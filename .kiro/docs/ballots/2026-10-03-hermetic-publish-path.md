@@ -2,7 +2,11 @@
 
 **Date**: 2026-10-03 (drafted)
 **Drafted by**: Thurgood (Opus), at the orchestrator's brief carrying Peter's 2026-10-03 ruling
-**Status**: **DRAFT.** Ratification waits for **Ada's fix PR to merge**. This text names her publish script and the `prepublishOnly` tripwire, and law must not cite an instrument that is not on `main`. Before Peter rules, the author corrects any name this draft got wrong (see § 2 "Preconditions"). No `Ratified-machine:` line: that mechanism belongs to the one ballot `completion-criteria-parity` parses (the B-U1 omission precedent).
+**Status**: **RATIFIED (Peter, 2026-10-03)**, relayed by the orchestrator. Peter's words, verbatim: *"Go with your reads on all four, have Thurgood ratify."* "Your reads" are the orchestrator's reads on forks F-1 to F-4 as presented to him; they are recorded as ruled in § 9.
+- **Precondition**: P1 was met before the ruling (#279 merged, `762b8c20`). The draft and both review rounds reached `main` in #282 (`b934fa73`).
+- **Record-first** (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"): this Status line, § 9's rulings and the F-4 consequence in § 4 are committed **before** any law edit, in the first commit of the application PR `chore/ratify-hermetic-publish-path`. The edits follow in the next commit. Peter's merge of that PR, under the governance carve-out, is the platform-verified act.
+- **No `Ratified-machine:` line**: that mechanism belongs to the one ballot `completion-criteria-parity` parses (the B-U1 omission precedent).
+- *Drafting-time status, kept for the record*: DRAFT, with ratification waiting for Ada's fix PR to merge, because law must not cite an instrument that is not on `main`.
 **Required reviewer**: **Stacy.** The two-phase form (§ 3.4) governs her pass, and her claims-pass records RS-6…RS-9 are the evidence here. **Consulted**: Ada, on the build/publish half (R1 + R2 cross-read, 2026-10-03; her fix PR is the instrument).
 **Authority for drafting**: Peter, 2026-10-03, relayed verbatim by the orchestrator: *"Let's go with your recommendations, but anything deferred I want captured."* The accepted recommendations are summarised in § 1.
 **Absorbs**: `.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` (triggered by #273's merge; this ballot is its vehicle), and Stacy's RS-6, RS-7, RS-8, RS-9 (`.kiro/specs/123-consumer-distribution/completion/claims-pass-release-15.0.0.md` § "Phase 2 standards implications").
@@ -191,7 +195,7 @@
 
 *Not drafted here*: the same teaching appears in `scripts/verify-publish-rail.sh`'s `FAIL[version]` message. The script is outside this ballot (§ 2). The register's `publish-rail-guard` row names `owner: thurgood`, and Thurgood built it at Spec 123 Task 7. It is not in his charter write scope, so the vehicle is **a chartered issue naming Thurgood, with `**Grant paths**: scripts/verify-publish-rail.sh` and a re-recorded `FAIL[version]` bite**, filed at application (§ 5 item 8).
 
-## 4. The register row (verbatim; applied as `proposed`)
+## 4. The register row (verbatim; applied as `proposed`; arms per F-4 as ruled)
 
 ### hermetic-publish-path
 
@@ -205,10 +209,10 @@ verification:
   owner: ada
   check_state: proposed
   checks: []
-  # P2 second leg and P3 are recorded (2026-10-03, pointer in § 2). THE FLIP (A9; fork F-4, § 9): this row lands
-  # `proposed` with the application PR. It flips to `armed`, `armed_at: tool-time` in the application PR itself
-  # only if Peter rules F-4 that way. Otherwise the flip PR is the release-record PR of the FIRST release run under
-  # steps 5–7 (its 6b record is the live evidence). At the flip, checks[] =
+  # P2 second leg and P3 are recorded (2026-10-03, pointer in § 2). THE FLIP (A9; F-4 RULED by Peter 2026-10-03:
+  # arm at the first release run under the law, not in the application PR). This row lands `proposed` with the
+  # application PR. It flips to `armed`, `armed_at: tool-time` in the release-record PR of the FIRST release
+  # published under RELEASE-FLOW steps 5–7; that release's 6b record is the live evidence. At the flip, checks[] =
   #   ["scripts/release-publish.ts (RELEASE-FLOW 5.1/5.3: fresh clone at the tag; three tag checks; check:drift;
   #     verify:token-index-clean after the pack; pack-assert; sha1 record)",
   #    "package.json prepublishOnly tripwire (folder publish refused; P3)",
@@ -219,7 +223,7 @@ verification:
 education:
   disposition: "AUTHOR: RELEASE-FLOW steps 5–7 (ballot 2026-10-03-hermetic-publish-path § 3) and governance/release-management-system.md § 5 are the education. PRUNED: the 2026-10-02 deferral's three manual guards are superseded by the script (Ada's issue records that). HONEST REACH: a publish run with --ignore-scripts, or of a tarball the script did not produce, is NOT detected before publish; 6b's sha1 comparison detects it after publish, and published bytes cannot be replaced"
 history:
-  - { date: 2026-10-03, change: "entry created at ballot 2026-10-03-hermetic-publish-path (DRAFT), from 15.0.0's two-artifact divergence (Stacy R-2; RS-6/RS-7/RS-8). check_state proposed. P2 (source read, Ada R2; observed leg) and P3 recorded on Ada's issue 2026-10-03. The flip PR and checks[] are named in the verification comment (Stacy R1 A9)", by: thurgood }
+  - { date: 2026-10-03, change: "entry created at ballot 2026-10-03-hermetic-publish-path (DRAFT), from 15.0.0's two-artifact divergence (Stacy R-2; RS-6/RS-7/RS-8). check_state proposed. P2 (source read, Ada R2; observed leg) and P3 recorded on Ada's issue 2026-10-03. The flip PR and checks[] are named in the verification comment (Stacy R1 A9). RATIFIED 2026-10-03 (Peter; F-3 owner ada; F-4: arms at the first release run under the law, the release-record PR of that release being the flip PR — not at this application)", by: thurgood }
 ```
 
 ## 5. Application (at ratification, one PR, Peter-merged under the governance carve-out)
@@ -292,7 +296,18 @@ The versions are whatever the root lock pins at that release. The notes author r
    - *Folded*: disclosure (§ 7) and cold-install smoke.
    - *Survives*: until option B, a zod-4-only defect in an unprobed tool ships green, and no in-repo signal sees it.
 
-## 9. Forks for Peter
+## 9. Forks for Peter — RULED (Peter, 2026-10-03)
+
+**The ruling, verbatim** (relayed by the orchestrator): *"Go with your reads on all four, have Thurgood ratify."* "Your reads" are the orchestrator's reads, as presented to Peter:
+- **F-1, RULED: retry at the same tag.** Reason: nothing has shipped under it, so the tag is still true.
+  - **Lost-tarball sub-case, RULED: bump a patch, never a mismatch on record.** This is the case where GitHub Packages already holds the bytes, the built tarball is lost, and a rebuild cannot reproduce the sha1.
+- **F-2, RULED: phase 2 drafted against an open PR is PERMITTED, with the mandatory merge-confirmation line in the A6 form** (§ 3.4). Reason: on 15.0.0 the line caught the drift, and a replay shows the wording catches that class.
+- **F-3, RULED: the register row's owner is `ada`.** Reason: the owner is whoever repairs the check when it goes red or dormant, and she maintains the instrument.
+- **F-4, RULED: the row arms at the first release run under the law, not in the application PR.** The reason given to Peter: arming on paper before the script has ever published is how 15.0.0's manual guard failed.
+  - **Recorded as owed and not taken**: Stacy's read on F-4 was owed (the fork was created at R2) and was not obtained. Peter ruled on the orchestrator's read.
+  - Thurgood's lean below was (i). The ruling is (ii).
+
+*The fork text as presented, kept for the record:*
 
 - **F-1** — a failure after the tag is pushed (§ 8 item 3): retry at the same tag, or bump a patch.
   - **Thurgood's read**: retry at the same tag. Nothing has shipped, so the tag is still true.
