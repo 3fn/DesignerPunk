@@ -28,7 +28,7 @@ Releases are executed by a **documented recipe, not a standing tool**. The autom
 **Key principles (unchanged by the retirement):**
 - Human-reviewed, human-decided: the recipe derives and drafts; **the repo's release owner (in DesignerPunk: Peter) ratifies the version bump and merges the release PR**.
 - Git tags are the only persistent release state.
-- Verification stays mechanized; judgment stays human. DesignerPunk's publish guard scripts (`check:drift`, `verify:token-index-clean`, the `prepublishOnly` chain — this repo's package scripts, not shipped to consumers) block a broken publish mechanically and are NOT part of the retired tool.
+- Verification stays mechanized; judgment stays human. DesignerPunk's publish guard is its publish script (`scripts/release-publish.ts`, which runs `check:drift`, `verify:token-index-clean` and `pack-assert` itself, in a fresh clone at the tag). `prepublishOnly` is only a tripwire that refuses a folder publish. These are this repo's package scripts, not shipped to consumers. They block a broken publish mechanically and are NOT part of the retired tool.
 
 ## The Release Recipe
 
@@ -38,7 +38,7 @@ The operational sequence lives in `.kiro/hooks/RELEASE-FLOW.md` (the PR-gated re
 2. **Classify**: for each change, read its task summary (`docs/specs/…`) or PR body for substance; classify 🔴 breaking / 🟡 minor / 🔵 patch-or-internal. Issue-driven work has no summary doc — its PR title and body are the record; do not assume spec-shaped work is the whole delta (the retired tool's fatal assumption).
 3. **Recommend the bump; the release owner ratifies.** Removals or behavior breaks → major. New behavior → minor. Fixes/internal → patch.
 4. **Hand-author the notes** at `docs/releases/release-X.Y.Z.md` (v14.0.0 is the format precedent). Notes ride the release PR with the version bump and any token-index regeneration.
-5. **Publish per RELEASE-FLOW.md** (repo-internal; and the dual-registry playbook it references): release PR → the release owner merges → publish from merged `main` → then tag and GitHub release: `git tag -a vX.Y.Z && git push origin vX.Y.Z && gh release create vX.Y.Z --notes-file docs/releases/release-X.Y.Z.md`.
+5. **Publish per RELEASE-FLOW.md** (repo-internal): release PR → the release owner merges (commit **S**) → a dry-run pack at S → **tag S** (`git tag -a vX.Y.Z <S> && git push origin vX.Y.Z`) → **one tarball**, built by the publish script in a fresh clone at the tag and published unchanged to every registry → verify both registries (same sha1) → **then** the GitHub release (`gh release create vX.Y.Z --notes-file docs/releases/release-X.Y.Z.md`). Never publish from a working checkout, never `--ignore-scripts`, never a folder publish.
 
 ## Discovering What Changed and Why
 

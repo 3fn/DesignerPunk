@@ -2,7 +2,11 @@
 
 **Date**: 2026-10-03 (drafted)
 **Drafted by**: Thurgood (Opus), at the orchestrator's brief carrying Peter's 2026-10-03 ruling
-**Status**: **DRAFT.** Ratification waits for **Ada's fix PR to merge**. This text names her publish script and the `prepublishOnly` tripwire, and law must not cite an instrument that is not on `main`. Before Peter rules, the author corrects any name this draft got wrong (see § 2 "Preconditions"). No `Ratified-machine:` line: that mechanism belongs to the one ballot `completion-criteria-parity` parses (the B-U1 omission precedent).
+**Status**: **RATIFIED (Peter, 2026-10-03)**, relayed by the orchestrator. Peter's words, verbatim: *"Go with your reads on all four, have Thurgood ratify."* "Your reads" are the orchestrator's reads on forks F-1 to F-4 as presented to him; they are recorded as ruled in § 9.
+- **Precondition**: P1 was met before the ruling (#279 merged, `762b8c20`). The draft and both review rounds reached `main` in #282 (`b934fa73`).
+- **Record-first** (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"): this Status line, § 9's rulings and the F-4 consequence in § 4 are committed **before** any law edit, in the first commit of the application PR `chore/ratify-hermetic-publish-path`. The edits follow in the next commit. Peter's merge of that PR, under the governance carve-out, is the platform-verified act.
+- **No `Ratified-machine:` line**: that mechanism belongs to the one ballot `completion-criteria-parity` parses (the B-U1 omission precedent).
+- *Drafting-time status, kept for the record*: DRAFT, with ratification waiting for Ada's fix PR to merge, because law must not cite an instrument that is not on `main`.
 **Required reviewer**: **Stacy.** The two-phase form (§ 3.4) governs her pass, and her claims-pass records RS-6…RS-9 are the evidence here. **Consulted**: Ada, on the build/publish half (R1 + R2 cross-read, 2026-10-03; her fix PR is the instrument).
 **Authority for drafting**: Peter, 2026-10-03, relayed verbatim by the orchestrator: *"Let's go with your recommendations, but anything deferred I want captured."* The accepted recommendations are summarised in § 1.
 **Absorbs**: `.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` (triggered by #273's merge; this ballot is its vehicle), and Stacy's RS-6, RS-7, RS-8, RS-9 (`.kiro/specs/123-consumer-distribution/completion/claims-pass-release-15.0.0.md` § "Phase 2 standards implications").
@@ -191,7 +195,7 @@
 
 *Not drafted here*: the same teaching appears in `scripts/verify-publish-rail.sh`'s `FAIL[version]` message. The script is outside this ballot (§ 2). The register's `publish-rail-guard` row names `owner: thurgood`, and Thurgood built it at Spec 123 Task 7. It is not in his charter write scope, so the vehicle is **a chartered issue naming Thurgood, with `**Grant paths**: scripts/verify-publish-rail.sh` and a re-recorded `FAIL[version]` bite**, filed at application (§ 5 item 8).
 
-## 4. The register row (verbatim; applied as `proposed`)
+## 4. The register row (verbatim; applied as `proposed`; arms per F-4 as ruled)
 
 ### hermetic-publish-path
 
@@ -205,10 +209,10 @@ verification:
   owner: ada
   check_state: proposed
   checks: []
-  # P2 second leg and P3 are recorded (2026-10-03, pointer in § 2). THE FLIP (A9; fork F-4, § 9): this row lands
-  # `proposed` with the application PR. It flips to `armed`, `armed_at: tool-time` in the application PR itself
-  # only if Peter rules F-4 that way. Otherwise the flip PR is the release-record PR of the FIRST release run under
-  # steps 5–7 (its 6b record is the live evidence). At the flip, checks[] =
+  # P2 second leg and P3 are recorded (2026-10-03, pointer in § 2). THE FLIP (A9; F-4 RULED by Peter 2026-10-03:
+  # arm at the first release run under the law, not in the application PR). This row lands `proposed` with the
+  # application PR. It flips to `armed`, `armed_at: tool-time` in the release-record PR of the FIRST release
+  # published under RELEASE-FLOW steps 5–7; that release's 6b record is the live evidence. At the flip, checks[] =
   #   ["scripts/release-publish.ts (RELEASE-FLOW 5.1/5.3: fresh clone at the tag; three tag checks; check:drift;
   #     verify:token-index-clean after the pack; pack-assert; sha1 record)",
   #    "package.json prepublishOnly tripwire (folder publish refused; P3)",
@@ -219,23 +223,38 @@ verification:
 education:
   disposition: "AUTHOR: RELEASE-FLOW steps 5–7 (ballot 2026-10-03-hermetic-publish-path § 3) and governance/release-management-system.md § 5 are the education. PRUNED: the 2026-10-02 deferral's three manual guards are superseded by the script (Ada's issue records that). HONEST REACH: a publish run with --ignore-scripts, or of a tarball the script did not produce, is NOT detected before publish; 6b's sha1 comparison detects it after publish, and published bytes cannot be replaced"
 history:
-  - { date: 2026-10-03, change: "entry created at ballot 2026-10-03-hermetic-publish-path (DRAFT), from 15.0.0's two-artifact divergence (Stacy R-2; RS-6/RS-7/RS-8). check_state proposed. P2 (source read, Ada R2; observed leg) and P3 recorded on Ada's issue 2026-10-03. The flip PR and checks[] are named in the verification comment (Stacy R1 A9)", by: thurgood }
+  - { date: 2026-10-03, change: "entry created at ballot 2026-10-03-hermetic-publish-path (DRAFT), from 15.0.0's two-artifact divergence (Stacy R-2; RS-6/RS-7/RS-8). check_state proposed. P2 (source read, Ada R2; observed leg) and P3 recorded on Ada's issue 2026-10-03. The flip PR and checks[] are named in the verification comment (Stacy R1 A9). RATIFIED 2026-10-03 (Peter; F-3 owner ada; F-4: arms at the first release run under the law, the release-record PR of that release being the flip PR — not at this application)", by: thurgood }
 ```
 
 ## 5. Application (at ratification, one PR, Peter-merged under the governance carve-out)
 
-1. The record-first Status flip in this file. Then §§ 3.1–3.8 and § 4, verbatim. Then the README "Ballots on record" entry.
-2. **Straggler sweep**: `grep -rnE "Publish from merged|publish from merged|git switch main && git pull|prepublishOnly|dual-registry playbook|then tag and GitHub release|not have indexed|indexing lag|indexed" .kiro/hooks governance .kiro/steering canonical docs/*.md README.md scripts/verify-publish-rail.sh`. Every hit is either brought in line or listed as intentionally historical. The 2026-10-03 pre-application sweep (`.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` § "2026-10-03 — documentation consistency sweep") is the baseline this sweep is diffed against.
-3. **The tasks.md annotation owed by the absorbed issue (its owed act 2)**: a dated annotation on Spec 123 `tasks.md`'s line "RELEASE fires at the release tag, before publish", pointing here (phase 1 at S before the tag; phase 2 after the step-6 record PR).
-4. `rebuild_index` after merge: `governance/` is a served root.
-5. Close and archive `.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` (`git mv` to `archive/`).
-6. **Charter follow-ups, by vehicle (b)**: a canonical-charter edit plus regeneration (Spec 122), in a separate PR after this one merges. Never hand-edit `.claude/agents/*` or `CLAUDE.md`.
+1. ✅ **APPLIED.** The record-first Status flip in this file, then §§ 3.1–3.8 and § 4, verbatim, then the README "Ballots on record" entry. Two formatting adaptations are recorded in the application record below.
+2. ✅ **RUN** (results in the application record below). **Straggler sweep**: `grep -rnE "Publish from merged|publish from merged|git switch main && git pull|prepublishOnly|dual-registry playbook|then tag and GitHub release|not have indexed|indexing lag|indexed" .kiro/hooks governance .kiro/steering canonical docs/*.md README.md scripts/verify-publish-rail.sh`. Every hit is either brought in line or listed as intentionally historical. The 2026-10-03 pre-application sweep (`.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` § "2026-10-03 — documentation consistency sweep") is the baseline this sweep is diffed against.
+3. ✅ **APPLIED.** **The tasks.md annotation owed by the absorbed issue (its owed act 2)**: a dated annotation on Spec 123 `tasks.md`'s line "RELEASE fires at the release tag, before publish", pointing here (phase 1 at S before the tag; phase 2 after the step-6 record PR).
+4. ⏳ **OWED AFTER MERGE.** `rebuild_index` after merge: `governance/` is a served root. The docs MCP indexes the main checkout, so a rebuild from the PR branch would index unmerged text. This follows the B-U1 and B-CI precedent of a post-merge rebuild.
+5. ✅ **APPLIED.** The outcome is recorded in the issue, which is moved to `archive/`. Its remaining items move to `.kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md`. Close and archive `.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` (`git mv` to `archive/`).
+6. ⏳ **NOT APPLIED HERE, by design.** These are tracked in `.kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md` § 2, with the signing cost. F-2 was ruled permitted, so Stacy's F-2 clause and the LIVENESS F-2 case both apply. **Charter follow-ups, by vehicle (b)**: a canonical-charter edit plus regeneration (Spec 122), in a separate PR after this one merges. Never hand-edit `.claude/agents/*` or `CLAUDE.md`.
    - **Stacy's RELEASE row** (`canonical/agents/stacy.md` L393): her wording, lifted verbatim from § 10 [STACY R1] item (7). It has an event cell, an appended scope sentence, and an F-2 clause if F-2 is permitted. Her consumer overlay row (`stacy.overlay.md` L73) stays unchanged.
    - **Thurgood's LIVENESS read 2** (`canonical/agents/thurgood.md` L448): two cases are events without a complete record. One is a RELEASE record with phase 1 only, still reading `publish-rail liveness: owed`. The other, if F-2 is permitted, is a phase 2 drafted against an open PR that has no merge-confirmation line (A8).
    - **Signing cost (A8)**: Stacy's row is in the Stacy-signed rendered unit `#the-trigger-set-the-114-superset-table-names-never-numbers`. The charter PR stales it, so one Stacy re-sign is owed (it enters Peter's Stacy-signed sample frame), plus one operative-set confirmation. Whether Thurgood's L448 row is rendered is checked at that PR.
    - Both are listed in the sweep section named in item 2.
-7. **Notify Stacy** of the before→after and the effective date. This is a standards change to her pass's timing, so notification is a charter duty, not a courtesy.
-8. **File the rail-script issue** named in § 3.8 (owner Thurgood; `**Grant paths**: scripts/verify-publish-rail.sh`).
+7. ⏳ **OWED AT MERGE**, by the orchestrator's message to Stacy naming the merge SHA. **Notify Stacy** of the before→after and the effective date. This is a standards change to her pass's timing, so notification is a charter duty, not a courtesy.
+8. ✅ **FILED**: `.kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md` § 1. Its grant paths are `scripts/verify-publish-rail.sh` and the bite file that carries the message, and the grant activates at this PR's merge. **File the rail-script issue** named in § 3.8 (owner Thurgood; `**Grant paths**: scripts/verify-publish-rail.sh`).
+
+### Application record (2026-10-03, `chore/ratify-hermetic-publish-path`)
+
+- **Before-text check**: every before-text in §§ 3.1, 3.2, 3.5, 3.6, 3.7 and 3.8 matched `main` @ `b934fa73` exactly once. Nothing stopped. The anchors for § 3.3 (before "**Land the result on `main`**") and § 3.4 (after "…without a committed record the pass has nothing to read.") were each found exactly once.
+- **Two formatting adaptations, stated here rather than made silently**:
+  - **(a) Indentation.** §§ 3.3 and 3.4 were indented three spaces so the new text sits inside RELEASE-FLOW step 6's list item. § 3.4's "7. **Announce last**" line stays at column 0 as a new list item. No words changed.
+  - **(b) A stray `**`.** One stray closing `**` at the end of § 3.8's after-text ("This step never retries automatically.**") was dropped. The bold opened and closed on that block's first line, so the trailing marker would have rendered as literal asterisks.
+- **Register row**: inserted as `### hermetic-publish-path` before `### issue-row-write-scope-grant`, verbatim from § 4. Its YAML parses (owner `ada`, `check_state: proposed`).
+- **Section-citation guard**: `check:section-citations` PASS, run locally on this branch: 191 citations, all resolved.
+- **Straggler sweep (§ 5 item 2)**:
+  - Every publish-path hit is either one of this ballot's new texts, the register's existing `publish-rail-guard` row (accurate), or one of three stragglers that are **not ratified edit sites and were not edited**. All three are filed in the follow-ups issue (§§ 1 and 3):
+    - `scripts/verify-publish-rail.sh` L45 and L77, the indexing-lag message;
+    - RELEASE-FLOW's "Deriving" Step 5 retirement note, which teaches tag and GitHub release as one act;
+    - RELEASE-FLOW's "What changed and why" `prepublishOnly` row.
+  - The pattern `indexed` was over-broad: about 40 unrelated "MCP-indexed" hits.
 
 ## 6. Deferred — captured
 
@@ -292,7 +311,18 @@ The versions are whatever the root lock pins at that release. The notes author r
    - *Folded*: disclosure (§ 7) and cold-install smoke.
    - *Survives*: until option B, a zod-4-only defect in an unprobed tool ships green, and no in-repo signal sees it.
 
-## 9. Forks for Peter
+## 9. Forks for Peter — RULED (Peter, 2026-10-03)
+
+**The ruling, verbatim** (relayed by the orchestrator): *"Go with your reads on all four, have Thurgood ratify."* "Your reads" are the orchestrator's reads, as presented to Peter:
+- **F-1, RULED: retry at the same tag.** Reason: nothing has shipped under it, so the tag is still true.
+  - **Lost-tarball sub-case, RULED: bump a patch, never a mismatch on record.** This is the case where GitHub Packages already holds the bytes, the built tarball is lost, and a rebuild cannot reproduce the sha1.
+- **F-2, RULED: phase 2 drafted against an open PR is PERMITTED, with the mandatory merge-confirmation line in the A6 form** (§ 3.4). Reason: on 15.0.0 the line caught the drift, and a replay shows the wording catches that class.
+- **F-3, RULED: the register row's owner is `ada`.** Reason: the owner is whoever repairs the check when it goes red or dormant, and she maintains the instrument.
+- **F-4, RULED: the row arms at the first release run under the law, not in the application PR.** The reason given to Peter: arming on paper before the script has ever published is how 15.0.0's manual guard failed.
+  - **Recorded as owed and not taken**: Stacy's read on F-4 was owed (the fork was created at R2) and was not obtained. Peter ruled on the orchestrator's read.
+  - Thurgood's lean below was (i). The ruling is (ii).
+
+*The fork text as presented, kept for the record:*
 
 - **F-1** — a failure after the tag is pushed (§ 8 item 3): retry at the same tag, or bump a patch.
   - **Thurgood's read**: retry at the same tag. Nothing has shipped, so the tag is still true.
@@ -422,3 +452,20 @@ What survives, added:
 - **(v) `floor-closure.json` is never regenerated by the script. SURVIVES.** Ada's (pack-assert's header leaves regeneration to callers). Routed.
 
 **The one thing Peter must read before ruling**: A1 in § 3.3. The scope-mapping trap is the difference between a step 6b that catches a 15.0.0-class divergence and one that certifies it.
+
+## Errata
+
+Peter authorized both, post-review, 2026-10-03, relayed by the orchestrator, verbatim: *"Erratum, go ahead."* He ruled that no separate ballot was needed.
+- **Why these are errata**: both are consistency corrections. Each sentence still taught the pre-ballot publish path after §§ 3.2 and 3.4 were applied. Neither adds rule content; each restates what the ratified steps 5.2, 5.1/5.3 and 7 already say.
+- **How they were found**: by the application PR's straggler sweep (§ 5 item 2; follow-ups issue § 3).
+- **Review coverage**: neither sentence was an edit site, so **Stacy's R1 did not cover these two sentences.**
+
+- **E-1, RELEASE-FLOW § "Deriving the delta" Step 5, the retirement note** (L109 at `6757a12e`). *(erratum 2026-10-03 — Peter, "Erratum, go ahead"; found by the application sweep)*
+  - **Before**: *(The automated analyze/notes/release CLI was retired 2026-08-12 — ballot `2026-08-12-q6-release-manager-retirement.md`; tag + GitHub release are manual: `git tag -a vX.Y.Z && git push origin vX.Y.Z && gh release create vX.Y.Z --notes-file docs/releases/release-X.Y.Z.md`.)*
+  - **After**: *(The automated analyze/notes/release CLI was retired 2026-08-12 — ballot `2026-08-12-q6-release-manager-retirement.md`. Tag and GitHub release are manual, and they are **two separate acts**. The tag is pushed at § "The sequence" step 5.2 (`git tag -a vX.Y.Z <S> && git push origin vX.Y.Z`). The GitHub release is created **last**, at step 7, only after step 6's rail PASS and a matching 6b record (`gh release create vX.Y.Z --notes-file docs/releases/release-X.Y.Z.md`). Erratum 2026-10-03, ballot `2026-10-03-hermetic-publish-path`.)*
+  - **Why**: "tag + GitHub release" presented one command chain. That contradicts ratified step 5.2 (tag S, GitHub release NOT yet) and step 7 (announce last).
+- **E-2, RELEASE-FLOW § "What changed and why", the `prepublishOnly` row** (L218 at `6757a12e`). *(erratum 2026-10-03 — Peter, "Erratum, go ahead"; found by the application sweep)*
+  - **Before**: | `prepublishOnly` | `build && check:drift` | `build && check:drift && verify:token-index-clean` — blocks publish if `token-index/` wasn't committed on the release branch |
+  - **After**: | `prepublishOnly` | `build && check:drift` | `build && check:drift && verify:token-index-clean` — blocks publish if `token-index/` wasn't committed on the release branch. *Superseded 2026-10-03 (ballot `2026-10-03-hermetic-publish-path`): `prepublishOnly` is now only the tripwire that refuses a folder publish. `check:drift` and `verify:token-index-clean` run inside `scripts/release-publish.ts` (§ "The sequence" steps 5.1 and 5.3).* |
+  - **Why**: the row presented the build-and-check chain as `prepublishOnly`'s current behaviour. Under ratified § 3.2 and P2, it is only the folder-publish tripwire. The 125-A history in the row is kept and annotated, not rewritten.
+
