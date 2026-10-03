@@ -15,6 +15,28 @@
 import { BuildOrchestrator } from '../BuildOrchestrator';
 import { BuildConfig, DEFAULT_BUILD_CONFIG } from '../types/BuildConfig';
 import { Platform } from '../types/Platform';
+import * as fs from 'fs';
+import * as os from 'os';
+import * as path from 'path';
+
+/**
+ * Every build in this file writes to a per-run temp directory, never to `./dist` (the package's ship
+ * directory) or `./test-output`. `DEFAULT_BUILD_CONFIG.outputDir` is `./dist`, so a config that spreads
+ * the default without overriding `outputDir` used to write `dist/{web,ios,android}/` into the real
+ * repo (option D, `.kiro/issues/2026-10-01-in-repo-generate-output-contaminates-package-dist.md`).
+ * `BuildConfig.ts`'s default is deliberately left as it is.
+ */
+let tmpOutputDir: string;
+/** The default build config with `outputDir` pointed at this run's temp directory. */
+const baseConfig = (): BuildConfig => ({ ...DEFAULT_BUILD_CONFIG, outputDir: tmpOutputDir });
+
+beforeAll(() => {
+  tmpOutputDir = fs.mkdtempSync(path.join(os.tmpdir(), 'build-orchestrator-test-'));
+});
+
+afterAll(() => {
+  fs.rmSync(tmpOutputDir, { recursive: true, force: true });
+});
 
 describe('BuildOrchestrator', () => {
   let orchestrator: BuildOrchestrator;
@@ -26,9 +48,9 @@ describe('BuildOrchestrator', () => {
   describe('Configuration Validation', () => {
     it('should validate valid configuration', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
-        outputDir: './dist',
+        outputDir: tmpOutputDir,
       };
 
       const result = orchestrator.validateConfig(config);
@@ -39,7 +61,7 @@ describe('BuildOrchestrator', () => {
 
     it('should reject configuration with no platforms', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: [],
       };
 
@@ -51,7 +73,7 @@ describe('BuildOrchestrator', () => {
 
     it('should reject configuration with invalid platforms', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['invalid' as Platform],
       };
 
@@ -63,7 +85,7 @@ describe('BuildOrchestrator', () => {
 
     it('should reject configuration with invalid build mode', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         mode: 'invalid' as any,
       };
 
@@ -75,7 +97,7 @@ describe('BuildOrchestrator', () => {
 
     it('should reject configuration with empty output directory', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         outputDir: '',
       };
 
@@ -87,7 +109,7 @@ describe('BuildOrchestrator', () => {
 
     it('should validate iOS-specific options when iOS platform is selected', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['ios'],
         ios: {
           swiftVersion: '5.9',
@@ -103,7 +125,7 @@ describe('BuildOrchestrator', () => {
 
     it('should reject iOS configuration without required options', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['ios'],
         ios: {} as any,
       };
@@ -117,7 +139,7 @@ describe('BuildOrchestrator', () => {
 
     it('should validate Android-specific options when Android platform is selected', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['android'],
         android: {
           kotlinVersion: '1.9.0',
@@ -134,7 +156,7 @@ describe('BuildOrchestrator', () => {
 
     it('should reject Android configuration with invalid SDK versions', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['android'],
         android: {
           kotlinVersion: '1.9.0',
@@ -154,7 +176,7 @@ describe('BuildOrchestrator', () => {
 
     it('should validate Web-specific options when Web platform is selected', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
         web: {
           target: 'es2020',
@@ -170,7 +192,7 @@ describe('BuildOrchestrator', () => {
 
     it('should reject Web configuration with invalid target', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
         web: {
           target: 'invalid' as any,
@@ -187,7 +209,7 @@ describe('BuildOrchestrator', () => {
 
     it('should warn about source maps in production mode', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         mode: 'production',
         sourceMaps: true,
       };
@@ -202,7 +224,7 @@ describe('BuildOrchestrator', () => {
 
     it('should warn about disabled minification in production mode', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         mode: 'production',
         minify: false,
       };
@@ -219,7 +241,7 @@ describe('BuildOrchestrator', () => {
   describe('Configuration', () => {
     it('should accept valid configuration', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
       };
 
@@ -228,7 +250,7 @@ describe('BuildOrchestrator', () => {
 
     it('should throw error for invalid configuration', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: [],
       };
 
@@ -237,7 +259,7 @@ describe('BuildOrchestrator', () => {
 
     it('should update status after configuration', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
       };
 
@@ -252,7 +274,7 @@ describe('BuildOrchestrator', () => {
   describe('Platform Selection', () => {
     it('should reject invalid platforms', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
       };
 
@@ -265,7 +287,7 @@ describe('BuildOrchestrator', () => {
 
     it('should reject empty platform list', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
       };
 
@@ -278,7 +300,7 @@ describe('BuildOrchestrator', () => {
 
     it('should accept valid platforms', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web', 'ios', 'android'],
       };
 
@@ -304,7 +326,7 @@ describe('BuildOrchestrator', () => {
 
     it('should update status during build', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
       };
 
@@ -327,7 +349,7 @@ describe('BuildOrchestrator', () => {
 
     it('should track start and end times', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
       };
 
@@ -343,7 +365,7 @@ describe('BuildOrchestrator', () => {
 
     it('should reset status on new build', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
       };
 
@@ -364,7 +386,7 @@ describe('BuildOrchestrator', () => {
   describe('Build Execution', () => {
     it('should build single platform', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
       };
 
@@ -379,7 +401,7 @@ describe('BuildOrchestrator', () => {
 
     it('should build multiple platforms sequentially', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web', 'ios'],
         parallel: false,
       };
@@ -395,7 +417,7 @@ describe('BuildOrchestrator', () => {
 
     it('should build multiple platforms in parallel', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web', 'ios', 'android'],
         parallel: true,
       };
@@ -414,7 +436,7 @@ describe('BuildOrchestrator', () => {
   describe('Build Results', () => {
     it('should return build results with metadata', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
       };
 
@@ -433,7 +455,7 @@ describe('BuildOrchestrator', () => {
 
     it('should generate build summary', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web', 'ios'],
       };
 
@@ -460,7 +482,7 @@ describe('BuildOrchestrator', () => {
   describe('Error Handling', () => {
     it('should handle cancellation', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
       };
 
@@ -476,7 +498,7 @@ describe('BuildOrchestrator', () => {
 
     it('should reset state', () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
       };
 
@@ -494,9 +516,9 @@ describe('BuildOrchestrator', () => {
   describe('Border Width Token Integration', () => {
     it('should include border width tokens in build process', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
-        outputDir: './test-output',
+        outputDir: tmpOutputDir,
       };
 
       orchestrator.configure(config);
@@ -510,9 +532,9 @@ describe('BuildOrchestrator', () => {
 
     it('should generate border width tokens for all platforms', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web', 'ios', 'android'],
-        outputDir: './test-output',
+        outputDir: tmpOutputDir,
       };
 
       orchestrator.configure(config);
@@ -528,9 +550,9 @@ describe('BuildOrchestrator', () => {
 
     it('should include token count in build metadata', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
-        outputDir: './test-output',
+        outputDir: tmpOutputDir,
       };
 
       orchestrator.configure(config);
@@ -544,9 +566,9 @@ describe('BuildOrchestrator', () => {
 
     it('should include package size in build metadata', async () => {
       const config: BuildConfig = {
-        ...DEFAULT_BUILD_CONFIG,
+        ...baseConfig(),
         platforms: ['web'],
-        outputDir: './test-output',
+        outputDir: tmpOutputDir,
       };
 
       orchestrator.configure(config);
