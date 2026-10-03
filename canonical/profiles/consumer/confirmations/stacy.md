@@ -56,9 +56,16 @@ date: 2026-09-27
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 confirmer: stacy
-canonicalHash: sha256:5055f134c5a6c6fc5ecd2f499d3eb428ff14a0679946152f88e630c0c8de3d7a
+canonicalHash: sha256:eb7326f4705918216be6d929ec192f58cd092d82110ee7fcb2c9b29eb07f3b1a
 items: trigger-lens, trigger-release, trigger-symptom, trigger-closeout, trigger-midpoint, trigger-arming, trigger-gate, trigger-education, trigger-straggler, trigger-liveness, trigger-burst, finding-routing, merge-path-status
-date: 2026-09-29
+date: 2026-10-03
+
+**Re-confirmed 2026-10-03 (Req 11.6.5d).**
+- **What changed**: the RELEASE row. Ballot `.kiro/docs/ballots/2026-10-03-hermetic-publish-path.md` § 5 item 6 (2a) replaced it with my § 10 [STACY R1] item (7) wording: a two-phase event cell, an appended phase-2 scope sentence, and the F-2 clause. One period was added after "arming line" as a sentence separator. Canonical commit `e54ad53c`.
+- **`trigger-release`'s text is now that row, byte for byte.** It is a verbatim substring of the unit. **That edit is authoring, not this confirming act** (signing-act ballot § 2 clause 4). It is its own commit, `0acbcc5f`. **Its authorization**: the orchestrator decided it, and it is named in the PR body for Peter's carve-out merge. The unit is my charter's, and the text is my own ratified wording. **Peter's merge of the PR is the authority**, on the same basis as Thurgood's LIVENESS sentence in the same canonical commit.
+- **What did not change**: the operative set, still 13 items. The row stays one `member` item, as LENS did on 2026-09-29 and ARMING on 2026-09-28. Phase 2's reads and the F-2 clause are part of the row's cells, so they are not split out. The canonicalHash is updated from `sha256:5055f134c5a6c6fc5ecd2f499d3eb428ff14a0679946152f88e630c0c8de3d7a` to the value above.
+
+**Ruling: CONFIRMED at 13 items.**
 
 **Re-confirmed 2026-09-29 (Req 11.6.5d).**
 - **What changed**: `trigger-lens`'s text, which is the LENS row. Edit site 5b of the ratified ballot `.kiro/docs/ballots/2026-09-28-parent-instrument-existence-check.md` (RATIFIED, Peter, 2026-09-29) adds question 6 (existence at the review base, never fit) and its plan-time form for M4-bound specs, which reads each parent's declared `**Instruments:**` block.
