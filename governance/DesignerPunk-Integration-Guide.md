@@ -76,7 +76,7 @@ Use this posture when you want a design system of your own. These are the five s
 
 **Step 3, `generate`, is the pipeline — run on every token change.** It builds your platform token output from your own token source. Section 4 says when to run it again.
 
-**Step 4, your personal note**: `.designerpunk/personal-note.local.md`, who you are and how you want to be worked with. Your agents read it every session, and it stays on your machine. You can fill it in by hand, or, after the restart, ask your agent to walk you through it.
+**Step 4, your personal note**: `.designerpunk/personal-note.local.md` — who you are and how you want to be worked with; your agents read it every session (it stays on your machine). You can fill it in by hand, or, after the restart, ask your agent to walk you through it.
 
 **Step 5, the restart, and why.** Your agent tool loads its MCP configuration when a session starts. The session that ran `init` cannot see the servers `init` just configured, so its first queries would fail. **This is a rule, not a one-off**: any later change to the MCP configuration, such as adding a server or updating the package, also needs a new session. Some tools ask you once to approve project-declared MCP servers; approve DesignerPunk's.
 
@@ -176,15 +176,15 @@ What the package ships for Android, and why it does not add up to a target yet:
 
 Platform requirements, for reference: the Compose BOM must be compatible with the component implementations. Android onboarding is a planned follow-up (Spec 129).
 
-## 5. When `sync` reports a missing token
+## 5. When sync reports a missing token
 
 After an update, `sync` may print a line like this:
 
 ```
-components now expect token '<name>' — <what it is for> (used by <components>). Add it to your set in <your token source>. Your tokens are yours; DesignerPunk never adds to them.
+components now expect token '<name>' — <what it is for> (used by <components>). Add it to your set in <your token source>. Your tokens are yours; DesignerPunk never adds to them. DesignerPunk's value, for reference: <value> ('<token>' in DesignerPunk's language). See: install doc § "When sync reports a missing token".
 ```
 
-It means an updated component references a token name that your token set does not define. **It is a report, not a change.** `sync` cannot add the token for you, because your tokens are your language: adding to them is your decision. Add the token to your set, choosing its value, and then run `npx designerpunk generate`.
+It means an updated component references a token name that your token set does not define. DesignerPunk's own value for that token is shown for reference only. **It is a report, not a change.** `sync` cannot add the token for you, because your tokens are your language: adding to them is your decision. Add the token to your set, choosing its value, and then run `npx designerpunk generate`.
 
 This is the one place where the two postures meet after birth: our updating surface asks something of your language, and the answer is yours.
 
