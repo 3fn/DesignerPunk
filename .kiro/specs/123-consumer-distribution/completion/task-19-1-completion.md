@@ -77,3 +77,29 @@
 - **Fix**: Ada's wording, verbatim, in the commit carrying this addendum (the region's "Your language" bullet, and a new sentence after the `generate` output list).
 - **Class guard, from 19.4 on**: each behaviour, path or count claim in the remainder table and in the region's passage table cites `file:line` or a ratified record, and its owning agent confirms it before commit. This was settled in consult and is recorded in `tasks.md` Task 19. Both corrected sentences now cite their source lines above.
 - **Re-run**: `npx jest --config scripts/jest.config.js scripts/__tests__/install-doc.test.ts` → 2/2 green. The README is unchanged.
+
+## Addendum 2 (2026-10-03) — two more false claims in the region, found at 19.4 owner wording
+
+- **The defects**:
+  - **(c) Region § 4, "The asymmetry is intended".** "After an update, a component may look different while your colours do not" is false given § 4's own exception. The dark and WCAG override values come from the installed package, so the next `generate` after an update can change them (`src/generators/generateTokenFiles.ts` L19–21).
+  - **(d) Region § 9, "To own one component".** It said to put your version under the component's name. Component precedence keys on the **declared** name, the `component:` field of `contracts.yaml` (or the schema `name:`), never on the directory name (`application-mcp-server/src/indexer/ComponentIndexer.ts` L172–181).
+- **Found by**: Ada (c) and Lina (d), in their 19.4 owner wording, 2026-10-03. Records: `completion/task-19-4-owner-wording/ada.md` § 11 and `lina.md` § 11 (the region re-read table).
+- **Cause**: the same class as Addendum 1. 19.1 stated behaviour from design and requirement wording without reading the code. For (d), "under the component's name" was a paraphrase of Req 2.5's "wins on its name".
+- **Fix**: the owners' wording, verbatim, applied in the 19.4 assembly that carries this addendum.
+  - (c): Ada's replacement for the bullet's first sentence, followed by the bullet's unchanged last sentence.
+  - (d): Lina's replacement for the first sentence. The rest of the paragraph stands.
+
+## Addendum 3 (2026-10-03) — three region claims corrected at the 19.4 owner reviews
+
+- **(e) § Platforms › Web, the `data-theme="wcag"` example: false.**
+  - The emitted selector is `:root[data-theme="wcag"]` (`dist/DesignTokens.web.css:932`; `src/generators/TokenFileGenerator.ts:977`), so the attribute works only on `<html>`. On a `<div>` it matches nothing.
+  - Found by Sparky (`completion/task-19-4-owner-review/sparky.md`, ledger row 12).
+  - **Origin**: #268's ratified after-text (Site 2b), which 19.1 moved into the region unchanged. Ada confirmed the Web section's other token facts, but did not review this one (`ada.md` review § Web).
+- **(f) § Platforms › iOS, and (g) § Platforms › Android: "The shipped components require it" (`ComponentTokens.*`) is over-general.**
+  - iOS: only some components read it (`ButtonIcon.ios.swift:67-80`), while others define their own token enums (`Avatar.ios.swift:35`, `BadgeLabelBase.ios.swift:46`).
+  - Android: 3 of 41 component files read it.
+  - Found by Kenya (`kenya.md` C1) and Data (`data.md` C-1).
+  - **Origin**: #268's ratified Site 1 after-text, point (iii), moved by 19.1.
+- **Cause**: 19.1 moved ratified text without re-reading the code behind it. The class guard (claims cite `file:line`, and owners confirm them) caught all three.
+- **Fix**: each owner's replacement text, verbatim, in the commit carrying this addendum. Kenya's and Data's reviews also added causes the region lacked: the iOS `Color.oklch` initializer, the product-token theme extension on both platforms, the colormath dependency, and the Android colour names. Those are additions, not defects.
+- **#268 content points changed**: P1 (iii) and P3 (v). They are recorded in the B-U3 preservation table with both owners' evidence, for Peter at the U3 merge.

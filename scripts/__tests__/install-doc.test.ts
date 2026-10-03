@@ -15,15 +15,11 @@
  *     (C6, C18), the README clause (C16), the stale-scope zero counts (C11).
  *   - 19.4: the markers, and region identity against the derivation (C9, C10).
  *
- * PENDING UNTIL 19.4: the old Setup Loop still sits below the region until
- * 19.4's sweep (Peter's ruling, 2026-10-03: kept as reference, de-numbered,
- * under `## Reference`), and the markers do not exist yet. Assertions that are
- * red by construction until then are registered with `test.failing` through
- * `pendingUntil194`. A `test.failing` test passes while its assertion fails,
- * and FAILS once the assertion holds, so 19.4 cannot satisfy one without
- * flipping it to a plain `test`. The ids are listed once in
- * `PENDING_UNTIL_19_4`, and a guard test asserts the registered set equals that
- * list. Nothing is skipped and no assertion is weakened.
+ * PENDING MECHANISM (19.2 → 19.4): 19.2 registered seven assertions that were
+ * red by construction until 19.4 as `test.failing` entries on a named list
+ * (`PENDING_UNTIL_19_4`). 19.4 flipped all seven to plain tests, so the list
+ * is now empty. `pendingUntil194` and its guard stay, so a later pending entry
+ * must be declared on the list rather than added silently.
  *
  * The scope sentence's CHANGELOG surface is asserted from 22.4, in this file
  * (Peter's O-2 ruling, 2026-10-03).
@@ -34,6 +30,7 @@ import * as path from 'path';
 import { LIFECYCLE_VERBS, ATTACH_OBJECT, attachUsage } from '../../src/cli/shared/vocabulary';
 import { cloneHatchMessage, personalNoteNamingMessage } from '../../src/cli/shared/errorCatalog';
 import { missingTokenMessage } from '../../src/cli/sync/NameContract';
+import { deriveInstallDoc, extractRegion, REGION_BEGIN, REGION_END, INSTALL_REL } from '../derive-install-doc';
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
 const read = (rel: string): string => fs.readFileSync(path.join(REPO_ROOT, rel), 'utf8');
@@ -143,29 +140,20 @@ export function pathSteps(fm: string[]): Record<string, number> {
 }
 
 /**
- * INTERIM (until 19.4): the region runs from the line after the metadata
- * block's closing `---` to the `---` before `## Setup Loop`. 19.4 replaces this
- * with the two markers. The pending test `interim-delimiter-retired` makes
- * forgetting to do so go red.
+ * The region: the text between the two committed markers (19.4). The interim
+ * `## Setup Loop` delimiter 19.2 used is retired.
  */
-export const USING_INTERIM_DELIMITER = true;
+export const USING_INTERIM_DELIMITER = false;
 export function region(guide: string): string {
-  const lines = guide.split('\n');
-  const rt = lines.findIndex((l) => l.startsWith('**Relevant Tasks**'));
-  const open = lines.indexOf('---', rt);
-  const setupLoop = lines.indexOf('## Setup Loop');
-  if (rt < 0 || open < 0) throw new Error('region: metadata block not found');
-  if (setupLoop < 0) throw new Error('region: `## Setup Loop` not found — the interim delimiter is retired; 19.4 switches to the markers');
-  let end = setupLoop;
-  while (end > open && (lines[end - 1].trim() === '' || lines[end - 1] === '---')) end--;
-  return lines.slice(open + 1, end).join('\n').trim();
+  return extractRegion(guide);
 }
 
 /** Everything in the guide that is not the region (front matter and metadata excluded). */
 export function outsideRegion(guide: string): string {
-  const r = region(guide);
-  const idx = guide.indexOf(r);
-  return guide.slice(idx + r.length);
+  const lines = guide.split('\n');
+  const b = lines.indexOf(REGION_BEGIN);
+  const e = lines.indexOf(REGION_END);
+  return [...lines.slice(0, b), ...lines.slice(e + 1)].join('\n');
 }
 
 /** Lines of the span from the heading matching `start` to the next heading of the same or higher level. */
@@ -257,17 +245,11 @@ export function cliTableDrift(text: string): string[] {
 // Pending-until-19.4 registry
 // ---------------------------------------------------------------------------
 
-const PENDING_UNTIL_19_4 = [
-  'interim-delimiter-retired',
-  'no-setup-loop-string-outside-region',
-  'no-numbered-step-heading-outside-region',
-  'one-reference-heading',
-  'guide-zero-stale-scope',
-  'install-md-zero-stale-scope',
-  'cli-commands-table-uses-vocabulary',
-] as const;
+const PENDING_UNTIL_19_4: readonly string[] = [
+  // empty since 19.4: all seven 19.2 entries flipped to plain tests (see 'flipped at 19.4' below)
+];
 const registeredPending: string[] = [];
-function pendingUntil194(id: (typeof PENDING_UNTIL_19_4)[number], name: string, fn: () => void): void {
+function pendingUntil194(id: string, name: string, fn: () => void): void {
   registeredPending.push(id);
   test.failing(`[pending 19.4: ${id}] ${name}`, fn);
 }
@@ -523,37 +505,74 @@ describe('stale-scope zero counts (C11), active', () => {
   });
 });
 
-describe('pending until 19.4 (test.failing: passes while red, fails once satisfied — flip it then)', () => {
-  pendingUntil194('interim-delimiter-retired', 'the region is delimited by its markers, not the interim `## Setup Loop` anchor', () => {
+describe('flipped at 19.4 (were test.failing pending entries from 19.2)', () => {
+  it('[flipped: interim-delimiter-retired] the region is delimited by its markers, not the interim `## Setup Loop` anchor', () => {
     expect(USING_INTERIM_DELIMITER).toBe(false);
   });
 
-  pendingUntil194('no-setup-loop-string-outside-region', 'no "Setup Loop" string outside the region (C9)', () => {
+  it('[flipped: no-setup-loop-string-outside-region] no "Setup Loop" string outside the region (C9)', () => {
     expect(count(outsideRegion(GUIDE), 'Setup Loop')).toBe(0);
   });
 
-  pendingUntil194('no-numbered-step-heading-outside-region', 'no numbered setup heading outside the region (C9)', () => {
+  it('[flipped: no-numbered-step-heading-outside-region] no numbered setup heading outside the region (C9)', () => {
     expect(headings(outsideRegion(GUIDE)).filter((h) => /^#{2,6} \d+[a-z]?\. /.test(h))).toEqual([]);
   });
 
-  pendingUntil194('one-reference-heading', 'the remainder sits under exactly one `## Reference` heading (C9)', () => {
-    expect(GUIDE.split('\n').filter((l) => l === '## Reference')).toHaveLength(1);
+  it('[flipped: one-reference-heading] the remainder sits under exactly one `## Reference` heading, with its lead line (C9)', () => {
+    const lines = GUIDE.split('\n');
+    const refs = lines.flatMap((l, i) => (l === '## Reference' ? [i] : []));
+    expect(refs).toHaveLength(1);
+    const lead = lines.slice(refs[0] + 1).find((l) => l.trim() !== '');
+    expect(lead).toMatch(/^This part of the guide is reference, not setup steps\./);
   });
 
-  pendingUntil194('guide-zero-stale-scope', 'the guide: zero `npm.pkg.github.com` and zero `@designerpunk:` (C11)', () => {
+  it('[flipped: guide-zero-stale-scope] the guide: zero `npm.pkg.github.com` and zero `@designerpunk:` (C11)', () => {
     for (const s of STALE_SCOPE) expect(count(GUIDE, s)).toBe(0);
   });
 
-  pendingUntil194('install-md-zero-stale-scope', 'docs/consumer/INSTALL.md exists, with zero stale-scope strings (C10, C11)', () => {
+  it('[flipped: install-md-zero-stale-scope] docs/consumer/INSTALL.md exists, with zero stale-scope strings (C10, C11)', () => {
     const install = read(INSTALL_PATH);
     for (const s of STALE_SCOPE) expect(count(install, s)).toBe(0);
   });
 
-  pendingUntil194('cli-commands-table-uses-vocabulary', 'every lifecycle-verb row in the guide uses vocabulary.ts’s description (C6 whole-guide, C11 § "CLI Commands")', () => {
+  it('[flipped: cli-commands-table-uses-vocabulary] every lifecycle-verb row in the guide uses vocabulary.ts’s description (C6 whole-guide, C11 § "CLI Commands")', () => {
     expect(cliTableDrift(GUIDE)).toEqual([]);
   });
 
-  it('the registered pending set is exactly the declared list', () => {
+  it('the registered pending set is exactly the declared list (empty since 19.4)', () => {
     expect([...registeredPending].sort()).toEqual([...PENDING_UNTIL_19_4].sort());
+  });
+});
+
+describe('the marked region and its committed derivation (C9, C10 — 19.4)', () => {
+  it('each marker occurs exactly once, begin before end', () => {
+    const lines = GUIDE.split('\n');
+    expect(lines.filter((l) => l === REGION_BEGIN)).toHaveLength(1);
+    expect(lines.filter((l) => l === REGION_END)).toHaveLength(1);
+    expect(lines.indexOf(REGION_BEGIN)).toBeLessThan(lines.indexOf(REGION_END));
+  });
+
+  it('the region opens the doc: the begin marker is the first non-blank line after the metadata block', () => {
+    const lines = GUIDE.split('\n');
+    const rt = lines.findIndex((l) => l.startsWith('**Relevant Tasks**'));
+    const close = lines.indexOf('---', rt);
+    const next = lines.slice(close + 1).find((l) => l.trim() !== '');
+    expect(next).toBe(REGION_BEGIN);
+  });
+
+  it(`${INSTALL_REL} equals deriveInstallDoc(<guide>), byte for byte (region identity)`, () => {
+    expect(read(INSTALL_REL)).toBe(deriveInstallDoc(GUIDE));
+  });
+
+  it('bite: a region edit without re-deriving goes red', () => {
+    const edited = GUIDE.replace('## 8. CI needs', '## 8. CI needs (edited)');
+    expect(edited).not.toBe(GUIDE);
+    expect(read(INSTALL_REL)).not.toBe(deriveInstallDoc(edited));
+  });
+
+  it('the derived file carries the region verbatim and the guide’s path-steps line', () => {
+    const install = read(INSTALL_REL);
+    expect(install).toContain(extractRegion(GUIDE));
+    expect(frontMatter(install).find((l) => l.startsWith('path-steps:'))).toBe(frontMatter(GUIDE).find((l) => l.startsWith('path-steps:')));
   });
 });

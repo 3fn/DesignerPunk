@@ -18,6 +18,8 @@ path-steps: { founder: 5, joining: 5, joining-cross-harness: 6, reference-no-ini
 
 ---
 
+<!-- designerpunk:install-region:begin -->
+
 This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a custom theme you register in `designerpunk.config.ts` does not change your generated output yet; light and dark mode work.
 
 ## Prerequisites
@@ -26,8 +28,8 @@ These come before anything you type. None of them is a step.
 
 | Prerequisite | Why | Minimum version |
 |---|---|---|
-| Node.js | The CLI, the token pipeline and the MCP servers run on it | 18+ (22+ recommended) |
-| npm | Installs `@3fn/core` from the public npm registry; no `.npmrc` and no access token are needed | 9+ |
+| Node.js | The CLI, the token pipeline and the MCP servers run on it | 18+, the floor its dependencies declare (DesignerPunk's own CI runs on 22) |
+| npm | Installs `@3fn/core` from the public npm registry; no `.npmrc` and no access token are needed | — |
 | One agent harness | DesignerPunk's agent layer is generated for one: Claude Code (`cc`) or Kiro (`kiro`) | — |
 
 `tsx` ships as a dependency of `@3fn/core`, so `designerpunk.config.ts` runs without a separate TypeScript install.
@@ -104,7 +106,7 @@ What `generate` writes, into the `output` directory set in `designerpunk.config.
 - **`npx designerpunk sync`** comes after it: it reports package updates against the installed package — reports, never writes silently. It prints its report before changing anything, and changes DesignerPunk's MCP configuration and generated agent files only on your go.
 - **`npx designerpunk generate`** comes after you change your own tokens.
 
-**The asymmetry is intended.** After an update, a component may look different while your colours do not, because the components are ours to improve and the tokens are yours to change. If an updated component needs a token your set does not have, `sync` tells you (section 5).
+**The asymmetry is intended.** After an update, a component may look different while your colours do not, because the components are ours to improve and the tokens are yours to change. The exception above still applies: the dark and WCAG override values come from the installed package, so the next `generate` after an update can change them. If an updated component needs a token your set does not have, `sync` tells you (section 5).
 
 Commit your lockfile, so that a teammate installs the version you built against.
 
@@ -143,15 +145,15 @@ import { BlendCalculator } from '@3fn/core/blend';
 
 **Themes, for now:**
 - **Dark mode** follows the user's preferred colour scheme, through CSS `light-dark()`. Set `color-scheme` on an element to force light or dark.
-- **One theme block is baked in**: `data-theme="wcag"`. It ships in DesignerPunk's base CSS and is generated into yours.
+- **One theme block is baked in**: `data-theme="wcag"`. It ships in DesignerPunk's base CSS and is generated into yours. Its selector is `:root[data-theme="wcag"]`, so set the attribute on the `<html>` element; on any other element it matches nothing.
   ```html
-  <div data-theme="wcag">
-    <!-- DesignerPunk components inside use the WCAG theme's values -->
-  </div>
+  <html data-theme="wcag">
+    <!-- DesignerPunk components on the page use the WCAG theme's values -->
+  </html>
   ```
 - **A theme you register in `designerpunk.config.ts` does not yet produce a `[data-theme="<name>"]` block in any generated CSS.** A custom `data-theme` value resolves against nothing yet.
 
-The full import list is in § Available Imports, below.
+The full import list is under Available Imports, in the reference part of the Integration Guide (`governance/DesignerPunk-Integration-Guide.md`).
 
 ### iOS
 
@@ -159,7 +161,9 @@ The full import list is in § Available Imports, below.
 
 What the package ships for iOS, and why it does not add up to a target yet:
 - `node_modules/@3fn/core/dist/DesignTokens.ios.swift` is DesignerPunk's **un-themed base snapshot**, generated from DesignerPunk's own configuration, not yours.
-- `node_modules/@3fn/core/dist/ComponentTokens.ios.swift` is DesignerPunk's **component token tier**. The shipped components require it.
+- `DesignTokens.ios.swift` also calls a `Color.oklch(...)` initializer (and a bare `oklch(...)`) that no shipped file defines and the package does not declare as a dependency. DesignerPunk's generator names ChromaKit for it.
+- Product tokens that reference a theme-varying token are emitted into `ProductTokens.ios.swift` as an extension on `<YourName>Theme`; nothing defines or generates that type.
+- `node_modules/@3fn/core/dist/ComponentTokens.ios.swift` is DesignerPunk's **component token tier**. Some of the shipped components read it (`ButtonIcon.ios.swift`, for one), and it refers to `SizingTokens`, `SpacingTokens` and `BorderWidthTokens`, which no shipped file defines.
 - Native token output omits the **14 theme-varying semantic colours**, among them `colorActionPrimary` and `colorStructureCanvas`.
 - Nine of the shipped components also spell the theme read as `@Environment(.dpTheme)`, without the key-path backslash.
 
@@ -171,10 +175,11 @@ Android: reference source, not a build input. The Compose components under `src/
 
 What the package ships for Android, and why it does not add up to a target yet:
 - `node_modules/@3fn/core/dist/DesignTokens.android.kt` is DesignerPunk's **un-themed base snapshot**, generated from DesignerPunk's own configuration, not yours.
-- `node_modules/@3fn/core/dist/ComponentTokens.android.kt` is DesignerPunk's **component token tier**. The shipped components require it.
-- Native token output omits the same **14 theme-varying semantic colours**.
+- `node_modules/@3fn/core/dist/ComponentTokens.android.kt` is DesignerPunk's **component token tier**. Three of the shipped components (Avatar, Badge-Label-Base and Button-Icon) read it.
+- Native token output omits the same **14 theme-varying semantic colours**, among them `color_action_primary` and `color_structure_canvas`. Only `_wcag` variants of some of them are emitted.
+- Product tokens that reference a theme-varying token are emitted as a read of `Local<your abbreviation>Theme`, which nothing defines.
 
-Platform requirements, for reference: the Compose BOM must be compatible with the component implementations. Android onboarding is a planned follow-up (Spec 129).
+Platform requirements, for reference: the generated Kotlin calls `Oklch(…).toComposeColor()`, which needs the colormath library (github.com/ajalt/colormath), and the file imports nothing, so you add the dependency and the imports yourself. The Compose BOM must be compatible with the component implementations. Android onboarding is a planned follow-up (Spec 129).
 
 ## 5. When sync reports a missing token
 
@@ -242,69 +247,45 @@ What this doc promises is bounded by what DesignerPunk can support at solo scale
 
 ## 9. Ownership
 
-**To own one component**, put your version in your repo's `src/components/` under the component's name. Yours wins on its name, and every other component continues to come from the package.
+**To own one component**, put your version in your repo's `src/components/`, declaring the component's name (the `component:` field of its `contracts.yaml`). Yours wins on its name, and every other component continues to come from the package.
 
 **To own the engine too**, clone `github.com/3fn/DesignerPunk`. `init` already made the token language yours; the clone adds the engine and the components.
 
----
+<!-- designerpunk:install-region:end -->
 
-## Setup Loop
+## Reference
 
-### 1. Install
+This part of the guide is reference, not setup steps. The install steps are the region above (and its copy, `docs/consumer/INSTALL.md`).
 
-GitHub Packages requires authentication. Create a `.npmrc` in your project root:
+### Configuring your design system
 
-```
-@designerpunk:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
-```
-
-Set `GITHUB_TOKEN` as an environment variable with a personal access token that has `read:packages` scope. Then install:
-
-```bash
-npm install @3fn/core
-```
-
-### 2. Configure
-
-Create `designerpunk.config.ts` at your project root:
+`init` writes `designerpunk.config.ts` at your project root. For `--name MyProduct --abbreviation MP` it reads:
 
 ```typescript
 import { defineConfig } from '@3fn/core/config';
-
-export default defineConfig({
-  name: 'MyProduct',        // → generated type names (MyProductTheme)
-  abbreviation: 'MP',       // → environment keys (MPThemeKey)
-  output: './dist/tokens'   // → where generated token files land
-});
-```
-
-For custom theming, add a theme:
-
-```typescript
-import { defineConfig } from '@3fn/core/config';
-import { myOverrides } from './themes/my-theme/SemanticOverrides';
+import { darkSemanticOverrides } from './src/tokens/themes/dark/SemanticOverrides.ts';
+import { wcagSemanticOverrides } from './src/tokens/themes/wcag/SemanticOverrides.ts';
 
 export default defineConfig({
   name: 'MyProduct',
   abbreviation: 'MP',
-  // Token attribute: defaults to "data-theme".
-  // If your product uses "data-theme" for another purpose,
-  // this can be made configurable in a future version.
+  tokenSource: './src/tokens',
+  componentTokens: ['./src/components', './src/tokens/component'],
   themes: [
-    { name: 'my-theme', mode: 'dark', overrides: myOverrides }
+    { name: 'dark', mode: 'dark', overrides: darkSemanticOverrides },
+    { name: 'wcag', mode: 'light', overrides: wcagSemanticOverrides },
   ],
-  tokenSource: './src/tokens',        // local token source (omit to use package defaults)
-  componentTokens: ['./components'],  // product component tokens (if any)
-  output: './dist/tokens'
+  output: './dist/tokens',
 });
 ```
 
-If no config file exists, the pipeline uses defaults.
+The one other option is `productTokens`, a directory of product token YAML (see "Product Tokens"). `componentTokens` directories are scanned for `tokens.ts` and `*.tokens.ts` files. Paths resolve relative to the config file's directory. The `themes` entries are not applied by `generate` yet (see "Themes").
+
+Without a config file, the pipeline uses defaults: name `DesignerPunk`, abbreviation `DP`, the installed package's own tokens, no themes, output `dist`.
 
 #### Token Source Configuration
 
-By default, the pipeline reads token definitions from the installed `@3fn/core` package. If your product maintains local token source (for customization or contribution back to core), set `tokenSource`:
+Without `tokenSource`, the pipeline reads the installed `@3fn/core` package's tokens. That is the CONSUME posture. `init` copies the token source into `src/tokens/` and sets `tokenSource: './src/tokens'`, so in a born repo your tokens are read from your own repo:
 
 ```typescript
 export default defineConfig({
@@ -319,49 +300,16 @@ export default defineConfig({
 - Path is resolved relative to the config file's directory
 - Must be a **complete** token source — no fallback to the package for missing families
 - Must export `getAllPrimitiveTokens()` from the root barrel and `getAllSemanticTokens()` from a `semantic/` subdirectory
-- Theme overrides are independent of `tokenSource` — they always resolve from the config's `themes` array
+- Dark and WCAG overrides are not read from `tokenSource` or from `themes`: `generate` applies DesignerPunk's own override maps from the installed package (section 4). Every semantic token those maps name must exist in your token source. If one is missing, `generate` reports an "Orphaned override key" and writes no token files.
 - `npx designerpunk init` copies a complete token source to `src/tokens/` automatically
 
-**When to use `tokenSource`:**
-- You're iterating on token values locally before contributing back to core
-- You need product-specific primitive token customizations
-- You want `npx designerpunk validate` to check your local edits
+#### Themes
 
-**When NOT to use `tokenSource`:**
-- You only consume published tokens without modification (use the package default)
-- You only need theme overrides (use the `themes` config instead)
+`designerpunk.config.ts` accepts a `themes` list of `{ name, mode, overrides }`, with `mode` one of `'light'`, `'dark'` or `'both'`. `generate` does not apply it yet. A theme you register produces no `[data-theme]` block and no native theme output. Its overrides are not validated either, so a misspelled token name passes silently. The `dark` and `wcag` entries that `init` writes do not drive output either: `generate` applies DesignerPunk's built-in dark and WCAG overrides regardless. Light and dark mode work, and the `wcag` theme is built in. Custom-theme output is delivered by Spec 129 (consumer-generation completeness).
 
-#### Creating a Theme
+### Starting the MCP servers by hand
 
-A theme is a `SemanticOverrideMap` — a record of semantic token names mapped to replacement primitive references. Create a file in your product repo:
-
-```typescript
-// themes/marketing/SemanticOverrides.ts
-import type { SemanticOverrideMap } from '@3fn/core/config';
-
-export const marketingOverrides: SemanticOverrideMap = {
-  // Swap action color from default cyan to teal
-  'color.action.primary': { primitiveReferences: { value: 'teal400' } },
-  'color.action.navigation': { primitiveReferences: { value: 'teal500' } },
-
-  // Adjust surface for darker feel
-  'color.structure.surface': { primitiveReferences: { value: 'black200' } },
-};
-```
-
-**How to find which tokens to override:**
-1. Query available semantic tokens: `search_tokens({ tier: "semantic", family: "color" })`
-2. Get details on a specific token: `get_token_details({ name: "color.action.primary" })`
-3. Browse primitive options: `get_token_family({ family: "color" })`
-
-Each override replaces the `primitiveReferences` entirely — no partial merge. Only override tokens you want to change; everything else inherits from the base theme.
-
-**Theme modes:**
-- `mode: 'dark'` — dark-only theme (sets `color-scheme: dark` on web, dark theme struct on iOS/Android)
-- `mode: 'light'` — light-only theme
-- `mode: 'both'` — generates both light and dark contexts (not yet supported in M0a)
-
-### 3. Start MCP Servers
+Your agent tool starts DesignerPunk's MCP servers itself, from the MCP configuration that `init` or `attach` writes. You do not need to start them. To start one by hand, for example to read its log:
 
 ```bash
 npx designerpunk mcp:app      # Application MCP — component + token queries
@@ -369,88 +317,27 @@ npx designerpunk mcp:docs     # Docs MCP — steering doc queries
 npx designerpunk mcp:product  # Product MCP — screen specs, domain objects, product architecture
 ```
 
-All commands resolve data paths from the installed package automatically. No configuration needed for the default case. The Product MCP starts with empty data if no `product/` directory exists yet — that's expected for a new project. Create the directory when you're ready to write screen specs (see "Product MCP Setup" below).
+Each command runs its server on stdio and writes its log to stderr. Run it from inside your project: the Application and Product servers find your design system from the directory they start in, while the data that ships with the package (docs, experience patterns, layout templates, family guidance) is read from the package. The Product MCP starts with empty data if no `product/` directory exists yet; that is expected for a new project (see "Specifying screens (Product MCP)" below).
 
 **Data freshness is automatic.** MCP servers detect stale data and rebuild before responding (30-second threshold gate). If you edit product YAML, component schemas, or steering docs, the next query will serve fresh data automatically. No manual health checks or `rebuild_index` calls needed during normal operation.
 
-On startup, each server prints its connection details:
-```
-DesignerPunk Application MCP started
-  Protocol: stdio
-  Data: [resolved path to component data]
-  Ready for connections
-```
+### Configure Agent Connections
 
-### 4. Configure Agent Connections
+Your agent tool needs two things to connect to DesignerPunk: an MCP configuration that tells it how to start the servers, and agent prompts that tell each agent its role. `init` writes both for the target you name, and `attach` writes them for another target or for a repo `init` did not create. Do not write the MCP configuration by hand: its approvals are generated from the servers' own tool registrations, and a hand-copied list drifts from them.
 
-Your Kiro agents need two things to connect to the MCP servers: a configuration file telling them how to reach the servers, and agent prompt files telling them what their role is.
+#### The files `init` and `attach` write
 
-#### 4a. Configure MCP server connections
+- **Claude Code** (`cc`): `.mcp.json` (the servers) and `.claude/settings.json` (the approved read-only tools, under `permissions.allow`).
+- **Kiro** (`kiro`): `.kiro/settings/mcp.json` (the servers, each with its approved read-only tools).
 
-Create `.kiro/settings/mcp.json` at your project root (Kiro reads this file on agent session startup to discover MCP servers):
+Both configure all three servers (docs, application, product). With `--reference`, only the docs and application servers are written, and no agents.
 
-```json
-{
-  "mcpServers": {
-    "designerpunk-docs": {
-      "command": "node",
-      "args": [
-        "./node_modules/@3fn/core/dist/mcp/docs-mcp.js"
-      ],
-      "env": {
-        "MCP_STEERING_DIR": "./node_modules/@3fn/core/governance"
-      },
-      "disabled": false,
-      "autoApprove": [
-        "find_docs",
-        "get_document_summary",
-        "get_document_full",
-        "get_section",
-        "list_cross_references",
-        "validate_metadata",
-        "get_index_health",
-        "rebuild_index"
-      ]
-    },
-    "designerpunk-application": {
-      "command": "node",
-      "args": [
-        "./node_modules/@3fn/core/dist/mcp/application-mcp.js"
-      ],
-      "env": {
-        "COMPONENTS_DIR": "./src/components",
-        "PATTERNS_DIR": "./node_modules/@3fn/core/experience-patterns",
-        "TEMPLATES_DIR": "./node_modules/@3fn/core/layout-templates",
-        "GUIDANCE_DIR": "./node_modules/@3fn/core/family-guidance",
-        "REGISTRY_PATH": "./node_modules/@3fn/core/family-registry.yaml",
-        "TOKEN_INDEX_DIR": "./token-index"
-      },
-      "disabled": false,
-      "autoApprove": [
-        "get_component_catalog",
-        "get_component_summary",
-        "get_component_full",
-        "find_components",
-        "validate_component",
-        "get_component_health"
-      ]
-    }
-  }
-}
-```
-
-**This configuration uses direct-node invocation** — Kiro spawns the MCP server binaries directly from `node_modules/@3fn/core/dist/mcp/`, rather than going through the `npx designerpunk mcp:*` CLI wrappers. The direct path is more reliable for MCP protocol handshake over stdio.
-
-**After saving `.kiro/settings/mcp.json`, restart your Kiro agent session** — agent sessions read the MCP config on startup; existing sessions won't pick up new servers or env var changes until restarted. A `rebuild_index` alone is NOT sufficient if you've changed directory paths — the server process must be restarted to read the new environment.
-
-Once the agent session reconnects, it should show `designerpunk-docs` and `designerpunk-application` as connected MCP servers. If either reports connection failure, verify:
-- `node_modules/@3fn/core/dist/mcp/` contains the bundled server files (they should ship with the package)
+After the files are written, restart your agent session so it picks them up (section 3 says why). If a session shows a server as not connected, verify:
+- `node_modules/@3fn/core/dist/mcp/` contains the bundled server files (they ship with the package)
 - Your `@3fn/core` install completed without errors
-- Paths in `mcp.json` resolve from your project root
+- Paths in the MCP config resolve from your project root
 
-> **Template source**: this configuration is the canonical template shipped with `@3fn/core` at `src/cli/templates/mcp-config.json.template`. If you've run `npx designerpunk init`, the file was scaffolded automatically using this template. If you're configuring manually (or init skipped the file because it already existed), copy the JSON above.
-
-#### 4b. Set up agent prompts
+#### Set up agent prompts
 
 The agent prompts are generated for your harness, not copied by hand. `npx designerpunk init` emits them for the default target. To add another target, or to wire a repo that `init` did not create, run:
 
@@ -466,14 +353,14 @@ npx designerpunk attach --target=<cc|kiro> --reference
 
 After `attach` finishes, restart your agent session so it picks up the MCP servers.
 
-### 5. Verify — Explore the Component Catalog
+### Verify — Explore the Component Catalog
 
-With MCP servers running, verify the ecosystem is working by querying the component catalog:
+Once your agent session is connected, verify DesignerPunk is working by querying the component catalog:
 
 ```
 get_component_catalog()
 ```
-→ Should return all 34 production components with names, types, families, and readiness.
+→ Should return DesignerPunk's components, plus any you have added in your own `src/components/`, with names, types, families, and readiness.
 
 ```
 find_components({ context: "forms" })
@@ -483,7 +370,7 @@ find_components({ context: "forms" })
 ```
 list_experience_patterns()
 ```
-→ Should return all 9 experience patterns (simple-form, settings, onboarding, etc.)
+→ Should return the experience patterns that ship with DesignerPunk (simple-form, settings, onboarding, and others).
 
 ```
 get_experience_pattern({ name: "simple-form" })
@@ -492,19 +379,20 @@ get_experience_pattern({ name: "simple-form" })
 
 If these queries return results, the ecosystem is working.
 
-### 6. Generate Tokens
+### Generating tokens — options
 
 ```bash
 npx designerpunk generate
 ```
 
-The pipeline shows where tokens are being read from:
+The pipeline shows where tokens are being read from. With the config `init` writes:
 ```
 📦 MyProduct (MP)
-   Tokens: ./src/tokens  (local)
-   Output: ./dist/tokens
-   Themes: my-theme (dark)
+   Tokens: src/tokens  (local)
+   Output: dist/tokens
+   Themes: dark (dark), wcag (light)
 ```
+The `Themes:` line lists what your config registers, not what was applied (see "Themes").
 
 The `(local)` annotation means tokens resolve from your configured `tokenSource` path. If `tokenSource` is omitted, you'll see `(package)` — meaning tokens come from the installed `@3fn/core` package.
 
@@ -512,14 +400,14 @@ The `(local)` annotation means tokens resolve from your configured `tokenSource`
 
 | Flag | Effect |
 |------|--------|
-| `--force` | Skip staleness detection, always regenerate product tokens |
-| `--product-only` | Skip system token pipeline, regenerate product tokens only (uses existing `token-index/`) |
+| `--force` | Regenerate product tokens even if their YAML is unchanged. System tokens are always regenerated. |
+| `--product-only` | Skip the system token pipeline and regenerate product tokens only, from the existing `token-index/`. Run it from your project root. |
 
 ```bash
 # Fast iteration on product tokens only
 npx designerpunk generate --product-only
 
-# Force full regeneration
+# Regenerate product tokens even if their YAML is unchanged
 npx designerpunk generate --force
 ```
 
@@ -532,94 +420,13 @@ npx designerpunk validate
 
 This checks semantic reference integrity, required fields, mathematical relationships, and family membership. Run it after editing token source files to catch errors before generation.
 
-Produces platform token files in your configured output directory:
-- `DesignTokens.web.css` — CSS custom properties
-- `DesignTokens.ios.swift` — Swift constants (no theme surface yet; see "iOS and Android" under step 7)
-- `DesignTokens.android.kt` — Kotlin constants (no theme surface yet; see "iOS and Android" under step 7)
-- `ComponentTokens.web.css` / `.ios.swift` / `.android.kt` — component tokens
-- `DesignTokens.dtcg.json` — DTCG standard format
-- `DesignTokens.figma.json` — Figma Variables format
-- `token-index/` — structured YAML index (primitives, semantics, components) loaded by the Application MCP for token queries
+`generate` writes the files listed in section 4, and `token-index/` at your project root.
 
-**In 15.0.0, a custom theme you register does not yet change this output.**
-- Web: no `[data-theme="<name>"]` block is generated.
-- iOS/Android: no theme structs or instances are generated.
+### Running Component Tests
 
-The web output carries DesignerPunk's base light/dark values and the baked `data-theme="wcag"` block. Theme emission is delivered by the consumer-generation completeness spec (`.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md`).
+You can test your own components with the Jest preset that ships with `@3fn/core`. You extend the preset with one line and install 5 devDependencies.
 
-### Platform Dependencies for OKLCH Color Output
-
-The color system uses OKLCH format. Platform-specific dependencies are needed for native color rendering:
-
-| Platform | Dependency | Purpose | Install |
-|----------|-----------|---------|---------|
-| **Web** | None | CSS `oklch()` is native (Chrome 111+, Safari 15.4+, Firefox 113+) | — |
-| **iOS** | [ChromaKit](https://github.com/HarshilShah/ChromaKit) | `Color.oklch(L, C, H)` API | Swift Package Manager |
-| **Android** | [colormath](https://github.com/ajalt/colormath) | `Oklch(L, C, H).toComposeColor()` | Gradle dependency |
-
-`npx designerpunk init` scaffolds these dependencies in platform-specific config files. If upgrading from a pre-OKLCH version, `npx designerpunk sync` will flag the new dependency requirements.
-
-### 7. Build Your Product
-
-#### Web
-
-```typescript
-// Import all web components
-import '@3fn/core';
-// or: import '@3fn/core/components';
-
-// Import design tokens: DesignerPunk's base (see "What these two imports are" below)
-import '@3fn/core/tokens.css';
-import '@3fn/core/component-tokens.css';
-
-// Optional: responsive grid, fonts, blend utilities
-import '@3fn/core/grid.css';
-import '@3fn/core/fonts/figtree.css';
-import '@3fn/core/fonts/commit-mono.css';
-import '@3fn/core/fonts/rajdhani.css';
-import { BlendCalculator } from '@3fn/core/blend';
-```
-
-**What these two imports are.**
-- `@3fn/core/tokens.css` is **DesignerPunk's own base**. It is generated from DesignerPunk's configuration, not yours, and it is the **zero-config evaluation path**: the components render against it with nothing built.
-- `@3fn/core/component-tokens.css` is DesignerPunk's **component token tier**. Keep importing it on every path.
-
-**Your own tokens.** After you run `npx designerpunk generate`, import your own `DesignTokens.web.css` from your configured `output` directory **in place of** `@3fn/core/tokens.css`. That file carries your token tier's values. Keep `@3fn/core/component-tokens.css`.
-
-**Themes, in this version:**
-- **Dark mode** follows the user's preferred colour scheme, through CSS `light-dark()`. Set `color-scheme` on an element to force light or dark.
-- **One theme block is baked in**: `data-theme="wcag"`. It ships in DesignerPunk's base CSS and is generated into yours.
-  ```html
-  <div data-theme="wcag">
-    <!-- DesignerPunk components inside use the WCAG theme's values -->
-  </div>
-  ```
-- **A theme you register in `designerpunk.config.ts` does not yet produce a `[data-theme="<name>"]` block in any generated CSS.** A custom `data-theme` value resolves against nothing in 15.0.0. Theme emission is delivered by the consumer-generation completeness spec (`.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md`).
-
-#### iOS and Android (not supported for onboarding in 15.0.0)
-
-**Native onboarding is not supported in 15.0.0.** The package ships DesignerPunk's native component sources and token files, but in this version they do not form a target that compiles in your app:
-
-- `node_modules/@3fn/core/dist/DesignTokens.ios.swift` and `node_modules/@3fn/core/dist/DesignTokens.android.kt` are DesignerPunk's **un-themed base snapshot**. They are generated from DesignerPunk's own configuration, not yours.
-- `node_modules/@3fn/core/dist/ComponentTokens.ios.swift` and `node_modules/@3fn/core/dist/ComponentTokens.android.kt` are DesignerPunk's **component token tier**. The shipped components require them.
-- The shipped iOS and Android components (`node_modules/@3fn/core/src/components/core/*/platforms/ios/` and `.../platforms/android/`) also read a **theme surface**: `@Environment(\.dpTheme)` on iOS and `LocalDPTheme.current` on Android. **Neither the base files nor your own `npx designerpunk generate` emits that theme surface in this version.**
-- Native token output omits the **14 theme-varying semantic colours**, among them `colorActionPrimary` and `colorStructureCanvas`. Four of them were present in 14.1.0's base files and are absent from 15.0.0's:
-  - Swift: `colorFeedbackSuccessText`, `colorTextDefault`, `colorTextMuted`, `colorTextSubtle`;
-  - Kotlin: `color_feedback_success_text`, `color_text_default`, `color_text_muted`, `color_text_subtle`.
-
-Copying these files into an Xcode project or an Android module therefore does not yield a compiling target.
-
-Native onboarding is delivered by the consumer-generation completeness spec (`.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md`). It covers three things: the theme surface, DesignerPunk's component tier harvested by your own `generate`, and per-platform output paths.
-
-Platform requirements, for reference: **iOS 17.0+** (SwiftUI, UIKit). On Android, the Compose BOM must be compatible with the component implementations.
-
----
-
-## Running Component Tests
-
-Product repos can run the same component tests that ship with `@3fn/core`. The package provides a Jest preset and shared test utilities — you extend the preset with one line and install 4 devDependencies.
-
-### Setup
+#### Setup
 
 Install test dependencies:
 
@@ -642,8 +449,8 @@ module.exports = {
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "commonjs",
-    "moduleResolution": "bundler",
+    "module": "node16",
+    "moduleResolution": "node16",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -655,7 +462,7 @@ module.exports = {
 }
 ```
 
-### Running Tests
+#### Running Tests
 
 ```bash
 npx jest                          # Run all tests
@@ -663,96 +470,25 @@ npx jest src/components/          # Run your own component tests, once you've ad
 npx jest --testPathPattern=Button # Run tests matching "Button"
 ```
 
-### Shared Test Utilities
+#### Shared Test Utilities
 
-Import from `@3fn/core/testing`:
+`@3fn/core/testing` exports test helpers (`registerComponent`, `createComponentFixture`, `cleanupDOM`, `waitForShadowDOM`, `setupTokenProperties`, `cleanupTokenProperties`, `setupBlendColorProperties`, `cleanupBlendColorProperties`, `readComponentCSS`). **In this version they do not work under the preset in an installed package**: the preset maps `@3fn/core/testing`, `@3fn/core/config`, `@3fn/core/blend` and `@3fn/core/types` to source files the package does not ship. `@3fn/core/build` is not affected.
 
-```typescript
-import {
-  registerComponent,
-  createComponentFixture,
-  cleanupDOM,
-  waitForShadowDOM,
-  setupTokenProperties,
-  cleanupTokenProperties,
-} from '@3fn/core/testing';
-```
-
-**Minimal working test example:**
-
-```typescript
-/** @jest-environment jsdom */
-import { registerComponent, createComponentFixture, cleanupDOM, waitForShadowDOM } from '@3fn/core/testing';
-import { ButtonCTA } from '../platforms/web/ButtonCTA.web';
-
-registerComponent('button-cta', ButtonCTA);
-
-describe('Button-CTA', () => {
-  afterEach(() => cleanupDOM());
-
-  it('renders with label', async () => {
-    const { element, cleanup } = createComponentFixture('button-cta', { label: 'Click me' });
-    await waitForShadowDOM(element);
-
-    const button = element.shadowRoot!.querySelector('button');
-    expect(button).not.toBeNull();
-    expect(button!.textContent).toContain('Click me');
-
-    cleanup();
-  });
-});
-```
-
-### Stemma Validators
-
-For `.stemma.test.ts` pattern tests (naming, token usage, accessibility validation):
-
-```typescript
-import { validateComponentName, validateTokenUsage } from '@3fn/core/testing';
-```
-
-These run static analysis against component schemas and source — no DOM required.
-
-### Notes
+#### Notes
 
 - The preset defaults to `jsdom` environment. All web component tests run in jsdom automatically.
 - `jest-environment-jsdom` is required — without it, DOM APIs are unavailable.
 - `@types/node` is required for contract tests that read CSS source from disk (the style-mock returns `''` for CSS imports, so filesystem reads are needed to verify CSS content).
-- If tests fail after updating `@3fn/core`, re-run `npx designerpunk init` to refresh component source. Stale source (from an older init) may cause test failures.
 
 ---
 
-## Native Platform Sync — Target Model (M0b)
-
-For M0b, the manual copy process will be replaced by CLI commands:
-
-```bash
-npx designerpunk sync:ios      # Copy all iOS files to configured Xcode project path
-npx designerpunk sync:android  # Copy all Android files to configured Gradle module path
-```
-
-Configured via `designerpunk.config.ts`:
-```typescript
-export default defineConfig({
-  // ...
-  platforms: {
-    ios: './MyProduct/DesignerPunk/',
-    android: './app/src/main/java/com/myproduct/designerpunk/'
-  }
-});
-```
-
-Runs automatically as part of `npx designerpunk generate` when platform paths are configured.
-
----
-
-## Available Imports
+### Available Imports
 
 | Import Path | What You Get |
 |-------------|-------------|
-| `@3fn/core` | All 34 web components (ESM bundle) |
+| `@3fn/core` | All web components (ESM bundle) |
 | `@3fn/core/components` | Same (alias) |
-| `@3fn/core/tokens.css` | DesignerPunk's base design tokens as CSS custom properties: the zero-config evaluation path. After `generate`, use your own `DesignTokens.web.css` instead (see step 7, Build Your Product) |
+| `@3fn/core/tokens.css` | DesignerPunk's base design tokens as CSS custom properties: the zero-config evaluation path. After `generate`, use your own `DesignTokens.web.css` instead (see Platforms › Web, in the install region) |
 | `@3fn/core/component-tokens.css` | DesignerPunk's component-level tokens as CSS custom properties (required on every path) |
 | `@3fn/core/config` | `defineConfig` function with TypeScript types |
 | `@3fn/core/blend` | Blend calculation utilities |
@@ -760,37 +496,29 @@ Runs automatically as part of `npx designerpunk generate` when platform paths ar
 | `@3fn/core/fonts/figtree.css` | Figtree font family (body/UI) |
 | `@3fn/core/fonts/commit-mono.css` | Commit Mono font family (code/mono) |
 | `@3fn/core/fonts/rajdhani.css` | Rajdhani font family (display) |
+| `@3fn/core/types` | Token type definitions. The token source `init` copied into your repo imports them. |
+| `@3fn/core/build` | `defineComponentTokens` and the component-token build types. Your component token files import it. |
+| `@3fn/core/jest-preset` | Jest preset for testing your own web components (see Running Component Tests) |
+| `@3fn/core/testing` | Test helpers for web components (see Running Component Tests, which says what does not work in this version) |
 
 ---
 
-## Product MCP Setup
+### Specifying screens (Product MCP)
 
-### Starting the Product MCP
+#### Starting the Product MCP
 
-```bash
-npx designerpunk mcp:product
-```
+Your agent tool starts the Product MCP from the MCP configuration that `init` writes (or `attach` without `--reference`); you do not start it yourself. `attach --reference` never configures it. `npx designerpunk mcp:product` also starts it by hand.
 
 Resolves product data from:
-1. `PRODUCT_DIR` env var (if set)
-2. `designerpunk.config.ts` product data path (if configured)
-3. `./product/` relative to cwd (default)
+1. `PRODUCT_DIR` env var (if set) — the generated configuration sets it to `./product`
+2. `product/` at your design system's root
+3. `./product/` relative to cwd (a repo with no design system)
 
-Starts with empty data if no product directory exists (warning, not error).
+Starts with an empty index if no product directory exists.
 
-**Component gap detection** reads `component-meta.yaml` files to validate component references in screen specs. Configure the component source directory:
-- `COMPONENT_DIR` env var (if set)
-- Default: `src/components` (your own component directory, once you've added components)
+**Component gap detection** reads `component-meta.yaml` files to check the component references in your screen specs. It checks against DesignerPunk's own components (their metadata ships in the package) together with your own components in `src/components/` (or `COMPONENT_DIR`, if set). No configuration is needed.
 
-**In a product repo** (where DesignerPunk is installed as a package), set `COMPONENT_DIR` to point into the installed package's own components instead — useful for validating screen-spec references against DesignerPunk's own component set rather than your own:
-```bash
-COMPONENT_DIR=./node_modules/@3fn/core/src/components/core npx designerpunk mcp:product
-```
-Or add it to your MCP server configuration so it's set automatically on startup.
-
-If `COMPONENT_DIR` is missing or empty, gap detection is disabled (all components pass). No crash.
-
-### Product Data Directory
+#### Product Data Directory
 
 ```
 product/
@@ -823,7 +551,7 @@ product/
     motion.yaml              # Motion characteristics (flipDuration, etc.)
 ```
 
-### Product Tokens
+#### Product Tokens
 
 Product tokens are product-level values that don't belong in Rosetta (system tokens) or Stemma (component tokens). Define them in `product/tokens/{category}.yaml`:
 
@@ -854,10 +582,12 @@ export default defineConfig({
 });
 ```
 
-**Generation** — `npx designerpunk generate` produces:
-- `dist/product/ProductTokens.web.css` (CSS custom properties)
-- `dist/product/ProductTokens.ios.swift` (Swift constants)
-- `dist/product/ProductTokens.android.kt` (Kotlin objects)
+**Generation** — `npx designerpunk generate` produces, in a `product/` folder inside your configured `output` directory:
+- `ProductTokens.web.css` (CSS custom properties)
+- `ProductTokens.ios.swift` (Swift constants)
+- `ProductTokens.android.kt` (Kotlin objects)
+
+The Swift and Kotlin files are reference output, not a build input, while native onboarding is unsupported (§ Platforms): they reference your native `DesignTokens` output and, for a theme-varying `ref`, a theme type `generate` does not emit.
 
 **Validation** — `npx designerpunk validate --product-tokens` checks ref integrity.
 
@@ -865,7 +595,7 @@ export default defineConfig({
 
 **Governance** — see `Product-Token-Governance.md` for naming conventions, rationale requirements, and promotion signals.
 
-### Writing Screen Specs
+#### Writing Screen Specs
 
 Each screen is a YAML file with platform branching:
 
@@ -890,7 +620,7 @@ ui-tree:
         text: color.contrast.onLight
     - component: Container-Base
       tokens:
-        padding: space.inset.normal
+        padding: space.inset.200
       children:
         - component: stats-bar    # One-off
         - component: activity-feed # One-off
@@ -912,13 +642,13 @@ Use canonical Rosetta token names as-is (dot-notation for semantic tokens like `
 
 **`_componentGaps`**: When you query a screen spec via `get_screen_spec`, the response includes a `_componentGaps` array listing any component references that don't match the ecosystem catalog (`component-meta.yaml`) or product one-off components. Each gap includes the component name, issue type (`not-found`), and UI tree path. This catches typos, outdated names, and references to components that haven't been built yet.
 
-### UI Tree Convention (Draft)
+#### UI Tree Convention (Draft)
 
 **Status**: Draft — to be revised after 3-5 real screen specs have been authored.
 
 This convention defines the expected structure of `ui-tree` in screen spec YAML files. It's what the Product MCP indexer relies on for component extraction, token extraction, and gap detection. It's a convention, not a schema — the indexer handles deviations gracefully (log warnings, index what it can), never rejects specs.
 
-#### Node Structure
+##### Node Structure
 
 ```yaml
 - component: ComponentName        # Required. System component or product one-off name.
@@ -927,7 +657,7 @@ This convention defines the expected structure of `ui-tree` in screen spec YAML 
     label: "Section Title"
   tokens:                         # Optional. Design token references. Indexed.
     background: color.structure.surface
-    padding: space.inset.normal
+    padding: space.inset.200
   children:                       # Optional. Array of child nodes. Traversed recursively.
     - component: ChildComponent
       props: { ... }
@@ -947,23 +677,23 @@ This convention defines the expected structure of `ui-tree` in screen spec YAML 
 
 **What the indexer ignores**: `props` values are never treated as token references. Unknown nesting keys (anything other than `children`) are not traversed.
 
-#### Platform Branching in UI Trees
+##### Platform Branching in UI Trees
 
 ```yaml
 ui-tree:
   shared:                         # Always traversed
     - component: Nav-Header-App
-  ios:                            # Traversed only when platform=ios requested
+  ios:                            # Node array → traversed for reverse indexes
     - component: Button-CTA       # Node array → traversed
   web:
     navigation: client-side route  # Metadata object → NOT traversed
 ```
 
 - `shared` is always traversed for reverse indexes.
-- Platform branches (`ios`, `android`, `web`) are traversed only when they contain node arrays (at least one object with a `component` field). Metadata objects are stored but not walked.
-- Without a platform filter, reverse indexes reflect the `shared` tree only.
+- A platform branch (`ios`, `android`, `web`) whose value is a node array is also traversed, so its components and tokens appear in `find_screens` results whether or not you filter by platform. A branch whose value is an object (metadata) is stored but not walked.
+- `get_screen_spec({ name, platform })` returns `shared` merged with that platform's branch.
 
-#### Token Reference Format
+##### Token Reference Format
 
 Use canonical Rosetta token names as-is. Dot-notation and flat names are both valid:
 
@@ -976,7 +706,7 @@ tokens:
 
 Token keys (left side) are descriptive labels — not indexed, no enforced vocabulary. Token values (right side) are stored exactly as written — no normalization, no validation against the token registry.
 
-#### What This Convention Does NOT Cover
+##### What This Convention Does NOT Cover
 
 - Accessibility annotations (inline vs separate section — not yet standardized)
 - Conditional rendering beyond `repeat` (`if`/`when` — not yet needed)
@@ -996,7 +726,7 @@ pages/dashboard/
 
 Systems Components are referenced by name — resolve details from the Application MCP. One-off components include their schema and contracts inline from `product/components/`.
 
-### One-off Component Metadata
+#### One-off Component Metadata
 
 One-off components use a Stemma subset — same rigor, less ceremony:
 
@@ -1006,7 +736,7 @@ One-off components use a Stemma subset — same rigor, less ceremony:
 
 **Not required**: family membership, full README, readiness tracking, three-platform review, component-meta.yaml, inheritance declarations.
 
-### Principles with YAML Frontmatter
+#### Principles with YAML Frontmatter
 
 Principle files are markdown with optional YAML frontmatter for keyword-based discovery:
 
@@ -1021,7 +751,7 @@ The marketing site uses a dark theme with cyan/teal electric accent...
 
 The `keywords` array makes principles queryable via `find_principles({ keyword: "dark-theme" })`. Without frontmatter, the principle is still indexed (accessible via `get_product_overview`) but won't appear in keyword searches.
 
-### Product MCP Example Queries
+#### Product MCP Example Queries
 
 ```
 # Impact analysis: which screens use a specific component?
@@ -1057,32 +787,39 @@ list_experience_map({ status: "in-progress", platform: "web" })
 
 ---
 
-## Governance Gradient
+### Governance Gradient
 
 | Tier | Artifacts | Review Depth | Who Governs |
 |------|-----------|-------------|-------------|
-| **Ecosystem** | Tokens, components, patterns, templates that shipped with `@3fn/core` | Full — contracts, metadata, multi-agent review, spec process | Ada (tokens), Lina (components), Thurgood (specs/tests) |
-| **Product extending** | Product-created tokens, one-off components, product templates | Schema compliance, naming conventions, accessibility contracts for new behavior | Ada/Lina consulted, Stacy audits at synthesis |
+| **Design system** | Your tokens (all of them, including what `init` copied), and the components, patterns and templates that ship with `@3fn/core` | Full — contracts, metadata, multi-agent review, spec process | Ada (tokens), Lina (components), Thurgood (specs/tests) |
+| **Product extending** | Product tokens (`product/tokens/`), one-off components, product templates | Schema compliance, naming conventions, accessibility contracts for new behavior | Ada/Lina consulted, Stacy audits at synthesis |
 | **Product internal** | Screen compositions, product-specific layouts, one-off styling | Minimal — does it work? does it use the ecosystem correctly? | Platform agents self-governed, Stacy spot-checks |
 
-**Principle**: Governance weight scales with blast radius. Ecosystem artifacts that affect all products get full review. Product-specific artifacts that affect only this product get lighter review. When in doubt, consult the specialist.
+**Principle**: Governance weight scales with blast radius. Design-system artifacts, which affect every screen, get full review. Product-specific artifacts that affect only this product get lighter review. When in doubt, consult the specialist.
 
 **Promotion path**: When a product artifact proves reusable (a second product needs it, or it fills a gap in the ecosystem taxonomy), it gets promoted through the full spec process. The product version becomes the reference implementation. Full Stemma lifecycle applies at promotion, not at creation.
 
 ---
 
-## CLI Commands
+### CLI Commands
 
 | Command | What It Does |
 |---------|-------------|
-| `npx designerpunk generate` | Run token pipeline with local `designerpunk.config.ts` |
-| `npx designerpunk mcp:app` | Start Application MCP server (component/token queries) |
-| `npx designerpunk mcp:docs` | Start Docs MCP server (steering doc queries) |
-| `npx designerpunk mcp:product` | Start Product MCP server (screen specs, domain objects, product architecture) |
+| `npx designerpunk init` | the birth event — runs once per design system, ever. `--target=<cc\|kiro>` picks the harness. |
+| `npx designerpunk generate` | the pipeline — run on every token change. `--force` regenerates product tokens even if unchanged; `--product-only` skips the system tokens. |
+| `npx designerpunk sync` | reports package updates against the installed package — reports, never writes silently. `--dry-run` reports only; `--apply` applies without the confirmation; `--overwrite <path>` and `--restore <path>` apply one conflict or one deleted file; `--migrate-legacy` removes what an earlier `init` copied and attaches the generated agent layer. |
+| `npx designerpunk validate` | validates token definitions against the active source. `--product-tokens` validates product token references against `token-index/`. |
+| `npx designerpunk attach --target=<cc\|kiro>` | attach a harness (agents + MCP config + approvals), for one target. `--reference` writes only the MCP config and approvals, no agents. |
+| `npx designerpunk mcp:app` | Start the Application MCP server by hand (component and token queries). Your agent tool normally starts it. |
+| `npx designerpunk mcp:docs` | Start the Docs MCP server by hand (steering doc queries). Your agent tool normally starts it. |
+| `npx designerpunk mcp:product` | Start the Product MCP server by hand (screen specs, domain objects, product architecture). Your agent tool normally starts it. |
+| `npx designerpunk figma:push` | Push tokens to Figma (requires Figma Desktop + Console MCP). |
+| `npx designerpunk figma:extract` | Extract design specs from Figma. |
+| `npx designerpunk --help` | Show the command list. |
 
 ---
 
-## Knowledge Base Setup
+### Knowledge Base Setup (Kiro CLI)
 
 For agents using `/knowledge` in Kiro CLI, recommended indexes for a product repo:
 
@@ -1090,15 +827,15 @@ For agents using `/knowledge` in Kiro CLI, recommended indexes for a product rep
 |---------------|------|---------|---------|
 | product-source | `./src` | `**/*.ts`, `**/*.tsx` | Product source code |
 | product-screens | `./specs` or `./screens` | `**/*.md` | Screen specifications |
-| designerpunk-application | `node_modules/@3fn/core/src/components/core` | `**/*.ts`, `**/*.yaml` | Component source and metadata |
+| designerpunk-application | `node_modules/@3fn/core/src/components/core` | `**/*.yaml` | Component schemas, contracts and metadata |
 
 Agents primarily use MCP queries for design system knowledge. Knowledge bases supplement with searchable source access for deep dives.
 
 ---
 
-## MCP Query Reference
+### MCP Query Reference
 
-### Application MCP (component and token queries)
+#### Application MCP (component and token queries)
 
 | Query | Purpose |
 |-------|---------|
@@ -1117,10 +854,14 @@ Agents primarily use MCP queries for design system knowledge. Knowledge bases su
 | `get_token_details({ name })` | Full token: value, family, platforms, formula, theme-varying status, consumers |
 | `get_token_family({ family })` | All tokens in a family with values and relationships |
 | `get_token_consumers({ token })` | Components that reference a token |
+| `get_design_philosophy()` | The design system's creative north star, aesthetic philosophy, and key characteristics |
+| `get_design_rules()` | Named design rules as structured data (name, constraint, rationale) |
+| `get_design_guidance({ category? })` | Design do's and don'ts as categorized directives |
+| `get_color_strategy({ tier? })` | Color strategy vocabulary (Restrained/Committed/Full/Drenched) with usage guidance |
 | `get_component_health()` | Index health status |
 | `rebuild_index()` | Rebuild component + token index |
 
-### Docs MCP (steering doc queries)
+#### Docs MCP (steering doc queries)
 
 | Query | Purpose |
 |-------|---------|
@@ -1130,12 +871,15 @@ Agents primarily use MCP queries for design system knowledge. Knowledge bases su
 | `get_section({ path, heading })` | Specific section by heading |
 | `list_cross_references({ path })` | Cross-references in a document |
 | `get_index_health()` | Index health status |
+| `validate_metadata({ path })` | Check a document's required metadata fields |
+| `rebuild_index()` | Rebuild the documentation index from scratch |
 
-### Product MCP (product architecture queries)
+#### Product MCP (product architecture queries)
 
 | Query | Purpose |
 |-------|---------|
 | `get_product_overview()` | Product context, config, principles |
+| `get_brand_context()` | Product brand identity: personality, voice, tone, anti-references, register |
 | `list_experience_map({ status?, platform?, usesComponent?, usesDomainObject?, usesToken? })` | All verticals, flows, feature pages — enriched with `referencedComponents`, `referencedDomainObjects`, `blockedReasons`. Optional filters (all conjunctive). |
 | `find_screens({ context?, status?, platform?, usesComponent?, usesDomainObject?, usesToken? })` | Discovery and impact analysis. Filters are conjunctive. `context` matches against screen type, name, and tags. Returns enriched screen summaries. |
 | `get_screen_spec({ name, platform? })` | Full screen spec (optional platform filter). Includes `_componentGaps` for any components not found in the ecosystem catalog or product one-offs. |
@@ -1146,75 +890,62 @@ Agents primarily use MCP queries for design system knowledge. Knowledge bases su
 | `find_templates({ category?, usedBy? })` | Find product templates by category or by which screen uses them. Templates include `usedBy` arrays. |
 | `list_product_templates()` | Product-specific layout and content patterns |
 | `get_product_health()` | Index status, data counts, reverse index sizes, gap counts, warnings |
+| `get_product_tokens({ category?, name?, platform?, promotionCandidate? })` | Product tokens, with resolved system token references |
 | `rebuild_product_index()` | Re-index product data and rebuild all reverse indexes |
 
 ---
 
-## Upgrading
+### Upgrading
 
-> **Note (2026-10-02, ballot `2026-10-02-integration-guide-native-scoping`).** This section describes the `sync` flow from **before 15.0.0**: `--accept-all`, `.kiro/sync-manifest.json`, and `sync` updating tokens and components. 15.0.0 retired that flow.
->
-> **For the current upgrade path, use 15.0.0's release notes:**
-> - `sync` prints its report before changing anything, and converts the manifest to `designerpunk.manifest.json`.
-> - `sync --migrate-legacy --target=<cc|kiro>` removes what an earlier `init` copied and attaches the generated agent layer, in the same run.
->
-> Spec 123 Task 19.4 reconciles this section.
-
-After upgrading `@3fn/core` to a new version, run `sync` to detect and apply package changes:
+After upgrading `@3fn/core` to a new version, run `sync`. It prints a report of everything DesignerPunk manages in your repo, compared with the installed package, before it changes anything:
 
 ```bash
-# Preview what changed (no modifications)
+# Report only (no modifications)
 npx designerpunk sync --dry-run
 
-# Interactive sync (governance auto-applies, source confirms, conflicts prompt)
+# On a terminal: the report, then one confirmation
 npx designerpunk sync
 
-# Factory reset — overwrite all files to match package (no prompts)
-npx designerpunk sync --accept-all
+# Off a terminal (for example CI): the report, then apply without a prompt
+npx designerpunk sync --apply
 ```
 
-### How Sync Works
+Coming from 14.x: follow the 15.0.0 release notes. `sync` converts the old `.kiro/sync-manifest.json` to `designerpunk.manifest.json`, and `sync --migrate-legacy --target=<cc|kiro>` removes what an earlier `init` copied and attaches the generated agent layer, in the same run.
 
-1. Compares your project files against the installed `@3fn/core` package using content hashes
-2. Classifies each file: **New**, **Updated** (safe to apply), **Conflict** (you edited it), or **Unchanged**
-3. Applies changes using a two-tier model:
-   - **Governance** (steering docs, agent configs): auto-applied without prompting
-   - **Source** (tokens, components, types): requires your confirmation
-4. Updates `.kiro/sync-manifest.json` (commit this to git — it tracks sync state for your team)
+#### How Sync Works
 
-### Conflict Resolution
+1. Reads `designerpunk.manifest.json` at your repo root: what DesignerPunk wrote into your repo, and at which version.
+2. Generates DesignerPunk's side of what it manages, for each target you have attached (the generated agent files, the managed region in `CLAUDE.md`, and DesignerPunk's own keys in your MCP configuration), and compares it with your files by content hash.
+3. Classifies each item: **new**, **updated** (the package changed and you did not), **conflict** (you edited it), **deleted by you**, **removed from the package**, **never recorded**, or **unchanged**.
+4. Prints the report. Nothing is written until you confirm on a terminal or pass `--apply`.
+5. Updates the manifest. Commit it: it is the baseline your teammates' `sync` compares against.
 
-When a file you've edited also changed in the package, sync prompts:
-- `[s]kip` — keep your version
-- `[o]verwrite` — replace with the package version
-- `[d]iff` — view a unified diff, then decide
+`sync` never writes your token source (`src/tokens`) or your own components. When an updated component needs a token your set does not have, it tells you (section 5) and you decide.
 
-### .designerpunkignore
+#### Conflict Resolution
 
-To permanently exclude files from sync (files you've intentionally customized):
+A file you edited that also changed in the package is a **conflict**. `sync` never overwrites it. The report lists it, and you choose per path:
+- keep your version: do nothing
+- replace it with the package version: `npx designerpunk sync --overwrite <path>`
+
+A file you deleted that DesignerPunk generated earlier is reported, and comes back only with `npx designerpunk sync --restore <path>`. `--accept-all` and `--force` are retired: `sync` prints a message that points to `--apply`.
+
+#### .designerpunkignore
+
+To permanently exclude files from sync (files you have intentionally customized), list them in `.designerpunkignore`, which `init` creates. It uses `.gitignore` syntax:
 
 ```gitignore
 # .designerpunkignore — uses .gitignore syntax
-.kiro/agents/custom-agent.md
-src/tokens/MyCustomTokens.ts
+.claude/agents/ada.md
+.kiro/agents/ada.json
 ```
 
-### CI/CD Integration
+Agents you write yourself are never managed and need no entry.
 
-In non-interactive environments, sync automatically runs in dry-run mode. Use `--accept-all` to apply changes in CI pipelines:
+#### CI/CD Integration
+
+Off a terminal, `sync` reports and writes nothing unless you pass `--apply`:
 
 ```bash
-npx designerpunk sync --accept-all  # Applies all updates without prompting
+npx designerpunk sync --apply  # Applies the updates without prompting. Conflicts and deleted files still need --overwrite <path> and --restore <path>.
 ```
-
-### OKLCH Color Migration (v12+)
-
-When upgrading to the OKLCH color system version:
-
-1. **Run sync** — updates token source files from RGBA to OKLCH channel primitives
-2. **Regenerate** — `npx designerpunk generate` produces OKLCH output (CSS `oklch()`, Swift ChromaKit, Kotlin colormath)
-3. **Add platform dependencies** — iOS: ChromaKit via SPM. Android: colormath via Gradle.
-4. **Product color tokens** — convert any `value:` color fields from RGB/hex to OKLCH format: `value: "oklch(0.65 0.24 10)"`. Use an online converter or ask Ada for batch conversion.
-5. **Verify** — CSS custom property names are unchanged (`var(--pink-300)` still works). Only the values change format.
-
-**Visual changes**: Palette refinements (teal, green, orange) and blend re-tuning produce intentional visual differences. See release notes for details.
