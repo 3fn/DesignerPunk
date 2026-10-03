@@ -31,6 +31,7 @@
 - RELEASE-FLOW: § "Deriving the delta" item 4, and steps 5 and 6 of § "The sequence" (§ 3.1–3.4).
 - `governance/release-management-system.md` § 5 (line 41) (§ 3.5) and line 31 (§ 3.6).
 - `.kiro/hooks/README.md` line 109 (§ 3.7).
+- RELEASE-FLOW step 6's rail paragraph (§ 3.8), added at R2.
 
 §§ 3.6 and 3.7 were added 2026-10-03 from the documentation sweep.
 - A `proposed` register row, `hermetic-publish-path` (§ 4).
@@ -54,7 +55,7 @@
 
   **Consequences:**
   - the `prepublishOnly` tripwire refuses folder publishes only, and never the script's tarball publish;
-  - the script must itself run `check:drift` and `verify:token-index-clean` before it packs (Ada confirms that it does);
+  - the script must itself run `check:drift` before the pack and `verify:token-index-clean` after it (the build inside `prepack` regenerates the index; Ada confirms, and Stacy R1 verified it against the source) — **A5**;
   - **no `postpublish` runs on either registry, so the step-6 record is the only post-publish check.**
 
   **Second leg: SATISFIED by pointer.** See `.kiro/issues/2026-10-01-in-repo-generate-output-contaminates-package-dist.md` § "P2, second leg: an observed tarball publish runs no lifecycle script":
@@ -91,7 +92,8 @@
 >    - **5.1 Dry run at S, before the tag is pushed**: `npx tsx scripts/release-publish.ts --dry-run <S>`, **run from the main checkout**.
 >      - It works in a fresh clone at S: `npm ci`, then `check:drift`, then `npm pack` with lifecycle scripts on, so `prepack` builds.
 >      - **After the pack** it runs `verify:token-index-clean`, because the build inside `prepack` regenerates the index.
->      - It then runs `pack-assert` on the tarball: no leftover `dist/` files, the MCP bundle shape (root `node_modules` only), no `dist/{ios,android,web}/**`, the eight root token files, `themes: []`, the closure present.
+>      - It then runs `pack-assert` on the tarball: no leftover `dist/` files, the MCP bundle shape (root `node_modules` only), no machine path in `dist/**`, no `dist/{ios,android,web}/**`, the eight root token files, `themes: []`, the closure present.
+>      - **Keep its output**: the dry run's `N/M assertions passed.` tally and its sha1 are pasted into the step-6 `.txt` (A3).
 >      - It runs these checks itself because a tarball publish runs no lifecycle scripts (P2).
 >
 >      **Nothing is published.** A red stops the release before any tag exists; fix it on a branch and re-merge (back to step 1).
@@ -99,7 +101,8 @@
 >    - **5.3 Publish to GitHub Packages**: `npx tsx scripts/release-publish.ts <version> --expect-sha <S>`, **run from the main checkout**. GitHub Packages auth is that checkout's gitignored `.npmrc`; an `npm whoami` preflight refuses before any build if it fails, and it refuses from a worktree.
 >      - It repeats 5.1 in a fresh clone **at the tag**.
 >      - It refuses unless `v<version>` resolves to `--expect-sha <S>`, the tag commit is on `origin/main`, and the tagged `package.json` version equals `<version>`.
->      - It then records the tarball's path, file count and sha1, publishes **that tarball** to GitHub Packages, and prints the public-npm command for 5.4 with the sha1 to check.
+>      - It then records the tarball's path, file count and sha1 in `release-publish-record.json` (in an OS temp dir; the script prints its path), publishes **that tarball** to GitHub Packages, and prints the public-npm command for 5.4 with the sha1 to check.
+>      - **Keep the tarball and its record until 6b is recorded** (A11). The record's full contents (commit, sha1, fileCount, bytes, pack-assert passed/total, createdAt) are pasted into the step-6 `.txt` (A3), because the temp dir is never committed and 6b's comparand must be.
 >    - **5.4 Publish the same tarball to public npm** (Peter's terminal, web 2FA): first check the printed sha1 against the file, then run `npm publish <tarball> --registry https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public`. **Never a folder publish, never `--ignore-scripts`, never a tarball the script did not produce.** A folder publish is refused by `prepublishOnly`, which names this script. That refusal is the tripwire, not the guard: the guard is the script.
 >    - **Guards live in the command the operator runs, never in a list addressed to a seat** (RS-7). A release check that cannot be put in the script is written into this step's text, at the point where the operator meets it.
 >    - **A tarball publish runs no lifecycle scripts**: no `prepublishOnly`, no `postpublish` (npm 10.9.3 source; ballot `2026-10-03-hermetic-publish-path` P2). The script runs the pre-publish checks itself. **Step 6 is the only post-publish check.** `postpublish`'s `token-index/` warning fires only on a folder publish, which the tripwire refuses.
@@ -107,31 +110,42 @@
 ### 3.3 `.kiro/hooks/RELEASE-FLOW.md` § "The sequence", step 6: the two-registry record (inserted after step 6's code block and its "do not announce" paragraph, before "**Land the result on `main`**")
 
 **Insert:**
-> **6b — the two-registry record.** In the same `.txt`, record for **each** registry:
+> **6b — the two-registry record.** In the same `.txt`, first paste the script's comparands:
+> - the 5.3 `release-publish-record.json` contents (commit, sha1, fileCount, bytes, pack-assert passed/total, createdAt);
+> - the 5.1 dry run's tally line.
+>
+> Then record, for **each** registry:
 > - the version is present;
 > - the registry's own publish time, from the packument's `time["<version>"]`, never an operator estimate (RS-8);
 > - the tarball's file count;
-> - `dist.shasum`.
+> - `dist.shasum`;
+> - the sha1 of the fetched tarball's own bytes (`shasum` of the file), an independent read beside the registry's claim (A4).
 >
-> **Both sha1s must equal the sha1 the script recorded at 5.3.** Any mismatch is a release incident: record it and stop before step 7. Published bytes cannot be replaced, so the remedy is Peter's ruling, not a re-publish.
+> **All four sha1s (two `dist.shasum`, two fetched-bytes) must equal the sha1 pasted from the 5.3 record.** Any mismatch is a release incident: record it and stop before step 7. Published bytes cannot be replaced, so the remedy is Peter's ruling, not a re-publish.
 >
-> Commands:
-> - **npmjs**: `curl -s https://registry.npmjs.org/@3fn%2fcore` for `time` and `versions["<v>"].dist.shasum`.
-> - **GitHub Packages**: `npm view @3fn/core@<v> dist.shasum time --json --registry https://npm.pkg.github.com`, run from a directory whose npm config authenticates to GitHub Packages (on 2026-10-03 the fresh clone's directory did).
-> - **File counts**: from each fetched tarball (`npm pack @3fn/core@<v> --registry <r>` then `tar -tzf … | wc -l`).
+> **Run every 6b command from the MAIN checkout.** That is the npm config 5.3's `whoami` preflight proved (A2). A fresh clone or a worktree carries no `.npmrc` (it is gitignored), and the GitHub Packages read there fails with E401.
 >
-> **Only if the GitHub Packages read fails on auth**, ask Peter for a `read:packages` token, and record that the fallback was used.
+> **Every `npm` command names the registry twice, `--registry <r> --@3fn:registry=<r>`** (A1). The main checkout's `.npmrc` maps the `@3fn` scope to GitHub Packages, and a scoped name follows that mapping over a bare `--registry`. Measured on 15.0.0 (Stacy R1): `npm view … --registry https://registry.npmjs.org` alone returned GitHub's sha1 `65d2ec0b…`; with the scope flag, npmjs's `48dd8cdd…`. Without it, 6b would have hidden the 15.0.0 divergence.
+>
+> Commands, with `<r>` = `https://registry.npmjs.org` or `https://npm.pkg.github.com`:
+> - **npmjs, metadata**: `curl -s https://registry.npmjs.org/@3fn%2fcore` for `time` and `versions["<v>"].dist.shasum`.
+> - **GitHub Packages, metadata**: `npm view @3fn/core@<v> dist.shasum time --json --registry https://npm.pkg.github.com --@3fn:registry=https://npm.pkg.github.com`.
+> - **Each tarball**: `npm pack @3fn/core@<v> --registry <r> --@3fn:registry=<r> --pack-destination <tmp>`, then `shasum <file>` and `tar -tzf <file> | wc -l`.
+>
+> **Only if the GitHub Packages read fails on auth from the main checkout**, ask Peter for a `read:packages` token, and record that the fallback was used.
 
 ### 3.4 `.kiro/hooks/RELEASE-FLOW.md` § "The sequence", step 6: the two-phase RELEASE claims pass, plus a new step 7 (appended after step 6's last paragraph, "…without a committed record the pass has nothing to read.")
 
 **Append:**
 > **The RELEASE claims pass runs in two phases, recorded in one file** (Stacy's pass; this text sets only *when*):
-> - **Phase 1** runs on **S, before the tag (5.2)**. It covers the release delta, the 5a owed-set paste and the 5b arming line. Its record lands by a record-only PR and states `publish-rail liveness: owed`.
+> - **Phase 1** runs on **S after 5.1 is green and before the tag (5.2)**. A red 5.1 moves S, so phase 1 never reads a commit that will not be tagged (A7). It covers the release delta, the 5a owed-set paste, the 5b arming line and 5.1's tally. Its record lands by a record-only PR and states `publish-rail liveness: owed`.
 > - **Phase 2** is a dated section appended to the same record. It reads the committed step-6 `.txt`: the rail result and the 6b two-registry record. **Its trigger is the merge of the step-6 release-record PR.**
 >
 > **Phase 2 may be drafted against that PR while it is still open.** If it is, it MUST end with a **merge-confirmation line** written at the PR's merge:
-> - It records `git diff --quiet <read-sha> <merge-sha> -- docs/releases/<v>/publish-verification.txt`.
-> - If the merged file differs from the read, the line records every changed hunk re-read and every phase-2 reading it changes.
+> - **Scope: every file phase 2 read from that PR**, not only the `.txt` (A6). It records `git diff --quiet <read-sha> <merge-sha> -- <each path read>`.
+> - If a merged file differs from the read, the line records every changed hunk re-read and every phase-2 reading it changes.
+> - **A finding resolved by a commit after the read stays in the record**, with its resolution and the resolving SHA. It is never deleted (A6; 15.0.0's R-4).
+> - **Where it lands**: in phase 2's own PR if that PR is still open at the step-6 PR's merge. Otherwise it goes in a follow-up record-only PR. On 15.0.0, phase 2's PR (#274) merged 16 s after #273, and the line needed #275.
 > - Until that line exists, the liveness reading is "read, not committed". (RS-9: on 15.0.0 the merged file differed from the one phase 2 read, and only the confirmation line caught it.)
 >
 > 7. **Announce last**: create the GitHub release (`gh release create v<version> --notes-file docs/releases/release-<version>.md`) **only after** step 6's rail PASS and a matching 6b record. Notes must not state a guard as applied before the step that applies it has run (R-3).
@@ -162,6 +176,21 @@
 **After:**
 > See `RELEASE-FLOW.md` in this directory for the release sequence under the PR gate (version-bump PRs, the derive-classify-ratify notes recipe, and the publish path: one tarball built by `scripts/release-publish.ts` in a fresh clone at the tag, which runs the token-index gate itself; `prepublishOnly` only refuses a folder publish).
 
+### 3.8 `.kiro/hooks/RELEASE-FLOW.md` § "The sequence", step 6, the rail paragraph's last sentence (added at R2, A10: RS-8's residue)
+
+**Before** (L142–144 at `1453dad6`):
+> **If it fails within the first few minutes of publishing, the
+>    registry may just not have indexed the version yet — wait a minute and
+>    re-run by hand; this step never retries automatically.**
+
+**After:**
+> **If it fails, read the registry's own record before re-running.**
+>    - If the packument (`curl -s https://registry.npmjs.org/@3fn%2fcore`) has no `time["<version>"]`, the version is not published yet. A 404 is then the correct answer, not indexing lag (15.0.0's R-4).
+>    - If `time["<version>"]` is present and the rail still fails within a few minutes of it, re-run by hand.
+>    - This step never retries automatically.**
+
+*Not drafted here*: the same teaching appears in `scripts/verify-publish-rail.sh`'s `FAIL[version]` message. The script is outside this ballot (§ 2). The register's `publish-rail-guard` row names `owner: thurgood`, and Thurgood built it at Spec 123 Task 7. It is not in his charter write scope, so the vehicle is **a chartered issue naming Thurgood, with `**Grant paths**: scripts/verify-publish-rail.sh` and a re-recorded `FAIL[version]` bite**, filed at application (§ 5 item 8).
+
 ## 4. The register row (verbatim; applied as `proposed`)
 
 ### hermetic-publish-path
@@ -176,28 +205,37 @@ verification:
   owner: ada
   check_state: proposed
   checks: []
-  # P2 second leg and P3 are recorded (2026-10-03, pointer in § 2). Arms (tool-time) only when RELEASE-FLOW steps 5–7
-  # land; until then, proposed. The CI half (`test:pack-contents` in lane-functional-root, PR after #279) is
-  # build-time evidence, not this row's tool-time check. ARMING read: Stacy.
+  # P2 second leg and P3 are recorded (2026-10-03, pointer in § 2). THE FLIP (A9; fork F-4, § 9): this row lands
+  # `proposed` with the application PR. It flips to `armed`, `armed_at: tool-time` in the application PR itself
+  # only if Peter rules F-4 that way. Otherwise the flip PR is the release-record PR of the FIRST release run under
+  # steps 5–7 (its 6b record is the live evidence). At the flip, checks[] =
+  #   ["scripts/release-publish.ts (RELEASE-FLOW 5.1/5.3: fresh clone at the tag; three tag checks; check:drift;
+  #     verify:token-index-clean after the pack; pack-assert; sha1 record)",
+  #    "package.json prepublishOnly tripwire (folder publish refused; P3)",
+  #    "RELEASE-FLOW step 6b two-registry record (four sha1s equal the 5.3 record)"].
+  # The CI half (`test:pack-contents` in lane-functional-root, #281) is build-time evidence, not this row's
+  # tool-time check. ARMING read: Stacy, at the flip PR's merge.
   # Owner is ada because she maintains the instrument (script, tripwire, pack-assert); the law text is Thurgood's.
 education:
   disposition: "AUTHOR: RELEASE-FLOW steps 5–7 (ballot 2026-10-03-hermetic-publish-path § 3) and governance/release-management-system.md § 5 are the education. PRUNED: the 2026-10-02 deferral's three manual guards are superseded by the script (Ada's issue records that). HONEST REACH: a publish run with --ignore-scripts, or of a tarball the script did not produce, is NOT detected before publish; 6b's sha1 comparison detects it after publish, and published bytes cannot be replaced"
 history:
-  - { date: 2026-10-03, change: "entry created at ballot 2026-10-03-hermetic-publish-path (DRAFT), from 15.0.0's two-artifact divergence (Stacy R-2; RS-6/RS-7/RS-8). check_state proposed pending the ballot's P2 observed leg and P3 bite (P2 verified by source read, Ada R2)", by: thurgood }
+  - { date: 2026-10-03, change: "entry created at ballot 2026-10-03-hermetic-publish-path (DRAFT), from 15.0.0's two-artifact divergence (Stacy R-2; RS-6/RS-7/RS-8). check_state proposed. P2 (source read, Ada R2; observed leg) and P3 recorded on Ada's issue 2026-10-03. The flip PR and checks[] are named in the verification comment (Stacy R1 A9)", by: thurgood }
 ```
 
 ## 5. Application (at ratification, one PR, Peter-merged under the governance carve-out)
 
-1. The record-first Status flip in this file. Then §§ 3.1–3.7 and § 4, verbatim. Then the README "Ballots on record" entry.
-2. **Straggler sweep**: `grep -rnE "Publish from merged|publish from merged|git switch main && git pull|prepublishOnly|dual-registry playbook|then tag and GitHub release" .kiro/hooks governance .kiro/steering canonical docs/*.md README.md`. Every hit is either brought in line or listed as intentionally historical. The 2026-10-03 pre-application sweep (`.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` § "2026-10-03 — documentation consistency sweep") is the baseline this sweep is diffed against.
+1. The record-first Status flip in this file. Then §§ 3.1–3.8 and § 4, verbatim. Then the README "Ballots on record" entry.
+2. **Straggler sweep**: `grep -rnE "Publish from merged|publish from merged|git switch main && git pull|prepublishOnly|dual-registry playbook|then tag and GitHub release|not have indexed|indexing lag|indexed" .kiro/hooks governance .kiro/steering canonical docs/*.md README.md scripts/verify-publish-rail.sh`. Every hit is either brought in line or listed as intentionally historical. The 2026-10-03 pre-application sweep (`.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` § "2026-10-03 — documentation consistency sweep") is the baseline this sweep is diffed against.
 3. **The tasks.md annotation owed by the absorbed issue (its owed act 2)**: a dated annotation on Spec 123 `tasks.md`'s line "RELEASE fires at the release tag, before publish", pointing here (phase 1 at S before the tag; phase 2 after the step-6 record PR).
 4. `rebuild_index` after merge: `governance/` is a served root.
 5. Close and archive `.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md` (`git mv` to `archive/`).
 6. **Charter follow-ups, by vehicle (b)**: a canonical-charter edit plus regeneration (Spec 122), in a separate PR after this one merges. Never hand-edit `.claude/agents/*` or `CLAUDE.md`.
-   - **Stacy's RELEASE row** (`canonical/agents/stacy.md` L393): its wording, Stacy's to author.
-   - **Thurgood's LIVENESS read 2** (`canonical/agents/thurgood.md` L448): a RELEASE record with phase 1 only, still reading `publish-rail liveness: owed`, is an event without a complete record.
+   - **Stacy's RELEASE row** (`canonical/agents/stacy.md` L393): her wording, lifted verbatim from § 10 [STACY R1] item (7). It has an event cell, an appended scope sentence, and an F-2 clause if F-2 is permitted. Her consumer overlay row (`stacy.overlay.md` L73) stays unchanged.
+   - **Thurgood's LIVENESS read 2** (`canonical/agents/thurgood.md` L448): two cases are events without a complete record. One is a RELEASE record with phase 1 only, still reading `publish-rail liveness: owed`. The other, if F-2 is permitted, is a phase 2 drafted against an open PR that has no merge-confirmation line (A8).
+   - **Signing cost (A8)**: Stacy's row is in the Stacy-signed rendered unit `#the-trigger-set-the-114-superset-table-names-never-numbers`. The charter PR stales it, so one Stacy re-sign is owed (it enters Peter's Stacy-signed sample frame), plus one operative-set confirmation. Whether Thurgood's L448 row is rendered is checked at that PR.
    - Both are listed in the sweep section named in item 2.
 7. **Notify Stacy** of the before→after and the effective date. This is a standards change to her pass's timing, so notification is a charter duty, not a courtesy.
+8. **File the rail-script issue** named in § 3.8 (owner Thurgood; `**Grant paths**: scripts/verify-publish-rail.sh`).
 
 ## 6. Deferred — captured
 
@@ -257,8 +295,20 @@ The versions are whatever the root lock pins at that release. The notes author r
 ## 9. Forks for Peter
 
 - **F-1** — a failure after the tag is pushed (§ 8 item 3): retry at the same tag, or bump a patch.
-- **F-2** — phase 2 against an open PR (§ 3.4): **permitted with the mandatory merge-confirmation line** (drafted, on tonight's evidence that it worked once and the line caught the drift), or forbidden (simpler, but phase 2 waits for the merge).
+  - **Thurgood's read**: retry at the same tag. Nothing has shipped, so the tag is still true.
+  - **Stacy's read (R1)**: the same, with a case that needs its own ruling (A11). GitHub Packages may already hold the bytes when the 5.3 tarball is lost (temp dir, reboot). A rebuild cannot reproduce the sha1 (§ 8 item 1), so a "retry" there forces a 6b mismatch.
+  - **What § 3.2 now does about it**: the operator keeps the tarball and its record until 6b is recorded. That prevents the loss but does not rule on it.
+  - **The sub-question for Peter**: in the lost-tarball case, bump a patch, or publish a rebuild to npmjs and accept a recorded, ruled 6b mismatch.
+- **F-2** — phase 2 against an open PR (§ 3.4): **permitted with the mandatory merge-confirmation line**, or forbidden (simpler, but phase 2 waits for the merge).
+  - **Thurgood's read**: permitted, as drafted. On 15.0.0 it worked once and the line caught the drift.
+  - **Stacy's read (R1)**: permitted with the line. A replay shows the § 3.4 wording would have caught 15.0.0. Her residual is (iv) in § 10.
 - **F-3** — the register row's owner: `ada`, who maintains the instrument (drafted), or `thurgood`, who owns the law text (the publish-rail-guard precedent, where the author built the script).
+  - **Stacy's read**: `ada`. The owner is whoever repairs a check that goes red or dormant, and that precedent does not separate the two options.
+- **F-4** (new at R2, from A9) — when the row arms.
+  - **Option (i)**: `armed`/`tool-time` in the application PR itself. This follows the publish-rail-guard same-commit precedent. The evidence already exists: the P2/P3 bites and #279's end-to-end `--dry-run`, 94/94. Stacy's binding condition carries over: if the row lands without steps 5–7, it lands `proposed`.
+  - **Option (ii)**: `proposed` until the first release run under the law, with that release's 6b record as the flip PR.
+  - **Thurgood's lean**: (i).
+  - **Stacy**: her read is owed on this fork. It was not in her R1, because A9 created it.
 
 ## 10. Review round record
 
@@ -336,3 +386,39 @@ What survives, added:
 **Verdict: APPROVE-WITH-AMENDMENTS.** 11 amendments. A1, A2, A3, A5 and A6 must land before Peter's ruling; the rest may land with R2 or be recorded as residuals with triggers. Forks surfaced, not picked: F-1 (same tag), F-2 (permitted, with the line), F-3 (`ada`).
 
 > No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR. This round reviews law text; it gates no PR.
+
+### [THURGOOD R2]
+
+2026-10-03. Pre-step: there are no `[@THURGOOD]` mentions in [STACY R1]. Incorporated into the body (woven in, not appended). Status stays **DRAFT**. Forks F-1, F-2 and F-3 stay open, each with both reads written into § 9. A9 surfaced a new fork, F-4.
+
+**Disposition tally: 11 of 11 amendments incorporated, 0 answered with no change.** Of her item-(1) notes, the 10e omission is incorporated and the `--expect-sha` observation is answered (below).
+
+| # | Disposition | Where |
+|---|---|---|
+| A1\* | Incorporated. Every 6b `npm` command carries `--registry <r> --@3fn:registry=<r>`, with her 15.0.0 measurement as the reason | § 3.3 |
+| A2\* | Incorporated. 6b runs from the MAIN checkout. The fresh-clone parenthetical is dropped from the law text; § 1 ruling 4 stays as the ruling's record | § 3.3 |
+| A3\* | Incorporated. The 5.3 `release-publish-record.json` contents and 5.1's tally are pasted into the step-6 `.txt` as 6b's comparands | §§ 3.2, 3.3 |
+| A4 | Incorporated. Each fetched tarball's own `shasum` is recorded beside `dist.shasum`, so four sha1s must equal the record | § 3.3 |
+| A5\* | Incorporated. `check:drift` runs before the pack and `verify:token-index-clean` after it | § 2 P2 |
+| A6\* | Incorporated. Scope is every file phase 2 read; placement is phase 2's PR if open, else a follow-up record-only PR (#275's case); a post-read resolution stays in the record | § 3.4 |
+| A7 | Incorporated. Phase 1 runs on S after 5.1 is green, and reads 5.1's tally | § 3.4 |
+| A8 | Incorporated. The signing cost is named, and LIVENESS gains the F-2 no-line case | § 5 item 6 |
+| A9 | Incorporated. #281 is named; the history line is corrected; the flip PR and the full `checks[]` are named. This opened **F-4** (arm at application vs. at the first release run) | § 4, § 9 |
+| A10 | Incorporated. New edit site § 3.8 (the rail paragraph's indexing-lag sentence); the straggler pattern gains `indexed\|indexing lag` and the rail script; the script's message is named, not drafted | § 3.8, § 5 items 2 and 8 |
+| A11 | Incorporated. Keep the tarball and its record until 6b is recorded; the lost-tarball case is added to F-1 as a sub-question | §§ 3.2, 9 |
+
+**Answered, no change**: `--expect-sha` is optional in the script, so the tag-to-S link rests on the operator typing step 5.3's command. The law text always passes it. Making it mandatory in the script is Ada's call, and this ballot does not legislate the script's argument parser. **Residual**: an operator who drops the flag gets ancestry plus a version match, not identity with S.
+
+**A correction to the brief I was handed.** The orchestrator's message called `verify-publish-rail.sh` "Ada's file". The register says otherwise: row `publish-rail-guard` has `owner: thurgood`, and I built the script at Spec 123 Task 7. Stacy's A10 reads the same way. The follow-up in § 3.8 is therefore an issue naming me, with a grant. That is needed because `scripts/**` is outside my charter write scope.
+
+**Stacy's added residuals, recorded:**
+- **(i) The floor misses § 10. SURVIVES until a lane PR.**
+  - **Proposed form**, additive and inside my P1 scope (deletions 0): in the same step's `run:` block, add `PUB=$(grep -c "^PASS: publish path:" "$RUNNER_TEMP/pack-contents.out")` and `[ "$PUB" -ge 14 ]` (16 today: 10a 8 + 10b 1 + 10c 2 + 10d 1+3 + 10e 1). A refactor that drops § 10 then reds the lane, whatever the total.
+  - **Raising `M ≥ 75`** would delete a line, which is outside P1. It is not needed once the section floor exists.
+  - **The script's own floor** (refuse if the publish-path PASS count is below 16): Ada's. Routed to her as a candidate deferred row (k) on her issue; I do not edit her file.
+- **(ii) Row (j)'s false-alarm habit. SURVIVES.** Ada's to mitigate, for example with a "nested `node_modules` present? this red is row (j); the script's fresh clone never shows it" hint in the 10d detail. Routed.
+- **(iii) The signing cost of the charter follow-ups. ABSORBED** (§ 5 item 6).
+- **(iv) Under F-2 "permitted", the read shapes the record before merge. SURVIVES**, made visible by A6's retention rule. It is the price of the permission, and F-2 is Peter's.
+- **(v) `floor-closure.json` is never regenerated by the script. SURVIVES.** Ada's (pack-assert's header leaves regeneration to callers). Routed.
+
+**The one thing Peter must read before ruling**: A1 in § 3.3. The scope-mapping trap is the difference between a step 6b that catches a 15.0.0-class divergence and one that certifies it.
