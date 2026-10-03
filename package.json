@@ -158,6 +158,7 @@
     "test:agent-generator": "jest --config tools/agent-generator/jest.config.js",
     "test:scripts": "jest --config scripts/jest.config.js",
     "test:consumer": "jest --roots='<rootDir>/tests' --testMatch='**/consumer-integration.test.ts' --runInBand --testTimeout=120000 --forceExit",
+    "test:pack-contents": "tsx scripts/pack-assert.ts --pack",
     "test:guard:dynamic-import": "jest --testPathPatterns='DynamicImportGuard' --no-coverage --runInBand",
     "test:smoke:mcp-boot": "jest --roots='<rootDir>/tests' --testMatch='**/mcp-boot-smoke.test.ts' --no-coverage --runInBand --testTimeout=60000",
     "test:smoke:browser-boot": "jest --roots='<rootDir>/tests' --testMatch='**/browser-boot-smoke.test.ts' --no-coverage --runInBand --testTimeout=60000",
@@ -195,8 +196,9 @@
     "check:122:sweep-8-demotion": "tsx tools/agent-generator/sweeps/sweep-8-demotion.ts",
     "prepack": "npm run build",
     "verify:token-index-clean": "git diff --quiet token-index/ || (echo '✖ token-index/ is stale relative to the committed state. Regenerate and commit it on the RELEASE BRANCH (it traverses the PR gate with the version bump) before publishing. See .kiro/hooks/RELEASE-FLOW.md.' && exit 1)",
-    "prepublishOnly": "npm run build && npm run check:drift && npm run verify:token-index-clean",
-    "postpublish": "git diff --quiet token-index/ || echo '⚠️  token-index/ changed during publish — commit it via a PR (main is branch-protected; never push it directly). See .kiro/hooks/RELEASE-FLOW.md.'"
+    "prepublishOnly": "node -e \"console.error('\\n✖ Folder publish refused. @3fn/core is published ONLY as one tarball built in a fresh clone at the tag: npx tsx scripts/release-publish.ts <version> (dry run: --dry-run <S>). See .kiro/hooks/RELEASE-FLOW.md step 5 and ballot 2026-10-03-hermetic-publish-path.\\n'); process.exit(1)\"",
+    "postpublish": "git diff --quiet token-index/ || echo '⚠️  token-index/ changed during publish — commit it via a PR (main is branch-protected; never push it directly). See .kiro/hooks/RELEASE-FLOW.md.'",
+    "release:publish": "tsx scripts/release-publish.ts"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
