@@ -84,7 +84,7 @@ Use this posture when you want a design system of your own. These are the five s
 
 After birth, your repo holds two different kinds of thing.
 
-- **Your language: the tokens.** `init` copied them into your repo, and they are yours wholesale. DesignerPunk never adds to them, and nothing of ours runs underneath them.
+- **Your language: the tokens.** `init` copied them into your repo, and they are yours wholesale. DesignerPunk never adds to them. One exception: `generate` applies DesignerPunk's own dark and WCAG override maps, not your copies in `src/tokens/themes/`, so editing those copies does not change your output yet.
 - **Our updating surface: the components.** You use them by name, and they improve when you update the package.
 
 **`generate` is the pipeline — run on every token change.** Run it whenever you change your own tokens. `init` was the birth event; it does not run again, however often you run `generate`. `validate` validates token definitions against the active source, and is worth running after you edit token source files.
@@ -96,7 +96,8 @@ What `generate` writes, into the `output` directory set in `designerpunk.config.
 - `ComponentTokens.web.css` / `.ios.swift` / `.android.kt` — component tokens
 - `DesignTokens.dtcg.json` — DTCG standard format
 - `DesignTokens.figma.json` — Figma Variables format
-- `token-index/` — the structured index the application MCP server reads for token queries
+
+`generate` also writes `token-index/` at your project root. It is the index the application MCP server reads for token queries.
 
 **The update lifecycle: three verbs, one sentence each.**
 - **`npm update @3fn/core`** refreshes DesignerPunk's updating surface, the components, and never your language, the tokens.

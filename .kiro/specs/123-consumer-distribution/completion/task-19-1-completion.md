@@ -66,3 +66,14 @@
    19.3 runs after 20.1, and 19.5 after 22.2 and 22.3, so these statements are re-read against what was built.
 7. **The Android colour bullet names no identifiers.** I could not confirm the snake-case base names against the build: only the `_wcag` variants exist in `dist/DesignTokens.android.kt`. It says "the same 14 theme-varying semantic colours" instead.
 8. **The scope sentence's version phrase**: #268's "in 15.0.0" became version-free ("yet") in the Web themes bullet, as B-U3's preservation row P3 records.
+
+## Addendum (2026-10-03) — two false claims in the region, corrected
+
+- **The defect**: two factual sentences 19.1 wrote into region § 4 were false.
+  - **(a)** `token-index/` was listed among the files `generate` writes into the `output` directory. It is written at the project root: `src/cli/designerpunk.ts` L267, `generateTokenIndex(path.resolve(generateRoot, 'token-index'), …)`.
+  - **(b)** "nothing of ours runs underneath them" (the tokens). `generate` statically imports the package's own dark, WCAG and dark-WCAG override maps (`src/generators/generateTokenFiles.ts` L19–21), so editing a consumer's copies in `src/tokens/themes/` changes nothing.
+- **Found by**: Ada, in her round-1 consult on the 19.4 remainder, 2026-10-03, verified against source. Thurgood re-read both cited lines.
+- **Cause**: (a) was copied from the old guide's § "6. Generate Tokens" output list. (b) was taken from Req 2's prose ("nothing of ours running underneath"), not from the code. 19.1 had no check on factual claims: its tests assert strings, not truth.
+- **Fix**: Ada's wording, verbatim, in the commit carrying this addendum (the region's "Your language" bullet, and a new sentence after the `generate` output list).
+- **Class guard, from 19.4 on**: each behaviour, path or count claim in the remainder table and in the region's passage table cites `file:line` or a ratified record, and its owning agent confirms it before commit. This was settled in consult and is recorded in `tasks.md` Task 19. Both corrected sentences now cite their source lines above.
+- **Re-run**: `npx jest --config scripts/jest.config.js scripts/__tests__/install-doc.test.ts` → 2/2 green. The README is unchanged.
