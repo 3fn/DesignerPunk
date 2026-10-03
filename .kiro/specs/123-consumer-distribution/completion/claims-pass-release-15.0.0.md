@@ -1,6 +1,6 @@
 # Claims Pass — RELEASE 15.0.0: Spec 123, the combined release (planned releases 1 and 2)
 
-**Date**: 2026-10-02 (phase 1)
+**Date**: 2026-10-02 (phase 1); 2026-10-03 UTC / 2026-10-02 EDT (phase 2, § "PHASE 2" below)
 **Grain**: RELEASE. One tag carries planned releases 1 and 2 (`tasks.md` § "Expected release count", Amendment 2026-10-02, PR #265 `b2cca6ca`; Peter: "Confirmed, ship them together").
 **Auditor**: Stacy
 **Release commit S**: `9e1a3106` — the squash of PR #271, merged 2026-10-03T00:17:50Z (2026-10-02 20:17 EDT). Its tree equals the PR head `f60ef180` (`50fbc86c`).
@@ -404,14 +404,166 @@ These are not J results. They go to the profile author (Thurgood) and the G2 fin
 
 ---
 
-## PHASE 2 — appended after publish (owed)
+## PHASE 2 — 2026-10-03 UTC (2026-10-02 EDT): publish, rail, published artifacts
 
-*Not yet written. Trigger: the merge of the publish-verification PR (`docs/releases/15.0.0/publish-verification.txt`). It will carry:*
-- *the tag check (`v15.0.0` points at `9e1a3106`);*
-- *`VERSION=15.0.0 ./scripts/verify-publish-rail.sh` output with its exit code, read from the committed `.txt` (Req 6.7);*
-- *the published tarball's integrity against the fresh-clone pack (`shasum dcd50641…` as built at `02d79ea6`; a rebuild may differ, so the listing and guards are compared, not only the hash);*
-- *the cold-install smoke;*
-- *a dated line resolving `publish-rail liveness: owed`.*
+**Auditor**: Stacy (a fresh seat; phase 1 was a prior instance of mine).
+**Trigger and form.** The clarification issue's form (`.kiro/issues/2026-10-02-release-audit-two-phase-clarification.md`) sets phase 2's trigger at **the merge** of the publish-verification PR. **This section departs from that form**: it was drafted while that PR was **open**, on Peter's instruction ("open the verification PR and start phase 2"). The PR is **#273** (branch `chore/release-15-publish-verification`, head `2f55329c`, OPEN at this writing; two files: `docs/releases/15.0.0/publish-verification.txt` and a dated section in `.kiro/issues/2026-10-01-in-repo-generate-output-contaminates-package-dist.md`). Every reading of the `.txt` below is of the file at `2f55329c`. **Consequence**: Req 6.7's "committed record" half is not yet met. **Owed**: one dated line appended here at #273's merge, saying whether the merged `.txt` equals `2f55329c`'s (if not, re-read).
+
+**Standards implications: list — four items (RS-6 … RS-9), § "Phase 2 standards implications" below.**
+
+> No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR. This section gates neither #273 nor anything after it.
+
+### What phase 1 said phase 2 would carry, and the reading
+
+| Owed by phase 1 | Reading | Result |
+|---|---|---|
+| Tag `v15.0.0` points at S | `git ls-remote origin`: `refs/tags/v15.0.0` = `b05719f6` (annotated), `^{}` = `9e1a3106`. GitHub release `v15.0.0` published 02:03:31Z, not draft, not prerelease | ✅ |
+| Rail guard output and exit code, read from the committed `.txt` (Req 6.7) | `.txt` § 1 at `2f55329c`: six `rc=10` (HTTP 404) attempts, then `02:21:20Z attempt 1 rc=0: PASS`. **My own re-run**: `VERSION=15.0.0 ./scripts/verify-publish-rail.sh` → `PASS: @3fn/core@15.0.0 visible on npmjs; tarball host verified`, `exit=0`, 2026-10-03T02:37:10Z | ✅ (record half pending #273's merge) |
+| Published tarball against the fresh-clone pack | Two registries, two artifacts. § "The dual-registry read" | ⚠️ **R-2** |
+| Cold-install smoke | § "Cold-install smoke" | ✅ (probed tools) |
+| A dated line resolving `publish-rail liveness: owed` | below | ✅ |
+
+**`publish-rail liveness: PASS` — 2026-10-03.** The guard ran and its last run passed (02:21:20Z, the operator's; 02:37:10Z, mine). Read from the `.txt` at `2f55329c` (#273, open) and from my re-run. The committed-record condition is met at #273's merge.
+
+### The dual-registry read
+
+| | GitHub Packages | public npm (`registry.npmjs.org`) |
+|---|---|---|
+| Who, from where | the orchestrator; **fresh shallow clone at the tag** (HEAD `9e1a3106`), `npm ci` exit 0 | **Peter, his terminal, the main checkout** (not a fresh clone); flags `--registry`/`--@3fn:registry`/`--access public`, web 2FA |
+| When | publish 02:08:01Z (`.txt` § 2) | build stamp in the artifact `2026-10-03T02:14:57Z` (`Generated:` line, `dist/DesignTokens.web.css`); **registry publish time `2026-10-03T02:19:49.286Z`** (packument `time["15.0.0"]`, read by me) |
+| sha1 | `65d2ec0b140192bc0f0adc17b9ac6526332a6594` | `48dd8cddbb360ff63d2d87cf7d0ac678ff6cc138` |
+| Files / packed | 1,638 / 6,372,471 B | 1,700 / 6,389,551 B |
+| dist-tags | `latest: 15.0.0` (orchestrator's `verification.md`) | `latest: 15.0.0` (packument, read by me) |
+| My verification | hashed the orchestrator's fetched-back tarball: sha1 = the above, 1,638 entries. **I could not read the GH Packages registry myself** (HTTP 403: the `.env` token lacks package read) | re-fetched from the registry: sha1 = the above |
+
+**Against Ada's pre-release fresh-clone pack** (`02d79ea6`; sha1 `dcd50641…`, 6,372,469 B): the GH artifact's path set is **identical** to her `list-15.txt` (0 diff lines, re-derived by me). The sha1 differs (`65d2ec0b…`, 6,372,471 B), as phase 1 anticipated: a rebuild re-stamps the `Generated:` lines. The public artifact matches neither.
+
+**The divergence, re-derived by me from the two tarballs** (extracted under the orchestrator's scratch `publish-15/x-gh`, `x-pub`; the `x-pub` tarball's sha1 equals my re-fetch):
+- **File set**: 62 paths only in public, 0 only in GH; the 62 equal the orchestrator's `extras.txt` exactly (`dist/tools/release` 24, `dist/build/platforms` 14, `dist/components/core` 14, `dist/build/validation` 6, `dist/tools/integrity` 4).
+- **Common files that differ**: 13. **11 differ in exactly one line, a `Generated:`/`generatedAt` timestamp** (7 of the 8 root token files — `DesignTokens.figma.json` is identical — plus `dist/browser/tokens.css`, `dist/mcp/tool-manifest.json`, `dist/types/generated/TokenTypes.{d.ts,js}`). **2 substantive**: `dist/mcp/docs-mcp.js` (815,228 vs 602,868 B), `dist/mcp/application-mcp.js` (958,866 vs 739,776 B). `dist/mcp/product-mcp.js` is identical.
+- **14.1.0 precedent, checked by me**: both 14.1.0 registry tarballs carry `dist/tools/release` 24 and `dist/build/platforms` 16, and `docs-mcp.js` 599,847 B on both. The public 15.0.0's residue and bundle shape are the historical norm; the GH 15.0.0's are new.
+- **Not re-verified — read from the orchestrator's write-up** (`publish-public/artifact-divergence.md`; `.txt` § 6): the embedded dependency versions (public zod 3.25.76 / ajv 8.20.0; GH zod 4.3.6 / ajv 8.18.0); the cause (`build:mcp` resolves from nested `*/node_modules` when present); "0 require/import hits" for the 62; the CI-lane shape split.
+- **The commit Peter's checkout was at is recorded nowhere.** The shipped tracked content is nonetheless S's: every common file outside `dist/mcp/*.js` is byte-equal modulo the timestamp line, and `git diff --name-only 9e1a3106 439f3e8e` (the head after #272) is this record only, outside `files[]`.
+
+**The deferral's three manual guards against both published artifacts** (`.kiro/issues/2026-10-01-…-package-dist.md` § "2026-10-02 — Peter's ruling"):
+
+| Guard | GH | public |
+|---|---|---|
+| 1. Fresh-clone publish | yes | **no** → **R-2** |
+| 2. Pack listing with scripts on: no `dist/{ios,android,web}/**`; eight root token files; `themes: []` | 0 / 8 of 8 / `git show 9e1a3106:designerpunk.config.ts` L21 `themes: [],` | 0 / 8 of 8. The checkout's config at publish is not recorded; **the effect is shown instead**: the public root token files are byte-equal to the fresh-clone build's except one timestamp line in 7 of them, so that build emitted base |
+| 3. Native-member diff vs 14.1.0: exactly the four disclosed colours | **run by me**: Swift 392 → 388, removed exactly `colorFeedbackSuccessText`, `colorTextDefault`, `colorTextMuted`, `colorTextSubtle`, **added 0**; Kotlin 402 → 398, the four snake-case twins, added 0 | **same result, run by me on the public bytes** (closes the `.txt` § 4 gap "NOT done for the public artifact") |
+
+My member counts differ from Ada's pre-release 407/410 (a different count rule: `static let|var|case` and `val|var`, applied to both sides); the set difference does not depend on the rule.
+
+### The packed artifact against the CHANGELOG and notes — re-read on the published bytes
+
+Phase 1's table was read on Ada's pre-release pack. On **both published artifacts**, by me:
+- `.kiro/agents/` 0; `product-template/` 0; `designerpunk.config.ts` 0; `.kiro/steering/` exactly 8, `personal-note` 0; Inter font files 0, `exports` fonts = `rajdhani`, `figtree`, `commit-mono` only; `dist/{ios,android,web}/` 0; `dist/generator/consumer-entry.js` present, `dist/consumer-canonical/` 126; `token-index/meta.json` = `{"tierDir":"../src/tokens"}`; `version` 15.0.0. ✅ both.
+- "about 6.4MB packed": 6,372,471 B (GH) and 6,389,551 B (public). ✅ both.
+- "browser bundles no longer embed the publishing machine's path": **re-verified** (phase 1 had it as read from Ada's guard): 0 `/Users/` hits in any `dist/` file, both artifacts. ✅ One hit elsewhere, not a bundle and not this claim: observation **O-1**.
+- **R-1, re-verified in the shipped bytes** (phase 1: read from the derivation source only): `dist/consumer-canonical/agents/kenya.md:100` "including your theme Swift", `data.md:107` "including your theme Kotlin", **on both registries**. R-1 stands as written.
+
+### Cold-install smoke
+
+The orchestrator installed each tarball into an empty directory (`publish-15/smoke-gh`, `smoke-pub`; `file:` dependencies on the two tarballs whose sha1 I checked). **Re-run by me in those installs**:
+- `designerpunk --help`: exit 0 on both, byte-identical output (42 lines).
+- JSON-RPC over stdio (the orchestrator's `probe2.js`, my own output files `s2-*`): docs server 8 tools, application server 21; **tool lists and schemas byte-identical**; `get_section` (`token-governance` / "Token Selection Matrix"), `get_token_details` (`space100`), `find_components` ("primary action button"): identical except `responseTimeMs`.
+- Boot logs (orchestrator's): both servers resolve every data root inside `node_modules/@3fn/core`; the application server indexes 34 components, 217/193/33 tokens, 0 warnings.
+
+**Reach**: equivalence is shown for the probed tools and inputs, not for every tool or input. The notes' upgrade rehearsal ran on a fresh-clone tarball, so it covered the GH bundle shape only; the public shape rests on this smoke and on 14.1.0 having shipped it.
+
+### Phase 2 findings
+
+#### R-2: High — the deferral's manual guard #1 did not hold at the public publish; the two registries carry different bytes under one version
+
+- **Promised**: Peter's 2026-10-02 deferral: "Publish from a fresh clone at the merged release SHA, never the working checkout, so no workspace leftovers in `dist/` can ship." Guards to be "run at the 15.0.0 publish by the release's packaging seat (Ada)".
+- **Claimed**: the release notes (R-3).
+- **Shipped**: public npm, the registry consumers install from by default and the one the rail guard checks, carries the working-checkout build: 62 stale `dist/` files and differently-resolved MCP bundles. GH Packages carries the fresh-clone build. A published version's bytes cannot be changed, so the divergence is permanent for 15.0.0.
+- **Severity**: High for the control: a ruled manual guard failed on first use, at the consumer-facing registry. **Consumer impact, measured: low**: the 62 files are inert, and the smoke shows the probed behaviour identical. I am rating the guard failure, not harm.
+- **Why it happened, from the record**: the guard was bound to a seat (Ada) that was not at the step (Peter's terminal, 2FA). The step's own law text, RELEASE-FLOW step 5, reads "`git switch main && git pull`, then `npm publish`" (RS-6, RS-7). **Not a finding against the operator**, who followed the law text at the step.
+- **Ruling**: Peter, 2026-10-03, verbatim **"Option 1"**: accept 15.0.0 as published on both registries, record the divergence, fix the class next. Option 2 (15.0.1 to both registries, deprecate public 15.0.0) not taken.
+- **Route**: remediation → **Ada** (her incident section is in #273; the class fix, a hermetic `build:mcp` plus a `prepublishOnly` guard, waits on an **Ada + Thurgood consult before any brief**). Standards → Thurgood (RS-6, RS-7). The deferral's options B and D were due "right after" the tag. The tag has passed and they are not built; #273's section moves the trigger to "before any 15.0.1 or 15.1.0 publish", effective when #273 merges.
+
+#### R-3: Medium — the release notes and the GitHub release state guard #1 as applied
+
+- **Claimed**: `docs/releases/release-15.0.0.md` L153 and the GitHub release body (same text, published 02:03:31Z, before either publish): "This release is published under three manual guards (fresh-clone publish; packed-contents listing with scripts on; native-member diff against 14.1.0)".
+- **Shipped**: false for public npm (R-2). Guards 2 and 3 hold in effect for both artifacts (table above).
+- The notes file is not in `files[]`; the GitHub release body is public.
+- **Route**: **Ada** (notes author): a dated erratum to the notes. Peter or the orchestrator: whether to edit the GitHub release body. Which text it should carry is theirs (mirror clause).
+
+#### R-4: Low — the `.txt` reads the six 404s as indexing lag; the registry shows the version did not exist yet
+
+- **Claimed**: `.txt` § 1 at `2f55329c`, "Each returned rc=10, the registry still indexing"; § 3, publish time "approx. 02:15Z".
+- **Shipped**: the packument's `time["15.0.0"]` is **02:19:49.286Z**, and the public artifact's build stamp is 02:14:57Z. During the 02:12–02:17Z attempts the version was not yet published, so the 404s were pre-publish, not indexing. ~02:15Z is the build (`prepublishOnly`), not the publish.
+- **Route**: **Ada**. #273 is open, so she may correct the text before it merges; this is not a gate on #273. RS-8 covers the class.
+
+#### O-1 (observation, not a release claim)
+
+`governance/Process-Cross-Reference-Standards.md:501` ships a link to `/Users/peter/.kiro/specs/typography-token-expansion/strategic-flexibility-guide.md`, in both 15.0.0 artifacts and in 14.1.0. It is a broken link to a machine path in a shipped governance doc. → **Thurgood** (Civitas content).
+
+### Phase-1 items marked "not re-run" — status now
+
+| Phase 1 | Now |
+|---|---|
+| Bundles carry no build-machine path (read from Ada's guard) | **re-run**, on both published artifacts: ✅ |
+| R-1's packed text not opened | **re-run** (opened in both published artifacts): stands |
+| Native member diff (Ada's unpacked pre-release files) | **re-run on both published artifacts**: ✅ |
+| A re-pack | **superseded**: the published artifacts are the authority |
+| Root suite | **still not re-run** |
+| Behavioural CLI claims (`sync` report-before-write, refusals, migration, reindexing) | **still not re-run**; only `--help` was run |
+| `/Users/` guard, J deviations self-reported, MIDPOINT/CLOSEOUT counting blocks | unchanged (J's and MIDPOINT's: still read, not re-run) |
+| Platform rows | none; any native claim stays `not re-verified — toolchain unavailable` |
+
+### Peter sample, restated
+
+**`Peter sample (Stacy-signed): 0 / 309`**. Still owed to Peter's seat; not run since phase 1. Trigger (d) stands fired (phase 1 § "Recorded events").
+
+### Phase 2 counting block
+
+No PR has merged since #272 (`origin/main` = `439f3e8e` at this writing), so the population adds no parents, no subtasks and no signing acts. Every phase-1 count stands. The ARMING read is still owed: the `completion-criteria-parity` flip PR has not merged.
+
+### Phase 2 method
+
+**Run by me**: tag check (`ls-remote`, `cat-file`); `gh release view v15.0.0`; the rail guard; the npmjs packument read; public tarball re-fetch and sha1; sha1 and entry count of the orchestrator's fetched GH tarball; file-set and byte diff of the two extracted artifacts; pack guards on both; native member diff vs the 14.1.0 public tarball, on both; 14.1.0 residue and bundle size on both 14.1.0 tarballs; the R-1 and `/Users/` greps; `--help` and the JSON-RPC probe in both smoke installs; `git show 9e1a3106:designerpunk.config.ts`; `gh pr view 273`; reading the `.txt` and the incident section at `2f55329c`.
+
+**Read, not re-run**:
+- the GH Packages registry metadata (403 to my token; from `publish-gh/verification.md` and `.txt` § 2);
+- the GH publish log and the `npm ci` in the clone;
+- the embedded MCP dependency versions and their cause;
+- the "0 require/import" check on the 62;
+- the six rail attempts (`rail-check.log`; per-attempt times not recorded);
+- the orchestrator's smoke installs and boot logs (I re-ran the probes in them; I did not re-install).
+
+**Not recorded by anyone**: the HEAD and `dist/` state of Peter's checkout at publish.
+
+**Disclosure**: the `.txt` is Ada's; the evidence under it is the orchestrator's. I verify their claims and do not author them. This section's findings are mine.
+
+### Open items — updated (carried to release 3 unless resolved first)
+
+1. The **9 J divergents**: unchanged.
+2. `Peter sample (Stacy-signed): 0 / 309` and the **trigger-(d) issue** Thurgood charters.
+3. The **owed-set ladder** rung (RS-3 fork): Thurgood, Peter.
+4. **J for #222/#223**, pending RS-4.
+5. **MP-1 … MP-7**: routing still not evidenced in a committed record.
+6. **R-1** (theme Swift/Kotlin cue): now confirmed in shipped bytes.
+7. **ARMING**: my read at the flip PR's merge.
+8. **#273-merge confirmation line** in this record (replaces phase 1's item 8).
+9. **R-2**: the class fix (Ada + Thurgood consult, then a brief); deferral options B and D, now due before the next publish.
+10. **R-3**: notes erratum (Ada); GitHub release body (Peter or the orchestrator).
+11. **R-4**: `.txt` wording (Ada).
+12. **O-1**: Thurgood.
+
+### Phase 2 standards implications
+
+- **RS-6**: four texts disagree on what the publish is made from and in which order.
+  - RELEASE-FLOW step 5: "Publish from merged `main`: `git switch main && git pull`, then `npm publish`".
+  - `governance/release-management-system.md` L41 (shipped in the package): "publish from merged `main` → then tag and GitHub release".
+  - The deferral's guard #1: a fresh clone at the merged release SHA, never the working checkout.
+  - The two-phase issue's ordering: tag = S, and "the publish is made **from the tag**". 15.0.0 tagged before publishing.
+  - The operator followed the first. #273's incident section already says guard #1 "must be stated in RELEASE-FLOW step 5". The RELEASE-FLOW clarification is tracked in the two-phase issue, and this belongs with it. **Owner**: Thurgood. **Vehicle**: Peter. I name the conflict and do not draft the text.
+- **RS-7**: a manual guard was bound to a seat that does not perform the step. The deferral assigned all three guards to Ada; the public publish is Peter's terminal step. Nothing put guard #1 in front of the person at that step. The class question is where a release's manual guards must live so that the step's operator meets them. Thurgood owns it, with Peter.
+- **RS-8**: the step-6 record format does not require the registry's own publish time (`time[<v>]`). Without it, a 404 read as "indexing" and a 404 read as "not yet published" cannot be told apart from the record. R-4 is that case. Thurgood (RELEASE-FLOW step 6) owns it.
+- **RS-9**: the two-phase form names #273's merge as phase 2's trigger. It does not say whether phase 2 may be drafted against an open PR's commit, as this one was on Peter's instruction. If it may, the form also owes the confirmation-at-merge line this section carries as item 8. Fold into the two-phase issue (Thurgood).
 
 ---
 
