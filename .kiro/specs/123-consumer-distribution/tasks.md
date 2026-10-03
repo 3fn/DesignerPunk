@@ -183,7 +183,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
       - (ii) iOS and Android are not supported yet: their components ship as reference source, not a build input (Ada's caveat 1);
       - (iii) on web, a theme the consumer registers does not yet emit (Ada's caveat 2).
     - The sentence sits **before step 1** of the install doc, and the same string appears on three surfaces: the install doc, the README and the release-3 CHANGELOG entry (Tasks 19 and 22).
-    - **iOS and Android follow** as the completeness spec. Spec 129 is currently a placeholder: `.kiro/specs/129-consumer-generation-completeness/design-outline.md`, PR #295, open at this writing.
+    - **iOS and Android follow** as the completeness spec, Spec 129: its design-outline stub with carried notes is `.kiro/specs/129-consumer-generation-completeness/design-outline.md` (#295, `e25fd512`).
     - The T2 (B) sentence above is overtaken on `main`: README § "Getting Started" has advertised `init` since `a6481d71` (2026-05-15), and #271 narrowed it. Task 19 reconciles the README to the scope sentence; it does not remove the section.
   - *(Amendment 2026-10-03 — **the G2 hold**. Peter's R-5.3, agreed: "nothing that carries the consumer profile is tagged or published until a HOLDS verdict, or Peter lifts it by a dated record.")*
     - **Every `@3fn/core` version carries the consumer profile** (`dist/consumer-canonical/**` is in `files[]`). So, until U3g's cycle-2 verdict reads HOLDS (Task 30) or Peter commits a dated record lifting the hold, **no version is tagged or published**. That covers release 3 and any 15.0.x patch.

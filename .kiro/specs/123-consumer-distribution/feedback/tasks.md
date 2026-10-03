@@ -1095,3 +1095,386 @@ All five land as I asked:
 **Standards implications**: none. The conditions apply existing trigger text to a moved carrier.
 
 ---
+
+
+## U3 amendment round (2026-10-03)
+
+**Amendment branch**: `chore/123-u3-amendment`. It was cut from `main` @ `79a3b3bc`, and `main` @ `e25fd512` (#295) was merged in.
+**Artifacts under review**: `tasks.md` (§ "Declared Merge Units", § "How the units run", § "Expected release count", § "Split tripwire", § "Delegated-tier plan", the post-unit obligations, Tasks 19–22, and the new UNIT 3g with Tasks 29–30) and `design.md` (errata dated 2026-10-03 to the overview, C5, C19, C20's table, C23, C24, C26, C27 and the catalog).
+**Author**: Thurgood (formalization seat). **Round form**: full (Peter's R-6: "Full.").
+
+### Context for Reviewers
+
+**What this round decides**: whether the amended U3 rows, the new U3g unit and the design errata are correct and verifiable before `task/123-u3-onboarding` is cut. The amendment grants nothing until it merges (T1-(B)).
+
+**Peter's rulings, 2026-10-03** (recorded by the orchestrator; quoted where Peter wrote them; settled, so do not relitigate):
+
+| # | Ruling | Peter's words | Where it lands |
+|---|---|---|---|
+| R-1 | One document with a marked install region; INSTALL.md is a **committed** derived file with an identity test; Thurgood cleans the reference remainder in the same pass | "I think it could stay as one document unless there's a strong reason todo otherwise. It really only should be necessary to be consumed by the orchestrating or primary agent once, I think." · assent: "Re: 1, 2, & 4, agreed" | Task 19; design C23 |
+| R-2 | Change the guide when the install process changes, with the why recorded; one light record-first ballot (B-U3) inside 19.4 for this rewrite; a new platform is a new section | "I think we should be thoughtful about why we're changing them and aware of when we need to change them — like if we add something to the install process. Example: we have on the roadmap to support React and React Native, and that might change the Integration Guide, preloaded specs, etc." | Task 19; design C23 |
+| R-3 | Release 3 is web only; iOS and Android follow as a fast follow; Spec 129 exists | "I *think* we said we'd say it's ready for building web only and then finish the iOS and Android work as a fast follow." · "let's at least create a spec and a design-outline placeholder with notes" | § "Expected release count"; Task 19; design C23 |
+| R-4 | Mechanism B (always emit the reference; create the note; warn when unfilled); the note content is a few prompted slots, an agent walkthrough offer, an edited example of Peter's note, no CLI wizard, worded by Leonardo; one added subtask (22.0) | "I'd like to maybe provide mine as an example, but I was also thinking something like a Mad Libs format, or walkthrough with agent support, might be less burdensome. I would like to encourage users to share what they and/or their organization value as well as some of their principles — especially those around communication and collaboration." | Task 22; design C19, C26 |
+| R-5 | G2 cycle 2 as its own unit beside U3, with Stacy's four conditions, the sizing run first and a ceiling, the hold, "implemented" = ran on shipped material, Thurgood's ruling as its own record first, and Stacy's attacks committed first | "I support whatever decision that need to be made to make sure this issue is solved optimally — not with a bunch of workarounds that create more work than necessary." · "Yes, and good idea." · "I agree with all the recommendations." | UNIT 3g (Tasks 29–30); § "Expected release count" (the hold); Task 22 (the backstop and the no-overlap test) |
+| R-6 | A full feedback round, with an existence check and Stacy's seven lens items | "Full." | this section |
+| R-7 | U3 stays one unit | "Re: unit size, keep it as one unit" | § "Split tripwire" (recorded as his read of the tripwire, not as a re-baselined threshold) |
+| R-8 | The note file is its own template, overwritten by the user's answers | "I was thinking myself the doc itself could be the template, and then it's just replaced/updated/overwritten with the user's response." | Task 22's detection rule; design C26 |
+| R-9 | Offer the `.gitignore` block to repos born on 15.0.0: ask before writing, only when git is not already ignoring `.designerpunk/`, and report when non-interactive | "Re: walkthrough 1, offer" | Task 20; design C24, catalog |
+| R-10 | Trigger (d) uses the hybrid (option 1+2) | "Re: walkthrough 2, hybrid" | **named only**, in § "Expected release count". Its vehicle (the issue record plus a § 5.3 ballot amendment) is **not** part of this amendment |
+
+**Inputs this draft was built from** (session scratch, not citable records; each owner's own words are in their R1 entry below):
+- Ada's, Leonardo's, Stacy's and Lina's U3-kickoff reads (Lina's in three rounds);
+- Thurgood's R1/R2 kickoff reads;
+- Peter's Kiro measurement;
+- Lina's provisional G2 sizing.
+
+**Two measurements, cited by content, because the scratch is not a record:**
+- **Kiro, missing `file://` resource**, run by Peter by hand on 2026-10-03 (`kiro-cli 2.12.1`, agent `probe`, `resources: ["file://.designerpunk/personal-note.local.md"]`).
+  - With the note absent: `agent validate` exit 0; chat exit 0; no warning, error or prompt; `/context show` lists `.designerpunk/personal-note.local.md 0.0% (no matches)`, the same form as Kiro's own default `AGENTS.md` / `README.md` entries.
+  - **Reading**: a silent skip, so mechanism B's residual is benign. **Lina records this in `.kiro/issues/2026-10-01-c19-personal-note-warning-unimplemented.md` in her `chore/` PR.**
+  - Not measured: the all-`TODO` case interactively, and **CC's `@`-import of a missing file, which stays unmeasured until U5 (C8(c))**.
+- **G2 cycle-2 sizing, provisional, 2026-10-03** (Lina, read-only over `main` @ `79a3b3bc`; to be re-run as U3g's first subtask on the ruled text).
+  - 168 re-pointed rows; **162 pass, 6 fail under all four clause-2 readings tried**.
+  - All six are frontmatter entries that render into the Kiro agent JSON, whose sidecar has one combined attribution span. They are fixed by per-entry spans in `adapters/kiro.ts`, at the cost of one re-sign (Stacy, `knowledgeBases[spec-summaries]`) and one lock refresh. No disposition is re-authored.
+  - **Two readings Lina names as blow-ups, which Thurgood's ruling must confirm or reject** (Task 29, criterion 1):
+    - (α) overlay `render` spans not counting as derivation → 141 rows fail;
+    - (β) extending the check to `superseded-by` rows → 20 fail by construction, which needs a different instrument.
+  - **Adjacent observation (Lina, unverified as to cause)**: #285 changed one line each in `canonical/profiles/consumer/{stacy,thurgood}.{dispositions.yaml,overlay.md}`, while `canonical/_consumer-output` did not change. U3g's first guard run will tell whether the change does not reach the rendering or the render is stale.
+
+**Stacy's § 1 question is answered by fact.** Under mechanism B, U3 changes no rendered unit: the note reference is already emitted at 15.0.0 (all eight committed Kiro agent JSONs carry it; verified below), and the note is a template member with no partition and no rows. Her no-overlap test stays as the mechanical proof (Task 22).
+
+**Scope — what is under review**: every hunk dated 2026-10-03 in `tasks.md` and `design.md` on this branch. The ledger, with each hunk's status:
+
+| # | Target | Hunk | Status |
+|---|---|---|---|
+| A1 | § "Expected release count" | release-3 scope sentence (three parts); the G2 hold; what release 3's RELEASE pass needs (Stacy § 6) | ruled (R-3, R-5.3, R-10); **wording is Leonardo's and Ada's in this round** |
+| A2 | § "Declared Merge Units", § "How the units run", § "Split tripwire", § "Delegated-tier plan", post-unit obligations; UNIT 3g (Tasks 29–30) | the U3g unit | ruled (R-5); **FK-4 and FK-5 open** |
+| A3 | Task 19 | marked region; committed derivation; remainder sweep; B-U3; platform sections; scope sentence; labels; README reconciled; 119-B lint defined; guards; lock | ruled (R-1, R-2, R-3); **Kenya/Data consult on the label causes** |
+| A4 | Task 19 / Task 22 | the packaging subtask | **FK-2 open** |
+| A5 | Task 20 | 20.3 after 22.1; target-free region source; COMMIT-POLICY ships; R-9's offer and report | ruled (R-9); **Leonardo's `generate` warning is his position, not ruled** |
+| A6 | Task 21 | location; 15B.5 coverage; P3 tiering; 21.3 to Lina | settled between owners (Ada, Lina, Thurgood) |
+| A7 | Task 22 | mechanism B; note content (R-8 detection rule); 16.6 flips; named-default notice; scaffold path and guard; G2 backstop; no-overlap test; CHANGELOG; lock | ruled (R-4, R-5, R-8); **the detection rule is confirmed by Lina and Leonardo**; **FK-1 open** |
+| D1 | design C19, C26 (+ C20 table note) | mechanism B; note content; detection rule | ruled (R-4, R-8) |
+| D2 | design catalog | three new rows (unfilled-note warning; `.gitignore` offer; `.gitignore` report) | **wording in this round** (Leonardo; Lina) |
+| D3 | design overview, C5, C23, C24, C27 | shipped artifacts; region and derivation; R-9; scaffold path | ruled, except **FK-1** inside C5 |
+
+**What is NOT under review:**
+- the rulings themselves;
+- **D4**, Thurgood's G2 spec-text ruling (its own PR, merged by Peter before U3g's machinery; Stacy pre-reads; Lina confirms buildability; Peter's R-5.5);
+- the trigger-(d) issue record and the § 5.3 ballot amendment (R-10's vehicle);
+- release-prep rows (Ada's publish-path rows, the `check:drift` class fix, the 10e scan);
+- any `.kiro/issues/**` edit;
+- any `canonical/**` or code change.
+
+**Open forks** (written into the rows both ways; the pick is Peter's after owners' positions are in):
+
+| Fork | Question | Positions |
+|---|---|---|
+| **FK-1** | Where the note template and example live in the package | (a) root `templates/…`, design C5/C20 as written — **Ada**. (b) `src/cli/templates/…` — **Lina, Thurgood** |
+| **FK-2** | When the packaging subtask runs, and who writes it | (a) 22.3b, after 22.3, Ada writes every hunk — **Ada, Thurgood** (Thurgood's R1 "19.0 first" is withdrawn: ADD rows go red until their files exist). (b) 19.0 `files[]` only, early, with the rows landing alongside their files — **Lina** |
+| **FK-4** | The form of Thurgood's G2 ruling | design C15 erratum plus a recorded reading, vs a `requirements.md` edit (which makes the four "next requirements touch" folds owed). R-5.4 is ruled either way |
+| **FK-5** | Does the profile corrections batch (intro reword, Kiro blank line, R-1's cue, divergents 5–9) ride U3g as 29.5? | (a) yes, one re-sign round — **Lina, Thurgood**. (b) a separate PR. Not ruled |
+
+**Also open, not forks**:
+- the final wording of the scope sentence (Leonardo, Ada);
+- the unfilled-note warning and the two `.gitignore` rows (Leonardo, Lina);
+- the walkthrough-offer line and its frequency (Leonardo);
+- the edited example note (Leonardo words it, Peter approves it);
+- Leonardo's `generate` warning (his position, R-9's companion);
+- the 20.3 fixture home (Lina).
+
+**U3's size, reconciled (R-7 RULED, one unit)**:
+- **18 subtasks against the declared 16**, threshold +3:
+  - 19.1–19.5 (5);
+  - 20.1–20.3 (3);
+  - 21.1–21.3 (3);
+  - 22.0, 22.1, 22.2, 22.3, 22.3b (19.0 under FK-2 (b)), 22.4, 22.5 (7).
+- B-U3 folds into 19.4; C19's callers, R3 and the 16.6 flips into 22.1; the 119-B lint into 19.2. No 22.1a, since Lina withdrew it under B.
+- **One slot remains before the tripwire fires.**
+- **U3g**: 12 declared (11 under FK-5 (b)), threshold +3.
+
+**Corrections to the inputs, stated so nobody builds on them:**
+1. **The named-default notice's catalog row EXISTS**: design.md "bare `init` default notice (A2)" (L935 on this branch; L886 at `79a3b3bc`), verbatim Leonardo A2. Lina R1 § 0 fact 3 ("no named-default notice row") misread the catalog's range. What is missing is the `errorCatalog.ts` function (0 hits for `no --target given`). 22.2 adds it.
+2. **Ada's "root-suite identity test"** is placed under `npm run test:scripts` instead. `tsconfig.json` has `rootDir: ./src`, so a `src/` test importing `scripts/derive-install-doc.ts` would break full `tsc`. `test:scripts` is a `lane-timing.yml` step with a floor, and `typecheck:scripts` covers the new files.
+3. **Thurgood R1's "19.0 first"** is withdrawn (Ada: ADD rows red until their files exist). **Thurgood's `.gitignore` position flipped to OFFER before R-9 ruled it.**
+4. **Thurgood R1's "`122-diff-guard` red by design until the lock refresh"** is withdrawn. A stale `inputClosure` with unmoved `outputs` runs `full-run-green` (Lina, `diff-guard.ts` L276–301).
+
+### Reviewers, and why each is tagged
+
+| Reviewer | Why |
+|---|---|
+| **Stacy (REQUIRED)** | Verifier. The lens (her § 7) on every amended row; the U3g unit's verifiability (attack-first ordering, condition (d)'s instrument, the consequence texts' freeze, the hold's wording); whether release 3's RELEASE-pass list (her § 6) is complete |
+| **Lina** | Executor of Tasks 20, 22, 29 and 30, and of 21.3. Whether the widened Primary Artifacts are complete; the detection rule (R-8); FK-1 and FK-2; the U3g subtask list and ceiling as transcribed |
+| **Ada** | Packaging owner and `pack-assert` maintainer: FK-1 and FK-2; the C5 erratum; the scope sentence's two caveats; the label strings |
+| **Leonardo** | Experience owner and Task 19's reviewer: the region's structure conditions; the scope sentence wording; the README reconciliation; the note template, offer line and example; the unfilled-warning wording; his `generate` warning; the 22.3 guard binding |
+| **Kenya** | iOS: are Task 3.5's label causes still true (`ContainerCardBase.ios.swift` L816's unterminated `/**`, still present on this branch; the `\.dpTheme` surface nothing defines; no `Package.swift`)? And under FK-5 (a), the re-sign round for R-1's cue and divergents 6/7/9 |
+| **Data** | Android: the same label-cause confirmation (`LocalDPTheme`; no Gradle module); and under FK-5 (a), R-1's cue and divergents 5/8 |
+
+### Existence table (Peter's R-6 mechanical step)
+
+Every file, command, check, catalog row and design line the amended rows name.
+
+**Classification**:
+- `ABSENT` paths that the rows create read **`built here (<subtask>)`**;
+- named things nobody has made yet read **`MISSING → owner`**;
+- `EXISTS` rows carry `@ <last-touch sha>`.
+
+**Drift** (Stacy's lens item 2): `git log --first-parent --format=%h 15010947..HEAD -- <path>`, where `15010947` is the tasks-round merge (#198). Each hit was read against its row (summary below).
+
+**Command** (run from the worktree root at HEAD `394b6bd5`; script in session scratch):
+```bash
+# per path: existence, last-touch sha, first-parent drift since the tasks-round merge
+git ls-files -- "$p" | head -1                       # empty -> ABSENT
+git log -1 --format=%h -- "$p"
+git log --first-parent --format=%h 15010947..HEAD -- "$p"
+```
+**Output, verbatim:**
+```text
+EXISTS | governance/DesignerPunk-Integration-Guide.md | @ 8d7d3ad1 | drift: 8d7d3ad13 669b51b09 d566b30ff 
+EXISTS | README.md | @ 9e1a3106 | drift: 9e1a3106a 
+EXISTS | CHANGELOG.md | @ 9e1a3106 | drift: 9e1a3106a 669b51b09 d566b30ff 
+EXISTS | package.json | @ 762b8c20 | drift: 762b8c209 9e1a3106a 669b51b09 90fb0e71e d566b30ff 
+EXISTS | src/cli/shared/vocabulary.ts | @ 669b51b09 | drift: 669b51b09 
+EXISTS | src/cli/shared/errorCatalog.ts | @ d949ce8b | drift: d949ce8b7 669b51b09 d566b30ff 
+EXISTS | src/cli/init.ts | @ 669b51b09 | drift: 669b51b09 d566b30ff 
+EXISTS | src/cli/designerpunk.ts | @ d949ce8b | drift: d949ce8b7 669b51b09 d566b30ff 
+ABSENT | src/cli/generate.ts
+EXISTS | src/cli/attach.ts | @ 669b51b09 | drift: 669b51b09 
+EXISTS | src/cli/sync/index.ts | @ 669b51b09 | drift: 669b51b09 d566b30ff 
+EXISTS | src/cli/sync/Classifier.ts | @ 669b51b09 | drift: 669b51b09 d566b30ff 
+EXISTS | src/cli/templates | @ d566b30ff | drift: d566b30ff 
+EXISTS | src/cli/__tests__/init.test.ts | @ 669b51b09 | drift: 669b51b09 d566b30ff 
+EXISTS | src/cli/__tests__/attach.test.ts | @ d949ce8b | drift: d949ce8b7 669b51b09 
+EXISTS | src/cli/__tests__/errorCatalog.test.ts | @ d949ce8b | drift: d949ce8b7 669b51b09 d566b30ff 
+EXISTS | src/cli/__tests__/sync.migration.test.ts | @ 669b51b09 | drift: 669b51b09 d566b30ff 
+EXISTS | src/cli/__tests__/sync.region.test.ts | @ 669b51b09 | drift: 669b51b09 
+EXISTS | src/cli/__tests__/fixtures | @ 669b51b09 | drift: 669b51b09 d566b30ff 
+EXISTS | tests/consumer-integration.test.ts | @ 669b51b09 | drift: 669b51b09 d566b30ff 
+EXISTS | tools/agent-generator/consumer-entry.ts | @ 669b51b0 | drift: 669b51b09 
+EXISTS | tools/agent-generator/diff-guard.ts | @ 669b51b0 | drift: 669b51b09 
+EXISTS | tools/agent-generator/render.ts | @ 669b51b0 | drift: 669b51b09 
+EXISTS | tools/agent-generator/adapters/kiro.ts | @ 669b51b0 | drift: 669b51b09 24c7f0603 
+EXISTS | tools/agent-generator/regrounding/derivation.ts | @ 669b51b0 | drift: 669b51b09 
+EXISTS | tools/agent-generator/regrounding/check-catalog.ts | @ 669b51b0 | drift: 669b51b09 
+EXISTS | tools/agent-generator/__tests__/derivation.test.ts | @ 669b51b0 | drift: 669b51b09 
+EXISTS | tools/agent-generator/__tests__/derivation.frontmatter.test.ts | @ 669b51b0 | drift: 669b51b09 
+EXISTS | tools/agent-generator/__tests__/semantics-guard.test.ts | @ 669b51b0 | drift: 669b51b09 
+EXISTS | tools/agent-generator/__tests__/semantics-guard.fixture.test.ts | @ 669b51b0 | drift: 669b51b09 
+EXISTS | tools/agent-generator/__fixtures__/semantics-guard | @ 08637770 | drift: 08637770a 669b51b09 
+EXISTS | tools/agent-generator/jest.config.js | @ 9297488ed | drift: none
+EXISTS | canonical/generated.lock | @ 8bd4bb50 | drift: 8bd4bb505 08637770a 9e1a3106a 669b51b09 2da748642 d847230d7 183140558 465250948 d455fe347 24c7f0603 da9404b25 314dbaa75 
+EXISTS | canonical/profiles/consumer/kenya.overlay.md | @ 669b51b0 | drift: 669b51b09 
+EXISTS | canonical/profiles/consumer/data.overlay.md | @ 669b51b0 | drift: 669b51b09 
+EXISTS | canonical/profiles/consumer | @ 08637770 | drift: 08637770a 669b51b09 d847230d7 d455fe347 14aa8c23a 24c7f0603 
+EXISTS | canonical/operative-sets | @ 08637770 | drift: 08637770a 669b51b09 d847230d7 d455fe347 14aa8c23a 24c7f0603 
+EXISTS | canonical/agents | @ 08637770 | drift: 08637770a 669b51b09 d847230d7 183140558 d455fe347 
+EXISTS | canonical/_consumer-output | @ 669b51b0 | drift: 669b51b09 
+EXISTS | .claude/agents | @ 08637770 | drift: 08637770a 669b51b09 d847230d7 183140558 d455fe347 24c7f0603 
+EXISTS | .kiro/agents | @ 08637770 | drift: 08637770a 669b51b09 d847230d7 183140558 d455fe347 24c7f0603 
+EXISTS | .kiro/steering | @ d847230d | drift: d847230d7 183140558 d455fe347 da9404b25 314dbaa75 
+EXISTS | scripts/pack-assert.ts | @ 762b8c20 | drift: 762b8c209 669b51b09 d566b30ff 
+EXISTS | scripts/release-publish.ts | @ 762b8c20 | drift: 762b8c209 
+EXISTS | scripts/check-section-citations.ts | @ c4b2581b8 | drift: none
+EXISTS | scripts/check-id-uniqueness.ts | @ 69a6bd331 | drift: none
+EXISTS | scripts/check-package-name-drift.js | @ 669b51b09 | drift: 669b51b09 
+EXISTS | scripts/jest.config.js | @ 5b86393be | drift: none
+EXISTS | tsconfig.scripts.json | @ 696458fc3 | drift: none
+EXISTS | governance/classification-map.md | @ 8bd4bb50 | drift: 8bd4bb505 54d35a2f6 70f8fe54f 669b51b09 dff78bcde 2da748642 d847230d7 183140558 d455fe347 d566b30ff 314dbaa75 
+EXISTS | .github/workflows/lane-timing.yml | @ dec738aa | drift: dec738aa1 1453dad6c 465250948 90fb0e71e 
+EXISTS | .github/workflows/consumer-guard.yml | @ 90fb0e71e | drift: 90fb0e71e 
+EXISTS | .github/workflows/agent-generator.yml | @ 669b51b0 | drift: 669b51b09 90fb0e71e 
+EXISTS | .github/workflows/section-citations.yml | @ 90fb0e71e | drift: 90fb0e71e 
+EXISTS | .kiro/docs/ballots/2026-10-02-integration-guide-native-scoping.md | @ 8d7d3ad1 | drift: 8d7d3ad13 
+EXISTS | .kiro/docs/ballots/2026-10-01-signing-act-chain.md | @ dff78bcd | drift: dff78bcde 2da748642 
+EXISTS | .kiro/docs/ballots/2026-10-03-hermetic-publish-path.md | @ 54d35a2f | drift: 54d35a2f6 b934fa736 1453dad6c 1d75c5e58 
+EXISTS | .kiro/specs/123-consumer-distribution/requirements.md | @ 669b51b0 | drift: 669b51b09 00078f113 24c7f0603 406eed1f9 d566b30ff 
+EXISTS | .kiro/specs/123-consumer-distribution/completion/task-3-5-completion.md | @ d566b30ff | drift: d566b30ff 
+EXISTS | .kiro/specs/123-consumer-distribution/completion/re-grounding-pass-four.md | @ 669b51b0 | drift: 669b51b09 
+EXISTS | .kiro/specs/123-consumer-distribution/completion/claims-pass-release-15.0.0.md | @ 0a299f2d | drift: 0a299f2d0 42b83d233 439f3e8e3 
+EXISTS | .kiro/specs/128-react-react-native-platform-admission | @ 869b2972 | drift: 869b29722 
+EXISTS | .kiro/specs/129-consumer-generation-completeness/design-outline.md | @ e25fd512 | drift: 394b6bd5d 
+EXISTS | .kiro/issues/2026-10-01-c19-personal-note-warning-unimplemented.md | @ ad17a22a | drift: ad17a22a8 
+EXISTS | .kiro/issues/2026-10-02-g2-pass-four-findings.md | @ 4a19ba6d | drift: 4a19ba6d3 e30ee6d8f 
+EXISTS | .kiro/issues/2026-10-02-consumer-generation-completeness-spec.md | @ 4a19ba6d | drift: 4a19ba6d3 
+EXISTS | .kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md | @ 26f2a50b | drift: 26f2a50be 
+EXISTS | .kiro/issues/2026-10-02-ground-truth-intro-line-stale-generated.md | @ e30ee6d8 | drift: e30ee6d8f 
+EXISTS | .kiro/issues/2026-10-02-kiro-ground-truth-heading-no-blank-line.md | @ e30ee6d8 | drift: e30ee6d8f 
+EXISTS | .kiro/issues/2026-10-03-stacy-signed-sample-trigger-d.md | @ cb28f011 | drift: cb28f0112 
+EXISTS | .kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md | @ 80bbc9fa | drift: 80bbc9fa8 08637770a 54d35a2f6 
+ABSENT | .kiro/specs/123-consumer-distribution/design-inputs
+ABSENT | docs/consumer/INSTALL.md
+ABSENT | docs/consumer/COMMIT-POLICY.md
+ABSENT | templates/personal-note.template.md
+ABSENT | src/cli/templates/personal-note.template.md
+ABSENT | src/cli/templates/starter-specs
+ABSENT | src/cli/templates/product
+ABSENT | src/cli/shared/personalNote.ts
+ABSENT | src/cli/shared/gitignoreRegion.ts
+ABSENT | src/cli/__tests__/personalNote.test.ts
+ABSENT | src/cli/__tests__/fixtures/policy-applied-born-repo
+ABSENT | scripts/derive-install-doc.ts
+ABSENT | scripts/__tests__/install-doc.test.ts
+ABSENT | scripts/__tests__/starter-specs.test.ts
+ABSENT | tools/agent-generator/__tests__/derivation.shipped-profile.test.ts
+ABSENT | .kiro/specs/123-consumer-distribution/completion/u3g-sizing.md
+ABSENT | .kiro/specs/123-consumer-distribution/completion/g2-cycle-2-attacks.md
+ABSENT | .kiro/specs/123-consumer-distribution/completion/g2-cycle-2-consequence-texts.md
+ABSENT | .kiro/specs/123-consumer-distribution/completion/re-grounding-g2-cycle-2.md
+```
+
+**How the `ABSENT` paths classify:**
+
+| Path | State |
+|---|---|
+| `src/cli/generate.ts` | **corrected by this amendment**: the row reads `src/cli/designerpunk.ts` (`runGenerate`) |
+| `docs/consumer/INSTALL.md` | built here (19.4) |
+| `docs/consumer/COMMIT-POLICY.md` | built here (20.1) |
+| `templates/personal-note.template.md` / `src/cli/templates/personal-note.template.md` | built here (22.1), at FK-1's path |
+| `src/cli/templates/starter-specs` | built here (21.1, 21.2) |
+| `src/cli/templates/product` | built here (22.3) |
+| `src/cli/shared/personalNote.ts`, `src/cli/__tests__/personalNote.test.ts` | built here (22.1) |
+| `src/cli/shared/gitignoreRegion.ts` | built here (20.2) |
+| `src/cli/__tests__/fixtures/policy-applied-born-repo` | built here (20.3); **Lina confirms the home** |
+| `scripts/derive-install-doc.ts` | built here (19.4) |
+| `scripts/__tests__/install-doc.test.ts` | built here (19.2, 19.4) |
+| `scripts/__tests__/starter-specs.test.ts` | built here (21.1, 21.2) |
+| `tools/agent-generator/__tests__/derivation.shipped-profile.test.ts` | built here (29.4) |
+| `.kiro/specs/123-consumer-distribution/design-inputs` | built here (22.0, 22.3; Leonardo's write scope) |
+| `completion/u3g-sizing.md` | built here (29.0) |
+| `completion/g2-cycle-2-attacks.md` | built here (Stacy, before 29.1; outside the line) |
+| `completion/g2-cycle-2-consequence-texts.md` | built here (30.0) |
+| `completion/re-grounding-g2-cycle-2.md` | built here (Stacy's verdict, 30.1) |
+| `.kiro/docs/ballots/<date>-123-b-u3-install-guide.md` | built here (19.4) |
+
+**Commands, lane steps, catalog rows, design referents and code facts** (run at HEAD `394b6bd5`):
+```text
+EXISTS | npm run test | jest --config jest.functional.config.js
+EXISTS | npm run test:scripts | jest --config scripts/jest.config.js
+EXISTS | npm run test:agent-generator | jest --config tools/agent-generator/jest.config.js
+EXISTS | npm run test:pack-contents | tsx scripts/pack-assert.ts --pack
+EXISTS | npm run test:consumer | jest --roots='<rootDir>/tests' --testMatch='**/consumer-integration.te
+EXISTS | npm run typecheck:scripts | tsc -p tsconfig.scripts.json
+EXISTS | npm run check:section-citations | tsx scripts/check-section-citations.ts
+EXISTS | npm run check:id-uniqueness | tsx scripts/check-id-uniqueness.ts
+EXISTS | npm run check:drift | node scripts/check-package-name-drift.js
+EXISTS | npm run check:122:diff-guard | tsx tools/agent-generator/diff-guard.ts
+EXISTS | npm run check:completion-criteria-parity | tsx scripts/check-completion-criteria-parity.ts
+lane-timing.yml step 'Run scripts/\*\* test suite (npm run test:scripts)': 1
+lane-timing.yml step 'Run tools/agent-generator/\*\* test suite (npm run test:agent-generator)': 1
+lane-timing.yml step 'Pack contents (npm run test:pack-contents)': 1
+git check-ignore -q .designerpunk/ (this repo) exit=1
+design.md '| bare `init` default notice (A2) |' → L935
+design.md '| **generate created the personal note** (Le-R1) |' → L973
+design.md '| **personal-note naming** (erratum, Le-T1; `init` output) |' → L977
+design.md '| **restart line — sequenced**' → L974
+design.md '| `untracked-new` |' → L954
+design.md '| `init` in a born repo (A7) |' → L929
+design.md '#### C19.' → L657
+design.md '#### C23.' → L731
+design.md '#### C24.' → L761
+design.md '#### C26.' → L786
+design.md '#### C27.' → L804
+design.md '#### C5.' → L258
+design.md '#### C15.' → L546
+design.md '| **personal note unfilled**' → L978
+design.md '| **`.gitignore` block — offer**' → L979
+design.md '| **`.gitignore` block — report**' → L980
+95:export function initBornRepoMessage(root: string): string {
+110:export function restartLineSequencedMessage(): string {
+127:export function personalNoteNamingMessage(): string {
+errorCatalog.ts named-default function: 0
+104:export const TEMPLATE_MEMBERS: readonly string[] = Object.freeze(['personal-note']);
+378:    if (TEMPLATE_MEMBERS.includes(member.id)) {
+379:      delivered.push(member); // the consumer's own file (C19) — referenced, never emitted here
+405:  for (const id of TEMPLATE_MEMBERS) docIdToPath[id] = TEMPLATE_MEMBER_PATH;
+408:    delivered.map((m) => [m.id, TEMPLATE_MEMBERS.includes(m.id) ? TEMPLATE_MEMBER_PATH : `${CC_IDENTITY_DI
+518:  const identityIds = alwaysSetIds.filter((id) => !gen.TEMPLATE_MEMBERS.includes(id));
+canonical/_consumer-output/kiro/.kiro/agents/ada.json:1
+canonical/_consumer-output/kiro/.kiro/agents/ada.json.attribution.json:0
+canonical/_consumer-output/kiro/.kiro/agents/ada-prompt.md.attribution.json:0
+canonical/_consumer-output/kiro/.kiro/agents/data-prompt.md.attribution.json:0
+canonical/_consumer-output/kiro/.kiro/agents/data.json.attribution.json:0
+canonical/_consumer-output/kiro/.kiro/agents/kenya.json:1
+canonical/_consumer-output/kiro/.kiro/agents/data.json:1
+canonical/_consumer-output/kiro/.kiro/agents/kenya-prompt.md.attribution.json:0
+canonical/_consumer-output/kiro/.kiro/agents/leonardo.json.attribution.json:0
+  if (lock && lock.inputClosure === inputHash && lock.outputs === outputsHash) {
+    return { verdict: 'no-op-green', freshness };
+  }
+  const fullRunReason: GuardResult['fullRunReason'] = !lock
+    ? 'no-lock'
+export const INPUT_CLOSURE_ROOTS: readonly string[] = [  'canonical',  'skills',  'tools/agent-generator',  'mcp-server/src',  'application-mcp-server/src',  'product-mcp-server/src',  'governance', // resolve-by-id root (S-D3)  '.kiro/steering', // resolve-by-id root (S-D3) ]; export const INPUT_CLOSURE_FILES: readonly string[] = ['package.json', '.kiro/hooks/complete-task.sh']; 
+1:/**
+/**
+ada.json:1 data.json:1 kenya.json:1 leonardo.json:1 lina.json:1 sparky.json:1 stacy.json:1 thurgood.json:1   # personal-note.local.md in each committed Kiro agent JSON (canonical/_consumer-output/kiro/.kiro/agents/)
+/**   # src/components/core/Container-Card-Base/platforms/ios/ContainerCardBase.ios.swift L816 — the unterminated comment, still present
+```
+
+**Rows, by class:**
+
+| Named thing | State |
+|---|---|
+| the named-default notice catalog row | exists (design.md, "bare `init` default notice (A2)") |
+| its `errorCatalog.ts` function | built here (22.2) |
+| the unfilled-note warning, `.gitignore` offer and report rows | exist **as of this amendment** (design errata); their `errorCatalog.ts` functions are built here (22.1, 20.2) |
+| `git check-ignore` | exists (git). This repo does not ignore `.designerpunk/` (exit 1), which matters only to the posture gate: the note is never created in the steward checkout |
+| Spec 128 directory | exists (`.kiro/specs/128-react-react-native-platform-admission` @ `869b2972`) |
+| Spec 129 outline | exists (@ `e25fd512`) |
+| Thurgood's G2 spec-text ruling record | **MISSING → Thurgood**: its own PR, before 29.1. Form is FK-4 |
+| the C19 issue's Kiro measurement section | **MISSING → Lina**: her `chore/` PR |
+| C23's "section order is unchanged from the draft" referent | **MISSING → Thurgood**: no committed list of the draft's sections was found in design history (searched from `5e98bd8f`). The 19.1 instruments block states the order and its source, or Leonardo confirms it here |
+| Peter's dated approval of the example note | built here (22.0) |
+| the RS-1 erratum and the § 5.3 trigger-(d) amendment | **MISSING → Thurgood**: release-3 needs, outside U3 |
+| `EXPECTED_CONTEXTS` change | none expected: 29.4's lean is an existing `test:agent-generator` step. A new context would be Peter's named act |
+
+**Drift summary, each read against its row:**
+- **`README.md` @ `9e1a3106` (#271)**: the reason Task 19's README clause is amended.
+- **`governance/DesignerPunk-Integration-Guide.md` @ `8d7d3ad1` (#268)**: the reason for B-U3's preservation table.
+- **`package.json` and `scripts/pack-assert.ts` @ `762b8c20` (#279)**: the hermetic publish path. U3's rows are section 9, outside its floor; Ada's release-prep rows land after U3.
+- **`canonical/generated.lock`**: moved on every closure change; U3 and U3g each refresh it by the guard's own write.
+- **`src/cli/**`** @ `669b51b0` / `d949ce8b` (U2b; the #270 rehearsal fixes): the rows were re-read against the current code (`generate` is `runGenerate`; `emitConsumer`'s callers are `attach.ts` and `sync/index.ts`).
+- **`.kiro/issues/*`**: read whole; their triggers are dispositioned in the rows above.
+- **No drift found that the amendment leaves unaddressed.**
+
+### Stacy's lens items (her § 7), applied to every amended row
+
+| Lens item | Applied as |
+|---|---|
+| 1. Every criterion names its instrument and what red looks like | Each amended bullet in Tasks 19–22 and 29–30 carries an **Instrument** and **Red** (or **Bite**) clause, or states `none` with its reason. Prose-only items (the remainder dispositions, the preservation table) are counted rows in a completion doc, with the count asserted |
+| 2. Drift | The table above |
+| 3. Design-line and catalog referents exist and say what the row says | Listed above, by line on this branch. The named-default row exists. The three new rows exist as of this amendment. C20's template-read claim is corrected (Lina) |
+| 4. Per-platform rows name their verification target | Task 19's native labels: causes verified by source read; build claims pre-declared `not re-verified — toolchain unavailable` |
+| 5. Primary Artifacts ⊇ every forced path | Tasks 19, 20, 21, 22, 29 and 30 are widened. `src/cli/generate.ts` is corrected |
+| 6. Cross-parent order in the rows | 19.3 after 20.1; 19.5 after 22.2; 20.3 after 22.1; 21.3 between 20.2 and 22.1; 22.2 after 20.3; 22.4 after U3 merges `main` carrying U3g |
+| 7. The 22.5 backstop is mechanical | `git merge-base --is-ancestor <U3g squash SHA> HEAD`, or Peter's dated re-ruling path |
+| 8. M4 (plan-time Instruments) | **Not applicable**: 123 is pre-`P`. `.kiro/issues/2026-09-29-instruments-parser-and-resolver.md` is still ACTIVE, and Task 17's block records "Spec 123 stays on M1's execution-time form (ballot § 4a)". U3's parent Instruments blocks are written at each parent's start (Start Up Tasks #8) |
+
+**Parity on this branch**: `npx tsx scripts/check-completion-criteria-parity.ts` → `SUMMARY: parents evaluated 21, pass 21, fail 0; emissions 0; reds 0` (the U3 and U3g parents are unticked and not evaluated).
+
+**Checkbox state**: unchanged — 110 ticked before and after. Unticked: 50 before, 66 after; the 16 new lines are 22.0, 22.3b, 29 + 29.0–29.7 and 30 + 30.0–30.3.
+
+#### [THURGOOD R1]
+
+- **Drafted** every hunk in the ledger above. I wrote no issue, charter, `canonical/**` or code change. The amendment edits only `tasks.md` and `design.md`. Every `tasks.md` edit appends to settled text, except three delegated-tier table cells that gain a parenthetical inside the cell (verified by a prefix check).
+- **What I folded from the reads:**
+  - **Ada**: the committed derivation, no `package.json` script line, the explicit-path `files[]` rows, the exact-set row over `src/cli/templates/**`, the two asserted label strings, the scope sentence's theme caveat.
+  - **Leonardo**: the region's two structure conditions; the remainder checklist; the scope sentence before step 1; the five-step README; the guard's state and classes; his authorship of the example's companions.
+  - **Lina**: the `designerpunk.ts` correction; mechanism B; the detection rule's form; the target-free region source; 21.3's split; the two-refresh lock plan; the U3g subtask shape and ceiling.
+  - **Stacy**: the four conditions, the attack-first order, the refusal conditions as criteria, the batching limits, divergent 7, and the § 6 list.
+- **Self-check against my own lens item 3**: Lina R1's "no named-default notice row" is wrong (the row exists), and I almost carried it into D2. The errata add only the three rows that do not exist.
+- **What survives against this draft:**
+  1. **The rows are long**, so a completion doc must reproduce every criterion bullet verbatim. I flattened nested sub-points into continuation lines, so each amendment is one criterion row, but Task 19 now has 24 criterion rows and Task 22 has 17, by the parity parser's count.
+  2. **U3g puts my profile text inside a cycle whose check judges it.** 29.5's wording is mine under FK-5 (a). Mitigations:
+     - I write none of the cycle's test text, consequence texts or Task 30's completion doc;
+     - Stacy's attacks are committed first;
+     - FK-5 (b) removes my edits from the unit entirely.
+
+     If Peter weighs the self-review shape above the second re-sign round, (b) is the honest pick.
+  3. **One U3 slot remains.** This round has historically grown units, so a finding that adds a U3 subtask should be weighed against R-7's "keep it as one unit" before it is accepted.
+- **[@STACY]** For each of Task 29's criteria 1–3 and Task 30's criteria 1–2: is the instrument decidable as written? In particular, is the "first commit touching `regrounding/**` or `adapters/**`" anchor enough to show your attacks preceded the fix, and does condition (d)'s `git log` over both refs satisfy you? Does the § "Expected release count" list match your § 6, with nothing missing? → tasks.md § "UNIT 3g"; § "Expected release count" -- [THURGOOD R1]
+- **[@LINA]** Three things. Is the detection rule in Task 22 (byte-identical to the template, or slot headings with every body empty or `TODO`; no slot headings = filled) the rule you will build, per R-8? Are the U3g subtasks and the ceiling transcribed faithfully from your sizing? Is anything you will write missing from the widened Primary Artifacts (Tasks 20, 22, 29)? → tasks.md § "Task 22", § "UNIT 3g" -- [THURGOOD R1]
+- **[@ADA]** Do the C5 erratum and FK-1/FK-2's statements of your position read as you hold them? Is `test:scripts`, not the root suite, acceptable for the identity test (the `rootDir` reason)? → design.md § "C5"; tasks.md § "Task 19" -- [THURGOOD R1]
+- **[@LEONARDO]** Three things. Please supply the final scope sentence, merging your plain sentence with Ada's two caveats into one asserted string. Please word the unfilled-warning row and the walkthrough-offer line, including its frequency. Is C23's "section order unchanged from the draft" referent something you can name, since I could not find the draft's list? → tasks.md § "Task 19", § "Task 22"; design.md § "C23", catalog -- [THURGOOD R1]
+- **[@KENYA]** **[@DATA]** Are Task 3.5's label causes still true word for word for your platform? Under FK-5 (a), will you take one re-sign round for R-1's cue and divergents 5–9? → tasks.md § "Task 19", § "Task 29" -- [THURGOOD R1]
+
+---
