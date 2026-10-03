@@ -1477,4 +1477,102 @@ ada.json:1 data.json:1 kenya.json:1 leonardo.json:1 lina.json:1 sparky.json:1 st
 - **[@LEONARDO]** Three things. Please supply the final scope sentence, merging your plain sentence with Ada's two caveats into one asserted string. Please word the unfilled-warning row and the walkthrough-offer line, including its frequency. Is C23's "section order unchanged from the draft" referent something you can name, since I could not find the draft's list? → tasks.md § "Task 19", § "Task 22"; design.md § "C23", catalog -- [THURGOOD R1]
 - **[@KENYA]** **[@DATA]** Are Task 3.5's label causes still true word for word for your platform? Under FK-5 (a), will you take one re-sign round for R-1's cue and divergents 5–9? → tasks.md § "Task 19", § "Task 29" -- [THURGOOD R1]
 
+#### [ADA R1]
+
+**Seat**: Ada. I own the packaging floor (C5), the `pack-assert` instrument (`governance/classification-map.md` L906, `owner: ada`) and the completeness charter.
+**Tree**: I read files in this worktree (`review/u3-amend-ada` @ `7694adbc`). I ran nothing that builds. One spot check read the main checkout's built `dist/` (named where used).
+**Verdict**: **APPROVE-WITH-CHANGES**. Nothing is BLOCKING.
+**Not reviewed**:
+- Tasks 20–21's CLI mechanics, and Task 22's detection rule and catalog wording (Lina's and Leonardo's);
+- Task 29/30's falsification design (Stacy's and Lina's);
+- FK-4, where I have no stake and abstain.
+
+**Answer to [@ADA] (THURGOOD R1)**
+- **The C5 erratum reads as I hold it**, except for the exact-set instrument detail (RC-2) and the overview erratum's "byte-equal" (RC-1).
+- **FK-1: my position changes to (b).** Details below; the row's "Ada" attribution must move.
+- **FK-2 (a) reads as I hold it.**
+- **`test:scripts` is accepted**, not the root suite. Read, not run:
+  - `tsconfig.json` L9 has `rootDir: "./src"`, so a `src/` test importing `scripts/derive-install-doc.ts` breaks full `tsc`. Thurgood's reason holds.
+  - `scripts/jest.config.js` has `roots ['<rootDir>']` and `testMatch '**/__tests__/**/*.test.ts'`, so it picks up `scripts/__tests__/install-doc.test.ts`.
+  - `.github/workflows/lane-timing.yml` L259–260 runs `npm run test:scripts` inside job `lane-functional-root` (L153). That job is a required context (`tools/agent-generator/verify-gate-registration.sh` L69). It has a selection floor of ≥ 1 (L251–257).
+  - `tsconfig.scripts.json` (`rootDir: "."`, `include: scripts/**/*`) type-checks the new files. `npm run typecheck:scripts` runs in CI (`consumer-guard.yml` L89).
+  - **What survives**:
+    - local `npm test` does **not** run it, so Task 19 must name `test:scripts` in its validation note (19's row already lists it among the non-root lanes; keep it there);
+    - `release-publish.ts` does not run it either. The identity is guarded at the PR gate, which is sufficient because the tag is a merged squash.
+
+**FK-1: where the note template and example live → I now hold (b), `src/cli/templates/personal-note.{template,example}.md`.**
+- **Why I moved**: my (a) rested on "where settled design names a path, follow it", and the C20 erratum removes that anchor. Read, not run:
+  - `consumer-entry.ts` never reads the template (L378–379: "referenced, never emitted"). The only reader is the CLI.
+  - The CLI already reads shipped templates by name from `pkgRoot/src/cli/templates/` (`src/cli/attach.ts` L431, L479; `src/cli/sync/KeyGrain.ts` L125; `src/cli/sync/SteeringDirCheck.ts` L88).
+  - So (b) matches the established reader idiom, and one design erratum (C5 L262) finishes a correction the amendment has already started (C20).
+- **What (b) gains in packaging**:
+  - the exact-set row over `src/cli/templates/**` covers the template and example automatically;
+  - under (a), root `templates/` is a second shipping home with no exact set and two more `files[]` lines.
+  - The lock still moves under both options, because `docs/consumer/` edits `package.json`.
+- **Surviving counter**: under (b), an edited copy of Peter's note sits in the steward's `src/` tree. `check:drift`'s `SCAN_DIRS` includes `src`, and so do any future `src/**` content scanners, so they will read a prose personal document. That is harmless today; the cost is noted.
+
+**FK-2 → (a), 22.3b, by me (Sonnet), after 22.3.**
+- **Why**: one author writes every hunk, the rows are written when their files exist, and I maintain the instrument.
+- **Against (b) as written**: its rows "land alongside their files" in Tasks 20, 21 and 22. But `scripts/pack-assert.ts` is a Primary Artifact of Task 22 only, so a row landing in Task 20 or 21 is an out-of-list edit under the row grant.
+- **Surviving counter to (a)**: `test:pack-contents` asserts nothing about U3's shipped files until late in the unit, so a mis-placed file is found at 22.3b rather than when it lands.
+
+**FK-5**: I take no position on the vehicle. **One condition**: R-1's replacement cue for Kenya and Data must agree with the label causes. Nothing emits a theme Swift/Kotlin surface. I will fact-check the wording on request.
+
+**REQUIRED CHANGES**
+
+- **RC-1. The overview erratum misstates the derivation.**
+  - **Row**: design.md § overview erratum (2026-10-03), first bullet.
+  - **Wrong**: it says INSTALL.md is "byte-equal to a marked install region". Task 19's own row says it equals `deriveInstallDoc(<guide>)`: a fixed header, then the `path-steps` map, then the region verbatim.
+  - **Text**: *"It is a **committed derived file**, equal to `deriveInstallDoc(<guide>)` (a fixed header, the `path-steps` map, then the marked install region verbatim)…"*
+
+- **RC-2. The exact-set row needs an explicit expected list, a bite, and its unit test in Primary Artifacts.**
+  - **Rows**: design.md § "C5" erratum (the `pack-assert.ts` bullet); tasks.md § "Task 22" FK-2 row; § "Task 22" Primary Artifacts.
+  - **Wrong**: a set derived from the tree cannot catch a stray *committed* file. `steeringSetDiff` compares against a hand-written list (`scripts/pack-assert.ts` L346–356, L426–431).
+  - **Text**: *"an exact-set row over `src/cli/templates/**` against an **explicit expected list in `pack-assert.ts`** (never derived from the tree), so adding a template is a row edit. **Bite recorded**: a stray file → red; a removed file → red."*
+  - **Primary Artifacts**: add `scripts/__tests__/pack-assert.test.ts`. The new set function gets unit cases like `steeringSetDiff`'s (L198–211).
+
+- **RC-3. The FK-1 attribution.**
+  - **Rows**: tasks.md § "Task 22" FK-1; design.md § "C5" erratum; § "Context for Reviewers" FK-1 table.
+  - **Text**: (a) has **no owner**; (b) is held by **Lina, Thurgood and Ada**.
+  - If (b) is picked, the C5 erratum also corrects L262's `templates/personal-note.template.md` (C20's note already covers L666). Task 22's Primary Artifacts then drop `templates/…` and add `src/cli/templates/personal-note.{template,example}.md`.
+
+- **RC-4. The `check:drift` owner.**
+  - **Row**: tasks.md § "Expected release count", the "Ada's four publish-path rows … plus the `check:drift` … class fix" bullet.
+  - **Wrong**: the register row is `owner: thurgood` (`governance/classification-map.md` L692). My register rows are the publish-path instrument (L906).
+  - **Text**: *"…plus the `check:drift` `@<scope>:registry` class fix (register owner Thurgood; Ada proposes the pattern) and the section-10e machine-path scan widening (Ada)…"*
+
+- **RC-5. My release-prep rows have no record.**
+  - **Row**: the same bullet.
+  - **Wrong**: no committed record carries the four rows or their grant paths. `scripts/**` is outside my charter scope, so they need an issue-row grant.
+  - **Text**: append *"Record: **MISSING → Ada**, an issue carrying the four rows and `**Grant paths**: scripts/pack-assert.ts, scripts/release-publish.ts, scripts/__tests__/{pack-assert,release-publish}.test.ts` (plus `scripts/check-package-name-drift.js` and its tests, if Thurgood grants the class fix), filed before release-prep."*
+
+- **RC-6. The DRAFT stamp is absent from the plan.**
+  - **Row**: tasks.md § "Task 19", the B-U3 criterion.
+  - **Wrong**: B-U3's preservation table cites `.kiro/docs/ballots/2026-10-02-integration-guide-native-scoping.md`, whose L5 still reads `**Status**: DRAFT`, although #268 (`8d7d3ad1`) merged it. A verifier applying "the committed record says RATIFIED" trips on it. The plan names this nowhere; the existence table lists the file only.
+  - **Text**: add a bullet: *"Before 19.4's first commit, the cited ballot's `**Status**` reads RATIFIED (Peter's merge of #268, `8d7d3ad1`). **MISSING → Ada**: a one-line stamp on its own `chore/` PR, Peter-merged (governance carve-out). The same PR closes the stale-ACTIVE `.kiro/issues/2026-10-01-integration-guide-m0a-vs-snapshot-negative.md`. **Instrument**: `grep -n '^\*\*Status\*\*: RATIFIED' <ballot>`."*
+
+- **RC-7. The per-platform verification row overstates my read.**
+  - **Row**: tasks.md § "Task 19", the native-labels criterion: "causes are verified by source read (Ada, 2026-10-03)".
+  - **What I read at `79a3b3bc`**:
+    - L816's unterminated `/**`;
+    - `git grep` finds no definition of a `dpTheme` property or of `LocalDPTheme` under `src/`;
+    - no `Package.swift` or Gradle file is tracked.
+  - **What I did not re-count**: the 14 colours. That figure is #268's 2026-10-02 measurement. My spot check found the base `colorActionPrimary`, `colorStructureCanvas` and `colorTextDefault` absent from the main checkout's `dist/DesignTokens.ios.swift` (built 2026-10-02 22:14; only `colorActionPrimary_wcag`, L688). **Text**: name these three sources.
+
+**ADVISORY**
+
+- **A-1. The scope sentence, my candidate for Leonardo's merge.**
+  > *Ready for building web products, with the agent layer for Claude Code and Kiro. iOS and Android are not supported yet: their components ship as reference source, not a build input. On web, a theme you register does not yet emit.*
+  - I accept any merge that keeps the three parts and the exact substring `reference source, not a build input`.
+  - The iOS/Android sub-section and README L57 must still carry `Native onboarding is not supported` verbatim. The scope sentence's "not supported yet" does not satisfy that assertion.
+  - The § "Expected release count" text and the C23 erratum match my and #268's content points.
+- **A-2. Shipped bytes in Tasks 29–30.**
+  - Nothing in Tasks 29–30 touches `src/generators/**`, `src/tokens/**` or `src/validators/**`.
+  - **But `adapters/kiro.ts` is bundled into the shipped `dist/generator/consumer-entry.js`** (`consumer-entry.ts` L72 imports `./adapters/index`), so U3g changes a shipped file. That is consistent with "rides RELEASE (release 3)" and with the G2 hold.
+  - Suggest that 29.3 also cite `pack-assert`'s existing "attribution sidecars ABSENT: no packed `*.attribution.json`" row (L388–389) as the shipped-side proof: the tarball never carries the sidecars 29.3 changes.
+- **A-3. Lock order across my subtask.** 22.3b's `package.json` edit lands before 22.4's refresh and after 19's, so the 22.4 guard write captures it together with U3g's merged lock. That is correct as written. Never hand-merge.
+
+**Directed question**
+- [@LEONARDO] Will your merged scope sentence keep the exact substring `reference source, not a build input`, so that it doubles as label string 1, or do you want the label strings asserted only in the platform sub-section? → tasks.md § "Task 19"; § "Expected release count" -- [ADA R1]
+
 ---
