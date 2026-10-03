@@ -21,6 +21,10 @@
 # .kiro/issues/2026-08-21-gate-registration-drift-reconciliation.md. Rule restated: arming OR
 # retiring a required check updates EXPECTED_CONTEXTS in the SAME recorded change (C9).
 #
+# ARMED 2026-10-03: "completion-criteria-parity" (Spec 127; register row governance/classification-map.md
+# § "completion-criteria-parity", 2026-10-03 history line, gate-bite throwaway PR #290). Counted 18 → 19
+# in this same recorded change; RED by design until Peter's branch-protection act adds the context.
+#
 # SWEEP-5 RETIRED (Spec 122 Task 18 / U11 closeout, 2026-07-11): 122-sweep-5-corrected-state was
 # a PRE-CUTOVER-WINDOW-ONLY gate (Req 19 AC1 exception; re-entry protection lives in the standing
 # class checks). The script side landed 2026-07-11 (PR #68), but the PAIRED Peter Settings action
@@ -79,8 +83,9 @@ EXPECTED_CONTEXTS=(
   # Later-armed required checks (2026-08-21 drift reconciliation — see header):
   "125B-tool-boot-smoke"     # armed 2026-07-14 (125-B Task 1.6)
   "Section Citation Guard"   # armed 2026-08-12 (Peter's flip; register § section-citation-resolution)
+  "completion-criteria-parity"   # armed 2026-10-03 (Spec 127; register § completion-criteria-parity; gate-bite runs cited there)
 )
-EXPECTED_COUNT=18
+EXPECTED_COUNT=19
 
 # ── Query ────────────────────────────────────────────────────────────────────
 ACTUAL_JSON="$(curl -sfL \
