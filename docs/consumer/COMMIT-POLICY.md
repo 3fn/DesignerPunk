@@ -24,7 +24,7 @@ This page says which files DesignerPunk's `init`, `generate`, `attach` and `sync
 
 - MCP configs: `.mcp.json` (Claude Code) or `.kiro/settings/mcp.json` (Kiro), at DesignerPunk's own server keys. `.claude/settings.json` holds the approval list for Claude Code.
 - `CLAUDE.md`: a managed region inside your file.
-- Generated agent artifacts and identity member files, for every target you have attached (`.claude/agents/`, `.kiro/agents/`, and the identity docs each target reads). Committing them means a teammate on the same agent tool needs no extra step; a teammate on a different tool runs `npx designerpunk attach --target=<cc|kiro>` once (see "Joining" below).
+- Generated agent artifacts and identity member files, for every target you have attached (`.claude/agents/`, `.kiro/agents/`, and the identity docs each target reads). Committing them means a teammate on the same agent tool needs no extra step; a teammate on a different tool runs `npx designerpunk attach --target=<cc|kiro>` once (see "Joining a repo that already has a design system" below).
 - `.gitignore`: your file, with a block DesignerPunk manages (below).
 
 **Do not commit: regenerated or local.**
@@ -53,10 +53,4 @@ Everything outside the markers is yours and is never touched. `sync` keeps the b
 
 ## Joining a repo that already has a design system
 
-1. Clone the repo.
-2. `npm install`
-3. `npx designerpunk generate`: rebuilds `token-index/` and the platform output, and creates your local personal note.
-4. If you use a different agent tool than the founder, or the agent layer is not committed: `npx designerpunk attach --target=<cc|kiro>`.
-5. Fill in `.designerpunk/personal-note.local.md`, then restart your agent session.
-
-`init` is never the join mechanism: it is the birth event, once per design system. The install guide's section "Joining an existing design system" has the full steps.
+The joining steps are in the install guide, `docs/consumer/INSTALL.md` in the `@3fn/core` package, under "7. Joining an existing design system". That section also says which step to add if you use a different agent tool than the founder. `init` is never the join mechanism: it is the birth event, once per design system.

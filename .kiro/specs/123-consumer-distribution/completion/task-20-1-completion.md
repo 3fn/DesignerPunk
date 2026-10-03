@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-03
 **Agent**: Lina (Sonnet) · PRIMARY, Task 20
-**Branch**: `task/123-u3-onboarding` · **Instruments block**: `.kiro/specs/123-consumer-distribution/completion/task-20-instruments.md` (committed first, `51c049905`; no MISSING row blocks 20.1)
+**Branch**: `task/123-u3-onboarding` · **Instruments block**: `.kiro/specs/123-consumer-distribution/completion/task-20-instruments.md` (committed first, `1224be9cf`; no MISSING row blocks 20.1)
 
 ## What changed
 
@@ -21,7 +21,7 @@
 ## Application-time adaptations
 
 - The instruments block lists the doc's table check as built here (row 1.3); the test is in `scripts/__tests__/`, not under `src/`, so `npm run test:scripts` selects it (row 1.4).
-- The joining section repeats the guide's steps rather than only pointing at them, so the page stands alone; the steps are copied in order from the guide's § 7 (L205–228). If Thurgood's 19.4 changes § 7, this list is a second place to update. That is a deliberate cost; say so if you want it reduced to a pointer.
+- The joining section repeated the guide's steps. **Cut after Peter's ruling; see the Addendum below.**
 - Otherwise none.
 
 ## Agreement with Thurgood's install region
@@ -60,13 +60,25 @@ Class guard (Peter, 2026-10-03). `VERIFIED-CODE` means the behaviour exists on t
 | 23 | Platform output is committed by default, so previewed bytes are shipped bytes; a team whose build runs `generate` need not commit it | design.md L1037–L1041 (DD1, derived; marked overturnable at the sitting in the text; C24's table is the settled form); guide L237 | ratified record |
 | 24 | `init` adds a `.gitignore` block between begin and end markers, ignoring exactly `token-index/` and `.designerpunk/`, with the commented line and the configured output path; `sync` keeps it and leaves other lines untouched | tasks.md L1080, L1081, L1088; design.md L780–L782, L789 | **DESIGN-ONLY**: `init` writes no `.gitignore` and `src/cli/shared/gitignoreRegion.ts` is absent at this commit (instruments rows 2.1, 2.3); 20.2 builds it. The `.gitignore` line-comment marker grain exists (`src/cli/sync/RegionGrain.ts`; `sync.region.test.ts` L37, L247) |
 | 25 | For a repo born on 15.0.0, `sync` offers the block when git is not ignoring `.designerpunk/`, asks before writing (yes-or-no, default no), and when nobody can answer prints a report and writes nothing | tasks.md L1091–L1103 (PR-9 RULED, Peter: "Re: walkthrough 1, offer"); design.md L784–L789, L989–L990 | **DESIGN-ONLY**: `sync` has no such offer at this commit (instruments rows 8.3, 8.4); 20.2 builds it. `git check-ignore -q` exits 1/0/128 for unignored/ignored/not-a-repo (run in scratch for the instruments block, row 8.1) |
-| 26 | The joining path is clone, `npm install`, `generate`, optional `attach --target=<cc\|kiro>`, fill in the note, restart; `init` is never the join mechanism | guide L205–L228 (§ 7); requirements.md L596–L603 (Req 15A.1–15A.3); `src/cli/shared/errorCatalog.ts` L97 (`init` refuses in a born repo) | ratified record + VERIFIED-CODE (the refusal) |
-| 27 | The install guide's section is named "Joining an existing design system" | guide L205 (`## 7. Joining an existing design system`) | VERIFIED |
+| 26 | The joining path is clone, `npm install`, `generate`, optional `attach --target=<cc\|kiro>`, fill in the note, restart; `init` is never the join mechanism | guide L205–L228 (§ 7); requirements.md L596–L603 (Req 15A.1–15A.3); `src/cli/shared/errorCatalog.ts` L97 (`init` refuses in a born repo) | REMOVED 2026-10-03 (see Addendum) for the five steps; the `init`-is-never-the-join-mechanism sentence stays, on the sources cited |
+| 27 | The install guide's section is named "Joining an existing design system" | guide L205 (`## 7. Joining an existing design system`) | REMOVED 2026-10-03 (see Addendum): the joining section was cut from the doc |
 
 **DESIGN-ONLY rows: 8 (scaffold half), 21, 24, 25** (and the `.gitignore` half of 17). All four are built inside this same unit (Task 21.3 for `specs/`, Task 22.1 for the note, Task 20.2 for the block and the offer), so they are true when U3 merges, but **not on this commit**. The doc ships in release 3 with them.
 
 ## Notes
 
 - **Unverified by me**: that a joiner's `generate` creates the note today (row 21: the guide already says so, the code does not); that `specs/` is scaffolded (row 8); the 15.0.0 offer (row 25).
-- **Counter-argument and residual**: repeating the joining steps (adaptation 2) buys a standalone page and costs a second place to keep in step with the guide; the doc's equality test covers the table only, not those steps. If 19.3 or 19.4 reword § 7, nothing mechanical turns red here.
+- **Counter-argument and residual**: none open on the joining steps: they are cut (Addendum), so the doc no longer carries a second copy to keep in step with the guide.
 - **Delegated-tier**: plan held (subtask; no parent line owed).
+
+## Addendum 2026-10-03: the joining steps are cut (Peter's ruling)
+
+**Ruling** (Peter, 2026-10-03, on the open question in "Application-time adaptations"): "cut it. If valuable, reference the steps and its location where the steps are being cut from."
+
+- `docs/consumer/COMMIT-POLICY.md` § "Joining a repo that already has a design system" no longer repeats the five steps. It is now a pointer: the steps are in the install guide, `docs/consumer/INSTALL.md` in the `@3fn/core` package, under "7. Joining an existing design system". It keeps one sentence, that `init` is never the join mechanism (claim 26's `init` half; requirements.md L602-L603, `src/cli/init.ts:127-133`).
+- **Forward reference**: `docs/consumer/INSTALL.md` does not exist on this branch until Task 19.4 derives it (the served source is the Integration Guide's install region, `governance/DesignerPunk-Integration-Guide.md` § 7). The README already carries the same forward reference (`README.md` § "Getting Started" links "Install guide" to `docs/consumer/INSTALL.md`). INSTALL.md ships as an explicit `files[]` path by 22.3b (design.md L275), so the pointer is true for a reader of the shipped package.
+- **Claims table**: rows 26 and 27 are marked REMOVED (the steps and the section-name claim left the doc; the pointer's heading string is the guide's own, L205). The new pointer's two claims: the section heading text (**V** guide L205, `## 7. Joining an existing design system`) and "says which step to add if you use a different agent tool" (**V** guide L219-L226).
+- The C24 table and `commit-policy.test.ts` are untouched.
+- Tests re-run after the cut: `commit-policy.test.ts` 6 passed; `npm run test:scripts` 17 suites, 364 passed.
+- Also corrected here: the instruments commit's SHA above. The two commits were re-written to fix the trailer block (`Agent: Lina` and `Co-Authored-By` adjacent in the final paragraph); the content and split are unchanged.
+
