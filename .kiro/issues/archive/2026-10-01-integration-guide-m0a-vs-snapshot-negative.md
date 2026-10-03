@@ -1,7 +1,7 @@
 # Issue: the Integration Guide's M0a steps tell consumers to copy the un-themed snapshots; the consumer overlays tell Kenya and Data never to read them for themed values
 
 **Date**: 2026-10-01
-**Status**: ACTIVE
+**Status**: CLOSED 2026-10-03 (see § "Closed — 2026-10-03" at the end of this file)
 **Owner**: Ada (drafts the governance proposal). **Decision**: Peter. The change is to a governance doc (`governance/DesignerPunk-Integration-Guide.md`), so it is ballot-ratified; and, depending on the option chosen, may also touch signed overlay units (a C1 re-sign by Kenya and Data) or the package's native-sync surface.
 **Trigger**: **before release 2's RELEASE record opens** — by that event a ballot draft for this item exists on a branch and Peter's pick is recorded. Why this event and not another:
 - The two sides of the contradiction are not on `main` together until **U2b's unit PR merges**. Before the merge the overlays live only on `task/123-u2b-profile`, so nothing on `main` contradicts the guide yet.
@@ -114,3 +114,15 @@ Any edit to `governance/DesignerPunk-Integration-Guide.md`, to the Kenya/Data ov
 **Status**: ACTIVE until the ballot ratifies and its edit is applied.
 
 **Pointer, not this issue's scope**: the guide's § "Upgrading" still teaches the 14.x `sync` model (`sync --accept-all`, `.kiro/sync-manifest.json`, `sync` updating tokens). It is disclosed in 15.0.0's notes as stale and routed to Task 19.4 (Thurgood, `2026-09-27-integration-guide-install-section-stale.md`).
+
+---
+
+## Closed — 2026-10-03
+
+*Recorded 2026-10-03 by Ada (owner), after the ballot this issue owed was ratified by Peter's merge of PR #268 (squash `8d7d3ad1`, 2026-10-02). Nothing above is rewritten; the Status line is the only edit outside this section. The line above reading "ACTIVE until the ballot ratifies and its edit is applied" is superseded by this section.*
+
+**Outcome**: the owed ballot (`.kiro/docs/ballots/2026-10-02-integration-guide-native-scoping.md`) ratified and its edit applied in the same PR, before Stacy's phase-1 RELEASE record for 15.0.0.
+- **Edit applied**: all eight after-texts in the ballot's § "Edit sites" (site 1; 2a-2d; site 3; 4a-4b) were compared against `governance/DesignerPunk-Integration-Guide.md` on `main`. Each appears verbatim, and the guide has not changed since `8d7d3ad1`.
+- **Option taken**: Peter's 2026-10-02 "middle path": option A, sharpened. 15.0.0 ships with the honest native and web scoping, and no deprecation promise.
+- **Not this issue's scope, still open elsewhere**: the native-onboarding fix is the consumer-generation completeness spec (`2026-10-02-consumer-generation-completeness-spec.md`); the guide's full rewrite, including § "Upgrading", is Spec 123 Task 19.4.
+- **Write-scope note**: `.kiro/issues/**` is outside Ada's charter write scope. This closing entry follows the practice recorded in `.kiro/issues/2026-10-02-issues-dir-write-scope-gap-and-grant-advisories.md` (owner closes on a `chore/` branch; Peter's merge is the authorization).

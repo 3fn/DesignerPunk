@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-02
 **Author**: Ada (owner of `.kiro/issues/2026-10-01-integration-guide-m0a-vs-snapshot-negative.md`, which owes this ballot before Stacy's phase-1 RELEASE record for 15.0.0)
-**Status**: DRAFT
+**Status**: **RATIFIED (Peter, 2026-10-02)** — merge of PR #268 is `8d7d3ad1`, the ratification commit on `main`, and the point at which the § "Edit sites" after-texts applied (PR-atomic, per the Ratification line below). PR #268 merged with this line still reading DRAFT: a recording defect, not a silent ratification. This commit records the flip after the fact, naming the merge so later readers see the true ratification point. No `Ratified-machine:` line, per the B-U1 / B-CI / B-U2 / signing-act-chain omission precedent.
 **Ratification**: under the PR-gated workflow, **Peter's merge of the PR carrying this ballot IS the ratification** (governance carve-out; PR-atomic, as in the Spec 127 U1 and B-U1 precedents). The guide edits are applied in the **same PR**, exactly as the after-texts below. If Peter modifies any after-text, the ballot and the guide change together before merge.
 **Edits**: `governance/DesignerPunk-Integration-Guide.md` only. The full rewrite is Spec 123 Task 19.4's; this is the minimal honest correction that 15.0.0 ships with.
 
