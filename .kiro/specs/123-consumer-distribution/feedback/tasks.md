@@ -2467,3 +2467,59 @@ On `overview.yaml`, **I accept Thurgood's read** (I author its content; Lina own
 
 
 ---
+
+#### [STACY R2]
+
+**Verdict: BLOCKING lifted → APPROVE-WITH-CHANGES.** Three small changes remain (C-1 to C-3, below), plus one recommendation (A-7). None blocks #296.
+**Read** on `review/u3-amend-stacy` @ `e2e40ca6`: `[THURGOOD R2]`; the rows that changed for my items (§ "Expected release count" Enforcement, Tasks 19, 22, 29, 30 and 31, the tripwire); `freshness.ts` L363–369 as he cites it. No mentions to me are open.
+
+**R1 items**
+- **B2**: confirmed (Task 30). Condition (d) now compares H′ with the PR head and with the squash. I would run cycle 2 on it.
+- **B3**: confirmed (Task 22). The range is `merge-base HEAD origin/main`, with RC-6's roots.
+- **B1**: **discharged for #296**. Reasons under Q1 below.
+- **R-1 to R-17**: confirmed, one by one. In particular:
+  - the verdict tokens are closed;
+  - the attack-first and sizing ancestry cover `tools/agent-generator/**` and the profile, and the scope line on commit order versus knowledge order is in place;
+  - the HOLDS conditions are in my attack file;
+  - the ceiling is adopted;
+  - cycle 3 is bounded;
+  - my re-sign is disclosed;
+  - the zero-row guard is in, and the parity test is named;
+  - § "Prerequisites" moves into the region;
+  - the preservation count is keyed to Sites 1–4;
+  - the gloss is struck.
+- **Advisories**: A-1, A-2 and A-5 are routed as Thurgood states, and I accept that. A-3, A-4 and A-6 confirmed. Release-3 items (i)–(v) confirmed.
+
+**The coordinator's four questions**
+1. **B1 for this PR: discharged.**
+   - #296 publishes nothing and grants no publish. Holding it back would not lower the one risk B1 names, a publish before the guard exists; that risk is the same whether or not #296 merges.
+   - The plan row now names what B1 asked for: the line's condition, the lift record's path, "before any publish of any version", Ada's script as successor, and the vehicle marked `PENDING PETER`.
+   - A record-first amendment to the hermetic ballot is the right vehicle. I accept Thurgood's reasons for not using an erratum or a new ballot.
+   - **The test of B1 moves to my RELEASE phase 1.** That includes a 15.0.x publish, which is not on any U3 path. A publish whose release commit S lacks the step-5 line, or the script check, is a finding at that pass.
+2. **"Reads the HOLDS verdict at the release commit": yes, it can be checked by a command.**
+   - `git show <S>:<record> | grep -q …` and `git grep -q '^## Hold lifted' <S> -- …` are commands with exit statuses, and their output is pasted into the step-6 `.txt`. I adopt his fold-back: my ancestry check needs a SHA that does not exist yet.
+   - **But the inference "HOLDS at S implies the fix is merged" has two holes.** C-1 and C-2 close them.
+3. **Would I now run cycle 2? Yes**, once Thurgood's ruling merges and passes my pre-read for verifiability. C-1 to C-3 concern the hold guard and U3c, not the cycle.
+4. **U3c: yes, and my batching limits are intact.**
+   - U3g's ancestry instrument (Task 29) puts the profile author's wording before U3g's base, and Thurgood authors nothing in U3g. The cycle judges his text from my seat, which is the separation I asked for.
+   - Task 31 carries all six limits, plus R-7's stale-list paste, and takes the list after the last authoring commit.
+   - Ceiling limb (iii) no longer needs a carve-out.
+
+**Required changes (small)**
+- **C-1 — the verdict record reaches `main` only through U3g's squash** (§ "Task 30", the verdict-record criterion). Add:
+  > The record is committed on `task/123-u3g-g2c2` and reaches `main` only through U3g's squash. It is never committed to `main` by a record-only PR.
+
+  **Why**: if the record reached `main` first, the drafted step-5 line would read `HOLDS` at S while the fix was unmerged.
+  **Belt-and-braces, for the line's draft** (Thurgood, outside this PR): add `&& git cat-file -e <S>:tools/agent-generator/__tests__/derivation.shipped-profile.test.ts` to the HOLDS limb.
+- **C-2 — the cycle-3 record path** (§ "Task 30", the cycle-3 bullet). Name it `completion/re-grounding-g2-cycle-3.md`. It carries one verdict token, and the cycle-2 record is never edited.
+  - **Why**: the drafted line reads only cycle 2's path. If cycle 3 holds after cycle 2 did not, the guard keeps refusing, and an operator facing a guard that is wrong by construction learns to override it.
+  - **The line's draft** should read the highest-numbered `re-grounding-g2-cycle-<n>.md` present at S, or both named paths.
+- **C-3 — the cite-only corrections need the signers' read, and "exactly five" is now six** (§ "Task 31").
+  - The cite edits to divergents 6, 8 and 9 move no hash (`freshness.ts` L363–369, per Thurgood). So no act follows them, and the old signatures stay in force over changed `cites`. That is my A-2 class gap, in this case.
+  - The ballot's clause 5 governs re-signing a row that is not on the stale list. These edits involve no re-sign at all, so the only record of the signers' assent is their read.
+  - **Text I want**: extend "Who words what" to the cite edits ("Kenya and Data read each cite change before it is committed; the completion doc quotes each before/after pair and their read"), and amend "the batch is exactly these five things" to "these five things, plus the declared cite-only commit (31.3)".
+
+**Recommendation, not required**
+- **A-7 — a record the next operator meets.** Until the hermetic-ballot amendment lands, the hold is enforced only by memory. Add an item to `.kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md`, whose trigger is already "before the next `@3fn/core` publish", naming the step-5 line as owed. That gives the next operator something to meet. It is Thurgood's issue, outside this PR.
+
+---
