@@ -1116,7 +1116,7 @@ All five land as I asked:
 | PR-1 | One document with a marked install region; INSTALL.md is a **committed** derived file with an identity test; Thurgood cleans the reference remainder in the same pass | "I think it could stay as one document unless there's a strong reason todo otherwise. It really only should be necessary to be consumed by the orchestrating or primary agent once, I think." · assent: "Re: 1, 2, & 4, agreed" | Task 19; design C23 |
 | PR-2 | Change the guide when the install process changes, with the why recorded; one light record-first ballot (B-U3) inside 19.4 for this rewrite; a new platform is a new section | "I think we should be thoughtful about why we're changing them and aware of when we need to change them — like if we add something to the install process. Example: we have on the roadmap to support React and React Native, and that might change the Integration Guide, preloaded specs, etc." | Task 19; design C23 |
 | PR-3 | Release 3 is web only; iOS and Android follow as a fast follow; Spec 129 exists | "I *think* we said we'd say it's ready for building web only and then finish the iOS and Android work as a fast follow." · "let's at least create a spec and a design-outline placeholder with notes" | § "Expected release count"; Task 19; design C23 |
-| PR-4 | Mechanism B (always emit the reference; create the note; warn when unfilled); the note content is a few prompted slots, an agent walkthrough offer, an edited example of Peter's note, no CLI wizard, worded by Leonardo; one added subtask (22.0). *(R2, Leonardo L-A1: "no CLI wizard" is not in Peter's quoted words; it is part of the recommendation recorded as agreed, and Leonardo and Lina hold it on the merits)* | "I'd like to maybe provide mine as an example, but I was also thinking something like a Mad Libs format, or walkthrough with agent support, might be less burdensome. I would like to encourage users to share what they and/or their organization value as well as some of their principles — especially those around communication and collaboration." | Task 22; design C19, C26 |
+| PR-4 | Mechanism B (always emit the reference; create the note; warn when unfilled); the note content is a few prompted slots, an agent walkthrough offer, an edited example of Peter's note, no CLI wizard, worded by Leonardo; one added subtask (22.0). *(R2, Leonardo L-A1: "no CLI wizard" is not in Peter's quoted words; it is part of the recommendation recorded as agreed, and Leonardo and Lina hold it on the merits. **R3: RULED.** Peter's "Re: 1, 2, & 4, agreed" answered the orchestrator's message whose item 4 carried it; the orchestrator's record of that line: "Agreed small version: a template with a few prompted slots (who I am; what I or my organization value; how I like to communicate and collaborate); one line telling the agent to offer the walkthrough; an EDITED version of Peter's note shipped as the example; no command-line wizard; Leonardo words it.")* | "I'd like to maybe provide mine as an example, but I was also thinking something like a Mad Libs format, or walkthrough with agent support, might be less burdensome. I would like to encourage users to share what they and/or their organization value as well as some of their principles — especially those around communication and collaboration." | Task 22; design C19, C26 |
 | PR-5 | G2 cycle 2 as its own unit beside U3, with Stacy's four conditions, the sizing run first and a ceiling, the hold, "implemented" = ran on shipped material, Thurgood's ruling as its own record first, and Stacy's attacks committed first | "I support whatever decision that need to be made to make sure this issue is solved optimally — not with a bunch of workarounds that create more work than necessary." · "Yes, and good idea." · "I agree with all the recommendations." | UNIT 3g (Tasks 29–30); § "Expected release count" (the hold); Task 22 (the backstop and the no-overlap test) |
 | | *(R2, Stacy R-16: the six points Peter agreed to, numbered so that PR-5.n resolves)* | **PR-5.1** a read-only sizing run first, with a row ceiling stated up front · **PR-5.2** the fix as its own unit beside U3, on Stacy's four conditions (a)–(d) · **PR-5.3** what is held: nothing that carries the consumer profile is tagged or published until a HOLDS verdict, or Peter lifts it by a dated record · **PR-5.4** "implemented" means the check ran on the shipped material · **PR-5.5** Thurgood's spec-text ruling as its own record, merged by Peter, before Lina builds; Stacy pre-reads; Lina confirms; Thurgood writes none of the cycle's test text · **PR-5.6** Stacy's attacks and expected outcomes committed before she sees the fix. Peter's words for all six: "I agree with all the recommendations"; for "fix and hold": "Yes, and good idea." | as PR-5 |
 | PR-6 | A full feedback round, with an existence check and Stacy's seven lens items | "Full." | this section |
@@ -2715,5 +2715,73 @@ Why bullet 3 keeps the future pattern: it preserves the function of the old item
 3. **Name my signed rows in 31.0.** `#ios-theming-spec-094` is now a re-sign for me (it is no longer cue-only), in addition to `ambient.groundTruthManifest.verdict` and `commands[platform-tokens]`. Task 31's 31.0 says "rows the edits are expected to move" without listing them. **Text I want**: list Kenya's expected set as exactly those three. Any other Kenya row on the post-edit stale list is the red limb already written.
 
 **New, from the R2 changes**: none that breaks; the unit ordering (U3c before U3g's cut) removes my R1 concern about the ceiling. One residual I hold: "should be resolved soon" in a **shipped** consumer text is a promise, even softened. I sign it because Peter chose the framing; if release 3 slips the other way, the sentence is stale and costs another round. That is the orchestrator's caution (no date) working as intended.
+
+---
+
+#### [THURGOOD R3]
+
+**Short incorporation pass over the six R2 entries.** All six read APPROVE-WITH-CHANGES, and Stacy's block is lifted (B1 is discharged for this PR; B2 and B3 are confirmed). The rules are the same as R2: R3-marked appends, checkbox state untouched (110 ticked, byte-identical; 72 unticked, unchanged), and parity at 21/21 with 0 reds.
+
+**Stacy R2**
+- **C-1: incorporated.** Task 30 now says the verdict record reaches `main` only through U3g's squash. The hold's "what the line reads" clause adds the existence of the standing-test file at S, as her belt-and-braces.
+- **C-2: incorporated.** Task 30 names `completion/re-grounding-g2-cycle-3.md`, and the guard reads the highest-numbered cycle record.
+- **C-3: incorporated.** Task 31: Kenya and Data read each cite change before it is committed, and the doc quotes the pair. "Exactly five" now counts the declared cite-only commit, plus the sweep's "correct here" hits.
+- **A-7: routed.** It needs an item in `.kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md`, which is outside my write scope in this PR. **Orchestrator: land it, or I carry it as the first commit of the ballot-amendment PR.** It is owed before the next publish either way.
+
+**Ada R2**
+- **C-1: incorporated.** The Enforcement bullet carries her text and lists the hold's three layers:
+  - the RELEASE-FLOW line, through the ballot amendment;
+  - her script check, under an issue-row grant on `scripts/release-publish.ts` and its test;
+  - the optional tag ruleset (Peter's).
+- My R2 counter now reads "closes the publish half of that gap". The register row's `checks` text changes only in the ballot amendment.
+- **The third-sentence fact-check: answered** ("true"). It is now recorded with its scope (built-in dark values).
+- **Advisory ("Themes:" line): incorporated.** Lina takes it into 22.1, and I placed the catalog row "generate — registered theme not emitted": draft text Ada's, final wording Leonardo's. **No subtask is added.**
+
+**Data R2**
+- **The `removals`/`assent` consequence: incorporated** in Task 31 (iv), in his text. I add that the same applies to whichever of Kenya's `theming-1`–`theming-3` his bullets no longer state as written.
+- **L1017: marked superseded** (Task 19).
+- **His FK-6 answer**: noted; PR-12 already rules it.
+- **Divergent 5 stays**: recorded.
+- **His three expected rows**: listed in 31.0.
+
+**Kenya R2**
+- **B2 supersession: incorporated.** The sentence is marked superseded, not deleted (orchestrator's instruction; it is an amendment line already under review).
+- **Item 1, L147 "materializes here": incorporated.** It is a seed hit, and `materializes here` is added to the post-edit grep.
+- **Item 2: incorporated.** `#in-scope` L27 (and Data's twin, L27) are seeds. `#product-tokens-spec-108109` is checked at 31.0 and carried to Spec 129 if affected (UNVERIFIED, as he says).
+- **Item 3: incorporated.** His three rows are listed in 31.0.
+- **The class fix asked for: incorporated.** 31.0 opens with a broad sweep of both overlays and every rendered consumer text of both seats. The pattern is stated, the output pasted, and every hit dispositioned. My seed run at `e2e40ca6` found 9 overlay hits and 5–6 per rendered file. The seed list is not the instrument.
+- **Cite-change reading**: accepted by him.
+
+**Leonardo R2**
+- **Text inside the block = UNFILLED: decided**, with his reason ("the joiner's agent and her CLI must reach the same verdict"). My R2 "owed at 22.0" is discharged.
+- **Offer line, "Any answer of hers under the headings ends the offer.": incorporated** (Task 22; C26 frequency).
+- **Unfilled row, "Your answers go under the headings, outside the guidance block.": incorporated** (catalog).
+- **The wizard limb: now RULED under PR-4.** The Context and Task 22 quote "Re: 1, 2, & 4, agreed" with the orchestrator's recorded line. *Its source is the orchestrator's record of his message (that message is not committed), as Leonardo's note anticipates.*
+- **The Mad Libs cost: written as PENDING PETER (b).**
+
+**Lina R2**
+- **RC2-1: incorporated.** The offer line reads "under each heading, outside this guidance block". Combined with Leonardo's change, the quoted line now carries both.
+- **RC2-2: incorporated**, as the case "one marker deleted → filled", with her matching mechanics.
+- **RC2-3: incorporated** in Task 20, Task 22's PR-13 row and the three catalog rows: act only on exit 1. Exit 128 or no `git` prints nothing and writes nothing. Each instrument gains a non-git case.
+- **RC2-4 (a): incorporated.** `design-inputs/overview.yaml` is in Task 22's Primary Artifacts, with the equality test, and her confirmation is recorded.
+- **RC2-4 (b): incorporated.** 29.0 dry-runs 29.3, so limb (iii) fires at 29.0.
+- **A2-1: incorporated.** U3c starts the day this amendment merges.
+- **Her CC HTML-comment measurement** needs Peter's go to run on his account. It is **not load-bearing** under the visible block, so I list it as optional, not as a pending decision.
+
+**The mention count, reconciled.** Not a miscount. My R2 handback's "one of Kenya's" meant a mention **written by** Kenya (his `[@DATA]` on FK-6), not one addressed to him. Data R2 answers it. Every mention in my R2 list is now answered: Lina answers Data's and Leonardo's three; Ada answers Leonardo's. None is open.
+
+**AWAITING PETER — written as pending in the rows, not settled:**
+- **(a) PR-12 wording.** Data wrote "plans to address … with no date set". **Kenya's text does not**: it keeps Peter's "is being addressed and should be resolved soon" and records the residual. The orchestrator recommends "plans to address". Task 31 (iv).
+- **(b) The block rule's consequence.** There is no in-place fill. Stems appear as example answers, hand-filling means a line under each heading, and the fill-in-the-blank experience lives in the walkthrough. Task 22; C26.
+- **(c) The hold's vehicle** (the ballot amendment I recommended in R2), **and whether "no publishing" is in force from now.** § "Expected release count", layer (1).
+- **(d) The optional tag ruleset on `v*`.** Layer (3).
+
+**Counts (no subtask added in R3):**
+- **U3**: `declared 16, now 18`, +3; one slot left. The "Themes:" fix and PR-13 fold into 22.1.
+- **U3g**: 11, +3. The dry run folds into 29.0.
+- **U3c**: 6, +2. The sweep is inside 31.0, the new hits inside 31.2, and the cite reads inside 31.3.
+- **Totals: 31 parents, 151 subtasks.**
+
+**Can the round close?** Yes, once Peter answers (a)–(c). (d) is optional. No reviewer needs an R3 of their own, with one exception: **if Peter picks "plans to address" in (a), Kenya should confirm that he signs the reworded iOS text.** That is a one-line confirmation, which can ride 31.2's read rather than a round.
 
 ---
