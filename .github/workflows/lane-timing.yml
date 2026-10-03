@@ -187,6 +187,26 @@ jobs:
       - name: Build (prebuild generates + tsc + bundles — required by export-contract tests)
         run: npm run build
 
+      # Standing scope (ballot 2026-09-27-ci-regime-standing-scope § 2, M1 P1): the publish-path
+      # pack check (ballot 2026-10-03-hermetic-publish-path; PR #279). `test:pack-contents` packs
+      # WITH lifecycle scripts (prepack rebuilds) and runs scripts/pack-assert.ts on the listing:
+      # no leftover dist/ files, the MCP bundle shape (root node_modules only), the eight root token
+      # files, themes: [], no machine path. PLACEMENT IS LOAD-BEARING: it must run in the
+      # root-only-install state, i.e. AFTER `npm run build` and BEFORE the step below installs the
+      # mcp-server sub-package; after that install, prepack's build:mcp bundles from the nested
+      # tree and the shape check goes red by design (Ada, #279; deferred row (j) on
+      # .kiro/issues/2026-10-01-in-repo-generate-output-contaminates-package-dist.md). Do not move it.
+      # Did-it-really-run floor (in-step, the build-validate form above): the script's own summary
+      # line `N/M assertions passed.` must be present with M >= 75 (derived from 94 on 2026-10-03,
+      # #279); a non-zero exit or any FAIL already fails the step through pipefail.
+      - name: Pack contents (npm run test:pack-contents) — with execution assertion
+        run: |
+          set -o pipefail
+          npm run test:pack-contents 2>&1 | tee "$RUNNER_TEMP/pack-contents.out"
+          TOTAL=$(grep -oE "^[0-9]+/[0-9]+ assertions passed" "$RUNNER_TEMP/pack-contents.out" | tail -1 | cut -d/ -f2 | cut -d' ' -f1)
+          echo "pack-assert ran ${TOTAL:-0} assertions (floor: 75; derived from 94 on 2026-10-03)"
+          [ "${TOTAL:-0}" -ge 75 ]
+
       # Run #2 finding: two suites (mcp-queryability, mcp-component-integration) assert the
       # mcp-server SUB-PACKAGE is built (`fs.existsSync(mcp-server/dist/index.js)`), which
       # the root `npm run build` does not produce (build:mcp emits the esbuild bundles to
