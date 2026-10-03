@@ -363,11 +363,17 @@ verdict: assent — surviving 1/1
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-10-03
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-trigger-set-the-114-superset-table-names-never-numbers` (re-pointed)
-canonicalHash: sha256:5055f134c5a6c6fc5ecd2f499d3eb428ff14a0679946152f88e630c0c8de3d7a
+canonicalHash: sha256:eb7326f4705918216be6d929ec192f58cd092d82110ee7fcb2c9b29eb07f3b1a
 renderedHash: sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5
 verdict: assent — surviving 5/13; not surviving: `trigger-lens`, `trigger-release`, `trigger-closeout`, `trigger-arming`, `trigger-gate`, `trigger-straggler`, `trigger-liveness`, `trigger-burst`
+
+**Re-signed 2026-10-03** (prior signature: assent at canonicalHash `sha256:5055f134c5a6c6fc5ecd2f499d3eb428ff14a0679946152f88e630c0c8de3d7a`; the row is on the branch's stale list). **The canonical change**: the RELEASE row became my ratified two-phase wording (ballot 2026-10-03-hermetic-publish-path § 5 item 6 (2a); `e54ad53c`). **The rendering did not change**: renderedHash recomputed from the three sidecar artifacts, equal to the value above. The consumer RELEASE row still fires "before a version publishes / at the release tag".
+- **The two removals added for it** (`subtraction-3`) are the two-phase event cell, and the phase-2 sentence with the F-2 clause. **Not owed a re-point.** Phase 2 reads DesignerPunk's step-6 release-record PR and its two-registry record against the publish script's sha1. That is this repo's publish rail. A consumer has no step-6 record, and the consumer charter's release need not be a package publish. The repo-independent part, a claims pass over the release delta before the release, survives in the consumer cell. No refusal follows.
+- `trigger-release` is still not credited. The item is the canonical row, whole. Its Q2 arming line, its two-phase event and its phase-2 read are all dropped, and the crediting rule credits no partial row.
+- The surviving set is unchanged: `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing`, `merge-path-status` (5/13, against the set re-confirmed at 13 in `confirmations/stacy.md`).
+- **Peter's sample frame**: this is a Stacy-signed assent, so it enters the frame (B-U2 F-3 (ii)).
 
 **Re-signed 2026-09-29, in the re-sign run** (prior signature: refuse). **Refusal resolved.** The LENS row now carries the five verifiability questions inline, plus question 6.
 - **`trigger-lens` is still not credited** under the crediting rule (run-2 summary): its M4 plan-time clause and its retire-to-emissions clause are dropped with nothing in their place. Both are keyed to this repo's instruments parser, so there is no consumer counterpart to re-point to, and no refusal follows.
