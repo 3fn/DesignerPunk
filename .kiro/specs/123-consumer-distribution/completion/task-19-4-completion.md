@@ -201,7 +201,7 @@ Anchors are lines in the committed guide, after the review corrections. Each ver
 | Starting the MCP servers by hand | L310–323 | Lina | CONFIRMED (`lina.md`) |
 | Configure Agent Connections | L324–355 | Lina | CONFIRMED (`lina.md`) |
 | Verify — Explore the Component Catalog | L356–381 | Lina | CONFIRMED (`lina.md`) |
-| Generating tokens — options | L382–424 | Ada | CONFIRMED (`ada.md`) |
+| Generating tokens — options | L382–424 | Ada | CONFIRMED (`ada.md`). *Correction 2026-10-03*: the banner sample's `Themes:` line (L393) is now the real output of `generateThemesLine` for the config `init` writes, carrying Leonardo's suffix (22.1/22.2). L395 ("The `Themes:` line lists what your config registers, not what was applied") is still true but now repeats the suffix. It is left as is for **Ada to confirm** |
 | Running Component Tests | L425–484 | Lina | CONFIRMED; "do not work" is now verified by reproduction (`lina.md`) |
 | Available Imports | L485–505 | Lina (rows `types` and `build` Ada's) | CONFIRMED (`lina.md`; Ada's rows confirmed in `ada.md`) |
 | Specifying screens (Product MCP) | L506–789 | Leonardo (Product Tokens co-owned with Ada) | CONFIRMED; held item 1 settled to Ada's final (`leonardo.md`, `ada.md`) |

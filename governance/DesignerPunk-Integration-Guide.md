@@ -78,7 +78,7 @@ Use this posture when you want a design system of your own. These are the five s
 
 **Step 3, `generate`, is the pipeline — run on every token change.** It builds your platform token output from your own token source. Section 4 says when to run it again.
 
-**Step 4, your personal note**: `.designerpunk/personal-note.local.md` — who you are and how you want to be worked with; your agents read it every session (it stays on your machine). You can fill it in by hand, or, after the restart, ask your agent to walk you through it.
+**Step 4, your personal note**: `.designerpunk/personal-note.local.md` — who you are, what you and your organization value, and how you like to work together — or, after the restart, ask your agent to walk you through it. Your agents read it every session (it stays on your machine).
 
 **Step 5, the restart, and why.** Your agent tool loads its MCP configuration when a session starts. The session that ran `init` cannot see the servers `init` just configured, so its first queries would fail. **This is a rule, not a one-off**: any later change to the MCP configuration, such as adding a server or updating the package, also needs a new session. Some tools ask you once to approve project-declared MCP servers; approve DesignerPunk's.
 
@@ -390,7 +390,7 @@ The pipeline shows where tokens are being read from. With the config `init` writ
 📦 MyProduct (MP)
    Tokens: src/tokens  (local)
    Output: dist/tokens
-   Themes: dark (dark), wcag (light)
+   Themes: dark (dark), wcag (light) — registered, not applied yet: a theme you register does not change your generated output; light and dark mode and the wcag theme use DesignerPunk's built-in values
 ```
 The `Themes:` line lists what your config registers, not what was applied (see "Themes").
 

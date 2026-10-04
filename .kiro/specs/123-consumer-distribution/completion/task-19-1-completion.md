@@ -113,3 +113,10 @@
 - **Confirmed by**: Ada (`completion/task-21-owner-review/ada.md` § (a)). She records that her 19.4 confirmation of L92 missed it.
 - **Fix**: Ada's replacement, verbatim, for region L92, and for § Reference › Generating tokens — options, L421. `docs/consumer/INSTALL.md` is re-derived.
 - **Knock-on**: 19.3's quoted passages do not include L92 or L421, so no quoted passage changed. Both replacements are single lines, so every line anchor in 19.3 and 19.4 still holds. The 19.4 owner-verdict table gets a dated correction note on Ada's § 4 row.
+
+## Addendum 5 (2026-10-03) — region § 3, Step 4 (L81), follows the corrected naming string
+
+- **Why**: Lina's 22.2 built `personalNoteNamingMessage()` to its corrected design text: three slots and the walkthrough (design erratum R2, Leonardo L-RC3). The region still carried the old two-slot clause, "who you are and how you want to be worked with". `install-doc.test.ts` imports the string, so it went red, as intended.
+- **Fix**: L81 now reads "`.designerpunk/personal-note.local.md` — who you are, what you and your organization value, and how you like to work together — or, after the restart, ask your agent to walk you through it. Your agents read it every session (it stays on your machine)." The old trailing sentence about filling it in by hand, or asking the agent, is folded into the new clause.
+- `docs/consumer/INSTALL.md` (L67) is re-derived. The assertion is unchanged.
+- **Not a defect of 19.1**: the string changed under it. 19.3's rows do not quote L81. The line count is unchanged, so every anchor holds.
