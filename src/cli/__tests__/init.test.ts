@@ -1065,3 +1065,33 @@ describe('CLI init — the C27 completion: notice first, next steps, restart row
   });
 });
 
+describe('CLI init — the src/components/README.md it writes (Task 22.2 follow-up; Leonardo\'s 19.5 review, the "install doc" naming)', () => {
+  let scratchDir: string;
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test('it names the declared-name rule and points at the install guide\'s "9. Ownership", at the path the package ships it', async () => {
+    await runInitIn(scratchDir);
+    const readme = fs.readFileSync(path.join(scratchDir, 'src/components/README.md'), 'utf8').replace(/\s+/g, ' ');
+    expect(readme).toContain("with the same declared name as one of DesignerPunk's (the `component:` field of its `contracts.yaml`) wins on that name (your fork)");
+    expect(readme).toContain('See the install guide\'s "9. Ownership" section (`docs/consumer/INSTALL.md` in the `@3fn/core` package) for the merge model.');
+    expect(readme).not.toContain('install doc');
+    expect(readme).not.toContain('Your first component');
+  });
+
+  test('TIED to the guide: the heading it quotes exists verbatim in docs/consumer/INSTALL.md (a heading change goes red here)', async () => {
+    await runInitIn(scratchDir);
+    const readme = fs.readFileSync(path.join(scratchDir, 'src/components/README.md'), 'utf8').replace(/\s+/g, ' ');
+    const quoted = /install guide's "([^"]+)" section \(`([^`]+)`/.exec(readme);
+    expect(quoted).not.toBeNull();
+    const [, heading, installPath] = quoted!;
+    const install = fs.readFileSync(path.join(PKG_ROOT, installPath), 'utf8');
+    expect(install.split('\n')).toContain(`## ${heading}`);
+  });
+});
+

@@ -131,3 +131,13 @@ Source: `completion/task-19-5-review/leonardo.md`. One commit (the one carrying 
 | managed region — markers missing (agent-layer form) | `… Restore the markers (see install guide § "Your agent layer") or re-run attach` | `managedRegionMarkersMissingMessage` |
 
 **Also found, not changed**: the README `init` writes into `src/components/` says "See the install doc's "Your first component" section for the merge model" (`src/cli/init.ts:600`): it uses the old name AND points at a section that does not exist. A user-facing string in a scaffolded file; Leonardo and Thurgood decide the target section before I reword it.
+
+## Addendum 2026-10-03 (third pass): the components README `init` writes
+
+`CONSUMER_COMPONENTS_README` (`src/cli/init.ts`, written to `src/components/README.md`) used the old name ("install doc") and pointed at a section that does not exist ("Your first component"). Text applied as Thurgood proposed and Leonardo confirmed (with where the guide lives): "…a component you add with the same declared name as one of DesignerPunk's (the `component:` field of its `contracts.yaml`) wins on that name (your fork), and everything else keeps coming from the package." and "…See the install guide's "9. Ownership" section (`docs/consumer/INSTALL.md` in the `@3fn/core` package) for the merge model."
+
+**Verified against source before applying**: (a) declared-name precedence: `application-mcp-server/src/indexer/ComponentIndexer.ts:175-181` ("Precedence keys on the DECLARED component name (the contracts `component` field; the schema `name` when a component has no contracts), never the directory name"), the same fact the guide's § 9 states; (b) the heading: `## 9. Ownership` exists verbatim at `docs/consumer/INSTALL.md:234` (and `governance/DesignerPunk-Integration-Guide.md:248`).
+
+**Tests**: no test transcribed the README. Added in `init.test.ts`: the written README carries both sentences and neither the old name nor "Your first component"; and a **tie to the guide**: the heading and path the README quotes are parsed back out of the README, and the heading must be a line of `docs/consumer/INSTALL.md` (`## 9. Ownership`), so a later heading change goes red here.
+
+**Standing release condition**: the path `docs/consumer/INSTALL.md` resolves inside an installed package only once **22.3b ships `docs/consumer/**`** (a `files[]` line for each, instruments rows 15.1/15.2). Until then a consumer following the README's pointer finds no file; the tie test reads the file from this repo, so it cannot see that gap. Owner: Ada (22.3b).
