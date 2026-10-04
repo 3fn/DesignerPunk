@@ -30,7 +30,7 @@ This page says which files DesignerPunk's `init`, `generate`, `attach` and `sync
 **Do not commit: regenerated or local.**
 
 - `token-index/`: the index the Application MCP reads for token queries. it is derived from your token source, and `generate` rebuilds it on every machine.
-- `.designerpunk/`: local to one person. It holds your personal note, `.designerpunk/personal-note.local.md`: who you are and how you want to be worked with. It belongs to a person, not to the design system, so a joiner never inherits yours and you never inherit the founder's. `generate` creates it when it is absent.
+- `.designerpunk/`: local to one person. It holds your personal note, `.designerpunk/personal-note.local.md`: who you are, what you value, and how you like to work with your agents. It belongs to a person, not to the design system, so a joiner never inherits yours and you never inherit the founder's. `generate` creates it when it is absent.
 
 ## Platform output is committed by default
 

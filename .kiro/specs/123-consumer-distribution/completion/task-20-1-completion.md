@@ -101,3 +101,7 @@ Not re-verified by me: the interactive prompt against a real terminal (the `[y/N
 |---|---|---|---|
 | 8 (`specs/**` is repo state; `init` scaffolds `specs/`) | DESIGN-ONLY for the scaffold half | **VERIFIED-CODE** | `src/cli/init.ts` `scaffoldStarterSpecs` (Step 11a): writes `src/cli/templates/starter-specs/**` into `specs/<spec>/<file>`, records each `generated`; `src/cli/__tests__/init.test.ts` § "the starter specs into specs/" (seven cases: byte-for-byte scaffold, manifest entries, `--skip-agents`, collision kept and reported, `--re-scaffold` preview, absent source). The **policy** half (commit it) is unchanged. Row 21 (`generate` creating the note) is still DESIGN-ONLY (Task 22.1). |
 
+
+## Addendum 2026-10-03 (reconciliation pass after 22.2): COMMIT-POLICY L33
+
+`docs/consumer/COMMIT-POLICY.md` L33 described the personal note with the old two-slot wording ("who you are and how you want to be worked with"). It now reads "who you are, what you value, and how you like to work with your agents": a short true description of the three-slot note, not a copy of `personalNoteNamingMessage()`. No claim in the 20.1 claims table changes state. `commit-policy.test.ts`: 6 passed (the table is untouched).

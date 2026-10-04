@@ -440,7 +440,7 @@ export function personalNoteUnignoredMessage(): string {
 export function generateThemesLine(themes: ReadonlyArray<{ name: string; mode: string }>): string {
   return (
     `Themes: ${themes.map((t) => `${t.name} (${t.mode})`).join(', ')} — registered, not applied yet: ` +
-    `a theme you register does not change your generated output; light and dark mode and the wcag theme use DesignerPunk's built-in values`
+    `a theme you register does not change your generated output; dark mode and the wcag theme apply DesignerPunk's built-in overrides to your tokens`
   );
 }
 
@@ -484,7 +484,7 @@ export interface InitNextStepsContext {
  */
 export function initNextStepsMessage(name: string, ctx: InitNextStepsContext): string {
   const steps: string[] = ['npm install'];
-  if (ctx.jestConfigScaffolded) steps.push('npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom');
+  if (ctx.jestConfigScaffolded) steps.push('npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node');
   steps.push('npx designerpunk generate');
   if (!ctx.agentLayerEmitted) steps.push('npx designerpunk attach --target=<cc|kiro> to attach a harness (agents + MCP config + approvals)');
   if (ctx.starterSpecNames.length > 0) {
@@ -503,8 +503,9 @@ To customize your visual language:
   • Run \`npx designerpunk generate\` after changes
 
 Note: Token values have mathematical relationships (modular scale,
-baseline grid). The validator will warn if changes break these
-relationships during generation.
+baseline grid). \`generate\` does not check these relationships, and
+\`npx designerpunk validate\`'s check for them currently fails even on
+unmodified token source (a known defect in the checker, not in your tokens).
 
 💡 After future upgrades, run \`npx designerpunk sync\` to apply updates.`;
 }

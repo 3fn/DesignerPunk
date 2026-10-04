@@ -241,17 +241,21 @@ describe('catalog strings — equal to their design rows (read from design.md at
   test('personal note created in an unignored directory', () => {
     expect(personalNoteUnignoredMessage()).toBe(designRow('**personal note created in an unignored directory**'));
   });
-  test('generate — registered theme not emitted: Leonardo\'s FINAL wording (catalog-wording.md § 1; the design erratum is owed)', () => {
+  test('generate — registered theme not emitted: the suffix, with Ada\'s token-fact correction (the light-mode clause was false)', () => {
+    const suffix =
+      ' — registered, not applied yet: a theme you register does not change your generated output; dark mode and the wcag theme apply DesignerPunk\'s built-in overrides to your tokens';
+    expect(generateThemesLine([{ name: 'dark', mode: 'dark' }])).toBe(`Themes: dark (dark)${suffix}`);
+    expect(generateThemesLine([{ name: 'dark', mode: 'dark' }, { name: 'wcag', mode: 'light' }])).toBe(`Themes: dark (dark), wcag (light)${suffix}`);
+    expect(generateThemesLine([{ name: 'dark', mode: 'dark' }])).not.toContain('light and dark mode');
+  });
+
+  // INTENDED RED until Leonardo updates his committed source (`design-inputs/catalog-wording.md` § 1 is not mine to edit):
+  // it still carries the pre-correction clause "light and dark mode and the wcag theme use DesignerPunk's built-in values".
+  test('the committed wording source (catalog-wording.md § 1) agrees with generateThemesLine', () => {
     const src = fs.readFileSync(path.join(SPEC, 'design-inputs/catalog-wording.md'), 'utf8');
     const final = /\*\*Final\*\*:\n```\n(Themes: [^\n]+)\n```/.exec(src)?.[1];
     expect(final).toBeDefined();
-    expect(final).toBe(
-      'Themes: <name> (<mode>)[, <name> (<mode>)…] — registered, not applied yet: a theme you register does not change your generated output; light and dark mode and the wcag theme use DesignerPunk\'s built-in values',
-    );
-    expect(generateThemesLine([{ name: 'dark', mode: 'dark' }])).toBe(
-      final!.replace('<name> (<mode>)[, <name> (<mode>)…]', 'dark (dark)'),
-    );
-    expect(generateThemesLine([{ name: 'dark', mode: 'dark' }, { name: 'wcag', mode: 'light' }])).toContain('Themes: dark (dark), wcag (light) — ');
+    expect(generateThemesLine([{ name: 'dark', mode: 'dark' }])).toBe(final!.replace('<name> (<mode>)[, <name> (<mode>)…]', 'dark (dark)'));
   });
 });
 

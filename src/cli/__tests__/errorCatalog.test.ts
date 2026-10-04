@@ -253,11 +253,24 @@ describe('errorCatalog — Task 22.2 additions', () => {
     const steps = m.split('\n').filter((l) => /^ {2}\d+\. /.test(l));
     expect(steps).toEqual([
       '  1. npm install',
-      '  2. npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom',
+      '  2. npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node',
       '  3. npx designerpunk generate',
       '  4. specs/ holds your starter specs (ci-needs, regrounding): run them with your agent when you are ready',
       "  5. commit .gitignore with the rest: DesignerPunk's block in it ignores .designerpunk/ and token-index/",
     ]);
+  });
+
+  test('the customize note says what is true: `generate` does not check the relationships, and `validate`\'s check currently fails on unmodified source', () => {
+    const m = initNextStepsMessage('Acme', { jestConfigScaffolded: true, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true });
+    expect(m).not.toContain('The validator will warn');
+    const flat = m.replace(/\s+/g, ' '); // the note wraps at 72 columns
+    expect(flat).toContain('`generate` does not check these relationships, and');
+    expect(flat).toContain("`npx designerpunk validate`'s check for them currently fails even on unmodified token source (a known defect in the checker, not in your tokens).");
+  });
+
+  test('the install-jest step names the five devDependencies the preset and the tsconfig.test.json `init` writes declare', () => {
+    const m = initNextStepsMessage('Acme', { jestConfigScaffolded: true, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true });
+    expect(m).toContain('npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node');
   });
 
   test('init next steps omit every step a skip made untrue', () => {
