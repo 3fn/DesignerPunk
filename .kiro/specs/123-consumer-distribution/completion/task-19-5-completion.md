@@ -1,9 +1,9 @@
-# Task 19.5 Completion — Leonardo's whole-document review, and the fold (IN PROGRESS: not ticked)
+# Task 19.5 Completion — Leonardo's whole-document review, and the fold
 
 **Date**: 2026-10-03
 **Agent**: Thurgood (Opus) · PRIMARY, Task 19
 **Review record**: `completion/task-19-5-review/leonardo.md`, byte-equal to the copy the orchestrator relayed. Read at `b8987db1c`. Verdict: CONFIRMED-WITH-CORRECTIONS, with 5 corrections, 2 contradictions, 3 misleading silences, and 8 polish lines held for the rewrite charter. He confirmed the README reading.
-**State**: every item has a disposition. **19.5 is not ticked**: the routed items are not back, and items 3–5 wait on Peter's #300 decision.
+**State**: every item is dispositioned and none is still out. **19.5 is ticked** in the commit that carries this update. The #300 items (3–5) carry truthful-now wording, to be revisited when the fixes land.
 
 ## Disposition table
 
@@ -53,3 +53,29 @@
   - the whole pre-fix guide (`b8987db1c`) → red, listing `Product Tokens (H4)` and `Themes (H4)` ×2;
   - restored.
 - The full lanes: see the commit's validation note.
+
+## Closing update (2026-10-03): the routed items are back
+
+| # | Final disposition | Where |
+|---|---|---|
+| 2 | **APPLIED** (Lina): `init`'s numbered list begins at `npx designerpunk generate`. `npm install @3fn/core (…)` is a conditional step 1, printed only when the package is absent from the repo; that was her answer on the case Leonardo did not find. The jest install moves after the list, as optional. **The design row** (catalog-close erratum) is corrected by Thurgood. | `b0fe66301` (`errorCatalog.ts` `initNextStepsMessage`); design.md, this commit |
+| 3 | **APPLIED, truthful now** (Lina): the C27 jest collision string says `@3fn/core/testing` does not load under the preset in this version. The C27 design bullet is corrected by Thurgood. **Revisit when the #300 preset fix lands.** | `b0fe66301`; design.md, this commit |
+| 4 | **APPLIED, truthful now** (Ada's correction of Leonardo's sentence, verified by run in a scratch repo): `generate` prints both ✅ lines, exits 0, and rewrites `token-index/` without its theme-varying data, with 0 theme-varying tokens where there should be 9. Appended to guide L303 verbatim. **Revisit when the #300 code fix lands.** | guide L303, this commit |
+| 5 | **APPLIED, truthful now** (Lina): COMMIT-POLICY's timestamp paragraph. **Revisit when Ada's determinism fix lands.** | `b0fe66301` (COMMIT-POLICY); `e87c1d9ef` (20.1 addendum) |
+| 6 | **APPLIED**: Lina's confirmed text at guide L320. The new `see "Specifying screens (Product MCP)"` pointer targets an H3, so the reachability guard is green. | guide L320, this commit; `product-mcp-server/src/index.ts:208` (per Lina) |
+| 9 | **APPLIED**: "install guide" in `NameContract.ts:69` and the agent-layer markers-missing string (Lina). The region § 5 quote (L189) follows the built message, INSTALL.md is re-derived, and `install-doc.test.ts`'s import assertion is green. The design rows are corrected. The `.gitignore` markers-missing row is still open with Peter. | `b0fe66301`; guide L189, INSTALL.md, design.md, this commit |
+
+**Check: INSTALL.md § 3 against what `init` now prints.**
+- The region does not describe `init`'s next-steps order anywhere, so it never mentioned the old `npm install` and jest steps.
+- Founder step 1, `npm install @3fn/core`, agrees with `init`'s new conditional step: after step 1 the package is present, so `init` does not print it.
+- § 7's "refuses and prints these steps" still holds.
+
+## Follow-on, found by Lina (not one of Leonardo's items; it does not hold the tick)
+
+- **Where**: the README that `init` writes into `src/components/` (`src/cli/init.ts:592-602`, `CONSUMER_COMPONENTS_README`).
+- **What is wrong**: it says "See the install doc's 'Your first component' section for the merge model". The name is old, and no such section exists.
+- **Thurgood's pick, a correction** (routed to Lina via the orchestrator; Leonardo's read requested):
+  - Point to the section that exists and states the merge model: the install guide's **"9. Ownership"**.
+  - Fix the same sentence's "with the same name", which has the defect corrected in the region at 19.4 (`task-19-1-completion.md` Addendum 2 (d)): precedence keys on the declared name.
+  - Proposed text: "A component you add with the same declared name as one of DesignerPunk's (the `component:` field of its `contracts.yaml`) wins on that name …" and "See the install guide's "9. Ownership" section for the merge model."
+- **Not polish**: both are false as written today.

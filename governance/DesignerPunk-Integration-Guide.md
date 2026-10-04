@@ -186,7 +186,7 @@ Platform requirements, for reference: the generated Kotlin calls `Oklch(…).toC
 After an update, `sync` may print a line like this:
 
 ```
-components now expect token '<name>' — <what it is for> (used by <components>). Add it to your set in <your token source>. Your tokens are yours; DesignerPunk never adds to them. DesignerPunk's value, for reference: <value> ('<token>' in DesignerPunk's language). See: install doc § "When sync reports a missing token".
+components now expect token '<name>' — <what it is for> (used by <components>). Add it to your set in <your token source>. Your tokens are yours; DesignerPunk never adds to them. DesignerPunk's value, for reference: <value> ('<token>' in DesignerPunk's language). See: install guide § "When sync reports a missing token".
 ```
 
 It means an updated component references a token name that your token set does not define. DesignerPunk's own value for that token is shown for reference only. **It is a report, not a change.** `sync` cannot add the token for you, because your tokens are your language: adding to them is your decision. Add the token to your set, choosing its value, and then run `npx designerpunk generate`.
@@ -300,7 +300,7 @@ export default defineConfig({
 - Path is resolved relative to the config file's directory
 - Must be a **complete** token source — no fallback to the package for missing families
 - Must export `getAllPrimitiveTokens()` from the root barrel and `getAllSemanticTokens()` from a `semantic/` subdirectory
-- Dark and WCAG overrides are not read from `tokenSource` or from `themes`: `generate` applies DesignerPunk's own override maps from the installed package (section 4). Every semantic token those maps name must exist in your token source. If one is missing, `generate` reports an "Orphaned override key" and writes no token files.
+- Dark and WCAG overrides are not read from `tokenSource` or from `themes`: `generate` applies DesignerPunk's own override maps from the installed package (section 4). Every semantic token those maps name must exist in your token source. If one is missing, `generate` reports an "Orphaned override key" and writes no token files. After that report, `generate` still prints "✅ System tokens generated", exits 0, and rewrites `token-index/` without its theme-varying data (a known defect), so read the lines above the ✅.
 - `npx designerpunk init` copies a complete token source to `src/tokens/` automatically
 
 ### Themes
@@ -317,7 +317,7 @@ npx designerpunk mcp:docs     # Docs MCP — steering doc queries
 npx designerpunk mcp:product  # Product MCP — screen specs, domain objects, product architecture
 ```
 
-Each command runs its server on stdio and writes its log to stderr. Run it from inside your project: the Application and Product servers find your design system from the directory they start in, while the data that ships with the package (docs, experience patterns, layout templates, family guidance) is read from the package. The Product MCP starts with empty data if no `product/` directory exists yet; that is expected for a new project (see "Specifying screens (Product MCP)" below).
+Each command runs its server on stdio and writes its log to stderr. Run it from inside your project: the Application and Product servers find your design system from the directory they start in, while the data that ships with the package (docs, experience patterns, layout templates, family guidance) is read from the package. The Product MCP starts with an empty index where no `product/` directory exists; a repo `init` created has one, with an example screen (see "Specifying screens (Product MCP)" below).
 
 **Data freshness is automatic.** MCP servers detect stale data and rebuild before responding (30-second threshold gate). If you edit product YAML, component schemas, or steering docs, the next query will serve fresh data automatically. No manual health checks or `rebuild_index` calls needed during normal operation.
 
