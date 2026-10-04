@@ -13,14 +13,16 @@ Every row below belongs in design.md § "Error Handling — the loud-failure cat
 
 **Final**:
 ```
-Themes: <name> (<mode>)[, <name> (<mode>)…] — registered, not applied yet: a theme you register does not change your generated output; light and dark mode and the wcag theme use DesignerPunk's built-in values
+Themes: <name> (<mode>)[, <name> (<mode>)…] — registered, not applied yet: a theme you register does not change your generated output; dark mode and the wcag theme apply DesignerPunk's built-in overrides to your tokens
 ```
+
+**Correction (2026-10-03; Ada, as token owner; applied by Lina in `generateThemesLine`, `src/cli/shared/errorCatalog.ts:440-444`, commit `21c73b60d`; this source updated by Leonardo to match the built string):** my first clause, "light and dark mode and the wcag theme use DesignerPunk's built-in values", was false for light mode. Light-mode values are the person's own tokens: the `light-base` context carries no override (`src/generators/generateTokenFiles.ts:150-154` names only `light-wcag`, `dark-base` and `dark-wcag`, resolved at `:165-171`). Only the dark and WCAG override maps are DesignerPunk's (`:19-21`). Verified by Leonardo against the source. I accept Ada's clause as wording too.
 
 | Reason | Class | Source |
 |---|---|---|
 | The themes print on ONE comma-joined line, so the line gets one suffix, not one per theme | VERIFIED-CODE | `src/cli/designerpunk.ts:241-242` |
 | Every born repo prints this line, because `init` writes `dark` and `wcag` entries into the config | VERIFIED-CODE | `src/cli/init.ts:719-735` (`generateConfig`) |
-| Dark mode and the `wcag` block do reach the output, from the package's own override maps, not from the config entries. So a bare "not yet emitted" would be false for those two names | VERIFIED-CODE | `src/generators/generateTokenFiles.ts:19-21` (static imports), `:126-165` (registration and context resolution) |
+| Dark mode and the `wcag` block do reach the output, applied as the package's own override maps on top of the person's tokens, not from the config entries. Light mode is the person's own tokens. So a bare "not yet emitted" would be false for those two names | VERIFIED-CODE | `src/generators/generateTokenFiles.ts:19-21` (static imports), `:150-171` (the override contexts and their resolution) |
 | The wording echoes the scope sentence's third sentence ("…does not change your generated output yet; light and dark mode work") | VERIFIED-CODE | `governance/DesignerPunk-Integration-Guide.md:23` |
 | No doc pointer: "the install guide" would now be ambiguous (`docs/consumer/INSTALL.md` is the region copy; the guide's § Reference "Themes" is a separate place) | DESIGN-ONLY | judgement |
 
