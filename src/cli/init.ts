@@ -253,14 +253,15 @@ export async function runInit(argv: string[], deps: InitDeps = {}): Promise<void
   );
   if (readmeCreated) manifest.recordFile('src/components/README.md', consumerComponentsReadme, 'generated');
 
-  // --- Step 5: product/overview.yaml — UNCHANGED in U1 (Task 22 replaces it) ---
-  const overviewPath = path.join(dest, 'product/overview.yaml');
-  const overviewCreated = createFileIfNotExists(
-    overviewPath,
-    generateOverview(opts.name),
-    'product/overview.yaml',
-  );
-  if (overviewCreated) manifest.recordFile('product/overview.yaml', overviewPath, 'generated');
+  // --- Step 5: the `product/` tree (design C27 erratum; Task 22.3) — `src/cli/templates/product/**`: the
+  // product overview (its one `__PRODUCT_NAME__` placeholder substituted), a worked example screen and the
+  // layout template it names. Leonardo authors the content; `init` places it. A path she already has is kept
+  // and reported (the generic skip line); every file written is recorded `generated`. -----------------------
+  for (const rel of listProductScaffoldFiles(pkgRoot)) {
+    const target = path.join(dest, 'product', rel);
+    const created = createFileIfNotExists(target, productScaffoldContent(pkgRoot, rel, opts.name), `product/${rel}`);
+    if (created) manifest.recordFile(`product/${rel}`, target, 'generated');
+  }
 
   // --- Step 6 (new): the agent layer + MCP config for the selected target — `attach`'s code
   // path (`emitAgentLayer`, C1's "(new) agent layer" row; C20). Replaces release-1's copy
@@ -499,7 +500,7 @@ async function previewReScaffold(pkgRoot: string, dest: string, opts: InitOption
   }
   const scaffoldFiles = [
     'designerpunk.config.ts',
-    'product/overview.yaml',
+    ...listProductScaffoldFiles(pkgRoot).map((f) => `product/${f}`),
     'jest.config.js',
     'tsconfig.test.json',
     '.designerpunkignore',
@@ -751,22 +752,37 @@ export default defineConfig({
 `;
 }
 
-function generateOverview(name: string): string {
-  return `# ${name} — Product Overview
+/** The `product/` scaffold's package source, relative to the package root (design C27 erratum; Task 22.3). Ships through the `src/cli/templates/` `files[]` entry. */
+export const PRODUCT_SCAFFOLD_SOURCE = 'src/cli/templates/product';
 
-## Product Context
-name: ${name}
-description: "[CUSTOMIZE] Describe your product"
-domain: "[CUSTOMIZE] Your product domain"
+/** The one placeholder in the scaffold: the product's name, in `overview.yaml`, inside a double-quoted YAML scalar. */
+export const PRODUCT_NAME_PLACEHOLDER = '__PRODUCT_NAME__';
 
-## Principles
-- "[CUSTOMIZE] Add your design principles"
+/** Every file under the `product/` scaffold source as `<path under product/>`, sorted; `[]` when the source is absent. */
+export function listProductScaffoldFiles(pkgRoot: string): string[] {
+  const root = path.join(pkgRoot, PRODUCT_SCAFFOLD_SOURCE);
+  const out: string[] = [];
+  const walk = (dir: string, rel: string): void => {
+    if (!fs.existsSync(dir)) return;
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => (a.name < b.name ? -1 : 1))) {
+      const next = rel ? `${rel}/${entry.name}` : entry.name;
+      if (entry.isDirectory()) walk(path.join(dir, entry.name), next);
+      else if (entry.isFile()) out.push(next);
+    }
+  };
+  walk(root, '');
+  return out;
+}
 
-## Platform Status
-web: not-started
-ios: not-started
-android: not-started
-`;
+/** Escape `name` for the inside of a double-quoted YAML scalar (the placeholder sits inside one). */
+function yamlDoubleQuotedBody(name: string): string {
+  return name.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
+}
+
+/** The scaffold file's bytes with `__PRODUCT_NAME__` replaced by `name` (escaped for the quoted scalar it sits in). */
+export function productScaffoldContent(pkgRoot: string, rel: string, name: string): string {
+  const raw = fs.readFileSync(path.join(pkgRoot, PRODUCT_SCAFFOLD_SOURCE, rel), 'utf-8');
+  return raw.split(PRODUCT_NAME_PLACEHOLDER).join(yamlDoubleQuotedBody(name));
 }
 
 // Re-exported for tests and for future callers that need the same refusal

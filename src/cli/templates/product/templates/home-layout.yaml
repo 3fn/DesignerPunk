@@ -1,0 +1,11 @@
+# A product layout template: how this product arranges a page. Screens name it with
+# `template: home-layout`. It follows the system layout template centered-content-page
+# (ask your agent: get_layout_template "centered-content-page").
+name: home-layout
+category: layout
+description: An app header above one centered content region, constrained in width at wider breakpoints.
+regions:
+  - name: header
+    description: App-level header, full width at every breakpoint.
+  - name: content
+    description: One centered region; follows centered-content-page's columns and maximum width.

@@ -2042,6 +2042,124 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       expect([...knowledgeSources].sort()).toEqual(['src/components', 'src/tokens']);
     });
 
+    // -----------------------------------------------------------------------------------------------
+    // Spec 123 Task 22.3 — the scaffolded `product/` tree's VALIDITY GUARD, from the PACKED install, in the
+    // born repo immediately after `init` and BEFORE `generate` (so no `token-index/` exists). It binds (design
+    // C27 erratum): the product index status `healthy` (zero warnings), zero `_componentGaps`, gap detection LIVE
+    // (a non-empty catalog), the example screen indexed, and the template it names exists. The same bar runs
+    // in-process, over the real indexer, in `src/cli/__tests__/productScaffold.test.ts`.
+    // -----------------------------------------------------------------------------------------------
+    /** Start the packed Product MCP in `cwd` (optionally with `PRODUCT_DIR`), run `fn(call)`, always kill it. */
+    async function withProductMcp<T>(cwd: string, env: Record<string, string>, fn: (call: (tool: string, args?: object) => Promise<any>) => Promise<T>): Promise<T> {
+      const child = spawn('node', [path.join(pkgIn(cwd), 'dist', 'mcp', 'product-mcp.js')], {
+        cwd,
+        stdio: ['pipe', 'pipe', 'pipe'],
+        env: { ...process.env, ...env, NODE_ENV: 'test' },
+      });
+      let next = 1;
+      const pending = new Map<number, (v: any) => void>();
+      let buffer = '';
+      child.stdout!.on('data', (d: Buffer) => {
+        buffer += d.toString();
+        const lines = buffer.split('\n');
+        buffer = lines.pop() ?? '';
+        for (const line of lines) {
+          if (!line.trim()) continue;
+          try {
+            const msg = JSON.parse(line);
+            pending.get(msg.id)?.(msg);
+          } catch { /* not a JSON-RPC line */ }
+        }
+      });
+      const rpc = (method: string, params: object): Promise<any> =>
+        new Promise((resolve, reject) => {
+          const id = next++;
+          const timer = setTimeout(() => reject(new Error(`product MCP timeout on ${method}`)), 15_000);
+          pending.set(id, (m) => { clearTimeout(timer); resolve(m); });
+          child.stdin!.write(JSON.stringify({ jsonrpc: '2.0', id, method, params }) + '\n');
+        });
+      try {
+        await new Promise<void>((resolve, reject) => {
+          const timer = setTimeout(() => reject(new Error('product MCP did not start')), 20_000);
+          child.stderr!.on('data', (d: Buffer) => { if (d.toString().includes('running on stdio')) { clearTimeout(timer); resolve(); } });
+          child.on('error', (e) => { clearTimeout(timer); reject(e); });
+        });
+        await rpc('initialize', { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'test', version: '1.0' } });
+        return await fn(async (tool, args = {}) => {
+          const res = await rpc('tools/call', { name: tool, arguments: args });
+          return JSON.parse(res.result.content[0].text);
+        });
+      } finally {
+        child.kill();
+      }
+    }
+
+    it('PRODUCT GUARD: the scaffolded product/ tree, from the packed install after init and before generate, is healthy with zero gaps, live gap detection, and its template', async () => {
+      const dir = consumers['cc'];
+      for (const rel of ['product/overview.yaml', 'product/experience-map/pages/example-home.yaml', 'product/templates/home-layout.yaml']) {
+        expect({ rel, exists: fs.existsSync(path.join(dir, rel)) }).toEqual({ rel, exists: true });
+      }
+      expect(fs.existsSync(path.join(dir, 'token-index'))).toBe(false); // BEFORE generate
+      expect(readText(dir, 'product/overview.yaml')).toContain('name: "Packed"'); // the substitution ran
+      expect(readText(dir, 'product/overview.yaml')).not.toContain('__PRODUCT_NAME__');
+
+      await withProductMcp(dir, {}, async (call) => {
+        const health = await call('get_product_health');
+        expect(health.status).toBe('healthy');
+        expect(health.warnings).toEqual([]);
+        expect(health.gapCounts).toEqual({ totalGaps: 0, screensWithGaps: 0 });
+        expect(health.catalogSize).toBeGreaterThan(0); // gap detection is live in the packed born repo
+        expect(health.counts.screens).toBe(1);
+        expect(health.counts.templates).toBe(1);
+        const spec = await call('get_screen_spec', { name: 'example-home' });
+        expect(spec.name).toBe('example-home');
+        expect(spec._componentGaps ?? []).toEqual([]);
+        expect(spec.template).toBe('home-layout');
+        expect(spec.status).toMatchObject({ ios: 'not-started', android: 'not-started' });
+        const overview = await call('get_product_overview');
+        expect(JSON.stringify(overview)).toContain('Packed');
+      });
+    }, 90_000);
+
+    it('PRODUCT GUARD, bite (1) in the packed install: a misspelled component name → a `not-found` gap (gap detection is live)', async () => {
+      const dir = consumers['cc'];
+      const copy = fs.mkdtempSync(path.join(os.tmpdir(), 'product-bite-'));
+      try {
+        fs.cpSync(path.join(dir, 'product'), copy, { recursive: true });
+        const page = path.join(copy, 'experience-map', 'pages', 'example-home.yaml');
+        fs.writeFileSync(page, fs.readFileSync(page, 'utf-8').replace('component: Button-CTA', 'component: Button-CTAA'));
+        await withProductMcp(dir, { PRODUCT_DIR: copy }, async (call) => {
+          const spec = await call('get_screen_spec', { name: 'example-home' });
+          expect(spec._componentGaps).toEqual(expect.arrayContaining([expect.objectContaining({ component: 'Button-CTAA', issue: 'not-found' })]));
+          const health = await call('get_product_health');
+          expect(health.gapCounts.totalGaps).toBeGreaterThan(0);
+        });
+      } finally {
+        fs.rmSync(copy, { recursive: true, force: true });
+      }
+    }, 90_000);
+
+    it('PRODUCT GUARD, bite (2) in the packed install: a missing referenced template is invisible to the indexer — the guard\'s own existence check catches it', async () => {
+      const dir = consumers['cc'];
+      const copy = fs.mkdtempSync(path.join(os.tmpdir(), 'product-bite2-'));
+      try {
+        fs.cpSync(path.join(dir, 'product'), copy, { recursive: true });
+        fs.rmSync(path.join(copy, 'templates', 'home-layout.yaml'));
+        await withProductMcp(dir, { PRODUCT_DIR: copy }, async (call) => {
+          const health = await call('get_product_health');
+          expect(health.status).toBe('healthy'); // the indexer does not resolve template names
+          expect(health.counts.templates).toBe(0);
+          const spec = await call('get_screen_spec', { name: 'example-home' });
+          const names = new Set<string>(((await call('list_product_templates')) as Array<{ name: string }>).map((t) => t.name));
+          // the guard's own limb: the screen names a template that the index does not hold
+          expect(spec.template).toBe('home-layout');
+          expect(names.has(spec.template)).toBe(false);
+        });
+      } finally {
+        fs.rmSync(copy, { recursive: true, force: true });
+      }
+    }, 90_000);
+
     it('the personal note is PRESENT in both installs after init, with the template\'s content (Task 22.1, mechanism B; C19 resolved)', () => {
       const template = fs.readFileSync(path.join(PKG_ROOT, 'src/cli/templates/personal-note.template.md'), 'utf-8');
       for (const t of TARGETS) {
