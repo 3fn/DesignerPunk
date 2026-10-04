@@ -65,3 +65,5 @@
 
 **Counts (current, 2026-10-03, after 20.2)**: N = 31 — exists 17 · built-here 12 · missing 2 · unlisted 4 (the `## Found later` entries of both kinds: three `unlisted` — the config-loader seam, the missing catalog rows, the markers-missing remedy — and one `misfit`, row 2.5). Rows 2.1, 2.3, 2.5, 3.1, 3.2 (consumed), 5.3, 6.1, 6.2, 8.1–8.6 are now built or exercised; rows 4.3/4.4/5.1 stay with 20.3 and 22.1, 7.3 with 22.3b.
 
+**Pointer note, 2026-10-03 (Lina; recommendation from Thurgood, to be ruled by Peter)**: the catalog-row gaps recorded above (the config-unreadable and block-added strings, and the markers-missing remedy for the target-free `.gitignore` region) are best closed by **ONE design erratum in the Task 22.2 window**, with **Leonardo's wording**, together with the starter-spec strings found at 21.3 (`task-21-instruments.md` § "Found later"). Until it lands the strings stand as authored (`errorCatalog.ts`, each marked "AUTHORED AT 20.2" or "AUTHORED AT 21.3"). Nothing in this note authorizes a change; it names where the erratum is expected.
+

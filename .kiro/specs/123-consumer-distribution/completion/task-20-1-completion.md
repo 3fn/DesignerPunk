@@ -95,3 +95,9 @@ Row numbers are the claims table's. `VERIFIED-CODE` now means the behaviour exis
 
 Not re-verified by me: the interactive prompt against a real terminal (the `[y/N]` is exercised through its test seam and `confirmGitignoreBlock` through a fake `readline`; no terminal was driven).
 
+## Addendum 2026-10-03 (after Task 21.3): row 8, re-checked
+
+| Row | Was | Now | Evidence |
+|---|---|---|---|
+| 8 (`specs/**` is repo state; `init` scaffolds `specs/`) | DESIGN-ONLY for the scaffold half | **VERIFIED-CODE** | `src/cli/init.ts` `scaffoldStarterSpecs` (Step 11a): writes `src/cli/templates/starter-specs/**` into `specs/<spec>/<file>`, records each `generated`; `src/cli/__tests__/init.test.ts` § "the starter specs into specs/" (seven cases: byte-for-byte scaffold, manifest entries, `--skip-agents`, collision kept and reported, `--re-scaffold` preview, absent source). The **policy** half (commit it) is unchanged. Row 21 (`generate` creating the note) is still DESIGN-ONLY (Task 22.1). |
+

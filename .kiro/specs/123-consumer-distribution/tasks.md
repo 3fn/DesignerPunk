@@ -1131,7 +1131,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   - [x] 21.1 CI-needs spec
   - [x] 21.2 Re-grounding spec
-  - [ ] 21.3 Scaffolding + structure test *(amendment 2026-10-03: the scaffolding is Lina's; the structure test is written with 21.1/21.2 by Thurgood)*
+  - [x] 21.3 Scaffolding + structure test *(amendment 2026-10-03: the scaffolding is Lina's; the structure test is written with 21.1/21.2 by Thurgood)*
 
 - [ ] 22. Personal note, `init` UX completion, product scaffold, and DD9 (**U3 gating parent**)
 

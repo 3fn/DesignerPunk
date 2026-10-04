@@ -28,7 +28,7 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as crypto from 'crypto';
-import { runInit, ManifestBuilder } from '../init';
+import { runInit, ManifestBuilder, listStarterSpecFiles, starterSpecNames, scaffoldStarterSpecs, STARTER_SPECS_SOURCE } from '../init';
 import { runAttach } from '../attach';
 import { resolvePackageRoot } from '../shared/resolvePackageRoot';
 import { cloneHatchMessage, personalNoteNamingMessage, restartLineSequencedMessage } from '../shared/errorCatalog';
@@ -41,7 +41,12 @@ import {
   gitignoreRegionContent,
   gitignoreRegionEntry,
 } from '../shared/gitignoreRegion';
-import { gitignoreBlockAddedMessage, gitignoreBlockConfigUnreadableMessage } from '../shared/errorCatalog';
+import {
+  gitignoreBlockAddedMessage,
+  gitignoreBlockConfigUnreadableMessage,
+  starterSpecCollisionMessage,
+  starterSpecsWrittenMessage,
+} from '../shared/errorCatalog';
 import { extractRegion, normalizeRegionContent, wrapRegion } from '../sync/RegionGrain';
 import type { ConfigModuleLoader } from '../../config/ConfigLoader';
 
@@ -868,5 +873,89 @@ describe('CLI init — the .gitignore managed block (Task 20.2; design.md C24)',
     expect(output).toContain(gitignoreBlockConfigUnreadableMessage(reason));
     expect(fs.existsSync(path.join(scratchDir, '.gitignore'))).toBe(false);
     expect(readManifestFile(scratchDir).entries[GITIGNORE_REGION_ID]).toBeUndefined();
+  });
+});
+
+describe('CLI init — the starter specs into specs/ (Task 21.3; design.md C25, DD15)', () => {
+  let scratchDir: string;
+  const TEMPLATE_FILES = listStarterSpecFiles(PKG_ROOT);
+  const templateBytes = (rel: string) => fs.readFileSync(path.join(PKG_ROOT, STARTER_SPECS_SOURCE, rel));
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test('the package ships exactly two starter specs (the source the scaffold reads)', () => {
+    expect(starterSpecNames(TEMPLATE_FILES)).toEqual(['ci-needs', 'regrounding']);
+    expect(TEMPLATE_FILES.length).toBeGreaterThanOrEqual(2);
+  });
+
+  test('init scaffolds both into specs/<spec>/<file>, byte for byte, and prints the summary line', async () => {
+    const { output } = await runInitIn(scratchDir);
+    for (const rel of TEMPLATE_FILES) {
+      expect(fs.readFileSync(path.join(scratchDir, 'specs', rel)).equals(templateBytes(rel))).toBe(true);
+    }
+    const written = fs.readdirSync(path.join(scratchDir, 'specs')).sort();
+    expect(written).toEqual(['ci-needs', 'regrounding']);
+    expect(output).toContain(`✓ ${starterSpecsWrittenMessage(TEMPLATE_FILES.length, ['ci-needs', 'regrounding'])}`);
+  });
+
+  test('every scaffolded file is recorded origin "generated" with the hash of the bytes written', async () => {
+    await runInitIn(scratchDir);
+    const entries = readManifestFile(scratchDir).entries;
+    for (const rel of TEMPLATE_FILES) {
+      expect(entries[`specs/${rel}`]).toEqual({ hash: sha256(templateBytes(rel).toString('utf-8')), grain: 'file', origin: 'generated' });
+    }
+  });
+
+  test('--skip-agents still scaffolds them (the specs do not depend on the agent layer)', async () => {
+    await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents']);
+    expect(fs.existsSync(path.join(scratchDir, 'specs', TEMPLATE_FILES[0]))).toBe(true);
+  });
+
+  test('RED (collision): an existing path is kept byte-identical, reported with the catalog string, and not recorded; the rest are still written', async () => {
+    const first = TEMPLATE_FILES[0];
+    const mine = '# my own notes, not the starter\n';
+    fs.mkdirSync(path.join(scratchDir, 'specs', path.dirname(first)), { recursive: true });
+    fs.writeFileSync(path.join(scratchDir, 'specs', first), mine);
+    // `specs/` alone does not make the repo `partial` (no config, no token tier), so bare init proceeds.
+    const { output } = await runInitIn(scratchDir);
+    expect(fs.readFileSync(path.join(scratchDir, 'specs', first), 'utf-8')).toBe(mine);
+    expect(output).toContain(starterSpecCollisionMessage(`specs/${first}`));
+    expect(readManifestFile(scratchDir).entries[`specs/${first}`]).toBeUndefined();
+    for (const rel of TEMPLATE_FILES.slice(1)) {
+      expect(fs.existsSync(path.join(scratchDir, 'specs', rel))).toBe(true);
+    }
+    expect(output).toContain(`✓ ${starterSpecsWrittenMessage(TEMPLATE_FILES.length - 1, starterSpecNames(TEMPLATE_FILES.slice(1)))}`);
+  });
+
+  test('--re-scaffold lists a deleted starter spec in its preview and re-adds it; an edited sibling is left byte-identical', async () => {
+    await runInitIn(scratchDir);
+    const [gone, edited] = [TEMPLATE_FILES[0], TEMPLATE_FILES[1]];
+    fs.rmSync(path.join(scratchDir, 'specs', gone));
+    fs.appendFileSync(path.join(scratchDir, 'specs', edited), '\nmy edit\n');
+    const editedBefore = fs.readFileSync(path.join(scratchDir, 'specs', edited));
+    const { output } = await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents', '--re-scaffold', '--yes']);
+    expect(output).toContain(`- specs/${gone}`);
+    expect(output).not.toContain(`- specs/${edited}`);
+    expect(fs.readFileSync(path.join(scratchDir, 'specs', gone)).equals(templateBytes(gone))).toBe(true);
+    expect(fs.readFileSync(path.join(scratchDir, 'specs', edited)).equals(editedBefore)).toBe(true);
+    expect(output).toContain(starterSpecCollisionMessage(`specs/${edited}`));
+  });
+
+  test('a package without the starter-specs source: scaffoldStarterSpecs reports templatesFound false and writes nothing', () => {
+    const emptyPkg = createScratchDir();
+    try {
+      const r = scaffoldStarterSpecs(emptyPkg, scratchDir, new ManifestBuilder());
+      expect(r).toEqual({ written: [], collided: [], templatesFound: false });
+      expect(fs.existsSync(path.join(scratchDir, 'specs'))).toBe(false);
+    } finally {
+      fs.rmSync(emptyPkg, { recursive: true, force: true });
+    }
   });
 });

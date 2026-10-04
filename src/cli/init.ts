@@ -34,6 +34,9 @@ import {
   jestConfigCollisionMessage,
   gitignoreBlockConfigUnreadableMessage,
   gitignoreBlockAddedMessage,
+  starterSpecCollisionMessage,
+  starterSpecsWrittenMessage,
+  consumerDegradationMessage,
 } from './shared/errorCatalog';
 import { computeGitignoreRegion, applyGitignoreRegion } from './shared/gitignoreRegion';
 import type { ConfigModuleLoader } from '../config/ConfigLoader';
@@ -338,6 +341,17 @@ export async function runInit(argv: string[], deps: InitDeps = {}): Promise<void
   );
   if (ignoreCreated) manifest.recordFile('.designerpunkignore', ignorePath, 'generated');
 
+  // --- Step 11a: the starter specs (design C25, DD15; Task 21.3) — `src/cli/templates/starter-specs/**`
+  // into `specs/`, harness-agnostic scaffolded files, never overwritten: a path she already has is
+  // reported and kept. Recorded as `generated` like every other file `init` writes (C1's manifest row);
+  // after the write they are hers, and `sync` never reads them. -------------------------------------
+  const starter = scaffoldStarterSpecs(pkgRoot, dest, manifest);
+  if (!starter.templatesFound) {
+    console.log(`  warning: ${consumerDegradationMessage('starter specs', STARTER_SPECS_SOURCE, 'none were scaffolded into specs/')}`);
+  }
+  for (const rel of starter.collided) console.log(`  ${starterSpecCollisionMessage(`specs/${rel}`)}`);
+  if (starter.written.length > 0) console.log(`✓ ${starterSpecsWrittenMessage(starter.written.length, starterSpecNames(starter.written))}`);
+
   // --- Step 11: the `.gitignore` managed block (C24; Task 20.2). Emitted AFTER the token copy: the
   // config `init` just wrote imports the copied tier, and the block's commented line carries the
   // CONFIGURED `outputDir`, read through `loadConfig` (a pre-existing config with a different
@@ -464,6 +478,9 @@ async function previewReScaffold(pkgRoot: string, dest: string, opts: InitOption
   if (!opts.skipAgents) {
     missing.push(...(await previewAgentLayerMissing(pkgRoot, dest, opts.target)));
   }
+  for (const rel of listStarterSpecFiles(pkgRoot)) {
+    if (!fs.existsSync(path.join(dest, 'specs', rel))) missing.push(`specs/${rel}`);
+  }
   const scaffoldFiles = [
     'designerpunk.config.ts',
     'product/overview.yaml',
@@ -478,6 +495,57 @@ async function previewReScaffold(pkgRoot: string, dest: string, opts: InitOption
     }
   }
   return missing;
+}
+
+/** The starter specs' package source, relative to the package root (design C25; Task 21 criterion 4). Ships through the `src/cli/templates/` `files[]` entry. */
+export const STARTER_SPECS_SOURCE = 'src/cli/templates/starter-specs';
+
+/** Every file under the starter-specs source as `<spec>/<file>`, sorted; `[]` when the source is absent. */
+export function listStarterSpecFiles(pkgRoot: string): string[] {
+  const root = path.join(pkgRoot, STARTER_SPECS_SOURCE);
+  const out: string[] = [];
+  const walk = (dir: string, rel: string): void => {
+    if (!fs.existsSync(dir)) return;
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => (a.name < b.name ? -1 : 1))) {
+      const next = rel ? `${rel}/${entry.name}` : entry.name;
+      if (entry.isDirectory()) walk(path.join(dir, entry.name), next);
+      else if (entry.isFile()) out.push(next);
+    }
+  };
+  walk(root, '');
+  return out;
+}
+
+/** The spec directories (first path segment) among `<spec>/<file>` paths, in order of first appearance. */
+export function starterSpecNames(files: string[]): string[] {
+  return [...new Set(files.map((f) => f.split('/')[0]))];
+}
+
+/**
+ * Scaffold the starter specs into `<dest>/specs/<spec>/<file>`. A path that already exists is NEVER
+ * overwritten and is not recorded: it is returned in `collided`, for the caller to report. Written files
+ * are recorded `generated`, with the hash of the bytes written.
+ */
+export function scaffoldStarterSpecs(
+  pkgRoot: string,
+  dest: string,
+  manifest: ManifestBuilder,
+): { written: string[]; collided: string[]; templatesFound: boolean } {
+  const files = listStarterSpecFiles(pkgRoot);
+  const written: string[] = [];
+  const collided: string[] = [];
+  for (const rel of files) {
+    const target = path.join(dest, 'specs', rel);
+    if (fs.existsSync(target)) {
+      collided.push(rel);
+      continue;
+    }
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, fs.readFileSync(path.join(pkgRoot, STARTER_SPECS_SOURCE, rel)));
+    manifest.recordFile(`specs/${rel}`, target, 'generated');
+    written.push(rel);
+  }
+  return { written, collided, templatesFound: files.length > 0 };
 }
 
 function walkMissing(src: string, dest: string, exclude: string[], out: string[], destRoot: string): void {

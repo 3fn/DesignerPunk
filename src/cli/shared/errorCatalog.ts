@@ -357,3 +357,22 @@ export function gitignoreBlockConfigUnreadableMessage(reason: string): string {
 export function gitignoreBlockAddedMessage(): string {
   return `.gitignore: added DesignerPunk's block (it ignores token-index/ and .designerpunk/)`;
 }
+
+// ---------------------------------------------------------------------------
+// The starter specs (Spec 123 Task 21.3; design.md C25, DD15). Both strings are AUTHORED AT 21.3:
+// the design catalog carries no row for either (the criterion says `init` "reports on collision" and
+// names no text); the existing generic `skipped: <label> (already exists)` literal in `init.ts` names
+// the skip but not its consequence (the C27 / A13 rule: a collision string states what the skip means).
+// `init.test.ts` asserts THESE functions' output. The design rows are owed (see `task-21-3-completion.md`).
+// ---------------------------------------------------------------------------
+
+/** A starter-spec path already exists: it is kept as it is, and the starter's version is not written. */
+export function starterSpecCollisionMessage(relPath: string): string {
+  return `skipped: ${relPath} (already exists) — your file is kept as it is; the starter spec's version was not written`;
+}
+
+/** The summary line after the starter specs are scaffolded into `specs/`. */
+export function starterSpecsWrittenMessage(fileCount: number, specNames: string[]): string {
+  return `specs/: ${fileCount} starter spec file${fileCount === 1 ? '' : 's'} (${specNames.join(', ')}) — run them with your agent`;
+}
+
