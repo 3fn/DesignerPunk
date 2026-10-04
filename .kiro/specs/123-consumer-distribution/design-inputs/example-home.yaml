@@ -1,0 +1,52 @@
+# An example screen spec. Your agents find it with find_screens; keep it, edit it, or
+# delete it once you have specified a screen of your own.
+name: example-home
+type: feature-page
+tags: [example, home, getting-started]
+status:
+  spec: complete
+  web: not-started
+  ios: not-started        # native onboarding is not supported on this release
+  android: not-started    # native onboarding is not supported on this release
+
+ux-direction: |
+  The first screen of a new product: an app header, then one centered section that says
+  nothing has been specified yet and offers the next step. Follows the system's
+  empty-state experience pattern (get_experience_pattern "empty-state").
+
+template: home-layout     # product/templates/home-layout.yaml
+
+ui-tree:
+  shared:
+    - component: Nav-Header-App
+    - component: Container-Base
+      props:
+        semantic: main
+        accessibilityLabel: Home
+      tokens:
+        background: color.structure.canvas
+      children:
+        - component: Container-Base
+          props:
+            semantic: section
+            accessibilityLabel: Getting started
+          tokens:
+            padding: space.inset.200
+          children:
+            - component: Container-Base
+              content:
+                heading: Nothing here yet
+                body: This is an example screen. Ask your agent to help you specify your first real one.
+            - component: Button-CTA
+              props:
+                label: Specify your first screen
+                variant: primary
+
+state-model:
+  shared:
+    - empty
+
+accessibility:
+  - The section's accessible name ("Getting started") announces the empty state to screen readers (WCAG 1.3.1).
+  - The button is keyboard-reachable and labelled with the action it takes (WCAG 2.1.1).
+  - Nav-Header-App renders no heading, so the screen's heading is the section's ("Nothing here yet").
