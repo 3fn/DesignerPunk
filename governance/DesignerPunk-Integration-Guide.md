@@ -153,7 +153,7 @@ import { BlendCalculator } from '@3fn/core/blend';
   ```
 - **A theme you register in `designerpunk.config.ts` does not yet produce a `[data-theme="<name>"]` block in any generated CSS.** A custom `data-theme` value resolves against nothing yet.
 
-The full import list is under Available Imports, in the reference part of the Integration Guide (`governance/DesignerPunk-Integration-Guide.md`).
+The full import list is under Available Imports, in the reference part of the Integration Guide (`governance/DesignerPunk-Integration-Guide.md` in the `@3fn/core` package; your agent reads it as `designerpunk-integration-guide`).
 
 ### iOS
 
@@ -283,7 +283,7 @@ The one other option is `productTokens`, a directory of product token YAML (see 
 
 Without a config file, the pipeline uses defaults: name `DesignerPunk`, abbreviation `DP`, the installed package's own tokens, no themes, output `dist`.
 
-#### Token Source Configuration
+### Token Source Configuration
 
 Without `tokenSource`, the pipeline reads the installed `@3fn/core` package's tokens. That is the CONSUME posture. `init` copies the token source into `src/tokens/` and sets `tokenSource: './src/tokens'`, so in a born repo your tokens are read from your own repo:
 
@@ -303,7 +303,7 @@ export default defineConfig({
 - Dark and WCAG overrides are not read from `tokenSource` or from `themes`: `generate` applies DesignerPunk's own override maps from the installed package (section 4). Every semantic token those maps name must exist in your token source. If one is missing, `generate` reports an "Orphaned override key" and writes no token files.
 - `npx designerpunk init` copies a complete token source to `src/tokens/` automatically
 
-#### Themes
+### Themes
 
 `designerpunk.config.ts` accepts a `themes` list of `{ name, mode, overrides }`, with `mode` one of `'light'`, `'dark'` or `'both'`. `generate` does not apply it yet. A theme you register produces no `[data-theme]` block and no native theme output. Its overrides are not validated either, so a misspelled token name passes silently. The `dark` and `wcag` entries that `init` writes do not drive output either: `generate` applies DesignerPunk's built-in dark and WCAG overrides regardless. Light and dark mode work, and the `wcag` theme is built in. Custom-theme output is delivered by Spec 129 (consumer-generation completeness).
 
@@ -505,8 +505,6 @@ npx jest --testPathPattern=Button # Run tests matching "Button"
 
 ### Specifying screens (Product MCP)
 
-#### Starting the Product MCP
-
 Your agent tool starts the Product MCP from the MCP configuration that `init` writes (or `attach` without `--reference`); you do not start it yourself. `attach --reference` never configures it. `npx designerpunk mcp:product` also starts it by hand.
 
 Resolves product data from:
@@ -518,7 +516,9 @@ Starts with an empty index if no product directory exists.
 
 **Component gap detection** reads `component-meta.yaml` files to check the component references in your screen specs. It checks against DesignerPunk's own components (their metadata ships in the package) together with your own components in `src/components/` (or `COMPONENT_DIR`, if set). No configuration is needed.
 
-#### Product Data Directory
+### Product Data Directory
+
+`init` scaffolds three of these: `overview.yaml` (fill in its `TODO`s), `templates/home-layout.yaml`, and `experience-map/pages/example-home.yaml`, a worked example screen to read, keep or delete. The tree below shows a fuller product. A screen can be a single file (`pages/<name>.yaml`) or a directory of facet files (`pages/<name>/<name>.yaml`).
 
 ```
 product/
@@ -551,7 +551,7 @@ product/
     motion.yaml              # Motion characteristics (flipDuration, etc.)
 ```
 
-#### Product Tokens
+### Product Tokens
 
 Product tokens are product-level values that don't belong in Rosetta (system tokens) or Stemma (component tokens). Define them in `product/tokens/{category}.yaml`:
 
@@ -595,7 +595,7 @@ The Swift and Kotlin files are reference output, not a build input, while native
 
 **Governance** — see `Product-Token-Governance.md` for naming conventions, rationale requirements, and promotion signals.
 
-#### Writing Screen Specs
+### Writing Screen Specs
 
 Each screen is a YAML file with platform branching:
 
@@ -642,13 +642,13 @@ Use canonical Rosetta token names as-is (dot-notation for semantic tokens like `
 
 **`_componentGaps`**: When you query a screen spec via `get_screen_spec`, the response includes a `_componentGaps` array listing any component references that don't match the ecosystem catalog (`component-meta.yaml`) or product one-off components. Each gap includes the component name, issue type (`not-found`), and UI tree path. This catches typos, outdated names, and references to components that haven't been built yet.
 
-#### UI Tree Convention (Draft)
+### UI Tree Convention (Draft)
 
 **Status**: Draft — to be revised after 3-5 real screen specs have been authored.
 
 This convention defines the expected structure of `ui-tree` in screen spec YAML files. It's what the Product MCP indexer relies on for component extraction, token extraction, and gap detection. It's a convention, not a schema — the indexer handles deviations gracefully (log warnings, index what it can), never rejects specs.
 
-##### Node Structure
+#### Node Structure
 
 ```yaml
 - component: ComponentName        # Required. System component or product one-off name.
@@ -663,6 +663,8 @@ This convention defines the expected structure of `ui-tree` in screen spec YAML 
       props: { ... }
       tokens: { ... }
   repeat: "for-each item in data.items"  # Optional. List rendering. NOT indexed.
+  content:                        # Optional. Text the screen shows that no component carries (a heading, body copy). NOT indexed.
+    heading: "Section Title"
 ```
 
 | Field | Type | Required | Indexed By |
@@ -672,12 +674,13 @@ This convention defines the expected structure of `ui-tree` in screen spec YAML 
 | `tokens` | object (string keys, string values) | No | Reverse index (token→screens) |
 | `children` | array of nodes | No | Traversed recursively |
 | `repeat` | string | No | Not indexed |
+| `content` | object (string values) | No | Not indexed |
 
 **What the indexer does per node**: reads `component` → adds to reverse index + checks gap detector. Reads `tokens` → adds each value to token reverse index. Recurses into `children`. Ignores everything else.
 
 **What the indexer ignores**: `props` values are never treated as token references. Unknown nesting keys (anything other than `children`) are not traversed.
 
-##### Platform Branching in UI Trees
+#### Platform Branching in UI Trees
 
 ```yaml
 ui-tree:
@@ -693,7 +696,7 @@ ui-tree:
 - A platform branch (`ios`, `android`, `web`) whose value is a node array is also traversed, so its components and tokens appear in `find_screens` results whether or not you filter by platform. A branch whose value is an object (metadata) is stored but not walked.
 - `get_screen_spec({ name, platform })` returns `shared` merged with that platform's branch.
 
-##### Token Reference Format
+#### Token Reference Format
 
 Use canonical Rosetta token names as-is. Dot-notation and flat names are both valid:
 
@@ -706,7 +709,7 @@ tokens:
 
 Token keys (left side) are descriptive labels — not indexed, no enforced vocabulary. Token values (right side) are stored exactly as written — no normalization, no validation against the token registry.
 
-##### What This Convention Does NOT Cover
+#### What This Convention Does NOT Cover
 
 - Accessibility annotations (inline vs separate section — not yet standardized)
 - Conditional rendering beyond `repeat` (`if`/`when` — not yet needed)
@@ -726,7 +729,7 @@ pages/dashboard/
 
 Systems Components are referenced by name — resolve details from the Application MCP. One-off components include their schema and contracts inline from `product/components/`.
 
-#### One-off Component Metadata
+### One-off Component Metadata
 
 One-off components use a Stemma subset — same rigor, less ceremony:
 
@@ -736,7 +739,7 @@ One-off components use a Stemma subset — same rigor, less ceremony:
 
 **Not required**: family membership, full README, readiness tracking, three-platform review, component-meta.yaml, inheritance declarations.
 
-#### Principles with YAML Frontmatter
+### Principles with YAML Frontmatter
 
 Principle files are markdown with optional YAML frontmatter for keyword-based discovery:
 
@@ -751,7 +754,7 @@ The marketing site uses a dark theme with cyan/teal electric accent...
 
 The `keywords` array makes principles queryable via `find_principles({ keyword: "dark-theme" })`. Without frontmatter, the principle is still indexed (accessible via `get_product_overview`) but won't appear in keyword searches.
 
-#### Product MCP Example Queries
+### Product MCP Example Queries
 
 ```
 # Impact analysis: which screens use a specific component?
@@ -835,7 +838,7 @@ Agents primarily use MCP queries for design system knowledge. Knowledge bases su
 
 ### MCP Query Reference
 
-#### Application MCP (component and token queries)
+### Application MCP (component and token queries)
 
 | Query | Purpose |
 |-------|---------|
@@ -861,7 +864,7 @@ Agents primarily use MCP queries for design system knowledge. Knowledge bases su
 | `get_component_health()` | Index health status |
 | `rebuild_index()` | Rebuild component + token index |
 
-#### Docs MCP (steering doc queries)
+### Docs MCP (steering doc queries)
 
 | Query | Purpose |
 |-------|---------|
@@ -874,7 +877,7 @@ Agents primarily use MCP queries for design system knowledge. Knowledge bases su
 | `validate_metadata({ path })` | Check a document's required metadata fields |
 | `rebuild_index()` | Rebuild the documentation index from scratch |
 
-#### Product MCP (product architecture queries)
+### Product MCP (product architecture queries)
 
 | Query | Purpose |
 |-------|---------|
@@ -912,7 +915,7 @@ npx designerpunk sync --apply
 
 Coming from 14.x: follow the 15.0.0 release notes. `sync` converts the old `.kiro/sync-manifest.json` to `designerpunk.manifest.json`, and `sync --migrate-legacy --target=<cc|kiro>` removes what an earlier `init` copied and attaches the generated agent layer, in the same run.
 
-#### How Sync Works
+### How Sync Works
 
 1. Reads `designerpunk.manifest.json` at your repo root: what DesignerPunk wrote into your repo, and at which version.
 2. Generates DesignerPunk's side of what it manages, for each target you have attached (the generated agent files, the managed region in `CLAUDE.md`, and DesignerPunk's own keys in your MCP configuration), and compares it with your files by content hash.
@@ -922,7 +925,7 @@ Coming from 14.x: follow the 15.0.0 release notes. `sync` converts the old `.kir
 
 `sync` never writes your token source (`src/tokens`) or your own components. When an updated component needs a token your set does not have, it tells you (section 5) and you decide.
 
-#### Conflict Resolution
+### Conflict Resolution
 
 A file you edited that also changed in the package is a **conflict**. `sync` never overwrites it. The report lists it, and you choose per path:
 - keep your version: do nothing
@@ -930,7 +933,7 @@ A file you edited that also changed in the package is a **conflict**. `sync` nev
 
 A file you deleted that DesignerPunk generated earlier is reported, and comes back only with `npx designerpunk sync --restore <path>`. `--accept-all` and `--force` are retired: `sync` prints a message that points to `--apply`.
 
-#### .designerpunkignore
+### .designerpunkignore
 
 To permanently exclude files from sync (files you have intentionally customized), list them in `.designerpunkignore`, which `init` creates. It uses `.gitignore` syntax:
 
@@ -942,7 +945,7 @@ To permanently exclude files from sync (files you have intentionally customized)
 
 Agents you write yourself are never managed and need no entry.
 
-#### CI/CD Integration
+### CI/CD Integration
 
 Off a terminal, `sync` reports and writes nothing unless you pass `--apply`:
 

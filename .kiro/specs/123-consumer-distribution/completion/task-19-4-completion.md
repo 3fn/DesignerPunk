@@ -212,6 +212,22 @@ Anchors are lines in the committed guide, after the review corrections. Each ver
 | Upgrading | L898–951 | Lina | CONFIRMED (`lina.md`) |
 | `docs/consumer/INSTALL.md` | whole file | Lina (Ada for its token lines) | CONFIRMED (`lina.md`, `ada.md`) |
 
+## Correction 2026-10-03 (19.5, Leonardo item 1) — heading levels, and the roster anchors
+
+- **The demotion in adaptation 1 below broke heading lookups.** The docs MCP parses only H2 and H3 (`mcp-server/src/indexer/section-parser.ts:86,96`), and the demotion pushed about 20 sections to H4.
+  - **Corrected at 19.5** by Leonardo's fix: one level up for every section a reader or pointer names, `## Reference` kept single, one heading line removed (`#### Starting the Product MCP`).
+  - A guard test now keeps every `see "<heading>"` target at H2 or H3. Record: `task-19-5-completion.md` § "Item 1".
+- **Roster anchors after 19.5**. These rows moved; the region rows and Reference rows up to L505 did not:
+
+  | Section | Lines |
+  |---|---|
+  | Specifying screens (Product MCP) | L506–792, now with Product Data Directory to Product MCP Example Queries as H3 siblings |
+  | Governance Gradient | L793–806 |
+  | CLI Commands | L807–824 |
+  | Knowledge Base Setup | L825–838 |
+  | MCP Query Reference | L839–900, its three tables now H3 |
+  | Upgrading | L901–954, its four subsections now H3 |
+
 ## Tests (re-run on the tree after the review corrections, before the commit)
 
 - `npm run test:scripts`: **17/17 suites, 369/369 tests**. `install-doc.test.ts`: **54/54**.

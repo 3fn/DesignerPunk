@@ -544,6 +544,35 @@ describe('flipped at 19.4 (were test.failing pending entries from 19.2)', () => 
   });
 });
 
+/**
+ * 19.5 (Leonardo item 1): the docs MCP indexes only `##` and `###` headings
+ * (`mcp-server/src/indexer/section-parser.ts:86,96`), so a `see "<heading>"`
+ * pointer to a deeper heading names a section `get_section` cannot return.
+ */
+export function unreachablePointers(text: string): string[] {
+  const levels = new Map<string, number>();
+  for (const h of headings(text)) {
+    const m = /^(#+) (.+)$/.exec(h)!;
+    levels.set(m[2].trim(), m[1].length);
+  }
+  const out: string[] = [];
+  for (const m of text.matchAll(/see "([^"]+)"/g)) {
+    const lvl = levels.get(m[1]);
+    if (lvl !== undefined && lvl > 3) out.push(`${m[1]} (H${lvl})`);
+  }
+  return out;
+}
+
+describe('cross-references name headings the docs MCP can return (19.5, item 1)', () => {
+  it('every `see "<heading>"` pointer to a heading targets an H2 or H3', () => {
+    expect(unreachablePointers(GUIDE)).toEqual([]);
+  });
+
+  it('bite: a pointer to an H4 heading is flagged', () => {
+    expect(unreachablePointers('### A\n\n#### Deep\n\nsee "Deep"\n')).toEqual(['Deep (H4)']);
+  });
+});
+
 describe('the marked region and its committed derivation (C9, C10 — 19.4)', () => {
   it('each marker occurs exactly once, begin before end', () => {
     const lines = GUIDE.split('\n');
