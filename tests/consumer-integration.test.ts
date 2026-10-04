@@ -352,6 +352,110 @@ describe('Consumer Integration (Spec 106 R8)', () => {
   }, TIMEOUT);
 
   /**
+   * Spec 123 Task 20.3 (design.md C24; tasks.md Task 20 criterion 4, Leonardo A8): **a fresh clone of a
+   * policy-applied repo runs joining steps 2-4 successfully.** The fixture is BUILT AT TEST TIME and nothing is
+   * committed (a born repo under `src/` would be type-checked by full `tsc`, and would rot against every later
+   * `init` change; R2, Lina RC-4):
+   *   1. a founder repo: `npm init`, `npm install` the PACKED tarball (saved, so the clone's `npm install` has a
+   *      dependency to restore), a `.gitignore` that already ignores `node_modules/`, then `init` (which appends the
+   *      DesignerPunk block: `token-index/` and `.designerpunk/` ignored) and `generate` (platform output is
+   *      committed by default);
+   *   2. the policy applied: `git add -A && git commit`, so exactly the repo state the commit policy names is in git;
+   *   3. `git clone` the founder repo, then the joining steps 2-4: `npm install` (the packed tarball again) and
+   *      `npx designerpunk generate`, which must succeed AND create `.designerpunk/personal-note.local.md`.
+   * SCOPE: file-provable completeness, not harness session load. Whether CC's `@`-import of the (gitignored,
+   * freshly created) note loads on a fresh clone is unmeasured until U5 (C8(c)).
+   */
+  describe('Spec 123 Task 20.3 — a fresh clone of a policy-applied repo runs joining steps 2-4 (C24; A8)', () => {
+    const GIT = ['-c', 'user.name=fixture', '-c', 'user.email=fixture@example.invalid'];
+    let parent: string;
+    let founder: string;
+    let clone: string;
+    let cloneGenerateOutput = '';
+
+    const sh = (cmd: string, cwd: string, timeout = 120_000): string => execSync(cmd, { cwd, encoding: 'utf-8', stdio: 'pipe', timeout });
+    const tracked = (dir: string): string[] => sh('git ls-files', dir).split('\n').filter(Boolean);
+
+    beforeAll(() => {
+      // Siblings under one parent, so the saved `file:` dependency's relative path resolves from the clone too.
+      parent = realDir(fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-clone-')));
+      founder = path.join(parent, 'founder');
+      clone = path.join(parent, 'clone');
+      fs.mkdirSync(founder);
+      sh('npm init -y', founder);
+      sh(`npm install ${tarballPath}`, founder, 120_000); // saved: package.json + package-lock.json
+      fs.writeFileSync(path.join(founder, '.gitignore'), 'node_modules/\n'); // the founder's own line; init appends its block
+      sh('git init -q', founder);
+      sh('npx designerpunk init --name Fresh --abbreviation FR', founder, 60_000);
+      sh('npx designerpunk generate', founder, 120_000);
+      sh(`git add -A && git ${GIT.join(' ')} commit -q -m "founder: policy applied"`, founder);
+      sh(`git clone -q ${founder} ${clone}`, parent);
+      sh('npm install', clone, 120_000); // joining step 2 (the packed tarball, from the committed lockfile)
+      cloneGenerateOutput = sh('npx designerpunk generate', clone, 120_000); // joining step 3
+    }, 480_000);
+
+    afterAll(() => {
+      if (parent) fs.rmSync(parent, { recursive: true, force: true });
+    });
+
+    it('the founder repo holds exactly the repo state the commit policy names — and none of what it says not to commit', () => {
+      const files = tracked(founder);
+      for (const must of [
+        'designerpunk.config.ts',
+        'designerpunk.manifest.json',
+        'package.json',
+        'package-lock.json',
+        '.gitignore',
+        '.designerpunkignore',
+        'src/tokens/index.ts',
+        'CLAUDE.md',
+        'specs/ci-needs/needs.md',
+        'dist/tokens/DesignTokens.web.css', // platform output: committed by default (DD1)
+      ]) {
+        expect({ must, tracked: files.includes(must) }).toEqual({ must, tracked: true });
+      }
+      expect(files.some((f) => f.startsWith('.claude/agents/'))).toBe(true); // generated agent artifacts are committed
+      for (const never of ['token-index/', '.designerpunk/', 'node_modules/']) {
+        expect({ never, tracked: files.filter((f) => f.startsWith(never)) }).toEqual({ never, tracked: [] });
+      }
+    });
+
+    it('the fresh clone starts without what the policy says is regenerated or local', () => {
+      // `generate` below has already run in the clone; the committed history is what proves the starting point
+      expect(tracked(clone).some((f) => f.startsWith('token-index/') || f.startsWith('.designerpunk/'))).toBe(false);
+    });
+
+    it('joining step 2: `npm install` restored the packed package in the clone', () => {
+      expect(fs.existsSync(path.join(clone, 'node_modules', '@3fn', 'core', 'package.json'))).toBe(true);
+    });
+
+    it('joining step 3: `generate` succeeded in the clone and regenerated what the policy says is regenerated', () => {
+      expect(cloneGenerateOutput).toContain('✅');
+      expect(fs.existsSync(path.join(clone, 'token-index', 'components.yaml'))).toBe(true);
+      expect(fs.statSync(path.join(clone, 'dist', 'tokens', 'DesignTokens.web.css')).size).toBeGreaterThan(0);
+    });
+
+    it('joining step 4: `.designerpunk/personal-note.local.md` was CREATED by `generate`, from the template, and is not tracked', () => {
+      const notePath = path.join(clone, '.designerpunk', 'personal-note.local.md');
+      expect(fs.existsSync(notePath)).toBe(true);
+      const template = fs.readFileSync(path.join(clone, 'node_modules', '@3fn', 'core', 'src', 'cli', 'templates', 'personal-note.template.md'), 'utf-8');
+      expect(fs.readFileSync(notePath, 'utf-8')).toBe(template);
+      expect(cloneGenerateOutput).toContain('created .designerpunk/personal-note.local.md from the template');
+      // the founder's block ignores `.designerpunk/`, so no unignored-directory row, and nothing shows as untracked
+      expect(cloneGenerateOutput).not.toContain('is not ignored by git in this repo');
+      expect(sh('git status --porcelain', clone).split('\n').filter((l) => l.includes('.designerpunk') || l.includes('token-index'))).toEqual([]);
+    });
+
+    it('the clone\'s `.gitignore` carries the founder\'s DesignerPunk block (init wrote it, the policy committed it)', () => {
+      const text = fs.readFileSync(path.join(clone, '.gitignore'), 'utf-8');
+      expect(text).toContain('# designerpunk:managed:begin');
+      expect(text).toContain('token-index/');
+      expect(text).toContain('.designerpunk/');
+      expect(text.startsWith('node_modules/\n')).toBe(true); // the founder's own line is where it was
+    });
+  });
+
+  /**
    * The shipped steering folder is EXACTLY the eight identity docs — never Peter's personal note
    * (Spec 123 C5 / Req 12.1a). Moved here from the retired 119-A relocation-gate leg A7
    * (.kiro/issues/2026-10-01-relocation-integrity-gate-vs-123-install-shape.md, residual R2): before the move, no
