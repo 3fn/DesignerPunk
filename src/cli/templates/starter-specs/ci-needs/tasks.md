@@ -12,7 +12,7 @@ DesignerPunk declares the needs; you own the fulfillment. It does not maintain i
 
 - [ ] 3. **Implement.** For each adopted need, add a check to your CI that verifies exactly what its **Check** says. Record where each check lives.
 
-- [ ] 4. **Gate.** Make every adopted check run on each change before it merges. A red check must block the merge, not only report.
+- [ ] 4. **Gate.** Make every adopted check run on each change before it merges. A red check must block the merge, not only report. Record in `notes.md` what makes it block (for example the required-check setting), by name.
 
 - [ ] 5. **Arm.** For each adopted need, run its **bite recipe** in your CI, not only on your machine:
   - introduce the failure;
@@ -20,7 +20,7 @@ DesignerPunk declares the needs; you own the fulfillment. It does not maintain i
   - revert;
   - confirm it goes green.
 
-  Record the red and green runs (a link or a log excerpt) in `notes.md`. A need whose check did not go red is not done.
+  Record the red and green runs (a link or a log excerpt) in `notes.md`. The red run must show the failure you introduced, not some other failure, and the record must show the merge was blocked. A need whose check did not go red for that reason is not done.
 
 - [ ] 6. **Close.** Write a short summary at the end of `notes.md`. For each need, record:
   - adopted or skipped;

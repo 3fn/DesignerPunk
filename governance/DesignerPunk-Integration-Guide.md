@@ -89,7 +89,7 @@ After birth, your repo holds two different kinds of thing.
 - **Your language: the tokens.** `init` copied them into your repo, and they are yours wholesale. DesignerPunk never adds to them. One exception: `generate` applies DesignerPunk's own dark and WCAG override maps, not your copies in `src/tokens/themes/`, so editing those copies does not change your output yet.
 - **Our updating surface: the components.** You use them by name, and they improve when you update the package.
 
-**`generate` is the pipeline — run on every token change.** Run it whenever you change your own tokens. `init` was the birth event; it does not run again, however often you run `generate`. `validate` validates token definitions against the active source, and is worth running after you edit token source files.
+**`generate` is the pipeline — run on every token change.** Run it whenever you change your own tokens. `init` was the birth event; it does not run again, however often you run `generate`. `validate` validates token definitions against the active source. One of its four checks, mathematical relationships, currently fails even on unmodified token source, so `validate` exits non-zero; that is a known defect in the checker, not in your tokens. Its other three checks are still worth reading after you edit token source files.
 
 What `generate` writes, into the `output` directory set in `designerpunk.config.ts`:
 - `DesignTokens.web.css` — CSS custom properties
@@ -418,7 +418,7 @@ To validate token definitions without generating files:
 npx designerpunk validate
 ```
 
-This checks semantic reference integrity, required fields, mathematical relationships, and family membership. Run it after editing token source files to catch errors before generation.
+This checks semantic reference integrity, required fields, mathematical relationships, and family membership. The mathematical-relationships check currently fails even on unmodified token source and makes `validate` exit non-zero (a known checker defect); read the other three checks' results after editing token source files.
 
 `generate` writes the files listed in section 4, and `token-index/` at your project root.
 

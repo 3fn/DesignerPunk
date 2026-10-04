@@ -200,8 +200,11 @@ describe('the re-grounding spec (criterion 2; Req 16.1, 24.1, 24.1b, 11.2)', () 
   it('the claims check is Stacy’s, after the formalization, with the closed negative form (Req 24.1b, beat 2)', () => {
     const t = ts.find((x) => /Stacy/.test(x) && /claims/.test(x));
     expect(t).toBeDefined();
+    // It follows the report task (task 5), whose file it writes into.
+    expect(ts.indexOf(t!)).toBeGreaterThan(ts.findIndex((x) => /did not transfer/.test(x)));
+    expect(t).toMatch(/After tasks 4 and 5/);
     expect(t).toMatch(/not Thurgood/);
-    expect(t).toMatch(/not exercised — no spec was produced/);
+    expect(t).toMatch(/not exercised — upstream beat produced no artifact/); // Req 24.1b's ratified closed form (requirements.md:830)
   });
 
   it('dispositions are the closed vocabulary, and the rejected term is absent (Req 11.2)', () => {

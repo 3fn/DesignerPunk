@@ -56,3 +56,19 @@ As in 21.1 (one file, one commit): `starter-specs.test.ts` 27/27; `test:scripts`
    - Stacy should confirm task 6 (her seat).
    - Lina should confirm the agent-file paths and the regeneration rule (generator output).
    - Its author, Thurgood, reviewing his own consumer seat is a stated residual.
+
+## Addendum (2026-10-03) — Stacy's confirmation applied
+
+Record: `completion/task-21-owner-review/stacy.md` § B.
+
+| Task | Owner | Verdict | Applied |
+|---|---|---|---|
+| 5 Report what did not transfer | Stacy | CONFIRMED | — |
+| 6 Verify the claims | Stacy | NOT-CONFIRMED as written: four defects in total. The negative form was not Req 24.1b's string; the audit object was unnamed (task 4 never executes a spec, so "its completion claims" pointed at nothing); task 6 ran before task 5 created `report.md`; approvals were uncheckable; there was no method line | her task-6 text, verbatim: promised / claimed / shipped, the "how many claims she opened, out of how many" line, and "After tasks 4 and 5" |
+| the spec's "Who does what" line | Thurgood (consequential) | — | "Task 6 is Stacy's, after task 4" → "after tasks 4 and 5", to match her task 6 |
+
+**The Req 24.1b check (Thurgood, independently)**: `requirements.md:830` reads "IF beat 1 produces no formalization THEN beat 2 SHALL be recorded in the closed negative form — *not exercised — upstream beat produced no artifact*". `tasks.md:1528` repeats it. Stacy's reading is right. The starter spec's earlier "not exercised — no spec was produced" was a second spelling of a closed form.
+
+**Test fixed**: `scripts/__tests__/starter-specs.test.ts` now asserts the ratified string, and that task 6 follows the report task and reads "After tasks 4 and 5". **Bites**: the old string back in → red; "After task 4" back in → red; restored.
+
+**Stacy's seam (outside Task 21)**: the consumer Stacy charter's owed-set query exits `FATAL` without `docs/claims-pass-adoption.md`, and nothing in a born repo creates that file. Reported to the orchestrator for routing. It touches `canonical/**`, under U3's no-overlap guard, so it is not fixed here.

@@ -103,3 +103,13 @@
 - **Cause**: 19.1 moved ratified text without re-reading the code behind it. The class guard (claims cite `file:line`, and owners confirm them) caught all three.
 - **Fix**: each owner's replacement text, verbatim, in the commit carrying this addendum. Kenya's and Data's reviews also added causes the region lacked: the iOS `Color.oklch` initializer, the product-token theme extension on both platforms, the colormath dependency, and the Android colour names. Those are additions, not defects.
 - **#268 content points changed**: P1 (iii) and P3 (v). They are recorded in the B-U3 preservation table with both owners' evidence, for Peter at the U3 merge.
+
+## Addendum 4 (2026-10-03) — the region's `validate` sentence (§ 4, L92) was false
+
+- **The defect**: region § 4 said `validate` "is worth running after you edit token source files". On the token source as shipped, `validate` exits 1: its mathematical-relationships check fails with 102 errors, including on unmodified source.
+  - The cause is the checker, not the tokens: Ada's open issue `.kiro/issues/2026-06-24-mathematical-relationship-parser-validation-gaps.md`.
+  - Run in this repo by Ada, and in a scratch born repo by Thurgood at 21.1.
+- **Found by**: Thurgood, while running the CI-needs bite candidates at 21.1 (`task-21-1-completion.md` § "Candidates considered and NOT shipped").
+- **Confirmed by**: Ada (`completion/task-21-owner-review/ada.md` § (a)). She records that her 19.4 confirmation of L92 missed it.
+- **Fix**: Ada's replacement, verbatim, for region L92, and for § Reference › Generating tokens — options, L421. `docs/consumer/INSTALL.md` is re-derived.
+- **Knock-on**: 19.3's quoted passages do not include L92 or L421, so no quoted passage changed. Both replacements are single lines, so every line anchor in 19.3 and 19.4 still holds. The 19.4 owner-verdict table gets a dated correction note on Ada's § 4 row.

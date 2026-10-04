@@ -2,7 +2,7 @@
 
 `npx designerpunk init` placed this spec in your repo. It is **Thurgood's**: the agent for spec formalization, test governance and the health of this repo's standing guidance. His charter arrived written for DesignerPunk's own repo, and was re-pointed at yours where it could be. This assignment finishes that work in your repo, with you. It ends with a report of what did not transfer.
 
-**Who does what**: Thurgood runs tasks 1–5 with you. You make the decisions. Task 6 is Stacy's, after task 4.
+**Who does what**: Thurgood runs tasks 1–5 with you. You make the decisions. Task 6 is Stacy's, after tasks 4 and 5.
 
 **One rule throughout**: do not edit the generated agent files (for example `.claude/agents/thurgood.md` or `.kiro/agents/thurgood-prompt.md`). They are regenerated, and a hand-edit is reported, not kept. Record re-pointings in this spec's report, and put standing guidance in a document your team owns.
 
@@ -31,4 +31,4 @@
 
   The report is yours. Whether to share it with DesignerPunk's maintainers is your human's decision.
 
-- [ ] 6. **Verify the spec's claims (Stacy).** After task 4, Stacy, not Thurgood, checks the formalized spec's completion claims against what was produced: what it promised, what it claims, and what exists. She records her result in `specs/regrounding/report.md` under her own heading. If task 4 produced no spec, she records "not exercised — no spec was produced", and never a pass or a fail.
+- [ ] 6. **Verify the formalization's claims (Stacy).** After tasks 4 and 5, Stacy, not Thurgood, checks what Thurgood claims to have produced against what exists. **Promised**: task 4 above and `specs/README.md`. **Claimed**: Thurgood's rows in `specs/regrounding/report.md` for tasks 3 and 4, and any record under `specs/<name>/`. **Shipped**: the files in `specs/<name>/` and the repo's git history (`git log --first-parent -- specs/`). For each artifact the claims name, she confirms it exists and says what it contains. She says how many claims she opened, out of how many; a claim she could not check is recorded as not checked, never as passed. The human's approvals are shipped only if the repo records them, otherwise she records them as claimed. She writes her result in `specs/regrounding/report.md` under her own heading. If task 4 produced no spec, she records "not exercised — upstream beat produced no artifact", and never a pass or a fail.

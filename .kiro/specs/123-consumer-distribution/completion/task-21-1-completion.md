@@ -100,3 +100,35 @@ Marks: **VERIFIED-RUN** (observed in the scratch born repo), **VERIFIED-CODE** (
 2. **N3 uses `--passWithNoTests`.** A born repo has no tests, and Jest exits 1. The guide's § Running Component Tests shows bare `npx jest # Run all tests`, which fails the same way in a born repo with no tests. **Flag for Lina** (her section). The guide is not edited here.
 3. **Structure**: the spec is a directory, `ci-needs/needs.md` plus `ci-needs/tasks.md`, so the declarations and the executable tasks are separate files. `tasks.md` writes its record to a consumer-side `notes.md`.
 4. **One commit for 21.1 and 21.2.** The structure test covers both specs, so splitting them would leave a red intermediate commit.
+
+## Addendum (2026-10-03) — owner confirmations applied
+
+Records: `completion/task-21-owner-review/{ada,stacy}.md`, each byte-equal to the copy the orchestrator relayed.
+
+| Need / task | Owner | Verdict | Applied |
+|---|---|---|---|
+| N1 Committed platform output matches `generate` | Ada | CONFIRMED-WITH-CORRECTIONS | Ada's Check bullet, verbatim: `generate --force`, and the product-token stamp added to the `-I` pattern. **Plus one correction of Thurgood's own** (see below) |
+| N2 the name contract (the token example) | Ada | CONFIRMED | — |
+| N2 the `sync` check | Lina | routed by the orchestrator; no record received here | — |
+| N3 your own component tests | Lina | routed by the orchestrator (her § Running Component Tests, finding 3) | — |
+| N4 product token references | Ada | CONFIRMED | — |
+| `tasks.md` T1–T3 | Stacy | CONFIRMED | — |
+| `tasks.md` T4 Gate | Stacy | GAP → corrected | her text, verbatim |
+| `tasks.md` T5 Arm | Stacy | GAP → corrected | her text, verbatim |
+| `tasks.md` T6 Close | Stacy | GAP; a correction is offered, but whether it suits a solo founder is an open fork | **HELD** (the old text stays) until the orchestrator returns the fork |
+
+**The corrected N1 recipe was re-run**, in the same scratch born repo with `productTokens` configured and one `product/tokens/layout.yaml`, at a new committed baseline:
+- baseline: green;
+- bite A, a spacing value edited: red;
+- bite B, the product token `ref: space300` → `space400`: red;
+- revert: green.
+
+**Ada's `--force` reasoning, verified by run**: with that product-token edit backdated (`touch -t 202001010000`), a plain `generate` did **not** regenerate the product output, so the change was masked; `generate --force` caught it, and the check went red.
+
+**One more correction, found by that re-run (Thurgood's own text, carried in Ada's bullet)**: the second sub-bullet, "`git status --porcelain --untracked-files=all -- <output>` prints nothing", is **false**. After `generate`, every stamped file shows as modified (` M`), because its timestamp changed. The baseline went red on the first re-run for exactly that reason. My 21.1 runner masked it with an untracked-only test, so the shipped sentence and the run I recorded disagreed.
+- **Replaced with** "`git ls-files --others --exclude-standard -- <output>` prints nothing (no new, uncommitted output file)", which is what the run checks.
+- **Ada should confirm the replacement**: it sits inside her corrected bullet.
+
+**Findings handled elsewhere**: `validate` red on unmodified source becomes the region and reference sentences (`task-19-1-completion.md` § "Addendum 4"). Generator determinism (10 stamped files, per Ada) is Ada's issue to file. Nothing in N1 changes for it beyond the `-I` pattern.
+
+**Note on N3 and Lina's section** (finding 3 is routed to Lina): N3 says `npx jest --passWithNoTests`. If her fix to § Running Component Tests uses a different form, for example a starter test file instead of the flag, N3 and the guide would disagree. Flag it when her fix lands.

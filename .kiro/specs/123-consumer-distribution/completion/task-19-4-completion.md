@@ -185,7 +185,7 @@ Anchors are lines in the committed guide, after the review corrections. Each ver
 | § 1 Which posture? | L39–49 | Thurgood | CONFIRMED (Thurgood: no behaviour claim beyond `init` = birth; `vocabulary.ts` forms) |
 | § 2 CONSUME | L50–66 | Lina | CONFIRMED (`lina.md`) |
 | § 3 BECOME | L67–84 | Lina | CONFIRMED (`lina.md`) |
-| § 4 Your language vs our updating surface | L85–114 | Ada | CONFIRMED; "section 4" → "above" applied (`ada.md`) |
+| § 4 Your language vs our updating surface | L85–114 | Ada | CONFIRMED; "section 4" → "above" applied (`ada.md`). *Correction 2026-10-03*: L92's `validate` sentence was false, because `validate` exits 1 on unmodified source. It was replaced with Ada's text, and L421 in "Generating tokens — options" with it (`task-21-owner-review/ada.md` § (a); `task-19-1-completion.md` § "Addendum 4"). Ada notes her 19.4 confirmation missed it. |
 | § Platforms (intro) | L115–118 | Thurgood | CONFIRMED (Sparky ledger row 15 checks its section numbers) |
 | § Platforms › Web | L119–157 | Sparky | CONFIRMED-WITH-CORRECTIONS, applied (`sparky.md`) |
 | § Platforms › iOS | L158–171 | Kenya | CONFIRMED-WITH-CORRECTIONS, C1–C3 applied; fork F pending Peter (`kenya.md`) |
