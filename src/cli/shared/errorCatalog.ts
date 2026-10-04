@@ -91,12 +91,12 @@ export function explicitTokenIndexMissingMessage(explicitPath: string): string {
 // duplicated-resolution-logic warning) — `init.ts` is the only caller today.
 // ---------------------------------------------------------------------------
 
-/** design.md catalog row: `init` in a born repo (A7). */
+/** design.md catalog row: `init` in a born repo (A7), with the 2026-10-03 erratum (R2, Leonardo L-RC3) applied: the personal-note step reads "fill in your personal note (generate creates it; your agent can walk you through it)". */
 export function initBornRepoMessage(root: string): string {
   return (
     `this repo already has a design system (${root}) — init is the birth event and runs once. ` +
-    `To join it: npm install → npx designerpunk generate → fill in .designerpunk/personal-note.local.md ` +
-    `(generate creates it) → restart your agent session (approve DesignerPunk's MCP servers if asked). ` +
+    `To join it: npm install → npx designerpunk generate → fill in your personal note ` +
+    `(generate creates it; your agent can walk you through it) → restart your agent session (approve DesignerPunk's MCP servers if asked). ` +
     `Using a different agent tool than this repo was set up for? Also run: npx designerpunk attach ` +
     `--target=<cc|kiro> to attach a harness (agents + MCP config + approvals). To deliberately re-scaffold: ` +
     `npx designerpunk init --re-scaffold`
@@ -125,9 +125,11 @@ export function cloneHatchMessage(): string {
 
 /** design.md catalog row: **personal-note naming** (erratum, Le-T1; `init` output). */
 export function personalNoteNamingMessage(): string {
+  // Corrected 2026-10-03 (design erratum R2, Leonardo L-RC3): three slots and the walkthrough.
   return (
-    `fill in .designerpunk/personal-note.local.md — who you are and how you want to be worked with; your ` +
-    `agents read it every session (it stays on your machine)`
+    `fill in .designerpunk/personal-note.local.md — who you are, what you and your organization value, and how ` +
+    `you like to work together — or, after the restart, ask your agent to walk you through it. ` +
+    `Your agents read it every session (it stays on your machine)`
   );
 }
 
@@ -440,5 +442,70 @@ export function generateThemesLine(themes: ReadonlyArray<{ name: string; mode: s
     `Themes: ${themes.map((t) => `${t.name} (${t.mode})`).join(', ')} — registered, not applied yet: ` +
     `a theme you register does not change your generated output; light and dark mode and the wcag theme use DesignerPunk's built-in values`
   );
+}
+
+// ---------------------------------------------------------------------------
+// `init`'s terminal output, completed (Spec 123 Task 22.2; design.md C27 and its erratum).
+// ---------------------------------------------------------------------------
+
+/** Display names for the harness targets the notice names; an undeclared id is shown as itself. Presentation only: the declared set is the profile's (C12). */
+const HARNESS_DISPLAY_NAMES: Readonly<Record<string, string>> = Object.freeze({ cc: 'Claude Code', kiro: 'Kiro' });
+const harnessName = (target: string): string => HARNESS_DISPLAY_NAMES[target] ?? target;
+
+/**
+ * design.md catalog row **bare `init` default notice (A2)** (Leonardo A2): printed FIRST on bare `init`
+ * (no `--target`); the sequenced restart row stays LAST. `defaultTarget` and `targets` come from the
+ * packaged profile, never a literal list; with the shipped two-target profile and `cc` as the default the
+ * string is the row's, verbatim. A `--skip-agents` run prints no notice (nothing was set up for a harness).
+ */
+export function namedDefaultNoticeMessage(defaultTarget: string, targets: readonly string[]): string {
+  const others = targets.filter((t) => t !== defaultTarget);
+  const using = others.map((t) => `Using ${harnessName(t)}? npx designerpunk attach --target=${t}`).join(' ');
+  return `no --target given — set up for ${harnessName(defaultTarget)} (the default).${using ? ` ${using}` : ''}`;
+}
+
+/** What `init` actually did, so its next steps list only steps a skip has not made untrue. */
+export interface InitNextStepsContext {
+  /** `jest.config.js` was written (false: an existing one was kept, so the install-jest step would be untrue). */
+  jestConfigScaffolded: boolean;
+  /** The starter specs are in `specs/` (written now, or already there). */
+  starterSpecNames: string[];
+  /** DesignerPunk's `.gitignore` block is in place (false: the config would not load, or the markers were gone). */
+  gitignoreBlockInPlace: boolean;
+  /** The agent layer was emitted (false under `--skip-agents`). */
+  agentLayerEmitted: boolean;
+}
+
+/**
+ * The block of next steps `init` prints before the clone hatch, the personal-note naming row and the
+ * sequenced restart row (which stays the LAST thing). It lists positively what this repo needs next, and
+ * names the `.gitignore` block and the `specs/` scaffold (C27 erratum, 2026-10-03). A step a skip made
+ * untrue is omitted. AUTHORED AT 22.2: the design catalog carries no row for the block as a whole.
+ */
+export function initNextStepsMessage(name: string, ctx: InitNextStepsContext): string {
+  const steps: string[] = ['npm install'];
+  if (ctx.jestConfigScaffolded) steps.push('npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom');
+  steps.push('npx designerpunk generate');
+  if (!ctx.agentLayerEmitted) steps.push('npx designerpunk attach --target=<cc|kiro> to attach a harness (agents + MCP config + approvals)');
+  if (ctx.starterSpecNames.length > 0) {
+    steps.push(`specs/ holds your starter specs (${ctx.starterSpecNames.join(', ')}): run them with your agent when you are ready`);
+  }
+  if (ctx.gitignoreBlockInPlace) {
+    steps.push('commit .gitignore with the rest: DesignerPunk\'s block in it ignores .designerpunk/ and token-index/');
+  }
+  return `Your product "${name}" is ready.
+
+Next steps:
+${steps.map((t, i) => `  ${i + 1}. ${t}`).join('\n')}
+
+To customize your visual language:
+  • Edit src/tokens/ to change base values and design intent
+  • Run \`npx designerpunk generate\` after changes
+
+Note: Token values have mathematical relationships (modular scale,
+baseline grid). The validator will warn if changes break these
+relationships during generation.
+
+💡 After future upgrades, run \`npx designerpunk sync\` to apply updates.`;
 }
 

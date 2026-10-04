@@ -261,6 +261,11 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       timeout: 30_000,
     });
     expect(output).toContain('TestProduct');
+    // Task 22.2 (C27 completion): bare `init` names the default it set up FIRST, and its next steps name the
+    // `.gitignore` block (written here, with the real config loader) and the `specs/` scaffold.
+    expect(output.split('\n')[0]).toMatch(/^no --target given — set up for .+ \(the default\)\./);
+    expect(output).toContain('specs/ holds your starter specs (ci-needs, regrounding)');
+    expect(output).toContain("commit .gitignore with the rest: DesignerPunk's block in it ignores .designerpunk/ and token-index/");
 
     // Verify key files exist
     expect(fs.existsSync(path.join(tempDir, 'designerpunk.config.ts'))).toBe(true);

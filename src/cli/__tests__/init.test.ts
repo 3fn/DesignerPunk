@@ -48,6 +48,9 @@ import {
   starterSpecsWrittenMessage,
   personalNoteCreatedMessage,
   personalNoteUnfilledMessage,
+  namedDefaultNoticeMessage,
+  initNextStepsMessage,
+  jestConfigCollisionMessage,
 } from '../shared/errorCatalog';
 import { PERSONAL_NOTE_REL, PERSONAL_NOTE_TEMPLATE_REL } from '../shared/personalNote';
 import { extractRegion, normalizeRegionContent, wrapRegion } from '../sync/RegionGrain';
@@ -1000,6 +1003,64 @@ describe('CLI init — the personal note (Task 22.1; mechanism B; C26)', () => {
     ({ output } = await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents', '--re-scaffold', '--yes']));
     expect(fs.readFileSync(notePath(), 'utf8')).toBe(TEMPLATE);
     expect(output).toContain(`⚠️  ${personalNoteUnfilledMessage()}`);
+  });
+});
+
+describe('CLI init — the C27 completion: notice first, next steps, restart row last (Task 22.2)', () => {
+  let scratchDir: string;
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+  const steps = (output: string) => output.split('\n').filter((l) => /^ {2}\d+\. /.test(l));
+
+  test('bare init prints the named-default notice FIRST, string-equal to the catalog, and the sequenced restart row LAST', async () => {
+    const { output } = await runInitIn(scratchDir, ['--name', 'Test', '--abbreviation', 'T']);
+    const notice = namedDefaultNoticeMessage(PROFILE.defaultTarget, PROFILE.targets);
+    expect(output.split('\n')[0]).toBe(notice);
+    expect(output.indexOf(notice)).toBeLessThan(output.indexOf('✓ Created'));
+    expect(output.trimEnd().endsWith(restartLineSequencedMessage())).toBe(true);
+    expect(output.indexOf(notice)).toBeLessThan(output.indexOf(restartLineSequencedMessage()));
+  });
+
+  test('NO notice with --target, and none under --skip-agents', async () => {
+    const withTarget = await runInitIn(scratchDir, [...BASE_ARGS, `--target=${PROFILE.defaultTarget}`]);
+    expect(withTarget.output).not.toContain('no --target given');
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+    const skipped = await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents']);
+    expect(skipped.output).not.toContain('no --target given');
+  });
+
+  test('the next steps are the catalog function\'s output for what init did, then hatch, naming and the restart row, in that order', async () => {
+    const { output } = await runInitIn(scratchDir, [...BASE_ARGS, `--target=${PROFILE.defaultTarget}`]);
+    const expected = initNextStepsMessage('Test', {
+      jestConfigScaffolded: true,
+      starterSpecNames: ['ci-needs', 'regrounding'],
+      gitignoreBlockInPlace: false, // the production config loader cannot run under jest: the block is reported, not written
+      agentLayerEmitted: true,
+    });
+    const tail = `${expected}\n\n${cloneHatchMessage()}\n\n${personalNoteNamingMessage()}\n\n${restartLineSequencedMessage()}`;
+    expect(output.trimEnd().endsWith(tail)).toBe(true);
+    expect(steps(output).some((l) => l.includes('specs/ holds your starter specs (ci-needs, regrounding)'))).toBe(true);
+  });
+
+  test('a SKIP makes its step disappear: an existing jest.config.js is kept, reported truthfully, and the install-jest step is omitted', async () => {
+    fs.writeFileSync(path.join(scratchDir, 'jest.config.js'), 'module.exports = {};\n');
+    const { output } = await runInitIn(scratchDir, [...BASE_ARGS, `--target=${PROFILE.defaultTarget}`]);
+    expect(output).toContain(jestConfigCollisionMessage());
+    expect(steps(output).some((l) => l.includes('npm install --save-dev jest'))).toBe(false);
+    expect(fs.readFileSync(path.join(scratchDir, 'jest.config.js'), 'utf8')).toBe('module.exports = {};\n');
+  });
+
+  test('a loader that fails: no .gitignore block, and the next steps do not tell her to commit one', async () => {
+    const { output } = await runInitIn(scratchDir, [...BASE_ARGS, `--target=${PROFILE.defaultTarget}`]);
+    expect(fs.existsSync(path.join(scratchDir, '.gitignore'))).toBe(false);
+    expect(steps(output).some((l) => l.includes('commit .gitignore'))).toBe(false);
   });
 });
 

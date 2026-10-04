@@ -37,7 +37,10 @@ import {
   starterSpecCollisionMessage,
   starterSpecsWrittenMessage,
   consumerDegradationMessage,
+  namedDefaultNoticeMessage,
+  initNextStepsMessage,
 } from './shared/errorCatalog';
+import type { InitNextStepsContext } from './shared/errorCatalog';
 import { computeGitignoreRegion, applyGitignoreRegion } from './shared/gitignoreRegion';
 import { ensurePersonalNote, printPersonalNoteRows, PERSONAL_NOTE_TEMPLATE_REL } from './shared/personalNote';
 import type { ConfigModuleLoader } from '../config/ConfigLoader';
@@ -130,8 +133,9 @@ export async function runInit(argv: string[], deps: InitDeps = {}): Promise<void
   // packed without its prepack build) fails before init writes anything. Read through the
   // PACKAGED consumer profile (`loadConsumerProfile`'s packaged form, C12/C9): bare `init`
   // = the declared default, `--target=<t>` = `<t>`; no literal target list here. ---------
+  let resolved: ReturnType<typeof resolveAgentTarget>;
   try {
-    resolveAgentTarget(pkgRoot, opts.target, 'init');
+    resolved = resolveAgentTarget(pkgRoot, opts.target, 'init');
   } catch (err) {
     console.error(`❌ ${err instanceof Error ? err.message : String(err)}`);
     process.exit(1);
@@ -171,6 +175,14 @@ export async function runInit(argv: string[], deps: InitDeps = {}): Promise<void
         return;
       }
     }
+  }
+
+  // The named-default notice (C27 erratum; Leonardo A2): bare `init` says which harness it set up and how to
+  // use the other. Printed FIRST (before any prompt or write); the sequenced restart row stays LAST. Not
+  // printed when `--target` was given, or under `--skip-agents` (no harness was set up).
+  if (opts.target === undefined && !opts.skipAgents) {
+    console.log(namedDefaultNoticeMessage(resolved.target, resolved.profile.targets));
+    console.log('');
   }
 
   if (!opts.name) {
@@ -360,12 +372,14 @@ export async function runInit(argv: string[], deps: InitDeps = {}): Promise<void
   // `shared/gitignoreRegion.ts`, and shared with `sync`. If the config will not load, report and
   // write NO block — never guess `./dist/tokens`. ----------------------------------------------
   const gitignoreBlock = await computeGitignoreRegion(dest, deps.configLoader);
+  let gitignoreBlockInPlace = false;
   if (!gitignoreBlock.ok) {
     console.log(`  ⚠️  ${gitignoreBlockConfigUnreadableMessage(gitignoreBlock.reason)}`);
   } else {
     const applied = applyGitignoreRegion(dest, gitignoreBlock.content, manifest.state.entries);
     if (applied.outcome === 'collision') console.log(`  ⚠️  ${applied.message}`);
     else if (applied.outcome === 'written') console.log(`✓ ${gitignoreBlockAddedMessage()}`);
+    gitignoreBlockInPlace = applied.outcome !== 'collision';
   }
 
   // --- Step 12: the personal note (C26; Task 22.1, mechanism B). `init` creates it from the template
@@ -388,28 +402,18 @@ export async function runInit(argv: string[], deps: InitDeps = {}): Promise<void
   console.log('✓ Created designerpunk.manifest.json');
 
   // --- Next steps (C27 erratum; Req 15.8, 15.9, 19.6) ----------------------
-  printNextSteps(opts.name);
+  printNextSteps(opts.name, {
+    jestConfigScaffolded: jestConfigCreated,
+    starterSpecNames: starterSpecNames([...starter.written, ...starter.collided]),
+    gitignoreBlockInPlace,
+    agentLayerEmitted: !opts.skipAgents,
+  });
 }
 
 /** The U1 terminal output — every line true of what U1's `init` actually did, with the sequenced restart row printed LAST (C27 erratum, Le-T5). */
-function printNextSteps(name: string): void {
+function printNextSteps(name: string, ctx: InitNextStepsContext): void {
   console.log(`
-Your product "${name}" is ready.
-
-Next steps:
-  1. npm install
-  2. npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom
-  3. npx designerpunk generate
-
-To customize your visual language:
-  • Edit src/tokens/ to change base values and design intent
-  • Run \`npx designerpunk generate\` after changes
-
-Note: Token values have mathematical relationships (modular scale,
-baseline grid). The validator will warn if changes break these
-relationships during generation.
-
-💡 After future upgrades, run \`npx designerpunk sync\` to apply updates.
+${initNextStepsMessage(name, ctx)}
 
 ${cloneHatchMessage()}
 

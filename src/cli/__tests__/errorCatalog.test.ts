@@ -97,15 +97,17 @@ describe('errorCatalog — string conformance (Task 1.6)', () => {
 // A SEPARATE describe block, additive to Task 1.6's frozen seven-row count above.
 // ---------------------------------------------------------------------------
 
+// Transcribed from design.md's catalog; the "init in a born repo" and "personal-note naming" rows are their
+// CORRECTED text (Erratum 2026-10-03, R2 — Leonardo L-RC3), which Task 22.2 made string-equal.
 const INIT_DESIGN_ROWS = {
   'init in a born repo': (root: string) =>
-    `this repo already has a design system (${root}) — init is the birth event and runs once. To join it: npm install → npx designerpunk generate → fill in .designerpunk/personal-note.local.md (generate creates it) → restart your agent session (approve DesignerPunk's MCP servers if asked). Using a different agent tool than this repo was set up for? Also run: npx designerpunk attach --target=<cc|kiro> to attach a harness (agents + MCP config + approvals). To deliberately re-scaffold: npx designerpunk init --re-scaffold`,
+    `this repo already has a design system (${root}) — init is the birth event and runs once. To join it: npm install → npx designerpunk generate → fill in your personal note (generate creates it; your agent can walk you through it) → restart your agent session (approve DesignerPunk's MCP servers if asked). Using a different agent tool than this repo was set up for? Also run: npx designerpunk attach --target=<cc|kiro> to attach a harness (agents + MCP config + approvals). To deliberately re-scaffold: npx designerpunk init --re-scaffold`,
   'restart line — sequenced': () =>
     `when the steps above are done, restart your agent session — DesignerPunk's MCP servers and your personal note load when a session starts, so this session cannot see them yet (approve the servers if your tool asks)`,
   'clone hatch': () =>
     `want to own the engine too? Clone github.com/3fn/DesignerPunk — init already made the token language yours; the clone adds the engine and the components`,
   'personal-note naming': () =>
-    `fill in .designerpunk/personal-note.local.md — who you are and how you want to be worked with; your agents read it every session (it stays on your machine)`,
+    `fill in .designerpunk/personal-note.local.md — who you are, what you and your organization value, and how you like to work together — or, after the restart, ask your agent to walk you through it. Your agents read it every session (it stays on your machine)`,
   'jest.config.js collision (C27 A13)': () =>
     `skipped: jest.config.js (already exists) — the DesignerPunk jest preset is not applied; to test your own forked components with @3fn/core/testing, add ...require('@3fn/core/jest-preset') to your config`,
 };
@@ -225,3 +227,50 @@ describe('errorCatalog — string conformance (15.0.0 rehearsal: generate load f
     );
   });
 });
+
+// ---------------------------------------------------------------------------
+// Task 22.2 — the bare `init` default notice (design.md row "bare `init` default notice (A2)", Leonardo A2).
+// ---------------------------------------------------------------------------
+import { namedDefaultNoticeMessage, initNextStepsMessage } from '../shared/errorCatalog';
+
+describe('errorCatalog — Task 22.2 additions', () => {
+  const A2_ROW = "no --target given — set up for Claude Code (the default). Using Kiro? npx designerpunk attach --target=kiro";
+
+  test('bare `init` default notice (A2): string-equal to the design row for the shipped two-target profile with cc as the default', () => {
+    expect(namedDefaultNoticeMessage('cc', ['cc', 'kiro'])).toBe(A2_ROW);
+  });
+
+  test('the notice follows the profile: a different default and an undeclared id are named, never a literal list', () => {
+    expect(namedDefaultNoticeMessage('kiro', ['cc', 'kiro'])).toBe(
+      'no --target given — set up for Kiro (the default). Using Claude Code? npx designerpunk attach --target=cc',
+    );
+    expect(namedDefaultNoticeMessage('solo', ['solo'])).toBe('no --target given — set up for solo (the default).');
+  });
+
+  test('init next steps: list positively, name the .gitignore block and the specs/ scaffold, in order', () => {
+    const m = initNextStepsMessage('Acme', { jestConfigScaffolded: true, starterSpecNames: ['ci-needs', 'regrounding'], gitignoreBlockInPlace: true, agentLayerEmitted: true });
+    expect(m).toContain('Your product "Acme" is ready.');
+    const steps = m.split('\n').filter((l) => /^ {2}\d+\. /.test(l));
+    expect(steps).toEqual([
+      '  1. npm install',
+      '  2. npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom',
+      '  3. npx designerpunk generate',
+      '  4. specs/ holds your starter specs (ci-needs, regrounding): run them with your agent when you are ready',
+      "  5. commit .gitignore with the rest: DesignerPunk's block in it ignores .designerpunk/ and token-index/",
+    ]);
+  });
+
+  test('init next steps omit every step a skip made untrue', () => {
+    const m = initNextStepsMessage('Acme', { jestConfigScaffolded: false, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: false });
+    const steps = m.split('\n').filter((l) => /^ {2}\d+\. /.test(l));
+    expect(steps).toEqual([
+      '  1. npm install',
+      '  2. npx designerpunk generate',
+      '  3. npx designerpunk attach --target=<cc|kiro> to attach a harness (agents + MCP config + approvals)',
+    ]);
+    expect(m).not.toContain('jest');
+    expect(m).not.toContain('specs/');
+    expect(m).not.toContain('.gitignore');
+  });
+});
+
