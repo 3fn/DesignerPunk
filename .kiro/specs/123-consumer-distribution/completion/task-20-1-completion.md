@@ -105,3 +105,7 @@ Not re-verified by me: the interactive prompt against a real terminal (the `[y/N
 ## Addendum 2026-10-03 (reconciliation pass after 22.2): COMMIT-POLICY L33
 
 `docs/consumer/COMMIT-POLICY.md` L33 described the personal note with the old two-slot wording ("who you are and how you want to be worked with"). It now reads "who you are, what you value, and how you like to work with your agents": a short true description of the three-slot note, not a copy of `personalNoteNamingMessage()`. No claim in the 20.1 claims table changes state. `commit-policy.test.ts`: 6 passed (the table is untouched).
+
+## Addendum 2026-10-03 (second pass, Leonardo's 19.5 review item 5): the timestamp paragraph
+
+`docs/consumer/COMMIT-POLICY.md` § "Platform output is committed by default" gained one paragraph after its first: every `generate` run rewrites a timestamp line in each generated file, so committed output shows as changed after every run (a known defect); compare with the timestamp lines ignored, as the CI-needs spec's N1 check does. New claim, VERIFIED-CODE: `src/generators/TokenFileGenerator.ts:307,382,461` (`Generated: <timestamp>`); N1's `-I` pattern at `src/cli/templates/starter-specs/ci-needs/needs.md:24-27`. The C24 table and `commit-policy.test.ts` are untouched (6 passed). (Recorded in `task-22-2-completion.md`'s second-pass addendum as item 5 of Leonardo's review; the review's own numbering is 5, not 3.)
