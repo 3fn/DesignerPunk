@@ -27,4 +27,4 @@ DesignerPunk declares the needs; you own the fulfillment. It does not maintain i
   - where its check lives;
   - its bite evidence.
 
-  That summary is the claim this spec makes. Check it against the runs before you call the spec done.
+  That summary is the claim this spec makes. Before you call the spec done, have a fresh session (or another person) other than the one that built the checks (Stacy, if you use her) open each run it links and write in `notes.md` which rows matched the runs and which did not.

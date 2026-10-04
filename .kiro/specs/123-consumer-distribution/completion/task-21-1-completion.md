@@ -115,7 +115,7 @@ Records: `completion/task-21-owner-review/{ada,stacy}.md`, each byte-equal to th
 | `tasks.md` T1–T3 | Stacy | CONFIRMED | — |
 | `tasks.md` T4 Gate | Stacy | GAP → corrected | her text, verbatim |
 | `tasks.md` T5 Arm | Stacy | GAP → corrected | her text, verbatim |
-| `tasks.md` T6 Close | Stacy | GAP; a correction is offered, but whether it suits a solo founder is an open fork | **HELD** (the old text stays) until the orchestrator returns the fork |
+| `tasks.md` T6 Close | Stacy | GAP; a correction is offered, but whether it suits a solo founder is an open fork | **HELD** (the old text stays) until the orchestrator returns the fork → **resolved 2026-10-03**: applied, see the T6 settlement below |
 
 **The corrected N1 recipe was re-run**, in the same scratch born repo with `productTokens` configured and one `product/tokens/layout.yaml`, at a new committed baseline:
 - baseline: green;
@@ -132,3 +132,14 @@ Records: `completion/task-21-owner-review/{ada,stacy}.md`, each byte-equal to th
 **Findings handled elsewhere**: `validate` red on unmodified source becomes the region and reference sentences (`task-19-1-completion.md` § "Addendum 4"). Generator determinism (10 stamped files, per Ada) is Ada's issue to file. Nothing in N1 changes for it beyond the `-I` pattern.
 
 **Note on N3 and Lina's section** (finding 3 is routed to Lina): N3 says `npx jest --passWithNoTests`. If her fix to § Running Component Tests uses a different form, for example a starter test file instead of the flag, N3 and the guide would disagree. Flag it when her fix lands.
+
+### T6 settlement (2026-10-03)
+
+- **The fork**: Stacy's strong form (a session other than the builder checks the summary) or her softer fallback.
+- **Settled among the owners**: Stacy raised it; Leonardo, asked as she requested, picks the strong form, and so does Thurgood. Peter was told and did not object.
+- **Shipped**: Stacy's strong form, with Leonardo's one wording adjustment. The checker is "a fresh session (or another person) other than the one that built the checks".
+- **Stacy's instrument clause is intact**: the checker opens each linked run and writes in `notes.md` which rows matched and which did not. Red is a summary with no such record.
+- **Structure test**: a new assertion that the Close task names a checker other than the builder and records its result. Bites, each red then restored:
+  - the record clause removed;
+  - "other than the one that built the checks" removed.
+- **Surviving counter-argument (Leonardo's)**: nothing enforces it, and a fresh session of the same model brings fresh context, not independent judgment.

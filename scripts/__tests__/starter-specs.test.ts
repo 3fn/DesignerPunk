@@ -176,6 +176,13 @@ describe('the CI-needs spec (criterion 1, C6; Req 17.1–17.4; design C25)', () 
     expect(ts.some((t) => /bite recipe/.test(t) && /goes red/.test(t) && /in your CI/.test(t))).toBe(true);
   });
 
+  it('the close task has its summary checked by a session other than the builder, with the result recorded (Stacy T6)', () => {
+    const close = tasks(read('ci-needs/tasks.md')).find((t) => /\*\*Close\.\*\*/.test(t));
+    expect(close).toBeDefined();
+    expect(close).toMatch(/other than the one that built the checks/);
+    expect(close).toMatch(/write in `notes\.md` which rows matched the runs and which did not/);
+  });
+
   it('bite: the need checker flags a need missing any one of the three', () => {
     const ok: Need = { id: 'N9', title: 't', fields: { Tier: 'minimal core', Why: 'w', Check: 'c', 'Bite recipe': 'x. The check goes red. Revert.', Price: 'skip it, a; adopt it, b' } };
     expect(needProblems(ok)).toEqual([]);
