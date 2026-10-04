@@ -46,7 +46,10 @@ import {
   gitignoreBlockConfigUnreadableMessage,
   starterSpecCollisionMessage,
   starterSpecsWrittenMessage,
+  personalNoteCreatedMessage,
+  personalNoteUnfilledMessage,
 } from '../shared/errorCatalog';
+import { PERSONAL_NOTE_REL, PERSONAL_NOTE_TEMPLATE_REL } from '../shared/personalNote';
 import { extractRegion, normalizeRegionContent, wrapRegion } from '../sync/RegionGrain';
 import type { ConfigModuleLoader } from '../../config/ConfigLoader';
 
@@ -959,3 +962,44 @@ describe('CLI init — the starter specs into specs/ (Task 21.3; design.md C25, 
     }
   });
 });
+
+describe('CLI init — the personal note (Task 22.1; mechanism B; C26)', () => {
+  let scratchDir: string;
+  const TEMPLATE = fs.readFileSync(path.join(PKG_ROOT, PERSONAL_NOTE_TEMPLATE_REL), 'utf8');
+  const notePath = () => path.join(scratchDir, PERSONAL_NOTE_REL);
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test('init creates the note from the template; it prints the NAMING row (in its next steps) and NO creation row or warning', async () => {
+    const { output } = await runInitIn(scratchDir);
+    expect(fs.readFileSync(notePath(), 'utf8')).toBe(TEMPLATE);
+    expect(output).toContain(personalNoteNamingMessage());
+    expect(output).not.toContain(personalNoteCreatedMessage());
+    expect(output).not.toContain(personalNoteUnfilledMessage());
+  });
+
+  test('the note is local to one person: never recorded in the manifest', async () => {
+    await runInitIn(scratchDir);
+    const entries = readManifestFile(scratchDir).entries;
+    expect(Object.keys(entries).filter((k) => k.includes('.designerpunk/') || k.includes('personal-note'))).toEqual([]);
+  });
+
+  test('--re-scaffold never overwrites an existing note: a filled one is untouched and silent; an unfilled one gets the warning', async () => {
+    await runInitIn(scratchDir);
+    fs.writeFileSync(notePath(), 'My own words.\n');
+    let { output } = await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents', '--re-scaffold', '--yes']);
+    expect(fs.readFileSync(notePath(), 'utf8')).toBe('My own words.\n');
+    expect(output).not.toContain(personalNoteUnfilledMessage());
+    fs.writeFileSync(notePath(), TEMPLATE);
+    ({ output } = await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents', '--re-scaffold', '--yes']));
+    expect(fs.readFileSync(notePath(), 'utf8')).toBe(TEMPLATE);
+    expect(output).toContain(`⚠️  ${personalNoteUnfilledMessage()}`);
+  });
+});
+

@@ -199,16 +199,38 @@ describe('catalog strings (design.md rows, read at run time)', () => {
     expect(gitignoreBlockReportMessage()).not.toContain('attach');
   });
 
-  test('config-unreadable (authored at 20.2): names the reason, says nothing was written, guesses no path', () => {
+  test('config-unreadable (authored at 20.2; Leonardo\'s wording): names the reason, says the block was not written, guesses no path', () => {
     const m = gitignoreBlockConfigUnreadableMessage('Failed to load /x/designerpunk.config.ts: boom\n    at stack');
     expect(m).toContain('Failed to load /x/designerpunk.config.ts: boom');
     expect(m).not.toContain('at stack');
-    expect(m).toContain('Nothing was written to .gitignore');
+    expect(m).toContain("DesignerPunk's .gitignore block was not written");
+    expect(m).not.toContain('Nothing was written'); // the redundant sentence is cut (catalog-wording.md § 2)
     expect(m).not.toContain('dist/tokens');
   });
 
   test('added (authored at 20.2)', () => {
-    expect(gitignoreBlockAddedMessage()).toBe(".gitignore: added DesignerPunk's block (it ignores token-index/ and .designerpunk/)");
+    // the same path order as the offer and report rows (catalog-wording.md § 3)
+    expect(gitignoreBlockAddedMessage()).toBe(".gitignore: added DesignerPunk's block (it ignores .designerpunk/ and token-index/)");
+  });
+});
+
+describe('managed region — markers missing: the remedy is split by file (catalog-wording.md § 6)', () => {
+  test('.gitignore: names the two marker lines and `sync`, never `attach`', () => {
+    const m = managedRegionMarkersMissingMessage('.gitignore');
+    expect(m).toBe(
+      "the DesignerPunk-managed block in .gitignore is missing its markers — not rewriting the file. " +
+        "Restore the lines '# designerpunk:managed:begin' and '# designerpunk:managed:end' around the block, and 'npx designerpunk sync' keeps it current again.",
+    );
+    expect(m).not.toContain('attach');
+    expect(m).toContain(GITIGNORE_MARKERS.begin.replace(/^# /, "# ")); // the marker text is the real one
+    expect(m).toContain(GITIGNORE_MARKERS.end);
+  });
+
+  test('every other file keeps the design row\'s remedy, unchanged', () => {
+    expect(managedRegionMarkersMissingMessage('CLAUDE.md')).toBe(
+      'the DesignerPunk-managed region in CLAUDE.md is missing its markers — not rewriting the file. ' +
+        'Restore the markers (see install doc § "Your agent layer") or re-run attach',
+    );
   });
 });
 

@@ -361,7 +361,7 @@ describe('Consumer Integration (Spec 106 R8)', () => {
    *
    * The package is read as INSTALLED (`node_modules/@3fn/core`), never from the repo. The expected eight are
    * DERIVED from the installed package's own locked always-set (`dist/consumer-canonical/shared/always-set.yaml`)
-   * less the one template member (`personal-note`, which ships as `templates/personal-note.template.md` and a
+   * less the one template member (`personal-note`, which ships as `src/cli/templates/personal-note.template.md` (FK-1 (b)) and a
    * consumer-owned `.designerpunk/personal-note.local.md` — Task 22, U3 — never under `.kiro/steering/`). The count
    * is pinned at 8 so an emptied or mis-parsed list cannot make the comparison vacuous.
    */
@@ -1843,7 +1843,7 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       }
     });
 
-    it('CC: the CLAUDE.md managed region imports each identity member, and every import resolves except the (absent) personal note', () => {
+    it('CC: the CLAUDE.md managed region imports each identity member, and every import resolves — the personal note now exists after init (Task 22.1, mechanism B)', () => {
       const dir = consumers['cc'];
       expect(dir).toBeDefined();
       const text = readText(dir, 'CLAUDE.md');
@@ -1855,7 +1855,7 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       expect(imports).toContain(PERSONAL_NOTE);
       const identityImports = imports.filter((i) => i !== PERSONAL_NOTE);
       expect(identityImports.length).toBeGreaterThan(0);
-      for (const i of identityImports) expect({ i, exists: fs.existsSync(path.join(dir, i)) }).toEqual({ i, exists: true });
+      for (const i of imports) expect({ i, exists: fs.existsSync(path.join(dir, i)) }).toEqual({ i, exists: true });
       // every shipped identity member is imported — none dropped
       expect(identityImports.sort()).toEqual(listFiles(dir, '.claude/identity').sort());
     });
@@ -1904,7 +1904,7 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       }
     });
 
-    it('Kiro: every agent resource resolves in the packed install — node_modules/@3fn/core paths, .kiro/steering/designerpunk-*, skills, prompts, knowledge bases — and the personal note is the one named-but-absent resource', () => {
+    it('Kiro: every agent resource resolves in the packed install — node_modules/@3fn/core paths, .kiro/steering/designerpunk-*, skills, prompts, knowledge bases — and the personal note resolves too: it exists after init (Task 22.1, mechanism B)', () => {
       const dir = consumers['kiro'];
       expect(dir).toBeDefined();
       expect(listFiles(dir, '.kiro/steering').filter((f) => /^\.kiro\/steering\/designerpunk-.*\.md$/.test(f)).length).toBeGreaterThan(0);
@@ -1921,10 +1921,7 @@ describe('Consumer Integration (Spec 106 R8)', () => {
         for (const r of agent.resources) {
           const uri = typeof r === 'string' ? r : r.source;
           const rel = uri.replace(/^(file|skill):\/\/(\.\/)?/, '');
-          if (rel === PERSONAL_NOTE) {
-            personalNoteNamed++;
-            continue;
-          }
+          if (rel === PERSONAL_NOTE) personalNoteNamed++;
           expect({ f, uri, exists: fs.existsSync(path.join(dir, rel)) }).toEqual({ f, uri, exists: true });
           if (typeof r === 'string' && rel.startsWith('node_modules/@3fn/core/')) pkgResources.add(rel);
           if (typeof r !== 'string' && r.type === 'knowledgeBase') knowledgeSources.add(rel);
@@ -1936,9 +1933,30 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       expect([...knowledgeSources].sort()).toEqual(['src/components', 'src/tokens']);
     });
 
-    it('the personal note is ABSENT in both installs until U3 (Task 22; C19 degradation) — asserted, never skipped', () => {
+    it('the personal note is PRESENT in both installs after init, with the template\'s content (Task 22.1, mechanism B; C19 resolved)', () => {
+      const template = fs.readFileSync(path.join(PKG_ROOT, 'src/cli/templates/personal-note.template.md'), 'utf-8');
       for (const t of TARGETS) {
-        expect({ t, exists: fs.existsSync(path.join(consumers[t], PERSONAL_NOTE)) }).toEqual({ t, exists: false });
+        const note = path.join(consumers[t], PERSONAL_NOTE);
+        expect({ t, exists: fs.existsSync(note) }).toEqual({ t, exists: true });
+        expect({ t, same: fs.readFileSync(note, 'utf-8') === template }).toEqual({ t, same: true });
+      }
+    });
+
+    it('the edited example of Peter\'s note is emitted NOWHERE: zero `personal-note.example` in every emitted file (Task 22, C8; instruments row 2.5)', () => {
+      for (const t of TARGETS) {
+        const dir = consumers[t];
+        const files = [...emittedAgentLayer(t, dir), ...mcpFiles(t)];
+        expect(files.length).toBeGreaterThan(20);
+        const hits = files.filter((f) => readText(dir, f).includes('personal-note.example'));
+        expect({ t, hits }).toEqual({ t, hits: [] });
+      }
+    });
+
+    // PENDING, not skipped (instruments rows 2.2/2.3): the placed template names the example at its installed path,
+    // and the example is not placed until Peter approves it. `it.failing` passes while red and FAILS once satisfied.
+    it.failing('[pending: instruments rows 2.2/2.3] the example the template names exists in the packed install: node_modules/@3fn/core/src/cli/templates/personal-note.example.md', () => {
+      for (const t of TARGETS) {
+        expect(fs.existsSync(path.join(consumers[t], 'node_modules/@3fn/core/src/cli/templates/personal-note.example.md'))).toBe(true);
       }
     });
 

@@ -35,7 +35,12 @@ import {
   legacyCopyEntries,
 } from '../sync/Migration';
 import { attachUsage } from '../shared/vocabulary';
-import { restartLineSequencedMessage } from '../shared/errorCatalog';
+import {
+  restartLineSequencedMessage,
+  personalNoteNamingMessage,
+  personalNoteCreatedMessage,
+  personalNoteUnfilledMessage,
+} from '../shared/errorCatalog';
 import { REPO_ROOT, createScratch, writeFile, readText, captureConsole, dirHash, sha } from './syncTestKit';
 
 const FIXTURE_DIR = path.join(__dirname, 'fixtures/release-1-cohort');
@@ -115,6 +120,19 @@ describe('sync — the release-1 cohort (Task 16.5)', () => {
     expect(dirHash(scratch)).toEqual(before);
   });
 
+  test('--migrate-legacy creates the personal note and prints the NAMING row (never the "created" row or the warning), BEFORE the sequenced restart row, which stays last (Task 22.1; R3)', async () => {
+    cohortRepo(scratch, { rebind: true });
+    const out = await runSync({ projectRoot: scratch, isTTY: false, migrateLegacy: true });
+    expect(out.personalNote).toBe('created');
+    expect(fs.existsSync(path.join(scratch, '.designerpunk/personal-note.local.md'))).toBe(true);
+    const lines = con.output().split('\n');
+    const naming = lines.indexOf(`ℹ️  ${personalNoteNamingMessage()}`);
+    expect(naming).toBeGreaterThan(-1);
+    expect(lines.indexOf(`ℹ️  ${personalNoteCreatedMessage()}`)).toBe(-1);
+    expect(lines.indexOf(`⚠️  ${personalNoteUnfilledMessage()}`)).toBe(-1);
+    expect(naming).toBeLessThan(lines.indexOf(restartLineSequencedMessage()));
+  });
+
   test('--migrate-legacy: removal THEN attach in one flow — ZERO origin:"copy" entries remain; edits are kept as hers; the next sync does not re-detect the cohort', async () => {
     cohortRepo(scratch, { rebind: true });
     const EDITED_GOV = 'governance/Token-Governance.md';
@@ -191,6 +209,10 @@ describe('sync — --migrate-legacy is offered ONLY with the attach step (Task 1
     expect(out.trace).toContain('migrate-legacy:refused');
     expect(out.trace.some((t) => t.startsWith('attach:') || t.startsWith('migrate-legacy:removed'))).toBe(false);
     expect(con.output()).toContain(migrateLegacyRefusedMessage(reason));
+    // Task 22.1 (mechanism B): a born-posture `sync` creates the personal note when it is absent, so the
+    // refused run's only write is the note. "Removes nothing" still holds for every other byte.
+    expect(out.personalNote).toBe('created');
+    fs.rmSync(path.join(scratch, '.designerpunk'), { recursive: true, force: true });
     expect(dirHash(scratch)).toEqual(before);
     expect(copyEntriesUnderCohortRoots(parseManifest(readText(scratch, MANIFEST_FILE)))).toHaveLength(124);
   });

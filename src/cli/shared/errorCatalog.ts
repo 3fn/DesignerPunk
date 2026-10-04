@@ -183,6 +183,15 @@ export function consumerDegradationMessage(member: string, where: string, conseq
  * in `<file>` (e.g. `CLAUDE.md`, `.gitignore`).
  */
 export function managedRegionMarkersMissingMessage(file: string): string {
+  // The target-free `.gitignore` block: `attach` never writes it, so "re-run attach" would be false
+  // (catalog-wording.md § 6, Leonardo). Every other managed region keeps the design row's remedy.
+  if (file === '.gitignore') {
+    return (
+      `the DesignerPunk-managed block in .gitignore is missing its markers — not rewriting the file. ` +
+      `Restore the lines '# designerpunk:managed:begin' and '# designerpunk:managed:end' around the block, ` +
+      `and 'npx designerpunk sync' keeps it current again.`
+    );
+  }
   return (
     `the DesignerPunk-managed region in ${file} is missing its markers — not rewriting the file. ` +
     `Restore the markers (see install doc § "Your agent layer") or re-run attach`
@@ -344,8 +353,8 @@ export function gitignoreBlockConfigUnreadableMessage(reason: string): string {
   const firstLine = reason.split(/\r?\n/, 1)[0].trim();
   return (
     `DesignerPunk's .gitignore block was not written — designerpunk.config.ts could not be loaded (${firstLine}), ` +
-    `so the platform output path is unknown and none was guessed. Nothing was written to .gitignore. ` +
-    `Add the lines token-index/ and .designerpunk/ to it yourself, or fix the config and run 'npx designerpunk sync'.`
+    `so the platform output path is unknown and none was guessed. ` +
+    `Add the lines token-index/ and .designerpunk/ to .gitignore yourself, or fix the config and run 'npx designerpunk sync'.`
   );
 }
 
@@ -355,7 +364,7 @@ export function gitignoreBlockConfigUnreadableMessage(reason: string): string {
  * `init.ts`; the row is owed with the one above).
  */
 export function gitignoreBlockAddedMessage(): string {
-  return `.gitignore: added DesignerPunk's block (it ignores token-index/ and .designerpunk/)`;
+  return `.gitignore: added DesignerPunk's block (it ignores .designerpunk/ and token-index/)`;
 }
 
 // ---------------------------------------------------------------------------
@@ -374,5 +383,62 @@ export function starterSpecCollisionMessage(relPath: string): string {
 /** The summary line after the starter specs are scaffolded into `specs/`. */
 export function starterSpecsWrittenMessage(fileCount: number, specNames: string[]): string {
   return `specs/: ${fileCount} starter spec file${fileCount === 1 ? '' : 's'} (${specNames.join(', ')}) — run them with your agent`;
+}
+
+// ---------------------------------------------------------------------------
+// The personal note (Spec 123 Task 22.1; design.md C26's 2026-10-03 errata, mechanism B — PR-4) and
+// `generate`'s `Themes:` line. Strings are the design rows' corrected text, verbatim; the `Themes:` suffix
+// is Leonardo's final wording (`design-inputs/catalog-wording.md` § 1), the design erratum for which is owed.
+// ---------------------------------------------------------------------------
+
+/**
+ * design.md catalog row **generate created the personal note** (Le-R1; corrected 2026-10-03, R2 — Leonardo
+ * L-RC3: three slots and the walkthrough). Printed by every command that creates the note except `init`
+ * and `sync --migrate-legacy`, which print the naming row.
+ */
+export function personalNoteCreatedMessage(): string {
+  return (
+    `created .designerpunk/personal-note.local.md from the template — fill it in, or ask your agent to walk you through it. ` +
+    `Your agents read it every session (it stays on your machine)`
+  );
+}
+
+/**
+ * design.md catalog row **personal note unfilled** (mechanism B, PR-4; wording Leonardo, R2/R3). A warning,
+ * exit 0 (Req 13, 18.5(iii)); printed by any command that finds an existing unfilled note, never in the
+ * same run as a creation row.
+ */
+export function personalNoteUnfilledMessage(): string {
+  return (
+    `your personal note (.designerpunk/personal-note.local.md) is still the unfilled template, so your agents set it aside. ` +
+    `Your answers go under the headings, outside the guidance block. ` +
+    `Fill it in yourself, or ask your agent to walk you through it: who you are, what you and your organization value, ` +
+    `and how you like to work together. Rather not keep one? Replace it with a line of your own and this message stops. ` +
+    `(It stays on your machine.)`
+  );
+}
+
+/**
+ * design.md catalog row **personal note created in an unignored directory** (PR-13 RULED; Leonardo's L-RC8
+ * text). Printed by `generate` and `attach` immediately after their creation row, only when
+ * `git check-ignore -q .designerpunk/` exits 1.
+ */
+export function personalNoteUnignoredMessage(): string {
+  return (
+    `.designerpunk/ is not ignored by git in this repo, so the personal note just created could be committed and shared with your team. ` +
+    `Add the line .designerpunk/ to .gitignore (or run 'npx designerpunk sync' in a terminal to add DesignerPunk's block).`
+  );
+}
+
+/**
+ * design.md catalog row **generate — registered theme not emitted** (R3; Ada's draft, Leonardo's FINAL
+ * wording — `design-inputs/catalog-wording.md` § 1). `generate` prints its registered themes on ONE
+ * comma-joined line, so the line gets one suffix. It comes off by dated amendment when Spec 129 item (i) lands.
+ */
+export function generateThemesLine(themes: ReadonlyArray<{ name: string; mode: string }>): string {
+  return (
+    `Themes: ${themes.map((t) => `${t.name} (${t.mode})`).join(', ')} — registered, not applied yet: ` +
+    `a theme you register does not change your generated output; light and dark mode and the wcag theme use DesignerPunk's built-in values`
+  );
 }
 

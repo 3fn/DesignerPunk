@@ -70,6 +70,7 @@ import {
   gitignoreBlockReportMessage,
   gitignoreBlockConfigUnreadableMessage,
   gitignoreBlockAddedMessage,
+  consumerDegradationMessage,
 } from '../shared/errorCatalog';
 import {
   GITIGNORE_FILE,
@@ -81,6 +82,9 @@ import {
   designerpunkDirIgnoreState,
 } from '../shared/gitignoreRegion';
 import { confirmGitignoreBlock } from './Prompter';
+import { findDesignSystemRoot } from '../shared/bornRepo';
+import { ensurePersonalNote, printPersonalNoteRows, PERSONAL_NOTE_TEMPLATE_REL } from '../shared/personalNote';
+import type { CreationRow, PersonalNoteStatus } from '../shared/personalNote';
 import { emitAgentLayer, resolveAgentTarget, attachRefusal, REFERENCE_SERVERS } from '../attach';
 import {
   KEY_SURFACES,
@@ -231,6 +235,13 @@ export interface SyncOutcome {
    * Absent when no offer applied.
    */
   gitignoreBlock?: 'added' | 'declined' | 'reported';
+  /**
+   * The personal note's status for this run (C26; Task 22.1): created when absent, classified when present.
+   * Absent when the run was not for a born-posture repo (a steward checkout, a consume manifest, no manifest).
+   */
+  personalNote?: PersonalNoteStatus;
+  /** The installed package's root, for steps that run after the main flow. */
+  pkgRoot?: string;
 }
 
 /** Parse `sync`'s CLI flags (everything after `sync`). */
@@ -278,9 +289,33 @@ async function terminalConfirm(question: string): Promise<boolean> {
 export async function runSync(options: SyncOptions): Promise<SyncOutcome> {
   const outcome = await runSyncMain(options);
   if (outcome.stopped === 'steward' || outcome.stopped === 'corrupt-manifest') return outcome;
+  personalNoteStep(options, outcome, 'created-only');
   const offered = await offerGitignoreBlock(options, outcome);
   if (offered) outcome.gitignoreBlock = offered;
   return outcome;
+}
+
+/**
+ * The personal note (C26; Task 22.1, mechanism B): `sync` creates it from the template when absent — in a
+ * born-posture repo only — and prints the "created" row (the naming row under `--migrate-legacy`, whose
+ * caller runs this step itself before the sequenced restart row), or the unfilled warning for an existing
+ * unfilled note: never both. `--dry-run` writes nothing, so an absent note stays absent.
+ */
+function personalNoteStep(options: SyncOptions, outcome: SyncOutcome, creationRow: CreationRow): void {
+  if (outcome.personalNote !== undefined || !outcome.pkgRoot) return;
+  const loaded = loadManifest(options.projectRoot);
+  if (loaded.kind !== 'ok' || loaded.manifest.posture !== 'born') return;
+  const dsRoot = findDesignSystemRoot(options.projectRoot);
+  const root = dsRoot.root ?? options.projectRoot;
+  const status = ensurePersonalNote({ root, pkgRoot: outcome.pkgRoot, dsState: dsRoot.state, create: !options.dryRun });
+  if (status === 'skipped-posture') return;
+  outcome.personalNote = status;
+  if (status === 'template-missing') {
+    console.log(`\n⚠️  ${consumerDegradationMessage('personal-note template', PERSONAL_NOTE_TEMPLATE_REL, 'the personal note was not created')}`);
+    return;
+  }
+  if (status === 'created' || status === 'unfilled') console.log('');
+  printPersonalNoteRows(status, root, creationRow);
 }
 
 /**
@@ -343,6 +378,7 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
     console.log(STEWARD_REPO_MESSAGE);
     return { ...outcome, stopped: 'steward', report: [STEWARD_REPO_MESSAGE] };
   }
+  outcome.pkgRoot = pkg.root;
   console.log(`📦 @3fn/core v${pkg.version}\n`);
   if (options.retiredForce) console.log(`${RETIRED_FORCE_MESSAGE}\n`);
 
@@ -591,6 +627,7 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
       outcome.manifestWritten = saveManifest(projectRoot, manifest);
       if (relocateLegacy && !legacyHasPointer(projectRoot)) writeLegacyPointer(projectRoot);
       console.log(`✅ Sync complete. ${MANIFEST_FILE} updated. Run 'npx designerpunk sync' again to review the migrated repo.`);
+      personalNoteStep(options, outcome, 'naming'); // the naming row, before the sequenced restart row (printed LAST)
       console.log('');
       console.log(restartLineSequencedMessage());
       return outcome;

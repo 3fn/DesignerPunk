@@ -39,6 +39,7 @@ import {
   consumerDegradationMessage,
 } from './shared/errorCatalog';
 import { computeGitignoreRegion, applyGitignoreRegion } from './shared/gitignoreRegion';
+import { ensurePersonalNote, printPersonalNoteRows, PERSONAL_NOTE_TEMPLATE_REL } from './shared/personalNote';
 import type { ConfigModuleLoader } from '../config/ConfigLoader';
 import { emitAgentLayer, previewAgentLayerMissing, resolveAgentTarget } from './attach';
 import { serializeManifest } from './sync/Manifest';
@@ -365,6 +366,17 @@ export async function runInit(argv: string[], deps: InitDeps = {}): Promise<void
     const applied = applyGitignoreRegion(dest, gitignoreBlock.content, manifest.state.entries);
     if (applied.outcome === 'collision') console.log(`  ⚠️  ${applied.message}`);
     else if (applied.outcome === 'written') console.log(`✓ ${gitignoreBlockAddedMessage()}`);
+  }
+
+  // --- Step 12: the personal note (C26; Task 22.1, mechanism B). `init` creates it from the template
+  // (a born repo by construction); it is local to one person and never recorded in the manifest. `init`
+  // prints the NAMING row in its next steps, so no creation row is printed here; a note that already
+  // exists (`--re-scaffold`) is never overwritten, and an unfilled one gets the unfilled warning. -----
+  const note = ensurePersonalNote({ root: dest, pkgRoot, dsState: 'born' });
+  if (note === 'template-missing') {
+    console.log(`  warning: ${consumerDegradationMessage('personal-note template', PERSONAL_NOTE_TEMPLATE_REL, 'the personal note was not created')}`);
+  } else {
+    printPersonalNoteRows(note, dest, 'silent');
   }
 
   // --- Manifest — written LAST (design.md C1's manifest row): every file and key above,

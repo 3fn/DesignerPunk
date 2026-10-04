@@ -30,10 +30,13 @@ import { isProductTokenStale, getProductTokenOutputPaths } from './staleness';
 import { runSync, parseSyncArgs } from './sync';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
 import { findDesignSystemRoot } from './shared/bornRepo';
+import { ensurePersonalNote, printPersonalNoteRows, PERSONAL_NOTE_TEMPLATE_REL } from './shared/personalNote';
 import {
   partialCaseMessage,
   componentTokenFamilyMismatchMessage,
   componentTokenFileLoadFailedMessage,
+  consumerDegradationMessage,
+  generateThemesLine,
 } from './shared/errorCatalog';
 import { attachUsage } from './shared/vocabulary';
 
@@ -239,9 +242,20 @@ export async function runGenerate(force = false) {
   console.log(`   Tokens: ${relativePath}  (${config.tokenSourceMode})`);
   console.log(`   Output: ${path.relative(process.cwd(), config.outputDir)}`);
   if (config.themes.length > 0) {
-    console.log(`   Themes: ${config.themes.map(t => `${t.name} (${t.mode})`).join(', ')}`);
+    console.log(`   ${generateThemesLine(config.themes)}`);
   }
   console.log('');
+
+  // The personal note (C26; Task 22.1, mechanism B): created from the template when absent — the joiner's
+  // fresh clone has none — and only in a BORN repo (never the steward checkout or package mode). A creation
+  // row, then PR-13's unignored-directory row; or, for an existing unfilled note, the warning — never both.
+  const note = ensurePersonalNote({ root: generateRoot, pkgRoot: resolvePackageRoot(__dirname), dsState: dsRoot.state });
+  if (note === 'template-missing') {
+    console.warn(`⚠️  ${consumerDegradationMessage('personal-note template', PERSONAL_NOTE_TEMPLATE_REL, 'the personal note was not created')}`);
+  } else {
+    printPersonalNoteRows(note, generateRoot, 'created');
+  }
+  if (note === 'created' || note === 'unfilled') console.log('');
 
   let systemFailed = false;
   let productFailed = false;

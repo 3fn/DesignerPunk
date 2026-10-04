@@ -46,11 +46,13 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
 import { findDesignSystemRoot } from './shared/bornRepo';
+import { ensurePersonalNote, printPersonalNoteRows, PERSONAL_NOTE_TEMPLATE_REL } from './shared/personalNote';
 import {
   attachUnbornRepoMessage,
   partialCaseMessage,
   restartLineSequencedMessage,
   restartLineNowMessage,
+  consumerDegradationMessage,
 } from './shared/errorCatalog';
 import { scaffoldKiroMcpConfig } from './shared/mcpConfig/kiro';
 import { scaffoldClaudeCodeMcpConfig } from './shared/mcpConfig/cc';
@@ -464,6 +466,15 @@ async function attachBorn(pkgRoot: string, repoRoot: string, requestedTarget: st
   if (unchanged > 0) parts.push(`${unchanged} unchanged`);
   if (collided > 0) parts.push(`${collided} skipped (see warnings above)`);
   console.log(`✓ Attached ${target} — ${parts.join(', ')}`);
+
+  // The personal note (C26; Task 22.1): created from the template when absent, in a born repo only — never
+  // in package mode. Its rows come before the sequenced restart row, which stays the LAST next step.
+  const note = ensurePersonalNote({ root: repoRoot, pkgRoot, dsState: findDesignSystemRoot(repoRoot).state });
+  if (note === 'template-missing') {
+    console.log(`  warning: ${consumerDegradationMessage('personal-note template', PERSONAL_NOTE_TEMPLATE_REL, 'the personal note was not created')}`);
+  } else {
+    printPersonalNoteRows(note, repoRoot, 'created');
+  }
   console.log('');
   console.log(restartLineSequencedMessage());
 }
