@@ -390,7 +390,7 @@ The pipeline shows where tokens are being read from. With the config `init` writ
 📦 MyProduct (MP)
    Tokens: src/tokens  (local)
    Output: dist/tokens
-   Themes: dark (dark), wcag (light) — registered, not applied yet: a theme you register does not change your generated output; light and dark mode and the wcag theme use DesignerPunk's built-in values
+   Themes: dark (dark), wcag (light) — registered, not applied yet: a theme you register does not change your generated output; dark mode and the wcag theme apply DesignerPunk's built-in overrides to your tokens
 ```
 The `Themes:` line lists what your config registers, not what was applied (see "Themes").
 
@@ -465,7 +465,7 @@ module.exports = {
 #### Running Tests
 
 ```bash
-npx jest                          # Run all tests
+npx jest --passWithNoTests       # Run all tests (a fresh repo has none yet: without the flag jest exits 1, "No tests found")
 npx jest src/components/          # Run your own component tests, once you've added some
 npx jest --testPathPattern=Button # Run tests matching "Button"
 ```
