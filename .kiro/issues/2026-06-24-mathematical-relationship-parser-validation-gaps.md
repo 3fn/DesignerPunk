@@ -37,3 +37,32 @@ Spec 118 is **module-resolution coherence** (config-load path, runtime TS execut
 ## Recommended disposition
 
 Ada to scope a focused fix (may graduate to a small spec if the "mathematical vs categorical" governance calls prove substantive). Acceptance: `npx designerpunk validate` passes on the current token source with the validator still catching genuinely-incorrect relationships (regression tests for both true-positive and the five false-negative categories above); then re-enable `validate passes` in `tests/consumer-integration.test.ts`.
+
+---
+
+## Addendum (2026-10-03): consumer impact now verified, and the install guide states it
+
+**What changed since filing**
+
+- **Reproduced on today's token source.**
+  - Ada ran `npx designerpunk validate` in this repo at `ea348aa76`, 2026-10-03:
+    - required fields ✅, family membership ✅, semantic references ✅;
+    - **Mathematical relationships ❌ with 102 errors** (up from "~99" at filing);
+    - **exit code 1**.
+  - The failure categories match § "Failure categories": descriptive operands ("lightest", `bezier(…)`), float tolerance (shadow opacity), special-case literals (`opacity100`), and scale multipliers (`scale088`…`scale108`).
+- **Verified in a born repo.** Thurgood's Spec 123 Task 21 bite run built a scratch born repo from a packed tarball (`init --target=cc`). It reports the same 102 errors and exit 1 on **unmodified** token source. So every new consumer's `validate` is red from the first command. That is verified by Thurgood's run; Ada did not run it there.
+- **The install guide now says so.** Ada's wording, applied by Thurgood at `08dded891`:
+  - `governance/DesignerPunk-Integration-Guide.md:92` (§ 4) and its derived copy, `docs/consumer/INSTALL.md:78`: "One of its four checks, mathematical relationships, currently fails even on unmodified token source, so `validate` exits non-zero; that is a known defect in the checker, not in your tokens."
+  - The Reference section at L421 says the same.
+
+  Both sentences must be removed in the PR that fixes this issue. Add them to the fix's acceptance criteria.
+- **CI needs.** No CI need in `src/cli/templates/starter-specs/ci-needs/needs.md` gates on bare `validate` (N4 uses `validate --product-tokens`, which does not run this check). This defect is why. A future need that gates on `validate` would be red from day one until this is fixed.
+- **Still skipped.** `tests/consumer-integration.test.ts:345` is `it.skip('validate passes')`.
+
+**Trigger (this addendum supersedes the header's "after Spec 118 closes")**. If Spec 118 has closed, that trigger fired without a record, which is a walk finding. Unverified: Spec 118's `tasks.md` still shows one unchecked item.: **the first Ada token-validator session after Spec 123 U3 merges**, or **a `fix/` PR on Peter's go**, whichever first.
+
+Why now: the defect has moved from a skipped internal test to a sentence in the consumer install guide. Every release that ships the sentence is a release whose first-run experience includes a known-red command.
+
+**Unverified**: whether the 102 are all false negatives. The 2026-06-24 analysis classified ~99 as false. I have not re-classified the 3 new ones, nor checked whether `blur000` ("16 × 1 = 16, but token baseValue is 0") is a genuine relationship error rather than a parser limit.
+
+**No fix is authorized by this addendum.**
