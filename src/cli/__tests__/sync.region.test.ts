@@ -167,7 +167,7 @@ describe('RegionGrain — spliceRegion', () => {
     // Verbatim design.md § "Error Handling" row: "managed region — markers missing".
     expect(result.message).toBe(
       'the DesignerPunk-managed region in CLAUDE.md is missing its markers — not rewriting the file. ' +
-        'Restore the markers (see install doc § "Your agent layer") or re-run attach',
+        'Restore the markers (see install guide § "Your agent layer") or re-run attach',
     );
     expect(result.message).toBe(managedRegionMarkersMissingMessage('CLAUDE.md'));
 

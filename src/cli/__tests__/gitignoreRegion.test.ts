@@ -229,7 +229,7 @@ describe('managed region — markers missing: the remedy is split by file (catal
   test('every other file keeps the design row\'s remedy, unchanged', () => {
     expect(managedRegionMarkersMissingMessage('CLAUDE.md')).toBe(
       'the DesignerPunk-managed region in CLAUDE.md is missing its markers — not rewriting the file. ' +
-        'Restore the markers (see install doc § "Your agent layer") or re-run attach',
+        'Restore the markers (see install guide § "Your agent layer") or re-run attach',
     );
   });
 });

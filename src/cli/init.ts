@@ -404,6 +404,7 @@ export async function runInit(argv: string[], deps: InitDeps = {}): Promise<void
 
   // --- Next steps (C27 erratum; Req 15.8, 15.9, 19.6) ----------------------
   printNextSteps(opts.name, {
+    packageInstalledHere: fs.existsSync(path.join(dest, 'node_modules', '@3fn', 'core', 'package.json')),
     jestConfigScaffolded: jestConfigCreated,
     starterSpecNames: starterSpecNames([...starter.written, ...starter.collided]),
     gitignoreBlockInPlace,

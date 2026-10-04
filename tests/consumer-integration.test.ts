@@ -265,6 +265,10 @@ describe('Consumer Integration (Spec 106 R8)', () => {
     // `.gitignore` block (written here, with the real config loader) and the `specs/` scaffold.
     expect(output.split('\n')[0]).toMatch(/^no --target given — set up for .+ \(the default\)\./);
     expect(output).toContain('specs/ holds your starter specs (ci-needs, regrounding)');
+    // Review item 2: the numbered list begins at `generate` (install → init → generate), with no bare `npm install`, and the jest install is an OPTIONAL line after it.
+    expect(output).not.toMatch(/^ {2}\d+\. npm install/m);
+    expect(output).toMatch(/^ {2}1\. npx designerpunk generate$/m);
+    expect(output).toContain('Optional, to test your own components: npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node');
     expect(output).toContain("commit .gitignore with the rest: DesignerPunk's block in it ignores .designerpunk/ and token-index/");
 
     // Verify key files exist

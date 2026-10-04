@@ -139,8 +139,9 @@ export function personalNoteNamingMessage(): string {
  */
 export function jestConfigCollisionMessage(): string {
   return (
-    `skipped: jest.config.js (already exists) — the DesignerPunk jest preset is not applied; to test your ` +
-    `own forked components with @3fn/core/testing, add ...require('@3fn/core/jest-preset') to your config`
+    `skipped: jest.config.js (already exists) — the DesignerPunk jest preset is not applied; to test your own ` +
+    `components with it, add ...require('@3fn/core/jest-preset') to your config (in this version @3fn/core/testing ` +
+    `does not load under the preset; see the Integration Guide's "Running Component Tests")`
   );
 }
 
@@ -196,7 +197,7 @@ export function managedRegionMarkersMissingMessage(file: string): string {
   }
   return (
     `the DesignerPunk-managed region in ${file} is missing its markers — not rewriting the file. ` +
-    `Restore the markers (see install doc § "Your agent layer") or re-run attach`
+    `Restore the markers (see install guide § "Your agent layer") or re-run attach`
   );
 }
 
@@ -466,7 +467,14 @@ export function namedDefaultNoticeMessage(defaultTarget: string, targets: readon
 
 /** What `init` actually did, so its next steps list only steps a skip has not made untrue. */
 export interface InitNextStepsContext {
-  /** `jest.config.js` was written (false: an existing one was kept, so the install-jest step would be untrue). */
+  /**
+   * `@3fn/core` is installed in this repo (`node_modules/@3fn/core`). False only when `init` ran from somewhere else (for
+   * example `npx` with no install first): the config `init` wrote imports from `@3fn/core`, so `generate` needs it, and the
+   * one step to print is `npm install @3fn/core`. The bare `npm install` `init` used to print is never needed: `init`
+   * changes no dependency and never writes the consumer's `package.json`.
+   */
+  packageInstalledHere: boolean;
+  /** `jest.config.js` was written (false: an existing one was kept, so the optional install-jest line would be untrue). */
   jestConfigScaffolded: boolean;
   /** The starter specs are in `specs/` (written now, or already there). */
   starterSpecNames: string[];
@@ -483,8 +491,9 @@ export interface InitNextStepsContext {
  * untrue is omitted. AUTHORED AT 22.2: the design catalog carries no row for the block as a whole.
  */
 export function initNextStepsMessage(name: string, ctx: InitNextStepsContext): string {
-  const steps: string[] = ['npm install'];
-  if (ctx.jestConfigScaffolded) steps.push('npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node');
+  // The numbered list begins at `generate` (install → init → generate → note → restart is the founder path).
+  const steps: string[] = [];
+  if (!ctx.packageInstalledHere) steps.push('npm install @3fn/core (it is not installed in this repo, and the config init wrote imports from it)');
   steps.push('npx designerpunk generate');
   if (!ctx.agentLayerEmitted) steps.push('npx designerpunk attach --target=<cc|kiro> to attach a harness (agents + MCP config + approvals)');
   if (ctx.starterSpecNames.length > 0) {
@@ -493,11 +502,14 @@ export function initNextStepsMessage(name: string, ctx: InitNextStepsContext): s
   if (ctx.gitignoreBlockInPlace) {
     steps.push('commit .gitignore with the rest: DesignerPunk\'s block in it ignores .designerpunk/ and token-index/');
   }
+  const optional = ctx.jestConfigScaffolded
+    ? '\nOptional, to test your own components: npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node\n'
+    : '';
   return `Your product "${name}" is ready.
 
 Next steps:
 ${steps.map((t, i) => `  ${i + 1}. ${t}`).join('\n')}
-
+${optional}
 To customize your visual language:
   • Edit src/tokens/ to change base values and design intent
   • Run \`npx designerpunk generate\` after changes

@@ -1039,6 +1039,7 @@ describe('CLI init — the C27 completion: notice first, next steps, restart row
   test('the next steps are the catalog function\'s output for what init did, then hatch, naming and the restart row, in that order', async () => {
     const { output } = await runInitIn(scratchDir, [...BASE_ARGS, `--target=${PROFILE.defaultTarget}`]);
     const expected = initNextStepsMessage('Test', {
+      packageInstalledHere: false, // the scratch repo has no node_modules/@3fn/core: init ran from the package under test
       jestConfigScaffolded: true,
       starterSpecNames: ['ci-needs', 'regrounding'],
       gitignoreBlockInPlace: false, // the production config loader cannot run under jest: the block is reported, not written
@@ -1049,11 +1050,11 @@ describe('CLI init — the C27 completion: notice first, next steps, restart row
     expect(steps(output).some((l) => l.includes('specs/ holds your starter specs (ci-needs, regrounding)'))).toBe(true);
   });
 
-  test('a SKIP makes its step disappear: an existing jest.config.js is kept, reported truthfully, and the install-jest step is omitted', async () => {
+  test('a SKIP makes its line disappear: an existing jest.config.js is kept, reported truthfully, and the optional install-jest line is omitted', async () => {
     fs.writeFileSync(path.join(scratchDir, 'jest.config.js'), 'module.exports = {};\n');
     const { output } = await runInitIn(scratchDir, [...BASE_ARGS, `--target=${PROFILE.defaultTarget}`]);
     expect(output).toContain(jestConfigCollisionMessage());
-    expect(steps(output).some((l) => l.includes('npm install --save-dev jest'))).toBe(false);
+    expect(output).not.toContain('Optional, to test your own components');
     expect(fs.readFileSync(path.join(scratchDir, 'jest.config.js'), 'utf8')).toBe('module.exports = {};\n');
   });
 
