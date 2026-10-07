@@ -4,7 +4,7 @@
 **Purpose**: Record the orchestrator's answer to Peter's question "if we didn't have `matchConfidence` and were choosing a direction — lexical tier, a discriminative model such as Jev, or a hybrid — what would you recommend?" Captured at Peter's direction alongside the discovery shadow-study charter.
 **Organization**: working-document
 **Scope**: cross-project
-**Status**: orchestrator's assessment, unreviewed by owners. The rubric-as-evidence idea in § 4 touches Lina's and Thurgood's rubric surfaces and is recorded in the study charter as a CANDIDATE pending their read, not as a proposal.
+**Status**: orchestrator's assessment. **§ 4 read by its owners (Thurgood, Lina) 2026-10-07 — see § 4a; verdict: a recorded idea, not a study arm; "recovers reconstructability" was an overclaim.** The rest remains the orchestrator's view.
 
 ---
 
@@ -42,11 +42,19 @@ Instead of one verdict per candidate, the model answers a small fixed rubric of 
 - Does the candidate's own `whenNotToUse` exclude this query? *(extension only — whenNotToUse is outside parity)*
 - Does ANY candidate exist for this query at all? *(the gap question — Leonardo's harm case)*
 
-The per-question answers ARE the evidence. The tier is derived from them by pre-registered thresholds — tiers, not scores, preserved. "Nothing exists" is a first-class answer. The rubric questions are owned the way the lexical rubric is owned (Lina components, Thurgood docs); the answerer (Jev, a local model, the agent) is swappable. TypeSafe's RAG-passage cookbook has this exact shape (four Noul questions per passage, thresholds routing).
+The per-question answers are the reported evidence. The tier is derived from them by pre-registered thresholds. *(Owner correction § 4a: this is derivation transparency, not Spec 121's reconstructability — the answers are not checkable facts.)* The rubric questions are owned the way the lexical rubric is owned (Lina components, Thurgood docs); the answerer (Jev, a local model, the agent) is swappable. TypeSafe's RAG-passage cookbook has this exact shape (four Noul questions per passage, thresholds routing).
 
 **Cheaper scoring**: do NOT key per-question answers (that doubles the keying cost). Score only the DERIVED tier/rank against the same Q2/Q3 answer keys; treat the per-question answers as the reported evidence, inspected on split cases only.
 
 **Scope risk, stated**: this is a judgment layer, not a matcher; it answers a different question from the study's Jev-as-matcher arms. Adding it to a study three owners already said may not be worth running past Stage 1 is scope creep unless it DISPLACES the listwise arm rather than joining it. Recorded in the charter as fork F9.
+
+## 4a. Owner read (Thurgood, Lina — 2026-10-07, read-only)
+
+- **Name it correctly**: derivation transparency, not reconstructability. P5 needs primitives that are checkable facts without trusting the tool's label; a probability is not one, and determinism is lost. The idea fixes "where is the threshold" and "which question failed", not "why 0.71". A tier can come out right over wrong evidence; checking answers on a sample is the minimum.
+- **Questions, corrected**: *purpose addresses the query* — keep, tied to a field (so a "no" names the field to fix); docs: section-level, heading doubles as a `get_section` pointer. *Deciding detail the candidate lacks* — keep on components (sibling confusion; flags copy-pasted text); docs: replace with *canonical home vs citing surface*. *Internal-only* — drop from any model rubric; it is a fact: docs have it deterministically (Layer-2 viability); components do NOT declare it consistently → a declared component-meta field (Lina's debt). *Does any candidate exist* — derive once per query from the floor, never ask per candidate; near-misses defer to the answer key.
+- **Tiers, Not Scores**: no line crossed inside a study; in the live path a ballot (changes 121's evidence contract; breaks the no-model-in-live-path invariant).
+- **Not a study arm**: different question (judgment vs matcher); owner design work before pre-registration; four correlated thresholds = a hand-tuned scoring function with more knobs and less negative-bearing data than the lexical rubric (overfitting); a parity-restricted rubric sees LESS than the agent, which already receives `whenNotToUse`.
+- **Where it could live**: the agent itself as the answerer, tested on a real screen (F2a); as a refinement of how `certainty-calibration` is taught — Thurgood's surface, own ballot track.
 
 ## 5. What survives
 
