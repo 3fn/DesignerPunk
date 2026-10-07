@@ -1,6 +1,7 @@
 # Agentic UI Strategy: DesignerPunk as an Agent-Ready Design System
 
 **Date**: 2026-02-24
+**Updated**: 2026-10-07 — AG-UI section added (transport layer; complements A2UI); needs 5 and 7 annotated; charter opened
 **Purpose**: Capture strategic thinking on positioning DesignerPunk for agentic UI protocols and agent-driven interface composition
 **Organization**: working-document
 **Scope**: cross-project
@@ -26,6 +27,36 @@ Key properties of A2UI:
 - Progressive rendering — stream UI updates in real-time
 
 A2UI is not the bet. It's a signal. The protocol space for agentic UI is unsettled and A2UI may not win. The strategic move is building toward *agent-legible design systems as a category* — A2UI compatibility becomes one output of that, not the goal itself.
+
+---
+
+## AG-UI as the Transport Layer
+
+*Added 2026-10-07.* [AG-UI](https://docs.ag-ui.com) (Agent–User Interaction Protocol, CopilotKit-originated, open) sits at a **different layer** from A2UI. A2UI describes *what* UI to render — a declarative component tree. AG-UI is the *pipe* between an agent backend and a frontend: an event stream carrying streamed text, tool calls, state snapshots and JSON Patch deltas (RFC 6902), run/step lifecycle, reasoning, sub-agent events, and human-in-the-loop interrupts. AG-UI positions itself alongside MCP (agent ↔ tools/data) and A2A (agent ↔ agent) as the agent ↔ user leg. The two compose: AG-UI's generative-UI story names declarative UI languages such as A2UI as one payload it can carry.
+
+Key properties of AG-UI as observed 2026-10-07:
+- **Frontend-defined tools** — the frontend passes tool definitions in `RunAgentInput.tools`; the agent can only call what the frontend registered. This is a *pre-approved catalog by construction*, the same security property A2UI's catalog model gives, delivered through plain tool calls.
+- **Shared state** — `StateSnapshot` plus `StateDelta` (JSON Patch) keep a typed state object in sync between agent and frontend.
+- **Human-in-the-loop** — a tool call pauses the run for confirmation; the human's answer becomes a tool result in the conversation history.
+- **Transport** — HTTP SSE or a binary protocol; TypeScript and Python SDKs; integrations listed for LangChain, CrewAI, Google ADK, Pydantic AI, LlamaIndex, and the Claude Agent SDK; frontend clients listed for CopilotKit (React) and React Native.
+
+**Posture: same as A2UI — a signal, not a bet.** The docs disagree with themselves on event count, and *how a tool call renders as UI* is a CopilotKit convention rather than a protocol rule. Any renderer bridge we build is partly our own convention. The integration methodology (canonical schema first, protocol transformers second) is what defends against this; the class-level move is to generate protocol adapters — A2UI, AG-UI, whatever follows — from the component metadata schema rather than hand-building any one of them.
+
+### Where AG-UI lands in the seven needs
+
+Of the seven needs below, the Application MCP (Spec 067) covers 1–4 and 6. AG-UI gives concrete protocol shape to the two that remained open:
+
+- **Need 5, Renderer Bridge** — generate one AG-UI frontend tool definition per component from the metadata schema (the 064 mapping exercise found the property definitions already JSON-Schema-expressible). A web bridge receives the tool calls, runs the proposed tree through `validate_assembly`, and mounts Stemma Web Components. Web first; React and React Native become direct AG-UI-ecosystem targets if Spec 128 admits them, but the bridge is not gated on 128 — the TypeScript client runs under Web Components.
+- **Need 7, Feedback Loop** — Stemma behavioral contracts become the vocabulary of events back to the agent. A press on `Button-CTA` or a validation failure on `Input-Text-Email` is a tool result or a `Custom` event the agent reasons over next turn; the contracts are what make those events semantic rather than raw DOM noise. Spec 067 marked this out of scope for lack of a protocol shape; AG-UI supplies one.
+
+Two further fits are plausible and unproven: the Product MCP's screen state models (`get_screen_state_model`) as the typed shape for AG-UI shared state; and the Claude Agent SDK as the listed backend, which closes the loop "Application MCP for selection → Claude agent for reasoning → AG-UI tool calls for rendering → Stemma for pixels → contract events back" with no new runtime.
+
+### What survives the counter-argument
+
+- **No product yet wants an agent surface.** Without one, an end-to-end demo is a demo, and demos rot. This does not fold in; it is why the work is chartered with a trigger rather than scheduled.
+- **Convention risk.** The rendering convention we pick may not be what the ecosystem settles on. Absorbed by the schema→transformer pattern, but only partly: the bridge's *runtime* behaviour (mount, validate, emit) is ours to maintain either way.
+
+**Charter**: `.kiro/issues/2026-10-07-ag-ui-renderer-bridge-and-feedback-loop-charter.md` — owner Thurgood (formalization), designers Lina (bridge) and Leonardo (screen/state side); trigger: Spec 128's React binding merges, OR a consumer product requests an agent-driven surface, whichever first. No build work authorized.
 
 ---
 
@@ -65,11 +96,15 @@ Formal descriptions of the data each component expects — semantic contracts be
 ### 5. Renderer Bridge (per platform)
 For A2UI specifically: implementations that map incoming A2UI component descriptions to actual Stemma components on each platform. Web is the most tractable first target.
 
+*2026-10-07*: AG-UI's frontend-defined tools are the second concrete shape for this need — see § "AG-UI as the Transport Layer". Both shapes should be transformers over the same metadata schema.
+
 ### 6. Validation and Safety Layer
 Verifies that agent-composed UIs are accessible, coherent, and within system bounds. The equivalent of existing token validators but for compositions.
 
 ### 7. Feedback Loop Mechanism
 Structured signals from rendered UI interactions back to the agent — semantically meaningful actions per component type, grounded in Stemma behavioral contracts.
+
+*2026-10-07*: AG-UI's tool results and `Custom` events are the first concrete protocol shape for this need — see § "AG-UI as the Transport Layer". Spec 067 marked it out of scope for lack of one.
 
 **Recommended sequencing**: metadata schema → composition rules → data contracts → renderer bridge → validation → feedback loop.
 
@@ -241,6 +276,7 @@ Key steps as they apply to this work:
 3. **Component metadata schema design** — Define the schema structure with A2UI compatibility as validation target
 4. **Application MCP** — Build the callable component catalog server
 5. **A2UI renderer bridge** — First protocol-specific integration, validates schema expressiveness end-to-end
+6. **AG-UI adapter + feedback loop** *(added 2026-10-07, chartered not scheduled)* — generate frontend tool definitions from the metadata schema; web renderer bridge over `validate_assembly`; contract-grounded events back to the agent. Charter: `.kiro/issues/2026-10-07-ag-ui-renderer-bridge-and-feedback-loop-charter.md`
 
 ---
 
@@ -250,3 +286,7 @@ Key steps as they apply to this work:
 - `.kiro/steering/Process-Integration-Methodology.md` — Integration methodology (this work is the second implementation)
 - `.kiro/steering/DTCG-Integration-Guide.md` — DTCG format specification (first implementation of the pattern)
 - `.kiro/steering/Figma-Workflow-Guide.md` — Figma integration workflow (first integration transformer)
+- `.kiro/specs/064-component-metadata-schema/findings/a2ui-mapping-exercise.md` — A2UI v0.9 mapping (zero schema omissions; property definitions JSON-Schema-expressible)
+- `.kiro/specs/067-application-mcp/design-outline.md` — Application MCP (covers needs 1–4 and 6; D7 deferred A2UI to Tier 3)
+- `.kiro/issues/2026-10-07-ag-ui-renderer-bridge-and-feedback-loop-charter.md` — AG-UI charter (needs 5 and 7)
+- https://docs.ag-ui.com — AG-UI protocol docs (introduction, events, tools, architecture read 2026-10-07)
