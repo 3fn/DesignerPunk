@@ -225,3 +225,67 @@ No subsections
     expect(result[3].subsections).toHaveLength(0);
   });
 });
+
+/**
+ * Fence-awareness (indexer fix 1, 2026-10-13 — .kiro/issues/2026-10-13-find-docs-indexer-defects-from-stage1.md).
+ * Data point, not an assertion: when the fix landed, 15 served governance docs carried `##`/`###`
+ * lines inside fenced code blocks (e.g. the completion-documentation-guide's templates), and all of
+ * them were indexed as phantom sections.
+ */
+describe('extractHeadingStructure — fence-aware (15 served docs had headings inside fences at fix time)', () => {
+  it('ignores ## and ### lines inside a ``` fence, keeps headings outside it', () => {
+    const content = [
+      '## Document Templates',
+      '### Detailed Completion Document',
+      '```markdown',
+      '# Task N.M Completion: [Task Title]',
+      '## Artifacts Created',
+      '### Approach',
+      '```',
+      '## Naming Conventions',
+      '### Summary Documents',
+    ].join('\n');
+
+    expect(extractHeadingStructure(content)).toEqual([
+      { heading: 'Document Templates', level: 2, subsections: ['Detailed Completion Document'] },
+      { heading: 'Naming Conventions', level: 2, subsections: ['Summary Documents'] },
+    ]);
+  });
+
+  it('ignores headings inside a ~~~ fence and inside a longer (````) fence', () => {
+    const content = [
+      '## Real',
+      '~~~',
+      '## Fake Tilde',
+      '~~~',
+      '````md',
+      '## Fake Long',
+      '```',
+      '## Still Fake (a shorter fence does not close a longer one)',
+      '````',
+      '### Real Sub',
+    ].join('\n');
+
+    expect(extractHeadingStructure(content)).toEqual([{ heading: 'Real', level: 2, subsections: ['Real Sub'] }]);
+  });
+
+  it('a fence of the other character does not close the open fence', () => {
+    const content = ['```', '~~~', '## Fake', '```', '## Real'].join('\n');
+    expect(extractHeadingStructure(content).map((s) => s.heading)).toEqual(['Real']);
+  });
+
+  it('an inline triple-backtick span with backticks after it does not open a fence', () => {
+    const content = ['```inline``` text', '## Real After Inline'].join('\n');
+    expect(extractHeadingStructure(content).map((s) => s.heading)).toEqual(['Real After Inline']);
+  });
+
+  it('accepts up to three spaces of fence indentation', () => {
+    const content = ['   ```', '## Fake Indented', '   ```', '## Real'].join('\n');
+    expect(extractHeadingStructure(content).map((s) => s.heading)).toEqual(['Real']);
+  });
+
+  it('an unclosed fence hides everything after it (CommonMark: runs to end of document)', () => {
+    const content = ['## Before', '```', '## Inside Unclosed'].join('\n');
+    expect(extractHeadingStructure(content).map((s) => s.heading)).toEqual(['Before']);
+  });
+});
