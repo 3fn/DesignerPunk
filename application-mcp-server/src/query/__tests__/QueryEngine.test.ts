@@ -264,6 +264,34 @@ describe('ComponentQueryEngine', () => {
     });
   });
 
+  describe('declared internal-only audit (defect record 2026-10-07 item 6)', () => {
+    // The audit of 2026-10-12: every component referenced under some `composition.internal`
+    // was reviewed; only these are never authored by product code (Icon-Base, Container-Base,
+    // Button-Icon, Input-Radio-Base are composed internally AND used directly — not internal-only).
+    const DECLARED_INTERNAL_ONLY = [
+      'Nav-Header-Base',
+      'Progress-Indicator-Connector-Base',
+      'Progress-Indicator-Label-Base',
+      'Progress-Indicator-Node-Base',
+    ];
+
+    it('exactly the audited components declare internal_only, and it surfaces as viability', () => {
+      const rows = engine.findComponents({}).data!;
+      const flagged = rows.filter(r => r.viability.internalOnly).map(r => r.name).sort();
+      expect(flagged).toEqual(DECLARED_INTERNAL_ONLY);
+    });
+
+    it('every internal-only component is composed or inherited by another component', () => {
+      const index = Array.from((engine as any).indexer.getIndex().values()) as any[];
+      for (const name of DECLARED_INTERNAL_ONLY) {
+        const usedBy = index.filter(m =>
+          (m.composition?.internal ?? []).some((c: { component: string }) => c.component === name) ||
+          m.contracts.inheritsFrom === name);
+        expect(usedBy.length).toBeGreaterThan(0);
+      }
+    });
+  });
+
   describe('progressive disclosure', () => {
     it('catalog → summary → full returns increasing detail', () => {
       const catalog = engine.getCatalog();
