@@ -3,7 +3,7 @@
 **Date**: 2026-10-12 (skeleton at pre-registration; results the same day)
 **Charter**: `.kiro/issues/2026-10-12-discovery-study-stage1-docs-charter.md`; design record `.kiro/issues/2026-10-07-discovery-shadow-study-charter.md`
 **Owner**: Thurgood. **Independent check of the miss table and of commit order**: orchestrator (Thurgood's declared conflict: he owns the docs rubric a null result vindicates).
-**Status**: **RESULTS RECORDED (commit (3)) — outcome PROVISIONAL.** Arm A ran at the pre-registration commit (2). Miss buckets await owner rulings, and the gate outcome awaits one class ruling (§ 6.8).
+**Status**: **STAGE 1 CLOSED — O1 (Peter's Reading A ruling, 2026-10-13). Stage 2 docs side: NOT RUN.** All 13 miss buckets are owner-ruled, with no key errors (§ 6.8–6.9). Follow-ups go to their owners (§ 4, § 7). Close record: § 9.
 
 ---
 
@@ -41,16 +41,17 @@ Squash-merge flattens this order on `main`; the orchestrator's PR-body note reco
 
 Three seat-labelled "probably undocumented" queries are keyed positive by evidence (K3/K6): KE-N1, DA-N1, ST-N2. Four seat-labelled "documented" queries are keyed strict-none: SP-09, KE-09, DA-10 (screen-file locations), ST-10 (claims taxonomy, not served).
 
-## 4. Discoveries made while keying — ROUTED, not fixed (no corpus edit in the study PR, charter § 3)
+## 4. Discoveries — ROUTED, not fixed (no corpus edit in the study PR, charter § 3)
 
 Each item goes out as an explicit message to the named owner(s) once this PR merges. Nothing below has been fixed.
 
 | # | Discovery | Evidence | Route (Civitas resolution path) | Owner(s) |
 |---|---|---|---|---|
-| D-1 | **Cross-domain contradiction on `.dp`** (DA-01, dropped K5c) | `rosetta-system-architecture` § "Token Consumption Rule": tokens are pre-unitized (Android `Dp`) and `.dp` is never appended. `platform-implementation-guidelines` § "Android Token Usage: The `.dp` Pattern": `DesignTokens` values are `Float`, and `.dp` is required for an explicitly typed `Dp`. | Cross-domain: Thurgood flags; both owners review; Peter arbitrates if they disagree. A component-development-guide example (`spaceInsetNormal.dp`, ~L626/L964) should be read in the same pass. | Ada (Rosetta doc) + Lina (PIG, CDG) |
-| D-2 | **Product-token guidance duplicated across two docs** (SP-02, SP-03, dropped K5a) | `web-authoring-standards` § "Product Token Authoring (Sparky)" (Naming Schema, Canonical Categories, Authoring Rules) and `product-token-governance` (Naming Conventions, Authoring Workflow, Value Governance) both carry substantive rules. WAS says "For full governance: See Product-Token-Governance.md". | Content consistency: Thurgood flags; the owners judge whether this is intentional web-specific abstraction or drift. Cross-domain if the two docs have different owners. | WAS owner (Lina / Sparky surface) + PTG owner (unrecorded) — orchestrator to confirm |
-| D-3 | **Unanswered question plus a routing-cue mismatch: "where do product-screen files live?"** (SP-09, KE-09, DA-10; keyed strict-none) | Three seats independently asked; no served doc answers. Each seat's charter routes "file-organization rules" to `process-file-organization`, which covers this repo's metadata-driven layout. A run (§ 6.4) put `process-file-organization` at rank 1 (`partial`) for SP-09 and DA-10: the cue sends seats to a doc that does not answer. | (a) The doc gap goes to the product-structure owner. (b) The cue wording lives in agent charters (`canonical/agents/**`, governance law) and changes only by ballot; Thurgood drafts. | Leonardo (product structure) for (a); Thurgood (ballot draft) + Peter for (b) |
-| D-4 | **Known index defect touching a key** (ST-05) | ST-05's answer is an H4 heading; H4 is not indexed (`.kiro/issues/2026-10-12-docs-mcp-does-not-index-h4.md`). ST-05 still PASSED (rank 1 via the doc's other headings). | Fold into the matcher issue in § 6.9. | Thurgood |
+| D-1 | **Cross-domain contradiction on `.dp`** (DA-01, dropped K5c) | `rosetta-system-architecture` § "Token Consumption Rule": tokens are pre-unitized (Android `Dp`) and `.dp` is never appended. `platform-implementation-guidelines` § "Android Token Usage: The `.dp` Pattern": `DesignTokens` values are `Float`, and `.dp` is required for an explicitly typed `Dp`. A `component-development-guide` example (`spaceInsetNormal.dp`, ~L626/L964) belongs in the same read. | Cross-domain: Thurgood flags; both owners review; Peter arbitrates if they disagree. | **Ada + Lina** |
+| D-2 | **Product-token guidance duplicated across two docs** (SP-02, SP-03, dropped K5a) | `web-authoring-standards` § "Product Token Authoring (Sparky)" (Naming Schema, Canonical Categories, Authoring Rules) and `product-token-governance` (Naming Conventions, Authoring Workflow, Value Governance) both carry substantive rules. WAS says "For full governance: See Product-Token-Governance.md". | Content consistency is the steward's to flag and route. The docs' domain owners judge whether this is intentional web-specific abstraction or drift; Thurgood does not resolve it. | **Thurgood** (owns the item; CONFIRMED) → the two docs' domain owners adjudicate |
+| D-3 | **Unanswered question plus a routing-cue mismatch: "where do product-screen files live?"** (SP-09, KE-09, DA-10; keyed strict-none) | Three seats independently asked; no served doc answers. Each seat's charter routes "file-organization rules" to `process-file-organization`, which covers this repo's metadata-driven layout. The run put that doc at rank 1 (`partial`) for SP-09 and DA-10. | (a) The doc gap goes to the consumer front door. (b) The cue wording lives in agent charters (`canonical/agents/**`, governance law) and changes only by ballot. | **Leonardo** for (a) (CONFIRMED: the consumer front door); **Thurgood** drafts the ballot for (b), Peter ratifies |
+| D-4 | **Known index defect touching a key** (ST-05) | ST-05's answer is an H4 heading; H4 is not indexed. ST-05 still PASSED (rank 1 via the doc's other headings). | Folded into the indexer issue (§ 6.9). | Thurgood |
+| D-5 | **Content debt: Android "role heading"** (raised by Lina while ruling DA-11) | `semantics { heading() }` is documented nowhere in the served corpus. | Owner's content-debt queue. | **Lina** |
 
 ## 5. Commands
 
@@ -169,27 +170,27 @@ Summaries (positives: n / R@1 / R@2 / tieredPass; negatives: n / correct / confi
 Miss worklist (tieredPass failed — bucket per charter § 1f): SP-08, KE-10, KE-N1, DA-02, DA-05, DA-07, DA-09, DA-11, DA-N1, ST-02, ST-04, ST-09, ST-N2
 ```
 
-### 6.6 Miss table: 13 positives failing A's own rule. Buckets are PROPOSED (Thurgood); each owner rules
+### 6.6 Miss table: 13 positives failing A's own rule. Buckets FINAL (each owner ruled, 2026-10-13; every ruling agreed with the proposal; rulings in § 6.9)
 
 Evidence comes from the exploratory analysis in § 6.7: whether the key ranks ≤ 2 when its answering heading is indexed, or when one alias taken verbatim from the doc's own text (never from the query) is added.
 
-| Id | Rank / tier | Key doc | Cause found | Proposed bucket | Owner who rules |
+| Id | Rank / tier | Key doc | Cause found | Bucket (proposed = ruled) | Owner (ruled) |
 |---|---|---|---|---|---|
-| SP-08 | 3 / partial | completion-documentation-guide | Answer is an **H3** ("The subtask completion doc …"); find_docs indexes H2 only | matcher/index defect (also heading-alias-fixable: → 1) | Thurgood |
-| DA-09 | 3 / partial | completion-documentation-guide | same H3 | matcher/index defect (heading-alias → 1) | Thurgood |
-| ST-04 | 3 / partial | completion-documentation-guide | same H3 | matcher/index defect (heading-alias → 1) | Thurgood |
-| ST-02 | 3 / partial | completion-documentation-guide | Answer is an H3 ("The delegated-tier line — unconditional") | matcher/index defect (heading-alias → 1) | Thurgood |
-| ST-09 | absent | completion-documentation-guide | Answer is an H3 ("CI provenance — …"); no query token in any indexed field | matcher/index defect (heading-alias → 1, strong) | Thurgood |
-| DA-07 | 6 / partial | product-handoff-protocol | Answer is an H3 ("Tier 2: Implementation Reports"); generic "format / tier / 2" strongs outrank it | matcher/index defect (heading-alias → 2) | PHP owner (unrecorded; candidate Stacy) — orchestrator to confirm |
-| KE-10 | absent | designerpunk-integration-guide | Answer is an H3 ("6. Generate Tokens"); query "ios" can never match doc "iOS" (tokenizer, § 6.9) | matcher/index defect (heading-alias → 2) | DIG owner (unrecorded) — orchestrator to confirm |
-| DA-02 | 24 / partial | component-development-guide | Query vocabulary (theme-varying, composable) reaches only the body; the H3 heading alone does not fix it (→ 24) | **alias/metadata-fixable** (content alias "Theme-varying tokens — read from CompositionLocal" → 1, strong) | **Lina** |
-| DA-11 | absent | platform-implementation-guidelines | TalkBack / contentDescription sit only in YAML body blocks; headings do not fix it | **alias/metadata-fixable** (content alias → 1) | **Lina** |
-| DA-05 | 3 / partial | test-development-standards | TDS matches 2 tokens (`partial`); test-behavioral-contract-validation and product-token-governance match 3 (`strong`). No answering sub-heading to test | **alias/metadata-fixable (unverified)** | Thurgood |
-| KE-N1 | 7 / partial | designerpunk-integration-guide | K6 key: the answer is a status statement; no query token (xcodebuild, simulator, runbook) appears in the doc; heading and sentence aliases fail (→ 7) | **structural** | DIG owner — orchestrator to confirm |
-| DA-N1 | absent | designerpunk-integration-guide | K6 key, as KE-N1 (gradle, coordinates absent); aliases fail (→ 24) | **structural** | DIG owner — orchestrator to confirm |
-| ST-N2 | absent | completion-documentation-guide | K6 key: the answer is "The instrument's honest reach"; heading and sentence aliases fail | **structural** | Thurgood |
+| SP-08 | 3 / partial | completion-documentation-guide | Answer is an **H3** ("The subtask completion doc …"); find_docs indexes H2 only | matcher/index defect (also heading-alias-fixable: → 1) | Thurgood (ruled) |
+| DA-09 | 3 / partial | completion-documentation-guide | same H3 | matcher/index defect (heading-alias → 1) | Thurgood (ruled) |
+| ST-04 | 3 / partial | completion-documentation-guide | same H3 | matcher/index defect (heading-alias → 1) | Thurgood (ruled) |
+| ST-02 | 3 / partial | completion-documentation-guide | Answer is an H3 ("The delegated-tier line — unconditional") | matcher/index defect (heading-alias → 1) | Thurgood (ruled) |
+| ST-09 | absent | completion-documentation-guide | Answer is an H3 ("CI provenance — …"); no query token in any indexed field | matcher/index defect (heading-alias → 1, strong) | Thurgood (ruled) |
+| DA-07 | 6 / partial | product-handoff-protocol | Answer is an H3 ("Tier 2: Implementation Reports"); generic "format / tier / 2" strongs outrank it | matcher/index defect (heading-alias → 2) | Leonardo (ruled) |
+| KE-10 | absent | designerpunk-integration-guide | Two matcher causes (Leonardo's correction): the generate half of the answer is an **H3** ("6. Generate Tokens"), and the iOS half is an **H4** ("iOS and Android (not supported for onboarding in 15.0.0)"), so an H2+H3 fix still drops it. Separately, query "ios" can never match doc "iOS" (tokenizer, § 6.9) | matcher/index defect (the "Generate Tokens" alias would also fix it, but would cover a matcher fault — not booked as metadata) | Leonardo (ruled) |
+| DA-02 | 24 / partial | component-development-guide | Query vocabulary (theme-varying, composable) reaches only the body; the H3 heading alone does not fix it (→ 24) | **alias/metadata-fixable** (content alias "Theme-varying tokens — read from CompositionLocal" → 1, strong) | Lina (ruled) |
+| DA-11 | absent | platform-implementation-guidelines | TalkBack / contentDescription sit only in YAML body blocks; headings do not fix it | **alias/metadata-fixable**. The content alias Thurgood tested → 1; Lina's chosen alias, "TalkBack semantics", is UNTESTED (§ 7) | Lina (ruled) |
+| DA-05 | 3 / partial | test-development-standards | TDS matches 2 tokens (`partial`); test-behavioral-contract-validation and product-token-governance match 3 (`strong`). No answering sub-heading to test | **alias/metadata-fixable (unverified)** | Thurgood (ruled) |
+| KE-N1 | 7 / partial | designerpunk-integration-guide | K6 key: the answer is a status statement; no query token (xcodebuild, simulator, runbook) appears in the doc; heading and sentence aliases fail (→ 7) | **structural** | Leonardo (ruled) |
+| DA-N1 | absent | designerpunk-integration-guide | K6 key, as KE-N1. "Gradle module path" IS in the guide's body (§ "Native Platform Sync — Target Model (M0b)"), but body text is not indexed by design (P3), so this is not a defect; the aliases tested fail (→ 24) | **structural** | Leonardo (ruled) |
+| ST-N2 | absent | completion-documentation-guide | K6 key: the answer is "The instrument's honest reach"; heading and sentence aliases fail | **structural** | Thurgood (ruled) |
 
-**Thurgood rules on 7 of the 13 misses and also owns the matcher. That is the declared conflict; the orchestrator checks this table.**
+**Thurgood ruled on 7 of the 13 misses and also owns the matcher. That is the declared conflict: the orchestrator checked this table, and Peter ruled the class question (§ 6.8).**
 
 ### 6.7 Exploratory analysis — NOT pre-registered; run after the results, in scratch; nothing fed back into keys or fixtures
 
@@ -200,40 +201,66 @@ Evidence comes from the exploratory analysis in § 6.7: whether the key ranks �
   - **KE-N1's counterfactual win is spurious**: it matched "UI Tree Convention", not the answer.
   - **Conclusion**: the H3 omission is a real cause, but indexing H3 at full high-signal weight is NOT a free fix. It is a matcher design question with its own tuning.
 - **Alias-fixability test**: one alias per miss, taken verbatim from the answering doc's own heading or sentence.
-  - Fixes 9: SP-08, KE-10, DA-02, DA-07, DA-09, DA-11, ST-02, ST-04, ST-09.
+  - Fixes 9: SP-08, KE-10, DA-02, DA-07, DA-09, DA-11, ST-02, ST-04, ST-09. *(Post-ruling notes: for DA-11 this was Thurgood's alias, not the one Lina chose. For KE-10, Leonardo ruled the alias would cover a matcher fault.)*
   - Fails 3: KE-N1, DA-N1, ST-N2.
   - Untested 1: DA-05.
 
-### 6.8 Volume gate and outcome — **PROVISIONAL, pending owner rulings and one class ruling**
+### 6.8 Volume gate and outcome — **FINAL**
 
-Gate-counted misses = fixable + structural (charter § 5). The outcome **turns on one classification**: whether the 7 H3-caused misses are "matcher/index defects" (not counted) or "alias/metadata-fixable" (counted).
+**Ruling (Peter, 2026-10-13): Reading A, by cause, with the filed indexer issue as the fix path (the class option).** Record: study charter § 6 "STAGE 1 OUTCOME" and `.kiro/issues/2026-10-13-find-docs-indexer-defects-from-stage1.md`, both carried by PR #314 (trigger FIRED by this ruling).
 
-| Reading | Matcher defect (not counted) | Fixable | Structural | Gate-counted | Branch that fires |
-|---|---|---|---|---|---|
-| **A — by cause** (the charter's letter; the rubric says "section headings", and the H2-only extraction predates the rubric, 2025-12-16) | 7 | 3 | 3 | 6 (> 3) | **O1**: ≤ 3 structural AND ≤ 8 fixable → hand-fix, findings, close; Stage 2 not run |
-| **B — by available fix** (each H3 miss IS fixed by its heading as an alias, and the matcher fix regresses § 6.7) | 0 | 10 | 3 | 13 | **O2**: ≥ 9 fixable AND 10/13 = 77 % ≥ 70 % → findings recommend chartering an offline alias-proposal tool; Peter rules whether Stage 2 runs |
+| Bucket (owner-ruled) | Count | Ids | Gate-counted? |
+|---|---|---|---|
+| Matcher/index defect | **7** | SP-08, DA-09, ST-02, ST-04, ST-09, DA-07, KE-10 | no (charter § 1f) — fix path: the indexer issue, landing AFTER this PR |
+| Alias/metadata-fixable | **3** | DA-02, DA-11, DA-05 | yes |
+| Structural | **3** | KE-N1, DA-N1, ST-N2 | yes |
+| **Gate-counted** | **6** | | > 3, so the gate does not stop the study; **O1 fires** (≤ 3 structural AND ≤ 8 fixable) |
 
-O3 does not fire under either reading (3 structural < 4).
+- **Outcome: O1** — hand-fix the 3 fixable misses through their owners (§ 7), record findings, close.
+- **Stage 2 on the docs side is CLOSED: NOT RUN.** O2 and O3 do not fire.
+- The components half of the Stage 2 question stays with Leonardo's Settings ledger (study charter, D2) and is not decided here.
+- **The surviving counter-argument, kept on record:** the indexer fix is not free (§ 6.7: −4 Q2, −1 oracle, +1 confident-wrong). Until it lands and is tuned, users still hit the 7 misses this outcome does not count. The indexer issue owns that risk, and its fix must be measured on the oracle plus a fresh query set, never on Q2.
 
-**Who should rule the class question: Peter, not Thurgood.** Thurgood owns both the matcher and five of the seven affected docs, so either answer from him is self-interested. Reading A shrinks the gate; reading B attributes his indexer's gap to doc metadata.
+### 6.9 Owner rulings, answer-key errors, key-rule findings
 
-**Thurgood's recommendation, labelled as his**: reading A, with the H3 question filed as its own matcher issue and measured on the oracle plus a fresh query set (never Q2, which these results have now spent). Seven of the misses share one cause, and seeding seven aliases would paper over an indexer gap.
+**Owner bucket rulings (2026-10-13, relayed by the orchestrator; all agree with the proposals; no key errors raised):**
+- **Lina**
+  - **DA-02**: alias-fixable; accepts the alias "Theme-varying tokens — read from CompositionLocal" (verbatim, `component-development-guide` L997); key correct. *Note*: for a product consumer, `designerpunk-integration-guide` L386 adds that 15.0.0 does not emit `LocalDPTheme` for consumers, so an acceptable set of both docs would have been the better key. It stays as frozen (keys are never edited after (2)).
+  - **DA-11**: alias-fixable; **her alias is "TalkBack semantics"** (from the doc's own § 4 table). That differs from the alias Thurgood tested, so it is **UNTESTED** and is not counted as a verified fix until a re-run (§ 7, not in this PR). Key defensible. "role heading" (`semantics { heading() }`) is documented nowhere; that is content debt Lina owns, not a key error (§ 4 D-5).
+- **Leonardo**
+  - **KE-10**: tokenizer/rank defect with two causes: the H3 drop, and "ios" can never match "iOS". The "Generate Tokens" alias would also fix it but would cover a matcher fault, so it is not booked as metadata. **Correction to § 6.6** (applied there): the iOS half of the answer is an **H4**, so an H2+H3 fix still drops it. Key correct.
+  - **KE-N1**: structural; key correct (strict-none would leave the consumer guessing).
+  - **DA-N1**: structural under current design. "Gradle module path" is in the guide's body (§ "Native Platform Sync — Target Model (M0b)"); body text is not indexed by design (P3), so this is not a defect. Key correct.
+  - **DA-07**: tokenizer/rank defect; the answer is the H3 "Tier 2: Implementation Reports" (`Product-Handoff-Protocol.md` L64). Key correct.
+- **Thurgood**: SP-08, DA-09, ST-02, ST-04, ST-09 are matcher defects; DA-05 is alias-fixable (unverified); ST-N2 is structural. All stand as proposed. The declared conflict was checked by the orchestrator, and the class question was ruled by Peter.
 
-**Counter-argument that survives**: the matcher fix is not free (§ 6.7: −4 Q2, −1 oracle, +1 confident-wrong). Until it exists and is tuned, the only working remedy for these seven is metadata. Reading A therefore books as "not counted" misses that today's users still hit.
+**Answer-key errors found after (2): none.**
 
-### 6.9 Answer-key errors and key-rule findings
+**K6 finding (not a key error)**: the 3 structural misses are exactly the 3 positives keyed under K6. A "how do I do X" phrasing shares no vocabulary with a "not supported in this version" statement. This is the one class a semantic arm could plausibly reach, and at 3 queries it is below the O3 bound.
 
-- **Answer-key errors found after (2): none so far.** Owners may still raise them while ruling buckets; any raised are counted and excluded here, never edited.
-- **K6 finding (not a key error)**: the 3 structural misses are exactly the 3 positives keyed under K6 (an answer that states the capability is unsupported). A "how do I do X" phrasing shares no vocabulary with a "not supported in this version" statement. Status answers are lexically unreachable by design. This is the one class where a semantic arm could plausibly help, and it is 3 queries — below the O3 bound.
-- **Matcher defects for a separate Thurgood issue** (charter § 1f; not fixed here, not gate-counted). `.kiro/issues/` is outside Thurgood's write scope, so the orchestrator files it or grants the path:
-  1. find_docs `sections` = H2 headings only (`DocumentIndexer.ts` maps `outline.map(s => s.heading)`; the H3 `subsections` are parsed and dropped). The rubric's high-signal field is "section headings", with no level restriction.
-  2. The heading extractor is fence-unaware: `##` lines inside template code blocks are indexed as sections (completion-documentation-guide lists "Found later", "Artifacts Created", "What Was Done" …).
-  3. Tokenizer asymmetry: the camelCase split turns doc text "iOS" into `i` + `os`, while a query's lowercase "ios" stays one token, so "ios" can never match "iOS". Spurious `i` / `os` hits also appear (ST-N2's top 3).
+**Matcher defects → `.kiro/issues/2026-10-13-find-docs-indexer-defects-from-stage1.md`** (Thurgood owner; filed in PR #314). The fixing PR needs a grant for `mcp-server/src/**` and lands after this study PR.
+  1. find_docs `sections` = H2 headings only (`DocumentIndexer.ts` `outline.map(s => s.heading)`; the H3 subsections are parsed and dropped). H4 is not parsed at all (the existing H4 issue), which is why KE-10's iOS half stays unreachable even after an H3 fix.
+  2. The heading extractor is fence-unaware: `##` lines inside template code blocks are indexed as sections.
+  3. Tokenizer asymmetry: doc text "iOS" becomes `i` + `os`, while a query's lowercase "ios" stays one token.
 
-## 7. Leonardo addendum (Q2-L)
+## 7. After close: the O1 hand-fixes and the Leonardo addendum
 
-_Pending: his Settings ledger must close first._ When it does: same sealed prompt (plus one added line allowing ~15–20 queries, recorded in the raw file), his block pasted verbatim, keyed in a separate fixture, and pre-registered by its own commit (SHA recorded here). It then runs at its own SHA, with any hand-fix that landed in between listed beside it. If the addendum's gate-counted misses, added to the four-seat count, would change the § 5 outcome, this section records "outcome re-opened" (dated) and Peter rules. The runner's raw-line accounting check must then include Q2-L.
+**O1 hand-fixes.** Each doc's owner makes the fix in a follow-up PR, never in this one. Aliases live in `governance/**` frontmatter, so each lands as a Peter-approved PR under the ballot-measure model. Once landed, the fixed Q2 items are spent as evaluation data (charter § 3).
+
+| Id | Doc | Owner | Alias | Verified? |
+|---|---|---|---|---|
+| DA-02 | `component-development-guide` | Lina | "Theme-varying tokens — read from CompositionLocal" (accepted) | yes: tested at → 1 / strong (§ 6.7) |
+| DA-11 | `platform-implementation-guidelines` | Lina | "TalkBack semantics" (her choice) | **NO: re-run owed** before it counts as a verified fix |
+| DA-05 | `test-development-standards` | Thurgood | not yet chosen | **NO: re-run owed** |
+
+The re-runs use the Stage 1 runner at the fixing PR's head, are reported in that PR, and change nothing in this findings doc's frozen results.
+
+**Leonardo addendum (Q2-L): still pending; his Settings ledger must close first.** When it does: the same sealed prompt (plus one added line allowing ~15–20 queries, recorded in the raw file), his block pasted verbatim, keyed in a separate fixture, and pre-registered by its own commit (SHA recorded here). It then runs at its own SHA, with any hand-fix or indexer fix that landed in between listed beside it. If the addendum's gate-counted misses, added to the four-seat count of 6, would change the § 5 outcome, this section records "outcome re-opened" (dated) and Peter rules. The runner's raw-line accounting check must then include Q2-L.
 
 ## 8. Prompt-iteration log (Stage 2 only)
 
 _Empty. Used only if Stage 2 runs. Iterations against the calibration-only set are capped at 5, and each is logged here._
+
+## 9. Stage 1 CLOSE
+
+**Closed 2026-10-13 — O1 (Peter's Reading A ruling). Stage 2 docs side: NOT RUN, O1.** SHAs on `chore/discovery-study-stage1`: (1) raw queries `5f8b668b5`; (2) pre-registration `08fed8984`; (3) results `d94adb623`; (4) the commit carrying this line (final owner rulings and close). Still open after close: the 3 hand-fixes (§ 7; two re-runs owed), the indexer issue (§ 6.9), the routed discoveries D-1–D-5 (§ 4), and Leonardo's Q2-L addendum (§ 7).
