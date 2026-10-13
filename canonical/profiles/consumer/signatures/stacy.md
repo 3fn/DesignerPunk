@@ -297,11 +297,19 @@ No consumer counterpart, confirmed: this entry names this repo's own command (`r
 ## `#frontmatter:knowledgeBases[spec-summaries]`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-10-12
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `knowledgeBases[spec-summaries]` (re-pointed)
 canonicalHash: sha256:01a07255b7a58397accf345c80ca08042755cd10b81e688a5c49a64baa572212
-renderedHash: sha256:1e34755afa443056ebaede347a929648371ef00338f0a6d2418eec2311ec19f0
+renderedHash: sha256:f262fe273f3f18f7565406721cb2a3c34d3353a73370a0fc36029a5905390b18
 verdict: assent — surviving 0/0
+
+**Re-signed 2026-10-12** (prior signature: assent 0/0, 2026-09-29, against rendered `sha256:1e34755a…`; the canonical hash is unchanged, `sha256:01a07255…`). The row is stale because the Kiro target now renders glob-only knowledge bases in the prompt (Spec 123 Task 29.3, Peter's ruling (A) on the 29.0 fork), so this entry gained a second rendered line. The canonical entry, the overlay and the disposition did not change.
+- **Judged against** the rendered lines, read in this session from `canonical/_consumer-output/` at this revision:
+  - `cc/.claude/agents/stacy.md` L794: `- spec-summaries: search these paths with Grep/Glob: specs/*/task-*-summary.md` (unchanged);
+  - `kiro/.kiro/agents/stacy-prompt.md` L404 (new): `- spec-summaries: search these paths: specs/*/task-*-summary.md`.
+- **Assent stands, on the same ground as 2026-09-29.** The removal (`docs/specs/**`, `subtraction-4`) is applied in both lines; neither contains it. The path states the summary location a consumer's task-completion protocol names (`specs/[spec]/task-N-summary.md`, `canonical/_consumer-output/cc/.claude/identity/designerpunk-task-completion-protocol.md` L33, L41), so the new Kiro line is as true as the cc line. The Kiro line omits "with Grep/Glob", which is right: Kiro names no search tool. No operative items attach to this entry, so surviving stays 0/0.
+- **The steward leg** (`.kiro/agents/stacy-prompt.md` L431: `docs/specs/**`) is DesignerPunk's own repo, outside this row. It is stated only because it changed in the same regeneration.
+- **Disclosure (Peter's trigger-(d) sample):** this is a Stacy-signed row moved by the cycle-2 fix, and the fix's verdict is also mine. Peter samples this act, not me. It is the only row on the branch's stale list after 29.3 (taken with `runFreshnessSweep`: 1 finding), so ceiling limb (iii) did not fire.
 
 **Re-signed 2026-09-29, in the re-sign run** (prior signature: assent 0). Assent to the re-pointed entry: `docs/specs/**` → `specs/*/task-*-summary.md`. That is the summary location TCP's tier selection now names.
 
