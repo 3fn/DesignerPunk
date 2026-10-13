@@ -962,7 +962,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 ### UNIT 3 — Onboarding
 
-- [ ] 19. The install doc, and the Integration Guide reconciled into it
+- [x] 19. The install doc, and the Integration Guide reconciled into it
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Thurgood (Opus)
   **Traces**: Reqs 15.1–15.9, 15B.1–15B.9, 22.2, 4.5 · design C23
