@@ -45,8 +45,14 @@ Onboarding's experience pattern lists 31 components and would hand Leonardo near
 ## 7. Cost (Leonardo)
 Scratch-consumer birth (pack, install, init, MCP wiring per the install guide) ≈ 0.5 session; product scaffolding inside it ≈ 0.25. Screen spec ≈ 1–1.5 sessions — novel work with no prior screens, so Impeccable's full gate applies: **two Peter stops (brief, then direction)**. Ledger overhead ≈ 0.25. Total ≈ 2–2.5 sessions; over that only with full brand configuration or install friction (which routes to 123 U3). Lina's judging pass ≈ 0.25; Thurgood's conformance read ≈ 0.25.
 
-## 8. Surviving caveats
+## 8b. Surviving caveats
 One screen yields perhaps 5–15 keyword calls: the right KIND of evidence, a thin BASIS. Read the result as directional, not conclusive (Leonardo; Thurgood agrees the clause-1 count will be small and the 4-of-7 reproductions remain the main evidence). F2-docs (charter the docs-side Stage 1 now?) remains UNRULED and is unaffected by this charter.
+
+## 8. Leonardo's read of the consumer-born path (2026-10-12, read-only) — no objection; three binding conditions
+1. **Pack from a BUILT tree**: run the full build at `main` ≥ `dcd337dcf` before `npm pack` — `dist/mcp/*.js` is built output and an unbuilt pack ships nothing to serve.
+2. **Launch the session FROM the consumer folder**: the shipped MCP config template (`src/cli/templates/mcp-config.json.template`) uses paths relative to the working folder (`./product`, `./node_modules/@3fn/core/...`); a session started anywhere else serves nothing. The ledger is written to its absolute path back in this repo.
+3. **Record which Leonardo ran**: the consumer gets init's generated agent layer, whose Leonardo prompt may not match this repo's; the ledger header names the prompt that was loaded.
+Checked on main: the consumer runs the same product-mcp-server code, so `product/experience-map/pages/*.yaml` indexes as in the fixtures; component roots = package + consumer, and the package ships `component-meta.yaml`, so all 34 components are served; `product/overview.yaml` arrives as `[CUSTOMIZE]` placeholders — filling it is scaffolding (logged, not counted as discovery); whether init creates `product/experience-map/` is unchecked — create if missing. Cost confirmed ≈ 2–2.5 sessions (birth + wiring 0.25–0.5; spec incl. two Impeccable stops 1–1.5; ledger 0.25).
 
 ## 8a. Execution brief (for Leonardo, in a fresh session on `main`; read-only ack requested now)
 1. Do not start before this charter merges (it activates the ledger grant) and the session serves `main` ≥ `dcd337dcf`.
