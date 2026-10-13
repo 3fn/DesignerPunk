@@ -75,3 +75,51 @@ N1's bite recipe (a changed value) does not exercise this path.
   - **What survives**: a throw also stops this repo's `npm run build` on a token-source error. That is the intended outcome, but it changes this repo's build behaviour, and Thurgood should know before the PR.
 
 **No fix is authorized by this record.**
+
+---
+
+## Addendum (2026-10-12): exit code and index state verified by run; a false comment in the same function
+
+### Verified by run (Ada, 2026-10-03)
+
+**Setup**: a scratch directory outside the repository:
+- a copy of `src/tokens/` and `src/types/`, with `src/tokens/component/` removed;
+- `color.action.navigation` renamed in the copied `semantic/ColorTokens.ts`. That is a key DesignerPunk's built-in dark override map names (`src/tokens/themes/dark/SemanticOverrides.ts:183`);
+- a minimal `designerpunk.config.ts` (`tokenSource: './src/tokens'`, `output: './dist/tokens'`).
+
+**Command**: `tsx <repo>/src/cli/designerpunk.ts generate`, run from that directory against the repo's source at the time (`task/123-u3-onboarding`, local HEAD `0e1ca0553`). The repo tree was unchanged after the run, and the scratch directory was then deleted.
+
+**Observed, in order**:
+1. `✅ Semantic token validation passed`
+2. `❌ Semantic override validation failed:`
+3. `Orphaned override key "color.action.navigation": no matching semantic token in registry`
+4. `⚠️  Token generation aborted due to override validation errors.`
+5. `✅ Token index generated at …/token-index`
+6. `✅ System tokens generated`
+7. **Exit code 0.**
+
+**Files after the run**:
+- **No token files written.** `dist/tokens/` was created and left empty.
+- **`token-index/` was written** (`components.yaml`, `meta.json`, `primitives.yaml`, `semantics.yaml`), with **0** semantic tokens marked `themeVarying: true`. The repository's own committed `token-index/semantics.yaml` has 9 at the same time. An aborted run therefore replaces a good index with one that has lost every theme-varying flag. The application MCP serves that index, and product-token generation reads it.
+
+This resolves both items under "Unverified" above: the exit code, and what `generateTokenIndex` writes from the empty result.
+
+### The second caller (verified by reading on `main`)
+
+`scripts/generate-platform-tokens.ts:83` calls `generateTokenFiles(tokenInput, config)` and continues to component-token generation on the same non-throwing return. This is this repository's own `generate:platform-tokens`, which `prebuild` runs, so it has the same blindness. Not run.
+
+### A false comment in the same function (verified by reading on `main`)
+
+`src/generators/generateTokenFiles.ts:17-18` reads: "Theme overrides remain as static imports — they resolve from the config's themes array, independent of tokenSource." That is false:
+- the three override maps are static imports from the package (`:19-21`);
+- the function never reads `config.themes`; the only read in `generate` is the banner line in `src/cli/designerpunk.ts`.
+
+The comment matters because a reader of this function would conclude that a registered theme is applied. The fix PR for this record touches the same lines, so it should correct the comment. Suggested text: `// Theme overrides are static imports of DesignerPunk's built-in maps; config.themes is not read here (Spec 129 item (i)).`
+
+### Still unverified
+
+- The script caller's behaviour, by run.
+- Whether an abort through the semantic-reference path (`generateTokenFiles.ts:80-95`), rather than the override path, behaves the same. By reading, it returns the same `EMPTY_MODE_RESOLVED`; not run.
+- What the application MCP reports from the degraded index. Not queried.
+
+**No fix is authorized by this addendum.**
