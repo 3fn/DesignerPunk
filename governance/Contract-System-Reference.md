@@ -7,6 +7,8 @@ description: Uniform behavioral contract system reference — 10-category taxono
 
 # Contract System Reference
 
+> **Audience framing**: this describes **DesignerPunk's own components**, not yours. **Worked example**: the 137-concept catalog, the `contracts.yaml` files and the Specs 063 and 078 rationale describe DesignerPunk's own Stemma components. **Transferable**: the conventions: one `contracts.yaml` per component as the source of truth for its behavioral guarantees, contract names in `{category}_{concept}` form, and categories assigned by what each contract means to the end user.
+
 **Date**: 2026-02-25
 **Last Reviewed**: 2026-07-03
 **Purpose**: governing all Stemma components

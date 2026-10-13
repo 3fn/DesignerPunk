@@ -8,6 +8,8 @@ description: Defines boundaries, information flow, access model, and interface c
 
 # MCP Relationship Model
 
+> **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the three MCP servers, the named agents (Ada, Lina, Thurgood, Stacy) and the escalation path through Thurgood to Peter's approval are DesignerPunk's own. **Transferable**: splitting knowledge servers by the question each answers (how the system works, how to use it, what is being built) and keeping a human approval step before anything is promoted.
+
 **Date**: 2026-03-20
 **Last Reviewed**: 2026-06-23
 **Purpose**: Defines boundaries, information flow, access model, and interface contracts between DesignerPunk's three MCP servers

@@ -7,6 +7,8 @@ description: Routing table for component documentation — maps component famili
 
 # Component Quick Reference
 
+> **Audience framing**: this describes **DesignerPunk's own components**, not yours. **Worked example**: the family table and its statuses name DesignerPunk's own component families and their document references. **Transferable**: the pattern of a routing table, one row per component family, that points an agent at the document to read.
+
 **Date**: 2026-01-01
 **Purpose**: Routing table for component documentation - helps AI agents find the right MCP document for each component family
 **Organization**: process-standard

@@ -1445,7 +1445,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 ### UNIT 4 — Content policy
 
-- [ ] 23. The banner predicate, guard, and banners
+- [x] 23. The banner predicate, guard, and banners
 
   **Type**: Implementation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Thurgood (Sonnet)
   **Traces**: Reqs 20.1–20.8 · design C28
@@ -1453,16 +1453,16 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Success Criteria:**
   - The predicate implements Ada's text, with the under-inclusion header.
   - `audience-banner.test.ts` asserts predicate-match ⇒ banner-present and reports `N match; N carry`. Bite recorded. *Scope in its output: predicate coverage, never "the corpus is bannered".*
-  - Each banner uses a template and states what is worked example and what is transferable (inspection per doc, listed).
-  - **Registration**: if it is a new CI context, Stacy's ARMING fires and the notice is recorded; if it runs in an existing lane, that lane is named. **Either way, each governed doc's coverage-map row LISTS the banner guard** (cited). *(Stacy R2: "zero blank rows" would be true before the guard existed, since other checks already cover those docs.)*
+  - Each banner uses a template and states what is worked example and what is transferable (inspection per doc, listed). *(Amendment 2026-10-13 — Peter's ruling, item 6, `completion/u4-rulings-2026-10-13.md`: the banner set is the predicate's matched set (18 at 23.1) **plus two docs declared outside the predicate**, `governance/Component-Readiness-Status.md` and `governance/Component-Quick-Reference.md` (Req 20.7; named in `KNOWN_UNDER_INCLUSIONS`). They sit outside the predicate's guard and its `N match; N carry` claim; their presence is asserted by a separate, scoped declared-list test. The predicate stays v1.)*
+  - **Registration**: if it is a new CI context, Stacy's ARMING fires and the notice is recorded; if it runs in an existing lane, that lane is named. *(Amendment 2026-10-13 — Peter's ruling, item 1, `completion/u4-rulings-2026-10-13.md`; **Consulted**: Lina, Stacy. The clause "Either way, each governed doc's coverage-map row LISTS the banner guard (cited)" and its Stacy R2 note are amended out: `canonical/coverage-map.yaml` has no `governance/` rows, so the clause named evidence that could not exist.)* **The registration evidence is four items**: (i) `lane-functional-root` is in `EXPECTED_CONTEXTS`; (ii) that job runs `npm run test:scripts`; (iii) pasted `--listTests` output names the guard's test file; (iv) the guard's scoped line lists every matched doc by path. *Residual accepted: the test file's dormancy goes undetected until the named-guard selection floor (the ruling's class option, a separate charter record) lands.*
 
   **Primary Artifacts:** `scripts/audience-banner/predicate.ts`, the test, `governance/*.md`
 
-  - [ ] 23.1 Predicate + guard + bite
-  - [ ] 23.2 Banners on the matched set; owners notified
-  - [ ] 23.3 Registration decision; the ARMING notice; the rows-list-the-guard evidence
+  - [x] 23.1 Predicate + guard + bite
+  - [x] 23.2 Banners on the matched set; owners notified
+  - [x] 23.3 Registration decision; the ARMING notice; the rows-list-the-guard evidence
 
-- [ ] 24. U1b backward check, the release recipe (B-U4), and the changelog step (**U4 gating parent**)
+- [x] 24. U1b backward check, the release recipe (B-U4), and the changelog step (**U4 gating parent**)
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Thurgood (Opus)
   **Traces**: Req 21.1–21.3, 23.7 · design C29, DD13, DD16
@@ -1472,11 +1472,11 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - **B-U4** is RATIFIED before its edits apply. It carries the trio obligation (23.7) and the **recurring** changelog step (21.2); the CHANGELOG itself exists since U1.
   - The U4 PR body carries the tripwire line.
 
-  **Primary Artifacts:** `.kiro/specs/123-consumer-distribution/validation/u1b-backward-check.md`, `.kiro/docs/ballots/<date>-123-b-u4-release-recipe.md`, `governance/release-management-system.md`
+  **Primary Artifacts:** `.kiro/specs/123-consumer-distribution/validation/u1b-backward-check.md`, `.kiro/docs/ballots/<date>-123-b-u4-release-recipe.md`, `governance/release-management-system.md`, `.kiro/hooks/RELEASE-FLOW.md` *(amendment 2026-10-13 — Peter's ruling, item 2, `completion/u4-rulings-2026-10-13.md`; Task 7's B-U1 precedent)*
 
-  - [ ] 24.1 U1b check (enumerated denominator; the D-T-A6 residual); route findings
-  - [ ] 24.2 B-U4 record-first; ratified edits
-  - [ ] 24.3 Open the U4 PR
+  - [x] 24.1 U1b check (enumerated denominator; the D-T-A6 residual); route findings
+  - [x] 24.2 B-U4 record-first; ratified edits
+  - [x] 24.3 Open the U4 PR
 
 ### UNIT 5 — Validation & closeout
 

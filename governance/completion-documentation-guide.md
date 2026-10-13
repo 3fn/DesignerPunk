@@ -7,6 +7,8 @@ description: Comprehensive completion and summary documentation guide — two-do
 
 # Completion Documentation Guide
 
+> **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the paths (`.kiro/specs/`, `docs/specs/`), the ballots it cites and the named agents are DesignerPunk's own. **Transferable**: the two-document workflow, success-criteria fidelity (each criterion reproduced with its evidence), and the instruments block that lists what each criterion's evidence depends on.
+
 **Date**: 2026-01-03
 **Last Reviewed**: 2026-09-29
 **Purpose**: Comprehensive guide for creating completion and summary documentation

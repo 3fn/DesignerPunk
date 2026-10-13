@@ -7,6 +7,8 @@ description: Standards for creating spec documents — requirements format (EARS
 
 # Spec Planning Standards
 
+> **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the `.kiro/specs/` layout, the agent assignments (Ada, Lina, Thurgood), Peter's routing and the instruments-block rules are DesignerPunk's own. **Transferable**: the formats: EARS requirements, the design-document sections, and tasks that carry a type, a validation tier and a recommended agent.
+
 **Date**: 2025-01-10
 **Updated**: October 20, 2025
 **Last Reviewed**: 2026-09-29
