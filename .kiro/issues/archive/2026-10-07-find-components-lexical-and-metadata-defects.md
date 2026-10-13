@@ -104,3 +104,8 @@ Has F1 been ruled? Ruled-yes with no fixing PR after one walk → finding. Fixin
 - `cd application-mcp-server && npx jest`: **31 suites / 432 tests passed**. New: `src/indexer/__tests__/termNormalization.test.ts`, `src/query/__tests__/Stage0LexicalFixes.test.ts` (items 1, 2, 3 incl. the rank-order guard, 5, 6), and the real-corpus internal-only audit in `src/query/__tests__/QueryEngine.test.ts`. Re-baselined: `tool-boundary.contract.test.ts` (`viability` key). Spec 121 calibration tests: all green.
 - `npm test` (root): **390 suites / 9377 tests passed**.
 - `npm run extract:meta`: zero diff against the hand-edited metas (edits survive the extractor).
+
+## 5. Closed — 2026-10-12
+
+**Fixing PR merged**: #303, squash `dcd337dcf` on `main` (tree-identical for every Stage 0 file to the verified branch head `e79159b33`; the only differences on `main` are eight unrelated issue records from #300). **Outcome**: items 1, 2, 3, 5, 6 executed; item 4 (de-dup) executed for Button ×4, FormInput ×8, Progress 6/7 (Bar-Base already distinct). Reproductions: rows 3 and 4 fixed; rows 2b, 5, 7 partly; row 6 not fixed for the intended target; row 1 still fails — residual class across rows 1, 2, 5, 7 is rubric clause 1 (one high-signal hit = `strong` at any coverage), a tier-rule change that is a ballot or the shadow study's call, recorded as an input to the study's volume gate (`2026-10-07-discovery-shadow-study-charter.md`). Out-of-scope findings (§ Fix record) remain recorded there, not fixed. Validation at merge (orchestrator-run): application-mcp-server 31 suites / 432 tests; root 390 suites / 9377 tests; `extract:meta` no diff. Archived per `.kiro/issues/README.md` rule 5.
+
