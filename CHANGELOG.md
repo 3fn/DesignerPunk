@@ -40,6 +40,8 @@ This is the third planned entry in the plan's numbering ("Release N" labels the 
 
 - Every `generate` rewrites a timestamp line in each generated file, so committed platform output shows as changed after every run even when no token changed. Compare with the timestamp lines ignored.
 - `@3fn/core/testing` and the jest preset's `@3fn/core/blend`, `/types` and `/config` mappings do not load in an installed package, so the shared test utilities do not work yet.
+- If your token source lacks a semantic token that DesignerPunk's dark or WCAG overrides name, `generate` reports an "Orphaned override key" and writes no token files, but still prints "✅ System tokens generated" and exits 0. Read the lines above the ✅.
+- `npx designerpunk validate`'s mathematical-relationships check fails even on unmodified token source, so `validate` exits non-zero. It is a defect in the checker, not in your tokens; its other checks are still worth reading.
 
 ## [15.0.0] — 2026-10-02
 
