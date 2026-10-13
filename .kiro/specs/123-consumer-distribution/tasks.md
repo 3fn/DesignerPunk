@@ -1453,7 +1453,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Success Criteria:**
   - The predicate implements Ada's text, with the under-inclusion header.
   - `audience-banner.test.ts` asserts predicate-match ⇒ banner-present and reports `N match; N carry`. Bite recorded. *Scope in its output: predicate coverage, never "the corpus is bannered".*
-  - Each banner uses a template and states what is worked example and what is transferable (inspection per doc, listed). *(Amendment 2026-10-13 — Peter's ruling, item 6, `completion/u4-rulings-2026-10-13.md`: the banner set is the predicate's matched set (18 at 23.1) **plus two docs declared outside the predicate**, `governance/Component-Readiness-Status.md` and `governance/Component-Quick-Reference.md` (Req 20.7; named in `KNOWN_UNDER_INCLUSIONS`, banded and unguarded). The predicate stays v1.)*
+  - Each banner uses a template and states what is worked example and what is transferable (inspection per doc, listed). *(Amendment 2026-10-13 — Peter's ruling, item 6, `completion/u4-rulings-2026-10-13.md`: the banner set is the predicate's matched set (18 at 23.1) **plus two docs declared outside the predicate**, `governance/Component-Readiness-Status.md` and `governance/Component-Quick-Reference.md` (Req 20.7; named in `KNOWN_UNDER_INCLUSIONS`). They sit outside the predicate's guard and its `N match; N carry` claim; their presence is asserted by a separate, scoped declared-list test. The predicate stays v1.)*
   - **Registration**: if it is a new CI context, Stacy's ARMING fires and the notice is recorded; if it runs in an existing lane, that lane is named. *(Amendment 2026-10-13 — Peter's ruling, item 1, `completion/u4-rulings-2026-10-13.md`; **Consulted**: Lina, Stacy. The clause "Either way, each governed doc's coverage-map row LISTS the banner guard (cited)" and its Stacy R2 note are amended out: `canonical/coverage-map.yaml` has no `governance/` rows, so the clause named evidence that could not exist.)* **The registration evidence is four items**: (i) `lane-functional-root` is in `EXPECTED_CONTEXTS`; (ii) that job runs `npm run test:scripts`; (iii) pasted `--listTests` output names the guard's test file; (iv) the guard's scoped line lists every matched doc by path. *Residual accepted: the test file's dormancy goes undetected until the named-guard selection floor (the ruling's class option, a separate charter record) lands.*
 
   **Primary Artifacts:** `scripts/audience-banner/predicate.ts`, the test, `governance/*.md`
@@ -1475,7 +1475,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Primary Artifacts:** `.kiro/specs/123-consumer-distribution/validation/u1b-backward-check.md`, `.kiro/docs/ballots/<date>-123-b-u4-release-recipe.md`, `governance/release-management-system.md`, `.kiro/hooks/RELEASE-FLOW.md` *(amendment 2026-10-13 — Peter's ruling, item 2, `completion/u4-rulings-2026-10-13.md`; Task 7's B-U1 precedent)*
 
   - [x] 24.1 U1b check (enumerated denominator; the D-T-A6 residual); route findings
-  - [ ] 24.2 B-U4 record-first; ratified edits
+  - [x] 24.2 B-U4 record-first; ratified edits
   - [ ] 24.3 Open the U4 PR
 
 ### UNIT 5 — Validation & closeout

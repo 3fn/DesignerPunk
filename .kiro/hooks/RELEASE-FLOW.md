@@ -28,6 +28,7 @@ Before step 1 below, the release author derives-classifies-ratifies:
 3. **Peter ratifies the bump**; notes are hand-authored at `docs/releases/release-X.Y.Z.md` (v14.0.0 = format precedent) and ride the release PR below.
 4. Publish mechanics: § "The sequence" steps 5–6 — **one tarball, built by `scripts/release-publish.ts` in a fresh clone at the tag, published unchanged to both registries**. The public-npm flags are written out in step 5.4. They were previously only in "the dual-registry playbook", which is not in this repo, so a fresh session could not find it. Auth note: public npm needs Peter's login/2FA, and the token expires in about 30 days, so an E404 on publish is a masked auth failure. **The release notes disclose any change in embedded dependency versions against the previous release's public artifact** (the first instance is § "Dependency disclosure" of ballot `2026-10-03-hermetic-publish-path`).
 5. **Claims-pass owed set + the arming question** — see the named step below. **Both lines produce artifacts, not reminders.**
+6. **Onboarding trio** (from release 4): recipe step 6 in `governance/release-management-system.md`. Where the runs sit relative to the tag is set by the trio protocol (Spec 123 Task 25). The obligation's tracking record is Spec 123 Task 28.4's.
 
 ### Step 5 — run the owed-set query, paste its output, and confront the arming question
 
@@ -114,7 +115,7 @@ The owed-set pipeline is **documented commands, not a committed script**, delibe
    for a standalone release) from up-to-date `main`.
 2. **Prepare the release on the branch**:
    - version bump in `package.json` (and any sub-packages),
-   - release notes / changelog updates,
+   - release notes (`docs/releases/release-<version>.md`) **and the consumer `CHANGELOG.md` entry** (retitle `## [Unreleased]` to the version; recipe step 4 in `governance/release-management-system.md`),
    - **regenerate the token-index**: run `npm run build` (its generation steps
      refresh `token-index/`), then commit any resulting `token-index/` diff.
 3. **Open the release PR** (`./.kiro/hooks/complete-task.sh` for spec-task releases,
