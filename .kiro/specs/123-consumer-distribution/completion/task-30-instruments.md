@@ -26,14 +26,14 @@
 | 3.2 | C3 nothing lands between request and verdict ((i)–(iii)) | `git diff --name-only <H′> <PR head> -- <declared input set>`, and the same after the squash | exists (`.kiro/specs/123-consumer-distribution/tasks.md` @ `6dc435cc5`; input set: `.kiro/specs/123-consumer-distribution/completion/task-29-4-completion.md` @ `d5939d1da`) | the criterion prescribes the commands; 29.4 declares the input set | 30.1, 30.3 |
 | 3.3 | C3 W1: the lock agrees with the tree, run by a seat other than Stacy | `npm run check:122:diff-guard` at H′ from a clean tree, quoted | exists (`tools/agent-generator/diff-guard.ts` @ `669b51b09`) | the guard's own verdict lines; Stacy repeats it read-only | 30.1 |
 | 3.4 | C3 W4/NR5: a green `--ci` dispatch at H′ (the `122-diff-guard` context, `verify-signing-chain --ci` inside it) | a branch-head dispatch of the required workflows (`complete-task.sh --subtask` or `gh workflow run`) | built here (30.1) | — | 30.1 |
-| 4.1 | C4 Stacy's verdict record, one token | `completion/re-grounding-g2-cycle-2.md` | MISSING → Stacy: written after the request (30.1). **Blocks 30.2 and 30.3** | — | **30.2, 30.3** |
+| 4.1 | C4 Stacy's verdict record, one token | `completion/re-grounding-g2-cycle-2.md` | MISSING → Stacy: written after the request (30.1). **Blocks 30.2 and 30.3** → resolved 2026-10-12: exists (`.kiro/specs/123-consumer-distribution/completion/re-grounding-g2-cycle-2.md` @ `15d7a2c0f`, one token, `HOLDS`) | — | **30.2, 30.3** |
 | 5.1 | C5 the completion doc cites the record path | `completion/task-30-completion.md` | built here (30.3) | — | 30.3 |
 | 6.1 | C6 the consequence applied byte-equal | byte check: concatenate the selected blocks from the texts file at C0′, `diff` against the applied section | built here (30.2) | — | 30.2 |
 | 6.2 | C6 Task 18's record not edited | `git diff <cut> <PR head> -- completion/task-18-completion.md completion/re-grounding-pass-four.md` empty | exists (`.kiro/specs/123-consumer-distribution/completion/g2-consequence-texts.md` @ `669b51b09`) | git computes it | 30.3 |
-| 7.1 | C7 the hold's enforcement where the operator meets it | the RELEASE-FLOW step-5 line (Thurgood's record-first amendment to the hermetic-publish ballot, PR-15) and Ada's `scripts/release-publish.ts` check | MISSING → Thurgood (the ballot amendment), Ada (the script, under its grant): neither is on `origin/main` @ `7aa433fca` (no G2-hold line in `.kiro/hooks/RELEASE-FLOW.md`; no cycle-record read in `scripts/release-publish.ts`). **Blocks nothing in U3g**: the hold is in force by ruling (PR-15: no version is published until the amendment lands) | — | none |
+| 7.1 | C7 the hold's enforcement where the operator meets it | the RELEASE-FLOW step-5 line (Thurgood's record-first amendment to the hermetic-publish ballot, PR-15) and Ada's `scripts/release-publish.ts` check | MISSING → Thurgood (the ballot amendment), Ada (the script, under its grant): neither is on `origin/main` @ `7aa433fca` (still absent at `32a811a21`, the verdict record's § 8; still MISSING at Task 30's close) (no G2-hold line in `.kiro/hooks/RELEASE-FLOW.md`; no cycle-record read in `scripts/release-publish.ts`). **Blocks nothing in U3g**: the hold is in force by ruling (PR-15: no version is published until the amendment lands) | — | none |
 | 8.1 | C8 the tripwire line | the U3g PR body | built here (30.3) | — | 30.3 |
 | 8.2 | C8 `npm test` and `tsc` green | the lanes | exists (`package.json` @ `762b8c209`) | measured at 29.7 (`d1fcda970`); re-run at 30.3 | 30.3 |
-| 9.1 | (unit) the ARMING event at U3g's merge | Stacy's ARMING record | MISSING → Stacy: post-merge. **Blocks nothing in Task 30** | — | none |
+| 9.1 | (unit) the ARMING event at U3g's merge | Stacy's ARMING record | MISSING → Stacy: post-merge. **Blocks nothing in Task 30** → at Task 30's close: still MISSING → Stacy, by design. It is written at U3g's merge | — | none |
 
 **Counts (at writing)**: N = 18 — exists 8 · built-here 7 · missing 3 · unlisted 0.
 
@@ -45,3 +45,10 @@
 **30.0 can run now.**
 
 ## Found later
+
+**Counts (final, 2026-10-12, at Task 30's close)**: N = 18 — exists 9 · built-here 7 · missing 2 · unlisted 0.
+- Row 4.1 resolved to `exists`.
+- **Still MISSING**:
+  - **7.1**: the hold's enforcement layers (Thurgood, Ada). They block nothing in U3g; with `HOLDS` the hold lifts at the squash.
+  - **9.1**: Stacy's ARMING record, written at merge, by design.
+- No `## Found later` entries.

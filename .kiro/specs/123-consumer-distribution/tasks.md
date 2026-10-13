@@ -1399,7 +1399,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 29.6 One re-sign round within Stacy's limits; the lock refresh *(R2: 29.5 moved to U3c as Task 31, PR-11; the numbers are kept so that references stay valid)*
   - [x] 29.7 Full validation
 
-- [ ] 30. **G2 cycle-2 gate parent** (**U3g gating parent**)
+- [x] 30. **G2 cycle-2 gate parent** (**U3g gating parent**)
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY **Lina (Opus)** — executing agent; **Stacy authors the attack file and the verdict record (outside the line); Thurgood recused**
   **Traces**: Reqs 11.8, 11.8.4, 24.3 · design § "Gates and sequencing" (G2) · Peter's PR-5
@@ -1430,7 +1430,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 30.0 Commit the pre-declared consequence texts (C0′)
   - [x] 30.1 Freeze H′; request cycle 2 from Stacy; hold the input set until the verdict
   - [x] 30.2 Apply the verdict's consequence byte-equal (on `HOLDS`)
-  - [ ] 30.3 Full validation; open the U3g PR (on `HOLDS` only; tripwire line)
+  - [x] 30.3 Full validation; open the U3g PR (on `HOLDS` only; tripwire line)
 
 ### UNIT 4 — Content policy
 
