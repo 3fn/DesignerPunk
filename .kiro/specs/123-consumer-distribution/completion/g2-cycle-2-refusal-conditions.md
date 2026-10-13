@@ -62,9 +62,18 @@ The request record (Lina's, at 30.1) is the witness. I read it against these bef
 ## 5. What my record will say about itself (so it can be audited)
 
 - **Section one** discloses that I wrote the findings (G2-F1/F2/F3) and write the verdict; that I pre-read Thurgood's ruling for verifiability only and he took parts of my read (the ruling's own list says which); that I re-signed `knowledgeBases[spec-summaries]` and any other Stacy-signed row the round moved; that Thurgood is recused and authored no line of the record.
-- **The sample, named, with its fraction**: every row in the attack file is run (35 of 35), or the record is `NOT-RUNNABLE`. The committed profile's 169 rows are read from the standing test's own output, not sampled by me; I re-run it and quote the count.
+- **The sample, named, with its fraction**: every row in the attack file is run (37 of 37), or the record is `NOT-RUNNABLE`. The committed profile's 169 rows are read from the standing test's own output, not sampled by me; I re-run it and quote the count.
 - **The verdict line** is exactly `**Verdict**: HOLDS`, `**Verdict**: DOES-NOT-HOLD` or `**Verdict**: NOT-RUNNABLE — not re-verified — <reason>`, once, at the start of a line.
 - **Findings** are routed by the two-route rule (an explicit message to the owning agent, and the standards line for Thurgood). A finding is a new finding and is never added to this cycle's verdict as a new attack class (Task 30, R-5).
 - **Merge-path status**: this verdict is read by Lina's gate parent (Task 30) as an input to a PR it opens, but my record is not a required check, a review gate or a blocking condition on any PR. The hold's enforcement is in RELEASE-FLOW (Task 29 B1 text), not in me.
+
+## 6. Peter's ruling on the named limits (recorded 2026-10-12)
+
+- **Ruling** (Peter, 2026-10-12, one word: "accept"; relayed by the orchestrator in the session and recorded here by Stacy). A cycle-2 `HOLDS` **may carry** the ruling's accepted residual (hollowing in place with destination S, including `writeScope[…]` widened to `**`, and the one unsigned shared governance rule hollowed in place) as a written-down limit, **provided the verdict record names it**.
+- **It is the exception to "never ship with a written-down limit"** (the recommendation Peter agreed to under PR-5, "Yes, and good idea.") and it is the exception only for the limits listed in the attack file § 2.4 (L1–L5). Any other limit found by the cycle is not covered.
+- **Grounds he was given**: the check still catches every attack it was built for; the limit was found by the ruling itself, not by a failed attack; the cover (a per-row content declaration, or a human read of in-place changes) is larger than U3g and is already routed as a permission question (the round-2 records).
+- **Surviving counter-argument (mine, left standing)**: a permission change that reaches no human passes. A `writeScope` member widened to `**`, or the shared governance rule rendered into every seat hollowed in place, is `VERIFIED` and no signer reads it. The ruling accepts that, and it is the thing the verdict record must say plainly in its "does not mean" list.
+- **What changes in my conduct**: nothing about the rows. L1–L5 stay expected `VERIFIED`; the verdict record names each one, with L3 and L5 first, and routes the permission question to Thurgood. The ruling widens what `HOLDS` may carry. It does not widen what I treat as an attack that must be rejected.
+- **Authority of this paragraph**: Peter's word as relayed. If the relay is not the record Peter wants, he replaces it with a dated record of his own and this paragraph defers to it.
 
 **Standards implications**: none.

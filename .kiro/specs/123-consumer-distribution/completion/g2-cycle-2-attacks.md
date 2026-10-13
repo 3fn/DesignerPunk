@@ -4,6 +4,8 @@
 **Date**: 2026-10-12
 **Unit**: U3g, branch `task/123-u3g-g2c2`, cut from `main` @ `c25470eac`. This file is committed on the branch as the child of `13dcfc08c`, before any commit that touches `tools/agent-generator/**` or `canonical/profiles/consumer/**` (Task 29 instrument: the attack file's commit is an ancestor of every such commit; `completion/u3g-sizing.md` @ `0e3a4c01f` is also an ancestor).
 **Ruled text this file is written against**: `.kiro/specs/123-consumer-distribution/g2-spec-text-ruling.md` (R1–R5), as merged by #304 and present at the cut (`905dd1e62` per `u3g-sizing.md`). **If that file changes before the first fix commit, this file is amended by a new dated commit first. After the first fix commit, no expected outcome here is edited** (a wrong expectation is then a finding in the verdict record, never a quiet change).
+
+**Dated additions after the first fix commit (2026-10-12; the first fix commit is Task 29.1, `4a8b65cf2`).** Two rows, M2 and L5, are added after the fix began. They are *ruled additions*, not edits of an expected outcome: no existing row's expectation changes. Their authority is Thurgood's erratum to the ruling (R2, shared-substrate members), merged by Peter in #310 (`fbd7549a7`), which answered the gap this file listed at § 6 item 1. Their tokens come from that merged text, and the adapters' `- ` prefix (`tools/agent-generator/adapters/cc.ts:215`, `adapters/kiro.ts:179`) it cites, read before the additions were written. Nothing was observed from a run. A reader who finds any other post-29.1 change to this file should treat it as a finding.
 **Authority**: Task 29 criteria C3/C6 and Task 30; Peter's PR-5.6 (attacks and expected outcomes are committed before she sees the fix); Req 11.4, 11.4.1, 11.8.
 
 ---
@@ -64,7 +66,7 @@ A control that fails means the check rejects honest work. That is not a pass on 
 | WS2 | body | overlay of `S_body` is U+00A0 (no-break space) characters only; destination `T_body` | `_canonical`, `cc`, `kiro` | `FAIL_NO_DERIVATION` | R2: `trim()` removes U+00A0 (same set as JS `\s`) |
 | FS1 | frontmatter | `description` (ada) overlay value is a string of spaces; destination `frontmatter:description` | `cc`, `kiro` | `FAIL_NO_DERIVATION`, **or** a `derive()` refusal naming the entry; **never** `VERIFIED` | R2 frontmatter rule: a string empty after `trim()` is not in `D`. I cannot tell from the record whether `derive()` refuses a whitespace string first; either outcome rejects it. A `derive()` refusal is recorded as such and is not a verdict |
 
-### 2.3 Rejections by clause (2): all expected `FAIL_DISHONEST_NAMING` (16 rows)
+### 2.3 Rejections by clause (2): all expected `FAIL_DISHONEST_NAMING` (17 rows)
 
 | ID | Lane | Construction | Surfaces | Expected | Basis |
 |---|---|---|---|---|---|
@@ -82,10 +84,11 @@ A control that fails means the check rejects honest work. That is not a pass on 
 | WS4 | body | overlay of `S_body` is the HTML comment `<!-- -->` only; destination `T_body` | `_canonical`, `cc`, `kiro` | `FAIL_DISHONEST_NAMING` | R2 (ruling L47: an HTML comment is text) |
 | WS5 | body | overlay of `S_body` is the single character `.`; destination `T_body` | `_canonical`, `cc`, `kiro` | `FAIL_DISHONEST_NAMING` | R2 (ruling L47: punctuation alone is text) |
 | M1 | member | `S_mem` re-pointed with destination `T_mem` (a sibling member id) | `cc`, `kiro` | `FAIL_DISHONEST_NAMING` | R1 member-id space [run: sizing §2 `member`] |
+| M2 *(added 2026-10-12)* | member | **emptied member**: the `_shared.overlay.md` entry for `S_mem` has `statement: ""`, with `id`, `kind`, `owner`, `source` and `crossRef` kept (derive()'s key-set rule); destination `T_mem` | `cc`, `kiro` | `FAIL_DISHONEST_NAMING` | ruling erratum #310 (R2, shared-substrate members): the body-unit rendered-text test applies, and the member renders as `- ` + the statement, so the span is `- ` and `D` is non-empty; the sibling is not among `D`'s sources (R1). If `derive()` refuses the construction, record the refusal; never `VERIFIED` |
 | U1 | body | `S_body` as committed; destination `#no-such-unit` (an anchor absent from the tree) | `_canonical`, `cc`, `kiro` | `FAIL_DISHONEST_NAMING`, with **no thrown exception** | R1 (ruling L33): unknown ids stay non-matching; design C15 |
 | U2 | body | `S_body` as committed; destination `frontmatter:description` (the other tree) | `_canonical`, `cc`, `kiro` | `FAIL_DISHONEST_NAMING` | R1 (ruling L31): identity is decided in one tree; cross-tree never matches |
 
-### 2.4 Named limits: expected `VERIFIED`, and recorded as limits, not as passes of a rejection (4 rows)
+### 2.4 Named limits: expected `VERIFIED`, and recorded as limits, not as passes of a rejection (5 rows)
 
 Each of these is a hollowing **in place**, with S itself as the destination. The ruling states that the check does not reach them (ruling § "What this reading does not reach"). I commit the expected outcome so that the limit is measured and named, not discovered. **None of them is an attack that this cycle expects to reject.**
 
@@ -95,6 +98,7 @@ Each of these is a hollowing **in place**, with S itself as the destination. The
 | L2 | frontmatter | the F3 shape (`gap`, `cue` = `""`) with destination `S_fm` itself | `cc`, `kiro` | `VERIFIED` | that no signature is owed and the freshness sweep returns 0 findings, as pass four measured for F5 (ruling L110: reaches no human) |
 | L3 | frontmatter | **permission-bearing**: `writeScope[.kiro/specs/**]` (kenya) overlay value widened from `specs/**` to `**`; destination itself | `cc`, `kiro` | `VERIFIED` | that the widened glob reaches the rendered `writeScope` on `cc` and the Kiro JSON `allowedPaths`, and that nothing routes to a human (ruling L111) |
 | L4 | always-set | overlay of `S_as` is the single token `Done.`; destination `S_as` | `_canonical`, `cc`, `kiro` | `VERIFIED` | **whether the C18 floor routes an always-set unit hollowed in place.** The ruling does not establish it (ruling L113) and carries it to this cycle. I will run the floor over the rendering and state the result |
+| L5 *(added 2026-10-12)* | member | as M2 (`statement: ""`); destination `S_mem` itself | `cc`, `kiro` | `VERIFIED` | ruling erratum #310: the residual's destination-S limit at its widest. The one shared member is a governance rule rendered into every agent, and its row is unsigned. I also record whether any route to a human exists for it (none is expected) |
 
 **`toolSubset` is not a row.** The ruling names `toolSubset[…]` with `writeScope[…]` as the permission-bearing instance. In the committed profile every `toolSubset` member is `retained` (kenya L81–98) and no `toolSubset`, `preflight` or `knowledgeBases` row other than the four `KB_*` is `re-pointed` (grep of all eight agent dispositions files at the cut). A re-pointed `toolSubset` row cannot exist without a disposition edit, so the limit is stated and not measured. `writeScope` (L3) is the constructible instance.
 
@@ -113,7 +117,7 @@ Each of these is a hollowing **in place**, with S itself as the destination. The
 
 `HOLDS` requires **all** of the following at the frozen H′:
 
-1. **G2-F1 (rows A3, F5)** closed: A3f, A3, F5, F5c, F3, F4, C1, V1, A2, AS2, M1, U1, U2, KB1, WS3, WS4, WS5 each return exactly their expected token on every listed surface.
+1. **G2-F1 (rows A3, F5)** closed: A3f, A3, F5, F5c, F3, F4, C1, V1, A2, AS2, M1, M2, U1, U2, KB1, WS3, WS4, WS5 each return exactly their expected token on every listed surface.
 2. **G2-F2 (rows C1, F3; a non-zero count; every PR touching the inputs)** closed:
    - C1 and F3 are rejected as in (1);
    - E2, E3, E4 and E5 are green;
@@ -125,7 +129,7 @@ Each of these is a hollowing **in place**, with S itself as the destination. The
    - **Task 29's red line is read as the ruling reads it** (ruling L101): "attack (a) as the generator emits it is not rejected by clause 1" means A1 and AS1. F3 is rejected by clause (2), and the frontmatter lane's rejection of attack (a) rests on clause (2) plus R1 alone (Lina's surviving counter, ruling L103). The verdict record states this.
 4. **Scope half (1)** (attack (a) verbatim): A1 as above. **Scope half (2)**: E1.
 5. **E6 held**, so that every token above was read off the real substrate.
-6. **No High or Critical finding raised by this cycle is still open.** The named limits in § 2.4 are *not* findings of this cycle (they are stated in the ruling and routed there); § 5 puts one fork about them to Peter.
+6. **No High or Critical finding raised by this cycle is still open.** The named limits in § 2.4 are *not* findings of this cycle (they are stated in the ruling and routed there); § 5 records Peter's ruling about them.
 
 ## 4. How the verdict is determined (closed, so nobody has to ask me)
 
@@ -134,18 +138,18 @@ Each of these is a hollowing **in place**, with S itself as the destination. The
 - **`NOT-RUNNABLE`**: E6 fails, or the toolchain to run the real `generateAll` is unavailable, or any row's construction cannot be built on the emitted substrate. The reason follows the token after ` — `. **A row I could not build is `not re-verified` and never counts toward HOLDS**; a cycle in which any listed row is unbuilt is `NOT-RUNNABLE`, not `HOLDS` with a note. A `derive()` refusal on FS1 is the one exception, and only because § 2.2 names it as an accepted outcome.
 - A request I **refuse** (the conditions in `completion/g2-cycle-2-refusal-conditions.md`) produces no record and no token.
 
-## 5. One fork I surface and do not pick (Peter's)
+## 5. The fork about the named limits, RULED by Peter (2026-10-12: "accept")
 
 The named limits L1–L4 are written-down limits, and the recommendation Peter agreed to under PR-5 was "fix and hold; never ship with a written-down limit". The ruling's own residual is that limit. Two defensible readings:
 
 - **(a)** The limits are outside G2-F1/F2/F3 as defined, were measured before this cycle (pass-four B1 for the body lane; pass-four F5's "would survive even if the check were wired" for the frontmatter lane), and are routed by the ruling to a C16/C18 touch. `HOLDS` may carry them, and the verdict record names them in its "does not mean" list.
 - **(b)** The permission-bearing instance (L3) in particular is a written-down limit that a consumer's `writeScope` could carry, and HOLDS should not be issued over it.
 
-**My default, if Peter does not rule before H′ freezes: (a), with L3 named in the verdict's "does not mean" list and routed to Thurgood as a permission question.** If Peter rules (b), the amendment is a new dated commit to § 3 before the first fix commit. Counter-argument to my own default: under (a) the hold lifts with a known permission-widening shape that reaches no human; what survives is that "never ship with a written-down limit" and "HOLDS may carry a named residual" cannot both be true, and I will not decide which governs.
+**Peter ruled (a) on 2026-10-12 ("accept"; relayed by the orchestrator, recorded in `completion/g2-cycle-2-refusal-conditions.md` § 6).** A `HOLDS` may carry the limits L1–L5 provided the verdict record names them, with L3 (the permission-bearing instance) and L5 (the unsigned shared governance rule) in its "does not mean" list, routed to Thurgood as a permission question. (The text below is kept as written before the ruling.) Counter-argument to my default: under (a) the hold lifts with a known permission-widening shape that reaches no human; what survives is that "never ship with a written-down limit" and "HOLDS may carry a named residual" cannot both be true, and I will not decide which governs.
 
 ## 6. What I cannot state an outcome against (Tasks 29 and 30), asked of their owners
 
-1. **Emptied member (the `members:` lane).** R2 states a body rule and a frontmatter rule and is silent on a shared-catalog member whose rendered value is empty. I have no row for it (`M2`), so it is untested. One line from Thurgood fixes it.
+1. **Emptied member (the `members:` lane): CLOSED 2026-10-12.** R2 was silent on a shared-catalog member whose rendered value is empty. Thurgood's erratum (#310, merged `fbd7549a7`) states it, and I corrected its first draft, which had named `FAIL_NO_DERIVATION` (the `- ` prefix keeps the span non-empty). Rows M2 and L5 now cover it.
 2. **Per-target pooling.** § 1 rule 2 assumes the per-target pooling the sizing prints. If the standing check is per artifact, tokens on a JSON-only artifact change. Lina states which at the request.
 3. **The unbuildable rows are not counted as passes** (§ 4). If `derive()` refuses a construction I list as buildable (FS1 is the one I already expect might), the row is recorded, not filled in.
 4. **Task 29 C7 / 29.3's `git diff --stat` instrument** now names `*.attribution.json` plus the `*-prompt.md` of agents with a rendered glob-only knowledge base (amendment at `13dcfc08c`). Which agents those are is not stated. I will read it off the declared moved-outputs list, and I cannot state in advance which prompts. (Not a verdict input.)
@@ -155,12 +159,12 @@ The named limits L1–L4 are written-down limits, and the recommendation Peter a
 | Expected verdict | Rows | IDs |
 |---|---|---|
 | `VERIFIED` (honest controls) | 8 | S0, S0p, T0, K0, W0, M0, D0, KB0 |
-| `VERIFIED` (named limits) | 4 | L1, L2, L3, L4 |
+| `VERIFIED` (named limits) | 5 | L1, L2, L3, L4, L5 |
 | `FAIL_NO_DERIVATION` | 7 | A1, A3, A4, AS1, WS1, WS2, FS1 (FS1 also accepts a recorded `derive()` refusal) |
-| `FAIL_DISHONEST_NAMING` | 16 | A2, A3f, V1, C1, AS2, F3, F4, F5, F5c, KB1, WS3, WS4, WS5, M1, U1, U2 |
-| **Total verdict rows** | **35** | |
+| `FAIL_DISHONEST_NAMING` | 17 | A2, A3f, V1, C1, AS2, F3, F4, F5, F5c, KB1, WS3, WS4, WS5, M1, M2, U1, U2 |
+| **Total verdict rows** | **37** | (13 `VERIFIED`, 7 `FAIL_NO_DERIVATION`, 17 `FAIL_DISHONEST_NAMING`) |
 | Structural checks | 6 | E1–E6 |
 
 `KB0` and `D0` each cover more than one committed row (four and two). The committed-profile condition in § 3(2) counts all 169.
 
-**Standards implications**: none for DesignerPunk's docs. One for the ruling: § 6 item 1 (the member lane's emptiness rule) is a single-line gap in R2 for Thurgood.
+**Standards implications**: none outstanding. The one this file raised (§ 6 item 1, the member lane's emptiness rule) was answered by Thurgood's erratum #310 on 2026-10-12.
