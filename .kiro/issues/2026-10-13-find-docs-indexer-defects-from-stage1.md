@@ -4,7 +4,16 @@
 **Type**: DEFECT RECORD with routed owner — surfaced by Thurgood while running Stage 1 of the discovery shadow study (`2026-10-12-discovery-study-stage1-docs-charter.md` § 1f: "tokenizer/rank defects in the docs matcher are filed as a separate Thurgood issue; they are not fixed in this PR and do not count toward the gate"). Filed by the orchestrator because `.kiro/issues/**` is outside Thurgood's write scope (gap issue `2026-10-02-issues-dir-write-scope-gap-and-grant-advisories.md`).
 **Owner**: **Thurgood** (docs matcher `mcp-server/src/query/**` and the docs rubric). Run SHA `08fed8984`; findings `.kiro/docs/discovery-study-stage1-findings.md` § 6.7–6.9.
 **Trigger**: **Peter's ruling on the Stage 1 class question (Reading A vs Reading B — study charter / findings § 6.8)** — **FIRED 2026-10-13: Peter ruled Reading A (the class option: fix the layer where the gap lives).** → if A (close), Thurgood fixes these as plain defects on their own PR; if B (alias-proposal tool), items 1 and 3 are inputs to that tool's design first. Either way, fixes land AFTER the study PR merges (the study never tunes the thing it measures).
-**Grant paths**: none needed — the matcher is inside Thurgood's scope? **NO** — `mcp-server/src/**` is OUTSIDE his charter scope (his Stage 1 charter lists it as such). The fixing PR needs a grant: proposed `mcp-server/src/query/**`, `mcp-server/src/indexer/**` (if the H3 drop lives there), their `__tests__/`, and `scripts/__fixtures__/discovery-oracle.ts` ONLY for the regression RUN (read), never an edit — activated by Peter's merge of a PR that names this file.
+**Grant paths** (ballot 2026-09-27-ci-regime-standing-scope § 3 — owner **Thurgood**; `mcp-server/src/**` is OUTSIDE his charter scope; **activated by Peter's merge of the PR carrying this line (Peter: "Start the indexer fix", 2026-10-13)**; one fixing PR, diffed against this list as it stands at that merge):
+- `mcp-server/src/indexer/**` (heading extraction: H3/H4, fence-awareness)
+- `mcp-server/src/query/**` (tokenizer: "iOS" split; any rank/weight tuning the design requires — tier derivation stays reconstructable)
+- `mcp-server/src/**/__tests__/**` (tests for the above)
+- `mcp-server/src/discovery-dry-run/**` (the runner/wrapper if the measurement needs a fresh-set mode)
+- `scripts/__fixtures__/discovery-fresh-<date>.ts` (the NEW blind query set the fix is measured on — Q2 is spent for matcher tuning)
+- `scripts/discovery-study-stage1.ts` (runner flags only)
+- `.kiro/docs/discovery-study-stage1-findings.md` (the owed DA-05 key-error addendum + the indexer-fix measurement addendum)
+- `.kiro/specs/121-claude-code-portability/discovery-confidence-rubric.md` is already in his scope (dated amendment for any weight/level change).
+**Read-only, never edited**: `scripts/__fixtures__/discovery-oracle.ts`, `scripts/__fixtures__/discovery-q2-seats.ts` (both must diff empty against `main` at the fixing PR's head). Nothing under `governance/**`, `.kiro/steering/**`, ballots, or `.github/**`.
 **Consulted**: none needed — relay of the owner's own findings; the owner fixes.
 
 ---
@@ -23,3 +32,6 @@
 
 ## What the walk checks
 Trigger ruled with no fixing PR after one walk → finding. Fixing PR must show oracle 83/0/0 and the frozen Q2 re-run, both from read-only fixtures. Then `git mv` to `archive/`.
+
+## Execution — started 2026-10-13 (Peter: "Start the indexer fix")
+Thurgood designs the fix and its measurement first (read-only consult: scope of H3/H4 indexing and weighting; fence-aware heading parser; iOS tokenization; acceptance = oracle 83/0/0 and rank-1-strong not below 77, no new confident-wrong on Q2 (reported, spent), and the fresh blind set as the discrimination measure), then executes on `fix/find-docs-indexer-h3-fence-ios` after this grant's merge. The fresh set is authored blind by the four seats via the same sealed prompt (new consults, no prior context) and keyed by Thurgood BEFORE the fix is run — pre-registered in the fixing PR's first commit.
