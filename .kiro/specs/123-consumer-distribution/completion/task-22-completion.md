@@ -3,11 +3,11 @@
 **Spec**: 123 — Consumer Distribution · **Unit**: U3 — Onboarding (Tasks 19–22; **this is the gating parent: its completion opens the U3 PR**) · **Type**: Implementation · **Validation**: Tier 3
 **Agent (plan)**: PRIMARY Lina (Sonnet); Leonardo (Opus) — 22.3 `example-home.yaml`, 22.5 DD9
 **Delegated-tier**: plan held — 22.1, 22.2, 22.3 (placement, mechanics, guard) and 22.4 ran Lina (Sonnet), the planned PRIMARY; Leonardo (Opus) authored 22.0, 22.3's content and 22.5's DD9 as planned; 22.3b ran Ada (Sonnet) as planned.
-**CI-provenance**: local
+**CI-provenance**: PR gate #321 @ fc68577daa89029d22a6c17b582e2e16f06eaeff (merge ref) — https://github.com/3fn/DesignerPunk/pull/321/checks?sha=fc68577daa89029d22a6c17b582e2e16f06eaeff
 **Instruments**: 54 listed — exists 30 · built-here 24 · missing 0 · unlisted 7 — .kiro/specs/123-consumer-distribution/completion/task-22-instruments.md
 **Traces**: Reqs 18, 19.3–19.8, 15.8, 15.9, 13 · design C26, C27 (+ erratum), DD9
 
-**On the CI line.** `local`: every run result below was measured on this machine at the tree carrying this doc. The unit's PR gate line replaces this one at open, in a docs-only commit after the checks finish.
+**On the CI line.** *(Replaced 2026-10-13, docs-only, after the gate ran: the PR-gate line above; every required context green at the merge ref; merged as `cdb8296fa`.)* Originally `local`: every run result below was measured on this machine at the tree carrying this doc. The unit's PR gate line replaces this one at open, in a docs-only commit after the checks finish.
 
 **Subtasks**: 22.0 (Leonardo; done by `f10721303` template, `f2ebbc77e` example, approval `8b78d46fa`, placement `464a748dc`) · 22.1 `ff5f2d53f` · 22.2 `fa3c1be3a` (+ `b0fe66301`, `21c73b60d`) · 22.3 `501c67cbd` with Leonardo's `55bbc1243` · 22.3b `4ed907eb1` (Ada) · 22.4 `fd53431e6` (lock), `d637c7b5f`, `a764f0c18`, `387ff998b` · 22.5 `d55e94169` · final lock `73ba4fc5f`. Their docs: `task-22-0-completion.md`, `task-22-1-completion.md`, `task-22-2-completion.md`, `task-22-3-completion.md`, `task-22-3b-completion.md`, `task-22-4-completion.md`, `task-22-5-completion.md`.
 
@@ -67,3 +67,11 @@ Primary Artifacts: every artifact this parent lists exists on the branch: `src/c
 - **The RELEASE (release 3) claims event** is owed after merge (Stacy); **B-U3 ratifies at this merge** (`.kiro/docs/ballots/2026-10-03-123-b-u3-install-guide.md`).
 - **Task 19's lock follow-up** (its C20 row) is discharged by this parent's last refresh (`73ba4fc5f`).
 - **Instruments row 7.1** (the tripwire line in the PR body): built at open; the RELEASE-FLOW enforcement layers that read it are Stacy's after merge.
+
+---
+
+## Addendum (2026-10-13, after the U3 PR opened and merged)
+
+- **Row 6 (the tripwire line in the U3 PR body)**: the PR is https://github.com/3fn/DesignerPunk/pull/321 (merged as `cdb8296fa`); its body carries `Tripwire: declared 16, now 18; parents unchanged; successor branch: none` — the row reads ✅.
+- **CI-provenance**: the header line now carries the PR-gate form; the local-run paragraph is kept as history.
+- Written by the orchestrator (a docs-only follow-up the doc itself promised at open).
