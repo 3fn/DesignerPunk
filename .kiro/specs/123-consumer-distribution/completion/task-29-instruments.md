@@ -82,3 +82,11 @@
     - (B) an R3 surface amendment to Thurgood's ruling;
     - the class option.
   - Blocks 29.3 until ruled. The plan is not edited.
+- 2026-10-12 — added-by-ruling (Thurgood proposed this kind for this case; `unlisted` is the nearest kind in the guide's vocabulary) — criterion C7 — Peter RULED (A) on the 29.0 fork; amendment dated 2026-10-12 under Task 29's C7 in `tasks.md`.
+  - Rows 7.1 and 7.2 now cover two kinds of span: per-entry Kiro-JSON spans for the two `description` rows, and **a Kiro-prompt knowledge-fallback note with per-entry spans** for the four glob-only `knowledgeBases[…]` rows. Both are built here at 29.3.
+  - Row 7.3 widens: the `git diff --stat` on 29.3's commit names `*.attribution.json` plus the `*-prompt.md` files of agents with a rendered glob-only knowledge base.
+  - New instruments are needed before 29.3 commits:
+    - **Kenya's, Data's and Stacy's reads of the rendered note**: MISSING → Kenya, Data, Stacy; requested at 29.3; **block 29.3's commit**.
+    - The reconciled `kiro.ts` L428–434 comment: built here (29.3).
+  - The steward `.kiro/agents/*-prompt.md` join row 7.4's moved outputs.
+  - The 29.0 `misfit` entry above is resolved by this ruling.
