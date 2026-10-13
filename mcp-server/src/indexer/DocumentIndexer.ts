@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { extractMetadata } from './metadata-parser';
 import { extractFrontmatterInfo } from './frontmatter-parser';
-import { extractHeadingStructure } from './heading-parser';
+import { extractHeadingStructure, extractDeepHeadings, WithDeepSections } from './heading-parser';
 import { resolveSection, SectionLookup } from './section-parser';
 import { extractCrossReferences, CrossReference as ParsedCrossReference } from './cross-ref-parser';
 import { estimateTokenCount } from '../utils/token-estimator';
@@ -552,6 +552,8 @@ export class DocumentIndexer {
     // Extract heading structure for section list
     const outline = extractHeadingStructure(content);
     const sections = outline.map(s => s.heading);
+    // Deep headings (H3/H4) for find_docs' co-occurrence gate (indexer fix 2).
+    const deepSections = extractDeepHeadings(content);
 
     // Estimate token count
     const tokenCount = estimateTokenCount(content);
@@ -562,7 +564,7 @@ export class DocumentIndexer {
     const id = frontmatter.id ?? '';
 
     // Store metadata in index
-    const documentMetadata: DocumentMetadata = {
+    const documentMetadata: DocumentMetadata & WithDeepSections = {
       path: filePath,
       id,
       purpose: metadata.purpose,
@@ -571,6 +573,7 @@ export class DocumentIndexer {
       lastReviewed: metadata.lastReviewed || '',
       organization: metadata.organization || '',
       sections,
+      deepSections,
       tokenCount,
       title: frontmatter.title,
       description: frontmatter.description,

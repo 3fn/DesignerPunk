@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-03
 **Drafted by**: Thurgood (Opus), PRIMARY on Spec 123 Task 19
-**Status**: DRAFT
+**Status**: **RATIFIED (Peter, 2026-10-13)** — by the merge of U3's unit PR #321 (squash `cdb8296fa`), the ratification act this ballot named. Stamped in a record-only follow-up (chore, 2026-10-13); the merge was the act, the stamp is the committed status line the README's mechanical check reads.
 **Ratification**: under the PR-gated workflow, **Peter's merge of U3's unit PR is the ratification** (governance carve-out; PR-atomic, as in the B-U1 and #268 precedents). This is a **light** ballot (Peter's PR-2): it records why the install process changes and what happens to the content #268 ratified. It does not put each guide edit to a vote.
 **Edits it governs**: `governance/DesignerPunk-Integration-Guide.md` (the install region, Task 19.1; markers, the reference remainder and the derivation, Task 19.4). It also covers the copies that follow from the guide: `docs/consumer/INSTALL.md` (the committed derivation) and the `README.md` install lines. Those copies are not law, and are named here only so the reader sees the whole surface.
 **Origin**: Spec 123 Task 19, criterion "B-U3, a light record-first ballot (PR-2)" (`tasks.md` @ `53a3d413`, L1005–1012); design C23 and its 2026-10-03 erratum.

@@ -34,9 +34,16 @@
 
 | 11 | **Components tokenizer has the "iOS" defect too**: `tokenizeString` (application-mcp-server/src/indexer/ComponentIndexer.ts L129–141) camelCase-splits "iOS" → `i`+`os`. Found by Thurgood designing the docs indexer fix (2026-10-13). | **Lina** | duplicate the versioned atoms list (iOS, iPadOS, macOS, tvOS, watchOS, iPhone, iPad) with cross-citing headers (the scorer precedent); own PR; her alias/calibration suite as the re-run |
 
+## From the indexer fix (#325, findings § 7) — routed
+| # | Item | Owner | Action / trigger |
+|---|---|---|---|
+| 12 | **Fenced-TEMPLATE headings are answers.** Fix 1 (fence-aware heading parser) stopped indexing headings inside code fences; in this corpus several fences are markdown TEMPLATES whose headings answer "what goes in X" (product-handoff-protocol Implementation Report + System Request templates; completion-documentation-guide completion-doc + Instruments templates). Measured cost: FKE-07 5→14, FST-08 3→8 (fresh); Q2 DA-07/ST-03/KE-08 moved and were recovered by fix 2. Candidate shapes: (i) never index fenced headings (as shipped now); (ii) index headings inside a fence whose info string is `markdown`/`md`, through the same deep-heading gate; (iii) fenced headings as a low-signal class. | **Thurgood** | Pre-register on a **NEW fresh set** (four seats, sealed prompt, new agents; same acceptance shape and oracle floor) — the 2026-10-13 fresh set is SPENT. Trigger: Thurgood's next matcher session; no edit before the pre-registration commit. |
+| 13 | **section-parser fence-awareness and H4 addressing** — the `get_section` side: `section-parser.ts` indexes `##`/`###` only and counts fenced lines in its `sN` ids; making it fence-aware renumbers ids in 15 docs. Distinct from #325, which fixed the find_docs MATCH surface only. Same defect family as `2026-10-12-docs-mcp-does-not-index-h4.md` (Thurgood; that record stays ACTIVE — #325 did NOT close it). | **Thurgood** | one addressing-conventions pass covering both; trigger as that record states (next indexer change, or a doc that cannot be flattened to H3). Fold the two records at the walk. |
+| 14 | **9 remaining fresh misses, by class** (data for any future gate, no action here): 4 K6 "not supported" status answers (FKE-09, FKE-N2, FDA-N2, FST-N1 — lexically unreachable by design; the one class a semantic arm could plausibly reach, still below O3's bound); 2 template rank losses (row 12); FSP-N2 (answering H3s each carry 2 of a long query's salient tokens, below the gate's 3); FKE-03/FDA-04 (product-token naming at rank 3, behind the Integration Guide and the duplicated WAS schema — D-2, row 5). | — | none; recorded |
+
 ## Also owed (study charter)
 - **Leonardo's Q2-L addendum** — after his Settings ledger closes: same sealed prompt (+ one line allowing ~15–20 queries), own pre-registration SHA, own results line in the findings doc (Thurgood keys; Leonardo's filter pre-freeze).
-- **Indexer fix** — `2026-10-13-find-docs-indexer-defects-from-stage1.md` (Thurgood; grant required; H3 indexing is not a free fix; one answer is an H4).
+- **Indexer fix — DONE**: #325 merged 2026-10-13, ACCEPTED on the fresh blind set; record archived; residuals rows 12–14.
 
 ## What the walk checks
 Row 6 recorded before any of rows 1–3 land (an alias PR without the re-run line → finding). Rows 4, 5, 7 dispositioned within two walks. Then `git mv` to `archive/`.
