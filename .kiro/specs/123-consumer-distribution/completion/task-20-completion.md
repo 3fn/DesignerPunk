@@ -3,11 +3,11 @@
 **Spec**: 123 — Consumer Distribution · **Unit**: U3 — Onboarding (declared multi-parent unit; the gating parent is Task 22, so this parent completes **done-on-branch**, no PR) · **Type**: Implementation · **Validation**: Tier 2
 **Agent (plan)**: PRIMARY Lina (Sonnet)
 **Delegated-tier**: plan held — 20.1, 20.2 and 20.3 ran Lina (Sonnet), the planned PRIMARY. 22.3b, which discharges C7, ran Ada (Sonnet) as planned.
-**CI-provenance**: local
+**CI-provenance**: branch-head dispatch @ a22bd890b5c986b9ca56a32c135c5fbed21cba7f — https://github.com/3fn/DesignerPunk/actions/runs/38331527426, https://github.com/3fn/DesignerPunk/actions/runs/38331533469, https://github.com/3fn/DesignerPunk/actions/runs/38331539576, https://github.com/3fn/DesignerPunk/actions/runs/38331545713, https://github.com/3fn/DesignerPunk/actions/runs/38331551156, https://github.com/3fn/DesignerPunk/actions/runs/38331556067
 **Instruments**: 31 listed — exists 17 · built-here 14 · missing 0 · unlisted 6 — .kiro/specs/123-consumer-distribution/completion/task-20-instruments.md
 **Traces**: Req 15A.1a · design C24, DD1, DD21
 
-**On the CI line.** It is `local` throughout. The orchestrator dispatched the required workflows against the unit branch at the checkpoint commits (the last: the 22.3b head, `4ed907eb1`) and read them; this doc cites no run URL, so every run result below was measured on this machine at the tree carrying `4ed907eb1` and is a local claim.
+**On the CI line.** The orchestrator dispatched the required workflows against the unit branch at `a22bd890b` (the commit that carries this doc's predecessor state) and the six runs are listed. I read each with `gh run view --json conclusion,headSha`: all six are **`success`** at `a22bd890b5c986b9ca56a32c135c5fbed21cba7f` — Consumer Guard (38331527426), 125B Tool-Boot Smoke (38331533469), Section Citation Guard (38331539576), Agent Generator (122) (38331545713), Package Name Drift Detection (38331551156), Lane Timing (38331556067). This is a branch-head dispatch, **not the gate** (the gate runs on the unit PR's merge ref). The commit carrying this edit touches only this completion doc. The Validation section's own results (`npm test`, `tsc`, `test:scripts`, `test:consumer`, `test:pack-contents`, the MCP suites) were measured **locally**, at the tree carrying `4ed907eb1`, and are local claims.
 
 **Subtasks**: 20.1 `96628612d` (with `7e838ed10`) · 20.2 `a9ece59fd` · 20.3 `cb2e94f58`; C7's packaging `4ed907eb1` (22.3b, Ada). Their docs: `task-20-1-completion.md`, `task-20-2-completion.md`, `task-20-3-completion.md`. Task 20's Instruments block is committed (`1224be9cf`) and its final Counts line is refreshed (Ada's interim line was stale).
 
