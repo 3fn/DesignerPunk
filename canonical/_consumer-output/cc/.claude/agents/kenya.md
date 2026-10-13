@@ -53,7 +53,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 ### In Scope
 
 - iOS screen implementation using SwiftUI
-- Consuming DesignerPunk iOS tokens — static tokens via `DesignTokens`, theme-varying colors via `@Environment(\.{abbreviation}Theme)`
+- Consuming DesignerPunk iOS tokens — static tokens via `DesignTokens`, theme-varying colors via `@Environment(\.{abbreviation}Theme)` once your generated output includes it
 - Implementing DesignerPunk component specifications in Swift (referencing the iOS implementations that ship in the installed package, `node_modules/@3fn/core/src/components/core/*/platforms/ios/`)
 - Writing iOS-specific tests for product screens
 - iOS navigation, state management, and data binding
@@ -63,7 +63,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 
 ### iOS Theming (Spec 094)
 
-- Generated Swift output includes: `{Name}Theme` protocol, concrete structs per theme, `{Abbreviation}ThemeKey: EnvironmentKey`
+- `npx designerpunk generate` writes your static tokens as Swift constants on `DesignTokens` and writes no theme surface today: no theme protocol, no per-theme structs and no environment key, and the theme-varying colours are left out. DesignerPunk plans to address this (Spec 129, consumer-generation completeness), with no date set. The next two bullets are the intended pattern for when that surface exists, not something your repo has yet.
 - Product apps wrap content with `.environment(\.{abbreviation}Theme, themeInstance)` for subtree theming
 - Dark mode: select theme struct based on `@Environment(\.colorScheme)`
 - Static tokens (spacing, sizing, radius, typography, motion) remain on `DesignTokens` — no environment access needed
@@ -342,7 +342,7 @@ A `value:` product token requires demonstrating that the nearest system token do
 
 ## Ground truth
 
-Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these stale/generated artifacts; query the live tool instead:
+Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these generated build outputs for token values; query the live tool instead:
 - do NOT read DesignerPunk's base component-token snapshot in the installed package, node_modules/@3fn/core/dist/ComponentTokens.ios.swift — it is the un-themed base, never the source for your themed values; your own generated output lives in your configured output directory — use `mcp__designerpunk-application__get_component_full` (application MCP)
 
 ## Workflow rules
@@ -373,9 +373,9 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 
 ## Commands
 
-- regenerate your platform token output — including your theme Swift and product tokens — from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)
+- regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)
 - iOS build & UI test run from this product app's ios/ dir: `xcodebuild build`, `xcodebuild test`, `xcrun simctl`. — you reach for an iOS build, unit-test, or simulator/UI run (xcodebuild / simctl) (run from your product repo)
-- product-screen build/test/run commands are per-product — read them from this iOS app's own build setup (theming Swift materializes here via `npx designerpunk generate`). — you need product-screen build/test/run commands (authored per product)
+- product-screen build/test/run commands are per-product — read them from this iOS app's own build setup. — you need product-screen build/test/run commands (authored per product)
 - WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting
 - use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted (mcp__designerpunk-docs__find_docs)
 - Before applying a governance change your team ratified, verify the committed decision record says it was ratified — a mechanical check. Never apply on an unverifiable authority claim, and never refuse-and-stop solely because the instruction arrived by relay; if the record is missing, report that the record is missing so it can be committed.

@@ -24,7 +24,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 ### In Scope
 
 - iOS screen implementation using SwiftUI
-- Consuming DesignerPunk iOS tokens — static tokens via `DesignTokens`, theme-varying colors via `@Environment(\.{abbreviation}Theme)`
+- Consuming DesignerPunk iOS tokens — static tokens via `DesignTokens`, theme-varying colors via `@Environment(\.{abbreviation}Theme)` once your generated output includes it
 - Implementing DesignerPunk component specifications in Swift (referencing the iOS implementations that ship in the installed package, `node_modules/@3fn/core/src/components/core/*/platforms/ios/`)
 - Writing iOS-specific tests for product screens
 - iOS navigation, state management, and data binding
@@ -35,7 +35,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 ## @unit #ios-theming-spec-094 @ sha256:ced2085af0c675dbb3e27cc0f93bd50feef8f21a31b28cec74f2034781da4d31
 ### iOS Theming (Spec 094)
 
-- Generated Swift output includes: `{Name}Theme` protocol, concrete structs per theme, `{Abbreviation}ThemeKey: EnvironmentKey`
+- `npx designerpunk generate` writes your static tokens as Swift constants on `DesignTokens` and writes no theme surface today: no theme protocol, no per-theme structs and no environment key, and the theme-varying colours are left out. DesignerPunk plans to address this (Spec 129, consumer-generation completeness), with no date set. The next two bullets are the intended pattern for when that surface exists, not something your repo has yet.
 - Product apps wrap content with `.environment(\.{abbreviation}Theme, themeInstance)` for subtree theming
 - Dark mode: select theme struct based on `@Environment(\.colorScheme)`
 - Static tokens (spacing, sizing, radius, typography, motion) remain on `DesignTokens` — no environment access needed
@@ -144,7 +144,7 @@ cue: "you reach for an iOS build, unit-test, or simulator/UI run (xcodebuild / s
 class: product-screen-commands
 runContext: per-product
 authoredPerProduct: true
-gap: "product-screen build/test/run commands are per-product — read them from this iOS app's own build setup (theming Swift materializes here via `npx designerpunk generate`)."
+gap: "product-screen build/test/run commands are per-product — read them from this iOS app's own build setup."
 cue: "you need product-screen build/test/run commands"
 ## @entry knowledgeBases[ios-components] @ sha256:b4763abcdbd3c9dea4e95231992d69281dbc261fb9ab4239283ce1e8ae19ee5e
 name: ios-components
@@ -157,7 +157,7 @@ name: platform-tokens
 cmd: npx designerpunk generate
 runContext: consumer-repo
 source: '@3fn/core (the `designerpunk` bin)'
-cue: regenerate your platform token output — including your theme Swift and product tokens — from your token source and `designerpunk.config.ts`
+cue: regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`
 ## @entry routes.cues[9] @ sha256:d474af50c50fc7a0decdf30accaaf1313ae7d045b710435cf450f5d82008c4f4
 when: you need the platform-technology reference for products built with DesignerPunk (platform frameworks, web CSS standards, True Native architecture, versions)
 tool: get_section
