@@ -1299,7 +1299,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 31.1 The intro-line reword (`render.ts`) and the Kiro blank line (`adapters/kiro.ts`, container span)
   - [x] 31.2 The cue removals and the two theming units (PR-12), worded with Kenya and Data; divergent 5 put to Data *(R3: plus every sweep hit dispositioned "correct here"; the `theming-1` removals)*
   - [x] 31.3 Regenerate; the cite-only corrections (divergents 6, 8, 9) in their own commit, declared outside the round *(R3: each read by its signer before commit)*
-  - [ ] 31.4 One re-sign round within Stacy's limits; the lock refresh
+  - [x] 31.4 One re-sign round within Stacy's limits; the lock refresh
   - [ ] 31.5 Full validation; open the U3c PR (tripwire line)
 
 ### UNIT 3g — G2 cycle 2: the corrected derivation check on the shipped profile *(added 2026-10-03; Peter's PR-5)*
