@@ -24,7 +24,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 ### In Scope
 
 - Android screen implementation using Jetpack Compose
-- Consuming DesignerPunk Android tokens — static tokens via `DesignTokens`, theme-varying colors via `Local{Abbreviation}Theme.current`
+- Consuming DesignerPunk Android tokens — static tokens via `DesignTokens`, theme-varying colors via `Local{Abbreviation}Theme.current` once your generated output includes it
 - Implementing DesignerPunk component specifications in Kotlin (referencing the Android implementations that ship in the installed package, `node_modules/@3fn/core/src/components/core/*/platforms/android/`)
 - Writing Android-specific tests for product screens
 - Android navigation, state management, and data binding
@@ -35,7 +35,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 ## @unit #android-theming-spec-094 @ sha256:7818e0ca9a1252c1baacf77ce2e9650bb50377b5c2e07cc07492b48f50ac9122
 ### Android Theming (Spec 094)
 
-- Generated Kotlin output includes: `{Name}Theme` data class, named instances in `{Name}Themes` object, `Local{Abbreviation}Theme` CompositionLocal
+- Your `npx designerpunk generate` produces no theme types for Android today: no `{Name}Theme` data class, no `{Name}Themes` object and no `Local{Abbreviation}Theme` CompositionLocal, and the theme-varying semantic colors are left out of `DesignTokens`. DesignerPunk plans to address this in its consumer-generation completeness work (Spec 129), with no date set. The next two bullets, on providing and selecting a theme, are the intended shape once it does.
 - Product apps wrap content with `CompositionLocalProvider(Local{Abbreviation}Theme provides themeInstance)` for subtree theming
 - Dark mode: select theme instance based on `isSystemInDarkTheme()`
 - `{Abbreviation}` uses uppercase (e.g., `DP` not `Dp`) to avoid collision with Compose `.dp` unit
@@ -156,7 +156,7 @@ name: platform-tokens
 cmd: npx designerpunk generate
 runContext: consumer-repo
 source: '@3fn/core (the `designerpunk` bin)'
-cue: regenerate your platform token output — including your theme Kotlin and product tokens — from your token source and `designerpunk.config.ts`
+cue: regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`
 ## @entry routes.cues[9] @ sha256:d474af50c50fc7a0decdf30accaaf1313ae7d045b710435cf450f5d82008c4f4
 when: you need the platform-technology reference for products built with DesignerPunk (platform frameworks, web CSS standards, True Native architecture, versions)
 tool: get_section
