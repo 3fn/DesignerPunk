@@ -23,14 +23,23 @@ date: 2026-09-29
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:ced2085af0c675dbb3e27cc0f93bd50feef8f21a31b28cec74f2034781da4d31
-renderedHash: sha256:d4203c84f2e984e60da165582dbdec12e7797c22e6dc815e8e2a3f7b64c8b327
-date: 2026-09-29
+renderedHash: sha256:48e5f42f374425d123fa8595e7172cd00e5eba1ff0a4c1018b6716b2a4713469
+date: 2026-10-12
 
 **Ruling: ASSENT — 5/5 surviving.** All 5 survive. `theming-1` to `theming-4` are verbatim. In a consumer, `theming-1` is *more* true than in-repo, because the theme surface materializes consumer-side via `npx designerpunk generate`.
 - **`theming-5`** survives on the rendered directive *"query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set"*. Sourcing a value or name from a Swift file violates that directive, so the item's violation is still a violation of this unit's rendering (5e, in-unit entailment).
 - **Lost**: the explicit warning about *where* the stale snapshots sit. It is a live trap in consumers, because the package ships them (see the three refused ground-truth rows). No credit is taken for it here.
 
 **Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, 5/5 surviving.** All 5 survive, and `theming-5` is now **verbatim-strong**. The rendering restores the snapshot warning, re-pointed: *"never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.ios.swift`) for your themed values; query the application MCP …"*. The gap I disclosed in phase two is closed.
+
+**Re-sign 2026-10-12 (Spec 123 Task 31.4), after Thurgood's authoring commits `dc86ef3ac` (31.2) and `e44e5fe19` / `fdec41750` (31.3): ASSENT, `surviving: [theming-2, theming-3, theming-4, theming-5]`.** This is a new act and closes no divergent (RS-1 has not landed).
+- **Stale list and hashes.** The row is on the branch's stale list at head `fdec41750` (six rows: my three and Data's three). `canonicalHash` is unchanged (`ced2085a…`, the canonical source is untouched); `renderedHash` moves `d4203c84…` → `48e5f42f…` (`renderedHashOf(readConsumerSpans, rowSpanSource)`, run read-only in the worktree).
+- **What I read, in this session.** The unit as rendered in cc `kenya.md` L64-70, kiro `kenya-prompt.md` L35-41 and `_canonical` `kenya.md` L177-183; the three are identical. The first bullet now reads: *"`npx designerpunk generate` writes your static tokens as Swift constants on `DesignTokens` and writes no theme surface today: no theme protocol, no per-theme structs and no environment key, and the theme-varying colours are left out. DesignerPunk plans to address this (Spec 129, consumer-generation completeness), with no date set. The next two bullets are the intended pattern for when that surface exists, not something your repo has yet."*
+- **`theming-1` is removed and not credited**: the rendering states the opposite of "generated Swift output includes a theme protocol, structs and a ThemeKey". The new `removals` entry (`cites: subtraction-1`) is the right removal for that sentence. **Judgment on the cite: I accept it, with a residual.** Subtraction-1 (repo-internal tooling invocations) is the nearest of the five, because the sentence inventories what DesignerPunk's own generator emits; it is not an exact fit (the sentence is a false claim being replaced, not a tooling invocation). The closed set has no "false claim replaced" category; that is RS-1's question, not mine to answer by refusing a correct text.
+- **Credited**: `theming-2` (L67, verbatim), `theming-3` (L68, verbatim), `theming-4` (L69, verbatim) and `theming-5` (L70, verbatim-strong, unchanged from my 2026-09-29 re-sign).
+- **Facts the new bullet rests on, checked**: nothing in a consumer's generate emits a theme surface (`generateThemeOverrideBlocks`, `TokenFileGenerator.ts` L1028, has no production caller; read); the consumer's `DesignTokens.ios.swift` leaves out the theme-varying colours (`docs/releases/release-15.0.0.md` L72, L127; the guide's § Platforms › iOS); Spec 129's directory name is `129-consumer-generation-completeness`.
+- **Residual, not a refusal (fork A, named at 31.0)**: bullets 2 and 3 are verbatim and are framed by bullet 1, directly above. A reader that quotes bullet 2 alone can still write against an environment key nothing defines. I judged the framing sufficient for the signature; the conditional form (B) remains open to Peter.
+- **Erratum.** My 2026-09-29 entry above says `theming-1` is *"more true than in-repo, because the theme surface materializes consumer-side via `npx designerpunk generate`"*. That was wrong: a consumer's `generate` emits no theme surface (`TokenFileGenerator.ts` L1028 has no production caller; my R2 § D, 2026-10-03, and the 19.4 review). This entry supersedes it; it is a correction of my reading, not a new claim.
 
 ## `#out-of-scope`
 
@@ -212,14 +221,20 @@ date: 2026-09-29
 signer: kenya
 disposition: re-pointed
 canonicalHash: sha256:bd33ad01f96b8e52831e10abdd7b33556a39d8ee99f9cccbd789170539199f67
-renderedHash: sha256:a51ec7c296550cce090a6b0151ad0d45630bda089c84a0199526948e0ec64147
-date: 2026-09-29
+renderedHash: sha256:eaed5dad0116f1571c1ed2fd4da6a10c81e5afa85214f1cabe2321fb5e84d34f
+date: 2026-10-12
 
 **Final re-sign 2026-09-29, after Thurgood's suffix fix `7e5af8be` and regen `8ea88c2f`: ASSENT to the re-point, `surviving: []`. My refusal is RESOLVED.**
 - **The rendering now reads** *"regenerate your platform token output — including your theme Swift and product tokens — from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)"*.
 - **The suffix is now true in a consumer**: "your product repo" is where the agent runs. I checked both consumer renderings (`cc/.claude/agents/kenya.md` and `kiro/.kiro/agents/kenya-prompt.md`), and neither contains "not this repo".
 - **The re-pointed function is complete**: the in-repo `npm run generate:platform-tokens` becomes the consumer's `npx designerpunk generate`, which regenerates theme Swift and product tokens from the consumer's own config. That is where the theming surface materializes.
 - **History**: no-consumer-counterpart, assented in phase two, then re-pointed by Thurgood's batch. I refused that version over the "(run from the consumer product repo, not this repo)" suffix, which contradicted itself in a consumer (`render.ts:97`). It is now fixed under the consumer profile.
+
+**Re-sign 2026-10-12 (Spec 123 Task 31.4), after Thurgood's authoring commit `dc86ef3ac` (31.2): ASSENT to the re-point, `surviving: []`.** A new act; it closes no divergent.
+- **Stale list and hashes.** On the branch's stale list at head `fdec41750`. `canonicalHash` unchanged (`bd33ad01…`); `renderedHash` moves `a51ec7c2…` → `eaed5dad…`.
+- **What I read, in this session.** The cue as rendered: cc `kenya.md` L376 and kiro `kenya-prompt.md` L293, *"regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)"*, and the `_canonical` frontmatter L100 (`cue: regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts``).
+- **Why it holds.** The cue no longer says generate produces theme Swift (the clause *"including your theme Swift"* was removed, not reworded). What remains is true: `npx designerpunk generate` writes the platform token files and, when `productTokens` is configured, the product tokens (`src/cli/generateProductTokens.ts`). The command, `runContext` and source are unchanged and still re-point `npm run generate:platform-tokens` (subtraction-1). Ada's fact-check of the cue is reported as TRUE in the brief; I rely on my own read of the source, not on that report.
+- **Erratum.** My 2026-09-29 entry above says the re-point *"regenerates theme Swift and product tokens from the consumer's own config. That is where the theming surface materializes."* The second sentence was wrong: nothing emits a theme surface in a consumer today (`TokenFileGenerator.ts` L1028, no production caller). This entry supersedes it.
 
 ## `#frontmatter:commands[swift-theme-types-tests]`
 
@@ -318,8 +333,8 @@ date: 2026-10-02
 signer: kenya
 disposition: retained
 canonicalHash: sha256:645f03d4ab6f8fcd2badea6765bf8a71420de5c194af2b3172e3fc3afd02d12c
-renderedHash: sha256:b7f514bac8ff290bc25b3caf9fcce92724b6d3e83f7aa044ed89468eb4314252
-date: 2026-10-02
+renderedHash: sha256:21178d058909814b92e345d1c860a461e64be9ead617d304813e6587956e7e1d
+date: 2026-10-12
 
 **REFUSED: `should-re-point`.** This entry's no-consumer-counterpart premise is false. `npm pack --dry-run` on the current tree lists `dist/DesignTokens.ios.swift`, `dist/ios/DesignTokens.ios.swift` and `dist/ComponentTokens.ios.swift` in the published tarball, because the `files` glob is `dist/**/*.{js,d.ts,json,css,swift,kt}`.
 - **The trap exists in every consumer.** The snapshots land at `node_modules/@3fn/core/dist/…`. `dist/ios/DesignTokens.ios.swift` has 0 `Theme` references, so it is the flat, un-themed surface this manifest exists to keep me off.
@@ -336,6 +351,12 @@ date: 2026-10-02
 - **Surviving**: `[]`. No operative-set items are owed on this frontmatter row; the assent is to the retention itself.
 - **Residual (not a refusal)**: the line says *"stale/generated"*, but the one listed artifact is generated and un-themed rather than stale. The trim's own removal of "stale" (subtraction-3) does not reach this introductory line. A consumer agent that obeys the line still does the right thing, so I don't refuse over it. The line is also a shared template (Data's rendering is identical), so rewording it is the profile author's or `render.ts` owner's authoring, not a signing act.
 - **Valve-1 blind spot**: closed for this row.
+
+**Re-sign 2026-10-12 (Spec 123 Task 31.4), after Thurgood's intro reword (`render.ts`, 31.1, regenerated at `48664c634`): ASSENT to `retained`, `surviving: []`.** A new act; it closes no divergent.
+- **Stale list and hashes.** On the branch's stale list at head `fdec41750`. `canonicalHash` unchanged (`645f03d4…`); `renderedHash` moves `b7f514ba…` → `21178d05…`.
+- **What I read, in this session.** The line the row owns, identical in both targets: cc `kenya.md` L345 and kiro `kenya-prompt.md` L262: *"Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these generated build outputs for token values; query the live tool instead:"*. The `## Ground truth` heading and its blank line (cc L343-344, kiro L260-261) are the container span and are not hashed by this row. The Kiro blank line is present. The `_canonical` frontmatter L15 keeps `verdict: none-trim-stale-snapshots`.
+- **Why `retained` still holds.** The entry's verdict value is still true in a consumer: the manifest trims a shipped, un-themed snapshot (the ComponentTokens trim, re-pointed to `node_modules/@3fn/core/dist/…`), and the listed artifact in both targets is exactly that. The reword closes the residual I recorded on 2026-10-02: the line no longer calls the artifact "stale", it calls it a generated build output, which is what it is.
+- **Surviving**: `[]`; no operative-set items are owed on this frontmatter row.
 
 ## Signing run summary (2026-09-29, phase two)
 
