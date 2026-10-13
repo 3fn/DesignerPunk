@@ -87,3 +87,25 @@ describe('find_components: "ios" matches real metadata that says "iOS"', () => {
     }
   });
 });
+
+describe('separators: `/` splits, `.` does not (slash-separator fix)', () => {
+  it('slash-joined atoms both survive as atoms', () => {
+    expect(tokenizeString('macOS/iPadOS')).toEqual(['macos', 'ipados']);
+    expect(tokenizeForMatch('(macOS/iPadOS with pointer)')).toEqual(['macos', 'ipados', 'pointer']);
+  });
+
+  it('slash-joined plain words split (real metadata: "back/close", "list/grid/map", "web/ios")', () => {
+    expect(tokenizeString('back/close')).toEqual(['back', 'close']);
+    expect(tokenizeString('List/Grid/Map')).toEqual(['list', 'grid', 'map']);
+    expect(tokenizeString('web/ios')).toEqual(['web', 'ios']);
+    expect(tokenizeString('iOS/web')).toEqual(['ios', 'web']);
+  });
+
+  it('`.` is NOT a separator: dotted token references and e.g. stay whole (see tokenizeString doc)', () => {
+    expect(tokenizeString('space.inset.100')).toEqual(['space.inset.100']);
+    expect(tokenizeString('color.badge.text.notification')).toEqual(['color.badge.text.notification']);
+    expect(tokenizeString('(e.g., Daily/Weekly)')).toEqual(['e.g', 'daily', 'weekly']);
+    // a sentence-final period is still stripped
+    expect(tokenizeString('Ignored on iOS.')).toEqual(['ignored', 'on', 'ios']);
+  });
+});
