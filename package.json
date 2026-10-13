@@ -29,6 +29,8 @@
     "dist/name-contract.json",
     "bin/",
     "src/cli/templates/",
+    "docs/consumer/INSTALL.md",
+    "docs/consumer/COMMIT-POLICY.md",
     ".kiro/steering/Agent-Directory.md",
     ".kiro/steering/AI-Collaboration-Principles.md",
     ".kiro/steering/Civitas-System-Overview.md",

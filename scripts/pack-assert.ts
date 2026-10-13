@@ -358,6 +358,32 @@ const SHIPPED_IDENTITY_DOCS = [
 /** Negated `dist/` subtrees (Ada's split packaging ruling): duplicate platform-token copies the root files already carry. */
 const NEGATED_DIST_DIRS = ['dist/ios/', 'dist/android/', 'dist/web/'];
 
+/**
+ * U3's two shipped consumer docs, by explicit path (design C5 erratum, 2026-10-03; tasks.md Task 20 criterion C7 and Task 22.3b).
+ * `docs/consumer/**` is NOT a directory glob in `files[]`: only these two files ship.
+ */
+const SHIPPED_CONSUMER_DOCS = ['docs/consumer/INSTALL.md', 'docs/consumer/COMMIT-POLICY.md'];
+
+/**
+ * The EXPLICIT expected set under `src/cli/templates/` (Task 22.3b; design C5 erratum, R2 Ada RC-2). Written by hand, NEVER
+ * derived from the tree: a tree-derived set cannot catch a stray committed file. Adding a template is an edit to this list.
+ * The directory ships through the single `src/cli/templates/` `files[]` entry, so this list is the only gate on what is in it.
+ */
+export const SHIPPED_CLI_TEMPLATES = [
+  'src/cli/templates/mcp-config.json.template',
+  'src/cli/templates/personal-note.template.md',
+  'src/cli/templates/personal-note.example.md',
+  'src/cli/templates/product/overview.yaml',
+  'src/cli/templates/product/experience-map/pages/example-home.yaml',
+  'src/cli/templates/product/templates/home-layout.yaml',
+  'src/cli/templates/starter-specs/ci-needs/needs.md',
+  'src/cli/templates/starter-specs/ci-needs/tasks.md',
+  'src/cli/templates/starter-specs/regrounding/tasks.md',
+];
+
+/** The U3 additions that also get their own ADD-present row (the starter specs and the scaffold files; `mcp-config.json.template` already has a declared-floor row). */
+const U3_TEMPLATE_ADDS = SHIPPED_CLI_TEMPLATES.filter((p) => p !== 'src/cli/templates/mcp-config.json.template');
+
 function assertDeferredRows(packedPaths: Set<string>, root: string): void {
   const packed = [...packedPaths];
   const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
@@ -374,6 +400,18 @@ function assertDeferredRows(packedPaths: Set<string>, root: string): void {
   for (const doc of SHIPPED_IDENTITY_DOCS) {
     check(packedPaths.has(doc), `deferred ADD present: ${doc}`);
   }
+
+  // ADD present: U3's consumer docs (explicit paths) and every U3 scaffold / starter-spec / note file (Task 22.3b). Outside the >= 14 `publish path:` floor.
+  for (const f of [...SHIPPED_CONSUMER_DOCS, ...U3_TEMPLATE_ADDS]) {
+    check(packedPaths.has(f), `deferred ADD present: ${f}`);
+  }
+  // The exact set under src/cli/templates/: a stray packed file or a dropped one is red.
+  const { unexpected: strayTemplates, missing: missingTemplates } = templatesSetDiff(packed);
+  check(
+    strayTemplates.length === 0 && missingTemplates.length === 0,
+    `deferred exact set: the packed set under src/cli/templates/ equals exactly the ${SHIPPED_CLI_TEMPLATES.length} expected files`,
+    `unexpected: [${strayTemplates.join(', ')}] missing: [${missingTemplates.join(', ')}]`
+  );
 
   // REMOVE absent: the agent copies, and every steering doc beyond the eight (incl. personal-note.md, named).
   const agents = packed.filter((p) => p.startsWith('.kiro/agents/'));
@@ -429,6 +467,16 @@ export function steeringSetDiff(packed: string[]): { unexpected: string[]; missi
   return {
     unexpected: steering.filter((p) => !expected.includes(p)),
     missing: expected.filter((p) => !steering.includes(p)),
+  };
+}
+
+/** The packed `src/cli/templates/` set against the explicit expected list: what is extra, what is missing. */
+export function templatesSetDiff(packed: string[]): { unexpected: string[]; missing: string[] } {
+  const templates = packed.filter((p) => p.startsWith('src/cli/templates/')).sort();
+  const expected = [...SHIPPED_CLI_TEMPLATES].sort();
+  return {
+    unexpected: templates.filter((p) => !expected.includes(p)),
+    missing: expected.filter((p) => !templates.includes(p)),
   };
 }
 
