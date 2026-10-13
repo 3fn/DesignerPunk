@@ -39,3 +39,68 @@ The components `aliases` set is never populated (no indexer plumbing) and aliase
 
 ## 4. What the walk checks
 Has F1 been ruled? Ruled-yes with no fixing PR after one walk → finding. Fixing PR merged → record the SHA here, re-run the seven reproductions, record results, `git mv` to `archive/`.
+
+---
+
+## Fix record (2026-10-12, Lina — branch `fix/find-components-stage0-lexical-metadata`)
+
+**Inputs used (contamination rule)**: only the seven reproductions in § 1 and the existing calibration tests in `tool-boundary.contract.test.ts`. No new query sets; no Q3 fixture authored or read (`scripts/__fixtures__/` was not opened). The R1 "expected failures" list was not used as a driver — see "Pre-exposure" below.
+
+### What changed, per item
+
+1. **Stop words** — new `application-mcp-server/src/indexer/termNormalization.ts`. The docs list (`mcp-server/src/query/stop-words.ts` v1) is copied verbatim (no cross-package import: tsc rootDir boundary), plus a closed-class components extension (non-spatial prepositions, conjunctions, pronouns/auxiliaries — e.g. `between`, `off`, `while`, `through`). Spatial prepositions (above/below/over/under/inside/…) are deliberately NOT stop words. Why a components extension: a single high-signal hit is `strong` here (rubric clause 1), so a function word in `purpose` does more damage than on the docs side. Versioned (`COMPONENT_STOP_WORD_LIST_VERSION = 1`); a drift-guard test fails if the docs list gains a word the copy lacks. Applied symmetrically (every indexed field and the query). A keyword made only of stop words now returns the `none` empty contract — before this change that path would have dropped the keyword filter and returned the whole catalog.
+2. **Plural folding** — a conservative suffix rule with an exceptions list, not a stemmer: `-ies`→`-y`, `-(ch|sh|x|ss)es`→drop `es`, otherwise drop a trailing `s`; words of ≤3 letters, words ending `ss`/`is`, and an exceptions list (`status`, `focus`, `radius`, `canvas`, `news`, `series`, …) are left alone. Why not a stemmer: it would conflate `navigation`/`navigate`, `selection`/`select`, `validation`/`validate` — distinctions that matter in this vocabulary. `matchedOn.term` carries the folded term.
+3. **Tier-aware rank** (Thurgood's ruling) — `rankCompare` in `QueryEngine.ts`: tier, then coverage, then own-name hit (the component's OWN name tokens, not family), then name (fixed display order). `deriveMatchConfidence` untouched. Rubric amended (see below).
+4. **Metadata de-dup** — see "Families checked". Rewrote `when_to_use` for Button-CTA, Button-Icon, Button-VerticalList-Item, Button-VerticalList-Set and the six Progress-* that shared one block; rewrote `alternatives` for the eight Input-* that shared the FormInput list (the record named seven; Input-Text-Email carried six of the same entries too). Each list now names only the genuinely adjacent alternatives, with reasons from that component's side. The three Progress-Indicator-* also got a `when_not_to_use` pointing at the semantic components (they had the family-level block pasted). `purpose` and `contexts` were NOT touched (they derive from the family docs). Verified the edits survive the extractor: `npm run extract:meta` regenerated all 34 files with zero diff against the working tree (content-aware preservation, fixed 2026-09-14).
+5. **Contract-category tokens** (Thurgood's ruling (b), corrected) — category tokens are low-signal: both the contract's `category` field and the category prefix of the concept key (`validation_` in `validation_form_integration`). The concept suffix stays high-signal. Rubric amended. **Tiers change at merge** for queries whose only high-signal evidence was a category word (`validation`, `interaction`, `accessibility`, …): they now land at `partial`.
+6. **Declared internal-only** — field `internal_only: true`, placed in the component's **`.schema.yaml`, not `component-meta.yaml`** (a deliberate departure from the brief). Reason: `extract:meta`'s `generateYaml` writes only purpose/usage/contexts/alternatives, so a new component-meta field would be silently dropped on the next extraction (the 2026-09-13 defect class), and the extractor is outside my write scope. `schema.yaml` is not generated, and it already holds `readiness`, the other Layer-2 signal. Populated on Nav-Header-Base, Progress-Indicator-Node-Base, Progress-Indicator-Connector-Base, Progress-Indicator-Label-Base. Audit: every component referenced under some `composition.internal` was checked; Icon-Base, Container-Base, Button-Icon and Input-Radio-Base are composed internally but also used directly, so they are not internal-only. Surfaced on every `find_components` row (structured and keyword) as `viability: { internalOnly }`, the same shape as find_docs' `viability`; also on `get_component_full` as `internalOnly`. The tool never filters on it. The tool-boundary key-set guard was re-baselined with a log entry.
+
+### Rubric amendments (`.kiro/specs/121-claude-code-portability/discovery-confidence-rubric.md`, in Lina's write scope `.kiro/specs/**`)
+- Components rubric: the high/low field lists updated with amendment markers; a normalization bullet added (stop words + plural folding); a dated **item-5 amendment block** (category tokens → low-signal).
+- Layer 3: the multi-owner-ties bullet now says the alphabetical final step is a fixed display order, not a judgment; a dated **item-3 amendment block** after the 119-A block (order, rank-only, reproductions, calibration green, guard test).
+
+### Before / after — the seven reproductions (rank 1 + tier; local build of `application-mcp-server/dist` against `src/components/core`)
+
+| # | Query | Before: rank 1 (tier), #strong | After: rank 1 (tier), #strong | Verdict |
+|---|---|---|---|---|
+| 1 | `a toast for errors` | Avatar-Base (strong) via `a`; 33/33 strong | Button-VerticalList-Item (strong) via `error`; 10 strong | **Still fails.** Stop words fixed, but folding `errors`→`error` now hits the `state_error` concept suffix (high-signal under ruling (b)). No toast exists; a confident-wrong `strong` remains. |
+| 2a | `toggle` | Chip-Filter (strong) via `toggle` | Chip-Filter (strong) — unchanged | **Not a lexical defect.** `toggle` is literally in Chip-Filter's purpose. No stop word is involved; this is rubric clause 1 (one high-signal hit = `strong`). |
+| 2b | `switch to turn a setting on or off` | Chip-Filter (strong) via `to/a/on/or/off`; 33 strong | Nav-SegmentedChoice-Base (strong, `switch`+`setting`); 2 strong; rank 2 Input-Checkbox-Base (strong, `setting`) | **Partly fixed.** No stop-word evidence. Still confident on a content word (`switch`). |
+| 3 | `tabs` | Badge-Count-Base (**partial** in this run; the record said strong), Nav-TabBar-Base strong at rank 3 | Nav-TabBar-Base (strong) rank 1 | **Fixed.** |
+| 4 | `email field with validation` | Input-Checkbox-Base (strong); 22 strong | Input-Text-Email (strong); 3 strong | **Fixed.** |
+| 5 | `loading spinner while data fetches` | Avatar-Base (partial) above Button-CTA (strong); Progress-Bar-Base absent | Button-CTA (strong) rank 1, Progress-Bar-Base (strong) rank 2; 2 strong | **Partly fixed.** Tier order is fixed and Progress-Bar-Base now appears. It sits at rank 2 only on the alphabetical step (tied on tier, coverage and name hit). `strong` still exists via `loading`. |
+| 6 | `progress through onboarding steps` | Progress-Indicator-Connector-Base (strong) | Progress-Bar-Base (strong); ranks 2–4 = the three Indicator-* (now flagged `internalOnly`); Stepper-Base rank 6, Stepper-Detailed rank 7 | **Not fixed for the intended target.** De-dup removed the identical text, but all seven Progress-* still match all three terms (family token `progress`, `step` in purposes, the shared `onboarding-flows` context), so they tie at full coverage and fall to the alphabet. Once a caller gates on `internalOnly`, the order is Bar, Pagination, Stepper-Base, Stepper-Detailed. |
+| 7 | `bottom navigation between sections` | Nav-TabBar-Base (strong) ✓; rank 2 Avatar-Base (strong) via `between` | Nav-TabBar-Base (strong) ✓; rank 2 Container-Base (strong, `section` in purpose); rank 3 Nav-Header-Base (flagged internal) | **Stop-word half fixed.** Rank 2 is still `strong` on a content word. |
+
+**Residual, recorded but not fixed (forks for Peter/Thurgood)**: rows 1, 2a, 2b, 5 and 7 all keep a confident-wrong or doubtful `strong` because of rubric clause 1: a single high-signal hit is `strong` whatever the coverage (`toast` and `spinner` match nothing, yet the row is `strong` at 50% or 33%). Changing that is a **tier-rule** change: a ballot-level rubric decision, and the study's own question. It is not a Stage-0 knob. Row 6 would also need a decision outside Stage 0. One candidate is a within-tier "count of high-signal terms" rank step (match-strength). It would lift Connector, Node, Pagination and the Steppers above Bar and Label, but it would not separate the Steppers from the internal Indicator-*. Not implemented, because it is not ruled.
+
+### Item 5 disposition
+**Decided and applied** per Thurgood's ruling (b) corrected (above). Not deferred.
+
+### Families checked for duplication
+- **Button**: one 4-entry `when_to_use` block across all four. **Fixed.**
+- **FormInput**: one shared `alternatives` list across eight Input-*. **Fixed.**
+- **Progress**: one `when_to_use` block across **six** of seven. Progress-Bar-Base was already distinct, so Leonardo's "seven" is six. **Fixed.**
+- **Nav-Header-***: no duplication. Not edited.
+- **Chip-***: no duplicated self-description. Chip-Filter and Chip-Input share one identical alternatives entry (`Chip-Base` / "When general interactive chip"). That is two siblings pointing at the same alternative for the same reason, not pasted self-description, so it was left. The same pattern exists in Badge-* and in Button-CTA/Button-Icon → Button-VerticalList-Item; also left.
+- Whole-corpus scan: no other `when_to_use` line or `alternatives` entry is repeated across components.
+
+### Pre-exposure (R1 expected-failure queries the de-dup incidentally touched, so Q3 can flag them)
+- **modal/dialog**: removed "Opening modals or dialogs" from all four Button-* `when_to_use`.
+- **page dots/carousel indicator**: `carousel` was removed from five Progress-* (it stays on Pagination-Base). `dots` was added to Pagination-Base and `dot` to Node-Base.
+- **wizard steps**: `step` tokens were redistributed across the Progress-* `when_to_use` entries.
+- **terms consent**: "terms of service acceptance" was removed from six Input-* alternatives; `consent` was added to Input-Checkbox-Base's alternative reason.
+- **select**: `selection` tokens moved (Button-VerticalList-Set, Input-Checkbox-Legal).
+- Not touched: app bar/navbar/toolbar, bottom nav, tag.
+
+### Out of scope, found (recorded, not fixed)
+1. **Progress-Stepper-Base `purpose` is wrong**: it says "labeled nodes showing step names", but its schema says "Node-Base + Connector-Base (no labels)". `purpose` derives from `Component-Family-Progress.md` (governance, ballot). Related: Progress-Stepper-Detailed's alternative reason for Stepper-Base ("step labels are sufficient without descriptions or connector lines") and Pagination-Base's ("steps need labels") repeat the same error. These are per-component entries, not duplicates, so they were left.
+2. **Nav-Header-Base's schema description says "composition rules flag direct use as warning"**, but no such check exists in `application-mcp-server`. Follow-up: `validate_assembly` could warn on `internal_only` components placed directly.
+3. **The `find_components` tool description does not mention `viability`.** The description is mirrored in `canonical/registry/tool-registry.json` (122-generated, diff-guarded), so changing it needs a registry regeneration outside Lina's write scope. Follow-up.
+4. **`internal_only` is not documented in the schema-format steering doc** (`component-schema-format`). A ballot proposal is owed.
+
+### Tests run
+- `cd application-mcp-server && npm run build`: clean.
+- `cd application-mcp-server && npx jest`: **31 suites / 432 tests passed**. New: `src/indexer/__tests__/termNormalization.test.ts`, `src/query/__tests__/Stage0LexicalFixes.test.ts` (items 1, 2, 3 incl. the rank-order guard, 5, 6), and the real-corpus internal-only audit in `src/query/__tests__/QueryEngine.test.ts`. Re-baselined: `tool-boundary.contract.test.ts` (`viability` key). Spec 121 calibration tests: all green.
+- `npm test` (root): **390 suites / 9377 tests passed**.
+- `npm run extract:meta`: zero diff against the hand-edited metas (edits survive the extractor).
