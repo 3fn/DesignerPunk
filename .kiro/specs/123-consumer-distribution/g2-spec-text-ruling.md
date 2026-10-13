@@ -1,6 +1,6 @@
 # Spec 123 — Thurgood's G2 spec-text ruling (G2-F1, G2-F2, G2-F3): the recorded reading
 
-**Date**: 2026-10-12 (first draft `b00dcf10c`; amended the same day, in one pass, on Stacy's pre-read and Lina's buildability read)
+**Date**: 2026-10-12 (first draft `b00dcf10c`; amended the same day, in one pass, on Stacy's pre-read and Lina's buildability read). **Erratum 2026-10-12** (later, its own PR): one clause added under R2, for shared-substrate members. See § "Erratum 2026-10-12: the shared member under R2".
 **Author**: Thurgood (spec standards; owner of the spec-text half of the three findings, `.kiro/issues/2026-10-02-g2-pass-four-findings.md` § "Split of work")
 **Form**: FK-4, settled between owners in the U3 amendment round (Stacy and Thurgood; Lina has no stake beyond buildability; Ada abstains). The form is **a design C15 erratum plus this recorded reading**, and the erratum cites this file. **No `requirements.md` edit** is made, so the deferred "next requirements touch" folds stay deferred.
 **Authority**:
@@ -48,6 +48,7 @@
 - **Frontmatter entries**: the test is on the entry's **derived value** (`derive()`'s YAML value at the entry's canonical path), not on its rendered text.
   - `null`, an empty list, or a string that is empty after `trim()` is not in `D`.
   - A map value that keeps any member is not empty. **No per-field rule is added**: `derive()` validates at class level by design (`derive.ts` L212–214).
+- **Shared-substrate members** *(erratum 2026-10-12)*: the body-unit rendered-text test applies to each span in `D`. Here `D` is the set R1 defines, the spans sourcing `canonical/shared/shared-catalog.yaml#<id>`. An emptied `members:` entry therefore gives `FAIL_NO_DERIVATION`, whether it renders a whitespace-only span or no span at all.
 - **Where it is built: in the check, not in `emitSpans`** (Lina). `emitSpans` never sees frontmatter values, and dropping the blank line's span there would break P2 attribution totality. `checkDerivation`'s input widens to each span's rendered lines and the derived value. Task 29 lists the tests that change.
 
 ## R3 — Req 11.4.1, "implemented" (G2-F2): ruled by Peter (PR-5.4), recorded here with its nouns filled
@@ -132,6 +133,14 @@ Clause (1) is evaluated first, and a row that fails it reports `FAIL_NO_DERIVATI
 **Not taken, with the reason**:
 - Stacy 1(b)'s map-entry rule ("the rendered text of its non-identity members; for a command, `gap` and `cue`"). It is a per-field emptiness rule, Lina's option (b): it would need field-shape knowledge that `derive()` keeps out by design, and it would make F3 reach `FAIL_NO_DERIVATION` only by adding that knowledge. **Fork (a) was picked instead.** F3/F5 are still rejected, by R1.
 - Stacy scope 5 (R1 versus Req 11.4's "descendant" spans in `D`). No change: under 10.G a span and a unit coincide, so identity and the sub-range rule give the same verdict on every committed row (169/169 name S). A finer future grain reopens it, as the containment pin already reserves.
+
+## Erratum 2026-10-12: the shared member under R2
+
+- **The defect.** R2 assigned its emptiness tests by lane: body units and frontmatter entries. R1 decides the one shared-substrate row (`_shared.dispositions.yaml#record-first-ratification`) in member-id space, which is neither lane. So R2 was silent on an emptied `members:` entry.
+- **How it surfaced.** Stacy could not state an expected verdict for that row from the text. Under bound 1 of the Q5 charter cut ("compliant" must be decidable without consulting the author), that is a defect in this text, not a question to answer in conversation.
+- **The fix.** One clause under R2: the body-unit rendered-text test applies to each span in the shared member's `D`. The result is `FAIL_NO_DERIVATION` for an emptied member, consistent with R2's purpose, Req 11.4 (1) ("something in the shipped charter demonstrably *derives from* S").
+- **What does not change.** No other clause, and no expected verdict in R5. The committed profile's shared member is an honest in-place re-pointing, so no committed row moves.
+- **Reads.** Stacy pre-reads it for verifiability, and Peter merges. Lina's build is unaffected beyond applying the existing body test to the shared member's spans.
 
 ## The erratum this record backs
 
