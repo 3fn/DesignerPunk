@@ -233,8 +233,8 @@ Verdicts are `no consumer loss` or `finding → <owner>`. "Survives" means the r
 
 One line per owner, appended when sent: `<date> — <owner> — IDs <…> — sent by <who> — <message ref>`.
 
-- Lina (F-P1, F-P2, D-1 to D-8): pending
-- Ada (D-9 to D-16): pending
+- 2026-10-13 — Lina — F-P1, F-P2, D-1 to D-8 (+ the sweep-5 column finding) — sent by the orchestrator — explicit message in her seat; ACKNOWLEDGED, no owner disputed. Disposition: F-P2 first (CDS's worked example is a non-conforming `wcag` form — a correctness bug), then F-P1 as a § citation from CDS:825 / CSR:183 to the register's allowlist entry (the register ships in `governance/`; only the test does not — a correction to F-P1's premise), then the D-findings in her content-debt batch after U4 merges (same files and lock as 23.2). Paths that exist nowhere (D-3; parts of D-1, D-7) are fixed regardless of convention. She asks that one path convention be settled across the three owners before any owner edits (class option, § 4).
+- 2026-10-13 — Ada — D-9 to D-16, D-18 — sent by the orchestrator — explicit message in her seat; ACKNOWLEDGED, no owner disputed (D-18 content accepted; Thurgood keeps stewardship of the table). Disposition: absent-from-repo lines (D-15, D-16, D-18, D-11's `ColorSemanticTokens.ts` and `tokens.ts` glob) as one ballot batch at her next burst, riding the Token-Family claims-vs-source pass; not-shipped lines (D-9, D-10, the rest of D-11, D-12 to D-14) held until Peter rules the § 4 class option. D-11's component-layout lines flagged to Lina.
 - Thurgood (D-17 to D-23; `.kiro/issues/` record by the orchestrator): pending
 
 ## 6. What this check does not establish
