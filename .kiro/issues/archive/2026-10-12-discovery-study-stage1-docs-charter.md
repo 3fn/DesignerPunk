@@ -85,3 +85,7 @@ Thurgood ~1.3 sessions (calibration set 0.25; prompt + raw capture 0.15; keying 
 ## 8. Closing
 
 When the findings doc lands (or the gate stops the study), record the outcome here (dated): bucket counts, O-rule, the routed follow-ups (alias proposals, docs-matcher defect issue, Stage 2 question to Peter). Record the same one line in the study charter § 6, then `git mv` this file to `archive/`.
+
+## 9. Closed — 2026-10-13
+Stage 1 ran and closed under **O1** (Peter's Reading A ruling, 2026-10-13). Study PR #315 merged (`aa7b7c08e`): commits (1) `5f8b668b5` raw queries · (2) `08fed8984` pre-registration · (3) `d94adb623` results · (4) `e95af9474` close — orchestrator-made in the pre-registered order after independent verification; only the seven granted paths touched; oracle byte-identical to `main` throughout. Results and all 13 owner-ruled buckets: `.kiro/docs/discovery-study-stage1-findings.md`. Follow-ups routed: `2026-10-13-discovery-study-stage1-followups.md` (hand-fixes, discoveries, the alias-hygiene re-run, Leonardo's Q2-L addendum); indexer defects: `2026-10-13-find-docs-indexer-defects-from-stage1.md` (#314 merged). Stage 2 docs side: NOT RUN. Archived per `.kiro/issues/README.md` rule 5.
+
