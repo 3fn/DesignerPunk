@@ -2,6 +2,9 @@ name: Progress-Indicator-Label-Base
 type: primitive
 family: ProgressIndicator
 version: "1.0.0"
+# Declared internal-only: rendered by other components, never used directly by product code.
+# Emitted on find_components as viability.internalOnly (Layer 2) — the caller gates.
+internal_only: true
 readiness:
   web:
     reviewed: true

@@ -28,17 +28,7 @@ contexts:
   - "onboarding-flows"
 
 alternatives:
-  - component: Input-Text-Email
-    reason: "When email address collection"
-  - component: Input-Text-Password
-    reason: "When password entry"
-  - component: Input-Text-PhoneNumber
-    reason: "When phone number collection"
-  - component: Input-Text-Base
-    reason: "When generic text input"
-  - component: Input-Checkbox-Legal
-    reason: "When terms of service acceptance"
   - component: Input-Checkbox-Base
-    reason: "When generic binary selection"
-  - component: Input-Radio-Base
-    reason: "When standalone radio (rare)"
+    reason: "When several options may be chosen at once"
+  - component: Button-VerticalList-Set
+    reason: "When the single choice is shown as rich list rows that drive an action rather than form data"

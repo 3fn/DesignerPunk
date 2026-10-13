@@ -171,6 +171,14 @@ const FIND_RESULT_EXACT_KEYS = new Set([
   'whenNotToUse',
   'alternatives',
   'contexts',
+  // Layer-2 viability (2026-10-12 — DELIBERATE RE-BASELINE, additive). `viability:
+  // { internalOnly }` carries the declared internal-only flag (schema.yaml `internal_only`)
+  // on EVERY find_components row — structured and keyword alike — because an internal-only
+  // component can be returned by either path. Emitted, never filtered on (the caller gates,
+  // mirroring find_docs' `viability: { placeholder, deprecated }`). Not a breaking change;
+  // the key-set guard fires because it is doing its job.
+  // @see .kiro/issues/2026-10-07-find-components-lexical-and-metadata-defects.md item 6
+  'viability',
 ]);
 
 /**

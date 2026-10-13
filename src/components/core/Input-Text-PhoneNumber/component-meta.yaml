@@ -14,15 +14,7 @@ contexts:
   - "profile-sections"
 
 alternatives:
-  - component: Input-Text-Email
-    reason: "When email address collection"
-  - component: Input-Text-Password
-    reason: "When password entry"
   - component: Input-Text-Base
-    reason: "When generic text input"
-  - component: Input-Checkbox-Legal
-    reason: "When terms of service acceptance"
-  - component: Input-Checkbox-Base
-    reason: "When generic binary selection"
-  - component: Input-Radio-Base
-    reason: "When standalone radio (rare)"
+    reason: "When the numeric input has no phone semantics, such as a quantity or postal code"
+  - component: Input-Text-Email
+    reason: "When the contact field collects an email address instead"

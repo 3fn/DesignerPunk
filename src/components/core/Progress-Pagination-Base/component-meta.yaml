@@ -1,11 +1,9 @@
 purpose: "Show simple dot-based pagination indicating the current position within a sequence of pages or steps."
 
-# Derived from family-level guidance (Component-Family-Progress.md)
 usage:
   when_to_use:
-    - "Showing position in a carousel or swipeable content (Pagination-Base)"
-    - "Displaying progress through a linear multi-step flow (Stepper-Base)"
-    - "Showing labeled steps with descriptions in complex workflows (Stepper-Detailed)"
+    - "Showing position in a carousel or swipeable content"
+    - "Indicating the current page of a short paged sequence with dots, without step labels"
   when_not_to_use:
     - "Navigation is the primary purpose (use navigation components instead)"
     - "Progress is continuous/percentage-based (use a progress bar)"

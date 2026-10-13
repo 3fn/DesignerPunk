@@ -32,6 +32,7 @@ import { LayoutTemplateIndexer } from './LayoutTemplateIndexer';
 import { TokenIndexer } from './TokenIndexer';
 import { ModeClassifier } from './ModeClassifier';
 import { isImmutableContext } from '../staleness/StalenessGate';
+import { normalizeTerms } from './termNormalization';
 
 // ---------------------------------------------------------------------------
 // Multi-root component indexing (Spec 123 Task 1.4 — design C3 "Indexer", L-D2/L-D8)
@@ -107,9 +108,9 @@ interface ComponentSource {
  * Grouped by signal class per the Components rubric in discovery-confidence-rubric.md.
  */
 export interface ComponentKeywordEntry {
-  /** High-signal: tokenized name, tokenized family, purpose, contract concept/category names */
+  /** High-signal: tokenized name, tokenized family, purpose, contract concept-key suffixes */
   highSignal: Set<string>;
-  /** Low-signal: whenToUse, contexts, alternatives[].reason, description */
+  /** Low-signal: whenToUse, contexts, alternatives[].reason, description, contract category tokens (category field + concept-key prefix) */
   lowSignal: Set<string>;
   /** Optional reactive aliases — absence must not block auto-derived matching (Req 1.9) */
   aliases?: Set<string>;
@@ -138,6 +139,28 @@ export function tokenizeString(input: string): string[] {
     .split(/\s+/)
     .map(t => t.replace(/^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$/g, '').toLowerCase())
     .filter(t => t.length > 0);
+}
+
+/**
+ * Tokenize for MATCHING: `tokenizeString` + stop-word removal + plural folding
+ * (`termNormalization.ts`; defect record 2026-10-07 items 1–2). Used on BOTH sides —
+ * every indexed field and the query — so normalization is symmetric by construction.
+ * `tokenizeString` stays the raw, un-normalized splitter.
+ */
+export function tokenizeForMatch(input: string): string[] {
+  return normalizeTerms(tokenizeString(input));
+}
+
+/**
+ * Split a contract concept key into its CATEGORY prefix and its CONCEPT suffix.
+ * Keys are `{category}_{concept}` (contract-system-reference § "Naming Convention"), e.g.
+ * `validation_form_integration` → { prefix: 'validation', suffix: 'form_integration' }.
+ * A key without `_` has no category prefix (suffix = the whole key).
+ */
+export function splitConceptKey(conceptKey: string): { prefix: string; suffix: string } {
+  const i = conceptKey.indexOf('_');
+  if (i <= 0) return { prefix: '', suffix: conceptKey };
+  return { prefix: conceptKey.slice(0, i), suffix: conceptKey.slice(i + 1) };
 }
 
 export class ComponentIndexer {
@@ -672,6 +695,7 @@ export class ComponentIndexer {
       composition: schema.composition,
       omits: schema.omits,
       contracts,
+      internalOnly: schema.internalOnly,
       annotations: metaResult.data ? {
         purpose: metaResult.data.purpose,
         usage: metaResult.data.usage,
@@ -697,8 +721,9 @@ export class ComponentIndexer {
    * Auto-derived from existing metadata at index-build time (Req 1.8).
    * Grouped by signal class per the Components rubric (discovery-confidence-rubric.md).
    *
-   * High-signal: tokenized name, tokenized family, purpose, contract concept/category names.
-   * Low-signal: whenToUse, contexts, alternatives[].reason, description.
+   * High-signal: tokenized name, tokenized family, purpose, contract concept-key SUFFIXES.
+   * Low-signal: whenToUse, contexts, alternatives[].reason, description, contract CATEGORY
+   * tokens (the `category` field and the concept-key prefix — amendment 2026-10-12, item 5).
    * EXCLUDES whenNotToUse — negative-signal trap (Req 1.4 / Lina R1 Q1).
    *
    * O2b confirmed: reads parsed `whenToUse` (camelCase) — the indexer operates on the
@@ -708,25 +733,38 @@ export class ComponentIndexer {
   private buildKeywordEntry(name: string, meta: ComponentMetadata): void {
     const highSignal = new Set<string>();
     const lowSignal = new Set<string>();
+    // All fields go through tokenizeForMatch (stop words dropped, plurals folded) — the query
+    // side does the same, so the two can never disagree (defect record 2026-10-07 items 1–2).
+    const tok = tokenizeForMatch;
 
     // High-signal: tokenized component name
-    for (const t of tokenizeString(name)) highSignal.add(t);
+    for (const t of tok(name)) highSignal.add(t);
 
     // High-signal: tokenized family name
     if (meta.family) {
-      for (const t of tokenizeString(meta.family)) highSignal.add(t);
+      for (const t of tok(meta.family)) highSignal.add(t);
     }
 
     // High-signal: purpose (already a string; tokenize it)
     if (meta.annotations?.purpose) {
-      for (const t of tokenizeString(meta.annotations.purpose)) highSignal.add(t);
+      for (const t of tok(meta.annotations.purpose)) highSignal.add(t);
     }
 
-    // High-signal: contract concept keys and category names
+    // Contract concepts. Rubric amendment 2026-10-12 (defect record item 5, Thurgood's
+    // ruling (b) corrected): the CATEGORY tokens are LOW-signal — both the contract's
+    // `category` field and the category PREFIX of the concept key (`validation_` in
+    // `validation_form_integration`, which `_`-splitting would otherwise make high-signal on
+    // its own). The concept SUFFIX (`form_integration`, `focusable`) stays HIGH-signal.
+    // A category word in a query therefore still matches every component in that category,
+    // at `partial` unless a high-signal field also carries it.
     for (const [conceptKey, contract] of Object.entries(meta.contracts.active)) {
-      for (const t of tokenizeString(conceptKey)) highSignal.add(t);
+      const { prefix, suffix } = splitConceptKey(conceptKey);
+      for (const t of tok(suffix)) highSignal.add(t);
+      if (prefix) {
+        for (const t of tok(prefix)) lowSignal.add(t);
+      }
       if (contract.category) {
-        for (const t of tokenizeString(contract.category)) highSignal.add(t);
+        for (const t of tok(contract.category)) lowSignal.add(t);
       }
     }
 
@@ -734,22 +772,22 @@ export class ComponentIndexer {
     // parsers.ts:198 maps raw usage.when_to_use → annotations.usage.whenToUse
     const whenToUse = meta.annotations?.usage?.whenToUse ?? [];
     for (const phrase of whenToUse) {
-      for (const t of tokenizeString(phrase)) lowSignal.add(t);
+      for (const t of tok(phrase)) lowSignal.add(t);
     }
 
     // Low-signal: contexts array
     for (const ctx of meta.annotations?.contexts ?? []) {
-      for (const t of tokenizeString(ctx)) lowSignal.add(t);
+      for (const t of tok(ctx)) lowSignal.add(t);
     }
 
     // Low-signal: alternatives[].reason
     for (const alt of meta.annotations?.alternatives ?? []) {
-      for (const t of tokenizeString(alt.reason)) lowSignal.add(t);
+      for (const t of tok(alt.reason)) lowSignal.add(t);
     }
 
     // Low-signal: description
     if (meta.description) {
-      for (const t of tokenizeString(meta.description)) lowSignal.add(t);
+      for (const t of tok(meta.description)) lowSignal.add(t);
     }
 
     this.keywordIndex.set(name, { highSignal, lowSignal });

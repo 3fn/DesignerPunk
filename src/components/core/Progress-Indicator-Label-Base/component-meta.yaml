@@ -1,15 +1,11 @@
 purpose: "Display a text label beneath or beside a progress indicator node to describe the step's name or status."
 
-# Derived from family-level guidance (Component-Family-Progress.md)
 usage:
   when_to_use:
-    - "Showing position in a carousel or swipeable content (Pagination-Base)"
-    - "Displaying progress through a linear multi-step flow (Stepper-Base)"
-    - "Showing labeled steps with descriptions in complex workflows (Stepper-Detailed)"
+    - "Internal: rendered by Progress-Stepper-Detailed as the text beneath each step node"
+    - "Building a new Progress semantic component that needs a truncating step label with optional helper text"
   when_not_to_use:
-    - "Navigation is the primary purpose (use navigation components instead)"
-    - "Progress is continuous/percentage-based (use a progress bar)"
-    - "Steps are non-linear or can be completed in any order"
+    - "Direct use in product screens — use Progress-Stepper-Base, Progress-Stepper-Detailed, or Progress-Pagination-Base"
 
 contexts:
   - "onboarding-flows"

@@ -170,6 +170,13 @@ export interface ComponentMetadata {
   /** Behavioral contracts (from contracts.yaml, inheritance resolved) */
   contracts: ResolvedContracts;
 
+  /**
+   * Declared internal-only (schema.yaml `internal_only: true`; absent → false). Rendered by
+   * other components; never used directly by product code. Layer-2 viability input — see
+   * ApplicationSummary.viability. Defect record 2026-10-07 item 6.
+   */
+  internalOnly: boolean;
+
   /** Semantic annotations (from component-meta.yaml, nullable) */
   annotations: SemanticAnnotations | null;
 
@@ -229,6 +236,20 @@ export interface ApplicationSummary extends ComponentSummary {
   whenNotToUse: string[];
   alternatives: Alternative[];
   contexts: string[];
+  /**
+   * Layer-2 VIABILITY signal (discovery-confidence-rubric.md § Layer 2) — distinct from
+   * matchConfidence (Layer 1) and rank (Layer 3), and alongside `readiness`. The tool EMITS;
+   * the caller GATES: an internal-only component may still be a `strong` match, but must not
+   * be placed in a product screen. Mirrors find_docs' `viability: { placeholder, deprecated }`.
+   * Added 2026-10-12 (defect record 2026-10-07 item 6).
+   */
+  viability: ComponentViability;
+}
+
+/** Layer-2 viability flags for a component (find_components). */
+export interface ComponentViability {
+  /** Declared internal-only (schema.yaml `internal_only: true`) — never use directly. */
+  internalOnly: boolean;
 }
 
 // ---------------------------------------------------------------------------

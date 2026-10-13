@@ -1,11 +1,9 @@
 purpose: "Guide users through a multi-step workflow with labeled nodes, step descriptions, and connector lines showing full progress detail."
 
-# Derived from family-level guidance (Component-Family-Progress.md)
 usage:
   when_to_use:
-    - "Showing position in a carousel or swipeable content (Pagination-Base)"
-    - "Displaying progress through a linear multi-step flow (Stepper-Base)"
-    - "Showing labeled steps with descriptions in complex workflows (Stepper-Detailed)"
+    - "Showing labeled steps with descriptions in complex workflows"
+    - "Multi-step flows where each step needs a visible label, optional helper text, and an optional icon"
   when_not_to_use:
     - "Navigation is the primary purpose (use navigation components instead)"
     - "Progress is continuous/percentage-based (use a progress bar)"

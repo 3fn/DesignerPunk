@@ -14,15 +14,7 @@ contexts:
   - "settings-screens"
 
 alternatives:
-  - component: Input-Text-Email
-    reason: "When email address collection"
-  - component: Input-Text-Password
-    reason: "When password entry"
-  - component: Input-Text-PhoneNumber
-    reason: "When phone number collection"
-  - component: Input-Text-Base
-    reason: "When generic text input"
-  - component: Input-Checkbox-Legal
-    reason: "When terms of service acceptance"
+  - component: Input-Radio-Set
+    reason: "When you need the group itself; Radio-Base options always sit inside an Input-Radio-Set"
   - component: Input-Checkbox-Base
-    reason: "When generic binary selection"
+    reason: "When each option can be chosen independently instead of one at a time"

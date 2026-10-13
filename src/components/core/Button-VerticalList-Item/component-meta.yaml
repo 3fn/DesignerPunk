@@ -1,12 +1,9 @@
 purpose: "Represent a single action item within a vertical list menu, supporting tap, select, and multi-select modes."
 
-# Derived from family-level guidance (Component-Family-Button.md)
 usage:
   when_to_use:
-    - "Triggering user actions (submit, save, cancel)"
-    - "Navigating to new views or pages"
-    - "Opening modals or dialogs"
-    - "Confirming or dismissing operations"
+    - "One row inside a Button-VerticalList-Set, with a label, optional description, and optional leading icon"
+    - "Rows whose selected or checked appearance is driven by the parent set rather than managed by the row"
   when_not_to_use:
     - "Displaying read-only status (use Badges instead)"
     - "Creating inline text links (use Link component when available)"
