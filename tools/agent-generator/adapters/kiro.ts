@@ -373,7 +373,7 @@ export class KiroAdapter implements TargetAdapter {
           renderGroundTruthTrims(kiroManifest.groundTruth, toolName);
         if (groundTruthBody !== undefined) {
           bodyParts.push(
-            emit([{ kind: 'entry', path: 'ambient.groundTruthManifest', text: `## Ground truth\n\n${groundTruthBody}\n\n` }])
+            emit([{ kind: 'entry', path: 'ambient.groundTruthManifest', text: `${KIRO_GROUND_TRUTH_LEAD}## Ground truth\n\n${groundTruthBody}\n\n` }])
           );
         }
       }
@@ -575,6 +575,16 @@ function listFilesRecursive(dir: string, base = ''): string[] {
 }
 
 /**
+ * The blank line before the `## Ground truth` heading (`.kiro/issues/2026-10-02-kiro-ground-truth-heading-no-blank-line.md`).
+ * Every Kiro prompt's body ends in a single `\n`, so the heading used to follow the last body line with no blank
+ * line between them; the CC adapter's neighbouring emit has one. The line belongs to the heading's OWN span, the
+ * container (`ambient.groundTruthManifest`, which no signed row hashes) — never the preceding body unit's last
+ * span, whose rows (`#what-you-dont-own` and the unit's other rows) would then move (Kenya; Data's warning).
+ * The steward leg is one span that starts at the heading, so the lead sits in that span's text too.
+ */
+const KIRO_GROUND_TRUTH_LEAD = '\n';
+
+/**
  * VALVE-1 — the consumer profile's ground-truth pieces, one span per signed row
  * (`.kiro/issues/2026-09-30-valve-1-per-trim-spans.md`):
  *   - `ambient.groundTruthManifest` — the `## Ground truth` heading, a container that renders only
@@ -586,7 +596,7 @@ function listFilesRecursive(dir: string, base = ''): string[] {
  * directive renders nothing (the same verdicts the steward form skips).
  */
 function groundTruthPieces(directive: GroundTruthDirective, toolName: (tool: string) => string): SpanPiece[] {
-  const container: SpanPiece = { kind: 'entry', path: 'ambient.groundTruthManifest', text: '## Ground truth\n\n' };
+  const container: SpanPiece = { kind: 'entry', path: 'ambient.groundTruthManifest', text: `${KIRO_GROUND_TRUTH_LEAD}## Ground truth\n\n` };
   const faithfulness = renderGroundTruthFaithfulness(directive, toolName);
   if (faithfulness !== undefined) {
     return [container, { kind: 'entry', path: 'ambient.groundTruthManifest.verdict', text: `${faithfulness}\n\n` }];

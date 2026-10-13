@@ -513,7 +513,7 @@ Interactive elements must remain visible in forced-colors mode. This rule is bei
 
 ## Ground truth
 
-Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these stale/generated artifacts; query the live tool instead:
+Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these generated build outputs for token values; query the live tool instead:
 - do NOT read the built token CSS snapshot dist/web/DesignTokens.web.css — it is a stale generated artifact, not the source of truth — use `mcp__designerpunk-application__get_token_details` (application MCP)
 - do NOT read the built component-token CSS snapshot dist/ComponentTokens.web.css — it is a stale generated artifact, not the source of truth — use `mcp__designerpunk-application__get_token_details` (application MCP)
 - do NOT read dist/browser/demo-styles.css — it is demo-page chrome and defines no tokens — use `mcp__designerpunk-application__search_tokens` (application MCP)

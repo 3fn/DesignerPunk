@@ -1296,7 +1296,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Primary Artifacts:** `canonical/profiles/consumer/**` (author edits and seat signatures in separate commits), `tools/agent-generator/render.ts`, `tools/agent-generator/adapters/kiro.ts`, `tools/agent-generator/__tests__/**` (only tests that assert the reworded strings), `canonical/_consumer-output/**`, `.claude/agents/**` and `.kiro/agents/**` (regenerated, never hand-edited), `canonical/generated.lock`, this parent's completion doc
 
   - [x] 31.0 Pre-edit instruments: the stale list and the `renderedHashOf` baselines, pasted *(R3: opens with the broad theme-claim sweep, every hit dispositioned; the expected signed set named)*
-  - [ ] 31.1 The intro-line reword (`render.ts`) and the Kiro blank line (`adapters/kiro.ts`, container span)
+  - [x] 31.1 The intro-line reword (`render.ts`) and the Kiro blank line (`adapters/kiro.ts`, container span)
   - [ ] 31.2 The cue removals and the two theming units (PR-12), worded with Kenya and Data; divergent 5 put to Data *(R3: plus every sweep hit dispositioned "correct here"; the `theming-1` removals)*
   - [ ] 31.3 Regenerate; the cite-only corrections (divergents 6, 8, 9) in their own commit, declared outside the round *(R3: each read by its signer before commit)*
   - [ ] 31.4 One re-sign round within Stacy's limits; the lock refresh

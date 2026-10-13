@@ -274,9 +274,10 @@ If the spec is ambiguous about Android behavior, pause and confirm with Leonardo
 - System-level component tests — Lina's domain
 
 Your test commands (with their triggering cues) and named gaps are in the Commands section. This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`.
+
 ## Ground truth
 
-Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these stale/generated artifacts; query the live tool instead:
+Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these generated build outputs for token values; query the live tool instead:
 - do NOT read the built Android token snapshot dist/android/DesignTokens.android.kt — it is a stale generated artifact (pre-Spec-094: theme-varying colors flattened to static values), not the source of truth — use `get_token_details` (application MCP)
 - do NOT read the built Android component-token snapshot dist/ComponentTokens.android.kt — it is a stale generated artifact, not the source of truth — use `get_component_full` (application MCP)
 

@@ -342,7 +342,7 @@ A `value:` product token requires demonstrating that the nearest system token do
 
 ## Ground truth
 
-Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these stale/generated artifacts; query the live tool instead:
+Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these generated build outputs for token values; query the live tool instead:
 - do NOT read DesignerPunk's base component-token snapshot in the installed package, node_modules/@3fn/core/dist/ComponentTokens.ios.swift — it is the un-themed base, never the source for your themed values; your own generated output lives in your configured output directory — use `mcp__designerpunk-application__get_component_full` (application MCP)
 
 ## Workflow rules

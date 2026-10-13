@@ -191,7 +191,7 @@ export function renderGroundTruthTrims(
   });
   const intro =
     'Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read ' +
-    'these stale/generated artifacts; query the live tool instead:';
+    'these generated build outputs for token values; query the live tool instead:';
   if (form === 'parts') return { intro, lines };
   return `${intro}\n${lines.join('\n')}`;
 }

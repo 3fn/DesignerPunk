@@ -270,6 +270,7 @@ Provide your counter-arguments; if Peter proceeds, respect it; proceed construct
 - Token formula validation tests — Ada's domain
 
 Your test commands (with their triggering cues) are in the Commands section. This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`.
+
 ## Ground truth
 
 Your ground-truth manifest IS the live catalog — served fresh by MCP, never a standing snapshot. Faithfulness checks are assembly-grain, not catalog enumeration: verify with `get_component_full` and `get_component_health`.
