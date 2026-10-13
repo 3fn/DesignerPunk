@@ -127,17 +127,28 @@ export type KeywordIndex = Map<string, ComponentKeywordEntry>;
  *      "whenToUse"                       → ["when", "to", "use"]
  *      "registration, login, or contact" → ["registration", "login", "or", "contact"]
  *      "safe area handling (iOS)"        → ["safe", "area", "handling", "ios"]   (atom, not i + os)
+ *      "macOS/iPadOS", "back/close"      → ["macos", "ipados"], ["back", "close"]  (`/` separates)
+ *      "space.inset.100", "e.g."         → ["space.inset.100"], ["e.g"]           (`.` does NOT)
+ *
+ * `/` is a separator, as on the docs side (mcp-server QueryEngine `/[\s\-_\/\.]+/`).
+ * `.` deliberately is NOT (the docs side differs here): in component metadata a dot occurs only
+ * inside identifiers — token references (`color.badge.text.notification`, `radius.full`,
+ * `space.inset.100`), WCAG criterion numbers (`2.5.5`), contrast ratios (`4.5:1`) — and the
+ * abbreviation `e.g.`. Splitting would inject identifier fragments (`color`, `space`, `full`,
+ * `label`, …) as prose words into low-signal fields, plus single-letter tokens (`e`, `g`), for no
+ * gain: no prose word in the index is dot-joined. A sentence-final period is already stripped by
+ * step 4.
  */
 export function tokenizeString(input: string): string[] {
   if (!input) return [];
   // 0. Protect brand-cased atoms (iOS, iPadOS, …) by lowercasing them in place, so step 2
   //    cannot split them (`tokenAtoms.ts`; follow-ups record row 11)
-  // 1. Split on hyphens and underscores
+  // 1. Split on hyphens, underscores and slashes (`/` — "back/close", "macOS/iPadOS")
   // 2. Split camelCase: insert space before uppercase letters preceded by lowercase
   // 3. Split on remaining whitespace
   // 4. Strip leading/trailing punctuation from each token
   // 5. Lowercase, filter empty
-  const dehyphenated = protectAtoms(input).replace(/[-_]+/g, ' ');
+  const dehyphenated = protectAtoms(input).replace(/[-_/]+/g, ' ');
   const decameled = dehyphenated.replace(/([a-z])([A-Z])/g, '$1 $2');
   return decameled
     .split(/\s+/)
