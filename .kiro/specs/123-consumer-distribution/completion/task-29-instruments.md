@@ -73,3 +73,12 @@
 **Not a Task 29 instrument (named so it is not mistaken for one)**: Peter's dated re-ruling path for 22.5 (`.kiro/issues/2026-10-02-g2-pass-four-findings.md`, a section naming 22.5). It is Task 22's G2 backstop and U3's instrument, not U3g's. U3g's merge on `HOLDS` is the other limb of that backstop.
 
 ## Found later
+- 2026-10-12 — misfit — rows 7.1 and 7.2 (`kiro.ts` per-entry JSON spans) — criterion C7 — found at 29.0 (`u3g-sizing.md` § 5).
+  - Per-entry spans give derivation evidence for the two `description` rows only.
+  - The four `knowledgeBases[…]` rows (data `android-components`, kenya `ios-components`, stacy `completion-docs` and `spec-summaries`) are glob-only and render nowhere in the Kiro target, on the consumer or the steward leg. `emitConfig` keeps only source-bearing knowledge bases (`kiro.ts` L259–260), and the Kiro prompt renders no knowledge note (L428–434).
+  - So C7's evidence cannot be produced for them by the instrument as listed.
+  - Route: a fork for Peter, surfaced in `u3g-sizing.md` § 5:
+    - (A) Kiro renders glob-only knowledge bases, which needs a dated amendment to C7;
+    - (B) an R3 surface amendment to Thurgood's ruling;
+    - the class option.
+  - Blocks 29.3 until ruled. The plan is not edited.
