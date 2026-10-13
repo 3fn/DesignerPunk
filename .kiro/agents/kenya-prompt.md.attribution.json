@@ -588,7 +588,39 @@
     {
       "lines": [
         311,
+        312
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:knowledgeBases"
+    },
+    {
+      "lines": [
+        313,
+        313
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:knowledgeBases[ios-components]"
+    },
+    {
+      "lines": [
+        314,
         314
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:knowledgeBases[ios-tests]"
+    },
+    {
+      "lines": [
+        315,
+        315
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:knowledgeBases"
+    },
+    {
+      "lines": [
+        316,
+        319
       ],
       "op": "render",
       "source": "canonical/agents/kenya.md#frontmatter:writeScope"

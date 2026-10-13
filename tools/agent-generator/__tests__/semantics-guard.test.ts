@@ -26,6 +26,9 @@ import { adaptersFor, type AdapterContext, type AdapterFactory, type FieldDispos
 import { CcAdapter } from '../adapters/cc';
 import { loadConsumerProfile } from '../consumer-profile';
 import { checkDerivation, renderedSpans, type DerivationVerdict } from '../regrounding/derivation';
+import { KiroAdapter } from '../adapters/kiro';
+import { entryTree } from '../partition';
+import type { YamlDoc } from '../frontmatter';
 import type { AttributionManifest } from '../attribution';
 import { E_FM, EXTRA, loadSemguard, S, semguardContext, SOURCE } from '../__fixtures__/semantics-guard';
 
@@ -84,9 +87,9 @@ function defineGuard(blocks: [string, TargetAdapter][]): void {
 
     /*
      * FRONTMATTER (Task 14.4; design C15 "E-fm"; DD7). Scope, per target: the frontmatter-derived
-     * sections of the PROSE artifact (CC: the agent file; Kiro: the prompt). The Kiro JSON config
-     * is one steward-shaped glue span under every profile (Task 15.0; C20), so a bypass INSIDE
-     * `write.allowedPaths` is invisible to `› kiro › frontmatter` — this block does not claim it.
+     * sections of the PROSE artifact (CC: the agent file; Kiro: the prompt). Since Task 29.3 the Kiro
+     * JSON config carries per-entry spans too; that artifact is proven in the `kiro — 29.3` block
+     * below, not here (this block reads the prose artifact only).
      */
     describe('frontmatter', () => {
       it(`E-fm: ${E_FM} (re-grounded in place) is VERIFIED over this adapter’s own spans`, () => {
@@ -150,5 +153,41 @@ describe.each(guardBlocks(PROFILE_TARGETS))('%s — attack (a) as emitted (29.2)
     const v = (destination: string) => checkDerivation({ file: SOURCE, trees: fixture.trees, spans, s: S, destination, derivedValue: fixture.derivedValue }).verdict;
     const T = '#the-trigger-set-the-114-superset-table-names-never-numbers';
     expect(`${target}: A1 ${v(T)}, A4 ${v(S)}`).toBe(`${target}: A1 FAIL_NO_DERIVATION, A4 FAIL_NO_DERIVATION`);
+  });
+});
+
+/*
+ * Task 29.3 (G2-F2; C7 as amended 2026-10-12 by Peter's ruling (A)): the Kiro target's two
+ * frontmatter surfaces, each judged ALONE. (1) The JSON config carries per-entry spans, so a row it
+ * renders (`writeScope[…]` → `allowedPaths`, `description`) derives from the JSON by itself.
+ * (2) A GLOB-ONLY knowledge base renders as a prompt fallback note with a per-member span. The
+ * fixture adds one glob-only knowledge base to semguard IN MEMORY (canonical frontmatter, derived
+ * frontmatter and a retained row), so the committed fixture files are unchanged.
+ */
+describe('kiro — 29.3: the JSON config and the knowledge note derive their rows', () => {
+  const KB = { name: 'specs-kb', globs: ['specs/**'] };
+  const kbPath = 'knowledgeBases[specs-kb]';
+  const derivedFm = { ...(fixture.resolved.doc.frontmatter as object), knowledgeBases: [KB] };
+  const resolved = { ...fixture.resolved, doc: { ...fixture.resolved.doc, frontmatter: derivedFm } } as typeof fixture.resolved;
+  const dispositions = { ...fixture.dispositions, frontmatter: { ...fixture.dispositions.frontmatter, [kbPath]: { disposition: 'retained' as const } } };
+  const ctx = semguardContext(BASE_CTX, { ...fixture, dispositions });
+  const trees = { body: fixture.trees.body, entry: entryTree({ ...fixture.frontmatter, knowledgeBases: [KB] } as YamlDoc) };
+  const derivedValue = (p: string) => (p === kbPath ? KB : fixture.derivedValue(p));
+  const files = new KiroAdapter(FIELD_DISPOSITIONS).emitAgent(resolved, ctx);
+  const spansOfFile = (suffix: string) => {
+    const f = files.find((x) => x.path.endsWith(suffix) && x.attribution);
+    if (!f || !f.attribution) throw new Error(`kiro: no ${suffix}`);
+    return renderedSpans(f.attribution.spans, f.content);
+  };
+  const v = (spans: ReturnType<typeof spansOfFile>, entry: string) =>
+    checkDerivation({ file: SOURCE, trees, spans, s: `frontmatter:${entry}`, destination: `frontmatter:${entry}`, derivedValue }).verdict;
+
+  it(`the JSON ALONE derives E-fm (${E_FM}, rendered into allowedPaths) and description`, () => {
+    const json = spansOfFile('semguard.json');
+    expect(`kiro json: ${E_FM} ${v(json, E_FM)}, description ${v(json, 'description')}`).toBe(`kiro json: ${E_FM} VERIFIED, description VERIFIED`);
+  });
+
+  it(`the prompt ALONE derives the glob-only knowledge base (${kbPath}) through its fallback note`, () => {
+    expect(`kiro prompt: ${kbPath} ${v(spansOfFile('semguard-prompt.md'), kbPath)}`).toBe(`kiro prompt: ${kbPath} VERIFIED`);
   });
 });

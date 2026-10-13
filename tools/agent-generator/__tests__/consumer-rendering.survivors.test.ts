@@ -282,6 +282,8 @@ describe('nothing renders that no surviving member sourced (Task 15.3; fixture s
     const claimsDropped = rows({ 'writeScope[a/**]': { disposition: 'no-consumer-counterpart' } }); // rendered with a/** retained
     expect(survivorViolations(out, profileOf(claimsDropped))).toEqual([
       'canonical/_consumer-output/cc/.claude/agents/twin.md: canonical/agents/twin.md#frontmatter:writeScope[a/**] — frontmatter leaf without a surviving row',
+      // Task 29.3: the Kiro JSON's `allowedPaths` now carries per-member spans, so the checker sees it too.
+      'canonical/_consumer-output/kiro/.kiro/agents/twin.json: canonical/agents/twin.md#frontmatter:writeScope[a/**] — frontmatter leaf without a surviving row',
       'canonical/_consumer-output/kiro/.kiro/agents/twin-prompt.md: canonical/agents/twin.md#frontmatter:writeScope[a/**] — frontmatter leaf without a surviving row',
     ]);
   });

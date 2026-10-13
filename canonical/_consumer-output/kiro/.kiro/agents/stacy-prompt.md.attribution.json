@@ -564,10 +564,26 @@
     {
       "lines": [
         401,
+        402
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:knowledgeBases"
+    },
+    {
+      "lines": [
+        403,
+        403
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:knowledgeBases[completion-docs]"
+    },
+    {
+      "lines": [
+        404,
         404
       ],
       "op": "render",
-      "source": "canonical/agents/stacy.md#frontmatter:writeScope"
+      "source": "canonical/agents/stacy.md#frontmatter:knowledgeBases[spec-summaries]"
     },
     {
       "lines": [
@@ -575,12 +591,36 @@
         405
       ],
       "op": "render",
-      "source": "canonical/agents/stacy.md#frontmatter:writeScope[.kiro/specs/**]"
+      "source": "canonical/agents/stacy.md#frontmatter:knowledgeBases[source-tree]"
     },
     {
       "lines": [
         406,
         406
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:knowledgeBases"
+    },
+    {
+      "lines": [
+        407,
+        410
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:writeScope"
+    },
+    {
+      "lines": [
+        411,
+        411
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:writeScope[.kiro/specs/**]"
+    },
+    {
+      "lines": [
+        412,
+        412
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#frontmatter:writeScope"

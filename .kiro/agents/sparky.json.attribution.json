@@ -4,6 +4,118 @@
     {
       "lines": [
         1,
+        8
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        9,
+        9
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#frontmatter:description"
+    },
+    {
+      "lines": [
+        10,
+        11
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        12,
+        15
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#frontmatter:preflight[git status --porcelain]"
+    },
+    {
+      "lines": [
+        16,
+        18
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        19,
+        19
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#frontmatter:kiro.keyboardShortcut"
+    },
+    {
+      "lines": [
+        20,
+        20
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#frontmatter:agent"
+    },
+    {
+      "lines": [
+        21,
+        34
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        35,
+        42
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#frontmatter:knowledgeBases[web-components]"
+    },
+    {
+      "lines": [
+        43,
+        49
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        50,
+        50
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#frontmatter:writeScope[.kiro/specs/**]"
+    },
+    {
+      "lines": [
+        51,
+        51
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#frontmatter:writeScope[docs/specs/**]"
+    },
+    {
+      "lines": [
+        52,
+        54
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        55,
+        55
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#frontmatter:kiro.welcomeMessage"
+    },
+    {
+      "lines": [
+        56,
         56
       ],
       "op": "render",

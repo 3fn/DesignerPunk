@@ -302,22 +302,55 @@ export class KiroAdapter implements TargetAdapter {
       config.welcomeMessage = kiroFields.welcomeMessage;
     }
 
-    // Machine JSON: one `render` span over the whole file, still constructed by `emitSpans`
-    // (C14) — a per-entry attribution INSIDE the JSON is not attempted (carried to Task 14/15).
-    // It stays steward-shaped under EVERY profile (Task 15.0 scope; consumer JSON semantics are C20's).
+    // Machine JSON with PER-ENTRY attribution (Spec 123 Task 29.3; G2-F2, Peter's ruling (A)): each
+    // line of the canonical JSON is attributed to the frontmatter entry it renders, through
+    // `emitSpans` under this agent's profile (so a re-pointed member's derived key maps back to its
+    // canonical path, 10.S). The BYTES are exactly `canonicalStringify(config)` — asserted below, never
+    // re-derived — so only the sidecar changes. Attributed: `name` (agent), `description`,
+    // `keyboardShortcut`/`welcomeMessage` (kiro.*), a skill or source-bearing knowledge-base
+    // resource (its member), `allowedPaths` (each writeScope member) and `hooks.agentSpawn` (each
+    // preflight member). Glue: braces, `prompt`, `includeMcpJson`, `tools`, every `allowedTools`
+    // grant (an `@<server>` grant is derived from a whole `toolSubset.<server>` list, and a container
+    // span with no member span in this artifact is not survivor-sourced, Task 15.3), and the
+    // `resources` references to ambient and always-set DOCS (a doc reference is not the entry's
+    // content; attributing it to an `ambient[…]` entry would also mark it as an inline embed).
+    const span = spanInputsFor(ctx, fm.agent);
+    const src: SpanSource = { ...spanSource(agent), entryOrigin: span.entryOrigin };
+    const kbIndexOf = new Map<unknown, number>((fm.knowledgeBases ?? []).map((kb, i) => [kb, i]));
+    const kbWithSource = (fm.knowledgeBases ?? []).filter((kb) => typeof kb.source === 'string');
+    const provenance = (at: readonly (string | number)[]): JsonPiece | undefined => {
+      const [k0, k1, k2, k3] = at;
+      if (at.length === 1 && k0 === 'name') return { kind: 'entry', path: 'agent' };
+      if (at.length === 1 && k0 === 'description') return { kind: 'entry', path: 'description' };
+      if (at.length === 1 && k0 === 'keyboardShortcut') return { kind: 'entry', path: 'kiro.keyboardShortcut' };
+      if (at.length === 1 && k0 === 'welcomeMessage') return { kind: 'entry', path: 'kiro.welcomeMessage' };
+      if (at.length === 2 && k0 === 'resources' && typeof k1 === 'number') {
+        const skillAt = k1 - resourceEntries.length;
+        if (skillAt >= 0 && skillAt < skillKeys.length) return { kind: 'member', list: 'skills', index: (fm.skills ?? []).indexOf(skillKeys[skillAt]) };
+        const kbAt = skillAt - skillKeys.length;
+        if (kbAt >= 0 && kbAt < kbWithSource.length) return { kind: 'member', list: 'knowledgeBases', index: kbIndexOf.get(kbWithSource[kbAt]) as number };
+        return undefined; // an ambient/always-set doc reference: glue
+      }
+      if (at.length === 4 && k0 === 'toolsSettings' && k1 === 'write' && k2 === 'allowedPaths' && typeof k3 === 'number') return { kind: 'member', list: 'writeScope', index: k3 };
+      if (at.length === 3 && k0 === 'hooks' && k1 === 'agentSpawn' && typeof k2 === 'number') return { kind: 'member', list: 'preflight', index: k2 };
+      return undefined;
+    };
+    const pieces = jsonPieces(config as JsonValue, provenance);
+    if (pieces.map((p) => p.text).join('') !== canonicalStringify(config as JsonValue)) {
+      throw new Error(`KiroAdapter.emitConfig: the per-entry JSON pieces for ${path} do not reproduce canonicalStringify(config) — refusing to change the bytes`);
+    }
     const acc = new AttributionAccumulator();
-    const content = emitSpans(acc, spanSource(agent), 'steward', undefined, undefined, [
-      { kind: 'glue', glue: 'kiro-config', text: canonicalStringify(config as JsonValue) },
-    ]).text;
+    const content = emitSpans(acc, src, span.profile, span.dispositions, span.overlay, pieces).text;
     const attribution = acc.build(path);
 
     return { path, content, attribution };
   }
 
   // -- .kiro/agents/<agent>-prompt.md ----------------------------------------
-  // Multi-span attribution, mirroring cc.ts's body construction — minus the two CC-only
-  // sections (per-agent ambient inline embeds; knowledge fallback), since Kiro delivers both
-  // via native config surfaces (resources / knowledgeBases), not prompt-body prose.
+  // Multi-span attribution, mirroring cc.ts's body construction — minus the per-agent ambient
+  // inline embeds, which Kiro delivers via the config's `resources`. The knowledge fallback is
+  // rendered for GLOB-ONLY knowledge bases only (section (e)): source-bearing ones are config
+  // `knowledgeBase` resources (Task 29.3).
   private emitPrompt(agent: ResolvedAgent, ctx: AdapterContext, subset: ToolSubset): EmittedFile {
     const fm = agent.doc.frontmatter;
     const path = `.kiro/agents/${fm.agent}-prompt.md`;
@@ -425,13 +458,25 @@ export class KiroAdapter implements TargetAdapter {
       );
     }
 
-    // -- (e) Knowledge fallback: NOT emitted for Kiro --------------------------
-    // Kiro has the native /knowledge surface (allowedTools: ["knowledge", ...] +
-    // per-agent `knowledgeBases` config declarations — carried in emitConfig via the
-    // `handled-elsewhere` disposition, field-dispositions.yaml's placement rationale for
-    // `resources`/`knowledgeBases` container fields) — no grep/Glob fallback note is needed
-    // or rendered here, unlike cc.ts's "## Knowledge fallback" section (CC has no native
-    // knowledge-base surface, so it renders a textual fallback instead).
+    // -- (e) Knowledge fallback — GLOB-ONLY knowledge bases, one entry span each ---
+    // Kiro's native /knowledge surface (`allowedTools: ["knowledge", …]` + a `knowledgeBase`
+    // object in the config's `resources`) carries only a knowledge base that declares a `source`
+    // path: emitConfig emits exactly those (`kbResources`, filtered on a string `source`). A
+    // GLOB-ONLY knowledge base (`globs:` and no `source`) has no Kiro-native form, so before Spec 123
+    // Task 29.3 it rendered nowhere on this target, on either leg (found at 29.0; Peter's ruling (A),
+    // 2026-10-12). It renders here as a fallback note, as cc.ts's "## Knowledge fallback" does for
+    // every knowledge base. (`field-dispositions.yaml`'s placement note — `/knowledge` carried "via
+    // the existing `knowledgeBases` frontmatter class" — holds for the source-bearing ones only.)
+    const globOnly = (fm.knowledgeBases ?? []).map((kb, i) => ({ kb, i })).filter(({ kb }) => typeof kb.source !== 'string');
+    if (globOnly.length > 0) {
+      bodyParts.push(
+        emit([
+          { kind: 'entry', path: 'knowledgeBases', text: '## Knowledge fallback\n\n' },
+          ...globOnly.map(({ kb, i }): SpanPiece => ({ kind: 'member', list: 'knowledgeBases', index: i, text: `- ${kb.name}: search these paths: ${kb.globs.join(', ')}\n` })),
+          { kind: 'entry', path: 'knowledgeBases', text: '\n' },
+        ])
+      );
+    }
 
     // -- (f) Write scope (base note only — Kiro has a declarative field) --------
     // ONE rendered sentence names every glob, so its span is the `writeScope` container, not
@@ -497,6 +542,53 @@ export class KiroAdapter implements TargetAdapter {
 // ============================================================================
 
 /** The span source for an agent's canonical file — the provenance prefix `emitSpans` cites. */
+/** A JSON line range's provenance: a frontmatter entry or list member (undefined → generator glue). */
+type JsonPiece = { kind: 'entry'; path: string } | { kind: 'member'; list: string; index: number };
+
+/**
+ * Split `canonicalStringify(value)` into span pieces, one per run of lines with the same
+ * provenance (Task 29.3). Re-implements `JSON.stringify(canonicalize(value), null, 2)`'s line
+ * layout so each value's lines (opening through closing) carry the provenance `at(path)` names,
+ * inherited by its descendants; the caller asserts the bytes are identical.
+ */
+function jsonPieces(value: JsonValue, at: (path: readonly (string | number)[]) => JsonPiece | undefined): SpanPiece[] {
+  const lines: { text: string; prov?: JsonPiece }[] = [];
+  const walk = (v: JsonValue, indent: string, path: (string | number)[], prefix: string, comma: string, inherited?: JsonPiece): void => {
+    const prov = at(path) ?? inherited;
+    if (v !== null && typeof v === 'object' && !Array.isArray(v)) {
+      const keys = Object.keys(v).sort().filter((k) => (v as Record<string, JsonValue | undefined>)[k] !== undefined);
+      if (keys.length === 0) return void lines.push({ text: `${indent}${prefix}{}${comma}`, prov });
+      lines.push({ text: `${indent}${prefix}{`, prov });
+      keys.forEach((k, i) => walk((v as Record<string, JsonValue>)[k], `${indent}  `, [...path, k], `${JSON.stringify(k)}: `, i < keys.length - 1 ? ',' : '', prov));
+      return void lines.push({ text: `${indent}}${comma}`, prov });
+    }
+    if (Array.isArray(v)) {
+      if (v.length === 0) return void lines.push({ text: `${indent}${prefix}[]${comma}`, prov });
+      lines.push({ text: `${indent}${prefix}[`, prov });
+      v.forEach((e, i) => walk(e, `${indent}  `, [...path, i], '', i < v.length - 1 ? ',' : '', prov));
+      return void lines.push({ text: `${indent}]${comma}`, prov });
+    }
+    lines.push({ text: `${indent}${prefix}${JSON.stringify(v)}${comma}`, prov });
+  };
+  walk(value, '', [], '', '');
+  const pieces: SpanPiece[] = [];
+  let run: { prov?: JsonPiece; text: string } | undefined;
+  const flush = (): void => {
+    if (!run) return;
+    const r = run;
+    pieces.push(r.prov === undefined ? { kind: 'glue', glue: 'kiro-config', text: r.text } : r.prov.kind === 'entry' ? { kind: 'entry', path: r.prov.path, text: r.text } : { kind: 'member', list: r.prov.list, index: r.prov.index, text: r.text });
+  };
+  for (const line of lines) {
+    if (run && JSON.stringify(run.prov) === JSON.stringify(line.prov)) run.text += `${line.text}\n`;
+    else {
+      flush();
+      run = { prov: line.prov, text: `${line.text}\n` };
+    }
+  }
+  flush();
+  return pieces;
+}
+
 function spanSource(agent: ResolvedAgent): SpanSource {
   const fm = agent.doc.frontmatter;
   return { file: `canonical/agents/${fm.agent}.md`, body: agent.doc.body, frontmatter: fm as unknown as YamlDoc };

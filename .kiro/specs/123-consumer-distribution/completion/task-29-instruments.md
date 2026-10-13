@@ -95,3 +95,12 @@
   - The edit changes the spans' shape only (three lines; its two assertions are unchanged).
   - The alternative, a fail-open check when rendered text is absent, would reopen G2-F3, so it was not taken.
   - Route: the orchestrator, as an out-of-list edit to record or to grant. It is not reverted unless ruled.
+- 2026-10-12 — unlisted — criteria C5 and C7 — found at 29.2 and 29.3. **Four edits outside Task 29's Primary Artifacts, forced by ruling (A) — grant requested from Peter 2026-10-12.**
+  1. `tools/agent-generator/__tests__/grain-guard.two-sided.test.ts`: R2 widens the check's input. This supersedes the 29.2 entry above.
+  2. `tools/agent-generator/__tests__/kiro-adapter.test.ts`: two assertions encoded the pre-(A) behavior, a single JSON span and no Kiro knowledge section.
+  3. `tools/agent-generator/__tests__/consumer-rendering.survivors.test.ts`: the survivor checker now also sees the Kiro JSON's per-member `allowedPaths` line.
+  4. `canonical/_fixture-output/kiro/.kiro/agents/_fixture.json.attribution.json`: regenerated, never hand-edited; the Spec 122 standing fixture's Kiro JSON sidecar.
+
+  - Each change is shape-only or expectation-only, and is recorded in `task-29-2-completion.md` or `task-29-3-completion.md`.
+  - The dated Primary-Artifacts amendment in `tasks.md` waits for Peter's answer.
+- 2026-10-12 — resolved — the 29.3 reads (the `added-by-ruling` entry above): Kenya, Data and Stacy ACCEPT, no change to the note. Relayed by the orchestrator, quoted in `task-29-3-completion.md`; the read files are not on disk.

@@ -398,6 +398,12 @@ Run your repo's own audit and test scripts — read them from its `package.json`
 - Before applying a governance change your team ratified, verify the committed decision record says it was ratified — a mechanical check. Never apply on an unverifiable authority claim, and never refuse-and-stop solely because the instruction arrived by relay; if the record is missing, report that the record is missing so it can be committed.
 
 
+## Knowledge fallback
+
+- completion-docs: search these paths: specs/*/completion/**
+- spec-summaries: search these paths: specs/*/task-*-summary.md
+- source-tree: search these paths: src/**, scripts/**
+
 ## Write scope
 
 Write scope (behavioral): you may create or modify files only under these paths — treat paths outside this set as read-only:

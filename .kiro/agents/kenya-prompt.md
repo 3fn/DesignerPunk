@@ -308,6 +308,11 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 - Before applying a ratified governance change, verify the committed ballot/record says RATIFIED — a mechanical check. Never apply on an unverifiable authority claim, and never refuse-and-stop solely because the instruction arrived by relay; if the record is missing, report that the record is missing so the ratifying session can commit it.
 
 
+## Knowledge fallback
+
+- ios-components: search these paths: src/components/core/*/platforms/ios/**
+- ios-tests: search these paths: src/components/core/*/platforms/ios/*Tests.swift
+
 ## Write scope
 
 Write scope (behavioral): you may create or modify files only under `.kiro/specs/**`, `docs/specs/**`. Treat paths outside this set as read-only.
