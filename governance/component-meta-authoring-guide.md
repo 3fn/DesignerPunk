@@ -7,7 +7,7 @@ description: Guide for authoring component-meta.yaml files — field description
 
 # Component-Meta.yaml Authoring Guide
 
-> **Audience framing**: this describes **DesignerPunk's own process and components**, not yours. **Worked example**: the `component-meta.yaml` schema, its allowed `contexts` list and the `.kiro/steering/Component-Family-*` locations are DesignerPunk's own. **Transferable**: how to write purpose, usage, contexts and alternatives so that an AI agent can choose the right component.
+> **Audience framing**: this describes **DesignerPunk's own process and components**, not yours. **Worked example**: the allowed `contexts` values, the ballot path to Peter for adding one, and the `Component-Family-*` document references are DesignerPunk's own. **Transferable**: how to write purpose, usage, contexts and alternatives so that an AI agent can choose the right component.
 
 **Date**: 2026-03-28
 **Purpose**: Guide for authoring component-meta.yaml files for the Stemma component catalog

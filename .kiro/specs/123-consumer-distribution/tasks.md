@@ -1459,8 +1459,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Primary Artifacts:** `scripts/audience-banner/predicate.ts`, the test, `governance/*.md`
 
   - [x] 23.1 Predicate + guard + bite
-  - [ ] 23.2 Banners on the matched set; owners notified
-  - [ ] 23.3 Registration decision; the ARMING notice; the rows-list-the-guard evidence
+  - [x] 23.2 Banners on the matched set; owners notified
+  - [x] 23.3 Registration decision; the ARMING notice; the rows-list-the-guard evidence
 
 - [ ] 24. U1b backward check, the release recipe (B-U4), and the changelog step (**U4 gating parent**)
 
