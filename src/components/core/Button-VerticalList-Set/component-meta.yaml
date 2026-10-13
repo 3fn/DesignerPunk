@@ -1,12 +1,10 @@
 purpose: "Group Button-VerticalList-Item components into a vertical action menu with mode-driven selection behavior (tap, select, multi-select)."
 
-# Derived from family-level guidance (Component-Family-Button.md)
 usage:
   when_to_use:
-    - "Triggering user actions (submit, save, cancel)"
-    - "Navigating to new views or pages"
-    - "Opening modals or dialogs"
-    - "Confirming or dismissing operations"
+    - "Vertical menus of tappable actions (tap mode), such as an account or settings menu"
+    - "Single-choice lists of rich rows with labels and descriptions (select mode)"
+    - "Multiple-choice lists of rich rows with minimum and maximum selection limits (multiSelect mode)"
   when_not_to_use:
     - "Displaying read-only status (use Badges instead)"
     - "Creating inline text links (use Link component when available)"

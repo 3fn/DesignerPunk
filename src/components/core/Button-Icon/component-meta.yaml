@@ -1,12 +1,10 @@
 purpose: "Provide a compact icon-only button for toolbar actions, close buttons, or secondary actions where space is limited."
 
-# Derived from family-level guidance (Component-Family-Button.md)
 usage:
   when_to_use:
-    - "Triggering user actions (submit, save, cancel)"
-    - "Navigating to new views or pages"
-    - "Opening modals or dialogs"
-    - "Confirming or dismissing operations"
+    - "Icon-only actions where space is limited and the icon is widely recognized (close, edit, share, more)"
+    - "Repeated per-item actions in list rows or cards, where a text label on every item would add clutter"
+    - "Compact secondary actions placed beside content rather than as a standalone call to action"
   when_not_to_use:
     - "Displaying read-only status (use Badges instead)"
     - "Creating inline text links (use Link component when available)"
