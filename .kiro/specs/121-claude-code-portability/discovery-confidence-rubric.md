@@ -59,7 +59,7 @@ Field: **`matchConfidence: 'strong' | 'partial' | 'none'`** (named distinctly to
 - **Tuning note (the fix the dry-run caught):** the ≥2-token coverage clause is **signal-class-gated** — low-signal-only coverage (e.g. a 2-token query both landing in a shared `contexts` value like `onboarding-flows`) caps at `partial`. Without this guard, low-cardinality shared fields mass-produce false `strong`s.
 
 **Docs — `find_docs` (Thurgood).**
-- **High-signal fields:** doc title/`name`, section headings, frontmatter `description`. *(There is NO `keywords` frontmatter field in the corpus — `description` is the keyword surface.)*
+- **High-signal fields:** doc title/`name`, section headings, frontmatter `description`, frontmatter `aliases` *(listed 2026-10-13: `aliases` has been high-signal in the shipped matcher since the 119-A alias seeding, Spec 121 Req 1.9 extended to docs, but this list never named it; see the alias-hygiene amendment below)*. *(There is NO `keywords` frontmatter field in the corpus — `description` is the keyword surface.)*
 - **Medium-signal:** layer / category / `Relevant Tasks` metadata.
 - **Low-signal:** body-only.
 - **Tier rule (with the validated incidental-token guard):**
@@ -67,6 +67,38 @@ Field: **`matchConfidence: 'strong' | 'partial' | 'none'`** (named distinctly to
   - `partial` = matched only medium/low-signal, OR an incidental/low-coverage high-signal token. **Body-only / incidental → `partial`, never `none`** (a flagged weak best-fit must beat a bare empty that hides it).
   - `none` = **zero salient-token matches in any field after stop-word + common-term normalization.** The stop-word list is **owned and versioned** (otherwise the `partial`/`none` line drifts silently).
 - Coverage denominator = total salient query tokens.
+
+> **Amendment (2026-10-13) — the alias-hygiene re-run: an authoring check on every `aliases:` change, on BOTH sides (no tier, rank or signal-class change).** Ruled by Peter (2026-10-13, the class option of the Stage 1 follow-ups: `.kiro/issues/2026-10-13-discovery-study-stage1-followups.md` row 6); authored by Thurgood as owner of the docs rubric.
+>
+> **What changed.** Any PR that adds, changes or removes an `aliases:` entry on a served doc, or on a component, must run a re-run and report it in the PR body before the alias lands. Nothing else changes: the tier rule, rank order, signal classes and stop-word list are all untouched.
+>
+> **Scope: both sides.** The rule covers a served doc's frontmatter `aliases:` (high-signal on the docs side, so one alias token can lift a doc to `strong` anywhere it appears in a query) and a component's `aliases` set (low-signal on the components side per Req 1.9, so it cannot reach `strong` alone, but still moves rank and `partial`; that set is not populated today). It does not cover matcher code changes (indexer, tokenizer, rank); those are measured under their own issue, against the oracle plus a FRESH query set — see the spent-set caveat.
+>
+> **The re-run (decidable without consulting the rule's author).**
+> 1. Run `npx tsx scripts/discovery-study-stage1.ts` (the oracle + the frozen Q2 fixture, both read-only) twice: at the PR head and at the PR's merge-base on `main`.
+> 2. Compare the per-query tables of the two runs.
+> 3. Until a components discovery fixture exists, a component-alias PR also runs the Spec 121 calibration tests: `cd application-mcp-server && npx jest src/__tests__/tool-boundary.contract.test.ts`, which must stay green.
+> 4. Once a components fixture exists, its calibration queries join step 1.
+>
+> **The PR body states:**
+> - the command and both SHAs (head and merge-base);
+> - **oracle** PASS / WEAK / MISS identical and rank-1-strong not lower;
+> - **Q2 not regressed**: no positive that is at rank ≤ 2 at the merge-base falls outside rank ≤ 2 at the head, and R@1 / R@2 are not lower;
+> - **no new confident-wrong**: no Q2 negative that is correct at the merge-base has a `strong` in its top 3 at the head (F6 bound).
+>
+> **A regression or a new confident-wrong blocks the alias until the PR body names each affected query id with its explanation.** Peter's merge accepts or rejects that explanation. The re-run is evidence for the merge decision; it is not a required check (see Status).
+>
+> **Why.** In Stage 1 (run at `08fed8984`, findings `.kiro/docs/discovery-study-stage1-findings.md` § 6.4), KE-N2 was a confident-wrong: `component-development-guide` came back `strong` at rank 1 for an unrelated strict-none negative ("swiftui navigationstack pattern designerpunk navigation component spec"), with `matchedOn` including `aliases:navigation`. That alias was seeded in 119-A from the oracle's alias-seeding worklist (concept "focus management keyboard navigation") to lift one query. An alias is a high-signal token with corpus-wide reach, and that cost is invisible without a re-run.
+>
+> **Status: an owner knob, recorded as a dated amendment; no ballot.** § "Tunability & Calibration" makes the field signal-class assignments and the stop-word list the owner's knobs. This adds an authoring check on one Layer-1 field's input; it changes no tier.
+> - **The one condition that would need a ballot:** making the re-run a **required CI check context**. A new required context is outside the CI regime's standing scope (ballot `2026-09-27-ci-regime-standing-scope`) and needs its own ballot.
+> - Until then it is a PR-body convention, read at Peter's merge and at claims passes.
+>
+> **Spent-set caveat (binding on every later reader).** Q2's results have been seen, so **Q2 is spent as a tuning target for the MATCHER**: no indexer, tokenizer or rank change may be tuned against it or justified by it. **Q2 remains valid as a regression guard for ALIAS additions**, because an alias touches only doc or component frontmatter, never the matcher. Each Q2 item an alias was written to fix is spent for that alias's own evaluation; the guard is about everything else not moving. The oracle carries the same dual status: it is the matcher's training set (findings § 2), and it is a regression guard.
+>
+> **First uses (the gate).** Hand-fix rows 1–3 of the follow-ups record wait on this amendment landing: DA-02 (Lina, `component-development-guide`), DA-11 (Lina, `platform-implementation-guidelines`; her alias is untested), DA-05 (Thurgood, `test-development-standards`). **Lina's DA-02 alias PR is the first use.** An alias PR without the re-run statement is a finding at the issues walk (follow-ups record, "What the walk checks").
+>
+> **How checked (at authoring).** The runner, fixtures and baseline exist on `main`: `scripts/discovery-study-stage1.ts`; `scripts/__fixtures__/discovery-q2-seats.ts` (36 positives / 8 negatives); the Stage 1 baseline at `08fed8984` (oracle 83/0/0 and rank-1-strong 77/83; Q2 R@1 18/36, R@2 23/36; negatives 6/8 correct). The runner's own integrity checks (verbatim strings, oracle byte-identical to `main`) still apply to each re-run.
 
 **Tokens — EXEMPT (Ada).**
 - Token access (`search_tokens`, `get_token_details`, `get_token_family`, `get_token_consumers`) is **structured/predicate retrieval over a closed, named vocabulary** — exact/substring filters returning the complete unranked matching set, or direct keyed lookup. There is **no relevance ranking**, so there is no fuzzy judgment for a tier to make legible; a tier would always read `strong` = zero information.
