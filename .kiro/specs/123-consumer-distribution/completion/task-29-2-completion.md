@@ -57,3 +57,7 @@
    - Recorded in the instruments block's `## Found later` (kind `unlisted`) for routing.
 2. **The member lane's emptiness rule is provisional** (rendered text), pending Thurgood's line (open point (d)). If his line differs, the change is one predicate plus one test.
 3. **Stacy's open point (b) is answered**: FS1 is not refused by `derive()` (a whitespace string has the canonical string type). The check returns `FAIL_NO_DERIVATION`.
+
+## Addendum 2026-10-12 (after 29.4)
+- Application-time adaptation 2 is resolved. The member lane's rule is now the ruling's erratum #310 (`fbd7549a7`, pick (a)), which is the rule built here.
+- The "provisional" flag is dropped. Stacy's M2 and L5 run through both adapters as she expects (`task-29-4-completion.md`, adaptation 2).

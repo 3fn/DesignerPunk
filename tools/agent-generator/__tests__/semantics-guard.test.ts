@@ -25,7 +25,7 @@ import * as path from 'path';
 import { adaptersFor, type AdapterContext, type AdapterFactory, type FieldDispositionTable, type TargetAdapter } from '../adapters/index';
 import { CcAdapter } from '../adapters/cc';
 import { loadConsumerProfile } from '../consumer-profile';
-import { checkDerivation, renderedSpans, type DerivationVerdict } from '../regrounding/derivation';
+import { checkDerivation, renderedSpans, SHARED_CATALOG_FILE, type DerivationVerdict } from '../regrounding/derivation';
 import { KiroAdapter } from '../adapters/kiro';
 import { entryTree } from '../partition';
 import type { YamlDoc } from '../frontmatter';
@@ -189,5 +189,31 @@ describe('kiro — 29.3: the JSON config and the knowledge note derive their row
 
   it(`the prompt ALONE derives the glob-only knowledge base (${kbPath}) through its fallback note`, () => {
     expect(`kiro prompt: ${kbPath} ${v(spansOfFile('semguard-prompt.md'), kbPath)}`).toBe(`kiro prompt: ${kbPath} VERIFIED`);
+  });
+});
+
+/*
+ * Stacy's rows M2 and L5 (her dated additions, `ec9fe0a9a`; the ruling's erratum #310, pick (a)):
+ * the shared governance-rule member emptied (`statement: ""`, every other key kept), rendered by
+ * EACH declared target's own adapter. The emission is `- ` (the adapters' `- ${statement ?? id}`),
+ * so D is non-empty: a sibling destination → FAIL_DISHONEST_NAMING (M2); itself → VERIFIED (L5,
+ * a named limit). The member and its row are added to semguard's context in memory.
+ */
+describe.each(guardBlocks(PROFILE_TARGETS))('%s — the emptied shared member (M2, L5)', (target, adapter) => {
+  const ID = 'record-first-ratification';
+  const SIB = 'find-docs-discovery';
+  const member = { id: ID, kind: 'governance-rule' as const, owner: 'thurgood', statement: '', source: 'your team\u2019s committed decision records', crossRef: 'x' };
+  const dispositions = { ...fixture.dispositions, members: { [ID]: { disposition: 're-pointed' as const, destination: ID } } };
+  const ctx = { ...semguardContext(BASE_CTX, { ...fixture, dispositions }), sharedCatalog: [member] } as AdapterContext;
+  const file = adapter.emitAgent(fixture.resolved, ctx).find((f) => f.path.endsWith('.md') && f.attribution);
+  const spans = file && file.attribution ? renderedSpans(file.attribution.spans, file.content) : [];
+  const v = (destination: string) => checkDerivation({ file: SHARED_CATALOG_FILE, trees: { body: fixture.trees.body }, spans, s: ID, destination }).verdict;
+
+  it('the emitted member span is `- ` (non-empty after trim)', () => {
+    expect(spans.filter((sp) => sp.source === `${SHARED_CATALOG_FILE}#${ID}`).map((sp) => sp.text)).toEqual(['- \n']);
+  });
+
+  it('M2 (sibling destination) → FAIL_DISHONEST_NAMING; L5 (itself) → VERIFIED, a named limit', () => {
+    expect(`${target}: M2 ${v(SIB)}, L5 ${v(ID)}`).toBe(`${target}: M2 FAIL_DISHONEST_NAMING, L5 VERIFIED`);
   });
 });

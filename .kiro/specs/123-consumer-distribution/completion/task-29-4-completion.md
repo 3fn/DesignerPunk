@@ -64,5 +64,10 @@ This set contains the ruling's R3 minimum. The ruling allows additions, never re
 
 ## Application-time adaptations
 1. **The evaluator lives in `derivation.ts`, a listed artifact, not in a new module.** That keeps the edit inside Primary Artifacts. It makes `derivation.ts` import `derive.ts` and `fs`; there is no import cycle, because `derive.ts` does not import `derivation.ts`.
-2. **Members**: the member row is evaluated in member-id space under the provisional rendered-text emptiness rule (29.2). Thurgood's line on members is still pending (Stacy's open point (d)).
+2. **Members — now law, no longer provisional.** The ruling's erratum for the member lane is #310, merged on `main` as `fbd7549a7`. Thurgood took pick (a): the body-unit rendered-text test applies to member spans. That is the rule 29.2 built.
+   - The "provisional" flag is dropped from `derivation.ts` and from the 29.2 test name.
+   - Stacy's dated rows **M2 and L5** (`ec9fe0a9a`) are added as fixtures. Each declared target's own adapter renders the emptied governance-rule member (`statement: ""`) as `- `.
+   - **M2** (sibling destination) → `FAIL_DISHONEST_NAMING`; **L5** (itself) → `VERIFIED`, a named limit. Both hold on `cc` and on `kiro`, as she expects.
+   - These are in `semantics-guard.test.ts`, in a follow-up commit after this subtask's commit.
+   - After the follow-up, `npm run test:agent-generator` is **1685/1686**. The one red is the same stale row.
 3. **The in-suite bites use `os.tmpdir()` copies**, removed in `finally`. The recorded bite used a scratch copy, also removed.

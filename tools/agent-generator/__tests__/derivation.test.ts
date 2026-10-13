@@ -286,7 +286,7 @@ describe('29.2 — an empty span derives nothing (ruling R2; G2-F3, MP-1)', () =
     expect(check([{ source: `${FILE}${S}`, text: '  \n\t\n' }], S, S)).toEqual({ verdict: 'FAIL_NO_DERIVATION', derived: [] });
   });
 
-  it('the shared-catalog member lane (provisional, flagged: R2 is silent on members) is held to the rendered-text rule', () => {
+  it('the shared-catalog member lane is held to the rendered-text rule (ruling erratum #310, pick (a))', () => {
     const v = (text: string) =>
       checkDerivation({ file: SHARED_CATALOG_FILE, trees: { body: partition('') }, spans: [{ source: `${SHARED_CATALOG_FILE}#record-first-ratification`, text }], s: 'record-first-ratification', destination: 'record-first-ratification' }).verdict;
     expect([v('\n'), v('- record-first ratification\n')]).toEqual(['FAIL_NO_DERIVATION', 'VERIFIED']);

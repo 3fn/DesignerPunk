@@ -49,8 +49,11 @@
  * would break P2 attribution totality (ruling R2). Hence the input carries each span's RENDERED
  * TEXT ({@link RenderedSpan}) and a derived-value lookup; a frontmatter span with no lookup
  * supplied is NOT in D (fail-closed: the check never assumes a value it was not shown).
- * PROVISIONAL (flagged, Task 29.2): R2 is silent on an emptied shared-catalog member; until
- * Thurgood's line lands, a member span is held to the body rule (its rendered text).
+ * SHARED-SUBSTRATE MEMBERS (the ruling's erratum of 2026-10-12, #310 `fbd7549a7`, pick (a)): the
+ * body-unit rendered-text test applies to each member span in D; no per-field rule. Both adapters
+ * render a governance rule as `- ${statement ?? id}`, so an emptied member's span is `- ` and D is
+ * never empty: emptied with a sibling destination → FAIL_DISHONEST_NAMING; with itself → VERIFIED
+ * (a named limit).
  *
  * UNKNOWN ANCHORS ARE NON-MATCHING, NEVER AN EXCEPTION (Lina R2): `isDescendantOrSelf` returns
  * false for an id absent from the tree — e.g. a bypass's `#body` span, or an S that a rename
@@ -156,7 +159,7 @@ export function renderedSpans(spans: readonly Pick<AttributionSpan, 'source' | '
   return spans.map((span) => ({ source: span.source, text: `${lines.slice(span.lines[0] - 1, span.lines[1]).join('\n')}\n` }));
 }
 
-/** R2, body (and, provisionally, member) spans: empty after `trim()` derives nothing. */
+/** R2, body and shared-member spans (erratum #310): empty after `trim()` derives nothing. */
 export const isEmptyRendering = (text: string): boolean => text.trim() === '';
 
 /** R2, frontmatter: `null`/absent, an empty list, or a string empty after `trim()` derives nothing. */
