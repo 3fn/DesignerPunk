@@ -54,6 +54,8 @@
  * `matchedOn.term` carries the NORMALIZED (folded) term — that is the term that matched.
  */
 
+import { ATOM_TERMS } from './tokenAtoms';
+
 /** Semantic version of the components stop-word list. Bump on any change to the set. */
 export const COMPONENT_STOP_WORD_LIST_VERSION = 1;
 
@@ -97,7 +99,8 @@ export function isComponentStopWord(term: string): boolean {
 
 /** Fold a regular English plural to its singular (conservative suffix rule — see header). */
 export function foldPlural(term: string): string {
-  if (term.length <= 3 || NON_PLURAL_S.has(term)) return term;
+  // Tokenizer atoms (ipados, macos, tvos, watchos) are never plurals — `tokenAtoms.ts`.
+  if (term.length <= 3 || NON_PLURAL_S.has(term) || ATOM_TERMS.has(term)) return term;
   if (term.endsWith('ss') || term.endsWith('is')) return term;
   if (term.endsWith('ies') && term.length > 4) return term.slice(0, -3) + 'y';
   if (/(ch|sh|x|ss)es$/.test(term)) return term.slice(0, -2);
