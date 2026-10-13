@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-13
 **Drafted by**: Thurgood (Opus), PRIMARY on Spec 123 Task 24
-**Status**: DRAFT. Two sections, ratifiable separately (§ 3, § 4), each with its own section-status line.
+**Status**: **RATIFIED (Peter, 2026-10-13) — merge 2a85df7fc** (PR #329, `U4 content policy (123)`; form r1, ruling item 4). Two sections, ratified together by that merge (§ 3, § 4), each with its own section-status line. Stamped in the record-only follow-up the ballot's § 2 names.
 **Ratification form**: **(r1), ruled.** Peter's merge of U4's unit PR ratifies both sections (PR-atomic, the B-U3 form). A record-only follow-up after the merge stamps this line and both section-status lines `RATIFIED (Peter, <date>) — merge <sha>`, and adds this ballot's entry to `.kiro/docs/ballots/README.md` § "Ballots on record" (§ 2).
 **Rulings applied** (2026-10-13): Peter, "All as recommended with class options" — record `.kiro/specs/123-consumer-distribution/completion/u4-rulings-2026-10-13.md` (`67587cf49`).
 - Item 3: this ballot is U4's first content commit (`757803488`).
@@ -58,7 +58,7 @@ git rev-list --no-merges $(git merge-base HEAD origin/main)..HEAD -- 'governance
 
 ## 3. § Banners (separately ratifiable)
 
-**§ 3 status**: DRAFT
+**§ 3 status**: **RATIFIED (Peter, 2026-10-13) — merge 2a85df7fc**
 
 **Why.** Req 20 (gate 4a, ruled): the governance corpus ships whole and MCP-served (20.1). A consumer's agent fetching a doc that carries DesignerPunk's own authorities (its merge rules, its ballots, its CI, its components' readiness) can take those authorities as its own. The banner tells it at the top what is DesignerPunk's worked example and what is transferable (20.8). One mechanism serves both the consumer and the reference-mode reader.
 
@@ -79,7 +79,7 @@ git rev-list --no-merges $(git merge-base HEAD origin/main)..HEAD -- 'governance
 
 ## 4. § Release recipe (separately ratifiable)
 
-**§ 4 status**: DRAFT
+**§ 4 status**: **RATIFIED (Peter, 2026-10-13) — merge 2a85df7fc**
 
 **Why.**
 - **The changelog step (Req 21.2)**: the release-notes disposition is decided. DD16 chose a consumer-facing `CHANGELOG.md`, hand-authored, consumer-framed, one entry per release. It has existed since U1: it holds the 15.0.0 entry (L46) and an `[Unreleased]` release-3 block (L7). Nothing in the recipe yet says each release writes one, so after 123 closes the file would go stale by omission.
