@@ -20,6 +20,19 @@
  * one tree — `<file>#<anchor>` into the body tree, `<file>#frontmatter:<path>` into the entry tree —
  * and containment is only ever asked WITHIN one tree. Cross-tree never matches.
  *
+ * HONEST NAMING IS IDENTITY, NOT CONTAINMENT (G2 spec-text ruling R1, 2026-10-12;
+ * `.kiro/specs/123-consumer-distribution/g2-spec-text-ruling.md`; design C15 erratum): clause (2)
+ * holds iff the destination is IDENTICAL to the source reference of at least one span in D —
+ * mutual `isDescendantOrSelf` in one tree, which holds only for the same node ({@link sameNode}).
+ * An ancestor of S does not satisfy it (attack (f), G2-F1); a sibling does not; no one-way
+ * containment does. Until Spec 123 Task 29.1 the check read clause (2) as "a span in D lies within
+ * the destination", which accepted every ancestor of S.
+ *
+ * THE SHARED-CATALOG MEMBER SPACE (ruling R1): a disposition row on the shared catalog
+ * (`canonical/shared/shared-catalog.yaml`, `_shared.dispositions.yaml` `members:`) names a member
+ * id. Members are flat, so D is the spans sourcing `canonical/shared/shared-catalog.yaml#<id>` and
+ * identity is id equality.
+ *
  * UNKNOWN ANCHORS ARE NON-MATCHING, NEVER AN EXCEPTION (Lina R2): `isDescendantOrSelf` returns
  * false for an id absent from the tree — e.g. a bypass's `#body` span, or an S that a rename
  * orphaned — so a red comes from DERIVATION, not from a throw. Spans from other files, generator
@@ -36,7 +49,7 @@
  * emitted by the adapters for every target — that is the per-target guard's (Task 14.3/14.4,
  * `semantics-guard.test.ts`); that a disposition row exists or its key is current (13.5).
  *
- * Traces to: Req 11.4, 10.G, 10.S; design C15.
+ * Traces to: Req 11.4, 10.G, 10.S; design C15 (and its 2026-10-12 erratum); the G2 spec-text ruling R1.
  */
 
 import type { AttributionSpan } from '../attribution';
@@ -48,10 +61,13 @@ export type DerivationVerdict = (typeof DERIVATION_VERDICTS)[number];
 /** The prefix a disposition's destination (and a span's anchor) uses for a frontmatter entry. */
 export const FRONTMATTER_PREFIX = 'frontmatter:';
 
-/** A location in one of the two trees. */
+/** The shared catalog's canonical path: a check over this file is decided in member-id space (ruling R1). */
+export const SHARED_CATALOG_FILE = 'canonical/shared/shared-catalog.yaml';
+
+/** A location in one of the two trees, or a shared-catalog member id (ruling R1). */
 export interface TreeRef {
-  tree: 'body' | 'entry';
-  /** A body anchor (`#…`) or an entry path (`writeScope[src/**]`). */
+  tree: 'body' | 'entry' | 'member';
+  /** A body anchor (`#…`), an entry path (`writeScope[src/**]`) or a member id. */
   id: string;
 }
 
@@ -81,11 +97,24 @@ export interface DerivationTrees {
   entry?: EntryTree;
 }
 
-/** Structural containment: `x` is `s` or lies beneath it, within ONE tree. Unknown ids → false. */
+/**
+ * Structural containment: `x` is `s` or lies beneath it, within ONE tree. Unknown ids → false.
+ * Member ids are flat: a member contains only itself.
+ */
 export function containedIn(x: TreeRef, s: TreeRef, trees: DerivationTrees): boolean {
   if (x.tree !== s.tree) return false;
+  if (x.tree === 'member') return x.id === s.id;
   const tree = x.tree === 'body' ? trees.body : trees.entry;
   return tree ? tree.isDescendantOrSelf(x.id, s.id) : false;
+}
+
+/**
+ * Identity (ruling R1): `x` and `s` are the SAME node of one tree — mutual containment, which in a
+ * tree with unique ids holds only for one node. Unknown ids stay non-matching; cross-tree never
+ * matches; never decided by an anchor-string comparison.
+ */
+export function sameNode(x: TreeRef, s: TreeRef, trees: DerivationTrees): boolean {
+  return containedIn(x, s, trees) && containedIn(s, x, trees);
 }
 
 export interface DerivationInput {
@@ -108,13 +137,21 @@ export interface DerivationResult {
 
 /** Req 11.4 over one re-pointed disposition. */
 export function checkDerivation(input: DerivationInput): DerivationResult {
-  const s = parseRef(input.s);
-  const destination = parseRef(input.destination);
+  const memberSpace = input.file === SHARED_CATALOG_FILE;
+  const ref = (r: string): TreeRef => (memberSpace ? { tree: 'member', id: r } : parseRef(r));
+  const s = ref(input.s);
+  const destination = ref(input.destination);
+  const sourceRef = (source: string): TreeRef | undefined => {
+    if (!memberSpace) return spanRef(source, input.file);
+    const prefix = `${input.file}#`;
+    return source.startsWith(prefix) ? { tree: 'member', id: source.slice(prefix.length) } : undefined;
+  };
   const d = input.spans
-    .map((span) => ({ source: span.source, ref: spanRef(span.source, input.file) }))
+    .map((span) => ({ source: span.source, ref: sourceRef(span.source) }))
     .filter((x): x is { source: string; ref: TreeRef } => x.ref !== undefined && containedIn(x.ref, s, input.trees));
   const derived = d.map((x) => x.source);
   if (d.length === 0) return { verdict: 'FAIL_NO_DERIVATION', derived };
-  const honest = d.some((x) => containedIn(x.ref, destination, input.trees));
+  // HONEST NAMING (ruling R1): the destination IS one of D's span sources — identity, never containment.
+  const honest = d.some((x) => sameNode(x.ref, destination, input.trees));
   return { verdict: honest ? 'VERIFIED' : 'FAIL_DISHONEST_NAMING', derived };
 }

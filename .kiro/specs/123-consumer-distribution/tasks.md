@@ -1385,7 +1385,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Primary Artifacts:** `tools/agent-generator/regrounding/derivation.ts`, `tools/agent-generator/regrounding/check-catalog.ts`, `tools/agent-generator/adapters/kiro.ts`, `tools/agent-generator/__tests__/{derivation,derivation.frontmatter,semantics-guard,semantics-guard.fixture}.test.ts`, `tools/agent-generator/__fixtures__/semantics-guard/**`, `tools/agent-generator/__tests__/derivation.shipped-profile.test.ts` (new: the standing application), `canonical/_consumer-output/**` (regenerated sidecars and renders), `canonical/profiles/consumer/**` (seat signatures only; R2: no author edits in U3g, PR-11), `.kiro/agents/*.json.attribution.json` (R2, Lina RC-7: regenerated, never hand-edited), `.kiro/agents/*-prompt.md` (amendment 2026-10-12, Peter's ruling (A): regenerated, never hand-edited), `tools/agent-generator/spans.ts` (R2, Lina RC-8: only if the ruling places G2-F3's fix there), `canonical/generated.lock`, `.kiro/specs/123-consumer-distribution/completion/u3g-sizing.md`
 
   - [x] 29.0 Read-only sizing re-run on the ruled text; the ceiling check (stop if any limb is exceeded)
-  - [ ] 29.1 Clause 2 per the ruling; attack (f) and one-token-variant fixtures; two-sided bites
+  - [x] 29.1 Clause 2 per the ruling; attack (f) and one-token-variant fixtures; two-sided bites
   - [ ] 29.2 Clause-1 rows rebuilt on the generator's emission of attack (a) (G2-F3, MP-1)
   - [ ] 29.3 Kiro-JSON per-entry attribution spans (the six rows)
   - [ ] 29.4 The standing application to the shipped profile on every PR touching its inputs (G2-F2; Stacy's condition (a)); the declared input set

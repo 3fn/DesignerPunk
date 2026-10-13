@@ -1,5 +1,6 @@
 /**
- * derivation.test.ts — Spec 123 Task 14.1: the 11.4 derivation checker (design C15).
+ * derivation.test.ts — Spec 123 Task 14.1: the 11.4 derivation checker (design C15); clause (2)
+ * re-ruled at Task 29.1 (G2 spec-text ruling R1: HONEST NAMING is IDENTITY, not containment).
  *
  * Criterion (tasks.md Task 14): "Containment through both trees only. Unknown anchors are
  * non-matching, never a throw: attack (a) → FAIL_NO_DERIVATION; E → VERIFIED; #body →
@@ -18,7 +19,7 @@ import { AttributionAccumulator } from '../attribution';
 import { splitFrontmatter } from '../frontmatter';
 import { entryTree, partition } from '../partition';
 import { emitSpans, type Dispositions } from '../spans';
-import { checkDerivation, containedIn, DERIVATION_VERDICTS, parseRef, spanRef } from '../regrounding/derivation';
+import { checkDerivation, containedIn, DERIVATION_VERDICTS, parseRef, sameNode, SHARED_CATALOG_FILE, spanRef } from '../regrounding/derivation';
 import { g1Fixture, readG1Rendering } from '../__fixtures__/g1-renderings';
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..');
@@ -98,13 +99,18 @@ describe('containment is structural, within one tree (the R4 pin)', () => {
   it('a :preamble unit is contained in its parent; the parent is NOT contained in its :preamble', () => {
     expect(containedIn(parseRef(`${PARENT}:preamble`), parseRef(PARENT), trees)).toBe(true);
     expect(containedIn(parseRef(PARENT), parseRef(`${PARENT}:preamble`), trees)).toBe(false);
-    expect(check([{ source: `${FILE}${PARENT}:preamble` }], PARENT, PARENT).verdict).toBe('VERIFIED');
+    // DERIVATION still accepts the contained span (clause 1); HONEST NAMING is identity (Task 29.1,
+    // ruling R1), so naming the parent is not naming a span source in D.
+    expect(check([{ source: `${FILE}${PARENT}:preamble` }], PARENT, PARENT)).toEqual({ verdict: 'FAIL_DISHONEST_NAMING', derived: [`${FILE}${PARENT}:preamble`] });
+    expect(check([{ source: `${FILE}${PARENT}:preamble` }], PARENT, `${PARENT}:preamble`).verdict).toBe('VERIFIED');
   });
 
   it('entry tree: a member is contained in its container; the container is NOT contained in a member', () => {
     const glob = [...trees.entry.nodes.keys()].find((k) => k.startsWith('writeScope['));
     expect(glob).toBeDefined();
-    expect(check([{ source: `${FILE}#frontmatter:${glob}` }], 'frontmatter:writeScope', 'frontmatter:writeScope').verdict).toBe('VERIFIED');
+    // Clause 1 accepts the member span under the container S; clause 2 (identity, Task 29.1) needs the member itself.
+    expect(check([{ source: `${FILE}#frontmatter:${glob}` }], 'frontmatter:writeScope', 'frontmatter:writeScope').verdict).toBe('FAIL_DISHONEST_NAMING');
+    expect(check([{ source: `${FILE}#frontmatter:${glob}` }], 'frontmatter:writeScope', `frontmatter:${glob}`).verdict).toBe('VERIFIED');
     // The container span (today's write-scope rendering) does not derive a per-glob S — Task 10's E-fm carry.
     expect(check([{ source: `${FILE}#frontmatter:writeScope` }], `frontmatter:${glob}`, `frontmatter:${glob}`).verdict).toBe('FAIL_NO_DERIVATION');
   });
@@ -138,12 +144,91 @@ describe('HONEST NAMING', () => {
     expect(check(r.spans, S, TRIGGER)).toEqual({ verdict: 'FAIL_DISHONEST_NAMING', derived: [`${FILE}${S}`] });
   });
 
-  it('the destination may contain the derived span (the ## parent contains S) → VERIFIED', () => {
+  it('naming the ## parent that contains S is not naming S (Task 29.1; was VERIFIED under containment) → FAIL_DISHONEST_NAMING', () => {
     const r = render({ [S]: { disposition: 're-pointed', overlay: E_TEXT } });
-    expect(check(r.spans, S, PARENT).verdict).toBe('VERIFIED');
+    expect(check(r.spans, S, PARENT).verdict).toBe('FAIL_DISHONEST_NAMING');
   });
 
   it('the verdict set is the design’s three, closed', () => {
     expect([...DERIVATION_VERDICTS]).toEqual(['VERIFIED', 'FAIL_NO_DERIVATION', 'FAIL_DISHONEST_NAMING']);
+  });
+});
+
+// ---------------------------------------------------------------------------------------------
+// Task 29.1 — clause (2) per the G2 spec-text ruling R1 (identity), G2-F1. Each fixture renders
+// through `emitSpans` under the consumer profile over the real stacy.md. The two-sided bites
+// (`__fixtures__/semantics-guard/__bites__/task-29-1-*`) record these tests RED with clause (2)
+// restored to containment, and GREEN as written.
+// ---------------------------------------------------------------------------------------------
+describe('29.1 — HONEST NAMING is identity (ruling R1; G2-F1)', () => {
+  const ONE_TOKEN = 'Owed.\n';
+
+  it('attack (f): S re-grounded in place, destination S’s ## parent → FAIL_DISHONEST_NAMING', () => {
+    const r = render({ [S]: { disposition: 're-pointed', overlay: E_TEXT } });
+    expect(`attack (f): ${check(r.spans, S, PARENT).verdict}`).toBe('attack (f): FAIL_DISHONEST_NAMING');
+  });
+
+  it('attack (f) at every ancestor: no ancestor of S names S', () => {
+    const r = render({ [S]: { disposition: 're-pointed', overlay: E_TEXT } });
+    const ancestors: string[] = [];
+    for (let a = bodyTree.get(S)?.parent ?? null; a !== null; a = bodyTree.get(a)?.parent ?? null) ancestors.push(a);
+    expect(ancestors.length).toBeGreaterThanOrEqual(2); // the ## parent and the document root at least
+    expect(ancestors.map((a) => `${a}: ${check(r.spans, S, a).verdict}`)).toEqual(ancestors.map((a) => `${a}: FAIL_DISHONEST_NAMING`));
+  });
+
+  it('the one-token variant of attack (a) that passed under containment (S reduced to one token, destination its ## parent) → FAIL_DISHONEST_NAMING', () => {
+    const r = render({ [S]: { disposition: 're-pointed', overlay: ONE_TOKEN } });
+    expect(r.text).toContain(ONE_TOKEN);
+    expect(`one-token variant, ancestor destination: ${check(r.spans, S, PARENT).verdict}`).toBe('one-token variant, ancestor destination: FAIL_DISHONEST_NAMING');
+  });
+
+  it('the one-token variant with a sibling destination (V1) → FAIL_DISHONEST_NAMING (rejected in both directions; not a two-sided case)', () => {
+    const r = render({ [S]: { disposition: 're-pointed', overlay: ONE_TOKEN } });
+    expect(check(r.spans, S, TRIGGER)).toEqual({ verdict: 'FAIL_DISHONEST_NAMING', derived: [`${FILE}${S}`] });
+  });
+
+  it('the honest in-place re-pointing stays VERIFIED (destination = S)', () => {
+    const r = render({ [S]: { disposition: 're-pointed', overlay: E_TEXT } });
+    expect(check(r.spans, S, S).verdict).toBe('VERIFIED');
+  });
+
+  it('an unknown destination (U1) is non-matching, never a throw → FAIL_DISHONEST_NAMING', () => {
+    const r = render({ [S]: { disposition: 're-pointed', overlay: E_TEXT } });
+    expect(() => check(r.spans, S, '#no-such-unit')).not.toThrow();
+    expect(check(r.spans, S, '#no-such-unit').verdict).toBe('FAIL_DISHONEST_NAMING');
+  });
+
+  it('a destination in the other tree (U2) never matches → FAIL_DISHONEST_NAMING', () => {
+    const r = render({ [S]: { disposition: 're-pointed', overlay: E_TEXT } });
+    expect(check(r.spans, S, 'frontmatter:description').verdict).toBe('FAIL_DISHONEST_NAMING');
+  });
+
+  it('sameNode is mutual containment: same node only; prefix siblings, parent/:preamble, unknown ids and cross-tree are not the same', () => {
+    const t = partition('# Title\n\n## The trigger set\n\nA.\n\n## The trigger set examples\n\nB.\n');
+    expect(sameNode(parseRef('#the-trigger-set'), parseRef('#the-trigger-set'), { body: t })).toBe(true);
+    expect(sameNode(parseRef('#the-trigger-set-examples'), parseRef('#the-trigger-set'), { body: t })).toBe(false);
+    expect(sameNode(parseRef(`${PARENT}:preamble`), parseRef(PARENT), trees)).toBe(false);
+    expect(sameNode(parseRef(PARENT), parseRef(`${PARENT}:preamble`), trees)).toBe(false);
+    expect(sameNode(parseRef('#nope'), parseRef('#nope'), trees)).toBe(false);
+    expect(sameNode(parseRef(S), parseRef('frontmatter:description'), trees)).toBe(false);
+  });
+});
+
+describe('29.1 — the shared-catalog member space (ruling R1: id equality)', () => {
+  const ID = 'record-first-ratification';
+  const SIB = 'find-docs-discovery';
+  const mcheck = (spans: { source: string }[], s: string, destination: string) =>
+    checkDerivation({ file: SHARED_CATALOG_FILE, trees: { body: partition('') }, spans, s, destination });
+
+  it('a span sourcing the member, destination the member (M0) → VERIFIED', () => {
+    expect(mcheck([{ source: `${SHARED_CATALOG_FILE}#${ID}` }], ID, ID)).toEqual({ verdict: 'VERIFIED', derived: [`${SHARED_CATALOG_FILE}#${ID}`] });
+  });
+
+  it('destination a sibling member id (M1) → FAIL_DISHONEST_NAMING', () => {
+    expect(mcheck([{ source: `${SHARED_CATALOG_FILE}#${ID}` }, { source: `${SHARED_CATALOG_FILE}#${SIB}` }], ID, SIB).verdict).toBe('FAIL_DISHONEST_NAMING');
+  });
+
+  it('only a sibling member, another file or glue is rendered → FAIL_NO_DERIVATION', () => {
+    expect(mcheck([{ source: `${SHARED_CATALOG_FILE}#${SIB}` }, { source: `${FILE}#${ID}` }, { source: 'WORKFLOW_RULES' }], ID, ID)).toEqual({ verdict: 'FAIL_NO_DERIVATION', derived: [] });
   });
 });

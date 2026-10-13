@@ -75,3 +75,14 @@ describe('11.4 on the entry tree — commands[<name>]', () => {
     expect(check([{ source: `${FILE}#frontmatter:commands` }], X, X).verdict).toBe('FAIL_NO_DERIVATION');
   });
 });
+
+describe('29.1 — HONEST NAMING is identity on the entry tree (ruling R1; G2-F1, F5’s shape)', () => {
+  it('a rendered member with its parent entry as destination (F5c) → FAIL_DISHONEST_NAMING', () => {
+    const spans = renderCommands({});
+    expect(`F5c: ${check(spans, X, 'commands').verdict}`).toBe('F5c: FAIL_DISHONEST_NAMING');
+  });
+
+  it('the same member with itself as destination → VERIFIED', () => {
+    expect(check(renderCommands({}), X, X).verdict).toBe('VERIFIED');
+  });
+});
