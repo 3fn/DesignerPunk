@@ -1312,7 +1312,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 *(R2 — PR-11 RULED: the profile corrections batch, first drafted here as 29.5, is **U3c** (Task 31), merged before this unit is cut. **U3g is the G2 cycle alone**, and Thurgood authors nothing in it.)*
 
-- [ ] 29. The corrected derivation check: the ruled clause 2, the generator's own emission, and its standing application to the shipped profile
+- [x] 29. The corrected derivation check: the ruled clause 2, the generator's own emission, and its standing application to the shipped profile
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY **Lina (Opus)**
   **Traces**: Reqs 11.4, 11.4.1, 11.8, 24.3 · design C15 (as corrected by Thurgood's ruling) · G2-F1, G2-F2, G2-F3; MIDPOINT MP-1

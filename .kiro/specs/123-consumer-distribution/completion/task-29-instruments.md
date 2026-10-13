@@ -47,7 +47,7 @@
 | 6.4 | C6 the count equals the count derived from the committed dispositions; red on zero | assertions in 6.1 | built here (29.4) | — | 29.4 |
 | 6.5 | C6 the bite: one rejected row planted in a temp copy turns the standing test red | bite record | built here (29.4) | — | 29.4 |
 | 6.6 | C6 the declared input (trigger) set | the completion doc's list; the minimum is the ruling's R3 | built here (29.4), over exists (`.kiro/specs/123-consumer-distribution/g2-spec-text-ruling.md` @ `905dd1e62`) | R3 names the minimum; the doc may add, never remove | 29.4 |
-| 6.7 | C6 the ARMING event (units table: "a check newly applied on every PR touching its inputs, criterion 29 C6") | Stacy's ARMING record | MISSING → Stacy: the event fires at U3g's merge. **Blocks nothing in Task 29** | — | none (post-merge) |
+| 6.7 | C6 the ARMING event (units table: "a check newly applied on every PR touching its inputs, criterion 29 C6") | Stacy's ARMING record | MISSING → Stacy: the event fires at U3g's merge. **Blocks nothing in Task 29** → at Task 29's close (2026-10-12): still MISSING → Stacy, by design. The record is written at U3g's merge | — | none (post-merge) |
 | 7.1 | C7 the adapter to change | `tools/agent-generator/adapters/kiro.ts` (the JSON emission and its one glue span) | exists (`tools/agent-generator/adapters/kiro.ts` @ `8a0c0e46a`) | the glue span `C1:frontmatter+ambient-manifest` is the one the six rows sit under | 29.3 |
 | 7.2 | C7 per-entry spans for the JSON fields | the 29.3 edit | built here (29.3) | — | 29.3 |
 | 7.3 | C7 JSON bytes unchanged | `git diff --stat <29.3^> <29.3> -- canonical/_consumer-output/kiro` names `*.attribution.json` only | exists (`.kiro/specs/123-consumer-distribution/tasks.md` @ `8a0c0e46a`) | the criterion prescribes it, on 29.3's commit | 29.3 |
@@ -56,8 +56,8 @@
 | 7.6 | C7 the stale list after 29.3, pasted before 29.6 | `runFreshnessSweep` through the no-write runner (`runGuard(repoRoot, { refreshLock: false })`) | exists (`tools/agent-generator/regrounding/freshness.ts` @ `669b51b09`; `tools/agent-generator/diff-guard.ts` @ `669b51b09`) | L265; never the lock-writing mode before 29.6 | 29.3, 29.6 |
 | 8.1 | C8 the re-sign rules and the chain verifier | signing-act ballot (batching, merge-only seat commits) + `verify-signing-chain` | exists (`.kiro/docs/ballots/2026-10-01-signing-act-chain.md` @ `dff78bcde`; `tools/agent-generator/regrounding/verify-signing-chain.ts` @ `669b51b09`) | the ballot is the rule; the verifier walks every signing commit in range | 29.6 |
 | 8.2 | C8 Stacy's re-sign of `knowledgeBases[spec-summaries]` (and any row the stale list names) | the seat's signing commit, merged in, never amended | built here (29.6, the seat; attestation, outside every line) | — | 29.6 |
-| 8.3 | C8 "until Thurgood's RS-1 erratum lands, a re-sign is a new act, not a closed divergent" | Thurgood's RS-1 erratum | MISSING → Thurgood: not drafted (no RS-1 in the ballot @ `dff78bcde`). **Blocks nothing**: the criterion already reads a re-sign here as a new act | — | none |
-| 8.4 | C8 a Stacy-signed row moved is disclosed and falls in Peter's sample (trigger (d)) | the § 5.3 amendment (trigger-(d) issue) | MISSING → Thurgood: the issue is ACTIVE, no amendment (`.kiro/issues/2026-10-03-stacy-signed-sample-trigger-d.md` @ `cb28f0112`). **Blocks nothing in U3g**: U3g discloses the row; the sample is owed at release 3's RELEASE pass | — | none |
+| 8.3 | C8 "until Thurgood's RS-1 erratum lands, a re-sign is a new act, not a closed divergent" | Thurgood's RS-1 erratum | MISSING → Thurgood: not drafted (no RS-1 in the ballot @ `dff78bcde`). **Blocks nothing**: the criterion already reads a re-sign here as a new act → resolved 2026-10-12 (29.6): none. The conditional limb did not fire: no divergent closed, and the one re-sign is a new act. RS-1 stays owed by Thurgood, outside this unit | — | none |
+| 8.4 | C8 a Stacy-signed row moved is disclosed and falls in Peter's sample (trigger (d)) | the § 5.3 amendment (trigger-(d) issue) | MISSING → Thurgood: the issue is ACTIVE, no amendment (`.kiro/issues/2026-10-03-stacy-signed-sample-trigger-d.md` @ `cb28f0112`). **Blocks nothing in U3g**: U3g discloses the row; the sample is owed at release 3's RELEASE pass → at Task 29's close: the limb fired. Stacy's `knowledgeBases[spec-summaries]` moved and is disclosed (`task-29-6-completion.md`). The § 5.3 amendment is still MISSING → Thurgood, owed before release 3's RELEASE pass | — | none |
 | 8.5 | C8 the PR body's stale list and one line per act | the U3g PR body | built here (30.3) | — | 30.3 |
 | 8.6 | C8 one lock refresh, by the guard's own write, from a clean tree | `npm run check:122:diff-guard` | exists (`tools/agent-generator/diff-guard.ts` @ `669b51b09`; `canonical/generated.lock` @ `8a0c0e46a`; `package.json` @ `762b8c209`) | writes only on `full-run-green`; moved outputs listed; any undeclared path is the stop | 29.6 |
 | 9.1 | C9 validation | `npm test`, full `tsc`, `npm run test:agent-generator` | exists (`package.json` @ `762b8c209`) | the lanes the criterion names; baseline green at the cut (above) | 29.7 |
@@ -104,3 +104,14 @@
   - Each change is shape-only or expectation-only, and is recorded in `task-29-2-completion.md` or `task-29-3-completion.md`.
   - The dated Primary-Artifacts amendment is `6dc435cc5`.
 - 2026-10-12 — resolved — the 29.3 reads (the `added-by-ruling` entry above): Kenya, Data and Stacy ACCEPT, no change to the note. Relayed by the orchestrator, quoted in `task-29-3-completion.md`; the read files are not on disk.
+
+**Counts (final, 2026-10-12, at Task 29's close)**: N = 39 — exists 23 · built-here 14 · missing 2 · unlisted 2.
+- Row 3.1 resolved to `exists`.
+- Row 8.3 resolved to `none` (its conditional limb did not fire). Like 6.1 in Task 31, it is not counted.
+- **Still MISSING**:
+  - **6.7**, Stacy's ARMING record. It is written at U3g's merge, by design.
+  - **8.4**, Thurgood's § 5.3 amendment. It is owed before release 3's RELEASE pass. U3g has made the disclosure.
+- The unlisted count is the `## Found later` entries of kind `unlisted` or `misfit`:
+  - the 29.0 `misfit`, resolved by Peter's ruling (A);
+  - the four-edit `unlisted` entry, granted at `6dc435cc5`. It supersedes the 29.2 grain-guard entry, so that entry is not counted twice.
+- The `added-by-ruling` entry (C7, the reads) is a routing record. It is not counted.
