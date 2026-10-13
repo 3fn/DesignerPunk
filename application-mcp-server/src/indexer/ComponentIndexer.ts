@@ -33,6 +33,7 @@ import { TokenIndexer } from './TokenIndexer';
 import { ModeClassifier } from './ModeClassifier';
 import { isImmutableContext } from '../staleness/StalenessGate';
 import { normalizeTerms } from './termNormalization';
+import { protectAtoms } from './tokenAtoms';
 
 // ---------------------------------------------------------------------------
 // Multi-root component indexing (Spec 123 Task 1.4 — design C3 "Indexer", L-D2/L-D8)
@@ -125,15 +126,18 @@ export type KeywordIndex = Map<string, ComponentKeywordEntry>;
  *      "Button-CTA"                      → ["button", "cta"]
  *      "whenToUse"                       → ["when", "to", "use"]
  *      "registration, login, or contact" → ["registration", "login", "or", "contact"]
+ *      "safe area handling (iOS)"        → ["safe", "area", "handling", "ios"]   (atom, not i + os)
  */
 export function tokenizeString(input: string): string[] {
   if (!input) return [];
+  // 0. Protect brand-cased atoms (iOS, iPadOS, …) by lowercasing them in place, so step 2
+  //    cannot split them (`tokenAtoms.ts`; follow-ups record row 11)
   // 1. Split on hyphens and underscores
   // 2. Split camelCase: insert space before uppercase letters preceded by lowercase
   // 3. Split on remaining whitespace
   // 4. Strip leading/trailing punctuation from each token
   // 5. Lowercase, filter empty
-  const dehyphenated = input.replace(/[-_]+/g, ' ');
+  const dehyphenated = protectAtoms(input).replace(/[-_]+/g, ' ');
   const decameled = dehyphenated.replace(/([a-z])([A-Z])/g, '$1 $2');
   return decameled
     .split(/\s+/)
