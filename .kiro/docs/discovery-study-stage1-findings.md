@@ -264,3 +264,17 @@ _Empty. Used only if Stage 2 runs. Iterations against the calibration-only set a
 ## 9. Stage 1 CLOSE
 
 **Closed 2026-10-13 — O1 (Peter's Reading A ruling). Stage 2 docs side: NOT RUN, O1.** SHAs on `chore/discovery-study-stage1`: (1) raw queries `5f8b668b5`; (2) pre-registration `08fed8984`; (3) results `d94adb623`; (4) the commit carrying this line (final owner rulings and close). Still open after close: the 3 hand-fixes (§ 7; two re-runs owed), the indexer issue (§ 6.9), the routed discoveries D-1–D-5 (§ 4), and Leonardo's Q2-L addendum (§ 7).
+
+## 10. Addendum (2026-10-13) — DA-05 is an answer-key error
+
+**Recorded under the indexer-fix grant (#322), which allows this addendum only. Nothing above is edited; the frozen results stand as recorded.**
+
+- **Finding**: while preparing the O1 hand-fix for DA-05 (follow-ups record row 3), Thurgood tested aliases in scratch.
+  - The only alias drawn from `test-development-standards`' own text that lifted DA-05 (L1192, "Validates structure, naming, and configuration at development time", 3/partial → 1/strong, no new confident-wrong) describes what LINTING checks.
+  - The doc states no screen-test file-structure or naming convention. The alias would have planted a `strong` on a doc that does not answer, which is the KE-N2 harm aimed at a positive.
+  - **No-go on the alias.** DA-05's key should have been dropped under K5b (partial coverage: the doc answers test CATEGORIES, not structure or naming). Ruled with the orchestrator, 2026-10-13; recorded in `.kiro/issues/2026-10-13-discovery-study-stage1-followups.md` row 3 (#320).
+- **Effect on the Stage 1 outcome**: DA-05 is counted as an answer-key error and **excluded** (charter § 2: never edited).
+  - Final buckets become 7 matcher defects / **2** alias-fixable (DA-02, DA-11) / 3 structural.
+  - **Gate-counted 6 → 5**, still > 3; O1's conditions (≤ 3 structural AND ≤ 8 fixable) still hold. **Outcome unchanged: O1.**
+- **Applied forward**: the indexer fix's fresh set drops the four screen-test structure/naming queries under K5b for the same reason (fresh fixture, FSP-05 / FKE-04 / FDA-06 / FST-10).
+- **Routed content gap**: screen-test file structure and naming are undocumented, and three seats asked in each set. Owner: Thurgood, as `test-development-standards`' content. It is fixed by writing the content, not by an alias.
