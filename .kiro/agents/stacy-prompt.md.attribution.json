@@ -652,7 +652,47 @@
     {
       "lines": [
         428,
+        429
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:knowledgeBases"
+    },
+    {
+      "lines": [
+        430,
+        430
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:knowledgeBases[completion-docs]"
+    },
+    {
+      "lines": [
+        431,
         431
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:knowledgeBases[spec-summaries]"
+    },
+    {
+      "lines": [
+        432,
+        432
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:knowledgeBases[source-tree]"
+    },
+    {
+      "lines": [
+        433,
+        433
+      ],
+      "op": "render",
+      "source": "canonical/agents/stacy.md#frontmatter:knowledgeBases"
+    },
+    {
+      "lines": [
+        434,
+        437
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#frontmatter:writeScope"

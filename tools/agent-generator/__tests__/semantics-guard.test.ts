@@ -25,7 +25,10 @@ import * as path from 'path';
 import { adaptersFor, type AdapterContext, type AdapterFactory, type FieldDispositionTable, type TargetAdapter } from '../adapters/index';
 import { CcAdapter } from '../adapters/cc';
 import { loadConsumerProfile } from '../consumer-profile';
-import { checkDerivation, type DerivationVerdict } from '../regrounding/derivation';
+import { checkDerivation, renderedSpans, SHARED_CATALOG_FILE, type DerivationVerdict } from '../regrounding/derivation';
+import { KiroAdapter } from '../adapters/kiro';
+import { entryTree } from '../partition';
+import type { YamlDoc } from '../frontmatter';
 import type { AttributionManifest } from '../attribution';
 import { E_FM, EXTRA, loadSemguard, S, semguardContext, SOURCE } from '../__fixtures__/semantics-guard';
 
@@ -55,7 +58,13 @@ function prose(adapter: TargetAdapter): { content: string; attribution: Attribut
 
 /** 11.4 alone, over the adapter's own spans, for an in-place re-pointing of `s`. */
 function verdictOf(adapter: TargetAdapter, s: string): DerivationVerdict {
-  return checkDerivation({ file: SOURCE, trees: fixture.trees, spans: prose(adapter).attribution.spans, s, destination: s }).verdict;
+  return checkDerivation({ file: SOURCE, trees: fixture.trees, spans: spansOf(adapter), s, destination: s, derivedValue: fixture.derivedValue }).verdict;
+}
+
+/** The adapter's own spans, each with the lines it covers in the artifact it emitted (R2, Task 29.2). */
+function spansOf(adapter: TargetAdapter) {
+  const p = prose(adapter);
+  return renderedSpans(p.attribution.spans, p.content);
 }
 
 /** The guard blocks for a declared target list — the adapters come from the registry. */
@@ -78,13 +87,13 @@ function defineGuard(blocks: [string, TargetAdapter][]): void {
 
     /*
      * FRONTMATTER (Task 14.4; design C15 "E-fm"; DD7). Scope, per target: the frontmatter-derived
-     * sections of the PROSE artifact (CC: the agent file; Kiro: the prompt). The Kiro JSON config
-     * is one steward-shaped glue span under every profile (Task 15.0; C20), so a bypass INSIDE
-     * `write.allowedPaths` is invisible to `› kiro › frontmatter` — this block does not claim it.
+     * sections of the PROSE artifact (CC: the agent file; Kiro: the prompt). Since Task 29.3 the Kiro
+     * JSON config carries per-entry spans too; that artifact is proven in the `kiro — 29.3` block
+     * below, not here (this block reads the prose artifact only).
      */
     describe('frontmatter', () => {
       it(`E-fm: ${E_FM} (re-grounded in place) is VERIFIED over this adapter’s own spans`, () => {
-        const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: prose(adapter).attribution.spans, s: `frontmatter:${E_FM}`, destination: `frontmatter:${E_FM}` }).verdict;
+        const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: spansOf(adapter), s: `frontmatter:${E_FM}`, destination: `frontmatter:${E_FM}`, derivedValue: fixture.derivedValue }).verdict;
         expect(`${target} frontmatter ${E_FM}: ${v}`).toBe(`${target} frontmatter ${E_FM}: VERIFIED`);
       });
 
@@ -95,7 +104,7 @@ function defineGuard(blocks: [string, TargetAdapter][]): void {
       });
 
       it(`EXTRA EVIDENCE (disclosed, not a substitute for E-fm): ${EXTRA} re-grounded in place is VERIFIED`, () => {
-        const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: prose(adapter).attribution.spans, s: `frontmatter:${EXTRA}`, destination: `frontmatter:${EXTRA}` }).verdict;
+        const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: spansOf(adapter), s: `frontmatter:${EXTRA}`, destination: `frontmatter:${EXTRA}`, derivedValue: fixture.derivedValue }).verdict;
         expect(`${target} frontmatter ${EXTRA}: ${v}`).toBe(`${target} frontmatter ${EXTRA}: VERIFIED`);
       });
     });
@@ -123,4 +132,88 @@ describe('a fake third target — declared, its adapter injected through the reg
   });
 
   defineGuard(blocks);
+});
+
+/*
+ * Task 29.2 (ruling R2; G2-F3, MP-1): attack (a) AS EACH ADAPTER EMITS IT. S stays re-pointed with
+ * its overlay emptied; every declared target's own prose artifact carries the one blank line
+ * attributed to S, and the check rejects it by clause (1).
+ */
+describe.each(guardBlocks(PROFILE_TARGETS))('%s — attack (a) as emitted (29.2)', (target, adapter) => {
+  const emptied = { ...fixture, overlay: { ...fixture.overlay, units: { ...fixture.overlay.units, [S]: '' } } };
+  const ctx = semguardContext(BASE_CTX, emptied);
+  const file = adapter.emitAgent(fixture.resolved, ctx).find((f) => f.path.endsWith('.md') && f.attribution);
+  const spans = file && file.attribution ? renderedSpans(file.attribution.spans, file.content) : [];
+
+  it('the emitted rendering carries exactly one blank line attributed to S', () => {
+    expect(spans.filter((sp) => sp.source === `${SOURCE}${S}`).map((sp) => sp.text)).toEqual(['\n']);
+  });
+
+  it('A1 (sibling destination) and A4 (destination S) → FAIL_NO_DERIVATION', () => {
+    const v = (destination: string) => checkDerivation({ file: SOURCE, trees: fixture.trees, spans, s: S, destination, derivedValue: fixture.derivedValue }).verdict;
+    const T = '#the-trigger-set-the-114-superset-table-names-never-numbers';
+    expect(`${target}: A1 ${v(T)}, A4 ${v(S)}`).toBe(`${target}: A1 FAIL_NO_DERIVATION, A4 FAIL_NO_DERIVATION`);
+  });
+});
+
+/*
+ * Task 29.3 (G2-F2; C7 as amended 2026-10-12 by Peter's ruling (A)): the Kiro target's two
+ * frontmatter surfaces, each judged ALONE. (1) The JSON config carries per-entry spans, so a row it
+ * renders (`writeScope[…]` → `allowedPaths`, `description`) derives from the JSON by itself.
+ * (2) A GLOB-ONLY knowledge base renders as a prompt fallback note with a per-member span. The
+ * fixture adds one glob-only knowledge base to semguard IN MEMORY (canonical frontmatter, derived
+ * frontmatter and a retained row), so the committed fixture files are unchanged.
+ */
+describe('kiro — 29.3: the JSON config and the knowledge note derive their rows', () => {
+  const KB = { name: 'specs-kb', globs: ['specs/**'] };
+  const kbPath = 'knowledgeBases[specs-kb]';
+  const derivedFm = { ...(fixture.resolved.doc.frontmatter as object), knowledgeBases: [KB] };
+  const resolved = { ...fixture.resolved, doc: { ...fixture.resolved.doc, frontmatter: derivedFm } } as typeof fixture.resolved;
+  const dispositions = { ...fixture.dispositions, frontmatter: { ...fixture.dispositions.frontmatter, [kbPath]: { disposition: 'retained' as const } } };
+  const ctx = semguardContext(BASE_CTX, { ...fixture, dispositions });
+  const trees = { body: fixture.trees.body, entry: entryTree({ ...fixture.frontmatter, knowledgeBases: [KB] } as YamlDoc) };
+  const derivedValue = (p: string) => (p === kbPath ? KB : fixture.derivedValue(p));
+  const files = new KiroAdapter(FIELD_DISPOSITIONS).emitAgent(resolved, ctx);
+  const spansOfFile = (suffix: string) => {
+    const f = files.find((x) => x.path.endsWith(suffix) && x.attribution);
+    if (!f || !f.attribution) throw new Error(`kiro: no ${suffix}`);
+    return renderedSpans(f.attribution.spans, f.content);
+  };
+  const v = (spans: ReturnType<typeof spansOfFile>, entry: string) =>
+    checkDerivation({ file: SOURCE, trees, spans, s: `frontmatter:${entry}`, destination: `frontmatter:${entry}`, derivedValue }).verdict;
+
+  it(`the JSON ALONE derives E-fm (${E_FM}, rendered into allowedPaths) and description`, () => {
+    const json = spansOfFile('semguard.json');
+    expect(`kiro json: ${E_FM} ${v(json, E_FM)}, description ${v(json, 'description')}`).toBe(`kiro json: ${E_FM} VERIFIED, description VERIFIED`);
+  });
+
+  it(`the prompt ALONE derives the glob-only knowledge base (${kbPath}) through its fallback note`, () => {
+    expect(`kiro prompt: ${kbPath} ${v(spansOfFile('semguard-prompt.md'), kbPath)}`).toBe(`kiro prompt: ${kbPath} VERIFIED`);
+  });
+});
+
+/*
+ * Stacy's rows M2 and L5 (her dated additions, `ec9fe0a9a`; the ruling's erratum #310, pick (a)):
+ * the shared governance-rule member emptied (`statement: ""`, every other key kept), rendered by
+ * EACH declared target's own adapter. The emission is `- ` (the adapters' `- ${statement ?? id}`),
+ * so D is non-empty: a sibling destination → FAIL_DISHONEST_NAMING (M2); itself → VERIFIED (L5,
+ * a named limit). The member and its row are added to semguard's context in memory.
+ */
+describe.each(guardBlocks(PROFILE_TARGETS))('%s — the emptied shared member (M2, L5)', (target, adapter) => {
+  const ID = 'record-first-ratification';
+  const SIB = 'find-docs-discovery';
+  const member = { id: ID, kind: 'governance-rule' as const, owner: 'thurgood', statement: '', source: 'your team\u2019s committed decision records', crossRef: 'x' };
+  const dispositions = { ...fixture.dispositions, members: { [ID]: { disposition: 're-pointed' as const, destination: ID } } };
+  const ctx = { ...semguardContext(BASE_CTX, { ...fixture, dispositions }), sharedCatalog: [member] } as AdapterContext;
+  const file = adapter.emitAgent(fixture.resolved, ctx).find((f) => f.path.endsWith('.md') && f.attribution);
+  const spans = file && file.attribution ? renderedSpans(file.attribution.spans, file.content) : [];
+  const v = (destination: string) => checkDerivation({ file: SHARED_CATALOG_FILE, trees: { body: fixture.trees.body }, spans, s: ID, destination }).verdict;
+
+  it('the emitted member span is `- ` (non-empty after trim)', () => {
+    expect(spans.filter((sp) => sp.source === `${SHARED_CATALOG_FILE}#${ID}`).map((sp) => sp.text)).toEqual(['- \n']);
+  });
+
+  it('M2 (sibling destination) → FAIL_DISHONEST_NAMING; L5 (itself) → VERIFIED, a named limit', () => {
+    expect(`${target}: M2 ${v(SIB)}, L5 ${v(ID)}`).toBe(`${target}: M2 FAIL_DISHONEST_NAMING, L5 VERIFIED`);
+  });
 });

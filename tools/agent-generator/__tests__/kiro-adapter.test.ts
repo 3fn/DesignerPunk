@@ -12,6 +12,7 @@
  *          emitAlwaysLayer returning [].
  */
 
+import { canonicalStringify } from '../canonical-json';
 import { KiroAdapter } from '../adapters/kiro';
 import type { AdapterContext, FieldDispositionTable, SharedCatalogMember } from '../adapters/index';
 import type { AlwaysSetMember } from '../compose';
@@ -323,9 +324,20 @@ describe('KiroAdapter.emitAgent — prompt body content', () => {
     expect(promptFile(files).content).not.toContain('## Ambient (per-agent)');
   });
 
-  it('does NOT contain a "## Knowledge fallback" section (native /knowledge surface instead)', () => {
+  // Spec 123 Task 29.3 (Peter's ruling (A), 2026-10-12): a GLOB-ONLY knowledge base has no Kiro-native
+  // form (the config's `knowledgeBase` resource needs a `source`), so it renders here as a fallback
+  // note; a source-bearing one stays a config resource and is not repeated in the prompt.
+  // (Was: 'does NOT contain a "## Knowledge fallback" section (native /knowledge surface instead)'.)
+  it('renders a "## Knowledge fallback" section for GLOB-ONLY knowledge bases, one line each', () => {
     const files = adapter.emitAgent(resolvedAgent(), ctx());
+    expect(promptFile(files).content).toContain('## Knowledge fallback\n\n- component-source: search these paths: src/components/**/*.tsx\n');
+  });
+
+  it('a SOURCE-BEARING knowledge base is a config resource, not a prompt line (no section when none is glob-only)', () => {
+    const kb = { name: 'with-source', globs: ['src/x/**'], source: 'file://./src/x' };
+    const files = adapter.emitAgent(resolvedAgent({ knowledgeBases: [kb] } as Partial<AgentFrontmatter>), ctx());
     expect(promptFile(files).content).not.toContain('## Knowledge fallback');
+    expect(JSON.parse(configFile(files).content).resources).toEqual(expect.arrayContaining([expect.objectContaining({ type: 'knowledgeBase', name: 'with-source' })]));
   });
 
   it('renders routing cues with NATIVE (non-namespaced) tool names', () => {
@@ -376,14 +388,18 @@ describe('KiroAdapter.emitAgent — prompt body content', () => {
 describe('KiroAdapter — attribution totality', () => {
   const adapter = new KiroAdapter(DISPOSITIONS);
 
-  it('the emitted config .json has a valid, TOTAL, single-span (render) attribution manifest', () => {
+  // Spec 123 Task 29.3 (G2-F2; C7): the JSON carries PER-ENTRY spans; its bytes are unchanged.
+  // (Was: 'the emitted config .json has a valid, TOTAL, single-span (render) attribution manifest'.)
+  it('the emitted config .json has a valid, TOTAL attribution manifest with per-entry spans (bytes = canonicalStringify of the config)', () => {
     const files = adapter.emitAgent(resolvedAgent(), ctx());
     const file = configFile(files);
     const result = checkAttributionTotality(file.attribution, lineCount(file.content));
     expect(result.errors).toEqual([]);
     expect(result.valid).toBe(true);
-    expect(file.attribution.spans).toHaveLength(1);
-    expect(file.attribution.spans[0].op).toBe('render');
+    expect(file.content).toBe(canonicalStringify(JSON.parse(file.content)));
+    const sources = file.attribution.spans.map((s) => s.source);
+    expect(sources).toEqual(expect.arrayContaining(['C1:frontmatter+ambient-manifest', expect.stringMatching(/#frontmatter:description$/), expect.stringMatching(/#frontmatter:agent$/)]));
+    expect(file.attribution.spans.every((s) => s.op === 'render')).toBe(true);
   });
 
   it('the emitted -prompt.md has a valid, total, multi-span attribution manifest', () => {

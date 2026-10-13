@@ -540,23 +540,47 @@
     {
       "lines": [
         301,
+        302
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:knowledgeBases"
+    },
+    {
+      "lines": [
+        303,
+        303
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:knowledgeBases[ios-components]"
+    },
+    {
+      "lines": [
+        304,
         304
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:knowledgeBases"
+    },
+    {
+      "lines": [
+        305,
+        308
       ],
       "op": "render",
       "source": "canonical/agents/kenya.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        305,
-        305
+        309,
+        309
       ],
       "op": "render",
       "source": "canonical/agents/kenya.md#frontmatter:writeScope[.kiro/specs/**]"
     },
     {
       "lines": [
-        306,
-        306
+        310,
+        310
       ],
       "op": "render",
       "source": "canonical/agents/kenya.md#frontmatter:writeScope"

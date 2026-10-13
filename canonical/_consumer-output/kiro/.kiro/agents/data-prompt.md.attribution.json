@@ -540,23 +540,47 @@
     {
       "lines": [
         317,
+        318
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:knowledgeBases"
+    },
+    {
+      "lines": [
+        319,
+        319
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:knowledgeBases[android-components]"
+    },
+    {
+      "lines": [
+        320,
         320
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:knowledgeBases"
+    },
+    {
+      "lines": [
+        321,
+        324
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        321,
-        321
+        325,
+        325
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:writeScope[.kiro/specs/**]"
     },
     {
       "lines": [
-        322,
-        322
+        326,
+        326
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:writeScope"

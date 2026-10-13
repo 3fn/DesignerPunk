@@ -1,0 +1,48 @@
+# BITE shipped-profile (Task 29.4, RED side): one rejected row planted in a copy of the shipped inputs (C1: stacy's S_body keeps its committed re-grounding, destination changed to its sibling T_body)
+# planted copy: <scratch>/planted (canonical/profiles/consumer, canonical/_consumer-output, canonical/consumer-profile.yaml and every cited source, copied from the working tree)
+# the plant: canonical/profiles/consumer/stacy.dispositions.yaml — "destination": "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script" → "destination": "#the-trigger-set-the-114-superset-table-names-never-numbers"
+# command: U3G_SHIPPED_ROOT=<scratch>/planted npx jest --config tools/agent-generator/jest.config.js tools/agent-generator/__tests__/derivation.shipped-profile.test.ts --verbose
+# base commit: ca9e40b9 + the 29.4 working tree; run 2026-10-13T02:42:57Z
+# --- jest output ---
+  console.log
+    standing application: 169 re-pointed rows evaluated (= the committed dispositions' count)
+
+      at Object.<anonymous> (__tests__/derivation.shipped-profile.test.ts:57:13)
+
+FAIL tools/agent-generator/__tests__/derivation.shipped-profile.test.ts
+  the 11.4 check on the shipped profile (G2-F2; ruling R3)
+    ✓ evaluates every re-pointed row the committed dispositions declare — a derived, non-zero count
+    ✕ every re-pointed row is VERIFIED on every surface that carries its source file
+    ✓ the surfaces are the ruling’s: body on _canonical + every declared target; frontmatter and members on the declared targets; Kiro pools prompt + JSON
+  the standing application bites (in a temp copy of the shipped inputs)
+    ✓ the copy is faithful: unplanted, it is clean with the same count
+    ✓ E3 — plant one rejected row (C1: S’s committed re-grounding, destination its sibling) → the guard reports exactly that row
+    ✓ E2 — with the dispositions removed the guard refuses to pass on zero rows
+
+  ● the 11.4 check on the shipped profile (G2-F2; ruling R3) › every re-pointed row is VERIFIED on every surface that carries its source file
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "canonical/profiles/consumer/stacy.dispositions.yaml##the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script → #the-trigger-set-the-114-superset-table-names-never-numbers: FAIL_DISHONEST_NAMING {\"_canonical\":\"FAIL_DISHONEST_NAMING\",\"cc\":\"FAIL_DISHONEST_NAMING\",\"kiro\":\"FAIL_DISHONEST_NAMING\"}",
+    + ]
+
+      61 |
+      62 |   it('every re-pointed row is VERIFIED on every surface that carries its source file', () => {
+    > 63 |     expect(result.failures).toEqual([]);
+         |                             ^
+      64 |   });
+      65 |
+      66 |   it('the surfaces are the ruling’s: body on _canonical + every declared target; frontmatter and members on the declared targets; Kiro pools prompt + JSON', () => {
+
+      at Object.<anonymous> (__tests__/derivation.shipped-profile.test.ts:63:29)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 5 passed, 6 total
+Snapshots:   0 total
+Time:        1.059 s, estimated 2 s
+Ran all test suites matching tools/agent-generator/__tests__/derivation.shipped-profile.test.ts.

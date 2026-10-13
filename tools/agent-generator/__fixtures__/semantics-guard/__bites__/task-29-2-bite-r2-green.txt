@@ -1,0 +1,125 @@
+# BITE r2 (Task 29.2): ruling R2 switched off (every contained span derives, as before 29.2) (two-sided, GREEN side): no mutation
+# command: npx jest --config tools/agent-generator/jest.config.js tools/agent-generator/__tests__/derivation.test.ts tools/agent-generator/__tests__/derivation.frontmatter.test.ts tools/agent-generator/__tests__/semantics-guard.test.ts -t 29.2 --verbose
+# base commit: 4a8b65cf + the working tree under test; run 2026-10-13T02:30:06Z
+# --- jest output ---
+PASS tools/agent-generator/__tests__/derivation.test.ts
+  the rendering fixtures are what they claim
+    ○ skipped S and the trigger set are SIBLINGS under one ## parent (attack (a)’s shape, measured)
+    ○ skipped E is zero-verbatim inside its destination (10.S Constraint 3) and renders as a render span sourcing S
+  11.4 over generator-emitted spans (the criterion row)
+    ○ skipped E → VERIFIED (the honest re-pointing: S re-grounded in place, destination S)
+    ○ skipped attack (a) → FAIL_NO_DERIVATION (S’s content moved into its SIBLING; the disposition names the sibling)
+    ○ skipped attack (a) at ## grain → FAIL_NO_DERIVATION (a span sourcing the ANCESTOR is a super-range, excluded)
+    ○ skipped #body → non-matching, never a throw (the pre-123 bypass span)
+  containment is structural, within one tree (the R4 pin)
+    ○ skipped a sibling that shares an anchor PREFIX is not contained (never prefix matching)
+    ○ skipped a :preamble unit is contained in its parent; the parent is NOT contained in its :preamble
+    ○ skipped entry tree: a member is contained in its container; the container is NOT contained in a member
+    ○ skipped cross-tree never matches: a body span cannot derive a frontmatter S, nor the reverse
+    ○ skipped with no entry tree supplied, every frontmatter reference is non-matching (not a throw)
+  what is not in D
+    ○ skipped spans from another file, generator glue, and profile-originated sources (10.S) never derive S
+    ○ skipped an S that names no current unit (a rename orphaned it) is FAIL_NO_DERIVATION, not a throw
+  HONEST NAMING
+    ○ skipped S derived, but the destination names a sibling → FAIL_DISHONEST_NAMING
+    ○ skipped naming the ## parent that contains S is not naming S (Task 29.1; was VERIFIED under containment) → FAIL_DISHONEST_NAMING
+    ○ skipped the verdict set is the design’s three, closed
+  29.1 — HONEST NAMING is identity (ruling R1; G2-F1)
+    ○ skipped attack (f): S re-grounded in place, destination S’s ## parent → FAIL_DISHONEST_NAMING
+    ○ skipped attack (f) at every ancestor: no ancestor of S names S
+    ○ skipped the one-token variant of attack (a) that passed under containment (S reduced to one token, destination its ## parent) → FAIL_DISHONEST_NAMING
+    ○ skipped the one-token variant with a sibling destination (V1) → FAIL_DISHONEST_NAMING (rejected in both directions; not a two-sided case)
+    ○ skipped the honest in-place re-pointing stays VERIFIED (destination = S)
+    ○ skipped an unknown destination (U1) is non-matching, never a throw → FAIL_DISHONEST_NAMING
+    ○ skipped a destination in the other tree (U2) never matches → FAIL_DISHONEST_NAMING
+    ○ skipped sameNode is mutual containment: same node only; prefix siblings, parent/:preamble, unknown ids and cross-tree are not the same
+  29.1 — the shared-catalog member space (ruling R1: id equality)
+    ○ skipped a span sourcing the member, destination the member (M0) → VERIFIED
+    ○ skipped destination a sibling member id (M1) → FAIL_DISHONEST_NAMING
+    ○ skipped only a sibling member, another file or glue is rendered → FAIL_NO_DERIVATION
+  29.2 — an empty span derives nothing (ruling R2; G2-F3, MP-1)
+    ✓ the generator’s emission of attack (a): an emptied re-pointed overlay renders ONE blank line attributed to S
+    ✓ A1 (attack (a) verbatim: emptied, sibling destination) → FAIL_NO_DERIVATION
+    ✓ A3 (emptied, destination S’s ## parent) → FAIL_NO_DERIVATION
+    ✓ A4 (emptied in place, destination S) → FAIL_NO_DERIVATION
+    ✓ WS1 (spaces, tabs and blank lines only) → FAIL_NO_DERIVATION
+    ✓ WS2 (U+00A0 only — trim() removes it) → FAIL_NO_DERIVATION
+    ✓ A2 (emptied to its heading line: the heading is text), sibling destination → FAIL_DISHONEST_NAMING (D non-empty; clause 2 decides)
+    ✓ WS3 (U+200B only — not removed by trim(), so text), sibling destination → FAIL_DISHONEST_NAMING (D non-empty; clause 2 decides)
+    ✓ WS4 (an HTML comment only — text), sibling destination → FAIL_DISHONEST_NAMING (D non-empty; clause 2 decides)
+    ✓ WS5 (a single "." — text), sibling destination → FAIL_DISHONEST_NAMING (D non-empty; clause 2 decides)
+    ✓ V1 (one token), sibling destination → FAIL_DISHONEST_NAMING (D non-empty; clause 2 decides)
+    ✓ a whitespace-only span does not hide a non-empty one: D keeps the span that renders text
+    ✓ the shared-catalog member lane (provisional, flagged: R2 is silent on members) is held to the rendered-text rule
+  29.2 — the always-set lane, through the same span function (AS1, AS2)
+    ✓ the fixture is what it claims: S_AS and T_AS are siblings in the always-set member’s tree
+    ✓ AS1 (emptied, sibling destination) → FAIL_NO_DERIVATION
+    ✓ AS2 (emptied to its heading line, sibling destination) → FAIL_DISHONEST_NAMING
+
+PASS tools/agent-generator/__tests__/derivation.frontmatter.test.ts
+  11.4 on the entry tree — commands[<name>]
+    ○ skipped the fixture is what it claims: lina.md’s commands are sibling members keyed by name
+    ○ skipped commands[<name>] emptied (omitted) with a sibling destination → FAIL_NO_DERIVATION
+    ○ skipped commands[<name>] emptied (kept, no text) with a sibling destination → FAIL_NO_DERIVATION
+    ○ skipped control — the member rendered, destination itself → VERIFIED
+    ○ skipped control — the member rendered, but the destination names its sibling → FAIL_DISHONEST_NAMING
+    ○ skipped a span on the commands CONTAINER does not derive a member (ancestor = super-range)
+  29.1 — HONEST NAMING is identity on the entry tree (ruling R1; G2-F1, F5’s shape)
+    ○ skipped a rendered member with its parent entry as destination (F5c) → FAIL_DISHONEST_NAMING
+    ○ skipped the same member with itself as destination → VERIFIED
+  29.2 — an empty derived value derives nothing (ruling R2; F3, FS1)
+    ✓ FS1: `description` re-pointed to a string of spaces → derive() accepts it (a string) and the check returns FAIL_NO_DERIVATION
+    ✓ F3 (frontmatter attack (a), verbatim shape: key set kept, string fields emptied) → the value keeps members, so D is non-empty; sibling destination → FAIL_DISHONEST_NAMING
+    ✓ with no derived-value lookup supplied, no frontmatter span is in D (fail-closed)
+
+PASS tools/agent-generator/__tests__/semantics-guard.test.ts
+  cc
+    ○ skipped body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+    ○ skipped body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+    frontmatter
+      ○ skipped E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+      ○ skipped E-fm’s re-grounded text is what shipped (not the canonical glob)
+      ○ skipped EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+  kiro
+    ○ skipped body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+    ○ skipped body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+    frontmatter
+      ○ skipped E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+      ○ skipped E-fm’s re-grounded text is what shipped (not the canonical glob)
+      ○ skipped EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+  a fake third target — declared, its adapter injected through the registry, no other edit to the guard
+    ○ skipped the declared list drives the blocks: one more target → one more block
+    ○ skipped a declared target with no registered adapter fails loud, naming it (no silent block)
+    cc
+      ○ skipped body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ○ skipped body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ○ skipped E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ○ skipped E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ○ skipped EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+    kiro
+      ○ skipped body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ○ skipped body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ○ skipped E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ○ skipped E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ○ skipped EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+    fake
+      ○ skipped body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ○ skipped body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ○ skipped E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ○ skipped E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ○ skipped EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+  cc — attack (a) as emitted (29.2)
+    ✓ the emitted rendering carries exactly one blank line attributed to S
+    ✓ A1 (sibling destination) and A4 (destination S) → FAIL_NO_DERIVATION
+  kiro — attack (a) as emitted (29.2)
+    ✓ the emitted rendering carries exactly one blank line attributed to S
+    ✓ A1 (sibling destination) and A4 (destination S) → FAIL_NO_DERIVATION
+
+Test Suites: 3 passed, 3 total
+Tests:       62 skipped, 23 passed, 85 total
+Snapshots:   0 total
+Time:        0.96 s, estimated 1 s
+Ran all test suites matching tools/agent-generator/__tests__/derivation.test.ts|tools/agent-generator/__tests__/derivation.frontmatter.test.ts|tools/agent-generator/__tests__/semantics-guard.test.ts with tests matching "29.2".

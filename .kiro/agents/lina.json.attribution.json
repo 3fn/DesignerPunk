@@ -4,6 +4,150 @@
     {
       "lines": [
         1,
+        7
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        8,
+        8
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:description"
+    },
+    {
+      "lines": [
+        9,
+        10
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        11,
+        14
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:preflight[git status --porcelain]"
+    },
+    {
+      "lines": [
+        15,
+        17
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        18,
+        18
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:kiro.keyboardShortcut"
+    },
+    {
+      "lines": [
+        19,
+        19
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:agent"
+    },
+    {
+      "lines": [
+        20,
+        31
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        32,
+        39
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:knowledgeBases[StemmaComponentSource]"
+    },
+    {
+      "lines": [
+        40,
+        47
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:knowledgeBases[ApplicationMCPServerSource]"
+    },
+    {
+      "lines": [
+        48,
+        54
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        55,
+        55
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[src/components/**]"
+    },
+    {
+      "lines": [
+        56,
+        56
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[.kiro/specs/**]"
+    },
+    {
+      "lines": [
+        57,
+        57
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[docs/specs/**]"
+    },
+    {
+      "lines": [
+        58,
+        58
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[application-mcp-server/**]"
+    },
+    {
+      "lines": [
+        59,
+        59
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[governance/component-meta-authoring-guide.md]"
+    },
+    {
+      "lines": [
+        60,
+        62
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        63,
+        63
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:kiro.welcomeMessage"
+    },
+    {
+      "lines": [
+        64,
         64
       ],
       "op": "render",

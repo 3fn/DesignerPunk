@@ -1,0 +1,88 @@
+# BITE kbnote (Task 29.3): the Kiro knowledge-fallback note removed (glob-only knowledge bases render nowhere, as before) (two-sided, RED side)
+# mutation: tools/agent-generator/adapters/kiro.ts
+# command: npx jest --config tools/agent-generator/jest.config.js tools/agent-generator/__tests__/semantics-guard.test.ts -t 29.3 --verbose
+# base commit: d9082bc6 + the working tree under test; run 2026-10-13T02:36:17Z
+# --- mutation diff ---
+--- a/tools/agent-generator/adapters/kiro.ts
++++ b/tools/agent-generator/adapters/kiro.ts (mutated)
+@@ -468,7 +468,7 @@
+     // every knowledge base. (`field-dispositions.yaml`'s placement note — `/knowledge` carried "via
+     // the existing `knowledgeBases` frontmatter class" — holds for the source-bearing ones only.)
+     const globOnly = (fm.knowledgeBases ?? []).map((kb, i) => ({ kb, i })).filter(({ kb }) => typeof kb.source !== 'string');
+-    if (globOnly.length > 0) {
++    if (false && globOnly.length > 0) { // BITE: no knowledge note
+       bodyParts.push(
+         emit([
+           { kind: 'entry', path: 'knowledgeBases', text: '## Knowledge fallback\n\n' },
+# --- jest output ---
+FAIL tools/agent-generator/__tests__/semantics-guard.test.ts
+  cc
+    ○ skipped body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+    ○ skipped body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+    frontmatter
+      ○ skipped E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+      ○ skipped E-fm’s re-grounded text is what shipped (not the canonical glob)
+      ○ skipped EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+  kiro
+    ○ skipped body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+    ○ skipped body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+    frontmatter
+      ○ skipped E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+      ○ skipped E-fm’s re-grounded text is what shipped (not the canonical glob)
+      ○ skipped EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+  a fake third target — declared, its adapter injected through the registry, no other edit to the guard
+    ○ skipped the declared list drives the blocks: one more target → one more block
+    ○ skipped a declared target with no registered adapter fails loud, naming it (no silent block)
+    cc
+      ○ skipped body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ○ skipped body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ○ skipped E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ○ skipped E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ○ skipped EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+    kiro
+      ○ skipped body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ○ skipped body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ○ skipped E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ○ skipped E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ○ skipped EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+    fake
+      ○ skipped body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ○ skipped body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ○ skipped E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ○ skipped E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ○ skipped EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+  cc — attack (a) as emitted (29.2)
+    ○ skipped the emitted rendering carries exactly one blank line attributed to S
+    ○ skipped A1 (sibling destination) and A4 (destination S) → FAIL_NO_DERIVATION
+  kiro — attack (a) as emitted (29.2)
+    ○ skipped the emitted rendering carries exactly one blank line attributed to S
+    ○ skipped A1 (sibling destination) and A4 (destination S) → FAIL_NO_DERIVATION
+  kiro — 29.3: the JSON config and the knowledge note derive their rows
+    ✓ the JSON ALONE derives E-fm (writeScope[.kiro/specs/**], rendered into allowedPaths) and description
+    ✕ the prompt ALONE derives the glob-only knowledge base (knowledgeBases[specs-kb]) through its fallback note
+
+  ● kiro — 29.3: the JSON config and the knowledge note derive their rows › the prompt ALONE derives the glob-only knowledge base (knowledgeBases[specs-kb]) through its fallback note
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "kiro prompt: knowledgeBases[specs-kb] VERIFIED"
+    Received: "kiro prompt: knowledgeBases[specs-kb] FAIL_NO_DERIVATION"
+
+      189 |
+      190 |   it(`the prompt ALONE derives the glob-only knowledge base (${kbPath}) through its fallback note`, () => {
+    > 191 |     expect(`kiro prompt: ${kbPath} ${v(spansOfFile('semguard-prompt.md'), kbPath)}`).toBe(`kiro prompt: ${kbPath} VERIFIED`);
+          |                                                                                      ^
+      192 |   });
+      193 | });
+      194 |
+
+      at Object.<anonymous> (__tests__/semantics-guard.test.ts:191:86)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 31 skipped, 1 passed, 33 total
+Snapshots:   0 total
+Time:        0.87 s, estimated 1 s
+Ran all test suites matching tools/agent-generator/__tests__/semantics-guard.test.ts with tests matching "29.3".
