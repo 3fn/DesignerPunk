@@ -87,7 +87,7 @@ const UNLABELLED_NATIVE_CLAIM = 'True native implementations (Web Components, Sw
 /** C23: the founder path's five steps, in order (one matcher per step). */
 const FOUNDER_ORDER: RegExp[] = [
   /npm install @3fn\/core/,
-  /npx designerpunk init --target=<cc\|kiro>/,
+  /npx designerpunk init --target=<cc\|kiro> --name <name> --abbreviation <abbr>/, // #312 finding 2: off a TTY, init needs both
   /npx designerpunk generate/,
   /personal note/,
   /^Restart your agent session/,

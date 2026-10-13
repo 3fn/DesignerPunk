@@ -131,7 +131,7 @@ This release is ready for building web products, with the agent layer for Claude
 **Use it in your project:**
 
 1. `npm install @3fn/core`
-2. `npx designerpunk init --target=<cc|kiro>` — `init` is the birth event — runs once per design system, ever
+2. `npx designerpunk init --target=<cc|kiro> --name <name> --abbreviation <abbr>` — `init` is the birth event — runs once per design system, ever
 3. `npx designerpunk generate` — `generate` is the pipeline — run on every token change
 4. Fill in your personal note — or, after the restart, ask your agent to walk you through it.
 5. Restart your agent session (approve DesignerPunk's MCP servers if asked).

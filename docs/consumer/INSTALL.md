@@ -55,12 +55,12 @@ Use this posture when you want DesignerPunk's docs and components as a reference
 Use this posture when you want a design system of your own. These are the five steps. Section 4 explains what steps 2 and 3 do, and why there are two of them.
 
 1. `npm install @3fn/core`
-2. `npx designerpunk init --target=<cc|kiro>`
+2. `npx designerpunk init --target=<cc|kiro> --name <name> --abbreviation <abbr>`
 3. `npx designerpunk generate`
 4. Fill in your personal note — or, after the restart, ask your agent to walk you through it.
 5. Restart your agent session (approve DesignerPunk's MCP servers if asked).
 
-**Step 2, `init`, is the birth event — runs once per design system, ever.** It copies DesignerPunk's token source into your repo as your own, writes `designerpunk.config.ts`, and generates the agent layer and the MCP configuration for the target you name (`cc` for Claude Code, `kiro` for Kiro). From then on the token language is yours. `init` never runs again in this repo. A teammate joins by section 7, not by running it.
+**Step 2, `init`, is the birth event — runs once per design system, ever.** It copies DesignerPunk's token source into your repo as your own, writes `designerpunk.config.ts`, and generates the agent layer and the MCP configuration for the target you name (`cc` for Claude Code, `kiro` for Kiro). From then on the token language is yours. `init` never runs again in this repo. A teammate joins by section 7, not by running it. `--name` and `--abbreviation` are your product's name and its short form, and `init` writes both into `designerpunk.config.ts`. Without them, `init` asks for each in a terminal; where nothing can answer (an agent's shell, or CI), it stops with an error. So pass both.
 
 **Step 3, `generate`, is the pipeline — run on every token change.** It builds your platform token output from your own token source. Section 4 says when to run it again.
 
