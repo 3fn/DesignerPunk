@@ -32,6 +32,8 @@
 |---|---|---|---|
 | 10 | `cd mcp-server && npx jest` run in PARALLEL fails intermittently: `token-efficiency.test.ts` and `performance.test.ts` both delete the shared `mcp-server/test-fixtures` dir and race (`ENOTEMPTY`); `--runInBand` passes 39/660. Pre-existing; unrelated to aliases. | **Thurgood** (test-suite health) | isolate the fixture dir per suite or serialize the two; CI lane check |
 
+| 11 | **Components tokenizer has the "iOS" defect too**: `tokenizeString` (application-mcp-server/src/indexer/ComponentIndexer.ts L129–141) camelCase-splits "iOS" → `i`+`os`. Found by Thurgood designing the docs indexer fix (2026-10-13). | **Lina** | duplicate the versioned atoms list (iOS, iPadOS, macOS, tvOS, watchOS, iPhone, iPad) with cross-citing headers (the scorer precedent); own PR; her alias/calibration suite as the re-run |
+
 ## Also owed (study charter)
 - **Leonardo's Q2-L addendum** — after his Settings ledger closes: same sealed prompt (+ one line allowing ~15–20 queries), own pre-registration SHA, own results line in the findings doc (Thurgood keys; Leonardo's filter pre-freeze).
 - **Indexer fix** — `2026-10-13-find-docs-indexer-defects-from-stage1.md` (Thurgood; grant required; H3 indexing is not a free fix; one answer is an H4).
