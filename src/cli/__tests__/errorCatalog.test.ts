@@ -97,17 +97,19 @@ describe('errorCatalog — string conformance (Task 1.6)', () => {
 // A SEPARATE describe block, additive to Task 1.6's frozen seven-row count above.
 // ---------------------------------------------------------------------------
 
+// Transcribed from design.md's catalog; the "init in a born repo" and "personal-note naming" rows are their
+// CORRECTED text (Erratum 2026-10-03, R2 — Leonardo L-RC3), which Task 22.2 made string-equal.
 const INIT_DESIGN_ROWS = {
   'init in a born repo': (root: string) =>
-    `this repo already has a design system (${root}) — init is the birth event and runs once. To join it: npm install → npx designerpunk generate → fill in .designerpunk/personal-note.local.md (generate creates it) → restart your agent session (approve DesignerPunk's MCP servers if asked). Using a different agent tool than this repo was set up for? Also run: npx designerpunk attach --target=<cc|kiro> to attach a harness (agents + MCP config + approvals). To deliberately re-scaffold: npx designerpunk init --re-scaffold`,
+    `this repo already has a design system (${root}) — init is the birth event and runs once. To join it: npm install → npx designerpunk generate → fill in your personal note (generate creates it; your agent can walk you through it) → restart your agent session (approve DesignerPunk's MCP servers if asked). Using a different agent tool than this repo was set up for? Also run: npx designerpunk attach --target=<cc|kiro> to attach a harness (agents + MCP config + approvals). To deliberately re-scaffold: npx designerpunk init --re-scaffold`,
   'restart line — sequenced': () =>
     `when the steps above are done, restart your agent session — DesignerPunk's MCP servers and your personal note load when a session starts, so this session cannot see them yet (approve the servers if your tool asks)`,
   'clone hatch': () =>
     `want to own the engine too? Clone github.com/3fn/DesignerPunk — init already made the token language yours; the clone adds the engine and the components`,
   'personal-note naming': () =>
-    `fill in .designerpunk/personal-note.local.md — who you are and how you want to be worked with; your agents read it every session (it stays on your machine)`,
+    `fill in .designerpunk/personal-note.local.md — who you are, what you and your organization value, and how you like to work together — or, after the restart, ask your agent to walk you through it. Your agents read it every session (it stays on your machine)`,
   'jest.config.js collision (C27 A13)': () =>
-    `skipped: jest.config.js (already exists) — the DesignerPunk jest preset is not applied; to test your own forked components with @3fn/core/testing, add ...require('@3fn/core/jest-preset') to your config`,
+    `skipped: jest.config.js (already exists) — the DesignerPunk jest preset is not applied; to test your own components with it, add ...require('@3fn/core/jest-preset') to your config (in this version @3fn/core/testing does not load under the preset; see the Integration Guide's "Running Component Tests")`,
 };
 
 describe('errorCatalog — string conformance (Task 2 additions)', () => {
@@ -225,3 +227,79 @@ describe('errorCatalog — string conformance (15.0.0 rehearsal: generate load f
     );
   });
 });
+
+// ---------------------------------------------------------------------------
+// Task 22.2 — the bare `init` default notice (design.md row "bare `init` default notice (A2)", Leonardo A2).
+// ---------------------------------------------------------------------------
+import { namedDefaultNoticeMessage, initNextStepsMessage } from '../shared/errorCatalog';
+
+describe('errorCatalog — Task 22.2 additions', () => {
+  const A2_ROW = "no --target given — set up for Claude Code (the default). Using Kiro? npx designerpunk attach --target=kiro";
+
+  test('bare `init` default notice (A2): string-equal to the design row for the shipped two-target profile with cc as the default', () => {
+    expect(namedDefaultNoticeMessage('cc', ['cc', 'kiro'])).toBe(A2_ROW);
+  });
+
+  test('the notice follows the profile: a different default and an undeclared id are named, never a literal list', () => {
+    expect(namedDefaultNoticeMessage('kiro', ['cc', 'kiro'])).toBe(
+      'no --target given — set up for Kiro (the default). Using Claude Code? npx designerpunk attach --target=cc',
+    );
+    expect(namedDefaultNoticeMessage('solo', ['solo'])).toBe('no --target given — set up for solo (the default).');
+  });
+
+  test('init next steps: list positively, name the .gitignore block and the specs/ scaffold, in order', () => {
+    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: true, starterSpecNames: ['ci-needs', 'regrounding'], gitignoreBlockInPlace: true, agentLayerEmitted: true });
+    expect(m).toContain('Your product "Acme" is ready.');
+    const steps = m.split('\n').filter((l) => /^ {2}\d+\. /.test(l));
+    expect(steps).toEqual([
+      '  1. npx designerpunk generate', // the list begins at generate: it matches INSTALL's founder path (install → init → generate)
+      '  2. specs/ holds your starter specs (ci-needs, regrounding): run them with your agent when you are ready',
+      "  3. commit .gitignore with the rest: DesignerPunk's block in it ignores .designerpunk/ and token-index/",
+    ]);
+    expect(steps.some((l) => l.includes('npm install'))).toBe(false);
+  });
+
+  test('the jest install is OPTIONAL and printed after the numbered list, not in it; only when jest.config.js was written', () => {
+    const optional = 'Optional, to test your own components: npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node';
+    const withJest = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: true, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true });
+    expect(withJest).toContain(optional);
+    expect(withJest.indexOf(optional)).toBeGreaterThan(withJest.indexOf('  1. npx designerpunk generate'));
+    expect(withJest.split('\n').filter((l) => /^ {2}\d+\. /.test(l)).some((l) => l.includes('jest'))).toBe(false);
+    const without = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: false, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true });
+    expect(without).not.toContain('Optional');
+  });
+
+  test('the ONE case for an install step: @3fn/core is not installed in the repo (init run through npx with no install first) → `npm install @3fn/core`, never a bare `npm install`', () => {
+    const m = initNextStepsMessage('Acme', { packageInstalledHere: false, jestConfigScaffolded: false, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true });
+    const steps = m.split('\n').filter((l) => /^ {2}\d+\. /.test(l));
+    expect(steps[0]).toBe('  1. npm install @3fn/core (it is not installed in this repo, and the config init wrote imports from it)');
+    expect(steps[1]).toBe('  2. npx designerpunk generate');
+    expect(steps.some((l) => /npm install(?! @3fn\/core)/.test(l))).toBe(false);
+  });
+
+  test('the customize note says what is true: `generate` does not check the relationships, and `validate`\'s check currently fails on unmodified source', () => {
+    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: true, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true });
+    expect(m).not.toContain('The validator will warn');
+    const flat = m.replace(/\s+/g, ' '); // the note wraps at 72 columns
+    expect(flat).toContain('`generate` does not check these relationships, and');
+    expect(flat).toContain("`npx designerpunk validate`'s check for them currently fails even on unmodified token source (a known defect in the checker, not in your tokens).");
+  });
+
+  test('the optional jest line names the five devDependencies the preset and the tsconfig.test.json `init` writes declare', () => {
+    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: true, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true });
+    expect(m).toContain('npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node');
+  });
+
+  test('init next steps omit every step a skip made untrue', () => {
+    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: false, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: false });
+    const steps = m.split('\n').filter((l) => /^ {2}\d+\. /.test(l));
+    expect(steps).toEqual([
+      '  1. npx designerpunk generate',
+      '  2. npx designerpunk attach --target=<cc|kiro> to attach a harness (agents + MCP config + approvals)',
+    ]);
+    expect(m).not.toContain('jest');
+    expect(m).not.toContain('specs/');
+    expect(m).not.toContain('.gitignore');
+  });
+});
+

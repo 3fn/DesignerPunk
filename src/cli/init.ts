@@ -32,7 +32,18 @@ import {
   cloneHatchMessage,
   personalNoteNamingMessage,
   jestConfigCollisionMessage,
+  gitignoreBlockConfigUnreadableMessage,
+  gitignoreBlockAddedMessage,
+  starterSpecCollisionMessage,
+  starterSpecsWrittenMessage,
+  consumerDegradationMessage,
+  namedDefaultNoticeMessage,
+  initNextStepsMessage,
 } from './shared/errorCatalog';
+import type { InitNextStepsContext } from './shared/errorCatalog';
+import { computeGitignoreRegion, applyGitignoreRegion } from './shared/gitignoreRegion';
+import { ensurePersonalNote, printPersonalNoteRows, PERSONAL_NOTE_TEMPLATE_REL } from './shared/personalNote';
+import type { ConfigModuleLoader } from '../config/ConfigLoader';
 import { emitAgentLayer, previewAgentLayerMissing, resolveAgentTarget } from './attach';
 import { serializeManifest } from './sync/Manifest';
 import type { DesignerPunkManifest, ManifestEntry, ManifestOrigin, HarnessTarget } from './sync/Manifest';
@@ -106,7 +117,13 @@ function hashContent(content: string): string {
   return crypto.createHash('sha256').update(content).digest('hex');
 }
 
-export async function runInit(argv: string[]): Promise<void> {
+/** Test seam for `runInit`: in-process jest cannot run the production config loader (see `loadConfig`). */
+export interface InitDeps {
+  /** The config-module loader for the `.gitignore` block's `outputDir` read (default: `loadConfig`'s production loader). */
+  configLoader?: ConfigModuleLoader;
+}
+
+export async function runInit(argv: string[], deps: InitDeps = {}): Promise<void> {
   const opts = parseInitArgs(argv);
   const dest = process.cwd();
   const pkgRoot = resolvePackageRoot(__dirname);
@@ -116,8 +133,9 @@ export async function runInit(argv: string[]): Promise<void> {
   // packed without its prepack build) fails before init writes anything. Read through the
   // PACKAGED consumer profile (`loadConsumerProfile`'s packaged form, C12/C9): bare `init`
   // = the declared default, `--target=<t>` = `<t>`; no literal target list here. ---------
+  let resolved: ReturnType<typeof resolveAgentTarget>;
   try {
-    resolveAgentTarget(pkgRoot, opts.target, 'init');
+    resolved = resolveAgentTarget(pkgRoot, opts.target, 'init');
   } catch (err) {
     console.error(`❌ ${err instanceof Error ? err.message : String(err)}`);
     process.exit(1);
@@ -157,6 +175,14 @@ export async function runInit(argv: string[]): Promise<void> {
         return;
       }
     }
+  }
+
+  // The named-default notice (C27 erratum; Leonardo A2): bare `init` says which harness it set up and how to
+  // use the other. Printed FIRST (before any prompt or write); the sequenced restart row stays LAST. Not
+  // printed when `--target` was given, or under `--skip-agents` (no harness was set up).
+  if (opts.target === undefined && !opts.skipAgents) {
+    console.log(namedDefaultNoticeMessage(resolved.target, resolved.profile.targets));
+    console.log('');
   }
 
   if (!opts.name) {
@@ -227,14 +253,15 @@ export async function runInit(argv: string[]): Promise<void> {
   );
   if (readmeCreated) manifest.recordFile('src/components/README.md', consumerComponentsReadme, 'generated');
 
-  // --- Step 5: product/overview.yaml — UNCHANGED in U1 (Task 22 replaces it) ---
-  const overviewPath = path.join(dest, 'product/overview.yaml');
-  const overviewCreated = createFileIfNotExists(
-    overviewPath,
-    generateOverview(opts.name),
-    'product/overview.yaml',
-  );
-  if (overviewCreated) manifest.recordFile('product/overview.yaml', overviewPath, 'generated');
+  // --- Step 5: the `product/` tree (design C27 erratum; Task 22.3) — `src/cli/templates/product/**`: the
+  // product overview (its one `__PRODUCT_NAME__` placeholder substituted), a worked example screen and the
+  // layout template it names. Leonardo authors the content; `init` places it. A path she already has is kept
+  // and reported (the generic skip line); every file written is recorded `generated`. -----------------------
+  for (const rel of listProductScaffoldFiles(pkgRoot)) {
+    const target = path.join(dest, 'product', rel);
+    const created = createFileIfNotExists(target, productScaffoldContent(pkgRoot, rel, opts.name), `product/${rel}`);
+    if (created) manifest.recordFile(`product/${rel}`, target, 'generated');
+  }
 
   // --- Step 6 (new): the agent layer + MCP config for the selected target — `attach`'s code
   // path (`emitAgentLayer`, C1's "(new) agent layer" row; C20). Replaces release-1's copy
@@ -328,6 +355,45 @@ export async function runInit(argv: string[]): Promise<void> {
   );
   if (ignoreCreated) manifest.recordFile('.designerpunkignore', ignorePath, 'generated');
 
+  // --- Step 11a: the starter specs (design C25, DD15; Task 21.3) — `src/cli/templates/starter-specs/**`
+  // into `specs/`, harness-agnostic scaffolded files, never overwritten: a path she already has is
+  // reported and kept. Recorded as `generated` like every other file `init` writes (C1's manifest row);
+  // after the write they are hers, and `sync` never reads them. -------------------------------------
+  const starter = scaffoldStarterSpecs(pkgRoot, dest, manifest);
+  if (!starter.templatesFound) {
+    console.log(`  warning: ${consumerDegradationMessage('starter specs', STARTER_SPECS_SOURCE, 'none were scaffolded into specs/')}`);
+  }
+  for (const rel of starter.collided) console.log(`  ${starterSpecCollisionMessage(`specs/${rel}`)}`);
+  if (starter.written.length > 0) console.log(`✓ ${starterSpecsWrittenMessage(starter.written.length, starterSpecNames(starter.written))}`);
+
+  // --- Step 11: the `.gitignore` managed block (C24; Task 20.2). Emitted AFTER the token copy: the
+  // config `init` just wrote imports the copied tier, and the block's commented line carries the
+  // CONFIGURED `outputDir`, read through `loadConfig` (a pre-existing config with a different
+  // `output` is kept above, so its path is the one used). The content is computed once, in
+  // `shared/gitignoreRegion.ts`, and shared with `sync`. If the config will not load, report and
+  // write NO block — never guess `./dist/tokens`. ----------------------------------------------
+  const gitignoreBlock = await computeGitignoreRegion(dest, deps.configLoader);
+  let gitignoreBlockInPlace = false;
+  if (!gitignoreBlock.ok) {
+    console.log(`  ⚠️  ${gitignoreBlockConfigUnreadableMessage(gitignoreBlock.reason)}`);
+  } else {
+    const applied = applyGitignoreRegion(dest, gitignoreBlock.content, manifest.state.entries);
+    if (applied.outcome === 'collision') console.log(`  ⚠️  ${applied.message}`);
+    else if (applied.outcome === 'written') console.log(`✓ ${gitignoreBlockAddedMessage()}`);
+    gitignoreBlockInPlace = applied.outcome !== 'collision';
+  }
+
+  // --- Step 12: the personal note (C26; Task 22.1, mechanism B). `init` creates it from the template
+  // (a born repo by construction); it is local to one person and never recorded in the manifest. `init`
+  // prints the NAMING row in its next steps, so no creation row is printed here; a note that already
+  // exists (`--re-scaffold`) is never overwritten, and an unfilled one gets the unfilled warning. -----
+  const note = ensurePersonalNote({ root: dest, pkgRoot, dsState: 'born' });
+  if (note === 'template-missing') {
+    console.log(`  warning: ${consumerDegradationMessage('personal-note template', PERSONAL_NOTE_TEMPLATE_REL, 'the personal note was not created')}`);
+  } else {
+    printPersonalNoteRows(note, dest, 'silent');
+  }
+
   // --- Manifest — written LAST (design.md C1's manifest row): every file and key above,
   // including the generated agent layer and the MCP config keys ----------------------------
   const installedVersion = readPackageVersion(pkgRoot);
@@ -337,28 +403,19 @@ export async function runInit(argv: string[]): Promise<void> {
   console.log('✓ Created designerpunk.manifest.json');
 
   // --- Next steps (C27 erratum; Req 15.8, 15.9, 19.6) ----------------------
-  printNextSteps(opts.name);
+  printNextSteps(opts.name, {
+    packageInstalledHere: fs.existsSync(path.join(dest, 'node_modules', '@3fn', 'core', 'package.json')),
+    jestConfigScaffolded: jestConfigCreated,
+    starterSpecNames: starterSpecNames([...starter.written, ...starter.collided]),
+    gitignoreBlockInPlace,
+    agentLayerEmitted: !opts.skipAgents,
+  });
 }
 
 /** The U1 terminal output — every line true of what U1's `init` actually did, with the sequenced restart row printed LAST (C27 erratum, Le-T5). */
-function printNextSteps(name: string): void {
+function printNextSteps(name: string, ctx: InitNextStepsContext): void {
   console.log(`
-Your product "${name}" is ready.
-
-Next steps:
-  1. npm install
-  2. npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom
-  3. npx designerpunk generate
-
-To customize your visual language:
-  • Edit src/tokens/ to change base values and design intent
-  • Run \`npx designerpunk generate\` after changes
-
-Note: Token values have mathematical relationships (modular scale,
-baseline grid). The validator will warn if changes break these
-relationships during generation.
-
-💡 After future upgrades, run \`npx designerpunk sync\` to apply updates.
+${initNextStepsMessage(name, ctx)}
 
 ${cloneHatchMessage()}
 
@@ -439,9 +496,12 @@ async function previewReScaffold(pkgRoot: string, dest: string, opts: InitOption
   if (!opts.skipAgents) {
     missing.push(...(await previewAgentLayerMissing(pkgRoot, dest, opts.target)));
   }
+  for (const rel of listStarterSpecFiles(pkgRoot)) {
+    if (!fs.existsSync(path.join(dest, 'specs', rel))) missing.push(`specs/${rel}`);
+  }
   const scaffoldFiles = [
     'designerpunk.config.ts',
-    'product/overview.yaml',
+    ...listProductScaffoldFiles(pkgRoot).map((f) => `product/${f}`),
     'jest.config.js',
     'tsconfig.test.json',
     '.designerpunkignore',
@@ -453,6 +513,57 @@ async function previewReScaffold(pkgRoot: string, dest: string, opts: InitOption
     }
   }
   return missing;
+}
+
+/** The starter specs' package source, relative to the package root (design C25; Task 21 criterion 4). Ships through the `src/cli/templates/` `files[]` entry. */
+export const STARTER_SPECS_SOURCE = 'src/cli/templates/starter-specs';
+
+/** Every file under the starter-specs source as `<spec>/<file>`, sorted; `[]` when the source is absent. */
+export function listStarterSpecFiles(pkgRoot: string): string[] {
+  const root = path.join(pkgRoot, STARTER_SPECS_SOURCE);
+  const out: string[] = [];
+  const walk = (dir: string, rel: string): void => {
+    if (!fs.existsSync(dir)) return;
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => (a.name < b.name ? -1 : 1))) {
+      const next = rel ? `${rel}/${entry.name}` : entry.name;
+      if (entry.isDirectory()) walk(path.join(dir, entry.name), next);
+      else if (entry.isFile()) out.push(next);
+    }
+  };
+  walk(root, '');
+  return out;
+}
+
+/** The spec directories (first path segment) among `<spec>/<file>` paths, in order of first appearance. */
+export function starterSpecNames(files: string[]): string[] {
+  return [...new Set(files.map((f) => f.split('/')[0]))];
+}
+
+/**
+ * Scaffold the starter specs into `<dest>/specs/<spec>/<file>`. A path that already exists is NEVER
+ * overwritten and is not recorded: it is returned in `collided`, for the caller to report. Written files
+ * are recorded `generated`, with the hash of the bytes written.
+ */
+export function scaffoldStarterSpecs(
+  pkgRoot: string,
+  dest: string,
+  manifest: ManifestBuilder,
+): { written: string[]; collided: string[]; templatesFound: boolean } {
+  const files = listStarterSpecFiles(pkgRoot);
+  const written: string[] = [];
+  const collided: string[] = [];
+  for (const rel of files) {
+    const target = path.join(dest, 'specs', rel);
+    if (fs.existsSync(target)) {
+      collided.push(rel);
+      continue;
+    }
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, fs.readFileSync(path.join(pkgRoot, STARTER_SPECS_SOURCE, rel)));
+    manifest.recordFile(`specs/${rel}`, target, 'generated');
+    written.push(rel);
+  }
+  return { written, collided, templatesFound: files.length > 0 };
 }
 
 function walkMissing(src: string, dest: string, exclude: string[], out: string[], destRoot: string): void {
@@ -483,12 +594,13 @@ const CONSUMER_COMPONENTS_README = `# Your Components
 
 This directory is yours. Components you add here appear ALONGSIDE
 DesignerPunk's ecosystem components — never instead of them. A component
-you add with the same name as one of DesignerPunk's wins on that name
-(your fork), and everything else keeps coming from the package.
+you add with the same declared name as one of DesignerPunk's (the
+\`component:\` field of its \`contracts.yaml\`) wins on that name (your fork),
+and everything else keeps coming from the package.
 
 DesignerPunk's own components are consumed by name via \`npm update\` —
-they are not copied here. See the install doc's "Your first component"
-section for the merge model.
+they are not copied here. See the install guide's "9. Ownership" section
+(\`docs/consumer/INSTALL.md\` in the \`@3fn/core\` package) for the merge model.
 `;
 
 function createFileIfNotExists(filePath: string, content: string, label: string, collisionMessage?: string): boolean {
@@ -642,22 +754,37 @@ export default defineConfig({
 `;
 }
 
-function generateOverview(name: string): string {
-  return `# ${name} — Product Overview
+/** The `product/` scaffold's package source, relative to the package root (design C27 erratum; Task 22.3). Ships through the `src/cli/templates/` `files[]` entry. */
+export const PRODUCT_SCAFFOLD_SOURCE = 'src/cli/templates/product';
 
-## Product Context
-name: ${name}
-description: "[CUSTOMIZE] Describe your product"
-domain: "[CUSTOMIZE] Your product domain"
+/** The one placeholder in the scaffold: the product's name, in `overview.yaml`, inside a double-quoted YAML scalar. */
+export const PRODUCT_NAME_PLACEHOLDER = '__PRODUCT_NAME__';
 
-## Principles
-- "[CUSTOMIZE] Add your design principles"
+/** Every file under the `product/` scaffold source as `<path under product/>`, sorted; `[]` when the source is absent. */
+export function listProductScaffoldFiles(pkgRoot: string): string[] {
+  const root = path.join(pkgRoot, PRODUCT_SCAFFOLD_SOURCE);
+  const out: string[] = [];
+  const walk = (dir: string, rel: string): void => {
+    if (!fs.existsSync(dir)) return;
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => (a.name < b.name ? -1 : 1))) {
+      const next = rel ? `${rel}/${entry.name}` : entry.name;
+      if (entry.isDirectory()) walk(path.join(dir, entry.name), next);
+      else if (entry.isFile()) out.push(next);
+    }
+  };
+  walk(root, '');
+  return out;
+}
 
-## Platform Status
-web: not-started
-ios: not-started
-android: not-started
-`;
+/** Escape `name` for the inside of a double-quoted YAML scalar (the placeholder sits inside one). */
+function yamlDoubleQuotedBody(name: string): string {
+  return name.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
+}
+
+/** The scaffold file's bytes with `__PRODUCT_NAME__` replaced by `name` (escaped for the quoted scalar it sits in). */
+export function productScaffoldContent(pkgRoot: string, rel: string, name: string): string {
+  const raw = fs.readFileSync(path.join(pkgRoot, PRODUCT_SCAFFOLD_SOURCE, rel), 'utf-8');
+  return raw.split(PRODUCT_NAME_PLACEHOLDER).join(yamlDoubleQuotedBody(name));
 }
 
 // Re-exported for tests and for future callers that need the same refusal

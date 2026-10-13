@@ -38,7 +38,7 @@ import { jestConfigModuleLoader } from '../../__tests__/helpers/configModuleLoad
 /** design.md § "Error Handling — the loud-failure catalog", transcribed verbatim. */
 const DESIGN_ROWS = {
   'name contract — missing (A9)': (name: string, use: string, components: string, tierPath: string, value: string, dpName: string) =>
-    `components now expect token '${name}' — ${use} (used by ${components}). Add it to your set in ${tierPath}. Your tokens are yours; DesignerPunk never adds to them. DesignerPunk's value, for reference: ${value} ('${dpName}' in DesignerPunk's language). See: install doc § "When sync reports a missing token".`,
+    `components now expect token '${name}' — ${use} (used by ${components}). Add it to your set in ${tierPath}. Your tokens are yours; DesignerPunk never adds to them. DesignerPunk's value, for reference: ${value} ('${dpName}' in DesignerPunk's language). See: install guide § "When sync reports a missing token".`,
   'name contract — cannot check': (outputDir: string) =>
     `cannot check the name contract — no generated web token output found at ${outputDir}. Run 'npx designerpunk generate' first. (This is not a clean report.)`,
 };

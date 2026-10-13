@@ -28,8 +28,10 @@ import {
   ROOT_TOKEN_FILES,
   SELF_CLEANING_DIRS,
   sourceCandidates,
+  SHIPPED_CLI_TEMPLATES,
   steeringSetDiff,
   tarballListing,
+  templatesSetDiff,
   themesAreEmpty,
   PackListing,
 } from '../pack-assert';
@@ -209,6 +211,49 @@ describe('steeringSetDiff — .kiro/steering/ ships exactly the eight identity d
   it('BITES on an MCP-served steering doc that is not an identity doc, and on a missing identity doc', () => {
     const wrong = [...IDENTITY_DOCS.slice(1), '.kiro/steering/Token-Governance.md'];
     expect(steeringSetDiff(wrong)).toEqual({ unexpected: ['.kiro/steering/Token-Governance.md'], missing: ['.kiro/steering/Agent-Directory.md'] });
+  });
+});
+
+// ─── templatesSetDiff ────────────────────────────────────────────────────────────────────────────
+
+describe('templatesSetDiff — src/cli/templates/ ships exactly the expected list (Task 22.3b)', () => {
+  const EXPECTED = [
+    'src/cli/templates/mcp-config.json.template',
+    'src/cli/templates/personal-note.template.md',
+    'src/cli/templates/personal-note.example.md',
+    'src/cli/templates/product/overview.yaml',
+    'src/cli/templates/product/experience-map/pages/example-home.yaml',
+    'src/cli/templates/product/templates/home-layout.yaml',
+    'src/cli/templates/starter-specs/ci-needs/needs.md',
+    'src/cli/templates/starter-specs/ci-needs/tasks.md',
+    'src/cli/templates/starter-specs/regrounding/tasks.md',
+  ];
+
+  it('the module list is the nine files above (a row edit, never derived from the tree)', () => {
+    expect([...SHIPPED_CLI_TEMPLATES].sort()).toEqual([...EXPECTED].sort());
+  });
+
+  it('passes the exact set, ignoring paths outside src/cli/templates/', () => {
+    expect(templatesSetDiff([...EXPECTED, 'src/cli/init.ts', 'docs/consumer/INSTALL.md'])).toEqual({ unexpected: [], missing: [] });
+  });
+
+  it('BITES on a stray file anywhere under src/cli/templates/ (top level and nested)', () => {
+    expect(templatesSetDiff([...EXPECTED, 'src/cli/templates/scratch.md']).unexpected).toEqual(['src/cli/templates/scratch.md']);
+    expect(templatesSetDiff([...EXPECTED, 'src/cli/templates/product/notes/draft.yaml']).unexpected).toEqual(['src/cli/templates/product/notes/draft.yaml']);
+    expect(templatesSetDiff([...EXPECTED, 'src/cli/templates/starter-specs/ci-needs/needs.md.bak']).unexpected).toEqual(['src/cli/templates/starter-specs/ci-needs/needs.md.bak']);
+  });
+
+  it('BITES on a dropped file (a removed starter spec, a removed scaffold file, the removed note example)', () => {
+    for (const gone of ['src/cli/templates/starter-specs/regrounding/tasks.md', 'src/cli/templates/product/overview.yaml', 'src/cli/templates/personal-note.example.md']) {
+      const without = EXPECTED.filter((p) => p !== gone);
+      expect(templatesSetDiff(without)).toEqual({ unexpected: [], missing: [gone] });
+    }
+  });
+
+  it('BITES on a rename (both halves report), and on an empty directory', () => {
+    const renamed = [...EXPECTED.filter((p) => p !== 'src/cli/templates/personal-note.template.md'), 'src/cli/templates/personal-note.tmpl.md'];
+    expect(templatesSetDiff(renamed)).toEqual({ unexpected: ['src/cli/templates/personal-note.tmpl.md'], missing: ['src/cli/templates/personal-note.template.md'] });
+    expect(templatesSetDiff(['dist/x.js']).missing.length).toBe(EXPECTED.length);
   });
 });
 

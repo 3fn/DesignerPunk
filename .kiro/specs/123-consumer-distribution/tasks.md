@@ -962,7 +962,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 ### UNIT 3 — Onboarding
 
-- [ ] 19. The install doc, and the Integration Guide reconciled into it
+- [x] 19. The install doc, and the Integration Guide reconciled into it
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Thurgood (Opus)
   **Traces**: Reqs 15.1–15.9, 15B.1–15B.9, 22.2, 4.5 · design C23
@@ -1002,6 +1002,15 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
     · **Widened grep**: criterion 7's grep widens to `git grep -n -E "product-template|src/components/core/|npm\.pkg\.github\.com|@designerpunk:|sync:ios|sync:android|--accept-all|\.kiro/sync-manifest\.json" -- governance/DesignerPunk-Integration-Guide.md`, with every hit dispositioned.
     · **Asserted zero**, in the guide, `docs/consumer/INSTALL.md` and `README.md`: `npm.pkg.github.com` as the install registry, and `@designerpunk:` (`check:drift`'s `SCOPE_PATTERN` cannot see the `@scope:registry` form). *(R2, Stacy A-6: "as the install registry" cannot be checked by a grep, so the assertion is a **plain zero count** of `npm.pkg.github.com` in the three files. A legitimate mention would need an allowed-context list, added with the mention.)*
     · **Leonardo checks at 19.5**: § "Writing Screen Specs" / "UI Tree Convention (Draft)" against his `example-home.yaml`.
+    · *(Annotation 2026-10-03 — **Peter's ruling**, this session, on the Setup Loop fork Thurgood reported at 19.1: reading (b), extended.)* The old Setup Loop's non-step content is **kept as reference**, de-numbered, under `## Reference`. C9's "replaces the Setup Loop" reads **"replaces as the step list"**. A **retitle counts as `corrected`**; retitles are limited to top-level reference headings. The sweep **removes or corrects, never polishes**.
+    · *(Same ruling — Peter, 2026-10-03: "Good on all four".)* **Class guard**: each behaviour, path or count claim in the remainder table and in the region's passage table (19.3) cites `file:line` or a ratified record. **Review mechanic**: the owners supply wording for their sections first; Thurgood assembles; each owner confirms their own rows before the commit.
+    · *(Settled in consult, 2026-10-03 — Leonardo, Ada, Thurgood; recorded, not ruled anew.)* § "Creating a Theme" becomes Ada's status note. § "Governance Gradient" takes Ada's rename ("Ecosystem" → "Design system", and so on). A separate doc-id for the reference is **parked** to the follow-up rewrite; PR-1 stands. The follow-up rewrite (Peter: "designer friendly and something an agent can help the user walk through") is a **Leonardo-led charter issue**, triggered by the release-3 tag, with the theme walkthrough gated on Spec 129 item (i). It is not in U3.
+    · *(PENDING — proposed, not ruled, 2026-10-03.)* Peter stated an amendment: "each integration guide section should be reviewed by the agent who owns that area once complete". Its shape, proposed by the orchestrator, **awaits his confirmation**. It is not a criterion until he confirms it. **→ RULED 2026-10-03** (Peter, "Sounds good to me"; see the next line).
+    · *(Annotation 2026-10-03 — **Peter's ruling**, "Sounds good to me", confirming the orchestrator's proposed shape.)* **Every section of the Integration Guide, the install region and the reference alike, is reviewed by the agent who owns that area once the text is complete (at the end of 19.4).**
+      · There is a named owner for every section, with none left over: Kenya (iOS); Data (Android); Lina (CLI, `sync`, testing, MCP config); Ada (tokens, themes); Leonardo (product, screens); Thurgood (governance). § Platforms › Web is **Sparky's**: the Agent Directory routes Web Components consumption and web-platform questions to him, and #268 named him its web reviewer. Ada's theme rows inside Web are her own wording, under the class guard above.
+      · Each review checks claims against source (`file:line`), not prose. There is one pass, on the final text. A later Task 22 CLI-string change reopens only that owner's section. Leonardo's 19.5 whole-document read covers contradictions between sections.
+      · **19.4's completion doc carries a section → owner → verdict table.**
+      · **Residuals, stated**: owners who supplied wording review their own words, and about six short reviews are added at 19.4's close.
   - *(amendment 2026-10-03)* **B-U3, a light record-first ballot (PR-2)**, is 19.4's first commit, at `.kiro/docs/ballots/<date>-123-b-u3-install-guide.md`. It is ratified by Peter's merge of U3's PR (the PR-atomic precedent of B-U1 and #268). It records:
     · why the install process changes;
     · **a preservation table** mapping each content point that #268 ratified (`.kiro/docs/ballots/2026-10-02-integration-guide-native-scoping.md`) to its new location, or to its retirement with a reason;
@@ -1055,13 +1064,13 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `docs/consumer/INSTALL.md`, `governance/DesignerPunk-Integration-Guide.md`, `README.md`, `src/cli/shared/vocabulary.ts`, tests, the build step deriving INSTALL.md *(amendment 2026-10-03: "the build step" reads as the committed derivation below; "tests" are named:)* `scripts/derive-install-doc.ts` (new, 19.4), `scripts/__tests__/install-doc.test.ts` (new, 19.2/19.4), `.kiro/docs/ballots/<date>-123-b-u3-install-guide.md` (new, 19.4: B-U3), `canonical/generated.lock` (refreshed once at 19's close, as in the criterion above)
 
-  - [ ] 19.1 `vocabulary.ts`; the doc in C23 order with prerequisites and native labels; the README L57 label + its string assertion *(amendment 2026-10-03: the region's scope sentence before step 1 (R2: as its first paragraph) and its per-platform section shape (R2: Web, iOS, Android siblings under § Platforms); the two asserted label strings; the README reconciled — status line, five steps, "Install guide" link, the labelled L57 sentence)*
-  - [ ] 19.2 Path-step counting test; heading-order test; 119-B lint; residual string assertions *(amendment 2026-10-03: in `scripts/__tests__/install-doc.test.ts`; the 119-B lint as defined above; stale-scope zero assertions; the Req 3.2 guard; imported CLI strings; the README in the path-step test)*
-  - [ ] 19.3 The ten owed-AC rows with quoted passages *(amendment 2026-10-03: after 20.1)*
-  - [ ] 19.4 **Integration Guide → served source of INSTALL.md content** (same doc-id; derived INSTALL.md; body-identity test) *(amendment 2026-10-03: B-U3 is its first commit; the marked region; `scripts/derive-install-doc.ts` and the committed `docs/consumer/INSTALL.md`; region identity with its bite; the remainder sweep and its table; the #268 preservation table; the lock refresh at 19's close)*
-  - [ ] 19.5 Leonardo's review; fold *(amendment 2026-10-03: after 22.2. On the branch for him: the derived INSTALL.md and the guide, the markers, the remainder and preservation tables, the widened-grep output, the README diff, the scope sentence and labels with Kenya's and Data's confirmations, the test output, the rebuilt guide's `get_document_summary` outline from a local docs-MCP rebuild, and `example-home.yaml` placed)*
+  - [x] 19.1 `vocabulary.ts`; the doc in C23 order with prerequisites and native labels; the README L57 label + its string assertion *(amendment 2026-10-03: the region's scope sentence before step 1 (R2: as its first paragraph) and its per-platform section shape (R2: Web, iOS, Android siblings under § Platforms); the two asserted label strings; the README reconciled — status line, five steps, "Install guide" link, the labelled L57 sentence)*
+  - [x] 19.2 Path-step counting test; heading-order test; 119-B lint; residual string assertions *(amendment 2026-10-03: in `scripts/__tests__/install-doc.test.ts`; the 119-B lint as defined above; stale-scope zero assertions; the Req 3.2 guard; imported CLI strings; the README in the path-step test)*
+  - [x] 19.3 The ten owed-AC rows with quoted passages *(amendment 2026-10-03: after 20.1)*
+  - [x] 19.4 **Integration Guide → served source of INSTALL.md content** (same doc-id; derived INSTALL.md; body-identity test) *(amendment 2026-10-03: B-U3 is its first commit; the marked region; `scripts/derive-install-doc.ts` and the committed `docs/consumer/INSTALL.md`; region identity with its bite; the remainder sweep and its table; the #268 preservation table; the lock refresh at 19's close)*
+  - [x] 19.5 Leonardo's review; fold *(amendment 2026-10-03: after 22.2. On the branch for him: the derived INSTALL.md and the guide, the markers, the remainder and preservation tables, the widened-grep output, the README diff, the scope sentence and labels with Kenya's and Data's confirmations, the test output, the rebuilt guide's `get_document_summary` outline from a local docs-MCP rebuild, and `example-home.yaml` placed)*
 
-- [ ] 20. The commit policy and the `.gitignore` managed block
+- [x] 20. The commit policy and the `.gitignore` managed block
 
   **Type**: Implementation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Lina (Sonnet)
   **Traces**: Req 15A.1a · design C24, DD1, DD21
@@ -1096,11 +1105,11 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `docs/consumer/COMMIT-POLICY.md`, `src/cli/init.ts`, tests *(amendment 2026-10-03 — widened to the paths the criteria force (Lina; Stacy's lens item 5):)* `src/cli/shared/gitignoreRegion.ts` (new), `src/cli/sync/index.ts`, `src/cli/sync/Classifier.ts`, `src/cli/shared/errorCatalog.ts` (PR-9's remedy row), `src/cli/__tests__/init.test.ts`, `src/cli/__tests__/sync.region.test.ts`, `tests/consumer-integration.test.ts` (20.3's packed fresh-clone case, built at test time; R2, Lina RC-4: the committed `src/cli/__tests__/fixtures/policy-applied-born-repo/**` fixture is dropped), `src/cli/sync/Prompter.ts` and `src/cli/sync/Reporter.ts` *(R2, Lina RC-3: the offer is a prompt and the report a report line; `sync/index.ts` imports both)*
 
-  - [ ] 20.1 `COMMIT-POLICY.md`
-  - [ ] 20.2 `.gitignore` region (configured path) + `sync` round-trip *(amendment 2026-10-03: `src/cli/shared/gitignoreRegion.ts`; the `sync` region source; PR-9's offer, report and corrected remedy)*
-  - [ ] 20.3 Fresh-clone fixture through step 4 *(amendment 2026-10-03: after 22.1; R2: built at test time, nothing committed)*
+  - [x] 20.1 `COMMIT-POLICY.md`
+  - [x] 20.2 `.gitignore` region (configured path) + `sync` round-trip *(amendment 2026-10-03: `src/cli/shared/gitignoreRegion.ts`; the `sync` region source; PR-9's offer, report and corrected remedy)*
+  - [x] 20.3 Fresh-clone fixture through step 4 *(amendment 2026-10-03: after 22.1; R2: built at test time, nothing committed)*
 
-- [ ] 21. The starter specs
+- [x] 21. The starter specs
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Thurgood (Opus)
   **Traces**: Reqs 16, 17 · design C25, DD15
@@ -1120,11 +1129,11 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `starter-specs/**`, `src/cli/init.ts` *(amendment 2026-10-03: `starter-specs/**` reads `src/cli/templates/starter-specs/**`;)* `src/cli/__tests__/init.test.ts` (21.3), `scripts/__tests__/starter-specs.test.ts` (new, the structure test, 21.1/21.2)
 
-  - [ ] 21.1 CI-needs spec
-  - [ ] 21.2 Re-grounding spec
-  - [ ] 21.3 Scaffolding + structure test *(amendment 2026-10-03: the scaffolding is Lina's; the structure test is written with 21.1/21.2 by Thurgood)*
+  - [x] 21.1 CI-needs spec
+  - [x] 21.2 Re-grounding spec
+  - [x] 21.3 Scaffolding + structure test *(amendment 2026-10-03: the scaffolding is Lina's; the structure test is written with 21.1/21.2 by Thurgood)*
 
-- [ ] 22. Personal note, `init` UX completion, product scaffold, and DD9 (**U3 gating parent**)
+- [x] 22. Personal note, `init` UX completion, product scaffold, and DD9 (**U3 gating parent**)
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY Lina (Sonnet); Leonardo (Opus) — 22.3 `example-home.yaml`, 22.5 DD9
   **Traces**: Reqs 18, 19.3–19.8, 15.8, 15.9, 13 · design C26, C27 (+ erratum), DD9
@@ -1225,6 +1234,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
     · `git diff --name-only $(git merge-base HEAD origin/main) HEAD -- canonical/profiles/consumer canonical/operative-sets canonical/agents canonical/shared canonical/consumer-profile.yaml canonical/_consumer-output tools/agent-generator .kiro/steering` prints nothing, **on a head where `122-diff-guard` is green**. That is U3's own net delta: at the cut and at 22.4 it prints nothing.
     · Changes to `governance/**` and `package.json` reach the check only by regenerating `canonical/_consumer-output/**`, which the required `122-diff-guard` forces, and which is in the list. So `governance/**` stays out of the list (Stacy, answering Lina: Leonardo's only guide reference is a section-less route, `canonical/agents/leonardo.md` L109–111).
     · Widen the path set to U3g's declared trigger set (Task 29, criterion G2-F2) once that is merged.
+    · *(amendment 2026-10-13 — Peter's ruling A, 2026-10-13; **Consulted**: Stacy — (b) + waiver, (a) not hers; Lina — recorded red, did not waive.)* **The widened set (Task 29's declared input set) printed one path at 22.4: `package.json`.** It is **waived once**, for this verified-harmless hit: the diff is two `files[]` lines (`docs/consumer/INSTALL.md`, `docs/consumer/COMMIT-POLICY.md`, 22.3b), the `scripts` block (including `test:agent-generator`) is unchanged, and `package.json` has no `jest` key, so `scripts` is the only selection wiring (verified by Stacy and Lina; the 22.4 doc records the output). The waiver is not a precedent. The entry itself is narrowed for every later use (see Task 29's 29.4 amendment): `package.json` counts in the set **only as its `scripts` block**.
     · **Red**: any path printed. A red holds 22.5. The 22.4 completion doc cites the green `122-diff-guard` run.
     · Under mechanism B U3 touches none of these paths (Lina's sizing note); the test is the mechanical proof.
     · **U3 merges `main` after U3g lands and before 22.4** (Stacy's condition (c)).
@@ -1237,13 +1247,13 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `templates/personal-note.template.md`, `src/cli/{init,generate}.ts`, the `product/` scaffold incl. `experience-map/pages/example-home.yaml`, tests, `CHANGELOG.md` (release 3) *(amendment 2026-10-03 — widened to the paths the criteria force (Lina, Leonardo, Ada; Stacy's lens item 5); `src/cli/{init,generate}.ts` reads `src/cli/init.ts` and `src/cli/designerpunk.ts`; the template and example paths per FK-1; the `product/` scaffold reads `src/cli/templates/product/**`:)* `src/cli/designerpunk.ts`, `src/cli/shared/personalNote.ts` (new), `src/cli/shared/errorCatalog.ts`, `src/cli/attach.ts`, `src/cli/sync/index.ts`, `src/cli/templates/product/**` (new), `src/cli/__tests__/personalNote.test.ts` (new), `src/cli/__tests__/{init,attach,errorCatalog,sync.migration}.test.ts`, `tests/consumer-integration.test.ts`, `.kiro/specs/123-consumer-distribution/design-inputs/{personal-note.template.md,personal-note.example.md,example-home.yaml}` (Leonardo; with their companions), `package.json` (the `files[]` lines only; author per FK-2), `scripts/pack-assert.ts` (author per FK-2), `canonical/generated.lock` (once, at 22.4) *(R2: FK-1 settled (b), so `templates/personal-note.template.md` reads `src/cli/templates/personal-note.template.md`; FK-2 settled (a), so `package.json` and `scripts/pack-assert.ts` are Ada's, at 22.3b. Added, by Lina RC-5, Ada RC-2, Leonardo L-RC4 and Stacy R-14:)* `src/cli/templates/personal-note.template.md` (new), `src/cli/templates/personal-note.example.md` (new), `src/cli/__tests__/generate.personalNote.test.ts` (new), `src/cli/__tests__/sync.test.ts`, `scripts/__tests__/pack-assert.test.ts` (Ada, 22.3b), `.kiro/specs/123-consumer-distribution/design-inputs/personal-note.example.approval.md` (new; the orchestrator's record of Peter's approval, 22.0) *(R3, Lina RC2-4 (a):)* `.kiro/specs/123-consumer-distribution/design-inputs/overview.yaml` (new; Leonardo), with its placed template under `src/cli/templates/product/**`
 
-  - [ ] 22.0 (Leonardo) The note template (prompted slots; the walkthrough-offer line) and the edited example of Peter's note, in `design-inputs/`; Peter's dated approval of the example *(added 2026-10-03, Peter's PR-4; R2: the template before 22.1, the example and its approval record before 22.3b; the approval record at `design-inputs/personal-note.example.approval.md`)* *(R4: input — `feedback/tasks.md` § "U3 amendment round (2026-10-03)", "Input for 22.0 (orchestrator, at Peter's direction)"; input, not a ruling. **PROPOSED, not ruled**: before the template ships, Peter runs the walkthrough himself on a scratch repo (about ten minutes); to be confirmed by Peter at the sitting where he approves the edited example.)*
-  - [ ] 22.1 Personal note: template, personalization, create-if-absent, all-`TODO`-as-absent *(amendment 2026-10-03: mechanism B; `src/cli/shared/personalNote.ts` and the detection rule; placement of 22.0's files (equality test); create in `init`, `generate` and `sync --migrate-legacy` (R3); the unfilled warning in `generate`, `attach` and `sync`; the posture gate; the three 16.6 flips; Leonardo's `generate` warning if adopted in this round; R2: the marked-block detection rule, who prints what, and the unignored-directory warning (PR-13 RULED); R3: the "Themes:" suffix, no subtask added)*
-  - [ ] 22.2 C27 completion: restart line, hatch, note naming, next steps; collision strings *(amendment 2026-10-03: after 20.3; the named-default notice first; next steps list the `.gitignore` block and the `specs/` scaffold; R2: the corrected naming, created and born-repo rows)*
-  - [ ] 22.3 (Leonardo) `example-home.yaml` in `design-inputs/`; (Lina) placement (equality test) + scaffold mechanics + validity guard *(amendment 2026-10-03: `src/cli/templates/product/**`; companions authored by Leonardo; the guard's state and classes as above)*
-  - [ ] 22.3b Packaging: every U3 `files[]` line and `pack-assert` row, plus the `src/cli/templates/**` exact set *(added 2026-10-03; FK-2 settled (a) in the round: here, by Ada (Sonnet), against an explicit expected list with its unit cases)*
-  - [ ] 22.4 Release-3 CHANGELOG entry; full validation *(amendment 2026-10-03: after U3 merges `main` carrying U3g; the no-overlap re-run; the lock refresh)*
-  - [ ] 22.5 (Leonardo) DD9 confirmation; open the U3 PR *(amendment 2026-10-03: the mechanical G2 backstop)*
+  - [x] 22.0 (Leonardo) The note template (prompted slots; the walkthrough-offer line) and the edited example of Peter's note, in `design-inputs/`; Peter's dated approval of the example *(added 2026-10-03, Peter's PR-4; R2: the template before 22.1, the example and its approval record before 22.3b; the approval record at `design-inputs/personal-note.example.approval.md`)* *(R4: input — `feedback/tasks.md` § "U3 amendment round (2026-10-03)", "Input for 22.0 (orchestrator, at Peter's direction)"; input, not a ruling. **PROPOSED, not ruled**: before the template ships, Peter runs the walkthrough himself on a scratch repo (about ten minutes); to be confirmed by Peter at the sitting where he approves the edited example.)*
+  - [x] 22.1 Personal note: template, personalization, create-if-absent, all-`TODO`-as-absent *(amendment 2026-10-03: mechanism B; `src/cli/shared/personalNote.ts` and the detection rule; placement of 22.0's files (equality test); create in `init`, `generate` and `sync --migrate-legacy` (R3); the unfilled warning in `generate`, `attach` and `sync`; the posture gate; the three 16.6 flips; Leonardo's `generate` warning if adopted in this round; R2: the marked-block detection rule, who prints what, and the unignored-directory warning (PR-13 RULED); R3: the "Themes:" suffix, no subtask added)*
+  - [x] 22.2 C27 completion: restart line, hatch, note naming, next steps; collision strings *(amendment 2026-10-03: after 20.3; the named-default notice first; next steps list the `.gitignore` block and the `specs/` scaffold; R2: the corrected naming, created and born-repo rows)*
+  - [x] 22.3 (Leonardo) `example-home.yaml` in `design-inputs/`; (Lina) placement (equality test) + scaffold mechanics + validity guard *(amendment 2026-10-03: `src/cli/templates/product/**`; companions authored by Leonardo; the guard's state and classes as above)*
+  - [x] 22.3b Packaging: every U3 `files[]` line and `pack-assert` row, plus the `src/cli/templates/**` exact set *(added 2026-10-03; FK-2 settled (a) in the round: here, by Ada (Sonnet), against an explicit expected list with its unit cases)*
+  - [x] 22.4 Release-3 CHANGELOG entry; full validation *(amendment 2026-10-03: after U3 merges `main` carrying U3g; the no-overlap re-run; the lock refresh)*
+  - [x] 22.5 (Leonardo) DD9 confirmation; open the U3 PR *(amendment 2026-10-03: the mechanical G2 backstop)*
 
 ### UNIT 3c — Consumer-profile corrections *(added 2026-10-03, R2; Peter's PR-11 and PR-12)*
 
@@ -1396,6 +1406,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 29.2 Clause-1 rows rebuilt on the generator's emission of attack (a) (G2-F3, MP-1)
   - [x] 29.3 Kiro-JSON per-entry attribution spans (the six rows)
   - [x] 29.4 The standing application to the shipped profile on every PR touching its inputs (G2-F2; Stacy's condition (a)); the declared input set
+    *(amendment 2026-10-13 — Peter's ruling A; Stacy's (b); **Consulted**: Stacy — (b) + waiver, (a) not hers; Lina — recorded red, did not waive.)* The declared input set's entry `package.json` ("the wiring: `test:agent-generator`", `completion/task-29-4-completion.md`) is **narrowed to `package.json`'s `scripts` block**: a change to `files[]`, `exports`, `dependencies` or version fields is not a change to the check's inputs. The hook is the `scripts` block, and `package.json` has no `jest` key; `tools/agent-generator/jest.config.js` is already in the set by path. Comparison command: `git show <base>:package.json | node -e "process.stdin.on('data',d=>process.stdout.write(JSON.stringify(JSON.parse(d).scripts)))"` against the same on `HEAD`; equal means no hit.
   - [x] 29.6 One re-sign round within Stacy's limits; the lock refresh *(R2: 29.5 moved to U3c as Task 31, PR-11; the numbers are kept so that references stay valid)*
   - [x] 29.7 Full validation
 

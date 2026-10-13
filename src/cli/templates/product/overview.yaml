@@ -1,0 +1,17 @@
+# What this product is. Committed and shared: every teammate's agents read the same
+# answers here (get_product_overview). Replace each TODO.
+name: "__PRODUCT_NAME__"
+description: TODO          # one sentence: what the product does, and for whom
+register: product          # product (an app or tool) or brand (marketing, launch pages)
+
+# What ships, and to whom. These are facts about the product, not about you, so they
+# live here rather than in your personal note.
+platforms:
+  shipsFirst: [web]        # this release supports web; iOS and Android are reference source
+  minimumVersions:
+    web: TODO              # e.g. the oldest browser versions you support
+    ios: TODO
+    android: TODO
+  browsers: TODO           # e.g. the latest two versions of Chrome, Safari, Firefox and Edge
+  devices: TODO            # e.g. phones and laptops; touch, mouse and keyboard
+  assistiveTechnology: TODO  # e.g. VoiceOver, NVDA, keyboard-only, zoom to 200%

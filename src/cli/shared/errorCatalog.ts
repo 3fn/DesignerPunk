@@ -91,12 +91,12 @@ export function explicitTokenIndexMissingMessage(explicitPath: string): string {
 // duplicated-resolution-logic warning) — `init.ts` is the only caller today.
 // ---------------------------------------------------------------------------
 
-/** design.md catalog row: `init` in a born repo (A7). */
+/** design.md catalog row: `init` in a born repo (A7), with the 2026-10-03 erratum (R2, Leonardo L-RC3) applied: the personal-note step reads "fill in your personal note (generate creates it; your agent can walk you through it)". */
 export function initBornRepoMessage(root: string): string {
   return (
     `this repo already has a design system (${root}) — init is the birth event and runs once. ` +
-    `To join it: npm install → npx designerpunk generate → fill in .designerpunk/personal-note.local.md ` +
-    `(generate creates it) → restart your agent session (approve DesignerPunk's MCP servers if asked). ` +
+    `To join it: npm install → npx designerpunk generate → fill in your personal note ` +
+    `(generate creates it; your agent can walk you through it) → restart your agent session (approve DesignerPunk's MCP servers if asked). ` +
     `Using a different agent tool than this repo was set up for? Also run: npx designerpunk attach ` +
     `--target=<cc|kiro> to attach a harness (agents + MCP config + approvals). To deliberately re-scaffold: ` +
     `npx designerpunk init --re-scaffold`
@@ -125,9 +125,11 @@ export function cloneHatchMessage(): string {
 
 /** design.md catalog row: **personal-note naming** (erratum, Le-T1; `init` output). */
 export function personalNoteNamingMessage(): string {
+  // Corrected 2026-10-03 (design erratum R2, Leonardo L-RC3): three slots and the walkthrough.
   return (
-    `fill in .designerpunk/personal-note.local.md — who you are and how you want to be worked with; your ` +
-    `agents read it every session (it stays on your machine)`
+    `fill in .designerpunk/personal-note.local.md — who you are, what you and your organization value, and how ` +
+    `you like to work together — or, after the restart, ask your agent to walk you through it. ` +
+    `Your agents read it every session (it stays on your machine)`
   );
 }
 
@@ -137,8 +139,9 @@ export function personalNoteNamingMessage(): string {
  */
 export function jestConfigCollisionMessage(): string {
   return (
-    `skipped: jest.config.js (already exists) — the DesignerPunk jest preset is not applied; to test your ` +
-    `own forked components with @3fn/core/testing, add ...require('@3fn/core/jest-preset') to your config`
+    `skipped: jest.config.js (already exists) — the DesignerPunk jest preset is not applied; to test your own ` +
+    `components with it, add ...require('@3fn/core/jest-preset') to your config (in this version @3fn/core/testing ` +
+    `does not load under the preset; see the Integration Guide's "Running Component Tests")`
   );
 }
 
@@ -183,9 +186,18 @@ export function consumerDegradationMessage(member: string, where: string, conseq
  * in `<file>` (e.g. `CLAUDE.md`, `.gitignore`).
  */
 export function managedRegionMarkersMissingMessage(file: string): string {
+  // The target-free `.gitignore` block: `attach` never writes it, so "re-run attach" would be false
+  // (catalog-wording.md § 6, Leonardo). Every other managed region keeps the design row's remedy.
+  if (file === '.gitignore') {
+    return (
+      `the DesignerPunk-managed block in .gitignore is missing its markers — not rewriting the file. ` +
+      `Restore the lines '# designerpunk:managed:begin' and '# designerpunk:managed:end' around the block, ` +
+      `and 'npx designerpunk sync' keeps it current again.`
+    );
+  }
   return (
     `the DesignerPunk-managed region in ${file} is missing its markers — not rewriting the file. ` +
-    `Restore the markers (see install doc § "Your agent layer") or re-run attach`
+    `Restore the markers (see install guide § "Your agent layer") or re-run attach`
   );
 }
 
@@ -298,3 +310,215 @@ export function componentTokenFileLoadFailedMessage(file: string, reason: string
   const firstLine = reason.split(/\r?\n/, 1)[0].trim();
   return `generate stopped — ${file} could not be loaded: ${firstLine} Fix the file and run generate again. Nothing was written.`;
 }
+
+// ---------------------------------------------------------------------------
+// The `.gitignore` managed block (Spec 123 Task 20.2; design.md C24's PR-9 erratum and § "Error
+// Handling — the loud-failure catalog (exact strings)" rows "`.gitignore` block — offer" and
+// "— report"). The block's content lives in `gitignoreRegion.ts`; its strings live here.
+// ---------------------------------------------------------------------------
+
+/**
+ * design.md catalog row **`.gitignore` block — offer** (PR-9; `sync`, interactive; only when
+ * `git check-ignore -q .designerpunk/` exits 1). Asked as its OWN question, after `sync`'s report,
+ * default No — the `[y/N]` is part of the row's text.
+ */
+export function gitignoreBlockOfferMessage(): string {
+  return (
+    `.designerpunk/ is not ignored by git here, so a personal note in it could be committed and shared with your team. ` +
+    `Add DesignerPunk's .gitignore block (it ignores .designerpunk/ and token-index/)? [y/N]`
+  );
+}
+
+/**
+ * design.md catalog row **`.gitignore` block — report** (PR-9; `sync`, non-interactive, including
+ * `--apply` off a TTY; writes nothing). Carries the remedy the `untracked-new` row's
+ * `attach --target` cannot give for a target-free region.
+ */
+export function gitignoreBlockReportMessage(): string {
+  return (
+    `.designerpunk/ is not ignored by git here, so a personal note in it could be committed and shared with your team. ` +
+    `To fix it: answer the prompt when running 'npx designerpunk sync' in a terminal, or add the line .designerpunk/ to .gitignore ` +
+    `(your agent can do this with your go). Nothing was changed.`
+  );
+}
+
+/**
+ * `init` or `sync` could not load `designerpunk.config.ts`, so the platform-output path for the
+ * block's commented line is unknown. The block is NOT written, and no path is guessed
+ * (tasks.md Task 20, R2 Lina A-2).
+ *
+ * AUTHORED AT 20.2, not copied: design.md § Error Handling carries no row for this case (the
+ * criterion says "init reports and writes no block" and names no text), so there is no catalog
+ * string to be equal to. `gitignoreRegion.test.ts` asserts THIS function's output. The design
+ * catalog row is owed (see `task-20-instruments.md` § "Found later").
+ */
+export function gitignoreBlockConfigUnreadableMessage(reason: string): string {
+  const firstLine = reason.split(/\r?\n/, 1)[0].trim();
+  return (
+    `DesignerPunk's .gitignore block was not written — designerpunk.config.ts could not be loaded (${firstLine}), ` +
+    `so the platform output path is unknown and none was guessed. ` +
+    `Add the lines token-index/ and .designerpunk/ to .gitignore yourself, or fix the config and run 'npx designerpunk sync'.`
+  );
+}
+
+/**
+ * The confirmation after the block is written (by `init`, or by `sync` after a yes). AUTHORED AT
+ * 20.2: the design catalog has no row for it (the existing "✓ Created …" lines are literals in
+ * `init.ts`; the row is owed with the one above).
+ */
+export function gitignoreBlockAddedMessage(): string {
+  return `.gitignore: added DesignerPunk's block (it ignores .designerpunk/ and token-index/)`;
+}
+
+// ---------------------------------------------------------------------------
+// The starter specs (Spec 123 Task 21.3; design.md C25, DD15). Both strings are AUTHORED AT 21.3:
+// the design catalog carries no row for either (the criterion says `init` "reports on collision" and
+// names no text); the existing generic `skipped: <label> (already exists)` literal in `init.ts` names
+// the skip but not its consequence (the C27 / A13 rule: a collision string states what the skip means).
+// `init.test.ts` asserts THESE functions' output. The design rows are owed (see `task-21-3-completion.md`).
+// ---------------------------------------------------------------------------
+
+/** A starter-spec path already exists: it is kept as it is, and the starter's version is not written. */
+export function starterSpecCollisionMessage(relPath: string): string {
+  return `skipped: ${relPath} (already exists) — your file is kept as it is; the starter spec's version was not written`;
+}
+
+/** The summary line after the starter specs are scaffolded into `specs/`. */
+export function starterSpecsWrittenMessage(fileCount: number, specNames: string[]): string {
+  return `specs/: ${fileCount} starter spec file${fileCount === 1 ? '' : 's'} (${specNames.join(', ')}) — run them with your agent`;
+}
+
+// ---------------------------------------------------------------------------
+// The personal note (Spec 123 Task 22.1; design.md C26's 2026-10-03 errata, mechanism B — PR-4) and
+// `generate`'s `Themes:` line. Strings are the design rows' corrected text, verbatim; the `Themes:` suffix
+// is Leonardo's final wording (`design-inputs/catalog-wording.md` § 1), the design erratum for which is owed.
+// ---------------------------------------------------------------------------
+
+/**
+ * design.md catalog row **generate created the personal note** (Le-R1; corrected 2026-10-03, R2 — Leonardo
+ * L-RC3: three slots and the walkthrough). Printed by every command that creates the note except `init`
+ * and `sync --migrate-legacy`, which print the naming row.
+ */
+export function personalNoteCreatedMessage(): string {
+  return (
+    `created .designerpunk/personal-note.local.md from the template — fill it in, or ask your agent to walk you through it. ` +
+    `Your agents read it every session (it stays on your machine)`
+  );
+}
+
+/**
+ * design.md catalog row **personal note unfilled** (mechanism B, PR-4; wording Leonardo, R2/R3). A warning,
+ * exit 0 (Req 13, 18.5(iii)); printed by any command that finds an existing unfilled note, never in the
+ * same run as a creation row.
+ */
+export function personalNoteUnfilledMessage(): string {
+  return (
+    `your personal note (.designerpunk/personal-note.local.md) is still the unfilled template, so your agents set it aside. ` +
+    `Your answers go under the headings, outside the guidance block. ` +
+    `Fill it in yourself, or ask your agent to walk you through it: who you are, what you and your organization value, ` +
+    `and how you like to work together. Rather not keep one? Replace it with a line of your own and this message stops. ` +
+    `(It stays on your machine.)`
+  );
+}
+
+/**
+ * design.md catalog row **personal note created in an unignored directory** (PR-13 RULED; Leonardo's L-RC8
+ * text). Printed by `generate` and `attach` immediately after their creation row, only when
+ * `git check-ignore -q .designerpunk/` exits 1.
+ */
+export function personalNoteUnignoredMessage(): string {
+  return (
+    `.designerpunk/ is not ignored by git in this repo, so the personal note just created could be committed and shared with your team. ` +
+    `Add the line .designerpunk/ to .gitignore (or run 'npx designerpunk sync' in a terminal to add DesignerPunk's block).`
+  );
+}
+
+/**
+ * design.md catalog row **generate — registered theme not emitted** (R3; Ada's draft, Leonardo's FINAL
+ * wording — `design-inputs/catalog-wording.md` § 1). `generate` prints its registered themes on ONE
+ * comma-joined line, so the line gets one suffix. It comes off by dated amendment when Spec 129 item (i) lands.
+ */
+export function generateThemesLine(themes: ReadonlyArray<{ name: string; mode: string }>): string {
+  return (
+    `Themes: ${themes.map((t) => `${t.name} (${t.mode})`).join(', ')} — registered, not applied yet: ` +
+    `a theme you register does not change your generated output; dark mode and the wcag theme apply DesignerPunk's built-in overrides to your tokens`
+  );
+}
+
+// ---------------------------------------------------------------------------
+// `init`'s terminal output, completed (Spec 123 Task 22.2; design.md C27 and its erratum).
+// ---------------------------------------------------------------------------
+
+/** Display names for the harness targets the notice names; an undeclared id is shown as itself. Presentation only: the declared set is the profile's (C12). */
+const HARNESS_DISPLAY_NAMES: Readonly<Record<string, string>> = Object.freeze({ cc: 'Claude Code', kiro: 'Kiro' });
+const harnessName = (target: string): string => HARNESS_DISPLAY_NAMES[target] ?? target;
+
+/**
+ * design.md catalog row **bare `init` default notice (A2)** (Leonardo A2): printed FIRST on bare `init`
+ * (no `--target`); the sequenced restart row stays LAST. `defaultTarget` and `targets` come from the
+ * packaged profile, never a literal list; with the shipped two-target profile and `cc` as the default the
+ * string is the row's, verbatim. A `--skip-agents` run prints no notice (nothing was set up for a harness).
+ */
+export function namedDefaultNoticeMessage(defaultTarget: string, targets: readonly string[]): string {
+  const others = targets.filter((t) => t !== defaultTarget);
+  const using = others.map((t) => `Using ${harnessName(t)}? npx designerpunk attach --target=${t}`).join(' ');
+  return `no --target given — set up for ${harnessName(defaultTarget)} (the default).${using ? ` ${using}` : ''}`;
+}
+
+/** What `init` actually did, so its next steps list only steps a skip has not made untrue. */
+export interface InitNextStepsContext {
+  /**
+   * `@3fn/core` is installed in this repo (`node_modules/@3fn/core`). False only when `init` ran from somewhere else (for
+   * example `npx` with no install first): the config `init` wrote imports from `@3fn/core`, so `generate` needs it, and the
+   * one step to print is `npm install @3fn/core`. The bare `npm install` `init` used to print is never needed: `init`
+   * changes no dependency and never writes the consumer's `package.json`.
+   */
+  packageInstalledHere: boolean;
+  /** `jest.config.js` was written (false: an existing one was kept, so the optional install-jest line would be untrue). */
+  jestConfigScaffolded: boolean;
+  /** The starter specs are in `specs/` (written now, or already there). */
+  starterSpecNames: string[];
+  /** DesignerPunk's `.gitignore` block is in place (false: the config would not load, or the markers were gone). */
+  gitignoreBlockInPlace: boolean;
+  /** The agent layer was emitted (false under `--skip-agents`). */
+  agentLayerEmitted: boolean;
+}
+
+/**
+ * The block of next steps `init` prints before the clone hatch, the personal-note naming row and the
+ * sequenced restart row (which stays the LAST thing). It lists positively what this repo needs next, and
+ * names the `.gitignore` block and the `specs/` scaffold (C27 erratum, 2026-10-03). A step a skip made
+ * untrue is omitted. AUTHORED AT 22.2: the design catalog carries no row for the block as a whole.
+ */
+export function initNextStepsMessage(name: string, ctx: InitNextStepsContext): string {
+  // The numbered list begins at `generate` (install → init → generate → note → restart is the founder path).
+  const steps: string[] = [];
+  if (!ctx.packageInstalledHere) steps.push('npm install @3fn/core (it is not installed in this repo, and the config init wrote imports from it)');
+  steps.push('npx designerpunk generate');
+  if (!ctx.agentLayerEmitted) steps.push('npx designerpunk attach --target=<cc|kiro> to attach a harness (agents + MCP config + approvals)');
+  if (ctx.starterSpecNames.length > 0) {
+    steps.push(`specs/ holds your starter specs (${ctx.starterSpecNames.join(', ')}): run them with your agent when you are ready`);
+  }
+  if (ctx.gitignoreBlockInPlace) {
+    steps.push('commit .gitignore with the rest: DesignerPunk\'s block in it ignores .designerpunk/ and token-index/');
+  }
+  const optional = ctx.jestConfigScaffolded
+    ? '\nOptional, to test your own components: npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node\n'
+    : '';
+  return `Your product "${name}" is ready.
+
+Next steps:
+${steps.map((t, i) => `  ${i + 1}. ${t}`).join('\n')}
+${optional}
+To customize your visual language:
+  • Edit src/tokens/ to change base values and design intent
+  • Run \`npx designerpunk generate\` after changes
+
+Note: Token values have mathematical relationships (modular scale,
+baseline grid). \`generate\` does not check these relationships, and
+\`npx designerpunk validate\`'s check for them currently fails even on
+unmodified token source (a known defect in the checker, not in your tokens).
+
+💡 After future upgrades, run \`npx designerpunk sync\` to apply updates.`;
+}
+

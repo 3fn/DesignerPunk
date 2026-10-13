@@ -28,13 +28,33 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as crypto from 'crypto';
-import { runInit, ManifestBuilder } from '../init';
+import { runInit, ManifestBuilder, listStarterSpecFiles, starterSpecNames, scaffoldStarterSpecs, STARTER_SPECS_SOURCE } from '../init';
 import { runAttach } from '../attach';
 import { resolvePackageRoot } from '../shared/resolvePackageRoot';
 import { cloneHatchMessage, personalNoteNamingMessage, restartLineSequencedMessage } from '../shared/errorCatalog';
 import { classifyFiles } from '../sync/Classifier';
 import { loadIgnoreFilter } from '../sync/IgnoreFilter';
 import { COPY_ROOTS } from '../sync/Manifest';
+import {
+  GITIGNORE_MARKERS,
+  GITIGNORE_REGION_ID,
+  gitignoreRegionContent,
+  gitignoreRegionEntry,
+} from '../shared/gitignoreRegion';
+import {
+  gitignoreBlockAddedMessage,
+  gitignoreBlockConfigUnreadableMessage,
+  starterSpecCollisionMessage,
+  starterSpecsWrittenMessage,
+  personalNoteCreatedMessage,
+  personalNoteUnfilledMessage,
+  namedDefaultNoticeMessage,
+  initNextStepsMessage,
+  jestConfigCollisionMessage,
+} from '../shared/errorCatalog';
+import { PERSONAL_NOTE_REL, PERSONAL_NOTE_TEMPLATE_REL } from '../shared/personalNote';
+import { extractRegion, normalizeRegionContent, wrapRegion } from '../sync/RegionGrain';
+import type { ConfigModuleLoader } from '../../config/ConfigLoader';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -766,3 +786,312 @@ describe('CLI init — U2 output prints the sequenced restart row LAST (Task 16.
     expect(output.indexOf('✓ Agent layer (')).toBeLessThan(output.indexOf(expectedTail));
   });
 });
+
+describe('CLI init — the .gitignore managed block (Task 20.2; design.md C24)', () => {
+  let scratchDir: string;
+  const ARGS = ['--name', 'Test', '--abbreviation', 'T', '--skip-agents'];
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  /** `runInit` with an injected config loader (the production loader cannot run in-process under jest). */
+  async function initWithLoader(args: string[], configLoader: ConfigModuleLoader): Promise<string> {
+    const originalCwd = process.cwd();
+    process.chdir(scratchDir);
+    const logSpy = jest.spyOn(console, 'log').mockImplementation();
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation();
+    const exitSpy = jest.spyOn(process, 'exit').mockImplementation(((() => undefined) as unknown) as () => never);
+    try {
+      await runInit(args, { configLoader });
+    } finally {
+      process.chdir(originalCwd);
+    }
+    const output = [...logSpy.mock.calls, ...errorSpy.mock.calls].map((call) => call.join(' ')).join('\n');
+    logSpy.mockRestore();
+    errorSpy.mockRestore();
+    exitSpy.mockRestore();
+    return output;
+  }
+
+  /** Reads `output: '<path>'` out of the config text `init` wrote, so the block's path provably comes from THAT file. */
+  const readOutputFromFile: ConfigModuleLoader = (configPath) => {
+    const m = /output:\s*'([^']+)'/.exec(fs.readFileSync(configPath, 'utf-8'));
+    if (!m) throw new Error('no output in config');
+    return { default: { output: m[1] } };
+  };
+
+  const gitignore = () => fs.readFileSync(path.join(scratchDir, '.gitignore'), 'utf-8');
+  const nonCommentLines = (text: string) => text.split('\n').filter((l) => l.trim() !== '' && !l.startsWith('#'));
+
+  test('the config init writes (output ./dist/tokens) → the block ignores exactly token-index/ and .designerpunk/, the commented line names dist/tokens/', async () => {
+    const output = await initWithLoader(ARGS, readOutputFromFile);
+    const content = gitignoreRegionContent('dist/tokens');
+    expect(gitignore()).toBe(wrapRegion(GITIGNORE_MARKERS, content));
+    expect(nonCommentLines(extractRegion(gitignore(), GITIGNORE_MARKERS).found ? (extractRegion(gitignore(), GITIGNORE_MARKERS) as { region: string }).region : '')).toEqual([
+      'token-index/',
+      '.designerpunk/',
+    ]);
+    expect(gitignore()).toContain('# dist/tokens/');
+    expect(output).toContain(`✓ ${gitignoreBlockAddedMessage()}`);
+  });
+
+  test('the entry is recorded: a generated region whose hash is over the normalized content', async () => {
+    await initWithLoader(ARGS, readOutputFromFile);
+    const entry = readManifestFile(scratchDir).entries[GITIGNORE_REGION_ID];
+    expect(entry).toEqual(gitignoreRegionEntry(gitignoreRegionContent('dist/tokens')));
+    expect(entry.hash).toBe(sha256(normalizeRegionContent(gitignoreRegionContent('dist/tokens'))));
+  });
+
+  test.each([
+    ['./build/tokens', 'build/tokens'],
+    ['out/design-tokens', 'out/design-tokens'],
+  ])('TWO CONFIGS: a pre-existing config with output %s is kept, and the commented line carries %s — never dist/tokens', async (configured, rel) => {
+    const configText = `module.exports = { output: '${configured}' };\n`;
+    fs.writeFileSync(path.join(scratchDir, 'designerpunk.config.ts'), configText);
+    // `--re-scaffold --yes`: a config with no token tier is `partial`, which bare `init` refuses.
+    await initWithLoader([...ARGS, '--re-scaffold', '--yes'], (p) => import(p));
+    expect(fs.readFileSync(path.join(scratchDir, 'designerpunk.config.ts'), 'utf-8')).toBe(configText); // kept (createFileIfNotExists)
+    expect(gitignore()).toContain(`# ${rel}/`);
+    expect(gitignore()).not.toContain('dist/tokens');
+    expect(gitignore()).toBe(wrapRegion(GITIGNORE_MARKERS, gitignoreRegionContent(rel)));
+  });
+
+  test('an existing .gitignore: her lines stay in place, byte for byte, and the block follows', async () => {
+    const mine = 'node_modules/\n.env\n';
+    fs.writeFileSync(path.join(scratchDir, '.gitignore'), mine);
+    await initWithLoader(ARGS, readOutputFromFile);
+    expect(gitignore().startsWith(mine)).toBe(true);
+    expect(extractRegion(gitignore(), GITIGNORE_MARKERS).found).toBe(true);
+  });
+
+  test('RED: a config that will not load → init reports, writes NO block, records no entry, guesses no path', async () => {
+    const throwing: ConfigModuleLoader = () => {
+      throw new Error('boom');
+    };
+    const output = await initWithLoader(ARGS, throwing);
+    const reason = `Failed to load ${path.join(scratchDir, 'designerpunk.config.ts')}: boom`;
+    expect(output).toContain(gitignoreBlockConfigUnreadableMessage(reason));
+    expect(fs.existsSync(path.join(scratchDir, '.gitignore'))).toBe(false);
+    expect(readManifestFile(scratchDir).entries[GITIGNORE_REGION_ID]).toBeUndefined();
+  });
+});
+
+describe('CLI init — the starter specs into specs/ (Task 21.3; design.md C25, DD15)', () => {
+  let scratchDir: string;
+  const TEMPLATE_FILES = listStarterSpecFiles(PKG_ROOT);
+  const templateBytes = (rel: string) => fs.readFileSync(path.join(PKG_ROOT, STARTER_SPECS_SOURCE, rel));
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test('the package ships exactly two starter specs (the source the scaffold reads)', () => {
+    expect(starterSpecNames(TEMPLATE_FILES)).toEqual(['ci-needs', 'regrounding']);
+    expect(TEMPLATE_FILES.length).toBeGreaterThanOrEqual(2);
+  });
+
+  test('init scaffolds both into specs/<spec>/<file>, byte for byte, and prints the summary line', async () => {
+    const { output } = await runInitIn(scratchDir);
+    for (const rel of TEMPLATE_FILES) {
+      expect(fs.readFileSync(path.join(scratchDir, 'specs', rel)).equals(templateBytes(rel))).toBe(true);
+    }
+    const written = fs.readdirSync(path.join(scratchDir, 'specs')).sort();
+    expect(written).toEqual(['ci-needs', 'regrounding']);
+    expect(output).toContain(`✓ ${starterSpecsWrittenMessage(TEMPLATE_FILES.length, ['ci-needs', 'regrounding'])}`);
+  });
+
+  test('every scaffolded file is recorded origin "generated" with the hash of the bytes written', async () => {
+    await runInitIn(scratchDir);
+    const entries = readManifestFile(scratchDir).entries;
+    for (const rel of TEMPLATE_FILES) {
+      expect(entries[`specs/${rel}`]).toEqual({ hash: sha256(templateBytes(rel).toString('utf-8')), grain: 'file', origin: 'generated' });
+    }
+  });
+
+  test('--skip-agents still scaffolds them (the specs do not depend on the agent layer)', async () => {
+    await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents']);
+    expect(fs.existsSync(path.join(scratchDir, 'specs', TEMPLATE_FILES[0]))).toBe(true);
+  });
+
+  test('RED (collision): an existing path is kept byte-identical, reported with the catalog string, and not recorded; the rest are still written', async () => {
+    const first = TEMPLATE_FILES[0];
+    const mine = '# my own notes, not the starter\n';
+    fs.mkdirSync(path.join(scratchDir, 'specs', path.dirname(first)), { recursive: true });
+    fs.writeFileSync(path.join(scratchDir, 'specs', first), mine);
+    // `specs/` alone does not make the repo `partial` (no config, no token tier), so bare init proceeds.
+    const { output } = await runInitIn(scratchDir);
+    expect(fs.readFileSync(path.join(scratchDir, 'specs', first), 'utf-8')).toBe(mine);
+    expect(output).toContain(starterSpecCollisionMessage(`specs/${first}`));
+    expect(readManifestFile(scratchDir).entries[`specs/${first}`]).toBeUndefined();
+    for (const rel of TEMPLATE_FILES.slice(1)) {
+      expect(fs.existsSync(path.join(scratchDir, 'specs', rel))).toBe(true);
+    }
+    expect(output).toContain(`✓ ${starterSpecsWrittenMessage(TEMPLATE_FILES.length - 1, starterSpecNames(TEMPLATE_FILES.slice(1)))}`);
+  });
+
+  test('--re-scaffold lists a deleted starter spec in its preview and re-adds it; an edited sibling is left byte-identical', async () => {
+    await runInitIn(scratchDir);
+    const [gone, edited] = [TEMPLATE_FILES[0], TEMPLATE_FILES[1]];
+    fs.rmSync(path.join(scratchDir, 'specs', gone));
+    fs.appendFileSync(path.join(scratchDir, 'specs', edited), '\nmy edit\n');
+    const editedBefore = fs.readFileSync(path.join(scratchDir, 'specs', edited));
+    const { output } = await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents', '--re-scaffold', '--yes']);
+    expect(output).toContain(`- specs/${gone}`);
+    expect(output).not.toContain(`- specs/${edited}`);
+    expect(fs.readFileSync(path.join(scratchDir, 'specs', gone)).equals(templateBytes(gone))).toBe(true);
+    expect(fs.readFileSync(path.join(scratchDir, 'specs', edited)).equals(editedBefore)).toBe(true);
+    expect(output).toContain(starterSpecCollisionMessage(`specs/${edited}`));
+  });
+
+  test('a package without the starter-specs source: scaffoldStarterSpecs reports templatesFound false and writes nothing', () => {
+    const emptyPkg = createScratchDir();
+    try {
+      const r = scaffoldStarterSpecs(emptyPkg, scratchDir, new ManifestBuilder());
+      expect(r).toEqual({ written: [], collided: [], templatesFound: false });
+      expect(fs.existsSync(path.join(scratchDir, 'specs'))).toBe(false);
+    } finally {
+      fs.rmSync(emptyPkg, { recursive: true, force: true });
+    }
+  });
+});
+
+describe('CLI init — the personal note (Task 22.1; mechanism B; C26)', () => {
+  let scratchDir: string;
+  const TEMPLATE = fs.readFileSync(path.join(PKG_ROOT, PERSONAL_NOTE_TEMPLATE_REL), 'utf8');
+  const notePath = () => path.join(scratchDir, PERSONAL_NOTE_REL);
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test('init creates the note from the template; it prints the NAMING row (in its next steps) and NO creation row or warning', async () => {
+    const { output } = await runInitIn(scratchDir);
+    expect(fs.readFileSync(notePath(), 'utf8')).toBe(TEMPLATE);
+    expect(output).toContain(personalNoteNamingMessage());
+    expect(output).not.toContain(personalNoteCreatedMessage());
+    expect(output).not.toContain(personalNoteUnfilledMessage());
+  });
+
+  test('the note is local to one person: never recorded in the manifest', async () => {
+    await runInitIn(scratchDir);
+    const entries = readManifestFile(scratchDir).entries;
+    expect(Object.keys(entries).filter((k) => k.includes('.designerpunk/') || k.includes('personal-note'))).toEqual([]);
+  });
+
+  test('--re-scaffold never overwrites an existing note: a filled one is untouched and silent; an unfilled one gets the warning', async () => {
+    await runInitIn(scratchDir);
+    fs.writeFileSync(notePath(), 'My own words.\n');
+    let { output } = await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents', '--re-scaffold', '--yes']);
+    expect(fs.readFileSync(notePath(), 'utf8')).toBe('My own words.\n');
+    expect(output).not.toContain(personalNoteUnfilledMessage());
+    fs.writeFileSync(notePath(), TEMPLATE);
+    ({ output } = await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents', '--re-scaffold', '--yes']));
+    expect(fs.readFileSync(notePath(), 'utf8')).toBe(TEMPLATE);
+    expect(output).toContain(`⚠️  ${personalNoteUnfilledMessage()}`);
+  });
+});
+
+describe('CLI init — the C27 completion: notice first, next steps, restart row last (Task 22.2)', () => {
+  let scratchDir: string;
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+  const steps = (output: string) => output.split('\n').filter((l) => /^ {2}\d+\. /.test(l));
+
+  test('bare init prints the named-default notice FIRST, string-equal to the catalog, and the sequenced restart row LAST', async () => {
+    const { output } = await runInitIn(scratchDir, ['--name', 'Test', '--abbreviation', 'T']);
+    const notice = namedDefaultNoticeMessage(PROFILE.defaultTarget, PROFILE.targets);
+    expect(output.split('\n')[0]).toBe(notice);
+    expect(output.indexOf(notice)).toBeLessThan(output.indexOf('✓ Created'));
+    expect(output.trimEnd().endsWith(restartLineSequencedMessage())).toBe(true);
+    expect(output.indexOf(notice)).toBeLessThan(output.indexOf(restartLineSequencedMessage()));
+  });
+
+  test('NO notice with --target, and none under --skip-agents', async () => {
+    const withTarget = await runInitIn(scratchDir, [...BASE_ARGS, `--target=${PROFILE.defaultTarget}`]);
+    expect(withTarget.output).not.toContain('no --target given');
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+    const skipped = await runInitIn(scratchDir, [...BASE_ARGS, '--skip-agents']);
+    expect(skipped.output).not.toContain('no --target given');
+  });
+
+  test('the next steps are the catalog function\'s output for what init did, then hatch, naming and the restart row, in that order', async () => {
+    const { output } = await runInitIn(scratchDir, [...BASE_ARGS, `--target=${PROFILE.defaultTarget}`]);
+    const expected = initNextStepsMessage('Test', {
+      packageInstalledHere: false, // the scratch repo has no node_modules/@3fn/core: init ran from the package under test
+      jestConfigScaffolded: true,
+      starterSpecNames: ['ci-needs', 'regrounding'],
+      gitignoreBlockInPlace: false, // the production config loader cannot run under jest: the block is reported, not written
+      agentLayerEmitted: true,
+    });
+    const tail = `${expected}\n\n${cloneHatchMessage()}\n\n${personalNoteNamingMessage()}\n\n${restartLineSequencedMessage()}`;
+    expect(output.trimEnd().endsWith(tail)).toBe(true);
+    expect(steps(output).some((l) => l.includes('specs/ holds your starter specs (ci-needs, regrounding)'))).toBe(true);
+  });
+
+  test('a SKIP makes its line disappear: an existing jest.config.js is kept, reported truthfully, and the optional install-jest line is omitted', async () => {
+    fs.writeFileSync(path.join(scratchDir, 'jest.config.js'), 'module.exports = {};\n');
+    const { output } = await runInitIn(scratchDir, [...BASE_ARGS, `--target=${PROFILE.defaultTarget}`]);
+    expect(output).toContain(jestConfigCollisionMessage());
+    expect(output).not.toContain('Optional, to test your own components');
+    expect(fs.readFileSync(path.join(scratchDir, 'jest.config.js'), 'utf8')).toBe('module.exports = {};\n');
+  });
+
+  test('a loader that fails: no .gitignore block, and the next steps do not tell her to commit one', async () => {
+    const { output } = await runInitIn(scratchDir, [...BASE_ARGS, `--target=${PROFILE.defaultTarget}`]);
+    expect(fs.existsSync(path.join(scratchDir, '.gitignore'))).toBe(false);
+    expect(steps(output).some((l) => l.includes('commit .gitignore'))).toBe(false);
+  });
+});
+
+describe('CLI init — the src/components/README.md it writes (Task 22.2 follow-up; Leonardo\'s 19.5 review, the "install doc" naming)', () => {
+  let scratchDir: string;
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+  });
+  afterEach(() => {
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  test('it names the declared-name rule and points at the install guide\'s "9. Ownership", at the path the package ships it', async () => {
+    await runInitIn(scratchDir);
+    const readme = fs.readFileSync(path.join(scratchDir, 'src/components/README.md'), 'utf8').replace(/\s+/g, ' ');
+    expect(readme).toContain("with the same declared name as one of DesignerPunk's (the `component:` field of its `contracts.yaml`) wins on that name (your fork)");
+    expect(readme).toContain('See the install guide\'s "9. Ownership" section (`docs/consumer/INSTALL.md` in the `@3fn/core` package) for the merge model.');
+    expect(readme).not.toContain('install doc');
+    expect(readme).not.toContain('Your first component');
+  });
+
+  test('TIED to the guide: the heading it quotes exists verbatim in docs/consumer/INSTALL.md (a heading change goes red here)', async () => {
+    await runInitIn(scratchDir);
+    const readme = fs.readFileSync(path.join(scratchDir, 'src/components/README.md'), 'utf8').replace(/\s+/g, ' ');
+    const quoted = /install guide's "([^"]+)" section \(`([^`]+)`/.exec(readme);
+    expect(quoted).not.toBeNull();
+    const [, heading, installPath] = quoted!;
+    const install = fs.readFileSync(path.join(PKG_ROOT, installPath), 'utf8');
+    expect(install.split('\n')).toContain(`## ${heading}`);
+  });
+});
+

@@ -66,7 +66,7 @@ export function missingTokenMessage(a: {
     `components now expect token '${a.name}' — ${a.declaredUse} (used by ${a.components.join(', ')}). ` +
     `Add it to your set in ${a.tierPath}. Your tokens are yours; DesignerPunk never adds to them. ` +
     `DesignerPunk's value, for reference: ${a.value} ('${a.dpToken}' in DesignerPunk's language). ` +
-    `See: install doc § "When sync reports a missing token".`
+    `See: install guide § "When sync reports a missing token".`
   );
 }
 

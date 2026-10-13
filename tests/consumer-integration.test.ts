@@ -261,6 +261,15 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       timeout: 30_000,
     });
     expect(output).toContain('TestProduct');
+    // Task 22.2 (C27 completion): bare `init` names the default it set up FIRST, and its next steps name the
+    // `.gitignore` block (written here, with the real config loader) and the `specs/` scaffold.
+    expect(output.split('\n')[0]).toMatch(/^no --target given — set up for .+ \(the default\)\./);
+    expect(output).toContain('specs/ holds your starter specs (ci-needs, regrounding)');
+    // Review item 2: the numbered list begins at `generate` (install → init → generate), with no bare `npm install`, and the jest install is an OPTIONAL line after it.
+    expect(output).not.toMatch(/^ {2}\d+\. npm install/m);
+    expect(output).toMatch(/^ {2}1\. npx designerpunk generate$/m);
+    expect(output).toContain('Optional, to test your own components: npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @types/node');
+    expect(output).toContain("commit .gitignore with the rest: DesignerPunk's block in it ignores .designerpunk/ and token-index/");
 
     // Verify key files exist
     expect(fs.existsSync(path.join(tempDir, 'designerpunk.config.ts'))).toBe(true);
@@ -352,6 +361,110 @@ describe('Consumer Integration (Spec 106 R8)', () => {
   }, TIMEOUT);
 
   /**
+   * Spec 123 Task 20.3 (design.md C24; tasks.md Task 20 criterion 4, Leonardo A8): **a fresh clone of a
+   * policy-applied repo runs joining steps 2-4 successfully.** The fixture is BUILT AT TEST TIME and nothing is
+   * committed (a born repo under `src/` would be type-checked by full `tsc`, and would rot against every later
+   * `init` change; R2, Lina RC-4):
+   *   1. a founder repo: `npm init`, `npm install` the PACKED tarball (saved, so the clone's `npm install` has a
+   *      dependency to restore), a `.gitignore` that already ignores `node_modules/`, then `init` (which appends the
+   *      DesignerPunk block: `token-index/` and `.designerpunk/` ignored) and `generate` (platform output is
+   *      committed by default);
+   *   2. the policy applied: `git add -A && git commit`, so exactly the repo state the commit policy names is in git;
+   *   3. `git clone` the founder repo, then the joining steps 2-4: `npm install` (the packed tarball again) and
+   *      `npx designerpunk generate`, which must succeed AND create `.designerpunk/personal-note.local.md`.
+   * SCOPE: file-provable completeness, not harness session load. Whether CC's `@`-import of the (gitignored,
+   * freshly created) note loads on a fresh clone is unmeasured until U5 (C8(c)).
+   */
+  describe('Spec 123 Task 20.3 — a fresh clone of a policy-applied repo runs joining steps 2-4 (C24; A8)', () => {
+    const GIT = ['-c', 'user.name=fixture', '-c', 'user.email=fixture@example.invalid'];
+    let parent: string;
+    let founder: string;
+    let clone: string;
+    let cloneGenerateOutput = '';
+
+    const sh = (cmd: string, cwd: string, timeout = 120_000): string => execSync(cmd, { cwd, encoding: 'utf-8', stdio: 'pipe', timeout });
+    const tracked = (dir: string): string[] => sh('git ls-files', dir).split('\n').filter(Boolean);
+
+    beforeAll(() => {
+      // Siblings under one parent, so the saved `file:` dependency's relative path resolves from the clone too.
+      parent = realDir(fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-clone-')));
+      founder = path.join(parent, 'founder');
+      clone = path.join(parent, 'clone');
+      fs.mkdirSync(founder);
+      sh('npm init -y', founder);
+      sh(`npm install ${tarballPath}`, founder, 120_000); // saved: package.json + package-lock.json
+      fs.writeFileSync(path.join(founder, '.gitignore'), 'node_modules/\n'); // the founder's own line; init appends its block
+      sh('git init -q', founder);
+      sh('npx designerpunk init --name Fresh --abbreviation FR', founder, 60_000);
+      sh('npx designerpunk generate', founder, 120_000);
+      sh(`git add -A && git ${GIT.join(' ')} commit -q -m "founder: policy applied"`, founder);
+      sh(`git clone -q ${founder} ${clone}`, parent);
+      sh('npm install', clone, 120_000); // joining step 2 (the packed tarball, from the committed lockfile)
+      cloneGenerateOutput = sh('npx designerpunk generate', clone, 120_000); // joining step 3
+    }, 480_000);
+
+    afterAll(() => {
+      if (parent) fs.rmSync(parent, { recursive: true, force: true });
+    });
+
+    it('the founder repo holds exactly the repo state the commit policy names — and none of what it says not to commit', () => {
+      const files = tracked(founder);
+      for (const must of [
+        'designerpunk.config.ts',
+        'designerpunk.manifest.json',
+        'package.json',
+        'package-lock.json',
+        '.gitignore',
+        '.designerpunkignore',
+        'src/tokens/index.ts',
+        'CLAUDE.md',
+        'specs/ci-needs/needs.md',
+        'dist/tokens/DesignTokens.web.css', // platform output: committed by default (DD1)
+      ]) {
+        expect({ must, tracked: files.includes(must) }).toEqual({ must, tracked: true });
+      }
+      expect(files.some((f) => f.startsWith('.claude/agents/'))).toBe(true); // generated agent artifacts are committed
+      for (const never of ['token-index/', '.designerpunk/', 'node_modules/']) {
+        expect({ never, tracked: files.filter((f) => f.startsWith(never)) }).toEqual({ never, tracked: [] });
+      }
+    });
+
+    it('the fresh clone starts without what the policy says is regenerated or local', () => {
+      // `generate` below has already run in the clone; the committed history is what proves the starting point
+      expect(tracked(clone).some((f) => f.startsWith('token-index/') || f.startsWith('.designerpunk/'))).toBe(false);
+    });
+
+    it('joining step 2: `npm install` restored the packed package in the clone', () => {
+      expect(fs.existsSync(path.join(clone, 'node_modules', '@3fn', 'core', 'package.json'))).toBe(true);
+    });
+
+    it('joining step 3: `generate` succeeded in the clone and regenerated what the policy says is regenerated', () => {
+      expect(cloneGenerateOutput).toContain('✅');
+      expect(fs.existsSync(path.join(clone, 'token-index', 'components.yaml'))).toBe(true);
+      expect(fs.statSync(path.join(clone, 'dist', 'tokens', 'DesignTokens.web.css')).size).toBeGreaterThan(0);
+    });
+
+    it('joining step 4: `.designerpunk/personal-note.local.md` was CREATED by `generate`, from the template, and is not tracked', () => {
+      const notePath = path.join(clone, '.designerpunk', 'personal-note.local.md');
+      expect(fs.existsSync(notePath)).toBe(true);
+      const template = fs.readFileSync(path.join(clone, 'node_modules', '@3fn', 'core', 'src', 'cli', 'templates', 'personal-note.template.md'), 'utf-8');
+      expect(fs.readFileSync(notePath, 'utf-8')).toBe(template);
+      expect(cloneGenerateOutput).toContain('created .designerpunk/personal-note.local.md from the template');
+      // the founder's block ignores `.designerpunk/`, so no unignored-directory row, and nothing shows as untracked
+      expect(cloneGenerateOutput).not.toContain('is not ignored by git in this repo');
+      expect(sh('git status --porcelain', clone).split('\n').filter((l) => l.includes('.designerpunk') || l.includes('token-index'))).toEqual([]);
+    });
+
+    it('the clone\'s `.gitignore` carries the founder\'s DesignerPunk block (init wrote it, the policy committed it)', () => {
+      const text = fs.readFileSync(path.join(clone, '.gitignore'), 'utf-8');
+      expect(text).toContain('# designerpunk:managed:begin');
+      expect(text).toContain('token-index/');
+      expect(text).toContain('.designerpunk/');
+      expect(text.startsWith('node_modules/\n')).toBe(true); // the founder's own line is where it was
+    });
+  });
+
+  /**
    * The shipped steering folder is EXACTLY the eight identity docs — never Peter's personal note
    * (Spec 123 C5 / Req 12.1a). Moved here from the retired 119-A relocation-gate leg A7
    * (.kiro/issues/2026-10-01-relocation-integrity-gate-vs-123-install-shape.md, residual R2): before the move, no
@@ -361,7 +474,7 @@ describe('Consumer Integration (Spec 106 R8)', () => {
    *
    * The package is read as INSTALLED (`node_modules/@3fn/core`), never from the repo. The expected eight are
    * DERIVED from the installed package's own locked always-set (`dist/consumer-canonical/shared/always-set.yaml`)
-   * less the one template member (`personal-note`, which ships as `templates/personal-note.template.md` and a
+   * less the one template member (`personal-note`, which ships as `src/cli/templates/personal-note.template.md` (FK-1 (b)) and a
    * consumer-owned `.designerpunk/personal-note.local.md` — Task 22, U3 — never under `.kiro/steering/`). The count
    * is pinned at 8 so an emptied or mis-parsed list cannot make the comparison vacuous.
    */
@@ -1843,7 +1956,7 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       }
     });
 
-    it('CC: the CLAUDE.md managed region imports each identity member, and every import resolves except the (absent) personal note', () => {
+    it('CC: the CLAUDE.md managed region imports each identity member, and every import resolves — the personal note now exists after init (Task 22.1, mechanism B)', () => {
       const dir = consumers['cc'];
       expect(dir).toBeDefined();
       const text = readText(dir, 'CLAUDE.md');
@@ -1855,7 +1968,7 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       expect(imports).toContain(PERSONAL_NOTE);
       const identityImports = imports.filter((i) => i !== PERSONAL_NOTE);
       expect(identityImports.length).toBeGreaterThan(0);
-      for (const i of identityImports) expect({ i, exists: fs.existsSync(path.join(dir, i)) }).toEqual({ i, exists: true });
+      for (const i of imports) expect({ i, exists: fs.existsSync(path.join(dir, i)) }).toEqual({ i, exists: true });
       // every shipped identity member is imported — none dropped
       expect(identityImports.sort()).toEqual(listFiles(dir, '.claude/identity').sort());
     });
@@ -1904,7 +2017,7 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       }
     });
 
-    it('Kiro: every agent resource resolves in the packed install — node_modules/@3fn/core paths, .kiro/steering/designerpunk-*, skills, prompts, knowledge bases — and the personal note is the one named-but-absent resource', () => {
+    it('Kiro: every agent resource resolves in the packed install — node_modules/@3fn/core paths, .kiro/steering/designerpunk-*, skills, prompts, knowledge bases — and the personal note resolves too: it exists after init (Task 22.1, mechanism B)', () => {
       const dir = consumers['kiro'];
       expect(dir).toBeDefined();
       expect(listFiles(dir, '.kiro/steering').filter((f) => /^\.kiro\/steering\/designerpunk-.*\.md$/.test(f)).length).toBeGreaterThan(0);
@@ -1921,10 +2034,7 @@ describe('Consumer Integration (Spec 106 R8)', () => {
         for (const r of agent.resources) {
           const uri = typeof r === 'string' ? r : r.source;
           const rel = uri.replace(/^(file|skill):\/\/(\.\/)?/, '');
-          if (rel === PERSONAL_NOTE) {
-            personalNoteNamed++;
-            continue;
-          }
+          if (rel === PERSONAL_NOTE) personalNoteNamed++;
           expect({ f, uri, exists: fs.existsSync(path.join(dir, rel)) }).toEqual({ f, uri, exists: true });
           if (typeof r === 'string' && rel.startsWith('node_modules/@3fn/core/')) pkgResources.add(rel);
           if (typeof r !== 'string' && r.type === 'knowledgeBase') knowledgeSources.add(rel);
@@ -1936,9 +2046,151 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       expect([...knowledgeSources].sort()).toEqual(['src/components', 'src/tokens']);
     });
 
-    it('the personal note is ABSENT in both installs until U3 (Task 22; C19 degradation) — asserted, never skipped', () => {
+    // -----------------------------------------------------------------------------------------------
+    // Spec 123 Task 22.3 — the scaffolded `product/` tree's VALIDITY GUARD, from the PACKED install, in the
+    // born repo immediately after `init` and BEFORE `generate` (so no `token-index/` exists). It binds (design
+    // C27 erratum): the product index status `healthy` (zero warnings), zero `_componentGaps`, gap detection LIVE
+    // (a non-empty catalog), the example screen indexed, and the template it names exists. The same bar runs
+    // in-process, over the real indexer, in `src/cli/__tests__/productScaffold.test.ts`.
+    // -----------------------------------------------------------------------------------------------
+    /** Start the packed Product MCP in `cwd` (optionally with `PRODUCT_DIR`), run `fn(call)`, always kill it. */
+    async function withProductMcp<T>(cwd: string, env: Record<string, string>, fn: (call: (tool: string, args?: object) => Promise<any>) => Promise<T>): Promise<T> {
+      const child = spawn('node', [path.join(pkgIn(cwd), 'dist', 'mcp', 'product-mcp.js')], {
+        cwd,
+        stdio: ['pipe', 'pipe', 'pipe'],
+        env: { ...process.env, ...env, NODE_ENV: 'test' },
+      });
+      let next = 1;
+      const pending = new Map<number, (v: any) => void>();
+      let buffer = '';
+      child.stdout!.on('data', (d: Buffer) => {
+        buffer += d.toString();
+        const lines = buffer.split('\n');
+        buffer = lines.pop() ?? '';
+        for (const line of lines) {
+          if (!line.trim()) continue;
+          try {
+            const msg = JSON.parse(line);
+            pending.get(msg.id)?.(msg);
+          } catch { /* not a JSON-RPC line */ }
+        }
+      });
+      const rpc = (method: string, params: object): Promise<any> =>
+        new Promise((resolve, reject) => {
+          const id = next++;
+          const timer = setTimeout(() => reject(new Error(`product MCP timeout on ${method}`)), 15_000);
+          pending.set(id, (m) => { clearTimeout(timer); resolve(m); });
+          child.stdin!.write(JSON.stringify({ jsonrpc: '2.0', id, method, params }) + '\n');
+        });
+      try {
+        await new Promise<void>((resolve, reject) => {
+          const timer = setTimeout(() => reject(new Error('product MCP did not start')), 20_000);
+          child.stderr!.on('data', (d: Buffer) => { if (d.toString().includes('running on stdio')) { clearTimeout(timer); resolve(); } });
+          child.on('error', (e) => { clearTimeout(timer); reject(e); });
+        });
+        await rpc('initialize', { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'test', version: '1.0' } });
+        return await fn(async (tool, args = {}) => {
+          const res = await rpc('tools/call', { name: tool, arguments: args });
+          return JSON.parse(res.result.content[0].text);
+        });
+      } finally {
+        child.kill();
+      }
+    }
+
+    it('PRODUCT GUARD: the scaffolded product/ tree, from the packed install after init and before generate, is healthy with zero gaps, live gap detection, and its template', async () => {
+      const dir = consumers['cc'];
+      for (const rel of ['product/overview.yaml', 'product/experience-map/pages/example-home.yaml', 'product/templates/home-layout.yaml']) {
+        expect({ rel, exists: fs.existsSync(path.join(dir, rel)) }).toEqual({ rel, exists: true });
+      }
+      expect(fs.existsSync(path.join(dir, 'token-index'))).toBe(false); // BEFORE generate
+      expect(readText(dir, 'product/overview.yaml')).toContain('name: "Packed"'); // the substitution ran
+      expect(readText(dir, 'product/overview.yaml')).not.toContain('__PRODUCT_NAME__');
+
+      await withProductMcp(dir, {}, async (call) => {
+        const health = await call('get_product_health');
+        expect(health.status).toBe('healthy');
+        expect(health.warnings).toEqual([]);
+        expect(health.gapCounts).toEqual({ totalGaps: 0, screensWithGaps: 0 });
+        expect(health.catalogSize).toBeGreaterThan(0); // gap detection is live in the packed born repo
+        expect(health.counts.screens).toBe(1);
+        expect(health.counts.templates).toBe(1);
+        const spec = await call('get_screen_spec', { name: 'example-home' });
+        expect(spec.name).toBe('example-home');
+        expect(spec._componentGaps ?? []).toEqual([]);
+        expect(spec.template).toBe('home-layout');
+        expect(spec.status).toMatchObject({ ios: 'not-started', android: 'not-started' });
+        const overview = await call('get_product_overview');
+        expect(JSON.stringify(overview)).toContain('Packed');
+      });
+    }, 90_000);
+
+    it('PRODUCT GUARD, bite (1) in the packed install: a misspelled component name → a `not-found` gap (gap detection is live)', async () => {
+      const dir = consumers['cc'];
+      const copy = fs.mkdtempSync(path.join(os.tmpdir(), 'product-bite-'));
+      try {
+        fs.cpSync(path.join(dir, 'product'), copy, { recursive: true });
+        const page = path.join(copy, 'experience-map', 'pages', 'example-home.yaml');
+        fs.writeFileSync(page, fs.readFileSync(page, 'utf-8').replace('component: Button-CTA', 'component: Button-CTAA'));
+        await withProductMcp(dir, { PRODUCT_DIR: copy }, async (call) => {
+          const spec = await call('get_screen_spec', { name: 'example-home' });
+          expect(spec._componentGaps).toEqual(expect.arrayContaining([expect.objectContaining({ component: 'Button-CTAA', issue: 'not-found' })]));
+          const health = await call('get_product_health');
+          expect(health.gapCounts.totalGaps).toBeGreaterThan(0);
+        });
+      } finally {
+        fs.rmSync(copy, { recursive: true, force: true });
+      }
+    }, 90_000);
+
+    it('PRODUCT GUARD, bite (2) in the packed install: a missing referenced template is invisible to the indexer — the guard\'s own existence check catches it', async () => {
+      const dir = consumers['cc'];
+      const copy = fs.mkdtempSync(path.join(os.tmpdir(), 'product-bite2-'));
+      try {
+        fs.cpSync(path.join(dir, 'product'), copy, { recursive: true });
+        fs.rmSync(path.join(copy, 'templates', 'home-layout.yaml'));
+        await withProductMcp(dir, { PRODUCT_DIR: copy }, async (call) => {
+          const health = await call('get_product_health');
+          expect(health.status).toBe('healthy'); // the indexer does not resolve template names
+          expect(health.counts.templates).toBe(0);
+          const spec = await call('get_screen_spec', { name: 'example-home' });
+          const names = new Set<string>(((await call('list_product_templates')) as Array<{ name: string }>).map((t) => t.name));
+          // the guard's own limb: the screen names a template that the index does not hold
+          expect(spec.template).toBe('home-layout');
+          expect(names.has(spec.template)).toBe(false);
+        });
+      } finally {
+        fs.rmSync(copy, { recursive: true, force: true });
+      }
+    }, 90_000);
+
+    it('the personal note is PRESENT in both installs after init, with the template\'s content (Task 22.1, mechanism B; C19 resolved)', () => {
+      const template = fs.readFileSync(path.join(PKG_ROOT, 'src/cli/templates/personal-note.template.md'), 'utf-8');
       for (const t of TARGETS) {
-        expect({ t, exists: fs.existsSync(path.join(consumers[t], PERSONAL_NOTE)) }).toEqual({ t, exists: false });
+        const note = path.join(consumers[t], PERSONAL_NOTE);
+        expect({ t, exists: fs.existsSync(note) }).toEqual({ t, exists: true });
+        expect({ t, same: fs.readFileSync(note, 'utf-8') === template }).toEqual({ t, same: true });
+      }
+    });
+
+    it('the edited example of Peter\'s note is emitted NOWHERE: zero `personal-note.example` in every emitted file (Task 22, C8; instruments row 2.5)', () => {
+      for (const t of TARGETS) {
+        const dir = consumers[t];
+        const files = [...emittedAgentLayer(t, dir), ...mcpFiles(t)];
+        expect(files.length).toBeGreaterThan(20);
+        const hits = files.filter((f) => readText(dir, f).includes('personal-note.example'));
+        expect({ t, hits }).toEqual({ t, hits: [] });
+      }
+    });
+
+    // FLIPPED from `it.failing` (2026-10-12, Peter approved the example): the template names the example at its installed
+    // path, and the existing `src/cli/templates/` `files[]` entry ships it, so it exists in the packed install.
+    it('the example the template names exists in the packed install, byte-equal to the source: node_modules/@3fn/core/src/cli/templates/personal-note.example.md', () => {
+      const source = fs.readFileSync(path.join(PKG_ROOT, 'src/cli/templates/personal-note.example.md'));
+      for (const t of TARGETS) {
+        const installed = path.join(consumers[t], 'node_modules/@3fn/core/src/cli/templates/personal-note.example.md');
+        expect({ t, exists: fs.existsSync(installed) }).toEqual({ t, exists: true });
+        expect({ t, same: fs.readFileSync(installed).equals(source) }).toEqual({ t, same: true });
       }
     });
 
