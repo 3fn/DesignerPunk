@@ -243,7 +243,7 @@ One line per owner, appended when sent: `<date> — <owner> — IDs <…> — se
 - **It reviews prunes, not the corpus.** A consumer gap that 125-B did not cause is out of scope, except where it sits on a pruned site (F-P2's bare-number example), and it is labelled as such where it appears.
 - **"No consumer loss" is the author's reading**, against the stated yardstick. No consumer-side probe was run. The U5 re-run of the reference-corpus probe (Req 26.7) is the only consumer-side evidence 123 will produce.
 - **The path sweep is lexical.** It finds `src/` strings matched by one regex. A path written another way, such as a relative link (`../src/...`) caught only by its `src/` tail, or prose naming a file without its directory, is either caught incidentally or missed. Paths under other unshipped roots (for example `scripts/`, `.kiro/hooks/`) are out of D-T-A6's scope and were not swept.
-- **Owner attribution is a proposal** until the orchestrator confirms it.
+- **Owner attribution was a proposal**, confirmed at delivery (§ 5 "Delivery": no owner disputed a row).
 - **The author is a party.** Seven of the 25 findings are in docs I own, and I wrote the 125-B prune ballots this record reviews. A reader should treat H1 and H2's "no consumer loss" accordingly. Stacy's claims pass is the independent read.
 
 ## Counter-argument, and what survives

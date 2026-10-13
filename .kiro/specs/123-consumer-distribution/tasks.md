@@ -1462,7 +1462,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 23.2 Banners on the matched set; owners notified
   - [x] 23.3 Registration decision; the ARMING notice; the rows-list-the-guard evidence
 
-- [ ] 24. U1b backward check, the release recipe (B-U4), and the changelog step (**U4 gating parent**)
+- [x] 24. U1b backward check, the release recipe (B-U4), and the changelog step (**U4 gating parent**)
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Thurgood (Opus)
   **Traces**: Req 21.1–21.3, 23.7 · design C29, DD13, DD16
@@ -1476,7 +1476,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   - [x] 24.1 U1b check (enumerated denominator; the D-T-A6 residual); route findings
   - [x] 24.2 B-U4 record-first; ratified edits
-  - [ ] 24.3 Open the U4 PR
+  - [x] 24.3 Open the U4 PR
 
 ### UNIT 5 — Validation & closeout
 
