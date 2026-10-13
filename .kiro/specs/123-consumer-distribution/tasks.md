@@ -1474,7 +1474,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `.kiro/specs/123-consumer-distribution/validation/u1b-backward-check.md`, `.kiro/docs/ballots/<date>-123-b-u4-release-recipe.md`, `governance/release-management-system.md`
 
-  - [ ] 24.1 U1b check (enumerated denominator; the D-T-A6 residual); route findings
+  - [x] 24.1 U1b check (enumerated denominator; the D-T-A6 residual); route findings
   - [ ] 24.2 B-U4 record-first; ratified edits
   - [ ] 24.3 Open the U4 PR
 
