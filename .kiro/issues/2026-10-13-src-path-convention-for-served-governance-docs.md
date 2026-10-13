@@ -1,0 +1,12 @@
+# Charter: one `src/`-path sentence and one path-labeling convention for served governance docs
+
+**Date**: 2026-10-13 · **Ruled**: Peter, 2026-10-13 (record `.kiro/specs/123-consumer-distribution/completion/u4-rulings-2026-10-13.md` item 7-class) · **Owner**: **Lina** (the sentence's home is the consumer always-layer or the docs-MCP preface — generator / docs-MCP work; the convention consult spans Lina, Ada, Thurgood) · **Trigger**: before ANY owner edits a D-T-A6 finding (Ada holds D-9, D-10, the not-shipped lines of D-11, D-12–D-14 on this; Lina's F-P2 does not wait); at Lina's next docs/generator session.
+
+## The class of problem
+Served `governance/` docs name `src/` paths that exist in DesignerPunk's repository but not in the published package (97 mentions / 67 unique paths / 19 docs at `8007105fa`; a further 43 mentions name paths that exist nowhere). A consumer's agent reading from `node_modules/@3fn/core/governance` takes them as paths in its own install. Per-line relabeling (33 lines in Rosetta-System-Architecture alone) is churn that decays on the next edit. Source: `.kiro/specs/123-consumer-distribution/validation/u1b-backward-check.md` § 4 and § 5 (Spec 123 Task 24.1, Ada's D-T-A6 residual).
+
+## The fix at the layer where the gap lives
+1. **One ruled consumer-facing sentence**, delivered once to every consumer reader: `src/` paths in these docs name DesignerPunk's repository, not your package. Home: the consumer always-layer rendering or the docs MCP's served preface (Lina decides which, with Thurgood for the docs-MCP side).
+2. **One path-labeling convention**, settled across the three owners before any of them edits (e.g. a fixed "repo path:" label or a repository-link form for paths not in the package), so Ada, Lina and Thurgood do not invent three. Optionally the backward check's path scan becomes a standing guard.
+
+**Residuals (accepted at ruling)**: the sentence teaches readers to discount the 112 paths that do resolve; where the path itself is the guidance (e.g. `src/validators/ModeParity.ts`, D-14), the sentence fixes the signal, not the missing content — shipping those files was considered and NOT recommended (conflicts with U1's `files[]` floor). Paths that exist nowhere are defects for every reader and are fixed by their owners regardless of this convention.
