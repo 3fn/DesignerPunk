@@ -50,20 +50,20 @@ import { SectionOutline } from '../models/DocumentSummary.js';
  * // ]
  * ```
  */
-export function extractHeadingStructure(content: string): SectionOutline[] {
-  const lines = content.split('\n');
-  const outline: SectionOutline[] = [];
-  let currentH2: SectionOutline | null = null;
-  // Open fence, if any: its character and length (CommonMark: ``` or ~~~, ≥ 3, up to 3 spaces
-  // of indentation; closed by the same character, at least as long, with nothing after it).
+/**
+ * Yield the lines of `content` that lie OUTSIDE fenced code blocks (``` or ~~~).
+ * CommonMark fence rules: an opening fence is ≥ 3 backticks or tildes with up to 3 spaces of
+ * indentation (a backtick fence's info string may not contain backticks); it closes on a line of the
+ * same character, at least as long, with nothing after it; an unclosed fence runs to the end.
+ */
+function linesOutsideFences(content: string): string[] {
+  const out: string[] = [];
   let fence: { char: string; len: number } | null = null;
-  
-  for (const line of lines) {
+  for (const line of content.split('\n')) {
     const fenceMatch = /^ {0,3}(`{3,}|~{3,})(.*)$/.exec(line);
     if (fenceMatch) {
       const marker = fenceMatch[1];
       if (fence === null) {
-        // A backtick fence's info string may not contain backticks (CommonMark); otherwise it opens.
         if (!(marker[0] === '`' && fenceMatch[2].includes('`'))) {
           fence = { char: marker[0], len: marker.length };
         }
@@ -74,8 +74,16 @@ export function extractHeadingStructure(content: string): SectionOutline[] {
       }
       continue;
     }
-    if (fence !== null) continue;
+    if (fence === null) out.push(line);
+  }
+  return out;
+}
 
+export function extractHeadingStructure(content: string): SectionOutline[] {
+  const outline: SectionOutline[] = [];
+  let currentH2: SectionOutline | null = null;
+
+  for (const line of linesOutsideFences(content)) {
     // Match H2 headings (## Heading)
     const h2Match = /^##\s+(.+)$/.exec(line);
     if (h2Match) {
@@ -96,4 +104,34 @@ export function extractHeadingStructure(content: string): SectionOutline[] {
   }
   
   return outline;
+}
+
+/**
+ * The deep-heading field carried on indexed document metadata (indexer fix 2, 2026-10-13).
+ * H3 + H4 heading names, in document order, outside fenced code blocks. find_docs reads them ONLY
+ * through the co-occurrence gate (QueryEngine `selectDeepHeading`): per doc, the single best deep
+ * heading counts, and only when it holds ≥ max(2, min(3, salient query tokens)) of the query's
+ * salient tokens. Declared here (not on models/DocumentMetadata) to keep the change inside the
+ * fix's granted paths; additive and optional.
+ */
+export interface WithDeepSections {
+  deepSections?: string[];
+}
+
+/**
+ * Extract the DEEP headings — H3 (`###`) and H4 (`####`) — in document order, fence-aware.
+ *
+ * Indexer fix 2 (2026-10-13, .kiro/issues/2026-10-13-find-docs-indexer-defects-from-stage1.md):
+ * find_docs matches these only through the co-occurrence gate in QueryEngine (`selectDeepHeading`),
+ * never as a plain field — see discovery-confidence-rubric.md, amendment "deep headings through a
+ * co-occurrence gate". Unlike `extractHeadingStructure`, an H3 before any H2 is kept (it is still
+ * a heading of the doc).
+ */
+export function extractDeepHeadings(content: string): string[] {
+  const out: string[] = [];
+  for (const line of linesOutsideFences(content)) {
+    const m = /^#{3,4}\s+(.+)$/.exec(line);
+    if (m) out.push(m[1].trim());
+  }
+  return out;
 }

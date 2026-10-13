@@ -5,7 +5,7 @@
 **Owner**: Thurgood. **Independent check**: orchestrator (Thurgood's declared conflict: he owns the matcher and most affected docs; the fresh blind set is the independent measure)
 **Branch**: `fix/find-docs-indexer-h3-fence-ios`
 **Pre-registration commit (1)**: `3db79d9fd`. It holds the fresh raw answers, the fresh fixture (30 positives / 8 strict-none negatives; every key reviewed by the orchestrator, none disputed), the sibling runner `scripts/discovery-indexer-fix-run.ts`, and the pure compare module `mcp-server/src/discovery-dry-run/fix-compare.ts` with tests. No fix code.
-**Status**: IN PROGRESS. Lines 1–2 are recorded below; lines 3–4 are pending.
+**Status**: IN PROGRESS. Lines 1–3 are recorded below; line 4 is pending.
 
 ---
 
@@ -62,7 +62,38 @@ Every line after `shipped` is run with `--compare` against the shipped JSON. The
 
 ## 3. Line `headings` — + deep headings via the co-occurrence gate
 
-_Pending (the fix-1 commit comes first)._
+- **Change**:
+  - `mcp-server/src/indexer/heading-parser.ts`: `extractDeepHeadings`, H3 + H4, fence-aware via the shared `linesOutsideFences`.
+  - `deepSections` is declared as `WithDeepSections` in `heading-parser.ts` (an additive, optional field), not on `models/DocumentMetadata`. That keeps the change inside the grant paths.
+  - `mcp-server/src/indexer/DocumentIndexer.ts`: populates `deepSections`.
+  - `mcp-server/src/query/QueryEngine.ts`: `deepHeadingGateK`, `selectDeepHeading`, and the high-signal class `subsections`, last in the high-signal order.
+  - Tier derivation is untouched. Rubric amendment: `.kiro/specs/121-claude-code-portability/discovery-confidence-rubric.md`, "deep headings (H3/H4) through a co-occurrence gate".
+- **Tests**:
+  - `src/query/__tests__/find-docs-deep-headings.test.ts`: gate math at 1/2/3/4/7 tokens, single best heading per doc, `subsections:` evidence, tier, no re-credit.
+  - `src/query/__tests__/find-docs-deep-headings.corpus.test.ts`: live-corpus guard for KE-06, DA-06, SP-05 and KE-03 at rank ≤ 2, and the oracle's "base variant inheritance patterns" at rank 1. A guard, not a tuning target.
+  - `src/indexer/__tests__/heading-parser.test.ts`: `extractDeepHeadings`.
+  - Full mcp-server suite (`npx jest --runInBand`): 42 suites, 699/699 passed. tsc clean.
+- **Command**: `npx tsx scripts/discovery-indexer-fix-run.ts --line headings --compare <scratch>/fix/line-shipped.json`. The code is uncommitted on top of fix 1's commit `07df14e59`, so the runner's HEAD line reads `07df14e59`. The fix-2 commit SHA is recorded when it is made.
+- **Oracle**: 83 / 0 / 0; rank-1-strong 77. Unchanged; the gate's oracle-only design prediction held.
+
+**Cumulative, shipped → headings:**
+- **Fresh positives**: R@1 17 → 20, R@2 19 → 21. **Gained FST-04 and FST-12; lost none; net +2.**
+  - All rank moves: FSP-N2 16→15, FKE-03 5→3, **FKE-07 5→14**, FDA-04 6→3, FDA-08 2→1, FST-04 3→1, **FST-08 3→8**, FST-12 absent→1.
+  - FKE-07 and FST-08 are fix 1's losses (§ 2); fix 2 does not recover them, because their answer headings sit inside a fence.
+- **Fresh negatives**: correct 7/8 (FSP-09 stays confident-wrong, as at shipped); **no new confident-wrong**; none resolved.
+- **Q2 (SPENT, descriptive only)**: R@1 20 → 25, R@2 25 → 29.
+  - Gained SP-08, DA-09, ST-02, ST-04, ST-09; lost KE-11 (rank 1→3); net +4; no new confident-wrong.
+
+**Delta, fence → headings (fix 2 alone):**
+- **Fresh rank moves**: FDA-08 2→1, FST-04 3→1, FST-12 absent→1.
+- **Fresh tier moves** (same rank, now `strong`): FKE-01, FKE-06, FST-05.
+- **Q2 rank moves (descriptive)**: SP-08 3→1, KE-07 2→1, KE-08 3→1, **KE-11 1→3**, DA-07 17→3, DA-09 5→1, ST-02 7→1, ST-03 14→1, ST-04 3→1, ST-09 absent→1.
+  - ST-05 moved partial → strong at the same rank.
+  - Fix 2 recovers DA-07's and ST-03's fence-1 losses. Their answers are H3s outside the fence: "Tier 2: Implementation Reports" and "The instruments line and block".
+
+**Runner's per-criterion read (informational at this line):** (a) ACCEPT · (b) ACCEPT (net +2, 0 lost) · (c) ACCEPT · overall ACCEPT.
+
+**Note:** (b) is met exactly at its +2 bound. Line 4 (atoms) can still move it either way, and acceptance is judged there.
 
 ## 4. Line `atoms` — + the "iOS"-family atom list
 

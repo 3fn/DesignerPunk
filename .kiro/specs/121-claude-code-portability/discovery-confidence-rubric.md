@@ -59,7 +59,7 @@ Field: **`matchConfidence: 'strong' | 'partial' | 'none'`** (named distinctly to
 - **Tuning note (the fix the dry-run caught):** the ≥2-token coverage clause is **signal-class-gated** — low-signal-only coverage (e.g. a 2-token query both landing in a shared `contexts` value like `onboarding-flows`) caps at `partial`. Without this guard, low-cardinality shared fields mass-produce false `strong`s.
 
 **Docs — `find_docs` (Thurgood).**
-- **High-signal fields:** doc title/`name`, section headings, frontmatter `description`, frontmatter `aliases` *(listed 2026-10-13: `aliases` has been high-signal in the shipped matcher since the 119-A alias seeding, Spec 121 Req 1.9 extended to docs, but this list never named it; see the alias-hygiene amendment below)*. *(There is NO `keywords` frontmatter field in the corpus — `description` is the keyword surface.)*
+- **High-signal fields:** doc title/`name`, section headings (H2, outside fenced code blocks since 2026-10-13), the single best **deep heading** (H3/H4) through the co-occurrence gate *(added 2026-10-13; see the deep-headings amendment below)*, frontmatter `description`, frontmatter `aliases` *(listed 2026-10-13: `aliases` has been high-signal in the shipped matcher since the 119-A alias seeding, Spec 121 Req 1.9 extended to docs, but this list never named it; see the alias-hygiene amendment below)*. *(There is NO `keywords` frontmatter field in the corpus — `description` is the keyword surface.)*
 - **Medium-signal:** layer / category / `Relevant Tasks` metadata.
 - **Low-signal:** body-only.
 - **Tier rule (with the validated incidental-token guard):**
@@ -99,6 +99,32 @@ Field: **`matchConfidence: 'strong' | 'partial' | 'none'`** (named distinctly to
 > **First uses (the gate).** Hand-fix rows 1–3 of the follow-ups record wait on this amendment landing: DA-02 (Lina, `component-development-guide`), DA-11 (Lina, `platform-implementation-guidelines`; her alias is untested), DA-05 (Thurgood, `test-development-standards`). **Lina's DA-02 alias PR is the first use.** An alias PR without the re-run statement is a finding at the issues walk (follow-ups record, "What the walk checks").
 >
 > **How checked (at authoring).** The runner, fixtures and baseline exist on `main`: `scripts/discovery-study-stage1.ts`; `scripts/__fixtures__/discovery-q2-seats.ts` (36 positives / 8 negatives); the Stage 1 baseline at `08fed8984` (oracle 83/0/0 and rank-1-strong 77/83; Q2 R@1 18/36, R@2 23/36; negatives 6/8 correct). The runner's own integrity checks (verbatim strings, oracle byte-identical to `main`) still apply to each re-run.
+
+> **Amendment (2026-10-13) — deep headings (H3/H4) through a co-occurrence gate, plus fence-aware headings (a field/signal-class change; the tier rule is untouched; TIERS MOVE AT MERGE).** Ruled by Thurgood as owner of the docs rubric (the "field signal-class assignments" knob, § "Tunability & Calibration"). Executed under the issue-row grant of `.kiro/issues/2026-10-13-find-docs-indexer-defects-from-stage1.md` (#322); measured by the pre-registered fresh blind set (`.kiro/docs/discovery-indexer-fix-findings.md`).
+>
+> **What changed.**
+> 1. **Fence-aware headings.** `##` / `###` lines inside fenced code blocks are no longer indexed as section headings: they are example content, not structure. `get_section`'s `sN` ids are untouched (`section-parser.ts`); renumbering them is a separate addressing-conventions pass.
+> 2. **Deep headings.** H3 and H4 headings (outside fences) enter the match surface through a **co-occurrence gate**:
+>    - for each doc, only the SINGLE deep heading containing the most distinct salient query tokens is considered (the first in document order on a tie);
+>    - it counts only if it contains **≥ max(2, min(3, salient query tokens))** of them, so a one-token query never passes, a two-token query needs both, and three or more need three;
+>    - a passing heading is a **high-signal** field with its own evidence class, **`matchedOn: subsections:<token>`**, last in the high-signal order, so a token already credited to the title, an H2, the description, purpose or an alias is not re-credited.
+> 3. `deriveMatchConfidence` is unchanged. A gated deep heading that holds every salient token is an "exact multi-token title/heading match", exactly as the tier rule already reads.
+>
+> **Why the gate, not plain H3 indexing.** In Stage 1's exploratory counterfactual (findings § 6.7), indexing every H3 as a plain high-signal field let one query's tokens scatter across dozens of generic H3s in a large doc. That inflated coverage and outranked the right doc:
+> - KE-06 / DA-06 lost `test-behavioral-contract-validation` to the "behavioral / contract / validation" H3s of platform-implementation-guidelines, test-development-standards and stemma-system-principles;
+> - SP-05 lost `test-development-standards` to component-development-standards' "structure / naming" H3s;
+> - KE-03 lost `token-family-accessibility` to token-family-responsive's "touch target" H3;
+> - the oracle concept "base variant inheritance patterns" fell from rank 1 to 12 behind the component-family docs' scattered H3s.
+>
+> Lower weights and dropping headings shared across docs did not fix the scatter (oracle still 82/83). Requiring the tokens to co-occur in ONE heading does: oracle 83/83, rank-1-strong 77, chosen on the oracle alone.
+>
+> **Evidence.** All four plain-H3 regressions are pinned by `mcp-server/src/query/__tests__/find-docs-deep-headings.corpus.test.ts`, a guard and not a tuning target. The gate math is pinned by `find-docs-deep-headings.test.ts`. Result lines: the fix findings §§ 2–3.
+>
+> **Tiers move at merge** for queries whose answer is a deep heading. That is the intent. The PR body says so for Peter's merge.
+>
+> **What would need a ballot:** changing the three-tier vocabulary or meaning, or emitting a score. Neither happens here.
+>
+> **Known open question (after the fix's final line):** in this corpus, fenced headings are often the ANSWER — templates such as the Implementation Report and the Instruments block. Fix 1 removes them as designed. Whether fenced template headings should come back at a lower class is the owner's design question, recorded in the fix findings.
 
 **Tokens — EXEMPT (Ada).**
 - Token access (`search_tokens`, `get_token_details`, `get_token_family`, `get_token_consumers`) is **structured/predicate retrieval over a closed, named vocabulary** — exact/substring filters returning the complete unranked matching set, or direct keyed lookup. There is **no relevance ranking**, so there is no fuzzy judgment for a tier to make legible; a tier would always read `strong` = zero information.

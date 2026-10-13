@@ -12,6 +12,7 @@
  */
 
 import { DocumentIndexer } from '../indexer/DocumentIndexer';
+import type { WithDeepSections } from '../indexer/heading-parser';
 import { filterSalientTokens } from './stop-words';
 import {
   DocumentationMap,
@@ -590,7 +591,9 @@ function tokenizeRaw(text: string): string[] {
 
 /**
  * Signal classes, reconciled to the docs rubric (discovery-confidence-rubric.md):
- *   - high:   title (frontmatter `name`/H1), sections (headings), description
+ *   - high:   title (frontmatter `name`/H1), sections (H2 headings), description,
+ *             subsections (the single best H3/H4 heading, only through the co-occurrence
+ *             gate — indexer fix 2, 2026-10-13)
  *   - medium: relevantTasks (+ layer/category metadata)
  *   - low:    path basename (a body/identifier proxy)
  *
@@ -599,13 +602,16 @@ function tokenizeRaw(text: string): string[] {
  *  alongside `description`, since both are curated keyword surfaces. `title` and
  *  `description` are NEW high-signal surfaces now that frontmatter is indexed.)
  */
-type SignalClass = 'title' | 'sections' | 'description' | 'purpose' | 'aliases' | 'relevantTasks' | 'path';
+type SignalClass = 'title' | 'sections' | 'description' | 'purpose' | 'aliases' | 'subsections' | 'relevantTasks' | 'path';
 
 // `aliases` is high-signal: a curated author declaration (Spec 121 Req 1.9, extended
 // to docs) that the doc is about these concepts even when the literal term is absent
 // from title/description — the bridge for semantic-synonym queries (e.g. "RTL" → a doc
 // that only says "logical properties").
-const HIGH_SIGNAL: SignalClass[] = ['title', 'sections', 'description', 'purpose', 'aliases'];
+// `subsections` (indexer fix 2, 2026-10-13): the doc's single best DEEP heading (H3/H4), present only
+// when it passes the co-occurrence gate (`selectDeepHeading`). Last in the high list, so a token that
+// also hits a title/H2/description/purpose/alias is credited there first.
+const HIGH_SIGNAL: SignalClass[] = ['title', 'sections', 'description', 'purpose', 'aliases', 'subsections'];
 const MEDIUM_SIGNAL: SignalClass[] = ['relevantTasks'];
 const LOW_SIGNAL: SignalClass[] = ['path'];
 
@@ -636,6 +642,47 @@ function buildDocTokenSets(doc: DocumentMetadata): Map<SignalClass, Set<string>>
   add('path', basename);
 
   return groups;
+}
+
+/**
+ * The deep-heading co-occurrence gate threshold for a query with `salientCount` salient tokens:
+ * max(2, min(3, salientCount)). A one-token query can never pass (a lone generic word in one of
+ * hundreds of H3s is exactly the scatter that broke plain H3 indexing); a two-token query needs
+ * both tokens in the same deep heading; three or more need three.
+ */
+export function deepHeadingGateK(salientCount: number): number {
+  return Math.max(2, Math.min(3, salientCount));
+}
+
+export interface DeepHeadingSelection {
+  heading: string;
+  /** All tokens of the selected heading (the field-side token set). */
+  tokens: Set<string>;
+  /** Distinct salient query tokens the heading contains. */
+  matched: number;
+}
+
+/**
+ * Indexer fix 2 (2026-10-13): select the doc's SINGLE best deep heading (H3/H4) for this query —
+ * the one containing the most distinct salient query tokens, the first in document order on a tie —
+ * and return it only if it passes the gate (`matched >= deepHeadingGateK`). Otherwise null: the
+ * doc's deep headings contribute nothing. Pure; query-dependent by design.
+ */
+export function selectDeepHeading(
+  deepSections: string[] | undefined,
+  salientTokens: string[],
+): DeepHeadingSelection | null {
+  if (!deepSections || deepSections.length === 0 || salientTokens.length === 0) return null;
+  const query = new Set(salientTokens);
+  let best: DeepHeadingSelection | null = null;
+  for (const heading of deepSections) {
+    const tokens = new Set(tokenizeRaw(heading));
+    let matched = 0;
+    for (const t of query) if (tokens.has(t)) matched += 1;
+    if (best === null || matched > best.matched) best = { heading, tokens, matched };
+  }
+  if (best === null || best.matched < deepHeadingGateK(salientTokens.length)) return null;
+  return best;
 }
 
 /** Build a ~50-token summary string from document metadata. */
@@ -684,6 +731,9 @@ function scoreDoc(doc: DocumentMetadata, salientTokens: string[]): ScoredDoc | n
   if (salientTokens.length === 0) return null;
 
   const groups = buildDocTokenSets(doc);
+  // Indexer fix 2: the doc's single best deep heading, only if it passes the co-occurrence gate.
+  const deep = selectDeepHeading((doc as DocumentMetadata & WithDeepSections).deepSections, salientTokens);
+  if (deep) groups.set('subsections', deep.tokens);
   const ORDER: SignalClass[] = [...HIGH_SIGNAL, ...MEDIUM_SIGNAL, ...LOW_SIGNAL];
   const WEIGHT: Record<'high' | 'medium' | 'low', number> = { high: 3, medium: 2, low: 1 };
   // Spec 119-A Layer-3 rank tie-breaker: a fractional bonus (< the 1-point gap

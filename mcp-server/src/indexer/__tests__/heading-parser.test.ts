@@ -4,7 +4,7 @@
  * Validates mechanical parsing of H2/H3 headings without content interpretation.
  */
 
-import { extractHeadingStructure } from '../heading-parser';
+import { extractHeadingStructure, extractDeepHeadings } from '../heading-parser';
 
 describe('extractHeadingStructure', () => {
   it('should extract H2 headings', () => {
@@ -287,5 +287,23 @@ describe('extractHeadingStructure — fence-aware (15 served docs had headings i
   it('an unclosed fence hides everything after it (CommonMark: runs to end of document)', () => {
     const content = ['## Before', '```', '## Inside Unclosed'].join('\n');
     expect(extractHeadingStructure(content).map((s) => s.heading)).toEqual(['Before']);
+  });
+});
+
+describe('extractDeepHeadings — H3 + H4, fence-aware (indexer fix 2)', () => {
+  it('returns H3 and H4 in document order, skipping H2 and fenced headings', () => {
+    const content = [
+      '### Before Any H2',
+      '## Section',
+      '### Sub',
+      '#### Deeper',
+      '```markdown',
+      '### Fenced Sub',
+      '#### Fenced Deeper',
+      '```',
+      '##### Too Deep',
+      '### Last',
+    ].join('\n');
+    expect(extractDeepHeadings(content)).toEqual(['Before Any H2', 'Sub', 'Deeper', 'Last']);
   });
 });
