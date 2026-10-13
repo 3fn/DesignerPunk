@@ -1,6 +1,6 @@
 # Spec 123 — Thurgood's G2 spec-text ruling (G2-F1, G2-F2, G2-F3): the recorded reading
 
-**Date**: 2026-10-12 (first draft `b00dcf10c`; amended the same day, in one pass, on Stacy's pre-read and Lina's buildability read)
+**Date**: 2026-10-12 (first draft `b00dcf10c`; amended the same day, in one pass, on Stacy's pre-read and Lina's buildability read). **Erratum 2026-10-12** (later, its own PR): one clause added under R2, for shared-substrate members. See § "Erratum 2026-10-12: the shared member under R2".
 **Author**: Thurgood (spec standards; owner of the spec-text half of the three findings, `.kiro/issues/2026-10-02-g2-pass-four-findings.md` § "Split of work")
 **Form**: FK-4, settled between owners in the U3 amendment round (Stacy and Thurgood; Lina has no stake beyond buildability; Ada abstains). The form is **a design C15 erratum plus this recorded reading**, and the erratum cites this file. **No `requirements.md` edit** is made, so the deferred "next requirements touch" folds stay deferred.
 **Authority**:
@@ -48,6 +48,11 @@
 - **Frontmatter entries**: the test is on the entry's **derived value** (`derive()`'s YAML value at the entry's canonical path), not on its rendered text.
   - `null`, an empty list, or a string that is empty after `trim()` is not in `D`.
   - A map value that keeps any member is not empty. **No per-field rule is added**: `derive()` validates at class level by design (`derive.ts` L212–214).
+- **Shared-substrate members** *(erratum 2026-10-12, corrected the same day on Stacy's pre-read)*: the body-unit rendered-text test applies to each span in `D`. Here `D` is the set R1 defines, the spans sourcing `canonical/shared/shared-catalog.yaml#<id>`. **No per-field rule is added**, for the same reason as frontmatter.
+  - **Why `D` is never empty for the governance-rule member.** Both adapters render it as `- ${member.statement ?? member.id}` (`tools/agent-generator/adapters/cc.ts` L215, `adapters/kiro.ts` L179). With `statement: ""` the span is `- `; with `statement` deleted it is `- <id>`. Neither is empty after `trim()`, so clause (1) never fails for this member.
+  - **Expected verdicts**:
+    - An emptied member with a sibling destination: `FAIL_DISHONEST_NAMING` (R1).
+    - An emptied member with itself as the destination: `VERIFIED`, a named limit (§ "What this reading does not reach").
 - **Where it is built: in the check, not in `emitSpans`** (Lina). `emitSpans` never sees frontmatter values, and dropping the blank line's span there would break P2 attribution totality. `checkDerivation`'s input widens to each span's rendered lines and the derived value. Task 29 lists the tests that change.
 
 ## R3 — Req 11.4.1, "implemented" (G2-F2): ruled by Peter (PR-5.4), recorded here with its nouns filled
@@ -110,6 +115,7 @@ Clause (1) is evaluated first, and a row that fails it reports `FAIL_NO_DERIVATI
   - **Frontmatter lane**: scalar leaves have no operative-set records (C16), and frontmatter re-pointings are outside the C18 routing population, so **it reaches no human**.
   - **The sharpest instance is permission-bearing**: a `writeScope[…]` or `toolSubset[…]` member re-pointed in place to a **wider** value (for example a glob widened to `**`). That is a permission widening, not a content hollowing. Its expected outcome under (v) is `VERIFIED`, with the limit named.
   - It routes to a later C16/C18 touch **as a permission question**. The committed profile has such rows today, unsigned, re-pointed and destination-S (Stacy, `kenya.dispositions.yaml` L77–79, L99).
+  - **The shared-member lane** *(erratum 2026-10-12)*: the one shared member, `record-first-ratification`, is a governance rule rendered into every agent, and its row is unsigned. Hollowed in place with itself as the destination, its rendered span stays `- ` and the row is `VERIFIED`. It reaches no human, so it routes with the permission-bearing instance above.
 - **The always-set lane.** Pass four measured three lanes: body, frontmatter, always-set (AS1, AS2, T0). Whether the C18 floor routes an always-set unit hollowed in place with destination S is **not established here**. C18's entry set names body units, and C19 derives always-set members through the same `derive()`, but no read here confirms how they route. It is carried into cycle 2's attack set (Stacy's) rather than asserted.
 - **Clause (1)'s bar is low**: one non-whitespace token derives. This is the weakest point of the check, and it is the destination-S case above.
 - **Req 11.4.1's text and clause (1)'s non-empty condition (R2) stay ambiguous or silent on `main`** (Stacy's surviving counter at FK-4, extended to R2). R2 narrows a clause marked verbatim, consistent with "demonstrably *derives*". CLOSEOUT audits against a requirement plus this side record until a requirements touch folds R2 and R3 in.
@@ -132,6 +138,22 @@ Clause (1) is evaluated first, and a row that fails it reports `FAIL_NO_DERIVATI
 **Not taken, with the reason**:
 - Stacy 1(b)'s map-entry rule ("the rendered text of its non-identity members; for a command, `gap` and `cue`"). It is a per-field emptiness rule, Lina's option (b): it would need field-shape knowledge that `derive()` keeps out by design, and it would make F3 reach `FAIL_NO_DERIVATION` only by adding that knowledge. **Fork (a) was picked instead.** F3/F5 are still rejected, by R1.
 - Stacy scope 5 (R1 versus Req 11.4's "descendant" spans in `D`). No change: under 10.G a span and a unit coincide, so identity and the sub-range rule give the same verdict on every committed row (169/169 name S). A finer future grain reopens it, as the containment pin already reserves.
+
+## Erratum 2026-10-12: the shared member under R2
+
+- **The defect.** R2 assigned its emptiness tests by lane: body units and frontmatter entries. R1 decides the one shared-substrate row (`_shared.dispositions.yaml#record-first-ratification`) in member-id space, which is neither lane. So R2 was silent on an emptied `members:` entry.
+- **How it surfaced.** Stacy could not state an expected verdict for that row from the text. Under bound 1 of the Q5 charter cut ("compliant" must be decidable without consulting the author), that is a defect in this text, not a question to answer in conversation.
+- **The first draft was wrong** (`3ea84ae1b`). It stated `FAIL_NO_DERIVATION` for an emptied member. Stacy's pre-read showed that the stated outcome does not follow from the clause's own test, because the adapters render a `- ` prefix (`cc.ts` L215, `kiro.ts` L179). Thurgood verified this by reading both lines. It was G2-F3's error again, a test model of the emission instead of the emission. The corrected clause states the verdicts the emission actually gives.
+- **The pick: (a), the rendered-text test and its real outcomes** (Thurgood, as author). The alternative was (b): a derived-value test on the member's `statement`, which would make `FAIL_NO_DERIVATION` reachable.
+  - (b) is a **per-field rule**. The check would have to know which field carries each member kind's content (`statement` for a governance rule, `cue` for a tool cue).
+  - R2 declined exactly that for frontmatter: it was Stacy's 1(b), not taken, because `derive()` keeps field-shape knowledge out by design.
+  - Adopting it for one lane would make the two lanes disagree on the same question. Under (a) the shared member behaves as the frontmatter entries F3 and F5 do: rejected by R1 when the destination is a sibling, and a named limit when the destination is S.
+  - (b) would also cost Lina a kind-aware read of the member's fields in `checkDerivation`, beside the span text R2 already adds.
+- **Surviving counter-argument** (Stacy's pre-read, and the reason (b) existed):
+  - The one shared member is a **governance rule that reaches every agent's rendering**, and its disposition row is **unsigned**. A statement hollowed in place with itself as the destination is `VERIFIED` and **reaches no human**. Its blast radius is every seat, not one entry.
+  - That is the residual's destination-S limit at its widest. It is now named there and routes with the permission-bearing instance to the later C16/C18 touch. Choosing (b) instead is Peter's to make at merge.
+- **What does not change.** No other clause, and no expected verdict in R5. No committed row moves: per R1's scan, the committed shared member is re-pointed with itself as the destination and a non-empty statement.
+- **Reads.** Stacy pre-reads the corrected clause for verifiability, and Peter merges. Lina's build is unaffected beyond applying the existing body test to the shared member's spans.
 
 ## The erratum this record backs
 

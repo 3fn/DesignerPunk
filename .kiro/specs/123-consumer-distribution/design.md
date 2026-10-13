@@ -553,6 +553,7 @@ function emitSpans(acc, source: { file: string; body: string; frontmatter: YamlD
     - For body units, `D` excludes any span whose rendered text over its line range is empty after `String.prototype.trim()`.
     - For frontmatter entries, `D` excludes any entry whose derived value is `null`, an empty list, or a trimmed-empty string. No per-field rule applies.
     - An emptied body overlay therefore gives `FAIL_NO_DERIVATION`. It is built in the check, not in `emitSpans`.
+    - *(Erratum 2026-10-12, the reading's R2 shared-member clause)* For the shared-substrate member, the body-unit rendered-text test applies to each span in its `D`, and no per-field rule is added. The member renders with a `- ` prefix, so `D` is never empty. An emptied member gives `FAIL_DISHONEST_NAMING` with a sibling destination, and `VERIFIED` with itself as the destination: a named limit.
   - **HONEST NAMING** (R1), aligned to Req 11.4 (2)'s text: the destination is **identical to the source reference of at least one span in `D`**, decided in the same tree as mutual `isDescendantOrSelf`. An ancestor or a sibling does not satisfy it, and no one-way containment does. The shared-member row is decided by id equality in the member-id space. *(Was: "at least one span in `D` lies within the destination", which accepted any ancestor of S: attack (f).)*
   - **Scope** (R3, PR-5.4): the check runs on the shipped material.
     - Body and always-set rows are evaluated on `canonical/_consumer-output/{_canonical,cc,kiro}/**`.
