@@ -66,3 +66,11 @@ Bar (design C27 erratum): product index status `healthy` (zero warnings); zero `
 
 - **Unverified by me**: a real terminal view of a fresh `init`'s `product/` tree through a harness (no harness was run); Leonardo's token checks; the guide's description of the new overview's shape (it describes a generic `overview.yaml`; nothing in it is false against the new file).
 - **Counter-argument and residual**: scaffolding a worked example screen into every product means a new founder's Product MCP starts with one screen they did not write, and `find_screens` returns it forever until they delete it. The example's own header says so ("keep it, edit it, or delete it"), and the guard binds its health, not its usefulness; whether an example in the index is better than an empty `product/` is Leonardo's and Peter's call, made in the plan.
+
+## Addendum 2026-10-12: 22.3 closed — the example placed, both shares in
+
+- **Leonardo's share** (`55bbc1243`, with his record and inspection) and **my share** (`501c67cbd`) are both in and green; the validity guard runs in process and from the packed install (53+ consumer cases passing).
+- **The personal-note example placement** (a step the plan named no subtask for; Leonardo proposed 22.3, the orchestrator confirmed after Peter's 2026-10-12 approval): `src/cli/templates/personal-note.example.md`, byte-equal to `design-inputs/personal-note.example.md`, hash `6b9556c50c72a29c25c5edbbc5ad00221d67928e` equal to the approval record's. The existing `src/cli/templates/` `files[]` entry ships it, so the template's named path `node_modules/@3fn/core/src/cli/templates/personal-note.example.md` resolves in the packed install (asserted, byte-equal). The pending items (`test.failing` in `personalNote.test.ts`; `it.failing` in the consumer test) flipped to ordinary tests.
+- **Packaging stays 22.3b's**: its `pack-assert` ADD-present rows and the `src/cli/templates/**` exact set must LIST the example and the product files; shipping is not at issue.
+- **Tests**: `personalNote.test.ts` 53 passed; `npm test` 9550/9550; `npm run test:scripts` 399/399; `npm run test:consumer` 53 passed, 1 skipped; `npx tsc --noEmit` clean. Not run: `test:pack-contents`, the MCP sub-suites.
+- **Tick**: 22.3 and 22.0 are ticked in `tasks.md`.

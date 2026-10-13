@@ -2183,11 +2183,14 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       }
     });
 
-    // PENDING, not skipped (instruments rows 2.2/2.3): the placed template names the example at its installed path,
-    // and the example is not placed until Peter approves it. `it.failing` passes while red and FAILS once satisfied.
-    it.failing('[pending: instruments rows 2.2/2.3] the example the template names exists in the packed install: node_modules/@3fn/core/src/cli/templates/personal-note.example.md', () => {
+    // FLIPPED from `it.failing` (2026-10-12, Peter approved the example): the template names the example at its installed
+    // path, and the existing `src/cli/templates/` `files[]` entry ships it, so it exists in the packed install.
+    it('the example the template names exists in the packed install, byte-equal to the source: node_modules/@3fn/core/src/cli/templates/personal-note.example.md', () => {
+      const source = fs.readFileSync(path.join(PKG_ROOT, 'src/cli/templates/personal-note.example.md'));
       for (const t of TARGETS) {
-        expect(fs.existsSync(path.join(consumers[t], 'node_modules/@3fn/core/src/cli/templates/personal-note.example.md'))).toBe(true);
+        const installed = path.join(consumers[t], 'node_modules/@3fn/core/src/cli/templates/personal-note.example.md');
+        expect({ t, exists: fs.existsSync(installed) }).toEqual({ t, exists: true });
+        expect({ t, same: fs.readFileSync(installed).equals(source) }).toEqual({ t, same: true });
       }
     });
 

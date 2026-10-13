@@ -5,10 +5,9 @@
  * status prints, the placed template (byte-equal to Leonardo's 22.0 design input and to its recorded
  * `git hash-object`), and every catalog string it prints, equal to its design row (read from design.md at run time).
  *
- * KNOWN FORWARD REFERENCE (pending, never skipped): the placed template points at
- * `node_modules/@3fn/core/src/cli/templates/personal-note.example.md`, which is not placed until Peter approves the
- * edited example (instruments rows 2.2/2.3) and a subtask places it. That assertion is held as an explicit
- * `test.failing` plus a named-list guard, the pattern `install-doc.test.ts` uses for the 19.4 items.
+ * The forward reference is RESOLVED (2026-10-12): the template points at
+ * `node_modules/@3fn/core/src/cli/templates/personal-note.example.md`, and Peter approved the edited example, so it
+ * is placed byte-equal with its recorded hash. The `test.failing` pending item that held it flipped to ordinary tests.
  */
 
 import * as crypto from 'crypto';
@@ -259,24 +258,35 @@ describe('catalog strings — equal to their design rows (read from design.md at
   });
 });
 
-describe('PENDING: the example the template points at (known forward reference)', () => {
-  const PENDING = ['the-example-the-template-points-at-is-placed'] as const;
-  const registered: string[] = [];
-  const pending = (id: (typeof PENDING)[number], name: string, fn: () => void) => {
-    registered.push(id);
-    // test.failing: passes while red, FAILS once satisfied: flip it then. Not a skip.
-    test.failing(`[pending: instruments rows 2.2/2.3] ${id}: ${name}`, fn);
-  };
+describe('the example the template points at (flipped from pending when Peter approved it, 2026-10-12)', () => {
+  const INPUT = path.join(SPEC, 'design-inputs/personal-note.example.md');
+  const APPROVAL = path.join(SPEC, 'design-inputs/personal-note.example.approval.md');
 
   test('the template names the example at its installed path', () => {
     expect(TEMPLATE).toContain('node_modules/@3fn/core/src/cli/templates/personal-note.example.md');
   });
 
-  pending('the-example-the-template-points-at-is-placed', 'src/cli/templates/personal-note.example.md exists (Peter approves the edited example; a subtask places it)', () => {
+  test('the example is placed, byte-equal to the design input', () => {
     expect(fs.existsSync(EXAMPLE_PLACED)).toBe(true);
+    expect(fs.readFileSync(EXAMPLE_PLACED).equals(fs.readFileSync(INPUT))).toBe(true);
   });
 
-  test('the registered pending set is exactly the declared list', () => {
-    expect([...registered].sort()).toEqual([...PENDING].sort());
+  test('its git hash-object equals the one Peter\'s dated approval record binds (RED if the placed copy differs)', () => {
+    const recorded = /\*\*Binds\*\*:[^\n]*?\*\*`([0-9a-f]{40})`\*\*/.exec(fs.readFileSync(APPROVAL, 'utf8'))?.[1];
+    expect(recorded).toBeDefined();
+    expect(gitBlobSha(fs.readFileSync(EXAMPLE_PLACED))).toBe(recorded);
+  });
+
+  test('it is a FILLED note under the detection rule (a finished example, not the template) and starts with the fixed first line', () => {
+    const example = fs.readFileSync(EXAMPLE_PLACED, 'utf8');
+    expect(isNoteUnfilled(example)).toBe(false);
+    expect(example.split('\n')[0]).toBe("This is Peter's note, edited, shown as an example. Write your own.");
+  });
+
+  test('it is never a resource or an import: no CV/resume reference (Req 18.2), no file path, no template markers', () => {
+    const example = fs.readFileSync(EXAMPLE_PLACED, 'utf8');
+    expect(example).not.toMatch(/resume|r\u00e9sum\u00e9|\.json|peter-michaels-allen/i);
+    expect(example).not.toContain(TEMPLATE_BEGIN);
+    expect(example).not.toContain(TEMPLATE_END);
   });
 });
