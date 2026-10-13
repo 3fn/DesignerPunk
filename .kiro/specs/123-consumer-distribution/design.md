@@ -548,15 +548,19 @@ function emitSpans(acc, source: { file: string; body: string; frontmatter: YamlD
   - **DERIVATION**: `D` = spans whose source names this file and whose anchor or path satisfies `tree.isDescendantOrSelf(x, S)` **against the body tree or the entry tree**. Empty → `FAIL_NO_DERIVATION`, a failure and not routed.
   - **HONEST NAMING**: at least one span in `D` lies within the destination.
   - **Unknown anchors are NON-MATCHING, never an exception** (Lina R2): `isDescendantOrSelf` returns false for an anchor absent from the tree (for example a bypass's `#body`), so a red comes from derivation, not from a throw.
-- **The per-target guard (input 21)**: **ONE file, `semantics-guard.test.ts`, with `describe.each(targets from consumer-profile.yaml)`**. **Test ids: `semantics-guard.test.ts › <target>`** (reconciled with the no-second-list rule; S-D-B4).
-- **The two-sided per-target bite** (S-D-B4) — the only observation that proves routing through adapters:
-  - mutate **`cc.ts`'s call site** so it bypasses `emitSpans` with an inline single span → **`› cc` RED, `› kiro` GREEN**;
-  - the symmetric mutation on `kiro.ts` → **`› kiro` RED, `› cc` GREEN**.
-  - **The bite asserts the verdict value `FAIL_NO_DERIVATION`, not merely red** (Lina R2).
-  - Both logs are committed. Cost, per Lina R2: about 1–2 hours once, for an agent-shaped fixture carrying exemplar E via `generateFixture`, then about 30 minutes per bite (restore the pre-123 inline call from git history).
-  - **The frontmatter call sites get their own per-target case** (Lina R2): exemplar **E-fm**, re-pointing `writeScope[<glob>]`, emitted through each adapter's frontmatter loop. Its call-site mutation gives the same two-sided red/green pattern, **`semantics-guard.test.ts › <target> › frontmatter`**. *(If the tasks round cannot build it, the record carries "frontmatter routing asserted, not bitten", never silence.)*
-  - The shared-function mutation stays, as the **unit twin's** bite (`spans.source-origin.test.ts`), because it turns every target red and so cannot prove per-target routing.
-  - *(Lina R2: CHEAP once C14 lands.)*
+- *(Erratum 2026-10-12 — Thurgood's G2 spec-text ruling, the reading recorded at `.kiro/specs/123-consumer-distribution/g2-spec-text-ruling.md` (FK-4: a C15 erratum plus a recorded reading; Peter's PR-5.5). It answers G2-F1 and G2-F3 of `completion/re-grounding-pass-four.md`. The two bullets above are superseded as follows, and nothing else in C15 changes.)*
+  - **DERIVATION** (R2):
+    - For body units, `D` excludes any span whose rendered text over its line range is empty after `String.prototype.trim()`.
+    - For frontmatter entries, `D` excludes any entry whose derived value is `null`, an empty list, or a trimmed-empty string. No per-field rule applies.
+    - An emptied body overlay therefore gives `FAIL_NO_DERIVATION`. It is built in the check, not in `emitSpans`.
+  - **HONEST NAMING** (R1), aligned to Req 11.4 (2)'s text: the destination is **identical to the source reference of at least one span in `D`**, decided in the same tree as mutual `isDescendantOrSelf`. An ancestor or a sibling does not satisfy it, and no one-way containment does. The shared-member row is decided by id equality in the member-id space. *(Was: "at least one span in `D` lies within the destination", which accepted any ancestor of S: attack (f).)*
+  - **Scope** (R3, PR-5.4): the check runs on the shipped material.
+    - Body and always-set rows are evaluated on `canonical/_consumer-output/{_canonical,cc,kiro}/**`.
+    - Frontmatter rows are evaluated on `cc` and `kiro`, including the Kiro agent JSON.
+    - A row is `VERIFIED` only on every surface carrying its source. The count is rows, non-zero and equal to the committed dispositions.
+    - It runs on every PR touching the input set named in the reading.
+  - Neither non-reading (α) nor (β) is adopted (R4).
+  - The expected verdict per measured row is in the reading's R5.
 
 #### C16. Operative-set records (Req 11.6.5d; Stacy S-D-B1, S-D-B2, S-D-A3, S-D-A4)
 
