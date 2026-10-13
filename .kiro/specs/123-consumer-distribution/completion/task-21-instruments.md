@@ -38,5 +38,5 @@
 ## Found later
 - 2026-10-03 — unlisted — a design catalog row for the starter-spec collision report and the scaffold summary line — criterion C3 ("`init` scaffolds both into `specs/`, reporting on collision") — found at 21.3 (Lina) — the criterion names no text, and design.md § Error Handling has no row for either string. Both were authored in `src/cli/shared/errorCatalog.ts` as `starterSpecCollisionMessage` and `starterSpecsWrittenMessage`, each marked "AUTHORED AT 21.3", and asserted by `init.test.ts`. Route: a design erratum row owed, wording for Leonardo, formalization Thurgood; the same erratum as the Task 20 entries (see `task-20-instruments.md` § "Found later", the dated pointer note). → resolved 2026-10-03 (Thurgood): the design rows were added by the catalog-close erratum, `8df365308` (design.md § Error Handling).
 
-**Counts (current, 2026-10-03, after 21.3)**: N = 20 — exists 11 · built-here 8 · missing 1 (row 4.2, Ada's 22.3b) · unlisted 1.
+**Counts (final, 2026-10-12, at Task 21's close)**: N = 20 — exists 11 · built-here 9 · missing 0 · unlisted 1 (resolved). Row 4.2 was resolved by Ada's 22.3b (`4ed907eb1`).
 

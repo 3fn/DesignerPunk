@@ -1109,7 +1109,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 20.2 `.gitignore` region (configured path) + `sync` round-trip *(amendment 2026-10-03: `src/cli/shared/gitignoreRegion.ts`; the `sync` region source; PR-9's offer, report and corrected remedy)*
   - [x] 20.3 Fresh-clone fixture through step 4 *(amendment 2026-10-03: after 22.1; R2: built at test time, nothing committed)*
 
-- [ ] 21. The starter specs
+- [x] 21. The starter specs
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Thurgood (Opus)
   **Traces**: Reqs 16, 17 · design C25, DD15
