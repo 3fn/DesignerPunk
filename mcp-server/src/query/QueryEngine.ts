@@ -14,6 +14,7 @@
 import { DocumentIndexer } from '../indexer/DocumentIndexer';
 import type { WithDeepSections } from '../indexer/heading-parser';
 import { filterSalientTokens } from './stop-words';
+import { protectAtoms } from './token-atoms';
 import {
   DocumentationMap,
   DocumentMetadata,
@@ -581,7 +582,9 @@ const STRONG_COVERAGE_THRESHOLD = 0.5;
  */
 function tokenizeRaw(text: string): string[] {
   if (!text) return [];
-  const expanded = text.replace(/([a-z])([A-Z])/g, '$1 $2');
+  // Indexer fix 3: brand-cased atoms (iOS, macOS, iPhone, …) are lowercased BEFORE the camelCase
+  // split so they stay one token on both the indexed and the query side (token-atoms.ts).
+  const expanded = protectAtoms(text).replace(/([a-z])([A-Z])/g, '$1 $2');
   return expanded
     .toLowerCase()
     .split(/[\s\-_\/\.]+/)

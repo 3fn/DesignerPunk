@@ -5,7 +5,7 @@
 **Owner**: Thurgood. **Independent check**: orchestrator (Thurgood's declared conflict: he owns the matcher and most affected docs; the fresh blind set is the independent measure)
 **Branch**: `fix/find-docs-indexer-h3-fence-ios`
 **Pre-registration commit (1)**: `3db79d9fd`. It holds the fresh raw answers, the fresh fixture (30 positives / 8 strict-none negatives; every key reviewed by the orchestrator, none disputed), the sibling runner `scripts/discovery-indexer-fix-run.ts`, and the pure compare module `mcp-server/src/discovery-dry-run/fix-compare.ts` with tests. No fix code.
-**Status**: IN PROGRESS. Lines 1–3 are recorded below; line 4 is pending.
+**Status**: **COMPLETE — all four lines run; the pre-registered acceptance is MET at the final line (§ 5).** Remaining items are routed (§ 7).
 
 ---
 
@@ -97,24 +97,67 @@ Every line after `shipped` is run with `--compare` against the shipped JSON. The
 
 ## 4. Line `atoms` — + the "iOS"-family atom list
 
-_Pending._
+- **Change**:
+  - `mcp-server/src/query/token-atoms.ts` (new): `TOKEN_ATOMS` v1 (iOS, iPadOS, macOS, tvOS, watchOS, iPhone, iPad), `TOKEN_ATOM_LIST_VERSION = 1` with a CHANGELOG (the stop-word module's pattern), and `protectAtoms`, which lowercases an atom in place, longest first and never inside a longer word.
+  - `mcp-server/src/query/QueryEngine.ts`: `tokenizeRaw` calls `protectAtoms` BEFORE the camelCase split. That is one tokenizer for indexed text and query alike, so the fix is symmetric.
+  - The components tokenizer is NOT touched (Lina, follow-ups row 11).
+- **Tests**: `src/query/__tests__/token-atoms.test.ts` covers:
+  - each atom, both through `protectAtoms` and as a find_docs match;
+  - iPadOS not read as iPad + OS;
+  - no match inside a longer word;
+  - a brand-cased query against lowercase doc text;
+  - `contentDescription` still splitting;
+  - the ST-N2 query: `description:ios` present, `description:i` / `description:os` absent.
+  - Full mcp-server suite (`npx jest --runInBand`): 43 suites, 721/721 passed. tsc clean.
+- **Command**: `npx tsx scripts/discovery-indexer-fix-run.ts --line atoms --compare <scratch>/fix/line-shipped.json`. The code is uncommitted on top of fix 2's commit `15f240a4b`, so the runner's HEAD line reads `15f240a4b`.
+- **Oracle**: 83 / 0 / 0; rank-1-strong 77.
+- **Fresh positives**: R@1 20, R@2 21. Cumulative vs shipped: gained FST-04 and FST-12, lost none, **net +2**.
+- **Fresh negatives**: correct 7/8; no new confident-wrong.
+- **Q2 (SPENT, descriptive)**: R@1 25, R@2 29; no change from the headings line.
+- **Delta vs the headings line: NONE.** No rank, tier or negative top-3 changed on the fresh set or Q2.
+  - Fix 3 is correct (it removes a real asymmetry and the spurious `i` / `os` tokens, pinned by its tests), but on these sets it is **measurably inert**. No fresh or Q2 query's outcome depended on "iOS" alone.
+  - In particular, Stage 1's KE-10 still misses: its iOS half is an H4 whose only overlap with the query is `ios`, below the gate.
 
-## 5. Acceptance at the final line
+## 5. Acceptance at the final line (`atoms` vs `shipped`) — **VERDICT: ACCEPTED**
 
 | Criterion | Result | Detail |
 |---|---|---|
-| (a) oracle 83/0/0 and rank-1-strong ≥ 77 | _pending_ | |
-| (b) fresh net ≥ +2, ≤ 2 lost | _pending_ | |
-| (c) no new confident-wrong (top 3) | _pending_ | |
-| (d) Q2 reported as spent | _pending_ | |
+| (a) oracle 83/0/0 and rank-1-strong ≥ 77 | **ACCEPT** | 83 / 0 / 0, rank-1-strong 77 (unchanged from shipped) |
+| (b) fresh net ≥ +2, ≤ 2 lost | **ACCEPT** | net **+2** (gained FST-04, FST-12; lost none) |
+| (c) no new confident-wrong (top 3) | **ACCEPT** | none; FSP-09 was confident-wrong at shipped and still is (D-3) |
+| (d) Q2 reported as spent | **done** | R@2 25 → 29 (gained SP-08, DA-09, ST-02, ST-04, ST-09; lost KE-11). Descriptive only, never evidence |
+
+**The fix as pre-registered is ACCEPTED on all three criteria.**
+
+**Read plainly:**
+- **(b) is met exactly at its bound, and all of it comes from fix 2.** Fix 1 is net 0 and costs rank on two fresh template queries (FKE-07 5→14, FST-08 3→8). Fix 3 is net 0.
+- **The surviving counter-argument:** +2 on 30 queries is the smallest margin the rule allows. One key judged differently, or one doc edit, would flip (b). The evidence says the gate fixes the class it was built for (answers in H3/H4 headings). It does not say the indexer is now good: 9 of 30 fresh positives still miss.
+- **Owner's position:** accept fix 2 on its evidence. Keep fix 1, because phantom sections are wrong by construction, but treat its template cost as the next design question (§ 7). Keep fix 3 as a correctness fix with no measured lift.
 
 ## 6. Answer-key errors found after the pre-registration commit
 
-None so far.
+**None.** No fresh key was challenged or found wrong while running the four lines. The 9 remaining fresh misses are matcher outcomes, not key errors.
 
 ## 7. Routed items
 
-- **Fenced template headings carry answer vocabulary** (§ 2): a design question for the owner after line 4 — keep fix 1 as specified, or index fenced headings at a lower class.
-- **FSP-09 confident-wrong at shipped**: one more instance of Stage 1's D-3 (seat cue → `process-file-organization`, which does not answer). Routed with D-3 (Leonardo for the doc gap; Thurgood's ballot draft for the cue wording).
-- **Components tokenizer** (`application-mcp-server/src/indexer/ComponentIndexer.ts` `tokenizeString`) has the same "iOS" camelCase-split defect. It is Lina's surface and her call; not in this PR.
-- **section-parser fence-awareness**: deferred to an addressing-conventions pass (`sN` renumbering in 15 docs).
+1. **The fenced-template design question.** Owner: Thurgood. Measured on a NEW fresh set, never this one, which is now spent for matcher tuning.
+   - **What**: fix 1 stopped indexing headings inside fenced code blocks. In this corpus several of those fences are markdown TEMPLATES whose headings are the answer to "what goes in X":
+     - `product-handoff-protocol` L98–127, the Implementation Report template ("Implementation Report", "What Was Built", "Deviations from Spec", "Decisions Made During Implementation", "Discoveries", "Open Items");
+     - L140–159, the System Request template;
+     - `completion-documentation-guide`'s completion-doc and Instruments-block templates.
+   - **Cost measured here**: FKE-07 5→14 and FST-08 3→8 (fresh, rank only; neither was a pass at shipped). In Q2 (descriptive): DA-07 6→17 and ST-03 1→14, recovered by fix 2 through the H3s outside the fence; KE-08 1→3, recovered to 1 by fix 2.
+   - **Candidate shapes**:
+     - (i) keep fix 1 as is (never index fenced headings);
+     - (ii) index headings inside a fence whose info string is `markdown` / `md` (a template), through the same deep-heading gate, and never other fences;
+     - (iii) index fenced headings only as a low-signal class.
+   - **Pre-register before choosing**: a new fresh set, the same acceptance shape, and the same oracle floor.
+2. **FSP-09 confident-wrong** (fresh, at every line): `process-file-organization` comes back `strong` for "where do product screen implementation files live". This is Stage 1's D-3 again — the routing cue points at a doc that does not answer, and no served doc answers. Routed with D-3: Leonardo for the doc gap; Thurgood's ballot draft for the cue wording.
+3. **Components tokenizer** (`application-mcp-server/src/indexer/ComponentIndexer.ts` `tokenizeString`) has the same "iOS" split defect. Lina's surface, follow-ups row 11; `token-atoms.ts` is the docs-side model if she wants a duplicate list with cross-citing headers.
+4. **section-parser fence-awareness**: deferred to an addressing-conventions pass. Making it fence-aware renumbers `sN` ids in 15 docs.
+5. **Stage 1 DA-05 key-error addendum**: written in `.kiro/docs/discovery-study-stage1-findings.md` § 10, the only edit there, as the grant allows.
+6. **Remaining fresh misses (9)**: FSP-N2, FKE-03, FKE-07, FKE-09, FKE-N2, FDA-04, FDA-N2, FST-08, FST-N1.
+   - Four are "not supported" status answers (FKE-09, FKE-N2, FDA-N2, FST-N1), Stage 1's K6 class, which is lexically unreachable by design.
+   - Two are template rank losses (§ 7.1).
+   - FSP-N2: test-development-standards' answering H3s ("JSDOM and Custom Elements", "Pattern: Shadow DOM Querying") each hold only two of the query's salient tokens, below the gate's 3 for a long query.
+   - FKE-03 and FDA-04 (product-token naming) sit at rank 3, all `partial`, behind `designerpunk-integration-guide` (product-token sections) and `web-authoring-standards`' duplicated naming schema (Stage 1 D-2).
+   - None is a new defect class.
