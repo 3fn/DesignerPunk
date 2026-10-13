@@ -61,6 +61,7 @@ One commit on the study issue's branch: fixtures (Q2; Q3 later), decision rules,
 
 ## 6. Forks for Peter (open at capture)
 - **F1** Authorize Stage 0 now (all three recommend yes). **F1b** fold the metadata de-dup into Stage 0, or split it.
+  **RULED 2026-10-12 (Peter): F1 AUTHORIZED; F1b — de-dup FOLDED INTO Stage 0.** Execution: Lina on `fix/find-components-stage0-lexical-metadata`, issue-driven under her charter scope (no grant); Thurgood consulted on the tie-breaker (rubric decision record). Contamination rule in force: Q3 and sealed seat queries do not exist yet, so nothing is visible to the fixer beyond the defect record and the existing calibration tests.
 - **F2** Components path: **(a)** Leonardo — Stage 0 → de-dup → ONE real screen (onboarding or settings) specified with every MCP call logged → then decide whether Stage 2 on components is worth running; **(b)** restore a D arm on components ("fresh subagent reads `get_component_catalog` and picks") as the baseline C-list must beat; **(c)** pre-register that components C-list results cannot ground a vendor or adoption claim, and run anyway. Orchestrator leans (a); residual: n = 1 screen, uncosted Leonardo spec cycle.
 - **F2-docs** Stage 1 docs side stands alone (closes the 119-B gap): charter now, or hold with F2.
 - **F3** Q3 → standing oracle: ballot (Lina) vs recorded issue decision (Thurgood; orchestrator leans).

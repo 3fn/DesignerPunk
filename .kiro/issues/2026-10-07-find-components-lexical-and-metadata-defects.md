@@ -4,6 +4,7 @@
 **Type**: DEFECT RECORD with routed owner — surfaced during the design consults for the discovery shadow study (`2026-10-07-discovery-shadow-study-charter.md`), not by any production incident
 **Owner**: **Lina** (Stemma; `application-mcp-server/**` is inside her charter write scope — confirmed by Lina 2026-10-07, so the fixes need no grant). **Thurgood consulted** on the rank tie-breaker (it amends the Spec 121 components rubric decision record; precedent: docs `TITLE_RANK_TIEBREAK`, Peter-approved as rank-only, Spec 119-A) and on item 5.
 **Trigger**: **Peter's ruling on fork F1 of the study charter** (all three consulted owners recommend authorizing the fixes now) → Lina opens the fixing PR(s). **No fix is authorized until that ruling.**
+**TRIGGER FIRED 2026-10-12**: Peter ruled F1 AUTHORIZED, de-dup (item 4) folded in. Fix scope = items 1, 2, 3, 4, 6; item 5 is decided or explicitly deferred inside the fixing PR after Thurgood's read. Branch `fix/find-components-stage0-lexical-metadata`.
 **Grant paths**: none needed (owner scope covers the surface).
 **Contamination rule (binding on the fixer, from the study charter)**: fixes are driven ONLY by the defects recorded here and by the existing calibration tests in `application-mcp-server/src/__tests__/tool-boundary.contract.test.ts`. Neither the study's Q3 component fixture nor the sealed seat-written queries may be seen by whoever makes the fixes before the fixes merge.
 
