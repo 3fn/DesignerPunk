@@ -62,3 +62,20 @@ package.json
 
 - **Not in the entry on purpose**: the `generate`-prints-✅-after-an-override-abort defect (Ada's report; I did not verify it), and the intentional-removal case for the `.gitignore` block (open with Peter). If either is fixed or ruled before the tag, release-prep edits the entry.
 - **Counter-argument and residual**: a CHANGELOG entry written by the implementer describes what the implementer built; a reader at release-prep (Thurgood, Ada) is the independent check on the prose, and none has read it yet.
+
+## Addendum 2026-10-13: the ⚠️ resolved — Peter's ruling A
+
+**Resolution.** Peter ruled **A** on 2026-10-13: a **one-time waiver** for this verified-harmless `package.json` hit, plus a **narrowing** of Task 29's declared input-set entry `package.json` to its `scripts` block. Both are recorded as dated amendments in `tasks.md` (Task 22's no-overlap criterion; Task 29's 29.4). The waiver is not a precedent. Verification cited: Stacy's and mine (the diff is two `files[]` lines; the `scripts` block is unchanged; `package.json` has no `jest` key, so `scripts` is the only selection wiring; `tools/agent-generator/jest.config.js` is in the set by path).
+
+**Re-run with the narrowed set** (merge base `31a8c9194`, which is `origin/main`):
+
+```
+$ git diff --name-only $(git merge-base HEAD origin/main) HEAD -- canonical/profiles/consumer canonical/operative-sets canonical/agents canonical/shared canonical/consumer-profile.yaml canonical/_consumer-output tools/agent-generator .kiro/steering/{AI-Collaboration-Principles,Agent-Directory,Civitas-System-Overview,DesignerPunk-Systems-Overview,Spec-Feedback-Protocol,Task-Completion-Protocol,core-goals,start-up-tasks}.md .github/workflows/lane-timing.yml .kiro/steering
+(prints nothing)
+
+$ S='process.stdin.on("data",d=>process.stdout.write(JSON.stringify(JSON.parse(d).scripts)))'
+$ [ "$(git show $B:package.json | node -e "$S")" = "$(git show HEAD:package.json | node -e "$S")" ]
+(equal: the scripts block is identical; prints nothing)
+```
+
+Claim 5 in the table above (the widened no-overlap set) therefore reads **✅ met under the narrowed set**; the original ⚠️ stays readable above as the 22.4-time record.
