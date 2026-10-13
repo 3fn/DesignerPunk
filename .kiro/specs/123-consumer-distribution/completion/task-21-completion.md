@@ -6,9 +6,22 @@
 - 21.1, 21.2 and the structure test: Thurgood (Opus), the planned PRIMARY.
 - 21.3: Lina (Sonnet), as amended.
 - C4's `pack-assert` rows: Ada (Sonnet), in the packaging subtask 22.3b, as the criterion assigns.
-**CI-provenance**: branch-head dispatch — run URLs appended by the orchestrator after the unit-member push
+**CI-provenance**: branch-head dispatch @ 16d88a20ab30567c2321842aa260fb4ae9cd5e7c — https://github.com/3fn/DesignerPunk/actions/runs/38334537842, https://github.com/3fn/DesignerPunk/actions/runs/38334542806, https://github.com/3fn/DesignerPunk/actions/runs/38334548195, https://github.com/3fn/DesignerPunk/actions/runs/38334553202, https://github.com/3fn/DesignerPunk/actions/runs/38334558157, https://github.com/3fn/DesignerPunk/actions/runs/38334563188
 **Instruments**: 20 listed — exists 11 · built-here 9 · missing 0 · unlisted 1 — .kiro/specs/123-consumer-distribution/completion/task-21-instruments.md
 **Traces**: Reqs 16, 17 · design C25, DD15
+
+**On the CI line.** The orchestrator dispatched the required workflows against the unit branch at `16d88a20a`, the commit that carries this doc's predecessor state.
+- I read each run with `gh run view --json name,conclusion,status,headSha`. All six are **`completed` / `success`** at `16d88a20ab30567c2321842aa260fb4ae9cd5e7c`:
+  - Consumer Guard (38334537842)
+  - 125B Tool-Boot Smoke (38334542806)
+  - Section Citation Guard (38334548195)
+  - Agent Generator (122) (38334553202)
+  - Package Name Drift Detection (38334558157)
+  - Lane Timing (38334563188)
+- Three of the six were still `in_progress` at my first read. I waited for them to complete (`gh run watch`) and re-read all six.
+- This is a branch-head dispatch, **not the gate**: the gate runs on the unit PR's merge ref.
+- The commit that carries this edit touches only this completion doc.
+- The Validation section's results were measured **locally** and are local claims.
 
 **Subtasks**:
 - the instruments block, `d93d1b95e`;
