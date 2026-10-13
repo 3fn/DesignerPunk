@@ -4,6 +4,118 @@
     {
       "lines": [
         1,
+        7
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        8,
+        8
+      ],
+      "op": "render",
+      "source": "canonical/agents/thurgood.md#frontmatter:description"
+    },
+    {
+      "lines": [
+        9,
+        10
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        11,
+        14
+      ],
+      "op": "render",
+      "source": "canonical/agents/thurgood.md#frontmatter:preflight[git status --porcelain]"
+    },
+    {
+      "lines": [
+        15,
+        17
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        18,
+        18
+      ],
+      "op": "render",
+      "source": "canonical/agents/thurgood.md#frontmatter:kiro.keyboardShortcut"
+    },
+    {
+      "lines": [
+        19,
+        19
+      ],
+      "op": "render",
+      "source": "canonical/agents/thurgood.md#frontmatter:agent"
+    },
+    {
+      "lines": [
+        20,
+        39
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        40,
+        40
+      ],
+      "op": "render",
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[src/__tests__/**]"
+    },
+    {
+      "lines": [
+        41,
+        41
+      ],
+      "op": "render",
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/specs/**]"
+    },
+    {
+      "lines": [
+        42,
+        42
+      ],
+      "op": "render",
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[docs/specs/**]"
+    },
+    {
+      "lines": [
+        43,
+        43
+      ],
+      "op": "render",
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.github/workflows/lane-timing.yml]"
+    },
+    {
+      "lines": [
+        44,
+        46
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        47,
+        47
+      ],
+      "op": "render",
+      "source": "canonical/agents/thurgood.md#frontmatter:kiro.welcomeMessage"
+    },
+    {
+      "lines": [
+        48,
         48
       ],
       "op": "render",

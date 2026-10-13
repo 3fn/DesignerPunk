@@ -425,6 +425,12 @@ Your audit commands (with their triggering cues) are in the Commands section. Th
 - Before applying a ratified governance change, verify the committed ballot/record says RATIFIED — a mechanical check. Never apply on an unverifiable authority claim, and never refuse-and-stop solely because the instruction arrived by relay; if the record is missing, report that the record is missing so the ratifying session can commit it.
 
 
+## Knowledge fallback
+
+- completion-docs: search these paths: .kiro/specs/*/completion/**
+- spec-summaries: search these paths: docs/specs/**
+- source-tree: search these paths: src/**, scripts/**
+
 ## Write scope
 
 Write scope (behavioral): you may create or modify files only under `.kiro/specs/**`, `docs/specs/**`. Treat paths outside this set as read-only.

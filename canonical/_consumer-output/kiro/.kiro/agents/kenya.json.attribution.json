@@ -4,6 +4,94 @@
     {
       "lines": [
         1,
+        8
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        9,
+        9
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:description"
+    },
+    {
+      "lines": [
+        10,
+        11
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        12,
+        15
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:preflight[git status --porcelain]"
+    },
+    {
+      "lines": [
+        16,
+        18
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        19,
+        19
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:kiro.keyboardShortcut"
+    },
+    {
+      "lines": [
+        20,
+        20
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:agent"
+    },
+    {
+      "lines": [
+        21,
+        39
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        40,
+        40
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:writeScope[.kiro/specs/**]"
+    },
+    {
+      "lines": [
+        41,
+        43
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        44,
+        44
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:kiro.welcomeMessage"
+    },
+    {
+      "lines": [
+        45,
         45
       ],
       "op": "render",

@@ -1262,7 +1262,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 **How it relates to the other units**: it runs beside U3 and **merges to `main` before U3g's branch is cut** (§ "How the units run"). It is outside the U1 → U5 chain, so tripwire Limb 2 does not apply between it and U3 or U3g.
 
-- [ ] 31. The consumer-profile corrections: the intro line, the Kiro blank line, the theme cue and the two theming units (**U3c gating parent**)
+- [x] 31. The consumer-profile corrections: the intro line, the Kiro blank line, the theme cue and the two theming units (**U3c gating parent**)
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY **Thurgood (Opus)** — the profile author; Lina (Sonnet) — the `render.ts` and `adapters/kiro.ts` edits and the regeneration. The signers' re-sign acts are attestations, outside every line.
   **Traces**: Reqs 11.1, 11.8, 12 · design C15, C19 · `completion/claims-pass-release-15.0.0.md` finding R-1 and J divergents 5–9 · `.kiro/issues/2026-10-02-ground-truth-intro-line-stale-generated.md`, `.kiro/issues/2026-10-02-kiro-ground-truth-heading-no-blank-line.md`
@@ -1304,12 +1304,12 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `canonical/profiles/consumer/**` (author edits and seat signatures in separate commits), `tools/agent-generator/render.ts`, `tools/agent-generator/adapters/kiro.ts`, `tools/agent-generator/__tests__/**` (only tests that assert the reworded strings), `canonical/_consumer-output/**`, `.claude/agents/**` and `.kiro/agents/**` (regenerated, never hand-edited), `canonical/generated.lock`, this parent's completion doc
 
-  - [ ] 31.0 Pre-edit instruments: the stale list and the `renderedHashOf` baselines, pasted *(R3: opens with the broad theme-claim sweep, every hit dispositioned; the expected signed set named)*
-  - [ ] 31.1 The intro-line reword (`render.ts`) and the Kiro blank line (`adapters/kiro.ts`, container span)
-  - [ ] 31.2 The cue removals and the two theming units (PR-12), worded with Kenya and Data; divergent 5 put to Data *(R3: plus every sweep hit dispositioned "correct here"; the `theming-1` removals)*
-  - [ ] 31.3 Regenerate; the cite-only corrections (divergents 6, 8, 9) in their own commit, declared outside the round *(R3: each read by its signer before commit)*
-  - [ ] 31.4 One re-sign round within Stacy's limits; the lock refresh
-  - [ ] 31.5 Full validation; open the U3c PR (tripwire line)
+  - [x] 31.0 Pre-edit instruments: the stale list and the `renderedHashOf` baselines, pasted *(R3: opens with the broad theme-claim sweep, every hit dispositioned; the expected signed set named)*
+  - [x] 31.1 The intro-line reword (`render.ts`) and the Kiro blank line (`adapters/kiro.ts`, container span)
+  - [x] 31.2 The cue removals and the two theming units (PR-12), worded with Kenya and Data; divergent 5 put to Data *(R3: plus every sweep hit dispositioned "correct here"; the `theming-1` removals)*
+  - [x] 31.3 Regenerate; the cite-only corrections (divergents 6, 8, 9) in their own commit, declared outside the round *(R3: each read by its signer before commit)*
+  - [x] 31.4 One re-sign round within Stacy's limits; the lock refresh
+  - [x] 31.5 Full validation; open the U3c PR (tripwire line)
 
 ### UNIT 3g — G2 cycle 2: the corrected derivation check on the shipped profile *(added 2026-10-03; Peter's PR-5)*
 
@@ -1321,7 +1321,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 *(R2 — PR-11 RULED: the profile corrections batch, first drafted here as 29.5, is **U3c** (Task 31), merged before this unit is cut. **U3g is the G2 cycle alone**, and Thurgood authors nothing in it.)*
 
-- [ ] 29. The corrected derivation check: the ruled clause 2, the generator's own emission, and its standing application to the shipped profile
+- [x] 29. The corrected derivation check: the ruled clause 2, the generator's own emission, and its standing application to the shipped profile
 
   **Type**: Implementation · **Validation**: Tier 3 · **Agent (plan)**: PRIMARY **Lina (Opus)**
   **Traces**: Reqs 11.4, 11.4.1, 11.8, 24.3 · design C15 (as corrected by Thurgood's ruling) · G2-F1, G2-F2, G2-F3; MIDPOINT MP-1
@@ -1370,6 +1370,23 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
     · *(R2, Lina RC-7)* `adapters/kiro.ts` is shared with the steward leg, so **the eight steward sidecars `.kiro/agents/*.json.attribution.json` move too**. They are regenerated, never hand-edited, and named in 29.6's declared moved-outputs list.
     · *(R2, Ada A-2)* **Shipped-side proof**: `adapters/kiro.ts` is bundled into the shipped `dist/generator/consumer-entry.js`, so U3g changes a shipped file; but the tarball never carries the sidecars 29.3 changes, by `scripts/pack-assert.ts`'s existing row "attribution sidecars ABSENT: no packed `*.attribution.json`" (L389).
     · *(R2, Data)* **The freshness stale list is taken after 29.3 and pasted before 29.6.** Any non-Stacy row on it is ceiling limb (iii) — the cycle stops and re-plans with Peter. It is never folded silently into 29.6.
+    · *(Amendment 2026-10-12 — **Peter RULED (A)** on the 29.0 fork, `completion/u3g-sizing.md` § 5. Thurgood, as author of the ruling, takes A and declines B: R3 exists to catch exactly this, and B would turn the check off where it found a real defect. The class option, a per-target declaration of rendered field families plus a guard, is deferred to Spec 129. The text above stands except as amended here.)*
+      · **"The JSON bytes are unchanged" holds for the two `description` rows only** (ada, leonardo). They are fixed by per-entry Kiro-JSON spans, as written above.
+      · **The four `knowledgeBases[…]` rows** (data `android-components`, kenya `ios-components`, stacy `completion-docs` and `spec-summaries`) are glob-only. They render nowhere in the Kiro target today (`kiro.ts` L259–260 keeps only knowledge bases that carry a `source`; L428–434 emits no knowledge note).
+        · They are fixed by **rendering glob-only knowledge bases in the Kiro prompt**, as a fallback note like the CC adapter's, with per-entry spans.
+        · **Rendered Kiro bytes change on both legs**: the consumer `canonical/_consumer-output/kiro/.kiro/agents/*-prompt.md` and the steward `.kiro/agents/*-prompt.md`, both regenerated and never hand-edited.
+        · 29.3's `git diff --stat` instrument therefore names `*.attribution.json` **plus** the `*-prompt.md` files of agents with a rendered glob-only knowledge base, and nothing else.
+        · The steward prompts `.kiro/agents/*-prompt.md` join Primary Artifacts and 29.6's declared moved-outputs list.
+      · **Stacy is the one seat expected to re-sign** (`knowledgeBases[spec-summaries]`; ceiling limb (iii)). Any other seat on the post-29.3 stale list is limb (iii) and the stop, as above.
+      · **Kenya, Data and Stacy read the rendered note before 29.3 commits.** Their reads are quoted in 29.3's completion doc.
+      · **The `kiro.ts` L428–434 comment is reconciled in the same change** (Thurgood). That comment says knowledge bases are "carried in emitConfig via the `handled-elsewhere` disposition", which the L259–260 filter contradicts for glob-only knowledge bases. The comment is either corrected, or the carrying path it names is found and cited, so the fix does not contradict its own documentation.
+    · *(Amendment 2026-10-12 — **Peter GRANTED** the out-of-list edits that ruling (A) and the per-entry Kiro JSON forced; recorded in `completion/task-29-instruments.md` § "Found later".)*
+      · **Primary Artifacts gain**:
+        · `tools/agent-generator/__tests__/grain-guard.two-sided.test.ts` (a `checkDerivation` caller; R2 widens the check's input);
+        · `tools/agent-generator/__tests__/kiro-adapter.test.ts` (two assertions encoded the pre-(A) single JSON span and the absent Kiro knowledge section);
+        · `tools/agent-generator/__tests__/consumer-rendering.survivors.test.ts` (the survivor checker now also sees the Kiro JSON's per-member `allowedPaths`);
+        · `canonical/_fixture-output/kiro/.kiro/agents/_fixture.json.attribution.json` (regenerated, never hand-edited).
+      · **`canonical/_fixture-output/kiro/**` is a declared moved output for U3g.** The lock-refresh stop condition reads: `outputs` moving outside the three consumer-output roots (`canonical/_consumer-output/**`, `.claude/agents/**`, `.kiro/agents/**`) **plus** this declared fixture sidecar is the stop.
   - **One re-sign round, within Stacy's batching limits** (her U3-kickoff read § 5; ballot `.kiro/docs/ballots/2026-10-01-signing-act-chain.md`):
     · only rows on the freshness stale list are in bound;
     · a disposition change with no hash move is out of bound: declared, granted and counted separately, never folded into the batch;
@@ -1381,17 +1398,17 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
     · **The lock**: one refresh after the round, by the guard's own write, from a clean tree. **`outputs` moves here by design**, so every moved output path is listed in the completion doc, and **any moved path other than the declared sidecars and renders is the stop.**
   - `npm test`, full `tsc` and `npm run test:agent-generator` are green on the branch.
 
-  **Primary Artifacts:** `tools/agent-generator/regrounding/derivation.ts`, `tools/agent-generator/regrounding/check-catalog.ts`, `tools/agent-generator/adapters/kiro.ts`, `tools/agent-generator/__tests__/{derivation,derivation.frontmatter,semantics-guard,semantics-guard.fixture}.test.ts`, `tools/agent-generator/__fixtures__/semantics-guard/**`, `tools/agent-generator/__tests__/derivation.shipped-profile.test.ts` (new: the standing application), `canonical/_consumer-output/**` (regenerated sidecars and renders), `canonical/profiles/consumer/**` (seat signatures only; R2: no author edits in U3g, PR-11), `.kiro/agents/*.json.attribution.json` (R2, Lina RC-7: regenerated, never hand-edited), `tools/agent-generator/spans.ts` (R2, Lina RC-8: only if the ruling places G2-F3's fix there), `canonical/generated.lock`, `.kiro/specs/123-consumer-distribution/completion/u3g-sizing.md`
+  **Primary Artifacts:** `tools/agent-generator/regrounding/derivation.ts`, `tools/agent-generator/regrounding/check-catalog.ts`, `tools/agent-generator/adapters/kiro.ts`, `tools/agent-generator/__tests__/{derivation,derivation.frontmatter,semantics-guard,semantics-guard.fixture}.test.ts`, `tools/agent-generator/__fixtures__/semantics-guard/**`, `tools/agent-generator/__tests__/derivation.shipped-profile.test.ts` (new: the standing application), `canonical/_consumer-output/**` (regenerated sidecars and renders), `canonical/profiles/consumer/**` (seat signatures only; R2: no author edits in U3g, PR-11), `.kiro/agents/*.json.attribution.json` (R2, Lina RC-7: regenerated, never hand-edited), `.kiro/agents/*-prompt.md` (amendment 2026-10-12, Peter's ruling (A): regenerated, never hand-edited), `tools/agent-generator/__tests__/{grain-guard.two-sided,kiro-adapter,consumer-rendering.survivors}.test.ts` and `canonical/_fixture-output/kiro/.kiro/agents/_fixture.json.attribution.json` (amendment 2026-10-12: Peter granted), `tools/agent-generator/spans.ts` (R2, Lina RC-8: only if the ruling places G2-F3's fix there), `canonical/generated.lock`, `.kiro/specs/123-consumer-distribution/completion/u3g-sizing.md`
 
-  - [ ] 29.0 Read-only sizing re-run on the ruled text; the ceiling check (stop if any limb is exceeded)
-  - [ ] 29.1 Clause 2 per the ruling; attack (f) and one-token-variant fixtures; two-sided bites
-  - [ ] 29.2 Clause-1 rows rebuilt on the generator's emission of attack (a) (G2-F3, MP-1)
-  - [ ] 29.3 Kiro-JSON per-entry attribution spans (the six rows)
-  - [ ] 29.4 The standing application to the shipped profile on every PR touching its inputs (G2-F2; Stacy's condition (a)); the declared input set
-  - [ ] 29.6 One re-sign round within Stacy's limits; the lock refresh *(R2: 29.5 moved to U3c as Task 31, PR-11; the numbers are kept so that references stay valid)*
-  - [ ] 29.7 Full validation
+  - [x] 29.0 Read-only sizing re-run on the ruled text; the ceiling check (stop if any limb is exceeded)
+  - [x] 29.1 Clause 2 per the ruling; attack (f) and one-token-variant fixtures; two-sided bites
+  - [x] 29.2 Clause-1 rows rebuilt on the generator's emission of attack (a) (G2-F3, MP-1)
+  - [x] 29.3 Kiro-JSON per-entry attribution spans (the six rows)
+  - [x] 29.4 The standing application to the shipped profile on every PR touching its inputs (G2-F2; Stacy's condition (a)); the declared input set
+  - [x] 29.6 One re-sign round within Stacy's limits; the lock refresh *(R2: 29.5 moved to U3c as Task 31, PR-11; the numbers are kept so that references stay valid)*
+  - [x] 29.7 Full validation
 
-- [ ] 30. **G2 cycle-2 gate parent** (**U3g gating parent**)
+- [x] 30. **G2 cycle-2 gate parent** (**U3g gating parent**)
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY **Lina (Opus)** — executing agent; **Stacy authors the attack file and the verdict record (outside the line); Thurgood recused**
   **Traces**: Reqs 11.8, 11.8.4, 24.3 · design § "Gates and sequencing" (G2) · Peter's PR-5
@@ -1419,10 +1436,10 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `.kiro/specs/123-consumer-distribution/completion/g2-cycle-2-consequence-texts.md`, Stacy's attack file and verdict record (cited), this parent's completion doc's 24.3 table
 
-  - [ ] 30.0 Commit the pre-declared consequence texts (C0′)
-  - [ ] 30.1 Freeze H′; request cycle 2 from Stacy; hold the input set until the verdict
-  - [ ] 30.2 Apply the verdict's consequence byte-equal (on `HOLDS`)
-  - [ ] 30.3 Full validation; open the U3g PR (on `HOLDS` only; tripwire line)
+  - [x] 30.0 Commit the pre-declared consequence texts (C0′)
+  - [x] 30.1 Freeze H′; request cycle 2 from Stacy; hold the input set until the verdict
+  - [x] 30.2 Apply the verdict's consequence byte-equal (on `HOLDS`)
+  - [x] 30.3 Full validation; open the U3g PR (on `HOLDS` only; tripwire line)
 
 ### UNIT 4 — Content policy
 

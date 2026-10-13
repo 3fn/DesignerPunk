@@ -270,6 +270,7 @@ Provide your counter-arguments; if your human lead proceeds, respect it; proceed
 - Token formula validation tests — Ada's domain
 
 Run component tests with your repo's own test runner and scripts — read them from its `package.json` before you run anything.
+
 ## Ground truth
 
 Your ground-truth manifest IS the live catalog — served fresh by MCP, never a standing snapshot. Faithfulness checks are assembly-grain, not catalog enumeration: verify with `get_component_full` and `get_component_health`.

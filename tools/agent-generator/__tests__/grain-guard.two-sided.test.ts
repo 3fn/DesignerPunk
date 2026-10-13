@@ -21,7 +21,7 @@ import { AttributionAccumulator } from '../attribution';
 import { splitFrontmatter } from '../frontmatter';
 import { entryTree, partition } from '../partition';
 import { emitSpans, type Dispositions } from '../spans';
-import { checkDerivation } from '../regrounding/derivation';
+import { checkDerivation, renderedSpans } from '../regrounding/derivation';
 import { g1Fixture, readG1Rendering } from '../__fixtures__/g1-renderings';
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..');
@@ -42,8 +42,9 @@ function render(profileRows: Record<string, Row>, overlay: Record<string, string
   for (const unit of tree.units) rows[unit.anchor] = { disposition: 'retained' };
   for (const [anchor, row] of Object.entries(profileRows)) if (tree.has(anchor)) rows[anchor] = row; // a row naming no current unit cannot apply (13.5 refuses it as orphaned)
   const acc = new AttributionAccumulator();
-  emitSpans(acc, { file: FILE, body, frontmatter }, 'consumer', { body: rows }, { units: overlay }, 'body');
-  return { tree, spans: acc.build('stacy.md').spans };
+  const out = emitSpans(acc, { file: FILE, body, frontmatter }, 'consumer', { body: rows }, { units: overlay }, 'body');
+  // Spans with their rendered lines: the input shape the check reads since Spec 123 Task 29.2 (ruling R2).
+  return { tree, spans: renderedSpans(acc.build('stacy.md').spans, out.text) };
 }
 const verdict = (r: ReturnType<typeof render>, s: string, destination: string) =>
   checkDerivation({ file: FILE, trees: { body: r.tree, entry: entryTree(frontmatter) }, spans: r.spans, s, destination }).verdict;

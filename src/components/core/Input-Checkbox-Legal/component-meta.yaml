@@ -25,15 +25,5 @@ contexts:
   - "settings-screens"
 
 alternatives:
-  - component: Input-Text-Email
-    reason: "When email address collection"
-  - component: Input-Text-Password
-    reason: "When password entry"
-  - component: Input-Text-PhoneNumber
-    reason: "When phone number collection"
-  - component: Input-Text-Base
-    reason: "When generic text input"
   - component: Input-Checkbox-Base
-    reason: "When generic binary selection"
-  - component: Input-Radio-Base
-    reason: "When standalone radio (rare)"
+    reason: "When the checkbox is an ordinary preference or selection rather than a consent record"

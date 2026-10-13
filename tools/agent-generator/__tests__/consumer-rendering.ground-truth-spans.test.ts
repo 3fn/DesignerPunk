@@ -140,7 +140,9 @@ describe('VALVE-1 — the trims leg renders one span per signed row (consumer pr
     const spans = readConsumerSpans(tmp)!;
     for (const target of [CC, KIRO]) {
       const of = (source: string) => (spans.get(source) ?? []).filter((p) => p.artifact === target).map((p) => p.text);
-      expect(of(CONTAINER)).toEqual(['## Ground truth\n\n']);
+      // Kiro's container carries the blank line before the heading (Task 31.1; the CC section already has one from
+      // the body above it): the heading's OWN span, never the preceding body unit's last span.
+      expect(of(CONTAINER)).toEqual([target === KIRO ? '\n## Ground truth\n\n' : '## Ground truth\n\n']);
       expect(of(VERDICT)).toHaveLength(1);
       expect(of(VERDICT)[0]).toMatch(/^Your token ground truth is served LIVE by MCP .* query the live tool instead:\n$/);
       expect(of(ALPHA)).toHaveLength(1);
@@ -155,6 +157,54 @@ describe('VALVE-1 — the trims leg renders one span per signed row (consumer pr
     const directive = deriveGroundTruthDirective(TRIMS)!;
     expect(read(CC)).toContain(`## Ground truth\n\n${renderGroundTruthTrims(directive, (t) => `mcp__designerpunk-docs__${t}`)}\n\n`);
     expect(read(KIRO)).toContain(`## Ground truth\n\n${renderGroundTruthTrims(directive, (t) => t)}\n\n`);
+  });
+
+  // Task 31.1 (ii) — `.kiro/issues/2026-10-02-kiro-ground-truth-heading-no-blank-line.md`.
+  it('(31.1 ii) Kiro: exactly ONE blank line before `## Ground truth`, held by the CONTAINER span — the preceding body unit\'s last span does not move', async () => {
+    await renderTwin(TRIMS);
+    const spans = readConsumerSpans(tmp)!;
+    const of = (source: string, target: string) => (spans.get(source) ?? []).filter((p) => p.artifact === target).map((p) => p.text);
+
+    // the output: one blank line, never zero, never two
+    expect(read(KIRO)).toContain('Kept verbatim.\n\n## Ground truth\n\n');
+    expect(read(KIRO)).not.toContain('\n\n\n## Ground truth');
+    expect(read(KIRO)).not.toContain('Kept verbatim.\n## Ground truth');
+
+    // the container span holds the blank line; the CC container does not (CC's blank line, in a real agent, comes from the
+    // ambient section above the heading — this twin has no ambient members — so CC is not asserted here and is not touched)
+    expect(of(CONTAINER, KIRO)).toEqual(['\n## Ground truth\n\n']);
+    expect(of(CONTAINER, CC)).toEqual(['## Ground truth\n\n']);
+
+    // the PRECEDING body span, in both targets: its text ends with the body's own last line and the one newline it always
+    // had. A blank line moved into it would make it end `\n\n` here, and would move that unit's rows' rendered hashes.
+    const lastBody = of(`${CHARTER}#kept`, KIRO).map((text) => ({ text })); // the twin's last body unit (`## Kept`)
+    expect(lastBody.length).toBeGreaterThan(0);
+    for (const piece of lastBody) {
+      expect(piece.text.endsWith('Kept verbatim.\n')).toBe(true);
+      expect(piece.text.endsWith('\n\n')).toBe(false);
+    }
+  });
+
+  it('(31.1 ii) the COMMITTED consumer output: every Kiro container span opens with the blank line, every CC one does not, and no Kiro `#what-you-dont-own` span ends in a blank line', () => {
+    const spans = readConsumerSpans(REPO_ROOT)!;
+    expect(spans).toBeDefined();
+    let kiroSeen = 0;
+    for (const agent of ['kenya', 'data', 'lina']) {
+      const container = spans.get(`canonical/agents/${agent}.md#frontmatter:ambient.groundTruthManifest`) ?? [];
+      for (const p of container) {
+        if (p.artifact.includes('/kiro/')) {
+          kiroSeen++;
+          expect({ agent, artifact: p.artifact, text: p.text }).toEqual({ agent, artifact: p.artifact, text: '\n## Ground truth\n\n' });
+        } else {
+          expect({ agent, artifact: p.artifact, text: p.text }).toEqual({ agent, artifact: p.artifact, text: '## Ground truth\n\n' });
+        }
+      }
+      // the unit directly above the heading keeps its single trailing newline (its rows' rendered hashes did not move)
+      for (const p of spans.get(`canonical/agents/${agent}.md#what-you-dont-own`) ?? []) {
+        if (p.artifact.includes('/kiro/')) expect({ agent, endsInBlank: p.text.endsWith('\n\n') }).toEqual({ agent, endsInBlank: false });
+      }
+    }
+    expect(kiroSeen).toBe(3); // kenya, data, lina: the three consumer Kiro prompts that carry the section
   });
 
   it("editing one trim's rendered text moves that trim's hash and no other row's", async () => {

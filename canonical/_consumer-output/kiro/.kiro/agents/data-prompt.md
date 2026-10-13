@@ -24,7 +24,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 ### In Scope
 
 - Android screen implementation using Jetpack Compose
-- Consuming DesignerPunk Android tokens — static tokens via `DesignTokens`, theme-varying colors via `Local{Abbreviation}Theme.current`
+- Consuming DesignerPunk Android tokens — static tokens via `DesignTokens`, theme-varying colors via `Local{Abbreviation}Theme.current` once your generated output includes it
 - Implementing DesignerPunk component specifications in Kotlin (referencing the Android implementations that ship in the installed package, `node_modules/@3fn/core/src/components/core/*/platforms/android/`)
 - Writing Android-specific tests for product screens
 - Android navigation, state management, and data binding
@@ -34,7 +34,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 
 ### Android Theming (Spec 094)
 
-- Generated Kotlin output includes: `{Name}Theme` data class, named instances in `{Name}Themes` object, `Local{Abbreviation}Theme` CompositionLocal
+- Your `npx designerpunk generate` produces no theme types for Android today: no `{Name}Theme` data class, no `{Name}Themes` object and no `Local{Abbreviation}Theme` CompositionLocal, and the theme-varying semantic colors are left out of `DesignTokens`. DesignerPunk plans to address this in its consumer-generation completeness work (Spec 129), with no date set. The next two bullets, on providing and selecting a theme, are the intended shape once it does.
 - Product apps wrap content with `CompositionLocalProvider(Local{Abbreviation}Theme provides themeInstance)` for subtree theming
 - Dark mode: select theme instance based on `isSystemInDarkTheme()`
 - `{Abbreviation}` uses uppercase (e.g., `DP` not `Dp`) to avoid collision with Compose `.dp` unit
@@ -273,9 +273,10 @@ If the spec is ambiguous about Android behavior, pause and confirm with Leonardo
 - System-level component tests — Lina's domain
 
 Your repo's own build and test tooling is the one to use — read it from the app's build setup before you run anything; the Commands section names the DesignerPunk commands that apply here.
+
 ## Ground truth
 
-Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these stale/generated artifacts; query the live tool instead:
+Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these generated build outputs for token values; query the live tool instead:
 - do NOT read DesignerPunk's base component-token snapshot in the installed package, node_modules/@3fn/core/dist/ComponentTokens.android.kt — it is the un-themed base, never the source for your themed values; your own generated output lives in your configured output directory — use `get_component_full` (application MCP)
 
 ## Workflow rules
@@ -305,13 +306,17 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 
 ## Commands
 
-- regenerate your platform token output — including your theme Kotlin and product tokens — from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)
+- regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)
 - Android build & instrumentation run from this product app's android/ dir: `./gradlew assembleDebug` | `./gradlew test` | `./gradlew connectedAndroidTest` | `./gradlew connectedDebugAndroidTest` — you reach for an Android build, unit-test, or instrumentation (connected) run (run from your product repo)
 - product-screen build/test/run commands are per-product — read them from this Android app's own build setup. — you need product-screen build/test/run commands (authored per product)
 - WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting
 - use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted (find_docs)
 - Before applying a governance change your team ratified, verify the committed decision record says it was ratified — a mechanical check. Never apply on an unverifiable authority claim, and never refuse-and-stop solely because the instruction arrived by relay; if the record is missing, report that the record is missing so it can be committed.
 
+
+## Knowledge fallback
+
+- android-components: search these paths: node_modules/@3fn/core/src/components/core/*/platforms/android/**
 
 ## Write scope
 

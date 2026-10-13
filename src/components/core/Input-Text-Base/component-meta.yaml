@@ -25,14 +25,8 @@ contexts:
 
 alternatives:
   - component: Input-Text-Email
-    reason: "When email address collection"
+    reason: "When the field collects an email address and needs format validation and the email keyboard"
   - component: Input-Text-Password
-    reason: "When password entry"
+    reason: "When the value is secret and must be masked"
   - component: Input-Text-PhoneNumber
-    reason: "When phone number collection"
-  - component: Input-Checkbox-Legal
-    reason: "When terms of service acceptance"
-  - component: Input-Checkbox-Base
-    reason: "When generic binary selection"
-  - component: Input-Radio-Base
-    reason: "When standalone radio (rare)"
+    reason: "When the field collects a phone number and needs formatting and the phone keyboard"

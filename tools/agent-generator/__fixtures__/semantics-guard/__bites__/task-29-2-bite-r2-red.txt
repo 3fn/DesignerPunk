@@ -1,0 +1,356 @@
+# BITE r2 (Task 29.2): ruling R2 switched off (every contained span derives, as before 29.2) (two-sided, RED side)
+# mutation: tools/agent-generator/regrounding/derivation.ts
+# command: npx jest --config tools/agent-generator/jest.config.js tools/agent-generator/__tests__/derivation.test.ts tools/agent-generator/__tests__/derivation.frontmatter.test.ts tools/agent-generator/__tests__/semantics-guard.test.ts -t 29.2 --verbose
+# base commit: 4a8b65cf + the working tree under test; run 2026-10-13T02:30:05Z
+# --- mutation diff ---
+--- a/tools/agent-generator/regrounding/derivation.ts
++++ b/tools/agent-generator/regrounding/derivation.ts (mutated)
+@@ -221,7 +221,7 @@
+   };
+   // R2: a span that renders nothing (body, member) or whose entry's derived value is empty (frontmatter) derives nothing.
+   const derives = (ref: TreeRef, text: string): boolean =>
+-    ref.tree === 'entry' ? input.derivedValue !== undefined && !isEmptyEntryValue(input.derivedValue(ref.id)) : !isEmptyRendering(text);
++    true; // BITE: R2 off — every contained span derives
+   const d = input.spans
+     .map((span) => ({ source: span.source, text: span.text, ref: sourceRef(span.source) }))
+     .filter((x): x is { source: string; text: string; ref: TreeRef } => x.ref !== undefined && containedIn(x.ref, s, input.trees) && derives(x.ref, x.text));
+# --- jest output ---
+FAIL tools/agent-generator/__tests__/derivation.test.ts
+  the rendering fixtures are what they claim
+    ○ skipped S and the trigger set are SIBLINGS under one ## parent (attack (a)’s shape, measured)
+    ○ skipped E is zero-verbatim inside its destination (10.S Constraint 3) and renders as a render span sourcing S
+  11.4 over generator-emitted spans (the criterion row)
+    ○ skipped E → VERIFIED (the honest re-pointing: S re-grounded in place, destination S)
+    ○ skipped attack (a) → FAIL_NO_DERIVATION (S’s content moved into its SIBLING; the disposition names the sibling)
+    ○ skipped attack (a) at ## grain → FAIL_NO_DERIVATION (a span sourcing the ANCESTOR is a super-range, excluded)
+    ○ skipped #body → non-matching, never a throw (the pre-123 bypass span)
+  containment is structural, within one tree (the R4 pin)
+    ○ skipped a sibling that shares an anchor PREFIX is not contained (never prefix matching)
+    ○ skipped a :preamble unit is contained in its parent; the parent is NOT contained in its :preamble
+    ○ skipped entry tree: a member is contained in its container; the container is NOT contained in a member
+    ○ skipped cross-tree never matches: a body span cannot derive a frontmatter S, nor the reverse
+    ○ skipped with no entry tree supplied, every frontmatter reference is non-matching (not a throw)
+  what is not in D
+    ○ skipped spans from another file, generator glue, and profile-originated sources (10.S) never derive S
+    ○ skipped an S that names no current unit (a rename orphaned it) is FAIL_NO_DERIVATION, not a throw
+  HONEST NAMING
+    ○ skipped S derived, but the destination names a sibling → FAIL_DISHONEST_NAMING
+    ○ skipped naming the ## parent that contains S is not naming S (Task 29.1; was VERIFIED under containment) → FAIL_DISHONEST_NAMING
+    ○ skipped the verdict set is the design’s three, closed
+  29.1 — HONEST NAMING is identity (ruling R1; G2-F1)
+    ○ skipped attack (f): S re-grounded in place, destination S’s ## parent → FAIL_DISHONEST_NAMING
+    ○ skipped attack (f) at every ancestor: no ancestor of S names S
+    ○ skipped the one-token variant of attack (a) that passed under containment (S reduced to one token, destination its ## parent) → FAIL_DISHONEST_NAMING
+    ○ skipped the one-token variant with a sibling destination (V1) → FAIL_DISHONEST_NAMING (rejected in both directions; not a two-sided case)
+    ○ skipped the honest in-place re-pointing stays VERIFIED (destination = S)
+    ○ skipped an unknown destination (U1) is non-matching, never a throw → FAIL_DISHONEST_NAMING
+    ○ skipped a destination in the other tree (U2) never matches → FAIL_DISHONEST_NAMING
+    ○ skipped sameNode is mutual containment: same node only; prefix siblings, parent/:preamble, unknown ids and cross-tree are not the same
+  29.1 — the shared-catalog member space (ruling R1: id equality)
+    ○ skipped a span sourcing the member, destination the member (M0) → VERIFIED
+    ○ skipped destination a sibling member id (M1) → FAIL_DISHONEST_NAMING
+    ○ skipped only a sibling member, another file or glue is rendered → FAIL_NO_DERIVATION
+  29.2 — an empty span derives nothing (ruling R2; G2-F3, MP-1)
+    ✓ the generator’s emission of attack (a): an emptied re-pointed overlay renders ONE blank line attributed to S
+    ✕ A1 (attack (a) verbatim: emptied, sibling destination) → FAIL_NO_DERIVATION
+    ✕ A3 (emptied, destination S’s ## parent) → FAIL_NO_DERIVATION
+    ✕ A4 (emptied in place, destination S) → FAIL_NO_DERIVATION
+    ✕ WS1 (spaces, tabs and blank lines only) → FAIL_NO_DERIVATION
+    ✕ WS2 (U+00A0 only — trim() removes it) → FAIL_NO_DERIVATION
+    ✓ A2 (emptied to its heading line: the heading is text), sibling destination → FAIL_DISHONEST_NAMING (D non-empty; clause 2 decides)
+    ✓ WS3 (U+200B only — not removed by trim(), so text), sibling destination → FAIL_DISHONEST_NAMING (D non-empty; clause 2 decides)
+    ✓ WS4 (an HTML comment only — text), sibling destination → FAIL_DISHONEST_NAMING (D non-empty; clause 2 decides)
+    ✓ WS5 (a single "." — text), sibling destination → FAIL_DISHONEST_NAMING (D non-empty; clause 2 decides)
+    ✓ V1 (one token), sibling destination → FAIL_DISHONEST_NAMING (D non-empty; clause 2 decides)
+    ✕ a whitespace-only span does not hide a non-empty one: D keeps the span that renders text
+    ✕ the shared-catalog member lane (provisional, flagged: R2 is silent on members) is held to the rendered-text rule
+  29.2 — the always-set lane, through the same span function (AS1, AS2)
+    ✓ the fixture is what it claims: S_AS and T_AS are siblings in the always-set member’s tree
+    ✕ AS1 (emptied, sibling destination) → FAIL_NO_DERIVATION
+    ✓ AS2 (emptied to its heading line, sibling destination) → FAIL_DISHONEST_NAMING
+
+  ● 29.2 — an empty span derives nothing (ruling R2; G2-F3, MP-1) › A1 (attack (a) verbatim: emptied, sibling destination) → FAIL_NO_DERIVATION
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "A1 (attack (a) verbatim: emptied, sibling destination): FAIL_NO_DERIVATION"
+    Received: "A1 (attack (a) verbatim: emptied, sibling destination): FAIL_DISHONEST_NAMING"
+
+      268 |     const r = render({ [S]: { disposition: 're-pointed', overlay } });
+      269 |     expect(sSpans(r)).toHaveLength(1); // the span IS emitted — R2, not the emission, excludes it
+    > 270 |     expect(`${label}: ${check(r.spans, S, destination).verdict}`).toBe(`${label}: FAIL_NO_DERIVATION`);
+          |                                                                   ^
+      271 |   });
+      272 |
+      273 |   it.each([
+
+      at __tests__/derivation.test.ts:270:67
+
+  ● 29.2 — an empty span derives nothing (ruling R2; G2-F3, MP-1) › A3 (emptied, destination S’s ## parent) → FAIL_NO_DERIVATION
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "A3 (emptied, destination S’s ## parent): FAIL_NO_DERIVATION"
+    Received: "A3 (emptied, destination S’s ## parent): FAIL_DISHONEST_NAMING"
+
+      268 |     const r = render({ [S]: { disposition: 're-pointed', overlay } });
+      269 |     expect(sSpans(r)).toHaveLength(1); // the span IS emitted — R2, not the emission, excludes it
+    > 270 |     expect(`${label}: ${check(r.spans, S, destination).verdict}`).toBe(`${label}: FAIL_NO_DERIVATION`);
+          |                                                                   ^
+      271 |   });
+      272 |
+      273 |   it.each([
+
+      at __tests__/derivation.test.ts:270:67
+
+  ● 29.2 — an empty span derives nothing (ruling R2; G2-F3, MP-1) › A4 (emptied in place, destination S) → FAIL_NO_DERIVATION
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "A4 (emptied in place, destination S): FAIL_NO_DERIVATION"
+    Received: "A4 (emptied in place, destination S): VERIFIED"
+
+      268 |     const r = render({ [S]: { disposition: 're-pointed', overlay } });
+      269 |     expect(sSpans(r)).toHaveLength(1); // the span IS emitted — R2, not the emission, excludes it
+    > 270 |     expect(`${label}: ${check(r.spans, S, destination).verdict}`).toBe(`${label}: FAIL_NO_DERIVATION`);
+          |                                                                   ^
+      271 |   });
+      272 |
+      273 |   it.each([
+
+      at __tests__/derivation.test.ts:270:67
+
+  ● 29.2 — an empty span derives nothing (ruling R2; G2-F3, MP-1) › WS1 (spaces, tabs and blank lines only) → FAIL_NO_DERIVATION
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "WS1 (spaces, tabs and blank lines only): FAIL_NO_DERIVATION"
+    Received: "WS1 (spaces, tabs and blank lines only): FAIL_DISHONEST_NAMING"
+
+      268 |     const r = render({ [S]: { disposition: 're-pointed', overlay } });
+      269 |     expect(sSpans(r)).toHaveLength(1); // the span IS emitted — R2, not the emission, excludes it
+    > 270 |     expect(`${label}: ${check(r.spans, S, destination).verdict}`).toBe(`${label}: FAIL_NO_DERIVATION`);
+          |                                                                   ^
+      271 |   });
+      272 |
+      273 |   it.each([
+
+      at __tests__/derivation.test.ts:270:67
+
+  ● 29.2 — an empty span derives nothing (ruling R2; G2-F3, MP-1) › WS2 (U+00A0 only — trim() removes it) → FAIL_NO_DERIVATION
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "WS2 (U+00A0 only — trim() removes it): FAIL_NO_DERIVATION"
+    Received: "WS2 (U+00A0 only — trim() removes it): FAIL_DISHONEST_NAMING"
+
+      268 |     const r = render({ [S]: { disposition: 're-pointed', overlay } });
+      269 |     expect(sSpans(r)).toHaveLength(1); // the span IS emitted — R2, not the emission, excludes it
+    > 270 |     expect(`${label}: ${check(r.spans, S, destination).verdict}`).toBe(`${label}: FAIL_NO_DERIVATION`);
+          |                                                                   ^
+      271 |   });
+      272 |
+      273 |   it.each([
+
+      at __tests__/derivation.test.ts:270:67
+
+  ● 29.2 — an empty span derives nothing (ruling R2; G2-F3, MP-1) › a whitespace-only span does not hide a non-empty one: D keeps the span that renders text
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+      Object {
+        "derived": Array [
+          "canonical/agents/stacy.md#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script",
+    +     "canonical/agents/stacy.md#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script",
+        ],
+        "verdict": "VERIFIED",
+      }
+
+      283 |
+      284 |   it('a whitespace-only span does not hide a non-empty one: D keeps the span that renders text', () => {
+    > 285 |     expect(check([{ source: `${FILE}${S}`, text: '\n' }, { source: `${FILE}${S}`, text: 'Owed.\n' }], S, S)).toEqual({ verdict: 'VERIFIED', derived: [`${FILE}${S}`] });
+          |                                                                                                              ^
+      286 |     expect(check([{ source: `${FILE}${S}`, text: '  \n\t\n' }], S, S)).toEqual({ verdict: 'FAIL_NO_DERIVATION', derived: [] });
+      287 |   });
+      288 |
+
+      at Object.<anonymous> (__tests__/derivation.test.ts:285:110)
+
+  ● 29.2 — an empty span derives nothing (ruling R2; G2-F3, MP-1) › the shared-catalog member lane (provisional, flagged: R2 is silent on members) is held to the rendered-text rule
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+    -   "FAIL_NO_DERIVATION",
+    +   "VERIFIED",
+        "VERIFIED",
+      ]
+
+      290 |     const v = (text: string) =>
+      291 |       checkDerivation({ file: SHARED_CATALOG_FILE, trees: { body: partition('') }, spans: [{ source: `${SHARED_CATALOG_FILE}#record-first-ratification`, text }], s: 'record-first-ratification', destination: 'record-first-ratification' }).verdict;
+    > 292 |     expect([v('\n'), v('- record-first ratification\n')]).toEqual(['FAIL_NO_DERIVATION', 'VERIFIED']);
+          |                                                           ^
+      293 |   });
+      294 | });
+      295 |
+
+      at Object.<anonymous> (__tests__/derivation.test.ts:292:59)
+
+  ● 29.2 — the always-set lane, through the same span function (AS1, AS2) › AS1 (emptied, sibling destination) → FAIL_NO_DERIVATION
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "AS1: FAIL_NO_DERIVATION"
+    Received: "AS1: FAIL_DISHONEST_NAMING"
+
+      315 |
+      316 |   it('AS1 (emptied, sibling destination) → FAIL_NO_DERIVATION', () => {
+    > 317 |     expect(`AS1: ${asCheck(renderAs(''), T_AS)}`).toBe('AS1: FAIL_NO_DERIVATION');
+          |                                                   ^
+      318 |   });
+      319 |
+      320 |   it('AS2 (emptied to its heading line, sibling destination) → FAIL_DISHONEST_NAMING', () => {
+
+      at Object.<anonymous> (__tests__/derivation.test.ts:317:51)
+
+FAIL tools/agent-generator/__tests__/derivation.frontmatter.test.ts
+  11.4 on the entry tree — commands[<name>]
+    ○ skipped the fixture is what it claims: lina.md’s commands are sibling members keyed by name
+    ○ skipped commands[<name>] emptied (omitted) with a sibling destination → FAIL_NO_DERIVATION
+    ○ skipped commands[<name>] emptied (kept, no text) with a sibling destination → FAIL_NO_DERIVATION
+    ○ skipped control — the member rendered, destination itself → VERIFIED
+    ○ skipped control — the member rendered, but the destination names its sibling → FAIL_DISHONEST_NAMING
+    ○ skipped a span on the commands CONTAINER does not derive a member (ancestor = super-range)
+  29.1 — HONEST NAMING is identity on the entry tree (ruling R1; G2-F1, F5’s shape)
+    ○ skipped a rendered member with its parent entry as destination (F5c) → FAIL_DISHONEST_NAMING
+    ○ skipped the same member with itself as destination → VERIFIED
+  29.2 — an empty derived value derives nothing (ruling R2; F3, FS1)
+    ✕ FS1: `description` re-pointed to a string of spaces → derive() accepts it (a string) and the check returns FAIL_NO_DERIVATION
+    ✓ F3 (frontmatter attack (a), verbatim shape: key set kept, string fields emptied) → the value keeps members, so D is non-empty; sibling destination → FAIL_DISHONEST_NAMING
+    ✕ with no derived-value lookup supplied, no frontmatter span is in D (fail-closed)
+
+  ● 29.2 — an empty derived value derives nothing (ruling R2; F3, FS1) › FS1: `description` re-pointed to a string of spaces → derive() accepts it (a string) and the check returns FAIL_NO_DERIVATION
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "FS1: FAIL_NO_DERIVATION"
+    Received: "FS1: VERIFIED"
+
+      121 |     const r = deriveAndRender('description', '"     "\n', (val) => `description: ${JSON.stringify(val)}\n`);
+      122 |     expect(r.spans.map((s) => s.text.trim())).toEqual(['description: "     "']); // the RENDERED text is not blank …
+    > 123 |     expect(`FS1: ${v(r, 'description', 'description')}`).toBe('FS1: FAIL_NO_DERIVATION'); // … the derived value is
+          |                                                          ^
+      124 |   });
+      125 |
+      126 |   it('F3 (frontmatter attack (a), verbatim shape: key set kept, string fields emptied) → the value keeps members, so D is non-empty; sibling destination → FAIL_DISHONEST_NAMING', () => {
+
+      at Object.<anonymous> (__tests__/derivation.frontmatter.test.ts:123:58)
+
+  ● 29.2 — an empty derived value derives nothing (ruling R2; F3, FS1) › with no derived-value lookup supplied, no frontmatter span is in D (fail-closed)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "FAIL_NO_DERIVATION"
+    Received: "VERIFIED"
+
+      134 |   it('with no derived-value lookup supplied, no frontmatter span is in D (fail-closed)', () => {
+      135 |     const spans = renderCommands({});
+    > 136 |     expect(checkDerivation({ file: FILE, trees, spans, s: `frontmatter:${X}`, destination: `frontmatter:${X}` }).verdict).toBe('FAIL_NO_DERIVATION');
+          |                                                                                                                           ^
+      137 |   });
+      138 | });
+      139 |
+
+      at Object.<anonymous> (__tests__/derivation.frontmatter.test.ts:136:123)
+
+FAIL tools/agent-generator/__tests__/semantics-guard.test.ts
+  cc
+    ○ skipped body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+    ○ skipped body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+    frontmatter
+      ○ skipped E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+      ○ skipped E-fm’s re-grounded text is what shipped (not the canonical glob)
+      ○ skipped EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+  kiro
+    ○ skipped body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+    ○ skipped body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+    frontmatter
+      ○ skipped E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+      ○ skipped E-fm’s re-grounded text is what shipped (not the canonical glob)
+      ○ skipped EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+  a fake third target — declared, its adapter injected through the registry, no other edit to the guard
+    ○ skipped the declared list drives the blocks: one more target → one more block
+    ○ skipped a declared target with no registered adapter fails loud, naming it (no silent block)
+    cc
+      ○ skipped body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ○ skipped body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ○ skipped E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ○ skipped E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ○ skipped EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+    kiro
+      ○ skipped body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ○ skipped body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ○ skipped E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ○ skipped E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ○ skipped EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+    fake
+      ○ skipped body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ○ skipped body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      frontmatter
+        ○ skipped E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ○ skipped E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ○ skipped EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+  cc — attack (a) as emitted (29.2)
+    ✓ the emitted rendering carries exactly one blank line attributed to S
+    ✕ A1 (sibling destination) and A4 (destination S) → FAIL_NO_DERIVATION
+  kiro — attack (a) as emitted (29.2)
+    ✓ the emitted rendering carries exactly one blank line attributed to S
+    ✕ A1 (sibling destination) and A4 (destination S) → FAIL_NO_DERIVATION
+
+  ● cc — attack (a) as emitted (29.2) › A1 (sibling destination) and A4 (destination S) → FAIL_NO_DERIVATION
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "cc: A1 FAIL_NO_DERIVATION, A4 FAIL_NO_DERIVATION"
+    Received: "cc: A1 FAIL_DISHONEST_NAMING, A4 VERIFIED"
+
+      150 |     const v = (destination: string) => checkDerivation({ file: SOURCE, trees: fixture.trees, spans, s: S, destination, derivedValue: fixture.derivedValue }).verdict;
+      151 |     const T = '#the-trigger-set-the-114-superset-table-names-never-numbers';
+    > 152 |     expect(`${target}: A1 ${v(T)}, A4 ${v(S)}`).toBe(`${target}: A1 FAIL_NO_DERIVATION, A4 FAIL_NO_DERIVATION`);
+          |                                                 ^
+      153 |   });
+      154 | });
+      155 |
+
+      at Object.<anonymous> (__tests__/semantics-guard.test.ts:152:49)
+
+  ● kiro — attack (a) as emitted (29.2) › A1 (sibling destination) and A4 (destination S) → FAIL_NO_DERIVATION
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "kiro: A1 FAIL_NO_DERIVATION, A4 FAIL_NO_DERIVATION"
+    Received: "kiro: A1 FAIL_DISHONEST_NAMING, A4 VERIFIED"
+
+      150 |     const v = (destination: string) => checkDerivation({ file: SOURCE, trees: fixture.trees, spans, s: S, destination, derivedValue: fixture.derivedValue }).verdict;
+      151 |     const T = '#the-trigger-set-the-114-superset-table-names-never-numbers';
+    > 152 |     expect(`${target}: A1 ${v(T)}, A4 ${v(S)}`).toBe(`${target}: A1 FAIL_NO_DERIVATION, A4 FAIL_NO_DERIVATION`);
+          |                                                 ^
+      153 |   });
+      154 | });
+      155 |
+
+      at Object.<anonymous> (__tests__/semantics-guard.test.ts:152:49)
+
+Test Suites: 3 failed, 3 total
+Tests:       12 failed, 62 skipped, 11 passed, 85 total
+Snapshots:   0 total
+Time:        0.995 s, estimated 1 s
+Ran all test suites matching tools/agent-generator/__tests__/derivation.test.ts|tools/agent-generator/__tests__/derivation.frontmatter.test.ts|tools/agent-generator/__tests__/semantics-guard.test.ts with tests matching "29.2".

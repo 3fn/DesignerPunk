@@ -1,0 +1,57 @@
+# BITE clause2 (Task 29.1): clause (2) restored to the shipped direction, containment (two-sided, GREEN side): no mutation
+# command: npx jest --config tools/agent-generator/jest.config.js tools/agent-generator/__tests__/derivation.test.ts tools/agent-generator/__tests__/derivation.frontmatter.test.ts -t 29.1 --verbose
+# base commit: f32a21f7 + the working tree under test; run 2026-10-13T02:24:40Z
+# --- jest output ---
+PASS tools/agent-generator/__tests__/derivation.test.ts
+  the rendering fixtures are what they claim
+    ○ skipped S and the trigger set are SIBLINGS under one ## parent (attack (a)’s shape, measured)
+    ○ skipped E is zero-verbatim inside its destination (10.S Constraint 3) and renders as a render span sourcing S
+  11.4 over generator-emitted spans (the criterion row)
+    ○ skipped E → VERIFIED (the honest re-pointing: S re-grounded in place, destination S)
+    ○ skipped attack (a) → FAIL_NO_DERIVATION (S’s content moved into its SIBLING; the disposition names the sibling)
+    ○ skipped attack (a) at ## grain → FAIL_NO_DERIVATION (a span sourcing the ANCESTOR is a super-range, excluded)
+    ○ skipped #body → non-matching, never a throw (the pre-123 bypass span)
+  containment is structural, within one tree (the R4 pin)
+    ○ skipped a sibling that shares an anchor PREFIX is not contained (never prefix matching)
+    ○ skipped a :preamble unit is contained in its parent; the parent is NOT contained in its :preamble
+    ○ skipped entry tree: a member is contained in its container; the container is NOT contained in a member
+    ○ skipped cross-tree never matches: a body span cannot derive a frontmatter S, nor the reverse
+    ○ skipped with no entry tree supplied, every frontmatter reference is non-matching (not a throw)
+  what is not in D
+    ○ skipped spans from another file, generator glue, and profile-originated sources (10.S) never derive S
+    ○ skipped an S that names no current unit (a rename orphaned it) is FAIL_NO_DERIVATION, not a throw
+  HONEST NAMING
+    ✓ naming the ## parent that contains S is not naming S (Task 29.1; was VERIFIED under containment) → FAIL_DISHONEST_NAMING
+    ○ skipped S derived, but the destination names a sibling → FAIL_DISHONEST_NAMING
+    ○ skipped the verdict set is the design’s three, closed
+  29.1 — HONEST NAMING is identity (ruling R1; G2-F1)
+    ✓ attack (f): S re-grounded in place, destination S’s ## parent → FAIL_DISHONEST_NAMING
+    ✓ attack (f) at every ancestor: no ancestor of S names S
+    ✓ the one-token variant of attack (a) that passed under containment (S reduced to one token, destination its ## parent) → FAIL_DISHONEST_NAMING
+    ✓ the one-token variant with a sibling destination (V1) → FAIL_DISHONEST_NAMING (rejected in both directions; not a two-sided case)
+    ✓ the honest in-place re-pointing stays VERIFIED (destination = S)
+    ✓ an unknown destination (U1) is non-matching, never a throw → FAIL_DISHONEST_NAMING
+    ✓ a destination in the other tree (U2) never matches → FAIL_DISHONEST_NAMING
+    ✓ sameNode is mutual containment: same node only; prefix siblings, parent/:preamble, unknown ids and cross-tree are not the same
+  29.1 — the shared-catalog member space (ruling R1: id equality)
+    ✓ a span sourcing the member, destination the member (M0) → VERIFIED
+    ✓ destination a sibling member id (M1) → FAIL_DISHONEST_NAMING
+    ✓ only a sibling member, another file or glue is rendered → FAIL_NO_DERIVATION
+
+PASS tools/agent-generator/__tests__/derivation.frontmatter.test.ts
+  11.4 on the entry tree — commands[<name>]
+    ○ skipped the fixture is what it claims: lina.md’s commands are sibling members keyed by name
+    ○ skipped commands[<name>] emptied (omitted) with a sibling destination → FAIL_NO_DERIVATION
+    ○ skipped commands[<name>] emptied (kept, no text) with a sibling destination → FAIL_NO_DERIVATION
+    ○ skipped control — the member rendered, destination itself → VERIFIED
+    ○ skipped control — the member rendered, but the destination names its sibling → FAIL_DISHONEST_NAMING
+    ○ skipped a span on the commands CONTAINER does not derive a member (ancestor = super-range)
+  29.1 — HONEST NAMING is identity on the entry tree (ruling R1; G2-F1, F5’s shape)
+    ✓ a rendered member with its parent entry as destination (F5c) → FAIL_DISHONEST_NAMING
+    ✓ the same member with itself as destination → VERIFIED
+
+Test Suites: 2 passed, 2 total
+Tests:       21 skipped, 14 passed, 35 total
+Snapshots:   0 total
+Time:        0.839 s, estimated 1 s
+Ran all test suites matching tools/agent-generator/__tests__/derivation.test.ts|tools/agent-generator/__tests__/derivation.frontmatter.test.ts with tests matching "29.1".

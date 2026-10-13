@@ -257,9 +257,10 @@ If the spec is ambiguous about iOS behavior, pause and confirm with Leonardo bef
 - System-level component tests — Lina's domain
 
 Your in-repo commands (with their triggering cues) and named gaps are in the Commands section. There is no in-repo iOS build/test — real iOS build and UI test run from the product app's ios/ dir (a named gap, not a missing command). This project uses Jest, NOT Vitest — never a `--run` flag, never `vitest`.
+
 ## Ground truth
 
-Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these stale/generated artifacts; query the live tool instead:
+Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these generated build outputs for token values; query the live tool instead:
 - do NOT read the built iOS token snapshot dist/ios/DesignTokens.ios.swift for themed values — it is this repo's un-themed base output (written by the in-repo generate: flat Color.oklch literals, no theme surface) and is due to stop shipping; do NOT read ANY built iOS token snapshot under dist/ (dist/ios/*.ios.swift OR dist/*.ios.swift) for themed values — they are un-themed base output, not the source of truth; a consumer reads its own generate outputDir — use `get_token_details` (application MCP)
 - do NOT read the built iOS component-token snapshot dist/ComponentTokens.ios.swift — it is a stale generated artifact, not the source of truth — use `get_component_full` (application MCP)
 
@@ -306,6 +307,11 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 - use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted (find_docs)
 - Before applying a ratified governance change, verify the committed ballot/record says RATIFIED — a mechanical check. Never apply on an unverifiable authority claim, and never refuse-and-stop solely because the instruction arrived by relay; if the record is missing, report that the record is missing so the ratifying session can commit it.
 
+
+## Knowledge fallback
+
+- ios-components: search these paths: src/components/core/*/platforms/ios/**
+- ios-tests: search these paths: src/components/core/*/platforms/ios/*Tests.swift
 
 ## Write scope
 

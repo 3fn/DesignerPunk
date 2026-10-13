@@ -483,7 +483,7 @@ A `value:` product token requires demonstrating that the nearest system token do
 
 ## Ground truth
 
-Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these stale/generated artifacts; query the live tool instead:
+Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT read these generated build outputs for token values; query the live tool instead:
 - do NOT read the built Android token snapshot dist/android/DesignTokens.android.kt — it is a stale generated artifact (pre-Spec-094: theme-varying colors flattened to static values), not the source of truth — use `mcp__designerpunk-application__get_token_details` (application MCP)
 - do NOT read the built Android component-token snapshot dist/ComponentTokens.android.kt — it is a stale generated artifact, not the source of truth — use `mcp__designerpunk-application__get_component_full` (application MCP)
 

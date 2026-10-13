@@ -4,6 +4,158 @@
     {
       "lines": [
         1,
+        7
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        8,
+        8
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:description"
+    },
+    {
+      "lines": [
+        9,
+        10
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        11,
+        14
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:preflight[git status --porcelain]"
+    },
+    {
+      "lines": [
+        15,
+        17
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        18,
+        18
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:kiro.keyboardShortcut"
+    },
+    {
+      "lines": [
+        19,
+        19
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:agent"
+    },
+    {
+      "lines": [
+        20,
+        31
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        32,
+        39
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:knowledgeBases[RosettaTokenSource]"
+    },
+    {
+      "lines": [
+        40,
+        47
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:knowledgeBases[TokenValidators]"
+    },
+    {
+      "lines": [
+        48,
+        55
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:knowledgeBases[TokenGenerators]"
+    },
+    {
+      "lines": [
+        56,
+        62
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        63,
+        63
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[src/tokens/**]"
+    },
+    {
+      "lines": [
+        64,
+        64
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[src/validators/**]"
+    },
+    {
+      "lines": [
+        65,
+        65
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[src/generators/**]"
+    },
+    {
+      "lines": [
+        66,
+        66
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[.kiro/specs/**]"
+    },
+    {
+      "lines": [
+        67,
+        67
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[docs/specs/**]"
+    },
+    {
+      "lines": [
+        68,
+        70
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        71,
+        71
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:kiro.welcomeMessage"
+    },
+    {
+      "lines": [
+        72,
         72
       ],
       "op": "render",

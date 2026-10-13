@@ -276,34 +276,26 @@
     {
       "lines": [
         257,
-        263
+        264
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:ambient.groundTruthManifest"
     },
     {
       "lines": [
-        264,
-        267
+        265,
+        268
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        268,
-        269
-      ],
-      "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes"
-    },
-    {
-      "lines": [
-        270,
+        269,
         270
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[web-quality-patterns]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes"
     },
     {
       "lines": [
@@ -311,7 +303,7 @@
         271
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[product-token-authoring]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[web-quality-patterns]"
     },
     {
       "lines": [
@@ -319,7 +311,7 @@
         272
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[product-token-naming]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[product-token-authoring]"
     },
     {
       "lines": [
@@ -327,7 +319,7 @@
         273
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[token-doc-map]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[product-token-naming]"
     },
     {
       "lines": [
@@ -335,7 +327,7 @@
         274
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[completion-doc-guidance]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[token-doc-map]"
     },
     {
       "lines": [
@@ -343,7 +335,7 @@
         275
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[cross-platform-guidance]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[completion-doc-guidance]"
     },
     {
       "lines": [
@@ -351,7 +343,7 @@
         276
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[stemma-principles]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[cross-platform-guidance]"
     },
     {
       "lines": [
@@ -359,7 +351,7 @@
         277
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[test-dev-standards]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[stemma-principles]"
     },
     {
       "lines": [
@@ -367,7 +359,7 @@
         278
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[bcv-guidance]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[test-dev-standards]"
     },
     {
       "lines": [
@@ -375,7 +367,7 @@
         279
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[token-lookup-beyond]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[bcv-guidance]"
     },
     {
       "lines": [
@@ -383,7 +375,7 @@
         280
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[dev-workflow-detail]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[token-lookup-beyond]"
     },
     {
       "lines": [
@@ -391,7 +383,7 @@
         281
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[file-organization]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[dev-workflow-detail]"
     },
     {
       "lines": [
@@ -399,7 +391,7 @@
         282
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[contract-concept-names-add]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[file-organization]"
     },
     {
       "lines": [
@@ -407,7 +399,7 @@
         283
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.agents[leonardo]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.docs[contract-concept-names-add]"
     },
     {
       "lines": [
@@ -415,7 +407,7 @@
         284
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[0]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.agents[leonardo]"
     },
     {
       "lines": [
@@ -423,7 +415,7 @@
         285
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[1]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[0]"
     },
     {
       "lines": [
@@ -431,7 +423,7 @@
         286
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[2]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[1]"
     },
     {
       "lines": [
@@ -439,7 +431,7 @@
         287
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[3]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[2]"
     },
     {
       "lines": [
@@ -447,7 +439,7 @@
         288
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[4]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[3]"
     },
     {
       "lines": [
@@ -455,7 +447,7 @@
         289
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[5]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[4]"
     },
     {
       "lines": [
@@ -463,7 +455,7 @@
         290
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[6]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[5]"
     },
     {
       "lines": [
@@ -471,7 +463,7 @@
         291
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[7]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[6]"
     },
     {
       "lines": [
@@ -479,7 +471,7 @@
         292
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[8]"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[7]"
     },
     {
       "lines": [
@@ -487,23 +479,23 @@
         293
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:routes"
+      "source": "canonical/agents/sparky.md#frontmatter:routes.cues[8]"
     },
     {
       "lines": [
         294,
-        295
+        294
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:commands"
+      "source": "canonical/agents/sparky.md#frontmatter:routes"
     },
     {
       "lines": [
-        296,
+        295,
         296
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:commands[build]"
+      "source": "canonical/agents/sparky.md#frontmatter:commands"
     },
     {
       "lines": [
@@ -511,7 +503,7 @@
         297
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:commands[build-browser]"
+      "source": "canonical/agents/sparky.md#frontmatter:commands[build]"
     },
     {
       "lines": [
@@ -519,7 +511,7 @@
         298
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:commands[web-tests]"
+      "source": "canonical/agents/sparky.md#frontmatter:commands[build-browser]"
     },
     {
       "lines": [
@@ -527,7 +519,7 @@
         299
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:commands[functional-suite]"
+      "source": "canonical/agents/sparky.md#frontmatter:commands[web-tests]"
     },
     {
       "lines": [
@@ -535,7 +527,7 @@
         300
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:commands[lint]"
+      "source": "canonical/agents/sparky.md#frontmatter:commands[functional-suite]"
     },
     {
       "lines": [
@@ -543,7 +535,7 @@
         301
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:commands[serve]"
+      "source": "canonical/agents/sparky.md#frontmatter:commands[lint]"
     },
     {
       "lines": [
@@ -551,7 +543,7 @@
         302
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:commands[test-consumer]"
+      "source": "canonical/agents/sparky.md#frontmatter:commands[serve]"
     },
     {
       "lines": [
@@ -559,7 +551,7 @@
         303
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:commands[consumer-generate]"
+      "source": "canonical/agents/sparky.md#frontmatter:commands[test-consumer]"
     },
     {
       "lines": [
@@ -567,7 +559,7 @@
         304
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:commands[web-dev-server]"
+      "source": "canonical/agents/sparky.md#frontmatter:commands[consumer-generate]"
     },
     {
       "lines": [
@@ -575,7 +567,7 @@
         305
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:commands[web-test-lane]"
+      "source": "canonical/agents/sparky.md#frontmatter:commands[web-dev-server]"
     },
     {
       "lines": [
@@ -583,7 +575,7 @@
         306
       ],
       "op": "render",
-      "source": "canonical/agents/sparky.md#frontmatter:commands[product-screen-commands]"
+      "source": "canonical/agents/sparky.md#frontmatter:commands[web-test-lane]"
     },
     {
       "lines": [
@@ -591,7 +583,7 @@
         307
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
+      "source": "canonical/agents/sparky.md#frontmatter:commands[product-screen-commands]"
     },
     {
       "lines": [
@@ -599,7 +591,7 @@
         308
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#complete-task-tooling"
+      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
     },
     {
       "lines": [
@@ -607,28 +599,36 @@
         309
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+      "source": "canonical/shared/shared-catalog.yaml#complete-task-tooling"
     },
     {
       "lines": [
         310,
-        311
+        310
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+    },
+    {
+      "lines": [
+        311,
+        312
       ],
       "op": "render",
       "source": "canonical/shared/shared-catalog.yaml#record-first-ratification"
     },
     {
       "lines": [
-        312,
-        312
+        313,
+        313
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:commands"
     },
     {
       "lines": [
-        313,
-        316
+        314,
+        317
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:writeScope"

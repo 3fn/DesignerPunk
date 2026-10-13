@@ -8,7 +8,7 @@
  * @see .kiro/specs/064-component-metadata-schema/design.md — Requirements 3.1–3.6
  */
 
-import { ComponentIndexer, tokenizeString } from '../indexer/ComponentIndexer';
+import { ComponentIndexer, tokenizeForMatch } from '../indexer/ComponentIndexer';
 import { checkComposition, validateRequires, RequiresValidationResult } from '../indexer/CompositionChecker';
 import {
   ComponentMetadata,
@@ -119,6 +119,52 @@ export function deriveMatchConfidence(
   // This is the guard's effect: low-signal-only coverage (including ≥2-token full coverage
   // that is entirely low-signal/aliases) caps at `partial`, never `strong`.
   return 'partial';
+}
+
+/** Tier order for ranking: strong ahead of partial ahead of none. */
+const TIER_ORDER: Record<MatchConfidence, number> = { strong: 0, partial: 1, none: 2 };
+
+/** The rank-relevant evidence of one keyword-discovery row. */
+export interface RankKey {
+  name: string;
+  matchConfidence: MatchConfidence;
+  /** matchedTokens / totalTokens */
+  coverage: number;
+  /** Count of matched query terms that are tokens of the component's OWN name (not family). */
+  nameHits: number;
+}
+
+/**
+ * Layer-3 rank order for `find_components` keyword results — RANK ONLY.
+ *
+ * Rubric amendment 2026-10-12 (discovery-confidence-rubric.md § Layer 3; Thurgood's ruling,
+ * defect record 2026-10-07 item 3). Order:
+ *   1. tier          — strong before partial (the rubric already says rank is "within a tier";
+ *                      the previous tier-blind sort let a `partial` outrank a `strong`)
+ *   2. coverage      — matchedTokens / totalTokens, descending
+ *   3. own-name hit  — matched query terms among the component's OWN name tokens, descending.
+ *                      Family tokens do not count (a family-only hit ties every sibling).
+ *                      Mirrors the docs TITLE_RANK_TIEBREAK precedent: it breaks only ties
+ *                      that tier and coverage leave standing.
+ *   4. name          — ascending. A FIXED DISPLAY ORDER for genuinely co-equal rows, not a
+ *                      relevance judgment (the agent/human breaks those ties — rubric § Layer 3).
+ * `deriveMatchConfidence` is untouched: no tier changes, only order.
+ */
+export function rankCompare(a: RankKey, b: RankKey): number {
+  const tier = TIER_ORDER[a.matchConfidence] - TIER_ORDER[b.matchConfidence];
+  if (tier !== 0) return tier;
+  if (b.coverage !== a.coverage) return b.coverage - a.coverage;
+  if (b.nameHits !== a.nameHits) return b.nameHits - a.nameHits;
+  return a.name.localeCompare(b.name);
+}
+
+/** Count matched query terms that occur among the component's OWN (normalized) name tokens. */
+export function countOwnNameHits(componentName: string, matchedOn: MatchedOnEntry[]): number {
+  const nameTokens = new Set(tokenizeForMatch(componentName));
+  const terms = new Set(matchedOn.map(e => e.term));
+  let hits = 0;
+  for (const t of terms) if (nameTokens.has(t)) hits++;
+  return hits;
 }
 
 export class ComponentQueryEngine {
@@ -267,53 +313,60 @@ export class ComponentQueryEngine {
     let keywordEvidence: Map<string, { matchedOn: MatchedOnEntry[]; matchedTokens: number; totalTokens: number }> | null = null;
 
     if (filters.keyword) {
-      const queryTerms = tokenizeString(filters.keyword);
-      if (queryTerms.length > 0) {
-        keywordEvidence = new Map();
-        const kwIndex = this.indexer.getKeywordIndex();
+      // Salient query terms: tokenized, stop words dropped, plurals folded, de-duplicated
+      // (defect record 2026-10-07 items 1–2). Their count is the coverage denominator.
+      const queryTerms = [...new Set(tokenizeForMatch(filters.keyword))];
+      if (queryTerms.length === 0) {
+        // A keyword made ONLY of stop words has zero salient terms → the `none` contract.
+        // (Before normalization existed this branch was unreachable for non-empty keywords;
+        //  falling through would silently drop the keyword filter and return the catalog.)
+        return { data: [], error: null, warnings: [], metrics: { responseTimeMs: Date.now() - start } };
+      }
+      keywordEvidence = new Map();
+      const kwIndex = this.indexer.getKeywordIndex();
 
-        candidates = candidates.filter(m => {
-          const entry = kwIndex.get(m.name);
-          if (!entry) return false;
+      candidates = candidates.filter(m => {
+        const entry = kwIndex.get(m.name);
+        if (!entry) return false;
 
-          const matchedOn: MatchedOnEntry[] = [];
-          let matchedCount = 0;
+        const matchedOn: MatchedOnEntry[] = [];
+        let matchedCount = 0;
 
-          for (const term of queryTerms) {
-            let termMatched = false;
+        for (const term of queryTerms) {
+          let termMatched = false;
 
-            if (entry.highSignal.has(term)) {
-              matchedOn.push({ field: 'highSignal', term });
-              termMatched = true;
-            } else if (entry.lowSignal.has(term)) {
-              matchedOn.push({ field: 'lowSignal', term });
-              termMatched = true;
-            } else if (entry.aliases?.has(term)) {
-              matchedOn.push({ field: 'aliases', term });
-              termMatched = true;
-            }
-
-            if (termMatched) matchedCount++;
+          if (entry.highSignal.has(term)) {
+            matchedOn.push({ field: 'highSignal', term });
+            termMatched = true;
+          } else if (entry.lowSignal.has(term)) {
+            matchedOn.push({ field: 'lowSignal', term });
+            termMatched = true;
+          } else if (entry.aliases?.has(term)) {
+            matchedOn.push({ field: 'aliases', term });
+            termMatched = true;
           }
 
-          if (matchedCount === 0) return false;
+          if (termMatched) matchedCount++;
+        }
 
-          keywordEvidence!.set(m.name, {
-            matchedOn,
-            matchedTokens: matchedCount,
-            totalTokens: queryTerms.length,
-          });
-          return true;
+        if (matchedCount === 0) return false;
+
+        keywordEvidence!.set(m.name, {
+          matchedOn,
+          matchedTokens: matchedCount,
+          totalTokens: queryTerms.length,
         });
-      }
+        return true;
+      });
     }
 
     // Build result — existing ApplicationSummary shape UNCHANGED; the three-layer signal is
     // ADDITIVE and rides ONLY on keyword-discovery results (Req 6.8 / §Collision).
     //
     //   Layer 1 (Match):     matchConfidence (derived below) + matchedOn (the evidence)
-    //   Layer 2 (Viability): readiness — already carried on ApplicationSummary; surfaced here as
-    //                        the DISTINCT gate signal (the caller gates on it; the tool does not).
+    //   Layer 2 (Viability): readiness + viability.internalOnly — carried on ApplicationSummary;
+    //                        the DISTINCT gate signals (the caller gates on them; the tool does not
+    //                        filter — an internal-only component still appears, flagged).
     //   Layer 3 (Usability): rank (assigned post-sort) + matchedOn (auditability)
     //
     // matchConfidence ≠ readiness ≠ rank. The tool emits all three and NEVER collapses them or
@@ -339,16 +392,32 @@ export class ComponentQueryEngine {
       return summary;
     });
 
-    // Sort: when keyword is active, order by coverage (matchedTokens desc), then name.
-    // This is the Layer-3 usability ORDER — it does not assert rank #1 is "the answer".
+    // Sort (Layer-3 usability ORDER — it does not assert rank #1 is "the answer").
+    // Keyword active → rankCompare: tier, then coverage, then own-name hit, then name
+    // (rubric Layer-3 amendment 2026-10-12; Thurgood's ruling). Otherwise → name.
     if (keywordEvidence) {
+      const nameHits = new Map<string, number>();
+      for (const row of results) {
+        const ev = keywordEvidence.get(row.name);
+        nameHits.set(row.name, ev ? countOwnNameHits(row.name, ev.matchedOn) : 0);
+      }
       results = results.sort((a, b) => {
         const aEv = keywordEvidence!.get(a.name);
         const bEv = keywordEvidence!.get(b.name);
-        const aCov = aEv ? aEv.matchedTokens / aEv.totalTokens : 0;
-        const bCov = bEv ? bEv.matchedTokens / bEv.totalTokens : 0;
-        if (bCov !== aCov) return bCov - aCov;
-        return a.name.localeCompare(b.name);
+        return rankCompare(
+          {
+            name: a.name,
+            matchConfidence: a.matchConfidence ?? 'none',
+            coverage: aEv ? aEv.matchedTokens / aEv.totalTokens : 0,
+            nameHits: nameHits.get(a.name) ?? 0,
+          },
+          {
+            name: b.name,
+            matchConfidence: b.matchConfidence ?? 'none',
+            coverage: bEv ? bEv.matchedTokens / bEv.totalTokens : 0,
+            nameHits: nameHits.get(b.name) ?? 0,
+          },
+        );
       });
     } else {
       results = results.sort((a, b) => a.name.localeCompare(b.name));
@@ -472,6 +541,8 @@ export class ComponentQueryEngine {
       whenNotToUse: meta.annotations?.usage.whenNotToUse ?? [],
       alternatives: meta.annotations?.alternatives ?? [],
       contexts: meta.annotations?.contexts ?? [],
+      // Layer 2 — declared internal-only (item 6). Emitted, never filtered on.
+      viability: { internalOnly: meta.internalOnly === true },
     };
   }
 }

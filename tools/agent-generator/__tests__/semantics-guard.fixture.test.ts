@@ -15,7 +15,8 @@ import { checkDispositionKeys, keyUniverse, type RowFile } from '../derive';
 import { splitFrontmatter } from '../frontmatter';
 import { assembleContext, CONSUMER_FIXTURE_OUTPUT_ROOT, FIXTURE_SOURCE, generateFixture } from '../generate';
 import { entryTree, partition } from '../partition';
-import { checkDerivation } from '../regrounding/derivation';
+import { checkDerivation, derivedEntryValues, renderedSpans } from '../regrounding/derivation';
+import { derive } from '../derive';
 import { validateDispositions } from '../regrounding/dispositions';
 import { hashEntry, hashText } from '../regrounding/hash';
 import { checkOverlayPins, parseOverlay } from '../regrounding/overlay';
@@ -87,10 +88,13 @@ describe('generateFixture’s consumer lane (Task 15.0) routes a re-pointing thr
     const targets = loadConsumerProfile(REPO_ROOT).targets;
     const outputs = await generateFixture(REPO_ROOT, ctx, adaptersFor(targets, ctx.dispositions), { profile: 'consumer', dispositions, overlay });
     const trees = { body: bodyTree, entry: tree };
+    // R2 (Task 29.2): each span with its rendered lines; entries judged on derive()'s value.
+    const derived = derive({ source: FIXTURE_SOURCE, frontmatter, body, dispositions, overlay });
+    const derivedValue = derivedEntryValues(derived.frontmatter as typeof frontmatter, derived.entryOrigin);
     const verdicts = targets.map((t) => {
       const prose = outputs.filter((o) => o.path.startsWith(`${CONSUMER_FIXTURE_OUTPUT_ROOT}/${t}/`) && o.path.endsWith('.md') && o.attribution);
-      const spans = prose.flatMap((o) => o.attribution?.spans ?? []);
-      const v = (s: string) => checkDerivation({ file: FIXTURE_SOURCE, trees, spans, s, destination: s }).verdict;
+      const spans = prose.flatMap((o) => (o.attribution ? renderedSpans(o.attribution.spans, String(o.content)) : []));
+      const v = (s: string) => checkDerivation({ file: FIXTURE_SOURCE, trees, spans, s, destination: s, derivedValue }).verdict;
       return `${t}: #doc ${v('#doc')}, ${glob} ${v(`frontmatter:${glob}`)}, files ${prose.length}`;
     });
     expect(verdicts).toEqual(targets.map((t) => `${t}: #doc VERIFIED, ${glob} VERIFIED, files 1`));

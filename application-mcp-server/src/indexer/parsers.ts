@@ -40,6 +40,12 @@ export interface ParsedSchema {
   tokens: string[];
   omits: string[];
   composition: CompositionDefinition | null;
+  /**
+   * Declared internal-only (`internal_only: true` in schema.yaml). An internal-only component
+   * is rendered by other components and must never be used directly by product code.
+   * Absent → false. Defect record 2026-10-07 item 6.
+   */
+  internalOnly: boolean;
 }
 
 export interface ParsedContracts {
@@ -121,6 +127,7 @@ export function parseSchemaYaml(filePath: string): ParseResult<ParsedSchema> {
       tokens,
       omits: toStringArray(doc.omits),
       composition,
+      internalOnly: doc.internal_only === true,
     },
     warning: null,
   };
