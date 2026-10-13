@@ -1458,7 +1458,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `scripts/audience-banner/predicate.ts`, the test, `governance/*.md`
 
-  - [ ] 23.1 Predicate + guard + bite
+  - [x] 23.1 Predicate + guard + bite
   - [ ] 23.2 Banners on the matched set; owners notified
   - [ ] 23.3 Registration decision; the ARMING notice; the rows-list-the-guard evidence
 
