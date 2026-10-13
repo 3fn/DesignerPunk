@@ -1445,7 +1445,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
 ### UNIT 4 — Content policy
 
-- [ ] 23. The banner predicate, guard, and banners
+- [x] 23. The banner predicate, guard, and banners
 
   **Type**: Implementation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Thurgood (Sonnet)
   **Traces**: Reqs 20.1–20.8 · design C28

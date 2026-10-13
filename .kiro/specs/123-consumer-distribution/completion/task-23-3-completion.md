@@ -96,7 +96,7 @@ The test file is selected by `scripts/jest.config.js` and run by an existing req
 
 ## 5. Block row 4.5
 
-Row 4.5 (`MISSING → orchestrator`: "each governed doc's coverage-map row LISTS the banner guard") is **resolved by amendment, not by an instrument**: the clause was amended out at `bdfdc9951` (ruling 1, option b), replaced by the four evidence items above. The block is not edited here; its rule is that a `MISSING` row is never overwritten and gains `→ resolved <date>: …` in the same row, which is the orchestrator's append if it wants the block's final-state counts to read M = 0. I list it so the parent completion doc's `**Instruments**:` line is computed from the block as it stands when the parent closes.
+Row 4.5 (`MISSING → orchestrator`: "each governed doc's coverage-map row LISTS the banner guard") is **resolved by amendment, not by an instrument**: the clause was amended out at `bdfdc9951` (ruling 1, option b), replaced by the four evidence items above. The block **was** edited after this section was first written: row 4.5 keeps its original `MISSING` text and gains `→ resolved 2026-10-13: exists (.kiro/specs/123-consumer-distribution/tasks.md @ bdfdc9951) — …` in the same row (a `MISSING` row is never overwritten), and `## Found later` carries one entry (2026-10-13, unlisted: the dead `.kiro/steering/Component-Family-*` paths, found at Lina's 23.2 owner read, routed to the U1b record § 5 and Lina's content-debt). The block's final-state counts are therefore exists 14 · built-here 10 · missing 0, with unlisted 1.
 
 ## What changed
 
