@@ -4,6 +4,43 @@ All notable consumer-facing changes to `@3fn/core` are recorded here, one entry 
 
 This file starts with Spec 123 ("Consumer Distribution"). Earlier releases are not backfilled here.
 
+## [Unreleased] — planned Release 3 (the install guide, the commit policy, starter specs and `init`'s onboarding)
+
+This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a custom theme you register in `designerpunk.config.ts` does not change your generated output yet; light and dark mode work.
+
+This is the third planned entry in the plan's numbering ("Release N" labels the Nth planned entry, not a count of tags; 15.0.0 carried the first two). It adds the install guide, the commit policy, the starter specs and the personal note, and finishes `init`'s output.
+
+### Added
+
+- **An install guide, `docs/consumer/INSTALL.md`**, shipped in the package. It teaches the four ways in (read DesignerPunk's docs, build a design system of your own, join one a teammate built, add a second agent tool) in the order you type them. The Integration Guide opens with the same text and keeps everything else under a "Reference" heading.
+- **A commit policy, `docs/consumer/COMMIT-POLICY.md`**, shipped in the package: which files `init` and `generate` leave for you to commit (your config, tokens, components, `product/`, `specs/`, the manifest, the generated agent files, and the generated platform output by default), and which each person regenerates or keeps local (`token-index/`, `.designerpunk/`).
+- **`init` adds a `.gitignore` block** that ignores exactly `token-index/` and `.designerpunk/`, with a commented line, in your own configured output path, for the case where your build runs `generate` and you do not want to commit platform output. **`sync` offers the same block** to a repo born on 15.0.0, only when git is not already ignoring `.designerpunk/`: it asks first (default no), and off a terminal it prints the fix and writes nothing.
+- **Two starter specs in `specs/`**, placed by `init` and never overwriting a file you have: a CI-needs spec (what a design system needs verified, how to check it, and what skipping each need costs) and a re-grounding spec for your agent to run. A path you already have is kept and reported.
+- **A personal note.** `init`, `generate`, `attach` and `sync` create `.designerpunk/personal-note.local.md` from a template when it is absent, so a teammate's fresh clone has one. It stays on your machine. A note that is still only the template tells your agents to set it aside and offers to walk you through it; the command that finds it unfilled prints one warning. A finished example note (an edited copy of the project owner's own) ships at `node_modules/@3fn/core/src/cli/templates/personal-note.example.md`; write your own rather than copying it. If `generate` creates the note in a directory git is not ignoring, it says so.
+- **A `product/` tree** from `init`: your product overview, a product layout template and a worked example screen, so the Product MCP starts with something real to index. `init` fills in your product's name.
+- **`init` names the target it chose** when you give none (`no --target given — set up for Claude Code (the default). Using Kiro? …`), prints its next steps starting at `generate`, and lists the `.gitignore` block and the `specs/` scaffold among them. The jest install is one optional line after the steps.
+
+### Changed
+
+- **`generate`'s `Themes:` line is honest**: a registered theme is "registered, not applied yet". Dark mode and the `wcag` theme apply DesignerPunk's built-in overrides to your tokens; a theme you register does not change your generated output.
+- **Your agents' ground-truth section reads accurately.** The line that tells an agent not to read generated build outputs no longer calls them "stale", and the Kiro prompts put a blank line before the "Ground truth" heading.
+- **The iOS and Android agents (Kenya and Data) no longer say `generate` produces theme code.** They state what `generate` produces today (no theme types) and that DesignerPunk plans to address it (Spec 129, no date). The "regenerate your platform token output — including your theme Swift/Kotlin" cue is removed.
+- **Kiro agent prompts carry a knowledge-base fallback note.** A Kiro knowledge base that is declared by glob only, which Kiro drops, now appears as a "search these paths" note in the prompt.
+- **Names are consistent:** the CLI says "install guide" where it used to say "install doc" (the missing-token message, the "markers missing" message), and the `src/components/README.md` that `init` writes points at the install guide's "Ownership" section and states the declared-name rule.
+- **Messages say what a skip means.** An existing `jest.config.js` is kept and the message says the preset is not applied and that `@3fn/core/testing` does not load under it in this version.
+- **The agent-profile derivation check now runs on what ships.** The check that each re-worded section of a shipped agent really comes from its source section now runs over the shipped consumer profile and its renderings, in every change to them. A re-worded section can no longer name an enclosing or neighbouring section as where its content went, and a section emptied to blank lines no longer passes. This closes the two limits 15.0.0 disclosed (the check was not applied to the shipped profile; a one-token variant of an emptied section passed). Still not covered: a section changed in place that names itself as its destination passes the check. That includes a write permission widened in place, and the shared governance rule emptied in place, which no reviewer reads.
+
+### Fixed
+
+- **`init` in a born repo says what is true.** Its refusal now reads "fill in your personal note (generate creates it; your agent can walk you through it)", and `generate` does create it. In 15.0.0 the same sentence promised a file `generate` did not write.
+- **`init` wrote a `product/overview.yaml` the Product MCP could not read** (a Markdown-shaped file that is not valid YAML, so the Product MCP indexed nothing). It now writes a valid overview.
+- **Customize note in `init`'s output:** it no longer says the validator warns when your tokens break their mathematical relationships during `generate`. `generate` does not check them, and `validate`'s check for them currently fails even on unmodified token source (a known defect in the checker, not in your tokens).
+
+### Known limitations in this release
+
+- Every `generate` rewrites a timestamp line in each generated file, so committed platform output shows as changed after every run even when no token changed. Compare with the timestamp lines ignored.
+- `@3fn/core/testing` and the jest preset's `@3fn/core/blend`, `/types` and `/config` mappings do not load in an installed package, so the shared test utilities do not work yet.
+
 ## [15.0.0] — 2026-10-02
 
 **This is a breaking (major) release for anyone running an earlier `@3fn/core`.** It ships, as one release, what was planned as two: the distribution substrate and the generated agent layer. To upgrade a 14.x install, see "Upgrading from 14.x" at the end of this entry. **In 15.0.0, the web path and the generated agent layer are ready; native (iOS/Android) onboarding is not supported yet** (see "Known limitations").

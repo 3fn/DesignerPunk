@@ -1251,7 +1251,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 22.2 C27 completion: restart line, hatch, note naming, next steps; collision strings *(amendment 2026-10-03: after 20.3; the named-default notice first; next steps list the `.gitignore` block and the `specs/` scaffold; R2: the corrected naming, created and born-repo rows)*
   - [x] 22.3 (Leonardo) `example-home.yaml` in `design-inputs/`; (Lina) placement (equality test) + scaffold mechanics + validity guard *(amendment 2026-10-03: `src/cli/templates/product/**`; companions authored by Leonardo; the guard's state and classes as above)*
   - [x] 22.3b Packaging: every U3 `files[]` line and `pack-assert` row, plus the `src/cli/templates/**` exact set *(added 2026-10-03; FK-2 settled (a) in the round: here, by Ada (Sonnet), against an explicit expected list with its unit cases)*
-  - [ ] 22.4 Release-3 CHANGELOG entry; full validation *(amendment 2026-10-03: after U3 merges `main` carrying U3g; the no-overlap re-run; the lock refresh)*
+  - [x] 22.4 Release-3 CHANGELOG entry; full validation *(amendment 2026-10-03: after U3 merges `main` carrying U3g; the no-overlap re-run; the lock refresh)*
   - [ ] 22.5 (Leonardo) DD9 confirmation; open the U3 PR *(amendment 2026-10-03: the mechanical G2 backstop)*
 
 ### UNIT 3c — Consumer-profile corrections *(added 2026-10-03, R2; Peter's PR-11 and PR-12)*

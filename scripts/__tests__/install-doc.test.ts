@@ -28,7 +28,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { LIFECYCLE_VERBS, ATTACH_OBJECT, attachUsage } from '../../src/cli/shared/vocabulary';
-import { cloneHatchMessage, personalNoteNamingMessage } from '../../src/cli/shared/errorCatalog';
+import { cloneHatchMessage, personalNoteNamingMessage, initBornRepoMessage } from '../../src/cli/shared/errorCatalog';
 import { missingTokenMessage } from '../../src/cli/sync/NameContract';
 import { deriveInstallDoc, extractRegion, REGION_BEGIN, REGION_END, INSTALL_REL } from '../derive-install-doc';
 
@@ -39,6 +39,24 @@ const GUIDE_PATH = 'governance/DesignerPunk-Integration-Guide.md';
 const INSTALL_PATH = 'docs/consumer/INSTALL.md';
 const README = read('README.md');
 const GUIDE = read(GUIDE_PATH);
+const CHANGELOG = read('CHANGELOG.md');
+
+/** The release-3 entry: from its heading to the next `## [` heading. */
+const RELEASE_3_ENTRY = (() => {
+  const lines = CHANGELOG.split('\n');
+  const start = lines.findIndex((l) => /^## \[Unreleased\] — planned Release 3\b/.test(l));
+  if (start < 0) throw new Error('CHANGELOG.md has no "## [Unreleased] — planned Release 3" entry');
+  const end = lines.findIndex((l, i) => i > start && /^## \[/.test(l));
+  return lines.slice(start, end < 0 ? undefined : end).join('\n');
+})();
+
+/** A block declared in `completion/g2-cycle-2-consequence-texts.md` § 5: the fenced `text` block under `### \`<name>\``. */
+function g2Block(name: string): string {
+  const src = read('.kiro/specs/123-consumer-distribution/completion/g2-cycle-2-consequence-texts.md');
+  const m = new RegExp('### `' + name + '`\\n\\n```text\\n([\\s\\S]*?)\\n```').exec(src);
+  if (!m) throw new Error(`g2-cycle-2-consequence-texts.md has no ${name} block`);
+  return m[1];
+}
 
 // ---------------------------------------------------------------------------
 // Fixed expectations, each with its source
@@ -369,6 +387,33 @@ describe('scope sentence (C14 — install doc and README; the CHANGELOG from 22.
   it('contains both label strings', () => {
     expect(SCOPE_SENTENCE).toContain(LABEL_REFERENCE_SOURCE);
     expect(SCOPE_SENTENCE).toContain(LABEL_NATIVE_ONBOARDING);
+  });
+
+  // Task 22.4 (Peter's O-2 ruling, 2026-10-03): the CHANGELOG is the third surface.
+  it('is the first paragraph of the release-3 CHANGELOG entry, identical to the install doc\'s (C14, third surface)', () => {
+    expect(paragraphs(RELEASE_3_ENTRY.split('\n').slice(1).join('\n'))[0]).toBe(SCOPE_SENTENCE);
+  });
+});
+
+describe('release-3 CHANGELOG entry (Task 22.4)', () => {
+  it('there is exactly one planned-Release-3 entry, above 15.0.0, and releases are not renumbered (the label rule)', () => {
+    expect(CHANGELOG.split('\n').filter((l) => /^## \[Unreleased\] — planned Release 3\b/.test(l))).toHaveLength(1);
+    expect(CHANGELOG.indexOf('## [Unreleased] — planned Release 3')).toBeLessThan(CHANGELOG.indexOf('## [15.0.0]'));
+  });
+
+  it('carries the G2 treatment matched to the HOLDS verdict: CHANGELOG-HOLDS, byte-equal to g2-cycle-2-consequence-texts.md § 5, and not CHANGELOG-LIFTED', () => {
+    const holds = g2Block('CHANGELOG-HOLDS');
+    const lifted = g2Block('CHANGELOG-LIFTED');
+    expect(holds.length).toBeGreaterThan(200);
+    expect(RELEASE_3_ENTRY).toContain(holds);
+    expect(RELEASE_3_ENTRY).not.toContain(lifted);
+    // exactly once: a doubled paste would still "contain" it
+    expect(RELEASE_3_ENTRY.split(holds).length - 1).toBe(1);
+  });
+
+  it('names the `init` born-repo message fix: "generate creates it" is now true (design catalog row "init in a born repo (A7)")', () => {
+    expect(RELEASE_3_ENTRY).toContain('(generate creates it; your agent can walk you through it)');
+    expect(initBornRepoMessage('/root')).toContain('(generate creates it; your agent can walk you through it)');
   });
 });
 
