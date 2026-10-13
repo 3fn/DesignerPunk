@@ -71,3 +71,5 @@
 
 **Counts (current, 2026-10-03, after 20.3)**: N = 31 — exists 17 · built-here 13 · missing 1 · unlisted 6 (row 4.4's resolved state is `built here`; `unlisted` is the `## Found later` entries of both kinds). Row 7.3 (Ada, 22.3b) is the only MISSING row left.
 
+
+**Counts (FINAL, 2026-10-12, at Task 20's parent completion)**: N = 31 — exists 17 · built-here 14 · missing 0 · unlisted 6. Final states: rows 4.4 (resolved by 22.1) and 7.3 (resolved by 22.3b, Ada, `4ed907eb1`) are `built here`, so no row is MISSING. `unlisted` counts the six dated `## Found later` entries above, both kinds: four `unlisted` (the loader seam, the missing catalog rows, the markers-missing remedy, the founder's `node_modules/` line) and two `misfit` (row 2.5's fit at 20.2; row 4.3's fit at 20.3). This line supersedes the stale interim Counts lines above (they stay readable).

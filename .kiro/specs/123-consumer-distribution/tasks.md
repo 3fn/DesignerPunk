@@ -1070,7 +1070,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 19.4 **Integration Guide → served source of INSTALL.md content** (same doc-id; derived INSTALL.md; body-identity test) *(amendment 2026-10-03: B-U3 is its first commit; the marked region; `scripts/derive-install-doc.ts` and the committed `docs/consumer/INSTALL.md`; region identity with its bite; the remainder sweep and its table; the #268 preservation table; the lock refresh at 19's close)*
   - [x] 19.5 Leonardo's review; fold *(amendment 2026-10-03: after 22.2. On the branch for him: the derived INSTALL.md and the guide, the markers, the remainder and preservation tables, the widened-grep output, the README diff, the scope sentence and labels with Kenya's and Data's confirmations, the test output, the rebuilt guide's `get_document_summary` outline from a local docs-MCP rebuild, and `example-home.yaml` placed)*
 
-- [ ] 20. The commit policy and the `.gitignore` managed block
+- [x] 20. The commit policy and the `.gitignore` managed block
 
   **Type**: Implementation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Lina (Sonnet)
   **Traces**: Req 15A.1a · design C24, DD1, DD21
