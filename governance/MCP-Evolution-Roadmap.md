@@ -7,6 +7,8 @@ description: Known gaps in the MCP knowledge layer and trigger conditions for wh
 
 # MCP Evolution Roadmap
 
+> **Audience framing**: this describes **DesignerPunk's own process and components**, not yours. **Worked example**: the gaps, priorities and triggers are DesignerPunk's own MCP backlog, and its inventory counts (for example 34 components indexed) are DesignerPunk's components. **Transferable**: recording a known gap with a priority and an explicit trigger for when it becomes worth doing, so deferred work is not forgotten.
+
 **Date**: 2026-03-11
 **Last Reviewed**: 2026-06-23
 **Purpose**: Capture known MCP knowledge gaps, their assessed priority, and the conditions that trigger action

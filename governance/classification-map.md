@@ -8,6 +8,8 @@ aliases: classification map register, rule classification, boundary call, verifi
 
 # Classification Map
 
+> **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the register's entries are DesignerPunk's own rules, owners and rulings (Peter's ratifications, Spec 125-B). **Transferable**: the entry schema (a boundary call, a verification disposition with its owner, an education disposition), so who enforces a rule is decided once and cited afterwards.
+
 **Date**: 2026-07-14
 **Last Reviewed**: 2026-09-29
 **Purpose**: The living register of per-rule classification decisions — boundary call, verification disposition + owner, and education disposition — so enforcement ownership is decided once and cited thereafter instead of re-litigated per agent, per prompt, per session

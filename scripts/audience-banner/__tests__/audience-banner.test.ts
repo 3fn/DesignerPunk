@@ -5,12 +5,18 @@
  * `N match; N carry`. The claim is scoped to the predicate — predicate coverage, never
  * "the corpus is bannered" (Req 20.3).
  *
- * PENDING MECHANISM (23.1 → 23.2): until 23.2 lands the banners, the real corpus is red by
- * construction (every matched doc lacks one). Task 19's form: one `test.failing` entry per doc on
- * a named list (`PENDING_UNTIL_23_2`), each flipped to a plain test as its banner lands, so the
- * suite stays green on the branch and a banner that lands without its flip turns red ("expected
- * to fail but passed"). The guard test `every matched doc not on the pending list carries a
- * banner` is the live presence check; an unlisted missing banner is red at once.
+ * PENDING MECHANISM (23.1 → 23.2, now empty): until 23.2 landed the banners the real corpus was
+ * red by construction (every matched doc lacked one). Task 19's form: one `test.failing` entry per
+ * doc on a named list (`PENDING_UNTIL_23_2`), each flipped to a plain test as its banner landed, so
+ * the suite stayed green on the branch and a banner that landed without its flip turned red
+ * ("expected to fail but passed"). 23.2 flipped all 18; the list is empty and the mechanism stays.
+ * The guard test `every matched doc not on the pending list carries a banner` is the live presence
+ * check; an unlisted missing banner is red at once.
+ *
+ * THE DECLARED LIST (Peter's ruling 6 (B), 2026-10-13): `Component-Readiness-Status` and
+ * `Component-Quick-Reference` are banded OUTSIDE the predicate. A separate block at the end asserts
+ * that the declared two carry a conforming banner. It is the declared list's own check and is NOT
+ * predicate coverage: it never enters the `N match; N carry` line.
  *
  * The synthetic bite (a temp corpus: a matching doc without a banner is red, with one is
  * green) runs from 23.1 and is independent of the real corpus. Non-vacuity lives here, not in a
@@ -43,29 +49,11 @@ import {
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..');
 
 /**
- * Matched docs whose banner has not landed yet. 23.2 removes each entry in the same commit as
- * its banner (and flips the doc's entry below from `test.failing` to a plain test). Empty by 23.2's close.
+ * Matched docs whose banner has not landed yet. EMPTY since 23.2: all 18 banners landed and each
+ * doc's entry flipped from `test.failing` to a plain test in that change. The mechanism stays so a
+ * later pending entry must be declared on this list, not added silently.
  */
-const PENDING_UNTIL_23_2: readonly string[] = [
-  'governance/AI-Collaboration-Framework.md',
-  'governance/Component-Development-Guide.md',
-  'governance/Component-Development-Standards.md',
-  'governance/Component-Meta-Data-Shapes-Governance.md',
-  'governance/Contract-System-Reference.md',
-  'governance/MCP-Evolution-Roadmap.md',
-  'governance/MCP-Relationship-Model.md',
-  'governance/Process-Development-Workflow.md',
-  'governance/Process-File-Organization.md',
-  'governance/Process-Hook-Operations.md',
-  'governance/Process-Orchestration-Model-Selection.md',
-  'governance/Process-Spec-Planning.md',
-  'governance/Process-Task-Type-Definitions.md',
-  'governance/Test-Behavioral-Contract-Validation.md',
-  'governance/classification-map.md',
-  'governance/completion-documentation-guide.md',
-  'governance/component-meta-authoring-guide.md',
-  'governance/release-management-system.md',
-];
+const PENDING_UNTIL_23_2: readonly string[] = [];
 
 const SAMPLE_PARTS = {
   subject: 'process',
@@ -305,6 +293,19 @@ describe('the real corpus: predicate-match ⇒ banner-present', () => {
     const run = PENDING_UNTIL_23_2.includes(rel) ? test.failing : test;
     const label = PENDING_UNTIL_23_2.includes(rel) ? `[pending 23.2: ${rel}]` : rel;
     run(`${label} carries a conforming audience banner`, () => {
+      expect(hasBanner(read(rel))).toBe(true);
+    });
+  }
+});
+
+// ----------------------------------------------------------------------------
+// The declared list (outside the predicate; NOT predicate coverage)
+// ----------------------------------------------------------------------------
+
+describe('the declared list banded outside the predicate (Ruling 6 (B); not predicate coverage)', () => {
+  for (const rel of KNOWN_UNDER_INCLUSIONS) {
+    it(`${rel} (declared, not matched) carries a conforming audience banner`, () => {
+      expect(matchesPredicate(read(rel))).toBe(false);
       expect(hasBanner(read(rel))).toBe(true);
     });
   }

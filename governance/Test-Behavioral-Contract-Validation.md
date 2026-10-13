@@ -8,6 +8,8 @@ description: Framework for validating behavioral contracts across web, iOS, and 
 
 # Behavioral Contract Validation Framework
 
+> **Audience framing**: this describes **DesignerPunk's own process and components**, not yours. **Worked example**: the web, iOS and Android components it validates, and the Button-CTA and Button-VerticalList-Item rulings it cites, are DesignerPunk's own. **Transferable**: what "identical behavior" means across platforms, the validation criteria per contract type, and the tolerance levels.
+
 **Date**: 2026-01-02
 **Purpose**: Framework for validating behavioral contracts across web, iOS, and Android platforms
 **Organization**: process-standard

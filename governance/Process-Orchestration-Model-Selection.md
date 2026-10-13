@@ -7,6 +7,8 @@ description: How an orchestrating agent picks a model tier for delegated subagen
 
 # Orchestration Model Selection
 
+> **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the model names and their current mapping (for example Sonnet and Opus), the Spec 121 evidence and the `tasks.md` Agent field are DesignerPunk's own. **Transferable**: the rule that the axis is decide versus implement, and that delegate-then-verify, not the model tier, is the guardrail.
+
 **Date**: 2026-07-07
 **Last Reviewed**: 2026-07-09
 **Purpose**: How an orchestrating agent chooses the model tier for delegated subagent work, and why verification — not the tier — is the guardrail (content AND placement)

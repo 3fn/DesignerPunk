@@ -7,6 +7,8 @@ description: Step-by-step guidelines for creating new component families in the 
 
 # Component Family Development Standards
 
+> **Audience framing**: this describes **DesignerPunk's own process and components**, not yours. **Worked example**: the `.kiro/steering/Component-Family-*` locations, the Form Inputs walk-through and the `complete-task.sh` task-PR step are DesignerPunk's. **Transferable**: the family-creation decision framework and the primitive-versus-semantic criteria.
+
 **Date**: 2026-01-02
 **Purpose**: Step-by-step guidelines for creating new component families in the Stemma System
 **Organization**: process-standard

@@ -7,6 +7,8 @@ description: Readiness status definitions, usage recommendations, and transition
 
 # Component Readiness Status System
 
+> **Audience framing**: this describes **DesignerPunk's own components**, not yours. **Worked example**: the readiness ratings, the family table and the component inventory are about DesignerPunk's own components. **Transferable**: the readiness vocabulary (production ready, beta, placeholder) and the transition guidelines, as a model for rating your own components.
+
 **Date**: 2026-01-01
 **Purpose**: Comprehensive readiness status definitions, usage recommendations, and transition guidelines for Stemma System components
 **Organization**: process-standard

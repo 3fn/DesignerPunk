@@ -7,6 +7,8 @@ description: Agent hook operational guidance — dependency chains, execution or
 
 # Hook Operations Guide
 
+> **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the Kiro IDE agent-hook runtime, its `.kiro/agent-hooks` configs and the retired release hooks are DesignerPunk's tooling, and the document itself says it describes a Kiro-IDE-only mechanism. **Transferable**: the general lessons on chained automation: dependency order, what happens when a prerequisite fails, and troubleshooting by following the chain.
+
 **Date**: 2026-01-04
 **Last Reviewed**: 2026-07-09
 **Purpose**: Comprehensive operational guidance for agent hook dependency chains, troubleshooting, and best practices

@@ -7,6 +7,8 @@ description: Development workflow and task completion practices — task complet
 
 # Development Workflow and Task Completion Practices
 
+> **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the task-branch and PR flow, `complete-task.sh`, the `taskStatus` tool and Peter's merge on green are DesignerPunk's own. **Transferable**: the sequence itself: validate, document, open a PR, and treat the merge as the point of completion.
+
 **Date**: 2025-10-20
 **Last Reviewed**: 2026-08-12
 **Purpose**: Task completion workflow and git practices for all development work

@@ -7,6 +7,8 @@ description: Governance criteria for adding data_shapes to component-meta.yaml. 
 
 # Component Metadata: Data Shapes Governance
 
+> **Audience framing**: this describes **DesignerPunk's own process and components**, not yours. **Worked example**: the A2UI mapping exercise, Spec 064 and the escalation to Peter by ballot measure are DesignerPunk's own history and decision path. **Transferable**: the pattern of stating trigger criteria for adding a metadata field, with an escalation step when they are met.
+
 **Date**: 2026-02-28
 **Last Reviewed**: 2026-02-28
 **Purpose**: Define trigger criteria and escalation process for adding formal data shape descriptions to component-meta.yaml

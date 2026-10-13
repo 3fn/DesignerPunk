@@ -8,7 +8,7 @@ aliases: release recipe, release process, release notes, what changed, version b
 
 # Release Management System
 
-> **Audience framing**: this documents **DesignerPunk's own** release process. Consumers of the package read it as a worked example of a recipe-over-tooling release model — the paths, scripts, and named roles below are DesignerPunk's, not yours. (Whether DesignerPunk's release notes themselves ship to consumers is an open Spec 123 question, deferred by the Q6 ballot.)
+> **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the release owner (in DesignerPunk, Peter), the `.kiro/docs/ballots/` evidence trail and the retired release manager are DesignerPunk's own. **Transferable**: the recipe-over-tooling model: a documented recipe rather than a standing tool, with a human ratifying the version bump.
 
 **Date**: 2026-02-28
 **Last Reviewed**: 2026-08-12

@@ -8,6 +8,8 @@ description: Guide for building components with appropriate token usage, True Na
 
 # Component Development and Practices Guide
 
+> **Audience framing**: this describes **DesignerPunk's own process and components**, not yours. **Worked example**: its examples are DesignerPunk's: the `.kiro/specs/...` references, the escalations to Peter, and the ruling that DesignerPunk components never declare a disabled-state contract. **Transferable**: the token-selection order, the behavioral-contracts workflow, and the habit of stopping to ask a human when a needed token is missing.
+
 **Date**: 2025-11-17
 **Last Reviewed**: 2026-05-06
 **Purpose**: Guide AI agents in building components with appropriate token usage, True Native Architecture, and effective collaboration practices

@@ -7,6 +7,8 @@ description: Task type definitions for the three-tier validation and documentati
 
 # Task Type Definitions
 
+> **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the precedents it cites (Specs 020, 036, 102, 117, 118, 124) and the rule that governance-law changes go to Peter's ballot are DesignerPunk's own. **Transferable**: the four task types (Setup, Implementation, Architecture, Documentation) and the three-tier validation each one maps to.
+
 **Date**: 2025-10-20
 **Last Reviewed**: 2026-07-05
 **Purpose**: Define task types for three-tier validation and documentation system

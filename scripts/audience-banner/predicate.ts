@@ -41,9 +41,12 @@
  * version bump decided by Ada with a re-measured count. Her measurement (v1 adoption): every
  * candidate string that catches the two docs adds at least 5 more docs (readiness emoji: 38;
  * `Production Ready` forms: 32; `Component-Family-*` references: 23), toward the corpus-wide
- * banding Req 20.4 forbids. Whether the two docs are banded OUTSIDE the predicate (declared, and
- * unguarded: a hand-kept list, the drift Req 20.3 exists to prevent) is a fork with Peter and is
- * not decided here.
+ * banding Req 20.4 forbids. Instead, by Peter's ruling (2026-10-13, item 6 (B)), the two carry
+ * banners BY DECLARATION: they are banded outside the predicate and named here, as a two-item
+ * declared list. The predicate stays v1 and the guard stays one-directional (match => banner); the
+ * declared list is a hand-kept list by design, kept to two named docs, and it is not predicate
+ * coverage: it never enters the "N match; N carry" line. The test checks the declared two apart
+ * from the guard, so a dropped declared banner is red.
  *
  * THE GUARD'S CLAIM IS SCOPED TO THE PREDICATE (Req 20.3): it reports "N docs match the
  * predicate; N carry banners" over the scan scope. It never says the corpus is covered, and

@@ -8,6 +8,8 @@ description: File organization standards — metadata-driven organization, direc
 
 # File Organization Standards
 
+> **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the `.kiro/` directory layout, the Kiro file-watching note and the `complete-task.sh --organize` option are DesignerPunk's. **Transferable**: metadata-driven organization: each file declares its organization and scope in a header, so where it lives is decided by rule.
+
 **Date**: 2025-01-10
 **Last Reviewed**: 2026-07-05
 **Purpose**: Metadata-driven file organization system for sustainable project structure
