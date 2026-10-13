@@ -2,15 +2,17 @@
 
 **Date**: 2026-10-13
 **Drafted by**: Thurgood (Opus), PRIMARY on Spec 123 Task 24
-**Status**: DRAFT. Two sections, ratifiable separately (§ 3, § 4). Each carries its own section-status line, and this line changes only when both are ruled.
-**Ratification form**: **to be ruled by Peter** (Task 24 instruments block O-2):
-- **(r1)** Peter's merge of U4's unit PR is the ratification (PR-atomic, the B-U3 form).
-- **(r2)** Peter rules each section in session, and its status line is stamped `RATIFIED` in a commit before any edit it governs (the B-U1 / B-U2 form and the record-first protocol, `.kiro/docs/ballots/README.md` § "The Ratification Protocol").
-
-§ 2 is written for both forms. The inapplicable one is struck at the ruling.
+**Status**: DRAFT. Two sections, ratifiable separately (§ 3, § 4), each with its own section-status line.
+**Ratification form**: **(r1), ruled.** Peter's merge of U4's unit PR ratifies both sections (PR-atomic, the B-U3 form). A record-only follow-up after the merge stamps this line and both section-status lines `RATIFIED (Peter, <date>) — merge <sha>`, and adds this ballot's entry to `.kiro/docs/ballots/README.md` § "Ballots on record" (§ 2).
+**Rulings applied** (2026-10-13): Peter, "All as recommended with class options" — record `.kiro/specs/123-consumer-distribution/completion/u4-rulings-2026-10-13.md` (`67587cf49`).
+- Item 3: this ballot is U4's first content commit (`757803488`).
+- Item 4: form (r1); the (r2) text is struck.
+- Item 5: R-1 "every release gets an entry" and R-2 "a record, not a gate" are confirmed.
+- Item 6: Req 20.7's fork is resolved as (B).
+- Item 2: `.kiro/hooks/RELEASE-FLOW.md` joins Task 24's Primary Artifacts, so F-1 and F-2 are no longer conditional.
 **Edits it governs**:
-- § 3: the banner on every `governance/*.md` doc that matches predicate v1 (Task 23.2).
-- § 4: `governance/release-management-system.md` below its banner (Task 24.2) and, if O-3's grant is made, `.kiro/hooks/RELEASE-FLOW.md` (§ 5, F-sites).
+- § 3: the banner on every `governance/*.md` doc that matches predicate v1, plus the two declared docs (§ 3 item 2) (Task 23.2).
+- § 4: `governance/release-management-system.md` below its banner, and `.kiro/hooks/RELEASE-FLOW.md` (§ 5, F-sites) (Task 24.2).
 **Origin**:
 - Spec 123 Task 24, criterion "B-U4 is RATIFIED before its edits apply. It carries the trio obligation (23.7) and the recurring changelog step (21.2)" (`tasks.md` @ `cdb8296fa`, L1472).
 - DD13's split: "B-U4 (the release recipe)" (`tasks.md` L378; design DD13, L1095).
@@ -34,7 +36,7 @@
 
 ## 2. Order — this ballot precedes every U4 governance-text commit
 
-**The governed set G**: every commit on `task/123-u4-content` that changes the text of a `governance/*.md` file, plus `.kiro/hooks/RELEASE-FLOW.md` if O-3's grant is made. Merges of `main` into the branch are excluded.
+**The governed set G**: every commit on `task/123-u4-content` that changes the text of a `governance/*.md` file or of `.kiro/hooks/RELEASE-FLOW.md`. Merges of `main` into the branch are excluded.
 
 ```
 git rev-list --no-merges $(git merge-base HEAD origin/main)..HEAD -- 'governance/*.md' .kiro/hooks/RELEASE-FLOW.md
@@ -42,18 +44,13 @@ git rev-list --no-merges $(git merge-base HEAD origin/main)..HEAD -- 'governance
 
 **State at drafting** (verified): `git diff --name-only 8007105fa HEAD -- governance/` → empty at `dc15b74c9`, so no governance-text commit precedes this ballot.
 
-**Instrument, under (r1)** *(strike if (r2) is ruled)*:
-- For every `c` in G, `git merge-base --is-ancestor <this ballot's adding commit> <c>` succeeds.
+**Instrument (r1, ruled)**:
+- For every `c` in G, `git merge-base --is-ancestor 757803488 <c>` succeeds (`757803488` is this ballot's adding commit).
 - Ratification is Peter's merge of U4's PR. **After the merge**, the `Status` line and the two section-status lines are stamped `RATIFIED (Peter, <date>) — merge <sha>` in a record-only follow-up, together with this ballot's entry in `.kiro/docs/ballots/README.md` § "Ballots on record". Otherwise `main` carries a governing ballot that reads DRAFT, which is B-U3's current state.
 
-**Instrument, under (r2)** *(strike if (r1) is ruled)*:
-- Let `S_b` and `S_r` be the commits stamping § 3's and § 4's section-status lines `RATIFIED`.
-- For every `c` in G that changes a banner block (the blockquote opening with `> **Audience framing**:`), `git merge-base --is-ancestor S_b <c>` succeeds.
-- For every `c` in G that changes `governance/release-management-system.md` below its banner, or `.kiro/hooks/RELEASE-FLOW.md`, `git merge-base --is-ancestor S_r <c>` succeeds.
-- The check that each stamp exists: `grep -n '^\*\*§ 3 status\*\*: \*\*RATIFIED'` (and `§ 4`) on this file → one hit each. The bold-inside-bold house form follows the Task 19 block's corrected grep.
-- `S_b` and `S_r` may be one commit if Peter rules both sections at one sitting.
+*(The (r2) instrument is struck — Peter's ruling, item 4, 2026-10-13. Its text stands in this ballot's adding commit, `757803488`.)*
 
-**Under either form, one file is shared** (Task 24 instruments O-4, ruled): `governance/release-management-system.md`.
+**One file is shared** (Task 24 instruments O-4, ruled): `governance/release-management-system.md`.
 - Task 23.2's commit replaces L11 only (its banner).
 - Task 24.2's commits change only L13–54. Only 24.2 changes the `Last Reviewed` and `Last Updated` lines L14–15.
 - The two never hold uncommitted edits to the file at the same time.
@@ -72,8 +69,9 @@ git rev-list --no-merges $(git merge-base HEAD origin/main)..HEAD -- 'governance
    - **the template and its recogniser** (`renderBanner` / `hasBanner`): a blockquote opening `> **Audience framing**:`, naming DesignerPunk's own `process`, `components` or `process and components` (Req 20.7), with a `**Worked example**:` mark and a `**Transferable**:` mark (Req 20.8). The authoring and the guard read the same symbol.
    - **the presence guard** (`auditBanners`, asserted by `scripts/audience-banner/__tests__/audience-banner.test.ts` in the required `lane-functional-root` job). It checks `predicate-match ⇒ banner-present`, and **its claim is scoped**: "N docs match the predicate; N carry banners", never "the corpus is bannered" (Req 20.3). Presence is not correctness and not readership (Req 20.10).
 2. **Named under-inclusions**: `governance/Component-Readiness-Status.md` and `governance/Component-Quick-Reference.md` (`KNOWN_UNDER_INCLUSIONS`; Req 20.7's reason, Lina A7). In a consumer install they read as claims about the consumer's components, and neither matches v1. Ada's measurement: every candidate string that catches them adds at least 5 more docs, toward the corpus-wide banding Req 20.4 forbids.
-   - **Fork, left open for Peter**: **(A)** leave them unbannered, as declared under-inclusions; or **(B)** band them outside the predicate, declared in the module, knowing that is a hand-kept list the guard cannot reach (the drift Req 20.3 exists to prevent).
-   - This ballot ratifies the convention under either answer. The fork's ruling is appended here.
+   - **RESOLVED (B)** — Peter's ruling, item 6, 2026-10-13. The two docs are **banded outside the predicate**, as a **declared two-item list**, named in `KNOWN_UNDER_INCLUSIONS` and here. The predicate stays v1.
+   - **The list is unguarded**: the guard checks `predicate-match ⇒ banner-present` only, so the guard cannot see these two banners. It is a hand-kept list, the drift Req 20.3 exists to prevent, accepted at size two. Adding a third doc to it is a change to this section, not a maintenance edit.
+   - (A), leaving them unbannered, was the alternative.
 3. **Per-doc text is not voted.** Each banner's two sentences (worked example, transferable) are reviewed by the doc's owning agent against source, with `file:line` citations, in the table at `.kiro/specs/123-consumer-distribution/completion/task-23-2-completion.md` (Task 23 instruments row 3.4). Thurgood-owned docs get an independent read (Task 23 instruments O-5). A wrong sentence is a defect fixed under the doc's ordinary maintenance, not a re-ballot.
 4. **The existing banner at `governance/release-management-system.md` L11** is replaced by the template in 23.2's commit. Its closing parenthetical ("Whether DesignerPunk's release notes themselves ship to consumers is an open Spec 123 question, deferred by the Q6 ballot") goes with it. **The question is answered, not dropped**: DD16 decided a consumer `CHANGELOG.md`, which ships (`files[]`; 1 entry in the pack listing). The release notes under `docs/releases/` do not ship (0 entries). § 4 makes the CHANGELOG entry a recipe step.
 
@@ -94,10 +92,11 @@ git rev-list --no-merges $(git merge-base HEAD origin/main)..HEAD -- 'governance
    - From the next release, the recipe runs it, using Task 25's committed protocol, fixtures and frozen-prompt discipline.
    - **Owner and trigger are not chosen here.** They are Task 28.4's record's, per Req 23.7. The step names that record as the obligation's home.
 3. **"Discovering What Changed" gains the consumer record** (§ 5, R-3).
-4. **Conditional on the O-3 grant** (`.kiro/hooks/RELEASE-FLOW.md` added to Task 24's Primary Artifacts): the operational sequence names both steps (§ 5, F-1, F-2). **If the grant is not made**, F-1 and F-2 are struck, and this ballot records that RELEASE-FLOW step 2's existing "release notes / changelog updates" is the operational cover, a generic one.
+4. **The operational sequence names both steps** (§ 5, F-1, F-2). `.kiro/hooks/RELEASE-FLOW.md` is in Task 24's Primary Artifacts by Peter's ruling, item 2.
 
-**Left open for Peter (not decided by this draft)**:
-- **Does a trio run gate the release?** Req 23 makes the trio 123's blocking bar, but says only "re-run per release" for later releases. R-2 below is worded as **record, not gate**: the runs are committed and their findings routed, and a regression relative to the recorded prior runs is a finding (Req 22.3's rule). If Peter wants a gate, R-2's last sentence changes and Stacy's RELEASE pass gains a line. That is a trigger-table question, not this ballot's.
+**Ruled (Peter, item 5, 2026-10-13)**:
+- **The trio re-run is a record, not a gate.** The runs are committed and their findings routed. A regression against the recorded prior runs is a finding (Req 22.3's rule), not a release blocker. A gate would be a later trigger-table change.
+- **Every release gets a CHANGELOG entry**, whether or not it has a consumer-facing change.
 
 ## 5. Edit sites (before → after)
 
@@ -128,7 +127,7 @@ After:
 
 **R-4 — `governance/release-management-system.md` L14–15, metadata.** `**Last Reviewed**` and `**Last Updated**` are set to the application date. Only 24.2 changes these lines (§ 2).
 
-**F-1 — `.kiro/hooks/RELEASE-FLOW.md` L117, § "The sequence" step 2** *(conditional on O-3)*.
+**F-1 — `.kiro/hooks/RELEASE-FLOW.md` L117, § "The sequence" step 2** *(granted: ruling item 2)*.
 
 Before:
 >    - release notes / changelog updates,
@@ -136,7 +135,7 @@ Before:
 After:
 >    - release notes (`docs/releases/release-<version>.md`) **and the consumer `CHANGELOG.md` entry** (retitle `## [Unreleased]` to the version; recipe step 4 in `governance/release-management-system.md`),
 
-**F-2 — `.kiro/hooks/RELEASE-FLOW.md`, § "Deriving the delta", a new item after item 5 (L30)** *(conditional on O-3)*.
+**F-2 — `.kiro/hooks/RELEASE-FLOW.md`, § "Deriving the delta", a new item after item 5 (L30)** *(granted: ruling item 2)*.
 
 Before: (none)
 
@@ -150,12 +149,13 @@ After:
 **Folded in**:
 - **Bundling** (DD13's own residual: "bundling delays everything if one item is contested") is why §§ 3 and 4 are ratifiable separately. A contested recipe item cannot hold the banners.
 - **Not re-ballotting each banner**: a vote per banner would contradict the light-ballot discipline Peter set for B-U3 (PR-2), so per-doc text goes to owner review instead (§ 3 item 3).
-- **Not deciding the trio's owner, trigger, or gate status**: Req 23.7 puts owner and trigger in Task 28.4's record. R-2 names that record instead of pre-picking. The gate question is left to Peter (§ 4).
+- **Not deciding the trio's owner or trigger**: Req 23.7 puts both in Task 28.4's record. R-2 names that record instead of pre-picking. Gate status was Peter's to decide, and he ruled it a record, not a gate (§ 4).
 - **L11's parenthetical** would vanish silently in a banner commit, so § 3 item 4 records the answer that retires it.
 
 **What survives**:
-- **§ 3 may be redundant law.** Req 20 already ratified the banners, and `tasks.md` L130's "banners" can be read as a merge-rule entry (Peter merges), not a ballot entry. Under that reading, § 3 re-records a ruling and adds a sitting to Task 23.2's path for nothing new. Under (r2), that cost is real calendar time at Peter's pace.
-- **Task 24's seat authors the record governing Task 23's edits.** That is a cross-parent dependency the plan did not declare; Task 23's criteria and Primary Artifacts do not name B-U4. Peter's O-1 ruling decides whether this is drift.
+- **§ 3 may be redundant law.** Req 20 already ratified the banners, and `tasks.md` L130's "banners" can be read as a merge-rule entry (Peter merges), not a ballot entry. Under that reading, § 3 re-records a ruling. Peter ruled the ordering (item 3) and the merge-ratified form (item 4), so the sitting cost did not land. The redundancy remains.
+- **Task 24's seat authors the record governing Task 23's edits.** That is a cross-parent dependency the plan did not declare; Task 23's criteria and Primary Artifacts do not name B-U4. Peter ruled the order (item 3). The dependency remains undeclared in Task 23's own text.
 - **R-2 commits the project to a recurring cost no one has measured.** Three persona sessions per release, plus an operator, plus records. Spec 123's first runs (U5) are the only cost evidence, and they come after this ballot. A trio step that proves too costly is changed by a later ballot, and until then it is a standing obligation.
-- **R-1's "an entry even when nothing consumer-facing changed"** is my reading of "one entry per release" (`CHANGELOG.md` L3). A reader could take the convention as one entry per release *that has consumer changes*.
+- **R-1's "an entry even when nothing consumer-facing changed"** was my reading of "one entry per release" (`CHANGELOG.md` L3), now ruled (item 5). Its cost: an entry that says "no consumer-facing changes" is noise a reader skims past.
+- **The declared two-doc band (§ 3 item 2) is unguarded** by construction. Accepted at the ruling (item 6).
 - **Under (r1)** the post-merge stamp is a second act that can be forgotten, exactly as B-U3's was. The stamp line in § 2's (r1) instrument names it, but nothing mechanical enforces it.
