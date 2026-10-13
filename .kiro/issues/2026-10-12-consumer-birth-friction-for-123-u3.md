@@ -3,7 +3,7 @@
 **Date**: 2026-10-12
 **Type**: FINDINGS RECORD, routed — surfaced by Leonardo while birthing the scratch consumer for the Settings-screen charter (`2026-10-12-leonardo-settings-screen-call-ledger-charter.md` § 8a step 2), following the SHIPPED install guide as written against a tarball packed from `main` @ `7aa433fca` (`3fn-core-15.0.0.tgz`, shasum `95a5fef72621354bf5fed4cd8b0f22173d347a6a`). Per that charter, init/onboarding friction routes HERE, not into the study.
 **Owner**: **Thurgood** (Spec 123 formalizer; Civitas) → route each row to the U3 unit's owner at U3's next review round. Items 6 and 8 additionally to **Lina** (Product MCP indexing; Application MCP readiness in a consumer) and **Ada** (packaging `files` list, token index).
-**Trigger**: **Spec 123 U3's next review round, before U3's unit PR opens** — each row dispositioned (fixed in U3 / already fixed on the U3 branch / deferred with reason). Note the packed `main` predates the unmerged `task/123-u3-onboarding` branch, so some rows may already be fixed there; the walk checks that each row says which.
+**Trigger**: ~~Spec 123 U3's next review round~~ — **RE-ROUTED 2026-10-13: U3 (#321) and U4 (#329/#331) merged before this record could be walked.** New trigger: **Spec 123 U5 — Task 26 "the two cross-target join runs and the install-doc correction" (rows 2, 4, 5, 7, 9) and Task 28 Closeout / Stacy's CLOSEOUT claims pass (rows 1, 8)**. Each row below carries its disposition against post-U3 `main` (`c5a6da8a4`, orchestrator-checked 2026-10-13).
 **Grant paths**: none.
 **Consulted**: none needed — a findings relay; owners dispose at the trigger.
 
@@ -20,10 +20,23 @@
 7. **Token index path set but missing.** Application MCP: `TOKEN_INDEX_DIR is set to ./token-index, which is absent or empty — unset it, or run generate`. Generate had not been run; init wired the path before the step that populates it. (Expected if the guide's order is install → init → generate; the message should say so, or init should not wire it yet.)
 8. **Readiness is wrong in the consumer.** `find_components` reports web `"status":"not-started","hasImplementation":false` for every component checked, including Nav-TabBar-Base (production-ready on web in the repo). Likely cause: the package `files` list ships schema/contracts/meta and the iOS/Android platform sources but excludes web implementation files (`!dist/web/**`, no `platforms/web/*.ts`), and the consumer-side Application MCP derives readiness from file presence. Effect: Layer-2 viability is misleading in every consumer. **Bears on the Settings ledger** — recorded there as a known-unreliable field.
 
+## Dispositions against post-U3 `main` (orchestrator, 2026-10-13)
+| Row | State on main | Route |
+|---|---|---|
+| 1 build noise (`docs/tokens.css` timestamp) | class item, reverted same day | Thurgood: known build-noise list (closeout) |
+| 2 abbreviation has no default | **still prompted** (`src/cli/init.ts` L191); `SS` confirmed by Peter for the scratch consumer | U5 Task 26: a default (initials of the name) or a one-line reason in the prompt |
+| 3 guide names the wrong scope | **FIXED in U3** — `docs/consumer/INSTALL.md` L18/L40 now `npm install @3fn/core`, public registry, no `.npmrc` | closed |
+| 4 guide's MCP step covers Kiro only | **verify at U5 Task 26** — no MCP wiring section found in post-U3 `INSTALL.md` by heading/`mcp.json` grep; init writes Claude Code's three-server `.mcp.json` | U5 Task 26 |
+| 5 next steps start at `npm install` | **likely FIXED in U3** (C27 erratum next-steps block, `init.ts` ~L405); verify the printed order in a fresh init | U5 Task 26 |
+| 6 generated `overview.yaml` invalid YAML | **FIXED in U3** — Task 22 replaced the generator with the scaffold template `src/cli/templates/product/overview.yaml` (parses; keys `name`, `description`, `register`, `platforms`) | closed |
+| 7 `TOKEN_INDEX_DIR` wired before generate | **message catalogued in U3** (`errorCatalog.ts` L77–84: born vs explicit-path forms); the ORDER (init wires the path, then tells you to run generate) is still worth one guide line | U5 Task 26 |
+| 8 readiness wrong in the consumer | **STILL OPEN** — `package.json` `files` excludes web implementation (`!dist/web/**`, no `platforms/web/*.ts`); consumer-side readiness derives from file presence → every web component reads `not-started`; Layer-2 viability misleading in every consumer | **Ada (packaging) + Lina (readiness derivation)** at U5 Task 26 / Closeout — decide: ship the web sources, or derive readiness from the manifest/schema instead of file presence |
+| **9 (new) CLI launch fails inside the desktop app's terminal pane** | Found 2026-10-13 opening Leonardo's session: `claude --agent leonardo` and plain `claude` both die with `error: An unknown error occurred (Unexpected)` when run from a shell the Claude desktop app opened — those shells carry the app's nested-session environment (`CLAUDECODE=1`, `CLAUDE_CODE_CHILD_SESSION=1`, session id, messaging socket/token, ~30 variables) and report no TTY. Works from macOS Terminal. Also: the desktop app installs no `claude` binary; the native installer (`curl -fsSL https://claude.ai/install.sh \| bash` → `~/.local/bin/claude`) does, without sudo; the global-npm path hits `EACCES` on `/usr/local/lib/node_modules` for a normal user. | U5 Task 26: the guide's "start a session" step should say *from a normal terminal, not from a shell inside a running Claude Code session or the desktop app's pane*, and name the native installer over `npm i -g` |
+
 ## Also recorded (not defects)
 - The tarball was packed into the session scratchpad; the consumer's `package.json` pointed at that temporary path. **Disposition (orchestrator)**: copied to `<consumer>/.pack/3fn-core-15.0.0.tgz` (shasum unchanged) and re-installed from there; `package.json` now reads `file:.pack/3fn-core-15.0.0.tgz`.
 - `product/experience-map/` is not created by init; Leonardo creates it (expected, not a defect, unless the guide implies otherwise).
 - Stage 0 confirmed served in the consumer: `viability` present on every `find_components` row; Nav-Header-Base `internalOnly: true`. Probe query "top bar" → any "top bar" query in the ledger is pre-exposed (P).
 
 ## What the walk checks
-Each row carries a disposition by U3's review round; row 6 unaddressed when U3's unit PR opens → finding. Then `git mv` to `archive/`.
+Rows 2, 4, 5, 7, 9 dispositioned at U5 Task 26; row 8 decided by Ada + Lina by U5's closeout; row 1 on the build-noise list. Row 8 undecided at CLOSEOUT → finding. Then `git mv` to `archive/`.
