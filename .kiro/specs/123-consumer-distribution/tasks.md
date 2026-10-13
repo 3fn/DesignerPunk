@@ -1388,7 +1388,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 29.1 Clause 2 per the ruling; attack (f) and one-token-variant fixtures; two-sided bites
   - [x] 29.2 Clause-1 rows rebuilt on the generator's emission of attack (a) (G2-F3, MP-1)
   - [x] 29.3 Kiro-JSON per-entry attribution spans (the six rows)
-  - [ ] 29.4 The standing application to the shipped profile on every PR touching its inputs (G2-F2; Stacy's condition (a)); the declared input set
+  - [x] 29.4 The standing application to the shipped profile on every PR touching its inputs (G2-F2; Stacy's condition (a)); the declared input set
   - [ ] 29.6 One re-sign round within Stacy's limits; the lock refresh *(R2: 29.5 moved to U3c as Task 31, PR-11; the numbers are kept so that references stay valid)*
   - [ ] 29.7 Full validation
 

@@ -71,9 +71,15 @@
  * Traces to: Req 11.4, 10.G, 10.S; design C15 (and its 2026-10-12 erratum); the G2 spec-text ruling R1, R2.
  */
 
+import * as fs from 'fs';
+import * as path from 'path';
+import { load as loadYaml } from 'js-yaml';
 import type { AttributionSpan } from '../attribution';
-import type { YamlDoc } from '../frontmatter';
-import { entryTree, type BodyPartition, type EntryTree } from '../partition';
+import { CONSUMER_OUTPUT_ROOT, loadConsumerProfile } from '../consumer-profile';
+import { derive, readConsumerSpans } from '../derive';
+import { splitFrontmatter, type YamlDoc } from '../frontmatter';
+import { entryTree, partition, type BodyPartition, type EntryTree } from '../partition';
+import { parseOverlay } from './overlay';
 
 export const DERIVATION_VERDICTS = Object.freeze(['VERIFIED', 'FAIL_NO_DERIVATION', 'FAIL_DISHONEST_NAMING'] as const);
 export type DerivationVerdict = (typeof DERIVATION_VERDICTS)[number];
@@ -230,4 +236,102 @@ export function checkDerivation(input: DerivationInput): DerivationResult {
   // HONEST NAMING (ruling R1): the destination IS one of D's span sources — identity, never containment.
   const honest = d.some((x) => sameNode(x.ref, destination, input.trees));
   return { verdict: honest ? 'VERIFIED' : 'FAIL_DISHONEST_NAMING', derived };
+}
+
+
+// =================================================================================================
+// THE STANDING APPLICATION (Spec 123 Task 29.4; G2-F2; ruling R3; Peter's PR-5.4): the check runs on
+// the SHIPPED material — the committed consumer profile and every committed target rendering under
+// `canonical/_consumer-output/` (the 16.1 parity test ties those renderings to what
+// `dist/consumer-canonical` emits) — never on fixtures alone.
+//
+// SURFACES (R3): a body or always-set row is evaluated on `_canonical` and every declared target; a
+// frontmatter row on the declared targets only (`_canonical` carries no per-entry frontmatter spans);
+// the shared-catalog member row on every declared target. A surface counts only if it carries the
+// row's source file (some span sources `<file>#…`).
+// POOLING: per TARGET — every artifact of a target (Kiro: the prompt AND the JSON) is one pool, as
+// the 29.0 sizing printed it (Stacy's attack file § 1 rule 2).
+// AGGREGATION: a row is VERIFIED only if it is VERIFIED on every one of its surfaces, and it has at
+// least one. The count is ROWS, never row × target.
+// =================================================================================================
+
+/** The profile directory the standing application reads. */
+export const CONSUMER_PROFILE_DIR = 'canonical/profiles/consumer';
+
+export interface ShippedRow {
+  /** The dispositions file (repo-relative). */
+  dispositionsFile: string;
+  /** The canonical source the rows cite. */
+  source: string;
+  lane: 'body' | 'frontmatter' | 'members';
+  key: string;
+  destination: string;
+  /** Verdict per surface (target root name → verdict). */
+  perSurface: Record<string, DerivationVerdict>;
+  /** `VERIFIED` only if every surface is; `NO_SURFACE` when no surface carries the source file. */
+  verdict: DerivationVerdict | 'NO_SURFACE';
+}
+
+/** Every `*.dispositions.yaml` of the committed consumer profile (agents, `_shared`, `always-set/`), sorted. */
+export function consumerDispositionsFiles(repoRoot: string): string[] {
+  const out: string[] = [];
+  const walk = (rel: string): void => {
+    for (const e of fs.readdirSync(path.join(repoRoot, rel), { withFileTypes: true })) {
+      const r = `${rel}/${e.name}`;
+      if (e.isDirectory() && e.name === 'always-set') walk(r);
+      else if (e.isFile() && e.name.endsWith('.dispositions.yaml')) out.push(r);
+    }
+  };
+  walk(CONSUMER_PROFILE_DIR);
+  return out.sort();
+}
+
+/** Run 11.4 over every `re-pointed` row of the committed consumer profile, on the committed renderings. */
+export function checkShippedProfile(repoRoot: string): ShippedRow[] {
+  const targets = loadConsumerProfile(repoRoot).targets;
+  const pools = new Map<string, Map<string, { artifact: string; text: string }[]>>();
+  for (const t of ['_canonical', ...targets]) pools.set(t, new Map(readConsumerSpans(repoRoot, `${CONSUMER_OUTPUT_ROOT}/${t}`) ?? []) as Map<string, { artifact: string; text: string }[]>);
+  const rows: ShippedRow[] = [];
+  for (const rel of consumerDispositionsFiles(repoRoot)) {
+    const doc = loadYaml(fs.readFileSync(path.join(repoRoot, rel), 'utf8')) as Record<string, unknown> & { source: string };
+    const source = doc.source;
+    const overlayRel = rel.replace(/\.dispositions\.yaml$/, '.overlay.md');
+    const overlay = fs.existsSync(path.join(repoRoot, overlayRel)) ? parseOverlay(fs.readFileSync(path.join(repoRoot, overlayRel), 'utf8'), overlayRel) : undefined;
+    const isShared = source === SHARED_CATALOG_FILE;
+    let trees: DerivationTrees = { body: partition('') };
+    let derivedValue: ((p: string) => unknown) | undefined;
+    if (!isShared) {
+      const split = splitFrontmatter(fs.readFileSync(path.join(repoRoot, source), 'utf8'), source);
+      const alwaysSet = doc.counterpart !== undefined;
+      const frontmatter = alwaysSet ? {} : split.frontmatter;
+      trees = { body: partition(split.body), entry: entryTree(frontmatter) };
+      if (!alwaysSet) {
+        // derive() is the refusal gate (stale pin, orphaned key, value congruence): a refusal throws here.
+        const derived = derive({ source, frontmatter, body: split.body, dispositions: doc as unknown as Parameters<typeof derive>[0]["dispositions"], overlay, dispositionsFile: rel });
+        derivedValue = derivedEntryValues(derived.frontmatter as YamlDoc, derived.entryOrigin);
+      }
+    }
+    for (const lane of ['body', 'frontmatter', 'members'] as const) {
+      const table = (doc[lane] ?? {}) as Record<string, { disposition?: string; destination?: string }>;
+      for (const [key, row] of Object.entries(table)) {
+        if (row?.disposition !== 're-pointed') continue;
+        const destination = row.destination ?? '';
+        const surfaces = lane === 'body' ? ['_canonical', ...targets] : [...targets];
+        const prefix = `${source}#`;
+        const perSurface: Record<string, DerivationVerdict> = {};
+        for (const t of surfaces) {
+          const pool = pools.get(t) as Map<string, { artifact: string; text: string }[]>;
+          const spans: RenderedSpan[] = [];
+          for (const [src, pieces] of pool) if (src.startsWith(prefix)) for (const p of pieces) spans.push({ source: src, text: p.text });
+          if (spans.length === 0) continue; // this surface does not carry the source file
+          const s = lane === 'frontmatter' ? `${FRONTMATTER_PREFIX}${key}` : key;
+          perSurface[t] = checkDerivation({ file: source, trees, spans, s, destination, derivedValue }).verdict;
+        }
+        const verdicts = Object.values(perSurface);
+        const verdict = verdicts.length === 0 ? 'NO_SURFACE' : verdicts.find((v) => v !== 'VERIFIED') ?? 'VERIFIED';
+        rows.push({ dispositionsFile: rel, source, lane, key, destination, perSurface, verdict });
+      }
+    }
+  }
+  return rows;
 }

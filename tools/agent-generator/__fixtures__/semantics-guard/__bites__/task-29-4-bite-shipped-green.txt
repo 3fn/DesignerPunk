@@ -1,0 +1,24 @@
+# BITE shipped-profile (Task 29.4, GREEN side): the committed repo, no plant
+# command: npx jest --config tools/agent-generator/jest.config.js tools/agent-generator/__tests__/derivation.shipped-profile.test.ts --verbose
+# base commit: ca9e40b9 + the 29.4 working tree; run 2026-10-13T02:42:58Z
+# --- jest output ---
+  console.log
+    standing application: 169 re-pointed rows evaluated (= the committed dispositions' count)
+
+      at Object.<anonymous> (__tests__/derivation.shipped-profile.test.ts:57:13)
+
+PASS tools/agent-generator/__tests__/derivation.shipped-profile.test.ts
+  the 11.4 check on the shipped profile (G2-F2; ruling R3)
+    ✓ evaluates every re-pointed row the committed dispositions declare — a derived, non-zero count
+    ✓ every re-pointed row is VERIFIED on every surface that carries its source file
+    ✓ the surfaces are the ruling’s: body on _canonical + every declared target; frontmatter and members on the declared targets; Kiro pools prompt + JSON
+  the standing application bites (in a temp copy of the shipped inputs)
+    ✓ the copy is faithful: unplanted, it is clean with the same count
+    ✓ E3 — plant one rejected row (C1: S’s committed re-grounding, destination its sibling) → the guard reports exactly that row
+    ✓ E2 — with the dispositions removed the guard refuses to pass on zero rows
+
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        1.048 s
+Ran all test suites matching tools/agent-generator/__tests__/derivation.shipped-profile.test.ts.
