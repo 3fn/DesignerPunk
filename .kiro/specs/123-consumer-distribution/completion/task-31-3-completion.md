@@ -29,7 +29,7 @@
   - (b) clause (iii) requires the removed block to contain a deny-list hit, and he did not find the deny-list's source.
 - **Thurgood on (b)**: no deny-list exists in code at this revision.
   - `git grep -i deny` over `tools/agent-generator` (tests excluded) finds none.
-  - Req 11.3 (iii)'s applicability verification is therefore a human reading today. The schema checks only that `cites` is one of `subtraction-1`…`subtraction-5` (`tools/agent-generator/regrounding/dispositions.ts` L88–92, L345).
+  - Req 11.3 (iii)'s applicability verification is therefore a human reading today. The schema checks only that `cites` is one of `subtraction-1`…`subtraction-5` (`tools/agent-generator/regrounding/dispositions.ts` L87–93 (the list), L338 (the removals check)).
   - That gap is recorded under the instruments block's `## Found later`.
 - *Record form*: the reads above are the orchestrator's relay of the two seats' answers. They are not verbatim files. If the seats' own words are committed later, they go beside `task-31-reads/` and this section cites them.
 
@@ -55,4 +55,4 @@ STALE LIST (all freshness findings): 6
   stale-signature | canonical/profiles/consumer/kenya.dispositions.yaml | ambient.groundTruthManifest.verdict | signature on ambient.groundTruthManifest.verdict is stale — its canonical or rendered content changed since signing; re-sign or refuse
   stale-signature | canonical/profiles/consumer/kenya.dispositions.yaml | commands[platform-tokens] | signature on commands[platform-tokens] is stale — its canonical or rendered content changed since signing; re-sign or refuse
 ```
-`diff` of the two: **identical**. Regenerating after the edit (`npx tsx tools/agent-generator/generate.ts`) moved **no** output file, which confirms that `cites` is in neither hash (`freshness.ts` L363–369).
+`diff` of the two: **identical**. Regenerating after the edit (`npx tsx tools/agent-generator/generate.ts`) moved **no** output file, which confirms that `cites` is in neither hash (the sweep compares canonical source text and the rendered span only: `freshness.ts` L363–369).
