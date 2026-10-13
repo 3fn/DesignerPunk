@@ -1428,8 +1428,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Primary Artifacts:** `.kiro/specs/123-consumer-distribution/completion/g2-cycle-2-consequence-texts.md`, Stacy's attack file and verdict record (cited), this parent's completion doc's 24.3 table
 
   - [x] 30.0 Commit the pre-declared consequence texts (C0′)
-  - [ ] 30.1 Freeze H′; request cycle 2 from Stacy; hold the input set until the verdict
-  - [ ] 30.2 Apply the verdict's consequence byte-equal (on `HOLDS`)
+  - [x] 30.1 Freeze H′; request cycle 2 from Stacy; hold the input set until the verdict
+  - [x] 30.2 Apply the verdict's consequence byte-equal (on `HOLDS`)
   - [ ] 30.3 Full validation; open the U3g PR (on `HOLDS` only; tripwire line)
 
 ### UNIT 4 — Content policy
