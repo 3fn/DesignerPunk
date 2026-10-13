@@ -3,7 +3,8 @@
 **Spec**: 123 — Consumer Distribution · **Unit**: U4 — Content policy (`u4-content`; parents 23–24; **this is the gating parent**, so its completion opens the U4 PR) · **Type**: Documentation · **Validation**: Tier 2
 **Agent (plan)**: PRIMARY Thurgood (Opus)
 **Delegated-tier**: plan held
-**CI-provenance**: <<CI-PROVENANCE — filled by the orchestrator at PR open>>
+**CI-provenance**: branch-head dispatch @ a42900dac85e7fe6b54ce1f4ca961bb92d25e086 — https://github.com/3fn/DesignerPunk/actions/runs/38482898882, https://github.com/3fn/DesignerPunk/actions/runs/38482906106, https://github.com/3fn/DesignerPunk/actions/runs/38482914170, https://github.com/3fn/DesignerPunk/actions/runs/38482921632, https://github.com/3fn/DesignerPunk/actions/runs/38482928722, https://github.com/3fn/DesignerPunk/actions/runs/38482935669
+*(All six green, measured at the Task 23 parent-close commit — before the `main` merge `ccf4dbeb8`, the lock refresh and this doc. The gate runs on PR #329; its `PR gate` line replaces this one in the post-merge records PR, the Task 22 / #323 precedent. Only a PR-gate line supports "the gate is green".)*
 **Instruments**: 26 listed — exists 19 · built-here 7 · missing 0 · unlisted 0 — .kiro/specs/123-consumer-distribution/completion/task-24-instruments.md
 **Traces**: Req 21.1–21.3, 23.7 · design C29, DD13, DD16
 
