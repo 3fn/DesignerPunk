@@ -19,7 +19,7 @@ import { AttributionAccumulator } from '../attribution';
 import { splitFrontmatter } from '../frontmatter';
 import { entryTree, partition } from '../partition';
 import { emitSpans, type Dispositions } from '../spans';
-import { checkDerivation, containedIn, DERIVATION_VERDICTS, parseRef, sameNode, SHARED_CATALOG_FILE, spanRef } from '../regrounding/derivation';
+import { checkDerivation, containedIn, DERIVATION_VERDICTS, derivedEntryValues, parseRef, renderedSpans, sameNode, SHARED_CATALOG_FILE, spanRef } from '../regrounding/derivation';
 import { g1Fixture, readG1Rendering } from '../__fixtures__/g1-renderings';
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..');
@@ -45,9 +45,18 @@ function render(overrides: Record<string, { disposition: Row['disposition']; ove
   }
   const acc = new AttributionAccumulator();
   const out = emitSpans(acc, { file: FILE, body, frontmatter }, 'consumer', { body: rows }, { units: overlayUnits }, 'body');
-  return { text: out.text, spans: acc.build('stacy.md').spans };
+  // Each span with the lines it covers in the rendering (R2's evidence, Task 29.2).
+  const built = acc.build('stacy.md').spans;
+  return { text: out.text, attribution: built, spans: renderedSpans(built, out.text) };
 }
-const check = (spans: { source: string }[], s: string, destination: string) => checkDerivation({ file: FILE, trees, spans, s, destination });
+/**
+ * The check over stacy's canonical frontmatter (every entry retained, so the derived value is the
+ * canonical one). A hand-built span with no `text` stands for a NON-EMPTY rendering (a stub line);
+ * R2's emptiness cases always pass the generator's own rendered text.
+ */
+const values = derivedEntryValues(frontmatter);
+const check = (spans: { source: string; text?: string }[], s: string, destination: string) =>
+  checkDerivation({ file: FILE, trees, spans: spans.map((sp) => ({ source: sp.source, text: sp.text ?? '(rendered line)\n' })), s, destination, derivedValue: values });
 
 describe('the rendering fixtures are what they claim', () => {
   it('S and the trigger set are SIBLINGS under one ## parent (attack (a)’s shape, measured)', () => {
@@ -58,7 +67,7 @@ describe('the rendering fixtures are what they claim', () => {
   it('E is zero-verbatim inside its destination (10.S Constraint 3) and renders as a render span sourcing S', () => {
     const r = render({ [S]: { disposition: 're-pointed', overlay: E_TEXT } });
     expect(r.text).toContain(E_TEXT);
-    expect(r.spans.filter((sp) => sp.source === `${FILE}${S}`).map((sp) => sp.op)).toEqual(['render']);
+    expect(r.attribution.filter((sp) => sp.source === `${FILE}${S}`).map((sp) => sp.op)).toEqual(['render']);
   });
 });
 
@@ -121,7 +130,7 @@ describe('containment is structural, within one tree (the R4 pin)', () => {
   });
 
   it('with no entry tree supplied, every frontmatter reference is non-matching (not a throw)', () => {
-    expect(checkDerivation({ file: FILE, trees: { body: bodyTree }, spans: [{ source: `${FILE}#frontmatter:writeScope` }], s: 'frontmatter:writeScope', destination: 'frontmatter:writeScope' }).verdict).toBe('FAIL_NO_DERIVATION');
+    expect(checkDerivation({ file: FILE, trees: { body: bodyTree }, spans: [{ source: `${FILE}#frontmatter:writeScope`, text: 'x\n' }], s: 'frontmatter:writeScope', destination: 'frontmatter:writeScope', derivedValue: values }).verdict).toBe('FAIL_NO_DERIVATION');
   });
 });
 
@@ -217,8 +226,8 @@ describe('29.1 — HONEST NAMING is identity (ruling R1; G2-F1)', () => {
 describe('29.1 — the shared-catalog member space (ruling R1: id equality)', () => {
   const ID = 'record-first-ratification';
   const SIB = 'find-docs-discovery';
-  const mcheck = (spans: { source: string }[], s: string, destination: string) =>
-    checkDerivation({ file: SHARED_CATALOG_FILE, trees: { body: partition('') }, spans, s, destination });
+  const mcheck = (spans: { source: string; text?: string }[], s: string, destination: string) =>
+    checkDerivation({ file: SHARED_CATALOG_FILE, trees: { body: partition('') }, spans: spans.map((sp) => ({ source: sp.source, text: sp.text ?? '- a rendered member\n' })), s, destination });
 
   it('a span sourcing the member, destination the member (M0) → VERIFIED', () => {
     expect(mcheck([{ source: `${SHARED_CATALOG_FILE}#${ID}` }], ID, ID)).toEqual({ verdict: 'VERIFIED', derived: [`${SHARED_CATALOG_FILE}#${ID}`] });
@@ -230,5 +239,86 @@ describe('29.1 — the shared-catalog member space (ruling R1: id equality)', ()
 
   it('only a sibling member, another file or glue is rendered → FAIL_NO_DERIVATION', () => {
     expect(mcheck([{ source: `${SHARED_CATALOG_FILE}#${SIB}` }, { source: `${FILE}#${ID}` }, { source: 'WORKFLOW_RULES' }], ID, ID)).toEqual({ verdict: 'FAIL_NO_DERIVATION', derived: [] });
+  });
+});
+
+// ---------------------------------------------------------------------------------------------
+// Task 29.2 — clause (1) per the G2 spec-text ruling R2 (G2-F3; MIDPOINT MP-1). Attack (a) AS THE
+// GENERATOR EMITS IT: S stays `re-pointed`, its overlay emptied, so `emitSpans` renders one blank
+// line attributed to S (`ensureTrailingNewline('')`). Task 14's rows modelled the attack instead
+// (S `superseded-by`, its text moved into the sibling); those rows stay as written (Task 14 is not
+// edited) and these are the rebuilt ones. Two-sided bites: `__bites__/task-29-2-*`.
+// ---------------------------------------------------------------------------------------------
+describe('29.2 — an empty span derives nothing (ruling R2; G2-F3, MP-1)', () => {
+  const sSpans = (r: ReturnType<typeof render>) => r.spans.filter((sp) => sp.source === `${FILE}${S}`);
+  const headingOfS = `${(bodyTree.units.find((u) => u.anchor === S)?.text as string).split('\n')[0]}\n`;
+
+  it('the generator’s emission of attack (a): an emptied re-pointed overlay renders ONE blank line attributed to S', () => {
+    const r = render({ [S]: { disposition: 're-pointed', overlay: '' } });
+    expect(sSpans(r)).toEqual([{ source: `${FILE}${S}`, text: '\n' }]);
+  });
+
+  it.each([
+    ['A1 (attack (a) verbatim: emptied, sibling destination)', '', TRIGGER],
+    ['A3 (emptied, destination S’s ## parent)', '', PARENT],
+    ['A4 (emptied in place, destination S)', '', S],
+    ['WS1 (spaces, tabs and blank lines only)', ' \t \n\n   \n', TRIGGER],
+    ['WS2 (U+00A0 only — trim() removes it)', '   \n', TRIGGER],
+  ])('%s → FAIL_NO_DERIVATION', (label, overlay, destination) => {
+    const r = render({ [S]: { disposition: 're-pointed', overlay } });
+    expect(sSpans(r)).toHaveLength(1); // the span IS emitted — R2, not the emission, excludes it
+    expect(`${label}: ${check(r.spans, S, destination).verdict}`).toBe(`${label}: FAIL_NO_DERIVATION`);
+  });
+
+  it.each([
+    ['A2 (emptied to its heading line: the heading is text)', headingOfS],
+    ['WS3 (U+200B only — not removed by trim(), so text)', '​\n'],
+    ['WS4 (an HTML comment only — text)', '<!-- -->\n'],
+    ['WS5 (a single "." — text)', '.\n'],
+    ['V1 (one token)', 'Owed.\n'],
+  ])('%s, sibling destination → FAIL_DISHONEST_NAMING (D non-empty; clause 2 decides)', (label, overlay) => {
+    const r = render({ [S]: { disposition: 're-pointed', overlay } });
+    expect(`${label}: ${check(r.spans, S, TRIGGER).verdict}`).toBe(`${label}: FAIL_DISHONEST_NAMING`);
+  });
+
+  it('a whitespace-only span does not hide a non-empty one: D keeps the span that renders text', () => {
+    expect(check([{ source: `${FILE}${S}`, text: '\n' }, { source: `${FILE}${S}`, text: 'Owed.\n' }], S, S)).toEqual({ verdict: 'VERIFIED', derived: [`${FILE}${S}`] });
+    expect(check([{ source: `${FILE}${S}`, text: '  \n\t\n' }], S, S)).toEqual({ verdict: 'FAIL_NO_DERIVATION', derived: [] });
+  });
+
+  it('the shared-catalog member lane (provisional, flagged: R2 is silent on members) is held to the rendered-text rule', () => {
+    const v = (text: string) =>
+      checkDerivation({ file: SHARED_CATALOG_FILE, trees: { body: partition('') }, spans: [{ source: `${SHARED_CATALOG_FILE}#record-first-ratification`, text }], s: 'record-first-ratification', destination: 'record-first-ratification' }).verdict;
+    expect([v('\n'), v('- record-first ratification\n')]).toEqual(['FAIL_NO_DERIVATION', 'VERIFIED']);
+  });
+});
+
+describe('29.2 — the always-set lane, through the same span function (AS1, AS2)', () => {
+  const AS_FILE = '.kiro/steering/Task-Completion-Protocol.md';
+  const asDoc = splitFrontmatter(fs.readFileSync(path.join(REPO_ROOT, AS_FILE), 'utf8'), AS_FILE);
+  const asTree = partition(asDoc.body);
+  const S_AS = '#for-subtasks';
+  const T_AS = '#for-parent-tasks-implementation-or-architecture-type';
+  function renderAs(overlay: string) {
+    const rows: Record<string, Row> = {};
+    for (const unit of asTree.units) rows[unit.anchor] = { disposition: 'retained' };
+    rows[S_AS] = { disposition: 're-pointed' };
+    const acc = new AttributionAccumulator();
+    const out = emitSpans(acc, { file: AS_FILE, body: asDoc.body, frontmatter: {} }, 'consumer', { body: rows }, { units: { [S_AS]: overlay } }, 'body');
+    return renderedSpans(acc.build('tcp.md').spans, out.text);
+  }
+  const asCheck = (spans: ReturnType<typeof renderAs>, destination: string) => checkDerivation({ file: AS_FILE, trees: { body: asTree }, spans, s: S_AS, destination }).verdict;
+
+  it('the fixture is what it claims: S_AS and T_AS are siblings in the always-set member’s tree', () => {
+    expect(asTree.get(S_AS)?.parent).toBe(asTree.get(T_AS)?.parent);
+  });
+
+  it('AS1 (emptied, sibling destination) → FAIL_NO_DERIVATION', () => {
+    expect(`AS1: ${asCheck(renderAs(''), T_AS)}`).toBe('AS1: FAIL_NO_DERIVATION');
+  });
+
+  it('AS2 (emptied to its heading line, sibling destination) → FAIL_DISHONEST_NAMING', () => {
+    const heading = `${(asTree.units.find((u) => u.anchor === S_AS)?.text as string).split('\n')[0]}\n`;
+    expect(`AS2: ${asCheck(renderAs(heading), T_AS)}`).toBe('AS2: FAIL_DISHONEST_NAMING');
   });
 });

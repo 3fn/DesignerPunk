@@ -90,3 +90,8 @@
     - The reconciled `kiro.ts` L428–434 comment: built here (29.3).
   - The steward `.kiro/agents/*-prompt.md` join row 7.4's moved outputs.
   - The 29.0 `misfit` entry above is resolved by this ruling.
+- 2026-10-12 — unlisted — criterion C5 (the clause-1 rows; R2 widens the check's input) — found at 29.2.
+  - `tools/agent-generator/__tests__/grain-guard.two-sided.test.ts` calls `checkDerivation` and is not in Task 29's Primary Artifacts. The ruling says "Task 29 lists the tests that change", and the list omits this file.
+  - The edit changes the spans' shape only (three lines; its two assertions are unchanged).
+  - The alternative, a fail-open check when rendered text is absent, would reopen G2-F3, so it was not taken.
+  - Route: the orchestrator, as an out-of-list edit to record or to grant. It is not reverted unless ruled.

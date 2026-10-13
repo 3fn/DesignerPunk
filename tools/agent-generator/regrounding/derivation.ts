@@ -33,6 +33,25 @@
  * id. Members are flat, so D is the spans sourcing `canonical/shared/shared-catalog.yaml#<id>` and
  * identity is id equality.
  *
+ * AN EMPTY SPAN DERIVES NOTHING (G2 spec-text ruling R2, 2026-10-12; G2-F3): Req 11.4 (1) asks
+ * that something in the shipped charter demonstrably DERIVES from S, so D excludes
+ *   - a BODY span whose rendered text over its line range is empty after `String.prototype.trim()`
+ *     ("whitespace" is exactly the set `trim()` removes; a zero-width space, an HTML comment or
+ *     punctuation alone is TEXT);
+ *   - a FRONTMATTER span whose entry's DERIVED VALUE (`derive()`'s YAML value at the entry's
+ *     canonical path) is `null`, an empty list, or a string empty after `trim()`. The test is on
+ *     the value, never on the rendered text (an adapter's rendering of an emptied value still
+ *     carries markup); a map that keeps any member is not empty (no per-field rule — derive()
+ *     validates at class level).
+ * An emptied re-pointed overlay renders one blank line attributed to S (`emitSpans`), so before
+ * Task 29.2 clause (1) could never fail on the re-pointed lane. The rule lives HERE, not in
+ * `emitSpans`: emitSpans never sees frontmatter values, and dropping the blank line's span there
+ * would break P2 attribution totality (ruling R2). Hence the input carries each span's RENDERED
+ * TEXT ({@link RenderedSpan}) and a derived-value lookup; a frontmatter span with no lookup
+ * supplied is NOT in D (fail-closed: the check never assumes a value it was not shown).
+ * PROVISIONAL (flagged, Task 29.2): R2 is silent on an emptied shared-catalog member; until
+ * Thurgood's line lands, a member span is held to the body rule (its rendered text).
+ *
  * UNKNOWN ANCHORS ARE NON-MATCHING, NEVER AN EXCEPTION (Lina R2): `isDescendantOrSelf` returns
  * false for an id absent from the tree — e.g. a bypass's `#body` span, or an S that a rename
  * orphaned — so a red comes from DERIVATION, not from a throw. Spans from other files, generator
@@ -49,11 +68,12 @@
  * emitted by the adapters for every target — that is the per-target guard's (Task 14.3/14.4,
  * `semantics-guard.test.ts`); that a disposition row exists or its key is current (13.5).
  *
- * Traces to: Req 11.4, 10.G, 10.S; design C15 (and its 2026-10-12 erratum); the G2 spec-text ruling R1.
+ * Traces to: Req 11.4, 10.G, 10.S; design C15 (and its 2026-10-12 erratum); the G2 spec-text ruling R1, R2.
  */
 
 import type { AttributionSpan } from '../attribution';
-import type { BodyPartition, EntryTree } from '../partition';
+import type { YamlDoc } from '../frontmatter';
+import { entryTree, type BodyPartition, type EntryTree } from '../partition';
 
 export const DERIVATION_VERDICTS = Object.freeze(['VERIFIED', 'FAIL_NO_DERIVATION', 'FAIL_DISHONEST_NAMING'] as const);
 export type DerivationVerdict = (typeof DERIVATION_VERDICTS)[number];
@@ -117,12 +137,65 @@ export function sameNode(x: TreeRef, s: TreeRef, trees: DerivationTrees): boolea
   return containedIn(x, s, trees) && containedIn(s, x, trees);
 }
 
+/** One attribution span with the text it covers in the rendered artifact (ruling R2's evidence). */
+export interface RenderedSpan {
+  source: string;
+  /** The span's rendered lines, each with its newline. */
+  text: string;
+}
+
+/** Attach each span's rendered lines (from its artifact's text) — the shape {@link checkDerivation} reads. */
+export function renderedSpans(spans: readonly Pick<AttributionSpan, 'source' | 'lines'>[], artifactText: string): RenderedSpan[] {
+  const lines = artifactText.split('\n');
+  return spans.map((span) => ({ source: span.source, text: `${lines.slice(span.lines[0] - 1, span.lines[1]).join('\n')}\n` }));
+}
+
+/** R2, body (and, provisionally, member) spans: empty after `trim()` derives nothing. */
+export const isEmptyRendering = (text: string): boolean => text.trim() === '';
+
+/** R2, frontmatter: `null`/absent, an empty list, or a string empty after `trim()` derives nothing. */
+export function isEmptyEntryValue(value: unknown): boolean {
+  if (value === null || value === undefined) return true;
+  if (Array.isArray(value)) return value.length === 0;
+  if (typeof value === 'string') return value.trim() === '';
+  return false;
+}
+
+/**
+ * The derived-value lookup R2 reads: CANONICAL entry path → `derive()`'s value there. Built from
+ * the DERIVED frontmatter (what the adapters render) and `derive()`'s `entryOrigin` (derived path →
+ * canonical path, for a re-pointed string member whose key is its new value). A container resolves
+ * to the list of its surviving leaf values (empty list when none survive); an unknown path →
+ * `undefined` (empty).
+ */
+export function derivedEntryValues(derivedFrontmatter: YamlDoc, entryOrigin: Readonly<Record<string, string>> = {}): (canonicalPath: string) => unknown {
+  const tree = entryTree(derivedFrontmatter);
+  const leaves = new Map<string, unknown>();
+  for (const leaf of tree.units) leaves.set(leaf.path, leaf.value);
+  const canonical = (p: string): string => entryOrigin[p] ?? p;
+  const values = new Map<string, unknown>();
+  for (const [p, v] of leaves) values.set(canonical(p), v);
+  const under = (id: string): unknown[] => {
+    const node = tree.get(id);
+    if (!node) return [];
+    if (leaves.has(id)) return [leaves.get(id)];
+    return node.children.flatMap(under);
+  };
+  for (const id of tree.nodes.keys()) if (!leaves.has(id) && !values.has(canonical(id))) values.set(canonical(id), under(id));
+  return (canonicalPath: string) => values.get(canonicalPath);
+}
+
 export interface DerivationInput {
   /** The canonical source path spans cite (`canonical/agents/stacy.md`). */
   file: string;
   trees: DerivationTrees;
-  /** The rendering's attribution spans (generator-emitted). */
-  spans: readonly Pick<AttributionSpan, 'source'>[];
+  /** The rendering's attribution spans (generator-emitted), each with its rendered text (R2). */
+  spans: readonly RenderedSpan[];
+  /**
+   * R2, frontmatter: the entry's derived value at a CANONICAL path ({@link derivedEntryValues}).
+   * Absent → no frontmatter span is in D (fail-closed).
+   */
+  derivedValue?: (canonicalPath: string) => unknown;
   /** S: the re-pointed unit (`#anchor`) or entry (`frontmatter:<path>`). */
   s: string;
   /** The disposition's destination (`#anchor` or `frontmatter:<path>`). */
@@ -146,9 +219,12 @@ export function checkDerivation(input: DerivationInput): DerivationResult {
     const prefix = `${input.file}#`;
     return source.startsWith(prefix) ? { tree: 'member', id: source.slice(prefix.length) } : undefined;
   };
+  // R2: a span that renders nothing (body, member) or whose entry's derived value is empty (frontmatter) derives nothing.
+  const derives = (ref: TreeRef, text: string): boolean =>
+    ref.tree === 'entry' ? input.derivedValue !== undefined && !isEmptyEntryValue(input.derivedValue(ref.id)) : !isEmptyRendering(text);
   const d = input.spans
-    .map((span) => ({ source: span.source, ref: sourceRef(span.source) }))
-    .filter((x): x is { source: string; ref: TreeRef } => x.ref !== undefined && containedIn(x.ref, s, input.trees));
+    .map((span) => ({ source: span.source, text: span.text, ref: sourceRef(span.source) }))
+    .filter((x): x is { source: string; text: string; ref: TreeRef } => x.ref !== undefined && containedIn(x.ref, s, input.trees) && derives(x.ref, x.text));
   const derived = d.map((x) => x.source);
   if (d.length === 0) return { verdict: 'FAIL_NO_DERIVATION', derived };
   // HONEST NAMING (ruling R1): the destination IS one of D's span sources — identity, never containment.

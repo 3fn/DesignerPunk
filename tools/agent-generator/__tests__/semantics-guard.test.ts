@@ -25,7 +25,7 @@ import * as path from 'path';
 import { adaptersFor, type AdapterContext, type AdapterFactory, type FieldDispositionTable, type TargetAdapter } from '../adapters/index';
 import { CcAdapter } from '../adapters/cc';
 import { loadConsumerProfile } from '../consumer-profile';
-import { checkDerivation, type DerivationVerdict } from '../regrounding/derivation';
+import { checkDerivation, renderedSpans, type DerivationVerdict } from '../regrounding/derivation';
 import type { AttributionManifest } from '../attribution';
 import { E_FM, EXTRA, loadSemguard, S, semguardContext, SOURCE } from '../__fixtures__/semantics-guard';
 
@@ -55,7 +55,13 @@ function prose(adapter: TargetAdapter): { content: string; attribution: Attribut
 
 /** 11.4 alone, over the adapter's own spans, for an in-place re-pointing of `s`. */
 function verdictOf(adapter: TargetAdapter, s: string): DerivationVerdict {
-  return checkDerivation({ file: SOURCE, trees: fixture.trees, spans: prose(adapter).attribution.spans, s, destination: s }).verdict;
+  return checkDerivation({ file: SOURCE, trees: fixture.trees, spans: spansOf(adapter), s, destination: s, derivedValue: fixture.derivedValue }).verdict;
+}
+
+/** The adapter's own spans, each with the lines it covers in the artifact it emitted (R2, Task 29.2). */
+function spansOf(adapter: TargetAdapter) {
+  const p = prose(adapter);
+  return renderedSpans(p.attribution.spans, p.content);
 }
 
 /** The guard blocks for a declared target list — the adapters come from the registry. */
@@ -84,7 +90,7 @@ function defineGuard(blocks: [string, TargetAdapter][]): void {
      */
     describe('frontmatter', () => {
       it(`E-fm: ${E_FM} (re-grounded in place) is VERIFIED over this adapter’s own spans`, () => {
-        const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: prose(adapter).attribution.spans, s: `frontmatter:${E_FM}`, destination: `frontmatter:${E_FM}` }).verdict;
+        const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: spansOf(adapter), s: `frontmatter:${E_FM}`, destination: `frontmatter:${E_FM}`, derivedValue: fixture.derivedValue }).verdict;
         expect(`${target} frontmatter ${E_FM}: ${v}`).toBe(`${target} frontmatter ${E_FM}: VERIFIED`);
       });
 
@@ -95,7 +101,7 @@ function defineGuard(blocks: [string, TargetAdapter][]): void {
       });
 
       it(`EXTRA EVIDENCE (disclosed, not a substitute for E-fm): ${EXTRA} re-grounded in place is VERIFIED`, () => {
-        const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: prose(adapter).attribution.spans, s: `frontmatter:${EXTRA}`, destination: `frontmatter:${EXTRA}` }).verdict;
+        const v = checkDerivation({ file: SOURCE, trees: fixture.trees, spans: spansOf(adapter), s: `frontmatter:${EXTRA}`, destination: `frontmatter:${EXTRA}`, derivedValue: fixture.derivedValue }).verdict;
         expect(`${target} frontmatter ${EXTRA}: ${v}`).toBe(`${target} frontmatter ${EXTRA}: VERIFIED`);
       });
     });
@@ -123,4 +129,26 @@ describe('a fake third target — declared, its adapter injected through the reg
   });
 
   defineGuard(blocks);
+});
+
+/*
+ * Task 29.2 (ruling R2; G2-F3, MP-1): attack (a) AS EACH ADAPTER EMITS IT. S stays re-pointed with
+ * its overlay emptied; every declared target's own prose artifact carries the one blank line
+ * attributed to S, and the check rejects it by clause (1).
+ */
+describe.each(guardBlocks(PROFILE_TARGETS))('%s — attack (a) as emitted (29.2)', (target, adapter) => {
+  const emptied = { ...fixture, overlay: { ...fixture.overlay, units: { ...fixture.overlay.units, [S]: '' } } };
+  const ctx = semguardContext(BASE_CTX, emptied);
+  const file = adapter.emitAgent(fixture.resolved, ctx).find((f) => f.path.endsWith('.md') && f.attribution);
+  const spans = file && file.attribution ? renderedSpans(file.attribution.spans, file.content) : [];
+
+  it('the emitted rendering carries exactly one blank line attributed to S', () => {
+    expect(spans.filter((sp) => sp.source === `${SOURCE}${S}`).map((sp) => sp.text)).toEqual(['\n']);
+  });
+
+  it('A1 (sibling destination) and A4 (destination S) → FAIL_NO_DERIVATION', () => {
+    const v = (destination: string) => checkDerivation({ file: SOURCE, trees: fixture.trees, spans, s: S, destination, derivedValue: fixture.derivedValue }).verdict;
+    const T = '#the-trigger-set-the-114-superset-table-names-never-numbers';
+    expect(`${target}: A1 ${v(T)}, A4 ${v(S)}`).toBe(`${target}: A1 FAIL_NO_DERIVATION, A4 FAIL_NO_DERIVATION`);
+  });
 });

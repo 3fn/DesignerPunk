@@ -18,6 +18,7 @@ import { entryTree, partition } from '../../partition';
 import type { ResolvedAgent } from '../../pipeline';
 import { derive, type RowFile } from '../../derive';
 import { loadDispositions, type DispositionsFile } from '../../regrounding/dispositions';
+import { derivedEntryValues } from '../../regrounding/derivation';
 import { parseOverlay, toSpanOverlay, type ParsedOverlay } from '../../regrounding/overlay';
 import type { AgentFrontmatter, CanonicalAgentDoc } from '../../schema';
 import type { Dispositions, Overlay } from '../../spans';
@@ -67,6 +68,8 @@ export function loadSemguard() {
     /** The consumer rendering's input: the DERIVED frontmatter with the canonical body. */
     resolved,
     entryOrigin: derived.entryOrigin,
+    /** R2's lookup (Task 29.2): canonical entry path → derive()'s value there. */
+    derivedValue: derivedEntryValues(derived.frontmatter as YamlDoc, derived.entryOrigin),
   };
 }
 
