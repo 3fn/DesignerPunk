@@ -130,3 +130,50 @@ Any other Kenya or Data row on the post-edit stale list is the red limb of C4. O
 1. **The worktree, not the main tree** (the orchestrator's vehicle choice, 2026-10-12): U3c branches from `main`, and the main tree is on U3's branch.
 2. **The scratch script** that produced §§ 2–3 (`…/scratchpad/u3c-baseline.ts`) is not committed. It only imports `freshness.ts` and `derive.ts`. Its output is pasted above.
 3. **The attributions were verified by reading the overlay**: kenya and data L27 sit under `## @unit #in-scope`; L38 and L39 sit under `## @unit #ios-theming-spec-094` and `#android-theming-spec-094`. Both `#in-scope` rows are **unsigned** today (no `signature` on the row; verified). **Risk, named**: the class-B correction could make the C18 floor route `#in-scope`, which would owe a *new* signature outside the expected set. The post-edit freshness sweep decides that, and it is reported at 31.4 as the C4 red limb if it happens.
+
+## Addendum (2026-10-12) — Kenya's and Data's reads, reconciled
+
+Records: `completion/task-31-reads/{kenya,data}.md`, each byte-equal to the copy the orchestrator relayed. Both were read at `dcd337dcf`, the same base as this sweep.
+
+**The sweep counts agree.** Kenya: overlay 5, plus one rendered-only line in each of three files, matching his classes A–F. Data: overlay 4, plus one rendered-only line in each of three files. Total 42, the same as § 1.
+
+**The dispositions agree, with one difference, now reconciled**:
+- A, B, C, E: **correct here**. Both seats supplied the texts:
+  - Kenya: L27 (B), L147 (E), L160 (A), and `#ios-theming` bullet 1 (C);
+  - Data: R-27 (B), R-159 (A), and R-38 (C).
+- D: **kept**. Both say it is true only as the intended shape, framed by the new bullet 1.
+- **F, `#product-tokens-spec-108109`: the two seats differed in label, not in fact.** Kenya: "carry to Spec 129". Data: "kept as true; the dependency carried".
+  - It is **two separate retained canonical units**, one per seat (`canonical/agents/kenya.md` L288, Swift; `canonical/agents/data.md` L291, Kotlin), not one shared line.
+  - Both lines describe what each emitter actually produces: `SwiftEmitter.ts:11,49-56` (Kenya, read) and `KotlinEmitter.ts:11,33,49-52` (Data, read).
+  - Both omit that the type they extend or read is undefined.
+  - **Reconciled disposition for both: "kept as true (describes the emitted form); the undefined-type dependency carried by name to Spec 129."** No text change. Both rows are unsigned and retained, so no act follows.
+  - This supersedes § 1's "carried" label for class F. The final count is **correct here 28 · kept 14 · carried 0 lines (one dependency carried by name, for both seats)**.
+
+**Fork picks (Thurgood, profile author; recorded with the surviving counter-argument):**
+
+1. **Kenya's bullets 2–3 of `#ios-theming-spec-094`: (A) verbatim, framed by the new bullet 1.** This is Kenya's lean, the smallest signed movement (only `theming-1` gains a `removals` cite), and Task 31's "L39 kept as the intended shape". Data's R-38 frames his bullets 2–3 the same way, so both platforms read alike.
+   - *Surviving counter-argument (Kenya)*: an agent that quotes bullet 2 alone loses the frame and can write `.environment(\.{abbreviation}Theme, …)` against a key nothing defines. Option (B), "Once that surface exists, …" on each bullet, would close that at the cost of two more removals and re-signs per platform. It is Peter's to overturn.
+2. **Data's Option B (add "Native Android onboarding is not supported on this release"): not added (Option A).**
+   - The batch is "exactly these five things" plus sweep hits. The sentence is neither, and adding it on Android alone would make the two seats asymmetric.
+   - R-38 already tells the agent there are no theme types and that the type it would read is undefined.
+   - *Surviving counter-argument (Data)*: an agent asked to build a native Android app on this release is not told onboarding is unsupported. Kenya names the same omission on iOS, along with the OKLCH initializer and the undefined token enums.
+   - **Carried, not dropped**: all four omissions go to Leonardo and Peter as a consumer-profile scope question, in one record outside this unit. The orchestrator files it; `.kiro/issues/` is outside my write scope.
+
+**Baselines added at Data's request** (the rows next to the Kiro `## Ground truth` heading, where the blank-line edit is at risk), computed as in § 3, before any edit:
+- In both Kiro prompts, the line directly above `## Ground truth` is the last line of the `#what-you-dont-own` render span: kenya L253–258, data L270–275. That is the row Data named.
+
+```
+kenya | body #what-you-dont-own | signer=kenya | renderedHashOf=sha256:463fe6517b19695411d61187d6aad4f2f97db3f15d20b031f0b057943fbb7368 | EQUAL
+kenya | frontmatter ambient.groundTruthManifest.trims[dist/ComponentTokens.ios.swift] | signer=kenya | renderedHashOf=sha256:78187ecb97b302742c39bea6639b579d69ce2335043f2412a19b37d3b9c8be5b | EQUAL
+data | body #what-you-dont-own | signer=data | renderedHashOf=sha256:19c95e554712d6fc50b6948d4d805ede3b63c44c3bce92a7abc9a679f9f0887e | EQUAL
+```
+
+(Data's `trims[dist/ComponentTokens.android.kt]` was already in § 3, EQUAL.) **31.1's check**: after the blank-line edit, these rows and the two trims rows are unchanged. Only the two `verdict` rows move, because of the intro reword.
+
+**For the 31.2 authoring commit, settled now**:
+- Kenya: replace `#ios-theming` bullet 1 with his text; `theming-1` gets a `removals` cite (authored by me); bullets 2–5 verbatim.
+- Data: R-38 replaces bullet 1; `theming-1` gets a `removals` cite (authored by me); bullets 2–5 verbatim.
+- B, A and E per the seats' texts.
+- Divergent 5 stays (Data).
+- Divergent 8 (J-BA84): I author the cite at 31.3, and Data reads it before commit, with the subtraction definitions in front of him. Kenya does the same for divergents 6 and 9.
+- **Ada's fact-check is still owed** (row 2.2) before 31.2. Data's analysis of the L159 cue ("and `designerpunk.config.ts`" does not overclaim, since `tokenSource`, `output`, `productTokens` and `name`/`abbreviation` all drive output) answers one of my two questions to her. Her own read stands.
