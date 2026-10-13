@@ -13,9 +13,9 @@
 ## Hand-fixes (findings § 7, O1) — each doc's owner, own PR, AFTER the alias-hygiene re-run (row 6)
 | # | Id | Doc | Owner | Alias | State |
 |---|---|---|---|---|---|
-| 1 | DA-02 | `component-development-guide` | **Lina** | "Theme-varying tokens — read from CompositionLocal" (accepted; verbatim guide L997) | tested → rank 1 strong (§ 6.7); still re-run under row 6 before landing |
-| 2 | DA-11 | `platform-implementation-guidelines` | **Lina** | "TalkBack semantics" (her choice, from the doc's § 4 table) | **UNTESTED — re-run owed** |
-| 3 | DA-05 | `test-development-standards` | **Thurgood** | not yet chosen | **re-run owed** |
+| 1 | DA-02 | `component-development-guide` | **Lina** | "Theme-varying tokens — read from CompositionLocal" (accepted; verbatim guide L997) | **LANDED on PR fix/stage1-alias-hand-fixes-lina (2026-10-13), re-run clean: DA-02 → rank 1 strong; no collateral** |
+| 2 | DA-11 | `platform-implementation-guidelines` | **Lina** | "TalkBack semantics" (her choice, from the doc's § 4 table) | **LANDED on the same PR as alias `TalkBack semantics contentDescription` (her one allowed alternative; `TalkBack semantics` alone left DA-11 at rank 15): DA-11 → rank 1 partial, passes; no collateral** |
+| 3 | DA-05 | `test-development-standards` | **Thurgood** | — | **NO-GO → ANSWER-KEY ERROR (2026-10-13).** Scratch test: the only lifting alias (L1192, "Validates structure, naming, and configuration at development time") plants a `strong` on a doc that does not answer how to structure or name a screen test — the KE-N2 harm aimed at a positive. Per the charter, key errors found after results are COUNTED AND EXCLUDED, never edited: gate-counted 6 → 5, O1 holds. The missing screen-test conventions become a CONTENT item for Thurgood to write into the doc. Findings doc owes a dated addendum under his next grant. |
 
 ## Discoveries (findings § 4) — routed, not fixed
 | # | Discovery | Owner(s) | Action |
@@ -26,6 +26,11 @@
 | 7 | D-3 "where do product-screen files live?" — asked by three seats, no doc answers; charters route it to `process-file-organization`, which covers THIS repo's layout | **Leonardo** (consumer front door: the doc gap) + **Thurgood** (a ballot on the routing-cue wording in the seat charters) | Leonardo: where the answer should live (Integration Guide rewrite charter 2026-10-03 is the likely home); Thurgood: ballot draft |
 | 8 | D-4 ST-05's answer is an H4 (still passed via other headings) | **Thurgood** | folded into `2026-10-13-find-docs-indexer-defects-from-stage1.md`; no separate action |
 | 9 | D-5 Android "role heading" (`semantics { heading() }`) documented nowhere | **Lina** | content-debt queue (`2026-08-25-contract-education-content-debt.md` or her next docs session) |
+
+## Found while landing rows 1–2 (routed)
+| # | Finding | Owner | Action |
+|---|---|---|---|
+| 10 | `cd mcp-server && npx jest` run in PARALLEL fails intermittently: `token-efficiency.test.ts` and `performance.test.ts` both delete the shared `mcp-server/test-fixtures` dir and race (`ENOTEMPTY`); `--runInBand` passes 39/660. Pre-existing; unrelated to aliases. | **Thurgood** (test-suite health) | isolate the fixture dir per suite or serialize the two; CI lane check |
 
 ## Also owed (study charter)
 - **Leonardo's Q2-L addendum** — after his Settings ledger closes: same sealed prompt (+ one line allowing ~15–20 queries), own pre-registration SHA, own results line in the findings doc (Thurgood keys; Leonardo's filter pre-freeze).
