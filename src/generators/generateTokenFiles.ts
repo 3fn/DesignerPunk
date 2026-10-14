@@ -221,7 +221,6 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
 
   const results = generator.generateAll({
     outputDir: effectiveOutputDir,
-    version: '1.0.0',
     includeComments: true,
     groupByCategory: true,
     primitiveTokens,
@@ -279,7 +278,6 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
   // --- Component Token Generation ---
   const componentResults = generator.generateComponentTokens({
     outputDir: effectiveOutputDir,
-    version: '1.0.0',
     includeComments: true,
   });
 

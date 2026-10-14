@@ -97,7 +97,8 @@ export interface DTCGTokenFile {
   $extensions?: {
     designerpunk?: {
       version: string;
-      generatedAt: string;
+      /** No longer written (output is deterministic); kept optional so older files still type-check. */
+      generatedAt?: string;
       rosettaVersion: string;
       /** Registered themes metadata (Spec 094). Present when themes are configured. */
       themes?: Array<{ name: string; mode: string }>;

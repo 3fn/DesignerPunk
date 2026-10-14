@@ -86,7 +86,6 @@ async function main() {
     console.log('📊 Component Token Generation Results:\n');
     const componentResults = generator.generateComponentTokens({
       outputDir,
-      version: '1.0.0',
       includeComments: true
     });
 

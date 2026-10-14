@@ -72,6 +72,7 @@ import { shadowTokens as semanticShadowTokens } from '../tokens/semantic/ShadowT
 import { darkSemanticOverrides } from '../tokens/themes/dark/SemanticOverrides';
 import { resolveSemanticTokenValue } from '../resolvers/SemanticValueResolver';
 import type { ThemeOverrideSet } from './TokenFileGenerator';
+import { getCoreVersion } from './coreVersion';
 
 /** Set of valid DTCG types for validation (Format Module 2025.10) */
 const VALID_DTCG_TYPES: ReadonlySet<string> = new Set([
@@ -117,7 +118,7 @@ export class DTCGFormatGenerator {
       $schema: this.config.schemaUrl,
     };
 
-    // Add root-level DesignerPunk extensions (version, generatedAt, rosettaVersion)
+    // Add root-level DesignerPunk extensions (version, rosettaVersion)
     if (this.config.includeExtensions) {
       output.$extensions = {
         designerpunk: this.generateRootExtensions(),
@@ -219,23 +220,15 @@ export class DTCGFormatGenerator {
   /**
    * Generate root-level DesignerPunk extension metadata.
    *
-   * Includes generator version, generation timestamp, and Rosetta system version
-   * for traceability and debugging.
+   * Includes generator version and Rosetta system version (the installed @3fn/core version)
+   * for traceability. No generation timestamp: the same input produces the same bytes
+   * (.kiro/issues/2026-10-03-generate-output-not-deterministic.md).
    */
   private generateRootExtensions(): NonNullable<NonNullable<DTCGTokenFile['$extensions']>['designerpunk']> {
-    // Read version from package.json at runtime
-    let rosettaVersion = 'unknown';
-    try {
-      const pkgPath = path.resolve(__dirname, '../../package.json');
-      const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
-      rosettaVersion = pkg.version || 'unknown';
-    } catch {
-      // Fallback — package.json not found or unreadable
-    }
+    const rosettaVersion = getCoreVersion();
 
     const extensions: NonNullable<NonNullable<DTCGTokenFile['$extensions']>['designerpunk']> = {
       version: '1.0.0',
-      generatedAt: new Date().toISOString(),
       rosettaVersion,
     };
 
