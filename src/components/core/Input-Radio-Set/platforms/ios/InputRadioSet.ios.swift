@@ -86,7 +86,7 @@ extension EnvironmentValues {
  * ```swift
  * @State private var selectedPlan: String? = nil
  * 
- * InputRadioSet(selectedValue: $selectedPlan) {
+ * InputRadioSet(selectedValue: $selectedPlan, accessibilityLabel: "Plan") {
  *     InputRadioBase(value: "basic", label: "Basic Plan", selectedValue: $selectedPlan)
  *     InputRadioBase(value: "pro", label: "Pro Plan", selectedValue: $selectedPlan)
  *     InputRadioBase(value: "enterprise", label: "Enterprise Plan", selectedValue: $selectedPlan)
@@ -95,6 +95,7 @@ extension EnvironmentValues {
  * // With validation and error
  * InputRadioSet(
  *     selectedValue: $selectedPlan,
+ *     accessibilityLabel: "Plan",
  *     required: true,
  *     error: true,
  *     errorMessage: "Please select a plan"
@@ -117,6 +118,10 @@ struct InputRadioSet<Content: View>: View {
     /// Currently selected value (controlled via binding)
     /// @see Requirement 9.3 - Pass selected state to matching child
     @Binding var selectedValue: String?
+
+    /// Accessible name of the radio group (REQUIRED — contract accessibility_radiogroup_role,
+    /// WCAG 4.1.2). Not rendered visibly; VoiceOver announces it when entering the group.
+    let accessibilityLabel: String
 
     @Environment(\.dpTheme) private var theme
     
@@ -153,6 +158,7 @@ struct InputRadioSet<Content: View>: View {
      * 
      * - Parameters:
      *   - selectedValue: Binding to the currently selected value
+     *   - accessibilityLabel: Accessible name of the group (required; e.g. "Theme")
      *   - required: Whether selection is required (default: false)
      *   - error: Whether to show error state (default: false)
      *   - errorMessage: Error message to display (default: nil)
@@ -163,6 +169,7 @@ struct InputRadioSet<Content: View>: View {
      */
     init(
         selectedValue: Binding<String?>,
+        accessibilityLabel: String,
         required: Bool = false,
         error: Bool = false,
         errorMessage: String? = nil,
@@ -172,6 +179,7 @@ struct InputRadioSet<Content: View>: View {
         @ViewBuilder content: () -> Content
     ) {
         self._selectedValue = selectedValue
+        self.accessibilityLabel = accessibilityLabel
         self.required = required
         self.error = error
         self.errorMessage = errorMessage
@@ -211,8 +219,10 @@ struct InputRadioSet<Content: View>: View {
         // @see Requirement 9.2 - Accessibility group (role="radiogroup" equivalent)
         // .contain allows VoiceOver to navigate into child radios individually
         .accessibilityElement(children: .contain)
-        // Announce group context so VoiceOver users understand this is a radio group
-        .accessibilityLabel("Radio group")
+        // Group name from the required prop (contract accessibility_radiogroup_role):
+        // VoiceOver announces what the choice is, e.g. "Theme", when entering the group.
+        // Replaces the former hardcoded "Radio group", which named the role, not the choice.
+        .accessibilityLabel(accessibilityLabel)
         .accessibilityIdentifier(testID ?? "")
         // Observe selection changes to invoke callback
         .onChange(of: selectedValue) { newValue in
@@ -261,7 +271,7 @@ private struct PreviewRadioSet: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            InputRadioSet(selectedValue: $selected) {
+            InputRadioSet(selectedValue: $selected, accessibilityLabel: "Options") {
                 InputRadioBase(value: "option-a", label: "Option A", selectedValue: $selected)
                 InputRadioBase(value: "option-b", label: "Option B", selectedValue: $selected)
                 InputRadioBase(value: "option-c", label: "Option C", selectedValue: $selected)
@@ -281,6 +291,7 @@ private struct PreviewRadioSetWithError: View {
     var body: some View {
         InputRadioSet(
             selectedValue: $selected,
+            accessibilityLabel: "Confirm",
             required: true,
             error: true,
             errorMessage: "Please select an option"
@@ -298,6 +309,7 @@ private struct PreviewRadioSetLarge: View {
     var body: some View {
         InputRadioSet(
             selectedValue: $selected,
+            accessibilityLabel: "Plan",
             size: .lg,
             onSelectionChange: { value in
                 print("Selection changed to: \(value ?? "nil")")

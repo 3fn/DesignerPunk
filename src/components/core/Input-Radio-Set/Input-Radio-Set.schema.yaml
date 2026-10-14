@@ -11,7 +11,7 @@
 name: Input-Radio-Set
 type: pattern
 family: FormInput
-version: "1.0.0"
+version: "2.0.0"  # 2.0.0 (2026-10-13): accessibilityLabel added as REQUIRED (breaking) — G6, contract accessibility_radiogroup_role
 readiness:
   web:
     reviewed: true
@@ -44,6 +44,16 @@ composition:
     self: false
 
 properties:
+  accessibilityLabel:
+    type: string
+    required: true
+    description: |
+      Accessible name of the radio group (e.g. "Theme"), required by contract
+      accessibility_radiogroup_role (WCAG 4.1.2). Not rendered visibly — show the
+      visible question as your own text and pass the same words here.
+      Web: aria-label on the role="radiogroup" container (attribute accessibility-label;
+      a missing attribute logs a development warning). iOS: .accessibilityLabel on the
+      .contain group. Android: contentDescription beside selectableGroup().
   selectedValue:
     type: "string | null"
     required: false

@@ -49,12 +49,14 @@ import type { RadioSize } from '../Input-Radio-Base/types';
  * ```typescript
  * // Basic usage
  * const props: InputRadioSetProps = {
+ *   accessibilityLabel: 'Theme',
  *   selectedValue: 'option-a',
  *   onSelectionChange: (value) => console.log('Selected:', value)
  * };
  * 
  * // With validation
  * const validatedProps: InputRadioSetProps = {
+ *   accessibilityLabel: 'Subscription plan',
  *   selectedValue: null,
  *   onSelectionChange: (value) => handleChange(value),
  *   required: true,
@@ -66,6 +68,23 @@ import type { RadioSize } from '../Input-Radio-Base/types';
  * ```
  */
 export interface InputRadioSetProps {
+  /**
+   * Accessible name of the radio group (REQUIRED).
+   *
+   * A radio group must have a name (WCAG 4.1.2 Name, Role, Value; contract
+   * `accessibility_radiogroup_role`), so assistive technology announces e.g.
+   * "Theme, radio group" before the options. The label is NOT rendered visibly:
+   * show the visible question/heading as your own text and pass the same words here.
+   * - Web: `aria-label` on the `role="radiogroup"` container
+   * - iOS: `.accessibilityLabel()` on the `.accessibilityElement(children: .contain)` group
+   * - Android: `contentDescription` in the group's `semantics` block, beside `selectableGroup()`
+   *
+   * Omitting it fails at compile time on iOS/Android and in typed TS usage. On web
+   * (an HTML attribute, not compile-checked) the group renders with no name and
+   * logs a development warning naming the missing `accessibility-label` attribute.
+   */
+  accessibilityLabel: string;
+
   /**
    * Currently selected value (controlled).
    * 
@@ -165,7 +184,8 @@ export const INPUT_RADIO_SET_OBSERVED_ATTRIBUTES = [
   'error',
   'error-message',
   'size',
-  'test-id'
+  'test-id',
+  'accessibility-label'
 ] as const;
 
 /**
@@ -206,6 +226,7 @@ export const INPUT_RADIO_SET_DEFAULTS = {
  * ```typescript
  * // Create element programmatically
  * const radioSet = document.createElement('input-radio-set') as InputRadioSetElement;
+ * radioSet.accessibilityLabel = 'Subscription plan';
  * radioSet.size = 'md';
  * radioSet.onSelectionChange = (value) => console.log('Selected:', value);
  * 
@@ -223,6 +244,14 @@ export const INPUT_RADIO_SET_DEFAULTS = {
  * ```
  */
 export interface InputRadioSetElement extends HTMLElement {
+  /**
+   * Accessible name of the radio group.
+   *
+   * Reflects the 'accessibility-label' attribute; rendered as `aria-label` on the
+   * `role="radiogroup"` container. Required by contract `accessibility_radiogroup_role`.
+   */
+  accessibilityLabel: string | null;
+
   /**
    * Currently selected value.
    * 

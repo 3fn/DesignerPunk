@@ -52,6 +52,8 @@ const COMPONENT_DIR = 'src/components/core/Input-Radio-Set';
 const WEB_COMPONENT_PATH = `${COMPONENT_DIR}/platforms/web/InputRadioSet.web.ts`;
 const CSS_PATH = `${COMPONENT_DIR}/platforms/web/InputRadioSet.web.css`;
 const TYPES_PATH = `${COMPONENT_DIR}/types.ts`;
+const IOS_PATH = `${COMPONENT_DIR}/platforms/ios/InputRadioSet.ios.swift`;
+const ANDROID_PATH = `${COMPONENT_DIR}/platforms/android/InputRadioSet.android.kt`;
 
 // ============================================================================
 // Helper Functions
@@ -366,6 +368,22 @@ describe('Input-Radio-Set Stemma Validators', () => {
       expect(webComponentSource).toContain('aria-describedby');
     });
 
+    // CONTRACT: accessibility_radiogroup_role — the group's accessible name (G6).
+    // No native build harness runs here, so the iOS/Android halves are checked by source.
+    it('iOS names the group from the required accessibilityLabel prop (no hardcoded "Radio group")', () => {
+      const swift = readFileContent(IOS_PATH);
+      expect(swift).toMatch(/let accessibilityLabel: String\n/);
+      expect(swift).toContain('.accessibilityElement(children: .contain)');
+      expect(swift).toContain('.accessibilityLabel(accessibilityLabel)');
+      expect(swift).not.toContain('.accessibilityLabel("Radio group")');
+    });
+
+    it('Android names the group from the required accessibilityLabel parameter beside selectableGroup()', () => {
+      const kotlin = readFileContent(ANDROID_PATH);
+      expect(kotlin).toMatch(/accessibilityLabel: String,\n/);
+      expect(kotlin).toMatch(/selectableGroup\(\)\s*\n\s*contentDescription = accessibilityLabel/);
+    });
+
     it('should support reduced motion preference', () => {
       if (!cssSource) {
         console.warn('CSS file not found, skipping test');
@@ -471,6 +489,7 @@ describe('Input-Radio-Set Stemma Validators', () => {
 
     it('should validate required accessibility properties', () => {
       const validProps = {
+        accessibilityLabel: 'Plan',
         selectedValue: 'option-a',
         required: false,
         error: false,
@@ -482,8 +501,9 @@ describe('Input-Radio-Set Stemma Validators', () => {
         validProps
       );
 
-      // Set is a container/group — it should not require its own label
-      // (the radiogroup role + children provide semantics)
+      // The Set names its group via the required accessibilityLabel prop
+      // (contract accessibility_radiogroup_role, 2.0.0); with it supplied there is no
+      // missing-label error.
       const hasCriticalError = result.errors.some(
         e => e.code === 'MISSING_ACCESSIBILITY_LABEL'
       );

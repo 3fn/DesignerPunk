@@ -1,4 +1,4 @@
-version: "1.0.0"
+version: "1.1.0"
 component: Input-Radio-Set
 family: Input-Radio
 
@@ -78,18 +78,24 @@ contracts:
 
   accessibility_radiogroup_role:
     category: accessibility
-    description: Proper ARIA role for group
+    description: Group role with an accessible name
     behavior: |
-      Set uses role="radiogroup" (web) with appropriate label.
+      Set uses role="radiogroup" (web) or the platform group equivalent
+      (iOS .accessibilityElement(children: .contain); Android selectableGroup()),
+      named by the required accessibilityLabel prop.
       Child radios use role="radio" with aria-checked state.
     wcag: "4.1.2 Name, Role, Value"
     platforms: [web, ios, android]
     validation:
       - Container has role="radiogroup" (web)
+      - Container exposes an accessible name equal to the accessibilityLabel prop (web aria-label; iOS accessibilityLabel; Android contentDescription)
+      - No empty accessible name is rendered when the label is missing (web), and a development warning names the missing attribute
       - Each child has role="radio" (web)
       - aria-checked reflects selection state
     test_approach: |
       - Verify container role is "radiogroup"
+      - Verify container aria-label equals the accessibility-label attribute, and updates when it changes
+      - Verify no aria-label and a console warning when accessibility-label is omitted
       - Verify child roles are "radio"
       - Select a radio and verify aria-checked updates
     required: true

@@ -2,7 +2,7 @@ purpose: "Group radio buttons into a mutually exclusive selection set where only
 
 usage:
   when_to_use:
-    - "Single selection from a group"
+    - "Single selection from a group (always give the group a name with the required accessibilityLabel, e.g. \"Theme\")"
     - "Subscription plan selection"
     - "Survey question (pick one)"
   when_not_to_use:

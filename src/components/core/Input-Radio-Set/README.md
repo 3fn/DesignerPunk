@@ -44,7 +44,9 @@ This component guarantees the following behaviors across all platforms:
 | `keyboard_navigation` | Arrow keys navigate within group | 2.1.1 |
 | `group_validation` | Required validation at group level | 3.3.1 |
 | `error_announcement` | Error message announced to screen readers | 4.1.3 |
-| `radiogroup_role` | Proper ARIA role for group | 4.1.2 |
+| `radiogroup_role` | Group role with an accessible name (required `accessibilityLabel`) | 4.1.2 |
+
+> **2.0.0 (2026-10-13) — breaking: `accessibilityLabel` is now REQUIRED.** A radio group must have a name (WCAG 4.1.2), and this component's own contract `accessibility_radiogroup_role` always required one, but before 2.0.0 there was no prop to provide it. The label is **not** rendered visibly: show your visible question or heading as your own text and pass the same words here. Missing label: a compile error on iOS/Android and in typed TS; on web (an HTML attribute) the group has no name and a development `console.warn` names the missing `accessibility-label`. Source: G6 in `.kiro/issues/2026-10-13-component-gaps-from-settings-ledger.md`.
 
 ---
 
@@ -54,20 +56,20 @@ This component guarantees the following behaviors across all platforms:
 
 ```html
 <!-- Basic usage -->
-<input-radio-set selected-value="option-a">
+<input-radio-set accessibility-label="Plan" selected-value="option-a">
   <input-radio-base label="Option A" value="option-a"></input-radio-base>
   <input-radio-base label="Option B" value="option-b"></input-radio-base>
   <input-radio-base label="Option C" value="option-c"></input-radio-base>
 </input-radio-set>
 
 <!-- With size propagation -->
-<input-radio-set size="lg" selected-value="premium">
+<input-radio-set accessibility-label="Plan" size="lg" selected-value="premium">
   <input-radio-base label="Basic Plan" value="basic" helper-text="Free forever"></input-radio-base>
   <input-radio-base label="Premium Plan" value="premium" helper-text="Best value for teams"></input-radio-base>
 </input-radio-set>
 
 <!-- With validation and error -->
-<input-radio-set required error error-message="Please select a plan">
+<input-radio-set accessibility-label="Plan" required error error-message="Please select a plan">
   <input-radio-base label="Basic Plan" value="basic"></input-radio-base>
   <input-radio-base label="Premium Plan" value="premium"></input-radio-base>
 </input-radio-set>
@@ -80,6 +82,7 @@ import { InputRadioSetElement } from './platforms/web/InputRadioSet.web';
 
 // Programmatic usage
 const radioSet = document.createElement('input-radio-set') as InputRadioSetElement;
+radioSet.accessibilityLabel = 'Choose an option';
 radioSet.size = 'md';
 radioSet.onSelectionChange = (value) => console.log('Selected:', value);
 
@@ -104,7 +107,7 @@ import DesignerPunk
 
 @State private var selectedPlan: String? = nil
 
-InputRadioSet(selectedValue: $selectedPlan, size: .md) {
+InputRadioSet(selectedValue: $selectedPlan, accessibilityLabel: "Plan", size: .md) {
     InputRadioBase(
         value: "basic",
         label: "Basic Plan",
@@ -122,6 +125,7 @@ InputRadioSet(selectedValue: $selectedPlan, size: .md) {
 // With validation
 InputRadioSet(
     selectedValue: $selectedPlan,
+    accessibilityLabel: "Plan",
     required: true,
     error: selectedPlan == nil,
     errorMessage: "Please select a plan"
@@ -141,6 +145,7 @@ var selectedPlan by remember { mutableStateOf<String?>(null) }
 InputRadioSet(
     selectedValue = selectedPlan,
     onSelectionChange = { selectedPlan = it },
+    accessibilityLabel = "Plan",
     size = RadioSize.Medium
 ) {
     InputRadioBase(
@@ -163,6 +168,7 @@ InputRadioSet(
 InputRadioSet(
     selectedValue = selectedPlan,
     onSelectionChange = { selectedPlan = it },
+    accessibilityLabel = "Plan",
     required = true,
     error = selectedPlan == null,
     errorMessage = "Please select a plan"
@@ -180,6 +186,7 @@ InputRadioSet(
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
+| `accessibilityLabel` | `string` | **Yes** | - | Accessible name of the group (e.g. "Theme"); not rendered visibly |
 | `selectedValue` | `string \| null` | No | `null` | Currently selected value (controlled) |
 | `onSelectionChange` | `(value: string \| null) => void` | No | - | Callback when selection changes |
 | `required` | `boolean` | No | `false` | Whether a selection is required |
@@ -192,6 +199,7 @@ InputRadioSet(
 
 | Attribute | Maps To | Description |
 |-----------|---------|-------------|
+| `accessibility-label` | `accessibilityLabel` | Group's accessible name, rendered as `aria-label` on the radiogroup (required; missing → dev warning) |
 | `selected-value` | `selectedValue` | Currently selected value |
 | `required` | `required` | Whether selection is required |
 | `error` | `error` | Error state indicator |
@@ -291,12 +299,12 @@ Input-Radio-Set does not render radio circles or dots. It delegates all visual r
 | 2.1.1 Keyboard | ✅ | Full keyboard navigation (arrows, Tab, Space, Home, End) |
 | 2.4.7 Focus Visible | ✅ | Focus ring on active radio within group |
 | 3.3.1 Error Identification | ✅ | Error message with `role="alert"` |
-| 4.1.2 Name, Role, Value | ✅ | Proper ARIA radiogroup role and state |
+| 4.1.2 Name, Role, Value | ✅ | Radiogroup role, a name from the required `accessibilityLabel`, and per-radio state |
 | 4.1.3 Status Messages | ✅ | Error messages announced via `role="alert"` |
 
 ### Screen Reader Support
 
-- Group announced as "radiogroup" with associated label
+- Group announced with its name and role (e.g. "Theme, radio group") from `accessibilityLabel`
 - Individual radios announce "selected" or "not selected" state
 - Error messages announced immediately via `role="alert"`
 - Navigation context provided (e.g., "2 of 3")
@@ -307,7 +315,7 @@ Input-Radio-Set does not render radio circles or dots. It delegates all visual r
 
 ### Web
 - Shadow DOM with `<slot>` for child composition
-- `role="radiogroup"` on container
+- `role="radiogroup"` on container, `aria-label` from `accessibility-label`
 - Roving tabindex for keyboard navigation
 - Error message with `role="alert"`
 - CSS logical properties for RTL support
@@ -315,14 +323,14 @@ Input-Radio-Set does not render radio circles or dots. It delegates all visual r
 ### iOS
 - SwiftUI `VStack` with `@ViewBuilder` content
 - Selection state passed via environment values
-- `.accessibilityElement(children: .contain)` for group
+- `.accessibilityElement(children: .contain)` for group, `.accessibilityLabel(accessibilityLabel)` names it
 - Error message with accessibility label
 - Native RTL handling
 
 ### Android
 - Jetpack Compose `Column` with `CompositionLocalProvider`
 - Selection state passed via `CompositionLocal`
-- `role = Role.RadioGroup` semantics
+- `semantics { selectableGroup(); contentDescription = accessibilityLabel }` (the radiogroup equivalent, named)
 - Error message with `liveRegion = LiveRegionMode.Polite`
 - Native RTL handling
 
