@@ -307,7 +307,12 @@ export class ComponentIndexer {
     // Cross-reference validation (components + patterns must be indexed first)
     const componentNames = new Set(Array.from(this.index.keys()));
     const patternNames = new Set(this.patternIndexer.getCatalog().map(p => p.name));
-    this.guidanceIndexer.validateCrossReferences(componentNames, patternNames, projectRoot);
+    // Companion paths (`governance/Component-Family-*.md`) are relative to the guidance data's own
+    // root — the installed package in a consumer — not to the consumer's project root, which has no
+    // `governance/` (2026-10-14; .kiro/issues/2026-10-03-app-mcp-degraded-companion-paths-in-consumer.md).
+    // projectRoot stays as the fallback, so a GUIDANCE_DIR override whose parent lacks the docs
+    // still resolves them where it did before.
+    this.guidanceIndexer.validateCrossReferences(componentNames, patternNames, [path.dirname(effectiveGuidanceDir), projectRoot]);
 
     // Index token data (if token index directory exists). projectRoot is passed explicitly so
     // the token indexer reads the SAME theme override files the mode classifier does

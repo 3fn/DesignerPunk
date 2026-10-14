@@ -1,7 +1,7 @@
 # Issue: the application MCP reports `degraded` in a consumer repo because it resolves family-doc companion paths against the consumer's root
 
 **Date**: 2026-10-03
-**Status**: ACTIVE
+**Status**: CLOSED (fixed 2026-10-14; see § Fixed)
 **Owner**: Lina (`application-mcp-server/**` is in my charter scope)
 **Trigger**: **the fix PR merges before release 3's tag** (Leonardo's position in the Spec 123 U3 kickoff round, accepted there). Why an event and not the release itself: release 3's RELEASE record cannot honestly say "the application MCP is healthy in a consumer repo" while this stands, and the U5 persona runs (Task 25) read `get_component_health` in a consumer-shaped repo and will read `degraded`. The fix PR is small and independent of U3's onboarding work, so it can run in parallel with U3 and does not need to wait for U3's unit to merge.
 **Source**: the 15.0.0 release notes (`docs/releases/release-15.0.0.md` L130: "*Not yet in a tracked issue file at this writing*"); the RELEASE claims pass (`.kiro/specs/123-consumer-distribution/completion/claims-pass-release-15.0.0.md` L133: "the issue is owed (Lina, per the release-prep handoff). Not a finding"). **This is a miss of mine, owned**: the issue was owed from release prep, not filed through the whole of release 2's close, and was found unfiled again at the U3 kickoff round (2026-10-03).
@@ -39,3 +39,13 @@ The code edit itself (`application-mcp-server/src/indexer/FamilyGuidanceIndexer.
 
 - **Against fixing before release 3**: it is a health-label error with no functional effect, the notes already disclose it, and a lock-moving PR in the application MCP costs a refresh and a verification round in a window that is busy with U3. A tracked, disclosed residual could rest until the first real consumer complaint. Fold-back: I accepted Leonardo's position because the persona runs read exactly this status, so shipping a release whose own validation reads `degraded` would force every run's record to explain it away. **What survives**: the cost is real and the benefit is a cleaner label; if U3 slips, this fix is the first thing that could be carried, with the disclosure in the release notes already written. That is Peter's call, not mine.
 - **Against the fix shape**: resolving against the package root makes the health check assert something about the package, not the consumer, so a consumer who deletes or shadows a family doc is not told. Today's check is wrong in the consumer and right in the package; the new one is right in both but weaker about consumer-side overrides. I do not know of a consumer override path for family docs, but I did not look for one. UNVERIFIED.
+
+## Fixed (2026-10-14)
+
+**Authority**: Peter's ruling 2026-10-14, "fix first" (before the 15.1.0 tag). Fixed by Lina on `fix/app-mcp-consumer-companion-paths`.
+
+- **The fix**: `ComponentIndexer.ts` passes `[path.dirname(effectiveGuidanceDir), projectRoot]` to `FamilyGuidanceIndexer.validateCrossReferences`, which now accepts several roots and finds a companion under any of them. Companions resolve against the guidance data's own root (the installed package in a consumer) first; `projectRoot` stays as the fallback, so a `GUIDANCE_DIR` override does no worse than before.
+- **Measured in a packed install**: before, `degraded` with exactly nine warnings, all companion paths (this record's count of nine is now VERIFIED live); after, `healthy`, 34 components, no warnings.
+- **Guard**: `application-mcp-server/src/indexer/__tests__/ConsumerCompanionPaths.test.ts` (consumer-shaped `projectRoot`, real package data). Bite run: the pre-fix call site turns it red with the nine warnings.
+- **Lock**: refreshed by the guard's own write under this record's grant; `inputClosure` b8140dd0… → 1aaad6e0…, `outputs` unmoved.
+- **The surviving counter recorded above still holds**: the check now asserts the package's docs exist, not a consumer override of them. No consumer override path for family docs is known.
