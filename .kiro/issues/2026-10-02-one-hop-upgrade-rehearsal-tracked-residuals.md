@@ -69,3 +69,5 @@ All three have the same **trigger**: the next `src/cli/sync/**` change under any
 ## Closing
 
 Record each item's outcome here, dated, as it resolves. Archive the file when every item has a recorded outcome (`.kiro/issues/README.md` rule 5).
+
+*(2026-10-14, Lina; lapse recorded by Stacy's 15.1.0 RELEASE pass, RL-3)* **R1 and R5 move to Spec 129.** R2, R4 and R6 were not fixed before the 15.1.0 tag. The 15.1.0 notes disclose R1 and R2 as known limitations. **New trigger for R2, R4 and R6**: Lina's own `fix/` PR, under this issue's row grant, merged before release 4's prep opens.
