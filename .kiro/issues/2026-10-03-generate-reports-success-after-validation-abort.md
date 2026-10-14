@@ -123,3 +123,29 @@ The comment matters because a reader of this function would conclude that a regi
 - What the application MCP reports from the degraded index. Not queried.
 
 **No fix is authorized by this addendum.**
+
+---
+
+## Fixed (2026-10-13)
+
+**Authority**: Peter's release-3 rulings of 2026-10-13 ("All as recommended"; record `.kiro/specs/123-consumer-distribution/completion/release-3-rulings-2026-10-13.md`, merged in #324), item 1: fix before the release-3 tag, in Ada's own `fix/` PR. That ruling activates this record's grant paths for the fix; only one of them was used (the new test file below).
+
+**What changed** (`src/generators/generateTokenFiles.ts`):
+- The three abort paths now **throw** `TokenGenerationAbortedError` (exported, `:38`) instead of returning an empty result: semantic references (`:103`), the dark override map (`:141`), the context override maps (`:170`). The per-token details are still logged first; the error's message carries the first one and a count of the rest. `EMPTY_MODE_RESOLVED` is deleted, so the function can no longer hand a caller an empty result.
+- The output directory is now created only after validation passes (`:231`), so an abort leaves no trace on disk, not even an empty `dist/tokens/`.
+- The false comment at the old `:17-18` now reads: "Theme overrides are static imports of DesignerPunk's built-in maps; config.themes is not read here (Spec 129 item (i)). They are not taken from tokenSource either."
+
+**Throw, not a returned status.** Both callers already route a throw to failure: `runGenerate`'s `catch` (`src/cli/designerpunk.ts:294-298`) sets `systemFailed`, and the run exits 1 at `:325`; the build script's `catch` (`scripts/generate-platform-tokens.ts:163-165`) exits 1. Both call `generateTokenIndex` after `generateTokenFiles` in the same `try`, so neither can build the index from an aborted run. Neither caller file changed. A returned status would have needed an edit in both, and a third caller added later could forget to read it.
+
+**Verified by run** (scratch copy of `src/tokens/` + `src/types/` outside the repo, `color.action.navigation` renamed, the repo's committed `token-index/` (9 `themeVarying: true`) copied in first):
+- `designerpunk generate`, before: `⚠️ Token generation aborted…`, `✅ Token index generated`, `✅ System tokens generated`, **exit 0**, `dist/tokens/` empty, `token-index/` rewritten with **0** `themeVarying: true`.
+- After: `❌ System token generation failed: Token generation aborted: semantic override validation failed: Orphaned override key "color.action.navigation": …`, **exit 1**, no `dist/`, `token-index/` byte-identical (9).
+- `scripts/generate-platform-tokens.ts` (this record's "still unverified" item), before: wrote component tokens, DTCG and a 0-flag index, `✨ All platform files generated successfully!`, **exit 0**. After: `❌ Error generating platform files: TokenGenerationAbortedError: …`, **exit 1**, index untouched.
+
+**Test**: `src/cli/__tests__/generateAbort.test.ts`, the real `generateTokenFiles` and `generateTokenIndex` on the repo's real token source through `runGenerate`. Three cases: a clean-source control (files and index written, ✅), the override path, and the semantic-reference path (this record's other unverified item). Each abort case expects exit 1, no ✅, no `dist/`, and the previous index byte-identical. Against the pre-fix code, both abort cases fail and the control passes.
+
+**Behaviour change for this repository**: `npm run build` runs `generate:platform-tokens` in `prebuild`, so a token-source validation error now stops the build. That is intended. Thurgood is told through the fix PR.
+
+**Not changed, and still open**:
+- `governance/DesignerPunk-Integration-Guide.md:303` still describes the old behaviour ("still prints ✅ … exits 0 … (a known defect)"). Ada does not edit governance; the correction goes to Peter as a ballot proposal.
+- After the failure, `runGenerate` prints `💡 Tip: Use --product-only to skip system token generation` even when no product tokens are configured (`src/cli/designerpunk.ts:321-323`). That predates this fix and is on the CLI side (Lina).
