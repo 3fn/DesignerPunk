@@ -50,3 +50,23 @@ The alias-hygiene amendment (`.kiro/specs/121-claude-code-portability/discovery-
 The study runners (`scripts/discovery-study-stage1.ts`, `scripts/discovery-indexer-fix-run.ts`) and the dry-run call `findDocsConcept` directly, and the fix leaves it untouched. The oracle run at head and at merge-base will therefore be **identical by construction**. The fixing PR runs it anyway and states both SHAs with the result 83/0/0 and rank-1-strong unchanged.
 
 The **load-bearing proof** that ranks and tiers are unchanged is the test in § 3 that checks every oracle concept against the slice of the unbounded result.
+
+---
+
+## Outcome — FIXED 2026-10-14 (fix commit `2dbc917421d0e3721de94213054fcb20710eba41`, branch `fix/find-docs-concept-limit`)
+- **Ruling**: Peter, 2026-10-14 — **option (a)**. Concept mode applies the documented default of 20, capped at 100, with `nextCursor` paging, exactly as list mode does.
+- **The fix** (`mcp-server/src/query/QueryEngine.ts`):
+  - `findDocs` concept branch (L338) now calls `pageFindDocsResult(findDocsConcept(...), { cursor, limit })`. The bound is applied after ranking and tier assignment, so it can only drop the tail of the result.
+  - New `resolveFindDocsPage` holds the list-mode default, cap and cursor arithmetic, moved verbatim and now shared by both modes. List-mode behaviour is unchanged.
+  - New `pageFindDocsResult` slices the page and sets `nextCursor`. The pinned no-match contract passes through unchanged.
+  - `mcp-server/src/tools/find-docs.ts`: the `cursor` description now reads "for either mode". It is the only change to that file.
+- **Tests**:
+  - New `find-docs-limit.test.ts`, **9 tests**: limit 3 → 3 plus `nextCursor`; the S3 call (limit 6) → 6; no limit → 20 plus `nextCursor`; cap 100; a cursor walk returns the whole ranked result with no overlap and no gap; the last page has no `nextCursor`; for **all 83 oracle concepts × k ∈ {1, 3, 20}**, the bounded page deep-equals the unbounded top-k (order, tier, evidence); the no-match contract still holds.
+  - Falsified against the unfixed `QueryEngine.ts`: 5 of 9 fail.
+  - Full `mcp-server` suite, run serially (`--runInBand`): **44 suites, 730 / 730 pass.** `npm run build:mcp` exits 0, with no build noise.
+- **Re-run** (`npx tsx scripts/discovery-study-stage1.ts`, at the fix commit and at the merge-base `cbf67c07b`): the two outputs are byte-identical apart from the two lines that print the HEAD SHA.
+  - Oracle: 83/0/0, rank-1-strong 77/83, identical at both SHAs.
+  - Q2: every per-query table identical; R@1 25/36, R@2 29/36 at both SHAs.
+  - Negatives: 6/8 correct at both SHAs; the same 2 confident-wrongs (SP-N1, KE-N2); no new confident-wrong.
+  - The runner calls `findDocsConcept` directly and passes no limit, so the bound cannot truncate a key hit there. Identical runs are expected by construction, and the oracle × k slice test is the load-bearing proof.
+- Closed and moved to `archive/` in the fixing PR (README rules 2 and 5).

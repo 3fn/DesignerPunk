@@ -117,7 +117,7 @@
       "tools": [
         {
           "description": "Discover docs by concept/keyword (concept mode, ranked), or enumerate the full catalog (list mode, paginated). Supersedes get_documentation_map.",
-          "inputSchemaHash": "sha256:41368aad650bc3fba9e6f7eb29e471f76b9cb74c7f4180bb7bad35ca6418b27b",
+          "inputSchemaHash": "sha256:d19b0c519b32ab87edf25a3a8c6f9478b9a529c1fb3470257c0dc1ac79802be4",
           "name": "find_docs"
         },
         {

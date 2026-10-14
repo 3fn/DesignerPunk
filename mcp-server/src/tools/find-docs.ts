@@ -61,7 +61,7 @@ export const findDocsTool = {
       cursor: {
         type: 'string',
         description:
-          'Pagination cursor for list mode (opaque string from previous nextCursor).',
+          'Pagination cursor for either mode (opaque string from previous nextCursor).',
       },
       limit: {
         type: 'number',
