@@ -1,0 +1,94 @@
+# Release 15.1.0 — publish verification (RELEASE-FLOW step 6: 6a rail guard + 6b two-registry record)
+
+Date: 2026-10-14 · Operator: the orchestrator, from the MAIN checkout (/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2) · Tag: v15.1.0 → S = e49359e49dc338078669a90aa5b37aa2436b60a4 (tag object f17abf1096206fc76be838ee13b50df1f8e0ceb5)
+Grant: .kiro/issues/2026-10-14-release-15-1-files-grant.md (path docs/releases/15.1.0/**, the post-publish record PR extent).
+
+## Comparands (6b)
+
+### 5.3 release-publish-record.json (verbatim)
+{
+  "mode": "publish",
+  "version": "15.1.0",
+  "commit": "e49359e49dc338078669a90aa5b37aa2436b60a4",
+  "source": "https://github.com/3fn/DesignerPunk.git",
+  "tarball": "/var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-UxDFa7/out/3fn-core-15.1.0.tgz",
+  "sha1": "f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620",
+  "fileCount": 1673,
+  "bytes": 6472478,
+  "checks": {
+    "passed": 105,
+    "total": 105
+  },
+  "publishedTo": [
+    "https://npm.pkg.github.com"
+  ],
+  "createdAt": "2026-10-14T02:35:50.410Z"
+}
+
+
+### 5.1 dry run at S (before the tag), tally line
+105/105 assertions passed.
+tarball sha1 at 5.1: b972c9d1304ccc093267d23d3fc0f8e6e3e6ccae (1673 files, 6472477 bytes) — differs from 5.3's by design: 5.3 rebuilds in a fresh clone at the TAG; TokenTypes.* and tool-manifest.json still carry wall-clock stamps (Stacy, phase 1). 6b compares against the 5.3 record, never 5.1.
+
+### 5.3 publish (from the main checkout, after Peter refreshed the GitHub Packages token — first attempt REFUSED at the whoami preflight, E403, nothing published)
+Published to https://npm.pkg.github.com at 2026-10-14T02:35:50Z — tarball sha1 f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620, 1673 files, 6472478 bytes, pack-assert 105/105.
+
+### 5.4 public npm (Peter's terminal, web 2FA)
+First attempt: E404 on PUT (npm masking an expired login — pitfall 4). After `npm login --auth-type=web`, the SAME tarball (shasum checked first: f4dd5caa…) published: `+ @3fn/core@15.1.0`, "being processed and may take a few minutes". The packument carried no time["15.1.0"] for ~1 minute after; read as not-yet-published per step 6, no guard retry; present at the next read.
+
+## 6a — the rail guard (full output, exit code)
+$ VERSION=15.1.0 ./scripts/verify-publish-rail.sh
+PASS: @3fn/core@15.1.0 visible on npmjs; tarball host verified
+exit code: 0
+
+## 6b — per-registry record
+
+### registry.npmjs.org
+$ curl -s https://registry.npmjs.org/@3fn%2fcore  (time["15.1.0"], versions["15.1.0"].dist.shasum, dist.fileCount)
+time: 2026-10-14T02:44:42.738Z
+dist.shasum: f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620
+dist.fileCount: 1673
+dist-tags.latest: 15.1.0
+
+
+$ curl -sL <versions["15.1.0"].dist.tarball from the npmjs packument> -o /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/tmp.06yKUkzvqP/npmjs.tgz  (npm pack against npmjs wrote no file twice from this checkout; the bytes are fetched directly instead — the rail's own method)
+tarball url: https://registry.npmjs.org/@3fn/core/-/core-15.1.0.tgz
+$ shasum /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/tmp.06yKUkzvqP/npmjs.tgz
+f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620  /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/tmp.06yKUkzvqP/npmjs.tgz
+$ tar -tzf | wc -l
+1673
+$ ls -l bytes
+(note: `npm pack @3fn/core@15.1.0 --registry https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org` wrote no file from this checkout on two runs — the bytes were fetched directly from the packument's dist.tarball URL instead, the rail's own method; recorded as an operator deviation, not a registry finding)
+- version present: yes (dist-tags.latest = 15.1.0)
+- registry publish time: 2026-10-14T02:44:42.738Z (packument time["15.1.0"])
+- file count: 1673 (dist.fileCount 1673; tar -tzf 1673)
+- dist.shasum: f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620
+- fetched bytes sha1: f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620 (6472478 bytes)
+
+### npm.pkg.github.com
+
+$ npm view @3fn/core@15.1.0 dist.shasum time.15.1.0 --json --registry https://npm.pkg.github.com --@3fn:registry=https://npm.pkg.github.com
+"f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620"
+
+$ npm pack @3fn/core@15.1.0 --registry https://npm.pkg.github.com --@3fn:registry=https://npm.pkg.github.com --pack-destination /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/tmp.fODwak6EC3/ghp
+npm notice 6.0kB dist/3fn-core-15.1.0.tgz
+npm notice filename: 3fn-core-15.1.0.tgz
+npm notice shasum: f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620
+npm notice total files: 1673
+$ shasum /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/tmp.fODwak6EC3/ghp/3fn-core-15.1.0.tgz
+f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620  /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/tmp.fODwak6EC3/ghp/3fn-core-15.1.0.tgz
+
+$ npm view @3fn/core@15.1.0 time --json --registry https://npm.pkg.github.com --@3fn:registry=https://npm.pkg.github.com | time["15.1.0"]
+- version present: yes
+- registry publish time: 2026-10-14T02:35:52Z (packument time["15.1.0"])
+- file count: 1673 (npm pack total files 1673; tar -tzf 1673)
+- dist.shasum: f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620
+- fetched bytes sha1: f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620
+
+## Verdict
+All four sha1s (npmjs dist.shasum, npmjs fetched bytes, GitHub Packages dist.shasum, GitHub Packages fetched bytes) equal the 5.3 record's sha1 f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620. Both registries carry the ONE tarball built in a fresh clone at the tag. Rail: PASS (exit 0). No release incident. Step 7 (GitHub release) may proceed.
+
+## Post-merge obligations recorded here (for Stacy's phase 2)
+- docs-MCP rebuild_index run on main at S by the orchestrator, 2026-10-14T02:15:07Z: healthy, 83 documents, 2849 sections, 333 cross-references (RL-5's remedy; the U3-era run has no record and stays "unverifiable, not refuted").
+- Lina's one-hop residual re-homing line applied to .kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md in this PR (RL-3).
+- Still owed in a follow-up records PR: Ada's publish-path issue + grant (RL-3), Thurgood's publish-rail-guard register row wording (RL-3 item 6), Lina's adaptations lines (RL-4), Thurgood's subtask docs (RL-4).
