@@ -139,9 +139,11 @@ export function personalNoteNamingMessage(): string {
  */
 export function jestConfigCollisionMessage(): string {
   return (
+    // 2026-10-13 (release-3 ruling item 2): the "(in this version @3fn/core/testing does not load under the
+    // preset …)" limitation clause is dropped — the preset now maps @3fn/core/* to the files the package
+    // ships (src/testing/presetMappings.ts). The design.md C27 A13 row takes the same amendment.
     `skipped: jest.config.js (already exists) — the DesignerPunk jest preset is not applied; to test your own ` +
-    `components with it, add ...require('@3fn/core/jest-preset') to your config (in this version @3fn/core/testing ` +
-    `does not load under the preset; see the Integration Guide's "Running Component Tests")`
+    `components with it, add ...require('@3fn/core/jest-preset') to your config`
   );
 }
 
@@ -192,7 +194,10 @@ export function managedRegionMarkersMissingMessage(file: string): string {
     return (
       `the DesignerPunk-managed block in .gitignore is missing its markers — not rewriting the file. ` +
       `Restore the lines '# designerpunk:managed:begin' and '# designerpunk:managed:end' around the block, ` +
-      `and 'npx designerpunk sync' keeps it current again.`
+      `and 'npx designerpunk sync' keeps it current again. ` +
+      // 2026-10-13 (release-3 ruling item 8): name the remedy for a block removed on purpose. Verified:
+      // sync skips the block when `.designerpunkignore` lists `.gitignore` (sync/index.ts L339, L498).
+      `If you removed the block on purpose, add the line '.gitignore' to .designerpunkignore and sync stops reporting it.`
     );
   }
   return (
