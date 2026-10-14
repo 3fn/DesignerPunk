@@ -689,6 +689,26 @@ Every time the thing did not exist, the tool returned a confident `strong` on so
 ### Rows for Lina to judge
 Lina's column is blank on every row. The rows where her judgment changes a count: D8, D9, D10 (is each rank-1 `strong` wrong?), D7 (was Avatar-Base the right pick?), D5 (Input-Radio-Set over Nav-SegmentedChoice-Base for the Theme choice), D12 (interim `secondary`/`primary` for a destructive action).
 
+### Method conformance (Thurgood)
+**2026-10-13 — read at `b9f5ae425`, re-checked after Lina's column (`ff3a00912`, row cells only). Verdict: CONFORMS WITH NOTES.** This covers the charter's § 3 schema, § 5 contamination and anti-steering rules, and § 8a brief only. It does not cover whether any row's pick was right (Lina's judgment) or the D2 go/no-go (Peter's decision).
+
+1. **Header: PASS.** It records the served SHA, all three builds, the Leonardo prompt that ran (with its sha256), and the exposure inventory, including the reproduction tables read in the same session.
+2. **Needs written before the first discovery call, and queries using their wording: PASS.** D8 and D10 use the needs' words as written. NOTE: D9 condenses N8 to "confirm sheet or dialog"; it is the same need and steers nothing.
+3. **Intent written before each call: PASS on the record.** The ledger landed as one commit, so the ordering rests on the author's attestation plus the orchestrator's transcript check: 35 MCP calls and 35 rows, per-tool counts matching on all 21 tools, and the 3 earlier calls are the inventoried pre-exposure probes.
+4. **P flags, mechanical and by hand: PASS.** Rule (b), token overlap after plural folding, is stricter than the charter's string match. Strict errs toward discounting more, and it costs nothing on untiered filter rows, so keep it. Leaving S1 out of the discovery denominator is correct, because it is the § 4 verification call; both shares are reported.
+5. **No padding: PASS.** All three keyword calls are existence checks the needs called for. That is fewer keyword calls than the needs section anticipated, not more.
+6. **§ 3 summary fields: PASS.** Every field is present. Lina's verdicts changed no count: at rank 1, 0 `strong` right and 3 wrong; existence checks, 1 found and 3 harm-case. NOTE: D10's coverage is given as "≈1/5". Quote the emitted matchedTokens/totalTokens instead; the clause-1 class holds at any reading.
+7. **Impeccable stops recorded with Peter's rulings: PASS.** NOTE: both stop headings still read "awaiting confirmation".
+8. **Appendices verbatim: PASS.** All nine consumer files in Appendices A–C are byte-identical to `../scratch-consumer-settings/product/**` (diffed 2026-10-13).
+9. **Scaffolding logged as scaffolding: PASS.** NOTE: row S3 is Kind X, while the "8 S · 10 X" tally counts by row ID. No discovery count is affected.
+10. **Anything that could seed Q3: none.**
+
+**Other NOTEs (no conformance effect):**
+- **(a) PR state.** The status line says "PR opened", but Leonardo's `gh` call from the consumer folder failed silently (no repo token there). The orchestrator opened **#347**. His line is left as written.
+- **(b) The served build predates #330**, the slash-separator fix. On `main` today, D8's "on/off" splits into two stop words, so D8 reads 1/1 coverage and is not a clause-1 boundary case. That is an input to Lina's clause-1 judgment; no row is re-scored.
+- **(c) Friction item 5 is mine, not Spec 123 U3's.** `find_docs` concept mode ignores `limit`; only list mode applies it (`mcp-server/src/query/QueryEngine.ts`). It is a docs-matcher defect, and Thurgood files it.
+- **(d) The two tool lessons are not docs-rubric findings.** `validate_assembly` not seeing `product/components/` is in Lina's tool. Untiered filter rows are the components rubric by design ("structured filters are exact constraints"); Lina's column judges them. Lina's new cell findings (D12: `size: "md"` is not a valid Button-CTA value and `validate_assembly` did not catch it; D15: Input-Radio-Set has no group-label prop, a possible G6) are hers to route.
+
 ### Component gaps surfaced (to Thurgood → Lina, after Peter's go)
 G1 Switch · G2 Modal/Dialog/Sheet · G3 destructive Button-CTA variant · G4 VerticalList-Item trailing value + chevron · G5 transient message. Plus two tool lessons: `validate_assembly` cannot see `product/components/` while the Product MCP can (V1 vs S7); structured `find_components` filter rows carry no tier/`matchedOn`, so they cannot be scored by the rubric at all.
 
