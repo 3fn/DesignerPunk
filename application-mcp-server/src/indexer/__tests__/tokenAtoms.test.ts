@@ -3,19 +3,46 @@
  * @see ../tokenAtoms.ts (twin of mcp-server/src/query/token-atoms.ts)
  */
 
-import * as fs from 'fs';
 import * as path from 'path';
 import {
   ATOM_TERMS,
   COMPONENT_TOKEN_ATOM_LIST_VERSION,
   TOKEN_ATOMS,
+  TWINNED_DOCS_TOKEN_ATOM_LIST_VERSION,
   protectAtoms,
 } from '../tokenAtoms';
 import { ComponentIndexer, tokenizeForMatch, tokenizeString } from '../ComponentIndexer';
 import { foldPlural } from '../termNormalization';
 import { ComponentQueryEngine } from '../../query/QueryEngine';
 
-const DOCS_ATOMS_PATH = path.resolve(__dirname, '../../../../mcp-server/src/query/token-atoms.ts');
+/** Shape-only view of the docs module — no logic, avoids a typed cross-sub-package import. */
+interface DocsTokenAtomsModule {
+  TOKEN_ATOM_LIST_VERSION: number;
+  TOKEN_ATOMS: readonly string[];
+  protectAtoms(text: string): string;
+}
+
+/**
+ * The REAL docs module, loaded from its TS source (ts-jest transpiles outside this package's
+ * rootDir). An untyped `require`, not an `import`: this package's tsconfig compiles `__tests__`,
+ * and a static import would pull a file outside `rootDir` into that program.
+ */
+function loadDocsTokenAtoms(): DocsTokenAtomsModule {
+  return require('../../../../mcp-server/src/query/token-atoms') as DocsTokenAtomsModule;
+}
+
+/** Shared fixture for the protectAtoms parity probe. */
+const PROTECT_ATOMS_FIXTURE: readonly string[] = [
+  'iOS', 'iPadOS', 'macOS', 'tvOS', 'watchOS', 'iPhone', 'iPad',
+  'safe area (iOS), iPadOS pointer, contentDescription',
+  '(iPadOS, iPad, iPhone)',
+  'macOS/iPadOS with pointer',
+  'IOS ios Ios',
+  'iPadless iOSified xiOS',
+  'contentDescription whenToUse',
+  '',
+];
+
 const COMPONENTS_DIR = path.resolve(__dirname, '../../../../src/components/core');
 
 describe('components token-atom list', () => {
@@ -23,12 +50,23 @@ describe('components token-atom list', () => {
     expect(COMPONENT_TOKEN_ATOM_LIST_VERSION).toBe(1);
   });
 
-  it('DRIFT GUARD: matches the docs-side list it twins (mcp-server token-atoms.ts)', () => {
-    const src = fs.readFileSync(DOCS_ATOMS_PATH, 'utf8');
-    const block = src.match(/TOKEN_ATOMS[^=]*=\s*Object\.freeze\(\[([\s\S]*?)\]\)/);
-    expect(block).not.toBeNull();
-    const docsAtoms = [...block![1].matchAll(/'([^']+)'/g)].map(m => m[1]);
-    expect([...TOKEN_ATOMS].sort()).toEqual(docsAtoms.sort());
+  describe('BOUND TWIN of mcp-server token-atoms.ts (Peter, 2026-10-13)', () => {
+    let docs: DocsTokenAtomsModule;
+    beforeAll(() => {
+      docs = loadDocsTokenAtoms();
+    });
+
+    it('TOKEN_ATOMS exactly equals the docs list (order included)', () => {
+      expect([...TOKEN_ATOMS]).toEqual([...docs.TOKEN_ATOMS]);
+    });
+
+    it('pin: TWINNED_DOCS_TOKEN_ATOM_LIST_VERSION equals the docs TOKEN_ATOM_LIST_VERSION', () => {
+      expect(TWINNED_DOCS_TOKEN_ATOM_LIST_VERSION).toBe(docs.TOKEN_ATOM_LIST_VERSION);
+    });
+
+    it.each(PROTECT_ATOMS_FIXTURE.map(t => [t]))('protectAtoms parity with the docs function: %p', (text) => {
+      expect(protectAtoms(text)).toBe(docs.protectAtoms(text));
+    });
   });
 
   it('protectAtoms lowercases atoms in place and leaves other words alone', () => {
