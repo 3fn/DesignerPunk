@@ -405,6 +405,17 @@ describe('sync — the .gitignore block (Task 20.2; design.md C24 and its PR-9 e
       expect(con.output()).toContain(managedRegionMarkersMissingMessage('.gitignore'));
       expect(gi()).toBe('only mine\n');
     });
+
+    test('the remedy the markers-missing row names works: `.gitignore` listed in .designerpunkignore silences the report (release-3 ruling item 8)', async () => {
+      bornRepo({ block: true });
+      fs.writeFileSync(giPath(), 'only mine\n');
+      writeFile(scratch, '.designerpunkignore', '.gitignore\n');
+      const out = await run({ apply: true, confirmGitignoreBlock: async () => { throw new Error('no offer expected'); } });
+      expect(managedRegionMarkersMissingMessage('.gitignore')).toContain("add the line '.gitignore' to .designerpunkignore");
+      expect(con.output()).not.toContain('missing its markers');
+      expect(out.gitignoreBlock).toBeUndefined();
+      expect(gi()).toBe('only mine\n');
+    });
   });
 
   describe('PR-9: the offer for a repo born without a block (its own [y/N], default No)', () => {
