@@ -4,6 +4,7 @@ import { TargetPlatform, OutputFormat } from '../types/TranslationOutput';
 import { getPlatformTokenName } from '../naming/PlatformNamingRules';
 import { getColorToken } from '../tokens/ColorTokens';
 import { getOpacityToken } from '../tokens/OpacityTokens';
+import { generatedByLine, getCoreVersion } from '../generators/coreVersion';
 
 /**
  * iOS-specific format generator
@@ -61,14 +62,13 @@ export class iOSFormatGenerator extends BaseFormatProvider {
   }
 
   generateHeader(metadata?: FileMetadata): string {
-    const timestamp = metadata?.generatedAt?.toISOString() || new Date().toISOString();
-    const version = metadata?.version || '1.0.0';
+    // No wall-clock time: same input, same bytes (2026-10-03-generate-output-not-deterministic).
+    const version = metadata?.version || getCoreVersion();
 
     return [
       '///',
       '/// DesignerPunk Design System - iOS Tokens',
-      `/// Generated: ${timestamp}`,
-      `/// Version: ${version}`,
+      `/// ${generatedByLine(version)}`,
       '/// Platform: iOS (Swift Constants)',
       '///',
       '',

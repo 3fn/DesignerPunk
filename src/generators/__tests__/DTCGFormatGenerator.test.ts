@@ -44,7 +44,8 @@ describe('DTCG schema structure', () => {
     expect(defaultOutput.$extensions).toBeDefined();
     expect(defaultOutput.$extensions?.designerpunk).toBeDefined();
     expect(defaultOutput.$extensions?.designerpunk?.version).toBe('1.0.0');
-    expect(defaultOutput.$extensions?.designerpunk?.generatedAt).toBeDefined();
+    // No generation timestamp: same input, same bytes (2026-10-03-generate-output-not-deterministic).
+    expect(defaultOutput.$extensions?.designerpunk?.generatedAt).toBeUndefined();
     expect(defaultOutput.$extensions?.designerpunk?.rosettaVersion).toBeDefined();
   });
 
