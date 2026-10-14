@@ -20,263 +20,263 @@
     {
       "lines": [
         176,
-        188
+        190
       ],
       "op": "render",
       "source": "canonical/agents/data.md#in-scope"
     },
     {
       "lines": [
-        189,
-        197
+        191,
+        199
       ],
       "op": "render",
       "source": "canonical/agents/data.md#android-theming-spec-094"
     },
     {
       "lines": [
-        198,
-        206
+        200,
+        208
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#product-tokens-spec-108109"
     },
     {
       "lines": [
-        207,
-        216
+        209,
+        218
       ],
       "op": "render",
       "source": "canonical/agents/data.md#out-of-scope"
     },
     {
       "lines": [
-        217,
-        222
+        219,
+        224
       ],
       "op": "render",
       "source": "canonical/agents/data.md#blocking-exception-direct-escalation-to-peter"
     },
     {
       "lines": [
-        223,
-        233
+        225,
+        235
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#the-implement-vs-direct-distinction"
     },
     {
       "lines": [
-        234,
-        237
+        236,
+        239
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#operational-mode-screen-implementation:preamble"
     },
     {
       "lines": [
-        238,
-        242
+        240,
+        244
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#step-1-review-the-specification"
     },
     {
       "lines": [
-        243,
-        247
+        245,
+        249
       ],
       "op": "render",
       "source": "canonical/agents/data.md#step-2-set-up-the-screen"
     },
     {
       "lines": [
-        248,
-        254
+        250,
+        256
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#step-3-implement"
     },
     {
       "lines": [
-        255,
-        260
+        257,
+        262
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#step-4-test"
     },
     {
       "lines": [
-        261,
-        267
+        263,
+        269
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#step-5-report-back"
     },
     {
       "lines": [
-        268,
-        271
+        270,
+        273
       ],
       "op": "render",
       "source": "canonical/agents/data.md#operational-mode-platform-expertise:preamble"
     },
     {
       "lines": [
-        272,
-        278
+        274,
+        280
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#what-you-provide"
     },
     {
       "lines": [
-        279,
-        286
+        281,
+        288
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#how-you-provide-it"
     },
     {
       "lines": [
-        287,
-        298
+        289,
+        300
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#with-leonardo-primary"
     },
     {
       "lines": [
-        299,
-        303
+        301,
+        305
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#with-sibling-platform-agents"
     },
     {
       "lines": [
-        304,
-        308
+        306,
+        310
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#with-stacy-product-governance"
     },
     {
       "lines": [
-        309,
-        315
+        311,
+        317
       ],
       "op": "render",
       "source": "canonical/agents/data.md#with-peter"
     },
     {
       "lines": [
-        316,
-        325
+        318,
+        327
       ],
       "op": "render",
       "source": "canonical/agents/data.md#how-to-use-designerpunk-tokens-on-android"
     },
     {
       "lines": [
-        326,
-        330
+        328,
+        332
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#token-reference-pattern"
     },
     {
       "lines": [
-        331,
-        342
+        333,
+        344
       ],
       "op": "render",
       "source": "canonical/agents/data.md#platform-currency-expectations"
     },
     {
       "lines": [
-        343,
-        355
+        345,
+        357
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#platform-reference-pointers"
     },
     {
       "lines": [
-        356,
-        365
+        358,
+        367
       ],
       "op": "render",
       "source": "canonical/agents/data.md#android-specific-guidance:preamble"
     },
     {
       "lines": [
-        366,
-        383
+        368,
+        385
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#android-skills-official-google-patterns"
     },
     {
       "lines": [
-        384,
-        395
+        386,
+        397
       ],
       "op": "render",
       "source": "canonical/agents/data.md#mcp-practice-notes"
     },
     {
       "lines": [
-        396,
-        399
+        398,
+        401
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#collaboration-standards:preamble"
     },
     {
       "lines": [
-        400,
-        404
+        402,
+        406
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#counter-arguments-are-mandatory"
     },
     {
       "lines": [
-        405,
-        407
+        407,
+        409
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#candid-over-comfortable"
     },
     {
       "lines": [
-        408,
-        410
+        410,
+        412
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#bias-self-monitoring"
     },
     {
       "lines": [
-        411,
-        415
+        413,
+        417
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#ask-if-unsure"
     },
     {
       "lines": [
-        416,
-        423
+        418,
+        425
       ],
       "op": "passthrough",
       "source": "canonical/agents/data.md#what-you-own"
     },
     {
       "lines": [
-        424,
-        429
+        426,
+        431
       ],
       "op": "render",
       "source": "canonical/agents/data.md#what-you-dont-own"

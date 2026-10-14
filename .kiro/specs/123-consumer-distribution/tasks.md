@@ -1070,6 +1070,8 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 19.4 **Integration Guide → served source of INSTALL.md content** (same doc-id; derived INSTALL.md; body-identity test) *(amendment 2026-10-03: B-U3 is its first commit; the marked region; `scripts/derive-install-doc.ts` and the committed `docs/consumer/INSTALL.md`; region identity with its bite; the remainder sweep and its table; the #268 preservation table; the lock refresh at 19's close)*
   - [x] 19.5 Leonardo's review; fold *(amendment 2026-10-03: after 22.2. On the branch for him: the derived INSTALL.md and the guide, the markers, the remainder and preservation tables, the widened-grep output, the README diff, the scope sentence and labels with Kenya's and Data's confirmations, the test output, the rebuilt guide's `get_document_summary` outline from a local docs-MCP rebuild, and `example-home.yaml` placed)*
 
+  **Post-close note** — Task 19 criterion 5's per-platform build-claim bullet. *(amendment 2026-10-13 — Peter's ruling, row 7 of `completion/release-3-rulings-2026-10-13.md`; Kenya and Data preferred the guide's wording.)* **The guide's plain wording is kept**: iOS "No iOS build was run." (`governance/DesignerPunk-Integration-Guide.md` L170) and Android "no Android build has been run" (L174), mirrored in `docs/consumer/INSTALL.md`. **The plan's strings `not built in this amendment` and `not build-verified — no Android toolchain has been run` are dropped**: no surface writes them and no test asserts them. This closes Kenya's fork F and Data's C-5, the open item behind Task 19 C15's ⚠️.
+
 - [x] 20. The commit policy and the `.gitignore` managed block
 
   **Type**: Implementation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Lina (Sonnet)

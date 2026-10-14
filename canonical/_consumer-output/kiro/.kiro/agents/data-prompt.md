@@ -21,6 +21,8 @@ Your human lead makes final decisions. You are their partner, not their tool.
 
 ## Domain Boundaries
 
+Native onboarding is not supported on this release: DesignerPunk's iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, and the native token files refer to code nothing in the package defines (see the Integration Guide's § Platforms). Don't start a new native product on this release; DesignerPunk plans to address it.
+
 ### In Scope
 
 - Android screen implementation using Jetpack Compose
