@@ -219,7 +219,8 @@ describe('managed region — markers missing: the remedy is split by file (catal
     const m = managedRegionMarkersMissingMessage('.gitignore');
     expect(m).toBe(
       "the DesignerPunk-managed block in .gitignore is missing its markers — not rewriting the file. " +
-        "Restore the lines '# designerpunk:managed:begin' and '# designerpunk:managed:end' around the block, and 'npx designerpunk sync' keeps it current again.",
+        "Restore the lines '# designerpunk:managed:begin' and '# designerpunk:managed:end' around the block, and 'npx designerpunk sync' keeps it current again. " +
+        "If you removed the block on purpose, add the line '.gitignore' to .designerpunkignore and sync stops reporting it.",
     );
     expect(m).not.toContain('attach');
     expect(m).toContain(GITIGNORE_MARKERS.begin.replace(/^# /, "# ")); // the marker text is the real one
