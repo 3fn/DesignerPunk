@@ -92,3 +92,23 @@ All four sha1s (npmjs dist.shasum, npmjs fetched bytes, GitHub Packages dist.sha
 - docs-MCP rebuild_index run on main at S by the orchestrator, 2026-10-14T02:15:07Z: healthy, 83 documents, 2849 sections, 333 cross-references (RL-5's remedy; the U3-era run has no record and stays "unverifiable, not refuted").
 - Lina's one-hop residual re-homing line applied to .kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md in this PR (RL-3).
 - Still owed in a follow-up records PR: Ada's publish-path issue + grant (RL-3), Thurgood's publish-rail-guard register row wording (RL-3 item 6), Lina's adaptations lines (RL-4), Thurgood's subtask docs (RL-4).
+
+## Erratum (RL-8, RL-9) — 2026-10-14, orchestrator, under the re-activation grant in .kiro/issues/2026-10-14-release-15-1-files-grant.md (activated by #354)
+
+### RL-8 — the omitted runs, pasted in full
+The 6a section above shows only the PASS run and says "no guard retry". Two earlier runs in the same session were omitted:
+
+1. **02:42:13Z — rail run before the public-npm publish had landed** (the registry's packument carried no time["15.1.0"] until 02:44:42.738Z):
+```
+$ VERSION=15.1.0 ./scripts/verify-publish-rail.sh
+FAIL[version]: @3fn/core@15.1.0 is not visible on https://registry.npmjs.org (HTTP 404) — do not announce this release. Before re-running, read the registry's own record: if the packument (curl -s https://registry.npmjs.org/@3fn%2fcore) has no time["15.1.0"], the version is not published yet and this 404 is the correct answer, not indexing lag; only if time["15.1.0"] is present, re-run by hand within a few minutes of it.
+exit code: 10
+```
+Read against the packument per step 6 ("if the packument has no time[\"<version>\"], the version is not published yet; a 404 is then the correct answer, not indexing lag"), so no retry was made then; the PASS run above was made once time["15.1.0"] appeared. The sentence "no guard retry" should read: **one pre-publish run (FAIL, exit 10, correct at the time), then one run after the registry's own publish time appeared (PASS, exit 0).**
+2. **`npm pack @3fn/core@15.1.0` against registry.npmjs.org wrote no file on BOTH runs from this checkout** — the 02:42Z batch (before the publish; nothing to fetch) and the 02:45Z batch (after; the no-file result there is unexplained — likely the scoped-registry mapping in the checkout's .npmrc; not diagnosed). The bytes were fetched from the packument's dist.tarball URL instead, as recorded above.
+
+### 5.3 command line (Ada's RL-7 evidence gap)
+`npx tsx scripts/release-publish.ts 15.1.0 --expect-sha e49359e49dc338078669a90aa5b37aa2436b60a4`, run from the main checkout at 02:35Z; the script's three tag checks therefore ran, and the tag resolved to S.
+
+### RL-9 — acknowledged
+The step-6 PR #351 also edited `.kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md` (Lina's re-homing line), a path outside the grant it cited. The grant's own clause makes that a claims-pass finding on the orchestrator; it stands as recorded in the 15.1.0 pass, phase 2. RS-18 (Thurgood) asks whether a grant implicitly covers the issue files it serves.
