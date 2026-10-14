@@ -89,7 +89,7 @@ contracts:
     validation:
       - Container has role="radiogroup" (web)
       - Container exposes an accessible name equal to the accessibilityLabel prop (web aria-label; iOS accessibilityLabel; Android contentDescription)
-      - No empty accessible name is rendered when the label is missing (web), and a development warning names the missing attribute
+      - No empty accessible name is rendered when the label is missing, empty or whitespace-only (web), and a development warning names the missing attribute
       - Each child has role="radio" (web)
       - aria-checked reflects selection state
     test_approach: |

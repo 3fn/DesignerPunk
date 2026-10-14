@@ -140,7 +140,8 @@ export class InputRadioSetElement extends HTMLElement {
     // Contract accessibility_radiogroup_role: a radio group must have an accessible
     // name (WCAG 4.1.2). The attribute cannot be compile-checked, so a missing one is a
     // development warning (same pattern as Button-Icon's aria-label), never a throw.
-    if (!this.accessibilityLabel) {
+    // An empty or whitespace-only value counts as missing (`""` passes the type check).
+    if (!this._hasAccessibleName()) {
       console.warn(
         'InputRadioSet: Missing required "accessibility-label" attribute. ' +
         'A radio group needs an accessible name so screen readers announce what the choice is (WCAG 4.1.2).'
@@ -208,6 +209,11 @@ export class InputRadioSetElement extends HTMLElement {
     } else {
       this.removeAttribute('accessibility-label');
     }
+  }
+
+  /** True when accessibility-label holds a non-blank name (empty/whitespace-only counts as missing). */
+  private _hasAccessibleName(): boolean {
+    return (this.accessibilityLabel ?? '').trim().length > 0;
   }
 
   /**
@@ -420,7 +426,7 @@ export class InputRadioSetElement extends HTMLElement {
     const isError = this.error;
     const errorMsg = this.errorMessage;
     const testId = this.testID;
-    const label = this.accessibilityLabel;
+    const label = this._hasAccessibleName() ? this.accessibilityLabel!.trim() : null;
 
     // Accessible name of the group (contract accessibility_radiogroup_role, WCAG 4.1.2).
     // Written with setAttribute (not innerHTML), so no HTML escaping is needed. Never render an

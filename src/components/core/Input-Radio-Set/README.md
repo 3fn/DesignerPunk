@@ -46,7 +46,7 @@ This component guarantees the following behaviors across all platforms:
 | `error_announcement` | Error message announced to screen readers | 4.1.3 |
 | `radiogroup_role` | Group role with an accessible name (required `accessibilityLabel`) | 4.1.2 |
 
-> **2.0.0 (2026-10-13) — breaking: `accessibilityLabel` is now REQUIRED.** A radio group must have a name (WCAG 4.1.2), and this component's own contract `accessibility_radiogroup_role` always required one, but before 2.0.0 there was no prop to provide it. The label is **not** rendered visibly: show your visible question or heading as your own text and pass the same words here. Missing label: a compile error on iOS/Android and in typed TS; on web (an HTML attribute) the group has no name and a development `console.warn` names the missing `accessibility-label`. Source: G6 in `.kiro/issues/2026-10-13-component-gaps-from-settings-ledger.md`.
+> **2.0.0 (2026-10-13) — breaking: `accessibilityLabel` is now REQUIRED.** A radio group must have a name (WCAG 4.1.2), and this component's own contract `accessibility_radiogroup_role` always required one, but before 2.0.0 there was no prop to provide it. The label is **not** rendered visibly: show your visible question or heading as your own text and pass the same words here. Missing label: a compile error on iOS/Android and in typed TS; on web (an HTML attribute) a missing, empty or whitespace-only label leaves the group unnamed and a development `console.warn` names `accessibility-label`. Source: G6 in `.kiro/issues/2026-10-13-component-gaps-from-settings-ledger.md`.
 
 ---
 

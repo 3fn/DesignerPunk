@@ -481,6 +481,18 @@ describe('Input-Radio-Set Web Component', () => {
       }
     });
 
+    it.each([[''], ['   ']])('blank label %p is treated as missing: no aria-label and the same development warning', async (blank) => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+      try {
+        const set = await createRadioSet({ 'accessibility-label': blank });
+        const container = set.shadowRoot?.querySelector('[role="radiogroup"]');
+        expect(container?.hasAttribute('aria-label')).toBe(false);
+        expect(warn).toHaveBeenCalledWith(expect.stringContaining('accessibility-label'));
+      } finally {
+        warn.mockRestore();
+      }
+    });
+
     it('does not warn when the label is provided', async () => {
       const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
       try {
