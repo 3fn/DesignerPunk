@@ -893,23 +893,16 @@ boundary_call:
 verification:
   disposition: barrier
   owner: ada
-  check_state: proposed
-  checks: []
-  # P2 second leg and P3 are recorded (2026-10-03, pointer in § 2). THE FLIP (A9; F-4 RULED by Peter 2026-10-03:
-  # arm at the first release run under the law, not in the application PR). This row lands `proposed` with the
-  # application PR. It flips to `armed`, `armed_at: tool-time` in the release-record PR of the FIRST release
-  # published under RELEASE-FLOW steps 5–7; that release's 6b record is the live evidence. At the flip, checks[] =
-  #   ["scripts/release-publish.ts (RELEASE-FLOW 5.1/5.3: fresh clone at the tag; three tag checks; check:drift;
-  #     verify:token-index-clean after the pack; pack-assert; sha1 record)",
-  #    "package.json prepublishOnly tripwire (folder publish refused; P3)",
-  #    "RELEASE-FLOW step 6b two-registry record (four sha1s equal the 5.3 record)"].
+  check_state: armed
+  armed_at: tool-time
+  checks: ["scripts/release-publish.ts (RELEASE-FLOW 5.1/5.3: fresh clone at the tag; three tag checks; check:drift; verify:token-index-clean after the pack; pack-assert; sha1 record)", "package.json prepublishOnly tripwire (folder publish refused; P3)", "RELEASE-FLOW step 6b two-registry record (four sha1s equal the 5.3 record)"]
   # The CI half (`test:pack-contents` in lane-functional-root, #281) is build-time evidence, not this row's
-  # tool-time check. ARMING read: Stacy, at the flip PR's merge.
-  # Owner is ada because she maintains the instrument (script, tripwire, pack-assert); the law text is Thurgood's.
+  # tool-time check. Owner is ada because she maintains the instrument (script, tripwire, pack-assert); the law text is Thurgood's.
 education:
   disposition: "AUTHOR: RELEASE-FLOW steps 5–7 (ballot 2026-10-03-hermetic-publish-path § 3) and governance/release-management-system.md § 5 are the education. PRUNED: the 2026-10-02 deferral's three manual guards are superseded by the script (Ada's issue records that). HONEST REACH: a publish run with --ignore-scripts, or of a tarball the script did not produce, is NOT detected before publish; 6b's sha1 comparison detects it after publish, and published bytes cannot be replaced"
 history:
   - { date: 2026-10-03, change: "entry created at ballot 2026-10-03-hermetic-publish-path (DRAFT), from 15.0.0's two-artifact divergence (Stacy R-2; RS-6/RS-7/RS-8). check_state proposed. P2 (source read, Ada R2; observed leg) and P3 recorded on Ada's issue 2026-10-03. The flip PR and checks[] are named in the verification comment (Stacy R1 A9). RATIFIED 2026-10-03 (Peter; F-3 owner ada; F-4: arms at the first release run under the law, the release-record PR of that release being the flip PR — not at this application)", by: thurgood }
+  - { date: 2026-10-14, change: "ARMED under F-4 (Peter 2026-10-03: arm at the first release run under the law; Peter 2026-10-14: a follow-up PR arms it — RL-7). The first release published under RELEASE-FLOW steps 5–7 is 15.1.0. Its step-6 release-record PR #351 (6efa34984) carries the live evidence, docs/releases/15.1.0/publish-verification.txt: 6a rail PASS (exit 0); 6b all four sha1s (npmjs and GitHub Packages; dist.shasum and fetched bytes) equal the 5.3 record, f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620, 1673 files; 5.3 was run with --expect-sha e49359e49 (the tag resolves to S). #351 touched no register, so the flip F-4 named for it lands in this follow-up PR instead: RL-7 of the 15.1.0 RELEASE claims pass, phase 2 (completion/claims-pass-release-15.1.0.md, PR #353). check_state proposed → armed, armed_at: tool-time, checks[] verbatim as pre-named. ARMING read: Stacy, at this PR's merge", by: thurgood }
 ```
 
 ### issue-row-write-scope-grant
