@@ -18,6 +18,16 @@ date: 2026-09-29
 
 **Ruling: ASSENT — 7/7 surviving.** All 7 confirmed items survive. `role`, `restraint`, `domain`, `leonardo-primary` and `system-through-leonardo` are verbatim. `human-decides` and `partner` are re-grounded: *"Your human lead makes final decisions. You are their partner, not their tool."* The removed text is the name "Peter" (subtraction-2, an authority claim naming a person), and its destination is the generic human lead in the same sentence.
 
+## `#in-scope`
+
+signer: kenya
+disposition: re-pointed
+canonicalHash: sha256:2d200f0d2b9ce6d63a106e452a5b04399c1bfdb3e2ebe85015e5ce8fdf12350e
+renderedHash: sha256:9dae5eb7c5cd3b7eb8b36c1f585ee9df6580918b8fee7b9cd2b5007ddbf9737c
+date: 2026-10-13
+
+**Ruling: ASSENT — 8/8 surviving.** scope-1 through scope-8 survive: the eight In Scope duties (SwiftUI screen implementation, token consumption, component implementation in Swift, iOS tests, navigation/state/data binding, VoiceOver accessibility, build configuration, advising Leonardo) are all present in the rendered unit, verbatim except for the re-grounded pointers. The one removal ("(referencing existing platforms/ios/ implementations)", subtraction-5) is re-pointed to the shipped `node_modules/@3fn/core/src/components/core/*/platforms/ios/` sources, which is true of the package. The added native-scope line (release-3 ruling 11) reads true by source read: the iOS/Android components ship as reference source, and the native token files refer to code nothing in the package defines. It does not contradict the rendered output. It is a release-level gate on starting a NEW native product; the eight items describe duties in an existing app, so both stand without conflict.
+
 ## `#ios-theming-spec-094`
 
 signer: kenya

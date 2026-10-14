@@ -1,7 +1,7 @@
 # Issue: the native consumer profiles never tell their agents that native onboarding is unsupported on this release, nor what in the shipped native output does not resolve
 
 **Date**: 2026-10-12
-**Status**: ACTIVE. **No fix is authorized by this record.**
+**Status**: CLOSED 2026-10-13: fork (A) RULED and executed (§ "Outcome", below). Archived in the fix PR `fix/native-profile-scope-line`.
 **Owner**: **Leonardo**, product architecture: whether the consumer agent layer must carry the release's scope sentence, and where. **Thurgood**: profile author; authoring, the operative-set and disposition mechanics, the re-sign round. **Kenya** (iOS) and **Data** (Android): the wording for their own overlays, and their signatures. **Peter**: the fork below.
 **Trigger**, two events, depending on the branch Peter picks:
 - **Add now**: **U3c's squash-merge to `main`.** U3c (Task 31) deliberately does not widen to this. The work then lands in the first PR after that merge which opens a native-overlay authoring and re-sign round, and **before the release-3 tag**, because the consumer agent layer ships in release 3.
@@ -69,3 +69,20 @@ The Integration Guide's § Platforms tells a human reader four things. Kenya and
 Record the outcome here (dated) and `git mv` this file to `archive/` when either:
 - the native overlays carry the line and are re-signed ((A)); or
 - Spec 129's requirements carry the gap by name ((B)).
+
+## Outcome (2026-10-13)
+
+- **Ruling**: Peter, 2026-10-13, release-3 rulings row 11 (`.kiro/specs/123-consumer-distribution/completion/release-3-rulings-2026-10-13.md`), "All as recommended". **Fork (A)**: add the one line to each native overlay now. The class option (the scope sentence once, in an always-loaded member) goes to Spec 129.
+- **Applied** (Thurgood, profile author), on `fix/native-profile-scope-line` from `fc6d122d4`:
+  - One paragraph each, under `## Domain Boundaries` inside the `#in-scope` unit of `canonical/profiles/consumer/kenya.overlay.md` and `canonical/profiles/consumer/data.overlay.md`.
+  - It began as Leonardo's proposed line **without the spec number**, per its own surviving counter ("DesignerPunk plans to address it"). **The final text differs from his draft in two places**, both settled 2026-10-13 from Kenya's and Data's reads, with the orchestrator deciding the wording:
+    - **"the generated native token output does not compile as-is" → "the native token files refer to code nothing in the package defines".** The compile claim stays out, as Task 19's criterion keeps Task 3.5's compile label out of the asserted set and out of the install doc: no build was run on iOS, and on Android the claim rests on a source read only. Ruling 7 kept the guide's plain "no build was run" wording for the same reason.
+      - The subject is Kenya's. "Native token files" covers the shipped snapshots, which is where the `SizingTokens`-family facts live, and a consumer's `generate` output, without overclaiming either.
+      - The replacement is true on both platforms by source read: guide § Platforms L164, L166, L182.
+    - **"Don't start a native product" → "Don't start a new native product"**, flagged by both. The sentence sits above scope bullets that describe duties inside an existing app.
+  - **Final text, identical in both overlays**: `Native onboarding is not supported on this release: DesignerPunk's iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, and the native token files refer to code nothing in the package defines (see the Integration Guide's § Platforms). Don't start a new native product on this release; DesignerPunk plans to address it.`
+  - Kenya and Data both read the rendered outputs as non-contradicting, and both assent 8/8 on `#in-scope`.
+  - It points to the Integration Guide § Platforms for the OKLCH, `SizingTokens`-family and `dpTheme` specifics, and does not copy them.
+  - Regenerated: 12 consumer renderings moved (`canonical/_consumer-output/{_canonical/agents,cc/.claude/agents,kiro/.kiro/agents}/{kenya,data}*` with their attribution sidecars). DesignerPunk's own `.claude/agents/**` and `.kiro/agents/**` did not move.
+- **Freshness**: `operative-set-freshness: PASS`, with 0 stale signatures. `#in-scope` was unsigned on both seats, and its `canonicalHash` is unchanged.
+- **Signatures**: the signing-chain floor (`verify-signing-chain --ci`, inside the required `122-diff-guard`) fails any range that touches `canonical/profiles/**` while checking zero rows. So the closing condition "re-signed" is met by **Kenya's and Data's first signature on `#in-scope`**, committed by each seat in this PR. Those signing commits complete the closing condition.

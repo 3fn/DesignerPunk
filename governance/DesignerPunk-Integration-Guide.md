@@ -300,7 +300,7 @@ export default defineConfig({
 - Path is resolved relative to the config file's directory
 - Must be a **complete** token source — no fallback to the package for missing families
 - Must export `getAllPrimitiveTokens()` from the root barrel and `getAllSemanticTokens()` from a `semantic/` subdirectory
-- Dark and WCAG overrides are not read from `tokenSource` or from `themes`: `generate` applies DesignerPunk's own override maps from the installed package (section 4). Every semantic token those maps name must exist in your token source. If one is missing, `generate` reports an "Orphaned override key" and writes no token files. After that report, `generate` still prints "✅ System tokens generated", exits 0, and rewrites `token-index/` without its theme-varying data (a known defect), so read the lines above the ✅.
+- Dark and WCAG overrides are not read from `tokenSource` or from `themes`: `generate` applies DesignerPunk's own override maps from the installed package (section 4). Every semantic token those maps name must exist in your token source. If one is missing, `generate` reports an "Orphaned override key", writes no token files, leaves `token-index/` as it was, and exits 1.
 - `npx designerpunk init` copies a complete token source to `src/tokens/` automatically
 
 ### Themes
@@ -472,7 +472,7 @@ npx jest --testPathPattern=Button # Run tests matching "Button"
 
 #### Shared Test Utilities
 
-`@3fn/core/testing` exports test helpers (`registerComponent`, `createComponentFixture`, `cleanupDOM`, `waitForShadowDOM`, `setupTokenProperties`, `cleanupTokenProperties`, `setupBlendColorProperties`, `cleanupBlendColorProperties`, `readComponentCSS`). **In this version they do not work under the preset in an installed package**: the preset maps `@3fn/core/testing`, `@3fn/core/config`, `@3fn/core/blend` and `@3fn/core/types` to source files the package does not ship. `@3fn/core/build` is not affected.
+`@3fn/core/testing` exports test helpers (`registerComponent`, `createComponentFixture`, `cleanupDOM`, `waitForShadowDOM`, `setupTokenProperties`, `cleanupTokenProperties`, `setupBlendColorProperties`, `cleanupBlendColorProperties`, `readComponentCSS`). The preset maps all five `@3fn/core/*` subpaths (`testing`, `config`, `blend`, `types` and `build`) to the compiled files the package ships under `dist/`, so the helpers load under `@3fn/core/testing` in an installed package.
 
 #### Notes
 
@@ -499,7 +499,7 @@ npx jest --testPathPattern=Button # Run tests matching "Button"
 | `@3fn/core/types` | Token type definitions. The token source `init` copied into your repo imports them. |
 | `@3fn/core/build` | `defineComponentTokens` and the component-token build types. Your component token files import it. |
 | `@3fn/core/jest-preset` | Jest preset for testing your own web components (see Running Component Tests) |
-| `@3fn/core/testing` | Test helpers for web components (see Running Component Tests, which says what does not work in this version) |
+| `@3fn/core/testing` | Test helpers for web components (see Running Component Tests) |
 
 ---
 

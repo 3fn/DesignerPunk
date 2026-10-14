@@ -26,6 +26,16 @@ signer: data
 
 **Assent — 7 of 7 survive.** `human-decides` and `partner` are re-keyed ("Your human lead makes final decisions. You are their partner, not their tool."), and the norm is intact. The other five are verbatim.
 
+## `#in-scope`
+
+signer: data
+disposition: re-pointed
+canonicalHash: sha256:9838f330a66c772bc46c6d79a597268682348899eb6b2a2a5090f250c195d5c3
+renderedHash: sha256:72e9990409a35f3943744a2d62662e144fb323dd5dcf47bad0b8d2b4acd1411c
+date: 2026-10-13
+
+**Ruling: ASSENT — 8/8 surviving.** scope-1 through scope-8 survive: the eight In Scope duties (Compose screen implementation, token consumption, Kotlin component implementation, Android tests, navigation/state/data binding, TalkBack accessibility, build configuration, advising Leonardo) are all present in the rendered unit, verbatim except for the re-grounded pointers. The one removal ("(referencing existing platforms/android/ implementations)", subtraction-5) is re-pointed to the shipped `node_modules/@3fn/core/src/components/core/*/platforms/android/` sources, which is true of the package. The added native-scope line (release-3 ruling 11) reads true by source read (Integration Guide, L182): the Android and iOS components ship as reference source, and the native token files refer to code nothing in the package defines. It does not contradict the rendered output. It is a release-level gate on starting a NEW native product; the eight items describe duties in an existing app, so both stand without conflict.
+
 ## `#out-of-scope`
 
 signer: data

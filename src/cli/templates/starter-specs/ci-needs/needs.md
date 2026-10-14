@@ -21,11 +21,11 @@ The commands below use DesignerPunk's lifecycle verbs:
 - **Tier**: minimal core
 - **Why**: by default your repo commits the platform output `generate` writes (the commit policy), so the files you preview are the files you ship. If a token changes and nobody runs `generate`, the committed CSS, Swift and Kotlin no longer say what your token source says, and nothing tells you.
 - **Applies when**: you commit generated platform output (the default). If your build or deploy runs `generate` itself and you do not commit the output, this need does not apply.
-- **Check**: run `npx designerpunk generate --force` (`--force` regenerates product tokens even when their files look unchanged; without product tokens it changes nothing), then fail if any file under the `output` directory in `designerpunk.config.ts` differs from its committed version, or is new and uncommitted. Ignore the timestamp lines: every `generate` run rewrites a timestamp in each stamped file (a `Generated:` line, the DTCG file's `"generatedAt"` value, and a `Product tokens — generated` line in product-token files), so a byte comparison would be red on every run. With git 2.30 or later:
-  - `git diff --exit-code -I 'Generated: |generatedAt|Product tokens — generated' -- <your output directory>` exits non-zero on a real difference;
+- **Check**: run `npx designerpunk generate --force` (`--force` regenerates product tokens even when their files look unchanged; without product tokens it changes nothing), then fail if any file under the `output` directory in `designerpunk.config.ts` differs from its committed version, or is new and uncommitted. `generate` writes the same bytes for the same token source, `designerpunk.config.ts` and `@3fn/core` version, so a plain comparison works:
+  - `git diff --exit-code -- <your output directory>` exits non-zero on any difference;
   - `git ls-files --others --exclude-standard -- <your output directory>` prints nothing (no new, uncommitted output file).
 - **Bite recipe**: change one token value in `src/tokens/` (for example a spacing value in `src/tokens/SpacingTokens.ts`) and commit it without running `generate`. The check goes red. Revert the change.
-- **Price**: skip it, and a token change can ship without its platform output, with nothing to report the mismatch; adopt it, and you run `generate` in CI on every change and keep this bite proof working.
+- **Price**: skip it, and a token change can ship without its platform output, with nothing to report the mismatch; adopt it, and you run `generate` in CI on every change and keep this bite proof working. Upgrading `@3fn/core` changes the version line in every generated file's header, so regenerate and commit the output in the same change as the upgrade.
 
 ### N2. After a package update, the name contract is clean
 
