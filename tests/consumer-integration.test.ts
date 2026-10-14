@@ -2241,6 +2241,9 @@ describe('Consumer Integration (Spec 106 R8)', () => {
   describe('Release-3 item 2 — the Jest preset loads @3fn/core/* subpaths in a packed install', () => {
     let presetDir: string;
     const DEV_DEPS = ['jest', 'ts-jest', 'jest-environment-jsdom', '@types/jest', '@types/node', 'typescript'];
+    // Thurgood's condition (c), 2026-10-13: the output names the symlinked toolchain versions (in the test title).
+    const toolchainVersion = (d: string): string => JSON.parse(fs.readFileSync(path.join(PKG_ROOT, 'node_modules', d, 'package.json'), 'utf-8')).version;
+    const TOOLCHAIN = `jest ${toolchainVersion('jest')}, ts-jest ${toolchainVersion('ts-jest')}, jest-environment-jsdom ${toolchainVersion('jest-environment-jsdom')}`;
 
     beforeAll(() => {
       presetDir = fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-jest-preset-'));
@@ -2281,7 +2284,7 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       }
     });
 
-    it('a test importing @3fn/core/testing, and one importing the copied token source (@3fn/core/types), pass under the preset', () => {
+    it(`a test importing @3fn/core/testing, and one importing the copied token source (@3fn/core/types), pass under the preset (symlinked toolchain: ${TOOLCHAIN})`, () => {
       const tokenFile = fs.readdirSync(path.join(presetDir, 'src', 'tokens')).find((f) =>
         f.endsWith('.ts') && fs.readFileSync(path.join(presetDir, 'src', 'tokens', f), 'utf-8').includes("from '@3fn/core/types'"),
       );

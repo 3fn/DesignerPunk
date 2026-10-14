@@ -56,3 +56,9 @@
   - `validateComponentName` / `validateTokenUsage` are still not reachable from `@3fn/core/testing`. `dist/testing/validators.js` ships, but `exports` has no `./testing/validators` entry and `index.ts` does not re-export them. Fixing that is an `exports` change (Ada). The guide no longer teaches them.
   - The Integration Guide § "Running Component Tests" (L475) and the "Available Imports" row for `@3fn/core/testing` (L502) still state the limitation. That is a `governance/` edit, routed by the orchestrator.
 - **Status**: RESOLVED on the fix branch, pending its merge.
+
+### Consumer case — Thurgood's four conditions (2026-10-13, orchestrator run in a side worktree of `fix/jest-preset-shipped-paths`)
+- (a) `@3fn/core` is installed from the packed tarball, never symlinked — satisfied (Lina, `tests/consumer-integration.test.ts` symlink loop skips it).
+- (b) every mapped subpath resolves under the fixture's `node_modules/@3fn/core/dist/`, never the repo tree — satisfied by the mapping assertion (case 2).
+- (c) the output names the symlinked toolchain — applied: the case title reads `(symlinked toolchain: jest 30.2.0, ts-jest 29.4.4, jest-environment-jsdom 30.2.0)`.
+- (d) recorded bite of the case itself: with `src/testing/jest-preset.ts` restored from `fc6d122d4` (the pre-fix preset) and the package rebuilt, `npm run test:consumer -- -t "Release-3 item 2"` → `Tests: 2 failed, 54 skipped, 1 passed` — case 2 red (a mapped path is `src/…`, not `dist/`), case 3 red with `Could not locate module @3fn/core/testing mapped as:` and `Could not locate module @3fn/core/types mapped as:`; exit 1. With the fixed preset: `3 passed`, exit 0.
