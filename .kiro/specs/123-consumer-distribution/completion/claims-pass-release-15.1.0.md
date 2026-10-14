@@ -447,6 +447,200 @@ This is my seat's lapse. RELEASE is the named backstop, so here is the read:
 
 ---
 
+## Phase 2 (2026-10-14) — publish verification, rail, two-registry record, cold-install smoke
+
+**Auditor**: Stacy (a fresh seat; phase 1 was a prior instance of mine).
+**Trigger**: the merge of the step-6 release-record PR, **#351**, squash `6efa3498416eb97d261bef4d7a3c627a01e6250f`, merged 2026-10-14T02:52:20Z by Peter. **This section was drafted after that merge**, on a worktree cut from `origin/main` at `6efa34984`. Every reading of #351's files below is of the merged commit. The merge-confirmation line is at the end of this section, in the required form.
+**Placement**: this section is inserted after phase 1's body and before Appendix A, as 15.0.0's phase 2 was. Phase 1's text is unchanged.
+
+**Standards implications: list — two new items (RS-17, RS-18), and RS-13 evidenced again. § "Phase 2 standards implications" below.**
+
+> No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR. This section gates nothing: #351 and the GitHub release came before it.
+
+### What phase 1 left owed, and the reading
+
+| Owed by phase 1 (open item 1, § "Scope" out-of-scope row) | Reading | Result |
+|---|---|---|
+| Tag `v15.1.0` on S, after phase 1 | `git describe --tags --exact-match e49359e49dc338078669a90aa5b37aa2436b60a4` → `v15.1.0`. `git ls-remote origin`: `refs/tags/v15.1.0` = `f17abf10` (annotated), `^{}` = `e49359e4`. Tagger time 2026-10-14T02:21:03Z, which is after #348 (phase 1) merged at 02:20:43Z | ✅ |
+| Rail result, read from the committed `.txt` (Req 6.7) | `.txt` § 6a at `6efa34984`: `PASS: @3fn/core@15.1.0 visible on npmjs; tarball host verified`, `exit code: 0`. The record leaves out one earlier failing run → **RL-8** | ✅ PASS; record incomplete (RL-8) |
+| 6b two-registry record: all four sha1s equal the 5.3 record | § "The two-registry read" | ✅ `f4dd5caa…` ×4 |
+| Cold-install smoke | § "Cold-install smoke" | ✅ |
+| The notes' fresh-clone sentence (the R-3 class; phase 1 § "The packed artifact", row "built from the root lock, in a fresh clone") | True if 6b's four sha1s equal the 5.3 record, and they do. The 5.3 record names `commit` = S and `source` = the GitHub URL, so it was a fresh clone at the tag. The GitHub release was created at 02:46:50–52Z, after the rail PASS (02:45:18Z) and the 6b reads (02:45:18–02:45:34Z). So step 7's "announce last" held | ✅ |
+| F-4 ARMING of `hermetic-publish-path` at the step-6 PR's merge (open item 2) | **Did not fire: the flip did not land.** At `6efa34984` the row reads `check_state: proposed`, `checks: []` → **RL-7** | ⚠️ RL-7 |
+| A dated line resolving `publish-rail liveness: owed` | below | ✅ |
+
+**`publish-rail liveness: PASS` — read and committed (2026-10-14).** The guard's committed run passed: exit 0, in `docs/releases/15.1.0/publish-verification.txt`, merged in #351 at `6efa34984`. This section was read from the merged commit, and the merge-confirmation line below records that. Req 6.7's record half is met.
+
+### The two-registry read
+
+| | registry.npmjs.org | npm.pkg.github.com |
+|---|---|---|
+| Registry publish time (`time["15.1.0"]`) | `2026-10-14T02:44:42.738Z`. **My read**, 02:56:08Z, neutral temp dir, no `.npmrc` | `2026-10-14T02:35:52Z`. **The orchestrator's measurement** (`.txt` § 6b) |
+| `dist-tags.latest` | `15.1.0` (my read) | — |
+| `dist.shasum` | `f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620` (my read; `integrity` `sha512-9vctj/VZ…wgP4Q==`) | `f4dd5caa…` (the orchestrator's measurement) |
+| Fetched-bytes sha1 | `curl -sL https://registry.npmjs.org/@3fn/core/-/core-15.1.0.tgz` → `shasum` `f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620`, 6,472,478 B, `tar -tzf \| wc -l` 1673. **Also** `npm pack @3fn/core@15.1.0 --registry https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --pack-destination <tmp>` from a neutral dir: exit 0, file written, same sha1, `total files: 1673` | `f4dd5caa…`, 1673 files (the orchestrator's measurement, `npm pack` from the main checkout) |
+| File count | `dist.fileCount` 1673 (my read) | 1673 (the orchestrator's) |
+
+**The GitHub Packages column is not re-verified by me.** The read needs the main checkout's `.npmrc` auth, and this seat does not have it. I did not attempt the auth. I checked that the `.txt`'s GitHub Packages lines match the tool output in the orchestrator's session transcript (`npm view` at 02:42:13Z and 02:45:18Z; `npm pack` at 02:45:18Z; the `time` read at 02:45:34Z). That shows the record copied what was measured. It does not re-measure the registry.
+
+**Against the 5.3 record**: the `.txt`'s pasted JSON equals the operator's `release-publish-record.json`, compared as parsed JSON. I hashed the 5.3 tarball the operator kept: `f4dd5caa2f2801633cf351b8f3ffaaa94f7ff620`. The pasted record shows `commit` `e49359e49…`, `fileCount` 1673, `bytes` 6472478, `checks` 105/105, `createdAt` 02:35:50.410Z. **All four sha1s equal it. One tarball is on both registries. No release incident.**
+
+**The published bytes against the artifact phase 1 audited** (the 5.1 dry-run tarball, sha1 `b972c9d1…`, re-hashed by phase 1):
+- I extracted both. The path sets are **identical**: 1673 each, 0 diff lines.
+- Exactly **3 files differ**, each by one timestamp line: `dist/mcp/tool-manifest.json` (`generatedAt`), `dist/types/generated/TokenTypes.d.ts` and `TokenTypes.js` (`Generated:`).
+- So phase 1's prediction holds: the 5.1-to-5.3 sha1 difference comes from wall-clock stamps only. **Every phase-1 reading of the packed artifact therefore carries over to the published bytes.**
+
+**The release-3 scope sentence**: the string `This release is ready for building web products, … light and dark mode work.` was compared byte-for-byte with `grep -cF`. Each surface has exactly 1 hit:
+- `README.md`, `docs/consumer/INSTALL.md`, `CHANGELOG.md` and `docs/releases/release-15.1.0.md`, at S;
+- the GitHub release body;
+- the packed `README.md`, `CHANGELOG.md` and `docs/consumer/INSTALL.md` in the published bytes.
+
+The GitHub release body, read through the public API (no credentials), is **byte-equal** to `docs/releases/release-15.1.0.md` at S. `gh release view v15.1.0` refused without a token (`gh auth login`), so I used the public endpoint `api.github.com/repos/3fn/DesignerPunk/releases/tags/v15.1.0`: `draft: false`, `prerelease: false`, `published_at` 2026-10-14T02:46:51Z.
+
+### Cold-install smoke
+
+Public registry only. Empty temp dir. No repo `.npmrc`; the user-level `~/.npmrc` has one line and no `@3fn` scope mapping. Run 2026-10-14T02:56Z, node v22.20.0, npm 10.9.3.
+
+```text
+$ cd "$(mktemp -d -t smoke151)" && ls -A          # (empty)
+$ npm init -y
+$ npm install @3fn/core@15.1.0 --registry https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org
+added 123 packages, and audited 124 packages in 2s          (exit 0; 3 low severity vulnerabilities)
+  package-lock: node_modules/@3fn/core → 15.1.0, resolved https://registry.npmjs.org/@3fn/core/-/core-15.1.0.tgz, integrity sha512-9vctj/VZ…wgP4Q== (= the packument's)
+$ npx designerpunk --help        → exit 0, 42 lines ("DesignerPunk Pipeline CLI" … init/attach/sync/generate/validate/mcp:*/figma:*)
+$ npx designerpunk --version     → exit 1, "Unknown command: --version", then the help text  (O-6)
+$ sleep 6 | node node_modules/@3fn/core/dist/mcp/docs-mcp.js
+[MCP Server] Data root steering: <dir>/node_modules/@3fn/core/governance (source: package)
+[MCP Server] Indexing … / Indexing complete / Server started and listening / … Server stopped        (exit 0)
+```
+
+The boot log prints no document count. So I checked the index over JSON-RPC on stdio (initialize, `tools/list`, `tools/call`), using a probe script kept outside the install:
+- **Docs MCP**: 8 tools. `get_index_health` → `healthy`, **83 documents, 2,517 sections, 333 cross-references**, 0 errors, 0 warnings. `get_section("token-governance", "Token Selection Matrix")` returns the section. `find_docs("token selection")` → rank 1 `Product-Token-Governance.md`, `matchConfidence: strong`, resolved inside `node_modules/@3fn/core/governance`.
+- **Application MCP**: 21 tools. Every data root is `(source: package)`; token-index is `(source: package-consume)`. `get_component_health` → `healthy`, 34 components, 9 patterns, 9 guidance families, 4 layout templates, tokens 217 / 193 / 33, `staleFiles: []`. `get_token_details("space100")` → value 8, `--space-100` / `space100` / `space_100`. `find_components("primary action button")` → `Button-CTA` first.
+
+**Reach**: `--help` plus three probed tools per server, on one machine, from public npm. No CLI behaviour (`init`/`generate`/`sync`) was run; phase 1's "Not run" list stands. The section count, 2,517 in the package, is not comparable with the in-repo index (2,849): the corpora differ.
+
+### The other records #351 carried
+
+- **`rebuild_index` on `main` at S** (RL-5's remedy): the `.txt` records it at 02:15:07Z: healthy, 83 / 2,849 / 333. **My indirect read**: this session's docs MCP `get_index_health` (not a withheld verb) reports `lastIndexTime` `2026-10-14T02:15:07.512Z` and 83 / 2,849 / 333. `main` was at S from 01:49:08Z until 846c6d99c at 02:18:07Z, so the index time falls on S. **RL-5 is remedied for this release's run.** Verifying the act itself needs the steward verb, so that stays **Thurgood's** under the carve-out (this is the second encounter, recorded for the carve-out's falsification count). The U3-era run stays "unverifiable, not refuted".
+- **Lina's one-hop line** (RL-3, row 8): **R1 and R5 → Spec 129 by a dated line: landed** (`.kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md` L73). The R2/R4/R6 half was not fixed before the tag; it is re-triggered, and the new trigger has a gap (**RL-10**). The vehicle is outside #351's grant (**RL-9**).
+
+### Phase 2 findings
+
+Two routes for each: an explicit message to the named owner (the orchestrator relays it), and standards implications where noted.
+
+#### RL-7: Low — the `hermetic-publish-path` flip did not land in the PR F-4 named
+
+- **Promised**: ballot `2026-10-03-hermetic-publish-path` § 4 and § 9, F-4 RULED (Peter, 2026-10-03). The row "flips to `armed`, `armed_at: tool-time` in the release-record PR of the FIRST release published under RELEASE-FLOW steps 5–7; that release's 6b record is the live evidence", with the three `checks[]` named. "ARMING read: Stacy, at the flip PR's merge."
+- **Qualifies**: 15.1.0 is that release. 5.3 used the script; 5.4 published the same file, with its shasum checked first; and 6b's four sha1s are equal. Its release-record PR is #351.
+- **Claimed**: nothing claims the flip. #351's body does not mention it. The release grant's "does not cover" section says "15.1.0 needs no governance edit".
+- **Shipped**: #351 touched two files, neither of them the register. At `6efa34984`, `governance/classification-map.md` § `hermetic-publish-path` still reads `check_state: proposed`, `checks: []`.
+- **Impact**: the register under-claims. Nothing reads armed that is not, and the evidence the flip needs is now committed. Low, for that reason. **Phase 1 forecast it** (RL-3 row 1, open item 2), one PR before the vehicle.
+- **ARMING**: not fired. My read is owed at the merge of whichever PR does the flip.
+- **Fork, surfaced, not picked**: (a) F-4's intent is "arm on the first live evidence", so a follow-up PR is within the ruling; (b) F-4 named the vehicle, so a different PR needs Peter's word. **Peter.**
+- **Route**: **Ada** (row owner, the instrument) and **Thurgood** (the register text), for the flip; **Peter** for the fork. → RS-13 (evidenced again).
+
+#### RL-8: Low — the committed 6a record leaves out a failing rail run and says "no guard retry"
+
+- **Promised**: RELEASE-FLOW step 6a: "Paste the **full output, including the exit code**"; "If it fails, read the registry's own record before re-running."
+- **Claimed**: `.txt` § 6a shows one run, PASS, exit 0. § 5.4 says: "read as not-yet-published per step 6, no guard retry".
+- **Shipped**: I read this from the orchestrator's session transcript (harness store, tool-call timestamps):
+  - 02:41:53Z: Peter reports "Published".
+  - **02:42:13Z: `VERSION=15.1.0 ./scripts/verify-publish-rail.sh` → `FAIL[version]: … (HTTP 404)`, `rail exit=10`.**
+  - 02:42:24Z: the packument read shows `latest` 15.0.0 and no `time["15.1.0"]`.
+  - 02:44:36Z: Peter's screenshot of `+ @3fn/core@15.1.0`.
+  - **02:45:18Z: the rail re-run → PASS, exit 0.** This is the run the `.txt` carries.
+  - The registry's own time, `02:44:42.738Z`, is about 2.5 minutes after the failing run. That 404 was the correct answer.
+- **What held**: the handling. The operator read the registry before re-running, and the `.txt`'s reading "not-yet-published" is right (unlike 15.0.0's R-4). The operator's chat called the 404 "that processing window", but that text is not in the record.
+- **What did not hold**: the record. It drops one run and its exit code, and "no guard retry" is inaccurate, because the PASS was the second run. 15.0.0's record pasted all six failing attempts.
+- **Related**: the deviation "`npm pack` against npmjs wrote no file … on two runs" counts that same 02:42:13Z batch, which ran before the version existed. So only one post-publish failure is unexplained (02:45:18Z). My `npm pack` from a neutral dir at 02:56Z wrote the file. Whether npm's packument cache from the 02:42Z read caused the failure is **not tested**.
+- **Impact**: none on the bytes or the verdict.
+- **Route**: **orchestrator** (the `.txt`'s operator): whether to add a dated erratum line to the `.txt` is theirs. → RS-17.
+
+#### RL-9: Low — #351 carried an edit outside the grant it cited
+
+- **Promised**: grant `.kiro/issues/2026-10-14-release-15-1-files-grant.md`. The post-publish record PR's extent is `docs/releases/15.1.0/**`, and "Both PRs cite this file and their path list. **An edit outside the list is a claims-pass finding.**"
+- **Shipped**: #351 also edits `.kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md` (+2/−0). The PR body discloses it as Lina's text, applied by the orchestrator.
+- **Reading**: the content is the act `tasks.md` L236 prescribed ("by a dated line in the issue"), and issues README rule 5 puts outcomes in the file. The cited grant did not admit the vehicle, and the grant's own words make that a finding. It is Low because it was disclosed and is record-only.
+- **Route**: **orchestrator**. → RS-18.
+
+#### RL-10: Low — the new R2/R4/R6 trigger names a grant that does not exist
+
+- **Shipped**: the dated line (L73) reads "New trigger for R2, R4 and R6: Lina's own `fix/` PR, **under this issue's row grant**, merged before release 4's prep opens."
+- **The gap**:
+  - The same file's Status line, at `6efa34984`, says "**no grant**: this file carries no `**Grant paths**:` list".
+  - `tasks.md` L236 planned an issue-row grant over `src/cli/sync/{Migration,Reporter,index}.ts` + tests.
+  - Lina's charter write scope (`src/components/**`, `.kiro/specs/**`, `docs/specs/**`, `application-mcp-server/**`, one guide) does not cover `src/cli/**`.
+  - So the trigger can only be executed once a grant is filed.
+- **Not a finding on the deferral itself**: the 15.1.0 notes disclose R1 and R2.
+- **Route**: **Lina** (the issue's owner; the text is hers). Filing the grant is her move, under issues README rule 8; activation is Peter's merge.
+
+#### Observations (not findings)
+
+- **O-5**: the docs MCP writes `mcp-server/logs/index-state.log` into the **consumer's project root** at boot (seen in the smoke dir). 15.0.0's public bundle carries the same `mcp-server/logs` path. It is already tracked at `.kiro/issues/2026-10-02-docs-mcp-logs-dir-cwd-relative.md` (Thurgood). This smoke adds the reproduction on the consumer side.
+- **O-6**: `npx designerpunk --version` exits 1. No shipped doc claims it: 0 hits in `README.md`, `INSTALL.md`, `CHANGELOG.md` and the notes, at S.
+- **O-7**: the `.txt`'s GitHub Packages `npm pack` excerpt has a line `npm notice 6.0kB dist/3fn-core-15.1.0.tgz`. No file in the package matches it: the published bytes (sha1 `f4dd5caa…`) contain 0 `.tgz` entries (my `tar -t`). Most likely, stderr and stdout interleaved. Cosmetic.
+- **O-8**: a packument read at 02:44:44–46.991Z had no `time["15.1.0"]`, though the registry's own time is `02:44:42.738Z`. The next read, at 02:44:55Z, had it. So for a few seconds after a publish, "no time key" does not prove "not published". Step 6's diagnostic held for the 02:42Z run, which was 2.5 minutes earlier. Not an RS at seconds scale; noted in case it recurs.
+
+### Phase-1 open items — status now
+
+| # | Item | Now |
+|---|---|---|
+| 1 | Phase 2 | **CLOSED** (this section) |
+| 2 | F-4 ARMING of `hermetic-publish-path` | **not fired**: the flip did not land → RL-7; the read is owed at the flip PR's merge |
+| 3 | J blind seats | unchanged (owed) |
+| 4 | `Peter sample (Stacy-signed): 0 / 5` | unchanged |
+| 5 | RL-1 | unchanged |
+| 6 | RL-3's nine obligations | 1 of 9 partly closed: Lina's R1/R5 → 129 line landed (R2/R4/R6 re-triggered, RL-10). Item 6 (`publish-rail-guard` row text) still open. Ada's publish-path issue + grant, RL-4's adaptations lines and Thurgood's subtask docs are named in the `.txt` as owed in a follow-up records PR |
+| 7 | RL-4, RL-5, RL-6 | RL-5 **remedied for this release's run** (above; verification Thurgood's); RL-4 and RL-6 unchanged |
+| 8–10 | J divergents, RS-3/14, RS-4, O-1 of 15.0.0 | unchanged |
+| new | RL-7 … RL-10 | as routed above |
+
+### Phase 2 counting block (delta)
+
+- The release delta is fixed at S (`v15.0.0..S`). Phase 2 adds **no parents, no subtasks and no signing acts**. Every phase-1 count stands.
+- **Orchestrator consult line**: #351's diff (`docs/releases/**`, `.kiro/issues/**`) touches no trigger surface. It carries `**Consulted**: none needed — …` anyway. Population unchanged (18), and the `none needed`-on-trigger-surface count is unchanged (1).
+- **Re-grounding dispositions, delegated-tier, instruments**: no new population.
+- **M3 / M4 / M5**: unchanged.
+- **Carve-out data**: the steward-verb-gated claims encountered so far are RL-5 at phase 1 and this release's `rebuild_index` record. No invocation of the exclusion by Thurgood is recorded.
+- **Method fraction (phase 2)**: of the 10 readings in the `.txt`'s 6b block, I re-measured the 5 npmjs ones (time, latest, `dist.shasum`, bytes sha1, count). The 5 GitHub Packages ones are the orchestrator's measurement, cross-read against the transcript.
+
+### Phase 2 method
+
+**Run by me**:
+- `git describe` / `ls-remote` / `cat-file` on the tag;
+- the npmjs packument and the tarball fetch (`shasum`, `tar -t`), plus `npm pack` from a neutral dir;
+- the hash of the operator's 5.3 tarball, and the parsed-JSON compare of the 5.3 record against the `.txt`;
+- extraction and diff of the published bytes against phase 1's 5.1 tarball;
+- the scope-sentence `grep -cF` on four files at S, the release body and three packed files;
+- the GitHub release read via the public API;
+- the PR #351 head and file blobs via the public API;
+- the cold-install smoke and the two JSON-RPC probes;
+- the 15.0.0 public bundle's `mcp-server/logs` string;
+- docs MCP `get_index_health` in this session;
+- Lina's write scope read from `canonical/agents/lina.md`;
+- reads of the transcript for 6a/6b and step-7 timestamps.
+
+**Read, not re-run**: the GitHub Packages registry (auth); the 5.3 and 5.4 publish runs (Peter's terminal for 5.4); the `rebuild_index` act itself (steward verb).
+
+**Not run**: CLI behaviour beyond `--help`/`--version`; the root suite; any native toolchain (none involved).
+
+**Disclosures**:
+- The `.txt` and its evidence are the orchestrator's. I verify their claims and do not author them.
+- One `git fetch origin refs/tags/v15.1.0:refs/tags/v15.1.0` ran in this worktree. It writes to the shared repo's tag ref. If the tag was already there locally, the fetch changed nothing; either way the local ref now equals `origin`'s (`f17abf10`). It is my only git write besides this file's edit, and I name it because the brief said no git writes.
+
+### Phase 2 standards implications
+
+- **RS-13, evidenced again** (RL-7). A ruled act was bound to a PR whose content is defined by RELEASE-FLOW step 6 and whose grant was drafted at release-prep. Neither text carries the flip, so the vehicle's operator never met it, and the grant's "does not cover" line asserted the opposite. Same class as RL-3. **Owner**: Thurgood, with Peter.
+- **RS-17**: RELEASE-FLOW step 6a says "the full output, including the exit code". It does not say whether earlier failing runs before the PASS are part of that output. 15.0.0 pasted all six; 15.1.0 pasted the last (RL-8). The 15.0.0 R-4 class lives in exactly those earlier runs. **Owner**: Thurgood (RELEASE-FLOW step 6). I name the gap and do not draft the text.
+- **RS-18**: issues README rule 5 records an outcome "IN the file". A grant's "an edit outside the list is a claims-pass finding" binds the PR that cites it. Is a dated outcome line in an issue file, carried by a PR whose grant does not list that file, a grant breach or a record act that needs no grant (RL-9)? The README does not say. **Owner**: Thurgood.
+
+### Merge-confirmation (#351)
+
+**Merge**: #351, head `3399062abbb1580bd294cdf1641b179f7b6833fc` (1 commit), squash `6efa3498416eb97d261bef4d7a3c627a01e6250f`, 2026-10-14T02:52:20Z. **Read SHA**: `6efa3498416eb97d261bef4d7a3c627a01e6250f` (this section was drafted after the merge). **Every file phase 2 read from that PR**: `docs/releases/15.1.0/publish-verification.txt`, `.kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md`. `git diff --quiet 6efa34984 6efa34984 -- docs/releases/15.1.0/publish-verification.txt .kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md` → exit 0 (trivially: the read SHA is the merge SHA). **Independently**, the PR head's blobs (public API, `pulls/351/files`) equal the merged blobs: `94772678…` (`.txt`) and `df944caf…` (issue file). **No merged file differs from the read.** No phase-2 reading changes. **`publish-rail liveness: PASS — read and committed.`**
+
+---
+
 ## Appendix A — signing-act walk, per-act lines (verbatim; the human-readable section of each run; the `--- machine-readable ---` JSON tail omitted)
 
 ```text
