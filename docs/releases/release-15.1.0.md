@@ -88,7 +88,7 @@ All from the onboarding unit (#321, Spec 123 Tasks 19–22) unless marked.
 3. **`npx designerpunk sync`, in a terminal.**
    - It refreshes the generated agent files: the Kenya/Data and Kiro changes above arrive this way.
    - It **offers DesignerPunk's `.gitignore` block** (default no) if git is not ignoring `.designerpunk/`. Off a terminal it prints the fix and writes nothing.
-   - **It creates the personal note if absent, even without a terminal and without `--apply`.** That is one exception to 15.0.0's "off a terminal, `sync` writes nothing unless you pass `--apply`". `--dry-run` still writes nothing.
+   - `sync` creates your personal note (`.designerpunk/personal-note.local.md`) when it is absent, even off a terminal without `--apply`. It is a local file that DesignerPunk never manages or overwrites, and `--dry-run` still writes nothing. Everything `sync` manages still waits for `--apply` off a terminal. This is a stated carve-out (design C26) from 15.0.0's rule that `sync` writes nothing off a terminal without `--apply`.
 4. **Jest**: a config that spreads the preset the way `init` writes it (`...require('@3fn/core/jest-preset')`) picks up the fixed mappings with no change. A config that sets its own `moduleNameMapper` after the spread replaces the preset's and keeps working as before, without the fix. To get the fix there, spread `require('@3fn/core/jest-preset').moduleNameMapper` into yours.
 5. **Restart your agent session** so it reloads the regenerated agents and MCP servers.
 
