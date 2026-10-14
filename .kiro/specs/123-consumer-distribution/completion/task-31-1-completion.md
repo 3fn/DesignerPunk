@@ -12,6 +12,8 @@
 - **Regenerated** with `npx tsx tools/agent-generator/generate.ts` ("wrote 387 files across 10 guarded roots"; the real tree, in place). **The diff guard was not run** (its full run writes the lock; the refresh is 31.4's).
 - **Tests**: `consumer-rendering.ground-truth-spans.test.ts` updated (the container text per target) and +2 cases: (a) the twin render has exactly one blank line before the Kiro heading, held by the container span (`'\n## Ground truth\n\n'`), the preceding `#kept` body span unchanged (ends in a single `\n`); (b) the COMMITTED consumer output: every Kiro container opens with the blank line (kenya, data, lina = 3), every CC one does not, and no Kiro `#what-you-dont-own` span ends in a blank line.
 
+**Application-time adaptations** *(appended 2026-10-14, Lina; Stacy's 15.1.0 RELEASE pass, RL-4)*: none. The `render.ts` and `adapters/kiro.ts` edits, the regeneration and the tests followed Task 31's plan and Thurgood's wording verbatim; the diff guard was left unrun because its full run writes the lock, and the lock refresh is 31.4's.
+
 ## The freshness stale list after the edit (criterion C4) — `runFreshnessSweep`, 2 findings
 
 ```

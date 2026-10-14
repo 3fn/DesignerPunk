@@ -70,4 +70,19 @@ All three have the same **trigger**: the next `src/cli/sync/**` change under any
 
 Record each item's outcome here, dated, as it resolves. Archive the file when every item has a recorded outcome (`.kiro/issues/README.md` rule 5).
 
-*(2026-10-14, Lina; lapse recorded by Stacy's 15.1.0 RELEASE pass, RL-3)* **R1 and R5 move to Spec 129.** R2, R4 and R6 were not fixed before the 15.1.0 tag. The 15.1.0 notes disclose R1 and R2 as known limitations. **New trigger for R2, R4 and R6**: Lina's own `fix/` PR, under this issue's row grant, merged before release 4's prep opens.
+*(2026-10-14, Lina; lapse recorded by Stacy's 15.1.0 RELEASE pass, RL-3)* **R1 and R5 move to Spec 129.** R2, R4 and R6 were not fixed before the 15.1.0 tag. The 15.1.0 notes disclose R1 and R2 as known limitations. **New trigger for R2, R4 and R6**: Lina's own `fix/` PR, under the `**Grant paths**:` list below (activated by Peter's merge of the records PR that adds it), merged before release 4's prep opens. *(Corrected 2026-10-14 — RL-10 of the 15.1.0 RELEASE pass, phase 2: the earlier clause cited a row grant this issue never had.)*
+
+## Grant (added 2026-10-14, Lina's list; activated by Peter's merge of the follow-up records PR; expires at the fixing PR's merge)
+
+**Grant paths** (R2, R4, R6 only; R1 and R5 are Spec 129's):
+- `src/cli/sync/Migration.ts` (R2 (a) judge the installed version first and (b) report a registry-auth failure once; R6 the per-version "cannot tell" lines)
+- `src/cli/sync/PackageResolver.ts` (R2 (a): read the installed `node_modules/@3fn/core` version)
+- `src/cli/sync/NameContract.ts` (R2: it shares the fetcher, cache first, and its `cannot tell` line)
+- `src/cli/sync/Reporter.ts` (R4: the apply-run report states the post-apply result)
+- `src/cli/sync/index.ts` (R4: report/apply ordering; the legacy manifest's "moves" line)
+- `src/cli/sync/Manifest.ts` (R4: the legacy `.kiro/sync-manifest.json` is moved or the message stops saying it is)
+- `src/cli/shared/errorCatalog.ts` (the new auth-failure row and the condensed cannot-tell row)
+- `src/cli/__tests__/{sync.migration,sync.catalog,sync.name-contract,sync,errorCatalog}.test.ts`, `src/cli/__tests__/syncTestKit.ts`, `src/cli/__tests__/fixtures/sync/**`
+- `CHANGELOG.md` (one consumer-facing `### Fixed` line)
+
+Left out on purpose: `canonical/generated.lock` (`src/cli` is not a diff-guard input-closure root, so the lock does not move); the `design.md` catalog rows these strings mirror (Thurgood's — errata with Lina's strings, as for release-3 item 8). Uncertain whether R2 (a) needs `PackageResolver.ts` or fits inside `Migration.ts`; listed so the PR does not stop halfway for a grant. An out-of-list edit is a claims-pass finding.
