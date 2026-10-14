@@ -157,6 +157,8 @@ elif platform file + tests exist and reviewed == true:
 
 **Compliance test**: Validates that for every component × platform combination, the indexer's derived status matches what the filesystem scan would produce. Runs as part of `npm test`.
 
+> **Implementation Note (2026-10-13, release-3 ruling item 5; Lina)**: In a consumer install, the scan above cannot run on DesignerPunk's own components. The package ships each component's schema, contracts, meta and native sources, but not its web source, `types.ts` or tests (`package.json` `files`). So the scan read every packaged component as web `not-started` and native `scaffold` (#312 finding 8). This decision's exclusion of `node_modules/` from the scan now has a defined replacement. For a component loaded from a path under `node_modules/`, the indexer serves the readiness this scan produced in the DesignerPunk repository, recorded at `application-mcp-server/src/indexer/packageReadiness.generated.ts` and bundled with the Application MCP. Every other component, including a consumer's own components and forks, is still derived from its files by the logic above. `PackageReadiness.test.ts` fails when the record differs from a fresh scan of `src/components/core`, and reproduces the consumer condition on Nav-TabBar-Base. The status vocabulary and the derivation logic are unchanged.
+
 ### Decision 5: Knowledge Base Configuration
 
 **Requirement**: Req 6

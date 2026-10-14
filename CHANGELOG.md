@@ -35,6 +35,7 @@ This is the third planned entry in the plan's numbering ("Release N" labels the 
 - **`init` in a born repo says what is true.** Its refusal now reads "fill in your personal note (generate creates it; your agent can walk you through it)", and `generate` does create it. In 15.0.0 the same sentence promised a file `generate` did not write.
 - **`init` wrote a `product/overview.yaml` the Product MCP could not read** (a Markdown-shaped file that is not valid YAML, so the Product MCP indexed nothing). It now writes a valid overview.
 - **Customize note in `init`'s output:** it no longer says the validator warns when your tokens break their mathematical relationships during `generate`. `generate` does not check them, and `validate`'s check for them currently fails even on unmodified token source (a known defect in the checker, not in your tokens).
+- **The Application MCP reports DesignerPunk's components at their real readiness in your project.** It read every DesignerPunk web component as `not-started` (and the native ones as `scaffold`), because the package does not ship the source files and tests that readiness is worked out from. It now reports the readiness DesignerPunk recorded when the package was built. Components in your own `src/components/` are still read from your files.
 
 ### Known limitations in this release
 
