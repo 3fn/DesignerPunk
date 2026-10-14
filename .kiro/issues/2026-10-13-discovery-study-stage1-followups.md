@@ -32,7 +32,7 @@
 |---|---|---|---|
 | 10 | `cd mcp-server && npx jest` run in PARALLEL fails intermittently: `token-efficiency.test.ts` and `performance.test.ts` both delete the shared `mcp-server/test-fixtures` dir and race (`ENOTEMPTY`); `--runInBand` passes 39/660. Pre-existing; unrelated to aliases. | **Thurgood** (test-suite health) | isolate the fixture dir per suite or serialize the two; CI lane check |
 
-| 11 | **Components tokenizer has the "iOS" defect too**: `tokenizeString` (application-mcp-server/src/indexer/ComponentIndexer.ts L129–141) camelCase-splits "iOS" → `i`+`os`. Found by Thurgood designing the docs indexer fix (2026-10-13). | **Lina** | duplicate the versioned atoms list (iOS, iPadOS, macOS, tvOS, watchOS, iPhone, iPad) with cross-citing headers (the scorer precedent); own PR; her alias/calibration suite as the re-run |
+| 11 | **Components tokenizer has the "iOS" defect too**: `tokenizeString` (application-mcp-server/src/indexer/ComponentIndexer.ts L129–141) camelCase-splits "iOS" → `i`+`os`. Found by Thurgood designing the docs indexer fix (2026-10-13). | **Lina** | duplicate the versioned atoms list (iOS, iPadOS, macOS, tvOS, watchOS, iPhone, iPad) with cross-citing headers (the scorer precedent); own PR; her alias/calibration suite as the re-run. **LANDED #328** (atoms twin). **RULED 2026-10-13 (Peter): keep the twins, Option A with Lina's split** — atoms a bound, guarded twin; stop words a seeded fork with a review pin; extraction deferred to the class charter `2026-10-13-mcp-shared-code-class-charter.md` |
 
 ## From the indexer fix (#325, findings § 7) — routed
 | # | Item | Owner | Action / trigger |
