@@ -4,9 +4,16 @@
  * OWNERSHIP: docs domain (Thurgood). The docs `find_docs` rubric is the one that
  * gates the `partial`/`none` tier line on "zero salient-token matches **after
  * stop-word + common-term normalization**" (discovery-confidence-rubric.md, Docs
- * rubric). Centralizing the list here keeps that tier boundary from drifting
- * silently across tools. The application MCP MAY consume `STOP_WORDS` as **data**
- * (not logic) so the two discovery surfaces share one normalization vocabulary.
+ * rubric). Versioning the list here keeps that tier boundary from drifting silently.
+ *
+ * COMPONENTS LIST = A SEEDED FORK, NOT A SHARED VOCABULARY (Peter, 2026-10-13):
+ * `application-mcp-server/src/indexer/termNormalization.ts` (components domain, Lina)
+ * owns its WHOLE stop-word list; this list is only its origin. Her review pin
+ * `REVIEWED_DOCS_STOP_WORD_LIST_VERSION` fails her required lane on any bump of
+ * `STOP_WORD_LIST_VERSION` until she reviews the change (taking it or declining it).
+ * A removal or addition here is not drift for her. A decline fires the class
+ * charter's trigger 3: `.kiro/issues/2026-10-13-mcp-shared-code-class-charter.md`.
+ * Twin of this file's sibling: `token-atoms.ts` (atoms are a BOUND twin, not a fork).
  *
  * LEGIBLE KNOB, NOT AN OPAQUE WEIGHT (Req 6.7): this list is a tunable knob.
  * Adding/removing a term predictably moves queries between tiers — a query whose
@@ -26,6 +33,9 @@
  *       auxiliaries, common interrogatives/quantifiers). No terms added or
  *       removed vs. the Task-3 inline set — pure relocation + versioning, so the
  *       `partial`/`none` line is unchanged by the extraction itself.
+ *   (2026-10-13, header only — NO version bump, list unchanged): ownership note rewritten
+ *       for the seeded-fork ruling (Peter, 2026-10-13; charter
+ *       `.kiro/issues/2026-10-13-mcp-shared-code-class-charter.md`, § 1 and § 6).
  */
 
 /** Semantic version of the stop-word list. Bump on any change to STOP_WORDS. */

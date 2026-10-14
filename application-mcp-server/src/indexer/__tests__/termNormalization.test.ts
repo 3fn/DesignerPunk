@@ -3,31 +3,39 @@
  * @see ../termNormalization.ts
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
 import {
   COMPONENT_STOP_WORDS,
   COMPONENT_STOP_WORD_LIST_VERSION,
+  REVIEWED_DOCS_STOP_WORD_LIST_VERSION,
   foldPlural,
   normalizeTerms,
 } from '../termNormalization';
 import { tokenizeForMatch, tokenizeString, splitConceptKey } from '../ComponentIndexer';
 
-const DOCS_STOP_WORDS_PATH = path.resolve(__dirname, '../../../../mcp-server/src/query/stop-words.ts');
+/** Shape-only view of the docs module — no logic, avoids a typed cross-sub-package import. */
+interface DocsStopWordsModule {
+  STOP_WORD_LIST_VERSION: number;
+}
+
+/**
+ * The REAL docs module, loaded from its TS source (ts-jest transpiles outside this package's
+ * rootDir). An untyped `require`, not an `import`: this package's tsconfig compiles `__tests__`.
+ */
+function loadDocsStopWords(): DocsStopWordsModule {
+  return require('../../../../mcp-server/src/query/stop-words') as DocsStopWordsModule;
+}
 
 describe('components stop-word list', () => {
   it('is versioned', () => {
     expect(COMPONENT_STOP_WORD_LIST_VERSION).toBe(1);
   });
 
-  it('DRIFT GUARD: contains every word of the docs list it was copied from (mcp-server stop-words.ts)', () => {
-    // Copied, not imported (rootDir boundary). If the docs list grows, this fails until the
-    // copy is refreshed and COMPONENT_STOP_WORD_LIST_VERSION is bumped.
-    const src = fs.readFileSync(DOCS_STOP_WORDS_PATH, 'utf-8');
-    const setBody = src.slice(src.indexOf('new Set<string>(['), src.indexOf(']),'));
-    const docsWords = Array.from(setBody.matchAll(/'([a-z]+)'/g)).map(m => m[1]);
-    expect(docsWords.length).toBeGreaterThan(40);
-    for (const w of docsWords) expect(COMPONENT_STOP_WORDS.has(w)).toBe(true);
+  it('REVIEW PIN: the last docs version reviewed here equals the docs STOP_WORD_LIST_VERSION', () => {
+    // SEEDED FORK (Peter, 2026-10-13): the lists are NOT asserted equal — a docs removal or
+    // addition is not drift. A docs version bump fails here until this side reviews the change
+    // and moves REVIEWED_DOCS_STOP_WORD_LIST_VERSION, whether or not the change is taken
+    // (see the termNormalization.ts header).
+    expect(REVIEWED_DOCS_STOP_WORD_LIST_VERSION).toBe(loadDocsStopWords().STOP_WORD_LIST_VERSION);
   });
 
   it('covers the function words named in the defect record reproductions', () => {
