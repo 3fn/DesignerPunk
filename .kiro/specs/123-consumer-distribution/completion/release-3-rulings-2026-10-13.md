@@ -1,0 +1,23 @@
+# Release-3 rulings — 2026-10-13
+
+**Written by**: the orchestrator (the record of Peter's rulings; owners execute)
+**Ruled by**: Peter Michaels Allen, in chat, 2026-10-13 — "All as recommended", answering the eleven items below as put to him
+**Context**: U3 (#321) merged; U3g (#313) merged with a HOLDS cycle-2 verdict; the publishing hold is lifted by that verdict. These rulings settle what happens before the release-3 tag. They are rulings, not plan amendments: each owner records the dated amendment or issue update in their own PR.
+
+| # | Item | Ruling | Owner · vehicle |
+|---|---|---|---|
+| 1 | `generate` prints ✅ and exits 0 after an override-validation abort, and rewrites `token-index/` without its theme-varying data (`.kiro/issues/2026-10-03-generate-reports-success-after-validation-abort.md`, exit code verified by run 2026-10-12) | **Fix before the release-3 tag** | Ada · its own `fix/` PR |
+| 2 | The Jest preset maps `@3fn/core/blend\|types\|testing\|config` to unshipped `src/**/index.ts` (`2026-10-03-jest-preset-maps-unshipped-source.md`; reproduced in a packed install) | **Fix before the tag** | Lina (Ada on `files[]`) · its own `fix/` PR |
+| 3 | `generate` output carries wall-clock stamps in ten files, so committed output never matches a fresh run (`2026-10-03-generate-output-not-deterministic.md`) | **Fix before the tag** (drop the stamps; Ada picks among her three options in the PR) | Ada · its own `fix/` PR |
+| 4 | `validate` exits 1 on unmodified token source (102 mathematical-relationship errors; `2026-06-24-mathematical-relationship-parser-validation-gaps.md` + addendum) | **Known limit**, stated in the release-3 notes; the checker fix is its own later piece | Ada · release-3 notes (22.4's CHANGELOG entry already carries it under Known limitations) |
+| 5 | Application MCP readiness reads `not-started` for every web component in a consumer (readiness derived from file presence; the package ships no web source — #312 finding 8, Lina) | **Fix before the tag** | Lina (indexer) with Ada (packaging) · its own `fix/` PR, with a dated note where readiness is specified |
+| 6 | Where the fixes go | **Separate small PRs**, not inside U4 or U5 | each owner |
+| 7 | The native build-claim strings: the guide reads "No iOS build was run." / "no Android build has been run"; the plan's strings were `not built in this amendment` / `not build-verified — no Android toolchain has been run` (Task 19 C15 ⚠️; Kenya fork F, Data C-5) | **Keep the guide's plain wording**; the plan's strings are dropped by a dated note under Task 19's criterion | Thurgood · dated tasks.md note (rides the next 123 records PR) |
+| 8 | `sync` reports "markers missing" on every run for a `.gitignore` block someone removed on purpose; the remedy that works today (list `.gitignore` in `.designerpunkignore`) is not named in the row | **Name the remedy in the message** (the `.gitignore` form of the markers-missing row; design catalog row amended) | Lina (string) · Thurgood (design row) · rides fix PR 2 or 5 |
+| 9 | `init` requires `--name`/`--abbreviation` off a TTY; should it default them (#312 finding 2)? | **No.** The install-doc fix (step 2 names both flags, U3 `cee395d72`) is enough; a silent default could bake a bad abbreviation into every generated identifier | — (closed; #312 finding 2 dispositioned) |
+| 10 | RS-1 — the signing-act ballot erratum that would let a re-sign *close* a divergent | **Carried**, as done in U3c and U3g: every re-sign was a new act; divergents 5, 6, 8, 9 remain carried by name to release 3's RELEASE pass. Thurgood lands RS-1 when he next touches the ballot | Thurgood |
+| 11 | The two native consumer profiles never say native onboarding is unsupported (`2026-10-12-consumer-profile-native-scope-gaps.md`, Leonardo's fork) | **Add the one line to each overlay now**, in the same PR batch as the fixes (a re-sign round for Kenya and Data; the class option — the scope sentence once in an always-loaded member — goes to Spec 129) | Thurgood (profile author) with Leonardo's wording; Kenya and Data re-sign |
+
+**Sequencing**: the fix PRs (1, 2, 3, 5, 8, 11) land before release-3 prep opens; release-3 prep then runs under the hermetic publish path with Stacy's RELEASE claims pass at the tag. Nothing here reopens U4 (content policy), which starts now from `main`.
+
+**Consulted** (before the items were put to Peter): Ada — items 1, 3, 4 (her records); Lina — items 2, 5, 8, 9 (her investigations and #312 read); Thurgood — item 7 context, item 10; Leonardo — item 11 (his lean); Kenya and Data — item 7 (their preference for the guide's wording).
