@@ -27,7 +27,7 @@
 - it rests on **undocumented compiler behaviour** (a JSON import from outside `rootDir`) in a project whose named recurring failure is module resolution — a TypeScript upgrade would break it loudly, but nothing sanctions it;
 - it **cannot carry logic** (`protectAtoms`, `TokenRefResolver` stay where they are) and has no comment header, so the legible-knob header and changelog must live in a TS wrapper or JSON fields;
 - it adds a **third cross-boundary pattern** beside the dist-require (`mcpDataRoots`) and the text-parse (`SemanticOverrideReader`).
-- Precondition if adopted: a required-lane typecheck of BOTH sub-packages (today CI builds only `mcp-server`; `application-mcp-server`'s tsc runs in no lane), so "breaks loudly" is true on both sides.
+- Precondition if adopted: both consuming sub-packages' tsc builds must run in a required context, so "breaks loudly" is true on both sides. Today they do (verified 2026-10-13, correcting the consult's round-1/2 claim that `application-mcp-server`'s tsc runs in no lane): `mcp-server` builds in `lane-functional-root`, and `application-mcp-server` builds in the required `125B-tool-boot-smoke` context (`.github/workflows/tool-boot-smoke.yml`) and in `122-setup` (`.github/workflows/agent-generator.yml`). The spec confirms this still holds, and adds `product-mcp-server` if it becomes a consumer.
 
 ## 2. The class
 
@@ -50,7 +50,12 @@
 
 ## 4. Interim rules (Ada; binding until the spec fires)
 1. **No new cross-boundary consumer.** No new module or data file is consumed across an MCP sub-package boundary — by any pattern — before this charter fires; a new need of that kind IS trigger 1.
-2. **Cross-boundary requires are bare.** esbuild silently keeps an unresolved `require` inside try/catch as a runtime require, so a forgotten `build:mcp-shared` entry ships a silent fallback instead of a build failure. Any cross-boundary require added or edited under an exception must not be wrapped in try/catch. The three existing entry-point requires of `../../dist/cli/shared/*` (`mcp-server/src/index.ts` L413; `application-mcp-server/src/index.ts` L701–703) sit inside try/catch with a defaults fallback by design (Spec 121 F-C2); they are **grandfathered** and are the live instances of this hazard the spec must address.
+2. **Cross-boundary requires are bare.** esbuild silently keeps an unresolved `require` inside try/catch as a runtime require, so a forgotten `build:mcp-shared` entry ships a silent fallback instead of a build failure. Any cross-boundary require added or edited under an exception must not be wrapped in try/catch. The **seven** existing entry-point requires of `../../dist/cli/shared/*`, across **three** files, sit inside try/catch with a defaults fallback by design (Spec 121 F-C2); they are **grandfathered** (reading confirmed by Ada) and are the live instances of this hazard the spec must address:
+   - `mcp-server/src/index.ts` L413 (`mcpDataRoots`);
+   - `application-mcp-server/src/index.ts` L701–703 (`mcpDataRoots`, `bornRepo`, `errorCatalog`);
+   - `product-mcp-server/src/index.ts` L605–607 (`mcpDataRoots`, `bornRepo`, `errorCatalog`) (all lines verified 2026-10-13).
+
+   **Coverage gap: the product server's three are the sharpest live instance** (Ada). The isolated-cwd boot smoke (`tests/mcp-boot-smoke.test.ts`) proves the docs and application fallbacks are NOT taken, because it asserts a non-empty index. But it treats an empty product index as expected ("starting with empty data"), so a silent fallback in the product server would still pass. The spec closes this first.
 
 ## 5. Later — when a trigger fires
 A **multi-unit spec** (Ada / Lina / Thurgood; rough cost 3–5 parents, 2–4 sessions) choosing the shared build unit or policy and migrating the class members, plus a **ballot amending the Module-Resolution Contract** (`rosetta-system-architecture` § "Module-Resolution Contract (Spec 118)") to name the sanctioned crossing pattern(s). It must ratify or retire § 1's pre-vetted JSON shape and decide the grandfathered try/catch requires (§ 4.2).
