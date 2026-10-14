@@ -44,8 +44,8 @@ const CHANGELOG = read('CHANGELOG.md');
 /** The release-3 entry: from its heading to the next `## [` heading. */
 const RELEASE_3_ENTRY = (() => {
   const lines = CHANGELOG.split('\n');
-  const start = lines.findIndex((l) => /^## \[Unreleased\] — planned Release 3\b/.test(l));
-  if (start < 0) throw new Error('CHANGELOG.md has no "## [Unreleased] — planned Release 3" entry');
+  const start = lines.findIndex((l) => /^## \[15\.1\.0\] — \d{4}-\d{2}-\d{2} — Release 3\b/.test(l));
+  if (start < 0) throw new Error('CHANGELOG.md has no "## [15.1.0] — <date> — Release 3" entry');
   const end = lines.findIndex((l, i) => i > start && /^## \[/.test(l));
   return lines.slice(start, end < 0 ? undefined : end).join('\n');
 })();
@@ -397,8 +397,8 @@ describe('scope sentence (C14 — install doc and README; the CHANGELOG from 22.
 
 describe('release-3 CHANGELOG entry (Task 22.4)', () => {
   it('there is exactly one planned-Release-3 entry, above 15.0.0, and releases are not renumbered (the label rule)', () => {
-    expect(CHANGELOG.split('\n').filter((l) => /^## \[Unreleased\] — planned Release 3\b/.test(l))).toHaveLength(1);
-    expect(CHANGELOG.indexOf('## [Unreleased] — planned Release 3')).toBeLessThan(CHANGELOG.indexOf('## [15.0.0]'));
+    expect(CHANGELOG.split('\n').filter((l) => /^## \[15\.1\.0\] — \d{4}-\d{2}-\d{2} — Release 3\b/.test(l))).toHaveLength(1);
+    expect(CHANGELOG.search(/^## \[15\.1\.0\] — \d{4}-\d{2}-\d{2} — Release 3\b/m)).toBeLessThan(CHANGELOG.indexOf('## [15.0.0]'));
   });
 
   it('carries the G2 treatment matched to the HOLDS verdict: CHANGELOG-HOLDS, byte-equal to g2-cycle-2-consequence-texts.md § 5, and not CHANGELOG-LIFTED', () => {
