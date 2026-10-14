@@ -37,11 +37,11 @@ This is the third planned entry in the plan's numbering ("Release N" labels the 
 - **Customize note in `init`'s output:** it no longer says the validator warns when your tokens break their mathematical relationships during `generate`. `generate` does not check them, and `validate`'s check for them currently fails even on unmodified token source (a known defect in the checker, not in your tokens).
 - **The Jest preset works in an installed package.** `@3fn/core/jest-preset` mapped `@3fn/core/testing`, `/types`, `/blend`, `/config` and `/build` to source files the package does not ship (or ships as raw TypeScript Jest will not compile), so a test importing the shared test utilities, a test of the token source `init` copied into your repo, or a test of a component token file failed with "Could not locate module" or "Must use import to load ES Module". The preset now maps each one to the compiled file the package's exports serve.
 - **`sync`'s "markers missing" message for `.gitignore` says how to silence it.** If you removed DesignerPunk's `.gitignore` block on purpose, add the line `.gitignore` to `.designerpunkignore` and `sync` stops reporting it.
+- **`generate` now fails when your token source fails its own checks.** If a semantic token points at a primitive you don't have, or your source lacks a semantic token that DesignerPunk's dark or WCAG overrides name ("Orphaned override key"), `generate` prints the reason and exits 1. It writes no token files and leaves `token-index/` as it was. Before this fix it printed "✅ System tokens generated", exited 0 (so CI passed), and rewrote `token-index/` with every theme-varying flag lost.
 
 ### Known limitations in this release
 
 - Every `generate` rewrites a timestamp line in each generated file, so committed platform output shows as changed after every run even when no token changed. Compare with the timestamp lines ignored.
-- If your token source lacks a semantic token that DesignerPunk's dark or WCAG overrides name, `generate` reports an "Orphaned override key" and writes no token files, but still prints "✅ System tokens generated" and exits 0. Read the lines above the ✅.
 - `npx designerpunk validate`'s mathematical-relationships check fails even on unmodified token source, so `validate` exits non-zero. It is a defect in the checker, not in your tokens; its other checks are still worth reading.
 
 ## [15.0.0] — 2026-10-02
