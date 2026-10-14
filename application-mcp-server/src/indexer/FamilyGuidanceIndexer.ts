@@ -44,11 +44,18 @@ export class FamilyGuidanceIndexer {
     }
   }
 
-  validateCrossReferences(componentNames: Set<string>, patternNames: Set<string>, projectRoot: string): void {
+  /**
+   * `companionRoots`: the directories a guidance file's `companion:` path may resolve against, in
+   * order; the companion is found if it exists under ANY of them. The caller passes the guidance
+   * data's own root first (the package root in a consumer, where `governance/` ships) — 2026-10-14,
+   * `.kiro/issues/2026-10-03-app-mcp-degraded-companion-paths-in-consumer.md`. A single string is
+   * one root (the pre-fix form, kept for callers and tests that pass one directory).
+   */
+  validateCrossReferences(componentNames: Set<string>, patternNames: Set<string>, companionRoots: string | string[]): void {
+    const roots = Array.isArray(companionRoots) ? companionRoots : [companionRoots];
     for (const [family, guidance] of this.guidance) {
       // Check companion path exists
-      const companionPath = path.resolve(projectRoot, guidance.companion);
-      if (!fs.existsSync(companionPath)) {
+      if (!roots.some((root) => fs.existsSync(path.resolve(root, guidance.companion)))) {
         this.indexWarnings.push(`${family}: companion path not found: ${guidance.companion}`);
       }
 
