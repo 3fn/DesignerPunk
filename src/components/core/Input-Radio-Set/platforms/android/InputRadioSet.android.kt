@@ -134,7 +134,8 @@ private object RadioSetTokens {
  * 
  * InputRadioSet(
  *     selectedValue = selectedPlan,
- *     onSelectionChange = { selectedPlan = it }
+ *     onSelectionChange = { selectedPlan = it },
+ *     accessibilityLabel = "Plan"
  * ) {
  *     InputRadioBase(
  *         value = "basic",
@@ -154,6 +155,7 @@ private object RadioSetTokens {
  * InputRadioSet(
  *     selectedValue = selectedPlan,
  *     onSelectionChange = { selectedPlan = it },
+ *     accessibilityLabel = "Plan",
  *     required = true,
  *     error = true,
  *     errorMessage = "Please select a plan"
@@ -171,6 +173,9 @@ private object RadioSetTokens {
  * 
  * @param selectedValue Currently selected value (controlled)
  * @param onSelectionChange Callback when selection changes
+ * @param accessibilityLabel Accessible name of the group (REQUIRED — contract
+ *   accessibility_radiogroup_role, WCAG 4.1.2). Not rendered visibly; TalkBack
+ *   announces it for the group, e.g. "Theme".
  * @param modifier Additional Compose modifiers
  * @param required Whether a selection is required for validation
  * @param error Error state indicator
@@ -183,6 +188,7 @@ private object RadioSetTokens {
 fun InputRadioSet(
     selectedValue: String?,
     onSelectionChange: (String) -> Unit,
+    accessibilityLabel: String,
     modifier: Modifier = Modifier,
     required: Boolean = false,
     error: Boolean = false,
@@ -202,8 +208,11 @@ fun InputRadioSet(
             // @see Requirement 9.9 - TalkBack announces group context
             // selectableGroup() tells TalkBack this is a group of selectable items
             // (the Compose equivalent of role="radiogroup")
+            // Group name (contract accessibility_radiogroup_role): TalkBack announces
+            // what the choice is, beside the selectableGroup() role equivalent.
             .semantics {
                 selectableGroup()
+                contentDescription = accessibilityLabel
             }
     ) {
         // Error message display
@@ -269,7 +278,8 @@ fun InputRadioSetPreview() {
         var selectedBasic by remember { mutableStateOf<String?>("option-b") }
         InputRadioSet(
             selectedValue = selectedBasic,
-            onSelectionChange = { selectedBasic = it }
+            onSelectionChange = { selectedBasic = it },
+            accessibilityLabel = "Options"
         ) {
             InputRadioBase(
                 value = "option-a",
@@ -305,6 +315,7 @@ fun InputRadioSetPreview() {
         InputRadioSet(
             selectedValue = selectedError,
             onSelectionChange = { selectedError = it },
+            accessibilityLabel = "Confirm",
             required = true,
             error = true,
             errorMessage = "Please select an option"
@@ -332,6 +343,7 @@ fun InputRadioSetPreview() {
         InputRadioSet(
             selectedValue = selectedLarge,
             onSelectionChange = { selectedLarge = it },
+            accessibilityLabel = "Plan",
             size = RadioSize.Large
         ) {
             InputRadioBase(

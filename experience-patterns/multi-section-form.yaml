@@ -50,6 +50,7 @@ steps:
                 role: form-field
                 hints:
                   label: "Mutually exclusive choice (e.g., age range, category)"
+                  accessibilityLabel: "Required group name: the question the choice answers (e.g., \"Age range\")"
                 children:
                   - component: Input-Radio-Base
                     role: radio-option

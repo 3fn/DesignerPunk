@@ -51,9 +51,11 @@ describe('Input-Radio-Set Web Component', () => {
     cleanupDOM();
   });
 
-  // Helper to create a radio set with child radios
+  // Helper to create a radio set with child radios.
+  // Every set gets an accessible name by default (contract accessibility_radiogroup_role);
+  // pass { 'accessibility-label': null } to create one without it.
   async function createRadioSet(
-    setAttrs: Record<string, string> = {},
+    attrs: Record<string, string | null> = {},
     options: Array<{ label: string; value: string }> = [
       { label: 'Option A', value: 'a' },
       { label: 'Option B', value: 'b' },
@@ -61,8 +63,9 @@ describe('Input-Radio-Set Web Component', () => {
     ]
   ): Promise<InputRadioSetElement> {
     const set = document.createElement('input-radio-set') as InputRadioSetElement;
+    const setAttrs: Record<string, string | null> = { 'accessibility-label': 'Options', ...attrs };
     for (const [key, val] of Object.entries(setAttrs)) {
-      set.setAttribute(key, val);
+      if (val !== null) set.setAttribute(key, val);
     }
     for (const opt of options) {
       const radio = document.createElement('input-radio-base');
@@ -441,6 +444,67 @@ describe('Input-Radio-Set Web Component', () => {
   });
 
   // ============================================================================
+  // CONTRACT: accessibility_radiogroup_role — the group's accessible name
+  // (WCAG 4.1.2 Name, Role, Value). Fix for G6, .kiro/issues/2026-10-13-component-gaps-from-settings-ledger.md
+  // ============================================================================
+
+  describe('accessibility_radiogroup_role: accessible name', () => {
+    it('radiogroup exposes an accessible name from the accessibility-label attribute', async () => {
+      const set = await createRadioSet({ 'accessibility-label': 'Theme' });
+      const container = set.shadowRoot?.querySelector('[role="radiogroup"]');
+      expect(container?.getAttribute('aria-label')).toBe('Theme');
+    });
+
+    it('updates the accessible name when accessibility-label changes', async () => {
+      const set = await createRadioSet({ 'accessibility-label': 'Theme' });
+      set.setAttribute('accessibility-label', 'Appearance');
+      const container = set.shadowRoot?.querySelector('[role="radiogroup"]');
+      expect(container?.getAttribute('aria-label')).toBe('Appearance');
+    });
+
+    it('reflects accessibilityLabel as a property', async () => {
+      const set = await createRadioSet();
+      set.accessibilityLabel = 'Plan';
+      expect(set.getAttribute('accessibility-label')).toBe('Plan');
+      expect(set.shadowRoot?.querySelector('[role="radiogroup"]')?.getAttribute('aria-label')).toBe('Plan');
+    });
+
+    it('omitted label: no empty aria-label is rendered, and a development warning names the missing attribute', async () => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+      try {
+        const set = await createRadioSet({ 'accessibility-label': null });
+        const container = set.shadowRoot?.querySelector('[role="radiogroup"]');
+        expect(container?.hasAttribute('aria-label')).toBe(false);
+        expect(warn).toHaveBeenCalledWith(expect.stringContaining('accessibility-label'));
+      } finally {
+        warn.mockRestore();
+      }
+    });
+
+    it.each([[''], ['   ']])('blank label %p is treated as missing: no aria-label and the same development warning', async (blank) => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+      try {
+        const set = await createRadioSet({ 'accessibility-label': blank });
+        const container = set.shadowRoot?.querySelector('[role="radiogroup"]');
+        expect(container?.hasAttribute('aria-label')).toBe(false);
+        expect(warn).toHaveBeenCalledWith(expect.stringContaining('accessibility-label'));
+      } finally {
+        warn.mockRestore();
+      }
+    });
+
+    it('does not warn when the label is provided', async () => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+      try {
+        await createRadioSet({ 'accessibility-label': 'Theme' });
+        expect(warn).not.toHaveBeenCalledWith(expect.stringContaining('accessibility-label'));
+      } finally {
+        warn.mockRestore();
+      }
+    });
+  });
+
+  // ============================================================================
   // Size Propagation (Requirement 9.10)
   // ============================================================================
 
@@ -494,6 +558,10 @@ describe('Input-Radio-Set Web Component', () => {
 
     it('should observe test-id attribute', () => {
       expect(InputRadioSetElement.observedAttributes).toContain('test-id');
+    });
+
+    it('should observe accessibility-label attribute', () => {
+      expect(InputRadioSetElement.observedAttributes).toContain('accessibility-label');
     });
   });
 });

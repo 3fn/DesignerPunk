@@ -88,6 +88,10 @@
   - Includes a behavioral contract test that fails today, a schema prop, a component-meta and README note, and an index rebuild.
   - Issue-driven, not a spec: one component, one contract, already specified by its own contracts.yaml.
 - **Trigger**: Peter's merge of this record (the record's trigger).
+- **Status**: ~~IN PROGRESS (2026-10-13, branch `fix/input-radio-set-group-label`)~~ → **DONE on branch, 2026-10-13; accepted at the fix PR's merge (PR #___)**.
+  - Fix: a required `accessibilityLabel` prop (web attribute `accessibility-label` → `aria-label` on the radiogroup; iOS `.accessibilityLabel(accessibilityLabel)` on the `.contain` group; Android `contentDescription` beside `selectableGroup()`). Schema 2.0.0 (breaking: new required prop); `contracts.yaml` 1.1.0 turns "with appropriate label" into checkable validation lines.
+  - Behavioral contract tests `accessibility_radiogroup_role: accessible name` in `InputRadioSet.test.ts` failed before the fix and pass after; the iOS/Android halves are checked by source in `InputRadioSet.stemma.test.ts`. No native build ran (no harness).
+  - **Correction to "Catalog today" above**: iOS did label the group, with a hardcoded `.accessibilityLabel("Radio group")`. That names the role, not the choice, so the defect stood; the fix replaces it.
 
 ---
 

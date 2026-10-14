@@ -74,7 +74,7 @@
 
       <h3>Input-Radio-Set (Orchestrator)</h3>
       <p>Wraps multiple <code>&lt;input-radio-base&gt;</code> children. Provides mutual exclusivity (selecting one deselects others), arrow key navigation, and group-level validation.</p>
-      <input-radio-set selected-value="option-b">
+      <input-radio-set accessibility-label="Choose an option" selected-value="option-b">
         <input-radio-base label="Option A" value="option-a"></input-radio-base>
         <input-radio-base label="Option B" value="option-b"></input-radio-base>
         <input-radio-base label="Option C" value="option-c"></input-radio-base>
@@ -93,19 +93,19 @@
       <p>Three size variants control the radio circle, dot, gap, and label typography. When used within a Set, the <code>size</code> attribute propagates to all children.</p>
 
       <h3>Small (sm) — 24px circle</h3>
-      <input-radio-set selected-value="sm-a" size="sm">
+      <input-radio-set accessibility-label="Small options" selected-value="sm-a" size="sm">
         <input-radio-base label="Small Option A" value="sm-a"></input-radio-base>
         <input-radio-base label="Small Option B" value="sm-b"></input-radio-base>
       </input-radio-set>
 
       <h3>Medium (md) — 32px circle (default)</h3>
-      <input-radio-set selected-value="md-a" size="md">
+      <input-radio-set accessibility-label="Medium options" selected-value="md-a" size="md">
         <input-radio-base label="Medium Option A" value="md-a"></input-radio-base>
         <input-radio-base label="Medium Option B" value="md-b"></input-radio-base>
       </input-radio-set>
 
       <h3>Large (lg) — 40px circle</h3>
-      <input-radio-set selected-value="lg-a" size="lg">
+      <input-radio-set accessibility-label="Large options" selected-value="lg-a" size="lg">
         <input-radio-base label="Large Option A" value="lg-a"></input-radio-base>
         <input-radio-base label="Large Option B" value="lg-b"></input-radio-base>
       </input-radio-set>
@@ -162,7 +162,7 @@
 
       <h3>Error State (Radio Set — Validation)</h3>
       <p>The Set supports group-level validation. When <code>required</code> is set and no selection exists, calling <code>validate()</code> shows an error.</p>
-      <input-radio-set id="validation-set" required error error-message="Please select a subscription plan">
+      <input-radio-set id="validation-set" accessibility-label="Subscription plan" required error error-message="Please select a subscription plan">
         <input-radio-base label="Basic" value="basic"></input-radio-base>
         <input-radio-base label="Standard" value="standard"></input-radio-base>
         <input-radio-base label="Premium" value="premium"></input-radio-base>
@@ -210,7 +210,7 @@
 
       <div class="demo-interactive">
         <p>Use <kbd>Tab</kbd> to enter the group, then arrow keys to navigate:</p>
-        <input-radio-set id="keyboard-set" selected-value="kb-b">
+        <input-radio-set id="keyboard-set" accessibility-label="Keyboard navigation example" selected-value="kb-b">
           <input-radio-base label="First" value="kb-a"></input-radio-base>
           <input-radio-base label="Second (selected)" value="kb-b"></input-radio-base>
           <input-radio-base label="Third" value="kb-c"></input-radio-base>
@@ -240,7 +240,7 @@
 
       <div class="demo-interactive">
         <h3>Radio Set → <code>change</code></h3>
-        <input-radio-set id="event-set">
+        <input-radio-set id="event-set" accessibility-label="Color">
           <input-radio-base label="Red" value="red"></input-radio-base>
           <input-radio-base label="Green" value="green"></input-radio-base>
           <input-radio-base label="Blue" value="blue"></input-radio-base>
@@ -369,7 +369,7 @@
 &gt;&lt;/input-radio-base&gt;
 
 &lt;!-- Radio group with mutual exclusivity --&gt;
-&lt;input-radio-set selected-value="plan-pro" size="md"&gt;
+&lt;input-radio-set accessibility-label="Plan" selected-value="plan-pro" size="md"&gt;
   &lt;input-radio-base label="Free" value="plan-free"
     helper-text="5 projects"&gt;&lt;/input-radio-base&gt;
   &lt;input-radio-base label="Pro" value="plan-pro"
@@ -379,7 +379,7 @@
 &lt;/input-radio-set&gt;
 
 &lt;!-- With validation --&gt;
-&lt;input-radio-set required id="my-group"&gt;
+&lt;input-radio-set accessibility-label="Confirm" required id="my-group"&gt;
   &lt;input-radio-base label="Yes" value="yes"&gt;&lt;/input-radio-base&gt;
   &lt;input-radio-base label="No" value="no"&gt;&lt;/input-radio-base&gt;
 &lt;/input-radio-set&gt;</pre>
@@ -405,6 +405,7 @@ const isValid = group.validate();
 
 // Programmatic creation
 const newSet = document.createElement('input-radio-set');
+newSet.accessibilityLabel = 'Dynamic options'; // required group name
 newSet.size = 'lg';
 newSet.onSelectionChange = (value) =&gt; {
   console.log('Selection changed:', value);

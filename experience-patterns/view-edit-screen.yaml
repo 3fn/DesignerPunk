@@ -89,6 +89,7 @@ steps:
                 role: form-field
                 hints:
                   label: "Selection field replacing the view mode display value"
+                  accessibilityLabel: "Required group name: the field's label (same words as the view mode label)"
                 children:
                   - component: Input-Radio-Base
                     role: radio-option

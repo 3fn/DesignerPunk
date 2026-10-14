@@ -15,7 +15,7 @@
  * 
  * Features:
  * - Shadow DOM with <slot> for child composition
- * - role="radiogroup" for accessibility
+ * - role="radiogroup" for accessibility, named by the required accessibility-label
  * - Attribute reflection for reactive updates
  * - Error message display with role="alert"
  * 
@@ -50,7 +50,7 @@ let radioSetIdCounter = 0;
  * 
  * @example
  * ```html
- * <input-radio-set selected-value="option-a" size="md">
+ * <input-radio-set accessibility-label="Plan" selected-value="option-a" size="md">
  *   <input-radio-base label="Option A" value="option-a"></input-radio-base>
  *   <input-radio-base label="Option B" value="option-b"></input-radio-base>
  *   <input-radio-base label="Option C" value="option-c"></input-radio-base>
@@ -136,6 +136,17 @@ export class InputRadioSetElement extends HTMLElement {
     // Propagate initial selection state to children and set up tabindex
     this._syncChildrenSelection();
     this._initializeTabIndices();
+
+    // Contract accessibility_radiogroup_role: a radio group must have an accessible
+    // name (WCAG 4.1.2). The attribute cannot be compile-checked, so a missing one is a
+    // development warning (same pattern as Button-Icon's aria-label), never a throw.
+    // An empty or whitespace-only value counts as missing (`""` passes the type check).
+    if (!this._hasAccessibleName()) {
+      console.warn(
+        'InputRadioSet: Missing required "accessibility-label" attribute. ' +
+        'A radio group needs an accessible name so screen readers announce what the choice is (WCAG 4.1.2).'
+      );
+    }
   }
 
   disconnectedCallback(): void {
@@ -181,6 +192,29 @@ export class InputRadioSetElement extends HTMLElement {
   // ---------------------------------------------------------------------------
   // Property Accessors (attribute reflection)
   // ---------------------------------------------------------------------------
+
+  /**
+   * Accessible name of the radio group.
+   *
+   * Reflects the 'accessibility-label' attribute; rendered as aria-label on the
+   * role="radiogroup" container (contract accessibility_radiogroup_role).
+   */
+  get accessibilityLabel(): string | null {
+    return this.getAttribute('accessibility-label');
+  }
+
+  set accessibilityLabel(value: string | null) {
+    if (value) {
+      this.setAttribute('accessibility-label', value);
+    } else {
+      this.removeAttribute('accessibility-label');
+    }
+  }
+
+  /** True when accessibility-label holds a non-blank name (empty/whitespace-only counts as missing). */
+  private _hasAccessibleName(): boolean {
+    return (this.accessibilityLabel ?? '').trim().length > 0;
+  }
 
   /**
    * Currently selected value.
@@ -345,7 +379,7 @@ export class InputRadioSetElement extends HTMLElement {
    * via a <slot> element. The Set does NOT duplicate radio rendering logic.
    * 
    * Structure:
-   * - Container div with role="radiogroup"
+   * - Container div with role="radiogroup" (aria-label from accessibility-label, set in _updateDOM)
    * - Error message element with role="alert" (hidden by default)
    * - <slot> for child Input-Radio-Base elements
    * 
@@ -392,6 +426,16 @@ export class InputRadioSetElement extends HTMLElement {
     const isError = this.error;
     const errorMsg = this.errorMessage;
     const testId = this.testID;
+    const label = this._hasAccessibleName() ? this.accessibilityLabel!.trim() : null;
+
+    // Accessible name of the group (contract accessibility_radiogroup_role, WCAG 4.1.2).
+    // Written with setAttribute (not innerHTML), so no HTML escaping is needed. Never render an
+    // empty aria-label (an empty name is worse than none for some screen readers).
+    if (label) {
+      this._container.setAttribute('aria-label', label);
+    } else {
+      this._container.removeAttribute('aria-label');
+    }
 
     // Update error state class
     if (isError && errorMsg) {
