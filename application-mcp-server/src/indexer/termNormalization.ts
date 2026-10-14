@@ -7,14 +7,26 @@
  * fold or a dropped word can never make the two sides disagree.
  *
  * ---------------------------------------------------------------------------
- * STOP WORDS — copied, not imported
+ * STOP WORDS — a SEEDED FORK of the docs list (owned here in full)
  * ---------------------------------------------------------------------------
- * SOURCE: `mcp-server/src/query/stop-words.ts` (docs domain, Thurgood), `STOP_WORD_LIST_VERSION = 1`.
- * That module invites the application MCP to consume its list "as data"; it is copied here
- * rather than imported because a static TS import would cross this sub-package's tsc rootDir
- * boundary (the same constraint documented for `mcpDataRoots` in `src/index.ts`). The
- * docs-v1 block below is a VERBATIM copy and must be kept in step with the source by hand —
- * if the docs list bumps its version, re-copy and bump `COMPONENT_STOP_WORD_LIST_VERSION`.
+ * ORIGIN: `mcp-server/src/query/stop-words.ts` (docs domain, Thurgood), `STOP_WORD_LIST_VERSION = 1`.
+ * Ruling: Peter, 2026-10-13 (tokenizer-twin extraction consult, Option A with the split): this
+ * list is NOT a twin of the docs list. It was seeded from docs v1 (the `SEEDED_FROM_DOCS_V1` block
+ * below, verbatim at seeding time) and the components domain owns the WHOLE list from here on,
+ * because a stop list is a rubric-tuned knob and the two rubrics differ (see COMPONENTS
+ * EXTENSION). Consequences, by design:
+ *   - A docs-side REMOVAL or addition is NOT drift. Nothing asserts that the two lists match.
+ *   - REVIEW PIN: `REVIEWED_DOCS_STOP_WORD_LIST_VERSION` records the last docs version reviewed
+ *     here. `__tests__/termNormalization.test.ts` `require`s the REAL docs module and asserts the
+ *     pin equals the docs `STOP_WORD_LIST_VERSION`, so a docs bump fails
+ *     lane-application-mcp-server-suite (every PR) until this side reviews the change and moves
+ *     the pin, WHETHER OR NOT the change is taken. Taking it = edit the list, bump
+ *     `COMPONENT_STOP_WORD_LIST_VERSION`, add a CHANGELOG line. Declining it = move the pin only and
+ *     record the decision in the CHANGELOG. Either way the review is visible in the diff.
+ *   - Why a local list and not an import: the sub-package tsc rootDir boundary (same constraint
+ *     as `mcpDataRoots` in `src/index.ts`). Where shared MCP code should live is the class
+ *     question taken up by the MCP shared-code class charter (Thurgood, `.kiro/issues/`,
+ *     2026-10-13) — not decided here.
  *
  * COMPONENTS EXTENSION — why a components-specific addition is justified:
  * the components rubric makes a SINGLE high-signal hit `strong` (rubric clause 1), while the
@@ -34,6 +46,8 @@
  * CHANGELOG:
  *   v1 (2026-10-12, defect record 2026-10-07 item 1): docs v1 list copied verbatim + the
  *       closed-class components extension below.
+ *   v1, no list change (2026-10-13, Peter's ruling): re-declared a seeded fork; docs v1 reviewed
+ *       (REVIEWED_DOCS_STOP_WORD_LIST_VERSION = 1); the superset drift guard is replaced by the pin.
  *
  * ---------------------------------------------------------------------------
  * PLURAL FOLDING — a suffix rule with an exceptions list, NOT a stemmer
@@ -59,8 +73,17 @@ import { ATOM_TERMS } from './tokenAtoms';
 /** Semantic version of the components stop-word list. Bump on any change to the set. */
 export const COMPONENT_STOP_WORD_LIST_VERSION = 1;
 
-/** VERBATIM copy of `mcp-server/src/query/stop-words.ts` STOP_WORDS (docs list v1). */
-const DOCS_STOP_WORDS_V1: readonly string[] = [
+/**
+ * The last docs `STOP_WORD_LIST_VERSION` reviewed on this side (review pin — see header). Moving it
+ * records a review, not agreement: the docs change may have been declined.
+ */
+export const REVIEWED_DOCS_STOP_WORD_LIST_VERSION = 1;
+
+/**
+ * SEEDED ORIGIN: the docs list v1 (`mcp-server/src/query/stop-words.ts`), copied verbatim at seeding
+ * time. Owned here from then on — it is not kept in step with the docs list (see header).
+ */
+const SEEDED_FROM_DOCS_V1: readonly string[] = [
   'a', 'an', 'the', 'and', 'or', 'of', 'in', 'on', 'at', 'to', 'for',
   'is', 'are', 'was', 'be', 'by', 'with', 'this', 'that', 'from', 'as',
   'it', 'its', 'all', 'any', 'each', 'if', 'not', 'no', 'but', 'so',
@@ -81,7 +104,7 @@ const COMPONENT_STOP_WORDS_EXTENSION: readonly string[] = [
 ];
 
 export const COMPONENT_STOP_WORDS: ReadonlySet<string> = Object.freeze(
-  new Set<string>([...DOCS_STOP_WORDS_V1, ...COMPONENT_STOP_WORDS_EXTENSION]),
+  new Set<string>([...SEEDED_FROM_DOCS_V1, ...COMPONENT_STOP_WORDS_EXTENSION]),
 ) as ReadonlySet<string>;
 
 /** Words ending in `s` that are not regular plurals (or whose fold would conflate/obscure). */
