@@ -64,3 +64,18 @@ Checked on main: the consumer runs the same product-mcp-server code, so `product
 
 ## 9. Closing
 When the screen + ledger PR merges and Lina's judgments and Thurgood's conformance note are in, Peter decides D2; record the decision here and in the study charter (dated), then `git mv` to `archive/`.
+
+### Outcome — RULED 2026-10-13 (Peter): **D2 = NO-GO.** Stage 2 does not run for components.
+- **The ledger**: merged as **#347 → `846c6d99c`** (`2026-10-12-leonardo-settings-call-ledger.md`): 35 MCP calls, 35 rows; the orchestrator's transcript cross-check found no unlogged call.
+- **The criterion, on its letter**:
+  - Keyword calls were **3 / 16 = 18.75 %** of discovery calls, below the 25 % threshold (23.5 % if the S1 verification call is counted, still below).
+  - Harmful outcomes as D2 defines them (a wrong `strong` acted on, or an existing component missed): **0**.
+  - The harm *class* named in § 3, a `strong` on something that does not exist, fired on **3 / 3** keyword rows (D8, D9, D10). All three are P rows, so per-query correctness is discounted (§ 5).
+- **Lina's row judgments** (`ff3a00912`) changed no § 3 count. At rank 1: 0 `strong` right, 3 wrong. Existence checks: 1 found, 3 harm-case.
+- **Thurgood's method conformance**: **CONFORMS WITH NOTES** (8 notes, in the ledger after § "Rows for Lina to judge").
+- **Routing**:
+  - **Component gaps G1–G6 → Lina** (Peter: "route the gaps to Lina"; her record is in flight on her own branch). G6 is her D15 finding: Input-Radio-Set has no group-label prop.
+  - **Consumer friction items 1–4, 6 and 7 → Spec 123 U5.**
+  - **Item 5 → Thurgood**, as a docs-matcher defect filed separately: `find_docs` concept mode ignores `limit`.
+- **Clause-1 coverage knob (D3): STILL PARKED, not ruled.** Evidence now on record: two clean clause-1 wrong `strong`s on the served build (D9 `dialog` at 1/3; D10 `change` at about 1/5). D8 sat at the 50 % boundary on the served build. It drops out of the class on `main` after #330, because "on/off" now splits into two stop words and D8 reads 1/1. The knob stays Lina's (D3).
+- Recorded in the study charter (`2026-10-07-discovery-shadow-study-charter.md` § 6, under F2). This charter is archived by this PR (README rules 2 and 5).
