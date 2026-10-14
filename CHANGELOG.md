@@ -42,8 +42,6 @@ This is the third planned entry in the plan's numbering ("Release N" labels the 
 
 ### Known limitations in this release
 
-- `@3fn/core/testing` and the jest preset's `@3fn/core/blend`, `/types` and `/config` mappings do not load in an installed package, so the shared test utilities do not work yet.
-- Every `generate` rewrites a timestamp line in each generated file, so committed platform output shows as changed after every run even when no token changed. Compare with the timestamp lines ignored.
 - `npx designerpunk validate`'s mathematical-relationships check fails even on unmodified token source, so `validate` exits non-zero. It is a defect in the checker, not in your tokens; its other checks are still worth reading.
 
 ## [15.0.0] — 2026-10-02
