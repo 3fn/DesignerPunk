@@ -109,7 +109,7 @@ const INIT_DESIGN_ROWS = {
   'personal-note naming': () =>
     `fill in .designerpunk/personal-note.local.md — who you are, what you and your organization value, and how you like to work together — or, after the restart, ask your agent to walk you through it. Your agents read it every session (it stays on your machine)`,
   'jest.config.js collision (C27 A13)': () =>
-    `skipped: jest.config.js (already exists) — the DesignerPunk jest preset is not applied; to test your own components with it, add ...require('@3fn/core/jest-preset') to your config (in this version @3fn/core/testing does not load under the preset; see the Integration Guide's "Running Component Tests")`,
+    `skipped: jest.config.js (already exists) — the DesignerPunk jest preset is not applied; to test your own components with it, add ...require('@3fn/core/jest-preset') to your config`,
 };
 
 describe('errorCatalog — string conformance (Task 2 additions)', () => {
