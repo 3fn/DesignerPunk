@@ -16,11 +16,18 @@
  * LEGIBLE KNOB: adding an atom predictably changes how one brand-cased word tokenizes. Bump
  * `TOKEN_ATOM_LIST_VERSION` and add a CHANGELOG entry on every change.
  *
- * NOT SHARED with the components tokenizer (application-mcp-server ComponentIndexer.tokenizeString),
- * which has the same defect — Lina's surface and her call (Stage 1 follow-ups record, row 11).
+ * BOUND, GUARDED TWIN (Peter, 2026-10-13): `application-mcp-server/src/indexer/tokenAtoms.ts`
+ * (components domain, Lina; #328) carries the same list and `protectAtoms`. Its guards (#340) load
+ * THIS module and assert list equality, `TWINNED_DOCS_TOKEN_ATOM_LIST_VERSION` ===
+ * `TOKEN_ATOM_LIST_VERSION`, and `protectAtoms` parity — so any change here must bump
+ * `TOKEN_ATOM_LIST_VERSION` and lands only with Lina's same-PR edit to her twin and pin.
+ * Charter: `.kiro/issues/2026-10-13-mcp-shared-code-class-charter.md`. Sibling: `stop-words.ts`
+ * (stop words are a SEEDED FORK on the components side, not a bound twin).
  *
  * CHANGELOG:
  *   v1 (2026-10-13, indexer fix 3): iOS, iPadOS, macOS, tvOS, watchOS, iPhone, iPad.
+ *   (2026-10-13, header only — NO version bump, list unchanged): twin note rewritten for the
+ *       bound-twin ruling (charter § 1 and § 6).
  */
 
 /** Version of the atom list. Bump on any change to TOKEN_ATOMS. */
