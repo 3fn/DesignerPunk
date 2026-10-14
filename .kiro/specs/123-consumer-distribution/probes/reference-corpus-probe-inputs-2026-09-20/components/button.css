@@ -1,0 +1,28 @@
+/* Meridian Button — basic web button component */
+
+.meridian-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #2B6CB0;
+  background-color: #2B6CB0;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.meridian-button:hover {
+  background-color: #1A4E85;
+  border-color: #1A4E85;
+}
+
+.meridian-button--secondary {
+  background-color: #FFFFFF;
+  color: #2B6CB0;
+}
+
+.meridian-button--secondary:hover {
+  background-color: #F0F4F8;
+}
