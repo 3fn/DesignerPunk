@@ -12,6 +12,8 @@
 - **`scripts/__tests__/install-doc.test.ts`** (Peter's O-2): the scope sentence is asserted as the entry's first paragraph (identical to the install doc's); one planned-Release-3 entry exists, above 15.0.0; `CHANGELOG-HOLDS` is contained exactly once, byte-equal, read from the consequence-texts file at run time, and `CHANGELOG-LIFTED` is absent; the born-repo "(generate creates it; your agent can walk you through it)" fix is in the entry and in `initBornRepoMessage`. **Bites** (made, run red, restored): altering the scope sentence in the entry → red; altering one word of the HOLDS block → red.
 - `tasks.md`: 22.4 ticked.
 
+**Application-time adaptations** *(appended 2026-10-14, Lina; Stacy's 15.1.0 RELEASE pass, RL-4)*: (1) the widened no-overlap re-run printed one path, `package.json` (Task 22.3b's two `files[]` lines); I recorded the row red by the letter and handed the hold to the orchestrator and Stacy rather than waiving it; (2) the first `npm test` run on this tree had six load-sensitive Button property-test failures; the 14 suites passed in isolation and a full rerun was clean (9550), and I recorded that rather than rerunning silently. No other adaptation.
+
 ## The no-overlap test, re-run, widened to Task 29's declared input set (`task-29-4-completion.md` § "The declared input (trigger) set")
 
 Merge base is `origin/main` = `31a8c9194` (U3 merged `main`, so the diff is U3's own net delta).

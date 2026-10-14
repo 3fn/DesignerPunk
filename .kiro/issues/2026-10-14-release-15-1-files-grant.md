@@ -32,3 +32,18 @@
 - **`canonical/generated.lock`**: the version bump moves the lock's `inputClosure` (`package.json` is in `INPUT_CLOSURE_FILES`); the refresh is **Thurgood's separate grant** (`2026-10-14-release-15-1-lock-refresh-grant.md`), written only by a green `check:122:diff-guard` run.
 - **`governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**`, agent charters**: never granted by an issue (rule 8; ballot § 3 clause 5). 15.1.0 needs no governance edit — the release-3 guide corrections landed in #337.
 - **No ratification authority.** Additive to charter scope and nothing else.
+
+---
+
+## 2026-10-14 — Re-activation: a grant for the 15.1.0 record erratum (RL-8, RL-9)
+
+**Why**: the `docs/releases/15.1.0/**` extent expired at #351's merge. Stacy's RELEASE pass, phase 2 (PR #353), found two defects in the orchestrator's record-keeping: **RL-8** — the 6a section of `docs/releases/15.1.0/publish-verification.txt` omits the 02:42:13Z pre-publish rail run (`FAIL[version] … HTTP 404`, exit 10 — correct at the time: the packument carried no `time["15.1.0"]` until 02:44:42Z) and one of the two `npm pack`-wrote-no-file runs, and says "no guard retry"; **RL-9** — #351 also edited `.kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md`, which was outside this grant's path list (the grant's own clause makes that a claims-pass finding; the orchestrator accepts it; RS-18 asks whether a grant implicitly covers the issue files it serves).
+- **Source**: `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-15.1.0.md` § Phase 2, RL-8 and RL-9.
+- **Grantee**: the orchestrator (the record's operator).
+- **Activation**: Peter's merge of the PR whose body names this section (README rule 8) — the 15.1.0 follow-up records PR.
+- **Expiry**: the erratum PR's merge.
+- **This section grants; it corrects nothing.** The erratum is made in a later PR, after this grant merges (the 15.0.0 precedent, #280).
+
+**Grant paths**: `docs/releases/15.1.0/publish-verification.txt`
+
+**What the erratum is**: a dated `## Erratum (RL-8, RL-9)` section appended to the `.txt`: (i) the omitted 02:42:13Z rail run pasted in full with its exit code 10, and the two `npm pack` no-file runs named with their times; the "no guard retry" sentence corrected to "one pre-publish run, read against the packument, then one run after `time["15.1.0"]` appeared"; (ii) a line acknowledging RL-9 by name. 5.3's command line is also recorded there: `npx tsx scripts/release-publish.ts 15.1.0 --expect-sha e49359e49dc338078669a90aa5b37aa2436b60a4` (Ada's RL-7 evidence gap).
