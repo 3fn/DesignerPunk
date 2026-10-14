@@ -77,7 +77,7 @@ export const tools = [
   {
     name: 'find_components',
     annotations: { readOnlyHint: true },
-    description: 'Find components by category, concept, platform, purpose keyword, or usage context. Returns ApplicationSummary with promoted selection guidance (purpose, whenToUse, whenNotToUse, alternatives, contexts). All parameters optional and combinable (conjunctive). Use `keyword` for natural-language tokenized discovery (e.g. "primary action button", "login", "text input field").',
+    description: 'Find components by category, concept, platform, purpose keyword, or usage context. Returns ApplicationSummary with promoted selection guidance (purpose, whenToUse, whenNotToUse, alternatives, contexts). All parameters optional and combinable (conjunctive). Use `keyword` for natural-language tokenized discovery (e.g. "primary action button", "login", "text input field"). Without `keyword`, the structured filters are exact constraints: their rows carry no `matchConfidence`, `matchedOn` or `rank` by design (every row satisfies the filter exactly) and are returned in name order, not ranked.',
     inputSchema: {
       type: 'object' as const,
       properties: {

@@ -2,7 +2,8 @@
  * Assembly Validator
  *
  * Validates a component tree (AssemblyNode) against the component catalog.
- * Depth-first walk checking: component existence, parent-child composition,
+ * Depth-first walk checking: component existence, prop values against the schema
+ * (PropValueChecker — T3, gaps record 2026-10-13), parent-child composition,
  * requires constraints, and count constraints.
  *
  * @see .kiro/specs/067-application-mcp/design.md — AssemblyValidator section
@@ -11,6 +12,7 @@
 import { ComponentIndexer } from '../indexer/ComponentIndexer';
 import { checkComposition, validateRequires } from '../indexer/CompositionChecker';
 import { AccessibilityChecker } from './AccessibilityChecker';
+import { checkPropValues } from './PropValueChecker';
 import { AssemblyNode, AssemblyValidationResult, AssemblyIssue } from '../models';
 
 export class AssemblyValidator {
@@ -37,6 +39,17 @@ export class AssemblyValidator {
       errors.push({ path, component: node.component, message: `Component "${node.component}" not found in catalog` });
       return;
     }
+
+    // Prop values against the resolved schema (own + inherited − omits)
+    checkPropValues(
+      path,
+      meta,
+      node.props,
+      (name) => this.indexer.getComponent(name),
+      this.indexer.getTokenIndexer(),
+      errors,
+      warnings,
+    );
 
     const children = node.children ?? [];
     const index = this.indexer.getIndex();
