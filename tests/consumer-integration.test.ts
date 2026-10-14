@@ -2226,4 +2226,107 @@ describe('Consumer Integration (Spec 106 R8)', () => {
       expect(data).toMatch(/search these paths with Grep\/Glob: node_modules\/@3fn\/core\/src\/components\/core\/\*\/platforms\/android\/\*\*/);
     });
   });
+
+  // Release-3 ruling item 2 (2026-10-13; .kiro/issues/2026-10-03-jest-preset-maps-unshipped-source.md):
+  // the Jest preset `init` writes into every born repo must load the `@3fn/core/*` subpaths from files
+  // the package ships. Before the fix it mapped them to `src/**/index.ts` (four not shipped; `build`
+  // shipped as raw .ts that Jest will not transform under node_modules), so a consumer test importing
+  // `@3fn/core/testing`, or the token source `init` copied (rewritten to import `@3fn/core/types`),
+  // failed to load. This runs Jest INSIDE a packed install, under the preset as `init` wrote it.
+  //
+  // The Jest toolchain is SYMLINKED from this repo's node_modules (the versions its lockfile pins),
+  // not installed from the registry: the case tests the package, not today's latest jest/ts-jest
+  // (a registry install can fail on an unrelated peer-range change). The devDependency list is the
+  // one the Integration Guide § "Running Component Tests" and `init`'s optional line name.
+  describe('Release-3 item 2 — the Jest preset loads @3fn/core/* subpaths in a packed install', () => {
+    let presetDir: string;
+    const DEV_DEPS = ['jest', 'ts-jest', 'jest-environment-jsdom', '@types/jest', '@types/node', 'typescript'];
+
+    beforeAll(() => {
+      presetDir = fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-jest-preset-'));
+      execSync('npm init -y', { cwd: presetDir, stdio: 'pipe' });
+      execSync(`npm install ${tarballPath} --no-audit --no-fund`, { cwd: presetDir, stdio: 'pipe', timeout: 60_000 });
+      execSync('npx designerpunk init --name PresetProbe --abbreviation PP', { cwd: presetDir, stdio: 'pipe', timeout: 30_000 });
+      for (const dep of DEV_DEPS) {
+        const link = path.join(presetDir, 'node_modules', dep);
+        if (fs.existsSync(link)) continue; // already present as a dependency of @3fn/core
+        mkdirp(path.dirname(link));
+        fs.symlinkSync(path.join(PKG_ROOT, 'node_modules', dep), link, 'dir');
+      }
+    }, TIMEOUT);
+
+    afterAll(() => {
+      if (presetDir) fs.rmSync(presetDir, { recursive: true, force: true });
+    });
+
+    it('init wrote the preset config this case runs under', () => {
+      expect(fs.readFileSync(path.join(presetDir, 'jest.config.js'), 'utf-8')).toContain("...require('@3fn/core/jest-preset')");
+    });
+
+    it('every subpath the preset maps resolves to a file in the installed package, never src/', () => {
+      const script =
+        `const path = require('path');` +
+        `const m = require('@3fn/core/jest-preset').moduleNameMapper;` +
+        `const out = Object.entries(m).filter(([k]) => k.startsWith('^@3fn/core/')).map(([k, v]) => [k, path.relative(process.cwd(), v), require('fs').existsSync(v)]);` +
+        `process.stdout.write(JSON.stringify(out));`;
+      const rows: Array<[string, string, boolean]> = JSON.parse(
+        execSync(`node -e ${JSON.stringify(script)}`, { cwd: presetDir, encoding: 'utf-8', timeout: 30_000 }),
+      );
+      expect(rows.map(([k]) => k).sort()).toEqual(
+        ['blend', 'build', 'config', 'testing', 'types'].map((s) => `^@3fn/core/${s}$`),
+      );
+      for (const [pattern, rel, exists] of rows) {
+        expect({ pattern, rel, exists }).toEqual({ pattern, rel, exists: true });
+        expect(rel).toMatch(/^node_modules\/@3fn\/core\/dist\/.+\.js$/);
+      }
+    });
+
+    it('a test importing @3fn/core/testing, and one importing the copied token source (@3fn/core/types), pass under the preset', () => {
+      const tokenFile = fs.readdirSync(path.join(presetDir, 'src', 'tokens')).find((f) =>
+        f.endsWith('.ts') && fs.readFileSync(path.join(presetDir, 'src', 'tokens', f), 'utf-8').includes("from '@3fn/core/types'"),
+      );
+      expect(tokenFile).toBeDefined(); // init rewrote at least one copied token file to import @3fn/core/types
+      writeFileEnsured(
+        path.join(presetDir, 'src', '__tests__', 'testing-helpers.test.ts'),
+        `import { registerComponent, createComponentFixture, cleanupDOM } from '@3fn/core/testing';\n` +
+          `test('@3fn/core/testing loads under the preset', () => {\n` +
+          `  class XProbe extends HTMLElement {}\n` +
+          `  registerComponent('x-probe', XProbe);\n` +
+          `  const { element, cleanup } = createComponentFixture<HTMLElement>('x-probe', { title: 'hi' });\n` +
+          `  expect(element).toBeInstanceOf(XProbe);\n` +
+          `  expect(element.title).toBe('hi');\n` +
+          `  cleanup();\n` +
+          `  cleanupDOM();\n` +
+          `});\n`,
+      );
+      writeFileEnsured(
+        path.join(presetDir, 'src', '__tests__', 'token-source.test.ts'),
+        `import * as tokens from '../tokens/${tokenFile!.replace(/\.ts$/, '')}';\n` +
+          `import * as build from '@3fn/core/build';\n` +
+          `import * as config from '@3fn/core/config';\n` +
+          `import * as blend from '@3fn/core/blend';\n` +
+          `test('the copied token source (imports @3fn/core/types) loads under the preset', () => {\n` +
+          `  expect(Object.keys(tokens).length).toBeGreaterThan(0);\n` +
+          `});\n` +
+          `test('@3fn/core/build, /config and /blend load under the preset', () => {\n` +
+          `  expect(typeof build.defineComponentTokens).toBe('function');\n` +
+          `  expect(typeof config.defineConfig).toBe('function');\n` +
+          `  expect(Object.keys(blend).length).toBeGreaterThan(0);\n` +
+          `});\n`,
+      );
+      const env = { ...process.env };
+      delete env.JEST_WORKER_ID;
+      const r = require('child_process').spawnSync(
+        process.execPath,
+        [path.join('node_modules', 'jest', 'bin', 'jest.js'), '--ci', '--colors=false'],
+        { cwd: presetDir, encoding: 'utf-8', env, timeout: 90_000 },
+      );
+      const output = `${r.stdout}\n${r.stderr}`;
+      expect(output).not.toContain('Could not locate module');
+      expect({ status: r.status, tail: output.split('\n').filter((l: string) => /^(Tests|Test Suites):/.test(l)) }).toEqual({
+        status: 0,
+        tail: ['Test Suites: 2 passed, 2 total', 'Tests:       3 passed, 3 total'],
+      });
+    }, TIMEOUT);
+  });
 });

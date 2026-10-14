@@ -40,3 +40,19 @@
   - **What survives**: the preset is what `init` writes into every born repo (`init.test.ts:353`). A limitation means every consumer's first helper-using test fails, and the token-source case above is untested either way.
 
 **No fix is authorized by this record.**
+
+## Fixed (2026-10-13)
+
+**Authority**: Peter's release-3 ruling, item 2, "Fix before the tag" (`.kiro/specs/123-consumer-distribution/completion/release-3-rulings-2026-10-13.md`, merged #324). Fixed by Lina on `fix/jest-preset-shipped-paths`. The pick was to remap to the shipped `dist/` files (Ada's lean). No source is newly shipped and `package.json` is unchanged, so Ada's `files[]`/`exports` path was not needed.
+
+- **The fix.** The preset's `@3fn/core/{blend,build,types,testing,config}` mappings are now derived from `package.json` `exports` (each subpath's `require` target) by the new `src/testing/presetMappings.ts`, which `src/testing/jest-preset.ts` spreads into `moduleNameMapper`. They are never hand-written paths. A subpath with no `require` target throws at preset load and names the subpath.
+- **Wider than recorded.** `@3fn/core/build` was broken too: it was mapped to the shipped but uncompiled `src/build/tokens/index.ts`, which Jest does not transform under `node_modules` ("Must use import to load ES Module"; reproduced 2026-10-13 in a packed install). The Integration Guide's "`@3fn/core/build` is not affected" was false. The fix covers all five.
+- **Verified in a packed install.** `npm pack` with scripts, `npm install` of the tarball into a fresh project, `init`, then the guide's devDependencies from the registry. A test of `@3fn/core/testing`'s helpers and a test of a copied token file (rewritten to `@3fn/core/types`) both pass, as do `/build`, `/config` and `/blend` (2 suites, 3 tests). The pre-fix mappings over the same install fail with "Could not locate module @3fn/core/testing" and "… @3fn/core/types".
+- **Guards.**
+  - In-repo: `src/testing/__tests__/presetMappings.test.ts`. Bite recorded: 2 of 5 cases go red against the pre-fix preset.
+  - Packed install: `tests/consumer-integration.test.ts`, the "Release-3 item 2" describe, run by `npm run test:consumer`. Its Jest toolchain is symlinked from the repo's lockfile versions, not installed from the registry.
+- **The `init` collision message** (`jestConfigCollisionMessage`) drops its "(in this version @3fn/core/testing does not load under the preset …)" clause. The design.md C27 A13 row takes the same amendment (Thurgood).
+- **Not fixed here (still open).**
+  - `validateComponentName` / `validateTokenUsage` are still not reachable from `@3fn/core/testing`. `dist/testing/validators.js` ships, but `exports` has no `./testing/validators` entry and `index.ts` does not re-export them. Fixing that is an `exports` change (Ada). The guide no longer teaches them.
+  - The Integration Guide § "Running Component Tests" (L475) and the "Available Imports" row for `@3fn/core/testing` (L502) still state the limitation. That is a `governance/` edit, routed by the orchestrator.
+- **Status**: RESOLVED on the fix branch, pending its merge.
