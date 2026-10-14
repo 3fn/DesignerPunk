@@ -14,8 +14,8 @@ import { SemanticTokenRegistry } from '../registries/SemanticTokenRegistry';
 import { SemanticOverrideResolver } from '../resolvers/SemanticOverrideResolver';
 import { resolveSemanticTokenValue } from '../resolvers/SemanticValueResolver';
 import { ThemeRegistry } from '../themes/ThemeRegistry';
-// Theme overrides remain as static imports — they resolve from the config's themes array,
-// independent of tokenSource. These are the base system's built-in themes shipped with @3fn/core.
+// Theme overrides are static imports of DesignerPunk's built-in maps; config.themes is not
+// read here (Spec 129 item (i)). They are not taken from tokenSource either.
 import { darkSemanticOverrides } from '../tokens/themes/dark/SemanticOverrides';
 import { wcagSemanticOverrides } from '../tokens/themes/wcag/SemanticOverrides';
 import { darkWcagSemanticOverrides } from '../tokens/themes/dark-wcag/SemanticOverrides';
@@ -26,16 +26,29 @@ import type { ResolvedConfig } from '../config/ConfigLoader';
 import type { TokenInput } from '../cli/resolveTokens';
 
 /**
- * Empty mode-resolved result returned on early-abort paths (validation failures).
- * Callers that wire the index will receive empty data and skip index population rather
- * than re-deriving stale values.
+ * Thrown when `generateTokenFiles` stops because the token source failed its own validation
+ * (semantic references, or the built-in override maps naming tokens the source lacks).
+ *
+ * The details are logged before the throw; the message carries the first one so a caller
+ * that prints only the message still names the cause. Nothing has been written when this
+ * is thrown, and callers must not build the token index: there is no result to build it from.
+ * (.kiro/issues/2026-10-03-generate-reports-success-after-validation-abort.md — the abort
+ * paths used to RETURN an empty result, which callers read as success.)
  */
-const EMPTY_MODE_RESOLVED: ModeResolvedTokens = {
-  resolvedLight: [],
-  resolvedDark: [],
-  themeVaryingTokens: new Set<string>(),
-  primitiveOklch: new Map(),
-};
+export class TokenGenerationAbortedError extends Error {
+  constructor(public readonly stage: 'semantic-references' | 'override-maps' | 'context-override-maps',
+              public readonly errors: string[]) {
+    const first = errors[0] ?? '(no detail)';
+    const more = errors.length > 1 ? ` (+${errors.length - 1} more, listed above)` : '';
+    const what = stage === 'semantic-references'
+      ? 'semantic token validation failed'
+      : stage === 'override-maps'
+        ? 'semantic override validation failed'
+        : 'context override validation failed';
+    super(`Token generation aborted: ${what}: ${first}${more}`);
+    this.name = 'TokenGenerationAbortedError';
+  }
+}
 
 /**
  * Main generation function.
@@ -48,17 +61,13 @@ const EMPTY_MODE_RESOLVED: ModeResolvedTokens = {
  * @param tokens - Resolved token arrays (primitive and semantic) from the configured source.
  * @param config - Resolved config from ConfigLoader.
  * @returns The mode-resolved truth (resolved light/dark sets, base-scoped theme-varying
- *   set, per-primitive OKLCH). On validation-abort paths, an empty result.
+ *   set, per-primitive OKLCH).
+ * @throws {TokenGenerationAbortedError} When the token source fails validation. Nothing is
+ *   written (not even the output directory), so the caller must not write the index either.
  */
 export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): ModeResolvedTokens {
   const effectiveOutputDir = config.outputDir;
   console.log('🚀 Starting token file generation...\n');
-
-  // Create output directory if it doesn't exist
-  if (!fs.existsSync(effectiveOutputDir)) {
-    fs.mkdirSync(effectiveOutputDir, { recursive: true });
-    console.log(`📁 Created output directory: ${effectiveOutputDir}\n`);
-  }
 
   // Validate semantic token references before generation
   console.log('🔍 Validating semantic token references...\n');
@@ -90,8 +99,8 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
       console.error('');
     }
     
-    console.error('⚠️  Token generation aborted due to validation errors.\n');
-    return EMPTY_MODE_RESOLVED;
+    // `rationale` joins the per-token reasons with '; ' (SemanticTokenValidator).
+    throw new TokenGenerationAbortedError('semantic-references', validationResult.rationale.split('; '));
   }
   
   if (validationResult.level === 'Warning') {
@@ -128,8 +137,8 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
   if (!overrideValidation.valid) {
     console.error('❌ Semantic override validation failed:\n');
     overrideValidation.errors.forEach(err => console.error(`   ${err}`));
-    console.error('\n⚠️  Token generation aborted due to override validation errors.\n');
-    return EMPTY_MODE_RESOLVED;
+    console.error('');
+    throw new TokenGenerationAbortedError('override-maps', overrideValidation.errors);
   }
 
   // Register themes in the registry for downstream consumers (getThemeVaryingTokens, etc.)
@@ -157,8 +166,8 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
   if (!contextValidation.valid) {
     console.error('❌ Context override validation failed:\n');
     contextValidation.errors.forEach(err => console.error(`   ${err}`));
-    console.error('\n⚠️  Token generation aborted due to override validation errors.\n');
-    return EMPTY_MODE_RESOLVED;
+    console.error('');
+    throw new TokenGenerationAbortedError('context-override-maps', contextValidation.errors);
   }
   console.log('✅ Semantic override validation passed\n');
 
@@ -217,6 +226,12 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
     if (!composed) continue;
     const metadata = getOklchMetadata(composed);
     primitiveOklch.set(token.name, { light: metadata, dark: metadata });
+  }
+
+  // Validation passed — only now touch the filesystem (an abort above leaves no trace).
+  if (!fs.existsSync(effectiveOutputDir)) {
+    fs.mkdirSync(effectiveOutputDir, { recursive: true });
+    console.log(`📁 Created output directory: ${effectiveOutputDir}\n`);
   }
 
   const results = generator.generateAll({
