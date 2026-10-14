@@ -34,6 +34,7 @@ import { ModeClassifier } from './ModeClassifier';
 import { isImmutableContext } from '../staleness/StalenessGate';
 import { normalizeTerms } from './termNormalization';
 import { protectAtoms } from './tokenAtoms';
+import { recordedPackageReadiness } from './packageReadiness';
 
 // ---------------------------------------------------------------------------
 // Multi-root component indexing (Spec 123 Task 1.4 — design C3 "Indexer", L-D2/L-D8)
@@ -702,7 +703,7 @@ export class ComponentIndexer {
       type: schema.type,
       family: schema.family,
       version: schema.version,
-      readiness: this.derivePlatformReadiness(dirPath, schema.readiness),
+      readiness: this.readinessFor(dirPath, schema.name, schema.readiness, warnings),
       description: schema.description,
       platforms: schema.platforms,
       properties: schema.properties,
@@ -806,6 +807,29 @@ export class ComponentIndexer {
     }
 
     this.keywordIndex.set(name, { highSignal, lowSignal });
+  }
+
+  /**
+   * Readiness for one component. A component loaded from the installed package (under
+   * `node_modules/`) gets the readiness recorded at build time, because the package does not ship
+   * the platform sources and tests the file scan reads (release-3 ruling item 5; see
+   * packageReadiness.ts). Every other component — the steward repo's, and the consumer's own —
+   * is derived from its files.
+   */
+  private readinessFor(
+    dirPath: string,
+    name: string,
+    schemaReadiness: ParsedSchemaReadiness | string,
+    warnings: string[],
+  ): PlatformReadiness {
+    if (isImmutableContext(dirPath)) {
+      const recorded = recordedPackageReadiness(name);
+      if (recorded) return recorded;
+      warnings.push(
+        `No recorded readiness for packaged component ${name}; derived from the installed files, which omit platform sources and tests, so it reads low`
+      );
+    }
+    return this.derivePlatformReadiness(dirPath, schemaReadiness);
   }
 
   /**
