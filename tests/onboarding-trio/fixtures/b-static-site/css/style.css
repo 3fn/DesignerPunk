@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  font-family: Georgia, serif;
+  color: #1f2328;
+  background: #faf7f2;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 32px;
+  border-bottom: 1px solid #e3ddd3;
+}
+
+.logo {
+  font-weight: bold;
+  color: #1f2328;
+  text-decoration: none;
+}
+
+nav a {
+  margin-left: 16px;
+  color: #1f2328;
+}
+
+main {
+  max-width: 640px;
+  margin: 48px auto;
+  padding: 0 32px;
+}
+
+.button {
+  display: inline-block;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 4px;
+  background: #b4462b;
+  color: #ffffff;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.contact-form {
+  display: grid;
+  gap: 8px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 8px;
+  border: 1px solid #c9c2b6;
+  font: inherit;
+}
