@@ -36,7 +36,7 @@ This page says which files DesignerPunk's `init`, `generate`, `attach` and `sync
 
 `generate` writes platform output (CSS, Swift, Kotlin) to the `output` path in your `designerpunk.config.ts`. The default is to commit it, so that the files you preview are the files you ship: a static site, or any clone-and-deploy pipeline that does not know to run `generate`, then deploys real token files. If you edit a token and forget to run `generate`, your own preview shows no change, and you catch it in the dev loop.
 
-The same token source and the same `@3fn/core` version give byte-identical output, so committed output changes only when a token changes or you upgrade `@3fn/core`.
+The same token source, the same `designerpunk.config.ts` and the same `@3fn/core` version give byte-identical output, so committed output changes only when you change a token or your config, or upgrade `@3fn/core`.
 
 If your build or deploy runs `npx designerpunk generate`, you do not need to commit the output. The `.gitignore` block carries a commented line for exactly this; uncomment it.
 
