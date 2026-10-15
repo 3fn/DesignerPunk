@@ -72,7 +72,7 @@ Use this posture when you want a design system of your own. These are the five s
 2. `npx designerpunk init --target=<cc|kiro> --name <name> --abbreviation <abbr>`
 3. `npx designerpunk generate`
 4. Fill in your personal note — or, after the restart, ask your agent to walk you through it.
-5. Restart your agent session (approve DesignerPunk's MCP servers if asked).
+5. Restart your agent session. Claude Code then asks you to trust the folder and to enable DesignerPunk's three MCP servers: accept both. Kiro asks nothing.
 
 **Step 2, `init`, is the birth event — runs once per design system, ever.** It copies DesignerPunk's token source into your repo as your own, writes `designerpunk.config.ts`, and generates the agent layer and the MCP configuration for the target you name (`cc` for Claude Code, `kiro` for Kiro). From then on the token language is yours. `init` never runs again in this repo. A teammate joins by section 7, not by running it. `--name` and `--abbreviation` are your product's name and its short form, and `init` writes both into `designerpunk.config.ts`. Without them, `init` asks for each in a terminal; where nothing can answer (an agent's shell, or CI), it stops with an error. So pass both.
 
@@ -80,7 +80,7 @@ Use this posture when you want a design system of your own. These are the five s
 
 **Step 4, your personal note**: `.designerpunk/personal-note.local.md` — who you are, what you and your organization value, and how you like to work together — or, after the restart, ask your agent to walk you through it. Your agents read it every session (it stays on your machine).
 
-**Step 5, the restart, and why.** Your agent tool loads its MCP configuration when a session starts. The session that ran `init` cannot see the servers `init` just configured, so its first queries would fail. **This is a rule, not a one-off**: any later change to the MCP configuration, such as adding a server or updating the package, also needs a new session. Some tools ask you once to approve project-declared MCP servers; approve DesignerPunk's.
+**Step 5, the restart, and why.** Your agent tool loads its MCP configuration when a session starts. The session that ran `init` cannot see the servers `init` just configured, so its first queries would fail. **This is a rule, not a one-off**: any later change to the MCP configuration, such as adding a server or updating the package, also needs a new session. On first open, Claude Code asks twice. First it asks whether you trust the folder, and lists the tool permissions DesignerPunk pre-approved in `.claude/settings.json`; until you trust the folder, it ignores them. Then it asks which of the three new MCP servers to enable. All three are selected, so choose "Enable selected". It keeps that choice per clone, so each person answers once. Kiro asks nothing: the servers run on first open, with their read-only tools pre-approved in `.kiro/settings/mcp.json`.
 
 ## 4. Your language vs our updating surface
 
@@ -217,7 +217,7 @@ To join a design system someone else birthed:
 2. `npm install`
 3. `npx designerpunk generate`
 4. Fill in `.designerpunk/personal-note.local.md` (`generate` creates it) — or, after the restart, ask your agent to walk you through it.
-5. Restart your agent session (approve DesignerPunk's MCP servers if asked).
+5. Restart your agent session. Claude Code then asks you to trust the folder and to enable DesignerPunk's three MCP servers: accept both. Kiro asks nothing.
 
 Your note is your own. You never inherit the founder's: it stays on each person's machine.
 
@@ -228,7 +228,7 @@ Your note is your own. You never inherit the founder's: it stays on each person'
 3. `npx designerpunk generate`
 4. `npx designerpunk attach --target=<cc|kiro>`
 5. Fill in `.designerpunk/personal-note.local.md` (`generate` creates it) — or, after the restart, ask your agent to walk you through it.
-6. Restart your agent session (approve DesignerPunk's MCP servers if asked).
+6. Restart your agent session. Claude Code then asks you to trust the folder and to enable DesignerPunk's three MCP servers: accept both. Kiro asks nothing.
 
 Which files the founder commits, and which each of you regenerates, is set by the commit policy (`docs/consumer/COMMIT-POLICY.md`).
 

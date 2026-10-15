@@ -93,8 +93,11 @@ const FOUNDER_ORDER: RegExp[] = [
   /^Restart your agent session/,
 ];
 
-/** C4: the approval instruction, harness-agnostic. Every path's last step reads exactly this. */
+/** C4: the approval instruction, harness-agnostic. A path not observed cold in U5 still ends with exactly this. */
 const RESTART_STEP = "Restart your agent session (approve DesignerPunk's MCP servers if asked).";
+/** C8 / C32 (Task 26.5): the observed truth, for the paths whose cells U5 observed cold (founder §3, joining §7). */
+const OBSERVED_RESTART_STEP =
+  "Restart your agent session. Claude Code then asks you to trust the folder and to enable DesignerPunk's three MCP servers: accept both. Kiro asks nothing.";
 const HARNESS_NAMES = ['Claude Code', 'Kiro', 'cc', 'kiro'];
 
 /**
@@ -445,10 +448,23 @@ describe('the approval instruction is harness-agnostic (C4)', () => {
     expect(RESTART_STEP).not.toMatch(/Claude Code/);
   });
 
-  it('every path list, in the region and the README, ends with it', () => {
-    const lists = [...numberedLists(REGION.split('\n')), ...numberedLists(span(README, /^## Getting Started$/))];
-    expect(lists.length).toBe(5);
-    for (const l of lists) expect(l[l.length - 1]).toBe(RESTART_STEP);
+  it('every path list ends with it, or with the observed truth where U5 observed the path cold', () => {
+    const region = numberedLists(REGION.split('\n'));
+    const readme = numberedLists(span(README, /^## Getting Started$/));
+    expect(region.length).toBe(4);
+    expect(readme.length).toBe(1);
+    // Not observed cold in U5: the reference posture (§2, the `--reference` list) and the README.
+    const unobserved = [...region.filter((l) => l.some((s) => s.includes('--reference'))), ...readme];
+    const observed = region.filter((l) => !l.some((s) => s.includes('--reference')));
+    expect(unobserved.length).toBe(2);
+    expect(observed.length).toBe(3); // §3 founder, §7 joining (same harness and cross-harness)
+    for (const l of unobserved) expect(l[l.length - 1]).toBe(RESTART_STEP);
+    for (const l of observed) expect(l[l.length - 1]).toBe(OBSERVED_RESTART_STEP);
+  });
+
+  it('the observed truth names each target it was observed on', () => {
+    expect(OBSERVED_RESTART_STEP).toMatch(/Claude Code/);
+    expect(OBSERVED_RESTART_STEP).toMatch(/Kiro/);
   });
 });
 

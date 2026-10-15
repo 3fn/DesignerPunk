@@ -1511,7 +1511,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 25.4 Run (c) — bare `init` in Kiro
   - [x] 25.5 Schema check; the scoped DD9 re-read
 
-- [ ] 26. The two cross-target join runs and the install-doc correction
+- [x] 26. The two cross-target join runs and the install-doc correction
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Leonardo (Opus) — operator; Thurgood (Sonnet) — 26.5
   **Traces**: Reqs 15A.4, 15A.1 · design C8, C24, DD8
@@ -1532,11 +1532,11 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `validation/join-cc-to-kiro.md`, `validation/join-kiro-to-cc.md`, `governance/DesignerPunk-Integration-Guide.md`
 
-  - [ ] 26.1 Commit the two fixtures, born from the packed artifact
-  - [ ] 26.2 Join CC→Kiro
-  - [ ] 26.3 Join Kiro→CC
-  - [ ] 26.4 The cold-observation table
-  - [ ] 26.5 (Thurgood) Install-doc correction for observed cells
+  - [x] 26.1 Commit the two fixtures, born from the packed artifact
+  - [x] 26.2 Join CC→Kiro
+  - [x] 26.3 Join Kiro→CC
+  - [x] 26.4 The cold-observation table
+  - [x] 26.5 (Thurgood) Install-doc correction for observed cells
 
 - [ ] 27. Re-grounding conformance (24.1 two-beat)
 
