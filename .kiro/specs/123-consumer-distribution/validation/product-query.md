@@ -59,7 +59,7 @@ The run is scoped: one session; the prompt names the server, not the tools; the 
 - **The checks**:
   - At `2acf8fb87` (2026-10-15, before the run): 0 paths changed. The fixture's `leonardo.md` is identical to the canonical rendering. `product-mcp-server/src` imports nothing from `application-mcp-server/` or `mcp-server/src/`, the two servers that did change.
   - **At the run** (§ 16 step 0, at `COMMIT`, whose prompt file is byte-identical to `67275cfee`'s), verbatim: `measured sources unchanged since 4c875235a: 0 paths` and `seat rendering: fixture == canonical at COMMIT`.
-  - **Re-checked at the U5 PR head**: PENDING. Whoever opens the PR runs `git diff --name-only 4c875235a <PR head> -- product-mcp-server src/cli canonical/_consumer-output/cc/.claude/agents/leonardo.md package-lock.json`. If any path has moved, this record no longer stands for release 4, and the run is repeated against a fresh `init --target=cc` birth from the release-4 tarball.
+  - **Re-checked at the U5 PR head**: DONE — at `8bae0346f` (PR #362's head, merged as `b10d5d3b6`) the diff reads **0 paths** (orchestrator, 2026-10-15; pasted in `completion/task-28-completion.md` § "PR gate and post-merge checks"). The record stands for release 4. Whoever opens the PR runs `git diff --name-only 4c875235a <PR head> -- product-mcp-server src/cli canonical/_consumer-output/cc/.claude/agents/leonardo.md package-lock.json`. If any path has moved, this record no longer stands for release 4, and the run is repeated against a fresh `init --target=cc` birth from the release-4 tarball.
 - Run repo: `/tmp/dp-trio/product-query/repo`, cloned from `origin/`: `6f07b47 founder's repo`, **203** files.
 
 ### candidate:
