@@ -1169,3 +1169,186 @@ date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
 
 **What to paste back for `join-kiro-to-cc`**: steps 0–10; every prompt you answered, word for word, with your answer; anything you typed beyond the steps (including any `operator-unblock`), and why; any Ctrl-C and why. Then: "`join-kiro-to-cc` done; files in `/tmp/dp-trio/join-kiro-to-cc/out`."
+
+## 15. The conformance run (Task 27)
+
+*Added 2026-10-15 for Spec 123 Task 27, under Task 25's write grant for this file (orchestrator ruling 2026-10-15; the same residual as § 14: a claims pass may read the edit as out-of-list).*
+
+### 15.1 What the run is
+
+- **Req 24.1 / 24.1b's two beats, plus Req 24.6's identity probe on both agents**, in **one** fresh clone of `fixtures/born-cc` (Dana's `order-status` service, born on Claude Code), on **Claude Code**. Its stream-json keeps tool results.
+- **Setup, by the launcher, not under test**: clone, tarball, `npm install`, `npx designerpunk generate`, the Claude Code preflight, and one captured interactive open to trust the folder and enable the three servers (§ 6's approval rule). Without the open, a headless session ignores the committed allow-list ("this workspace has not been trusted", Task 26 K-1).
+- **Order, strictly sequential, never in parallel**:
+  1. identity probe, `--agent thurgood` (fresh session);
+  2. identity probe, `--agent stacy` (fresh session);
+  3. **beat 1**, `--agent thurgood`, the re-grounding spec's tasks 1–5;
+  4. **beat 2**, `--agent stacy`, its task 6, only after beat 1's session has ended.
+- **Prompts**: `.kiro/specs/123-consumer-distribution/validation/prompts/conformance-beat-1.md` (PROBE and BEAT blocks for Thurgood) and `conformance-beat-2.md` (PROBE and BEAT blocks for Stacy).
+- **Budgets** (observed, not enforced; § 4): probes 30 turns each; beat 1 120; beat 2 60.
+- **Records**: `validation/conformance-beat-1.md` (beat 1, Thurgood's probe, the 24.3 labelling) and `validation/conformance-beat-2.md` (beat 2, Stacy's probe). Fields: J1–J12 of § 14.2 where they apply, plus `bar:` (formalized yes/no, artifact paths; beat 1), `claims-check:` (beat 2, or `not exercised — upstream beat produced no artifact`), `identity-probe:` (the per-item match table against the rendered charter, file cited), `findings:` with the forced negative, and the residuals.
+- **What each run writes** (`/tmp/dp-trio/conformance/`): `origin/`, `repo/`, `home/`, `empty/`, and `out/`, which holds `preflight-cc-<time>.typescript`, `open-<time>.typescript`, `probe-thurgood.{jsonl,stderr}`, `probe-stacy.{jsonl,stderr}`, `beat-1.{jsonl,stderr}`, `beat-2.{jsonl,stderr}`, the `*.utc` and `*.exit` files, `host.txt`, `candidate-shasum.txt`, `isolation.txt`, `harness-user-state-{before,after}.txt`, `home-files.txt`, `tmp-writes.txt`, `repo-status.txt`, `specs-after.txt`, `agents-diff.txt` and `source-access-audit.txt`.
+
+### 15.2 Launch blocks, for Peter
+
+Same rules as § 11 and § 14.4:
+- one new macOS Terminal window, kept open for the whole run (zsh);
+- one block at a time;
+- each interactive session gets its own capture;
+- if macOS asks about the keychain, click Cancel (never reset), press Ctrl-C, and tell the orchestrator;
+- the only edit is `COMMIT=` in step 0: the commit that carries both conformance prompts.
+
+**Paste back only**: the outputs of steps 0–6; for the four headless sessions, the check block's output (steps 7–10); and step 11's whole output. Read nothing else to the orchestrator; it reads the files.
+
+**Step 0 — variables and checks.** Expect `0`, then `fixture and prompts found at commit`.
+
+```sh
+RUN=conformance
+FIX=born-cc
+COMMIT=FILL_IN_COMMIT
+DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
+TGZ="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/3fn-core-15.1.0.tgz"
+R="/tmp/dp-trio/$RUN"
+P1=".kiro/specs/123-consumer-distribution/validation/prompts/conformance-beat-1.md"
+P2=".kiro/specs/123-consumer-distribution/validation/prompts/conformance-beat-2.md"
+env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
+git -C "$DP" cat-file -e "${COMMIT}:${P1}" && git -C "$DP" cat-file -e "${COMMIT}:${P2}" && git -C "$DP" cat-file -e "${COMMIT}:tests/onboarding-trio/fixtures/${FIX}/package.json" && echo "fixture and prompts found at commit"
+```
+
+**Step 1 — the founder's repo and one clone.** Expect one `founder's repo` line, `203`, and the fixture's top-level files. If it prints `STOP`, stop.
+
+```sh
+if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/origin" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/origin" --strip-components=4 && cd "$R/origin" && git init -q -b main && git add -A && git -c user.name=founder -c user.email=founder@example.invalid -c commit.gpgsign=false commit -q -m "founder's repo" && git log --oneline && find . -type f -not -path './.git/*' | wc -l && git clone -q "$R/origin" "$R/repo" && ls -A "$R/repo"; fi
+```
+
+**Step 2 — the tarball.** Expect `aa3efdcf9ce3c2689c2e5979932c48a46f3f6584`.
+
+```sh
+mkdir -p "$R/repo/.pack" && cp "$TGZ" "$R/repo/.pack/" && shasum -a 1 "$R/repo/.pack/3fn-core-15.1.0.tgz" | tee "$R/out/candidate-shasum.txt"
+```
+
+**Step 3 — the frozen prompts, from the commit.** Expect four non-zero line counts.
+
+```sh
+git -C "$DP" show "${COMMIT}:${P1}" > "$R/out/prompt-1.md"
+git -C "$DP" show "${COMMIT}:${P2}" > "$R/out/prompt-2.md"
+awk '/ PROBE END -->/{p=0} p{print} / PROBE BEGIN -->/{p=1}' "$R/out/prompt-1.md" > "$R/out/probe-thurgood-prompt.txt"
+awk '/ PROBE END -->/{p=0} p{print} / PROBE BEGIN -->/{p=1}' "$R/out/prompt-2.md" > "$R/out/probe-stacy-prompt.txt"
+awk '/ BEAT END -->/{p=0} p{print} / BEAT BEGIN -->/{p=1}' "$R/out/prompt-1.md" > "$R/out/beat-1-prompt.txt"
+awk '/ BEAT END -->/{p=0} p{print} / BEAT BEGIN -->/{p=1}' "$R/out/prompt-2.md" > "$R/out/beat-2-prompt.txt"
+wc -l "$R"/out/*-prompt.txt
+```
+
+**Step 4 — host versions, and `harness-user-state` before.** Expect the run-store entries `absent`.
+
+```sh
+{ date -u +%Y-%m-%dT%H:%M:%SZ; hostname -s; sw_vers -productVersion; uname -m; echo "node $(node -v) / npm $(npm -v)"; claude --version; } > "$R/out/host.txt" 2>&1; cat "$R/out/host.txt"
+hstate() {
+  echo "== run store (CC): $R/home/.claude"
+  for f in "$R/home/.claude/.claude.json" "$R/home/.claude/settings.json"; do
+    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f") DesignerPunk-relevant lines"; grep -n -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f" | cut -c1-200; else echo "${f}: absent"; fi
+  done
+  if [ -f "$R/home/.claude/.claude.json" ]; then echo "-- projects in the run store:"; jq -c '.projects // {} | to_entries[] | {dir: .key, trusted: .value.hasTrustDialogAccepted, enabled: .value.enabledMcpjsonServers}' "$R/home/.claude/.claude.json"; fi
+  if [ -f "$R/repo/.claude/settings.local.json" ]; then echo "-- repo .claude/settings.local.json:"; cat "$R/repo/.claude/settings.local.json"; else echo "-- repo .claude/settings.local.json: absent"; fi
+  echo "== run store (Kiro): $R/home/.kiro and $R/home/Library/Application Support/kiro-cli"
+  for d in "$R/home/.kiro" "$R/home/Library/Application Support/kiro-cli"; do
+    if [ -d "$d" ]; then echo "${d}: present, $(find "$d" -type f | wc -l | tr -d " ") files; DesignerPunk-relevant:"; grep -r -l -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$d" 2>/dev/null | head -20; else echo "${d}: absent"; fi
+  done
+  if [ -f "$R/home/.kiro/settings/mcp.json" ]; then echo "-- run-store Kiro global MCP servers:"; jq -r '.mcpServers // {} | keys[]' "$R/home/.kiro/settings/mcp.json"; fi
+  echo "== real user stores (DesignerPunk-relevant only)"
+  if [ -f "$HOME/.claude.json" ]; then echo "$HOME/.claude.json: $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$HOME/.claude.json") DesignerPunk-relevant lines"; else echo "$HOME/.claude.json: absent"; fi
+  if [ -f "$HOME/.kiro/settings/mcp.json" ]; then echo "$HOME/.kiro/settings/mcp.json servers: $(jq -r '.mcpServers // {} | keys | join(", ")' "$HOME/.kiro/settings/mcp.json")"; else echo "$HOME/.kiro/settings/mcp.json: absent"; fi
+  echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
+  echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
+}
+hstate > "$R/out/harness-user-state-before.txt" 2>&1; cat "$R/out/harness-user-state-before.txt"
+```
+
+**Step 5 — setup: install and generate (you run these; they are not under test).** Expect `added … packages` and `✅ System tokens generated`.
+
+```sh
+cd "$R/repo" && npm install --no-audit --no-fund 2>&1 | tail -3 && npx designerpunk generate 2>&1 | tail -3 && git status --porcelain
+```
+
+**Step 6 — Claude Code preflight, then the trust-and-enable open (interactive, captured).** First block: the first-run onboarding in an empty folder; defaults; `/exit`. Second block: in the repo, answer by § 6 (trust the folder; enable DesignerPunk's servers), type `/mcp` and wait, Esc, then `/exit`. Type no task. Paste back what each showed.
+
+```sh
+echo "isolation (CC): CLAUDE_CONFIG_DIR=$R/home/.claude (real HOME)" | tee "$R/out/isolation.txt"
+cd "$R/empty" && CLAUDE_CONFIG_DIR="$R/home/.claude" script -q "$R/out/preflight-cc-$(date -u +%H%M%S).typescript" claude
+```
+
+```sh
+cd "$R/repo" && CLAUDE_CONFIG_DIR="$R/home/.claude" script -q "$R/out/open-$(date -u +%H%M%S).typescript" claude
+```
+
+**Step 7 — identity probe: consumer-Thurgood (fresh session).** Then run the check block and paste its output.
+
+```sh
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-thurgood.start.utc" && CLAUDE_CONFIG_DIR="$R/home/.claude" claude -p "$(cat "$R/out/probe-thurgood-prompt.txt")" --agent thurgood --max-turns 30 --output-format stream-json --verbose --permission-mode acceptEdits --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "WebFetch,WebSearch" > "$R/out/probe-thurgood.jsonl" 2> "$R/out/probe-thurgood.stderr"; echo "exit=$?" | tee "$R/out/probe-thurgood.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-thurgood.end.utc"
+```
+
+```sh
+head -c 800 "$R/out/probe-thurgood.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, mcp_servers}' "$R/out/probe-thurgood.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/probe-thurgood.jsonl"
+```
+
+**Step 8 — identity probe: consumer-Stacy (fresh session).** Then run the check block and paste its output.
+
+```sh
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-stacy.start.utc" && CLAUDE_CONFIG_DIR="$R/home/.claude" claude -p "$(cat "$R/out/probe-stacy-prompt.txt")" --agent stacy --max-turns 30 --output-format stream-json --verbose --permission-mode acceptEdits --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "WebFetch,WebSearch" > "$R/out/probe-stacy.jsonl" 2> "$R/out/probe-stacy.stderr"; echo "exit=$?" | tee "$R/out/probe-stacy.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-stacy.end.utc"
+```
+
+```sh
+head -c 800 "$R/out/probe-stacy.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, mcp_servers}' "$R/out/probe-stacy.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/probe-stacy.jsonl"
+```
+
+**Step 9 — beat 1: consumer-Thurgood works the re-grounding spec.** This is the long one: it may take many minutes and prints nothing until it ends. Then run the check block and paste its output.
+
+```sh
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/beat-1.start.utc" && CLAUDE_CONFIG_DIR="$R/home/.claude" claude -p "$(cat "$R/out/beat-1-prompt.txt")" --agent thurgood --max-turns 120 --output-format stream-json --verbose --permission-mode acceptEdits --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "WebFetch,WebSearch" > "$R/out/beat-1.jsonl" 2> "$R/out/beat-1.stderr"; echo "exit=$?" | tee "$R/out/beat-1.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/beat-1.end.utc"
+```
+
+```sh
+head -c 800 "$R/out/beat-1.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, mcp_servers}' "$R/out/beat-1.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/beat-1.jsonl"
+```
+
+**Step 10 — beat 2: consumer-Stacy, only after step 9 has returned.** Then run the check block and paste its output.
+
+```sh
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/beat-2.start.utc" && CLAUDE_CONFIG_DIR="$R/home/.claude" claude -p "$(cat "$R/out/beat-2-prompt.txt")" --agent stacy --max-turns 60 --output-format stream-json --verbose --permission-mode acceptEdits --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "WebFetch,WebSearch" > "$R/out/beat-2.jsonl" 2> "$R/out/beat-2.stderr"; echo "exit=$?" | tee "$R/out/beat-2.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/beat-2.end.utc"
+```
+
+```sh
+head -c 800 "$R/out/beat-2.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, mcp_servers}' "$R/out/beat-2.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/beat-2.jsonl"
+```
+
+**Step 11 — after: state, the specs the beats left, agent files untouched?, audit.** Paste the whole output. That ends the run.
+
+```sh
+hstate() {
+  echo "== run store (CC): $R/home/.claude"
+  for f in "$R/home/.claude/.claude.json" "$R/home/.claude/settings.json"; do
+    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f") DesignerPunk-relevant lines"; grep -n -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f" | cut -c1-200; else echo "${f}: absent"; fi
+  done
+  if [ -f "$R/home/.claude/.claude.json" ]; then echo "-- projects in the run store:"; jq -c '.projects // {} | to_entries[] | {dir: .key, trusted: .value.hasTrustDialogAccepted, enabled: .value.enabledMcpjsonServers}' "$R/home/.claude/.claude.json"; fi
+  if [ -f "$R/repo/.claude/settings.local.json" ]; then echo "-- repo .claude/settings.local.json:"; cat "$R/repo/.claude/settings.local.json"; else echo "-- repo .claude/settings.local.json: absent"; fi
+  echo "== run store (Kiro): $R/home/.kiro and $R/home/Library/Application Support/kiro-cli"
+  for d in "$R/home/.kiro" "$R/home/Library/Application Support/kiro-cli"; do
+    if [ -d "$d" ]; then echo "${d}: present, $(find "$d" -type f | wc -l | tr -d " ") files; DesignerPunk-relevant:"; grep -r -l -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$d" 2>/dev/null | head -20; else echo "${d}: absent"; fi
+  done
+  if [ -f "$R/home/.kiro/settings/mcp.json" ]; then echo "-- run-store Kiro global MCP servers:"; jq -r '.mcpServers // {} | keys[]' "$R/home/.kiro/settings/mcp.json"; fi
+  echo "== real user stores (DesignerPunk-relevant only)"
+  if [ -f "$HOME/.claude.json" ]; then echo "$HOME/.claude.json: $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$HOME/.claude.json") DesignerPunk-relevant lines"; else echo "$HOME/.claude.json: absent"; fi
+  if [ -f "$HOME/.kiro/settings/mcp.json" ]; then echo "$HOME/.kiro/settings/mcp.json servers: $(jq -r '.mcpServers // {} | keys | join(", ")' "$HOME/.kiro/settings/mcp.json")"; else echo "$HOME/.kiro/settings/mcp.json: absent"; fi
+  echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
+  echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
+}
+hstate > "$R/out/harness-user-state-after.txt" 2>&1; cat "$R/out/harness-user-state-after.txt"
+find "$R/home" -type f -newer "$R/out/start.stamp" | sed "s|$R/home|HOME|" | sort > "$R/out/home-files.txt"; echo "files the run store gained: $(wc -l < "$R/out/home-files.txt" | tr -d " ")"
+find /tmp/ -maxdepth 1 -newer "$R/out/start.stamp" 2>/dev/null | grep -v -E "^/tmp/$|^/tmp/dp-trio$" | tee "$R/out/tmp-writes.txt"
+cd "$R/repo" && git status --porcelain --ignored | grep -v node_modules | tee "$R/out/repo-status.txt"; git log --oneline --all | head -20
+cd "$R/repo" && { echo "--- git log --first-parent -- specs/"; git log --first-parent --stat --format="%h %s" -- specs/ | head -60; echo "--- specs tree"; find specs -type f | sort; } > "$R/out/specs-after.txt" 2>&1; cat "$R/out/specs-after.txt"
+cd "$R/repo" && git diff --stat "$(git rev-list --max-parents=0 HEAD)" -- .claude/agents .claude/identity | tee "$R/out/agents-diff.txt"; echo "agent-file changes since the founder commit: $(wc -l < "$R/out/agents-diff.txt" | tr -d " ") lines"
+grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/probe-*.jsonl "$R"/out/beat-*.jsonl "$R"/out/open-*.typescript > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (package self-references expected; see § 10)"
+date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
+```
+
+**Paste back for `conformance`**: steps 0–6 in full; the four check-block outputs (steps 7–10); step 11 in full; any prompt you answered in step 6, word for word, with your answer; anything else you typed and why. Then: "`conformance` done; files in `/tmp/dp-trio/conformance/out`."
