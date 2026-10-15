@@ -3,7 +3,7 @@
 **Spec**: 123 — Consumer Distribution · **Unit**: U5 — Validation & closeout (`task/123-u5-closeout`; parents 25–28) · **Type**: Documentation · **Validation**: Tier 2
 **Agent (plan)**: PRIMARY Leonardo (Opus) — operator · **Launcher**: Peter (every harness session, from macOS Terminal; ruling 2026-10-14)
 **Delegated-tier**: plan held
-**CI-provenance**: local
+**CI-provenance**: branch-head dispatch @ 042813db1adf7d4fe6fca890099877e22f8b3c33 — https://github.com/3fn/DesignerPunk/actions/runs/38676261101, https://github.com/3fn/DesignerPunk/actions/runs/38676266677, https://github.com/3fn/DesignerPunk/actions/runs/38676272606, https://github.com/3fn/DesignerPunk/actions/runs/38676278195, https://github.com/3fn/DesignerPunk/actions/runs/38676284610, https://github.com/3fn/DesignerPunk/actions/runs/38676290797 *(all six completed success, read 2026-10-15; replaced `local` in a docs-only commit after the dispatch — local runs are listed in § Validation)*
 **Instruments**: 37 listed — exists 17 · built-here 20 · missing 0 · unlisted 6 — .kiro/specs/123-consumer-distribution/completion/task-25-instruments.md
 **Traces**: Reqs 22, 23, 24.2a, 25.1, 25.5, 15B.3 · design C30
 
