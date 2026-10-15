@@ -290,6 +290,12 @@ Persona (a)'s findings, each attributed to an axis. A finding first seen here is
 | R1-13 | outside the axes (instrument) | **The fresh-`HOME` mechanism is unsafe for Claude Code on macOS**: the login keychain moves with `HOME`, and Claude Code offered to reset it. Replaced mid-run by `CLAUDE_CONFIG_DIR`. Re-login under `CLAUDE_CONFIG_DIR` still needed a browser sign-in. | F7 | protocol (operator) — revised |
 | R1-14 | outside the axes | `npm install` of the candidate into the fixture reported "37 vulnerabilities (3 low, 5 moderate, 29 high)" across 390 packages. **Attribution: cannot-tell.** The 390 include the fixture's own `jest`, `ts-jest` and `typescript`, and the warnings named `inflight` and `glob@7`, which jest pulls in. | birth: the install output | Ada (an `npm audit` of the candidate alone), low |
 
+**Erratum (2026-10-15, Leonardo) — R1-12, and the same reading in F7 and F17**:
+- `.claude/settings.local.json` is ignored by **the launcher's own global git ignore** (`/Users/3fn/.config/git/ignore:1:**/.claude/settings.local.json`), **not by anything DesignerPunk writes**. The managed `.gitignore` block ignores only `token-index/` and `.designerpunk/`.
+- On a machine without that global rule, the file shows as untracked and can be committed by accident.
+- Evidence: `git check-ignore -v .claude/settings.local.json` in `join-cc-to-kiro`'s probe clone and `join-kiro-to-cc`'s clone (`validation/join-cc-to-kiro.md` J16 and J-3; `validation/join-kiro-to-cc.md` J7 and K-5).
+- The finding stands otherwise: the enablement is per-clone, and a teammate is asked again.
+
 **Forced negative, written**: the persona's path itself (5 steps) completed. The findings above are about the host, the product and the instrument. None is a stop on the path.
 
 ### 15B.3:
