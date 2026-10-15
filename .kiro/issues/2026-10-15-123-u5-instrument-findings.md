@@ -1,0 +1,108 @@
+# Spec 123 U5 instrument runs — every finding, with owner, PR vehicle and trigger (walked at release-4 prep)
+
+**Date**: 2026-10-15
+**Status**: ACTIVE
+**Owner**: **this record — Thurgood** (keeps it and walks it). **Each row — its named owner.**
+**Trigger**: **release-4 prep (16.0.0), before RELEASE phase 1.** At that walk, **every row without a merged fix is waived in writing (one line in the row's Disposition cell, with who waived it and why) or blocks RELEASE phase 1** (Peter's ruling (4)(a), 2026-10-15, ruled in the U5 session; recorded in `.kiro/specs/123-consumer-distribution/completion/task-28-completion.md`). Rows whose home is another active record keep that record's trigger for the fix; the release-4 walk still writes their waiver line.
+**Source**: the U5 instrument runs — persona trio (Task 25), cross-target joins (Task 26), conformance two-beat (Task 27) — and the open rows of `.kiro/issues/2026-10-12-consumer-birth-friction-for-123-u3.md`. Peter's ruling (4), 2026-10-15: findings **sorted, not piled** — CLI behaviour to Lina in one `fix/` PR with tests; install-doc text to Thurgood's one doc PR; rendering/profile to Thurgood (consumer profile) and Lina (generator), each in its own PR.
+**Grant paths**: none here. Each vehicle PR declares its own (an install-doc PR touches `governance/DesignerPunk-Integration-Guide.md`, so it carries a `**Consulted**:` line and is Peter-merged).
+**Consulted**: none needed — the routes are the records' proposed routes, sorted by Peter's ruling (4).
+
+**Record paths** (all under `.kiro/specs/123-consumer-distribution/validation/`): R1-* `trio-1-backend.md` · R2-* `trio-2-designer.md` · R3-* `trio-3-pm.md` · J-* `join-cc-to-kiro.md` · K-* `join-kiro-to-cc.md` · C-* `conformance-beat-1.md` · BD-* = the `D-*` rows of `conformance-beat-2.md` (renamed here to avoid colliding with the U1b check's D-1–D-23) · FR-n = row n of the friction record.
+
+**Vehicles**: **V-DOC** = Thurgood's install-doc `fix/` PR (Integration Guide install region → `docs/consumer/INSTALL.md` by `scripts/derive-install-doc.ts`; plus the root `README.md`), **before the release-4 tag** (Peter, 2026-10-15). **V-CLI** = Lina's one CLI `fix/` PR with tests. **V-PROF** = Thurgood's consumer-profile PR. **V-GEN** = Lina's generator/adapter PR. **V-OWN** = the owner's own PR.
+
+---
+
+## 1. Install-doc text → Thurgood, V-DOC (before the release-4 tag)
+
+| ID | Finding | Owner | Vehicle | Disposition at release-4 prep |
+|---|---|---|---|---|
+| R3-1 (doc) | INSTALL § 3 says `init` "stops with an error" where nothing can answer; it hangs in an agent's shell (the code half is § 2) | Thurgood | V-DOC | |
+| R2-1 | No path for a page with no build step in § Web (one exists in the shipped `governance/browser-distribution-guide.md`) | Thurgood | V-DOC | |
+| R2-3 | A no-build page cannot load the module bundle from `file://`; it needs a local server | Thurgood | V-DOC | |
+| R2-6 / R3-9 | "Restart your agent session" is not concrete per harness (26.5 fixed *what each harness asks*, not *how to restart*) | Thurgood | V-DOC | |
+| R3-4 (doc) | Nothing a founder meets first points to INSTALL (CLI half in § 2) | Thurgood | V-DOC | |
+| R3-8 | "MCP server" and "harness" are used and never defined | Thurgood | V-DOC | |
+| R1-4 | "token", "primitive", "semantic" are used and never defined | Thurgood | V-DOC | |
+| R1-5 (doc) | "Product" vs "design system" blur at birth (`--name` asks for a product name) | Thurgood | V-DOC | |
+| R1-1 / R1-2 (doc) | The TypeScript-host repairs `init` makes necessary: `@3fn/core/types` under the host's `moduleResolution`; default output `./dist/tokens` inside the host's gitignored build output | Thurgood | V-DOC | |
+| R1-6 (doc) | INSTALL § 4 says the tokens are "yours wholesale"; the palette, override maps, motion, layering and DTCG export are read from the package (Ada's sentence; pipeline fix: `.kiro/issues/2026-10-15-123-palette-read-from-package.md`) | Thurgood | V-DOC | |
+| J-4 / K-2 | § 7 does not tell a cross-harness joiner to commit what `attach` wrote (`.kiro/` or `.claude/`, `.mcp.json`, `CLAUDE.md`, the manifest change) | Thurgood | V-DOC | |
+| K-6 | § 7 does not say why a joiner runs `generate` when the output is committed | Thurgood | V-DOC | |
+| J-3 / K-5 (doc) | `.claude/settings.local.json` (per-clone server enablement) is ignored by nothing DesignerPunk writes (code half in § 2) | Thurgood | V-DOC | |
+| J-5 | The guide is found through the README, not by name (low) | Thurgood | V-DOC | |
+| 26.5-add | The root `README.md` Getting Started list still carries the harness-agnostic approval sentence | Thurgood | V-DOC | |
+| FR-9 | Start sessions from a normal terminal, not a shell inside a running Claude session or the desktop app's pane; name the native installer over `npm i -g` | Thurgood | V-DOC | |
+| FR-11 | What `init` creates vs the layout the guide shows (`product/domain-objects/` shown, not created) | Thurgood | V-DOC | |
+| FR-7 / FR-12 | One guide line on the order: `init` wires `TOKEN_INDEX_DIR`, `generate` populates it (not observed in the four join/trio runs; the message is catalogued) | Thurgood | V-DOC | |
+
+## 2. CLI behaviour → Lina, V-CLI (one `fix/` PR with tests)
+
+**Ruled into V-CLI** (Peter (4)): R3-1 first.
+
+| ID | Finding | Owner | Vehicle | Disposition at release-4 prep |
+|---|---|---|---|---|
+| R3-1 | `init` prompts on stdin with no terminal check (`src/cli/init.ts` L188–193, `prompt()` L463–468) and hangs in an agent's shell; the re-scaffold confirmation in the same file does check | Lina | V-CLI (first) | |
+| R3-2 | `init` ignores `--name=value` (parses only `--name <value>`, `init.ts` L436); the `=` form is dropped silently | Lina | V-CLI | |
+| R2-5 / R3-11 / K-3 | The `.gitignore` `init` creates (or its managed block) does not ignore `node_modules/` | Lina | V-CLI | |
+| 26.5-add | `init`'s refusal message still carries the harness-agnostic approval sentence (`src/cli/shared/errorCatalog.ts` L99) | Lina | V-CLI | |
+| R3-3 | The DD9 notice offers `attach --target=kiro`, which presumes a born repo, when it fires before `init` fails for want of a name | Lina | V-CLI or later (Lina's call) | |
+| R3-4 (CLI) | `--help` points to "the DesignerPunk repo's designerpunk.config.ts"; neither `--help` nor `init`'s output names INSTALL | Lina | V-CLI or later | |
+| R2-4 | `init` scaffolds `jest.config.js`, `tsconfig.test.json` and a TypeScript config into a static HTML site | Lina | V-CLI or later | |
+| R1-1 / R1-2 (code) | `init` breaks a TypeScript host's build (`@3fn/core/types` resolution); default output dir sits in `dist/` | Lina | V-CLI or later | |
+| J-3 / K-5 (code) | The managed `.gitignore` block could carry `.claude/settings.local.json` | Lina | V-CLI or later | |
+| R1-5 (code) | `init`'s prompt says "product name" where the persona births a company-wide system | Lina | V-CLI or later | |
+| FR-2 | The abbreviation has no default (initials of the name, or a one-line reason in the prompt) | Lina | V-CLI or later | |
+
+## 3. Rendering and the consumer profile → Thurgood (V-PROF) and Lina (V-GEN), own PRs
+
+| ID | Finding | Owner | Vehicle | Disposition at release-4 prep |
+|---|---|---|---|---|
+| R3-5 | Consumer-Leonardo's rendered write scope is `specs/**` only, so his screen specs land where `find_screens` cannot read them (`subject: leonardo`) | Thurgood | V-PROF | |
+| R2-2 | Consumer-Sparky's charter, and the browser guide, point a no-build site at DesignerPunk's base `tokens.css`, not the founder's generated `DesignTokens.web.css` | Thurgood (charter); Lina (`governance/browser-distribution-guide.md`) | V-PROF; V-OWN (Lina) | |
+| R2-8 / R3-12 | kiro-cli 2.12.1 tags every server reached through the generated workspace agents `[legacy]` (`includeMcpJson: true`); meaning unverified | Lina | V-GEN | |
+| C-3 / BD-2 (S1) | Served `process-spec-planning` binds the Instruments block to a parser the package's own `agent-directory.dispositions.yaml` removes for consumers | Thurgood | V-PROF (or the served-doc edit, kind per `.kiro/issues/2026-10-15-123-governance-edit-kinds-ballot.md`) | |
+| C-6 | Served routed-format sections carry DesignerPunk-only paths and tools (`.kiro/specs/…`, `complete-task.sh`, Kiro `taskStatus`, ballots) | Thurgood | home: `.kiro/issues/2026-10-13-src-path-convention-for-served-governance-docs.md` (its trigger); V-PROF for the consumer cue | |
+| C-4 | Consumer-Stacy's owed-set query hard-codes `docs/claims-pass-adoption.md`, which no born repo has | Stacy (overlay); Thurgood (profile) | home: `.kiro/issues/2026-10-03-consumer-stacy-owed-set-needs-adoption-record.md` (its trigger) | |
+
+## 4. MCP servers and components
+
+| ID | Finding | Owner | Vehicle | Disposition at release-4 prep |
+|---|---|---|---|---|
+| C-2 | `get_section` returns only the heading and the opening of a fenced template; the template's own `##` headings are indexed as siblings | Thurgood | home: `.kiro/issues/2026-10-13-discovery-study-stage1-followups.md` row 13 + `.kiro/issues/2026-10-12-docs-mcp-does-not-index-h4.md` (their trigger: the next indexer change) | |
+| R1-3 / R2-7 / K-4 | The docs MCP writes `mcp-server/logs/` into the consumer's repo root (four runs) | Thurgood (filing); fix owner named at its trigger | home: `.kiro/issues/2026-10-02-docs-mcp-logs-dir-cwd-relative.md` — **now with consumer evidence**, which strengthens its case | |
+| R1-7 | `get_token_consumers` returns `[]` in a born consumer for tokens the shipped Button-CTA reads; cause unverified (perhaps friction row 8's class) | Lina | V-OWN | |
+| R1-8 | `find_components` ranks an internal-only scaffold first for "status indicator", and 11 of 15 rows are `strong` | Lina | V-OWN (the discovery study's find_components arm) | |
+| FR-13 | `.mcp.json` sets `COMPONENTS_DIR` to `./src/components`; observed as configured in both joins, effect not exercised | Lina | V-OWN (decide defect vs intended) | |
+| FR-14 | Application MCP token tools are dead for the session after born-then-generate (`tokenIndexDir` resolved once at startup) | Lina | V-OWN | |
+| C-1 | `Button-CTA` declares `state_loading` (active, required); its web implementation has no loading / `aria-busy` handling | Lina | V-OWN | |
+| R1-9 | `Badge-Label-Base` has no status tone, variant or styling hook (low; component gap) | Lina | V-OWN (or the component-gaps record) | |
+| R1-14 / J-6 | `npm install` reports 37 vulnerabilities; attribution `cannot-tell` | Ada | `.kiro/issues/2026-10-15-123-cannot-tell-cells.md` row 5 | |
+| R1-6 (pipeline) | `generate` reads palette, override maps, motion, layering, DTCG from the package | Ada | `.kiro/issues/2026-10-15-123-palette-read-from-package.md` | **Waived for 16.0.0 by Peter's ruling (1), 2026-10-15**: ship with the known-limitation paragraph |
+
+## 5. Closed, or no DesignerPunk route (recorded so the count is whole)
+
+| ID | Finding | Disposition |
+|---|---|---|
+| R1-12, K-1 | Committed / attached `.claude/settings.json` allow-list ignored until trust; enablement asked separately | **Closed by Task 26.5** (the observed approval line, `governance/DesignerPunk-Integration-Guide.md` +4/−4) |
+| R1-10, R1-11, R1-13, R2-9, R2-10, R3-10, J-1, J-2, K-7 | Instrument findings (writes outside the folder; `--max-turns` not enforced; fresh-`HOME` unsafe → `CLAUDE_CONFIG_DIR`; capture overwrite; `KIRO_HOME`; `operator-unblock`; zsh `:t` modifier; after-step defects; built-in tool named first) | **Closed in `tests/onboarding-trio/protocol.md`** (revised through Tasks 25–27, Leonardo) |
+| R3-7 | kiro-cli transcripts show tool calls, not results | Instrument limit; **28.3's bar** is met by its own Claude Code run; the Kiro cells exit in `.kiro/issues/2026-10-15-123-cannot-tell-cells.md` |
+| R3-6, BD-1 (S2) | Consumer-Leonardo skipped three charter steps; a consumer outline's heading-token premise was false (`typography.h1`–`h6` are emitted) — `subject: leonardo` | **No DesignerPunk defect** (the CSS is correct); Stacy's CLOSEOUT cross-reads the `subject: leonardo` tags (`tasks.md` L1490) |
+| C-5, C-7, BD-3, BD-4 | Fixture `file:` dependency; beat-1 process deviations in the consumer story; beat 2 uncommitted; three claims not reached | **No DesignerPunk route** (instrument notes / correct behaviour) |
+| FR-1 | Build left `docs/tokens.css` modified (a `Generated:` timestamp) | **Closed by #339** (`c2629954f`, no wall-clock stamps; the header now reads `Generated by: @3fn/core <version>`) |
+| FR-4 | The guide's MCP step does not match what is written | **Not observed** in either join (`friction-rows:`); closed |
+| FR-5 | `init`'s next steps start at `npm install` | **Fixed in U3**; trio-3 observed "generate as the first next step"; closed |
+
+## 6. Carried design obligations with no other home (from the Task 28 C4 enumeration)
+
+Not instrument findings; placed here so each has an owner and a walked trigger rather than a closed spec's prose.
+
+| ID | Obligation | Owner | Vehicle / trigger | Disposition at release-4 prep |
+|---|---|---|---|---|
+| DO-1 | **Native name-contract resolution** (design § "What resisted design-grain specification" item 5; DD10's residual: "web only; native surfaces are unchecked until Kenya and Data specify resolution") | Kenya, Data | Spec 129's kickoff (`.kiro/issues/2026-10-03-native-generator-findings-for-spec-129-intake.md`) or the first release that supports native onboarding, whichever first | Not a release-4 item (native onboarding is unsupported in 16.0.0): waive in writing |
+| DO-2 | **Req 11.6.5's C(c1) row, superseded-in-execution** (tasks.md "Carried obligations — placed": "Next requirements touch") | Thurgood | No further requirements touch is planned in Spec 123. Proposed disposition: closed by declaration — the tasks amendment of 2026-09-27 (item 4) is the operative text, and `requirements.md` is not edited at closeout. **For Peter**: rule this, or name a touch | |
+
+## Walk (release-4 prep)
+
+For each row in §§ 1–4 and § 6: a merged fix (PR number) **or** a written waiver (who, why). **Any row with neither blocks RELEASE phase 1.** After 16.0.0 ships, rows still open move to their owners' records or the next release's walk, and this file archives with the release's record.
