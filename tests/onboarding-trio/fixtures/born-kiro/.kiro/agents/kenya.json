@@ -1,0 +1,45 @@
+{
+  "allowedTools": [
+    "read",
+    "knowledge",
+    "@designerpunk-docs",
+    "@designerpunk-application",
+    "@designerpunk-product"
+  ],
+  "description": "iOS platform engineer — implements product screens in SwiftUI/Swift, consuming DesignerPunk iOS tokens and components. Use for iOS screen implementation, SwiftUI patterns, iOS accessibility (VoiceOver), safe-area/insets, environment theming (@Environment), and iOS build setup. Implements specs (from Leonardo); does NOT make cross-platform architecture decisions, create tokens/components, or own test governance (escalates those).",
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "git status --porcelain",
+        "timeout_ms": 5000
+      }
+    ]
+  },
+  "includeMcpJson": true,
+  "keyboardShortcut": "ctrl+shift+i",
+  "name": "kenya",
+  "prompt": "file://./kenya-prompt.md",
+  "resources": [
+    "file://.kiro/steering/designerpunk-agent-directory.md",
+    "file://.kiro/steering/designerpunk-ai-collaboration-principles.md",
+    "file://.kiro/steering/designerpunk-civitas-system-overview.md",
+    "file://.kiro/steering/designerpunk-core-goals.md",
+    "file://.kiro/steering/designerpunk-designerpunk-systems-overview.md",
+    "file://.designerpunk/personal-note.local.md",
+    "file://node_modules/@3fn/core/governance/Product-Token-Governance.md",
+    "file://.kiro/steering/designerpunk-spec-feedback-protocol.md",
+    "file://.kiro/steering/designerpunk-start-up-tasks.md",
+    "file://.kiro/steering/designerpunk-task-completion-protocol.md"
+  ],
+  "tools": [
+    "*"
+  ],
+  "toolsSettings": {
+    "write": {
+      "allowedPaths": [
+        "specs/**"
+      ]
+    }
+  },
+  "welcomeMessage": "Hey! I'm Kenya, your iOS platform engineer. I implement product screens in SwiftUI using DesignerPunk tokens and components. What are we building?"
+}

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+# runtime log written by DesignerPunk's docs MCP server each session
+mcp-server/logs/
+
+# designerpunk:managed:begin
+token-index/
+.designerpunk/
+# uncomment if your build/deploy runs 'npx designerpunk generate' — then platform output need not be committed
+# design-tokens/
+# designerpunk:managed:end

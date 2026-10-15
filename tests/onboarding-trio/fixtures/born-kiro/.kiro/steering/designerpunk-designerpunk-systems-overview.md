@@ -1,0 +1,317 @@
+---
+id: designerpunk-designerpunk-systems-overview
+inclusion: always
+---
+
+
+# DesignerPunk Systems Overview
+
+**Date**: 2026-05-03
+**Last Reviewed**: 2026-09-21
+**Purpose**: Visual architecture overview of DesignerPunk's three foundational systems
+**Organization**: architecture-overview
+**Scope**: cross-project
+**Layer**: 1
+**Relevant Tasks**: all-tasks
+
+---
+
+## Overview
+
+DesignerPunk is built on three complementary foundation systems:
+
+- **Rosetta System** — Mathematical foundation for visual consistency (tokens, scales, relationships)
+- **Stemma System** — Relational foundation for behavioral consistency (components, contracts, inheritance)
+- **Civitas System** — Governance foundation for operational consistency (steering docs, MCP servers, agent coordination, processes)
+
+This document provides visual diagrams showing how these systems work individually and how they integrate to create the complete design system.
+
+For detailed Civitas documentation, see [Civitas System Overview](./designerpunk-civitas-system-overview.md).
+
+---
+
+## Pointer 1: Module-Resolution Contract (Spec 118)
+
+Module resolution — runtime-TS loading, package exports, the bin, consumer `.ts`, and component tokens — is governed by the **Module-Resolution Contract**; pull it before touching those surfaces. See `rosetta-system-architecture` § "Module-Resolution Contract".
+
+---
+
+## High-Level: DesignerPunk Three-System Architecture
+
+This diagram shows the relationship between Rosetta (mathematical), Stemma (relational), and Civitas (governance) systems, and how they work together.
+
+```mermaid
+flowchart TB
+    subgraph DesignerPunk["DesignerPunk Design System"]
+        subgraph Rosetta["Rosetta System — Mathematical Foundation"]
+            direction TB
+            R_Desc["How things look and scale<br/>Token values, scales, relationships"]
+            R_Prim["Primitive Tokens"]
+            R_Sem["Semantic Tokens"]
+            R_CompTok["Component Tokens"]
+            R_Prim --> R_Sem --> R_CompTok
+        end
+
+        subgraph Stemma["Stemma System — Relational Foundation"]
+            direction TB
+            S_Desc["How things behave and relate<br/>Component contracts, inheritance"]
+            S_Fam["Component Families"]
+            S_Base["Primitive (Base) components"]
+            S_Sem["Semantic components"]
+            S_Contracts["Behavioral Contracts"]
+            S_Fam --> S_Base --> S_Sem
+            S_Base --> S_Contracts
+            S_Sem --> S_Contracts
+        end
+
+        subgraph Civitas["Civitas System — Governance Foundation"]
+            direction TB
+            C_Desc["How the system is governed<br/>Standards, processes, coordination"]
+            C_Steer["Steering Docs (92: 83 MCP-served + 9 identity)"]
+            C_MCP["MCP Servers (3)"]
+            C_Agents["Agent Configs (8)"]
+            C_Auto["Hooks & Tooling"]
+            C_Steer --- C_MCP
+            C_Agents --- C_Auto
+        end
+    end
+
+    R_CompTok --> Stemma
+    Civitas -.->|"Governs"| Rosetta
+    Civitas -.->|"Governs"| Stemma
+    Rosetta -.->|"Visual consistency"| R_Desc
+    Stemma -.->|"Behavioral consistency"| S_Desc
+    Civitas -.->|"Operational consistency"| C_Desc
+```
+
+---
+
+## Rosetta System: Token Pipeline and Layers
+
+This diagram shows the Rosetta token pipeline (definition → validation → registry → generation → output) and the three-layer token hierarchy (primitive → semantic → component).
+
+```mermaid
+flowchart LR
+    subgraph Pipeline["Rosetta token pipeline"]
+        D["Definition<br/>Token files"]
+        V["Validation<br/>Mathematical rules"]
+        R["Registry<br/>Global store"]
+        M["Mode Resolution<br/>Light/dark sets"]
+        G["Generation<br/>Platform formats"]
+        O["Platform output<br/>CSS / Swift / Kotlin"]
+        D --> V --> R --> M --> G --> O
+    end
+
+    subgraph Layers["Token definition layers"]
+        direction TB
+        L1["Layer 1: Primitive<br/>spacing, color, typography, motion, radius"]
+        L2["Layer 2: Semantic<br/>button.*, input.*, card.*, color.primary"]
+        L3["Layer 3: Component<br/>defineComponentTokens() per component"]
+        L1 --> L2 --> L3
+    end
+
+    Layers --> Pipeline
+```
+
+---
+
+## Stemma System: Families and Inheritance
+
+This diagram shows the component families, the family inheritance pattern (primitive base → semantic variants), and how behavioral contracts apply to components.
+
+```mermaid
+flowchart TB
+    subgraph Families["Component families"]
+        F1["Buttons"]
+        F2["Form Inputs"]
+        F3["Containers"]
+        F4["Icons"]
+        F5["Modals"]
+        F6["Avatars"]
+        F7["Badges & Tags"]
+        F8["Data Displays"]
+        F9["Dividers"]
+        F10["Loading"]
+        F11["Navigation"]
+    end
+
+    subgraph Inheritance["Family inheritance pattern"]
+        Base["[Family]-[Type]-Base<br/>Primitive — foundational behaviors"]
+        Sem1["[Family]-[Type]-Variant1<br/>Semantic"]
+        Sem2["[Family]-[Type]-Variant2<br/>Semantic"]
+        Base --> Sem1
+        Base --> Sem2
+    end
+
+    subgraph Contracts["Behavioral contracts (examples)"]
+        C1["interaction_focusable"]
+        C2["validation_validatable"]
+        C3["content_float_label"]
+        C4["state_error"]
+    end
+
+    Families --> Inheritance
+    Base --> Contracts
+    Sem1 --> Contracts
+    Sem2 --> Contracts
+```
+
+---
+
+## Civitas System: Governance Infrastructure
+
+This diagram shows the Civitas governance infrastructure — steering documentation served via MCP, agent configurations with domain boundaries, and the trigger mechanisms that keep governance active.
+
+```mermaid
+flowchart TB
+    subgraph Civitas["Civitas System"]
+        subgraph Docs["Steering Documentation"]
+            L0["Layer 0: Meta-guide"]
+            L1["Layer 1: Foundation (always loaded)"]
+            L2["Layer 2: Frameworks (MCP-queryable)"]
+            L3["Layer 3: Implementations (conditional)"]
+            L0 --> L1 --> L2 --> L3
+        end
+
+        subgraph MCPs["MCP Servers"]
+            DocsMCP["Docs MCP<br/>83 docs, 2,833 sections"]
+            AppMCP["Application MCP<br/>34 components, 443 tokens"]
+            ProdMCP["Product MCP<br/>(conceptual)"]
+        end
+
+        subgraph Agents["Agent Ecosystem"]
+            Sys["System Agents<br/>Ada (Rosetta), Lina (Stemma), Thurgood (Civitas)"]
+            Prod["Product Agents<br/>Leonardo, Sparky, Kenya, Data, Stacy"]
+        end
+
+        subgraph Governance["Governance Processes"]
+            Triggers["Event-driven triggers"]
+            Cadence["Monthly health checks"]
+            Ballot["Ballot measure model"]
+        end
+    end
+
+    Docs --> MCPs
+    MCPs --> Agents
+    Governance -.->|"Maintains"| Docs
+    Governance -.->|"Monitors"| MCPs
+    Governance -.->|"Verifies"| Agents
+```
+
+---
+
+## Integration: Tokens → Components → Platforms
+
+This diagram shows how Rosetta tokens flow into Stemma components, which then generate platform-specific implementations (Web, iOS, Android), all governed by Civitas.
+
+```mermaid
+flowchart TB
+    subgraph Rosetta["Rosetta System"]
+        PT["Primitive tokens<br/>space100, purple-300, fontSize200"]
+        ST["Semantic tokens<br/>color.primary, typography.bodyMd"]
+        CT["Component token files<br/>tokens.ts per component"]
+        PT --> ST --> CT
+    end
+
+    subgraph Stemma["Stemma System"]
+        Fam["Component families<br/>Buttons, Form Inputs, …"]
+        Comp["Stemma components<br/>[Family]-[Type]-[Variant]"]
+        Fam --> Comp
+    end
+
+    subgraph Platforms["Platform implementations"]
+        Web["Web<br/>CSS custom properties<br/>Web Components"]
+        iOS["iOS<br/>Swift extensions<br/>SwiftUI"]
+        And["Android<br/>Kotlin extensions<br/>Jetpack Compose"]
+    end
+
+    subgraph Civitas["Civitas System"]
+        Gov["Governance<br/>Standards, processes, MCP"]
+    end
+
+    CT --> Comp
+    Comp --> Web
+    Comp --> iOS
+    Comp --> And
+    Civitas -.->|"Governs"| Rosetta
+    Civitas -.->|"Governs"| Stemma
+```
+
+---
+
+## Combined Overview (Single Diagram)
+
+This diagram provides a simplified single-view of the complete system: three foundations → platform output.
+
+```mermaid
+flowchart TB
+    subgraph Foundation["DesignerPunk Foundation"]
+        subgraph Rosetta["Rosetta — Mathematical"]
+            R1["Primitive tokens"]
+            R2["Semantic tokens"]
+            R3["Component tokens"]
+            R1 --> R2 --> R3
+        end
+
+        subgraph Stemma["Stemma — Relational"]
+            S1["Component families"]
+            S2["Primitive (Base) components"]
+            S3["Semantic components"]
+            S4["Behavioral contracts"]
+            S1 --> S2 --> S3
+            S2 --> S4
+            S3 --> S4
+        end
+
+        subgraph Civitas["Civitas — Governance"]
+            C1["Steering docs & MCP"]
+            C2["Agent coordination"]
+            C3["Processes & triggers"]
+            C1 --> C2 --> C3
+        end
+    end
+
+    subgraph Output["Platform output"]
+        Web["Web"]
+        iOS["iOS"]
+        And["Android"]
+    end
+
+    R3 --> S3
+    S3 --> Web
+    S3 --> iOS
+    S3 --> And
+    Civitas -.->|"Governs"| Rosetta
+    Civitas -.->|"Governs"| Stemma
+```
+
+---
+
+## Related Documentation
+
+**Civitas System:**
+- [Civitas System Overview](./designerpunk-civitas-system-overview.md) — Governance layer definition, three-layer boundary, processes
+
+**Rosetta System:**
+- [Rosetta System Principles](rosetta-system-principles) — Mathematical foundation and token philosophy
+- [Rosetta System Architecture](rosetta-system-architecture) — Detailed pipeline, generation subsystem, validation
+
+**Stemma System:**
+- [Stemma System Principles](stemma-system-principles) — Component philosophy and inheritance patterns
+- [Contract System Reference](contract-system-reference) — Behavioral contracts, Concept Catalog, classification rules
+- [Component Quick Reference](component-quick-reference) — Routing table for component family docs
+
+**Component Families:**
+- [Component-Family-Button.md](component-family-button)
+- [Component-Family-Form-Inputs.md](component-family-form-inputs)
+- [Component-Family-Icon.md](component-family-icon)
+- [Component-Family-Container.md](component-family-container)
+- [Component-Family-Avatar.md](component-family-avatar)
+- [Component-Family-Badge.md](component-family-badge)
+- [Component-Family-Chip.md](component-family-chip)
+- [Component-Family-Progress.md](progress-indicator-components)
+- [Component-Family-Divider.md](component-family-divider) (placeholder)
+- [Component-Family-Loading.md](component-family-loading) (placeholder)
+- [Component-Family-Modal.md](component-family-modal) (placeholder)
+- [Component-Family-Navigation.md](component-family-navigation)
+- [Component-Family-Data-Display.md](component-family-data-display) (placeholder)

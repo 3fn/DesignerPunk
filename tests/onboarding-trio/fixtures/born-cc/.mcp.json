@@ -1,0 +1,38 @@
+{
+  "mcpServers": {
+    "designerpunk-docs": {
+      "command": "node",
+      "args": [
+        "./node_modules/@3fn/core/dist/mcp/docs-mcp.js"
+      ],
+      "env": {
+        "MCP_STEERING_DIR": "./node_modules/@3fn/core/governance"
+      }
+    },
+    "designerpunk-application": {
+      "command": "node",
+      "args": [
+        "./node_modules/@3fn/core/dist/mcp/application-mcp.js"
+      ],
+      "env": {
+        "COMPONENTS_DIR": "./src/components",
+        "PATTERNS_DIR": "./node_modules/@3fn/core/experience-patterns",
+        "TEMPLATES_DIR": "./node_modules/@3fn/core/layout-templates",
+        "GUIDANCE_DIR": "./node_modules/@3fn/core/family-guidance",
+        "REGISTRY_PATH": "./node_modules/@3fn/core/family-registry.yaml",
+        "TOKEN_INDEX_DIR": "./token-index"
+      }
+    },
+    "designerpunk-product": {
+      "command": "node",
+      "args": [
+        "./node_modules/@3fn/core/dist/mcp/product-mcp.js"
+      ],
+      "env": {
+        "PRODUCT_DIR": "./product",
+        "COMPONENT_DIR": "./src/components",
+        "TOKEN_INDEX_DIR": "./token-index"
+      }
+    }
+  }
+}

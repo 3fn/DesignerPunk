@@ -1,0 +1,911 @@
+/**
+ * Semantic Color Token Definitions
+ * 
+ * Mode-aware semantic color tokens following the Nathan Curtis concept-first naming model.
+ * Tokens are organized by semantic concept for intuitive discovery and AI agent reasoning.
+ * 
+ * SEMANTIC CONCEPTS:
+ * - feedback = System status communication (success, error, warning, info, select, notification)
+ * - identity = Entity type differentiation (human, agent)
+ * - action = Interactive element emphasis (primary, secondary)
+ * - contrast = Content on colored backgrounds (onLight, onDark)
+ * - structure = Visual organization (canvas, surface, border, border.subtle)
+ * 
+ * ADDITIONAL CATEGORIES:
+ * - attention = yellow (attention-grabbing elements)
+ * - highlight = yellow (emphasized content)
+ * - tech = cyan (technical elements)
+ * - data = cyan (data visualization)
+ * - text = gray hierarchy (default, muted, subtle)
+ * - icon = gray (default icon color)
+ * - print = black (print media)
+ * - glow = vibrant neon colors for emphasis effects
+ * 
+ * MIGRATED TO COMPONENT DIRECTORIES (Spec 058):
+ * - avatar = MIGRATED to src/components/core/Avatar-Base/avatar.tokens.ts
+ * - badge = MIGRATED to src/components/core/Badge-Count-Notification/tokens.ts
+ *   (Note: Badge component tokens reference the semantic color.feedback.notification.* tokens)
+ * 
+ * All color tokens reference mode-aware primitive color tokens that support
+ * light/dark modes with base/wcag themes.
+ * 
+ * ARCHITECTURAL DECISION: Shadow Color Semantic Layer Removed
+ * 
+ * Shadow tokens now reference primitive shadow colors directly (e.g., shadowBlack100)
+ * instead of going through a semantic color layer (e.g., color.shadow.default).
+ * 
+ * Rationale:
+ * 1. Matches Industry Patterns: Major design systems (Material Design, Carbon, Polaris)
+ *    include shadow color directly in shadow token definitions rather than creating
+ *    separate semantic color tokens for shadows.
+ * 
+ * 2. Aligns with Typography Architecture: Typography tokens compose primitives directly
+ *    (fontSize, lineHeight, fontWeight) without intermediate semantic layers. Shadow
+ *    tokens should follow the same pattern.
+ * 
+ * 3. Eliminates Hierarchical References: Semantic→semantic references (shadow.dusk →
+ *    color.shadow.default → shadowBlack100) create unnecessary complexity. Direct
+ *    primitive references (shadow.dusk → shadowBlack100) are clearer.
+ * 
+ * 4. Shadow Colors Aren't Reusable: Shadow-specific colors like shadowBlack100 won't
+ *    be used outside shadow contexts, so a semantic abstraction layer provides no value.
+ * 
+ * 5. Semantic Meaning in Shadow Token: The semantic meaning belongs in the shadow token
+ *    name itself (shadow.dusk, shadow.sunrise) rather than in a separate color token.
+ * 
+ * NAMING MIGRATION (Spec 052):
+ * - Migrated from strong/subtle pattern to concept-first pattern
+ * - Old: color.success.strong/subtle → New: color.feedback.success.text/background
+ * - Old: color.select.selected.strong/subtle → New: color.feedback.select.text/background.rest
+ * - Old: color.primary → New: color.action.primary
+ * - See design authority: .kiro/specs/051-semantic-token-naming-restructure/design-outline.md
+ * 
+ * Spec-aligned: Token count updated for Spec 052 semantic naming restructure
+ */
+
+import { SemanticToken, SemanticCategory } from '@3fn/core/types';
+
+/**
+ * Semantic color tokens for systematic color usage
+ * 
+ * Token count updated for Spec 052 semantic naming restructure.
+ * See design authority: .kiro/specs/051-semantic-token-naming-restructure/design-outline.md
+ */
+export const colorTokens: Record<string, Omit<SemanticToken, 'primitiveTokens'>> = {
+  // ============================================================================
+  // FEEDBACK CONCEPT: Communicate system status to users
+  // ============================================================================
+  /**
+   * Feedback Concept: Communicate system status to users
+   * 
+   * Roles: success, error, warning, info, select
+   * Properties: text, background, border
+   * 
+   * Design Note (Select): Select is placed under feedback as UI response to 
+   * user action. If additional interaction-based use cases emerge (focus states, 
+   * drag states), consider migrating to an 'interaction' concept.
+   * 
+   * @see .kiro/specs/051-semantic-token-naming-restructure/design-outline.md
+   */
+
+  // Feedback - Success (3 tokens)
+  /**
+   * WCAG remediation (2026-09-12, Spec 112 audit finding F4):
+   * This token previously referenced green400 (OKLCH 0.66 0.18 154), which measures
+   * 2.84:1 against color.structure.canvas (white100) — below the 4.5:1 AA floor for
+   * normal text. Remapped to green500 (OKLCH 0.54 0.14 154) = 4.72:1 on white100.
+   * The dark theme carries a Level 2 override to green300 (4.63:1 on the dark canvas,
+   * gray400) — see src/tokens/themes/dark/SemanticOverrides.ts.
+   *
+   * Guarded by src/tokens/__tests__/SemanticColorContrast.test.ts.
+   * No primitive OKLCH values were changed; green400 remains the ramp step it was.
+   */
+  'color.feedback.success.text': {
+    name: 'color.feedback.success.text',
+    primitiveReferences: { value: 'green500' },
+    category: SemanticCategory.COLOR,
+    context: 'Text color for success feedback messages and indicators',
+    description: 'Green text color for success states - form validation, confirmation messages, positive feedback. References green500 for WCAG AA contrast (4.72:1) against the light canvas; dark theme overrides to green300 (4.63:1 against the dark canvas).'
+  },
+
+  'color.feedback.success.background': {
+    name: 'color.feedback.success.background',
+    primitiveReferences: { value: 'green100' },
+    category: SemanticCategory.COLOR,
+    context: 'Background color for success feedback areas',
+    description: 'Light green background for success states - alert backgrounds, success banners, positive indicators'
+  },
+
+  'color.feedback.success.border': {
+    name: 'color.feedback.success.border',
+    primitiveReferences: { value: 'green400' },
+    category: SemanticCategory.COLOR,
+    context: 'Border color for success feedback elements',
+    description: 'Green border for success states - input validation borders, success card outlines'
+  },
+
+  // Feedback - Error (3 tokens)
+  'color.feedback.error.text': {
+    name: 'color.feedback.error.text',
+    primitiveReferences: { value: 'pink400' },
+    category: SemanticCategory.COLOR,
+    context: 'Text color for error feedback messages and indicators',
+    description: 'Pink text color for error states - form validation errors, error messages, destructive action warnings'
+  },
+
+  'color.feedback.error.background': {
+    name: 'color.feedback.error.background',
+    primitiveReferences: { value: 'pink100' },
+    category: SemanticCategory.COLOR,
+    context: 'Background color for error feedback areas',
+    description: 'Light pink background for error states - alert backgrounds, error banners, destructive indicators'
+  },
+
+  'color.feedback.error.border': {
+    name: 'color.feedback.error.border',
+    primitiveReferences: { value: 'pink400' },
+    category: SemanticCategory.COLOR,
+    context: 'Border color for error feedback elements',
+    description: 'Pink border for error states - input validation borders, error card outlines'
+  },
+
+  // Feedback - Warning (3 tokens)
+  'color.feedback.warning.text': {
+    name: 'color.feedback.warning.text',
+    primitiveReferences: { value: 'orange400' },
+    category: SemanticCategory.COLOR,
+    context: 'Text color for warning feedback messages and indicators',
+    description: 'Orange text color for warning states - caution messages, attention-required indicators'
+  },
+
+  'color.feedback.warning.background': {
+    name: 'color.feedback.warning.background',
+    primitiveReferences: { value: 'orange100' },
+    category: SemanticCategory.COLOR,
+    context: 'Background color for warning feedback areas',
+    description: 'Light orange background for warning states - alert backgrounds, caution banners'
+  },
+
+  'color.feedback.warning.border': {
+    name: 'color.feedback.warning.border',
+    primitiveReferences: { value: 'orange400' },
+    category: SemanticCategory.COLOR,
+    context: 'Border color for warning feedback elements',
+    description: 'Orange border for warning states - input validation borders, warning card outlines'
+  },
+
+  // Feedback - Info (3 tokens)
+  'color.feedback.info.text': {
+    name: 'color.feedback.info.text',
+    primitiveReferences: { value: 'teal400' },
+    category: SemanticCategory.COLOR,
+    context: 'Text color for informational feedback messages',
+    description: 'Teal text color for informational states - help text, informational messages, neutral feedback'
+  },
+
+  'color.feedback.info.background': {
+    name: 'color.feedback.info.background',
+    primitiveReferences: { value: 'teal100' },
+    category: SemanticCategory.COLOR,
+    context: 'Background color for informational feedback areas',
+    description: 'Light teal background for informational states - info banners, help sections'
+  },
+
+  'color.feedback.info.border': {
+    name: 'color.feedback.info.border',
+    primitiveReferences: { value: 'teal400' },
+    category: SemanticCategory.COLOR,
+    context: 'Border color for informational feedback elements',
+    description: 'Teal border for informational states - info card outlines, help section borders'
+  },
+
+  // Feedback - Select (6 tokens: text/background/border × rest/default)
+  /**
+   * Select tokens include state (rest, default) because selection has interaction states.
+   * - rest: Currently selected item state
+   * - default: Not selected / available for selection state
+   * Hover states will use blend compositions.
+   */
+  'color.feedback.select.text.rest': {
+    name: 'color.feedback.select.text.rest',
+    primitiveReferences: { value: 'cyan400' },
+    category: SemanticCategory.COLOR,
+    context: 'Text color for selected state in selection components',
+    description: 'Cyan text for selected state - label text in Select/Multi-Select modes when item is selected'
+  },
+
+  'color.feedback.select.text.default': {
+    name: 'color.feedback.select.text.default',
+    primitiveReferences: { value: 'gray200' },
+    category: SemanticCategory.COLOR,
+    context: 'Text color for not-selected state in selection components',
+    description: 'Gray text for not-selected state - label text in Select mode when item is available but not selected'
+  },
+
+  'color.feedback.select.background.rest': {
+    name: 'color.feedback.select.background.rest',
+    primitiveReferences: { value: 'cyan100' },
+    category: SemanticCategory.COLOR,
+    context: 'Background color for selected state in selection components',
+    description: 'Light cyan background for selected state in Select and Multi-Select modes'
+  },
+
+  'color.feedback.select.background.default': {
+    name: 'color.feedback.select.background.default',
+    primitiveReferences: { value: 'gray100' },
+    category: SemanticCategory.COLOR,
+    context: 'Background color for not-selected state in selection components',
+    description: 'Light gray background for not-selected state in Select mode'
+  },
+
+  'color.feedback.select.border.rest': {
+    name: 'color.feedback.select.border.rest',
+    primitiveReferences: { value: 'cyan400' },
+    category: SemanticCategory.COLOR,
+    context: 'Border color for selected state in selection components',
+    description: 'Cyan border for selected state - checkmark base, item border in Select/Multi-Select modes'
+  },
+
+  'color.feedback.select.border.default': {
+    name: 'color.feedback.select.border.default',
+    primitiveReferences: { value: 'gray200' },
+    category: SemanticCategory.COLOR,
+    context: 'Border color for not-selected state in selection components',
+    description: 'Gray border for not-selected state in Select mode'
+  },
+
+  // Feedback - Notification (2 tokens)
+  /**
+   * Notification tokens for attention-demanding UI elements like badge counts.
+   * Uses high-visibility pink for maximum visual prominence.
+   * 
+   * @see .kiro/specs/046-input-checkbox-base Task 8.2 for migration context
+   */
+  'color.feedback.notification.background': {
+    name: 'color.feedback.notification.background',
+    primitiveReferences: { value: 'pink400' },
+    category: SemanticCategory.COLOR,
+    context: 'Background color for notification badges and alerts',
+    description: 'High-visibility pink background for notification badges - provides 6.33:1 contrast ratio with white text, exceeds WCAG AA requirements'
+  },
+
+  'color.feedback.notification.text': {
+    name: 'color.feedback.notification.text',
+    primitiveReferences: { value: 'white100' },
+    category: SemanticCategory.COLOR,
+    context: 'Text color for notification badges and alerts',
+    description: 'White text on notification backgrounds - ensures WCAG AA contrast compliance (6.33:1 ratio) for maximum readability'
+  },
+
+  // ============================================================================
+  // IDENTITY CONCEPT: Entity type differentiation
+  // ============================================================================
+  /**
+   * Identity Concept: Differentiate entity types visually
+   * 
+   * Roles: human, agent
+   * 
+   * These tokens represent the core identity colors for different entity types.
+   * Component tokens (e.g., color.avatar.human.background) should reference these
+   * semantic tokens rather than primitives directly.
+   * 
+   * @see .kiro/specs/051-semantic-token-naming-restructure/design-outline.md
+   */
+
+  'color.identity.human': {
+    name: 'color.identity.human',
+    primitiveReferences: { value: 'orange300' },
+    category: SemanticCategory.COLOR,
+    context: 'Identity color for human entities',
+    description: 'Orange identity color for human entities - warm, approachable visual identity used by Avatar and other human-representing components'
+  },
+
+  'color.identity.agent': {
+    name: 'color.identity.agent',
+    primitiveReferences: { value: 'teal200' },
+    category: SemanticCategory.COLOR,
+    context: 'Identity color for AI agent entities',
+    description: 'Teal identity color for AI agent entities - distinct, technical visual identity used by Avatar and other agent-representing components'
+  },
+
+  // ============================================================================
+  // ACTION CONCEPT: Interactive element emphasis
+  // ============================================================================
+  /**
+   * Action Concept: Visual emphasis levels for interactive elements
+   * 
+   * Roles: primary, secondary
+   * 
+   * Design Note: primary/secondary represent visual emphasis levels, not action types.
+   * - primary: Emphasized action (single, focused instances) - hero CTAs, main actions
+   * - secondary: De-emphasized action (repetitive, supporting instances) - list items, secondary buttons
+   * 
+   * Use primary for hero moments, secondary for lists to avoid UI over-saturation.
+   * 
+   * @see .kiro/specs/051-semantic-token-naming-restructure/design-outline.md
+   */
+
+  'color.action.primary': {
+    name: 'color.action.primary',
+    primitiveReferences: { value: 'cyan300' },
+    category: SemanticCategory.COLOR,
+    context: 'Primary action color for emphasized interactive elements',
+    description: 'Cyan color for emphasized actions - hero CTAs, main buttons, primary interactive elements. Use for single, focused instances where visual prominence is desired.'
+  },
+
+  'color.action.secondary': {
+    name: 'color.action.secondary',
+    primitiveReferences: { value: 'gray400' },
+    category: SemanticCategory.COLOR,
+    context: 'Secondary action color for de-emphasized interactive elements',
+    description: 'Dark neutral color for de-emphasized actions - list item buttons, secondary CTAs, repetitive action elements. Use for supporting instances to avoid UI over-saturation.'
+  },
+
+  'color.action.navigation': {
+    name: 'color.action.navigation',
+    primitiveReferences: { value: 'cyan500' },
+    category: SemanticCategory.COLOR,
+    context: 'Navigation action color for inline links and navigation elements',
+    description: 'Cyan color for navigation actions - inline text links, breadcrumbs, and navigation-specific interactive elements.'
+  },
+
+  // Attention & Highlight (2 tokens)
+  'color.attention': {
+    name: 'color.attention',
+    primitiveReferences: { value: 'yellow400' },
+    category: SemanticCategory.COLOR,
+    context: 'Attention color for elements requiring user focus',
+    description: 'Yellow for attention-grabbing elements and notifications'
+  },
+
+  'color.highlight': {
+    name: 'color.highlight',
+    primitiveReferences: { value: 'yellow300' },
+    category: SemanticCategory.COLOR,
+    context: 'Highlight color for emphasized content',
+    description: 'Yellow for highlighted text and emphasized content'
+  },
+
+  // Tech & Data (2 tokens)
+  'color.tech': {
+    name: 'color.tech',
+    primitiveReferences: { value: 'purple400' },
+    category: SemanticCategory.COLOR,
+    context: 'Tech color for technical elements and code',
+    description: 'Purple for technical elements, code snippets, and tech-related UI'
+  },
+
+  'color.data': {
+    name: 'color.data',
+    primitiveReferences: { value: 'purple300' },
+    category: SemanticCategory.COLOR,
+    context: 'Data color for data visualization and metrics',
+    description: 'Purple for data visualization, metrics, and data-related elements'
+  },
+
+  // Text Hierarchy (4 tokens)
+  /**
+   * WCAG remediation (2026-09-13, interim dark-text-hierarchy fix, Peter-ratified;
+   * .kiro/issues/2026-09-12-semantic-contrast-adjudication-queue.md):
+   * The light-mode primitive (gray300) is unchanged and remains AA-passing against
+   * the light canvas. Against the dark canvas (color.structure.canvas → gray400) it
+   * measured 1.536:1 — well below the 4.5:1 AA floor for normal text. The dark theme
+   * carries a Level 2 override to white100 (8.46:1 on gray400) — see
+   * src/tokens/themes/dark/SemanticOverrides.ts.
+   *
+   * Guarded by src/tokens/__tests__/SemanticColorContrast.test.ts.
+   * No primitive OKLCH values were changed.
+   */
+  'color.text.default': {
+    name: 'color.text.default',
+    primitiveReferences: { value: 'gray300' },
+    category: SemanticCategory.COLOR,
+    context: 'Primary text color for body content',
+    description: 'Primary gray for main text content. Dark theme overrides to white100 (8.46:1 against the dark canvas) for WCAG AA.'
+  },
+
+  /**
+   * WCAG remediation (2026-09-13, interim dark-text-hierarchy fix, Peter-ratified;
+   * .kiro/issues/2026-09-12-semantic-contrast-adjudication-queue.md):
+   * The light-mode primitive (gray200) is unchanged. Against the dark canvas it
+   * measured 2.324:1 — below the 4.5:1 AA floor. The dark theme carries a Level 2
+   * override to white300 (6.28:1 on gray400) — see
+   * src/tokens/themes/dark/SemanticOverrides.ts.
+   *
+   * Guarded by src/tokens/__tests__/SemanticColorContrast.test.ts.
+   * No primitive OKLCH values were changed.
+   */
+  'color.text.muted': {
+    name: 'color.text.muted',
+    primitiveReferences: { value: 'gray200' },
+    category: SemanticCategory.COLOR,
+    context: 'Muted text color for secondary content',
+    description: 'Muted gray for secondary and less prominent text. Dark theme overrides to white300 (6.28:1 against the dark canvas) for WCAG AA.'
+  },
+
+  /**
+   * WCAG remediation (2026-09-13, interim dark-text-hierarchy fix, Peter-ratified;
+   * .kiro/issues/2026-09-12-semantic-contrast-adjudication-queue.md):
+   * The light-mode primitive (gray100) is unchanged. Against the dark canvas it
+   * measured 3.411:1 — below the 4.5:1 AA floor. The dark theme carries a Level 2
+   * override to white500 (4.53:1 on gray400) — see
+   * src/tokens/themes/dark/SemanticOverrides.ts.
+   *
+   * Guarded by src/tokens/__tests__/SemanticColorContrast.test.ts.
+   * No primitive OKLCH values were changed.
+   */
+  'color.text.subtle': {
+    name: 'color.text.subtle',
+    primitiveReferences: { value: 'gray100' },
+    category: SemanticCategory.COLOR,
+    context: 'Subtle text color for tertiary content',
+    description: 'Subtle gray for tertiary and very subtle text elements. Dark theme overrides to white500 (4.53:1 against the dark canvas) for WCAG AA.'
+  },
+
+  // ============================================================================
+  // CONTRAST CONCEPT: Content on colored backgrounds
+  // ============================================================================
+  /**
+   * Contrast Concept: Colors for content on colored backgrounds
+   * 
+   * Roles: onLight, onDark
+   * 
+   * Naming matches the background the content sits ON:
+   * - onLight: Dark content (black500) for use on light backgrounds
+   * - onDark: Light content (white100) for use on dark backgrounds
+   * 
+   * @see .kiro/specs/051-semantic-token-naming-restructure/design-outline.md
+   */
+
+  'color.contrast.onLight': {
+    name: 'color.contrast.onLight',
+    primitiveReferences: { value: 'black500' },
+    category: SemanticCategory.COLOR,
+    context: 'Contrast color for content on light backgrounds',
+    description: 'Black color for content (text, icons) on light backgrounds - ensures WCAG AA contrast compliance for readability'
+  },
+
+  'color.contrast.onDark': {
+    name: 'color.contrast.onDark',
+    primitiveReferences: { value: 'white100' },
+    category: SemanticCategory.COLOR,
+    context: 'Contrast color for content on dark backgrounds',
+    description: 'White color for content (text, icons) on dark backgrounds - ensures WCAG AA contrast compliance for readability'
+  },
+
+  'color.contrast.onAction': {
+    name: 'color.contrast.onAction',
+    primitiveReferences: { value: 'black500' },
+    category: SemanticCategory.COLOR,
+    context: 'Contrast color for content on action-colored backgrounds',
+    description: 'Content color for text and icons on primary action backgrounds. Black on cyan (base), white on teal (WCAG) to maintain contrast compliance.'
+  },
+
+  // ============================================================================
+  // STRUCTURE CONCEPT: Visual organization and layout
+  // ============================================================================
+  /**
+   * Structure Concept: Visual organization and layout elements
+   * 
+   * Roles: canvas, surface, border
+   * 
+   * Provides foundational colors for UI structure:
+   * - canvas: Base page background (white100)
+   * - surface: Elevated containers like cards (white200)
+   * - border: Standard UI borders and dividers (gray100)
+   * - border.subtle: Subtle borders with baked-in alpha for softer visual separation
+   * 
+   * @see .kiro/specs/051-semantic-token-naming-restructure/design-outline.md
+   */
+
+  'color.structure.canvas': {
+    name: 'color.structure.canvas',
+    primitiveReferences: { value: 'white100' },
+    category: SemanticCategory.COLOR,
+    context: 'Base canvas color for page backgrounds',
+    description: 'Canvas background color - default surface for all pages, provides the foundational layer for UI structure'
+  },
+
+  'color.structure.surface': {
+    name: 'color.structure.surface',
+    primitiveReferences: { value: 'white200' },
+    category: SemanticCategory.COLOR,
+    context: 'Surface color for cards and elevated containers',
+    description: 'Surface near-white for cards, containers, and elevated surfaces - provides visual hierarchy above canvas. Alias for color.structure.surface.primary.'
+  },
+
+  'color.structure.surface.primary': {
+    name: 'color.structure.surface.primary',
+    primitiveReferences: { value: 'white200' },
+    category: SemanticCategory.COLOR,
+    context: 'Primary surface color for cards and elevated containers',
+    description: 'Primary surface near-white for cards - default elevation level, provides visual hierarchy above canvas'
+  },
+
+  'color.structure.surface.secondary': {
+    name: 'color.structure.surface.secondary',
+    primitiveReferences: { value: 'white300' },
+    category: SemanticCategory.COLOR,
+    context: 'Secondary surface color for nested cards or lower emphasis',
+    description: 'Secondary surface light gray-white for nested cards - secondary elevation level, provides subtle visual distinction from primary surface'
+  },
+
+  'color.structure.surface.tertiary': {
+    name: 'color.structure.surface.tertiary',
+    primitiveReferences: { value: 'white400' },
+    category: SemanticCategory.COLOR,
+    context: 'Tertiary surface color for deeply nested cards or lowest emphasis',
+    description: 'Tertiary surface medium gray-white for deeply nested cards - tertiary elevation level, provides clear visual distinction for deep nesting'
+  },
+
+  'color.structure.border': {
+    name: 'color.structure.border',
+    primitiveReferences: { value: 'gray100' },
+    category: SemanticCategory.COLOR,
+    context: 'Border color for UI elements and dividers',
+    description: 'Border gray for standard UI element borders and dividers - provides clear visual separation'
+  },
+
+  /**
+   * Opacity Composition Pattern: color + opacity
+   * 
+   * This token uses opacity composition rather than a baked-in RGBA value.
+   * The primitiveReferences object contains separate `color` and `opacity` keys
+   * that platform generators resolve to the appropriate RGBA output:
+   * - Web: rgba(r, g, b, alpha)
+   * - iOS: UIColor(red:green:blue:alpha:)
+   * - Android: Color.argb(alpha, r, g, b)
+   * 
+   * This pattern aligns with the mathematical token foundation where opacity
+   * values are derived from the opacity token scale (opacity048 = 0.48).
+   * 
+   * @see src/tokens/OpacityTokens.ts for opacity scale definition
+   */
+  'color.structure.border.subtle': {
+    name: 'color.structure.border.subtle',
+    primitiveReferences: { color: 'gray100', opacity: 'opacity048' },
+    category: SemanticCategory.COLOR,
+    context: 'Subtle border color with transparency for softer visual separation',
+    description: 'Semi-transparent border (gray100 at opacity048/48%) for subtle visual separation - used by Container-Base, Container-Card-Base, and other components needing soft borders'
+  },
+
+  // Background Variants (1 token - kept for specific use case)
+  'color.background.primary.subtle': {
+    name: 'color.background.primary.subtle',
+    primitiveReferences: { value: 'cyan100' },
+    category: SemanticCategory.COLOR,
+    context: 'Subtle primary background for hover states and selections',
+    description: 'Subtle cyan tint background for secondary button hover states, selected list items, and hover states on cards/containers'
+  },
+
+  // Icon Colors (2 tokens)
+  'color.icon.default': {
+    name: 'color.icon.default',
+    primitiveReferences: { value: 'gray200' },
+    category: SemanticCategory.COLOR,
+    context: 'Default icon color with optical balance (slightly lighter than text)',
+    description: 'Default icon color using gray200 for optical balance - slightly lighter than text (gray300) for proper visual weight'
+  },
+
+  'color.icon.navigation.inactive': {
+    name: 'color.icon.navigation.inactive',
+    primitiveReferences: { value: 'gray300' },
+    category: SemanticCategory.COLOR,
+    context: 'Inactive navigation icon color — neutral gray for unselected destinations',
+    description: 'Inactive icon fill for navigation components (Nav-TabBar, Nav-Header). Neutral gray distinct from active cyan. Dark override swaps to gray100. Scoped to navigation contexts — not a universal inactive icon token.'
+  },
+
+  // Print Media Colors (1 token)
+  'color.print.default': {
+    name: 'color.print.default',
+    primitiveReferences: { value: 'black100' },
+    category: SemanticCategory.COLOR,
+    context: 'Pure black color for print media',
+    description: 'Pure black (#000000) for optimal printing quality in print media queries'
+  },
+
+  // Glow Colors (5 tokens) - Reference existing vibrant primitive colors
+  'glow.neonPurple': {
+    name: 'glow.neonPurple',
+    primitiveReferences: { value: 'purple500' },
+    category: SemanticCategory.COLOR,
+    context: 'Neon purple glow color for emphasis effects',
+    description: 'Vibrant purple glow referencing purple500'
+  },
+
+  'glow.neonCyan': {
+    name: 'glow.neonCyan',
+    primitiveReferences: { value: 'cyan500' },
+    category: SemanticCategory.COLOR,
+    context: 'Neon cyan glow color for emphasis effects',
+    description: 'Vibrant cyan glow referencing cyan500'
+  },
+
+  'glow.neonYellow': {
+    name: 'glow.neonYellow',
+    primitiveReferences: { value: 'yellow500' },
+    category: SemanticCategory.COLOR,
+    context: 'Neon yellow glow color for emphasis effects',
+    description: 'Vibrant yellow glow referencing yellow500'
+  },
+
+  'glow.neonGreen': {
+    name: 'glow.neonGreen',
+    primitiveReferences: { value: 'green300' },
+    category: SemanticCategory.COLOR,
+    context: 'Neon green glow color for emphasis effects',
+    description: 'Vibrant green glow referencing green300 (highest chroma in family, brighter for glow effect)'
+  },
+
+  'glow.neonPink': {
+    name: 'glow.neonPink',
+    primitiveReferences: { value: 'pink500' },
+    category: SemanticCategory.COLOR,
+    context: 'Neon pink glow color for emphasis effects',
+    description: 'Vibrant pink glow referencing pink500'
+  },
+
+  // ============================================================================
+  // COMPONENT TOKENS - MIGRATED (Spec 058)
+  // ============================================================================
+  /**
+   * Component Tokens: MIGRATED to component directories per Rosetta System architecture
+   * 
+   * Per Rosetta System architecture, component tokens live at src/components/[ComponentName]/tokens.ts.
+   * 
+   * Avatar tokens migrated to src/components/core/Avatar-Base/avatar.tokens.ts:
+   * - color.avatar.human.background -> AvatarColorTokens['human.background']
+   * - color.avatar.agent.background -> AvatarColorTokens['agent.background']
+   * - color.avatar.human.icon -> AvatarColorTokens['human.icon']
+   * - color.avatar.agent.icon -> AvatarColorTokens['agent.icon']
+   * - color.avatar.default.border -> AvatarColorTokens['default.border']
+   * 
+   * Badge tokens migrated to src/components/core/Badge-Count-Notification/tokens.ts:
+   * - color.badge.notification.background -> BadgeNotificationColorTokens['notification.background']
+   * - color.badge.notification.text -> BadgeNotificationColorTokens['notification.text']
+   * 
+   * Import from the canonical locations:
+   * import { AvatarColorTokens } from 'src/components/core/Avatar-Base/avatar.tokens';
+   * import { BadgeNotificationColorTokens } from 'src/components/core/Badge-Count-Notification/tokens';
+   * 
+   * @see .kiro/specs/058-component-token-architecture-cleanup for migration details
+   */
+
+  // ============================================================================
+  // PROGRESS INDICATOR FAMILY (Spec 048)
+  // Color tokens for progress states: current, pending, completed, error
+  // ============================================================================
+
+  'color.progress.current.background': {
+    name: 'color.progress.current.background',
+    primitiveReferences: { value: 'cyan300' },
+    category: SemanticCategory.COLOR,
+    context: 'Reasoning: Cyan300 provides a vibrant, accessible background that distinguishes the active position from completed (green) and error (pink) states without conflicting with feedback semantics.',
+    description: 'Background color for the currently active progress node — the "you are here" indicator in pagination dots and stepper nodes.'
+  },
+
+  'color.progress.current.text': {
+    name: 'color.progress.current.text',
+    primitiveReferences: { value: 'cyan400' },
+    category: SemanticCategory.COLOR,
+    context: 'Reasoning: Cyan400 is darker than cyan300, ensuring sufficient contrast for text/icon content rendered inside the current node background.',
+    description: 'Text/icon color for content inside the currently active progress node — checkmarks, step numbers, or icons within the active indicator.'
+  },
+
+  'color.progress.pending.background': {
+    name: 'color.progress.pending.background',
+    primitiveReferences: { value: 'white300' },
+    category: SemanticCategory.COLOR,
+    context: 'Reasoning: White300 provides a subtle, low-emphasis background for incomplete nodes, visually receding behind the active and completed states.',
+    description: 'Background color for incomplete/pending progress nodes — upcoming steps that have not been reached yet.'
+  },
+
+  'color.progress.pending.text': {
+    name: 'color.progress.pending.text',
+    primitiveReferences: { value: 'gray300' },
+    category: SemanticCategory.COLOR,
+    context: 'Reasoning: Gray300 provides muted text that signals "not yet active" while maintaining readability against the white300 background.',
+    description: 'Text/icon color for content inside pending progress nodes — step numbers or icons in upcoming/incomplete steps.'
+  },
+
+  'color.progress.pending.connector': {
+    name: 'color.progress.pending.connector',
+    primitiveReferences: { value: 'white200' },
+    category: SemanticCategory.COLOR,
+    context: 'Reasoning: White200 is lighter than the pending node background (white300), creating a subtle connector line that indicates untraversed path between incomplete steps.',
+    description: 'Color for connector lines between incomplete/pending progress nodes — the inactive path segments in steppers.'
+  },
+
+  'color.progress.completed.background': {
+    name: 'color.progress.completed.background',
+    primitiveReferences: { value: 'green100' },
+    category: SemanticCategory.COLOR,
+    context: 'Reasoning: Green100 aligns with the established success/completion semantic (feedback.success.background also uses green100), providing immediate recognition of finished steps.',
+    description: 'Background color for completed progress nodes — steps that have been successfully finished.'
+  },
+
+  'color.progress.completed.text': {
+    name: 'color.progress.completed.text',
+    primitiveReferences: { value: 'green400' },
+    category: SemanticCategory.COLOR,
+    context: 'Reasoning: Green400 provides strong contrast against green100 background for checkmark icons and text content, matching the feedback.success.text pattern.',
+    description: 'Text/icon color for content inside completed progress nodes — primarily the checkmark icon that signals step completion.'
+  },
+
+  'color.progress.completed.connector': {
+    name: 'color.progress.completed.connector',
+    primitiveReferences: { value: 'green100' },
+    category: SemanticCategory.COLOR,
+    context: 'Reasoning: Green100 for active connectors creates visual continuity between completed nodes, showing the traversed path as a unified green "progress trail."',
+    description: 'Color for connector lines between completed progress nodes — the active path segments showing progress already made.'
+  },
+
+  'color.progress.error.background': {
+    name: 'color.progress.error.background',
+    primitiveReferences: { value: 'pink100' },
+    category: SemanticCategory.COLOR,
+    context: 'Reasoning: Pink100 aligns with the established error semantic (feedback.error.background also uses pink100), providing immediate recognition of problematic steps.',
+    description: 'Background color for error progress nodes — steps that have encountered a problem requiring attention.'
+  },
+
+  'color.progress.error.text': {
+    name: 'color.progress.error.text',
+    primitiveReferences: { value: 'pink400' },
+    category: SemanticCategory.COLOR,
+    context: 'Reasoning: Pink400 provides strong contrast against pink100 background for error icons and text, matching the feedback.error.text pattern.',
+    description: 'Text/icon color for content inside error progress nodes — error icons or indicators within problematic steps.'
+  },
+
+  // ============================================================================
+  // SCRIM TOKENS (Spec 073)
+  // Dark translucent overlays for floating surfaces. Mode-invariant.
+  // Uses modifier architecture: base color + opacity modifier.
+  // ============================================================================
+
+  'color.scrim.standard': {
+    name: 'color.scrim.standard',
+    primitiveReferences: { value: 'black500' },
+    modifiers: [{ type: 'opacity', reference: 'opacity080' }],
+    modeInvariant: true,
+    category: SemanticCategory.COLOR,
+    context: 'Derived from black500 at opacity080 (80%). Scrim tokens dim content regardless of theme.',
+    description: 'Standard scrim for floating surfaces over content — pagination pills, dense overlays, floating toolbars.'
+  },
+};
+
+/**
+ * Array of all color semantic token names for iteration
+ * 
+ * Token count updated for Spec 058 component token architecture cleanup:
+ * - Removed 5 Avatar component tokens (migrated to src/components/core/Avatar-Base/avatar.tokens.ts):
+ *   - color.avatar.human.background
+ *   - color.avatar.agent.background
+ *   - color.avatar.human.icon
+ *   - color.avatar.agent.icon
+ *   - color.avatar.default.border
+ * - Removed 2 Badge component tokens (migrated to src/components/core/Badge-Count-Notification/tokens.ts):
+ *   - color.badge.notification.background
+ *   - color.badge.notification.text
+ * 
+ * Previous count (Spec 052): 50 tokens
+ * After Avatar migration: 45 tokens
+ * Current count (Spec 058): 43 tokens
+ * 
+ * See design authority: .kiro/specs/058-component-token-architecture-cleanup/design.md
+ */
+export const colorTokenNames = Object.keys(colorTokens);
+
+/**
+ * Get color semantic token by name
+ */
+export function getColorToken(name: string): Omit<SemanticToken, 'primitiveTokens'> | undefined {
+  return colorTokens[name];
+}
+
+/**
+ * Get all color semantic tokens as array
+ */
+export function getAllColorTokens(): Array<Omit<SemanticToken, 'primitiveTokens'>> {
+  return Object.values(colorTokens);
+}
+
+/**
+ * Validate token count - updated for Spec 046 notification token addition
+ * 
+ * Token changes (Spec 046 - Notification semantic tokens):
+ * - Added 2 notification semantic tokens:
+ *   - color.feedback.notification.background (pink400)
+ *   - color.feedback.notification.text (white100)
+ * 
+ * Token changes (2026-02-21 - Surface elevation hierarchy):
+ * - Added 3 surface elevation tokens:
+ *   - color.structure.surface.primary (white200) - alias for existing color.structure.surface
+ *   - color.structure.surface.secondary (white300)
+ *   - color.structure.surface.tertiary (white400)
+ * - Kept color.structure.surface as alias for color.structure.surface.primary
+ * 
+ * Previous count (Spec 058): 43 tokens
+ * After Spec 046: 45 tokens
+ * After progress (10) + scrim (1): 59 tokens
+ * Current count: 59 tokens
+ * 
+ * Remaining tokens breakdown:
+ * - Feedback concept: 20 tokens (success/error/warning/info × text/background/border + select × 6 + notification × 2)
+ * - Identity concept: 2 tokens (human, agent)
+ * - Action concept: 2 tokens (primary, secondary)
+ * - Contrast concept: 2 tokens (onLight, onDark)
+ * - Structure concept: 7 tokens (canvas, surface + surface.primary/secondary/tertiary, border, border.subtle)
+ * - Attention/Highlight: 2 tokens
+ * - Tech/Data: 2 tokens
+ * - Text hierarchy: 3 tokens (default, muted, subtle)
+ * - Icon: 1 token (default)
+ * - Print: 1 token (default)
+ * - Background: 1 token (primary.subtle)
+ * - Glow: 5 tokens (neonPurple, neonCyan, neonYellow, neonGreen, neonPink)
+ * - Progress: 10 tokens (current/pending/completed/error × background/text + connectors)
+ * - Scrim: 1 token (standard)
+ * Total: 59 tokens
+ */
+export function validateColorTokenCount(): boolean {
+  const expectedCount = 62;
+  const actualCount = colorTokenNames.length;
+  if (actualCount !== expectedCount) {
+    console.warn(`Color token count mismatch: expected ${expectedCount}, got ${actualCount}`);
+    return false;
+  }
+  return true;
+}
+
+// ============================================================================
+// PROGRESS & SCRIM CONVENIENCE EXPORTS
+// Filtered views for consumers that need just these subsets
+// ============================================================================
+
+/** Progress color token names */
+export const progressColorTokenNames = colorTokenNames.filter(n => n.startsWith('color.progress.'));
+export const PROGRESS_COLOR_TOKEN_COUNT = 10;
+
+export function getProgressColorToken(name: string): Omit<SemanticToken, 'primitiveTokens'> | undefined {
+  return name.startsWith('color.progress.') ? colorTokens[name] : undefined;
+}
+
+export function getAllProgressColorTokens(): Array<Omit<SemanticToken, 'primitiveTokens'>> {
+  return progressColorTokenNames.map(n => colorTokens[n]);
+}
+
+export function validateProgressColorTokenCount(): boolean {
+  return progressColorTokenNames.length === PROGRESS_COLOR_TOKEN_COUNT;
+}
+
+/** Scrim color token names */
+export const scrimColorTokenNames = colorTokenNames.filter(n => n.startsWith('color.scrim.'));
+export const SCRIM_COLOR_TOKEN_COUNT = 1;
+
+export function getScrimColorToken(name: string): Omit<SemanticToken, 'primitiveTokens'> | undefined {
+  return name.startsWith('color.scrim.') ? colorTokens[name] : undefined;
+}
+
+export function getAllScrimColorTokens(): Array<Omit<SemanticToken, 'primitiveTokens'>> {
+  return scrimColorTokenNames.map(n => colorTokens[n]);
+}
+
+// Aliases for barrel compatibility
+export const progressColorTokens = Object.fromEntries(progressColorTokenNames.map(n => [n, colorTokens[n]]));
+export const scrimColorTokens = Object.fromEntries(scrimColorTokenNames.map(n => [n, colorTokens[n]]));
+
+// ============================================================================
+// BACKWARD COMPATIBILITY RE-EXPORTS — REMOVED (Spec 104)
+// ============================================================================
+// Avatar and Badge component color tokens were previously re-exported here for
+// backward compatibility (Spec 058). These re-exports violated the token source
+// portability boundary (importing from ../../components/) and have been removed.
+//
+// Use canonical imports instead:
+//   import { AvatarColorTokens } from 'src/components/core/Avatar-Base/avatar.tokens';
+//   import { BadgeNotificationColorTokens } from 'src/components/core/Badge-Count-Notification/tokens';
+// ============================================================================
+
+// Deprecated helper functions removed (Spec 104) — use canonical imports instead:
+//   import { AvatarColorTokens } from 'src/components/core/Avatar-Base/avatar.tokens';
+//   import { BadgeNotificationColorTokens } from 'src/components/core/Badge-Count-Notification/tokens';
+

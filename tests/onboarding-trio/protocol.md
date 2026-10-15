@@ -759,3 +759,412 @@ Each outcome that differs from this protocol's assumption is also appended to th
 - Turn counting for Kiro: one agent turn is one model response that ends either in a tool call or in the final answer, counted from `birth.txt` / `probe-<agent>.txt`. The record states the count and this rule.
 - Findings are written per persona and attributed to an axis (F21). A finding seen in more than one run is written in each run's record and marked `also seen in <run-id>`; it is never pooled into one list.
 - Every finding whose subject is consumer-Leonardo carries `subject: leonardo` (run discipline C2), for Stacy's CLOSEOUT cross-read.
+
+## 14. Join runs (Task 26)
+
+*Added 2026-10-15 for Spec 123 Task 26, under Task 25's write grant for this file (orchestrator ruling 2026-10-15). Everything in §§ 1–13 applies unless this section says otherwise.*
+
+### 14.1 What a join run is
+
+- **Two runs**, each a teammate joining a repo someone else birthed, **on the other harness** (Req 15A.4):
+  - `join-cc-to-kiro`: the founder's repo is `fixtures/born-cc` (from `trio-1-backend`, born `init --target=cc`); the joiner, Mei, uses Kiro; the post-restart query goes to `--agent thurgood`.
+  - `join-kiro-to-cc`: the founder's repo is `fixtures/born-kiro` (from `trio-3-pm`, born `init --target=kiro`); the joiner, Jordan, uses Claude Code; the post-restart query goes to `--agent stacy`.
+- **The founder's repo is a committed fixture.** The launcher commits it as `$R/origin` (one commit, "founder's repo") and **clones** it to `$R/repo`. That clone is INSTALL § 7's step 1, done by the launcher and recorded as such. The joiner starts at step 2.
+- **The path**: INSTALL § 7, `joining-cross-harness`, 6 steps:
+  1. clone;
+  2. `npm install`;
+  3. `generate`;
+  4. `attach --target=<other>`;
+  5. the personal note;
+  6. restart.
+- **Budget**: 40 agent turns for the join session (`path-steps` 6 → floor 18; ≈ 6.7×), observed, not enforced on either harness (§ 4). 30 turns for the query session.
+- **"Joined" means the agent answers, not that files exist.** The post-restart query goes to a **named** attached agent, fixed by the frozen prompt. Its three answers (its domain; one routed tool it owns; one thing outside its scope and who owns it) are checked against **the rendering `attach` wrote in that clone**: Kiro `.kiro/agents/thurgood-prompt.md` (and `thurgood.json` for its tools); Claude Code `.claude/agents/stacy.md`. This is Req 24.6's bar in miniature.
+- **The same-harness C8(c) probe** (in `join-cc-to-kiro` only; the orchestrator ruled "clone twice"):
+  - It runs on a **second, separate clone** (`$R/probe-repo`) of the same origin.
+  - The launcher runs `npm install` there, then opens **Claude Code** once, captured, before any `generate`. So the gitignored `.designerpunk/personal-note.local.md` is absent, and the committed `.claude/settings.json` arrives by clone.
+  - It observes: (1) is the committed `.claude/settings.json` honored for server enablement, or does Claude Code still ask? (2) What does the `CLAUDE.md` `@`-import of the missing note do: load, warn or error?
+  - It is **labelled a same-harness observation** in the record and does not count toward the Kiro join's teammate-cold cell.
+
+### 14.2 The join record schema
+
+Each join record is `.kiro/specs/123-consumer-distribution/validation/<run-id>.md`, with every field below present under its exact label. A field with nothing to report says so in words (`none`, `not applicable — <why>`, `cannot-tell — <why>`). The field list is reproduced in the record's header.
+
+| # | Label (exact) | Content |
+|---|---|---|
+| J1 | `run-id:` | run-id; the joiner; the founder's harness and the joiner's |
+| J2 | `frozen-prompt:` | the prompt file, its commit, the ancestry line with its exit code, then the file verbatim |
+| J3 | `founder-repo:` | the fixture path; the trio run it came from and its source ref; file count and tree hash; the origin commit made in the run |
+| J4 | `candidate:` | tarball path, expected and measured shasum, `package-lock.json`'s `resolved` line after `npm install` |
+| J5 | `target:` | the founder's harness, the joiner's harness and its version, and the `attach` command the joiner ran |
+| J6 | `source-access:` | the § 10 audit, classified; writes outside the run folder |
+| J7 | `harness-user-state:` | the mechanism (§ 5.1); the inspection before and after, verbatim; the files the run stores gained; clean/warm verdict; re-login cost |
+| J8 | `session-launched-by:` | per session |
+| J9 | `operator-log:` | every launcher act after a frozen prompt, verbatim, with its reason, including any `operator-unblock` (§ 3) |
+| J10 | `budget:` | per budgeted session: budget, multiple, enforcement, turns used |
+| J11 | `stop:` | one line per session, `- stop: <session> — <event>` from § 3 |
+| J12 | `wall-clock:` | per session, UTC start and end; recorded, never asserted |
+| J13 | `steps-walked:` | **per-step outcome for the 6 steps**: `done`, `done by the launcher`, `done with help from <where>`, `skipped — <why>`, or `not reached`, with transcript evidence |
+| J14 | `first-MCP-load:` | from the captured open on the joiner's clone: what the harness asked for, verbatim; the `/mcp` listing |
+| J15 | `cold-observation:` | `cold-observation: <cc\|kiro> teammate-cold: observed` · `not observed cold — state not clean` · `cannot-tell — <why>` |
+| J16 | `c8c-observations:` | (1) committed `.claude/settings.json` honored for server enablement? (2) the gitignored note's `@`-import on a fresh clone: loads, warns or errors? Each answered from the evidence this run has, with its source named (the probe clone in `join-cc-to-kiro`; the joiner's own clone in `join-kiro-to-cc`), or `not applicable — <why>` |
+| J17 | `post-restart-query:` | the agent; the question (frozen); the answer, quoted; the rendered charter file with the quoted lines for its domain, routes and out-of-scope; a per-item `matches` / `does not match` / `cannot-tell`; and the verdict `joined` or `not joined` |
+| J18 | `discovery:` | per MCP query in the join and query sessions: query, result or `not printed`, `succeeded` / `failed` |
+| J19 | `friction-rows:` | for each of friction-record rows 2, 4, 5, 7, 9, 11, 12, 13: `observed`, `not observed`, or `n/a this run`, with evidence. Closing them is Task 28.4's, not this record's |
+| J20 | `findings:` | findings, each with its route; `subject: leonardo` where it applies; the forced negative written, `findings: none` if so |
+| J21 | `joiner-close:` | the joiner's closing note, verbatim |
+
+**The join schema check** (run from the repo root; paste the output into the Task 26 completion doc):
+
+```sh
+for f in .kiro/specs/123-consumer-distribution/validation/join-*.md; do
+  echo "== $f"
+  for label in 'run-id:' 'frozen-prompt:' 'founder-repo:' 'candidate:' 'target:' 'source-access:' 'harness-user-state:' 'session-launched-by:' 'operator-log:' 'budget:' 'stop:' 'wall-clock:' 'steps-walked:' 'first-MCP-load:' 'cold-observation:' 'c8c-observations:' 'post-restart-query:' 'discovery:' 'friction-rows:' 'findings:' 'joiner-close:'; do
+    grep -q -F -- "$label" "$f" && echo "  present  $label" || echo "  MISSING  $label"
+  done
+  grep -E -c -- '^- stop: [a-z0-9-]+ — (completed|budget-exhausted|auth-required|harness-error:|operator-halt:)' "$f" | sed 's/^/  stop lines from the vocabulary: /'
+  grep -E -- 'cold-observation: (cc|kiro) teammate-cold: (observed|not observed cold — state not clean|cannot-tell — )' "$f" >/dev/null && echo "  teammate-cold cell well-formed" || echo "  teammate-cold cell NOT well-formed"
+done
+```
+
+### 14.3 What each run writes
+
+Everything lands under `/tmp/dp-trio/<run-id>/`:
+- **`origin/`**: the founder's repo, as committed by the launcher.
+- **`repo/`**: the joiner's clone.
+- **`probe-repo/`**: `join-cc-to-kiro` only; the C8(c) clone.
+- **`home/`**: `.claude/` (`CLAUDE_CONFIG_DIR`) and `.kiro/` (`KIRO_HOME`).
+- **`empty/`**: for the preflights.
+- **`out/`**, which holds every capture and transcript:
+  - `preflight-cc-<time>.typescript`, `preflight-kiro-<time>.typescript`;
+  - `c8c-probe-<time>.typescript` (join-cc-to-kiro);
+  - `join.txt` (Kiro) or `join.jsonl` + `join.stderr` (CC);
+  - `open-<time>.typescript`;
+  - `query.txt` (Kiro) or `query.jsonl` + `query.stderr` (CC);
+  - the `*.utc` stamps and `*.exit` files;
+  - `host.txt`, `candidate-shasum.txt`, `isolation.txt`;
+  - `harness-user-state-{before,after}.txt`, `home-files.txt`, `tmp-writes.txt`;
+  - `repo-status.txt`, `source-access-audit.txt`, `kiro-mcp-list.txt` (Kiro).
+
+### 14.4 Launch blocks — join runs, for Peter
+
+Same rules as § 11:
+- one new macOS Terminal window per run, kept open for the whole run (zsh);
+- one block at a time, pasting each output back;
+- every interactive session gets its own capture file;
+- if macOS asks about the keychain, click Cancel (never reset), press Ctrl-C, and tell the orchestrator;
+- the only edit is `COMMIT=` in step 0, which the orchestrator fills with the commit carrying the fixtures and this run's frozen prompt.
+
+**`operator-unblock` (§ 3)**: if, in a Kiro session, a command visibly waits at a prompt that nothing in the session can answer (as `init` did in Run 3), you may press Return on the empty prompt (Ctrl-U first if needed), and nothing else. Say so in your paste-back, with the prompt's text. A Claude Code headless session runs its commands without a terminal, so you cannot type into it; if it seems stuck, wait for it to end and say so.
+
+
+#### Join run 1 — `join-cc-to-kiro` (founder: Claude Code; joiner Mei: Kiro; query: Thurgood)
+
+**Step 0 — variables and checks.** Expect `0`, then `fixture and prompt found at commit`.
+
+```sh
+RUN=join-cc-to-kiro
+FIX=born-cc
+COMMIT=FILL_IN_COMMIT
+DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
+TGZ="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/3fn-core-15.1.0.tgz"
+R="/tmp/dp-trio/$RUN"
+PF=".kiro/specs/123-consumer-distribution/validation/prompts/$RUN.md"
+env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
+git -C "$DP" cat-file -e "$COMMIT:$PF" && git -C "$DP" cat-file -e "$COMMIT:tests/onboarding-trio/fixtures/$FIX/package.json" && echo "fixture and prompt found at commit"
+```
+
+**Step 1 — the founder's repo, and the joiner's clone (INSTALL § 7 step 1, done by you).** Expect one `founder's repo` line and the fixture's top-level files. If it prints `STOP`, stop and tell the orchestrator.
+
+```sh
+if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/origin" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/origin" --strip-components=4 && cd "$R/origin" && git init -q -b main && git add -A && git -c user.name=founder -c user.email=founder@example.invalid -c commit.gpgsign=false commit -q -m "founder's repo" && git log --oneline && find . -type f -not -path './.git/*' | wc -l && git clone -q "$R/origin" "$R/repo" && git clone -q "$R/origin" "$R/probe-repo" && ls -A "$R/repo"; fi
+```
+
+**Step 2 — the candidate tarball, into the clone(s).** Expect `aa3efdcf9ce3c2689c2e5979932c48a46f3f6584`.
+
+```sh
+mkdir -p "$R/repo/.pack" && cp "$TGZ" "$R/repo/.pack/" && mkdir -p "$R/probe-repo/.pack" && cp "$TGZ" "$R/probe-repo/.pack/" && shasum -a 1 "$R/repo/.pack/3fn-core-15.1.0.tgz" | tee "$R/out/candidate-shasum.txt"
+```
+
+**Step 3 — the frozen prompts, read from the commit.** Expect a non-zero line count for both.
+
+```sh
+git -C "$DP" show "$COMMIT:$PF" > "$R/out/prompt.md"
+awk '/ JOIN END -->/{p=0} p{print} / JOIN BEGIN -->/{p=1}' "$R/out/prompt.md" > "$R/out/join-prompt.txt"
+awk '/ QUERY END -->/{p=0} p{print} / QUERY BEGIN -->/{p=1}' "$R/out/prompt.md" > "$R/out/query-prompt.txt"
+wc -l "$R"/out/*-prompt.txt
+```
+
+**Step 4 — host facts (versions).** Paste the output.
+
+```sh
+{ date -u +%Y-%m-%dT%H:%M:%SZ; hostname -s; sw_vers -productVersion; uname -m; echo "node $(node -v) / npm $(npm -v)"; claude --version; kiro-cli --version; } > "$R/out/host.txt" 2>&1; cat "$R/out/host.txt"
+```
+
+**Step 5 — `harness-user-state` before.** Expect the run-store entries all `absent`. Paste the output.
+
+```sh
+hstate() {
+  echo "== run store (CC): $R/home/.claude"
+  for f in "$R/home/.claude/.claude.json" "$R/home/.claude/settings.json"; do
+    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f") DesignerPunk-relevant lines"; grep -n -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f" | cut -c1-200; else echo "${f}: absent"; fi
+  done
+  if [ -f "$R/home/.claude/.claude.json" ]; then echo "-- projects in the run store:"; jq -c '.projects // {} | to_entries[] | {dir: .key, trusted: .value.hasTrustDialogAccepted, enabled: .value.enabledMcpjsonServers}' "$R/home/.claude/.claude.json"; fi
+  if [ -f "$R/repo/.claude/settings.local.json" ]; then echo "-- repo .claude/settings.local.json:"; cat "$R/repo/.claude/settings.local.json"; else echo "-- repo .claude/settings.local.json: absent"; fi
+  echo "== run store (Kiro): $R/home/.kiro and $R/home/Library/Application Support/kiro-cli"
+  for d in "$R/home/.kiro" "$R/home/Library/Application Support/kiro-cli"; do
+    if [ -d "$d" ]; then echo "${d}: present, $(find "$d" -type f | wc -l | tr -d " ") files; DesignerPunk-relevant:"; grep -r -l -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$d" 2>/dev/null | head -20; else echo "${d}: absent"; fi
+  done
+  if [ -f "$R/home/.kiro/settings/mcp.json" ]; then echo "-- run-store Kiro global MCP servers:"; jq -r '.mcpServers // {} | keys[]' "$R/home/.kiro/settings/mcp.json"; fi
+  echo "== real user stores (DesignerPunk-relevant only)"
+  if [ -f "$HOME/.claude.json" ]; then echo "$HOME/.claude.json: $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$HOME/.claude.json") DesignerPunk-relevant lines"; else echo "$HOME/.claude.json: absent"; fi
+  if [ -f "$HOME/.kiro/settings/mcp.json" ]; then echo "$HOME/.kiro/settings/mcp.json servers: $(jq -r '.mcpServers // {} | keys | join(", ")' "$HOME/.kiro/settings/mcp.json")"; else echo "$HOME/.kiro/settings/mcp.json: absent"; fi
+  echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
+  echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
+}
+hstate > "$R/out/harness-user-state-before.txt" 2>&1; cat "$R/out/harness-user-state-before.txt"
+```
+
+**Step 6 — Claude Code preflight (interactive), in an empty folder.** Expect the first-run onboarding and a browser sign-in. Choose the defaults, type no message, then `/exit`. Paste back what it showed.
+
+```sh
+echo "isolation (CC): CLAUDE_CONFIG_DIR=$R/home/.claude (real HOME)" | tee -a "$R/out/isolation.txt"
+cd "$R/empty" && CLAUDE_CONFIG_DIR="$R/home/.claude" script -q "$R/out/preflight-cc-$(date -u +%H%M%S).typescript" claude
+```
+
+**Step 7 — the C8(c) probe (same-harness observation, separate clone).** First install the packages in the probe clone (the second line opens Claude Code there). **Type no task.** Before typing anything, note every prompt Claude Code shows, word for word, and whether it mentions the personal note or an import. Answer by § 6 (trust the folder; approve DesignerPunk's servers). Then type `/context` and wait for it, type `/mcp` and wait, press Esc, and `/exit`. Paste back every prompt word for word with your answer, and what `/context` and `/mcp` showed.
+
+```sh
+cd "$R/probe-repo" && npm install --no-audit --no-fund 2>&1 | tail -3; ls -A .designerpunk 2>&1
+```
+
+```sh
+cd "$R/probe-repo" && CLAUDE_CONFIG_DIR="$R/home/.claude" script -q "$R/out/c8c-probe-$(date -u +%H%M%S).typescript" claude
+```
+
+**Step 8 — choose the Kiro isolation, then preflight.** As in § 11, Run 2, step 6: run 8a–8c in order, end with exactly one `KENV=` line (8d), then the preflight chat (8e).
+
+**8a**
+
+```sh
+cd "$R/empty" && kiro-cli whoami; echo "exit=$?"; kiro-cli mcp list 2>&1 | head -20
+```
+
+**8b — accept if your account shows, `fetch` is absent, and files appear.**
+
+```sh
+cd "$R/empty" && KIRO_HOME="$R/home/.kiro" kiro-cli whoami; echo "exit=$?"; KIRO_HOME="$R/home/.kiro" kiro-cli mcp list 2>&1 | head -20; ls -A "$R/home/.kiro" 2>&1 | head
+```
+
+**8c — only if 8b was not accepted.**
+
+```sh
+cd "$R/empty" && HOME="$R/home" kiro-cli whoami; echo "exit=$?"; HOME="$R/home" kiro-cli mcp list 2>&1 | head -20
+```
+
+**8d — run exactly one** (first if 8b was accepted; second if 8c was; third if neither, which makes the run warm).
+
+```sh
+KENV="KIRO_HOME=$R/home/.kiro"; echo "isolation (Kiro): $KENV (real HOME)" | tee -a "$R/out/isolation.txt"
+```
+
+```sh
+KENV="HOME=$R/home"; echo "isolation (Kiro): $KENV" | tee -a "$R/out/isolation.txt"
+```
+
+```sh
+KENV=""; echo "isolation (Kiro): none — real profile (warm run)" | tee -a "$R/out/isolation.txt"
+```
+
+**8e — Kiro preflight chat, in the empty folder.** Type no message; `/quit`. Paste back what it showed.
+
+```sh
+cd "$R/empty" && env $KENV script -q "$R/out/preflight-kiro-$(date -u +%H%M%S).typescript" kiro-cli chat
+```
+
+**Step 9 — the join session (headless; Mei works alone).** Output scrolls and is saved. Do not type into it, except an `operator-unblock` (above). Ctrl-C only for `operator-halt:loop` or `operator-halt:unsafe`. Paste back the `exit=` line and `tail -n 40 "$R/out/join.txt"`.
+
+```sh
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/join.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never "$(cat "$R/out/join-prompt.txt")" 2>&1 | tee "$R/out/join.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/join.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/join.end.utc"
+```
+
+**Step 10 — open (interactive, captured): the restart, and the teammate-cold first load.** Type no task. Note every prompt Kiro shows before its prompt, word for word, and answer by § 6. Then `/mcp` (wait), `/agent` (wait, then Esc), `/quit`. Paste back each prompt with your answer, and both lists.
+
+```sh
+cd "$R/repo" && env $KENV script -q "$R/out/open-$(date -u +%H%M%S).typescript" kiro-cli chat
+```
+
+**Step 11 — the post-restart query: consumer-Thurgood (headless).** Same rules as the join session. Paste back the `exit=` line and `tail -n 40 "$R/out/query.txt"`. If Kiro says the agent does not exist, that is the result: paste it.
+
+```sh
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/query.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never --agent thurgood "$(cat "$R/out/query-prompt.txt")" 2>&1 | tee "$R/out/query.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/query.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/query.end.utc"
+```
+
+**Step 12 — after: state, repo, writes outside the folder, audit.** Paste the whole output. That ends the run.
+
+```sh
+hstate() {
+  echo "== run store (CC): $R/home/.claude"
+  for f in "$R/home/.claude/.claude.json" "$R/home/.claude/settings.json"; do
+    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f") DesignerPunk-relevant lines"; grep -n -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f" | cut -c1-200; else echo "${f}: absent"; fi
+  done
+  if [ -f "$R/home/.claude/.claude.json" ]; then echo "-- projects in the run store:"; jq -c '.projects // {} | to_entries[] | {dir: .key, trusted: .value.hasTrustDialogAccepted, enabled: .value.enabledMcpjsonServers}' "$R/home/.claude/.claude.json"; fi
+  if [ -f "$R/repo/.claude/settings.local.json" ]; then echo "-- repo .claude/settings.local.json:"; cat "$R/repo/.claude/settings.local.json"; else echo "-- repo .claude/settings.local.json: absent"; fi
+  echo "== run store (Kiro): $R/home/.kiro and $R/home/Library/Application Support/kiro-cli"
+  for d in "$R/home/.kiro" "$R/home/Library/Application Support/kiro-cli"; do
+    if [ -d "$d" ]; then echo "${d}: present, $(find "$d" -type f | wc -l | tr -d " ") files; DesignerPunk-relevant:"; grep -r -l -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$d" 2>/dev/null | head -20; else echo "${d}: absent"; fi
+  done
+  if [ -f "$R/home/.kiro/settings/mcp.json" ]; then echo "-- run-store Kiro global MCP servers:"; jq -r '.mcpServers // {} | keys[]' "$R/home/.kiro/settings/mcp.json"; fi
+  echo "== real user stores (DesignerPunk-relevant only)"
+  if [ -f "$HOME/.claude.json" ]; then echo "$HOME/.claude.json: $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$HOME/.claude.json") DesignerPunk-relevant lines"; else echo "$HOME/.claude.json: absent"; fi
+  if [ -f "$HOME/.kiro/settings/mcp.json" ]; then echo "$HOME/.kiro/settings/mcp.json servers: $(jq -r '.mcpServers // {} | keys | join(", ")' "$HOME/.kiro/settings/mcp.json")"; else echo "$HOME/.kiro/settings/mcp.json: absent"; fi
+  echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
+  echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
+}
+hstate > "$R/out/harness-user-state-after.txt" 2>&1; cat "$R/out/harness-user-state-after.txt"
+find "$R/home" -type f -newer "$R/out/start.stamp" | sed "s|$R/home|HOME|" | sort > "$R/out/home-files.txt"; echo "files the run stores gained: $(wc -l < "$R/out/home-files.txt" | tr -d " ")"; grep -v -E "/(plugins|skills)/" "$R/out/home-files.txt" | head -40
+find /tmp/ -maxdepth 1 -newer "$R/out/start.stamp" 2>/dev/null | grep -v -E "^/tmp/$|^/tmp/dp-trio$" | tee "$R/out/tmp-writes.txt"
+cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"; git log --oneline --all | head -5
+grep -n -A3 '"node_modules/@3fn/core"' "$R/repo/package-lock.json" | head -6
+ls -A "$R/repo/.claude" "$R/repo/.kiro" 2>&1 | head -20
+cd "$R/probe-repo" && git status --porcelain | tee "$R/out/probe-repo-status.txt"
+env ${KENV:-} kiro-cli mcp list 2>&1 | tee "$R/out/kiro-mcp-list.txt"
+grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/join.* "$R"/out/query.* "$R"/out/open-*.typescript > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (package self-references expected; see § 10)"
+date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
+```
+
+**What to paste back for `join-cc-to-kiro`**: steps 0–12; every prompt you answered, word for word, with your answer; anything you typed beyond the steps (including any `operator-unblock`), and why; any Ctrl-C and why. Then: "`join-cc-to-kiro` done; files in `/tmp/dp-trio/join-cc-to-kiro/out`."
+
+
+#### Join run 2 — `join-kiro-to-cc` (founder: Kiro; joiner Jordan: Claude Code; query: Stacy)
+
+**Step 0 — variables and checks.** Expect `0`, then `fixture and prompt found at commit`.
+
+```sh
+RUN=join-kiro-to-cc
+FIX=born-kiro
+COMMIT=FILL_IN_COMMIT
+DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
+TGZ="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/3fn-core-15.1.0.tgz"
+R="/tmp/dp-trio/$RUN"
+PF=".kiro/specs/123-consumer-distribution/validation/prompts/$RUN.md"
+env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
+git -C "$DP" cat-file -e "$COMMIT:$PF" && git -C "$DP" cat-file -e "$COMMIT:tests/onboarding-trio/fixtures/$FIX/package.json" && echo "fixture and prompt found at commit"
+```
+
+**Step 1 — the founder's repo, and the joiner's clone (INSTALL § 7 step 1, done by you).** Expect one `founder's repo` line and the fixture's top-level files. If it prints `STOP`, stop and tell the orchestrator.
+
+```sh
+if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/origin" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/origin" --strip-components=4 && cd "$R/origin" && git init -q -b main && git add -A && git -c user.name=founder -c user.email=founder@example.invalid -c commit.gpgsign=false commit -q -m "founder's repo" && git log --oneline && find . -type f -not -path './.git/*' | wc -l && git clone -q "$R/origin" "$R/repo" && ls -A "$R/repo"; fi
+```
+
+**Step 2 — the candidate tarball, into the clone(s).** Expect `aa3efdcf9ce3c2689c2e5979932c48a46f3f6584`.
+
+```sh
+mkdir -p "$R/repo/.pack" && cp "$TGZ" "$R/repo/.pack/" && shasum -a 1 "$R/repo/.pack/3fn-core-15.1.0.tgz" | tee "$R/out/candidate-shasum.txt"
+```
+
+**Step 3 — the frozen prompts, read from the commit.** Expect a non-zero line count for both.
+
+```sh
+git -C "$DP" show "$COMMIT:$PF" > "$R/out/prompt.md"
+awk '/ JOIN END -->/{p=0} p{print} / JOIN BEGIN -->/{p=1}' "$R/out/prompt.md" > "$R/out/join-prompt.txt"
+awk '/ QUERY END -->/{p=0} p{print} / QUERY BEGIN -->/{p=1}' "$R/out/prompt.md" > "$R/out/query-prompt.txt"
+wc -l "$R"/out/*-prompt.txt
+```
+
+**Step 4 — host facts (versions).** Paste the output.
+
+```sh
+{ date -u +%Y-%m-%dT%H:%M:%SZ; hostname -s; sw_vers -productVersion; uname -m; echo "node $(node -v) / npm $(npm -v)"; claude --version; kiro-cli --version; } > "$R/out/host.txt" 2>&1; cat "$R/out/host.txt"
+```
+
+**Step 5 — `harness-user-state` before.** Expect the run-store entries all `absent`. Paste the output.
+
+```sh
+hstate() {
+  echo "== run store (CC): $R/home/.claude"
+  for f in "$R/home/.claude/.claude.json" "$R/home/.claude/settings.json"; do
+    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f") DesignerPunk-relevant lines"; grep -n -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f" | cut -c1-200; else echo "${f}: absent"; fi
+  done
+  if [ -f "$R/home/.claude/.claude.json" ]; then echo "-- projects in the run store:"; jq -c '.projects // {} | to_entries[] | {dir: .key, trusted: .value.hasTrustDialogAccepted, enabled: .value.enabledMcpjsonServers}' "$R/home/.claude/.claude.json"; fi
+  if [ -f "$R/repo/.claude/settings.local.json" ]; then echo "-- repo .claude/settings.local.json:"; cat "$R/repo/.claude/settings.local.json"; else echo "-- repo .claude/settings.local.json: absent"; fi
+  echo "== run store (Kiro): $R/home/.kiro and $R/home/Library/Application Support/kiro-cli"
+  for d in "$R/home/.kiro" "$R/home/Library/Application Support/kiro-cli"; do
+    if [ -d "$d" ]; then echo "${d}: present, $(find "$d" -type f | wc -l | tr -d " ") files; DesignerPunk-relevant:"; grep -r -l -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$d" 2>/dev/null | head -20; else echo "${d}: absent"; fi
+  done
+  if [ -f "$R/home/.kiro/settings/mcp.json" ]; then echo "-- run-store Kiro global MCP servers:"; jq -r '.mcpServers // {} | keys[]' "$R/home/.kiro/settings/mcp.json"; fi
+  echo "== real user stores (DesignerPunk-relevant only)"
+  if [ -f "$HOME/.claude.json" ]; then echo "$HOME/.claude.json: $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$HOME/.claude.json") DesignerPunk-relevant lines"; else echo "$HOME/.claude.json: absent"; fi
+  if [ -f "$HOME/.kiro/settings/mcp.json" ]; then echo "$HOME/.kiro/settings/mcp.json servers: $(jq -r '.mcpServers // {} | keys | join(", ")' "$HOME/.kiro/settings/mcp.json")"; else echo "$HOME/.kiro/settings/mcp.json: absent"; fi
+  echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
+  echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
+}
+hstate > "$R/out/harness-user-state-before.txt" 2>&1; cat "$R/out/harness-user-state-before.txt"
+```
+
+**Step 6 — Claude Code preflight (interactive), in an empty folder.** Expect the first-run onboarding and a browser sign-in. Defaults, no message, `/exit`. Paste back what it showed.
+
+```sh
+echo "isolation (CC): CLAUDE_CONFIG_DIR=$R/home/.claude (real HOME)" | tee -a "$R/out/isolation.txt"
+cd "$R/empty" && CLAUDE_CONFIG_DIR="$R/home/.claude" script -q "$R/out/preflight-cc-$(date -u +%H%M%S).typescript" claude
+```
+
+**Step 7 — the join session (headless; Jordan works alone).** It prints nothing until it ends. Then run the check block and paste both outputs.
+
+```sh
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/join.start.utc" && CLAUDE_CONFIG_DIR="$R/home/.claude" claude -p "$(cat "$R/out/join-prompt.txt")" --max-turns 40 --output-format stream-json --verbose --permission-mode acceptEdits --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "WebFetch,WebSearch" > "$R/out/join.jsonl" 2> "$R/out/join.stderr"; echo "exit=$?" | tee "$R/out/join.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/join.end.utc"
+```
+
+```sh
+head -c 800 "$R/out/join.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, mcp_servers}' "$R/out/join.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/join.jsonl"
+```
+
+**Step 8 — open (interactive, captured): the restart, the teammate-cold first load, and C8(c).** Type no task. Note every prompt Claude Code shows before its input prompt, word for word, including anything about the personal note or an import. Answer by § 6. Then `/context` (wait), `/mcp` (wait, then Esc), `/exit`. Paste back each prompt with your answer, and what `/context` and `/mcp` showed.
+
+```sh
+cd "$R/repo" && CLAUDE_CONFIG_DIR="$R/home/.claude" script -q "$R/out/open-$(date -u +%H%M%S).typescript" claude
+```
+
+**Step 9 — the post-restart query: consumer-Stacy (headless).** It prints nothing until it ends. Then the check block; paste both outputs.
+
+```sh
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/query.start.utc" && CLAUDE_CONFIG_DIR="$R/home/.claude" claude -p "$(cat "$R/out/query-prompt.txt")" --agent stacy --max-turns 30 --output-format stream-json --verbose --permission-mode acceptEdits --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "WebFetch,WebSearch" > "$R/out/query.jsonl" 2> "$R/out/query.stderr"; echo "exit=$?" | tee "$R/out/query.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/query.end.utc"
+```
+
+```sh
+head -c 800 "$R/out/query.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, mcp_servers}' "$R/out/query.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/query.jsonl"
+```
+
+**Step 10 — after: state, repo, writes outside the folder, audit.** Paste the whole output. That ends the run.
+
+```sh
+hstate() {
+  echo "== run store (CC): $R/home/.claude"
+  for f in "$R/home/.claude/.claude.json" "$R/home/.claude/settings.json"; do
+    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f") DesignerPunk-relevant lines"; grep -n -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f" | cut -c1-200; else echo "${f}: absent"; fi
+  done
+  if [ -f "$R/home/.claude/.claude.json" ]; then echo "-- projects in the run store:"; jq -c '.projects // {} | to_entries[] | {dir: .key, trusted: .value.hasTrustDialogAccepted, enabled: .value.enabledMcpjsonServers}' "$R/home/.claude/.claude.json"; fi
+  if [ -f "$R/repo/.claude/settings.local.json" ]; then echo "-- repo .claude/settings.local.json:"; cat "$R/repo/.claude/settings.local.json"; else echo "-- repo .claude/settings.local.json: absent"; fi
+  echo "== run store (Kiro): $R/home/.kiro and $R/home/Library/Application Support/kiro-cli"
+  for d in "$R/home/.kiro" "$R/home/Library/Application Support/kiro-cli"; do
+    if [ -d "$d" ]; then echo "${d}: present, $(find "$d" -type f | wc -l | tr -d " ") files; DesignerPunk-relevant:"; grep -r -l -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$d" 2>/dev/null | head -20; else echo "${d}: absent"; fi
+  done
+  if [ -f "$R/home/.kiro/settings/mcp.json" ]; then echo "-- run-store Kiro global MCP servers:"; jq -r '.mcpServers // {} | keys[]' "$R/home/.kiro/settings/mcp.json"; fi
+  echo "== real user stores (DesignerPunk-relevant only)"
+  if [ -f "$HOME/.claude.json" ]; then echo "$HOME/.claude.json: $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$HOME/.claude.json") DesignerPunk-relevant lines"; else echo "$HOME/.claude.json: absent"; fi
+  if [ -f "$HOME/.kiro/settings/mcp.json" ]; then echo "$HOME/.kiro/settings/mcp.json servers: $(jq -r '.mcpServers // {} | keys | join(", ")' "$HOME/.kiro/settings/mcp.json")"; else echo "$HOME/.kiro/settings/mcp.json: absent"; fi
+  echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
+  echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
+}
+hstate > "$R/out/harness-user-state-after.txt" 2>&1; cat "$R/out/harness-user-state-after.txt"
+find "$R/home" -type f -newer "$R/out/start.stamp" | sed "s|$R/home|HOME|" | sort > "$R/out/home-files.txt"; echo "files the run stores gained: $(wc -l < "$R/out/home-files.txt" | tr -d " ")"; grep -v -E "/(plugins|skills)/" "$R/out/home-files.txt" | head -40
+find /tmp/ -maxdepth 1 -newer "$R/out/start.stamp" 2>/dev/null | grep -v -E "^/tmp/$|^/tmp/dp-trio$" | tee "$R/out/tmp-writes.txt"
+cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"; git log --oneline --all | head -5
+grep -n -A3 '"node_modules/@3fn/core"' "$R/repo/package-lock.json" | head -6
+ls -A "$R/repo/.claude" "$R/repo/.kiro" 2>&1 | head -20
+cat "$R/repo/.claude/settings.local.json" 2>&1
+grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/join.* "$R"/out/query.* "$R"/out/open-*.typescript > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (package self-references expected; see § 10)"
+date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
+```
+
+**What to paste back for `join-kiro-to-cc`**: steps 0–10; every prompt you answered, word for word, with your answer; anything you typed beyond the steps (including any `operator-unblock`), and why; any Ctrl-C and why. Then: "`join-kiro-to-cc` done; files in `/tmp/dp-trio/join-kiro-to-cc/out`."
