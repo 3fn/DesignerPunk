@@ -1,0 +1,46 @@
+{
+  "allowedTools": [
+    "read",
+    "knowledge",
+    "@designerpunk-docs",
+    "@designerpunk-application",
+    "@designerpunk-product"
+  ],
+  "description": "Cross-platform product architect. Use for screen/flow specification, component & pattern selection (via Application MCP), layout specification, token-selection guidance for product screens, cross-platform consistency review, and design-creation/visual direction (the Impeccable skill). Directs — does NOT implement platform code (hands off to Kenya/Data/Sparky), create tokens/components (escalates to Ada/Lina via Thurgood), or make product decisions (your human lead's call).",
+  "hooks": {
+    "agentSpawn": [
+      {
+        "command": "git status --porcelain",
+        "timeout_ms": 5000
+      }
+    ]
+  },
+  "includeMcpJson": true,
+  "keyboardShortcut": "ctrl+shift+o",
+  "name": "leonardo",
+  "prompt": "file://./leonardo-prompt.md",
+  "resources": [
+    "file://.kiro/steering/designerpunk-agent-directory.md",
+    "file://.kiro/steering/designerpunk-ai-collaboration-principles.md",
+    "file://.kiro/steering/designerpunk-civitas-system-overview.md",
+    "file://.kiro/steering/designerpunk-core-goals.md",
+    "file://node_modules/@3fn/core/governance/cross-platform-vs-platform-specific-decision-framework.md",
+    "file://.kiro/steering/designerpunk-designerpunk-systems-overview.md",
+    "file://.designerpunk/personal-note.local.md",
+    "file://.kiro/steering/designerpunk-spec-feedback-protocol.md",
+    "file://.kiro/steering/designerpunk-start-up-tasks.md",
+    "file://.kiro/steering/designerpunk-task-completion-protocol.md",
+    "skill://.kiro/skills/impeccable/SKILL.md"
+  ],
+  "tools": [
+    "*"
+  ],
+  "toolsSettings": {
+    "write": {
+      "allowedPaths": [
+        "specs/**"
+      ]
+    }
+  },
+  "welcomeMessage": "Hey! I'm Leonardo, your product architect. I handle cross-platform technical direction, component selection, and screen specification for products built with DesignerPunk. What are we building?"
+}

@@ -4,6 +4,42 @@ All notable consumer-facing changes to `@3fn/core` are recorded here, one entry 
 
 This file starts with Spec 123 ("Consumer Distribution"). Earlier releases are not backfilled here.
 
+## [Unreleased]
+
+Release 4, planned as **16.0.0**. This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a custom theme you register in `designerpunk.config.ts` does not change your generated output yet; light and dark mode work.
+
+This is the fourth planned entry in the plan's numbering. **It is a major release** because one component, `Input-Radio-Set`, now requires a property it did not have (see "Breaking"). Nothing else a 15.1.0 install relies on was removed. Two Application and docs MCP tools behave differently, listed under "Changed"; the steps are under "Upgrading from 15.1.0" at the end of this entry.
+
+### Breaking
+
+- **`Input-Radio-Set` now requires a name for the radio group.** A radio group needs an accessible name, so that a screen reader announces what the choice is ("Theme", "Plan") and not only that it is a radio group (WCAG 4.1.2). The name is a new required property, `accessibilityLabel`. It is not drawn on screen: show the visible question as your own text, and pass the same words here. One edit per platform:
+  - **Web:** add the attribute `accessibility-label` to `<input-radio-set>`, for example `<input-radio-set accessibility-label="Theme" …>`. From script, set the property: `radioSet.accessibilityLabel = "Theme"`. It becomes the `aria-label` of the group's `role="radiogroup"`.
+  - **SwiftUI:** pass `accessibilityLabel:` as the second argument, right after `selectedValue:`, for example `InputRadioSet(selectedValue: $plan, accessibilityLabel: "Plan") { … }`. It replaces the fixed "Radio group" label the component used to announce, which named the role and not the choice.
+  - **Jetpack Compose:** pass the named parameter `accessibilityLabel = "Plan"` (a `String`, with no default), for example `InputRadioSet(selectedValue = plan, onSelectionChange = { plan = it }, accessibilityLabel = "Plan") { … }`.
+
+  **If you do not update your call sites:** on iOS, on Android and in typed TypeScript, a missing label is a compile error. (Native source is reference source in this release, so you meet that error only if you build it.) On web it is not a build error: the group renders with no accessible name, and a development warning in the console names the missing `accessibility-label` attribute. An empty or whitespace-only value counts as missing, so `""` does not satisfy it. The Application MCP's `validate_assembly` also warns about a tree that leaves it out, and the form experience patterns (`multi-section-form`, `view-edit-screen`) now tell your agent to supply the group name.
+
+### Changed
+
+- **`validate_assembly` now checks prop values against each component's schema.** A wrong value for a known prop is now an error that names the prop and its allowed values: for example Button-CTA `size: "md"`, where the schema allows `small`, `medium` or `large`, or a colour prop that is not a real colour token. Before this, such a tree passed. **A tree that passed on 15.1.0 can now fail.**
+- **`validate_assembly` also warns** about a prop name the component's schema does not list, and about a required prop that is missing (callback props are exempt). A warning does not fail the tree; this is how an `Input-Radio-Set` without `accessibilityLabel` is flagged. Not checked: data bindings (`"{Domain.field}"`), functions, objects, `IconName` values and free-form strings.
+- **`find_docs` in concept mode now returns one page of results.** It returns 20 matches by default (`limit` raises it, up to 100) and a `nextCursor` when more remain; pass it back as `cursor` for the next page. Pages are cut after ranking, so the first page holds the best matches. Before, concept mode ignored `limit` and `cursor` and returned every match in one response. If your own tooling calls `find_docs` with a `concept` and expects every match at once, follow `nextCursor`. List mode is unchanged.
+- **`find_components` says what its filter results are.** Without `keyword`, the `context` and `category` filters are exact constraints: their rows carry no `matchConfidence`, `matchedOn` or `rank`, and they come back in name order. Only the tool's description changed; its results did not.
+- **The install guide's restart step says what each agent tool asks.** On the founding and joining paths, `docs/consumer/INSTALL.md` (and the Integration Guide it is generated from) now says that Claude Code asks you to trust the folder and then to enable DesignerPunk's three MCP servers, and that you accept both; Kiro asks nothing. Before, it said only "approve DesignerPunk's MCP servers if asked". The reference path (no `init`) is unchanged.
+
+### Known limitations in this release
+
+- **Part of the token source `init` copied into your repo is not read yet.** `generate` takes the colour palette, the dark and WCAG override maps, the motion and layering tokens, and the whole DTCG/Figma export from the installed package, so editing those parts of your copy does not change your output yet. Spacing, typography and the other non-colour primitives, and your semantic references, are read from your copy. The install guide's "yours wholesale" sentence is corrected to match.
+- The known limitations listed for 15.1.0 still apply: `validate`'s mathematical-relationships check fails on unmodified token source; the Application MCP reads most of DesignerPunk's iOS and Android implementations as `scaffold`; and `--migrate-components` reports "cannot tell" when your registry access fails.
+
+### Upgrading from 15.1.0
+
+1. `npm install @3fn/core@16.0.0`.
+2. Search your code for `input-radio-set` and `InputRadioSet(` (Swift and Kotlin), and add the group's name to each, as shown under "Breaking".
+3. If you run `validate_assembly` in your own checks, re-run them: a tree with a wrong prop value now fails (see "Changed").
+4. Run `npx designerpunk sync` in a terminal to refresh your generated agent files. It reports what it changes, if anything.
+5. Restart your agent session, so that the MCP servers load the new version (the install guide's rule for any package update).
+
 ## [15.1.0] — 2026-10-14 — Release 3 (the install guide, the commit policy, starter specs and `init`'s onboarding)
 
 This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a custom theme you register in `designerpunk.config.ts` does not change your generated output yet; light and dark mode work.

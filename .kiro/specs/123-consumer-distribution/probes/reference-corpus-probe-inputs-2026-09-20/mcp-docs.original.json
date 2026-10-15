@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "designerpunk-docs": {
+      "command": "node",
+      "args": ["/private/tmp/claude-501/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/bc43eba2-6548-45f7-8173-2ede511d746c/scratchpad/probe-ref-corpus/node_modules/@3fn/core/dist/mcp/docs-mcp.js"]
+    }
+  }
+}

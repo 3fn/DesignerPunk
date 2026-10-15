@@ -1,0 +1,6 @@
+# designerpunk:managed:begin
+token-index/
+.designerpunk/
+# uncomment if your build/deploy runs 'npx designerpunk generate' — then platform output need not be committed
+# dist/tokens/
+# designerpunk:managed:end

@@ -1,0 +1,9 @@
+# DesignerPunk Sync Ignore
+# Files listed here are never touched by `npx designerpunk sync`.
+# Uses .gitignore syntax: globs, exact paths, # comments.
+
+# Example: keep your edits to a generated agent file (sync would otherwise offer to overwrite it)
+# .claude/agents/ada.md
+# .kiro/agents/ada.json
+# .kiro/agents/ada-prompt.md
+# Agents you write yourself are never managed and need no entry here.

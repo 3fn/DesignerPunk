@@ -423,7 +423,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 | **Req 11.6.5's C(c1) row superseded-in-execution** (amendment 2026-09-27, item 4: premise false, clause (a) exercised by F `#purpose` only) | **Next requirements touch** — the row is edited then; 123 executes under the tasks amendment. Also carried to that touch: the 11.6.5 table fold of G1 run 1's per-unit restatements, the F row as instantiated (three units), and G1 run 2 finding **R2-A1**. DR-2, DR-3, DR-4 and the stale "Against the exemplars" counts were folded as errata by the U2b-cut amendment |
 | Routed defects (out of scope; for Lina): `ContainerCardBase.ios.swift:816` unterminated comment; `LocalDPTheme` / `dpTheme` hardcoding; per-component `dist` `.css` requires (A7) | Filed by the steward: `.kiro/issues/2026-09-26-native-component-theme-hardcoding.md`. Task 3.5 cites it, and routes the A7 finding and the `:816` parse defect as messages |
 | *(amendment 2026-10-03, R2 — Leonardo L-A2)* **25.1: persona (c)'s frozen prompt names a web product.** Under release 3's scope, an "app" prompt would test the native label instead of the path | **Task 25.1**, owner Leonardo, due at U5's cut (Task 25's rows are outside the U3 amendment, so this is a carry line, not an edit) |
-| *(amendment 2026-10-03, R2 — Kenya B2, advisory)* **Task 25's "Not exercised" reasons**: "no platform toolchain on the host" is untrue for iOS on at least one host (Kenya ran `swiftc` there, 2026-10-03); the true reason is "no native component consumption path" | **Task 25**, owner Leonardo, at U5's cut, reworded with Kenya and Data |
+| *(amendment 2026-10-03, R2 — Kenya B2, advisory)* **Task 25's "Not exercised" reasons**: "no platform toolchain on the host" is untrue for iOS on at least one host (Kenya ran `swiftc` there, 2026-10-03); the true reason is "no native component consumption path" | **Task 25**, owner Leonardo, at U5's cut, reworded with Kenya and Data → applied 2026-10-14 at U5's cut, see Task 25 criterion 3 |
 | *(amendment 2026-10-03, R2 — Kenya B1)* **Nine shipped iOS files read the theme without the key-path backslash** (`@Environment(.dpTheme)`; they parse but do not type-check against a defined key) | **Lina, a new issue of its own**, filed in her pre-cut `chore/` PR and cross-referenced from item 2 of `.kiro/issues/2026-09-26-native-component-theme-hardcoding.md`. **Not 123 work.** Task 19 names it as a cause (prose) |
 
 ---
@@ -1490,7 +1490,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - **C3 `session-launched-by: <who>`** — who physically launched each harness session (Leonardo, Peter or the orchestrator). Leonardo owns the prompts, protocol adherence, in-run judgments and records.
 - **`harness-user-state` is EVIDENCE, not a word** (Leonardo A2). Either the inspection commands and output over the harness's user-level stores, or the mechanism used. **The default mechanism is a fresh temporary `HOME` per run**; any re-login cost is recorded.
 
-- [ ] 25. The persona trio
+- [x] 25. The persona trio
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Leonardo (Opus) — operator
   **Traces**: Reqs 22, 23, 24.2a, 25.1, 25.5, 15B.3 · design C30
@@ -1498,20 +1498,20 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   **Success Criteria:**
   - Three records at `.kiro/specs/123-consumer-distribution/validation/trio-<n>-<persona>.md`. Each runs against a packed install with no source access, on its committed fixture, **from its frozen prompt**. Both targets appear.
   - **Every record carries every C30 field, plus `operator-log`, `session-launched-by` and `subject:` tags**, with the field list reproduced. **Schema check scope: it establishes field presence, not observation quality** (S-T-A3). The forced negative per persona is what makes an empty findings list auditable, and Stacy's CLOSEOUT reads the operator logs' content and the `subject: leonardo` findings.
-  - **"Not exercised" reasons use Kenya's and Data's corrected wording**: *"Kenya/Data unexercised — no native component consumption path, and no platform toolchain on the host"* (never "for want of a platform fixture").
+  - **"Not exercised" reasons use Kenya's and Data's corrected wording**: *"Kenya unexercised — no supported native component consumption path (INSTALL.md § iOS: reference source, not a build input)"* and *"Data unexercised — no supported native component consumption path (INSTALL.md § Android: reference source, not a build input; no Gradle module; LocalDPTheme undefined)"* (never "for want of a platform fixture"). Each record also carries a per-run `host-toolchain (ios|android): …` line, recorded as a fact with its commands and exit codes, never as the reason. *(amendment 2026-10-14 — Peter RULED (b), orchestrator's O-1 fork; consulted Kenya, Data (both hold (b), cross-read), Leonardo)*
   - Budgets are agent turns ≥ 3× the declared `path-steps`; `budget-exhausted` is a finding.
   - **Persona (c) runs bare `init` in Kiro** (still counting toward Kiro), and her record states whether 15B.3's distinction held (evidence quoted).
   - **DD9 re-read, scoped** (Leonardo A1): it states whether a founder who got the wrong default **recovered via the notice**, and states that it **cannot** establish which harness is the majority.
 
   **Primary Artifacts:** `tests/onboarding-trio/{protocol.md,fixtures/}`, `.kiro/specs/123-consumer-distribution/validation/prompts/`, `validation/trio-*.md`
 
-  - [ ] 25.1 Protocol + committed fixtures + frozen prompts
-  - [ ] 25.2 Run (a)
-  - [ ] 25.3 Run (b)
-  - [ ] 25.4 Run (c) — bare `init` in Kiro
-  - [ ] 25.5 Schema check; the scoped DD9 re-read
+  - [x] 25.1 Protocol + committed fixtures + frozen prompts
+  - [x] 25.2 Run (a)
+  - [x] 25.3 Run (b)
+  - [x] 25.4 Run (c) — bare `init` in Kiro
+  - [x] 25.5 Schema check; the scoped DD9 re-read
 
-- [ ] 26. The two cross-target join runs and the install-doc correction
+- [x] 26. The two cross-target join runs and the install-doc correction
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Leonardo (Opus) — operator; Thurgood (Sonnet) — 26.5
   **Traces**: Reqs 15A.4, 15A.1 · design C8, C24, DD8
@@ -1532,13 +1532,13 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `validation/join-cc-to-kiro.md`, `validation/join-kiro-to-cc.md`, `governance/DesignerPunk-Integration-Guide.md`
 
-  - [ ] 26.1 Commit the two fixtures, born from the packed artifact
-  - [ ] 26.2 Join CC→Kiro
-  - [ ] 26.3 Join Kiro→CC
-  - [ ] 26.4 The cold-observation table
-  - [ ] 26.5 (Thurgood) Install-doc correction for observed cells
+  - [x] 26.1 Commit the two fixtures, born from the packed artifact
+  - [x] 26.2 Join CC→Kiro
+  - [x] 26.3 Join Kiro→CC
+  - [x] 26.4 The cold-observation table
+  - [x] 26.5 (Thurgood) Install-doc correction for observed cells
 
-- [ ] 27. Re-grounding conformance (24.1 two-beat)
+- [x] 27. Re-grounding conformance (24.1 two-beat)
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Leonardo (Opus) — operator (**not the profile author**)
   **Traces**: Reqs 24.1–24.6 · design C31
@@ -1552,12 +1552,12 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `validation/conformance-beat-{1,2}.md`, `.kiro/specs/123-consumer-distribution/validation/prompts/conformance-*.md`
 
-  - [ ] 27.1 Freeze and commit both prompts
-  - [ ] 27.2 Beat 1
-  - [ ] 27.3 Beat 2
-  - [ ] 27.4 The identity probe; the 24.3 labelling
+  - [x] 27.1 Freeze and commit both prompts
+  - [x] 27.2 Beat 1
+  - [x] 27.3 Beat 2
+  - [x] 27.4 The identity probe; the 24.3 labelling
 
-- [ ] 28. Closeout (**U5 gating parent**)
+- [x] 28. Closeout (**U5 gating parent**)
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Thurgood (Opus); Leonardo (Opus) — 28.3
   **Traces**: Reqs 25.2–25.7, 26.7, 23.7, 23.9 · design C32
@@ -1575,10 +1575,10 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `validation/probe-rerun.md`, `.kiro/issues/<date>-123-*.md`, `CHANGELOG.md` (release 4)
 
-  - [ ] 28.1 Probe re-run with scoping
-  - [ ] 28.2 Tarball assertion
-  - [ ] 28.3 (Leonardo) Product query, seat and bar
-  - [ ] 28.4 Obligation records; release-4 CHANGELOG entry; full validation; open the U5 PR
+  - [x] 28.1 Probe re-run with scoping
+  - [x] 28.2 Tarball assertion
+  - [x] 28.3 (Leonardo) Product query, seat and bar
+  - [x] 28.4 Obligation records; release-4 CHANGELOG entry; full validation; open the U5 PR
 
 ---
 
