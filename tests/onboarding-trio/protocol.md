@@ -1352,3 +1352,167 @@ date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
 
 **Paste back for `conformance`**: steps 0–6 in full; the four check-block outputs (steps 7–10); step 11 in full; any prompt you answered in step 6, word for word, with your answer; anything else you typed and why. Then: "`conformance` done; files in `/tmp/dp-trio/conformance/out`."
+
+
+## 16. The product query (Task 28.3)
+
+*Added 2026-10-15 for Spec 123 Task 28.3, by Leonardo, under Task 25's write grant for this file (the same residual as §§ 14–15: a claims pass may read the edit as out-of-list, since Task 28's Primary Artifacts do not name this file).*
+
+### 16.1 What the run is
+
+- **The criterion** (Task 28, Leonardo A7): consumer-Leonardo, in a fresh session in the consumer repo, answers `get_product_overview` (the overview's product name matches the scaffold) and `find_screens` (returns `example-home`). The transcript excerpt shows both.
+- **Why Claude Code, headless, stream-json**: its `tool_result` blocks carry what the two tools returned. Run 3's Kiro transcript printed the calls but not the results, so its cells read `cannot-tell` (`validation/trio-3-pm.md` R3-7). That run did not discharge this criterion.
+- **The consumer repo**: one fresh clone of `fixtures/born-cc`, Task 26.1's CC-born fixture, **stated as such**. Dana's `order-status` service was born by `npx designerpunk init --target=cc --name "Order Status" --abbreviation OST` from candidate `aa3efdcf…` (`validation/trio-1-backend.md` L169). That candidate is the `4c875235a` preview, **not the release-4 tarball**.
+  - **Why the fixture and not a fresh birth**: the bar is about the seat and the Product MCP, not the tarball version. Every source the bar reads is unchanged from `4c875235a` to the prompt commit: `product-mcp-server/`, `src/cli/` (`init` and the product templates), the CC rendering of Leonardo, and `package-lock.json`. Step 0 checks this at `COMMIT`; if any path moved, it prints `STOP`.
+  - The fixture's lock pins the preview tarball's integrity, so it cannot install another tarball without a re-lock. That is why the preview is used here.
+- **Setup, by the launcher, not under test** (§ 15's recipe): clone, tarball, `npm install`, `npx designerpunk generate`, the Claude Code preflight, one captured interactive open to trust the folder and enable the three servers (§ 6), then `claude mcp list` as the text record that the three servers connect.
+- **The session**: one, fresh, headless: `claude --agent leonardo -p <frozen prompt> --output-format stream-json --verbose`. Budget 15 turns (observed, not enforced; § 4). No `--permission-mode acceptEdits`: the question is read-only, so a write attempt shows up as a permission denial.
+- **Prompt**: `.kiro/specs/123-consumer-distribution/validation/prompts/product-query-leonardo.md` (one PROMPT block).
+- **Record**: `.kiro/specs/123-consumer-distribution/validation/product-query.md`.
+- **What the run writes** (`/tmp/dp-trio/product-query/`): `origin/`, `repo/`, `home/`, `empty/`, and `out/`. `out/` holds:
+  - `preflight-cc-<time>.typescript` and `open-<time>.typescript`;
+  - `mcp-list.txt`;
+  - `product-query.{jsonl,stderr,exit}` and its `*.utc` files;
+  - `seat-*.txt`, `result-get_product_overview.txt`, `result-find_screens.txt`, `product-query-calls.txt`, `product-query-answer.txt` and `product-query-excerpt.txt`;
+  - `host.txt`, `candidate-shasum.txt`, `isolation.txt`, `hstate.zsh` and `harness-user-state-{before,after}.txt`;
+  - `home-files.txt`, `tmp-writes.txt`, `repo-status.txt` and `source-access-audit.txt`.
+
+### 16.2 Launch blocks, for Peter
+
+Same rules as § 11 and § 15:
+- one new macOS Terminal window, kept open for the whole run (zsh);
+- one block at a time;
+- each interactive session gets its own capture, and none is overwritten;
+- if macOS asks about the keychain, click Cancel (never reset), press Ctrl-C, and tell the orchestrator;
+- the only edit is `COMMIT=` in step 0: the commit that carries the frozen prompt.
+
+**Paste back**: the outputs of steps 0–6 in full; every prompt you answered in step 6, word for word, with your answer; step 8's whole output; step 9's whole output; anything else you typed and why. Read nothing else to the orchestrator; it reads the files.
+
+**Step 0 — variables and checks.** Expect `0`, then `fixture and prompt found at commit`, then `measured sources unchanged since 4c875235a: 0 paths`, then `seat rendering: fixture == canonical at COMMIT`. If any line prints `STOP`, stop and tell the orchestrator.
+
+```sh
+RUN=product-query
+FIX=born-cc
+COMMIT=FILL_IN_COMMIT
+DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
+TGZ="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/3fn-core-15.1.0.tgz"
+R="/tmp/dp-trio/$RUN"
+PF=".kiro/specs/123-consumer-distribution/validation/prompts/product-query-leonardo.md"
+env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
+git -C "$DP" cat-file -e "${COMMIT}:${PF}" && git -C "$DP" cat-file -e "${COMMIT}:tests/onboarding-trio/fixtures/${FIX}/product/overview.yaml" && echo "fixture and prompt found at commit"
+N=$(git -C "$DP" diff --name-only 4c875235a "$COMMIT" -- product-mcp-server src/cli canonical/_consumer-output/cc/.claude/agents/leonardo.md package-lock.json | wc -l | tr -d " "); if [ "$N" = 0 ]; then echo "measured sources unchanged since 4c875235a: 0 paths"; else echo "STOP: $N measured paths changed since 4c875235a"; git -C "$DP" diff --name-only 4c875235a "$COMMIT" -- product-mcp-server src/cli canonical/_consumer-output/cc/.claude/agents/leonardo.md package-lock.json; fi
+diff <(git -C "$DP" show "${COMMIT}:tests/onboarding-trio/fixtures/${FIX}/.claude/agents/leonardo.md") <(git -C "$DP" show "${COMMIT}:canonical/_consumer-output/cc/.claude/agents/leonardo.md") > /dev/null && echo "seat rendering: fixture == canonical at COMMIT" || echo "STOP: the fixture's leonardo.md differs from the canonical CC rendering at COMMIT"
+```
+
+**Step 1 — the founder's repo and one clone.** Expect one `founder's repo` line, `203`, and the fixture's top-level files. If it prints `STOP`, stop.
+
+```sh
+if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/origin" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/origin" --strip-components=4 && cd "$R/origin" && git init -q -b main && git add -A && git -c user.name=founder -c user.email=founder@example.invalid -c commit.gpgsign=false commit -q -m "founder's repo" && git log --oneline && find . -type f -not -path './.git/*' | wc -l && git clone -q "$R/origin" "$R/repo" && ls -A "$R/repo"; fi
+```
+
+**Step 2 — the tarball.** Expect `aa3efdcf9ce3c2689c2e5979932c48a46f3f6584`. Any other value: stop.
+
+```sh
+mkdir -p "$R/repo/.pack" && cp "$TGZ" "$R/repo/.pack/" && shasum -a 1 "$R/repo/.pack/3fn-core-15.1.0.tgz" | tee "$R/out/candidate-shasum.txt"
+```
+
+**Step 3 — the frozen prompt, from the commit.** Expect a non-zero line count.
+
+```sh
+git -C "$DP" show "${COMMIT}:${PF}" > "$R/out/prompt.md"
+awk '/ PROMPT END -->/{p=0} p{print} / PROMPT BEGIN -->/{p=1}' "$R/out/prompt.md" > "$R/out/product-query-prompt.txt"
+wc -l "$R/out/product-query-prompt.txt"
+```
+
+**Step 4 — host versions, and `harness-user-state` before.** Expect the run-store entries `absent`. The inspection is saved as `out/hstate.zsh` so step 9 reuses the same text; the before-file is never overwritten.
+
+```sh
+{ date -u +%Y-%m-%dT%H:%M:%SZ; hostname -s; sw_vers -productVersion; uname -m; echo "node $(node -v) / npm $(npm -v)"; claude --version; } > "$R/out/host.txt" 2>&1; cat "$R/out/host.txt"
+cat > "$R/out/hstate.zsh" <<'HSTATE'
+hstate() {
+  echo "== run store (CC): $R/home/.claude"
+  for f in "$R/home/.claude/.claude.json" "$R/home/.claude/settings.json"; do
+    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f") DesignerPunk-relevant lines"; grep -n -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f" | cut -c1-200; else echo "${f}: absent"; fi
+  done
+  if [ -f "$R/home/.claude/.claude.json" ]; then echo "-- projects in the run store:"; jq -c '.projects // {} | to_entries[] | {dir: .key, trusted: .value.hasTrustDialogAccepted, enabled: .value.enabledMcpjsonServers}' "$R/home/.claude/.claude.json"; fi
+  if [ -f "$R/repo/.claude/settings.local.json" ]; then echo "-- repo .claude/settings.local.json:"; cat "$R/repo/.claude/settings.local.json"; else echo "-- repo .claude/settings.local.json: absent"; fi
+  echo "== real user stores (DesignerPunk-relevant only)"
+  if [ -f "$HOME/.claude.json" ]; then echo "$HOME/.claude.json: $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$HOME/.claude.json") DesignerPunk-relevant lines"; else echo "$HOME/.claude.json: absent"; fi
+}
+HSTATE
+source "$R/out/hstate.zsh"
+if [ -e "$R/out/harness-user-state-before.txt" ]; then echo "before-state already recorded; not overwritten"; else hstate > "$R/out/harness-user-state-before.txt" 2>&1; fi; cat "$R/out/harness-user-state-before.txt"
+```
+
+**Step 5 — setup: install and generate (you run these; they are not under test).** Expect `added … packages`, `✅ System tokens generated`, and `?? .pack/` as the only `git status` line.
+
+```sh
+cd "$R/repo" && npm install --no-audit --no-fund 2>&1 | tail -3 && npx designerpunk generate 2>&1 | tail -3 && git status --porcelain
+```
+
+**Step 6 — Claude Code preflight, the trust-and-enable open, and the server list.** Three blocks, in order.
+- First block: the first-run onboarding in an empty folder. Choose the defaults, sign in if asked, then `/exit`.
+- Second block: in the repo. Answer by § 6: trust the folder, and enable DesignerPunk's servers. Type `/mcp` and wait for the list, press Esc, then `/exit`. Type no task.
+- Third block: not interactive. Expect three lines, for `designerpunk-docs`, `designerpunk-application` and `designerpunk-product`, each connected. An account-level connector may also be listed; leave it. **If any `designerpunk-` server is not connected, stop.**
+
+Paste back what each block showed, and each prompt word for word with your answer.
+
+```sh
+echo "isolation (CC): CLAUDE_CONFIG_DIR=$R/home/.claude (real HOME)" | tee "$R/out/isolation.txt"
+cd "$R/empty" && CLAUDE_CONFIG_DIR="$R/home/.claude" script -q "$R/out/preflight-cc-$(date -u +%H%M%S).typescript" claude
+```
+
+```sh
+cd "$R/repo" && CLAUDE_CONFIG_DIR="$R/home/.claude" script -q "$R/out/open-$(date -u +%H%M%S).typescript" claude
+```
+
+```sh
+cd "$R/repo" && CLAUDE_CONFIG_DIR="$R/home/.claude" claude mcp list 2>&1 | tee "$R/out/mcp-list.txt"
+```
+
+**Step 7 — the product query: consumer-Leonardo (fresh session, headless).** It prints only `exit=…` when the session ends, usually within a minute or two. Then run step 8.
+
+```sh
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/product-query.start.utc" && CLAUDE_CONFIG_DIR="$R/home/.claude" claude --agent leonardo -p "$(cat "$R/out/product-query-prompt.txt")" --max-turns 15 --output-format stream-json --verbose --allowedTools "Bash,Read,Glob,Grep,mcp__designerpunk-product__get_product_overview,mcp__designerpunk-product__find_screens" --disallowedTools "WebFetch,WebSearch" > "$R/out/product-query.jsonl" 2> "$R/out/product-query.stderr"; echo "exit=$?" | tee "$R/out/product-query.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/product-query.end.utc"
+```
+
+**Step 8 — the check: the seat, both calls, both results, the answer, and the bar.** Paste the whole output. It ends with the two bar lines. Each count is `0` or more; the record interprets them, so no number here is a pass or a fail.
+
+```sh
+cd "$R/repo" && {
+echo "== stderr (first 800 bytes)"; head -c 800 "$R/out/product-query.stderr"; echo
+echo "== init"; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, claude_code_version, permissionMode, mcp_servers}' "$R/out/product-query.jsonl"
+echo "== result"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms, permission_denials}' "$R/out/product-query.jsonl"
+echo "== seat: the session's tools vs .claude/agents/leonardo.md tools:"
+awk '/^---$/{c++; next} c==1 && /^  - /{sub(/^  - /,""); print}' "$R/repo/.claude/agents/leonardo.md" | sort > "$R/out/seat-frontmatter-tools.txt"
+jq -r 'select(.type=="system" and .subtype=="init") | .tools[]' "$R/out/product-query.jsonl" | sort > "$R/out/seat-init-tools.txt"
+if diff "$R/out/seat-frontmatter-tools.txt" "$R/out/seat-init-tools.txt" > "$R/out/seat-diff.txt"; then echo "identical ($(wc -l < "$R/out/seat-init-tools.txt" | tr -d " ") tools)"; else echo "DIFFERENT:"; cat "$R/out/seat-diff.txt"; fi
+echo "== every tool call, in order"; jq -r 'select(.type=="assistant") | .message.content[]? | select(.type=="tool_use") | "\(.name) \(.input|tojson|.[0:200])"' "$R/out/product-query.jsonl" | tee "$R/out/product-query-calls.txt"
+for T in get_product_overview find_screens; do
+  jq -s -r --arg n "mcp__designerpunk-product__$T" '([.[]|select(.type=="user")|.message.content[]?|select(.type=="tool_result")]) as $r | .[]|select(.type=="assistant")|.message.content[]?|select(.type=="tool_use" and .name==$n) | . as $t | ([$r[]|select(.tool_use_id==$t.id)][0] // {}) as $x | "== call \($t.id) input=\($t.input|tojson) is_error=\($x.is_error)\n\(($x.content // "(no tool_result)") | if type=="string" then . elif type=="array" then (map(.text // "")|join("")) else tostring end)"' "$R/out/product-query.jsonl" > "$R/out/result-$T.txt"
+  echo "== $T: $(grep -c '^== call' "$R/out/result-$T.txt") call(s); result excerpt (first 1500 bytes):"; head -c 1500 "$R/out/result-$T.txt"; echo
+done
+jq -r 'select(.type=="result") | .result' "$R/out/product-query.jsonl" > "$R/out/product-query-answer.txt"
+echo "== the answer, verbatim"; cat "$R/out/product-query-answer.txt"
+echo "== the bar"
+echo "overview.yaml L3: $(sed -n 3p "$R/repo/product/overview.yaml")"
+PN=$(sed -n '3s/^name: *"\(.*\)".*$/\1/p' "$R/repo/product/overview.yaml")
+if [ -z "$PN" ]; then echo "STOP: no quoted name on overview.yaml L3"; else
+echo "bar (a) \"$PN\": in the get_product_overview result: $(grep -c -F "$PN" "$R/out/result-get_product_overview.txt"); in the answer: $(grep -c -F "$PN" "$R/out/product-query-answer.txt")"
+echo "bar (b) example-home: in the find_screens result: $(grep -c -F example-home "$R/out/result-find_screens.txt"); in the answer: $(grep -c -F example-home "$R/out/product-query-answer.txt")"
+fi
+} 2>&1 | tee "$R/out/product-query-excerpt.txt"
+```
+
+**Step 9 — after: state, repo untouched?, audit.** Paste the whole output. That ends the run.
+
+```sh
+source "$R/out/hstate.zsh"; hstate > "$R/out/harness-user-state-after.txt" 2>&1; cat "$R/out/harness-user-state-after.txt"
+find "$R/home" -type f -newer "$R/out/start.stamp" | sed "s|$R/home|HOME|" | sort > "$R/out/home-files.txt"; echo "files the run store gained: $(wc -l < "$R/out/home-files.txt" | tr -d " ")"
+find /tmp/ -maxdepth 1 -newer "$R/out/start.stamp" 2>/dev/null | grep -v -E "^/tmp/$|^/tmp/dp-trio$" | tee "$R/out/tmp-writes.txt"
+cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"; git log --oneline --all | head -5
+grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/product-query.jsonl "$R"/out/open-*.typescript > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (package self-references expected; see § 10)"
+date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
+```
+
+**Paste back for `product-query`**: steps 0–6 in full; step 8 and step 9 in full; any prompt you answered in step 6, word for word, with your answer; anything else you typed and why. Then: "`product-query` done; files in `/tmp/dp-trio/product-query/out`."
