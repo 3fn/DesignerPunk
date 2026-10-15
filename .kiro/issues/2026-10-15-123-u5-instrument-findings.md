@@ -8,7 +8,7 @@
 **Grant paths**: none here. Each vehicle PR declares its own (an install-doc PR touches `governance/DesignerPunk-Integration-Guide.md`, so it carries a `**Consulted**:` line and is Peter-merged).
 **Consulted**: none needed — the routes are the records' proposed routes, sorted by Peter's ruling (4).
 
-**Record paths** (all under `.kiro/specs/123-consumer-distribution/validation/`): R1-* `trio-1-backend.md` · R2-* `trio-2-designer.md` · R3-* `trio-3-pm.md` · J-* `join-cc-to-kiro.md` · K-* `join-kiro-to-cc.md` · C-* `conformance-beat-1.md` · PQ-* `product-query.md` · BD-* = the `D-*` rows of `conformance-beat-2.md` (renamed here to avoid colliding with the U1b check's D-1–D-23) · FR-n = row n of the friction record.
+**Record paths** (all under `.kiro/specs/123-consumer-distribution/validation/`): R1-* `trio-1-backend.md` · R2-* `trio-2-designer.md` · R3-* `trio-3-pm.md` · J-* `join-cc-to-kiro.md` · K-* `join-kiro-to-cc.md` · C-* `conformance-beat-1.md` · PQ-* `product-query.md` · P-* `probe-rerun.md` · BD-* = the `D-*` rows of `conformance-beat-2.md` (renamed here to avoid colliding with the U1b check's D-1–D-23) · FR-n = row n of the friction record.
 
 **Vehicles**: **V-DOC** = Thurgood's install-doc `fix/` PR (Integration Guide install region → `docs/consumer/INSTALL.md` by `scripts/derive-install-doc.ts`; plus the root `README.md`), **before the release-4 tag** (Peter, 2026-10-15). **V-CLI** = Lina's one CLI `fix/` PR with tests. **V-PROF** = Thurgood's consumer-profile PR. **V-GEN** = Lina's generator/adapter PR. **V-OWN** = the owner's own PR.
 
@@ -88,6 +88,17 @@
 | PQ-1 | **Claude Code 2.1.301's default `permissionMode` is `"auto"`.** § 16 passed no `--permission-mode`, relying on the old default to surface a write as a permission denial. No write was attempted, so 28.3's bar is unaffected, but the run cannot tell what admitted the two MCP calls: the committed pre-approvals in `.claude/settings.json`, `--allowedTools`, or auto mode's classifier. **Consumers get the same default**, so whether it changes what INSTALL's "pre-approved … apply without asking" buys a user is **unobserved**. **It also reaches 28.1**: `validation/probe-rerun.md`'s blocks pass no `--permission-mode` either, so its comparison with the n=1's three denied `Bash` calls (CLI 2.1.278) has to read each session's init `permissionMode` before attributing any difference in denials to the product | Leonardo (protocol: an explicit `--permission-mode` in future headless blocks); Thurgood (INSTALL's "pre-approved" sentence, if a later run observes a difference — V-DOC) | V-OWN (protocol) | |
 | PQ-2 | **The CLI auto-updated mid-run**, 2.1.300 → 2.1.301 between the host-facts step and the session. The version is to be read from the session's init event, not `host.txt`; every earlier record that took it from `host.txt` can be stale the same way | Leonardo | V-OWN (protocol) | |
 
+## 4c. The reference-corpus probe re-run (Task 28.1)
+
+| ID | Finding | Owner | Vehicle | Disposition at release-4 prep |
+|---|---|---|---|---|
+| P-1 | **Audience banners do not reach a reference-mode agent through the docs MCP's summary-first path**: `get_document_summary` and `get_section` omit a doc's preamble, where every banner sits; only `get_document_full` returns it. Both probe sessions fetched bannered docs that way and met no banner, so Req 20.8's "reference-mode framing rides the banner language" is not delivered on the MCP path | Thurgood (banner convention, docs MCP); the code fix is in `mcp-server/src/**`, outside his write scope — fixing owner named at the trigger | V-OWN (a docs-MCP change: e.g. the banner in the summary payload) | |
+| P-2 | **INSTALL § 2's reference bullets ("For the agent reading this corpus") reached neither probe agent**: nothing on the reference path (`attach --reference`'s output, the manifest, the MCP) points to them | Thurgood | V-DOC can only move text; the delivery fix rides P-1's vehicle or `attach --reference`'s next-steps (Lina) | |
+| P-3 | **`governance/Token-Family-Opacity.md` reads `Last Reviewed: 2026-03-06`** though its § Disabled States was rewritten on 2026-09-18 (#170); INSTALL's "defer to the more recently reviewed one" would weigh it wrongly | Thurgood (metadata); Ada (content review) | V-OWN (a CONTENT CORRECTION per `.kiro/issues/2026-10-15-123-governance-edit-kinds-ballot.md`) | |
+| P-4 | **`SectionNotFound` suggestions cannot reach an H4**, so INSTALL's "retry using the `suggestions` field" fails where the probe needed it | Thurgood | home: `.kiro/issues/2026-10-12-docs-mcp-does-not-index-h4.md` (its trigger) | |
+| P-5 | **Instrument: the probe's two sessions ran in different permission modes** (A `auto`, B `default`) on 2.1.301; `--allowedTools` did not bound A | Leonardo (protocol) | with PQ-1 (§ 4b) | |
+| P-6 | **Comparator erratum**: the n=1 record's "no such heading exists" (the heading is an H4 at 14.1.0) and "unsourced addition" (the phrase is verbatim at 14.1.0 Component-Templates L774) were wrong | Thurgood | an erratum line on `.kiro/specs/123-consumer-distribution/probes/reference-corpus-probe-record.md` | **Done in U5** (erratum appended 2026-10-15, Task 28.1) |
+
 ## 5. Closed, or no DesignerPunk route (recorded so the count is whole)
 
 | ID | Finding | Disposition |
@@ -112,4 +123,4 @@ Not instrument findings; placed here so each has an owner and a walked trigger r
 
 ## Walk (release-4 prep)
 
-For each row in §§ 1–4, 4b and 6: a merged fix (PR number) **or** a written waiver (who, why). **Any row with neither blocks RELEASE phase 1.** After 16.0.0 ships, rows still open move to their owners' records or the next release's walk, and this file archives with the release's record.
+For each row in §§ 1–4, 4b, 4c and 6: a merged fix (PR number) **or** a written waiver (who, why). **Any row with neither blocks RELEASE phase 1.** After 16.0.0 ships, rows still open move to their owners' records or the next release's walk, and this file archives with the release's record.

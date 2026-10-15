@@ -1557,7 +1557,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 27.3 Beat 2
   - [x] 27.4 The identity probe; the 24.3 labelling
 
-- [ ] 28. Closeout (**U5 gating parent**)
+- [x] 28. Closeout (**U5 gating parent**)
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Thurgood (Opus); Leonardo (Opus) — 28.3
   **Traces**: Reqs 25.2–25.7, 26.7, 23.7, 23.9 · design C32
@@ -1575,10 +1575,10 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `validation/probe-rerun.md`, `.kiro/issues/<date>-123-*.md`, `CHANGELOG.md` (release 4)
 
-  - [ ] 28.1 Probe re-run with scoping
-  - [ ] 28.2 Tarball assertion
-  - [ ] 28.3 (Leonardo) Product query, seat and bar
-  - [ ] 28.4 Obligation records; release-4 CHANGELOG entry; full validation; open the U5 PR
+  - [x] 28.1 Probe re-run with scoping
+  - [x] 28.2 Tarball assertion
+  - [x] 28.3 (Leonardo) Product query, seat and bar
+  - [x] 28.4 Obligation records; release-4 CHANGELOG entry; full validation; open the U5 PR
 
 ---
 

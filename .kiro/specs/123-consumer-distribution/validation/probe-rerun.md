@@ -318,57 +318,122 @@ date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 
 ## Record
 
-*Empty until the run. Written by Thurgood from `$R/out/` and Peter's paste-back. Every field is owed for each session; "none" is written, never implied (Req 25.5).*
+*Written by Thurgood, 2026-10-15, from `/tmp/dp-trio/probe-rerun-1/out/` (read-only) and Peter's paste-back. Quotations are from the files; where the paste-back and a file differ, the file is quoted. Transcripts and deliverables are not committed; the excerpts below are.*
 
 ### Run facts (both sessions)
 
-- `run-id:` probe-rerun-1
-- `session-launched-by:` Peter (macOS Terminal) — every session, including the preflight and 6b
-- `candidate:` path, sha1 (step 2), the head it was built at, the `release-publish.ts --dry-run` record
-- `inputs:` step 1's six sha1s vs § Frozen inputs (match / mismatch)
-- `harness:` CLI version (step 3; and the init event's `claude_code_version`), isolation, preflight screens
-- `operator-log:` every act Peter took beyond the blocks, verbatim, with the reason; the 6d fallback if used; `none` if none
-- `writes-outside-folder:` step 7's lists, each entry classed (agent / harness / unrelated)
-- `source-access:` audit hit count and each hit classed
+- `run-id:` probe-rerun-1 · run 21:48:20Z → 22:40:57Z (2026-10-15)
+- `session-launched-by:` Peter (macOS Terminal) — every session: the preflight (step 4), session A (step 5), the restart (step 6b) and session B (step 6c). Step 6d was **not** run.
+- `launch-commit:` `COMMIT=539387fa2` (this file at the launch; the block's placeholder was filled in Peter's terminal, not in the file).
+- `candidate:` `/Users/3fn/Documents/Work Projects/Kiro/u5-pack/3fn-core-15.1.0-d6b6c7445.tgz`, sha1 **`326d798dcd71320129267cbeb97a2d59c13bfba7`** (step 2 = the Expect value), built by `release-publish.ts --dry-run d6b6c7445` (`completion/task-28-2-completion.md`). Its version string reads 15.1.0; it is the release-4 candidate, not the published 16.0.0. A's lock: `node_modules/@3fn/core` 15.1.0, `resolved` the candidate's path.
+- `inputs:` step 1's six sha1s **match** § Frozen inputs exactly (`out/inputs-sha1.txt`); both folders held `README.md components package.json tokens.json` and nothing else at launch.
+- `harness:` Claude Code **2.1.301** — `out/host.txt` (both the `npx` CLI and the `PATH` binary) and both sessions' init events (`claude_code_version`). Model `claude-fable-5-1`. Isolation `CLAUDE_CONFIG_DIR=/tmp/dp-trio/probe-rerun-1/home/.claude`, real `HOME`. Preflight (`out/preflight-214839.typescript`): theme → login method → browser sign-in ("Logged in as peter@designerpunk.ai") → security notes → terminal setup ("No, maybe later") → "Yes, I trust this folder" (the empty folder) → the notice "Auto mode is now Claude Code's default permission mode."
+- **`permissionMode` (read from each init event, PQ-1)**: session A **`auto`**; session B **`default`**. Both on 2.1.301 in the same run store. Why they differ is **cannot-tell** from these files (B's folder was trusted at 6b and carries a project `.claude/settings.json`; A's folder was never opened interactively; the interactive B open itself showed "auto mode on").
+- `operator-log:` none — no Ctrl-C, no typing beyond the blocks, no 6d (paste-back).
+- `writes-outside-folder:` `/tmp/claude-501` and `/tmp/cc-socks` — the orchestrator session's harness directories (unrelated); **`/tmp/zeb_def_ipc_57361` — unattributed** (not the agent's by any transcript line; not the orchestrator's by its account). The run store gained the expected session files (`projects/-private-tmp-dp-trio-probe-rerun-1-{a,b,empty}/`, `history.jsonl`, `.claude.json` and backups, caches, `settings.json`). Inside the folders, the docs MCP wrote `mcp-server/logs/` in both (R1-3's class; `.kiro/issues/2026-10-02-docs-mcp-logs-dir-cwd-relative.md`), and A's folder also gained `logs/`.
+- `source-access:` audit **0 hits** (`out/source-access-audit.txt`). Session A did read **its own run-store spill file** (`/tmp/dp-trio/probe-rerun-1/home/.claude/projects/…/tool-results/b2lmcsqat.txt`, the harness's "Output too large … saved to" file for its own earlier `Bash` result) — the harness's, inside the run; not DesignerPunk source.
 
 ### Session A — the September path, release-4 artifact
 
-- `mcp-connection:` the init event's `mcp_servers`
-- `result:` subtype, `num_turns`, `terminal_reason`, `is_error`, cost, duration
-- `deliverable:` produced? path, bytes
-- `tool-calls:` the docs-MCP calls by name with counts (n=1: `get_section` 13, `get_document_summary` 3, `find_docs` 2, `get_document_full` 0), the docs-MCP sequence in order, and the other tools' counts with any denials
-- `discovery (per question)` — one row per thing the agent went looking for:
+- `mcp-connection:` `[{"name":"designerpunk-docs","status":"connected","source":"dynamic"}]` (as September).
+- `result:` `success`, **34** turns, `completed`, `is_error: false`, **$2.76**, **226737 ms**; `permission_denials: []`; stderr empty.
+- `deliverable:` `meridian-disabled-states.md`, **16026** bytes, 343 lines — **written through a `Bash` heredoc**, not `Write`.
+- `tool-calls:` docs MCP **23** — `get_section` 9 (one `SectionNotFound`), `find_docs` 6, `get_document_summary` 6, `get_document_full` 2 (n=1: 13 / 2 / 3 / 0). Other: **`Bash` 9, all admitted** (`ls`/`find`, three `grep` sweeps of `node_modules/@3fn/core/governance/`, a read of its own spill file, one `python3 -I` contrast computation, the heredoc write), `ToolSearch` 1. `--allowedTools` does not list `Bash`; **auto mode admitted all nine** (n=1 on 2.1.278: 7 `Bash`, 3 denied).
+- `sequence (docs MCP):` `find_docs` ×4 ("disabled state", "opacity", "interaction states hover focus pressed", "accessibility aria-disabled") → `get_document_full` Token-Family-Opacity, Component-Family-Button → `get_document_summary` ×6 (Form-Inputs, Test-Behavioral-Contract-Validation, Token-Family-Color, Token-Family-Blend, Web-Authoring-Standards, Contract-System-Reference) → `get_section` ×8 (Test-Behavioral-Contract-Validation "Disabled State Exclusion Guard Validation"; Blend "Anti-Patterns to Avoid"; Contract-System-Reference "Exclusion Fields", "Three States", "state (16)"; Form-Inputs "Contract Details", "Accessibility Considerations"; Web-Authoring-Standards "Hard Rules") → `find_docs` ×2 ("adjudication exclusion guard", "loading state validate on blur unavailable action") → three `Bash` sweeps → `get_section` Component-Templates **"No Disabled States — Standardized Exclusion" → `SectionNotFound`**, suggestions `Overview, Schema Format Templates, Inheritance Pattern Templates, Behavioral Contract Templates, Quick Reference: Template Selection, Related Documentation` → `Bash grep` on the file finds it: **`751:#### No Disabled States — Standardized Exclusion`** — an H4.
 
-| Question the agent was answering | Call(s) | Discovery | Evidence (transcript line / tool_result excerpt) |
+- `discovery (per question):`
+
+| Question the agent was answering | Call(s) | Discovery | Evidence |
 |---|---|---|---|
-| | | succeeded / failed | |
+| How does DesignerPunk treat disabled states? | `find_docs "disabled state"` | **succeeded** | 4 rows, all `strong` (Test-Behavioral-Contract-Validation first) |
+| What does it say about opacity for disabled? | `find_docs "opacity"`; `get_document_full` Token-Family-Opacity | **succeeded** | Opacity § Disabled States: "Applying opacity to simulate a disabled state is the exact pattern the ruling prohibits" |
+| How are interaction states handled? | `find_docs "interaction states hover focus pressed"`; Button `get_document_full` | **succeeded** | 10 rows (1 `strong`, 9 `partial`) |
+| What are the accessibility rules (aria-disabled)? | `find_docs "accessibility aria-disabled"`; Form-Inputs sections; Web-Authoring-Standards "Hard Rules" | **succeeded** (partial match) | 8 rows, all `partial`; acted on the sections, not the ranking |
+| Where is the ruling itself? | `find_docs "adjudication exclusion guard"`; Contract-System-Reference sections | **failed** for the record (the adjudication issue file is not in the package); **succeeded** for its content via the exclusion guard and template text | 1 `partial` row |
+| What replaces disabled (loading, validation)? | `find_docs "loading state validate on blur unavailable action"` | **succeeded** (partial) | 10 `partial` rows; Component-Family-Loading among them |
+| The "No Disabled States" template text | `get_section` Component-Templates | **failed** (`SectionNotFound`; the heading is an H4 the server cannot address); **recovered by `grep` on the file**, not by the suggestions (which list H2 only) | the error payload above; `u5nf81` result |
+| Contrast of the proposed colours | `Bash python3 -I` | succeeded (admitted by auto mode) | "white on brand-blue 5.42:1 …" |
 
-- `banner:` did a served doc's "Audience framing" banner reach the agent (count, which docs)? What it did with it — quoted the worked-example / transferable split, used it to decide what to carry over, or ignored it (quote). `none met` written if none (row 1.10; Req 25.7 / 20.8)
-- `reference-guidance:` did the agent meet INSTALL § 2's reference bullets (by reading INSTALL, or not at all)? On this path, nothing points it there; `not met` is expected and still written
-- `the n=1's four gaps, re-read` — for each, `observed` / `not observed` / `cannot-tell`, with the transcript evidence:
-  1. a signal that reference use of a foreign system is a sanctioned mode
-  2. `Last Reviewed` dates weighed when two docs disagree
-  3. a `SectionNotFound` retried with the server's `suggestions`
-  4. quoted text and dates re-verified before being presented as quotes
-- `spot-checks:` three of the deliverable's claims about DesignerPunk, each checked against the served doc (the n=1's method): verified / partially / not
-- `intent-vs-execution:` PASS / FAIL with the reason (DesignerPunk names, values or code in Meridian's proposal?); `idiom:` flat hex, px, web-only CSS?
-- `findings:` numbered (P-A1, …), each with its owner — **Forced negative, written**: `findings: none` if none
+- `banner:` **met twice — both through `Bash grep` over the package's `governance/` files, never through the MCP.** The two `Audience framing` hits are inside the results of the `rAR1p3` and `wGgi7N` sweeps (Component-Development-Guide's banner). The bannered docs A fetched through the MCP — Contract-System-Reference (summary + 3 sections) and Test-Behavioral-Contract-Validation (summary + 1 section) — returned **no banner**: summaries and sections do not carry a doc's preamble, where the banner sits. **What A did with it**: nothing observable — no transcript text and no deliverable line mentions audience, worked example or transferable.
+- `reference-guidance:` **not met** (`grep -c 'Reference use is a sanctioned mode'` → 0). Nothing on this path points the agent to INSTALL, and it did not read it.
+- `the n=1's four gaps, re-read:`
+  1. *a signal that reference use is sanctioned* — **not observed** (the prompt supplied the framing, as in September).
+  2. *`Last Reviewed` weighed when docs disagree* — **not exercised**: the disagreement the n=1 navigated (Opacity's "use opacity for disabled" vs the July ban) is gone from the release-4 corpus (Opacity § Disabled States was reconciled by #170). A states the July ruling and no conflict.
+  3. *`SectionNotFound` retried with `suggestions`* — **not observed, and could not have worked**: the suggestions list H2 only, and the target is an H4 `get_section` cannot reach (`.kiro/issues/2026-10-12-docs-mcp-does-not-index-h4.md`). A **did recover** — by grepping the file — which September's agent did not.
+  4. *quotes re-verified* — **one miss**: A puts "dim it with opacity to look disabled" in quotation marks; the served text is "Applying opacity to simulate a disabled state is the exact pattern the ruling prohibits" (a paraphrase presented as a quote).
+- `spot-checks` (against `/tmp/dp-trio/probe-rerun-1/a/node_modules/@3fn/core/governance/`):
+  1. "a formal ruling in July 2026 and applied to every component with zero exceptions" — **verified** (Component-Templates L753–756: "Per the 2026-07-15 adjudication … corpus-wide with zero exceptions").
+  2. "explicitly deprecated the one colour-blending token it had for disabled styling" — **verified** (Token-Family-Blend L31, L73: `blend.disabledDesaturate` "DEPRECATED 2026-07-15").
+  3. "read-only … never disabled semantics" — **verified** (Component-Inheritance-Structures L84: "`state_readonly` … — never disabled semantics").
+  - Contrast figures re-computed (WCAG 2.1): 5.42, 3.45, 3.12, 6.05, 1.43 — **all correct**; the opacity case 2.13 (recomputed 2.11; compositing rounding).
+- `intent-vs-execution:` **PASS** — zero DesignerPunk names, values or code in Meridian's tokens or CSS (grep for DesignerPunk token or contract names → 0; hex values are Meridian's own). Stricter than September: it carries the ban further (no `disabled` token at all; one constrained `aria-disabled` "inert" style marked as a divergence). `idiom:` **PASS** — flat hex, px, plain web CSS.
+- `findings:` P-1, P-2, P-4, P-5, P-6 (below, § Findings).
 
 ### Session B — the shipped path (INSTALL § 2)
 
-- `attach:` 6a's output; `.mcp.json` servers; `.claude/settings.json` allow-list count
-- `restart:` each prompt 6b showed, word for word, with Peter's answer; the `/mcp` list
-- `project-config-honoured-headless:` yes / no, from 6c's init event (design open input 18); `fallback used:` no / yes (6d, logged)
-- then every Session A field above, for session B (including its own discovery table, banner, reference-guidance and four-gaps lines)
-- `findings:` numbered (P-B1, …) — **Forced negative, written**
+- `attach:` "✓ Created .mcp.json (designerpunk-docs + designerpunk-application) · ✓ Created .claude/settings.json (27 approved tools) · ✓ Reference-wired cc — MCP config + approvals (docs + application servers), no agents", then "restart your agent session now — … (approve them if your tool asks)". `.mcp.json`: `designerpunk-docs` → `./node_modules/@3fn/core/dist/mcp/docs-mcp.js`, `designerpunk-application` → `…/application-mcp.js`. `.claude/settings.json`: 27 `permissions.allow` entries, no `defaultMode`. A `designerpunk.manifest.json` (`posture: consume`) was also written.
+- `restart:` (`out/b-open-222913.typescript`, verbatim) — first "Quick safety check: Is this a project you created or one you trust? … ⚠ This folder pre-approves 27 tool permissions in .claude/settings.json: mcp__designerpunk-docs__find_docs, … and 19 more. These will apply without asking. Only proceed if you trust this configuration." → **Yes, I trust this folder**; then "2 new MCP servers found in this project. Select any you wish to enable. MCP servers may execute code or access system resources. All tool calls require approval." (both preselected) → **Enable selected**. Banner "⏵⏵ auto mode on". `/mcp`: "Project MCPs (…/b/.mcp.json): ✔ designerpunk-application 21 tools, ✔ designerpunk-docs 8 tools; claude.ai: ✔ claude.ai Claude Docs 8 tools; Built-in: ◯ computer-use". **This matches INSTALL** (two asks, preselected, "Enable selected").
+- `project-config-honoured-headless:` **YES** — the headless `-p` session, with no `--mcp-config`, connected both project servers: `{"name":"designerpunk-docs","status":"connected","source":"project"}`, `{"name":"designerpunk-application","status":"connected","source":"project"}` (plus the account connector `claude.ai Claude Docs` `pending`, unused). **Design open input 18 is answered for Claude Code on this path**: a headless session honours the project config and the enablement given at the interactive open. `fallback used:` **no**.
+- `result:` `success`, **37** turns, `completed`, `is_error: false`, **$2.48**, **225718 ms**; stderr empty; **`permission_denials`: 1** — `Bash` `python3 -I -c '…'` (a contrast check run *after* the deliverable was written): "This command requires approval" (default mode; September's pattern).
+- `deliverable:` **12711** bytes, written with `Write`.
+- `tool-calls:` docs MCP **25** — `get_section` 13, `find_docs` 8, `get_document_summary` 4, `get_document_full` **0**; application MCP 2 — `get_design_rules`, `get_design_philosophy`; `Read` 4 (README, tokens.json, button.css, **`designerpunk.manifest.json`**); `Bash` 2 (a `find`, admitted; the `python3`, denied); `ToolSearch` 2; `Write` 1.
+- `discovery (per question):`
+
+| Question the agent was answering | Call(s) | Discovery | Evidence |
+|---|---|---|---|
+| How does DesignerPunk treat disabled states? | `find_docs "disabled state"` | **succeeded** | 4 `strong` rows |
+| Opacity for disabled | `find_docs "disabled opacity"`; Opacity summary + "Disabled States", "Semantic Opacity Tokens", "Accessibility Considerations" | **succeeded** | the "exact pattern the ruling prohibits" text |
+| Interaction states | `find_docs "interaction states hover focus pressed disabled"`; Button/Form-Inputs "Behavioral Contracts" | **succeeded** | 1 `strong` + 9 `partial` |
+| Accessibility of disabled controls | `find_docs "accessibility contrast disabled controls"` | **succeeded** | 1 `strong` + 9 `partial` |
+| `aria-disabled` | `find_docs "aria-disabled"` | **failed** | 0 rows, `matchConfidence: none`; it moved on (no action on the empty result — the certainty rule held) |
+| Where is the ruling itself? | `find_docs "button-cta-disabled-state-adjudication"`, `"adjudication unavailable action not rendered"` | **failed** for the record (not in the package); content found via the exclusion-guard section and Blend's anti-pattern | 5 and 1 `partial` rows |
+| Forced colours, focus | Web-Authoring-Standards "6. High Contrast Mode", "4. Focus Patterns" | **succeeded** | "Interactive elements must remain visible in forced-colors mode … hard requirement" |
+| What replaces disabled (busy) | `find_docs "loading state busy async pending"` | **succeeded** (partial) | 12 `partial` rows |
+| The system's design principles | `get_design_rules`, `get_design_philosophy` (application MCP) | **succeeded** | rule list; "Electric Precision" |
+
+- `banner:` **none met** (`grep -c 'Audience framing'` → 0). B fetched bannered docs only by summary or section (Test-Behavioral-Contract-Validation: summary + "Disabled State Exclusion Guard Validation") and never called `get_document_full`, so no banner reached it — **P-1**.
+- `reference-guidance:` **not met** (0). `attach --reference`'s output points at no guidance; B read the manifest, which carries none.
+- `the n=1's four gaps, re-read:` 1 **not observed** (prompt-supplied); 2 **not exercised** (no disagreement left in the corpus); 3 **not exercised** (no `SectionNotFound`); 4 **held** — its one quoted phrase, "for usability and accessibility reasons", is verbatim in the served Test-Behavioral-Contract-Validation L315 it fetched; it **disclosed** that its contrast numbers are hand-computed because the check was denied.
+- `spot-checks:`
+  1. "In July 2026 DesignerPunk ruled that no component may have a disabled state, with zero exceptions, 'for usability and accessibility reasons.'" — **verified** (Component-Templates L753–756; the quoted phrase at Test-Behavioral-Contract-Validation L315).
+  2. "calls disabled-via-opacity the exact pattern its ruling prohibits" — **verified** (Token-Family-Opacity L373–376).
+  3. "Forced-colors support is a hard rule for anything interactive" — **verified** (Web-Authoring-Standards L155).
+  - Contrast (hand-computed): 4.55, 5.33, 1.18 — **correct** (re-computed 4.55, 5.33, 1.17).
+- `intent-vs-execution:` **PASS** — zero DesignerPunk names, values or code in Meridian's tokens or CSS. Closer to September than A: it adopts the preference order, then defines a styled `disabled` fallback with `disabled-background #EDEDED` and `disabled-text #6B6B6B` — the same two values September proposed. `idiom:` **PASS** — flat hex, px, plain CSS, a `forced-colors` block with system keywords.
+- `findings:` P-1, P-2, P-3 (below).
+
+### Findings
+
+**Forced negative, written, per session**: session A — **no product failure in the agent's work** (intent extraction PASS, idiom PASS, three spot-checks verified, one paraphrase presented as a quote); session B — **no product failure in the agent's work** (PASS, PASS, three verified, the one quote verbatim). Every finding below is about what the **product delivered** to the agent, the **instrument**, or the **comparator**.
+
+| # | Session | Finding | Evidence | Route |
+|---|---|---|---|---|
+| **P-1** | A, B | **Audience banners do not reach a reference-mode agent through the docs MCP's summary-first path.** `get_document_summary` and `get_section` omit a doc's preamble, where every banner sits; only `get_document_full` returns it. Both sessions fetched bannered docs that way and received none; A met banner text only by `grep`-ing the package files, and neither used it. **On this evidence Req 20.8's "reference-mode framing rides the banner language" is not delivered on the MCP path** | the tool_result scan above; the banner predicate's 20 docs vs the fetched docs; re-checked 2026-10-15 on the steward docs MCP: `get_document_summary` and `get_section("Overview")` on bannered `process-hook-operations` both return no banner (the summary carries metadata and outline; the first section starts at its `##`) | **Thurgood** (docs MCP / banner convention, U4 Task 23) |
+| **P-2** | A, B | **INSTALL § 2's reference bullets ("For the agent reading this corpus") reached neither agent.** Nothing on either path — `attach --reference`'s output, the manifest, the MCP — points to them | `grep` → 0 in both transcripts | **Thurgood** (install doc / reference-mode delivery) |
+| **P-3** | (corpus) | **`Token-Family-Opacity` reads `Last Reviewed: 2026-03-06`** though its § Disabled States was rewritten on 2026-09-18 (#170). INSTALL's rule "defer to the more recently reviewed one" would weigh it wrongly in a future conflict | the served header; `git log` of the file | **Thurgood** (metadata, Civitas) → **Ada** (content owner reviews) |
+| **P-4** | A | **`SectionNotFound` suggestions cannot reach an H4**, so INSTALL's "retry using the `suggestions` field" fails exactly where A needed it; A recovered by `grep` | the error payload; `u5nf81` | **Thurgood** — home `.kiro/issues/2026-10-12-docs-mcp-does-not-index-h4.md` (now with a consumer-path instance) |
+| **P-5** | A, B | **Instrument: the two sessions ran in different permission modes** (A `auto`, B `default`) on the same CLI. `--allowedTools` did not bound A (9 `Bash` admitted, including `python3` and a heredoc file write); B's `python3` was denied, as in September. Tool-use differences between A and B (and between A and the n=1) are **not attributable to the product** | init events; `permission_denials` | **Leonardo** (protocol; PQ-1's class: an explicit `--permission-mode`) |
+| **P-6** | — | **Comparator corrections** (read against `git show v14.1.0:governance/…`): (i) the n=1's "no such heading exists" was wrong — "No Disabled States — Standardized Exclusion" existed at 14.1.0 as an **H4** (Component-Templates L751), so its `SectionNotFound` was the H4 defect, not a hallucinated heading; (ii) its "unsourced addition" was wrong — "for usability and accessibility reasons" is verbatim at 14.1.0 Component-Templates L774 (unverified *by that agent*, not unsourced) | `git show v14.1.0:governance/Component-Templates.md` | **Thurgood** — erratum appended to `probes/reference-corpus-probe-record.md` (2026-10-15) |
+
+Also recorded, not findings: the docs MCP's `mcp-server/logs/` in both folders (R1-3's existing record); `/tmp/zeb_def_ipc_57361` unattributed; B's `claude.ai Claude Docs` connector `pending` and unused (account state).
 
 ### Comparison
 
-- **A vs the n=1** (same path, release-4 artifact vs 14.1.0, CLI version differs): what moved, per field.
-- **B vs A** (same artifact, shipped entry path vs hand-wired): what moved, per field.
-- What a difference can and cannot be attributed to (one run per arm).
+- **A vs the n=1** (same path; release-4 candidate vs 14.1.0; CLI 2.1.301 `auto` vs 2.1.278 default):
+  - **The corpus changed under the task**: the March-vs-July conflict the n=1 adjudicated is gone (#170), so A reports one consistent ruling. That is a product improvement the re-run can see.
+  - A went further than September in carrying the ban (no `disabled` token; one constrained `aria-disabled` style), and **recovered** from the same `SectionNotFound` September dead-ended on.
+  - More `find_docs` (6 vs 2), `get_document_full` used (2 vs 0), `Bash` unbounded by auto mode (9 admitted vs 3 denied). The mode difference (P-5) blocks attributing the tool-use change to the product.
+- **B vs A** (same candidate; shipped path vs hand-wired; `default` vs `auto`):
+  - The shipped path **works headless**: project config honoured, both servers connected, no fallback.
+  - B also used the application MCP (design rules, philosophy), which only the shipped path wires.
+  - B never met a banner; A met it only outside the MCP (P-1).
+  - B's proposal sits closer to September's (a styled `disabled` fallback, the same two hex values); A's is stricter. One run per arm: **this difference cannot be attributed** to the path, the mode or chance.
 
 ### Verdict and the scoped Evidence sentence
 
-- Verdict per session: SUPPORTS / DOES NOT SUPPORT the reference-corpus mode, with the strongest evidence for and the residual against (the n=1's form).
-- The Evidence sentence from § Scope, with its values filled.
+- **Session A: SUPPORTS** the reference-corpus mode. *For*: intent extracted and re-argued for Meridian's constraints, zero transplanted names, three spot-checks verified, and recovery from a failed lookup. *Residual against*: one paraphrase in quotation marks, and the framing the product now ships for this mode reached it only by accident (P-1, P-2).
+- **Session B: SUPPORTS** the reference-corpus mode, through the shipped entry path. *For*: the documented install and restart, project config honoured headless, three spot-checks verified, its one quote verbatim, an honest disclosure of an unverified computation. *Residual against*: **no** reference-mode framing reached it — no banner, no INSTALL bullets (P-1, P-2).
+- **Req 20.8 / row 1.10**: the banner question is answered **no** for this task on both paths. The mode works on the agent's own reasoning plus the prompt's framing; the shipped framing is not what carried it.
+
+**Evidence sentence (C1)**:
+> *Requirement 26.7 states the n=1 "MEASURED A PRE-CHANGE ARTIFACT … n=1, one corpus, one task, one harness." This re-run adds two data points on the same corpus and the same task, byte-identical to the n=1's (`53a551e3c`), in one harness (Claude Code 2.1.301), against the release-4 candidate tarball (`326d798dcd71320129267cbeb97a2d59c13bfba7`, built at `d6b6c7445`), not the published 16.0.0: session A on the n=1's hand-wired path (SUPPORTS), session B on the shipped INSTALL § 2 path (SUPPORTS; the headless session honoured `attach --reference`'s project config). It is evidence about this corpus, this task and this harness only — and on it, the reference-mode framing the product ships (banners, INSTALL § 2's bullets) reached neither agent through the served path (P-1, P-2).*
