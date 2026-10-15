@@ -60,6 +60,8 @@
 
 **Counts (current, 2026-10-14, at 25.1, after the row 1.11 ruling)**: N = 37 — exists 17 · built-here 20 · missing 0 · unlisted 1. Row 1.11 resolved in-row (Peter's ruling, 2026-10-14: he launches every harness session himself from macOS Terminal). This line supersedes both Counts lines above.
 
+**Counts (current, 2026-10-14, after the Run 1 step 1 fix)**: N = 37 — exists 17 · built-here 20 · missing 0 · unlisted 2. `unlisted` counts the two dated `## Found later` entries (both `misfit`). This line supersedes the Counts lines above.
+
 ## What the rows mean for scheduling
 
 - **25.1 can start on the go.** Every 25.1 row is `built here`; neither MISSING row stops it. The protocol carries the C3 sample line with its wording marked pending row 3.2.
@@ -82,6 +84,7 @@ These are host tools, with no repo file to cite: `claude` CLI 2.1.299 at `/Users
 ## Found later
 
 - 2026-10-14 — misfit — row 4.2, the CC turn guard (`claude -p --max-turns`) — criterion C4 — found at 25.1 (`/Users/3fn/.local/bin/claude --help`, version 2.1.299, lists no `--max-turns` option and no other turn flag; the brief's "verified" list named it; the reference probe's CLI 2.1.278 accepted it but did not stop at it) — route: none outside the seat. `protocol.md` passes `--max-turns` with a fallback declared in advance (one re-run without it if the CLI rejects the option), and the record states which happened. With either outcome the CC budget may be observed rather than enforced, like Kiro's (row 4.3)
+- 2026-10-14 — misfit — rows 1.5 / 1.10, the fixture clone in the launch block (`git archive … | tar -x -C "$R/repo" --strip-components=3`) — criterion C1 — found at Run 1 step 1 by Peter: the committed block did not place the fixture at the repo root (it landed in `$R/repo/a-ts-service/`; `ls -A` showed `.git a-ts-service`), because the archive path has four components before the files — route: `tests/onboarding-trio/protocol.md` fixed to `--strip-components=4` in all three runs' step 1, in the next commit. Run 1 was re-prepared (`rm -rf "$R"`, steps 1–5 redone) before any harness session ran
 
 ## Surviving counter-argument to this block
 

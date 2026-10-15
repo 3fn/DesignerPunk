@@ -53,7 +53,7 @@ Every harness session in a run ends with exactly one stop event from this list, 
 - **Each probe session's budget is 30 turns.** It guards the probe task, not the path, so it is declared separately and not derived from `path-steps`.
 - **Budgets are never wall-clock.** Wall-clock is recorded per session (UTC start and end) and never asserted. An overrun is relative only to this instrument's own recorded prior runs (Req 22.3), and the first runs have none.
 - **How each harness enforces it:**
-  - **CC**: `--max-turns <budget>` on `claude -p`. **Unverified**: `claude --help` at 2.1.299 does not list `--max-turns`, and the reference probe's CLI 2.1.278 accepted it without stopping at it (36 turns under a limit of 25). The launch passes it anyway. If the CLI rejects it, the stop is `harness-error:<the rejection>`, and the session is re-run once **without** the flag; both attempts are recorded. Either way the record reads `num_turns` and `subtype` from the result event, and a session past its budget that did not stop is a finding (`guard not enforced`), not a stop.
+  - **CC**: `--max-turns <budget>` on `claude -p`. **Unverified**: `claude --help` at 2.1.299 does not list `--max-turns` (the launch host reported 2.1.300 at Run 1; the help was not re-checked at that version), and the reference probe's CLI 2.1.278 accepted it without stopping at it (36 turns under a limit of 25). The launch passes it anyway. If the CLI rejects it, the stop is `harness-error:<the rejection>`, and the session is re-run once **without** the flag; both attempts are recorded. Either way the record reads `num_turns` and `subtype` from the result event, and a session past its budget that did not stop is a finding (`guard not enforced`), not a stop.
   - **Kiro**: `kiro-cli chat` has no turn limit flag (2.12.1). The budget is **observed, not enforced**: turns are counted from the captured transcript after the session. Over budget is a finding (`over budget, unenforced`). The launcher halts only for `operator-halt:loop` or `operator-halt:unsafe` (§ 3).
 - **`budget-exhausted` is recorded as a FINDING: the run did not complete.** It is never a pass.
 
@@ -221,6 +221,8 @@ After the last session, the transcripts (`birth.*`, `open.typescript`, `probe-*`
 
 ### Run 1 — `trio-1-backend` (persona (a), Claude Code)
 
+> **Re-prepared, 2026-10-14.** As first committed, step 1 used `--strip-components=3`, which put the fixture in `$R/repo/a-ts-service/` instead of at the repo root (`ls -A` showed `.git a-ts-service`). Peter found it at Run 1 step 1, ran `rm -rf "$R"`, and redid steps 1–5 with the corrected `--strip-components=4` before any harness session had run. No session saw the misplaced fixture. Runs 2 and 3 use the corrected command from the start.
+
 **Step 0 — variables and checks.** Expect: `0` (no nested-session variables), then `prompt found at commit`.
 
 ```sh
@@ -238,7 +240,7 @@ git -C "$DP" cat-file -e "$COMMIT:$PF" && echo "prompt found at commit"
 **Step 1 — run folder and fixture clone.** Expect: one `initial commit` line and the fixture's files. If it prints `STOP`, stop and tell the orchestrator.
 
 ```sh
-if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/repo" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/repo" --strip-components=3 && cd "$R/repo" && git init -q -b main && git add -A && git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit -q -m "initial commit" && git log --oneline && ls -A; fi
+if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/repo" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/repo" --strip-components=4 && cd "$R/repo" && git init -q -b main && git add -A && git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit -q -m "initial commit" && git log --oneline && ls -A; fi
 ```
 
 **Step 2 — the candidate tarball, copied into the repo (the persona installs it).** Expect: `aa3efdcf9ce3c2689c2e5979932c48a46f3f6584`. Any other value: stop.
@@ -257,7 +259,7 @@ awk '/ PROBE-lina END -->/{p=0} p{print} / PROBE-lina BEGIN -->/{p=1}' "$R/out/p
 wc -l "$R"/out/*-prompt.txt
 ```
 
-**Step 4 — host facts.** Paste the whole output.
+**Step 4 — host facts.** Paste the whole output. At Run 1's launch the CLI reported `2.1.300 (Claude Code)`; the help check in § 4 was made at 2.1.299 and was not repeated at 2.1.300.
 
 ```sh
 {
@@ -406,7 +408,7 @@ git -C "$DP" cat-file -e "$COMMIT:$PF" && echo "prompt found at commit"
 **Step 1 — run folder and fixture clone.** Expect: one `initial commit` line and the fixture's files. If it prints `STOP`, stop and tell the orchestrator.
 
 ```sh
-if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/repo" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/repo" --strip-components=3 && cd "$R/repo" && git init -q -b main && git add -A && git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit -q -m "initial commit" && git log --oneline && ls -A; fi
+if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/repo" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/repo" --strip-components=4 && cd "$R/repo" && git init -q -b main && git add -A && git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit -q -m "initial commit" && git log --oneline && ls -A; fi
 ```
 
 **Step 2 — the candidate tarball, copied into the repo (the persona installs it).** Expect: `aa3efdcf9ce3c2689c2e5979932c48a46f3f6584`. Any other value: stop.
@@ -545,7 +547,7 @@ git -C "$DP" cat-file -e "$COMMIT:$PF" && echo "prompt found at commit"
 **Step 1 — run folder and fixture clone.** Expect: one `initial commit` line and the fixture's files. If it prints `STOP`, stop and tell the orchestrator.
 
 ```sh
-if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/repo" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/repo" --strip-components=3 && cd "$R/repo" && git init -q -b main && git add -A && git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit -q -m "initial commit" && git log --oneline && ls -A; fi
+if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/repo" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/repo" --strip-components=4 && cd "$R/repo" && git init -q -b main && git add -A && git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit -q -m "initial commit" && git log --oneline && ls -A; fi
 ```
 
 **Step 2 — the candidate tarball, copied into the repo (the persona installs it).** Expect: `aa3efdcf9ce3c2689c2e5979932c48a46f3f6584`. Any other value: stop.
