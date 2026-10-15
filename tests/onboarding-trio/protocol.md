@@ -216,7 +216,7 @@ The record writes each session's stop as a line `- stop: <session> — <event>` 
 
 ## 10. The source-access audit
 
-After the last session, the transcripts (`birth.*`, `open.typescript`, `probe-*`) are searched for the DesignerPunk source tree and repository: `DesignerPunk-v2`, `wt-u5`, `claude-501`, `github.com/3fn/DesignerPunk`, `raw.githubusercontent.com/3fn`. **Each hit is classified in F6**:
+After the last session, the transcripts (`birth.*`, `open-*.typescript`, `probe-*`) are searched for the DesignerPunk source tree and repository: `DesignerPunk-v2`, `wt-u5`, `claude-501`, `github.com/3fn/DesignerPunk`, `raw.githubusercontent.com/3fn`. **Each hit is classified in F6**:
 
 - `read-of-shipped-text`: the string appears in text the persona read from the installed package. Not a breach. **Expected matches** (seen in Run 1): the package `package.json`'s `repository.url` (`git+https://github.com/3fn/DesignerPunk.git`); the package README's GitHub badge; INSTALL § 9 ("To own the engine too, clone `github.com/3fn/DesignerPunk`"); and `init`'s printed hatch line ("want to own the engine too? Clone github.com/3fn/DesignerPunk"). A transcript that reads the README, INSTALL and `init`'s output will match 3–4 times without any access attempt.
 - `access attempt`: the agent tried to read, list, clone or fetch the source. **A finding**, attributed to the persona's axis.
@@ -229,7 +229,7 @@ After the last session, the transcripts (`birth.*`, `open.typescript`, `probe-*`
 
 **How to use these.** Open one new macOS Terminal window per run (not a shell inside the Claude app), and keep it open for the whole run: later steps use the variables step 0 sets, and Kiro runs also use `KENV` from step 6. The blocks assume zsh, the Terminal default. Paste one block at a time, wait for it to finish, and paste its output back to the orchestrator. Nothing in a block needs editing except `COMMIT=` in step 0, which the orchestrator fills with the commit that carries this run's frozen prompt.
 
-**What never changes**: everything a run produces lands in `/tmp/dp-trio/<run-id>/out/`. Leave that folder in place; the record is written from it. Your answers to harness prompts in steps 6 and 8 follow § 6's approval rule, and every one goes in your paste-back. **If macOS ever asks about your keychain, click Cancel — never reset — press Ctrl-C, and tell the orchestrator.**
+**What never changes**: everything a run produces lands in `/tmp/dp-trio/<run-id>/out/`. **Every interactive session gets its own capture file** (`preflight-<time>.typescript`, `open-<time>.typescript`). If you open a session a second time, that is fine — say so in your paste-back. The first one's capture is kept (Run 2 lost its first open to an overwrite). Leave that folder in place; the record is written from it. Your answers to harness prompts in steps 6 and 8 follow § 6's approval rule, and every one goes in your paste-back. **If macOS ever asks about your keychain, click Cancel — never reset — press Ctrl-C, and tell the orchestrator.**
 
 
 ### Run 1 — `trio-1-backend` (persona (a), Claude Code)
@@ -320,7 +320,7 @@ hstate > "$R/out/harness-user-state-before.txt" 2>&1; cat "$R/out/harness-user-s
 
 ```sh
 echo "isolation: CLAUDE_CONFIG_DIR=$R/home/.claude (real HOME)" | tee "$R/out/isolation.txt"
-cd "$R/empty" && CLAUDE_CONFIG_DIR="$R/home/.claude" script -q "$R/out/preflight.typescript" claude
+cd "$R/empty" && CLAUDE_CONFIG_DIR="$R/home/.claude" script -q "$R/out/preflight-$(date -u +%H%M%S).typescript" claude
 ```
 
 **Step 7 — birth (headless; the persona works alone).** It prints nothing until the session ends, which may take a while. Then run the check block and paste both outputs.
@@ -336,7 +336,7 @@ head -c 600 "$R/out/birth.stderr"; echo; jq -c 'select(.type=="system" and .subt
 **Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Claude Code shows, word for word (trusting the folder, approving MCP servers from `.mcp.json`, anything else). Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp`, wait for the list, press Esc, and type `/exit`. Paste back each prompt word for word with your answer, and the `/mcp` list.
 
 ```sh
-cd "$R/repo" && CLAUDE_CONFIG_DIR="$R/home/.claude" script -q "$R/out/open.typescript" claude
+cd "$R/repo" && CLAUDE_CONFIG_DIR="$R/home/.claude" script -q "$R/out/open-$(date -u +%H%M%S).typescript" claude
 ```
 
 **Step 9.1 — probe: consumer-Ada (headless).** 
@@ -387,7 +387,7 @@ find "$R/home" -type f -newer "$R/out/start.stamp" | sed "s|$R/home|HOME|" | sor
 find /tmp/ -maxdepth 1 -newer "$R/out/start.stamp" 2>/dev/null | grep -v -E "^/tmp/$|^/tmp/dp-trio$" | tee "$R/out/tmp-writes.txt"
 cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"; git log --oneline --all | head -5
 grep -n -A3 '"node_modules/@3fn/core"' "$R/repo/package-lock.json" | head -6
-grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (3-4 expected self-references from the package; see § 10)"
+grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open-*.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (3-4 expected self-references from the package; see § 10)"
 date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
 
@@ -509,7 +509,7 @@ KENV=""; echo "isolation: none — real profile (warm run)" | tee "$R/out/isolat
 **6e — preflight chat in the empty folder.** Type no message. Note anything it shows before its prompt, then type `/quit`. Paste back what it showed.
 
 ```sh
-cd "$R/empty" && env $KENV script -q "$R/out/preflight.typescript" kiro-cli chat
+cd "$R/empty" && env $KENV script -q "$R/out/preflight-$(date -u +%H%M%S).typescript" kiro-cli chat
 ```
 
 **Step 7 — birth (headless; the persona works alone).** The session's output scrolls past and is saved. Do not type into it. Press Ctrl-C only if it visibly repeats the same action three or more times (`operator-halt:loop`) or starts working outside `/tmp/dp-trio` (`operator-halt:unsafe`), and say so. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/birth.txt"`).
@@ -521,7 +521,7 @@ cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && env $K
 **Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Kiro shows, word for word. Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp` and wait for the list, type `/agent list` and wait for the list, then type `/quit`. Paste back each prompt word for word with your answer, and both lists.
 
 ```sh
-cd "$R/repo" && env $KENV script -q "$R/out/open.typescript" kiro-cli chat
+cd "$R/repo" && env $KENV script -q "$R/out/open-$(date -u +%H%M%S).typescript" kiro-cli chat
 ```
 
 **Step 9 — probe: consumer-Sparky (headless).** 
@@ -558,7 +558,7 @@ find /tmp/ -maxdepth 1 -newer "$R/out/start.stamp" 2>/dev/null | grep -v -E "^/t
 cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"; git log --oneline --all | head -5
 grep -n -A3 '"node_modules/@3fn/core"' "$R/repo/package-lock.json" | head -6
 env $KENV kiro-cli mcp list 2>&1 | tee "$R/out/kiro-mcp-list.txt"
-grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (3-4 expected self-references from the package; see § 10)"
+grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open-*.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (3-4 expected self-references from the package; see § 10)"
 date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
 
@@ -680,7 +680,7 @@ KENV=""; echo "isolation: none — real profile (warm run)" | tee "$R/out/isolat
 **6e — preflight chat in the empty folder.** Type no message. Note anything it shows before its prompt, then type `/quit`. Paste back what it showed.
 
 ```sh
-cd "$R/empty" && env $KENV script -q "$R/out/preflight.typescript" kiro-cli chat
+cd "$R/empty" && env $KENV script -q "$R/out/preflight-$(date -u +%H%M%S).typescript" kiro-cli chat
 ```
 
 **Step 7 — birth (headless; the persona works alone).** The session's output scrolls past and is saved. Do not type into it. Press Ctrl-C only if it visibly repeats the same action three or more times (`operator-halt:loop`) or starts working outside `/tmp/dp-trio` (`operator-halt:unsafe`), and say so. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/birth.txt"`).
@@ -692,7 +692,7 @@ cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && env $K
 **Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Kiro shows, word for word. Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp` and wait for the list, type `/agent list` and wait for the list, then type `/quit`. Paste back each prompt word for word with your answer, and both lists.
 
 ```sh
-cd "$R/repo" && env $KENV script -q "$R/out/open.typescript" kiro-cli chat
+cd "$R/repo" && env $KENV script -q "$R/out/open-$(date -u +%H%M%S).typescript" kiro-cli chat
 ```
 
 **Step 9 — probe: consumer-Leonardo (headless).** 
@@ -729,7 +729,7 @@ find /tmp/ -maxdepth 1 -newer "$R/out/start.stamp" 2>/dev/null | grep -v -E "^/t
 cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"; git log --oneline --all | head -5
 grep -n -A3 '"node_modules/@3fn/core"' "$R/repo/package-lock.json" | head -6
 env $KENV kiro-cli mcp list 2>&1 | tee "$R/out/kiro-mcp-list.txt"
-grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (3-4 expected self-references from the package; see § 10)"
+grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open-*.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (3-4 expected self-references from the package; see § 10)"
 date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
 
@@ -745,8 +745,8 @@ date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 | `--agent <name>` selects the born repo's agent (CC) | **Settled (Run 1)**: the run store's session logs record `"agentSetting":"ada"` / `"lina"`; the init event does not name it | F18 cites the session log |
 | Where CC records project MCP enablement | **Settled (Run 1, 2.1.300)**: the repo's ignored `.claude/settings.local.json`, not the user store | F7, F17 |
 | A headless session shows MCP approval prompts | Not relied on: `open` is interactive. Run 1: the headless birth printed only the stderr notice that untrusted-workspace permissions were ignored | F15, F17 |
-| kiro-cli isolation (`KIRO_HOME`, fresh `HOME`) and where it keeps its login | **Unverified.** Decided at Kiro step 6 by observation (§ 5.1) | `out/isolation.txt`; F7 |
-| `--agent <name>` selects the born repo's agent (Kiro) | **Unverified** | the Kiro output names the agent, or `harness-error:<what>` and probe `not exercised` |
+| kiro-cli isolation (`KIRO_HOME`, fresh `HOME`) and where it keeps its login | **Settled for kiro-cli 2.12.1 (Run 2)**: `KIRO_HOME="$R/home/.kiro"` kept the login, dropped the real global server (`fetch`), and populated the run store; a fresh `HOME` gave "Not logged in" with no keychain prompt. The login database stays in the real profile. **Unverified**: whether that database holds per-workspace state | `out/isolation.txt`; F7 |
+| `--agent <name>` selects the born repo's agent (Kiro) | **Settled (Run 2)**: the agent's welcome message and hook ran | F18 |
 | The kiro-cli desktop app, if running under the real user, interferes with an isolated session | **Unverified** | a finding outside the axes, with the error |
 
 Each outcome that differs from this protocol's assumption is also appended to the Task 25 Instruments block's `## Found later` as a `misfit`.
