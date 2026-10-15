@@ -8,7 +8,7 @@
 **Grant paths**: none here. Each vehicle PR declares its own (an install-doc PR touches `governance/DesignerPunk-Integration-Guide.md`, so it carries a `**Consulted**:` line and is Peter-merged).
 **Consulted**: none needed — the routes are the records' proposed routes, sorted by Peter's ruling (4).
 
-**Record paths** (all under `.kiro/specs/123-consumer-distribution/validation/`): R1-* `trio-1-backend.md` · R2-* `trio-2-designer.md` · R3-* `trio-3-pm.md` · J-* `join-cc-to-kiro.md` · K-* `join-kiro-to-cc.md` · C-* `conformance-beat-1.md` · BD-* = the `D-*` rows of `conformance-beat-2.md` (renamed here to avoid colliding with the U1b check's D-1–D-23) · FR-n = row n of the friction record.
+**Record paths** (all under `.kiro/specs/123-consumer-distribution/validation/`): R1-* `trio-1-backend.md` · R2-* `trio-2-designer.md` · R3-* `trio-3-pm.md` · J-* `join-cc-to-kiro.md` · K-* `join-kiro-to-cc.md` · C-* `conformance-beat-1.md` · PQ-* `product-query.md` · BD-* = the `D-*` rows of `conformance-beat-2.md` (renamed here to avoid colliding with the U1b check's D-1–D-23) · FR-n = row n of the friction record.
 
 **Vehicles**: **V-DOC** = Thurgood's install-doc `fix/` PR (Integration Guide install region → `docs/consumer/INSTALL.md` by `scripts/derive-install-doc.ts`; plus the root `README.md`), **before the release-4 tag** (Peter, 2026-10-15). **V-CLI** = Lina's one CLI `fix/` PR with tests. **V-PROF** = Thurgood's consumer-profile PR. **V-GEN** = Lina's generator/adapter PR. **V-OWN** = the owner's own PR.
 
@@ -81,11 +81,18 @@
 | R1-14 / J-6 | `npm install` reports 37 vulnerabilities; attribution `cannot-tell` | Ada | `.kiro/issues/2026-10-15-123-cannot-tell-cells.md` row 5 | |
 | R1-6 (pipeline) | `generate` reads palette, override maps, motion, layering, DTCG from the package | Ada | `.kiro/issues/2026-10-15-123-palette-read-from-package.md` | **Waived for 16.0.0 by Peter's ruling (1), 2026-10-15**: ship with the known-limitation paragraph |
 
+## 4b. Instrument findings still open (the protocol) → Leonardo
+
+| ID | Finding | Owner | Vehicle | Disposition at release-4 prep |
+|---|---|---|---|---|
+| PQ-1 | **Claude Code 2.1.301's default `permissionMode` is `"auto"`.** § 16 passed no `--permission-mode`, relying on the old default to surface a write as a permission denial. No write was attempted, so 28.3's bar is unaffected, but the run cannot tell what admitted the two MCP calls: the committed pre-approvals in `.claude/settings.json`, `--allowedTools`, or auto mode's classifier. **Consumers get the same default**, so whether it changes what INSTALL's "pre-approved … apply without asking" buys a user is **unobserved**. **It also reaches 28.1**: `validation/probe-rerun.md`'s blocks pass no `--permission-mode` either, so its comparison with the n=1's three denied `Bash` calls (CLI 2.1.278) has to read each session's init `permissionMode` before attributing any difference in denials to the product | Leonardo (protocol: an explicit `--permission-mode` in future headless blocks); Thurgood (INSTALL's "pre-approved" sentence, if a later run observes a difference — V-DOC) | V-OWN (protocol) | |
+| PQ-2 | **The CLI auto-updated mid-run**, 2.1.300 → 2.1.301 between the host-facts step and the session. The version is to be read from the session's init event, not `host.txt`; every earlier record that took it from `host.txt` can be stale the same way | Leonardo | V-OWN (protocol) | |
+
 ## 5. Closed, or no DesignerPunk route (recorded so the count is whole)
 
 | ID | Finding | Disposition |
 |---|---|---|
-| R1-12, K-1 | Committed / attached `.claude/settings.json` allow-list ignored until trust; enablement asked separately | **Closed by Task 26.5** (the observed approval line, `governance/DesignerPunk-Integration-Guide.md` +4/−4) |
+| R1-12, K-1 | Committed / attached `.claude/settings.json` allow-list ignored until trust; enablement asked separately | **Closed by Task 26.5** (the observed approval line, `governance/DesignerPunk-Integration-Guide.md` +4/−4). **Re-confirmed on 2.1.301 by 28.3** (`product-query.md` § `findings:` observation 1): trust lands in the run store, the server enablement in the repo's `.claude/settings.local.json` — what INSTALL L69 says |
 | R1-10, R1-11, R1-13, R2-9, R2-10, R3-10, J-1, J-2, K-7 | Instrument findings (writes outside the folder; `--max-turns` not enforced; fresh-`HOME` unsafe → `CLAUDE_CONFIG_DIR`; capture overwrite; `KIRO_HOME`; `operator-unblock`; zsh `:t` modifier; after-step defects; built-in tool named first) | **Closed in `tests/onboarding-trio/protocol.md`** (revised through Tasks 25–27, Leonardo) |
 | R3-7 | kiro-cli transcripts show tool calls, not results | Instrument limit; **28.3's bar** is met by its own Claude Code run; the Kiro cells exit in `.kiro/issues/2026-10-15-123-cannot-tell-cells.md` |
 | R3-6, BD-1 (S2) | Consumer-Leonardo skipped three charter steps; a consumer outline's heading-token premise was false (`typography.h1`–`h6` are emitted) — `subject: leonardo` | **No DesignerPunk defect** (the CSS is correct); Stacy's CLOSEOUT cross-reads the `subject: leonardo` tags (`tasks.md` L1490) |
@@ -105,4 +112,4 @@ Not instrument findings; placed here so each has an owner and a walked trigger r
 
 ## Walk (release-4 prep)
 
-For each row in §§ 1–4 and § 6: a merged fix (PR number) **or** a written waiver (who, why). **Any row with neither blocks RELEASE phase 1.** After 16.0.0 ships, rows still open move to their owners' records or the next release's walk, and this file archives with the release's record.
+For each row in §§ 1–4, 4b and 6: a merged fix (PR number) **or** a written waiver (who, why). **Any row with neither blocks RELEASE phase 1.** After 16.0.0 ships, rows still open move to their owners' records or the next release's walk, and this file archives with the release's record.
