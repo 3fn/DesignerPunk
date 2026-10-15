@@ -1490,7 +1490,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - **C3 `session-launched-by: <who>`** — who physically launched each harness session (Leonardo, Peter or the orchestrator). Leonardo owns the prompts, protocol adherence, in-run judgments and records.
 - **`harness-user-state` is EVIDENCE, not a word** (Leonardo A2). Either the inspection commands and output over the harness's user-level stores, or the mechanism used. **The default mechanism is a fresh temporary `HOME` per run**; any re-login cost is recorded.
 
-- [ ] 25. The persona trio
+- [x] 25. The persona trio
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Leonardo (Opus) — operator
   **Traces**: Reqs 22, 23, 24.2a, 25.1, 25.5, 15B.3 · design C30
@@ -1505,11 +1505,11 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `tests/onboarding-trio/{protocol.md,fixtures/}`, `.kiro/specs/123-consumer-distribution/validation/prompts/`, `validation/trio-*.md`
 
-  - [ ] 25.1 Protocol + committed fixtures + frozen prompts
-  - [ ] 25.2 Run (a)
-  - [ ] 25.3 Run (b)
-  - [ ] 25.4 Run (c) — bare `init` in Kiro
-  - [ ] 25.5 Schema check; the scoped DD9 re-read
+  - [x] 25.1 Protocol + committed fixtures + frozen prompts
+  - [x] 25.2 Run (a)
+  - [x] 25.3 Run (b)
+  - [x] 25.4 Run (c) — bare `init` in Kiro
+  - [x] 25.5 Schema check; the scoped DD9 re-read
 
 - [ ] 26. The two cross-target join runs and the install-doc correction
 

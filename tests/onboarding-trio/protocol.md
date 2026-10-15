@@ -44,6 +44,7 @@ Every harness session in a run ends with exactly one stop event from this list, 
 | `operator-halt:<reason>` | the launcher stopped the session (Ctrl-C) — **the only operator-initiated stop** (run discipline C1) | no — `<reason>` is one of `loop` (the same action visibly repeated three or more times) or `unsafe` (the agent began acting outside the run directory) |
 
 - An unrecorded truncation never rolls into a green (Req 22.4): a record without a stop event per session fails the schema check (§ 9).
+- **`operator-unblock:<reason>` is a logged operator act, not a stop** (added after Run 3, 2026-10-14). When a headless session is blocked waiting on terminal input that nothing in the session can supply, the launcher may send the minimum that lets the blocked command finish without supplying content: an empty line, or Ctrl-D. It is logged verbatim under `operator-log`, with what it unblocked, and recorded as a finding (Run 3: `init` waited on a `Product name:` prompt inside Kiro's shell). The launcher never types content or instructions into a birth or probe session.
 - A probe session that cannot run because its precondition did not happen is not a stop; it is recorded as `probe: not exercised — upstream beat produced no artifact` (the Req 24.1b closed negative form), never as a pass or a fail.
 
 ## 4. The budget rule (Req 22, design C30)
@@ -108,7 +109,7 @@ Every harness session in a run ends with exactly one stop event from this list, 
 ## 6. The approval rule and the operator log
 
 - **The approval rule, fixed before any run**: in `preflight` and `open` the launcher answers each harness prompt as the install doc tells a user to — **approve DesignerPunk's MCP servers if asked** (INSTALL § 3 step 5); trust the folder if asked; complete login and onboarding screens with the defaults. **Never accept a macOS keychain reset or unlock prompt raised by a run-store mechanism**: click Cancel, Ctrl-C, and record `auth-required`. Any other prompt: choose the option that lets the session continue without granting more than it asks for, and log it.
-- **Every launcher act after a frozen prompt goes in `operator-log`**, verbatim, with its reason (run discipline C1). That includes each approval answer (`approval: <prompt, verbatim> → <answer>`), each `/mcp` or `/exit` typed in `open`, any re-run after `auth-required` or a rejected flag, and any `operator-halt`. **The launcher types nothing into a birth or probe session.** If nothing was done beyond the fixed steps, the log reads `none beyond the fixed open steps`.
+- **Every launcher act after a frozen prompt goes in `operator-log`**, verbatim, with its reason (run discipline C1). That includes each approval answer (`approval: <prompt, verbatim> → <answer>`), each `/mcp` or `/exit` typed in `open`, any re-run after `auth-required` or a rejected flag, and any `operator-halt`. **The launcher types nothing into a birth or probe session**, except an `operator-unblock` (§ 3). If nothing was done beyond the fixed steps, the log reads `none beyond the fixed open steps`.
 - `session-launched-by: Peter` on every session of every run (ruling 2026-10-14).
 
 ## 7. The direction-(ii) behavioral probe (Req 24.2, 24.2a)
