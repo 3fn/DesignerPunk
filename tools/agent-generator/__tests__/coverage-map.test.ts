@@ -249,6 +249,9 @@ import {
 } from '../coverage-map';
 import type { RecordedAdjudication } from '../sweeps/common';
 import * as path from 'path';
+import * as fs from 'fs';
+import * as os from 'os';
+import { execFileSync } from 'child_process';
 
 const REPO = '/repo';
 
@@ -587,5 +590,37 @@ describe('coverage-map lanes — the real repo (derivation smoke)', () => {
     expect(a.rows.filter((r) => r.kind === 'error')).toEqual([]);
     expect(a.requiredContexts).toBeGreaterThan(0);
     expect(a.requiredCompared).toContain('npm run test');
+  });
+});
+
+describe('coverage-map lanes — committed fixture trees are not lane inputs', () => {
+  it('skips the jest configs and package.json files of a fixtures/ or __fixtures__/ tree, even an unloadable one', () => {
+    const repoRoot = path.resolve(__dirname, '..', '..', '..');
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'covmap-fixture-tree-'));
+    try {
+      const put = (rel: string, body: string) => {
+        fs.mkdirSync(path.dirname(path.join(tmp, rel)), { recursive: true });
+        fs.writeFileSync(path.join(tmp, rel), body);
+      };
+      const gate = 'tools/agent-generator/verify-gate-registration.sh';
+      put(gate, fs.readFileSync(path.join(repoRoot, gate), 'utf8'));
+      put('jest.config.js', 'module.exports = { roots: [] };\n');
+      // A born-consumer-shaped fixture: its config requires a package that is not installed here.
+      const unloadable = "module.exports = { ...require('@3fn/not-installed/jest-preset') };\n";
+      put('tests/x/fixtures/born/jest.config.js', unloadable);
+      put('tests/x/fixtures/born/package.json', '{"scripts":{"test":"jest"}}');
+      put('tests/x/__fixtures__/other/jest.config.js', unloadable);
+      // A non-fixture directory with the same unloadable config must still surface (the rule is narrow).
+      put('tools/real/jest.config.js', unloadable);
+      execFileSync('git', ['init', '-q'], { cwd: tmp });
+      execFileSync('git', ['add', '-A'], { cwd: tmp });
+
+      const inputs = readLaneInputs(tmp);
+      expect(Object.keys(inputs.jestConfigs).sort()).toEqual(['jest.config.js', 'tools/real/jest.config.js']);
+      expect(inputs.jestConfigs['tools/real/jest.config.js']).toBeUndefined();
+      expect(Object.keys(inputs.packages)).not.toContain('tests/x/fixtures/born');
+    } finally {
+      fs.rmSync(tmp, { recursive: true, force: true });
+    }
   });
 });
