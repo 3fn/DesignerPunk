@@ -52,6 +52,8 @@
 
 **Counts (current, 2026-10-15, after the row 1.5 ruling)**: N = 29 — exists 18 · built-here 11 · missing 0 · unlisted 0. Row 1.5 resolved in-row (option (a), under Task 25's grant). This line supersedes the Counts lines above.
 
+**Counts (current, 2026-10-15, after `join-cc-to-kiro`)**: N = 29 — exists 18 · built-here 11 · missing 0 · unlisted 2. This line supersedes the Counts lines above.
+
 ## What the rows mean for scheduling
 
 - **Row 1.5 stops 26.1's file placement**, and through it 26.2–26.3. The content does not wait: I can write the fixtures, prompts and launch blocks the moment the location is decided. Option (b) needs no grant, because everything lands inside `.kiro/specs/**`. Option (a) keeps the fixtures beside the trio's, which is tidier for the standing instrument; it needs a grant record.
@@ -77,6 +79,9 @@
 - **O-4 — Doc defects the trio found that 26.5 may not fix.** 26.5 corrects "only … cells observed cold". The trio also found install-doc sentences that are false or missing, none of them a C8 cold cell: R3-1 (INSTALL § 3's "where nothing can answer … it stops with an error" is false for Kiro), R2-1 (no no-build path), R2-6/R3-9 (restart not concrete), R3-4 (no pointer to the guide), R1-1/R1-2 (TypeScript-host repairs). **These route to Thurgood as an install-doc issue, outside 26.5's criterion**, unless the orchestrator widens 26.5 by amendment.
 
 ## Found later
+
+- 2026-10-15 — misfit — rows 1.7 / 1.4, § 14.4 step 0's fixture check (`"$COMMIT:tests/…"`) — criterion C1 — found at `join-cc-to-kiro` step 0 (Peter): zsh read `$COMMIT:tests` as `$COMMIT` with the `:t` (tail) modifier and printed "fatal: Not a valid object name 23be48ee1ests/…". Step 1's `git archive` takes the commit and path as separate arguments and succeeded, so the run was unaffected. Route: protocol.md § 14.4 now uses `${COMMIT}:${PF}` and `${COMMIT}:tests/…/${FIX}/…` in both join runs. `join-kiro-to-cc` was already launched with the old block and will hit the same harmless failure
+- 2026-10-15 — misfit — rows 5.2 / 2.2, § 14.4's after-step for `join-cc-to-kiro` — criteria C5, C4 — found while writing the `join-cc-to-kiro` record (Leonardo): (a) `kiro-cli mcp list` ran with the working directory set to `probe-repo` (the previous line `cd`s there), so `out/kiro-mcp-list.txt` is empty; (b) the inspection read `$R/repo/.claude/settings.local.json`, not the probe clone's, and `git status --porcelain` hides ignored files, so the probe's enablement file looked absent. It exists, and is ignored by the launcher's global git ignore (`join-cc-to-kiro.md` J16, J-3). Route: § 14.4's after-step now runs `mcp list` from `$R/repo`, reads both clones' `settings.local.json` with `git check-ignore -v`, and uses `git status --porcelain --ignored`. The record reads the open capture and the probe clone directly instead
 
 ## Surviving counter-argument to this block
 

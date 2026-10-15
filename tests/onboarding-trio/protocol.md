@@ -845,6 +845,7 @@ Everything lands under `/tmp/dp-trio/<run-id>/`:
   - `harness-user-state-{before,after}.txt`, `home-files.txt`, `tmp-writes.txt`;
   - `repo-status.txt`, `source-access-audit.txt`, `kiro-mcp-list.txt` (Kiro).
 
+
 ### 14.4 Launch blocks — join runs, for Peter
 
 Same rules as § 11:
@@ -870,7 +871,7 @@ TGZ="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/3fn-core-15.1.0.tgz"
 R="/tmp/dp-trio/$RUN"
 PF=".kiro/specs/123-consumer-distribution/validation/prompts/$RUN.md"
 env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
-git -C "$DP" cat-file -e "$COMMIT:$PF" && git -C "$DP" cat-file -e "$COMMIT:tests/onboarding-trio/fixtures/$FIX/package.json" && echo "fixture and prompt found at commit"
+git -C "$DP" cat-file -e "${COMMIT}:${PF}" && git -C "$DP" cat-file -e "${COMMIT}:tests/onboarding-trio/fixtures/${FIX}/package.json" && echo "fixture and prompt found at commit"
 ```
 
 **Step 1 — the founder's repo, and the joiner's clone (INSTALL § 7 step 1, done by you).** Expect one `founder's repo` line and the fixture's top-level files. If it prints `STOP`, stop and tell the orchestrator.
@@ -888,7 +889,7 @@ mkdir -p "$R/repo/.pack" && cp "$TGZ" "$R/repo/.pack/" && mkdir -p "$R/probe-rep
 **Step 3 — the frozen prompts, read from the commit.** Expect a non-zero line count for both.
 
 ```sh
-git -C "$DP" show "$COMMIT:$PF" > "$R/out/prompt.md"
+git -C "$DP" show "${COMMIT}:${PF}" > "$R/out/prompt.md"
 awk '/ JOIN END -->/{p=0} p{print} / JOIN BEGIN -->/{p=1}' "$R/out/prompt.md" > "$R/out/join-prompt.txt"
 awk '/ QUERY END -->/{p=0} p{print} / QUERY BEGIN -->/{p=1}' "$R/out/prompt.md" > "$R/out/query-prompt.txt"
 wc -l "$R"/out/*-prompt.txt
@@ -1023,11 +1024,11 @@ hstate() {
 hstate > "$R/out/harness-user-state-after.txt" 2>&1; cat "$R/out/harness-user-state-after.txt"
 find "$R/home" -type f -newer "$R/out/start.stamp" | sed "s|$R/home|HOME|" | sort > "$R/out/home-files.txt"; echo "files the run stores gained: $(wc -l < "$R/out/home-files.txt" | tr -d " ")"; grep -v -E "/(plugins|skills)/" "$R/out/home-files.txt" | head -40
 find /tmp/ -maxdepth 1 -newer "$R/out/start.stamp" 2>/dev/null | grep -v -E "^/tmp/$|^/tmp/dp-trio$" | tee "$R/out/tmp-writes.txt"
-cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"; git log --oneline --all | head -5
+cd "$R/repo" && git status --porcelain --ignored | tee "$R/out/repo-status.txt"; git log --oneline --all | head -5
 grep -n -A3 '"node_modules/@3fn/core"' "$R/repo/package-lock.json" | head -6
 ls -A "$R/repo/.claude" "$R/repo/.kiro" 2>&1 | head -20
-cd "$R/probe-repo" && git status --porcelain | tee "$R/out/probe-repo-status.txt"
-env ${KENV:-} kiro-cli mcp list 2>&1 | tee "$R/out/kiro-mcp-list.txt"
+cd "$R/repo" && env ${KENV:-} kiro-cli mcp list 2>&1 | tee "$R/out/kiro-mcp-list.txt"
+cd "$R/probe-repo" && git status --porcelain --ignored | tee "$R/out/probe-repo-status.txt"; cat .claude/settings.local.json 2>&1; git check-ignore -v .claude/settings.local.json 2>&1
 grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/join.* "$R"/out/query.* "$R"/out/open-*.typescript > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (package self-references expected; see § 10)"
 date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
@@ -1048,7 +1049,7 @@ TGZ="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/3fn-core-15.1.0.tgz"
 R="/tmp/dp-trio/$RUN"
 PF=".kiro/specs/123-consumer-distribution/validation/prompts/$RUN.md"
 env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
-git -C "$DP" cat-file -e "$COMMIT:$PF" && git -C "$DP" cat-file -e "$COMMIT:tests/onboarding-trio/fixtures/$FIX/package.json" && echo "fixture and prompt found at commit"
+git -C "$DP" cat-file -e "${COMMIT}:${PF}" && git -C "$DP" cat-file -e "${COMMIT}:tests/onboarding-trio/fixtures/${FIX}/package.json" && echo "fixture and prompt found at commit"
 ```
 
 **Step 1 — the founder's repo, and the joiner's clone (INSTALL § 7 step 1, done by you).** Expect one `founder's repo` line and the fixture's top-level files. If it prints `STOP`, stop and tell the orchestrator.
@@ -1066,7 +1067,7 @@ mkdir -p "$R/repo/.pack" && cp "$TGZ" "$R/repo/.pack/" && shasum -a 1 "$R/repo/.
 **Step 3 — the frozen prompts, read from the commit.** Expect a non-zero line count for both.
 
 ```sh
-git -C "$DP" show "$COMMIT:$PF" > "$R/out/prompt.md"
+git -C "$DP" show "${COMMIT}:${PF}" > "$R/out/prompt.md"
 awk '/ JOIN END -->/{p=0} p{print} / JOIN BEGIN -->/{p=1}' "$R/out/prompt.md" > "$R/out/join-prompt.txt"
 awk '/ QUERY END -->/{p=0} p{print} / QUERY BEGIN -->/{p=1}' "$R/out/prompt.md" > "$R/out/query-prompt.txt"
 wc -l "$R"/out/*-prompt.txt
@@ -1159,10 +1160,10 @@ hstate() {
 hstate > "$R/out/harness-user-state-after.txt" 2>&1; cat "$R/out/harness-user-state-after.txt"
 find "$R/home" -type f -newer "$R/out/start.stamp" | sed "s|$R/home|HOME|" | sort > "$R/out/home-files.txt"; echo "files the run stores gained: $(wc -l < "$R/out/home-files.txt" | tr -d " ")"; grep -v -E "/(plugins|skills)/" "$R/out/home-files.txt" | head -40
 find /tmp/ -maxdepth 1 -newer "$R/out/start.stamp" 2>/dev/null | grep -v -E "^/tmp/$|^/tmp/dp-trio$" | tee "$R/out/tmp-writes.txt"
-cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"; git log --oneline --all | head -5
+cd "$R/repo" && git status --porcelain --ignored | tee "$R/out/repo-status.txt"; git log --oneline --all | head -5
 grep -n -A3 '"node_modules/@3fn/core"' "$R/repo/package-lock.json" | head -6
 ls -A "$R/repo/.claude" "$R/repo/.kiro" 2>&1 | head -20
-cat "$R/repo/.claude/settings.local.json" 2>&1
+cd "$R/repo" && cat .claude/settings.local.json 2>&1; git check-ignore -v .claude/settings.local.json 2>&1
 grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/join.* "$R"/out/query.* "$R"/out/open-*.typescript > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (package self-references expected; see § 10)"
 date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
