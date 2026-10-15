@@ -107,6 +107,7 @@
 - **Disposition**: **by design**. An exact-match filter (`context`, `category`, `concept`) has no confidence gradient: every returned row satisfies the filter exactly, so `matchConfidence` and `matchedOn` would carry no information. The components rubric scores keyword mode only ("structured filters are exact constraints"; Thurgood's conformance note (d) agrees). The ledger handled these rows correctly as untiered.
 - **Follow-up (small, mine)**: one sentence in the `find_components` tool description (`application-mcp-server/src/index.ts`) saying filter results are exact and untiered, and that order is alphabetical, so a caller does not read order as rank.
 - **Trigger**: the next change to `find_components` or its tool description.
+- **Status**: **DONE on branch `fix/validate-assembly-prop-values`, 2026-10-13; accepted at the fix PR's merge (PR #___)**. Pulled forward by Peter's go together with T3. One sentence was added to the `find_components` description: without `keyword`, structured-filter rows carry no `matchConfidence`, `matchedOn` or `rank` by design, and come back in name order, not ranked. The description is introspected into `canonical/registry/tool-registry.json`, so the registry and `canonical/generated.lock` were regenerated (`tools/agent-generator/generate.ts`) and `check:122:diff-guard` is green.
 
 ### T3 — `validate_assembly` does not check prop values (Lina's D12 finding)
 - **What happened**: `Button-CTA` with `size: "md"` passed V1. The schema type is `'small' | 'medium' | 'large'`. `application-mcp-server/src/validation/AssemblyValidator.ts` checks existence, composition and assembly accessibility only; props reach only the conditional composition rules.
@@ -114,6 +115,14 @@
   - Check string-literal prop values against schema union-literal types. Skip binding expressions (`{…}`) and non-literal types. Flag required props that are missing.
   - Size: **small**. The question of error vs warning for a bad literal is settled in the fix PR; I lean error, because an invalid literal is never right.
 - **Trigger**: Peter's merge of this record. It is second in my queue after G6: small, entirely in my scope, and it stops a whole class of spec bugs reaching platform agents.
+- **Status**: **DONE on branch `fix/validate-assembly-prop-values`, 2026-10-13; accepted at the fix PR's merge (PR #___)**.
+  - New `application-mcp-server/src/validation/PropValueChecker.ts`, called from `AssemblyValidator.walk`. It is schema-driven: own + inherited props (along `inheritsFrom`, minus `omits`), with no per-component special cases.
+  - **Errors**: a known prop whose value fails its type (an enum literal, `string`/`number`/`boolean`); a `<Family>TokenName` prop whose value is not a token of that family in the served index.
+  - **Warnings**: an unknown prop name; a missing required prop (callback props exempt); a token prop when the token index is not loaded.
+  - **Not checked**: `{binding}` values, null values, and types that are not machine-checkable (functions, objects, arrays, `IconName`). Free-form `string` props accept any string.
+  - **Correction to the brief that routed this**: before this fix there was NO prop-name check at all. Unknown names were silently accepted.
+  - Re-running Leonardo's V1 tree gives the 9 one-off "not found" errors plus exactly one new error (Button-CTA `size: "md"`) and one warning (Input-Radio-Set missing `accessibilityLabel`, required since #352). There were no false positives.
+  - **Found in passing (not fixed here)**: `experience-patterns/onboarding.yaml` hints `semantic: form` on Container-Base, whose schema does not allow `form`. `AccessibilityChecker`'s `FORM_SEMANTICS` also lists `form`. One of the two is wrong; that is a Lina decision for the next pattern/schema touch.
 
 ---
 

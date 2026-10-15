@@ -332,8 +332,10 @@ export class QueryEngine {
       // List/catalog mode: bounded, unranked enumeration
       result = findDocsList(allDocs, { cursor, limit });
     } else if (concept && concept.trim() !== '') {
-      // Concept search mode: ranked, tokenized keyword match
-      result = findDocsConcept(allDocs, concept.trim());
+      // Concept search mode: ranked, tokenized keyword match. The page bound is applied
+      // AFTER ranking and tier assignment, so it can only drop the tail — never reorder
+      // or re-tier (defect record 2026-10-13-find-docs-concept-mode-ignores-limit.md).
+      result = pageFindDocsResult(findDocsConcept(allDocs, concept.trim()), { cursor, limit });
     } else {
       // Neither mode supplied — return empty no-match contract
       result = {
@@ -885,15 +887,7 @@ export function findDocsList(
   allDocs: DocumentMetadata[],
   params: { cursor?: string; limit?: number },
 ): FindDocsResult {
-  const rawLimit = params.limit && params.limit > 0 ? params.limit : FIND_DOCS_DEFAULT_LIMIT;
-  // Hard upper cap: 5× default (100 entries) to preserve growth headroom
-  const limit = Math.min(rawLimit, FIND_DOCS_DEFAULT_LIMIT * 5);
-
-  let startIndex = 0;
-  if (params.cursor) {
-    const parsed = parseInt(params.cursor, 10);
-    if (!isNaN(parsed) && parsed >= 0) startIndex = parsed;
-  }
+  const { startIndex, limit } = resolveFindDocsPage(params);
 
   const page = allDocs.slice(startIndex, startIndex + limit);
 
@@ -909,5 +903,45 @@ export function findDocsList(
 
   const result: FindDocsResult = { data: entries, error: null };
   if (hasMore) result.nextCursor = String(nextIndex);
+  return result;
+}
+
+/**
+ * The page bound shared by both `find_docs` modes: `limit` defaults to
+ * FIND_DOCS_DEFAULT_LIMIT, is hard-capped at 5× (100 entries) to preserve growth headroom,
+ * and `cursor` is the opaque string index of the page start.
+ */
+function resolveFindDocsPage(params: { cursor?: string; limit?: number }): {
+  startIndex: number;
+  limit: number;
+} {
+  const rawLimit = params.limit && params.limit > 0 ? params.limit : FIND_DOCS_DEFAULT_LIMIT;
+  const limit = Math.min(rawLimit, FIND_DOCS_DEFAULT_LIMIT * 5);
+
+  let startIndex = 0;
+  if (params.cursor) {
+    const parsed = parseInt(params.cursor, 10);
+    if (!isNaN(parsed) && parsed >= 0) startIndex = parsed;
+  }
+  return { startIndex, limit };
+}
+
+/**
+ * Concept mode — bound an ALREADY RANKED and tiered result to one page (same semantics as
+ * list mode: default 20, cap 100, `nextCursor` when more remain). Pure slicing: each entry's
+ * rank order, `matchConfidence`, `matchedOn` and coverage are untouched, and the pinned
+ * no-match contract `{ data: [], error: null, matchConfidence: 'none' }` passes through as is.
+ */
+export function pageFindDocsResult(
+  ranked: FindDocsResult,
+  params: { cursor?: string; limit?: number },
+): FindDocsResult {
+  if (ranked.data.length === 0) return ranked;
+  const { startIndex, limit } = resolveFindDocsPage(params);
+  const page = ranked.data.slice(startIndex, startIndex + limit);
+  const nextIndex = startIndex + page.length;
+  const result: FindDocsResult = { ...ranked, data: page };
+  delete result.nextCursor;
+  if (nextIndex < ranked.data.length) result.nextCursor = String(nextIndex);
   return result;
 }

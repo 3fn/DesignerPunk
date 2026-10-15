@@ -10,7 +10,7 @@
           "name": "check_composition"
         },
         {
-          "description": "Find components by category, concept, platform, purpose keyword, or usage context. Returns ApplicationSummary with promoted selection guidance (purpose, whenToUse, whenNotToUse, alternatives, contexts). All parameters optional and combinable (conjunctive). Use `keyword` for natural-language tokenized discovery (e.g. \"primary action button\", \"login\", \"text input field\").",
+          "description": "Find components by category, concept, platform, purpose keyword, or usage context. Returns ApplicationSummary with promoted selection guidance (purpose, whenToUse, whenNotToUse, alternatives, contexts). All parameters optional and combinable (conjunctive). Use `keyword` for natural-language tokenized discovery (e.g. \"primary action button\", \"login\", \"text input field\"). Without `keyword`, the structured filters are exact constraints: their rows carry no `matchConfidence`, `matchedOn` or `rank` by design (every row satisfies the filter exactly) and are returned in name order, not ranked.",
           "inputSchemaHash": "sha256:fdee0907c5962e27e7c5faef1d46af0c311b89bdbd8d6259663dd9a6a2aa7f2f",
           "name": "find_components"
         },
@@ -117,7 +117,7 @@
       "tools": [
         {
           "description": "Discover docs by concept/keyword (concept mode, ranked), or enumerate the full catalog (list mode, paginated). Supersedes get_documentation_map.",
-          "inputSchemaHash": "sha256:41368aad650bc3fba9e6f7eb29e471f76b9cb74c7f4180bb7bad35ca6418b27b",
+          "inputSchemaHash": "sha256:d19b0c519b32ab87edf25a3a8c6f9478b9a529c1fb3470257c0dc1ac79802be4",
           "name": "find_docs"
         },
         {

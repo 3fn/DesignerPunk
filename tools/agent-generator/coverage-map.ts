@@ -1150,6 +1150,14 @@ export function formatLaneAudit(audit: LaneAuditResult): string[] {
 /** Tracked jest config files: `jest.config.*` and `jest.<lane>.config.*`. */
 export const JEST_CONFIG_PATTERN = /(^|\/)jest(\.[\w-]+)?\.config\.(js|cjs|mjs|ts|json)$/;
 
+/**
+ * A committed fixture tree — `__fixtures__/` or a `fixtures/` directory segment — holds files
+ * that belong to some OTHER repo or test scenario (e.g. a born consumer repo whose
+ * `jest.config.js` requires `@3fn/core`, which is not installed inside the fixture), never to
+ * this repo's own lanes. Its configs and package.json files are not lane inputs.
+ */
+export const FIXTURE_TREE_PATTERN = /(^|\/)(__fixtures__|fixtures)\//;
+
 export function readLaneInputs(repoRoot: string): LaneInputs {
   const files = execFileSync('git', ['ls-files'], { cwd: repoRoot, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
     .split('\n')
@@ -1163,7 +1171,7 @@ export function readLaneInputs(repoRoot: string): LaneInputs {
 
   const packages: PackageScriptsMap = {};
   for (const f of files.filter((f) => f === 'package.json' || /^[^/]+(\/[^/]+)*\/package\.json$/.test(f))) {
-    if (f.includes('node_modules/') || f.includes('__fixtures__/')) continue;
+    if (f.includes('node_modules/') || FIXTURE_TREE_PATTERN.test(f)) continue;
     const dir = f === 'package.json' ? '.' : path.posix.dirname(f);
     try {
       packages[dir] = (JSON.parse(read(f)) as { scripts?: Record<string, string> }).scripts ?? {};
@@ -1173,7 +1181,7 @@ export function readLaneInputs(repoRoot: string): LaneInputs {
   }
 
   const jestConfigs: Record<string, JestConfigShape | undefined> = {};
-  for (const f of files.filter((f) => JEST_CONFIG_PATTERN.test(f) && !f.includes('__fixtures__/'))) {
+  for (const f of files.filter((f) => JEST_CONFIG_PATTERN.test(f) && !FIXTURE_TREE_PATTERN.test(f))) {
     try {
       jestConfigs[f] = /\.(js|cjs|json)$/.test(f) ? (require(path.join(repoRoot, f)) as JestConfigShape) : undefined;
     } catch {
