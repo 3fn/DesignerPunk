@@ -5,7 +5,7 @@
 **Spec**: 123 — Consumer Distribution · **Unit**: U5 — Validation & closeout (`task/123-u5-closeout`; parents 25–28) · **Type**: Documentation · **Validation**: Tier 2
 **Agent (plan)**: PRIMARY Leonardo (Opus) — operator; Thurgood (Sonnet) — 26.5 · **Launcher**: Peter (every harness session, from macOS Terminal)
 **Delegated-tier**: planned Leonardo (Opus) primary; Thurgood (Sonnet) — 26.5 → actual Leonardo (Opus) primary; Thurgood (Opus) — 26.5 — 26.5 ran in the Thurgood (Opus) seat the orchestrator was already continuing across U5 (Tasks 28 instruments, the Task 25 amendment), not on a re-estimate of its demand; class: model-evolution
-**CI-provenance**: local
+**CI-provenance**: branch-head dispatch @ 992e2ae3640c83c6f61fb05c3d488ee6ab40bd68 — https://github.com/3fn/DesignerPunk/actions/runs/38680957753, https://github.com/3fn/DesignerPunk/actions/runs/38680963631, https://github.com/3fn/DesignerPunk/actions/runs/38680969724, https://github.com/3fn/DesignerPunk/actions/runs/38680975496, https://github.com/3fn/DesignerPunk/actions/runs/38680981385, https://github.com/3fn/DesignerPunk/actions/runs/38680986769 *(all six completed success, read 2026-10-15, after main @ #361 was merged in at 90df66638; the 26.1 checkpoint dispatch at 23be48ee1 had Lane Timing FAIL on the fixture jest config, fixed by #361 — local runs are listed in § Validation)*
 **Instruments**: 29 listed — exists 18 · built-here 11 · missing 0 · unlisted 2 — .kiro/specs/123-consumer-distribution/completion/task-26-instruments.md
 **Traces**: Reqs 15A.4, 15A.1 · design C8, C24, DD8
 
