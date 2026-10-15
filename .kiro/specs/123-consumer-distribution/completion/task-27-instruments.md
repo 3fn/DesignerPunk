@@ -47,6 +47,8 @@
 
 **Counts (current, 2026-10-15, final states)**: N = 24 — exists 16 · built-here 8 · missing 0 · unlisted 0.
 
+**Counts (FINAL, 2026-10-15, at Task 27's parent completion)**: N = 24 — exists 16 · built-here 8 · missing 0 · unlisted 1. `unlisted` counts the one dated `## Found later` entry (`misfit`). This line supersedes the Counts lines above.
+
 ## What the rows mean for scheduling
 
 - **27.1 can start on the go.** The prompts (rows 1.1, 1.3, 2.5) and the launch blocks (rows 3.3, 4.3) are this seat's to write.
@@ -61,6 +63,8 @@
 - **O-3 — Probes before beats.** Running the identity probes first keeps their answers independent of beat 1's artifacts. Running them after would show whether beat 1 changed anything. Fresh sessions either way; I chose before.
 
 ## Found later
+
+- 2026-10-15 — misfit — row 6.2, the `harness-user-state` before-inspection in § 15's step 4 (and the same line in §§ 11 and 14.4) — criterion C1 (preconditions recorded) — found while writing the conformance records (Leonardo): the block wrote `out/harness-user-state-before.txt` unguarded. The launcher ran it late (after the setup open), then re-ran it after beat 2, which overwrote the before-state with the after-state (`diff` shows the files identical). The genuine before-state is Peter's relayed paste-back, recorded as such in `validation/conformance-beat-1.md`. Route: protocol.md — the before-line in every section is now no-clobber (`if [ -e …before.txt ]; then echo "before-state already recorded; not overwritten"; else hstate > …; fi`), 6 occurrences (three trio runs, two join runs, the conformance run)
 
 ## Surviving counter-argument to this block
 

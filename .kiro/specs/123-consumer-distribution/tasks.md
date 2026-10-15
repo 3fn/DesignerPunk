@@ -1538,7 +1538,7 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
   - [x] 26.4 The cold-observation table
   - [x] 26.5 (Thurgood) Install-doc correction for observed cells
 
-- [ ] 27. Re-grounding conformance (24.1 two-beat)
+- [x] 27. Re-grounding conformance (24.1 two-beat)
 
   **Type**: Documentation · **Validation**: Tier 2 · **Agent (plan)**: PRIMARY Leonardo (Opus) — operator (**not the profile author**)
   **Traces**: Reqs 24.1–24.6 · design C31
@@ -1552,10 +1552,10 @@ Reviewers: Ada, Lina, Stacy, Leonardo, Kenya, Data.
 
   **Primary Artifacts:** `validation/conformance-beat-{1,2}.md`, `.kiro/specs/123-consumer-distribution/validation/prompts/conformance-*.md`
 
-  - [ ] 27.1 Freeze and commit both prompts
-  - [ ] 27.2 Beat 1
-  - [ ] 27.3 Beat 2
-  - [ ] 27.4 The identity probe; the 24.3 labelling
+  - [x] 27.1 Freeze and commit both prompts
+  - [x] 27.2 Beat 1
+  - [x] 27.3 Beat 2
+  - [x] 27.4 The identity probe; the 24.3 labelling
 
 - [ ] 28. Closeout (**U5 gating parent**)
 

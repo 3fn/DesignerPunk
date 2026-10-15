@@ -314,7 +314,7 @@ hstate() {
   echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
   echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
 }
-hstate > "$R/out/harness-user-state-before.txt" 2>&1; cat "$R/out/harness-user-state-before.txt"
+if [ -e "$R/out/harness-user-state-before.txt" ]; then echo "before-state already recorded; not overwritten"; else hstate > "$R/out/harness-user-state-before.txt" 2>&1; fi; cat "$R/out/harness-user-state-before.txt"
 ```
 
 **Step 6 — preflight (interactive), in an empty folder, with an empty Claude Code store.** Expect the full first-run onboarding: theme, login method, a browser sign-in, security notes, terminal setup, trusting this folder. Choose the defaults, sign in, and type no message. At the input prompt, type `/exit`. Paste back each screen it showed and what you chose. If macOS asks about the keychain, click Cancel, press Ctrl-C, and stop.
@@ -470,7 +470,7 @@ hstate() {
   echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
   echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
 }
-hstate > "$R/out/harness-user-state-before.txt" 2>&1; cat "$R/out/harness-user-state-before.txt"
+if [ -e "$R/out/harness-user-state-before.txt" ]; then echo "before-state already recorded; not overwritten"; else hstate > "$R/out/harness-user-state-before.txt" 2>&1; fi; cat "$R/out/harness-user-state-before.txt"
 ```
 
 **Step 6 — choose the Kiro isolation, then preflight.** Run 6a–6c in order and paste each output. You will end with exactly one `KENV=` line (6d), which later steps use. **If macOS asks about the keychain at any point, click Cancel — never reset — press Ctrl-C, and go to the 6d line for the real profile.**
@@ -641,7 +641,7 @@ hstate() {
   echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
   echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
 }
-hstate > "$R/out/harness-user-state-before.txt" 2>&1; cat "$R/out/harness-user-state-before.txt"
+if [ -e "$R/out/harness-user-state-before.txt" ]; then echo "before-state already recorded; not overwritten"; else hstate > "$R/out/harness-user-state-before.txt" 2>&1; fi; cat "$R/out/harness-user-state-before.txt"
 ```
 
 **Step 6 — choose the Kiro isolation, then preflight.** Run 6a–6c in order and paste each output. You will end with exactly one `KENV=` line (6d), which later steps use. **If macOS asks about the keychain at any point, click Cancel — never reset — press Ctrl-C, and go to the 6d line for the real profile.**
@@ -922,7 +922,7 @@ hstate() {
   echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
   echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
 }
-hstate > "$R/out/harness-user-state-before.txt" 2>&1; cat "$R/out/harness-user-state-before.txt"
+if [ -e "$R/out/harness-user-state-before.txt" ]; then echo "before-state already recorded; not overwritten"; else hstate > "$R/out/harness-user-state-before.txt" 2>&1; fi; cat "$R/out/harness-user-state-before.txt"
 ```
 
 **Step 6 — Claude Code preflight (interactive), in an empty folder.** Expect the first-run onboarding and a browser sign-in. Choose the defaults, type no message, then `/exit`. Paste back what it showed.
@@ -1100,7 +1100,7 @@ hstate() {
   echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
   echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
 }
-hstate > "$R/out/harness-user-state-before.txt" 2>&1; cat "$R/out/harness-user-state-before.txt"
+if [ -e "$R/out/harness-user-state-before.txt" ]; then echo "before-state already recorded; not overwritten"; else hstate > "$R/out/harness-user-state-before.txt" 2>&1; fi; cat "$R/out/harness-user-state-before.txt"
 ```
 
 **Step 6 — Claude Code preflight (interactive), in an empty folder.** Expect the first-run onboarding and a browser sign-in. Defaults, no message, `/exit`. Paste back what it showed.
@@ -1260,7 +1260,7 @@ hstate() {
   echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
   echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
 }
-hstate > "$R/out/harness-user-state-before.txt" 2>&1; cat "$R/out/harness-user-state-before.txt"
+if [ -e "$R/out/harness-user-state-before.txt" ]; then echo "before-state already recorded; not overwritten"; else hstate > "$R/out/harness-user-state-before.txt" 2>&1; fi; cat "$R/out/harness-user-state-before.txt"
 ```
 
 **Step 5 — setup: install and generate (you run these; they are not under test).** Expect `added … packages` and `✅ System tokens generated`.
