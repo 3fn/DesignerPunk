@@ -53,8 +53,9 @@ Every harness session in a run ends with exactly one stop event from this list, 
 - **Each probe session's budget is 30 turns.** It guards the probe task, not the path, so it is declared separately and not derived from `path-steps`.
 - **Budgets are never wall-clock.** Wall-clock is recorded per session (UTC start and end) and never asserted. An overrun is relative only to this instrument's own recorded prior runs (Req 22.3), and the first runs have none.
 - **How each harness enforces it:**
-  - **CC**: `--max-turns <budget>` on `claude -p`. **Unverified**: `claude --help` at 2.1.299 does not list `--max-turns` (the launch host reported 2.1.300 at Run 1; the help was not re-checked at that version), and the reference probe's CLI 2.1.278 accepted it without stopping at it (36 turns under a limit of 25). The launch passes it anyway. If the CLI rejects it, the stop is `harness-error:<the rejection>`, and the session is re-run once **without** the flag; both attempts are recorded. Either way the record reads `num_turns` and `subtype` from the result event, and a session past its budget that did not stop is a finding (`guard not enforced`), not a stop.
+  - **CC**: `--max-turns <budget>` on `claude -p` is **accepted but not enforced** on Claude Code 2.1.300. Run 1 (`trio-1-backend`, 2026-10-14) reported `num_turns` 41 under `--max-turns 40` and 52 under `--max-turns 30`, both `subtype: success`, `terminal_reason: completed`. `claude --help` does not list the flag at 2.1.299; the reference probe saw the same at 2.1.278 (36 turns under 25). The launch still passes it, because a later CLI may honor it and the record should show which. **The CC budget is observed, not enforced**: the record reads `num_turns` and `subtype` from the result event, and a session past its budget that did not stop is a finding (`guard not enforced`), not a stop. If a CLI ever rejects the flag, the stop is `harness-error:<the rejection>`, and the session is re-run once without it; both attempts are recorded.
   - **Kiro**: `kiro-cli chat` has no turn limit flag (2.12.1). The budget is **observed, not enforced**: turns are counted from the captured transcript after the session. Over budget is a finding (`over budget, unenforced`). The launcher halts only for `operator-halt:loop` or `operator-halt:unsafe` (§ 3).
+  - **Consequence for both harnesses**: no budget in this protocol is a hard stop today. The only guard against a runaway is the launcher. Kiro's output scrolls and can be watched (`operator-halt:loop`). A headless CC session cannot be watched, so a CC runaway shows up only in its turn count and cost afterwards. `budget-exhausted` stays in the vocabulary for a harness that enforces a limit.
 - **`budget-exhausted` is recorded as a FINDING: the run did not complete.** It is never a pass.
 
 ## 5. Preconditions and the run procedure
@@ -64,7 +65,15 @@ Every harness session in a run ends with exactly one stop event from this list, 
 - **Packed install only, no source access** (Req 23.2, all three personas). The candidate is the tarball at `/Users/3fn/Documents/Work Projects/Kiro/u5-pack/3fn-core-15.1.0.tgz`, shasum `aa3efdcf9ce3c2689c2e5979932c48a46f3f6584`, packed with `npm pack --ignore-scripts` from `4c875235a` after a full build. Its `package.json` version still reads 15.1.0; the records name the commit and shasum, not a version. The launcher checks the shasum in every run, and a mismatch stops the run before any session.
 - **The step-1 substitution.** The persona cannot run INSTALL step 1 (`npm install @3fn/core`) as written, because the public registry serves the published 15.1.0, not the candidate. The launcher copies the tarball into the run's repo at `.pack/3fn-core-15.1.0.tgz`, and the frozen prompt says to install that file wherever instructions say to install `@3fn/core`. The record carries this as a limitation (step 1 is exercised against a file, not the registry) and checks `package-lock.json` to show which one was installed.
 - **The run's repo is a fresh clone of the committed fixture**, read from the frozen-prompt commit with `git archive` (so the fixture used is the committed one), initialised as its own git repository with one commit, under `/tmp/dp-trio/<run-id>/repo`. It lives outside the DesignerPunk source tree.
-- **A fresh temporary `HOME` per run** (`/tmp/dp-trio/<run-id>/home`), passed to every harness command as `HOME=…`. The launcher's own shell keeps its real `HOME`. That is the mechanism behind `harness-user-state` (§ 5.3).
+- **An isolated user-level store per run, chosen per harness** (`/tmp/dp-trio/<run-id>/home` holds it). The launcher's shell keeps its real `HOME` throughout. This is the mechanism behind `harness-user-state` (§ 5.3).
+  - **Claude Code: `CLAUDE_CONFIG_DIR="$R/home/.claude"`, with the real `HOME`.** Every CC command in § 11 carries it. **Why not `HOME=`**: in Run 1 (2026-10-14), preflight with `HOME="$R/home"` went into a login loop, and macOS asked for access to the login keychain, offering to reset it to defaults. The CC credential lives in the macOS login keychain, and moving `HOME` moves where macOS looks for it. Peter cancelled, nothing was reset, and the stop was `auth-required`. With `CLAUDE_CONFIG_DIR`, the user-level store (`.claude.json`, settings, trust, session logs) starts empty and the real keychain supplies the login. The first open still runs the full onboarding and a browser sign-in (Run 1's re-login cost). **Never accept a keychain reset**: if macOS offers one, click Cancel, press Ctrl-C, and record `auth-required`.
+  - **What `CLAUDE_CONFIG_DIR` does not isolate**: account-level state arrives with the login — in Run 1, the `claude.ai Claude Docs` connector (MCP source `claudeai`), account-synced skills, and plugin-marketplace caches. None is DesignerPunk's. The record names them, and the clean/warm verdict says how it weighed them.
+  - **Kiro (kiro-cli): decided at preflight, in this order** (§ 11, step 6). **Unverified throughout**: the order rests on kiro-cli 2.12.1's binary naming `KIRO_HOME` and `KIRO_DATA_DIR`, and reading its login from "the secret store" with "Error getting … token from keychain" messages (`strings` on `kiro-cli-chat`). Nothing in its `--help` documents an isolation variable.
+    1. Confirm the real profile is logged in: `kiro-cli whoami`.
+    2. **Try `KIRO_HOME="$R/home/.kiro"`** (keeps the real `HOME`, so the keychain is untouched). Accept it if `whoami` still reports the login **and** `kiro-cli mcp list` no longer shows the real profile's global server (`fetch`), and `$R/home/.kiro` gains files. Then every Kiro command carries `KIRO_HOME="$R/home/.kiro"`.
+    3. Otherwise **try `HOME="$R/home"`**. Accept it if `whoami` reports the login with no prompt of any kind. **If macOS shows any keychain dialog, click Cancel (never reset)**, press Ctrl-C, and go to 4.
+    4. Otherwise **run with the real profile**. The run is **warm**: the record copies the real profile's DesignerPunk-relevant state verbatim (global MCP server names, global agent names, global steering that mentions DesignerPunk) and labels the cold-observation `not observed cold — state not clean`.
+  - The chosen mechanism is written to `out/isolation.txt` and quoted in the record's F7.
 - **No nested session.** The launch shell must not carry the Claude app's nested-session environment (`CLAUDECODE`, `CLAUDE_CODE_*`): friction row 9 records that `claude` fails from a shell inside the desktop app. The first command of every block checks this.
 - **Host facts** (Task 25 criterion 3, as amended 2026-10-14): one `host-toolchain (ios)` and one `host-toolchain (android)` line per run, recorded as facts with their commands and exit codes, never as the reason a platform agent is unexercised.
 
@@ -74,7 +83,7 @@ Every harness session in a run ends with exactly one stop event from this list, 
 |---|---|---|---|---|
 | 1 | prepare | no | — | dirs, fixture clone, tarball + shasum, frozen prompt from the commit, host facts |
 | 2 | `harness-user-state` before | no | — | the precondition, as evidence |
-| 3 | preflight | yes (empty dir, not the repo) | interactive | first-run onboarding and any login in the fresh `HOME`, kept out of the repo so they do not mix with the first MCP load. Its cost is recorded as re-login cost |
+| 3 | preflight | yes (empty dir, not the repo) | interactive | first-run onboarding and any login in the isolated store (and, for Kiro, the choice of isolation mechanism), kept out of the repo so they do not mix with the first MCP load. Its cost is recorded as re-login cost |
 | 4 | birth | yes | headless, budgeted | the persona walks the install doc from the frozen BIRTH prompt |
 | 5 | open | yes | interactive, captured with `script` | the restart: the first session in the born repo. The launcher types no task. It records **`first-MCP-load`** verbatim, answers prompts by the approval rule (§ 6), lists the MCP servers (`/mcp`), and exits |
 | 6 | probe | yes, one per probe agent | headless, budgeted | the direction-(ii) behavioral probe (§ 7) from the frozen PROBE prompt(s) |
@@ -87,16 +96,18 @@ Every harness session in a run ends with exactly one stop event from this list, 
 
 ### 5.3 `harness-user-state` — evidence, not a word
 
-- **Default mechanism**: the fresh `HOME`. The inspection runs before preflight and after the last session, over:
-  - CC: `$HOME/.claude.json` and `$HOME/.claude/settings.json` of the run's `HOME`;
-  - Kiro: `$HOME/.kiro/` and `$HOME/Library/Application Support/kiro-cli/` of the run's `HOME` (**unverified** that kiro-cli keeps its user state there; the after-listing of every file the run's `HOME` gained shows where it actually wrote);
-  - **the real user's stores, counted only** (`~/.claude.json`, `~/.claude/settings.json`, `~/.kiro/`, `~/Library/Application Support/kiro-cli/`): they matter only if a harness ignores `HOME`. If the after-listing shows the harness wrote nothing under the run's `HOME`, the run is labelled **warm** and the real store's DesignerPunk entries are recorded verbatim.
-- **The state is clean** when the run's `HOME` has no DesignerPunk entries before the birth session, and the harness demonstrably used the run's `HOME`. Only a clean run's `first-MCP-load` is interpreted as cold (design C30). A warm run is labelled warm and never edits the install doc (C32).
-- **Re-login cost**: whatever the preflight asked for (onboarding screens, a browser login, `kiro-cli login`), recorded verbatim.
+- **What the inspection reads** (§ 11's `hstate`, before preflight and after the last session):
+  - **CC, the run store**: `$R/home/.claude/.claude.json` (its `projects` entries: trust, `enabledMcpjsonServers`) and `$R/home/.claude/settings.json`; and, after the run, the repo's own `.claude/settings.local.json`. **Claude Code 2.1.300 writes the project's MCP server enablement there, in the repo, not in the user store** (Run 1).
+  - **Kiro, the run store** (whichever mechanism step 6 chose): `$R/home/.kiro/` and, under `HOME=`, `$R/home/Library/Application Support/kiro-cli/`.
+  - **DesignerPunk-relevant entries only**: lines naming `designerpunk-docs`, `designerpunk-application` or `designerpunk-product`, `enabledMcpjsonServers`, and DesignerPunk paths. **A plain "designerpunk" match is not used**: the operator's account email (`…@designerpunk.ai`) matches it. In Run 1, every "designerpunk" line in the run store was the account's `emailAddress` or `organizationName`.
+  - **The real user's stores**: the same DesignerPunk-relevant lines in `~/.claude.json` (counted; this repo's own projects are there), plus, for Kiro, the global MCP server names in `~/.kiro/settings/mcp.json`, the global agent names in `~/.kiro/agents/`, and any `~/.kiro/steering/` file naming DesignerPunk. Kiro's `sessions/` and `tasks/` are per-directory history and are not counted: a new run folder has none.
+  - **Every file the run store gained** (`find … -newer start.stamp`), which shows where each harness actually wrote.
+- **The state is clean** when the run store holds no DesignerPunk-relevant entry before the birth session, and the harness demonstrably used the run store. Only a clean run's `first-MCP-load` is interpreted as cold (design C30). A warm run is labelled warm and never edits the install doc (C32). Account-level state that is not DesignerPunk's is named in the record, not counted against "clean".
+- **Re-login cost**: whatever the preflight asked for (onboarding screens, a browser sign-in, `kiro-cli login`, any keychain dialog), recorded verbatim from the capture. **When a paste-back and the capture disagree, the capture is quoted** (Run 1's paste-back said no login was asked; its capture shows a browser sign-in).
 
 ## 6. The approval rule and the operator log
 
-- **The approval rule, fixed before any run**: in `preflight` and `open` the launcher answers each harness prompt as the install doc tells a user to — **approve DesignerPunk's MCP servers if asked** (INSTALL § 3 step 5); trust the folder if asked; complete login and onboarding screens with the defaults. Any other prompt: choose the option that lets the session continue without granting more than it asks for, and log it.
+- **The approval rule, fixed before any run**: in `preflight` and `open` the launcher answers each harness prompt as the install doc tells a user to — **approve DesignerPunk's MCP servers if asked** (INSTALL § 3 step 5); trust the folder if asked; complete login and onboarding screens with the defaults. **Never accept a macOS keychain reset or unlock prompt raised by a run-store mechanism**: click Cancel, Ctrl-C, and record `auth-required`. Any other prompt: choose the option that lets the session continue without granting more than it asks for, and log it.
 - **Every launcher act after a frozen prompt goes in `operator-log`**, verbatim, with its reason (run discipline C1). That includes each approval answer (`approval: <prompt, verbatim> → <answer>`), each `/mcp` or `/exit` typed in `open`, any re-run after `auth-required` or a rejected flag, and any `operator-halt`. **The launcher types nothing into a birth or probe session.** If nothing was done beyond the fixed steps, the log reads `none beyond the fixed open steps`.
 - `session-launched-by: Peter` on every session of every run (ruling 2026-10-14).
 
@@ -207,21 +218,26 @@ The record writes each session's stop as a line `- stop: <session> — <event>` 
 
 After the last session, the transcripts (`birth.*`, `open.typescript`, `probe-*`) are searched for the DesignerPunk source tree and repository: `DesignerPunk-v2`, `wt-u5`, `claude-501`, `github.com/3fn/DesignerPunk`, `raw.githubusercontent.com/3fn`. **Each hit is classified in F6**:
 
-- `read-of-shipped-text`: the string appears in text the persona read from the installed package (INSTALL § 9 names the GitHub repository). Not a breach.
+- `read-of-shipped-text`: the string appears in text the persona read from the installed package. Not a breach. **Expected matches** (seen in Run 1): the package `package.json`'s `repository.url` (`git+https://github.com/3fn/DesignerPunk.git`); the package README's GitHub badge; INSTALL § 9 ("To own the engine too, clone `github.com/3fn/DesignerPunk`"); and `init`'s printed hatch line ("want to own the engine too? Clone github.com/3fn/DesignerPunk"). A transcript that reads the README, INSTALL and `init`'s output will match 3–4 times without any access attempt.
 - `access attempt`: the agent tried to read, list, clone or fetch the source. **A finding**, attributed to the persona's axis.
 
 `none` if the search returns nothing.
 
+**Writes outside the run folder.** Headless agents can write anywhere the launcher's user can. In Run 1, the persona cloned the repo to `/tmp/dp-trio-clonetest` and wrote `/tmp/mcp-*.err`, and a probe agent built a throwaway copy at `/tmp/dp-scratch/`. Step 10 lists every `/tmp` entry newer than the run's start (`out/tmp-writes.txt`); the record classifies each as the agent's or unrelated, and the agent's become a finding outside the axes. Watching a headless session is not possible, so `operator-halt:unsafe` can fire only in a Kiro session whose output scrolls.
+
 ## 11. Launch blocks — one per step, for Peter
 
-**How to use these.** Open one new macOS Terminal window per run (not a shell inside the Claude app), and keep it open for the whole run: later steps use the variables step 0 sets. The blocks assume zsh, the Terminal default. Paste one block at a time, wait for it to finish, and paste its output back to the orchestrator. Nothing in a block needs editing except `COMMIT=` in step 0, which the orchestrator fills with the commit that carries this run's frozen prompt.
+**How to use these.** Open one new macOS Terminal window per run (not a shell inside the Claude app), and keep it open for the whole run: later steps use the variables step 0 sets, and Kiro runs also use `KENV` from step 6. The blocks assume zsh, the Terminal default. Paste one block at a time, wait for it to finish, and paste its output back to the orchestrator. Nothing in a block needs editing except `COMMIT=` in step 0, which the orchestrator fills with the commit that carries this run's frozen prompt.
 
-**What never changes**: everything a run produces lands in `/tmp/dp-trio/<run-id>/out/`. Leave that folder in place; the record is written from it. Your answers to harness prompts in steps 6 and 8 follow § 6's approval rule, and every one goes in your paste-back.
+**What never changes**: everything a run produces lands in `/tmp/dp-trio/<run-id>/out/`. Leave that folder in place; the record is written from it. Your answers to harness prompts in steps 6 and 8 follow § 6's approval rule, and every one goes in your paste-back. **If macOS ever asks about your keychain, click Cancel — never reset — press Ctrl-C, and tell the orchestrator.**
 
 
 ### Run 1 — `trio-1-backend` (persona (a), Claude Code)
 
-> **Re-prepared, 2026-10-14.** As first committed, step 1 used `--strip-components=3`, which put the fixture in `$R/repo/a-ts-service/` instead of at the repo root (`ls -A` showed `.git a-ts-service`). Peter found it at Run 1 step 1, ran `rm -rf "$R"`, and redid steps 1–5 with the corrected `--strip-components=4` before any harness session had run. No session saw the misplaced fixture. Runs 2 and 3 use the corrected command from the start.
+
+> **Run 1 as run, 2026-10-14.** Two things differed from the blocks first committed, and both are corrected below.
+> - **Re-prepared.** Step 1 used `--strip-components=3`, which put the fixture in `$R/repo/a-ts-service/` instead of at the repo root (`ls -A` showed `.git a-ts-service`). Peter found it at step 1, ran `rm -rf "$R"`, and redid steps 1–5 with `--strip-components=4` before any harness session had run. No session saw the misplaced fixture.
+> - **Isolation mechanism changed at step 6.** Preflight with `HOME="$R/home"` ended `auth-required` (a login loop and a macOS keychain-reset offer, cancelled). Every CC session from then on used `CLAUDE_CONFIG_DIR="$R/home/.claude"` with the real `HOME`, as the blocks now say (§ 5.1). The record (`validation/trio-1-backend.md`) carries both attempts.
 
 **Step 0 — variables and checks.** Expect: `0` (no nested-session variables), then `prompt found at commit`.
 
@@ -237,7 +253,7 @@ env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
 git -C "$DP" cat-file -e "$COMMIT:$PF" && echo "prompt found at commit"
 ```
 
-**Step 1 — run folder and fixture clone.** Expect: one `initial commit` line and the fixture's files. If it prints `STOP`, stop and tell the orchestrator.
+**Step 1 — run folder and fixture clone.** Expect: one `initial commit` line and the fixture's files at the top level (no `a-ts-service/` folder). If it prints `STOP`, stop and tell the orchestrator.
 
 ```sh
 if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/repo" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/repo" --strip-components=4 && cd "$R/repo" && git init -q -b main && git add -A && git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit -q -m "initial commit" && git log --oneline && ls -A; fi
@@ -259,7 +275,7 @@ awk '/ PROBE-lina END -->/{p=0} p{print} / PROBE-lina BEGIN -->/{p=1}' "$R/out/p
 wc -l "$R"/out/*-prompt.txt
 ```
 
-**Step 4 — host facts.** Paste the whole output. At Run 1's launch the CLI reported `2.1.300 (Claude Code)`; the help check in § 4 was made at 2.1.299 and was not repeated at 2.1.300.
+**Step 4 — host facts.** Paste the whole output.
 
 ```sh
 {
@@ -276,113 +292,102 @@ echo "cmd: ls ~/Library/Android/sdk"; ls ~/Library/Android/sdk; echo "exit=$?"
 } > "$R/out/host.txt" 2>&1; cat "$R/out/host.txt"
 ```
 
-**Step 5 — `harness-user-state` before.** Expect: the run `HOME` entries all `absent`. Paste the whole output.
+**Step 5 — `harness-user-state` before.** Expect: the run-store entries all `absent`. Paste the whole output.
 
 ```sh
 hstate() {
-  echo "== run HOME: $R/home"
-  for f in "$R/home/.claude.json" "$R/home/.claude/settings.json"; do
-    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -i designerpunk "$f") lines naming designerpunk"; grep -n -i designerpunk "$f" | cut -c1-200; else echo "${f}: absent"; fi
+  echo "== run store (CC): $R/home/.claude"
+  for f in "$R/home/.claude/.claude.json" "$R/home/.claude/settings.json"; do
+    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f") DesignerPunk-relevant lines"; grep -n -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f" | cut -c1-200; else echo "${f}: absent"; fi
   done
+  if [ -f "$R/home/.claude/.claude.json" ]; then echo "-- projects in the run store:"; jq -c '.projects // {} | to_entries[] | {dir: .key, trusted: .value.hasTrustDialogAccepted, enabled: .value.enabledMcpjsonServers}' "$R/home/.claude/.claude.json"; fi
+  if [ -f "$R/repo/.claude/settings.local.json" ]; then echo "-- repo .claude/settings.local.json:"; cat "$R/repo/.claude/settings.local.json"; else echo "-- repo .claude/settings.local.json: absent"; fi
+  echo "== run store (Kiro): $R/home/.kiro and $R/home/Library/Application Support/kiro-cli"
   for d in "$R/home/.kiro" "$R/home/Library/Application Support/kiro-cli"; do
-    if [ -d "$d" ]; then echo "${d}: present, files naming designerpunk:"; grep -r -l -i designerpunk "$d" 2>/dev/null; else echo "${d}: absent"; fi
+    if [ -d "$d" ]; then echo "${d}: present, $(find "$d" -type f | wc -l | tr -d " ") files; DesignerPunk-relevant:"; grep -r -l -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$d" 2>/dev/null | head -20; else echo "${d}: absent"; fi
   done
-  echo "== real user stores (counts only)"
-  for f in "$HOME/.claude.json" "$HOME/.claude/settings.json"; do
-    if [ -f "$f" ]; then echo "${f}: $(grep -c -i designerpunk "$f") lines naming designerpunk"; else echo "${f}: absent"; fi
-  done
-  for d in "$HOME/.kiro" "$HOME/Library/Application Support/kiro-cli"; do
-    if [ -d "$d" ]; then echo "${d}: $(grep -r -l -i designerpunk "$d" 2>/dev/null | wc -l | tr -d ' ') files naming designerpunk"; else echo "${d}: absent"; fi
-  done
+  if [ -f "$R/home/.kiro/settings/mcp.json" ]; then echo "-- run-store Kiro global MCP servers:"; jq -r '.mcpServers // {} | keys[]' "$R/home/.kiro/settings/mcp.json"; fi
+  echo "== real user stores (DesignerPunk-relevant only)"
+  if [ -f "$HOME/.claude.json" ]; then echo "$HOME/.claude.json: $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$HOME/.claude.json") DesignerPunk-relevant lines"; else echo "$HOME/.claude.json: absent"; fi
+  if [ -f "$HOME/.kiro/settings/mcp.json" ]; then echo "$HOME/.kiro/settings/mcp.json servers: $(jq -r '.mcpServers // {} | keys | join(", ")' "$HOME/.kiro/settings/mcp.json")"; else echo "$HOME/.kiro/settings/mcp.json: absent"; fi
+  echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
+  echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
 }
 hstate > "$R/out/harness-user-state-before.txt" 2>&1; cat "$R/out/harness-user-state-before.txt"
 ```
 
-**Step 6 — preflight (interactive), in an empty folder.** Claude Code opens with a brand-new home. Complete whatever it shows first (theme, login, trusting this folder) with the defaults, and type no message. At the input prompt, type `/exit`. Paste back: each screen it showed and what you chose, or `nothing asked`, and whether a login was needed.
+**Step 6 — preflight (interactive), in an empty folder, with an empty Claude Code store.** Expect the full first-run onboarding: theme, login method, a browser sign-in, security notes, terminal setup, trusting this folder. Choose the defaults, sign in, and type no message. At the input prompt, type `/exit`. Paste back each screen it showed and what you chose. If macOS asks about the keychain, click Cancel, press Ctrl-C, and stop.
 
 ```sh
-cd "$R/empty" && HOME="$R/home" script -q "$R/out/preflight.typescript" claude
+echo "isolation: CLAUDE_CONFIG_DIR=$R/home/.claude (real HOME)" | tee "$R/out/isolation.txt"
+cd "$R/empty" && CLAUDE_CONFIG_DIR="$R/home/.claude" script -q "$R/out/preflight.typescript" claude
 ```
 
 **Step 7 — birth (headless; the persona works alone).** It prints nothing until the session ends, which may take a while. Then run the check block and paste both outputs.
 
 ```sh
-cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && HOME="$R/home" claude -p "$(cat "$R/out/birth-prompt.txt")" --max-turns 40 --output-format stream-json --verbose --permission-mode acceptEdits --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "WebFetch,WebSearch" > "$R/out/birth.jsonl" 2> "$R/out/birth.stderr"; echo "exit=$?" | tee "$R/out/birth.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.end.utc"
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && CLAUDE_CONFIG_DIR="$R/home/.claude" claude -p "$(cat "$R/out/birth-prompt.txt")" --max-turns 40 --output-format stream-json --verbose --permission-mode acceptEdits --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "WebFetch,WebSearch" > "$R/out/birth.jsonl" 2> "$R/out/birth.stderr"; echo "exit=$?" | tee "$R/out/birth.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.end.utc"
 ```
 
 ```sh
-head -c 600 "$R/out/birth.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, mcp_servers}' "$R/out/birth.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/birth.jsonl"
+head -c 600 "$R/out/birth.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, mcp_servers}' "$R/out/birth.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/birth.jsonl"
 ```
 
-**If the check shows `unknown option` for `--max-turns`** (§ 4): run this fallback once, then the check block again, and say so in your paste-back. If you use it, use the probe fallback commands in step 9 too.
+**Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Claude Code shows, word for word (trusting the folder, approving MCP servers from `.mcp.json`, anything else). Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp`, wait for the list, press Esc, and type `/exit`. Paste back each prompt word for word with your answer, and the `/mcp` list.
 
 ```sh
-mv "$R/out/birth.jsonl" "$R/out/birth.attempt1.jsonl"; mv "$R/out/birth.stderr" "$R/out/birth.attempt1.stderr"; mv "$R/out/birth.exit" "$R/out/birth.attempt1.exit"
-cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && HOME="$R/home" claude -p "$(cat "$R/out/birth-prompt.txt")" --output-format stream-json --verbose --permission-mode acceptEdits --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "WebFetch,WebSearch" > "$R/out/birth.jsonl" 2> "$R/out/birth.stderr"; echo "exit=$?" | tee "$R/out/birth.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.end.utc"
+cd "$R/repo" && CLAUDE_CONFIG_DIR="$R/home/.claude" script -q "$R/out/open.typescript" claude
 ```
 
-**Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Claude Code shows, word for word (trusting the folder, approving MCP servers from `.mcp.json`, anything else). Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp`, wait for the list, press Esc, and type `/exit`. Paste back: each prompt word for word with your answer, and the `/mcp` list.
+**Step 9.1 — probe: consumer-Ada (headless).** 
+It prints nothing until the session ends. Then run the check block and paste both outputs.
 
 ```sh
-cd "$R/repo" && HOME="$R/home" script -q "$R/out/open.typescript" claude
-```
-
-**Step 9.1 — probe: consumer-Ada (headless).** It prints nothing until the session ends. Then run the check block and paste both outputs.
-
-```sh
-cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-ada.start.utc" && HOME="$R/home" claude -p "$(cat "$R/out/probe-ada-prompt.txt")" --agent ada --max-turns 30 --output-format stream-json --verbose --permission-mode acceptEdits --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "WebFetch,WebSearch" > "$R/out/probe-ada.jsonl" 2> "$R/out/probe-ada.stderr"; echo "exit=$?" | tee "$R/out/probe-ada.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-ada.end.utc"
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-ada.start.utc" && CLAUDE_CONFIG_DIR="$R/home/.claude" claude -p "$(cat "$R/out/probe-ada-prompt.txt")" --agent ada --max-turns 30 --output-format stream-json --verbose --permission-mode acceptEdits --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "WebFetch,WebSearch" > "$R/out/probe-ada.jsonl" 2> "$R/out/probe-ada.stderr"; echo "exit=$?" | tee "$R/out/probe-ada.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-ada.end.utc"
 ```
 
 ```sh
-head -c 600 "$R/out/probe-ada.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, mcp_servers}' "$R/out/probe-ada.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/probe-ada.jsonl"
+head -c 600 "$R/out/probe-ada.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, mcp_servers}' "$R/out/probe-ada.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/probe-ada.jsonl"
 ```
 
-**Only if step 7 needed the fallback**: run this instead of the probe command above, then run the check block above again.
+**Step 9.2 — probe: consumer-Lina (headless).** 
+It prints nothing until the session ends. Then run the check block and paste both outputs.
 
 ```sh
-cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-ada.start.utc" && HOME="$R/home" claude -p "$(cat "$R/out/probe-ada-prompt.txt")" --agent ada --output-format stream-json --verbose --permission-mode acceptEdits --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "WebFetch,WebSearch" > "$R/out/probe-ada.jsonl" 2> "$R/out/probe-ada.stderr"; echo "exit=$?" | tee "$R/out/probe-ada.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-ada.end.utc"
-```
-
-**Step 9.2 — probe: consumer-Lina (headless).** It prints nothing until the session ends. Then run the check block and paste both outputs.
-
-```sh
-cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-lina.start.utc" && HOME="$R/home" claude -p "$(cat "$R/out/probe-lina-prompt.txt")" --agent lina --max-turns 30 --output-format stream-json --verbose --permission-mode acceptEdits --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "WebFetch,WebSearch" > "$R/out/probe-lina.jsonl" 2> "$R/out/probe-lina.stderr"; echo "exit=$?" | tee "$R/out/probe-lina.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-lina.end.utc"
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-lina.start.utc" && CLAUDE_CONFIG_DIR="$R/home/.claude" claude -p "$(cat "$R/out/probe-lina-prompt.txt")" --agent lina --max-turns 30 --output-format stream-json --verbose --permission-mode acceptEdits --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "WebFetch,WebSearch" > "$R/out/probe-lina.jsonl" 2> "$R/out/probe-lina.stderr"; echo "exit=$?" | tee "$R/out/probe-lina.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-lina.end.utc"
 ```
 
 ```sh
-head -c 600 "$R/out/probe-lina.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, mcp_servers}' "$R/out/probe-lina.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/probe-lina.jsonl"
+head -c 600 "$R/out/probe-lina.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, mcp_servers}' "$R/out/probe-lina.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/probe-lina.jsonl"
 ```
 
-**Only if step 7 needed the fallback**: run this instead of the probe command above, then run the check block above again.
-
-```sh
-cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-lina.start.utc" && HOME="$R/home" claude -p "$(cat "$R/out/probe-lina-prompt.txt")" --agent lina --output-format stream-json --verbose --permission-mode acceptEdits --allowedTools "Bash,Read,Write,Edit,Glob,Grep" --disallowedTools "WebFetch,WebSearch" > "$R/out/probe-lina.jsonl" 2> "$R/out/probe-lina.stderr"; echo "exit=$?" | tee "$R/out/probe-lina.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-lina.end.utc"
-```
-
-**Step 10 — after: `harness-user-state`, repo state, and the audit.** Paste the whole output. That ends the run.
+**Step 10 — after: `harness-user-state`, repo state, writes outside the folder, and the audit.** Paste the whole output. That ends the run.
 
 ```sh
 hstate() {
-  echo "== run HOME: $R/home"
-  for f in "$R/home/.claude.json" "$R/home/.claude/settings.json"; do
-    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -i designerpunk "$f") lines naming designerpunk"; grep -n -i designerpunk "$f" | cut -c1-200; else echo "${f}: absent"; fi
+  echo "== run store (CC): $R/home/.claude"
+  for f in "$R/home/.claude/.claude.json" "$R/home/.claude/settings.json"; do
+    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f") DesignerPunk-relevant lines"; grep -n -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f" | cut -c1-200; else echo "${f}: absent"; fi
   done
+  if [ -f "$R/home/.claude/.claude.json" ]; then echo "-- projects in the run store:"; jq -c '.projects // {} | to_entries[] | {dir: .key, trusted: .value.hasTrustDialogAccepted, enabled: .value.enabledMcpjsonServers}' "$R/home/.claude/.claude.json"; fi
+  if [ -f "$R/repo/.claude/settings.local.json" ]; then echo "-- repo .claude/settings.local.json:"; cat "$R/repo/.claude/settings.local.json"; else echo "-- repo .claude/settings.local.json: absent"; fi
+  echo "== run store (Kiro): $R/home/.kiro and $R/home/Library/Application Support/kiro-cli"
   for d in "$R/home/.kiro" "$R/home/Library/Application Support/kiro-cli"; do
-    if [ -d "$d" ]; then echo "${d}: present, files naming designerpunk:"; grep -r -l -i designerpunk "$d" 2>/dev/null; else echo "${d}: absent"; fi
+    if [ -d "$d" ]; then echo "${d}: present, $(find "$d" -type f | wc -l | tr -d " ") files; DesignerPunk-relevant:"; grep -r -l -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$d" 2>/dev/null | head -20; else echo "${d}: absent"; fi
   done
-  echo "== real user stores (counts only)"
-  for f in "$HOME/.claude.json" "$HOME/.claude/settings.json"; do
-    if [ -f "$f" ]; then echo "${f}: $(grep -c -i designerpunk "$f") lines naming designerpunk"; else echo "${f}: absent"; fi
-  done
-  for d in "$HOME/.kiro" "$HOME/Library/Application Support/kiro-cli"; do
-    if [ -d "$d" ]; then echo "${d}: $(grep -r -l -i designerpunk "$d" 2>/dev/null | wc -l | tr -d ' ') files naming designerpunk"; else echo "${d}: absent"; fi
-  done
+  if [ -f "$R/home/.kiro/settings/mcp.json" ]; then echo "-- run-store Kiro global MCP servers:"; jq -r '.mcpServers // {} | keys[]' "$R/home/.kiro/settings/mcp.json"; fi
+  echo "== real user stores (DesignerPunk-relevant only)"
+  if [ -f "$HOME/.claude.json" ]; then echo "$HOME/.claude.json: $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$HOME/.claude.json") DesignerPunk-relevant lines"; else echo "$HOME/.claude.json: absent"; fi
+  if [ -f "$HOME/.kiro/settings/mcp.json" ]; then echo "$HOME/.kiro/settings/mcp.json servers: $(jq -r '.mcpServers // {} | keys | join(", ")' "$HOME/.kiro/settings/mcp.json")"; else echo "$HOME/.kiro/settings/mcp.json: absent"; fi
+  echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
+  echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
 }
 hstate > "$R/out/harness-user-state-after.txt" 2>&1; cat "$R/out/harness-user-state-after.txt"
-find "$R/home" -type f -newer "$R/out/start.stamp" | sed "s|$R/home|HOME|" | sort > "$R/out/home-files.txt"; echo "files the run HOME gained: $(wc -l < "$R/out/home-files.txt" | tr -d " ")"; head -40 "$R/out/home-files.txt"
-cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"
+find "$R/home" -type f -newer "$R/out/start.stamp" | sed "s|$R/home|HOME|" | sort > "$R/out/home-files.txt"; echo "files the run store gained: $(wc -l < "$R/out/home-files.txt" | tr -d " ")"; grep -v -E "/(plugins|skills)/" "$R/out/home-files.txt" | head -40
+find /tmp/ -maxdepth 1 -newer "$R/out/start.stamp" 2>/dev/null | grep -v -E "^/tmp/$|^/tmp/dp-trio$" | tee "$R/out/tmp-writes.txt"
+cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"; git log --oneline --all | head -5
 grep -n -A3 '"node_modules/@3fn/core"' "$R/repo/package-lock.json" | head -6
-grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ")"
+grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (3-4 expected self-references from the package; see § 10)"
 date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
 
@@ -405,7 +410,7 @@ env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
 git -C "$DP" cat-file -e "$COMMIT:$PF" && echo "prompt found at commit"
 ```
 
-**Step 1 — run folder and fixture clone.** Expect: one `initial commit` line and the fixture's files. If it prints `STOP`, stop and tell the orchestrator.
+**Step 1 — run folder and fixture clone.** Expect: one `initial commit` line and the fixture's files at the top level (no `b-static-site/` folder). If it prints `STOP`, stop and tell the orchestrator.
 
 ```sh
 if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/repo" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/repo" --strip-components=4 && cd "$R/repo" && git init -q -b main && git add -A && git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit -q -m "initial commit" && git log --oneline && ls -A; fi
@@ -443,85 +448,117 @@ echo "cmd: ls ~/Library/Android/sdk"; ls ~/Library/Android/sdk; echo "exit=$?"
 } > "$R/out/host.txt" 2>&1; cat "$R/out/host.txt"
 ```
 
-**Step 5 — `harness-user-state` before.** Expect: the run `HOME` entries all `absent`. Paste the whole output.
+**Step 5 — `harness-user-state` before.** Expect: the run-store entries all `absent`. Paste the whole output.
 
 ```sh
 hstate() {
-  echo "== run HOME: $R/home"
-  for f in "$R/home/.claude.json" "$R/home/.claude/settings.json"; do
-    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -i designerpunk "$f") lines naming designerpunk"; grep -n -i designerpunk "$f" | cut -c1-200; else echo "${f}: absent"; fi
+  echo "== run store (CC): $R/home/.claude"
+  for f in "$R/home/.claude/.claude.json" "$R/home/.claude/settings.json"; do
+    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f") DesignerPunk-relevant lines"; grep -n -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f" | cut -c1-200; else echo "${f}: absent"; fi
   done
+  if [ -f "$R/home/.claude/.claude.json" ]; then echo "-- projects in the run store:"; jq -c '.projects // {} | to_entries[] | {dir: .key, trusted: .value.hasTrustDialogAccepted, enabled: .value.enabledMcpjsonServers}' "$R/home/.claude/.claude.json"; fi
+  if [ -f "$R/repo/.claude/settings.local.json" ]; then echo "-- repo .claude/settings.local.json:"; cat "$R/repo/.claude/settings.local.json"; else echo "-- repo .claude/settings.local.json: absent"; fi
+  echo "== run store (Kiro): $R/home/.kiro and $R/home/Library/Application Support/kiro-cli"
   for d in "$R/home/.kiro" "$R/home/Library/Application Support/kiro-cli"; do
-    if [ -d "$d" ]; then echo "${d}: present, files naming designerpunk:"; grep -r -l -i designerpunk "$d" 2>/dev/null; else echo "${d}: absent"; fi
+    if [ -d "$d" ]; then echo "${d}: present, $(find "$d" -type f | wc -l | tr -d " ") files; DesignerPunk-relevant:"; grep -r -l -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$d" 2>/dev/null | head -20; else echo "${d}: absent"; fi
   done
-  echo "== real user stores (counts only)"
-  for f in "$HOME/.claude.json" "$HOME/.claude/settings.json"; do
-    if [ -f "$f" ]; then echo "${f}: $(grep -c -i designerpunk "$f") lines naming designerpunk"; else echo "${f}: absent"; fi
-  done
-  for d in "$HOME/.kiro" "$HOME/Library/Application Support/kiro-cli"; do
-    if [ -d "$d" ]; then echo "${d}: $(grep -r -l -i designerpunk "$d" 2>/dev/null | wc -l | tr -d ' ') files naming designerpunk"; else echo "${d}: absent"; fi
-  done
+  if [ -f "$R/home/.kiro/settings/mcp.json" ]; then echo "-- run-store Kiro global MCP servers:"; jq -r '.mcpServers // {} | keys[]' "$R/home/.kiro/settings/mcp.json"; fi
+  echo "== real user stores (DesignerPunk-relevant only)"
+  if [ -f "$HOME/.claude.json" ]; then echo "$HOME/.claude.json: $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$HOME/.claude.json") DesignerPunk-relevant lines"; else echo "$HOME/.claude.json: absent"; fi
+  if [ -f "$HOME/.kiro/settings/mcp.json" ]; then echo "$HOME/.kiro/settings/mcp.json servers: $(jq -r '.mcpServers // {} | keys | join(", ")' "$HOME/.kiro/settings/mcp.json")"; else echo "$HOME/.kiro/settings/mcp.json: absent"; fi
+  echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
+  echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
 }
 hstate > "$R/out/harness-user-state-before.txt" 2>&1; cat "$R/out/harness-user-state-before.txt"
 ```
 
-**Step 6 — preflight, in an empty folder.** First check the login. If `whoami` says you are not logged in, run the second line and complete the login, then the third. In the chat, type no message: type `/quit`. Paste back: the `whoami` output, whether you had to log in and what it asked, and anything the chat showed before its prompt.
+**Step 6 — choose the Kiro isolation, then preflight.** Run 6a–6c in order and paste each output. You will end with exactly one `KENV=` line (6d), which later steps use. **If macOS asks about the keychain at any point, click Cancel — never reset — press Ctrl-C, and go to the 6d line for the real profile.**
+
+**6a — your real profile is logged in.** Expect your account. If it says you are not logged in, run `kiro-cli login` (your normal profile) and then 6a again.
 
 ```sh
-HOME="$R/home" kiro-cli whoami; echo "exit=$?"
+cd "$R/empty" && kiro-cli whoami; echo "exit=$?"; kiro-cli mcp list 2>&1 | head -20
+```
+
+**6b — try `KIRO_HOME` (keeps your real home and keychain).** Accept it if the first lines still show your account, the server list does **not** show `fetch`, and the last line shows files.
+
+```sh
+cd "$R/empty" && KIRO_HOME="$R/home/.kiro" kiro-cli whoami; echo "exit=$?"; KIRO_HOME="$R/home/.kiro" kiro-cli mcp list 2>&1 | head -20; ls -A "$R/home/.kiro" 2>&1 | head
+```
+
+**6c — only if 6b was not accepted: try a fresh `HOME`.** Accept it if it shows your account with no prompt of any kind, and the server list does not show `fetch`.
+
+```sh
+cd "$R/empty" && HOME="$R/home" kiro-cli whoami; echo "exit=$?"; HOME="$R/home" kiro-cli mcp list 2>&1 | head -20
+```
+
+**6d — set the choice.** Run exactly one of these three lines: the first if 6b was accepted, the second if 6c was, the third if neither (the run is then warm).
+
+```sh
+KENV="KIRO_HOME=$R/home/.kiro"; echo "isolation: $KENV (real HOME)" | tee "$R/out/isolation.txt"
 ```
 
 ```sh
-HOME="$R/home" kiro-cli login
+KENV="HOME=$R/home"; echo "isolation: $KENV" | tee "$R/out/isolation.txt"
 ```
 
 ```sh
-cd "$R/empty" && HOME="$R/home" script -q "$R/out/preflight.typescript" kiro-cli chat
+KENV=""; echo "isolation: none — real profile (warm run)" | tee "$R/out/isolation.txt"
+```
+
+**6e — preflight chat in the empty folder.** Type no message. Note anything it shows before its prompt, then type `/quit`. Paste back what it showed.
+
+```sh
+cd "$R/empty" && env $KENV script -q "$R/out/preflight.typescript" kiro-cli chat
 ```
 
 **Step 7 — birth (headless; the persona works alone).** The session's output scrolls past and is saved. Do not type into it. Press Ctrl-C only if it visibly repeats the same action three or more times (`operator-halt:loop`) or starts working outside `/tmp/dp-trio` (`operator-halt:unsafe`), and say so. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/birth.txt"`).
 
 ```sh
-cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && HOME="$R/home" kiro-cli chat --no-interactive --trust-all-tools --wrap never "$(cat "$R/out/birth-prompt.txt")" 2>&1 | tee "$R/out/birth.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/birth.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.end.utc"
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never "$(cat "$R/out/birth-prompt.txt")" 2>&1 | tee "$R/out/birth.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/birth.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.end.utc"
 ```
 
-**Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Kiro shows, word for word. Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp` and wait for the list, type `/agent list` and wait for the list, then type `/quit`. Paste back: each prompt word for word with your answer, and both lists.
+**Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Kiro shows, word for word. Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp` and wait for the list, type `/agent list` and wait for the list, then type `/quit`. Paste back each prompt word for word with your answer, and both lists.
 
 ```sh
-cd "$R/repo" && HOME="$R/home" script -q "$R/out/open.typescript" kiro-cli chat
+cd "$R/repo" && env $KENV script -q "$R/out/open.typescript" kiro-cli chat
 ```
 
-**Step 9 — probe: consumer-Sparky (headless).** Same rules as step 7. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/probe-sparky.txt"`).
+**Step 9 — probe: consumer-Sparky (headless).** 
+Same rules as step 7. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/probe-sparky.txt"`).
 
 ```sh
-cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-sparky.start.utc" && HOME="$R/home" kiro-cli chat --no-interactive --trust-all-tools --wrap never --agent sparky "$(cat "$R/out/probe-sparky-prompt.txt")" 2>&1 | tee "$R/out/probe-sparky.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/probe-sparky.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-sparky.end.utc"
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-sparky.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never --agent sparky "$(cat "$R/out/probe-sparky-prompt.txt")" 2>&1 | tee "$R/out/probe-sparky.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/probe-sparky.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-sparky.end.utc"
 ```
 
-**Step 10 — after: `harness-user-state`, repo state, and the audit.** Paste the whole output. That ends the run.
+**Step 10 — after: `harness-user-state`, repo state, writes outside the folder, and the audit.** Paste the whole output. That ends the run.
 
 ```sh
 hstate() {
-  echo "== run HOME: $R/home"
-  for f in "$R/home/.claude.json" "$R/home/.claude/settings.json"; do
-    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -i designerpunk "$f") lines naming designerpunk"; grep -n -i designerpunk "$f" | cut -c1-200; else echo "${f}: absent"; fi
+  echo "== run store (CC): $R/home/.claude"
+  for f in "$R/home/.claude/.claude.json" "$R/home/.claude/settings.json"; do
+    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f") DesignerPunk-relevant lines"; grep -n -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f" | cut -c1-200; else echo "${f}: absent"; fi
   done
+  if [ -f "$R/home/.claude/.claude.json" ]; then echo "-- projects in the run store:"; jq -c '.projects // {} | to_entries[] | {dir: .key, trusted: .value.hasTrustDialogAccepted, enabled: .value.enabledMcpjsonServers}' "$R/home/.claude/.claude.json"; fi
+  if [ -f "$R/repo/.claude/settings.local.json" ]; then echo "-- repo .claude/settings.local.json:"; cat "$R/repo/.claude/settings.local.json"; else echo "-- repo .claude/settings.local.json: absent"; fi
+  echo "== run store (Kiro): $R/home/.kiro and $R/home/Library/Application Support/kiro-cli"
   for d in "$R/home/.kiro" "$R/home/Library/Application Support/kiro-cli"; do
-    if [ -d "$d" ]; then echo "${d}: present, files naming designerpunk:"; grep -r -l -i designerpunk "$d" 2>/dev/null; else echo "${d}: absent"; fi
+    if [ -d "$d" ]; then echo "${d}: present, $(find "$d" -type f | wc -l | tr -d " ") files; DesignerPunk-relevant:"; grep -r -l -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$d" 2>/dev/null | head -20; else echo "${d}: absent"; fi
   done
-  echo "== real user stores (counts only)"
-  for f in "$HOME/.claude.json" "$HOME/.claude/settings.json"; do
-    if [ -f "$f" ]; then echo "${f}: $(grep -c -i designerpunk "$f") lines naming designerpunk"; else echo "${f}: absent"; fi
-  done
-  for d in "$HOME/.kiro" "$HOME/Library/Application Support/kiro-cli"; do
-    if [ -d "$d" ]; then echo "${d}: $(grep -r -l -i designerpunk "$d" 2>/dev/null | wc -l | tr -d ' ') files naming designerpunk"; else echo "${d}: absent"; fi
-  done
+  if [ -f "$R/home/.kiro/settings/mcp.json" ]; then echo "-- run-store Kiro global MCP servers:"; jq -r '.mcpServers // {} | keys[]' "$R/home/.kiro/settings/mcp.json"; fi
+  echo "== real user stores (DesignerPunk-relevant only)"
+  if [ -f "$HOME/.claude.json" ]; then echo "$HOME/.claude.json: $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$HOME/.claude.json") DesignerPunk-relevant lines"; else echo "$HOME/.claude.json: absent"; fi
+  if [ -f "$HOME/.kiro/settings/mcp.json" ]; then echo "$HOME/.kiro/settings/mcp.json servers: $(jq -r '.mcpServers // {} | keys | join(", ")' "$HOME/.kiro/settings/mcp.json")"; else echo "$HOME/.kiro/settings/mcp.json: absent"; fi
+  echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
+  echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
 }
 hstate > "$R/out/harness-user-state-after.txt" 2>&1; cat "$R/out/harness-user-state-after.txt"
-find "$R/home" -type f -newer "$R/out/start.stamp" | sed "s|$R/home|HOME|" | sort > "$R/out/home-files.txt"; echo "files the run HOME gained: $(wc -l < "$R/out/home-files.txt" | tr -d " ")"; head -40 "$R/out/home-files.txt"
-cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"
+find "$R/home" -type f -newer "$R/out/start.stamp" | sed "s|$R/home|HOME|" | sort > "$R/out/home-files.txt"; echo "files the run store gained: $(wc -l < "$R/out/home-files.txt" | tr -d " ")"; grep -v -E "/(plugins|skills)/" "$R/out/home-files.txt" | head -40
+find /tmp/ -maxdepth 1 -newer "$R/out/start.stamp" 2>/dev/null | grep -v -E "^/tmp/$|^/tmp/dp-trio$" | tee "$R/out/tmp-writes.txt"
+cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"; git log --oneline --all | head -5
 grep -n -A3 '"node_modules/@3fn/core"' "$R/repo/package-lock.json" | head -6
-HOME="$R/home" kiro-cli mcp list 2>&1 | tee "$R/out/kiro-mcp-list.txt"
-grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ")"
+env $KENV kiro-cli mcp list 2>&1 | tee "$R/out/kiro-mcp-list.txt"
+grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (3-4 expected self-references from the package; see § 10)"
 date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
 
@@ -544,7 +581,7 @@ env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
 git -C "$DP" cat-file -e "$COMMIT:$PF" && echo "prompt found at commit"
 ```
 
-**Step 1 — run folder and fixture clone.** Expect: one `initial commit` line and the fixture's files. If it prints `STOP`, stop and tell the orchestrator.
+**Step 1 — run folder and fixture clone.** Expect: one `initial commit` line and the fixture's files at the top level (no `c-near-empty/` folder). If it prints `STOP`, stop and tell the orchestrator.
 
 ```sh
 if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/repo" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/repo" --strip-components=4 && cd "$R/repo" && git init -q -b main && git add -A && git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit -q -m "initial commit" && git log --oneline && ls -A; fi
@@ -582,104 +619,137 @@ echo "cmd: ls ~/Library/Android/sdk"; ls ~/Library/Android/sdk; echo "exit=$?"
 } > "$R/out/host.txt" 2>&1; cat "$R/out/host.txt"
 ```
 
-**Step 5 — `harness-user-state` before.** Expect: the run `HOME` entries all `absent`. Paste the whole output.
+**Step 5 — `harness-user-state` before.** Expect: the run-store entries all `absent`. Paste the whole output.
 
 ```sh
 hstate() {
-  echo "== run HOME: $R/home"
-  for f in "$R/home/.claude.json" "$R/home/.claude/settings.json"; do
-    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -i designerpunk "$f") lines naming designerpunk"; grep -n -i designerpunk "$f" | cut -c1-200; else echo "${f}: absent"; fi
+  echo "== run store (CC): $R/home/.claude"
+  for f in "$R/home/.claude/.claude.json" "$R/home/.claude/settings.json"; do
+    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f") DesignerPunk-relevant lines"; grep -n -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f" | cut -c1-200; else echo "${f}: absent"; fi
   done
+  if [ -f "$R/home/.claude/.claude.json" ]; then echo "-- projects in the run store:"; jq -c '.projects // {} | to_entries[] | {dir: .key, trusted: .value.hasTrustDialogAccepted, enabled: .value.enabledMcpjsonServers}' "$R/home/.claude/.claude.json"; fi
+  if [ -f "$R/repo/.claude/settings.local.json" ]; then echo "-- repo .claude/settings.local.json:"; cat "$R/repo/.claude/settings.local.json"; else echo "-- repo .claude/settings.local.json: absent"; fi
+  echo "== run store (Kiro): $R/home/.kiro and $R/home/Library/Application Support/kiro-cli"
   for d in "$R/home/.kiro" "$R/home/Library/Application Support/kiro-cli"; do
-    if [ -d "$d" ]; then echo "${d}: present, files naming designerpunk:"; grep -r -l -i designerpunk "$d" 2>/dev/null; else echo "${d}: absent"; fi
+    if [ -d "$d" ]; then echo "${d}: present, $(find "$d" -type f | wc -l | tr -d " ") files; DesignerPunk-relevant:"; grep -r -l -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$d" 2>/dev/null | head -20; else echo "${d}: absent"; fi
   done
-  echo "== real user stores (counts only)"
-  for f in "$HOME/.claude.json" "$HOME/.claude/settings.json"; do
-    if [ -f "$f" ]; then echo "${f}: $(grep -c -i designerpunk "$f") lines naming designerpunk"; else echo "${f}: absent"; fi
-  done
-  for d in "$HOME/.kiro" "$HOME/Library/Application Support/kiro-cli"; do
-    if [ -d "$d" ]; then echo "${d}: $(grep -r -l -i designerpunk "$d" 2>/dev/null | wc -l | tr -d ' ') files naming designerpunk"; else echo "${d}: absent"; fi
-  done
+  if [ -f "$R/home/.kiro/settings/mcp.json" ]; then echo "-- run-store Kiro global MCP servers:"; jq -r '.mcpServers // {} | keys[]' "$R/home/.kiro/settings/mcp.json"; fi
+  echo "== real user stores (DesignerPunk-relevant only)"
+  if [ -f "$HOME/.claude.json" ]; then echo "$HOME/.claude.json: $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$HOME/.claude.json") DesignerPunk-relevant lines"; else echo "$HOME/.claude.json: absent"; fi
+  if [ -f "$HOME/.kiro/settings/mcp.json" ]; then echo "$HOME/.kiro/settings/mcp.json servers: $(jq -r '.mcpServers // {} | keys | join(", ")' "$HOME/.kiro/settings/mcp.json")"; else echo "$HOME/.kiro/settings/mcp.json: absent"; fi
+  echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
+  echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
 }
 hstate > "$R/out/harness-user-state-before.txt" 2>&1; cat "$R/out/harness-user-state-before.txt"
 ```
 
-**Step 6 — preflight, in an empty folder.** First check the login. If `whoami` says you are not logged in, run the second line and complete the login, then the third. In the chat, type no message: type `/quit`. Paste back: the `whoami` output, whether you had to log in and what it asked, and anything the chat showed before its prompt.
+**Step 6 — choose the Kiro isolation, then preflight.** Run 6a–6c in order and paste each output. You will end with exactly one `KENV=` line (6d), which later steps use. **If macOS asks about the keychain at any point, click Cancel — never reset — press Ctrl-C, and go to the 6d line for the real profile.**
+
+**6a — your real profile is logged in.** Expect your account. If it says you are not logged in, run `kiro-cli login` (your normal profile) and then 6a again.
 
 ```sh
-HOME="$R/home" kiro-cli whoami; echo "exit=$?"
+cd "$R/empty" && kiro-cli whoami; echo "exit=$?"; kiro-cli mcp list 2>&1 | head -20
+```
+
+**6b — try `KIRO_HOME` (keeps your real home and keychain).** Accept it if the first lines still show your account, the server list does **not** show `fetch`, and the last line shows files.
+
+```sh
+cd "$R/empty" && KIRO_HOME="$R/home/.kiro" kiro-cli whoami; echo "exit=$?"; KIRO_HOME="$R/home/.kiro" kiro-cli mcp list 2>&1 | head -20; ls -A "$R/home/.kiro" 2>&1 | head
+```
+
+**6c — only if 6b was not accepted: try a fresh `HOME`.** Accept it if it shows your account with no prompt of any kind, and the server list does not show `fetch`.
+
+```sh
+cd "$R/empty" && HOME="$R/home" kiro-cli whoami; echo "exit=$?"; HOME="$R/home" kiro-cli mcp list 2>&1 | head -20
+```
+
+**6d — set the choice.** Run exactly one of these three lines: the first if 6b was accepted, the second if 6c was, the third if neither (the run is then warm).
+
+```sh
+KENV="KIRO_HOME=$R/home/.kiro"; echo "isolation: $KENV (real HOME)" | tee "$R/out/isolation.txt"
 ```
 
 ```sh
-HOME="$R/home" kiro-cli login
+KENV="HOME=$R/home"; echo "isolation: $KENV" | tee "$R/out/isolation.txt"
 ```
 
 ```sh
-cd "$R/empty" && HOME="$R/home" script -q "$R/out/preflight.typescript" kiro-cli chat
+KENV=""; echo "isolation: none — real profile (warm run)" | tee "$R/out/isolation.txt"
+```
+
+**6e — preflight chat in the empty folder.** Type no message. Note anything it shows before its prompt, then type `/quit`. Paste back what it showed.
+
+```sh
+cd "$R/empty" && env $KENV script -q "$R/out/preflight.typescript" kiro-cli chat
 ```
 
 **Step 7 — birth (headless; the persona works alone).** The session's output scrolls past and is saved. Do not type into it. Press Ctrl-C only if it visibly repeats the same action three or more times (`operator-halt:loop`) or starts working outside `/tmp/dp-trio` (`operator-halt:unsafe`), and say so. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/birth.txt"`).
 
 ```sh
-cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && HOME="$R/home" kiro-cli chat --no-interactive --trust-all-tools --wrap never "$(cat "$R/out/birth-prompt.txt")" 2>&1 | tee "$R/out/birth.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/birth.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.end.utc"
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never "$(cat "$R/out/birth-prompt.txt")" 2>&1 | tee "$R/out/birth.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/birth.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.end.utc"
 ```
 
-**Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Kiro shows, word for word. Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp` and wait for the list, type `/agent list` and wait for the list, then type `/quit`. Paste back: each prompt word for word with your answer, and both lists.
+**Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Kiro shows, word for word. Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp` and wait for the list, type `/agent list` and wait for the list, then type `/quit`. Paste back each prompt word for word with your answer, and both lists.
 
 ```sh
-cd "$R/repo" && HOME="$R/home" script -q "$R/out/open.typescript" kiro-cli chat
+cd "$R/repo" && env $KENV script -q "$R/out/open.typescript" kiro-cli chat
 ```
 
-**Step 9 — probe: consumer-Leonardo (headless).** Same rules as step 7. If Kiro says the agent does not exist, that is the result: paste it and go on to step 10. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/probe-leonardo.txt"`).
+**Step 9 — probe: consumer-Leonardo (headless).** 
+Same rules as step 7. If Kiro says the agent does not exist, that is the result: paste it and go on to step 10. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/probe-leonardo.txt"`).
 
 ```sh
-cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-leonardo.start.utc" && HOME="$R/home" kiro-cli chat --no-interactive --trust-all-tools --wrap never --agent leonardo "$(cat "$R/out/probe-leonardo-prompt.txt")" 2>&1 | tee "$R/out/probe-leonardo.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/probe-leonardo.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-leonardo.end.utc"
+cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-leonardo.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never --agent leonardo "$(cat "$R/out/probe-leonardo-prompt.txt")" 2>&1 | tee "$R/out/probe-leonardo.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/probe-leonardo.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-leonardo.end.utc"
 ```
 
-**Step 10 — after: `harness-user-state`, repo state, and the audit.** Paste the whole output. That ends the run.
+**Step 10 — after: `harness-user-state`, repo state, writes outside the folder, and the audit.** Paste the whole output. That ends the run.
 
 ```sh
 hstate() {
-  echo "== run HOME: $R/home"
-  for f in "$R/home/.claude.json" "$R/home/.claude/settings.json"; do
-    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -i designerpunk "$f") lines naming designerpunk"; grep -n -i designerpunk "$f" | cut -c1-200; else echo "${f}: absent"; fi
+  echo "== run store (CC): $R/home/.claude"
+  for f in "$R/home/.claude/.claude.json" "$R/home/.claude/settings.json"; do
+    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f") DesignerPunk-relevant lines"; grep -n -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f" | cut -c1-200; else echo "${f}: absent"; fi
   done
+  if [ -f "$R/home/.claude/.claude.json" ]; then echo "-- projects in the run store:"; jq -c '.projects // {} | to_entries[] | {dir: .key, trusted: .value.hasTrustDialogAccepted, enabled: .value.enabledMcpjsonServers}' "$R/home/.claude/.claude.json"; fi
+  if [ -f "$R/repo/.claude/settings.local.json" ]; then echo "-- repo .claude/settings.local.json:"; cat "$R/repo/.claude/settings.local.json"; else echo "-- repo .claude/settings.local.json: absent"; fi
+  echo "== run store (Kiro): $R/home/.kiro and $R/home/Library/Application Support/kiro-cli"
   for d in "$R/home/.kiro" "$R/home/Library/Application Support/kiro-cli"; do
-    if [ -d "$d" ]; then echo "${d}: present, files naming designerpunk:"; grep -r -l -i designerpunk "$d" 2>/dev/null; else echo "${d}: absent"; fi
+    if [ -d "$d" ]; then echo "${d}: present, $(find "$d" -type f | wc -l | tr -d " ") files; DesignerPunk-relevant:"; grep -r -l -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$d" 2>/dev/null | head -20; else echo "${d}: absent"; fi
   done
-  echo "== real user stores (counts only)"
-  for f in "$HOME/.claude.json" "$HOME/.claude/settings.json"; do
-    if [ -f "$f" ]; then echo "${f}: $(grep -c -i designerpunk "$f") lines naming designerpunk"; else echo "${f}: absent"; fi
-  done
-  for d in "$HOME/.kiro" "$HOME/Library/Application Support/kiro-cli"; do
-    if [ -d "$d" ]; then echo "${d}: $(grep -r -l -i designerpunk "$d" 2>/dev/null | wc -l | tr -d ' ') files naming designerpunk"; else echo "${d}: absent"; fi
-  done
+  if [ -f "$R/home/.kiro/settings/mcp.json" ]; then echo "-- run-store Kiro global MCP servers:"; jq -r '.mcpServers // {} | keys[]' "$R/home/.kiro/settings/mcp.json"; fi
+  echo "== real user stores (DesignerPunk-relevant only)"
+  if [ -f "$HOME/.claude.json" ]; then echo "$HOME/.claude.json: $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$HOME/.claude.json") DesignerPunk-relevant lines"; else echo "$HOME/.claude.json: absent"; fi
+  if [ -f "$HOME/.kiro/settings/mcp.json" ]; then echo "$HOME/.kiro/settings/mcp.json servers: $(jq -r '.mcpServers // {} | keys | join(", ")' "$HOME/.kiro/settings/mcp.json")"; else echo "$HOME/.kiro/settings/mcp.json: absent"; fi
+  echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
+  echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
 }
 hstate > "$R/out/harness-user-state-after.txt" 2>&1; cat "$R/out/harness-user-state-after.txt"
-find "$R/home" -type f -newer "$R/out/start.stamp" | sed "s|$R/home|HOME|" | sort > "$R/out/home-files.txt"; echo "files the run HOME gained: $(wc -l < "$R/out/home-files.txt" | tr -d " ")"; head -40 "$R/out/home-files.txt"
-cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"
+find "$R/home" -type f -newer "$R/out/start.stamp" | sed "s|$R/home|HOME|" | sort > "$R/out/home-files.txt"; echo "files the run store gained: $(wc -l < "$R/out/home-files.txt" | tr -d " ")"; grep -v -E "/(plugins|skills)/" "$R/out/home-files.txt" | head -40
+find /tmp/ -maxdepth 1 -newer "$R/out/start.stamp" 2>/dev/null | grep -v -E "^/tmp/$|^/tmp/dp-trio$" | tee "$R/out/tmp-writes.txt"
+cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"; git log --oneline --all | head -5
 grep -n -A3 '"node_modules/@3fn/core"' "$R/repo/package-lock.json" | head -6
-HOME="$R/home" kiro-cli mcp list 2>&1 | tee "$R/out/kiro-mcp-list.txt"
-grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ")"
+env $KENV kiro-cli mcp list 2>&1 | tee "$R/out/kiro-mcp-list.txt"
+grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (3-4 expected self-references from the package; see § 10)"
 date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
 
 **What to paste back for run `trio-3-pm`, in one message if that is easier**: the output of steps 0–10; every prompt you answered in steps 6 and 8, word for word, with your answer; anything you typed that the steps did not tell you to type, and why; any Ctrl-C and why. Then: "`trio-3-pm` done; files in `/tmp/dp-trio/trio-3-pm/out`."
 
-## 12. Mechanics not verified before the first run, and how each outcome is recorded
+## 12. Mechanics — what Run 1 settled, and what is still unverified
 
-None of these could be checked without launching a harness session, and none was launched while this protocol was written.
-
-| Mechanic | If it goes one way | If it goes the other |
+| Mechanic | Status | How it is recorded |
 |---|---|---|
-| A fresh `HOME` finds credentials without a login (CC: macOS keychain; kiro-cli: unknown store) | preflight shows no login; re-login cost `none` | preflight records the login asked for, verbatim, as re-login cost; a session that could not start is `auth-required` |
-| kiro-cli keeps user state under `$HOME` | the run `HOME` gains Kiro files (step 10's listing); the state can be clean | nothing appears under the run `HOME`: the Kiro run is **warm**, its real-store entries are recorded verbatim, and its `cold-observation` is `not observed cold — state not clean` |
-| `claude -p` accepts `--max-turns` (not in `--help` at 2.1.299) | the result's `subtype` shows whether it stopped there | the launch is rejected: `harness-error:<rejection>`, then the fallback run without it; the budget is observed, like Kiro's |
-| A headless session shows MCP approval prompts | not relied on: `open` is interactive | — |
-| `--agent <name>` selects the born repo's generated agent (CC `.claude/agents/<name>.md`; Kiro `.kiro/agents/<name>.json`) | the probe's init event (CC) or the Kiro output names the agent | `harness-error:<what>`, and the probe is `not exercised` with that reason |
-| The kiro-cli desktop app, if running under the real user, interferes with a session under another `HOME` | no effect seen | recorded as a finding outside the axes, with the error |
+| A fresh `HOME` for Claude Code | **Settled (Run 1): unsafe on macOS.** Login loop and a keychain-reset offer; `auth-required`. Replaced by `CLAUDE_CONFIG_DIR` (§ 5.1) | n/a for later runs; Run 1's record carries both attempts |
+| `CLAUDE_CONFIG_DIR` gives an empty CC store and keeps the login | **Settled (Run 1)**: the store started empty ("configuration file not found"), and the login needed a browser sign-in but no keychain prompt. Account-level connector, skills and plugin caches still arrive | re-login cost and account-level state in F7 |
+| `claude -p --max-turns` | **Settled (Run 1, 2.1.300): accepted, not enforced** (41/40, 52/30, both `completed`) | budget observed; overrun is a finding |
+| `--agent <name>` selects the born repo's agent (CC) | **Settled (Run 1)**: the run store's session logs record `"agentSetting":"ada"` / `"lina"`; the init event does not name it | F18 cites the session log |
+| Where CC records project MCP enablement | **Settled (Run 1, 2.1.300)**: the repo's ignored `.claude/settings.local.json`, not the user store | F7, F17 |
+| A headless session shows MCP approval prompts | Not relied on: `open` is interactive. Run 1: the headless birth printed only the stderr notice that untrusted-workspace permissions were ignored | F15, F17 |
+| kiro-cli isolation (`KIRO_HOME`, fresh `HOME`) and where it keeps its login | **Unverified.** Decided at Kiro step 6 by observation (§ 5.1) | `out/isolation.txt`; F7 |
+| `--agent <name>` selects the born repo's agent (Kiro) | **Unverified** | the Kiro output names the agent, or `harness-error:<what>` and probe `not exercised` |
+| The kiro-cli desktop app, if running under the real user, interferes with an isolated session | **Unverified** | a finding outside the axes, with the error |
 
-Each outcome that turns out differently from this protocol's assumption is also appended to the Task 25 Instruments block's `## Found later` as a `misfit`.
+Each outcome that differs from this protocol's assumption is also appended to the Task 25 Instruments block's `## Found later` as a `misfit`.
 
 ## 13. Writing the record
 
