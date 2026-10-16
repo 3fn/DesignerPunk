@@ -44,3 +44,7 @@ This obligation was due before release 3's RELEASE phase 1. It lapsed: no issue 
 ## Duration
 
 The grant expires at the fixing PR's merge. If row 6 lands in a separate Thurgood PR, that PR cites this record and its two paths, and the grant over those two paths expires at its merge.
+
+## Outcome (2026-10-16, walk write) — RESOLVED
+
+**Rows 1–4 and 6 merged in #373** (`7f8e06530`: `--expect-sha` required and a full 40-character match, the publish-path floor, the 10d nested-roots hint, the `floor-closure.json` regeneration check, and the `check:drift` `@<scope>:registry` pattern). **Row 5 merged in #374** (`1e02fa4f4`) after the ordering condition above was met by O-1's fix (#367): **Peter ruled (a) on 2026-10-16** — a path-boundary match for the machine-path scan, with no exception list: a needle hits only at a path boundary, so vendored text such as `abc.com/home/{pathArg}` no longer hits, and the accepted misses (a machine path glued to a word character; paths inside binaries) are recorded in #374's body. The law text for the widened scan landed in #376. The grant expired at #373's merge and (row 5) at #374's merge. The "candidate, not granted" deterministic-pack item stays unopened. **Status: RESOLVED** — the Status line above is left as written; this outcome supersedes it. Per `.kiro/issues/README.md` rule 5 this record belongs in `archive/` (`git mv`, content unchanged), in the PR that closes it.

@@ -38,6 +38,7 @@ Rulings item 10: declared foreign trees. A root `.gitattributes` with a `dp-fore
 
 - Validation: `npm run audit:coverage-map` green on the PR head; `npm run test:scripts`.
 - Expires at this PR's merge.
+- *Correction (2026-10-16, found at #371)*: `tools/agent-generator/__tests__/coverage-map.test.ts` runs under `npm run test:agent-generator` (`jest --config tools/agent-generator/jest.config.js`), **not** `npm run test:scripts`; the validation line above names the wrong script for that file. The original line is left as written.
 
 ---
 
@@ -48,3 +49,15 @@ Rulings item 10: declared foreign trees. A root `.gitattributes` with a `dp-fore
 - **C-1** (Lina, Button-CTA contract amendment): her charter scope (`src/components/**`); the Component-Family-Button hunk under the carve-out, Peter-merged.
 - **V-PROF** (Thurgood, consumer overlays for Leonardo and Sparky + regeneration): `canonical/**` under the carve-out, Peter-merged; two re-sign acts under the signing-act chain.
 - **The records PR** (Thurgood, errata CL-2/3/4/6, OB-1 line, DO-2 line, hermetic follow-ups status line): `.kiro/specs/**` and `.kiro/issues/**` lines — the issues-dir write-scope gap (`.kiro/issues/2026-10-02-issues-dir-write-scope-gap-and-grant-advisories.md`) still applies; the orchestrator writes the issue-file lines if the steward's charter does not reach them.
+
+---
+
+## Outcome — all three grants EXPIRED (2026-10-16, walk write)
+
+Each grant expired at the merge of its own fixing PR, as its section says:
+
+- **§ 1 V-CLI-min** — EXPIRED at the merge of **#372** (`1423c15a6`).
+- **§ 2 V-DOC** — EXPIRED at the merge of **#375** (`ecf281dbd`).
+- **§ 3 CL-1 class fix** — EXPIRED at the merge of **#371** (`bab9a83fe`).
+
+The "Not in this record" items have since merged under their own vehicles: O-1 #367; C-1 #369; the records PR #370; PR A (publish-path rows 1–4 and 6) #373 and row 5 #374; V-PROF #378. The diff-against-the-list check for each grant PR belongs to the RELEASE claims pass. Record status: all grants expired; the record is eligible for `archive/` under `.kiro/issues/README.md` rule 5 once the orchestrator moves it with the walk PR (or at the next health-check walk).
