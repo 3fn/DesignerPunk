@@ -134,7 +134,7 @@ This release is ready for building web products, with the agent layer for Claude
 2. `npx designerpunk init --target=<cc|kiro> --name <name> --abbreviation <abbr>` — `init` is the birth event — runs once per design system, ever
 3. `npx designerpunk generate` — `generate` is the pipeline — run on every token change
 4. Fill in your personal note — or, after the restart, ask your agent to walk you through it.
-5. Restart your agent session (approve DesignerPunk's MCP servers if asked).
+5. Restart your agent session. Claude Code then asks you to trust the folder and to enable DesignerPunk's three MCP servers: accept both. Kiro asks nothing.
 
 [Install guide](docs/consumer/INSTALL.md)
 
