@@ -580,7 +580,7 @@
     {
       "lines": [
         328,
-        328
+        330
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:writeScope"

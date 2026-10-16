@@ -524,7 +524,7 @@
     {
       "lines": [
         296,
-        296
+        298
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:writeScope"

@@ -1182,31 +1182,31 @@
     {
       "lines": [
         475,
-        477
+        479
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        478,
-        481
+        480,
+        483
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:preflight"
     },
     {
       "lines": [
-        482,
-        482
+        484,
+        484
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:preflight[git status --porcelain]"
     },
     {
       "lines": [
-        483,
-        483
+        485,
+        485
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:preflight"

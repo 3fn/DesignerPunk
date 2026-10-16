@@ -14,6 +14,7 @@
 
 import { canonicalStringify } from '../canonical-json';
 import { KiroAdapter } from '../adapters/kiro';
+import { CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE } from '../adapters/cc';
 import type { AdapterContext, FieldDispositionTable, SharedCatalogMember } from '../adapters/index';
 import type { AlwaysSetMember } from '../compose';
 import type { ResolvedAgent } from '../pipeline';
@@ -373,6 +374,10 @@ describe('KiroAdapter.emitAgent — prompt body content', () => {
     expect(content).toContain('.kiro/specs/**');
     expect(content).not.toContain('PreToolUse');
     expect(content).not.toContain('isolation: worktree');
+    // Steward lane unchanged by the release-4 consumer write-scope exception (2026-10-16); the
+    // consumer-lane rendering is pinned in consumer-profile.adapters.test.ts.
+    expect(content).toContain('Treat paths outside this set as read-only.');
+    expect(content).not.toContain(CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE);
   });
 
   it('never renders the dropped-from-prompt keyboardShortcut value in the prompt body', () => {

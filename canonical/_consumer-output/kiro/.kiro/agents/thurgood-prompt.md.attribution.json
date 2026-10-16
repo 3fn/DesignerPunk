@@ -628,7 +628,7 @@
     {
       "lines": [
         386,
-        386
+        388
       ],
       "op": "render",
       "source": "canonical/agents/thurgood.md#frontmatter:writeScope"

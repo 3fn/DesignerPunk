@@ -524,7 +524,7 @@
     {
       "lines": [
         211,
-        211
+        213
       ],
       "op": "render",
       "source": "canonical/agents/ada.md#frontmatter:writeScope"

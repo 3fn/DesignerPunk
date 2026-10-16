@@ -794,31 +794,31 @@
     {
       "lines": [
         553,
-        555
+        557
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        556,
-        559
+        558,
+        561
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:preflight"
     },
     {
       "lines": [
-        560,
-        560
+        562,
+        562
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:preflight[git status --porcelain]"
     },
     {
       "lines": [
-        561,
-        561
+        563,
+        563
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:preflight"

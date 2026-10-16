@@ -812,7 +812,7 @@
     {
       "lines": [
         362,
-        362
+        364
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:writeScope"

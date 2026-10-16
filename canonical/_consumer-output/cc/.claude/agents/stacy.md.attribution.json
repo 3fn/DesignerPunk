@@ -879,31 +879,31 @@
     {
       "lines": [
         802,
-        804
+        806
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        805,
-        808
+        807,
+        810
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#frontmatter:preflight"
     },
     {
       "lines": [
-        809,
-        809
+        811,
+        811
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#frontmatter:preflight[git status --porcelain]"
     },
     {
       "lines": [
-        810,
-        810
+        812,
+        812
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#frontmatter:preflight"

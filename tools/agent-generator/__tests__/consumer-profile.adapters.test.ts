@@ -13,9 +13,10 @@
  * need the docs MCP corpus session).
  */
 
+import * as fs from 'fs';
 import * as path from 'path';
 import { adaptersFor, registeredAdapterFactories, type AdapterContext, type FieldDispositionTable, type TargetAdapter } from '../adapters/index';
-import { CcAdapter } from '../adapters/cc';
+import { CcAdapter, CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE } from '../adapters/cc';
 import { renderRunContextAnnotation } from '../render';
 import { KiroAdapter } from '../adapters/kiro';
 import { loadConsumerProfile, parseConsumerProfile, ConsumerProfileError } from '../consumer-profile';
@@ -222,6 +223,88 @@ describe.each(ADAPTERS)('%s adapter — the consumer path routes through emitSpa
     expect(() => prompt(make(), baseCtx({ profile: 'consumer', consumer: { dispositions: {} } }))).toThrow(
       'emitSpans: the consumer profile requires dispositions — every unit and entry carries an explicit row.'
     );
+  });
+});
+
+/** The `## Write scope` section of a rendered prose artifact (heading through the next heading / EOF). */
+function writeScopeSection(content: string): string {
+  const start = content.indexOf('## Write scope\n');
+  if (start < 0) throw new Error('no ## Write scope section');
+  const next = content.indexOf('\n## ', start + 1);
+  return next < 0 ? content.slice(start) : content.slice(start, next + 1);
+}
+
+/**
+ * Release-4 consumer write-scope exception (2026-10-16). In a consumer's repo the declared scope is
+ * the PRE-APPROVED set; the governing prose itself states the exception (ask the human lead, write
+ * only after they confirm in this session) and carries a target-true platform clause. An
+ * "only under … read-only" sentence is a hard brake the agent obeys even over an in-session grant
+ * (six Kiro runs, Peter, 2026-10-16), so it must not survive in the consumer lane. The steward lane
+ * is byte-identical to what it was.
+ */
+const CONSUMER_WRITE_SCOPE_INTRO = 'Write scope (behavioral): these paths are pre-approved — you may create or modify files under them:';
+const PLATFORM_CLAUSE: Record<string, string> = {
+  cc: 'Claude Code may not show a permission prompt for such a write, so their confirmation is the check.',
+  kiro: 'Kiro may also show its own permission prompt for such a write.',
+};
+const STEWARD_NOTE = 'Write scope (behavioral): you may create or modify files only under `a/**`, `b/**`. Treat paths outside this set as read-only.';
+const FACET_7 =
+  'CC has no declarative per-agent write-path field (cc-agent-model.md facet 7: path rules are session-global, not per-agent); ' +
+  'the documented enforcement options are a per-agent `PreToolUse` hook rejecting out-of-scope `Edit`/`Write` paths, or ' +
+  '`isolation: worktree` — named here as the enforcement mechanism, not emitted as a declarative scope.';
+const STEWARD_SECTION: Record<string, string> = {
+  cc: `## Write scope\n\n${STEWARD_NOTE} ${FACET_7}\n\n`,
+  kiro: `## Write scope\n\n${STEWARD_NOTE}\n\n`,
+};
+const CONSUMER_SECTION: Record<string, string> = {
+  cc: `## Write scope\n\n${CONSUMER_WRITE_SCOPE_INTRO}\n\n- \`a/**\`\n- \`b/**\`\n\n${CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE} ${PLATFORM_CLAUSE.cc}\n\n${FACET_7}\n\n`,
+  kiro: `## Write scope\n\n${CONSUMER_WRITE_SCOPE_INTRO}\n\n- \`a/**\`\n- \`b/**\`\n\n${CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE} ${PLATFORM_CLAUSE.kiro}\n\n`,
+};
+
+describe.each(ADAPTERS)('%s adapter — the consumer write-scope exception (release 4, 2026-10-16)', (name, make) => {
+  it('the exception sentence names no version and grants nothing by itself', () => {
+    expect(CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE).toBe(
+      'Paths outside this set are not pre-approved: ask your human lead before writing there, and write there only after they confirm in this session.'
+    );
+    expect(CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE).not.toMatch(/\d+\.\d+/);
+  });
+
+  it('the consumer lane renders the pre-approved set, the exception sentence and the target-true platform clause — exactly', () => {
+    const out = consumerPrompt(make(), rows());
+    const section = writeScopeSection(out.content);
+    expect(section).toBe(CONSUMER_SECTION[name]);
+    expect(section).not.toContain('read-only');
+    expect(section).not.toContain('only under');
+    // The other target's platform clause never leaks in.
+    for (const [other, clause] of Object.entries(PLATFORM_CLAUSE)) if (other !== name) expect(section).not.toContain(clause);
+  });
+
+  it('the steward lane is byte-identical (one-sentence container note) and carries no exception sentence', () => {
+    const steward = prompt(make(), baseCtx());
+    expect(writeScopeSection(steward.content)).toBe(STEWARD_SECTION[name]);
+    expect(steward.content).not.toContain(CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE);
+    expect(steward.content).not.toContain(CONSUMER_WRITE_SCOPE_INTRO);
+  });
+});
+
+describe('the consumer write-scope exception in the committed renderings (release 4, 2026-10-16)', () => {
+  const AGENTS = ['ada', 'data', 'kenya', 'leonardo', 'lina', 'sparky', 'stacy', 'thurgood'];
+  const read = (rel: string): string => fs.readFileSync(path.join(REPO_ROOT, rel), 'utf8');
+  const TARGETS: [string, (a: string) => string, (a: string) => string][] = [
+    ['cc', (a) => `canonical/_consumer-output/cc/.claude/agents/${a}.md`, (a) => `.claude/agents/${a}.md`],
+    ['kiro', (a) => `canonical/_consumer-output/kiro/.kiro/agents/${a}-prompt.md`, (a) => `.kiro/agents/${a}-prompt.md`],
+  ];
+
+  it.each(TARGETS)('%s: every consumer charter carries the sentence; every steward charter keeps the read-only note and lacks it', (target, consumerPath, stewardPath) => {
+    for (const a of AGENTS) {
+      const consumer = writeScopeSection(read(consumerPath(a)));
+      expect(consumer).toContain(CONSUMER_WRITE_SCOPE_INTRO);
+      expect(consumer).toContain(`${CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE} ${PLATFORM_CLAUSE[target]}`);
+      expect(consumer).not.toContain('read-only');
+      const steward = writeScopeSection(read(stewardPath(a)));
+      expect(steward).toContain('Treat paths outside this set as read-only.');
+      expect(steward).not.toContain(CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE);
+    }
   });
 });
 

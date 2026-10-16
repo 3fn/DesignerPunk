@@ -67,7 +67,7 @@ import type {
   IdentityMemberInput,
 } from './index';
 import { identityMemberName, identityMembersStewardMessage, renderIdentityMember, spanInputsFor } from './index';
-import { CONSUMER_GENERATED_BANNER } from './cc';
+import { CONSUMER_GENERATED_BANNER, CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE } from './cc';
 
 // ============================================================================
 // toolRef — NATIVE (non-namespaced) Kiro tool-reference syntax
@@ -144,8 +144,16 @@ function allFlatTools(subset: ToolSubset): string[] {
  * keeps the one-sentence container rendering above, byte-identical.
  */
 const WRITE_SCOPE_MEMBERS_INTRO =
-  'Write scope (behavioral): you may create or modify files only under these paths — treat paths outside this set as read-only:';
-const WRITE_SCOPE_MEMBERS_OUTRO = '\n';
+  'Write scope (behavioral): these paths are pre-approved — you may create or modify files under them:';
+/**
+ * Release-4 consumer write-scope exception (2026-10-16) — the same sentence as cc.ts
+ * (`CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE`, see the rationale there), with a Kiro-true platform
+ * clause: Kiro's own layer PROMPTS for a write outside `allowedPaths` rather than denying it
+ * (runs 5–6), unless the user has told it to trust the tool — hence "may".
+ */
+const KIRO_WRITE_SCOPE_PLATFORM_CLAUSE = 'Kiro may also show its own permission prompt for such a write.';
+const WRITE_SCOPE_MEMBERS_OUTRO =
+  `\n${CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE} ${KIRO_WRITE_SCOPE_PLATFORM_CLAUSE}\n\n`;
 
 function renderWriteScopeImpl(paths: readonly string[]): string {
   return renderWriteScopeNote(paths);

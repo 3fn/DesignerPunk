@@ -547,9 +547,11 @@ Interactive elements must remain visible in forced-colors mode. This rule is bei
 
 ## Write scope
 
-Write scope (behavioral): you may create or modify files only under these paths — treat paths outside this set as read-only:
+Write scope (behavioral): these paths are pre-approved — you may create or modify files under them:
 
 - `specs/**`
+
+Paths outside this set are not pre-approved: ask your human lead before writing there, and write there only after they confirm in this session. Claude Code may not show a permission prompt for such a write, so their confirmation is the check.
 
 CC has no declarative per-agent write-path field (cc-agent-model.md facet 7: path rules are session-global, not per-agent); the documented enforcement options are a per-agent `PreToolUse` hook rejecting out-of-scope `Edit`/`Write` paths, or `isolation: worktree` — named here as the enforcement mechanism, not emitted as a declarative scope.
 

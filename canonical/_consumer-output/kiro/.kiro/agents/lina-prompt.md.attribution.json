@@ -796,7 +796,7 @@
     {
       "lines": [
         344,
-        344
+        346
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#frontmatter:writeScope"

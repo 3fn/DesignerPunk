@@ -735,31 +735,31 @@
     {
       "lines": [
         429,
-        431
+        433
       ],
       "op": "render",
       "source": "canonical/agents/ada.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        432,
-        435
+        434,
+        437
       ],
       "op": "render",
       "source": "canonical/agents/ada.md#frontmatter:preflight"
     },
     {
       "lines": [
-        436,
-        436
+        438,
+        438
       ],
       "op": "render",
       "source": "canonical/agents/ada.md#frontmatter:preflight[git status --porcelain]"
     },
     {
       "lines": [
-        437,
-        437
+        439,
+        439
       ],
       "op": "render",
       "source": "canonical/agents/ada.md#frontmatter:preflight"
