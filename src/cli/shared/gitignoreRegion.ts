@@ -100,12 +100,21 @@ export function gitignoreRegionEntry(content: string): ManifestEntry {
   };
 }
 
+/**
+ * The lines `init` writes ABOVE the block when it CREATES `.gitignore` (release-4 rulings item 1; R2-5/R3-11/K-3:
+ * a born repo otherwise commits `node_modules/`). They are the host's own lines: outside the markers, never in
+ * the region's content or hash, so the block still ignores exactly {@link GITIGNORE_IGNORED_PATHS} and `sync`
+ * never manages, reports or rewrites them. An existing `.gitignore` gets none.
+ */
+export const GITIGNORE_HOST_SEED_LINES: readonly string[] = Object.freeze(['node_modules/']);
+
 export type GitignoreApplyOutcome = 'written' | 'unchanged' | 'collision';
 
 /**
  * Write the block into `<projectRoot>/.gitignore` and record its entry in `entries`.
  * Mirrors `attach.ts`'s region apply, for the one target-free region:
- *  - no `.gitignore` → created holding only the region;
+ *  - no `.gitignore` → created holding only the region — or, when `hostLinesIfCreated` is given (`init`), those
+ *    lines first, as the host's own, then the region (the {@link appendRegion} layout);
  *  - the file exists, the manifest records no block and the file has no markers → the region is
  *    appended after the consumer's own bytes, which stay in place;
  *  - the markers are present → the region is spliced, outside bytes untouched;
@@ -116,12 +125,17 @@ export function applyGitignoreRegion(
   projectRoot: string,
   content: string,
   entries: Record<string, ManifestEntry>,
+  options: { hostLinesIfCreated?: readonly string[] } = {},
 ): { outcome: GitignoreApplyOutcome; message?: string } {
   const abs = path.join(projectRoot, GITIGNORE_FILE);
   const entry = gitignoreRegionEntry(content);
 
   if (!fs.existsSync(abs)) {
-    fs.writeFileSync(abs, wrapRegion(GITIGNORE_MARKERS, content), 'utf-8');
+    const host = options.hostLinesIfCreated ?? [];
+    const text = host.length > 0
+      ? appendRegion(`${host.join('\n')}\n`, GITIGNORE_MARKERS, content)
+      : wrapRegion(GITIGNORE_MARKERS, content);
+    fs.writeFileSync(abs, text, 'utf-8');
     entries[GITIGNORE_REGION_ID] = entry;
     return { outcome: 'written' };
   }

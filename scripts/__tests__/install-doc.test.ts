@@ -466,6 +466,16 @@ describe('the approval instruction is harness-agnostic (C4)', () => {
     expect(OBSERVED_RESTART_STEP).toMatch(/Claude Code/);
     expect(OBSERVED_RESTART_STEP).toMatch(/Kiro/);
   });
+
+  it('the born-repo refusal (the join path, errorCatalog `initBornRepoMessage`) carries the observed truth in the catalog\'s inline form (release-4 rulings item 2, 26.5-add)', () => {
+    // Derived from the doc's pin, so the catalog sentence and INSTALL's step cannot drift apart unseen.
+    const inline = OBSERVED_RESTART_STEP
+      .replace(/^Restart your agent session\. Claude Code then asks /, 'restart your agent session (Claude Code asks ')
+      .replace(/: accept both\. Kiro asks nothing\.$/, ': accept both; Kiro asks nothing)');
+    expect(inline).toBe("restart your agent session (Claude Code asks you to trust the folder and to enable DesignerPunk's three MCP servers: accept both; Kiro asks nothing)");
+    expect(initBornRepoMessage('/root')).toContain(inline);
+    expect(initBornRepoMessage('/root')).not.toContain(RESTART_STEP.replace(/^Restart/, 'restart').replace(/\.$/, ''));
+  });
 });
 
 describe('119-B lint (C4, C17), over the region', () => {

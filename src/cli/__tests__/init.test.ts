@@ -28,6 +28,7 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as crypto from 'crypto';
+import { spawn } from 'child_process';
 import { runInit, ManifestBuilder, listStarterSpecFiles, starterSpecNames, scaffoldStarterSpecs, STARTER_SPECS_SOURCE } from '../init';
 import { runAttach } from '../attach';
 import { resolvePackageRoot } from '../shared/resolvePackageRoot';
@@ -51,7 +52,10 @@ import {
   namedDefaultNoticeMessage,
   initNextStepsMessage,
   jestConfigCollisionMessage,
+  initNeedsNameOffTerminalMessage,
+  INSTALL_GUIDE_PATH,
 } from '../shared/errorCatalog';
+import { printHelp } from '../designerpunk';
 import { PERSONAL_NOTE_REL, PERSONAL_NOTE_TEMPLATE_REL } from '../shared/personalNote';
 import { extractRegion, normalizeRegionContent, wrapRegion } from '../sync/RegionGrain';
 import type { ConfigModuleLoader } from '../../config/ConfigLoader';
@@ -194,6 +198,107 @@ describe('CLI init — birth check (Task 2.2; design.md C1 row 0; Req 15A.3)', (
     expect(output).toContain('the following files will be RE-ADDED');
     expect(output).toContain('src/tokens/index.ts');
     expect(fs.existsSync(path.join(scratchDir, 'src/tokens/index.ts'))).toBe(true);
+  });
+});
+
+describe('CLI init — off a terminal, missing --name/--abbreviation: refuses, never waits on a prompt (R3-1; release-4 rulings item 2)', () => {
+  let scratchDir: string;
+  let ttyDescriptor: PropertyDescriptor | undefined;
+
+  beforeEach(() => {
+    scratchDir = createScratchDir();
+    markGitBoundary(scratchDir);
+    ttyDescriptor = Object.getOwnPropertyDescriptor(process.stdin, 'isTTY');
+    Object.defineProperty(process.stdin, 'isTTY', { value: undefined, configurable: true, writable: true }); // no terminal attached
+  });
+
+  afterEach(() => {
+    if (ttyDescriptor) Object.defineProperty(process.stdin, 'isTTY', ttyDescriptor);
+    else delete (process.stdin as { isTTY?: boolean }).isTTY;
+    fs.rmSync(scratchDir, { recursive: true, force: true });
+  });
+
+  // The jest timeout is the hang guard: a prompt off a terminal never resolves.
+  test.each([
+    ['no flags', [] as string[]],
+    ['only --name', ['--name', 'Test']],
+    ['only --abbreviation', ['--abbreviation', 'T']],
+  ])('%s → exit 1 with the catalog message naming both flags; nothing written; no notice', async (_label, args) => {
+    const before = fs.readdirSync(scratchDir).sort();
+    const { output, exitCode } = await runInitIn(scratchDir, args);
+    expect(exitCode).toBe(1);
+    expect(output).toBe(`❌ ${initNeedsNameOffTerminalMessage()}`);
+    expect(output).toContain('--name');
+    expect(output).toContain('--abbreviation');
+    expect(output).toContain(INSTALL_GUIDE_PATH);
+    expect(output).not.toContain('no --target given'); // the named-default notice is not printed
+    expect(fs.existsSync(path.join(scratchDir, 'designerpunk.config.ts'))).toBe(false);
+    expect(fs.readdirSync(scratchDir).sort()).toEqual(before);
+  }, 10000);
+
+  test('both flags given off a terminal → init proceeds as before (the guard asks for nothing it was given)', async () => {
+    const { exitCode } = await runInitIn(scratchDir, ['--name', 'Test', '--abbreviation', 'T', '--skip-agents']);
+    expect(exitCode).toBeUndefined();
+    expect(fs.existsSync(path.join(scratchDir, 'designerpunk.config.ts'))).toBe(true);
+  });
+
+  test('the `--name=value` form counts as given (R3-2, the same parse function)', async () => {
+    const { exitCode } = await runInitIn(scratchDir, ['--name=Acme Co', '--abbreviation=AC', '--skip-agents']);
+    expect(exitCode).toBeUndefined();
+    const config = fs.readFileSync(path.join(scratchDir, 'designerpunk.config.ts'), 'utf-8');
+    expect(config).toContain("name: 'Acme Co'");
+    expect(config).toContain("abbreviation: 'AC'");
+  });
+
+  test('THE BIN, spawned the way an agent shell runs it (stdin a pipe held OPEN, never ended): exits 1 with the message, no hang', async () => {
+    const bin = path.join(PKG_ROOT, 'bin', 'designerpunk.js');
+    const child = spawn(process.execPath, [bin, 'init'], { cwd: scratchDir, stdio: ['pipe', 'pipe', 'pipe'] });
+    let stderr = '';
+    let stdout = '';
+    child.stdout.on('data', (d) => { stdout += String(d); });
+    child.stderr.on('data', (d) => { stderr += String(d); });
+    const killer = setTimeout(() => child.kill('SIGKILL'), 10000); // the Kiro shape hung here before R3-1
+    const result = await new Promise<{ code: number | null; signal: NodeJS.Signals | null }>((resolve) => {
+      child.on('exit', (code, signal) => resolve({ code, signal }));
+    });
+    clearTimeout(killer);
+    child.stdin.destroy();
+    expect(result.signal).toBeNull(); // it exited on its own; it was not killed
+    expect(result.code).toBe(1);
+    expect(stderr).toContain(initNeedsNameOffTerminalMessage());
+    expect(stdout).not.toContain('no --target given');
+    expect(fs.existsSync(path.join(scratchDir, 'designerpunk.config.ts'))).toBe(false);
+  }, 20000);
+});
+
+describe('CLI --help — the init lines are true (release-4 rulings item 2)', () => {
+  const help = (): string => {
+    const logSpy = jest.spyOn(console, 'log').mockImplementation();
+    try {
+      printHelp();
+      return logSpy.mock.calls.map((c) => c.join(' ')).join('\n');
+    } finally {
+      logSpy.mockRestore();
+    }
+  };
+
+  test('no "prompted if omitted": --name and --abbreviation are asked for only in a terminal', () => {
+    const h = help();
+    expect(h).not.toContain('prompted if omitted');
+    expect(h).toMatch(/--name <name> .*asked for in a terminal; required where no terminal is attached/);
+    expect(h).toMatch(/--abbreviation <abbr> .*asked for in a terminal; required where no terminal is attached/);
+  });
+
+  test('the --skip-components no-op is not offered; --re-scaffold and --yes are', () => {
+    const h = help();
+    expect(h).not.toContain('--skip-components');
+    expect(h).not.toContain("Don't copy starter components");
+    expect(h).toMatch(/^ {2}--re-scaffold /m);
+    expect(h).toMatch(/^ {2}--yes /m);
+  });
+
+  test('it names the install guide', () => {
+    expect(help()).toContain(`Install guide: ${INSTALL_GUIDE_PATH}`);
   });
 });
 
@@ -832,7 +937,7 @@ describe('CLI init — the .gitignore managed block (Task 20.2; design.md C24)',
   test('the config init writes (output ./dist/tokens) → the block ignores exactly token-index/ and .designerpunk/, the commented line names dist/tokens/', async () => {
     const output = await initWithLoader(ARGS, readOutputFromFile);
     const content = gitignoreRegionContent('dist/tokens');
-    expect(gitignore()).toBe(wrapRegion(GITIGNORE_MARKERS, content));
+    expect(gitignore()).toBe(`node_modules/\n\n${wrapRegion(GITIGNORE_MARKERS, content)}`); // the seeded host line, then the block
     expect(nonCommentLines(extractRegion(gitignore(), GITIGNORE_MARKERS).found ? (extractRegion(gitignore(), GITIGNORE_MARKERS) as { region: string }).region : '')).toEqual([
       'token-index/',
       '.designerpunk/',
@@ -859,7 +964,7 @@ describe('CLI init — the .gitignore managed block (Task 20.2; design.md C24)',
     expect(fs.readFileSync(path.join(scratchDir, 'designerpunk.config.ts'), 'utf-8')).toBe(configText); // kept (createFileIfNotExists)
     expect(gitignore()).toContain(`# ${rel}/`);
     expect(gitignore()).not.toContain('dist/tokens');
-    expect(gitignore()).toBe(wrapRegion(GITIGNORE_MARKERS, gitignoreRegionContent(rel)));
+    expect(gitignore()).toBe(`node_modules/\n\n${wrapRegion(GITIGNORE_MARKERS, gitignoreRegionContent(rel))}`);
   });
 
   test('an existing .gitignore: her lines stay in place, byte for byte, and the block follows', async () => {
@@ -868,6 +973,22 @@ describe('CLI init — the .gitignore managed block (Task 20.2; design.md C24)',
     await initWithLoader(ARGS, readOutputFromFile);
     expect(gitignore().startsWith(mine)).toBe(true);
     expect(extractRegion(gitignore(), GITIGNORE_MARKERS).found).toBe(true);
+  });
+
+  test('init CREATES .gitignore → node_modules/ is seeded above the block as her own line (release-4 rulings item 1)', async () => {
+    await initWithLoader(ARGS, readOutputFromFile);
+    const x = extractRegion(gitignore(), GITIGNORE_MARKERS) as { found: true; before: string; region: string };
+    expect(x.found).toBe(true);
+    expect(x.before.split('\n')[0]).toBe('node_modules/'); // above the begin marker, outside the managed block
+    expect(nonCommentLines(x.region)).toEqual(['token-index/', '.designerpunk/']); // C24's exactly two, unchanged
+    expect(readManifestFile(scratchDir).entries[GITIGNORE_REGION_ID]).toEqual(gitignoreRegionEntry(gitignoreRegionContent('dist/tokens')));
+  });
+
+  test('an existing .gitignore is left alone: init adds no node_modules/ line to it', async () => {
+    fs.writeFileSync(path.join(scratchDir, '.gitignore'), '.env\n');
+    await initWithLoader(ARGS, readOutputFromFile);
+    expect(gitignore().startsWith('.env\n')).toBe(true);
+    expect(gitignore()).not.toContain('node_modules/');
   });
 
   test('RED: a config that will not load → init reports, writes NO block, records no entry, guesses no path', async () => {

@@ -39,9 +39,10 @@ import {
   consumerDegradationMessage,
   namedDefaultNoticeMessage,
   initNextStepsMessage,
+  initNeedsNameOffTerminalMessage,
 } from './shared/errorCatalog';
 import type { InitNextStepsContext } from './shared/errorCatalog';
-import { computeGitignoreRegion, applyGitignoreRegion } from './shared/gitignoreRegion';
+import { computeGitignoreRegion, applyGitignoreRegion, GITIGNORE_HOST_SEED_LINES } from './shared/gitignoreRegion';
 import { ensurePersonalNote, printPersonalNoteRows, PERSONAL_NOTE_TEMPLATE_REL } from './shared/personalNote';
 import type { ConfigModuleLoader } from '../config/ConfigLoader';
 import { emitAgentLayer, previewAgentLayerMissing, resolveAgentTarget } from './attach';
@@ -175,6 +176,15 @@ export async function runInit(argv: string[], deps: InitDeps = {}): Promise<void
         return;
       }
     }
+  }
+
+  // --- Off a terminal, nothing can answer the name/abbreviation prompts (R3-1; release-4 rulings item 2): refuse
+  // with both flags named, BEFORE the notice and before any write — never wait on a prompt no one will answer.
+  // The same guard `confirmReScaffold` uses. ----------------------------------------------------------------
+  if ((!opts.name || !opts.abbreviation) && !process.stdin.isTTY) {
+    console.error(`❌ ${initNeedsNameOffTerminalMessage()}`);
+    process.exit(1);
+    return;
   }
 
   // The named-default notice (C27 erratum; Leonardo A2): bare `init` says which harness it set up and how to
@@ -377,7 +387,10 @@ export async function runInit(argv: string[], deps: InitDeps = {}): Promise<void
   if (!gitignoreBlock.ok) {
     console.log(`  ⚠️  ${gitignoreBlockConfigUnreadableMessage(gitignoreBlock.reason)}`);
   } else {
-    const applied = applyGitignoreRegion(dest, gitignoreBlock.content, manifest.state.entries);
+    // A `.gitignore` init CREATES also gets `node_modules/` above the block, as her own line (release-4 rulings
+    // item 1; R2-5/R3-11/K-3): outside the markers, never recorded, never managed by `sync`. An existing file is
+    // left as it is.
+    const applied = applyGitignoreRegion(dest, gitignoreBlock.content, manifest.state.entries, { hostLinesIfCreated: GITIGNORE_HOST_SEED_LINES });
     if (applied.outcome === 'collision') console.log(`  ⚠️  ${applied.message}`);
     else if (applied.outcome === 'written') console.log(`✓ ${gitignoreBlockAddedMessage()}`);
     gitignoreBlockInPlace = applied.outcome !== 'collision';
@@ -432,6 +445,8 @@ function parseInitArgs(argv: string[]): InitOptions {
       opts.target = argv[i].slice('--target='.length);
       continue;
     }
+    const eq = /^--(name|abbreviation)=(.*)$/.exec(argv[i]); // `--name=Acme` as well as `--name Acme` (R3-2)
+    if (eq) { opts[eq[1] as 'name' | 'abbreviation'] = eq[2]; continue; }
     switch (argv[i]) {
       case '--name':
         opts.name = argv[++i];

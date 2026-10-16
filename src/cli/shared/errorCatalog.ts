@@ -96,10 +96,34 @@ export function initBornRepoMessage(root: string): string {
   return (
     `this repo already has a design system (${root}) — init is the birth event and runs once. ` +
     `To join it: npm install → npx designerpunk generate → fill in your personal note ` +
-    `(generate creates it; your agent can walk you through it) → restart your agent session (approve DesignerPunk's MCP servers if asked). ` +
+    // 2026-10-15 (release-4 rulings item 2, 26.5-add): the restart step takes the words Thurgood observed cold in U5,
+    // in the catalog's inline form (INSTALL's OBSERVED_RESTART_STEP, lowercase-first, no final period).
+    `(generate creates it; your agent can walk you through it) → restart your agent session (Claude Code asks you to trust ` +
+    `the folder and to enable DesignerPunk's three MCP servers: accept both; Kiro asks nothing). ` +
     `Using a different agent tool than this repo was set up for? Also run: npx designerpunk attach ` +
     `--target=<cc|kiro> to attach a harness (agents + MCP config + approvals). To deliberately re-scaffold: ` +
     `npx designerpunk init --re-scaffold`
+  );
+}
+
+/**
+ * Where the consumer reads the install guide once `@3fn/core` is installed: the package ships it at
+ * `docs/consumer/INSTALL.md`. Named by `init`'s off-terminal refusal, its closing output and `--help`.
+ */
+export const INSTALL_GUIDE_PATH = 'node_modules/@3fn/core/docs/consumer/INSTALL.md';
+
+/**
+ * `init` was run without `--name` or `--abbreviation` where no terminal is attached (an agent's shell, CI), so
+ * nothing can answer its prompts (R3-1; release-4 rulings item 2). Printed before the named-default notice and
+ * before any write; `init` exits 1. Names BOTH flags whichever was missing: INSTALL tells her to pass both.
+ * AUTHORED 2026-10-15 (V-CLI-min, Lina): the design catalog carries no row for it; the row is owed at 123's
+ * next design touch, like the issue rows below.
+ */
+export function initNeedsNameOffTerminalMessage(): string {
+  return (
+    `init needs --name and --abbreviation when it cannot ask for them — no terminal is attached, so nothing can ` +
+    `answer a prompt. Run it again with both: npx designerpunk init --name <name> --abbreviation <abbr> ` +
+    `(the full command is in ${INSTALL_GUIDE_PATH}). Nothing was written.`
   );
 }
 
@@ -524,6 +548,7 @@ baseline grid). \`generate\` does not check these relationships, and
 \`npx designerpunk validate\`'s check for them currently fails even on
 unmodified token source (a known defect in the checker, not in your tokens).
 
-💡 After future upgrades, run \`npx designerpunk sync\` to apply updates.`;
+💡 After future upgrades, run \`npx designerpunk sync\` to apply updates.
+📖 The install guide: ${INSTALL_GUIDE_PATH}`;
 }
 

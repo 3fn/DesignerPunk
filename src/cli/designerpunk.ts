@@ -37,6 +37,7 @@ import {
   componentTokenFileLoadFailedMessage,
   consumerDegradationMessage,
   generateThemesLine,
+  INSTALL_GUIDE_PATH,
 } from './shared/errorCatalog';
 import { attachUsage } from './shared/vocabulary';
 
@@ -533,11 +534,12 @@ Usage:
   npx designerpunk --help          Show this help
 
 Init options:
-  --name <name>                    Product name (prompted if omitted)
-  --abbreviation <abbr>            Short form (prompted if omitted)
-  --skip-components                Don't copy starter components
+  --name <name>                    Product name (asked for in a terminal; required where no terminal is attached)
+  --abbreviation <abbr>            Short form (asked for in a terminal; required where no terminal is attached)
   --target=<cc|kiro>               Harness to set up (agents + MCP config); default: the package's declared default
   --skip-agents                    Don't generate the agent layer
+  --re-scaffold                    Re-add DesignerPunk's files in a repo that already has a design system (lists them first)
+  --yes                            Confirm --re-scaffold without a prompt (required where no terminal is attached)
 
 Generate options:
   --force                          Skip staleness detection, always regenerate
@@ -546,6 +548,8 @@ Generate options:
 Configuration:
   Place a designerpunk.config.ts in your project root.
   See the DesignerPunk repo's designerpunk.config.ts for an example.
+
+Install guide: ${INSTALL_GUIDE_PATH}
 
 MCP servers resolve data paths from the installed package automatically.
 No configuration needed for default usage.
