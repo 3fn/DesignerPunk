@@ -3,7 +3,7 @@
 **Date**: 2026-10-16 (phase 1)
 **Grain**: RELEASE. Release 4, the plan's fourth CHANGELOG entry (`tasks.md` § "Expected release count"). A MAJOR, for #352.
 **Auditor**: Stacy
-**Release commit S**: `4b940c45d9f2479453d062d0711a9a1ca7ede6b2`, the squash of PR #381, merged by Peter 2026-10-16T12:35:29Z. Its tree `cbef2f66` equals the PR head `4d7805569`'s tree.
+**Release commit S**: `4b940c45d9f2479453d062d0711a9a1ca7ede6b2`, the squash of PR #381, merged by Peter 2026-10-16T12:35:29Z. Its tree `cbef2f66` equals the PR head `4d7805569`'s tree. **Superseded by the Addendum on S1 = `13adf005a` (2026-10-16, end of this file): RL-11 (a) was taken, and the tag goes on S1, never on S.**
 **Firing event**: RELEASE, phase 1 (RELEASE-FLOW § "The sequence" step 6): on S, after 5.1 is green (5.1 record `createdAt` 2026-10-16T12:37:22Z) and before the tag (5.2).
 **State at this writing**: no `v16.0.0` tag, local or on `origin` (`git ls-remote --tags origin` lists `v15.0.0` and `v15.1.0` only). `registry.npmjs.org/@3fn%2fcore`: `dist-tags.latest` = `15.1.0`, and neither `time` nor `versions` has a `16.0.0` key. `docs/releases/16.0.0/` does not exist. **Nothing is published.**
 **Release delta**: `git log --first-parent v15.1.0..S` = **35** squash commits, #347–#381. The notes' count of 33 is the same range at `c466b3e10`, before the grants (#380) and the release PR (#381).
@@ -604,3 +604,86 @@ counts (beside the per-act lines, never in place of them; no total is green): 0 
 verify-signing-chain --audit — consistency, not identity — PR #381 (refs/pull/381/head = 4d780556); store /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2
 counts (beside the per-act lines, never in place of them; no total is green): 0 act(s) — anchored 0 · unanchored 0 · record absent 0 · FAIL 0 · anomaly 0
 ```
+
+---
+
+## Addendum (2026-10-16) — phase 1 re-read on S1 = 13adf005a (RL-11 fork (a) taken)
+
+**Release commit S1**: `13adf005a65d74ccf240a5c8a8b865962e5b67c1`, the squash of PR #383 (`chore/release-v16.0.0-rl11`), merged by Peter 2026-10-16T13:39:27Z; parent `308a588f3` (#382, this record). `origin/main` = S1 (`git ls-remote`, 13:44Z). **It replaces S.** Peter ruled RL-11 (a), fix before the tag, on 2026-10-16 (recorded in the rulings record's item-20 erratum).
+**State at this writing**: no `v16.0.0` tag, local or on `origin` (tags end at `v15.1.0`). `registry.npmjs.org/@3fn%2fcore`: `dist-tags.latest` = `15.1.0`, no `16.0.0` in `versions` or `time` (13:44Z). **Nothing is published.**
+**Firing event**: the same RELEASE phase 1, re-read on the new release commit. **This addendum gates nothing**, as the pass above gates nothing.
+
+### What changed between S and S1
+
+`git log --first-parent 4b940c45d..13adf005a` = #382 and #383. The union of their paths: this record; `CHANGELOG.md`; `docs/releases/release-16.0.0.md`; `.kiro/issues/2026-10-16-release-16-0-files-grant.md` (re-activation section appended); `.kiro/issues/2026-10-16-blend-deprecation-next-major-doc-correction.md` (new); `completion/release-4-rulings-2026-10-15.md` (item-20 erratum, the blend ruling line, RL-14 marked open). `git diff --name-only S S1 -- src token-index governance canonical package.json package-lock.json` → **0 paths**. No code, token, generated file, served doc, lock or charter changed. Branch commits: `a902c44b5`, `4d89605c9` (`Agent: Ada`), `c65ebd954` (orchestration record; no `Agent:` trailer, the PR body names the orchestrator).
+
+### RELEASE-FLOW 5.1 at S1 (pasted as handed over; log and record read by me)
+
+```text
+105/105 assertions passed.
+sha1:       13519dbbc58702ae94e9040655ec91caa132e8b1
+files:      1675   bytes: 6494581   pack-assert: 105/105   publish path: 16 (floor 16)
+record:     /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-1fyiKs/out/release-publish-record.json
+exit 0
+```
+
+`release-publish-record.json`: `mode` `dry-run`, `commit` = S1 (full SHA), `sha1` `13519dbb…`, `fileCount` 1675, `bytes` 6494581, `checks` 105/105, `publishedTo` `[]`, `createdAt` 2026-10-16T13:40:43.574Z. Log L1 names the full S1 SHA and a fresh clone. `check:drift` clean (1523 files); floor-closure `Closure 1: 54 … 0 escaping` / `Closure 2: … 0 bare specifiers`; `verify:token-index-clean` no error line; 105 `PASS`, 0 `FAIL`, 16 `PASS: publish path:` (`nested roots []` ×3; the machine-path scan). I copied the kept tarball and re-hashed it: sha1 equal, 6494581 bytes.
+
+**S against S1, packed** (both dry-run tarballs extracted): file sets equal (1675 = 1675). `diff -rq` → exactly **4 files**: `CHANGELOG.md` (byte-equal to S1's, `cmp`) and the three build-timestamp files (`dist/mcp/tool-manifest.json` `generatedAt`; `dist/types/generated/TokenTypes.{d.ts,js}` `Generated:`), one line each. The +486 bytes are the CHANGELOG. `dist/DesignTokens.dtcg.json` is byte-equal at S and S1. This also confirms, between two of our own builds, the phase-2 expectation above: a rebuild moves exactly those three timestamp files.
+
+### What carries over, and what I re-ran
+
+- **Carried unchanged, because no served content, code or signing act changed** (paths above): the release-delta read (now 37 squash commits `v15.1.0..S1`; the two new are #382 and #383, read here); the parents (0 new; parity unchanged); the owed-set query and its reading; 5b; the 23-claim-group artifact table except the rows re-read below; the signing-act walk (35 PRs; **not re-run on #382/#383**: neither diff touches a signature or confirmation object, so 0 acts by inspection, not by instrument); J; the Peter sample; re-grounding dispositions.
+- **Re-run against the S1 tarball**: the packed `CHANGELOG.md` and the notes at S1 for RL-11, RL-12 and RL-13; a package-wide grep for the blend removal sentence.
+
+### RL-11: fixed at S1
+
+- **Shipped (packed CHANGELOG L52)**: "commit what changes: the version number in each file, and, in `DesignTokens.dtcg.json`, one line of text, the deprecation reason on `blend.disabledDesaturate` (#368). No token value changed in this release." Notes L85 is the same; notes L19 now says the DTCG export carries the string as `$extensions.designerpunk.deprecatedReason`, and the Figma, CSS, Swift and Kotlin files differ in the version only (my phase-1 diff against public 15.1.0 holds for those: they are byte-equal at S and S1).
+- Packed DTCG L3972 is unchanged, as expected: the fix discloses the line. "header-only" now appears once in the packed CHANGELOG, at L90, in the `## [15.1.0]` entry, where it is true of 15.1.0. 0 hits in the notes.
+- O-11 (rulings item 20's wording) is **closed** by the item-20 erratum.
+
+### RL-12: fixed at S1
+
+Packed CHANGELOG L31: "Sparky refused to create a file at `src/hello.ts`, with and without a yes given in the session; a screen under `src/` meets the same sentence, so Sparky would refuse the screen code a Leonardo spec asks for". The observation and the inference are now separate, and the observation matches the runs as I read them. Notes L44 was the same class in the past tense (Ada's second commit) and now reads the same way.
+
+### RL-13: each of the four defects closed at S1
+
+1. **CHANGELOG blend line**: packed L43, under Known limitations. ✅
+2. **The ruling's record**: the rulings record's "Blend ruling (2026-10-16, Peter …)" line, fork (a). ✅ #381's body is historical and unchanged; what it claimed for the CHANGELOG is now true of S1, though it was not true of S.
+3. **The obligation's home**: `.kiro/issues/2026-10-16-blend-deprecation-next-major-doc-correction.md`, owner Ada, trigger `tag:v16.0.0` → one PR before release 5's phase 1. Its site list matches S1's source exactly (20 sites: `Token-Family-Blend.md` ×5, `Token-Family-Color.md` ×1, `BlendTokens.ts` ×3, the three wrappers ×3 each, `OklchBlendCalculator.ts` ×2). ✅
+4. **The `description` named**: CHANGELOG L43 and notes L67 name it in `BlendTokens.js` and the DTCG and Figma exports (Figma L3140 carries it; I had not named Figma). ✅
+- **The wrapper extension, and whether the disclosure is complete.** Ada found the sentence in the wrappers, a wider set than my finding named; my phase-1 read grepped the token and the docs, not the package, for the sentence. A package-wide grep at S1 for "next major" finds 15 files. Each is now either named by the disclosure (served docs; the description in `BlendTokens.{ts,d.ts,js}`, DTCG, Figma; the wrappers' `@deprecated`/`@Deprecated`/`@available` messages, web `.js`/`.d.ts`, iOS, Android) or a **code comment** of the same sentence: `dist/blend/OklchBlendCalculator.js` L25, and the web wrapper's JSDoc and comment re-bundled into `dist/browser/designerpunk.{esm,umd}.js`. **My reading: complete at the grain a reader meets (deprecation text and served docs)**. The comment-only sites are in the record by source, and the bundle regenerates from it. One unpacked site is in neither: `src/blend/__tests__/InteractionStateAudit.test.ts` L135 (a comment, "remove at the next major version"). → O-16, for the fixing PR's sweep.
+
+### RL-14: open
+
+The rulings record says "open — Peter's ruling (fork (a) the #379 merge accepted the carry; (b) rule the three rows now) is awaited". #383's body says the same. **I infer no ruling from #383's merge.** That would be exactly RS-28's undefined act: a merge answering a question its body leaves open. Still Peter's, with Thurgood writing the line either way.
+
+### New finding
+
+**RL-17: Low — two `.kiro/issues/` edits in #383 are outside both the grant list and the author's charter scope.**
+- **Promised**: rule 8 (`.kiro/issues/README.md`): a grant covers "exactly those paths … An out-of-list edit is a claims-pass finding." Ada's charter `writeScope`: `src/tokens/**`, `src/validators/**`, `src/generators/**`, `.kiro/specs/**`, `docs/specs/**`.
+- **Claimed** (#383 body): "`.kiro/issues/**` and `.kiro/specs/**/completion/**` records need no grant. Every touched path is on the list or is a record."
+- **Shipped**: `a902c44b5` (`Agent: Ada`) creates the blend obligation record and appends the re-activation section to the files grant. Neither path is on the grant list (`CHANGELOG.md`, the notes) or in her scope. I find no written rule that exempts issue records: not in rule 8, the issues README, or a ballot (the only "needs no grant" clause is the C1 signing-act clause).
+- **Reading**: the content is right, and it is what my RL-13 asked for. My route named Ada as the record's owner and no seat as its writer, so the cause is partly mine. Practice agrees with the body: in #380, Ada filed her own grant. The gap is that the practice has no written home. **Remedy**: acknowledgement only. **Route**: Ada (acknowledge); Thurgood → RS-30.
+
+### Observations (not findings)
+
+- **O-16 — sweep residue for the blend correction**: the unpacked test comment above; the browser bundles are derived from the listed sources. Re-grep the packed tarball after the fixing PR. That check is the release-5 phase 1 read of this record.
+- **O-17 — the grant re-activated inside the PR it covers.** Rule 8 is met by its letter: activation is that merge, so "the list as it stood at that merge" is the PR's own list. The section states the deviation from the 15.1 precedent and quotes Peter's direction. The out-of-list read kept an external referent this time: #382's RL-11–13 named only these two files. In general, a list authored in the same diff it bounds makes rule 8's diff self-referential. This is RS-27's class (a direction ruled in chat, recorded only inside the artifact it authorizes). I name it and do not rule it.
+- **O-18 — a same-class sentence outside the blend**: packed `src/tokens/index.ts` L322 and `dist/tokens/index.d.ts` L123: "`getAllTokens` … will be removed in v2.0" (since 2025-10-25, `a616ed790`). The package is 16.0.0. `dist/tokens/index` is not reachable through `exports` (only `.` and `./build` touch tokens), and no release claim states it. I judge it outside this release's claims. The floor's letter has no reach clause, though, so whether a known stale sentence at an unexported path is "where its reader meets it" is RS-28's question, not mine. **Route**: Ada (token source), for disposal or a line in the blend record.
+
+### Standing, unchanged at S1
+
+RL-15 (`complete-task.sh`'s stale `proposed` text) and RL-16 (record-form defects, incl. the files grant's copied 15.1.0 text, which the appended section did not touch); RS-25 … RS-29; RS-10, RS-13, RS-14; every row of "Open items carried", except that item 1 now reads **the tag `v16.0.0` on S1**, and item 8 (RL-11's fork) is **resolved: (a)**.
+**New standards implication**:
+- **RS-30 (RL-17)**: whether filing or appending an issue record (an obligation, a grant section) needs scope, and from where, is unwritten. Charters omit `.kiro/issues/**`. Rule 8 counts every out-of-list edit as a finding. Practice files records freely (#380, #383). **Owner**: Thurgood. I name the gap and do not draft it.
+
+**Standards implications (this addendum): list — RS-30 new; RS-27 and RS-28 evidenced again (O-17, O-18, RL-14).**
+
+### For the tag (my statement; the pass gates nothing)
+
+On S1, every claim I re-read holds in the packed artifact and the notes. RL-11 and RL-12 are fixed in the packed `CHANGELOG.md`. RL-13's disclosure is complete at the grain a reader meets, and its correction has a home. **What remains is RL-14, which is open and Peter's.** Whether it bears on the tag is his call under the floor, not mine. RL-17 is a record-form finding and does not bear on the artifact. The 5.1 tally at S1 is 105/105, `publish path: 16 (floor 16)`, sha1 `13519dbb…`. **If a tag is cut, it goes on S1 = `13adf005a65d74ccf240a5c8a8b865962e5b67c1`; S is superseded.** 5.3's `--expect-sha` is S1.
+
+**Surviving counter-argument**: this addendum rests on two of our own dry-run tarballs, greps and a source diff. It inherits phase 1's limits (OB-2: no one has run the 16.0.0 tarball as a consumer). RL-13's "complete" rests on grepping one phrase family; differently worded removal-schedule text would escape it. O-18 is what one widening of the phrase found. Also, I missed the wrapper sites at phase 1, and Ada found them. That is evidence my phase-1 greps were scoped to the finding, not to the sentence.
+
+**`publish-rail liveness: owed`.** Phase 2 reads as placed above, on S1.
