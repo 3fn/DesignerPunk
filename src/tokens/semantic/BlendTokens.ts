@@ -139,7 +139,7 @@ export const blendTokens: Record<string, SemanticBlendToken> = {
     description: 'DEPRECATED (2026-07-15): DesignerPunk does not support disabled states — if an action is unavailable, do not render the component. Formerly: blend for disabled states with desaturation (12% less saturated). Scheduled for removal in the next major version.',
     deprecated: true,
     deprecatedSince: '2026-07-15',
-    deprecatedReason: 'No-disabled-states philosophy holds corpus-wide (Button-CTA adjudication, 2026-07-15). Unavailable actions should not be rendered; state_loading covers in-flight async actions.'
+    deprecatedReason: 'No-disabled-states philosophy holds corpus-wide (Button-CTA adjudication, 2026-07-15). Unavailable actions should not be rendered; state_loading covers in-flight async actions: ruled alternative, not yet implemented (Button-CTA, 16.x).'
   },
 
   'blend.containerHoverDarker': {
