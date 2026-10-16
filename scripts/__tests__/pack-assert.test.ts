@@ -263,26 +263,66 @@ describe('templatesSetDiff — src/cli/templates/ ships exactly the expected lis
 
 // ─── findMachinePaths ────────────────────────────────────────────────────────────────────────────
 
-describe('findMachinePaths — no machine path in dist/**', () => {
+describe('findMachinePaths — no machine path in any packed text file', () => {
   const files: Record<string, string> = {
     'dist/a.js': 'module.exports = 1;',
     'dist/b.js': 'const root = "/Users/someone/repo/src";',
-    'dist/c.js': 'const root = "/private/var/folders/xx/T/clone/src";',
+    'dist/c.js': 'const root = "/opt/build/clone/src";',
     'governance/doc.md': 'see /Users/peter/notes.md',
+    'src/assets/fonts/x.woff2': 'wOF2\0\0/Users/ inside binary bytes',
   };
   const read = (p: string): string | undefined => files[p];
 
-  it('BITES on a planted /Users/ path in a dist file and ignores non-dist files', () => {
-    expect(findMachinePaths(Object.keys(files), read, ['/Users/'])).toEqual(['dist/b.js']);
+  it('BITES on a planted /Users/ path in a dist file AND in a packed non-dist file (row 5: the O-1 class, governance/)', () => {
+    expect(findMachinePaths(Object.keys(files), read, ['/Users/'])).toEqual(['dist/b.js', 'governance/doc.md']);
   });
 
   it('BITES on the build root itself (a fresh clone under the OS temp dir is not under /Users/)', () => {
-    expect(findMachinePaths(Object.keys(files), read, ['/Users/', '/private/var/folders/xx/T/clone'])).toEqual(['dist/b.js', 'dist/c.js']);
+    expect(findMachinePaths(Object.keys(files), read, ['/opt/build/clone'])).toEqual(['dist/c.js']);
   });
 
-  it('machinePathNeedles names /Users/ and the build root', () => {
+  it('skips binary files (a NUL byte), so a font cannot red or green the scan', () => {
+    expect(findMachinePaths(['src/assets/fonts/x.woff2'], read, ['/Users/'])).toEqual([]);
+  });
+
+  it.each([
+    ['governance/Process-Doc.md', 'see /Users/peter/Documents/x.md'],
+    ['.kiro/steering/core-goals.md', 'cd /home/runner/work/DesignerPunk'],
+    ['docs/consumer/INSTALL.md', 'at /private/var/folders/xx/T/dp-release-1/clone/src'],
+    ['token-index/index.json', '{"source":"/Users/someone/repo/src/tokens/x.ts"}'],
+    ['CHANGELOG.md', '- fixed /home/dev/repo/path'],
+    ['src/tokens/x.ts', '// built at /Users/ci/tree'],
+  ])('BITES on a machine prefix in %s', (p, text) => {
+    expect(findMachinePaths([p], () => text, machinePathNeedles('/nonexistent/build-root'))).toEqual([p]);
+  });
+
+  it.each([
+    ['abc.com/home/x', false],
+    ['https://abc.com/home/{pathArg}', false],
+    ['a/b/home/x', false],
+    ['/home/peter/x', true],
+    ['"/home/x"', true],
+    ['see /home/x', true],
+    ['path:/Users/x', true],
+    ['p=/Users/x', true],
+    ['file:///Users/x', true],
+    ['/Users/x at very start', true],
+    ['x/Users/y then /Users/z', true],
+  ])('path boundary: %j hits=%s', (text, hit) => {
+    expect(findMachinePaths(['f.md'], () => text, ['/Users/', '/home/'])).toEqual(hit ? ['f.md'] : []);
+  });
+
+  it('a needle at the very start of a file hits', () => {
+    expect(findMachinePaths(['f.md'], () => '/home/x', ['/home/'])).toEqual(['f.md']);
+  });
+
+  it('binary (NUL) files are skipped even with a boundary hit', () => {
+    expect(findMachinePaths(['f.bin'], () => '\0 /home/x', ['/home/'])).toEqual([]);
+  });
+
+  it('machinePathNeedles names /Users/, /home/, /private/var/folders/ and the build root', () => {
     const needles = machinePathNeedles('/nonexistent/build-root');
-    expect(needles).toContain('/Users/');
+    for (const n of ['/Users/', '/home/', '/private/var/folders/']) expect(needles).toContain(n);
     expect(needles).toContain(path.resolve('/nonexistent/build-root'));
   });
 });
@@ -371,7 +411,14 @@ describe('publishPathFindings — section 10 end to end over a synthetic package
 
   it('BITES on a planted machine path, including the build root', () => {
     files['dist/TokenEngine.js'] = `const p = "${root}/src";`;
-    expect(failed(listing())[0]).toMatch(/^publish path: no machine path in dist\/\*\*/);
+    expect(failed(listing())[0]).toMatch(/^publish path: no machine path in any packed text file/);
+  });
+
+  it('BITES on a /Users/ path in a packed non-dist file (row 5; 10e scanned only dist/ before)', () => {
+    files['.kiro/steering/core-goals.md'] = 'See /Users/peter/Documents/notes.md';
+    const f = publishPathFindings(listing()).filter((x) => !x.ok);
+    expect(f.map((x) => x.label)).toEqual([expect.stringMatching(/^publish path: no machine path in any packed text file/)]);
+    expect(f[0].detail).toBe('1: .kiro/steering/core-goals.md');
   });
 });
 
