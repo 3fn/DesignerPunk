@@ -240,7 +240,9 @@ import {
   LANES_SWEEP_CONTEXT,
   analyzeLanes,
   auditLanes,
+  declaredForeignFiles,
   deriveJobContext,
+  FOREIGN_TREE_ATTRIBUTE,
   formatLaneAudit,
   parseExpectedContexts,
   readLaneInputs,
@@ -604,6 +606,8 @@ describe('coverage-map lanes — committed fixture trees are not lane inputs', (
       };
       const gate = 'tools/agent-generator/verify-gate-registration.sh';
       put(gate, fs.readFileSync(path.join(repoRoot, gate), 'utf8'));
+      // The skip rule is the repo's declaration (CL-1), so the scratch repo carries the real one.
+      put('.gitattributes', fs.readFileSync(path.join(repoRoot, '.gitattributes'), 'utf8'));
       put('jest.config.js', 'module.exports = { roots: [] };\n');
       // A born-consumer-shaped fixture: its config requires a package that is not installed here.
       const unloadable = "module.exports = { ...require('@3fn/not-installed/jest-preset') };\n";
@@ -622,5 +626,124 @@ describe('coverage-map lanes — committed fixture trees are not lane inputs', (
     } finally {
       fs.rmSync(tmp, { recursive: true, force: true });
     }
+  });
+});
+
+describe('coverage-map lanes — declared foreign trees (CL-1: root .gitattributes dp-foreign-tree)', () => {
+  const repoRoot = path.resolve(__dirname, '..', '..', '..');
+  const gate = 'tools/agent-generator/verify-gate-registration.sh';
+  const unloadable = "module.exports = { ...require('@3fn/not-installed/jest-preset') };\n";
+
+  /** A scratch git repo holding `files` (plus the real gate script), every path tracked. */
+  function withRepo(files: Record<string, string>, body: (tmp: string) => void): void {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'covmap-foreign-tree-'));
+    try {
+      const all: Record<string, string> = { [gate]: fs.readFileSync(path.join(repoRoot, gate), 'utf8'), ...files };
+      for (const [rel, text] of Object.entries(all)) {
+        fs.mkdirSync(path.dirname(path.join(tmp, rel)), { recursive: true });
+        fs.writeFileSync(path.join(tmp, rel), text);
+      }
+      execFileSync('git', ['init', '-q'], { cwd: tmp });
+      execFileSync('git', ['add', '-A'], { cwd: tmp });
+      body(tmp);
+    } finally {
+      fs.rmSync(tmp, { recursive: true, force: true });
+    }
+  }
+
+  const probeTree = {
+    'probes/frozen-inputs/package.json': '{"scripts":{"test":"node run.js"}}',
+    'probes/frozen-inputs/jest.config.js': unloadable,
+  };
+
+  it('a declared tree is skipped — its package.json and jest config are not lane inputs', () => {
+    withRepo({ '.gitattributes': `probes/frozen-inputs/** ${FOREIGN_TREE_ATTRIBUTE}\n`, ...probeTree }, (tmp) => {
+      const inputs = readLaneInputs(tmp);
+      expect(Object.keys(inputs.packages)).not.toContain('probes/frozen-inputs');
+      expect(Object.keys(inputs.jestConfigs)).not.toContain('probes/frozen-inputs/jest.config.js');
+      // The tree's files stay tracked inputs to selection — only its lane ROOTS are dropped.
+      expect(inputs.files).toContain('probes/frozen-inputs/package.json');
+    });
+  });
+
+  it('an undeclared tree is NOT skipped (fail closed: an unknown package.json is still a lane input)', () => {
+    withRepo({ ...probeTree }, (tmp) => {
+      const inputs = readLaneInputs(tmp);
+      expect(inputs.packages['probes/frozen-inputs']).toEqual({ test: 'node run.js' });
+      expect(Object.keys(inputs.jestConfigs)).toContain('probes/frozen-inputs/jest.config.js');
+      expect(inputs.jestConfigs['probes/frozen-inputs/jest.config.js']).toBeUndefined();
+    });
+  });
+
+  it('only the value `set` declares a tree — unset or valued forms stay lane inputs (fail closed)', () => {
+    const attrs = [
+      `a/** ${FOREIGN_TREE_ATTRIBUTE}`,
+      `b/** -${FOREIGN_TREE_ATTRIBUTE}`,
+      `c/** ${FOREIGN_TREE_ATTRIBUTE}=yes`,
+      `d/** !${FOREIGN_TREE_ATTRIBUTE}`,
+    ].join('\n');
+    const pkg = '{"scripts":{"test":"jest"}}';
+    withRepo({ '.gitattributes': `${attrs}\n`, 'a/package.json': pkg, 'b/package.json': pkg, 'c/package.json': pkg, 'd/package.json': pkg }, (tmp) => {
+      expect(Object.keys(readLaneInputs(tmp).packages).sort()).toEqual(['b', 'c', 'd']);
+    });
+  });
+
+  it('reads the declaration with ONE `git check-attr --stdin` call per readLaneInputs', () => {
+    withRepo({ '.gitattributes': `probes/frozen-inputs/** ${FOREIGN_TREE_ATTRIBUTE}\n`, ...probeTree, 'tools/real/jest.config.js': unloadable }, (tmp) => {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const cp = require('child_process') as typeof import('child_process');
+      const spy = jest.spyOn(cp, 'execFileSync');
+      try {
+        readLaneInputs(tmp);
+        const checkAttr = spy.mock.calls.filter(([cmd, args]) => cmd === 'git' && (args as string[])[0] === 'check-attr');
+        expect(checkAttr).toHaveLength(1);
+        expect(checkAttr[0][1]).toEqual(expect.arrayContaining(['--stdin', FOREIGN_TREE_ATTRIBUTE]));
+      } finally {
+        spy.mockRestore();
+      }
+    });
+  });
+
+  // The retired #361 rule, kept ONLY as this equivalence oracle (never applied by the instrument).
+  const RETIRED_FIXTURE_TREE_PATTERN = /(^|\/)(__fixtures__|fixtures)\//;
+  const PROBE_INPUTS_TREE = '.kiro/specs/123-consumer-distribution/probes/reference-corpus-probe-inputs-2026-09-20/';
+
+  it("the attribute file's three patterns reproduce today's set (the retired regex + the probe-inputs tree)", () => {
+    // Semantics: on probe paths and near-misses, the real .gitattributes agrees with the retired
+    // regex plus the probe-inputs tree — no more, no less.
+    const probes = [
+      'fixtures/package.json',
+      'tests/onboarding-trio/fixtures/born-cc/package.json',
+      'tests/onboarding-trio/fixtures/born-cc/nested/deep/jest.config.js',
+      'src/x/__fixtures__/package.json',
+      '__fixtures__/jest.config.js',
+      `${PROBE_INPUTS_TREE}package.json`,
+      `${PROBE_INPUTS_TREE}sub/jest.config.js`,
+      'fixtures.ts',
+      'src/myfixtures/package.json',
+      'src/fixture/package.json',
+      'src/__fixtures__x/package.json',
+      'src/fixtures-old/package.json',
+      '.kiro/specs/123-consumer-distribution/probes/package.json',
+      '.kiro/specs/123-consumer-distribution/probes/reference-corpus-probe-inputs-2026-09-21/package.json',
+      'tools/real/jest.config.js',
+    ];
+    const expected = probes.filter((p) => RETIRED_FIXTURE_TREE_PATTERN.test(p) || p.startsWith(PROBE_INPUTS_TREE)).sort();
+    const realAttributes = fs.readFileSync(path.join(repoRoot, '.gitattributes'), 'utf8');
+    withRepo({ '.gitattributes': realAttributes }, (tmp) => {
+      expect([...declaredForeignFiles(tmp, probes)].sort()).toEqual(expected);
+    });
+
+    // The real repo: nothing #361 skipped, and nothing in the probe-inputs tree, is a lane input.
+    const tracked = execFileSync('git', ['ls-files'], { cwd: repoRoot, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+      .split('\n')
+      .filter((f) => f.length > 0);
+    const todaysSet = tracked.filter((f) => RETIRED_FIXTURE_TREE_PATTERN.test(f) || f.startsWith(PROBE_INPUTS_TREE));
+    expect(todaysSet.length).toBeGreaterThan(0);
+    const declared = declaredForeignFiles(repoRoot, todaysSet);
+    expect(todaysSet.filter((f) => !declared.has(f))).toEqual([]);
+    const inputs = readLaneInputs(repoRoot);
+    expect(Object.keys(inputs.packages).filter((d) => todaysSet.includes(`${d}/package.json`))).toEqual([]);
+    expect(Object.keys(inputs.jestConfigs).filter((c) => todaysSet.includes(c))).toEqual([]);
   });
 });

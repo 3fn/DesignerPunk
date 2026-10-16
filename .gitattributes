@@ -1,0 +1,13 @@
+# .gitattributes — repo-level declarations read by this repo's own instruments.
+#
+# dp-foreign-tree — a tracked tree whose files belong to some OTHER repo or scenario (a born
+# consumer repo, a probe's frozen inputs), never to this repo's own test lanes. The
+# coverage-map lanes audit (`tools/agent-generator/coverage-map.ts` readLaneInputs) skips the
+# package.json and jest config files of a declared tree; an undeclared one stays a lane input
+# (fail closed). To exempt a new tree, declare it here — the instrument holds no second list.
+# Custom attribute only: it changes no checkout, diff, merge or eol behavior.
+# Source: release-4 rulings item 10 (CL-1); grant .kiro/issues/2026-10-15-release-4-floor-grants.md § 3.
+
+**/fixtures/** dp-foreign-tree
+**/__fixtures__/** dp-foreign-tree
+.kiro/specs/123-consumer-distribution/probes/reference-corpus-probe-inputs-2026-09-20/** dp-foreign-tree
