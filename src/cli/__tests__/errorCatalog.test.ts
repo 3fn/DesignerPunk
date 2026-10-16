@@ -98,10 +98,12 @@ describe('errorCatalog — string conformance (Task 1.6)', () => {
 // ---------------------------------------------------------------------------
 
 // Transcribed from design.md's catalog; the "init in a born repo" and "personal-note naming" rows are their
-// CORRECTED text (Erratum 2026-10-03, R2 — Leonardo L-RC3), which Task 22.2 made string-equal.
+// CORRECTED text (Erratum 2026-10-03, R2 — Leonardo L-RC3), which Task 22.2 made string-equal. The born-repo
+// row's restart step takes Thurgood's observed words, inline form (2026-10-15, release-4 rulings item 2,
+// 26.5-add); the design.md row's matching erratum is Thurgood's, under .kiro/specs/.
 const INIT_DESIGN_ROWS = {
   'init in a born repo': (root: string) =>
-    `this repo already has a design system (${root}) — init is the birth event and runs once. To join it: npm install → npx designerpunk generate → fill in your personal note (generate creates it; your agent can walk you through it) → restart your agent session (approve DesignerPunk's MCP servers if asked). Using a different agent tool than this repo was set up for? Also run: npx designerpunk attach --target=<cc|kiro> to attach a harness (agents + MCP config + approvals). To deliberately re-scaffold: npx designerpunk init --re-scaffold`,
+    `this repo already has a design system (${root}) — init is the birth event and runs once. To join it: npm install → npx designerpunk generate → fill in your personal note (generate creates it; your agent can walk you through it) → restart your agent session (Claude Code asks you to trust the folder and to enable DesignerPunk's three MCP servers: accept both; Kiro asks nothing). Using a different agent tool than this repo was set up for? Also run: npx designerpunk attach --target=<cc|kiro> to attach a harness (agents + MCP config + approvals). To deliberately re-scaffold: npx designerpunk init --re-scaffold`,
   'restart line — sequenced': () =>
     `when the steps above are done, restart your agent session — DesignerPunk's MCP servers and your personal note load when a session starts, so this session cannot see them yet (approve the servers if your tool asks)`,
   'clone hatch': () =>
@@ -231,7 +233,7 @@ describe('errorCatalog — string conformance (15.0.0 rehearsal: generate load f
 // ---------------------------------------------------------------------------
 // Task 22.2 — the bare `init` default notice (design.md row "bare `init` default notice (A2)", Leonardo A2).
 // ---------------------------------------------------------------------------
-import { namedDefaultNoticeMessage, initNextStepsMessage } from '../shared/errorCatalog';
+import { namedDefaultNoticeMessage, initNextStepsMessage, initNeedsNameOffTerminalMessage, INSTALL_GUIDE_PATH } from '../shared/errorCatalog';
 
 describe('errorCatalog — Task 22.2 additions', () => {
   const A2_ROW = "no --target given — set up for Claude Code (the default). Using Kiro? npx designerpunk attach --target=kiro";
@@ -303,3 +305,32 @@ describe('errorCatalog — Task 22.2 additions', () => {
   });
 });
 
+// ---------------------------------------------------------------------------
+// V-CLI-min (release-4 rulings item 2; R3-1) — `init` off a terminal, and the install guide's path.
+// AUTHORED 2026-10-15: no design.md row yet (owed at 123's next design touch).
+// ---------------------------------------------------------------------------
+
+describe('errorCatalog — init off a terminal (R3-1)', () => {
+  test('the refusal, verbatim: names both flags, the install guide, and that nothing was written', () => {
+    expect(initNeedsNameOffTerminalMessage()).toBe(
+      'init needs --name and --abbreviation when it cannot ask for them — no terminal is attached, so nothing can answer a prompt. ' +
+        'Run it again with both: npx designerpunk init --name <name> --abbreviation <abbr> ' +
+        '(the full command is in node_modules/@3fn/core/docs/consumer/INSTALL.md). Nothing was written.',
+    );
+  });
+
+  test('the install guide path is the file the package ships (docs/consumer/INSTALL.md), as installed', () => {
+    expect(INSTALL_GUIDE_PATH).toBe('node_modules/@3fn/core/docs/consumer/INSTALL.md');
+    const fs = require('fs') as typeof import('fs');
+    const path = require('path') as typeof import('path');
+    const inPackage = INSTALL_GUIDE_PATH.replace('node_modules/@3fn/core/', '');
+    const repoRoot = path.resolve(__dirname, '../../..');
+    expect(fs.existsSync(path.join(repoRoot, inPackage))).toBe(true);
+    expect(JSON.parse(fs.readFileSync(path.join(repoRoot, 'package.json'), 'utf8')).files).toContain(inPackage);
+  });
+
+  test("init's closing output names the install guide", () => {
+    const m = initNextStepsMessage('Acme', { packageInstalledHere: true, jestConfigScaffolded: false, starterSpecNames: [], gitignoreBlockInPlace: false, agentLayerEmitted: true });
+    expect(m).toContain(`The install guide: ${INSTALL_GUIDE_PATH}`);
+  });
+});

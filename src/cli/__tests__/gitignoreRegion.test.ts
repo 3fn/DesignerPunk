@@ -12,6 +12,7 @@ import * as path from 'path';
 import { execFileSync } from 'child_process';
 import * as readline from 'readline';
 import {
+  GITIGNORE_HOST_SEED_LINES,
   GITIGNORE_IGNORED_PATHS,
   GITIGNORE_MARKERS,
   GITIGNORE_PLATFORM_OUTPUT_REASON,
@@ -32,7 +33,10 @@ import {
 } from '../shared/errorCatalog';
 import { confirmGitignoreBlock } from '../sync/Prompter';
 import { extractRegion, normalizeRegionContent, wrapRegion } from '../sync/RegionGrain';
-import type { ManifestEntry } from '../sync/Manifest';
+import type { DesignerPunkManifest, ManifestEntry } from '../sync/Manifest';
+import { MANIFEST_FILE, serializeManifest } from '../sync/Manifest';
+import { runSync } from '../sync';
+import { captureConsole, createScratch, setupPackage, writeFile } from './syncTestKit';
 import { jestConfigModuleLoader } from '../../__tests__/helpers/configModuleLoader';
 
 const DESIGN = fs.readFileSync(path.resolve(__dirname, '../../../.kiro/specs/123-consumer-distribution/design.md'), 'utf8');
@@ -158,6 +162,83 @@ describe('applyGitignoreRegion — the apply rules, outside bytes untouched', ()
     expect(r.outcome).toBe('collision');
     expect(r.message).toBe(managedRegionMarkersMissingMessage('.gitignore'));
     expect(read()).toBe('mine only\n');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Release-4 rulings item 1 (the harm row; R2-5/R3-11/K-3): `init` seeds `node_modules/` as a HOST line above the
+// block when it creates `.gitignore`. The block itself is unchanged (C24's exactly-two entries); `sync` never
+// manages the host line.
+// ---------------------------------------------------------------------------
+
+describe('the node_modules/ host line init seeds when it CREATES .gitignore', () => {
+  let dir: string;
+  const content = gitignoreRegionContent('dist/tokens');
+  beforeEach(() => { dir = scratch(); });
+  afterEach(() => fs.rmSync(dir, { recursive: true, force: true }));
+  const read = () => fs.readFileSync(path.join(dir, '.gitignore'), 'utf8');
+  const seed = { hostLinesIfCreated: GITIGNORE_HOST_SEED_LINES };
+
+  test('the seed is exactly node_modules/, and the block still ignores exactly its two paths', () => {
+    expect([...GITIGNORE_HOST_SEED_LINES]).toEqual(['node_modules/']);
+    expect(content.split('\n').filter((l) => l.trim() !== '' && !l.startsWith('#'))).toEqual(['token-index/', '.designerpunk/']);
+  });
+
+  test('no .gitignore → node_modules/ ABOVE the begin marker, outside the region; the entry is the block\'s alone', () => {
+    const entries: Record<string, ManifestEntry> = {};
+    expect(applyGitignoreRegion(dir, content, entries, seed)).toEqual({ outcome: 'written' });
+    expect(read()).toBe(`node_modules/\n\n${wrapRegion(GITIGNORE_MARKERS, content)}`);
+    const x = extractRegion(read(), GITIGNORE_MARKERS) as { found: true; before: string; region: string };
+    expect(x.before.split('\n')).toContain('node_modules/');
+    expect(x.region).not.toContain('node_modules/');
+    expect(entries[GITIGNORE_REGION_ID]).toEqual(gitignoreRegionEntry(content)); // the hash never sees the host line
+  });
+
+  test('an existing .gitignore is left alone: no node_modules/ added, her bytes stay the prefix', () => {
+    fs.writeFileSync(path.join(dir, '.gitignore'), '.env\n');
+    applyGitignoreRegion(dir, content, {}, seed);
+    expect(read().startsWith('.env\n')).toBe(true);
+    expect(read()).not.toContain('node_modules/');
+  });
+
+  test('without the option (sync\'s call) a created .gitignore holds only the region, as before', () => {
+    applyGitignoreRegion(dir, content, {});
+    expect(read()).toBe(wrapRegion(GITIGNORE_MARKERS, content));
+  });
+});
+
+describe('sync over the seeded .gitignore reports no drift and leaves the host line alone', () => {
+  let repo: string;
+  let con: ReturnType<typeof captureConsole>;
+  beforeEach(() => {
+    repo = createScratch('dp-gi-seed-sync-');
+    con = captureConsole();
+  });
+  afterEach(() => {
+    con.restore();
+    fs.rmSync(repo, { recursive: true, force: true });
+  });
+
+  test('a born repo whose .gitignore init created: sync (and sync --apply) writes nothing, offers nothing, applies nothing', async () => {
+    setupPackage(repo);
+    writeFile(repo, 'designerpunk.config.ts', `module.exports = { output: './dist/tokens' };\n`);
+    execFileSync('git', ['init', '-q'], { cwd: repo });
+    const entries: DesignerPunkManifest['entries'] = {};
+    applyGitignoreRegion(repo, gitignoreRegionContent('dist/tokens'), entries, { hostLinesIfCreated: GITIGNORE_HOST_SEED_LINES });
+    writeFile(repo, MANIFEST_FILE, serializeManifest({ version: '1', posture: 'born', installedVersion: '15.0.0', contractHash: '', attachedTargets: [], entries }));
+    const before = fs.readFileSync(path.join(repo, '.gitignore'), 'utf8');
+    expect(before.startsWith('node_modules/\n')).toBe(true);
+
+    const noOffer = async () => { throw new Error('no offer expected'); };
+    const out = await runSync({ projectRoot: repo, isTTY: true, configLoader: jestConfigModuleLoader, confirmGitignoreBlock: noOffer });
+    expect(fs.readFileSync(path.join(repo, '.gitignore'), 'utf8')).toBe(before);
+    expect(out.applied).not.toContain(GITIGNORE_REGION_ID);
+    expect(out.gitignoreBlock).toBeUndefined();
+    expect(con.output()).toContain('managed item unchanged');
+
+    const applied = await runSync({ projectRoot: repo, isTTY: false, apply: true, configLoader: jestConfigModuleLoader, confirmGitignoreBlock: noOffer });
+    expect(fs.readFileSync(path.join(repo, '.gitignore'), 'utf8')).toBe(before);
+    expect(applied.applied).not.toContain(GITIGNORE_REGION_ID);
   });
 });
 
