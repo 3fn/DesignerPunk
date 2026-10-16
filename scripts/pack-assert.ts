@@ -27,7 +27,7 @@
  * contaminates-package-dist.md`, 2026-10-03; ballot 2026-10-03-hermetic-publish-path) adds the
  * publish-path checks: the eight root token files, `themes: []` in the packed commit's
  * `designerpunk.config.ts`, NO leftover `dist/` files, the MCP bundles' module roots all in the root
- * `node_modules/`, and no machine path in `dist/**`. 15.0.0's public artifact (built in a working
+ * `node_modules/`, and no machine path in any packed text file (widened from `dist/**` on 2026-10-15). 15.0.0's public artifact (built in a working
  * checkout) would have failed the leftover and bundle-shape checks.
  *
  * Three ways to get the listing. Every check runs in all three; only where the bytes come from differs:
@@ -602,20 +602,42 @@ export function themesAreEmpty(configSource: string): { ok: boolean; detail: str
   return inner === '' ? { ok: true, detail: 'themes: []' } : { ok: false, detail: `themes holds: ${inner.slice(0, 120)}` };
 }
 
-/** Packed `dist/` files whose text contains any of `needles` (machine paths). */
+/**
+ * Packed text files whose text contains any of `needles` (machine paths) at a path boundary. Every packed path is scanned, not only
+ * `dist/` (publish-path instrument row 5, 2026-10-15): `governance/`, `.kiro/steering/`, `docs/consumer/`,
+ * `token-index/`, `src/**`, `CHANGELOG.md` ship too. A file holding a NUL byte is binary (a font, an image) and is
+ * skipped, the heuristic git itself uses.
+ */
 export function findMachinePaths(paths: string[], read: (p: string) => string | undefined, needles: string[]): string[] {
   const hits: string[] = [];
   for (const p of paths) {
-    if (!p.startsWith('dist/')) continue;
     const text = read(p);
-    if (text !== undefined && needles.some((n) => text.includes(n))) hits.push(p);
+    if (text === undefined || text.includes('\0')) continue;
+    if (needles.some((n) => containsAtPathBoundary(text, n))) hits.push(p);
   }
   return hits;
 }
 
-/** The absolute forms of `root` that must never appear in shipped bytes (as given and with symlinks resolved). */
+/**
+ * A needle matches only at a path boundary: not preceded by `[A-Za-z0-9_.-]` (Peter's ruling (a), 2026-10-16). A
+ * needle at the start of the text matches. So `abc.com/home/x` (a vendored-skill URL) and `a/b/home/x` (a repo-relative
+ * path) do not hit, while `/home/peter/x`, `"/home/x"`, ` /home/x`, `path:/Users/x` and `p=/Users/x` do. No exception
+ * list exists; a machine path glued to a word character is the accepted miss.
+ */
+export const PATH_BOUNDARY_PRECEDER = /[A-Za-z0-9_.-]/;
+export function containsAtPathBoundary(text: string, needle: string): boolean {
+  for (let i = text.indexOf(needle); i !== -1; i = text.indexOf(needle, i + 1)) {
+    if (i === 0 || !PATH_BOUNDARY_PRECEDER.test(text[i - 1])) return true;
+  }
+  return false;
+}
+
+/** Home and temp prefixes of the machines that build: macOS and Linux homes, and macOS's per-user temp root. */
+export const MACHINE_PATH_PREFIXES = ['/Users/', '/home/', '/private/var/folders/'];
+
+/** The needles 10e scans for: the machine prefixes, and `root` as given and with symlinks resolved. */
 export function machinePathNeedles(root: string): string[] {
-  const needles = new Set<string>(['/Users/', path.resolve(root)]);
+  const needles = new Set<string>([...MACHINE_PATH_PREFIXES, path.resolve(root)]);
   try {
     needles.add(fs.realpathSync(root));
   } catch {
@@ -665,10 +687,11 @@ export function publishPathFindings(listing: PackListing): Finding[] {
       `root modules ${r.root}; nested roots [${r.nested.join(', ')}]${r.nested.length > 0 ? ` — ${NESTED_ROOTS_HINT}` : ''}`);
   }
 
-  // 10e. No machine path in dist/**.
+  // 10e. No machine path in any packed text file.
   const needles = machinePathNeedles(listing.root);
   const machine = findMachinePaths(paths, listing.read, needles);
-  add(machine.length === 0, `publish path: no machine path in dist/** (${needles.join(' | ')})`, machine.slice(0, 10).join(', '));
+  add(machine.length === 0, `publish path: no machine path in any packed text file (${needles.join(' | ')})`,
+    machine.length ? `${machine.length}: ${machine.slice(0, 10).join(', ')}${machine.length > 10 ? ', …' : ''}` : '');
 
   return out;
 }
