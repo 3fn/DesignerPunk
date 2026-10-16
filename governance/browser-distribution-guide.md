@@ -493,7 +493,7 @@ Layout container with padding, background, shadow, and border options.
 3. **Verify CSS custom properties:**
    ```javascript
    // In browser console
-   getComputedStyle(document.documentElement).getPropertyValue('--color-primary');
+   getComputedStyle(document.documentElement).getPropertyValue('--color-action-primary');
    // Should return a color value, not empty string
    ```
 
