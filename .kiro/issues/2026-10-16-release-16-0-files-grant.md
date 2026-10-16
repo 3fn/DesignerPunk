@@ -33,3 +33,21 @@
 - **`governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**`, agent charters**: never granted by an issue (rule 8; ballot § 3 clause 5). 16.0.0 needs no governance edit — the release-3 guide corrections landed in #337.
 - **No ratification authority.** Additive to charter scope and nothing else.
 
+
+---
+
+## 2026-10-16 — Re-activation: a grant for the RL-11/RL-12/RL-13 pre-tag fix
+
+**Why**: the `CHANGELOG.md` and `docs/releases/release-16.0.0.md` extent expired at the release PR's merge (#381, `4b940c45d`). Stacy's RELEASE claims pass, phase 1 (#382), then found three defects in those two files: **RL-11**, "header-only" (CHANGELOG L51, notes L19 and L85) is false where its reader meets it, because `DesignTokens.dtcg.json` also carries #368's `deprecatedReason` string; **RL-12**, the CHANGELOG's write-scope bullet (L31) states as observed what the Kiro runs only support as an inference; **RL-13**, the CHANGELOG's `## [16.0.0]` entry carries no blend-deprecation line, and the post-tag correction has no record. Peter ruled RL-11 fork (a), fix before the tag, on 2026-10-16.
+- **Source**: `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.0.0.md` § Findings, RL-11, RL-12 and RL-13.
+- **Grantee**: Ada (the 16.0.0 release's packaging seat).
+- **Activation**: Peter's merge of the PR whose body names this section (README rule 8): this fix PR, branch `chore/release-v16.0.0-rl11`.
+- **Expiry**: that same merge.
+- **This deviates from the 15.1 precedent** ("this section grants; it corrects nothing; the erratum is a later PR"). Here the grant and the correction ride ONE PR, on Peter's explicit direction (2026-10-16: "Ada authors the fix PR with the grant re-activation inside it"), so the grant is active at the moment the diff is judged against it. Because `CHANGELOG.md` is packed, the merge is the new release commit (S1), and step 5.1 and a dated phase-1 addendum re-run on it.
+
+**Grant paths**: `CHANGELOG.md`, `docs/releases/release-16.0.0.md`
+
+**What the fix is** (in the `## [16.0.0]` entry and the notes only):
+- **RL-11**: Upgrading step 5 (CHANGELOG and notes) and notes L19 say the generated-output change is the version in each file plus, in `DesignTokens.dtcg.json`, the one `deprecatedReason` string; "no token value changed" is kept.
+- **RL-12**: the CHANGELOG write-scope parenthetical states what was observed (Sparky refused to create `src/hello.ts`, with and without an in-session yes) and marks the screen-code refusal as the consequence.
+- **RL-13**: one CHANGELOG Known-limitations line for the blend deprecation, and the notes' blend line extended to the token's own `description` and the wrappers' messages; both name the new record `.kiro/issues/2026-10-16-blend-deprecation-next-major-doc-correction.md`.
