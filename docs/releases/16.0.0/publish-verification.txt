@@ -1,0 +1,194 @@
+# Release 16.0.0 — publish verification (RELEASE-FLOW step 6: 6a rail guard + 6b two-registry record)
+
+Date: 2026-10-16 · Operator: the orchestrator, from the MAIN checkout (/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2) · Tag: v16.0.0 → S1 = 13adf005a65d74ccf240a5c8a8b865962e5b67c1 (tag object 0259a606f2d2c2cdafc2c07b57681bed3712a5ee; the squash of PR #383, the RL-11 fix; S = 4b940c45d (#381) was never tagged)
+Grant: .kiro/issues/2026-10-16-release-16-0-files-grant.md (path docs/releases/16.0.0/**, the post-publish record PR extent; expires at this PR's merge).
+Practice (rulings item 19 / RS-17): EVERY run is pasted, failing ones included, with its time and exit code.
+
+## Comparands (6b)
+
+### 5.3 release-publish-record.json (verbatim)
+{
+  "mode": "publish",
+  "version": "16.0.0",
+  "commit": "13adf005a65d74ccf240a5c8a8b865962e5b67c1",
+  "source": "https://github.com/3fn/DesignerPunk.git",
+  "tarball": "/var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-vFNgYW/out/3fn-core-16.0.0.tgz",
+  "sha1": "e9d8bfca5371eacc6fdf30579a512b280c1c165a",
+  "fileCount": 1675,
+  "bytes": 6494583,
+  "checks": {
+    "passed": 105,
+    "total": 105
+  },
+  "publishedTo": [
+    "https://npm.pkg.github.com"
+  ],
+  "createdAt": "2026-10-16T14:31:53.542Z"
+}
+
+### 5.1 dry run at S1 (before the tag), tally line — orchestrator, main checkout, 2026-10-16T13:40:43Z
+$ npx tsx scripts/release-publish.ts --dry-run 13adf005a65d74ccf240a5c8a8b865962e5b67c1 --keep
+105/105 assertions passed.
+files: 1675   bytes: 6494581   pack-assert: 105/105   publish path: 16 (floor 16)
+tarball sha1 at 5.1: 13519dbbc58702ae94e9040655ec91caa132e8b1 — differs from 5.3's by design: 5.3 rebuilds in a fresh clone at the TAG, and the three build-timestamp files move (Stacy's addendum measured the same class between S and S1: equal file sets, four files differ). 6b compares against the 5.3 record's sha1, never 5.1's.
+(5.1 had also run at S = 4b940c45d on 2026-10-16: 105/105, publish path 16, sha1 8edc478f4262a22778dfcbe94a55c837ff6aa031, bytes 6494095 — superseded by S1; recorded in Stacy's phase-1 record #382.)
+
+### 5.3 publish — Peter, from the MAIN checkout, macOS Terminal tab 0 (whoami preflight passed first try)
+$ npx tsx scripts/release-publish.ts 16.0.0 --expect-sha 13adf005a65d74ccf240a5c8a8b865962e5b67c1
+[… fresh clone at v16.0.0, npm ci, check:drift, closure compare, npm pack with prepack build, verify:token-index-clean, pack-assert; npm notice file list elided …]
+npm notice Tarball Details
+npm notice name: @3fn/core
+npm notice version: 16.0.0
+npm notice filename: 3fn-core-16.0.0.tgz
+npm notice package size: 6.5 MB
+npm notice unpacked size: 23.5 MB
+npm notice shasum: e9d8bfca5371eacc6fdf30579a512b280c1c165a
+npm notice integrity: sha512-IGo88WwPv8hny[...]uDNG0WPRJ04tQ==
+npm notice total files: 1675
+npm notice
+npm notice Publishing to https://npm.pkg.github.com with tag latest and default access
++ @3fn/core@16.0.0
+
+tarball:    /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-vFNgYW/out/3fn-core-16.0.0.tgz
+sha1:       e9d8bfca5371eacc6fdf30579a512b280c1c165a
+files:      1675   bytes: 6494583   pack-assert: 105/105   publish path: 16 (floor 16)
+record:     /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-vFNgYW/out/release-publish-record.json
+
+Published to https://npm.pkg.github.com. RELEASE-FLOW 5.4 (Peter's terminal, web 2FA) — first check the file, then publish the SAME tarball:
+  shasum /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-vFNgYW/out/3fn-core-16.0.0.tgz    # must print e9d8bfca5371eacc6fdf30579a512b280c1c165a
+  npm publish /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-vFNgYW/out/3fn-core-16.0.0.tgz --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public
+Then RELEASE-FLOW step 6: both registries' dist.shasum must equal the sha1 above.
+(whoami preflight passed first try; no token refresh needed — no E403 seen in the captured tail.)
+Published to https://npm.pkg.github.com at 2026-10-16T14:31:56Z (the registry's own time["16.0.0"]) — tarball sha1 e9d8bfca5371eacc6fdf30579a512b280c1c165a, 1675 files, 6494583 bytes, pack-assert 105/105, publish path 16 (floor 16).
+
+### 5.3 — a SECOND run (duplicate), Peter, Terminal tab 1, started ~4 s after tab 0 — REFUSED E409, nothing published
+$ npx tsx scripts/release-publish.ts 16.0.0 --expect-sha 13adf005a65d74ccf240a5c8a8b865962e5b67c1
+[… fresh clone at v16.0.0, build, pack-assert as in tab 0; npm notice file list elided …]
+npm notice Tarball Details
+npm notice name: @3fn/core
+npm notice version: 16.0.0
+npm notice filename: 3fn-core-16.0.0.tgz
+npm notice package size: 6.5 MB
+npm notice unpacked size: 23.5 MB
+npm notice shasum: c543b5534f9923d53567d7aa3f914fc55a3c1577
+npm notice integrity: sha512-Z9WCWX4nI7rnu[...]fShCZwdAxSO9A==
+npm notice total files: 1675
+npm notice
+npm notice Publishing to https://npm.pkg.github.com with tag latest and default access
+npm error code E409
+npm error 409 Conflict - PUT https://npm.pkg.github.com/@3fn%2fcore - Cannot publish over existing version
+npm error A complete log of this run can be found in: /Users/3fn/.npm/_logs/2026-10-16T14_31_57_233Z-debug-0.log
+work dir kept for inspection: /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-UuoCX1
+
+REFUSED: npm publish to GitHub Packages failed (exit 1)
+Nothing was published.
+# Reading: tab 0's run had already published e9d8bfca… at 14:31:56Z; the registry refused the second PUT (E409), so GitHub Packages holds exactly one 16.0.0 artifact, e9d8bfca…. The tab-1 tarball (c543b553…, a different build-timestamp set) is NOT the release artifact and must not be used at 5.4. Different sha1 for the same commit = the three build-timestamp files (Stacy's addendum measured the same class between S and S1).
+
+### 5.4 public npm (Peter's terminal, web 2FA)
+$ shasum /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-vFNgYW/out/3fn-core-16.0.0.tgz
+e9d8bfca5371eacc6fdf30579a512b280c1c165a  /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-vFNgYW/out/3fn-core-16.0.0.tgz
+$ npm publish /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-vFNgYW/out/3fn-core-16.0.0.tgz --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public
+[… npm notice file list elided …]
+npm notice Tarball Details
+npm notice name: @3fn/core
+npm notice version: 16.0.0
+npm notice filename: 3fn-core-16.0.0.tgz
+npm notice package size: 6.5 MB
+npm notice unpacked size: 23.5 MB
+npm notice shasum: e9d8bfca5371eacc6fdf30579a512b280c1c165a
+npm notice integrity: sha512-IGo88WwPv8hny[...]uDNG0WPRJ04tQ==
+npm notice total files: 1675
+npm notice
+npm notice Publishing to https://registry.npmjs.org with tag latest and public access
+npm error code E404
+npm error 404 Not Found - PUT https://registry.npmjs.org/@3fn%2fcore - Not found
+npm error 404
+npm error 404  '@3fn/core@16.0.0' is not in this registry.
+npm error 404
+npm error 404 Note that you can also install from a
+npm error 404 tarball, folder, http url, or git url.
+npm error A complete log of this run can be found in: /Users/3fn/.npm/_logs/2026-10-16T14_37_23_701Z-debug-0.log
+# Cause (orchestrator read, 14:37:44Z): `npm whoami --registry https://registry.npmjs.org` → E401 Unauthorized. The npmjs login had expired; npm reports that on a scoped PUT as E404 (pitfall 4, the same refusal 15.1.0's 5.4 met — docs/releases/15.1.0/publish-verification.txt L37). Packument check: time["16.0.0"] ABSENT on registry.npmjs.org. Remedy: `npm login --auth-type=web --registry https://registry.npmjs.org`, then the SAME tarball, same command.
+Attempt 2 (Peter, macOS Terminal, after `npm login --auth-type=web --registry https://registry.npmjs.org`; web 2FA at the PUT: "Authenticate your account at: https://www.npmjs.com/auth/cli/…"): the SAME tarball (shasum checked first, e9d8bfca…; npm notice shasum e9d8bfca5371eacc6fdf30579a512b280c1c165a, total files 1675) published:
+  npm notice Your package is being processed and may take a few minutes to become available.
+  + @3fn/core@16.0.0
+(Screenshot of the Terminal read by the orchestrator at ~14:41Z; the pane transcript of attempt 1 is verbatim above.)
+
+## 6a — the rail guard (full output, exit code) — every run
+### rail run 1 — 2026-10-16T14:40:52Z — main checkout
+  $ VERSION=16.0.0 ./scripts/verify-publish-rail.sh
+  FAIL[version]: @3fn/core@16.0.0 is not visible on https://registry.npmjs.org (HTTP 404) — do not announce this release. Before re-running, read the registry's own record: if the packument (curl -s https://registry.npmjs.org/@3fn%2fcore) has no time["16.0.0"], the version is not published yet and this 404 is the correct answer, not indexing lag; only if time["16.0.0"] is present, re-run by hand within a few minutes of it.
+  exit 10
+(packument at 14:40:35Z: time["16.0.0"] ABSENT, latest 15.1.0 — the 404 was the correct answer: not published yet.)
+### rail run 2 — 2026-10-16T14:42:25Z — main checkout
+  $ VERSION=16.0.0 ./scripts/verify-publish-rail.sh
+  FAIL[version]: @3fn/core@16.0.0 is not visible on https://registry.npmjs.org (HTTP 404) — do not announce this release. Before re-running, read the registry's own record: if the packument (curl -s https://registry.npmjs.org/@3fn%2fcore) has no time["16.0.0"], the version is not published yet and this 404 is the correct answer, not indexing lag; only if time["16.0.0"] is present, re-run by hand within a few minutes of it.
+  exit 10
+(packument at 14:42:25Z: time["16.0.0"] still ABSENT — npm's "being processed" window; the orchestrator then watched the packument instead of re-running the rail.)
+(packument watch: time["16.0.0"] appeared at 2026-10-16T14:52:24.127Z — the registry's own time, 10 min 59 s after Peter's `+ @3fn/core@16.0.0`; the orchestrator polled the packument every 15 s and re-ran the rail only once it was present, per the step-6 rule.)
+### rail run 3 — 2026-10-16T14:52:53Z — main checkout
+  $ VERSION=16.0.0 ./scripts/verify-publish-rail.sh
+  PASS: @3fn/core@16.0.0 visible on npmjs; tarball host verified
+  exit 0
+
+## 6b — per-registry record
+
+### registry.npmjs.org
+$ curl -s https://registry.npmjs.org/@3fn%2fcore | (time["16.0.0"], dist-tags.latest, versions["16.0.0"].dist.shasum, .dist.tarball)
+time["16.0.0"]: 2026-10-16T14:52:24.127Z
+dist-tags.latest: 16.0.0
+dist.shasum: e9d8bfca5371eacc6fdf30579a512b280c1c165a
+dist.tarball: https://registry.npmjs.org/@3fn/core/-/core-16.0.0.tgz
+$ npm pack @3fn/core@16.0.0 --registry https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --pack-destination <tmp>/npmjs
+npm notice 3fn-core-16.0.0.tgz
+npm notice Tarball Details
+npm notice name: @3fn/core
+npm notice version: 16.0.0
+npm notice filename: 3fn-core-16.0.0.tgz
+npm notice shasum: e9d8bfca5371eacc6fdf30579a512b280c1c165a
+npm notice total files: 1675
+$ shasum npmjs/3fn-core-16.0.0.tgz
+e9d8bfca5371eacc6fdf30579a512b280c1c165a  /private/tmp/claude-501/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/scratchpad/step6/npmjs/3fn-core-16.0.0.tgz
+$ tar -tzf npmjs/3fn-core-16.0.0.tgz | wc -l
+    1675
+$ wc -c
+ 6494583
+$ cmp npmjs vs ghp tarball bytes
+identical bytes
+- version present: yes · registry publish time time["16.0.0"] = 2026-10-16T14:52:24.127Z · file count 1675 · dist.shasum e9d8bfca5371eacc6fdf30579a512b280c1c165a · fetched-bytes sha1 e9d8bfca5371eacc6fdf30579a512b280c1c165a · 6494583 bytes · dist-tags.latest = 16.0.0
+
+### npm.pkg.github.com
+$ npm view @3fn/core@16.0.0 dist.shasum time --json --registry https://npm.pkg.github.com --@3fn:registry=https://npm.pkg.github.com | (dist.shasum, time["16.0.0"])
+dist.shasum: e9d8bfca5371eacc6fdf30579a512b280c1c165a
+time["16.0.0"]: 2026-10-16T14:31:56Z
+$ npm pack @3fn/core@16.0.0 --registry https://npm.pkg.github.com --@3fn:registry=https://npm.pkg.github.com --pack-destination <tmp>/ghp
+npm notice 3fn-core-16.0.0.tgz
+5.9kB dist/tools/integrity/GenerationIntegrityCheck.js
+npm notice Tarball Details
+npm notice name: @3fn/core
+npm notice version: 16.0.0
+npm notice filename: 3fn-core-16.0.0.tgz
+npm notice package size: 6.5 MB
+npm notice unpacked size: 23.5 MB
+npm notice shasum: e9d8bfca5371eacc6fdf30579a512b280c1c165a
+npm notice integrity: sha512-IGo88WwPv8hny[...]uDNG0WPRJ04tQ==
+npm notice total files: 1675
+npm notice
+$ shasum ghp/3fn-core-16.0.0.tgz
+e9d8bfca5371eacc6fdf30579a512b280c1c165a  /private/tmp/claude-501/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/scratchpad/step6/ghp/3fn-core-16.0.0.tgz
+$ tar -tzf ghp/3fn-core-16.0.0.tgz | wc -l
+    1675
+$ wc -c
+ 6494583
+- version present: yes · registry publish time time["16.0.0"] = 2026-10-16T14:31:56Z · file count 1675 · dist.shasum e9d8bfca5371eacc6fdf30579a512b280c1c165a · fetched-bytes sha1 e9d8bfca5371eacc6fdf30579a512b280c1c165a · 6494583 bytes
+- The two fetched tarballs are byte-identical (`cmp`).
+
+## Verdict
+All four sha1s (npmjs dist.shasum, npmjs fetched bytes, GitHub Packages dist.shasum, GitHub Packages fetched bytes) equal the 5.3 record's sha1 e9d8bfca5371eacc6fdf30579a512b280c1c165a. Both registries carry the ONE tarball built in a fresh clone at the tag v16.0.0 (S1 = 13adf005a65d74ccf240a5c8a8b865962e5b67c1), 1675 files, 6494583 bytes. Rail guard: PASS, exit 0 (run 3; runs 1–2 were correct 404s before the registry recorded the version). The duplicate 5.3 run's tarball (c543b553…) was refused by the registry and never published; it is not an artifact of this release. Release 16.0.0 is published and verified; the GitHub release (step 7) follows Stacy's phase 2.
+
+## Post-merge obligations recorded here (for Stacy's phase 2)
+- Both indexes: no rebuild_index owed for #383/#384 — they touched CHANGELOG.md, docs/releases/, .kiro/issues/ and .kiro/specs/ completion records only, none MCP-served (the docs MCP serves governance/** and steering; the last served-content change was #378, indexed 2026-10-16T03:16Z per #382's record).
+- Post-tag obligations with homes: the blend deprecation-text correction (.kiro/issues/2026-10-16-blend-deprecation-next-major-doc-correction.md, Ada, trigger tag:v16.0.0 — now fired); the docs-MCP PR (rulings item 14, Thurgood); the ballot sitting (item 23 + option D's two ballots, items 26); CLI class fix (item 24, Lina); PR 0/1 palette series next burst (item 27, Ada); RL-17 acknowledgement (Ada) and RS-30 (Thurgood: a written home for 'which record paths need no grant').
+- Still open for Peter: RL-14 (C-3 / C-6 / C-4) — fork (a) the #379 merge accepted the carry, or (b) rule the three rows now; Thurgood writes the line either way.
+- OB-2 (Stacy): no one has yet run the published 16.0.0 tarball as a consumer; the cold-install smoke is phase 2's.
+- GitHub release: NOT yet created; step 7 runs LAST, after phase 2: gh release create v16.0.0 --notes-file docs/releases/release-16.0.0.md
