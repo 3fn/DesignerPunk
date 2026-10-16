@@ -14,8 +14,14 @@
  *   - .kiro/agents/     — local development agent prompts
  *   - dist/             — build artifacts (skipping sourcemaps)
  *
- * Pattern matched: @<scope>/(core|tokens|components)
- * Drift is any match where <scope> differs from package.json's scope.
+ * Patterns matched:
+ *   - @<scope>/(core|tokens|components|build)  — a package reference
+ *   - @<scope>:registry                         — an npm scope-registry line (`.npmrc`, install docs);
+ *                                                 added 2026-10-15 (#312 finding 3: a stale
+ *                                                 `@designerpunk:registry=…` passed the first pattern)
+ * Drift is any match where <scope> differs from package.json's scope. A registry
+ * line for a third-party scope is drift too unless the scope is named in
+ * THIRD_PARTY_REGISTRY_SCOPES (empty today).
  *
  * Sourcemaps (*.js.map, *.map) are excluded — sourcemaps embed source content
  * and would false-positive on any legitimate reference in committed sources.
@@ -91,6 +97,21 @@ const SCOPE_PATTERN = new RegExp(
   `@([a-z0-9][a-z0-9-]*)/(${PACKAGE_NAMES.join('|')})(?=[/"'\\s\`,;:)\\]}]|$)`,
   'g',
 );
+
+/**
+ * Pattern: @<scope>:registry — the npm config key that maps a scope to a registry
+ * (`@3fn:registry=https://npm.pkg.github.com`). A stale scope here points an install
+ * at the wrong (or no) registry, so it is drift like a stale package reference.
+ *
+ * Capture group 1: scope (without @)
+ */
+const REGISTRY_PATTERN = /@([a-z0-9][a-z0-9-]*):registry\b/g;
+
+/**
+ * Third-party scopes whose `@<scope>:registry` lines are legitimate (a dependency
+ * served from its own registry). Named here, one per entry, with the reason; empty today.
+ */
+const THIRD_PARTY_REGISTRY_SCOPES = [];
 
 /**
  * Read the expected scope from package.json.
@@ -174,6 +195,22 @@ function scanFile(filePath, expectedScope, repoRoot) {
           matchedScope: scope,
           matchedPackage: pkgName,
           fullMatch: match[0],
+          expected: `@${expectedScope}/${pkgName}`,
+        });
+      }
+    }
+    REGISTRY_PATTERN.lastIndex = 0;
+    while ((match = REGISTRY_PATTERN.exec(line)) !== null) {
+      const [, scope] = match;
+      if (scope !== expectedScope && !THIRD_PARTY_REGISTRY_SCOPES.includes(scope)) {
+        drift.push({
+          file: path.relative(repoRoot, filePath),
+          line: i + 1,
+          lineText: line.trim(),
+          matchedScope: scope,
+          matchedPackage: null,
+          fullMatch: match[0],
+          expected: `@${expectedScope}:registry`,
         });
       }
     }
@@ -190,7 +227,7 @@ function formatDrift(entry, expectedScope) {
   return [
     `  ${colors.red}✗${colors.reset} ${colors.bold}${entry.file}:${entry.line}${colors.reset}`,
     `    ${colors.gray}found:${colors.reset}    ${colors.red}${entry.fullMatch}${colors.reset}`,
-    `    ${colors.gray}expected:${colors.reset} ${colors.green}@${expectedScope}/${entry.matchedPackage}${colors.reset}`,
+    `    ${colors.gray}expected:${colors.reset} ${colors.green}${entry.expected}${colors.reset}`,
     `    ${colors.gray}context:${colors.reset}  ${snippet}`,
   ].join('\n');
 }
@@ -206,7 +243,7 @@ function main() {
     `${colors.gray}  Scanning: ${SCAN_DIRS.join(', ')}${colors.reset}`,
   );
   console.log(
-    `${colors.gray}  Packages: ${PACKAGE_NAMES.map((p) => `@*/${p}`).join(', ')}${colors.reset}`,
+    `${colors.gray}  Packages: ${PACKAGE_NAMES.map((p) => `@*/${p}`).join(', ')}, @*:registry${colors.reset}`,
   );
   console.log(`${colors.gray}  Excluded: *.map (sourcemaps)${colors.reset}`);
   console.log('');
@@ -259,4 +296,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { SCAN_DIRS };
+module.exports = { SCAN_DIRS, THIRD_PARTY_REGISTRY_SCOPES };
