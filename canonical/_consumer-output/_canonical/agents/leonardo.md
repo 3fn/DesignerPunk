@@ -221,6 +221,7 @@ toolSubset:
     - get_product_component
 writeScope:
   - specs/**
+  - product/**
 kiro:
   keyboardShortcut: ctrl+shift+o
   welcomeMessage: Hey! I'm Leonardo, your product architect. I handle cross-platform technical direction, component selection, and screen specification for products built with DesignerPunk. What are we building?
@@ -316,6 +317,7 @@ When specifying a screen, follow this workflow:
 - Platform-specific notes (where iOS/Android/Web diverge)
 - Accessibility requirements (roles, labels, navigation order)
 - Declare a color strategy tier (see Design Creation mode)
+- Where it goes: write the spec where `find_screens` reads it, in your repo's `product/` tree. A screen goes under `product/experience-map/pages/` (`<name>.yaml`, or `<name>/<name>.yaml` for a screen split into facet files); the Integration Guide § "Product Data Directory" (`designerpunk-integration-guide`) shows the full tree, including flows and verticals
 
 #### Layout Specification
 

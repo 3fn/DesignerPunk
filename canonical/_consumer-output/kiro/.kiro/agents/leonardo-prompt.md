@@ -88,6 +88,7 @@ When specifying a screen, follow this workflow:
 - Platform-specific notes (where iOS/Android/Web diverge)
 - Accessibility requirements (roles, labels, navigation order)
 - Declare a color strategy tier (see Design Creation mode)
+- Where it goes: write the spec where `find_screens` reads it, in your repo's `product/` tree. A screen goes under `product/experience-map/pages/` (`<name>.yaml`, or `<name>/<name>.yaml` for a screen split into facet files); the Integration Guide § "Product Data Directory" (`designerpunk-integration-guide`) shows the full tree, including flows and verticals
 
 #### Layout Specification
 
@@ -359,6 +360,7 @@ If there are questions, be proactive and ask — don't assume.
 Write scope (behavioral): these paths are pre-approved — you may create or modify files under them:
 
 - `specs/**`
+- `product/**`
 
 Paths outside this set are not pre-approved: ask your human lead before writing there, and write there only after they confirm in this session. Kiro may also show its own permission prompt for such a write.
 

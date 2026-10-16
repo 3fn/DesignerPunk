@@ -56,7 +56,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 ### In Scope
 
 - Web screen implementation using Web Components (Shadow DOM)
-- Consuming DesignerPunk Web tokens (CSS custom properties via `@3fn/core/tokens.css`)
+- Consuming DesignerPunk Web tokens (CSS custom properties): import or link your repo's own `DesignTokens.web.css`, which `npx designerpunk generate` writes to your configured output directory, in place of DesignerPunk's base (`@3fn/core/tokens.css`, the bundle's `dist/browser/tokens.css`, or the same-named `DesignTokens.web.css` inside the installed package), which is only the zero-config evaluation path; alongside it, keep the component-token stylesheet the install guide names (`docs/consumer/INSTALL.md` § Web, in the `@3fn/core` package)
 - Implementing DesignerPunk component specifications in TypeScript (referencing each component's assembled API through the application MCP)
 - Writing Web-specific tests for product screens
 - Web navigation, state management, and data binding

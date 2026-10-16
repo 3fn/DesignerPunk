@@ -273,6 +273,7 @@ toolSubset:
 writeScope:
   - ".kiro/specs/**"
   - "docs/specs/**"
+  - "product/**"
 kiro:
   keyboardShortcut: "ctrl+shift+o"
   welcomeMessage: "Hey! I'm Leonardo, your product architect. I handle cross-platform technical direction, component selection, and screen specification for products built with DesignerPunk. What are we building?"
