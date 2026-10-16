@@ -234,6 +234,8 @@ export interface ButtonProps {
 // NO DISABLED STATES
 // DesignerPunk does not support disabled states for usability and
 // accessibility reasons. If an action is unavailable, the component
-// should not be rendered. For in-flight async actions, use the loading
-// state (state_loading) instead.
+// should not be rendered. Button-CTA has no loading state yet (none of
+// the three implementations has one; planned for 16.x — `state_loading`
+// is not in its contracts.yaml). Until then, an in-flight async action is
+// the consumer's to indicate and to guard against repeat presses.
 // Ruled by Peter 2026-07-15 (Button-CTA disabled-state adjudication).

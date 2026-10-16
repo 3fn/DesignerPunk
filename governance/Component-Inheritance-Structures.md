@@ -144,13 +144,14 @@ Button-CTA uses the `[Family]-[Type]` pattern (not `[Family]-[Type]-Base`) becau
 
 ### Behavioral Contracts
 
-**Contracts (6 total)**:
-- `interaction_pressable` - Responds to click/tap interactions (WCAG 2.1.1)
+**Contracts (5 total)**:
 - `interaction_focusable` - Keyboard focus support (WCAG 2.1.1)
-- `state_loading` - Shows loading indicator during async operations
-- `icon_support` - Supports leading/trailing icons
+- `interaction_pressable` - Responds to click/tap interactions (WCAG 2.1.1)
+- `interaction_hover` - Perceptibly darker on hover, desktop only (WCAG 1.4.13)
+- `interaction_pressed` - Distinctly darker when pressed
 - `interaction_focus_ring` - WCAG 2.4.7 focus visible indicator
-- `reduced_motion_support` - Respects prefers-reduced-motion
+
+No loading state yet — planned for 16.x.
 
 **Excluded**: `state_disabled` — DesignerPunk does not support disabled states for usability and accessibility reasons (adjudicated 2026-07-15; see `.kiro/issues/button-cta-disabled-state-adjudication.md`).
 

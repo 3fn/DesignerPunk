@@ -33,7 +33,7 @@ The Button-CTA (Call-to-Action Button) component is a cross-platform button foll
 
 ## Behavioral Contracts
 
-This component guarantees 7 behavioral contracts across all platforms:
+This component guarantees 5 behavioral contracts:
 
 | Contract | Description | Platforms | WCAG |
 |----------|-------------|-----------|------|
@@ -41,10 +41,11 @@ This component guarantees 7 behavioral contracts across all platforms:
 | `pressable` | Responds to press/click events | web, ios, android | 2.1.1 |
 | `hover_state` | Visual feedback on hover | web | 1.4.13 |
 | `pressed_state` | Visual feedback when pressed | web, ios, android | 2.4.7 |
-| `loading_state` | Shows loading indicator | web, ios, android | 4.1.3 |
 | `focus_ring` | WCAG 2.4.7 focus visible indicator | web, ios, android | 2.4.7 |
 
 **Excluded**: `state_disabled` — DesignerPunk does not support disabled states for usability and accessibility reasons. If an action is unavailable, the component should not be rendered (adjudicated 2026-07-15).
+
+**Not yet addressed**: a loading state (`state_loading`). None of the three implementations has one; it is planned for 16.x. Until then, an in-flight async action is yours to indicate (for example, an indeterminate `Progress-Bar-Base` beside the button) and to guard against repeat presses in your `onPress` handler.
 
 ---
 
