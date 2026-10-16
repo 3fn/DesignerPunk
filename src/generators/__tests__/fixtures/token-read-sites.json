@@ -1,0 +1,223 @@
+{
+  "record": ".kiro/issues/2026-10-15-123-palette-read-from-package.md",
+  "note": "Ledger of every pipeline-code read of the PACKAGE token source (src/tokens). A site not reachable from generate is listed for completeness. Rows are compared with the observed set by TokenReadSiteInventory.test.ts.",
+  "rows": [
+    {
+      "file": "src/blend/BlendCalculator.ts",
+      "modules": [
+        "BlendTokens"
+      ],
+      "part": "Blend primitives (BlendTokens)",
+      "generateReach": "generate: no - the blend runtime utilities; not imported by the generate path (BlendUtilityGenerator emits source text and imports only blend/ColorSpaceUtils)"
+    },
+    {
+      "file": "src/build/BuildOrchestrator.ts",
+      "modules": [
+        "index",
+        "semantic"
+      ],
+      "part": "All primitive and semantic tokens (getAllPrimitiveTokens, getAllSemanticTokens, getTokensByCategory)",
+      "generateReach": "generate: no - steward build orchestration; not imported by the generate path"
+    },
+    {
+      "file": "src/composition/BlendComposition.ts",
+      "modules": [
+        "BlendTokens"
+      ],
+      "part": "Blend primitives (BlendTokens)",
+      "generateReach": "generate: no - not imported by the generate path"
+    },
+    {
+      "file": "src/composition/BlendCompositionParser.ts",
+      "modules": [
+        "BlendTokens"
+      ],
+      "part": "Blend primitives (BlendTokens)",
+      "generateReach": "generate: no - not imported by the generate path"
+    },
+    {
+      "file": "src/composition/OpacityCompositionParser.ts",
+      "modules": [
+        "BlendTokens"
+      ],
+      "part": "Blend primitives (BlendTokens)",
+      "generateReach": "generate: no - not imported by the generate path"
+    },
+    {
+      "file": "src/generators/BlendValueGenerator.ts",
+      "modules": [
+        "BlendTokens"
+      ],
+      "part": "Blend primitives (getAllBlendTokens, BLEND_BASE_VALUE)",
+      "generateReach": "generate: no - imported by no pipeline file (tests only)"
+    },
+    {
+      "file": "src/generators/DTCGFormatGenerator.ts",
+      "modules": [
+        "BlendTokens",
+        "BlurTokens",
+        "BorderWidthTokens",
+        "BreakpointTokens",
+        "ColorTokens",
+        "DensityTokens",
+        "DurationTokens",
+        "EasingTokens",
+        "FontFamilyTokens",
+        "FontSizeTokens",
+        "FontWeightTokens",
+        "GlowOpacityTokens",
+        "LetterSpacingTokens",
+        "LineHeightTokens",
+        "OpacityTokens",
+        "RadiusTokens",
+        "ScaleTokens",
+        "ShadowOffsetTokens",
+        "ShadowOpacityTokens",
+        "SizingTokens",
+        "SpacingTokens",
+        "TapAreaTokens",
+        "color",
+        "index",
+        "semantic/AccessibilityTokens",
+        "semantic/BlendTokens",
+        "semantic/BorderWidthTokens",
+        "semantic/ColorTokens",
+        "semantic/ElevationTokens",
+        "semantic/GridSpacingTokens",
+        "semantic/IconTokens",
+        "semantic/MotionTokens",
+        "semantic/OpacityTokens",
+        "semantic/RadiusTokens",
+        "semantic/ShadowTokens",
+        "semantic/SpacingTokens",
+        "semantic/TypographyTokens",
+        "semantic/ZIndexTokens",
+        "semantic/index",
+        "themes/dark/SemanticOverrides"
+      ],
+      "part": "Every primitive and semantic token family, the colour palette (colorTokens, composedColorMap) and the dark override map: the whole DTCG export (and the Figma export built from it)",
+      "generateReach": "generate: yes - generateTokenFiles requires it for DesignTokens.dtcg.json; the Figma file is built from that output"
+    },
+    {
+      "file": "src/generators/generateTokenFiles.ts",
+      "modules": [
+        "color",
+        "themes/dark-wcag/SemanticOverrides",
+        "themes/dark/SemanticOverrides",
+        "themes/wcag/SemanticOverrides"
+      ],
+      "part": "Dark, WCAG and dark-WCAG override maps (themes/*/SemanticOverrides) and composedColorMap (per-primitive OKLCH metadata for the token index)",
+      "generateReach": "generate: yes - every run"
+    },
+    {
+      "file": "src/generators/ResponsiveGridGenerator.ts",
+      "modules": [
+        "BreakpointTokens",
+        "semantic/GridSpacingTokens"
+      ],
+      "part": "Breakpoint primitives and semantic grid-spacing tokens",
+      "generateReach": "generate: no - imported by no pipeline file (tests only)"
+    },
+    {
+      "file": "src/generators/TokenFileGenerator.ts",
+      "modules": [
+        "FontSizeTokens",
+        "LineHeightTokens",
+        "color",
+        "color/channels/chroma/chromatic",
+        "color/channels/chroma/neutral",
+        "color/channels/hues",
+        "color/channels/lightness/chromatic",
+        "color/channels/lightness/neutral",
+        "index",
+        "semantic",
+        "semantic/IconTokens"
+      ],
+      "part": "Motion primitives (duration, easing, scale) and semantic motion; layering (z-index, elevation); the OKLCH palette (composedColors, hue, lightness and chroma channels); icon-size derivation (fontSize, lineHeight, icon multiplier tables); getAllPrimitiveTokens/getAllSemanticTokens only as an options fallback and for the cross-platform consistency report (no effect on written files)",
+      "generateReach": "generate: yes - generateAll and generateComponentTokens, every run"
+    },
+    {
+      "file": "src/integration/ValidationCoordinator.ts",
+      "modules": [
+        "RadiusTokens",
+        "SpacingTokens"
+      ],
+      "part": "Spacing and radius primitives",
+      "generateReach": "generate: no - not imported by the generate path"
+    },
+    {
+      "file": "src/providers/AndroidFormatGenerator.ts",
+      "modules": [
+        "ColorTokens",
+        "OpacityTokens"
+      ],
+      "part": "Colour palette (getColorToken) and opacity primitives (getOpacityToken) for colour-with-opacity composition formatting",
+      "generateReach": "generate: yes - same as WebFormatGenerator"
+    },
+    {
+      "file": "src/providers/iOSFormatGenerator.ts",
+      "modules": [
+        "ColorTokens",
+        "OpacityTokens"
+      ],
+      "part": "Colour palette (getColorToken) and opacity primitives (getOpacityToken) for colour-with-opacity composition formatting",
+      "generateReach": "generate: yes - same as WebFormatGenerator"
+    },
+    {
+      "file": "src/providers/WebFormatGenerator.ts",
+      "modules": [
+        "ColorTokens",
+        "OpacityTokens"
+      ],
+      "part": "Colour palette (getColorToken) and opacity primitives (getOpacityToken) for colour-with-opacity composition formatting",
+      "generateReach": "generate: yes - used by TokenFileGenerator and generateTokenIndex (the opacity-composition branch is bypassed when SemanticValueResolver has already baked the value)"
+    },
+    {
+      "file": "src/providers/WebUnitConverter.ts",
+      "modules": [
+        "FontSizeTokens"
+      ],
+      "part": "fontSize base value (FONT_SIZE_BASE_VALUE)",
+      "generateReach": "generate: no - imported only by integration/TranslationCoordinator and build/validation/TokenComparator"
+    },
+    {
+      "file": "src/resolvers/SemanticValueResolver.ts",
+      "modules": [
+        "ColorTokens",
+        "OpacityTokens",
+        "color"
+      ],
+      "part": "Colour palette (composedColorMap, legacy getColorToken) and opacity primitives (getOpacityToken) used to bake colour-with-opacity semantic values",
+      "generateReach": "generate: yes - resolveSemanticTokenValue runs for all four contexts"
+    },
+    {
+      "file": "src/tools/ThemeFileGenerator.ts",
+      "modules": [
+        "semantic",
+        "themes/dark/SemanticOverrides"
+      ],
+      "part": "Semantic tokens and the dark override map",
+      "generateReach": "generate: no - steward tool; not imported by the generate path"
+    },
+    {
+      "file": "src/validators/buildValidation.ts",
+      "modules": [
+        "BorderWidthTokens",
+        "SpacingTokens",
+        "semantic/AccessibilityTokens",
+        "semantic/ColorTokens"
+      ],
+      "part": "Spacing, border-width, accessibility and semantic colour tokens",
+      "generateReach": "generate: no - steward script (npm run build:validate); excluded from the package (pack-assert wholesale sentinel)"
+    },
+    {
+      "file": "src/validators/ModeParity.ts",
+      "modules": [
+        "semantic",
+        "themes/dark/SemanticOverrides"
+      ],
+      "part": "Semantic tokens and the dark override map",
+      "generateReach": "generate: no - steward script (npm run audit:mode-parity)"
+    }
+  ]
+}
