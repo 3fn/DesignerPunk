@@ -88,6 +88,8 @@ The fastest way to get started with DesignerPunk web components:
 - Components auto-register when the bundle loads
 - No manual setup code required
 
+**Your own tokens.** `dist/browser/tokens.css` is DesignerPunk's base, the zero-config evaluation path. In a repo where you ran `npx designerpunk init`, link the `DesignTokens.web.css` that `npx designerpunk generate` writes to your configured output directory **in place of** `tokens.css`, and keep the component-token stylesheet the install guide names (`docs/consumer/INSTALL.md` § Web). A page that links the base still renders, and the bundle's token check still passes, but your token edits never reach it.
+
 ---
 
 ## Demo Pages
@@ -301,10 +303,10 @@ The bundle automatically checks if tokens are loaded. If tokens are missing, you
 
 The `tokens.css` file includes CSS custom properties for:
 
-- **Colors**: `--color-primary`, `--color-error`, `--color-success`, etc.
-- **Typography**: `--typography-body-md-font-size`, `--typography-heading-lg-font-size`, etc.
+- **Colors**: `--color-action-primary`, `--color-feedback-error-text`, `--color-feedback-success-text`, etc.
+- **Typography**: `--typography-body-md-font-size`, `--typography-h-1-font-size`, etc.
 - **Spacing**: `--space-100`, `--space-200`, `--space-inset-200`, etc.
-- **Borders**: `--border-border-default`, `--radius-100`, etc.
+- **Borders**: `--border-default`, `--radius-100`, etc.
 - **Shadows**: `--shadow-container`, `--shadow-dusk`, etc.
 
 ### Using Tokens in Custom Styles
@@ -313,7 +315,7 @@ You can use DesignerPunk tokens in your own CSS:
 
 ```css
 .my-custom-element {
-  background: var(--color-surface);
+  background: var(--color-structure-surface);
   color: var(--color-text-default);
   padding: var(--space-inset-200);
   border-radius: var(--radius-100);

@@ -9,6 +9,7 @@ description: Opacity token family — transparency tokens with 8% base increment
 
 **Date**: 2025-12-30
 **Last Reviewed**: 2026-03-06
+**Section Revised**: § Disabled States revised 2026-09-18 (#170)
 **Purpose**: Complete reference for opacity tokens with percentage-based naming convention and mathematical relationships
 **Organization**: token-documentation
 **Scope**: cross-project
@@ -381,7 +382,7 @@ Use opacity tokens for modal backdrops, overlays, and scrim effects:
 
 If an action is unavailable, use one of the three ruled alternatives instead:
 
-- `state_loading` — for an in-flight async action
+- `state_loading` — for an in-flight async action; a ruled alternative, not yet implemented (Button-CTA, 16.x)
 - Validate-on-press / validate-on-blur — for invalid input
 - Do not render the component — for an action that is not available at all
 

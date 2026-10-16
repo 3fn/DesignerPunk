@@ -74,9 +74,11 @@ Use this posture when you want a design system of your own. These are the five s
 4. Fill in your personal note — or, after the restart, ask your agent to walk you through it.
 5. Restart your agent session. Claude Code then asks you to trust the folder and to enable DesignerPunk's three MCP servers: accept both. Kiro asks nothing.
 
-**Step 2, `init`, is the birth event — runs once per design system, ever.** It copies DesignerPunk's token source into your repo as your own, writes `designerpunk.config.ts`, and generates the agent layer and the MCP configuration for the target you name (`cc` for Claude Code, `kiro` for Kiro). From then on the token language is yours. `init` never runs again in this repo. A teammate joins by section 7, not by running it. `--name` and `--abbreviation` are your product's name and its short form, and `init` writes both into `designerpunk.config.ts`. Without them, `init` asks for each in a terminal; where nothing can answer (an agent's shell, or CI), it stops with an error. So pass both.
+**Step 2, `init`, is the birth event — runs once per design system, ever.** It copies DesignerPunk's token source into your repo as your own, writes `designerpunk.config.ts`, and generates the agent layer and the MCP configuration for the target you name (`cc` for Claude Code, `kiro` for Kiro). From then on the token language is yours. `init` never runs again in this repo. A teammate joins by section 7, not by running it. `--name` and `--abbreviation` are your product's name and its short form, and `init` writes both into `designerpunk.config.ts`. Without them, `init` asks for each in a terminal; where no terminal is attached (an agent's shell, or CI), it stops with an error. So pass both.
 
 **Step 3, `generate`, is the pipeline — run on every token change.** It builds your platform token output from your own token source. Section 4 says when to run it again.
+
+**If your repo is a TypeScript project with its own build**, two edits keep `init` from breaking it. Exclude `src/tokens/**` and `src/components/**` from your `tsconfig.json`: DesignerPunk's pipeline reads those files and your build does not, and the token source imports `@3fn/core/types`, which your module resolution may not find. And if your build writes to `dist/`, set `output` in `designerpunk.config.ts` to a directory outside it (for example `design-tokens/`) and run `npx designerpunk generate` again: the default, `./dist/tokens`, sits inside your build output, which is usually gitignored, and the commit policy commits generated output.
 
 **Step 4, your personal note**: `.designerpunk/personal-note.local.md` — who you are, what you and your organization value, and how you like to work together — or, after the restart, ask your agent to walk you through it. Your agents read it every session (it stays on your machine).
 
@@ -86,7 +88,7 @@ Use this posture when you want a design system of your own. These are the five s
 
 After birth, your repo holds two different kinds of thing.
 
-- **Your language: the tokens.** `init` copied them into your repo, and they are yours wholesale. DesignerPunk never adds to them. One exception: `generate` applies DesignerPunk's own dark and WCAG override maps, not your copies in `src/tokens/themes/`, so editing those copies does not change your output yet.
+- **Your language: the tokens.** `init` copied them into your repo, and they are yours. DesignerPunk never adds to them. But part of your copy is not read yet. `generate` takes the following from the installed package, so editing them in your copy does not change your output yet: the colour palette; the dark and WCAG override maps; the opacity values that colours with transparency are built from; the motion tokens (duration, easing and scale) and the layering tokens; the font-size and line-height values that icon sizes are calculated from (your own font-size and line-height tokens are still read from your copy); and the whole DTCG/Figma export. Spacing and the other non-colour primitives, and your semantic references, are read from your copy.
 - **Our updating surface: the components.** You use them by name, and they improve when you update the package.
 
 **`generate` is the pipeline — run on every token change.** Run it whenever you change your own tokens. `init` was the birth event; it does not run again, however often you run `generate`. `validate` validates token definitions against the active source. One of its four checks, mathematical relationships, currently fails even on unmodified token source, so `validate` exits non-zero; that is a known defect in the checker, not in your tokens. Its other three checks are still worth reading after you edit token source files.
@@ -106,11 +108,11 @@ What `generate` writes, into the `output` directory set in `designerpunk.config.
 - **`npx designerpunk sync`** comes after it: it reports package updates against the installed package — reports, never writes silently. It prints its report before changing anything, and changes DesignerPunk's MCP configuration and generated agent files only on your go.
 - **`npx designerpunk generate`** comes after you change your own tokens.
 
-**The asymmetry is intended.** After an update, a component may look different while your colours do not, because the components are ours to improve and the tokens are yours to change. The exception above still applies: the dark and WCAG override values come from the installed package, so the next `generate` after an update can change them. If an updated component needs a token your set does not have, `sync` tells you (section 5).
+**The asymmetry is intended.** After an update, a component may look different while your colours do not, because the components are ours to improve and the tokens are yours to change. The exceptions above still apply: the colour palette, the dark and WCAG override maps, the opacity in composed colours, the motion and layering tokens, the font-size and line-height values behind icon sizes, and the DTCG/Figma export all come from the installed package, so the next `generate` after an update can change them. If an updated component needs a token your set does not have, `sync` tells you (section 5).
 
 Commit your lockfile, so that a teammate installs the version you built against.
 
-**Upgrading from 14.x**: follow the 15.0.0 release notes. `sync` converts the old manifest to `designerpunk.manifest.json`, and `sync --migrate-legacy --target=<cc|kiro>` removes what an earlier `init` copied and attaches the generated agent layer, in the same run.
+**Upgrading from 14.x**: follow the 15.0.0 release notes. `sync` converts the old manifest to `designerpunk.manifest.json`, and `sync --migrate-legacy --target=<cc|kiro>` removes what an earlier `init` copied and attaches the generated agent layer, in the same run. In that run, the report `sync` prints before applying shows your repo as it was before the conversion, and the old manifest, `.kiro/sync-manifest.json`, is kept with a note in it, not moved.
 
 ## Platforms
 
@@ -142,6 +144,8 @@ import { BlendCalculator } from '@3fn/core/blend';
 - `@3fn/core/component-tokens.css` is DesignerPunk's **component token tier**. Keep importing it on every path.
 
 **Your own tokens.** After you run `npx designerpunk generate`, import your own `DesignTokens.web.css` from your configured `output` directory **in place of** `@3fn/core/tokens.css`. That file carries your token tier's values. Keep `@3fn/core/component-tokens.css`.
+
+**A page with no build step** loads the browser bundle with a `<link>` and a `<script type="module">`, as the browser distribution guide shows (`governance/browser-distribution-guide.md` in the `@3fn/core` package; your agent reads it as `browser-distribution-guide`); link your own `DesignTokens.web.css` there too, in place of the bundle's base `tokens.css`. Serve that page over local HTTP (for example `python3 -m http.server`), not by opening the file: browsers do not load the module bundle from a `file://` page.
 
 **Themes, for now:**
 - **Dark mode** follows the user's preferred colour scheme, through CSS `light-dark()`. Set `color-scheme` on an element to force light or dark.
@@ -229,6 +233,8 @@ Your note is your own. You never inherit the founder's: it stays on each person'
 4. `npx designerpunk attach --target=<cc|kiro>`
 5. Fill in `.designerpunk/personal-note.local.md` (`generate` creates it) — or, after the restart, ask your agent to walk you through it.
 6. Restart your agent session. Claude Code then asks you to trust the folder and to enable DesignerPunk's three MCP servers: accept both. Kiro asks nothing.
+
+**Why `generate` on a join**: the platform output is already committed, so `generate` may change nothing there. It writes what is per-machine and never committed: `token-index/`, which the application MCP server reads, and your personal note. **If you ran `attach`**, commit what it wrote, so the next teammate on that agent tool does not run it again: the agent files (`.kiro/`, or `.claude/`, `.mcp.json` and `CLAUDE.md`) and the change to `designerpunk.manifest.json`. Do not commit `.claude/settings.local.json`: Claude Code keeps your per-clone choice of MCP servers there, and nothing DesignerPunk writes ignores it, so add it to your `.gitignore` if your global git ignore does not.
 
 Which files the founder commits, and which each of you regenerates, is set by the commit policy (`docs/consumer/COMMIT-POLICY.md`).
 

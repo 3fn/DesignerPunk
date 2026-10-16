@@ -95,7 +95,7 @@ const FOUNDER_ORDER: RegExp[] = [
 
 /** C4: the approval instruction, harness-agnostic. A path not observed cold in U5 still ends with exactly this. */
 const RESTART_STEP = "Restart your agent session (approve DesignerPunk's MCP servers if asked).";
-/** C8 / C32 (Task 26.5): the observed truth, for the paths whose cells U5 observed cold (founder §3, joining §7). */
+/** C8 / C32 (Task 26.5): the observed truth, for the paths whose cells U5 observed cold (founder §3, joining §7), and the README's founder list (the §3 path; release-4 V-DOC). */
 const OBSERVED_RESTART_STEP =
   "Restart your agent session. Claude Code then asks you to trust the folder and to enable DesignerPunk's three MCP servers: accept both. Kiro asks nothing.";
 const HARNESS_NAMES = ['Claude Code', 'Kiro', 'cc', 'kiro'];
@@ -453,11 +453,12 @@ describe('the approval instruction is harness-agnostic (C4)', () => {
     const readme = numberedLists(span(README, /^## Getting Started$/));
     expect(region.length).toBe(4);
     expect(readme.length).toBe(1);
-    // Not observed cold in U5: the reference posture (§2, the `--reference` list) and the README.
-    const unobserved = [...region.filter((l) => l.some((s) => s.includes('--reference'))), ...readme];
-    const observed = region.filter((l) => !l.some((s) => s.includes('--reference')));
-    expect(unobserved.length).toBe(2);
-    expect(observed.length).toBe(3); // §3 founder, §7 joining (same harness and cross-harness)
+    // Not observed cold in U5: the reference posture (§2, the `--reference` list).
+    const unobserved = region.filter((l) => l.some((s) => s.includes('--reference')));
+    // The README's list is the §3 founder path, so it carries §3's observed truth (release-4 V-DOC).
+    const observed = [...region.filter((l) => !l.some((s) => s.includes('--reference'))), ...readme];
+    expect(unobserved.length).toBe(1);
+    expect(observed.length).toBe(4); // §3 founder, §7 joining (same harness and cross-harness), the README
     for (const l of unobserved) expect(l[l.length - 1]).toBe(RESTART_STEP);
     for (const l of observed) expect(l[l.length - 1]).toBe(OBSERVED_RESTART_STEP);
   });
