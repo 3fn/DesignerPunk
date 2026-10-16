@@ -196,6 +196,33 @@ signer: sparky
 
 *Prior ruling (phase two, `62c4aa73`), superseded by the above*: REFUSE `should-re-point`. `mcp-fallback` grepped `src/components/` for web implementations, which is dead in a consumer install.
 
+## `#in-scope`
+
+signer: sparky
+disposition: re-pointed
+canonicalHash: sha256:22419845e4ce89eec0166976e1b0447e3956ebccd3548cc410c9129473b2a0d3
+renderedHash: sha256:8c7879c02ba0f36c0944d08aeb4e1dcaace2ca7136097ce625b907b6fa34e831
+date: 2026-10-16
+
+**Ruling: ASSENT — 8/8 surviving.** I credit `scope-1` … `scope-8`. This is a first signature on a clearing row, offered under release-4 rulings item 8. The unit is the same in all three renderings (cc L59, kiro L27, `_canonical` L167).
+
+- `scope-1` and `scope-4` … `scope-8` are verbatim.
+- `scope-2` survives re-pointed. The member is unchanged: consuming DesignerPunk Web tokens as CSS custom properties. Only the file changes. It moves from DesignerPunk's base to the repo's own `DesignTokens.web.css`, which is the token source in a consumer (5b). The base is still named as the zero-config evaluation path. So any page that follows the line consumes the tokens as custom properties, and no reading of the line drops consumption out of scope.
+- `scope-3` survives re-pointed. The removed parenthetical (`platforms/web/` sources, subtraction-5) names files the package does not ship: `files` carries only the iOS and Android platform sources plus schemas. Its replacement, the assembled API through the application MCP, resolves, because `application-mcp-server/src/` ships.
+
+### Facts I checked myself
+
+- `package.json` `exports`: `./tokens.css` → `./dist/DesignTokens.web.css`, which has the same filename as the consumer's own file, so the line is right to disambiguate. `./component-tokens.css` → `./dist/ComponentTokens.web.css`. `files` excludes `dist/web/**`. `dist/browser/` holds `tokens.css` as its only stylesheet.
+- `docs/consumer/INSTALL.md` § Web: "What these two imports are" (base = zero-config evaluation path; keep `component-tokens.css` on every path), "Your own tokens" (L132), and "A page with no build step" (L134). The line is consistent with all three. It defers the component-token file to INSTALL, which names `@3fn/core/component-tokens.css`.
+- `governance/browser-distribution-guide.md` L91, the "Your own tokens" paragraph from #375, makes the same claim.
+- Born repos: `born-cc/design-tokens/DesignTokens.web.css` and `born-kiro/dist/tokens/DesignTokens.web.css`. Each sits in the `output` set in that repo's `designerpunk.config.ts` (`./design-tokens`, `./dist/tokens`). So "writes to your configured output directory" holds.
+- The package's `dist/ComponentTokens.web.css` covers all seven component groups, Progress included. The consumer's own generated `ComponentTokens.web.css` holds Progress only (32 lines in `born-cc`). Keeping the package's stylesheet, as the line says, is therefore enough and is correct.
+
+### Residuals (recorded, not refused)
+
+1. **"Keep" understates the no-build path.** `scripts/build-browser-bundles.js` (`copyTokenCSS`) merges the component tokens into the bundle's `tokens.css`: `--avatar-size-xs` is present in `dist/browser/tokens.css` and absent from `dist/DesignTokens.web.css`. So a no-build page that swaps the bundle's `tokens.css` for the repo's own file loses the component tokens unless it *adds* a link to the package's component-token stylesheet. It cannot simply keep a link, because it never had one. A page that follows "alongside it, keep …" still ends up with the component tokens, so I don't refuse the line. The browser guide L91 has the same wording, and that file is Lina's surface.
+2. **Two files with the same name.** The repo's own output directory also contains a `ComponentTokens.web.css`, and that one is partial. INSTALL L86 lists it as "component tokens" without saying it is not the file to link. This unit avoids the trap by deferring to INSTALL, which names the package's file. The ambiguity lives in INSTALL and belongs to the doc owners, not to this row.
+
 ## Signing run summary (2026-09-29, phase two)
 
 - **Commits** (branch `task/123-u2b-fr2-sparky`, from `60b0fdb5`):
