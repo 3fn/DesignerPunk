@@ -521,6 +521,26 @@ export const PRODUCER_OUTPUTS: Record<string, string[]> = {
 };
 export const SELF_CLEANING_DIRS = ['dist/consumer-canonical/'];
 
+/** Section 10d inspects at least this many MCP bundles (`dist/mcp/*.js`): docs, application, product. */
+export const MIN_MCP_BUNDLES = 3;
+
+/** Every section-10 finding's label starts with this; `release-publish.ts` and CI count the passes by it. */
+export const PUBLISH_PATH_LABEL = 'publish path:';
+
+/**
+ * The fewest section-10 findings a full run emits (all of them pass on a releasable tarball). Derived from
+ * section 10's own assertion list, never written as a literal that goes stale upward:
+ *   10a one per root token file · 10b one · 10c two · 10d one (bundles found) + one per bundle (>= MIN_MCP_BUNDLES) · 10e one.
+ * `release-publish.ts` refuses a tarball whose `publish path:` pass count is below this (the ballot's residual (i):
+ * a refactor that drops section 10 must not pass the script). The unit test pins it to `publishPathFindings`'
+ * actual count on a three-bundle package, so a new section-10 check fails the test until this line counts it.
+ */
+export const PUBLISH_PATH_FLOOR = ROOT_TOKEN_FILES.length + 1 + 2 + (1 + MIN_MCP_BUNDLES) + 1;
+
+/** Appended to a 10d red that names nested roots: the worktree class (ballot row (j)). */
+export const NESTED_ROOTS_HINT =
+  'nested `node_modules` present? In a working checkout this red is row (j); the script\'s fresh clone never shows it';
+
 /** Candidate sources (repo-relative) a `tsc`-emitted `dist/` file may come from. */
 export function sourceCandidates(distPath: string): string[] {
   const rel = distPath.slice('dist/'.length);
@@ -614,7 +634,7 @@ export function publishPathFindings(listing: PackListing): Finding[] {
   const packed = new Set(paths);
 
   // 10a. The eight root token files.
-  for (const f of ROOT_TOKEN_FILES) add(packed.has(f), `publish path: root token file present: ${f}`);
+  for (const f of ROOT_TOKEN_FILES) add(packed.has(f), `${PUBLISH_PATH_LABEL} root token file present: ${f}`);
 
   // 10b. `themes: []` in the source config of the packed commit.
   const configPath = path.join(listing.root, 'designerpunk.config.ts');
@@ -634,13 +654,15 @@ export function publishPathFindings(listing: PackListing): Finding[] {
 
   // 10d. Bundle shape: every node_modules module root in dist/mcp/*.js is the ROOT node_modules/.
   const bundles = paths.filter((p) => /^dist\/mcp\/[^/]+\.js$/.test(p)).sort();
-  add(bundles.length >= 3, 'publish path: MCP bundles found to inspect (>= 3)', bundles.join(', '));
+  add(bundles.length >= MIN_MCP_BUNDLES, `publish path: MCP bundles found to inspect (>= ${MIN_MCP_BUNDLES})`, bundles.join(', '));
   for (const b of bundles) {
     const src = listing.read(b) ?? '';
     const r = bundleModuleRoots(src);
+    // Row (j): a nested root means the build found a gitignored nested install. Say so in the red itself, so an
+    // "expected red" learned in a working checkout is never carried over to a red from the script's fresh clone.
     add(r.root > 0 && r.nested.length === 0,
       `publish path: ${b} resolves every module from the root node_modules/`,
-      `root modules ${r.root}; nested roots [${r.nested.join(', ')}]`);
+      `root modules ${r.root}; nested roots [${r.nested.join(', ')}]${r.nested.length > 0 ? ` — ${NESTED_ROOTS_HINT}` : ''}`);
   }
 
   // 10e. No machine path in dist/**.

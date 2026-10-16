@@ -25,12 +25,9 @@ const SCRIPT = path.resolve(__dirname, '..', 'check-package-name-drift.js');
 // eslint-disable-next-line no-control-regex
 const stripAnsi = (text: string): string => text.replace(/\x1b\[[0-9;]*m/g, '');
 
-function makeTempProject(): string {
+function makeTempProject(name = '@example-scope/core'): string {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'drift-script-'));
-  fs.writeFileSync(
-    path.join(dir, 'package.json'),
-    JSON.stringify({ name: '@example-scope/core', version: '0.0.0' }),
-  );
+  fs.writeFileSync(path.join(dir, 'package.json'), JSON.stringify({ name, version: '0.0.0' }));
   return dir;
 }
 
@@ -75,5 +72,51 @@ describe('check-package-name-drift (spawned in a temp project)', () => {
     expect(result.status).toBe(1);
     expect(result.stderr).toContain('Package name drift detected');
     expect(result.stderr).toContain('@other-scope/core');
+  });
+});
+
+/**
+ * The `@<scope>:registry` class fix (publish-path instrument rows, row 6; register row
+ * `package-name-scope-drift`, Thurgood's, delegated to the fixing PR). Before it, only
+ * `@<scope>/<pkg>` was matched, so a stale `@designerpunk:registry=…` line (#312 finding 3)
+ * passed. The project here is scoped `@3fn`, as the real package is.
+ */
+describe('check-package-name-drift — @<scope>:registry lines', () => {
+  let projectDir: string;
+
+  beforeEach(() => {
+    projectDir = makeTempProject('@3fn/core');
+    fs.mkdirSync(path.join(projectDir, 'governance'));
+  });
+
+  afterEach(() => {
+    fs.rmSync(projectDir, { recursive: true, force: true });
+  });
+
+  it('BITES on a stale @designerpunk:registry line (red, exit 1, the expected key named)', () => {
+    fs.writeFileSync(
+      path.join(projectDir, 'governance', 'install.md'),
+      'Add to .npmrc:\n\n    @designerpunk:registry=https://npm.pkg.github.com\n',
+    );
+
+    const result = runScript(projectDir);
+
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('governance/install.md:3');
+    expect(result.stderr).toContain('found:    @designerpunk:registry');
+    expect(result.stderr).toContain('expected: @3fn:registry');
+  });
+
+  it('passes the package scope\'s own @3fn:registry line (green, exit 0)', () => {
+    fs.writeFileSync(
+      path.join(projectDir, 'governance', 'install.md'),
+      'Add to .npmrc:\n\n    @3fn:registry=https://npm.pkg.github.com\n\nThen `npm install @3fn/core`.\n',
+    );
+
+    const result = runScript(projectDir);
+
+    expect(result.status).toBe(0);
+    expect(result.stdout).toContain('No package name drift detected (1 files scanned)');
+    expect(result.stderr).toBe('');
   });
 });

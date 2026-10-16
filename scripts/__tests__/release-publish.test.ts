@@ -19,15 +19,17 @@ import {
   parseLsRemote,
   PUBLIC_REGISTRY,
   publicPublishArgs,
+  publishPathPasses,
   Refusal,
   ReleaseArgs,
   renderCommand,
   runRelease,
   RunResult,
+  sameFloorClosure,
   sha1OfFile,
   shellQuote,
 } from '../release-publish';
-import { Finding } from '../pack-assert';
+import { Finding, PUBLISH_PATH_FLOOR } from '../pack-assert';
 
 // ─── parseArgs ───────────────────────────────────────────────────────────────────────────────────
 
@@ -37,14 +39,31 @@ describe('parseArgs', () => {
   });
 
   it('parses a publish at a version, with or without a leading v, and its options', () => {
-    expect(parseArgs(['15.0.1'])).toEqual({ mode: 'publish', version: '15.0.1', expectSha: undefined, source: undefined, keep: false });
-    expect(parseArgs(['v15.1.0-rc.1', '--expect-sha', '9e1a3106', '--source', '/tmp/repo', '--keep'])).toEqual({
+    const full = '9e1a3106a18c4a1554a3705e3559ae5797028a24';
+    expect(parseArgs(['15.0.1', '--expect-sha', full])).toEqual({ mode: 'publish', version: '15.0.1', expectSha: full, source: undefined, keep: false });
+    expect(parseArgs(['v15.1.0-rc.1', '--expect-sha', full, '--source', '/tmp/repo', '--keep'])).toEqual({
       mode: 'publish',
       version: '15.1.0-rc.1',
-      expectSha: '9e1a3106',
+      expectSha: full,
       source: '/tmp/repo',
       keep: true,
     });
+  });
+
+  // Row 4 (publish-path instrument rows, 2026-10-14): tag-to-S identity is a script check. Before, `<version>` alone
+  // published on ancestry plus a version match, and a 7-character prefix passed a `startsWith` compare.
+  it('refuses a publish without --expect-sha (the dry run keeps naming its commit with --dry-run alone)', () => {
+    expect(() => parseArgs(['15.0.1'])).toThrow(Refusal);
+    expect(() => parseArgs(['15.0.1'])).toThrow(/a publish needs --expect-sha <S>, the full 40-character SHA/);
+    expect(() => parseArgs(['15.0.1', '--keep'])).toThrow(/needs --expect-sha/);
+    expect(parseArgs(['--dry-run', '1d75c5e5']).mode).toBe('dry-run');
+  });
+
+  it('refuses an abbreviated --expect-sha, even a valid prefix of S (the old startsWith compare accepted it)', () => {
+    for (const short of ['9e1a310', '9e1a3106', '9e1a3106a18c4a1554a3705e3559ae5797028a2']) {
+      expect(() => parseArgs(['15.0.1', '--expect-sha', short])).toThrow(/full 40-character commit SHA \(no prefix\)/);
+    }
+    expect(() => parseArgs(['15.0.1', '--expect-sha', '9E1A3106A18C4A1554A3705E3559AE5797028A24'])).toThrow(/full 40-character/);
   });
 
   it.each([
@@ -55,6 +74,7 @@ describe('parseArgs', () => {
     [['--dry-run', '1d75c5e5', '--expect-sha', '1d75c5e5'], /applies to a publish/],
     [['fifteen'], /not a version/],
     [['15.0.1', '--expect-sha', 'xyz'], /commit SHA/],
+    [['15.0.1', '--expect-sha'], /needs a value/],
     [['15.0.1', '16.0.0'], /unexpected argument/],
     [['15.0.1', '--ignore-scripts'], /unknown option/],
   ])('refuses %j', (argv, message) => {
@@ -108,6 +128,37 @@ describe('sha1OfFile', () => {
   });
 });
 
+describe('sameFloorClosure — the regenerated closure is compared parsed, generatedAt aside', () => {
+  const closure = (generatedAt: string, files: string[]): string =>
+    `${JSON.stringify({ generatedAt, note: 'n', closure2: { files, totalFiles: files.length } }, null, 2)}\n`;
+
+  it('treats a regeneration that differs only in its wall-clock stamp as current (a byte compare would refuse every publish)', () => {
+    expect(sameFloorClosure(closure('2026-09-26T23:23:20.952Z', ['src/a.ts']), closure('2026-10-15T09:00:00.000Z', ['src/a.ts']))).toBe(true);
+  });
+
+  it('ignores key order and formatting', () => {
+    expect(sameFloorClosure('{"b":1,"a":{"y":2,"x":[1,2]}}', '{ "a": { "x": [1, 2], "y": 2 }, "b": 1, "generatedAt": "z" }')).toBe(true);
+  });
+
+  it('BITES on a stale closure: a file joined or left it', () => {
+    expect(sameFloorClosure(closure('t1', ['src/a.ts']), closure('t1', ['src/a.ts', 'src/b.ts']))).toBe(false);
+    expect(sameFloorClosure(closure('t1', ['src/a.ts', 'src/b.ts']), closure('t2', ['src/b.ts', 'src/a.ts']))).toBe(false);
+  });
+});
+
+describe('publishPathPasses — counts passing section-10 findings by label', () => {
+  it('counts only passing `publish path:` findings', () => {
+    expect(
+      publishPathPasses([
+        { ok: true, label: 'publish path: a' },
+        { ok: false, label: 'publish path: b' },
+        { ok: true, label: 'closure-2 ADD present: x' },
+        { ok: true, label: 'publish path: c' },
+      ])
+    ).toBe(2);
+  });
+});
+
 // ─── runRelease, with every side effect faked ────────────────────────────────────────────────────
 
 const PROJECT = '/repo';
@@ -142,7 +193,17 @@ interface FakeOptions {
   fail?: string; // a substring of "cmd args" whose call exits 1
   findings?: Finding[];
   tarballs?: string[];
+  staleClosure?: boolean; // the regenerated floor-closure.json differs from the committed one
 }
+
+/** A full, green pack-assert run: section 10 at exactly its floor, plus an earlier section's finding. */
+const GREEN_FINDINGS: Finding[] = [
+  { ok: true, label: 'closure-2 ADD present: src/build/tokens/ComponentToken.ts' },
+  ...Array.from({ length: PUBLISH_PATH_FLOOR }, (_, i) => ({ ok: true, label: `publish path: check ${i + 1}` })),
+];
+const CLOSURE_COMMITTED = `${JSON.stringify({ generatedAt: '2026-09-26T23:23:20.952Z', closure2: { files: ['src/a.ts'] } }, null, 2)}\n`;
+const CLOSURE_REGENERATED = `${JSON.stringify({ generatedAt: '2026-10-15T09:00:00.000Z', closure2: { files: ['src/a.ts'] } }, null, 2)}\n`;
+const CLOSURE_STALE = `${JSON.stringify({ generatedAt: '2026-10-15T09:00:00.000Z', closure2: { files: ['src/a.ts', 'src/b.ts'] } }, null, 2)}\n`;
 
 function fake(o: FakeOptions = {}): Fake {
   const calls: Call[] = [];
@@ -150,12 +211,14 @@ function fake(o: FakeOptions = {}): Fake {
   const written: Record<string, string> = {};
   const removed: string[] = [];
   let statusCalls = 0;
+  let closureRegenerated = false;
   const ok = (stdout = ''): RunResult => ({ status: 0, stdout });
   const deps: Deps = {
     run(cmd, args, cwd) {
       calls.push({ cmd, args, cwd });
       const line = `${cmd} ${args.join(' ')}`;
       if (o.fail && line.includes(o.fail)) return { status: 1, stdout: '' };
+      if (cmd === 'npx' && args.includes('scripts/floor-closure.ts')) closureRegenerated = true;
       if (cmd === 'git') {
         if (args[0] === 'remote') return ok(`${ORIGIN}\n`);
         if (args[0] === 'ls-remote') {
@@ -178,6 +241,10 @@ function fake(o: FakeOptions = {}): Fake {
     mkdir: () => undefined,
     readFile: (f) => {
       if (f === `${CLONE}/package.json`) return JSON.stringify({ name: '@3fn/core', version: o.pkgVersion ?? '15.0.1' });
+      if (f === `${CLONE}/floor-closure.json`) {
+        if (!closureRegenerated) return CLOSURE_COMMITTED;
+        return o.staleClosure ? CLOSURE_STALE : CLOSURE_REGENERATED;
+      }
       throw new Error(`unexpected read: ${f}`);
     },
     writeFile: (f, t) => {
@@ -189,7 +256,7 @@ function fake(o: FakeOptions = {}): Fake {
     rm: (d) => {
       removed.push(d);
     },
-    assertTarball: () => ({ findings: o.findings ?? [{ ok: true, label: 'all good' }], fileCount: 1638 }),
+    assertTarball: () => ({ findings: o.findings ?? GREEN_FINDINGS, fileCount: 1638 }),
     log: (l) => {
       logs.push(l);
     },
@@ -201,7 +268,7 @@ function fake(o: FakeOptions = {}): Fake {
 const line = (c: Call): string => `${c.cmd} ${c.args.join(' ')}`;
 const publishCalls = (f: Fake): Call[] => f.calls.filter((c) => c.cmd === 'npm' && c.args[0] === 'publish');
 const DRY: ReleaseArgs = { mode: 'dry-run', sha: '9e1a3106', keep: false };
-const PUB: ReleaseArgs = { mode: 'publish', version: '15.0.1', keep: false };
+const PUB: ReleaseArgs = { mode: 'publish', version: '15.0.1', expectSha: S, keep: false };
 
 // Silence pack-assert's report printing (reportFindings writes to the console).
 let logSpy: jest.SpyInstance;
@@ -225,6 +292,11 @@ describe('runRelease — dry run (RELEASE-FLOW 5.1)', () => {
     expect(seq).toContain(`git fetch -q --depth 1 ${ORIGIN} ${S}`);
     expect(idx('npm ci')).toBeGreaterThan(idx('git checkout -q --detach FETCH_HEAD'));
     expect(idx('npm run check:drift')).toBeGreaterThan(idx('npm ci'));
+    // The closure is regenerated in the clone after install and before the pack, then restored to the commit's bytes.
+    expect(idx('npx tsx scripts/floor-closure.ts')).toBeGreaterThan(idx('npm ci'));
+    expect(idx('git checkout -q -- floor-closure.json')).toBeGreaterThan(idx('npx tsx scripts/floor-closure.ts'));
+    expect(idx(`npm pack --pack-destination ${OUT}`)).toBeGreaterThan(idx('git checkout -q -- floor-closure.json'));
+    expect(f.calls.find((c) => c.cmd === 'npx')?.cwd).toBe(CLONE);
     expect(idx(`npm pack --pack-destination ${OUT}`)).toBeGreaterThan(idx('npm run check:drift'));
     // The token index is regenerated by the build inside pack's prepack, so it is verified AFTER the pack.
     expect(idx('npm run verify:token-index-clean')).toBeGreaterThan(idx('npm pack'));
@@ -286,9 +358,15 @@ describe('runRelease — publish (RELEASE-FLOW 5.3)', () => {
     expect(log).toContain(r.publicCommand);
   });
 
-  it('accepts a matching --expect-sha', () => {
+  it('accepts an --expect-sha equal to the tagged commit', () => {
     const f = fake();
-    expect(() => runRelease({ ...PUB, expectSha: S.slice(0, 8) }, f.deps, PROJECT)).not.toThrow();
+    expect(() => runRelease({ ...PUB, expectSha: S }, f.deps, PROJECT)).not.toThrow();
+  });
+
+  it('refuses a prefix of the tagged commit even if one reaches runRelease (identity, never startsWith)', () => {
+    const f = fake();
+    expect(() => runRelease({ ...PUB, expectSha: S.slice(0, 8) }, f.deps, PROJECT)).toThrow(/not the expected 9e1a3106/);
+    expect(publishCalls(f)).toEqual([]);
   });
 
   it('honours --source for both the tag lookup and the clone', () => {
@@ -304,7 +382,7 @@ describe('runRelease — publish (RELEASE-FLOW 5.3)', () => {
 describe('runRelease — refusals: each stops before anything is published', () => {
   const cases: Array<[string, ReleaseArgs, FakeOptions, RegExp]> = [
     ['the tag does not exist', PUB, { tagCommit: null }, /tag v15\.0\.1 does not exist/],
-    ['the tag does not resolve to --expect-sha', { ...PUB, expectSha: 'deadbeef' }, {}, /not the expected deadbeef/],
+    ['the tag does not resolve to --expect-sha', { ...PUB, expectSha: 'deadbeef'.repeat(5) }, {}, /not the expected (deadbeef){5}/],
     ['the tagged commit is not on origin/main', PUB, { onMain: false }, /is not on this checkout's origin\/main/],
     ['this checkout has no GitHub Packages auth (checked before any install or build)', PUB, { fail: 'npm whoami' }, /no GitHub Packages auth/],
     ['the clone is not at the requested commit', PUB, { cloneHead: 'f'.repeat(40) }, /the clone is at f+, not the requested/],
@@ -316,6 +394,21 @@ describe('runRelease — refusals: each stops before anything is published', () 
     ['npm pack fails', PUB, { fail: 'npm pack' }, /npm pack \(scripts on\) failed/],
     ['the pack produced no tarball, or several', PUB, { tarballs: [] }, /exactly one tarball/],
     ['the token index is stale', PUB, { fail: 'verify:token-index-clean' }, /verify:token-index-clean failed/],
+    ['floor-closure.json is stale at the commit (row 3)', PUB, { staleClosure: true }, /floor-closure\.json is stale/],
+    ['the floor-closure regeneration fails', PUB, { fail: 'scripts/floor-closure.ts' }, /npx tsx scripts\/floor-closure\.ts failed/],
+    [
+      // Row 1 (ballot residual (i)): a pack-assert that dropped section 10 has no failed finding to refuse on.
+      'pack-assert ran without section 10 (row 1: the script floor)',
+      PUB,
+      { findings: GREEN_FINDINGS.filter((f) => !f.label.startsWith('publish path:')) },
+      new RegExp(`0 passing \`publish path:\` finding\\(s\\), below the section-10 floor of ${PUBLISH_PATH_FLOOR}`),
+    ],
+    [
+      'pack-assert ran section 10 short by one check (row 1)',
+      PUB,
+      { findings: GREEN_FINDINGS.slice(0, -1) },
+      new RegExp(`${PUBLISH_PATH_FLOOR - 1} passing .* below the section-10 floor`),
+    ],
     [
       'pack-assert finds a leftover on the tarball',
       PUB,
@@ -345,6 +438,19 @@ describe('runRelease — refusals: each stops before anything is published', () 
     const f = fake({ fail: 'npm publish' });
     expect(() => runRelease(PUB, f.deps, PROJECT)).toThrow(/npm publish to GitHub Packages failed/);
     expect(Object.keys(f.written)).toEqual([]);
+  });
+
+  it('a stale closure refuses before the pack, and the regenerated file stays in the kept clone to diff', () => {
+    const f = fake({ staleClosure: true });
+    expect(() => runRelease(DRY, f.deps, PROJECT)).toThrow(/floor-closure\.json is stale/);
+    const seq = f.calls.map(line);
+    expect(seq.some((l) => l.startsWith('npm pack'))).toBe(false);
+    expect(seq).not.toContain('git checkout -q -- floor-closure.json');
+  });
+
+  it('a dry run below the section-10 floor refuses too (5.1 catches it before any tag exists)', () => {
+    const f = fake({ findings: [{ ok: true, label: 'closure-2 ADD present: x' }] });
+    expect(() => runRelease(DRY, f.deps, PROJECT)).toThrow(/below the section-10 floor/);
   });
 
   it('a dry run with a stale token index refuses too (5.1 stops the release before any tag exists)', () => {

@@ -22,9 +22,13 @@ import {
   findLeftovers,
   findMachinePaths,
   machinePathNeedles,
+  MIN_MCP_BUNDLES,
+  NESTED_ROOTS_HINT,
   parseArgs,
   PRODUCER_OUTPUTS,
   publishPathFindings,
+  PUBLISH_PATH_FLOOR,
+  PUBLISH_PATH_LABEL,
   ROOT_TOKEN_FILES,
   SELF_CLEANING_DIRS,
   sourceCandidates,
@@ -322,6 +326,27 @@ describe('publishPathFindings — section 10 end to end over a synthetic package
   it('BITES on a planted nested-root bundle comment', () => {
     files['dist/mcp/docs-mcp.js'] = `${ROOT_BUNDLE}\n// mcp-server/node_modules/zod/v3/types.js`;
     expect(failed(listing())).toEqual(['publish path: dist/mcp/docs-mcp.js resolves every module from the root node_modules/']);
+  });
+
+  // Row 2 (ballot residual (ii), row (j)): the nested-roots red names its working-checkout cause.
+  it('a nested-root red carries the row-(j) hint; a no-module-comments red and a green bundle do not', () => {
+    files['dist/mcp/docs-mcp.js'] = `${ROOT_BUNDLE}\n// mcp-server/node_modules/zod/v3/types.js`;
+    files['dist/mcp/product-mcp.js'] = '"use strict";\nvar a = 1;';
+    const byLabel = (b: string) => publishPathFindings(listing()).find((x) => x.label === `publish path: ${b} resolves every module from the root node_modules/`);
+    expect(byLabel('dist/mcp/docs-mcp.js')?.detail).toBe(`root modules 2; nested roots [mcp-server/] — ${NESTED_ROOTS_HINT}`);
+    expect(NESTED_ROOTS_HINT).toMatch(/In a working checkout this red is row \(j\); the script's fresh clone never shows it/);
+    expect(byLabel('dist/mcp/product-mcp.js')?.detail).toBe('root modules 0; nested roots []');
+    expect(byLabel('dist/mcp/application-mcp.js')?.detail).toBe('root modules 2; nested roots []');
+  });
+
+  // Row 1 (ballot residual (i)): release-publish refuses below PUBLISH_PATH_FLOOR. The floor is derived, not a
+  // literal; this pins it to what section 10 actually emits, so a new section-10 check reds here until counted.
+  it('PUBLISH_PATH_FLOOR equals the findings a green three-bundle package emits, all labelled `publish path:`', () => {
+    const all = publishPathFindings(listing());
+    expect(Object.keys(files).filter((p) => /^dist\/mcp\/[^/]+\.js$/.test(p))).toHaveLength(MIN_MCP_BUNDLES);
+    expect(all.every((x) => x.ok && x.label.startsWith(PUBLISH_PATH_LABEL))).toBe(true);
+    expect(all).toHaveLength(PUBLISH_PATH_FLOOR);
+    expect(PUBLISH_PATH_FLOOR).toBe(16); // the ballot-time count; CI's lane-timing floor (>= 14) is a separate instrument
   });
 
   it('BITES on a bundle with no module comments at all (the shape check must not pass vacuously)', () => {
