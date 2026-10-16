@@ -100,23 +100,31 @@
     {
       "lines": [
         43,
-        45
+        43
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:writeScope[product/**]"
+    },
+    {
+      "lines": [
+        44,
+        46
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"
     },
     {
       "lines": [
-        46,
-        46
+        47,
+        47
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:kiro.welcomeMessage"
     },
     {
       "lines": [
-        47,
-        47
+        48,
+        48
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"

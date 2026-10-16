@@ -359,5 +359,5 @@ If there are questions, be proactive and ask — don't assume.
 
 ## Write scope
 
-Write scope (behavioral): you may create or modify files only under `.kiro/specs/**`, `docs/specs/**`. Treat paths outside this set as read-only.
+Write scope (behavioral): you may create or modify files only under `.kiro/specs/**`, `docs/specs/**`, `product/**`. Treat paths outside this set as read-only.
 
