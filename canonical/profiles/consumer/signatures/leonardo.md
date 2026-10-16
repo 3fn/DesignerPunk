@@ -111,6 +111,44 @@ assent: surviving [] — to the RE-AUTHORED row, `re-pointed` (removal "build to
   - (b) *"versions"* promises content the doc does not have. The platform minimums live in Core Goals. The canonical cue made the same promise, so this is not a regression introduced by the re-point.
 - It is a frontmatter entry with no operative items, so `surviving: []` is the itemized form.
 
+## `#frontmatter:writeScope[product/**]`
+
+signer: leonardo
+disposition: retained
+canonicalHash: sha256:92d969eed35a660c78a68a9cb6a3c350dcf226e85ca109eb2ab87027f7d7c4b7
+renderedHash: sha256:1cedb3f31fe5c4a72e35923bf4278cd6b085b949140e541a34c1feacd7c48f8c
+date: 2026-10-16
+
+**Ruling: ASSENT, `surviving: []`** (first signature on this row; signed at authoring head `afe59393f`).
+- **It removes the cause of R3-5, the finding I reported.** Before this change, my consumer charter told me to author product tokens in `product/tokens/` (cc `leonardo.md` L93), to count screens with `find_screens` (L237), and to run `rebuild_product_index` after product screen specs change (L284), while its write scope excluded `product/**`. With `product/**` in the pre-approved set, the write scope now agrees with the rest of the charter. I read it rendered in all three places: cc `leonardo.md` L475–476, kiro `leonardo-prompt.md` L362–363 and `leonardo.json` `allowedPaths`, and `_canonical/agents/leonardo.md` L222–224.
+- **The path is the one the Product MCP reads.** `product-mcp-server/src/index.ts` L24 sets `DEFAULT_PRODUCT_DIR = 'product'`, and `resolveProductRoot` (`src/cli/shared/mcpDataRoots.ts` L282 onward) resolves it to `<design-system root>/product` in a born repo, with `PRODUCT_DIR` as the only override.
+- **`retained` is the right form.** The overlay grammar re-grounds existing canonical entries and cannot add a member. The only overlay-legal alternative would re-point `writeScope[docs/specs/**]`, which would contradict my signed reading of that row. Peter ruled F1 on 2026-10-16. DesignerPunk's own Leonardo gains the same path. It is inert here because this repo has no `product/` tree.
+- **My earlier act still reads true.** `#frontmatter:writeScope[docs/specs/**]` (above) is unchanged in substance: the summary-doc function still lands inside the rendered `specs/**` root. Its line cite `cc/.claude/agents/leonardo.md:474` is now `:475` because the Step 3 pointer added one line above it. The kiro `leonardo.json:41` cite is unchanged. I left that section as it is.
+- **Residuals (not grounds for refusal):**
+  - (a) Pre-approval covers all of `product/**`: `overview.yaml`, `principles/`, `components/`, `tokens/` and the experience map. That is broader than screen specs. Pre-approval is not ownership, and the always-loaded token rule still requires human review before any token is created.
+  - (b) If a consumer moves the product root with `PRODUCT_DIR`, `product/**` names the default path, not the real one. The write-scope outro covers this case: ask the human lead first.
+- It is a frontmatter entry with no operative items, so `surviving: []` is the itemized form.
+
+## `#step-3-specify-the-screen:preamble`
+
+signer: leonardo
+disposition: re-pointed
+canonicalHash: sha256:3bfa452cf198abf63cc4937876f190413f90cd7f099e8469f4f7d2f77907be2c
+renderedHash: sha256:15b120fd252d6c8a05063df6e4c620d3ee22ab76f42fa202c5d2a8c0a0d18290
+date: 2026-10-16
+
+**Ruling: ASSENT, surviving `specify-1` … `specify-7` (7 of 7).** This signature is voluntary. The unit clears triviality, but it adds an instruction to my charter, so I signed it.
+- **All seven items render verbatim.** I read the unit in cc `leonardo.md` L132–140, kiro `leonardo-prompt.md` L83–91 and `_canonical/agents/leonardo.md` L312–320. The three are identical, and each `specify-N` text appears unchanged in this unit's rendering. Nothing is removed. The only change is one added last bullet.
+- **I checked each claim in the pointer against source:**
+  - "where `find_screens` reads it, in your repo's `product/` tree": true. See the row above for the product-root resolution.
+  - "A screen goes under `product/experience-map/pages/`": `ProductIndexer.indexExperienceMap` scans `experience-map/{verticals,flows,pages}`, and `pages` entries index as `feature-page`. The screen `init` scaffolds is `src/cli/templates/product/experience-map/pages/example-home.yaml`.
+  - "`<name>.yaml`, or `<name>/<name>.yaml` for a screen split into facet files": `indexScreenDirectory` takes the `.yaml` whose basename matches the directory as the primary file and merges the other files in as facets. The Integration Guide states the same thing.
+  - "Integration Guide § 'Product Data Directory' (`designerpunk-integration-guide`)": resolves. A `get_section` call on that id and heading returned the tree, with flows and verticals (2026-10-16).
+- **It gives the step a destination, and the same charter assumes one.** Novelty counting (`find_screens`, L237) and the rebuild protocol (L284) depend on screen specs living in the product tree. In R3-5, I wrote the plan under `specs/`, where `find_screens` cannot see it. This bullet would have prevented that.
+- **Residuals (not grounds for refusal):**
+  - (a) "A screen goes under `pages/`" simplifies. A screen that belongs to a flow or a vertical is an experience-map entry under `flows/` or `verticals/`. The bullet hands that case to the guide ("including flows and verticals") instead of stating it.
+  - (b) The guide's sibling § "Writing Screen Specs" is the better reference for the spec's format. The pointer correctly names the section about location, which is what it is for.
+
 ## Signing run summary (2026-09-29, phase two)
 
 - **Commits** (branch `task/123-u2b-fr2-leonardo`, from `60b0fdb5`, not pushed):
