@@ -72,6 +72,13 @@ Record each item's outcome here, dated, as it resolves. Archive the file when ev
 
 *(2026-10-14, Lina; lapse recorded by Stacy's 15.1.0 RELEASE pass, RL-3)* **R1 and R5 move to Spec 129.** R2, R4 and R6 were not fixed before the 15.1.0 tag. The 15.1.0 notes disclose R1 and R2 as known limitations. **New trigger for R2, R4 and R6**: Lina's own `fix/` PR, under the `**Grant paths**:` list below (activated by Peter's merge of the records PR that adds it), merged before release 4's prep opens. *(Corrected 2026-10-14 — RL-10 of the 15.1.0 RELEASE pass, phase 2: the earlier clause cited a row grant this issue never had.)*
 
+*(2026-10-15, Peter; release-4 rulings item 12, `.kiro/specs/123-consumer-distribution/completion/release-4-rulings-2026-10-15.md`; written by Thurgood)* **Waived for 16.0.0 by Peter, 2026-10-15.** The trigger above lapsed a second time: R2, R4 and R6 were not fixed before release 4's prep opened.
+- **R2** is disclosed in the 16.0.0 notes' Known limitations.
+- **R4** is disclosed by one INSTALL "Upgrading from 14.x" sentence: the report printed before applying shows the pre-apply state, and the old manifest is kept, not moved. The sentence rides Thurgood's install-doc PR (V-DOC).
+- **R6** is noise, not a false statement, and needs no disclosure.
+
+**New trigger for R2, R4 and R6**: Lina's `fix/` PR, under the grant below, merged before release 5's RELEASE phase 1, or a dated re-ruling. **A third lapse routes to Peter as a spec-or-drop decision.**
+
 ## Grant (added 2026-10-14, Lina's list; activated by Peter's merge of the follow-up records PR; expires at the fixing PR's merge)
 
 **Grant paths** (R2, R4, R6 only; R1 and R5 are Spec 129's):

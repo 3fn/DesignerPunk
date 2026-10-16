@@ -345,3 +345,19 @@ My verdict, "U5's claims hold; six Low findings", rests on the **mechanical half
 - whether 26.7's scoping is honest about an instrument whose operator, launcher and subject seats are all inside the house.
 
 The sample found one fabricated quote in ten rows, and a reader should weigh "the other 34 read true" by that rate, not by my verdict. And the RELEASE 15.1.0 residual stands: 70 ✅ rows of U3, U3c, U3g and U4 were covered by no pass, and CLOSEOUT chose to cite rather than re-read them. What the spec actually proves is that **every parent was read once, and roughly one row in six was re-verified across the spec**. That is the honest reach of five passes, and it is short of "the spec's claims are verified".
+
+---
+
+## [THURGOOD] Composed-loop outcome (2026-10-15)
+
+**Outcome: adopted.** I read the pass in full. The CL findings on my seat are discharged: errata for CL-2, CL-4 and CL-6, and an acknowledgement for CL-3, in `task-26-completion.md` and `task-28-completion.md`. The OB-1 line is in `task-28-4-completion.md`. **CL-5's verification decision (steward verb)**: verified. `get_index_health` at 2026-10-15 reads `lastIndexTime 2026-10-15T23:27:05Z`, 83 documents, 2517 sections, 333 cross-references, 2113762 bytes, matching the orchestrator's § 7 record. The 2849 → 2517 section drop stays unexplained. A candidate cause is #325's fence-aware headings, unverified; I carry it to the post-tag docs-MCP PR (rulings item 14). This answers CL-5, the third steward-verb-gated encounter Stacy counts across 123's passes. It is the first time in those passes that I have exercised the carve-out, recorded as data for its falsification condition.
+
+The RS items, one line each:
+- **RS-19**: adopted. Queued to the standards sitting: the mechanical header read, plus this pass's sub-gap. The guide has no state for a criterion that waits on a human act, which is a defect in my text (`task-28-completion.md` § Erratum).
+- **RS-20 (a), RS-20 (b)**: adopted. Guide amendment candidates: a seat-continuity cause, and whether a consult whose wording ships breaks `plan held`.
+- **RS-21**: adopted. Tasks-round convention candidate: a derived artifact's Primary Artifacts entry names the derived file and its guard.
+- **RS-22**: adopted. In flight as rulings item 10's class fix (declared foreign trees).
+- **RS-23**: adopted. Queued for Peter as an amendment candidate to the tasks-row grant ballot (`2026-09-26-tasks-row-write-scope-grant`): is a grant limited to its parent's purpose?
+- **RS-24**: adopted as routed (Peter, with the orchestrator). The standards sitting takes it up (rulings item 16).
+- **RS-13 (escalated)**: adopted into the class option D ballot (rulings item 26 (iii): RELEASE-FLOW step 1 queries and pastes the due rows).
+- **RS-18**: carried.

@@ -25,3 +25,9 @@ At each monthly health check: has the first release trio after 16.0.0 run? If ye
 ## Outcomes
 
 *(appended by the owners)*
+
+- **Row 5 — attributed** *(2026-10-15; Ada's attribution, ruled with Peter's release-4 rulings item 15, `.kiro/specs/123-consumer-distribution/completion/release-4-rulings-2026-10-15.md`; written by Thurgood in the release-4 records PR)*.
+  - **The 37 `npm install` vulnerabilities**: 2 low are DesignerPunk's own dependencies, `diff`, and esbuild via `tsx`. The rest come from the fixture's own `jest` chain. The cell's `cannot-tell` is resolved by this attribution; the record cells stay as written.
+  - **Bundled code `npm audit` cannot see**: the MCP bundles inline three libraries that carry advisories: `@modelcontextprotocol/sdk` 1.29.0 (an advisory against its OAuth client), `fast-uri` 3.1.3 and `js-yaml` 4.2.0. None of the three bundles contains the sdk's OAuth client: they use the stdio transport only.
+  - **The class**: a consumer's `npm audit` cannot see bundled code, because inlined libraries are not in the dependency tree it reads. So neither the 37 count nor a clean audit says anything about the three advisories above.
+  - **Disposition**: carried to release 5 with this record. The remedy is Ada's to name there. Nothing here blocks 16.0.0 (rulings item 15).

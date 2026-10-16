@@ -6,7 +6,7 @@
 **Agent (plan)**: PRIMARY Thurgood (Opus); Leonardo (Opus) — 28.3 · **Launcher**: Peter (every harness session, from macOS Terminal; Decision 1, 2026-10-14)
 **Delegated-tier**: plan held
 **CI-provenance**: the U5 PR's required checks — PR #362 (`https://github.com/3fn/DesignerPunk/pull/362`), head `8bae0346f`, **21/21 check runs pass** (every required context green: `lane-typecheck`, `lane-functional-root`, `lane-build-validate`, `lane-mcp-server-suite`, `lane-application-mcp-server-suite`, `completion-criteria-parity`, `Consumer Guard`, `Section Citation Guard`, `125B-tool-boot-smoke`, `Check package name drift`, `122-setup` + `122-canonical-vs-truth` + `122-diff-guard` + `122-sweep-1…8`); workflow runs 38820131554 / 131607 / 131609 / 131642 / 131667 / 131744 / 131788. **Merged by Peter 2026-10-15T22:59:32Z as `b10d5d3b6`** (squash; merge on green = the authorization act). *(Filled post-merge in the records PR, U4's #331 pattern; local runs in § Validation.)*
-**Instruments**: 50 listed — exists 30 · built-here 15 · missing 5 (all 5 resolved 2026-10-15, in-row) · unlisted 0 · misfit 2 (rows 2.5 and 2.2, `## Found later`) — .kiro/specs/123-consumer-distribution/completion/task-28-instruments.md
+**Instruments**: 48 listed — exists 33 · built-here 15 · missing 0 · unlisted 2 — .kiro/specs/123-consumer-distribution/completion/task-28-instruments.md
 **Traces**: Reqs 25.2–25.7, 26.7, 23.7, 23.9 · design C32
 
 ## Rulings applied in this task (Peter, 2026-10-15 — ruled in the U5 session; recorded here)
@@ -58,7 +58,7 @@ Unmet or partially met criteria: None *(C9 flipped from ⚠️ to ✅ in the pos
 | 10 | Pass four | R-OI 4 · T-WR 1 | closed | `completion/re-grounding-pass-four.md`; G2 cycle 2 `completion/re-grounding-g2-cycle-2.md` (HOLDS) |
 | 11 | Native name-contract resolution | D-WR 5 | **open** | `.kiro/issues/2026-10-15-123-u5-instrument-findings.md` § 6 DO-1 (Kenya, Data) |
 | 12 | Monorepo birth detection: explicit env is the escape | D-WR 6 | closed (accepted residual) | DD23/DD24 |
-| 13 | Migration fetch-and-re-transform; dp-portfolio's manifest history | D-WR 7 · T-CO "dp-portfolio `ls`" | closed | `completion/task-5-1-completion.md` (forced negative: "not obtained — both branches covered by fixtures") |
+| 13 | Migration fetch-and-re-transform; dp-portfolio's manifest history | D-WR 7 · T-CO "dp-portfolio `ls`" | closed | `completion/task-5-1-completion.md` (L7: "OBTAINED (the forced negative does not apply)"; L12: `.kiro/sync-manifest.json` → PRESENT) *(corrected 2026-10-15, CL-6; § Erratum 2026-10-15)* |
 | 14 | Cold-count interpretability depends on the operator's machine; a fresh `HOME` costs a re-login | D-WR 9 · T-WR 4 | closed | every U5 record's `harness-user-state:`; isolation by `CLAUDE_CONFIG_DIR` / `KIRO_HOME` (protocol § 5.1; R1-13, R2-10) |
 | 15 | An item's `text` completeness is the confirmer's | D-WR 10 | closed (accepted residual) | C1 confirmation records |
 | 16 | Tasks-round items: release count, tripwire thresholds, `.swift`/`.kt`, sizing | D-WR 8 · R-OI 5 · R-H 4.5 | release count **moved** (plan: release 4 minor; actual 16.0.0, #352 — instruments O-10); thresholds: this PR's tripwire line; `.swift`/`.kt`: **open** at its own record; sizing: closed in the tasks round | CHANGELOG `## [Unreleased]` + RELEASE pass; `completion/u5-pr-body.md`; `.kiro/issues/2026-09-26-native-component-distribution.md` |
@@ -119,3 +119,16 @@ Primary Artifacts: all shipped as declared — `validation/probe-rerun.md` (froz
 **Owed, outside this seat's write scope**: `.kiro/issues/2026-10-12-consumer-birth-friction-for-123-u3.md` should get a dated closing note (its open rows now live in `…-u5-instrument-findings.md`; rows 1, 4, 5 closed there) and a `git mv` to `archive/` (issues README rule 5). The file's name is not `<date>-123-*`, so the Task 28 row grant does not cover it — the orchestrator's call.
 
 **Not criterion failures, stated**: the target's own per-path listing was never committed, so per-path attribution runs against a reproducible baseline that is 64 entries short of the target; the gap is stated in the 28.2 output, not absorbed.
+
+## Erratum 2026-10-15
+
+*Found by Stacy's CLOSEOUT pass (`completion/claims-pass.md`, findings CL-2 and CL-6, both Low); recorded under the release-4 rulings, item 21 (`completion/release-4-rulings-2026-10-15.md`). **No Status changes, and no criterion text changes.** The header line and one C4 evidence cell are corrected in place, and each is marked there. The original wording is recorded below.*
+
+- **CL-2** — the `**Instruments**:` header line.
+  - **Was**: ``**Instruments**: 50 listed — exists 30 · built-here 15 · missing 5 (all 5 resolved 2026-10-15, in-row) · unlisted 0 · misfit 2 (rows 2.5 and 2.2, `## Found later`) — .kiro/specs/123-consumer-distribution/completion/task-28-instruments.md``
+  - **Is**: `48 listed — exists 33 · built-here 15 · missing 0 · unlisted 2`. It now matches the guide's grammar (Completion Documentation Guide § "The instruments line and block"). E, B and M count **final** states: rows 1.2, 8.1 and 8.2 resolved to `exists`, so E is 30 + 3 = 33 and M is 0. U counts the two `## Found later` entries (rows 2.5 and 2.2, both `misfit`), which the guide counts "of both kinds". I recounted every row of `task-28-instruments.md` against the guide's states with a script.
+  - **Rows 1.6 and 3.6 are not counted** (N is 48, not 50). They resolved to a human act ("Peter launches from macOS Terminal …"), which is none of the guide's states. The block's own counter-argument paragraph says they are not instruments ("Nothing is absent"). The guide's nearest rule is that `none — <why>` rows are not counted, so I applied it. Counting them as `exists` would claim a capability this seat was denied. **This is a gap in the guide's text, not a question to settle in conversation**: it has no state for an act a criterion waits on. It is queued with RS-19 (the outcome line on `claims-pass.md`).
+- **CL-6** — C4 table, item 13, evidence cell.
+  - **Was**: `completion/task-5-1-completion.md` (forced negative: "not obtained — both branches covered by fixtures")
+  - **Is**: `task-5-1-completion.md` L7 reads "### The dp-portfolio input — OBTAINED (the forced negative does not apply)", and L12 reports `ls .kiro/sync-manifest.json` → **PRESENT**. The quoted forced negative is not in the cited doc. The "closed" status holds, and holds more strongly than the false quote said.
+  - **Cause**: not reconstructed. The quote was not checked against the cited line when the table was written. The other C4 rows were not re-read for this erratum. Stacy's sample found 1 false quote in 10 rows; her pass states that rate as the honest weight for the 34 unsampled rows, and this erratum does not change it.
