@@ -31,7 +31,7 @@ The Buttons family provides interactive components for triggering user actions w
 
 - **Visual Hierarchy**: Three visual variants (primary, secondary, tertiary) establish clear action hierarchy
 - **Size Variants**: Three sizes (small, medium, large) for different contexts and emphasis levels
-- **Interaction States**: Comprehensive hover, pressed, and loading states (no disabled state — DesignerPunk philosophy)
+- **Interaction States**: Hover and pressed states (no disabled state — DesignerPunk philosophy; no loading state yet — planned for 16.x)
 - **Accessibility First**: WCAG 2.1 AA compliant with keyboard navigation and screen reader support
 - **Cross-Platform Consistent**: Platform-appropriate feedback (ripple on Android, scale on iOS)
 
@@ -97,7 +97,7 @@ Button-CTA uses the `[Family]-[Type]` pattern without a variant suffix because i
 
 ### Base Contracts
 
-All Button-CTA instances implement these 6 foundational contracts:
+All Button-CTA instances implement these 5 foundational contracts:
 
 | Contract | Description | WCAG | Platforms |
 |----------|-------------|------|-----------|
@@ -105,7 +105,6 @@ All Button-CTA instances implement these 6 foundational contracts:
 | `interaction_pressable` | Responds to press/click events | 2.1.1 | web, ios, android |
 | `interaction_hover` | Visual feedback on hover (desktop) | 1.4.13 | web |
 | `interaction_pressed` | Visual feedback when pressed | 2.4.7 | web, ios, android |
-| `state_loading` | Shows loading indicator during async | 4.1.3 | web, ios, android |
 | `interaction_focus_ring` | WCAG 2.4.7 focus visible indicator | 2.4.7 | web, ios, android |
 
 ### Contract Details

@@ -9,6 +9,7 @@ usage:
     - "Displaying read-only status (use Badges instead)"
     - "Creating inline text links (use Link component when available)"
     - "Building toggle controls (use Toggle component when available)"
+    - "In-flight async actions — no loading state yet (16.x)"
 
 contexts:
   - "forms"
