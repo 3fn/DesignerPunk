@@ -498,7 +498,7 @@ where properties are separated by concern.
 ## Related Guides
 
 - [Compositional Color Guide](https://github.com/3fn/DesignerPunk/blob/main/.kiro/specs/typography-token-expansion/compositional-color-guide.md)
-- [Strategic Flexibility Guide](/Users/peter/.kiro/specs/typography-token-expansion/strategic-flexibility-guide.md)
+- [Strategic Flexibility Guide](/path/to/your-clone/.kiro/specs/typography-token-expansion/strategic-flexibility-guide.md)
 - [Inline Emphasis Guide](/.kiro/specs/typography-token-expansion/inline-emphasis-guide.md)
 ```
 
