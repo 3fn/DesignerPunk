@@ -1,7 +1,7 @@
 # Issue: hermetic publish path — the follow-ups owed after ratification (rail-script message, charter rows, two RELEASE-FLOW stragglers)
 
 **Date**: 2026-10-03
-**Status**: ACTIVE, for items 4 and 6 only. Item 1 is RESOLVED by #286; its grant expired at that merge. Item 2 is RESOLVED by #285. Item 3 is RESOLVED by erratum on #283. Item 5 is RESOLVED by #287. *(Status as of 2026-10-03, after #287's merge; the history follows.)*
+**Status**: ACTIVE, for item 4 only. Item 1 is RESOLVED by #286; its grant expired at that merge. Item 2 is RESOLVED by #285. Item 3 is RESOLVED by erratum on #283. Item 5 is RESOLVED by #287. Item 6 is RESOLVED by #354 (`ce7b492e1`; the `publish-rail-guard` row's 2026-10-14 history entry). *(Status corrected 2026-10-15 under release-4 rulings item 22; it had read "ACTIVE, for items 4 and 6" since 2026-10-03. The history follows.)*
 **Owner**: Thurgood. Stacy authors the wording of her own charter row (item 2a).
 **Trigger**: **before the next `@3fn/core` publish (15.0.1 or 15.1.0) to either registry.** That release is the first run under ballot `2026-10-03-hermetic-publish-path`, and its arming event per F-4. Its operator must not meet the old "indexing lag" message, and its RELEASE pass must not run under charter rows that predate the two-phase form.
 **Source**: `.kiro/docs/ballots/2026-10-03-hermetic-publish-path.md` (RATIFIED Peter 2026-10-03): § 3.8's "Not drafted here" note, § 5 items 6 and 8, and the application PR's straggler sweep (§ 5 item 2).
@@ -108,6 +108,8 @@ Spec 122 applies: never hand-edit `.claude/agents/*` or `CLAUDE.md`. No grant is
 
 **Status of item 4**: **stays OPEN.** It is not addressed by #286 or #287, and it is deferred by Peter's 2026-10-03 direction. Its owner and trigger are as above.
 
+**Item 4 at release 4 (16.0.0), for Stacy's RELEASE carry** *(2026-10-15, release-4 rulings item 22)*: not on the tag path. Its trigger has not fired: there has been no amendment to the signing-act ballot and no second hold. It lands after the release, unless RS-1's errata land first or V-PROF's re-sign round records a hold. A hold there would be the second hold, which fires the trigger. Until then, the interim rule above governs any hold.
+
 ## 5. The CI-floor residual (Stacy R1 residual (i) on the ballot) — RESOLVED 2026-10-03 by #287 (`dec738aa`)
 
 - **The residual**: the pack-contents step's total floor of ≥ 75 of 94 did not cover pack-assert's 16-assertion publish-path section, since 94 − 16 = 78. A refactor dropping that section would have stayed green.
@@ -117,7 +119,9 @@ Spec 122 applies: never hand-edit `.claude/agents/*` or `CLAUDE.md`. No grant is
 - **Scope**: standing CI scope (ballot 2026-09-27 § 2). The change is additive only (8/0); there is no new context, and `EXPECTED_CONTEXTS` is unchanged.
 - **First live green**: #287's own `lane-functional-root` run (6m17s), with the floor live.
 
-## 6. The register row `publish-rail-guard` still carries the indexing-lag wording — OPEN
+## 6. The register row `publish-rail-guard` still carries the indexing-lag wording — RESOLVED 2026-10-14 by #354 (`ce7b492e1`)
+
+*(Recorded 2026-10-15, release-4 rulings item 22.)* #354 corrected the row's `checks[]` "honest reach" 404 sentence to the packument-time reading, and its 2026-10-14 history entry says it "Discharges hermetic-publish-path follow-ups item 6". The text below is the record as filed.
 
 - **Owner**: Thurgood.
 - **What**: `governance/classification-map.md` § `publish-rail-guard`, the `checks` field. It still reads *"A 404 in the first minutes after publish may be registry indexing lag, not a real failure — the script's own message says so, and the fix is a manual re-run, never an automatic retry."* After #286 that is wrong twice over: the script no longer says so, and the ratified RELEASE-FLOW step 6 sends the operator to the packument's `time["<version>"]`.

@@ -4,9 +4,9 @@
 
 **Spec**: 123 — Consumer Distribution · **Unit**: U5 — Validation & closeout (`task/123-u5-closeout`; parents 25–28) · **Type**: Documentation · **Validation**: Tier 2
 **Agent (plan)**: PRIMARY Leonardo (Opus) — operator; Thurgood (Sonnet) — 26.5 · **Launcher**: Peter (every harness session, from macOS Terminal)
-**Delegated-tier**: planned Leonardo (Opus) primary; Thurgood (Sonnet) — 26.5 → actual Leonardo (Opus) primary; Thurgood (Opus) — 26.5 — 26.5 ran in the Thurgood (Opus) seat the orchestrator was already continuing across U5 (Tasks 28 instruments, the Task 25 amendment), not on a re-estimate of its demand; class: model-evolution
+**Delegated-tier**: planned Leonardo (Opus) primary; Thurgood (Sonnet) — 26.5 → actual Leonardo (Opus) primary; Thurgood (Opus) — 26.5 — 26.5 ran in the Thurgood (Opus) seat the orchestrator was already continuing across U5 (Tasks 28 instruments, the Task 25 amendment), not on a re-estimate of its demand; class: agent-evolution — corrected 2026-10-15 (CL-4; § Erratum 2026-10-15)
 **CI-provenance**: branch-head dispatch @ 992e2ae3640c83c6f61fb05c3d488ee6ab40bd68 — https://github.com/3fn/DesignerPunk/actions/runs/38680957753, https://github.com/3fn/DesignerPunk/actions/runs/38680963631, https://github.com/3fn/DesignerPunk/actions/runs/38680969724, https://github.com/3fn/DesignerPunk/actions/runs/38680975496, https://github.com/3fn/DesignerPunk/actions/runs/38680981385, https://github.com/3fn/DesignerPunk/actions/runs/38680986769 *(all six completed success, read 2026-10-15, after main @ #361 was merged in at 90df66638; the 26.1 checkpoint dispatch at 23be48ee1 had Lane Timing FAIL on the fixture jest config, fixed by #361 — local runs are listed in § Validation)*
-**Instruments**: 29 listed — exists 18 · built-here 11 · missing 0 · unlisted 2 — .kiro/specs/123-consumer-distribution/completion/task-26-instruments.md
+**Instruments**: 30 listed — exists 18 · built-here 12 · missing 0 · unlisted 2 — .kiro/specs/123-consumer-distribution/completion/task-26-instruments.md
 **Traces**: Reqs 15A.4, 15A.1 · design C8, C24, DD8
 
 ## Success Criteria
@@ -175,3 +175,15 @@ Primary Artifacts: all shipped as declared. `validation/join-cc-to-kiro.md` and 
 **Positive evidence, kept**:
 - `generate` on a second machine reproduced the committed platform output byte for byte, in both directions (`design-tokens/` and `dist/tokens/` stayed clean). That is COMMIT-POLICY's determinism claim, observed twice.
 - `sync` on the joined Kiro-born repo reported "name contract: clean … 282 managed items unchanged".
+
+## Erratum 2026-10-15
+
+*Found by Stacy's CLOSEOUT pass (`completion/claims-pass.md`, findings CL-2, CL-3 and CL-4, all Low); recorded under the release-4 rulings, item 21 (`completion/release-4-rulings-2026-10-15.md`). **No Status changes, and no criterion text changes.** Two header lines are corrected in place, and each is marked there. The original wording is recorded below.*
+
+- **CL-2** — the `**Instruments**:` header line (written at 26.5).
+  - **Was**: `29 listed — exists 18 · built-here 11 · missing 0 · unlisted 2`
+  - **Is**: `30 listed — exists 18 · built-here 12 · missing 0 · unlisted 2`. `task-26-instruments.md` has 30 final-state rows (E 18, B 12) plus one uncounted `none —` row. The header left out row 6.4, `built here (26.4) — see row 4.3`, a cross-reference row. The guide counts rows, not distinct instruments, so it counts. I recounted the block with a script.
+- **CL-4** — the `**Delegated-tier**:` line's class.
+  - **Was**: `…; class: model-evolution`
+  - **Is**: `…; class: agent-evolution`. The line's own reason says the tier moved because an existing Thurgood (Opus) seat was continued, "not on a re-estimate of its demand". `model-evolution` means the cognitive-demand estimate was off, so the label sent model-tier recalibration a demand signal that did not happen. The cause was a routing choice (which seat ran 26.5), so `agent-evolution` is the nearer label. It is not an exact one: the vocabulary has no class for seat continuity. That gap is RS-20 (a), queued (the outcome line on `claims-pass.md`).
+- **CL-3** — **acknowledged.** 26.5 wrote two paths outside Task 26's Primary Artifacts and outside my charter's write scope: `docs/consumer/INSTALL.md` (+4/−4, derived from the guide by `scripts/derive-install-doc.ts`) and `scripts/__tests__/install-doc.test.ts` (+23/−5). Both were declared at the time (§ "Additional verification"; `task-26-5-completion.md`). The finding stands as recorded: declaring an out-of-list write does not bring it into the list. No remedy is owed beyond this record. The class (a criterion whose object is a derived artifact names only the source) recurs from MIDPOINT MP-6 and is queued as RS-21.
