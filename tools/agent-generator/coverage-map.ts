@@ -1151,12 +1151,41 @@ export function formatLaneAudit(audit: LaneAuditResult): string[] {
 export const JEST_CONFIG_PATTERN = /(^|\/)jest(\.[\w-]+)?\.config\.(js|cjs|mjs|ts|json)$/;
 
 /**
- * A committed fixture tree — `__fixtures__/` or a `fixtures/` directory segment — holds files
- * that belong to some OTHER repo or test scenario (e.g. a born consumer repo whose
- * `jest.config.js` requires `@3fn/core`, which is not installed inside the fixture), never to
- * this repo's own lanes. Its configs and package.json files are not lane inputs.
+ * The git attribute that declares a tracked tree FOREIGN to this repo's lanes. A foreign tree —
+ * a committed fixture (`fixtures/`, `__fixtures__/`), a probe's frozen inputs — holds files that
+ * belong to some OTHER repo or scenario (e.g. a born consumer repo whose `jest.config.js` requires
+ * `@3fn/core`, which is not installed inside the fixture), never to this repo's own lanes. Its
+ * package.json and jest config files are not lane inputs.
+ *
+ * The declaration lives in ONE place — the root `.gitattributes` — and this instrument holds no
+ * second list (release-4 rulings item 10, CL-1; it retired #361's path regex). Exempting a new
+ * tree is a reviewable `.gitattributes` line, not an edit here.
  */
-export const FIXTURE_TREE_PATTERN = /(^|\/)(__fixtures__|fixtures)\//;
+export const FOREIGN_TREE_ATTRIBUTE = 'dp-foreign-tree';
+
+/**
+ * Of `candidates` (repo-relative paths), the ones `.gitattributes` declares foreign — read with
+ * ONE `git check-attr -z --stdin` call. Only the value `set` counts: unspecified, unset, or any
+ * other value leaves the file a lane input (fail closed — an undeclared tree is never silently
+ * skipped, so an unknown package.json still surfaces). A git failure throws: the audit goes red,
+ * it does not degrade to "nothing is foreign" or "everything is".
+ */
+export function declaredForeignFiles(repoRoot: string, candidates: readonly string[]): Set<string> {
+  const foreign = new Set<string>();
+  if (candidates.length === 0) return foreign;
+  const out = execFileSync('git', ['check-attr', '-z', '--stdin', FOREIGN_TREE_ATTRIBUTE], {
+    cwd: repoRoot,
+    encoding: 'utf8',
+    input: candidates.map((c) => `${c}\0`).join(''),
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  // -z output: <path> NUL <attribute> NUL <info> NUL, one triple per input path.
+  const fields = out.split('\0');
+  for (let i = 0; i + 2 < fields.length; i += 3) {
+    if (fields[i + 1] === FOREIGN_TREE_ATTRIBUTE && fields[i + 2] === 'set') foreign.add(fields[i]);
+  }
+  return foreign;
+}
 
 export function readLaneInputs(repoRoot: string): LaneInputs {
   const files = execFileSync('git', ['ls-files'], { cwd: repoRoot, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
@@ -1169,9 +1198,15 @@ export function readLaneInputs(repoRoot: string): LaneInputs {
   const workflows: Record<string, string> = {};
   for (const f of files.filter((f) => /^\.github\/workflows\/[^/]+\.ya?ml$/.test(f))) workflows[f] = read(f);
 
+  const packageFiles = files.filter(
+    (f) => (f === 'package.json' || /^[^/]+(\/[^/]+)*\/package\.json$/.test(f)) && !f.includes('node_modules/')
+  );
+  const configFiles = files.filter((f) => JEST_CONFIG_PATTERN.test(f));
+  const foreign = declaredForeignFiles(repoRoot, [...packageFiles, ...configFiles]);
+
   const packages: PackageScriptsMap = {};
-  for (const f of files.filter((f) => f === 'package.json' || /^[^/]+(\/[^/]+)*\/package\.json$/.test(f))) {
-    if (f.includes('node_modules/') || FIXTURE_TREE_PATTERN.test(f)) continue;
+  for (const f of packageFiles) {
+    if (foreign.has(f)) continue;
     const dir = f === 'package.json' ? '.' : path.posix.dirname(f);
     try {
       packages[dir] = (JSON.parse(read(f)) as { scripts?: Record<string, string> }).scripts ?? {};
@@ -1181,7 +1216,8 @@ export function readLaneInputs(repoRoot: string): LaneInputs {
   }
 
   const jestConfigs: Record<string, JestConfigShape | undefined> = {};
-  for (const f of files.filter((f) => JEST_CONFIG_PATTERN.test(f) && !FIXTURE_TREE_PATTERN.test(f))) {
+  for (const f of configFiles) {
+    if (foreign.has(f)) continue;
     try {
       jestConfigs[f] = /\.(js|cjs|json)$/.test(f) ? (require(path.join(repoRoot, f)) as JestConfigShape) : undefined;
     } catch {
