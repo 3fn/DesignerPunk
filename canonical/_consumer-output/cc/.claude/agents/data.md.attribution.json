@@ -825,31 +825,31 @@
     {
       "lines": [
         534,
-        536
+        538
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        537,
-        540
+        539,
+        542
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:preflight"
     },
     {
       "lines": [
-        541,
-        541
+        543,
+        543
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:preflight[git status --porcelain]"
     },
     {
       "lines": [
-        542,
-        542
+        544,
+        544
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:preflight"

@@ -10,7 +10,7 @@
  *          lane 1) including its missing-steeringIdToPath throw.
  */
 
-import { CcAdapter } from '../adapters/cc';
+import { CcAdapter, CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE } from '../adapters/cc';
 import type { AdapterContext, FieldDispositionTable, SharedCatalogMember } from '../adapters/index';
 import type { AlwaysSetMember } from '../compose';
 import type { ResolvedAgent } from '../pipeline';
@@ -290,6 +290,10 @@ describe('CcAdapter.emitAgent — body content', () => {
     expect(files[0].content).toContain('docs/specs/**');
     expect(files[0].content).toContain('PreToolUse');
     expect(files[0].content).toContain('isolation: worktree');
+    // Steward lane unchanged by the release-4 consumer write-scope exception (2026-10-16); the
+    // consumer-lane rendering is pinned in consumer-profile.adapters.test.ts.
+    expect(files[0].content).toContain('Treat paths outside this set as read-only.');
+    expect(files[0].content).not.toContain(CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE);
   });
 
   it('renders the run-context annotation on the consumer-repo gap command', () => {

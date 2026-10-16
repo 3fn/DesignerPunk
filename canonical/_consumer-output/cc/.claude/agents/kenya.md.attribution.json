@@ -790,31 +790,31 @@
     {
       "lines": [
         395,
-        397
+        399
       ],
       "op": "render",
       "source": "canonical/agents/kenya.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        398,
-        401
+        400,
+        403
       ],
       "op": "render",
       "source": "canonical/agents/kenya.md#frontmatter:preflight"
     },
     {
       "lines": [
-        402,
-        402
+        404,
+        404
       ],
       "op": "render",
       "source": "canonical/agents/kenya.md#frontmatter:preflight[git status --porcelain]"
     },
     {
       "lines": [
-        403,
-        403
+        405,
+        405
       ],
       "op": "render",
       "source": "canonical/agents/kenya.md#frontmatter:preflight"

@@ -620,7 +620,7 @@
     {
       "lines": [
         412,
-        412
+        414
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#frontmatter:writeScope"

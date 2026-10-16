@@ -379,8 +379,10 @@ Run tests with your repo's own test runner and scripts — read them from its `p
 
 ## Write scope
 
-Write scope (behavioral): you may create or modify files only under these paths — treat paths outside this set as read-only:
+Write scope (behavioral): these paths are pre-approved — you may create or modify files under them:
 
 - `src/__tests__/**`
 - `specs/**`
+
+Paths outside this set are not pre-approved: ask your human lead before writing there, and write there only after they confirm in this session. Kiro may also show its own permission prompt for such a write.
 

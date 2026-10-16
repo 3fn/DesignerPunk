@@ -356,7 +356,9 @@ If there are questions, be proactive and ask — don't assume.
 
 ## Write scope
 
-Write scope (behavioral): you may create or modify files only under these paths — treat paths outside this set as read-only:
+Write scope (behavioral): these paths are pre-approved — you may create or modify files under them:
 
 - `specs/**`
+
+Paths outside this set are not pre-approved: ask your human lead before writing there, and write there only after they confirm in this session. Kiro may also show its own permission prompt for such a write.
 

@@ -1007,31 +1007,31 @@
     {
       "lines": [
         416,
-        418
+        420
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        419,
-        422
+        421,
+        424
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#frontmatter:preflight"
     },
     {
       "lines": [
-        423,
-        423
+        425,
+        425
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#frontmatter:preflight[git status --porcelain]"
     },
     {
       "lines": [
-        424,
-        424
+        426,
+        426
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#frontmatter:preflight"

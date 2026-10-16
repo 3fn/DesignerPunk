@@ -177,10 +177,26 @@ const FACET_7_ENFORCEMENT_SENTENCE =
  * The consumer profile's per-member write-scope rendering (Task 15.0): an intro line, one bullet
  * per glob (each its own `writeScope[<glob>]` span), then the closing text. The steward profile
  * keeps the one-sentence container rendering above, byte-identical.
+ *
+ * Release-4 consumer write-scope exception (2026-10-16): in a consumer's repo the declared scope
+ * is the PRE-APPROVED set, not the whole of what the seat may ever write (a product seat's code
+ * root is not in it). The rendered prose is the brake an agent obeys — an "only under … read-only"
+ * sentence makes it refuse even a write its human grants in the session (six Kiro runs, Peter,
+ * 2026-10-16) — so the governing text states the exception itself: ask first, write only after
+ * the human confirms in this session (never a self-grant, no version named). On Claude Code the
+ * prose is the only brake (no per-agent path field — facet 7 — and the permission mode may not
+ * prompt), so the outro says so plainly. The Kiro adapter renders the same exception sentence with
+ * a Kiro-true platform clause; the steward profile is untouched.
  */
 const WRITE_SCOPE_MEMBERS_INTRO =
-  'Write scope (behavioral): you may create or modify files only under these paths — treat paths outside this set as read-only:';
-const WRITE_SCOPE_MEMBERS_OUTRO = `\n${FACET_7_ENFORCEMENT_SENTENCE}\n\n`;
+  'Write scope (behavioral): these paths are pre-approved — you may create or modify files under them:';
+export const CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE =
+  'Paths outside this set are not pre-approved: ask your human lead before writing there, and write there ' +
+  'only after they confirm in this session.';
+const CC_WRITE_SCOPE_PLATFORM_CLAUSE =
+  'Claude Code may not show a permission prompt for such a write, so their confirmation is the check.';
+const WRITE_SCOPE_MEMBERS_OUTRO =
+  `\n${CONSUMER_WRITE_SCOPE_EXCEPTION_SENTENCE} ${CC_WRITE_SCOPE_PLATFORM_CLAUSE}\n\n${FACET_7_ENFORCEMENT_SENTENCE}\n\n`;
 
 function renderWriteScopeImpl(paths: readonly string[]): string {
   return `${renderWriteScopeNote(paths)} ${FACET_7_ENFORCEMENT_SENTENCE}`;

@@ -823,31 +823,31 @@
     {
       "lines": [
         768,
-        770
+        772
       ],
       "op": "render",
       "source": "canonical/agents/thurgood.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        771,
-        774
+        773,
+        776
       ],
       "op": "render",
       "source": "canonical/agents/thurgood.md#frontmatter:preflight"
     },
     {
       "lines": [
-        775,
-        775
+        777,
+        777
       ],
       "op": "render",
       "source": "canonical/agents/thurgood.md#frontmatter:preflight[git status --porcelain]"
     },
     {
       "lines": [
-        776,
-        776
+        778,
+        778
       ],
       "op": "render",
       "source": "canonical/agents/thurgood.md#frontmatter:preflight"

@@ -580,7 +580,7 @@
     {
       "lines": [
         312,
-        312
+        314
       ],
       "op": "render",
       "source": "canonical/agents/kenya.md#frontmatter:writeScope"
