@@ -194,7 +194,7 @@ Ground truth for this stewardship is COMPUTED at audit time by your repo's own c
 - Post-agent-prompt-modification: verify prompt-to-doc alignment and agent-directory consistency.
 
 **Cadence-driven** (your team's periodic health check):
-- When the recorded health-check date is stale past your team's cadence, run the health check, review the findings, flag issues to domain agents as needed, and record the new date.
+- When the newest health-check record is older than your team's cadence, run the health check, review the findings, flag issues to domain agents as needed, and commit the check's record.
 - **Return-edge review**: examine recurring check-failure patterns for education-implicating signals — does a failure cluster indicate the docs teach the wrong thing? Flag findings to the owning domain agent. This is the system-side half of the loop; Stacy's Lessons Synthesis Review is the product-side half.
 - **LIVENESS** (the claims-audit lapse detector — **a QUERY over the owed-set, never a recollection**). **Meta-item only**: **read for records, never for verdicts** — you check whether passes happened and left records; you never re-decide what a pass concluded. Two reads:
   1. **"Is the closeout-owed set empty?"** — run Stacy's owed-set query and read its output.
