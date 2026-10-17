@@ -171,11 +171,16 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: lina
-canonicalHash: sha256:b98c5264e74f32de3ea21adf7d2c43147c48e087866a903701d29fa595cb8d38
-items: scope-scaffolding, scope-platforms, scope-docs, scope-contract-tests, scope-token-integration, scope-schema, scope-token-mapping, scope-inheritance, scope-parity, scope-theme-consumption, scope-data-theme, scope-one-off, scope-promotion, scope-maintained-docs
-date: 2026-09-29
+canonicalHash: sha256:a78c65a56e0be270fbcade0106ae39659bd984a2aae2dc75de93e288c1131ef2
+items: scope-scaffolding, scope-platforms, scope-docs, scope-contract-tests, scope-token-integration, scope-schema, scope-token-mapping, scope-inheritance, scope-parity, scope-theme-consumption, scope-data-theme, scope-one-off, scope-promotion, scope-maintained-docs, scope-standing-grant, scope-standing-pr-names-file, scope-standing-rule-9, scope-standing-grants-compose, scope-standing-scope-moves, scope-standing-law
+date: 2026-10-17
 
-**Ruling: CONFIRMED at 14 items.** An enumeration: each member is an in-scope duty, and dropping one narrows the role (5c: members of an operative enumeration are operative). The set is complete at {n}.
+**Ruling: CONFIRMED at 20 items** (re-confirmation; the unit was re-hashed by the six-roots bullet, ballot 2026-10-17-standing-write-scope-six-roots; items drafted by Thurgood as profile author at `408ad8523`, on the split I proposed). The fourteen prior members stand: an enumeration, each member an in-scope duty, and dropping one narrows the role (5c). The new bullet is six items:
+- `scope-standing-grant` (member): the grant, through its test-ownership rule. The test rule is the grant's edge (it says which tests the grant covers), so it stays inside the member, as `thurgood.yaml`'s `scope-12` keeps the CI-regime limits inside its grant.
+- Five obligations that bind on their own: `scope-standing-pr-names-file`, `scope-standing-rule-9`, `scope-standing-grants-compose`, `scope-standing-scope-moves`, `scope-standing-law`. Each can be violated on a PR that leaves the grant untouched, so each is separate; a rendering that kept the limits and dropped the paths is then credited for exactly what it kept.
+- **Not an item**: "This test rule is enforced on Claude Code only until the per-owner test folders land; until then Kiro `allowedPaths` blocks these tests (…)". It states what the runtimes do, not a duty of the seat.
+
+The set is complete at 20.
 
 ## `#out-of-scope`
 

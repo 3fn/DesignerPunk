@@ -304,7 +304,7 @@ units:
         text: "When in doubt, consult Lina."
     confirmation: canonical/profiles/consumer/confirmations/lina.md#ownership
   "#in-scope":
-    canonicalHash: sha256:b98c5264e74f32de3ea21adf7d2c43147c48e087866a903701d29fa595cb8d38
+    canonicalHash: sha256:a78c65a56e0be270fbcade0106ae39659bd984a2aae2dc75de93e288c1131ef2
     items:
       - id: scope-scaffolding
         kind: member
