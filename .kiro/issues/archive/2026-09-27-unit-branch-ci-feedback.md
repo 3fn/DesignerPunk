@@ -190,3 +190,7 @@ When PR-1 and PR-2 have merged, and the U2a claims read confirms the dispatch UR
 ## Filed by
 
 Thurgood (Civitas steward), 2026-09-27, at Peter's direction, relayed by the orchestrator. It rides the Spec 123 U2-split amendment PR.
+
+## Closed — 2026-10-17 (monthly health-check walk, Thurgood)
+
+Executed: PR-1 #218 `90fb0e71e` and PR-2 #227 `7fa64c6d8` merged under ballot B-CI. The dispatch works: unit-branch runs report under their `(unit-branch)` context names (for example `task-11-completion.md` L60: all six workflows green at the branch head). **Lapse, recorded and not repaired**: ballot B-CI step 7 required a dated probe-verification entry in this file before U2a's first work commit; no such entry exists. The substitute evidence above is real but is not the probe the ballot named. Closed with the lapse on the record (owner: Thurgood). Archived per `.kiro/issues/README.md` rule 5.

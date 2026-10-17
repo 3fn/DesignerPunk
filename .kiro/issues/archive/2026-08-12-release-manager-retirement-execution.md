@@ -61,3 +61,7 @@
 ## Stacy consult record (safeguard 2 — RMS rewrite, 2026-08-12)
 
 Returned pre-PR-2; ALL items folded, zero declined: (a) ballot-fidelity clean incl. C1 chain; (b) CRITICAL dead get_section citations in PHO → fixed in PR 2, + register-candidate rule recorded above; (c) CRITICAL consumer dead-pointer + 3 MEDIUMs → audience-framing banner + role-framing + guard-script qualifier + inline tag mechanics + chain consumer-note (her one-line fix adopted; systemic question routed to 123 per her own counter-argument); (d) MEDIUM shipped-surface under-specification → files[] named authoritative in BOTH docs; adjacent residue (CDG/PSP hook-rationale passages) → rewritten with historical notes; nits (frontmatter name/description; Historical Note retained given the banner) → taken.
+
+## Closed — 2026-10-17 (monthly health-check walk, Thurgood)
+
+Executed 2026-08-12: PR 1 of 2 (the kill) #117 `29289bb25`, PR 2 of 2 (law and teaching rewrite) #118 `83a17bed9`. 20 checklist items ticked; the one unticked item is conditional (a U1b wave window open at execution) and did not apply. The file stayed at the root as "IN EXECUTION" for two months; the 2026-09-19 walk misread it as waiting on its own session. That is a walk error, recorded here and in the health-check report. Archived per `.kiro/issues/README.md` rule 5.

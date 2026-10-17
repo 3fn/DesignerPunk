@@ -28,3 +28,7 @@
 - The grant holds on the fixing PR's branch only. It is activated by Peter's merge of a PR whose body names this issue and this path list, and it expires when that PR merges (`.kiro/issues/README.md` rule 8).
 - It confers no ratification authority, and it touches no governance-law path.
 - The fixing PR is a `chore/` PR to `main`, merged into U2b's unit branch before the unit PR opens.
+
+## Closed — 2026-10-17 (monthly health-check walk, Thurgood)
+
+Executed by #241 `17fb6745e` (2026-09-30), before U2b's unit PR opened, as the trigger required: `emitSkillTrees`, its result type and its test block were deleted; `tools/agent-generator/skills.ts` L29 now records the retirement. `git grep emitSkillTrees -- tools` finds only that comment. Archived per `.kiro/issues/README.md` rule 5.

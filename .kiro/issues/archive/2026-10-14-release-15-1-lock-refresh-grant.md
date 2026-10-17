@@ -16,3 +16,7 @@ The version bump edits `package.json`, which is in the lock's input closure (`IN
 ## Grant
 - **Rule 8.** Activated by Peter's merge of the PR whose body names this file and this path list. **The fixing PR is the 15.1.0 release PR**: the refresh commit lands on its branch (its own commit, after the bump; written by a green `npm run check:122:diff-guard` run, never by hand), and the grant expires when that PR merges. The release PR's body names this file and restates `**Grant paths**: canonical/generated.lock`.
 - The refresh commit's message states the `inputClosure` before/after and that `outputs` is unchanged; if `outputs` moves, Thurgood stops and reports instead of refreshing.
+
+## Closed — 2026-10-17 (monthly health-check walk, Thurgood)
+
+Expired at the 15.1.0 release PR's merge, #346 `e49359e49` (README rule 8); the release shipped as `v15.1.0` (2026-10-13). Nothing further is owed under this grant. Archived per `.kiro/issues/README.md` rule 5.

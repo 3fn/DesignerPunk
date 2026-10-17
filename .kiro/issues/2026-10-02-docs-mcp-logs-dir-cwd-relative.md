@@ -23,3 +23,5 @@ Any edit to `mcp-server/src/**`.
 ## Filed by
 
 Thurgood, 2026-10-02, in the U2b closeout bookkeeping PR, so closing the lock issue leaves no untracked carry.
+
+**Walk 2026-10-17 — the trigger fired (this is the first monthly walk after filing).** The defect stands on `main` at `6db219208` (`mcp-server/src/index.ts` L61 `DEFAULT_LOGS_DIR = 'mcp-server/logs'`), now with consumer evidence (15.0.0 smoke O-5; release-4 U5 rows R1-3 / R2-7 / K-4). The fixing owner is still unnamed because `mcp-server/src/**` is in no charter's write scope. That is the same class as the health check's finding (i) (`tools/agent-generator/**`, `scripts/**`). **Routed to Peter** to name the fix owner. The class option is the write-scope ballot recorded in `2026-10-02-issues-dir-write-scope-gap-and-grant-advisories.md` (walk line, same date). New trigger: Peter names the owner, or the next PR that touches `mcp-server/src/**`, whichever comes first.
