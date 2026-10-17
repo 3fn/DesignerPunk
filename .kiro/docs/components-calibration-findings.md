@@ -264,3 +264,79 @@ ran 36 scored phrases under: status-quo, parity, r3 (status-quo self-check passe
 - DAT-9 (r3): Nav-TabBar-Base → Nav-Header-Base
 - SPA-6 (r3): Chip-Filter → Chip-Base
 ```
+
+---
+
+## 3. Method conformance (Thurgood)
+
+**Verdict: CONFORMS WITH NOTES.** The run was sealed, keyed, pre-registered and scored as the charter requires. One note must be closed before the PR opens (M7); one is a charter text defect I own (M8). The outcome holds under every reading I could construct.
+
+**Independent re-run (mine, 2026-10-17, read-only).**
+- Run at `e132bcd83`, using the measurement command in § 1.5. `run.ts` blob `0d82e2f983f8`; fixture sha256 `87de8a11…69a0c` (matches the guard pin).
+- The output is identical to § 2.8 on every headline line: R3 net +26 / +25, parity +24 / +24, TSL 0, new CW 0, R@1 / R@2 unchanged, status-quo self-check passed.
+- `git diff --stat 222f1aa7a e132bcd83 -- application-mcp-server/src/calibration application-mcp-server/src/query application-mcp-server/src/indexer src/components` is empty. So the fixture, keys, arms and runner have not changed since the keys commit, and the matcher and corpus are the merge-base's.
+
+### Conformance by charter section
+
+- **M1 — § 4, sealing: CONFORMS.**
+  - Four fresh sessions were run; the harness counted tool_uses = 1 for each (the hand-back).
+  - The raw file (`ad7b13b06`) holds the prompt verbatim and each answer byte-identical to the orchestrator's relay, which I diff-checked at capture.
+  - That the seats saw only the prompt is orchestrator-attested; there is no other record.
+- **M2 — § 3, size and keys: CONFORMS.**
+  - 36 phrases: 21 positive and 15 gap, so the gap share is 41.7 % (≥ ⅓, ≥ 8). No top-up seat; no F4 drops.
+  - LEO-8 was labelled B by its seat and keyed positive. That is § 3 as written: the key decides the class.
+  - The gap `closestSensible` values were set before any run.
+- **M3 — keys before scoring: CONFORMS.**
+  - The keys, arms and runner landed together in `222f1aa7a`, before any arm was run on q1. No calibration code or key has changed since (re-run paragraph above).
+- **M4 — Stacy's N3, the self-attested status-quo harness check: IMMATERIAL to the outcome.**
+  - The run came after the keys and the arm code were committed, and neither has changed since. R3's text was fixed in the charter (#387) before any seat wrote.
+  - A status-quo table could not have shaped any input that decides acceptance.
+  - Recorded as self-attested, as § 2.2 already says.
+- **M5 — § 5, pre-registration before the run: CONFORMS WITH NOTE.**
+  - Step (2) ran as two commits, `222f1aa7a` then `0c2e0a9bb`. Both precede the run and the results commit `e132bcd83`. § 1.1 records the split; this is not a deviation in substance.
+  - The pre-registration block carries every item § 5 lists: R3 text, arms, acceptance and turn/revert verbatim, fixture hash, command, counts and pre-exposure flags.
+- **M6 — §§ 6 and 8, arms fixed and acceptance applied as written: CONFORMS.**
+  - Arms: status quo imports the shipped function. Parity and R3 match § 8 and § 1.2. The control arm is not run, as specified (`--arms control` exits 2).
+  - The verdict is the AND of both subsets (Stacy's N1).
+  - Pre-exposure was computed mechanically from all four § 2 sources (`preExposure.ts`): 4 rows.
+- **M7 — § 7, Stacy's read: DONE, NOT YET RECORDED.**
+  - § 1.7 still holds its placeholder; § 2.2 carries only the one-line verdict.
+  - The orchestrator records her read and notes N1–N4 in § 1.7 before the PR opens. Until then, the record of a non-gating read lives outside the PR.
+- **M8 — Stacy's N2, the CW unit: a defect in my § 6 text.**
+  - Charter § 6 says "a `strong` row in ranks 1–3". It does not say whether a "row" is a phrase or a (phrase, component) pair, so a reader of § 6 alone cannot compute `net`.
+  - **For q1 the unit is binding as pre-registered.** § 1.5 ("CW is counted per (phrase, component) pair in ranks 1–3") was already in `0c2e0a9bb`, before the run.
+  - **The outcome does not depend on the unit.** Re-scored per phrase from the same run output (a phrase is CW if any top-3 `strong` falls outside its key):
+    - status quo 32 phrases;
+    - parity 27, so net +5;
+    - R3 25, so net +7;
+    - new CW 0 for both;
+    - the same fixed counts without the pre-exposed rows (parity +5, R3 +7).
+
+    Both arms clear net ≥ +3 under either reading.
+  - **The fix: a charter amendment, not a gloss here.** In the charter's closing commit (§ 14) I amend § 6's CW definition to read "a (phrase, component) pair: a `strong` result in ranks 1–3 whose component is not in the phrase's key (a gap negative's key is empty); `net` and 'new CW' count pairs". The amendment is dated and cites this note.
+  - The charter's method outlives q1, and bound 1 of my charter cut makes an interpretation question my text's defect. It does not move q1's goalposts: the amended text is the unit q1 pre-registered.
+- **M9 — § 2, spent-set rule: IN FORCE.** q1 is spent as a tuning target from `e132bcd83` (§ 2.7) and is a regression guard only. The F3 freeze SHA is `222f1aa7a` (the fixture's last change). Walk line: `git log --oneline 222f1aa7a.. -- application-mcp-server/src/calibration/__fixtures__/components-calibration-q1.json`.
+- **M10 — fallback (C): did not fire** between `67d9d807a` and the run, as § 2.2 states. No revert rule applies.
+
+### Method ruling on the turn (for Peter's decision; the decision is his)
+
+**What the pre-registered turn rule permits, given § 2.5's disagreement analysis:**
+- **(a) R3 turns as written.** It met all three criteria on both subsets. That is what the turn rule says happens.
+- **(b) Turning parity instead is NOT pre-registered.** Parity is a comparison arm ("this charter turns nothing else"). A parity turn would be a new decision on a spent set. It would need Peter's ruling as a fresh choice, and under § 2 its justification could not rest on q1.
+- **(c) An R3′ with the anchor restricted to non-incidental name tokens is tuning on a spent set.** It needs fresh queries authored under § 4, with the anchor-specific cases pre-registered.
+
+**The anchor finding does not undo the acceptance.**
+- The seven anchor-fragment pairs (`indicator`, `icon`, `bar`, `list`) were confident-wrong under status quo too. R3 leaves them as they are, so "no new CW" holds.
+- The finding shows that R3's anchor has an untested benefit and a measured cost **relative to parity**. The pre-registered comparison was against status quo, not parity.
+- Using a post-hoc split of a passed test to reverse a pre-registered acceptance is the same forking-paths error as tuning on the set, in the other direction.
+
+**The step I sign:**
+1. Turn R3 as pre-registered, in Lina's separate PR, carrying the § 9 re-run and § 2.5 as its surviving counter-argument.
+2. File the anchor-fragment observation as a recorded follow-up (Lina's, in the charter's closing):
+   - **What**: R3's own-name anchor fires on incidental tokens of compound names; its benefit (name hits carrying unmatched modifiers) is supported only by author-exposed probes.
+   - **Trigger**: the next fresh components set authored under § 4 — for the next components-matcher change or the next instrument run, whichever comes first.
+   - **What that set must pre-register**: name-with-modifier positives and compound-name-fragment negatives, plus an R3′ arm (anchor restricted to whole-name or family tokens) beside R3 and parity.
+
+**Holding the turn** is Peter's to choose, and it does not violate the method, but it departs from the pre-registered rule. If he holds, the reason belongs in the charter's closing record. I would not sign the method for "turn parity" or "turn R3′" on q1.
+
+**Surviving counter-argument.** The turn embeds "names beat purpose" when the blind set supports only "a stricter coverage gate than parity". Over parity, R3 wins by 2 pairs (1 without pre-exposed rows), which is inside noise at n = 36. If the next fresh set shows the anchor's benefit never arrives, the system will have carried a rule whose distinctive clause cost more than it bought. The pre-registration bound the decision to status quo, not to this question.
