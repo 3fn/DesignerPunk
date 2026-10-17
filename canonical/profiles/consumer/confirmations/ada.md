@@ -43,13 +43,25 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: ada
-canonicalHash: sha256:3a09069dc398675a590bae57b1b3ad676e377c54e2dd018190b6f24ff4aa1570
-items: scope-create, scope-math, scope-compliance, scope-docs, scope-testing, scope-naming, scope-output, scope-hierarchy, scope-coverage, scope-theme-registry, scope-pipeline-config, scope-theme-output, scope-config-authoring
-date: 2026-09-29
+canonicalHash: sha256:da60b5bb35b68b8d1ce7cf41bf10f0d8a73bb17bbefa8a625d3cf76e3888c78b
+items: scope-create, scope-math, scope-compliance, scope-docs, scope-testing, scope-naming, scope-output, scope-hierarchy, scope-coverage, scope-theme-registry, scope-pipeline-config, scope-theme-output, scope-config-authoring, scope-standing-grant, scope-standing-consults, scope-standing-test-rule, scope-standing-pr-names-file, scope-standing-rule-9, scope-standing-grants-compose, scope-standing-law, scope-standing-scope-moves
+date: 2026-10-17
 
-**Ruling: CONFIRMED at 13 items, as drafted.**
-- Each bullet is a scope member; a consumer Ada that refuses or disowns it violates the boundary.
-- The `src/…` paths in `scope-theme-registry` and `scope-pipeline-config` are repo-bound referents. Under 5b/5e they are read re-keyed to the consumer's repo, so they stay inside the item text; they can only make strict matching under-count.
+**Ruling: CONFIRMED at 21 items** (re-confirmation, 2026-10-17). The six-roots bullet re-hashed the unit (ballot 2026-10-17-standing-write-scope-six-roots). Thurgood drafted the items as profile author at `408ad8523`, and I agree with all eight new ones as drafted.
+- **The thirteen prior members stand** as confirmed on 2026-09-29. Each bullet is a scope member; a consumer Ada that refuses or disowns it violates the boundary. The `src/…` paths in `scope-theme-registry` and `scope-pipeline-config` are repo-bound referents, read re-keyed under 5b/5e.
+- **Two members from the bullet**:
+  - `scope-standing-grant` is the grant itself.
+  - `scope-standing-test-rule` says which tests the grant covers. Lina keeps her test rule inside her grant item. Mine is a separate member because the consult sentence sits between the two in my bullet, so they are not contiguous. It is still a member, not an obligation: it defines what I may write.
+- **Six obligations, each breakable on a PR that leaves the grant untouched**:
+  - `scope-standing-consults`: the Thurgood and Leonardo shares. This includes `src/cli/sync/SteeringDirCheck.ts`, which Peter ruled in as the docs MCP's `MCP_STEERING_DIR` contract; for me it is a consult obligation and nothing more.
+  - `scope-standing-pr-names-file`;
+  - `scope-standing-rule-9`;
+  - `scope-standing-grants-compose`;
+  - `scope-standing-law`;
+  - `scope-standing-scope-moves`.
+- **Not an item**: the sentence "This test rule is enforced on Claude Code only until the per-owner test folders land; …". It describes what the runtimes enforce, not a duty of the seat.
+
+The set is complete at 21.
 
 ## `#out-of-scope`
 
