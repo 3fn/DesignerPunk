@@ -94,7 +94,23 @@ Charter § 5 describes step (2) as one commit. It is executed as **two** commits
 
 ### 1.7 Stacy's read (charter § 7)
 
-_Recorded by the orchestrator after her read, before the measurement run._
+_Recorded by the orchestrator (declared orchestration write; consult record, not a seat edit) after her read and before the measurement run. Read at HEAD 0c2e0a9bb, 2026-10-17; read-only; only `--verify-only` was run (exit 0)._
+
+**Verdict: VERIFIABLE WITH NOTES.** No criterion wording was sent back.
+
+- (1) Acceptance decidable from the runner's output alone — PASS. Every term resolves in `run.ts` (`scoreArm` / `acceptance`) plus § 1.5: confident-wrong = a (phrase, component) pair in ranks 1–3 outside the accept set; true-strong-lost = an accept member `strong` at rank ≤ 2 under status quo and not under the arm; "new" = pair set-difference; "not lower" = count comparison on the same subset. `findComponents` applies no default `limit`, so re-sorts see all rows; the runner's salient-token denominator equals the engine's.
+- (2) Arms fixed before the run — PASS. R3's text in charter § 10 and § 1.2 here is byte-identical (diffed); `arms.ts` blob identical at 222f1aa7a and HEAD; parity defined; status quo imports the shipped `deriveMatchConfidence`; `src/query` and `src/indexer` unchanged against the merge-base 67d9d807a.
+- (3) Sealing provable — PASS. ad7b13b06 precedes 222f1aa7a; the fixture's sha256 at both commits equals the pinned `87de8a11…`; a scripted raw↔fixture comparison matched 36/36 phrases, needs, seats, A/B labels and order.
+- (4) Turn/revert rule and fallback trigger — PASS (observable events named).
+- (5) Keying integrity (structure, not merits) — PASS. 1:1 rows; 0 drops recorded by class and count; LEO-8's judgment call carries its reason; pre-exposure flags recomputed by `validateFixture` and guard-pinned; exactly KEN-4, LEO-1, DAT-2, SPA-5 match; the probe lists equal charter App. A (34) and Lina's 68 verbatim; the Stage 0 strings equal the archived table rows 1–7; D8–D10 strings equal.
+
+**Notes (record shape only) and their dispositions:**
+- **N1** the runner prints two subset verdicts and no overall line → the results commit states the overall verdict as the AND of both, naming both. *Disposition: done in § 2 (e132bcd83).*
+- **N2** the per-pair confident-wrong unit lives in § 1.5 / `run.ts`, not in charter § 6, so a reader of § 6 alone cannot compute `net`. *Disposition: Thurgood's text; he amends charter § 6 to the per-pair wording in the charter's closing commit (§ 3 below). Scored per phrase instead, R3 nets +7 and parity +5 with no new confident-wrong, so the verdict does not depend on the unit.*
+- **N3** the one `--arms status-quo --table` harness check before the pre-registration commit departs from § 10's "verify-only is the only mode before (2)"; that it preceded keying is self-attested and unprovable from the chain. *Disposition: recorded as self-attested at the claims pass, not a finding.*
+- **N4** the results commit must carry the pre-registration SHA, the `run.ts` blob, the corpus SHA, the orchestrator's run line, and whether the fallback trigger fired. *Disposition: all five are in § 2 (pre-registration 0c2e0a9bb; `run.ts` blob 0d82e2f983f8; corpus 0c2e0a9bb; run line with command + headline; fallback (C) did not fire between 67d9d807a and 0c2e0a9bb).*
+
+**Consulted**: Stacy — VERIFIABLE WITH NOTES; chain sealed and byte-checked end to end; four record-shape notes, no criterion wording returned.
 
 ---
 
