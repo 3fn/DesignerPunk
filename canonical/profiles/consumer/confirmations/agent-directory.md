@@ -22,9 +22,15 @@
 ## `#agent-directory:preamble`
 
 confirmer: stacy
-canonicalHash: sha256:c3bff3f30d5ad063ef351074a7c76bae1cb51034bd6a6b1b596c261cbef9879e
+canonicalHash: sha256:4b4d5861dda65a1bb0b16963743c6ed4440c53e33a2f97af82b7d5797e34d977
 items: none
-date: 2026-09-29
+date: 2026-10-17
+
+**Re-confirmed 2026-10-17 (Req 11.6.5d).**
+- **What changed**: the body line `**Last Reviewed**: 2026-09-28` left the unit; the stamp now lives in the YAML frontmatter as `lastReviewed:`, which `splitFrontmatter` keeps outside `canonicalHash`. Ballot `.kiro/docs/ballots/2026-10-17-no-volatile-metadata-in-signed-units.md` (RATIFIED, Peter, 2026-10-17, #393) § 3.2; authoring commit `0274210a8` (Thurgood). No other text in the unit changed. The canonicalHash moves from `sha256:c3bff3f30d5ad063ef351074a7c76bae1cb51034bd6a6b1b596c261cbef9879e` to the value above.
+- **Re-ruled**: what remains is the title and the metadata block (`Date`, `Purpose`, `Organization`, `Scope`, `Layer`, `Relevant Tasks`). No agent acts against doc metadata, and the removed line was never an item. The zero stays declared (5d).
+
+**Ruling: CONFIRMED at 0, declared.**
 
 **Ruling: CONFIRMED at 0, declared.** Doc metadata.
 
