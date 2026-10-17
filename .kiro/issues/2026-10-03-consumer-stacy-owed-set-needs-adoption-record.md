@@ -44,3 +44,11 @@ The pick is the owners', with Peter's go.
 None proposed. `canonical/**` is governance surface and changes through the ballot or charter process. If option 1 touches `src/cli/init.ts`, its owner names that grant when the PR opens.
 
 **No fix is authorized by this record.**
+
+---
+
+## Lapse (2026-10-17)
+
+**The trigger fired and lapsed without a fix.** Trigger: "the first consumer-profile PR after Spec 123 U3 merges." **Verified 2026-10-17 by `git log` on `main`:** the U3 onboarding unit merged as #321 (`cdb8296fa`, 2026-10-13); the first PR after it to touch `canonical/profiles/consumer/` was **#337** (`5ac23b74c`, 2026-10-13: Kenya and Data overlays, dispositions and signatures), and the second was **#378** (`51d8273a7`, 2026-10-15: V-PROF, Leonardo and Sparky). **Neither touched `stacy.overlay.md`**, and **#377** (`d0f5d3653`) touched no file under `canonical/profiles/consumer/`. (Earlier consumer-profile PRs #307 and #313, 2026-10-12, may also count, depending on which U3 merge the trigger meant; unverified. The firing PR is #337 on the strictest reading.) `stacy.overlay.md:108` still reads `ADOPTION=docs/claims-pass-adoption.md`; no fix was made, and the record was not walked when the trigger fired. The walk (#379) carried the row as C-4 and shipped 16.0.0 with it.
+
+**Ruled by Peter, 2026-10-17** (`.kiro/specs/123-consumer-distribution/completion/release-4-rulings-2026-10-15.md`, row 28): C-4 is false at a consumer agent's reader and shipped in 16.0.0 as a floor miss, a recorded one-time exception. **New deadline: fixed before release-5 phase 1** (no 16.0.1 patch). The fix is a profile PR, Stacy writes the overlay text; the pick among the three fix shapes above remains the owners', with Peter's go.
