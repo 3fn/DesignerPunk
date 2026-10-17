@@ -64,7 +64,7 @@ units:
           ❌ Beginning implementation without explicit user request
     confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-critical-wait-for-user-authorization-before-starting-new-tasks
   "#item-civitas-governance-health-check":
-    canonicalHash: sha256:81d0a0079ab252f6cd829b654d963401e76ae66dfc084bb0634844041c06552b
+    canonicalHash: sha256:431d69a79f5a20615aeea797e290d1ed6f45e7e887e8bb43b4399336e363098a
     items:
       - id: hc-1
         kind: obligation
