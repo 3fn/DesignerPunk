@@ -1,6 +1,6 @@
 # Claims Pass — RELEASE 16.0.0: Spec 123, release 4
 
-**Date**: 2026-10-16 (phase 1)
+**Date**: 2026-10-16 (phase 1); **phase 2 appended 2026-10-17** (§ "Phase 2 (2026-10-17)", end of file, after the Addendum)
 **Grain**: RELEASE. Release 4, the plan's fourth CHANGELOG entry (`tasks.md` § "Expected release count"). A MAJOR, for #352.
 **Auditor**: Stacy
 **Release commit S**: `4b940c45d9f2479453d062d0711a9a1ca7ede6b2`, the squash of PR #381, merged by Peter 2026-10-16T12:35:29Z. Its tree `cbef2f66` equals the PR head `4d7805569`'s tree. **Superseded by the Addendum on S1 = `13adf005a` (2026-10-16, end of this file): RL-11 (a) was taken, and the tag goes on S1, never on S.**
@@ -514,6 +514,8 @@ My verdict, "the 16.0.0 artifact matches its claims except RL-11 and RL-12", res
 
 ## Phase 2 — placeholder
 
+*Written 2026-10-17: § "Phase 2 (2026-10-17)" at the end of this file, after the Addendum.*
+
 *To be appended as a dated section at the merge of the step-6 release-record PR (RELEASE-FLOW step 6). It reads:*
 - the tag;
 - the committed `docs/releases/16.0.0/publish-verification.txt`: every rail run with its exit code (rulings item 19), and the 6b record (the 5.3 record pasted, the 5.1 tally, and per registry the `time["16.0.0"]`, file count, `dist.shasum` and fetched-bytes sha1, all four equal to the 5.3 record);
@@ -687,3 +689,114 @@ On S1, every claim I re-read holds in the packed artifact and the notes. RL-11 a
 **Surviving counter-argument**: this addendum rests on two of our own dry-run tarballs, greps and a source diff. It inherits phase 1's limits (OB-2: no one has run the 16.0.0 tarball as a consumer). RL-13's "complete" rests on grepping one phrase family; differently worded removal-schedule text would escape it. O-18 is what one widening of the phrase found. Also, I missed the wrapper sites at phase 1, and Ada found them. That is evidence my phase-1 greps were scoped to the finding, not to the sentence.
 
 **`publish-rail liveness: owed`.** Phase 2 reads as placed above, on S1.
+
+---
+
+## Phase 2 (2026-10-17) — publish verification, rail, two-registry record, cold-install smoke
+
+**Auditor**: Stacy (a fresh seat; phase 1 and the addendum were earlier instances of mine).
+**Trigger**: the merge of the step-6 release-record PR **#385**, squash `8d221da96b6f8e15bdeb11124e443de8a7b8d881`, merged by Peter 2026-10-16T17:25:14Z (public API `pulls/385`: `merged_at`, `merged_by` 3fn, 1 commit, 1 file). **Drafted after that merge**, on a worktree cut from `main` at `b1112d2e1`. Every reading of #385's file is of the merged commit. Peter gave the go on 2026-10-17.
+**Placement**: appended after the Addendum, which is phase 1's tail. In this file the Addendum already follows Appendix A, so phase 2 goes at the end. 15.1.0 placed phase 2 before its appendix. Phase 1's and the Addendum's text are unchanged.
+
+**Standards implications: list — two new items (RS-31, RS-32); RS-28 evidenced again; RS-30 answered by a ratified ballot that is not yet applied. § "Phase 2 standards implications" below.**
+
+> No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR. This section gates nothing. #385 merged before it, and step 7 (the GitHub release) needs nothing from it.
+
+### What phase 1 left owed, and the reading
+
+| Owed (phase 1 "To phase 2", the Addendum, the brief) | Reading | Result |
+|---|---|---|
+| 1. Tag `v16.0.0` on S1 | `git describe --tags --exact-match 13adf005a…` → `v16.0.0`. `git ls-remote origin`: `refs/tags/v16.0.0` = `0259a606f2d2…` (annotated), `^{}` = `13adf005a65d74ccf240a5c8a8b865962e5b67c1`. Tagger time 2026-10-16T14:31:18Z. That is after the Addendum merged (#384, 14:00:37Z) and before the 5.3 record's `createdAt` (14:31:53.542Z). S (`4b940c45d`) is untagged | ✅ |
+| 2. 5.3 / 5.4 | One publish to each registry, of one file. Two refused attempts are pasted and classified below | ✅ |
+| 3. Rail result, every run pasted (rulings item 19, RS-17) | `.txt` § 6a: run 1 (14:40:52Z) and run 2 (14:42:25Z) `FAIL[version] … (HTTP 404)`, `exit 10`. Each is paired with a packument read that shows no `time["16.0.0"]`, so each 404 was the correct answer. Run 3 (14:52:53Z) `PASS: @3fn/core@16.0.0 visible on npmjs; tarball host verified`, `exit 0`. The operator watched the packument between runs 2 and 3 and did not re-run the rail blind. **RS-17 is satisfied this time: every rail run is in the record with its time and exit code.** 15.1.0's RL-8 was the omission of exactly this | ✅ |
+| 4. 6b: four sha1s equal the 5.3 record | § "The two-registry read" | ✅ `e9d8bfca…` ×4 (GitHub Packages column read from the record) |
+| 5. Published bytes against phase 1's tarball (expect exactly the three timestamp files to differ) | The public tarball against the kept 5.1 dry run at S1 (`dp-release-1fyiKs`, sha1 `13519dbb…`, re-hashed by me). Path sets are identical (1675, 0 diff lines). `diff -rq` → exactly **3 files**, one line each: `dist/mcp/tool-manifest.json` `generatedAt` 14:31:49.932Z vs 13:40:40.206Z; `dist/types/generated/TokenTypes.{d.ts,js}` `Generated:` 14:31:39.122Z vs 13:40:30.425Z. The 2-byte difference in tarball size is the compression of those stamps. **Every phase-1 and Addendum reading of the packed artifact carries over to the published bytes** | ✅ |
+| 6. Cold-install smoke (OB-2) | § "Cold-install smoke" | ✅ (narrows OB-2, does not close it) |
+| 7. The notes' fresh-clone sentence (the R-3 class) | It holds if 6b's sha1s equal the 5.3 record. They do, and the record names `commit` = S1 and `source` = the GitHub URL | ✅ |
+| 8. RL-11's fork | (a), fixed at S1 (Addendum). **It reaches the consumer**: the installed `CHANGELOG.md` L52 is the fixed sentence ("…and, in `DesignTokens.dtcg.json`, one line of text, the deprecation reason on `blend.disabledDesaturate` (#368). No token value changed in this release."), and the installed `dist/DesignTokens.dtcg.json` L3972 carries the `deprecatedReason` string it discloses | ✅ |
+| 9. J blind seats (2 for release 4, 4 for 15.1.0) | Not run. The 2026-10-17 health check (#392 L124) lists them as owed to Peter's seat | unchanged (owed) |
+| ARMING of `hermetic-publish-path` / `publish-rail-guard` at #385's merge | **Nothing arms, and nothing was owed.** At `b1112d2e1` both rows read `check_state: armed`, `armed_at: tool-time`: `publish-rail-guard` since 2026-09-27; `hermetic-publish-path` since #355 (2026-10-14, my ARMING read #357). `governance/classification-map.md` last changed at #376, before S. #385 touches no register, no `.github/**` path and no gate list. 16.0.0 is the first release run with the hermetic row already armed, and this 6b record is that row's first in-force evidence. Unlike 15.1.0's RL-7, no ruled flip was pending. Also: the row's 2026-10-14 history says the corrected 404 sentence "ships from the next release". The installed `governance/classification-map.md` has it (`if the packument has no time`: 1 hit) | ✅ no ARMING event |
+| `publish-rail liveness: owed` | below | ✅ |
+
+**`publish-rail liveness: PASS` — read and committed (2026-10-17).** The guard's committed run 3 passed with exit 0, in `docs/releases/16.0.0/publish-verification.txt`, merged in #385 at `8d221da96`. The two earlier runs are in the record too. The merge-confirmation line below records the read.
+
+### The two-registry read
+
+| | registry.npmjs.org | npm.pkg.github.com |
+|---|---|---|
+| `time["16.0.0"]` | `2026-10-16T14:52:24.127Z`. **My read** (packument, 2026-10-17T18:16:51Z, no credentials) | `2026-10-16T14:31:56Z`. **The orchestrator's measurement** (`.txt` L163) |
+| `dist-tags.latest` | `16.0.0` (my read) | — |
+| `dist.shasum` / `fileCount` | `e9d8bfca5371eacc6fdf30579a512b280c1c165a` / 1675 (my read; `integrity` `sha512-IGo88WwPv8hny…uDNG0WPRJ04tQ==`, equal to the `.txt`'s prefix and suffix) | `e9d8bfca…` (the orchestrator's) |
+| Fetched-bytes sha1 | `curl -sL …/core-16.0.0.tgz` → `e9d8bfca5371eacc6fdf30579a512b280c1c165a`, 6,494,583 B, `tar -tzf \| wc -l` 1675, 0 `.tgz` entries | `e9d8bfca…`, 1675, 6,494,583 B (the orchestrator's `npm pack` from the main checkout) |
+
+**The GitHub Packages column is not re-verified by me.** The read needs the main checkout's `.npmrc` auth, which this seat does not hold and did not attempt. **Against the 5.3 record**: the `.txt`'s pasted JSON (L10–27) equals the operator's kept `release-publish-record.json` (`dp-release-vFNgYW`), compared as parsed JSON. `mode` is `publish`, `commit` is S1, and `publishedTo` is `["https://npm.pkg.github.com"]`. The kept 5.3 tarball hashes to `e9d8bfca…`, and `cmp` shows it byte-identical to the npmjs bytes I fetched. **One tarball is on both registries. No release incident.**
+
+**The two refused attempts, classified**:
+- **The duplicate 5.3 run (tab 1, ~4 s after tab 0) was refused with E409. It was not an incident.** Both runs built from the tag in fresh clones. Tab 0's PUT landed first (14:31:56Z), and GitHub Packages refused tab 1's (`Cannot publish over existing version`). The script then printed `REFUSED … Nothing was published.` and no 5.4 command. That is the guard working as designed: the registry will not overwrite a version, and the script stops when the publish fails. Tab 1's kept work dir (`dp-release-UuoCX1`) has a tarball (`c543b553…`) and **no** `release-publish-record.json`, so it never got as far as a record. Its contents differ from the published bytes in exactly the same three timestamp files. **What made this safe** was the registry's immutability plus the 5.4 sha1 check, not anything stopping two runs at once → RS-32.
+- **The first 5.4 attempt got E404. It was not an incident, and the handling was right.** The orchestrator diagnosed it as an expired npmjs login (`npm whoami` → E401, the documented pitfall 4) and checked that the packument had no `time["16.0.0"]`. Peter re-ran `npm login --auth-type=web`, then published the same tarball, with its sha1 checked first. **This is the second release in a row** where 5.4 hit an expired public-npm login *after* 5.3 had already published to GitHub Packages (15.1.0 L37). For about 20 minutes (14:31:56Z → 14:52:24Z), 16.0.0 was on GitHub Packages and not on npmjs → RS-31.
+
+### Cold-install smoke
+
+Public registry only, in an empty temp dir with no repo `.npmrc`. Run 2026-10-17T18:17Z, node v22.20.0, npm 10.9.3.
+
+```text
+$ mkdir smoke-16 && cd smoke-16 && ls -A        # (empty)
+$ npm init -y && npm install @3fn/core@16.0.0 --registry https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --ignore-scripts
+  npm ls @3fn/core → @3fn/core@16.0.0 (exit 0); lock: resolved …/core-16.0.0.tgz, integrity = the packument's
+  node_modules/@3fn/core/package.json version → 16.0.0
+$ npx designerpunk --help        → exit 0, 45 lines ("DesignerPunk Pipeline CLI" …); writes nothing to the dir
+  present: docs/consumer/INSTALL.md (22,538 B); dist/mcp/{docs-mcp,application-mcp,product-mcp}.js (+ tool-manifest.json)
+  CHANGELOG.md L52 = the RL-11 fixed sentence; dist/DesignTokens.dtcg.json L3972 = the deprecatedReason string
+```
+
+I also checked three of the claims phase 1 named as having the most consumer reach (its surviving counter-argument). I sent JSON-RPC over stdio to the installed bundles, from a probe script kept outside the install:
+- **Docs MCP**: 8 tools. `get_index_health` → `healthy`, 83 documents / 2,517 sections / 333 cross-references, the same as the 15.1.0 package. `find_docs("token selection", limit 2)` → ranks 1–2 and `nextCursor: "2"`. Passing `cursor: "2"` → ranks 3–4 and `nextCursor: "4"`. **This matches CHANGELOG Changed L20.**
+- **Application MCP**: 21 tools. `get_component_health` → `healthy`, 34 components, `staleFiles: []`. `validate_assembly` on Button-CTA `size: "md"` → `valid: false`, error `Prop "size": invalid value "md" — allowed: 'small' | 'medium' | 'large'`. **This matches L18.** An `Input-Radio-Set` with no `accessibilityLabel` → a **warning** `Missing required prop "accessibilityLabel" (string)`, not an error. **This matches L19** ("A warning does not fail the tree").
+- **Not run**: #352's web render (no browser), the native compile errors (`not re-verified — toolchain unavailable`), and `init` / `generate` / `sync`. **OB-2 is narrowed, not closed.**
+- **O-5 again**: booting the docs MCP wrote `mcp-server/logs/` into the consumer's project root. The issue is ACTIVE and was walked 2026-10-17 (`.kiro/issues/2026-10-02-docs-mcp-logs-dir-cwd-relative.md`). This is the same reproduction on 16.0.0.
+
+### Carried items — status now
+
+| Item | Now |
+|---|---|
+| RL-11, RL-12 | ✅ fixed at S1, and both reach the consumer. The installed `CHANGELOG.md` is byte-equal to S1's packed copy, since it is not in the three-file diff set |
+| RL-13 | ✅ closed at S1. The blend correction's trigger `tag:v16.0.0` **has fired**. Ada's PR is owed before release-5 phase 1. At 18:16Z, `origin` had no open PR and no branch besides `main`, so the PR is in flight but not visible to me. **Owed** |
+| RL-14 | ✅ **RULED** (#386, rulings row 28, Peter 2026-10-17): fork B. **I checked the "shipped" side in the published bytes**: C-3 is `governance/Process-Spec-Planning.md` L482 (`#### The Instruments block (M4) …`), and C-4 is `dist/consumer-canonical/agents/stacy.md` (it names `docs/claims-pass-adoption.md`). Both are present. **So the Addendum's "For the tag" verdict ("every claim I re-read holds") stands only with this exception**: 16.0.0 shipped two floor rows that are false for a consumer agent, under a ruled one-time exception. The fix deadline is before release-5 phase 1. **C-4's text is mine to write** (home record `.kiro/issues/2026-10-03-consumer-stacy-owed-set-needs-adoption-record.md`) |
+| RL-15, RL-16 | unchanged. Nothing under `.kiro/hooks/`, `scripts/release-publish.ts`, `scripts/verify-publish-rail.sh`, the register or `canonical/agents/` changed in `13adf005a..b1112d2e1` |
+| RL-17 | Ada's acknowledgement is **owed**. It rides her blend PR, which is not yet on `origin` |
+| RS-30 | **Answered on paper, not yet in force.** Ballot `2026-10-17-standing-write-scope-six-roots` (RATIFIED, #393) § 2.5 grants `.kiro/issues/**` to every seat under README rule 9 (the header-owner rule). Its § 5 edit sites are **not applied** at `b1112d2e1`: `.kiro/issues/README.md` has no rule 9, and neither `canonical/agents/ada.md` nor `stacy.md` lists `.kiro/issues/**`. Edit site 5a, my ARMING-row line, is **my commit** on the application PR: **owed by me**. Rule 9 does not apply back to #383, so RL-17's remedy stays acknowledgement |
+| OB-2 | narrowed (above) |
+| GitHub release (step 7) | **Not created.** `api.github.com/repos/3fn/DesignerPunk/releases/tags/v16.0.0` → 404 at ~18:16Z. Correct: step 7 runs last |
+| 2026-10-17 health check "16.0.0 phase 2 owed" (#392 L123, L156) | **closed by this section** |
+| The release-5 table (RL-1 … RL-6, the J divergents, RS-3/4/13/14, 15.0.0 R-1, OB-3/OB-11) | unchanged; not re-read |
+
+### Phase 2 findings
+
+**None new (no RL-18).** Three observations:
+- **O-19**: the `.txt` L5 says "EVERY run is pasted … with its time and exit code". That is true of the three rail runs, which is item 19's scope. It overstates the publish runs: 5.3 tab 0 and 5.4 attempt 1 carry no exit-code line, and 5.4 attempt 2 is a summary of a screenshot with an approximate time. L115 discloses that, so no reader is misled about what kind of evidence it is. I judge it not a finding. RS-17's text (Thurgood, post-tag) should say whether "every run" covers 5.3/5.4 or only 6a.
+- **O-20**: `.txt` L166 has a stray `5.9kB dist/tools/integrity/GenerationIntegrityCheck.js` line, from interleaved output (the same as 15.1.0's O-7). Cosmetic.
+- **O-21**: the health check (#392 L123) says #385 "merged today". It merged 2026-10-16T17:25:14Z, and the check is dated 2026-10-17. Cosmetic. **Route**: Thurgood.
+
+### Phase 2 counting block (delta)
+
+- The release delta is fixed at S1. Phase 2 adds **no parents, no subtasks and no signing acts**, and every phase-1/Addendum count stands. #385's diff (`docs/releases/16.0.0/**`) touches no trigger surface and carries `**Consulted**: none needed — …`. It is on the grant's list (1 path), and the grant expires at that merge. Re-grounding, delegated-tier, instruments, M3/M4/M5: no new population.
+- **Method fraction**: of the `.txt`'s 6b readings, I re-measured the npmjs five (time, latest, `dist.shasum`, bytes sha1, count) and both comparands (the 5.3 record as parsed JSON; the kept 5.3 tarball). The GitHub Packages four are the orchestrator's measurement, **not re-verified**.
+- **Carve-out data**: no steward-verb-gated claim in phase 2. The `.txt` L190 says no `rebuild_index` was owed for #383/#384; I agree by path (neither touches a served root).
+
+### Phase 2 method
+
+**Run by me**: `git describe` / `ls-remote` / `cat-file` on the tag; the public API reads of `pulls/385` (+ `/files`), the open-PR list and `releases/tags/v16.0.0`; the npmjs packument and tarball fetch; hashing the kept 5.1, 5.3 and tab-1 tarballs, and the parsed-JSON comparison of the record; extracting and diffing the public bytes against the 5.1@S1 and tab-1 builds; the cold-install, `--help`, and the five MCP calls; greps of the installed package; register and ballot reads at `b1112d2e1`. **Read, not re-run**: the GitHub Packages registry (auth), the 5.3/5.4 runs (Peter's terminal). **Writes**: this file, the smoke dir, the probe script and the extracted tarballs, all in the session scratchpad. No credentials were read, and no git write was made besides this commit.
+
+### Phase 2 standards implications
+
+- **RS-31**: 5.3's preflight checks only GitHub Packages auth (`release-publish.ts` L259). Public-npm auth is first tested at 5.4, after one registry already holds the version. Two releases in a row (15.1.0, 16.0.0) opened a window where only one registry had the version, ~20 min this time. Whether a public-npm `whoami` belongs before 5.3, and in which artifact, is the question. **Owner**: Ada (the script), Thurgood (RELEASE-FLOW text; Ada's clause in § 2.6 of the six-roots ballot binds the split). I name the gap and do not draft it.
+- **RS-32**: nothing stops two concurrent 5.3 runs. This time they were made safe by the registry refusing a second publish and by the 5.4 sha1 check, both of which held. A run that loses the race leaves a kept tarball that looks like a release candidate. The question is whether RELEASE-FLOW 5.3 should say "one run at a time", or the script should refuse when another run is in progress. **Owner**: Thurgood, with Ada.
+- **RS-28, evidenced again**: #385's body ends "Open for Peter: RL-14" and was merged before the 2026-10-17 ruling. Row 28's rule ("any question put to Peter in a PR body means the PR is not merged until Peter answers") does not apply back to it. Its law text should say whether a pointer to a question asked elsewhere counts as asking it. Input for the item-23 sitting.
+
+### Merge-confirmation (#385)
+
+**Merge**: #385, head `c78b77e4c3f85d9bd7415e684d963917e95540c9` (1 commit), squash `8d221da96b6f8e15bdeb11124e443de8a7b8d881`, 2026-10-16T17:25:14Z. **Read SHA**: `b1112d2e1` (drafted after the merge). **The one file phase 2 read from that PR**: `docs/releases/16.0.0/publish-verification.txt`. `git diff --quiet 8d221da96 b1112d2e1 -- docs/releases/16.0.0/` → exit 0. The blob is `907986cb…` at the merge, at `b1112d2e1`, and in the PR head (`pulls/385/files`). **No merged file differs from the read. No phase-2 reading changes. `publish-rail liveness: PASS — read and committed.`**
+
+**For step 7 (my statement; it gates nothing)**: the published bytes are the audited bytes (three timestamp files aside). Both registries carry them. The rail passed, and its runs are on record. Nothing in this section bears on creating the GitHub release, which may follow this record's merge: `gh release create v16.0.0 --notes-file docs/releases/release-16.0.0.md`. Its body should be read against the notes at the next pass, as 15.1.0's was.
+
+**Surviving counter-argument**: "no incident" for the two refused attempts rests on the registry and the script behaving as their messages say. I did not reproduce the race, and the GitHub Packages column is the orchestrator's measurement, not mine. The smoke ran five tool calls and `--help` on one machine. #352's web break, the change with the most consumer reach in a major release, has still not been run as a consumer would run it.

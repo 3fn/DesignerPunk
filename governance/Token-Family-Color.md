@@ -184,7 +184,7 @@ Interaction states (hover, pressed, focused) use **OKLCH-space interpolation**. 
 | **Focused** | 0 | +0.02 min | Chroma boost (not lightness) |
 | **Icon lighter** | 0.02–0.04 | Preserve | Lighter (optical balance) |
 
-> **No disabled blend (2026-07-15)**: DesignerPunk does not support disabled states — if an action is unavailable, do not render the component. The corresponding `blend.disabledDesaturate` token is **DEPRECATED** in source and scheduled for removal at the next major version. See Token-Family-Blend § "Anti-Patterns to Avoid".
+> **No disabled blend (2026-07-15)**: DesignerPunk does not support disabled states — if an action is unavailable, do not render the component. The corresponding `blend.disabledDesaturate` token is **DEPRECATED** in source and retained for backward compatibility; removal is not scheduled (a ruling naming the major release schedules it). See Token-Family-Blend § "Anti-Patterns to Avoid".
 
 **Web**: Uses `color-mix(in oklch, ...)` for runtime blending.
 **Native**: Blend results pre-resolved at build time.

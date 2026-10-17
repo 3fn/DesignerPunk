@@ -124,8 +124,8 @@ export const blendTokens: Record<string, SemanticBlendToken> = {
    * @deprecated 2026-07-15 — DesignerPunk does not support disabled states
    * (Button-CTA disabled-state adjudication, ruled REMOVE; the no-disabled-states
    * philosophy holds corpus-wide). If an action is unavailable, do not render the
-   * component. Retained for backward compatibility; scheduled for removal in the
-   * next major version of @3fn/core. For non-disabled desaturation needs, use the
+   * component. Retained for backward compatibility; removal is not scheduled (a
+   * ruling naming the major release schedules it). For non-disabled desaturation needs, use the
    * generic desaturate utilities with primitive blend tokens.
    */
   'blend.disabledDesaturate': {
@@ -136,7 +136,7 @@ export const blendTokens: Record<string, SemanticBlendToken> = {
     direction: BlendDirection.DESATURATE,
     category: 'interaction',
     context: 'DEPRECATED - disabled states are not supported in DesignerPunk',
-    description: 'DEPRECATED (2026-07-15): DesignerPunk does not support disabled states — if an action is unavailable, do not render the component. Formerly: blend for disabled states with desaturation (12% less saturated). Scheduled for removal in the next major version.',
+    description: 'DEPRECATED (2026-07-15): DesignerPunk does not support disabled states — if an action is unavailable, do not render the component. Formerly: blend for disabled states with desaturation (12% less saturated). Retained for backward compatibility; removal is not scheduled.',
     deprecated: true,
     deprecatedSince: '2026-07-15',
     deprecatedReason: 'No-disabled-states philosophy holds corpus-wide (Button-CTA adjudication, 2026-07-15). Unavailable actions should not be rendered; state_loading covers in-flight async actions: ruled alternative, not yet implemented (Button-CTA, 16.x).'
@@ -222,7 +222,7 @@ export function validateBlendTokenCount(): boolean {
  * 5. Disabled states?
  *    → DO NOT style disabled states. DesignerPunk does not support disabled states —
  *      if an action is unavailable, do not render the component (adjudicated 2026-07-15).
- *    → blend.disabledDesaturate is DEPRECATED and scheduled for removal at the next major.
+ *    → blend.disabledDesaturate is DEPRECATED and retained for backward compatibility; removal is not scheduled.
  * 
  * 6. Large container/surface hover?
  *    → Use blend.containerHoverDarker (4% darker)

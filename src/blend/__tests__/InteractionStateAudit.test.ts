@@ -131,8 +131,8 @@ describe('Spec 112 Task 5.1: Interaction State Visual Audit', () => {
     // No component declares a disabled state (no-disabled-states philosophy).
     // blend.disabledDesaturate was deprecated 2026-07-15 (PR #83, Button-CTA
     // disabled-state adjudication). This test validates the calculator
-    // capability only, retained for backward compatibility; remove at the
-    // next major version alongside the token itself.
+    // capability only, retained for backward compatibility; removal is not
+    // scheduled (a ruling naming the major release schedules it, alongside the token itself).
     it('calculator disabled blend — ΔC reduction meets minimum', () => {
       const result = calc.interactionBlend(primaryButton, 'disabled', lightSurface);
       const dc = deltaC(primaryButton, result);
