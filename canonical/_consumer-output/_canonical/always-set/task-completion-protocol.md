@@ -2,7 +2,6 @@
 # Task Completion Protocol
 
 **Date**: 2026-06-29
-**Last Reviewed**: 2026-09-29
 **Purpose**: The end-of-task operational sequence (completion docs, tiers, parent vs. subtask, stop-and-wait, PR flow) — operational law, always loaded
 **Organization**: process-standard
 **Scope**: cross-project

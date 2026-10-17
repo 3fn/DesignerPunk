@@ -70,7 +70,7 @@ units:
         kind: obligation
         label: "overdue test on the cadence marker"
         text: |-
-          IF it's been >30 days since last governance health check **[2026-09-19]**, THEN flag:
+          IF the newest record in `.kiro/docs/civitas-health-checks/` is more than 30 days old (each record is named `YYYY-MM-DD.md`, the date its check ran), THEN flag:
       - id: hc-2
         kind: route
         label: "the flag routes to the steward, before proceeding"
@@ -80,12 +80,12 @@ units:
         kind: obligation
         label: "only the steward runs it"
         text: |-
-          Only Thurgood runs the health check.
+          Only Thurgood runs the health check; its committed record is the date.
       - id: hc-4
         kind: obligation
         label: "every agent checks and flags"
         text: |-
-          All agents check the date and flag if overdue.
+          All agents read the newest record's filename and flag if overdue.
     confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-civitas-governance-health-check
   # Task 15.4 (2026-09-29): the remaining units, drafted by Thurgood (profile author); each is
   #   confirmed in the confirmer's seat (C1) — a DRAFT until its confirmation: note is committed.

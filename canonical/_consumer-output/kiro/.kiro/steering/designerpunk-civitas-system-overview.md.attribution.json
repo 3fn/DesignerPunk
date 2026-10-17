@@ -12,71 +12,71 @@
     {
       "lines": [
         6,
-        18
+        17
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Civitas-System-Overview.md#civitas-system-overview:preamble"
     },
     {
       "lines": [
-        19,
-        28
+        18,
+        27
       ],
       "op": "render",
       "source": ".kiro/steering/Civitas-System-Overview.md#overview"
     },
     {
       "lines": [
-        29,
-        50
+        28,
+        49
       ],
       "op": "render",
       "source": ".kiro/steering/Civitas-System-Overview.md#what-civitas-contains"
     },
     {
       "lines": [
-        51,
-        58
+        50,
+        57
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Civitas-System-Overview.md#what-civitas-does-not-contain"
     },
     {
       "lines": [
-        59,
-        70
+        58,
+        69
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Civitas-System-Overview.md#relationship-to-rosetta-and-stemma"
     },
     {
       "lines": [
-        71,
-        87
+        70,
+        86
       ],
       "op": "render",
       "source": ".kiro/steering/Civitas-System-Overview.md#the-three-layer-boundary"
     },
     {
       "lines": [
-        88,
-        100
+        87,
+        99
       ],
       "op": "render",
       "source": ".kiro/steering/Civitas-System-Overview.md#governance-processes"
     },
     {
       "lines": [
-        101,
-        112
+        100,
+        111
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Civitas-System-Overview.md#external-representation"
     },
     {
       "lines": [
-        113,
-        115
+        112,
+        114
       ],
       "op": "render",
       "source": ".kiro/steering/Civitas-System-Overview.md#document-access"

@@ -12,71 +12,71 @@
     {
       "lines": [
         6,
-        18
+        17
       ],
       "op": "passthrough",
       "source": ".kiro/steering/AI-Collaboration-Principles.md#ai-collaboration-principles:preamble"
     },
     {
       "lines": [
-        19,
-        30
+        18,
+        29
       ],
       "op": "passthrough",
       "source": ".kiro/steering/AI-Collaboration-Principles.md#the-ai-optimism-problem"
     },
     {
       "lines": [
-        31,
-        39
+        30,
+        38
       ],
       "op": "passthrough",
       "source": ".kiro/steering/AI-Collaboration-Principles.md#candid-vs-brutal-communication"
     },
     {
       "lines": [
-        40,
-        53
+        39,
+        52
       ],
       "op": "render",
       "source": ".kiro/steering/AI-Collaboration-Principles.md#counter-argument-requirement"
     },
     {
       "lines": [
-        54,
-        61
+        53,
+        60
       ],
       "op": "passthrough",
       "source": ".kiro/steering/AI-Collaboration-Principles.md#exploratory-vs-directive-questions"
     },
     {
       "lines": [
-        62,
-        73
+        61,
+        72
       ],
       "op": "passthrough",
       "source": ".kiro/steering/AI-Collaboration-Principles.md#bias-self-monitoring"
     },
     {
       "lines": [
-        74,
-        83
+        73,
+        82
       ],
       "op": "render",
       "source": ".kiro/steering/AI-Collaboration-Principles.md#when-human-and-ai-disagree"
     },
     {
       "lines": [
-        84,
-        98
+        83,
+        97
       ],
       "op": "passthrough",
       "source": ".kiro/steering/AI-Collaboration-Principles.md#certainty-calibration-finding-guidance-before-you-guess"
     },
     {
       "lines": [
-        99,
-        110
+        98,
+        109
       ],
       "op": "passthrough",
       "source": ".kiro/steering/AI-Collaboration-Principles.md#mcp-query-for-full-framework"

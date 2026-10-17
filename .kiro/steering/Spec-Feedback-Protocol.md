@@ -1,12 +1,12 @@
 ---
 id: spec-feedback-protocol
 inclusion: always
+lastReviewed: 2026-10-17
 ---
 
 # Spec Feedback Protocol
 
 **Date**: 2026-03-13
-**Last Reviewed**: 2026-03-24
 **Purpose**: Structured protocol for multi-agent feedback during spec formalization
 **Organization**: process-standard
 **Scope**: cross-project

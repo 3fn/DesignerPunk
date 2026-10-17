@@ -1,6 +1,7 @@
 ---
 id: task-completion-protocol
 inclusion: always
+lastReviewed: 2026-09-29
 name: Task-Completion-Protocol
 description: Operational law for ending a task — when to write completion docs, which tier, the parent-vs-subtask sequence, and the stop-and-wait-for-authorization rule. Load when completing any task or subtask.
 ---
@@ -8,7 +9,6 @@ description: Operational law for ending a task — when to write completion docs
 # Task Completion Protocol
 
 **Date**: 2026-06-29
-**Last Reviewed**: 2026-09-29
 **Purpose**: The end-of-task operational sequence (completion docs, tiers, parent vs. subtask, stop-and-wait, PR flow) — operational law, always loaded
 **Organization**: process-standard
 **Scope**: cross-project

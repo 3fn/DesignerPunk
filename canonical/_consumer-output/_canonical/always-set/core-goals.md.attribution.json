@@ -4,23 +4,23 @@
     {
       "lines": [
         1,
-        11
+        10
       ],
       "op": "passthrough",
       "source": ".kiro/steering/core-goals.md#core-goals:preamble"
     },
     {
       "lines": [
-        12,
-        32
+        11,
+        31
       ],
       "op": "render",
       "source": ".kiro/steering/core-goals.md#core-project-context"
     },
     {
       "lines": [
-        33,
-        83
+        32,
+        82
       ],
       "op": "render",
       "source": ".kiro/steering/core-goals.md#development-practices"

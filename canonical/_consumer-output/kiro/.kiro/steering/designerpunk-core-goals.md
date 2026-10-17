@@ -7,7 +7,6 @@ inclusion: always
 # Core Goals
 
 **Date**: 2025-10-20
-**Last Reviewed**: 2026-07-05
 **Purpose**: Core project context and development practices for DesignerPunk design system
 **Organization**: process-standard
 **Scope**: cross-project

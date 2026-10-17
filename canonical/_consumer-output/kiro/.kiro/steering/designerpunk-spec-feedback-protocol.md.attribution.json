@@ -12,119 +12,119 @@
     {
       "lines": [
         6,
-        18
+        17
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Spec-Feedback-Protocol.md#spec-feedback-protocol:preamble"
     },
     {
       "lines": [
-        19,
-        24
+        18,
+        23
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Spec-Feedback-Protocol.md#purpose"
     },
     {
       "lines": [
-        25,
-        48
+        24,
+        47
       ],
       "op": "render",
       "source": ".kiro/steering/Spec-Feedback-Protocol.md#the-feedback-document"
     },
     {
       "lines": [
-        49,
-        61
+        48,
+        60
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Spec-Feedback-Protocol.md#feedback-checkpoints"
     },
     {
       "lines": [
-        62,
-        75
+        61,
+        74
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Spec-Feedback-Protocol.md#stakeholder-identification"
     },
     {
       "lines": [
-        76,
-        89
+        75,
+        88
       ],
       "op": "render",
       "source": ".kiro/steering/Spec-Feedback-Protocol.md#sequential-formalization-gate"
     },
     {
       "lines": [
-        90,
-        102
+        89,
+        101
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Spec-Feedback-Protocol.md#mandatory-mention-scanning"
     },
     {
       "lines": [
-        103,
-        119
+        102,
+        118
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Spec-Feedback-Protocol.md#stamp-format"
     },
     {
       "lines": [
-        120,
-        131
+        119,
+        130
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Spec-Feedback-Protocol.md#standard-feedback"
     },
     {
       "lines": [
-        132,
-        141
+        131,
+        140
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Spec-Feedback-Protocol.md#directed-questions"
     },
     {
       "lines": [
-        142,
-        154
+        141,
+        153
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Spec-Feedback-Protocol.md#incorporation-notes"
     },
     {
       "lines": [
-        155,
-        174
+        154,
+        173
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Spec-Feedback-Protocol.md#context-for-reviewers"
     },
     {
       "lines": [
-        175,
-        182
+        174,
+        181
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Spec-Feedback-Protocol.md#resolution-tracking"
     },
     {
       "lines": [
-        183,
-        231
+        182,
+        230
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Spec-Feedback-Protocol.md#spec-feedback-template"
     },
     {
       "lines": [
-        232,
-        234
+        231,
+        233
       ],
       "op": "render",
       "source": ".kiro/steering/Spec-Feedback-Protocol.md#document-access"

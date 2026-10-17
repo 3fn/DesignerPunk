@@ -4,71 +4,71 @@
     {
       "lines": [
         1,
-        11
+        10
       ],
       "op": "passthrough",
       "source": ".kiro/steering/start-up-tasks.md#start-up-tasks:preamble"
     },
     {
       "lines": [
-        12,
-        13
+        11,
+        12
       ],
       "op": "passthrough",
       "source": ".kiro/steering/start-up-tasks.md#item-check-the-current-date"
     },
     {
       "lines": [
-        14,
-        19
+        13,
+        18
       ],
       "op": "render",
       "source": ".kiro/steering/start-up-tasks.md#item-civitas-governance-health-check"
     },
     {
       "lines": [
-        20,
-        49
+        19,
+        48
       ],
       "op": "passthrough",
       "source": ".kiro/steering/start-up-tasks.md#item-critical-wait-for-user-authorization-before-starting-new-tasks"
     },
     {
       "lines": [
-        50,
-        53
+        49,
+        52
       ],
       "op": "render",
       "source": ".kiro/steering/start-up-tasks.md#item-critical-this-project-uses-jest-not-vitest"
     },
     {
       "lines": [
-        54,
-        61
+        53,
+        60
       ],
       "op": "render",
       "source": ".kiro/steering/start-up-tasks.md#item-test-command-selection-guidelines"
     },
     {
       "lines": [
-        62,
-        74
+        61,
+        73
       ],
       "op": "passthrough",
       "source": ".kiro/steering/start-up-tasks.md#item-delegation-and-model-tier-before-delegating-and-before-deciding-whether-to"
     },
     {
       "lines": [
-        75,
-        80
+        74,
+        79
       ],
       "op": "passthrough",
       "source": ".kiro/steering/start-up-tasks.md#item-ending-a-task-see-task-completion-protocol"
     },
     {
       "lines": [
-        81,
-        83
+        80,
+        82
       ],
       "op": "render",
       "source": ".kiro/steering/start-up-tasks.md#item-starting-a-parent-task-write-its-instruments-block-first"

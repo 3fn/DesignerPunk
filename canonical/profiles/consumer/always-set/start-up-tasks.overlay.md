@@ -1,4 +1,4 @@
-## @unit #item-civitas-governance-health-check @ sha256:81d0a0079ab252f6cd829b654d963401e76ae66dfc084bb0634844041c06552b
+## @unit #item-civitas-governance-health-check @ sha256:431d69a79f5a20615aeea797e290d1ed6f45e7e887e8bb43b4399336e363098a
 2. **Civitas Governance Health Check**
    
    IF it's been longer than your team's cadence since the last governance health check (keep its date recorded here), THEN flag: "Governance health check overdue — Thurgood (Civitas steward) should run the health check before proceeding."

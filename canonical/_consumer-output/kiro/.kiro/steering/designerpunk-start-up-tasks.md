@@ -7,7 +7,6 @@ inclusion: always
 # Start Up Tasks
 
 **Date**: 2025-10-20
-**Last Reviewed**: 2026-09-29
 **Purpose**: Essential pre-task checklist for every task (date check, governance health, Jest commands, test selection, authorization-to-start). End-of-task sequence: see Task Completion Protocol.
 **Organization**: process-standard
 **Scope**: cross-project

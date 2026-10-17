@@ -2,7 +2,6 @@
 # Agent Directory
 
 **Date**: 2026-03-26
-**Last Reviewed**: 2026-09-28
 **Purpose**: Cross-agent reference for all DesignerPunk AI agents — domains, boundaries, and routing guidance
 **Organization**: process-standard
 **Scope**: cross-project
