@@ -33,12 +33,23 @@ signer: ada
 
 signer: ada
 
-**RE-SIGNED 2026-09-29 — ASSENT, surviving 13/13** (stale; renderedHash now `sha256:6209aa1c…`).
-- **What changed**: `scope-docs` now reads "Token documentation — your team's token docs; DesignerPunk's Token-Family and Rosetta architecture docs ship in the installed package (read them there; changes to them go upstream to DesignerPunk)". That is the re-pointing my phase-two observation asked for.
-- The item "Token documentation (Token-Family docs, Rosetta architecture)", re-keyed to the consumer, is entailed. Documentation of the team's tokens is in scope, and the shipped docs are placed correctly: read locally, changed upstream.
-- The other twelve bullets are unchanged from the phase-two judgment:
+**RE-SIGNED 2026-10-17 — ASSENT, surviving 13 of 21.** Signed against canonical `sha256:da60b5bb…` and rendered `sha256:6209aa1c…`, and judged against the 21-item set confirmed at `da9acba63`.
+- **What changed**: in canonical, only the six-roots bullet (ballot 2026-10-17-standing-write-scope-six-roots). The rendering did not change by a single byte, because the row removes that bullet under `subtraction-1`.
+- **The thirteen prior items survive exactly as at the 2026-09-29 re-sign**:
   - eleven are verbatim;
-  - `scope-theme-registry` and `scope-pipeline-config` are re-keyed and entailed.
+  - `scope-theme-registry` and `scope-pipeline-config` are re-keyed and entailed;
+  - `scope-docs` is re-pointed: the team's token docs are in scope, and DesignerPunk's shipped docs are read there and changed upstream.
+
+**Not surviving, and I agree they should not**: `scope-standing-grant`, `scope-standing-consults`, `scope-standing-test-rule`, `scope-standing-pr-names-file`, `scope-standing-rule-9`, `scope-standing-grants-compose`, `scope-standing-law`, `scope-standing-scope-moves`.
+- The rendering states none of them, so a compliant implementation can break each one.
+- Each is bound to this steward repo, and none has a counterpart in a consumer repo:
+  - the CLI source, the release and build `scripts/` and their tests, and the `ada-*` hooks;
+  - the docs MCP's packaging and the Thurgood and Leonardo shares over these files;
+  - `.kiro/issues/` rule 9, this repo's task-row grants, and `canonical/agents/**` law.
+- Some of these paths reach a consumer, but only as read-only package contents: `src/cli/templates/` and `mcp-server/{package.json,tsconfig.json}` are in the package's `files`. A change to them goes upstream. It is not a duty to re-key (subtraction 1).
+- **The one I weighed hardest is `scope-standing-law`.** "Owning an instrument never authorizes changing the law it serves" sounds general. But the consumer seat owns no release instrument for it to attach to, and the consumer's change discipline is already carried by `#the-process` and `#what-this-means-in-practice`.
+
+No refusal.
 
 ## `#boundary-cases`
 
