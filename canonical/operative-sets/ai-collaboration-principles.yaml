@@ -10,7 +10,7 @@ owner: thurgood
 confirmer: stacy
 units:
   "#ai-collaboration-principles:preamble":
-    canonicalHash: sha256:d31ab6271da795484db292e4adb89b0f7b6e332fa355414760cc1953de1bf0c3
+    canonicalHash: sha256:4c032ad50769c2393ffe69c8488ef6a5835431c6032c0e45a908bbb6b2507bfd
     items: []
     confirmation: canonical/profiles/consumer/confirmations/ai-collaboration-principles.md#ai-collaboration-principles:preamble
   "#the-ai-optimism-problem":
