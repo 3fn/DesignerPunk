@@ -16,7 +16,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 
 ---
 
-## @unit #in-scope @ sha256:a4b41f84abcc206e302958d1c7cda76fdb7b675b7010f1d926fe03a412e1ad12
+## @unit #in-scope @ sha256:da60b5bb35b68b8d1ce7cf41bf10f0d8a73bb17bbefa8a625d3cf76e3888c78b
 ### In Scope
 
 - Token creation, modification, and deprecation (ecosystem and product-created)

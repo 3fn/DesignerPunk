@@ -80,7 +80,6 @@
         "scripts/jest.config.js",
         "scripts/esbuild-css-plugin.js",
         "scripts/fix-tokens-css.js",
-        "scripts/profile-incremental-analysis.js",
         "scripts/audience-banner/**",
         "scripts/__bites__/**",
         "mcp-server/package.json",

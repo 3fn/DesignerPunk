@@ -18,7 +18,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 
 ---
 
-## @unit #in-scope @ sha256:2d38f58eec0a9c83aecfb87799b0b1c64c63590d95d899692ca92bf83754f44d
+## @unit #in-scope @ sha256:186ad4aa0c3d39c173b5781f764566e784bfc49b7d1256550affe14c94ca9daf
 ### In Scope
 
 - Component scaffolding (types.ts → platforms → tests → README)

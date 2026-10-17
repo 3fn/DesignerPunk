@@ -263,7 +263,7 @@
         83
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/profile-incremental-analysis.js]"
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/audience-banner/**]"
     },
     {
       "lines": [
@@ -271,7 +271,7 @@
         84
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/audience-banner/**]"
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/__bites__/**]"
     },
     {
       "lines": [
@@ -279,7 +279,7 @@
         85
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/__bites__/**]"
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[mcp-server/package.json]"
     },
     {
       "lines": [
@@ -287,7 +287,7 @@
         86
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:writeScope[mcp-server/package.json]"
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[mcp-server/package-lock.json]"
     },
     {
       "lines": [
@@ -295,7 +295,7 @@
         87
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:writeScope[mcp-server/package-lock.json]"
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[mcp-server/tsconfig.json]"
     },
     {
       "lines": [
@@ -303,7 +303,7 @@
         88
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:writeScope[mcp-server/tsconfig.json]"
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[mcp-server/jest.config.js]"
     },
     {
       "lines": [
@@ -311,7 +311,7 @@
         89
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:writeScope[mcp-server/jest.config.js]"
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[.kiro/hooks/ada-*.kiro.hook]"
     },
     {
       "lines": [
@@ -319,36 +319,28 @@
         90
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:writeScope[.kiro/hooks/ada-*.kiro.hook]"
-    },
-    {
-      "lines": [
-        91,
-        91
-      ],
-      "op": "render",
       "source": "canonical/agents/ada.md#frontmatter:writeScope[.kiro/issues/**]"
     },
     {
       "lines": [
-        92,
-        94
+        91,
+        93
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"
     },
     {
       "lines": [
-        95,
-        95
+        94,
+        94
       ],
       "op": "render",
       "source": "canonical/agents/ada.md#frontmatter:kiro.welcomeMessage"
     },
     {
       "lines": [
-        96,
-        96
+        95,
+        95
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"
