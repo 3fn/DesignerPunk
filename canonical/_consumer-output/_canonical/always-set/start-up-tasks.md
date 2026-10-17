@@ -12,9 +12,9 @@
 
 2. **Civitas Governance Health Check**
    
-   IF it's been longer than your team's cadence since the last governance health check (keep its date recorded here), THEN flag: "Governance health check overdue — Thurgood (Civitas steward) should run the health check before proceeding."
+   IF it's been longer than your team's cadence since the newest health-check record, THEN flag: "Governance health check overdue — Thurgood (Civitas steward) should run the health check before proceeding."
    
-   *Only Thurgood runs the health check. All agents check the date and flag if overdue.*
+   *Only Thurgood runs the health check; its committed record is the date. All agents read the newest record and flag if overdue.*
 
 3. **CRITICAL: Wait for User Authorization Before Starting New Tasks**
    
