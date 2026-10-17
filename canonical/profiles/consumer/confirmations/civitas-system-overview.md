@@ -22,9 +22,15 @@
 ## `#civitas-system-overview:preamble`
 
 confirmer: stacy
-canonicalHash: sha256:261e7f3fe63802d69ea320635254b04b9a5f8b49be25e3bdf1e540aab4bf8844
+canonicalHash: sha256:8432dd89e8983effa2ffc3acccfa4ff1a882621d6c4612b72f5eb9d691f75940
 items: none
-date: 2026-09-29
+date: 2026-10-17
+
+**Re-confirmed 2026-10-17 (Req 11.6.5d).**
+- **What changed**: the body line `**Last Reviewed**: 2026-09-21` left the unit; the stamp now lives in the YAML frontmatter as `lastReviewed:`, which `splitFrontmatter` keeps outside `canonicalHash`. Ballot `.kiro/docs/ballots/2026-10-17-no-volatile-metadata-in-signed-units.md` (RATIFIED, Peter, 2026-10-17, #393) § 3.2; authoring commit `0274210a8` (Thurgood). No other text in the unit changed. The canonicalHash moves from `sha256:261e7f3fe63802d69ea320635254b04b9a5f8b49be25e3bdf1e540aab4bf8844` to the value above.
+- **Re-ruled**: what remains is the title and the metadata block (`Date`, `Purpose`, `Organization`, `Scope`, `Layer`, `Relevant Tasks`). No agent acts against doc metadata, and the removed line was never an item. The zero stays declared (5d).
+
+**Ruling: CONFIRMED at 0, declared.**
 
 **Ruling: CONFIRMED at 0, declared.** Doc metadata.
 
