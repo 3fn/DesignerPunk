@@ -3,9 +3,9 @@
 **Date**: 2026-10-17
 **Type**: **CHARTER**, carrying the method and the pre-registration form for the components calibration instrument. Not a ballot; no governance law changes.
 **Authority**: Peter's ruling, 2026-10-17, on the clause-1 coverage knob (D3 of `archive/2026-10-12-leonardo-settings-screen-call-ledger-charter.md`; study charter `2026-10-07-discovery-shadow-study-charter.md` § 6, F2 "Still open (i)"): **(B), taken as the DURABLE class option.** The components calibration instrument is the deliverable. R3 is pre-registered and turns only on acceptance. Lina's fallback trigger to (C) stands (§ 1). Thurgood's three conditions and Stacy's read are adopted. No ballot.
-**Status**: **CHARTERED.** No seat has written and no query exists.
+**Status**: **ACTIVE — STANDING INSTRUMENT** (2026-10-17). q1 ran, accepted R3, and is SPENT; R3 turned (§ 15). This file stays at the root as the instrument's home (§ 15, "Root, not archive"). (was: CHARTERED.)
 **Owner**: **Lina** (the instrument, the knob, the runner, the fixture, the keys; § 10). **Thurgood** (method, the pre-registration form, the sealed prompt, F3 freeze, the walk; §§ 2–9). **Orchestrator**: runs the seats and the instrument; never authors a query; independently re-runs the results table (Lina's declared conflict: R3 is her rule). **Stacy**: a bounded verifiability read of § 6 (§ 7).
-**Trigger**: **Peter's merge of this charter** → the orchestrator runs the four sealed seats (§ 4). **All four seats' answers captured** → the instrument PR opens (§ 5 commit order). **Fallback trigger (C)**: the instrument has not run by the next PR that changes the components matcher OR the next product screen session, whichever comes first → § 1 (C).
+**Trigger** (standing, from 2026-10-17): **any PR that changes the components matcher** (`deriveMatchConfidence`, `rankCompare` / `countOwnNameHits`, signal-class assignment in the indexer, `termNormalization.ts`) → a FRESH set authored under § 4 and run under §§ 5–6 before that change is accepted (§ 2); q1 runs on it as a regression guard only. **T4** (`2026-10-13-component-gaps-from-settings-ledger.md` § T4) rides that next fresh set. **The monthly walk** reads § 11's F3 line. *(Was, executed: Peter's merge of this charter → seats; seats captured → instrument PR; fallback (C) on the next components-matcher PR or screen session — never fired.)*
 **Grant paths** (activated per `.kiro/issues/README.md` item 8 by Peter's merge of a PR whose body names this file; the instrument PR is diffed against this list):
 - `.kiro/docs/components-calibration-seat-queries.raw.md` — **Thurgood**: the sealed prompt and the four seats' answers, verbatim, committed before keying.
 - `.kiro/docs/components-calibration-findings.md` — **Lina** (results, arms table, keys rationale) and **Thurgood** (method-conformance section only).
@@ -73,14 +73,14 @@ The pre-registration block carries:
 ## 6. Acceptance (pre-registered) and the turn/revert rule
 
 **Definitions** (every arm is scored on the same fixture; "status quo" = today's `deriveMatchConfidence` on `main`):
-- **Confident-wrong (CW)**: a `strong` row in ranks 1–3 whose component is not in the query's key (a gap negative's key is empty) (F6).
+- **Confident-wrong (CW)**: a **(phrase, component) pair** — a `strong` result in ranks 1–3 whose component is not in the phrase's key (a gap negative's key is empty) (F6). `net`, "fixed" and "new CW" all count pairs. *(Amended 2026-10-17, Thurgood, closing Stacy's note N2 — findings `.kiro/docs/components-calibration-findings.md` § 3 M8: the earlier "a `strong` row" did not say whether a row was a phrase or a pair. The amended text is the unit q1 pre-registered (findings § 1.5, in `0c2e0a9bb` before the run), so no result moves; q1 also passes under a per-phrase reading.)*
 - **True strong lost (TSL)**: a positive whose keyed component is `strong` at rank ≤ 2 under status quo and is not `strong` at rank ≤ 2 under the arm.
 - **Net** = (CW under status quo that are not CW under the arm) − TSL.
 - **R@1 / R@2**: rank-only; the share of positives whose keyed component is at rank 1 / rank ≤ 2.
 
 **R3 is accepted iff, against status quo, all three hold, both with and without pre-exposed rows**:
 1. **net ≥ +3**;
-2. **no new CW** (no row that is CW under R3 and was not under status quo);
+2. **no new CW** (no pair that is CW under R3 and was not under status quo);
 3. **R@1 and R@2 not lower.**
 
 **Turn rule**: if R3 is accepted, Lina lands R3 as a dated rubric amendment in a **separate PR** (never in the instrument PR), carrying the re-run owed (§ 9) and a PR-body line that tiers change at merge. If R3 is not accepted: no turn; R3 is not re-tuned against this set (§ 2); the findings record the result and any variant needs fresh queries.
@@ -133,7 +133,7 @@ Filled by Lina, 2026-10-17. Rows 1–9 are the charter's; rows 10–14 are added
 ## 11. Freeze (F3) and the walk line
 
 - **Freeze**: the fixture freezes at the pre-registration commit (2). The promotion to a standing guard is a dated decision recorded in § 13 of this file when it closes, plus Lina's guard test (§ 10).
-- **Walk line** (Thurgood, monthly health check, alongside the docs oracle line): `git log --oneline <freeze-sha>.. -- <fixture path>`. Empty = nothing to do. Non-empty = the "frozen, never extended" rule has met a real case: a walk finding, and the F3 ballot trigger fires, with the diff and author in the record.
+- **Walk line** (Thurgood, monthly health check, alongside the docs oracle line): `git log --oneline d7bee56e0.. -- application-mcp-server/src/calibration/__fixtures__/components-calibration-q1.json`. The freeze SHA is `d7bee56e0`, the squash of #388 on `main`; the branch SHA `222f1aa7a` (findings § 3 M9) does not survive the squash, so the walk uses the `main` SHA. Lina's guard test pins the fixture's sha256 (`87de8a11…69a0c`) and catches an accidental edit on the way in. Empty = nothing to do. Non-empty = the "frozen, never extended" rule has met a real case: a walk finding, and the F3 ballot trigger fires, with the diff and author in the record.
 
 ## 12. Cost and the vendor note
 
@@ -151,11 +151,32 @@ Filled by Lina, 2026-10-17. Rows 1–9 are the charter's; rows 10–14 are added
 - § 10 still `_pending_` at the pre-registration commit → finding.
 - The F3 walk line non-empty → finding and ballot trigger (§ 11).
 - Findings doc landed with no outcome recorded below → finding.
+- **Standing (from 2026-10-17)**: a merged PR that changed the components matcher (Trigger line) with no fresh-set run recorded in a findings doc → finding. A matcher change justified by q1 rather than a fresh set → finding (§ 2).
 
 ## 14. Closing
 
-When the results commit lands: record here (dated) the arms table's headline (net, CW, R@1/R@2 per arm, with and without pre-exposed rows), the turn decision, the freeze SHA, and any routed follow-ups (metadata debt from F4, a synonym-recall note under § 12). Record the same one line in the study charter § 6 under F2 "Still open (i)", then `git mv` this file to `archive/`.
+*(As chartered: record the outcome, record one line in the study charter, then `git mv` to `archive/`. Superseded 2026-10-17 by the root decision in § 15; the outcome and the study-charter line are recorded.)*
 
+## 15. Outcome — 2026-10-17
+
+- **The run**: pre-registered at `0c2e0a9bb`; run by the orchestrator at that SHA (`run.ts` blob `0d82e2f983f8`, fixture sha256 `87de8a11…69a0c`); Lina's and Thurgood's re-runs byte-identical on every headline line. Merged as #388 → `d7bee56e0`.
+- **Headline (charter § 6, the AND of both subsets)**:
+
+  | Arm | all rows | without pre-exposed | TSL | new CW | R@1 / R@2 |
+  |---|---|---|---|---|---|
+  | parity | net +24 | net +24 | 0 | 0 | unchanged (18/18; 14/14) |
+  | **R3** | **net +26** | **net +25** | 0 | 0 | unchanged (18/18; 14/14) |
+
+  Both arms ACCEPTED. Per-phrase reading (§ 6 amendment): R3 +7, parity +5, new 0. Method conformance: CONFORMS WITH NOTES (findings § 3).
+- **Turn ruling (Peter, 2026-10-17)**: R3 turns as pre-registered. Commits on `fix/components-clause1-r3-turn`: `22688e6e4` (rubric components block amended to R3, dated 2026-10-17; `deriveMatchConfidence` gains the row's `name` + `family`; deliberate test flips named) and `f018a10e1` (`canonical/generated.lock` inputClosure refresh only).
+- **§ 9 re-run (Lina, recorded in the turn PR)**: 19 tiers move `strong` → `partial` across the seven Stage 0 reproductions and D8–D10; nothing moves up; no positive at rank ≤ 2 regressed. One recorded cost: S0-5 "loading spinner while data fetches" — Progress-Bar-Base from rank-1 `strong` to rank 4 of four tied `partial`s. q1 regression guard: shipped tier ≡ `r3Arm` on all 36 rows. Full application-mcp-server 512 green, root 9591 green, `tsc` clean.
+- **No consumer-surface impact**: the `find_components` tool description does not define tiers and is unchanged; `f018a10e1` refreshes the lock's input closure only — registry outputs unchanged (diff-guard no-op-green). The tier vocabulary and its meaning are unchanged (no ballot, D3).
+- **q1 is SPENT** as a tuning target from `d7bee56e0`: regression guard only (§ 2). Freeze and walk line: § 11.
+- **Follow-up T4** (Lina): R3's own-name anchor fires on incidental fragments of compound names (`indicator`, `icon`, `bar`, `list`); its benefit rests on author-exposed probes. Recorded in `2026-10-13-component-gaps-from-settings-ledger.md` § T4; trigger = the next fresh components set, with an anchor-restricted arm pre-registered beside R3 and parity.
+- **Fallback (C) never fired.** The revert rule never applied.
+- **F4 metadata debt**: none (0 drops). **Synonym-recall note (§ 12)**: TSL 0 on q1, so the candidate Jev trigger did not appear.
+- **Root, not archive**: the instrument (runner, keying protocol, sealing, pre-registration form) is durable and every later components-matcher change must run a fresh set through it; the walk reads only root files, so the standing trigger and the F3 line keep a watcher only while this file stays at the root (README rule 1: owners and trigger in the header).
+- **Study charter**: one line recorded under § 6, F2 "Still open (i)".
 ---
 
 ## Appendix A — Thurgood's probe set (2026-10-17, author-exposed; for the § 2 flag)

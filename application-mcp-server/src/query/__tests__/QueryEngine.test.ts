@@ -222,13 +222,11 @@ describe('ComponentQueryEngine', () => {
       const result = engine.findComponents({ keyword: 'primary action button' });
       const row = result.data![0] as any;
       const matchedTokens = row.matchedOn.length; // distinct matched terms on this row
-      // Recompute the tier from the emitted evidence and compare to the emitted label.
-      const recomputed = deriveMatchConfidence(row.matchedOn, matchedTokens, matchedTokens);
-      // The emitted tier must be derivable from the emitted primitives (no opaque label).
-      expect(['strong', 'partial']).toContain(recomputed);
-      if (row.matchedOn.some((e: any) => e.field === 'highSignal')) {
-        expect(row.matchConfidence).toBe('strong');
-      }
+      const totalTokens = 3; // "primary action button" — three salient tokens
+      // Recompute the tier from the emitted evidence (matchedOn, coverage, name, family) and
+      // compare to the emitted label: the tier is derivable from emitted primitives only.
+      const recomputed = deriveMatchConfidence(row.matchedOn, matchedTokens, totalTokens, { name: row.name, family: row.family });
+      expect(recomputed).toBe(row.matchConfidence);
     });
 
     it('rank is 1-based and contiguous over the returned set', () => {

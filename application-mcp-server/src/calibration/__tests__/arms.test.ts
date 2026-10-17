@@ -17,7 +17,7 @@ const ev = (name: string, family: string, matchedOn: MatchedOnEntry[], totalToke
 describe('statusQuoArm', () => {
   it('is the shipped deriveMatchConfidence', () => {
     const cases = [ev('X-Y', 'F', [h('a')], 3), ev('X-Y', 'F', [l('a'), l('b')], 2), ev('X-Y', 'F', [], 2)];
-    for (const e of cases) expect(statusQuoArm(e)).toBe(deriveMatchConfidence(e.matchedOn, e.matchedTokens, e.totalTokens));
+    for (const e of cases) expect(statusQuoArm(e)).toBe(deriveMatchConfidence(e.matchedOn, e.matchedTokens, e.totalTokens, { name: e.name, family: e.family }));
   });
 });
 
@@ -61,7 +61,7 @@ describe('r3Arm — the six defining cases (charter § 10)', () => {
 
 describe('rankUnderArm uses the shipped rankCompare (tier, coverage, own-name hit, name)', () => {
   it('a strong row outranks a partial with higher coverage', () => {
-    const rows = [ev('Zed-Base', 'Z', [l('a'), l('b')], 2), ev('Alpha-Base', 'A', [h('a')], 2)];
+    const rows = [ev('Zed-Base', 'Z', [l('alpha'), l('zed')], 2), ev('Alpha-Base', 'A', [h('alpha')], 2)];
     expect(rankUnderArm(rows, 'status-quo').map(r => r.name)).toEqual(['Alpha-Base', 'Zed-Base']);
   });
 });

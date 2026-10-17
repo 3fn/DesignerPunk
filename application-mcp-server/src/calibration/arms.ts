@@ -29,9 +29,13 @@ export interface RowEvidence {
 
 const hasHighSignal = (e: RowEvidence): boolean => e.matchedOn.some(m => m.field === 'highSignal');
 
-/** Status quo: the shipped rule, imported (charter § 8). */
+/**
+ * Status quo: the SHIPPED rule, imported (charter § 8) — whatever `deriveMatchConfidence` is on
+ * the measured SHA. Since the R3 turn (rubric amendment 2026-10-17) the shipped rule IS R3, so on
+ * the spent q1 set `--arms status-quo,r3` must report the two arms identical (regression guard).
+ */
 export function statusQuoArm(e: RowEvidence): MatchConfidence {
-  return deriveMatchConfidence(e.matchedOn, e.matchedTokens, e.totalTokens);
+  return deriveMatchConfidence(e.matchedOn, e.matchedTokens, e.totalTokens, { name: e.name, family: e.family });
 }
 
 /**
