@@ -225,3 +225,7 @@ const lastReviewedMatch = frontmatterReviewed || content.match(/\*\*Last Reviewe
      - The consumer always-set renderings drop the body `Last Reviewed` line (48 files: eight docs, three lanes, each with its sidecar), so consumer copies carry no review date. The consumer lanes write fresh minimal frontmatter.
      - The `hc` rendering and the consumer Thurgood rendering changed text.
   4. **§ 3.3, "they drop the record-path clause".** The consumer overlay ended as a re-author to the record mechanism (its text is in `d884d2af`), not a path-only drop. Its removals were re-authored to three entries, all `subtraction-3`: the record-path clause, `the monthly health check`, and `filename`.
+  5. **§ 4, the grant list.** It missed two paths that the `#item-civitas-governance-health-check` re-hash drags with it: the G1 record pin and its expected table.
+     - `tools/agent-generator/__fixtures__/g1-renderings/manifest.yaml`: G′'s pin moved from `81d0a007…` to `431d69a7…`.
+     - `tools/agent-generator/__tests__/triviality.g1.test.ts`: re-derived at the new pin; its expected G′ line holds at `0/4 ROUTES`, so the file is unchanged.
+     - They are named here so that Peter's merge of the execution PR activates them under README rule 8. The reserve `tools/agent-generator/**` line was for a generator change and was not used.
