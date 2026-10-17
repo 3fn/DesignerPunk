@@ -371,11 +371,26 @@ verdict: assent — surviving 1/1
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 signer: stacy
-date: 2026-10-03
+date: 2026-10-17
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-trigger-set-the-114-superset-table-names-never-numbers` (re-pointed)
-canonicalHash: sha256:eb7326f4705918216be6d929ec192f58cd092d82110ee7fcb2c9b29eb07f3b1a
+canonicalHash: sha256:aa674a0127352f1c012ddfd8f8d9742d7470063ed604415526f83de6e8056d1c
 renderedHash: sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5
 verdict: assent — surviving 5/13; not surviving: `trigger-lens`, `trigger-release`, `trigger-closeout`, `trigger-arming`, `trigger-gate`, `trigger-straggler`, `trigger-liveness`, `trigger-burst`
+
+**Re-signed 2026-10-17** (prior signature: assent, 2026-10-03, against `sha256:eb7326f4…`). Stale because the canonical ARMING row changed: edit site 5a of ballot `2026-10-17-standing-write-scope-six-roots` added the § 3 item 4 instrument-change trigger, applied verbatim by Thurgood at `2c8e448ff`. The rendering did not change: renderedHash recomputed at this revision, equal to the prior signature's, and the consumer rendering at `canonical/_consumer-output/_canonical/agents/stacy.md` carries no ARMING row.
+- **Judged against**: the rendered unit at this revision and the operative set re-confirmed at 13 items (`ce4ead62e`).
+- **The ARMING removal still applies, under `subtraction-3`.** The removal text was updated to the new row byte for byte, and it reproduces the whole row. Every new clause is keyed to this repo's instruments: the § 4 B checker files, the completion-claims checker, `verify-gate-registration.sh` and `EXPECTED_CONTEXTS`, the steward-verb tool files and their tests, and the register row's known gap. Those are our instruments as obligations. No refusal follows.
+- **The one I weighed**: the function under the new clause, "a change to a gate instrument that leaves the required-check set unchanged gets a post-acceptance read", is repo-independent in principle. But the consumer rendering carries no ARMING row at all, because every barrier read in it names this repo's gate. Re-pointing this one clause would leave a fragment with no parent trigger. I am recording it as an observation for the next re-grounding of the ARMING row, not as a refusal.
+- **Unchanged from the 2026-10-03 signature**: LENS, RELEASE, CLOSEOUT, ARMING, GATE, STRAGGLER, LIVENESS and BURST are not credited. `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing` and `merge-path-status` survive, each verbatim in the rendering.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-10-03)**:
+
+> signer: stacy
+> date: 2026-10-03
+> canonicalHash: sha256:eb7326f4705918216be6d929ec192f58cd092d82110ee7fcb2c9b29eb07f3b1a
+> renderedHash: sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5
+> verdict: assent — surviving 5/13
 
 **Re-signed 2026-10-03** (prior signature: assent, 2026-09-29, against `sha256:5055f134…`). Stale because the canonical RELEASE row changed (ballot `2026-10-03-hermetic-publish-path` § 5 item 6 (2a), canonical commit `59e2b7ff`); the rendering did not change (renderedHash recomputed from `canonical/_consumer-output/` at this revision: unchanged).
 - **Judged against**: the rendered unit at this revision and the operative set re-confirmed at 13 items (`e8924318`).
