@@ -62,62 +62,64 @@ export interface DiscoveryConfidenceSignal {
 }
 
 /**
+ * The component identity the tier rule reads: the row's own `name` and `family`, exactly as
+ * emitted on every keyword row (so the tier stays recomputable from emitted evidence, P5).
+ */
+export interface ComponentIdentity {
+  name: string;
+  family: string;
+}
+
+/**
  * Components Layer-1 rubric (discovery-confidence-rubric.md → "Components — find_components (Lina)").
  *
- * Derives the match TIER purely from the emitted evidence (matchedOn + coverage), so an
- * auditor can recompute it without trusting the label (Req 6.2 / P5 reconstructability).
+ * Derives the match TIER purely from the emitted evidence (matchedOn + coverage + the row's own
+ * name and family), so an auditor can recompute it without trusting the label (Req 6.2 / P5).
  *
- * Tier rule (with the validated false-confidence fix):
- *   - `strong`  = a high-signal-field hit
- *                 OR ≥2-token full coverage where at least one matched field is high-signal.
- *   - `partial` = at least one token matched but only in low-signal fields AND not the
- *                 qualified-coverage case above (includes the single-low-signal-token case).
+ * Tier rule — R3, "names beat purpose" (rubric amendment 2026-10-17; pre-registered and accepted
+ * by the components calibration instrument, `.kiro/docs/components-calibration-findings.md`):
+ *   - `strong`  = at least one high-signal-field hit, AND either
+ *                 (i)  a matched query token is a token of the component's own `name` or its
+ *                      `family`, or
+ *                 (ii) at least two salient query tokens matched, and they are more than half of
+ *                      the salient query tokens.
+ *   - `partial` = any other match (a lone `purpose` / concept-suffix hit without (ii)'s support,
+ *                 the single-low-signal-token case, low-signal-only coverage).
  *   - `none`    = zero tokens matched.
  *
- * THE SIGNAL-CLASS-GATED ≥2-TOKEN GUARD (the dry-run fix): the ≥2-token coverage clause
- * only reaches `strong` when at least one matched field is high-signal. Low-signal-ONLY
- * coverage (e.g. two tokens both landing in a shared `contexts` value like `onboarding-flows`)
- * caps at `partial`, NOT `strong`. Without this guard, low-cardinality shared fields would
- * mass-produce false `strong`s.
+ * Signal-class gate (unchanged): low-signal-ONLY coverage (e.g. two tokens both landing in a
+ * shared `contexts` value like `onboarding-flows`) caps at `partial`, never `strong`.
  *
- * `aliases` are reactive true-synonym divergences (Req 1.9) — they stand in for the term an
- * author chose NOT to put in a high-signal field, so they are treated as low-signal for tiering
- * (they do not, on their own, lift a match to `strong`). High-signal must be earned by an
- * actual high-signal-field hit.
+ * `aliases` are reactive true-synonym divergences (Req 1.9), treated as low-signal for tiering:
+ * they never lift a match to `strong` on their own.
  *
- * @param matchedOn signal-class-labeled evidence for the candidate (the matched terms)
+ * Name / family tokens use the matcher's own normalization (`tokenizeForMatch`). Name and family
+ * are always high-signal fields, so a (i) hit is itself a high-signal hit.
+ *
+ * @param matchedOn     signal-class-labeled evidence for the candidate (the matched terms)
  * @param matchedTokens count of distinct query tokens that matched any field
- * @param totalTokens   total query tokens (coverage denominator)
+ * @param totalTokens   total salient query tokens (coverage denominator)
+ * @param identity      the row's own `name` and `family` (as emitted)
  */
 export function deriveMatchConfidence(
   matchedOn: MatchedOnEntry[],
   matchedTokens: number,
-  totalTokens: number
+  totalTokens: number,
+  identity: ComponentIdentity
 ): MatchConfidence {
   if (matchedTokens === 0) return 'none';
 
-  const hasHighSignal = matchedOn.some(e => e.field === 'highSignal');
+  // The signal-class gate: no high-signal field → `partial`, whatever the coverage.
+  if (!matchedOn.some(e => e.field === 'highSignal')) return 'partial';
 
-  // `strong` via a direct high-signal-field hit.
-  if (hasHighSignal && matchedTokens >= 1 && totalTokens >= 1) {
-    // Note: a single high-signal hit already qualifies as `strong` (the first clause of the
-    // rubric: "a high-signal-field hit"). The ≥2-token clause below is the SECOND path to
-    // `strong`; both are gated on at least one high-signal field.
-    return 'strong';
-  }
+  // (i) the anchor: a matched term is a token of the component's own name or family.
+  const anchor = new Set([...tokenizeForMatch(identity.name), ...tokenizeForMatch(identity.family)]);
+  if (matchedOn.some(e => anchor.has(e.term))) return 'strong';
 
-  // `strong` via ≥2-token FULL coverage where at least one matched field is high-signal.
-  // (Unreachable in practice once the high-signal hit above returns, but kept explicit so the
-  //  rubric reads as written and the guard is legible: full coverage WITHOUT any high-signal
-  //  field falls through to `partial`.)
-  const fullCoverage = matchedTokens === totalTokens;
-  if (matchedTokens >= 2 && fullCoverage && hasHighSignal) {
-    return 'strong';
-  }
+  // (ii) support: ≥ 2 salient tokens matched, and more than half of the query.
+  if (matchedTokens >= 2 && matchedTokens / totalTokens > 0.5) return 'strong';
 
-  // Everything else with ≥1 matched token but NO high-signal field → `partial`.
-  // This is the guard's effect: low-signal-only coverage (including ≥2-token full coverage
-  // that is entirely low-signal/aliases) caps at `partial`, never `strong`.
+  // A lone `purpose` / concept-suffix hit without support → `partial` (names beat purpose).
   return 'partial';
 }
 
@@ -382,7 +384,8 @@ export class ComponentQueryEngine {
           const matchConfidence = deriveMatchConfidence(
             evidence.matchedOn,
             evidence.matchedTokens,
-            evidence.totalTokens
+            evidence.totalTokens,
+            { name: m.name, family: m.family }
           );
           // readiness (Layer 2) already rides on `summary` via ApplicationSummary — left intact.
           // rank (Layer 3) is assigned after the sort below so it reflects final ordering.

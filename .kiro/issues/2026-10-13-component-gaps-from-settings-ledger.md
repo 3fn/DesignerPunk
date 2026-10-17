@@ -124,6 +124,18 @@
   - Re-running Leonardo's V1 tree gives the 9 one-off "not found" errors plus exactly one new error (Button-CTA `size: "md"`) and one warning (Input-Radio-Set missing `accessibilityLabel`, required since #352). There were no false positives.
   - **Found in passing (not fixed here)**: `experience-patterns/onboarding.yaml` hints `semantic: form` on Container-Base, whose schema does not allow `form`. `AccessibilityChecker`'s `FORM_SEMANTICS` also lists `form`. One of the two is wrong; that is a Lina decision for the next pattern/schema touch.
 
+### T4 — R3's name anchor fires on compound-name fragments (added 2026-10-17, from the R3 turn)
+- **What happened**: R3 ("names beat purpose") turned 2026-10-17 as pre-registered (rubric components block, amendment 2026-10-17; findings `.kiro/docs/components-calibration-findings.md` § 2). Its clause (i) anchors `strong` on any token of the component's own name or family, including fragments of compound names:
+  - `indicator` (Progress-Indicator-*)
+  - `icon` (Button-Icon)
+  - `bar` (Nav-TabBar-Base, Progress-Bar-Base)
+  - `list` (Button-VerticalList-*)
+
+  On the sealed q1 set that leaves **7 confident-wrong pairs that parity fixed and R3 does not** (KEN-9 ×2, LEO-8, DAT-3, SPA-4, SPA-9 ×2; findings § 2.5). They were confident-wrong before R3 too, so there is no new CW. The anchor's intended benefit (name hits with unmatched modifiers stay `strong`) is attested only by my author-exposed probe set, not by q1.
+- **Also seen at the turn (rank, not tier)**: "loading spinner while data fetches" now returns four `partial`s tied on coverage and name hits. Progress-Bar-Base, the sensible labeled closest match, falls from rank 1 to rank 4 on the alphabetical step. Within `partial`, rank does not prefer a high-signal hit over a low-signal-only one. Any change there is a rank rule (Thurgood's Layer-3 ruling) and is measured the same way.
+- **Disposition**: **defect candidate, deferred with trigger**. Narrowing the anchor (e.g. to the name's distinguishing segment, or to tokens not shared across names) is tuning, and q1 is spent (charter § 2), so it is not done now.
+- **Trigger**: the next fresh components query set authored under the instrument charter § 4. An **anchor-restricted R3′ arm** is pre-registered there beside status quo (= R3), and the rank question above may ride the same set as its own pre-registered arm. Owner: Lina; method: Thurgood.
+
 ---
 
 ## Note for Leonardo's next session (do NOT fix here)
@@ -134,7 +146,7 @@ The scratch consumer's `product/experience-map/pages/settings/settings.yaml` (le
 
 ## Priority (Lina)
 
-**G6 → T3 → G1 → G4 → G3 + G2 (together) → T1 → G5 → T2 (rides the next touch).**
+**G6 → T3 → G1 → G4 → G3 + G2 (together) → T1 → G5 → T2 (rides the next touch).** T4 rides the next fresh components set (its own trigger).
 
 First pick, **G6**: a production-ready component fails its own accessibility contract today, and it is the smallest fix with no token or spec dependency.
 

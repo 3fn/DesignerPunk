@@ -167,9 +167,16 @@ describe('item 5 — contract category tokens are low-signal; concept suffix sta
     }
   });
 
-  it('the concept suffix stays high-signal ("validatable" → strong; "integration" → strong)', () => {
-    expect(find('validatable').find(r => r.name === 'Fx-Field-Base')!.matchConfidence).toBe('strong');
-    expect(find('integration').find(r => r.name === 'Fx-Node-Base')!.matchConfidence).toBe('strong');
+  it('the concept suffix stays high-signal ("validatable", "integration" → matchedOn highSignal)', () => {
+    // DELIBERATE FLIP (rubric amendment 2026-10-17, R3): this used to assert `strong`. Under R3 a
+    // lone concept-suffix hit with no name/family anchor is `partial` ("names beat purpose"). The
+    // property item 5 pins — the suffix's SIGNAL CLASS — is asserted on the emitted evidence.
+    const field = find('validatable').find(r => r.name === 'Fx-Field-Base')!;
+    expect(field.matchedOn).toContainEqual({ field: 'highSignal', term: 'validatable' });
+    expect(field.matchConfidence).toBe('partial');
+    const node = find('integration').find(r => r.name === 'Fx-Node-Base')!;
+    expect(node.matchedOn).toContainEqual({ field: 'highSignal', term: 'integration' });
+    expect(node.matchConfidence).toBe('partial');
   });
 
   it('the category prefix of an interaction_* key is low-signal too ("interaction")', () => {
@@ -198,6 +205,9 @@ describe('item 6 — declared internal-only, emitted as Layer-2 viability, never
   });
 
   it('internal-only does not change the match tier (Layer 1 untouched)', () => {
-    expect(find('integration').find(r => r.name === 'Fx-Node-Base')!.matchConfidence).toBe('strong');
+    // An own-name hit (R3 clause i) on the internal-only fixture still reaches `strong`: the
+    // viability flag is not an input to the tier. (Was the suffix-only query "integration",
+    // which R3 now tiers `partial` for every component — see item 5.)
+    expect(find('node').find(r => r.name === 'Fx-Node-Base')!.matchConfidence).toBe('strong');
   });
 });
