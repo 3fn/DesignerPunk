@@ -100,23 +100,31 @@
     {
       "lines": [
         52,
-        54
+        52
+      ],
+      "op": "render",
+      "source": "canonical/agents/sparky.md#frontmatter:writeScope[.kiro/issues/**]"
+    },
+    {
+      "lines": [
+        53,
+        55
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"
     },
     {
       "lines": [
-        55,
-        55
+        56,
+        56
       ],
       "op": "render",
       "source": "canonical/agents/sparky.md#frontmatter:kiro.welcomeMessage"
     },
     {
       "lines": [
-        56,
-        56
+        57,
+        57
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"

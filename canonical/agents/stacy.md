@@ -238,6 +238,9 @@ toolSubset:
 writeScope:
   - ".kiro/specs/**"
   - "docs/specs/**"
+  # Standing scope added by ballot 2026-10-17-standing-write-scope-six-roots (RATIFIED Peter 2026-10-17, #393):
+  # § 2.5 / § 5 item 1 — issue files, narrowed by .kiro/issues/README.md rule 9
+  - ".kiro/issues/**"
 kiro:
   keyboardShortcut: "ctrl+shift+g"
   welcomeMessage: "Hey! I'm Stacy, your product governance specialist. I audit process quality, test coverage, cross-platform parity, and spec structure for products built with DesignerPunk. What needs a review?"

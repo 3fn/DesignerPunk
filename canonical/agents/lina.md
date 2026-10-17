@@ -291,6 +291,49 @@ writeScope:
   - "docs/specs/**"
   - "application-mcp-server/**"
   - "governance/component-meta-authoring-guide.md"
+  # Standing scope added by ballot 2026-10-17-standing-write-scope-six-roots (RATIFIED Peter 2026-10-17, #393):
+  # § 2.2 — scripts/, by file
+  - "scripts/extract-component-meta.ts"
+  - "scripts/figma-component-generator.ts"
+  - "scripts/audit-component-tokens.js"
+  - "scripts/validate-examples.js"
+  # § 2.4 — your own hooks
+  - ".kiro/hooks/lina-*.kiro.hook"
+  # § 4, F-1 Option B — the generator's rendering, adapters and emitters
+  - "tools/agent-generator/render.ts"
+  - "tools/agent-generator/adapters/**"
+  - "tools/agent-generator/compose.ts"
+  - "tools/agent-generator/derive.ts"
+  - "tools/agent-generator/generate.ts"
+  - "tools/agent-generator/pipeline.ts"
+  - "tools/agent-generator/skills.ts"
+  - "tools/agent-generator/consumer-entry.ts"
+  - "tools/agent-generator/consumer-profile.ts"
+  - "tools/agent-generator/attribution.ts"
+  - "tools/agent-generator/spans.ts"
+  - "tools/agent-generator/registry.ts"
+  - "tools/agent-generator/registry-manifest.ts"
+  - "tools/agent-generator/resolve.ts"
+  - "tools/agent-generator/resolve-stdio.ts"
+  - "tools/agent-generator/workflow-rules-accessor.ts"
+  - "tools/agent-generator/regrounding/derivation.ts"
+  - "tools/agent-generator/regrounding/dispositions.ts"
+  - "tools/agent-generator/regrounding/overlay.ts"
+  - "tools/agent-generator/__fixtures__/g1-renderings/**"
+  - "tools/agent-generator/__fixtures__/semantics-guard/**"
+  # § 4, F-1 Option B — the generator's shared core (Lina primary, Thurgood consulted on any change)
+  - "tools/agent-generator/schema.ts"
+  - "tools/agent-generator/partition.ts"
+  - "tools/agent-generator/frontmatter.ts"
+  - "tools/agent-generator/canonical-json.ts"
+  - "tools/agent-generator/source.ts"
+  - "tools/agent-generator/regrounding/hash.ts"
+  - "tools/agent-generator/regrounding/operative-sets.ts"
+  - "tools/agent-generator/__fixtures__/golden-partition/**"
+  - "tools/agent-generator/jest.config.js"
+  - "tools/agent-generator/tsconfig.json"
+  # § 2.5 — issue files, narrowed by .kiro/issues/README.md rule 9
+  - ".kiro/issues/**"
 kiro:
   keyboardShortcut: "ctrl+shift+l"
   welcomeMessage: "Hey! I'm Lina, your Stemma component specialist. I can help with component scaffolding, platform implementations, behavioral contracts, and component documentation. What are we building?"
@@ -341,6 +384,7 @@ Lina governs **all components in the repo** — ecosystem components that shippe
 - One-off component review — structured schema (Stemma subset), accessibility contracts for new behavior
 - Component promotion path — when a product one-off proves reusable, scaffold the full Stemma structure for ecosystem inclusion
 - **Maintained steering docs** (content correctness and updates when component architecture or platform implementation patterns change): `platform-implementation-guidelines.md`; `Cross-Platform vs Platform-Specific Decision Framework.md`
+- **Standing write scope — six roots (ballot 2026-10-17-standing-write-scope-six-roots, F-1 Option B)**: your write scope adds the generator's rendering, adapters and emitters, its shared core (`schema.ts`, `partition.ts`, `frontmatter.ts`, `canonical-json.ts`, `source.ts`, `regrounding/hash.ts`, `regrounding/operative-sets.ts`, `__fixtures__/golden-partition/**`, `jest.config.js`, `tsconfig.json` — you are primary, and Thurgood is consulted on any change because his checkers read it), the `scripts/` component files, your own `.kiro/hooks/lina-*.kiro.hook` files, and `.kiro/issues/**`. Under `tools/agent-generator/__tests__/` a test follows the source module of its first `../<module>` import, except `entry-tree.test.ts` and `grain-guard.two-sided.test.ts` (shared core) and `semantics-guard.test.ts`, `semantics-guard.fixture.test.ts`, `g1-renderings.provenance.test.ts` and `survivor-sourced.ts` (yours), and `__tests__/fixtures/**` follows the test that reads it; a test, fixture or bite under `scripts/` follows the file it exercises; the PR that adds or edits a test or fixture names the exercised file in its body. Issue files follow `.kiro/issues/README.md` rule 9. Task-row and issue-row grants add to this scope and never narrow it. **Owning the generator's emitters never authorizes a change to any seat's write scope, your own included**: a seat's write scope moves only by a `canonical/agents/**` edit, Peter-merged with every affected seat consulted. Owning a tool never authorizes changing the law it serves without a ballot.
 
 ### Out of Scope
 

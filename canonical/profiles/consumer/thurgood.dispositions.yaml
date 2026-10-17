@@ -4,7 +4,7 @@
 source: canonical/agents/thurgood.md
 body:
   "#identity": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}, {"text": "for DesignerPunk", "cites": "subtraction-2"}], "destination": "#identity", "signature": {"signer": "stacy", "canonicalHash": "sha256:e396aa201b6a31a256a242b1b52f267804e02bca71865fd8721df8f47afd2255", "renderedHash": "sha256:3a407bdcfe27238327d36a8025209dd2dd2a7c30971796a17a3133cd2a0f576d", "assent": {"surviving": ["thurgood-role", "thurgood-domain", "thurgood-handoff", "thurgood-human-decides", "thurgood-partner"]}, "evidence": "canonical/profiles/consumer/signatures/thurgood.md#identity"}}
-  "#in-scope": {"disposition": "re-pointed", "removals": [{"text": "\"Shared\" doc maintenance (MCP-Relationship-Model, MCP-Evolution-Roadmap, Platform-Resource-Map, Process-Integration-Methodology, BUILD-SYSTEM-SETUP, DesignerPunk-Systems-Overview)", "cites": "subtraction-3"}, {"text": "- **CI regime — standing test-lane scope (ballot 2026-09-27-ci-regime-standing-scope § 2)**: in `.github/workflows/lane-timing.yml` only, a step that runs an existing `package.json` test script inside an existing required job, plus its own did-it-really-run floor (fails on zero; same selection as the step). Nothing else — no env/cache/runner/`if:`/`continue-on-error` change, no removed line (`git diff --numstat` deletions 0). **Never**: a new required context, a change to `EXPECTED_CONTEXTS`'s count, branch protection or repo settings (Peter's). Every other CI path goes through an issue-row grant (§ 3). ARMING audits each such PR at its merge.", "cites": "subtraction-2"}], "destination": "#in-scope", "signature": {"signer": "stacy", "canonicalHash": "sha256:e4224dc56540bf7e0bbc958f5110efdb43990ccca3e4e0262ebd335f0d4822f4", "renderedHash": "sha256:5ac2d4d30cbdce5a9e34a0a66dff621d3e78e87f4500dee9f715f39f2fc72037", "assent": {"surviving": ["scope-1", "scope-2", "scope-3", "scope-4", "scope-5", "scope-6", "scope-7", "scope-8", "scope-9", "scope-10", "civitas-1", "civitas-2", "civitas-3", "civitas-4", "civitas-5", "civitas-6", "civitas-7", "civitas-8", "civitas-9"]}, "evidence": "canonical/profiles/consumer/signatures/thurgood.md#in-scope"}}
+  "#in-scope": {"disposition": "re-pointed", "removals": [{"text": "\"Shared\" doc maintenance (MCP-Relationship-Model, MCP-Evolution-Roadmap, Platform-Resource-Map, Process-Integration-Methodology, BUILD-SYSTEM-SETUP, DesignerPunk-Systems-Overview)", "cites": "subtraction-3"}, {"text": "- **CI regime — standing test-lane scope (ballot 2026-09-27-ci-regime-standing-scope § 2)**: in `.github/workflows/lane-timing.yml` only, a step that runs an existing `package.json` test script inside an existing required job, plus its own did-it-really-run floor (fails on zero; same selection as the step). Nothing else — no env/cache/runner/`if:`/`continue-on-error` change, no removed line (`git diff --numstat` deletions 0). **Never**: a new required context, a change to `EXPECTED_CONTEXTS`'s count, branch protection or repo settings (Peter's). Every other CI path goes through an issue-row grant (§ 3). ARMING audits each such PR at its merge.", "cites": "subtraction-2"}, {"text": "- **Standing write scope — six roots (ballot 2026-10-17-standing-write-scope-six-roots)**: your write scope lists, by file, the `scripts/` checks you own, the docs MCP (`mcp-server/src/**`, its tests, docs and README), the completion tooling in `.kiro/hooks/`, `.kiro/issues/**`, and the generator's checkers and sweeps. A test, fixture or bite under `scripts/` follows the file it exercises; under `tools/agent-generator/__tests__/` a test follows the source module of its first `../<module>` import, except `entry-tree.test.ts` and `grain-guard.two-sided.test.ts` (shared core) and `semantics-guard.test.ts`, `semantics-guard.fixture.test.ts`, `g1-renderings.provenance.test.ts` and `survivor-sourced.ts` (Lina's), and `__tests__/fixtures/**` follows the test that reads it; the PR that adds or edits a test or fixture names the exercised file in its body. You are consulted on any change to the generator's shared core (Lina primary), to `src/cli/attach.ts` and the agent-layer templates `init` writes, and to the docs MCP's packaging files (Ada primary); Ada is consulted on any change to `scripts/derive-install-doc.ts`. A legacy completion script still present at the second monthly walk after ratification is a walk finding. `.kiro/hooks/RELEASE-FLOW.md` stays Peter-merged law, and issue files follow `.kiro/issues/README.md` rule 9. Task-row and issue-row grants add to this scope and never narrow it. **Owning an instrument never authorizes changing the law it serves without a ballot** — owning `governance-check.sh` does not let you change what the health check is — **and a seat's write scope moves only by a `canonical/agents/**` edit**, Peter-merged with every affected seat consulted; owning the generator's checkers never authorizes a change to any seat's write scope.", "cites": "subtraction-1"}], "destination": "#in-scope", "signature": {"signer": "stacy", "canonicalHash": "sha256:e4224dc56540bf7e0bbc958f5110efdb43990ccca3e4e0262ebd335f0d4822f4", "renderedHash": "sha256:5ac2d4d30cbdce5a9e34a0a66dff621d3e78e87f4500dee9f715f39f2fc72037", "assent": {"surviving": ["scope-1", "scope-2", "scope-3", "scope-4", "scope-5", "scope-6", "scope-7", "scope-8", "scope-9", "scope-10", "civitas-1", "civitas-2", "civitas-3", "civitas-4", "civitas-5", "civitas-6", "civitas-7", "civitas-8", "civitas-9"]}, "evidence": "canonical/profiles/consumer/signatures/thurgood.md#in-scope"}}
   "#out-of-scope": {"disposition": "retained"}
   "#the-audit-vs-write-distinction": {"disposition": "retained"}
   "#boundary-cases": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#boundary-cases", "signature": {"signer": "stacy", "canonicalHash": "sha256:4d88ea810df219fc662c033fc3718d69cee169d8eac3784cf1256e95aca2e3d4", "renderedHash": "sha256:897d222a732569af1be2dae8e9486b63e24ecb41f8effd908c6baa6393420350", "assent": {"surviving": ["boundary-flag", "boundary-audit-side", "boundary-coordinate"]}, "evidence": "canonical/profiles/consumer/signatures/thurgood.md#boundary-cases"}}
@@ -114,6 +114,64 @@ frontmatter:
   "writeScope[.kiro/specs/**]": {"disposition": "re-pointed", "destination": "frontmatter:writeScope[.kiro/specs/**]"}
   "writeScope[docs/specs/**]": {"disposition": "superseded-by", "destination": "frontmatter:writeScope[.kiro/specs/**]", "cites": "subtraction-4", "signature": {"signer": "stacy", "canonicalHash": "sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/thurgood.md#frontmatter:writeScope[docs/specs/**]"}}
   "writeScope[.github/workflows/lane-timing.yml]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-2", "signature": {"signer": "stacy", "canonicalHash": "sha256:ace15778cda93bf6a09a8ef9992347ede436f4c1eed2033fb680d776a97b0faf", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/thurgood.md#frontmatter:writeScope[.github/workflows/lane-timing.yml]"}}
+  "writeScope[scripts/completion-claims/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/check-completion-criteria-parity.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/discovery-dry-run.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/discovery-study-stage1.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/discovery-indexer-fix-run.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/governance-check.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/validate-steering-metadata.js]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/detect-stale-metadata.js]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/detect-affected-steering-docs.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/verify-prompt-alignment.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/scan-cross-references.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/validate-cross-reference-format.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/check-id-uniqueness.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/check-section-citations.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/backfill-doc-ids.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/validate-metadata-parsing.js]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/validate-structure-parsing.js]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/validate-task-vocabulary.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/add-metadata-to-file.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/analyze-metadata.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/extract-doc-structure.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/find-duplicate-content.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/consolidate-structure-maps.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/convert-date-formats.js]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/calculate-baseline-metrics.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/generate-legacy-path-manifest.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/relocation-integrity-gate.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/derive-install-doc.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[scripts/categorize-tests.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[mcp-server/src/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[mcp-server/tests/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[mcp-server/docs/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[mcp-server/README.md]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[.kiro/hooks/complete-task.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[.kiro/hooks/README.md]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[.kiro/hooks/task-completion-agent-hook.md]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[.kiro/hooks/commit-task.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[.kiro/hooks/commit-task-organized.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[.kiro/hooks/task-completion-commit.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[.kiro/hooks/organize-after-completion.kiro.hook]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[.kiro/hooks/organize-by-metadata.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[.kiro/hooks/archive/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[.kiro/hooks/thurgood-*.kiro.hook]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[.kiro/issues/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "writeScope[tools/agent-generator/diff-guard.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[tools/agent-generator/canonical-vs-truth.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[tools/agent-generator/coverage-map.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[tools/agent-generator/sweeps/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[tools/agent-generator/verify-gate-registration.sh]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[tools/agent-generator/workflow-rules-guard.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[tools/agent-generator/child-process-guard.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[tools/agent-generator/regrounding/verify-signing-chain.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[tools/agent-generator/regrounding/signatures.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[tools/agent-generator/regrounding/c1.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[tools/agent-generator/regrounding/freshness.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[tools/agent-generator/regrounding/check-catalog.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[tools/agent-generator/regrounding/triviality.ts]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
+  "writeScope[tools/agent-generator/__fixtures__/stale-unit/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-1"}
   "kiro.keyboardShortcut": {"disposition": "retained"}
   "kiro.welcomeMessage": {"disposition": "retained"}
   "preflight[git status --porcelain]": {"disposition": "retained"}

@@ -1090,3 +1090,35 @@ history:
   - { date: 2026-10-01, change: "entry created by ballot 2026-10-01-signing-act-chain (DRAFT at authoring; in force at its ratification merge R = `2da74864` (#243) — the Status flip commit was recorded after that merge, discharging the recording defect the ballot's own Status line anticipated). ORIGIN: Peter's 2026-09-30 rulings — the merged authorization rule APPROVED in direction (consult 2: Stacy, Thurgood, Lina, Kenya; converged at round 2 on the function-derived form with Lina's stale-list bound and Stacy's audit); the condition that the rule carry identity assurance or an honest account of why it is out of reach; the direction to scale the six layers back. The holistic design (Thurgood R2 synthesis) APPROVED with Stacy's R2 residual (lookup rule, H2b, F12', A4 before U2b merges; check 4 per brief; pre-ratification observation) and Lina's (F13; merge-only) folded. Retires the A-round's A1 (-> --ci), A2 (gone), A3 scripted checks + 1c (-> --audit, every act), A3 judgment (-> J) and the step-up (-> the widening rule); A4 stays one-time. Owner thurgood (instrument); verdicts Stacy's. Non-substring sweep at authoring: 35 live ids + this one, relations 0, dupes 0. BALLOT ROUND (same day, pre-ratification): Stacy R1 APPROVE-WITH-AMENDMENTS folded at THURGOOD R2 — the closed success-evidence set and seat commit convention, F5 reworded, F11 extended, F14 and H4-H7 added, H2b reads anomaly, the sweep first on every PR with its own un-gated setup, the link-6 fallback, checks[] populated at the flip", by: thurgood }
   - { date: 2026-10-01, change: "ARMED at the fixing PR #245's merge into U2b (issue 2026-10-01-verify-signing-chain-ci-step step 5; ballot § 4.1). Bite evidence on the PR's own CI: F10 red run 36879685299; F11 red run 36880277736; F9 red via the stacked route, PR #246 closed unmerged, run 36885636467 (noop=true then FAIL link 3); final green 36880556269 with operative-set-freshness PASS 373 units. Fixtures: 30 by id, 59 Jest tests green on the U2b-merged tree. Stacy's ARMING read records the extent and the F9 extra-cause question.", by: thurgood }
 ```
+
+### charter-write-scope-render-fidelity
+
+```yaml
+rule: "For each seat and each target, the ordered list of globs extracted from that target's writeScope spans equals the seat's canonical writeScope array (canonical/agents/<seat>.md frontmatter), element for element and in order; a seat's write scope moves only by a canonical/agents/** edit, Peter-merged with every affected seat consulted — owning the generator never authorizes a change to any seat's write scope"
+boundary_call:
+  class: functional
+  rationale: "Ordered-list equality over parsed generator outputs and canonical frontmatter — decidable without judgment. A PROJECTION, not raw text: the targets render scope differently (the CC steward agent one sentence, the CC consumer profile one span per glob, Kiro its own form), so no two targets share bytes (ballot § 3.2, rewritten at R2 on Stacy R1). Proves RENDERING fidelity only: write scope in this runtime is behavioral, so a seat writing outside its scope is still caught only at claims passes (ballot § 7, surviving residual 2)"
+verification:
+  disposition: barrier
+  owner: thurgood
+  check_state: proposed
+  checks: []
+  # Planned: a named sweep under the existing required context 122-diff-guard (no new context, EXPECTED_CONTEXTS
+  # unchanged), built after ratification by the owner of tools/agent-generator/sweeps/** (Thurgood, F-1 Option B).
+  # FALSIFICATION FIXTURES (Stacy specifies, Thurgood builds; all four must red): an injected glob; a dropped glob; a
+  # reordered pair; a cross-seat swap (seat X rendered with seat Y's list). Stays proposed until the fixtures pass on
+  # the CI path. ARMING fires at the building PR's merge (Stacy), which also falls in her instrument-path population
+  # (ballot § 3.4: sweeps/** is on the § 4 B checker list).
+  # OPEN AT AUTHORING (application-PR finding, for ruling before build — not resolved here): (1) the CONSUMER targets'
+  # writeScope is DERIVED, not canonical — derive() drops no-consumer-counterpart / superseded-by members and the overlay
+  # re-points others (thurgood: canonical 4+58 globs, consumer renders `src/__tests__/**`, `specs/**`), so § 3.2's
+  # "equals the canonical array" is false by construction for them; the reference array there is the derived consumer
+  # canonical (canonical/_consumer-output/_canonical/agents/<seat>.md frontmatter writeScope). (2) Targets are FOUR,
+  # not three: CC steward, Kiro steward, CC consumer, Kiro consumer (canonical/_consumer-output/kiro/.kiro/agents/<seat>.json
+  # allowedPaths).
+  rationale: "List equality per (seat, target) — no judgment in the predicate; the four fixture classes cover injection, omission, order and identity"
+education:
+  disposition: "LAW HOME, single: .kiro/docs/ballots/2026-10-17-standing-write-scope-six-roots.md § 3 (the guard: scope moves only by a canonical/agents/** edit; the projection; lock-hash disclosure; the instrument-change ARMING trigger). POINTER-GRADE: one In Scope bullet each in canonical/agents/{thurgood,ada,lina}.md (the guard sentence and Ada's § 2.6 clause, in each charter's idiom)"
+history:
+  - { date: 2026-10-17, change: "entry created proposed by the application of ballot 2026-10-17-standing-write-scope-six-roots (RATIFIED Peter 2026-10-17, #393; F-1 = Option B; Stacy's R2 addition approved), edit site 5. Owner thurgood (instrument); ARMING verdicts Stacy's. Non-substring sweep at authoring: 38 live ids + this one, relations 0, dupes 0. Two authoring findings recorded in the verification comment for ruling before build (derived consumer arrays; four targets, not three)", by: thurgood }
+```

@@ -433,5 +433,5 @@ Your audit commands (with their triggering cues) are in the Commands section. Th
 
 ## Write scope
 
-Write scope (behavioral): you may create or modify files only under `.kiro/specs/**`, `docs/specs/**`. Treat paths outside this set as read-only.
+Write scope (behavioral): you may create or modify files only under `.kiro/specs/**`, `docs/specs/**`, `.kiro/issues/**`. Treat paths outside this set as read-only.
 

@@ -40,6 +40,7 @@ Ada governs **all tokens in the repo** — ecosystem tokens that shipped with `@
 - Pipeline configuration (`src/config/defineConfig.ts`, `src/config/ConfigLoader.ts`) — portable pipeline
 - Platform generator theme-aware output — CSS `data-theme` scoping, Swift `@Environment`, Kotlin `CompositionLocal`, DTCG/Figma theme metadata
 - `designerpunk.config.ts` authoring guidance — pipeline configuration, NOT token vocabulary. New token creation follows the standard governance process.
+- **Standing write scope — six roots (ballot 2026-10-17-standing-write-scope-six-roots)**: your write scope adds the CLI (`src/cli/**`), the `scripts/` files for token, type and platform generation, build, packaging and release, the docs MCP's packaging files, your own `.kiro/hooks/ada-*.kiro.hook` files, and `.kiro/issues/**`. Consult Thurgood on any change to `src/cli/attach.ts`, the agent-layer templates `init` writes, and the docs MCP's packaging files; consult Leonardo on `src/cli/templates/product/**` and the starter specs; you are consulted on any change to `scripts/derive-install-doc.ts` (Thurgood's). A test, fixture or bite under `scripts/` follows the file it exercises, and the PR that adds or edits one names that file in its body. Issue files follow `.kiro/issues/README.md` rule 9. Task-row and issue-row grants add to this scope and never narrow it. **Owning a release instrument never authorizes a change to release law without a ballot** — owning `release-publish.ts` does not let you change RELEASE-FLOW — **and your write scope moves only by a `canonical/agents/**` edit**, Peter-merged with every affected seat consulted.
 
 ### Out of Scope
 
@@ -213,5 +214,5 @@ Your test commands (with their triggering cues) are in the Commands section. Thi
 
 ## Write scope
 
-Write scope (behavioral): you may create or modify files only under `src/tokens/**`, `src/validators/**`, `src/generators/**`, `.kiro/specs/**`, `docs/specs/**`. Treat paths outside this set as read-only.
+Write scope (behavioral): you may create or modify files only under `src/tokens/**`, `src/validators/**`, `src/generators/**`, `.kiro/specs/**`, `docs/specs/**`, `src/cli/**`, `scripts/generate-platform-tokens.ts`, `scripts/generate-token-types.ts`, `scripts/verify-opacity-types.ts`, `scripts/build-browser-bundles.js`, `scripts/build-name-contract.ts`, `scripts/build-tool-manifest.ts`, `scripts/floor-closure.ts`, `scripts/pack-assert.ts`, `scripts/release-publish.ts`, `scripts/verify-publish-rail.sh`, `scripts/check-package-name-drift.js`, `scripts/jest.config.js`, `scripts/esbuild-css-plugin.js`, `scripts/fix-tokens-css.js`, `scripts/profile-incremental-analysis.js`, `scripts/audience-banner/**`, `scripts/__bites__/**`, `mcp-server/package.json`, `mcp-server/package-lock.json`, `mcp-server/tsconfig.json`, `mcp-server/jest.config.js`, `.kiro/hooks/ada-*.kiro.hook`, `.kiro/issues/**`. Treat paths outside this set as read-only.
 

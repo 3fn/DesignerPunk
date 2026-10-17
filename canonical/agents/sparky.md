@@ -263,6 +263,9 @@ toolSubset:
 writeScope:
   - ".kiro/specs/**"
   - "docs/specs/**"
+  # Standing scope added by ballot 2026-10-17-standing-write-scope-six-roots (RATIFIED Peter 2026-10-17, #393):
+  # § 2.5 / § 5 item 1 — issue files, narrowed by .kiro/issues/README.md rule 9
+  - ".kiro/issues/**"
 kiro:
   keyboardShortcut: "ctrl+shift+w"
   welcomeMessage: "Hey! I'm Sparky, your Web platform engineer. I implement product screens in Web Components using DesignerPunk tokens and components. What are we building?"

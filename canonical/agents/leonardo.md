@@ -274,6 +274,9 @@ writeScope:
   - ".kiro/specs/**"
   - "docs/specs/**"
   - "product/**"
+  # Standing scope added by ballot 2026-10-17-standing-write-scope-six-roots (RATIFIED Peter 2026-10-17, #393):
+  # § 2.5 / § 5 item 1 — issue files, narrowed by .kiro/issues/README.md rule 9
+  - ".kiro/issues/**"
 kiro:
   keyboardShortcut: "ctrl+shift+o"
   welcomeMessage: "Hey! I'm Leonardo, your product architect. I handle cross-platform technical direction, component selection, and screen specification for products built with DesignerPunk. What are we building?"

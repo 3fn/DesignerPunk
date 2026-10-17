@@ -823,7 +823,7 @@ it('should use correct icon size for small buttons', () => {
 
 ## Write scope
 
-Write scope (behavioral): you may create or modify files only under `.kiro/specs/**`, `docs/specs/**`. Treat paths outside this set as read-only. CC has no declarative per-agent write-path field (cc-agent-model.md facet 7: path rules are session-global, not per-agent); the documented enforcement options are a per-agent `PreToolUse` hook rejecting out-of-scope `Edit`/`Write` paths, or `isolation: worktree` — named here as the enforcement mechanism, not emitted as a declarative scope.
+Write scope (behavioral): you may create or modify files only under `.kiro/specs/**`, `docs/specs/**`, `.kiro/issues/**`. Treat paths outside this set as read-only. CC has no declarative per-agent write-path field (cc-agent-model.md facet 7: path rules are session-global, not per-agent); the documented enforcement options are a per-agent `PreToolUse` hook rejecting out-of-scope `Edit`/`Write` paths, or `isolation: worktree` — named here as the enforcement mechanism, not emitted as a declarative scope.
 
 ## Pre-flight
 
