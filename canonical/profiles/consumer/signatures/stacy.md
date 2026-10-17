@@ -346,6 +346,22 @@ verdict: assent — surviving 0/0
 >
 > No consumer counterpart, confirmed: this entry names this repo's own write path. I assent that nothing survives.
 
+## `#frontmatter:writeScope[.kiro/issues/**]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `writeScope[.kiro/issues/**]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:da4495fd22d50dccd4d3a7df6a11f943bb2e7a4bb57d21ccb8131f388be1768f
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite. **The cite applies (Req 11.6.5e's applicability test for bullets 1–4):** subtraction 3 removes our stewardship cadences and instruments as obligations, and this entry names one. `.kiro/issues/**` is this repo's issue-record convention:
+- its README rules 1–9;
+- the charter walk at this repo's monthly health check;
+- rule 9's "an edit outside this rule is a claims-pass finding", which is one of our claims-pass events.
+
+There is nothing to re-point to. `init` (`src/cli/init.ts`) creates no `.kiro/issues/`, the package's `files` ships none, and the consumer rendering grants no tracking-record scope for a re-keyed form to attach to. The cite is consistent with my own profile's earlier removal of the toolchain-charter issue path under `subtraction-3` (`#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument`), and with the same row in the other seven profiles. I assent that nothing survives. This is a Stacy-signed assent on my own row, so it falls in Peter's sample (C1 collapse seat).
+
 ## `#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble`
 
 signer: stacy
