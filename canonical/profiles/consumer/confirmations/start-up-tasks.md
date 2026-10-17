@@ -71,9 +71,15 @@ date: 2026-09-27
 ## `#start-up-tasks:preamble`
 
 confirmer: stacy
-canonicalHash: sha256:0001b5d0d0c61157fefff63a04af1d2f17f3d0031dd04c46d8ead8bab938cea4
+canonicalHash: sha256:9639643088d6d09683cc3c51a8bb0dd559413225f673b7c3c6d690aa8738f2ee
 items: none
-date: 2026-09-29
+date: 2026-10-17
+
+**Re-confirmed 2026-10-17 (Req 11.6.5d).**
+- **What changed**: the body line `**Last Reviewed**: 2026-09-29` left the unit; the stamp now lives in the YAML frontmatter as `lastReviewed:`, which `splitFrontmatter` keeps outside `canonicalHash`. Ballot `.kiro/docs/ballots/2026-10-17-no-volatile-metadata-in-signed-units.md` (RATIFIED, Peter, 2026-10-17, #393) § 3.2; authoring commit `0274210a8` (Thurgood). No other text in the unit changed. The canonicalHash moves from `sha256:0001b5d0d0c61157fefff63a04af1d2f17f3d0031dd04c46d8ead8bab938cea4` to the value above.
+- **Re-ruled**: what remains is the title and the metadata block (`Date`, `Purpose`, `Organization`, `Scope`, `Layer`, `Relevant Tasks`). No agent acts against doc metadata; the Purpose line's end-of-task pointer is orientation. The removed line was never an item. The zero stays declared (5d).
+
+**Ruling: CONFIRMED at 0, declared.**
 
 **Ruling: CONFIRMED at 0, declared.** Doc metadata. Its end-of-task pointer is orientation.
 

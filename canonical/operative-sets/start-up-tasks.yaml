@@ -90,7 +90,7 @@ units:
   # Task 15.4 (2026-09-29): the remaining units, drafted by Thurgood (profile author); each is
   #   confirmed in the confirmer's seat (C1) — a DRAFT until its confirmation: note is committed.
   "#start-up-tasks:preamble":
-    canonicalHash: sha256:0001b5d0d0c61157fefff63a04af1d2f17f3d0031dd04c46d8ead8bab938cea4
+    canonicalHash: sha256:9639643088d6d09683cc3c51a8bb0dd559413225f673b7c3c6d690aa8738f2ee
     items: []
     confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#start-up-tasks:preamble
   "#item-check-the-current-date":
