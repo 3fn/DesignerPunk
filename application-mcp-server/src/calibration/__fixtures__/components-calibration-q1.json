@@ -1,0 +1,632 @@
+[
+  {
+    "id": "KEN-1",
+    "seat": "kenya",
+    "phrase": "text field with label and error message",
+    "need": "Sign-up / settings form — the email and password inputs, with the validation state when the server rejects the value.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Input-Text-Base",
+        "Input-Text-Email",
+        "Input-Text-Password",
+        "Input-Text-PhoneNumber"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Any Input-Text-* does the job (label, validation states, inline error); the semantic variants are text inputs with the same error behaviour, so the acceptable set is the family."
+    }
+  },
+  {
+    "id": "KEN-2",
+    "seat": "kenya",
+    "phrase": "primary button",
+    "need": "Sign-up \"Create account\", checkout \"Pay now\" — the one filled CTA at the bottom of a NavigationStack screen.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Button-CTA"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Button-CTA is the primary call-to-action button."
+    }
+  },
+  {
+    "id": "KEN-3",
+    "seat": "kenya",
+    "phrase": "card container",
+    "need": "Feed — each post / item wrapped in a surfaced container with padding and radius, stacked in a LazyVStack.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Container-Card-Base",
+        "Container-Base"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Container-Card-Base is the card; Container-Base also gives a surfaced block (background, padding, radius) and no press behaviour is asked for."
+    }
+  },
+  {
+    "id": "KEN-4",
+    "seat": "kenya",
+    "phrase": "tab bar",
+    "need": "App shell — bottom navigation between Feed / Profile / Settings; need to know whether to use the DS one or map to native TabView.",
+    "seatLabel": "A",
+    "preExposed": [
+      "lina-probes"
+    ],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Nav-TabBar-Base"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Nav-TabBar-Base is the persistent bottom tab bar."
+    }
+  },
+  {
+    "id": "KEN-5",
+    "seat": "kenya",
+    "phrase": "avatar with initials fallback",
+    "need": "Profile header and feed rows — user image, falling back to initials when no photo.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Avatar-Base"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Avatar-Base: image with initials fallback."
+    }
+  },
+  {
+    "id": "KEN-6",
+    "seat": "kenya",
+    "phrase": "toggle switch row",
+    "need": "Settings — the \"Notifications on/off\" rows; the Toggle plus its label laid out as a list row.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "gap",
+      "accept": [],
+      "closestSensible": [
+        "Input-Checkbox-Base"
+      ],
+      "f4": null,
+      "note": "No switch/toggle component exists (gap G1). Input-Checkbox-Base is the settings pattern's sanctioned placeholder, so it is a sensible labeled closest match."
+    }
+  },
+  {
+    "id": "KEN-7",
+    "seat": "kenya",
+    "phrase": "empty state with illustration and call to action",
+    "need": "Feed before the user follows anyone — centered message, optional graphic, one button to go do the thing.",
+    "seatLabel": "B",
+    "preExposed": [],
+    "key": {
+      "class": "gap",
+      "accept": [],
+      "closestSensible": [
+        "Container-Base",
+        "Button-CTA"
+      ],
+      "f4": null,
+      "note": "No empty-state component exists. Container-Base + Button-CTA are the parts it would be composed from: sensible closest matches."
+    }
+  },
+  {
+    "id": "KEN-8",
+    "seat": "kenya",
+    "phrase": "inline banner for errors or offline",
+    "need": "Checkout / feed — a non-modal strip at the top of the screen (\"You're offline\", \"Payment failed, try again\") that doesn't take over the view the way an alert does.",
+    "seatLabel": "B",
+    "preExposed": [],
+    "key": {
+      "class": "gap",
+      "accept": [],
+      "closestSensible": [],
+      "f4": null,
+      "note": "No banner / inline-alert component exists; no catalog component is a sensible neighbour."
+    }
+  },
+  {
+    "id": "KEN-9",
+    "seat": "kenya",
+    "phrase": "pull to refresh loading indicator",
+    "need": "Feed — the spinner shown during refresh; unsure whether the DS has a loading component I should use or whether I just use SwiftUI's `.refreshable` and the native indicator.",
+    "seatLabel": "B",
+    "preExposed": [],
+    "key": {
+      "class": "gap",
+      "accept": [],
+      "closestSensible": [
+        "Progress-Bar-Base"
+      ],
+      "f4": null,
+      "note": "No spinner or refresh component exists. Progress-Bar-Base (indeterminate mode, 'loading states') is a sensible labeled closest match for the loading part, not for pull-to-refresh."
+    }
+  },
+  {
+    "id": "LEO-1",
+    "seat": "leonardo",
+    "phrase": "primary action button",
+    "need": "Checkout and sign-up: the one committed CTA at the bottom of a form (\"Place order\", \"Create account\").",
+    "seatLabel": "A",
+    "preExposed": [
+      "lina-probes",
+      "thurgood-probes"
+    ],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Button-CTA"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Button-CTA is the primary call-to-action button."
+    }
+  },
+  {
+    "id": "LEO-2",
+    "seat": "leonardo",
+    "phrase": "text input field with error message",
+    "need": "Sign-up and settings forms: email/password/name fields that need to show inline validation when the user gets it wrong.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Input-Text-Base",
+        "Input-Text-Email",
+        "Input-Text-Password",
+        "Input-Text-PhoneNumber"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Any Input-Text-* does the job (label, validation states, inline error); the semantic variants are text inputs with the same error behaviour, so the acceptable set is the family."
+    }
+  },
+  {
+    "id": "LEO-3",
+    "seat": "leonardo",
+    "phrase": "toggle switch for on/off setting",
+    "need": "Settings screen: the notification/privacy rows where each row is a label plus a single on/off control.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "gap",
+      "accept": [],
+      "closestSensible": [
+        "Input-Checkbox-Base"
+      ],
+      "f4": null,
+      "note": "No switch/toggle component exists (gap G1). Input-Checkbox-Base is the settings pattern's sanctioned placeholder, so it is a sensible labeled closest match."
+    }
+  },
+  {
+    "id": "LEO-4",
+    "seat": "leonardo",
+    "phrase": "card container for grouped content",
+    "need": "Settings and profile: visually grouping related rows/options into a surfaced block with padding and border.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Container-Card-Base",
+        "Container-Base"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Container-Card-Base is the card; Container-Base also groups content in a surfaced block with padding and border (no press behaviour asked for)."
+    }
+  },
+  {
+    "id": "LEO-5",
+    "seat": "leonardo",
+    "phrase": "bottom tab bar navigation",
+    "need": "Feed/profile/settings app shell: the persistent top-level navigation across the main sections.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Nav-TabBar-Base"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Nav-TabBar-Base is the persistent bottom tab bar."
+    }
+  },
+  {
+    "id": "LEO-6",
+    "seat": "leonardo",
+    "phrase": "status badge or label",
+    "need": "Profile and settings: small \"Verified\", \"Pro\", \"Pending\" indicators next to a name or a row.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Badge-Label-Base"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Badge-Label-Base: text label badge for categorization and status. Badge-Count-* are numeric, not status words."
+    }
+  },
+  {
+    "id": "LEO-7",
+    "seat": "leonardo",
+    "phrase": "empty state with illustration and call to action",
+    "need": "Feed and search results when there's nothing to show: a centered message, optional graphic, and a single action to get the user unstuck.",
+    "seatLabel": "B",
+    "preExposed": [],
+    "key": {
+      "class": "gap",
+      "accept": [],
+      "closestSensible": [
+        "Container-Base",
+        "Button-CTA"
+      ],
+      "f4": null,
+      "note": "No empty-state component exists. Container-Base + Button-CTA are the parts it would be composed from: sensible closest matches."
+    }
+  },
+  {
+    "id": "LEO-8",
+    "seat": "leonardo",
+    "phrase": "list row with leading icon, title, subtitle and chevron",
+    "need": "Settings and profile: the tappable navigation row that drills into a sub-screen — the bread-and-butter \"list item\" I need everywhere and suspect isn't a first-class component yet.",
+    "seatLabel": "B",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Button-VerticalList-Item"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Button-VerticalList-Item is the tappable row (label, description, leadingIcon, tap mode); it is the settings pattern's row. It has no trailing chevron slot (gap G4), but the row itself exists, so this is keyed positive, not gap."
+    }
+  },
+  {
+    "id": "LEO-9",
+    "seat": "leonardo",
+    "phrase": "inline banner for form-level error or success",
+    "need": "Checkout and sign-up: a non-modal strip above the form for \"Payment failed\" / \"Account created\" that isn't tied to a single field.",
+    "seatLabel": "B",
+    "preExposed": [],
+    "key": {
+      "class": "gap",
+      "accept": [],
+      "closestSensible": [],
+      "f4": null,
+      "note": "No banner / inline-alert component exists; no catalog component is a sensible neighbour."
+    }
+  },
+  {
+    "id": "DAT-1",
+    "seat": "data",
+    "phrase": "text input with error message",
+    "need": "For the sign-up and checkout forms — a field that shows an inline validation error and announces it to TalkBack.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Input-Text-Base",
+        "Input-Text-Email",
+        "Input-Text-Password",
+        "Input-Text-PhoneNumber"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Any Input-Text-* does the job (label, validation states, inline error); the semantic variants are text inputs with the same error behaviour, so the acceptable set is the family."
+    }
+  },
+  {
+    "id": "DAT-2",
+    "seat": "data",
+    "phrase": "primary action button",
+    "need": "The \"Create account\" / \"Place order\" call to action at the bottom of sign-up and checkout — the one filled button per screen.",
+    "seatLabel": "A",
+    "preExposed": [
+      "lina-probes",
+      "thurgood-probes"
+    ],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Button-CTA"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Button-CTA is the primary call-to-action button."
+    }
+  },
+  {
+    "id": "DAT-3",
+    "seat": "data",
+    "phrase": "bottom tab bar",
+    "need": "Top-level navigation between feed, profile and settings — a persistent bar that survives nav changes.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Nav-TabBar-Base"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Nav-TabBar-Base is the persistent bottom tab bar."
+    }
+  },
+  {
+    "id": "DAT-4",
+    "seat": "data",
+    "phrase": "card container for list item",
+    "need": "Feed rows and the order summary on checkout — a surface with padding and radius I can put arbitrary content inside.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Container-Card-Base",
+        "Container-Base"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Container-Card-Base is the card; Container-Base also gives a surface with padding and radius for arbitrary content (no press behaviour asked for)."
+    }
+  },
+  {
+    "id": "DAT-5",
+    "seat": "data",
+    "phrase": "toggle switch",
+    "need": "Settings screen — on/off rows for notifications, dark mode, etc.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "gap",
+      "accept": [],
+      "closestSensible": [
+        "Input-Checkbox-Base"
+      ],
+      "f4": null,
+      "note": "No switch/toggle component exists (gap G1). Input-Checkbox-Base is the settings pattern's sanctioned placeholder, so it is a sensible labeled closest match."
+    }
+  },
+  {
+    "id": "DAT-6",
+    "seat": "data",
+    "phrase": "avatar with initials fallback",
+    "need": "Profile header and feed author rows — a round image that falls back to initials when there is no photo.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Avatar-Base"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Avatar-Base: image with initials fallback."
+    }
+  },
+  {
+    "id": "DAT-7",
+    "seat": "data",
+    "phrase": "empty state illustration with message and action",
+    "need": "The feed with no items yet, or an empty cart — an icon or illustration, a line of copy, and a button to get started, as one composed piece rather than three.",
+    "seatLabel": "B",
+    "preExposed": [],
+    "key": {
+      "class": "gap",
+      "accept": [],
+      "closestSensible": [
+        "Container-Base",
+        "Button-CTA"
+      ],
+      "f4": null,
+      "note": "No empty-state component exists. Container-Base + Button-CTA are the parts it would be composed from: sensible closest matches."
+    }
+  },
+  {
+    "id": "DAT-8",
+    "seat": "data",
+    "phrase": "pull to refresh",
+    "need": "The feed — the Compose-native refresh gesture; I suspect the library leaves this to the platform rather than owning it, but I would still check before reaching for Material's.",
+    "seatLabel": "B",
+    "preExposed": [],
+    "key": {
+      "class": "gap",
+      "accept": [],
+      "closestSensible": [],
+      "f4": null,
+      "note": "No refresh component exists; the gesture is platform-owned. No catalog component is a sensible neighbour."
+    }
+  },
+  {
+    "id": "DAT-9",
+    "seat": "data",
+    "phrase": "bottom sheet",
+    "need": "Checkout (choose shipping option) and profile (edit photo menu) — a modal sheet that slides up from the bottom, handles system bar insets, and dismisses on scrim tap.",
+    "seatLabel": "B",
+    "preExposed": [],
+    "key": {
+      "class": "gap",
+      "accept": [],
+      "closestSensible": [],
+      "f4": null,
+      "note": "No sheet or modal component exists (Modal family is a placeholder); no catalog component is a sensible neighbour."
+    }
+  },
+  {
+    "id": "SPA-1",
+    "seat": "sparky",
+    "phrase": "text input with label and error message",
+    "need": "Sign-up / settings form — the email and password fields that need a floating label, validation state, and an inline error I can wire to `aria-describedby`.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Input-Text-Base",
+        "Input-Text-Email",
+        "Input-Text-Password",
+        "Input-Text-PhoneNumber"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Any Input-Text-* does the job (label, validation states, inline error); the semantic variants are text inputs with the same error behaviour, so the acceptable set is the family."
+    }
+  },
+  {
+    "id": "SPA-2",
+    "seat": "sparky",
+    "phrase": "primary button",
+    "need": "Sign-up submit, checkout \"Place order\", settings \"Save\" — the one high-emphasis CTA per screen, with loading/disabled handling.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Button-CTA"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Button-CTA is the primary call-to-action button."
+    }
+  },
+  {
+    "id": "SPA-3",
+    "seat": "sparky",
+    "phrase": "card container",
+    "need": "Feed items and the checkout order summary — a surfaced block with inset padding and optional press behavior so a whole card can be a tap target.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Container-Card-Base"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "The need asks for press behaviour: Container-Card-Base has it; Container-Base has no press handler, so it is not in the set."
+    }
+  },
+  {
+    "id": "SPA-4",
+    "seat": "sparky",
+    "phrase": "bottom tab bar",
+    "need": "App shell navigation under the feed / profile / settings screens — persistent tabs with a selected state and ARIA tablist semantics.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Nav-TabBar-Base"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Nav-TabBar-Base is the persistent bottom tab bar."
+    }
+  },
+  {
+    "id": "SPA-5",
+    "seat": "sparky",
+    "phrase": "avatar",
+    "need": "Profile header and feed item author — image with initials fallback and size variants.",
+    "seatLabel": "A",
+    "preExposed": [
+      "lina-probes",
+      "thurgood-probes"
+    ],
+    "key": {
+      "class": "positive",
+      "accept": [
+        "Avatar-Base"
+      ],
+      "closestSensible": [],
+      "f4": null,
+      "note": "Avatar-Base: image with initials fallback, sizes."
+    }
+  },
+  {
+    "id": "SPA-6",
+    "seat": "sparky",
+    "phrase": "toggle switch",
+    "need": "Settings screen — on/off rows (notifications, dark mode) that need a role=\"switch\" implementation rather than a checkbox.",
+    "seatLabel": "A",
+    "preExposed": [],
+    "key": {
+      "class": "gap",
+      "accept": [],
+      "closestSensible": [
+        "Input-Checkbox-Base"
+      ],
+      "f4": null,
+      "note": "No switch/toggle component exists (gap G1). Input-Checkbox-Base is the settings pattern's sanctioned placeholder, so it is a sensible labeled closest match. The seat explicitly rejects a checkbox for role reasons; it is still the sanctioned placeholder."
+    }
+  },
+  {
+    "id": "SPA-7",
+    "seat": "sparky",
+    "phrase": "empty state illustration with message and action",
+    "need": "Feed with no posts, search with no results — a centered icon/illustration, headline, supporting copy, and a single CTA. I'd expect to build this from Container + Button if there isn't a dedicated piece.",
+    "seatLabel": "B",
+    "preExposed": [],
+    "key": {
+      "class": "gap",
+      "accept": [],
+      "closestSensible": [
+        "Container-Base",
+        "Button-CTA"
+      ],
+      "f4": null,
+      "note": "No empty-state component exists. Container-Base + Button-CTA are the parts it would be composed from: sensible closest matches."
+    }
+  },
+  {
+    "id": "SPA-8",
+    "seat": "sparky",
+    "phrase": "toast notification",
+    "need": "Settings \"Saved\" confirmation, checkout error after a failed payment — a transient, non-blocking message with an `aria-live` region and auto-dismiss. Not sure the system has a feedback/toast family yet versus only modals.",
+    "seatLabel": "B",
+    "preExposed": [],
+    "key": {
+      "class": "gap",
+      "accept": [],
+      "closestSensible": [],
+      "f4": null,
+      "note": "No toast / snackbar component exists (gap G5). Badge-Count-Notification is a count badge, not a message: not a sensible neighbour."
+    }
+  },
+  {
+    "id": "SPA-9",
+    "seat": "sparky",
+    "phrase": "skeleton loader for a list",
+    "need": "Feed and profile while data loads — placeholder shapes that match the card layout, respecting reduced motion on the shimmer. The Loading family may only have a spinner.",
+    "seatLabel": "B",
+    "preExposed": [],
+    "key": {
+      "class": "gap",
+      "accept": [],
+      "closestSensible": [],
+      "f4": null,
+      "note": "No skeleton component exists (Loading family is a placeholder). Progress-Bar-Base is a bar, not a skeleton: not a sensible neighbour."
+    }
+  }
+]
