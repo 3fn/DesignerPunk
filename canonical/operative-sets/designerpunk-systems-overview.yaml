@@ -10,7 +10,7 @@ owner: thurgood
 confirmer: stacy
 units:
   "#designerpunk-systems-overview:preamble":
-    canonicalHash: sha256:a81ba036a8683b7f30a77c88663f6998b785552410e420d0d33b162868a445a1
+    canonicalHash: sha256:56dabfbc13a893407ca6899b55c1625ac4728276c3b48207c7295ff45475b6d1
     items: []
     confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#designerpunk-systems-overview:preamble
   "#overview":
