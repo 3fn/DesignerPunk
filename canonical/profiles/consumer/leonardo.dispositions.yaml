@@ -142,7 +142,7 @@ frontmatter:
   "writeScope[.kiro/specs/**]": {"disposition": "re-pointed", "destination": "frontmatter:writeScope[.kiro/specs/**]"}
   "writeScope[docs/specs/**]": {"disposition": "superseded-by", "destination": "frontmatter:writeScope[.kiro/specs/**]", "cites": "subtraction-4", "signature": {"signer": "leonardo", "canonicalHash": "sha256:bc10d943438a0fa1a02e86c698d39f9b7882a42838f341886c89f3021c0e416c", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#frontmatter:writeScope[docs/specs/**]"}}
   "writeScope[product/**]": {"disposition": "retained", "signature": {"signer": "leonardo", "canonicalHash": "sha256:92d969eed35a660c78a68a9cb6a3c350dcf226e85ca109eb2ab87027f7d7c4b7", "renderedHash": "sha256:1cedb3f31fe5c4a72e35923bf4278cd6b085b949140e541a34c1feacd7c48f8c", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#frontmatter:writeScope[product/**]"}}
-  "writeScope[.kiro/issues/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3"}
+  "writeScope[.kiro/issues/**]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-3", "signature": {"signer": "leonardo", "canonicalHash": "sha256:da4495fd22d50dccd4d3a7df6a11f943bb2e7a4bb57d21ccb8131f388be1768f", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/leonardo.md#frontmatter:writeScope[.kiro/issues/**]"}}
   "kiro.keyboardShortcut": {"disposition": "retained"}
   "kiro.welcomeMessage": {"disposition": "retained"}
   "preflight[git status --porcelain]": {"disposition": "retained"}

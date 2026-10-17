@@ -129,6 +129,18 @@ date: 2026-10-16
   - (b) If a consumer moves the product root with `PRODUCT_DIR`, `product/**` names the default path, not the real one. The write-scope outro covers this case: ask the human lead first.
 - It is a frontmatter entry with no operative items, so `surviving: []` is the itemized form.
 
+## `#frontmatter:writeScope[.kiro/issues/**]`
+
+signer: leonardo
+canonicalHash: sha256:da4495fd22d50dccd4d3a7df6a11f943bb2e7a4bb57d21ccb8131f388be1768f
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+assent: surviving [] (`no-consumer-counterpart`, cites subtraction-3)
+
+**First signature, 2026-10-17 (ballot `2026-10-17-standing-write-scope-six-roots` § 2.5 / § 5 item 1, RATIFIED Peter, #393; applied as draft `bf30a6017`).** I read the entry by its rendering: the dropped entry renders nothing, so no consumer seat gets `.kiro/issues/**` as a write root.
+- **Subtraction-3 applies.** `.kiro/issues/**` is DesignerPunk's own stewardship-instrument surface: the README rules, Thurgood's monthly walk, and rule 9's claims-pass finding on an out-of-rule edit. `init` creates no `.kiro/issues/` in a consumer repo, so there is no tree for the scope to point at and no walk or claims pass to give it meaning.
+- **The scope grant only.** A consumer may still keep its own issue records wherever it likes. That is a separate question from this row, and a consumer's Leonardo would ask its human lead first, as the write-scope outro already says.
+- It is a frontmatter entry with no operative items, so `surviving: []` is the itemized form.
+
 ## `#step-3-specify-the-screen:preamble`
 
 signer: leonardo
