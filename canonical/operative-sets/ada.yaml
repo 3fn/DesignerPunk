@@ -104,6 +104,38 @@ units:
         kind: member
         label: "designerpunk.config.ts authoring"
         text: "`designerpunk.config.ts` authoring guidance — pipeline configuration, NOT token vocabulary. New token creation follows the standard governance process."
+      - id: scope-standing-grant
+        kind: member
+        label: "Standing write scope"
+        text: "**Standing write scope — six roots (ballot 2026-10-17-standing-write-scope-six-roots)**: your write scope adds the CLI (`src/cli/**`), the `scripts/` files for token, type and platform generation, build, packaging and release, the docs MCP's packaging files, your own `.kiro/hooks/ada-*.kiro.hook` files, and `.kiro/issues/**`"
+      - id: scope-standing-consults
+        kind: obligation
+        label: "Consult Thurgood and Leonardo on the shares"
+        text: "Consult Thurgood on any change to the agent layer and the docs MCP's launch contract: `src/cli/attach.ts`, `src/cli/sync/RegionGrain.ts`, `src/cli/sync/SteeringDirCheck.ts`, `src/cli/shared/personalNote.ts`, `src/cli/templates/personal-note.{template,example}.md`, `src/cli/shared/mcpConfig/**`, `src/cli/templates/mcp-config.json.template`, and `mcp-server/{package.json,package-lock.json,tsconfig.json,jest.config.js}`; consult Leonardo on any change to `src/cli/templates/product/**` and `src/cli/templates/starter-specs/**`; you are consulted on any change to `scripts/derive-install-doc.ts` (Thurgood's)"
+      - id: scope-standing-test-rule
+        kind: member
+        label: "Tests follow the file they exercise"
+        text: "A test, fixture or bite under `scripts/` follows the file it exercises"
+      - id: scope-standing-pr-names-file
+        kind: obligation
+        label: "The PR names the exercised file"
+        text: "the PR that adds or edits one names that file in its body"
+      - id: scope-standing-rule-9
+        kind: obligation
+        label: "Issue files follow rule 9"
+        text: "Issue files follow `.kiro/issues/README.md` rule 9"
+      - id: scope-standing-grants-compose
+        kind: obligation
+        label: "Grants add, never narrow; the consult"
+        text: "Task-row and issue-row grants add to this scope and never narrow it; a grant to you over a path in another seat's standing scope names that seat as consulted, in the grant record and in the PR's `**Consulted**:` line"
+      - id: scope-standing-law
+        kind: obligation
+        label: "No release-law change without a ballot"
+        text: "**Owning a release instrument never authorizes a change to release law without a ballot** — owning `release-publish.ts` does not let you change RELEASE-FLOW"
+      - id: scope-standing-scope-moves
+        kind: obligation
+        label: "Scope moves only by a canonical edit"
+        text: "**and your write scope moves only by a `canonical/agents/**` edit**, Peter-merged with every affected seat consulted"
     confirmation: canonical/profiles/consumer/confirmations/ada.md#in-scope
   "#out-of-scope":
     canonicalHash: sha256:ff02d3db0cfbbc8f5f6e559f9b24e3bb5e7e8c25b31e6d257b495d9ad225edeb

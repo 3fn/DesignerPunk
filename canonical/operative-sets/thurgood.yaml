@@ -118,6 +118,42 @@ units:
         kind: member
         label: "CI regime — standing test-lane scope (ballot 2026-09-27-ci-r"
         text: "**CI regime — standing test-lane scope (ballot 2026-09-27-ci-regime-standing-scope § 2)**: in `.github/workflows/lane-timing.yml` only, a step that runs an existing `package.json` test script inside an existing required job, plus its own did-it-really-run floor (fails on zero; same selection as the step). Nothing else — no env/cache/runner/`if:`/`continue-on-error` change, no removed line (`git diff --numstat` deletions 0). **Never**: a new required context, a change to `EXPECTED_CONTEXTS`'s count, branch protection or repo settings (Peter's). Every other CI path goes through an issue-row grant (§ 3). ARMING audits each such PR at its merge."
+      - id: scope-13
+        kind: member
+        label: "Standing write scope and its test rule"
+        text: "**Standing write scope — six roots (ballot 2026-10-17-standing-write-scope-six-roots)**: your write scope lists, by file, the `scripts/` checks you own, the docs MCP (`mcp-server/src/**`, its tests, docs and README), the completion tooling in `.kiro/hooks/`, `.kiro/issues/**`, and the generator's checkers and sweeps. A test, fixture or bite under `scripts/` follows the file it exercises; under `tools/agent-generator/__tests__/` a test follows the module whose basename equals the test filename's stem before its first `.`, in any directory, otherwise its first `../` import, except `entry-tree.test.ts` and `grain-guard.two-sided.test.ts` (shared core) and `semantics-guard.test.ts`, `semantics-guard.fixture.test.ts`, `g1-renderings.provenance.test.ts` and `survivor-sourced.ts` (Lina's), and `__tests__/fixtures/**` follows the test that reads it"
+      - id: scope-14
+        kind: obligation
+        label: "The PR names the exercised file"
+        text: "the PR that adds or edits a test or fixture names the exercised file in its body"
+      - id: scope-15
+        kind: obligation
+        label: "Consulted on the shares; Ada consulted on derive-install-doc"
+        text: "You are consulted on any change to the generator's shared core (Lina primary) and to the agent layer and docs MCP launch contract in Ada's scope: `src/cli/attach.ts`, `src/cli/sync/RegionGrain.ts`, `src/cli/sync/SteeringDirCheck.ts`, `src/cli/shared/personalNote.ts`, `src/cli/templates/personal-note.{template,example}.md`, `src/cli/shared/mcpConfig/**`, `src/cli/templates/mcp-config.json.template`, and `mcp-server/{package.json,package-lock.json,tsconfig.json,jest.config.js}`; Ada is consulted on any change to `scripts/derive-install-doc.ts`"
+      - id: scope-16
+        kind: obligation
+        label: "Legacy completion scripts: retirement walk finding"
+        text: "A legacy completion script still present at the second monthly walk after ratification is a walk finding"
+      - id: scope-17
+        kind: obligation
+        label: "RELEASE-FLOW stays Peter-merged law"
+        text: "`.kiro/hooks/RELEASE-FLOW.md` stays Peter-merged law"
+      - id: scope-18
+        kind: obligation
+        label: "Issue files follow rule 9"
+        text: "issue files follow `.kiro/issues/README.md` rule 9"
+      - id: scope-19
+        kind: obligation
+        label: "Grants add, never narrow; the consult"
+        text: "Task-row and issue-row grants add to this scope and never narrow it; a grant to you over a path in another seat's standing scope names that seat as consulted, in the grant record and in the PR's `**Consulted**:` line"
+      - id: scope-20
+        kind: obligation
+        label: "No law change without a ballot"
+        text: "**Owning an instrument never authorizes changing the law it serves without a ballot** — owning `governance-check.sh` does not let you change what the health check is"
+      - id: scope-21
+        kind: obligation
+        label: "Scope moves only by a canonical edit"
+        text: "**and a seat's write scope moves only by a `canonical/agents/**` edit**, Peter-merged with every affected seat consulted; owning the generator's checkers never authorizes a change to any seat's write scope"
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#in-scope
   "#out-of-scope":
     canonicalHash: sha256:f443e3ebcf11ad1c2d778ad8a39887d3e38e38da196ef25bc0e3e4943ad7583b
