@@ -10,7 +10,7 @@ owner: thurgood
 confirmer: stacy
 units:
   "#task-completion-protocol:preamble":
-    canonicalHash: sha256:470b82059538dd17eeebcea849187caecfa75fc0afc0479ad294c921350e4baf
+    canonicalHash: sha256:7a91b549b5b592758fec919051a234df05bfdc346f9e78bdd609710958999d42
     items:
       - id: operational-law
         kind: obligation

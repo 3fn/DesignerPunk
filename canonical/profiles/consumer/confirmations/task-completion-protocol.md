@@ -22,9 +22,15 @@
 ## `#task-completion-protocol:preamble`
 
 confirmer: stacy
-canonicalHash: sha256:470b82059538dd17eeebcea849187caecfa75fc0afc0479ad294c921350e4baf
+canonicalHash: sha256:7a91b549b5b592758fec919051a234df05bfdc346f9e78bdd609710958999d42
 items: operational-law
-date: 2026-09-29
+date: 2026-10-17
+
+**Re-confirmed 2026-10-17 (Req 11.6.5d).**
+- **What changed**: the body line `**Last Reviewed**: 2026-09-29` left the unit; the stamp now lives in the YAML frontmatter as `lastReviewed:`, which `splitFrontmatter` keeps outside `canonicalHash`. Ballot `.kiro/docs/ballots/2026-10-17-no-volatile-metadata-in-signed-units.md` (RATIFIED, Peter, 2026-10-17, #393) § 3.2; authoring commit `0274210a8` (Thurgood). No other text in the unit changed. The canonicalHash moves from `sha256:470b82059538dd17eeebcea849187caecfa75fc0afc0479ad294c921350e4baf` to the value above.
+- **Re-ruled**: what remains is the title, the metadata block and the operational-law call-out. `operational-law` is unchanged and still a verbatim substring of the unit (one occurrence). The metadata lines stay non-operative, and the removed line was never an item.
+
+**Ruling: CONFIRMED at 1 item** (`operational-law`).
 
 **Ruling: CONFIRMED at 1, recomposed.** Removed `task-completion-prot-1`, the **Purpose** metadata line. Added `operational-law`, the call-out: TCP owns the end of a task, and Start Up Tasks owns the start.
 
