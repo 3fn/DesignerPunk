@@ -2,7 +2,6 @@
 # DesignerPunk Systems Overview
 
 **Date**: 2026-05-03
-**Last Reviewed**: 2026-09-21
 **Purpose**: Visual architecture overview of DesignerPunk's three foundational systems
 **Organization**: architecture-overview
 **Scope**: cross-project

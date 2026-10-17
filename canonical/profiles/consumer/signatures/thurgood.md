@@ -117,11 +117,24 @@ Re-pointing "Peter" → "your human lead" carries the same obligation.
 ## `#trigger-types`
 
 signer: stacy
-date: 2026-10-03
+date: 2026-10-17
 row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#trigger-types` (re-pointed; ROUTED)
-canonicalHash: sha256:50cfe90475442c31152e04f7f6786332694f9c9e0fc85797ab3b4af8189414c0
-renderedHash: sha256:91410d9f7178c41b379e2852047aefc7af3f877160a60fccd3d3e672980456f1
+canonicalHash: sha256:b4d484bc616d3215424be7d346e2729bca7e8178564925e0a0590795ba38a961
+renderedHash: sha256:da5352d42da3a81edb6708dfbbcf6d045da4e019d331e7a473c98729ce7e5f67
 verdict: assent — surviving 11/21; not surviving: `instruments-named`, `event-post-doc`, `liveness-release-complete`, `liveness-charter-walk`, `owed-set-three-copies`, `owed-set-predicate`, `owed-set-pipeline`, `owed-set-exclusion-classes`, `owed-set-promotion`, `register-read`
+
+**Re-signed 2026-10-17** (prior signature: assent 11/21, 2026-10-03, against `sha256:50cfe904…189414c0`). Stale because the canonical unit and its rendering both moved: the cadence-driven step now reads the newest health-check record instead of a date in Start Up Tasks (canonical `2df26ddee`, the consumer overlay `038ba7838`; Thurgood, as consistency edits to ballot `2026-10-17-no-volatile-metadata-in-signed-units`). renderedHash recomputed from `canonical/_consumer-output/` at this revision with the generator's own `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`.
+- **Judged against**: the rendered unit at this revision and the set re-confirmed at 21 (`8f2639d2c`).
+- **`cadence-health-check` survives, re-grounded**: *"When the newest health-check record is older than your team's cadence, run the health check, review the findings, flag issues to domain agents as needed, and commit the check's record."* That states the step's whole function: the staleness test (against the newest record, at the team's cadence in place of "monthly"), the run, the review, the flag and the closing commit of the record. The record directory is removed (`subtraction-3`, replacing the old `Start Up Tasks` removal); "there" loses its referent with it and is not needed, since the consumer's record location is the team's (as in `start-up-tasks` `#item-civitas-governance-health-check`, re-signed `d4fdd609c`). The step and the start-up item now say the same thing on both sides, which the old pair ("record the new date" / "keep its date recorded here") also did.
+- **Unchanged from the 2026-10-03 signature, below**: the ten other survivors and the ten non-survivors, on the same grounds; their canonical and rendered text did not move.
+
+**Prior signature record (superseded, 2026-10-03)**:
+
+> signer: stacy
+> date: 2026-10-03
+> canonicalHash: sha256:50cfe90475442c31152e04f7f6786332694f9c9e0fc85797ab3b4af8189414c0
+> renderedHash: sha256:91410d9f7178c41b379e2852047aefc7af3f877160a60fccd3d3e672980456f1
+> verdict: assent — surviving 11/21
 
 **Re-signed 2026-10-03** (prior signature: assent 11/20, 2026-09-29, against `sha256:563ec186…`). Stale because LIVENESS read 2 gained one sentence (ballot `2026-10-03-hermetic-publish-path` § 5 item 6 (2b) and A8, canonical commit `59e2b7ff`); the rendering did not change (renderedHash recomputed from `canonical/_consumer-output/` at this revision: unchanged).
 - **Judged against**: the rendered unit at this revision and the operative set re-confirmed at 21 items (`9ebc06ba`), which carries the sentence as its own item, `liveness-release-complete`.

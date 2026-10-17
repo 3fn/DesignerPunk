@@ -10,7 +10,7 @@ owner: thurgood
 confirmer: stacy
 units:
   "#civitas-system-overview:preamble":
-    canonicalHash: sha256:261e7f3fe63802d69ea320635254b04b9a5f8b49be25e3bdf1e540aab4bf8844
+    canonicalHash: sha256:8432dd89e8983effa2ffc3acccfa4ff1a882621d6c4612b72f5eb9d691f75940
     items: []
     confirmation: canonical/profiles/consumer/confirmations/civitas-system-overview.md#civitas-system-overview:preamble
   "#overview":

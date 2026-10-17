@@ -229,9 +229,16 @@ date: 2026-09-29
 ## `#trigger-types`
 
 confirmer: stacy
-canonicalHash: sha256:50cfe90475442c31152e04f7f6786332694f9c9e0fc85797ab3b4af8189414c0
+canonicalHash: sha256:b4d484bc616d3215424be7d346e2729bca7e8178564925e0a0590795ba38a961
 items: instruments-named, instruments-computed, event-post-spec, event-post-doc, event-post-prompt, cadence-health-check, return-edge, liveness-records-not-verdicts, liveness-owed-set, liveness-records, liveness-release-complete, liveness-charter-walk, owed-set-three-copies, owed-set-predicate, owed-set-pipeline, owed-set-exclusion-classes, owed-set-promotion, register-read, discovery-spec, discovery-feedback, discovery-audit
-date: 2026-10-03
+date: 2026-10-17
+
+**Re-confirmed 2026-10-17 (Req 11.6.5d).**
+- **What changed**: the cadence-driven health-check step. It read *"Check Start Up Tasks for the governance health check date … and commit the updated date in Start Up Tasks."* It now reads the newest record in `.kiro/docs/civitas-health-checks/` and commits the check's record there. Authoring commit `2df26ddee` (Thurgood). No other text in the unit changed. The canonicalHash moves from `sha256:50cfe90475442c31152e04f7f6786332694f9c9e0fc85797ab3b4af8189414c0` to the value above.
+- **Authority, stated as found**: the edit is not in ballot `2026-10-17-no-volatile-metadata-in-signed-units` § 4's file list. The orchestrator included it as forced by § 2's rule: the old step instructed the steward to commit a date into a signed unit, which § 2 forbids and § 3.1 replaces. I confirm the operative set against the text as authored; whether the charter edit stands on the ballot's authority is Peter's call at merge, not this act's.
+- **Re-ruled**: `cadence-health-check` keeps its function (on staleness past the monthly cadence: run the check, review, flag, commit the record), now tested against the newest record instead of a date in Start Up Tasks. Its text is Thurgood's, a verbatim substring of the unit (one occurrence). It stays one `step`: "commit the check's record there" is the run's closing act, as "commit the updated date" was. The other 20 items are unchanged and still verbatim.
+
+**Ruling: CONFIRMED at 21 items.**
 
 **Re-confirmed 2026-10-03 (Req 11.6.5d).**
 - **What changed**: LIVENESS read 2 gains one sentence. Ballot `.kiro/docs/ballots/2026-10-03-hermetic-publish-path.md` (RATIFIED, Peter, 2026-10-03) § 5 item 6 (2b) and A8, canonical commit `59e2b7ff`: *"A RELEASE record is complete only with both phases … are each an event without a complete record."* No other text in the unit changed.

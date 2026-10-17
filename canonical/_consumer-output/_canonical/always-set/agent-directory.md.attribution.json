@@ -4,119 +4,119 @@
     {
       "lines": [
         1,
-        13
+        12
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Agent-Directory.md#agent-directory:preamble"
     },
     {
       "lines": [
-        14,
-        23
+        13,
+        22
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Agent-Directory.md#agent-tiers"
     },
     {
       "lines": [
-        24,
-        41
+        23,
+        40
       ],
       "op": "render",
       "source": ".kiro/steering/Agent-Directory.md#primary-agent-orchestrator"
     },
     {
       "lines": [
-        42,
-        49
+        41,
+        48
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Agent-Directory.md#system-agents:preamble"
     },
     {
       "lines": [
-        50,
-        57
+        49,
+        56
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Agent-Directory.md#ada-rosetta-token-specialist"
     },
     {
       "lines": [
-        58,
-        65
+        57,
+        64
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Agent-Directory.md#lina-stemma-component-specialist"
     },
     {
       "lines": [
-        66,
-        79
+        65,
+        78
       ],
       "op": "render",
       "source": ".kiro/steering/Agent-Directory.md#thurgood-test-governance-spec-standards-civitas-steward"
     },
     {
       "lines": [
-        80,
-        89
+        79,
+        88
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Agent-Directory.md#product-agents:preamble"
     },
     {
       "lines": [
-        90,
-        97
+        89,
+        96
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Agent-Directory.md#leonardo-product-architect"
     },
     {
       "lines": [
-        98,
-        105
+        97,
+        104
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Agent-Directory.md#sparky-web-platform-engineer"
     },
     {
       "lines": [
-        106,
-        113
+        105,
+        112
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Agent-Directory.md#kenya-ios-platform-engineer"
     },
     {
       "lines": [
-        114,
-        121
+        113,
+        120
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Agent-Directory.md#data-android-platform-engineer"
     },
     {
       "lines": [
-        122,
-        133
+        121,
+        132
       ],
       "op": "render",
       "source": ".kiro/steering/Agent-Directory.md#stacy-product-governance-quality-assurance-execution-claims-verification"
     },
     {
       "lines": [
-        134,
-        158
+        133,
+        157
       ],
       "op": "passthrough",
       "source": ".kiro/steering/Agent-Directory.md#cross-domain-routing"
     },
     {
       "lines": [
-        159,
-        161
+        158,
+        160
       ],
       "op": "render",
       "source": ".kiro/steering/Agent-Directory.md#human-lead"

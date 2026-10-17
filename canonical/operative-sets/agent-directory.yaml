@@ -10,7 +10,7 @@ owner: thurgood
 confirmer: stacy
 units:
   "#agent-directory:preamble":
-    canonicalHash: sha256:c3bff3f30d5ad063ef351074a7c76bae1cb51034bd6a6b1b596c261cbef9879e
+    canonicalHash: sha256:4b4d5861dda65a1bb0b16963743c6ed4440c53e33a2f97af82b7d5797e34d977
     items: []
     confirmation: canonical/profiles/consumer/confirmations/agent-directory.md#agent-directory:preamble
   "#agent-tiers":

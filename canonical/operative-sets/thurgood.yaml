@@ -460,7 +460,7 @@ units:
         text: "**Unowned** (involves infrastructure-level doc): Thurgood resolves directly. If domain expertise is needed, Thurgood flags → closest domain agent resolves."
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#resolution-path-for-flagged-inconsistencies
   "#trigger-types":
-    canonicalHash: sha256:50cfe90475442c31152e04f7f6786332694f9c9e0fc85797ab3b4af8189414c0
+    canonicalHash: sha256:b4d484bc616d3215424be7d346e2729bca7e8178564925e0a0590795ba38a961
     items:
       - id: instruments-named
         kind: member
@@ -485,7 +485,7 @@ units:
       - id: cadence-health-check
         kind: step
         label: "The periodic health check"
-        text: "Check Start Up Tasks for the governance health check date. IF it is stale past the monthly cadence, run the governance health check command, review findings and flag issues to domain agents as needed, and commit the updated date in Start Up Tasks."
+        text: "Check the newest record in `.kiro/docs/civitas-health-checks/`. IF it is older than the monthly cadence, run the governance health check command, review findings and flag issues to domain agents as needed, and commit the check's record there."
       - id: return-edge
         kind: step
         label: "Return-edge review"

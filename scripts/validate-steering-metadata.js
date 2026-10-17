@@ -151,7 +151,9 @@ function parseMetadata(content, filename) {
 
   // Extract metadata fields using regex
   const dateMatch = content.match(/\*\*Date\*\*:\s*(.+)/);
-  const lastReviewedMatch = content.match(/\*\*Last Reviewed\*\*:\s*(.+)/);
+  const frontmatterBlock = content.match(/^---\n([\s\S]*?)\n---/);
+  const frontmatterReviewed = frontmatterBlock && frontmatterBlock[1].match(/^lastReviewed:\s*(\S+)\s*$/m);
+  const lastReviewedMatch = frontmatterReviewed || content.match(/\*\*Last Reviewed\*\*:\s*(.+)/);
   const purposeMatch = content.match(/\*\*Purpose\*\*:\s*(.+)/);
   const organizationMatch = content.match(/\*\*Organization\*\*:\s*(.+)/);
   const scopeMatch = content.match(/\*\*Scope\*\*:\s*(.+)/);

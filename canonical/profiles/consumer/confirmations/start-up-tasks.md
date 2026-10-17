@@ -50,19 +50,29 @@ date: 2026-09-27
 ## `#item-civitas-governance-health-check`
 
 confirmer: stacy
-canonicalHash: sha256:81d0a0079ab252f6cd829b654d963401e76ae66dfc084bb0634844041c06552b
+canonicalHash: sha256:431d69a79f5a20615aeea797e290d1ed6f45e7e887e8bb43b4399336e363098a
 items: hc-1, hc-2, hc-3, hc-4
-date: 2026-09-27
+date: 2026-10-17
 
-- **canonicalHash**: `sha256:81d0a0079ab252f6cd829b654d963401e76ae66dfc084bb0634844041c06552b` (body lines 14–19)
+**Re-confirmed 2026-10-17 (Req 11.6.5d).**
+- **What changed**: the cadence marker left the unit. Item 2 now tests the newest record in `.kiro/docs/civitas-health-checks/` instead of a typed date, and its footnote names the committed record as the date. Ballot `.kiro/docs/ballots/2026-10-17-no-volatile-metadata-in-signed-units.md` (RATIFIED, Peter, 2026-10-17, #393) §§ 3.1 and 3.3; authoring commit `0274210a8` (Thurgood, profile author), which also re-authored the texts of `hc-1`, `hc-3` and `hc-4` (signing-act ballot § 2 clause 4: items are authoring). `hc-2` did not change. The canonicalHash moves from `sha256:81d0a007…6c06552b` to the value above.
+- **Re-ruled against the new text**: the same four functions, at the same seams. All four texts are verbatim substrings of the unit, one occurrence each, and together with the title and the `THEN flag:` seam they cover every sentence of the unit.
+  - `hc-1`: the overdue test now reads the newest record's filename date; the duty to flag is unchanged. Its label still says "cadence marker"; labels are never matched (§ 3.3), so I leave it and say so.
+  - `hc-3` now carries two clauses: only the steward runs the check, and the check's committed record is the date. I keep them as one item. Both bind the steward's run, and an agent violates the item by breaking either (running it from a non-steward seat, or typing a date instead of committing a record). Splitting would add an item without changing what a signature must account for, since a rendering that drops either clause cannot be credited with `hc-3` as written.
+  - `hc-4`: the universal duty now names the read (the newest record's filename) instead of "check the date"; it stays wider than `hc-1`'s conditional flag.
+- **The table below is updated to the new text**; the `[2026-09-19]` marker it cited no longer exists in the unit.
+
+**Ruling: CONFIRMED at 4 items** (`hc-1`, `hc-2`, `hc-3`, `hc-4`).
+
+- **canonicalHash**: `sha256:431d69a79f5a20615aeea797e290d1ed6f45e7e887e8bb43b4399336e363098a` (body lines 13–18 at this revision; was `sha256:81d0a007…6c06552b`, body lines 14–19)
 - **Operative items: 4.** `hc-1` … `hc-4`.
 
 | id | Kind | Why it is operative |
 |---|---|---|
-| hc-1 | obligation | Not flagging past the interval violates it. It covers the interval test against the last-check marker `[2026-09-19]`, and the duty to flag. |
+| hc-1 | obligation | Not flagging past the interval violates it. It covers the interval test against the newest health-check record (its `YYYY-MM-DD.md` filename is the date), and the duty to flag. *(Re-stated 2026-10-17; it cited the marker `[2026-09-19]`, which left the unit.)* |
 | hc-2 | route | This is the flag's content. It routes the overdue check to the steward and orders it before proceeding. Flagging the wrong party violates it, and so does proceeding past the flag. |
-| hc-3 | obligation | A non-steward agent running the health check violates it. |
-| hc-4 | obligation | Any agent that skips the date check violates it. This duty is universal, so it is wider than hc-1's conditional flag. |
+| hc-3 | obligation | A non-steward agent running the health check violates it, and so does a steward run that leaves no committed record (the record is the date). |
+| hc-4 | obligation | Any agent that skips reading the newest record violates it. This duty is universal, so it is wider than hc-1's conditional flag. |
 
 **Decomposition note**: hc-1 and hc-2 come from one sentence. I split them at `THEN flag:` because the message carries a separate function: the route to the steward and the before-proceeding order. Each piece is a verbatim substring. Taken together they are the complete sentence, so no remainder is truncated. Splitting makes the denominator larger. That makes clearing harder, never easier, so the split is safe for the denominator attack in 5d.
 
@@ -71,9 +81,15 @@ date: 2026-09-27
 ## `#start-up-tasks:preamble`
 
 confirmer: stacy
-canonicalHash: sha256:0001b5d0d0c61157fefff63a04af1d2f17f3d0031dd04c46d8ead8bab938cea4
+canonicalHash: sha256:9639643088d6d09683cc3c51a8bb0dd559413225f673b7c3c6d690aa8738f2ee
 items: none
-date: 2026-09-29
+date: 2026-10-17
+
+**Re-confirmed 2026-10-17 (Req 11.6.5d).**
+- **What changed**: the body line `**Last Reviewed**: 2026-09-29` left the unit; the stamp now lives in the YAML frontmatter as `lastReviewed:`, which `splitFrontmatter` keeps outside `canonicalHash`. Ballot `.kiro/docs/ballots/2026-10-17-no-volatile-metadata-in-signed-units.md` (RATIFIED, Peter, 2026-10-17, #393) § 3.2; authoring commit `0274210a8` (Thurgood). No other text in the unit changed. The canonicalHash moves from `sha256:0001b5d0d0c61157fefff63a04af1d2f17f3d0031dd04c46d8ead8bab938cea4` to the value above.
+- **Re-ruled**: what remains is the title and the metadata block (`Date`, `Purpose`, `Organization`, `Scope`, `Layer`, `Relevant Tasks`). No agent acts against doc metadata; the Purpose line's end-of-task pointer is orientation. The removed line was never an item. The zero stays declared (5d).
+
+**Ruling: CONFIRMED at 0, declared.**
 
 **Ruling: CONFIRMED at 0, declared.** Doc metadata. Its end-of-task pointer is orientation.
 

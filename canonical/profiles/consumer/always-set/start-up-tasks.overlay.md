@@ -1,9 +1,9 @@
-## @unit #item-civitas-governance-health-check @ sha256:81d0a0079ab252f6cd829b654d963401e76ae66dfc084bb0634844041c06552b
+## @unit #item-civitas-governance-health-check @ sha256:431d69a79f5a20615aeea797e290d1ed6f45e7e887e8bb43b4399336e363098a
 2. **Civitas Governance Health Check**
    
-   IF it's been longer than your team's cadence since the last governance health check (keep its date recorded here), THEN flag: "Governance health check overdue — Thurgood (Civitas steward) should run the health check before proceeding."
+   IF it's been longer than your team's cadence since the newest health-check record, THEN flag: "Governance health check overdue — Thurgood (Civitas steward) should run the health check before proceeding."
    
-   *Only Thurgood runs the health check. All agents check the date and flag if overdue.*
+   *Only Thurgood runs the health check; its committed record is the date. All agents read the newest record and flag if overdue.*
 
 ## @unit #item-critical-this-project-uses-jest-not-vitest @ sha256:f75f87b00a0dafa053d0b2da2229ab451e79ced7621723927163505605e171d0
 4. **CRITICAL: Use your repo's own test runner**

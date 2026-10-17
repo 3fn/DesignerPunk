@@ -2,7 +2,6 @@
 # Start Up Tasks
 
 **Date**: 2025-10-20
-**Last Reviewed**: 2026-09-29
 **Purpose**: Essential pre-task checklist for every task (date check, governance health, Jest commands, test selection, authorization-to-start). End-of-task sequence: see Task Completion Protocol.
 **Organization**: process-standard
 **Scope**: cross-project
@@ -13,9 +12,9 @@
 
 2. **Civitas Governance Health Check**
    
-   IF it's been longer than your team's cadence since the last governance health check (keep its date recorded here), THEN flag: "Governance health check overdue — Thurgood (Civitas steward) should run the health check before proceeding."
+   IF it's been longer than your team's cadence since the newest health-check record, THEN flag: "Governance health check overdue — Thurgood (Civitas steward) should run the health check before proceeding."
    
-   *Only Thurgood runs the health check. All agents check the date and flag if overdue.*
+   *Only Thurgood runs the health check; its committed record is the date. All agents read the newest record and flag if overdue.*
 
 3. **CRITICAL: Wait for User Authorization Before Starting New Tasks**
    

@@ -123,17 +123,19 @@ else
   echo "⚠️  Governance check complete. Issues found — review above."
 fi
 
-# Update governance health check date in Start Up Tasks if --full was used
+# Report the cadence from the newest health-check record (ballot 2026-10-17-no-volatile-metadata-in-signed-units).
+# The record is the date; this script never writes into a steering doc.
 if [ "$FULL_CHECK" = true ]; then
-  STARTUP_FILE=".kiro/steering/start-up-tasks.md"
+  RECORD_DIR=".kiro/docs/civitas-health-checks"
+  NEWEST=$(ls "$RECORD_DIR"/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].md 2>/dev/null | sort | tail -1)
   TODAY=$(date +%Y-%m-%d)
-  if [ -f "$STARTUP_FILE" ]; then
-    sed -i '' "s/\*\*\[.*\]\*\*/\*\*\[$TODAY\]\*\*/" "$STARTUP_FILE" 2>/dev/null || \
-    sed -i "s/\*\*\[.*\]\*\*/\*\*\[$TODAY\]\*\*/" "$STARTUP_FILE" 2>/dev/null || \
-    echo "⚠️  Could not auto-update governance date in Start Up Tasks. Update manually to $TODAY."
-  fi
   echo ""
-  echo "📅 Governance health check date updated to $TODAY in Start Up Tasks."
+  if [ -n "$NEWEST" ]; then
+    echo "📅 Newest health-check record: $(basename "$NEWEST" .md)"
+  else
+    echo "📅 No health-check record yet in $RECORD_DIR."
+  fi
+  echo "   This run's record is $RECORD_DIR/$TODAY.md; committing it is what records the check."
 fi
 
 if [ "$FINDINGS" -eq 0 ]; then

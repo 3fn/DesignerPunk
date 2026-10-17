@@ -214,3 +214,18 @@ const lastReviewedMatch = frontmatterReviewed || content.match(/\*\*Last Reviewe
 ## Errata
 
 - **2026-10-17 (Thurgood)**: § 7 R2's correction-back says no `validate-metadata.ts` exists under `mcp-server/src/indexer/`. That is literally true, but `mcp-server/src/tools/validate-metadata.ts` exists: it is the `validate_metadata` tool's handler, and it reads the stamp through `QueryEngine.validateMetadata` → `DocumentIndexer.validateMetadata` (L471). Stacy's citation was to that file. The design is unaffected, because the identity docs are not served.
+- **2026-10-17 (Thurgood), on execution — the record matched to what shipped** (Stacy, R1 on execution):
+  1. **§ 3.3 step 1.** The authoring commits move no record `canonicalHash`. `verify-signing-chain` reads a moved existing unit hash as the confirmer's object, so every hash move is one of Stacy's acts, as in #285. There were four authoring commits, not one:
+     - `0274210a` — the eight docs, item 2, the `hc-*` texts, the overlay pin and removals, and regeneration. Its `Agent: thurgood` line sits outside git's trailer block; the commit carries no signing act, so the verifier skips it.
+     - `d884d2af` — the consumer health-check overlay re-authored to the record mechanism, because "keep its date recorded here" was a typed date.
+     - `038ba783` — the consumer Thurgood overlay `#trigger-types` line, for the same reason.
+     - `2df26dde` — the canonical Thurgood charter's `cadence-health-check` item, which still committed a date into Start Up Tasks.
+  2. **§ 3.3's act count.** There were twelve C1 acts, not ten. The two beyond the § 4 list are `thurgood.yaml #trigger-types` re-confirmed and its `thurgood.dispositions.yaml` row re-signed. They cover the consumer Thurgood overlay line (`038ba783`) and the charter's L444 `cadence-health-check` item (`2df26dde`). Both were forced by § 2's rule against a typed date. The orchestrator made the call to include them; the authority is Peter's carve-out merge of the execution PR (the #285 2b basis).
+  3. **§ 4, the lock.** `outputs` moves, contrary to "expected unchanged":
+     - The consumer always-set renderings drop the body `Last Reviewed` line (48 files: eight docs, three lanes, each with its sidecar), so consumer copies carry no review date. The consumer lanes write fresh minimal frontmatter.
+     - The `hc` rendering and the consumer Thurgood rendering changed text.
+  4. **§ 3.3, "they drop the record-path clause".** The consumer overlay ended as a re-author to the record mechanism (its text is in `d884d2af`), not a path-only drop. Its removals were re-authored to three entries, all `subtraction-3`: the record-path clause, `the monthly health check`, and `filename`.
+  5. **§ 4, the grant list.** It missed two paths that the `#item-civitas-governance-health-check` re-hash drags with it: the G1 record pin and its expected table.
+     - `tools/agent-generator/__fixtures__/g1-renderings/manifest.yaml`: G′'s pin moved from `81d0a007…` to `431d69a7…`.
+     - `tools/agent-generator/__tests__/triviality.g1.test.ts`: re-derived at the new pin; its expected G′ line holds at `0/4 ROUTES`, so the file is unchanged.
+     - They are named here so that Peter's merge of the execution PR activates them under README rule 8. The reserve `tools/agent-generator/**` line was for a generator change and was not used.

@@ -1,6 +1,7 @@
 ---
 id: designerpunk-systems-overview
 inclusion: always
+lastReviewed: 2026-09-21
 name: DesignerPunk-Systems-Overview
 description: Visual architecture overview of DesignerPunk's three foundational systems — Rosetta (mathematical token system), Stemma (relational component system), and Civitas (governance system). Mermaid diagrams showing token hierarchy, component families, governance infrastructure, pipeline flow, and platform integration.
 ---
@@ -8,7 +9,6 @@ description: Visual architecture overview of DesignerPunk's three foundational s
 # DesignerPunk Systems Overview
 
 **Date**: 2026-05-03
-**Last Reviewed**: 2026-09-21
 **Purpose**: Visual architecture overview of DesignerPunk's three foundational systems
 **Organization**: architecture-overview
 **Scope**: cross-project

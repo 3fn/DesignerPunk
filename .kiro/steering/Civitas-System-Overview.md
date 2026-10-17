@@ -1,12 +1,12 @@
 ---
 id: civitas-system-overview
 inclusion: always
+lastReviewed: 2026-09-21
 ---
 
 # Civitas System Overview
 
 **Date**: 2026-05-03
-**Last Reviewed**: 2026-09-21
 **Purpose**: Define Civitas — the governance layer of DesignerPunk
 **Organization**: process-standard
 **Scope**: cross-project

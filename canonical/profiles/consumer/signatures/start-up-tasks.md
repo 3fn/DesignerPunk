@@ -7,13 +7,29 @@
 ## `#item-civitas-governance-health-check`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-10-17
 row: `canonical/profiles/consumer/always-set/start-up-tasks.dispositions.yaml` · body · `#item-civitas-governance-health-check` (re-pointed; ROUTED)
-canonicalHash: sha256:81d0a0079ab252f6cd829b654d963401e76ae66dfc084bb0634844041c06552b
-renderedHash: sha256:31182e31459fb9f012ab3acadf77fa2d5c7ccb72e909a95e32fd51d3e16d0afe
+canonicalHash: sha256:431d69a79f5a20615aeea797e290d1ed6f45e7e887e8bb43b4399336e363098a
+renderedHash: sha256:c84daa37ea6b80ee038f8a8ae11571746f3586b266ccb336cd163176df2792b0
 verdict: assent — surviving 4/4
 
-The exemplar G/G′ unit. `hc-1` survives re-grounded: the team's cadence replaces ">30 days", and the date is kept recorded. `hc-2` survives without "monthly". The last two are verbatim.
+**Re-signed 2026-10-17** (prior signature: assent 4/4, 2026-09-29, against `sha256:81d0a007…6c06552b`). Stale because the canonical unit and its rendering both moved: ballot `2026-10-17-no-volatile-metadata-in-signed-units` (RATIFIED, Peter, 2026-10-17, #393) §§ 3.1 and 3.3 replaced the typed marker with a read of the newest health-check record; Thurgood re-authored the overlay and the row's removals (`0274210a8`, `d884d2af0`). renderedHash recomputed from `canonical/_consumer-output/` at this revision with the generator's own `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`.
+- **Judged against**: the rendered unit at this revision — *"IF it's been longer than your team's cadence since the newest health-check record, THEN flag: "Governance health check overdue — Thurgood (Civitas steward) should run the health check before proceeding." … Only Thurgood runs the health check; its committed record is the date. All agents read the newest record and flag if overdue."* — and the set re-confirmed at 4 (`bb48fe2fb`).
+- **`hc-1` survives, re-grounded**: the overdue test against the newest record, with the team's cadence in place of "30 days". The record-directory path and its `YYYY-MM-DD.md` naming are removed (`subtraction-3`): a consumer repo has no `.kiro/docs/civitas-health-checks/`.
+- **`hc-2` survives** without "monthly", as before.
+- **`hc-3` survives verbatim, both clauses**: the steward-only run and "its committed record is the date".
+- **`hc-4` survives**: "read the newest record and flag if overdue" states the universal read-and-flag duty. "filename" is removed (`subtraction-3`); with no naming convention rendered, how a record carries its date is the team's, and the duty does not depend on it.
+- **Observation, not a refusal**: the prior overlay told the consumer where the date lived ("keep its date recorded here"). The new one names a record but not its location, so a consumer team must decide where its health-check records live before an agent can perform the read. That is the ballot's surviving counter-argument (2) as it reaches consumers. Every item is still stated, so the rule credits all four; the disposition is the right one, since any concrete location would be this repo's.
+
+**Prior signature record (superseded, 2026-09-29)**:
+
+> signer: stacy
+> date: 2026-09-29
+> canonicalHash: sha256:81d0a0079ab252f6cd829b654d963401e76ae66dfc084bb0634844041c06552b
+> renderedHash: sha256:31182e31459fb9f012ab3acadf77fa2d5c7ccb72e909a95e32fd51d3e16d0afe
+> verdict: assent — surviving 4/4
+>
+> The exemplar G/G′ unit. `hc-1` survives re-grounded: the team's cadence replaces ">30 days", and the date is kept recorded. `hc-2` survives without "monthly". The last two are verbatim.
 
 ## `#item-critical-this-project-uses-jest-not-vitest`
 

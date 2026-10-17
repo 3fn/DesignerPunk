@@ -100,7 +100,7 @@ Thurgood sets the standards. Ada and Lina implement to those standards.
 - **Cross-domain** (docs owned by different agents disagree): Thurgood flags → both domain agents review → they agree on resolution. If they disagree, your human lead arbitrates.
 - **Unowned** (involves infrastructure-level doc): Thurgood resolves directly. If domain expertise is needed, Thurgood flags → closest domain agent resolves.
 
-## @unit #trigger-types @ sha256:50cfe90475442c31152e04f7f6786332694f9c9e0fc85797ab3b4af8189414c0
+## @unit #trigger-types @ sha256:b4d484bc616d3215424be7d346e2729bca7e8178564925e0a0590795ba38a961
 ### Trigger Types
 
 Ground truth for this stewardship is COMPUTED at audit time by your repo's own checks — never served from a standing snapshot.
@@ -111,7 +111,7 @@ Ground truth for this stewardship is COMPUTED at audit time by your repo's own c
 - Post-agent-prompt-modification: verify prompt-to-doc alignment and agent-directory consistency.
 
 **Cadence-driven** (your team's periodic health check):
-- When the recorded health-check date is stale past your team's cadence, run the health check, review the findings, flag issues to domain agents as needed, and record the new date.
+- When the newest health-check record is older than your team's cadence, run the health check, review the findings, flag issues to domain agents as needed, and commit the check's record.
 - **Return-edge review**: examine recurring check-failure patterns for education-implicating signals — does a failure cluster indicate the docs teach the wrong thing? Flag findings to the owning domain agent. This is the system-side half of the loop; Stacy's Lessons Synthesis Review is the product-side half.
 - **LIVENESS** (the claims-audit lapse detector — **a QUERY over the owed-set, never a recollection**). **Meta-item only**: **read for records, never for verdicts** — you check whether passes happened and left records; you never re-decide what a pass concluded. Two reads:
   1. **"Is the closeout-owed set empty?"** — run Stacy's owed-set query and read its output.
