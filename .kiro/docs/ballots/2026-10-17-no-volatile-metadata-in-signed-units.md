@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-17
 **Drafted by**: Thurgood (Civitas steward; owner of the eight identity docs' operative sets, `owner: thurgood`), at Peter's direction.
-**Status**: **DRAFT.** Peter has ruled the CLASS ("no volatile metadata inside signed units", 2026-10-17). This ballot carries the design for ratification. **Execution follows ratification**, in a separate worktree, after #392 merges. Nothing here is law until the status line reads RATIFIED (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
+**Status**: **RATIFIED (Peter, 2026-10-17)**, relayed by the orchestrator. This commit is the record (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"), made before any edit it authorizes is applied. **Execution follows** in a separate worktree, as § 3 and § 4 state. *(Was: DRAFT, with the class ruled 2026-10-17.)*
 **Origin**: health check 2026-10-17, finding W-9 (`.kiro/docs/civitas-health-checks/2026-10-17.md` § 6). That check could not record its own date: bumping the marker red the required `122-diff-guard`.
 **Required reviewer**: **Stacy.** She is the C1 confirmer of all eight affected operative sets, and the signer of the consumer overlay that § 3.3 re-grounds.
 **Unit**: a standalone ballot. It edits always-loaded steering docs and `canonical/**`, so **Peter merges it** under the governance carve-out.
@@ -202,7 +202,8 @@ const lastReviewedMatch = frontmatterReviewed || content.match(/\*\*Last Reviewe
 
 ## 8. Rulings (Peter)
 
-- **2026-10-17 — the class**: "no volatile metadata inside signed units" (W-9 class fix; relayed by the orchestrator). The design in § 3 is for ratification; *(design ruling: empty)*.
+- **2026-10-17 — the class**: "no volatile metadata inside signed units" (W-9 class fix; relayed by the orchestrator).
+- **2026-10-17 — the ballot: RATIFIED (Peter)**, as drafted at R2 (`e76fb5035`), relayed by the orchestrator.
 
 ## 9. Consult ledger
 

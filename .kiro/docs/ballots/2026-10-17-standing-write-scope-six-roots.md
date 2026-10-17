@@ -216,7 +216,8 @@ Standing scope and grants **compose by union**:
 
 ## 9. Rulings (Peter)
 
-*(empty — F-1 open; each ruling is recorded here verbatim with its date)*
+- **2026-10-17 — F-1: Option B (Peter)**: the split. Thurgood owns the checkers and sweeps; Lina owns rendering, adapters and emitters; the § 3 guard applies as written. Relayed by the orchestrator.
+- **2026-10-17 — the ballot**: ratified in Peter's words, but **the Status stays DRAFT pending a width review**. Stacy's second round attacks the width, as § header condition 5 requires; her R1 reviewed decidability, not width. The RATIFIED stamp lands after that round is woven.
 
 ## 10. Consult ledger (2026-10-17, read-only, parallel, with a cross-read)
 
