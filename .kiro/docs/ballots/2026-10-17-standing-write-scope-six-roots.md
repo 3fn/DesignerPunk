@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-17
 **Drafted by**: Thurgood (Civitas steward), at Peter's direction, after a three-seat consult with a cross-read (ledger, § 10).
-**Status**: **DRAFT.** Nothing here is law until Peter ratifies it (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"). **One fork is open (§ 4, F-1). It waits for Peter's answer; there is no default.** This follows Peter's RL-14 rule: a ballot that carries a fork states it and waits, and is never "adopted unless amended".
+**Status**: **RATIFIED (Peter, 2026-10-17)**, relayed by the orchestrator. F-1 is Option B, and Stacy's R2 width addition is approved (§ 9). This commit is the record (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"), made before any edit site in § 5 is applied. *(Was: DRAFT, one fork open, then held pending the width review.)*
 **Origin**: the 2026-10-17 health check's findings W-5, W-6 and W-7 (`.kiro/docs/civitas-health-checks/2026-10-17.md` § 6), and the issue `.kiro/issues/2026-10-02-issues-dir-write-scope-gap-and-grant-advisories.md`, whose trigger fired at that walk.
 **Required reviewer**: **Stacy**, with the mandate to **attack the width.** She audits the extent afterwards, so her incentive runs toward narrow (the precedent of ballot `2026-09-27-ci-regime-standing-scope`).
 **Unit**: a standalone record-first ballot. It edits charters (`canonical/agents/**`) and `.kiro/issues/README.md`, so **Peter merges it** under the governance carve-out.
@@ -251,7 +251,8 @@ Standing scope and grants **compose by union**:
 ## 9. Rulings (Peter)
 
 - **2026-10-17 — F-1: Option B (Peter)**: the split. Thurgood owns the checkers and sweeps; Lina owns rendering, adapters and emitters; the § 3 guard applies as written. Relayed by the orchestrator.
-- **2026-10-17 — the ballot**: ratified in Peter's words, but **the Status stays DRAFT pending a width review**. Stacy's second round attacks the width, as § header condition 5 requires; her R1 reviewed decidability, not width. The RATIFIED stamp lands after that round is woven.
+- **2026-10-17 — the ballot**: ratified in Peter's words, with the Status held DRAFT pending a width review (Stacy R2, § 8).
+- **2026-10-17 — Stacy's R2 recommendations APPROVED (Peter)**: the § 3 item 4 instrument-change ARMING trigger, `derive-install-doc.ts` shared with Ada (consulted), and the legacy-hooks retirement trigger. **Ballot RATIFIED (Peter, 2026-10-17).**
 
 ## 10. Consult ledger (2026-10-17, read-only, parallel, with a cross-read)
 

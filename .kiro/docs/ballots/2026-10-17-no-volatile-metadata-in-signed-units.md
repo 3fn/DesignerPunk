@@ -210,3 +210,7 @@ const lastReviewedMatch = frontmatterReviewed || content.match(/\*\*Last Reviewe
 - **Peter**, 2026-10-17: ruled the W-9 class (§ 8).
 - **Thurgood**, 2026-10-17 (the design consult, read-only): marker → newest record; `Last Reviewed` moved to frontmatter, not frozen; scripts read frontmatter and stop auto-writing; the generator unchanged.
 - **Stacy R1**, 2026-10-17 (§ 7).
+
+## Errata
+
+- **2026-10-17 (Thurgood)**: § 7 R2's correction-back says no `validate-metadata.ts` exists under `mcp-server/src/indexer/`. That is literally true, but `mcp-server/src/tools/validate-metadata.ts` exists: it is the `validate_metadata` tool's handler, and it reads the stamp through `QueryEngine.validateMetadata` → `DocumentIndexer.validateMetadata` (L471). Stacy's citation was to that file. The design is unaffected, because the identity docs are not served.
