@@ -1,7 +1,7 @@
 # Ballot Measure: Standing write scope for six roots no charter owns
 
 **Date**: 2026-10-17
-**Drafted by**: Thurgood (Civitas steward), at Peter's direction, after a three-seat consult with a cross-read (ledger, § 8).
+**Drafted by**: Thurgood (Civitas steward), at Peter's direction, after a three-seat consult with a cross-read (ledger, § 10).
 **Status**: **DRAFT.** Nothing here is law until Peter ratifies it (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"). **One fork is open (§ 4, F-1). It waits for Peter's answer; there is no default.** This follows Peter's RL-14 rule: a ballot that carries a fork states it and waits, and is never "adopted unless amended".
 **Origin**: the 2026-10-17 health check's findings W-5, W-6 and W-7 (`.kiro/docs/civitas-health-checks/2026-10-17.md` § 6), and the issue `.kiro/issues/2026-10-02-issues-dir-write-scope-gap-and-grant-advisories.md`, whose trigger fired at that walk.
 **Required reviewer**: **Stacy**, with the mandate to **attack the width.** She audits the extent afterwards, so her incentive runs toward narrow (the precedent of ballot `2026-09-27-ci-regime-standing-scope`).
@@ -47,7 +47,7 @@ Grants stay right for one-off work. These are **standing** surfaces with standin
 
 ### 2.2 `scripts/**` → split BY FILE (no seat takes the root)
 
-Tests and fixtures follow the file they exercise: `scripts/__tests__/**`, `scripts/__fixtures__/**`, `scripts/__bites__/**`.
+Tests and fixtures follow the file they exercise: `scripts/__tests__/**`, `scripts/__fixtures__/**`, `scripts/__bites__/**`. That mapping is a judgment, so it is made decidable at the point of edit: **the PR that adds or edits a test, fixture or bite names, in its body, the file it exercises**, and the owner of that file is the owner of the edit. *(Stacy R1, § 8.)*
 
 **Ada** (token, type and platform generation; build; packaging; release instruments):
 - `generate-platform-tokens.ts`, `generate-token-types.ts`, `verify-opacity-types.ts`
@@ -76,11 +76,18 @@ Tests and fixtures follow the file they exercise: `scripts/__tests__/**`, `scrip
 
 ### 2.3 `mcp-server/src/**` → **Thurgood**
 
-This is the docs MCP: indexer, query engine and matcher. **Shared with Ada**: packaging and module resolution (`mcp-server/package.json`, `tsconfig.json`, the build). **W-7** (the docs-MCP logs-dir fix) follows this root, so its fix owner is Thurgood from ratification.
+This is the docs MCP: indexer, query engine and matcher, with `mcp-server/src/**/__tests__/**`.
+
+The rest of `mcp-server/`, by path:
+- **Ada, with Thurgood consulted** (packaging and module resolution): `mcp-server/package.json`, `mcp-server/package-lock.json`, `mcp-server/tsconfig.json`, `mcp-server/jest.config.js`.
+- **Thurgood**: `mcp-server/tests/**`, `mcp-server/docs/**`, `mcp-server/README.md`.
+- **No seat**: `mcp-server/logs/` is runtime output, gitignored and never committed, so it is not a write path. Removing the cwd-relative write that creates it is W-7's fix.
+
+**W-7** (the docs-MCP logs-dir fix, in `mcp-server/src/index.ts`) follows `mcp-server/src/**`, so its fix owner is Thurgood from ratification.
 
 ### 2.4 `.kiro/hooks/**` → **Thurgood**, for the completion tooling
 
-- **Thurgood**: `complete-task.sh` (the CI regime and completion tooling, ballot B-CI M3), `README.md`, and the legacy completion scripts (`commit-task*.sh`, `task-completion-commit.sh`, `organize-*`, `archive/**`) **[author's addition: legacy files, owned so someone can retire them]**.
+- **Thurgood**: `complete-task.sh` (the CI regime and completion tooling, ballot B-CI M3), `README.md`, `task-completion-agent-hook.md` (its companion doc; unlisted at draft, Stacy R1), and the legacy completion scripts (`commit-task.sh`, `commit-task-organized.sh`, `task-completion-commit.sh`, `organize-after-completion.kiro.hook`, `organize-by-metadata.sh`, `archive/**`) **[author's addition: legacy files, owned so someone can retire them]**.
 - **`RELEASE-FLOW.md` stays Peter-merged law, with no seat scope.**
 - **[author's addition — owners confirm]**: each seat owns its own `<seat>-*.kiro.hook` files (`ada-*`, `lina-*`, `thurgood-*`).
 
@@ -99,7 +106,15 @@ A glob cannot say "files whose `**Owner**:` is me", so the scope is granted whol
 ## 3. The guard (identical under both F-1 options)
 
 1. **Scope moves only by a `canonical/agents/**` edit**, Peter-merged under the carve-out, with every affected seat consulted and the consult recorded in the PR's `**Consulted**:` line. **Owning the generator never authorizes a change to any seat's write scope.**
-2. **A named sweep under `122-diff-guard`** asserts that each rendered write-scope line equals its canonical `writeScope` declaration byte for byte, for every seat and every target (CC and Kiro, steward and consumer legs). **Stacy specifies its falsification fixtures**, including an emitter edit that injects one path and one that drops one; both must red. It is built after ratification by the F-1 owner of `sweeps/**` (Thurgood under both options), and registered `proposed` until the fixtures pass on the CI path.
+2. **A named sweep under `122-diff-guard`** compares a **projection**, not raw text. The targets render scope differently:
+   - the CC steward agent renders one sentence;
+   - the CC consumer profile renders one span per glob;
+   - Kiro renders its own form.
+
+   **The projection**: for each seat and each target (CC steward, CC consumer, Kiro), the **ordered list of globs extracted from that target's `writeScope` spans** must equal the seat's canonical `writeScope` array (`canonical/agents/<seat>.md` frontmatter), element for element and in order.
+   - **Stacy specifies the falsification fixtures** on that projection: an injected glob, a dropped glob, a reordered pair, and a cross-seat swap (seat X rendered with seat Y's list). All four must red.
+   - It is built after ratification by the owner of `sweeps/**` (Thurgood under both F-1 options), and registered `proposed` until the fixtures pass on the CI path.
+   - *(Rewritten at R2: the draft's "equals byte for byte" had no referent, because no two targets render the same bytes. Stacy R1.)*
 3. **Disclosure**: any PR that moves the `outputs` hash in `canonical/generated.lock` says so in its body, with the before and after hashes.
 
 **Why the existing pieces are not enough**:
@@ -111,18 +126,39 @@ A glob cannot say "files whose `**Owner**:` is me", so the scope is granted whol
 
 **Option A: Thurgood primary on all of `tools/agent-generator/**`; Lina secondary on consumer-lane code.**
 - **Thurgood**: everything, emitters included.
-- **Lina, secondary** (consulted, may author under a `tasks.md` row): the consumer-lane code. That is `consumer-entry.ts`, `consumer-profile.ts`, the consumer legs of `adapters/**`, and `regrounding/**`'s consumer overlays.
+- **Lina, secondary** (consulted on every change, and may author under a `tasks.md` row), on **whole files** so the scope is decidable:
+  - `consumer-entry.ts`, `consumer-profile.ts`, `adapters/cc.ts`, `adapters/kiro.ts`, `adapters/index.ts`;
+  - `regrounding/derivation.ts`, `regrounding/dispositions.ts`, `regrounding/overlay.ts`;
+  - and their tests.
+
+  *(R2: the draft's "consumer legs of `adapters/**`" was not file-decidable, because `adapters/cc.ts` renders both legs. Stacy R1.)*
 - **For**: one owner means fewer seams; the conflict is handled by § 3.
 - **Against**: verifier and renderer are the same seat. § 3 makes rendering checkable, but the person who writes the check also writes what it checks.
 
 **Option B: split, so the verifier is not the renderer.**
-- **Thurgood (checkers and sweeps)**: `diff-guard.ts`, `canonical-vs-truth.ts`, `coverage-map.ts`, `sweeps/**`, `verify-gate-registration.sh`, `workflow-rules-guard.ts`, `child-process-guard.ts`, and the signing-chain verification in `regrounding/**`.
-- **Lina (rendering, adapters, emitters)**: `render.ts`, `adapters/**`, `compose.ts`, `derive.ts`, `generate.ts`, `pipeline.ts`, `skills.ts`, `consumer-entry.ts`, `consumer-profile.ts`, `attribution.ts`, `spans.ts`, `registry.ts`, `registry-manifest.ts`, `resolve.ts`, `resolve-stdio.ts`, `workflow-rules-accessor.ts`.
-- **Shared core** (`schema.ts`, `partition.ts`, `frontmatter.ts`, `canonical-json.ts`, `source.ts`): Lina primary, Thurgood consulted on any change, because checkers read these too. **[author's addition — Peter rules]**
+Every file in the tree is assigned (R2; Stacy R1 found the draft left about twenty unassigned).
+
+- **Thurgood (checkers and sweeps)**:
+  - `diff-guard.ts`, `canonical-vs-truth.ts`, `coverage-map.ts`, `sweeps/**`, `verify-gate-registration.sh`, `workflow-rules-guard.ts`, `child-process-guard.ts`;
+  - `regrounding/verify-signing-chain.ts`, `regrounding/signatures.ts`, `regrounding/c1.ts`, `regrounding/freshness.ts`, `regrounding/check-catalog.ts`, `regrounding/triviality.ts`;
+  - `__fixtures__/stale-unit/**`.
+- **Lina (rendering, adapters, emitters)**:
+  - `render.ts`, `adapters/**`, `compose.ts`, `derive.ts`, `generate.ts`, `pipeline.ts`, `skills.ts`, `consumer-entry.ts`, `consumer-profile.ts`, `attribution.ts`, `spans.ts`, `registry.ts`, `registry-manifest.ts`, `resolve.ts`, `resolve-stdio.ts`, `workflow-rules-accessor.ts`;
+  - `regrounding/derivation.ts`, `regrounding/dispositions.ts`, `regrounding/overlay.ts`;
+  - `__fixtures__/g1-renderings/**`, `__fixtures__/semantics-guard/**`.
+- **Shared core: Lina primary, Thurgood consulted on any change**, because checkers read these too:
+  - `schema.ts`, `partition.ts`, `frontmatter.ts`, `canonical-json.ts`, `source.ts`;
+  - `regrounding/hash.ts`, `regrounding/operative-sets.ts`;
+  - `__fixtures__/golden-partition/**`, `jest.config.js`, `tsconfig.json`.
+  - **[author's addition — Peter rules]**
+- **`__tests__/**`**: a test file follows the source module it imports (the first `../<module>` import); the PR names the exercised file (§ 2.2's rule). Exceptions, by file:
+  - `entry-tree.test.ts` and `grain-guard.two-sided.test.ts` → shared core;
+  - `semantics-guard.test.ts`, `semantics-guard.fixture.test.ts`, `g1-renderings.provenance.test.ts` and `survivor-sourced.ts` → Lina;
+  - `__tests__/fixtures/**` follows the test that reads it.
 - **For** (Lina's argument): the seat that verifies the charters is not the seat that writes them.
 - **Against**: about twenty files sit on a seam, and a change to the shared core needs two seats.
 
-**What the author does not do here**: pick. Both seats accept § 3 under either option. Lina argued for B, and the author took A in the cross-read; both readings are on record (§ 8).
+**What the author does not do here**: pick. Both seats accept § 3 under either option. Lina argued for B, and the author took A in the cross-read; both readings are on record (§ 10).
 
 ## 5. Edit sites (applied after ratification, exactly as ruled)
 
@@ -137,7 +173,14 @@ A glob cannot say "files whose `**Owner**:` is me", so the scope is granted whol
 
 **Out of scope**: governance-law paths (`governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**`); `RELEASE-FLOW.md`; `.github/**` beyond `lane-timing.yml`'s existing standing scope. All stay Peter-merged or ballot-only.
 
-## 6. Counter-arguments (the author's, after fold-back)
+## 6. Composition with existing grants (added at R2; Stacy R1)
+
+Standing scope and grants **compose by union**:
+- A `tasks.md` row grant (ballot `2026-09-26-tasks-row-write-scope-grant`) and an issue-row grant (README rule 8) are **additive** to any seat's standing scope. They **never narrow** it.
+- A grant over a path that this ballot places in **another seat's** standing scope **names that seat as consulted**, in the grant record and in the fixing PR's `**Consulted**:` line. The owning seat's consult is recorded, never assumed.
+- An edit outside the union of standing scope and active grants is a claims-pass finding, as today.
+
+## 7. Counter-arguments (the author's, after fold-back)
 
 - **Folded in**:
   - "The map grants roots, not files" → `scripts/` is now by file.
@@ -148,11 +191,34 @@ A glob cannot say "files whose `**Owner**:` is me", so the scope is granted whol
   - **(2) Behavioral enforcement.** Write scope in this runtime is behavioral (CC has no per-agent path field). The § 3 sweep checks rendering, not behaviour. A seat writing outside its scope is still caught only at claims passes.
   - **(3) The README rule is honour-based**, with the same limit as (2).
 
-## 7. Review rounds
+## 8. Review rounds
 
-*(empty — Stacy R1 owed)*
+#### [STACY R1] — 2026-10-17 — REVIEW WITH NOTES
+- PASS: `scripts/` by-file list complete against the 52-entry tree. NOTE: "tests follow the file they exercise" is a judgment mapping; the PR should name the exercised file.
+- NOTE: `.kiro/hooks/task-completion-agent-hook.md` is unlisted.
+- FAIL (decidability, § 4): Option B leaves `__tests__/**`, `__fixtures__/**`, `jest.config.js`, `tsconfig.json`, `mcp-server/logs` and ten `regrounding/*.ts` unassigned; Option A's "consumer legs of `adapters/**`" is not file-decidable.
+- PASS: fork stated, both options, no pick; the RL-14 reading matches release-4 rulings row 28.
+- FAIL (§ 3.2): "byte for byte" has no referent; state the projection. She will write fixtures for inject, drop, reorder and cross-seat swap.
+- FAIL (absent): no composition clause with the tasks-row grant and README rule 8.
+- NOTE: PR body wording (hers to fix).
+- Both ballots: add a rulings slot.
 
-## 8. Consult ledger (2026-10-17, read-only, parallel, with a cross-read)
+#### [THURGOOD R2] — incorporated, woven
+- Tests-follow rule → § 2.2 (the PR names the exercised file); the same rule is reused in § 4 B.
+- `task-completion-agent-hook.md` → § 2.4, Thurgood; the legacy list is enumerated by file.
+- Decidability FAIL:
+  - Option A's Lina scope is now whole files (§ 4 A).
+  - Option B assigns every file in the tree, including tests (import rule plus a by-file exception list), fixtures, `jest.config.js` and `tsconfig.json` (shared core), and all eleven `regrounding/*.ts`.
+  - `mcp-server/` outside `src/` is assigned by path in § 2.3, and `mcp-server/logs/` is named a non-write-path.
+- Projection FAIL → § 3.2 rewritten around the ordered-glob projection, with her four fixture classes named.
+- Composition FAIL → new § 6.
+- Rulings slot → § 9.
+
+## 9. Rulings (Peter)
+
+*(empty — F-1 open; each ruling is recorded here verbatim with its date)*
+
+## 10. Consult ledger (2026-10-17, read-only, parallel, with a cross-read)
 
 - **Thurgood ×2**:
   - R1: claimed `.kiro/issues/**` (steward), `scripts/` mine-by-file, `mcp-server/src/**`, generator shared (checkers mine, rendering Lina's), `complete-task.sh`; refused `src/cli/**` (read as Lina's).

@@ -56,29 +56,86 @@ Two kinds of text that change on a schedule sit inside units whose `canonicalHas
 
 ### 3.2 `Last Reviewed`: MOVED to frontmatter, not frozen
 
-**Edit**: in each of the eight docs, the body line `**Last Reviewed**: <date>` is removed and `lastReviewed: <same date>` is added to the existing YAML frontmatter (all eight already open with `---`, `id:` and `inclusion:`).
+**Edit**: in each of the eight docs, the body line `**Last Reviewed**: <date>` is removed and a `lastReviewed:` line is added to the existing YAML frontmatter, after `inclusion:` (all eight already open with `---`, `id:` and `inclusion:`). The before → after, per doc (read at `ea438efa6`):
+
+| Doc | Body line removed (before) | Frontmatter line added (after) |
+|---|---|---|
+| `AI-Collaboration-Principles.md` | `**Last Reviewed**: 2026-08-02` | `lastReviewed: 2026-08-02` |
+| `Agent-Directory.md` | `**Last Reviewed**: 2026-09-28` | `lastReviewed: 2026-09-28` |
+| `Civitas-System-Overview.md` | `**Last Reviewed**: 2026-09-21` | `lastReviewed: 2026-09-21` |
+| `core-goals.md` | `**Last Reviewed**: 2026-07-05` | `lastReviewed: 2026-07-05` |
+| `DesignerPunk-Systems-Overview.md` | `**Last Reviewed**: 2026-09-21` | `lastReviewed: 2026-09-21` |
+| `Spec-Feedback-Protocol.md` | `**Last Reviewed**: 2026-03-24` | **`lastReviewed: 2026-10-17`** (the stamp #392 held; verified clean that day) |
+| `start-up-tasks.md` | `**Last Reviewed**: 2026-09-29` | `lastReviewed: 2026-09-29` |
+| `Task-Completion-Protocol.md` | `**Last Reviewed**: 2026-09-29` | `lastReviewed: 2026-09-29` |
 
 **Why move rather than freeze**:
 - Freezing kills a live signal: the stale-review warning would fire forever or have to be suppressed.
 - Moving keeps the per-doc review date where people and the validators read it.
 - Moving needs **no generator change**: `tools/agent-generator/frontmatter.ts` `splitFrontmatter` already hashes the body only (`canonicalHash = sha256(partition(splitFrontmatter(src).body))`, per the operative-set headers).
 
-**Surviving counter-argument**: the always-loaded docs now carry their review date in frontmatter. That is less visible to a reader than a bold body line, and it is a second metadata location for the same field: served docs keep the body form, because `mcp-server`'s `metadata-parser.ts` reads `Last Reviewed` from the body and lists it as required. The two forms are reconciled only in the validators (§ 3.4).
+**Surviving counter-argument**: the always-loaded docs now carry their review date in frontmatter. That is less visible to a reader than a bold body line, and it is a second metadata location for the same field. Served docs keep the body form, and the readers of that form are (corrected at R2):
+- `mcp-server/src/indexer/metadata-parser.ts` L54 reads `Last Reviewed` from the body as an **optional** field (`lastReviewed?: string`, L12).
+- The docs MCP's `validate_metadata` tool (`DocumentIndexer.validateMetadata`, `mcp-server/src/indexer/DocumentIndexer.ts` L471) lists `lastReviewed` among its required fields.
+- `scripts/validate-steering-metadata.js` L191 requires it.
+
+None of these reach the eight identity docs, which are not served. The two forms are reconciled only in the two steering scripts (§ 3.4).
 
 ### 3.3 One-time re-signing (the cost of the fix, paid once)
 
 - **Eight `#<doc>:preamble` units** re-hash in `canonical/operative-sets/{ai-collaboration-principles,agent-directory,civitas-system-overview,core-goals,designerpunk-systems-overview,spec-feedback-protocol,start-up-tasks,task-completion-protocol}.yaml`. **Stacy re-confirms** each in `canonical/profiles/consumer/confirmations/<doc>.md`.
 - **`#item-civitas-governance-health-check`**:
-  - `hc-1`'s text changes to the new obligation's verbatim text (author: Thurgood, the profile author); `hc-4`'s text follows the new footnote.
+  - Item text after (author: Thurgood, the profile author; each a verbatim substring of the new unit, per the record's rule):
+    - `hc-1` before: `IF it's been >30 days since last governance health check **[2026-09-19]**, THEN flag:` → after: ``IF the newest record in `.kiro/docs/civitas-health-checks/` is more than 30 days old (each record is named `YYYY-MM-DD.md`, the date its check ran), THEN flag:``
+    - `hc-2` unchanged.
+    - `hc-3` before: `Only Thurgood runs the health check.` → after: `Only Thurgood runs the health check; its committed record is the date.`
+    - `hc-4` before: `All agents check the date and flag if overdue.` → after: `All agents read the newest record's filename and flag if overdue.`
+    - `hc-1` keeps its label `overdue test on the cadence marker`. The label is never matched, so it can stay.
   - Stacy re-confirms.
   - The consumer overlay (`canonical/profiles/consumer/always-set/start-up-tasks.overlay.md`) and its dispositions row are re-authored. They drop the record-path clause, since a consumer has no `.kiro/docs/civitas-health-checks/`, so this follows the existing "re-pointed" disposition.
   - Stacy re-signs (`canonical/profiles/consumer/signatures/start-up-tasks.md`).
 - These are C1 signing and confirming acts, so they **need no grant** (ballot `2026-10-01-signing-act-chain` M1). Authoring the item text and the overlay is Thurgood's, as profile author.
+- **Commit sequencing, so `verify-signing-chain` links 2 and 3 hold** (Stacy R1; link 1 holds as drafted):
+  1. **One authoring commit first** (Thurgood): the eight docs, the eight operative-set records (preamble `canonicalHash` and the `hc-*` texts), and the overlay and dispositions re-author.
+  2. **Then one confined commit per C1 act**, each touching only that act's confirmation or signature sub-object and its sheet section, with an `Agent: stacy` trailer: eight preamble re-confirmations, one `#item-civitas-governance-health-check` re-confirmation, and one re-sign of `signatures/start-up-tasks.md`.
+  3. **Then** the lock refresh (a green full diff-guard run) and the scripts commit.
+- No commit mixes authoring with a C1 act, and no C1 act is folded into another.
 
 ### 3.4 The scripts stop writing and start reading
 
-- **`scripts/governance-check.sh`**: delete L127–L137 (the auto-write block). In its place, print the newest record's filename date and its age in days, and exit non-zero if the run has no record for today **[author's addition — Peter rules]**.
-- **`scripts/detect-stale-metadata.js`** and **`scripts/validate-steering-metadata.js`**: read `lastReviewed` from YAML frontmatter when present, and the body `**Last Reviewed**` otherwise. They still warn when neither exists.
+- **`scripts/governance-check.sh`**: the block at L127–L137 (`# Update governance health check date in Start Up Tasks if --full was used` through its closing `fi`) is **replaced** by:
+
+```bash
+# Report the cadence from the newest health-check record (ballot 2026-10-17-no-volatile-metadata-in-signed-units).
+# The record is the date; this script never writes into a steering doc.
+if [ "$FULL_CHECK" = true ]; then
+  RECORD_DIR=".kiro/docs/civitas-health-checks"
+  NEWEST=$(ls "$RECORD_DIR"/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].md 2>/dev/null | sort | tail -1)
+  TODAY=$(date +%Y-%m-%d)
+  echo ""
+  if [ -n "$NEWEST" ]; then
+    echo "📅 Newest health-check record: $(basename "$NEWEST" .md)"
+  else
+    echo "📅 No health-check record yet in $RECORD_DIR."
+  fi
+  echo "   This run's record is $RECORD_DIR/$TODAY.md; committing it is what records the check."
+fi
+```
+
+  - It is **scoped to `--full`**, so audit-time runs print nothing new (Stacy R1).
+  - **The draft's exit-non-zero addition is WITHDRAWN at R2.** The record is written after the run, from its output, so a "no record for today" exit would red every `--full` run. The printed line replaces it.
+- **`scripts/detect-stale-metadata.js`** L24 and **`scripts/validate-steering-metadata.js`** L154. The same one-line before is replaced by the same three-line after in each:
+  - Before: `const lastReviewedMatch = content.match(/\*\*Last Reviewed\*\*:\s*(.+)/);`
+  - After:
+
+```js
+const frontmatterBlock = content.match(/^---\n([\s\S]*?)\n---/);
+const frontmatterReviewed = frontmatterBlock && frontmatterBlock[1].match(/^lastReviewed:\s*(\S+)\s*$/m);
+const lastReviewedMatch = frontmatterReviewed || content.match(/\*\*Last Reviewed\*\*:\s*(.+)/);
+```
+
+  - `lastReviewedMatch[1]` is the date in both forms, so no downstream line changes.
+  - The required-field check at `validate-steering-metadata.js` L191 is untouched: it reads the parsed `lastReviewed`, now satisfied by either form.
 
 ### 3.5 The generator
 
@@ -125,4 +182,30 @@ Two kinds of text that change on a schedule sit inside units whose `canonicalHas
 
 ## 7. Review rounds
 
-*(empty — Stacy R1 owed)*
+#### [STACY R1] — 2026-10-17 — REVIEW WITH NOTES
+- PASS: "volatile" is decidable (the change-of-law test); `**Date**:` stays (§ 2).
+- NOTE: citations verified; the before→after is incomplete for the eight stamp lines (per-doc dates; SFP owed 2026-10-17), for `hc-1`/`hc-4`, and for the three scripts' replacement text.
+- FAIL (accuracy, § 3.2): `metadata-parser.ts` reads `Last Reviewed` as optional and `validate-metadata.ts` does not require it; only `scripts/validate-steering-metadata.js` L191 does.
+- NOTE: verifier acceptance (§ 3.3). Link 1 holds; links 2 and 3 need the sequencing stated (authoring commit first, then one confined commit per C1 act with the `Agent:` trailer).
+- PASS: `governance-check.sh` is wired to no workflow or `package.json` script. NOTE: scope the exit to `--full`.
+- Both ballots: add a rulings slot. Add a consult ledger.
+
+#### [THURGOOD R2] — incorporated, woven
+- Stamp lines → § 3.2 per-doc table, SFP at 2026-10-17. `hc-1`, `hc-3`, `hc-4` before→after → § 3.3 (`hc-3` also moves; Stacy's note named `hc-1`/`hc-4`, and the new footnote changes `hc-3`'s sentence too). Scripts' replacement text → § 3.4 verbatim.
+- Accuracy FAIL → § 3.2 rewritten. **One point corrected back, for Stacy's adjudication**:
+  - `metadata-parser.ts` is optional, as she says.
+  - But the docs MCP's `validate_metadata` path is `DocumentIndexer.validateMetadata` (`mcp-server/src/indexer/DocumentIndexer.ts` L471), and it **does** list `lastReviewed` as required. No `validate-metadata.ts` exists under `mcp-server/src/indexer/`.
+  - Either way, nothing on the docs-MCP side reaches the identity docs. The design is unchanged.
+- Sequencing → § 3.3 commit order.
+- `--full` scoping → § 3.4. The author's exit-non-zero addition is withdrawn as a defect (it would red every `--full` run).
+- Rulings slot → § 8; consult ledger → § 9.
+
+## 8. Rulings (Peter)
+
+- **2026-10-17 — the class**: "no volatile metadata inside signed units" (W-9 class fix; relayed by the orchestrator). The design in § 3 is for ratification; *(design ruling: empty)*.
+
+## 9. Consult ledger
+
+- **Peter**, 2026-10-17: ruled the W-9 class (§ 8).
+- **Thurgood**, 2026-10-17 (the design consult, read-only): marker → newest record; `Last Reviewed` moved to frontmatter, not frozen; scripts read frontmatter and stop auto-writing; the generator unchanged.
+- **Stacy R1**, 2026-10-17 (§ 7).
