@@ -38,3 +38,5 @@ Any charter edit, README edit or ballot text. This issue is the tracked flag; th
 ## Filed by
 
 Thurgood, 2026-10-02, in the U2b closeout bookkeeping PR.
+
+**Walk 2026-10-17 — the trigger fired (the monthly walk came before any ballot-drafting pass).** No ballot draft exists. The gap has widened beyond `.kiro/issues/**`: code roots with a de facto owner and no charter write scope include `tools/agent-generator/**` (surfaced again at #389), `mcp-server/src/**` (see `2026-10-02-docs-mcp-logs-dir-cwd-relative.md`), `scripts/**`, `src/cli/**` (Lina's CLI surface) and `.kiro/hooks/**`. **Class option: ONE ballot** that makes the charters' stated write scope match the ownership practised (option 1 or 2 below, decided per root), not one ballot per path. Owner: Thurgood drafts; Peter rules. New trigger: Thurgood's next ballot sitting, and in any case before the next PR that needs a grant only because of this gap.

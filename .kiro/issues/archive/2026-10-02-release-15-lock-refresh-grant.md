@@ -57,3 +57,7 @@ The register row's flip and the branch-protection change are not grantable by an
 ## Closing
 
 When the release PR merges, the grant expires. The outcome (the trigger log's last entry and the count of refresh commits) is recorded here, dated, and the file moves to `archive/` (README rule 5).
+
+## Closed — 2026-10-17 (monthly health-check walk, Thurgood)
+
+Expired at the 15.0.0 release PR's merge (README rule 8); the release shipped as `v15.0.0` (2026-10-02). Nothing further is owed under this grant. Archived per `.kiro/issues/README.md` rule 5.

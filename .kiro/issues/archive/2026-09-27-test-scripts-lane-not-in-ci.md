@@ -26,3 +26,7 @@ Add a `test:scripts` step to an existing required lane, or a new lane registered
 ## Filed by
 
 Steward (main-loop), 2026-09-27, at Peter's direction.
+
+## Closed — 2026-10-17 (monthly health-check walk, Thurgood)
+
+Executed by PR-1 of ballot B-CI, #218 `90fb0e71e` (2026-09-27): `npm run test:scripts` runs as a step of the required `lane-functional-root` job in `.github/workflows/lane-timing.yml`, with its own did-it-really-run floor (L247–L260 on `main` at `6db219208`). That was before the Q2 arming, as the trigger required. Archived per `.kiro/issues/README.md` rule 5.

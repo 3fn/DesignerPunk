@@ -8,8 +8,8 @@ description: Platform-specific file paths for component implementations, tokens,
 # Platform Resource Map
 
 **Date**: 2026-03-28
-**Last Reviewed**: 2026-03-31
-**Last Updated**: 2026-03-28
+**Last Reviewed**: 2026-10-17
+**Last Updated**: 2026-10-17
 **Purpose**: Cross-platform file path reference for component source, tokens, and shared artifacts
 **Organization**: process-standard
 **Scope**: cross-project
@@ -39,16 +39,16 @@ description: Platform-specific file paths for component implementations, tokens,
 |----------|-----|-----|---------|
 | Token definitions (canonical) | `src/tokens/semantic/` | same | same |
 | Platform token constants | `dist/DesignTokens.web.css` (generated) | `src/tokens/platforms/ios/*.swift` | `src/tokens/platforms/android/*.kt` |
-| Primitive tokens | `src/tokens/primitives/` | same | same |
+| Primitive tokens | `src/tokens/*Tokens.ts` (one file per family, e.g. `SpacingTokens.ts`) | same | same |
 | Theme overrides | `src/tokens/themes/` | same | same |
 
 ## Family Guidance
 
 | Resource | Path |
 |----------|------|
-| Family steering docs | `.kiro/steering/Component-Family-{Family}.md` |
+| Family steering docs | `governance/Component-Family-{Family}.md` |
 | Family guidance YAML | `family-guidance/{family}.yaml` |
-| Document template | `.kiro/steering/Component-MCP-Document-Template.md` |
+| Document template | `governance/Component-MCP-Document-Template.md` |
 
 ## Notes
 
@@ -59,7 +59,7 @@ description: Platform-specific file paths for component implementations, tokens,
 
 ## Indexed Knowledge Bases
 
-Platform agents have searchable, platform-filtered knowledge bases available via the `/knowledge` tool. Use these **before** manually navigating files — they can answer "how does X work" and "which components use Y" queries directly.
+Platform agents running in **Kiro** have searchable, platform-filtered knowledge bases available via the `/knowledge` tool (declared in each agent's Kiro config). Claude Code has no `/knowledge` tool: there, use Grep/Glob over the same paths. Use these **before** manually navigating files — they can answer "how does X work" and "which components use Y" queries directly.
 
 | Knowledge Base | Content | Use For |
 |---------------|---------|---------|
@@ -67,4 +67,4 @@ Platform agents have searchable, platform-filtered knowledge bases available via
 | `web-tests` / `ios-tests` / `android-tests` | Platform test files | Finding test patterns, understanding test coverage |
 | `semantic-tokens` | Canonical token definitions | Token name lookups, understanding token relationships |
 
-**Tip**: Try a natural language search first (e.g., "how does Button-CTA handle icon integration"). Fall back to `fs_read` only if the knowledge base doesn't have what you need.
+**Tip**: Try a natural language search first (e.g., "how does Button-CTA handle icon integration"). In Kiro, fall back to `fs_read` only if the knowledge base doesn't have what you need.

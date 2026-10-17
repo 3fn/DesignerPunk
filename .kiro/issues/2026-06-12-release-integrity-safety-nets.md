@@ -31,3 +31,5 @@ The two guards below prevent recurrence.
 - If guard #1 changes the release process, the `Release Management System.md` update is a ballot
   measure requiring Peter's sign-off.
 - Implementation is Thurgood's domain (test/release machinery), not Ada's. Ada surfaced and logged it.
+
+**Walk 2026-10-17 — a trigger fired without a record.** "Revisit at release-manager retirement execution" fired on 2026-08-12 (#117/#118), and no revisit was recorded; the 2026-09-19 walk missed it. Since then the hermetic-publish law (ballot `2026-10-03-hermetic-publish-path`, the `publish-rail-guard` and `hermetic-publish-path` register rows) has covered much of this file's ground. **New trigger**: the next PR that edits RELEASE-FLOW law text. At that PR, Thurgood reads this file's items against the current RELEASE-FLOW and either closes them as covered or carries the rest by name. Owner unchanged (Thurgood).
