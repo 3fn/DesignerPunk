@@ -8,7 +8,7 @@
 
 ## The gap
 
-Ballot `2026-10-01-signing-act-chain` M1 clause 3 makes a C1 signing act valid "only for a row on the branch's freshness stale list". A **new** routed row (`no-consumer-counterpart`, `superseded-by`, or a routed body row) that has never been signed is **not stale** — it has no signature to go stale — so `operative-set-freshness` never lists it. Its first signature therefore matches neither clause 3 nor clause 5, and audit legs (i) and (iv) do not cover it. Today the only instrument that sees unsigned routed rows is the Jest test `tools/agent-generator/__tests__/consumer-profile.real.test.ts` ("every ROUTED, no-consumer-counterpart and superseded-by row carries a C1-correct signature"), which runs in a different lane and is not the M1 bound. The application PR of the six-roots ballot carries **124** such first signatures.
+Ballot `2026-10-01-signing-act-chain` M1 clause 3 makes a C1 signing act valid "only for a row on the branch's freshness stale list". A **new** routed row (`no-consumer-counterpart`, `superseded-by`, or a routed body row) that has never been signed is **not stale** — it has no signature to go stale — so `operative-set-freshness` never lists it. Its first signature therefore matches neither clause 3 nor clause 5, and audit legs (i) and (iv) do not cover it. Today the only instrument that sees unsigned routed rows is the Jest test `tools/agent-generator/__tests__/consumer-profile.real.test.ts` ("every ROUTED, no-consumer-counterpart and superseded-by row carries a C1-correct signature"), which runs in a different lane and is not the M1 bound. The application PR of the six-roots ballot carries **123** such first signatures.
 
 ## The fix (two parts)
 
