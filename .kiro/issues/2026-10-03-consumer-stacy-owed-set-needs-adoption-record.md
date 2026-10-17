@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-03
 **Status**: ACTIVE
-**Owner**:
+**Owner**: Stacy, Thurgood (owners confirmed as listed below — Peter, 2026-10-17)
 - **Stacy** for the overlay text: `canonical/profiles/consumer/stacy.overlay.md`.
 - **Thurgood** for the consumer profile: `canonical/consumer-profile.yaml`, and whatever `init` or the profile scaffolds.
 

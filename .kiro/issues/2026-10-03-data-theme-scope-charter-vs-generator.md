@@ -2,12 +2,12 @@
 
 **Date**: 2026-10-03
 **Status**: ACTIVE
-**Owner**:
+**Owner**: Thurgood, Leonardo, Ada (owners confirmed as listed below — Peter, 2026-10-17)
 - **Thurgood + Leonardo** for the charter text (`canonical/agents/sparky.md` and its generated renderings).
 - **Ada** for the generator's intent: is root-only scoping deliberate, or a gap?
 - Sparky is the reporter and the web verifier.
 
-**Trigger**: **the first PR after Spec 123 U3 merges that is allowed to touch `canonical/**`.** At that PR, either the charter is corrected, or a recorded decision says the generator will change instead.
+**Trigger**: **Spec 129's design** (`.kiro/specs/129-consumer-generation-completeness/`, the theme-block code this touches). At that design, either the charter is corrected, or a recorded decision says the generator will change instead. *(Re-anchored 2026-10-17 by Peter's ruling — see the dated line at the end. Was: "the first PR after Spec 123 U3 merges that is allowed to touch `canonical/**`", which the six-roots application PR would otherwise have fired.)*
 **Source**: Sparky's Spec 123 Task 19.4 owner review of the Integration Guide § Platforms › Web (2026-10-03). That review corrected the guide's own example from `<div data-theme="wcag">` to `<html data-theme="wcag">`, and it flagged the charter text and the generator docstring. Ada confirmed the guide text before Sparky's review and missed the scoping; recorded here for the claims pass.
 
 ---
@@ -47,3 +47,5 @@ The pick is Peter's, after Ada states the intended scoping. Ada's honest positio
   - That is a fork, so it is surfaced, not picked.
 
 **No fix is authorized by this record.**
+
+2026-10-17 — Peter: owners confirmed as listed; the charter-vs-generator choice waits for Spec 129 (the theme-block code it touches); trigger re-anchored to Spec 129's design. — Thurgood
