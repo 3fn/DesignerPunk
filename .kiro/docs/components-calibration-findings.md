@@ -3,7 +3,7 @@
 **Date**: 2026-10-17
 **Charter**: `.kiro/issues/2026-10-17-components-calibration-instrument-charter.md` (merged #387 → `67d9d807a`).
 **Owner**: Lina (pre-registration, results, arms table, keys rationale); Thurgood (method-conformance section only). Grant path: charter header, "Grant paths".
-**Status**: **PRE-REGISTERED.** No arm other than status quo has been run on the q1 fixture. Results come in a later commit on this branch, below the pre-registration block.
+**Status**: **RESULTS RECORDED** (§ 2). The pre-registration block (§ 1) is unchanged from `0c2e0a9bb`.
 
 ---
 
@@ -98,6 +98,169 @@ _Recorded by the orchestrator after her read, before the measurement run._
 
 ---
 
-## 2. Results
+## 2. Results (Lina; results commit)
 
-_Not yet run._
+### 2.1 Overall verdict (charter § 6 — the AND of both subsets)
+
+**R3: ACCEPTED on all scored rows (net +26) AND without pre-exposed rows (net +25) → acceptance met. Parity: likewise, ACCEPTED on all scored rows (net +24) AND without pre-exposed rows (net +24).** For both arms on both subsets: TSL 0, new CW 0, R@1 and R@2 unchanged (18/18 all; 14/14 without P).
+
+### 2.2 Provenance
+
+- **Pre-registration SHA**: `0c2e0a9bb`. Earlier chain commits: `ad7b13b06` (raw seat answers), `222f1aa7a` (keys and build).
+- **Scoring code**: `application-mcp-server/src/calibration/run.ts`, blob `0d82e2f983f8`. Arms: `arms.ts`, blob `8b7e1d31eb87`.
+- **Corpus SHA**: `0c2e0a9bb`, the branch HEAD at the run. `git diff --stat 67d9d807a 0c2e0a9bb -- application-mcp-server/src/query application-mcp-server/src/indexer src/components` is empty, so the matcher and the 34-component corpus are the merge-base's.
+- **Fixture**: sha256 `87de8a11a5fec5b48a57d20a5a58e6ceb513f6a41d6392240f9ce99d6af69a0c` (verify OK at the run).
+- **The run (orchestrator, 2026-10-17)**:
+  - Command, at `0c2e0a9bb`: `cd application-mcp-server && npx tsx src/calibration/run.ts --fixture src/calibration/__fixtures__/components-calibration-q1.json --arms status-quo,parity,r3 --table`.
+  - All scored rows: parity net +24, R3 net +26, both ACCEPTED.
+  - Without pre-exposed rows: parity +24, R3 +25, both ACCEPTED.
+  - The status-quo self-check passed.
+- **Stacy's read (§ 7)**: verifiable with notes; no criterion wording was sent back. The orchestrator records it in § 1.7.
+- **Fallback trigger (C)**: **did NOT fire** between `67d9d807a` and `0c2e0a9bb`. There was no components-matcher PR and no product screen session.
+- **Self-attested**: my single `--arms status-quo --table` run before the pre-registration commit (§ 1.1) was a harness check. It is self-attested; no tool record exists of what I did or did not read from it. The keys were committed in `222f1aa7a` before it ran.
+
+### 2.3 Arms table (headline, from the run output)
+
+| Arm | Subset | Positives | R@1 | R@2 | CW pairs | Gaps none / partial / strong | vs status quo |
+|---|---|---|---|---|---|---|---|
+| status quo | all | 21 | 18 | 18 | 73 | 1 / 0 / 14 | — |
+| parity | all | 21 | 18 | 18 | 49 | 1 / 5 / 9 | fixed 24, TSL 0, net +24, new CW 0 → ACCEPTED |
+| R3 | all | 21 | 18 | 18 | 47 | 1 / 7 / 7 | fixed 26, TSL 0, net +26, new CW 0 → ACCEPTED |
+| status quo | without P | 17 | 14 | 14 | 67 | 1 / 0 / 14 | — |
+| parity | without P | 17 | 14 | 14 | 43 | 1 / 5 / 9 | fixed 24, TSL 0, net +24, new CW 0 → ACCEPTED |
+| R3 | without P | 17 | 14 | 14 | 42 | 1 / 7 / 7 | fixed 25, TSL 0, net +25, new CW 0 → ACCEPTED |
+
+### 2.4 Rank-1 changes, judged (listed, not gated)
+
+- **KEN-6** (`toggle switch row`, gap), both arms: Chip-Filter (strong, CW) → Button-Icon (partial). **Tier right**: the CW is gone. **Rank neutral**: neither component is a sensible neighbour, and the sensible one (Input-Checkbox-Base) is not in the top 3.
+- **KEN-8** (`inline banner for errors or offline`, gap), both arms: Button-VerticalList-Item (strong, CW) → Nav-Header-Base (partial). **Tier right. Rank neutral, leaning worse**: the new rank 1 is internal-only, so it is a poor labeled closest match even though it is flagged.
+- **DAT-5** and **SPA-6** (`toggle switch`, gap), R3: Chip-Filter (strong, CW) → Chip-Base (partial). **Tier right. Rank neutral**: Input-Checkbox-Base, the sensible match, sits at rank 3, now `partial`.
+- **DAT-9** (`bottom sheet`, gap), R3: Nav-TabBar-Base (strong, CW) → Nav-Header-Base (partial). **Tier right; rank neutral.** The query is **not** "bottom tab bar". It is the gap phrase "bottom sheet", and Nav-TabBar-Base came back `strong` only because of the word `bottom`. Removing that CW is correct. The new rank 1 is internal-only and not a sensible neighbour (`closestSensible` is empty), but R3 now marks both rows `partial`, which is the designed F5 (ii) outcome.
+
+**Labeled-closest-match outcome (F5 ii), judged from the keys' pre-registered `closestSensible`**: under R3, 7 gaps return a `partial` closest match. Two are sensible: DAT-7 and SPA-7 (Button-CTA for an empty state). Five are not: KEN-6, KEN-8, DAT-5, DAT-9 and SPA-6. Under parity, 5 return a `partial` match, with the same two sensible.
+
+### 2.5 Parity vs R3 — the honest reading
+
+- **This set separates the two arms by a net of 2 CW pairs on all rows (26 vs 24), and by 1 without pre-exposed rows (25 vs 24).** The net hides more movement: the arms disagree on **16 pairs**.
+  - **9 pairs fixed by R3 only**:
+    - DAT-5 ×3 (Chip-Filter, Input-Checkbox-Base, Input-Text-Password)
+    - SPA-6 ×3 (the same three)
+    - DAT-9 (Nav-TabBar-Base)
+    - SPA-8 (Badge-Count-Base)
+    - KEN-4, pre-exposed (Chip-Filter)
+
+    All of these come from R3's stricter coverage clause (>50 % rather than ≥50 %, with a lone purpose or suffix hit treated as `partial`). None comes from the name/family anchor.
+  - **7 pairs fixed by parity only**:
+    - KEN-9 ×2 (Progress-Indicator-Connector-Base and -Label-Base, via the name token `indicator`)
+    - LEO-8 (Button-Icon, via `icon`)
+    - DAT-3 and SPA-4 (Progress-Bar-Base, via `bar`)
+    - SPA-9 ×2 (Button-VerticalList-Item and -Set, via `list`)
+
+    Every one of these is **R3's own-name anchor firing on an incidental token of a compound name**.
+- **What the anchor was for did not happen here.** The anchor exists to keep name hits that carry unmatched modifiers at `strong` (my probe set: "large dark checkbox", "chip that can be removed"). Parity loses no true strong on this set (TSL 0). So on this blind set the anchor's cost shows (7 pairs) and its benefit does not. **The choice of R3 over parity therefore rests on my probe-set reasoning, which is author-exposed, not on this blind set.** The blind set supports one thing directly: a stricter coverage gate than parity.
+- **Other residual confident-wrongs under R3**:
+  - SPA-8: Badge-Count-Notification, via the own-name token `notification`.
+  - LEO-3: Input-Checkbox-Base, via clause (ii) with two purpose words, `toggle` and `setting`.
+  - SPA-9: the VerticalList pair.
+  - KEN-7 and LEO-7: Button-CTA and Button-Icon, empty-state rows.
+
+  These are the surviving counter-argument, carried into the turn PR. Under § 2 no variant may be tuned against this set: an R3 that drops or narrows the anchor needs fresh queries.
+
+### 2.6 Keys rationale
+
+The keys are in § 1.6 and in each fixture row's `note`, and are unchanged since `222f1aa7a`. **No answer-key errors were found** reading the results. DAT-1 and SPA-1 (Input-Checkbox-Base and Input-Radio-Base ahead of Input-Text-Base for "text input with … error message") are status-quo rank misses shared by all three arms; they are not key errors.
+
+### 2.7 Spent set, and what happens next
+
+- **SPENT-SET line (charter § 2): q1 is spent as a tuning target at this commit, whatever the outcome.** From here it is a regression guard only. No matcher change may be tuned against it or justified by it; a later change needs fresh queries authored under § 4.
+- **Next, per the turn rule (§ 6)**: R3 is accepted, so it turns. I land R3 as a dated rubric amendment in a **separate PR, after this instrument PR merges**. That PR carries:
+  - the § 9 re-run and charter § 10's row "Re-run owed";
+  - the identity check that the shipped tier equals `r3Arm` on every q1 row;
+  - the deliberately flipped assertions, named;
+  - a PR-body line that tiers change at merge;
+  - § 2.5's anchor finding as its surviving counter-argument.
+
+  Parity is a comparison arm, not a turn candidate; it also passed, and that is reported here.
+
+### 2.8 Run output (verbatim, as captured by the orchestrator)
+
+```text
+fixture: application-mcp-server/src/calibration/__fixtures__/components-calibration-q1.json  sha256 87de8a11a5fec5b48a57d20a5a58e6ceb513f6a41d6392240f9ce99d6af69a0c
+counts: 36 rows — 21 positives, 15 gap negatives, 0 dropped (F4); gap share 41.7 %
+pre-exposed (scored): KEN-4, LEO-1, DAT-2, SPA-5
+verify: OK
+ran 36 scored phrases under: status-quo, parity, r3 (status-quo self-check passed)
+
+| id | class | P | status-quo: rank 1 · 2 · 3 | parity: rank 1 · 2 · 3 | r3: rank 1 · 2 · 3 |
+|---|---|---|---|---|---|
+| KEN-1 | positive |  | Input-Text-Base (strong) ✓ · Input-Text-Email (strong) ✓ · Input-Text-Password (strong) ✓ | Input-Text-Base (strong) ✓ · Input-Text-Email (strong) ✓ · Input-Text-Password (strong) ✓ | Input-Text-Base (strong) ✓ · Input-Text-Email (strong) ✓ · Input-Text-Password (strong) ✓ |
+| KEN-2 | positive |  | Button-CTA (strong) ✓ · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW | Button-CTA (strong) ✓ · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW | Button-CTA (strong) ✓ · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW |
+| KEN-3 | positive |  | Container-Card-Base (strong) ✓ · Container-Base (strong) ✓ · Chip-Filter (strong) CW | Container-Card-Base (strong) ✓ · Container-Base (strong) ✓ · Chip-Filter (strong) CW | Container-Card-Base (strong) ✓ · Container-Base (strong) ✓ · Chip-Filter (strong) CW |
+| KEN-4 | positive | P | Nav-TabBar-Base (strong) ✓ · Progress-Bar-Base (strong) CW · Chip-Filter (strong) CW | Nav-TabBar-Base (strong) ✓ · Progress-Bar-Base (strong) CW · Chip-Filter (strong) CW | Nav-TabBar-Base (strong) ✓ · Progress-Bar-Base (strong) CW · Badge-Count-Base (partial) |
+| KEN-5 | positive |  | Avatar-Base (strong) ✓ · Nav-SegmentedChoice-Base (strong) CW · Nav-TabBar-Base (strong) CW | Avatar-Base (strong) ✓ · Nav-SegmentedChoice-Base (strong) CW · Badge-Count-Base (partial) | Avatar-Base (strong) ✓ · Nav-SegmentedChoice-Base (strong) CW · Badge-Count-Base (partial) |
+| KEN-6 | gap |  | Chip-Filter (strong) CW · Input-Checkbox-Base (strong) CW · Input-Text-Password (strong) CW | Button-Icon (partial) · Button-VerticalList-Item (partial) · Button-VerticalList-Set (partial) | Button-Icon (partial) · Button-VerticalList-Item (partial) · Button-VerticalList-Set (partial) |
+| KEN-7 | gap |  | Button-CTA (strong) CW · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW | Button-CTA (strong) CW · Button-Icon (strong) CW · Button-VerticalList-Item (partial) | Button-CTA (strong) CW · Button-Icon (strong) CW · Button-VerticalList-Item (partial) |
+| KEN-8 | gap |  | Button-VerticalList-Item (strong) CW · Button-VerticalList-Set (strong) CW · Icon-Base (strong) CW | Nav-Header-Base (partial) · Badge-Count-Base (partial) · Badge-Label-Base (partial) | Nav-Header-Base (partial) · Badge-Count-Base (partial) · Badge-Label-Base (partial) |
+| KEN-9 | gap |  | Progress-Bar-Base (strong) CW · Progress-Indicator-Connector-Base (strong) CW · Progress-Indicator-Label-Base (strong) CW | Progress-Bar-Base (strong) CW · Progress-Indicator-Connector-Base (partial) · Progress-Indicator-Label-Base (partial) | Progress-Bar-Base (strong) CW · Progress-Indicator-Connector-Base (strong) CW · Progress-Indicator-Label-Base (strong) CW |
+| LEO-1 | positive | P | Button-CTA (strong) ✓ · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW | Button-CTA (strong) ✓ · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW | Button-CTA (strong) ✓ · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW |
+| LEO-2 | positive |  | Input-Text-Base (strong) ✓ · Input-Text-Email (strong) ✓ · Input-Text-Password (strong) ✓ | Input-Text-Base (strong) ✓ · Input-Text-Email (strong) ✓ · Input-Text-Password (strong) ✓ | Input-Text-Base (strong) ✓ · Input-Text-Email (strong) ✓ · Input-Text-Password (strong) ✓ |
+| LEO-3 | gap |  | Input-Checkbox-Base (strong) CW · Input-Text-Password (strong) CW · Nav-SegmentedChoice-Base (strong) CW | Input-Checkbox-Base (strong) CW · Input-Text-Password (strong) CW · Nav-SegmentedChoice-Base (strong) CW | Input-Checkbox-Base (strong) CW · Input-Text-Password (strong) CW · Nav-SegmentedChoice-Base (strong) CW |
+| LEO-4 | positive |  | Container-Card-Base (strong) ✓ · Container-Base (strong) ✓ · Chip-Filter (strong) CW | Container-Card-Base (strong) ✓ · Container-Base (strong) ✓ · Chip-Filter (strong) CW | Container-Card-Base (strong) ✓ · Container-Base (strong) ✓ · Chip-Filter (strong) CW |
+| LEO-5 | positive |  | Nav-TabBar-Base (strong) ✓ · Nav-Header-Base (strong) CW · Nav-Header-App (strong) CW | Nav-TabBar-Base (strong) ✓ · Nav-Header-Base (strong) CW · Nav-Header-App (strong) CW | Nav-TabBar-Base (strong) ✓ · Nav-Header-Base (strong) CW · Nav-Header-App (strong) CW |
+| LEO-6 | positive |  | Badge-Label-Base (strong) ✓ · Badge-Count-Base (strong) CW · Badge-Count-Notification (strong) CW | Badge-Label-Base (strong) ✓ · Badge-Count-Base (strong) CW · Badge-Count-Notification (strong) CW | Badge-Label-Base (strong) ✓ · Badge-Count-Base (strong) CW · Badge-Count-Notification (strong) CW |
+| LEO-7 | gap |  | Button-CTA (strong) CW · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW | Button-CTA (strong) CW · Button-Icon (strong) CW · Button-VerticalList-Item (partial) | Button-CTA (strong) CW · Button-Icon (strong) CW · Button-VerticalList-Item (partial) |
+| LEO-8 | positive |  | Button-VerticalList-Item (strong) ✓ · Nav-Header-Page (strong) CW · Button-Icon (strong) CW | Button-VerticalList-Item (strong) ✓ · Nav-Header-Page (strong) CW · Button-Icon (partial) | Button-VerticalList-Item (strong) ✓ · Nav-Header-Page (strong) CW · Button-Icon (strong) CW |
+| LEO-9 | gap |  | Input-Radio-Set (strong) CW · Input-Text-Base (strong) CW · Input-Text-Email (strong) CW | Input-Radio-Set (strong) CW · Input-Text-Base (strong) CW · Input-Text-Email (strong) CW | Input-Radio-Set (strong) CW · Input-Text-Base (strong) CW · Input-Text-Email (strong) CW |
+| DAT-1 | positive |  | Input-Checkbox-Base (strong) CW · Input-Radio-Base (strong) CW · Input-Text-Base (strong) ✓ | Input-Checkbox-Base (strong) CW · Input-Radio-Base (strong) CW · Input-Text-Base (strong) ✓ | Input-Checkbox-Base (strong) CW · Input-Radio-Base (strong) CW · Input-Text-Base (strong) ✓ |
+| DAT-2 | positive | P | Button-CTA (strong) ✓ · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW | Button-CTA (strong) ✓ · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW | Button-CTA (strong) ✓ · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW |
+| DAT-3 | positive |  | Nav-TabBar-Base (strong) ✓ · Nav-Header-Base (strong) CW · Progress-Bar-Base (strong) CW | Nav-TabBar-Base (strong) ✓ · Nav-Header-Base (strong) CW · Badge-Count-Base (partial) | Nav-TabBar-Base (strong) ✓ · Nav-Header-Base (strong) CW · Progress-Bar-Base (strong) CW |
+| DAT-4 | positive |  | Badge-Count-Base (strong) CW · Button-VerticalList-Item (strong) CW · Container-Card-Base (strong) ✓ | Badge-Count-Base (strong) CW · Button-VerticalList-Item (strong) CW · Container-Card-Base (strong) ✓ | Badge-Count-Base (strong) CW · Button-VerticalList-Item (strong) CW · Container-Card-Base (strong) ✓ |
+| DAT-5 | gap |  | Chip-Filter (strong) CW · Input-Checkbox-Base (strong) CW · Input-Text-Password (strong) CW | Chip-Filter (strong) CW · Input-Checkbox-Base (strong) CW · Input-Text-Password (strong) CW | Chip-Base (partial) · Chip-Filter (partial) · Input-Checkbox-Base (partial) |
+| DAT-6 | positive |  | Avatar-Base (strong) ✓ · Nav-SegmentedChoice-Base (strong) CW · Nav-TabBar-Base (strong) CW | Avatar-Base (strong) ✓ · Nav-SegmentedChoice-Base (strong) CW · Badge-Count-Base (partial) | Avatar-Base (strong) ✓ · Nav-SegmentedChoice-Base (strong) CW · Badge-Count-Base (partial) |
+| DAT-7 | gap |  | Button-CTA (strong) CW · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW | Button-CTA (partial) · Button-Icon (partial) · Button-VerticalList-Item (partial) | Button-CTA (partial) · Button-Icon (partial) · Button-VerticalList-Item (partial) |
+| DAT-8 | gap |  | — (none) | — (none) | — (none) |
+| DAT-9 | gap |  | Nav-TabBar-Base (strong) CW · Nav-Header-Base (partial) | Nav-TabBar-Base (strong) CW · Nav-Header-Base (partial) | Nav-Header-Base (partial) · Nav-TabBar-Base (partial) |
+| SPA-1 | positive |  | Input-Checkbox-Base (strong) CW · Input-Radio-Base (strong) CW · Input-Text-Base (strong) ✓ | Input-Checkbox-Base (strong) CW · Input-Radio-Base (strong) CW · Input-Text-Base (strong) ✓ | Input-Checkbox-Base (strong) CW · Input-Radio-Base (strong) CW · Input-Text-Base (strong) ✓ |
+| SPA-2 | positive |  | Button-CTA (strong) ✓ · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW | Button-CTA (strong) ✓ · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW | Button-CTA (strong) ✓ · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW |
+| SPA-3 | positive |  | Container-Card-Base (strong) ✓ · Container-Base (strong) CW · Chip-Filter (strong) CW | Container-Card-Base (strong) ✓ · Container-Base (strong) CW · Chip-Filter (strong) CW | Container-Card-Base (strong) ✓ · Container-Base (strong) CW · Chip-Filter (strong) CW |
+| SPA-4 | positive |  | Nav-TabBar-Base (strong) ✓ · Nav-Header-Base (strong) CW · Progress-Bar-Base (strong) CW | Nav-TabBar-Base (strong) ✓ · Nav-Header-Base (strong) CW · Badge-Count-Base (partial) | Nav-TabBar-Base (strong) ✓ · Nav-Header-Base (strong) CW · Progress-Bar-Base (strong) CW |
+| SPA-5 | positive | P | Avatar-Base (strong) ✓ · Badge-Count-Base (partial) | Avatar-Base (strong) ✓ · Badge-Count-Base (partial) | Avatar-Base (strong) ✓ · Badge-Count-Base (partial) |
+| SPA-6 | gap |  | Chip-Filter (strong) CW · Input-Checkbox-Base (strong) CW · Input-Text-Password (strong) CW | Chip-Filter (strong) CW · Input-Checkbox-Base (strong) CW · Input-Text-Password (strong) CW | Chip-Base (partial) · Chip-Filter (partial) · Input-Checkbox-Base (partial) |
+| SPA-7 | gap |  | Button-CTA (strong) CW · Button-Icon (strong) CW · Button-VerticalList-Item (strong) CW | Button-CTA (partial) · Button-Icon (partial) · Button-VerticalList-Item (partial) | Button-CTA (partial) · Button-Icon (partial) · Button-VerticalList-Item (partial) |
+| SPA-8 | gap |  | Badge-Count-Notification (strong) CW · Badge-Count-Base (strong) CW · Badge-Label-Base (partial) | Badge-Count-Notification (strong) CW · Badge-Count-Base (strong) CW · Badge-Label-Base (partial) | Badge-Count-Notification (strong) CW · Badge-Count-Base (partial) · Badge-Label-Base (partial) |
+| SPA-9 | gap |  | Button-VerticalList-Item (strong) CW · Button-VerticalList-Set (strong) CW · Progress-Stepper-Detailed (strong) CW | Button-VerticalList-Item (partial) · Button-VerticalList-Set (partial) · Avatar-Base (partial) | Button-VerticalList-Item (strong) CW · Button-VerticalList-Set (strong) CW · Avatar-Base (partial) |
+
+### Headline — all scored rows
+
+| arm | positives | R@1 | R@2 | CW (pairs, ranks 1–3) | gaps: none / partial / strong |
+|---|---|---|---|---|---|
+| status-quo | 21 | 18 | 18 | 73 | 1 / 0 / 14 |
+| parity | 21 | 18 | 18 | 49 | 1 / 5 / 9 |
+| r3 | 21 | 18 | 18 | 47 | 1 / 7 / 7 |
+
+**parity vs status quo (all scored rows)**: fixed CW 24; TSL 0; net +24; new CW 0; R@1 18→18; R@2 18→18 → **ACCEPTED** on this subset
+
+**r3 vs status quo (all scored rows)**: fixed CW 26; TSL 0; net +26; new CW 0; R@1 18→18; R@2 18→18 → **ACCEPTED** on this subset
+
+### Headline — without pre-exposed rows
+
+| arm | positives | R@1 | R@2 | CW (pairs, ranks 1–3) | gaps: none / partial / strong |
+|---|---|---|---|---|---|
+| status-quo | 17 | 14 | 14 | 67 | 1 / 0 / 14 |
+| parity | 17 | 14 | 14 | 43 | 1 / 5 / 9 |
+| r3 | 17 | 14 | 14 | 42 | 1 / 7 / 7 |
+
+**parity vs status quo (without pre-exposed rows)**: fixed CW 24; TSL 0; net +24; new CW 0; R@1 14→14; R@2 14→14 → **ACCEPTED** on this subset
+
+**r3 vs status quo (without pre-exposed rows)**: fixed CW 25; TSL 0; net +25; new CW 0; R@1 14→14; R@2 14→14 → **ACCEPTED** on this subset
+
+### Rank-1 changes against status quo (listed, not gated)
+
+- KEN-6 (parity): Chip-Filter → Button-Icon
+- KEN-6 (r3): Chip-Filter → Button-Icon
+- KEN-8 (parity): Button-VerticalList-Item → Nav-Header-Base
+- KEN-8 (r3): Button-VerticalList-Item → Nav-Header-Base
+- DAT-5 (r3): Chip-Filter → Chip-Base
+- DAT-9 (r3): Nav-TabBar-Base → Nav-Header-Base
+- SPA-6 (r3): Chip-Filter → Chip-Base
+```
