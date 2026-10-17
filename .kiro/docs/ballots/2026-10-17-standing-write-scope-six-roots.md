@@ -65,7 +65,7 @@ Tests and fixtures follow the file they exercise: `scripts/__tests__/**`, `scrip
 - **[author's addition — owners confirm at review]**:
   - `consolidate-structure-maps.sh`, `convert-date-formats.js`, `calculate-baseline-metrics.sh` (all steering-doc tooling)
   - `generate-legacy-path-manifest.ts`, `relocation-integrity-gate.ts` (Spec 119-A docs-MCP infra)
-  - `derive-install-doc.ts` (the install doc; Thurgood owns its reference remainder, ballot B-U3)
+  - `derive-install-doc.ts` (the install doc; Thurgood owns its reference remainder, ballot B-U3). **Shared: Ada is consulted on any change**, because the install process it derives from is her pipeline (Stacy R2).
   - `categorize-tests.ts` (test governance)
 
 **Lina**:
@@ -87,7 +87,7 @@ The rest of `mcp-server/`, by path:
 
 ### 2.4 `.kiro/hooks/**` → **Thurgood**, for the completion tooling
 
-- **Thurgood**: `complete-task.sh` (the CI regime and completion tooling, ballot B-CI M3), `README.md`, `task-completion-agent-hook.md` (its companion doc; unlisted at draft, Stacy R1), and the legacy completion scripts (`commit-task.sh`, `commit-task-organized.sh`, `task-completion-commit.sh`, `organize-after-completion.kiro.hook`, `organize-by-metadata.sh`, `archive/**`) **[author's addition: legacy files, owned so someone can retire them]**.
+- **Thurgood**: `complete-task.sh` (the CI regime and completion tooling, ballot B-CI M3), `README.md`, `task-completion-agent-hook.md` (its companion doc; unlisted at draft, Stacy R1), and the legacy completion scripts (`commit-task.sh`, `commit-task-organized.sh`, `task-completion-commit.sh`, `organize-after-completion.kiro.hook`, `organize-by-metadata.sh`, `archive/**`) **[author's addition: legacy files, owned so someone can retire them]**. Accepted at R2 with the **retirement named as the trigger**: a legacy file still present at the second monthly walk after ratification is a walk finding (Stacy R2).
 - **`RELEASE-FLOW.md` stays Peter-merged law, with no seat scope.**
 - **[author's addition — owners confirm]**: each seat owns its own `<seat>-*.kiro.hook` files (`ada-*`, `lina-*`, `thurgood-*`).
 
@@ -116,6 +116,20 @@ A glob cannot say "files whose `**Owner**:` is me", so the scope is granted whol
    - It is built after ratification by the owner of `sweeps/**` (Thurgood under both F-1 options), and registered `proposed` until the fixtures pass on the CI path.
    - *(Rewritten at R2: the draft's "equals byte for byte" had no referent, because no two targets render the same bytes. Stacy R1.)*
 3. **Disclosure**: any PR that moves the `outputs` hash in `canonical/generated.lock` says so in its body, with the before and after hashes.
+4. **Instrument-change audit trigger** (added at R3; Stacy R2). Today nothing fires on a change to a gate instrument's source or fixtures that leaves the required-check set unchanged. A weakened checker passes its own green and stays invisible until RELEASE. So **Stacy's ARMING population gains "a PR whose diff touches an instrument path"**. The instrument paths are:
+   - the § 4 B checker list;
+   - `scripts/check-completion-criteria-parity.ts` and `scripts/completion-claims/**`;
+   - `tools/agent-generator/verify-gate-registration.sh`;
+   - the three steward-verb tool files: `mcp-server/src/tools/validate-metadata.ts`, `list-cross-references.ts`, `rebuild-index.ts`.
+
+   **The read**, all three decidable from the PR:
+   - `git diff --numstat` shows **0 deletions** under any `__fixtures__/**`, unless the PR body names the fixture and its spec amendment;
+   - the PR body cites the fixture test run;
+   - `EXPECTED_CONTEXTS` is unchanged, or the change is named in the body.
+
+   **An audit trigger, never a gate.** It reads after acceptance, which is her seat; she does not read pre-merge and does not write fixtures (Q5).
+
+   **Cost**: one row edit to `canonical/agents/stacy.md` (her commit, Peter-merged, riding the application PR), and minutes per instrument PR.
 
 **Why the existing pieces are not enough**:
 - `diff-guard` proves the outputs equal what the generator renders from canonical. It does not prove the generator renders write scope faithfully.
@@ -169,6 +183,7 @@ Every file in the tree is assigned (R2; Stacy R1 found the draft left about twen
 3. **Regeneration** (`npm run check:122:diff-guard`, full run): `.claude/agents/**`, `.kiro/agents/**` and the lock; the `outputs` hash moves and the PR says so (§ 3.3).
 4. **Signing acts**: each seat's operative set (`canonical/operative-sets/{ada,lina,thurgood,…}.yaml`) gains `writeScope[<glob>]` units. These are confirmed and signed by the C1 seats; signing acts need no grant (ballot `2026-10-01-signing-act-chain` M1).
 5. **Register**: a `charter-write-scope-render-fidelity` row at `proposed`, owner thurgood, carrying § 3.2's sweep.
+5a. **`canonical/agents/stacy.md`**: her ARMING population row gains the § 3.4 instrument-change trigger. This is **her commit** on the application PR, Peter-merged (Stacy R2).
 6. **Re-routing lines** (§ 2.1), appended by the records' owners after merge.
 
 **Out of scope**: governance-law paths (`governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**`); `RELEASE-FLOW.md`; `.github/**` beyond `lane-timing.yml`'s existing standing scope. All stay Peter-merged or ballot-only.
@@ -214,6 +229,25 @@ Standing scope and grants **compose by union**:
 - Composition FAIL → new § 6.
 - Rulings slot → § 9.
 
+#### [STACY R2] — 2026-10-17 — the width review (Option B) — ACCEPTABLE WITH THE ADDITION; nothing to strike
+- (1) Gains enumerated by root are coherent with Civitas infrastructure: PASS.
+- (2) Share one: `derive-install-doc.ts` → Ada consulted on any change (B-U3 gave Thurgood the remainder only). Legacy hooks: accepted, with the retirement named as the trigger (still present at the second walk = finding).
+- (3) Concentration. The existing counterweights are listed:
+  - Peter merges every PR;
+  - `canonical/`, `governance/`, steering, ballots and `.github/` are Peter-merged;
+  - her fixture specs;
+  - the coverage-map zero-blank-row check and the gate-registration count at ARMING;
+  - ballot 2026-09-27 M3;
+  - claims passes.
+
+  **Missing**: nothing fires on a change to a gate instrument's source or fixtures that leaves the required-check set unchanged. She refuses write on fixtures (Q5: she must not co-maintain checks) and refuses a pre-merge read (co-signer ground; her seat is post-acceptance). The narrowest addition is an ARMING-population extension (the paths, the read, never a gate, the cost).
+- (4) Verdict: ACCEPTABLE WITH THE ADDITION.
+
+#### [THURGOOD R3] — incorporated, woven
+- (2) → § 2.2 (`derive-install-doc.ts` shared with Ada) and § 2.4 (the retirement trigger).
+- (3) → new § 3 item 4 (the instrument-change audit trigger, as she specified it), plus edit site 5a (her own row edit).
+- **Status**: held DRAFT until Peter's word on the addition is relayed (§ 9).
+
 ## 9. Rulings (Peter)
 
 - **2026-10-17 — F-1: Option B (Peter)**: the split. Thurgood owns the checkers and sweeps; Lina owns rendering, adapters and emitters; the § 3 guard applies as written. Relayed by the orchestrator.
@@ -225,6 +259,7 @@ Standing scope and grants **compose by union**:
   - R1: claimed `.kiro/issues/**` (steward), `scripts/` mine-by-file, `mcp-server/src/**`, generator shared (checkers mine, rendering Lina's), `complete-task.sh`; refused `src/cli/**` (read as Lina's).
   - Cross-read: yielded `src/cli/**` to Ada; took generator primary, emitters included; proposed § 3.
 - **Ada ×1**: `src/cli/**` hers (with `attach.ts` and templates shared); the `scripts/` by-file list; "append-for-all" on issues; the release-instrument clause (§ 2.6).
+- **Stacy ×2** (review rounds, § 8): R1 decidability; R2 width (Option B), ACCEPTABLE WITH THE ADDITION.
 - **Lina ×2**:
   - R1: `src/cli/**` Ada's; generator primary to Thurgood, Lina secondary on consumer-lane code; the emitter conflict flag.
   - Last word, crossing Thurgood's: accepts emitters and rendering primary under the guard and argues the split is the better separation → F-1 option B.
