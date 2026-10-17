@@ -37,7 +37,7 @@ object BlendTokenValues {
     const val focusSaturate: Float = 0.08f
     
     /** Disabled state desaturation - blend300 (12%) */
-    @Deprecated("DesignerPunk does not support disabled states (adjudicated 2026-07-15). Removal at next major.")
+    @Deprecated("DesignerPunk does not support disabled states (adjudicated 2026-07-15). Retained for backward compatibility; removal is not scheduled.")
     const val disabledDesaturate: Float = 0.12f
     
     /** Icon optical balance lightening - blend200 (8%) */
@@ -164,7 +164,7 @@ fun Color.focusBlend(): Color {
  *
  * @see Requirements: 11.4 - Theme-aware wrapper functions
  */
-@Deprecated("DesignerPunk does not support disabled states (adjudicated 2026-07-15) — if an action is unavailable, do not render the component. Use desaturate() for non-disabled desaturation. Removal at next major.")
+@Deprecated("DesignerPunk does not support disabled states (adjudicated 2026-07-15) — if an action is unavailable, do not render the component. Use desaturate() for non-disabled desaturation. Retained for backward compatibility; removal is not scheduled.")
 fun Color.disabledBlend(): Color {
     return this.desaturate(BlendTokenValues.disabledDesaturate)
 }
@@ -282,7 +282,7 @@ object BlendUtilitiesProvider {
      * @param color Base color
      * @return Desaturated color for disabled state
      */
-    @Deprecated("DesignerPunk does not support disabled states (adjudicated 2026-07-15) — if an action is unavailable, do not render the component. Removal at next major.")
+    @Deprecated("DesignerPunk does not support disabled states (adjudicated 2026-07-15) — if an action is unavailable, do not render the component. Retained for backward compatibility; removal is not scheduled.")
     fun disabledColor(color: Color): Color {
         return color.disabledBlend()
     }

@@ -28,7 +28,7 @@ The DesignerPunk blend token system provides a mathematically consistent foundat
 - **Theme-Aware**: Blend utilities work correctly with both light and dark themes
 - **Semantic Meaning**: Semantic blend tokens express design intent (hover, pressed, focus)
 
-> **Deprecation note (2026-07-15)**: `blend.disabledDesaturate` and the `disabledColor()`/`disabledBlend()` convenience wrappers are **DEPRECATED**. DesignerPunk does not support disabled states (Button-CTA disabled-state adjudication, ruled REMOVE — the philosophy holds corpus-wide): if an action is unavailable, do not render the component. The deprecated surfaces remain for backward compatibility and are scheduled for removal in the next major version of `@3fn/core`. The generic `desaturate()` utilities are NOT deprecated.
+> **Deprecation note (2026-07-15)**: `blend.disabledDesaturate` and the `disabledColor()`/`disabledBlend()` convenience wrappers are **DEPRECATED**. DesignerPunk does not support disabled states (Button-CTA disabled-state adjudication, ruled REMOVE — the philosophy holds corpus-wide): if an action is unavailable, do not render the component. The deprecated surfaces are retained for backward compatibility; **removal is not scheduled** — removing them is a breaking change, scheduled only by a ruling that names the major release (corrected 2026-10-17; earlier text said "next major version"). The generic `desaturate()` utilities are NOT deprecated.
 
 ---
 
@@ -70,7 +70,7 @@ Semantic blend tokens provide contextual meaning for common color modification u
 | `blend.pressedDarker` | blend300 | darker | 12% | Pressed state feedback on light backgrounds |
 | `blend.pressedLighter` | blend300 | lighter | 12% | Pressed state feedback on dark backgrounds |
 | `blend.focusSaturate` | blend200 | saturate | 8% | Focus state with increased saturation |
-| `blend.disabledDesaturate` | blend300 | desaturate | 12% | **DEPRECATED 2026-07-15** — no disabled states in DesignerPunk; removal at next major |
+| `blend.disabledDesaturate` | blend300 | desaturate | 12% | **DEPRECATED 2026-07-15** — no disabled states in DesignerPunk; retained for backward compatibility, removal not scheduled |
 | `blend.containerHoverDarker` | blend100 | darker | 4% | Subtle container/surface hover |
 | `color.icon.opticalBalance` | blend200 | lighter | 8% | Icon optical weight compensation |
 
@@ -109,7 +109,7 @@ import {
 | `hoverColor(baseColor)` | darkerBlend | 8% (blend200) |
 | `pressedColor(baseColor)` | darkerBlend | 12% (blend300) |
 | `focusColor(baseColor)` | saturate | 8% (blend200) |
-| `disabledColor(baseColor)` | desaturate | **DEPRECATED 2026-07-15** — removal at next major |
+| `disabledColor(baseColor)` | desaturate | **DEPRECATED 2026-07-15** — retained for backward compatibility, removal not scheduled |
 | `iconColor(baseColor)` | lighterBlend | 8% (blend200) |
 
 **Usage Example**:
@@ -169,7 +169,7 @@ extension Color {
     /// Focus state color (8% more saturated)
     func focusBlend() -> Color
     
-    /// DEPRECATED 2026-07-15 — no disabled states in DesignerPunk; removal at next major
+    /// DEPRECATED 2026-07-15 — no disabled states in DesignerPunk; retained for backward compatibility, removal not scheduled
     func disabledBlend() -> Color
     
     /// Icon optical balance (8% lighter)
@@ -216,7 +216,7 @@ fun Color.desaturate(amount: Float): Color
 fun Color.hoverBlend(): Color    // 8% darker
 fun Color.pressedBlend(): Color  // 12% darker
 fun Color.focusBlend(): Color    // 8% more saturated
-fun Color.disabledBlend(): Color // DEPRECATED 2026-07-15 — removal at next major
+fun Color.disabledBlend(): Color // DEPRECATED 2026-07-15 — retained for backward compatibility, removal not scheduled
 fun Color.iconBlend(): Color     // 8% lighter
 ```
 

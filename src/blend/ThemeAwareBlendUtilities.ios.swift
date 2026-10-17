@@ -28,7 +28,7 @@ public struct BlendTokenValues {
     public static let focusSaturate: Double = 0.08
     
     /// Disabled state desaturation - blend300 (12%)
-    @available(*, deprecated, message: "DesignerPunk does not support disabled states (adjudicated 2026-07-15). Removal at next major.")
+    @available(*, deprecated, message: "DesignerPunk does not support disabled states (adjudicated 2026-07-15). Retained for backward compatibility; removal is not scheduled.")
     public static let disabledDesaturate: Double = 0.12
     
     /// Icon optical balance lightening - blend200 (8%)
@@ -173,7 +173,7 @@ extension Color {
     /// ```
     ///
     /// @see Requirements: 11.4 - Theme-aware wrapper functions
-    @available(*, deprecated, message: "DesignerPunk does not support disabled states (adjudicated 2026-07-15) — if an action is unavailable, do not render the component. Use desaturate(_:) for non-disabled desaturation. Removal at next major.")
+    @available(*, deprecated, message: "DesignerPunk does not support disabled states (adjudicated 2026-07-15) — if an action is unavailable, do not render the component. Use desaturate(_:) for non-disabled desaturation. Retained for backward compatibility; removal is not scheduled.")
     public func disabledBlend() -> Color {
         return self.desaturate(BlendTokenValues.disabledDesaturate)
     }
@@ -278,7 +278,7 @@ public class BlendUtilitiesProvider {
     /// Calculate disabled color for a given base color
     /// - Parameter color: Base color
     /// - Returns: Desaturated color for disabled state
-    @available(*, deprecated, message: "DesignerPunk does not support disabled states (adjudicated 2026-07-15) — if an action is unavailable, do not render the component. Removal at next major.")
+    @available(*, deprecated, message: "DesignerPunk does not support disabled states (adjudicated 2026-07-15) — if an action is unavailable, do not render the component. Retained for backward compatibility; removal is not scheduled.")
     public func disabledColor(_ color: Color) -> Color {
         return color.disabledBlend()
     }

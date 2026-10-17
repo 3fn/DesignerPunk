@@ -1,7 +1,7 @@
 # Obligation: correct the "scheduled for removal in the next major version" text on the deprecated disabled blend (RL-13)
 
 **Date**: 2026-10-16
-**Status**: ACTIVE (shipped as a known limitation in 16.0.0)
+**Status**: FIXING — PR open (this section); closes at the merge
 **Owner**: **Ada** (content of `Token-Family-Blend.md` and `Token-Family-Color.md`; `BlendTokens.ts`; the blend wrappers). **Thurgood** reads the served-doc hunks for cross-surface consistency.
 **Trigger**: `tag:v16.0.0` pushed → one PR before release 5's phase 1.
 **Source**: claims pass `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.0.0.md` § RL-13 (the obligation had no home). Peter ruled the blend fork (a) on 2026-10-16: ship 16.0.0 with the text as is, correct it after the tag (ruled in session; recorded in the release-4 rulings record by the orchestrator in the RL-11 fix PR).
@@ -27,3 +27,23 @@ Deprecated, retained for backward compatibility; **removal is not scheduled**. R
 ## What the change is not
 
 The `description` edit is a source text change, not a value change: `token-index/` and every token value stay the same. The regenerated DTCG and Figma exports change in that text. The fixing PR's release entry says so.
+
+---
+
+## 2026-10-17 — Grant: the wrapper sites
+
+**Why**: `tag:v16.0.0` fired 2026-10-16 and Peter gave the go on 2026-10-17. The sentences this record lists include the blend wrappers and a test comment under `src/blend/**`, which is outside Ada's charter writeScope; the record said the fixing PR declares its own grant for them. This section is that grant. The served docs (`governance/Token-Family-Blend.md`, `governance/Token-Family-Color.md`) are not granted here (rule 8 never grants `governance/**`): they ride the same PR as a Peter-merged content correction by their owner.
+- **Source**: this record; claims pass `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.0.0.md` § RL-13, and the addendum's O-16 (the test comment at `src/blend/__tests__/InteractionStateAudit.test.ts` L135).
+- **Grantee**: Ada.
+- **Activation**: Peter's merge of the PR whose body names this section (README rule 8): this fixing PR, branch `fix/blend-deprecation-next-major-text`.
+- **Expiry**: that same merge.
+- **Precedent**: #383 — the grant and the correction ride ONE PR on Peter's direction, so the grant is active when the diff is judged against it.
+- **Owner of the granted paths**: `src/blend/**` belongs to Lina's side of the house by charter; the wrappers' owner is consulted through the PR body's `**Consulted**:` line (added by the orchestrator), not by Ada. The change is comment, doc-comment and deprecation-message text only; no signature, value or behaviour changes.
+
+**Grant paths**: src/blend/ThemeAwareBlendUtilities.web.ts, src/blend/ThemeAwareBlendUtilities.ios.swift, src/blend/ThemeAwareBlendUtilities.android.kt, src/blend/OklchBlendCalculator.ts, src/blend/__tests__/InteractionStateAudit.test.ts, docs/token-system-overview.md
+
+`docs/token-system-overview.md` (L389, the site the first re-grep list missed) is not in Ada's charter writeScope either; its last edits were Ada's deprecation PRs (#83, #89), so the correction is hers and is granted here.
+
+**Wording used**: "deprecated since 2026-07-15, retained for backward compatibility; removal is not scheduled" (long form), "retained for backward compatibility, removal not scheduled" (table cells and one-line comments). No release is named; only a ruling that names the major release schedules removal.
+
+**Sites not on this record's list** (found by the re-grep, NOT changed here — outside the grant and the PR's file list; `docs/token-system-overview.md` L389 was found the same way and is now fixed and granted above): frozen onboarding fixtures under `tests/onboarding-trio/fixtures/**` (born-cc, born-kiro) that carry copies of the old `BlendTokens.ts` and DTCG/Figma text. Routed to the orchestrator in the PR hand-back.

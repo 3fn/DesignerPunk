@@ -18,7 +18,7 @@
 import type { Oklch } from '../color/OklchConverter';
 
 // 'disabled' is deprecated calculator capability: DesignerPunk supports no disabled
-// states (adjudicated 2026-07-15) — no component may use it; removal at next major.
+// states (adjudicated 2026-07-15) — no component may use it; retained for backward compatibility, removal not scheduled.
 export type InteractionState = 'hover' | 'pressed' | 'focused' | 'disabled';
 
 /** Thresholds for interaction state blends. */
@@ -26,7 +26,7 @@ export const INTERACTION_THRESHOLDS = {
   hover:    { deltaL: { min: 0.02, max: 0.05 }, deltaC: 0 },
   pressed:  { deltaL: { min: 0.05, max: 0.10 }, deltaC: 0 },
   focused:  { deltaL: 0, deltaC: { min: 0.02 } },
-  // deprecated 2026-07-15 (no-disabled-states philosophy) — removal at next major
+  // deprecated 2026-07-15 (no-disabled-states philosophy) — retained for backward compatibility, removal not scheduled
   disabled: { deltaL: 0, deltaC: { min: 0.03 } },
 } as const;
 
