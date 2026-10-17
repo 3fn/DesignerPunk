@@ -10,7 +10,7 @@ owner: thurgood
 confirmer: stacy
 units:
   "#spec-feedback-protocol:preamble":
-    canonicalHash: sha256:971f7ffb246e7ee5a545823f7c05c117abd8c0831fdaecebe30ef1bed23e26ad
+    canonicalHash: sha256:5e50e45a2d708c1a5b4dda5a1c46d4134af8c03199b99b619586aa89c87e949e
     items: []
     confirmation: canonical/profiles/consumer/confirmations/spec-feedback-protocol.md#spec-feedback-protocol:preamble
   "#purpose":
