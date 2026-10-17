@@ -169,6 +169,7 @@ describe('constants restated from generate.ts (the bundle may not import it)', (
 
 describe('the BUILT bundle (build:generator)', () => {
   let bundlePath: string;
+  let bundleInputs: string[];
 
   beforeAll(() => {
     // build:generator's OWN esbuild command, re-pointed at a temp outfile — never a copied flag list.
@@ -185,18 +186,30 @@ describe('the BUILT bundle (build:generator)', () => {
     // The only literal `require` of that path lives in `workflow-rules-accessor.ts`'s
     // `getWorkflowRules()`, a file outside `consumer-entry.ts`'s import closure (only
     // `generate.ts`, which this bundle may not import, imports it) — so esbuild never reaches it
-    // and `build:generator` needs no `--external` for it. This build, with `mcp-server/dist`
-    // moved aside, fails if a `require` of it ever becomes reachable again.
+    // and `build:generator` needs no `--external` for it.
+    //
+    // HOW that is proven (fix/agent-generator-dist-rename-race): this test used to rename the
+    // REAL `mcp-server/dist` aside for the build. Jest runs this package's suites in parallel
+    // workers, and another suite's ts-jest transform type-resolves `mcp-server/dist/index.d.ts`
+    // — inside the rename window it hit ENOENT ("Test suite failed to run"; #388's
+    // lane-functional-root). No test may move or remove a real build artifact other suites
+    // resolve. Instead the build writes esbuild's own `--metafile`, and the test asserts that NO
+    // input of the bundle lies under `mcp-server/dist`. That is the same property, checked in
+    // both states: with dist present a reachable `require` would pull dist files into the
+    // inputs (red here); with dist absent (CI) it would fail the build itself (red in beforeAll).
+    const metafilePath = path.join(tmp, 'bundle', 'consumer-entry.meta.json');
     const distPath = path.join(REPO_ROOT, 'mcp-server', 'dist');
-    const asidePath = path.join(tmp, 'mcp-server-dist-aside');
     const hadDist = fsReal.existsSync(distPath);
-    if (hadDist) fsReal.renameSync(distPath, asidePath);
-    try {
-      childProcess.execSync(esbuildCmd, { cwd: REPO_ROOT, stdio: 'pipe' });
-    } finally {
-      if (hadDist) fsReal.renameSync(asidePath, distPath);
-    }
+    childProcess.execSync(`${esbuildCmd} --metafile=${JSON.stringify(metafilePath)}`, { cwd: REPO_ROOT, stdio: 'pipe' });
+    // Regression guard for the race itself: the build must leave the real artifact as it found it.
+    expect(fsReal.existsSync(distPath)).toBe(hadDist);
+    bundleInputs = Object.keys((JSON.parse(fs.readFileSync(metafilePath, 'utf8')) as { inputs: Record<string, unknown> }).inputs);
   }, 60_000);
+
+  test('no bundle input lies under `mcp-server/dist` (esbuild metafile; the real dist is never moved)', () => {
+    expect(bundleInputs.length).toBeGreaterThan(0);
+    expect(bundleInputs.filter((p) => p.replace(/\\/g, '/').includes('mcp-server/dist/'))).toEqual([]);
+  });
 
   test('carries no live-introspection or stdio-transport code', () => {
     const text = fs.readFileSync(bundlePath, 'utf8');
