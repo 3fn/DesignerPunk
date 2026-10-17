@@ -512,7 +512,7 @@ Button components resolve tokens through the Rosetta System's semantic-to-primit
 ## Component Metadata
 
 ### Button-CTA — Metadata
-- **Purpose**: Provide a prominent call-to-action button for primary user actions like submitting forms, confirming dialogs, or starting flows.
+- **Purpose**: Provide a prominent call-to-action button for primary user actions.
 - **Contexts**: forms, modals, onboarding-flows, dashboards
 
 ### Button-Icon — Metadata
