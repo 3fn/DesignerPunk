@@ -57,7 +57,7 @@ export const BlendTokenValues = {
   /**
    * Disabled state desaturation - blend300 (12%)
    * @deprecated 2026-07-15 — DesignerPunk does not support disabled states; if an action
-   * is unavailable, do not render the component. Scheduled for removal at the next major.
+   * is unavailable, do not render the component. Retained for backward compatibility; removal is not scheduled.
    */
   disabledDesaturate: 0.12,
   /** Icon optical balance lightening - blend200 (8%) */
@@ -95,7 +95,7 @@ export interface BlendUtilitiesResult {
    * @returns Desaturated hex color string for disabled state
    * @deprecated 2026-07-15 — DesignerPunk does not support disabled states; if an action
    * is unavailable, do not render the component. For non-disabled desaturation, use the
-   * generic desaturate() utility. Scheduled for removal at the next major.
+   * generic desaturate() utility. Retained for backward compatibility; removal is not scheduled.
    */
   disabledColor: (baseColor: string) => string;
   
@@ -249,7 +249,7 @@ export function createBlendUtilities(): BlendUtilitiesResult {
     hoverColor: (baseColor: string) => darkerBlend(baseColor, BlendTokenValues.hoverDarker),
     pressedColor: (baseColor: string) => darkerBlend(baseColor, BlendTokenValues.pressedDarker),
     focusColor: (baseColor: string) => saturate(baseColor, BlendTokenValues.focusSaturate),
-    // deprecated 2026-07-15 (no-disabled-states philosophy) — removal at next major
+    // deprecated 2026-07-15 (no-disabled-states philosophy) — retained for backward compatibility, removal not scheduled
     disabledColor: (baseColor: string) => desaturate(baseColor, BlendTokenValues.disabledDesaturate),
     iconColor: (baseColor: string) => lighterBlend(baseColor, BlendTokenValues.iconLighter),
     

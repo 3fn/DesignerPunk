@@ -51,3 +51,5 @@
 - **RL-11**: Upgrading step 5 (CHANGELOG and notes) and notes L19 say the generated-output change is the version in each file plus, in `DesignTokens.dtcg.json`, the one `deprecatedReason` string; "no token value changed" is kept.
 - **RL-12**: the CHANGELOG write-scope parenthetical states what was observed (Sparky refused to create `src/hello.ts`, with and without an in-session yes) and marks the screen-code refusal as the consequence.
 - **RL-13**: one CHANGELOG Known-limitations line for the blend deprecation, and the notes' blend line extended to the token's own `description` and the wrappers' messages; both name the new record `.kiro/issues/2026-10-16-blend-deprecation-next-major-doc-correction.md`.
+
+**2026-10-17 — RL-17 acknowledged (Ada)**: the two `.kiro/issues/` writes in #383 (`a902c44b5`) were outside this grant's path list and my charter writeScope at the time; the content was what RL-13 asked for. Since ballot `2026-10-17-standing-write-scope-six-roots` (ratified 2026-10-17), `.kiro/issues/**` is standing scope for every seat under its header-owner rule (RS-30's written home).
