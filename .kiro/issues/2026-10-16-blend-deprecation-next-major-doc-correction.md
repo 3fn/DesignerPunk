@@ -40,8 +40,10 @@ The `description` edit is a source text change, not a value change: `token-index
 - **Precedent**: #383 — the grant and the correction ride ONE PR on Peter's direction, so the grant is active when the diff is judged against it.
 - **Owner of the granted paths**: `src/blend/**` belongs to Lina's side of the house by charter; the wrappers' owner is consulted through the PR body's `**Consulted**:` line (added by the orchestrator), not by Ada. The change is comment, doc-comment and deprecation-message text only; no signature, value or behaviour changes.
 
-**Grant paths**: src/blend/ThemeAwareBlendUtilities.web.ts, src/blend/ThemeAwareBlendUtilities.ios.swift, src/blend/ThemeAwareBlendUtilities.android.kt, src/blend/OklchBlendCalculator.ts, src/blend/__tests__/InteractionStateAudit.test.ts
+**Grant paths**: src/blend/ThemeAwareBlendUtilities.web.ts, src/blend/ThemeAwareBlendUtilities.ios.swift, src/blend/ThemeAwareBlendUtilities.android.kt, src/blend/OklchBlendCalculator.ts, src/blend/__tests__/InteractionStateAudit.test.ts, docs/token-system-overview.md
+
+`docs/token-system-overview.md` (L389, the site the first re-grep list missed) is not in Ada's charter writeScope either; its last edits were Ada's deprecation PRs (#83, #89), so the correction is hers and is granted here.
 
 **Wording used**: "deprecated since 2026-07-15, retained for backward compatibility; removal is not scheduled" (long form), "retained for backward compatibility, removal not scheduled" (table cells and one-line comments). No release is named; only a ruling that names the major release schedules removal.
 
-**Sites not on this record's list** (found by the re-grep, NOT changed here — outside the grant and the PR's file list): `docs/token-system-overview.md` L389 ("removal at next major"); frozen onboarding fixtures under `tests/onboarding-trio/fixtures/**` (born-cc, born-kiro) that carry copies of the old `BlendTokens.ts` and DTCG/Figma text. Routed to the orchestrator in the PR hand-back.
+**Sites not on this record's list** (found by the re-grep, NOT changed here — outside the grant and the PR's file list; `docs/token-system-overview.md` L389 was found the same way and is now fixed and granted above): frozen onboarding fixtures under `tests/onboarding-trio/fixtures/**` (born-cc, born-kiro) that carry copies of the old `BlendTokens.ts` and DTCG/Figma text. Routed to the orchestrator in the PR hand-back.
