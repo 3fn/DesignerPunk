@@ -184,6 +184,12 @@ signer: sparky
 
 *Prior ruling (phase two)*: assented `no-consumer-counterpart`.
 
+## `#frontmatter:writeScope[.kiro/issues/**]`
+
+signer: sparky
+
+**ASSENT — `no-consumer-counterpart`, `surviving: []`** (first signature, 2026-10-17; added by ballot `2026-10-17-standing-write-scope-six-roots` § 2.5 / § 5 item 1). `subtraction-3` applies: `.kiro/issues/**` is this repo's stewardship instrument, meaning the `.kiro/issues/README.md` rules, Thurgood's monthly walk, and rule 9's claims-pass finding on out-of-rule edits. `init` creates no `.kiro/issues/` in a consumer repo, so a consumer's Sparky has nothing there to author, append to, or be walked against, and gets no scope. I own no issue record today (I appear only as a blind query author in the discovery-study charter), so the row removes no function I exercise.
+
 ## `#mcp-practice-notes`
 
 signer: sparky
