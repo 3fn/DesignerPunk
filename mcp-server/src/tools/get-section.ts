@@ -30,7 +30,8 @@ export const getSectionTool = {
   description:
     'Get specific document section by heading. Returns section content with parent ' +
     'context, a stable sectionId, and siblingHeadings (adjacent sections under the ' +
-    'same parent — a cue that more may exist). For a heading that occurs more than ' +
+    'same parent — a cue that more may exist), and, for a bannered doc, its ' +
+    'audienceBanner (omitted otherwise). For a heading that occurs more than ' +
     'once, pass "parent" or "sectionId" to disambiguate; otherwise the response ' +
     'lists the candidate occurrences. RULE: when retrieving a multi-section logical ' +
     'unit, call get_document_summary first (summary-first) so sibling sections are ' +
