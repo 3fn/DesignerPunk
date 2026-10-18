@@ -3,11 +3,11 @@
 **Date**: 2026-10-18
 **Status**: ACTIVE
 **Owner**: Thurgood (RELEASE-FLOW text) · Ada (the script)
-**Trigger**: before release-5 step 5.3 — fix lands first, or a dated waiver line here
+**Trigger**: `release:next:phase-1` — the fix lands first, or a dated waiver line here. *(Re-ruled 2026-10-18, Thurgood, for both owners: was "before release-5 step 5.3". Step 5.3 runs `scripts/release-publish.ts` in a fresh clone at the tag, so a fix that is not in the tagged release squash S does not hold at 5.3; the phase-1 token fires at S. Authority: ballot 2026-10-18-obligation-drain-and-release-falsity-floor M2 back-fill, the application PR `chore/ballot-sitting-application`.)*
 **Source**: RS-32, Stacy's RELEASE phase 2 for 16.0.0 (`.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.0.0.md`, L735 and L793). Stacy named the gap and asked the question; she did not draft it. Run record: `docs/releases/16.0.0/publish-verification.txt`, the 5.3 duplicate-run section.
 **Grant paths**: none here — the fixing PR touches `.kiro/hooks/RELEASE-FLOW.md` (law; `**Consulted**: Ada`, Peter-merged) and/or `scripts/release-publish.ts` (Ada, standing)
 **Consulted**: none needed — filing only
-**Class**: P2 obligation (proposed — the option-D class header; that ballot is not yet drafted)
+**Class**: P2 obligation (guard) · owed-act *(set 2026-10-18, Thurgood, under `.kiro/issues/README.md` rule 12; the `(guard)` reading is ballot 2026-10-18-obligation-drain-and-release-falsity-floor M5's; under F-A1 (b) a P2 `(guard)` escalates at its first lapse, rule 11)*
 
 ## The incident
 
