@@ -3,7 +3,7 @@
 **Date**: 2026-10-18
 **Status**: ACTIVE
 **Owner**: Thurgood (owner of `tools/agent-generator/regrounding/verify-signing-chain.ts` under ballot `2026-10-17-standing-write-scope-six-roots` F-1 Option B)
-**Trigger**: `merge:#<PR>` — the PR carrying this fix closes it. *(Placeholder: the PR number is filled in when the PR opens; until then this line is not a token and is a walk finding if it survives the merge.)*
+**Trigger**: `merge:#409` — the PR carrying this fix closes it.
 **Source**: Stacy's class option, 2026-10-18 (relayed by the orchestrator), after two of her C1 re-confirm commits carried `Agent: Stacy` in a paragraph above the final one: git's `%(trailers:key=Agent)` returned empty, `verify-signing-chain` link 3 failed with "signing commit carries no Agent: trailer", and the merge-only rule forced a branch re-cut.
 **Grant paths**: none — the fix is inside Thurgood's standing scope (`tools/agent-generator/regrounding/*` by file, tests under `tools/agent-generator/__tests__/`).
 **Consulted**: none needed — filing only; the fix is the owner's own instrument and changes no law and no pass/fail outcome
