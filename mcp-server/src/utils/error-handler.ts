@@ -8,6 +8,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { resolveLogsDir } from './logs-dir';
 
 /**
  * Error types supported by the error handler
@@ -43,9 +44,9 @@ export interface ErrorLogEntry {
 }
 
 /**
- * Default log directory path
+ * Default log directory: absolute, never under the working directory
+ * (see utils/logs-dir.ts; was cwd-relative 'logs').
  */
-const DEFAULT_LOG_DIR = 'logs';
 const DEFAULT_LOG_FILE = 'errors.log';
 
 /**
@@ -55,7 +56,7 @@ export class ErrorHandler {
   private logDir: string;
   private logFile: string;
 
-  constructor(logDir: string = DEFAULT_LOG_DIR) {
+  constructor(logDir: string = resolveLogsDir()) {
     this.logDir = logDir;
     this.logFile = path.join(logDir, DEFAULT_LOG_FILE);
   }
@@ -146,8 +147,6 @@ export class ErrorHandler {
     message: string,
     context?: Record<string, unknown>
   ): void {
-    this.ensureLogDirectory();
-
     const logEntry: ErrorLogEntry = {
       timestamp: new Date().toISOString(),
       errorType,
@@ -159,6 +158,7 @@ export class ErrorHandler {
     const logLine = JSON.stringify(logEntry) + '\n';
 
     try {
+      this.ensureLogDirectory();
       fs.appendFileSync(this.logFile, logLine);
     } catch (error) {
       // If logging fails, output to console as fallback

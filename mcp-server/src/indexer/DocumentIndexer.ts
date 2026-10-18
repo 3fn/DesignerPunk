@@ -3,7 +3,9 @@ import * as path from 'path';
 import { extractMetadata } from './metadata-parser';
 import { extractFrontmatterInfo } from './frontmatter-parser';
 import { extractHeadingStructure, extractDeepHeadings, WithDeepSections } from './heading-parser';
-import { resolveSection, SectionLookup } from './section-parser';
+import { resolveSection, SectionLookup, deepHeadingSuggestions } from './section-parser';
+import { extractAudienceBanner } from './audience-banner';
+import { resolveLogsDir } from '../utils/logs-dir';
 import { extractCrossReferences, CrossReference as ParsedCrossReference } from './cross-ref-parser';
 import { estimateTokenCount } from '../utils/token-estimator';
 import { determineIndexHealth } from './index-health';
@@ -91,9 +93,10 @@ export class DocumentIndexer {
   /**
    * Create a new DocumentIndexer
    * 
-   * @param logsDirectory - Directory for log files (default: 'logs')
+   * @param logsDirectory - Directory for log files (default: `resolveLogsDir()` — absolute,
+   *   never under the working directory; see utils/logs-dir.ts)
    */
-  constructor(logsDirectory: string = 'logs') {
+  constructor(logsDirectory: string = resolveLogsDir()) {
     this.logsDirectory = logsDirectory;
   }
 
@@ -263,6 +266,9 @@ export class DocumentIndexer {
     // Estimate token count for full document
     const tokenCount = estimateTokenCount(content);
 
+    // P-1: the audience banner rides the summary (present only when the doc carries one).
+    const audienceBanner = extractAudienceBanner(content);
+
     return {
       path: filePath,
       metadata: {
@@ -275,7 +281,8 @@ export class DocumentIndexer {
       },
       outline,
       crossReferences: crossReferenceInfo,
-      tokenCount
+      tokenCount,
+      ...(audienceBanner !== undefined ? { audienceBanner } : {})
     };
   }
 
@@ -370,9 +377,15 @@ export class DocumentIndexer {
       throw error;
     }
 
-    // not_found — provide helpful error with available sections.
+    // not_found — provide helpful error with available sections: the H2 list
+    // (unchanged), then any H3/H4 that shares a word with the request (P-4), so a
+    // reader who missed a deep heading is pointed at it, not one level too coarse.
     const outline = extractHeadingStructure(content);
-    const availableSections = outline.map((s) => s.heading);
+    const h2s = outline.map((s) => s.heading);
+    const deep = opts.heading
+      ? deepHeadingSuggestions(content, opts.heading).filter((h) => !h2s.includes(h))
+      : [];
+    const availableSections = [...h2s, ...deep];
     const what = opts.sectionId
       ? `Section id "${opts.sectionId}"`
       : `Section "${opts.heading}"` + (opts.parent ? ` under parent "${opts.parent}"` : '');
@@ -898,15 +911,15 @@ export class DocumentIndexer {
 
     const logLine = JSON.stringify(logEntry) + '\n';
 
-    // Ensure logs directory exists
-    if (!fs.existsSync(this.logsDirectory)) {
-      fs.mkdirSync(this.logsDirectory, { recursive: true });
+    // Diagnostics only: a log that cannot be written never fails indexing.
+    try {
+      if (!fs.existsSync(this.logsDirectory)) {
+        fs.mkdirSync(this.logsDirectory, { recursive: true });
+      }
+      fs.appendFileSync(path.join(this.logsDirectory, 'index-state.log'), logLine, 'utf-8');
+    } catch (error) {
+      console.error('Failed to write to index-state log:', error);
     }
-
-    const logPath = path.join(this.logsDirectory, 'index-state.log');
-    
-    // Append to log file
-    fs.appendFileSync(logPath, logLine, 'utf-8');
   }
 
   /**

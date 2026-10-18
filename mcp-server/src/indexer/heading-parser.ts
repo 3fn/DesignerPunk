@@ -51,32 +51,46 @@ import { SectionOutline } from '../models/DocumentSummary.js';
  * ```
  */
 /**
- * Yield the lines of `content` that lie OUTSIDE fenced code blocks (``` or ~~~).
- * CommonMark fence rules: an opening fence is ≥ 3 backticks or tildes with up to 3 spaces of
- * indentation (a backtick fence's info string may not contain backticks); it closes on a line of the
- * same character, at least as long, with nothing after it; an unclosed fence runs to the end.
+ * Per-line fence mask: `mask[i]` is true when line `i` is a fence delimiter or lies inside a fenced
+ * code block (``` or ~~~). CommonMark fence rules: an opening fence is ≥ 3 backticks or tildes with
+ * up to 3 spaces of indentation (a backtick fence's info string may not contain backticks); it
+ * closes on a line of the same character, at least as long, with nothing after it; an unclosed
+ * fence runs to the end.
+ *
+ * Exported so `section-parser.ts` (get_section addressing) applies the SAME fence rule as the
+ * outline and find_docs (C-2, 2026-10-18).
  */
-function linesOutsideFences(content: string): string[] {
-  const out: string[] = [];
+export function fenceMask(lines: string[]): boolean[] {
+  const mask: boolean[] = new Array(lines.length).fill(false);
   let fence: { char: string; len: number } | null = null;
-  for (const line of content.split('\n')) {
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     const fenceMatch = /^ {0,3}(`{3,}|~{3,})(.*)$/.exec(line);
     if (fenceMatch) {
       const marker = fenceMatch[1];
       if (fence === null) {
         if (!(marker[0] === '`' && fenceMatch[2].includes('`'))) {
           fence = { char: marker[0], len: marker.length };
+          mask[i] = true;
         }
         continue;
       }
+      mask[i] = true;
       if (marker[0] === fence.char && marker.length >= fence.len && fenceMatch[2].trim() === '') {
         fence = null;
       }
       continue;
     }
-    if (fence === null) out.push(line);
+    if (fence !== null) mask[i] = true;
   }
-  return out;
+  return mask;
+}
+
+/** Yield the lines of `content` that lie OUTSIDE fenced code blocks (see {@link fenceMask}). */
+function linesOutsideFences(content: string): string[] {
+  const lines = content.split('\n');
+  const mask = fenceMask(lines);
+  return lines.filter((_, i) => !mask[i]);
 }
 
 export function extractHeadingStructure(content: string): SectionOutline[] {

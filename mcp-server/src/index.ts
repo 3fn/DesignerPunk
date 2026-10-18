@@ -25,6 +25,7 @@ import { DocumentIndexer } from './indexer/DocumentIndexer';
 import { QueryEngine, QueryMetrics } from './query/QueryEngine';
 import { FileWatcher } from './watcher/FileWatcher';
 import { StalenessGate, isImmutableContext } from './staleness/StalenessGate';
+import { resolveLogsDir } from './utils/logs-dir';
 
 // Import tool definitions and handlers
 import {
@@ -58,7 +59,6 @@ import {
 const SERVER_NAME = 'mcp-documentation-server';
 const SERVER_VERSION = '0.1.0';
 const DEFAULT_STEERING_DIR = 'governance/';
-const DEFAULT_LOGS_DIR = 'mcp-server/logs';
 
 // Tool registration (Spec 123 Task 4, C8) — the single source of truth for what
 // this server actually registers. `getHealthStatusTool` is exported from `./tools`
@@ -99,8 +99,9 @@ class MCPDocumentationServer {
   constructor(steeringDirectory: string = DEFAULT_STEERING_DIR) {
     this.steeringDirectory = steeringDirectory;
 
-    // Initialize DocumentIndexer with logs directory
-    this.indexer = new DocumentIndexer(DEFAULT_LOGS_DIR);
+    // Initialize DocumentIndexer with logs directory — absolute, never under the
+    // working directory (utils/logs-dir.ts; was the cwd-relative mcp-server/logs).
+    this.indexer = new DocumentIndexer(resolveLogsDir());
 
     // Initialize QueryEngine with metrics logging
     this.queryEngine = new QueryEngine(this.indexer, this.logMetrics.bind(this));
