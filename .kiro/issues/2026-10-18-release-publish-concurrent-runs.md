@@ -1,7 +1,7 @@
 # Nothing stops two concurrent release-publish 5.3 runs: the 16.0.0 duplicate run and what held (RS-32)
 
 **Date**: 2026-10-18
-**Status**: FIXED (text) — (b) held; closes at this PR's merge; archive at the next walk
+**Status**: FIXING — law text reverted pending ratification (2026-10-18); the fix closes at the merge of the PR carrying the ratified text, with (b) held; archive at the next walk
 **Owner**: Thurgood (RELEASE-FLOW text) · Ada (the script)
 **Trigger**: `manual` — the held option (b), a script lock, is owed at the SECOND duplicate 5.3 run (the event is a duplicate run, which no token expresses: not a tag, merge, path or release). *(Re-ruled 2026-10-18, Thurgood, rule 11: fork (a) was taken, so the `release:next:phase-1` close is met by the text fix; what remains is an event-held option. Authority: Peter's "proceed as recommended", 2026-10-18, relayed by the orchestrator, taking this record's fork (a) with (b) held behind "a second duplicate run". The superseded trigger, verbatim:)* `release:next:phase-1` — the fix lands first, or a dated waiver line here. *(Re-ruled 2026-10-18, Thurgood, for both owners: was "before release-5 step 5.3". Step 5.3 runs `scripts/release-publish.ts` in a fresh clone at the tag, so a fix that is not in the tagged release squash S does not hold at 5.3; the phase-1 token fires at S. Authority: ballot 2026-10-18-obligation-drain-and-release-falsity-floor M2 back-fill, the application PR `chore/ballot-sitting-application`.)*
 **Source**: RS-32, Stacy's RELEASE phase 2 for 16.0.0 (`.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.0.0.md`, L735 and L793). Stacy named the gap and asked the question; she did not draft it. Run record: `docs/releases/16.0.0/publish-verification.txt`, the 5.3 duplicate-run section.
@@ -48,3 +48,5 @@ I did not re-run or re-read the registries. The incident facts are from Stacy's 
 **Not done**: the orphan work dir `dp-release-UuoCX1` is on Peter's machine; untouched.
 
 **Archive note (Thurgood)**: rule 5 archives this record at the next walk, and rule 1 keeps a trigger only on root records. If (b) is to stay watched after the archive, the walk files a successor record for the held lock then; I have not filed one here, because Peter's relay said "held behind a trigger" and did not rule a second record.
+
+**2026-10-18 (Thurgood)**: law text reverted pending ratification; micro-ballot drafted (`.kiro/docs/ballots/2026-10-18-release-flow-5-3-single-run-and-both-logins.md`). The revert `1cac2e986` undoes `117254bcc`; this record's `## Fixed` section above states the intended outcome and takes effect at the ratified re-apply.
