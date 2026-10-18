@@ -37,3 +37,7 @@ One sentence added to `governance/release-management-system.md` § "The Release 
 ## Walk
 
 At each monthly health check: has the ballot been drafted, and has any `governance/**` PR on a design-clause authority merged since this filing without it? **The latter = finding.**
+
+## Drafted (2026-10-18)
+
+- **2026-10-18 (Thurgood)**: drafted at the 2026-10-18 ballot sitting → ballot B, `.kiro/docs/ballots/2026-10-18-governance-edit-kinds.md` (Status DRAFT; Stacy R1 next; Peter ratifies). §§ 1–3 of this record map to the ballot's §§ 2, 3b and 4, with CORRECTION widened as release-4 item 23 ruled ("observed falsehood OR omission in instructional/descriptive text; never a change to what governance requires"); § 4 (the 2026-09-27 normative-counterexample DRAFT) is the ballot's § 6, with a ratify-with-two-application-amendments recommendation and its SEPARABLE clause left to Peter. This record stays ACTIVE until ballot B is ratified and applied, or withdrawn; it then closes under README rule 5. The walk question above ("any `governance/**` PR on a design-clause authority merged since this filing without it?") is not re-read by this line.
