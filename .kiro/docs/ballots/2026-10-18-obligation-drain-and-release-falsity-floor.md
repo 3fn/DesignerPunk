@@ -2,8 +2,8 @@
 
 **Date**: 2026-10-18
 **Drafted by**: Thurgood (Civitas steward), at the ballot sitting Peter opened on 2026-10-18 ("Let's do the ballot sitting next"). Woven at R2 from Stacy R1 (§ 8).
-**Status**: **DRAFT** — not ratified. No edit site below is applied. **Merge = nothing; ratification is by Peter's word on the record**, committed to this file's Status line before any edit site is applied (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
-**Held under row 28**: the sitting's PR carries an `**Open for Peter**:` line for every fork (§ 4) and every item marked "Peter rules", and is **not merged until Peter answers each on the record**.
+**Status**: **RATIFIED (Peter, 2026-10-18)**, relayed by the orchestrator — "Go with your recommendations" (the forks and the measures) and "All as recommended" (the ten marked items), both 2026-10-18 (§ 9). This commit is the record (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"), made before any edit site is applied; the application is a later PR. *(Was: DRAFT.)*
+**Held under row 28**: the sitting's PR carries an `**Open for Peter**:` line for every fork (§ 4) and every item marked "Peter rules", and is **not merged until Peter answers each on the record**. *(Answered by Peter on the record, 2026-10-18 — § 9.)*
 **Authority for drafting**: release-4 rulings (`.kiro/specs/123-consumer-distribution/completion/release-4-rulings-2026-10-15.md`) **item 23** (class option A, "Ruled"), **item 26** (class option D, "RULED by Peter 2026-10-15 ('Approved'): fork D-1 = the ESCALATION LADDER now (no script …); two ballots in one sitting, Stacy required reviewer") and **row 28** (RL-14, ruled 2026-10-17; its law text "rides the item-23 `release-falsity-floor` ballot sitting").
 **Sibling**: ballot B, `2026-10-18-governance-edit-kinds.md` (same sitting).
 **Required reviewer**: **Stacy** — she reads the walk record at RELEASE phase 1, may dispute P0 readings under Q5, and is the seat whose findings (RS-13, RS-27, RS-28, O-17) this ballot answers.
@@ -296,10 +296,25 @@ Then:
 
 ## 9. Rulings (Peter)
 
-*(empty)*
+- **2026-10-18 — the forks and the measures (Peter, relayed by the orchestrator): "Go with your recommendations."** Outcome:
+  - **M1–M8 and R-1: all ratified.**
+  - **F-A1 = (b)**: a `(guard)` P2 escalates at **lapse 1**, like P0 ("a weakened guard hides other failures"). Operative wording for application, rule 11's escalation sentence: "at the **second** lapse of a P1 or a P2 `(record)` record, or the **first** of a P0 or a P2 `(guard)` record".
+  - **F-A2 = (a)**: the archive rule only (one walker); W-8's release-walk discharge is not adopted.
+  - **F-A3 = (b)**: every floor-class row goes to Peter in one batch per release. Woven into M7 and the `release-falsity-floor` rule line before this commit (`70df7b5eb`).
+- **2026-10-18 — the ten marked items (Peter, relayed): "All as recommended."** The recommendations came from the read-only owner consults of 2026-10-18 (Thurgood, Stacy). The numbering follows the R2 report's list; the mapping of items 1–4, 6 and 8 is inferred from that order, and items 5, 7, 9 and 10 are confirmed by their amendments' content.
+  - **Ratified as written**: 1, M1b; 2, `release:next:phase-1`; 3, the item-3a placement; 4, M4 [a] ("a lapsed fix-now returns without that option"); 6, M6's rule-5 clauses; 8, M8 "a pointer counts".
+  - **Amended (Stacy)**:
+    - 5, M4 [b]: + "a grant still open at its fixing PR's merge is a walk finding";
+    - 7, O-18's reach: + "…and rides the release's Peter batch, never silent";
+    - 9, M8 "'Not now — merge' is an answer": + "and the question is filed under rule 10 with a trigger".
+    - Each was woven in `70df7b5eb`.
+  - **Amended (Thurgood)**: 10, ballot B's enforcement-code list (lives in ballot B).
+- **Recorded for the application (Stacy's text, relayed 2026-10-18)**: her phase-1 line per floor-class row is "the walk-record line (record path, `main at:` SHA), the citation of Peter's dated answer (quoted words, dated before the walk PR's `mergedAt`), and Stacy's re-check of the surface at S (`git show S:<path>`, falsehood fixed or disclosed); where a surface can't be re-checked, `not re-verified — <why>`." It rides her RELEASE trigger row (§ 7; her `release-falsity-floor` conditions).
+- **Owed**: the application PR (§ 7), Peter-merged.
 
 ## 10. Consult ledger
 
 - 2026-10-15, option D: Thurgood ×2 (backlog consult; cross-read), Stacy ×1 — read-only; digests outside the repo, summarized in rulings item 26.
 - 2026-10-15, class option A: Thurgood (round 2, the principle); Lina, Ada (floors fitting under it) — rulings record L9.
 - 2026-10-18: Stacy R1 (required reviewer, `59e00f33b`), woven at THURGOOD R2 (§ 8).
+- 2026-10-18: the ten-item owner consults (Thurgood, Stacy; read-only) on the marked items; Peter adopted their recommendations ("All as recommended", § 9).

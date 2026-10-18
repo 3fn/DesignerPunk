@@ -2,8 +2,8 @@
 
 **Date**: 2026-10-18
 **Drafted by**: Thurgood (Civitas steward), at the ballot sitting Peter opened on 2026-10-18. Woven at R2 from Stacy R1 (§ 9).
-**Status**: **DRAFT** — not ratified. No edit site below is applied. **Merge = nothing; ratification is by Peter's word on the record**, committed to this file's Status line before any edit site is applied (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
-**Held under row 28**: the sitting's PR carries an `**Open for Peter**:` line for F-B1, for § 6's options (i)–(iv) and its SEPARABLE clause, and for every item marked "Peter rules", and is **not merged until Peter answers each on the record**.
+**Status**: **RATIFIED (Peter, 2026-10-18)**, relayed by the orchestrator — "Go with your recommendations" and "All as recommended", both 2026-10-18 (§ 10). This commit is the record (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"), made before any edit site is applied; the application is a later PR. *(Was: DRAFT.)*
+**Held under row 28**: the sitting's PR carries an `**Open for Peter**:` line for F-B1, for § 6's options (i)–(iv) and its SEPARABLE clause, and for every item marked "Peter rules", and is **not merged until Peter answers each on the record**. *(Answered by Peter on the record, 2026-10-18 — § 10.)*
 **Authority for drafting**:
 - the charter `.kiro/issues/2026-10-15-123-governance-edit-kinds-ballot.md` (§§ 1–4), from Peter's rulings (3) and (4)(b) of 2026-10-15 (recorded in `.kiro/specs/123-consumer-distribution/completion/task-28-completion.md` L16);
 - release-4 rulings item 23: the sitting "also carries the governance-edit-kinds ballot (with CORRECTION widened to **'observed falsehood OR omission in instructional/descriptive text; never a change to what governance requires'**) and the normative-counterexample DRAFT".
@@ -190,10 +190,18 @@ No register row is proposed, and Stacy agrees (R1 item 8). **Cost of the sitting
 
 ## 10. Rulings (Peter)
 
-*(empty — and § 6's options (i)–(iv) on the 2026-09-27 DRAFT, plus its SEPARABLE pick)*
+- **2026-10-18 (Peter, relayed by the orchestrator): "Go with your recommendations."** Outcome:
+  - **§ 2** (the three kinds), **§ 3a**, **§ 3b** and **§ 4**: ratified.
+  - **F-B1 = (b)**: the kinds cover every Peter-merged law path (`governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, the prose of `canonical/agents/**`); "governance text" includes them; an edit to a seat's write scope or role is always LAW. Woven into § 2 and § 3a before this commit (`b28d335a8`). The consumer-rendering re-check is Stacy's at application.
+  - **§ 6, the 2026-09-27 DRAFT: option (i)** — ratified with the re-anchor only. Amendment (2) is withdrawn, and (2b) is not adopted as a separate measure. Recorded on that file's own Status line in this commit.
+  - **Its SEPARABLE clause**: "carried (not scheduled as a named attack)", as relayed. **Reading for application, to be confirmed**: the `[Separable:]` sentence is **not** adopted, because a suspicion with no counterexample is carried, not pre-registered as an attack. The application PR carries an `**Open for Peter**:` line on this reading (row 28) until it is confirmed.
+- **2026-10-18 (Peter, relayed): "All as recommended"** — item 10, the reach of the enforcement-code list: **amended (Thurgood)** to add "every check named by a required job in `EXPECTED_CONTEXTS`" (`tools/agent-generator/verify-gate-registration.sh` L63). Woven in `b28d335a8`.
+- **§ 3b**: Stacy's CORRECTION clause ("…or whose only referent is governance text or enforcement code changed in the same PR (the ballot's § 2 list)"), in her words, woven in `b28d335a8`.
+- **Owed**: the application PR (§ 8), Peter-merged.
 
 ## 11. Consult ledger
 
 - 2026-10-15: Thurgood (edit kinds, round 2 — rulings record L46); Peter's rulings (3), (4)(b).
 - 2026-09-27: Stacy (the § 6 DRAFT's text and R1).
 - 2026-10-18: Stacy R1 (required reviewer, `59e00f33b`), woven at THURGOOD R2 (§ 9).
+- 2026-10-18: the ten-item owner consults (Thurgood, Stacy; read-only) on the marked items; Peter adopted their recommendations ("All as recommended", § 10).
