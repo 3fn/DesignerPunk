@@ -218,6 +218,12 @@ The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consu
 
 **Re-sign (2026-09-29, `dba93df5`): ASSENT — 7 of 7. Refusal resolved.** The snapshot negative is **restored**, re-keyed to the package root: "never read DesignerPunk's un-themed base snapshots … (`node_modules/@3fn/core/dist/*.android.kt`)". That is the re-point my refusal asked for. It names the package's flattened files, not the consumer's own `generate` output, and the MCP positive is kept. Dropping "(see the Ground truth section)" is correct, because the consumer's Ground truth section no longer lists the DesignTokens trim. **Dependency accepted**: the glob `dist/*.android.kt` covers the top-level `DesignTokens.android.kt` but not `dist/android/DesignTokens.android.kt`. That file leaves the package at Task 16.3 (Ada's split). Until 16.3 merges, the subdirectory copy still ships and is not named. `native-2` no longer points a consumer at the flattened `DesignTokens` object: the "never" clause names it.
 
+## `#frontmatter:writeScope[.kiro/issues/**]`
+
+signer: data
+
+**ASSENT — `no-consumer-counterpart`, `surviving: []`** (first signature, 2026-10-17; added by ballot `2026-10-17-standing-write-scope-six-roots` § 2.5 / § 5 item 1). `subtraction-3` applies: `.kiro/issues/**` is this repo's stewardship instrument, meaning the `.kiro/issues/README.md` rules, Thurgood's monthly walk, and rule 9's claims-pass finding on out-of-rule edits. `init` creates no `.kiro/issues/` in a consumer repo, so a consumer's Data has nothing there to author, append to, or be walked against, and gets no scope. At consult I noted that rule 9 keys on the singular `**Owner**:` header while several records (including the build-verification harness charter) use `**Owners**:`; that is an ambiguity in the repo's own convention and does not bear on the consumer disposition.
+
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/android/DesignTokens.android.kt]`
 
 signer: data

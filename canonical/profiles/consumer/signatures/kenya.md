@@ -300,6 +300,16 @@ date: 2026-09-29
 
 **Re-sign 2026-09-29, after Thurgood's re-author batch `dba93df5`: ASSENT, `surviving: []`.** **Assent to `superseded-by writeScope[.kiro/specs/**]`.** The consumer's spec-writing area is the re-pointed `specs/**`. Our separate summary-doc tier folds into it; a consumer has no two-tier split.
 
+## `#frontmatter:writeScope[.kiro/issues/**]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:da4495fd22d50dccd4d3a7df6a11f943bb2e7a4bb57d21ccb8131f388be1768f
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-10-17
+
+**Ruling: ASSENT — `surviving: []` (first signature, 2026-10-17; row added by ballot `2026-10-17-standing-write-scope-six-roots` § 2.5 / § 5 item 1).** `subtraction-3` applies: `.kiro/issues/**` is DesignerPunk's stewardship instrument — the `.kiro/issues/README.md` rules, Thurgood's monthly walk, and rule 9's claims-pass finding on out-of-rule edits. `init` creates no `.kiro/issues/` in a consumer repo (checked `src/cli/init.ts` at `306863b6b`: no such scaffolding), so a consumer's Kenya has nothing there to author or be walked against, and gets no scope.
+
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/ios/DesignTokens.ios.swift]`
 
 signer: kenya

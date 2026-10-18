@@ -236,6 +236,9 @@ toolSubset:
 writeScope:
   - ".kiro/specs/**"
   - "docs/specs/**"
+  # Standing scope added by ballot 2026-10-17-standing-write-scope-six-roots (RATIFIED Peter 2026-10-17, #393):
+  # § 2.5 / § 5 item 1 — issue files, narrowed by .kiro/issues/README.md rule 9
+  - ".kiro/issues/**"
 kiro:
   keyboardShortcut: "ctrl+shift+d"
   welcomeMessage: "Hey! I'm Data, your Android platform engineer. I implement product screens in Jetpack Compose using DesignerPunk tokens and components. What are we building?"

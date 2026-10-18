@@ -234,6 +234,9 @@ toolSubset:
 writeScope:
   - ".kiro/specs/**"
   - "docs/specs/**"
+  # Standing scope added by ballot 2026-10-17-standing-write-scope-six-roots (RATIFIED Peter 2026-10-17, #393):
+  # § 2.5 / § 5 item 1 — issue files, narrowed by .kiro/issues/README.md rule 9
+  - ".kiro/issues/**"
 kiro:
   keyboardShortcut: "ctrl+shift+i"
   welcomeMessage: "Hey! I'm Kenya, your iOS platform engineer. I implement product screens in SwiftUI using DesignerPunk tokens and components. What are we building?"

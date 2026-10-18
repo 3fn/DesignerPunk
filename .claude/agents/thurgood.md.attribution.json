@@ -180,383 +180,383 @@
     {
       "lines": [
         48,
-        73
+        74
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#in-scope"
     },
     {
       "lines": [
-        74,
-        82
+        75,
+        83
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#out-of-scope"
     },
     {
       "lines": [
-        83,
-        93
+        84,
+        94
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#the-audit-vs-write-distinction"
     },
     {
       "lines": [
-        94,
-        97
+        95,
+        98
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#boundary-cases"
     },
     {
       "lines": [
-        98,
-        113
+        99,
+        114
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#domain-boundary-response-examples"
     },
     {
       "lines": [
-        114,
-        117
+        115,
+        118
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#operational-mode-spec-formalization:preamble"
     },
     {
       "lines": [
-        118,
-        120
+        119,
+        121
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#step-1-query-current-standards"
     },
     {
       "lines": [
-        121,
-        126
+        122,
+        127
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#step-2-transform-design-outline-requirementsmd"
     },
     {
       "lines": [
-        127,
-        131
+        128,
+        132
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#step-3-transform-design-outline-designmd"
     },
     {
       "lines": [
-        132,
-        138
+        133,
+        139
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#step-4-transform-design-outline-tasksmd"
     },
     {
       "lines": [
-        139,
-        143
+        140,
+        144
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#step-5-recommend-domain-review"
     },
     {
       "lines": [
-        144,
-        148
+        145,
+        149
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#spec-formalization-is-not-autonomous"
     },
     {
       "lines": [
-        149,
-        152
+        150,
+        153
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#operational-mode-audit:preamble"
     },
     {
       "lines": [
-        153,
-        155
+        154,
+        156
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#step-1-query-audit-methodology"
     },
     {
       "lines": [
-        156,
-        164
+        157,
+        165
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#step-2-gather-evidence"
     },
     {
       "lines": [
-        165,
-        167
+        166,
+        168
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#step-3-cross-reference-with-domain-docs"
     },
     {
       "lines": [
-        168,
-        174
+        169,
+        175
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#step-4-report-findings-with-severity"
     },
     {
       "lines": [
-        175,
-        180
+        176,
+        181
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#step-5-flag-domain-specific-issues"
     },
     {
       "lines": [
-        181,
-        185
+        182,
+        186
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#audit-is-analysis-not-implementation"
     },
     {
       "lines": [
-        186,
-        199
+        187,
+        200
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#operational-mode-test-governance"
     },
     {
       "lines": [
-        200,
-        203
+        201,
+        204
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#operational-mode-civitas-steward:preamble"
     },
     {
       "lines": [
-        204,
-        211
+        205,
+        212
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#the-three-layer-boundary"
     },
     {
       "lines": [
-        212,
-        217
+        213,
+        218
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#resolution-path-for-flagged-inconsistencies"
     },
     {
       "lines": [
-        218,
-        283
+        219,
+        284
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#trigger-types"
     },
     {
       "lines": [
-        284,
-        292
+        285,
+        293
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#steering-doc-lifecycle"
     },
     {
       "lines": [
-        293,
-        296
+        294,
+        297
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#the-q5-boundary-execution-claims-verification-is-stacys:preamble"
     },
     {
       "lines": [
-        297,
-        306
+        298,
+        307
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#the-charter-cut-ratified-verbatim"
     },
     {
       "lines": [
-        307,
-        315
+        308,
+        316
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#the-composed-learning-loop-your-standing-duties-on-every-claims-pass"
     },
     {
       "lines": [
-        316,
-        319
+        317,
+        320
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#the-caller-out-duty-the-mirror-clauses-enforcement-yours-to-fire"
     },
     {
       "lines": [
-        320,
-        329
+        321,
+        330
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#the-three-boundary-bounds-ratified-unsoftened"
     },
     {
       "lines": [
-        330,
-        333
+        331,
+        334
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#collaboration-model-domain-respect:preamble"
     },
     {
       "lines": [
-        334,
-        338
+        335,
+        339
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#trust-by-default"
     },
     {
       "lines": [
-        339,
-        344
+        340,
+        345
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#obligation-to-flag"
     },
     {
       "lines": [
-        345,
-        349
+        346,
+        350
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#graceful-correction"
     },
     {
       "lines": [
-        350,
-        354
+        351,
+        355
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#fallibility"
     },
     {
       "lines": [
-        355,
-        358
+        356,
+        359
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#documentation-governance-ballot-measure-model:preamble"
     },
     {
       "lines": [
-        359,
-        365
+        360,
+        366
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#the-process"
     },
     {
       "lines": [
-        366,
-        375
+        367,
+        376
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#what-this-means-in-practice"
     },
     {
       "lines": [
-        376,
-        385
+        377,
+        386
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#mcp-practice-notes"
     },
     {
       "lines": [
-        386,
-        389
+        387,
+        390
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#collaboration-standards:preamble"
     },
     {
       "lines": [
-        390,
-        398
+        391,
+        399
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#counter-arguments-are-mandatory"
     },
     {
       "lines": [
-        399,
-        401
+        400,
+        402
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#candid-over-comfortable"
     },
     {
       "lines": [
-        402,
-        404
+        403,
+        405
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#bias-self-monitoring"
     },
     {
       "lines": [
-        405,
-        409
+        406,
+        410
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#when-you-and-peter-disagree"
     },
     {
       "lines": [
-        410,
-        417
+        411,
+        418
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#what-you-own"
     },
     {
       "lines": [
-        418,
-        424
+        419,
+        425
       ],
       "op": "passthrough",
       "source": "canonical/agents/thurgood.md#what-you-dont-own"
     },
     {
       "lines": [
-        425,
-        426
+        426,
+        427
       ],
       "op": "render",
       "source": "C11:lane2-header"
     },
     {
       "lines": [
-        427,
-        490
+        428,
+        491
       ],
       "mode": "embed",
       "op": "resolve",
@@ -564,8 +564,8 @@
     },
     {
       "lines": [
-        491,
-        844
+        492,
+        845
       ],
       "mode": "embed",
       "op": "resolve",
@@ -573,27 +573,19 @@
     },
     {
       "lines": [
-        845,
-        848
+        846,
+        849
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        849,
-        850
-      ],
-      "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes"
-    },
-    {
-      "lines": [
-        851,
+        850,
         851
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[spec-requirements-format]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes"
     },
     {
       "lines": [
@@ -601,7 +593,7 @@
         852
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[spec-design-format]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[spec-requirements-format]"
     },
     {
       "lines": [
@@ -609,7 +601,7 @@
         853
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[spec-tasks-format]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[spec-design-format]"
     },
     {
       "lines": [
@@ -617,7 +609,7 @@
         854
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[task-type-classification]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[spec-tasks-format]"
     },
     {
       "lines": [
@@ -625,7 +617,7 @@
         855
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[audit-workflow]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[task-type-classification]"
     },
     {
       "lines": [
@@ -633,7 +625,7 @@
         856
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[contract-validation-process]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[audit-workflow]"
     },
     {
       "lines": [
@@ -641,7 +633,7 @@
         857
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[completion-doc-guidance]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[contract-validation-process]"
     },
     {
       "lines": [
@@ -649,7 +641,7 @@
         858
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[spec-planning-beyond]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[completion-doc-guidance]"
     },
     {
       "lines": [
@@ -657,7 +649,7 @@
         859
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[task-types-beyond]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[spec-planning-beyond]"
     },
     {
       "lines": [
@@ -665,7 +657,7 @@
         860
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[build-system-setup]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[task-types-beyond]"
     },
     {
       "lines": [
@@ -673,7 +665,7 @@
         861
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[completion-docs-beyond]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[build-system-setup]"
     },
     {
       "lines": [
@@ -681,7 +673,7 @@
         862
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[cross-ref-standards]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[completion-docs-beyond]"
     },
     {
       "lines": [
@@ -689,7 +681,7 @@
         863
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[file-organization]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[cross-ref-standards]"
     },
     {
       "lines": [
@@ -697,7 +689,7 @@
         864
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[hook-ops-detail]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[file-organization]"
     },
     {
       "lines": [
@@ -705,7 +697,7 @@
         865
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[audit-methodology-beyond]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[hook-ops-detail]"
     },
     {
       "lines": [
@@ -713,7 +705,7 @@
         866
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[bcv-beyond]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[audit-methodology-beyond]"
     },
     {
       "lines": [
@@ -721,7 +713,7 @@
         867
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[ci-enforced-guards]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[bcv-beyond]"
     },
     {
       "lines": [
@@ -729,7 +721,7 @@
         868
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[dev-workflow-detail-add]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[ci-enforced-guards]"
     },
     {
       "lines": [
@@ -737,7 +729,7 @@
         869
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.agents[ada]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.docs[dev-workflow-detail-add]"
     },
     {
       "lines": [
@@ -745,7 +737,7 @@
         870
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.agents[lina]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.agents[ada]"
     },
     {
       "lines": [
@@ -753,7 +745,7 @@
         871
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[0]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.agents[lina]"
     },
     {
       "lines": [
@@ -761,7 +753,7 @@
         872
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[1]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[0]"
     },
     {
       "lines": [
@@ -769,7 +761,7 @@
         873
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[2]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[1]"
     },
     {
       "lines": [
@@ -777,7 +769,7 @@
         874
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[3]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[2]"
     },
     {
       "lines": [
@@ -785,7 +777,7 @@
         875
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[4]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[3]"
     },
     {
       "lines": [
@@ -793,7 +785,7 @@
         876
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[5]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[4]"
     },
     {
       "lines": [
@@ -801,7 +793,7 @@
         877
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[6]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[5]"
     },
     {
       "lines": [
@@ -809,7 +801,7 @@
         878
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[7]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[6]"
     },
     {
       "lines": [
@@ -817,7 +809,7 @@
         879
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[8]"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[7]"
     },
     {
       "lines": [
@@ -825,23 +817,23 @@
         880
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:routes"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes.cues[8]"
     },
     {
       "lines": [
         881,
-        882
+        881
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:commands"
+      "source": "canonical/agents/thurgood.md#frontmatter:routes"
     },
     {
       "lines": [
-        883,
+        882,
         883
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:commands[governance-health-check]"
+      "source": "canonical/agents/thurgood.md#frontmatter:commands"
     },
     {
       "lines": [
@@ -849,7 +841,7 @@
         884
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:commands[validate-steering-metadata]"
+      "source": "canonical/agents/thurgood.md#frontmatter:commands[governance-health-check]"
     },
     {
       "lines": [
@@ -857,7 +849,7 @@
         885
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:commands[scan-cross-references]"
+      "source": "canonical/agents/thurgood.md#frontmatter:commands[validate-steering-metadata]"
     },
     {
       "lines": [
@@ -865,7 +857,7 @@
         886
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:commands[detect-affected-steering-docs]"
+      "source": "canonical/agents/thurgood.md#frontmatter:commands[scan-cross-references]"
     },
     {
       "lines": [
@@ -873,7 +865,7 @@
         887
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:commands[functional-suite]"
+      "source": "canonical/agents/thurgood.md#frontmatter:commands[detect-affected-steering-docs]"
     },
     {
       "lines": [
@@ -881,7 +873,7 @@
         888
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:commands[full-suite-with-performance]"
+      "source": "canonical/agents/thurgood.md#frontmatter:commands[functional-suite]"
     },
     {
       "lines": [
@@ -889,7 +881,7 @@
         889
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:commands[performance-lane]"
+      "source": "canonical/agents/thurgood.md#frontmatter:commands[full-suite-with-performance]"
     },
     {
       "lines": [
@@ -897,7 +889,7 @@
         890
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:commands[performance-isolated]"
+      "source": "canonical/agents/thurgood.md#frontmatter:commands[performance-lane]"
     },
     {
       "lines": [
@@ -905,7 +897,7 @@
         891
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
+      "source": "canonical/agents/thurgood.md#frontmatter:commands[performance-isolated]"
     },
     {
       "lines": [
@@ -913,7 +905,7 @@
         892
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#complete-task-tooling"
+      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
     },
     {
       "lines": [
@@ -921,52 +913,60 @@
         893
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+      "source": "canonical/shared/shared-catalog.yaml#complete-task-tooling"
     },
     {
       "lines": [
         894,
-        895
+        894
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+    },
+    {
+      "lines": [
+        895,
+        896
       ],
       "op": "render",
       "source": "canonical/shared/shared-catalog.yaml#record-first-ratification"
     },
     {
       "lines": [
-        896,
-        896
+        897,
+        897
       ],
       "op": "render",
       "source": "canonical/agents/thurgood.md#frontmatter:commands"
     },
     {
       "lines": [
-        897,
-        900
+        898,
+        901
       ],
       "op": "render",
       "source": "canonical/agents/thurgood.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        901,
-        904
+        902,
+        905
       ],
       "op": "render",
       "source": "canonical/agents/thurgood.md#frontmatter:preflight"
     },
     {
       "lines": [
-        905,
-        905
+        906,
+        906
       ],
       "op": "render",
       "source": "canonical/agents/thurgood.md#frontmatter:preflight[git status --porcelain]"
     },
     {
       "lines": [
-        906,
-        906
+        907,
+        907
       ],
       "op": "render",
       "source": "canonical/agents/thurgood.md#frontmatter:preflight"

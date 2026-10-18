@@ -40,7 +40,8 @@
       "allowedPaths": [
         ".kiro/specs/**",
         "docs/specs/**",
-        "product/**"
+        "product/**",
+        ".kiro/issues/**"
       ]
     }
   },

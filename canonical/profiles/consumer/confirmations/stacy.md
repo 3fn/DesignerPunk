@@ -56,9 +56,16 @@ date: 2026-09-27
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 confirmer: stacy
-canonicalHash: sha256:eb7326f4705918216be6d929ec192f58cd092d82110ee7fcb2c9b29eb07f3b1a
+canonicalHash: sha256:aa674a0127352f1c012ddfd8f8d9742d7470063ed604415526f83de6e8056d1c
 items: trigger-lens, trigger-release, trigger-symptom, trigger-closeout, trigger-midpoint, trigger-arming, trigger-gate, trigger-education, trigger-straggler, trigger-liveness, trigger-burst, finding-routing, merge-path-status
-date: 2026-10-03
+date: 2026-10-17
+
+**Re-confirmed 2026-10-17 (Req 11.6.5d).**
+- **What changed**: the ARMING row. Edit site 5a of the ratified ballot `.kiro/docs/ballots/2026-10-17-standing-write-scope-six-roots.md` (RATIFIED, Peter, 2026-10-17) adds the § 3 item 4 instrument-change trigger: the instrument-path Event, the instrument paths, the three reads with Peter's 2026-10-17 widening (the generator's `__tests__/fixtures/**`, the § 4 B checkers' tests by the tests-follow-the-module rule, and the three steward-verb tests), the known-gap clause, "an audit trigger, never a gate", and the cost. Under Peter's ruling on the 5a substitute, Thurgood applied my drafted row byte for byte (`2c8e448ff`) and this confirmation is my act over it.
+- **`trigger-arming`'s text, verified verbatim**: it equals the canonical ARMING line byte for byte, equals the row I drafted (3,088 bytes, compared with `cmp`), and is a verbatim substring of the unit (one occurrence). The item-text edit is Thurgood's authoring (`2c8e448ff`), not this act.
+- **What did not change**: the operative set, still 13 items. The row stays one `member` item, as at the 2026-09-28, 2026-09-29 and 2026-10-03 re-confirmations; the instrument-path reads sit inside the row's cells and are not split out. No other item's text moved. The canonicalHash moves from `sha256:eb7326f4705918216be6d929ec192f58cd092d82110ee7fcb2c9b29eb07f3b1a` to the value above.
+
+**Ruling: CONFIRMED at 13 items.**
 
 **Re-confirmed 2026-10-03 (Req 11.6.5d).**
 - **What changed**: the RELEASE row. Ballot `.kiro/docs/ballots/2026-10-03-hermetic-publish-path.md` (RATIFIED, Peter, 2026-10-03) § 5 item 6 replaced it with Stacy's § 10 [STACY R1] item (7) wording: the two-phase event cell, the appended phase-2 scope sentence, and the F-2 clause (F-2 ruled permitted, § 9). One period was added after "arming line" as the sentence separator. Canonical commit `59e2b7ff`.

@@ -241,6 +241,35 @@ writeScope:
   - "src/generators/**"
   - ".kiro/specs/**"
   - "docs/specs/**"
+  # Standing scope added by ballot 2026-10-17-standing-write-scope-six-roots (RATIFIED Peter 2026-10-17, #393):
+  # § 2.1 — the CLI (shares stated in the In Scope bullet)
+  - "src/cli/**"
+  # § 2.2 — scripts/, by file
+  - "scripts/generate-platform-tokens.ts"
+  - "scripts/generate-token-types.ts"
+  - "scripts/verify-opacity-types.ts"
+  - "scripts/build-browser-bundles.js"
+  - "scripts/build-name-contract.ts"
+  - "scripts/build-tool-manifest.ts"
+  - "scripts/floor-closure.ts"
+  - "scripts/pack-assert.ts"
+  - "scripts/release-publish.ts"
+  - "scripts/verify-publish-rail.sh"
+  - "scripts/check-package-name-drift.js"
+  - "scripts/jest.config.js"
+  - "scripts/esbuild-css-plugin.js"
+  - "scripts/fix-tokens-css.js"
+  - "scripts/audience-banner/**"
+  - "scripts/__bites__/**"
+  # § 2.3 — the docs MCP's packaging (Thurgood consulted)
+  - "mcp-server/package.json"
+  - "mcp-server/package-lock.json"
+  - "mcp-server/tsconfig.json"
+  - "mcp-server/jest.config.js"
+  # § 2.4 — your own hooks
+  - ".kiro/hooks/ada-*.kiro.hook"
+  # § 2.5 — issue files, narrowed by .kiro/issues/README.md rule 9
+  - ".kiro/issues/**"
 kiro:
   keyboardShortcut: "ctrl+shift+a"
   welcomeMessage: "Hey! I'm Ada, your Rosetta token specialist. I can help with token development, mathematical foundations, token compliance, and export pipeline work (DTCG, Figma, platform generators). What are we working on?"
@@ -288,6 +317,7 @@ Ada governs **all tokens in the repo** — ecosystem tokens that shipped with `@
 - Pipeline configuration (`src/config/defineConfig.ts`, `src/config/ConfigLoader.ts`) — portable pipeline
 - Platform generator theme-aware output — CSS `data-theme` scoping, Swift `@Environment`, Kotlin `CompositionLocal`, DTCG/Figma theme metadata
 - `designerpunk.config.ts` authoring guidance — pipeline configuration, NOT token vocabulary. New token creation follows the standard governance process.
+- **Standing write scope — six roots (ballot 2026-10-17-standing-write-scope-six-roots)**: your write scope adds the CLI (`src/cli/**`), the `scripts/` files for token, type and platform generation, build, packaging and release, the docs MCP's packaging files, your own `.kiro/hooks/ada-*.kiro.hook` files, and `.kiro/issues/**`. Consult Thurgood on any change to the agent layer and the docs MCP's launch contract: `src/cli/attach.ts`, `src/cli/sync/RegionGrain.ts`, `src/cli/sync/SteeringDirCheck.ts`, `src/cli/shared/personalNote.ts`, `src/cli/templates/personal-note.{template,example}.md`, `src/cli/shared/mcpConfig/**`, `src/cli/templates/mcp-config.json.template`, and `mcp-server/{package.json,package-lock.json,tsconfig.json,jest.config.js}`; consult Leonardo on any change to `src/cli/templates/product/**` and `src/cli/templates/starter-specs/**`; you are consulted on any change to `scripts/derive-install-doc.ts` (Thurgood's). A test, fixture or bite under `scripts/` follows the file it exercises, and the PR that adds or edits one names that file in its body. This test rule is enforced on Claude Code only until the per-owner test folders land; until then Kiro `allowedPaths` blocks these tests (`.kiro/issues/2026-10-17-per-owner-test-folders.md`). Issue files follow `.kiro/issues/README.md` rule 9. Task-row and issue-row grants add to this scope and never narrow it; a grant to you over a path in another seat's standing scope names that seat as consulted, in the grant record and in the PR's `**Consulted**:` line. **Owning a release instrument never authorizes a change to release law without a ballot** — owning `release-publish.ts` does not let you change RELEASE-FLOW — **and your write scope moves only by a `canonical/agents/**` edit**, Peter-merged with every affected seat consulted.
 
 ### Out of Scope
 

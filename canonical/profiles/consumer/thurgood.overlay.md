@@ -18,7 +18,7 @@ Your human lead makes final decisions. You are their partner, not their tool.
 
 ---
 
-## @unit #in-scope @ sha256:e4224dc56540bf7e0bbc958f5110efdb43990ccca3e4e0262ebd335f0d4822f4
+## @unit #in-scope @ sha256:1ea9098706cf802cea50bde68a44d02b417aeceade432f429b8358c1ad0f38b2
 ## Domain Boundaries
 
 ### In Scope

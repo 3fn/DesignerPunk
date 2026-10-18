@@ -132,10 +132,26 @@
     {
       "lines": [
         60,
+        60
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[scripts/extract-component-meta.ts]"
+    },
+    {
+      "lines": [
+        61,
+        61
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[scripts/figma-component-generator.ts]"
+    },
+    {
+      "lines": [
+        62,
         62
       ],
       "op": "render",
-      "source": "C1:frontmatter+ambient-manifest"
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[scripts/audit-component-tokens.js]"
     },
     {
       "lines": [
@@ -143,12 +159,292 @@
         63
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:kiro.welcomeMessage"
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[scripts/validate-examples.js]"
     },
     {
       "lines": [
         64,
         64
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[.kiro/hooks/lina-*.kiro.hook]"
+    },
+    {
+      "lines": [
+        65,
+        65
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/render.ts]"
+    },
+    {
+      "lines": [
+        66,
+        66
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/adapters/**]"
+    },
+    {
+      "lines": [
+        67,
+        67
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/compose.ts]"
+    },
+    {
+      "lines": [
+        68,
+        68
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/derive.ts]"
+    },
+    {
+      "lines": [
+        69,
+        69
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/generate.ts]"
+    },
+    {
+      "lines": [
+        70,
+        70
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/pipeline.ts]"
+    },
+    {
+      "lines": [
+        71,
+        71
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/skills.ts]"
+    },
+    {
+      "lines": [
+        72,
+        72
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/consumer-entry.ts]"
+    },
+    {
+      "lines": [
+        73,
+        73
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/consumer-profile.ts]"
+    },
+    {
+      "lines": [
+        74,
+        74
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/attribution.ts]"
+    },
+    {
+      "lines": [
+        75,
+        75
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/spans.ts]"
+    },
+    {
+      "lines": [
+        76,
+        76
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/registry.ts]"
+    },
+    {
+      "lines": [
+        77,
+        77
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/registry-manifest.ts]"
+    },
+    {
+      "lines": [
+        78,
+        78
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/resolve.ts]"
+    },
+    {
+      "lines": [
+        79,
+        79
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/resolve-stdio.ts]"
+    },
+    {
+      "lines": [
+        80,
+        80
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/workflow-rules-accessor.ts]"
+    },
+    {
+      "lines": [
+        81,
+        81
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/regrounding/derivation.ts]"
+    },
+    {
+      "lines": [
+        82,
+        82
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/regrounding/dispositions.ts]"
+    },
+    {
+      "lines": [
+        83,
+        83
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/regrounding/overlay.ts]"
+    },
+    {
+      "lines": [
+        84,
+        84
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/__fixtures__/g1-renderings/**]"
+    },
+    {
+      "lines": [
+        85,
+        85
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/__fixtures__/semantics-guard/**]"
+    },
+    {
+      "lines": [
+        86,
+        86
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/schema.ts]"
+    },
+    {
+      "lines": [
+        87,
+        87
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/partition.ts]"
+    },
+    {
+      "lines": [
+        88,
+        88
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/frontmatter.ts]"
+    },
+    {
+      "lines": [
+        89,
+        89
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/canonical-json.ts]"
+    },
+    {
+      "lines": [
+        90,
+        90
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/source.ts]"
+    },
+    {
+      "lines": [
+        91,
+        91
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/regrounding/hash.ts]"
+    },
+    {
+      "lines": [
+        92,
+        92
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/regrounding/operative-sets.ts]"
+    },
+    {
+      "lines": [
+        93,
+        93
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/__fixtures__/golden-partition/**]"
+    },
+    {
+      "lines": [
+        94,
+        94
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/jest.config.js]"
+    },
+    {
+      "lines": [
+        95,
+        95
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[tools/agent-generator/tsconfig.json]"
+    },
+    {
+      "lines": [
+        96,
+        96
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:writeScope[.kiro/issues/**]"
+    },
+    {
+      "lines": [
+        97,
+        99
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        100,
+        100
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:kiro.welcomeMessage"
+    },
+    {
+      "lines": [
+        101,
+        101
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"

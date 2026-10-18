@@ -108,23 +108,31 @@
     {
       "lines": [
         44,
-        46
+        44
+      ],
+      "op": "render",
+      "source": "canonical/agents/leonardo.md#frontmatter:writeScope[.kiro/issues/**]"
+    },
+    {
+      "lines": [
+        45,
+        47
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"
     },
     {
       "lines": [
-        47,
-        47
+        48,
+        48
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:kiro.welcomeMessage"
     },
     {
       "lines": [
-        48,
-        48
+        49,
+        49
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"

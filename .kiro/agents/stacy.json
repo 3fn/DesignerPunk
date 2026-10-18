@@ -38,7 +38,8 @@
     "write": {
       "allowedPaths": [
         ".kiro/specs/**",
-        "docs/specs/**"
+        "docs/specs/**",
+        ".kiro/issues/**"
       ]
     }
   },

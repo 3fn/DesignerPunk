@@ -22,11 +22,26 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: stacy
-canonicalHash: sha256:e4224dc56540bf7e0bbc958f5110efdb43990ccca3e4e0262ebd335f0d4822f4
-items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10, civitas-1, civitas-2, civitas-3, civitas-4, civitas-5, civitas-6, civitas-7, civitas-8, civitas-9, scope-12
-date: 2026-09-29
+canonicalHash: sha256:1ea9098706cf802cea50bde68a44d02b417aeceade432f429b8358c1ad0f38b2
+items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10, civitas-1, civitas-2, civitas-3, civitas-4, civitas-5, civitas-6, civitas-7, civitas-8, civitas-9, scope-12, scope-13, scope-14, scope-15, scope-16, scope-17, scope-18, scope-19, scope-20, scope-21
+date: 2026-10-17
 
-**Ruling: CORRECTED 12 → 20.** `scope-11` was the group label **"Civitas infrastructure stewardship:"**. Under clause (c) a label retains nothing, and crediting it would let a rendering keep the heading and drop all nine duties. It is replaced by the nine members, `civitas-1` to `civitas-9`. `scope-12` (the CI regime scope) stays one item: it is one grant with its limits.
+**Ruling: CONFIRMED at 29 items** (re-confirmation, 2026-10-17). The six-roots bullet re-hashed the unit (ballot 2026-10-17-standing-write-scope-six-roots). Thurgood drafted the nine new items as profile author at `408ad8523`. I read each one against the bullet as it stands now, with the § 6 consult clause in its tail, and I agree with all nine as drafted.
+- **The twenty prior items stand** as corrected on 2026-09-29: `scope-1` to `scope-10`, `civitas-1` to `civitas-9`, and `scope-12`. `scope-11`, the group label "Civitas infrastructure stewardship:", stays out under clause (c): a label retains nothing.
+- **One member from the bullet**: `scope-13` is the grant together with its test-assignment rule. The two are contiguous in his bullet, so one member carries both, the same shape as Lina's. It is a member because it defines what the seat may write.
+- **Eight obligations.** Each can be broken on a PR that leaves the grant untouched, so each is its own item:
+  - `scope-14`: the PR names the exercised file;
+  - `scope-15`: the consult shares (Lina's shared core; Ada's agent layer and docs MCP launch contract), and Ada consulted on `scripts/derive-install-doc.ts`;
+  - `scope-16`: the legacy-script retirement walk finding;
+  - `scope-17`: `RELEASE-FLOW.md` stays Peter-merged law;
+  - `scope-18`: rule 9;
+  - `scope-19`: grants add and never narrow, with the § 6 consult named in the grant record and the PR's `**Consulted**:` line;
+  - `scope-20`: no law change without a ballot;
+  - `scope-21`: scope moves only by a `canonical/agents/**` edit, and owning the checkers never authorizes a scope change.
+- **I checked the split between `scope-20` and `scope-21`.** It falls inside one sentence, but the two duties break independently: a PR can change what the health check is without touching any seat's scope, and the reverse. Two items is right.
+- **Not an item**: "This test rule is enforced on Claude Code only until the per-owner test folders land; …". It describes what the runtimes enforce, not a duty of the seat. This matches Ada's and Lina's sets.
+
+The set is complete at 29.
 
 ## `#out-of-scope`
 

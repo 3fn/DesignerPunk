@@ -140,10 +140,26 @@
     {
       "lines": [
         68,
+        68
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[src/cli/**]"
+    },
+    {
+      "lines": [
+        69,
+        69
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/generate-platform-tokens.ts]"
+    },
+    {
+      "lines": [
+        70,
         70
       ],
       "op": "render",
-      "source": "C1:frontmatter+ambient-manifest"
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/generate-token-types.ts]"
     },
     {
       "lines": [
@@ -151,12 +167,180 @@
         71
       ],
       "op": "render",
-      "source": "canonical/agents/ada.md#frontmatter:kiro.welcomeMessage"
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/verify-opacity-types.ts]"
     },
     {
       "lines": [
         72,
         72
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/build-browser-bundles.js]"
+    },
+    {
+      "lines": [
+        73,
+        73
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/build-name-contract.ts]"
+    },
+    {
+      "lines": [
+        74,
+        74
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/build-tool-manifest.ts]"
+    },
+    {
+      "lines": [
+        75,
+        75
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/floor-closure.ts]"
+    },
+    {
+      "lines": [
+        76,
+        76
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/pack-assert.ts]"
+    },
+    {
+      "lines": [
+        77,
+        77
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/release-publish.ts]"
+    },
+    {
+      "lines": [
+        78,
+        78
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/verify-publish-rail.sh]"
+    },
+    {
+      "lines": [
+        79,
+        79
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/check-package-name-drift.js]"
+    },
+    {
+      "lines": [
+        80,
+        80
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/jest.config.js]"
+    },
+    {
+      "lines": [
+        81,
+        81
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/esbuild-css-plugin.js]"
+    },
+    {
+      "lines": [
+        82,
+        82
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/fix-tokens-css.js]"
+    },
+    {
+      "lines": [
+        83,
+        83
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/audience-banner/**]"
+    },
+    {
+      "lines": [
+        84,
+        84
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[scripts/__bites__/**]"
+    },
+    {
+      "lines": [
+        85,
+        85
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[mcp-server/package.json]"
+    },
+    {
+      "lines": [
+        86,
+        86
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[mcp-server/package-lock.json]"
+    },
+    {
+      "lines": [
+        87,
+        87
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[mcp-server/tsconfig.json]"
+    },
+    {
+      "lines": [
+        88,
+        88
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[mcp-server/jest.config.js]"
+    },
+    {
+      "lines": [
+        89,
+        89
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[.kiro/hooks/ada-*.kiro.hook]"
+    },
+    {
+      "lines": [
+        90,
+        90
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:writeScope[.kiro/issues/**]"
+    },
+    {
+      "lines": [
+        91,
+        93
+      ],
+      "op": "render",
+      "source": "C1:frontmatter+ambient-manifest"
+    },
+    {
+      "lines": [
+        94,
+        94
+      ],
+      "op": "render",
+      "source": "canonical/agents/ada.md#frontmatter:kiro.welcomeMessage"
+    },
+    {
+      "lines": [
+        95,
+        95
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"

@@ -73,3 +73,5 @@ Task 22 lists `src/cli/designerpunk.ts` in its Primary Artifacts (tasks.md, Task
 - **Unverified by me**: the exact message a subdirectory run prints (derived from reading L88–108 and L319–323, not by running the CLI); whether any consumer fixture exercises `--product-only` from a subdirectory (I found none in `src/cli/__tests__`); `src/cli/validate.ts`.
 
 **No fix is authorized by this record.**
+
+2026-10-17 — Lina: re-routed to Ada as `src/cli/**` owner (ballot 2026-10-17-standing-write-scope-six-roots § 2.1); the Owner header stands as the record of who owned it when filed.

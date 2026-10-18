@@ -14,7 +14,9 @@ signer: lina
 
 signer: lina
 
-**ASSENT — surviving: scope-scaffolding, scope-platforms, scope-docs, scope-contract-tests, scope-token-integration, scope-schema, scope-token-mapping, scope-inheritance, scope-parity, scope-theme-consumption, scope-data-theme, scope-one-off, scope-promotion, scope-maintained-docs.** 13 members verbatim. `scope-maintained-docs` re-keyed: the obligation to maintain the component guidance docs' content survives as "**Your team's component guidance docs** (content correctness and updates …)". DesignerPunk's two named docs are read-only in the installed package, so the consumer's counterpart is their own guidance docs (5b). Every compliant implementation maintains them.
+**ASSENT — surviving: scope-scaffolding, scope-platforms, scope-docs, scope-contract-tests, scope-token-integration, scope-schema, scope-token-mapping, scope-inheritance, scope-parity, scope-theme-consumption, scope-data-theme, scope-one-off, scope-promotion, scope-maintained-docs.** (Re-sign 2026-10-17, against canonical `sha256:a78c65a5…` and rendered `sha256:25e69652…`, judged against the 20-item set.) The canonical unit changed only by the six-roots bullet (ballot 2026-10-17-standing-write-scope-six-roots); the rendering is byte-unchanged, because the row removes that bullet under `subtraction-1`. The fourteen survive as at the 2026-09-29 signing: 13 members verbatim, and `scope-maintained-docs` re-keyed to "**Your team's component guidance docs** (content correctness and updates …)" — DesignerPunk's two named docs are read-only in the installed package, so the consumer's counterpart is their own guidance docs (5b).
+
+**Not surviving, and I agree they should not**: `scope-standing-grant`, `scope-standing-pr-names-file`, `scope-standing-rule-9`, `scope-standing-grants-compose`, `scope-standing-scope-moves`, `scope-standing-law`. The rendering states none of them, so a compliant implementation can violate each. Each is bound to this steward repo: the generator and its tests, these `scripts/` files, the `lina-*` hooks, `.kiro/issues/` rule 9, this repo's task-row grants and `canonical/agents/**` law. A consumer installs none of them and has no counterpart to re-key to (subtraction 1). The one I weighed hardest is `scope-standing-law`: "a tool never authorizes changing the law it serves" reads as general, but in the consumer it has no tool to attach to (the consumer seat owns no generator, adapters or subtractions), and the consumer's own change discipline is carried by `#the-process` and `#what-this-means-in-practice`, not by this unit. No refusal.
 
 ## `#boundary-cases`
 
@@ -129,6 +131,228 @@ signer: lina
 signer: lina
 
 **ASSENT — surviving: [] (nothing survives).** Agree: this repo's governance doc. The consumer reads DesignerPunk's copy read-only in the package (subtraction 3), consistent with `practice-no-write`'s re-grounding.
+
+## `#frontmatter:writeScope[scripts/extract-component-meta.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: `scripts/extract-component-meta.ts` is one of this repo's component scripts, granted by file (ballot 2026-10-17-standing-write-scope-six-roots § 2.2). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/figma-component-generator.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: `scripts/figma-component-generator.ts` is one of this repo's component scripts, granted by file (ballot 2026-10-17-standing-write-scope-six-roots § 2.2). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/audit-component-tokens.js]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: `scripts/audit-component-tokens.js` is one of this repo's component scripts, granted by file (ballot 2026-10-17-standing-write-scope-six-roots § 2.2). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/validate-examples.js]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: `scripts/validate-examples.js` is one of this repo's component scripts, granted by file (ballot 2026-10-17-standing-write-scope-six-roots § 2.2). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[.kiro/hooks/lina-*.kiro.hook]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: this repo's own Kiro hooks for the Lina seat (§ 2.4). The package installs no hooks and `src/cli/templates/` carries none, so a consumer has nothing at this path to own (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/render.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/render.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/adapters/**]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/adapters/**`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/compose.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/compose.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/derive.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/derive.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/generate.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/generate.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/pipeline.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/pipeline.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/skills.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/skills.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/consumer-entry.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/consumer-entry.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/consumer-profile.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/consumer-profile.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/attribution.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/attribution.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/spans.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/spans.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/registry.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/registry.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/registry-manifest.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/registry-manifest.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/resolve.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/resolve.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/resolve-stdio.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/resolve-stdio.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/workflow-rules-accessor.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/workflow-rules-accessor.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/regrounding/derivation.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/regrounding/derivation.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/regrounding/dispositions.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/regrounding/dispositions.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/regrounding/overlay.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/regrounding/overlay.ts`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/__fixtures__/g1-renderings/**]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/__fixtures__/g1-renderings/**`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/__fixtures__/semantics-guard/**]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/__fixtures__/semantics-guard/**`, the generator's rendering, adapters and emitters; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/schema.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/schema.ts`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/partition.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/partition.ts`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/frontmatter.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/frontmatter.ts`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/canonical-json.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/canonical-json.ts`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/source.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/source.ts`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/regrounding/hash.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/regrounding/hash.ts`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/regrounding/operative-sets.ts]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/regrounding/operative-sets.ts`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/__fixtures__/golden-partition/**]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/__fixtures__/golden-partition/**`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/jest.config.js]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/jest.config.js`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[tools/agent-generator/tsconfig.json]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: the agent generator's source (`tools/agent-generator/tsconfig.json`, the generator's shared core; § 4, F-1 Option B). A consumer receives only the compiled `dist/generator/**`, read-only inside the installed package, so there is no consumer path to write (subtraction 1).
+
+## `#frontmatter:writeScope[.kiro/issues/**]`
+
+signer: lina
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). Agree: this repo's issue records, written under its own `.kiro/issues/README.md` rule 9 (§ 2.5). That convention is a stewardship instrument of this repo; the package ships neither the records nor the convention, and the consumer's tracking practice is theirs to set (subtraction 3, as cited).
 
 ## `#frontmatter:commands[functional-suite]`
 

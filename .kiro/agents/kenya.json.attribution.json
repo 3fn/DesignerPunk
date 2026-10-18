@@ -84,23 +84,31 @@
     {
       "lines": [
         42,
-        44
+        42
+      ],
+      "op": "render",
+      "source": "canonical/agents/kenya.md#frontmatter:writeScope[.kiro/issues/**]"
+    },
+    {
+      "lines": [
+        43,
+        45
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"
     },
     {
       "lines": [
-        45,
-        45
+        46,
+        46
       ],
       "op": "render",
       "source": "canonical/agents/kenya.md#frontmatter:kiro.welcomeMessage"
     },
     {
       "lines": [
-        46,
-        46
+        47,
+        47
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"

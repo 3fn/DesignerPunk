@@ -33,12 +33,23 @@ signer: ada
 
 signer: ada
 
-**RE-SIGNED 2026-09-29 — ASSENT, surviving 13/13** (stale; renderedHash now `sha256:6209aa1c…`).
-- **What changed**: `scope-docs` now reads "Token documentation — your team's token docs; DesignerPunk's Token-Family and Rosetta architecture docs ship in the installed package (read them there; changes to them go upstream to DesignerPunk)". That is the re-pointing my phase-two observation asked for.
-- The item "Token documentation (Token-Family docs, Rosetta architecture)", re-keyed to the consumer, is entailed. Documentation of the team's tokens is in scope, and the shipped docs are placed correctly: read locally, changed upstream.
-- The other twelve bullets are unchanged from the phase-two judgment:
+**RE-SIGNED 2026-10-17 — ASSENT, surviving 13 of 21.** Signed against canonical `sha256:da60b5bb…` and rendered `sha256:6209aa1c…`, and judged against the 21-item set confirmed at `da9acba63`.
+- **What changed**: in canonical, only the six-roots bullet (ballot 2026-10-17-standing-write-scope-six-roots). The rendering did not change by a single byte, because the row removes that bullet under `subtraction-1`.
+- **The thirteen prior items survive exactly as at the 2026-09-29 re-sign**:
   - eleven are verbatim;
-  - `scope-theme-registry` and `scope-pipeline-config` are re-keyed and entailed.
+  - `scope-theme-registry` and `scope-pipeline-config` are re-keyed and entailed;
+  - `scope-docs` is re-pointed: the team's token docs are in scope, and DesignerPunk's shipped docs are read there and changed upstream.
+
+**Not surviving, and I agree they should not**: `scope-standing-grant`, `scope-standing-consults`, `scope-standing-test-rule`, `scope-standing-pr-names-file`, `scope-standing-rule-9`, `scope-standing-grants-compose`, `scope-standing-law`, `scope-standing-scope-moves`.
+- The rendering states none of them, so a compliant implementation can break each one.
+- Each is bound to this steward repo, and none has a counterpart in a consumer repo:
+  - the CLI source, the release and build `scripts/` and their tests, and the `ada-*` hooks;
+  - the docs MCP's packaging and the Thurgood and Leonardo shares over these files;
+  - `.kiro/issues/` rule 9, this repo's task-row grants, and `canonical/agents/**` law.
+- Some of these paths reach a consumer, but only as read-only package contents: `src/cli/templates/` and `mcp-server/{package.json,tsconfig.json}` are in the package's `files`. A change to them goes upstream. It is not a duty to re-key (subtraction 1).
+- **The one I weighed hardest is `scope-standing-law`.** "Owning an instrument never authorizes changing the law it serves" sounds general. But the consumer seat owns no release instrument for it to attach to, and the consumer's change discipline is already carried by `#the-process` and `#what-this-means-in-practice`.
+
+No refusal.
 
 ## `#boundary-cases`
 
@@ -182,6 +193,144 @@ signer: ada
   - the consumer's rendered Task Completion Protocol now names the summary-doc location, `specs/[spec]/task-N-summary.md` (lines 33, 41, 106), which is inside that scope.
 - The function "write the task summary docs" therefore survives in the re-pointed `specs/**` scope. `superseded-by` is more accurate than my phase-two absence assent, which it replaces.
 - The cite (subtraction-4, DesignerPunk's `docs/specs/` layout) applies.
+
+## `#frontmatter:writeScope[src/cli/**]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `src/cli/**`: The CLI source, granted whole (§ 2.1). Only `src/cli/templates/` ships, as read-only package contents. `init` copies those templates to paths the consumer owns (`product/`, the starter specs, the personal note, the MCP config), and those paths sit under other scopes, never under `src/cli/`. A consumer has no CLI source to write; a change to it goes upstream (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/generate-platform-tokens.ts]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/generate-platform-tokens.ts`: This repo's platform-token build step (§ 2.2). A consumer generates through the installed `designerpunk` bin, not this script. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/generate-token-types.ts]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/generate-token-types.ts`: This repo's token-type generation step (§ 2.2). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/verify-opacity-types.ts]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/verify-opacity-types.ts`: This repo's build-time check on the generated opacity types (§ 2.2). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/build-browser-bundles.js]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/build-browser-bundles.js`: Builds the `dist/browser` bundles the package ships (§ 2.2). The bundles ship; the builder does not. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/build-name-contract.ts]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/build-name-contract.ts`: Builds `dist/name-contract.json` (§ 2.2). The contract ships; the builder does not. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/build-tool-manifest.ts]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/build-tool-manifest.ts`: Builds `dist/mcp/tool-manifest.json` (§ 2.2). The manifest ships; the builder does not. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/floor-closure.ts]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/floor-closure.ts`: This repo's package-floor closure check (§ 2.2), a packaging instrument. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/pack-assert.ts]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/pack-assert.ts`: Asserts this repo's tarball contents before publish (§ 2.2), a release instrument. A consumer does not publish `@3fn/core`. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/release-publish.ts]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/release-publish.ts`: This repo's only publish path (§ 2.2; ballot 2026-10-03-hermetic-publish-path), a release instrument. A consumer does not publish `@3fn/core`. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/verify-publish-rail.sh]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/verify-publish-rail.sh`: This repo's post-publish rail (§ 2.2), a release instrument. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/check-package-name-drift.js]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/check-package-name-drift.js`: Checks this repo's package-name and registry-scope drift (§ 2.2). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/jest.config.js]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/jest.config.js`: This repo's `test:scripts` lane config (§ 2.2). The consumer's root `jest.config.js`, which `init` writes, is a different path and the consumer's own file. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/esbuild-css-plugin.js]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/esbuild-css-plugin.js`: The CSS-as-string plugin `build-browser-bundles.js` requires (§ 2.2, confirmed at consult). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/fix-tokens-css.js]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/fix-tokens-css.js`: A post-processor for this repo's generated `tokens.css` (§ 2.2, confirmed at consult). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/audience-banner/**]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/audience-banner/**`: The banner predicate (my text, Spec 123 Req 20.3) and its presence guard over this repo's `governance/*.md` (§ 2.2, confirmed at consult). The banners reach the consumer inside the shipped `governance/`, where their agents read them; the predicate and the guard do not ship. It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[scripts/__bites__/**]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `scripts/__bites__/**`: The publish-rail fixtures for `verify-publish-rail.sh` (§ 2.2, confirmed at consult). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[mcp-server/package.json]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `mcp-server/package.json`: The docs MCP's packaging, with Thurgood consulted (§ 2.3). A consumer runs the built `dist/mcp/docs-mcp.js`. It ships, but only as read-only package contents (`files`): a change to it goes upstream to DesignerPunk, and a consumer has no copy of its own to write (subtraction 1).
+
+## `#frontmatter:writeScope[mcp-server/package-lock.json]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `mcp-server/package-lock.json`: The docs MCP's lockfile (§ 2.3). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[mcp-server/tsconfig.json]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `mcp-server/tsconfig.json`: The docs MCP's module-resolution config, with Thurgood consulted (§ 2.3). It ships, but only as read-only package contents (`files`): a change to it goes upstream to DesignerPunk, and a consumer has no copy of its own to write (subtraction 1).
+
+## `#frontmatter:writeScope[mcp-server/jest.config.js]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `mcp-server/jest.config.js`: The docs MCP's test config (§ 2.3). It is not in the package's `files`, so a consumer has no copy to own (subtraction 1).
+
+## `#frontmatter:writeScope[.kiro/hooks/ada-*.kiro.hook]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `.kiro/hooks/ada-*.kiro.hook`: This repo's own Kiro hooks for my seat (§ 2.4). The package ships no hooks, and `init` and `attach` emit none. A consumer has nothing to own (subtraction 1).
+
+## `#frontmatter:writeScope[.kiro/issues/**]`
+
+signer: ada
+
+**ASSENT — surviving: [] (nothing survives)** (first signature, 2026-10-17). I agree with the disposition and the cite. `.kiro/issues/**`: This repo's issue records, written under its own `.kiro/issues/README.md` rule 9 (§ 2.5). The convention is a stewardship instrument of this repo. The package ships neither the records nor the convention, and the consumer's tracking practice is theirs to set (subtraction 3, as cited).
 
 ## `#the-process`
 

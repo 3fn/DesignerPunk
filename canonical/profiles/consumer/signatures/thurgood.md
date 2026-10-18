@@ -18,13 +18,24 @@ verdict: assent — surviving 5/5
 ## `#in-scope`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-10-17
 row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#in-scope` (re-pointed; ROUTED)
-canonicalHash: sha256:e4224dc56540bf7e0bbc958f5110efdb43990ccca3e4e0262ebd335f0d4822f4
+canonicalHash: sha256:1ea9098706cf802cea50bde68a44d02b417aeceade432f429b8358c1ad0f38b2
 renderedHash: sha256:5ac2d4d30cbdce5a9e34a0a66dff621d3e78e87f4500dee9f715f39f2fc72037
-verdict: assent — surviving 19/20; not surviving: `scope-12`
+verdict: assent — surviving 19/29; not surviving: `scope-12`, `scope-13`, `scope-14`, `scope-15`, `scope-16`, `scope-17`, `scope-18`, `scope-19`, `scope-20`, `scope-21`
 
-`civitas-8` survives, re-grounded to "the docs your team owns that no single domain agent does". `scope-12` (the CI-regime standing scope) is a repo grant with no consumer counterpart. With it removed, consumer-Thurgood holds no CI-edit scope at all, which is stricter, not looser.
+**RE-SIGNED 2026-10-17 — ASSENT, surviving 19 of 29.** Judged against the 29-item set I confirmed at `0dc7213d1`.
+- **What changed**: in canonical, only the six-roots bullet (ballot 2026-10-17-standing-write-scope-six-roots). The rendering did not change by a single byte (renderedHash recomputed, equal to the prior signature's), because the row removes the whole bullet under `subtraction-1`.
+- **The nineteen prior survivors stand** as at the 2026-09-29 signature. `civitas-8` survives, re-grounded to "the docs your team owns that no single domain agent does". `scope-12` still does not survive: it is a repo CI grant with no consumer counterpart.
+- **The nine new items do not survive, and I agree they should not.** The rendering states none of them, so a compliant consumer implementation can break each one. Each is bound to this steward repo:
+  - `scope-13` grants this repo's files: the `scripts/` checks, the docs MCP source and tests, the `.kiro/hooks/` completion tooling, `.kiro/issues/**`, and the generator's checkers and sweeps, with this repo's test-assignment rule;
+  - `scope-14`, `scope-15` and `scope-19` are this repo's PR and consult mechanics over those files and its task-row and issue-row grants;
+  - `scope-16`, `scope-17` and `scope-18` name this repo's legacy scripts, `RELEASE-FLOW.md` and README rule 9;
+  - `scope-21` is `canonical/agents/**` law.
+- **Some of these paths reach a consumer, but only as read-only package contents.** `mcp-server/src/` is in the package's `files`, and the docs MCP is also bundled as `dist/mcp/docs-mcp.js`. `signatures.ts`, `check-catalog.ts` and `workflow-rules-guard.ts` are inlined into the shipped `dist/generator/consumer-entry.js`. A change to any of them goes upstream. None is a duty to re-key (subtraction 1).
+- **The one I weighed hardest is `scope-20`.** "Owning an instrument never authorizes changing the law it serves without a ballot" reads as general. But it is stated over this repo's instruments and its ballot law, and the consumer rendering grants the seat no standing write scope over any instrument for it to attach to. Removing the bullet leaves consumer-Thurgood with no standing write grant at all, which is stricter, not looser.
+
+No refusal.
 
 ## `#boundary-cases`
 
@@ -548,6 +559,644 @@ renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb098
 verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed: this entry names this repo's own write path. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/completion-claims/**]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/completion-claims/**]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:afcd81bdec54ba0b6c48b9e65c7dca385fa0c9cf572973261d3d1166debeea9c
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/completion-claims/**`: This repo's `completion-criteria-parity` checker modules and their fixtures. It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/check-completion-criteria-parity.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/check-completion-criteria-parity.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:28cf50f2a38be6e471b6a63c693f262ad8a674c13917d476e08991121f096d60
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/check-completion-criteria-parity.ts`: The CLI of this repo's `completion-criteria-parity` check. It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/discovery-dry-run.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/discovery-dry-run.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:d21b4a559c2cc5fdff0fa24ef1b7687b984ab7130746bd094d196f0af1a9a759
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/discovery-dry-run.ts`: Spec 119-A's discovery dry-run runner. It is a thin CLI over a core in `mcp-server/src/discovery-dry-run/`, which ships read-only inside `mcp-server/src/`. This wrapper is not in the package's `files`. A change to either goes upstream. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/discovery-study-stage1.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/discovery-study-stage1.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:0c8deb64b399577ab1e343c88777539ba6a0f2679e2e938cfa2805512421eb41
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/discovery-study-stage1.ts`: A temporary instrument of this repo's discovery study, retiring with the study. It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/discovery-indexer-fix-run.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/discovery-indexer-fix-run.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:b8994eafb26a49da187041bb9189bf068a640ba0aae783775475428e1b2d6103
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/discovery-indexer-fix-run.ts`: A temporary runner for this repo's indexer-fix findings, retiring with them. It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/governance-check.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/governance-check.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:1210503bd3a034ff1baa3116cf63471211dbb9f1544244cbc38cf15f91e176ff
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/governance-check.sh`: This repo's Civitas health-check script. It is not in the package's `files`, so a consumer has no copy to own. A consumer-Thurgood keeps a health cadence over their own corpus with their own tooling; this script is not that tooling. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/validate-steering-metadata.js]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/validate-steering-metadata.js]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:1f680a36af98ffa2e1d1babb55d20e979fd2ce977a2afd7471d61d7ab51f3f0e
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/validate-steering-metadata.js`: This repo's steering-corpus tooling (steering metadata validation). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/detect-stale-metadata.js]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/detect-stale-metadata.js]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:ed3bc7603a81e3309a2734bd9bab4b49f11971669b2c751d3790b1efa0fc7718
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/detect-stale-metadata.js`: This repo's steering-corpus tooling (stale-metadata detection). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/detect-affected-steering-docs.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/detect-affected-steering-docs.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:43835ba436ebb32e5a5a127ae2316bbfc405c8da5ca15cd8c8deeaae67de024f
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/detect-affected-steering-docs.sh`: This repo's steering-corpus tooling (which steering docs a change affects). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/verify-prompt-alignment.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/verify-prompt-alignment.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:773743bed221e6265942e7ee021675ebac9b8a1265edadbee90a310e6e505462
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/verify-prompt-alignment.sh`: This repo's prompt-to-steering alignment check over its own agent prompts. It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/scan-cross-references.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/scan-cross-references.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:9f831c7977a45264889b95a3479ee2101eb30d4ecbf3abdec247f274a0163842
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/scan-cross-references.sh`: This repo's steering-corpus tooling (cross-reference scan). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/validate-cross-reference-format.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/validate-cross-reference-format.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:109d2de63ebf8147f45e93211e3a77ff28e41e74ffd691ee515d35dc609cff2c
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/validate-cross-reference-format.sh`: This repo's steering-corpus tooling (cross-reference format check). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/check-id-uniqueness.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/check-id-uniqueness.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:1961949575888eb0a402b3525722e259fe122ea7802eb41514eaca1779774af0
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/check-id-uniqueness.ts`: The CI leg of Spec 119-A's doc `id` uniqueness guard. It is a thin CLI over a core in `mcp-server/src/id-guard/`, which ships read-only inside `mcp-server/src/`. This wrapper is not in the package's `files`. A change to either goes upstream. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/check-section-citations.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/check-section-citations.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:f8b5fbf02311a092ef05f483b41da057fed2e7f1a4c32552337498788ceb744d
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/check-section-citations.ts`: This repo's dead-citation guard over its steering corpus (register row `section-citation-resolution`). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/backfill-doc-ids.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/backfill-doc-ids.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:5d2b009a01e4b149661ab96d8f977335fd602bef3340da67cc115dd5de9b32b6
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/backfill-doc-ids.ts`: Spec 119-A's one-time `id` backfill codemod over this repo's docs. It is a thin CLI over a core in `mcp-server/src/id-guard/`, which ships read-only inside `mcp-server/src/`. This wrapper is not in the package's `files`. A change to either goes upstream. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/validate-metadata-parsing.js]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/validate-metadata-parsing.js]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:e7a8ae19a6fd27a00444ecdd4070f220eb41b500629934d403f9100db70425e3
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/validate-metadata-parsing.js`: This repo's steering-corpus tooling (metadata parsing check). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/validate-structure-parsing.js]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/validate-structure-parsing.js]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:deb78e7a7bce1e1d4a815d53b6d9c017a97f132f3949a41460067a021e9a6e63
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/validate-structure-parsing.js`: This repo's steering-corpus tooling (structure parsing check). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/validate-task-vocabulary.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/validate-task-vocabulary.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:6686f8e25c4f944d6b99345cf03b35e86bf9c7e48fb5e64cf9f959fc1f46958b
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/validate-task-vocabulary.sh`: Checks task type names in this repo's metadata analysis against its standard vocabulary. It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/add-metadata-to-file.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/add-metadata-to-file.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:f9c7f6a93076b149a293d07e50fd9038e883ab4b2f6542e916d28b6a16b6f13b
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/add-metadata-to-file.sh`: This repo's steering-corpus tooling (adds metadata headers). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/analyze-metadata.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/analyze-metadata.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:f75c39ed23cb56476713050772d6386eeb2cd845fed1f83231e5a100408b1583
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/analyze-metadata.sh`: This repo's steering-corpus tooling (metadata analysis). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/extract-doc-structure.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/extract-doc-structure.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:e92a946a26d74c3d79f227a234e084dd1a29fdef8cafb26ae2755d5beb21776e
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/extract-doc-structure.sh`: This repo's steering-corpus tooling (document structure extraction). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/find-duplicate-content.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/find-duplicate-content.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:52c2f199d809e5804b8923a61957e357c504f339721ab97ec517b557d5b6d1fd
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/find-duplicate-content.sh`: This repo's steering-corpus tooling (duplicate-content scan). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/consolidate-structure-maps.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/consolidate-structure-maps.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:4c00883a64e03965146ff2dd6d17fe4a4ff47f4bb8069435c629ec8d9cbf1335
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/consolidate-structure-maps.sh`: This repo's steering-corpus tooling (consolidates structure maps). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/convert-date-formats.js]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/convert-date-formats.js]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:1005f0a5ae488d3895b8afb7184c7e12b78d454d68bd53022c1a2c46461b93b7
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/convert-date-formats.js`: This repo's steering-corpus tooling (converts steering dates to ISO 8601). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/calculate-baseline-metrics.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/calculate-baseline-metrics.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:a014a70ce6962a70c7969e638617a6f96e20106e1104189dc4036b0a3773924c
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/calculate-baseline-metrics.sh`: This repo's steering-corpus tooling (baseline metrics). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/generate-legacy-path-manifest.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/generate-legacy-path-manifest.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:1832303295edbc3e15159fca3b1656e3c4b0e65a472166005207aa0e3f040d1b
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/generate-legacy-path-manifest.ts`: Spec 119-A's legacy-path forwarding manifest producer. It is a thin CLI over a core in `mcp-server/src/legacy-path/`, which ships read-only inside `mcp-server/src/`. This wrapper is not in the package's `files`. A change to either goes upstream. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/relocation-integrity-gate.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/relocation-integrity-gate.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:3ac3948c74f411c8057bd8bb87ed35834a1e60467326672045725580c66c5c17
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/relocation-integrity-gate.ts`: Spec 119-A's relocation exit check. It is a thin CLI over a core in `mcp-server/src/relocation-integrity-gate/`, which ships read-only inside `mcp-server/src/`. This wrapper is not in the package's `files`. A change to either goes upstream. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/derive-install-doc.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/derive-install-doc.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:900677d7778004a896a1540672c57ec446015cca16ecf9f55cd7970a4f59ef59
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/derive-install-doc.ts`: Derives `docs/consumer/INSTALL.md` from the Integration Guide's install region. The output ships in `files`; the script does not. A consumer reads the install doc and has no derivation to run. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/categorize-tests.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/categorize-tests.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:7c037f5b278d0912307f1050de0d2e01d96afe1b2c1883afad86b6c02b74623a
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/categorize-tests.ts`: Adds categorization metadata to this repo's test files. It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[mcp-server/src/**]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[mcp-server/src/**]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:4f060ca19a04f17876ecfe817a34c0b9592b7fa778339aba0cb4ef6ce6277b57
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `mcp-server/src/**`: The docs MCP source. It **does** reach a consumer, read-only: `mcp-server/src/` is in the package's `files`, and the server also ships bundled as `dist/mcp/docs-mcp.js`. A consumer serves their corpus through it but does not edit it; a change goes upstream. Write scope over it has no consumer counterpart. I assent that nothing survives.
+
+## `#frontmatter:writeScope[mcp-server/tests/**]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[mcp-server/tests/**]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:d725e6f969cac32cc51ceda1afe932ba8ff18ed6ab0508ca01dfd2758d28b9e9
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `mcp-server/tests/**`: The docs MCP's integration, performance and property suites. It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[mcp-server/docs/**]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[mcp-server/docs/**]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:3018560de137a497460b54bce876e9122c027ce7f82f227434ecfd9b981e3f02
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `mcp-server/docs/**`: The docs MCP's internal report (`empirical-validation-report.md`). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[mcp-server/README.md]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[mcp-server/README.md]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:f9fbc81bf5f105a625e0cf4fc66768e010ccc1221eb52c85dc589e9131c06c1f
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `mcp-server/README.md`: The docs MCP's README. Only `mcp-server/src/`, `package.json` and `tsconfig.json` are in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[.kiro/hooks/complete-task.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[.kiro/hooks/complete-task.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:fa577ec2fbf4294a207c5a4960d23a7c170b662d257461f284e8a8d230244927
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `.kiro/hooks/complete-task.sh`: This repo's PR-flow completion tooling. It is not in the package's `files`, so a consumer has no copy to own, and `init` writes no hooks. A consumer's completion flow is their own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[.kiro/hooks/README.md]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[.kiro/hooks/README.md]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:4fc9b1ec1212465aff48907071295a5e5f1c79ba2266abe60fda36e7c31c9610
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `.kiro/hooks/README.md`: The README of this repo's hooks directory. It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[.kiro/hooks/task-completion-agent-hook.md]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[.kiro/hooks/task-completion-agent-hook.md]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:2296313dccdce6014ad3579f601b8601ffbd858a6a61c50c63d25c0bacbb7e4b
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `.kiro/hooks/task-completion-agent-hook.md`: Legacy completion tooling of this repo's old commit flow, owned only to retire it (§ 2.4; the second-walk retirement trigger). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[.kiro/hooks/commit-task.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[.kiro/hooks/commit-task.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:44d4aef7298ae5397652831e48359bcdd981eed6196e5d56c911cc7abc7874e9
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `.kiro/hooks/commit-task.sh`: Legacy completion tooling of this repo's old commit flow, owned only to retire it (§ 2.4; the second-walk retirement trigger). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[.kiro/hooks/commit-task-organized.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[.kiro/hooks/commit-task-organized.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:bca8f8e9f64edacebc8f315ba14b225dd29595ceccadfa9d952d2634b486e087
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `.kiro/hooks/commit-task-organized.sh`: Legacy completion tooling of this repo's old commit flow, owned only to retire it (§ 2.4; the second-walk retirement trigger). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[.kiro/hooks/task-completion-commit.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[.kiro/hooks/task-completion-commit.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:da886e40f6f8207e638b77a6dce49e6968722abeed259dcab741005b8fdbff3e
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `.kiro/hooks/task-completion-commit.sh`: Legacy completion tooling of this repo's old commit flow, owned only to retire it (§ 2.4; the second-walk retirement trigger). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[.kiro/hooks/organize-after-completion.kiro.hook]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[.kiro/hooks/organize-after-completion.kiro.hook]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:c7b587af5b1217bd8332e1a267571232d4c054ed8a1e54c7394f58f14fcedf95
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `.kiro/hooks/organize-after-completion.kiro.hook`: Legacy completion tooling of this repo's old commit flow, owned only to retire it (§ 2.4; the second-walk retirement trigger). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[.kiro/hooks/organize-by-metadata.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[.kiro/hooks/organize-by-metadata.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:a5e83c13216be03c633f4ca93949d0c0de63629e0b964e2c96dd648324bb5f91
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `.kiro/hooks/organize-by-metadata.sh`: Legacy completion tooling of this repo's old commit flow, owned only to retire it (§ 2.4; the second-walk retirement trigger). It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[.kiro/hooks/archive/**]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[.kiro/hooks/archive/**]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:dd00f6b6ff4bc44f87d3276c097ad0a68b2606dfb8387c839291dec2d9458fc9
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `.kiro/hooks/archive/**`: This repo's retired hooks. It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[.kiro/hooks/thurgood-*.kiro.hook]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[.kiro/hooks/thurgood-*.kiro.hook]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:daf196badc1ed1268c7eae9322daa78d07f54c667238e7fd80f2da266b0f8084
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `.kiro/hooks/thurgood-*.kiro.hook`: This repo's Kiro audit hooks for the steward seat. It is not in the package's `files`, so a consumer has no copy to own, and `init` writes no hooks. I assent that nothing survives.
+
+## `#frontmatter:writeScope[.kiro/issues/**]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[.kiro/issues/**]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:da4495fd22d50dccd4d3a7df6a11f943bb2e7a4bb57d21ccb8131f388be1768f
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite. `.kiro/issues/**` is this repo's issue records, walked at its monthly health check under README rules 1–9, and rule 9 makes an out-of-rule edit a claims-pass finding. Those are our stewardship cadence and instruments as obligations (subtraction 3). `init` creates no `.kiro/issues/` and the package ships none, so there is nothing to re-point to. I assent that nothing survives.
+
+## `#frontmatter:writeScope[tools/agent-generator/diff-guard.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[tools/agent-generator/diff-guard.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:addf95a5d64c5b351236b73bac3f5fe28a90ed048b4a22d6f2f545b67e8a4877
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `tools/agent-generator/diff-guard.ts`: This repo's generator diff guard (the `122-diff-guard` check). It contributes no code to the shipped `dist/generator/consumer-entry.js` and is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[tools/agent-generator/canonical-vs-truth.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[tools/agent-generator/canonical-vs-truth.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:9ce0b192dae5ac78261ef39474a3d3e1af17b1d737b737afb752abac20241f12
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `tools/agent-generator/canonical-vs-truth.ts`: This repo's canonical-vs-truth check. It contributes no code to the shipped `dist/generator/consumer-entry.js` and is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[tools/agent-generator/coverage-map.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[tools/agent-generator/coverage-map.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:577f215827354f05ee4bbe95476b3b38696878237bddedf0c156691e00615a88
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `tools/agent-generator/coverage-map.ts`: This repo's coverage-of-coverage audit. It contributes no code to the shipped `dist/generator/consumer-entry.js` and is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[tools/agent-generator/sweeps/**]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[tools/agent-generator/sweeps/**]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:622a75d6a7e394a52a8d819cfc6cb4e68ec0c4d4855927a3de800192dfb030b9
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `tools/agent-generator/sweeps/**`: This repo's generator sweeps. It contributes no code to the shipped `dist/generator/consumer-entry.js` and is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[tools/agent-generator/verify-gate-registration.sh]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[tools/agent-generator/verify-gate-registration.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:21749fc39b1084099920ffe85a1ef554745a94fd314584ca7584507e76d47739
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `tools/agent-generator/verify-gate-registration.sh`: This repo's check that its required contexts are still registered on its PR gate. It is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[tools/agent-generator/workflow-rules-guard.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[tools/agent-generator/workflow-rules-guard.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:783768fe7f359641522f5e450244e5725bd26239927bbb4c57307defddcee072
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `tools/agent-generator/workflow-rules-guard.ts`: The WORKFLOW_RULES wiring and anti-duplication guard. It **does** reach a consumer, read-only: it is inlined into the shipped `dist/generator/consumer-entry.js` (`dist/generator/**` is in `files`), and the consumer runs it as part of the installed generator. There is no source in the consumer's repo to write; a change goes upstream. I assent that nothing survives.
+
+## `#frontmatter:writeScope[tools/agent-generator/child-process-guard.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[tools/agent-generator/child-process-guard.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:02157d1d0aca5416f12ea126613bb9f4b99f157c40d838b3b696e7a2f94f28ac
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `tools/agent-generator/child-process-guard.ts`: The lifetime guard for the steward harness's spawned MCP servers. It contributes no code to the shipped `dist/generator/consumer-entry.js` and is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[tools/agent-generator/regrounding/verify-signing-chain.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[tools/agent-generator/regrounding/verify-signing-chain.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:4e5594feda006fde7bbc18363eda5a2f751130bd16cd8059139d148b61c5aa65
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `tools/agent-generator/regrounding/verify-signing-chain.ts`: This repo's signing-chain verifier. It contributes no code to the shipped `dist/generator/consumer-entry.js` and is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[tools/agent-generator/regrounding/signatures.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[tools/agent-generator/regrounding/signatures.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:b87961f74d649f0a9fc83033928553112eec105142e184e37d84096be7c38f21
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `tools/agent-generator/regrounding/signatures.ts`: The signature format and its checks. It **does** reach a consumer, read-only: it is inlined into the shipped `dist/generator/consumer-entry.js` (`dist/generator/**` is in `files`), and the consumer runs it as part of the installed generator. There is no source in the consumer's repo to write; a change goes upstream. I assent that nothing survives.
+
+## `#frontmatter:writeScope[tools/agent-generator/regrounding/c1.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[tools/agent-generator/regrounding/c1.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:159909d41a3fbde20c34f579fa544ac5ed722d0b8ddc37f4ecc29450e61cf7e9
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `tools/agent-generator/regrounding/c1.ts`: The C1 seat function. The consumer entry imports it, but it is tree-shaken out: it contributes no code to the shipped `dist/generator/consumer-entry.js` and is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[tools/agent-generator/regrounding/freshness.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[tools/agent-generator/regrounding/freshness.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:247dbed09d247a386ffdd8f982db5366b2e965cf3c7db86e71688c34c785dbbe
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `tools/agent-generator/regrounding/freshness.ts`: This repo's operative-set freshness sweep. It contributes no code to the shipped `dist/generator/consumer-entry.js` and is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[tools/agent-generator/regrounding/check-catalog.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[tools/agent-generator/regrounding/check-catalog.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:5e3d0c4bc66f94cbb39653fe1270ed40adb2e353e2740bd46669ae9344e14028
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `tools/agent-generator/regrounding/check-catalog.ts`: The registry of the nine re-grounding refusals. It **does** reach a consumer, read-only: it is inlined into the shipped `dist/generator/consumer-entry.js` (`dist/generator/**` is in `files`), and the consumer runs it as part of the installed generator. There is no source in the consumer's repo to write; a change goes upstream. I assent that nothing survives.
+
+## `#frontmatter:writeScope[tools/agent-generator/regrounding/triviality.ts]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[tools/agent-generator/regrounding/triviality.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:a3cb250a87f41d8f0b586c84723c1eab4de3d6982be4153249f0ca189ea9556f
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `tools/agent-generator/regrounding/triviality.ts`: This repo's triviality floor. It contributes no code to the shipped `dist/generator/consumer-entry.js` and is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
+
+## `#frontmatter:writeScope[tools/agent-generator/__fixtures__/stale-unit/**]`
+
+signer: stacy
+date: 2026-10-17
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[tools/agent-generator/__fixtures__/stale-unit/**]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:0ec963d1fcfd7d3d738db6c87bd20cf1977ce0e3b270a492330998d14a71beab
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `tools/agent-generator/__fixtures__/stale-unit/**`: The stale-unit fixture of this repo's freshness tests. It contributes no code to the shipped `dist/generator/consumer-entry.js` and is not in the package's `files`, so a consumer has no copy to own. I assent that nothing survives.
 
 ## `#the-q5-boundary-execution-claims-verification-is-stacys:preamble`
 

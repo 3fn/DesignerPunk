@@ -124,23 +124,31 @@
     {
       "lines": [
         47,
-        49
+        47
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:writeScope[.kiro/issues/**]"
+    },
+    {
+      "lines": [
+        48,
+        50
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"
     },
     {
       "lines": [
-        50,
-        50
+        51,
+        51
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:kiro.welcomeMessage"
     },
     {
       "lines": [
-        51,
-        51
+        52,
+        52
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"

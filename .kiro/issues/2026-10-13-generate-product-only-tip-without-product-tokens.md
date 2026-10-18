@@ -8,3 +8,5 @@ When system-token generation fails, `runGenerate` prints `💡 Tip: Use --produc
 
 ## Fix shape
 Print the tip only when `productTokens` is configured; one assertion in the CLI tests. No grant needed (Lina's own surface).
+
+2026-10-17 — Lina: re-routed to Ada as `src/cli/**` owner (ballot 2026-10-17-standing-write-scope-six-roots § 2.1); the Owner header stands as the record of who owned it when filed.

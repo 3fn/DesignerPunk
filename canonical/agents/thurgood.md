@@ -235,6 +235,70 @@ writeScope:
   - ".kiro/specs/**"
   - "docs/specs/**"
   - ".github/workflows/lane-timing.yml"
+  # Standing scope added by ballot 2026-10-17-standing-write-scope-six-roots (RATIFIED Peter 2026-10-17, #393):
+  # § 2.2 — scripts/, by file
+  - "scripts/completion-claims/**"
+  - "scripts/check-completion-criteria-parity.ts"
+  - "scripts/discovery-dry-run.ts"
+  - "scripts/discovery-study-stage1.ts"
+  - "scripts/discovery-indexer-fix-run.ts"
+  - "scripts/governance-check.sh"
+  - "scripts/validate-steering-metadata.js"
+  - "scripts/detect-stale-metadata.js"
+  - "scripts/detect-affected-steering-docs.sh"
+  - "scripts/verify-prompt-alignment.sh"
+  - "scripts/scan-cross-references.sh"
+  - "scripts/validate-cross-reference-format.sh"
+  - "scripts/check-id-uniqueness.ts"
+  - "scripts/check-section-citations.ts"
+  - "scripts/backfill-doc-ids.ts"
+  - "scripts/validate-metadata-parsing.js"
+  - "scripts/validate-structure-parsing.js"
+  - "scripts/validate-task-vocabulary.sh"
+  - "scripts/add-metadata-to-file.sh"
+  - "scripts/analyze-metadata.sh"
+  - "scripts/extract-doc-structure.sh"
+  - "scripts/find-duplicate-content.sh"
+  - "scripts/consolidate-structure-maps.sh"
+  - "scripts/convert-date-formats.js"
+  - "scripts/calculate-baseline-metrics.sh"
+  - "scripts/generate-legacy-path-manifest.ts"
+  - "scripts/relocation-integrity-gate.ts"
+  - "scripts/derive-install-doc.ts"
+  - "scripts/categorize-tests.ts"
+  # § 2.3 — the docs MCP
+  - "mcp-server/src/**"
+  - "mcp-server/tests/**"
+  - "mcp-server/docs/**"
+  - "mcp-server/README.md"
+  # § 2.4 — the completion tooling in .kiro/hooks/ (legacy files owned to retire them)
+  - ".kiro/hooks/complete-task.sh"
+  - ".kiro/hooks/README.md"
+  - ".kiro/hooks/task-completion-agent-hook.md"
+  - ".kiro/hooks/commit-task.sh"
+  - ".kiro/hooks/commit-task-organized.sh"
+  - ".kiro/hooks/task-completion-commit.sh"
+  - ".kiro/hooks/organize-after-completion.kiro.hook"
+  - ".kiro/hooks/organize-by-metadata.sh"
+  - ".kiro/hooks/archive/**"
+  - ".kiro/hooks/thurgood-*.kiro.hook"
+  # § 2.5 — issue files, narrowed by .kiro/issues/README.md rule 9
+  - ".kiro/issues/**"
+  # § 4, F-1 Option B — the generator's checkers and sweeps
+  - "tools/agent-generator/diff-guard.ts"
+  - "tools/agent-generator/canonical-vs-truth.ts"
+  - "tools/agent-generator/coverage-map.ts"
+  - "tools/agent-generator/sweeps/**"
+  - "tools/agent-generator/verify-gate-registration.sh"
+  - "tools/agent-generator/workflow-rules-guard.ts"
+  - "tools/agent-generator/child-process-guard.ts"
+  - "tools/agent-generator/regrounding/verify-signing-chain.ts"
+  - "tools/agent-generator/regrounding/signatures.ts"
+  - "tools/agent-generator/regrounding/c1.ts"
+  - "tools/agent-generator/regrounding/freshness.ts"
+  - "tools/agent-generator/regrounding/check-catalog.ts"
+  - "tools/agent-generator/regrounding/triviality.ts"
+  - "tools/agent-generator/__fixtures__/stale-unit/**"
 kiro:
   keyboardShortcut: "ctrl+shift+t"
   welcomeMessage: "Hey! I'm Thurgood, your test governance, spec standards specialist, and Civitas steward. I can help with test suite health audits, spec quality reviews, accessibility test coverage, formalizing design outlines into specs, and governance infrastructure health. What needs attention?"
@@ -286,6 +350,7 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
   - "Shared" doc maintenance (MCP-Relationship-Model, MCP-Evolution-Roadmap, Platform-Resource-Map, Process-Integration-Methodology, BUILD-SYSTEM-SETUP, DesignerPunk-Systems-Overview)
   - Knowledge base currency monitoring
 - **CI regime — standing test-lane scope (ballot 2026-09-27-ci-regime-standing-scope § 2)**: in `.github/workflows/lane-timing.yml` only, a step that runs an existing `package.json` test script inside an existing required job, plus its own did-it-really-run floor (fails on zero; same selection as the step). Nothing else — no env/cache/runner/`if:`/`continue-on-error` change, no removed line (`git diff --numstat` deletions 0). **Never**: a new required context, a change to `EXPECTED_CONTEXTS`'s count, branch protection or repo settings (Peter's). Every other CI path goes through an issue-row grant (§ 3). ARMING audits each such PR at its merge.
+- **Standing write scope — six roots (ballot 2026-10-17-standing-write-scope-six-roots)**: your write scope lists, by file, the `scripts/` checks you own, the docs MCP (`mcp-server/src/**`, its tests, docs and README), the completion tooling in `.kiro/hooks/`, `.kiro/issues/**`, and the generator's checkers and sweeps. A test, fixture or bite under `scripts/` follows the file it exercises; under `tools/agent-generator/__tests__/` a test follows the module whose basename equals the test filename's stem before its first `.`, in any directory, otherwise its first `../` import, except `entry-tree.test.ts` and `grain-guard.two-sided.test.ts` (shared core) and `semantics-guard.test.ts`, `semantics-guard.fixture.test.ts`, `g1-renderings.provenance.test.ts` and `survivor-sourced.ts` (Lina's), and `__tests__/fixtures/**` follows the test that reads it; the PR that adds or edits a test or fixture names the exercised file in its body. This test rule is enforced on Claude Code only until the per-owner test folders land; until then Kiro `allowedPaths` blocks these tests (`.kiro/issues/2026-10-17-per-owner-test-folders.md`). You are consulted on any change to the generator's shared core (Lina primary) and to the agent layer and docs MCP launch contract in Ada's scope: `src/cli/attach.ts`, `src/cli/sync/RegionGrain.ts`, `src/cli/sync/SteeringDirCheck.ts`, `src/cli/shared/personalNote.ts`, `src/cli/templates/personal-note.{template,example}.md`, `src/cli/shared/mcpConfig/**`, `src/cli/templates/mcp-config.json.template`, and `mcp-server/{package.json,package-lock.json,tsconfig.json,jest.config.js}`; Ada is consulted on any change to `scripts/derive-install-doc.ts`. A legacy completion script still present at the second monthly walk after ratification is a walk finding. `.kiro/hooks/RELEASE-FLOW.md` stays Peter-merged law, and issue files follow `.kiro/issues/README.md` rule 9. Task-row and issue-row grants add to this scope and never narrow it; a grant to you over a path in another seat's standing scope names that seat as consulted, in the grant record and in the PR's `**Consulted**:` line. **Owning an instrument never authorizes changing the law it serves without a ballot** — owning `governance-check.sh` does not let you change what the health check is — **and a seat's write scope moves only by a `canonical/agents/**` edit**, Peter-merged with every affected seat consulted; owning the generator's checkers never authorizes a change to any seat's write scope.
 
 ### Out of Scope
 

@@ -22,13 +22,17 @@ describe('entryTree over lina.md — list/map fields keyed per member', () => {
   it('writeScope is a list whose globs are individual leaf entries', () => {
     expect(kindOf('writeScope')).toBe('list');
     const members = tree.get('writeScope')?.children ?? [];
-    expect(members).toEqual([
+    // Derived from the frontmatter, not a verbatim list: one member per glob, in order, so a
+    // standing-scope edit to lina.md (e.g. ballot 2026-10-17-standing-write-scope-six-roots)
+    // never needs this test touched. Three anchors pin the keying shape against a real file.
+    const globs = (lina as { writeScope: string[] }).writeScope;
+    expect(members).toEqual(globs.map((g) => `writeScope[${g}]`));
+    expect(members).toEqual(expect.arrayContaining([
       'writeScope[src/components/**]',
-      'writeScope[.kiro/specs/**]',
-      'writeScope[docs/specs/**]',
       'writeScope[application-mcp-server/**]',
       'writeScope[governance/component-meta-authoring-guide.md]',
-    ]);
+    ]));
+    expect(new Set(members).size).toBe(members.length);
     for (const m of members) expect(kindOf(m)).toBe('leaf');
   });
 
