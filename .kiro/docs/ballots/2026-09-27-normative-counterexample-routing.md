@@ -2,7 +2,7 @@
 
 **Date**: 2026-09-27
 **Drafted by**: Thurgood (Civitas steward; author of the completion-documentation guide)
-**Status**: **RATIFIED (Peter, 2026-10-18)**, relayed by the orchestrator, at the 2026-10-18 ballot sitting ("Go with your recommendations"; ballot `2026-10-18-governance-edit-kinds.md` § 6 and § 10): ratified **with the re-anchor amendment only**; amendment (2) withdrawn; the SEPARABLE clause "carried (not scheduled as a named attack)" (§ 5). This commit is the record, made before either edit is applied. *(Was: DRAFT — not ratified.)*
+**Status**: **RATIFIED (Peter, 2026-10-18)**, relayed by the orchestrator, at the 2026-10-18 ballot sitting ("Go with your recommendations"; ballot `2026-10-18-governance-edit-kinds.md` § 6 and § 10): ratified **with the re-anchor amendment only**; amendment (2) withdrawn; the SEPARABLE clause "carried (not scheduled as a named attack)" (§ 5). This commit is the record, made before either edit is applied. *(Was: DRAFT — not ratified.)* *(Superseded 2026-10-18: the SEPARABLE clause is ADOPTED and applied with the clause — Peter, 'Adopt it'; § 5.)*
 **Required reviewer**: Stacy. § 1 is her amended text, and she is the claims-pass seat whose findings § 2 must not pre-empt.
 **Origin**:
 - Spec 123 lessons item (`tasks.md` § "Carried obligations", #220, and the U2b-cut amendment).
@@ -115,7 +115,7 @@
 - **Application**, once `Status: RATIFIED`:
   - **re-anchor (the ratified amendment, 2026-10-18)**: the guide's blob is now `ccfbc354d740191a39c57711854038ae877b098b`, not the drafted `acd8ea3d…`. The before-text still holds at `64d0a7a1f` (§ "Authoring notes" item 3 at L349, then `### Authoring guidance — what each platform bullet verifies against` at L351), so the insertion point is unchanged. Re-verify the anchor at application;
   - **amendment (2), withdrawn (2026-10-18)**: the composition lines with ballots 2026-10-18 A (M1) and B (the kinds) are not applied, on Stacy's R1 reading (her rule's trigger is spec text, outside the kinds' scope, and M1 binds rulings and passes, not completion-doc notes);
-  - **the SEPARABLE sentence**: per § 5's reading, applied **without** it, pending confirmation;
+  - **the SEPARABLE sentence**: per § 5's reading, applied **without** it, pending confirmation — **superseded 2026-10-18: applied WITH it (Peter, 'Adopt it')**
   - insert both subsections exactly as written;
   - run `rebuild_index` (docs MCP);
   - run `validate_metadata` on the guide;
@@ -152,4 +152,6 @@
   - **§ 1 and § 2: ratified** as written, with the re-anchor amendment to § 3's application.
   - **Amendment (2): withdrawn.**
   - **SEPARABLE clause**: "carried (not scheduled as a named attack)", as relayed. Reading for application: the `[Separable:]` sentence is deleted, so a noticed question with no counterexample is carried rather than pre-registered as a named attack. This reading is to be confirmed by Peter on the record before the application PR merges (an `**Open for Peter**:` line in that PR's body, row 28).
+  - **Confirmed otherwise (Peter, 2026-10-18, 'Adopt it')**: the SEPARABLE clause is ADOPTED — 'Ratify with it': the `[Separable:]` marker is dropped and the sentence applied as written; the earlier 'not adopted' reading is superseded.
 - **Owed**: the application (§ 3), Peter-merged.
+- **Applied 2026-10-18, PR `chore/ballot-sitting-application`** (Thurgood): both subsections inserted after § "Authoring notes" at the re-verified anchor (blob `ccfbc354…`, L349/L351), the `[Separable:]` marker dropped and its sentence applied; `Last Reviewed` bumped.

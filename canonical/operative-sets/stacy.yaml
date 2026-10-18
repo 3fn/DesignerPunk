@@ -161,7 +161,7 @@ units:
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-charter-cut-ratified-verbatim
   # exemplar D — 13 item(s)
   "#the-trigger-set-the-114-superset-table-names-never-numbers":
-    canonicalHash: sha256:aa674a0127352f1c012ddfd8f8d9742d7470063ed604415526f83de6e8056d1c
+    canonicalHash: sha256:ea4f4b52be0b5544d4721d485ae3b509839b271d376079158d8bca376b64a545
     items:
       - id: trigger-lens
         kind: member
@@ -170,7 +170,7 @@ units:
       - id: trigger-release
         kind: member
         label: RELEASE
-        text: "| **RELEASE** | **Two phases, one record**: phase 1 on the release squash S, before the tag; phase 2 at the merge of the step-6 release-record PR | **Claims pass over the release delta (`git log <last-tag>..main`) — parent criteria tables vs `tasks.md` vs shipped source**. **Non-negotiable.** Paired with the release-step condition: the checklist runs the owed-set query and pastes its output, and carries Q2 guard (i)'s arming line. Phase 2 reads the committed step-6 record — the rail result and the two-registry record (each registry's time[<v>], file count and sha1, equal to the publish script's recorded sha1) — against the published bytes; until it does, the record reads publish-rail liveness: owed. Drafted against the open record PR, it ends with the merge-confirmation line. | Stacy |"
+        text: "| **RELEASE** | **Two phases, one record**: phase 1 on the release squash S, before the tag; phase 2 at the merge of the step-6 release-record PR | **Claims pass over the release delta (`git log <last-tag>..main`) — parent criteria tables vs `tasks.md` vs shipped source**. **Non-negotiable.** Paired with the release-step condition: the checklist runs the owed-set query and pastes its output, and carries Q2 guard (i)'s arming line. Phase 1 also carries the `release-falsity-floor` read (ballot 2026-10-18-obligation-drain-and-release-falsity-floor M7): the walk record (`.kiro/issues/<date>-release-<V>-walk.md`, RELEASE-FLOW item 3a) exists, its greps re-run at its `main at:` SHA, and every row carries a disposition; per floor-class row, one line — the walk-record line (record path, `main at:` SHA); for a row carried or read as not false at its reader, the citation of Peter's dated answer (quoted words, dated before the walk PR's `mergedAt`), a row without one being a finding routed to Peter; and your re-check of the surface at S (`git show S:<path>`: fixed, disclosed where its reader meets it, or still false under the cited waiver), or `not re-verified — <why>` (this read's own negative, outside the criterion-row vocabulary). A read, never a gate. Phase 2 reads the committed step-6 record — the rail result and the two-registry record (each registry's time[<v>], file count and sha1, equal to the publish script's recorded sha1) — against the published bytes; until it does, the record reads publish-rail liveness: owed. Drafted against the open record PR, it ends with the merge-confirmation line. | Stacy |"
       - id: trigger-symptom
         kind: member
         label: SYMPTOM
@@ -574,7 +574,7 @@ units:
         text: "the co-signed joint working agreement + lifecycle amendment (`.kiro/specs/127-completion-claims-integrity/pre-spec/`, PRs #158/#165) are the underlying authority where this text and they disagree."
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble
   "#the-claims-pass-record-claims-passmd-the-template":
-    canonicalHash: sha256:8103d28ef4a140c355a2c82c2395c492fceb1b48c46a87b24f49b6713fb38ac7
+    canonicalHash: sha256:29f67487340c5c5a970f454430b234269a73503f5caec77340985c065e109a33
     items:
       - id: record-committed
         kind: obligation
@@ -696,6 +696,10 @@ units:
         kind: obligation
         label: "Instruments read"
         text: "**The instruments read** *(ballot 2026-09-28-parent-instrument-existence-check)*: on every bound parent doc in the population, the fixed-form `**Instruments**:` header line — presence and grammar (a missing line and a malformed one are findings of different kinds on the authoring PRIMARY), the path naming that parent's own block, and the line's counts equal to the block's rows in their final states (a resolved `MISSING` row keeps its original state beside its resolution) and to its `## Found later` entries dated on or before the parent doc; then gaps counted in two kinds, **unlisted** (an instrument a criterion's evidence needed that the block never named) and **misfit** (an `exists` row whose fit clause does not describe what the criterion reads), each split by source — **self-reported** (the block's `## Found later`) or **pass-found** (recorded in this pass's record, never appended to the author's block); the self-reported share is the honesty signal, and a `missing 0 · unlisted 0` line on a parent with a pass-found gap is counted as the ritual-stub signal — counted, never a gate."
+      - id: governance-edit-kind-read
+        kind: obligation
+        label: "Governance-edit-kind read"
+        text: "**The governance-edit-kind read** *(ballot 2026-10-18-governance-edit-kinds)*: on every PR in the population whose diff touches a path the edit kinds cover (`.kiro/docs/ballots/README.md` § \"When a governance edit needs a ballot — three kinds\"), the `**Edit kind**:` lines — read from the PR body (`gh pr view <n> --json body`, run for this seat by a session holding credentials), never from the squash message — against the merge's diff: every changed file, and every hunk where a file's lines split it, is named by a line giving its kind and authority. **A file or hunk with no line, or a line with no authority, is a finding on the authoring agent** (counted apart: missing vs no-authority). The rot-mode count: LAW hunks whose ballot did not read RATIFIED at the merge (`git show <merge>:<ballot>`), each also routed to Peter, who alone ratifies or reverts; EXECUTION hunks whose clause was not merged or ratified at the merge, or does not name the edit; CORRECTION hunks whose observation record does not resolve at the merge, or whose only referent is governance text or enforcement code changed in the same PR (the ballot's § 2 list). A kind you read as wrong is a finding on the authoring agent; whether the text is right is its owner's. **Observation, not a guard** — never a gate."
       - id: never-a-gate
         kind: obligation
         label: "Never a gate"

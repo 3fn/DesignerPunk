@@ -311,6 +311,7 @@ Then:
   - **Amended (Thurgood)**: 10, ballot B's enforcement-code list (lives in ballot B).
 - **Recorded for the application (Stacy's text, relayed 2026-10-18)**: her phase-1 line per floor-class row is "the walk-record line (record path, `main at:` SHA), the citation of Peter's dated answer (quoted words, dated before the walk PR's `mergedAt`), and Stacy's re-check of the surface at S (`git show S:<path>`, falsehood fixed or disclosed); where a surface can't be re-checked, `not re-verified — <why>`." It rides her RELEASE trigger row (§ 7; her `release-falsity-floor` conditions).
 - **Owed**: the application PR (§ 7), Peter-merged.
+- **Applied 2026-10-18, PR `chore/ballot-sitting-application`** (Thurgood): README rules 1, 5, 6, 10–12, L4 and the roster removal; RELEASE-FLOW L26, item 3a, L187, L207; the TCP M8 bullet and its operative-set item; the two register rows; the owners' back-fill for Thurgood's records and C-3's home record. Stacy's RELEASE trigger row (§ 7) and her signing acts, and Ada's and Stacy's back-fill lines, are their own seat commits in the same PR.
 
 ## 10. Consult ledger
 

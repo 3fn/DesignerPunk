@@ -270,7 +270,7 @@ units:
         text: "**Tooling follow-up (optional)**: `complete-task.sh` may auto-prune the local unit branch once it detects the merge — a convenience, not a hard requirement; the manual `git branch -d` step is not blocked on it."
     confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#branch-cleanup
   "#branch-and-pr-conventions":
-    canonicalHash: sha256:920fbf9e608725a083053d158bcb195209a2993b1e00037764621cbf1a71b2cf
+    canonicalHash: sha256:4e0f6aca925ae3b32e9dfda4c2972002344de66fafdeefb0c4f05c7ad860583d
     items:
       - id: branch-and-pr-conven-1
         kind: obligation
@@ -296,6 +296,14 @@ units:
         kind: obligation
         label: "PR body additionally carries a Unit: field (the declared mer"
         text: "**PR body** additionally carries a `Unit:` field (the declared merge unit, or the task for single-parent units) alongside the existing `Spec:` / `Task:` / `Agent:` / completion-doc-path / validation-note fields."
+      - id: branch-and-pr-conven-7
+        kind: obligation
+        label: "A question to Peter holds the merge (Peter, 2026-10-17: \"Don"
+        text: "**A question to Peter holds the merge** (Peter, 2026-10-17: \"Don't merge until I answer\"). A PR body that puts a question to Peter carries it on a line beginning `**Open for Peter**:`. The PR is not merged until Peter's answer is on the record — his words, dated, in a committed file or written by him on the PR — **dated before the merge** (his comment's timestamp, or the commit adding his words, is earlier than the PR's `mergedAt`), and the body cites it. A merge never answers a question; no author writes \"merge = yes\", \"adopted at merge unless amended\" or an equivalent. **A pointer counts as asking**: a body line pointing at a question asked elsewhere holds the merge exactly as the written-out question would. An unmarked question to Peter holds it too; the missing marker is a finding on the author. \"Not now — merge\" is an answer, and the question is filed under rule 10 with a trigger."
+      - id: branch-and-pr-conven-8
+        kind: obligation
+        label: "Edit kind (ballot 2026-10-18-governance-edit-kinds): a PR wh"
+        text: "**Edit kind** (ballot 2026-10-18-governance-edit-kinds): a PR whose diff touches a governance path (`governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, the prose of `canonical/agents/**`) carries one line per changed file — `**Edit kind**: <path> — LAW (<ballot path>)`, `— EXECUTION (<clause>)` or `— CORRECTION (<observation record>; truth: <referent>)`. Where one file's lines are of different kinds, it carries one line per part instead, with `<path> L<a>–<b>`: the line range in the file as it stands at the merge commit. The lines are read from the PR body (`gh pr view <n> --json body`), never from the squash message."
     confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#branch-and-pr-conventions
   "#the-merge-rule":
     canonicalHash: sha256:d9fdd24e86b6c31126977969bbe4d47e0df9b05bc4c3a2bf6274d8cfd801e34e

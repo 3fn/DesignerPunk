@@ -1124,3 +1124,43 @@ history:
   - { date: 2026-10-17, change: "entry created proposed by the application of ballot 2026-10-17-standing-write-scope-six-roots (RATIFIED Peter 2026-10-17, #393; F-1 = Option B; Stacy's R2 addition approved), edit site 5. Owner thurgood (instrument); ARMING verdicts Stacy's. Non-substring sweep at authoring: 38 live ids + this one, relations 0, dupes 0. Two authoring findings recorded in the verification comment for ruling before build (derived consumer arrays; four targets, not three)", by: thurgood }
   - { date: 2026-10-17, change: "rule and fixtures adopt the five-surface projection (ballot Errata (c), Peter's Fork C ruling relayed 2026-10-17: Lina's per-surface read, the consumer pass-through, the missing-disposition-row fixture); the OPEN comment is replaced; the known gap (deleted assertions inside instrument tests, Errata (d)) recorded. Still proposed", by: thurgood }
 ```
+
+### issues-obligation-lapse
+
+```yaml
+rule: "A root .kiro/issues/ record carries an owner, a Trigger token from the fixed grammar (the event that owes the close) and a Class; a record neither closed nor re-ruled by an ancestor of a firing commit lapses, appended as ## Lapse (date) naming that SHA and never erased (count = distinct SHAs; open records lapse again at each later release's S); P1 and P2 `(record)` escalate to Peter at lapse 2, P0 and P2 `(guard)` at lapse 1, with spec / drop / fix-now; obligations created by a ruling or pass are filed in the same PR"
+boundary_call:
+  class: functional
+  rationale: "Firing commits and closing commits are git objects; on-time is git merge-base --is-ancestor; the count is distinct SHAs — decidable from git alone. manual tokens are printed not computable"
+verification:
+  disposition: record-check
+  owner: thurgood
+  check_state: proposed
+  checks: []
+  # The ladder (rulings item 26, D-1): held by the walk record and the monthly walk; the second miss on a token-bearing record promotes the grep to a committed script under a scoped grant
+  # Rule line updated at application as PRE-DECLARED EXECUTION of Peter's F-A1 = (b) ruling (ballot 2026-10-18-obligation-drain-and-release-falsity-floor § 9, 2026-10-18): a P2 (guard) escalates at lapse 1, like P0 (.kiro/issues/README.md rule 11)
+education:
+  disposition: "LAW HOME: this ballot M1, M2, M4–M6. POINTER-GRADE: .kiro/issues/README.md rules 1, 5, 6, 10–12"
+history:
+  - { date: 2026-10-18, change: "entry created (steward, window-free — the certainty-calibration precedent) by ballot 2026-10-18-obligation-drain-and-release-falsity-floor", by: thurgood }
+```
+
+### release-falsity-floor
+
+```yaml
+rule: "Nothing ships that the release knows is false at the place where its reader meets it; 'knows' = the rows of the release's walk record (.kiro/issues/<date>-release-<v>-walk.md); served docs, MCP contracts and agent charters are fixed, not disclosed; every floor-class row goes to Peter in one batch per release and holds the walk record's PR until he answers; only Peter waives, in quoted, dated words from outside the diff"
+boundary_call:
+  class: functional
+  rationale: "The walk record's path, its main-at SHA, its paste and each row's disposition are decidable from the committed record. Whether a 'not false at its reader' reading is right is judgment — audited, never gated"
+verification:
+  disposition: record-check
+  owner: stacy
+  check_state: proposed
+  checks: []
+  # Read at RELEASE phase 1 (RELEASE-FLOW step 6): the walk record exists, its grep re-runs at its main-at SHA, every row is dispositioned. A read in the pass, never a gate.
+  # Owner stacy on her two conditions (Stacy R1 item 15): (1) M3's walk-record home lands; (2) her charter's RELEASE trigger row names this read, in the same application, with her re-sign (if ballot B is struck, A carries the re-sign alone).
+education:
+  disposition: "LAW HOME: this ballot M7. POINTER-GRADE: RELEASE-FLOW 'Deriving the delta' items 1 and 3a"
+history:
+  - { date: 2026-10-18, change: "entry created (steward, window-free) by ballot 2026-10-18-obligation-drain-and-release-falsity-floor; rulings item 23; owner stacy on her R1 conditions", by: thurgood }
+```

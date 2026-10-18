@@ -1,7 +1,7 @@
 ---
 id: task-completion-protocol
 inclusion: always
-lastReviewed: 2026-09-29
+lastReviewed: 2026-10-18
 name: Task-Completion-Protocol
 description: Operational law for ending a task — when to write completion docs, which tier, the parent-vs-subtask sequence, and the stop-and-wait-for-authorization rule. Load when completing any task or subtask.
 ---
@@ -119,6 +119,8 @@ Branch → PR → required checks → merge.
 - **PR body** MUST carry: `Spec:` (spec directory name), `Task:` (task number + name), `Agent:` (authoring agent, or `Peter` for human-direct work), path(s) to the completion doc(s) on the branch, and a one-line validation note (which tier/commands ran locally).
 - **Unit-grain naming (multi-parent units)**: a unit spanning multiple parents uses a unit slug — branch `task/<spec>-<unit-slug>` (e.g., `task/122-substrate`, `task/122-cutover-ada`); PR title `<Unit description> (<spec>)`. A single-parent unit keeps the unchanged `task/<spec>-<N>-<slug>` branch and `Task <N> Complete: <Description> (<spec>)` title.
 - **PR body** additionally carries a `Unit:` field (the declared merge unit, or the task for single-parent units) alongside the existing `Spec:` / `Task:` / `Agent:` / completion-doc-path / validation-note fields.
+- **A question to Peter holds the merge** (Peter, 2026-10-17: "Don't merge until I answer"). A PR body that puts a question to Peter carries it on a line beginning `**Open for Peter**:`. The PR is not merged until Peter's answer is on the record — his words, dated, in a committed file or written by him on the PR — **dated before the merge** (his comment's timestamp, or the commit adding his words, is earlier than the PR's `mergedAt`), and the body cites it. A merge never answers a question; no author writes "merge = yes", "adopted at merge unless amended" or an equivalent. **A pointer counts as asking**: a body line pointing at a question asked elsewhere holds the merge exactly as the written-out question would. An unmarked question to Peter holds it too; the missing marker is a finding on the author. "Not now — merge" is an answer, and the question is filed under rule 10 with a trigger.
+- **Edit kind** (ballot 2026-10-18-governance-edit-kinds): a PR whose diff touches a governance path (`governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, the prose of `canonical/agents/**`) carries one line per changed file — `**Edit kind**: <path> — LAW (<ballot path>)`, `— EXECUTION (<clause>)` or `— CORRECTION (<observation record>; truth: <referent>)`. Where one file's lines are of different kinds, it carries one line per part instead, with `<path> L<a>–<b>`: the line range in the file as it stands at the merge commit. The lines are read from the PR body (`gh pr view <n> --json body`), never from the squash message.
 
 ### The Merge Rule
 

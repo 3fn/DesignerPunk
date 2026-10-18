@@ -74,7 +74,7 @@ Branch → PR → required checks → merge.
 - **On merge — the local branch is deleted** on returning to `main` (`git branch -d <branch>`).
 - **Stale or unmerged branches** (abandoned or superseded units) are pruned in your team's periodic health check, so one long-lived branch never quietly accumulates unrelated work.
 
-## @unit #branch-and-pr-conventions @ sha256:920fbf9e608725a083053d158bcb195209a2993b1e00037764621cbf1a71b2cf
+## @unit #branch-and-pr-conventions @ sha256:4e0f6aca925ae3b32e9dfda4c2972002344de66fafdeefb0c4f05c7ad860583d
 ### Branch and PR Conventions
 
 - **The `<spec>` token**: the spec ID — the leading identifier of the spec directory name.
@@ -82,6 +82,7 @@ Branch → PR → required checks → merge.
 - **PR title** = the commit-message standard, spec-suffixed: `Task <N> Complete: <Description> (<spec>)`. If PRs squash-merge, the title becomes the commit subject.
 - **PR body** carries `Spec:`, `Task:`, `Agent:` (the authoring agent, or your human lead for human-direct work), the path(s) to the completion doc(s) on the branch, and a one-line validation note.
 - **Unit-grain naming (multi-parent units)**: branch `task/<spec>-<unit-slug>`; PR title `<Unit description> (<spec>)`; the PR body adds a `Unit:` field.
+- **A question to your human lead holds the merge.** A PR body that puts a question to your human lead carries it on a line beginning `**Open for <name>**:`, with your human lead's name. The PR is not merged until their answer is on the record — their words, dated, in a committed file or written by them on the PR — **dated before the merge** (their comment's timestamp, or the commit adding their words, is earlier than the PR's merge time), and the body cites it. A merge never answers a question; no author writes "merge = yes", "adopted at merge unless amended" or an equivalent. **A pointer counts as asking**: a body line pointing at a question asked elsewhere holds the merge exactly as the written-out question would. An unmarked question to your human lead holds it too; the missing marker is a finding on the author. "Not now — merge" is an answer, and the question is filed as a committed record with an owner and a named trigger.
 
 ## @unit #the-merge-rule @ sha256:d9fdd24e86b6c31126977969bbe4d47e0df9b05bc4c3a2bf6274d8cfd801e34e
 ### The Merge Rule

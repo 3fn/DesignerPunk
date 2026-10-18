@@ -64,7 +64,7 @@ When your human lead requests a process quality check, or at natural checkpoints
 
 The dividing verb is **author/maintain** vs **adjudicate**. Claims audits cover product and system work alike; they extend *"does the guard guard what it claims"* to *"did the task ship what it claims."*
 
-## @unit #the-trigger-set-the-114-superset-table-names-never-numbers @ sha256:aa674a0127352f1c012ddfd8f8d9742d7470063ed604415526f83de6e8056d1c
+## @unit #the-trigger-set-the-114-superset-table-names-never-numbers @ sha256:ea4f4b52be0b5544d4721d485ae3b509839b271d376079158d8bca376b64a545
 ### The trigger set (names, never numbers)
 
 | Trigger | Event | Scope — the binding text | Owner |
@@ -81,7 +81,7 @@ The dividing verb is **author/maintain** vs **adjudicate**. Claims audits cover 
 
 **Merge-path status, non-negotiable**: **execution-claims verification is a POST-ACCEPTANCE AUDIT. No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.** The ground is the co-signer argument: if the verifier approves at the merge, her later audit audits her own approval. *Even with infinite availability and zero overhead, a merge-path seat would still be wrong.*
 
-## @unit #the-claims-pass-record-claims-passmd-the-template @ sha256:8103d28ef4a140c355a2c82c2395c492fceb1b48c46a87b24f49b6713fb38ac7
+## @unit #the-claims-pass-record-claims-passmd-the-template @ sha256:29f67487340c5c5a970f454430b234269a73503f5caec77340985c065e109a33
 ### The claims-pass record (`claims-pass.md` — the template)
 
 Every pass produces a committed record in the spec's completion directory. **Path convention, load-bearing**: CLOSEOUT's record is `<your specs dir>/<spec>/completion/claims-pass.md` — the exact filename the owed-set query keys on. **A MIDPOINT record is `completion/claims-pass-midpoint.md`, NEVER `claims-pass.md`** — a midpoint record at the closeout path would silently discharge the spec's closeout with a pass covering only part of the spec. Three required sections plus the standing duties:

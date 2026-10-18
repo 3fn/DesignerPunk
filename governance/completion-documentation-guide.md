@@ -10,7 +10,7 @@ description: Comprehensive completion and summary documentation guide — two-do
 > **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the paths (`.kiro/specs/`, `docs/specs/`), the ballots it cites and the named agents are DesignerPunk's own. **Transferable**: the two-document workflow, success-criteria fidelity (each criterion reproduced with its evidence), and the instruments block that lists what each criterion's evidence depends on.
 
 **Date**: 2026-01-03
-**Last Reviewed**: 2026-09-29
+**Last Reviewed**: 2026-10-18
 **Purpose**: Comprehensive guide for creating completion and summary documentation
 **Organization**: process-standard
 **Scope**: cross-project
@@ -347,6 +347,16 @@ The rule is exact-set because self-authored verification tables fail in six name
 1. **Copy the `tasks.md` bullet; never retranscribe it.** Retyping is where math-glyph and punctuation drift is produced, and normalization friction will concentrate there.
 2. **The decomposition-scope boundary.** Success Criteria bullets decompose per-platform (the convention is in Process-Spec-Planning § "`tasks.md` Structural Conventions"). A `**Primary Artifacts:**` line that bundles platforms does **not** decompose — it has its own remedy in the Additional verification section's forced-negative line.
 3. **Denominators must be enumerable from the record** *(S-1, ratified 2026-09-19 — two audit instances)*. A criterion whose denominator is a list SHALL make that list enumerable: either the criterion enumerates its elements inline in `tasks.md`, or the completion doc's Evidence carries the **per-element checklist — the elements themselves, never only their total**. An aggregate count over an unenumerated prose list ("contains every element of that section": `25/25`) is non-compliant evidence for the criterion it totals.
+
+### Carried notes that contradict a normative claim
+
+A note that states a counterexample to a normative claim in requirements or design (a soundness, safety, or 'cannot/never' sentence) is a finding. Its writer quotes the sentence and its location, and routes it when noticed to that text's owner as an explicit message — not only as a line in a completion doc. It may also be carried to the implementing task, but never only carried. The owner, on receipt, either repairs the claim or records why it holds; if the finder disputes a 'holds', the dispute goes to the next scheduled gate on that text as a named attack, or to Peter. Carrying it forward unanswered is itself a finding. Where the text is under a scheduled falsification gate, every such finding and every repair made before the gate is listed in the gate's record and re-run there as a named attack. A noticed question about a normative sentence, without a counterexample, is pre-registered as a named attack for that gate rather than carried. Notes about implementation that contradict no normative sentence may still be carried.
+
+*Honest reach: whether a note "states a counterexample" is decidable against the named sentence. The rule does not decide whether the claim is wrong — the owner does, on receipt.*
+
+### Errata to a completion doc
+
+**Errata to a completion doc.** A correction to a committed completion doc is appended as a dated `## Erratum <date>` (or `## Addendum <date>`) section that cites what it corrects and what found it. The original text is not edited, with one exception: an erratum to a criterion row's Status or Evidence also updates that row in place, and quotes the replaced Status and Evidence verbatim in the erratum. **An erratum does not discharge or pre-empt a claims-pass finding on the original claim** — whether the original is a finding is the claims-pass seat's call.
 
 ### Authoring guidance — what each platform bullet verifies against
 

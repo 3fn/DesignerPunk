@@ -23,9 +23,18 @@ Nothing in the publish lifecycle commits or pushes.
 
 Before step 1 below, the release author derives-classifies-ratifies:
 
-1. **Derive**: `git log $(git describe --tags --abbrev=0)..main --oneline` (all changes — squash titles are the changelog spine) and the same log scoped to the SHIPPED surface — **authoritative list: `package.json` `files[]`** (`src/` alone misses served-content roots like `governance/`; v14's docs-corpus entry lived there). Issue-driven work appears ONLY here — never assume spec summaries cover the delta.
+1. **Derive**: `git log $(git describe --tags --abbrev=0)..main --oneline` (all changes — squash titles are the changelog spine) and the same log scoped to the SHIPPED surface — **authoritative list: `package.json` `files[]`** (`src/` alone misses served-content roots like `governance/`; v14's docs-corpus entry lived there). Issue-driven work appears ONLY here — never assume spec summaries cover the delta. The release's blocking test and due-row paste run at item 3a, once the bump is ratified.
 2. **Classify** each change 🔴 breaking / 🟡 minor / 🔵 patch-internal, reading task summaries or PR bodies for substance.
 3. **Peter ratifies the bump**; notes are hand-authored at `docs/releases/release-X.Y.Z.md` (v14.0.0 = format precedent) and ride the release PR below.
+3a. **The walk** (ballot 2026-10-18-obligation-drain-and-release-falsity-floor M3, M7), before the release branch. **The blocking test**: **nothing ships that the release knows is false at the place where its reader meets it.** "Knows" = the rows of the walk record. A disclosure counts only where the reader meets the falsehood: agents never read the CHANGELOG, so served docs, MCP contracts and agent charters are fixed, not disclosed. The scope sentence counts as a shipped sentence. Every other row is carried with one bulk line per record (SHA, home, trigger). A **floor-class row** is a row whose record meets the P0 definition, whether or not it carries `**Class**: P0`. Every floor-class row, carried or read as not false at its reader, goes to Peter in one batch per release as `**Open for Peter**:` lines in the walk record's PR, held until he answers. The author's reading is one line offered with each row, never a carry. Only Peter waives a floor-class row, and his batch answers count as waivers only if quoted and dated, from outside the diff. Then, on up-to-date `main`:
+   ```bash
+   echo "main at: $(git rev-parse HEAD)"; V=<ratified version>; VE=$(printf %s "$V" | sed 's/\./\\./g')
+   grep -nE '^\*\*Trigger\*\*: `(release:('"$VE"'|next):phase-1|tag:v'"$VE"')`' .kiro/issues/*.md; echo "due-rows exit $?"
+   grep -nE '^\*\*Class\*\*: P0' .kiro/issues/*.md; echo "P0 exit $?"
+   ```
+   **The walk record** is `.kiro/issues/<date>-release-<V>-walk.md`, an issue record (`**Owner**:` the walk's author; ``**Trigger**: `release:<V>:phase-1` ``; `**Class**: P2 obligation (record) · owed-act`), landed by a record-only PR before the release branch. It carries the `main at:` SHA, both commands verbatim with their outputs and exit codes (an empty result pasted as empty), and one row per due hit, per P0 record and per row of the release's findings records: `| record | floor-class? | disposition | evidence |`. Each disposition is **fixed** (the PR), **carried** (one bulk line: SHA, home, trigger; a floor-class row per M7), **waived** (Peter's quoted, dated words, sourced outside the diff) or **lapse** (rule 11). It closes and archives after phase 1 (rule 5).
+
+   A due row the grep misses **on a record that carries a token**, noticed by a claims pass or the monthly walk, is a **miss**; the second miss promotes the grep to a committed script under a scoped grant (the owed-set ladder's first rung). A record with no token is a back-fill finding (rule 1), not a miss.
 4. Publish mechanics: § "The sequence" steps 5–6 — **one tarball, built by `scripts/release-publish.ts` in a fresh clone at the tag, published unchanged to both registries**. The public-npm flags are written out in step 5.4. They were previously only in "the dual-registry playbook", which is not in this repo, so a fresh session could not find it. Auth note: public npm needs Peter's login/2FA, and the token expires in about 30 days, so an E404 on publish is a masked auth failure. **The release notes disclose any change in embedded dependency versions against the previous release's public artifact** (the first instance is § "Dependency disclosure" of ballot `2026-10-03-hermetic-publish-path`).
 5. **Claims-pass owed set + the arming question** — see the named step below. **Both lines produce artifacts, not reminders.**
 6. **Onboarding trio** (from release 4): recipe step 6 in `governance/release-management-system.md`. Where the runs sit relative to the tag is set by the trio protocol (Spec 123 Task 25). The obligation's tracking record is Spec 123 Task 28.4's.
@@ -184,7 +193,7 @@ The owed-set pipeline is **documented commands, not a committed script**, delibe
    **Only if the GitHub Packages read fails on auth from the main checkout**, ask Peter for a `read:packages` token, and record that the fallback was used.
 
    **Land the result on `main`** — `main` is branch-protected, so a working-tree
-   file is not enough. Paste the **full output, including the exit code**, to
+   file is not enough. Paste the **full output of every step-6 rail run, failing runs included and in order, each with its exit code**, to
    `docs/releases/<v>/publish-verification.txt` (`.txt`, not `.log` — this
    repo's `*.log` gitignore rule would otherwise silently drop the file, the
    same trap Task 7.1's own bites hit once already) and open a small
@@ -204,7 +213,7 @@ The owed-set pipeline is **documented commands, not a committed script**, delibe
    without a committed record the pass has nothing to read.
 
    **The RELEASE claims pass runs in two phases, recorded in one file** (Stacy's pass; this text sets only *when*):
-   - **Phase 1** runs on **S after 5.1 is green and before the tag (5.2)**. A red 5.1 moves S, so phase 1 never reads a commit that will not be tagged (A7). It covers the release delta, the 5a owed-set paste, the 5b arming line and 5.1's tally. Its record lands by a record-only PR and states `publish-rail liveness: owed`.
+   - **Phase 1** runs on **S after 5.1 is green and before the tag (5.2)**. A red 5.1 moves S, so phase 1 never reads a commit that will not be tagged (A7). It covers the release delta, the walk record (item 3a: its paste, its `main at:` SHA and each row's disposition), the 5a owed-set paste, the 5b arming line and 5.1's tally. Its record lands by a record-only PR and states `publish-rail liveness: owed`.
    - **Phase 2** is a dated section appended to the same record. It reads the committed step-6 `.txt`: the rail result and the 6b two-registry record. **Its trigger is the merge of the step-6 release-record PR.**
 
    **Phase 2 may be drafted against that PR while it is still open.** If it is, it MUST end with a **merge-confirmation line** written at the PR's merge:

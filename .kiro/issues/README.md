@@ -1,53 +1,27 @@
 # .kiro/issues/ — the active-charter convention
 
 **Established**: 2026-09-19 (the issues-dir triage — chartered as the load-bearing precondition of the monthly health check's active-charter walk; Spec 127 outline-settle ballot § 5.5, Peter's tracking ruling; owner Thurgood)
-**The rule in one line**: **anything in this directory's root is ACTIVE; everything closed lives in `archive/`.** The active-charter walk is `ls .kiro/issues/*.md` — bounded by construction, minutes not sessions.
+**The rule in one line**: **anything in this directory's root is ACTIVE; everything closed lives in `archive/`.** The walk reads every root record (rule 6); rule 5 keeps the root bounded — it is not bounded by construction.
 
 ---
 
 ## The convention
 
-1. **Root = active.** A file at the root is a live charter, an open defect, or a deferred item — and it SHALL carry an **owner** and a **named trigger** (an event, never a calendar hope). A root file without both is itself a walk finding.
+1. **Root = active.** A file at the root is a live charter, an open defect, or a deferred item — and it SHALL carry an **owner** and a **named trigger** (an event, never a calendar hope). The trigger line begins `**Trigger**: ` followed immediately by exactly one backticked token naming **the event that owes the close** — `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual` — then optional prose; a start condition, if any, is prose (definitions: ballot 2026-10-18-obligation-drain-and-release-falsity-floor M2). Only the record's owner writes or changes its Trigger line (rule 9). A root file without both is itself a walk finding.
 2. **`archive/` = closed records.** Resolved defects, executed charters/session briefs, superseded notes, canonical adjudication records whose rulings are law elsewhere, stale investigation notes, and accidental duplicates. Files move by `git mv`, content UNCHANGED — the record is immutable; the move is the only edit.
 3. **Citation resolution**: historical records (ballots, completion docs, register history entries) cite `.kiro/issues/<file>` paths as written at their time — those citations are point-in-time and are NOT rewritten when a file archives. **Resolution rule: a cited issue path not found at the root is in `archive/` under the same filename.** (One flat directory, no renames, so resolution is mechanical.)
 4. **Resurrection**: an archived-stale item that turns out to be live moves BACK to the root by `git mv`, gaining an owner + trigger in the same commit. Archiving is never a ruling on the merits — the merits live in the file.
-5. **Closing an item**: when a root item resolves/executes, record the outcome IN the file (dated), then `git mv` it to `archive/` — ideally in the PR that closes it, otherwise at the next health-check walk.
-6. **The walk** (monthly health check, Thurgood): for each root file — *has its trigger fired? if fired, is there evidence/a record?* Fired-without-record = finding. Root growing stale items = finding. That is the whole walk.
+5. **Closing an item**: when a root item resolves/executes, record the outcome IN the file (dated), then `git mv` it to `archive/` — ideally in the PR that closes it, otherwise at the next health-check walk. A record whose outcome is recorded is archived no later than the next walk; a grant archives at its fixing PR's merge; a P3 with a `manual` trigger still unfired at two consecutive walks is archived stale, its move commit adding the dated outcome line "archived stale — no outcome" (rule 4 brings it back).
+6. **The walk** (monthly health check, Thurgood) is a triage sitting, recorded in the health-check record: for each root record — has its trigger fired (rule 1)? If fired, it is closed and archived, closed as done-but-unclosed (no lapse), re-ruled by its owner, or lapsed (rule 11). The headline prints, per class: records, fired-open, lapses, and `manual` (not computable) of the total; the escalations owed to Peter go to him as one batch. A root record missing owner, trigger token or class = finding.
 7. **Instrument-surfaced rows** (register entry `instrument-rows-disposed-not-fixed`; ballot 2026-09-27-ci-regime-standing-scope § 4): an instrument's PR carries no fix outside its own extent; each surfaced row is, in that PR, adjudicated under the instrument's `sweep:` key or filed here as a chartered item (owner + named trigger + a unique expiry string in the adjudication `record`, removed by the fix PR with `grep -c` → 0). A surfaced row with neither disposition is a walk finding.
 8. **Grant paths** (ballot 2026-09-27-ci-regime-standing-scope § 3): an issue whose body carries a `**Grant paths**:` list grants its named owner write scope over exactly those paths, on the fixing PR's branch, until that PR merges — activated by Peter's merge of a PR whose body names the grant; the fixing PR is diffed against the list as it stood at that merge; a `.github/**` grant carries M1's excluded acts unless named and admitted; never a governance-law path; the fixing PR cites its path list. An out-of-list edit is a claims-pass finding. A C1 signing or confirming act needs no grant (ballot 2026-10-01-signing-act-chain; register `signing-act-consistency`).
 9. **Who writes an issue file** (ballot 2026-10-17-standing-write-scope-six-roots § 2.5): the seat(s) named in a record's `**Owner**:` or `**Owners**:` header author and edit its body; a section jointly authored by co-owners is edited by any of them, and a line signed by one seat is rewritten only by that seat. Any seat may append a dated line signed with its name to any record. Thurgood, as the convention's steward, walks every record, appends walk lines, and closes and archives records under rule 5. An edit outside this rule is a claims-pass finding.
+10. **Filing rule.** A ruling or a claims pass that creates an obligation files an issue record for it, or appends to the existing one, **in the same PR that records the ruling or the pass**. An obligation stated only in a plan line, a carry list, a walk table, a rulings row or a PR body, citing no record, is a finding on the PR that wrote it. A record filed for another owner names its filer; rule 9 applies to every later edit. A grant list is never authored only inside the diff it bounds: it is in a merged record first, or Peter's direction naming its paths is on the record **outside** that diff — a dated line in a record merged earlier, or Peter's own comment on the PR.
+11. **Lapse and escalation.** A record **lapses** at a firing event (rule 1) when no commit that is an ancestor of the event's commit closed it (rule 5's dated outcome line, or the archive move) or re-ruled it (its Trigger line changed in a diff carrying a dated reason and authority). **A record still open after a lapse lapses again at each later release's S.** Whoever observes a lapse — the walker, the walk's author, a claims pass — appends `## Lapse (YYYY-MM-DD)` naming the firing commit's SHA, signed. The headings are append-only, a later re-ruling never erases one, and **the count is the number of distinct SHAs they name**. A fixing PR closes its record by adding rule 5's outcome line in the same PR. **Escalation**: at the **second** lapse of a P1 or a P2 `(record)` record, or the **first** of a P0 or a P2 `(guard)` record, the record goes to Peter with exactly three options — **spec**, **drop**, or **fix-now** (a git-visible trigger no later than the next release's S). A lapsed fix-now returns without that option. Grants are excluded; a grant still open at its fixing PR's merge is a walk finding. A charter cannot lapse before its trigger fires.
+12. **Class.** Every root record carries `**Class**: <level> <name> · <kind>`. Levels: **P0 false-claim** (the release falsity floor's definition — ballot 2026-10-18-obligation-drain-and-release-falsity-floor M7), **P1 consumer-blocking**, **P2 obligation** with **exactly one, mandatory** sub-tag — **`(guard)`** (a guard or instrument weaker than its claim) or **`(record)`** (the record or its form is wrong; no reader is misled) — and **P3 improvement**. Kinds: `defect`, `owed-act`, `charter`, `grant`. The owner classes; a dated line re-classes a record when what it describes ships. Only Peter downgrades a P0. Stacy may confirm or dispute a P0 reading, and may read a non-P0 record as P0 — a finding to Peter, never an upgrade by her (Q5; her read, never a gate).
 
 **Ledger of the founding triage**: `archive/TRIAGE-2026-09-19.md` (every moved file, classed).
 
 ---
 
-## Active roster at the founding triage (27; 26 after the first walk — rsa-orchestrator verified-executed and archived 2026-09-19 — owners and triggers as recorded in each file)
-
-| File | Owner | Trigger / state |
-|---|---|---|
-| 2026-09-12-semantic-contrast-adjudication-queue.md | Ada (+Peter rulings) | WAS campaign-gated — **campaign closed 2026-09-18: now eligible**; next deep burst per D5 |
-| 2026-09-14-color-token-enforcement-spec-candidate.md | Thurgood (formalization) | next deep burst per D5 — heir to the 125-B campaign method |
-| 2026-09-12-spec-115-phase-b-colortokens-deletion.md | Thurgood → Ada | needs spec formalization before execution |
-| 2026-09-17-platform-build-verification-harness-candidate.md | Kenya/Data | chartered, not scheduled; no build work authorized |
-| 2026-09-17-disabled-guard-corpus-repairs.md | Lina | items 1–7 + D1 DONE (#169/#172); **residuals remain**: sibling vacuous-skips, CTA iOS/Android blend siblings, strict-key parser hardening, D2 scaffold touchpoint |
-| 2026-09-13-component-meta-extractor-clobbers-handedits.md | Lina | next Lina session with extractor capacity |
-| 2026-09-19-accuracy-pass-residuals.md | Ada/Peter, Kenya/Data, Thurgood, Leonardo/Lina | second-order smalls from the resolved follow-ups; walked monthly |
-| 2026-08-25-contract-education-content-debt.md | Lina | batch authorized 2026-08-25; next Lina docs session |
-| 2026-08-12-release-manager-retirement-execution.md | Thurgood | own dedicated session (36-file inventory) |
-| 2026-08-13-component-token-platform-references-noncompiling.md | Ada/Lina | open defect |
-| 2026-07-19-application-mcp-search-tokens-partial-match-signal.md | Thurgood | was LATER-after-119-B — 119-B complete: eligible |
-| 2026-06-28-spec-094-platform-theme-emission-unwired.md | Ada | deferred; theme-emission work |
-| 2026-06-26-package-json-types-condition-ordering.md | Ada | seeded; next module-resolution touch |
-| 2026-06-26-token-index-ordering-readdirsync-portability.md | Ada | seeded; deliberately not pursued in 124 |
-| 2026-06-25-component-schema-token-name-drift.md | Lina | open follow-up |
-| 2026-06-24-blend-system-architecture-and-oklch-alignment.md | Ada | SOON-triaged; the blend spec charter |
-| 2026-06-24-mathematical-relationship-parser-validation-gaps.md | Ada | SOON-triaged |
-| 2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md | Ada | LATER-triaged |
-| 2026-06-24-oklch-shadow-color-family-not-migrated.md | Ada | deferred (out of 117 scope) |
-| 2026-06-13-module-resolution-strategy.md | Ada | deferred to a dedicated spec |
-| 2026-06-13-blendutilities-not-generated.md | Ada | split 2026-06-24; open doc-accuracy half |
-| 2026-06-12-release-integrity-safety-nets.md | Thurgood | deferred (Peter-approved); revisit at release-manager retirement execution |
-| 2026-06-10-post-v12-rgba-pipeline-cleanup.md | Ada | open (deferred) |
-| 2026-05-03-civitas-trigger-effectiveness-followup.md | Thurgood | scheduled window Nov 2026 – May 2027 |
-| 2026-05-03-steering-doc-metadata-errors.md | Thurgood | incremental at monthly health checks |
-| ios-readonly-focusable-prototype.md | Kenya | DEFERRED (Peter 2026-07-15) — trigger: hardware access |
+The roster is `ls .kiro/issues/*.md`; the founding roster is in git history (`git show 64d0a7a1f:.kiro/issues/README.md`).

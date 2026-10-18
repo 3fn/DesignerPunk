@@ -103,11 +103,19 @@ date: 2026-09-29
 ## `#branch-and-pr-conventions`
 
 confirmer: stacy
-canonicalHash: sha256:920fbf9e608725a083053d158bcb195209a2993b1e00037764621cbf1a71b2cf
-items: branch-and-pr-conven-1, branch-and-pr-conven-2, branch-and-pr-conven-3, branch-and-pr-conven-4, branch-and-pr-conven-5, branch-and-pr-conven-6
-date: 2026-09-29
+canonicalHash: sha256:4e0f6aca925ae3b32e9dfda4c2972002344de66fafdeefb0c4f05c7ad860583d
+items: branch-and-pr-conven-1, branch-and-pr-conven-2, branch-and-pr-conven-3, branch-and-pr-conven-4, branch-and-pr-conven-5, branch-and-pr-conven-6, branch-and-pr-conven-7, branch-and-pr-conven-8
+date: 2026-10-18
 
-**Ruling: CONFIRMED at 6, as drafted.**
+**Re-confirmed 2026-10-18 (Req 11.6.5d).**
+- **What changed**: two bullets, appended after the `Unit:` bullet. `branch-and-pr-conven-7` is ballot `.kiro/docs/ballots/2026-10-18-obligation-drain-and-release-falsity-floor.md` M8 ("A question to Peter holds the merge", with the two readings Peter ruled 2026-10-18: a pointer counts, and "Not now — merge" is an answer whose question is filed under rule 10). `branch-and-pr-conven-8` is ballot `.kiro/docs/ballots/2026-10-18-governance-edit-kinds.md` § 3a (the `**Edit kind**:` line, over F-B1 (b)'s path set). Both ballots RATIFIED, Peter, 2026-10-18; the doc edit and both item texts are Thurgood's authoring (`e084dbfd8`), not this act.
+- **Both texts, verified verbatim**: each item equals its ballot's quoted text byte for byte (898 and 642 characters) and occurs once in the unit. No other item's text moved; items 1–6 remain verbatim substrings.
+- **Item grain**: each bullet is one `obligation`, as drafted. M8 carries several clauses (the marker, the dated-before-merge answer, the no-"merge = yes" rule, the pointer and unmarked-question holds, the "Not now — merge" filing), but they are one rule about one act, the hold; a rendering that keeps the hold re-grounded keeps all of them, so splitting would change no credit. The frontmatter `lastReviewed` change (W-9) is outside the body unit.
+- The canonicalHash moves from `sha256:920fbf9e608725a083053d158bcb195209a2993b1e00037764621cbf1a71b2cf` to the value above, as `operative-set-freshness` printed it and as recomputed from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts`.
+
+**Ruling: CONFIRMED at 8 items.**
+
+**Confirmed 2026-09-29: CONFIRMED at 6, as drafted.**
 
 ## `#the-merge-rule`
 
