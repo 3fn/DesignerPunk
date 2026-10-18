@@ -50,4 +50,11 @@ export interface DocumentSummary {
   
   /** Full document token count */
   tokenCount: number;
+
+  /**
+   * The doc's audience banner (P-1, release-4 rulings item 14): the preamble blockquote that opens
+   * `> **Audience framing**:`, markers stripped. Present ONLY for a bannered doc — an unbannered
+   * doc's summary is unchanged. Additive.
+   */
+  audienceBanner?: string;
 }

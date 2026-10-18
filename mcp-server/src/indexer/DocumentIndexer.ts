@@ -4,6 +4,7 @@ import { extractMetadata } from './metadata-parser';
 import { extractFrontmatterInfo } from './frontmatter-parser';
 import { extractHeadingStructure, extractDeepHeadings, WithDeepSections } from './heading-parser';
 import { resolveSection, SectionLookup } from './section-parser';
+import { extractAudienceBanner } from './audience-banner';
 import { extractCrossReferences, CrossReference as ParsedCrossReference } from './cross-ref-parser';
 import { estimateTokenCount } from '../utils/token-estimator';
 import { determineIndexHealth } from './index-health';
@@ -263,6 +264,9 @@ export class DocumentIndexer {
     // Estimate token count for full document
     const tokenCount = estimateTokenCount(content);
 
+    // P-1: the audience banner rides the summary (present only when the doc carries one).
+    const audienceBanner = extractAudienceBanner(content);
+
     return {
       path: filePath,
       metadata: {
@@ -275,7 +279,8 @@ export class DocumentIndexer {
       },
       outline,
       crossReferences: crossReferenceInfo,
-      tokenCount
+      tokenCount,
+      ...(audienceBanner !== undefined ? { audienceBanner } : {})
     };
   }
 
