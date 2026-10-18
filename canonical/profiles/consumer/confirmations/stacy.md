@@ -56,9 +56,16 @@ date: 2026-09-27
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 confirmer: stacy
-canonicalHash: sha256:aa674a0127352f1c012ddfd8f8d9742d7470063ed604415526f83de6e8056d1c
+canonicalHash: sha256:ea4f4b52be0b5544d4721d485ae3b509839b271d376079158d8bca376b64a545
 items: trigger-lens, trigger-release, trigger-symptom, trigger-closeout, trigger-midpoint, trigger-arming, trigger-gate, trigger-education, trigger-straggler, trigger-liveness, trigger-burst, finding-routing, merge-path-status
-date: 2026-10-17
+date: 2026-10-18
+
+**Re-confirmed 2026-10-18 (Req 11.6.5d).**
+- **What changed**: the RELEASE row. Ballot `.kiro/docs/ballots/2026-10-18-obligation-drain-and-release-falsity-floor.md` (RATIFIED, Peter, 2026-10-18) § 7 (M7) names my RELEASE row as the home of the `release-falsity-floor` read. I drafted the sentence that carries it (inserted after "carries Q2 guard (i)'s arming line."), and Thurgood applied it byte for byte under six-roots errata (f) at `9072db1ed`, to the canonical row and as `trigger-release`'s item text. That is his authoring, not this act.
+- **`trigger-release`'s text, verified verbatim**: it equals the canonical RELEASE line byte for byte, equals the row I drafted (`cmp`-identical, 1,626 characters), and is a verbatim substring of the unit (one occurrence).
+- **What did not change**: the operative set, still 13 items. The row stays one `member` item, as at every earlier re-confirmation; the floor read sits inside the row's scope cell and is not split out. No other item's text moved; the other 12 remain verbatim substrings of the unit. The canonicalHash moves from `sha256:aa674a0127352f1c012ddfd8f8d9742d7470063ed604415526f83de6e8056d1c` to the value above, as `operative-set-freshness` printed it and as recomputed from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts`.
+
+**Ruling: CONFIRMED at 13 items.**
 
 **Re-confirmed 2026-10-17 (Req 11.6.5d).**
 - **What changed**: the ARMING row. Edit site 5a of the ratified ballot `.kiro/docs/ballots/2026-10-17-standing-write-scope-six-roots.md` (RATIFIED, Peter, 2026-10-17) adds the § 3 item 4 instrument-change trigger: the instrument-path Event, the instrument paths, the three reads with Peter's 2026-10-17 widening (the generator's `__tests__/fixtures/**`, the § 4 B checkers' tests by the tests-follow-the-module rule, and the three steward-verb tests), the known-gap clause, "an audit trigger, never a gate", and the cost. Under Peter's ruling on the 5a substitute, Thurgood applied my drafted row byte for byte (`2c8e448ff`) and this confirmation is my act over it.
