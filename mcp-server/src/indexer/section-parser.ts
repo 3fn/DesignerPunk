@@ -11,9 +11,20 @@
  *   - a stable, drift-resistant section ID (`sectionId`)
  *   - sibling-heading adjacency cues (`siblingHeadings`) so a stub/preamble
  *     signals that substantive siblings exist (Finding 1).
+ *
+ * FENCE-AWARE ADDRESSING (C-2, 2026-10-18 — `.kiro/issues/2026-10-13-discovery-study-stage1-followups.md`
+ * row 13): a `##`/`###` line inside a fenced code block is template content, not a section of the
+ * doc. For every REAL (unfenced) heading: a fenced heading no longer ends its section (get_section
+ * used to return only the heading and the opening of a template), is never its sibling, and is
+ * never its parent. Fenced headings are kept, unchanged, as a FALLBACK: they keep their place in
+ * the `s{index}` count (so no section id moves — the renumbering that held this back at #325
+ * does not happen), their own sectionId still resolves, and a heading that matches only inside a
+ * fence still resolves — each to exactly its pre-fix payload, because a template heading can
+ * answer "what goes in X" (row 12). A real heading always wins over a fenced one of the same text.
  */
 
 import { Section } from '../models/Section';
+import { fenceMask } from './heading-parser';
 
 /**
  * One heading occurrence in document order, with its structural address.
@@ -31,8 +42,14 @@ export interface HeadingNode {
   lineIndex: number;
   /** 0-based document-order position among all parsed headings. */
   index: number;
-  /** Parent heading (nearest preceding heading of a lower level), or null. */
+  /** Parent heading (nearest preceding heading of a lower level), or null.
+   *  For a real heading, fenced headings are skipped (C-2); for a fenced heading it is
+   *  {@link rawParent}, its pre-fix value. */
   parent: string | null;
+  /** True when the heading line lies inside a fenced code block (template content, C-2). */
+  inFence: boolean;
+  /** The pre-C-2 parent: nearest preceding heading of a lower level, fenced or not. */
+  rawParent: string | null;
 }
 
 /**
@@ -87,9 +104,12 @@ export function parseSectionId(sectionId: string): number | null {
  */
 export function parseHeadingTree(content: string): HeadingNode[] {
   const lines = content.split('\n');
+  const mask = fenceMask(lines);
   const nodes: HeadingNode[] = [];
-  // Stack of the most recent heading at each level for parent resolution.
-  const lastByLevel: Record<number, string | null> = { 2: null, 3: null };
+  // Most recent heading at each level, for parent resolution: `real` skips fenced
+  // headings (C-2), `raw` is the pre-fix track that fenced fallback nodes keep.
+  const real: Record<number, string | null> = { 2: null, 3: null };
+  const raw: Record<number, string | null> = { 2: null, 3: null };
 
   let order = 0;
   for (let i = 0; i < lines.length; i++) {
@@ -98,20 +118,20 @@ export function parseHeadingTree(content: string): HeadingNode[] {
 
     const level = headingMatch[1].length;
     const heading = headingMatch[2].trim();
+    const inFence = mask[i];
 
-    let parent: string | null = null;
-    if (level === 3) {
-      parent = lastByLevel[2];
-    }
+    const rawParent = level === 3 ? raw[2] : null;
+    const parent = inFence ? rawParent : level === 3 ? real[2] : null;
 
-    nodes.push({ heading, level, lineIndex: i, index: order, parent });
+    // Every heading line, fenced or not, takes its position: ids never move (C-2).
+    nodes.push({ heading, level, lineIndex: i, index: order, parent, inFence, rawParent });
     order += 1;
 
-    lastByLevel[level] = heading;
     // Entering a new H2 invalidates the "current H3" so a later H3 doesn't
     // inherit a stale sibling context.
-    if (level === 2) {
-      lastByLevel[3] = null;
+    for (const track of inFence ? [raw] : [raw, real]) {
+      track[level] = heading;
+      if (level === 2) track[3] = null;
     }
   }
 
@@ -132,6 +152,12 @@ export function computeSiblingHeadings(nodes: HeadingNode[], target: HeadingNode
   for (const n of nodes) {
     if (n.index === target.index) continue;
     if (n.level !== target.level) continue;
+    if (target.inFence) {
+      // Fenced fallback node: its pre-fix sibling set (C-2 leaves it unchanged).
+      if (n.rawParent === target.rawParent) siblings.push(n.heading);
+      continue;
+    }
+    if (n.inFence) continue;
     if (n.parent === target.parent) {
       siblings.push(n.heading);
     }
@@ -141,9 +167,12 @@ export function computeSiblingHeadings(nodes: HeadingNode[], target: HeadingNode
 
 /**
  * Find all occurrences of a heading (by exact text match), in document order.
+ * Real headings only when any exist; otherwise the fenced fallback (C-2).
  */
 export function findHeadingOccurrences(nodes: HeadingNode[], heading: string): HeadingNode[] {
-  return nodes.filter((n) => n.heading === heading);
+  const all = nodes.filter((n) => n.heading === heading);
+  const realOnes = all.filter((n) => !n.inFence);
+  return realOnes.length > 0 ? realOnes : all;
 }
 
 /**
@@ -162,10 +191,13 @@ function extractSectionByNode(
   nodes: HeadingNode[],
 ): Section {
   const lines = content.split('\n');
+  // C-2: a real section runs through any fenced template it contains. A fenced
+  // fallback node keeps its pre-fix boundary.
+  const mask = node.inFence ? null : fenceMask(lines);
   const sectionContent: string[] = [];
 
   for (let i = node.lineIndex; i < lines.length; i++) {
-    if (i !== node.lineIndex) {
+    if (i !== node.lineIndex && !(mask && mask[i])) {
       const headingMatch = /^(#{2,3})\s+(.+)$/.exec(lines[i]);
       if (headingMatch) {
         const level = headingMatch[1].length;
@@ -250,7 +282,12 @@ export function resolveSection(
   if (occurrences.length === 0) return { kind: 'not_found' };
 
   if (opts.parent !== undefined && opts.parent !== '') {
-    occurrences = occurrences.filter((n) => n.parent === opts.parent);
+    const parent = opts.parent;
+    occurrences = occurrences.filter((n) => n.parent === parent);
+    if (occurrences.length === 0) {
+      // C-2 fallback: a parent that only a fenced occurrence carries (pre-fix behaviour).
+      occurrences = nodes.filter((n) => n.heading === opts.heading && n.inFence && n.parent === parent);
+    }
     if (occurrences.length === 0) return { kind: 'not_found' };
   }
 
