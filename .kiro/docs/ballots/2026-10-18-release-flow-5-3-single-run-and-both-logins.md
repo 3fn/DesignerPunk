@@ -2,8 +2,8 @@
 
 **Date**: 2026-10-18
 **Drafted by**: Thurgood (Civitas steward; owner of the RELEASE-FLOW text)
-**Status**: DRAFT
-**Ratification**: *(slot — Peter's words, quoted and dated, committed by the session that receives them before any edit site is applied; `.kiro/docs/ballots/README.md` § "The Ratification Protocol". A merge of this PR is not ratification.)*
+**Status**: **RATIFIED (Peter, 2026-10-18)**, relayed by the orchestrator. This commit is the record, made before either edit site is applied.
+**Ratification**: Peter, 2026-10-18, in chat, answering the two edit sites below quoted to him verbatim with both counter-arguments stated: **"Ratify both"**. Relayed by the orchestrator; committed by Thurgood before any edit site was applied (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
 **Unit**: standalone; edits `.kiro/hooks/RELEASE-FLOW.md` only, so Peter merges it under the governance carve-out. The same branch carries Ada's script change `87d3407f2` (`scripts/release-publish.ts`, standing scope).
 **Edit text**: identical to the reverted commit `117254bcc` (`git show 117254bcc` against `1cac2e986` shows the same hunks), so a reviewer can diff the two.
 
