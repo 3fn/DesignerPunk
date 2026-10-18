@@ -76,39 +76,39 @@
     {
       "lines": [
         89,
-        96
+        97
       ],
       "op": "render",
       "source": ".kiro/steering/Task-Completion-Protocol.md#branch-and-pr-conventions"
     },
     {
       "lines": [
-        97,
-        102
+        98,
+        103
       ],
       "op": "render",
       "source": ".kiro/steering/Task-Completion-Protocol.md#the-merge-rule"
     },
     {
       "lines": [
-        103,
-        106
+        104,
+        107
       ],
       "op": "render",
       "source": ".kiro/steering/Task-Completion-Protocol.md#emergency-procedure"
     },
     {
       "lines": [
-        107,
-        113
+        108,
+        114
       ],
       "op": "render",
       "source": ".kiro/steering/Task-Completion-Protocol.md#tier-selection-which-docs-how-much-detail"
     },
     {
       "lines": [
-        114,
-        123
+        115,
+        124
       ],
       "op": "render",
       "source": ".kiro/steering/Task-Completion-Protocol.md#key-rules"
