@@ -270,7 +270,7 @@ units:
         text: "**Tooling follow-up (optional)**: `complete-task.sh` may auto-prune the local unit branch once it detects the merge — a convenience, not a hard requirement; the manual `git branch -d` step is not blocked on it."
     confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#branch-cleanup
   "#branch-and-pr-conventions":
-    canonicalHash: sha256:920fbf9e608725a083053d158bcb195209a2993b1e00037764621cbf1a71b2cf
+    canonicalHash: sha256:4e0f6aca925ae3b32e9dfda4c2972002344de66fafdeefb0c4f05c7ad860583d
     items:
       - id: branch-and-pr-conven-1
         kind: obligation
