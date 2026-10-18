@@ -574,7 +574,7 @@ units:
         text: "the co-signed joint working agreement + lifecycle amendment (`.kiro/specs/127-completion-claims-integrity/pre-spec/`, PRs #158/#165) are the underlying authority where this text and they disagree."
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble
   "#the-claims-pass-record-claims-passmd-the-template":
-    canonicalHash: sha256:8103d28ef4a140c355a2c82c2395c492fceb1b48c46a87b24f49b6713fb38ac7
+    canonicalHash: sha256:29f67487340c5c5a970f454430b234269a73503f5caec77340985c065e109a33
     items:
       - id: record-committed
         kind: obligation

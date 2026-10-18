@@ -239,9 +239,19 @@ date: 2026-09-29
 ## `#the-claims-pass-record-claims-passmd-the-template`
 
 confirmer: stacy
-canonicalHash: sha256:8103d28ef4a140c355a2c82c2395c492fceb1b48c46a87b24f49b6713fb38ac7
-items: record-committed, closeout-path, midpoint-path, section-scope, section-findings, section-method, method-honesty, closed-negative-string, mandatory-line, counting-1, counting-2, counting-3, counting-4, counting-5, counting-6, counting-7, counting-8, counting-9, counting-10-buckets, counting-10-ncc-rate, counting-10-assent-refusal, counting-10-spot-check, counting-10-full-survival, counting-11, counting-12, report-set-comparison, emission-reading, delegated-tier-read, deferral-walk-back, instruments-read, never-a-gate
-date: 2026-09-29
+canonicalHash: sha256:29f67487340c5c5a970f454430b234269a73503f5caec77340985c065e109a33
+items: record-committed, closeout-path, midpoint-path, section-scope, section-findings, section-method, method-honesty, closed-negative-string, mandatory-line, counting-1, counting-2, counting-3, counting-4, counting-5, counting-6, counting-7, counting-8, counting-9, counting-10-buckets, counting-10-ncc-rate, counting-10-assent-refusal, counting-10-spot-check, counting-10-full-survival, counting-11, counting-12, report-set-comparison, emission-reading, delegated-tier-read, deferral-walk-back, instruments-read, governance-edit-kind-read, never-a-gate
+date: 2026-10-18
+
+**Re-confirmed 2026-10-18 (Req 11.6.5d).**
+- **What changed**: one bullet, "The governance-edit-kind read", inserted between "The instruments read" and "The never-a-gate sentence" in the list "Plus, on every pass:". It is my text from ballot `.kiro/docs/ballots/2026-10-18-governance-edit-kinds.md` § 3b (RATIFIED, Peter, 2026-10-18), including my CORRECTION clause "…or whose only referent is governance text or enforcement code changed in the same PR (the ballot's § 2 list)". Under six-roots errata (f), Thurgood applied it byte for byte to the charter and as item `governance-edit-kind-read` (`a0e25936c`); that is his authoring, not this act.
+- **`governance-edit-kind-read`'s text, verified verbatim**: it equals the ballot's § 3b quoted text byte for byte (1,290 characters; the ruled L62 text, not the superseded R1 draft at L149) and occurs once in the unit.
+- **Item grain**: one `obligation`, as the instruments read is. Its missing / no-authority count and its rot-mode count read one surface (the `**Edit kind**:` lines against the merge's diff) and are not split out.
+- **What did not change**: the other 31 items, each still a verbatim substring of the unit. The canonicalHash moves from `sha256:8103d28ef4a140c355a2c82c2395c492fceb1b48c46a87b24f49b6713fb38ac7` to the value above, as `operative-set-freshness` printed it and as recomputed with `partition` + `regrounding/hash.ts`.
+
+**Ruling: CONFIRMED at 32 items.**
+
+**Confirmed 2026-09-29 (prior record, superseded)**: canonicalHash `sha256:8103d28ef4a140c355a2c82c2395c492fceb1b48c46a87b24f49b6713fb38ac7`, 31 items, as below.
 
 **Ruling: CORRECTED 27 → 31. Recorded and confirmed against the post-13.8 + post-#239 text.** The canonicalHash above is `sha256:8103d28e…38ac7`, which I verified equal to the hash of the current unit. The text includes B-U2's counting-block edit (13.8) and the instruments-read bullet (#239, merged at `c34ee564`). **No A4 re-confirmation is owed later on #239's account.**
 - **Split**: `counting-10` bundled five separately violable metrics into one item, so a rendering keeping four of the five could not be credited for any. It is replaced by `counting-10-buckets`, `counting-10-ncc-rate`, `counting-10-assent-refusal` (they share the from-history clause, so they stay one item), `counting-10-spot-check` and `counting-10-full-survival`.
