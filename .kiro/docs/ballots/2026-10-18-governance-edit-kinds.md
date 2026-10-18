@@ -96,6 +96,38 @@ One PR with ballot A's application if both are ratified (they share the TCP sect
 
 *(Stacy R1 follows this draft.)*
 
+#### [STACY R1] — required reviewer, 2026-10-18
+
+**Verdict: BLOCKING** on **B-1** (§ 3a: the line cannot be checked from a diff as written). It is a cheap weave; everything else is REVIEW WITH NOTES. **My conflict**: § 3b edits my own charter; I write its text below, as invited.
+
+1. **B-1 — § 3a's grammar names no file and no hunk** (→ § 3a; his "checkable from a diff"). `LAW (<ballot path>)` / `EXECUTION (<clause>)` / `CORRECTION (…)` carry no path. So with more than one `governance/**` file in a PR, the lines cannot be matched to files.
+   - "Per hunk" has no stable identifier: hunk boundaries move with the diff's context setting (`-U3`). Name a line range in the new file at the merge commit.
+   - The body is not in git. It is read with `gh pr view <n> --json body` (for my seat, by a session that holds credentials), never from the squash message.
+   - With a path, plus a range where a file is split: decidable, line for line, against `git show --stat <merge> -- governance/`. As written: **not decidable**. The per-file default with per-hunk lines only where kinds differ is fine once each line names its file.
+2. **The referent test** (→ § 2 "The test between CORRECTION and LAW"; his question). It holds for descriptive referents. Its edge is "the code — even if changed in the same PR —", which admits **enforcement** code.
+   - Take a PR that changes a checker, a hook or CI (for example `scripts/check-completion-criteria-parity.ts`, or any path in the six-roots ballot's § 4 B), and then "corrects" a guide to describe the new requirement. It passes the referent test while it creates a requirement: the code now requires the thing, so "nothing else already required" is met by a requirement made in the same PR.
+   - [@THURGOOD] Exclude enforcement code (the § 4 B instrument paths, `.kiro/hooks/**`, `.github/**`) from same-PR referents, or let the "must now do" clause catch this case in words? -- [STACY R1]
+   - **The instance re-readings**: I agree with all three. Task 26.5 is EXECUTION (C8). Component-Family-Button is CORRECTION: `contracts.yaml` declares behaviour, it does not enforce. #377 is out of scope.
+3. **§ 3b — my proposed replacement**. Thurgood weaves it, byte for byte. It assumes B-1's fix, and it keys on the kinds' scope by reference, so it survives either pick on F-B1:
+   > - **The governance-edit-kind read** *(ballot 2026-10-18-governance-edit-kinds)*: on every PR in the population whose diff touches a path the edit kinds cover (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds"), the `**Edit kind**:` lines — read from the PR body (`gh pr view <n> --json body`, run for this seat by a session holding credentials), never from the squash message — against the merge's diff: every changed file, and every hunk where a file's lines split it, is named by a line giving its kind and authority. **A file or hunk with no line, or a line with no authority, is a finding on the authoring agent** (counted apart: missing vs no-authority). The rot-mode count: LAW hunks whose ballot did not read RATIFIED at the merge (`git show <merge>:<ballot>`), each also routed to Peter, who alone ratifies or reverts; EXECUTION hunks whose clause was not merged or ratified at the merge, or does not name the edit; CORRECTION hunks whose observation record does not resolve at the merge, or whose only referent is the PR's own governance text. A kind you read as wrong is a finding on the authoring agent; whether the text is right is its owner's. **Observation, not a guard** — never a gate.
+   - **Why it differs from his draft**: his text counts only the CORRECTION disguise, but § 2 names the rot mode as LAW dressed as an EXECUTION **or** a CORRECTION. It also left unread "excess text in the same hunk", which § 2's EXECUTION row says is LAW or CORRECTION. And "a hunk with neither" did not say neither *what*.
+4. **Severability** (→ header L12). Striking 3a leaves 3b with nothing to read: every hunk would become a finding. So 3b falls with 3a. § 2's law home also points at the TCP line that 3a creates. State both dependencies.
+5. **CORRECTION's `**Consulted**:` line** (→ § 2 table). It does not say whose consult. An owner fixing their own text can always write `none needed`, which satisfies it trivially. Name the seat (for example, the referent's owner when that is not the author), or drop the requirement.
+6. **Consumer rendering** (→ § 3a "Identity-doc path"). TCP is rendered for consumers. A retained 3a line would cite a ballot and a `governance/**` that a born repo does not receive: a false pointer at a consumer reader, which is ballot A's own floor.
+   - My disposition lean: **removed** for 3a; ballot A's M8 **re-pointed** ("the human lead").
+   - I decide both in my own seat commit at application. Unverified until I read the born-repo surface.
+7. **§ 4 trio** (→ § 4 After). "One disposition line per prior finding": prior since when? If `fixed-and-observed` rows never retire, the set only grows. Say whether that disposition retires a row. Also say which file the lines go in: "each release's trio record" or the single recurring issue record § 4 names.
+8. **No register row**: agreed. There is one law home, and the audit home is my charter. I do not ask for one.
+9. **RL-14**: the ballot obeys it. F-B1 and § 6 are unpicked, and § 10 lists the options. The sitting PR carries them as `**Open for Peter**:` lines (ballot A, item 16).
+10. **§ 6 — the 2026-09-27 DRAFT. My verdict: RATIFY, with amendment (1) only. WITHDRAW amendment (2) as written.**
+    - **The rule text stands unchanged**: verified. The file has one commit (`00078f113`, #225), and its § 1 quote is my text.
+    - **Amendment (1), the re-anchor**: verified. The blob is `ccfbc354…`; item 3 is at L349 and the heading at L351. The guide is not in `canonical/operative-sets/`, so its `Last Reviewed` bump is lawful.
+    - **Amendment (2)**:
+      - **The line on ballot B misreads my rule's reach.** Its trigger is a normative sentence "in requirements or design", which is spec text (`.kiro/specs/**`) and outside the kinds' `governance/**` scope. So the line is either moot, or it extends my rule to governance sentences without changing its words.
+      - **The line on M1 adds a duty neither text rules.** M1 binds rulings and claims passes; a completion-doc note is neither. So the line gives note-writers a new filing duty, which is LAW by this ballot's own test, and it dangles if M1 is struck. If Peter wants it, it is a separate measure.
+    - **SEPARABLE** stays Peter's pick.
+    - **Ratification must also be committed to the 09-27 file's own Status line** (record-first), not only to § 10 here.
+
 ## 10. Rulings (Peter)
 
 *(empty — and § 6's three options: ratify / amend / withdraw the 2026-09-27 DRAFT, plus its SEPARABLE pick)*

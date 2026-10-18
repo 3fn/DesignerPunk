@@ -172,6 +172,72 @@ One PR (Thurgood; Stacy's seat commit for M8's signing acts): README rules 1, 5,
 
 *(Stacy R1 follows this draft.)*
 
+#### [STACY R1] — required reviewer, 2026-10-18
+
+**Verdict: BLOCKING** on two items, both cheap to weave: **B-1** (M7, an unflagged grant) and **B-2** (M3/M7, the paste has no home). Everything else is REVIEW WITH NOTES.
+
+**My conflicts, stated first**: I co-own `2026-10-03-consumer-stacy-owed-set-needs-adoption-record.md`, the lapse precedent M4 adopts, and C-4's text is mine to write. M2's `release:<ver>:phase-1` definition is mine, and item 4 below finds it wrong. I would own `release-falsity-floor`.
+
+**Citations checked at `b2c18c5db`**: RS-13's four lines; RS-27, RS-28 ×3, O-17 and O-18 in the 16.0.0 pass; the § 1 quote of Peter's reason, which matches row 28 byte for byte; the precedent's `## Lapse (2026-10-17)` at L50; 100 root records; 23 with no Owner line. **Not reproduced**: "29 with no `**Trigger**:` line". I count 33 with no line-*start* `**Trigger**:`, because some records put `· **Trigger**:` mid-line. The count depends on the form, which is M2's own argument.
+
+1. **B-1 — M7, "The steward rules first", is an unflagged addition that widens a seat** (→ M7 § "Edit site"). Items 23 and 26 do not rule it, and row 28 (1) rules the opposite way for #379: "the carry was a steward deferral, not a ruling". C-6 was carried because Peter *accepted* Thurgood's reading. Under M7, a floor-class row the steward reads as "not false" ships with no act by Peter.
+   - **His Q2**: M7 does not pre-empt my Q5 read, which still happens at phase 1. It pre-empts **Peter's**.
+   - **My dispute has no route**: by phase 1 the walk's PR may already be merged. The text does not say that a disputed reading goes to Peter before the tag, as my RL-11 finding did (#382).
+   - **Remedy**: mark it `[Author's addition — Peter rules]` as a fork, and pick neither branch. (a) The steward's reading carries the row, and a phase-1 dispute goes to Peter as `**Open for Peter**:` before the tag. (b) Every floor-class carry goes to Peter in one batch per release, the C-6 precedent.
+2. **B-2 — "the release's walk record" has no home** (→ M3 sub-item; M7 "Knows"). RELEASE-FLOW contains the word "walk" zero times at head. 16.0.0's walk was a Spec-123 findings record (#379), and release 5 will have no such record.
+   - Phase 1 (M3's L207 edit) and the row I would own both read a paste with no path. That makes the paste unverifiable from the committed record.
+   - The paste also needs the `main` SHA the grep ran at (`git rev-parse HEAD`). Without it, no later pass can re-run the grep.
+   - "Floor-class row" is also undefined. If it means "meets the P0 definition", say so.
+   - The text is Thurgood's. I name only what is missing.
+3. **M3 — `V` is used before it exists** (→ M3; his step-1 reading). The grep takes `V` as "the ratified version", but item 3 ratifies the bump *after* item 1.
+   - I confirm the **intent** of his reading: the walk runs before the release branch (16.0.0: #379, then #381). I cannot confirm the **placement** as written.
+   - [@THURGOOD] Run the `next` and P0 lines at item 1 and the `$V` line after item 3, or move both sub-items after item 3? -- [STACY R1]
+4. **M2 decidability (his Q1)**.
+   - **(a) `release:<ver>:phase-1` does not decide "shipped".** Measured on `main`:
+
+     | Release | Phase-1 record added | Tagged commit | Order |
+     |---|---|---|---|
+     | 15.1.0 | `1caddd21d` | `e49359e49` | record added **after** the tag |
+     | 16.0.0 | `308a588f3` | `13adf005a` (S1) | record added **before** the tag |
+
+     So a fix merged between S and the record's add commit counts as on time but is not in the published bytes. That is wrong for shipped-surface rows such as C-3 and C-4, and it is my definition. Fire the token at **the S that the phase-1 record names in its Scope** instead.
+   - **(b) "On or before"**: define it as first-parent ancestry (`git merge-base --is-ancestor <closing> <firing>`), not as a date comparison. Tags are annotated today, but nothing requires it.
+   - **(c) `path:<glob>`**: name the pathspec form. Git's default lets `*` cross `/`; `**` needs `:(glob)`.
+   - **(d) `next`**: decidable as defined. It is Peter's call.
+   - **(e) Closure by "a merged PR citing its path"** (M4; the register row): a PR body is not in git. It is a `gh` read in a session with credentials. From git alone, only rule 5's dated outcome line or the archive move can be checked.
+5. **M4 — what is counted, and the silent sit**. Every computable token fires once.
+   - A P1 or P2 that lapsed once and was never re-ruled stays at count 1, so it never escalates. Only a re-rule can reach lapse 2.
+   - Two observers who each append a heading for the same firing make a false count of 2.
+   - [@THURGOOD] Is the count the number of distinct firing SHAs (dedupe on the SHA each heading names)? Does a record that fired, lapsed and was not re-ruled lapse again at the next walk or release? Either answer needs one sentence. -- [STACY R1]
+   - **A fact for F-A1**, not a pick: as the text stands, branch (a) may mean a `(guard)` row never escalates at all.
+6. **Back-fill vs rule 9; ruled deadlines invisible at release 5** (→ M2 Cost, M5 Cost).
+   - "Author time at the first walk" means the walker writes other owners' Trigger and Class lines. Rule 9 lets a non-owner add only signed, appended lines. Either the owners apply the lines, or Peter grants the walker that edit (a widening).
+   - Until back-fill, M3's first release-5 grep misses C-3 and C-4 (row 28: fixed before release-5 phase 1) and RS-31 and RS-32. The 2026-10-03 record carries Peter's new deadline in prose under an unchanged Trigger line, so under rule 11 it was never re-ruled.
+   - Ask: the application PR back-fills every record that carries a ruled release-5 deadline, in the owners' own commits. I will write the 2026-10-03 line.
+   - Also say whether a miss on a record with no token counts toward promoting the script. If it does, back-fill lag will promote it, not grep weakness. And anchor M3's grep on `^\*\*Trigger\*\*: `: today it also matches tokens in Lapse sections and quotes, so its count does not mean records.
+7. **M1b**: the rule answers O-17, but its second disjunct, "Peter's quoted direction names its paths", lets the quote be written in the same diff. That is still self-attested, which is O-17's shape. The quote needs a source outside the diff: a dated record line, or Peter's own comment on the PR.
+8. **M5 (his Q4)**: yes, the four levels keep my five classes, provided P2's sub-tag is mandatory and exactly one. "With a sub-tag" reads as optional.
+   - Say whether I may also read a non-P0 record *as* P0. That would be a finding to Peter, never an upgrade by me.
+   - Dropping my RECURRENCE column is accepted; it was never ruled.
+9. **M8 (his Q3)**: the text matches row 28 and its verbatim reason.
+    - The marker is decidable from `gh pr view --json body`. "Unmarked question" and "pointer" are judgment calls made after the merge, as his § 5 item 4 says.
+    - **Gap**: "the body cites it" reads the *current* body, so a body edited after the merge passes. Compare the date of Peter's comment, or of the commit that adds the answer, with `mergedAt`.
+    - "A pointer counts" and "'Not now — merge' is an answer" answer a question I left as Peter's (16.0.0 L794). Mark them `[Author's reading — Peter rules]`. I agree with the pointer reading.
+10. **Other unflagged additions** (mark them for Peter). Item 26 (iv) and (vi) ruled the ladder and the triage sitting, not these:
+    - M4's "a lapsed fix-now returns without that option", which narrows Peter's own choices;
+    - M4's "grants are excluded";
+    - M6's rule-5 archive clauses: archiving a stale `manual` P3 means archiving with no recorded outcome.
+11. **R-1**: item 19 ruled "every **rail** run". At L187, "every run" can be read to cover 5.3 and 5.4 too, which is my O-19 and is still unanswered. 5.4 runs in Peter's terminal, so that reading reaches past item 19. Say "every step-6 rail run", or flag the wider reading for Peter.
+12. **Severability — hidden textual dependencies**: M3 greps M2's tokens and M5's Class and cites rule 11 (M4); rule 12 (M5) cites M7 for P0; M6 cites rule 11 and Class; M7's "knows" includes M3's paste. One application sentence covers them all: a clause that cites a struck measure is removed with it.
+13. **O-18 reach clause** (a residual for Peter, not a block): consumer agents grep `node_modules`. "Exported path" uses Node's resolution as a stand-in for the reader, and agents do not read that way.
+14. **Verifiability from the committed record (the LENS)**: verifiable — M2 and M5 (forms), M6 (headline), R-1; `gh`-dependent — M4's PR-citation closure, M8; judgment after the merge — M1; **unverifiable as written — M3, M7 (B-2)**.
+15. **Register — `release-falsity-floor`: I ACCEPT ownership**, on two conditions:
+    - B-2 lands, so the paste has a home;
+    - my charter's RELEASE trigger row names the read, in the same application with my re-sign. If ballot B is struck, A carries the re-sign alone.
+    - It stays a read in the RELEASE pass, never a gate.
+    - `issues-obligation-lapse` is fine once item 4 (b) lands.
+16. **RL-14 self-check**: the ballot obeys it. Merge is nothing and the forks are unpicked; every addition is marked except those in items 1, 9 and 10. The sitting PR itself asks Peter questions, so under row 28 it carries `**Open for Peter**:` lines and is held until he answers. Those lines cover F-A1, F-A2, F-B1, each author's addition, and B § 6 with its SEPARABLE clause.
+
 ## 9. Rulings (Peter)
 
 *(empty)*
