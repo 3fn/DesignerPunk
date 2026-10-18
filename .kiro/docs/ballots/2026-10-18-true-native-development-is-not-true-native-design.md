@@ -279,7 +279,7 @@ Native look stops being the presumed default. (a), native look, stays legitimate
 
 - **Ratify / modify / reject:** *(open)*
 
-- **F-1, what DesignerPunk's own components ship when no design choice is made. Option (iv) is proposed and PENDING Peter's approval.**
+- **F-1, what DesignerPunk's own components ship when no design choice is made. Option (iv) is APPROVED by Peter, 2026-10-18** (relayed by the orchestrator; ratification of the ballot as a whole is still open).
   - **Peter** (relayed, verbatim): *"Though well considered, I'm unsure about that framing. The wording seems strange to have a default of 'our look' and yet have an opt-out of the native style. Doesn't having to opt-in to a default defeat the purpose of default? I could be misunderstanding, so correct me if my thinking is flawed. I would put it to the agents for consideration before blindly approving, but maybe 'our look by default; but in the absence of a specified design, fallback to native controls'."*
   - **The ballot's own defect.** All five seats ACCEPT (iv) over (i). All five also say his critique of (i) slightly misread it, and that the misreading came from the ballot's R3 wording, not from his reasoning. Lina: *"Under (i), our look ships when the consumer chooses nothing, so nobody opts in to the default. The "opt-out" means opting out of our look and into native. "Native-look opt-out" reads as the reverse, so that's a defect in the ballot's text, not in his reasoning."*
   - **(iv)**: *"our look by default; in the absence of a specified design, fall back to native controls."* This is an **authoring-time rule**, not a consumer switch. There is one rendering path per component per platform, and **no opt-out API**.
@@ -297,11 +297,11 @@ Native look stops being the presumed default. (a), native look, stays legitimate
     - What ships depends on how far authoring got. A late design ships native, and a design that arrives later is a visual breaking change (Data).
     - Partial styling, such as tint only, has no clear status. Leaving a control undesigned becomes the cheap path, and one screen can mix drawn and native controls (Leonardo).
     - R-3 lands on every iOS consumer (Kenya; Lina).
-  - **Superseded by (iv), pending Peter's approval.** These stay for the record; R3's analysis of them is in § 10:
+  - **Superseded by (iv), now approved.** These stay for the record; R3's analysis of them is in § 10:
     - (i) Our look by default, with a native-look opt-out. This is the defective R3 wording.
     - (ii) Native look by default, with a brand opt-in.
     - (iii) Silent: each component decides.
-  - **Approval of (iv):** *(open)*
+  - **Approval of (iv): APPROVED by Peter, 2026-10-18** (relayed by the orchestrator; ratification of the ballot as a whole is still open). His words, verbatim: *"Re: 1, Approved"*
 
 - **F-2: RULED (relayed). "Design" covers control behavior.**
   - **Peter** (verbatim): *"'Design' also covers control behavior, but sometimes the design might choose a platform convention – and sometimes it might not. That's why it's so critical to be thorough and developing component specs."*
@@ -754,6 +754,7 @@ The R4 wording leaves out floor part 2 of § 1 (accessibility semantics are alwa
   - Kenya accepted 6.7 as drafted.
   - Data supplied his own 6.7 line and accepted 6.8.
   - Nothing remains to confirm.
+- **Peter**, 2026-10-18 (third message, relayed): *"Re: 1, Approved"*. F-1 (iv) is approved (§ 8). Ratification of the ballot as a whole is still open, and Peter is reading it.
 - **Still owed at execution**: the C1 re-confirmations of the moved signed units, made by the owning seats in the execution PR: Leonardo 1 (with a fresh ruling), Kenya 1, Data 2.
 - **Surfaced, routed to Lina**: the defects in § 5 belong to her components, and the fixes go to her own record and change, not this unit:
   - iOS: `.isButton` probable drift.
