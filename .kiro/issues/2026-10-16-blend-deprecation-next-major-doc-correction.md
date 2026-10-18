@@ -1,9 +1,11 @@
 # Obligation: correct the "scheduled for removal in the next major version" text on the deprecated disabled blend (RL-13)
 
 **Date**: 2026-10-16
-**Status**: FIXING — PR open (this section); closes at the merge
+**Status**: FIXED — closed at #394's merge (2026-10-18); archive at the next walk (rule 5). *(Was: FIXING — PR open (this section); closes at the merge. Updated 2026-10-18, Ada: PR #394 MERGED as `a4694a2a5`; the correction landed.)*
 **Owner**: **Ada** (content of `Token-Family-Blend.md` and `Token-Family-Color.md`; `BlendTokens.ts`; the blend wrappers). **Thurgood** reads the served-doc hunks for cross-surface consistency.
 **Trigger**: `tag:v16.0.0` pushed → one PR before release 5's phase 1.
+**Trigger (re-read 2026-10-18, Ada, ballot 2026-10-18-obligation-drain-and-release-falsity-floor M2/M5 back-fill, the application PR `chore/ballot-sitting-application`)**: `tag:v16.0.0` was a START event, M2's own example of a token that does not name the event that owes the close. Under M2 the deadline token would have been `release:next:phase-1` ("one PR before release 5's phase 1"). Now moot: the fix merged at #394 (`a4694a2a5`, 2026-10-18) before that deadline. The Trigger line above stays verbatim.
+**Class**: P2 obligation (record) · defect *(set 2026-10-18, Ada, rule 12: the text said removal was scheduled for the next major when it was not, but it was a disclosed known limitation of 16.0.0 (Peter's ruling (a), 2026-10-16) and the doc is the record, not a guard, so P0 and P1 are not read. Fixed at #394.)*
 **Source**: claims pass `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.0.0.md` § RL-13 (the obligation had no home). Peter ruled the blend fork (a) on 2026-10-16: ship 16.0.0 with the text as is, correct it after the tag (ruled in session; recorded in the release-4 rulings record by the orchestrator in the RL-11 fix PR).
 **Grant paths**: none here. `governance/**` is never granted by an issue (rule 8): a served-doc content correction by its owner rides a normal PR carrying a `**Consulted**:` line, and Peter merges it. `src/blend/**` is outside Ada's charter write scope, so the fixing PR declares its own grant for it.
 **Consulted**: none needed — the owner records her own obligation; Thurgood's read is named above for the fixing PR.

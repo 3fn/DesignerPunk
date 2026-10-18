@@ -3,11 +3,11 @@
 **Date**: 2026-10-18
 **Status**: ACTIVE
 **Owner**: Ada (script) · Thurgood (RELEASE-FLOW text)
-**Trigger**: before release-5 step 5.1 (the next 5.1 dry run) — fix lands first, or a dated waiver line here
+**Trigger**: `release:next:phase-1` — the fix lands first, or a dated waiver line here. *(Re-ruled 2026-10-18, Ada: was "before release-5 step 5.1 (the next 5.1 dry run)". No token expresses 5.1, which precedes phase 1; `release:next:phase-1` is the looser, machine-visible choice, so the M3 walk counts the record at phase 1 (it fires at S). `manual` would be exact but invisible to the walk, and this is a guard record. A fix that is not in the tagged squash S does not hold at 5.3 in any case. Authority: ballot 2026-10-18-obligation-drain-and-release-falsity-floor M2/M5 back-fill, the application PR `chore/ballot-sitting-application`. The superseded trigger, verbatim:)* before release-5 step 5.1 (the next 5.1 dry run) — fix lands first, or a dated waiver line here
 **Source**: RS-31, Stacy's RELEASE phase 2 for 16.0.0 (`.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.0.0.md`, "Phase 2 standards implications"). Stacy named the gap and did not draft it.
 **Grant paths**: none here. The fixing PR touches `scripts/release-publish.ts` (Ada, standing, six-roots ballot § scripts-by-file) and, if the text changes, `.kiro/hooks/RELEASE-FLOW.md` (law: `**Consulted**:` line, Peter-merged). Owning the script does not let Ada change RELEASE-FLOW without a ballot.
 **Consulted**: none needed — filing only; Thurgood is named owner of the text half
-**Class**: P2 obligation (proposed — the option-D class ballot is not yet drafted)
+**Class**: P2 obligation (guard) · owed-act *(set 2026-10-18, Ada, rule 12, replacing "P2 obligation (proposed — the option-D class ballot is not yet drafted)", which is superseded: the class ballot is ratified. The `(guard)` reading is M5's: the 5.3 preflight is a guard weaker than its claim, since it checks one of the two registries and the other first fails after a version is already published. No reader is misled, so P0 is not read; under rule 11 a P2 `(guard)` escalates at its first lapse.)*
 
 ## The gap
 
