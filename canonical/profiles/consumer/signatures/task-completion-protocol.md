@@ -95,11 +95,26 @@ verdict: assent — surviving 3/4; not surviving: `branch-cleanup-4`
 ## `#branch-and-pr-conventions`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-10-18
 row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#branch-and-pr-conventions` (re-pointed; ROUTED)
-canonicalHash: sha256:920fbf9e608725a083053d158bcb195209a2993b1e00037764621cbf1a71b2cf
-renderedHash: sha256:8f675184378d4b3c945ec8ec6331abc41e090d755ce601a531645f0960bcf768
-verdict: assent — surviving 5/6; not surviving: `branch-and-pr-conven-6`
+canonicalHash: sha256:4e0f6aca925ae3b32e9dfda4c2972002344de66fafdeefb0c4f05c7ad860583d
+renderedHash: sha256:f6fb65fb4a49594b6e94cabd362728162544d4f01421d9549a6fda088702adaf
+verdict: assent — surviving 6/8; not surviving: `branch-and-pr-conven-6`, `branch-and-pr-conven-8`
+
+**Re-signed 2026-10-18** (prior signature: assent, 2026-09-29, against `sha256:920fbf9e…`). Stale because the canonical unit gained two bullets: ballot `2026-10-18-obligation-drain-and-release-falsity-floor` M8 (the question-holds-the-merge rule, item `-7`) and ballot `2026-10-18-governance-edit-kinds` § 3a (the `**Edit kind**:` line, item `-8`), applied by Thurgood at `e084dbfd8` and re-confirmed by me at 8 items (`fd9b29d87`). The rendering changed too: the overlay (re-pinned and given my consumer M8 bullet byte for byte, Thurgood `e09d2842e`) adds one bullet.
+- **Judged against**: the fresh rendering of the unit at this revision (three pieces: the `_canonical` always-set copy, the CC identity doc and the Kiro steering doc), and the operative set at 8 items.
+- **renderedHash source**: the committed rendering under `canonical/_consumer-output/` is stale for this unit (it still reads `sha256:8f675184…`; Thurgood's regeneration commit follows). The value above is computed from a fresh rendering: `generateAll(root)` → `writeOutputs(<temp dir>)` → `readConsumerSpans(<temp dir>)` → `renderedHashOf(rowSpanSource(...))`, the guard's own full-run code path, run as `npx tsx <scratchpad>/tools-stacy/fresh-rendered-hash.ts <worktree> .kiro/steering/Task-Completion-Protocol.md body '#branch-and-pr-conventions'`. Nothing was written under the worktree.
+- **`-7` survives, re-grounded**: Peter → "your human lead" and the marker → `**Open for <name>**:` with the lead's name (both `subtraction-2`); `mergedAt` → "the PR's merge time"; "filed under rule 10 with a trigger" → "filed as a committed record with an owner and a named trigger" (`subtraction-5`, replaced by its consumer counterpart). Every operative clause is stated: the marked line, the dated-before-merge answer and its citation, no "merge = yes" or equivalent, the pointer hold, the unmarked-question hold with its finding, and "Not now — merge" as an answer whose question is filed. The 2026-10-17 quote is history, not a clause.
+- **`-8` is not credited**: the whole Edit-kind bullet is removed (`subtraction-5`). Its path set (`governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, the prose of `canonical/agents/**`) and its three kinds' citations (a ballot path, a clause, an observation record) are this repo's governance machinery; a consumer has no counterpart to re-point to. Consistent with my claims-pass row, whose governance-edit-kind read is removed the same way (`signatures/stacy.md` `#the-claims-pass-record-claims-passmd-the-template`).
+- **Unchanged from the 2026-09-29 signature**: `-1` to `-5` survive; `-6` is not credited, for the reason below.
+
+**Prior signature record (superseded, 2026-09-29)**:
+
+> signer: stacy
+> date: 2026-09-29
+> canonicalHash: sha256:920fbf9e608725a083053d158bcb195209a2993b1e00037764621cbf1a71b2cf
+> renderedHash: sha256:8f675184378d4b3c945ec8ec6331abc41e090d755ce601a531645f0960bcf768
+> verdict: assent — surviving 5/6; not surviving: `branch-and-pr-conven-6`
 
 `-1` to `-5` survive, with the examples dropped. `-6` is not credited: the `Unit:` field is re-scoped to multi-parent units only, which drops "or the task, for single-parent units".
 
