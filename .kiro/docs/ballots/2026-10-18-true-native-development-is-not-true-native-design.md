@@ -6,7 +6,7 @@
 - R3 revision after the three platform seats' R1 reads.
 - R4 records Peter's rulings and the five seats' reads of his F-1 reframing.
 - R5 records the owners' confirmations of their site wordings. All rounds are dated the same day.
-**Status**: **DRAFT (R5, after the confirmations round).** Peter's answers of 2026-10-18 are recorded in § 8 as relayed, not ratified: F-2 is ruled, F-3 is ruled and edit site 5 is dropped. F-1 (iv) awaits his approval. Nothing in § 6 is applied until this record says RATIFIED (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
+**Status**: **RATIFIED (Peter, 2026-10-18)**, relayed by the orchestrator. It is ratified as written at R5, with the presentational fix folded in by this commit. This commit is the record (README § "The Ratification Protocol"). Execution follows in its own PR. *(Was: DRAFT (R5).)*
 **Origin**: Peter's answer on Spec 130 fork P-1, given in chat on 2026-10-18 and relayed by the orchestrator. It is recorded at `.kiro/specs/130-input-switch-base/feedback.md` § "[PETER R0]". He agreed the answer should become law through this ballot, not stay a feedback line.
 **Reviewers of record**:
 - **Required**: **Leonardo** (product architect; he consumes the design philosophy) and **Lina** (owner of `governance/cross-platform-vs-platform-specific-decision-framework.md`).
@@ -158,13 +158,14 @@ Each site uses its owner's text. **Sites 1, 4, 6, 7 and 8 carry the F-2 ruling**
 | 2 | Same doc, Decision Criteria Q2 (L103), Q3 (L113) and Q4 (L126). See 6.2. | Lina | Peter merges | None |
 | 3 | Same doc, § "Documentation Requirements" (L313, L317). Made symmetric. See 6.3. | Lina | Peter merges | None |
 | 4 | `design-language/design-philosophy.yaml`: Leonardo's named rule, after "The Break-Glass Rule" (L49–51), before `guidance:` (L53). This file is what `get_design_philosophy` and `get_design_rules` serve (`application-mcp-server/src/index.ts` L754, L814). See 6.4. | Peter (author, Spec 107 Req 8); Leonardo (consumer) | Peter merges. It ships in the package (`package.json` `files`: `design-language/`). | None |
-| 5 | ~~`preserved-knowledge/true-native-architecture-concepts.md` addendum~~ **DROPPED** (Peter, 2026-10-18, relayed; § 8). The directory is historical context. See 6.5 for the follow-up. | — | — | — |
 | 6 | `canonical/agents/leonardo.md` L439 and L441, in Leonardo's wording (his R3). See 6.6. | Leonardo | `canonical/**`, so Peter merges, then regenerate | Items `consistent-not-identical` (`leonardo.yaml` L399) and `native-2` (L407–410) move. Leonardo re-confirms the unit at `confirmations/leonardo.md` L197–201, with **a fresh ruling** on his sentence "accepting a non-native idiom on one platform violates them". |
 | 7 | `canonical/agents/kenya.md` L340 and `kenya.yaml` L247–250 (`implement-3`). The R4 wording, which Kenya accepted (her R3). See 6.7. | Kenya | Peter merges, then regenerate | Kenya re-confirms `#step-3-implement` (`confirmations/kenya.md` L116–120). Kenya's straggler check of L258, L319, L366, L370 and L450 found nothing to edit. |
 | 8a | `canonical/agents/data.md` L343 and `data.yaml` L251–254 (`implement-3`). Data's own wording (his R3). See 6.7. | Data | Peter merges, then regenerate | Data re-confirms `#step-3-implement` (`confirmations/data.md` L120). |
 | 8b | `canonical/agents/data.md` L451 and `data.yaml` L527–530 (`native-1`), "Material 3 as base". Data's straggler, the counterpart of site 6's "Material 3 base". See 6.8. | Data | Peter merges, then regenerate | Data re-confirms `#android-specific-guidance:preamble` (`confirmations/data.md` L242–248). |
 | 9 | `governance/Component-Development-Guide.md` L723: a scoping note on SF Symbols. See 6.9. | Lina | Peter merges | None |
 | 10 | `.kiro/specs/130-input-switch-base/design-outline.md` § "2. Settled decisions": one row. See 6.10. | Thurgood | Merged with the R1 unit | None |
+
+*Site 5 was withdrawn by Peter on 2026-10-18: `preserved-knowledge/` is historical context (§ 8; follow-up at § 6.5). The table skips 5 deliberately, so that review entries citing sites by number stay valid.*
 
 **Total signing cost: four C1 re-confirmations.** Leonardo has one, with a fresh ruling. Kenya has one. Data has two, both plain re-signs, because his 2026-09-29 rulings contain no sentence that contradicts this law. The owning seats make them in the execution PR. Under the signing-act chain's M1 they need no grant. The execution PR regenerates `canonical/_consumer-output/**` and the agent outputs, and `122-diff-guard` must be green.
 
@@ -198,7 +199,7 @@ The replacement is Lina's (a), with **one amendment**: in her first bullet, "the
     rationale: "Native controls cap theming; native behavior is what users and assistive technology rely on."
 ```
 
-**6.5: DROPPED.** Peter (relayed; quoted in § 8) describes the `preserved-knowledge/` directory as historical context: the ideas DesignerPunk is built from, not current reference material. This ballot therefore does not edit it.
+**6.5: site withdrawn, so no edit. The follow-up is below.** Peter (relayed; quoted in § 8) describes the `preserved-knowledge/` directory as historical context: the ideas DesignerPunk is built from, not current reference material. This ballot therefore does not edit it.
 - **Follow-up, not this ballot.** Three live docs still point to `preserved-knowledge/true-native-architecture-concepts.md` as current architectural guidance:
   - `.kiro/steering/core-goals.md` L33
   - `governance/Component-Development-Guide.md` L31
@@ -275,9 +276,9 @@ Native look stops being the presumed default. (a), native look, stays legitimate
 
 ## 8. Rulings (Peter)
 
-*Peter answered in chat on 2026-10-18, and the orchestrator relayed it. Everything below is recorded as relayed, **not as ratified**. Ratification is the record-first act in `.kiro/docs/ballots/README.md`, which here is Peter's merge of the PR carrying it.*
+*Peter answered in chat on 2026-10-18, and the orchestrator relayed it. Each ruling below is recorded as relayed. Peter ratified the ballot as a whole on 2026-10-18 (first bullet). This commit is the record-first act in `.kiro/docs/ballots/README.md`.*
 
-- **Ratify / modify / reject:** *(open)*
+- **Ratify / modify / reject: RATIFIED (Peter, 2026-10-18)**, relayed by the orchestrator. His words, verbatim: *"Ratify as written with the presentational fix folded in and review it with Thurgood if you haven't already."* The presentational fix is folded into this commit; see Errata.
 
 - **F-1, what DesignerPunk's own components ship when no design choice is made. Option (iv) is APPROVED by Peter, 2026-10-18** (relayed by the orchestrator; ratification of the ballot as a whole is still open).
   - **Peter** (relayed, verbatim): *"Though well considered, I'm unsure about that framing. The wording seems strange to have a default of 'our look' and yet have an opt-out of the native style. Doesn't having to opt-in to a default defeat the purpose of default? I could be misunderstanding, so correct me if my thinking is flawed. I would put it to the agents for consideration before blindly approving, but maybe 'our look by default; but in the absence of a specified design, fallback to native controls'."*
@@ -297,10 +298,10 @@ Native look stops being the presumed default. (a), native look, stays legitimate
     - What ships depends on how far authoring got. A late design ships native, and a design that arrives later is a visual breaking change (Data).
     - Partial styling, such as tint only, has no clear status. Leaving a control undesigned becomes the cheap path, and one screen can mix drawn and native controls (Leonardo).
     - R-3 lands on every iOS consumer (Kenya; Lina).
-  - **Superseded by (iv), now approved.** These stay for the record; R3's analysis of them is in § 10:
-    - (i) Our look by default, with a native-look opt-out. This is the defective R3 wording.
-    - (ii) Native look by default, with a brand opt-in.
-    - (iii) Silent: each component decides.
+  - **Not taken.** The seats' analysis is in § 10: [THURGOOD R3]'s F-1 and the five R2 reads.
+    - **(i) Our look, with a runtime native-look opt-out.** An opt-out is API surface forever. It splits the design across two geometries, and the less-used path rots without tests (Data R1). Its R3 wording also read backwards.
+    - **(ii) Native look by default, with a brand opt-in.** It has no stable meaning on web (Sparky), it is weak on Android, where OEMs draw their own (Data), and it puts DesignerPunk's look behind an opt-in.
+    - **(iii) Silent; each component decides.** There is no predictable default, and the question is re-argued at every P-1 (Kenya).
   - **Approval of (iv): APPROVED by Peter, 2026-10-18** (relayed by the orchestrator; ratification of the ballot as a whole is still open). His words, verbatim: *"Re: 1, Approved"*
 
 - **F-2: RULED (relayed). "Design" covers control behavior.**
@@ -319,7 +320,7 @@ Native look stops being the presumed default. (a), native look, stays legitimate
   - **Forced colors stays outside the ruling** (Sparky). It is a ratified Hard Rule that was not carried out, and it goes to Lina's defect record (§ 11).
   - **Not answered by the ruling: does "every theme context" include iOS Increase Contrast?** That would double the contexts to eight on iOS (Kenya R1 (a)4). This is carried to Spec 130 R1 for the switch's own contexts. It does not block ratification.
 
-- **Edit site 5: DROPPED (relayed).**
+- **Edit site 5: WITHDRAWN (relayed).**
   - **Peter** (verbatim): *"Well... no one. The preserved-knowledge directory is context and lessons learned from the previously failed attempts at building what is now DesignerPunk. They're the ideas DP is built from, so they're historical context rather than anything that we would point to today as reference material."*
   - The follow-up is at § 6.5.
 
@@ -755,6 +756,7 @@ The R4 wording leaves out floor part 2 of § 1 (accessibility semantics are alwa
   - Data supplied his own 6.7 line and accepted 6.8.
   - Nothing remains to confirm.
 - **Peter**, 2026-10-18 (third message, relayed): *"Re: 1, Approved"*. F-1 (iv) is approved (§ 8). Ratification of the ballot as a whole is still open, and Peter is reading it.
+- **Peter**, 2026-10-18 (fourth message, relayed): *"Ratify as written with the presentational fix folded in and review it with Thurgood if you haven't already."* The orchestrator proposed the fix and Thurgood reviewed it before this commit, with one refinement: (i)'s reason drops "two renderings", which Data's wrapper-and-slot read had already corrected. RATIFIED, and this commit is the record.
 - **Still owed at execution**: the C1 re-confirmations of the moved signed units, made by the owning seats in the execution PR: Leonardo 1 (with a fresh ruling), Kenya 1, Data 2.
 - **Surfaced, routed to Lina**: the defects in § 5 belong to her components, and the fixes go to her own record and change, not this unit:
   - iOS: `.isButton` probable drift.
@@ -763,3 +765,11 @@ The R4 wording leaves out floor part 2 of § 1 (accessibility semantics are alwa
   - Also Sparky's static-CSS-check class option, for her consult. Sparky R2 (d) places it on this record.
   - Also forced colors, kept outside F-3 by the ruling.
   - The orchestrator routes this. The record is not opened in this unit.
+
+## Errata
+
+- **2026-10-18, ratification commit: the presentational fix** Peter asked for. Rejected content is no longer shown as struck-through or "superseded" text, because an agent or an index reads struck text as live.
+  - § 6's table lists only live sites, with a one-line note that site 5 was withdrawn. The numbering gap is kept.
+  - § 8 F-1 records (i), (ii) and (iii) as a prose "Not taken" line, each with its reason.
+  - Two lines in [THURGOOD R4] describe the old form and stay as written: "The row is kept and struck, so the site numbers stay stable" and "(i), (ii) and (iii) are kept as superseded".
+  - No ruling, site or wording changed.
