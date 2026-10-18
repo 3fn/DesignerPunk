@@ -1128,7 +1128,7 @@ history:
 ### issues-obligation-lapse
 
 ```yaml
-rule: "A root .kiro/issues/ record carries an owner, a Trigger token from the fixed grammar (the event that owes the close) and a Class; a record neither closed nor re-ruled by an ancestor of a firing commit lapses, appended as ## Lapse (date) naming that SHA and never erased (count = distinct SHAs; open records lapse again at each later release's S); P1/P2 escalate to Peter at lapse 2, P0 at lapse 1, with spec / drop / fix-now; obligations created by a ruling or pass are filed in the same PR"
+rule: "A root .kiro/issues/ record carries an owner, a Trigger token from the fixed grammar (the event that owes the close) and a Class; a record neither closed nor re-ruled by an ancestor of a firing commit lapses, appended as ## Lapse (date) naming that SHA and never erased (count = distinct SHAs; open records lapse again at each later release's S); P1 and P2 `(record)` escalate to Peter at lapse 2, P0 and P2 `(guard)` at lapse 1, with spec / drop / fix-now; obligations created by a ruling or pass are filed in the same PR"
 boundary_call:
   class: functional
   rationale: "Firing commits and closing commits are git objects; on-time is git merge-base --is-ancestor; the count is distinct SHAs — decidable from git alone. manual tokens are printed not computable"
@@ -1138,7 +1138,7 @@ verification:
   check_state: proposed
   checks: []
   # The ladder (rulings item 26, D-1): held by the walk record and the monthly walk; the second miss on a token-bearing record promotes the grep to a committed script under a scoped grant
-  # F-A1 = (b) (Peter, 2026-10-18): a P2 (guard) record escalates at lapse 1, like P0; P1 and P2 (record) at lapse 2 (.kiro/issues/README.md rule 11)
+  # Rule line updated at application as PRE-DECLARED EXECUTION of Peter's F-A1 = (b) ruling (ballot 2026-10-18-obligation-drain-and-release-falsity-floor § 9, 2026-10-18): a P2 (guard) escalates at lapse 1, like P0 (.kiro/issues/README.md rule 11)
 education:
   disposition: "LAW HOME: this ballot M1, M2, M4–M6. POINTER-GRADE: .kiro/issues/README.md rules 1, 5, 6, 10–12"
 history:
