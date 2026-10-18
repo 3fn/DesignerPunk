@@ -4,7 +4,7 @@
 **Discovered by**: Ada, while shipping the `color.feedback.success.text` WCAG fix (Spec 112 audit F4 remediation) — the new `SemanticColorContrast.test.ts` guard measured every text-role pair for the first time
 **Domain**: Ada (token remaps) — **color choices need Peter's adjudication** (visible design changes)
 **Severity**: High — includes a dark-mode body-text failure more severe than the defect the fix session was sent for
-**Status**: **DEFERRED until 125-B campaign close (Peter's ruling, 2026-09-13)** — spec-track; see § "The sustained fix" and § "Deferral ruling" below. Interim dark-text fix carved out and shipped (see § "Interim fix").
+**Status**: **DEFERRED (re-anchored 2026-10-18 to Peter's planned redesign; the 125-B campaign-close trigger fired and was superseded)** — spec-track; see § "The sustained fix", § "Deferral ruling" and § "Measured at the Spec 130 switch read (2026-10-18) — pinned, deferred" below. Interim dark-text fix carved out and shipped (see § "Interim fix"). **Exemption count (2026-10-18)**: the title's 16 is the F4-time count; the guard's `EXEMPT` list pins 15 live text pairs today, and the 2026-10-18 section adds 5 non-text pairs pinned in this record only, for **20 live pinned pairs**.
 
 ---
 
@@ -81,3 +81,27 @@ Deferred until **125-B campaign close** (waves 3–4 + 5.Z), on three grounds se
 ## Interim fix (carved out, Peter-ratified 2026-09-13)
 
 **Dark text hierarchy only**: Level 2 dark overrides `color.text.default → white100` (8.46:1), `color.text.muted → white300` (6.28:1), `color.text.subtle → white500` (4.53:1) — all vs. dark canvas gray400, ratios from the repo's `contrastRatio`. Kills the queue's most severe item (dark body text 1.536:1) with existing primitives and zero design invention; the picks form a clean preserved hierarchy the spec is expected to keep. The three dark text-hierarchy rows above are thereby REMEDIATED; all other queue rows stand.
+
+## Measured at the Spec 130 switch read (2026-10-18) — pinned, deferred
+
+*Signed: Ada, 2026-10-18.* Measured during the read-only G1 switch consult (`.kiro/specs/130-input-switch-base/inbound-from-ada.md`, commit `9e3d1aa00`). Method: the repo's `contrastRatio()` (`src/color/OklchConverter.ts`) over primitive values from `composedColorMap` (`src/tokens/color`), cross-checked against `dist/DesignTokens.web.css`. Floor: WCAG 2.1 SC 1.4.11, **3:1 for non-text UI components**. Canvas = `color.structure.canvas`: white100 `oklch(1 0 260)` in light, gray400 `oklch(0.42 0.018 260)` in dark (CSS line 558).
+
+These are **non-text** pairs. `SemanticColorContrast.test.ts` asserts text pairs only, so these 5 are pinned **in this record only**; no test breaks if they regress or are fixed.
+
+| # | Pair (token → primitive) | Context | Ratio | Read from |
+|---|---|---|---|---|
+| 1 | `accessibility.focus.color` → cyan300 `oklch(0.76 0.148 202.5)` vs canvas white100 | light, every theme (the value is fixed; it does not follow the wcag theme's teal swap) | **1.983** | CSS line 834 |
+| 2a | `color.feedback.select.border.default` → gray200 `oklch(0.62 0.02 260)` vs canvas gray400 (Input-Checkbox-Base / Input-Radio-Base unchecked border) | dark | **2.324** | CSS line 540 |
+| 2b | `color.feedback.select.border.rest` → cyan400 `oklch(0.64 0.125 202.5)` vs canvas gray400 (checked border: checkbox, radio, Chip-Filter) | dark | **2.711** | CSS line 539 |
+| 3a | `color.action.primary` → cyan300 vs canvas white100, as a non-text fill | light-base | **1.983** | CSS line 545 |
+| 3b | `color.action.primary` → teal300 `oklch(0.52 0.08 209)` vs canvas gray400, as a non-text fill (no dark-wcag override exists for it) | dark-wcag | **1.588** | CSS line 935 (wcag block) |
+
+Passing for the record: `action.primary` dark-base 4.27; light-wcag 5.33. Focus ring dark 4.27.
+
+**The class (4)**: (i) the guard has no non-text 3:1 pairing; its header lists "Non-text roles … and their 3:1 floor" under NOT COVERED. (ii) The select family has no dark overrides: none of the six `color.feedback.select.*` tokens appears in `src/tokens/themes/dark/SemanticOverrides.ts`, so 2a/2b are the same root cause as the § "The queue" dark rows (light primitives resolving against the dark canvas). Both belong to deliverables 2 and 4 of § "The sustained fix".
+
+**Ruling**: Peter, 2026-10-18 (relayed): accessibility contrast issues are punted for now; a larger redesign is being considered to complement DesignerPunk's development maturation. These pairs are pinned here as exemptions; the queue's new trigger is that redesign (or Peter's go), replacing the fired 125-B campaign-close trigger.
+
+*Provenance note (Ada)*: the ruling arrived by coordinator relay and is recorded as relayed; there is no ballot for it, since it re-anchors a deferral rather than changing governance law.
+
+**Not deferred**: Spec 130's own switch tokens are designed to pass 3:1 now, irrespective of this deferral: an outlined off state (theme-varying off outline gray300 / gray100: 5.51 / 3.41 vs canvas) and a theme-varying on fill (cyan400 or cyan500 / cyan300 / teal300 / teal200: all ≥ 3.12 vs canvas). See `.kiro/specs/130-input-switch-base/inbound-from-ada.md` § (d).
