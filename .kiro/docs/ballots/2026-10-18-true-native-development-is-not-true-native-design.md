@@ -4,8 +4,9 @@
 **Drafted by**: Thurgood (Civitas steward), at Peter's direction.
 - R2 revision after Leonardo's and Lina's R1 reads.
 - R3 revision after the three platform seats' R1 reads.
-- R4 records Peter's rulings and the five seats' reads of his F-1 reframing. All rounds are dated the same day.
-**Status**: **DRAFT (R4, the rulings round).** Peter's answers of 2026-10-18 are recorded in § 8 as relayed, not ratified: F-2 is ruled, F-3 is ruled and edit site 5 is dropped. F-1 (iv) awaits his approval. Nothing in § 6 is applied until this record says RATIFIED (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
+- R4 records Peter's rulings and the five seats' reads of his F-1 reframing.
+- R5 records the owners' confirmations of their site wordings. All rounds are dated the same day.
+**Status**: **DRAFT (R5, after the confirmations round).** Peter's answers of 2026-10-18 are recorded in § 8 as relayed, not ratified: F-2 is ruled, F-3 is ruled and edit site 5 is dropped. F-1 (iv) awaits his approval. Nothing in § 6 is applied until this record says RATIFIED (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
 **Origin**: Peter's answer on Spec 130 fork P-1, given in chat on 2026-10-18 and relayed by the orchestrator. It is recorded at `.kiro/specs/130-input-switch-base/feedback.md` § "[PETER R0]". He agreed the answer should become law through this ballot, not stay a feedback line.
 **Reviewers of record**:
 - **Required**: **Leonardo** (product architect; he consumes the design philosophy) and **Lina** (owner of `governance/cross-platform-vs-platform-specific-decision-framework.md`).
@@ -149,18 +150,18 @@ These are categories, not the switch's list. Each component lists its own instan
 
 ## 6. Edit sites (applied only after RATIFIED)
 
-Each site uses its owner's text. **Sites 1, 4, 6, 7 and 8 carry the F-2 ruling**: design covers control behavior, and the floor names what it never chooses. Kenya, Data and Sparky each said all five must carry the same answer. Where a seat's wording was written before the ruling, it is re-proposed below to follow it, and **each owner confirms its own at execution**.
+Each site uses its owner's text. **Sites 1, 4, 6, 7 and 8 carry the F-2 ruling**: design covers control behavior, and the floor names what it never chooses. Kenya, Data and Sparky each said all five must carry the same answer. Where a seat's wording was written before the ruling, it was re-proposed at R4. **Each owner has now confirmed or supplied its own wording** (their R3 entries in § 10), and the owners' words are what appear below.
 
 | # | Site | Owner | Merge rule | Signing cost |
 |---|---|---|---|---|
-| 1 | `governance/cross-platform-vs-platform-specific-decision-framework.md` L23, "Key Principle". Replaced by Lina's (a) text, amended once for Spec 128 (she confirmed), plus one F-2 sentence that she confirms at execution. See 6.1. | Lina | `governance/**`, so Peter merges | None. Leonardo loads it as an ambient file, and the baseline lists ids, not hashes. |
+| 1 | `governance/cross-platform-vs-platform-specific-decision-framework.md` L23, "Key Principle". Replaced by Lina's (a) text, amended once for Spec 128 (she confirmed), plus her two F-2 sentences and one bullet change (her R3). See 6.1. | Lina | `governance/**`, so Peter merges | None. Leonardo loads it as an ambient file, and the baseline lists ids, not hashes. |
 | 2 | Same doc, Decision Criteria Q2 (L103), Q3 (L113) and Q4 (L126). See 6.2. | Lina | Peter merges | None |
 | 3 | Same doc, § "Documentation Requirements" (L313, L317). Made symmetric. See 6.3. | Lina | Peter merges | None |
 | 4 | `design-language/design-philosophy.yaml`: Leonardo's named rule, after "The Break-Glass Rule" (L49–51), before `guidance:` (L53). This file is what `get_design_philosophy` and `get_design_rules` serve (`application-mcp-server/src/index.ts` L754, L814). See 6.4. | Peter (author, Spec 107 Req 8); Leonardo (consumer) | Peter merges. It ships in the package (`package.json` `files`: `design-language/`). | None |
 | 5 | ~~`preserved-knowledge/true-native-architecture-concepts.md` addendum~~ **DROPPED** (Peter, 2026-10-18, relayed; § 8). The directory is historical context. See 6.5 for the follow-up. | — | — | — |
-| 6 | `canonical/agents/leonardo.md` L439 and L441, re-proposed for F-2. See 6.6. | Leonardo | `canonical/**`, so Peter merges, then regenerate | Items `consistent-not-identical` (`leonardo.yaml` L399) and `native-2` (L407–410) move. Leonardo re-confirms the unit at `confirmations/leonardo.md` L197–201, with **a fresh ruling** on his sentence "accepting a non-native idiom on one platform violates them". |
-| 7 | `canonical/agents/kenya.md` L340 and `kenya.yaml` L247–250 (`implement-3`). Kenya's wording, re-proposed for F-2. See 6.7. | Kenya | Peter merges, then regenerate | Kenya re-confirms `#step-3-implement` (`confirmations/kenya.md` L116–120). Kenya's straggler check of L258, L319, L366, L370 and L450 found nothing to edit. |
-| 8a | `canonical/agents/data.md` L343 and `data.yaml` L251–254 (`implement-3`). Data's wording, re-proposed for F-2. See 6.7. | Data | Peter merges, then regenerate | Data re-confirms `#step-3-implement` (`confirmations/data.md` L120). |
+| 6 | `canonical/agents/leonardo.md` L439 and L441, in Leonardo's wording (his R3). See 6.6. | Leonardo | `canonical/**`, so Peter merges, then regenerate | Items `consistent-not-identical` (`leonardo.yaml` L399) and `native-2` (L407–410) move. Leonardo re-confirms the unit at `confirmations/leonardo.md` L197–201, with **a fresh ruling** on his sentence "accepting a non-native idiom on one platform violates them". |
+| 7 | `canonical/agents/kenya.md` L340 and `kenya.yaml` L247–250 (`implement-3`). The R4 wording, which Kenya accepted (her R3). See 6.7. | Kenya | Peter merges, then regenerate | Kenya re-confirms `#step-3-implement` (`confirmations/kenya.md` L116–120). Kenya's straggler check of L258, L319, L366, L370 and L450 found nothing to edit. |
+| 8a | `canonical/agents/data.md` L343 and `data.yaml` L251–254 (`implement-3`). Data's own wording (his R3). See 6.7. | Data | Peter merges, then regenerate | Data re-confirms `#step-3-implement` (`confirmations/data.md` L120). |
 | 8b | `canonical/agents/data.md` L451 and `data.yaml` L527–530 (`native-1`), "Material 3 as base". Data's straggler, the counterpart of site 6's "Material 3 base". See 6.8. | Data | Peter merges, then regenerate | Data re-confirms `#android-specific-guidance:preamble` (`confirmations/data.md` L242–248). |
 | 9 | `governance/Component-Development-Guide.md` L723: a scoping note on SF Symbols. See 6.9. | Lina | Peter merges | None |
 | 10 | `.kiro/specs/130-input-switch-base/design-outline.md` § "2. Settled decisions": one row. See 6.10. | Thurgood | Merged with the R1 unit | None |
@@ -170,15 +171,15 @@ Each site uses its owner's text. **Sites 1, 4, 6, 7 and 8 carry the F-2 ruling**
 **6.1, Key Principle.** The current text at L23:
 > **Key Principle**: Neither cross-platform consistency nor platform-specific idioms are always correct. The right choice depends on context, user expectations, and design system goals.
 
-The replacement is Lina's (a), with **one amendment**: in her first bullet, "the platform's own UI framework" becomes "the platform's own rendering and accessibility stack" (Sparky (a)1, Spec 128). **Lina confirmed the amendment** (read-only, 2026-10-18, verbatim): "ACCEPT. I take 'the platform's own rendering and accessibility stack are not a choice' as my text for edit site 1. … The new phrase admits React (DOM plus ARIA) and React Native (native views plus native accessibility APIs), which is what Spec 128 needs. It still excludes self-drawn surfaces such as canvas or Flutter-style rendering, which is the intent." **F-2 is ruled, and this needs one proposed addition, which Lina confirms at execution.** Her last bullet already reads broadly and stays as written. The floor's other two fixed parts, platform-owned interaction and system surfaces, are not yet in her text, so a closing sentence is proposed. It is marked ⟨proposed⟩ below.
+The replacement is Lina's (a), with **one amendment**: in her first bullet, "the platform's own UI framework" becomes "the platform's own rendering and accessibility stack" (Sparky (a)1, Spec 128). **Lina confirmed the amendment** (read-only, 2026-10-18, verbatim): "ACCEPT. I take 'the platform's own rendering and accessibility stack are not a choice' as my text for edit site 1. … The new phrase admits React (DOM plus ARIA) and React Native (native views plus native accessibility APIs), which is what Spec 128 needs. It still excludes self-drawn surfaces such as canvas or Flutter-style rendering, which is the intent." **F-2 is ruled, and the text for it is Lina's own (her R3, verbatim).** She declined R4's proposed sentence. Her two sentences sit after the bullets. In her third bullet, "within the limits above" becomes "within the limits of this principle", so that the bullet also covers those two sentences.
 > **Key Principle**: True Native Development does not mean True Native Design. Three axes, two of them fixed:
 > - **Implementation is always native.** Build-time platform separation and the platform's own rendering and accessibility stack are not a choice.
 > - **Accessibility semantics are always platform-correct.** Role, state, name, activation, focus and announcements behave exactly as the platform's native control would. That is not a choice either.
-> - **Design is a choice.** Look, and interaction conventions within the limits above, may follow the platform's native idiom or depart from it to serve the product's users and brand. Neither is always correct; the right choice depends on context, user expectations and design system goals.
+> - **Design is a choice.** Look, and interaction conventions within the limits of this principle, may follow the platform's native idiom or depart from it to serve the product's users and brand. Neither is always correct; the right choice depends on context, user expectations and design system goals.
 >
 > A departure in design never licenses a departure in semantics.
 >
-> ⟨proposed⟩ Interaction the platform owns (back, scroll, text selection, keyboard and IME) and system surfaces and structural idioms are never replaced; every visual and behavioral choice is recorded with its reason.
+> Two more limits are not a choice: interaction the platform owns (back and history, scrolling, text selection, keyboard and IME, and the platform services a native control takes part in) is never replaced, and system surfaces and structural idioms are never replaced, though their contents may be styled. Every visual and behavioral choice is recorded with its reason.
 
 **6.2, Decision Criteria** (Lina's consequential edits):
 - L103: `- **Strong platform convention**: Use platform idiom` becomes `- **Strong platform convention**: Consider platform idiom`
@@ -205,18 +206,20 @@ The replacement is Lina's (a), with **one amendment**: in her first bullet, "the
 - **Owner**: Thurgood (Civitas content consistency).
 - **Cost**: the Core Goals edit needs its own ballot and an identity-doc re-sign. The two governance pointers are in Lina's docs, so she is consulted.
 
-**6.6, Leonardo's charter.** Re-proposed to follow the F-2 ruling; Leonardo confirms at execution.
-- L439: `Each platform should feel native:` becomes `Each platform should feel native in structure and in the interaction the platform owns:`
-- L441: `(Scaffold, Material 3 base, system bars)` becomes `(Scaffold, Material 3 structure, system bars)`
+**6.6, Leonardo's charter** (his R3). His L439 adds floor part 2, accessibility semantics, which he calls "the part a drawn control is most likely to lose".
+- L439: `Each platform should feel native:` becomes `Each platform should feel native in structure, in accessibility semantics, and in the interaction the platform owns:`
+- L441: `(Scaffold, Material 3 base, system bars)` becomes `(Scaffold, Material 3 structure, system bars)`. Leonardo accepted it (his R3).
 
-**6.7, Kenya's and Data's step lines.** Re-proposed by Thurgood from their R1 wordings to follow the F-2 ruling; Kenya and Data each confirm at execution.
+**6.7, Kenya's and Data's step lines.** Re-proposed by Thurgood at R4 from their R1 wordings to follow the F-2 ruling, then confirmed at R3:
+- **Kenya** accepted as drafted: "The tail's 'feel native in structure' is enough because the opening clause already holds 'the interaction iOS owns' to the § 1.3 floor."
+- **Data** supplied his own wording, which adds text selection and keyboard.
 - **What carries over from R1**: their shape, which qualifies the leading clause and not only the tail.
 - **What changes**: Kenya (c) warned that "behavioral" and "gestures" would contradict site 1 under Lina's reading, and that reading is now ruled. So behavior is narrowed to what the platform owns.
 - Kenya, L340 and `implement-3`: `Follow iOS structural idioms and the interaction iOS owns (navigation, system surfaces, system gestures, accessibility) — the screen should feel native in structure; its look and component behavior follow the spec, which may choose iOS convention or depart from it`
-- Data, L343 and `implement-3`: `Follow Android structural idioms and the interaction Android owns (system surfaces, back, scroll, IME, accessibility) — the screen should feel native in structure; its look and component behavior follow the spec's design choices.`
+- Data, L343 and `implement-3` (his R3, verbatim): `Follow Android structural idioms and the interaction Android owns (system surfaces, back, scroll, text selection, keyboard and IME, accessibility) — the screen should feel native in structure; its look and component behavior follow the spec's design choices.`
 - Each `label` is regenerated.
 
-**6.8, Data's Android guidance** (L451 and `native-1`, his wording): `Jetpack Compose composables with Material 3 as structural base (Scaffold, system bars); visuals follow DesignerPunk tokens and the spec`
+**6.8, Data's Android guidance** (L451 and `native-1`, his wording; accepted as written at his R3): `Jetpack Compose composables with Material 3 as structural base (Scaffold, system bars); visuals follow DesignerPunk tokens and the spec`
 
 **6.9, the Component Development Guide scoping note**, after the example's code block (ends L725):
 > *Scope note (ballot `2026-10-18-true-native-development-is-not-true-native-design`): "platform-native visual consistency" is this example's reason, not a requirement — a component's icons may depart from the platform's native set when its design calls for it.*
@@ -698,6 +701,42 @@ Also ruled same message: F-2 — "'Design' also covers control behavior, but som
 - **The R3 line on Lina's confirmation now points to § 6.1.** → [THURGOOD R3]
 - **Sparky's R2 (d)**: the static CSS check belongs on Lina's defect record, not this ballot's execution. → § 9 R-2, § 11
 
+*Source: "R5 seat confirmations on the R4 re-proposed site wordings (2026-10-18) — VERBATIM". The words are unchanged.*
+
+#### [LINA R3] — 2026-10-18 — confirmation of the site wording, verbatim
+*Lina — site 6.1: DECLINES Thurgood's ⟨proposed⟩ sentence as worded; her exact text instead*
+
+"I don't accept Thurgood's sentence as worded. Its parenthesis is shorter than floor part 3: it leaves out 'history' and 'the platform services a native control takes part in (§ 3 item 10)'. It also drops part 4's 'their contents may be styled'. The exact text I want instead:
+> Two more limits are not a choice: interaction the platform owns (back and history, scrolling, text selection, keyboard and IME, and the platform services a native control takes part in) is never replaced, and system surfaces and structural idioms are never replaced, though their contents may be styled. Every visual and behavioral choice is recorded with its reason.
+There's also a placement problem. These sentences go at the end of the principle, but my third bullet says 'within the limits above', so it wouldn't cover them. In that bullet, 'within the limits above' should become 'within the limits of this principle'. Without that change, the text contradicts the F-2 ruling.
+My F-1 report from earlier stands: I accept Peter's framing as (iv), I pick it over (i), and the per-platform `designed`/`native` entry in the design spec is the test for 'absence of a specified design'."
+
+#### [KENYA R3] — 2026-10-18 — confirmation of the site wording, verbatim
+*Kenya — site 6.7: ACCEPT*
+
+"ACCEPT the R4 § 6.7 wording for kenya.md L340 and `implement-3`, as drafted at 82ce61a2f. It is the text I'll re-confirm at execution; I edited nothing. The tail's 'feel native in structure' is enough because the opening clause already holds 'the interaction iOS owns' to the § 1.3 floor."
+
+#### [LEONARDO R3] — 2026-10-18 — confirmation of the site wording, verbatim
+*Leonardo — site 6.6: one addition to L439; L441 ACCEPT*
+
+"Not a plain ACCEPT: I want one addition to L439. Please use:
+`Each platform should feel native in structure, in accessibility semantics, and in the interaction the platform owns:`
+The R4 wording leaves out floor part 2 of § 1 (accessibility semantics are always platform-correct), and that is the part a drawn control is most likely to lose. L441 (`Material 3 structure`): ACCEPT."
+
+#### [DATA R3] — 2026-10-18 — confirmation of the site wording, verbatim
+*Data — site 6.8 ACCEPT; site 6.7 one change, exact wording*
+
+"ACCEPT 6.8 as written. For 6.7 I want one change: R4's list of interaction Android owns leaves out text selection and keyboard, which the § 1 floor item 3 names. Exact wording for L343 and `implement-3`: `Follow Android structural idioms and the interaction Android owns (system surfaces, back, scroll, text selection, keyboard and IME, accessibility) — the screen should feel native in structure; its look and component behavior follow the spec's design choices.`"
+
+#### [THURGOOD R5] — 2026-10-18 — confirmations woven in; the owners' words replace mine
+
+- **6.1 (Lina).** My ⟨proposed⟩ sentence is withdrawn. She was right that it was shorter than the floor: it dropped "history", the platform services clause and "their contents may be styled". Her two sentences replace it, verbatim, after the bullets. Her third bullet now reads "within the limits of this principle". The ⟨proposed⟩ mark is removed. → § 6.1
+- **6.6 (Leonardo).** His L439 adds accessibility semantics, floor part 2. L441's `Material 3 structure` is accepted. → § 6.6
+- **6.7 (Kenya).** Accepted as drafted at `82ce61a2f`, and her reason is quoted. → § 6.7
+- **6.7 (Data).** His exact wording replaces mine and adds text selection and keyboard. 6.8 is accepted as written. → § 6.7, § 6.8
+- **§ 8 is unchanged.** Approval of F-1 (iv), and ratify / modify / reject, remain Peter's.
+- **§ 11.** The confirmations that were owed at execution are now recorded as confirmed. Execution still owes the C1 re-confirmations of the moved units: Leonardo 1, Kenya 1, Data 2. → § 11
+
 ## 11. Consult ledger
 
 - **Peter**, 2026-10-18 (relayed by the orchestrator): the principle, verbatim, and the instruction that it becomes law through a short ballot. His full-roster answer on Spec 130 ("insight over cost") is in its R0.
@@ -709,7 +748,13 @@ Also ruled same message: F-2 — "'Design' also covers control behavior, but som
 - **Peter**, 2026-10-18 (second message, relayed): ruled F-2 and F-3, dropped site 5, and proposed F-1 (iv). He asked that the seats consider (iv) before he approves it. All of this is recorded in § 8 as relayed.
 - **F-1 (iv) reads**, 2026-10-18, read-only: **Lina, Leonardo, Kenya, Sparky and Data all ACCEPT (iv) over (i).** All five say R3's (i) wording, not Peter's reasoning, caused the misreading. Their decidable-test clauses are converged in § 8. Leonardo amended his site-4 rule for F-2. Kenya's P-2 recommendation goes to Spec 130 R1. Data withdrew "disabled state" and confirmed the F-3 "modified" definition and item 5 coverage.
 - **Follow-up, not this ballot**: the three live pointers to `preserved-knowledge/true-native-architecture-concepts.md` (§ 6.5). Owner Thurgood. Core Goals needs a ballot and an identity-doc re-sign; Lina is consulted on her two docs.
-- **Owed at execution**: Lina confirms 6.1's ⟨proposed⟩ sentence, and Leonardo, Kenya and Data confirm their re-proposed lines (6.6, 6.7).
+- **Site wordings confirmed**, 2026-10-18, read-only, R3 entries in § 10:
+  - Lina supplied her own 6.1 text and the bullet change.
+  - Leonardo supplied his own L439 and accepted L441.
+  - Kenya accepted 6.7 as drafted.
+  - Data supplied his own 6.7 line and accepted 6.8.
+  - Nothing remains to confirm.
+- **Still owed at execution**: the C1 re-confirmations of the moved signed units, made by the owning seats in the execution PR: Leonardo 1 (with a fresh ruling), Kenya 1, Data 2.
 - **Surfaced, routed to Lina**: the defects in § 5 belong to her components, and the fixes go to her own record and change, not this unit:
   - iOS: `.isButton` probable drift.
   - Android: `InputCheckboxBase.android.kt` L429–433, L445–449, L482 and L465; no focus handling; `rememberRipple` (count disputed, seven vs four).
