@@ -1,11 +1,15 @@
 # Ballot Measure: True Native Development is not True Native Design
 
 **Date**: 2026-10-18
-**Drafted by**: Thurgood (Civitas steward), at Peter's direction. R2 revision on the same day, after Leonardo's and Lina's R1 reads.
-**Status**: **DRAFT (R2).** Nothing in § 6 is applied until this record says RATIFIED (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
+**Drafted by**: Thurgood (Civitas steward), at Peter's direction.
+- R2 revision after Leonardo's and Lina's R1 reads.
+- R3 revision after the three platform seats' R1 reads. All rounds are dated the same day.
+**Status**: **DRAFT (R3).** This is the last review round before the PR. The ballot goes to Peter for ratification. Nothing in § 6 is applied until this record says RATIFIED (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
 **Origin**: Peter's answer on Spec 130 fork P-1, given in chat on 2026-10-18 and relayed by the orchestrator. It is recorded at `.kiro/specs/130-input-switch-base/feedback.md` § "[PETER R0]". He agreed the answer should become law through this ballot, not stay a feedback line.
-**Required reviewers**: **Leonardo** (product architect; he consumes the design philosophy) and **Lina** (owner of `governance/cross-platform-vs-platform-specific-decision-framework.md`). Both R1 reads are in (§ 10).
-- **Kenya, Data and Sparky**: their slots are open. The orchestrator is consulting them on this R2 draft, and whether they are formal reviewers is a § 8 slot.
+**Reviewers of record**:
+- **Required**: **Leonardo** (product architect; he consumes the design philosophy) and **Lina** (owner of `governance/cross-platform-vs-platform-specific-decision-framework.md`).
+- **R1 reviewers of record**: **Kenya, Data and Sparky**. Kenya asked for the slot. Sites 7 and 8 are their charters, and the platform claims in § 7 are theirs to verify.
+- All five R1 reads are in § 10.
 **Unit**: this draft is standalone. The application PR edits `governance/**` and `canonical/**`, so **Peter merges it** under the governance carve-out.
 
 ---
@@ -14,82 +18,157 @@
 
 > **"True Native Development does not necessarily mean True Native Design, and design needs to be able to part from native design to solve a product team's own user needs and branding."** — Peter, 2026-10-18
 
-**The floor is the law's second half.** Both owners' reads agree the sentence holds only with it. Leonardo: "It does not survive if worded as 'native idiom is not binding' with no behavioral floor." The floor has three parts:
-1. **Implementation is always native.** That means build-time platform separation and the platform's own UI framework.
-2. **Accessibility semantics are always platform-correct.** Role, state, name, activation, focus and announcements behave exactly as the platform's native control would.
+**The floor is the law's second half.** All five reads agree the sentence holds only with it. Leonardo: "It does not survive if worded as 'native idiom is not binding' with no behavioral floor."
+
+1. **Implementation is always native.** That means build-time platform separation and **the platform's own rendering and accessibility stack**. This wording comes from Sparky (a)1. "UI framework" would have excluded the React and React Native targets that Spec 128 is chartered to admit.
+2. **Accessibility semantics are always platform-correct.** Role, state, name, activation, focus and announcements behave as the platform's native control would. The rule needs a referent on every platform:
+   - **On web**, "platform-correct" means the WAI-ARIA role contract, the APG keyboard pattern and the HTML-AAM mappings (Sparky (a)2).
+   - **Where a platform has no native control**, the component uses that platform's closest documented trait pattern and records the choice (Kenya (a)1).
 3. **System surfaces and structural idioms are never replaced.** Their contents may be styled.
 
 **A departure in design never licenses a departure in semantics.** (Lina, verbatim.)
 
-Whether "design" covers interaction conventions or only visuals is fork **F-2** in § 8. The two owners differ on it.
+Whether "design" covers interaction conventions is fork **F-2** in § 8. The reads give three formulations of one split.
 
 ## 2. What it changes
 
 - **True Native Architecture is a development axis.** It does not bind visual design to platform idiom.
 - **Design is a choice.** It may follow native idiom or depart from it, to serve a product's users and brand. Under the floor, a token-drawn control becomes an admissible default rather than a recorded deviation.
-- **Why this matters (Leonardo (a))**: "Native controls limit what a theme can reach." On iOS the system Toggle draws its own off track in system colors, and a product's theme cannot reach it.
-- **Reasons are recorded both ways.** Every component records its visual choice and the reason, whether it follows native idiom or departs from it (Leonardo (d)3; edit site 3).
-- **Review splits in two (Leonardo (a))**: "Visual departures from native need a reason. Behavioral departures from native are not allowed."
+- **Why this matters**: Leonardo (a) puts it as "Native controls limit what a theme can reach." On iOS the system Toggle draws its own off track in system colors, out of a theme's reach.
+- **Reasons are recorded both ways.** Every component records its visual choice and the reason, whether it follows native idiom or departs (Leonardo (d)3; edit site 3).
+- **Review splits in two** (Leonardo (a)): "Visual departures from native need a reason. Behavioral departures from native are not allowed."
 
-## 3. What a departure must carry: law-level categories
+## 3. What a departure must carry: law-level categories, by platform
 
-These are categories, not the switch's list. The categories merge Lina's (c) 1–11 and Leonardo's (b) 1–8, cited by their numbers. Each component lists its own instances in `contracts.yaml`; the switch's list belongs to Spec 130, not here (Lina (c)).
+These are categories, not the switch's list. Each component lists its own instances in `contracts.yaml` (Lina (c)). The list merges Lina's (c) 1–11, Leonardo's (b) 1–8, and the platform reads: Kenya (a), Data (a), Sparky (a). Platform notes are the seats' own; confidence levels are theirs, where they gave them.
 
-1. **Role and state**, announced as the native control would announce them, and localized. Never a mimic: no control that looks native and carries different semantics. (Lina 1–2; Leonardo 1, 7)
-2. **Name and description.** The visible label is the name, as one combined element. (Lina 3)
-3. **Activation by every input path the platform supports**: screen reader, keyboard, Full Keyboard Access, Switch Control, Voice Control naming, D-pad. (Lina 4; Leonardo 2)
-4. **Focus**: one stop, with a visible indicator. (Lina 5; Leonardo 2)
-5. **Touch target floors**: `tapAreaMinimum` and `tapAreaRecommended`, plus each platform's minimum interactive size. (Lina 6; Leonardo 3)
-6. **User accessibility and display settings**: text scale, reduced motion, increased contrast, bold text, differentiate without color, forced colors, and on/off labels. (Lina 7, 9; Leonardo 2)
-7. **Right-to-left mirroring.** (Lina 8; Leonardo 2)
-8. **The feedback the native control gave for free**: haptics, and pressed, hover and state-layer feedback. (Lina 10–11)
-9. **Floors that system controls gave for free**: the 3:1 non-text contrast floor in all four theme contexts, and the Contract Rule's per-platform tests. (Leonardo 8; see fork **F-3**)
-10. **Interaction conventions users rely on**: thumb drag, back gestures, scroll physics, text selection, keyboard and IME behavior. (Leonardo 4; its reach is fork **F-2**)
-11. **System surfaces and structural idioms**, which are never replaced. These are part of the floor (§ 1.3). (Leonardo 5–6)
+1. **Role and state.** Announced as the floor's referent would announce them, and localized.
+   - **Never override the platform's default state strings.** A custom string makes localization our job (Data).
+   - **Never a mimic**: no control that looks native and carries different semantics.
+   - Sources: Lina 1–2; Leonardo 1, 7.
+2. **Name and description.**
+   - The visible label is the name, as one combined element.
+   - No usage hint the screen reader already speaks (Data (a), from the checkbox defect in § 5).
+   - Source: Lina 3.
+3. **Activation by every input path the platform supports.** These are screen-reader double-tap, a hardware keyboard (Tab to focus; Enter and Space to activate), Full Keyboard Access, Switch Control and Switch Access, Voice Control, and D-pad.
+   - iOS Voice Control: `.accessibilityInputLabels` adds alternate names (Kenya).
+   - Compose: Space under `clickable` is unverified (Data).
+   - Web: Space is required (Sparky).
+   - Sources: Lina 4; Leonardo 2.
+4. **Focus**: one stop, with a visible indicator.
+   - Web: `:focus-visible`.
+   - Android: a drawn control draws its own D-pad and keyboard focus indicator (Data).
+   - Sources: Lina 5; Leonardo 2.
+5. **Touch target**: **the higher of the token floor and the platform minimum** (Data).
+   - On Android the minimum interactive size is 48dp, which equals `tapAreaRecommended`. `tapAreaMinimum` (44) alone fails.
+   - Sources: Lina 6; Leonardo 3.
+6. **User accessibility and display settings, per platform.**
+   - **iOS** (Kenya (a)2–4):
+     - Dynamic Type means the label reflows and the row stacks at accessibility sizes. The control does not scale; UISwitch does not.
+     - Reduce Motion.
+     - Reduce Transparency, `accessibilityReduceTransparency`.
+     - Increase Contrast, `colorSchemeContrast == .increased`. It doubles the contrast contexts; see F-3.
+     - Bold Text.
+     - Button Shapes, `accessibilityShowButtonShapes`.
+     - On/Off Labels. A drawn switch reads `UIAccessibility.isOnOffSwitchLabelsEnabled` and observes its change notification; there is no SwiftUI environment value (medium confidence).
+     - Large Content Viewer, `.accessibilityShowsLargeContentViewer`, for controls that do not scale with text.
+   - **Android** (Data (a)):
+     - Font scale, nonlinear up to 200% on API 34+, so the row reflows.
+     - Remove animations, and the animator duration scale.
+     - High-contrast text.
+     - Bold text, `fontWeightAdjustment` (API 31+).
+     - Display size.
+     - Possibly the API 34 system contrast level (moderate confidence).
+     - Android has no forced-colors equivalent.
+   - **Web** (Sparky (a)):
+     - Text scale, browser zoom to 400% and reflow (WCAG 1.4.10), and text-spacing overrides (1.4.12).
+     - `prefers-reduced-motion`.
+     - `prefers-contrast`, using values from the current spec.
+     - **Forced colors, named explicitly.** A drawn thumb painted with `background-color` disappears, because backgrounds are forced to Canvas. It needs a system-color border or `forced-color-adjust` handling. Web-Authoring-Standards Hard Rule 6 already requires this.
+   - Sources: Lina 7, 9; Leonardo 2.
+7. **Right-to-left mirroring, written in leading and trailing terms.**
+   - SwiftUI: `.offset(x:)` and hand-computed thumb positions do not flip (Kenya).
+   - Compose: Canvas, `drawBehind` and `absoluteOffset` do not mirror; `Modifier.offset` does (Data).
+   - Web: logical insets or `:dir(rtl)` (Sparky).
+   - Sources: Lina 8; Leonardo 2.
+8. **The feedback the native control gave.**
+   - iOS haptics reproduced with `.sensoryFeedback`, which honours the System Haptics setting (Kenya, medium confidence).
+   - Compose M3 `Switch` gives no haptic (Data, moderate confidence), so a haptic on Android is a design choice, not an obligation.
+   - Pressed, hover and state-layer feedback.
+   - Sources: Lina 10–11.
+9. **Floors that system controls gave free.**
+   - The 3:1 non-text contrast floor in every theme context (see F-3).
+   - **State never carried by color alone**, WCAG 1.4.1. This is unconditional, so it moved here from item 6 (Sparky).
+   - The Contract Rule's per-platform tests.
+   - Source: Leonardo 8.
+10. **Interaction conventions users rely on**, whose reach is F-2: thumb drag, back gestures, scroll physics, text selection, keyboard and IME behavior.
+    - It also covers **the platform services the native control took part in** (Sparky): autofill and password managers, form participation and restoration, find-in-page.
+    - Source: Leonardo 4.
+11. **System surfaces and structural idioms are never replaced** (§ 1.3).
+    - The most common iOS failure is hiding the nav bar to draw a custom back button. That kills the interactive edge-swipe-back gesture (Kenya (a)8).
+    - Sources: Leonardo 5–6.
 
 ## 4. What it does NOT change
 
 - **The decision framework's "it depends" stays.** This ballot names the design axis. It picks no component's answer.
-- **The 2026-10-18 accessibility punt is a separate decision.** On P-6 and P-13, Peter deferred the *system-wide* contrast fix to a later redesign. This ballot neither reopens nor relaxes it. How § 3 item 9 meets it is fork F-3.
+- **The 2026-10-18 accessibility punt is a separate decision.** On P-6 and P-13, Peter deferred the *system-wide* contrast fix to a later redesign. This ballot neither reopens nor relaxes it; F-3 is where the two meet.
+- **Forced colors is not part of the punt** (Sparky (d)). It is a ratified Hard Rule that has not been carried out, and it stays outside F-3.
 - **Build-time separation, the Rosetta pipeline and the behavioral contracts are unchanged.**
 
-## 5. Already true: the catalog departs today (Lina (d))
+## 5. Already true: the catalog departs today, and drifts
 
-**Precedents**:
+**Precedents** (Lina (d)). The law describes the catalog as it already is:
 - Nav-SegmentedChoice-Base: drawn on iOS.
-- Input-Text-Base: a Material float label, drawn on iOS; on Android, `BasicTextField`.
+- Input-Text-Base: a Material float label, drawn on iOS; `BasicTextField` on Android.
 - Input-Checkbox-Base and Input-Radio-Base: drawn on iOS and Android.
-- Nav-TabBar-Base and Progress-Bar-Base: no `TabView` or `ProgressView` on iOS (from a grep only).
+- Nav-TabBar-Base and Progress-Bar-Base: no `TabView` or `ProgressView` on iOS.
 
-For the catalog, this law describes what already happens.
+**Cautionary instances, one per platform.**
 
-**The cautionary instance**: the drawn iOS checkbox announces as a button. Its source, `src/components/core/Input-Checkbox-Base/platforms/ios/InputCheckboxBase.ios.swift:306`, reads `.accessibilityAddTraits(.isButton)` (verified 2026-10-18). This is the semantics drift that § 1.2 and § 3 item 1 exist to prevent.
+**iOS.** `InputCheckboxBase.ios.swift:306` reads `.accessibilityAddTraits(.isButton)`; the line is verified. **This is probable drift, and it shows the rule had no referent where no native control exists** (Kenya (a)1):
+- `.isButton` plus a value was the standard pattern before iOS 17's `.isToggle`.
+- The checkbox has three states, and `.isToggle` is binary.
+- The fix is § 1.2's trait-pattern rule, not a verdict on this line.
+
+**Android** (Data (a); lines verified 2026-10-18):
+- `InputCheckboxBase.android.kt` L429–433 hard-codes English `stateDescription` ("checked", "unchecked", "partially checked"). That overrides TalkBack's localized default strings — item 1.
+- L445–449 and L482 append "Double tap to check" to `contentDescription`. TalkBack speaks the hint twice — item 2.
+- L465 sizes to `tapAreaMinimum`, 44dp, which is below 48dp — item 5.
+- No focus handling was found — item 4.
+- Data counts seven components on the deprecated `rememberRipple`. A grep on 2026-10-18 found four component sources: Input-Radio-Base, Input-Checkbox-Base, Button-Icon and Button-VerticalList-Item. The routed record re-counts.
+
+**Web** (Sparky V1, V2):
+- `forced-colors` appears **0** times in `src/` (confirmed), despite Hard Rule 6.
+- All **34** `prefers-contrast` queries use `high` (confirmed). That is an obsolete draft value, so the queries are very likely dead. Sparky's confidence comes from training data, and this needs a real browser check before anyone acts.
+
+**Surfaced, routed.** These are defects in Lina's components. They route to **Lina's own record and change**, not this unit, and are named in § 11. This ballot cites them as evidence only.
 
 ## 6. Edit sites (applied only after RATIFIED)
 
-Each site uses its owner's own text verbatim where the owner offered it.
+Each site uses its owner's text. **Sites 1, 4, 6, 7 and 8 must all carry the same F-2 answer.** Kenya, Data and Sparky each say so, and the wording below marks where the answer bites.
 
 | # | Site | Owner | Merge rule | Signing cost |
 |---|---|---|---|---|
-| 1 | `governance/cross-platform-vs-platform-specific-decision-framework.md` L23, "Key Principle". Replaced by Lina's (a) text. See 6.1. | Lina | `governance/**`, so Peter merges | None. Leonardo loads the doc as an ambient file, and the baseline lists ids, not hashes. The edit reaches his context directly. |
+| 1 | `governance/cross-platform-vs-platform-specific-decision-framework.md` L23, "Key Principle". Replaced by Lina's (a) text, amended once for Spec 128. See 6.1. | Lina | `governance/**`, so Peter merges | None. Leonardo loads it as an ambient file, and the baseline lists ids, not hashes. |
 | 2 | Same doc, Decision Criteria Q2 (L103), Q3 (L113) and Q4 (L126). See 6.2. | Lina | Peter merges | None |
 | 3 | Same doc, § "Documentation Requirements" (L313, L317). Made symmetric. See 6.3. | Lina | Peter merges | None |
-| 4 | `design-language/design-philosophy.yaml`: Leonardo's named rule (c), inserted after "The Break-Glass Rule" (L49–51), before `guidance:` (L53). It replaces R1's characteristic line. This is the file `get_design_philosophy` and `get_design_rules` serve (`application-mcp-server/src/index.ts` L754, L814). See 6.4. | Peter (author, Spec 107 Req 8); Leonardo (consumer) | Peter merges. It ships in the package (`package.json` `files`: `design-language/`) and reaches consumers at the next release. | None |
-| 5 | `preserved-knowledge/true-native-architecture-concepts.md`: an addendum after the closing line, pinning "user experience" at L429. See 6.5. | Unowned (preserved knowledge, so an addendum and never a rewrite) | Peter merges, riding the application PR. Who writes it is a § 8 slot. | None |
-| 6 | `canonical/agents/leonardo.md` L439–441, § "What 'Consistent' Means in True Native". See 6.6. | Leonardo | `canonical/**`, so Peter merges, then regenerate | It moves operative-set items `consistent-not-identical` and `native-2` (`canonical/operative-sets/leonardo.yaml` L399 and L407–410). Leonardo re-confirms the unit pinned at `canonical/profiles/consumer/confirmations/leonardo.md` L197–201 (C1). That ruling's sentence, "accepting a non-native idiom on one platform violates them", needs a fresh ruling, not just a re-sign. |
-| 7 | `canonical/agents/kenya.md` L340 and `canonical/operative-sets/kenya.yaml` L247–250 (`implement-3`). See 6.7. | Kenya | Peter merges, then regenerate | Kenya re-confirms `#step-3-implement` (`confirmations/kenya.md` L116–120). |
-| 8 | `canonical/agents/data.md` L343 and `canonical/operative-sets/data.yaml` L251–254 (`implement-3`). See 6.7. | Data | Peter merges, then regenerate | Data re-confirms `#step-3-implement` (`confirmations/data.md` L120). |
-| 9 | `governance/Component-Development-Guide.md` L723: a scoping note on the example's "platform-native visual consistency" reason for SF Symbols. See 6.8. | Lina | Peter merges | None |
-| 10 | `.kiro/specs/130-input-switch-base/design-outline.md` § "2. Settled decisions": one row. See 6.9. | Thurgood | Applied at R1 incorporation and merged with that R1 unit | None |
+| 4 | `design-language/design-philosophy.yaml`: Leonardo's named rule, after "The Break-Glass Rule" (L49–51), before `guidance:` (L53). This file is what `get_design_philosophy` and `get_design_rules` serve (`application-mcp-server/src/index.ts` L754, L814). See 6.4. | Peter (author, Spec 107 Req 8); Leonardo (consumer) | Peter merges. It ships in the package (`package.json` `files`: `design-language/`). | None |
+| 5 | `preserved-knowledge/true-native-architecture-concepts.md`: an addendum pinning L429's "user experience". See 6.5. | Unowned (preserved knowledge, so an addendum and never a rewrite) | Peter merges with the application PR. The writer is a § 8 slot. | None |
+| 6 | `canonical/agents/leonardo.md` L439 and L441. See 6.6. | Leonardo | `canonical/**`, so Peter merges, then regenerate | Items `consistent-not-identical` (`leonardo.yaml` L399) and `native-2` (L407–410) move. Leonardo re-confirms the unit at `confirmations/leonardo.md` L197–201, with **a fresh ruling** on his sentence "accepting a non-native idiom on one platform violates them". |
+| 7 | `canonical/agents/kenya.md` L340 and `kenya.yaml` L247–250 (`implement-3`). Kenya's wording. See 6.7. | Kenya | Peter merges, then regenerate | Kenya re-confirms `#step-3-implement` (`confirmations/kenya.md` L116–120). Kenya's straggler check of L258, L319, L366, L370 and L450 found nothing to edit. |
+| 8a | `canonical/agents/data.md` L343 and `data.yaml` L251–254 (`implement-3`). Data's wording. See 6.7. | Data | Peter merges, then regenerate | Data re-confirms `#step-3-implement` (`confirmations/data.md` L120). |
+| 8b | `canonical/agents/data.md` L451 and `data.yaml` L527–530 (`native-1`), "Material 3 as base". Data's straggler, the counterpart of site 6's "Material 3 base". See 6.8. | Data | Peter merges, then regenerate | Data re-confirms `#android-specific-guidance:preamble` (`confirmations/data.md` L242–248). |
+| 9 | `governance/Component-Development-Guide.md` L723: a scoping note on SF Symbols. See 6.9. | Lina | Peter merges | None |
+| 10 | `.kiro/specs/130-input-switch-base/design-outline.md` § "2. Settled decisions": one row. See 6.10. | Thurgood | Merged with the R1 unit | None |
 
-**Total signing cost: three C1 re-confirmations**, one unit each for Leonardo, Kenya and Data. Leonardo's includes a fresh ruling on his 2026-09-29 sentence. All three are made by the owning seat in the execution PR. Under the signing-act chain's M1, these signing acts need no grant. The execution PR regenerates `canonical/_consumer-output/**` and the agent outputs, and `122-diff-guard` must be green.
+**Total signing cost: four C1 re-confirmations.** Leonardo has one, with a fresh ruling. Kenya has one. Data has two, both plain re-signs, because his 2026-09-29 rulings contain no sentence that contradicts this law. The owning seats make them in the execution PR. Under the signing-act chain's M1 they need no grant. The execution PR regenerates `canonical/_consumer-output/**` and the agent outputs, and `122-diff-guard` must be green.
 
 **6.1, Key Principle.** The current text at L23:
 > **Key Principle**: Neither cross-platform consistency nor platform-specific idioms are always correct. The right choice depends on context, user expectations, and design system goals.
 
-After the edit (Lina (a), verbatim). The last bullet's "interaction conventions" clause depends on **F-2**: if F-2 goes Leonardo's way, those five words leave.
+The replacement is Lina's (a), with **one amendment**: in her first bullet, "the platform's own UI framework" becomes "the platform's own rendering and accessibility stack" (Sparky (a)1, Spec 128). Lina has not yet read the amendment and confirms it at execution. The last bullet's "interaction conventions" clause follows **F-2**.
 > **Key Principle**: True Native Development does not mean True Native Design. Three axes, two of them fixed:
-> - **Implementation is always native.** Build-time platform separation and the platform's own UI framework are not a choice.
+> - **Implementation is always native.** Build-time platform separation and the platform's own rendering and accessibility stack are not a choice.
 > - **Accessibility semantics are always platform-correct.** Role, state, name, activation, focus and announcements behave exactly as the platform's native control would. That is not a choice either.
 > - **Design is a choice.** Look, and interaction conventions within the limits above, may follow the platform's native idiom or depart from it to serve the product's users and brand. Neither is always correct; the right choice depends on context, user expectations and design system goals.
 >
@@ -105,82 +184,148 @@ After the edit (Lina (a), verbatim). The last bullet's "interaction conventions"
 - L313: `**When using platform-specific idioms**, document in component README:` becomes `**Every component documents its visual choice** — native idiom or departure — in its README:`
 - L317: `1. **Rationale**: Why platform idiom chosen over cross-platform pattern` becomes `1. **Rationale**: Why this visual choice (native idiom or departure) was made`
 
-**6.4, the design-philosophy rule** (Leonardo (c), verbatim), at the existing rules' indentation:
+**6.4, the design-philosophy rule** (Leonardo (c), verbatim; "input and gesture conventions" follows **F-2**):
 ```yaml
   - name: "The Native-Behavior Rule"
     constraint: "True Native is how DesignerPunk is built, not a requirement on how it looks: visual design may part from platform idiom when a product's user needs or brand require it, carried by tokens and themes. Behavior never parts — accessibility semantics, input and gesture conventions, and system surfaces remain each platform's own."
     rationale: "Native controls cap theming; native behavior is what users and assistive technology rely on."
 ```
-If F-2 goes Lina's way, "input and gesture conventions" leaves the constraint's second sentence.
 
 **6.5, the preserved-knowledge addendum:**
 > **Addendum (2026-10-18, ballot `2026-10-18-true-native-development-is-not-true-native-design`)**: "True Native", and "native performance and user experience" above, describe development and behavior (build-time separation, native implementation, native accessibility semantics), not visual appearance; design may depart from native idiom while implementation and semantics stay native.
 
-**6.6, Leonardo's charter** (proposed; Leonardo confirms the wording at execution):
-- L439: `Consistent does NOT mean identical. Each platform should feel native:` becomes `Consistent does NOT mean identical. Each platform should feel native in structure and behavior:`
+**6.6, Leonardo's charter** (proposed; he confirms the wording at execution, and "behavior" follows F-2):
+- L439: `Each platform should feel native:` becomes `Each platform should feel native in structure and behavior:`
 - L441: `(Scaffold, Material 3 base, system bars)` becomes `(Scaffold, Material 3 structure, system bars)`
 
-**6.7, Kenya's and Data's charters:** `— the screen should feel native` becomes `— the screen should feel native in structure and behavior`. This applies to each charter line and to its operative-set `text`, and the `label` is regenerated.
+**6.7, Kenya's and Data's step lines.** These are their own wordings. Both qualify the leading clause, not only the tail. "Behavioral" and "gestures" follow F-2: under Lina's reading they would contradict site 1 (Kenya (c)).
+- Kenya, L340 and `implement-3`: `Follow iOS structural and behavioral idioms (navigation, system surfaces, gestures, accessibility) — the screen should feel native in structure and behavior; its look follows the spec, which may depart from native idiom`
+- Data, L343 and `implement-3`: `Follow Android structural and behavioral idioms — the screen should feel native in structure and behavior; its look follows the spec's design choice.`
+- Each `label` is regenerated.
 
-**6.8, the Component Development Guide scoping note**, added after the example's code block (ends L725):
+**6.8, Data's Android guidance** (L451 and `native-1`, his wording): `Jetpack Compose composables with Material 3 as structural base (Scaffold, system bars); visuals follow DesignerPunk tokens and the spec`
+
+**6.9, the Component Development Guide scoping note**, after the example's code block (ends L725):
 > *Scope note (ballot `2026-10-18-true-native-development-is-not-true-native-design`): "platform-native visual consistency" is this example's reason, not a requirement — a component's icons may depart from the platform's native set when its design calls for it.*
 
-**6.9, the Spec 130 settled row:**
+**6.10, the Spec 130 settled row:**
 
 | Decision | Source |
 |---|---|
 | True Native Development is not True Native Design, with the behavioral floor. Native idiom does not bind the switch's look, so drawn or token-defined geometry is admissible on every platform. Semantics are never drawn. | Ballot `2026-10-18-true-native-development-is-not-true-native-design` |
 
-**Straggler sweep.** Run 2026-10-18 over `governance`, `.kiro/steering`, `design-language` and `canonical`:
-- R1's sweep did not grep the charters. Leonardo did, and found sites 6–8.
-- **Candidates for Lina's read**: the framework's motion § "When to Pause and Ask" (L165–170), the lines "Platform idiom conflicts with design system consistency" and "Animation is critical to brand expression". These are design-axis choices under this law. They are not proposed here.
+**Straggler sweep**, run 2026-10-18 over `governance`, `.kiro/steering`, `design-language` and `canonical`:
+- R1's sweep did not grep the charters. Leonardo found sites 6–8a, and Data found 8b.
+- Kenya's check found nothing further in his charter. Data keeps L366, L440 and L471, because they describe knowledge or fallback order, not a mandate.
+- **Candidates for Lina's read, not proposed**: the framework's motion § "When to Pause and Ask" (L165–170), "Platform idiom conflicts with design system consistency" and "Animation is critical to brand expression".
 - Core Goals is consistent and is not edited.
 - The application PR re-runs the sweep, including over `canonical/agents/**`.
 
 ## 7. Consequences for Spec 130 P-1
 
-- Native look stops being the presumed default. Option (a) stays legitimate; (b) and (c) are admissible.
-- **Lina's lean has moved** (her (b)): "draw the visuals on all three platforms, but never draw the semantics." Under it:
-  - iOS keeps `Toggle` with a custom `ToggleStyle`. Kenya must verify VoiceOver; this is unverified.
-  - Android draws inside `Modifier.toggleable(role = Role.Switch)`.
-  - Geometry is 56×32 everywhere, so C1–C3 apply on all three platforms.
-- **Leonardo (a)**: the Restrained direction becomes fully expressible, and P-10 becomes a visual decision on iOS too.
-- **Nothing is picked here.** P-1 is ruled at R1. F-1 below bears directly on the switch, because the switch makes the default choice for every consumer.
+Native look stops being the presumed default. (a), native look, stays legitimate, and (b) and (c) are admissible. Lina's lean has moved: "draw the visuals on all three platforms, but never draw the semantics." Under that lean, the platform seats read it like this. **Nothing is picked: P-1 is ruled at R1.**
+
+**iOS** (Kenya (b), knowledge-grade: there is no Xcode target):
+- `Toggle` with a custom `ToggleStyle`.
+- Implicit preservation of the toggle trait is **not reliable**. Spec 130 should make `.accessibilityRepresentation { Toggle(configuration) }` plus `.isToggle` a **contract requirement**.
+- Expected announcement: "‹label›, switch button, on/off, double-tap to toggle setting" (medium-high confidence). On-device confirmation is owed.
+- Lost under a custom style:
+  - The UISwitch haptic (high confidence). Reproduce it with `.sensoryFeedback(…, trigger: configuration.isOn)`, and settle on a device which feedback matches.
+  - Thumb drag. Rebuild it with a `DragGesture` or give it up.
+  - The On/Off Labels glyphs, unless the setting is read (§ 3 item 6).
+- The component needs an explicit style parameter, because an internally applied style beats a consumer's outer `.toggleStyle`.
+
+**Android** (Data (b), high confidence on semantics):
+- `Modifier.toggleable(…, role = Role.Switch)` on the row supplies the role, localized On/Off, activation and focusability, provided `stateDescription` and `contentDescription` are **not** overridden.
+- A drawn switch rebuilds:
+  - The row's minimum height.
+  - The state layer via `ripple(...)`, not `rememberRipple`.
+  - An explicit focus indicator.
+  - Motion on motion tokens. Watch for animator scale being applied twice.
+  - RTL-safe thumb placement.
+- Compose M3 `Switch` has no thumb drag to rebuild (moderate confidence).
+
+**Web** (Sparky (a)):
+- `<button type="button" role="switch" aria-checked>`, as the outline already names. Sparky's reasons:
+  - Space and Enter both activate it natively.
+  - One element owns the focus ring, the target size and the forced-colors styling.
+  - It is not form-associated, which fits P-3(a).
+  - State styling keys on `[aria-checked="true"]`.
+- The cost that survives: `aria-checked` has to be kept in sync from script. A unit test pins it.
+
+**Geometry** is 56×32 everywhere under Lina's lean, so C1–C3 apply on all three platforms. F-1 bears directly on this, because the switch sets the default for every consumer.
 
 ## 8. Rulings (Peter)
 
 *Empty: the ballot is DRAFT.*
+
 - **Ratify / modify / reject:**
-- **F-1, what DesignerPunk's own components ship when a consumer makes no choice.** Raised by both owners; this was R1's R-2. Lina (e): "Applied to ecosystem components, DesignerPunk's brand departure ships to every consumer as the default, and a consumer who wants native look has to fork the component." Leonardo (d)2: "A product that wants the system look gets it only if the component offers a native rendering option."
-  - **(i) Departed look by default, with a native-look opt-out.** The brand reaches every consumer. Cost: every drawn component also maintains a native rendering path, which means two renderings and two sets of tests.
-  - **(ii) Native look by default, with a brand opt-in.** Defaults keep the native behavior for free, which lowers R-1. Cost: the same two paths. DesignerPunk's own look becomes opt-in, which sits against the philosophy. On iOS, the Restrained direction is only partly reachable through the native path (Leonardo (a)).
-  - **(iii) Silent; each component decides at its own P-1.** Cost: no rule. Each component re-argues the question, and consumers cannot predict what they will get. Without an escape hatch, a consumer who wants native look forks the component.
-- **F-2, does "design" cover interaction conventions?** The two owners' texts differ, and as drafted they would land on two different surfaces of the same law. The pick decides which wording changes (6.1 or 6.4). P-2, iOS label pressability, turns on it.
-  - **Lina (a)**: *"Look, and interaction conventions within the limits above, may follow the platform's native idiom or depart from it."*
-  - **Leonardo (c)**: *"Behavior never parts — accessibility semantics, input and gesture conventions, and system surfaces remain each platform's own."* His (b)4 adds: *"Interaction conventions users rely on. Thumb drag and haptics on the iOS toggle, back gestures, scroll physics, text selection, keyboard and IME behavior."*
-- **F-3, § 3 item 9 and the accessibility punt.** Leonardo's (b)8 makes the 3:1 non-text floor something a departure takes on. Peter's consequence (c) already applies it to the switch. Choose one:
-  - **(i)** Item 9 binds **new** departures, and existing drawn components that fail (checkbox and radio in dark mode) stay under the punt on the contrast-queue record until the redesign.
+
+- **F-1, what DesignerPunk's own components ship when a consumer makes no choice.** Lina (e) and Leonardo (d)2 raised it.
+  - **(i) Our look by default, with a native-look opt-out.** All three platform seats lean (i), each with a condition:
+    - Kenya: scope the opt-out to "where a native control exists". The checkbox, radio and float label have nothing to opt out *to*.
+    - Sparky: on web it is moot. There is no single native look, so any default reads "native where the platform has one". The two-path cost falls on iOS and Android only.
+    - Data offers the **class option**: semantics live on a wrapper the component owns, and rendering is a swappable visual slot. Then native versus drawn is **one semantics layer and one accessibility test set**, with only the visuals differing. That corrects R2's "two renderings and two sets of tests". The cost is a component-guide convention plus a one-time refactor where semantics sit on the rendering.
+    - Counters:
+      - Kenya: R-1 staleness lands on every iOS consumer who never chose it.
+      - Data: an opt-out is API surface forever. The 52×32 and 56×32 geometries diverge, and the less-used path rots without tests.
+  - **(ii) Native look by default, with a brand opt-in.** Defaults get OS redesigns for free; Kenya cites iOS 26's Liquid Glass toggle.
+    - Cost: DesignerPunk's look becomes opt-in, against the philosophy.
+    - The premise has no stable meaning on web (Sparky) and is weak on Android, where OEMs draw their own (Data).
+  - **(iii) Silent; each component decides at its own P-1.**
+    - Cost: no predictable default, and the question is re-argued every time.
+    - Kenya: "(iii) is worst for me".
+
+- **F-2, does "design" cover interaction conventions? Three formulations of one split.** Sites 1, 4, 6, 7 and 8 follow the pick, and P-2 (iOS label pressability) turns on it.
+  - **Leonardo, strict** (his (c)): *"Behavior never parts — accessibility semantics, input and gesture conventions, and system surfaces remain each platform's own."*
+    - P-2: whole-row tap is **not** admissible on iOS.
+  - **Lina, broad** (her (a)): *"Look, and interaction conventions within the limits above, may follow the platform's native idiom or depart from it."*
+    - P-2: admissible.
+  - **The platform seats, converging on a middle line:**
+    - **Kenya**: design may *add* affordances to native interaction, and may never *remove or contradict* a convention users rely on.
+      - P-2: whole-row tap is **admissible**, because it removes nothing users rely on.
+      - Kenya's counter: "additive" is in the eye of the drafter, and the line needs its own case law.
+    - **Sparky**: interaction the platform owns is floor (scrolling, back and history, text selection, IME, shortcuts, Tab order, zoom). Component-local interaction is design.
+      - Proposed wording: "Look, and component-local interaction, within the limits above."
+      - P-2: admissible.
+      - Sparky's counter: thumb drag on iOS sits on the line.
+    - **Data**: behavior, and the *presence* of feedback, are floor. The *form* of feedback is design (ripple versus our own state layer).
+      - Data's counter: presence versus form gets re-argued per component.
+
+- **F-3, § 3 item 9's 3:1 floor and the accessibility punt.** Forced colors stays outside this fork (§ 4).
+  - **(i)** Item 9 binds **new** departures only. Existing drawn components that fail stay on the contrast-queue record until the redesign.
+    - Sparky leans (i).
+    - Its counter survives: on the first screen Spec 130 serves, a compliant switch sits next to a checkbox that fails in dark mode.
   - **(ii)** Item 9 binds existing departures too, which reopens part of the punt.
   - **(iii)** Item 9 leaves this ballot and waits for the redesign.
-  - Drafted as (i), but it is Peter's call, not absorbed.
+  - Drafted as (i), but not absorbed.
+  - Two sub-questions ride F-3:
+    - **Item 5, the touch target, is F-3-shaped too** (Data). The existing checkbox and radio sit at 44dp, below Android's 48dp.
+    - **Does "every theme context" include iOS Increase Contrast?** It would double the contexts to eight on iOS. Name it, or exclude it (Kenya (a)4).
+
 - **Who writes edit site 5** (preserved knowledge, outside every charter's scope):
-- **Kenya, Data and Sparky: do they review this ballot, or first meet it at Spec 130 R1?** The orchestrator recommends they review it, citing Peter's "insight over cost". Their slots are in § 10.
 
 ## 9. Counter-arguments (after fold-back)
 
 **Folded in:**
-- **Forfeiting free native behavior** (Leonardo (d)1; Lina (e)). The floor (§ 1) and the carried categories (§ 3) make semantics law, held by contracts. The P-1 path Lina now leans to keeps `Toggle` and `Role.Switch` semantics.
-- **iOS consumers expect the system toggle** (Leonardo (d)2). The law permits departure and never mandates it. `product-dp.md:77`, "Reinventing standard affordances for flavor", still governs: branding is a reason, flavor is not. The rest of this counter becomes F-1.
-- **Unrecorded drawn-by-default choices** (Leonardo (d)3). Documentation is now symmetric (site 3).
-- **More load on the platform reviewers.** The law permits departure and never requires it. Whether the platform seats review this ballot is a § 8 slot.
+- **Forfeiting free native behavior** (Leonardo (d)1; Lina (e); Kenya (b)). The floor (§ 1) and the categories (§ 3) make semantics law. The iOS representation contract (§ 7) and Android's no-override rule are the concrete fixes.
+- **iOS consumers expect the system toggle** (Leonardo (d)2). The law permits departure and never mandates it. `product-dp.md:77`, "Reinventing standard affordances for flavor", still governs. The rest becomes F-1.
+- **Unrecorded drawn-by-default choices.** Documentation is now symmetric (site 3).
+- **Load on the platform reviewers.** The three seats are now reviewers of record.
+- **No native look on Android or web** (Data (e); Sparky (c)). This lowers R-1's staleness on those platforms, and it reshaped F-1.
 
 **What survives:**
-- **(R-1) Owned accessibility is recurring work, and it goes stale.** Each drawn control is accessibility code DesignerPunk writes and tests on each platform it draws. Native controls pick up OS redesigns and new settings for free; drawn ones get them "only when we notice" (Lina (e)). Leonardo calls this "a permanent maintenance and staleness cost. It is a real cost, not a reason to reject the law."
-- **(R-2) The check that would catch drift does not exist** (Lina (e)). There is no native build or announcement harness. Stacy has already flagged the switch's announcement claims as unverifiable. "The law still licenses departures that today we can only check by reading code."
-  - The harness is chartered and unbuilt: `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md`.
-  - Its § 3 triggers are, whichever fires first: (1) the first product spec kickoff; (2) one generator-emits-invalid-platform-code incident; (3) the 125-B post-campaign queue review.
-  - This ballot neither fires nor evaluates that charter. Whether its evaluation is owed now is a question for the next charter walk.
-  - The checkbox's `.isButton` (§ 5) shows the gap is real.
+- **(R-1) Owned accessibility is recurring work, and it goes stale.** Each drawn control is accessibility code DesignerPunk writes and tests on each platform it draws. Native controls pick up OS redesigns and new settings for free; drawn ones only "when we notice" (Lina (e)). Leonardo: "a permanent maintenance and staleness cost. It is a real cost, not a reason to reject the law."
+- **(R-2) The check that would catch drift does not exist, on any platform.** "The law still licenses departures that today we can only check by reading code" (Lina (e)). Per platform:
+  - **iOS** (Kenya (f)): no VoiceOver, haptic or On/Off Labels claim can be verified in this repo. There is no Xcode target. The checkbox shows that reading code misses things.
+  - **Android** (Data (f)): the gap has already happened. The precedent component breaks items 1, 2 and 5 and nobody noticed. Compose semantics assertions (`assertIsOn`, a role matcher, `assertHeightIsAtLeast`) would close Android's half, once the harness exists.
+  - **Web** (Sparky (e)): even a written Hard Rule was not carried out (V1, V2). Sparky's class option, *not vetted with Lina*: a static CSS check in the web tests, requiring a `forced-colors` block on every interactive component and rejecting unknown media-feature values. Its residual: existence is not correctness, and jsdom cannot evaluate media queries.
+  - The harness is chartered and unbuilt: `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md`. Its § 3 triggers, whichever fires first:
+    1. The first product spec kickoff.
+    2. One generator-emits-invalid-platform-code incident.
+    3. The 125-B post-campaign queue review.
+  - This ballot neither fires nor evaluates that charter. Whether evaluation is owed now is a question for the next charter walk.
+- **(R-3) Drawn controls go visually stale inside native chrome** (Kenya (f)). The floor keeps the nav bars, sheets, keyboards and grouped lists native, and Apple redesigns them every year (Liquid Glass now). The drawn controls sitting inside them do not follow. That makes visual coherence a recurring cost at every iOS release. It is distinct from R-1, which is about accessibility going stale.
 
 ## 10. Review rounds
 
@@ -301,18 +446,175 @@ Every R1 item is accounted for below. Nothing was declined.
 - **A straggler I noticed, not proposed**: the framework's motion § "When to Pause and Ask" (L165–170) has two lines that become design-axis choices under this law. They are flagged for Lina's read. → § 6 sweep
 - **Open slots**: Kenya, Data and Sparky. The orchestrator consults them on this R2 draft.
 
-#### [KENYA R1]
-*(pending: consult on the R2 draft)*
+#### [KENYA R1] — 2026-10-18 — read-only consult on R2, entered verbatim
+*Source: [KENYA R1] — read-only consult on ballot R2 (HEAD 6f4a6fd3c), 2026-10-18 — VERBATIM. The headings are demoted to fit this document; the words are unchanged.*
 
-#### [DATA R1]
-*(pending: consult on the R2 draft)*
+I edited nothing and ran nothing that writes, and no call was denied. I read §§ 1–10, kenya.md L330–350, operative item `implement-3`, my `#step-3-implement` confirmation, and InputCheckboxBase.ios.swift L296–312.
 
-#### [SPARKY R1]
-*(pending: consult on the R2 draft)*
+**Caveat on every SwiftUI claim below:** I am answering from knowledge, not from a build. This repo has no Xcode target, so this is code-reading-grade evidence, which is exactly R-2.
+
+##### (a) ACCEPT the principle and the floor, with CHANGES to § 3 for iOS
+The floor is right, and the iOS catalog already lives under it. My changes:
+1. **Item 1 needs a rule for controls iOS doesn't have.** "Announced as the native control would" means nothing for a checkbox or radio, because iOS has neither. Add: "where the platform has no native control, use its closest documented trait pattern, and record the choice." This also changes how § 5's cautionary case should read. The checkbox's `.isButton` plus `accessibilityValue` was the standard iOS pattern before iOS 17 shipped `.isToggle`. Our floor is 17.0, so `.isToggle` is available, and for binary state the case against `.isButton` holds. But the checkbox has three states, and `.isToggle` is binary. I believe `.isToggle` also makes VoiceOver say "switch button" (medium-low confidence), which is wrong for a checkbox. So I'd word § 5 as "probable drift, and it shows the rule has no referent where no native control exists," not as plain verified drift. The `.isButton` line is real; the diagnosis is the softer part.
+2. **Item 6 is missing four iOS settings:** Reduce Transparency (`accessibilityReduceTransparency`) — matters more now that iOS 26's Liquid Glass materials surround our controls; Button Shapes (`accessibilityShowButtonShapes`) for drawn buttons; On/Off Labels — UISwitch draws I/O glyphs when this is on; as far as I know there is no SwiftUI environment value for it; a drawn switch has to read `UIAccessibility.isOnOffSwitchLabelsEnabled` and observe its change notification (medium confidence); Large Content Viewer (`.accessibilityShowsLargeContentViewer`) for controls that don't scale with text — applies directly to the drawn Nav-TabBar-Base.
+3. **Item 6, Dynamic Type, needs a narrower meaning.** UISwitch does not scale with text size; its label does. For a switch, "text scale" should mean the label reflows and the row stacks at accessibility sizes, not that the control scales. Otherwise teams will over-build.
+4. **Item 6, Increase Contrast, interacts with F-3.** Native controls respond to `colorSchemeContrast == .increased`. If item 9's "four theme contexts" means light/dark × two themes, Increase Contrast doubles that to eight on iOS. Name it, or state that it is excluded.
+5. **Item 7, RTL, has a SwiftUI trap worth recording.** `.offset(x:)` and hand-computed thumb positions do not flip under right-to-left layout. Drawn travel must be written in leading/trailing terms.
+6. **Item 8, haptics: add "honours the System Haptics setting."** `.sensoryFeedback` should respect it already (medium confidence).
+7. **Item 3, Voice Control:** fine. `.accessibilityInputLabels` covers alternate names; the visible label stays the name.
+8. **Item 11, structural idioms:** add the iOS failure that happens most often. Hiding the nav bar to draw a custom back button kills the interactive edge-swipe-back gesture. That breaks the floor and should be named.
+
+##### (b) Lina's two unverified claims
+**1. Toggle with a custom `ToggleStyle`: does it keep the toggle trait and the "switch button, on/off" announcement?** My belief: **not reliably.** My confidence that it is preserved implicitly is low to medium. I recall the style's `makeBody` output becoming the accessibility content, so a body built from a tap gesture reads the label and drops the state. **The robust fix doesn't depend on that belief.** Inside `makeBody`, add `.accessibilityRepresentation { Toggle(configuration) }` (iOS 15+), so VoiceOver sees a standard Toggle. Belt and braces: `.isToggle` (iOS 17+). With that, I'm medium-high confident in the expected announcement: "‹label›, switch button, on/off, double-tap to toggle setting," localized for free. Spec 130 should make that representation a contract requirement rather than lean on implicit behavior. It still needs on-device VoiceOver confirmation, which R-2 says we can't do yet.
+**2. Does UISwitch's haptic survive a custom style?** **No** (high confidence). Nothing in a custom style is UISwitch. It has to be reproduced with `.sensoryFeedback(…, trigger: configuration.isOn)`, which is iOS 17+ and inside our floor. I'm only medium confident that `.selection` matches UISwitch; it may be closer to a light impact. Spec 130 should settle that on a device. **Also lost (high confidence):** thumb drag. UISwitch lets you drag the thumb, and a custom style needs its own `DragGesture` or gives that up. That is Leonardo's (b)4 "thumb drag" made concrete. The On/Off Labels glyphs are lost too, per (a)2.
+
+##### (c) My edit site (6.7): CHANGES
+Swapping only the tail leaves the first clause, "Follow iOS idioms and conventions", unqualified, and that is the half I'd actually read as a visual mandate. My wording:
+> "Follow iOS structural and behavioral idioms (navigation, system surfaces, gestures, accessibility) — the screen should feel native in structure and behavior; its look follows the spec, which may depart from native idiom"
+Two notes: **This wording depends on F-2.** If F-2 goes Lina's way, "behavior" and "gestures" here would contradict her Key Principle. Whichever way F-2 lands, sites 6–8 need the same answer. **My straggler check** (grep of `native` in kenya.md): L258, L319, L366, L370 and L450 are all about development or idiom advice, so none needs editing. The re-confirmation cost doesn't change my view: it is one unit, five items, and I'd re-confirm `#step-3-implement` in the execution PR.
+
+##### (d) F-2: does "design" cover interaction conventions?
+**My read is closer to Leonardo's, with a test that may dissolve the fork.** I'm surfacing it; the pick is Peter's. **Proposed test:** design may *add* affordances to native interaction; it may never *remove or contradict* a convention users rely on. Removing or contradicting is floor: back swipe, scroll physics, text selection, keyboard and IME, thumb drag. Adding is design. **P-2 under this test.** The iOS convention, as I understand it, is that only the switch toggles; a Settings row label is inert (medium-high confidence). Making the whole row tappable removes nothing users rely on. Nobody depends on the label being inert, and it widens the touch target. VoiceOver behaves the same either way, because the combined element toggles on double-tap. So under my test, whole-row tap is admissible on iOS. Under a strict Leonardo reading, it is not. **Counter:** "additive" is in the eye of the drafter. A tappable row can collide with rows that navigate, or with swipe actions, and it changes what users expect from Settings rows platform-wide. The add/remove line would also need its own case law, which is the per-component re-argument F-1(iii) is trying to avoid.
+
+##### (e) F-1: the ecosystem default, from the seat that implements it
+**On iOS, the two-paths cost is asymmetric, and the options don't say so:** Where a native control exists (Toggle, ProgressView, segmented Picker), the native path is nearly free: `.toggleStyle(.switch)` plus `.tint()`, with no accessibility code of our own. Where none exists (checkbox, radio, float label), there is nothing to opt out *to*. So any opt-out should be scoped to "where a native control exists." **My read:** **(i)**, our look by default, with a native opt-out scoped as above, and the switch built as a `ToggleStyle`. Then the opt-out is a SwiftUI idiom, not a fork. One catch: an internally applied style beats a consumer's outer `.toggleStyle`, so the component needs an explicit style parameter. Bonus: the native path doubles as the test oracle for the drawn path's announcement. **(iii) is worst for me:** no predictable default, and the question gets re-argued at every component's P-1. **Counter:** (i) puts R-1 staleness on every iOS consumer who never chose it. The native default under (ii) gets OS redesigns for free, including iOS 26's Liquid Glass toggle, and what DesignerPunk's look gains by being the default may not be worth that.
+
+##### (f) My surviving counter to the law
+**A drawn control sits inside native chrome that Apple redesigns every year.** The floor requires native nav bars, sheets, keyboards and grouped lists, and those pick up each new look (Liquid Glass is the current one) automatically. Our drawn controls sit inside that frame and don't. That makes visual coherence a recurring cost at every iOS release, not a one-time design decision. It is distinct from R-1, which is accessibility going stale; this is visual staleness against the frame the law obliges us to keep. **R-2 is sharper on iOS.** I cannot verify any VoiceOver, haptic or On/Off Labels claim in this repo. Today the iOS half of the floor is checked only by reading code, and the checkbox shows that reading code misses things. I'd ask that R-2 say so explicitly for iOS.
+**Formal reviewer slot (§ 8):** I'd take it. Sites 7 and 8 are charter edits on the platform seats, and the iOS claims in § 7 are mine to verify.
+
+#### [DATA R1] — 2026-10-18 — read-only consult on R2, entered verbatim
+*Source: [DATA R1] — read-only consult on the R2 ballot draft (2026-10-18) — VERBATIM. The headings are demoted to fit this document; the words are unchanged.*
+
+I read §§ 1–11, my charter at L343/L451, `operative-sets/data.yaml`, `confirmations/data.md#step-3-implement`, and the Android `Input-Checkbox-Base`/`Input-Radio-Base` sources. I edited nothing, committed nothing, and no call was denied. HEAD is `6f4a6fd3c` and the tree is clean.
+
+**(a) ACCEPT the principle and the floor, with CHANGES to § 3.** The Android repo gives a reason for the floor that the ballot does not yet cite. Our existing drawn Android checkbox, which § 5 lists as a precedent, already drifts on three of the § 3 categories (verified today):
+- **Item 1 (localized state).** `InputCheckboxBase.android.kt:429-433` hard-codes English `stateDescription` ("checked"/"unchecked"/"partially checked"). That overrides the localized strings TalkBack would read by default.
+- **Item 2 (name).** L445-449 and L482 add "Double tap to check" to `contentDescription`. TalkBack already says its own usage hint, so users hear it twice, and it is wrong for keyboard and Switch Access users.
+- **Item 5 (touch target).** L465 sizes to `tapAreaMinimum` (44dp). That is below Android's 48dp minimum interactive size, which equals `tapAreaRecommended` (48).
+- **Item 4 (focus).** grep finds no focus handling. The only focus cue is whatever the ripple's focus state layer draws, and I have not checked whether that is visible enough.
+- **R-1 staleness.** Seven Android components still use the deprecated `rememberRipple`.
+This is the Android counterpart of the iOS `.isButton` example, and § 5 should name it. Changes to § 3:
+- **Item 5:** say "the higher of the token floor and the platform minimum". On Android, `tapAreaMinimum` alone does not meet the floor. That makes the existing checkbox and radio an F-3-style question for item 5 as well as item 9.
+- **Item 1:** add "disabled state". Also add the advice not to override the platform's default state strings; a custom string takes localization onto us.
+- **Item 3:** add hardware keyboard (Tab to focus, Enter and Space to activate). Compose `clickable` covers Enter and D-pad centre. I am not sure it covers Space, so verify. Web requires Space.
+- **Item 6, Android settings:** font scale (nonlinear up to 200% on API 34+, so the row must reflow), Remove animations / animator duration scale, high-contrast text, bold text (`fontWeightAdjustment`, API 31+), display size, and possibly the API 34 system contrast level (moderate confidence). Android has no forced-colors equivalent.
+- **Item 7:** say that Canvas and `drawBehind` drawing does not mirror for RTL. `Modifier.offset` mirrors; `absoluteOffset` and Canvas do not.
+- **Item 8:** on Android the native control gives nothing for free here. I believe Compose M3 `Switch` triggers no haptic (moderate confidence), so TOGGLE_ON/OFF (API 34+) is a design choice, not something we owe. The category wording is fine as written.
+
+**(b) Lina's claim: I confirm it, with additions.** My confidence is high on semantics and moderate on the M3 internals.
+- `Modifier.toggleable(value, interactionSource, indication, role = Role.Switch, onValueChange)` provides the role, the On/Off toggleable state, the click action, enabled/disabled, and focusability. With Role.Switch, Compose reports the node as `android.widget.Switch` and supplies localized default "On"/"Off" state text. TalkBack then reads label, "Switch", and the state, activates on double-tap, and announces the change. That needs almost no extra accessibility code, as long as we do **not** override `stateDescription` or `contentDescription`, which is the checkbox's mistake.
+- In the row-owns-semantics pattern the outline already uses, `Switch(onCheckedChange = null)` is purely visual: it has no semantics and no minimum size. So yes, it was buying geometry, ripple and motion. It also buys M3's state colors (hover, focus, press, disabled), the thumb that grows on press (only if the interactionSource is shared), and future M3 updates.
+- A drawn switch has to rebuild: 1. The row's minimum height: `tapAreaRecommended`, or `minimumInteractiveComponentSize()`. 2. The state layer: `indication = ripple(...)`, the current API, not `rememberRipple`. 3. An explicit D-pad/keyboard focus indicator using the accessibility.focus tokens and `collectIsFocusedAsState`. 4. Thumb motion with `animateDpAsState` on motion tokens. Compose's clock should already respect animator scale (moderate confidence). The existing components also read `ANIMATOR_DURATION_SCALE` themselves, so check it is not applied twice. 5. RTL-safe thumb placement. 6. Disabled visuals.
+- I believe Compose M3 `Switch` has no thumb drag (moderate confidence), so drag is not something we would be rebuilding on Android.
+
+**(c) My edit site: I accept the direction, but the wording is incomplete.** Changing only the tail leaves "Follow Android idioms and conventions", the start of the line, readable as a rule about visuals. My wording for L343 and `implement-3`: "Follow Android structural and behavioral idioms — the screen should feel native in structure and behavior; its look follows the spec's design choice."
+- **There is also a straggler the sweep missed:** L451 / `native-1` (`#android-specific-guidance:preamble`), "Jetpack Compose composables with Material 3 as base". It is the exact counterpart of Leonardo's "Material 3 base", which site 6 edits. My proposed text: "Jetpack Compose composables with Material 3 as structural base (Scaffold, system bars); visuals follow DesignerPunk tokens and the spec."
+- L366, L440 and L471 can stay. They describe knowledge or fallback order, not a mandate.
+- The cost becomes **two** re-confirmations instead of one: `#step-3-implement` and `#android-specific-guidance:preamble`. Both are re-signs. My 2026-09-29 rulings were plain "CONFIRMED as drafted", with no sentence that contradicts the law the way Leonardo's does. The cost does not change my view.
+
+**(d) F-2.** My read sits between the two owners, and I am surfacing it as a third option, not picking. The test is whether the user's expectation of what happens depends on the thing.
+- **Behavior, which never departs:** activation, back and predictive back, scroll physics and overscroll stretch, IME, text selection.
+- **Feedback presence, also floor:** a press must produce perceptible feedback. On Android, a tap with no state layer reads as a dead tap.
+- **Feedback form, which is design:** ripple versus our own state layer, thumb grows on press or not. Those are M3's look, not conventions users rely on, and Compose M3 users get no drag anyway.
+- So this mostly follows Leonardo's text, with feedback form carved out as design. Counter: the line between presence and form is a judgment call that will be re-argued per component. Leonardo's "input and gesture conventions never part" could also ban a branded gesture pattern that replaces no system gesture, which Lina's wording allows.
+
+**(e) F-1.** My read is (i), our look by default with a native-look opt-out, **on one condition:** semantics live on a wrapper the component owns, and rendering is a swappable visual slot.
+- On Android under that architecture, the native path is `Switch(onCheckedChange = null)` inside the same toggleable row. That is one semantics layer and one accessibility test set, with only the visuals differing. § 8's "two renderings and two sets of tests" overstates the cost here, and likely on iOS too (default versus custom `ToggleStyle`, same `Toggle`).
+- Android also weakens (ii)'s premise. There is no single native look on Android: M3 `Switch` is Google's library look, and OEM Settings apps such as One UI draw their own.
+- The class option is the semantics-wrapper plus rendering-slot rule. It costs a convention in the component guide and a one-time refactor where semantics currently sit on the rendering.
+- Counter: an opt-out is API surface forever. M3 geometry (52×32) differs from 56×32, so layout and C1–C3 diverge between the two paths. The less-used native path will rot without tests.
+
+**(f) My surviving counter to the law.** R-2 is not hypothetical on Android; it is already true. The floor holds only as far as something checks it, and on Android nothing can. This repo has no Gradle or Compose UI test run, and our precedent component already breaks items 1, 2 and 5 without anyone noticing.
+- Compose semantics assertions (`assertIsOn`, a role matcher, `assertHeightIsAtLeast`) are cheap and would close the Android half of R-2, but only once the chartered harness exists.
+- The law still licenses Android departures that today we can only check by reading code, as I did here.
+- What I folded in: Android's fragmented native look lowers the staleness part of R-1 for Android. It does nothing for R-2.
+
+#### [SPARKY R1] — 2026-10-18 — read-only consult on R2, entered verbatim
+*Source: Sparky R1: web seat. Read-only consult on ballot 2026-10-18-true-native-development-is-not-true-native-design (R2, HEAD 6f4a6fd3c) — VERBATIM. The headings are demoted to fit this document; the words are unchanged.*
+
+I read §§ 1–9 and grepped the web catalog under `src/components/core/*/platforms/web`. I edited nothing, committed nothing, and no call was denied.
+
+##### Two verified facts that bear on the ballot (grep, 2026-10-18)
+- **V1. No forced-colors support in the web catalog.** `forced-colors` appears 0 times in `src/` (34 web components). Web-Authoring-Standards Hard Rule 6 already makes forced-colors a hard requirement and says "existing components may need remediation." That remediation has not happened. The brief's premise that "the web seat ships forced-colors anyway" is false today.
+- **V2. The catalog's high-contrast support probably never runs.** All 34 `prefers-contrast` queries use the value `high`, in 18 components (checkbox, radio, Button-CTA, Chip and others). The current spec (Media Queries Level 5) has `more | less | custom | no-preference`; `high` was an old draft value. An unknown value makes the media query never match, so these blocks are very likely dead code. Confidence is high, but this comes from my training data: check it in a real browser before anyone acts on it.
+Together these are the web version of R-2. A written rule existed and the catalog still didn't carry this category. It belongs to Lina's domain, routed via Leonardo or Thurgood. I'm reporting it, not fixing it.
+
+##### (a) The principle and floor: CHANGES (small)
+I accept the principle. Two changes:
+1. **Floor part 1's wording collides with Spec 128.** "The platform's own UI framework" read literally rules out React and React Native, which 128 is chartered to admit. Custom Elements and Shadow DOM qualify, React does not. Suggested wording: "the platform's own rendering and accessibility stack."
+2. **Floor part 2 has nothing to point at on the web.** "Exactly as the platform's native control would" assumes a native control exists. The web has no native switch, segmented control or tabs. Safari 17.4+ ships a non-standard `<input type="checkbox" switch>`, and it is not cross-browser as far as I know. Add: *on web, "platform-correct" means the WAI-ARIA role contract, the APG keyboard pattern and the HTML-AAM mappings.*
+**The § 3 categories, checked for web:** Covered: forced colors and `prefers-contrast` (item 6), reduced motion (6), Space required / Enter supported (3), `:focus-visible` (4), hover and pressed feedback (8), RTL (7). **Item 6:** "text scale" should read "text scale, browser zoom to 400% / reflow (1.4.10), and text-spacing overrides (1.4.12)." Drawn controls with fixed block sizes clip under these. **Move "differentiate without color" from item 6 to item 9.** On the web it isn't a user setting. It is unconditional WCAG 1.4.1. **Item 6 or 8 should name forced-colors behavior explicitly.** A drawn thumb painted with `background-color` disappears in forced-colors mode, because backgrounds are forced to Canvas. It needs a system-color border or `forced-color-adjust` handling. The native control gets this for free; a drawn one does not. **Item 7:** RTL thumb travel needs logical insets or `:dir(rtl)`. Hard Rule 1's `translateX` exception doesn't apply here, because direction matters for the thumb. **Possible missing category: platform services the native control took part in.** Autofill and password managers, form participation and restoration, find-in-page. The switch doesn't need it; Input-Text-Base would if it were ever drawn. Fold it into item 10 or add it.
+**`<button role="switch">` vs `<input type="checkbox" role="switch">`.** Neither is "native" in the iOS sense; both are drawn visuals over standard semantics. The existing web checkbox already uses that pattern: a visually hidden native input with a drawn sibling. Under the floor, both are admissible if they meet the APG switch contract. I pick the **`<button type="button" role="switch" aria-checked>`** the outline already names: Space and Enter both activate it natively (a checkbox ignores Enter, and inside a form Enter submits it); the track and thumb live inside the focusable element — one element owns the focus ring, the target size and the forced-colors ButtonText/ButtonFace styling, with no visually-hidden-sibling workaround; it is not form-associated, which fits P-3(a) (an input inside Shadow DOM doesn't join the outer form without ElementInternals anyway, so the checkbox's "free form participation" isn't free here); styling keyed on `[aria-checked="true"]` ties the visual state to the announced state. Counter-argument: the button makes us keep `aria-checked` in sync with JavaScript, which is a bug class the checkbox's native `checked` doesn't have. The checkbox route would also allow progressive enhancement to Safari's `switch` attribute later. That sync risk is my surviving cost. It's cheap to pin with a unit test (toggle → `aria-checked` flips), so I keep the button.
+
+##### (b) F-2: does "design" cover interaction?
+From the web seat, both owners are half right. "Interaction conventions" bundles two different things: 1. **Interaction the platform owns**: scrolling, back and history, text selection, IME, browser and OS shortcuts, Tab order, zoom, context menu. These are floor and never depart. Leonardo is right here. 2. **Interaction local to a component**: whether the label or row toggles (P-2), drag-to-toggle, Enter on a switch. Above the APG minimum the web has no native idiom to bind to. That is design, within § 3. Lina is right here. **Class option to surface:** split F-2 along that line, worded "Look, and component-local interaction, within the limits above." Cost: one boundary definition, then the same consistency repair to sites 6.1 and 6.4. The surviving counter: some things sit on the line. Thumb drag on iOS is a UISwitch behavior that users rely on, yet it is component-local. Someone still has to rule on those cases. The pick is Peter's.
+
+##### (c) F-1: the default when a consumer makes no choice
+On the web it is close to moot. The UA stylesheet isn't one native look: it differs across Chrome, Safari and Firefox, and there is no cross-browser native switch. Option (ii) "native look by default" has no stable meaning on the web. The nearest web equivalent of "native with brand" is `accent-color`, which tints native checkbox, radio, range and progress. It is the counterpart of iOS tint-only. A native-ish look on the web could also be a **token theme mapped to CSS system colors**, not a second rendering path. Custom properties reach through Shadow DOM, so the web pays none of the "two renderings" cost. Does this change the answer for the other platforms? I think it does. A law-level (ii) would be undefined on the web, so any default must read "native where the platform has one." That makes the opt-out a per-platform capability, not a promise across the system. The two-path cost then falls on iOS and Android only. My lean is (i) with that per-platform caveat. The counter: (i) puts our brand on every iOS consumer by default, which is Leonardo's (d)2 and it survives. The pick is Peter's.
+
+##### (d) F-3: does the 3:1 floor bind existing components?
+Fix the premise first. Forced-colors does not discharge item 9. Forced-colors replaces author colors with system colors, so it says nothing about 3:1 contrast in our four theme contexts. And per V1, the web doesn't ship forced-colors today anyway. Keep two things apart: **Forced-colors (and V2's dead queries)** is an already-ratified Hard Rule that hasn't been carried out. It is not part of the punt, so F-3 should not absorb it in either direction. **The 3:1 contrast floor:** my lean is (i), new departures only. The switch meets it and the checkbox and radio stay on the contrast-queue record. The counter that survives: under (i), a Settings screen shows a compliant switch next to a checkbox that fails in dark mode. That inconsistency is visible, and it lands on the first screen 130 serves. The pick is Peter's.
+
+##### (e) My surviving counter-argument to the law
+The web has always been in the "drawn" world, because most of its composite widgets have no native element. So R-1 and R-2 have already played out on the web. With a written Hard Rule in place, the catalog still shipped no forced-colors support and, very likely, high-contrast queries that never match. The law alone will not carry the floor; instruments will. **Class option, not yet vetted with Lina:** a static CSS check run with the web tests. Every interactive web component must have a `forced-colors` block, and no media feature may use an unknown value. Cost: a small script, plus remediating the interactive subset of 34 components. Its residual: checking that the block exists is not checking that it is correct. Real forced-colors behavior needs a browser, and our Jest/jsdom setup can't evaluate media queries. So R-2 survives on the web too, just narrower.
+
+##### Paths
+- Hidden native input pattern: `src/components/core/Input-Checkbox-Base/platforms/web/InputCheckboxBase.web.ts` (L473–484); hidden-input CSS (L216) and `prefers-contrast: high` (L444): `…/InputCheckboxBase.web.css`; web mapping in the outline (§ 5.1, L75).
+
+#### [THURGOOD R3] — 2026-10-18 — incorporation of the platform reads, woven into the body
+
+Every item in the three platform reads is accounted for below.
+- **Floor wording** (Sparky (a)1, a must-fix). "UI framework" becomes "rendering and accessibility stack", in § 1 and in site 1's text. **Lina's site-1 text is amended by another reviewer, and Lina confirms it at execution.** → § 1, § 6.1
+- **The floor's referent on every platform.**
+  - Web is WAI-ARIA, APG and HTML-AAM (Sparky (a)2).
+  - Platforms with no native control use the closest documented trait pattern, and the choice is recorded (Kenya (a)1).
+  - → § 1.2
+- **§ 5's iOS case is softened** to "probable drift; it shows the rule has no referent where no native control exists", following Kenya's three-state reasoning. → § 5
+- **§ 3, per platform.**
+  - Kenya (a)2–8: Reduce Transparency, Button Shapes, On/Off Labels, Large Content Viewer, Dynamic Type narrowed to label reflow, Increase Contrast (to F-3), the RTL `.offset(x:)` trap, haptics honouring System Haptics, and nav-bar hiding killing edge-swipe-back.
+  - Data (a): the higher of the token floor and the platform minimum; no state-string overrides; hardware keyboard; the Android settings; Canvas and `drawBehind` not mirroring; haptics as design on Android.
+  - Sparky (a): zoom, reflow and text spacing; 1.4.1 moved to item 9; forced colors named; logical insets; platform services folded into item 10.
+  - → § 3
+- **Declined, with the reason: Data's "add disabled state" to item 1.** `governance/classification-map.md` § "no-disabled-states" (Peter, 2026-07-15, zero exceptions) leaves no disabled state for the floor to govern, and Spec 130 excludes it by the same law. "Disabled visuals" is omitted from § 7's Android rebuild list for the same reason. If Data meant a platform-imposed disabled state outside DesignerPunk's components, that is a question for Lina and Peter, not this ballot.
+- **§ 5 gains the Android and web counterparts** (Data (a); Sparky V1, V2). I verified each against the source on 2026-10-18.
+  - Data's "seven components on `rememberRipple`" does not match my grep, which found four component sources. The discrepancy is recorded, not resolved.
+  - The defects route to Lina's own record and change, not this unit. → § 5 "Surfaced, routed", § 11
+- **F-2 is presented as three formulations of one split** (Leonardo strict; Lina broad; the platform seats' converging middle line from Kenya, Sparky and Data). Each comes with what it does to P-2. → § 8
+- **F-1**:
+  - All three platform seats lean (i), with conditions.
+  - Data's wrapper-and-slot class option corrects R2's "two renderings and two sets of tests".
+  - The counters are kept.
+  - → § 8
+- **F-3**:
+  - Forced colors moves out of the fork (Sparky (d)).
+  - Sparky's lean and counter are recorded.
+  - Data's touch-target sub-question and Kenya's Increase Contrast sub-question are added.
+  - → § 4, § 8
+- **Sites**:
+  - Kenya's and Data's own wordings for 7 and 8a.
+  - Data's straggler becomes site 8b, so the signing cost rises to **four** re-confirms, two of them Data's.
+  - All three seats say sites 6–8 must carry the same F-2 answer.
+  - → § 6
+- **§ 7 brought up to date**:
+  - iOS: `ToggleStyle` plus the representation contract, the lost haptic, thumb drag and glyphs, and the explicit style parameter.
+  - Android: the toggleable row with no string overrides, and the rebuild list.
+  - Web: `<button role="switch">` with Sparky's reasons and surviving cost.
+  - → § 7
+- **R-2 sharpened per platform**, with the harness triggers cited once. **Kenya's (f) visual-staleness counter is added as R-3**, kept separate from R-1. → § 9
+- **Reviewers of record**: Kenya, Data and Sparky are recorded as R1 reviewers of record, so the § 8 slot that asked about them is retired. → header
 
 ## 11. Consult ledger
 
 - **Peter**, 2026-10-18 (relayed by the orchestrator): the principle, verbatim, and the instruction that it becomes law through a short ballot. His full-roster answer on Spec 130 ("insight over cost") is in its R0.
-- **Leonardo**, 2026-10-18: R1 read in (read-only consult). It holds only with the behavioral floor. It offers the Native-Behavior Rule and finds sites 6–9.
-- **Lina**, 2026-10-18: R1 read in (read-only consult). It offers the three-axes Key Principle and the consequential edits. Her P-1 lean has moved. Her surviving counter is R-2.
-- **Kenya, Data and Sparky**: pending, to be consulted on R2. Whether they are formal reviewers is a § 8 slot.
+- **Leonardo**, 2026-10-18 (R1, read-only): the law holds only with the behavioral floor. He offered the Native-Behavior Rule and found sites 6–9.
+- **Lina**, 2026-10-18 (R1, read-only): she offered the three-axes Key Principle and the consequential edits. Her P-1 lean has moved. Her surviving counter became R-2. **Owed**: her confirmation of the site-1 amendment (§ 6.1).
+- **Kenya**, 2026-10-18 (R1 reviewer of record, read-only): she accepted with § 3 changes and gave the trait-pattern rule. She found implicit `ToggleStyle` semantics unreliable and proposed the representation contract, the add/remove F-2 test, F-1 (i) scoped, and R-3.
+- **Data**, 2026-10-18 (R1 reviewer of record, read-only): he accepted with § 3 changes. He supplied the Android drift evidence and site 8b (two re-confirms), the presence/form F-2 test, and the F-1 wrapper-and-slot class option.
+- **Sparky**, 2026-10-18 (R1 reviewer of record, read-only): she accepted with floor-wording changes. She reported V1 and V2, the platform-owned/component-local F-2 split, F-1 as moot on web, the forced-colors separation in F-3, and the static CSS check class option (not vetted with Lina).
+- **Surfaced, routed to Lina**: the defects in § 5 belong to her components, and the fixes go to her own record and change, not this unit:
+  - iOS: `.isButton` probable drift.
+  - Android: `InputCheckboxBase.android.kt` L429–433, L445–449, L482 and L465; no focus handling; `rememberRipple` (count disputed, seven vs four).
+  - Web: V1, zero `forced-colors`; V2, 34 `prefers-contrast: high` queries, which need a browser check.
+  - Also Sparky's static-CSS-check class option, for her consult.
+  - The orchestrator routes this. The record is not opened in this unit.
