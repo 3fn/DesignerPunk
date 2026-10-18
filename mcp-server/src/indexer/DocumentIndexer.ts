@@ -3,7 +3,7 @@ import * as path from 'path';
 import { extractMetadata } from './metadata-parser';
 import { extractFrontmatterInfo } from './frontmatter-parser';
 import { extractHeadingStructure, extractDeepHeadings, WithDeepSections } from './heading-parser';
-import { resolveSection, SectionLookup } from './section-parser';
+import { resolveSection, SectionLookup, deepHeadingSuggestions } from './section-parser';
 import { extractAudienceBanner } from './audience-banner';
 import { extractCrossReferences, CrossReference as ParsedCrossReference } from './cross-ref-parser';
 import { estimateTokenCount } from '../utils/token-estimator';
@@ -375,9 +375,15 @@ export class DocumentIndexer {
       throw error;
     }
 
-    // not_found — provide helpful error with available sections.
+    // not_found — provide helpful error with available sections: the H2 list
+    // (unchanged), then any H3/H4 that shares a word with the request (P-4), so a
+    // reader who missed a deep heading is pointed at it, not one level too coarse.
     const outline = extractHeadingStructure(content);
-    const availableSections = outline.map((s) => s.heading);
+    const h2s = outline.map((s) => s.heading);
+    const deep = opts.heading
+      ? deepHeadingSuggestions(content, opts.heading).filter((h) => !h2s.includes(h))
+      : [];
+    const availableSections = [...h2s, ...deep];
     const what = opts.sectionId
       ? `Section id "${opts.sectionId}"`
       : `Section "${opts.heading}"` + (opts.parent ? ` under parent "${opts.parent}"` : '');
