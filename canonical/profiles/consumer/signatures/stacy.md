@@ -402,11 +402,27 @@ verdict: assent — surviving 1/1
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 signer: stacy
-date: 2026-10-17
+date: 2026-10-18
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-trigger-set-the-114-superset-table-names-never-numbers` (re-pointed)
-canonicalHash: sha256:aa674a0127352f1c012ddfd8f8d9742d7470063ed604415526f83de6e8056d1c
+canonicalHash: sha256:ea4f4b52be0b5544d4721d485ae3b509839b271d376079158d8bca376b64a545
 renderedHash: sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5
 verdict: assent — surviving 5/13; not surviving: `trigger-lens`, `trigger-release`, `trigger-closeout`, `trigger-arming`, `trigger-gate`, `trigger-straggler`, `trigger-liveness`, `trigger-burst`
+
+**Re-signed 2026-10-18** (prior signature: assent, 2026-10-17, against `sha256:aa674a01…`). Stale because the canonical RELEASE row changed: ballot `2026-10-18-obligation-drain-and-release-falsity-floor` § 7 (M7) puts the `release-falsity-floor` read in my RELEASE row's phase 1. I drafted the sentence; Thurgood applied it byte for byte at `9072db1ed`, and I re-confirmed the set at 13 items (`9bbd83d1b`). The rendering did not change: renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/tools-stacy/fresh-rendered-hash.ts`), equal to the committed rendering's value and to the prior signature's.
+- **Judged against**: the rendered unit at this revision and the operative set at 13 items.
+- **The new sentence is removed under `subtraction-3`** (Thurgood inserted the removal after the phase-2 one at `e09d2842e`, as I decided). Every part of it is keyed to this repo's release instruments: the walk record at `.kiro/issues/<date>-release-<V>-walk.md` and RELEASE-FLOW item 3a, its `main at:` SHA and greps, the floor-class rows of ballot M7, the walk PR's `mergedAt`, and the release squash S.
+- **The one I weighed**: the function, "before a release, re-check every claim known to be false at the surface where its reader meets it, and carry none without the human lead's dated word", is repo-independent in principle. But the consumer RELEASE row carries no phase structure at all (the two-phase cell and the phase-2 sentence are removed under `subtraction-3` since 2026-10-03), and the read's whole input is the walk record, which a consumer does not produce. Re-pointing the sentence would leave a read with nothing to read. I am recording it as an observation for the next re-grounding of the RELEASE row, not as a refusal.
+- **`trigger-release` is still not credited**, as before; the new sentence adds one more uncredited clause to it.
+- **Unchanged from the 2026-10-17 signature**: LENS, RELEASE, CLOSEOUT, ARMING, GATE, STRAGGLER, LIVENESS and BURST are not credited. `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing` and `merge-path-status` survive, each verbatim in the rendering.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-10-17)**:
+
+> signer: stacy
+> date: 2026-10-17
+> canonicalHash: sha256:aa674a0127352f1c012ddfd8f8d9742d7470063ed604415526f83de6e8056d1c
+> renderedHash: sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5
+> verdict: assent — surviving 5/13
 
 **Re-signed 2026-10-17** (prior signature: assent, 2026-10-03, against `sha256:eb7326f4…`). Stale because the canonical ARMING row changed: edit site 5a of ballot `2026-10-17-standing-write-scope-six-roots` added the § 3 item 4 instrument-change trigger, applied verbatim by Thurgood at `2c8e448ff`. The rendering did not change: renderedHash recomputed at this revision, equal to the prior signature's, and the consumer rendering at `canonical/_consumer-output/_canonical/agents/stacy.md` carries no ARMING row.
 - **Judged against**: the rendered unit at this revision and the operative set re-confirmed at 13 items (`ce4ead62e`).
