@@ -41,5 +41,12 @@ The parity checker's PASS lines are the arming evidence. Before the parser fix, 
 
 - **Re-verified live**: the checker has been REQUIRED since the 2026-10-03 flip (register row history) and no PR has touched `scripts/completion-claims/**` or the CLI since (`git log --first-parent --since=2026-10-03` is empty), so nested bullets are still read as rows; Req 2.2.1 is unamended. Spec 123 is closed, so its 11 nesting parents are no longer mid-execution, which removes the draft's "poison 123's 11 parents in the middle of execution" cost for option (B) and leaves (B) a forward-only rule. That reading is mine from the closed state, not re-measured against the 123 tasks file.
 - **The Q2 evidence caveat above is spent**: arming happened on a count the caveat governed; the caveat is history now and the sitting does not need to re-litigate it.
-- **Routed to the capped sitting of 2026-10-18, item S3**: Thurgood drafts, **Peter rules the fork A (amend Req 2.2.1 to match practice) or B (require flat lists going forward)** and the open sub-fork (is the outer "group-heading" bullet a criterion at all). Surfaced, not picked. S3 shares a ballot with S4 and S5 where the sitting groups them: all three amend the `completion-criteria-parity` instrument's law, and the Req 2.2.1 text is the same surface as S5's Req 6.4 erratum.
+- **Routed to the capped sitting of 2026-10-18, item S3**: Thurgood drafts, **Peter rules the fork A (amend Req 2.2.1 to match practice) or B (require flat lists going forward)** and the open sub-fork (is the outer "group-heading" bullet a criterion at all). Surfaced, not picked. S3 shares the sitting-2 ballot with the D-2 rider (S4), the trigger-(d) rider (S5) and the D3 rider (S6); S3, S4 and S6 amend the `completion-criteria-parity` instrument's law, and the Req 2.2.1 text is the same surface as S5's Req 6.4 erratum.
 - **Closes** when the ballot is merged and its recorded amendment (A) or normalization/date (B) lands.
+
+## Lapse (2026-10-18)
+
+*Signed: Thurgood (owner), observed under README rule 11 as applied in #408.*
+
+- **Fired event**: the old trigger, the Q2 sitting, #267, `70f8fe54fbd7e92d60746e3135aee22c4f90b3bf` (2026-10-02), the arming sitting that recorded Q2 (the flip followed 2026-10-03). D4 was not taken there although Peter's 2026-09-26 ruling deferred it to that sitting. No commit that is an ancestor of the event's commit closed this record (rule 5's dated outcome line, or the archive move) or re-ruled it (its Trigger line changed in a diff carrying a dated reason and authority).
+- **Consequence (rule 11)**: this is a P2 `(record)`, which escalates at its **second** lapse, so nothing goes to Peter now. It lapses again at each later release's S while it is open.

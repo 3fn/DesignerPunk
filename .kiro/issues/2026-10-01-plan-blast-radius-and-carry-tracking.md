@@ -173,3 +173,10 @@ Any edit to Process-Spec-Planning, the Completion Documentation Guide, the TCP, 
 - **What rule 10 does not do, named and not filed**: it does not give a completion doc a fixed-form `**Carries**:` line, and no checker reads a carry's cited path (this record's option **B1**). It also binds "a ruling or a claims pass that creates an obligation", so a carry written by a task author in a parent completion doc reaches it only through the carry-list clause. This is a design note, not an obligation: **B1 is reopened only if a claims pass finds an untracked carry a second time** (the lean this record already carried: "B2 first, B1 only if the claims pass finds untracked carries a second time"). B2, the Guide rule with no checker, is what rule 10 already is.
 - **(a) LIVE, routed to the capped sitting of 2026-10-18, item S2**: a Process-Spec-Planning ballot owed, Thurgood drafts, Peter picks A1 / A2 / A3 (§ "(a) Options"). Lean unchanged: **A1 plus the A-minimal practice now; A2 and A3 after one more tasks round has applied A1.** Half (a)'s one mechanical form rides the instruments-parser PR (`.kiro/issues/2026-09-29-instruments-parser-and-resolver.md`); that is a separate record and this one adds no obligation to it.
 - **Closes** when the sitting's ballot merges (A1 adopted, or the pick recorded as "not yet"), by rule 5's dated outcome line and the archive move.
+
+## Lapse (2026-10-18)
+
+*Signed: Thurgood (owner), observed under README rule 11 as applied in #408.*
+
+- **Fired event**: the old trigger's event 1, U2b's unit PR merge, #262, `669b51b0931369e4d86123995becfea8246e439c` (2026-10-02); its own "Trigger fired — 2026-10-02" section above recorded that the drafting was owed. No commit that is an ancestor of the event's commit closed this record (rule 5's dated outcome line, or the archive move) or re-ruled it (its Trigger line changed in a diff carrying a dated reason and authority).
+- **Consequence (rule 11)**: this is a P3, which has no escalation path; the lapse is recorded and the re-ruling in this PR sets the next event.
