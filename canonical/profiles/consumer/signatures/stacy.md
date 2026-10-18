@@ -62,11 +62,26 @@ Both cuts survive verbatim.
 ## `#the-claims-pass-record-claims-passmd-the-template`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-10-18
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-claims-pass-record-claims-passmd-the-template` (re-pointed; ROUTED)
-canonicalHash: sha256:8103d28ef4a140c355a2c82c2395c492fceb1b48c46a87b24f49b6713fb38ac7
+canonicalHash: sha256:29f67487340c5c5a970f454430b234269a73503f5caec77340985c065e109a33
 renderedHash: sha256:ac788d09a695a9a4f828e4e9c5ea3c3c1d51d96eb387c3ce2c65a13447ee5e75
-verdict: assent — surviving 18/31; not surviving: `counting-6`, `counting-8`, `counting-9`, `counting-10-buckets`, `counting-10-ncc-rate`, `counting-10-assent-refusal`, `counting-10-spot-check`, `counting-10-full-survival`, `counting-11`, `counting-12`, `emission-reading`, `delegated-tier-read`, `instruments-read`
+verdict: assent — surviving 18/32; not surviving: `counting-6`, `counting-8`, `counting-9`, `counting-10-buckets`, `counting-10-ncc-rate`, `counting-10-assent-refusal`, `counting-10-spot-check`, `counting-10-full-survival`, `counting-11`, `counting-12`, `emission-reading`, `delegated-tier-read`, `instruments-read`, `governance-edit-kind-read`
+
+**Re-signed 2026-10-18** (prior signature: assent, 2026-09-29, against `sha256:8103d28e…`). Stale because the canonical unit gained one bullet, my governance-edit-kind read (ballot `2026-10-18-governance-edit-kinds` § 3b), applied by Thurgood byte for byte at `a0e25936c` and re-confirmed by me at 32 items (`a799be236`). The rendering did not change: renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/tools-stacy/fresh-rendered-hash.ts`), equal to the committed rendering's value and to the prior signature's.
+- **Judged against**: the rendered unit at this revision and the operative set at 32 items.
+- **`governance-edit-kind-read` is not credited**: the bullet is removed under `subtraction-3` (Thurgood extended the existing removal entry at `e09d2842e`, as I decided). It reads the `**Edit kind**:` lines this repo's TCP requires over this repo's governance path set, and the consumer TCP rendering removes that line too (`signatures/task-completion-protocol.md` `#branch-and-pr-conventions`, item `-8`), so a consumer pass has no line to read. The two renderings agree.
+- **Unchanged from the 2026-09-29 signature**: the same 18 items survive and the same 13 are not credited, for the reasons below.
+- **The run-1 tally** (§ "Signing run summary (2026-09-29, phase two, run 1)", the `#the-claims-pass-record-…` line, 18/31) is the 2026-09-29 count and is not rewritten. At this re-sign the row reads 18/32. The annotation sits here because the signing-chain verifier reads a change to a summary section, which keys to no row, as a link-2 failure.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-09-29)**:
+
+> signer: stacy
+> date: 2026-09-29
+> canonicalHash: sha256:8103d28ef4a140c355a2c82c2395c492fceb1b48c46a87b24f49b6713fb38ac7
+> renderedHash: sha256:ac788d09a695a9a4f828e4e9c5ea3c3c1d51d96eb387c3ce2c65a13447ee5e75
+> verdict: assent — surviving 18/31
 
 **Judged strictly, as briefed.**
 - The `volatile-ok` marker is dropped.
