@@ -154,3 +154,4 @@
   - **SEPARABLE clause**: "carried (not scheduled as a named attack)", as relayed. Reading for application: the `[Separable:]` sentence is deleted, so a noticed question with no counterexample is carried rather than pre-registered as a named attack. This reading is to be confirmed by Peter on the record before the application PR merges (an `**Open for Peter**:` line in that PR's body, row 28).
   - **Confirmed otherwise (Peter, 2026-10-18, 'Adopt it')**: the SEPARABLE clause is ADOPTED — 'Ratify with it': the `[Separable:]` marker is dropped and the sentence applied as written; the earlier 'not adopted' reading is superseded.
 - **Owed**: the application (§ 3), Peter-merged.
+- **Applied 2026-10-18, PR `chore/ballot-sitting-application`** (Thurgood): both subsections inserted after § "Authoring notes" at the re-verified anchor (blob `ccfbc354…`, L349/L351), the `[Separable:]` marker dropped and its sentence applied; `Last Reviewed` bumped.

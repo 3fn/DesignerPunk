@@ -199,6 +199,7 @@ No register row is proposed, and Stacy agrees (R1 item 8). **Cost of the sitting
 - **2026-10-18 (Peter, relayed): "All as recommended"** — item 10, the reach of the enforcement-code list: **amended (Thurgood)** to add "every check named by a required job in `EXPECTED_CONTEXTS`" (`tools/agent-generator/verify-gate-registration.sh` L63). Woven in `b28d335a8`.
 - **§ 3b**: Stacy's CORRECTION clause ("…or whose only referent is governance text or enforcement code changed in the same PR (the ballot's § 2 list)"), in her words, woven in `b28d335a8`.
 - **Owed**: the application PR (§ 8), Peter-merged.
+- **Applied 2026-10-18, PR `chore/ballot-sitting-application`** (Thurgood): the ballots README section (§ 2), the TCP `**Edit kind**:` bullet (§ 3a) and its operative-set item, Stacy's § 3b bullet in `canonical/agents/stacy.md` and its operative-set item (her re-confirm and re-sign are her seat commits), and the recipe sentence (§ 4).
 
 ## 11. Consult ledger
 
