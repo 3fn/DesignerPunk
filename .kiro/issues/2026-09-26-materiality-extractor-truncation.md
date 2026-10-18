@@ -3,7 +3,8 @@
 **Date**: 2026-09-26
 **Status**: ACTIVE
 **Owner**: Thurgood (the `completion-criteria-parity` instrument, Spec 127)
-**Trigger**: **the Q2 sitting OR the next touch of `scripts/completion-claims/materiality.ts`, whichever comes first**
+**Trigger**: `manual` — the capped sitting's ballot (sitting item S4, a rider) merges; the code fix follows it. Written as `merge:#<N>` once that PR is known. *(Re-ruled 2026-10-18, Thurgood: the Q2 sitting fired 2026-10-02 and the check was armed 2026-10-03, so the record's own sentence "the defect bites at arming" is now true of the required gate; `scripts/completion-claims/materiality.ts` has not been touched since #181. Authority: the owner's Trigger-line right (README rule 9), re-ruled under rule 11 in a diff carrying this dated reason, and Peter's routing of 2026-10-18 ("Go on the W-1 records PR and the capped sitting", relayed in the orchestrator's brief; the PR body cites it). The superseded trigger, verbatim:)* **the Q2 sitting OR the next touch of `scripts/completion-claims/materiality.ts`, whichever comes first**
+**Class**: P2 obligation (guard) · defect *(set 2026-10-18, Thurgood, rule 12. A required instrument's materiality surface is truncated at in-block prose, so a reworded or deleted criterion after the stop point can read immaterial and skip its declaration; the guard is weaker than its claim. The census (7 legacy blocks in 7 files) bounds today's reach; the direction is the costly one, Req 2.3.4.)*
 **Source**: the extraction audit behind the parser fix PR `fix/parity-parser-blank-line-extraction` (found at Spec 123 U1 Task 5). Peter ruled 2026-09-26: D1 and D2 are fixed in that PR; D3 is filed here.
 
 ## The defect
@@ -61,3 +62,12 @@ Anything that changes the extracted surface is a change to the ballot's closed, 
 - record the new digest against the ballot's per-class counts.
 
 **Test**: fixtures for each stop shape above (intro prose, bold sub-label). A reworded criterion after the stop point must read material. Bite: the current `collectBulletBody` must go red on them.
+
+## Triage (2026-10-18)
+
+*Signed: Thurgood (owner). Nothing above is rewritten.*
+
+- **Re-verified live**: `collectBulletBody` is at `scripts/completion-claims/materiality.ts` L69 and is unchanged since #181. "Until then, the claims pass owns materiality as judgment" ended at the 2026-10-03 flip; the amendment duty (Req 2.3.5) now fires on a required check.
+- **Why a rider and not a code fix first**: the fix changes the extracted surface, which this record already classes as a **recorded amendment** to the ballot's closed, enumerated pattern set (Req 2.3.4), not a code fix alone. The pattern-set amendment is law text and rides the capped sitting's parity-instrument ballot (**item S4, a rider on S3/S5's ballot**). The code fix (the continue-across-prose rule, fixtures for each stop shape, a bite that turns the current `collectBulletBody` red, `--verify-extraction` re-run and the new digest recorded) follows the ballot in its own PR, inside my standing scope (`scripts/completion-claims/**`).
+- **Rule 11 note**: P2 `(guard)` escalates at its **first** lapse (rule 11). The old event, the Q2 sitting, fired 2026-10-02 and nothing closed or re-ruled the record before it. I have not appended a `## Lapse` heading: the old event is not a rule-1 token, the same position the pre-grammar records are in, and the PR body puts the reading to Peter rather than deciding it here.
+- **Closes** when the code-fix PR merges with the dated outcome line and the archive move.

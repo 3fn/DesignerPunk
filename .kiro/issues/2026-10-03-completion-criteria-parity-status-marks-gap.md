@@ -3,7 +3,9 @@
 **Date**: 2026-10-03
 **Status**: ACTIVE. It carries a grant, which does nothing until Peter's merge activates it.
 **Owner**: Thurgood (instrument owner; register row `completion-criteria-parity`, `owner: thurgood`).
-**Trigger**: **whichever comes first**:
+**Trigger**: `manual` — the capped sitting's ballot (sitting item S5) merges; the checker fix follows it in this record's fixing PR. Written as `merge:#<N>` once the ballot PR is known. *(Re-ruled 2026-10-18, Thurgood: the old first clause, "before the next RELEASE claims pass", fired at the 15.1.0 RELEASE pass and again at 16.0.0's with the gap still open, and the guide line is governance law that cannot ship without a ballot, so the ballot is the next event, not the fix. Authority: the owner's Trigger-line right (README rule 9), re-ruled under rule 11 in a diff carrying this dated reason, and Peter's routing of 2026-10-18 ("Go on the W-1 records PR and the capped sitting", relayed in the orchestrator's brief; the PR body cites it). The superseded trigger, verbatim:)* kept verbatim in the next block.
+**Class**: P2 obligation (guard) · defect *(set 2026-10-18, Thurgood, rule 12. The required gate accepts a Status cell outside the closed vocabulary (`Partial`, `Done`, `N/A`, `✅ (partially)`) as claiming, so a partial result can pass without the follow-up link the guide requires: a guard weaker than its claim.)*
+**Superseded trigger (re-ruled 2026-10-18; verbatim)**: **whichever comes first**:
 - before the next RELEASE claims pass;
 - the first completion doc observed, by anyone, with a Status cell outside the closed vocabulary.
 **Source**:
@@ -92,3 +94,12 @@ Thurgood's charter `writeScope` (`canonical/agents/thurgood.md` L233–237) is `
 
   So none of M1's excluded acts arises.
 - **Discipline**: the fixing PR's `git diff --name-only` is the list above, plus the two Spec 127 errata (charter scope), plus, if Peter routes it there, the guide line under the governance carve-out, named in the PR body. An out-of-list edit is a claims-pass finding.
+
+## Triage (2026-10-18)
+
+*Signed: Thurgood (owner). Nothing above is rewritten; the old Trigger text is kept verbatim in the block under the Class line.*
+
+- **Re-verified live**: `governance/completion-documentation-guide.md` § "Status vocabulary" still names three marks and states neither that nothing else is a Status nor that `—` is the annotation marker; `git log --first-parent --since=2026-10-03 -- scripts/completion-claims scripts/check-completion-criteria-parity.ts` is empty, so the checker is unchanged since the flip. Whether the second old clause (an observed Status outside the vocabulary) has fired is not asserted here; no observation is on record in this file.
+- **The issue-row grant is now redundant, not void.** Section 5 says the charter's write scope "does not cover the checker or its tests". Since the six-roots ballot (2026-10-17) my standing scope lists `scripts/completion-claims/**` and `scripts/check-completion-criteria-parity.ts`. The grant list stays as filed (rule 10: a grant list lives in a merged record); the fixing PR needs no grant to edit those two paths and still cites the list. The Spec 127 errata are in `.kiro/specs/**`, also standing scope. The **guide line stays governance law** and cannot be granted.
+- **Routed to the capped sitting of 2026-10-18, item S5** (shares a ballot with S3 and S4 where grouped): the ballot or erratum carrying (a) the one-line tightening of the guide's § "Status vocabulary" (§ 2.4's proposed line), landing **with or before** the checker change, and (b) the Req 6.4 erratum adding Status validity to the verdict surface. The checker fix (`parseStatus` exact-match, new `[STATUS_NONCOMPLIANT]` class, fixtures, the live-corpus pre-merge run) and the lows in § 3 follow in this record's fixing PR; items (a) and (b) of § 3 touch the CI path and are re-bitten.
+- **Closes** when the fixing PR merges with the dated outcome line and the archive move.
