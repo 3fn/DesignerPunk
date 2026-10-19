@@ -1,0 +1,5 @@
+# Fixture dispositions file — Stacy's charter (signer stacy under C1: owner ≠ profile author).
+source: canonical/agents/stacy.md
+body:
+  "#identity": {"disposition": "re-pointed", "destination": "#identity", "signature": {"signer": "stacy", "canonicalHash": "sha256:8888888888888888888888888888888888888888888888888888888888888888", "renderedHash": "sha256:9999999999999999999999999999999999999999999999999999999999999999", "assent": {"surviving": ["verifier"]}, "evidence": "canonical/profiles/consumer/signatures/stacy.md#identity"}}
+  "#second": {"disposition": "re-pointed", "destination": "#second", "signature": {"signer": "stacy", "canonicalHash": "sha256:aaaa111111111111111111111111111111111111111111111111111111111111", "renderedHash": "sha256:aaaa222222222222222222222222222222222222222222222222222222222222", "assent": {"surviving": ["second"]}, "evidence": "canonical/profiles/consumer/signatures/stacy.md#second"}}

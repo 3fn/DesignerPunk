@@ -1,0 +1,13 @@
+# Fixture operative-set record (C16) — Stacy confirms.
+source: canonical/agents/stacy.md
+owner: stacy
+confirmer: stacy
+units:
+  "#in-scope":
+    canonicalHash: sha256:cccc111111111111111111111111111111111111111111111111111111111111
+    items:
+      - id: claims-audit
+        kind: obligation
+        label: "The claims audit"
+        text: "You audit whether a completed task's claims match what actually shipped."
+    confirmation: canonical/profiles/consumer/confirmations/stacy.md#in-scope
