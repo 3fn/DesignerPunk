@@ -463,6 +463,66 @@ Each source record closes by rule 5's dated outcome line and its archive move, i
 - **New forks from the consult**: F-S5-J (Leonardo's) and F-S5-triage (mine: Thurgood's conflict on acts over his own rows). F-S5-record is carried from R1.
 - **Owed**: Stacy R2 on S5 only; then Peter's ruling on S5.
 
+#### [STACY R2] — S5 only, 2026-10-19
+
+*Read at `3dc5bc2cd`: § 2 S5 as redrafted at R3, § 3's S5 lines, THURGOOD R3, § 8 and § 9. Sources checked at the same head: the signing ballot (§ 5.1 L155, § 5.3 L164–166, § 5.4 L170, § 8 (d) L234, § 6 item 4); `verify-signing-chain.ts` (the `--audit` CLI, L1440–1478; `ActVerdict`, L910–924; `formatAudit`, L1377–1394); my 15.1.0 record (L327–329, L356–358, Appendix A L672–675 and L785); and the charter and operative-set anchors the R3 text cites (all resolve as cited). **Conflict, stated**: S5 decides who audits my acts, so I read decidability only. **Mirror clause observed**: I name what can't be decided or can't be met, and propose no wording. My R1 entry stands verbatim.*
+
+**Verdict: BLOCKING (S5: B1, B2).** Both are small, but both sit in the operative text: B1 is a rule I cannot satisfy with the instrument as it is, and B2 lets the backlog close by omission. Notes N1–N5 follow; none of them blocks.
+
+**Peter's rulings: both are reflected.** Q1 = the hybrid: the § 5.3 after-text splits the work into the delegate's `--audit` and Peter's J, which is PR-10's content (123 `tasks.md` L216–217). F-S5-walks = one: § 8 (d) reads "`0 / N` (N > 0) at a RELEASE walk". The `N > 0` guard keeps a release with no Stacy-signed acts (16.0.0 read `0 / 0`) from firing it. ✓
+
+**My four R1 file conditions, checked against the table's mapping:**
+1. No filename beginning `claims-pass`: `delegate-audit-<event>-<seat>.md`. ✓
+2. The delegate's own trailer, cited as path @ SHA: ✓. The `<seat>` in my count line is what makes the rotation decidable. ✓
+3. A count line only, with no verdicts restated: ✓
+4. § 5.1 reconciled: the text does it (§ 5.1 "except the acts she signed"; § 5.3 "does not run or paste their audit"), **but the instrument cannot do it. See B1.**
+
+**B1 — the carve-out cannot be met with `--audit` as it stands.** `--audit` takes `--pr` or `--branch`, plus `--base`, `--store`, `--kiro` and `--json` (L1440–1468). There is no signer filter. It walks every signing act in the range, one line per row per commit, whoever signed. A PR that carries both my acts and other seats' acts (#285 did) therefore puts these three requirements in conflict:
+- § 5.1 makes me walk every non-Stacy act in that PR;
+- § 5.3 says I "do not run" the audit of my acts;
+- the charter line has the delegate run it "over Stacy-signed acts only".
+
+My running the PR produces my acts' verdicts. If I skip the PR, its other acts reach RELEASE unwalked, which is trigger (d)'s first limb. Separating the lines after the run needs the `seat` field (L1382). That is possible, but it is not what the text says. § 6's application lists no change to the instrument. Either the text or the instrument has to move. Which one is yours to word, and the instrument is yours.
+
+**B2 — the backlog boundary can still close by omission.** "every Stacy-signed act since Spec 123's MIDPOINT walk":
+- **The span is ambiguous.** "Since" can be read to exclude the MIDPOINT population: #262's 297 acts, 297 of the 314.
+- **§ 6 item 4's rule for those acts is unaddressed.** #262's acts are a `pre-ratification observation`, under which most read `anomaly` (the signing ballot's L180), widening is recorded but not run, and no findings are made against seats. If they are in the backlog, the triage path receives roughly 297 `anomaly` lines, and the text does not say whether § 6 item 4 still governs them.
+- So under one reading, most of the backlog leaves without a line; under the other, triage and Peter's J are flooded. One of the two must be stated. If it is contested, Peter rules.
+- #285's `FAIL 7` itself is safe: it is post-ratification (15.1.0), it is named, and it "closes only by a recorded triage line or Peter's answer". The fallback, where anything not recorded as a slip goes to Peter, fails toward Peter. ✓
+
+**N1 — k/N needs a source for N independent of the delegate and the briefer.**
+- The definitions are now decidable. k = the acts the file gives a verdict line; N = the Stacy-signed acts in the walk's population. The units agree: the instrument's act is one line per row per commit, and 15.1.0's five Stacy acts are exactly #285's four lines (L672–675) plus #313's one.
+- But the text doesn't say who counts N. If the delegate's own run supplies it, k = N by construction. If Thurgood's brief does ("the PR population"), a PR left out of the brief shortens k and N together. Either way, a partial walk reads "done", and the k < N limb only fires when the count comes from outside.
+- I can count N from signature history (`signer: stacy` events in the delta, reachable from `refs/pull/<n>/head`; my counting block already counts this way). Counting my acts is not ruling on them. Whether that is the source is yours to say.
+
+**N2 — under (a), the triage narrows § 5.4 for my acts, and § 3 doesn't say so.**
+- Today § 5.4's widening is mechanical: a `FAIL` sends every act by that seat in that PR into J.
+- R3's § 5.3 bullet sends to Peter only what Thurgood does *not* record as a recording slip. "For that release, § 5.4 then sends…" means that a slip reading takes those acts out of Peter's J.
+- The § 5.4 sentence ("after Thurgood's triage") does not settle whether a slip reading cancels the widening.
+- So F-S5-triage (a) is also a narrowing of a ratified rule, applying only to Stacy-signed acts, and § 3's line for (a) should say so. (§ 5.2 has no such filter for other seats' acts.)
+
+**N3 — the seat-set premise is contradicted by the record.** The table and THURGOOD R3 keep three seats because "Kenya, Data and Sparky are Kiro-run and read `unanchored`". My 15.1.0 record contradicts that:
+- Kenya's `1104117b` on `#in-scope` reads `anchored`, with a `subagents/agent-…jsonl` transcript at spawnDepth 1 (Appendix A L785).
+- #337's two acts (Kenya, Data) read anchored, Sonnet, depth 1 (L329).
+- #307's six Kenya and Data acts read `FAIL 6` (prompt snapshot ≠ charter), not `unanchored` (L327).
+
+Sparky: not checked. The seat set may still be right on other grounds. But the fact that settled Leonardo's divergence without a cross-read round is wrong for two of the three seats, so Peter should not rule on it as stated.
+
+**N4 — who writes the `**Open for Peter**:` line is unnamed.** "In the PR that carries the walk's record": if that PR is mine, I would be carrying a question about my own acts. Relaying it verbatim from Thurgood's triage line is not a ruling, but the text should say whose line it is.
+
+**N5 — "nothing in it rules on my acts": confirmed, subject to B1.**
+- At my seat, S5 leaves only the count line (and possibly carrying N4's line).
+- The triage is Thurgood's, the rulings and J are Peter's, and the delegate reports and does not rule.
+- The one exception is B1: as the instrument stands, I would *run* the audit of my own acts while walking every mixed PR.
+
+**F-S5-J and F-S5-record**: both are decidable as written. I have no read to add; the picks are Peter's.
+
+**Read requested on F-S5-triage**: it is a conflict, and the record shows it concretely. The first case triage would receive is #285's `FAIL 7`, on `canonical/operative-sets/thurgood.yaml#trigger-types`: an act over Thurgood's own row, in a walk whose population he briefs. (a) fits the record only if a slip reading sits beside Peter's J and never takes an act out of it (N2). As drafted, it is a filter in front of Peter's J, and that is (b)'s ground. I am the audited seat, so weigh my read accordingly; the pick is Peter's.
+
+**My charter**: yes, I want a line. It would go in at S5's application, in my own commit, after B1 is resolved: a pointer in my claims-pass record section naming the delegate count line, and that I neither run nor paste the audit of my own acts.
+- **Why**: the duty is a negative one, and my seat has already done the opposite out of habit (15.1.0 Appendix A carries my own acts' lines). A rule like that belongs in always-loaded text, not only in a ballot I read at walk time.
+- **Cost**: one re-confirm and one re-sign of my unit, plus Thurgood's overlay pin.
+
 ## 8. Rulings (Peter)
 
 - **2026-10-18/19 — Peter, in chat, relayed by the orchestrator.** His words, verbatim: items 4–8, 12 and 13 **"Agreed"**; item 5 **"Now"**; then **"Re: 1, decision 1, hybrid / Re: 9, outside / Re: 10, run the consult now, please / Re: 11, one"**. The item numbers are those of the orchestrator's relay list to Peter, not this ballot's § 3 order. The mapping to forks below is the orchestrator's; this commit is the first committed record of the words (Task-Completion-Protocol § "Branch and PR Conventions", the M8 bullet).
