@@ -10,7 +10,7 @@ description: Comprehensive completion and summary documentation guide — two-do
 > **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the paths (`.kiro/specs/`, `docs/specs/`), the ballots it cites and the named agents are DesignerPunk's own. **Transferable**: the two-document workflow, success-criteria fidelity (each criterion reproduced with its evidence), and the instruments block that lists what each criterion's evidence depends on.
 
 **Date**: 2026-01-03
-**Last Reviewed**: 2026-10-18
+**Last Reviewed**: 2026-10-19
 **Purpose**: Comprehensive guide for creating completion and summary documentation
 **Organization**: process-standard
 **Scope**: cross-project
@@ -113,6 +113,8 @@ The rule binds parents in specs whose `tasks.md` declares `**Criteria mode**: pe
 - **✅ verified met**
 - **⚠️ verified unmet or partial** — a ⚠️ row **MUST link a tracking issue or follow-up task**
 - **❌ verified absent** — the "3.3 pattern": a tested module was created, and the seam it was meant to reach was never touched
+
+The Status cell is exactly one of ✅, ⚠️, ❌ — or `—` on an annotation row that claims no verdict; any other text is non-compliant. A criterion marked `—` claims nothing, and so reads as missing from the table.
 
 Each mark SHALL reflect a check **actually performed against shipped source, never against intent or effort**. **A ✅ with an empty or prose-only Evidence cell is non-compliant on its face.**
 
