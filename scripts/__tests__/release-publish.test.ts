@@ -304,7 +304,7 @@ describe('runRelease — dry run (RELEASE-FLOW 5.1)', () => {
     expect(seq.some((l) => l.includes('--ignore-scripts'))).toBe(false);
     // npm runs inside the clone, never in the operator's checkout.
     for (const c of f.calls.filter((c) => c.cmd === 'npm')) expect(c.cwd).toBe(CLONE);
-    expect(seq.some((l) => l.startsWith('npm whoami'))).toBe(false); // a dry run needs no publish auth
+    expect(seq.some((l) => l.startsWith('npm whoami'))).toBe(false); // a dry run needs no publish auth (either registry)
 
     expect(publishCalls(f)).toEqual([]);
     expect(r.record).toMatchObject({ mode: 'dry-run', version: '15.0.1', commit: S, tarball: TARBALL, sha1: '65d2ec0b140192bc0f0adc17b9ac6526332a6594', fileCount: 1638, publishedTo: [] });
@@ -343,6 +343,11 @@ describe('runRelease — publish (RELEASE-FLOW 5.3)', () => {
     expect(seq).toContain(`git merge-base --is-ancestor ${S} origin/main`);
     // The auth preflight runs in the operator checkout, before the clone is even fetched.
     expect(seq.indexOf(`npm whoami --registry=${GH_REGISTRY}`)).toBeLessThan(seq.findIndex((l) => l.startsWith('git fetch')));
+    // RS-31: so does the public-npm check, with the registry named twice (RELEASE-FLOW A1), from the same cwd.
+    const npmjsWhoami = `npm whoami --registry=${PUBLIC_REGISTRY} --@3fn:registry=${PUBLIC_REGISTRY}`;
+    expect(seq.indexOf(npmjsWhoami)).toBeGreaterThanOrEqual(0);
+    expect(seq.indexOf(npmjsWhoami)).toBeLessThan(seq.findIndex((l) => l.startsWith('git fetch')));
+    expect(f.calls.find((c) => line(c) === npmjsWhoami)?.cwd).toBe(PROJECT);
     expect(seq).toContain(`git fetch -q --depth 1 ${ORIGIN} refs/tags/v15.0.1`);
 
     const pubs = publishCalls(f);
@@ -384,7 +389,8 @@ describe('runRelease — refusals: each stops before anything is published', () 
     ['the tag does not exist', PUB, { tagCommit: null }, /tag v15\.0\.1 does not exist/],
     ['the tag does not resolve to --expect-sha', { ...PUB, expectSha: 'deadbeef'.repeat(5) }, {}, /not the expected (deadbeef){5}/],
     ['the tagged commit is not on origin/main', PUB, { onMain: false }, /is not on this checkout's origin\/main/],
-    ['this checkout has no GitHub Packages auth (checked before any install or build)', PUB, { fail: 'npm whoami' }, /no GitHub Packages auth/],
+    ['this checkout has no GitHub Packages auth (checked before any install or build)', PUB, { fail: `npm whoami --registry=${GH_REGISTRY}` }, /no GitHub Packages auth/],
+    ['this checkout has no public-npm auth (RS-31: checked before any install or build)', PUB, { fail: `npm whoami --registry=${PUBLIC_REGISTRY}` }, /no public-npm auth/],
     ['the clone is not at the requested commit', PUB, { cloneHead: 'f'.repeat(40) }, /the clone is at f+, not the requested/],
     ['package.json at the tag disagrees with the version', PUB, { pkgVersion: '15.0.0' }, /says version 15\.0\.0: the tag and the version disagree/],
     ['the clone is dirty after checkout', PUB, { dirtyAfter: 'checkout' }, /not clean after checkout/],
@@ -429,9 +435,28 @@ describe('runRelease — refusals: each stops before anything is published', () 
   });
 
   it('a missing GitHub Packages auth refuses before npm ci runs', () => {
-    const f = fake({ fail: 'npm whoami' });
+    const f = fake({ fail: `npm whoami --registry=${GH_REGISTRY}` });
     expect(() => runRelease(PUB, f.deps, PROJECT)).toThrow(Refusal);
     expect(f.calls.map(line).some((l) => l.startsWith('npm ci'))).toBe(false);
+  });
+
+  it('RS-31: a missing public-npm auth refuses before any clone or build, names the registry, the exit code and the login remedy, and states the 5.4 residual', () => {
+    const f = fake({ fail: `npm whoami --registry=${PUBLIC_REGISTRY}` });
+    let message = '';
+    try {
+      runRelease(PUB, f.deps, PROJECT);
+    } catch (e) {
+      expect(e).toBeInstanceOf(Refusal);
+      message = (e as Error).message;
+    }
+    expect(message).toContain(PUBLIC_REGISTRY);
+    expect(message).toContain('exit 1');
+    expect(message).toContain(`npm login --auth-type=web --registry=${PUBLIC_REGISTRY}`);
+    expect(message).toContain('web 2FA');
+    expect(message).toMatch(/shrinks the window.*does not close it/);
+    const seq = f.calls.map(line);
+    expect(seq.some((l) => l.startsWith('git init') || l.startsWith('git fetch') || l.startsWith('npm ci'))).toBe(false);
+    expect(publishCalls(f)).toEqual([]);
   });
 
   it('a failing GitHub Packages publish is reported as such and writes no record', () => {

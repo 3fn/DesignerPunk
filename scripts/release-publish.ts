@@ -30,6 +30,8 @@
  *   - the tag v<version> does not exist at the source, or does not resolve to exactly --expect-sha;
  *   - publish mode: the tagged commit is not on this checkout's `origin/main` (fetch first);
  *   - publish mode: `npm whoami --registry=<GitHub Packages>` fails from this checkout (checked before any build);
+ *   - publish mode: `npm whoami` against public npm fails from this checkout (same preflight, RS-31; 5.4 still runs
+ *     in the operator's terminal with web 2FA, so a pass here shrinks the window before 5.4 and does not close it);
  *   - the clone's HEAD is not the requested commit, or `package.json`'s version at that commit is not <version>;
  *   - the clone is not clean after checkout or after `npm ci`;
  *   - `npm ci`, `check:drift`, `npm pack` (scripts on: prepack builds) or `verify:token-index-clean` fails;
@@ -258,6 +260,16 @@ export function runRelease(args: ReleaseArgs, deps: Deps, projectRoot: string = 
     // `npm whoami` prints a user name, never a token. A worktree has no copy of the gitignored `.npmrc`.
     if (deps.run('npm', ['whoami', `--registry=${GH_REGISTRY}`], projectRoot).status !== 0) {
       throw new Refusal(`npm has no GitHub Packages auth from ${projectRoot} (\`npm whoami --registry=${GH_REGISTRY}\` failed). Run the script from the checkout whose npm config authenticates (the main checkout's gitignored .npmrc), not from a worktree.`);
+    }
+    // RS-31: public-npm auth is the other half of the 5.4 PUT. An expired npmjs login surfaced at 5.4 for 15.1.0 and
+    // 16.0.0 (npm reports it as E404 on a scoped PUT), after GitHub Packages already held the version. Check it here
+    // too, before any clone or build. The check reads whatever `npm` itself reads from this cwd (project .npmrc, then the
+    // operator's user config ~/.npmrc, where an npmjs login usually lives), because it IS an `npm whoami`; the script
+    // reads no config file. RESIDUAL, not closed: 5.4 runs in the operator's terminal with web 2FA, so a login that
+    // lapses after this check, or a 2FA failure, still stops 5.4. A pass here shrinks that window.
+    const npmjs = deps.run('npm', ['whoami', `--registry=${PUBLIC_REGISTRY}`, `--${PACKAGE_SCOPE}:registry=${PUBLIC_REGISTRY}`], projectRoot);
+    if (npmjs.status !== 0) {
+      throw new Refusal(`npm has no public-npm auth from ${projectRoot} (\`npm whoami --registry=${PUBLIC_REGISTRY} --${PACKAGE_SCOPE}:registry=${PUBLIC_REGISTRY}\` failed, exit ${npmjs.status}). Run \`npm login --auth-type=web --registry=${PUBLIC_REGISTRY}\`, then re-run. Nothing was built or published. Note that 5.4 still runs in the operator's terminal with web 2FA: passing this check shrinks the window in which 5.4 can fail after GitHub Packages holds the version, and does not close it.`);
     }
     target = commit;
     fetchRef = `refs/tags/${tag}`;
