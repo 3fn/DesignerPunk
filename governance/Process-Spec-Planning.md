@@ -481,7 +481,7 @@ The reason is mandatory. A block carrying `none` **and** criteria bullets is a l
 
 #### The Instruments block (M4) — in force from the first tasks round after `P`
 
-*(Ballot `2026-09-28-parent-instrument-existence-check` § 4a, RATIFIED 2026-09-29.)* **`P` is the squash SHA of the instruments parser PR.** Before `P`, **no spec writes an `**Instruments:**` block**: the parser would read it as a criteria-block malformation, or fold it into Primary Artifacts. The template above gains the block in that PR.
+*(Ballot `2026-09-28-parent-instrument-existence-check` § 4a, RATIFIED 2026-09-29.)* **`P` is the squash SHA of the instruments parser PR.** The parser is part of DesignerPunk's own `completion-criteria-parity` instrument (`scripts/completion-claims/`), which the consumer package does not ship: in a consumer repo no parser collects or checks this block, and `P` is a merge in DesignerPunk's repo. Before `P`, **no spec writes an `**Instruments:**` block**: the parser would read it as a criteria-block malformation, or fold it into Primary Artifacts. The template above gains the block in that PR.
 
 From the first tasks round after `P`, each parent row carries an `**Instruments:**` block **after `**Primary Artifacts:**`**. It has one bullet per instrument a success criterion's evidence depends on (a test, check or CI context, fixture, file or record, command, upstream artifact). Each bullet carries a **stable, append-only row id** and exactly one state:
 

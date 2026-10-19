@@ -57,8 +57,10 @@ docid#sectionid
 
 - **`docid`** — unique corpus-wide (Convention 1 above). Stable, immutable, semantically inert.
 - **`sectionid`** — unique within its document (future, deferred to Gap 7 — see below).
+  - **The positional form the docs MCP serves today** (`mcp-server/src/indexer/section-parser.ts`; Spec 121 Task 6, H4 added in #405): `s{index}` for an H2 or H3, where `index` is its 0-based position among the doc's `##`/`###` lines, fenced ones included; `s{c}.{k}` for an H4, the k-th (1-based) real `####` under the real H2/H3 whose id is `s{c}`. H4s sit outside the `s{index}` count, so adding an H4 moves no H2/H3 id. A `####` inside a fence, or before the first real H2/H3, has no id.
+  - **Lookup by heading text** tries real H2/H3 first, then fenced H2/H3, then H4.
 
-**Current state:** only the `docid` half is implemented. The `#sectionid` half is **designed-not-precluded** — the grammar is intentionally left open so Gap 7 can slot in without a grammar change.
+**Current state:** only the `docid` half is implemented as a durable id; the positional ids above are not durable (they move when a section is inserted, deleted or reordered before them). The durable `#sectionid` half is **designed-not-precluded** — the grammar is intentionally left open so Gap 7 can slot in without a grammar change.
 
 **Gap 7 cross-link — trigger now firing:** Gap 7 ("Source-Embedded Stable Section IDs") in `MCP-Evolution-Roadmap.md` describes the work needed to make `sectionid` durable (embedded in source markdown, not just positional). Its trigger condition is: "Consumers (or Spec 122-generated agents) begin **persisting** `sectionId` values across sessions/edits and observe drift." This trigger is **now firing** — Spec 122-generated agents are the next planned deliverable and will persist IDs and address cross-refs by ID. Gap 7 is therefore active. Section-`id` embedding is explicitly excluded from Spec 119-A scope and recorded in `MCP-Evolution-Roadmap.md` Gap 7 as the next addressable gap.
 

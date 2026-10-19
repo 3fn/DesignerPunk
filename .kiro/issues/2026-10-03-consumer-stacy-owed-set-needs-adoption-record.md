@@ -1,7 +1,7 @@
 # Issue: the consumer Stacy charter's owed-set query exits FATAL without `docs/claims-pass-adoption.md`, and nothing in a born repo creates that file
 
 **Date**: 2026-10-03
-**Status**: ACTIVE
+**Status**: FIXED — closes at the merge of the PR from `fix/c3-c4-h4-served-text` (§ "Fixed (2026-10-18)"); archive at the next walk (rule 5). *(Was: ACTIVE.)*
 **Owner**: Stacy, Thurgood (owners confirmed as listed below — Peter, 2026-10-17)
 - **Stacy** for the overlay text: `canonical/profiles/consumer/stacy.overlay.md`.
 - **Thurgood** for the consumer profile: `canonical/consumer-profile.yaml`, and whatever `init` or the profile scaffolds.
@@ -64,3 +64,24 @@ None proposed. `canonical/**` is governance surface and changes through the ball
 - **The Class line, my read as owner (rule 12)**: **P0 false-claim · defect.** The consumer Stacy charter's owed-set query (`canonical/profiles/consumer/stacy.overlay.md` L108–110) points at `docs/claims-pass-adoption.md`, which no born repo has, and so exits FATAL before it reports any owed spec. That is a false statement in an agent charter, which is a surface where a consumer's agent meets it (M7's P0 definition). Row 28 rules it "false at a consumer agent's reader". It is a `defect`, not an `owed-act`, because the shipped text itself is wrong. The fix is the act that is owed.
 - **Escalation (rule 11)**: a P0 goes to Peter at its first lapse. Row 28 is that decision: a fixed deadline no later than the next release's S, which is fix-now in rule 11's terms. That mapping is my reading. Peter's words are row 28's, and rule 11 postdates them. A second lapse at release 5's S would return the record to Peter **without** the fix-now option.
 - **Still owed**: the fix, a consumer-profile PR. I write the overlay text, and the owners pick among the three fix shapes above, with Peter's go. Nothing here is a fix.
+
+---
+
+## Fixed (2026-10-18)
+
+**Signed: Stacy (co-owner, overlay text), 2026-10-18.** I wrote the text. Thurgood applied it byte for byte on `fix/c3-c4-h4-served-text` under F12′, because I re-sign the row in the same range. The record closes at that PR's merge.
+- **Authority**: Peter's ruling of 2026-10-17 (`.kiro/specs/123-consumer-distribution/completion/release-4-rulings-2026-10-15.md` row 28 (2)): fixed before release-5 phase 1, Stacy writes the text. Peter's go for this shape on 2026-10-18 ("proceed as recommended") reached me through the orchestrator's brief. The record of that go is the orchestrator's, not this file.
+- **The shape: this record's option 3, with two refinements.** Without an adoption record, the query takes the day `designerpunk.manifest.json` was first committed on the first-parent line. That is the repository's DesignerPunk birth, not its first commit. It prints which source it used. If neither exists, it stops with a named remedy (option 2's message) instead of `FATAL`. The adoption record still wins when a team keeps one. The prose discloses that the default starts too early for a repo that got this charter by upgrade, and says how to set the real day.
+  - **Not option 1 (scaffold)**: it is a cross-seat CLI change (`src/cli/init.ts`, the manifest entry, the commit policy, tests), and it does not reach repos already born on 16.0.0. The query fix reaches them when their agent files are next regenerated from a release that carries it.
+  - **Not the repo's first commit (option 3 as written)**: a repo that had history before DesignerPunk would date adoption before DesignerPunk existed in it. The manifest is the one DesignerPunk-specific file every born repo commits (`docs/consumer/COMMIT-POLICY.md`, the commit column).
+- **The text**: `canonical/profiles/consumer/stacy.overlay.md` L104 (the adoption-day sentence) and L108–113 (the date resolution). `grep -c FATAL` on the overlay is `0`. The canonical unit and its pin (`sha256:e3f6f82a…`) did not move. The three consumer renderings under `canonical/_consumer-output/` were regenerated.
+- **Verified (falsification runs of the patched query, in scratch git repos, git 2.50.1)**:
+  - (S1) a born repo, manifest in the root commit, no record: `adopted on: <birth day> (from designerpunk.manifest.json, first committed)`, and a same-day later spec is kept (the midnight pin holds).
+  - (S2) a record is present: the record's date is used.
+  - (S3) specs committed, manifest not committed: the named-remedy `STOP`, exit 1.
+  - (S4) manifest added on a branch and merged `--no-ff`: the merge's date, not the branch commit's, and a pre-DesignerPunk spec is excluded.
+  - (S5) manifest rewritten later by `sync`: still the first-add date.
+- **Re-signed**: one row (`stacy.dispositions.yaml` `#the-owed-set-pipeline-…`), assent 14/14, renderedHash moved, canonicalHash unchanged, no re-confirmation. The signature sheet carries the act.
+- **Not dragged**: `tools/agent-generator/__fixtures__/g1-renderings/run1.E.…txt` is pinned to the G1 run-1 record's blob, and `__fixtures__/semantics-guard/…/semguard.overlay.md` to the G1 E rendering. Neither reads the live overlay, and both keep the old text as history. `tests/onboarding-trio/fixtures/born-{cc,kiro}` carry the old rendering as committed founder repos. No test asserts their content against the generator.
+- **The surviving counter**: the default cannot know when this charter reached a repo, only when DesignerPunk did. For a repo born before the charter shipped, it over-lists specs until the team writes the record. That is the visible-number direction, and it is disclosed where the reader meets it. A shallow clone dates the manifest at the graft and under-lists, but every stage of the query already needs full first-parent history.
+- **Found while fixing, not fixed here**: the query lists every spec touched since adoption that lacks `claims-pass.md`, including specs whose final unit has not merged. So a fresh born repo prints its two starter specs (`ci-needs`, `regrounding`) as `OWED` on day one. That behaviour predates C-4 and is shared with this repo's own query. It is reported to the orchestrator for a home.
