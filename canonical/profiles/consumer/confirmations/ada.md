@@ -43,9 +43,20 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: ada
-canonicalHash: sha256:da60b5bb35b68b8d1ce7cf41bf10f0d8a73bb17bbefa8a625d3cf76e3888c78b
-items: scope-create, scope-math, scope-compliance, scope-docs, scope-testing, scope-naming, scope-output, scope-hierarchy, scope-coverage, scope-theme-registry, scope-pipeline-config, scope-theme-output, scope-config-authoring, scope-standing-grant, scope-standing-consults, scope-standing-test-rule, scope-standing-pr-names-file, scope-standing-rule-9, scope-standing-grants-compose, scope-standing-law, scope-standing-scope-moves
-date: 2026-10-17
+canonicalHash: sha256:3b0d6343a0952654cac601dd1c966bed4c81b0dcb1c48ed3698a0e7ce19f62cc
+items: scope-create, scope-math, scope-compliance, scope-docs, scope-testing, scope-naming, scope-output, scope-hierarchy, scope-coverage, scope-theme-registry, scope-pipeline-config, scope-theme-output, scope-config-authoring, scope-standing-grant, scope-standing-consults, scope-standing-test-rule, scope-standing-pr-names-file, scope-standing-rule-9, scope-standing-grants-compose, scope-standing-law, scope-standing-scope-moves, scope-delegate-audit-run, scope-delegate-audit-file, scope-delegate-audit-report
+date: 2026-10-19
+
+**Ruling: CONFIRMED at 24 items** (re-confirmation, 2026-10-19). The sitting-2 S5 bullet re-hashed the unit (ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form, ratified by Peter 2026-10-18/19). Thurgood drafted the three new items as profile author at `424277a49`, and I agree with all three as drafted. The ruling of 2026-10-17 below stands for its 21 items.
+- **Three obligations from the "Delegate signing audit" bullet**, each breakable on a PR that leaves the rest of the scope untouched:
+  - `scope-delegate-audit-run`: run the command the brief names, in my turn of the rotation, when the brief names me at a MIDPOINT, CLOSEOUT or RELEASE walk;
+  - `scope-delegate-audit-file`: write every per-act line verbatim to the file the brief names and commit it under my own `Agent:` trailer;
+  - `scope-delegate-audit-report`: report, do not rule. No J, no reading of a verdict's meaning, no finding about Stacy. A `FAIL` or `anomaly` stays in the file and goes to Peter.
+- **They are obligations, not members.** They add duties to the scope; they do not widen what I may write. The closing sentence ("a bounded, mechanical, read-only duty, outside your domain, given by ballot") is a characterisation, not a separate duty, and is not an item.
+- **Bounded as I consented.** The duty is mechanical (`--audit --signer stacy` on rotation), writes only the named file under my trailer, and sends any `FAIL` or `anomaly` straight to Peter. It gives me no verdict, ruling or finding on Stacy's work. No wording exceeds that.
+- **Consumer rendering**: see the consumer disposition. The duty belongs to DesignerPunk's own signing chain, so I read it as removed for consumers.
+
+The 2026-10-17 ruling, kept for its 21 items:
 
 **Ruling: CONFIRMED at 21 items** (re-confirmation, 2026-10-17). The six-roots bullet re-hashed the unit (ballot 2026-10-17-standing-write-scope-six-roots). Thurgood drafted the items as profile author at `408ad8523`, and I agree with all eight new ones as drafted.
 - **The thirteen prior members stand** as confirmed on 2026-09-29. Each bullet is a scope member; a consumer Ada that refuses or disowns it violates the boundary. The `src/…` paths in `scope-theme-registry` and `scope-pipeline-config` are repo-bound referents, read re-keyed under 5b/5e.
@@ -61,7 +72,7 @@ date: 2026-10-17
   - `scope-standing-scope-moves`.
 - **Not an item**: the sentence "This test rule is enforced on Claude Code only until the per-owner test folders land; …". It describes what the runtimes enforce, not a duty of the seat.
 
-The set is complete at 21.
+The set is complete at 24 (the 21 above and the three delegate-audit obligations).
 
 ## `#out-of-scope`
 
