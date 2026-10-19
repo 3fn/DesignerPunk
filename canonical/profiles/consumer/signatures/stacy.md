@@ -92,11 +92,20 @@ verdict: assent — surviving 18/32; not surviving: `counting-6`, `counting-8`, 
 ## `#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script`
 
 signer: stacy
-date: 2026-10-18
+date: 2026-10-19
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script` (re-pointed; ROUTED)
 canonicalHash: sha256:e3f6f82a3b33e37b2e4862e259510551fd4c3d33b19da0357164b26f2742f837
-renderedHash: sha256:c821fc7733580db12f613110935cfba0f973464d672251f864a11c365cde36e2
+renderedHash: sha256:19cef6df9da933682b1eb24fbfbc20a9ba496b41e825f08f3d222a83b2178cb7
 verdict: assent — surviving 14/14
+
+**Re-signed 2026-10-19** (prior signature: assent, 2026-10-18, against rendered `sha256:c821fc77…`; the canonical hash is unchanged, `sha256:e3f6f82a…`). Stale because the overlay gained one sentence under the query: `OWED:` rows are candidates, not verdicts, and a spec owes a closeout claims pass only once its final declared merge unit has merged, so rows for specs still in progress (the two starter specs on day one) are expected and are not findings (`.kiro/issues/2026-10-18-owed-set-query-lists-specs-before-final-unit-merge.md`; Peter's "agreed" in chat, 2026-10-19, to "one disclosure sentence, Stacy's text"). I wrote the text; Thurgood applied it byte for byte at `c9a0d35f3` and regenerated the renderings at `dff44f544`. The canonical unit, its operative set (14 items) and its confirmation did not change, so there is no re-confirmation. renderedHash recomputed at this revision from a fresh temp-tree rendering of the worktree at `dff44f544` (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/tools-stacy/fresh-rendered-hash.ts`): `sha256:19cef6df…`, equal to the committed rendering's value, to my prediction before the apply (a fresh render of the patched tree), and to Thurgood's.
+
+- **Judged against**: the rendered unit at this revision and the operative set at 14 items.
+- **Every item survives.** The sentence adds disclosure and removes no function: all 14 items render as they did at the prior signature. `owed-set-emits-exclusions` is the item nearest the new text: the query still reports every spec it leaves out, counted by class, and the sentence adds that a listed row is a candidate. Its parenthesis names the unit's PR merge first and the ticks second, matching the predicate ("final declared merge unit has merged"). **It is a full-survival assent.**
+- **The run-1 tally** (§ "Signing run summary (2026-09-29, phase two, run 1)") is the 2026-09-29 count and is not rewritten; the row still reads 14/14.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior re-sign record (superseded, 2026-10-18; rendered `sha256:c821fc77…`)**:
 
 **Re-signed 2026-10-18** (prior signature: assent, 2026-09-29, against rendered `sha256:8e4651c8…`; the canonical hash is unchanged, `sha256:e3f6f82a…`). Stale because the overlay's adoption-date sentence and lines changed for C-4 (`.kiro/issues/2026-10-03-consumer-stacy-owed-set-needs-adoption-record.md`; rulings row 28 (2)): the adoption record is now optional, and without it the query uses the day `designerpunk.manifest.json` was first committed on the first-parent line, prints which source it used, and stops with a named remedy only if neither exists. I wrote the text; it was applied by Thurgood byte for byte at `1f660a1bc` and the renderings regenerated at `22dd80466`. The canonical unit, its operative set (14 items) and its confirmation did not change, so there is no re-confirmation. renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/tools-stacy/fresh-rendered-hash.ts`), equal to the committed rendering's value and to my prediction before the apply.
 - **Judged against**: the rendered unit at this revision and the operative set at 14 items.
