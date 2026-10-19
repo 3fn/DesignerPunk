@@ -158,8 +158,8 @@ units:
     items:
       - id: test-command-selecti-2
         kind: obligation
-        label: "Use npm test (default - excludes performance tests)"
-        text: "**WHEN validating regular task completion THEN:**\n   - Use `npm test` (default - excludes performance tests)"
+        label: "Run targeted tests for a subtask"
+        text: "**WHEN validating a subtask THEN:**\n   - Run targeted tests relevant to the change, not the full suite: `npm test -- <test-file-path>` (Task Completion Protocol § \"For SUBTASKS\", step 1)"
       - id: test-command-selecti-5
         kind: obligation
         label: "Default: Use npm test (comprehensive functional validation)"
@@ -179,7 +179,7 @@ units:
       - id: decision-tree
         kind: step
         label: "The decision tree"
-        text: "Is this a parent task completion?\n   ├─ YES → Does task modify performance systems?\n   │   ├─ YES → npm run test:all (includes performance regression tests)\n   │   └─ NO → npm test (comprehensive functional validation)\n   └─ NO → Does task involve performance changes?\n       ├─ YES → npm run test:performance + test:performance:isolated (or test:all)\n       └─ NO → npm test (default)"
+        text: "Is this a parent task completion?\n   ├─ YES → Does task modify performance systems?\n   │   ├─ YES → npm run test:all (includes performance regression tests)\n   │   └─ NO → npm test (comprehensive functional validation)\n   └─ NO → Does task involve performance changes?\n       ├─ YES → npm run test:performance + test:performance:isolated (or test:all)\n       └─ NO → targeted tests: npm test -- <test-file-path>"
       - id: test-command-selecti-9
         kind: obligation
         label: "npm test validates all functionality (functional lanes only;"

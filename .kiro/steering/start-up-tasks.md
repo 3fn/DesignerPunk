@@ -1,7 +1,7 @@
 ---
 id: start-up-tasks
 inclusion: always
-lastReviewed: 2026-09-29
+lastReviewed: 2026-10-19
 name: Start-Up-Tasks
 description: Essential pre-task checklist — date verification, governance health check, Jest test commands, test selection guidelines, and authorization-to-start rules. Load when beginning any task execution or running tests. (End-of-task sequence lives in Task Completion Protocol.)
 ---
@@ -76,10 +76,8 @@ description: Essential pre-task checklist — date verification, governance heal
 
 5. **Test Command Selection Guidelines**
    
-   **WHEN validating regular task completion THEN:**
-   - Use `npm test` (default - excludes performance tests)
-   - Fast, deterministic feedback loop (~1 minute warm)
-   - Sufficient for most development validation
+   **WHEN validating a subtask THEN:**
+   - Run targeted tests relevant to the change, not the full suite: `npm test -- <test-file-path>` (Task Completion Protocol § "For SUBTASKS", step 1)
    
    **WHEN validating parent task completion THEN:**
    - **Default**: Use `npm test` (comprehensive functional validation)
@@ -97,7 +95,7 @@ description: Essential pre-task checklist — date verification, governance heal
    │   └─ NO → npm test (comprehensive functional validation)
    └─ NO → Does task involve performance changes?
        ├─ YES → npm run test:performance + test:performance:isolated (or test:all)
-       └─ NO → npm test (default)
+       └─ NO → targeted tests: npm test -- <test-file-path>
    ```
    
    **Key distinction:**
