@@ -231,7 +231,9 @@ For a Stacy-signed act, the J it sends acts into is Peter's (§ 5.3); no annotat
 
 ### 7.3 Cost
 
-- **Per PR**: `--ci` **~25–35 s on every PR, `noop` included** (restated at R2: the un-gated setup is measured at 18–26 s — a `fetch-depth: 0` checkout 7–8 s in `completion-criteria-parity`, runs 36670894608 / 36670176355 / 36559589771; Node 3–6 s and `npm ci` 7–12 s in `122-setup`, runs 36670894533 / 36670176245 / 36559589747 — plus the sweep and the walk, unmeasured in CI; ~2 min on profile-touching PRs). On a no-op PR the job ran in ~1 s before; this is the carve-out's price; `--audit` ~5 min of reading (the scan itself is sub-second); J ~5 min per judged brief or continuation and ~15 min per blind seat; Peter, one `--audit` command plus J on his Stacy-signed sample.
+*(Amended 2026-10-19 by ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form S5; prior text at 3b84122c9.)*
+
+- **Per PR**: `--ci` **~25–35 s on every PR, `noop` included** (restated at R2: the un-gated setup is measured at 18–26 s — a `fetch-depth: 0` checkout 7–8 s in `completion-criteria-parity`, runs 36670894608 / 36670176355 / 36559589771; Node 3–6 s and `npm ci` 7–12 s in `122-setup`, runs 36670894533 / 36670176245 / 36559589747 — plus the sweep and the walk, unmeasured in CI; ~2 min on profile-touching PRs). On a no-op PR the job ran in ~1 s before; this is the carve-out's price; `--audit` ~5 min of reading (the scan itself is sub-second); J ~5 min per judged brief or continuation and ~15 min per blind seat; Peter, J on at least one Stacy-signed act per RELEASE (§ 5.3); a delegate seat, one `--audit --signer stacy` run per walk (§ 5.3).
 - **One-time**: one Sonnet build session under the grant; Stacy's fixture specification; Peter's A4 config commit; this ballot round.
 
 ---
