@@ -215,6 +215,7 @@ interface Emission { kind: 'declared-none-table-waiver'|'exemption-honored'
 | Requested merge base unresolvable *(added 2026-10-19, D-2 low (a): `.kiro/issues/2026-10-03-completion-criteria-parity-status-marks-gap.md` § 3)* | **(RED)** `cannot resolve merge base against <ref> — diff-scoped duties (Req 6.3) not evaluated` |
 | Authorship lookup failed — a git error, or empty history in CI *(added 2026-10-19, D-2 low (b), same record)* | **(RED)** `cannot resolve authorship date for <file> (<reason>) — criteria-mode resolution (DD2) not evaluated` |
 | Shallow clone *(added 2026-10-19, D-2 low (b), same record)* | **(RED)** `authorship dates unresolvable: shallow clone — DD2 needs full history (checkout fetch-depth: 0)` |
+| A claiming row's Status cell is not exactly ✅, ⚠️, ❌ (or `—` on an annotation row) *(added 2026-10-19, D-2: the Req 6.4 erratum in `requirements.md`; ballot `2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form` S4)* | **(RED)** `parent N: <criteria|gate> row "<criterion>" Status '<cell>' is not one of ✅ ⚠️ ❌ (or — on an annotation row)` |
 
 ## Testing Strategy
 
