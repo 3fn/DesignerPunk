@@ -1,0 +1,16 @@
+{
+  "case": "status-mark-trailing-text",
+  "class": "status",
+  "provenance": ".kiro/docs/ballots/2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "STATUS_NONCOMPLIANT"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "messages": [
+    "parent 1: criteria row \"Beta: the profile loader rejects an unknown key with a named…\" Status '✅ (partially)' is not one of ✅ ⚠️ ❌ (or — on an annotation row)"
+  ],
+  "notes": "The includes() hole (D-2 record § 1, last line; S4 rider 'The gap'): a mark with trailing text read as ✅ before the fix."
+}

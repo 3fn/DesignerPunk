@@ -1,0 +1,18 @@
+{
+  "case": "status-word-done-and-na",
+  "class": "status",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/completion/arming-2026-10-03-parity-flip-fixtures.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "STATUS_NONCOMPLIANT",
+    "STATUS_NONCOMPLIANT"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "messages": [
+    "parent 1: criteria row \"Alpha: the CLI prints the resolved profile path on every run\" Status 'Done' is not one of ✅ ⚠️ ❌ (or — on an annotation row)",
+    "parent 1: criteria row \"Gamma: the README documents the profile file location\" Status 'N/A' is not one of ✅ ⚠️ ❌ (or — on an annotation row)"
+  ],
+  "notes": "§ 5 item 1's other two words (Done, N/A), each red once; Alpha's and Gamma's evidence is otherwise compliant, so the Status class is the only red."
+}
