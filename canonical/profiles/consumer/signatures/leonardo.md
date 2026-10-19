@@ -22,6 +22,21 @@ assent: surviving 6 of 6 — leo-role, leo-translate, leo-domain, leo-coordinate
 - `leo-partner` (*"You are his partner, not his tool."*) → *"You are their partner, not their tool."* Same relation, re-pointed. Credited by entailment.
 - The subtraction-2 removal is honest: nothing in the unit but the name left.
 
+## `#in-scope`
+
+signer: leonardo
+canonicalHash: sha256:f8f57690c21e3315eded9d2f97e9919e57aba11220678be4ae4d324326b8cafa
+renderedHash: sha256:7040089812064a9ea89c7d26a3f20e8242858a480a3316d8979a98e61dbad9ee
+assent: surviving 8 of 11 — scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8
+
+**Signed 2026-10-19. This is a FIRST signature on this row** (the row was `retained`, unsigned, until Thurgood's `5842fee82` re-pointed it). The freshness stale list cannot flag it; it is outside that list's bound (`.kiro/issues/2026-10-17-first-signatures-not-on-stale-list.md`), so this act stands on the unsigned-routed reading, not on a stale line.
+
+- **The row**: `re-pointed`, one removal (the "Delegate signing audit" bullet, `subtraction-3`), `destination: "#in-scope"` (`5842fee82`). The overlay unit `## @unit #in-scope @ sha256:f8f57690…` is the canonical unit minus that bullet; the regeneration `a3f8b6053` moved only my three consumer sidecars (`#in-scope` op passthrough → render), and no consumer artifact byte changed.
+- **How I read it (5e)**: only the unit's own rendering, checked against the overlay unit. `scope-1`..`scope-8` are each verbatim in it (checked by substring). Nothing of the delegate duty survives: no `delegate`, no `Peter`.
+- **The three items dropped by subtraction**: `scope-delegate-audit-run`, `scope-delegate-audit-file`, `scope-delegate-audit-report`. This is the right removal, not a loss of a consumer-violable obligation: the duty rests on `verify-signing-chain`, a ratified DesignerPunk ballot, and a MIDPOINT/CLOSEOUT/RELEASE rotation, none of which exist in a consumer repo, and it audits a signing chain consumers do not have. `subtraction-3` (repo-only mechanism, no consumer counterpart) is the cite I recommended in the re-confirmation. The consumer Leonardo is not asked to audit anyone's signatures, and the removal does not weaken any of `scope-1`..`scope-8`. Credited by verbatim survival, not entailment.
+- **renderedHash**: recomputed with `readConsumerSpans` + `renderedHashOf` at `a3f8b6053` for `canonical/agents/leonardo.md#in-scope`: `sha256:7040089812064a9ea89c7d26a3f20e8242858a480a3316d8979a98e61dbad9ee`, equal to the coordinator's value. Control: `#identity` recomputes to its signed `45154d43…`.
+- **Refusals: 0.**
+
 ## `#out-of-scope`
 
 signer: leonardo
