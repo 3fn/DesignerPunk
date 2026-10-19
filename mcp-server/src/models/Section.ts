@@ -35,4 +35,13 @@ export interface Section {
    * Optional for back-compat with hand-constructed Section literals.
    */
   siblingHeadings?: string[];
+
+  /**
+   * The doc's audience banner (P-1; Peter ruled 2026-10-18 that a direct `get_section` carries it,
+   * as `get_document_summary` does since #405) — same text as the summary's `audienceBanner`.
+   * Present ONLY when the doc is bannered; absent otherwise. Additive. Not counted in `tokenCount`
+   * (which measures the section's own content). Not carried on `SectionNotFound`/ambiguous
+   * responses: the reader has no section yet, and the next call (or the summary) delivers it.
+   */
+  audienceBanner?: string;
 }
