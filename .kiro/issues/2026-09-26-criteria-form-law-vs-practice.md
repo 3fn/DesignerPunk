@@ -3,7 +3,8 @@
 **Date**: 2026-09-26
 **Status**: ACTIVE
 **Owner**: Thurgood drafts the ballot; Peter rules.
-**Trigger**: **the Q2 sitting** (the arming decision for `completion-criteria-parity`: the 5.Z sitting or release-prep start, whichever comes first).
+**Trigger**: `manual` — the capped sitting's ballot (sitting item S3) merges; written as `merge:#<N>` once that PR is known. *(Re-ruled 2026-10-18, Thurgood: the Q2 sitting fired and was recorded 2026-10-02 (register row `completion-criteria-parity`, ARMING SITTING; flip 2026-10-03) and D4 was not taken there, though Peter's 2026-09-26 ruling deferred it "to a ballot at the Q2 sitting". Authority: the owner's Trigger-line right (README rule 9), re-ruled under rule 11 in a diff carrying this dated reason, and Peter's routing of 2026-10-18 ("Go on the W-1 records PR and the capped sitting", relayed in the orchestrator's brief; the PR body cites it). The superseded trigger, verbatim:)* **the Q2 sitting** (the arming decision for `completion-criteria-parity`: the 5.Z sitting or release-prep start, whichever comes first).
+**Class**: P2 obligation (record) · defect *(set 2026-10-18, Thurgood, rule 12. Ratified Req 2.2.1 says "flat … no nested sub-bullets" and the armed checker accepts a nested bullet as a row; the law's text is wrong against practice and no reader is misled.)*
 **Source**: the extraction audit behind PR `fix/parity-parser-blank-line-extraction` (found at Spec 123 U1 Task 5). Peter ruled 2026-09-26: **D4 is deferred to a ballot at the Q2 sitting**, and nested bullets stay accepted as rows until then. The ruling is recorded in `.kiro/specs/127-completion-claims-integrity/design.md`, in the note under C2.
 
 ## The question for the ballot
@@ -33,3 +34,19 @@ The parity checker's PASS lines are the arming evidence. Before the parser fix, 
 3. **Spec 123's parent 5 counts only after re-verification following the `tasks.md` normalization.** Under the fix, parent 5 is a loud MALFORMATION: it is poisoned and gets no verdict. After the normalization it reads SET_MISMATCH, with the 14 rows in the side table missing from the criteria table, until the two tables are merged. Only a PASS after both steps counts.
 4. **The fix also surfaced parent 4.** On the U1 branch, `task-4-completion.md`'s Additional-verification line reads `**Primary Artifacts (as declared in tasks.md): … — all shipped as declared.**`, which is not the fixed prefix `Primary Artifacts:`. After the fix, parent 4 goes **RED [AV_MISSING_OR_MALFORMED]**. It counts only after that line is corrected and parent 4 is re-run. This finding goes to Lina (Task 4 PRIMARY, the author of doc 4) as an explicit message, relayed through the coordinator in the fix PR's report.
 5. **Standing framing.** A green parity run is not evidence that a claim is honest. That was the error Spec 127 exists to prevent. N counts parents the instrument evaluated, not claims found true.
+
+## Triage (2026-10-18)
+
+*Signed: Thurgood (owner). Nothing above is rewritten.*
+
+- **Re-verified live**: the checker has been REQUIRED since the 2026-10-03 flip (register row history) and no PR has touched `scripts/completion-claims/**` or the CLI since (`git log --first-parent --since=2026-10-03` is empty), so nested bullets are still read as rows; Req 2.2.1 is unamended. Spec 123 is closed, so its 11 nesting parents are no longer mid-execution, which removes the draft's "poison 123's 11 parents in the middle of execution" cost for option (B) and leaves (B) a forward-only rule. That reading is mine from the closed state, not re-measured against the 123 tasks file.
+- **The Q2 evidence caveat above is spent**: arming happened on a count the caveat governed; the caveat is history now and the sitting does not need to re-litigate it.
+- **Routed to the capped sitting of 2026-10-18, item S3**: Thurgood drafts, **Peter rules the fork A (amend Req 2.2.1 to match practice) or B (require flat lists going forward)** and the open sub-fork (is the outer "group-heading" bullet a criterion at all). Surfaced, not picked. S3 shares the sitting-2 ballot with the D-2 rider (S4), the trigger-(d) rider (S5) and the D3 rider (S6); S3, S4 and S6 amend the `completion-criteria-parity` instrument's law, and the Req 2.2.1 text is the same surface as S5's Req 6.4 erratum.
+- **Closes** when the ballot is merged and its recorded amendment (A) or normalization/date (B) lands.
+
+## Lapse (2026-10-18)
+
+*Signed: Thurgood (owner), observed under README rule 11 as applied in #408.*
+
+- **Fired event**: the old trigger, the Q2 sitting, #267, `70f8fe54fbd7e92d60746e3135aee22c4f90b3bf` (2026-10-02), the arming sitting that recorded Q2 (the flip followed 2026-10-03). D4 was not taken there although Peter's 2026-09-26 ruling deferred it to that sitting. No commit that is an ancestor of the event's commit closed this record (rule 5's dated outcome line, or the archive move) or re-ruled it (its Trigger line changed in a diff carrying a dated reason and authority).
+- **Consequence (rule 11)**: this is a P2 `(record)`, which escalates at its **second** lapse, so nothing goes to Peter now. It lapses again at each later release's S while it is open.
