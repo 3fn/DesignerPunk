@@ -1,6 +1,7 @@
 /**
  * verdict.ts — the parity predicate + emission format (Spec 127, design C5;
- * Reqs 2.5, 6.2–6.4; DD3).
+ * Reqs 2.5, 6.2–6.4 — 6.4 as corrected by the 2026-10-19 erratum, which adds
+ * Status validity to the verdict surface; DD3).
  *
  * Pure evaluation over parsed structures — no git, no fs beyond what the
  * parsers did — so the falsification fixtures (C7) drive the SAME functions
@@ -29,6 +30,7 @@ export type Verdict =
   | 'SET_MISMATCH'
   | 'AV_SET_MISMATCH'
   | 'EVIDENCE_NONCOMPLIANT'
+  | 'STATUS_NONCOMPLIANT'
   | 'FORCED_NEGATIVE_MISSING'
   | 'AV_MISSING_OR_MALFORMED'
   | 'MALFORMATION'
@@ -107,6 +109,17 @@ function evidenceFindings(
   for (const r of rows) {
     if (!r.claiming) continue;
     const name = `${r.criterion.slice(0, 60)}${r.criterion.length > 60 ? '…' : ''}`;
+    if (r.status === 'other') {
+      // The closed Status vocabulary (guide § "Status vocabulary", sitting-2
+      // S4; D-2 fix): a Status outside ✅ ⚠️ ❌ (or — on an annotation row) is
+      // non-compliant, so a partial written `Partial`/`Done`/`N/A` cannot
+      // escape the ⚠️ follow-up-link MUST below. Additive: the row is still
+      // a claim, so its evidence duty is evaluated too.
+      findings.push({
+        verdict: 'STATUS_NONCOMPLIANT',
+        message: `parent ${parentId(parent)}: ${label} row "${name}" Status '${r.statusCell}' is not one of ✅ ⚠️ ❌ (or — on an annotation row)`,
+      });
+    }
     if (r.evidence.trim() === '' || r.evidenceKind === 'empty-or-prose') {
       findings.push({
         verdict: 'EVIDENCE_NONCOMPLIANT',
