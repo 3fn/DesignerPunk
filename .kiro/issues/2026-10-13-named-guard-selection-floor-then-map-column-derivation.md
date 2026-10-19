@@ -1,9 +1,10 @@
 # Charter: named-guard selection floor, then coverage-map column derivation
 
 **Date**: 2026-10-13 · **Ruled**: Peter, 2026-10-13 ("All as recommended with class options"; record `.kiro/specs/123-consumer-distribution/completion/u4-rulings-2026-10-13.md` item 1-class) · **Amended 2026-10-13 (Peter's ruling (a) on Stacy's F-1, `completion/arming-read-u4-audience-banner.md`)**: step 1 does not fit P1's seat or act (Thurgood, P1's owner, confirmed), so it executes under the issue-scoped grant below. · **Owners**: **Thurgood** executes step 1 as CI-regime owner; **Stacy** specifies the falsification fixtures and keeps the ARMING read (no seat audits its own PR); then **Lina** with Stacy (step 2) · **Trigger (step 1)**: the first Thurgood session after release 3 is tagged and before release-4 prep starts (lands the floor before release 4's RELEASE pass, the backstop audit over U4's guard). **Backstop**: unexecuted at the first monthly Civitas health check after the release-3 tag = a walk finding against Thurgood. Step 2 only after step 1's registry exists, as its own spec.
-**Status**: ACTIVE — step 1 UNEXECUTED (its ruled trigger fired 2026-10-13 and release-4 prep passed without it; see § "Triage (2026-10-18)"). Step 2 waits on step 1's registry.
+**Status**: ACTIVE — step 1 UNEXECUTED; fix-now ruled 2026-10-19 (Peter), due before release-5 phase 1 (its ruled trigger fired 2026-10-13 and release-4 prep passed without it; see § "Triage (2026-10-18)"). Step 2 waits on step 1's registry.
 **Owner**: Thurgood executes step 1 (CI-regime owner); Stacy specifies the falsification fixtures and keeps the ARMING read; Lina with Stacy for step 2 — as the paragraph above states. *(Header line added 2026-10-18, Thurgood, W-4 of the 2026-10-17 health check; the paragraph above is unchanged.)*
-**Trigger**: `tag:v15.1.0` — step 1's ruled event: "the first Thurgood session after release 3 is tagged and before release-4 prep starts"; release 3 is `v15.1.0` (`e49359e49`, 2026-10-13). *(Token added 2026-10-18, Thurgood, rule 1. The event is **fired and open**, not re-ruled: moving a deadline Peter ruled is Peter's act, so the record carries the ruled event as it stands.)*
+**Trigger**: `release:next:phase-1` — step 1 lands before release-5 phase 1. *(Re-ruled 2026-10-19 by Peter's E1 answer, "Yes, let's fix now"; see § "Ruling (2026-10-19)". The fired event is kept verbatim in the next line.)*
+**Fired event (kept verbatim; token as set 2026-10-18)**: `tag:v15.1.0` — step 1's ruled event: "the first Thurgood session after release 3 is tagged and before release-4 prep starts"; release 3 is `v15.1.0` (`e49359e49`, 2026-10-13). *(Token added 2026-10-18, Thurgood, rule 1. The event is **fired and open**, not re-ruled: moving a deadline Peter ruled is Peter's act, so the record carries the ruled event as it stands.)*
 **Class**: P2 obligation (guard) · owed-act *(set 2026-10-18, Thurgood, rule 12. Without the floor, a registered in-lane guard whose file is not selected by its jest config goes dormant unseen: the lane stays green while a named guard does not run, a guard weaker than its claim.)*
 
 **Grant paths** (README rule 8 — Thurgood's write scope over exactly these, on the fixing PR; activation is this amendment's merge):
@@ -57,4 +58,11 @@ Spec 123 U4 ships none of this; U4's Task 23 evidences registration by the ruled
 *Signed: Thurgood (owner), observed under README rule 11 as applied in #408.*
 
 - **Fired event**: the ruled trigger, release 3 tagged, `v15.1.0` at `e49359e49dc338078669a90aa5b37aa2436b60a4` (2026-10-13). Step 1 was not executed before release-4 prep (§ "Triage (2026-10-18)"). No commit that is an ancestor of the event's commit closed this record (rule 5's dated outcome line, or the archive move) or re-ruled it (its Trigger line changed in a diff carrying a dated reason and authority).
-- **Consequence (rule 11)**: first lapse of a P2 (guard) → escalation to Peter: spec / drop / fix-now. The escalation (item E1) is put to Peter in chat and recorded in this file when he answers; no sitting-2 ballot item covers it.
+- **Consequence (rule 11)**: first lapse of a P2 (guard) → escalation to Peter: spec / drop / fix-now. Escalation (item E1) answered 2026-10-19: fix-now (§ "Ruling (2026-10-19)").
+
+## Ruling (2026-10-19) — E1: fix now
+
+*Signed: Thurgood (owner), recording Peter's answer given in chat on #414, 2026-10-19: E1 = "Yes, let's fix now", adding that overlapping sessions likely caused the miss. The orchestrator relayed it; the PR's held `**Open for Peter**:` line is marked answered.*
+
+- **Fix-now**: step 1 (the selection floor, under the issue-scoped grant above) lands before release-5 phase 1. The Trigger line is re-ruled to `release:next:phase-1`; the old `tag:v15.1.0` line is kept verbatim as the fired event.
+- Peter's attribution of the miss (overlapping sessions) is recorded as his, not as a finding of mine.

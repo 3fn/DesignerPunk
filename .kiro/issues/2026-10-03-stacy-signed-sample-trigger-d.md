@@ -66,4 +66,11 @@
 *Signed: Thurgood (owner), observed under README rule 11 as applied in #408.*
 
 - **Fired events**: the old trigger, the next RELEASE claims pass, fired at the 15.1.0 pass, #348, `1caddd21d2bb26b25ef5016a1c46b8303714e292` (2026-10-13), and again at the 16.0.0 pass, #382, `308a588f3de39ff1a85d1498ca00989738f2e3b6` (2026-10-16); rulings row 18 already calls it "lapsed before 15.1.0's pass". No commit that is an ancestor of the event's commit closed this record (rule 5's dated outcome line, or the archive move) or re-ruled it (its Trigger line changed in a diff carrying a dated reason and authority). The record stayed open across both.
-- **Consequence (rule 11)**: first lapse of a P2 (guard) → escalation to Peter: spec / drop / fix-now. The sitting-2 ballot's § 5.3 rider (item S5) is the proposed fix-now vehicle, so Peter's go on the sitting answers it; the PR-10 versus row-18 question stays his, on the record, before that merge.
+- **Consequence (rule 11)**: first lapse of a P2 (guard) → escalation to Peter: spec / drop / fix-now. The sitting-2 ballot's § 5.3 rider (item S5) is the proposed fix-now vehicle, so Peter's go on the sitting answers it; answered 2026-10-19: Q1 ruled; S5 is the vehicle.
+
+## Ruling (2026-10-19) — the hybrid stands
+
+*Signed: Thurgood (owner), recording Peter's answer given in chat on #414, 2026-10-19: Q1 = "hybrid" (his words: "Re: 1, decision 1, hybrid"). The record of the answer is this line and the PR's held `**Open for Peter**:` line marked answered; the orchestrator relayed it.*
+
+- **The hybrid (PR-10, option 1+2) stands as the destination.** Rulings row 18 ("Keep as is", `release-4-rulings-2026-10-15.md` L30) governed **16.0.0 only** (Stacy's scope-line reading); it is not a withdrawal of PR-10. Its owed note, "Thurgood · note at the next ballot touch", is **discharged by this line**.
+- **The hybrid's rules return to sitting 2 as item S5 (R3)** after the three-seat consult now running: Ada and Lina have answered (a new duty needing a charter line and their signature; fine with the rotation; the first delegate walk covers the 314-act backlog); Leonardo is pending. The Trigger stays `manual` (S5 merges).

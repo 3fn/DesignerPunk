@@ -77,4 +77,4 @@ Anything that changes the extracted surface is a change to the ballot's closed, 
 *Signed: Thurgood (owner), observed under README rule 11 as applied in #408.*
 
 - **Fired event**: the old trigger's first clause, the Q2 sitting, #267, `70f8fe54fbd7e92d60746e3135aee22c4f90b3bf` (2026-10-02), the arming sitting that recorded Q2 (the flip followed 2026-10-03). The second clause (a touch of `materiality.ts`) has not fired. No commit that is an ancestor of the event's commit closed this record (rule 5's dated outcome line, or the archive move) or re-ruled it (its Trigger line changed in a diff carrying a dated reason and authority).
-- **Consequence (rule 11)**: first lapse of a P2 (guard) → escalation to Peter: spec / drop / fix-now. The sitting-2 ballot's D3 rider (item S6) is the proposed fix-now vehicle, so Peter's go on the sitting answers it; until he answers, the escalation is open.
+- **Consequence (rule 11)**: first lapse of a P2 (guard) → escalation to Peter: spec / drop / fix-now. The sitting-2 ballot's D3 rider (item S6) is the proposed fix-now vehicle, so Peter's go on the sitting answers it; **answered 2026-10-19 (sitting 2 S4/S6 ratified)**.
