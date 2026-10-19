@@ -171,9 +171,9 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: lina
-canonicalHash: sha256:a78c65a56e0be270fbcade0106ae39659bd984a2aae2dc75de93e288c1131ef2
-items: scope-scaffolding, scope-platforms, scope-docs, scope-contract-tests, scope-token-integration, scope-schema, scope-token-mapping, scope-inheritance, scope-parity, scope-theme-consumption, scope-data-theme, scope-one-off, scope-promotion, scope-maintained-docs, scope-standing-grant, scope-standing-pr-names-file, scope-standing-rule-9, scope-standing-grants-compose, scope-standing-scope-moves, scope-standing-law
-date: 2026-10-17
+canonicalHash: sha256:fa62f16593d61608573d09f2c1fca26bfe91552f0d0639f321c2276b8db4a1dd
+items: scope-scaffolding, scope-platforms, scope-docs, scope-contract-tests, scope-token-integration, scope-schema, scope-token-mapping, scope-inheritance, scope-parity, scope-theme-consumption, scope-data-theme, scope-one-off, scope-promotion, scope-maintained-docs, scope-standing-grant, scope-standing-pr-names-file, scope-standing-rule-9, scope-standing-grants-compose, scope-standing-scope-moves, scope-standing-law, scope-delegate-audit-run, scope-delegate-audit-file, scope-delegate-audit-report
+date: 2026-10-19
 
 **Ruling: CONFIRMED at 20 items** (re-confirmation; the unit was re-hashed by the six-roots bullet, ballot 2026-10-17-standing-write-scope-six-roots; items drafted by Thurgood as profile author at `408ad8523`, on the split I proposed). The fourteen prior members stand: an enumeration, each member an in-scope duty, and dropping one narrows the role (5c). The new bullet is six items:
 - `scope-standing-grant` (member): the grant, through its test-ownership rule. The test rule is the grant's edge (it says which tests the grant covers), so it stays inside the member, as `thurgood.yaml`'s `scope-12` keeps the CI-regime limits inside its grant.
@@ -181,6 +181,14 @@ date: 2026-10-17
 - **Not an item**: "This test rule is enforced on Claude Code only until the per-owner test folders land; until then Kiro `allowedPaths` blocks these tests (…)". It states what the runtimes do, not a duty of the seat.
 
 The set is complete at 20.
+
+**Re-confirmation 2026-10-19** (ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form, S5; the unit was re-hashed by the "Delegate signing audit" bullet): **CONFIRMED at 23 items.** The twenty prior items stand unchanged. The new bullet is three items, each an obligation that binds on its own:
+- `scope-delegate-audit-run`: when the brief names me at a MIDPOINT, CLOSEOUT or RELEASE walk, in my turn of the rotation, run the command the brief names (the stacy-filtered audit, or the unfiltered audit with every line marked by signer).
+- `scope-delegate-audit-file`: write every per-act line verbatim to the file the brief names and commit it under my own `Agent:` trailer.
+- `scope-delegate-audit-report`: report, do not rule. No J, no reading a verdict's meaning, no finding about Stacy. A `FAIL` or `anomaly` stays in the file and goes to Peter as the brief names.
+Each can be violated while the others are kept (run without filing; file without verbatim lines; file and then rule), so each is separate. This is the bounded duty I consented to in consult: mechanical, read-only, outside my domain, given by ballot. Nothing in the wording exceeds it. The closing sentence of the bullet ("a bounded, mechanical, read-only duty, outside your domain, given by ballot") states what the duty is, not a further duty, and is not an item.
+
+The set is complete at 23.
 
 ## `#out-of-scope`
 
