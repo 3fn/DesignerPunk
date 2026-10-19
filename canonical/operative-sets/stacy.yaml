@@ -161,7 +161,7 @@ units:
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-charter-cut-ratified-verbatim
   # exemplar D — 13 item(s)
   "#the-trigger-set-the-114-superset-table-names-never-numbers":
-    canonicalHash: sha256:ea4f4b52be0b5544d4721d485ae3b509839b271d376079158d8bca376b64a545
+    canonicalHash: sha256:bef1274f376dbc6f7c385f1341f0c40a84928d3cdf163a640539f436e442b1b0
     items:
       - id: trigger-lens
         kind: member
@@ -574,7 +574,7 @@ units:
         text: "the co-signed joint working agreement + lifecycle amendment (`.kiro/specs/127-completion-claims-integrity/pre-spec/`, PRs #158/#165) are the underlying authority where this text and they disagree."
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble
   "#the-claims-pass-record-claims-passmd-the-template":
-    canonicalHash: sha256:11c50738271b1e8436109a51b12d12a8f2b19463d04dfdeb805b6bd69570c5e9
+    canonicalHash: sha256:006d7a0b20b48f56a4769ba2d44042284270b2a9bd7e620b4c79cfd2cc247b74
     items:
       - id: record-committed
         kind: obligation
