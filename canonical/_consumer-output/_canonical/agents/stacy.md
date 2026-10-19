@@ -364,6 +364,8 @@ echo "OWED:"; [ -n "$OWED" ] && printf "$OWED" || echo "  (none)"
 echo "EXCLUDED: $CLOSED closed; ${A}(a) / ${B}(b) / ${C}(c) by class; plus every spec with no activity since $ADOPTED"
 ```
 
+`OWED:` rows are candidates, not verdicts: a spec owes a closeout claims pass only once its final declared merge unit has merged (the unit's PR has merged and its tasks are ticked in `tasks.md`), so rows for specs still in progress, such as your two starter specs on day one, are expected and are not findings.
+
 The classes: **(a)** the spec declares its merge units, in whatever form your tasks files use, and the anchor is its final declared unit; **(b)** no declared units and one PR, so that PR is the unit (the commonest shape, and a query that drops it silently gives exactly the healthy-looking short list this count prevents); **(c)** no declared units and several PRs, so the anchor is the PR carrying the last parent completion doc.
 
 If you keep this query in more than one place (say a release checklist and a periodic health check), keep every copy the same text.
