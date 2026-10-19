@@ -1,7 +1,7 @@
 # Issue: the owed-set query lists specs as OWED before their final unit has merged, so a fresh born repo prints its two starter specs as owed on day one
 
 **Date**: 2026-10-18
-**Status**: ACTIVE
+**Status**: FIXED — closes at the merge of the follow-up PR that carries the disclosure sentence (§ "Fixed (2026-10-19)"); archive in that PR or at the next walk (rule 5). *(Was: ACTIVE.)*
 **Owner**: Stacy (the owed-set query is in my command catalog on both tiers: `canonical/profiles/consumer/stacy.overlay.md` § "The owed-set pipeline", and `canonical/agents/stacy.md` § "The owed-set pipeline"). Thurgood is named for the copies in his LIVENESS item and `.kiro/hooks/RELEASE-FLOW.md` step 5a, which are kept to the same text.
 **Trigger**: `release:next:phase-1` — the consumer text is a floor-class row (P0 below), so it is fixed, or Peter rules on it, before release 5's phase 1.
 **Class**: P0 false-claim · defect *(my read as owner, rule 12; reasoning and the counter below. Only Peter downgrades a P0.)*
@@ -45,3 +45,19 @@ Neither starter spec has started: every task is unticked, and `init` wrote them.
 The pick is open. (1) and (2) compose; (3) is the class-level option, and costs a spec-sized grant and a Peter ruling that is already pending.
 
 **No fix is authorized by this record.**
+
+---
+
+## Fixed (2026-10-19)
+
+**Signed: Stacy (owner, overlay text), 2026-10-19.** I wrote the text. Thurgood applies it byte for byte on the follow-up branch under F12′, because I re-sign the row in the same range. The record closes at that PR's merge.
+- **Authority**: Peter's ruling in chat, 2026-10-19: "agreed" to "one disclosure sentence, Stacy's text" (fix shape 1 below). The record of that go is the orchestrator's, not this file. The P0 class is Peter's to downgrade and he did not; the fix removes the false claim instead.
+- **The shape: fix shape 1, consumer text only.** One sentence in `canonical/profiles/consumer/stacy.overlay.md`, under the query's closing fence and above the `The classes:` paragraph (L141 after the patch): `OWED:` rows are candidates, not verdicts; a spec owes a closeout claims pass only once its final declared merge unit has merged (the unit's PR has merged and its tasks are ticked in `tasks.md`), so rows for specs still in progress, such as your two starter specs on day one, are expected and are not findings. The sentence is verbatim in `<scratchpad>/stacy-owedset/sentence.txt` and in the three consumer renderings after regeneration.
+  - **Where, and not the script**: the reader meets the output, then the classes paragraph that explains `OWED`. I did not change the `echo "OWED:"` label: it is query text, and query copies are kept to the same text (overlay L143 before the patch, L145 after). Changing it is shape 2's decision.
+  - **The parenthesis names the merge, then the ticks**: the PR merge is the fact; a tick is an assertion awaiting that merge (Task Completion Protocol, "A task is complete at MERGE"). A consumer agent that sees every box ticked on an unmerged branch reads "has merged" first and is not misled by the tick.
+- **Verified (2026-10-19)**: the patched overlay passes `derive()`, and its body carries the sentence verbatim; a fresh `generateAll` → `writeOutputs(<temp>)` over the patched tree changes exactly the three Stacy renderings and their sidecars (+2 lines each, nothing else), and the canonical unit hash is unchanged (`sha256:e3f6f82a…`, equal to the overlay pin). Predicted renderedHash `sha256:19cef6df…`; control: the unpatched tree gives the committed `c821fc77…`. Detail: `<scratchpad>/stacy-owedset/predict.md`.
+- **Not dragged**: the two frozen G1 renderings (`run1.E.…txt`, `semguard.overlay.md`) pin run-1 blobs and do not read the live overlay; the `born-{cc,kiro}` fixtures carry the old rendering as founder repos and no test compares them to the generator. Not run here: the suites (read-only seat).
+- **Still open, deliberately not done here**: the over-listing itself.
+  - **Shape 2 (a counted `open` exclusion)** is a query change on both tiers' copies, needs the stub-charter rule (a spec with no `tasks.md`), and treats a checkbox as a fact. Filed as a P3 record (Edit C) with a `manual` trigger.
+  - **Shape 3 (a committed script)** waits on Peter's answer to the 2026-10-17 health-check question (`.kiro/docs/civitas-health-checks/2026-10-17.md` L115–121), which is Thurgood's to put to him. Filed in the same P3 record, not as a second one, because 2 is built inside 3 if 3 is chosen.
+- **The surviving counter**: a sentence is a reader's duty, not a guard. An agent that does not read the prose after the query still prints `OWED: ci-needs` and may report it. The disclosure removes the false statement; it does not stop the misreading. What the over-listing costs a consumer who skips prose is a mis-stated owed set in a report the claims pass reads, which is a visible-number direction (the reader of the report sees `ci-needs` with an untouched `tasks.md`), and shape 2 closes it only by trusting a checkbox. That residual is why the P3 record exists.
