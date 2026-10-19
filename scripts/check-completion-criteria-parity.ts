@@ -22,8 +22,13 @@
  * Output contract (DD3): ONE format for humans, CI, and the claims pass —
  * per-spec per-parent verdict lines, the association manifest (Req 2.4.2),
  * emission lines scoped to parity's OWN surface (B-9), and a summary line
- * with pass/fail counts and the emission count. Exit non-zero on any red or
- * malformation; exit zero with emissions otherwise.
+ * with pass/exempt/fail counts and the emission count. Exit non-zero on any
+ * red or malformation; exit zero with emissions otherwise.
+ *
+ * Loud, never silent (D-2 record § 3, 2026-10-19): a requested merge base
+ * that cannot be resolved, a failed authorship lookup, and a shallow clone
+ * are each RED — before, the first two were a `note:`/`undefined` and exit 0,
+ * turning the diff-scoped and declaration duties off without a trace.
  *
  * Framing (the (d8) sentence, carried where the instrument lives): nothing
  * here makes claim honesty owned, solved, or guaranteed. Any future reading
@@ -41,6 +46,10 @@ import {
   evaluateSpec,
   evaluateAmendment,
   formatUntickedLine,
+  mergeBaseUnresolvable,
+  authorshipUnresolvable,
+  shallowCloneFinding,
+  SHALLOW_CLONE_MESSAGE,
   Finding,
   SpecResult,
 } from './completion-claims/verdict';
@@ -54,23 +63,62 @@ import { verifyExtraction } from './completion-claims/materiality';
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const SPECS_DIR = path.join(PROJECT_ROOT, '.kiro', 'specs');
 
+/**
+ * Every git call pipes stderr (D-2 low (c)): an inherited stderr printed
+ * `fatal: path … exists on disk, but not in '<sha>'` on green runs. A failure
+ * that matters is turned into a RED finding by the caller, quoting git's
+ * first stderr line — never printed raw, never swallowed.
+ */
 function git(args: string[]): string {
-  return execFileSync('git', args, { cwd: PROJECT_ROOT, encoding: 'utf8' });
+  return execFileSync('git', args, {
+    cwd: PROJECT_ROOT,
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
 }
+
+function gitError(e: unknown): string {
+  const err = e as { stderr?: string | Buffer; message?: string };
+  const text = (err.stderr ? String(err.stderr) : err.message ?? String(e)).trim();
+  return text.split('\n')[0] || 'git failed';
+}
+
+/** In CI every tasks.md is committed, so an empty history is a failure, not
+ *  an uncommitted local file. */
+const IN_CI = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true';
+
+type Authorship = { date: string } | { uncommitted: true } | { error: string };
 
 /**
  * Authorship date (DD2): the first-commit date of the file under
  * `git log --diff-filter=A --follow` — the ruled instrument, run verbatim.
  * Squash-merge makes it the merge date (correct: the date it entered main's
  * view); CI checks out with fetch-depth 0 so the history is present.
+ *
+ * D-2 low (b): a git error is `{ error }` (RED), never `undefined` → legacy.
+ * Empty history is `{ error }` in CI; locally it is `{ uncommitted }` (a new
+ * file not yet committed — reported as a note, resolved as before).
  */
-function authorshipDate(relFile: string): string | undefined {
+function authorshipDate(relFile: string): Authorship {
+  let out: string;
   try {
-    const out = git(['log', '--diff-filter=A', '--follow', '--format=%cs', '--', relFile]);
-    const dates = out.trim().split('\n').filter(Boolean);
-    return dates.length ? dates[dates.length - 1] : undefined;
-  } catch {
-    return undefined;
+    out = git(['log', '--diff-filter=A', '--follow', '--format=%cs', '--', relFile]);
+  } catch (e) {
+    return { error: `git log failed: ${gitError(e)}` };
+  }
+  const dates = out.trim().split('\n').filter(Boolean);
+  if (dates.length) return { date: dates[dates.length - 1] };
+  return IN_CI ? { error: 'no commit adds this file in the fetched history' } : { uncommitted: true };
+}
+
+/** Is HEAD's repository a shallow clone? A git error here is also loud. */
+function shallowCheck(): Finding | undefined {
+  try {
+    return git(['rev-parse', '--is-shallow-repository']).trim() === 'true'
+      ? shallowCloneFinding()
+      : undefined;
+  } catch (e) {
+    return authorshipUnresolvable('(repository)', `git rev-parse failed: ${gitError(e)}`);
   }
 }
 
@@ -109,8 +157,14 @@ function main(): number {
     .sort();
 
   const results: SpecResult[] = [];
+  // Run-level reds that belong to no spec (D-2 lows (a), (b)).
+  const runFindings: Finding[] = [];
+  const notes: string[] = [];
   let skippedSpecLevel = 0;
   let skippedLegacy = 0;
+  let authorshipUnresolved = 0;
+  let shallowChecked = false;
+  let shallow = false;
 
   for (const specDir of specDirs) {
     const relFile = path.join('.kiro', 'specs', specDir, 'tasks.md');
@@ -118,7 +172,34 @@ function main(): number {
     const tasks = parseTasksMd(text, specDir);
     // Authorship dates are only consulted for UNDECLARED files (declaration
     // governs when present) — keeps the git cost proportional to the gap.
-    const authoredAt = tasks.declaredMode ? undefined : authorshipDate(relFile);
+    let authoredAt: string | undefined;
+    if (!tasks.declaredMode) {
+      if (!shallowChecked) {
+        shallowChecked = true;
+        const sf = shallowCheck();
+        if (sf) {
+          runFindings.push(sf);
+          shallow = sf.message === SHALLOW_CLONE_MESSAGE;
+        }
+      }
+      if (shallow) {
+        // A shallow clone dates every file at its boundary commit, so every
+        // undeclared file would read post-ratification (measured: 153 false
+        // NON_COMPLIANT reds). The one shallow red stands for them all.
+        authorshipUnresolved++;
+        continue;
+      }
+      const a = authorshipDate(relFile);
+      if ('error' in a) {
+        // Unresolvable, not legacy: the spec is left out of the population
+        // and the run is red, so the declaration duty never goes off quietly.
+        authorshipUnresolved++;
+        runFindings.push(authorshipUnresolvable(relFile, a.error));
+        continue;
+      }
+      if ('uncommitted' in a) notes.push(`note: ${relFile} has no commit yet — authorship unknown, resolved as legacy (local run only; in CI this is red)`);
+      else authoredAt = a.date;
+    }
     const mode = resolveMode(tasks.declaredMode, authoredAt, ratifiedAt);
     if (mode === 'legacy') {
       skippedLegacy++;
@@ -143,7 +224,8 @@ function main(): number {
     try {
       mergeBase = git(['merge-base', baseRef, 'HEAD']).trim();
     } catch {
-      console.log(`note: cannot resolve merge base against ${baseRef} — diff-scoped duties skipped`);
+      // D-2 low (a): the duty was requested and cannot run — red, not a note.
+      runFindings.push(mergeBaseUnresolvable(baseRef));
     }
     if (mergeBase) {
       const changed = git(['diff', '--name-only', mergeBase, 'HEAD'])
@@ -154,18 +236,23 @@ function main(): number {
         const abs = path.join(PROJECT_ROOT, file);
         if (!fs.existsSync(abs)) continue; // deleted
         const headText = fs.readFileSync(abs, 'utf8');
+        // D-2 low (c): existence at the base is checked first (ls-tree prints
+        // nothing for an absent path and never errors on it), so a tasks.md
+        // ADDED in this change no longer makes `git show` print `fatal:`.
         let baseText: string | undefined;
-        try {
+        if (git(['ls-tree', '--name-only', mergeBase, '--', file]).trim() !== '') {
           baseText = git(['show', `${mergeBase}:${file}`]);
-        } catch {
-          baseText = undefined; // added in this change — the authorship duty covers it
-        }
+        } // else: added in this change — the authorship duty covers it
         // The amendment duty binds LEGACY files (declared files are already
         // in — or excluded from — the population; the full scan covers the
         // post-ratification-authored-undeclared red).
         const headParsed = parseTasksMd(headText);
         if (headParsed.declaredMode) continue;
-        const authoredAt = authorshipDate(file);
+        if (shallow) continue; // the run is already red (shallow clone)
+        const a = authorshipDate(file);
+        // A failed lookup is already a full-scan red for this file (same path).
+        if ('error' in a) continue;
+        const authoredAt = 'date' in a ? a.date : undefined;
         if (authoredAt && authoredAt > ratifiedAt) continue; // full-scan red already
         const finding = evaluateAmendment(baseText, headText);
         if (finding) diffFindings.push({ file, finding });
@@ -175,9 +262,16 @@ function main(): number {
 
   // ---- output (DD3: one contract) ----
   let pass = 0;
+  let exempt = 0;
   let fail = 0;
   let reds = 0;
   let emissions = 0;
+
+  for (const n of notes) console.log(n);
+  for (const f of runFindings) {
+    reds++;
+    console.log(`RED [${f.verdict}] ${f.message}`);
+  }
 
   for (const r of results) {
     console.log(`spec ${r.spec} (${r.mode}):`);
@@ -197,6 +291,11 @@ function main(): number {
         // PASS: an unevaluated parent counted as passing would be this law's
         // own misleading-green shape.
         console.log(`  parent ${p.parent}: not evaluated (completion doc not found)`);
+      } else if (p.findings.length === 0 && p.emissions.some((e) => e.kind === 'exemption-honored')) {
+        // D-2 low (d)(ii): an exemption-honored parent was counted in `pass`.
+        // Its criteria table was waived, so it is counted apart.
+        exempt++;
+        console.log(`  parent ${p.parent}: EXEMPT (criteria table waived by the fixed-string exemption; no red on the duties evaluated)`);
       } else if (p.findings.length === 0) {
         pass++;
         console.log(`  parent ${p.parent}: PASS`);
@@ -225,12 +324,18 @@ function main(): number {
     console.log(`${d.file}: RED [${d.finding.verdict}] ${d.finding.message}`);
   }
 
+  // D-2 low (d)(i): `results` also holds undeclared non-compliant specs,
+  // which were counted as "declared per-parent".
+  const declaredPerParent = results.filter((r) => r.mode === 'per-parent').length;
+  const undeclared = results.length - declaredPerParent;
   console.log(
-    `population: ${specDirs.length} tasks.md — ${results.length} declared per-parent, ` +
-      `${skippedSpecLevel} spec-level (skipped), ${skippedLegacy} legacy (skipped)`
+    `population: ${specDirs.length} tasks.md — ${declaredPerParent} declared per-parent, ` +
+      `${undeclared} undeclared post-ratification (red), ` +
+      `${skippedSpecLevel} spec-level (skipped), ${skippedLegacy} legacy (skipped)` +
+      (authorshipUnresolved ? `, ${authorshipUnresolved} authorship unresolvable (red)` : '')
   );
   console.log(
-    `SUMMARY: parents evaluated ${pass + fail}, pass ${pass}, fail ${fail}; emissions ${emissions}; reds ${reds}`
+    `SUMMARY: parents evaluated ${pass + exempt + fail}, pass ${pass}, exempt ${exempt}, fail ${fail}; emissions ${emissions}; reds ${reds}`
   );
   return reds > 0 ? 1 : 0;
 }

@@ -34,7 +34,9 @@ export type Verdict =
   | 'MALFORMATION'
   | 'NON_COMPLIANT_NO_DECLARATION'
   | 'MATERIAL_AMENDMENT_WITHOUT_DECLARATION'
-  | 'RATIFICATION_RECORD_UNRESOLVABLE';
+  | 'RATIFICATION_RECORD_UNRESOLVABLE'
+  | 'MERGE_BASE_UNRESOLVABLE'
+  | 'AUTHORSHIP_UNRESOLVABLE';
 
 export interface Emission {
   kind:
@@ -432,6 +434,42 @@ export function parseRatificationRecord(
   const matches = [...ballotText.matchAll(RATIFIED_MACHINE_RE)];
   if (matches.length !== 1) return red;
   return { date: matches[0][1] };
+}
+
+/**
+ * CLI-level loud failures (D-2 record § 3 lows (a) and (b), 2026-10-19). The
+ * CLI owns the git invocations; the strings live here so the catalog-
+ * conformance cases pin them beside every other loud string.
+ *
+ * (a) A requested merge base (`--base`, or GITHUB_BASE_REF in a PR context)
+ *     that cannot be resolved was a `note:` and exit 0 — the diff-scoped
+ *     duties silently off. Now red.
+ */
+export function mergeBaseUnresolvable(baseRef: string): Finding {
+  return {
+    verdict: 'MERGE_BASE_UNRESOLVABLE',
+    message: `cannot resolve merge base against ${baseRef} — diff-scoped duties (Req 6.3) not evaluated`,
+  };
+}
+
+/**
+ * (b) An authorship lookup (DD2) that fails was swallowed into `undefined`,
+ *     which `resolveMode` reads as LEGACY — the declaration duty silently off.
+ *     Now red, per file; and a shallow clone (whose history cannot date a
+ *     file) is red once for the run.
+ */
+export function authorshipUnresolvable(file: string, reason: string): Finding {
+  return {
+    verdict: 'AUTHORSHIP_UNRESOLVABLE',
+    message: `cannot resolve authorship date for ${file} (${reason}) — criteria-mode resolution (DD2) not evaluated`,
+  };
+}
+
+export const SHALLOW_CLONE_MESSAGE =
+  'authorship dates unresolvable: shallow clone — DD2 needs full history (checkout fetch-depth: 0)';
+
+export function shallowCloneFinding(): Finding {
+  return { verdict: 'AUTHORSHIP_UNRESOLVABLE', message: SHALLOW_CLONE_MESSAGE };
 }
 
 /**
