@@ -1,7 +1,7 @@
 # Issue: the always-loaded law contradicts itself on test scope — Start Up Tasks #5 says `npm test` for task completion; Task Completion Protocol says targeted tests, not the full suite, for subtasks
 
 **Date**: 2026-10-01
-**Status**: ACTIVE
+**Status**: ACTIVE *(2026-10-19, Thurgood: S1 (A) applied by PR `chore/ballot-sitting-2-application`; closes in that PR once Stacy's re-sign lands, § "S1 applied (2026-10-19)".)*
 **Owner**: Thurgood (drafts the ballot; both docs are Civitas governance-layer identity docs). **Decision**: Peter. Ratification is by ballot (`.kiro/docs/ballots/README.md`); an edit to either doc is an edit to a signed identity doc in the consumer profile (see "What an edit costs").
 **Trigger**: `manual` — the capped sitting's ballot (sitting item S1) merges; written as `merge:#<N>` once that PR is known. *(Re-ruled 2026-10-18, Thurgood: the old event, U2b's unit PR merge, fired as #262 on 2026-10-02 and the ballot draft was not written; the rider deadline named in it, "the next ballot that edits either doc", first passed at #396 (`42a6ba716`, W-9, 2026-10-17, which edited Start Up Tasks and re-signed two of its units) and passed again at #408 (2026-10-18, which edited the TCP), without carrying the pick. Authority: the owner's Trigger-line right (README rule 9), re-ruled under rule 11 in a diff carrying this dated reason, and Peter's routing of 2026-10-18 ("Go on the W-1 records PR and the capped sitting", relayed in the orchestrator's brief; the PR body cites it). The superseded trigger, verbatim:)* kept verbatim in the next block.
 **Class**: P2 obligation (record) · defect *(set 2026-10-18, Thurgood, rule 12. Two always-loaded identity docs give a subtask-test instruction that cannot be followed both ways; neither states a false fact, and agents resolve it in practice (Stacy met it as a drafting question), so I read it as (record), not P0. Stacy may read it as P0 and say so to Peter; I do not upgrade it either way.)*
@@ -84,3 +84,12 @@ Any edit to `.kiro/steering/start-up-tasks.md`, `.kiro/steering/Task-Completion-
 
 - **Fired event**: the old trigger, U2b's unit PR merge, #262, `669b51b0931369e4d86123995becfea8246e439c` (2026-10-02). No commit that is an ancestor of the event's commit closed this record (rule 5's dated outcome line, or the archive move) or re-ruled it (its Trigger line changed in a diff carrying a dated reason and authority).
 - **Consequence (rule 11)**: this is a P2 `(record)`, which escalates at its **second** lapse, so nothing goes to Peter now. It lapses again at each later release's S while it is open; the re-ruling in this PR (Trigger line, dated reason, authority) is the closing-or-re-ruling act for any later event.
+
+## S1 applied (2026-10-19)
+
+*Signed: Thurgood (owner). Nothing above is rewritten.*
+
+- **Ruled**: ballot `.kiro/docs/ballots/2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form.md` S1, **F-S1a = A** (scope Start Up Tasks item 5 to parent tasks, with the subtask line, as drafted) and **F-S1b = now** (Peter, 2026-10-18/19, § 8). The F-2 TCP pointer rider is not carried (S1 (A) touches no TCP unit; ballot § 5).
+- **Applied by PR `chore/ballot-sitting-2-application`** (Thurgood): `.kiro/steering/start-up-tasks.md` item 5, the "regular task completion" block replaced by "**WHEN validating a subtask THEN:** Run targeted tests relevant to the change, not the full suite: `npm test -- <test-file-path>` (Task Completion Protocol § "For SUBTASKS", step 1)", and the decision tree's non-parent, non-performance leaf now reads `targeted tests: npm test -- <test-file-path>`; the operative-set items `test-command-selecti-2` and `decision-tree`. Straggler: `grep -n 'regular task completion' .kiro/steering/start-up-tasks.md` returns 0.
+- **The signed unit** `#item-test-command-selection-guidelines` is staled by the edit: Stacy's re-confirm and re-sign, and the overlay pin and removal text to her consumer decision, follow in the same PR.
+- **Closes** in that PR once her re-sign lands: rule 5's dated outcome line, then the archive move.
