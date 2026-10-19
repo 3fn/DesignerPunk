@@ -2,13 +2,13 @@
 
 **Date**: 2026-10-18
 **Drafted by**: Thurgood (Civitas steward), at the capped sitting Peter opened on 2026-10-18 ("Go on the W-1 records PR and the capped sitting", relayed in the orchestrator's brief). This is step 2 of the W-1 triage; step 1 is the records PR on `chore/w1-records-closes-and-tokens`, which re-rules the six source records' triggers to this sitting. Woven at R2 from Stacy R1 (§ 7).
-**Status**: **DRAFT.** Merging this file ratifies nothing: **merge = nothing.** Ratification is Peter's word on the record, committed first as a Status line (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"), before any edit site is applied.
-**Held under the merge rule** (Task-Completion-Protocol § "Branch and PR Conventions", the M8 bullet): this PR's body carries one `**Open for Peter**:` line for each fork in § 3 and each item marked "Peter rules", and it is **not merged until Peter's answer to each is on the record**, dated before the merge.
+**Status**: **RATIFIED in part (Peter, 2026-10-18/19)**: S1–S4, S6 ratified with the forks above; S5 pending the three-seat consult (R3), relayed by the orchestrator. Peter's quoted words and dates are in § 8. This commit is the record (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"), made before any edit site is applied; the application is a later PR. *(Was: DRAFT; merge = nothing.)*
+**Held under the merge rule** (Task-Completion-Protocol § "Branch and PR Conventions", the M8 bullet): this PR's body carries one `**Open for Peter**:` line for each fork in § 3 and each item marked "Peter rules", and it is **not merged until Peter's answer to each is on the record**, dated before the merge. *(Answered by Peter on the record, 2026-10-18/19 — § 8 — for every fork except the S5 redraft, which returns at R3.)*
 **Authority for drafting**: the 2026-10-17 health check, finding W-1 (`.kiro/docs/civitas-health-checks/2026-10-17.md` L80–88: seven of Thurgood's records fired without a record; "the four ballot drafts are better as one ballot sitting than four"); each source record's own trigger (§ 1); Peter's routing of 2026-10-18 (above).
 **Required reviewer**: **Stacy**. S1's edit site is a unit she confirms and signs. S3, S4 and S6 amend the law of an instrument whose verdicts she reads. S2 is a planning rule whose independent reader (A3) would be her LENS. S5, now a deferral stub, concerns who audits her own signing acts.
 **Unit**: standalone record-first ballot. Its application edits `.kiro/steering/start-up-tasks.md`, `governance/Process-Spec-Planning.md`, `governance/completion-documentation-guide.md` and `governance/classification-map.md` (one history line, S3), so **Peter merges it** under the governance carve-out. After the S5 strike, it no longer edits the signing-act ballot.
 **Cap**: exactly the items below. Anything I was tempted to add is in § 5, with where it goes instead.
-**Severability**: each item can be struck alone, and **a clause that cites a struck item is removed with it**. The one cross-item citation: S3's sub-branch A-ii relies on S4's `—` sentence, so **A-ii is unavailable if S4 is struck**. **S5 is struck from this sitting** (R2; orchestrator's call on Stacy R1's S5 block). Its stub (§ 2 S5) records why and what S5's own later ballot needs before it can be drafted.
+**Severability**: each item can be struck alone, and **a clause that cites a struck item is removed with it**. The one cross-item citation: S3's sub-branch A-ii relies on S4's `—` sentence, so **A-ii is unavailable if S4 is struck**. **S5 was struck at R2** (orchestrator's call on Stacy R1's S5 block). **Peter overrode the deferral** (§ 8, F-S5-override): the three-seat consult runs now, and S5 **returns to this sitting as an R3 item**. Its stub (§ 2 S5) stands until then, and its four entry conditions are the R3 redraft's checklist.
 **Item numbers — a mismatch to fix before either PR merges**: the records PR (`a6de2ee76`, read-only) labels D3 as "S4", D-2 as "S5" and trigger (d) as "S6". This ballot follows the sitting brief: **S4 = D-2, S5 = trigger (d), S6 = D3.** S1–S3 agree. One of the two must be renumbered; the records PR is three tokens.
 
 > **Conflict of interest, stated first.** The author owns all six source records and lapsed on every one (W-1). He authored the `tasks.md` that nests criteria in 11 parents (S3), owns the instrument whose law S3, S4 and S6 amend, and is the profile author whose rows Stacy signs (S5). Where a lean below favours less work for his seat, the residual says so.
@@ -135,7 +135,9 @@ The records PR's S1 triage line says the rider deadline passed at #408. It first
 
 **Cost**: about 10 min for the line. The fixing PR is the record's cost (about 3 h), not this ballot's. **If struck**: the checker fix still has the register rule ("a Status mark … per row") as its law, but the guide stays silent on what it enforces, and S3's A-ii falls with it.
 
-### S5 — the § 5.3 amendment (trigger (d)): STRUCK from this sitting, deferred
+### S5 — the § 5.3 amendment (trigger (d)): struck at R2, returning at R3 (Peter, F-S5-override)
+
+*(Peter, 2026-10-18/19: Q1 = the hybrid; one RELEASE walk at zero fires; "run the consult now, please" — § 8. The stub below stands until the R3 redraft replaces it.)*
 
 **Struck at R2**, on Stacy R1's BLOCKING (S5) and the orchestrator's call: **"deferred pending the three-seat consult and Peter's Q1 answer."** S5 was severable, and nothing in S1–S4 or S6 waits on it. This stub replaces the draft's operative text. The draft is in git at `8bcb951b6`.
 
@@ -390,7 +392,18 @@ Each source record closes by rule 5's dated outcome line and its archive move, i
 
 ## 8. Rulings (Peter)
 
-*(None. Each fork in § 3 is answered on the record, dated, before this PR merges.)*
+- **2026-10-18/19 — Peter, in chat, relayed by the orchestrator.** His words, verbatim: items 4–8, 12 and 13 **"Agreed"**; item 5 **"Now"**; then **"Re: 1, decision 1, hybrid / Re: 9, outside / Re: 10, run the consult now, please / Re: 11, one"**. The item numbers are those of the orchestrator's relay list to Peter, not this ballot's § 3 order. The mapping to forks below is the orchestrator's; this commit is the first committed record of the words (Task-Completion-Protocol § "Branch and PR Conventions", the M8 bullet).
+- **Ratified, with the forks:**
+  - **S1**: **F-S1a = A** (scope Start Up Tasks item 5 to parent tasks, with the subtask line, as drafted); **F-S1b = now** ("Now"). The one-unit re-sign is paid at application.
+  - **S2**: **F-S2 = A1 now**, on the narrowed class (R2). A2 and A3 were not offered; A2 is homed on the blast-radius record (§ 2 S2).
+  - **S3**: **F-S3 = A** (nested bullets are rows; law text only); **F-S3′ = A-i** (every bullet is a criterion, the group heading included, whose Status rests on its own words); **F-S3″ = outside** ("Re: 9, outside"). 127 `requirements.md` is **not** edited. The supersession is recorded in the D4 record's dated outcome line and the 127 `design.md` L87 line, as release-4 rulings item 17 did.
+  - **S4**: ratified; **the bracketed sentence is kept** ("A criterion marked `—` claims nothing, and so reads as missing from the table").
+  - **S6**: **fix now**. The class-4 amendment and the rows 2–3 wording are ratified as drafted. The instrument census re-run stays a stop condition at application.
+- **S5 — not ratified; pending R3:**
+  - **F-S5-Q1 = the hybrid** ("Re: 1, decision 1, hybrid"). Rulings row 18 is read as having governed 16.0.0 only. PR-10 is the destination. Per the orchestrator, the records seat files this answer in the trigger-(d) record (`.kiro/issues/2026-10-03-stacy-signed-sample-trigger-d.md`) on #414. Not read here.
+  - **F-S5-walks = one** ("Re: 11, one"): once J is per release, one RELEASE walk reading `0` fires trigger (d).
+  - **F-S5-override = run the three-seat consult now** ("Re: 10, run the consult now, please"). The deferral is overridden, and S5 returns to this sitting as an **R3** item once Ada, Lina and Leonardo have answered (read-only consults, digests relayed by the orchestrator). The R3 redraft answers the four entry conditions (§ 2 S5), and Stacy reviews it before Peter rules S5.
+- **Owed**: the application PR for S1–S4 and S6 (§ 6), Peter-merged; the S5 redraft at R3; the item-number mismatch with the records PR (header).
 
 ## 9. Consult ledger
 
