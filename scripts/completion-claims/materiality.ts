@@ -14,6 +14,12 @@
  * The narrative-prose gap is ACCEPTED as a stated decision (DD9): load-bearing
  * numbers in free prose between tasks are outside this surface; the guarded
  * channels are the LENS's question 5 and the claims pass.
+ *
+ * Class 4 (the heading label) takes its WHOLE SECTION, not a bullet body:
+ * ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form S6
+ * (law text: governance/Process-Spec-Planning.md, the pattern-set table).
+ * The bullet-body rule stopped at in-block prose and bold sub-labels and
+ * dropped numbered lists whole — false-IMmaterial, the costly direction.
  */
 
 import * as fs from 'fs';
@@ -95,6 +101,29 @@ function collectBulletBody(lines: string[], start: number): { body: string[]; en
   return { body, end: i };
 }
 
+/** Any ATX heading, any level. */
+const HEADING_RE = /^#{1,6}(\s|$)/;
+/** A thematic break: three or more `-`, `*` or `_`, optionally spaced. */
+const THEMATIC_BREAK_RE = /^ {0,3}([-*_])(\s*\1){2,}\s*$/;
+
+/**
+ * Class 4's body (ballot sitting-2 S6): the section runs to the next heading
+ * of any level, a thematic break or a top-level checkbox line, and takes in
+ * every line between — prose, bold sub-labels, numbered lists and any inline
+ * label (`**Primary Artifacts:**` included; it is not a class-4 boundary).
+ */
+function collectClass4Section(lines: string[], start: number): { body: string[]; end: number } {
+  const body: string[] = [];
+  let i = start;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (HEADING_RE.test(line) || THEMATIC_BREAK_RE.test(line) || P1_TOP_LEVEL_CHECKBOX.test(line)) break;
+    body.push(line);
+    i++;
+  }
+  return { body, end: i };
+}
+
 export interface Extraction {
   /** Extracted segments, in document order. */
   segments: string[];
@@ -112,10 +141,18 @@ export function extractPromiseSurface(text: string): Extraction {
       continue;
     }
 
+    // A heading line is class 4 even if it also carries a bold label: the
+    // heading shape decides the body extent (S6).
+    if (P4_LABEL_HEADING.test(line)) {
+      const { body, end } = collectClass4Section(lines, i + 1);
+      segments.push(line, ...body);
+      i = end - 1;
+      continue;
+    }
+
     const isP2 = P2_LABEL_FROZEN.test(line);
     const isP3 = !isP2 && P3_LABEL_COLON_OUTSIDE.test(line);
-    const isP4 = P4_LABEL_HEADING.test(line);
-    if (isP2 || isP3 || isP4) {
+    if (isP2 || isP3) {
       const { body, end } = collectBulletBody(lines, i + 1);
       segments.push(line, ...body);
       i = end - 1;
@@ -171,7 +208,9 @@ export function isMaterialAmendment(before: string, after: string): boolean {
  * `.kiro/specs/<spec>/tasks.md`, print per-file segment counts, the per-class
  * totals (reconciled against ballot § 5.7's P1–P8 table — every difference
  * attributed to enumerated corpus changes, never to extraction behaviour),
- * and a corpus digest.
+ * and a corpus digest. One recorded exception: the class-4 body extent was
+ * amended by ballot sitting-2 S6, so the digest changed (the per-class counts
+ * did not) and that one change is attributed to the amendment by name.
  */
 export function verifyExtraction(projectRoot: string): {
   files: { file: string; counts: ExtractionCounts }[];

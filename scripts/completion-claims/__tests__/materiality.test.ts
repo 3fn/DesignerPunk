@@ -1,9 +1,11 @@
 /**
  * materiality.test.ts — the generous extraction + canonical-form comparison
  * (Spec 127, design C4; Req 2.3): each pattern class, tick-only diff
- * immaterial, strike-through material, wrapped-line reflow immaterial.
+ * immaterial, strike-through material, wrapped-line reflow immaterial;
+ * class 4's whole-section body (ballot sitting-2 S6).
  */
 
+import { normalizeCell } from '../normalize';
 import {
   extractPromiseSurface,
   countPatternClasses,
@@ -130,5 +132,91 @@ describe('materiality — normalized-and-masked inequality (Req 2.3.2)', () => {
     const nbspOnly = BASE.replace('exports two functions', 'exports two functions');
     expect(canonicalSurface(nbspOnly)).toBe(canonicalSurface(BASE));
     expect(canonicalSurface(pasted)).not.toBe(canonicalSurface(BASE));
+  });
+});
+
+/**
+ * Class 4 takes its whole section (ballot
+ * 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form S6). Each
+ * stop shape the old bullet-body rule truncated at gets a fixture, and a
+ * reworded criterion after the old stop point must read MATERIAL. The bite:
+ * the pre-S6 extractor goes red on five of the six tests in this block; the
+ * Primary Artifacts pin passes under both rules, which is what it pins.
+ */
+describe('class 4 — the heading label takes its whole section (S6)', () => {
+  // Shape 1: intro prose (001, 002, 003, web-format-cleanup).
+  const INTRO_PROSE = `- [x] 9. Final task
+
+## Success Criteria
+
+Spec is complete when:
+
+- every token resolves to a primitive
+- the suite passes with zero skips
+`;
+
+  // Shape 2: bold sub-labels (010, 011, 012).
+  const BOLD_SUB_LABEL = `## Success Criteria
+
+**Critical Success** (Required):
+- the release pipeline publishes to both registries
+
+**Nice to Have**:
+- the changelog links every PR
+`;
+
+  // Shape 3: a numbered list (011-inset, 034, 119-B, issue-fix-*, release-detection).
+  const NUMBERED = `## Success Criteria
+
+1. Every inset token carries its new name
+2. No component references a retired name
+`;
+
+  test('intro prose: the bullets after it are in the surface', () => {
+    expect(extractPromiseSurface(INTRO_PROSE).segments.join('\n')).toContain('the suite passes with zero skips');
+  });
+
+  test('intro prose: a reworded criterion after the old stop point IS material', () => {
+    const relaxed = INTRO_PROSE.replace('with zero skips', 'with few skips');
+    expect(isMaterialAmendment(INTRO_PROSE, relaxed)).toBe(true);
+  });
+
+  test('bold sub-label: every sub-group is in the surface, and rewording one IS material', () => {
+    expect(extractPromiseSurface(BOLD_SUB_LABEL).segments.join('\n')).toContain('the changelog links every PR');
+    const relaxed = BOLD_SUB_LABEL.replace('to both registries', 'to one registry');
+    expect(isMaterialAmendment(BOLD_SUB_LABEL, relaxed)).toBe(true);
+  });
+
+  test('numbered list: the items are in the surface, and deleting one IS material', () => {
+    expect(extractPromiseSurface(NUMBERED).segments.join('\n')).toContain('No component references a retired name');
+    const dropped = NUMBERED.replace('2. No component references a retired name\n', '');
+    expect(isMaterialAmendment(NUMBERED, dropped)).toBe(true);
+  });
+
+  test('a **Primary Artifacts:** label inside a class-4 section is taken in, with no change to the normalized surface', () => {
+    const text = `## Success Criteria
+
+- the module ships
+
+**Primary Artifacts:**
+- scripts/foo.ts
+`;
+    const { segments } = extractPromiseSurface(text);
+    // taken in once, by the section, not re-extracted as its own class-5 block
+    expect(segments.filter((l) => l.includes('**Primary Artifacts:**'))).toHaveLength(1);
+    expect(canonicalSurface(text)).toBe(
+      normalizeCell('## Success Criteria\n- the module ships\n**Primary Artifacts:**\n- scripts/foo.ts')
+    );
+  });
+
+  test('the section ends at the next heading of any level, a thematic break or a top-level checkbox line', () => {
+    const afterHeading = '## Success Criteria\n\n- in\n\n### Notes\n\n- out\n';
+    expect(extractPromiseSurface(afterHeading).segments.join('\n')).not.toContain('- out');
+    const afterBreak = '## Success Criteria\n\n- in\n\n---\n\n- out\n';
+    expect(extractPromiseSurface(afterBreak).segments.join('\n')).not.toContain('- out');
+    const afterCheckbox = '## Success Criteria\n\n- in\n\n- [ ] 2. Next task\n  - out\n';
+    const surface = extractPromiseSurface(afterCheckbox).segments;
+    expect(surface).toContain('- [ ] 2. Next task'); // the checkbox is still its own class-1 segment
+    expect(surface.join('\n')).not.toContain('  - out');
   });
 });
