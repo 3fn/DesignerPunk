@@ -167,6 +167,8 @@ At **MIDPOINT, CLOSEOUT and RELEASE**, Stacy runs `--audit` over **every PR merg
 
 *(Amended 2026-10-19 by ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form S5; prior text at 3b84122c9.)*
 
+*(2026-10-19: the signer filter landed — `--signer` / `--exclude-signer` on `--audit`, PR `fix/audit-signer-filter` (`4fb2c644d`), Stacy's fixtures F1–F16. From that PR's merge the "Interim, until `--signer` / `--exclude-signer` land on `--audit`" bullet below no longer governs; the delegate runs `--audit --signer stacy` and Stacy runs `--audit --exclude-signer stacy` (§ 5.1). Sitting-2 ballot S5, "Order: the interim bullet governs until it merges.")*
+
 For acts Stacy signed, the C1 collapse-seat rule applies: Stacy does not rule on her own acts, and does not run or paste their audit. The duty has two halves, and their readings are never merged into one number.
 
 - **`--audit` (links 4–7), at every walk, by a delegate.**
