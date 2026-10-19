@@ -212,10 +212,15 @@ interface Emission { kind: 'declared-none-table-waiver'|'exemption-honored'
 | Material amendment without declaration | `material amendment without criteria-mode declaration (canonical-form diff attached)` |
 | Ticked parent, no completion doc | *(emission, not red)* `completion doc not found — not evaluated (doc presence is parent-completion-docs-present's surface, proposed/unbuilt; interim owner: the claims pass)` |
 | Ballot absent, or machine line unparseable | **(RED — B-2)** `cannot resolve ratification record at <path>` |
+| Requested merge base unresolvable *(added 2026-10-19, D-2 low (a): `.kiro/issues/2026-10-03-completion-criteria-parity-status-marks-gap.md` § 3)* | **(RED)** `cannot resolve merge base against <ref> — diff-scoped duties (Req 6.3) not evaluated` |
+| Authorship lookup failed — a git error, or empty history in CI *(added 2026-10-19, D-2 low (b), same record)* | **(RED)** `cannot resolve authorship date for <file> (<reason>) — criteria-mode resolution (DD2) not evaluated` |
+| Shallow clone *(added 2026-10-19, D-2 low (b), same record)* | **(RED)** `authorship dates unresolvable: shallow clone — DD2 needs full history (checkout fetch-depth: 0)` |
 
 ## Testing Strategy
 
 Jest, functional lane, timing-assertion-free (house law). Suites: `normalize.test.ts` (property-style cases incl. pipes, `<br>`, NBSP, glyph passthrough); `tasks-md.test.ts` (all three parent forms, the 054a falsifier, declared-none, malformations); `completion-doc.test.ts` (table parsing, deferral form incl. `->`, exemption near-misses); `materiality.test.ts` (each generous-pattern class; tick-only diff = immaterial; strike-through = material; wrapped-line reflow = immaterial); `fixtures.test.ts` (C7 — Stacy's falsification cases, red-by-construction); `verdict.test.ts` (multiset semantics, duplicate bullets). Plus `--verify-extraction` over the live corpus (recorded, not asserted — the corpus moves). **Gate-bite** (Req 6.4): at arming time, a throwaway PR with a deliberately defective completion doc, proof cited on the register row — planned in tasks, not built here.
+
+> **Erratum (2026-10-19, Thurgood), added adjacent to the paragraph above, not part of it:** "**Gate-bite** (Req 6.4)" above cites the wrong criterion. The gate-bite is Requirement 6 AC **6**; AC **4** is the verdict surface. Read it as **Req 6.6**, as C6 and `tasks.md` already do. Source: Stacy's arming fixture spec, `completion/arming-2026-10-03-parity-flip-fixtures.md` § 5 item 12; routed by `.kiro/issues/2026-10-03-completion-criteria-parity-status-marks-gap.md` § 4. The paragraph is kept as written.
 
 ## Design Decisions
 
