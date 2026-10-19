@@ -426,6 +426,17 @@ class TreeIndex {
   }
 }
 
+/** The failure text for the one-paragraph-too-early class (the 2026-10-18 re-cut): the line exists, git does not read it. */
+export const AGENT_ABOVE_FINAL_PARAGRAPH =
+  'signing commit carries no parsable Agent: trailer — an "Agent:" line exists above the final paragraph; git reads trailers only from the last paragraph: put "Agent: <seat>" and "Co-Authored-By:" together in ONE final paragraph';
+
+/** True when the commit body has an `Agent: <value>` line in any paragraph but the last (git reads trailers only from the last). */
+export function agentLineAboveFinalParagraph(repo: string, sha: string): boolean {
+  const body = git(repo, ['log', '-1', '--format=%B', sha]).replace(/\s+$/, '');
+  const paragraphs = body.split(/\n[ \t]*\n/);
+  return paragraphs.slice(0, -1).some((p) => /^Agent:\s*\S+/m.test(p));
+}
+
 /** Read every commit of `base..head`, parents before children. */
 export function readRange(repo: string, base: string, head: string): CommitInfo[] {
   const SEP = '\x1e';
@@ -765,7 +776,9 @@ export function walkRange(repo: string, base: string, head: string, rg: Reground
       findings.push({ link, sha: an.sha, row, message });
     };
     const trailer = an.trailers.length === 1 ? an.trailers[0].toLowerCase() : undefined;
-    if (an.trailers.length === 0) push(3, 'signing commit carries no Agent: trailer');
+    if (an.trailers.length === 0) {
+      push(3, agentLineAboveFinalParagraph(repo, an.sha) ? AGENT_ABOVE_FINAL_PARAGRAPH : 'signing commit carries no Agent: trailer');
+    }
     if (an.trailers.length > 1) push(3, `signing commit carries ${an.trailers.length} Agent: trailers (${an.trailers.join(', ')}) — exactly one names the signer`);
     if (trailer) signerSeats.add(trailer);
 
