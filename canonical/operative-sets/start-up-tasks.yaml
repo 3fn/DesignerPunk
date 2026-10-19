@@ -154,7 +154,7 @@ units:
         text: "`vitest` - This project doesn't use Vitest"
     confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-critical-this-project-uses-jest-not-vitest
   "#item-test-command-selection-guidelines":
-    canonicalHash: sha256:b4c82938bb3f353c5f5b20b055bddfd411f747dc8ab748e7bbe89cb86c9e6974
+    canonicalHash: sha256:3df356662cb6f1dbb2a10bd046eada681e3cac69ead4d3f3f2ffff6187bc47db
     items:
       - id: test-command-selecti-2
         kind: obligation
