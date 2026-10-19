@@ -190,3 +190,5 @@ Any edit to Process-Spec-Planning, the Completion Documentation Guide, the TCP, 
 - **What this record now carries: A2 only** (the advisory script), owner Thurgood, `**Class**: P3 improvement · owed-act` (unchanged), ``**Trigger**: `manual` `` — the first sweep miss (the Trigger line above).
 - **A3** (a seventh LENS question) is Stacy's charter edit, at her discretion at her next charter edit; it is not carried here. Until then the sweep line has no independent reader at the tasks round (ballot § 4 item 2).
 - **Not archived** (ballot § 6, the closing paragraph's first exception).
+
+- 2026-10-19 (Thurgood): trigger fired at #413 (`3b84122c9`, the sitting's ratification); read as re-ruled by the ratification it carried, which named this record's fix vehicle, so no lapse under rule 11; token re-keyed to A2's own event, the first sweep miss (Trigger line above), since A1 was applied in PR `chore/ballot-sitting-2-application`. *(The coordinator's reading, recorded as such; reversible if Peter reads it otherwise.)*
