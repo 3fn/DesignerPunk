@@ -841,6 +841,20 @@ describe('verify-signing-chain --audit --signer / --exclude-signer (sitting-2 S5
       expect(r.out).toEqual([]);
       expect(r.err.join('\n')).toMatch(msg);
     }
+    // F13g–i (orchestrator verification, 2026-10-19): an argument --audit does not know never runs
+    // unfiltered. Bite: before the fix each read exit 0 with the full unfiltered output.
+    const known = '--audit, --pr <N>, --branch <b>, --base <ref>, --store <dir>, --kiro <sha,…>, --signer <seat>, --exclude-signer <seat>, --json';
+    for (const [tail, tok] of [
+      [['--bogus'], '--bogus'], // g: an unknown flag
+      [['--signer stacy'], '--signer stacy'], // h: flag and value pasted as one token
+      [['--signr', 'stacy'], '--signr'], // i: a misspelt flag
+      [['--exclude-signer', 'stacy', 'stray'], 'stray'], // a bare token where no value is expected
+    ] as const) {
+      const r = run(M, ...tail);
+      expect(r.code).toBe(2);
+      expect(r.out).toEqual([]);
+      expect(r.err).toEqual([`verify-signing-chain --audit: unknown argument '${tok}' for --audit — known: ${known}`]);
+    }
     // No --branch, no --pr: usage, exit 2, not a filtered empty run.
     const n = cli(['--audit', '--store', M.store, '--exclude-signer', 'stacy'], M.repo);
     expect(n.code).toBe(2);

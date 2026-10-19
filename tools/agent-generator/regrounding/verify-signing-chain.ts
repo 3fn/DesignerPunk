@@ -41,6 +41,8 @@
  *               `(unknown)` — is <seat>; `--exclude-signer <seat>` keeps every other act,
  *               `(unknown)` included. It selects from the finished verdict list, so a kept act's
  *               verdict never changes. Mutually exclusive, never repeated, never `--flag=value`;
+ *               any argument `--audit` does not know (a misspelt flag, a flag and value pasted as
+ *               one token, a stray bare token) exits 2 — never an unfiltered run;
  *               seat names case-insensitive and exact; a seat neither on the roster (the charters
  *               under `canonical/agents/`, their C1 seats, `peter`) nor seen in the range exits 2.
  *               A filtered run adds one line under the header,
@@ -1444,6 +1446,31 @@ export function parseSignerFilter(argv: string[]): { filter?: SignerFilter; erro
   return { filter: { mode: name === '--signer' ? 'signer' : 'exclude-signer', seat: v.toLowerCase() } };
 }
 
+/** `--audit`'s arguments: those that take a value, and the bare switches. */
+export const AUDIT_VALUE_FLAGS = ['--pr', '--branch', '--base', '--store', '--kiro', '--signer', '--exclude-signer'] as const;
+export const AUDIT_SWITCHES = ['--audit', '--json'] as const;
+
+/**
+ * The first argument `--audit` does not know — an unknown `--` token (a misspelling such as
+ * `--signr`, or a flag and its value pasted as one token, `"--signer stacy"`), or a bare token
+ * where no value is expected — else `undefined`. An unknown argument exits 2, never runs
+ * unfiltered (Stacy's F13: "never fall through to an unfiltered run"). `--ci` is not read here.
+ */
+export function unknownAuditArg(argv: string[]): string | undefined {
+  for (let i = 0; i < argv.length; i += 1) {
+    const t = argv[i];
+    if ((AUDIT_SWITCHES as readonly string[]).includes(t)) continue;
+    if ((AUDIT_VALUE_FLAGS as readonly string[]).includes(t)) {
+      i += 1;
+      continue;
+    }
+    return t;
+  }
+  return undefined;
+}
+
+export const AUDIT_KNOWN = '--audit, --pr <N>, --branch <b>, --base <ref>, --store <dir>, --kiro <sha,…>, --signer <seat>, --exclude-signer <seat>, --json';
+
 /**
  * The seats a filter may name: every charter stem under `canonical/agents/` at `head` (never a
  * `_`-prefixed fixture), every seat C1 maps one to (Thurgood's rows → stacy), the escalation
@@ -1544,6 +1571,11 @@ export function main(argv: string[], cwd: string = process.cwd()): number {
     const sf = parseSignerFilter(argv);
     if (sf.error) {
       console.error(`verify-signing-chain --audit: ${sf.error}`);
+      return 2;
+    }
+    const unknown = unknownAuditArg(argv);
+    if (unknown !== undefined) {
+      console.error(`verify-signing-chain --audit: unknown argument '${unknown}' for --audit — known: ${AUDIT_KNOWN}`);
       return 2;
     }
     const pr = arg(argv, '--pr');
