@@ -180,311 +180,311 @@
     {
       "lines": [
         55,
-        72
+        73
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#in-scope"
     },
     {
       "lines": [
-        73,
-        79
+        74,
+        80
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#out-of-scope"
     },
     {
       "lines": [
-        80,
-        83
+        81,
+        84
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#boundary-cases"
     },
     {
       "lines": [
-        84,
-        99
+        85,
+        100
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#domain-boundary-response-examples"
     },
     {
       "lines": [
-        100,
-        103
+        101,
+        104
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#component-scaffolding-workflow:preamble"
     },
     {
       "lines": [
-        104,
-        106
+        105,
+        107
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#step-1-verify-component-family-doc"
     },
     {
       "lines": [
-        107,
-        109
+        108,
+        110
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#step-2-create-typests"
     },
     {
       "lines": [
-        110,
-        117
+        111,
+        118
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#step-3-author-contractsyaml"
     },
     {
       "lines": [
-        118,
-        139
+        119,
+        140
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#step-4-create-platform-implementations"
     },
     {
       "lines": [
-        140,
-        142
+        141,
+        143
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#step-5-create-tests"
     },
     {
       "lines": [
-        143,
-        147
+        144,
+        148
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#step-6-create-or-review-component-metayaml"
     },
     {
       "lines": [
-        148,
-        152
+        149,
+        153
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#step-7-create-readme"
     },
     {
       "lines": [
-        153,
-        156
+        154,
+        157
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#platform-implementation-true-native-architecture:preamble"
     },
     {
       "lines": [
-        157,
-        162
+        158,
+        163
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#web"
     },
     {
       "lines": [
-        163,
-        167
+        164,
+        168
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#ios"
     },
     {
       "lines": [
-        168,
-        172
+        169,
+        173
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#android"
     },
     {
       "lines": [
-        173,
-        177
+        174,
+        178
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#cross-platform-consistency"
     },
     {
       "lines": [
-        178,
-        181
+        179,
+        182
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#token-usage-in-components:preamble"
     },
     {
       "lines": [
-        182,
-        188
+        183,
+        189
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#token-selection-priority-must-follow-this-order"
     },
     {
       "lines": [
-        189,
-        191
+        190,
+        192
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#component-token-construction-rule"
     },
     {
       "lines": [
-        192,
-        202
+        193,
+        203
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#when-a-token-is-missing"
     },
     {
       "lines": [
-        203,
-        206
+        204,
+        207
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#collaboration-model-domain-respect:preamble"
     },
     {
       "lines": [
-        207,
-        211
+        208,
+        212
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#trust-by-default"
     },
     {
       "lines": [
-        212,
-        216
+        213,
+        217
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#obligation-to-flag"
     },
     {
       "lines": [
-        217,
-        221
+        218,
+        222
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#graceful-correction"
     },
     {
       "lines": [
-        222,
-        226
+        223,
+        227
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#fallibility"
     },
     {
       "lines": [
-        227,
-        230
+        228,
+        231
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#documentation-governance-ballot-measure-model:preamble"
     },
     {
       "lines": [
-        231,
-        237
+        232,
+        238
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#the-process"
     },
     {
       "lines": [
-        238,
-        246
+        239,
+        247
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#what-this-means-in-practice"
     },
     {
       "lines": [
-        247,
-        260
+        248,
+        261
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#mcp-practice-notes"
     },
     {
       "lines": [
-        261,
-        264
+        262,
+        265
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#collaboration-standards:preamble"
     },
     {
       "lines": [
-        265,
-        273
+        266,
+        274
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#counter-arguments-are-mandatory"
     },
     {
       "lines": [
-        274,
-        276
+        275,
+        277
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#candid-over-comfortable"
     },
     {
       "lines": [
-        277,
-        279
+        278,
+        280
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#bias-self-monitoring"
     },
     {
       "lines": [
-        280,
-        284
+        281,
+        285
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#when-you-and-peter-disagree"
     },
     {
       "lines": [
-        285,
-        292
+        286,
+        293
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#what-you-own"
     },
     {
       "lines": [
-        293,
-        298
+        294,
+        299
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#what-you-dont-own"
     },
     {
       "lines": [
-        299,
-        300
+        300,
+        301
       ],
       "op": "render",
       "source": "C11:lane2-header"
     },
     {
       "lines": [
-        301,
-        342
+        302,
+        343
       ],
       "mode": "embed",
       "op": "resolve",
@@ -492,35 +492,27 @@
     },
     {
       "lines": [
-        343,
-        346
+        344,
+        347
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#frontmatter:ambient.groundTruthManifest"
     },
     {
       "lines": [
-        347,
-        350
+        348,
+        351
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        351,
-        352
-      ],
-      "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes"
-    },
-    {
-      "lines": [
-        353,
+        352,
         353
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[concept-catalog]"
+      "source": "canonical/agents/lina.md#frontmatter:routes"
     },
     {
       "lines": [
@@ -528,7 +520,7 @@
         354
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[contracts-yaml-format]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[concept-catalog]"
     },
     {
       "lines": [
@@ -536,7 +528,7 @@
         355
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[schema-structure]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[contracts-yaml-format]"
     },
     {
       "lines": [
@@ -544,7 +536,7 @@
         356
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[data-shapes-trigger]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[schema-structure]"
     },
     {
       "lines": [
@@ -552,7 +544,7 @@
         357
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[token-usage-law]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[data-shapes-trigger]"
     },
     {
       "lines": [
@@ -560,7 +552,7 @@
         358
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[token-selection-framework]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[token-usage-law]"
     },
     {
       "lines": [
@@ -568,7 +560,7 @@
         359
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[scaffolding-templates]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[token-selection-framework]"
     },
     {
       "lines": [
@@ -576,7 +568,7 @@
         360
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[contract-validation-criteria]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[scaffolding-templates]"
     },
     {
       "lines": [
@@ -584,7 +576,7 @@
         361
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[completion-doc-guidance]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[contract-validation-criteria]"
     },
     {
       "lines": [
@@ -592,7 +584,7 @@
         362
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[spec-tasks-format]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[completion-doc-guidance]"
     },
     {
       "lines": [
@@ -600,7 +592,7 @@
         363
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-avatar]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[spec-tasks-format]"
     },
     {
       "lines": [
@@ -608,7 +600,7 @@
         364
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-badge]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-avatar]"
     },
     {
       "lines": [
@@ -616,7 +608,7 @@
         365
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-button]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-badge]"
     },
     {
       "lines": [
@@ -624,7 +616,7 @@
         366
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-chip]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-button]"
     },
     {
       "lines": [
@@ -632,7 +624,7 @@
         367
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-container]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-chip]"
     },
     {
       "lines": [
@@ -640,7 +632,7 @@
         368
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-data-display]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-container]"
     },
     {
       "lines": [
@@ -648,7 +640,7 @@
         369
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-divider]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-data-display]"
     },
     {
       "lines": [
@@ -656,7 +648,7 @@
         370
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-form-inputs]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-divider]"
     },
     {
       "lines": [
@@ -664,7 +656,7 @@
         371
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-icon]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-form-inputs]"
     },
     {
       "lines": [
@@ -672,7 +664,7 @@
         372
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-loading]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-icon]"
     },
     {
       "lines": [
@@ -680,7 +672,7 @@
         373
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-modal]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-loading]"
     },
     {
       "lines": [
@@ -688,7 +680,7 @@
         374
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-navigation]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-modal]"
     },
     {
       "lines": [
@@ -696,7 +688,7 @@
         375
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-progress]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-navigation]"
     },
     {
       "lines": [
@@ -704,7 +696,7 @@
         376
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[stemma-principles]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[family-progress]"
     },
     {
       "lines": [
@@ -712,7 +704,7 @@
         377
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[component-dev-standards]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[stemma-principles]"
     },
     {
       "lines": [
@@ -720,7 +712,7 @@
         378
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[component-doc-map]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[component-dev-standards]"
     },
     {
       "lines": [
@@ -728,7 +720,7 @@
         379
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[component-readiness]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[component-doc-map]"
     },
     {
       "lines": [
@@ -736,7 +728,7 @@
         380
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[inheritance-structures]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[component-readiness]"
     },
     {
       "lines": [
@@ -744,7 +736,7 @@
         381
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[web-css-rules]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[inheritance-structures]"
     },
     {
       "lines": [
@@ -752,7 +744,7 @@
         382
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[cross-platform-guidance]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[web-css-rules]"
     },
     {
       "lines": [
@@ -760,7 +752,7 @@
         383
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[cross-platform-decision]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[cross-platform-guidance]"
     },
     {
       "lines": [
@@ -768,7 +760,7 @@
         384
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[token-governance-beyond]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[cross-platform-decision]"
     },
     {
       "lines": [
@@ -776,7 +768,7 @@
         385
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[token-lookup-patterns]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[token-governance-beyond]"
     },
     {
       "lines": [
@@ -784,7 +776,7 @@
         386
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[schema-format-beyond]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[token-lookup-patterns]"
     },
     {
       "lines": [
@@ -792,7 +784,7 @@
         387
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[component-meta-authoring]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[schema-format-beyond]"
     },
     {
       "lines": [
@@ -800,7 +792,7 @@
         388
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[dev-workflow-detail]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[component-meta-authoring]"
     },
     {
       "lines": [
@@ -808,7 +800,7 @@
         389
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[file-organization]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[dev-workflow-detail]"
     },
     {
       "lines": [
@@ -816,7 +808,7 @@
         390
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.docs[component-token-brand-contract]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[file-organization]"
     },
     {
       "lines": [
@@ -824,7 +816,7 @@
         391
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.agents[ada]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.docs[component-token-brand-contract]"
     },
     {
       "lines": [
@@ -832,7 +824,7 @@
         392
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.agents[thurgood]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.agents[ada]"
     },
     {
       "lines": [
@@ -840,7 +832,7 @@
         393
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.cues[0]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.agents[thurgood]"
     },
     {
       "lines": [
@@ -848,7 +840,7 @@
         394
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.cues[1]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.cues[0]"
     },
     {
       "lines": [
@@ -856,7 +848,7 @@
         395
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.cues[2]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.cues[1]"
     },
     {
       "lines": [
@@ -864,7 +856,7 @@
         396
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.cues[3]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.cues[2]"
     },
     {
       "lines": [
@@ -872,7 +864,7 @@
         397
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.cues[4]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.cues[3]"
     },
     {
       "lines": [
@@ -880,7 +872,7 @@
         398
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.cues[5]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.cues[4]"
     },
     {
       "lines": [
@@ -888,7 +880,7 @@
         399
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.cues[6]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.cues[5]"
     },
     {
       "lines": [
@@ -896,7 +888,7 @@
         400
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.cues[7]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.cues[6]"
     },
     {
       "lines": [
@@ -904,7 +896,7 @@
         401
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.cues[8]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.cues[7]"
     },
     {
       "lines": [
@@ -912,7 +904,7 @@
         402
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes.cues[9]"
+      "source": "canonical/agents/lina.md#frontmatter:routes.cues[8]"
     },
     {
       "lines": [
@@ -920,23 +912,23 @@
         403
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:routes"
+      "source": "canonical/agents/lina.md#frontmatter:routes.cues[9]"
     },
     {
       "lines": [
         404,
-        405
+        404
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:commands"
+      "source": "canonical/agents/lina.md#frontmatter:routes"
     },
     {
       "lines": [
-        406,
+        405,
         406
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:commands[functional-suite]"
+      "source": "canonical/agents/lina.md#frontmatter:commands"
     },
     {
       "lines": [
@@ -944,7 +936,7 @@
         407
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:commands[component-tests]"
+      "source": "canonical/agents/lina.md#frontmatter:commands[functional-suite]"
     },
     {
       "lines": [
@@ -952,7 +944,7 @@
         408
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:commands[full-suite-with-performance]"
+      "source": "canonical/agents/lina.md#frontmatter:commands[component-tests]"
     },
     {
       "lines": [
@@ -960,7 +952,7 @@
         409
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
+      "source": "canonical/agents/lina.md#frontmatter:commands[full-suite-with-performance]"
     },
     {
       "lines": [
@@ -968,7 +960,7 @@
         410
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#complete-task-tooling"
+      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
     },
     {
       "lines": [
@@ -976,39 +968,39 @@
         411
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+      "source": "canonical/shared/shared-catalog.yaml#complete-task-tooling"
     },
     {
       "lines": [
         412,
-        413
+        412
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+    },
+    {
+      "lines": [
+        413,
+        414
       ],
       "op": "render",
       "source": "canonical/shared/shared-catalog.yaml#record-first-ratification"
     },
     {
       "lines": [
-        414,
-        414
+        415,
+        415
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#frontmatter:commands"
     },
     {
       "lines": [
-        415,
-        416
-      ],
-      "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:knowledgeBases"
-    },
-    {
-      "lines": [
-        417,
+        416,
         417
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:knowledgeBases[StemmaComponentSource]"
+      "source": "canonical/agents/lina.md#frontmatter:knowledgeBases"
     },
     {
       "lines": [
@@ -1016,7 +1008,7 @@
         418
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:knowledgeBases[ApplicationMCPServerSource]"
+      "source": "canonical/agents/lina.md#frontmatter:knowledgeBases[StemmaComponentSource]"
     },
     {
       "lines": [
@@ -1024,36 +1016,44 @@
         419
       ],
       "op": "render",
-      "source": "canonical/agents/lina.md#frontmatter:knowledgeBases"
+      "source": "canonical/agents/lina.md#frontmatter:knowledgeBases[ApplicationMCPServerSource]"
     },
     {
       "lines": [
         420,
-        423
+        420
+      ],
+      "op": "render",
+      "source": "canonical/agents/lina.md#frontmatter:knowledgeBases"
+    },
+    {
+      "lines": [
+        421,
+        424
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        424,
-        427
+        425,
+        428
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#frontmatter:preflight"
     },
     {
       "lines": [
-        428,
-        428
+        429,
+        429
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#frontmatter:preflight[git status --porcelain]"
     },
     {
       "lines": [
-        429,
-        429
+        430,
+        430
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#frontmatter:preflight"

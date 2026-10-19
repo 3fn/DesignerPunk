@@ -364,359 +364,359 @@
     {
       "lines": [
         71,
-        83
+        84
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#in-scope"
     },
     {
       "lines": [
-        84,
-        90
+        85,
+        91
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#product-configuration-context"
     },
     {
       "lines": [
-        91,
-        99
+        92,
+        100
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#product-tokens"
     },
     {
       "lines": [
-        100,
-        108
+        101,
+        109
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#out-of-scope"
     },
     {
       "lines": [
-        109,
-        119
+        110,
+        120
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#the-direct-vs-delegate-distinction"
     },
     {
       "lines": [
-        120,
-        123
+        121,
+        124
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#operational-mode-screen-specification:preamble"
     },
     {
       "lines": [
-        124,
-        127
+        125,
+        128
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#step-1-understand-the-intent"
     },
     {
       "lines": [
-        128,
-        131
+        129,
+        132
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#step-2-select-components-via-application-mcp"
     },
     {
       "lines": [
-        132,
-        140
+        133,
+        141
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#step-3-specify-the-screen:preamble"
     },
     {
       "lines": [
-        141,
-        152
+        142,
+        153
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#layout-specification"
     },
     {
       "lines": [
-        153,
-        155
+        154,
+        156
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#step-4-validate-assembly"
     },
     {
       "lines": [
-        156,
-        165
+        157,
+        166
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#step-5-hand-off-to-platform-agents"
     },
     {
       "lines": [
-        166,
-        169
+        167,
+        170
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#operational-mode-lessons-learned:preamble"
     },
     {
       "lines": [
-        170,
-        178
+        171,
+        179
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#what-qualifies-as-a-lesson"
     },
     {
       "lines": [
-        179,
-        187
+        180,
+        188
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#capture-process"
     },
     {
       "lines": [
-        188,
-        192
+        189,
+        193
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#structured-request-format"
     },
     {
       "lines": [
-        193,
-        196
+        194,
+        197
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#operational-mode-cross-platform-review:preamble"
     },
     {
       "lines": [
-        197,
-        203
+        198,
+        204
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#review-checklist"
     },
     {
       "lines": [
-        204,
-        213
+        205,
+        214
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#what-consistent-means-in-true-native"
     },
     {
       "lines": [
-        214,
-        217
+        215,
+        218
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#operational-mode-design-creation-impeccable-skill:preamble"
     },
     {
       "lines": [
-        218,
-        229
+        219,
+        230
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#skill-loading-sequence"
     },
     {
       "lines": [
-        230,
-        237
+        231,
+        238
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#gate-system"
     },
     {
       "lines": [
-        238,
-        240
+        239,
+        241
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#color-strategy-declaration"
     },
     {
       "lines": [
-        241,
-        243
+        242,
+        244
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#conflict-resolution-hierarchy"
     },
     {
       "lines": [
-        244,
-        246
+        245,
+        247
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#anti-slop-awareness"
     },
     {
       "lines": [
-        247,
-        249
+        248,
+        250
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#lessons-learned-capture"
     },
     {
       "lines": [
-        250,
-        254
+        251,
+        255
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#available-commands"
     },
     {
       "lines": [
-        255,
-        262
+        256,
+        263
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#with-platform-agents"
     },
     {
       "lines": [
-        263,
-        265
+        264,
+        266
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#platform-scope-adaptation"
     },
     {
       "lines": [
-        266,
-        268
+        267,
+        269
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#with-stacy-product-governance"
     },
     {
       "lines": [
-        269,
-        271
+        270,
+        272
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#with-system-agents-via-thurgood"
     },
     {
       "lines": [
-        272,
-        276
+        273,
+        277
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#with-peter"
     },
     {
       "lines": [
-        277,
-        288
+        278,
+        289
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#mcp-practice-notes"
     },
     {
       "lines": [
-        289,
-        302
+        290,
+        303
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#onboarding-awareness"
     },
     {
       "lines": [
-        303,
-        309
+        304,
+        310
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#what-you-own"
     },
     {
       "lines": [
-        310,
-        316
+        311,
+        317
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#what-you-dont-own"
     },
     {
       "lines": [
-        317,
-        325
+        318,
+        326
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#platform-currency-awareness"
     },
     {
       "lines": [
-        326,
-        329
+        327,
+        330
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#collaboration-standards:preamble"
     },
     {
       "lines": [
-        330,
-        334
+        331,
+        335
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#counter-arguments-are-mandatory"
     },
     {
       "lines": [
-        335,
-        337
+        336,
+        338
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#candid-over-comfortable"
     },
     {
       "lines": [
-        338,
-        340
+        339,
+        341
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#bias-self-monitoring"
     },
     {
       "lines": [
-        341,
-        343
+        342,
+        344
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#when-you-and-peter-disagree"
     },
     {
       "lines": [
-        344,
-        345
+        345,
+        346
       ],
       "op": "passthrough",
       "source": "canonical/agents/leonardo.md#ask-if-unsure"
     },
     {
       "lines": [
-        346,
-        347
+        347,
+        348
       ],
       "op": "render",
       "source": "C11:lane2-header"
     },
     {
       "lines": [
-        348,
-        409
+        349,
+        410
       ],
       "mode": "embed",
       "op": "resolve",
@@ -724,27 +724,19 @@
     },
     {
       "lines": [
-        410,
-        413
+        411,
+        414
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        414,
-        415
-      ],
-      "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes"
-    },
-    {
-      "lines": [
-        416,
+        415,
         416
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[decision-criteria]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes"
     },
     {
       "lines": [
@@ -752,7 +744,7 @@
         417
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[spec-tasks-format]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[decision-criteria]"
     },
     {
       "lines": [
@@ -760,7 +752,7 @@
         418
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[layout-vocabulary]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[spec-tasks-format]"
     },
     {
       "lines": [
@@ -768,7 +760,7 @@
         419
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[product-token-authoring]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[layout-vocabulary]"
     },
     {
       "lines": [
@@ -776,7 +768,7 @@
         420
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[component-doc-map]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[product-token-authoring]"
     },
     {
       "lines": [
@@ -784,7 +776,7 @@
         421
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[component-readiness]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[component-doc-map]"
     },
     {
       "lines": [
@@ -792,7 +784,7 @@
         422
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[concept-catalog]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[component-readiness]"
     },
     {
       "lines": [
@@ -800,7 +792,7 @@
         423
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[cross-platform-guidance]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[concept-catalog]"
     },
     {
       "lines": [
@@ -808,7 +800,7 @@
         424
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[spec-planning-beyond]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[cross-platform-guidance]"
     },
     {
       "lines": [
@@ -816,7 +808,7 @@
         425
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[product-token-gov-beyond]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[spec-planning-beyond]"
     },
     {
       "lines": [
@@ -824,7 +816,7 @@
         426
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[stemma-principles]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[product-token-gov-beyond]"
     },
     {
       "lines": [
@@ -832,7 +824,7 @@
         427
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[test-dev-standards]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[stemma-principles]"
     },
     {
       "lines": [
@@ -840,7 +832,7 @@
         428
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[token-lookup-patterns]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[test-dev-standards]"
     },
     {
       "lines": [
@@ -848,7 +840,7 @@
         429
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[dev-workflow-detail]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[token-lookup-patterns]"
     },
     {
       "lines": [
@@ -856,7 +848,7 @@
         430
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[file-organization]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[dev-workflow-detail]"
     },
     {
       "lines": [
@@ -864,7 +856,7 @@
         431
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[product-handoff-protocol-route]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[file-organization]"
     },
     {
       "lines": [
@@ -872,7 +864,7 @@
         432
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[integration-onboarding-guide]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[product-handoff-protocol-route]"
     },
     {
       "lines": [
@@ -880,7 +872,7 @@
         433
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.agents[sparky]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.docs[integration-onboarding-guide]"
     },
     {
       "lines": [
@@ -888,7 +880,7 @@
         434
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.agents[kenya]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.agents[sparky]"
     },
     {
       "lines": [
@@ -896,7 +888,7 @@
         435
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.agents[data]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.agents[kenya]"
     },
     {
       "lines": [
@@ -904,7 +896,7 @@
         436
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.agents[stacy]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.agents[data]"
     },
     {
       "lines": [
@@ -912,7 +904,7 @@
         437
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.agents[thurgood]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.agents[stacy]"
     },
     {
       "lines": [
@@ -920,7 +912,7 @@
         438
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[0]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.agents[thurgood]"
     },
     {
       "lines": [
@@ -928,7 +920,7 @@
         439
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[1]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[0]"
     },
     {
       "lines": [
@@ -936,7 +928,7 @@
         440
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[2]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[1]"
     },
     {
       "lines": [
@@ -944,7 +936,7 @@
         441
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[3]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[2]"
     },
     {
       "lines": [
@@ -952,7 +944,7 @@
         442
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[4]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[3]"
     },
     {
       "lines": [
@@ -960,7 +952,7 @@
         443
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[5]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[4]"
     },
     {
       "lines": [
@@ -968,7 +960,7 @@
         444
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[6]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[5]"
     },
     {
       "lines": [
@@ -976,7 +968,7 @@
         445
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[7]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[6]"
     },
     {
       "lines": [
@@ -984,7 +976,7 @@
         446
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[8]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[7]"
     },
     {
       "lines": [
@@ -992,7 +984,7 @@
         447
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[9]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[8]"
     },
     {
       "lines": [
@@ -1000,7 +992,7 @@
         448
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[10]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[9]"
     },
     {
       "lines": [
@@ -1008,7 +1000,7 @@
         449
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[11]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[10]"
     },
     {
       "lines": [
@@ -1016,7 +1008,7 @@
         450
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[12]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[11]"
     },
     {
       "lines": [
@@ -1024,7 +1016,7 @@
         451
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[13]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[12]"
     },
     {
       "lines": [
@@ -1032,7 +1024,7 @@
         452
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[14]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[13]"
     },
     {
       "lines": [
@@ -1040,7 +1032,7 @@
         453
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[15]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[14]"
     },
     {
       "lines": [
@@ -1048,7 +1040,7 @@
         454
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[16]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[15]"
     },
     {
       "lines": [
@@ -1056,7 +1048,7 @@
         455
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[17]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[16]"
     },
     {
       "lines": [
@@ -1064,7 +1056,7 @@
         456
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[18]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[17]"
     },
     {
       "lines": [
@@ -1072,7 +1064,7 @@
         457
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[19]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[18]"
     },
     {
       "lines": [
@@ -1080,7 +1072,7 @@
         458
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[20]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[19]"
     },
     {
       "lines": [
@@ -1088,7 +1080,7 @@
         459
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[21]"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[20]"
     },
     {
       "lines": [
@@ -1096,23 +1088,23 @@
         460
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:routes"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes.cues[21]"
     },
     {
       "lines": [
         461,
-        462
+        461
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:commands"
+      "source": "canonical/agents/leonardo.md#frontmatter:routes"
     },
     {
       "lines": [
-        463,
+        462,
         463
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:commands[generate-tokens]"
+      "source": "canonical/agents/leonardo.md#frontmatter:commands"
     },
     {
       "lines": [
@@ -1120,7 +1112,7 @@
         464
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:commands[validate-product-tokens]"
+      "source": "canonical/agents/leonardo.md#frontmatter:commands[generate-tokens]"
     },
     {
       "lines": [
@@ -1128,7 +1120,7 @@
         465
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:commands[init-product]"
+      "source": "canonical/agents/leonardo.md#frontmatter:commands[validate-product-tokens]"
     },
     {
       "lines": [
@@ -1136,7 +1128,7 @@
         466
       ],
       "op": "render",
-      "source": "canonical/agents/leonardo.md#frontmatter:commands[sync-product]"
+      "source": "canonical/agents/leonardo.md#frontmatter:commands[init-product]"
     },
     {
       "lines": [
@@ -1144,7 +1136,7 @@
         467
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
+      "source": "canonical/agents/leonardo.md#frontmatter:commands[sync-product]"
     },
     {
       "lines": [
@@ -1152,7 +1144,7 @@
         468
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#complete-task-tooling"
+      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
     },
     {
       "lines": [
@@ -1160,52 +1152,60 @@
         469
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+      "source": "canonical/shared/shared-catalog.yaml#complete-task-tooling"
     },
     {
       "lines": [
         470,
-        471
+        470
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+    },
+    {
+      "lines": [
+        471,
+        472
       ],
       "op": "render",
       "source": "canonical/shared/shared-catalog.yaml#record-first-ratification"
     },
     {
       "lines": [
-        472,
-        472
+        473,
+        473
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:commands"
     },
     {
       "lines": [
-        473,
-        476
+        474,
+        477
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        477,
-        480
+        478,
+        481
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:preflight"
     },
     {
       "lines": [
-        481,
-        481
+        482,
+        482
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:preflight[git status --porcelain]"
     },
     {
       "lines": [
-        482,
-        482
+        483,
+        483
       ],
       "op": "render",
       "source": "canonical/agents/leonardo.md#frontmatter:preflight"

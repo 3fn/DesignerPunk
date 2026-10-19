@@ -31,6 +31,7 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 - Lessons-learned identification (what the Application MCP gets wrong, what patterns are missing)
 - System feedback coordination (structured requests to system agents for gaps)
 - Screen-level specification (what a screen contains, how it behaves, what states it has)
+- **Delegate signing audit** (ballot `2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form` S5; signing-act ballot § 5.3): when the brief names you at a MIDPOINT, CLOSEOUT or RELEASE walk, in your turn of the rotation (Ada → Lina → Leonardo), run the command the brief names (`verify-signing-chain --audit --signer stacy`, or, until that filter lands, the unfiltered audit with every line marked by signer). Write every per-act line verbatim to the file the brief names (`delegate-audit-<event>-<seat>.md`), and commit it under your own `Agent:` trailer. **You report; you do not rule**: you do not run J, read a verdict's meaning, or make a finding about Stacy. A `FAIL` or `anomaly` is left in the file, and it goes to Peter as the brief names. This is a bounded, mechanical, read-only duty, outside your domain, given by ballot.
 
 ### Product Configuration Context
 
