@@ -104,6 +104,10 @@ Every entry is a `### <entry-id>` heading followed by **one fenced YAML block** 
   - **Counting rule**: gate-registration arithmetic (`tools/agent-generator/verify-gate-registration.sh`'s `EXPECTED_CONTEXTS`) counts **required PR check contexts only**. Rows qualified `tool-time` or `build-time` are **excluded from that arithmetic** — they register no PR context, so counting them would manufacture the drift the count-assert exists to catch.
   - Like `check_state` and `checks`, `armed_at` is **per-scope** on a scoped row (a rule can be PR-gated on one surface and tool-time on another).
   - *Upgrade path, noted not adopted*: if tool-time/build-time gates multiply, the field becomes **mandatory on every `armed` row** — at which point the default disappears and omission becomes a schema defect. That is a later amendment with its own record, not an inference from this one.
+- `census`: **optional** — the instrument's **census-mode** command, or `none — <why>` in the owner's words; **per-scope** on a scoped row. Ratified 2026-10-19 (ballot `.kiro/docs/ballots/2026-10-19-instrument-census-at-draft.md` § 2, fork F-3 (A); the rule it serves is the "Instrument census" bullets in `.kiro/docs/ballots/README.md` § "Conventions"). Three rules govern it:
+  - **Who writes it.** The owner builds the census mode as EXECUTION in their own scope. Thurgood, as register steward, then writes the field on the owner's word: the command, or the owner's `none — <why>`, which brings the census rule's exemption ground 2 into play. That edit is EXECUTION under the ballot, Peter-merged under the governance carve-out.
+  - **When.** Both happen before the first in-scope item on that instrument leaves DRAFT. Until the field exists, the item waits.
+  - **How it is read.** The census reader's check is `git show <sha>:governance/classification-map.md`, and a census line's `<command>` must equal the field. A missing field is a finding from the reader, never a gate: Peter may ratify past it.
 - `scope[]`: **optional** per-surface qualifier — but **REQUIRED when the rule's boundary is surface-dependent** (for such rules a scalar disposition is not simplification, it is wrong). Entries without multi-surface needs stay scalar (the lens-not-columns guard). Each scope entry carries:
   - `surface`: the surface this line governs
   - `disposition`: `barrier | record-check | warn | none` (scalar dispositions only — never `scoped`)
@@ -1172,4 +1176,27 @@ education:
   disposition: "LAW HOME: this ballot M7. POINTER-GRADE: RELEASE-FLOW 'Deriving the delta' items 1 and 3a"
 history:
   - { date: 2026-10-18, change: "entry created (steward, window-free) by ballot 2026-10-18-obligation-drain-and-release-falsity-floor; rulings item 23; owner stacy on her R1 conditions", by: thurgood }
+```
+
+### instrument-census-at-draft
+
+```yaml
+rule: "A ballot item presumptively in scope of a registered instrument (an edit site the check's command loads, an edit site its row or code cites as the law it implements, or a named instrument code change to follow) carries exactly one **Census**: line: the instrument's census mode run as committed and with a git-apply-able scratch diff at one main SHA (both digests over sorted per-input lines, the per-input delta, the scratch diff), or a fixed-form exemption on one of three grounds, or a not-in-scope line; a hand count never substitutes; the census reader reproduces both digests and the delta; the census is re-run at application (an unmoved input's difference stops the item) and in the shipping PR (equal digests at its own base)"
+boundary_call:
+  class: functional
+  rationale: "The presumptive set, the line's presence and grammar, and the exemption grounds are decidable; the digests are reproducible from the named command, SHA and scratch diff. Whether the scratch diff reads the rule faithfully, and whether a not-in-scope reason is true, are not — the census reader's"
+verification:
+  disposition: audit
+  owner: stacy
+  check_state: none
+  checks: []
+  # Read at the ballot's review by the census reader (Stacy; Thurgood where she drafts), and at ARMING
+  # for the shipping PR. The application re-run is a step of the application, not a check.
+  # Mechanizable as a ballot lint over the presumptive set; not proposed.
+  # Rule line aligned at application to the ballot's operative text (§ 2, after Stacy R2-1: the reader
+  # reproduces both digests and the delta); the alignment is recorded in the ballot's § 9 (2026-10-19).
+education:
+  disposition: "ONE HOME: .kiro/docs/ballots/README.md § 'Conventions', the 'Instrument census' bullets. READER'S DUTY: canonical/agents/stacy.md (site 3). FIELD: § 'Entry Schema', verification.census. LAW RECORD: .kiro/docs/ballots/2026-10-19-instrument-census-at-draft.md. ORIGIN: .kiro/issues/2026-09-26-materiality-extractor-truncation.md § 'S6 held at application (2026-10-19)'"
+history:
+  - { date: 2026-10-19, change: "entry created by ballot 2026-10-19-instrument-census-at-draft, RATIFIED by Peter 2026-10-19 (record-first). ORIGIN: sitting-2 S6, ratified on a hand census of 7 files; the instrument's decision function changed 14 (653e5a5d… → 0bffa3cd…)", by: thurgood }
 ```
