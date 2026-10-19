@@ -6,9 +6,9 @@
 **Held under the merge rule** (Task-Completion-Protocol § "Branch and PR Conventions", the M8 bullet): this PR's body carries one `**Open for Peter**:` line for each fork in § 3 and each item marked "Peter rules", and it is **not merged until Peter's answer to each is on the record**, dated before the merge. *(Answered by Peter on the record, 2026-10-18/19 — § 8 — for every fork except the S5 redraft, which returns at R3.)*
 **Authority for drafting**: the 2026-10-17 health check, finding W-1 (`.kiro/docs/civitas-health-checks/2026-10-17.md` L80–88: seven of Thurgood's records fired without a record; "the four ballot drafts are better as one ballot sitting than four"); each source record's own trigger (§ 1); Peter's routing of 2026-10-18 (above).
 **Required reviewer**: **Stacy**. S1's edit site is a unit she confirms and signs. S3, S4 and S6 amend the law of an instrument whose verdicts she reads. S2 is a planning rule whose independent reader (A3) would be her LENS. S5, now a deferral stub, concerns who audits her own signing acts.
-**Unit**: standalone record-first ballot. Its application edits `.kiro/steering/start-up-tasks.md`, `governance/Process-Spec-Planning.md`, `governance/completion-documentation-guide.md` and `governance/classification-map.md` (one history line, S3), so **Peter merges it** under the governance carve-out. After the S5 strike, it no longer edits the signing-act ballot.
+**Unit**: standalone record-first ballot. Its application edits `.kiro/steering/start-up-tasks.md`, `governance/Process-Spec-Planning.md`, `governance/completion-documentation-guide.md` and `governance/classification-map.md` (one history line, S3; three comment lines and a history line, S5). If S5 is ratified, it also edits `.kiro/docs/ballots/2026-10-01-signing-act-chain.md` and `canonical/agents/{ada,lina,leonardo}.md`. So **Peter merges it** under the governance carve-out.
 **Cap**: exactly the items below. Anything I was tempted to add is in § 5, with where it goes instead.
-**Severability**: each item can be struck alone, and **a clause that cites a struck item is removed with it**. The one cross-item citation: S3's sub-branch A-ii relies on S4's `—` sentence, so **A-ii is unavailable if S4 is struck**. **S5 was struck at R2** (orchestrator's call on Stacy R1's S5 block). **Peter overrode the deferral** (§ 8, F-S5-override): the three-seat consult runs now, and S5 **returns to this sitting as an R3 item**. Its stub (§ 2 S5) stands until then, and its four entry conditions are the R3 redraft's checklist.
+**Severability**: each item can be struck alone, and **a clause that cites a struck item is removed with it**. The one cross-item citation: S3's sub-branch A-ii relies on S4's `—` sentence, so **A-ii is unavailable if S4 is struck**. **S5 was struck at R2** (orchestrator's call on Stacy R1's S5 block). **Peter overrode the deferral** (§ 8, F-S5-override), and **S5 is redrafted at R3** from the three-seat consult (§ 2 S5). It awaits Stacy's R2 read and Peter's ruling. Within S5, the three charter lines fall with the § 5.3 edit.
 **Item numbers — a mismatch to fix before either PR merges**: the records PR (`a6de2ee76`, read-only) labels D3 as "S4", D-2 as "S5" and trigger (d) as "S6". This ballot follows the sitting brief: **S4 = D-2, S5 = trigger (d), S6 = D3.** S1–S3 agree. One of the two must be renumbered; the records PR is three tokens.
 
 > **Conflict of interest, stated first.** The author owns all six source records and lapsed on every one (W-1). He authored the `tasks.md` that nests criteria in 11 parents (S3), owns the instrument whose law S3, S4 and S6 amend, and is the profile author whose rows Stacy signs (S5). Where a lean below favours less work for his seat, the residual says so.
@@ -135,33 +135,84 @@ The records PR's S1 triage line says the rider deadline passed at #408. It first
 
 **Cost**: about 10 min for the line. The fixing PR is the record's cost (about 3 h), not this ballot's. **If struck**: the checker fix still has the register rule ("a Status mark … per row") as its law, but the guide stays silent on what it enforces, and S3's A-ii falls with it.
 
-### S5 — the § 5.3 amendment (trigger (d)): struck at R2, returning at R3 (Peter, F-S5-override)
+### S5 — the § 5.3 amendment (trigger (d)): the hybrid, redrafted at R3 from the three-seat consult
 
-*(Peter, 2026-10-18/19: Q1 = the hybrid; one RELEASE walk at zero fires; "run the consult now, please" — § 8. The stub below stands until the R3 redraft replaces it.)*
+*(Struck at R2 on Stacy R1's BLOCKING. Returned by Peter, 2026-10-18/19 — "Re: 10, run the consult now, please" (§ 8). Redrafted here from the consults of Ada, Lina and Leonardo (2026-10-19, read-only; § 9). **Not ratified**: it awaits Stacy's R2 read and Peter's ruling. The R2 stub is in git at `d47e78696`.)*
 
-**Struck at R2**, on Stacy R1's BLOCKING (S5) and the orchestrator's call: **"deferred pending the three-seat consult and Peter's Q1 answer."** S5 was severable, and nothing in S1–S4 or S6 waits on it. This stub replaces the draft's operative text. The draft is in git at `8bcb951b6`.
+**What Peter has already ruled for S5** (§ 8):
+- **Q1 = the hybrid** ("Re: 1, decision 1, hybrid"). Rulings row 18 is read as having governed 16.0.0 only, and PR-10 (123 `tasks.md` L215–217) is the destination. Per the orchestrator, the records seat files the answer in the trigger-(d) record on #414. Not read here.
+- **One RELEASE walk at zero fires trigger (d)** ("Re: 11, one").
 
-**Why it is struck, in one line each:**
-- The draft put a standing, rotating duty on Ada, Lina and Leonardo. None of their charters names it, and none of them was consulted. That is consult-first trigger (a). § 9's "none of these items touches Ada's or Lina's surfaces" was false while S5 stood.
-- Its operative text was incomplete in three ways Stacy found (entry conditions 1–3 below). Fixing them is design work that needs the consult's answers, not wording.
+**The gap, unchanged**: § 5.3 binds `--audit` and J on Stacy-signed acts to Peter's seat alone. It has read `0` at every walk since Spec 123's MIDPOINT: cumulative `0 / 314`, including #285's `FAIL 7` on one of her acts (15.1.0 record L356–358; 16.0.0 record L364).
 
-**What stays as it is:**
-- **§ 5.3 of `.kiro/docs/ballots/2026-10-01-signing-act-chain.md` is unchanged**, and so is § 8 (d). 15.1.0 and 16.0.0 ran under § 5.3 as written (`0 / 5` and `0 / 0`; cumulative `0 / 314` since MIDPOINT; Stacy R1, S5 item 3).
-- **The trigger-(d) record stays open.** Trigger (d) has fired and does not un-fire (Stacy R1, S5 item 5). **Peter's Q1 answer — PR-10's hybrid or rulings row 18's "keep as is" — is recorded in that record**, by its owner, as a dated line quoting his words. It is not recorded here. The record's Trigger stays as the records PR re-rules it, re-pointed at application to S5's own later ballot.
-- **Q1, stated without the anachronism.** PR-10 (123 `tasks.md` L215, 2026-10-03) is Peter's own words choosing the hybrid. Row 18 (`release-4-rulings-2026-10-15.md` L30) is "the orchestrator's pick … Peter did not object", in a record whose context line limits it to "what lands before the 16.0.0 tag", and it neither cites nor revokes PR-10. Read with that scope line, the two agree: row 18 decided 16.0.0, and PR-10 names the destination. Read without it, row 18 supersedes PR-10 by date. **The draft's other ground, "a non-objection is not an answer", is withdrawn**: it applied a rule ruled on 2026-10-17 and made law on 2026-10-18 to a record dated 2026-10-15 (Stacy R1, S5).
+**How the R1 entry conditions are answered:**
 
-**Entry conditions for S5's own later ballot** (Stacy R1's four blockers; the ballot is drafted only when all four have answers):
-1. **Who reads a `FAIL` or `anomaly` on a Stacy-signed act.** That includes the recording-slip test of trigger (a) and how § 5.4's widening applies: a `FAIL` sends that seat's acts in the PR into J, so Peter's "at least one per release" is a floor. Also the **§ 5.1 edit site**: Stacy-signed acts come out of her per-act paste. Her four conditions on where the delegate's lines live stand on the record (§ 7): a file the delegate authors, never named `claims-pass*`, committed under `Agent: <seat>`, cited by her count line only, and § 5.1 reconciled. Also where that file lives for a RELEASE after Spec 123's closure, which RELEASE-FLOW step 5 does not settle.
-2. **A delegate lapse must be decidable from the record.** The draft's "`0 / N` when empty, never omitted" line is always present, so a "missing line" limb cannot fire on the delegate's lapse. `<k> / <N>` is undefined for a check that covers every act (§ 4.2). The form must make k < N, or its equivalent, the lapse signal.
-3. **The backlog.** `0 / 314` Stacy-signed acts have never been sampled since MIDPOINT, including #285's `FAIL 7` (15.1.0 record L356–358). The ballot asks Peter whether the first delegate walk and his first J cover the backlog, or whether the amendment closes it; saying nothing closes it by omission.
-4. **The consult.** A bounded, read-only consult of the seats that would carry the duty is owed before the ballot goes to Peter. It covers whether each seat can read the harness store under `~/.claude/projects/…` from its own seat (not verified), and who briefs the delegate at each walk (presumably the orchestrator). The seat set must be argued: the draft named Ada, Lina and Leonardo, from option (2)'s text, and left out Kenya, Data and Sparky without a reason.
+| Stacy R1 | Answered by |
+|---|---|
+| 1 — who reads a `FAIL` or `anomaly`; § 5.1; § 5.4; where the delegate's file lives | the § 5.3 triage bullet; the § 5.1 and § 5.4 edits; the file rule in § 5.3, carrying her four conditions |
+| 2 — the delegate's lapse must be decidable; `<k> / <N>` undefined | `<k>` and `<N>` defined; k < N, or no cited file, fires trigger (d)'s new limb |
+| 3 — the 314-act backlog | the backlog bullet: the first delegate walk covers it; #285's `FAIL 7` enters triage |
+| 4 — the consult, harness access, the briefer, the seat set | consulted (§ 9). All three seats can list the harness store from their own seats (each verified; none ran `--audit`). The brief is Thurgood's, with the orchestrator as fallback. The seat set stays at three, because Kenya, Data and Sparky are Kiro-run and read `unanchored` (§ 8 of the signing ballot), so they cannot run it (Lina) |
 
-**Also carried to that ballot**:
-- The § 8 (d) re-key: one RELEASE walk at `0`, or two. Put to Peter now (§ 3), because his answer shapes the draft.
-- The record's sub-fork, "whether J by a delegate counts toward § 5.3 at all". It closes on Peter's word, not on the author's "moot under PR-10" reading (Stacy R1, S5 item 6).
-- How the amendment is recorded: in place plus a dated `## Amendments` entry quoting the superseded text verbatim, or a pointer under § 5.3. Stacy has no objection to either; it is Peter's.
+**Operative text**, `.kiro/docs/ballots/2026-10-01-signing-act-chain.md`:
 
-**Cost now**: none in this sitting. **Cost of the deferral**: § 5.3 stays a duty bound to Peter's seat alone. It has read `0` at every walk since MIDPOINT (RS-7's class), and the next RELEASE reads it again unless Peter runs it. **Peter may override the deferral** and ask for the three-seat consult now, with S5 drafted in this sitting (§ 3).
+- **§ 5.1, before** (L155):
+  > At **MIDPOINT, CLOSEOUT and RELEASE**, Stacy runs `--audit` over **every PR merged since her last walk** (and every unmerged unit branch in the event's population), covering **every act in it**. The per-act lines go verbatim into that event's claims-pass record. **A signing PR that reaches RELEASE unwalked is trigger (d)** (§ 8).
+- **After**:
+  > At **MIDPOINT, CLOSEOUT and RELEASE**, Stacy runs `--audit` over **every PR merged since her last walk** (and every unmerged unit branch in the event's population), covering **every act in it except the acts she signed**, which the delegate walks (§ 5.3). The per-act lines go verbatim into that event's claims-pass record; the Stacy-signed per-act lines go into the delegate's file, and the record carries only its count line. **A signing PR that reaches RELEASE unwalked is trigger (d)** (§ 8).
+
+- **§ 5.3, before** (L164–166):
+  > ### 5.3 Stacy-signed acts — Peter's sample
+  >
+  > For acts Stacy signed, **Peter runs `--audit` and J** (the C1 collapse-seat rule; Stacy will not rule on her own acts). The claims-pass record carries the line `Peter sample (Stacy-signed): <k> / <N>`, and **`0 / N` when empty, never omitted**.
+- **After**:
+  > ### 5.3 Stacy-signed acts — a delegate's audit, Peter's sample
+  >
+  > For acts Stacy signed, the C1 collapse-seat rule applies: Stacy does not rule on her own acts, and does not run or paste their audit. The duty has two halves, and their readings are never merged into one number.
+  >
+  > - **`--audit` (links 4–7), at every walk, by a delegate.**
+  >   - **Who**: at each MIDPOINT, CLOSEOUT and RELEASE walk (§ 5.1), a **delegate seat** runs `--audit` over every Stacy-signed act in the walk's population. The delegates are **Ada, Lina and Leonardo, in that order, one per walk**: each walk takes the seat after the one named in the previous walk's delegate line, and the first walk takes Ada. Kiro-run seats read `unanchored` (§ 8) and do not carry the duty.
+  >   - **The brief**: **Thurgood** (the instrument's owner) writes it — the PR population, the command, the output path. The orchestrator dispatches it, and writes it when Thurgood's seat cannot.
+  >   - **The file**: the delegate writes every per-act line verbatim to `delegate-audit-<event>-<seat>.md`, in the directory of the event's claims-pass record (a filename never beginning `claims-pass`), and commits it under its own `Agent:` trailer. An act whose record cannot be read is written with the instrument's own verdict (`record absent`), never skipped. **The delegate reports; it does not rule.**
+  >   - **Stacy's count line**: her record carries one line, `Delegate audit (Stacy-signed, <seat>): <k> / <N> — <path> @ <sha>`. N is the number of Stacy-signed acts in the walk's population, and k the number to which the file gives a verdict line. **k = N is the duty done.** `0 / 0` when there are none, never omitted. She does not restate the delegate's verdicts.
+  > - **J (link 8), at every RELEASE, by Peter.** At each RELEASE Peter blind-re-judges at least one Stacy-signed act. The RELEASE record carries `Peter sample (Stacy-signed): <k> / <N>` (k acts judged, of N Stacy-signed acts in the release's population), **`0 / N` when empty, never omitted**.
+  > - **A `FAIL` or `anomaly` on a Stacy-signed act** goes first to **Thurgood**, who triages the tool against the act: is it the instrument, or a recording slip (trigger (a)'s test)? He records his reading as a dated, signed line appended to the delegate's file, in his own commit. **Anything he does not record as a recording slip goes to Peter**, as an `**Open for Peter**:` line in the PR that carries the walk's record. For that release, § 5.4 then sends the PR's Stacy-signed acts into Peter's J. **[Fork F-S5-triage]**
+  > - **The backlog**: the first delegate walk under this rule covers **every Stacy-signed act since Spec 123's MIDPOINT walk**, not only the PRs merged since the last walk. #285's `FAIL 7` enters the triage path above. It closes only by a recorded triage line or Peter's answer, never by omission.
+
+- **§ 5.4, append one sentence** after L170: "For a Stacy-signed act, the J it sends acts into is Peter's (§ 5.3), after Thurgood's triage."
+
+- **§ 8 (d), before** (L234):
+  > - **(d)** a signing PR reaches RELEASE unwalked, **or** Peter's Stacy-signed sample reads `0 / N` at two consecutive walks.
+- **After** (Peter, "Re: 11, one"):
+  > - **(d)** a signing PR reaches RELEASE unwalked, **or** Peter's Stacy-signed sample reads `0 / N` (N > 0) at a RELEASE walk, **or** a walk's delegate audit line reads k < N or cites no committed file.
+
+- **How the amendment is recorded [F-S5-record]**: either § 5.1, § 5.3, § 5.4 and § 8 (d) are replaced in place, with a new `## Amendments` section after `## Errata` quoting each superseded text verbatim with this ballot's name and date (the errata precedent, L373–376); or the body is left untouched and one italic pointer is added under each section. Stacy has no objection to either form (R1, S5 item 7).
+
+**The three charter lines.** One text, three copies, appended as the last bullet of `### In Scope` in each charter:
+- `canonical/agents/ada.md`, after L320;
+- `canonical/agents/lina.md`, after L387;
+- `canonical/agents/leonardo.md`, after L317.
+
+> - **Delegate signing audit** (ballot `2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form` S5; signing-act ballot § 5.3): when the brief names you at a MIDPOINT, CLOSEOUT or RELEASE walk, in your turn of the rotation (Ada → Lina → Leonardo), run the command the brief names (`verify-signing-chain --audit`, over Stacy-signed acts only). Write every per-act line verbatim to the file the brief names (`delegate-audit-<event>-<seat>.md`), and commit it under your own `Agent:` trailer. **You report; you do not rule**: you do not run J, read a verdict's meaning, or make a finding about Stacy. A `FAIL` or `anomaly` is left in the file for the triage the brief names. This is a bounded, mechanical, read-only duty, outside your domain, given by ballot.
+
+- The words "outside your domain, given by ballot" are Leonardo's condition ("does not fit his charter … would accept a bounded, mechanical, read-only duty by ballot"). The list of what a delegate does not do is Lina's.
+- **The signed units**: each line stales its charter's `#in-scope` unit (`canonical/operative-sets/{ada,lina,leonardo}.yaml` L52, L306 and L40; owner = confirmer = the seat). Per seat, the seat re-confirms and re-signs in its own commits (`git commit … && git log -1 --format='%H %s'`), and Thurgood re-authors the overlay pin and removal text to the seat's consumer decision. Measured from the anchors, not simulated. Consumer repos run no signing chain, so the seat's likely consumer disposition is a removal, but that is the seat's decision.
+- **Edit kinds at application**: `canonical/agents/{ada,lina,leonardo}.md` — LAW, ratified here, so EXECUTION (S5) at application. A change to a seat's role is always LAW (ballot B); it moves only by a `canonical/agents/**` edit, Peter-merged, with every affected seat consulted (§ 9).
+- **`governance/classification-map.md` § `signing-act-consistency`**: the comment lines at L1036, L1073 and L1083 are reworded to the split (a delegate's audit, Peter's J, Thurgood's triage), and a history line is added. The `rule:` line names no seat and is unchanged. Edit kind: EXECUTION (S5).
+- **Not edited**: Stacy's charter. Its sentence "Stacy-signed assents are sampled by Peter" stays true. Whether to name the delegate line there is her decision, in her own commit.
+
+**Forks for Peter** (also in § 3):
+- **F-S5-J**: may a delegate also run J? (i) No: J is Peter's alone, and a delegate never runs it (my lean; nothing in PR-10 asks for it). (ii) Yes, as supplementary evidence on its own line, never counted toward § 5.3 (Leonardo's lean, worded as "J stays Peter's").
+- **F-S5-triage**: who reads a `FAIL` first? (a) Thurgood triages tool against act, and Peter rules everything that is not a recording slip. All three seats proposed this. (b) Every `FAIL` or `anomaly` on a Stacy-signed act goes straight to Peter. The case for (b): Stacy signs the rows whose owner is the profile author, Thurgood. Under (a), he triages failures on acts over his own rows, and he also writes the brief. The cost of (b): Peter reads instrument faults, too.
+- **F-S5-record**: in place with `## Amendments`, or a pointer (above).
+
+**Cost**:
+- **Application**: about 1.5 h of Thurgood's time (the ballot sections, the register comments, three overlay pins and removal texts, regeneration, the lock). Two acts per delegate seat (re-confirm, re-sign), about 15 min each. No Stacy re-sign unless she chooses to place a line in her charter.
+- **Per walk**: Thurgood's brief (about 10 min), one delegate run (minutes; the scan is sub-second), and triage of any `FAIL`.
+- **Per release**: Peter's J on at least one act (about 15 min).
+- **The first walk**: about 314 per-act lines in one file, plus triage of #285's `FAIL 7` and anything else it reads.
+
+**If struck**: § 5.3 stays as ratified, and the next RELEASE reads `0 / N` again unless Peter runs it.
 
 ### S6 rider — the D3 pattern-set amendment
 
@@ -204,9 +255,13 @@ Each is one `**Open for Peter**:` line in this PR's body.
 - **F-S3 — the criteria form**: (A) nested bullets are rows (law text only), or (B) flat lists for files authored on or after the ratification date (a parser change, about 2–3 h). Lean A.
 - **F-S3′ — group headings**: under A, (A-i) every bullet is a criterion, or (A-ii) a bullet with children is a `—` group heading (a parser change). **A-ii is unavailable if S4 is struck.** Lean A-i.
 - **F-S3″ — where 2.2.1's supersession is recorded**: (in) a dated note inside closed 127 `requirements.md`, or (out) no edit there, as item 17 did, with the record's outcome line and a `design.md` line carrying it.
-- **F-S5-Q1 — the trigger-(d) pick**: PR-10's hybrid (the destination; row 18 decided 16.0.0 only), or row 18's "keep as is" (no amendment; the record closes). His answer is recorded in the trigger-(d) record, not in this ballot.
-- **F-S5-override — the deferral**: accept S5's strike (the three-seat consult and S5's own ballot come later), or ask for the consult now and S5 in this sitting.
-- **F-S5-walks — the § 8 (d) re-key, for S5's later draft**: once J is per release, does one RELEASE walk at `0` fire trigger (d), or two? The source record treats one as the hybrid failing.
+- **F-S5-Q1 — the trigger-(d) pick**: **RULED — the hybrid** (§ 8).
+- **F-S5-override — the deferral**: **RULED — run the consult now** (§ 8). Done 2026-10-19 (§ 9), and S5 is redrafted at R3.
+- **F-S5-walks — the § 8 (d) re-key**: **RULED — one** RELEASE walk at `0` fires (§ 8). Written into S5's § 8 (d) after-text.
+- **F-S5-J (R3) — may a delegate also run J?** (i) No: J is Peter's alone (lean). (ii) Yes, as supplementary evidence on its own line, never counted toward § 5.3 (Leonardo's lean).
+- **F-S5-triage (R3) — who reads a `FAIL` on a Stacy-signed act first?** (a) Thurgood triages tool against act, and Peter rules the rest (all three seats). (b) Straight to Peter, because under (a) Thurgood triages failures on acts over his own rows and writes the brief.
+- **F-S5-record (R3) — how the signing ballot records the amendment**: in place, with a `## Amendments` section quoting the superseded text; or a pointer under each section.
+- **S5 itself (R3)**: ratify the redraft, amend it, or strike it (§ 3 lines above, and the S5 cost line).
 - **Marked in place, also Peter's**: S4's bracketed sentence (without it, the first sentence cannot be decided by guide readers); S6's rows 2–3 addition; S6 itself (the amendment, or strike it and keep the record open).
 
 ## 4. Counter-arguments, after fold-back
@@ -221,7 +276,7 @@ Each is one `**Open for Peter**:` line in this PR's body.
   - A2 has a home and a trigger (R2).
 - **S3**: B's authorship measure is named, and "after" against "on or after" is made consistent (R2). The note's home is now a fork, not the author's pick (R2).
 - **S4**: the bracket is kept as the decidable definition of "annotation row" (R2).
-- **S5**: struck rather than patched (R2). Its draft would have bound three seats without a consult and left a lapse undecidable.
+- **S5**: struck rather than patched (R2), then redrafted at R3 from the three-seat consult. It now names the briefer, the triage reader, the file, the lapse signal and the backlog, and keeps the seat set at three, because Kiro-run seats cannot anchor.
 - **S6**: the record's generous candidate would have widened 87 correct blocks, so the rule covers class 4 only. The census re-run with the real instrument is now a stop condition at application (R2).
 
 **Surviving:**
@@ -233,7 +288,11 @@ Each is one `**Open for Peter**:` line in this PR's body.
    - It is a guard written for a failure mode that may not recur.
 3. **S3 (A) — a heading's ✅ can rest on its children.** Under A-i, the only defence is a claims-pass read at CLOSEOUT. A-ii closes it at the cost of an instrument change and depends on S4. B closes it by losing the grouping that authors reach for on purpose, and its forward-only key is only as loud as `authorshipDate()`'s error handling.
 4. **S4 — spellings.** Exact-match may red docs that wrote `-`, `–` or `⚠` without U+FE0F. The fixing PR's live-corpus run settles it, but the ballot cannot promise that the guide line and today's corpus agree.
-5. **S5 — the deferral keeps a duty that does not run.** § 5.3 has read `0` since MIDPOINT, with a `FAIL 7` on one of Stacy's acts never sampled. Striking S5 is the honest move for the text, and it leaves that unaddressed until S5's own ballot, unless Peter runs the sample or overrides.
+5. **S5 — agents checking agents, a single briefer, a retention bound.**
+   - Under "consistency, not identity", a delegate's `--audit` is an agent check on Stacy, which the chain cannot certify. Peter's one J per release is the only human read. If it also reads `0` at a RELEASE, trigger (d) fires, and the honest next step is option (3), a C1 population change, as a spec, not more delegation (Leonardo; the source record).
+   - **The briefing seat is the new single point of failure** (Ada's words, "name it"): Thurgood writes every brief, and the delegates hold no memory across walks. Under F-S5-triage (a) he also triages, on acts over his own rows.
+   - **Retention bounds the backlog** (Lina): acts whose transcripts age past A4's 180-day retention read `record absent`. The first delegate walk must land before Spec 123's earliest MIDPOINT-population acts age out. That date is not computed here.
+   - The duty sits in Leonardo's charter, outside his domain, by ballot. He accepts it on those terms.
 6. **S6 — the reach is nearly zero, and three sections stay unseen.** Seven dormant legacy files can bite only through a PR that rewords a 2025 spec's criteria. The fix costs about 2 h and one more sentence in a "closed, enumerated" set, and closedness is what makes over-inclusion safe. Three more legacy sections still lose their whole body under the amended rule.
 7. **The sitting itself**: five live items and a stub put up to ten answers in front of Peter at once. Severability limits the damage, not the attention.
 
@@ -246,7 +305,7 @@ Each is one `**Open for Peter**:` line in this PR's body.
 - **Prose-M3's retirement**: rides the instruments-parser PR (`.kiro/issues/2026-09-29-instruments-parser-and-resolver.md`).
 - **The D-2 checker fix, its lows, the `—`-on-a-criterion fixture, the Req 6.4 erratum and the `design.md` L217 correction**: the D-2 record's fixing PR (S4).
 - **The D3 code fix**: its own PR after ratification (S6). **The three deeper-heading sections**: an open residual on the D3 record.
-- **The § 5.3 amendment, its four entry conditions and the three-seat consult**: S5's own later ballot. **Peter's Q1 answer**: the trigger-(d) record.
+- **Peter's Q1 answer (the hybrid)**: the trigger-(d) record, filed by the records seat on #414. **Naming the delegate line in Stacy's charter**: hers, in her own commit.
 - **Lapse readings for these six records** (README rule 11): the records PR puts them to Peter.
 - **W-1's class option** (a standing ballot-sitting event): not drafted, as in ballot A § 6.
 - **The rider-deadline correction (#396 before #408) and the item-number mismatch**: the records PR (header; § 1).
@@ -269,7 +328,12 @@ One PR (Thurgood), carrying only the items ratified:
   - a `completion-criteria-parity` history line;
   - the parser change, if A-ii or B is ruled.
 - **S4**: the guide paragraph. The checker fix follows in the D-2 record's fixing PR.
-- **S5**: nothing in this sitting. The trigger-(d) record gets a dated line naming this strike, the four entry conditions by pointer to § 2 S5, and its Trigger re-pointed at S5's own ballot. Peter's Q1 answer goes there when given.
+- **S5 (if ratified)**:
+  - § 5.1, § 5.3, § 5.4 and § 8 (d) in the signing ballot, in the ruled F-S5-record form;
+  - the three register comment lines and a history line;
+  - the three charter lines, each seat's re-confirm and re-sign in its own commits, and the overlay pins and removal texts, with regeneration and the lock;
+  - the trigger-(d) record closes by rule 5 once the application merges.
+  - The first delegate walk follows at the next MIDPOINT, CLOSEOUT or RELEASE event, and covers the backlog.
 - **S6**: the instrument census re-run first (a stop condition), then the PSP table rows and the sentence. The code fix follows in its own PR, and the three-section residual is appended to the D3 record.
 - **Everywhere**: the ballots-README index entry; the `**Edit kind**:` lines (S1–S4, S6 above); the `**Consulted**:` line.
 
@@ -277,9 +341,9 @@ Then: the docs MCP `rebuild_index` and `validate_metadata`; `node scripts/valida
 - `grep -n 'regular task completion' .kiro/steering/start-up-tasks.md` returns 0 (S1).
 - `grep -n 'no nested sub-bullets' governance/Process-Spec-Planning.md` returns 0 (S3 A).
 - `grep -c 'sitting-2-subtask-tests' governance/Process-Spec-Planning.md` returns one hit per ratified PSP item.
-- `git diff --name-only` shows no change to `.kiro/docs/ballots/2026-10-01-signing-act-chain.md` (S5 struck).
+- `grep -n 'Peter runs .--audit' .kiro/docs/ballots/2026-10-01-signing-act-chain.md` finds only the superseded-text quote (S5, in-place form); `grep -c 'Delegate signing audit' canonical/agents/{ada,lina,leonardo}.md` returns 1 each.
 
-Each source record closes by rule 5's dated outcome line and its archive move, in the PR that discharges it. Two exceptions: the blast-radius record stays open for A2, and the trigger-(d) record stays open for S5.
+Each source record closes by rule 5's dated outcome line and its archive move, in the PR that discharges it. Two exceptions: the blast-radius record stays open for A2, and the trigger-(d) record stays open until S5 is ruled and applied.
 
 **Cost of the sitting**: three seats (Thurgood drafts, Stacy reviews R1, Peter rules) and two rounds. Application is about 3 h of Thurgood's time if all five live items are ratified, about 20 min of Stacy's, and one merge for Peter.
 
@@ -390,6 +454,15 @@ Each source record closes by rule 5's dated outcome line and its archive move, i
 
 **Declined**: none.
 
+#### [THURGOOD R3] — S5 redrafted from the three-seat consult, 2026-10-19
+
+- **Peter's rulings carried in** (§ 8): Q1 = the hybrid; one RELEASE walk at `0` fires; the consult was run now.
+- **Consult digests woven** (Ada, Lina, Leonardo; read-only; § 9), and **converged** on: the seat set of three; Thurgood as briefer, with the orchestrator as fallback; a delegate-authored `delegate-audit-<event>-<seat>.md` under its own trailer; Thurgood triages first, then Peter; the first walk covers the backlog, and #285's `FAIL 7` is never closed quietly.
+- **The one factual divergence**: Leonardo was open to widening the rotation. Lina's fact settles it: Kenya, Data and Sparky are Kiro-run and read `unanchored`, so they cannot run it. No cross-read round was run (the orchestrator's call, since the point is factual).
+- **Stacy R1's four S5 conditions**: each is mapped to its answer in § 2 S5's table. Her four file conditions are in the § 5.3 after-text: no `claims-pass*` name, the delegate's trailer, a count line only, § 5.1 reconciled.
+- **New forks from the consult**: F-S5-J (Leonardo's) and F-S5-triage (mine: Thurgood's conflict on acts over his own rows). F-S5-record is carried from R1.
+- **Owed**: Stacy R2 on S5 only; then Peter's ruling on S5.
+
 ## 8. Rulings (Peter)
 
 - **2026-10-18/19 — Peter, in chat, relayed by the orchestrator.** His words, verbatim: items 4–8, 12 and 13 **"Agreed"**; item 5 **"Now"**; then **"Re: 1, decision 1, hybrid / Re: 9, outside / Re: 10, run the consult now, please / Re: 11, one"**. The item numbers are those of the orchestrator's relay list to Peter, not this ballot's § 3 order. The mapping to forks below is the orchestrator's; this commit is the first committed record of the words (Task-Completion-Protocol § "Branch and PR Conventions", the M8 bullet).
@@ -410,4 +483,5 @@ Each source record closes by rule 5's dated outcome line and its archive move, i
 - 2026-10-17: the monthly walk (W-1) routed the drafts to one sitting.
 - 2026-10-18: the records PR (`a6de2ee76`, another Thurgood seat, read-only here) re-ruled the six triggers to this sitting and recorded the PR-10 against row-18 conflict.
 - 2026-10-18: Stacy R1, the required reviewer (`1e325393b`): REVIEW WITH NOTES, BLOCKING on S5. Woven at THURGOOD R2 (§ 7).
-- 2026-10-18: **a consult gap, found at R1 and resolved by strike.** The R1 draft's S5 put a standing duty on Ada, Lina and Leonardo with no consult, and this ledger said no item touched Ada's or Lina's surfaces. That was false while S5 stood. With S5 struck (the orchestrator's call), no live item touches another seat's surface beyond Stacy's. The three-seat consult is S5's entry condition 4.
+- 2026-10-18: **a consult gap, found at R1 and resolved by strike.** The R1 draft's S5 put a standing duty on Ada, Lina and Leonardo with no consult, and this ledger said no item touched Ada's or Lina's surfaces. That was false while S5 stood. Peter then ordered the consult ("run the consult now, please").
+- 2026-10-19: **Ada, Lina, Leonardo** — bounded, read-only consults on S5, run by the orchestrator. Each seat verified from its own seat that it can list the harness store; none ran `--audit`. Their digests were relayed to Thurgood, the orchestrator ran no cross-read round, and the digests were woven at THURGOOD R3. Ada: a new duty, fits "report, don't rule"; the briefer is the single point of failure. Lina: states what a delegate does not do; Kiro-run seats cannot anchor, so keep three; A4 retention bounds the backlog. Leonardo: outside his charter; accepts a bounded, mechanical, read-only duty by ballot; raised the delegate-J fork.
