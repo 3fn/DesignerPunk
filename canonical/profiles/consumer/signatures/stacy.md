@@ -92,13 +92,36 @@ verdict: assent — surviving 18/32; not surviving: `counting-6`, `counting-8`, 
 ## `#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-10-19
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script` (re-pointed; ROUTED)
 canonicalHash: sha256:e3f6f82a3b33e37b2e4862e259510551fd4c3d33b19da0357164b26f2742f837
-renderedHash: sha256:8e4651c8af28921399677f9ad9a7791f3df9c2aeffd295bc716b2f051e47ddde
+renderedHash: sha256:19cef6df9da933682b1eb24fbfbc20a9ba496b41e825f08f3d222a83b2178cb7
 verdict: assent — surviving 14/14
 
-**Every item survives, re-grounded.** The predicate is keyed to the team's adoption record, the pipeline to `$SPECS_DIR` and `$ADOPTION` (the midnight pin kept), the three classes are restated, three-copies becomes "keep every copy the same text", the ladder becomes "a second wrong result → a committed script", and git history is kept. This is the G1 exemplar E rendering. **It is a full-survival assent**, earned item by item; see the tally.
+**Re-signed 2026-10-19** (prior signature: assent, 2026-10-18, against rendered `sha256:c821fc77…`; the canonical hash is unchanged, `sha256:e3f6f82a…`). Stale because the overlay gained one sentence under the query: `OWED:` rows are candidates, not verdicts, and a spec owes a closeout claims pass only once its final declared merge unit has merged, so rows for specs still in progress (the two starter specs on day one) are expected and are not findings (`.kiro/issues/2026-10-18-owed-set-query-lists-specs-before-final-unit-merge.md`; Peter's "agreed" in chat, 2026-10-19, to "one disclosure sentence, Stacy's text"). I wrote the text; Thurgood applied it byte for byte at `c9a0d35f3` and regenerated the renderings at `dff44f544`. The canonical unit, its operative set (14 items) and its confirmation did not change, so there is no re-confirmation. renderedHash recomputed at this revision from a fresh temp-tree rendering of the worktree at `dff44f544` (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/tools-stacy/fresh-rendered-hash.ts`): `sha256:19cef6df…`, equal to the committed rendering's value, to my prediction before the apply (a fresh render of the patched tree), and to Thurgood's.
+
+- **Judged against**: the rendered unit at this revision and the operative set at 14 items.
+- **Every item survives.** The sentence adds disclosure and removes no function: all 14 items render as they did at the prior signature. `owed-set-emits-exclusions` is the item nearest the new text: the query still reports every spec it leaves out, counted by class, and the sentence adds that a listed row is a candidate. Its parenthesis names the unit's PR merge first and the ticks second, matching the predicate ("final declared merge unit has merged"). **It is a full-survival assent.**
+- **The run-1 tally** (§ "Signing run summary (2026-09-29, phase two, run 1)") is the 2026-09-29 count and is not rewritten; the row still reads 14/14.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior re-sign record (superseded, 2026-10-18; rendered `sha256:c821fc77…`)**:
+
+**Re-signed 2026-10-18** (prior signature: assent, 2026-09-29, against rendered `sha256:8e4651c8…`; the canonical hash is unchanged, `sha256:e3f6f82a…`). Stale because the overlay's adoption-date sentence and lines changed for C-4 (`.kiro/issues/2026-10-03-consumer-stacy-owed-set-needs-adoption-record.md`; rulings row 28 (2)): the adoption record is now optional, and without it the query uses the day `designerpunk.manifest.json` was first committed on the first-parent line, prints which source it used, and stops with a named remedy only if neither exists. I wrote the text; it was applied by Thurgood byte for byte at `1f660a1bc` and the renderings regenerated at `22dd80466`. The canonical unit, its operative set (14 items) and its confirmation did not change, so there is no re-confirmation. renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/tools-stacy/fresh-rendered-hash.ts`), equal to the committed rendering's value and to my prediction before the apply.
+- **Judged against**: the rendered unit at this revision and the operative set at 14 items.
+- **Every item survives, re-grounded.** Thirteen items render as they did at the prior signature. `owed-set-ratification-resolve` is the one re-grounded differently: canonically it reads the boundary date from a committed record and stops loudly when it cannot; the rendering reads the team's adoption record when there is one, otherwise the commit that first added `designerpunk.manifest.json` (a committed, checkable event), prints the source, and stops with a named remedy when neither exists. Same function, re-grounded to something a born repo has. `owed-set-predicate` survives with the boundary still "on or after adoption", and the prose now says where that day comes from. The rest is as before: the pipeline keyed to `$SPECS_DIR` and `$ADOPTED` (the midnight pin kept), the three classes restated, three-copies as "keep every copy the same text", the ladder as "a second wrong result → a committed script", git history kept. The rendering is the G1 exemplar E rendering except its adoption-date sentence and lines. **It is a full-survival assent**, earned item by item.
+- **The run-1 tally** (§ "Signing run summary (2026-09-29, phase two, run 1)", the `#the-owed-set-pipeline-…` line, 14/14, and "two are item-by-item re-groundings") is the 2026-09-29 count and is not rewritten. At this re-sign the row still reads 14/14. The annotation sits here because the signing-chain verifier reads a change to a summary section, which keys to no row, as a link-2 failure.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-09-29)**:
+
+> signer: stacy
+> date: 2026-09-29
+> canonicalHash: sha256:e3f6f82a3b33e37b2e4862e259510551fd4c3d33b19da0357164b26f2742f837
+> renderedHash: sha256:8e4651c8af28921399677f9ad9a7791f3df9c2aeffd295bc716b2f051e47ddde
+> verdict: assent — surviving 14/14
+>
+> **Every item survives, re-grounded.** The predicate is keyed to the team's adoption record, the pipeline to `$SPECS_DIR` and `$ADOPTION` (the midnight pin kept), the three classes are restated, three-copies becomes "keep every copy the same text", the ladder becomes "a second wrong result → a committed script", and git history is kept. This is the G1 exemplar E rendering. **It is a full-survival assent**, earned item by item; see the tally.
 
 ## `#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument`
 

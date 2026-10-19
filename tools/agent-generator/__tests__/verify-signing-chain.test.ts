@@ -16,7 +16,7 @@ import * as path from 'path';
 import { load as loadYaml } from 'js-yaml';
 import { splitFrontmatter } from '../frontmatter';
 import { partition } from '../partition';
-import { NO_SIGNING_PATHS_LINE, runCi, type CiResult } from '../regrounding/verify-signing-chain';
+import { AGENT_ABOVE_FINAL_PARAGRAPH, NO_SIGNING_PATHS_LINE, runCi, type CiResult } from '../regrounding/verify-signing-chain';
 import {
   cleanupTmp,
   commit,
@@ -95,6 +95,38 @@ describe(`verify-signing-chain --ci (links 1–3) — C1 from ${RG_IS_REAL ? 're
     const r = ci(repo, base);
     expect(r.ok).toBe(false);
     expect(r.findings.some((f) => f.link === 3 && /no Agent: trailer/.test(f.message))).toBe(true);
+  });
+
+  test('F2b: `Agent:` in the final paragraph with `Co-Authored-By:` → passes (trailer read)', () => {
+    const [repo, base] = pr();
+    resign(repo, { seed: 'f2b' });
+    commit(repo, 'Re-sign #identity', ['Agent: kenya', 'Co-Authored-By: Fixture <f@example.invalid>']);
+    const r = ci(repo, base);
+    expect(r.findings).toEqual([]);
+    expect(r.ok).toBe(true);
+  });
+
+  test('F2c: `Agent:` above a blank line, then `Co-Authored-By:` → fails with the one-final-paragraph hint', () => {
+    const [repo, base] = pr();
+    resign(repo, { seed: 'f2c' });
+    commit(repo, 'Re-sign #identity', ['Agent: kenya', '', 'Co-Authored-By: Fixture <f@example.invalid>']);
+    const r = ci(repo, base);
+    expect(r.ok).toBe(false);
+    const f = r.findings.filter((x) => x.link === 3 && /no parsable Agent: trailer/.test(x.message));
+    expect(f).toHaveLength(1);
+    expect(f[0].message).toBe(AGENT_ABOVE_FINAL_PARAGRAPH);
+    expect(f[0].message).toContain('an "Agent:" line exists above the final paragraph');
+    expect(f[0].message).toContain('put "Agent: <seat>" and "Co-Authored-By:" together in ONE final paragraph');
+  });
+
+  test('F2d: no `Agent:` line anywhere → the existing message, unchanged', () => {
+    const [repo, base] = pr();
+    resign(repo, { seed: 'f2d' });
+    commit(repo, 'Re-sign #identity', ['Co-Authored-By: Fixture <f@example.invalid>']);
+    const r = ci(repo, base);
+    expect(r.ok).toBe(false);
+    const f = r.findings.filter((x) => x.link === 3 && /no /.test(x.message) && /Agent: trailer/.test(x.message));
+    expect(f.map((x) => x.message)).toEqual(['signing commit carries no Agent: trailer']);
   });
 
   test('F3: two `Agent:` trailers → fail', () => {

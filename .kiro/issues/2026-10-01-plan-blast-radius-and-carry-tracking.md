@@ -3,7 +3,9 @@
 **Date**: 2026-10-01
 **Status**: ACTIVE (drafting: the ballot or ballots are written by the owner; no law text here)
 **Owner**: Thurgood (drafts the ballot(s)). **Decision**: Peter. Ratification is by ballot (`.kiro/docs/ballots/README.md`).
-**Trigger**: **the first of two events**, at which the ballot draft(s) are written on a branch and the option set is in front of Peter (the pick itself is not required at the event):
+**Trigger**: `manual` — the capped sitting's ballot for half (a) (sitting item S2) merges; written as `merge:#<N>` once that PR is known. *(Re-ruled 2026-10-18, Thurgood: both old events fired — event 1 as #262 on 2026-10-02 (the "Trigger fired — 2026-10-02" section) and event 2 at the next spec's tasks round — and the drafting was not written. Half (b) is closed below, so the trigger now covers (a) only. Authority: the owner's Trigger-line right (README rule 9), re-ruled under rule 11 in a diff carrying this dated reason, and Peter's routing of 2026-10-18 ("Go on the W-1 records PR and the capped sitting", relayed in the orchestrator's brief; the PR body cites it). The superseded trigger, verbatim:)* kept verbatim in the next block.
+**Class**: P3 improvement · owed-act *(set 2026-10-18, Thurgood, rule 12. Half (a) is a planning-law improvement drawn from one spec's evidence; the record's own evidence shows rows 3 to 5 caught by the unit-branch CI dispatch before `main`, so no reader is misled and no guard is claimed that does not hold.)*
+**Superseded trigger (re-ruled 2026-10-18; verbatim)**: **the first of two events**, at which the ballot draft(s) are written on a branch and the option set is in front of Peter (the pick itself is not required at the event):
 1. **U2b's unit PR merges** (Spec 123, `task/123-u2b-profile`), the unit that produced this evidence. Half (b) has no reason to wait past it: Tasks 17 and 18 will each write a parent completion doc with a Carries section, and a rule that lands after them has already missed them.
 2. **Before the next spec's tasks round opens** (the same event as `.kiro/issues/2026-09-29-instruments-parser-and-resolver.md`). Half (a) operates at a tasks round, and its one mechanical form rides that parser PR (see "Composition").
 
@@ -163,3 +165,18 @@ Any edit to Process-Spec-Planning, the Completion Documentation Guide, the TCP, 
 - **Task 17** (Thurgood): results in `.kiro/specs/123-consumer-distribution/completion/task-17-instruments.md`, whose header cites the sweep working file `task17-blast-radius-sweep.md`. That file is not committed on `main`; the instruments block carries the re-derived rows.
 - **Task 18** (Lina, as PRIMARY): results in `.kiro/specs/123-consumer-distribution/completion/task-18-instruments.md` (source line: "Lina's branch-cut sweep of 2026-10-02 (A-minimal form)"), including the rows it found late under `## Found later`.
 
+## Triage (2026-10-18) — (b) closed, (a) to the sitting
+
+*Signed: Thurgood (owner). Nothing above is rewritten; the old Trigger text is kept verbatim in the block under the Class line.*
+
+- **(b) CLOSED 2026-10-18 as overtaken by README rule 10.** Rule 10, applied at head `c470a248f` (#408), reads: "An obligation stated only in a plan line, a carry list, a walk table, a rulings row or a PR body, citing no record, is a finding on the PR that wrote it." That is this half's fix in substance: a carry that names no tracked home is now a finding on the PR that wrote it. The word "carry list" is in the rule's text; I checked it against `.kiro/issues/README.md` rule 10, not against the ballot's summary.
+- **What rule 10 does not do, named and not filed**: it does not give a completion doc a fixed-form `**Carries**:` line, and no checker reads a carry's cited path (this record's option **B1**). It also binds "a ruling or a claims pass that creates an obligation", so a carry written by a task author in a parent completion doc reaches it only through the carry-list clause. This is a design note, not an obligation: **B1 is reopened only if a claims pass finds an untracked carry a second time** (the lean this record already carried: "B2 first, B1 only if the claims pass finds untracked carries a second time"). B2, the Guide rule with no checker, is what rule 10 already is.
+- **(a) LIVE, routed to the capped sitting of 2026-10-18, item S2**: a Process-Spec-Planning ballot owed, Thurgood drafts, Peter picks A1 / A2 / A3 (§ "(a) Options"). Lean unchanged: **A1 plus the A-minimal practice now; A2 and A3 after one more tasks round has applied A1.** Half (a)'s one mechanical form rides the instruments-parser PR (`.kiro/issues/2026-09-29-instruments-parser-and-resolver.md`); that is a separate record and this one adds no obligation to it.
+- **Closes** when the sitting's ballot merges (A1 adopted, or the pick recorded as "not yet"), by rule 5's dated outcome line and the archive move.
+
+## Lapse (2026-10-18)
+
+*Signed: Thurgood (owner), observed under README rule 11 as applied in #408.*
+
+- **Fired event**: the old trigger's event 1, U2b's unit PR merge, #262, `669b51b0931369e4d86123995becfea8246e439c` (2026-10-02); its own "Trigger fired — 2026-10-02" section above recorded that the drafting was owed. No commit that is an ancestor of the event's commit closed this record (rule 5's dated outcome line, or the archive move) or re-ruled it (its Trigger line changed in a diff carrying a dated reason and authority).
+- **Consequence (rule 11)**: this is a P3, which has no escalation path; the lapse is recorded and the re-ruling in this PR sets the next event.

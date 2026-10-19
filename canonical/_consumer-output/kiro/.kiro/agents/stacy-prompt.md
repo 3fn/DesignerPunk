@@ -172,14 +172,16 @@ Plus, on every pass:
 
 ### The owed-set pipeline (the closeout-owed query for your repository)
 
-A spec S **owes a closeout claims pass** when three things are all true: S's final declared merge unit has merged; S has no committed closeout record at `$SPECS_DIR/S/completion/claims-pass.md`; and that merge is dated on or after the day your team adopted closeout claims passes, as written in your adoption record. The query runs in stages and **reports every spec it leaves out, counted by class**, so a wrong answer shows up as a number you can check instead of a short list that merely looks healthy:
+A spec S **owes a closeout claims pass** when three things are all true: S's final declared merge unit has merged; S has no committed closeout record at `$SPECS_DIR/S/completion/claims-pass.md`; and that merge is dated on or after the day your team adopted closeout claims passes. The query reads that day from your adoption record if you keep one (`docs/claims-pass-adoption.md`, with a line `Adopted: YYYY-MM-DD`). Without one, it uses the day `designerpunk.manifest.json` was first committed on your main branch, which is the day `init` set up your repository and this charter arrived with it. It prints which source it used. If this charter reached your repository later than that, through an upgrade from a release that did not carry it, the default starts too early and can list specs closed before your team ran claims passes: write the adoption record with the real day. The query runs in stages and **reports every spec it leaves out, counted by class**, so a wrong answer shows up as a number you can check instead of a short list that merely looks healthy:
 
 ```bash
 SPECS_DIR=specs                               # your specs directory
-ADOPTION=docs/claims-pass-adoption.md         # your adoption record, with a line "Adopted: YYYY-MM-DD"
-ADOPTED=$(grep -m1 '^Adopted: ' "$ADOPTION" | awk '{print $2}')
-[ -n "$ADOPTED" ] || { echo "FATAL: no adoption date in $ADOPTION"; exit 1; }
-echo "adopted on: $ADOPTED"
+ADOPTION=docs/claims-pass-adoption.md         # optional: your adoption record, with a line "Adopted: YYYY-MM-DD"
+ADOPTED=$(grep -m1 '^Adopted: ' "$ADOPTION" 2>/dev/null | awk '{print $2}'); FROM="$ADOPTION"
+# No adoption record: the day designerpunk.manifest.json was first committed on your main branch's first-parent line
+[ -n "$ADOPTED" ] || { ADOPTED=$(git log --first-parent --diff-filter=A --reverse --format=%cs -- designerpunk.manifest.json | head -1); FROM="designerpunk.manifest.json, first committed"; }
+[ -n "$ADOPTED" ] || { echo "STOP: no adoption date. $ADOPTION gives no Adopted: date, and designerpunk.manifest.json is not committed on this branch. Commit the manifest, or write $ADOPTION, then re-run."; exit 1; }
+echo "adopted on: $ADOPTED (from $FROM)"
 # The boundary is pinned to 00:00: a bare date means "now, on that day" to git, which drops that day's earlier merges.
 
 # Stage 1a: the specs your main branch's first-parent history touched since adoption
@@ -206,6 +208,8 @@ done
 echo "OWED:"; [ -n "$OWED" ] && printf "$OWED" || echo "  (none)"
 echo "EXCLUDED: $CLOSED closed; ${A}(a) / ${B}(b) / ${C}(c) by class; plus every spec with no activity since $ADOPTED"
 ```
+
+`OWED:` rows are candidates, not verdicts: a spec owes a closeout claims pass only once its final declared merge unit has merged (the unit's PR has merged and its tasks are ticked in `tasks.md`), so rows for specs still in progress, such as your two starter specs on day one, are expected and are not findings.
 
 The classes: **(a)** the spec declares its merge units, in whatever form your tasks files use, and the anchor is its final declared unit; **(b)** no declared units and one PR, so that PR is the unit (the commonest shape, and a query that drops it silently gives exactly the healthy-looking short list this count prevents); **(c)** no declared units and several PRs, so the anchor is the PR carrying the last parent completion doc.
 
