@@ -353,7 +353,12 @@ export class DocumentIndexer {
     const lookup: SectionLookup = resolveSection(content, filePath, opts);
 
     if (lookup.kind === 'section') {
-      return lookup.section;
+      // P-1 (Peter, 2026-10-18): a direct get_section reader meets the audience banner too.
+      // Same extractor and same text as the summary's; present only for a bannered doc.
+      const audienceBanner = extractAudienceBanner(content);
+      return audienceBanner !== undefined
+        ? { ...lookup.section, audienceBanner }
+        : lookup.section;
     }
 
     if (lookup.kind === 'ambiguous') {
