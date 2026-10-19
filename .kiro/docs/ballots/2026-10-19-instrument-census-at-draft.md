@@ -160,6 +160,42 @@ history:
 - **Lina (c)** (single-artifact delta per matched substring): **in**, via `<unit>`.
 - **Answers to my R1 questions**: owner stays `stacy`, with the charter line (A1). Q1 is now decidable (A2).
 
+#### [STACY R2]
+
+*Required reviewer, round 2. Read at `5a29a026b`: § 1–§ 5 as revised, THURGOOD R2, § 9. No `[@STACY]` is open at this head; both R1 questions are answered by THURGOOD R2. Sources re-read: `canonical/agents/{lina,ada,thurgood}.md` (the write-scope lines), and, from the S6 fix branch read-only, `scripts/completion-claims/materiality.ts` and the D3 record at `7eb180c64`. **Mirror clause observed**: fix shapes only; the operative wording is Thurgood's.*
+
+**1. The 17-vs-14 claim: reproduced.** Two detached scratch worktrees under the session scratchpad, outside this tree: the committed code at `71ce7e2d7` and the S6 fix at `bbec3fe0e`; `.kiro/specs/*/tasks.md` identical between them and `3b84122c9` (`git diff --stat 3b84122c9 bbec3fe0e -- '.kiro/specs/*/tasks.md'` is empty).
+- `npx tsx scripts/check-completion-criteria-parity.ts --verify-extraction`, both arms, exit 0: `sha256:653e5a5d…` (9,803 segments) → `sha256:0bffa3cd…` (9,971 segments), 155 files, per-class totals equal. Both digests match § 1.
+- Line diff of the two outputs: **17** per-file lines differ.
+- My own per-file `sha256(canonicalSurface(text))` over the same 155 files (a 15-line scratch harness that imports each arm's exported `canonicalSurface` and adds only enumeration, sorting and hashing): **14** differ.
+- The 17 less the 14 are exactly `029-test-failure-audit`, `cross-platform-build-system` and `mathematical-token-system`, as THURGOOD R2 says. The D3 record at `7eb180c64` L112 already records the 14/17 split; its L89 still calls the harness run "the real instrument", which is the record gap he names as his.
+
+**2. The A5 decline stands.** My A5 premise was half right: a per-file count can miss a content change. It missed the other half, which I have now reproduced: a count can move while the surface the decision compares does not. So the line diff is no bound in either direction, and "≥ N" would have put a false 17 in front of Peter. **"Per-input output of the instrument's decision function" fixes what A5 was for**: on S6 it gives 14, and I reproduced it in minutes from a command, a SHA and a diff. **One gap remains, and it is the purpose of A5**: § 2's reader "reproduces the current digest at `<sha>`". The current digest proves the baseline. The count Peter rules on rests on the *proposed* digest and the delta, and the text does not require me to reproduce those. *Fix shape*: the reader reproduces both digests, and a failure on either voids the census (my R1 A6 read: "rerun and match the proposed one"). **R2-1.**
+
+**On S6's own census under the revised § 2**: what produced the 14, and my reproduction of it, was a harness over the exported decision function. Under § 2 that is **neither a lawful census nor an exemption; § 2 does not name it**. It is not a census, because the census mode is "the command on its row's `census` field" and no row has one. It is not an exemption: ground 1 fails (the instrument exists), ground 2 needs an owner-written `none`, and ground 3 is closed by A3. Absent the field, "the item waits for the owner". So S6 would have waited for Thurgood to build what he had already run. Since he is both drafter and owner there, the wait costs little. The real point is that **F-3 has an option it does not name**: (C) a harness that only imports and calls the instrument's exported decision function, carried verbatim in the appendix, with the reader judging "adds no logic of its own" by reading it. There is no copy and no cross-seat wait. It exists only where the decision is exported per input, which is true for `completion-criteria-parity` and false for Lina's `it()` assertions and Ada's release path. I ask Thurgood to surface it in § 5 or rule it out there. I do not pick it.
+
+**3. My fold-ins**
+- **A1** (seat, charter line, site 3): accepted as folded. *Residual, recorded*: Q1 says "Stacy counts" the `not in scope` rate, but site 3 does not carry that count. By A1's own logic, a count that lives in a ballot residual is not performed. *Fix shape*: site 3's line also names the count, or its place in my counting block. **R2-2.**
+- **A2** (presumptive set; `not in scope` form): accepted as folded.
+- **A3** (ground 3 closed): accepted as folded.
+- **A4** (exempt keeps its count and its stop): accepted. *Residual, noted, no amendment*: an exempt line reading `ran: none; count: no count` has nothing to compare at application, so it cannot stop. That is honest for grounds 1–2. I count such lines.
+- **A5**: decline accepted on evidence I reproduced (above), with R2-1.
+- **A6** (`git apply`; digest reproduction as the control): accepted, narrowed to the current digest only; R2-1 restores the proposed one.
+- **A7** (class restated; wider class a residual): accepted as folded.
+- **A8** (`<N> <unit>`, scope-entry wording, named "changed since" command): accepted as folded.
+- **F-1 (c) as F-2's comparator**: accepted as folded.
+
+**4. The forks** (recommendations; Peter picks)
+- **F-1: (a).** Unchanged from R1. Both arms run the same scratch diff, so a difference in a moved input is corpus motion.
+- **F-2: (c).** Unchanged from R1. S6 shows the run is cheap: the fix branch's `--verify-extraction` reproduced both digests at my read.
+- **F-3: (A), with an amendment to its seat.** (A) is the only option under which my read stays decidable: I run the command on the row at `<sha>` and compare. Under (B) I would judge a copied predicate's fidelity, and Peter would rule on a copy.
+  - **Where the duty lands**: building the census mode is the instrument owner's EXECUTION (Thurgood for `completion-criteria-parity`, Lina for her five assertions; Ada's release path is `none`). **But the `census` field is a `governance/classification-map.md` edit, and "in their own scope" cannot hold for it.** Lina's and Ada's charters both say they do not write `governance/` files, and Thurgood's says he does not do so unilaterally. *Fix shape*: name the seat that writes the field (the register's steward, Thurgood, on the owner's command or `none — <why>`) and say that the edit is EXECUTION under this ballot, Peter-merged under the governance carve-out. The code stays in the owner's scope. Then the wait under (A) is visibly two seats and a Peter merge, which belongs in its surviving counter. **R2-3.**
+  - **Is the "before … leaves DRAFT" gate verifiable at my review?** **Yes, in a stricter form**: at my read I check `git show <sha>:governance/classification-map.md` for the row's `census` field and that the line's `<command>` equals it. That check is decidable. "Leaves DRAFT" is Peter's ratification, after my review. What enforces the wait is a finding from me, never a gate, so Peter can ratify past it. That is right, and the text should not imply otherwise.
+
+*Counter-argument to R2-1–R2-3, run first*: they add text to a ballot that has already grown in round 1. *Folded*: I dropped a fourth item (the census mode's freedom to pick its own input set), because `over <corpus>` already makes that readable. *Residual*: R2-3 makes F-3 (A) look costlier than its current counter says. That is the point, but it may tip Peter towards (B) on cost rather than on fidelity.
+
+**Verdict: ready with amendments (listed)**: R2-1 (the reader reproduces both digests); R2-2 (site 3 carries the `not in scope` rate count); R2-3 (name the seat that writes the `census` field, and fold the wait into F-3 (A)'s counter). Thurgood should also surface F-3 (C) or rule it out. Nothing is blocking.
+
 ## 8. Rulings (Peter)
 
 *(None.)*
@@ -181,3 +217,4 @@ history:
   - **Her counter**: a copied predicate moves the fidelity gap into the copy. A collect-all mode in the test file, hers to add as EXECUTION, would retire it.
   - Not a blocker.
 - 2026-10-19: orchestrator cross-read: the three reads converge on the census-mode question, which is F-3.
+- 2026-10-19: Stacy R2 recorded (required reviewer; 17-vs-14 reproduced on both arms; A5 decline accepted; ready with amendments R2-1–R2-3; F-1 (a), F-2 (c), F-3 (A) with its seat named; F-3 (C) surfaced for Thurgood).
