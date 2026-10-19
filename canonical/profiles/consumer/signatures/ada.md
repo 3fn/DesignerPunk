@@ -33,6 +33,18 @@ signer: ada
 
 signer: ada
 
+**RE-SIGNED 2026-10-19 — ASSENT, surviving 13 of 24.** Signed against canonical `sha256:3b0d6343…` and rendered `sha256:6209aa1c…`, and judged against the 24-item set confirmed at `12060d3aa`, with the overlay pinned at `5842fee82` and the consumer rendering regenerated at `a3f8b6053`.
+- **What changed**: in canonical, only the "Delegate signing audit" bullet (ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form, S5). The row removes the whole bullet under `subtraction-3` (DesignerPunk's own signing-chain instrument). I recomputed the rendered hash with `readConsumerSpans` and `renderedHashOf` on the worktree at `a3f8b6053`: `sha256:6209aa1c…`, equal to the 2026-10-17 value. The rendering did not change by a single byte.
+- **The thirteen prior items survive exactly as at the 2026-10-17 re-sign**: eleven verbatim; `scope-theme-registry` and `scope-pipeline-config` re-keyed and entailed; `scope-docs` re-pointed.
+
+**Not surviving, and I agree they should not** (11):
+- The eight standing-grant items, for the reasons given in the superseded signature below: `scope-standing-grant`, `scope-standing-consults`, `scope-standing-test-rule`, `scope-standing-pr-names-file`, `scope-standing-rule-9`, `scope-standing-grants-compose`, `scope-standing-law`, `scope-standing-scope-moves`.
+- The three delegate-audit obligations: `scope-delegate-audit-run`, `scope-delegate-audit-file`, `scope-delegate-audit-report`. Consumers have no signing chain, no `verify-signing-chain`, no delegate seats and no Stacy rotation to audit, so the function has no consumer counterpart and does not survive re-grounded elsewhere in the rendering. That is why this is a removal and not a re-point (11.6.5e). A compliant implementation can break each of the three.
+
+No refusal.
+
+**SUPERSEDED — the signature of 2026-10-17 (surviving 13 of 21; canonical `sha256:da60b5bb…`, rendered `sha256:6209aa1c…`), kept as the prior record:**
+
 **RE-SIGNED 2026-10-17 — ASSENT, surviving 13 of 21.** Signed against canonical `sha256:da60b5bb…` and rendered `sha256:6209aa1c…`, and judged against the 21-item set confirmed at `da9acba63`.
 - **What changed**: in canonical, only the six-roots bullet (ballot 2026-10-17-standing-write-scope-six-roots). The rendering did not change by a single byte, because the row removes that bullet under `subtraction-1`.
 - **The thirteen prior items survive exactly as at the 2026-09-29 re-sign**:
