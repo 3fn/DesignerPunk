@@ -1,0 +1,1 @@
+{"version": 1, "guards": [{"file": "guards/alpha.guard-fixture.ts", "config": "jest.config.js", "context": "lane-not-a-required-context", "record": "fixture case unknown-context"}]}

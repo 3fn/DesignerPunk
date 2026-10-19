@@ -259,6 +259,18 @@ jobs:
       - name: Run scripts/** test suite (npm run test:scripts)
         run: npm run test:scripts
 
+      # Named-guard selection floor (issue-row grant, .kiro/issues/README.md rule 8, activated #332;
+      # .kiro/issues/2026-10-13-named-guard-selection-floor-then-map-column-derivation.md step 1).
+      # The selection floors above assert only "≥ N resolved test files", so one in-lane guard falling
+      # out of its config's testMatch/roots/rootDir goes unseen while the lane stays green. This step
+      # reads .github/in-lane-guards.json and, per entry, confirms the file and config exist, the
+      # context is in verify-gate-registration.sh EXPECTED_CONTEXTS, and the file appears in the real
+      # `npx jest --config <config> --listTests`; an empty or malformed registry fails. Its line
+      # `N registered in-lane guards; N selected` is a claim over REGISTERED guards only, never every
+      # in-lane guard. A NEW did-it-really-run guard; no pre-existing step is modified.
+      - name: Named-guard selection floor — registered in-lane guards selected (.github/in-lane-guards.json)
+        run: npx tsx scripts/ci/check-in-lane-guards.ts
+
       # Standing scope (ballot 2026-09-27-ci-regime-standing-scope § 2, M1 P1 — first
       # application): tools/agent-generator/** (the 122 generator's own suites — golden bite 1,
       # the entry tree, the unit twin, the coverage-map/lanes tests) previously ran in NO CI
