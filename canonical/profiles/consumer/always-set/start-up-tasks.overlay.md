@@ -10,7 +10,7 @@
    
    **WHEN running tests THEN you MUST use the commands your repo defines** — read them from its `package.json` (or its build tool's config) before you run anything, and never guess a runner's flags.
 
-## @unit #item-test-command-selection-guidelines @ sha256:b4c82938bb3f353c5f5b20b055bddfd411f747dc8ab748e7bbe89cb86c9e6974
+## @unit #item-test-command-selection-guidelines @ sha256:3df356662cb6f1dbb2a10bd046eada681e3cac69ead4d3f3f2ffff6187bc47db
 5. **Test Command Selection Guidelines**
    
    **WHEN validating a subtask THEN** run the tests relevant to the change (not the full suite).

@@ -81,7 +81,7 @@ The dividing verb is **author/maintain** vs **adjudicate**. Claims audits cover 
 
 **Merge-path status, non-negotiable**: **execution-claims verification is a POST-ACCEPTANCE AUDIT. No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.** The ground is the co-signer argument: if the verifier approves at the merge, her later audit audits her own approval. *Even with infinite availability and zero overhead, a merge-path seat would still be wrong.*
 
-## @unit #the-claims-pass-record-claims-passmd-the-template @ sha256:29f67487340c5c5a970f454430b234269a73503f5caec77340985c065e109a33
+## @unit #the-claims-pass-record-claims-passmd-the-template @ sha256:11c50738271b1e8436109a51b12d12a8f2b19463d04dfdeb805b6bd69570c5e9
 ### The claims-pass record (`claims-pass.md` — the template)
 
 Every pass produces a committed record in the spec's completion directory. **Path convention, load-bearing**: CLOSEOUT's record is `<your specs dir>/<spec>/completion/claims-pass.md` — the exact filename the owed-set query keys on. **A MIDPOINT record is `completion/claims-pass-midpoint.md`, NEVER `claims-pass.md`** — a midpoint record at the closeout path would silently discharge the spec's closeout with a pass covering only part of the spec. Three required sections plus the standing duties:
