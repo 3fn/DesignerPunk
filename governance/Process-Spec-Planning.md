@@ -546,13 +546,15 @@ The **promise surface** is extracted with a deliberately **GENEROUS** pattern se
 | # | Class | Pattern |
 |---|---|---|
 | 1 | every top-level checkbox line, any parent form | `^- \[[xX ]\] ` (checkbox state masked to one token) |
-| 2 | criteria label — frozen | `**Success Criteria:**` |
-| 3 | criteria label — colon-outside | `**Success Criteria**:` |
-| 4 | criteria label — heading | `^#{2,4} .*Success Criteria` |
+| 2 | criteria label — frozen | `**Success Criteria:**` with their bullet bodies |
+| 3 | criteria label — colon-outside | `**Success Criteria**:` with their bullet bodies |
+| 4 | criteria label — heading, with its whole section | `^#{2,4} .*Success Criteria` — the body runs to the next heading of any level, thematic break or top-level checkbox line, and takes in every line between (prose and bold sub-labels included) |
 | 5 | primary-artifact blocks | `**Primary Artifacts:**` with their bullet bodies |
 | 6 | gate clauses | `merge gate`, case-insensitive, with their bullet bodies |
 | 7 | units block — canonical | `^## Declared Merge Units` (one base string; trailing parentheticals vary) |
 | 8 | units block — legacy bold-prose | `^**Merge units (` |
+
+*(Class 4's body extent amended by ballot `2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form` S6. The per-class counts are unchanged; the corpus digest changes, and that one change is attributed to this amendment by name.)*
 
 Extracted segments concatenate in document order and are compared after the same four normalization rules the criteria cells use, plus the checkbox mask: **one normalization concept, plus one named mask.** **No exclusion list exists or is needed** — ticks, dates, annotations outside the surface and reformatting are immaterial automatically. **Strike-through supersession of a parent IS material**: it removes a promise.
 
