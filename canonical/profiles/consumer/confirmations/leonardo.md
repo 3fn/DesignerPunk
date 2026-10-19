@@ -32,11 +32,19 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: leonardo
-canonicalHash: sha256:cd2e971224fb16c096463b43d53797b42c96332217c16ef2be3d182c0a6e4475
-items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8
-date: 2026-09-29
+canonicalHash: sha256:f8f57690c21e3315eded9d2f97e9919e57aba11220678be4ae4d324326b8cafa
+items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-delegate-audit-run, scope-delegate-audit-file, scope-delegate-audit-report
+date: 2026-10-19
 
-**Ruling: CONFIRMED at 8 items.** Each bullet is a scope member; a consumer Leonardo that refuses one of these (e.g. leaves token selection to the platform agents) or does it by another route breaks it.
+**Re-confirmed 2026-10-19 (Req 11.6.5d).**
+- **What changed**: one bullet, "Delegate signing audit", added after "Screen-level specification" (ballot `2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form` S5, RATIFIED Peter 2026-10-18/19; applied by Thurgood, `424277a49`). It is the duty I consented to in consult, in the bounds I consented to: bounded, mechanical, read-only, outside my domain, given by ballot.
+- **Item grain**: three `obligation` items, split by what a consumer could violate: `scope-delegate-audit-run` (run the command the brief names, at a MIDPOINT, CLOSEOUT or RELEASE walk, in my turn of the rotation), `scope-delegate-audit-file` (every per-act line verbatim to the named file, committed under my own `Agent:` trailer), `scope-delegate-audit-report` (report, do not rule; a `FAIL` or `anomaly` stays in the file and goes to Peter as the brief names). Each text is a verbatim substring of the unit and occurs once.
+- **Wording checked against the consent**: nothing in the bullet implies judgment or ownership. The report item is a prohibition (no J run, no reading of a verdict's meaning, no finding about Stacy), which is the bound itself. I rule on nothing in this duty.
+- **What did not change**: `scope-1`..`scope-8`, each still a verbatim substring of the unit. The canonicalHash moves from `sha256:cd2e971224fb16c096463b43d53797b42c96332217c16ef2be3d182c0a6e4475` to the value above, as `operative-set-freshness` printed it and as recomputed with `partition` + `regrounding/hash.ts`.
+
+**Ruling: CONFIRMED at 11 items.**
+
+**Confirmed 2026-09-29 (prior record, superseded)**: canonicalHash `sha256:cd2e971224fb16c096463b43d53797b42c96332217c16ef2be3d182c0a6e4475`, 8 items. Each bullet is a scope member; a consumer Leonardo that refuses one of these (e.g. leaves token selection to the platform agents) or does it by another route breaks it.
 
 ## `#product-configuration-context`
 
