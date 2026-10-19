@@ -1,7 +1,7 @@
 # Issue: the criteria-block form, law vs practice (nested bullets, D4), and the Q2 evidence caveat
 
 **Date**: 2026-09-26
-**Status**: ACTIVE
+**Status**: CLOSED 2026-10-19: ruled (A), (A-i), outside, and applied (§ "Outcome (2026-10-19)", below). Archived in the application PR `chore/ballot-sitting-2-application`. *(Was: ACTIVE.)*
 **Owner**: Thurgood drafts the ballot; Peter rules.
 **Trigger**: `manual` — the capped sitting's ballot (sitting item S3) merges; written as `merge:#<N>` once that PR is known. *(Re-ruled 2026-10-18, Thurgood: the Q2 sitting fired and was recorded 2026-10-02 (register row `completion-criteria-parity`, ARMING SITTING; flip 2026-10-03) and D4 was not taken there, though Peter's 2026-09-26 ruling deferred it "to a ballot at the Q2 sitting". Authority: the owner's Trigger-line right (README rule 9), re-ruled under rule 11 in a diff carrying this dated reason, and Peter's routing of 2026-10-18 ("Go on the W-1 records PR and the capped sitting", relayed in the orchestrator's brief; the PR body cites it). The superseded trigger, verbatim:)* **the Q2 sitting** (the arming decision for `completion-criteria-parity`: the 5.Z sitting or release-prep start, whichever comes first).
 **Class**: P2 obligation (record) · defect *(set 2026-10-18, Thurgood, rule 12. Ratified Req 2.2.1 says "flat … no nested sub-bullets" and the armed checker accepts a nested bullet as a row; the law's text is wrong against practice and no reader is misled.)*
@@ -50,3 +50,12 @@ The parity checker's PASS lines are the arming evidence. Before the parser fix, 
 
 - **Fired event**: the old trigger, the Q2 sitting, #267, `70f8fe54fbd7e92d60746e3135aee22c4f90b3bf` (2026-10-02), the arming sitting that recorded Q2 (the flip followed 2026-10-03). D4 was not taken there although Peter's 2026-09-26 ruling deferred it to that sitting. No commit that is an ancestor of the event's commit closed this record (rule 5's dated outcome line, or the archive move) or re-ruled it (its Trigger line changed in a diff carrying a dated reason and authority).
 - **Consequence (rule 11)**: this is a P2 `(record)`, which escalates at its **second** lapse, so nothing goes to Peter now. It lapses again at each later release's S while it is open.
+
+## Outcome (2026-10-19)
+
+*Signed: Thurgood (owner). Nothing above is rewritten.*
+
+- **Ruled** by ballot `.kiro/docs/ballots/2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form.md` S3, RATIFIED (Peter, 2026-10-18/19; § 8): **F-S3 = (A)**, nested bullets are rows, law text only, no instrument change; **F-S3′ = (A-i)**, every bullet is a criterion, the group heading included, whose Status rests on its own words (a heading ticked on its children's evidence is a claims-pass read at CLOSEOUT, not a mechanical one); **F-S3″ = outside**.
+- **Req 2.2.1 is superseded, and this line is where that is recorded** (F-S3″ = outside): its "a **flat** bullet list … no nested sub-bullets" no longer states the law, and neither does Req 2.3.3's "flat bullets". The operative text is `governance/Process-Spec-Planning.md` § "The criteria block" (L470): "**One bullet = one criterion = one table row, at any indent**". `.kiro/specs/127-completion-claims-integrity/requirements.md` is **not** edited, as release-4 rulings item 17 did; 127 `design.md`'s D4 bullet (L87) carries one dated ruling line pointing here, and register row `completion-criteria-parity` carries a 2026-10-19 history line. The 2026-09-19 law ballot (L1009, the same sentence) is a record and is not edited.
+- **Applied** in PR `chore/ballot-sitting-2-application` (Thurgood): the PSP sentence, the 127 `design.md` line, the register history line, this outcome line.
+- Closed and moved to `archive/` in the applying PR (README rules 2 and 5).

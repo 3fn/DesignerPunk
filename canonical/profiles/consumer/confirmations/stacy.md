@@ -246,9 +246,20 @@ date: 2026-09-29
 ## `#the-claims-pass-record-claims-passmd-the-template`
 
 confirmer: stacy
-canonicalHash: sha256:29f67487340c5c5a970f454430b234269a73503f5caec77340985c065e109a33
-items: record-committed, closeout-path, midpoint-path, section-scope, section-findings, section-method, method-honesty, closed-negative-string, mandatory-line, counting-1, counting-2, counting-3, counting-4, counting-5, counting-6, counting-7, counting-8, counting-9, counting-10-buckets, counting-10-ncc-rate, counting-10-assent-refusal, counting-10-spot-check, counting-10-full-survival, counting-11, counting-12, report-set-comparison, emission-reading, delegated-tier-read, deferral-walk-back, instruments-read, governance-edit-kind-read, never-a-gate
-date: 2026-10-18
+canonicalHash: sha256:11c50738271b1e8436109a51b12d12a8f2b19463d04dfdeb805b6bd69570c5e9
+items: record-committed, closeout-path, midpoint-path, section-scope, section-findings, section-method, method-honesty, closed-negative-string, mandatory-line, counting-1, counting-2, counting-3, counting-4, counting-5, counting-6, counting-7, counting-8, counting-9, counting-10-buckets, counting-10-ncc-rate, counting-10-assent-refusal, counting-10-spot-check, counting-10-full-survival, counting-11, counting-12, report-set-comparison, emission-reading, delegated-tier-read, deferral-walk-back, instruments-read, governance-edit-kind-read, delegate-audit-pointer, never-a-gate
+date: 2026-10-19
+
+**Re-confirmed 2026-10-19 (Req 11.6.5d).**
+- **What changed**: one bullet, "The delegate-audit pointer", inserted between "The governance-edit-kind read" and "The never-a-gate sentence" in the list "Plus, on every pass:". It is my text from ballot `2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form` S5 (RATIFIED, Peter, 2026-10-18/19). Thurgood applied it byte for byte to the charter (`canonical/agents/stacy.md`, cmp-identical to my patched file) and as item `delegate-audit-pointer` at `47afb433c`; that is his authoring, not this act.
+- **`delegate-audit-pointer`'s text, verified verbatim**: it occurs once in the unit and equals the inserted charter line.
+- **Item grain**: one `obligation`, not split. The `<k> / <N>` line, the N-from-signature-history rule, the straight-to-Peter routing of a `FAIL` or `anomaly`, and the separate Peter-sample line are one pointer duty read at one surface (the record's delegate-audit line).
+- **What did not change**: the other 32 items, each still a verbatim substring of the unit. The canonicalHash moves from `sha256:29f67487340c5c5a970f454430b234269a73503f5caec77340985c065e109a33` to the value above, as `operative-set-freshness` printed it and as recomputed with `partition` + `regrounding/hash.ts`.
+- **Consumer rendering (my decision, stated for the disposition)**: pin only; the overlay body is unchanged and the rendered hash is expected unchanged. The `subtraction-3` removal (the four read bullets) gains "; **The delegate-audit pointer**": consumers run no signing chain and have no delegate seats. `assent.surviving` is unchanged, so 18 of 33 items survive. The pin and the re-sign follow in later turns.
+
+**Ruling: CONFIRMED at 33 items.**
+
+**Confirmed 2026-10-18 (prior record, superseded)**: canonicalHash `sha256:29f67487340c5c5a970f454430b234269a73503f5caec77340985c065e109a33`, 32 items, as below.
 
 **Re-confirmed 2026-10-18 (Req 11.6.5d).**
 - **What changed**: one bullet, "The governance-edit-kind read", inserted between "The instruments read" and "The never-a-gate sentence" in the list "Plus, on every pass:". It is my text from ballot `.kiro/docs/ballots/2026-10-18-governance-edit-kinds.md` § 3b (RATIFIED, Peter, 2026-10-18), including my CORRECTION clause "…or whose only referent is governance text or enforcement code changed in the same PR (the ballot's § 2 list)". Under six-roots errata (f), Thurgood applied it byte for byte to the charter and as item `governance-edit-kind-read` (`a0e25936c`); that is his authoring, not this act.

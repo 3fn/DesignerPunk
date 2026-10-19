@@ -304,7 +304,7 @@ units:
         text: "When in doubt, consult Lina."
     confirmation: canonical/profiles/consumer/confirmations/lina.md#ownership
   "#in-scope":
-    canonicalHash: sha256:a78c65a56e0be270fbcade0106ae39659bd984a2aae2dc75de93e288c1131ef2
+    canonicalHash: sha256:fa62f16593d61608573d09f2c1fca26bfe91552f0d0639f321c2276b8db4a1dd
     items:
       - id: scope-scaffolding
         kind: member
@@ -386,6 +386,18 @@ units:
         kind: obligation
         label: "No law change without a ballot"
         text: "Owning a tool never authorizes changing the law it serves without a ballot — owning the adapters does not let you change the consumer subtractions or any seat's signed dispositions"
+      - id: scope-delegate-audit-run
+        kind: obligation
+        label: "Delegate audit: run the command the brief names"
+        text: "when the brief names you at a MIDPOINT, CLOSEOUT or RELEASE walk, in your turn of the rotation (Ada → Lina → Leonardo), run the command the brief names (`verify-signing-chain --audit --signer stacy`, or, until that filter lands, the unfiltered audit with every line marked by signer)"
+      - id: scope-delegate-audit-file
+        kind: obligation
+        label: "Delegate audit: every line verbatim, own trailer"
+        text: "Write every per-act line verbatim to the file the brief names (`delegate-audit-<event>-<seat>.md`), and commit it under your own `Agent:` trailer."
+      - id: scope-delegate-audit-report
+        kind: obligation
+        label: "Delegate audit: report, do not rule; FAIL to Peter"
+        text: "**You report; you do not rule**: you do not run J, read a verdict's meaning, or make a finding about Stacy. A `FAIL` or `anomaly` is left in the file, and it goes to Peter as the brief names."
     confirmation: canonical/profiles/consumer/confirmations/lina.md#in-scope
   "#out-of-scope":
     canonicalHash: sha256:60728a67e9739c913a7bc14247e50b8512019224f96ec065b75a65c61bd01e41

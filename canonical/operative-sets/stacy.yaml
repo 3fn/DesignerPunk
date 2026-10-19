@@ -574,7 +574,7 @@ units:
         text: "the co-signed joint working agreement + lifecycle amendment (`.kiro/specs/127-completion-claims-integrity/pre-spec/`, PRs #158/#165) are the underlying authority where this text and they disagree."
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble
   "#the-claims-pass-record-claims-passmd-the-template":
-    canonicalHash: sha256:29f67487340c5c5a970f454430b234269a73503f5caec77340985c065e109a33
+    canonicalHash: sha256:11c50738271b1e8436109a51b12d12a8f2b19463d04dfdeb805b6bd69570c5e9
     items:
       - id: record-committed
         kind: obligation
@@ -700,6 +700,10 @@ units:
         kind: obligation
         label: "Governance-edit-kind read"
         text: "**The governance-edit-kind read** *(ballot 2026-10-18-governance-edit-kinds)*: on every PR in the population whose diff touches a path the edit kinds cover (`.kiro/docs/ballots/README.md` § \"When a governance edit needs a ballot — three kinds\"), the `**Edit kind**:` lines — read from the PR body (`gh pr view <n> --json body`, run for this seat by a session holding credentials), never from the squash message — against the merge's diff: every changed file, and every hunk where a file's lines split it, is named by a line giving its kind and authority. **A file or hunk with no line, or a line with no authority, is a finding on the authoring agent** (counted apart: missing vs no-authority). The rot-mode count: LAW hunks whose ballot did not read RATIFIED at the merge (`git show <merge>:<ballot>`), each also routed to Peter, who alone ratifies or reverts; EXECUTION hunks whose clause was not merged or ratified at the merge, or does not name the edit; CORRECTION hunks whose observation record does not resolve at the merge, or whose only referent is governance text or enforcement code changed in the same PR (the ballot's § 2 list). A kind you read as wrong is a finding on the authoring agent; whether the text is right is its owner's. **Observation, not a guard** — never a gate."
+      - id: delegate-audit-pointer
+        kind: obligation
+        label: "Delegate-audit pointer"
+        text: "**The delegate-audit pointer** *(ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form S5; signing-act ballot § 5.3)*: you neither run nor paste the audit of the signing acts you signed. Your walk is `verify-signing-chain --audit --exclude-signer stacy` (signing-act ballot § 5.1; § 5.3 names the interim form until the filter lands); the Stacy-signed per-act lines live in the delegate's `delegate-audit-<event>-<seat>.md`, in this record's directory, never in the record. The record carries one line, `Delegate audit (Stacy-signed, <seat>): <k> / <N> — <path> @ <sha>`, where **N is yours, counted from signature history** (`signer: stacy` events in the population's delta, reachable from each PR's `refs/pull/<n>/head`), never the delegate's or the brief's; **k = N is the duty done**; `0 / 0` when there are none, never omitted; you do not restate the delegate's verdicts. A `FAIL` or `anomaly` on one of your acts goes **straight to Peter**: you do not triage, carry or rule on it. Peter's blind re-judgment (J) is its own line, `Peter sample (Stacy-signed): <k> / <N>`, and is never merged into this count."
       - id: never-a-gate
         kind: obligation
         label: "Never a gate"

@@ -50,7 +50,7 @@ units:
         text: "When in doubt, consult Ada."
     confirmation: canonical/profiles/consumer/confirmations/ada.md#ownership
   "#in-scope":
-    canonicalHash: sha256:da60b5bb35b68b8d1ce7cf41bf10f0d8a73bb17bbefa8a625d3cf76e3888c78b
+    canonicalHash: sha256:3b0d6343a0952654cac601dd1c966bed4c81b0dcb1c48ed3698a0e7ce19f62cc
     items:
       - id: scope-create
         kind: member
@@ -136,6 +136,18 @@ units:
         kind: obligation
         label: "Scope moves only by a canonical edit"
         text: "**and your write scope moves only by a `canonical/agents/**` edit**, Peter-merged with every affected seat consulted"
+      - id: scope-delegate-audit-run
+        kind: obligation
+        label: "Delegate audit: run the command the brief names"
+        text: "when the brief names you at a MIDPOINT, CLOSEOUT or RELEASE walk, in your turn of the rotation (Ada → Lina → Leonardo), run the command the brief names (`verify-signing-chain --audit --signer stacy`, or, until that filter lands, the unfiltered audit with every line marked by signer)"
+      - id: scope-delegate-audit-file
+        kind: obligation
+        label: "Delegate audit: every line verbatim, own trailer"
+        text: "Write every per-act line verbatim to the file the brief names (`delegate-audit-<event>-<seat>.md`), and commit it under your own `Agent:` trailer."
+      - id: scope-delegate-audit-report
+        kind: obligation
+        label: "Delegate audit: report, do not rule; FAIL to Peter"
+        text: "**You report; you do not rule**: you do not run J, read a verdict's meaning, or make a finding about Stacy. A `FAIL` or `anomaly` is left in the file, and it goes to Peter as the brief names."
     confirmation: canonical/profiles/consumer/confirmations/ada.md#in-scope
   "#out-of-scope":
     canonicalHash: sha256:ff02d3db0cfbbc8f5f6e559f9b24e3bb5e7e8c25b31e6d257b495d9ad225edeb

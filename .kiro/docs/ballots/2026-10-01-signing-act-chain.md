@@ -152,7 +152,9 @@ This is a behavioral rule before merge. A rewrite surfaces after merge as `recor
 
 ### 5.1 The walk
 
-At **MIDPOINT, CLOSEOUT and RELEASE**, Stacy runs `--audit` over **every PR merged since her last walk** (and every unmerged unit branch in the event's population), covering **every act in it**. The per-act lines go verbatim into that event's claims-pass record. **A signing PR that reaches RELEASE unwalked is trigger (d)** (§ 8).
+*(Amended 2026-10-19 by ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form S5; prior text at 3b84122c9.)*
+
+At **MIDPOINT, CLOSEOUT and RELEASE**, Stacy runs `--audit` over **every PR merged since her last walk** (and every unmerged unit branch in the event's population), covering **every act in it except the acts she signed** (`--audit --exclude-signer stacy`), which the delegate walks (§ 5.3). The per-act lines go verbatim into that event's claims-pass record; the Stacy-signed per-act lines go into the delegate's file, and the record carries only its count line. **A signing PR that reaches RELEASE unwalked is trigger (d)** (§ 8).
 
 ### 5.2 J — the one sample, judgment only
 
@@ -161,13 +163,31 @@ At **MIDPOINT, CLOSEOUT and RELEASE**, Stacy runs `--audit` over **every PR merg
 - **Rate** (Stacy's, from the A3 round): every `refuse`; every flip (assent↔refuse, or a changed `surviving`); at least one act per distinct non-Stacy signer seat per PR; and **one blind assent per seat per render population**, preferring full-survival assents. The fraction is counted; no floor is set.
 - **The blind seat**: a fresh seat of the same charter re-judges the act **without seeing the prior disposition**; the two are compared afterwards. A disagreement is logged **`divergent`** — never green, never a finding against the first seat, counted in the record; one still unresolved at the next RELEASE stays an open item there.
 
-### 5.3 Stacy-signed acts — Peter's sample
+### 5.3 Stacy-signed acts — a delegate's audit, Peter's sample
 
-For acts Stacy signed, **Peter runs `--audit` and J** (the C1 collapse-seat rule; Stacy will not rule on her own acts). The claims-pass record carries the line `Peter sample (Stacy-signed): <k> / <N>`, and **`0 / N` when empty, never omitted**.
+*(Amended 2026-10-19 by ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form S5; prior text at 3b84122c9.)*
+
+For acts Stacy signed, the C1 collapse-seat rule applies: Stacy does not rule on her own acts, and does not run or paste their audit. The duty has two halves, and their readings are never merged into one number.
+
+- **`--audit` (links 4–7), at every walk, by a delegate.**
+  - **Who**: at each MIDPOINT, CLOSEOUT and RELEASE walk (§ 5.1), a **delegate seat** runs `--audit --signer stacy` over every Stacy-signed act in the walk's population. The delegates are **Ada, Lina and Leonardo, in that order, one per walk**: each walk takes the seat after the one named in the previous walk's delegate line, and the first walk takes Ada. *(Until the signer filter lands, see the interim bullet.)*
+  - **The brief**: **Thurgood** (the instrument's owner) writes it — the PR population, the command, the output path. The orchestrator dispatches it, and writes it when Thurgood's seat cannot.
+  - **Interim, until `--signer` / `--exclude-signer` land on `--audit`**: on a PR carrying both Stacy-signed and other acts, the delegate runs the unfiltered `--audit` and writes every line, each marked with its signer (the instrument's `seat` field, checked against signature history). Stacy takes that PR's other acts' verdicts from the delegate's file, cited as path @ SHA, and does not run the audit over it herself. On a PR with no Stacy-signed act, she runs `--audit` as § 5.1 says.
+  - **The file**: the delegate writes every per-act line verbatim to `delegate-audit-<event>-<seat>.md`, in the directory of the event's claims-pass record (a filename never beginning `claims-pass`), and commits it under its own `Agent:` trailer. An act whose record cannot be read is written with the instrument's own verdict (`record absent`), never skipped. **The delegate reports; it does not rule.**
+  - **Stacy's count line**: her record carries one line, `Delegate audit (Stacy-signed, <seat>): <k> / <N> — <path> @ <sha>`. **N is the number of Stacy-signed acts in the walk's population, and Stacy counts it from signature history** (`signer: stacy` signature events in the population's delta, reachable from each PR's `refs/pull/<n>/head`, the way her counting block counts). It does not come from the delegate's run or from the brief. Counting her own acts is not ruling on them. k is the number to which the delegate's file gives a verdict line. **k = N is the duty done.** `0 / 0` when there are none, never omitted. She does not restate the delegate's verdicts.
+- **J (link 8), at every RELEASE, by Peter.** At each RELEASE Peter blind-re-judges at least one Stacy-signed act. The RELEASE record carries `Peter sample (Stacy-signed): <k> / <N>` (k acts judged, of N Stacy-signed acts in the release's population), **`0 / N` when empty, never omitted**.
+- **A `FAIL` or `anomaly` on a Stacy-signed act goes straight to Peter**, as an `**Open for Peter**:` line in the PR that carries the delegate's file. **Thurgood writes that line** (the briefing seat), relaying the delegate's line verbatim, with the orchestrator as fallback; Stacy does not carry it. Thurgood may add a dated, signed annotation beside it, reading tool against act (trigger (a)'s recording-slip test). **The annotation never filters, delays or decides**, and **a recorded slip never removes an act from Peter's J**: § 5.4's widening sends the PR's Stacy-signed acts into his J for that release, whatever the annotation reads. *(F-S5-triage = (b), Peter, 2026-10-19.)*
+- **The backlog**: the first delegate walk under this rule covers **every Stacy-signed act from Spec 123's MIDPOINT population (#262, 297 acts at that count) inclusive, through the walk's base**, not only the PRs merged since the last walk.
+  - **Acts committed before this ballot's ratification point R** (`2da74864`) stay under § 6 item 4: they are a `pre-ratification observation` and are expected to read `anomaly` by rule. The file records them as **one counted line**, `pre-ratification: <n> anomaly by rule, not triaged individually`. They do not go to Peter one by one, they do not enter the widening, and no finding is made against a seat. A pre-ratification act that reads anything other than `anchored` or `anomaly` is listed by act on its own line. It is not triaged (§ 6 item 4), and it goes to Peter in the same `**Open for Peter**:` batch.
+  - **#285's `FAIL 7`** (on `canonical/operative-sets/thurgood.yaml#trigger-types`, post-ratification, 15.1.0) goes to Peter by the path above, by name. It closes only by Peter's answer, never by omission.
 
 ### 5.4 The widening rule
 
+*(Amended 2026-10-19 by ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form S5; prior text at 3b84122c9.)*
+
 **A `FAIL`, an `anomaly`, a meta `spawnDepth` ≠ 1, or a meta `model` unlike the seat's plan sends every act by that seat in that PR into J.** This is all that survives of the step-up layer.
+
+For a Stacy-signed act, the J it sends acts into is Peter's (§ 5.3); no annotation removes an act from it.
 
 ---
 
@@ -211,12 +231,16 @@ For acts Stacy signed, **Peter runs `--audit` and J** (the C1 collapse-seat rule
 
 ### 7.3 Cost
 
-- **Per PR**: `--ci` **~25–35 s on every PR, `noop` included** (restated at R2: the un-gated setup is measured at 18–26 s — a `fetch-depth: 0` checkout 7–8 s in `completion-criteria-parity`, runs 36670894608 / 36670176355 / 36559589771; Node 3–6 s and `npm ci` 7–12 s in `122-setup`, runs 36670894533 / 36670176245 / 36559589747 — plus the sweep and the walk, unmeasured in CI; ~2 min on profile-touching PRs). On a no-op PR the job ran in ~1 s before; this is the carve-out's price; `--audit` ~5 min of reading (the scan itself is sub-second); J ~5 min per judged brief or continuation and ~15 min per blind seat; Peter, one `--audit` command plus J on his Stacy-signed sample.
+*(Amended 2026-10-19 by ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form S5; prior text at 3b84122c9.)*
+
+- **Per PR**: `--ci` **~25–35 s on every PR, `noop` included** (restated at R2: the un-gated setup is measured at 18–26 s — a `fetch-depth: 0` checkout 7–8 s in `completion-criteria-parity`, runs 36670894608 / 36670176355 / 36559589771; Node 3–6 s and `npm ci` 7–12 s in `122-setup`, runs 36670894533 / 36670176245 / 36559589747 — plus the sweep and the walk, unmeasured in CI; ~2 min on profile-touching PRs). On a no-op PR the job ran in ~1 s before; this is the carve-out's price; `--audit` ~5 min of reading (the scan itself is sub-second); J ~5 min per judged brief or continuation and ~15 min per blind seat; Peter, J on at least one Stacy-signed act per RELEASE (§ 5.3); a delegate seat, one `--audit --signer stacy` run per walk (§ 5.3).
 - **One-time**: one Sonnet build session under the grant; Stacy's fixture specification; Peter's A4 config commit; this ballot round.
 
 ---
 
 ## 8. The honest boundary and the identity trigger
+
+*(Amended 2026-10-19 by ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form S5; prior text at 3b84122c9.)*
 
 **What this does not assure:**
 - **Identity.** Every link is either typed (`Agent:`, `signer:`) or harness-written into a store any local session can write. The chain proves **consistency** among records, not who typed. The label is "consistency, not identity", and the instrument prints it.
@@ -231,7 +255,7 @@ For acts Stacy signed, **Peter runs `--audit` and J** (the C1 collapse-seat rule
 - **(a)** one walked mismatch that a recording slip does not explain;
 - **(b)** a second `unanchored` act;
 - **(c)** U3's identity work opening — U3 then answers the per-seat question; a decline with reasons is allowed;
-- **(d)** a signing PR reaches RELEASE unwalked, **or** Peter's Stacy-signed sample reads `0 / N` at two consecutive walks.
+- **(d)** a signing PR reaches RELEASE unwalked, **or** Peter's Stacy-signed sample reads `0 / N` (N > 0) at a RELEASE walk, **or** a walk's delegate audit line reads k < N or cites no committed file.
 
 Peter decides whether the issue becomes a spec.
 

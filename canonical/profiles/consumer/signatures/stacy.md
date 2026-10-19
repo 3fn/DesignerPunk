@@ -62,18 +62,33 @@ Both cuts survive verbatim.
 ## `#the-claims-pass-record-claims-passmd-the-template`
 
 signer: stacy
-date: 2026-10-18
+date: 2026-10-19
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-claims-pass-record-claims-passmd-the-template` (re-pointed; ROUTED)
-canonicalHash: sha256:29f67487340c5c5a970f454430b234269a73503f5caec77340985c065e109a33
+canonicalHash: sha256:11c50738271b1e8436109a51b12d12a8f2b19463d04dfdeb805b6bd69570c5e9
 renderedHash: sha256:ac788d09a695a9a4f828e4e9c5ea3c3c1d51d96eb387c3ce2c65a13447ee5e75
-verdict: assent — surviving 18/32; not surviving: `counting-6`, `counting-8`, `counting-9`, `counting-10-buckets`, `counting-10-ncc-rate`, `counting-10-assent-refusal`, `counting-10-spot-check`, `counting-10-full-survival`, `counting-11`, `counting-12`, `emission-reading`, `delegated-tier-read`, `instruments-read`, `governance-edit-kind-read`
+verdict: assent — surviving 18/33; not surviving: `counting-6`, `counting-8`, `counting-9`, `counting-10-buckets`, `counting-10-ncc-rate`, `counting-10-assent-refusal`, `counting-10-spot-check`, `counting-10-full-survival`, `counting-11`, `counting-12`, `emission-reading`, `delegated-tier-read`, `instruments-read`, `governance-edit-kind-read`, `delegate-audit-pointer`
 
-**Re-signed 2026-10-18** (prior signature: assent, 2026-09-29, against `sha256:8103d28e…`). Stale because the canonical unit gained one bullet, my governance-edit-kind read (ballot `2026-10-18-governance-edit-kinds` § 3b), applied by Thurgood byte for byte at `a0e25936c` and re-confirmed by me at 32 items (`a799be236`). The rendering did not change: renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/tools-stacy/fresh-rendered-hash.ts`), equal to the committed rendering's value and to the prior signature's.
-- **Judged against**: the rendered unit at this revision and the operative set at 32 items.
-- **`governance-edit-kind-read` is not credited**: the bullet is removed under `subtraction-3` (Thurgood extended the existing removal entry at `e09d2842e`, as I decided). It reads the `**Edit kind**:` lines this repo's TCP requires over this repo's governance path set, and the consumer TCP rendering removes that line too (`signatures/task-completion-protocol.md` `#branch-and-pr-conventions`, item `-8`), so a consumer pass has no line to read. The two renderings agree.
-- **Unchanged from the 2026-09-29 signature**: the same 18 items survive and the same 13 are not credited, for the reasons below.
-- **The run-1 tally** (§ "Signing run summary (2026-09-29, phase two, run 1)", the `#the-claims-pass-record-…` line, 18/31) is the 2026-09-29 count and is not rewritten. At this re-sign the row reads 18/32. The annotation sits here because the signing-chain verifier reads a change to a summary section, which keys to no row, as a link-2 failure.
+**Re-signed 2026-10-19** (prior signature: assent 18/32, 2026-10-18, against `sha256:29f67487340c5c5a970f454430b234269a73503f5caec77340985c065e109a33`). Stale because the canonical unit gained one bullet, my delegate-audit pointer (ballot `2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form` S5; signing-act ballot § 5.3), applied by Thurgood byte for byte at `47afb433c` and re-confirmed by me at 33 items (`17e0bf939`). Thurgood moved the overlay pin only and added the pointer to the `subtraction-3` removal (`5842fee82`), then regenerated (`a3f8b6053`). The rendering did not change: renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/tools-stacy/fresh-rendered-hash.ts`), equal to the committed rendering's value and to both prior signatures'.
+- **Judged against**: the rendered unit at this revision and the operative set at 33 items.
+- **`delegate-audit-pointer` is not credited**: the rendered unit states nothing of it (checked: no "delegate", "signing chain" or `verify-signing-chain` text in `canonical/_consumer-output/_canonical/agents/stacy.md`). The pointer names this repo's signing-act chain and a delegate seat's audit file; consumers run no signing chain and have no delegate seats, so it has no consumer counterpart. The removal text names it ("; **The delegate-audit pointer**"), so the removal and the non-credit agree.
+- **Unchanged from the 2026-10-18 signature**: the same 18 items survive and the same 14 are not credited, for the reasons in the prior records below; the 33rd item is the 15th not credited.
+- **The run-1 tally** (§ "Signing run summary (2026-09-29, phase two, run 1)", the `#the-claims-pass-record-…` line, 18/31) is the 2026-09-29 count and is not rewritten. At this re-sign the row reads 18/33. The annotation sits here because the signing-chain verifier reads a change to a summary section, which keys to no row, as a link-2 failure.
 - **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-10-18)**:
+
+> signer: stacy
+> date: 2026-10-18
+> canonicalHash: sha256:29f67487340c5c5a970f454430b234269a73503f5caec77340985c065e109a33
+> renderedHash: sha256:ac788d09a695a9a4f828e4e9c5ea3c3c1d51d96eb387c3ce2c65a13447ee5e75
+> verdict: assent — surviving 18/32
+>
+> **Re-signed 2026-10-18** (prior signature: assent, 2026-09-29, against `sha256:8103d28e…`). Stale because the canonical unit gained one bullet, my governance-edit-kind read (ballot `2026-10-18-governance-edit-kinds` § 3b), applied by Thurgood byte for byte at `a0e25936c` and re-confirmed by me at 32 items (`a799be236`). The rendering did not change: renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/tools-stacy/fresh-rendered-hash.ts`), equal to the committed rendering's value and to the prior signature's.
+> - **Judged against**: the rendered unit at this revision and the operative set at 32 items.
+> - **`governance-edit-kind-read` is not credited**: the bullet is removed under `subtraction-3` (Thurgood extended the existing removal entry at `e09d2842e`, as I decided). It reads the `**Edit kind**:` lines this repo's TCP requires over this repo's governance path set, and the consumer TCP rendering removes that line too (`signatures/task-completion-protocol.md` `#branch-and-pr-conventions`, item `-8`), so a consumer pass has no line to read. The two renderings agree.
+> - **Unchanged from the 2026-09-29 signature**: the same 18 items survive and the same 13 are not credited, for the reasons below.
+> - **The run-1 tally** (§ "Signing run summary (2026-09-29, phase two, run 1)", the `#the-claims-pass-record-…` line, 18/31) is the 2026-09-29 count and is not rewritten. At this re-sign the row reads 18/32. The annotation sits here because the signing-chain verifier reads a change to a summary section, which keys to no row, as a link-2 failure.
+> - **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
 
 **Prior signature record (superseded, 2026-09-29)**:
 

@@ -117,9 +117,19 @@ date: 2026-09-29
 ## `#item-test-command-selection-guidelines`
 
 confirmer: stacy
-canonicalHash: sha256:b4c82938bb3f353c5f5b20b055bddfd411f747dc8ab748e7bbe89cb86c9e6974
+canonicalHash: sha256:3df356662cb6f1dbb2a10bd046eada681e3cac69ead4d3f3f2ffff6187bc47db
 items: test-command-selecti-2, test-command-selecti-5, test-command-selecti-6, test-command-selecti-7, test-command-selecti-8, decision-tree, test-command-selecti-9, test-command-selecti-10, test-command-selecti-11, default-assumption
-date: 2026-09-29
+date: 2026-10-19
+
+**Re-confirmed 2026-10-19 (Req 11.6.5d).**
+- **What changed**: item 5's text, by ballot `2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form` S1 (RATIFIED, Peter, 2026-10-18/19), applied by Thurgood at `4f6de10f8`: the "regular task completion" branch becomes "WHEN validating a subtask THEN run targeted tests relevant to the change, not the full suite" (Task Completion Protocol § "For SUBTASKS", step 1), the parent branch is scoped to parent tasks, and the decision tree's non-parent leaf reads "targeted tests". The canonicalHash moves from `sha256:b4c82938bb3f353c5f5b20b055bddfd411f747dc8ab748e7bbe89cb86c9e6974` to the value above, as `operative-set-freshness` printed it and as recomputed with `partition` + `regrounding/hash.ts`.
+- **Items stay at 10; ids unchanged, texts moved**: `test-command-selecti-2` is now "Run targeted tests for a subtask" and `decision-tree` carries the new leaf. Every one of the 10 items is a verbatim substring of the unit and occurs once (checked with check-items against the current tree).
+- **Item grain unchanged**: `-2` stays one `obligation` (its `WHEN … THEN` condition travels with it, the 11.3 convention); `decision-tree` stays one `step`.
+- **Consumer rendering (my decision, stated for the disposition)**: the consumer rendering does not change. The overlay prose already reads the subtask rule as the Task Completion Protocol does (the consumer TCP overlay's `#for-subtasks` carries it, so the overlay adds no second pointer), hence the overlay changes its `@ sha256:` pin only. `test-command-selecti-2` was dropped on 2026-09-29 because it said "regular task completion → npm test"; it now says targeted tests for a subtask and joins the survivors (6 → 7). `decision-tree` names DesignerPunk's lanes and stays out. The pin and the re-sign follow in later turns.
+
+**Ruling: CONFIRMED at 10 items.**
+
+**Confirmed 2026-09-29 (prior record, superseded)**: canonicalHash `sha256:b4c82938bb3f353c5f5b20b055bddfd411f747dc8ab748e7bbe89cb86c9e6974`, 10 items.
 
 **Ruling: CORRECTED 11 → 10.**
 - Removed `-1` (the title line), and `-3` and `-4` (rationale about `npm test`).

@@ -22,7 +22,7 @@
         22,
         34
       ],
-      "op": "passthrough",
+      "op": "render",
       "source": "canonical/agents/leonardo.md#in-scope"
     },
     {

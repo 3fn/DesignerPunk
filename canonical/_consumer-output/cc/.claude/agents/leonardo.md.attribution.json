@@ -366,7 +366,7 @@
         71,
         83
       ],
-      "op": "passthrough",
+      "op": "render",
       "source": "canonical/agents/leonardo.md#in-scope"
     },
     {

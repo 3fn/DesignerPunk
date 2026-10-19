@@ -11,7 +11,7 @@ description: Standards for creating spec documents — requirements format (EARS
 
 **Date**: 2025-01-10
 **Updated**: October 20, 2025
-**Last Reviewed**: 2026-09-29
+**Last Reviewed**: 2026-10-19
 **Purpose**: Standards for creating requirements, design, and task documents for feature specifications
 **Organization**: process-standard
 **Scope**: cross-project
@@ -467,7 +467,7 @@ Every `tasks.md` **authored or materially amended after ratification** SHALL dec
 
 #### The criteria block
 
-The frozen form is a label line reading exactly `**Success Criteria:**` — colon **inside** the bold, any leading indentation — followed by a **flat** bullet list. **One bullet = one criterion = one table row**; no nested sub-bullets. Wrapped and continuation lines fold under the normalization rules.
+The frozen form is a label line reading exactly `**Success Criteria:**` — colon **inside** the bold, any leading indentation — followed by a bullet list. **One bullet = one criterion = one table row, at any indent**: a nested bullet is a criterion and a row, and so is the bullet it nests under, whose Status rests on its own words. Wrapped and continuation lines fold under the normalization rules. *(Ballot `2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form` S3.)*
 
 **Association**: a criteria block associates to the **nearest preceding checkbox line at any indent**; only blocks whose associated line is a **top-level parent** own parent criteria. Two blocks on one parent, or a block preceding every checkbox, is a loud malformation.
 
@@ -499,6 +499,15 @@ From the first tasks round after `P`, each parent row carries an `**Instruments:
 - **Row ids are never renumbered.** A new instrument takes the next id.
 - **The parser collects the block** as a closed-vocabulary promise block. It owes no Additional-verification rows. The exact row grammar lands with the parser, and any grammar change before `P` is a dated erratum to M4 in that PR.
 - **Specs planned before `P`, Spec 123 included, do not use this block.** Their parents write the full execution-time Instruments file (Start Up Tasks item 8).
+
+#### The tasks-round sweep — what a plan's changes will touch
+
+*(Ballot `2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form` S2.)* A plan names what its criteria need. It does not, by itself, name the **standing checks that read what its parents change**. At the tasks round, the `tasks.md` author sweeps for both, before the tasks feedback round opens, and records the result.
+
+- **Which specs**: a spec any of whose parents lists in its Primary Artifacts a surface that decides what the project installs or how it installs: its package manifest, its CLI source, its agent and profile sources, or its always-loaded steering docs. *(In DesignerPunk: `package.json`, `src/cli/**`, `canonical/**`, `.kiro/steering/**`.)* A spec outside that class records `**Tasks-round sweep**: not in class — <one-line reason>`.
+- **What is swept**: **(i)** every path a parent's success criteria require editing, against that parent's Primary Artifacts; **(ii)** every standing check **outside the root test suite**, for anything that reads a surface the parent changes. *(In DesignerPunk: the `mcp-server` and `application-mcp-server` jest suites, `test:consumer`, `test:scripts`, `test:agent-generator`, the required workflows under `.github/workflows/`, and `tool-boot-smoke.yml`.)* The sweep is done by hand. A path search finds static readers. A check that exercises behaviour (a CLI test, for example) is found only by reading it. A difference between local and CI environments is not a reader, and no sweep finds it.
+- **Where it is recorded**: in the tasks feedback document's "Context for Reviewers", as `**Tasks-round sweep** (at <sha>):`, followed by one bullet per hit. Each bullet names the path or check, the parent, and exactly one disposition: `added` (now in the parent's Primary Artifacts), `granted (<issue record path>)`, or `unaffected — <why>`. A sweep with no hits records `**Tasks-round sweep** (at <sha>): none — <what was swept>`. Silence is not a result.
+- **Before the tasks doc merges**, every `added` hit is in its parent's Primary Artifacts.
 
 #### Spanning claims — the structural limb, as law
 

@@ -586,6 +586,7 @@ Sparky: not checked. The seat set may still be right on other grounds. But the f
   - **4 — F-S5-seats = three** (Ada, Lina, Leonardo). Widening is open on a later consult.
   - **5 — S5 = ratified** as redrafted at R4.
 - **Owed**: the application PR for S1–S6 (§ 6), Peter-merged; the three follow-on EXECUTION PRs (§ 6); the item-number mismatch with the records PR (header). *(The S5 redraft owed at the first ruling was done at R3/R4.)*
+- **Applied 2026-10-19, PR `chore/ballot-sitting-2-application`** (Thurgood): S1 (Start Up Tasks item 5 and its two operative-set items); S2 and S3 (Process-Spec-Planning, the sweep subsection and L470 A-i); S4 (the completion guide's status-marks line, bracketed sentence kept); S3 and S5 register lines; S5 (signing ballot §§ 5.1, 5.3, 5.4 and 8 (d) in place, pointer form, prior text at `3b84122c9`; the three charter lines and their operative-set items; Stacy's pointer line, her text); the class principle (ballots README, edit discipline); the 127 `design.md` L87 line; the records (rule 9). Seat acts (Stacy's two units; Ada, Lina and Leonardo `#in-scope`) follow in their own commits in the same PR. **S6 held**: its stop condition held at application — the instrument census changes 14 class-4 sections, not the seven (`.kiro/issues/2026-09-26-materiality-extractor-truncation.md` § "S6 held at application (2026-10-19)"); S6's PSP text is not applied in this PR.
 
 ## 9. Consult ledger
 
