@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-19
 **Drafted by**: Thurgood (Civitas steward; owner of most of the instruments this rule binds), at Peter's direction: *"send the class option to Thurgood"* (chat, 2026-10-19, relayed by the orchestrator). The class option as put to him: *a ballot that amends an instrument carries that instrument's own scratch-run census as its count, never a hand count.* Woven at R2 from Stacy R1 and the Ada and Lina consults (§ 7, § 9).
-**Status**: DRAFT. Nothing in this file is applied, and its merge applies nothing (`.kiro/docs/ballots/README.md` § "The Ratification Protocol").
+**Status**: **RATIFIED (Peter, 2026-10-19)**, ruled in chat and relayed by the orchestrator: "All as recommended", on all three forks (§ 8). This commit is the record (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"), made before any edit site is applied. The application is a later PR. *(Was: DRAFT, R1–R3; nothing in this file was applied while it was a draft.)*
 **Required reviewer**: **Stacy**. She reads the verdicts of the instruments this binds, and § 2 makes her the census reader. Her hand census is the incident's count (§ 1).
 **Consulted**: Ada — her release path is not expressible as a census, and her detector needs its corpus named; Lina — her five assertions have no census mode, and the fix for that is hers to make (§ 9).
 **Unit**: standalone record-first ballot. Its application edits `.kiro/docs/ballots/README.md`, `governance/classification-map.md` and `canonical/agents/stacy.md` (and so regenerates), so **Peter merges it** under the governance carve-out.
@@ -208,7 +208,12 @@ No `[@THURGOOD]` is open at this head.
 
 ## 8. Rulings (Peter)
 
-*(None.)*
+- **2026-10-19 — Peter, in chat, recorded by the orchestrator.** His words, verbatim: **"All as recommended"**, to the three forks as § 5 put them. This commit is the first committed record of the words.
+  - **F-1 — the application comparator**: **(a)**. Stop on a difference in an input unchanged since the census SHA, and list moved inputs.
+  - **F-2 — the shipping-PR run**: **(c)**. The PR that ships the instrument change runs the scratch diff and the shipped code at its own base. Digests must be equal, with no carve-out.
+  - **F-3 — census mode**: **(A)**. Census mode is a register property. The owner builds it before the first in-scope item on that instrument leaves DRAFT, and the steward writes the `census` field. (B) and (C) were not taken.
+- **Application**: a later PR, branching from `main` after this PR merges. It applies § 4 sites 1–3 exactly as written, with § 2's bracketed fork tags dropped. Site 3 needs regeneration, Stacy's re-confirm and re-sign of any moved unit, and a refreshed `canonical/generated.lock`. It is Peter-merged.
+- **Owed EXECUTION under (A), recorded (§ 4)**: when an owner's first in-scope item is drafted, the owner builds the census mode in their own scope, and Thurgood writes that row's `census` field on the owner's word, Peter-merged. Thurgood's is owed first, for `completion-criteria-parity`: a per-file `sha256(canonicalSurface)` output from `--verify-extraction`. Lina's five assertions and Ada's `no-hardcoded-color` follow at their first in-scope item. Ada's release path is `none — <why>`, in her words.
 
 ## 9. Consult ledger
 
@@ -229,3 +234,4 @@ No `[@THURGOOD]` is open at this head.
 - 2026-10-19: orchestrator cross-read: the three reads converge on the census-mode question, which is F-3.
 - 2026-10-19: Stacy R2 recorded (required reviewer; 17-vs-14 reproduced on both arms; A5 decline accepted; ready with amendments R2-1–R2-3; F-1 (a), F-2 (c), F-3 (A) with its seat named; F-3 (C) surfaced for Thurgood).
 - 2026-10-19: Stacy R2 recorded (`71dc73213`; ready with amendments R2-1–R2-3; she reproduced 17 against 14 herself and upheld the A5 decline; F-3 (C) surfaced). Woven at THURGOOD R3.
+- 2026-10-19: **RATIFIED** by Peter in chat ("All as recommended": F-1 (a), F-2 (c), F-3 (A)), relayed by the orchestrator and recorded in § 8 by Thurgood. The application PR follows from `main` after this PR merges.
