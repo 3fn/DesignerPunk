@@ -88,7 +88,70 @@ Under M1, every `.github/**` path except `lane-timing.yml` is excluded. So each 
 
 ## 7. Review round record
 
-*(Empty at draft. Stacy R1 next.)*
+#### [STACY R1]
+
+*Read at `164ee6d12` from source, git and scratch runs; the PR body and CI logs were not read (no credentials in this seat). `[@STACY]` mentions: none open. Mandate: attack the width.*
+
+**1. Does P1b close the class without weakening the floor? Yes, with three should-amendments.** I ran the § 2 predicate as written on scratch copies of the live registry (`jq-1.7.1`):
+
+| Variant | Prints | Floor (`check-in-lane-guards.ts`) |
+|---|---|---|
+| pure append | `true` | — |
+| duplicate `"file"` key inside entry 0 (re-point) | `false` | — |
+| the same, plus a real append | `false` | — |
+| entry 0 re-pointed, its original appended at the end | `true` | same parsed effect as one added entry: not a weakening |
+| removal; removal plus append | `false`; `false` | — |
+| `version` bump; bump plus append | `false`; `false` | — |
+| two entries swapped (no append) | `false` | — |
+| swapped plus append | `true` | reorder changes no entry: not a weakening |
+| an existing entry appended a second time | **`true`** | red: `FAIL: … duplicate of entry 3 … counted once`, exit 1, but the line still reads `18 registered in-lane guards; 18 selected` |
+| append with an extra key (`"skip": true`) | **`true`** | green: the check ignores extra fields |
+| new top-level key plus append; an entry's `record` modified plus append | `false`; `false` | — |
+
+Thurgood's § 2 claims reproduce. Two `true`s the clause does not cover:
+- **A1 (should)**: add `and all($b[0].guards[]; keys == ["config","context","file","record"])` to the predicate. With it, the extra-key append prints `false` and every other row is unchanged (re-run). The clause says the added entry is a `{file, config, context, record}` object, and the predicate should test that. Harmless today, because the check ignores extra fields. But a later checker that reads a field such as `optional` would turn an append that passes the predicate into a weakening.
+- **A2 (should)**: the evidence line should read: *the check's line `N registered in-lane guards; N selected`, with N the number of entries in `guards` at the PR head, and the step green.* As written, a red run satisfies "the N; N line" (the duplicate row above). The lane reds it, so it cannot merge green, but the evidence should not be readable as passing. Also: in the PR body, `git show main:` should be the merge base. At ARMING I read `<merge>^` against `<merge>`, and that read decides.
+- **A3 (should)**: the per-entry evidence should also name *the assertion (the `it(…)` name) that the record's claim rests on*. That makes hole 2 checkable at the read (§ 4 below).
+- **A4 (should, ordering)**: § 4 should say that the phase-3 registry commits in this PR come after the RATIFIED commit carrying Peter's dated words. Better still, his ruling should be on the PR as his own comment, outside the diff it authorizes (the spirit of issues README rule 10, which is written for grant lists). § 4 should also say that this PR's merge is P1b's first ARMING firing, over phase 3. The predicate's old side is `<merge>^`, so the read covers the F-1 and F-2 entries like any later ones.
+
+**Residual the ballot does not name (a fork for Peter, not a blocker): maintenance friction.** Suppose a guard's owner renames or moves a registered file (say Lina renames a test). The required lane goes red: `registered file is absent`. The repair is to change the entry's `file`, which is a modification, so it is excluded and needs an issue-row grant or Peter's own act. P1b makes the registry grow (18 entries now; F-1 adds six or seven, and F-2 up to the rest of Ada's cited suites), so it also raises how often this blocks a merge. Options:
+- (i) leave it, and renames go through Peter or a grant;
+- (ii) admit one more act: a re-point whose old `file` is renamed in the same PR (an `R` row in `git diff -M --name-status`), which is decidable.
+
+My lean is (i) until the first instance, then (ii) by amendment. It stays one rule now, and the trigger can be checked. Surviving counter: the first instance arrives as a red required check on someone else's unit, at the worst time to need Peter.
+
+**2. Fork (a)/(b). I recommend (a); the pick is Peter's.**
+- (a) keeps the floor's denominator with its owner. A second reader sees each entry before it lands, and my read comes after. It keeps one charter carrying a `.github/**` glob, not eight. The `charter-write-scope-render-fidelity` rule ("moves only by a `canonical/agents/**` edit, Peter-merged with every affected seat consulted") makes (b)'s true cost seven seat consults, not just seven edits. It also needs seven consumer-dispositions rows, under that row's planned fifth fixture. § 6's (b) cost line should say so.
+- **Does (a) force Ada's registrations through Thurgood's seat? Yes, as authorship of the JSON line only.** The choice of suites and the record text stay Ada's: Thurgood's F-2 owner line already says "Which of the two is Ada's pick". F-1's suites are the `completion-criteria-parity` instrument's tests, Thurgood's own, so no cross-seat act. I find that acceptable. Under (a), a name-only finding lands on the adder (Thurgood), and the remedy goes to the file's owner.
+- Surviving counter: if Thurgood is not in a unit, the guard's author must brief him or leave the guard unregistered, and an unregistered guard is the thing the floor cannot see. Revisit trigger I can count: at ARMING and at claims passes, an unregistered in-lane guard whose cause is "the author's seat could not register". The second instance re-argues (b).
+
+**3. My ARMING-row text for P1b** (`canonical/agents/stacy.md`, trigger table, ARMING row). Apply it byte for byte under errata (f), as two insertions. Both avoid `|` (the row is a table cell) and the volatile-fact patterns. If A1 is taken, the read picks up the stronger predicate through its § 2 reference, with no change here.
+
+Event: insert after `(ballot 2026-10-17-standing-write-scope-six-roots § 3 item 4)`:
+```text
+ / a PR whose diff touches `.github/in-lane-guards.json` merges (ballot 2026-10-20-in-lane-guard-registry-additive-entries, P1b; keyed on the path, never on the PR's own claim to be P1b)
+```
+Scope: insert after `on CI paths unless the grant names the act`:
+```text
+; for a PR touching `.github/in-lane-guards.json` — read at its merge `<m>` against `<m>^`, the first four reads decidable from git, the workflow and the check, the fifth a judgment: the PR's `.github/**` changes are exactly that file; the additivity predicate of ballot 2026-10-20-in-lane-guard-registry-additive-entries § 2, with `git show <m>^:.github/in-lane-guards.json` as its old side, prints `true`; the check's line reads `N registered in-lane guards; N selected` with N the number of entries in `guards` at `<m>` and the step green, from the PR's CI run (read by a session holding credentials) or else from your own run at `<m>`, saying which; for each added entry, its `config` is run by an unconditional step (no `if:`, no `continue-on-error`) of the job whose `name:` resolves to its `context` on a pull_request event, directly or through the `package.json` script that step calls (`git show <m>:.github/workflows/<file>`, `git show <m>:package.json`), and its `record` resolves at `<m>` and names the guard, or a class the PR body lists the file under; and the assertion in the file that the record's claim rests on, named, or a finding that the entry guards in name only. A `false` predicate or a touched existing entry is a finding on the executing agent, routed to Peter as an unadmitted weakening of a floor; a name-only entry is a finding on the adder, its remedy a stronger file, never a removal under this clause
+```
+
+**4. The two holes: acceptable residuals for a P1b. Neither must close before it ships.**
+- **Hole 1 (a config no required job runs)**: confirmed. `check-in-lane-guards.ts` reads the registry, `EXPECTED_CONTEXTS` (evaluated by bash) and `npx jest --config <config> --listTests`. It never reads `.github/workflows/**`, so nothing ties a `config` to the `context`'s job. It is decidable, and the read above checks it on every P1b merge. Its exposure runs from the merge to my read, and only P1b entries can open it: the 18 existing entries use the two configs `lane-functional-root` runs (`npm test` gives `jest.functional.config.js`, at `lane-timing.yml` L242; `npm run test:scripts` gives `scripts/jest.config.js`, at L260; checked at #421). Step 2 is its mechanical home.
+- **Hole 2 (a selected file that asserts nothing)**: confirmed, and permanent. No predicate can decide "asserts the claim". It predates P1b, but P1b raises its rate by making a name-only entry cheap. The clause also makes such an entry sticky: removing it is excluded, so the remedy is a stronger file (in the owner's scope, with no grant) or Peter. That bias is the right direction. A3 turns the read from "is it a guard?" into "does this named assertion red on the violation?". **The F-2 instance, checked myself**: `src/tokens/__tests__/FontSizeTokensFormulaValidation.test.ts` L172–173 asserts `Object.keys(fontSizeTokens).length` is `toBeGreaterThanOrEqual(11)`. A new, autonomous font-size token passes it. Registered under `§ no-autonomous-token-creation`, it would be hole 2 from birth. To Ada, through the F-2 owner line: register it only under a record naming what it does guard (formula values), add a closed-set assertion first, or narrow the row. Which one is her pick.
+
+**5. Census check: correct.** All three lines use the `not in scope` form correctly, and each call holds:
+- `122-diff-guard` (register `never-hand-edit-122-generated`, armed): the edited canonical units are its ordinary inputs;
+- `verify-signing-chain` (`signing-act-consistency`, armed): the re-confirms and re-signs are its ordinary inputs;
+- `check-section-citations` (`section-citation-resolution`, armed): it parses `get_section` / `get_document_*` blocks. The new text, including my row text above, adds none.
+
+`check-in-lane-guards.ts` and `in-lane-guards` appear in no `governance/classification-map.md` row, so no line is owed.
+
+One more instrument the census did not name, and correctly so: `charter-write-scope-render-fidelity` reads `check_state: proposed` with `checks: []`. That makes it no registered instrument under the census definition, so no line is owed. Its rule binds edit site 2 (see item 2), and the `writeScope[.github/in-lane-guards.json]` dispositions row in § 4 meets its planned fifth fixture.
+
+`Standards implications: none` — the amendments are to this ballot's evidence and ordering, not to a standard.
+
+**Verdict: ready with amendments (listed).** A1 (shape clause in the predicate), A2 (N equals the entry count, and the step green), A3 (name the assertion per entry), A4 (ordering: Peter's words before phase 3; this merge is the first P1b firing); plus my row text above for site 4. The maintenance-friction fork and the (a)/(b) fork go to Peter. Nothing blocks.
 
 ## 8. Ratification
 
