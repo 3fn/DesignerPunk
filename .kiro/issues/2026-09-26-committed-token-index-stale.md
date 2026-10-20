@@ -21,3 +21,5 @@ Most likely cause: #202 corrected Container-Base's schema colour list (to `color
 ## Filed by
 
 Steward (main-loop), 2026-09-26.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 24, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: The owner decides. The drift was absorbed at the 15.0.0 release PR (#271, `9e1a3106a`; the 15.0.0 grant's `token-index/**` line names this file). Fix items 2–3 (root cause; a clean-checkout CI check) are not evidenced, so the record may close or stay open. Proposed `manual` · `P3 improvement · defect`.

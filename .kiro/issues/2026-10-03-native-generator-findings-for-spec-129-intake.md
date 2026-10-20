@@ -90,3 +90,5 @@ None proposed here. Spec 129's tasks will carry Primary Artifacts. `src/generato
   - **What survives**: items 2 and 3b are new defects with no home. Item 1's `UIKit`-only import and the OKLCH dependency are new facts. One intake record is cheaper for Spec 129's requirements round than three more root files.
 
 **No fix is authorized by this record.**
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 53, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` (Spec 129's requirements round) · `P2 obligation (record) · defect`.

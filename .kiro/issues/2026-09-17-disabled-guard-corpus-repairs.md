@@ -132,3 +132,5 @@ Zero behavior change confirmed — targeted suites green (2/2 suites, 47/47 test
 ## Verification obligations (per Stacy's wave-4 B4)
 
 Items 1, 5, 6, 7: the armed suites themselves + item 1's before/after MCP evidence. Items 3–4 (education rewrites): the armed guard verifies only the 9 guarded components' span — beyond that, the verification is each rewrite's post-edit re-sweep (`grep -niE "aria-disabled|\.disabled\(|enabled\s*=\s*false"` over the edited doc returns only ❌-framed/prohibition content), stated here rather than assumed.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 21, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: The owner decides: the item states were not re-verified at this walk. Proposed `manual`; the class is the owner's (item 1 was a live data defect).

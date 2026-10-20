@@ -28,3 +28,5 @@ A record walked monthly with a trigger that never fires is a recurring reminder 
 ## Walk
 
 At each monthly health check: has a willing stranger appeared (Peter)? If one ran, is there a record? **Fired without a record = finding.** Unfired is not a finding.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 73, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P2 obligation (record) · owed-act`. It is a Req 23.9 obligation; a P3 class would archive it stale after two unfired walks, against its own line "unfired is not a finding". The owner decides.

@@ -76,3 +76,5 @@ It is equally not C8 (`never-hand-edit-generated-token-outputs`) — component m
 - Register row recording the gap: `governance/classification-map.md § "never-hand-edit-generated-token-outputs"` (education disposition, "ADJACENT GAP SURFACED, routed not folded").
 - Wave-3 records: `.kiro/specs/125-B-classification-map/completion/u1b/wave-3-consult-lina.md` §3; `wave-3-assessment.md` §3.4.
 - Precedent for the route-don't-fold pattern: the wave-2 `contract-platforms-specified` row (a gap found by adjudicating a KEEP line).
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 19, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P2 obligation (guard) · defect` (silent loss of sanctioned hand-edits to MCP-served metadata).

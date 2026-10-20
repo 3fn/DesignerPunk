@@ -46,3 +46,5 @@ Release 3 ships a guide that is correct but written in a developer's voice. At a
 ## 5. Closing
 
 When the rewritten guide merges, record the outcome here (dated) and `git mv` this file to `archive/`.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 50, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P3 improvement · charter`. Its prose trigger "the release-3 tag is cut" fired (`v15.1.0`) and no rewrite has opened; the owner opens it or re-rules.

@@ -61,3 +61,5 @@ This is not a `src/cli/designerpunk.ts` matter; **Task 22 is not involved**. The
 - **Unverified by me**: that the Kiro `autoApprove` semantics ignore unknown names (I did not run Kiro; Thurgood's and my reading is that an unmatched name is inert); the registered-name lists came from grep, not the manifest; `rebuild_product_index`'s `readOnlyHint` (I did not read the product registration).
 
 **No fix is authorized by this record.**
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 52, call PETER)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` (Peter's go on `.kiro/settings/mcp.json`) · `P3 improvement · defect` (an unmatched auto-approve name is inert). The guide half is done (no `validate_component` in the guide after #321). Peter's question: remove `validate_component` from L38?

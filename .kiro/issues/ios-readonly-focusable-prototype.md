@@ -37,3 +37,5 @@ Real hardware, Full Keyboard Access enabled, verifying:
 - **Fails** → per Data's recorded dissent, the ruling's ledger entry stands:
   iOS FKA/external-keyboard users are knowingly served worse than Android
   keyboard users for read-only content — declared, monitored, not erased.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 84, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P3 improvement · owed-act`.

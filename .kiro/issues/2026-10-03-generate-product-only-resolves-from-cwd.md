@@ -75,3 +75,5 @@ Task 22 lists `src/cli/designerpunk.ts` in its Primary Artifacts (tasks.md, Task
 **No fix is authorized by this record.**
 
 2026-10-17 — Lina: re-routed to Ada as `src/cli/**` owner (ballot 2026-10-17-standing-write-scope-six-roots § 2.1); the Owner header stands as the record of who owned it when filed.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 48, call BACK-FILL (Ada))**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P2 obligation (record) · defect`.

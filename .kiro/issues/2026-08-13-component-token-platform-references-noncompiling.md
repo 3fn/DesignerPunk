@@ -44,3 +44,5 @@ No platform-side compile check exists for the generated component token files; t
 - PR #126 — Button-Icon family mislabel fix (reference path)
 - Avatar fix PR (branch `fix/avatar-icon-token-family`) — family-mismatch guard in `defineComponentTokens` now prevents *label* drift at authoring time; it cannot make the emitted class exist
 - `src/tokens/component/progress.ts` — the guard's first catch (one spacing-family call spanning three families)
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 15, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` (Spec 129's requirements round, where `2026-10-03-native-generator-findings-for-spec-129-intake.md` folds its ComponentTokens half) · `P1 consumer-blocking · defect`. The owner decides.

@@ -194,3 +194,5 @@ A3's 44dp may also be re-dispositioned explicitly if Peter rules the Android 48d
 ## Walk log
 
 *(Thurgood appends dated walk lines here under README rule 6. Seats append dated, signed lines under rule 9.)*
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 80, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` (per component, as its § Trigger states) · `P1 consumer-blocking · defect` (accessibility semantics). The owner decides.

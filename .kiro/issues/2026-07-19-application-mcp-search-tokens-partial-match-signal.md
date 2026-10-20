@@ -39,3 +39,5 @@ Option (b) has a built-in payoff: 119-B's signal-scoped calibration boundary **e
 - Adjudication + ownership record: `.kiro/specs/119-B-capability-routing-measurement/feedback/requirements.md` [ADA R2], [ADA R3], [MAIN-LOOP R1]
 - The shipped three-layer signal this would join: Spec 121 (`discovery-confidence-rubric.md`); live on `find_docs` and keyworded `find_components` (probes 2026-07-16/18)
 - Sibling Ada-owned Application-MCP item (candidate to bundle in one issue-driven session): `.kiro/issues/2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md`
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 14, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P3 improvement · defect`.

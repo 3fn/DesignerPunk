@@ -34,3 +34,5 @@ A focused component-schema-normalization pass (Lina) + token-name canonicalizati
 
 - Surfaced by: Spec 118 Task 9.5.2 (`.kiro/specs/118-module-resolution-coherence/findings/consumer-component-schema-discovery.md`, the array-group reader fix commit `0b9ee827`).
 - Pattern sibling (silently-dead feature exposed): the array-group reader bug itself (consumers field 0/193 until 9.5.2).
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 10, call BACK-FILL (Lina))**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P0 false-claim · defect`, on the steward's reading of M7: the shipped token index, served by the Application MCP, answers "no consumer" for tokens that have consumers. That is an MCP response a package reader meets. Lina classes; Stacy may confirm or dispute; only Peter downgrades a P0.

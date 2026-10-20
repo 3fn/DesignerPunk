@@ -23,3 +23,5 @@ Deprecate the alias on iOS and Android: a warning at use, and docs/README update
 ## Filed by
 
 Steward (main-loop), 2026-09-27, at Peter's direction.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 28, call BACK-FILL (Lina))**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `path:src/components/core/Container-Base/**` · `P3 improvement · defect`.

@@ -24,3 +24,5 @@
 ## Why chartered-not-started
 
 New enforcement capability, not a regression — the campaign deliberately committed C9 classify-only, and the register tells the truth meanwhile. Queue behind: 125-B campaign close, Spec 127 formalization, the contrast spec sequencing decision. Revisit trigger: post-campaign queue review, or any new consumer-reaching hardcoded-color escape (which would raise this from candidate to chartered-with-priority).
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 20, call PETER)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` (Peter rules its sequencing) · `P3 improvement · charter`. Peter's question: the "post-campaign queue review" sequencing was never ruled. Rank it, fold it, or drop it?

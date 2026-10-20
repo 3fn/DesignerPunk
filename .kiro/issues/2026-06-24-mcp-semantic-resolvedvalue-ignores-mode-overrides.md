@@ -37,3 +37,5 @@ Decide whether `get_token_details` should serve mode-resolved semantic values fo
 
 - Spec 117 Task 5 completion: `.kiro/specs/117-token-index-generation-integrity/completion/task-5-completion.md` (Residual observations)
 - Related MCP accessor history: Spec 121 added `resolvedValue` to `get_token_details`; this is a narrower follow-on (per-mode override resolution).
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 8, call ASSIGN → Ada)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: The disposition is a token-index-format decision (option (a)) and the sibling record `2026-07-19-…` (Ada's, row 14) names it as its bundling candidate. Proposed after assignment: `manual` · `P2 obligation (record) · defect` (the `themeVarying` flag is correct, so the reader is told the value varies).

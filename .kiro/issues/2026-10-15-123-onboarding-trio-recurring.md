@@ -34,3 +34,5 @@ At each monthly health check: has a release shipped since the last entry below? 
 ## Runs
 
 - Release 4 (16.0.0): Spec 123 Task 25 (records above). Conformance: Task 27 (`cc` only).
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 74, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `release:next:phase-1`, re-tokened each release · `P2 obligation (record) · owed-act`.

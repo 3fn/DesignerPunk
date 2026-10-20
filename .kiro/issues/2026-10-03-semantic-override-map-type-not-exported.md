@@ -46,3 +46,5 @@ The governance doc change goes through the ballot process, not a grant.
 **Unverified**: whether `dist/config/index.d.ts` in a packed tarball matches `src/config/index.ts`. I did not inspect a tarball.
 
 **No fix is authorized by this record.**
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 55, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Live: `SemanticOverrideMap` is not in `src/config/index.ts`. Proposed `manual` (Spec 129's requirements round) · `P3 improvement · defect`.

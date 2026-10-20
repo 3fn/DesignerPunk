@@ -52,3 +52,5 @@ Complete the OKLCH migration for the shadow family as a **Spec 112 follow-on** (
 - Spec 117 Task 3 completion: `.kiro/specs/117-token-index-generation-integrity/completion/task-3-completion.md`
 - Originating migration: Spec 112 (OKLCH migration) — chromatic + neutral only
 - R3 criterion scoping: Spec 117 R3 "no rgba" is scoped to OKLCH-migrated color primitives; shadows tracked here (not in the `IntentionalDivergenceManifest`).
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 9, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P3 improvement · defect`. Overlaps row 18: shadow-primitive migration is Spec 115 Phase B's first item. Needs Peter's token-creation review at execution.

@@ -20,3 +20,5 @@ The Spec 123 platform verdicts (KEEP the native trees as labelled reference sour
 ## Filed by
 
 Steward (main-loop), 2026-09-26, at Kenya's and Data's routing (both flagged it independently; Kenya confirmed Data's Android finding has the iOS equivalent).
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 27, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P2 obligation (record) · defect` (the native trees ship labelled as reference source).

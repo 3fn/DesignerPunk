@@ -74,3 +74,5 @@ These paths are outside Ada's write scope. The guide sentence and N1 text are ch
   - **What survives**: only in CI, only with `--force`, and only for teams that adopt N1, which is a minimal-core need but optional to adopt.
 
 **No fix is authorized by this record.**
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 60, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P2 obligation (guard) · defect` (the staleness check is weaker than "up to date").

@@ -8,3 +8,5 @@ Spec 086's readiness derivation looks for native tests as `*Tests.swift` / `*Tes
 
 ## Fix shape
 Extend the native test patterns to the repo's actual forms (and decide whether a `.ios.test.ts` Jest file counts as "tests" for a SwiftUI component — it exercises the TS-side parity, not the Swift); regenerate `packageReadiness.generated.ts` (`UPDATE_PACKAGE_READINESS=1 npx jest PackageReadiness` from `application-mcp-server/`); a dated note in Spec 086 § Decision 4. Not part of release-3 item 5.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 67, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Live (`ComponentIndexer.ts` L856, `testPatterns: [/Tests\.swift$/]`). Proposed `path:application-mcp-server/src/indexer/ComponentIndexer.ts` · `P2 obligation (guard) · defect`.
