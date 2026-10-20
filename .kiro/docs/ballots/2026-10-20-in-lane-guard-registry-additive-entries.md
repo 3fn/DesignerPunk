@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-20
 **Drafted by**: Thurgood (Civitas steward; CI-regime owner; owner of the named-guard selection floor)
-**Status**: **DRAFT** — not ratified. No edit site below is applied.
+**Status**: **RATIFIED (Peter, 2026-10-20)** — "All as recommended" (§ 8): P1b as it stands at `13a2250d3` § 2; F-1 (a); F-2 (i). **Record-first**: this commit is the record, made before any edit site is applied and before any P1b registry entry (§ 4 step 1). *(Superseded status, kept verbatim: "**DRAFT** — not ratified. No edit site below is applied.")*
 **Required reviewer**: **Stacy** — mandate: attack the width. She keeps the ARMING read this clause relies on, and she re-confirms and re-signs every unit it moves (§ 4).
 **Unit**: branch `chore/records-sweep-registry-amendment`, with the records sweep that carries her second ARMING read on #421 and the F-1/F-2 fixes that ride this clause. It edits charters and `.kiro/steering/`, so **Peter merges it** under the governance carve-out.
 **Amends**: ballot `2026-09-27-ci-regime-standing-scope` § 2 (M1, the standing scope P1). Charter bullet "CI regime — standing test-lane scope" (`canonical/agents/thurgood.md` § "In Scope").
@@ -174,4 +174,13 @@ One more instrument the census did not name, and correctly so: `charter-write-sc
 
 ## 8. Ratification
 
-*(Empty at draft.)*
+- **Peter, 2026-10-20, ruled in chat**, answering the three asks as put in the body of PR #426; recorded by the orchestrator and relayed to the author, who commits it here. **His words, verbatim: "All as recommended"**, to:
+  1. **ratify P1b** as § 2 stands at `13a2250d3`;
+  2. **F-1 (a)**: the CI-regime owner only, with Stacy's revisit trigger (the second unregistered in-lane guard whose cause is "the author's seat could not register" re-opens (b));
+  3. **F-2 (i)**: re-points stay excluded; the first instance triggers an amendment ballot for (ii).
+- **Form** (A4): Peter's words, dated, in chat, recorded by the orchestrator; this commit precedes every phase-3 commit in the PR.
+- **In force**: § 2 binds from this commit on the branch and on `main` from the PR's merge, which is P1b's first ARMING firing (§ 4).
+
+## 9. Application ledger
+
+*(Appended as each step lands; nothing above is rewritten.)*
