@@ -41,6 +41,7 @@
         ".kiro/specs/**",
         "docs/specs/**",
         ".github/workflows/lane-timing.yml",
+        ".github/in-lane-guards.json",
         "scripts/completion-claims/**",
         "scripts/check-completion-criteria-parity.ts",
         "scripts/discovery-dry-run.ts",
