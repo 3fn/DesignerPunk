@@ -150,6 +150,102 @@
       "config": "scripts/jest.config.js",
       "context": "lane-functional-root",
       "record": ".kiro/specs/123-consumer-distribution/completion/task-17-4-completion.md (Spec 123 Task 17.4, the standing rule-to-SCAN_DIRS parity test); governance/classification-map.md § package-name-scope-drift; registered under F-1 of .kiro/issues/2026-10-13-named-guard-selection-floor-then-map-column-derivation.md"
+    },
+    {
+      "file": "src/tokens/__tests__/BlendTokens.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/tokens/__tests__/MotionTokens.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/tokens/__tests__/ShadowOffsetTokens.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/tokens/__tests__/BorderWidthTokens.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/tokens/semantic/__tests__/AccessibilityTokens.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/tokens/__tests__/ColorTokens.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/tokens/__tests__/TokenCategories.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/tokens/__tests__/SizingTokens.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/tokens/__tests__/BlurTokens.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/tokens/__tests__/FontWeightTokens.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/tokens/__tests__/LineHeightTokensFormulaValidation.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/tokens/__tests__/RadiusStrategicFlexibilityValidation.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/tokens/semantic/__tests__/OpacityTokens.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/tokens/semantic/__tests__/BlendTokens.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/tokens/semantic/__tests__/BorderWidthTokens.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/tokens/semantic/__tests__/IconTokens.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
     }
   ]
 }
