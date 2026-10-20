@@ -3,7 +3,7 @@
 **Date**: 2026-09-27
 **Status**: ACTIVE
 **Owner**: Lina (component API) + Kenya (iOS) + Data (Android)
-**Class**: `P3 improvement · defect` *(set 2026-10-20, Lina, rule 12. Accepted. The alias still exists on native (iOS TokenMapping.swift L205; Android TokenMapping.kt L229 and L343) and not on web, but deprecating it removes a second vocabulary and breaks no consumer; no reader is misled.)*
+**Class**: P3 improvement · defect *(set 2026-10-20, Lina, rule 12. Accepted. The alias still exists on native (iOS TokenMapping.swift L205; Android TokenMapping.kt L229 and L343) and not on web, but deprecating it removes a second vocabulary and breaks no consumer; no reader is misled.)*
 **Trigger**: `path:src/components/core/Container-Base/**` — the next native Container-Base touch, where the deprecation warning and docs land; or the native-component-distribution follow-up (`2026-09-26-native-component-distribution.md`), whichever comes first. This doesn't block Spec 123. *(token set 2026-10-20, Lina; the prose is the record's original trigger.)*
 **Source**: Container-Base phantom-vars record (`archive/2026-09-26-container-base-phantom-css-vars.md`, "Left open" item 2). Peter deferred it to Spec 123 Task 6's context. Task 6 (Ada) analysed it, and **Peter ruled option (N) on 2026-09-27**.
 

@@ -1,7 +1,7 @@
 # Defect: the retired `122-sweep-5-corrected-state` context is still a coverage-map column (13 rows)
 
 **Date**: 2026-10-13 · **Found by**: Lina (U4 consult, 2026-10-13), confirmed by Stacy (`grep -c "122-sweep-5-corrected-state" canonical/coverage-map.yaml` → 13) · **Owner**: **Lina** (generator owner) — a recommendation; Peter's pick at this PR's merge, the alternative being Thurgood with Lina's review
-**Class**: `P2 obligation (guard) · defect` *(set 2026-10-20, Lina, rule 12. Accepted. `grep -c 122-sweep-5-corrected-state canonical/coverage-map.yaml` is 13 at 2026-10-20: the map lists a check that no longer gates as guarding those rows, a false-green column in Stacy's instrument.)*
+**Class**: P2 obligation (guard) · defect *(set 2026-10-20, Lina, rule 12. Accepted. `grep -c 122-sweep-5-corrected-state canonical/coverage-map.yaml` is 13 at 2026-10-20: the map lists a check that no longer gates as guarding those rows, a false-green column in Stacy's instrument.)*
 **Trigger**: `path:tools/agent-generator/coverage-map.ts` — the `chore/` PR that drops the retired context, independent of Spec 123 U4, at Lina's next generator touch. *(was, inline in the header: a `chore/` PR independent of Spec 123 U4, at Lina's next generator touch.)*
 
 **Grant paths**: `tools/agent-generator/coverage-map.ts`, `tools/agent-generator/__tests__/coverage-map.test.ts`, `canonical/coverage-manifest.yaml`, `canonical/coverage-map.yaml`, `canonical/generated.lock` (README rule 8: write scope over exactly these, on the fixing PR).
