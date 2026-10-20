@@ -234,7 +234,7 @@ units:
         text: "Reference existing DesignerPunk iOS component implementations as patterns"
     confirmation: canonical/profiles/consumer/confirmations/kenya.md#step-2-set-up-the-screen
   "#step-3-implement":
-    canonicalHash: sha256:420c78588aaaf97319fe6c8025e8572abc6d979529f798410e6971da01619fdc
+    canonicalHash: sha256:360dba5fa662d2ab6ab539f123bbfdd318cdb40920909c2aeee2727ec1a863da
     items:
       - id: implement-1
         kind: step

@@ -116,11 +116,11 @@ date: 2026-09-29
 ## `#step-3-implement`
 
 confirmer: kenya
-canonicalHash: sha256:420c78588aaaf97319fe6c8025e8572abc6d979529f798410e6971da01619fdc
+canonicalHash: sha256:360dba5fa662d2ab6ab539f123bbfdd318cdb40920909c2aeee2727ec1a863da
 items: implement-1, implement-2, implement-3, implement-4, implement-5
-date: 2026-09-29
+date: 2026-10-19
 
-**Ruling: CONFIRMED at 5 items, as drafted.**
+**Ruling: CONFIRMED at 5 items, as drafted.** Re-confirmed after ballot `2026-10-18-true-native-development-is-not-true-native-design` (§ 6.7). The item set is unchanged. `implement-3` now carries the line I accepted at R4: structure and the interaction iOS owns stay native, while look and component behavior follow the spec.
 
 ## `#step-4-test`
 
