@@ -1,11 +1,25 @@
-# Ballot Measure: Spec 128 — Platform Admission Identity (React and React Native)
+# Inbound from the identity sitting (2026-10-20) — Spec 128 Platform Admission Identity (React and React Native)
+
+> **Carry record (2026-10-20, Thurgood).** Peter ruled on 2026-10-20 (in chat, relayed and confirmed by the orchestrator) that **the identity sitting stops here**. Its work is preserved and taken up inside Spec 128, so that everything sits under one context. **No fork is ruled.**
+>
+> This file is the identity ballot draft, moved whole from `.kiro/docs/ballots/2026-10-20-spec-128-platform-admission-identity.md` (last ballot revision R2, `f9b82e033`). It was moved with `git mv`, and nothing in it is summarised. The old path keeps a stub that points here, because `.kiro/issues/2026-10-20-web-element-api-and-form-participation.md` L6 cites it.
+>
+> **How the outline round uses it.** The forks in § 2 and the slots in § 6 become **open questions for 128's outline round**. The seats' positions and all twelve verbatim reads are in § 7 and § 8.
+>
+> **One slot is moved out of the carry**: "Who charters 17.0.0, and when?" It is not a 128 question. It is tracked at `.kiro/issues/2026-10-20-17-0-0-release-charter.md`.
+>
+> **What still needs a ballot.** The Core Goals and charter edits that 128's outline rulings drive (§ 3) remain LAW. They will need a ballot when the outline round has settled them.
+>
+> Below this point the text is the ballot as it stood at R2. The only changes are the Status line, the § 1 amendment and the two § 6 annotations, each marked with this carry date.
+
+# Ballot Measure (carried): Spec 128 — Platform Admission Identity (React and React Native)
 
 **Date**: 2026-10-20
 **Drafted by**: Thurgood (Civitas steward; Spec 128 formalization owner), at Peter's direction (2026-10-20, relayed by the orchestrator): *"Let's work on 128's six-fork ruling sitting."*
 - R0 (`0f291b6f3`): six forks, four carried decisions, edit sites pending the rulings.
 - R1 (`7c9d1903a`, same day): folds the seven read-only R1 reads (§ 7). D1–D3 and a new D5 each get their own ruling line. D4 became fork F-7. A new fork, F-8, comes from Data's read.
 - R2 (this revision, same day): folds the five read-only R2 cross-reads (Lina, Sparky, Leonardo, Kenya, Data; § 7). F-6 converged on one rule. F-5 gains F-5w's clause and its trigger fork, and a new fork F-5f. F-4 gains a class option. F-7 records that its exit has no builder. Q8 is ruled separately.
-**Status**: **DRAFT (R2)**. The rulings slots are open (§ 6). **No text is proposed for any edit site.** The Core Goals wording follows Peter's rulings, at the text round.
+**Status**: **CARRIED into Spec 128 (2026-10-20, Peter)**. Not ratified and not rejected. *(Was: DRAFT (R2), at `f9b82e033`, at `.kiro/docs/ballots/2026-10-20-spec-128-platform-admission-identity.md`.)* The rulings slots are open (§ 6). **No text is proposed for any edit site.** The Core Goals wording follows Peter's rulings, at the text round.
 **Kind**: **LAW** (README § "When a governance edit needs a ballot"). It changes what the Layer 1 identity docs say the project is.
 **Origin**: the charter's first deliverable (`.kiro/issues/2026-10-03-react-react-native-platform-admission-charter.md`). Its trigger fired on 2026-10-03: the v15.0.0 tag exists, and the parity required-flip merged in #292 and was confirmed ARMED in #294. The charter's walk rule counts "trigger fired, no identity-ballot draft" as a finding. R0 discharged that finding.
 **Source record**: `.kiro/specs/128-react-react-native-platform-admission/inbound-from-react-rn-sitting-2026-10-02.md` (cited below as "inbound § N"). This ballot cites it and does not restate it.
@@ -32,6 +46,26 @@
 - **Adopter-authored tokens and components are the product shape.**
 
 **The project is not split.** P5 was declined by all four owning seats (inbound § 4), and the charter records it (§ 1). Fork F-4 asks only whether Peter wants a separate *identity* on top of one project.
+
+**Added at the carry: Peter's amendment, verbatim and dated (2026-10-20, in chat, relayed and confirmed by the orchestrator).** Peter ran a scenario:
+
+> "A new user opens the DesignerPunk CLI to start a new project: they want to work in React Native and React only"
+
+He ruled that the answer:
+
+> "should be something to the effect of: 'The user chooses what platforms they want to develop on (React and React Native), those platform tokens, components, and agents are installed, and all others are not.'"
+
+**This is the outcome statement Spec 128's outline is written to.** It crosses three parts of the system:
+1. **Platform-scoped token emission.** Spec 129 item (v), the `platforms:` config, is where this lands. Ada's R1 (b) warning applies: if (v) ships with closed `web/ios/android` keys, 128 has to migrate a public config schema. Her remedy is one exported `PLATFORM_KEYS` constant with the type derived from it, as the registry's seed (§ 4; the priorities record now carries this seam line).
+2. **A platform-scoped agent roster.** This is Spec 123's agent layer (`emitAgentLayer`, `src/cli/attach.ts`, called from `src/cli/init.ts:48`). It is not scoped today: the consumer profile carries eight seat overlays (`canonical/profiles/consumer/*.overlay.md`, plus `_shared`), and all eight ship.
+3. **React and React Native components.** None exist today.
+
+**What today's `init` does, against the statement.** The orchestrator checked `src/cli/init.ts` and `src/cli/shared/errorCatalog.ts` on 2026-10-20. Lines marked *re-verified* I checked myself the same day.
+- **There is no platform prompt or flag.** `--target` picks the harness, `cc` or `kiro` (`init.ts` L7, L57; re-verified). No `--platform` exists anywhere in `src/cli` (re-verified by grep).
+- **All eight agents are installed.**
+- **`generate` emits web, iOS and Android with no selection.** For example, `generateProductTokens.ts` L56–58 writes all three files unconditionally (re-verified).
+- **The Core Goals overlay tells every adopter's agents "True Native … (web/iOS/Android)"** (`canonical/profiles/consumer/always-set/core-goals.overlay.md` L7; re-verified at R0).
+- **The 16.0.0 notes say "don't start a native product" and never mention React** (`docs/releases/release-16.0.0.md` L29; zero matches for "react"; re-verified).
 
 **What this ballot settles, once ruled**:
 1. **The platform list.** Core Goals L21 reads "Build-time platform separation (web/iOS/Android)".
@@ -538,11 +572,12 @@ The priorities record fixes the order (`.kiro/issues/2026-10-18-spec-priorities-
 
 **Process slots**:
 - **Who builds the harness?** 129's first task evaluates it, and nothing commits anyone to build it (129 outline L47 asks the same question). Kenya and Data are its designers and need tasks-row grants to author host modules. Registering it as a required check is Peter's. — *(open)*
-- **Who charters 17.0.0, and when?** F-6's sequencing rule and Lina's new record both trigger on it, and no record plans it. — *(open)*
+- **Who charters 17.0.0, and when?** F-6's sequencing rule and Lina's new record both trigger on it, and no record plans it. — *(open)* → **Moved out of the carry (2026-10-20)**, per Peter's carry ruling. It is not a 128 question. It is tracked at `.kiro/issues/2026-10-20-17-0-0-release-charter.md`, with Peter as owner and the next release-prep or health-check walk as its trigger.
 - **Site 4 owner** (`technology-stack.md`; Lina offered). — *(open)*
 - **One ballot or two** (§ 3). — *(open)*
 - **Core Goals edited once or twice** (§ 3). Recommended: twice, unless trigger 2 fires first. — *(open)*
 - **Q-0 (optional)**: does Peter recall why v1 moved off React? — *(open)*
+- **Proposal, added at the carry (2026-10-20). It is the orchestrator's, and Peter has not ruled it.** A class rule for the ballots README: *"forks whose answer depends on a spec's design go to that spec's outline; a standalone ballot carries only decisions that change what Core Goals or the charters say."* Not added to the README. Recorded here so the outline round, or a later ballot, can take it up. — *(open)*
 
 ---
 
