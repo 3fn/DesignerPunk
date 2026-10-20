@@ -18,24 +18,39 @@ verdict: assent — surviving 5/5
 ## `#in-scope`
 
 signer: stacy
-date: 2026-10-17
+date: 2026-10-20
 row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#in-scope` (re-pointed; ROUTED)
-canonicalHash: sha256:1ea9098706cf802cea50bde68a44d02b417aeceade432f429b8358c1ad0f38b2
+canonicalHash: sha256:7beb0570510b6af92be4cf368831f0ea152bbfdf9c1a6867bcd92c1fb792de39
 renderedHash: sha256:5ac2d4d30cbdce5a9e34a0a66dff621d3e78e87f4500dee9f715f39f2fc72037
 verdict: assent — surviving 19/29; not surviving: `scope-12`, `scope-13`, `scope-14`, `scope-15`, `scope-16`, `scope-17`, `scope-18`, `scope-19`, `scope-20`, `scope-21`
 
-**RE-SIGNED 2026-10-17 — ASSENT, surviving 19 of 29.** Judged against the 29-item set I confirmed at `0dc7213d1`.
-- **What changed**: in canonical, only the six-roots bullet (ballot 2026-10-17-standing-write-scope-six-roots). The rendering did not change by a single byte (renderedHash recomputed, equal to the prior signature's), because the row removes the whole bullet under `subtraction-1`.
-- **The nineteen prior survivors stand** as at the 2026-09-29 signature. `civitas-8` survives, re-grounded to "the docs your team owns that no single domain agent does". `scope-12` still does not survive: it is a repo CI grant with no consumer counterpart.
-- **The nine new items do not survive, and I agree they should not.** The rendering states none of them, so a compliant consumer implementation can break each one. Each is bound to this steward repo:
-  - `scope-13` grants this repo's files: the `scripts/` checks, the docs MCP source and tests, the `.kiro/hooks/` completion tooling, `.kiro/issues/**`, and the generator's checkers and sweeps, with this repo's test-assignment rule;
-  - `scope-14`, `scope-15` and `scope-19` are this repo's PR and consult mechanics over those files and its task-row and issue-row grants;
-  - `scope-16`, `scope-17` and `scope-18` name this repo's legacy scripts, `RELEASE-FLOW.md` and README rule 9;
-  - `scope-21` is `canonical/agents/**` law.
-- **Some of these paths reach a consumer, but only as read-only package contents.** `mcp-server/src/` is in the package's `files`, and the docs MCP is also bundled as `dist/mcp/docs-mcp.js`. `signatures.ts`, `check-catalog.ts` and `workflow-rules-guard.ts` are inlined into the shipped `dist/generator/consumer-entry.js`. A change to any of them goes upstream. None is a duty to re-key (subtraction 1).
-- **The one I weighed hardest is `scope-20`.** "Owning an instrument never authorizes changing the law it serves without a ballot" reads as general. But it is stated over this repo's instruments and its ballot law, and the consumer rendering grants the seat no standing write scope over any instrument for it to attach to. Removing the bullet leaves consumer-Thurgood with no standing write grant at all, which is stricter, not looser.
+**Re-signed 2026-10-20** (prior signature: assent 19/29, 2026-10-17, against `sha256:1ea9098706cf802cea50bde68a44d02b417aeceade432f429b8358c1ad0f38b2`). Stale because the canonical unit changed: ballot `2026-10-20-in-lane-guard-registry-additive-entries` (P1b; RATIFIED, Peter, 2026-10-20) added a sentence to the CI-regime bullet (`scope-12`) for `.github/in-lane-guards.json`: an entry may be added, never changed or removed. Thurgood applied it at `ae68f130b`; I re-confirmed the set at 29 items (`8674be2e5`); he pinned the overlay and regenerated (`ebc83c6b5`). The rendering did not change by a byte: renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/tools-stacy/fresh-rendered-hash.ts`), equal to the committed rendering's value and to the prior signature's.
+- **Judged against**: the rendered unit at this revision and the operative set at 29 items.
+- **`scope-12` still does not survive, and the new sentence goes with it.** The bullet is a repo CI grant: it names `lane-timing.yml`, `EXPECTED_CONTEXTS` and a registry file that only DesignerPunk's `lane-functional-root` check reads. A consumer's CI has none of them, and the rendering states none of it (checked: no "in-lane" or "additiv" text under `canonical/_consumer-output`, and the grep for the registry path, P1b and the predicate in consumer output returns 0). The whole-bullet removal (`subtraction-2`) quotes the bullet, and Thurgood rewrote its text to the new bullet. No refusal follows.
+- **Unchanged from the 2026-10-17 signature**: the same 19 items survive and the same 10 are not credited, for the reasons in the prior record below.
+- **C1 collapse**: I signed this assent on a row of Thurgood's charter in the counterpart seat; it is in Peter's sample as Stacy-signed.
 
-No refusal.
+**Prior signature record (superseded, 2026-10-17)**:
+
+> signer: stacy
+> date: 2026-10-17
+> row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#in-scope` (re-pointed; ROUTED)
+> canonicalHash: sha256:1ea9098706cf802cea50bde68a44d02b417aeceade432f429b8358c1ad0f38b2
+> renderedHash: sha256:5ac2d4d30cbdce5a9e34a0a66dff621d3e78e87f4500dee9f715f39f2fc72037
+> verdict: assent — surviving 19/29; not surviving: `scope-12`, `scope-13`, `scope-14`, `scope-15`, `scope-16`, `scope-17`, `scope-18`, `scope-19`, `scope-20`, `scope-21`
+>
+> **RE-SIGNED 2026-10-17 — ASSENT, surviving 19 of 29.** Judged against the 29-item set I confirmed at `0dc7213d1`.
+> - **What changed**: in canonical, only the six-roots bullet (ballot 2026-10-17-standing-write-scope-six-roots). The rendering did not change by a single byte (renderedHash recomputed, equal to the prior signature's), because the row removes the whole bullet under `subtraction-1`.
+> - **The nineteen prior survivors stand** as at the 2026-09-29 signature. `civitas-8` survives, re-grounded to "the docs your team owns that no single domain agent does". `scope-12` still does not survive: it is a repo CI grant with no consumer counterpart.
+> - **The nine new items do not survive, and I agree they should not.** The rendering states none of them, so a compliant consumer implementation can break each one. Each is bound to this steward repo:
+>   - `scope-13` grants this repo's files: the `scripts/` checks, the docs MCP source and tests, the `.kiro/hooks/` completion tooling, `.kiro/issues/**`, and the generator's checkers and sweeps, with this repo's test-assignment rule;
+>   - `scope-14`, `scope-15` and `scope-19` are this repo's PR and consult mechanics over those files and its task-row and issue-row grants;
+>   - `scope-16`, `scope-17` and `scope-18` name this repo's legacy scripts, `RELEASE-FLOW.md` and README rule 9;
+>   - `scope-21` is `canonical/agents/**` law.
+> - **Some of these paths reach a consumer, but only as read-only package contents.** `mcp-server/src/` is in the package's `files`, and the docs MCP is also bundled as `dist/mcp/docs-mcp.js`. `signatures.ts`, `check-catalog.ts` and `workflow-rules-guard.ts` are inlined into the shipped `dist/generator/consumer-entry.js`. A change to any of them goes upstream. None is a duty to re-key (subtraction 1).
+> - **The one I weighed hardest is `scope-20`.** "Owning an instrument never authorizes changing the law it serves without a ballot" reads as general. But it is stated over this repo's instruments and its ballot law, and the consumer rendering grants the seat no standing write scope over any instrument for it to attach to. Removing the bullet leaves consumer-Thurgood with no standing write grant at all, which is stricter, not looser.
+>
+> No refusal.
 
 ## `#boundary-cases`
 
@@ -559,6 +574,17 @@ renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb098
 verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed: this entry names this repo's own write path. I assent that nothing survives.
+
+## `#frontmatter:writeScope[.github/in-lane-guards.json]`
+
+signer: stacy
+date: 2026-10-20
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[.github/in-lane-guards.json]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:579d3495739862a0f62b7fd4b572c3f843f5c07f1f608edc87e7b41abb83a20f
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 2). `.github/in-lane-guards.json`: the glob added by ballot `2026-10-20-in-lane-guard-registry-additive-entries` (P1b) so the steward may add entries to DesignerPunk's in-lane guard registry. The file is read only by this repo's `lane-functional-root` check against its `EXPECTED_CONTEXTS`; a consumer repo has no such registry and no CI-regime standing scope, so there is no copy to own. It is the same ground as `writeScope[.github/workflows/lane-timing.yml]`. The row's renderedHash is the empty-span hash (0 pieces, fresh render and committed rendering agree). I assent that nothing survives.
 
 ## `#frontmatter:writeScope[scripts/completion-claims/**]`
 
