@@ -116,11 +116,11 @@ date: 2026-09-29
 ## `#step-3-implement`
 
 confirmer: data
-canonicalHash: sha256:9d0052ab5c5eeb94cc37d81827252ae799a4428b70570b548b5a78e17ef66b3e
+canonicalHash: sha256:492bd11aac9108c1e734441bdcdb4f0b2e2b1818ba296b7ab10b4b108a1c4a43
 items: implement-1, implement-2, implement-3, implement-4, implement-5
-date: 2026-09-29
+date: 2026-10-19
 
-**Ruling: CONFIRMED as drafted.**
+**Ruling: CONFIRMED at 5 items, as drafted.** Re-confirmed after ballot `2026-10-18-true-native-development-is-not-true-native-design` (§ 6.7). The item set is unchanged. `implement-3` now carries the line I gave at R4: structure and the interaction Android owns (system surfaces, back, scroll, text selection, keyboard and IME, accessibility) stay native, while look and component behavior follow the spec's design choices.
 
 ## `#step-4-test`
 

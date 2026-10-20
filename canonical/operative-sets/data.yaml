@@ -238,7 +238,7 @@ units:
         text: "Reference existing DesignerPunk Android component implementations as patterns"
     confirmation: canonical/profiles/consumer/confirmations/data.md#step-2-set-up-the-screen
   "#step-3-implement":
-    canonicalHash: sha256:9d0052ab5c5eeb94cc37d81827252ae799a4428b70570b548b5a78e17ef66b3e
+    canonicalHash: sha256:492bd11aac9108c1e734441bdcdb4f0b2e2b1818ba296b7ab10b4b108a1c4a43
     items:
       - id: implement-1
         kind: step
