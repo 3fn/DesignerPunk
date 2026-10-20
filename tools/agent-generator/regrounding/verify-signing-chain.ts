@@ -36,6 +36,22 @@
  *               `~/.claude/projects/<project>/`). One verdict per act from the closed set
  *               `anchored` · `unanchored` · `record absent` · `FAIL` · `anomaly`, link-numbered,
  *               never rolled up. Exit 0 unless the command itself cannot run.
+ *               `--signer <seat>` keeps only the acts whose signer — the `seat` field every line
+ *               already prints: `c1Seat(owner)`, else the single `Agent:` trailer, else
+ *               `(unknown)` — is <seat>; `--exclude-signer <seat>` keeps every other act,
+ *               `(unknown)` included. It selects from the finished verdict list, so a kept act's
+ *               verdict never changes. Mutually exclusive, never repeated, never `--flag=value`;
+ *               any argument `--audit` does not know (a misspelt flag, a flag and value pasted as
+ *               one token, a stray bare token) exits 2 — never an unfiltered run;
+ *               seat names case-insensitive and exact; a seat neither on the roster (the charters
+ *               under `canonical/agents/`, their C1 seats, `peter`) nor seen in the range exits 2.
+ *               A filtered run adds one line under the header,
+ *               `filter --<flag> <seat>: <n> of <m> act(s) selected; <m-n> withheld`, and its counts
+ *               line and JSON `acts` cover the selected acts only (JSON adds
+ *               `filter: {mode, seat, selected, withheld}`). The delegate runs
+ *               `--audit --signer stacy` (signing ballot § 5.3), Stacy `--audit --exclude-signer
+ *               stacy` (§ 5.1) — sitting-2 ballot S5. Unfiltered output is unchanged; `--ci`
+ *               ignores both flags.
  *
  * WHAT A SIGNING ACT IS, as this instrument reads it (ballot § 2 clause 1):
  *   - a change to a dispositions row's `signature` sub-object
@@ -1387,8 +1403,105 @@ export function runAudit(opts: AuditOptions): ActVerdict[] {
   return out;
 }
 
-export function formatAudit(acts: ActVerdict[], header: string): string[] {
+/**
+ * The signer filter of `--audit` (sitting-2 ballot S5). It keys on the `seat` field every per-act
+ * line prints (`c1Seat(owner)`, else the single `Agent:` trailer, else `(unknown)`) and on nothing
+ * else — not the trailer, the row's owner or the transcript's meta. It selects from the FINISHED
+ * verdict list, after every pass of {@link runAudit}, so it never changes a kept act's verdict.
+ * `seat` is lowercased; the comparison is case-insensitive.
+ */
+export interface SignerFilter {
+  mode: 'signer' | 'exclude-signer';
+  seat: string;
+}
+
+export const matchesSigner = (a: ActVerdict, seat: string): boolean => a.seat.toLowerCase() === seat.toLowerCase();
+
+/** The acts a filter keeps; `--signer` and `--exclude-signer` over one list partition it, order kept. */
+export function filterActs(acts: ActVerdict[], filter: SignerFilter): ActVerdict[] {
+  return acts.filter((a) => (filter.mode === 'signer') === matchesSigner(a, filter.seat));
+}
+
+/** The one line a filtered run adds, directly under the header (form: Stacy's fixture specification § 3). */
+export const filterLine = (f: SignerFilter, selected: number, total: number): string =>
+  `filter --${f.mode} ${f.seat}: ${selected} of ${total} act(s) selected; ${total - selected} withheld`;
+
+const FILTER_FLAGS = ['--signer', '--exclude-signer'] as const;
+
+/**
+ * Parse `--signer <seat>` / `--exclude-signer <seat>`. No filter when neither is passed. An
+ * `error` — never a silent unfiltered run — when both are passed, either is repeated, the value
+ * is missing, empty or flag-shaped, or the `--flag=value` spelling is used.
+ */
+export function parseSignerFilter(argv: string[]): { filter?: SignerFilter; error?: string } {
+  const eq = argv.find((t) => FILTER_FLAGS.some((f) => t.startsWith(`${f}=`)));
+  if (eq) return { error: `'${eq}': write the seat as a separate argument (${eq.split('=')[0]} <seat>)` };
+  const present = FILTER_FLAGS.filter((f) => argv.includes(f));
+  if (present.length > 1) return { error: '--signer and --exclude-signer are mutually exclusive' };
+  if (present.length === 0) return {};
+  const name = present[0];
+  if (argv.filter((t) => t === name).length > 1) return { error: `${name} given more than once` };
+  const v = arg(argv, name);
+  if (v === undefined || v === '' || v.startsWith('--')) return { error: `${name} needs a seat name (got ${v === undefined ? 'nothing' : `'${v}'`})` };
+  return { filter: { mode: name === '--signer' ? 'signer' : 'exclude-signer', seat: v.toLowerCase() } };
+}
+
+/** `--audit`'s arguments: those that take a value, and the bare switches. */
+export const AUDIT_VALUE_FLAGS = ['--pr', '--branch', '--base', '--store', '--kiro', '--signer', '--exclude-signer'] as const;
+export const AUDIT_SWITCHES = ['--audit', '--json'] as const;
+
+/**
+ * The first argument `--audit` does not know — an unknown `--` token (a misspelling such as
+ * `--signr`, or a flag and its value pasted as one token, `"--signer stacy"`), or a bare token
+ * where no value is expected — else `undefined`. An unknown argument exits 2, never runs
+ * unfiltered (Stacy's F13: "never fall through to an unfiltered run"). `--ci` is not read here.
+ */
+export function unknownAuditArg(argv: string[]): string | undefined {
+  for (let i = 0; i < argv.length; i += 1) {
+    const t = argv[i];
+    if ((AUDIT_SWITCHES as readonly string[]).includes(t)) continue;
+    if ((AUDIT_VALUE_FLAGS as readonly string[]).includes(t)) {
+      i += 1;
+      continue;
+    }
+    return t;
+  }
+  return undefined;
+}
+
+export const AUDIT_KNOWN = '--audit, --pr <N>, --branch <b>, --base <ref>, --store <dir>, --kiro <sha,…>, --signer <seat>, --exclude-signer <seat>, --json';
+
+/**
+ * The seats a filter may name: every charter stem under `canonical/agents/` at `head` (never a
+ * `_`-prefixed fixture), every seat C1 maps one to (Thurgood's rows → stacy), the escalation
+ * seat `peter`, and every seat seen in the range's acts. Exact match only — never a prefix.
+ */
+export function knownSeats(repo: string, head: string, rg: Regrounding, acts: ActVerdict[]): { roster: string[]; seen: string[] } {
+  const stems = lsTree(repo, head, 'canonical/agents')
+    .map((p) => /^canonical\/agents\/([^/_][^/]*)\.md$/.exec(p)?.[1])
+    .filter((x): x is string => !!x)
+    .map((x) => x.toLowerCase());
+  const roster = [...new Set([...stems, ...stems.map((x) => rg.c1Seat(x)), ESCALATION_SEAT])].sort();
+  const seen = [...new Set(acts.map((a) => a.seat.toLowerCase()))].sort();
+  return { roster, seen };
+}
+
+/** C1's escalation seat (`c1.ts` ESCALATION_SEAT) — on the filter roster though it signs nothing today. */
+export const ESCALATION_SEAT = 'peter';
+
+/**
+ * The human-readable audit. With a `filter`, `acts` is the FULL verdict list: one `filter` line
+ * follows the header, and the per-act lines and the counts line cover the selected acts only —
+ * withheld acts appear as a bare number, never a line, a verdict or a count. Without one, the
+ * output is exactly the pre-filter output.
+ */
+export function formatAudit(acts: ActVerdict[], header: string, filter?: SignerFilter): string[] {
   const lines = [`verify-signing-chain --audit — ${LABEL} — ${header}`];
+  if (filter) {
+    const kept = filterActs(acts, filter);
+    lines.push(filterLine(filter, kept.length, acts.length));
+    acts = kept;
+  }
   for (const a of acts) {
     const label = a.link ? `${a.verdict} ${a.link}` : a.verdict;
     lines.push(
@@ -1433,8 +1546,8 @@ function defaultBase(repo: string, head: string): string {
   throw new HistoryError('no base: pass --base, set BASE_SHA, or fetch main');
 }
 
-export function main(argv: string[]): number {
-  const repo = gitTry(process.cwd(), ['rev-parse', '--show-toplevel'])?.trim() ?? process.cwd();
+export function main(argv: string[], cwd: string = process.cwd()): number {
+  const repo = gitTry(cwd, ['rev-parse', '--show-toplevel'])?.trim() ?? cwd;
   const rgLoaded = loadRegrounding();
   if (argv.includes('--ci')) {
     try {
@@ -1453,6 +1566,16 @@ export function main(argv: string[]): number {
   if (argv.includes('--audit')) {
     if (!rgLoaded) {
       console.error('verify-signing-chain --audit: regrounding/c1.ts and signatures.ts are not on this tree — nothing to audit against');
+      return 2;
+    }
+    const sf = parseSignerFilter(argv);
+    if (sf.error) {
+      console.error(`verify-signing-chain --audit: ${sf.error}`);
+      return 2;
+    }
+    const unknown = unknownAuditArg(argv);
+    if (unknown !== undefined) {
+      console.error(`verify-signing-chain --audit: unknown argument '${unknown}' for --audit — known: ${AUDIT_KNOWN}`);
       return 2;
     }
     const pr = arg(argv, '--pr');
@@ -1480,16 +1603,32 @@ export function main(argv: string[]): number {
     const store = arg(argv, '--store') ?? defaultStore(repo);
     const kiro = arg(argv, '--kiro')?.split(',').filter(Boolean);
     const acts = runAudit({ repo, base, head, store, rg: rgLoaded, kiro, since: R_SHA });
+    const filter = sf.filter;
+    if (filter) {
+      const { roster, seen } = knownSeats(repo, resolveCommit(repo, head) ?? head, rgLoaded, acts);
+      if (!roster.includes(filter.seat) && !seen.includes(filter.seat)) {
+        console.error(
+          `verify-signing-chain --audit: unknown seat '${filter.seat}' for --${filter.mode} — seats seen in range: ${seen.join(', ') || '(none)'}; roster: ${roster.join(', ')}`
+        );
+        return 2;
+      }
+    }
+    // Unfiltered: the object and the lines are exactly as before the filter existed.
+    let payload: Record<string, unknown> = { label: LABEL, header, acts };
+    if (filter) {
+      const kept = filterActs(acts, filter);
+      payload = { label: LABEL, header, filter: { mode: filter.mode, seat: filter.seat, selected: kept.length, withheld: acts.length - kept.length }, acts: kept };
+    }
     if (argv.includes('--json')) {
-      console.log(JSON.stringify({ label: LABEL, header, acts }, null, 2));
+      console.log(JSON.stringify(payload, null, 2));
     } else {
-      for (const l of formatAudit(acts, `${header}; store ${store}`)) console.log(l);
+      for (const l of formatAudit(acts, `${header}; store ${store}`, filter)) console.log(l);
       console.log('--- machine-readable ---');
-      console.log(JSON.stringify({ label: LABEL, header, acts }));
+      console.log(JSON.stringify(payload));
     }
     return 0;
   }
-  console.error('usage: verify-signing-chain --ci [--base <sha>] [--head <sha>] [--since <sha>|none]\n       verify-signing-chain --audit (--pr <N> | --branch <b>) [--base <ref>] [--store <dir>] [--kiro <sha,…>] [--json]');
+  console.error('usage: verify-signing-chain --ci [--base <sha>] [--head <sha>] [--since <sha>|none]\n       verify-signing-chain --audit (--pr <N> | --branch <b>) [--base <ref>] [--store <dir>] [--kiro <sha,…>] [--signer <seat> | --exclude-signer <seat>] [--json]');
   return 2;
 }
 

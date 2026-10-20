@@ -1,0 +1,6 @@
+{
+  "spans": [
+    { "lines": [1, 2], "source": "canonical/agents/thurgood.md#doc:preamble" },
+    { "lines": [3, 5], "source": "canonical/agents/thurgood.md#trigger-types" }
+  ]
+}

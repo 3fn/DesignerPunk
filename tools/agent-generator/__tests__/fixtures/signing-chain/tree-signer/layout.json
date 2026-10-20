@@ -1,0 +1,18 @@
+{
+  "_note": "Overlay on tree/ for the --signer / --exclude-signer fixtures (sitting-2 ballot S5; Stacy's fixture specification F1–F16). Applied by signerRepo() in verify-signing-chain.audit.test.ts as a second base commit on main. Replaces the kenya and thurgood dispositions and signature sheets (each gains one row) and adds a stacy seat, a data charter (a real seat with no act) and thurgood's rendering.",
+  "canonical/agents/stacy.md": "charter-stacy.md",
+  "canonical/agents/data.md": "charter-data.md",
+  ".claude/agents/stacy.md": "generated-stacy.md",
+  "canonical/_consumer-output/_canonical/agents/stacy.md": "rendering-stacy.md",
+  "canonical/_consumer-output/_canonical/agents/stacy.md.attribution.json": "rendering-stacy.attribution.json",
+  "canonical/_consumer-output/_canonical/agents/thurgood.md": "rendering-thurgood.md",
+  "canonical/_consumer-output/_canonical/agents/thurgood.md.attribution.json": "rendering-thurgood.attribution.json",
+  "canonical/profiles/consumer/kenya.dispositions.yaml": "kenya.dispositions.yaml",
+  "canonical/profiles/consumer/stacy.dispositions.yaml": "stacy.dispositions.yaml",
+  "canonical/profiles/consumer/thurgood.dispositions.yaml": "thurgood.dispositions.yaml",
+  "canonical/profiles/consumer/signatures/kenya.md": "signatures-kenya.md",
+  "canonical/profiles/consumer/signatures/stacy.md": "signatures-stacy.md",
+  "canonical/profiles/consumer/signatures/thurgood.md": "signatures-thurgood.md",
+  "canonical/operative-sets/stacy.yaml": "operative-set-stacy.yaml",
+  "canonical/profiles/consumer/confirmations/stacy.md": "confirmations-stacy.md"
+}
