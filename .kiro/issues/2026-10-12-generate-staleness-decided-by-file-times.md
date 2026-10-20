@@ -9,6 +9,7 @@
 - **Spec 129's design phase opening**. Its consumer-generation work changes what product tokens reference.
 
 Not blocking release 3: CI need N1 already runs `generate --force`.
+**Class**: P2 obligation (guard) · defect *(set 2026-10-20, Ada, rule 12. The staleness check compares only the product YAML's file times with the oldest output, so a change to the token source or the config reads a stale output as fresh and `generate` skips the rebuild with no message; the guard is weaker than its claim. `--force` catches it, and Task 21's bite run verified the masking by run.)*
 **Source**: Ada's Spec 123 U3c (Task 31) fact-check, 2026-10-12. Thurgood's Task 21 bite run verified the masking by run: a backdated product YAML change was skipped by a plain `generate` and caught by `--force`. Peter's go was to file, not to fix.
 
 *(The false code comment from the same fact-check, `generateTokenFiles.ts:17-18`, is recorded as an addendum to `2026-10-03-generate-reports-success-after-validation-abort.md` instead, because that record's fix PR edits the same lines.)*
