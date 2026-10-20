@@ -202,9 +202,19 @@ date: 2026-09-29
 ## `#what-consistent-means-in-true-native`
 
 confirmer: leonardo
-canonicalHash: sha256:ae21efbfbb09593cc716b7247d97bb9e288b0a5a867a8df357a62969fd3891ff
+canonicalHash: sha256:fd72f906bab14aff5698bdf4e34c8bc5e88dc0d14416af734d425e7c93fe6af8
 items: consistent-not-identical, native-1, native-2, native-3, consistent-means
-date: 2026-09-29
+date: 2026-10-19
+
+**Re-confirmed 2026-10-19 (Req 11.6.5d).**
+- **What changed**: two lines of the unit, edit site 6.6 of the ratified ballot `.kiro/docs/ballots/2026-10-18-true-native-development-is-not-true-native-design.md` (RATIFIED, Peter, 2026-10-18). The lead-in now reads "Each platform should feel native in structure, in accessibility semantics, and in the interaction the platform owns:" (my R4 wording), and "Material 3 base" becomes "Material 3 structure". Thurgood applied both to the charter and to the texts of `consistent-not-identical` and `native-2` (`dccd3fc61`). That is his authoring, not this act.
+- **Item texts, verified verbatim**: all five are verbatim substrings of the unit, one occurrence each, in record order. The canonicalHash moves from `sha256:ae21efbfbb09593cc716b7247d97bb9e288b0a5a867a8df357a62969fd3891ff` to the value above, as `operative-set-freshness` printed it and as I recomputed it independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts` (the two agree).
+- **What did not change**: the set, still 5 items, no id added or removed. The trailing colon on `consistent-not-identical` stays: the lead-in is still an obligation, now scoped.
+- **Fresh ruling on my 2026-09-29 sentence** ("accepting a non-native idiom on one platform violates them"): the ratified law contradicts it, and it is withdrawn. What the unit obliges now: structure (the idioms listed in `native-1`–`native-3`), accessibility semantics, and the interaction the platform owns stay native on every platform. Look and component behavior are design choices the spec records, whether they follow platform convention or depart from it. A consumer implementation violates the unit by demanding identical implementations, or by departing on any platform from native structure, platform-correct accessibility semantics, or the interaction the platform owns. A drawn, token-styled control is not a violation. `consistent-means` reads unchanged under the law: "same interaction model" is the one model the spec's recorded choices define across platforms.
+
+**Ruling: CONFIRMED at 5 items.**
+
+**Confirmed 2026-09-29 (prior record, superseded)**: canonicalHash `sha256:ae21efbfbb09593cc716b7247d97bb9e288b0a5a867a8df357a62969fd3891ff`, 5 items. Its second sentence is withdrawn by the fresh ruling above; the text is kept as the record.
 
 **Ruling: CONFIRMED at 5 items.** Demanding identical implementations, or accepting a non-native idiom on one platform, violates them. The trailing colon on `consistent-not-identical` is verbatim and kept, per Lina's `scaffold-follow-stemma` precedent: *"Each platform should feel native"* is itself an obligation, not a bare lead-in.
 

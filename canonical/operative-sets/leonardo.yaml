@@ -406,7 +406,7 @@ units:
         text: "Does the screen look and behave consistently across platforms (within True Native expectations)?"
     confirmation: canonical/profiles/consumer/confirmations/leonardo.md#review-checklist
   "#what-consistent-means-in-true-native":
-    canonicalHash: sha256:ae21efbfbb09593cc716b7247d97bb9e288b0a5a867a8df357a62969fd3891ff
+    canonicalHash: sha256:fd72f906bab14aff5698bdf4e34c8bc5e88dc0d14416af734d425e7c93fe6af8
     items:
       - id: consistent-not-identical
         kind: obligation
