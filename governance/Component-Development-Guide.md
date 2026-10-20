@@ -11,7 +11,7 @@ description: Guide for building components with appropriate token usage, True Na
 > **Audience framing**: this describes **DesignerPunk's own process and components**, not yours. **Worked example**: its examples are DesignerPunk's: the `.kiro/specs/...` references, the escalations to Peter, and the ruling that DesignerPunk components never declare a disabled-state contract. **Transferable**: the token-selection order, the behavioral-contracts workflow, and the habit of stopping to ask a human when a needed token is missing.
 
 **Date**: 2025-11-17
-**Last Reviewed**: 2026-05-06
+**Last Reviewed**: 2026-10-19
 **Purpose**: Guide AI agents in building components with appropriate token usage, True Native Architecture, and effective collaboration practices
 **Organization**: process-standard
 **Scope**: cross-project
@@ -723,6 +723,8 @@ This component uses direct SF Symbols for status indicators because:
 - SF Symbols provide platform-native visual consistency
 - Status icons follow iOS Human Interface Guidelines
 ```
+
+*Scope note (ballot `2026-10-18-true-native-development-is-not-true-native-design`): "platform-native visual consistency" is this example's reason, not a requirement — a component's icons may depart from the platform's native set when its design calls for it.*
 
 ### Icon Size Tokens
 
