@@ -8,6 +8,8 @@
 **Priority**: MEDIUM as an audit gap; **the consumer-facing gap it symptomatizes is the real problem** — see § 1
 **Owners**: **Kenya (iOS) and Data (Android) — DESIGNERS of the harness.** **Ada and Lina — VERIFIED PARTIES** (their generated output is what the harness would compile)
 **Explicitly NOT**: Kenya and Data do **not** become standing per-pass verifiers — § 4
+**Class**: P2 obligation (guard) · charter *(set 2026-10-20, Kenya, rule 12. The record names an instrument gap: nothing compiles the Swift or Kotlin we generate, so platform "command + result" Evidence on two of three platforms is trust-the-reported-result, weaker than the claim it supports. The interim posture (§ 2) makes the gap visible in the record but does not close it. Kind charter: opened deliberately, evaluated at named triggers, no build authorized. Data co-owns this record and may re-class.)*
+**Trigger**: `path:.kiro/specs/129-consumer-generation-completeness/tasks.md` — the event that owes the evaluation: Spec 129's tasks.md landing, whose first task is this charter's evaluation (priorities record; 129's acceptance, "compiling on all three platforms", depends on the harness). The § 3 incident trigger (generated Swift/Kotlin that does not compile) is not path-computable and stays in § 3 as prose; if it fires first, the owner re-rules here. *(Set 2026-10-20, Kenya, rule 9, accepting the steward's walk-line proposal in spirit but taking the computable token over `manual`. Was: the three prose triggers in § 3, which carry no token. Note per the priorities record: § 3 trigger 3, the post-campaign queue review, fired without an evaluation.)*
 
 ---
 
