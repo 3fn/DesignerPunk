@@ -1,0 +1,80 @@
+# Web element API and form participation: one contract violation, one contract gap and five element-API defects
+
+**Date**: 2026-10-20
+**Type**: DEFECT RECORD. It records defects and fixes nothing. No component file changes with this record.
+**Owner**: **Lina** (the components and their contracts are hers; she authors and edits this body under README rule 9). **Verifier**: **Sparky** (web), who verifies each fix in its owning component PR and may append dated, signed lines here.
+**Trigger**: `release:next:phase-1` — the release falsity floor's due point for item E1, a P0: fixed, or waived by Peter in that release's floor batch (ballot `2026-10-18-obligation-drain-and-release-falsity-floor` M7). E2–E7 are owed no later than **17.0.0**, and **no record plans 17.0.0**: `.kiro/issues/2026-10-16-blend-deprecation-next-major-doc-correction.md:17` reads "17.0.0, which no record plans". Their start condition is the 17.0.0 charter, which is an open process slot in the Spec 128 identity ballot (`.kiro/docs/ballots/2026-10-20-spec-128-platform-admission-identity.md` § 6, "Who charters 17.0.0, and when?"). When E1 closes, I re-rule this line to `release:17.0.0:phase-1`, with a dated reason, under rule 11.
+**Class**: P0 false-claim · defect *(set 2026-10-20, Lina, rule 12. Item E1 sets the class. The Input-Checkbox-Base contract, served by the application MCP, says that on web the checkbox takes part in native form submission, and the web element does not. That is "a statement false in … an MCP contract" (M7's P0 definition). Only Peter downgrades a P0. On their own, E2–E7 would be P2 obligation (record) or P3. The class is re-set when E1 ships.)*
+**Found by**: Sparky's R1 read and Lina's cross-read on the Spec 128 identity ballot (§ 7 there). Every file:line below was **VERIFIED (Lina, 2026-10-20)** in source at `f9b82e033`. Anything about runtime browser behaviour is marked **REASONING**: Jest/jsdom is not a browser, and nothing here was run in one.
+**Walked**: monthly, in the health check's active-charter walk (README rule 6).
+**Status**: **OPEN**. Every item is unfixed.
+
+---
+
+## Why this is its own record
+
+These defects are owed to **plain web consumers**, whatever Spec 128's F-6 decides. They are not a React cost (Spec 128 ballot § 2, F-6, "Sequencing"). F-6's sequencing rule is that generated React wrappers do not ship before this cleanup.
+
+**Relation to `.kiro/issues/2026-10-18-drawn-control-drift-ios-android-web.md`**: that record holds the True Native ballot's routed drawn-control items (I1, A1–A7, W1, W2). It closes item by item in owning PRs, with Kenya, Data and Sparky verifying. This record is a different class: web element-API and form-participation defects, plus one contract violation and one contract gap. Nothing here duplicates an item there. A component PR that fixes items from both records names both IDs.
+
+---
+
+## E1. Input-Checkbox-Base violates its own required `validation_form_integration` contract on web (P0)
+
+- **The contract**: `src/components/core/Input-Checkbox-Base/contracts.yaml:143–161` reads "Checkbox participates in native form submission. Value is included in form data when checked." It is `required: true` with `platforms: [web, ios, android]`. Input-Checkbox-Legal inherits it (`Input-Checkbox-Legal/contracts.yaml:4`, `inherits: Input-Checkbox-Base`). Both READMEs repeat the claim (`Input-Checkbox-Base/README.md:46`, `Input-Checkbox-Legal/README.md:106`).
+- **The element**: the native `<input type="checkbox" name=…>` is rendered **inside the shadow root** (`Input-Checkbox-Base/platforms/web/InputCheckboxBase.web.ts:103` `attachShadow`, `:457` `name`, `:474` `type="checkbox"`). The element is not form-associated: no `static formAssociated`, no `attachInternals`, no `setFormValue`. Across all 34 web components, only `Input-Radio-Base/platforms/web/InputRadioBase.web.ts:83` (`formAssociated = true`) and `:121` (`attachInternals()`) are. Legal also renders in its own shadow root (`InputCheckboxLegal.web.ts:88`).
+- **What does work**: form **reset**. It is wired by hand: a listener on the closest ancestor form (`InputCheckboxBase.web.ts:341–343`, `:353–355`), tested at `__tests__/InputCheckboxBase.test.ts:482–512`.
+- **REASONING**: a form owns only controls in its own tree, so a checkbox inside a shadow root is not in the outer form's `FormData` or submission. This needs a real browser to confirm (see E7).
+- **Fix shape (Lina's read; the fix PR decides)**: make the element form-associated with `ElementInternals` (`setFormValue` on check/uncheck, plus `formResetCallback`, which replaces the hand-wired listener). This is additive, so it need not wait for a major. The alternative, narrowing the contract to exclude web, would make the contract match by giving up the behaviour. That is a contract change, and it is Peter's call if it is ever proposed.
+- **Not verified**: what "native form submission" means on iOS and Android. Neither platform has an HTML form, and this record does not examine the native implementations.
+
+## E2. Text inputs carry no form-participation contract (gap); Input-Radio-Set is borderline
+
+- `src/components/core/Input-Text-Base/contracts.yaml` lists ten contracts (`:6`–`:237`), and none is `validation_form_integration`. Email, Password and PhoneNumber inherit Input-Text-Base (`contracts.yaml:4` in each) and add none. So no platform promises that a text field submits with a form. On web it does not: `InputTextBase.web.ts` has no `attachInternals`. Email nests `<input-text-base>` inside its own shadow root (`InputTextEmail.web.ts:50`, `:139–153`), so association and labelling would cross two boundaries.
+- The concept exists in the catalog (`governance/Contract-System-Reference.md:89`, `:111`). Adding it to Input-Text-Base is a contract change, and the web element must then satisfy it (E1's fix shape).
+- **Input-Radio-Set** carries `validation_group_required` (`Input-Radio-Set/contracts.yaml:45`) and no form contract. Spec 128's converged F-6 rule makes "takes part in constraint validation" part of `validation_form_integration`, so the set is borderline: either the set carries the contract, or its children's contract covers the group. This is open and decided in the contract change.
+
+## E3. Input-Text-Base rebuilds its shadow DOM on `error-message` and `is-success`
+
+- `InputTextBase.web.ts:189–218`: a `value` change updates the inner input directly and returns early (`:192–199`). A change to `error-message` (`:200`) or `is-success` (`:207`) falls through to `render()` (`:216–217`). `render()` rebuilds the container through `innerHTML` (`:288`), then clears and refills the shadow root (`:329` `this._shadowRoot.innerHTML = ''`).
+- **REASONING (needs a real browser)**: replacing the `<input>` drops focus and caret, so live validation while the user types loses their place.
+
+## E4. `delegatesFocus` only on three components
+
+- Only `ButtonVerticalListItem.web.ts:273`, `ButtonVerticalListSet.web.ts:174` and `InputRadioSet.web.ts:91` pass `delegatesFocus: true`. On the text inputs and checkboxes, calling `.focus()` on the host does not reach the inner control (**REASONING**). That breaks "focus the first invalid field".
+
+## E5. Event and property names on six generated-set components
+
+- **ButtonVerticalListItem**: dispatches `CustomEvent('focus')` and `CustomEvent('blur')` (`ButtonVerticalListItem.web.ts:942`, `:957`). The four Input-Text files do the same (e.g. `InputTextBase.web.ts:368`, `InputTextEmail.web.ts:204`).
+- **NavTabBar**: `selection-change` (`NavTabBarBase.web.ts:293`).
+- **NavSegmentedChoice**: `selection-change` (`NavSegmentedChoiceBase.web.ts:345`, `:382`).
+- **ChipFilter**: `selectionchange`, unhyphenated (`ChipFilter.web.ts:502–503`).
+- **ButtonCTA**: property `buttonVariant` (`ButtonCTA.web.ts:323`, `:331`) where `types.ts:149` has `variant`. The `variant` attribute is observed (`:153`).
+- **Button-Icon**: property `buttonVariant` (`ButtonIcon.web.ts:363`, `:434`) where `types.ts:159` has `variant`.
+- **REASONING**: native focus already reaches the host, so host listeners can fire twice, and ancestors see a bubbling `focus` that native never produces. A wrapper generator maps `types.ts` mechanically, so every mismatch becomes a hand-kept exception.
+
+## E6. NavSegmentedChoice's `aria-controls` cannot reach its panels
+
+- The element renders in an open shadow root (`NavSegmentedChoiceBase.web.ts:81`). Each segment gets `aria-controls="${id}-panel-${value}"` (`:262–266`), and the panels belong to the adopter, outside the shadow root. The contract is `accessibility_aria_controls`, `required: true` (`Nav-SegmentedChoice-Base/contracts.yaml:352–366`).
+- **REASONING**: ID references do not cross a shadow root, so the reference resolves to nothing. ARIA reference-target support, which could change this, is **UNVERIFIED**. The contract's own validation (`:362–363`) checks only that the attribute is present, so it passes against a reference that resolves to nothing. That is a guard weaker than its claim.
+
+## E7. No test covers `FormData` submission
+
+- The checkbox tests cover reset only (`InputCheckboxBase.test.ts:482–512`). No test in Input-Checkbox-Base, Input-Checkbox-Legal or Input-Text-Base reads `FormData` or submits a form. That is why E1 passed unseen. The contract's own `test_approach` (`contracts.yaml:157–160`, "Place checkbox in form, check it, submit / Verify value in form data") was never carried out. Whether jsdom can prove submission, or a real browser is needed, is decided in E1's fix PR.
+
+---
+
+## Sparky's counter, recorded
+
+A generated wrapper could ship **before** 17.0.0 with an alias table, so that the later element break is non-breaking for React. This is acceptable **only with an expiry pinned to 17.0.0** (Sparky R1; Spec 128 ballot § 2, F-6). This record does not adopt or reject it. If it is taken, the alias table's expiry is written into this record when it is.
+
+## Not in this record
+
+- Sparky's report of a parallel `onChange` property alongside a `change` event on the inputs and checkboxes. I did not re-verify it here, and it is not in scope.
+- SSR import-safety (all 34 modules call `define` at module scope). That is vertical-wide, and it is decided by inbound § 10 Q2, not here.
+
+## What closes this record (README rules 5 and 11)
+
+Each item closes in its owning component PR. The PR names the item ID (E1–E7), and Sparky appends a dated line confirming the fix in a browser. E1 first: at the next release's phase 1 it is fixed or carried to Peter's floor batch. When every item has an outcome line, the record moves to `archive/`.
+
+## Walk log
