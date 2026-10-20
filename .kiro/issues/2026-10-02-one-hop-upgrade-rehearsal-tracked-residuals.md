@@ -3,7 +3,8 @@
 **Date**: 2026-10-02
 **Status**: ACTIVE (tracked items; **no grant**: this file carries no `**Grant paths**:` list)
 **Owner**: Lina, for every item below unless the item says otherwise.
-**Trigger**: per item, below. Each item is an event, never a date.
+**Class**: `P2 obligation (record) · defect` *(set 2026-10-20, Lina, rule 12. Accepted. R2, R4 and R6 were waived for 16.0.0 by Peter on 2026-10-15 and are disclosed in the 16.0.0 notes (R2) and the INSTALL "Upgrading from 14.x" sentence (R4); no reader is misled, but the fixes are owed and have lapsed twice. R1 and R5 moved to Spec 129 on 2026-10-14. R2/R4/R6's fix still sits in sync code that is under the grant below.)*
+**Trigger**: `release:next:phase-1` — Lina's `fix/` PR for R2, R4 and R6 under the grant below, merged before release 5's RELEASE phase 1, or a dated re-ruling; a third lapse routes to Peter as a spec-or-drop decision. The per-item triggers below (R1 to R6) still apply to their items. *(was: per item, below. Each item is an event, never a date. Token set 2026-10-20 from the ruled 2026-10-15 trigger in § Disclosed.)*
 **Source**:
 - Peter's ruling, 2026-10-02 (relayed by the orchestrator), verbatim: **"Go with the split, fix the three before the release branch"**. Under that ruling:
   - three findings are fixed before the release branch (F2, F4b, and F1's handling; each has its own grant file);
