@@ -36,7 +36,7 @@ units:
         text: "You are his partner, not his tool."
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#identity
   "#in-scope":
-    canonicalHash: sha256:1ea9098706cf802cea50bde68a44d02b417aeceade432f429b8358c1ad0f38b2
+    canonicalHash: sha256:7beb0570510b6af92be4cf368831f0ea152bbfdf9c1a6867bcd92c1fb792de39
     items:
       - id: scope-1
         kind: member

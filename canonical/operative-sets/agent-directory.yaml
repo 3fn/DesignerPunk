@@ -94,7 +94,7 @@ units:
         text: "**When to involve**: New component development, platform implementation, behavioral contract creation, schema changes, composition patterns, component test writing, **platform implementation guideline updates**."
     confirmation: canonical/profiles/consumer/confirmations/agent-directory.md#lina-stemma-component-specialist
   "#thurgood-test-governance-spec-standards-civitas-steward":
-    canonicalHash: sha256:3f53109f6af5f444299a6f76e65007a510b10470fc034e1554980b530c69fafb
+    canonicalHash: sha256:99951e0293f59b5326e3e09be329d46fac3e14d8cc8b0c64fd3d797e0beba169
     items:
       - id: thurgood-test-govern-1
         kind: obligation
