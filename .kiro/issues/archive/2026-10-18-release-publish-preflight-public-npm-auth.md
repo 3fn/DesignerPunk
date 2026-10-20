@@ -45,3 +45,9 @@ The 5.3 publish-mode preflight (`scripts/release-publish.ts` L259) runs `npm who
 **Residual (stated, not solved)**: 5.4 runs in the operator's terminal with web 2FA. A login that lapses between this check and the 5.4 PUT, or a 2FA failure at 5.4, still stops 5.4 after GitHub Packages holds the version. The check shrinks that window's likelihood only.
 
 **Text half**: one sentence for RELEASE-FLOW 5.3 is owed by Thurgood (his seat; law, Peter-merged). The script is fixed independently of it.
+
+## Archived (2026-10-20)
+
+*Signed: Thurgood (Civitas steward), archived by the steward, early walk act, Peter's go 2026-10-20 ("Go on the records PR with the class option and resolving F-1 and F-2, please", chat, relayed by the orchestrator); README rule 5, "otherwise at the next health-check walk".*
+
+- **Outcome**: the script fix (§ "Fixed (2026-10-18)") and the RELEASE-FLOW 5.3 "both logins" sentence (the text half owed by Thurgood, under the ratified micro-ballot `2026-10-18-release-flow-5-3-single-run-and-both-logins`) merged together as #410, `0baeadda8` (2026-10-19), before release-5 phase 1. The outcome above is the owner's (Ada); this line adds the merge SHA and records the text half delivered. Moved to `archive/` by `git mv` in the same commit as this line.

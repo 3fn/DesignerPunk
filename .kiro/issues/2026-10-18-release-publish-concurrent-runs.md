@@ -1,7 +1,7 @@
 # Nothing stops two concurrent release-publish 5.3 runs: the 16.0.0 duplicate run and what held (RS-32)
 
 **Date**: 2026-10-18
-**Status**: FIXED (text) — (b) held; closes at this PR's merge; archive at the next walk
+**Status**: ACTIVE — the text fix merged (#410, `0baeadda8`); option (b), the script lock, is held behind the `manual` trigger, so the record stays at the root (§ "Walk (2026-10-20)"). *(Set 2026-10-20, Thurgood, co-owner. Superseded status, kept verbatim: "FIXED (text) — (b) held; closes at this PR's merge; archive at the next walk")*
 **Owner**: Thurgood (RELEASE-FLOW text) · Ada (the script)
 **Trigger**: `manual` — the held option (b), a script lock, is owed at the SECOND duplicate 5.3 run (the event is a duplicate run, which no token expresses: not a tag, merge, path or release). *(Re-ruled 2026-10-18, Thurgood, rule 11: fork (a) was taken, so the `release:next:phase-1` close is met by the text fix; what remains is an event-held option. Authority: Peter's "proceed as recommended", 2026-10-18, relayed by the orchestrator, taking this record's fork (a) with (b) held behind "a second duplicate run". The superseded trigger, verbatim:)* `release:next:phase-1` — the fix lands first, or a dated waiver line here. *(Re-ruled 2026-10-18, Thurgood, for both owners: was "before release-5 step 5.3". Step 5.3 runs `scripts/release-publish.ts` in a fresh clone at the tag, so a fix that is not in the tagged release squash S does not hold at 5.3; the phase-1 token fires at S. Authority: ballot 2026-10-18-obligation-drain-and-release-falsity-floor M2 back-fill, the application PR `chore/ballot-sitting-application`.)*
 **Source**: RS-32, Stacy's RELEASE phase 2 for 16.0.0 (`.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.0.0.md`, L735 and L793). Stacy named the gap and asked the question; she did not draft it. Run record: `docs/releases/16.0.0/publish-verification.txt`, the 5.3 duplicate-run section.
@@ -52,3 +52,11 @@ I did not re-run or re-read the registries. The incident facts are from Stacy's 
 **2026-10-18 (Thurgood)**: law text reverted pending ratification; micro-ballot drafted (`.kiro/docs/ballots/2026-10-18-release-flow-5-3-single-run-and-both-logins.md`). The revert `1cac2e986` undoes `117254bcc`; this record's `## Fixed` section above states the intended outcome and takes effect at the ratified re-apply.
 
 **2026-10-18 (Thurgood)**: ratified and re-applied. Peter ratified the two RELEASE-FLOW edit sites on 2026-10-18 ("Ratify both"; ballot `2026-10-18-release-flow-5-3-single-run-and-both-logins`, Status commit `22c443570`), and the text is back in `.kiro/hooks/RELEASE-FLOW.md` as `5f198dd0f`, identical to the reverted `117254bcc`. The `## Fixed (2026-10-18)` section above stands; (b) stays held behind the `manual` trigger.
+
+## Walk (2026-10-20)
+
+*Signed: Thurgood (co-owner, RELEASE-FLOW text; Civitas steward), early walk act, Peter's go 2026-10-20 ("Go on the records PR with the class option and resolving F-1 and F-2, please", chat, relayed by the orchestrator).*
+
+- **Not archived.** The text fix merged as #410, `0baeadda8` (2026-10-19), before release-5 phase 1, so the `release:next:phase-1` close the superseded trigger owed is met. But the live Trigger line owes option (b), the version-keyed script lock (Ada's, `scripts/release-publish.ts`), at the second duplicate 5.3 run, and that event has not happened. An open owed act is not a recorded outcome, so rule 5 does not archive the record.
+- **The archive note's question, answered**: keeping this record at the root is the successor record the 2026-10-18 note contemplated; filing a second file would split one obligation's history across two records. No successor is filed.
+- **Class and trigger unchanged**: P2 obligation (guard) · owed-act, `manual`. A `manual` trigger is not computable by the walk (rule 6 counts it as such); rule 5's archived-stale clause covers P3 records only, so this record is not a stale-archive candidate. Its (b) fires on the event in prose: whoever observes a second duplicate 5.3 run (the RELEASE record's author or Stacy's RELEASE pass) appends the dated line that fires it.

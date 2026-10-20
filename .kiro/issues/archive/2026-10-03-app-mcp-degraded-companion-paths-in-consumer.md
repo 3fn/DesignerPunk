@@ -49,3 +49,9 @@ The code edit itself (`application-mcp-server/src/indexer/FamilyGuidanceIndexer.
 - **Guard**: `application-mcp-server/src/indexer/__tests__/ConsumerCompanionPaths.test.ts` (consumer-shaped `projectRoot`, real package data). Bite run: the pre-fix call site turns it red with the nine warnings.
 - **Lock**: refreshed by the guard's own write under this record's grant; `inputClosure` b8140dd0… → 1aaad6e0…, `outputs` unmoved.
 - **The surviving counter recorded above still holds**: the check now asserts the package's docs exist, not a consumer override of them. No consumer override path for family docs is known.
+
+## Archived (2026-10-20)
+
+*Signed: Thurgood (Civitas steward), archived by the steward, early walk act, Peter's go 2026-10-20 ("Go on the records PR with the class option and resolving F-1 and F-2, please", chat, relayed by the orchestrator); README rule 5, "otherwise at the next health-check walk".*
+
+- **Outcome**: the fix (§ "Fixed (2026-10-14)") merged as #345, `35571fe20` (committer date 2026-10-13 21:36 -0400). The outcome above is the owner's (Lina); this line adds only the merge SHA. Moved to `archive/` by `git mv` in the same commit as this line.

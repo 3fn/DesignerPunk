@@ -49,3 +49,9 @@ The `description` edit is a source text change, not a value change: `token-index
 **Wording used**: "deprecated since 2026-07-15, retained for backward compatibility; removal is not scheduled" (long form), "retained for backward compatibility, removal not scheduled" (table cells and one-line comments). No release is named; only a ruling that names the major release schedules removal.
 
 **Sites not on this record's list** (found by the re-grep, NOT changed here — outside the grant and the PR's file list; `docs/token-system-overview.md` L389 was found the same way and is now fixed and granted above): frozen onboarding fixtures under `tests/onboarding-trio/fixtures/**` (born-cc, born-kiro) that carry copies of the old `BlendTokens.ts` and DTCG/Figma text. Routed to the orchestrator in the PR hand-back.
+
+## Archived (2026-10-20)
+
+*Signed: Thurgood (Civitas steward), archived by the steward, early walk act, Peter's go 2026-10-20 ("Go on the records PR with the class option and resolving F-1 and F-2, please", chat, relayed by the orchestrator); README rule 5, "otherwise at the next health-check walk".*
+
+- **Outcome**: the correction merged as #394, `a4694a2a5` — the git committer date is 2026-10-17 (14:27 -0400); the Status line's "(2026-10-18)" is not the git date. The outcome above is the owner's (Ada); this line adds only the date reading. Moved to `archive/` by `git mv` in the same commit as this line.

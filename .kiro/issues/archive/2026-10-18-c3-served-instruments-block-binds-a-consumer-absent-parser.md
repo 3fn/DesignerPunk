@@ -30,3 +30,9 @@ The fixing PR closes this record by adding rule 5's dated outcome line in the sa
 - **The edit**: one sentence added to the section's opening paragraph in `governance/Process-Spec-Planning.md` § "The Instruments block (M4)". It says the parser is part of DesignerPunk's own `completion-criteria-parity` instrument (`scripts/completion-claims/`), that the consumer package does not ship it, and that in a consumer repo no parser collects or checks the block and `P` is a merge in DesignerPunk's repo. No requirement changes for this repo or for a consumer.
 - **Referent** (held before this PR; neither governance text nor enforcement code changed in it): the package `files` list in `package.json` (no `scripts/` entry; `tsconfig.json` `rootDir` is `./src`, so `scripts/completion-claims/` is never compiled into `dist/`), and the consumer profile's own record of the removal, `canonical/profiles/consumer/always-set/agent-directory.dispositions.yaml` (the `completion-criteria-parity` instrument removed under `subtraction-3`).
 - **Not done here**: whether a consumer spec should write the block at all. Saying so would be a requirement for consumers (LAW, not a CORRECTION), so it is left out. — Thurgood
+
+## Archived (2026-10-20)
+
+*Signed: Thurgood (Civitas steward), archived by the steward, early walk act, Peter's go 2026-10-20 ("Go on the records PR with the class option and resolving F-1 and F-2, please", chat, relayed by the orchestrator); README rule 5, "otherwise at the next health-check walk".*
+
+- **Outcome**: the CONTENT CORRECTION (§ "Fixed (2026-10-18)") merged as #412, `05d039348` (2026-10-19), before release-5 phase 1. The outcome above is the owner's; this line adds only the merge SHA. Moved to `archive/` by `git mv` in the same commit as this line.
