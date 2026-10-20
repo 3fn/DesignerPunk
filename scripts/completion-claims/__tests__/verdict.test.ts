@@ -20,6 +20,9 @@ import {
   formatUntickedLine,
   DOC_NOT_FOUND_EMISSION,
   RATIFICATION_BALLOT_PATH,
+  mergeBaseUnresolvable,
+  authorshipUnresolvable,
+  shallowCloneFinding,
 } from '../verdict';
 
 const HEADER = '**Criteria mode**: per-parent\n\n';
@@ -348,6 +351,25 @@ describe('the per-spec unticked count (Peter, 2026-09-26)', () => {
 });
 
 describe('CATALOG CONFORMANCE — every loud string equals its design-table row', () => {
+  test('merge base unresolvable (added 2026-10-19, D-2 low (a))', () => {
+    expect(mergeBaseUnresolvable('origin/main')).toEqual({
+      verdict: 'MERGE_BASE_UNRESOLVABLE',
+      message: 'cannot resolve merge base against origin/main — diff-scoped duties (Req 6.3) not evaluated',
+    });
+  });
+
+  test('authorship lookup failed (added 2026-10-19, D-2 low (b))', () => {
+    expect(authorshipUnresolvable('.kiro/specs/x/tasks.md', 'git log failed')).toEqual({
+      verdict: 'AUTHORSHIP_UNRESOLVABLE',
+      message:
+        'cannot resolve authorship date for .kiro/specs/x/tasks.md (git log failed) — criteria-mode resolution (DD2) not evaluated',
+    });
+    expect(shallowCloneFinding()).toEqual({
+      verdict: 'AUTHORSHIP_UNRESOLVABLE',
+      message: 'authorship dates unresolvable: shallow clone — DD2 needs full history (checkout fetch-depth: 0)',
+    });
+  });
+
   test('declared per-parent, block not found', () => {
     const tasks = parseTasksMd(HEADER + '- [x] 2. No block here\n', 's');
     const r = evaluateSpec(tasks, 'per-parent', () => docWith([['x', '✅', 'a/b.ts']]));
