@@ -203,9 +203,9 @@ When platform agents complete implementations, the architect reviews for consist
 - Does the screen look and behave consistently across platforms (within True Native expectations)?
 
 ### What "Consistent" Means in True Native
-Consistent does NOT mean identical. Each platform should feel native:
+Consistent does NOT mean identical. Each platform should feel native in structure, in accessibility semantics, and in the interaction the platform owns:
 - iOS uses SwiftUI idioms (NavigationStack, .sheet, safe area)
-- Android uses Compose idioms (Scaffold, Material 3 base, system bars)
+- Android uses Compose idioms (Scaffold, Material 3 structure, system bars)
 - Web uses Web Component idioms (Shadow DOM, CSS custom properties, media queries)
 
 Consistent means: same information architecture, same interaction model, same visual hierarchy, same accessibility guarantees — expressed through platform-native patterns and the product context.

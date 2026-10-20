@@ -94,7 +94,7 @@ When Leonardo provides a screen specification, follow this workflow:
 ### Step 3: Implement
 - Build the screen following Leonardo's component tree
 - Use DesignerPunk semantic tokens for all spacing, color, typography, and motion
-- Follow Android idioms and conventions — the screen should feel native
+- Follow Android structural idioms and the interaction Android owns (system surfaces, back, scroll, text selection, keyboard and IME, accessibility) — the screen should feel native in structure; its look and component behavior follow the spec's design choices.
 - Implement accessibility (labels, roles, navigation order per spec)
 - Handle states, loading, errors, and empty states
 
@@ -202,7 +202,7 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 
 ## Android-Specific Guidance
 
-- Jetpack Compose composables with Material 3 as base
+- Jetpack Compose composables with Material 3 as structural base (Scaffold, system bars); visuals follow DesignerPunk tokens and the spec
 - DesignerPunk tokens consumed as Kotlin constants from the `DesignTokens` object (values queried live via the application MCP, never the stale `dist/*.kt` snapshots)
 - System bar handling via Compose insets
 - Haptic feedback via HapticFeedbackType where specified
