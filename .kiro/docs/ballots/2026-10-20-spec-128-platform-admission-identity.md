@@ -3,17 +3,18 @@
 **Date**: 2026-10-20
 **Drafted by**: Thurgood (Civitas steward; Spec 128 formalization owner), at Peter's direction (2026-10-20, relayed by the orchestrator): *"Let's work on 128's six-fork ruling sitting."*
 - R0 (`0f291b6f3`): six forks, four carried decisions, edit sites pending the rulings.
-- R1 (this revision, same day): folds the seven read-only R1 reads (§ 7). D1–D3 and a new D5 each get their own ruling line. D4 became fork F-7. A new fork, F-8, comes from Data's read.
-**Status**: **DRAFT (R1)**. The rulings slots are open (§ 6). **No text is proposed for any edit site.** The Core Goals wording follows Peter's rulings, at the text round.
+- R1 (`7c9d1903a`, same day): folds the seven read-only R1 reads (§ 7). D1–D3 and a new D5 each get their own ruling line. D4 became fork F-7. A new fork, F-8, comes from Data's read.
+- R2 (this revision, same day): folds the five read-only R2 cross-reads (Lina, Sparky, Leonardo, Kenya, Data; § 7). F-6 converged on one rule. F-5 gains F-5w's clause and its trigger fork, and a new fork F-5f. F-4 gains a class option. F-7 records that its exit has no builder. Q8 is ruled separately.
+**Status**: **DRAFT (R2)**. The rulings slots are open (§ 6). **No text is proposed for any edit site.** The Core Goals wording follows Peter's rulings, at the text round.
 **Kind**: **LAW** (README § "When a governance edit needs a ballot"). It changes what the Layer 1 identity docs say the project is.
 **Origin**: the charter's first deliverable (`.kiro/issues/2026-10-03-react-react-native-platform-admission-charter.md`). Its trigger fired on 2026-10-03: the v15.0.0 tag exists, and the parity required-flip merged in #292 and was confirmed ARMED in #294. The charter's walk rule counts "trigger fired, no identity-ballot draft" as a finding. R0 discharged that finding.
 **Source record**: `.kiro/specs/128-react-react-native-platform-admission/inbound-from-react-rn-sitting-2026-10-02.md` (cited below as "inbound § N"). This ballot cites it and does not restate it.
 **Reviewers of record**:
 - **Required**: **Stacy** (governance tiers; claims passes) and **Leonardo** (adopter front door).
 - **R1 reviewers**: **Ada, Lina, Sparky, Kenya, Data**.
-- All seven R1 reads are in § 7, verbatim.
+- All seven R1 reads and the five R2 cross-reads are in § 7, verbatim.
 **Unit**: standalone draft. The application PR edits `.kiro/steering/**`, `canonical/**` and `governance/**`, so **Peter merges it** under the governance carve-out.
-**Consulted**: Stacy, Leonardo, Ada, Lina, Sparky, Kenya, Data. All seven reads were read-only, on R0 at `0f291b6f3`; one-line reads are in § 8.
+**Consulted**: Stacy, Leonardo, Ada, Lina, Sparky, Kenya, Data. All seven R1 reads were read-only, on R0 at `0f291b6f3`. The R2 cross-reads (Lina, Sparky, Leonardo, Kenya, Data) were read-only, on R1 at `7c9d1903a`. One-line reads are in § 8.
 
 ---
 
@@ -185,150 +186,242 @@ The adopter's only maths instrument, `designerpunk validate`, checks honesty onl
 
 ### F-4. Is the split about code, or about identity
 
-**Question**: with the project unsplit, does Peter want a separate identity (a name, an edition, a front door) for the React audience?
+**Question (sharpened at R2, Leonardo cross-read 4)**: *"Should a React-only adopter's agents be told 'True Native' while nothing native is production?"* Underneath it is Lina's R1 question (c): **which problem was the split idea meant to solve?** Engineering velocity is answered by P1 and F-1, and F-1 (c) does not relieve it. Audience and positioning is answered by (b) below.
+
+**Why the question bites.** Under F-7 and F-5w no native platform sits above `experimental`, yet `designerpunk init` tells the adopter's agents "True Native cross-platform design system… web/iOS/Android" (overlay L7, L13–16). The identity an adopter meets is decided by **edit site 1a**, whatever F-4 rules (Leonardo R1 (b)).
 
 | Option | Cost |
 |---|---|
-| (a) **Code only.** "DesignerPunk for React" is a landing page and an install path (P1). | If the motive was identity, it goes unmet. |
-| (b) **A sub-identity over one core.** A named edition with its own front door, release notes generated from the registry, and plausibly its own `init` profile and consumer rendering (Leonardo (b)). | A brand surface and a second front door. A name is cheap to add and expensive to retract. |
+| (a) **Yes, as stated.** True Native is the architecture, and React is one binding of it. "DesignerPunk for React" is a landing page and an install path (P1). | It may read as "a native project with a React port", which is the retreat reading from the other side (Leonardo R1). |
+| (b) **No: a platform-scoped init rendering.** A web or React adopter's rendering describes only what they installed. This is the sub-identity, with its own front door and generated release notes. | A second consumer rendering, signed and kept in step with the first. A name is cheap to add and expensive to retract. |
+| (c) **Yes, with the tiers shown.** Site 1a's text is **generated from the registry**: "True Native architecture; web production, React experimental, native experimental/source-only". So it cannot over-claim. | The rendering depends on D3's registry. Its hash moves with every tier change, so the signing design has to treat the generated part as data, not signed text (Stacy R1 (c)5 applies). |
 
-**R1 fold.** Lina (c) puts the question underneath this fork: **which problem was the split idea meant to solve?** Engineering velocity is answered by P1 and F-1, and F-1 (c) does not relieve it. Audience and positioning is answered by (b).
+**Seats' positions**: **Leonardo** names (c) as the class option. He says it answers site 1a whatever Peter's intent on F-4, and he does not pick on intent. Lina asks the question underneath.
 
-**Leonardo (b) reframes the question.** Under (a), `designerpunk init` tells the adopter's agents that this is a "True Native cross-platform design system… web/iOS/Android" (overlay L7, L13–16). So the identity an adopter meets is decided by **edit site 1a**, whatever F-4 rules. His question for Peter: *"If the first outside adopter is a React-only team that will never touch iOS or Android, should anything they see, whether docs, init output or what their agents are told, mention True Native?"* No points to (b), with a separate consumer rendering. Yes points to (a).
+**Recommendation**:
+- **On intent: none.** Only Peter knows the motive.
+- **Take (c) as the class option either way.** It keeps site 1a honest under any answer, and (b) can still be layered on top if the answer is positioning.
+- R0's default, "(a) until a first adopter exists", is not neutral (Leonardo R1).
 
-**Recommendation**: none on intent, because only Peter knows the motive. *R1 fold*: R0's default, "(a) until a first adopter exists", is **not neutral** (Leonardo). The first impression forms through the init rendering before any adopter exists.
+**Surviving counter**: (c) puts generated text inside a signed identity rendering. If the signing design cannot separate data from text, every promotion means a re-sign, which is the cost Stacy R1 (c)5 told us to avoid.
 
-**Surviving counter**: under (a), True Native framing on a React install may read as "a native project with a React port". That is the retreat reading from the other side (Leonardo).
-
-**Class option**: none. This is a question of intent.
+**Class option**: (c), the registry-generated identity line.
 
 ### F-5. Working Class, the proof case, and iOS-first
 
-**Question**: does Spec 070's Working Class stay three native apps as the proof case, with iOS first? And what counts as a proof consumer for each platform?
+**Question**: does Spec 070's Working Class stay three native apps as the proof case? Which platform proves first? What counts as a proof consumer?
 
 | Option | Cost |
 |---|---|
-| (a) **Working Class stays native, iOS first.** | It proves nothing until the native harness exists (2 of 34 production-ready; nothing compiles Swift or Kotlin in CI). |
-| (b) **Working Class adds or moves to React Native.** | A 070 amendment. Data: "RN hides the Compose gap more than it fixes it". Two Android builds of one product stop the proof from discriminating. |
-| (c) **Working Class stays the native proof; React and React Native get their own named proof consumer.** | That consumer does not exist yet (Leonardo: none exists for React Native). |
-| (c-WC-web) **Leonardo's candidate 1**: Working Class's *web* app is consumed through the React binding. | One product spec gives a native binding and a React binding, the strongest parity proof. But Web Components lose their standalone proof, the React proof waits behind iOS-first, and it needs a 070 reading or amendment. |
+| (a) **Working Class stays native, iOS first.** | It proves nothing until the native harness exists (F-7: that exit cannot be met today on either native platform). |
+| (b) **Working Class adds or moves to React Native.** | A 070 amendment. Two Android builds of one product stop the proof from discriminating (Data). |
+| (c) **Working Class stays the native proof; React and React Native get their own named proof consumer.** | No such consumer exists (Leonardo; Kenya, verified: `find_screens` returns `[]` and there is no `product/` directory). |
+| (c + candidate 1) **(c), with Working Class's web app consumed through the React binding** (Leonardo R1). | **070 L28 names "TypeScript/Web Components" outright, so candidate 1 needs a 070 AMENDMENT, not a reading** (Leonardo cross-read, verified at L28). It rides edit site 2's planned amendment. It is **a target until it has a passing build**. It counts for `react`, and for `web` only if the registry says so: framework-free use of the elements stays unproven. |
 
-**What is already decided**: the True Native floor admits React Native, so 070's "No React Native" line is a product preference, not law. Kenya accepts this answer to her R1 question. 070 has **no named product owner** (Kenya (d), verified: participants "Peter, Thurgood"), so the decision is Peter's.
+**What is already decided**:
+- The True Native floor admits React Native, so 070's "No React Native" line is a product preference, not law.
+- 070 has no named product owner, so the decision is Peter's.
 
-**R1 folds into the class option.** "Every production-tier platform names a proof consumer":
-- **A proof consumer is defined** (Leonardo (c)): a repo that persists; a named product owner; at least N screens specified through the Product MCP; inspectable by a claims pass. The scratch Settings consumer does not qualify.
-- **`harness` and `consumer` are separate** (Kenya (a)). A harness host module compiles; a consumer is a real product exercising components with assistive-tech evidence. Only `consumer` satisfies the rule.
-- **The consumer must have a passing build** (Data (a)). A name is not evidence: Working Class Android is named, not built.
-- **Narrow "iOS first" to the SwiftUI Working Class vertical** (Kenya (a)). Once `rn-ios` exists, "iOS first" is ambiguous. It is **a proof ordering, not an adoption ordering** (Leonardo (c)); adopters meet web or React first (Integration Guide L23).
-- **Web fails the class rule on ratification day** (Stacy (e)1). No proof consumer is recorded for web, and Working Class is unbuilt. Either web drops to experimental, contradicting Integration Guide L23 ("ready for building web products"), or the rule needs a grandfather clause or a named web consumer. This is sub-fork **F-5w**.
+**The class option, as converged at R2.** "Every production-tier platform names a proof consumer":
+- **Definition** (Leonardo R1): a repo that persists; a named product owner; at least N screens specified through the Product MCP; inspectable by a claims pass; **a passing build** (Data).
+- **`harness` and `consumer` are separate registry kinds** (Kenya). Only `consumer` satisfies the rule.
+- **A parity fixture is `harness`.** Leonardo, Kenya and Data all say this at R2: a React Native or SwiftUI render of Working Class's specs, with no owner of its own, is harness evidence and **never satisfies the consumer rule**. It is still worth having, as the same spec rendered in two or three runtimes (a parity oracle). It is cheap on the spec side, because a React Native spec takes its interaction notes from the native notes Working Class already carries.
+- **Order of proof** (Kenya cross-read 1, sign-ready, verbatim): *"Among the native verticals, SwiftUI's Working Class proof comes first, because Xcode is reachable at the iOS seat and the SwiftUI vertical has never run in an app. Which platform proves first overall is Peter's call; if he takes candidate 1, web goes first and I don't contest it."*
+- **An outside repo, such as Peter's new organization (Q1), can set adoption order but cannot back a readiness claim**, because a claims pass cannot inspect it (Leonardo cross-read 1).
 
 **Seats' positions**:
-- **Kenya**: (c) plus the class option, iOS-first holding, narrowed to SwiftUI. Her fork: if Q1's answer is a React Native product, it becomes the first proof consumer and SwiftUI-first drops to second.
-- **Data**: (c), with a separate React Native consumer, not an RN build of Working Class. His fork: Working Class's screen specs as a **fixture** the React Native consumer also renders. Leonardo owns that question.
-- **Leonardo**: (c) plus the class option and the definition. His fork: candidate 1 versus waiting for Q1.
+- **Leonardo**: candidate 1 survives, as a target.
+- **Kenya**: "SwiftUI is the first native proof"; she does not contest candidate 1.
+- **Data**: candidate 1 "would be a real consumer once built, and it doesn't touch RN".
 
-**Recommendation**: **(c), with the class option as defined above**, iOS-first narrowed to the SwiftUI vertical, and **F-5w answered by a dated grandfather clause**: web keeps its current claim until a named web consumer exists or the next major, whichever comes first.
-- Candidate 1 and Data's fixture idea go to Leonardo's outline-round read.
-- Data's ask is folded in § 4: Android harness evaluation is decoupled from Working Class's Android kickoff.
+**Recommendation**: **(c) with the class option as converged, plus candidate 1 as a recorded target** (riding site 2's 070 amendment). SwiftUI is the first native proof. Which platform proves first overall follows: web/React goes first if Peter takes candidate 1.
 
 **Surviving counter**:
-- No React or React Native proof consumer exists, so both may stay experimental indefinitely. Candidate 1 is the only option that shortens that, and it reopens 070.
-- The grandfather clause is the same "cheap place to stay" risk in another form, so it needs a date.
+- No React Native consumer exists or is planned, so `rn-*` may stay experimental indefinitely.
+- Refusing fixture status pushes toward building a product just to prove the system, which is worse (Leonardo cross-read 2). That counter is fork F-5f.
 
-**Class option**: a proof consumer per production-tier platform, with the definition above.
+**Class option**: a proof consumer per production-tier platform, with the definition and the `harness`/`consumer` split above.
 
-### F-6. React web: generated, authored, or a mix
+#### F-5w. Web and the class rule: the grandfather clause, and its trigger
 
-**Question**: which React web components are generated wrappers over the web elements, and which are hand-written React?
+Web fails the class rule on ratification day: there is no recorded web proof consumer, and Working Class is unbuilt (Stacy R1 (e)1).
 
-*R1 fold*: **"SSR-critical" is struck from the criterion.** Server-side rendering safety is not a property of single components here. All 34 web modules define their element class and call `customElements.define` at module scope; only `ButtonVerticalListSet.web.ts` has a `typeof` guard (Sparky (a); Lina (a); verified). SSR is fixed once for the whole vertical, in the element and the wrapper generator, or not at all.
+**Leonardo's clause** (cross-read 3, sign-ready, verbatim):
 
-**The deciding rule.** Two versions are on record:
-- **Sparky (a)**: a component is authored if it has **(F) form participation** or **(R) a cross-root ARIA reference**; otherwise it is generated. A borderline component stays generated until a failing test shows the rule applies. Today that gives **8 authored** (the four Input-Text, Input-Checkbox-Base, Input-Checkbox-Legal, Input-Radio-Base, Input-Radio-Set) and **26 generated**.
-- **Lina (a)**: a component is authored if it carries `validation_form_integration` or holds a controlled value.
-- **The two do not yet agree.** `validation_form_integration` appears in only 2 contracts (Input-Checkbox-Base, Input-Radio-Base; verified), so Lina's first prong picks fewer than Sparky's (F). Reconciling them is outline-round work for the two seats.
-- **"A copyable front-door component" is not a reason to author** (Sparky (b)). This holds F-3 and F-6 apart.
+> "Web keeps the `production` tier it holds at ratification, shown with evidence tier `pre-rule` (no proof consumer). This standing ends at the earlier of: (a) a web proof consumer meeting F-5's definition, including a passing build, is recorded, and web then holds `production` on its own evidence; or (b) the next major release after ratification, at which web shows `experimental` unless (a) has happened, and that release's notes disclose the change. Web only. It cannot be renewed except by ballot. Stacy checks it at that release's RELEASE pass."
 
-**Record, not a field.** Lina (a): do not store `react:`. Authored-ness is visible from the files, as readiness detects implementations today. The rule becomes one check: a component the rule says must be authored, with no authored file, is a finding. Sparky would keep the field, but Stacy (d) notes either is mechanically checkable. **I take Lina's form**, because it removes a metadata axis.
+**The fork inside it: trigger (b).**
 
 | Option | Cost |
 |---|---|
-| (a) **Generated everywhere.** | Forms break: only InputRadioBase is form-associated (verified). There are no cross-root IDREFs, and `ref.focus()` does nothing on most inputs (Sparky (a)2). |
-| (b) **Authored, all 34.** | Permanent double maintenance (Sparky R2). |
-| (c-eager) **Author the 8 form components from the start.** | Robust React forms on day one; permanent double maintenance on the most complex components. |
-| (c-gated) **Fix the elements in 17.0.0 and generate all 34; promote to authored only on a failing test.** The fixes are `ElementInternals` on all 8, no `innerHTML` re-render on state attributes, and `delegatesFocus`. Lina's alternative, (a) plus fixing forms in the element itself, is the same shape. | One implementation, and plain web adopters are fixed too. React forms wait on 17.0.0. The cross-root reference gap stays open (ARIA reference-target support is unverified). |
+| (b1) **The next major, as written.** It is event-anchored. | It has nothing to do with consumer progress. If 17.0.0 ships soon, web drops to `experimental` in the release that may also bring React (Leonardo). |
+| (b2) **A minimum time window.** | It goes against the project's event-anchoring rule (time windows rot during gaps in work). |
 
-**Sequencing, whichever option wins** (Lina (a); Sparky (a)): **generated wrappers do not ship before the 17.0.0 element cleanup.** Five of the 26 generated components carry element defects: ButtonVerticalListItem, NavTabBar, NavSegmentedChoice, ChipFilter and ButtonCTA. Sparky's counter: a pre-17 alias table, accepted only with an expiry pinned to 17.0.0. That cleanup is owed to plain web consumers anyway. It is not a React cost, and R0's (a) cost line wrongly charged it to the wrappers.
+**My read**: (b1). Under F-6's sequencing rule, generated React wrappers ship only after the 17.0.0 element cleanup, and 17.0.0 has no charter (§ 4). So the coincidence Leonardo fears happens only if React ships inside the same major as the cleanup. If it does, the drop is disclosed in that release's notes, and the `pre-rule` label has already said why.
 
-**What is already decided**: every option sits on DOM plus ARIA (True Native floor parts 1–2). An authored React component needs its own `rendering:` entry; a generated wrapper inherits the web entry.
+**Surviving counter**: Leonardo's, unabsorbed. A front door that opens with "web: experimental" on the release that introduces React is the worst first impression on offer.
+
+#### F-5f (new at R2). Should a shipped parity fixture ever count as a consumer?
+
+| Option | Cost |
+|---|---|
+| (no) **A fixture is always `harness`.** | React Native may stay experimental indefinitely, because no separate React Native product exists. |
+| (yes, if shipped) **A fixture that ships to real users counts.** | It becomes F-5 (b) by another route: two builds of one product, which Data rejected. It also invites building a product just to prove the system. |
 
 **Seats' positions**:
-- **Sparky** leans (c-gated), "also the simpler option, so check my bias".
-- **Lina** puts (c)-narrowed against (a) plus element fixes, and does not pick.
+- **Leonardo**: no.
+- **Kenya**: the fixture "must never satisfy the consumer rule".
+- **Data**: it could count only as option (b), a 070 amendment he argued against.
+
+**Recommendation**: **no.**
+
+**Surviving counter**: Leonardo's own. It leaves React Native's production tier with no route that exists today.
+
+### F-6. React web: generated, authored, or a mix — the rule converged at R2
+
+**Question**: which React web components are generated wrappers over the web elements, and which are hand-written ("authored") React?
+
+**The rule.** Lina and Sparky converged on one rule in their R2 cross-reads.
+
+Sparky's sign-ready text (verbatim):
+
+> "A component's React web binding is authored if and only if its resolved contracts (own plus inherited, minus excludes) include `validation_form_integration` or a cross-root reference contract. Otherwise it is generated. A component joins the authored set only by amending its contracts, backed by a failing test. There is no hand-kept list."
+
+Lina's proposal (verbatim) adds the catalog definition and the exclusions:
+
+> "(F) `validation_form_integration` — whose catalog definition adopts Sparky's (F)(i): submits/resets with an ancestor form or takes part in constraint validation — or (R) a contract that ID-references adopter-supplied DOM (`accessibility_aria_controls` today; a catalog concept for external label/description reference, if needed, by ballot). Selection state (`state_controlled`, `state_selected`, `interaction_toggle_selection`) never qualifies. SSR is not a criterion."
+
+Sparky drops his (F)(ii) prong, controlled text, once Input-Text-Base carries the form contract. Lina keeps it only as a failing-test promotion route.
+
+**No `react:` field.** Sparky concedes it. Authored-ness comes from files, under two conditions both seats sign:
+1. **A two-way check.** A required authored file that is missing is a finding. An authored file with no matching contract is also a finding, so a stray or front-door copy cannot flip a component.
+2. **A deferral reason record**, on the existing precedent `status: not-applicable` plus `reason` (`ComponentIndexer.ts:866-875`, verified).
+
+Step 4 must also add a React key to readiness, which today scans only web, iOS and Android (`ComponentIndexer.ts:854-858`, verified).
+
+**"A copyable front-door component" is not a reason to author** (Sparky R1 (b)). This holds F-3 and F-6 apart.
+
+**The set today: 8 firm, plus 1 borderline.**
+- **Firm**:
+  - the four Input-Text components, once Input-Text-Base carries the form contract;
+  - Input-Checkbox-Base, and Input-Checkbox-Legal, which inherits the contract (`contracts.yaml:4`, verified);
+  - Input-Radio-Base;
+  - **Nav-SegmentedChoice-Base**, caught by (R). It sets `aria-controls` inside its shadow root toward panels the adopter owns (`NavSegmentedChoiceBase.web.ts:264`; contract `accessibility_aria_controls`, `required: true`; verified), so the reference is broken today. Both seats agree.
+- **Borderline**: **Input-Radio-Set**. Lina asks whether it carries the form contract. Sparky: "in only if its group label can come from the adopter's DOM".
+
+*[THURGOOD R2] note*: the coordinator's summary said "9". The cross-reads give 8 firm + Radio-Set pending a contract decision.
+
+**Costs of the rule**:
+- A contract change: `validation_form_integration` is added to Input-Text-Base, and its three variants inherit it. Lina owns it.
+- A possible catalog concept for external label and description references, by ballot. `aria_controls` is already in the catalog (`governance/Contract-System-Reference.md` L57, verified).
+- Sparky's residual: the rule is only as good as contract coverage. Input-Text-Base shows contracts can lag behaviour, so **an audit of form-related contracts comes before the rule is trusted**.
+
+**The decisive fact for gated vs eager** (Lina; verified). Input-Checkbox-Base **violates its own required contract on web**:
+- `validation_form_integration` is declared at `contracts.yaml:143-161`, `required: true`.
+- But the element is not form-associated. Only InputRadioBase is.
+- Reset works through a hand-wired listener, and no test covers `FormData` submission.
+
+The element fix is owed whatever F-6 decides.
+
+| Option | Cost |
+|---|---|
+| (a) **Generated everywhere.** | The contract violation above, carried into React. No cross-root IDREFs. |
+| (b) **Authored, all 34.** | Permanent double maintenance. |
+| (c-eager) **Author the authored set from the start.** | Robust React forms on day one; double maintenance on the most complex components. |
+| (c-gated) **Fix the elements in 17.0.0, generate all 34, and promote to authored only by contract change backed by a failing test.** | One implementation, and plain web adopters are fixed too. React forms wait on 17.0.0. Intrinsic limits (controlled text through a shadow `<input>`, cross-root IDREFs) may promote the four text inputs after 17.0.0 anyway. React forms would then have waited a major and ended at c-eager (Lina). |
+
+**Seats' positions**: **both pick c-gated**. Sparky adds a bias flag: "it is also the simpler option for me".
+
+**Q2 decides before either.** If server-side rendering is a hard requirement, **both c options fail for all 34**: every generated wrapper renders an empty host on the server, because SSR safety is a property of the whole vertical. The path is then:
+1. a time-boxed Declarative Shadow DOM spike with React 19 hydration (unverified whether it works cleanly);
+2. if the spike fails, (b) hand-written React for all 34. **That cost is Peter's call.** Neither seat picks it.
+
+**Sequencing rule**: generated wrappers do not ship before the 17.0.0 element cleanup.
+- **Six generated components carry element defects**: ButtonVerticalListItem, NavTabBar, NavSegmentedChoice, ChipFilter, ButtonCTA, and **Button-Icon**, whose `buttonVariant` getter (`ButtonIcon.web.ts:363`, `:434`, verified) disagrees with `variant` in its `types.ts` (L159, verified). Lina added Button-Icon at R2.
+- NavSegmentedChoice also carries the cross-root `aria-controls` defect.
+- **17.0.0 is planned by no record.** `.kiro/issues/2026-10-16-blend-deprecation-next-major-doc-correction.md:17` reads "17.0.0, which no record plans" (verified). The sequencing rule therefore rests on an uncharted release. That is a process slot in § 6.
+- **Routing**: Lina will write a new record after R2, `.kiro/issues/2026-10-20-web-element-api-and-form-participation.md`. It covers the checkbox violation, the text-input contract gap, the `innerHTML` rebuild, `delegatesFocus`, the event and property names on all six components, and SegmentedChoice's `aria-controls`. Its trigger is the 17.0.0 charter. It is not the drift record, which holds the True Native ballot's routed drawn-control items, a different class (Lina).
+
+**What is already decided**: every option sits on DOM plus ARIA (True Native floor parts 1–2).
 
 **Recommendation**:
-- **Rule now**: the criterion without the SSR prong, the not-a-front-door-reason clause, and the sequencing rule.
-- **Carry to after inbound § 10 Q2** (is SSR a hard requirement?): the choice between c-eager and c-gated, and the authored list. Q2 decides F-6 more than any criterion does (Sparky). If SSR is a hard requirement, every generated wrapper is client-only, and the hybrid collapses toward (b) or an unproven Declarative Shadow DOM path.
-- My lean is c-gated, for the same reason as Sparky's, with the same bias warning.
+- **Rule now**: the converged rule (Sparky's text plus Lina's catalog and selection clauses), the two-way check, the deferral record, the not-a-front-door-reason clause, and the sequencing rule.
+- **c-gated**, as both seats pick, **conditional on Q2 answering "SSR not required"**.
+- If Q2 answers "required": the DSD spike, then Peter's cost call on (b).
 
 **Surviving counter**:
-- The authored subset holds the components with the most contracts.
-- One contract verified by two harnesses (shadow-DOM element tests and light-DOM RTL) can pass in one and fail in the other (Lina).
-- Even under c-gated, the cross-root ID-reference limit is a real Shadow-DOM ceiling (Sparky).
+- Under c-gated, React forms wait on a release nobody has chartered.
+- The four text inputs may be promoted anyway.
+- One contract verified by two harnesses (shadow-DOM element tests and light-DOM RTL) can pass in one and fail in the other (Lina R1).
+- The cross-root ID-reference ceiling stays open (Sparky).
 
-**Class option**: the deciding rule, with authored-ness derived from files. It decides once, so the choice is never re-argued per component.
+**Class option**: the contracts-derived rule. Contracts decide; files fulfil; the two-way check catches drift; the list grows only by contract change.
 
-### F-7 (new; was D4). What the native platforms may claim, and what lifts them
+### F-7 (from D4). What the native platforms may claim, and what lifts them
 
 **Question**: what tier do iOS and Android sit at today, and what exact, checkable condition moves them up?
 
-*R1 fold* (Stacy (b); Kenya (c); Data (c)): R0 framed D4 as a demotion. **It is an upgrade.**
-- The shipped Integration Guide already says native is "not supported" and "reference source, not a build input" (L23, L164, L178; verified). In a production / experimental / community list, `experimental` reads as "usable at your own risk", which is more.
-- The consumer guard asserts no tier and no native build, so D4 breaks none of Spec 123's records (`tests/consumer-integration.test.ts` L2122; verified).
-- What D4 does demote: the 2 of 34 components whose computed readiness shows `production-ready` on iOS and Android. Data verified that the Android claims have **never been executed**: nothing in `.github/workflows` runs gradle or kotlinc (verified), and no JDK, Android SDK, gradle or kotlinc is reachable on this machine (verified). The release that ships the generator must disclose the drop (Stacy).
+*R1 fold* (Stacy; Kenya; Data): `experimental` is an **upgrade** on the published guide ("not supported", "reference source, not a build input": Integration Guide L23, L164, L178; verified). What D4 demotes is the 2 of 34 components showing `production-ready` on iOS and Android. The Android claims were never executed (verified). The release that ships the generator must disclose the drop.
 
 | Option | Cost |
 |---|---|
 | (i) **A tier matching the guide**: "source shipped, not a build input". | A fourth tier name. |
-| (ii) **Define `experimental` to include "not a build input".** | It stretches one word over two states, on top of condition 2 of F-1. |
-| (iii) **`experimental` plus an evidence tier**, e.g. `source-only` or `unbuilt`, using F-1 (c)'s evidence-tier field (Kenya (c)). | No new tier, but a value in a field. It may read worse to native-first architects (Kenya's own residual). |
+| (ii) **Define `experimental` to include "not a build input".** | One word over two states. |
+| (iii) **`experimental` plus an evidence tier** (`source-only` / `unbuilt`), using F-1 (c)'s field (Kenya). | A value in a field; it may read worse to native-first architects. |
 
-**A checkable exit.** R0's "until the harness exists" is met by a harness that is built but not required. The exit needs all of these:
-- the harness is a **registered required check** and **green on that platform's tree**, generated tokens included (Stacy; Kenya);
+**The checkable exit**:
+- the harness is a **registered required check, green** on that platform's tree, generated tokens included;
 - **compile evidence per component**;
-- **a proof consumer** under F-5's class option. As drafted, D4 (lifted by the harness) and F-5 (lifted by a consumer) disagreed, and this reconciles them;
-- for Android, **a declared minimum version** (Data (c); inbound § 10 Q8; Core Goals L27–28). "Platform-correct" is undefined without one.
-- **Assistive-tech evidence is tracked per component, apart from the tier** (Kenya (c)3).
+- **a proof consumer** under F-5;
+- **a declared minimum version**;
+- assistive-tech evidence tracked per component, apart from the tier.
 
-**Data's minimum Android harness**: a Gradle compile of a host module holding the generated tokens and the component `.kt` files, plus Robolectric semantics tests on the JVM. Emulator and TalkBack runs are not in the minimum; they are `assistive-tech` evidence.
+**R2: the exit cannot be met today on either native platform** (both seats; verified where marked).
+- **iOS** (Kenya):
+  - No workflow runs swift or xcodebuild, and there is no `Package.swift` or `.xcodeproj` (verified).
+  - Green is impossible today: 9 files read `@Environment(.dpTheme)` without the key-path backslash (verified), and `ContainerCardBase.ios.swift` opens an unterminated comment at :816 (verified the opener; Kenya ran `swiftc -parse`).
+  - There are 41 Swift files (verified), with no compile evidence.
+  - The minimum version is **already met**: Core Goals L28, iOS 17.0+.
+  - **Smallest instrument**: a host `Package.swift` (`.iOS(.v17)`) compiling the generated tokens plus the 41 files with one `xcodebuild` command, **red on its first run by design**. The host must generate its tokens the way a consumer does, or the theme-reading files fail for an unrelated reason.
+- **Android** (Data):
+  - There are zero Gradle files and no java or gradle step in any workflow (verified), and no JDK locally (verified).
+  - There are 41 `.kt` files (verified) and 2 `createComposeRule` test files.
+  - **Smallest instrument**: a host Gradle module plus `./gradlew :host:compileDebugKotlin`, with Robolectric semantics tests second.
+  - **The exit requires a CI-side toolchain.** Data believes ubuntu runners ship a JDK and the Android SDK; this is unverified.
+- **Owner gap** (Data cross-read 2). 129's first task **evaluates** the harness charter; **nothing commits anyone to building it**. 129's own outline already asks "who builds the platform build-verification harness (Kenya, Data)?" (`.kiro/specs/129-consumer-generation-completeness/design-outline.md` L47, verified). The harness charter names Kenya and Data as **designers** and is "CHARTERED — not scheduled" (verified). Without a named builder, F-7's exit has no owner. This is a process slot in § 6.
+- **Registering the required check is Peter's, not mine.** *[THURGOOD R2] correction to the R2 brief*: my standing CI-regime scope (ballot 2026-09-27-ci-regime-standing-scope § 2) **never** adds a required context or changes `EXPECTED_CONTEXTS`. A new required check goes through a ballot or issue-row grant, with branch protection in Peter's hands.
+- **Both seats need a tasks-row grant** to author host modules.
 
 **Seats' positions**:
-- **Kenya**: "right call; if anything, generous". She picks (iii).
-- **Data**: "right call, and more honest than the draft says".
-- **Stacy**: make it a fork, with options (i)–(iii).
+- **Kenya**: (iii).
+- **Data** and **Stacy**: make it a fork. Data adds that the exit needs the toolchain on the CI side.
 
-**Recommendation**: **(iii), with the exit list above.** It uses a field F-1 (c) already needs, so the law and the published guide say the same thing.
+**Recommendation**: **(iii), with the exit list above.** And state plainly in the record: **no native platform can leave `experimental` until a builder is named and a CI-hosted harness is registered.**
 
-**Surviving counter, and a question that decides it**: inbound § 10 Q5 asks whether device-level assistive-tech testing is in scope for anyone. If the answer is no, a production bar that includes assistive-tech evidence is **unreachable for every platform, web included**. The reachable alternative bar (compiles, unit tests, named consumer) claims less (Kenya). Q5 is in § 6.
+**Surviving counter**: inbound § 10 Q5. If device-level assistive-tech testing is in scope for no one, a production bar that includes it is unreachable for every platform, web included (Kenya R1).
 
-**Class option**: the evidence tier, which applies to every platform.
+**Class option**: the evidence tier, for every platform.
 
-### F-8 (new). React Native tiers that move faster than Compose
+### F-8. React Native tiers that move faster than their native siblings
 
-**Question**: may `rn-android` sit above `android`, given that its `unit` evidence (RNTL in Jest) runs in today's CI while Kotlin tests run nowhere?
+**Question**: may an `rn-*` column sit above its native sibling's tier?
 
 | Option | Cost |
 |---|---|
-| (A) **Accept the asymmetry, labeled.** Tiers move independently, and the evidence kind is shown. | Under F-1 (c) the registry may show RN greener than Compose purely because its instruments are cheaper. Data: "'RN hides the Compose gap' turned into a mechanism". |
-| (B) **Cap `rn-android`'s tier at `android`'s.** | A coherent Android story, but React Native pays for Compose's debt, against the adoption premise. |
+| (A) **Accept the asymmetry, labeled.** Tiers move independently, and the evidence kind is shown. | The registry may show RN greener than Compose or SwiftUI because its instruments are cheaper. |
+| (B) **Cap each `rn-*` tier at its native sibling's.** | React Native pays for the native verticals' debt, against the adoption premise. |
 
-**Seats' positions**: **Data** raised the fork and did not pick. Kenya's D2 read (separate columns, each at its own tier) is consistent with (A).
+**Seats' positions (R2)**:
+- **Data**: (A), with F-1's rule that no `rn-*` column goes above `experimental` on `unit` evidence alone. "Labels make that visible; they don't remove it." What caps both columns is the toolchain, not just the rule: `rn-android` evidence beyond `unit` needs the same Android SDK.
+- **Kenya**: (A), but only on evidence of **the same kind** (a passing simulator build plus VoiceOver evidence on the same Xcode host), never on Jest `unit` evidence alone.
 
-**Recommendation**: **(A), with F-1's rule that no `rn-*` column is claimed above `experimental` on `unit` evidence alone.** That rule removes the cheapest path, and the labels show the rest.
+**Recommendation**: **(A), with both conditions**: the `unit`-evidence rule (Data) and the same-kind-of-evidence rule for any `rn-*` column claimed above its sibling (Kenya).
 
-**Surviving counter**: the instrument-cost gap is structural: a JDK, the Android SDK, CI minutes and gate governance, against nothing new for Jest. Labeling makes it visible, not gone (Data).
+**Surviving counter**:
+- Data: `rn-android experimental/unit` next to `android experimental/unbuilt` still reads as RN being ahead.
+- Kenya, unabsorbed: on iOS a higher `rn-ios` would be a *true* signal that the SwiftUI source is broken. But it would effectively tell adopters "use RN for iOS" on the True Native thesis's own showcase vertical.
 
-**Class option**: none beyond F-1's evidence rule.
+**Class option**: the evidence-kind rules above, which apply to every binding/native pair.
 
 ---
 
@@ -338,7 +431,7 @@ No text is proposed. At the text round each site gets before→after text, and e
 
 | # | Site | Driven by | Owner | Merge rule |
 |---|---|---|---|---|
-| 1 | **The `#core-project-context` unit, all four files** (Stacy (c)6): `.kiro/steering/core-goals.md` (L18 identity line, L21 platform list, L27–28 minimum versions, plus the admission rule, tier names and proof statement); `canonical/operative-sets/core-goals.yaml`; `canonical/profiles/consumer/always-set/core-goals.dispositions.yaml`; `canonical/profiles/consumer/confirmations/core-goals.md`. **Re-sign** (C1 signer Stacy, `canonical/profiles/consumer/signatures/core-goals.md`). | § 1, F-1, F-5, F-7 | Identity doc with no domain owner. Thurgood drafts; Stacy signs and confirms. | Peter |
+| 1 | **The `#core-project-context` unit, all four files** (Stacy (c)6): `.kiro/steering/core-goals.md` (L18 identity line, L21 platform list, L27–28 minimum versions, and L29 only if Q8 sets a value; plus the admission rule, tier names and proof statement); `canonical/operative-sets/core-goals.yaml`; `canonical/profiles/consumer/always-set/core-goals.dispositions.yaml`; `canonical/profiles/consumer/confirmations/core-goals.md`. **Re-sign** (C1 signer Stacy, `canonical/profiles/consumer/signatures/core-goals.md`). | § 1, F-1, F-4, F-5, F-7, Q8 | Identity doc with no domain owner. Thurgood drafts; Stacy signs and confirms. | Peter |
 | 1a | Its consumer rendering: `canonical/profiles/consumer/always-set/core-goals.overlay.md` L7 and L13–16, **and L35 under F-2 (b), (c) or (c′)** (Ada's correction). | 1, F-2, F-4 | Thurgood; signer Stacy | Peter |
 | 2 | `.kiro/specs/070-agent-architecture/alignment-record.md`: § True Native Commitment (L27–28), **§ Platform Priority (L20–21)**, which narrows "iOS first" to the SwiftUI vertical, and **§ Context (L11)**, "a civic engagement iOS app", which contradicts "three native apps" (Kenya (d)). | F-5 | **No named product owner.** Peter decides; Thurgood (070's author) drafts; Leonardo consulted. | Peter |
 | 3 | `.kiro/specs/034-component-architecture-system/design-outline.md` L56. Lina's approach: the historical line stays and a dated 128 amendment is appended. | D1, F-6 | Lina | Peter |
@@ -373,13 +466,13 @@ No text is proposed. At the text round each site gets before→after text, and e
 
 The priorities record fixes the order (`.kiro/issues/2026-10-18-spec-priorities-by-outcome.md` § 3). R1 adds the seats' corrections.
 
-1. **Spec 129 comes first.** Its first task evaluates the platform build-verification harness. *R1 corrections, Ada (d)*:
+1. **Spec 129 comes first.** Its first task evaluates the platform build-verification harness. **R2: evaluating it is not building it.** Nothing commits anyone to build the harness (129 outline L47 asks the question), so F-7's exit has no owner until the § 6 process slot is ruled. The exit needs a CI-hosted toolchain on both native platforms (F-7). *R1 corrections, Ada (d)*:
    - **129 item (i) covers iOS and Android only** (verified: `.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` L25). React web consumes `data-theme` CSS, and web custom themes emit nowhere today (Integration Guide L158; verified). **Recommendation to 129's owners: widen (i) to web**; `generateWebThemeBlock` already exists.
    - **The theme source must be the adopter's registered themes** (`ThemeRegistry`). That means 129's item (vi), the Model B leak, has to be decided that way, with (i) built on it.
    - **R0's "rather than building either twice" overstates it.** Theme emission is built once in 129 and *moved* once in 128. That is cheap, but it is a cost.
    - **The transitive limitation carries over**: shadows that reference overridden colour primitives get base values on native, and `rn-ios` `shadowColor` will inherit this. 128 either fixes it or accepts it explicitly.
    - **129 item (v)** should use one exported `PLATFORM_KEYS` constant as D3's seed, so it does not ship a closed public platform list (Ada (b); recommendation to 129).
-2. **Spec 128.** This sitting runs now, and implementation comes after 129. *R1 additions*:
+2. **Spec 128.** This sitting runs now, and implementation comes after 129. **R2: step 6's sequencing rule rests on 17.0.0, and no record plans 17.0.0** (verified). Lina's new record `.kiro/issues/2026-10-20-web-element-api-and-form-participation.md` also triggers on its charter. *R1 additions*:
    - **Step 6 (generated wrappers) comes after the 17.0.0 element cleanup** (Lina (g); Sparky (a)). The cleanup is Lina's (inbound § 11) and owed to web consumers regardless.
    - **The parser-gaps issue** (`.kiro/issues/2026-06-24-mathematical-relationship-parser-validation-gaps.md`) **is a prerequisite of F-2 (c′) and of step 4.** Its trigger should be tied to 128 step 4 (Ada (a)).
    - **Android harness evaluation has its own trigger** inside 129's first task. It is not reattached to Working Class's iOS-first sequencing (Data (a), (e)). Data (c) answered charter interim (c): no Android toolchain is reachable locally. The realistic host is CI, which is gate territory.
@@ -406,7 +499,7 @@ The priorities record fixes the order (`.kiro/issues/2026-10-18-spec-priorities-
 - **One web spec, two state models** (Leonardo (e)). Controlled inputs, SSR and Suspense add states the element binding lacks. Cross-platform review needs a React column even though React is not a platform.
 
 **Mine, after fold-back**:
-- **Six forks became eight.** *Folded*: any fork may be carried to the outline round (§ 6). But **site 1 does not apply while F-1, F-5 or F-7 is unruled**, because its tier and proof text depends on them (Stacy (e)7). *Residual*: design-grade rulings made now rest on less evidence than the round would bring. F-6 is now explicitly split into what to rule now and what waits for Q2.
+- **Six forks became eight, plus F-5w and F-5f.** *Folded*: any fork may be carried to the outline round (§ 6). But **site 1 does not apply while F-1, F-5 or F-7 is unruled**, because its tier and proof text depends on them (Stacy (e)7). *Residual*: design-grade rulings made now rest on less evidence than the round would bring. F-6 is now explicitly split into what to rule now and what waits for Q2.
 - **The React history is lost** (inbound § 2). *Folded*: question slot Q-0 (§ 6). *Residual*: 128 may repeat a failure whose cause is lost.
 - **The same move, repeatedly.** R0 flagged that I recommended "record, don't block" three times. *R1*: Stacy (d) counts fewer axes than I did. Lina removed one (`react:` is derived from files). Ada (f) showed that F-2's field repairs an existing unread field rather than adding one. **What remains**: tier and evidence tier per platform, `rendering:` and evidence per component per platform, conformance per adopter token, and a proof consumer per platform. Stacy (d) sets two conditions before she can carry them: a validator per axis, and a named reader and falsifier per axis. *Residual*: this project already ships departure fields nobody reads (Ada (f)). Each new field is only better than none if it is indexed where agents read it and its missing state blocks.
 
@@ -414,30 +507,41 @@ The priorities record fixes the order (`.kiro/issues/2026-10-18-spec-priorities-
 
 ## 6. Rulings (Peter) — OPEN
 
-*When Peter rules, the session that receives the ruling records it here first and commits that record before anything is applied (README § "The Ratification Protocol"). **Site 1 waits until F-1, F-5 and F-7 are all ruled** (Stacy (e)7).*
+*When Peter rules, the session that receives the ruling records it here first and commits that record before anything is applied (README § "The Ratification Protocol"). **Site 1 waits until F-1, F-5 and F-7 are all ruled** (Stacy R1 (e)7).*
 
 - **Ratify / modify / reject**: — *(open)*
-- **D1** (React web is a binding, with `kind: platform | binding`, `over: web`): — *(open)*
-- **D2** (two RN keys, each with its own column and tier; the shared-file evidence rule): — *(open)*
-- **D3** (platform registry; design open; adopter migration owed): — *(open)*
-- **D5** (contract-version pin and staleness rule): — *(open)*
-- **F-1, tier-scoped gates** (recommended: (c) with conditions 1–4; it does not relieve velocity): — *(open; or carry)*
-- **F-2, adopter tokens** (recommended: (c′), with floors blocking): — *(open; or carry)*
-- **F-3, front door** (recommended: (c), platform-scoped; set contents carried): — *(open; or carry)*
-- **F-4, code or identity** (Leonardo's question; no recommendation): — *(open; or carry)*
-- **F-5, proof case** (recommended: (c) with the defined class option, iOS-first narrowed to SwiftUI) — *(open; or carry)*
-  - **F-5w, web and the class rule** (recommended: a dated grandfather clause): — *(open)*
-- **F-6, React web** (rule the criterion and sequencing now; c-eager vs c-gated after Q2): — *(open; or carry)*
-- **F-7, native tier and exit** (recommended: (iii) with the exit list): — *(open; or carry)*
-- **F-8, RN vs Compose asymmetry** (recommended: (A) with the `unit`-evidence rule): — *(open; or carry)*
-- **Inbound § 10 questions that decide forks**:
-  - Q1, the first consumer (F-4, F-5): — *(open)*
-  - Q2, SSR a hard requirement? (F-6): — *(open)*
-  - Q5, assistive-tech testing in scope? (F-7): — *(open)*
-  - Q8, Android minimum version (F-7): — *(open)*
-- **Site 4 owner** (`technology-stack.md`; Lina offered): — *(open)*
-- **One ballot or two (§ 3)**: — *(open)*
-- **Core Goals edited once or twice (§ 3)** (recommended: twice, unless trigger 2 fires first): — *(open)*
+
+**Seat recommendations, each needing its own ruling**:
+- **D1**: React web is a binding, typed `kind: platform | binding`, `over: web`. — *(open)*
+- **D2**: two React Native keys, each with its own column and tier, plus the shared-file evidence rule. — *(open)*
+- **D3**: the platform registry; design open; adopter migration owed. — *(open)*
+- **D5**: the contract-version pin and staleness rule. — *(open)*
+
+**Forks**:
+- **F-1, tier-scoped gates**. Recommended: (c) with conditions 1–4; it does not relieve velocity. — *(open; or carry)*
+- **F-2, adopter tokens**. Recommended: (c′), with the floors blocking. — *(open; or carry)*
+- **F-3, front door**. Recommended: (c), platform-scoped; the set's contents are carried. — *(open; or carry)*
+- **F-4, code or identity**. No recommendation on intent; (c), the registry-generated site 1a, is recommended as the class option. — *(open; or carry)*
+- **F-5, proof case**. Recommended: (c) with the converged class option, candidate 1 as a recorded target (riding site 2), and SwiftUI as the first native proof. — *(open; or carry)*
+  - **F-5w, web grandfather clause**. Leonardo's text as quoted. — *(open)*
+  - **F-5w trigger (b)**: (b1) the next major, recommended, or (b2) a minimum window. — *(open)*
+  - **F-5f, may a shipped parity fixture count as a consumer?** Recommended: no. — *(open)*
+- **F-6, React web**. Recommended: the converged rule now; c-gated if Q2 says SSR is not required; otherwise the DSD spike, then Peter's cost call on (b). — *(open; or carry)*
+- **F-7, native tier and exit**. Recommended: (iii) with the exit list. — *(open; or carry)*
+- **F-8, binding vs native asymmetry**. Recommended: (A) with the `unit` and same-kind rules. — *(open; or carry)*
+
+**Inbound § 10 questions that decide forks**:
+- **Q1**, the first consumer (F-4, F-5): — *(open)*
+- **Q2**, is SSR a hard requirement? (F-6; this decides before c-eager vs c-gated): — *(open)*
+- **Q5**, is assistive-tech testing in scope? (F-7's bar): — *(open)*
+- **Q8**, the Android minimum, **ruled separately**. F-7's exit requires only that a minimum is *declared*. If a value is wanted now, Data proposes **minSdk 24**, the build-config default (`ConfigHelpers.ts:583`, verified). The value edits Core Goals L29, inside the signed unit (site 1). — *(open)*
+
+**Process slots**:
+- **Who builds the harness?** 129's first task evaluates it, and nothing commits anyone to build it (129 outline L47 asks the same question). Kenya and Data are its designers and need tasks-row grants to author host modules. Registering it as a required check is Peter's. — *(open)*
+- **Who charters 17.0.0, and when?** F-6's sequencing rule and Lina's new record both trigger on it, and no record plans it. — *(open)*
+- **Site 4 owner** (`technology-stack.md`; Lina offered). — *(open)*
+- **One ballot or two** (§ 3). — *(open)*
+- **Core Goals edited once or twice** (§ 3). Recommended: twice, unless trigger 2 fires first. — *(open)*
 - **Q-0 (optional)**: does Peter recall why v1 moved off React? — *(open)*
 
 ---
@@ -759,6 +863,218 @@ The priorities record fixes the order (`.kiro/issues/2026-10-18-spec-priorities-
 > ## (e) Surviving counter from the Android seat
 > D4, F-5 (c), iOS-first and D2 compound against Compose: Android drops to experimental; its proof consumer is second in line; its harness rides a 129 task; meanwhile `rn-android` arrives as a second Android column whose `unit` evidence (RNTL in Jest) runs in today's CI while Kotlin tests run nowhere. Under F-1 (c) the registry could show rn-android greener than android purely because its instruments are cheaper — "RN hides the Compose gap" turned into a mechanism. Folded in: the ballot/outline should state (i) no rn-* column may be claimed above `experimental` on `unit` evidence alone, (ii) Android harness evaluation is its own trigger, not tied to Working Class sequencing. Residual: the instrument-cost gap is structural (JDK + SDK + CI minutes + gate governance vs nothing new for Jest); labeling makes it visible, not gone. Fork for Peter: (A) accept the asymmetry, labeled — tiers move independently with evidence kind shown; (B) cap rn-android's tier at android's — coherent Android story, but RN pays for Compose's debt, against the adoption premise. Unverified: RN predictive-back status; RN nonlinear font scaling; whether hosted GitHub runners ship the Android SDK and JDK.
 
+#### [THURGOOD R2] — 2026-10-20 — fold of the five R2 cross-reads
+
+- **F-6 converged.** Lina and Sparky sign one contracts-derived rule (§ 2 F-6). Sparky concedes the `react:` field. Both add the two-way check and the deferral record. Both pick c-gated, with Q2 deciding first.
+  - Lina's decisive fact is verified: Input-Checkbox-Base violates its required `validation_form_integration` contract on web.
+  - **The set is 8 firm plus Radio-Set borderline**, not 9. Sparky's R2 list removes Radio-Set from his R1 eight and adds SegmentedChoice.
+  - Six generated components carry element defects (Lina added Button-Icon; verified). 17.0.0 has no charter (verified), which is now a process slot.
+  - Lina writes `.kiro/issues/2026-10-20-web-element-api-and-form-participation.md` after this commit, on the same branch.
+- **F-5 converged on the fixture.** Leonardo, Kenya and Data: a parity fixture is `harness`, never a consumer.
+  - Leonardo's self-correction is verified: 070 L28 names "TypeScript/Web Components", so candidate 1 needs a 070 amendment, which rides site 2.
+  - Kenya: "SwiftUI is the first native proof", and she does not contest candidate 1.
+  - New: F-5w carries Leonardo's sign-ready clause and its trigger fork. F-5f is a new fork.
+- **F-4 sharpened.** Leonardo's question now leads, and his (c), the registry-generated site 1a, is the class option. My residual: generated text inside a signed rendering needs the signing design to treat it as data.
+- **F-7.** The exit cannot be met today on either native platform (verified where marked).
+  - The owner gap is now a process slot: nothing commits anyone to *build* the harness.
+  - *Correction to the brief*: registering a required check is outside my standing CI scope. It is Peter's, through a ballot or issue-row grant.
+- **F-8.** Data and Kenya pick (A). Kenya's same-kind-of-evidence condition is folded in. Her showcase-vertical residual is kept unabsorbed.
+- **Q8 is split out.** A minimum must be declared; the value is ruled separately, and minSdk 24 is on offer (verified at `ConfigHelpers.ts:583`). The value edits Core Goals L29, inside the signed unit.
+- **Caller-out check.** Leonardo's F-5w clause and Kenya's order-of-proof sentence are **seat-authored text offered for Peter to rule on**, quoted as theirs. They are positions, not criterion language a verifier handed me to carry. The text round words the Core Goals and 070 sites itself.
+
+#### [LINA R2] — 2026-10-20 — cross-read, read-only, on R1 (`7c9d1903a`); VERBATIM (as saved by the orchestrator)
+
+> # Lina: F-6 cross-read (read-only, nothing edited) @ 7c9d1903a — VERBATIM 2026-10-20
+>
+> **1. Where the two rules disagree** [V] = verified today, [R] = reasoning
+>
+> First, a correction to my own R1 rule: it is not contract-derived. Its first prong (`validation_form_integration`) reads contract data. Its second prong ("holds a controlled value") is my judgment. The contract prong alone picks 3 components: Checkbox-Base, Radio-Base, and Checkbox-Legal, which inherits the contract (`Input-Checkbox-Legal/contracts.yaml:4`) [V]. Reading the judgment prong broadly, the components classified differently are:
+> - **Input-Text-Base/-Email/-Password/-PhoneNumber**: Sparky authors them. My contract prong misses them because Input-Text-Base carries no `validation_form_integration` (its contracts are listed at `contracts.yaml:6–237`) [V]. That is a contract gap: no platform promises that a text field submits with a form.
+> - **Input-Radio-Set**: Sparky authors it. I reach it only by judgment. It has `validation_group_required` (`:45`) [V], which is constraint validation, so Sparky's (F)(i) applies.
+> - **Button-VerticalList-Set** (`state_controlled`, `:25`), **Chip-Filter** (`interaction_toggle_selection`, `:7`) and **Nav-TabBar-Base** (`state_selected`, `:164`) [V]: I would author them; Sparky would not. His exclusion of selection state is the better line [R].
+> - **Nav-SegmentedChoice-Base**: Sparky classed it generated, but **his own (R) catches it**. It sets `aria-controls="${id}-panel-${value}"` inside an open shadow root (`NavSegmentedChoiceBase.web.ts:81`, `:264`). Those panels belong to the adopter, so the ID reference is broken today [V]. The contract is `accessibility_aria_controls`, `required: true` (`contracts.yaml:352–366`) [V].
+>
+> **2. One rule we could both sign** (proposal; Sparky has not seen it)
+>
+> > A React web component is **authored** iff its *assembled* contracts (own + inherited) include (F) `validation_form_integration` — whose catalog definition adopts Sparky's (F)(i): submits/resets with an ancestor form or takes part in constraint validation — or (R) a contract that ID-references adopter-supplied DOM (`accessibility_aria_controls` today; a catalog concept for external label/description reference, if needed, by ballot). Selection state (`state_controlled`, `state_selected`, `interaction_toggle_selection`) never qualifies. SSR is not a criterion. Sparky's (F)(ii), controlled text with caret/IME, is binding-specific rather than a cross-platform behaviour, so it promotes only on a failing test. Promotion by any route adds the contract, so the list grows by contract change, not argument. A selected component with no authored file is a finding.
+>
+> Contracts stay the source of truth, and (F)/(R) become the predicate over them. Its cost is a contract change: add `validation_form_integration` to Input-Text-Base (its 3 variants inherit it), and decide whether Radio-Set carries it. The result is Sparky's 8 plus Nav-SegmentedChoice-Base, so 9.
+>
+> **3. c-eager vs c-gated**
+>
+> Pick: **c-gated**. The decisive fact [V]: Input-Checkbox-Base already **violates its own required contract** on web. `validation_form_integration` (`contracts.yaml:143–161`, `required: true`) promises form submission, but the native input sits inside the shadow root (`InputCheckboxBase.web.ts:103`, `:457`, `:474`) and the element is not form-associated. The element fix is owed whatever F-6 decides, so do it once.
+>
+> What survives: under c-gated the rule only names promotion candidates. Controlled text through a shadow `<input>` and cross-root ID references are intrinsic limits, so the 4 text inputs may well be promoted after 17.0.0 anyway. React forms would then wait a major and end up at c-eager. A separate gap: **17.0.0 is planned by no record.** `2026-10-16-blend-deprecation-next-major-doc-correction.md:17` describes it as "17.0.0, which no record plans" [V]. The sequencing rule therefore rests on a release nobody has chartered. Q2 still comes before either option.
+>
+> The five defects, confirmed with one correction [V]:
+> - ButtonVerticalListItem: `focus` event at `:942`.
+> - NavTabBar: `selection-change` at `:293`.
+> - NavSegmentedChoice: `:345`, `:382`.
+> - ChipFilter: `selectionchange` at `:502`.
+> - ButtonCTA: `buttonVariant` at `:323`.
+> - **Add Button-Icon**, which has a `buttonVariant` getter (`ButtonIcon.web.ts:363`, `:434`) while its `types.ts` uses `variant`. That makes **6 generated components**, plus NavSegmentedChoice's cross-root `aria-controls`.
+>
+> **4. Sparky's incidentals: both verified**
+> - **Forms**: only `InputRadioBase.web.ts:83` (`formAssociated`) and `:121` (`attachInternals`) take part [V]. Checkbox reset works through a hand-wired listener on the parent form (`InputCheckboxBase.web.ts:86–87`, `:129`), and tests cover it (`InputCheckboxBase.test.ts:482–512`) [V]. No test covers `FormData` submission (grep found none) [V]. Text inputs fail to submit too, but no contract claims they do (a gap, not a violation).
+> - **Re-render**: when `error-message` or `is-success` changes, `render()` runs (`InputTextBase.web.ts:200–217`). It clears the shadow root with `innerHTML = ''` (`:329`) and rebuilds it (`:288`); only `value` returns early (`:192–199`) [V]. That this drops focus and caret mid-typing is [R] and needs a real browser to confirm.
+>
+> **Where they go**: a **new record**, not the drift record. `2026-10-18-drawn-control-drift-…md` holds the True Native ballot's routed drawn-control items (I1, A1–A7, W1–W2), which close item by item with platform verifiers (`:182–185`) [V]. This is a different class: web element-API defects, one contract violation and one contract gap. The proposed `.kiro/issues/2026-10-20-web-element-api-and-form-participation.md` would cover the checkbox violation, the text-input contract gap, the `innerHTML` rebuild, `delegatesFocus` (only on ButtonVerticalListItem/-Set and InputRadioSet [V]), the event and property names on all 6 components, and SegmentedChoice's `aria-controls`. Its trigger would be the 17.0.0 charter that does not yet exist. I can write it once briefed; this read had no write grant.
+>
+> **Consulted**: none. This was a cross-read; Sparky has not seen the rule in item 2.
+
+#### [SPARKY R2] — 2026-10-20 — cross-read, read-only, on R1 (`7c9d1903a`); VERBATIM (as saved by the orchestrator)
+
+> # Sparky cross-read on Spec 128 F-6 (read-only; ballot @ 7c9d1903a) — VERBATIM 2026-10-20
+>
+> **1. Where the two rules disagree**
+> I read Lina's "holds a controlled value" as the `state_controlled` contract. That contract is only in Button-VerticalList-Set/contracts.yaml:25 [verified]. Inheritance merges parent contracts into children (InheritanceResolver.ts:55-66) [verified].
+> - **Input-Text-Base, -Email, -Password, -PhoneNumber.** My rule makes them authored; Lina's misses them. My rule is right on behaviour: they are the strongest cases for form submission and caret/IME handling. The gap is in the contract: Input-Text-Base has no `validation_form_integration` (contracts.yaml:6-237) [verified].
+> - **Input-Radio-Set.** My rule makes it authored; Lina's misses it. Lina is closer to right. The Set's own contracts are group-level (`validation_group_required` :45, `accessibility_error_announcement` :63) [verified], and form submission belongs to the child radios. My R1 list over-counted, so it moves to borderline [reasoning].
+> - **Button-VerticalList-Set.** Lina's rule makes it authored; mine keeps it generated. Mine is right: in React every selection component is "controlled". Passing a selection through a prop has no caret or IME at stake [reasoning].
+> - **Nav-SegmentedChoice-Base.** My R1 got this one wrong. It emits `aria-controls="[id]-panel-[value]"` (contracts.yaml:352-357) [verified], and those panels sit in the adopter's DOM. An ID reference can't cross the shadow root, so by my own cross-root rule (R) it should be authored. Reading the contracts caught what my hand list missed.
+> - **Agree:** Checkbox-Base, Checkbox-Legal (gets the form contract through inheritance) and Radio-Base.
+>
+> **2. One rule: yes, I can sign it**
+> Text I would sign:
+> > "A component's React web binding is authored if and only if its resolved contracts (own plus inherited, minus excludes) include `validation_form_integration` or a cross-root reference contract. Otherwise it is generated. A component joins the authored set only by amending its contracts, backed by a failing test. There is no hand-kept list."
+>
+> What that takes:
+> - (a) Add `validation_form_integration` to Input-Text-Base. The three children inherit it.
+> - (b) Add a catalog concept for an ID reference to adopter-supplied DOM. Today `accessibility_aria_controls` is the only near-match [verified grep]. Lina and the catalog governance decide this.
+>
+> The result is 8 authored: the four text inputs, the two checkboxes, Radio-Base and SegmentedChoice. Radio-Set is in only if its group label can come from the adopter's DOM [UNVERIFIED].
+> My (F)(ii) prong, controlled text on every keystroke, adds nothing once (a) lands. I'd drop it.
+>
+> **Finding for Lina** [verified]: Input-Checkbox-Base declares `validation_form_integration` (contracts.yaml:143), but only InputRadioBase.web.ts:83 is form-associated. The contract claims behaviour the web code doesn't have.
+>
+> **3. No `react:` field: it holds, with two conditions**
+> My rule is decided by a property, but once the property lives in the contracts, the requirement comes from contracts and fulfilment comes from files. I concede the field. Relying on file presence alone breaks three things:
+> - **A stray `.tsx` flips a component to authored without anyone deciding it.** A copy made for front-door (F-3) reasons would do this. So the check must run both ways: a required file that is missing is a finding, and an authored file with no matching contract is also a finding.
+> - **A deliberate deferral needs a reason record.** Examples: before 17.0.0, or blocked on SSR. The precedent already exists: the schema's readiness `status: not-applicable` plus `reason` (ComponentIndexer.ts:866-875) [verified].
+> - **The indexer has no React key.** Readiness only scans web, iOS and Android (ComponentIndexer.ts:854-858) [verified], so step 4 has to add one.
+>
+> **4. The fork for Peter**
+> - **c-eager:** hand-write the 8 form components in React from day one. React forms are solid at launch, but the hardest components are maintained twice, permanently.
+> - **c-gated:** fix the web elements in 17.0.0, then generate all 34 wrappers and hand-write a component only when a test fails. That keeps one implementation and fixes plain web users too, but React forms wait on 17.0.0, and the cross-root ID-reference ceiling stays open.
+>
+> The fact that decides it is Q2: is server-side rendering (SSR) a hard requirement? If not, I lean c-gated. Bias flag: it is also the simpler option for me.
+>
+> If Q2 says SSR is required, both c options fail for all 34. Every generated wrapper renders an empty host on the server, because SSR is a whole-package property [verified R1]. In that case:
+> 1. I'd run a time-boxed spike on Declarative Shadow DOM (`<template shadowrootmode>`) with React 19 hydration [UNVERIFIED that it works cleanly].
+> 2. If the spike fails, the honest answer is (b), hand-writing all 34, with permanent double maintenance. That cost is Peter's call; I would not pick it for him.
+>
+> **What survives my fold-back** [reasoning]: a contracts-derived rule is only as good as the contract coverage. Input-Text-Base shows the contracts can lag behind behaviour, so the rule needs an audit of form-related contracts before it can be trusted.
+
+#### [LEONARDO R2] — 2026-10-20 — cross-read, read-only, on R1 (`7c9d1903a`); VERBATIM (as saved by the orchestrator)
+
+> # Leonardo: cross-read on F-5, F-5w and F-4 (read-only; ballot @ 7c9d1903a) — VERBATIM 2026-10-20
+>
+> **What I checked myself:** the ballot at `7c9d1903a`, in particular § 2 F-4/F-5/F-7/F-8, § 6, the Kenya, Data, Stacy and Leonardo R1 reads, and Thurgood's fold. I also read `.kiro/specs/070-agent-architecture/alignment-record.md` L20–28. This repo has no `product/` directory, so Working Class has no Product MCP screens here. Everything else below is my judgment.
+>
+> **A correction to my own R1:** 070 L28 names the web stack outright as "TypeScript/Web Components". Candidate 1 therefore needs an amendment to 070, not a reading of it. It can go into edit site 2's 070 amendment, which is already planned, so it does not reopen 070 separately.
+>
+> **1. Does candidate 1 survive Kenya and Data?** Yes, but as a target, not as a current proof consumer. What has to change:
+> - It is a candidate until Working Class web has a passing build (Data). Naming it proves nothing.
+> - Kenya's narrowing actually helps it. "iOS-first" now means the SwiftUI vertical only, so the web/React vertical no longer waits behind it. One of my own objections to candidate 1 goes away.
+> - It counts for `react`. It counts for `web` only if the registry says so: under D1 the wrappers exercise the web elements, but using the elements without a framework stays unproven.
+> - Kenya's Q1 reordering holds only if the org consumer can be inspected by a claims pass. An outside repo can drive adoption order but cannot back a readiness claim.
+> - Its "real product" evidence includes assistive-tech evidence, and Q5 decides whether that evidence can be gathered at all.
+>
+> **2. Data's fixture (Working Class specs rendered by web/React and by React Native)?** One proof consumer plus a parity instrument. It is not two consumers. A React Native rendering that never ships is Kenya's `harness`, not a `consumer`. If it does ship, it becomes F-5 (b), which Data himself rejected. So it does **not** satisfy F-5's class option for React Native. It still has value as its own kind of evidence: the same spec in two runtimes. It is also cheap on the spec side, because a React Native spec takes its interaction notes from the iOS/Android notes, which Working Class's native specs already carry.
+> **Surviving counter:** no separate React Native product exists. Refusing the fixture consumer status leaves React Native experimental indefinitely, or pushes us toward building a product just to prove the system, which is worse. **Fork for Peter:** should a shipped parity fixture count as a consumer? My read is no.
+>
+> **3. The grandfather clause (F-5w):** acceptable, but only if it uses the folded definition (a passing build, not a name) and shows openly in the registry. This is the text I would sign:
+>
+> > "Web keeps the `production` tier it holds at ratification, shown with evidence tier `pre-rule` (no proof consumer). This standing ends at the earlier of: (a) a web proof consumer meeting F-5's definition, including a passing build, is recorded, and web then holds `production` on its own evidence; or (b) the next major release after ratification, at which web shows `experimental` unless (a) has happened, and that release's notes disclose the change. Web only. It cannot be renewed except by ballot. Stacy checks it at that release's RELEASE pass."
+>
+> **Surviving counter:** trigger (b) has nothing to do with consumer progress. If 17.0.0 ships soon, web drops to experimental in the same release that brings React, which hurts the front door. The alternative is a minimum time window, which goes against event-anchoring. That choice is a fork for Peter.
+>
+> **4. Is my F-4 question still the right one?** Yes, but it can be sharper. After F-7 and F-5w, a React-only adopter would be told "True Native cross-platform" while no native platform is above experimental. The sharper question: *"Should a React-only adopter's agents be told 'True Native' while nothing native is production?"* It could take three answers:
+> - **(a) Yes, as stated:** True Native is the architecture, and React is presented as one binding of it.
+> - **(b) No:** a web or React adopter gets a platform-scoped init rendering that describes only what they installed.
+> - **(c) Yes, with the tiers shown:** site 1a's text is generated from the registry ("True Native architecture; web production, React experimental, native experimental/source-only"), so it cannot over-claim. This is the class option, and it answers site 1a whatever Peter's intent on F-4. That is my judgment, not a pick on his intent.
+
+#### [KENYA R2] — 2026-10-20 — cross-read, read-only, on R1 (`7c9d1903a`); VERBATIM (as saved by the orchestrator)
+
+> # KENYA cross-read, Spec 128 identity ballot @ 7c9d1903a — VERBATIM 2026-10-20
+> Read-only: I edited nothing and committed nothing. Labels: VERIFIED (I ran or read it today), JUDGMENT, UNVERIFIED.
+>
+> **1. Does iOS-first survive candidate 1?** No, not as "first overall." It becomes "SwiftUI is the first native proof." JUDGMENT: 070's four reasons (alignment-record.md L21–25, VERIFIED) explain why SwiftUI goes ahead of the other native verticals. They do not argue against web, which is at 30/34 production-ready and is the only platform the guide supports.
+> Position I would sign: "Among the native verticals, SwiftUI's Working Class proof comes first, because Xcode is reachable at the iOS seat and the SwiftUI vertical has never run in an app. Which platform proves first overall is Peter's call; if he takes candidate 1, web goes first and I don't contest it."
+> Residual: candidate 1 still needs a 070 reading, and 070 has no product owner on record.
+>
+> **2. Data's fixture.** Yes, the SwiftUI vertical should render the same fixture. That makes it a three-way parity oracle. Applying my own split:
+> - If the Working Class iOS app renders its own specs, it is a **consumer**. It is the native proof, not a third one.
+> - If a host module renders specs borrowed from another product, it is a **harness**: no owner, not a product. The same holds for an RN app rendering Working Class specs, unless it is a real product with its own owner.
+> - So the fixture is harness evidence and must never satisfy the consumer rule.
+> - VERIFIED: the fixture doesn't exist yet. `find_screens` returns `[]`, and there is no `product/` directory.
+>
+> **3. Can F-7's exit be met for iOS today?** No.
+> - **Required check, green**: missing. VERIFIED: none of the seven workflows (`.github/workflows/`) runs swift or xcodebuild, and there is no Package.swift or .xcodeproj anywhere.
+> - **Green is impossible today**:
+>   - VERIFIED: 9 files read `@Environment(.dpTheme)` without the key-path backslash, e.g. `ProgressBarBase.ios.swift:47`, `Avatar.ios.swift:292`.
+>   - VERIFIED: `swiftc -parse` on `ContainerCardBase.ios.swift` fails with "unterminated '/*' comment" (the comment opens at :816; the error is reported at :962).
+> - **Compile evidence per component**: none for any of the 41 iOS Swift files (VERIFIED count).
+> - **Proof consumer**: none (VERIFIED, see 2).
+> - **Minimum version**: already met for iOS. `core-goals.md:28` says iOS 17.0+ (VERIFIED).
+> - **Toolchain**: Xcode 26.0.1 is on this machine (VERIFIED). Whether hosted macOS runners are available, and at what cost, is UNVERIFIED.
+>
+> Single smallest missing instrument: a host Swift package manifest (`Package.swift`, `.iOS(.v17)`) that compiles the generated tokens plus the 41 component files, with one command (`xcodebuild … -destination 'generic/platform=iOS Simulator' build`). It will be red on its first run, by design: the 10 known defects become its first findings.
+> - JUDGMENT: the root token output has no Spec-094 theme surface. The host has to generate its tokens the way a consumer does, or the theme-reading files fail for a reason unrelated to the missing backslash.
+> - I can't author this manifest under my write scope. It needs a tasks-row grant.
+>
+> **4. May `rn-ios` ever sit above SwiftUI's tier?**
+> - Pick (JUDGMENT): yes, under (A), but only on evidence of the same kind: a passing simulator build plus VoiceOver evidence on the same Xcode host. Never on Jest `unit` evidence alone.
+> - Counter (residual, Peter's fork): because both columns share one host and one VoiceOver oracle, `rn-ios` sitting higher would be a true signal that our SwiftUI source is broken, not an artifact of cheaper instruments. But the registry would then effectively tell adopters "use RN for iOS" on the True Native thesis's own showcase vertical.
+
+#### [DATA R2] — 2026-10-20 — cross-read, read-only, on R1 (`7c9d1903a`); VERBATIM (as saved by the orchestrator)
+
+> # Data's cross-read of the Spec 128 identity ballot at 7c9d1903a — VERBATIM 2026-10-20
+> Read-only: I edited and committed nothing.
+>
+> **1. The React Native render of Working Class specs is a harness fixture, not a proof consumer.** (judgment)
+> - It renders another product's screens to give us something to compare against. That is what a fixture is, by Kenya's own split.
+> - It has no product owner of its own and no product reason to persist.
+> - It could become a consumer only if a named owner adopted those screens as an RN product: its own repo, its own Product MCP screens, a passing build command, inspectable by Stacy. That is option (b), a 070 amendment, which I argued against.
+> - So record it as `harness` in the registry. It must not satisfy the F-5 class rule.
+> - Leonardo's candidate 1 (Working Class web through the React binding) is a different case. It would be a real consumer once built, and it doesn't touch RN.
+>
+> **2. F-7 exit for Android**
+>
+> What exists (verified):
+> - 41 component `.kt` files in `src/components/core/*/platforms/android/` (`git ls-files`).
+> - 2 test files, both `createComposeRule` UI tests: `Button-VerticalList-Item/.../VerticalListButtonItemTest.kt` and `Button-VerticalList-Set/.../ButtonVerticalListSetTest.kt`.
+> - A build-config default of `minSdkVersion: 24` at `ConfigHelpers.ts:583` and `AndroidFileOrganizer.ts:68`. A ≥21 check at `BuildOrchestrator.ts:616`. `targetSdkVersion: 34` at `ConfigHelpers.ts:446`.
+> - The harness charter, which is "CHARTERED — not scheduled" (charter L7), with Data as designer (L9).
+>
+> What is missing (verified):
+> - No Gradle file of any kind in the repo: zero `build.gradle`, `settings.gradle`, `gradlew`, `.kts` or `AndroidManifest` files.
+> - No java or gradle step in any of the 7 workflows.
+> - No JDK on this machine (`java_home`: "Unable to locate a Java Runtime"). No gradle, kotlinc or sdkmanager either.
+> - No required check, no proof consumer, and no declared minimum version (`core-goals.md:29` says "Not yet constrained").
+>
+> The smallest missing instrument is a host Gradle module plus `./gradlew :host:compileDebugKotlin`, compile only. Robolectric semantics tests come second.
+>
+> **Yes, the exit needs the toolchain installed on the CI side.** Nothing exists locally, and a "registered required check" can only be CI. I believe ubuntu runners ship a JDK and the Android SDK, but that is UNVERIFIED.
+>
+> **Who owns it** (judgment):
+> - Building the instrument is 129's job. The priorities record makes the harness 129's acceptance instrument and first task (`2026-10-18-spec-priorities-by-outcome.md` L33–34, L55). 128 only cites it as an exit condition.
+> - Gap: 129's first task is to *evaluate* the charter. Nothing yet commits it to *building* the harness. The ballot or 129's outline should name who builds it, or the F-7 exit has no owner.
+> - Registering it as a required check falls under the 125-A gate rules and Thurgood's CI-regime scope.
+> - I would need a tasks-row grant to author the module or workflow.
+>
+> **3. F-8: I pick (A), with the rule that no `rn-*` column goes above `experimental` on `unit` evidence alone.** (judgment) This matches Kenya's columns at their own tiers and Stacy's view that a `wcag:` ✅ on `unit` evidence is a finding.
+>
+> What also caps both columns is the toolchain, not just the rule. Any `rn-android` evidence beyond `unit` (emulator or TalkBack) needs the same Android SDK the Compose harness needs.
+>
+> Surviving counter: two rows can share a tier and still mislead. `rn-android experimental/unit` next to `android experimental/unbuilt` reads as RN being ahead, purely because its instruments are cheaper. Labels make that visible; they don't remove it. Once the harness exists, Robolectric gives Compose the same `unit` evidence.
+>
+> **4. Android minimum version: rule it separately, as Q8.**
+> - The F-7 exit should require only that a minimum is *declared*, not name the value. Setting the value edits Core Goals L29, which is in the signed unit.
+> - If a value is wanted now, I'd propose minSdk 24, because it is the default the build config already uses (verified, cited above).
+> - UNVERIFIED: current Compose BOM minSdk (I recall androidx moving to 23) and device-share figures.
+> - Edge-to-edge enforcement at API 35 and predictive back at 33+ are target-SDK and runtime concerns, not minimum-version ones. compileSdk and targetSdk should be pinned in the host module.
+
 ---
 
 ## 8. Consult ledger
@@ -776,4 +1092,14 @@ The priorities record fixes the order (`.kiro/issues/2026-10-18-spec-priorities-
 | Kenya | F-5: (c), narrow iOS-first to SwiftUI, `harness` vs `consumer`. D2: per-key column and tier. D4 generous: use the evidence tier; the exit must be "harness green", reconciled with F-5. Q5 decides the bar. |
 | Data | Android production never executed; no toolchain locally. F-5: (c), a consumer with a passing build, decouple the Android harness. D2: rn-android is a sibling emitter, Kotlin golden diff. Minimum harness. F-8 asymmetry fork. |
 
-**Parallel and blind.** The R1 reads were run in parallel, so no seat read another's position. The cross-read is this fold. Before Peter rules, a short cross-read round on F-6's deciding rule (Lina and Sparky) and on F-5's candidate 1 (Leonardo, Kenya, Data) would test the collisions named in [THURGOOD R1].
+- **R2 cross-reads**: read-only, on R1 (`7c9d1903a`), 2026-10-20, run by the orchestrator at § 8's R1 recommendation. The verbatim text is in § 7.
+
+| Seat | One-line cross-read |
+|---|---|
+| Lina | F-6: proposes the one rule (contracts, own plus inherited; (F)/(R); selection never). Picks c-gated on the Checkbox-Base contract violation. 17.0.0 has no charter. Adds Button-Icon. Proposes a new web-element record. |
+| Sparky | F-6: signs the rule; drops (F)(ii); concedes `react:` with the two-way check and the deferral record; 8 authored, Radio-Set borderline; c-gated if no SSR; the DSD spike, then (b), if SSR. |
+| Leonardo | F-5: candidate 1 survives as a target and needs a 070 amendment; a fixture is `harness`; F-5w clause text plus its trigger fork; new fork on shipped fixtures; F-4 sharpened, with (c) the registry-generated site 1a. |
+| Kenya | "SwiftUI is the first native proof", and she does not contest candidate 1. The fixture is `harness`. F-7's iOS exit cannot be met (verified); smallest instrument `Package.swift` + `xcodebuild`. F-8 (A) on same-kind evidence. |
+| Data | The RN fixture is `harness`. F-7's Android exit cannot be met (verified); smallest instrument a host Gradle module; the exit needs a CI toolchain; nothing commits anyone to *build* the harness. F-8 (A). Q8 separately, with minSdk 24 on offer. |
+
+**Parallel and blind, then crossed.** The R1 reads ran in parallel; the R2 cross-reads tested the two collisions named in [THURGOOD R1], and both converged. Forks still open after R2 are listed in § 6. Each was surfaced, never picked by a seat for Peter.
