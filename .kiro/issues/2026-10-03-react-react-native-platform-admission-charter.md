@@ -23,3 +23,9 @@ Adoption is the goal (Peter, 2026-10-02). React and React Native enter as platfo
 ## 3. Closing
 
 When the identity ballot is RATIFIED and Spec 128's outline round opens, record both here (dated) and `git mv` to `archive/`.
+
+## Walk log
+
+- 2026-10-20 (Thurgood): **the identity-ballot draft exists, and it was carried, not ratified.** It was drafted R0–R2 on 2026-10-20 (§ 2's walk finding is discharged).
+  - Peter then ruled that the sitting stops and its work moves inside Spec 128, with no fork ruled. The draft now lives at `.kiro/specs/128-react-react-native-platform-admission/inbound-from-identity-sitting-2026-10-20.md`. The § 8 forks are open questions for the outline round, which satisfies the charter's secondary trigger ("directs that they ride the outline round").
+  - **§ 3's closing condition no longer fits as written.** It reads "identity ballot is RATIFIED", but the Core Goals and charter changes now ride a later ballot that follows 128's outline rulings. I will re-rule § 3 when the outline round opens. Until then this charter stays at the root.

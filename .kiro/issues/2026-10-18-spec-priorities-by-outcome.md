@@ -77,3 +77,8 @@ These are lines, not edits. Each record's owner appends to their own record (rul
 ## Walk log
 
 - 2026-10-18: record opened (Thurgood).
+- 2026-10-20 (Thurgood), **Peter's ruling, relayed and confirmed by the orchestrator: the 129/128 seam.**
+  - **Spec 129's `platforms:` config (item (v)) is designed as the platform registry's seed**: one exported `PLATFORM_KEYS` constant, with the type derived from it (Ada's R1 (b) recommendation).
+  - **Spec 128's platform-selection experience is its acceptance test.** Peter's outcome statement: the user chooses the platforms they develop on, and only those platforms' tokens, components and agents are installed.
+  - Source: `.kiro/specs/128-react-react-native-platform-admission/inbound-from-identity-sitting-2026-10-20.md` § 1 and § 4.
+  - The same day, the 128 identity sitting ran (R0–R2) and was **carried into Spec 128 with no fork ruled**. The § 4 line "The Spec 128 charter walk finding stands until the fork sitting is scheduled" is therefore met: the sitting ran.
