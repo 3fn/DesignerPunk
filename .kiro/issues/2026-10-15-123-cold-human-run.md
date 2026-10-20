@@ -3,7 +3,8 @@
 **Date**: 2026-10-15
 **Status**: ACTIVE (unfired at Spec 123's closeout)
 **Owner**: **Leonardo** — prepares and observes the run, and writes its record under the trio protocol's discipline. **Peter** is the one who finds the person.
-**Trigger**: **the first willing stranger** — the first person who has never used DesignerPunk and agrees to install it from the shipped install guide while being observed. **No date is set**: Req 23.9, "a date we would not honour is worse than a generic trigger".
+**Trigger**: `manual` — the first willing stranger appears and Peter finds the person (no date by design, Req 23.9). *(was: **the first willing stranger** — the first person who has never used DesignerPunk and agrees to install it from the shipped install guide while being observed. **No date is set**: Req 23.9, "a date we would not honour is worse than a generic trigger".)*
+**Class**: P2 obligation (record) · owed-act *(set 2026-10-20, Leonardo, rule 12. A Req 23.9 obligation owed as a committed record; P3 would let two unfired walks archive it stale, against its own line "unfired is not a finding".)*
 **Source**: Req 23.9 (Leonardo R2 A7, extended by Stacy: "an item 'reported open' inside a closed spec's completion doc is, operationally, dropped"). Placed at Task 28.4 by `tasks.md` § "Carried obligations — placed".
 **Grant paths**: none.
 **Consulted**: none needed — Req 23.9 fixes the owner class, the trigger and the no-date rule.
