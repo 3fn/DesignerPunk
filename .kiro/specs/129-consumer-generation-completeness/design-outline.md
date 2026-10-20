@@ -20,6 +20,12 @@ Related, by path only:
 
 ---
 
+## Intake (ruled 2026-10-20)
+
+- **The mathematical-relationship parser validation gaps** (`.kiro/issues/2026-06-24-mathematical-relationship-parser-validation-gaps.md`; owner Ada) **fold into this spec**. **Peter, 2026-10-20** (chat, relayed by the orchestrator), on the issues walk's PETER item 2 (ledger `.kiro/issues/archive/TRIAGE-2026-10-20.md`): *"Fold it into the spec"*. The record's consumer impact: `npx designerpunk validate` exits 1 in every consumer, and the install guide carries the sentence. The record's Trigger is Ada's (`path:` on this spec's `requirements.md`); where it lands in scope (i)–(vi), or as a new item, is the requirements round's to settle. — Thurgood
+
+---
+
 ## Notes carried in
 
 Each note carries its source and date. These are recorded positions, not rulings, unless marked as Peter's.

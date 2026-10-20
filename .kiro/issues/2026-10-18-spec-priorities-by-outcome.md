@@ -50,6 +50,15 @@ These are listed as presented to Peter. **He did not reorder them**, and the let
 - **Its R1 round may run alongside 128's fork sitting**, at low cost.
 - **The surviving counter, recorded and not absorbed**: parking 130 leaves the Settings screen announcing "checkbox" for longer.
 
+**4. Color-track spec (after 130).** *(Added 2026-10-20, Thurgood, on Peter's rulings of that day; walk ledger `archive/TRIAGE-2026-10-20.md` § "Rulings (2026-10-20)".)*
+- **One spec folds three records**: the Spec 115 Phase B `colorTokens` deletion (`.kiro/issues/2026-09-12-spec-115-phase-b-colortokens-deletion.md`), color-token enforcement (`.kiro/issues/2026-09-14-color-token-enforcement-spec-candidate.md`), and blend-system/OKLCH alignment (`.kiro/issues/2026-06-24-blend-system-architecture-and-oklch-alignment.md`).
+- **Intake**: the rgba-pipeline cleanup (`.kiro/issues/2026-06-10-post-v12-rgba-pipeline-cleanup.md`) and the shadow-color OKLCH migration (`.kiro/issues/2026-06-24-oklch-shadow-color-family-not-migrated.md`).
+- **Peter, 2026-10-20** (chat, relayed by the orchestrator), verbatim: item 1 (blend/OKLCH) *"agreed"*, to the revised suggestion to fold it into one color-track spec after Spec 130; items 3 and 4 (115-B deletion; enforcement) *"agreed"*, as one color-track spec with the rgba-cleanup and shadow-OKLCH records folded in, ranked after 130.
+- **Framing, corrected before the ruling** (by the orchestrator): only `blend.disabledDesaturate` and two wrappers are deprecated, and they are retained. The blend system and its OKLCH alignment are live work, not a drop candidate.
+- **Owners, by domain**: Ada (tokens: the deletion, blend, OKLCH, rgba, shadow); Lina (the enforcement surfaces); Thurgood (formalization).
+- **Owed in the PR that creates the spec directory** (Ada's note, 2026-10-20; Lina's the same for hers): each folded and intake record's owner (five records) re-rules its `manual` Trigger to a `path:` token on the new spec directory, in that PR.
+- **Why after 130**: Peter's ordering. This record states no further ground.
+
 ## 4. What this changes elsewhere
 
 These are lines, not edits. Each record's owner appends to their own record (rule 9).
@@ -84,3 +93,4 @@ These are lines, not edits. Each record's owner appends to their own record (rul
   - **Spec 128's platform-selection experience is its acceptance test.** Peter's outcome statement: the user chooses the platforms they develop on, and only those platforms' tokens, components and agents are installed.
   - Source: `.kiro/specs/128-react-react-native-platform-admission/inbound-from-identity-sitting-2026-10-20.md` § 1 and § 4.
   - The same day, the 128 identity sitting ran (R0–R2) and was **carried into Spec 128 with no fork ruled**. The § 4 line "The Spec 128 charter walk finding stands until the fork sitting is scheduled" is therefore met: the sitting ran.
+- 2026-10-20 (Thurgood): **rank 4 added** — the color-track spec, after 130 (§ 3.4), on Peter's rulings on walk items 1, 3 and 4. Walk item 2 (the parser-validation gaps) folds into Spec 129 (intake note in `.kiro/specs/129-consumer-generation-completeness/design-outline.md`); it adds nothing to the order.
