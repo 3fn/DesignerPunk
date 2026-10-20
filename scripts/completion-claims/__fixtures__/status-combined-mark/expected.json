@@ -1,0 +1,16 @@
+{
+  "case": "status-combined-mark",
+  "class": "status",
+  "provenance": ".kiro/docs/ballots/2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "STATUS_NONCOMPLIANT"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "messages": [
+    "parent 1: criteria row \"Beta: the profile loader rejects an unknown key with a named…\" Status '✅⚠️' is not a bare mark — write the mark only (✅, ⚠️, ❌; — on an annotation row)"
+  ],
+  "notes": "A combined mark (D-2 record § 1 and § 2.2): read as ✅ by includes() before the fix."
+}

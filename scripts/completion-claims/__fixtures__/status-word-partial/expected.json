@@ -1,0 +1,16 @@
+{
+  "case": "status-word-partial",
+  "class": "status",
+  "provenance": ".kiro/specs/127-completion-claims-integrity/completion/arming-2026-10-03-parity-flip-fixtures.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "STATUS_NONCOMPLIANT"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "messages": [
+    "parent 1: criteria row \"Beta: the profile loader rejects an unknown key with a named…\" Status 'Partial' is not a bare mark — write the mark only (✅, ⚠️, ❌; — on an annotation row)"
+  ],
+  "notes": "K-status-nonmark (Stacy's arming spec § 1.3 / § 5 item 1): a partial written as a word, with test evidence and no follow-up link. Before the D-2 fix: reds 0 ('other' counted as claiming and escaped the ⚠️ link MUST). Now STATUS_NONCOMPLIANT."
+}

@@ -14,6 +14,9 @@ import { normalizeCell } from './normalize';
 export interface Row {
   criterion: string;
   status: '✅' | '⚠️' | '❌' | '—' | 'other';
+  /** The Status cell as written (trimmed) — carried so a non-vocabulary
+   *  cell's STATUS_NONCOMPLIANT finding can quote it. */
+  statusCell: string;
   evidence: string;
   evidenceKind: 'path' | 'test' | 'command' | 'decision-record' | 'empty-or-prose';
   /**
@@ -23,6 +26,9 @@ export interface Row {
    * from the claimed multiset AND from evidence evaluation; marking a REAL
    * criterion/condition `—` removes it from the claimed set and therefore
    * still mismatches against the declared set — the shape cannot be abused.
+   * (The guide states this since sitting-2 S4: "A criterion marked `—`
+   * claims nothing, and so reads as missing from the table." Pinned by the
+   * `status-criterion-marked-dash` fixture.)
    */
   claiming: boolean;
 }
@@ -95,13 +101,21 @@ const EXEMPTION_NEARMISS_RE = /^Criteria fidelity:/;
 
 const AV_HEADING_RE = /^#{2,4}\s+Additional verification\s*$/i;
 
-function parseStatus(cell: string): Row['status'] {
+/**
+ * The closed Status vocabulary — guide § "Status vocabulary" (sitting-2 S4,
+ * ratified 2026-10-18/19): "The Status cell is exactly one of ✅, ⚠️, ❌ — or
+ * `—` on an annotation row that claims no verdict; any other text is
+ * non-compliant." EXACT match after trimming (D-2 fix): the earlier
+ * `includes()` read `✅ (partially)` / `✅⚠️` as ✅, and `-`, `–` and `⚠`
+ * without U+FE0F were accepted as spellings. ⚠️ is U+26A0 U+FE0F; `—` is
+ * U+2014. Anything else is `'other'` — still a claiming row (it asserts
+ * something about a criterion), and red as STATUS_NONCOMPLIANT in verdict.ts.
+ */
+export const STATUS_MARKS: readonly Row['status'][] = ['✅', '\u26A0\uFE0F', '❌', '\u2014'];
+
+export function parseStatus(cell: string): Row['status'] {
   const c = cell.trim();
-  if (c.includes('✅')) return '✅';
-  if (c.includes('⚠️') || c.includes('⚠')) return '⚠️';
-  if (c.includes('❌')) return '❌';
-  if (c === '—' || c === '-' || c === '–') return '—';
-  return 'other';
+  return (STATUS_MARKS as readonly string[]).includes(c) ? (c as Row['status']) : 'other';
 }
 
 /**
@@ -219,6 +233,7 @@ function parseTables(lines: string[], headerFirstCell: RegExp): Table[] {
         rows.push({
           criterion: c[0],
           status,
+          statusCell: c[1].trim(),
           evidence: c[2],
           evidenceKind: classifyEvidence(c[2]),
           claiming: status !== '—',

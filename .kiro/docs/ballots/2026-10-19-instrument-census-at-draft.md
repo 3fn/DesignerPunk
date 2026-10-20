@@ -63,6 +63,8 @@ New bullets in `.kiro/docs/ballots/README.md` § "Conventions", after "Edit disc
 
 **Owed EXECUTION after ratification (pre-declared here)**: when an owner's first in-scope item is drafted, the owner builds the census mode in their own scope, and Thurgood writes the row's `census` field on the owner's word. The field edit is Peter-merged. Mine for `completion-criteria-parity` is a per-file `sha256(canonicalSurface)` output from `--verify-extraction`, which today prints only counts.
 
+*(2026-10-19: scope note and carrying record → `.kiro/issues/2026-10-19-census-mode-completion-criteria-parity.md`.)*
+
 **The register row, proposed** (no-substring check against the 40 live ids, run at drafting: clear):
 
 ```yaml

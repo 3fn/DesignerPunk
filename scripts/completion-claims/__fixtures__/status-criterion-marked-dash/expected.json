@@ -1,0 +1,19 @@
+{
+  "case": "status-criterion-marked-dash",
+  "class": "status",
+  "provenance": ".kiro/docs/ballots/2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [
+    "SET_MISMATCH"
+  ],
+  "emissions": [],
+  "exit": "red",
+  "mismatch": {
+    "missing": [
+      "Gamma: the README documents the profile file location"
+    ],
+    "extra": []
+  },
+  "notes": "Stacy R1 S4 item 3 (routed to this fixing PR by the ballot's S4 rider): a real criterion marked — claims nothing and reads as missing from the table (the guide's S4 bracketed sentence). Pins verdict.ts's non-claiming skip plus the multiset compare: SET_MISMATCH with Gamma missing, no Status red. Behaviour unchanged by the D-2 fix; nothing pinned it before."
+}

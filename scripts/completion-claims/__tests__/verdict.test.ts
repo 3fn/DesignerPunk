@@ -351,6 +351,35 @@ describe('the per-spec unticked count (Peter, 2026-09-26)', () => {
 });
 
 describe('CATALOG CONFORMANCE — every loud string equals its design-table row', () => {
+  test('Status outside the closed vocabulary (added 2026-10-19, D-2) — criteria and gate rows', () => {
+    const p = parent(tasksWith(['criterion A'], '\n  **Merge gate:**\n  - `npm test` green\n'));
+    const doc = docWith([['criterion A', 'Partial', '`npm test` → 3 failing']], {
+      av:
+        '\n### Additional verification\n\n| Condition (verbatim) | Status | Evidence |\n|---|---|---|\n| `npm test` green | Done | `npm test → 0 failures` |\n',
+    });
+    expect(evaluateParent(p, doc).findings).toEqual([
+      {
+        verdict: 'STATUS_NONCOMPLIANT',
+        message: `parent 2: criteria row "criterion A" Status 'Partial' is not a bare mark — write the mark only (✅, ⚠️, ❌; — on an annotation row)`,
+      },
+      {
+        verdict: 'STATUS_NONCOMPLIANT',
+        message: `parent 2: gate row "\`npm test\` green" Status 'Done' is not a bare mark — write the mark only (✅, ⚠️, ❌; — on an annotation row)`,
+      },
+    ]);
+  });
+
+  test('a criterion marked — reads as missing from the table (S4 bracket; no Status red, a set red)', () => {
+    const p = parent(tasksWith(['criterion A', 'criterion B']));
+    const doc = docWith([
+      ['criterion A', '✅', 'a/b.test.ts'],
+      ['criterion B', '—', 'a/b.test.ts'],
+    ]);
+    const f = evaluateParent(p, doc).findings;
+    expect(f.map((x) => x.verdict)).toEqual(['SET_MISMATCH']);
+    expect(f[0].diff).toEqual({ missing: ['criterion B'], extra: [] });
+  });
+
   test('merge base unresolvable (added 2026-10-19, D-2 low (a))', () => {
     expect(mergeBaseUnresolvable('origin/main')).toEqual({
       verdict: 'MERGE_BASE_UNRESOLVABLE',

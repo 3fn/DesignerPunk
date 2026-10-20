@@ -110,9 +110,9 @@ The rule binds parents in specs whose `tasks.md` declares `**Criteria mode**: pe
 
 ### Status vocabulary
 
-- **✅ verified met**
-- **⚠️ verified unmet or partial** — a ⚠️ row **MUST link a tracking issue or follow-up task**
-- **❌ verified absent** — the "3.3 pattern": a tested module was created, and the seam it was meant to reach was never touched
+- **✅** — verified met
+- **⚠️** — verified unmet or partial; a ⚠️ row **MUST link a tracking issue or follow-up task**
+- **❌** — verified absent; the "3.3 pattern": a tested module was created, and the seam it was meant to reach was never touched
 
 The Status cell is exactly one of ✅, ⚠️, ❌ — or `—` on an annotation row that claims no verdict; any other text is non-compliant. A criterion marked `—` claims nothing, and so reads as missing from the table.
 

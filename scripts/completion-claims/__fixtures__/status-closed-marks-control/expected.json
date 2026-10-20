@@ -1,0 +1,14 @@
+{
+  "case": "status-closed-marks-control",
+  "class": "status",
+  "provenance": ".kiro/docs/ballots/2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form.md",
+  "kind": "parity",
+  "ratifiedAt": "2026-09-19",
+  "verdicts": [],
+  "emissions": [],
+  "exit": "green",
+  "parentsEvaluated": [
+    "1"
+  ],
+  "notes": "CONTROL: every closed mark (✅, ⚠️ with U+FE0F and a link, ❌) on criteria rows, plus — (U+2014) on an annotation row in the gate table. Exact match must not over-reject: green."
+}

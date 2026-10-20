@@ -11,6 +11,8 @@ import {
   parseCompletionDoc,
   locateCompletionDocs,
   classifyEvidence,
+  parseStatus,
+  STATUS_MARKS,
 } from '../completion-doc';
 
 const DOC = `# Task 2 Completion
@@ -189,5 +191,42 @@ describe('evidence-kind classification — the stated heuristic (C3, Lina R1)', 
     expect(classifyEvidence('   ')).toBe('empty-or-prose');
     expect(classifyEvidence('Implemented the module and made sure it works')).toBe('empty-or-prose');
     expect(classifyEvidence('Created complete directory structure')).toBe('empty-or-prose');
+  });
+});
+
+describe('parseStatus — the closed vocabulary, exact match (sitting-2 S4; D-2 fix)', () => {
+  test('the four legal cells, trimmed, map to themselves', () => {
+    expect(parseStatus('✅')).toBe('✅');
+    expect(parseStatus('  \u26A0\uFE0F ')).toBe('\u26A0\uFE0F');
+    expect(parseStatus('❌')).toBe('❌');
+    expect(parseStatus('\u2014')).toBe('\u2014');
+    expect(STATUS_MARKS).toEqual(['✅', '\u26A0\uFE0F', '❌', '\u2014']);
+  });
+
+  test.each([
+    ['a word', 'Partial'],
+    ['a word', 'Done'],
+    ['a word', 'N/A'],
+    ['a mark with trailing text (the includes() hole)', '✅ (partially)'],
+    ['a combined mark', '✅⚠️'],
+    ["the guide's bullet label copied into the cell", '✅ verified met'],
+    ['ASCII hyphen-minus as the annotation marker (accepted before the fix)', '-'],
+    ['en dash as the annotation marker (accepted before the fix)', '\u2013'],
+    ['⚠ without U+FE0F (accepted before the fix)', '\u26A0'],
+    ['an empty cell', ''],
+    ['a bolded mark', '**✅**'],
+  ])('%s — %j → other', (_label, cell) => {
+    expect(parseStatus(cell)).toBe('other');
+  });
+
+  test('the raw cell is carried on the row; a non-vocabulary row is still claiming', () => {
+    const d = parseCompletionDoc(
+      '| Criterion (verbatim) | Status | Evidence |\n|---|---|---|\n| a | Partial | `npm test` → 3 failing |\n| b | - | note |\n',
+      'd.md'
+    );
+    expect(d.rows.map((r) => [r.status, r.statusCell, r.claiming])).toEqual([
+      ['other', 'Partial', true],
+      ['other', '-', true],
+    ]);
   });
 });
