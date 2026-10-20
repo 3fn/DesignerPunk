@@ -522,7 +522,7 @@ units:
         text: "Use your platform's references. Don't assume patterns from sibling platforms apply to yours."
     confirmation: canonical/profiles/consumer/confirmations/data.md#platform-reference-pointers
   "#android-specific-guidance:preamble":
-    canonicalHash: sha256:afaa161290815fb26ca8098c8f1a6ca2bb55dfafb4189e5d7fa76818f65054aa
+    canonicalHash: sha256:ecee4b84b3be8aec66c32213eb25d9d5d5687216a3a095130d3e572a82e13be7
     items:
       - id: native-1
         kind: member
