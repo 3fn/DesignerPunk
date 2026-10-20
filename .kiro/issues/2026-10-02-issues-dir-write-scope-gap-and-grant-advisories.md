@@ -3,7 +3,8 @@
 **Date**: 2026-10-02
 **Status**: ACTIVE
 **Owner**: Thurgood (the issues-dir convention's owner, `.kiro/issues/README.md`; the grant rule's ballot author). **Decision**: Peter, by ballot where a charter or the README changes (`.kiro/docs/ballots/README.md`).
-**Trigger**: `manual` — Thurgood's next ballot sitting, with the A-1 and A-2 drafts in front of Peter. The gap half is executed: ballot `2026-10-17-standing-write-scope-six-roots`, ratified #393 (`b1112d2e1`) and applied at `096e11f99`. A-1 and A-2 remain. *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Trigger**: `release:next:phase-1` — the ruling on the A-1/A-2 DRAFT ballot (`.kiro/docs/ballots/2026-10-20-grant-ci-deletions-and-activating-merge-read.md`) and its application close this record, no later than the next release's S. Re-ruled 2026-10-20, Thurgood (owner), on Peter's fix-now (§ "Outcome (2026-10-20)"); rule 11 [a]: a lapse returns without fix-now.
+**Superseded trigger (re-ruled 2026-10-20; verbatim)**: `manual` — Thurgood's next ballot sitting, with the A-1 and A-2 drafts in front of Peter. The gap half is executed: ballot `2026-10-17-standing-write-scope-six-roots`, ratified #393 (`b1112d2e1`) and applied at `096e11f99`. A-1 and A-2 remain. *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
 **Superseded trigger (back-filled 2026-10-20; verbatim)**: **the next ballot-drafting pass, or the monthly health-check walk, whichever comes first.** Both are events, never a date. The walk is named because this issue is exactly the kind of root item the active-charter walk reads for fired-without-record.
 **Class**: P2 obligation (guard) · owed-act *(set 2026-10-20, Thurgood, rule 12. A-2 is a missing detector: an issue-row grant's activating merge is read by nobody. A-1 is a CI-path clause that no in-place replacement can meet.)*
 **Source**: Spec 123 U2b's execution (2026-10-01 to 2026-10-02), where this surfaced three times in one unit; Stacy's ARMING read of #256, `.kiro/specs/127-completion-claims-integrity/completion/arming-2026-10-02-pr256-workflow-comment-grant.md` (landed as #257, `79cb787c`), § "Standards implications" items 1 and 2 (A-1, A-2).
@@ -46,3 +47,17 @@ Thurgood, 2026-10-02, in the U2b closeout bookkeeping PR.
 ## Lapse (2026-10-20)
 
 Firing commit: `3b84122c9` (#413, ballot sitting 2 ratified, 2026-10-19), the first ballot sitting after rule 11's application (`c470a248f`). It passed without the A-1/A-2 drafts. The 2026-10-18 sitting (#407, `71bbd1085`) came before `c470a248f` and is not counted. **Lapse count: 1.** Rule 11: the first lapse of a P2 `(guard)` record goes to Peter with spec, drop or fix-now. It is in the walk's Peter batch (ledger, PETER item 7). — Thurgood
+
+## Outcome (2026-10-20) — fix-now, split by kind
+
+**Peter, 2026-10-20** (chat, relayed by the orchestrator), on the walk's PETER item 7 (ledger `archive/TRIAGE-2026-10-20.md`): *"fix it now"*.
+
+Both advisories are LAW, so neither ships by fix-now as an edit:
+- A-1 changes what Stacy's ARMING row requires (`canonical/agents/stacy.md`, operationalizing ballot `2026-09-27-ci-regime-standing-scope` § 3).
+- A-2 adds a requirement to README rule 8 and a read to the steward's LIVENESS item. There is no grant template to edit; "at both merges" is in grant records by practice only (since `archive/2026-10-12-discovery-study-stage1-docs-charter.md`).
+
+**What shipped now**:
+- **DRAFT (record-first)**: both items as one micro-ballot, `.kiro/docs/ballots/2026-10-20-grant-ci-deletions-and-activating-merge-read.md`. Stacy is the required reviewer. Forks F-1 (the deletions-clause form) and F-2 (LIVENESS or RELEASE) are Peter's.
+- **EXECUTION**: none to governance text. Records only: this outcome and the Trigger re-rule above. A-2's query ran once at `076e947da` as the draft's evidence (147 output lines, a superset; about ten records name a `.github/**` path in a `**Grant paths**:` list, by a heuristic filter). Whether each activating merge got its ARMING read is Stacy's to read (Q5), not the steward's.
+
+The record stays at the root until the ballot is ruled and applied, then closes by rule 5. — Thurgood
