@@ -7,6 +7,8 @@
 **Type**: Component-schema authoring drift / token-name canonicalization (NOT a generation or inversion bug)
 **Primary owner**: Lina (component-schema audit) + Ada (token-name canonicalization — the canonical semantic/primitive names)
 **Status**: Open — tracked follow-up. Does NOT block Spec 118 9.5.2 (the 329 relationships that DO resolve are correct + shipped; this is about ADDITIONAL relationships silently dropped).
+**Class**: P0 false-claim · defect *(set 2026-10-20, Lina, rule 12. Accepted the steward's reading. The Application MCP's `get_token_consumers`, and the consumers field of `get_token`, answer from this index. For tokens whose real consumers declare a non-canonical name (Input-Text-Base still declares `color.error.strong` and `color.success.strong`, which are not token-index keys) they return no consumer. That is an MCP response a package reader meets, and the record has known it since 2026-06-25. Still live at 2026-10-20: 17 core schemas still declare at least one of the non-resolving forms the record names (grep). One reading Stacy may press: an empty list is incomplete rather than false; I class it P0 because the tool is named for the question it answers wrongly. Only Peter downgrades.)*
+**Trigger**: `manual` — the component-schema normalization pass merges together with its unknown-token-name guard (§ Recommended disposition). No path token: a path over the schemas would fire on every unrelated schema edit, and a P0 lapses at its first firing (rule 11). A floor-class row for the next release walk (M7).
 
 ---
 
@@ -34,3 +36,5 @@ A focused component-schema-normalization pass (Lina) + token-name canonicalizati
 
 - Surfaced by: Spec 118 Task 9.5.2 (`.kiro/specs/118-module-resolution-coherence/findings/consumer-component-schema-discovery.md`, the array-group reader fix commit `0b9ee827`).
 - Pattern sibling (silently-dead feature exposed): the array-group reader bug itself (consumers field 0/193 until 9.5.2).
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 10, call BACK-FILL (Lina))**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P0 false-claim · defect`, on the steward's reading of M7: the shipped token index, served by the Application MCP, answers "no consumer" for tokens that have consumers. That is an MCP response a package reader meets. Lina classes; Stacy may confirm or dispute; only Peter downgrades a P0.

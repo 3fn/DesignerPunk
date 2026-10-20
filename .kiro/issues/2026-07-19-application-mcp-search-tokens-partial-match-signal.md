@@ -7,6 +7,8 @@
 **Type**: Application MCP token search (match-quality signaling, NOT search correctness)
 **Primary owner**: Ada (ownership accepted on the record — [ADA R3], 119-B feedback/requirements.md)
 **Status**: Open — **LATER**: take up after 119-B's design phase settles the calibration-propagation prose (so the new signal lands against settled prose, not a moving target). No hard trigger; a natural slot is any Ada Application-MCP session touching the search/index surface.
+**Trigger**: `path:application-mcp-server/src/indexer/TokenIndexer.ts` — the next change to the token reader whose `search` (L193) returns the partial match with no signal; the Status line's "natural slot" made an event. It bundles with `2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md`, the sibling this record names. *(Set 2026-10-20, Ada, rules 1 and 9. It replaces the Status line's "No hard trigger"; that line stays as written.)*
+**Class**: P3 improvement · defect *(set 2026-10-20, Ada, rule 12. The record's own double-mitigation stands: token selection is gated independently by the token-governance checkpoints, and the certainty-calibration rule's step 3 is tool-agnostic.)*
 
 ---
 
@@ -39,3 +41,5 @@ Option (b) has a built-in payoff: 119-B's signal-scoped calibration boundary **e
 - Adjudication + ownership record: `.kiro/specs/119-B-capability-routing-measurement/feedback/requirements.md` [ADA R2], [ADA R3], [MAIN-LOOP R1]
 - The shipped three-layer signal this would join: Spec 121 (`discovery-confidence-rubric.md`); live on `find_docs` and keyworded `find_components` (probes 2026-07-16/18)
 - Sibling Ada-owned Application-MCP item (candidate to bundle in one issue-driven session): `.kiro/issues/2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md`
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 14, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P3 improvement · defect`.

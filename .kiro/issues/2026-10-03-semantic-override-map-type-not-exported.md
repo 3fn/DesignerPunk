@@ -3,7 +3,8 @@
 **Date**: 2026-10-03
 **Status**: ACTIVE
 **Owner**: Ada (theme registry and `defineConfig` authoring guidance).
-**Trigger**: **Spec 129's requirements round.** That is when registering a custom theme starts to change output (Spec 129 scope item (i)), so it is the first time a consumer has a reason to write an override map. Until then, a registered theme does nothing (Integration Guide § Reference › Themes). The missing export has no live consumer impact, and fixing it alone would invite authoring for a feature that does not run yet.
+**Trigger**: `manual` — Spec 129's requirements round, the first time a consumer has a reason to write an override map; the export-or-document fork is Peter's pick there. *(was: **Spec 129's requirements round.** That is when registering a custom theme starts to change output (Spec 129 scope item (i)), so it is the first time a consumer has a reason to write an override map. Until then, a registered theme does nothing (Integration Guide § Reference › Themes). The missing export has no live consumer impact, and fixing it alone would invite authoring for a feature that does not run yet.)* *(Token set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P3 improvement · defect *(set 2026-10-20, Ada, rule 12. Live: `SemanticOverrideMap` is still absent from `src/config/index.ts` (read 2026-10-20); a born repo has the workaround, and a registered theme does nothing until Spec 129 item (i), so there is no live consumer impact.)*
 **Source**: Ada's Integration Guide review for Spec 123 Task 19.4 (2026-10-03). The old "Creating a Theme" example imported this type from `@3fn/core/config`; 19.4 removed that example. Peter's go was to file, not to fix.
 
 ---
@@ -46,3 +47,5 @@ The governance doc change goes through the ballot process, not a grant.
 **Unverified**: whether `dist/config/index.d.ts` in a packed tarball matches `src/config/index.ts`. I did not inspect a tarball.
 
 **No fix is authorized by this record.**
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 55, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Live: `SemanticOverrideMap` is not in `src/config/index.ts`. Proposed `manual` (Spec 129's requirements round) · `P3 improvement · defect`.

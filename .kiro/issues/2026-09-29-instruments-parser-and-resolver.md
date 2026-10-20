@@ -3,7 +3,9 @@
 **Date**: 2026-09-29
 **Status**: ACTIVE
 **Owner**: Thurgood (instrument owner, `completion-criteria-parity`; the grant below)
-**Trigger**: **before the next spec's tasks round opens.** M4 binds from the first tasks round after this PR's squash SHA `P`, so this work precedes it.
+**Trigger**: `manual` — a new spec's `tasks.md` is created, i.e. the next spec's tasks round opens (the event is unchanged). A `path:` glob would fire on any edit to an existing `tasks.md`, so the event stays prose. Unfired at this walk: no `tasks.md` has been added since 2026-09-26. *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Superseded trigger (back-filled 2026-10-20; verbatim)**: **before the next spec's tasks round opens.** M4 binds from the first tasks round after this PR's squash SHA `P`, so this work precedes it.
+**Class**: P2 obligation (guard) · owed-act *(set 2026-10-20, Thurgood, rule 12. This is M4's precondition: Start Up Tasks § 8 and ballot M4 bind from a squash SHA `P` that does not exist until this instrument merges.)*
 **Source**: ballot `.kiro/docs/ballots/2026-09-28-parent-instrument-existence-check.md`, **RATIFIED (Peter, 2026-09-29)**: § 4a (M4), and the A-6 (ii) ruling. This issue replaces the ballot's original edit site 6, the prose-M3 issue; prose-M3 is carried below.
 **Grant paths**: `scripts/completion-claims/**` (ballot § 4a; the B-CI M3 precedent), on this PR's branch, until it merges.
 

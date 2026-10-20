@@ -2,7 +2,8 @@
 
 **Date**: 2026-10-13
 **Owner**: **Lina** (components and the Application MCP). Per-item co-owners are named where they differ.
-**Trigger (record as a whole)**: Peter's merge of this record's PR. That starts G6 (my first pick, see § Priority). Every other item waits on its own named trigger below.
+**Class**: P3 improvement · owed-act *(set 2026-10-20, Lina, rule 12. Accepted. The record routes component gaps and tool lessons that have interim specs; no shipped statement is false. G6, T2 and T3 are done (G6 in #352, 16.0.0); the rest wait on their own named triggers below.)*
+**Trigger**: `manual` — every item below has executed or moved into a spec or its own record (the "Closes when" line); each item keeps its own named trigger below. *(was: "Trigger (record as a whole)": Peter's merge of this record's PR. That starts G6 (my first pick, see § Priority). Every other item waits on its own named trigger below. Fired and acted on: G6 shipped.)*
 **Closes when**: every item below has either executed (fix merged) or moved into a spec or its own record. The outcome is recorded here, dated, and then this file is `git mv`'d to `archive/`.
 **Source**: `.kiro/issues/2026-10-12-leonardo-settings-call-ledger.md`. Its § "Component gaps surfaced" routes G1–G5 and two tool lessons "to Lina after Peter's go"; Lina's D-row column adds G6 and one more tool lesson.
 **Ruling**: Peter, 2026-10-13: D2 = NO-GO (no Stage 2 for components); "route the gaps to Lina".
@@ -155,3 +156,5 @@ First pick, **G6**: a production-ready component fails its own accessibility con
 ## Outcomes
 
 *(dated entries appended here as items execute)*
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 62, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P3 improvement · owed-act`. G6 shipped (#352, in 16.0.0) and has no entry under § Outcomes.

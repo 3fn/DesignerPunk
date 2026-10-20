@@ -106,3 +106,5 @@ The application MCP needs the file to ship, so that the package's index finds it
 - **Consumers**: Spec 123 Task 20's `.gitignore` region ignores a consumer's `token-index/`, so nothing changes for them. The relative value also helps any consumer who commits her index anyway.
 
 **The 14.1.0 fact, re-checked**: `curl` of `https://registry.npmjs.org/@3fn/core/-/core-14.1.0.tgz | tar tz` lists four `token-index/` entries, `README.md`, `components.yaml`, `primitives.yaml` and `semantics.yaml`, and **no `meta.json`**. The defect is new in 15.0.0.
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: resolved — fixed by its named fixing PR #270 (`d949ce8b7`; writer and resolver halves); the grants expired at that merge. Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood

@@ -8,6 +8,8 @@
 **Priority**: MEDIUM as an audit gap; **the consumer-facing gap it symptomatizes is the real problem** — see § 1
 **Owners**: **Kenya (iOS) and Data (Android) — DESIGNERS of the harness.** **Ada and Lina — VERIFIED PARTIES** (their generated output is what the harness would compile)
 **Explicitly NOT**: Kenya and Data do **not** become standing per-pass verifiers — § 4
+**Class**: P2 obligation (guard) · charter *(set 2026-10-20, Kenya, rule 12. The record names an instrument gap: nothing compiles the Swift or Kotlin we generate, so platform "command + result" Evidence on two of three platforms is trust-the-reported-result, weaker than the claim it supports. The interim posture (§ 2) makes the gap visible in the record but does not close it. Kind charter: opened deliberately, evaluated at named triggers, no build authorized. Data co-owns this record and may re-class.)*
+**Trigger**: `path:.kiro/specs/129-consumer-generation-completeness/tasks.md` — the event that owes the evaluation: Spec 129's tasks.md landing, whose first task is this charter's evaluation (priorities record; 129's acceptance, "compiling on all three platforms", depends on the harness). The § 3 incident trigger (generated Swift/Kotlin that does not compile) is not path-computable and stays in § 3 as prose; if it fires first, the owner re-rules here. *(Set 2026-10-20, Kenya, rule 9, accepting the steward's walk-line proposal in spirit but taking the computable token over `manual`. Was: the three prose triggers in § 3, which carry no token. Note per the priorities record: § 3 trigger 3, the post-campaign queue review, fired without an evaluation.)*
 
 ---
 
@@ -82,3 +84,5 @@ The token pipeline emits `DesignTokens.ios.swift` and `DesignTokens.android.kt`;
 - `.kiro/specs/127-completion-claims-integrity/design-outline.md` § 4.1 (Evidence-cell edge 2), § 5.3 (honest-reach obligation), § 8 Q5 carried item 2 — where the gap is recorded on the spec
 - `.kiro/specs/127-completion-claims-integrity/pre-spec/q5-joint-working-agreement.md` § 4.1 — the write-scope gap, the same class of capability fact
 - `.kiro/specs/127-completion-claims-integrity/pre-spec/q5-lifecycle-amendment.md` § 2.5 — the claims-pass Method section that produces this charter's evidence criterion (PR #165, **merged 2026-09-17**)
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 22, call BACK-FILL (Kenya/Data))**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` (its evaluation is Spec 129's first task, per the priorities record, which also notes that its trigger 3 fired without an evaluation) · `P2 obligation (guard) · charter`.

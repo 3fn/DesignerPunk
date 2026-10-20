@@ -3,7 +3,9 @@
 **Date**: 2026-10-17
 **Status**: ACTIVE
 **Owner**: Thurgood (steward; the generator's checker tests), with **Lina co-owner** (the shared core; she owns the rendering tests) and **Ada** for `scripts/__tests__/` (her scripts' tests and fixtures).
-**Trigger**: **the merge of the application PR of ballot `2026-10-17-standing-write-scope-six-roots`** (branch `chore/write-scope-six-roots`).
+**Trigger**: `manual` — the fixing PR (the § Scope move) merges. The old line's start event fired at `096e11f99`. It named no close deadline, so there is no lapse. *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Superseded trigger (back-filled 2026-10-20; verbatim)**: **the merge of the application PR of ballot `2026-10-17-standing-write-scope-six-roots`** (branch `chore/write-scope-six-roots`).
+**Class**: P2 obligation (record) · owed-act *(set 2026-10-20, Thurgood, rule 12. Kiro's mechanical `allowedPaths` is narrower than the ratified rule, so Kiro seats are blocked, not misled.)*
 **Source**: Peter's ruling on Fork A (2026-10-17, relayed by the orchestrator): the class option — per-owner test subfolders, one glob per seat plus a shared-core folder — with sequencing (b): the application PR ships the prose rule and a named interim; the move is this issue. Recorded in the ballot's `## Errata` (e).
 
 ## The interim this issue ends

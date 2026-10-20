@@ -3,7 +3,8 @@
 **Date**: 2026-09-26
 **Status**: ACTIVE
 **Owner**: Lina (component build output)
-**Trigger**: Lina's next component-content or build session, **or** the first report of anything importing `dist/components/**` directly, whichever comes first. Not a Spec 123 blocker.
+**Class**: P2 obligation (record) · defect *(set 2026-10-20, Lina, rule 12. Not P1: package.json exports map `./components` to the browser bundle (L93-96) and expose no dist/components path, so a deep require is refused by exports before it reaches a missing .css; the supported surface is the bundle. Not P0: no served statement is false there. The seven dist/components modules do ship with dangling requires, because files[] still ships dist/**/*.js, so the package and the record disagree. Re-class P1 if an exports entry or a documented deep path ever reaches them.)*
+**Trigger**: `manual` — option (a), (b) or (c) is picked and its guard (every `require("./*.css")` in dist/components resolves) merges, or the first report of anything importing dist/components directly. *(was: Lina's next component-content or build session, **or** the first report of anything importing `dist/components/**` directly, whichever comes first. Not a Spec 123 blocker.)*
 **Source**: Lina's Spec 123 design-round finding (A7, design.md C5). Re-verified live by Ada at U1 Task 3 and by the steward on 2026-09-26. Lina asked for it to be filed rather than carried in memory.
 
 ## The defect
@@ -36,3 +37,5 @@ Whichever is chosen, add a guard: every `require("./*.css")` in `dist/components
 ## Filed by
 
 Steward (main-loop), 2026-09-26, at Lina's request (U1 Task 4 hand-back).
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 25, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual`. Class: the owner's (P1 consumer-blocking if `@3fn/core/components` resolves into these files; otherwise P2 obligation (record) · defect).

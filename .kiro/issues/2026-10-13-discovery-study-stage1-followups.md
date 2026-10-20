@@ -3,7 +3,9 @@
 **Date**: 2026-10-13
 **Type**: ROUTING RECORD — the follow-ups the merged Stage 1 findings (`.kiro/docs/discovery-study-stage1-findings.md`, #315) owe to owners. Each row is a separate owner action on its own PR; nothing here is done. The Stage 1 charter archives on this record's merge.
 **Owner**: rows below (Lina, Thurgood, Leonardo, Ada). **Walk**: Thurgood.
-**Trigger**: each row's owner's next docs session; row 6 is RECORDED (2026-10-13) — rows 1–3 are unblocked and each alias PR carries the re-run line.
+**Trigger**: `manual` — each row's owner's next docs session (the event is unchanged). The walk checks that rows 4, 5 and 7 are dispositioned within two walks. They are open at this walk. *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Superseded trigger (back-filled 2026-10-20; verbatim)**: each row's owner's next docs session; row 6 is RECORDED (2026-10-13) — rows 1–3 are unblocked and each alias PR carries the re-run line.
+**Class**: P3 improvement · owed-act *(set 2026-10-20, Thurgood, rule 12. A routing record of doc improvements and discoveries. No guard is claimed.)*
 **Grant paths**: none here (doc owners edit their own docs under their charters; the indexer fix has its own issue + grant).
 **Consulted**: none needed — relay of the merged findings' § 4 and § 7; owners act.
 **Class option (Peter, "keep the class options coming")**: row 6 — an **alias-hygiene re-run** as a standing rule: any PR adding a `aliases:` entry re-runs `scripts/discovery-study-stage1.ts` (oracle + frozen Q2, read-only) and shows no new confident-wrong and no regression. Cost: one command in the PR body; no new tooling. Rationale: KE-N2 — an alias seeded in 119-A to lift one oracle query manufactured a `strong` on an unrelated negative. Fixing three aliases without this check repeats the pattern.

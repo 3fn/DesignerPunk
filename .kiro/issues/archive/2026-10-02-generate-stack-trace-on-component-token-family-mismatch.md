@@ -81,3 +81,5 @@ The tracked continuation is in `2026-10-02-one-hop-upgrade-rehearsal-tracked-res
 - Migration-side detection in `src/cli/sync/**`, which is tracked elsewhere.
 - `governance/**`, `.kiro/steering/**`, ballots and charters.
 - No ratification authority.
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: resolved — fixed by its named fixing PR #270 (`d949ce8b7`); the grant expired at that merge. Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood

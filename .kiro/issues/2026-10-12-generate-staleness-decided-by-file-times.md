@@ -3,12 +3,13 @@
 **Date**: 2026-10-12
 **Status**: ACTIVE
 **Owner**: Ada (product-token pipeline correctness). Lina is consulted for the CLI surface (`src/cli/staleness.ts` sits under `src/cli/**`, her surface per `2026-10-03-generate-product-only-resolves-from-cwd.md`).
-**Trigger**: whichever fires first:
+**Trigger**: `path:src/cli/staleness.ts` — the PR that edits `isProductTokenStale`, the fix site (it has not changed since v11.9.0; the check still compares only product-YAML mtimes with the oldest output, read 2026-10-20). *(Token set 2026-10-20, Ada, rules 1 and 9. The prior prose trigger follows, kept as the explanation:)* whichever fires first:
 - **a `fix/` PR opened on Peter's go**;
 - **the PR that fixes `2026-10-03-generate-product-only-resolves-from-cwd.md`**, which edits `runProductOnly`, a caller of `isProductTokenStale`;
 - **Spec 129's design phase opening**. Its consumer-generation work changes what product tokens reference.
 
 Not blocking release 3: CI need N1 already runs `generate --force`.
+**Class**: P2 obligation (guard) · defect *(set 2026-10-20, Ada, rule 12. The staleness check compares only the product YAML's file times with the oldest output, so a change to the token source or the config reads a stale output as fresh and `generate` skips the rebuild with no message; the guard is weaker than its claim. `--force` catches it, and Task 21's bite run verified the masking by run.)*
 **Source**: Ada's Spec 123 U3c (Task 31) fact-check, 2026-10-12. Thurgood's Task 21 bite run verified the masking by run: a backdated product YAML change was skipped by a plain `generate` and caught by `--force`. Peter's go was to file, not to fix.
 
 *(The false code comment from the same fact-check, `generateTokenFiles.ts:17-18`, is recorded as an addendum to `2026-10-03-generate-reports-success-after-validation-abort.md` instead, because that record's fix PR edits the same lines.)*
@@ -74,3 +75,5 @@ These paths are outside Ada's write scope. The guide sentence and N1 text are ch
   - **What survives**: only in CI, only with `--force`, and only for teams that adopt N1, which is a minimal-core need but optional to adopt.
 
 **No fix is authorized by this record.**
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 60, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P2 obligation (guard) · defect` (the staleness check is weaker than "up to date").

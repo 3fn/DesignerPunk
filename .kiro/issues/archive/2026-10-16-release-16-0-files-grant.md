@@ -53,3 +53,5 @@
 - **RL-13**: one CHANGELOG Known-limitations line for the blend deprecation, and the notes' blend line extended to the token's own `description` and the wrappers' messages; both name the new record `.kiro/issues/2026-10-16-blend-deprecation-next-major-doc-correction.md`.
 
 **2026-10-17 — RL-17 acknowledged (Ada)**: the two `.kiro/issues/` writes in #383 (`a902c44b5`) were outside this grant's path list and my charter writeScope at the time; the content was what RL-13 asked for. Since ballot `2026-10-17-standing-write-scope-six-roots` (ratified 2026-10-17), `.kiro/issues/**` is standing scope for every seat under its header-owner rule (RS-30's written home).
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: grant consumed — #381 (`4b940c45d`), #385 (`8d221da96`) and the re-activation's pre-tag fix #383 (`13adf005a`); rule 5, a grant archives at its fixing PR's merge. Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood

@@ -3,7 +3,9 @@
 **Date**: 2026-10-19
 **Owner**: **Thurgood**, who flags this under Civitas content consistency (intra-domain path: the steward flags, the domain agent resolves).
 **Resolver**: **Lina**, who owns `governance/cross-platform-vs-platform-specific-decision-framework.md`. She raised these items herself while applying her edit sites.
-**Trigger**: Lina's next edit to the framework doc, or the next monthly walk, whichever comes first.
+**Trigger**: `path:governance/cross-platform-vs-platform-specific-decision-framework.md` — Lina's next edit to the framework doc, or the next full monthly walk (the event is unchanged). This pulled-forward walk is not that walk. *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Superseded trigger (back-filled 2026-10-20; verbatim)**: Lina's next edit to the framework doc, or the next monthly walk, whichever comes first.
+**Class**: P2 obligation (record) · defect *(set 2026-10-20, Thurgood, rule 12. Internal-consistency items in a served doc that Lina raised herself. No item is yet shown false to a reader.)*
 **Closes when**: each item below is resolved in the doc or ruled "keep, intentional", with the outcome recorded here, dated. The fix is a `governance/**` edit, so Peter merges it.
 **Not the ballot**: ballot `2026-10-18-true-native-development-is-not-true-native-design` is RATIFIED and executed. These items are post-ratification consistency findings and do not reopen it. Sites 6.1, 6.2, 6.3 and 6.9 landed at `692a0cd18`.
 **Related**: the § 6.5 pointer follow-up already lives at `2026-10-18-principles-kind-and-preserved-knowledge-triage.md`. It is not repeated here.

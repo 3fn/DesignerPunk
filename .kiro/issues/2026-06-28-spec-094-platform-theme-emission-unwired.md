@@ -7,6 +7,8 @@
 **Priority**: High (live native-platform contract gap)
 **Impact**: All iOS/Android platform token output; migrated native components consume a theming contract the build does not emit
 **Assigned To**: Ada (generator wiring) + Lina (component-contract cross-check) + Thurgood (governance audit signal)
+**Trigger**: `manual` — Spec 129 scope item (i) merges (theme emission wired into the build for Swift and Kotlin); the charter `2026-10-02-consumer-generation-completeness-spec.md` carries the item. *(Set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P1 consumer-blocking · defect *(set 2026-10-20, Ada, rule 12. `generateThemeOverrideBlocks` still has no call site outside its tests (read 2026-10-20, `TokenFileGenerator.ts` L1024), so a native consumer who registers a theme gets no theme types. It is disclosed, not a false claim: 15.0.0's notes and release-16.0.0.md L29 say native ships as reference source, not a build input, so it is not P0. The reading that would re-class it to P2 (record): the native trees staying labelled reference source indefinitely.)*
 
 ---
 
@@ -75,3 +77,5 @@ Approve the fix with the three defaults (yes / resolved-contexts / iOS-Android-f
   - **Measured**: member-name diff of the 14.1.0 registry tarball against a `main` build, 2026-10-02.
 - **A consumer's own `generate` has the same gap.** It runs the same generator, and `generateThemeOverrideBlocks` still has no call site (read 2026-10-02).
 - **Disclosed in 15.0.0's release notes** per Peter's 3b ruling (2026-10-02, relayed by the orchestrator: *"Go with A, disclose — and capture the follow-up"*). This note and the completeness charter are the follow-up's capture.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 13, call BACK-FILL (Ada))**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` (Spec 129 item (i) merges) · `P1 consumer-blocking · defect` (disclosed in 15.0.0's notes; native shipped as reference source). The owner decides the level.

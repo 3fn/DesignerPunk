@@ -5,7 +5,9 @@
 **Authority**: Peter's direction statements, recorded verbatim in `.kiro/specs/128-react-react-native-platform-admission/inbound-from-react-rn-sitting-2026-10-02.md` § 1. **No ballot yet** — the identity ballot is the charter's first deliverable.
 **Status**: **CHARTERED — not scheduled.** No build work is authorized. Outline drafting is permitted before the trigger; nothing lands.
 **Owner**: **Thurgood** (formalization; identity ballot drafting). **Ada and Lina — designers** of the registry, emitter contract, and component expression. **Leonardo — adopter front door.**
-**Trigger**: **the v15.0.0 tag is cut AND the completion-criteria-parity required-flip has merged** (ballot 70f8fe54) → Thurgood drafts the identity ballot and opens the outline round. Secondary trigger: Peter rules on the inbound's § 8 forks (or directs that they ride the outline round).
+**Trigger**: `manual` — the identity ballot is RATIFIED and Spec 128's outline round opens (the § 3 close event). The start event above (the v15.0.0 tag and the parity required-flip) is prose. Drafting is underway, but not on `main`. *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Superseded trigger (back-filled 2026-10-20; verbatim)**: **the v15.0.0 tag is cut AND the completion-criteria-parity required-flip has merged** (ballot 70f8fe54) → Thurgood drafts the identity ballot and opens the outline round. Secondary trigger: Peter rules on the inbound's § 8 forks (or directs that they ride the outline round).
+**Class**: P3 improvement · charter *(set 2026-10-20, Thurgood, rule 12. A directed spec charter, ranked 2 in `2026-10-18-spec-priorities-by-outcome.md`. It is not stale: its drafting is in progress.)*
 **Grant paths**: none — this charter grants no write scope; formalization proceeds through the normal spec pipeline.
 
 ---

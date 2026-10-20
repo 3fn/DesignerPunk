@@ -3,7 +3,8 @@
 **Date**: 2026-10-03
 **Status**: ACTIVE
 **Owner**: Ada (generators, `src/generators/**`, `src/providers/**`, `src/build/product/emitters/**`). Kenya (iOS) and Data (Android) are the platform verifiers. Lina cross-checks the component tier (component-token harvest; native components' theme reads).
-**Trigger**: **Spec 129's requirements round** (`.kiro/specs/129-consumer-generation-completeness/`; charter `2026-10-02-consumer-generation-completeness-spec.md`). At that round, each item below is either taken into Spec 129's requirements or explicitly left out with a reason. Not blocking release 3: native is labelled reference source, not a build input (Integration Guide § Platforms).
+**Trigger**: `manual` — Spec 129's requirements round: each item is taken into the requirements or left out with a reason. *(was: **Spec 129's requirements round** (`.kiro/specs/129-consumer-generation-completeness/`; charter `2026-10-02-consumer-generation-completeness-spec.md`). At that round, each item below is either taken into Spec 129's requirements or explicitly left out with a reason. Not blocking release 3: native is labelled reference source, not a build input (Integration Guide § Platforms).)* *(Token set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P2 obligation (record) · defect *(set 2026-10-20, Ada, rule 12. An intake record of three native-generator defects (the `UIKit`-only import, the OKLCH dependency, the ComponentTokens half folded from `2026-08-13-…`); native ships labelled reference source, so no reader is misled.)*
 **Source**:
 - Kenya's and Data's Task 19.4 owner reviews of the Integration Guide § Platforms (2026-10-03).
 - Kenya ran `swiftc -parse` and `swiftc -typecheck -sdk iphonesimulator -target arm64-apple-ios17.0-simulator` on this tree's `dist/` files (Swift 6.2). Data's evidence is source reading only.
@@ -90,3 +91,5 @@ None proposed here. Spec 129's tasks will carry Primary Artifacts. `src/generato
   - **What survives**: items 2 and 3b are new defects with no home. Item 1's `UIKit`-only import and the OKLCH dependency are new facts. One intake record is cheaper for Spec 129's requirements round than three more root files.
 
 **No fix is authorized by this record.**
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 53, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` (Spec 129's requirements round) · `P2 obligation (record) · defect`.

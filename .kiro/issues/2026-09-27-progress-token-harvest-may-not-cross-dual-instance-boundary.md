@@ -3,7 +3,8 @@
 **Date**: 2026-09-27
 **Status**: ACTIVE
 **Owner**: Ada (Spec 124's dual-instance guarantee is her design; `loadComponentTokens.ts` Source 1 / `scopedTsRequire` are her territory)
-**Trigger**: next Spec 124/dual-instance-adjacent touch, or before this finding is relied on as settled.
+**Trigger**: `path:src/build/tokens/defineComponentTokens.ts` — the next change to the brand mechanism whose dual-instance behavior the finding questions, at which the finding is traced or re-ruled; or the finding is about to be relied on as settled, whichever comes first. *(was: next Spec 124/dual-instance-adjacent touch, or before this finding is relied on as settled.)* *(Token set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P2 obligation (guard) · defect *(set 2026-10-20, Ada, rule 12. The packed-install test is cited as the authoritative proof of the dual-instance guarantee, and the record's own bite (swap the brand for a plain `Symbol()`) did not go red, so the guard may hold less than it claims. Clause (b), provenance, is verified and automated.)*
 **Source**: Spec 123 U1 Task 9 (Thurgood), found while executing the brand-survival bite (a) manual verification requirements.md Req 3.2 names.
 
 ## The gap
@@ -34,3 +35,5 @@ A resolution needs someone who can trace `scopedTsRequire`'s actual behavior for
 ## Filed by
 
 Thurgood (Spec 123 U1 Task 9), 2026-09-27.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 30, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P2 obligation (guard) · defect` (the test may not exercise the boundary it is cited for).

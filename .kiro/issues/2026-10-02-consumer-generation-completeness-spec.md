@@ -3,7 +3,8 @@
 **Date**: 2026-10-02
 **Status**: ACTIVE (chartered, not started)
 **Owner**: Ada (token pipeline and generators). **Lina** owns the component tier: the component-token harvest, and the cross-check of the native components' `theme.<token>` names against what is emitted. **Thurgood** formalizes the spec (design outline → requirements → design → tasks). **Decision**: Peter, at each formalization gate.
-**Trigger**: **the next spec kickoff after 15.0.0 ships.** "Ships" means the publish is verified: `scripts/verify-publish-rail.sh` passes and its record has merged (RELEASE-FLOW step 6).
+**Trigger**: `manual` — Spec 129's formalization opens (rank 1 in `2026-10-18-spec-priorities-by-outcome.md`); the design outline is still a placeholder. *(was: **the next spec kickoff after 15.0.0 ships.** "Ships" means the publish is verified: `scripts/verify-publish-rail.sh` passes and its record has merged (RELEASE-FLOW step 6).)* *(Token set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P2 obligation (record) · charter *(set 2026-10-20, Ada, rule 12. A chartered spec with a recorded principle, scope items (i)–(vi) and acceptance sentence; nothing built, and no reader is misled by the charter.)*
 **Source**:
 - Peter's rulings at the 15.0.0 release-prep sitting, 2026-10-02, relayed by the orchestrator:
   - 3a: *"Go with the middle path, ship 15 with the honest native scoping"*, which named this spec as the next work, Ada's with Lina;
@@ -63,3 +64,5 @@
 - Any code, spec text or Integration Guide edit. This file is the charter.
 - The 15.0.0 guide wording, which is the ballot owed under the M0a issue.
 - The ship-directory hygiene, which is its own issue.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 37, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` (Spec 129's formalization opens; rank 1 in the priorities record) · `P2 obligation (record) · charter`.

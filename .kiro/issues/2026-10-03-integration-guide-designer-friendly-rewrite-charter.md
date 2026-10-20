@@ -5,7 +5,8 @@
 **Authority**: Peter's direction, 2026-10-03: the guide should be "updated… designer friendly and something an agent can help the user walk through". The scope below comes from the Leonardo/Ada/Thurgood two-round consult, recorded on `task/123-u3-onboarding` in `tasks.md` Task 19's dated annotations (commits `ed99a57d`, `d34ca071`).
 **Status**: **CHARTERED, not scheduled.** No guide edit is authorized under this charter before the trigger. The Spec 123 Task 19.4 accuracy pass is separate and is not governed here.
 **Owner**: **Leonardo** (lead). **Ada**: token facts. **Lina**: review of the CLI, `sync`, testing and MCP-config sections (Start MCP Servers, Generate flags, CLI Commands, Upgrading, Verify counts, Running Component Tests). **Thurgood**: governance, doc-id and routing.
-**Trigger**: **the release-3 tag is cut** → Leonardo opens the rewrite. **Gate**: the theme walkthrough and anything native wait for Spec 129 (`129-consumer-generation-completeness`) item (i) to merge (item (i)'s content is *unverified* by me; taken as given in the consult).
+**Trigger**: `manual` — Leonardo opens the rewrite when Peter directs the burst slot for it, or when Spec 129 item (i) merges and unlocks the gated theme/native walkthroughs, whichever comes first. Re-ruled 2026-10-20 (Leonardo, owner, rule 9): the release-3 tag (`v15.1.0`) was cut and no rewrite opened, so the original event has fired; the charter is not dropped and stays live, and the next opening is a named act on Peter's go, not a calendar hope. *(was: **the release-3 tag is cut** → Leonardo opens the rewrite. **Gate**: the theme walkthrough and anything native wait for Spec 129 (`129-consumer-generation-completeness`) item (i) to merge (item (i)'s content is *unverified* by me; taken as given in the consult).)*
+**Class**: P3 improvement · charter *(set 2026-10-20, Leonardo, rule 12. The shipped guide is correct but in a developer's voice; no reader is misled or blocked, so an improvement, and a charter because the work is a directed follow-up that is not yet a spec.)*
 **Grant paths**: none. This charter grants no write scope.
 
 ---
@@ -46,3 +47,5 @@ Release 3 ships a guide that is correct but written in a developer's voice. At a
 ## 5. Closing
 
 When the rewritten guide merges, record the outcome here (dated) and `git mv` this file to `archive/`.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 50, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P3 improvement · charter`. Its prose trigger "the release-3 tag is cut" fired (`v15.1.0`) and no rewrite has opened; the owner opens it or re-rules.

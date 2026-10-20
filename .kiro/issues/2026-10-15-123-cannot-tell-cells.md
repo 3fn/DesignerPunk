@@ -3,7 +3,8 @@
 **Date**: 2026-10-15
 **Status**: ACTIVE
 **Owner**: **Leonardo** (rows 1–4: the trio's operator; the class fix for each is an instrument change). **Ada** (row 5).
-**Trigger**: rows 1–4 — **the first release trio run after 16.0.0** (the firing event of `.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md`): each row is re-observed there, or its record says why not. Row 5 — **release-4 prep** (an `npm audit` of the candidate alone is minutes).
+**Trigger**: `release:next:phase-1` — release 5's prep (the first release trio run after 16.0.0, the firing event of `.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md`): rows 1–4 are re-observed there or the record says why not; row 5 (Ada) is attributed and carried to the same release. *(was: rows 1–4 — **the first release trio run after 16.0.0** (the firing event of `.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md`): each row is re-observed there, or its record says why not. Row 5 — **release-4 prep** (an `npm audit` of the candidate alone is minutes).)*
+**Class**: P2 obligation (record) · owed-act *(set 2026-10-20, Leonardo, rule 12. The cells are honest `cannot-tell` values, so no reader is misled and the guard is not weaker than its claim; what is owed is the re-observation and its recorded line.)*
 **Source**: Task 28 criterion C8 ("any `cannot-tell` / not-observed-cold cells" exit as committed records with owner and trigger). Read as: every U5 record cell whose value is `cannot-tell` or "not observed cold" (instruments block O-8). The cold-observation table (`validation/cold-observation-table.md`) reads **observed** in all four cells and has **no** "not observed cold — state not clean" cell, so every row below is a `cannot-tell`.
 **Grant paths**: none.
 **Consulted**: none needed — a listing of committed cells with their committed routes.
@@ -31,3 +32,5 @@ At each monthly health check: has the first release trio after 16.0.0 run? If ye
   - **Bundled code `npm audit` cannot see**: the MCP bundles inline three libraries that carry advisories: `@modelcontextprotocol/sdk` 1.29.0 (an advisory against its OAuth client), `fast-uri` 3.1.3 and `js-yaml` 4.2.0. None of the three bundles contains the sdk's OAuth client: they use the stdio transport only.
   - **The class**: a consumer's `npm audit` cannot see bundled code, because inlined libraries are not in the dependency tree it reads. So neither the 37 count nor a clean audit says anything about the three advisories above.
   - **Disposition**: carried to release 5 with this record. The remedy is Ada's to name there. Nothing here blocks 16.0.0 (rulings item 15).
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 72, call BACK-FILL (Leonardo))**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `release:next:phase-1` · `P2 obligation (record) · owed-act`.

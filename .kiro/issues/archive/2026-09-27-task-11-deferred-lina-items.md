@@ -81,3 +81,5 @@
 ## Filed by
 
 Lina, 2026-09-27, at Peter's direction (relayed by the orchestrator), recording his ruling on the two items raised in her 11.2 confirmations. `.kiro/issues/` is outside Lina's charter write scope. The file is written on the orchestrator's instruction, carrying Peter's ruling; it records a deferral and changes no governed content.
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: executed — items 1 and 2 carry in-file EXECUTED lines; steps 4–5 rode Tasks 13.4 and 18, ticked and merged in U2b #262 (`669b51b09`). Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood

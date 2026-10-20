@@ -26,3 +26,5 @@ None filed here. The fixing PR needs `tools/agent-generator/render.ts` (and `ada
 
 - **Against doing it at all**: it is a wording nit on a line that works; each reword costs two seats a re-sign and moves the lock, and consumers who already installed release 2 receive the correction only on their next sync. A tracked residual with the trigger above may be the right resting state if no re-sign is otherwise coming.
 - **Against the batching trigger**: "the next re-sign of either verdict row" may be far off, which is why the U3 kickoff backstop exists. If Peter prefers a hard date-free bound tied to a release instead (for example "before release 3's tag"), that is his call.
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: resolved — U3c #307 (`8a0c0e46a`, Task 31: the intro line). Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood

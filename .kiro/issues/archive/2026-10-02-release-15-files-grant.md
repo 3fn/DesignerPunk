@@ -70,3 +70,5 @@ This line supersedes the 2026-10-02 `**Grant paths**:` line above for any PR cit
 - *Not a pending correction*: Stacy's R-4 (the 02:12–02:17Z 404s read as indexing lag) was already corrected before #273 merged, in `087f7697` (merged in `eadc7f45`). Stacy's #275 marks it resolved, so it needs no grant.
 
 **Not covered**: anything else in `docs/releases/**`, `CHANGELOG.md` and the GitHub release body. Whether the GitHub release body is edited is Peter's or the orchestrator's call (R-3's route). An edit outside the two paths is a claims-pass finding.
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: grant consumed — #271 (`9e1a3106a`), #273 (`eadc7f452`) and the re-activation's corrections PR #280 (`941bca6cc`); rule 5, a grant archives at its fixing PR's merge. Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood

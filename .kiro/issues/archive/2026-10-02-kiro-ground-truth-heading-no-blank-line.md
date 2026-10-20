@@ -38,3 +38,5 @@ None filed here. File a `**Grant paths**:` list in this issue before the fixing 
 
 - **Against fixing**: cosmetic, and it moves steward outputs for a Markdown-readability nit; the 122 posture favours not touching steward bytes without a reason. If the reason is only aesthetic, leaving it recorded and unfixed is defensible.
 - **For fixing**: the sibling CC output has the blank line, so the two targets render the same section differently, and a Markdown linter or a stricter renderer treats a heading that is not preceded by a blank line as part of the preceding paragraph in some dialects. Which of the two is the right resting state is a pick for Peter, so I did not fold it.
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: resolved — U3c #307 (`8a0c0e46a`); `KIRO_GROUND_TRUTH_LEAD` (`tools/agent-generator/adapters/kiro.ts` L685) cites this file. Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood

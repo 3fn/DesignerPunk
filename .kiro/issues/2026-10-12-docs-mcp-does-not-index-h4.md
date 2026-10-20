@@ -3,7 +3,9 @@
 **Date**: 2026-10-12
 **Status**: ACTIVE
 **Owner**: Thurgood (Civitas steward; docs MCP indexer) — facts surfaced by Leonardo (19.5 review) and verified by Thurgood on a local rebuild; filed by the orchestrator (`.kiro/issues/` is outside Thurgood's write scope)
-**Trigger**: the next docs-MCP indexer change, or the first served doc whose reference content cannot be flattened to H3 (the Integration Guide was flattened instead — Task 19.5, `0e1ca0553`)
+**Trigger**: `path:mcp-server/src/indexer/**` — the next docs-MCP indexer change, or the first reader who needs an H4 in a summary outline (the event is unchanged). *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Superseded trigger (back-filled 2026-10-20; verbatim)**: the next docs-MCP indexer change, or the first served doc whose reference content cannot be flattened to H3 (the Integration Guide was flattened instead — Task 19.5, `0e1ca0553`)
+**Class**: P3 improvement · defect *(set 2026-10-20, Thurgood, rule 12. Items (1) (the summary outline and the health count exclude H4) and (3) (fold the two records) remain. H4s are addressable by `get_section`, so no served answer is false.)*
 
 ## What
 

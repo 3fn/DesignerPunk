@@ -88,3 +88,5 @@ A controlled 4-config experiment under the broken CJS-only tsx (worktree) isolat
 - **Why**: cross-cutting build-infra concern beyond 117's token-index scope; requires its own investigation + a strategy decision that isn't Ada's to make alone.
 - **Where**: a dedicated module-resolution-strategy spec (Thurgood-led).
 - **Impact**: recurring developer friction + silent boot-failures at CJS↔ESM boundaries until addressed; not blocking (workarounds + the 117 bin fix unblock the immediate path).
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: superseded and executed — Spec 118 is the dedicated spec (`.kiro/specs/118-module-resolution-coherence/design-outline.md` L7); every 118 task is ticked except Task 10 (N/A); the law is `rosetta-system-architecture` § "Module-Resolution Contract". Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood

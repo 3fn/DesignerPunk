@@ -66,3 +66,5 @@ Why now: the defect has moved from a skipped internal test to a sentence in the 
 **Unverified**: whether the 102 are all false negatives. The 2026-06-24 analysis classified ~99 as false. I have not re-classified the 3 new ones, nor checked whether `blur000` ("16 × 1 = 16, but token baseValue is 0") is a genuine relationship error rather than a parser limit.
 
 **No fix is authorized by this addendum.**
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 7, call PETER)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` (a `fix/` PR on Peter's go, or the first Ada token-validator session) · `P1 consumer-blocking · defect` (`validate` exits 1 for every consumer). Peter's question: a `fix/` PR now, or a small spec?

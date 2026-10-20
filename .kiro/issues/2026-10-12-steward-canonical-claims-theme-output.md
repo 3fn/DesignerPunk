@@ -3,7 +3,9 @@
 **Date**: 2026-10-12
 **Status**: ACTIVE
 **Owner**: Thurgood (Civitas steward) for the cross-surface consistency flag; the wording is Kenya's (`canonical/agents/kenya.md`) and Data's (`canonical/agents/data.md`), resolved on the intra-domain path. Filed by the orchestrator from Thurgood's U3c sweep (Task 31.0, 2026-10-12).
-**Trigger**: whichever comes first — Spec 129 item (i) lands; the next authoring touch of either canonical agent file; or release 3's RELEASE pass.
+**Trigger**: `path:canonical/agents/[dk]*a.md` — the next authoring touch of `canonical/agents/kenya.md` or `canonical/agents/data.md` (the glob matches exactly those two), or Spec 129 item (i) lands. The "release 3's RELEASE pass" limb fired at 15.1.0, before rule 11, so it is not counted. That limb is dropped: Stacy carried the record there (claims-pass R-1). *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Superseded trigger (back-filled 2026-10-20; verbatim)**: whichever comes first — Spec 129 item (i) lands; the next authoring touch of either canonical agent file; or release 3's RELEASE pass.
+**Class**: P2 obligation (record) · defect *(set 2026-10-20, Thurgood, rule 12. The text is steward-only and not packed: `files[]` ships `dist/consumer-canonical/**`, never `canonical/agents/**`, and U3c corrected the consumer side. It is not met under M7 (O-18).)*
 
 ## What
 

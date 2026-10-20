@@ -32,3 +32,5 @@ Correct the install section to public npm with the `@3fn` scope, or replace it w
 ## Filed by
 
 Steward (main-loop), 2026-09-27, at Peter's direction.
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: resolved — U3 #321 (`cdb8296fa`) removed the GitHub Packages install text; `npm.pkg.github.com` and `@designerpunk/` no longer appear in `governance/DesignerPunk-Integration-Guide.md`. Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood

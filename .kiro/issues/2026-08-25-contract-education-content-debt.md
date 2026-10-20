@@ -6,6 +6,8 @@
 **Status**: OPEN — batch authorized by Peter 2026-08-25 ("batch the rest for Lina"); CDS:322 split out and fixed same day (this file's carrying PR)
 **Owner**: Lina (all items; Peter decision points marked)
 **Priority order**: as listed (Peter-set sequencing rationale in each item)
+**Class**: P2 obligation (guard) · owed-act *(set 2026-10-20, Lina, rule 12. Overrode the steward's P3 proposal. Item 2 is live: the Concept Catalog name validator scans `contracts:` names but never `excludes:`, and `interaction_segment_disabled` (Nav-SegmentedChoice-Base/contracts.yaml L432) is still not a catalog concept, so the guard is weaker than its claim. Item 4's ruled DELETE is also unexecuted: governance/Component-Templates.md L996 and L1089 still teach `custom_validation`, which Peter ruled out on 2026-08-25. Classed with the batch; Stacy may read item 4 higher (rule 12). Items 3 and 5 are not re-verified today and are content debt at P3. Kind owed-act: Peter authorized the batch on 2026-08-25.)*
+**Trigger**: `manual` — items 2 to 5 are each resolved or explicitly parked with a dated note here (the Done criteria); no single path or merge fires it.
 
 ---
 
@@ -49,3 +51,5 @@ The 7 component-doc reviews routed to Lina at the 2026-08-25 health check (§3 +
 ## Done criteria
 
 Each item lands via its own PR (or small coherent groups), normal review; item 2's validator extension proves its bite (mutation red/green) before the sweep is called closed; docs-MCP reindex after any served-surface change. This issue closes when items 2–5 are each resolved-or-explicitly-parked with a dated note here.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 16, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P3 improvement · owed-act`.

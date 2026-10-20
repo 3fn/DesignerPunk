@@ -5,7 +5,8 @@
 **Owner**: **Lina** (the components are hers; she authors and edits this body under README rule 9).
 **Verifiers**: **Kenya** (iOS), **Data** (Android), **Sparky** (web). Each verifies the fix on their platform in the owning component PR, and each may append dated, signed lines here.
 **Authority**: ballot `.kiro/docs/ballots/2026-10-18-true-native-development-is-not-true-native-design.md`, § 5 "Already true" and § 11 "Surfaced, routed to Lina". Its Status line reads **RATIFIED (Peter, 2026-10-18)** at commit `6bb53b096` on `chore/tnd-ballot-ratified` (PR #401). That PR was open, not merged, when this record was filed; the status was checked mechanically from the commit.
-**Trigger**: per component, whichever comes first:
+**Class**: P1 consumer-blocking · defect *(set 2026-10-20, Lina, rule 12. Accepted. These are accessibility semantics of shipped Input-Checkbox-Base and Input-Radio-Base (hard-coded English state strings on Android, probable role drift on iOS, no forced-colors support or an obsolete prefers-contrast value on web) that reach end users of a consumer's product. The iOS and Android behaviors are REPORTED by the platform seats, not verified in this repo (R-2); the source text is verified.)*
+**Trigger**: `manual` — per component: the next PR that changes that component's rendering or contracts (item arms below). Not a path: the items span several components, each with its own fix PR. *(Token set 2026-10-20, Lina; the original two arms follow unchanged.)*
 - (a) **the next PR that changes that component's rendering or contracts**. This is the ratified F-3 rule: "grandfathered components must align when we work to update them". "Modified" means rendering or contracts, not metadata or docs (ballot § 8, F-3, as Data confirmed it).
 - (b) **Spec 130's placeholder retirement, if it touches Input-Checkbox-Base's rendering.** As planned, it does **not**: it edits `settings.yaml`, not the checkbox (ballot § 8, F-3). So arm (b) is not expected to fire. It is recorded here so that a walker does not mistake Spec 130's merge for a fired trigger.
 
@@ -194,3 +195,5 @@ A3's 44dp may also be re-dispositioned explicitly if Peter rules the Android 48d
 ## Walk log
 
 *(Thurgood appends dated walk lines here under README rule 6. Seats append dated, signed lines under rule 9.)*
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 80, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` (per component, as its § Trigger states) · `P1 consumer-blocking · defect` (accessibility semantics). The owner decides.

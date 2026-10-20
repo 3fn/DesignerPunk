@@ -3,7 +3,8 @@
 **Date**: 2026-09-27
 **Status**: ACTIVE
 **Owner**: Lina (component API) + Kenya (iOS) + Data (Android)
-**Trigger**: the next native Container-Base touch, or the native-component-distribution follow-up (`2026-09-26-native-component-distribution.md`), whichever comes first. This doesn't block Spec 123.
+**Class**: P3 improvement · defect *(set 2026-10-20, Lina, rule 12. Accepted. The alias still exists on native (iOS TokenMapping.swift L205; Android TokenMapping.kt L229 and L343) and not on web, but deprecating it removes a second vocabulary and breaks no consumer; no reader is misled.)*
+**Trigger**: `path:src/components/core/Container-Base/**` — the next native Container-Base touch, where the deprecation warning and docs land; or the native-component-distribution follow-up (`2026-09-26-native-component-distribution.md`), whichever comes first. This doesn't block Spec 123. *(token set 2026-10-20, Lina; the prose is the record's original trigger.)*
 **Source**: Container-Base phantom-vars record (`archive/2026-09-26-container-base-phantom-css-vars.md`, "Left open" item 2). Peter deferred it to Spec 123 Task 6's context. Task 6 (Ada) analysed it, and **Peter ruled option (N) on 2026-09-27**.
 
 ## The inconsistency
@@ -23,3 +24,5 @@ Deprecate the alias on iOS and Android: a warning at use, and docs/README update
 ## Filed by
 
 Steward (main-loop), 2026-09-27, at Peter's direction.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 28, call BACK-FILL (Lina))**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `path:src/components/core/Container-Base/**` · `P3 improvement · defect`.

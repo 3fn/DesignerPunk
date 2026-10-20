@@ -3,7 +3,8 @@
 **Date**: 2026-09-26
 **Status**: ACTIVE
 **Owner**: Lina (component content); Kenya/Data as platform verifiers
-**Trigger**: fix rides the "native component distribution" follow-up (Kenya/Data's shared charter out of Spec 123 Task 3.5's KEEP-WITH-FOLLOW-UP: first iOS/Android product spec, or the platform build-verification charter's evaluation, whichever first) — OR earlier at Lina's convenience; the parse defect (item 3) is independent and cheap
+**Class**: P2 obligation (record) · defect *(set 2026-10-20, Lina, rule 12. Accepted. The native trees ship as labelled reference source (15.0.0 notes), so no reader is misled and the package claims nothing it cannot hold; but the defect is real and still live (25 Android component files still reference LocalDPTheme, grep 2026-10-20) and the trees cannot compile against any born repo's tokens until it is fixed.)*
+**Trigger**: `manual` — the native component distribution follow-up starts, or the platform build-verification charter's evaluation opens, or Spec 129's design phase opens on scope item (i), whichever is first; the parse defect (item 3) is independent and cheap. *(was: fix rides the "native component distribution" follow-up (Kenya/Data's shared charter out of Spec 123 Task 3.5's KEEP-WITH-FOLLOW-UP: first iOS/Android product spec, or the platform build-verification charter's evaluation, whichever first) — OR earlier at Lina's convenience; the parse defect (item 3) is independent and cheap. The Spec 129 arm is taken from the 2026-10-03 iOS key record, which ties its trigger to the same event.)*
 **Source**: Spec 123 tasks-round platform consults (KENYA R1, DATA R1 in `.kiro/specs/123-consumer-distribution/feedback/tasks.md`), both measured against the real tree; Kenya ran `swiftc -typecheck` (iOS 17 simulator)
 
 ## The defect (cross-platform, same class)
@@ -20,3 +21,5 @@ The Spec 123 platform verdicts (KEEP the native trees as labelled reference sour
 ## Filed by
 
 Steward (main-loop), 2026-09-26, at Kenya's and Data's routing (both flagged it independently; Kenya confirmed Data's Android finding has the iOS equivalent).
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 27, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P2 obligation (record) · defect` (the native trees ship labelled as reference source).

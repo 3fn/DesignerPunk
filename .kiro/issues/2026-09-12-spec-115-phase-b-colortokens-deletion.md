@@ -31,3 +31,5 @@ Finish what `src/tokens/ColorTokens.ts`'s own `@deprecated` header promises: **S
 ## Guard until then
 
 The Option A parity test (DTCG `$value` ↔ OKLCH source, per primitive) makes any re-divergence loud. It protects the seam but NOT the misleading-surface problem — the file still reads as live data.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 18, call PETER)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` (Peter ranks it) · `P3 improvement · charter`. Peter's question: rank this spec-sized item, and fold the rgba-cleanup and shadow-OKLCH records into it?

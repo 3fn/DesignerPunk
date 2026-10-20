@@ -5,6 +5,9 @@
 **Agent**: Ada
 **Severity**: Low — tech debt, no user impact
 **Status**: Open (deferred)
+**Owner**: Ada (the `**Agent**:` header above; added at the 2026-10-20 walk, rule 9)
+**Trigger**: `manual` — the cleanup opens: Peter ranks Spec 115 Phase B (`2026-09-12-spec-115-phase-b-colortokens-deletion.md`, which the walk's question 3 proposes to fold this record into), or gives a standalone go. The header's "Blocked by: v12 release" condition has been met. *(Set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P3 improvement · defect *(set 2026-10-20, Ada, rule 12. A frozen legacy RGBA path with no consumer-visible effect (the header's own Severity: Low). The reading that would re-class it: the RGBA path found to diverge from the OKLCH output a consumer receives.)*
 
 ---
 
@@ -66,3 +69,5 @@ See issue file `2026-06-10-oklch-pipeline-integration-incomplete.md` for the lis
 - Old `BlendCalculator` (RGB-space) removed; only `OklchBlendCalculator` remains
 - All 8500+ tests still pass
 - `npx designerpunk generate` output unchanged (same OKLCH values)
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 3, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Live: `rgba(` in 10 non-test files under `src/{tokens,providers,generators,resolvers}`; `ColorTokenValue` at `src/types/PrimitiveToken.ts:47`. Proposed `manual` · `P3 improvement · defect`. Add an `**Owner**:` line. Overlaps row 18 (Spec 115 Phase B); the owner may fold it there.

@@ -3,7 +3,8 @@
 **Date**: 2026-10-03
 **Status**: ACTIVE
 **Owner**: Lina (`src/cli/designerpunk.ts`, the CLI surface); Ada as the reporter and, if the fix touches the product-token emitter, the consulted seat
-**Trigger**: **a `fix/` PR opened on Peter's go**, or the **next CLI-touching task that is allowed to widen into `runProductOnly`**, whichever fires first. Spec 123 U3 Task 22 edits `src/cli/designerpunk.ts` (`runGenerate`) but **must not carry this** (see "Relation to U3 Task 22"), so Task 22 is not the trigger. Not blocking release 3: `--product-only` is an optional flag, and the failure is a refusal, not silent wrong output (see "Impact").
+**Trigger**: `manual` — a `fix/` PR opened on Peter's go, or the next CLI task allowed to widen into `runProductOnly`, whichever fires first. A path token is not used: Spec 123's Task 22 edited `src/cli/designerpunk.ts` and was ruled not to carry this, so the file path would fire on work that does not close it. *(was: **a `fix/` PR opened on Peter's go**, or the **next CLI-touching task that is allowed to widen into `runProductOnly`**, whichever fires first. Spec 123 U3 Task 22 edits `src/cli/designerpunk.ts` (`runGenerate`) but **must not carry this** (see "Relation to U3 Task 22"), so Task 22 is not the trigger. Not blocking release 3: `--product-only` is an optional flag, and the failure is a refusal, not silent wrong output (see "Impact").)* *(Token set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P2 obligation (record) · defect *(set 2026-10-20, Ada, rule 12. `runProductOnly` anchors to `process.cwd()` (`designerpunk.ts` L332 and L340, read 2026-10-20) and `--force` is described as "Regenerate all" when it only bypasses the product-token staleness check; the failure is a refusal, not silent wrong output, and the help text is the part that misleads.)*
 **Source**: Ada's review of the Integration Guide, relayed through the orchestrator on 2026-10-03. Peter's go was to file, not to fix. Ada reported both items; the first was UNVERIFIED by the orchestrator, and I verified both below on branch `chore/issues-guide-rewrite-charter-and-cli-findings` (cut from `main` 981891e6).
 
 ---
@@ -75,3 +76,5 @@ Task 22 lists `src/cli/designerpunk.ts` in its Primary Artifacts (tasks.md, Task
 **No fix is authorized by this record.**
 
 2026-10-17 — Lina: re-routed to Ada as `src/cli/**` owner (ballot 2026-10-17-standing-write-scope-six-roots § 2.1); the Owner header stands as the record of who owned it when filed.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 48, call BACK-FILL (Ada))**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P2 obligation (record) · defect`.

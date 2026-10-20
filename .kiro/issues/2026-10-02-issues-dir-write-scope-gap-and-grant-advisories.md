@@ -3,7 +3,9 @@
 **Date**: 2026-10-02
 **Status**: ACTIVE
 **Owner**: Thurgood (the issues-dir convention's owner, `.kiro/issues/README.md`; the grant rule's ballot author). **Decision**: Peter, by ballot where a charter or the README changes (`.kiro/docs/ballots/README.md`).
-**Trigger**: **the next ballot-drafting pass, or the monthly health-check walk, whichever comes first.** Both are events, never a date. The walk is named because this issue is exactly the kind of root item the active-charter walk reads for fired-without-record.
+**Trigger**: `manual` — Thurgood's next ballot sitting, with the A-1 and A-2 drafts in front of Peter. The gap half is executed: ballot `2026-10-17-standing-write-scope-six-roots`, ratified #393 (`b1112d2e1`) and applied at `096e11f99`. A-1 and A-2 remain. *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Superseded trigger (back-filled 2026-10-20; verbatim)**: **the next ballot-drafting pass, or the monthly health-check walk, whichever comes first.** Both are events, never a date. The walk is named because this issue is exactly the kind of root item the active-charter walk reads for fired-without-record.
+**Class**: P2 obligation (guard) · owed-act *(set 2026-10-20, Thurgood, rule 12. A-2 is a missing detector: an issue-row grant's activating merge is read by nobody. A-1 is a CI-path clause that no in-place replacement can meet.)*
 **Source**: Spec 123 U2b's execution (2026-10-01 to 2026-10-02), where this surfaced three times in one unit; Stacy's ARMING read of #256, `.kiro/specs/127-completion-claims-integrity/completion/arming-2026-10-02-pr256-workflow-comment-grant.md` (landed as #257, `79cb787c`), § "Standards implications" items 1 and 2 (A-1, A-2).
 
 ---
@@ -40,3 +42,7 @@ Any charter edit, README edit or ballot text. This issue is the tracked flag; th
 Thurgood, 2026-10-02, in the U2b closeout bookkeeping PR.
 
 **Walk 2026-10-17 — the trigger fired (the monthly walk came before any ballot-drafting pass).** No ballot draft exists. The gap has widened beyond `.kiro/issues/**`: code roots with a de facto owner and no charter write scope include `tools/agent-generator/**` (surfaced again at #389), `mcp-server/src/**` (see `2026-10-02-docs-mcp-logs-dir-cwd-relative.md`), `scripts/**`, `src/cli/**` (Lina's CLI surface) and `.kiro/hooks/**`. **Class option: ONE ballot** that makes the charters' stated write scope match the ownership practised (option 1 or 2 below, decided per root), not one ballot per path. Owner: Thurgood drafts; Peter rules. New trigger: Thurgood's next ballot sitting, and in any case before the next PR that needs a grant only because of this gap.
+
+## Lapse (2026-10-20)
+
+Firing commit: `3b84122c9` (#413, ballot sitting 2 ratified, 2026-10-19), the first ballot sitting after rule 11's application (`c470a248f`). It passed without the A-1/A-2 drafts. The 2026-10-18 sitting (#407, `71bbd1085`) came before `c470a248f` and is not counted. **Lapse count: 1.** Rule 11: the first lapse of a P2 `(guard)` record goes to Peter with spec, drop or fix-now. It is in the walk's Peter batch (ledger, PETER item 7). — Thurgood

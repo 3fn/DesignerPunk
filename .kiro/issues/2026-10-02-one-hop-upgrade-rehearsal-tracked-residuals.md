@@ -3,7 +3,8 @@
 **Date**: 2026-10-02
 **Status**: ACTIVE (tracked items; **no grant**: this file carries no `**Grant paths**:` list)
 **Owner**: Lina, for every item below unless the item says otherwise.
-**Trigger**: per item, below. Each item is an event, never a date.
+**Class**: P2 obligation (record) · defect *(set 2026-10-20, Lina, rule 12. Accepted. R2, R4 and R6 were waived for 16.0.0 by Peter on 2026-10-15 and are disclosed in the 16.0.0 notes (R2) and the INSTALL "Upgrading from 14.x" sentence (R4); no reader is misled, but the fixes are owed and have lapsed twice. R1 and R5 moved to Spec 129 on 2026-10-14. R2/R4/R6's fix still sits in sync code that is under the grant below.)*
+**Trigger**: `release:next:phase-1` — Lina's `fix/` PR for R2, R4 and R6 under the grant below, merged before release 5's RELEASE phase 1, or a dated re-ruling; a third lapse routes to Peter as a spec-or-drop decision. The per-item triggers below (R1 to R6) still apply to their items. *(was: per item, below. Each item is an event, never a date. Token set 2026-10-20 from the ruled 2026-10-15 trigger in § Disclosed.)*
 **Source**:
 - Peter's ruling, 2026-10-02 (relayed by the orchestrator), verbatim: **"Go with the split, fix the three before the release branch"**. Under that ruling:
   - three findings are fixed before the release branch (F2, F4b, and F1's handling; each has its own grant file);
@@ -93,3 +94,5 @@ Record each item's outcome here, dated, as it resolves. Archive the file when ev
 - `CHANGELOG.md` (one consumer-facing `### Fixed` line)
 
 Left out on purpose: `canonical/generated.lock` (`src/cli` is not a diff-guard input-closure root, so the lock does not move); the `design.md` catalog rows these strings mirror (Thurgood's — errata with Lina's strings, as for release-3 item 8). Uncertain whether R2 (a) needs `PackageResolver.ts` or fits inside `Migration.ts`; listed so the PR does not stop halfway for a grant. An out-of-list edit is a claims-pass finding.
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 43, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `release:next:phase-1` (ruled in prose, 2026-10-15: "before release 5's RELEASE phase 1") · `P2 obligation (record) · defect`. `src/cli/sync/**` is in Ada's standing scope since the six-roots ballot; the owner may re-route, as she did on 2026-10-17 for two CLI records.

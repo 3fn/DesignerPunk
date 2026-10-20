@@ -5,6 +5,9 @@
 **Domain**: Ada (token remaps) — **color choices need Peter's adjudication** (visible design changes)
 **Severity**: High — includes a dark-mode body-text failure more severe than the defect the fix session was sent for
 **Status**: **DEFERRED (re-anchored 2026-10-18 to Peter's planned redesign; the 125-B campaign-close trigger fired and was superseded)** — spec-track; see § "The sustained fix", § "Deferral ruling" and § "Measured at the Spec 130 switch read (2026-10-18) — pinned, deferred" below. Interim dark-text fix carved out and shipped (see § "Interim fix"). **Exemption count (2026-10-18)**: the title's 16 is the F4-time count; the guard's `EXEMPT` list pins 15 live text pairs today, and the 2026-10-18 section adds 5 non-text pairs pinned in this record only, for **20 live pinned pairs**.
+**Owner**: Ada (the `**Domain**:` header above; added at the 2026-10-20 walk, rule 9). The color choices are Peter's adjudication.
+**Trigger**: `manual` — Peter's planned redesign or his go, per the 2026-10-18 ruling (§ "Deferral ruling"), which replaced the 125-B campaign-close trigger. *(Set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P2 obligation (guard) · owed-act *(set 2026-10-20, Ada, rule 12. The contrast guard (`SemanticColorContrast.test.ts`) carries 20 pinned sub-AA pairs as exemptions, so it holds less than the WCAG AA claim it is named for, by Peter's 2026-10-18 ruling. The reading that would re-class it: the redesign landing and removing the exemptions (close), or an exemption found unpinned (P1).)*
 
 ---
 
@@ -105,3 +108,5 @@ Passing for the record: `action.primary` dark-base 4.27; light-wcag 5.33. Focus 
 *Provenance note (Ada)*: the ruling arrived by coordinator relay and is recorded as relayed; there is no ballot for it, since it re-anchors a deferral rather than changing governance law.
 
 **Not deferred**: Spec 130's own switch tokens are designed to pass 3:1 now, irrespective of this deferral: an outlined off state (theme-varying off outline gray300 / gray100: 5.51 / 3.41 vs canvas) and a theme-varying on fill (cyan400 or cyan500 / cyan300 / teal300 / teal200: all ≥ 3.12 vs canvas). See `.kiro/specs/130-input-switch-base/inbound-from-ada.md` § (d).
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 17, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` (Peter's redesign or his go, per the 2026-10-18 ruling) · `P2 obligation (guard) · owed-act` (the contrast guard carries pinned exemptions). Add an `**Owner**:` line.

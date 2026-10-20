@@ -7,6 +7,8 @@
 **Type**: Token foundation / incomplete migration (Spec 112 follow-on)
 **Primary owner**: Ada (Rosetta tokens) — **requires Peter's token-creation review**
 **Status**: Open — deferred (out of scope for Spec 117, which is token-index *integrity*, not token-foundation migration)
+**Trigger**: `manual` — Peter's ranking of Spec 115 Phase B (whose first item is the shadow-primitive migration, walk row 18) or his token-creation review, which the `**Primary owner**:` line already requires at execution. *(Set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P3 improvement · defect *(set 2026-10-20, Ada, rule 12. An incomplete migration, not a divergence: the record's own analysis has the index and dist agreeing, and no consumer output is wrong. The reading that would re-class it: a consumer-visible OKLCH/rgba mismatch on a shadow token.)*
 
 ---
 
@@ -52,3 +54,5 @@ Complete the OKLCH migration for the shadow family as a **Spec 112 follow-on** (
 - Spec 117 Task 3 completion: `.kiro/specs/117-token-index-generation-integrity/completion/task-3-completion.md`
 - Originating migration: Spec 112 (OKLCH migration) — chromatic + neutral only
 - R3 criterion scoping: Spec 117 R3 "no rgba" is scoped to OKLCH-migrated color primitives; shadows tracked here (not in the `IntentionalDivergenceManifest`).
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 9, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P3 improvement · defect`. Overlaps row 18: shadow-primitive migration is Spec 115 Phase B's first item. Needs Peter's token-creation review at execution.

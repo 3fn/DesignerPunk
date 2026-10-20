@@ -5,6 +5,8 @@
 **Owner**: Ada (Rosetta / generation pipeline)
 **Severity**: High — shipped generated output does not compile on iOS or Android (v14.0.0 affected)
 **Status**: OPEN
+**Trigger**: `manual` — Spec 129's requirements round, where `2026-10-03-native-generator-findings-for-spec-129-intake.md` folds this record's ComponentTokens half; at that round it is taken into the requirements or left out with a reason. The record had no named trigger before this line (that intake record already flagged it). *(Set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P1 consumer-blocking · defect *(set 2026-10-20, Ada, rule 12. `getFamilyClassName` (`TokenFileGenerator.ts` L635) still emits references to `SizingTokens`, `SpacingTokens` and `BorderWidthTokens`, which no generated file defines (read 2026-10-20), so a native consumer's generated ComponentTokens output does not compile. Disclosed, not a false claim: release-16.0.0.md L29 says do not start a native product on this release, so it is not P0.)*
 
 ---
 
@@ -44,3 +46,5 @@ No platform-side compile check exists for the generated component token files; t
 - PR #126 — Button-Icon family mislabel fix (reference path)
 - Avatar fix PR (branch `fix/avatar-icon-token-family`) — family-mismatch guard in `defineComponentTokens` now prevents *label* drift at authoring time; it cannot make the emitted class exist
 - `src/tokens/component/progress.ts` — the guard's first catch (one spacing-family call spanning three families)
+
+**Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 15, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` (Spec 129's requirements round, where `2026-10-03-native-generator-findings-for-spec-129-intake.md` folds its ComponentTokens half) · `P1 consumer-blocking · defect`. The owner decides.
