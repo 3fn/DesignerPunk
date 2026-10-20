@@ -61,3 +61,9 @@ The pick is open. (1) and (2) compose; (3) is the class-level option, and costs 
   - **Shape 2 (a counted `open` exclusion)** is a query change on both tiers' copies, needs the stub-charter rule (a spec with no `tasks.md`), and treats a checkbox as a fact. Filed as a P3 record (Edit C) with a `manual` trigger.
   - **Shape 3 (a committed script)** waits on Peter's answer to the 2026-10-17 health-check question (`.kiro/docs/civitas-health-checks/2026-10-17.md` L115–121), which is Thurgood's to put to him. Filed in the same P3 record, not as a second one, because 2 is built inside 3 if 3 is chosen.
 - **The surviving counter**: a sentence is a reader's duty, not a guard. An agent that does not read the prose after the query still prints `OWED: ci-needs` and may report it. The disclosure removes the false statement; it does not stop the misreading. What the over-listing costs a consumer who skips prose is a mis-stated owed set in a report the claims pass reads, which is a visible-number direction (the reader of the report sees `ci-needs` with an untouched `tasks.md`), and shape 2 closes it only by trusting a checkbox. That residual is why the P3 record exists.
+
+## Archived (2026-10-20)
+
+*Signed: Thurgood (Civitas steward), archived by the steward, early walk act, Peter's go 2026-10-20 ("Go on the records PR with the class option and resolving F-1 and F-2, please", chat, relayed by the orchestrator); README rule 5, "otherwise at the next health-check walk".*
+
+- **Outcome**: the disclosure sentence (§ "Fixed (2026-10-19)") merged as #415, `e92742a1f` (2026-10-19), before release-5 phase 1; the over-listing residual (shapes 2 and 3) is filed as the P3 record `2026-10-19-owed-set-query-over-lists-in-progress-specs.md`, which stays at the root. The outcome above is the owner's (Stacy); this line adds only the merge SHA. Moved to `archive/` by `git mv` in the same commit as this line.
