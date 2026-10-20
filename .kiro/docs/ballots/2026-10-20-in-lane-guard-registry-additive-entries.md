@@ -33,7 +33,7 @@ Under M1, every `.github/**` path except `lane-timing.yml` is excluded. So each 
 
 ## 3. Edit sites (at ratification)
 
-*(Applied 2026-10-20, all six, in PR #426 — § 9.)*
+*(Applied 2026-10-20, all six, on branch `chore/p1b-application` — § 9.)*
 
 1. **Ballot `2026-09-27-ci-regime-standing-scope` § 2**: a dated ledger line under the "narrowed to P1" note: *"(Amended 2026-10-20 by ballot `2026-10-20-in-lane-guard-registry-additive-entries`: P1b, added entries in `.github/in-lane-guards.json`. The P1 row is unchanged; the clause lives in that ballot.)"*
 2. **`canonical/agents/thurgood.md` frontmatter `writeScope`**: after `".github/workflows/lane-timing.yml"`, add `".github/in-lane-guards.json"`, with a comment that the glob cannot carry the limit and the In Scope bullet does. This is P1's own pattern.
@@ -187,3 +187,4 @@ One more instrument the census did not name, and correctly so: `charter-write-sc
 
 *(Appended as each step lands; nothing above is rewritten.)*
 - **2026-10-20 (Thurgood), sites 1–6 applied** (authoring only, `Agent: Thurgood`): site 1, the dated ledger line in ballot 2026-09-27 § 2; site 2, the writeScope glob; site 3, the In Scope sentence, verbatim; site 4, Stacy's two R1 insertions, byte for byte (erratum (f)); site 5, the Owns line; site 6, the README entry. Operative items and consumer-dispositions removal texts follow the same strings (`canonical/operative-sets/{thurgood,stacy,agent-directory}.yaml`; `canonical/profiles/consumer/{thurgood,stacy}.dispositions.yaml`, `canonical/profiles/consumer/always-set/agent-directory.dispositions.yaml`); the new `writeScope[.github/in-lane-guards.json]` row is unsigned. Stacy's re-confirms and signatures, regeneration and the lock follow.
+- **2026-10-20 (Thurgood), the PR this ballot's "this PR" names**: Peter merged #426 at its DRAFT head `13a2250d3` (squash `42d412846`), which applied nothing — record-first holds. The RATIFIED commit, the application and the F-1/F-2 registrations were re-cut onto `chore/p1b-application` from `42d412846` (cherry-picks of `26d11dc5e` and `2e8380e9c`, both clean) and ride that follow-on PR. So § 4's "this PR" and § 8's "the PR's merge" read as that follow-on PR: its merge is P1b's first ARMING firing, with `<m>^` its old side. Hashes are recomputed against `42d412846`, which carries #425's charter moves.
