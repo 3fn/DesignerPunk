@@ -61,3 +61,5 @@ Both advisories are LAW, so neither ships by fix-now as an edit:
 - **EXECUTION**: none to governance text. Records only: this outcome and the Trigger re-rule above. A-2's query ran once at `076e947da` as the draft's evidence (147 output lines, a superset; about ten records name a `.github/**` path in a `**Grant paths**:` list, by a heuristic filter). Whether each activating merge got its ARMING read is Stacy's to read (Q5), not the steward's.
 
 The record stays at the root until the ballot is ruled and applied, then closes by rule 5. — Thurgood
+
+- **2026-10-20 (Thurgood), R2**: the DRAFT ballot folds all eight of Stacy's R1 amendments, her two corrections and her #243 evidence (A-2's second instance, Low, no remedy owed). It also finds that the draft's `-S` query missed #332. Both forks are still Peter's, and both recommendations, now joint, are F-1 (b) and F-2 (i). Nothing is applied.
