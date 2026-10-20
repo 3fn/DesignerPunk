@@ -360,11 +360,11 @@ describe('CATALOG CONFORMANCE — every loud string equals its design-table row'
     expect(evaluateParent(p, doc).findings).toEqual([
       {
         verdict: 'STATUS_NONCOMPLIANT',
-        message: `parent 2: criteria row "criterion A" Status 'Partial' is not one of ✅ ⚠️ ❌ (or — on an annotation row)`,
+        message: `parent 2: criteria row "criterion A" Status 'Partial' is not a bare mark — write the mark only (✅, ⚠️, ❌; — on an annotation row)`,
       },
       {
         verdict: 'STATUS_NONCOMPLIANT',
-        message: `parent 2: gate row "\`npm test\` green" Status 'Done' is not one of ✅ ⚠️ ❌ (or — on an annotation row)`,
+        message: `parent 2: gate row "\`npm test\` green" Status 'Done' is not a bare mark — write the mark only (✅, ⚠️, ❌; — on an annotation row)`,
       },
     ]);
   });

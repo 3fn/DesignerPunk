@@ -10,7 +10,7 @@
   "emissions": [],
   "exit": "red",
   "messages": [
-    "parent 1: criteria row \"Beta: the profile loader rejects an unknown key with a named…\" Status '✅ (partially)' is not one of ✅ ⚠️ ❌ (or — on an annotation row)"
+    "parent 1: criteria row \"Beta: the profile loader rejects an unknown key with a named…\" Status '✅ (partially)' is not a bare mark — write the mark only (✅, ⚠️, ❌; — on an annotation row)"
   ],
   "notes": "The includes() hole (D-2 record § 1, last line; S4 rider 'The gap'): a mark with trailing text read as ✅ before the fix."
 }

@@ -117,7 +117,7 @@ function evidenceFindings(
       // a claim, so its evidence duty is evaluated too.
       findings.push({
         verdict: 'STATUS_NONCOMPLIANT',
-        message: `parent ${parentId(parent)}: ${label} row "${name}" Status '${r.statusCell}' is not one of ✅ ⚠️ ❌ (or — on an annotation row)`,
+        message: `parent ${parentId(parent)}: ${label} row "${name}" Status '${r.statusCell}' is not a bare mark — write the mark only (✅, ⚠️, ❌; — on an annotation row)`,
       });
     }
     if (r.evidence.trim() === '' || r.evidenceKind === 'empty-or-prose') {
