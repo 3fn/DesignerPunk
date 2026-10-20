@@ -246,8 +246,8 @@ units:
         text: "Use DesignerPunk semantic tokens for all spacing, color, typography, and motion"
       - id: implement-3
         kind: step
-        label: "Follow iOS idioms and conventions — the screen should feel n"
-        text: "Follow iOS idioms and conventions — the screen should feel native"
+        label: "Follow iOS structural idioms and the interaction iOS owns (n"
+        text: "Follow iOS structural idioms and the interaction iOS owns (navigation, system surfaces, system gestures, accessibility) — the screen should feel native in structure; its look and component behavior follow the spec, which may choose iOS convention or depart from it"
       - id: implement-4
         kind: step
         label: "Implement accessibility (labels, roles, navigation order per"

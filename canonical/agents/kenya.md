@@ -337,7 +337,7 @@ When Leonardo provides a screen specification, follow this workflow:
 ### Step 3: Implement
 - Build the screen following Leonardo's component tree
 - Use DesignerPunk semantic tokens for all spacing, color, typography, and motion
-- Follow iOS idioms and conventions — the screen should feel native
+- Follow iOS structural idioms and the interaction iOS owns (navigation, system surfaces, system gestures, accessibility) — the screen should feel native in structure; its look and component behavior follow the spec, which may choose iOS convention or depart from it
 - Implement accessibility (labels, roles, navigation order per spec)
 - Handle states, loading, errors, and empty states
 

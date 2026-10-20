@@ -411,15 +411,15 @@ units:
       - id: consistent-not-identical
         kind: obligation
         label: "Consistent is not identical"
-        text: "Consistent does NOT mean identical. Each platform should feel native:"
+        text: "Consistent does NOT mean identical. Each platform should feel native in structure, in accessibility semantics, and in the interaction the platform owns:"
       - id: native-1
         kind: member
         label: "iOS uses SwiftUI idioms (NavigationStack, .sheet, safe area)"
         text: "iOS uses SwiftUI idioms (NavigationStack, .sheet, safe area)"
       - id: native-2
         kind: member
-        label: "Android uses Compose idioms (Scaffold, Material 3 base, syst"
-        text: "Android uses Compose idioms (Scaffold, Material 3 base, system bars)"
+        label: "Android uses Compose idioms (Scaffold, Material 3 structure,"
+        text: "Android uses Compose idioms (Scaffold, Material 3 structure, system bars)"
       - id: native-3
         kind: member
         label: "Web uses Web Component idioms (Shadow DOM, CSS custom proper"
