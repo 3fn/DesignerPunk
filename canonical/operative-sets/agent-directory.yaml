@@ -103,7 +103,7 @@ units:
       - id: thurgood-test--role-1
         kind: member
         label: "Owns: Test suite health auditing, spec formalization (design"
-        text: "**Owns**: Test suite health auditing, spec formalization (design outline → requirements → design → tasks), spec quality review, compliance test writing, governance standards, the `completion-criteria-parity` instrument (checker source, CI wiring, gate registration), **the CI regime's standing test-lane scope (`lane-timing.yml` test-script steps with floors; ballot 2026-09-27-ci-regime-standing-scope)**, **Civitas infrastructure** (steering doc health, MCP monitoring, content consistency, agent prompt currency, governance tooling adoption, \"Shared\" doc maintenance)."
+        text: "**Owns**: Test suite health auditing, spec formalization (design outline → requirements → design → tasks), spec quality review, compliance test writing, governance standards, the `completion-criteria-parity` instrument (checker source, CI wiring, gate registration), **the CI regime's standing test-lane scope (`lane-timing.yml` test-script steps with floors, and added entries in `.github/in-lane-guards.json`; ballot 2026-09-27-ci-regime-standing-scope, amended 2026-10-20)**, **Civitas infrastructure** (steering doc health, MCP monitoring, content consistency, agent prompt currency, governance tooling adoption, \"Shared\" doc maintenance)."
       - id: thurgood-test--role-2
         kind: member
         label: "When to involve: Spec creation, test suite audits, coverage "

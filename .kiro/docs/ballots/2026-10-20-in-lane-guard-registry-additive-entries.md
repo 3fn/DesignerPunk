@@ -33,6 +33,8 @@ Under M1, every `.github/**` path except `lane-timing.yml` is excluded. So each 
 
 ## 3. Edit sites (at ratification)
 
+*(Applied 2026-10-20, all six, in PR #426 — § 9.)*
+
 1. **Ballot `2026-09-27-ci-regime-standing-scope` § 2**: a dated ledger line under the "narrowed to P1" note: *"(Amended 2026-10-20 by ballot `2026-10-20-in-lane-guard-registry-additive-entries`: P1b, added entries in `.github/in-lane-guards.json`. The P1 row is unchanged; the clause lives in that ballot.)"*
 2. **`canonical/agents/thurgood.md` frontmatter `writeScope`**: after `".github/workflows/lane-timing.yml"`, add `".github/in-lane-guards.json"`, with a comment that the glob cannot carry the limit and the In Scope bullet does. This is P1's own pattern.
 3. **`canonical/agents/thurgood.md` § "In Scope"**, the CI-regime bullet. Before `Every other CI path goes through an issue-row grant (§ 3).`, insert: *"In `.github/in-lane-guards.json` only (P1b, ballot 2026-10-20-in-lane-guard-registry-additive-entries): **add** an entry, never change or remove one, never change `version` or another key (that is weakening a floor: an issue-row grant naming the act, or Peter's); the PR shows the additivity predicate `true` against its merge base, the step green with `N registered; N selected` (N the entry count), and per added entry the assertion its record rests on."*
@@ -184,3 +186,4 @@ One more instrument the census did not name, and correctly so: `charter-write-sc
 ## 9. Application ledger
 
 *(Appended as each step lands; nothing above is rewritten.)*
+- **2026-10-20 (Thurgood), sites 1–6 applied** (authoring only, `Agent: Thurgood`): site 1, the dated ledger line in ballot 2026-09-27 § 2; site 2, the writeScope glob; site 3, the In Scope sentence, verbatim; site 4, Stacy's two R1 insertions, byte for byte (erratum (f)); site 5, the Owns line; site 6, the README entry. Operative items and consumer-dispositions removal texts follow the same strings (`canonical/operative-sets/{thurgood,stacy,agent-directory}.yaml`; `canonical/profiles/consumer/{thurgood,stacy}.dispositions.yaml`, `canonical/profiles/consumer/always-set/agent-directory.dispositions.yaml`); the new `writeScope[.github/in-lane-guards.json]` row is unsigned. Stacy's re-confirms and signatures, regeneration and the lock follow.

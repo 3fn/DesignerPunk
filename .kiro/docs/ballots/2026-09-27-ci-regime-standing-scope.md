@@ -56,6 +56,8 @@
 
 *(Narrowed at `[THURGOOD R2]`, on Stacy R1's measured base rate: P1's named task recurred twice in two days; P2–P4's tasks recurred at most once in 80 days, and that was a retrofit. **P2, P3 and P4 are excluded and go to M2, per event.** The original P1–P4 table is in this file's history at `c7b1f4bb`.)*
 
+*(Amended 2026-10-20 by ballot `2026-10-20-in-lane-guard-registry-additive-entries`: P1b, added entries in `.github/in-lane-guards.json`. The P1 row is unchanged; the clause lives in that ballot.)*
+
 ### Peter's ruled limits (verbatim, condition 2)
 
 > **New required contexts, changes to `EXPECTED_CONTEXTS`'s count, branch protection and repo settings stay Peter's.**
