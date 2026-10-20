@@ -3,7 +3,8 @@
 **Date**: 2026-10-02
 **Status**: ACTIVE (chartered, not started)
 **Owner**: Ada (token pipeline and generators). **Lina** owns the component tier: the component-token harvest, and the cross-check of the native components' `theme.<token>` names against what is emitted. **Thurgood** formalizes the spec (design outline → requirements → design → tasks). **Decision**: Peter, at each formalization gate.
-**Trigger**: **the next spec kickoff after 15.0.0 ships.** "Ships" means the publish is verified: `scripts/verify-publish-rail.sh` passes and its record has merged (RELEASE-FLOW step 6).
+**Trigger**: `manual` — Spec 129's formalization opens (rank 1 in `2026-10-18-spec-priorities-by-outcome.md`); the design outline is still a placeholder. *(was: **the next spec kickoff after 15.0.0 ships.** "Ships" means the publish is verified: `scripts/verify-publish-rail.sh` passes and its record has merged (RELEASE-FLOW step 6).)* *(Token set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P2 obligation (record) · charter *(set 2026-10-20, Ada, rule 12. A chartered spec with a recorded principle, scope items (i)–(vi) and acceptance sentence; nothing built, and no reader is misled by the charter.)*
 **Source**:
 - Peter's rulings at the 15.0.0 release-prep sitting, 2026-10-02, relayed by the orchestrator:
   - 3a: *"Go with the middle path, ship 15 with the honest native scoping"*, which named this spec as the next work, Ada's with Lina;

@@ -5,6 +5,8 @@
 **Owner**: Ada (Rosetta / generation pipeline)
 **Severity**: High — shipped generated output does not compile on iOS or Android (v14.0.0 affected)
 **Status**: OPEN
+**Trigger**: `manual` — Spec 129's requirements round, where `2026-10-03-native-generator-findings-for-spec-129-intake.md` folds this record's ComponentTokens half; at that round it is taken into the requirements or left out with a reason. The record had no named trigger before this line (that intake record already flagged it). *(Set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P1 consumer-blocking · defect *(set 2026-10-20, Ada, rule 12. `getFamilyClassName` (`TokenFileGenerator.ts` L635) still emits references to `SizingTokens`, `SpacingTokens` and `BorderWidthTokens`, which no generated file defines (read 2026-10-20), so a native consumer's generated ComponentTokens output does not compile. Disclosed, not a false claim: release-16.0.0.md L29 says do not start a native product on this release, so it is not P0.)*
 
 ---
 

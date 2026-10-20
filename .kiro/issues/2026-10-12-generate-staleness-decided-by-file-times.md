@@ -3,7 +3,7 @@
 **Date**: 2026-10-12
 **Status**: ACTIVE
 **Owner**: Ada (product-token pipeline correctness). Lina is consulted for the CLI surface (`src/cli/staleness.ts` sits under `src/cli/**`, her surface per `2026-10-03-generate-product-only-resolves-from-cwd.md`).
-**Trigger**: whichever fires first:
+**Trigger**: `path:src/cli/staleness.ts` — the PR that edits `isProductTokenStale`, the fix site (it has not changed since v11.9.0; the check still compares only product-YAML mtimes with the oldest output, read 2026-10-20). *(Token set 2026-10-20, Ada, rules 1 and 9. The prior prose trigger follows, kept as the explanation:)* whichever fires first:
 - **a `fix/` PR opened on Peter's go**;
 - **the PR that fixes `2026-10-03-generate-product-only-resolves-from-cwd.md`**, which edits `runProductOnly`, a caller of `isProductTokenStale`;
 - **Spec 129's design phase opening**. Its consumer-generation work changes what product tokens reference.

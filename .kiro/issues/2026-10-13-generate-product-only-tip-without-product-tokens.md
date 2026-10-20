@@ -1,6 +1,8 @@
 # Issue: after a system-token failure, `generate` prints the `--product-only` tip even when no product tokens are configured
 
-**Date**: 2026-10-13 · **Status**: ACTIVE · **Owner**: Lina (CLI surface, `src/cli/designerpunk.ts` `runGenerate`, ~L321–323 at `fc6d122d4`) · **Trigger**: Lina's next CLI `fix/` PR (she accepted it as a pre-existing defect on her surface, 2026-10-13; not part of release-3 item 1 or item 2).
+**Date**: 2026-10-13 · **Status**: ACTIVE · **Owner**: Lina (CLI surface, `src/cli/designerpunk.ts` `runGenerate`, ~L321–323 at `fc6d122d4`)
+**Trigger**: `path:src/cli/designerpunk.ts` — the next CLI `fix/` PR that edits `runGenerate`, where the tip is printed (L324, unconditional on `productTokens`, read 2026-10-20). *(was: Lina's next CLI `fix/` PR (she accepted it as a pre-existing defect on her surface, 2026-10-13; not part of release-3 item 1 or item 2).)* *(Token set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P3 improvement · defect *(set 2026-10-20, Ada, rule 12. Cosmetic: the tip names a flag that does nothing useful when no product tokens are configured; the exit code is already correct after #335.)*
 **Source**: Ada's release-3 item-1 fix (PR #335, `.kiro/issues/2026-10-03-generate-reports-success-after-validation-abort.md` § Fixed, "Open, not mine to change" item 2); recorded by the orchestrator at Lina's request (she cannot write `.kiro/issues/` under her charter).
 
 ## The gap (by reading, Ada; not run)

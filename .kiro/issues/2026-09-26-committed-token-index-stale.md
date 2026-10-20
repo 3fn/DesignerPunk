@@ -3,7 +3,8 @@
 **Date**: 2026-09-26
 **Status**: ACTIVE
 **Owner**: Ada
-**Trigger**: next Ada session after the Spec 123 U1 unit PR merges. Sooner if it blocks anyone.
+**Trigger**: `manual` — Ada decides the two items still open: whether a per-PR check that `generate` over a clean checkout leaves `token-index/**` unchanged is built (item 3; `verify:token-index-clean`, `package.json` L200, runs at release only, and no workflow runs a token-index diff, read 2026-10-20), or the record is closed on the release-time check. *(was: next Ada session after the Spec 123 U1 unit PR merges. Sooner if it blocks anyone.)* *(Token set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P3 improvement · defect *(set 2026-10-20, Ada, rule 12. The drift itself was absorbed at the 15.0.0 release PR (#271, `9e1a3106a`), and item 2 is decided in practice (`token-index/meta.json` is tracked). I did not re-run a clean build at this walk, so recurrence is unverified. The reading that would close it: Ada ruling the release-time check sufficient.)*
 **Source**: observed repeatedly during Spec 123 U1 (Tasks 3, 4 and the Task 1 fix-up) and in Lina's fresh-main worktree (#209).
 
 ## The defect

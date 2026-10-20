@@ -7,6 +7,9 @@
 **Type**: Application MCP token resolution (NOT token-index generation)
 **Primary owner**: Application MCP / Rosetta (Ada consulted)
 **Status**: Open — **LATER (triaged 2026-06-25, Task-8 milestone)**: low severity, documented workaround exists; needs a token-index-format / MCP-resolution design decision. Parked/opportunistic. Out of scope for Spec 117 (token-index *generation* integrity, not MCP semantic resolution). See `docs/roadmap/m0a-deferred-items.md` § "Issues surfaced during the 117/118 spec cluster".
+**Owner**: Ada (ASSIGN accepted 2026-10-20, rule 9; the `**Primary owner**:` header above stays as filed)
+**Trigger**: `path:application-mcp-server/src/indexer/TokenIndexer.ts` — the next change to the Application MCP's token reader, which is where `resolvedValue` and the theme resolution are built. It is the same file as `2026-07-19-application-mcp-search-tokens-partial-match-signal.md` (`search`, L193), the sibling that names this record as its bundle. *(Set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P3 improvement · defect *(set 2026-10-20, Ada, rule 12. Narrowed since filing: #154 (2026-09-13) shipped option (b), query-time resolution, as `themeResolutions.dark` with `modeValue`; read live 2026-10-20 on `color.structure.canvas`, which returns `oklch(0.42 0.018 260)` there. The top-level `resolvedValue.dark` still repeats the base by design (the fix was additive), so the record stays open for that readout. The reading that would re-class it to P2 (record): an agent reading `resolvedValue.dark` without `themeResolutions`.)*
 
 ---
 

@@ -3,7 +3,8 @@
 **Date**: 2026-10-03
 **Status**: ACTIVE
 **Owner**: Ada (generators, `src/generators/**`, `src/providers/**`, `src/build/product/emitters/**`). Kenya (iOS) and Data (Android) are the platform verifiers. Lina cross-checks the component tier (component-token harvest; native components' theme reads).
-**Trigger**: **Spec 129's requirements round** (`.kiro/specs/129-consumer-generation-completeness/`; charter `2026-10-02-consumer-generation-completeness-spec.md`). At that round, each item below is either taken into Spec 129's requirements or explicitly left out with a reason. Not blocking release 3: native is labelled reference source, not a build input (Integration Guide § Platforms).
+**Trigger**: `manual` — Spec 129's requirements round: each item is taken into the requirements or left out with a reason. *(was: **Spec 129's requirements round** (`.kiro/specs/129-consumer-generation-completeness/`; charter `2026-10-02-consumer-generation-completeness-spec.md`). At that round, each item below is either taken into Spec 129's requirements or explicitly left out with a reason. Not blocking release 3: native is labelled reference source, not a build input (Integration Guide § Platforms).)* *(Token set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P2 obligation (record) · defect *(set 2026-10-20, Ada, rule 12. An intake record of three native-generator defects (the `UIKit`-only import, the OKLCH dependency, the ComponentTokens half folded from `2026-08-13-…`); native ships labelled reference source, so no reader is misled.)*
 **Source**:
 - Kenya's and Data's Task 19.4 owner reviews of the Integration Guide § Platforms (2026-10-03).
 - Kenya ran `swiftc -parse` and `swiftc -typecheck -sdk iphonesimulator -target arm64-apple-ios17.0-simulator` on this tree's `dist/` files (Swift 6.2). Data's evidence is source reading only.

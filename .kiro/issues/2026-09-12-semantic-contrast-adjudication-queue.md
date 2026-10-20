@@ -5,6 +5,9 @@
 **Domain**: Ada (token remaps) — **color choices need Peter's adjudication** (visible design changes)
 **Severity**: High — includes a dark-mode body-text failure more severe than the defect the fix session was sent for
 **Status**: **DEFERRED (re-anchored 2026-10-18 to Peter's planned redesign; the 125-B campaign-close trigger fired and was superseded)** — spec-track; see § "The sustained fix", § "Deferral ruling" and § "Measured at the Spec 130 switch read (2026-10-18) — pinned, deferred" below. Interim dark-text fix carved out and shipped (see § "Interim fix"). **Exemption count (2026-10-18)**: the title's 16 is the F4-time count; the guard's `EXEMPT` list pins 15 live text pairs today, and the 2026-10-18 section adds 5 non-text pairs pinned in this record only, for **20 live pinned pairs**.
+**Owner**: Ada (the `**Domain**:` header above; added at the 2026-10-20 walk, rule 9). The color choices are Peter's adjudication.
+**Trigger**: `manual` — Peter's planned redesign or his go, per the 2026-10-18 ruling (§ "Deferral ruling"), which replaced the 125-B campaign-close trigger. *(Set 2026-10-20, Ada, rules 1 and 9.)*
+**Class**: P2 obligation (guard) · owed-act *(set 2026-10-20, Ada, rule 12. The contrast guard (`SemanticColorContrast.test.ts`) carries 20 pinned sub-AA pairs as exemptions, so it holds less than the WCAG AA claim it is named for, by Peter's 2026-10-18 ruling. The reading that would re-class it: the redesign landing and removing the exemptions (close), or an exemption found unpinned (P1).)*
 
 ---
 
