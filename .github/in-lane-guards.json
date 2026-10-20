@@ -108,6 +108,48 @@
       "config": "jest.functional.config.js",
       "context": "lane-functional-root",
       "record": "governance/classification-map.md § no-hardcoded-color (scope: the 7 components carrying a *.stemma.test.ts)"
+    },
+    {
+      "file": "scripts/completion-claims/__tests__/completion-doc.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/issues/2026-10-13-named-guard-selection-floor-then-map-column-derivation.md § Owner lines on the second ARMING read, F-1 (the completion-claims suites, the class's second named instance: unit tests of the completion-criteria-parity instrument)"
+    },
+    {
+      "file": "scripts/completion-claims/__tests__/fixtures.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/issues/2026-10-13-named-guard-selection-floor-then-map-column-derivation.md § Owner lines on the second ARMING read, F-1 (the completion-claims suites, the class's second named instance: unit tests of the completion-criteria-parity instrument)"
+    },
+    {
+      "file": "scripts/completion-claims/__tests__/materiality.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/issues/2026-10-13-named-guard-selection-floor-then-map-column-derivation.md § Owner lines on the second ARMING read, F-1 (the completion-claims suites, the class's second named instance: unit tests of the completion-criteria-parity instrument)"
+    },
+    {
+      "file": "scripts/completion-claims/__tests__/normalize.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/issues/2026-10-13-named-guard-selection-floor-then-map-column-derivation.md § Owner lines on the second ARMING read, F-1 (the completion-claims suites, the class's second named instance: unit tests of the completion-criteria-parity instrument)"
+    },
+    {
+      "file": "scripts/completion-claims/__tests__/tasks-md.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/issues/2026-10-13-named-guard-selection-floor-then-map-column-derivation.md § Owner lines on the second ARMING read, F-1 (the completion-claims suites, the class's second named instance: unit tests of the completion-criteria-parity instrument)"
+    },
+    {
+      "file": "scripts/completion-claims/__tests__/verdict.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/issues/2026-10-13-named-guard-selection-floor-then-map-column-derivation.md § Owner lines on the second ARMING read, F-1 (the completion-claims suites, the class's second named instance: unit tests of the completion-criteria-parity instrument)"
+    },
+    {
+      "file": "scripts/__tests__/package-name-scope-parity.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/specs/123-consumer-distribution/completion/task-17-4-completion.md (Spec 123 Task 17.4, the standing rule-to-SCAN_DIRS parity test); governance/classification-map.md § package-name-scope-drift; registered under F-1 of .kiro/issues/2026-10-13-named-guard-selection-floor-then-map-column-derivation.md"
     }
   ]
 }
