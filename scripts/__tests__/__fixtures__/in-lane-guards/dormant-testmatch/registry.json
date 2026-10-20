@@ -1,0 +1,1 @@
+{"version": 1, "guards": [{"file": "guards/selected.guard-fixture.ts", "config": "jest.config.js", "context": "lane-functional-root", "record": "fixture case dormant-testmatch"}, {"file": "guards/dormant.guard-fixture.ts", "config": "jest.config.js", "context": "lane-functional-root", "record": "fixture case dormant-testmatch"}]}

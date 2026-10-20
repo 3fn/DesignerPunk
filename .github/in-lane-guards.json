@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "guards": [
+    {
+      "file": "scripts/audience-banner/__tests__/audience-banner.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/specs/123-consumer-distribution/completion/task-23-completion.md (Spec 123 Task 23, the audience-banner presence guard; first instance named by the named-guard charter)"
+    },
+    {
+      "file": "scripts/__tests__/in-lane-guards.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/issues/2026-10-13-named-guard-selection-floor-then-map-column-derivation.md § Step 1 (the floor registers its own test)"
+    },
+    {
+      "file": "src/tokens/__tests__/OpacityTokens.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "src/__tests__/stemma-system/behavioral-contract-validation.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § wcag-format-validity; governance/classification-map.md § wcag-required-refs; governance/classification-map.md § validation-criteria-completeness; governance/classification-map.md § contract-platforms-specified"
+    },
+    {
+      "file": "src/__tests__/stemma-system/cross-platform-consistency.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-disabled-states (scope: Input-Text-Base / -Email / -Password / -PhoneNumber)"
+    },
+    {
+      "file": "src/__tests__/stemma-system/form-inputs-contracts.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-disabled-states (scope: Input-Text-Base / -Email / -Password / -PhoneNumber)"
+    },
+    {
+      "file": "src/components/core/Button-CTA/__tests__/ButtonCTA.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-disabled-states (scope: Button-CTA)"
+    },
+    {
+      "file": "src/components/core/Button-VerticalList-Item/__tests__/ButtonVerticalListItem.unit.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-disabled-states (scope: Button-VerticalList-Item)"
+    },
+    {
+      "file": "src/components/core/Button-VerticalList-Item/__tests__/ButtonVerticalListItem.integration.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-disabled-states (scope: Button-VerticalList-Item)"
+    },
+    {
+      "file": "src/components/core/Button-VerticalList-Item/__tests__/ButtonVerticalListItem.failLoudly.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-disabled-states (scope: Button-VerticalList-Item)"
+    },
+    {
+      "file": "src/__tests__/browser-distribution/css-bundling.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-disabled-states (scope: ALL web components’ shipped CSS)"
+    },
+    {
+      "file": "src/components/core/Badge-Count-Base/__tests__/BadgeCountBase.stemma.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-hardcoded-color (scope: the 7 components carrying a *.stemma.test.ts)"
+    },
+    {
+      "file": "src/components/core/Badge-Count-Notification/__tests__/BadgeCountNotification.stemma.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-hardcoded-color (scope: the 7 components carrying a *.stemma.test.ts)"
+    },
+    {
+      "file": "src/components/core/Badge-Label-Base/__tests__/BadgeLabelBase.stemma.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-hardcoded-color (scope: the 7 components carrying a *.stemma.test.ts)"
+    },
+    {
+      "file": "src/components/core/Button-Icon/__tests__/ButtonIcon.stemma.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-hardcoded-color (scope: the 7 components carrying a *.stemma.test.ts); governance/classification-map.md § no-disabled-states (scope: Button-Icon, Input-Checkbox-Base, Input-Radio-Base)"
+    },
+    {
+      "file": "src/components/core/Input-Checkbox-Base/__tests__/InputCheckboxBase.stemma.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-hardcoded-color (scope: the 7 components carrying a *.stemma.test.ts); governance/classification-map.md § no-disabled-states (scope: Button-Icon, Input-Checkbox-Base, Input-Radio-Base)"
+    },
+    {
+      "file": "src/components/core/Input-Radio-Base/__tests__/InputRadioBase.stemma.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-hardcoded-color (scope: the 7 components carrying a *.stemma.test.ts); governance/classification-map.md § no-disabled-states (scope: Button-Icon, Input-Checkbox-Base, Input-Radio-Base)"
+    },
+    {
+      "file": "src/components/core/Input-Radio-Set/__tests__/InputRadioSet.stemma.test.ts",
+      "config": "jest.functional.config.js",
+      "context": "lane-functional-root",
+      "record": "governance/classification-map.md § no-hardcoded-color (scope: the 7 components carrying a *.stemma.test.ts)"
+    }
+  ]
+}
