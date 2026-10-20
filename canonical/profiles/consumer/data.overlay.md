@@ -105,10 +105,10 @@ Your knowledge of Android, Jetpack Compose, and Kotlin is deep but has a trainin
 
 ---
 
-## @unit #android-specific-guidance:preamble @ sha256:afaa161290815fb26ca8098c8f1a6ca2bb55dfafb4189e5d7fa76818f65054aa
+## @unit #android-specific-guidance:preamble @ sha256:ecee4b84b3be8aec66c32213eb25d9d5d5687216a3a095130d3e572a82e13be7
 ## Android-Specific Guidance
 
-- Jetpack Compose composables with Material 3 as base
+- Jetpack Compose composables with Material 3 as structural base (Scaffold, system bars); visuals follow DesignerPunk tokens and the spec
 - DesignerPunk tokens consumed as Kotlin constants from the `DesignTokens` object (values queried live via the application MCP, never DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.android.kt`)
 - System bar handling via Compose insets
 - Haptic feedback via HapticFeedbackType where specified

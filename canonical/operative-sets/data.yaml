@@ -238,7 +238,7 @@ units:
         text: "Reference existing DesignerPunk Android component implementations as patterns"
     confirmation: canonical/profiles/consumer/confirmations/data.md#step-2-set-up-the-screen
   "#step-3-implement":
-    canonicalHash: sha256:9d0052ab5c5eeb94cc37d81827252ae799a4428b70570b548b5a78e17ef66b3e
+    canonicalHash: sha256:492bd11aac9108c1e734441bdcdb4f0b2e2b1818ba296b7ab10b4b108a1c4a43
     items:
       - id: implement-1
         kind: step
@@ -250,8 +250,8 @@ units:
         text: "Use DesignerPunk semantic tokens for all spacing, color, typography, and motion"
       - id: implement-3
         kind: step
-        label: "Follow Android idioms and conventions — the screen should fe"
-        text: "Follow Android idioms and conventions — the screen should feel native"
+        label: "Follow Android structural idioms and the interaction Android"
+        text: "Follow Android structural idioms and the interaction Android owns (system surfaces, back, scroll, text selection, keyboard and IME, accessibility) — the screen should feel native in structure; its look and component behavior follow the spec's design choices."
       - id: implement-4
         kind: step
         label: "Implement accessibility (labels, roles, navigation order per"
@@ -522,12 +522,12 @@ units:
         text: "Use your platform's references. Don't assume patterns from sibling platforms apply to yours."
     confirmation: canonical/profiles/consumer/confirmations/data.md#platform-reference-pointers
   "#android-specific-guidance:preamble":
-    canonicalHash: sha256:afaa161290815fb26ca8098c8f1a6ca2bb55dfafb4189e5d7fa76818f65054aa
+    canonicalHash: sha256:ecee4b84b3be8aec66c32213eb25d9d5d5687216a3a095130d3e572a82e13be7
     items:
       - id: native-1
         kind: member
-        label: "Jetpack Compose composables with Material 3 as base"
-        text: "Jetpack Compose composables with Material 3 as base"
+        label: "Jetpack Compose composables with Material 3 as structural ba"
+        text: "Jetpack Compose composables with Material 3 as structural base (Scaffold, system bars); visuals follow DesignerPunk tokens and the spec"
       - id: native-2
         kind: member
         label: "DesignerPunk tokens consumed as Kotlin constants from the De"

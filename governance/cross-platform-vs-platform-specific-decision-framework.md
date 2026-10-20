@@ -9,7 +9,7 @@ description: Strategic guidance on when to use cross-platform patterns vs platfo
 # Cross-Platform vs Platform-Specific Decision Framework
 
 **Date**: 2025-12-19
-**Last Reviewed**: 2026-07-08
+**Last Reviewed**: 2026-10-19
 **Purpose**: Strategic guidance on when to use cross-platform patterns vs platform-specific idioms
 **Organization**: process-standard
 **Scope**: cross-project
@@ -20,7 +20,14 @@ description: Strategic guidance on when to use cross-platform patterns vs platfo
 
 DesignerPunk's True Native Architecture creates a fundamental tension: we want cross-platform consistency through design tokens while respecting platform-appropriate UX through native idioms. This framework helps you make informed decisions about when to prioritize each approach.
 
-**Key Principle**: Neither cross-platform consistency nor platform-specific idioms are always correct. The right choice depends on context, user expectations, and design system goals.
+**Key Principle**: True Native Development does not mean True Native Design. Three axes, two of them fixed:
+- **Implementation is always native.** Build-time platform separation and the platform's own rendering and accessibility stack are not a choice.
+- **Accessibility semantics are always platform-correct.** Role, state, name, activation, focus and announcements behave exactly as the platform's native control would. That is not a choice either.
+- **Design is a choice.** Look, and interaction conventions within the limits of this principle, may follow the platform's native idiom or depart from it to serve the product's users and brand. Neither is always correct; the right choice depends on context, user expectations and design system goals.
+
+A departure in design never licenses a departure in semantics.
+
+Two more limits are not a choice: interaction the platform owns (back and history, scrolling, text selection, keyboard and IME, and the platform services a native control takes part in) is never replaced, and system surfaces and structural idioms are never replaced, though their contents may be styled. Every visual and behavioral choice is recorded with its reason.
 
 ---
 
@@ -100,7 +107,7 @@ DesignerPunk's True Native Architecture creates a fundamental tension: we want c
 
 ### 2. Is there a platform convention that users expect?
 
-- **Strong platform convention**: Use platform idiom
+- **Strong platform convention**: Consider platform idiom
   - Users have learned platform patterns
   - Example: iOS swipe-to-delete, Android back button behavior
   
@@ -110,7 +117,7 @@ DesignerPunk's True Native Architecture creates a fundamental tension: we want c
 
 ### 3. Does the platform provide superior UX through native patterns?
 
-- **Superior platform UX**: Use platform idiom
+- **Superior platform UX**: Consider platform idiom
   - Platform pattern is objectively better
   - Example: iOS spring animations feel more responsive
   
@@ -118,12 +125,14 @@ DesignerPunk's True Native Architecture creates a fundamental tension: we want c
   - No meaningful UX difference
   - Example: Button border radius
 
+Accessibility semantics stay native whatever is chosen for design.
+
 ### 4. Can we maintain design system consistency while respecting platform idioms?
 
 - **Yes**: Use platform idiom with token-based values
   - Example: iOS spring animation with motion token duration
   
-- **No**: Pause and ask for guidance
+- **No**: Record the departure
   - Example: Platform color scheme conflicts with brand colors
 
 ---
@@ -310,11 +319,11 @@ Button(
 
 ## Documentation Requirements
 
-**When using platform-specific idioms**, document in component README:
+**Every component documents its visual and behavioral choices** — native idiom or departure — in its README:
 
 ### Required Documentation
 
-1. **Rationale**: Why platform idiom chosen over cross-platform pattern
+1. **Rationale**: Why each visual and behavioral choice (native idiom or departure) was made
 2. **Platform differences**: What differs between platforms and why
 3. **Token usage**: Which tokens still used despite platform idioms
 4. **Accessibility**: How platform idiom affects accessibility

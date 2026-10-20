@@ -116,11 +116,11 @@ date: 2026-09-29
 ## `#step-3-implement`
 
 confirmer: data
-canonicalHash: sha256:9d0052ab5c5eeb94cc37d81827252ae799a4428b70570b548b5a78e17ef66b3e
+canonicalHash: sha256:492bd11aac9108c1e734441bdcdb4f0b2e2b1818ba296b7ab10b4b108a1c4a43
 items: implement-1, implement-2, implement-3, implement-4, implement-5
-date: 2026-09-29
+date: 2026-10-19
 
-**Ruling: CONFIRMED as drafted.**
+**Ruling: CONFIRMED at 5 items, as drafted.** Re-confirmed after ballot `2026-10-18-true-native-development-is-not-true-native-design` (§ 6.7). The item set is unchanged. `implement-3` now carries the line I gave at R4: structure and the interaction Android owns (system surfaces, back, scroll, text selection, keyboard and IME, accessibility) stay native, while look and component behavior follow the spec's design choices.
 
 ## `#step-4-test`
 
@@ -242,11 +242,11 @@ date: 2026-09-29
 ## `#android-specific-guidance:preamble`
 
 confirmer: data
-canonicalHash: sha256:afaa161290815fb26ca8098c8f1a6ca2bb55dfafb4189e5d7fa76818f65054aa
+canonicalHash: sha256:ecee4b84b3be8aec66c32213eb25d9d5d5687216a3a095130d3e572a82e13be7
 items: native-1, native-2, native-3, native-4, native-5, native-6, native-7
-date: 2026-09-29
+date: 2026-10-19
 
-**Ruling: CONFIRMED as drafted.** Each bullet fixes the Compose mechanism used for its concern. `native-7` binds the minimum version to Core Goals rather than a choice of my own.
+**Ruling: CONFIRMED at 7 items, as drafted.** Each bullet fixes the Compose mechanism used for its concern. `native-7` binds the minimum version to Core Goals rather than a choice of my own. Re-confirmed after ballot `2026-10-18-true-native-development-is-not-true-native-design` (§ 6.8). The item set is unchanged. `native-1` now carries the line I gave in my consult: Material 3 is the structural base (Scaffold, system bars), and visuals follow DesignerPunk tokens and the spec.
 
 ## `#android-skills-official-google-patterns`
 

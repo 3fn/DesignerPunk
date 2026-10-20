@@ -49,6 +49,9 @@ rules:
   - name: "The Break-Glass Rule"
     constraint: "Rules can be broken for moments of critical impact, but only sparingly and with explicit authorization."
     rationale: "A system that never breaks its own rules is rigid. A system that breaks them without discipline is chaos. The exception proves the rule when it's earned."
+  - name: "The Native-Behavior Rule"
+    constraint: "True Native is how DesignerPunk is built, not a requirement on how it looks or behaves: design may follow a platform's idiom or part from it for a product's user needs or brand, carried by tokens and themes, with each choice recorded. Accessibility semantics, interaction the platform owns, and system surfaces never part."
+    rationale: "Native controls cap theming; native behavior is what users and assistive technology rely on."
 
 guidance:
   do:

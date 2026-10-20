@@ -406,20 +406,20 @@ units:
         text: "Does the screen look and behave consistently across platforms (within True Native expectations)?"
     confirmation: canonical/profiles/consumer/confirmations/leonardo.md#review-checklist
   "#what-consistent-means-in-true-native":
-    canonicalHash: sha256:ae21efbfbb09593cc716b7247d97bb9e288b0a5a867a8df357a62969fd3891ff
+    canonicalHash: sha256:fd72f906bab14aff5698bdf4e34c8bc5e88dc0d14416af734d425e7c93fe6af8
     items:
       - id: consistent-not-identical
         kind: obligation
         label: "Consistent is not identical"
-        text: "Consistent does NOT mean identical. Each platform should feel native:"
+        text: "Consistent does NOT mean identical. Each platform should feel native in structure, in accessibility semantics, and in the interaction the platform owns:"
       - id: native-1
         kind: member
         label: "iOS uses SwiftUI idioms (NavigationStack, .sheet, safe area)"
         text: "iOS uses SwiftUI idioms (NavigationStack, .sheet, safe area)"
       - id: native-2
         kind: member
-        label: "Android uses Compose idioms (Scaffold, Material 3 base, syst"
-        text: "Android uses Compose idioms (Scaffold, Material 3 base, system bars)"
+        label: "Android uses Compose idioms (Scaffold, Material 3 structure,"
+        text: "Android uses Compose idioms (Scaffold, Material 3 structure, system bars)"
       - id: native-3
         kind: member
         label: "Web uses Web Component idioms (Shadow DOM, CSS custom proper"
