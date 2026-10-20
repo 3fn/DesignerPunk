@@ -16,3 +16,5 @@ The version bump edits `package.json`, which is in the lock's input closure (`IN
 ## Grant
 - **Rule 8.** Activated by Peter's merge of the PR whose body names this file and this path list. **The fixing PR is the 16.0.0 release PR**: the refresh commit lands on its branch (its own commit, after the bump; written by a green `npm run check:122:diff-guard` run, never by hand), and the grant expires when that PR merges. The release PR's body names this file and restates `**Grant paths**: canonical/generated.lock`.
 - The refresh commit's message states the `inputClosure` before/after and that `outputs` is unchanged; if `outputs` moves, Thurgood stops and reports instead of refreshing.
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: grant consumed — expired at the 16.0.0 release PR's merge (#381, `4b940c45d`). Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood

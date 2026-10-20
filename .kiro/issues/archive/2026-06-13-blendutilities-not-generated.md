@@ -39,3 +39,5 @@ Determine intent before fixing:
 - Audit classification: `.kiro/specs/117-token-index-generation-integrity/findings/classification.md` (§ N1)
 - Inventory correction: `src/tools/integrity/inventory.ts` (header note, deferred finding 117-N1)
 - Possibly misleading source: `.kiro/steering/Rosetta-System-Architecture.md` § Platform Output (lists `dist/BlendUtilities.*`)
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: superseded — the code disposition is carried by `2026-06-24-blend-system-architecture-and-oklch-alignment.md` (this file's Status line, 2026-06-24); the doc half executed as Spec 117 P3 (`517b0ff99`). Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood

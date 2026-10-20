@@ -28,3 +28,5 @@ Address incrementally during normal Civitas steward work:
 
 - Spec 098 staleness assessment: `findings/staleness-assessment.md`
 - Spec 099 Task 4.2: `completion/task-4-2-completion.md`
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: resolved — `node scripts/validate-steering-metadata.js` at `c219488d6`: 0 errors, 19 warnings (was 63 errors in 49 of 87 docs); 2026-10-17 health-check record § 2, "Metadata: 0 errors". Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood

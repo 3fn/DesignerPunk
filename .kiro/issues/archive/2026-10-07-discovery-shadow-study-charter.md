@@ -106,3 +106,5 @@ Stage 0 ≈ 0.5–1 Lina (+ ≈ 0.5 de-dup) + Thurgood consult. Stage 1 ≈ 1.25
 
 ## 9. Closing
 When Peter rules the forks, record the rulings here (dated), owners open their issues, and this file either becomes the pre-registration root (Thurgood's study issue cites it) or, if Peter declines the study, records that and moves to `archive/`.
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: executed — forks F1–F7 ruled (§ 6); Stage 0 #303 (`dcd337dcf`); Stage 1 outcome ruled 2026-10-13; D2 NO-GO on the Settings ledger (#347, `846c6d99c`); F7 parked with neither trigger fired; the calibration instrument continues in `2026-10-17-components-calibration-instrument-charter.md`. Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood

@@ -47,3 +47,5 @@
 **Grant paths**: `docs/releases/15.1.0/publish-verification.txt`
 
 **What the erratum is**: a dated `## Erratum (RL-8, RL-9)` section appended to the `.txt`: (i) the omitted 02:42:13Z rail run pasted in full with its exit code 10, and the two `npm pack` no-file runs named with their times; the "no guard retry" sentence corrected to "one pre-publish run, read against the packument, then one run after `time["15.1.0"]` appeared"; (ii) a line acknowledging RL-9 by name. 5.3's command line is also recorded there: `npx tsx scripts/release-publish.ts 15.1.0 --expect-sha e49359e49dc338078669a90aa5b37aa2436b60a4` (Ada's RL-7 evidence gap).
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: grant consumed — #346 (`e49359e49`), #351 (`6efa34984`) and the re-activation's erratum PR #356 (`68cdbeea8`); rule 5, a grant archives at its fixing PR's merge. Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood

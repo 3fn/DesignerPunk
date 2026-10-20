@@ -27,3 +27,5 @@ Reorder each conditional-export subpath so `"types"` is listed **first** (before
 - `package.json` was **untouched by Spec 124** — this is strictly pre-existing.
 - Belongs naturally with the Spec 118 export work (module-resolution coherence), where the export map is already in scope.
 - Acceptance: each conditional-export subpath lists `"types"` first; the esbuild export-condition-ordering warnings disappear from `npm run build`; a TS consumer resolves bundled types through the subpaths.
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: resolved — #31 (`66a1a085d`, "order `types` condition first"); every `exports` subpath lists `types` first at `c219488d6`. Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood

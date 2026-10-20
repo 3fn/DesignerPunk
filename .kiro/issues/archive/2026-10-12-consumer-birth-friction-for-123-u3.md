@@ -59,3 +59,5 @@ Rows 2, 4, 5, 7, 9 dispositioned at U5 Task 26; row 8 decided by Ada + Lina by U
 **Also relayed (not rows)**:
 - **Note for Leonardo's next consumer session**: three Button-CTA `size: "md"` values in the Settings spec (his artifact in the scratch consumer, ledger Appendix A L310–L360 and Appendix C L580/L583; ledger D12) should be `medium`. His artifact, not the engine; not fixed here.
 - **Readiness row 8 (Ada + Lina) is unchanged by this routing.** The ledger confirms web readiness read `not-started` for every component in the (15.0.0-born) consumer; the fix merged as #338 (release-3 item 5) and is verified only from the repo side until a 15.1.0+ consumer run reads it — the trio's `find_components` rows are that read.
+
+**Outcome (2026-10-20)**: archived by the steward at the 2026-10-20 walk, Peter's go; ground: resolved — Stacy's CLOSEOUT pass (#364, `c7f40c98e`), `.kiro/specs/123-consumer-distribution/completion/claims-pass.md` L184 (OB-3): row 8 decided (#338) and observed in a 15.1.0+ consumer, no finding; the closing note and archive move owed there are made here. Rule 4: not a ruling on the merits. Ledger: `archive/TRIAGE-2026-10-20.md`. — Thurgood
