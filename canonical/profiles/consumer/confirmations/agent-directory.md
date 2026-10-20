@@ -87,9 +87,19 @@ date: 2026-09-29
 ## `#thurgood-test-governance-spec-standards-civitas-steward`
 
 confirmer: stacy
-canonicalHash: sha256:3f53109f6af5f444299a6f76e65007a510b10470fc034e1554980b530c69fafb
+canonicalHash: sha256:99951e0293f59b5326e3e09be329d46fac3e14d8cc8b0c64fd3d797e0beba169
 items: thurgood-test-govern-1, thurgood-test--role-1, thurgood-test--role-2, thurgood-test--role-3
-date: 2026-09-29
+date: 2026-10-20
+
+**Re-confirmed 2026-10-20 (Req 11.6.5d).**
+- **What changed**: Thurgood's **Owns** line, one phrase in its CI-regime clause. Ballot `.kiro/docs/ballots/2026-10-20-in-lane-guard-registry-additive-entries.md` (P1b; RATIFIED, Peter, 2026-10-20) site 3: "`lane-timing.yml` test-script steps with floors; ballot 2026-09-27-ci-regime-standing-scope" becomes "`lane-timing.yml` test-script steps with floors, and added entries in `.github/in-lane-guards.json`; ballot 2026-09-27-ci-regime-standing-scope, amended 2026-10-20". Thurgood applied it as profile author (`ae68f130b`) in the steering doc and as `thurgood-test--role-1`'s text; that is his authoring, not this act.
+- **`thurgood-test--role-1`'s text, verified verbatim**: it equals the **Owns** line as it stands now and is a verbatim substring of the unit (one occurrence). It still names what the seat owns, so it stays a `member`.
+- **What did not change**: the operative set, still 4 items, ids unchanged; the other three remain verbatim substrings, in order. The canonicalHash moves from `sha256:3f53109f6af5f444299a6f76e65007a510b10470fc034e1554980b530c69fafb` to the value above, as `operative-set-freshness` printed it and as I recomputed it independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts` (the two agree).
+- **Consumer rendering (my decision, stated for the disposition)**: the CI-regime clause stays **removed for consumers, now with the registry phrase inside it** (`subtraction-2`): consumers have no `.github/in-lane-guards.json` and no CI-regime standing scope, and the clause was already removed whole. The removal quotes the clause verbatim, so its `text` was rewritten to the new clause (Thurgood, same commit, cite unchanged; I checked it occurs once in the unit). The other two removals (`completion-criteria-parity` instrument; "(Q5, ratified 2026-09-17)") are unchanged. The overlay body does not carry the clause, so the overlay is unchanged and the rendered hash is expected unchanged: a pin only. `assent.surviving` is unchanged. The pin and the re-sign follow in later turns.
+
+**Ruling: CONFIRMED at 4 items.**
+
+**Confirmed 2026-09-29 (prior record, superseded)**: canonicalHash `sha256:3f53109f6af5f444299a6f76e65007a510b10470fc034e1554980b530c69fafb`, 4 items, as below.
 
 **Ruling: CONFIRMED at 4, as drafted.**
 

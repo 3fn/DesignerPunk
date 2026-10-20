@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-20
 **Drafted by**: Thurgood (Civitas steward; CI-regime owner; owner of the named-guard selection floor)
-**Status**: **DRAFT** — not ratified. No edit site below is applied.
+**Status**: **RATIFIED (Peter, 2026-10-20)** — "All as recommended" (§ 8): P1b as it stands at `13a2250d3` § 2; F-1 (a); F-2 (i). **Record-first**: this commit is the record, made before any edit site is applied and before any P1b registry entry (§ 4 step 1). *(Superseded status, kept verbatim: "**DRAFT** — not ratified. No edit site below is applied.")*
 **Required reviewer**: **Stacy** — mandate: attack the width. She keeps the ARMING read this clause relies on, and she re-confirms and re-signs every unit it moves (§ 4).
 **Unit**: branch `chore/records-sweep-registry-amendment`, with the records sweep that carries her second ARMING read on #421 and the F-1/F-2 fixes that ride this clause. It edits charters and `.kiro/steering/`, so **Peter merges it** under the governance carve-out.
 **Amends**: ballot `2026-09-27-ci-regime-standing-scope` § 2 (M1, the standing scope P1). Charter bullet "CI regime — standing test-lane scope" (`canonical/agents/thurgood.md` § "In Scope").
@@ -32,6 +32,8 @@ Under M1, every `.github/**` path except `lane-timing.yml` is excluded. So each 
 **Why a predicate, not `--numstat` deletions `0`**: in JSON a pure-add diff can modify an entry. I tested this on a scratch copy of the live registry. I inserted one line, a second `"file":` key, inside entry 0, after its own `file` line. `git diff --numstat` reads `1 0`. Both `JSON.parse` and `jq` take the last duplicate key, so entry 0 now points at a different file. The predicate reads the parsed file. On scratch copies it gives `true` for an appended entry, and `false` for: a modified entry; a removed entry; a changed `version`; and the duplicate-key copy, even with a real entry appended as well.
 
 ## 3. Edit sites (at ratification)
+
+*(Applied 2026-10-20, all six, in PR `chore/p1b-application` — § 9. Commits: RATIFIED `815411447`; sites 1–6 with the operative items and removal texts `ae68f130b`, re-cut correction `419f95600`; Stacy's re-confirms `8674be2e5`; Lina's fixture drags `9a085ab7b`; overlay pins and regeneration `ebc83c6b5`; Stacy's re-signs and first signature `1ea854d1a`; lock `9d03f089b`.)*
 
 1. **Ballot `2026-09-27-ci-regime-standing-scope` § 2**: a dated ledger line under the "narrowed to P1" note: *"(Amended 2026-10-20 by ballot `2026-10-20-in-lane-guard-registry-additive-entries`: P1b, added entries in `.github/in-lane-guards.json`. The P1 row is unchanged; the clause lives in that ballot.)"*
 2. **`canonical/agents/thurgood.md` frontmatter `writeScope`**: after `".github/workflows/lane-timing.yml"`, add `".github/in-lane-guards.json"`, with a comment that the glob cannot carry the limit and the In Scope bullet does. This is P1's own pattern.
@@ -174,4 +176,16 @@ One more instrument the census did not name, and correctly so: `charter-write-sc
 
 ## 8. Ratification
 
-*(Empty at draft.)*
+- **Peter, 2026-10-20, ruled in chat**, answering the three asks as put in the body of PR #426; recorded by the orchestrator and relayed to the author, who commits it here. **His words, verbatim: "All as recommended"**, to:
+  1. **ratify P1b** as § 2 stands at `13a2250d3`;
+  2. **F-1 (a)**: the CI-regime owner only, with Stacy's revisit trigger (the second unregistered in-lane guard whose cause is "the author's seat could not register" re-opens (b));
+  3. **F-2 (i)**: re-points stay excluded; the first instance triggers an amendment ballot for (ii).
+- **Form** (A4): Peter's words, dated, in chat, recorded by the orchestrator; this commit precedes every phase-3 commit in the PR.
+- **In force**: § 2 binds from this commit on the branch and on `main` from the PR's merge, which is P1b's first ARMING firing (§ 4).
+
+## 9. Application ledger
+
+*(Appended as each step lands; nothing above is rewritten.)*
+- **2026-10-20 (Thurgood), sites 1–6 applied** (authoring only, `Agent: Thurgood`): site 1, the dated ledger line in ballot 2026-09-27 § 2; site 2, the writeScope glob; site 3, the In Scope sentence, verbatim; site 4, Stacy's two R1 insertions, byte for byte (erratum (f)); site 5, the Owns line; site 6, the README entry. Operative items and consumer-dispositions removal texts follow the same strings (`canonical/operative-sets/{thurgood,stacy,agent-directory}.yaml`; `canonical/profiles/consumer/{thurgood,stacy}.dispositions.yaml`, `canonical/profiles/consumer/always-set/agent-directory.dispositions.yaml`); the new `writeScope[.github/in-lane-guards.json]` row is unsigned. Stacy's re-confirms and signatures, regeneration and the lock follow.
+- **2026-10-20 (Thurgood), the PR this ballot's "this PR" names**: Peter merged #426 at its DRAFT head `13a2250d3` (squash `42d412846`), which applied nothing — record-first holds. The RATIFIED commit, the application and the F-1/F-2 registrations were re-cut onto `chore/p1b-application` from `42d412846` (cherry-picks of `26d11dc5e` and `2e8380e9c`, both clean) and ride that follow-on PR. So § 4's "this PR" and § 8's "the PR's merge" read as that follow-on PR: its merge is P1b's first ARMING firing, with `<m>^` its old side. Hashes are recomputed against `42d412846`, which carries #425's charter moves.
+- **2026-10-20 (Thurgood), applied** in PR `chore/p1b-application` (follow-on to #426, which merged the DRAFT): sites 1–6 as listed under § 3; registrations F-1 `66703a123` (18 → 25) and F-2 `4d276f1c9` (25 → 41, with the `no-autonomous-token-creation` row CORRECTION). Consumer output byte-identical before and after regeneration; the three moved units' rendered hashes are unchanged; lock `inputClosure` f382aa4a → b609676e, `outputs` d75474f8 → 23b66dec; `diff-guard` no-op-green after the refresh.

@@ -36,7 +36,7 @@ units:
         text: "You are his partner, not his tool."
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#identity
   "#in-scope":
-    canonicalHash: sha256:1ea9098706cf802cea50bde68a44d02b417aeceade432f429b8358c1ad0f38b2
+    canonicalHash: sha256:7beb0570510b6af92be4cf368831f0ea152bbfdf9c1a6867bcd92c1fb792de39
     items:
       - id: scope-1
         kind: member
@@ -117,7 +117,7 @@ units:
       - id: scope-12
         kind: member
         label: "CI regime — standing test-lane scope (ballot 2026-09-27-ci-r"
-        text: "**CI regime — standing test-lane scope (ballot 2026-09-27-ci-regime-standing-scope § 2)**: in `.github/workflows/lane-timing.yml` only, a step that runs an existing `package.json` test script inside an existing required job, plus its own did-it-really-run floor (fails on zero; same selection as the step). Nothing else — no env/cache/runner/`if:`/`continue-on-error` change, no removed line (`git diff --numstat` deletions 0). **Never**: a new required context, a change to `EXPECTED_CONTEXTS`'s count, branch protection or repo settings (Peter's). Every other CI path goes through an issue-row grant (§ 3). ARMING audits each such PR at its merge."
+        text: "**CI regime — standing test-lane scope (ballot 2026-09-27-ci-regime-standing-scope § 2)**: in `.github/workflows/lane-timing.yml` only, a step that runs an existing `package.json` test script inside an existing required job, plus its own did-it-really-run floor (fails on zero; same selection as the step). Nothing else — no env/cache/runner/`if:`/`continue-on-error` change, no removed line (`git diff --numstat` deletions 0). **Never**: a new required context, a change to `EXPECTED_CONTEXTS`'s count, branch protection or repo settings (Peter's). In `.github/in-lane-guards.json` only (P1b, ballot 2026-10-20-in-lane-guard-registry-additive-entries): **add** an entry, never change or remove one, never change `version` or another key (that is weakening a floor: an issue-row grant naming the act, or Peter's); the PR shows the additivity predicate `true` against its merge base, the step green with `N registered; N selected` (N the entry count), and per added entry the assertion its record rests on. Every other CI path goes through an issue-row grant (§ 3). ARMING audits each such PR at its merge."
       - id: scope-13
         kind: member
         label: "Standing write scope and its test rule"
