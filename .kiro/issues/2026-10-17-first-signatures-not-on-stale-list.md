@@ -3,7 +3,9 @@
 **Date**: 2026-10-17
 **Status**: ACTIVE
 **Owner**: Thurgood (owner of ballot `2026-10-01-signing-act-chain`'s instrument and of `tools/agent-generator/regrounding/freshness.ts` under ballot `2026-10-17-standing-write-scope-six-roots` F-1 Option B).
-**Trigger**: **the merge of the application PR of ballot `2026-10-17-standing-write-scope-six-roots`, or the next PR adding routed rows**, whichever comes first.
+**Trigger**: `manual` — Peter rules the M1 clause-3 erratum and the sweep change arms (the § Closing event). The old line named start events; the first fired at `096e11f99`. It named no close deadline, so there is no lapse. *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Superseded trigger (back-filled 2026-10-20; verbatim)**: **the merge of the application PR of ballot `2026-10-17-standing-write-scope-six-roots`, or the next PR adding routed rows**, whichever comes first.
+**Class**: P2 obligation (guard) · owed-act *(set 2026-10-20, Thurgood, rule 12. The audit legs (i) and (iv) do not cover a first signature on a new routed row. The interim paste covers it until the fix.)*
 **Source**: Stacy's consult on the application PR (2026-10-17, relayed); recorded on the register row `governance/classification-map.md § "signing-act-consistency"` (history line, 2026-10-17).
 
 ## The gap

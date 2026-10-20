@@ -2,7 +2,9 @@
 
 **Date**: 2026-10-18
 **Owner**: **Thurgood**, as steward of this record. Each spec's owners keep their own specs; this record holds only the order between them.
-**Trigger**: re-rank when a spec closes, when an outcome changes, or at any monthly walk where the order no longer matches the facts. **Walked monthly**, as part of the active-charter walk (`.kiro/issues/README.md` rule 6).
+**Trigger**: `manual` — re-rank when a spec closes, when an outcome changes, or at any monthly walk (the event is unchanged). *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Superseded trigger (back-filled 2026-10-20; verbatim)**: re-rank when a spec closes, when an outcome changes, or at any monthly walk where the order no longer matches the facts. **Walked monthly**, as part of the active-charter walk (`.kiro/issues/README.md` rule 6).
+**Class**: P3 improvement · charter *(set 2026-10-20, Thurgood, rule 12. A standing order record. Each monthly walk is its re-rank event.)*
 **Authority**: Peter, 2026-10-18, in chat, relayed by the orchestrator. He asked for a prioritization rule, then chose the class option: a written priorities record, walked monthly, "with the optimal order identified".
 **Scope**: a record only. It reschedules nothing beyond what it states. Each spec's own gates, rounds and rulings still decide its execution.
 **Facts source**: the orchestrator's Explore pass of 2026-10-18 (paths cite-checked; I re-checked the ones cited below).

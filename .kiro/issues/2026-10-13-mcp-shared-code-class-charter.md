@@ -4,7 +4,9 @@
 **Type**: **CHARTER** (class record + interim rules + one grant). Not a ballot; no governance law changes. Opened by Peter's ruling on the tokenizer-twin extraction consult.
 **Ruled**: Peter, 2026-10-13 — **Option A with Lina's split, plus this charter** (§ 1).
 **Owner**: **Thurgood** (this charter, its walk, the grant below). The class spec, when it fires, is co-owned by **Ada** (module resolution, packaging), **Lina** (`application-mcp-server/**`) and **Thurgood** (docs matcher, test governance).
-**Trigger**: any ONE of the three in § 3 fires the spec. Walked at each monthly Civitas health check (README rule 6).
+**Trigger**: `manual` — any one of the three § 3 events fires the spec (the event is unchanged). *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Superseded trigger (back-filled 2026-10-20; verbatim)**: any ONE of the three in § 3 fires the spec. Walked at each monthly Civitas health check (README rule 6).
+**Class**: P3 improvement · charter *(set 2026-10-20, Thurgood, rule 12. A class charter with interim rules. Nothing it owes has fired.)*
 **Grant paths** (README rule 8 — Thurgood's write scope over exactly these, **header comment text only**, on the one fixing PR; activation is this charter's merge):
 - `mcp-server/src/query/stop-words.ts` (header only)
 - `mcp-server/src/query/token-atoms.ts` (header only)

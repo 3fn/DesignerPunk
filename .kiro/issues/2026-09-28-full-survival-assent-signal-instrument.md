@@ -3,7 +3,9 @@
 **Date**: 2026-09-28
 **Status**: ACTIVE
 **Owner**: Thurgood, the builder, under the Q5 instrument pattern (`completion-criteria-parity` precedent): Thurgood builds and maintains the instrument. **Stacy specifies the fixtures**, and the reading stays hers.
-**Trigger**: **the first post-123 release prep**, meaning the first release whose population follows Spec 123's first render. That is where the event metrics' baselines begin and detection becomes possible (ballot B-U2 § 2, `**populations**`). Sooner if Stacy's MIDPOINT or RELEASE pass asks for it.
+**Trigger**: `release:next:phase-1` — the instrument lands before release 5's RELEASE phase 1. The old event, "the first post-123 release prep", fired at 15.1.0's prep and again at 16.0.0's. Both were before rule 11's application (`c470a248f`, #408), so neither is counted as a lapse. This line states the deadline as a token; the reason is the back-fill, under Peter's go for this walk. *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Superseded trigger (back-filled 2026-10-20; verbatim)**: **the first post-123 release prep**, meaning the first release whose population follows Spec 123's first render. That is where the event metrics' baselines begin and detection becomes possible (ballot B-U2 § 2, `**populations**`). Sooner if Stacy's MIDPOINT or RELEASE pass asks for it.
+**Class**: P2 obligation (record) · owed-act *(set 2026-10-20, Thurgood, rule 12. Owed by ballot B-U2's F-3 ruling. Every population records the signal as `not yet instrumented`, so no reader is misled.)*
 **Source**: ballot `.kiro/docs/ballots/2026-09-28-123-b-u2.md`, **RATIFIED (Peter, 2026-09-28)**, F-3 ruling "plus the gap line". It came from the 2026-09-28 consults on F-3's class fix (Thurgood: the proxies; Stacy: the signal; orchestrator: "the record carries the gap").
 
 ## Why this file exists

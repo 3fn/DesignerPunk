@@ -1,6 +1,8 @@
 # U1b backward check — Thurgood-owned findings D-17 to D-23
 
 **Date**: 2026-10-13 · **Owner**: **Thurgood** · **Trigger**: his next docs session after the `src/`-path convention is settled (`2026-10-13-src-path-convention-for-served-governance-docs.md`); absent-from-repo lines (D-18 is Ada's content; see below) may be fixed before it. **Routed by**: the orchestrator (Spec 123 Task 24.1, Req 21.1 — findings route to the owning agent, never fixed in 123). **Record**: `.kiro/specs/123-consumer-distribution/validation/u1b-backward-check.md` § 5 (the "Finding" cells are the text of record).
+**Trigger**: `manual` — Thurgood's next docs session after the `src/`-path convention settles (`2026-10-13-src-path-convention-for-served-governance-docs.md`). This restates the inline trigger on the Date line, which is kept verbatim. *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Class**: P2 obligation (record) · defect *(set 2026-10-20, Thurgood, rule 12. The findings are repo-only `src/` paths in served docs: true in this repo and absent from the package, which is the class the convention's one sentence answers. D-18 (a path that existed nowhere) is fixed on `main`: `governance/Platform-Resource-Map.md` L42 now reads `src/tokens/*Tokens.ts`.)*
 
 | ID | Doc | Lines at `8007105fa` | Kind |
 |---|---|---|---|

@@ -3,7 +3,9 @@
 **Date**: 2026-10-03
 **Status**: ACTIVE, for item 4 only. Item 1 is RESOLVED by #286; its grant expired at that merge. Item 2 is RESOLVED by #285. Item 3 is RESOLVED by erratum on #283. Item 5 is RESOLVED by #287. Item 6 is RESOLVED by #354 (`ce7b492e1`; the `publish-rail-guard` row's 2026-10-14 history entry). *(Status corrected 2026-10-15 under release-4 rulings item 22; it had read "ACTIVE, for items 4 and 6" since 2026-10-03. The history follows.)*
 **Owner**: Thurgood. Stacy authors the wording of her own charter row (item 2a).
-**Trigger**: **before the next `@3fn/core` publish (15.0.1 or 15.1.0) to either registry.** That release is the first run under ballot `2026-10-03-hermetic-publish-path`, and its arming event per F-4. Its operator must not meet the old "indexing lag" message, and its RELEASE pass must not run under charter rows that predate the two-phase form.
+**Trigger**: `path:.kiro/docs/ballots/2026-10-01-signing-act-chain.md` — item 4 only (items 1–3, 5 and 6 are resolved): the next amendment to the signing-act ballot, or the second hold. The header's original event (the next publish) fired at 15.1.0. *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Superseded trigger (back-filled 2026-10-20; verbatim)**: **before the next `@3fn/core` publish (15.0.1 or 15.1.0) to either registry.** That release is the first run under ballot `2026-10-03-hermetic-publish-path`, and its arming event per F-4. Its operator must not meet the old "indexing lag" message, and its RELEASE pass must not run under charter rows that predate the two-phase form.
+**Class**: P2 obligation (record) · defect *(set 2026-10-20, Thurgood, rule 12. A correct hold has no recorded act form, so the instrument reads it as an F5. The interim rule keeps holds outside the sheets, so no reader is misled.)*
 **Source**: `.kiro/docs/ballots/2026-10-03-hermetic-publish-path.md` (RATIFIED Peter 2026-10-03): § 3.8's "Not drafted here" note, § 5 items 6 and 8, and the application PR's straggler sweep (§ 5 item 2).
 
 ---
@@ -131,3 +133,6 @@ Spec 122 applies: never hand-edit `.claude/agents/*` or `CLAUDE.md`. No grant is
   - item 4's trigger (the next amendment to the signing-act ballot, or the second hold);
   - **the next `@3fn/core` publish's RELEASE pass**. That release is the first run under the hermetic-publish law, and its rail record must not be read against a register row that teaches what step 6 retired.
 
+## Lapse (2026-10-20)
+
+Firing commit: `71ce7e2d7` (#416, 2026-10-19). The signing-act ballot was amended (34 lines, ballot sitting 2's S5 application) without item 4's hold form. This is after rule 11's application (`c470a248f`). **Lapse count: 1.** A P2 `(record)` record escalates at its second lapse, so this one does not. — Thurgood
