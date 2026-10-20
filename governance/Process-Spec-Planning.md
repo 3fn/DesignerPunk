@@ -1958,7 +1958,7 @@ The TokenSelector integrates with:
 
 1. **Success Criteria Verification** — **the table form is the required shape**
    - **Required**: a three-column table reproducing **every** `tasks.md` success criterion for this parent, verbatim and in full — `Criterion (verbatim) | Status | Evidence` — none dropped, none reworded, none added
-   - **Required**: a Status mark on every row, from the closed vocabulary **✅ verified met · ⚠️ verified unmet or partial (MUST link a tracking issue or follow-up task) · ❌ verified absent**. Each mark reflects a check performed **against shipped source, never against intent or effort**
+   - **Required**: a Status mark on every row, from the closed vocabulary **✅** (verified met) · **⚠️** (verified unmet or partial; MUST link a tracking issue or follow-up task) · **❌** (verified absent) — the mark alone is the Status value. Each mark reflects a check performed **against shipped source, never against intent or effort**
    - **Required**: an Evidence cell on every row, of one of four kinds — an artifact path · a test name · a command + its result · a locatable decision record or approval citation. **A ✅ with an empty or prose-only Evidence cell is non-compliant on its face**
    - **Required**: immediately after the table, the forced-negative line `Unmet or partially met criteria: None` — or a list, each item with a follow-up link. **Silence does not satisfy it**
    - **Required if applicable**: an **Additional verification** section when the parent declares `**Primary Artifacts:**` or `**Merge gate:**` — gate conditions as criterion-style rows under the same predicate, the artifact forced-negative line, and any deferral in the fixed form `Artifact deferred: <path> → <unit>`
