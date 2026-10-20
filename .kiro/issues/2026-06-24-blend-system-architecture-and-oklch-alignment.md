@@ -7,6 +7,9 @@
 **Type**: Color foundation / blend architecture — OKLCH migration completeness
 **Primary owner**: Ada (Rosetta color foundation) — with Lina (component consumers) and Leonardo (cross-platform) consulted
 **Status**: Open — **SOON (triaged 2026-06-25, Task-8 milestone)**: scheduled as its own Ada-led spec (Lina/Leonardo consulted) — important-not-urgent (foundational OKLCH-consistency gap; not a runtime break). Captured for a holistic review, explicitly out of scope for Spec 117. See `docs/roadmap/m0a-deferred-items.md` § "Issues surfaced during the 117/118 spec cluster".
+**Class**: P2 obligation (record) · charter *(set 2026-10-20, Ada, rule 12. Spec 112 ticked the OKLCH migration while the blend subsystem still computes interaction states in RGB/HSL, so the record of that migration is wrong; interaction states render correctly and no consumer is blocked, so not P1, and it is the standing charter for the color-track spec, so kind charter. Only `blend.disabledDesaturate` and the two wrappers are deprecated and retained; the blend system and the OKLCH alignment are live charter work.)*
+**Trigger**: `manual` — the color-track spec's formalization opens (the spec that folds this record with 115-B colortokens deletion and color-token enforcement, intake rgba-cleanup and shadow-OKLCH; ranked after Spec 130, priorities record rank 4). *(Set 2026-10-20, Ada, rule 9. `manual` rather than a `path:` token because that spec has no directory or name yet, so a glob would be a guess that never fires or fires on the wrong spec; the event is computable the day the directory exists, and the owner re-rules the token to `path:` in that PR. Was: no Trigger line; header Status "SOON (triaged 2026-06-25)", scheduled as its own Ada-led spec.)*
+**Ruling (Peter, 2026-10-20, relayed)**: "agreed" — folded into ONE color-track spec with 115-B colortokens deletion and color-token enforcement (intake: rgba-cleanup, shadow-OKLCH), ranked after Spec 130.
 
 ---
 
