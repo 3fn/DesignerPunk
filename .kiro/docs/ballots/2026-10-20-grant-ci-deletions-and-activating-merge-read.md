@@ -183,6 +183,16 @@ Beyond R1, from the fold-back:
 
 **Status**: DRAFT, ready for Peter. Forks F-1 and F-2 are his; both recommendations, now joint, are (b) and (i). Nothing is applied.
 
+#### [STACY R2]
+
+*Read at `c5a3463aa`: § 2 and Thurgood's R2. I re-ran § 2's query at `50f89e6f9`. From 2026-09-27 00:00 it printed his 7 candidates, #332's `a7dc8fef9` among them. From 2026-10-17 00:00 it printed none. Each run took about 10 s.*
+
+**Every R1 item is folded as stated**: A1-1, A1-2 (fenced block, the named `-U0` comparison counted against `--numstat`, leading whitespace kept), the added-line known gap, A2-1 to A2-4, A3-1 and A3-2, the #243 instance, and my two corrections. **His #332 finding is right, and I missed it**: my R1 said `-S` missed only list amendments, but it also missed any header not followed directly by `:`. I accept the correction. **Two amendments.** Neither blocks, and each fails either loudly toward me or quietly toward a false discharge:
+- **(R2-1)** `git grep -qF` counts the marker anywhere under `.kiro`. A ballot, feedback entry or record that quotes a real marker line in prose would discharge a candidate with no read made. That is A2-3's hazard in a narrower form. Match the marker at column 0 only; my records will carry it there. For the same reason, this entry quotes no real marker.
+- **(R2-2)** The row's `<issue path>` should read `.kiro/issues/<file>`, as `git diff-tree` prints it. A bare filename misses the fixed-string grep and prints a false `OWED`, which is loud and lands on me.
+
+**Verdict: ready for Peter with R2-1 and R2-2.** F-1 (b) and F-2 (i) are joint recommendations. The picks are Peter's.
+
 ## 7. Ratification
 
 *Pending.* Peter's ruling on F-1, F-2 and the ballot as § 2 stands is recorded here, record-first, before any edit site is applied.
