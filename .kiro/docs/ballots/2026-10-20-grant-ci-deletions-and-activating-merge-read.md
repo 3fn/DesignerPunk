@@ -26,7 +26,7 @@
 **A-1. The deletions clause (edit site 1, Stacy's ARMING row).** Two replacements.
 - Replace *"at activation the list names no governance-law path and names any M1-excluded act it admits"* with:
 
-  > at activation the list names no governance-law path and names any M1-excluded act it admits, each line of its `**Deleted lines**:` block read there as one such act or not, and the read carries the line `**Grant activation read**: <issue path> @ <activating-merge sha, 9 characters>`
+  > at activation the list names no governance-law path and names any M1-excluded act it admits, each line of its `**Deleted lines**:` block read there as one such act or not, and the read carries, at column 0, the line `**Grant activation read**: .kiro/issues/<file> @ <activating-merge sha, 9 characters>`
 
 - Replace *"with `--numstat` deletions `0` on CI paths unless the grant names the act"* with:
 
@@ -39,7 +39,7 @@
 
 - **Edit site 3: `canonical/agents/thurgood.md` § LIVENESS**, a fourth read after item 3:
 
-  > 4. **Grant activations** (ballot 2026-10-20-grant-ci-deletions-and-activating-merge-read). Run the query below. A candidate is a first-parent commit since the last walk that changes a root `.kiro/issues/` file's `**Grant paths**` blocks so that they name a `.github/` path. A block is a line beginning `**Grant paths**` and the lines after it up to the first blank line. The last walk is the date of the newest `.kiro/docs/civitas-health-checks/` record before this walk's, from 00:00 (run the query before this walk's record is committed). The set is a superset: an amendment that activates nothing, and a block that names `.github/` only as not granted, match too. Each candidate owes the committed line `**Grant activation read**: <path> @ <sha>`. That line is Stacy's activation read, or, where the merge activated no `.github/**` grant (clause 4: its PR body did not name one), the line followed by `— no .github/** grant activated: <why>`. A candidate printed `OWED` is a finding, routed to Stacy. Read for records, never for verdicts. The query does not see an activation by a PR that leaves the record's blocks unchanged; that PR's prompt is its `**ARMING**:` line (rule 8).
+  > 4. **Grant activations** (ballot 2026-10-20-grant-ci-deletions-and-activating-merge-read). Run the query below. A candidate is a first-parent commit since the last walk that changes a root `.kiro/issues/` file's `**Grant paths**` blocks so that they name a `.github/` path. A block is a line beginning `**Grant paths**` and the lines after it up to the first blank line. The last walk is the date of the newest `.kiro/docs/civitas-health-checks/` record before this walk's, from 00:00 (run the query before this walk's record is committed). The set is a superset: an amendment that activates nothing, and a block that names `.github/` only as not granted, match too. Each candidate owes a committed line that begins, at column 0, `**Grant activation read**: .kiro/issues/<file> @ <sha>` (the path as `git diff-tree` prints it); a quotation of the marker inside a line does not count. That line is Stacy's activation read, or, where the merge activated no `.github/**` grant (clause 4: its PR body did not name one), the line followed by `— no .github/** grant activated: <why>`. A candidate printed `OWED` is a finding, routed to Stacy. Read for records, never for verdicts. The query does not see an activation by a PR that leaves the record's blocks unchanged; that PR's prompt is its `**ARMING**:` line (rule 8).
   >
   > ```bash
   > LAST=$(ls .kiro/docs/civitas-health-checks/ | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}\.md$' | sort | tail -1 | cut -c1-10)
@@ -47,7 +47,7 @@
   > for c in $(git log --first-parent --since="$LAST 00:00" --format=%h -- .kiro/issues); do
   >   for f in $(git diff-tree --no-commit-id --no-renames --name-only -r "$c^" "$c" -- .kiro/issues ':!.kiro/issues/archive'); do
   >     now=$(blocks "$c:$f"); [ "$now" != "$(blocks "$c^:$f")" ] && printf '%s\n' "$now" | grep -q '\.github/' \
-  >       && { m="**Grant activation read**: $f @ $(git rev-parse --short=9 "$c")"; git grep -qF "$m" HEAD -- .kiro || echo "OWED: $m"; }
+  >       && { m="**Grant activation read**: $f @ $(git rev-parse --short=9 "$c")"; git grep -h -F "$m" HEAD -- .kiro | cut -c1-${#m} | grep -qxF -- "$m" || echo "OWED: $m"; }
   >   done
   > done
   > echo "window from $LAST"
@@ -193,6 +193,14 @@ Beyond R1, from the fold-back:
 
 **Verdict: ready for Peter with R2-1 and R2-2.** F-1 (b) and F-2 (i) are joint recommendations. The picks are Peter's.
 
+#### [THURGOOD R3]
+
+*Read: Stacy's R2 at `664dccca6`. The amended query was re-run at `50f89e6f9` and gives the same 7 candidates from 2026-09-27 and none from 2026-10-17. The column-0 test was checked on a string that occurs only mid-line under `.kiro`: it is rejected.*
+- **R2-1** (the marker counts anywhere): folded. The match is at column 0 only, in the row's text, in item 4's text and in the query (`git grep -h -F … | cut -c1-${#m} | grep -qxF`). **Residual**: a column-0 quotation, for example inside a fenced block, still counts. This ballot quotes the marker only in templates and indented quotes.
+- **R2-2** (the path in the marker): folded. The marker reads `.kiro/issues/<file>`, as `git diff-tree` prints it, in the row and in item 4.
+
+**Status**: DRAFT, ready for Peter. F-1 (b) and F-2 (i) are joint recommendations; the picks are his.
+
 ## 7. Ratification
 
 *Pending.* Peter's ruling on F-1, F-2 and the ballot as § 2 stands is recorded here, record-first, before any edit site is applied.
@@ -201,3 +209,4 @@ Beyond R1, from the fold-back:
 
 *(Appended as each step lands; nothing above is rewritten.)*
 - **2026-10-20 (Thurgood)**: DRAFT merged in #431 (`50f89e6f9`) with Stacy's R1. R2 folded all eight of her amendments, her two corrections and her evidence on branch `chore/sitting-3-peter-gated-and-grant-reads`. No edit site is applied.
+- **2026-10-20 (Thurgood)**: R3 folded Stacy's R2-1 (column-0 marker) and R2-2 (full `.kiro/issues/` path). No edit site is applied.
