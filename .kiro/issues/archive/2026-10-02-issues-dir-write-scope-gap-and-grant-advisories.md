@@ -63,3 +63,9 @@ Both advisories are LAW, so neither ships by fix-now as an edit:
 The record stays at the root until the ballot is ruled and applied, then closes by rule 5. — Thurgood
 
 - **2026-10-20 (Thurgood), R2**: the DRAFT ballot folds all eight of Stacy's R1 amendments, her two corrections and her #243 evidence (A-2's second instance, Low, no remedy owed). It also finds that the draft's `-S` query missed #332. Both forks are still Peter's, and both recommendations, now joint, are F-1 (b) and F-2 (i). Nothing is applied.
+
+## Outcome (2026-10-21) — ruled and applied; closed
+
+- **Ruled**: Peter, 2026-10-20, in chat: "Let's proceed with revised option 2 as recommended." — F-1 (b), F-2 (i) (ballot § 7, record-first at `85c2e79db`).
+- **Applied** on branch `chore/sitting-3-peter-gated-and-grant-reads`, in the PR that carries this outcome: site 1, Stacy's ARMING row (A-1) and LIVENESS row (A-2), her ratified text byte for byte, re-confirmed and re-signed in her own seat commits; site 2, README rule 8; site 3, Thurgood's LIVENESS item 4 and its query; site 4, ballot 2026-09-27 § 3's dated line; site 5, the register history line. The ballot's § 8 ledger carries the commit SHAs.
+- **Closed** by rule 5 at this PR's merge, which is an ancestor of the next release's S, so the `release:next:phase-1` token is met on time. Archived in the same PR. — Thurgood
