@@ -11,7 +11,14 @@
  *                 (2) history: refuses a shallow or unreadable history, loudly (F10);
  *                 (3) the walk over every commit in `base..head`:
  *                       link 1 — decided PER SIGNING COMMIT: the act moves the row's pinned
- *                                `canonicalHash`/`renderedHash` (F5 fails, F14 passes);
+ *                                `canonicalHash`/`renderedHash` (F5 fails, F14 passes); a FIRST
+ *                                signature (the row's dispositions `signature` absent at the
+ *                                commit's first parent, present at the commit) instead needs the
+ *                                row on the UNSIGNED-ROUTED LIST of the commit's first-parent tree
+ *                                — never the head's or the range base's (§ 2 clause 3, erratum
+ *                                ratified 2026-10-21; `freshness.ts` `routedPopulation`; fixtures
+ *                                FU10–FU26b, Stacy). An undecidable list fails it: a missing link is
+ *                                never green. Every other act is judged exactly as before;
  *                       link 2 — every hunk, and every commit carrying one, stays inside the
  *                                signer's objects (F4, F12); a seat that signs in range does not
  *                                edit its own charter in another commit of the range (F12′); for a
@@ -194,6 +201,19 @@ export interface Regrounding {
   sharedCatalog: string;
   /** The `operative-set-freshness` sweep over a working tree, when `freshness.ts` exists. */
   sweep?: (repoRoot: string) => SweepResult;
+  /**
+   * The unsigned-routed list of a tree read through `read` (`files` = its paths under the profile
+   * and records dirs) — `freshness.ts` `routedPopulation`, when it exists (§ 2 clause 3).
+   */
+  unsignedRouted?: (read: (rel: string) => string | undefined, files: readonly string[]) => UnsignedRoutedList;
+  /** The census mode's lines (`freshness.ts` `routedCensus`), when it exists. */
+  census?: (read: (rel: string) => string | undefined, files: readonly string[]) => string[];
+}
+
+/** The unsigned-routed list as link 1 reads it: row ids, and what made it undecidable (per file). */
+export interface UnsignedRoutedList {
+  rows: { file: string; section: Section; key: string }[];
+  errors: { file: string; message: string }[];
 }
 
 const hasModule = (dir: string, rel: string): boolean => ['.ts', '.js'].some((ext) => fs.existsSync(path.join(dir, rel + ext)));
@@ -233,6 +253,15 @@ export function loadRegrounding(dir: string = __dirname): Regrounding | undefine
       const report = fresh.runFreshnessSweep(root);
       return { pass: report.findings.length === 0, lines: fresh.formatFreshness(report) };
     };
+    const pop = (fresh as { routedPopulation?: (read: (rel: string) => string | undefined, files: readonly string[]) => { rows: (UnsignedRoutedList['rows'][number] & { signed: boolean })[]; errors: UnsignedRoutedList['errors'] } }).routedPopulation;
+    const census = (fresh as { routedCensus?: (read: (rel: string) => string | undefined, files: readonly string[]) => string[] }).routedCensus;
+    if (census) rg.census = census;
+    if (pop) {
+      rg.unsignedRouted = (read, files) => {
+        const p = pop(read, files);
+        return { rows: p.rows.filter((r) => !r.signed), errors: p.errors };
+      };
+    }
   }
   return rg;
 }
@@ -345,6 +374,8 @@ export interface SigningAct {
   pinnedMoved: boolean;
   /** For sheet-only changes: the section is new/removed or its hash lines moved. */
   sectionMoved: boolean;
+  /** A FIRST signature: the dispositions `signature` is absent at the first parent and present here (§ 2 clause 3). */
+  first?: boolean;
   via: string[];
 }
 
@@ -649,6 +680,7 @@ export function analyzeCommit(repo: string, info: CommitInfo, rg: Regrounding | 
           const m0 = isMap(s0) ? s0 : undefined;
           const m1 = isMap(s1) ? s1 : undefined;
           a.pinnedMoved = !m0 || !m1 || m0.canonicalHash !== m1.canonicalHash || m0.renderedHash !== m1.renderedHash;
+          if (!m0 && m1) a.first = true;
           const signer = (m1 ?? m0)?.signer;
           if (typeof signer === 'string') a.signerFields.push(signer);
         }
@@ -777,6 +809,20 @@ export function walkRange(repo: string, base: string, head: string, rg: Reground
   let rowsChecked = 0;
   let signingCommits = 0;
   const signerSeats = new Set<string>();
+  /** The unsigned-routed list of a first parent's tree (§ 2 clause 3), computed once per parent. */
+  const listedAt = new Map<string, { ids: Set<string>; undecidable: Map<string, string> } | undefined>();
+  const unsignedAt = (parent: string | undefined): { ids: Set<string>; undecidable: Map<string, string> } | undefined => {
+    if (!rg?.unsignedRouted) return undefined;
+    const key = parent ?? EMPTY_TREE;
+    if (!listedAt.has(key)) {
+      const files = parent ? [...lsTree(repo, parent, PROFILES_DIR), ...lsTree(repo, parent, RECORDS_DIR)] : [];
+      const list = rg.unsignedRouted((rel) => (parent ? blobText(repo, parent, rel) : undefined), files);
+      const undecidable = new Map<string, string>();
+      for (const e of list.errors) if (!undecidable.has(e.file)) undecidable.set(e.file, e.message);
+      listedAt.set(key, { ids: new Set(list.rows.map((r) => rowIdOf(r.file, r.section, r.key))), undecidable });
+    }
+    return listedAt.get(key);
+  };
 
   for (const an of analyses) {
     if (an.merge) {
@@ -811,7 +857,20 @@ export function walkRange(repo: string, base: string, head: string, rg: Reground
           push(2, `the commit (Agent: ${trailer}) edits ${a.rowId}, an object of seat ${a.seat}`, a.rowId);
         }
       }
-      if (!actMoved(a)) {
+      if (a.first) {
+        const parent = an.parents[0];
+        const at = parent ? parent.slice(0, 8) : '(none — root commit)';
+        const listed = unsignedAt(parent);
+        // An error naming this row's file, or a shared input (not a dispositions file), leaves the row undecidable.
+        const why = listed ? [...listed.undecidable].find(([f]) => f === a.file || !isDispositionsPath(f))?.[1] : undefined;
+        if (!listed) {
+          push(1, `first signature: the unsigned-routed list cannot be computed on this tree (regrounding/freshness.ts routedPopulation is absent) — a missing link is never green`, a.rowId);
+        } else if (why !== undefined) {
+          push(1, `first signature: the unsigned-routed list at the commit's first parent ${at} is undecidable — ${why}; a missing link is never green`, a.rowId);
+        } else if (!listed.ids.has(a.rowId)) {
+          push(1, `first signature on a row on neither the stale list nor the unsigned-routed list at the commit's first parent ${at} (ballot § 2 clause 3)`, a.rowId);
+        }
+      } else if (!actMoved(a)) {
         push(1, a.pinnedTouched ? 're-sign leaves canonicalHash and renderedHash unchanged — the row is not on the stale list (F5)' : 'sheet section changed with no hash moved and no pinned hash moved in this commit — not on the stale list', a.rowId);
       }
     }
@@ -1546,9 +1605,40 @@ function defaultBase(repo: string, head: string): string {
   throw new HistoryError('no base: pass --base, set BASE_SHA, or fetch main');
 }
 
+/**
+ * `--census-routed [--at <sha>]` — the census mode (ballot 2026-10-19-instrument-census-at-draft;
+ * register `signing-act-consistency`, field `census`). Prints `freshness.ts` `routedCensus` over the
+ * profile tree: the working tree's tracked files, or the tree of `<sha>` with `--at`. Adds no logic;
+ * exit 0, or 2 when the mode or the commit is missing. Never part of `--ci`.
+ */
+export function censusRouted(repo: string, argv: string[], rg: Regrounding | undefined): number {
+  if (!rg?.census) {
+    console.error('verify-signing-chain --census-routed: regrounding/freshness.ts routedCensus is not on this tree');
+    return 2;
+  }
+  const at = arg(argv, '--at');
+  let files: string[];
+  let read: (rel: string) => string | undefined;
+  if (at !== undefined) {
+    const c = resolveCommit(repo, at);
+    if (!c) {
+      console.error(`verify-signing-chain --census-routed: --at ${at} does not resolve to a commit in this history`);
+      return 2;
+    }
+    files = [...lsTree(repo, c, PROFILES_DIR), ...lsTree(repo, c, RECORDS_DIR)];
+    read = (rel) => blobText(repo, c, rel);
+  } else {
+    files = git(repo, ['ls-files', '--', PROFILES_DIR, RECORDS_DIR]).split('\n').filter(Boolean);
+    read = (rel) => (fs.existsSync(path.join(repo, rel)) ? fs.readFileSync(path.join(repo, rel), 'utf8') : undefined);
+  }
+  for (const l of rg.census(read, files)) console.log(l);
+  return 0;
+}
+
 export function main(argv: string[], cwd: string = process.cwd()): number {
   const repo = gitTry(cwd, ['rev-parse', '--show-toplevel'])?.trim() ?? cwd;
   const rgLoaded = loadRegrounding();
+  if (argv.includes('--census-routed')) return censusRouted(repo, argv, rgLoaded);
   if (argv.includes('--ci')) {
     try {
       const head = arg(argv, '--head') ?? (process.env.HEAD_SHA || undefined) ?? 'HEAD';
@@ -1628,7 +1718,7 @@ export function main(argv: string[], cwd: string = process.cwd()): number {
     }
     return 0;
   }
-  console.error('usage: verify-signing-chain --ci [--base <sha>] [--head <sha>] [--since <sha>|none]\n       verify-signing-chain --audit (--pr <N> | --branch <b>) [--base <ref>] [--store <dir>] [--kiro <sha,…>] [--signer <seat> | --exclude-signer <seat>] [--json]');
+  console.error('usage: verify-signing-chain --ci [--base <sha>] [--head <sha>] [--since <sha>|none]\n       verify-signing-chain --census-routed [--at <sha>]\n       verify-signing-chain --audit (--pr <N> | --branch <b>) [--base <ref>] [--store <dir>] [--kiro <sha,…>] [--signer <seat> | --exclude-signer <seat>] [--json]');
   return 2;
 }
 
