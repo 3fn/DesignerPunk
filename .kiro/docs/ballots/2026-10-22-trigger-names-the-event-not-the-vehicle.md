@@ -22,7 +22,7 @@
 The token names a **vehicle**: the next amendment, made for some other reason, which the hold-form work hoped to ride. The record lapsed at both amendments, and **both were authored by the record's own owner**:
 
 - **`71ce7e2d7` (#416, 2026-10-19)**: ballot sitting 2's S5 application, 34 lines, without the hold form. Recorded as `## Lapse (2026-10-20)`.
-- **`9359c3805` (#437, 2026-10-21)**: the clause-3 erratum, 9 lines, without the hold form. Not recorded until this PR, which appends `## Lapse (2026-10-22)` (rule 11). This is the record's second lapse, so it goes to Peter with spec / drop / fix-now.
+- **`9359c3805` (#437, 2026-10-21)**: the clause-3 erratum, 9 lines, without the hold form. Recorded as `## Lapse (2026-10-22)` on #441's branch (`chore/routes-floor-census-and-ratification`), not yet on `main`. This is the record's second lapse, so it went to Peter with spec / drop / fix-now. **Peter, chat, 2026-10-22, verbatim: "Fix now."** The fix is ballot DRAFT `2026-10-22-hold-act-recorded-in-pr-body.md`, whose application closes item 4.
 
 A third commit touched the path, `8033f3a3e` (#423, 2026-10-19, a two-line dated ledger note). It predates the token, which was back-filled at the 2026-10-20 walk, and that walk counted only #416. I report it and do not re-decide it.
 
@@ -62,7 +62,7 @@ The consult estimate was "~10 of 30". The recount, every root record's first `**
 3. **`governance/classification-map.md`, row `issues-obligation-lapse`**: one history line, `{ date: <application date>, change: "README rule 1 gains the trigger-names-the-event sentence (ballot 2026-10-22-trigger-names-the-event-not-the-vehicle); rule line, checks and check_state unchanged", by: thurgood }`. The education disposition gains this ballot as LAW HOME for that sentence.
 4. **Straggler sweep**: `grep -c 'trigger-names-the-event-not-the-vehicle' .kiro/issues/README.md governance/classification-map.md` → `1` and `1`.
 5. **Roster re-rule (the next health-check walk, owners' own commits, rule 9)**: each owner re-rules the Appendix's 17 Trigger lines, choosing `release:next:phase-1`, `merge:#<N>` of an existing vehicle PR, the record's own fixing event, or a close. The walk prints the roster and counts the lines left un-re-ruled. One left un-re-ruled at the walk after that is a walk finding on its owner. Each superseded Trigger text stays inline in its record, labelled and dated (README § "Conventions", superseded text).
-6. **Hermetic item 4** is on the roster, and its re-rule is Peter's spec / drop / fix-now answer (§ 1), not a re-rule by its owner alone.
+6. **Hermetic item 4** is on the roster, but it closes with the application of ballot `2026-10-22-hold-act-recorded-in-pr-body.md` (Peter's "Fix now.", § 1). It needs no re-rule unless that application slips past the walk.
 
 ## 5. Recommendation, counter-argument (fold-back applied), residual
 
@@ -110,7 +110,7 @@ One line per record: file · owner · class · the vehicle its Trigger line name
 | 6 | `2026-09-27-progress-token-harvest-may-not-cross-dual-instance-boundary.md` | Ada | P2 (guard) · defect | `path:src/build/tokens/defineComponentTokens.ts`, the next change to the brand mechanism |
 | 7 | `2026-09-28-complete-task-no-ci-warning-wording.md` | Thurgood | P3 · defect | `path:.kiro/hooks/complete-task.sh`, the next change to the script |
 | 8 | `2026-10-01-in-repo-generate-output-contaminates-package-dist.md` | Ada | P2 (guard) · defect | `path:scripts/generate-platform-tokens.ts`, the next change to how it reads the config ("the file Spec 129 will edit") |
-| 9 | `2026-10-03-hermetic-publish-path-follow-ups.md` | Thurgood | P2 (record) · defect | `path:.kiro/docs/ballots/2026-10-01-signing-act-chain.md`, the next amendment (lapsed twice; § 1) |
+| 9 | `2026-10-03-hermetic-publish-path-follow-ups.md` | Thurgood | P2 (record) · defect | `path:.kiro/docs/ballots/2026-10-01-signing-act-chain.md`, the next amendment (lapsed twice; Peter "Fix now.", closed by the hold-act ballot's application; § 1) |
 | 10 | `2026-10-12-docs-mcp-does-not-index-h4.md` | Thurgood | P3 · defect | `path:mcp-server/src/indexer/**`, the next docs-MCP indexer change |
 | 11 | `2026-10-12-steward-canonical-claims-theme-output.md` | Thurgood (wording Kenya's and Data's) | P2 (record) · defect | `path:canonical/agents/[dk]*a.md`, the next authoring touch of Kenya's or Data's charter |
 | 12 | `2026-10-13-consumer-guard-c6-sync-dry-run-hits-npm-registry.md` | Lina | P3 · defect | `path:tests/consumer-integration.test.ts`, the next commit that edits the file |
