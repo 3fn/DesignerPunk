@@ -71,6 +71,8 @@
         "scripts/relocation-integrity-gate.ts",
         "scripts/derive-install-doc.ts",
         "scripts/categorize-tests.ts",
+        "scripts/issues-owned.sh",
+        "scripts/__tests__/issues-owned.test.ts",
         "mcp-server/src/**",
         "mcp-server/tests/**",
         "mcp-server/docs/**",
