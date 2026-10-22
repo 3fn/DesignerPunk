@@ -22,7 +22,7 @@
 The token names a **vehicle**: the next amendment, made for some other reason, which the hold-form work hoped to ride. The record lapsed at both amendments, and **both were authored by the record's own owner**:
 
 - **`71ce7e2d7` (#416, 2026-10-19)**: ballot sitting 2's S5 application, 34 lines, without the hold form. Recorded as `## Lapse (2026-10-20)`.
-- **`9359c3805` (#437, 2026-10-21)**: the clause-3 erratum, 9 lines, without the hold form. Recorded as `## Lapse (2026-10-22)` on #441's branch (`chore/routes-floor-census-and-ratification`), not yet on `main`. This is the record's second lapse, so it went to Peter with spec / drop / fix-now. **Peter, chat, 2026-10-22, verbatim: "Fix now."** The fix is ballot DRAFT `2026-10-22-hold-act-recorded-in-pr-body.md`, whose application closes item 4.
+- **`9359c3805` (#437, 2026-10-21)**: the clause-3 erratum, 9 lines, without the hold form. Recorded as `## Lapse (2026-10-22)` by #441 (`dae569756`, merged 2026-10-22 while this draft was being written). This is the record's second lapse, so it went to Peter with spec / drop / fix-now. **Peter, chat, 2026-10-22, verbatim: "Fix now."** The fix is ballot DRAFT `2026-10-22-hold-act-recorded-in-pr-body.md`, whose application closes item 4.
 
 A third commit touched the path, `8033f3a3e` (#423, 2026-10-19, a two-line dated ledger note). It predates the token, which was back-filled at the 2026-10-20 walk, and that walk counted only #416. I report it and do not re-decide it.
 

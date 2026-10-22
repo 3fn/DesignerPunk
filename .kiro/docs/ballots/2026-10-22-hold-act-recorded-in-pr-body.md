@@ -25,7 +25,7 @@
 
 **The lapses.** Item 4's trigger was "the next amendment to the signing-act ballot, or the second hold". The ballot was amended twice without the hold form, both times by its owner:
 - **`71ce7e2d7` (#416, 2026-10-19)**: lapse 1, recorded on `main` as `## Lapse (2026-10-20)`.
-- **`9359c3805` (#437, 2026-10-21)**: lapse 2, recorded as `## Lapse (2026-10-22)` on #441's branch (`chore/routes-floor-census-and-ratification`), not yet on `main`.
+- **`9359c3805` (#437, 2026-10-21)**: lapse 2, recorded as `## Lapse (2026-10-22)` by #441 (`dae569756`, merged 2026-10-22).
 
 **Escalation and ruling.** A P2 `(record)` at its second lapse goes to Peter with exactly three options, **spec**, **drop** or **fix-now** (README rule 11). Peter: **"Fix now."** This ballot is that fix. The class that made the trigger lapse by construction is ballot DRAFT `2026-10-22-trigger-names-the-event-not-the-vehicle.md`.
 
@@ -47,17 +47,17 @@ Followed by its dated pointer: *(amended <application date> by ballot 2026-10-22
 
 ## 3. Timing: before the routes-floor application
 
-The orchestrator recommended, and Peter's "Fix now." places, this amendment **before** the routes-floor application PR (ballot `2026-10-21-routes-floor-re-pointed-frontmatter-members.md`, ratified 2026-10-22 on #441's branch). That PR's signing fan-out is the largest scheduled (the orchestrator's count: seven seats over 20 rows), so a hold is most likely there, and without this rule a hold there would be the second hold, the other limb of item 4's trigger. The floor application does not itself amend the signing-act ballot; its edit sites are `triviality.ts`, its tests and Spec 123 `design.md` § C18.
+The orchestrator recommended, and Peter's "Fix now." places, this amendment **before** the routes-floor application PR (ballot `2026-10-21-routes-floor-re-pointed-frontmatter-members.md`, ratified 2026-10-22, recorded by #441 at `dae569756`). That PR's signing fan-out is the largest scheduled (the orchestrator's count: seven seats over 20 rows), so a hold is most likely there, and without this rule a hold there would be the second hold, the other limb of item 4's trigger. The floor application does not itself amend the signing-act ballot; its edit sites are `triviality.ts`, its tests and Spec 123 `design.md` § C18.
 
-**Sequence**: #441 merges → this ballot is ratified (record-first) → the application PR (§ 4) merges → the routes-floor application PR opens.
+**Sequence**: #441 merged (`dae569756`) → this ballot is ratified (record-first) → the application PR (§ 4) merges → the routes-floor application PR opens.
 
-## 4. Application (one PR, Peter-merged, after #441 merges)
+## 4. Application (one PR, Peter-merged, cut from `main` at or after `dae569756`)
 
 1. **Record-first**: this file's Status reads `RATIFIED (Peter, <date>)`, committed before any site.
 2. **`.kiro/docs/ballots/2026-10-01-signing-act-chain.md` § 2 clause 6**: the § 2 sentence and its dated pointer, exactly as written.
 3. **Same file, § Errata**: one ledger line, `§ 2 clause 6: the hold form added (ballot 2026-10-22-hold-act-recorded-in-pr-body; Peter, 2026-10-22, "Fix now."; hermetic follow-ups item 4).`
 4. **`governance/classification-map.md`, row `signing-act-consistency`**: one history line, `{ date: <application date>, change: "§ 2 clause 6 gains the hold form: a hold is a line in the PR body's acts list (<dispositions file>#<row> — <seat> — hold: <reason>), never a sheet or signature edit, and not a signing act (ballot 2026-10-22-hold-act-recorded-in-pr-body; closes hermetic follow-ups item 4); rule line, checks and check_state unchanged", by: thurgood }`.
-5. **Close hermetic item 4**: this amendment is item 4's owed fix. The application PR adds rule 5's dated outcome line to `.kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md` and `git mv`s it to `archive/`, since item 4 is its last open item. **It must branch after #441 merges**, because the record's `## Lapse (2026-10-22)` lives on #441's branch, and editing the record anywhere else first would conflict with it or duplicate it. The application touches the record's trigger path (`path:.kiro/docs/ballots/2026-10-01-signing-act-chain.md`), and the same commit closes it, so it does not lapse a third time.
+5. **Close hermetic item 4**: this amendment is item 4's owed fix. The application PR adds rule 5's dated outcome line to `.kiro/issues/2026-10-03-hermetic-publish-path-follow-ups.md` and `git mv`s it to `archive/`, since item 4 is its last open item. **It branches from `main` at or after `dae569756`** (#441), where the record's `## Lapse (2026-10-22)` landed. An earlier base would conflict with that heading or duplicate it. The application touches the record's trigger path (`path:.kiro/docs/ballots/2026-10-01-signing-act-chain.md`), and the same commit closes it, so it does not lapse a third time.
 6. **Straggler sweep**: `grep -c 'hold-act-recorded-in-pr-body'` → `2` in the signing-act ballot (the pointer and the Errata line) and `1` in the register. Separately, `grep -n 'Interim rule' .kiro/issues/archive/2026-10-03-hermetic-publish-path-follow-ups.md`; the interim text stays there inline as the superseded record (README § "Conventions", superseded text).
 
 **Other records that fire on "the next amendment to the signing-act ballot"**: none besides hermetic item 4. I checked every root record's Trigger lines and body triggers for the ballot path, "amendment to the signing", and riders on it, at `275b711e5`. Its item 6 rider (the `publish-rail-guard` register row, "riding with item 4's hold-form work") was resolved separately at #354 (`ce7b492e1`), so it carries nothing into this PR. The register's `signing-act-consistency` disposition carries a different rider (the TCP pointer "rides the next TCP edit"), keyed to a TCP edit, not to this ballot. It does not fire here.
