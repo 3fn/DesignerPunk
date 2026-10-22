@@ -607,7 +607,7 @@ body:
     disposition: re-pointed
     destination: "#the-owed-set-pipeline"
     removals: [ { text: "…/.kiro/docs/ballots/2026-09-19-…", cites: subtraction-1 } ]
-    signature:                                     # present iff ROUTED
+    signature:                                     # present iff ROUTED (2026-10-22: a signature may persist on a non-routed row — the closed set of seven, routes-floor ballot § 6 residual 1)
       signer: stacy                                # C1: owner of THIS charter (stacy) ≠ profile author → stacy (S-D-B1)
       canonicalHash: sha256:…                      # VALVE 1
       renderedHash: sha256:…
@@ -655,6 +655,8 @@ frontmatter:                                        # NEW (L-D4)
      - **The floor can under-count** (a re-grounded item routes). That is the intended one-sidedness.
   3. Otherwise → **ROUTED** → a C17 signature row, judged under the semantic correspondence rule, **with retention decided by entailment** (Req 11.6.5e, added after G1 run 1): an item is retained iff every implementation that complies with the rendering's statements complies with it. Labels, references and bare goals entail nothing.
   4. **Hard floor, population defined** (S-D-A6): a charter in which **every body unit with a non-empty C16 item set** is `no-consumer-counterpart` → **FAIL**. Preambles with zero items cannot be used to evade it.
+  5. **The entry grain.** A `frontmatter` row or a `members` row whose disposition is `re-pointed` **ROUTES** (reason `re-pointed-entry`) → a C17 signature row, judged by a human. Clause 1's INAPPLICABLE does not reach it: an entry is operative configuration that has no C16 item record, not a unit whose committed record holds zero items, so clauses 1–2 have nothing to count, and no measure exists by which it could clear. A re-grounded entry is also where clause 2's own exclusion lands: 12 of the 28 re-pointed entries today carry removals that cite subtraction 1–4 (13 removals), and clause 2 never lets a body unit with such a removal clear. Nothing else in C18 changes. Body units are classified exactly as clauses 1–4 say (outside the entry set; INAPPLICABLE; CLEARS; ROUTES). A `retained` frontmatter or members row is not routed.
+     *(Clause 5 added 2026-10-22, ratified: ballot `.kiro/docs/ballots/2026-10-21-routes-floor-re-pointed-frontmatter-members.md`. Code: `regrounding/triviality.ts` `routesEntry`, called from `freshness.ts` `routedPopulation`; `classifyCharter` is unchanged. "Today" in the clause is the ratified census at `9359c3805`.)*
 - **Grain**: applied **per unit** of C13's partition; no aggregation (Req 11.6.5f).
 - **Not built until G1 returns HOLDS.**
 
