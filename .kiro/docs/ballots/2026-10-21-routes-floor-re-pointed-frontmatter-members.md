@@ -315,3 +315,49 @@ canonical/profiles/consumer/thurgood.dispositions.yaml#frontmatter:writeScope[.k
 ```
 
 (Current count line: `1089 rows; 360 routed; 0 unsigned-routed; errors 0`.)
+
+### Application re-run (README "Re-runs"; run 2026-10-22 by Thurgood on the application branch `chore/routes-floor-application`, base `main` `dae569756`, the #441 squash)
+
+**Census**: `npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --census-routed` over `canonical/profiles/**` + `canonical/operative-sets/**` + their canonical sources @ `dae569756` — current `9fdea4525cff6ba2cd3d5a69b8cce19bbdf5dc47c22f904bc672cb7cb7186a3a` → proposed `079376c4a8e972ab4f128e93a1000f3320abebc3acbc741071ad74b96dc188bd`; 29 rows change (delta below)
+- **Arms.** Both run as `<command> --at dae569756` in the application worktree at `dae569756` before any edit site, exit 0, empty stderr. Current: as committed. Proposed: the re-run scratch diff above (`git apply --check` passes at `dae569756`; it touches only `regrounding/freshness.ts`), then reverted. Count lines: current `1090 rows; 360 routed; 0 unsigned-routed; errors 0`, proposed `1090 rows; 389 routed; 20 unsigned-routed; errors 0`.
+- **Shipped form equals the scratch diff, no carve-out.** After site 2 (`freshness.ts` calling `triviality.ts` `routesEntry`), the same command `--at dae569756` digests to `079376c4…`, byte-identical to the scratch arm. The shipped code `--at 9359c3805` and `--at b42874bd0` digests to the ratified proposed `0f5c5144…` (`1089 rows; 388 routed; 19 unsigned-routed; errors 0`).
+- **The ratified census reproduces.** `regrounding/**` is unchanged between `9359c3805` and `dae569756` (`git diff --name-only 9359c3805 dae569756 -- tools/agent-generator/regrounding` is empty), so `--at 9359c3805` in this worktree gives the ratified arms exactly: current `b423eae8…`, proposed (scratch) `0f5c5144…`.
+- **Input-by-input comparison against the ratified census.** `git diff --name-only 9359c3805 dae569756 -- canonical/profiles canonical/operative-sets canonical/agents canonical/shared .kiro/steering` names 12 files, every one changed in one merge, #439 (`809276d2b`): `canonical/agents/{stacy,thurgood}.md`, `canonical/operative-sets/{stacy,thurgood}.yaml`, `canonical/profiles/consumer/{confirmations,signatures}/{stacy,thurgood}.md`, `canonical/profiles/consumer/{stacy,thurgood}.dispositions.yaml`, `canonical/profiles/consumer/{stacy,thurgood}.overlay.md`. #430, #438, #440 and #441 touch no corpus input.
+  - Over all 1090 rows of each arm, exactly **one line differs** between the ratified census and this one, in both arms: `canonical/profiles/consumer/stacy.dispositions.yaml#frontmatter:commands[owed-set]`, absent at `9359c3805`, present here (current `not-routed unsigned -`; proposed `routed: re-pointed: re-pointed-entry unsigned stacy`). The input that changed: `stacy.dispositions.yaml`, which #439 gave the row (`re-pointed`, removal `./scripts/owed-set.sh` cited subtraction-1, no signature). It is the difference § 8 expects. Every other row's line is byte-identical across the two bases, so the rest of #439's changes (stacy's re-pointed owed-set body unit and thurgood's `#trigger-types` unit, both re-signed by Stacy, with their sheets, confirmations, operative sets and overlays) moved no census line.
+  - No line differs in an input unchanged since `9359c3805`. **No stop condition.**
+- **Delta** = the ratified 28 rows plus `stacy#frontmatter:commands[owed-set]`: 29 rows, every current line `not-routed`, none from routed to not-routed, 28 `frontmatter` + 1 `members`, 20 `unsigned` + 9 `signed`. The 20 unsigned are the § 3 site 6 table's 19 plus Stacy's fifth (§ 8).
+
+```
+canonical/profiles/consumer/_shared.dispositions.yaml#record-first-ratification	routed: re-pointed: re-pointed-entry	unsigned	stacy
+canonical/profiles/consumer/ada.dispositions.yaml#frontmatter:description	routed: re-pointed: re-pointed-entry	unsigned	ada
+canonical/profiles/consumer/ada.dispositions.yaml#frontmatter:writeScope[.kiro/specs/**]	routed: re-pointed: re-pointed-entry	unsigned	ada
+canonical/profiles/consumer/data.dispositions.yaml#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt]	routed: re-pointed: re-pointed-entry	signed	data
+canonical/profiles/consumer/data.dispositions.yaml#frontmatter:commands[android-build-test]	routed: re-pointed: re-pointed-entry	unsigned	data
+canonical/profiles/consumer/data.dispositions.yaml#frontmatter:commands[platform-tokens]	routed: re-pointed: re-pointed-entry	signed	data
+canonical/profiles/consumer/data.dispositions.yaml#frontmatter:commands[product-screen-commands]	routed: re-pointed: re-pointed-entry	unsigned	data
+canonical/profiles/consumer/data.dispositions.yaml#frontmatter:knowledgeBases[android-components]	routed: re-pointed: re-pointed-entry	unsigned	data
+canonical/profiles/consumer/data.dispositions.yaml#frontmatter:routes.cues[9]	routed: re-pointed: re-pointed-entry	signed	data
+canonical/profiles/consumer/data.dispositions.yaml#frontmatter:writeScope[.kiro/specs/**]	routed: re-pointed: re-pointed-entry	unsigned	data
+canonical/profiles/consumer/kenya.dispositions.yaml#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.ios.swift]	routed: re-pointed: re-pointed-entry	signed	kenya
+canonical/profiles/consumer/kenya.dispositions.yaml#frontmatter:commands[ios-build-test]	routed: re-pointed: re-pointed-entry	unsigned	kenya
+canonical/profiles/consumer/kenya.dispositions.yaml#frontmatter:commands[platform-tokens]	routed: re-pointed: re-pointed-entry	signed	kenya
+canonical/profiles/consumer/kenya.dispositions.yaml#frontmatter:commands[product-screen-commands]	routed: re-pointed: re-pointed-entry	unsigned	kenya
+canonical/profiles/consumer/kenya.dispositions.yaml#frontmatter:knowledgeBases[ios-components]	routed: re-pointed: re-pointed-entry	unsigned	kenya
+canonical/profiles/consumer/kenya.dispositions.yaml#frontmatter:routes.cues[9]	routed: re-pointed: re-pointed-entry	signed	kenya
+canonical/profiles/consumer/kenya.dispositions.yaml#frontmatter:writeScope[.kiro/specs/**]	routed: re-pointed: re-pointed-entry	unsigned	kenya
+canonical/profiles/consumer/leonardo.dispositions.yaml#frontmatter:description	routed: re-pointed: re-pointed-entry	unsigned	leonardo
+canonical/profiles/consumer/leonardo.dispositions.yaml#frontmatter:routes.cues[21]	routed: re-pointed: re-pointed-entry	signed	leonardo
+canonical/profiles/consumer/leonardo.dispositions.yaml#frontmatter:writeScope[.kiro/specs/**]	routed: re-pointed: re-pointed-entry	unsigned	leonardo
+canonical/profiles/consumer/lina.dispositions.yaml#frontmatter:writeScope[.kiro/specs/**]	routed: re-pointed: re-pointed-entry	unsigned	lina
+canonical/profiles/consumer/sparky.dispositions.yaml#frontmatter:commands[product-screen-commands]	routed: re-pointed: re-pointed-entry	unsigned	sparky
+canonical/profiles/consumer/sparky.dispositions.yaml#frontmatter:routes.cues[8]	routed: re-pointed: re-pointed-entry	signed	sparky
+canonical/profiles/consumer/sparky.dispositions.yaml#frontmatter:writeScope[.kiro/specs/**]	routed: re-pointed: re-pointed-entry	unsigned	sparky
+canonical/profiles/consumer/stacy.dispositions.yaml#frontmatter:commands[owed-set]	routed: re-pointed: re-pointed-entry	unsigned	stacy
+canonical/profiles/consumer/stacy.dispositions.yaml#frontmatter:knowledgeBases[completion-docs]	routed: re-pointed: re-pointed-entry	unsigned	stacy
+canonical/profiles/consumer/stacy.dispositions.yaml#frontmatter:knowledgeBases[spec-summaries]	routed: re-pointed: re-pointed-entry	signed	stacy
+canonical/profiles/consumer/stacy.dispositions.yaml#frontmatter:writeScope[.kiro/specs/**]	routed: re-pointed: re-pointed-entry	unsigned	stacy
+canonical/profiles/consumer/thurgood.dispositions.yaml#frontmatter:writeScope[.kiro/specs/**]	routed: re-pointed: re-pointed-entry	unsigned	stacy
+1090 rows; 389 routed; 20 unsigned-routed; errors 0
+```
+
+(Current count line: `1090 rows; 360 routed; 0 unsigned-routed; errors 0`.)
