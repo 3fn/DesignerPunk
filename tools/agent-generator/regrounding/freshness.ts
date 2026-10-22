@@ -256,14 +256,49 @@ interface SourceView {
   members: Map<string, unknown>;
 }
 
+/** A row as the census mode reports it: every dispositions row, with routedPopulation's verdict. */
+export interface CensusRow {
+  file: string;
+  section: RowSection;
+  key: string;
+  /** The routed row, when routedPopulation routes it. */
+  routed?: RoutedRow;
+  signed: boolean;
+}
+
+/** A row carries a signature (a refusal is one). The one predicate for `RoutedRow.signed` and the census. */
+export const isSignedRow = (row: unknown): boolean =>
+  typeof row === 'object' && row !== null && !Array.isArray(row) && (row as { signature?: unknown }).signature !== undefined && (row as { signature?: unknown }).signature !== null;
+
+/**
+ * The census mode's output (ballot 2026-10-19-instrument-census-at-draft; register
+ * `signing-act-consistency`, field `census`): one line per dispositions row,
+ * `<rowId>\t<routed: <label> | not-routed>\t<signed|unsigned>\t<signer | ->`, sorted, then the
+ * count line. Every value is routedPopulation's own; nothing is decided here.
+ */
+export function routedCensus(read: (rel: string) => string | undefined, files: readonly string[]): string[] {
+  const pop = routedPopulation(read, files);
+  const lines = pop.all
+    .map((r) => `${listRowId(r)}\t${r.routed ? `routed: ${routedLabel(r.routed)}` : 'not-routed'}\t${r.signed ? 'signed' : 'unsigned'}\t${r.routed?.signer ?? '-'}`)
+    .sort();
+  const routed = pop.all.filter((r) => r.routed).length;
+  const unsigned = pop.all.filter((r) => r.routed && !r.signed).length;
+  return [...lines, `${lines.length} rows; ${routed} routed; ${unsigned} unsigned-routed; errors ${pop.errors.length}`];
+}
+
 /**
  * The signed population over a tree read through `read` (repo-relative path → text, `undefined`
  * when absent); `files` lists the tree's paths under the profile and records dirs. Records pair
  * with dispositions files by `source`. Pure; never throws — what cannot be decided goes to
  * `errors`, naming the dispositions file it concerns. Rows come back in list order.
  */
-export function routedPopulation(read: (rel: string) => string | undefined, files: readonly string[]): { rows: RoutedRow[]; errors: RoutedError[] } {
+export function routedPopulation(
+  read: (rel: string) => string | undefined,
+  files: readonly string[]
+): { rows: RoutedRow[]; errors: RoutedError[]; all: CensusRow[] } {
   const rows: RoutedRow[] = [];
+  /** Every row of every dispositions file that parses, with this function's verdict — the census mode's input. */
+  const all: CensusRow[] = [];
   /** One line per error, so a list line or a --ci finding never spans lines (a YAML error carries a snippet). */
   const firstLine = (e: unknown): string => String((e as Error)?.message ?? e).split('\n')[0].trim();
   const errors: RoutedError[] = [];
@@ -297,10 +332,16 @@ export function routedPopulation(read: (rel: string) => string | undefined, file
   for (const file of files.filter((x) => x.startsWith(`${PROFILE_DIR}/`) && x.endsWith('.dispositions.yaml')).sort()) {
     const doc = yaml(file);
     if (!doc) continue; // absent or unparsable (recorded) — the sweep's own findings name it
+    const section = (name: RowSection): Record<string, unknown> => (isMap(doc[name]) ? (doc[name] as Record<string, unknown>) : {});
+    /** The rows of a file whose list is undecidable: each one, not routed. */
+    const undecided = (): void => {
+      for (const name of ['body', 'frontmatter', 'members'] as const) for (const [key, row] of Object.entries(section(name))) all.push({ file, section: name, key, signed: isSignedRow(row) });
+    };
     const source = typeof doc.source === 'string' ? doc.source : undefined;
     const sourceText = source === undefined ? undefined : read(source);
     if (source === undefined || sourceText === undefined) {
       errors.push({ file, message: `${file}: source ${String(doc.source)} does not exist — which rows name a current unit is undecidable` });
+      undecided();
       continue;
     }
     let universe: KeyUniverse;
@@ -308,6 +349,7 @@ export function routedPopulation(read: (rel: string) => string | undefined, file
       universe = keyUniverseOf(source, sourceText);
     } catch (e) {
       errors.push({ file, message: `${file}: the key universe of ${source} cannot be read — ${firstLine(e)}` });
+      undecided();
       continue;
     }
     const current: Record<RowSection, (k: string) => boolean> = {
@@ -315,7 +357,6 @@ export function routedPopulation(read: (rel: string) => string | undefined, file
       frontmatter: (k) => universe.entryNodes.has(k),
       members: (k) => universe.members.includes(k),
     };
-    const section = (name: RowSection): Record<string, unknown> => (isMap(doc[name]) ? (doc[name] as Record<string, unknown>) : {});
 
     // C18 over the body: which re-pointed units ROUTE.
     const routes = new Map<string, string[]>();
@@ -347,24 +388,28 @@ export function routedPopulation(read: (rel: string) => string | undefined, file
 
     for (const name of ['body', 'frontmatter', 'members'] as const) {
       for (const [key, row] of Object.entries(section(name))) {
+        const census: CensusRow = { file, section: name, key, signed: isSignedRow(row) };
+        all.push(census);
         if (!isMap(row) || !current[name](key)) continue; // an orphan is on no list (the sweep refuses it)
         const d = row.disposition;
         const routedBy = name === 'body' && d === 're-pointed' ? routes.get(key) : undefined;
         if (d !== 'no-consumer-counterpart' && d !== 'superseded-by' && routedBy === undefined) continue;
         const owner = ownerOf(source, name === 'members' ? key : undefined, { sharedOwners, recordOwners });
-        rows.push({
+        const routed: RoutedRow = {
           file,
           section: name,
           key,
           disposition: d as RoutedRow['disposition'],
           ...(routedBy ? { routedBy } : {}),
           signer: owner === undefined ? undefined : c1Seat(owner),
-          signed: row.signature !== undefined && row.signature !== null,
-        });
+          signed: census.signed,
+        };
+        census.routed = routed;
+        rows.push(routed);
       }
     }
   }
-  return { rows: listOrder(rows), errors };
+  return { rows: listOrder(rows), errors, all };
 }
 
 /** The unsigned-routed list over a working tree — the rows the sweep emits. */

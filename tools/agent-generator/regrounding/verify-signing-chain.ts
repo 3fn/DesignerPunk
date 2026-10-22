@@ -206,6 +206,8 @@ export interface Regrounding {
    * and records dirs) — `freshness.ts` `routedPopulation`, when it exists (§ 2 clause 3).
    */
   unsignedRouted?: (read: (rel: string) => string | undefined, files: readonly string[]) => UnsignedRoutedList;
+  /** The census mode's lines (`freshness.ts` `routedCensus`), when it exists. */
+  census?: (read: (rel: string) => string | undefined, files: readonly string[]) => string[];
 }
 
 /** The unsigned-routed list as link 1 reads it: row ids, and what made it undecidable (per file). */
@@ -252,6 +254,8 @@ export function loadRegrounding(dir: string = __dirname): Regrounding | undefine
       return { pass: report.findings.length === 0, lines: fresh.formatFreshness(report) };
     };
     const pop = (fresh as { routedPopulation?: (read: (rel: string) => string | undefined, files: readonly string[]) => { rows: (UnsignedRoutedList['rows'][number] & { signed: boolean })[]; errors: UnsignedRoutedList['errors'] } }).routedPopulation;
+    const census = (fresh as { routedCensus?: (read: (rel: string) => string | undefined, files: readonly string[]) => string[] }).routedCensus;
+    if (census) rg.census = census;
     if (pop) {
       rg.unsignedRouted = (read, files) => {
         const p = pop(read, files);
@@ -1601,9 +1605,40 @@ function defaultBase(repo: string, head: string): string {
   throw new HistoryError('no base: pass --base, set BASE_SHA, or fetch main');
 }
 
+/**
+ * `--census-routed [--at <sha>]` — the census mode (ballot 2026-10-19-instrument-census-at-draft;
+ * register `signing-act-consistency`, field `census`). Prints `freshness.ts` `routedCensus` over the
+ * profile tree: the working tree's tracked files, or the tree of `<sha>` with `--at`. Adds no logic;
+ * exit 0, or 2 when the mode or the commit is missing. Never part of `--ci`.
+ */
+export function censusRouted(repo: string, argv: string[], rg: Regrounding | undefined): number {
+  if (!rg?.census) {
+    console.error('verify-signing-chain --census-routed: regrounding/freshness.ts routedCensus is not on this tree');
+    return 2;
+  }
+  const at = arg(argv, '--at');
+  let files: string[];
+  let read: (rel: string) => string | undefined;
+  if (at !== undefined) {
+    const c = resolveCommit(repo, at);
+    if (!c) {
+      console.error(`verify-signing-chain --census-routed: --at ${at} does not resolve to a commit in this history`);
+      return 2;
+    }
+    files = [...lsTree(repo, c, PROFILES_DIR), ...lsTree(repo, c, RECORDS_DIR)];
+    read = (rel) => blobText(repo, c, rel);
+  } else {
+    files = git(repo, ['ls-files', '--', PROFILES_DIR, RECORDS_DIR]).split('\n').filter(Boolean);
+    read = (rel) => (fs.existsSync(path.join(repo, rel)) ? fs.readFileSync(path.join(repo, rel), 'utf8') : undefined);
+  }
+  for (const l of rg.census(read, files)) console.log(l);
+  return 0;
+}
+
 export function main(argv: string[], cwd: string = process.cwd()): number {
   const repo = gitTry(cwd, ['rev-parse', '--show-toplevel'])?.trim() ?? cwd;
   const rgLoaded = loadRegrounding();
+  if (argv.includes('--census-routed')) return censusRouted(repo, argv, rgLoaded);
   if (argv.includes('--ci')) {
     try {
       const head = arg(argv, '--head') ?? (process.env.HEAD_SHA || undefined) ?? 'HEAD';
@@ -1683,7 +1718,7 @@ export function main(argv: string[], cwd: string = process.cwd()): number {
     }
     return 0;
   }
-  console.error('usage: verify-signing-chain --ci [--base <sha>] [--head <sha>] [--since <sha>|none]\n       verify-signing-chain --audit (--pr <N> | --branch <b>) [--base <ref>] [--store <dir>] [--kiro <sha,…>] [--signer <seat> | --exclude-signer <seat>] [--json]');
+  console.error('usage: verify-signing-chain --ci [--base <sha>] [--head <sha>] [--since <sha>|none]\n       verify-signing-chain --census-routed [--at <sha>]\n       verify-signing-chain --audit (--pr <N> | --branch <b>) [--base <ref>] [--store <dir>] [--kiro <sha,…>] [--signer <seat> | --exclude-signer <seat>] [--json]');
   return 2;
 }
 
