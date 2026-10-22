@@ -250,7 +250,7 @@ units:
         text: "**One rule worth restating here at the start:** when you report a task complete, **STOP and wait for user authorization** before starting the next one (see #3 above)."
     confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-ending-a-task-see-task-completion-protocol
   "#item-starting-a-parent-task-write-its-instruments-block-first":
-    canonicalHash: sha256:450bc8ccda0592e81e09ec9b06ec82b08cf7c6a8512572d7a7674f27df86a2d2
+    canonicalHash: sha256:bab2eca6c2b9f830775c12ea924c2ccb0a2899fffad979c2289d262a94200dca
     items:
       - id: write-block
         kind: obligation

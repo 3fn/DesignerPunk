@@ -98,6 +98,17 @@ date: 2026-09-29
 
 **Ruling: CONFIRMED at 1, as drafted.**
 
+## `#step-0-read-the-records-that-name-the-spec`
+
+confirmer: stacy
+canonicalHash: sha256:ad3c60d3e1b78b06d44a01035a84a5b2d9c97ef90a935f8d77f5261928117be3
+items: read-records-first
+date: 2026-10-21
+
+**Ruling: CONFIRMED at 1, as drafted (new unit, 2026-10-21).** Ballot `.kiro/docs/ballots/2026-10-20-manual-records-routed-readers.md` E2 (RATIFIED, Peter, 2026-10-20), edit site 4, applied in `fadc095e4`. The unit is the heading and its one sentence: *"Run Process-Spec-Planning's pre-formalization grep and write its disposition lines in the requirements feedback round before Step 1 (ballot 2026-10-20-manual-records-routed-readers, E2)."* The ballot's wording is "Run Process-Spec-Planning's pre-formalization grep and write its disposition lines in the requirements feedback round before Step 1"; Thurgood added the parenthetical ballot citation to the sentence. The citation does not change what is required, and the item's text is the sentence as the charter prints it, a verbatim substring of the unit (one occurrence).
+- **Operative under 5c**: a formalizer who writes Step 1 without running the grep, or runs it and leaves no disposition lines in the requirements feedback round, violates it. One `step`; the heading is a label (clause (c)).
+- **Consumer rendering (decision (b), for the disposition)**: `no-consumer-counterpart`, **`subtraction-3`**, confirmed. The brief's reason, "consumers do not formalize our specs", is too wide as stated: Steps 1 to 5 of this mode are retained for consumers, so consumers do formalize specs. The ground that applies is narrower. The step is an obligation to read this repo's stewardship record system, the root `.kiro/issues/` records and their `**Trigger**:` lines, through a grep and a disposition convention that Process-Spec-Planning's new section defines for this repo's issue corpus; a consumer install has neither the records nor the convention, so the step has no consumer referent to re-point to. That is "our stewardship ... instruments as obligations" (`subtraction-3`). `subtraction-1` is the near miss: the step names no tool by invocation (the grep lives in the doc it routes to), unlike Start Up Tasks item 9, which invokes `./scripts/issues-owned.sh` and so cites `subtraction-1`. The unit is a whole-unit `no-consumer-counterpart`, so the Step 1 to 5 rows are untouched.
+
 ## `#step-1-query-current-standards`
 
 confirmer: stacy
@@ -254,9 +265,19 @@ date: 2026-09-29
 ## `#trigger-types`
 
 confirmer: stacy
-canonicalHash: sha256:b4d484bc616d3215424be7d346e2729bca7e8178564925e0a0590795ba38a961
-items: instruments-named, instruments-computed, event-post-spec, event-post-doc, event-post-prompt, cadence-health-check, return-edge, liveness-records-not-verdicts, liveness-owed-set, liveness-records, liveness-release-complete, liveness-charter-walk, owed-set-three-copies, owed-set-predicate, owed-set-pipeline, owed-set-exclusion-classes, owed-set-promotion, register-read, discovery-spec, discovery-feedback, discovery-audit
-date: 2026-10-17
+canonicalHash: sha256:c0eae17781843d50c34fec00c2c31a7772924a04ce3e9c017f1efa2cbc1205fd
+items: instruments-named, instruments-computed, event-post-spec, event-post-doc, event-post-prompt, cadence-health-check, return-edge, liveness-records-not-verdicts, liveness-owed-set, liveness-records, liveness-release-complete, liveness-charter-walk, liveness-grant-activations, liveness-grant-activations-query, owed-set-three-copies, owed-set-predicate, owed-set-pipeline, owed-set-exclusion-classes, owed-set-promotion, register-read, discovery-spec, discovery-feedback, discovery-audit
+date: 2026-10-21
+
+**Re-confirmed 2026-10-21 (Req 11.6.5d).**
+- **What changed**: LIVENESS gains a fourth read, item 4, **Grant activations**, with its query, and the lead-in sentence's "Three reads:" becomes "Four reads:". The text is Thurgood's, from ballot `.kiro/docs/ballots/2026-10-20-grant-ci-deletions-and-activating-merge-read.md` § 2 A-2, edit site 3 (RATIFIED, Peter, 2026-10-20), applied in authoring commit `3fa2565fa`; the prose paragraph and the fenced query each equal the ballot's, the query line for line (indentation aside). No other text in the unit changed. The canonicalHash moves from `sha256:b4d484bc616d3215424be7d346e2729bca7e8178564925e0a0590795ba38a961` to the value above, as `operative-set-freshness` printed it and as I recomputed it independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts` (the two agree).
+- **Two items added, 21 to 23** (items are authoring, signing-act ballot § 2 clause 4; I confirm them). `liveness-grant-activations` (`step`) is the item 4 paragraph: run the query; a candidate owes a committed `**Grant activation read**:` line at column 0 or the `— no .github/** grant activated: <why>` form; an `OWED` candidate is a finding routed to me. It is operative under 5c: a LIVENESS walk that skips the query, accepts a quoted marker as the line, or does not route an `OWED` candidate to me violates it. `liveness-grant-activations-query` (`command`) is the fenced query, one item with its internal bytes kept, as `owed-set-pipeline` is. Both texts are verbatim substrings of the unit (one occurrence each). I did not split the paragraph's sentences into separate items: the superset note, the window definition and the "read for records, never for verdicts" bound are conditions on the one step, as at `liveness-owed-set`. The recount of the items list (`items:` above): the 21 earlier ids in their order, plus these two after `liveness-charter-walk` and before `owed-set-three-copies`, which is the record's order; 23 ids, matching the record's 23 items.
+- **What did not change**: the other 21 items, all still verbatim substrings.
+- **Consumer rendering (decision (a), for the disposition)**: the two new items are **removed for consumers with the rest of this unit's internal reads** (`subtraction-3`). Thurgood added the removal ("The grant-activation read (LIVENESS item 4) and its query over `.kiro/issues/` grant records"); I confirm it applies. The read walks root `.kiro/issues/` `**Grant paths**` blocks and the DesignerPunk civitas-health-checks records, and routes an `OWED` candidate to my ARMING-row duty, which consumers do not receive (my own rows' removal, above). It is a stewardship instrument carried as an obligation, the same ground as the active-charter walk and the register read beside it. Pin only after this act: the overlay's unit pin; the overlay body is expected unchanged; my `assent.surviving` (11 items) is expected unchanged, as neither new item survives.
+
+**Ruling: CONFIRMED at 23 items.**
+
+**Re-confirmed 2026-10-17 (prior record, superseded)**: canonicalHash `sha256:b4d484bc616d3215424be7d346e2729bca7e8178564925e0a0590795ba38a961`, 21 items, as below.
 
 **Re-confirmed 2026-10-17 (Req 11.6.5d).**
 - **What changed**: the cadence-driven health-check step. It read *"Check Start Up Tasks for the governance health check date … and commit the updated date in Start Up Tasks."* It now reads the newest record in `.kiro/docs/civitas-health-checks/` and commits the check's record there. Authoring commit `2df26ddee` (Thurgood). No other text in the unit changed. The canonicalHash moves from `sha256:50cfe90475442c31152e04f7f6786332694f9c9e0fc85797ab3b4af8189414c0` to the value above.
