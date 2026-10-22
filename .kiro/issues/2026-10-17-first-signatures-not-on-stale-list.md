@@ -21,6 +21,10 @@ Ballot `2026-10-01-signing-act-chain` M1 clause 3 makes a C1 signing act valid "
 
 Every PR whose signing round includes first signatures **pastes both lists** in its body: the freshness stale list (`npm run check:122:diff-guard`) and the unsigned-routed rows reported by `consumer-profile.real.test.ts`, each taken before signing and re-taken per round.
 
+## Ruling (2026-10-21)
+
+- 2026-10-21 — **Peter, in chat, verbatim: "Re: erratum text, ratify."** Part 1 (the M1 clause-3 erratum) is **RATIFIED (Peter, 2026-10-21)** as § "The fix" item 1 words it. Clause 3 of ballot `2026-10-01-signing-act-chain` § 2 is rewritten in place with a dated pointer and an Errata entry; the text it replaces is the one quoted under § "The gap" above (whole clause at `b42874bd0`). Part 2 (the sweep change) is built in the same PR. *(Thurgood)*
+
 ## Closing
 
 Closes when the erratum is ratified and the sweep change is armed: record the outcome here (dated) and `git mv` this file to `archive/` (README rule 5).
