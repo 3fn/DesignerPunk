@@ -51,56 +51,31 @@ Release is where both of this repository's consumer-reaching completion-claim es
 
 > **`closeout-owed(S)`** ⟺ S's final declared unit has merged **AND** `.kiro/specs/S/completion/claims-pass.md` does not exist **AND** that merge is dated on or after the ratification date recorded in `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`.
 
-**The pipeline** — four stages, as **documented commands, not a committed script**. Run it; paste what it prints.
+**The query** is a committed script since Peter's "Yes." of 2026-10-21 (`.kiro/issues/2026-10-19-owed-set-query-over-lists-in-progress-specs.md`; the ladder's first rung, below). Run it on up-to-date `main`; paste what it prints.
 
 ```bash
-BALLOT=.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md
-RATIFIED=$(grep -m1 '^Ratified-machine: ' "$BALLOT" | awk '{print $2}')
-[ -n "$RATIFIED" ] || { echo "FATAL: cannot resolve ratification record at $BALLOT"; exit 1; }
-echo "ratification date: $RATIFIED"
-# Boundary PINNED TO MIDNIGHT: a bare date resolves via git approxidate to the date
-# at the CURRENT time of day, silently dropping same-day-earlier merges from stage 1a
-# (CLOSEOUT pilot F-1, 2026-09-19 — the owed-set's first wrong result, repaired in all
-# three copies in one commit).
-
-# Stage 1a — every spec with post-ratification merge activity on main's first-parent line
-SPECS=$(git log --first-parent --since="$RATIFIED 00:00" --name-only --pretty=format: -- '.kiro/specs/' \
-        | sed -n 's|^\.kiro/specs/\([^/]*\)/.*|\1|p' | sort -u)
-echo "specs with post-ratification merge activity: $(echo "$SPECS" | grep -c .)"
-
-A=0; B=0; C=0; CLOSED=0; OWED=""
-for S in $SPECS; do
-  T=".kiro/specs/$S/tasks.md"
-  # Stage 1b — classify into exactly one class, units-form precedence first
-  if   grep -qE '^## Declared Merge Units' "$T" 2>/dev/null \
-    || grep -qE '^\*\*Merge units \(' "$T" 2>/dev/null \
-    || grep -qiE '^#{2,4} .*merge unit' "$T" 2>/dev/null; then cls=a; A=$((A+1))
-  else
-    n=$(git log --first-parent --oneline --since="$RATIFIED 00:00" -- ".kiro/specs/$S/" | wc -l | tr -d ' ')
-    if [ "$n" -le 1 ]; then cls=b; B=$((B+1)); else cls=c; C=$((C+1)); fi
-  fi
-  # Stage 2 — the final anchor's merge commit and date
-  ANCHOR=$(git log --first-parent -1 --format='%h %cs' -- ".kiro/specs/$S/")
-  # Stage 3 — does the closeout record exist?
-  if [ -f ".kiro/specs/$S/completion/claims-pass.md" ]; then CLOSED=$((CLOSED+1))
-  else OWED="$OWED  $S ($cls, anchor $ANCHOR)\n"; fi
-done
-
-# Stage 4 — emit the owed set PLUS the enumerated exclusion counts, by name
-echo "OWED SET:"; [ -n "$OWED" ] && printf "$OWED" || echo "  (empty)"
-echo "EXCLUSIONS: $CLOSED closed; ${A}(a) / ${B}(b) / ${C}(c) per class; \
-K excluded as pre-ratification (no first-parent activity since $RATIFIED)"
+bash scripts/owed-set.sh
 ```
 
-**What each class means, and why class (b) is spelled out**: **(a)** the spec declares units in any recognized form — the canonical `## Declared Merge Units` heading, the legacy bold-prose declaration, or a heading containing "merge unit", tried in that precedence order — so CLOSEOUT anchors on the **final declared unit**. **(b)** no units block and a single PR: that PR **is** the spec's only unit. *This is the corpus's most common shape, and a stage that silently drops it produces a healthy-looking short list — the exact failure this enumeration exists to make impossible.* **(c)** no units block, more than one PR: the anchor is the PR carrying the **last parent completion doc**.
+It reads the ratification date from the ballot's `Ratified-machine:` line and pins the boundary to 00:00 on that day (CLOSEOUT pilot F-1, 2026-09-19: a bare date resolves to the current time of day and drops that day's earlier merges). It prints one row per spec that a first-parent commit since then touched, `<class>\t<spec>\t<reason>`, with exactly one class per spec, decided in this order:
 
-**The one judgment point, named rather than hidden**: stage 2 resolves the anchor as *the most recent first-parent commit touching the spec*. For class (a) that is a proxy for "the final declared unit merged" and for class (c) a proxy for "the PR carrying the last parent completion doc". **Where the proxy and the definition disagree, the definition governs and the operator says so in the pasted output.** A wrong owed-set result noticed here counts toward the promotion ladder below.
+- `closed` — `completion/claims-pass.md` exists.
+- `stub` — no `tasks.md` (a charter-only spec); the reason names its files.
+- `open` — at least one unticked parent (`- [ ]` at column 0); the reason gives `N of M` and says a checkbox is an assertion, not a merge fact.
+- `touch-only` — no post-ratification first-parent commit changed `tasks.md` or `completion/**` (a feedback, inbound or post-closure touch); the reason names the last touching commit.
+- `candidate` — everything else; the reason gives the unit class and the anchor.
 
-**Named classes in the exclusion line, so a wrong answer is a falsifiable count rather than a healthy-looking short list.** Stacy's command catalog (`canonical/agents/stacy.md`, U3) carries this same pipeline as its authoritative home; this step and the monthly health check's LIVENESS item are its two run surfaces.
+**Rows are candidates, never verdicts.** `open` and `touch-only` are heuristics over checkboxes and paths, not merge facts; where the operator knows a row is wrong, the operator says so in the pasted output.
 
-**An empty set is pasted as an empty result.** The step produces a record either way — that is the whole point of running a query instead of recalling an obligation.
+**What each unit class means, and why class (b) is spelled out**: **(a)** the spec declares units in any recognized form — the canonical `## Declared Merge Units` heading, the legacy bold-prose declaration, or a heading containing "merge unit", tried in that precedence order — so CLOSEOUT anchors on the **final declared unit**. **(b)** no units block and a single PR: that PR **is** the spec's only unit. *This is the corpus's most common shape, and a stage that silently drops it produces a healthy-looking short list — the exact failure this enumeration exists to make impossible.* **(c)** no units block, more than one PR: the anchor is the PR carrying the **last parent completion doc**.
 
-*Note on the MIDPOINT record*: a spec declaring ≥ 3 units carries its midpoint pass at `completion/claims-pass-midpoint.md`. The predicate above keys on `claims-pass.md` **exactly**, so a midpoint record never discharges a closeout obligation.
+**The one judgment point, named rather than hidden**: the anchor printed is *the most recent first-parent commit touching the spec*. For class (a) that is a proxy for "the final declared unit merged" and for class (c) a proxy for "the PR carrying the last parent completion doc". **Where the proxy and the definition disagree, the definition governs and the operator says so in the pasted output.** A wrong owed-set result noticed here is fixed in the script, with a falsification case in `scripts/__tests__/owed-set.test.ts`.
+
+**The last line counts every class, so a wrong answer is a falsifiable count rather than a healthy-looking short list**: `owed-set: <n> candidates; excluded: <c> closed, <o> open, <s> stub, <t> touch-only; classes a/b/c = …; <p> specs without activity since <date>; adoption <date> from <source>; ref <sha>`. The rows sum to the counts and the unit classes split the candidates, so a dropped class is an arithmetic error. Stacy's command catalog (`canonical/agents/stacy.md`) names the same call; this step and the monthly health check's LIVENESS item are its two run surfaces.
+
+**An empty set is pasted as an empty result**, and so is an `owed-set: unavailable (…) — continue` line: the script exits 0 always (a read, never a gate). The step produces a record either way — that is the whole point of running a query instead of recalling an obligation.
+
+*Note on the MIDPOINT record*: a spec declaring ≥ 3 units carries its midpoint pass at `completion/claims-pass-midpoint.md`. The predicate above, and the script, key on `claims-pass.md` **exactly**, so a midpoint record never discharges a closeout obligation.
 
 #### 5b — *"if arming is undecided, decide it now"*
 
@@ -110,11 +85,13 @@ K excluded as pre-ratification (no first-parent activity since $RATIFIED)"
 
 #### The staged-mechanization ladder, and its named de-facto detectors
 
-The owed-set pipeline is **documented commands, not a committed script**, deliberately. Its promotion path is pre-committed and is the only path:
+The owed-set query began as **documented commands, not a committed script**, deliberately. Its promotion path is pre-committed and is the only path:
 
 **documented pipeline → (second wrong result) committed script + scoped grant → (the Q2 re-evaluation sitting) publish-hook decision.**
 
-**The de-facto detectors are named**: a wrong owed-set result **noticed in ordinary use** counts toward promotion, and the two ordinary-use surfaces are **(1) the LIVENESS read at the monthly Civitas health check** and **(2) this release step**. No detection project is created and no new obligation is added — the two places the query is already run are the two places a wrong answer is already visible. *Recorded honestly: this is detection-by-use, not detection-by-guard. It cannot catch an omission that neither reader recognizes. It converts an unfireable trigger into a fireable one; it does not make the pipeline self-checking.*
+**The first rung fired on Peter's "Yes." (2026-10-21)**: the query is `scripts/owed-set.sh`, built under the scoped grant in `.kiro/issues/2026-10-19-owed-set-query-over-lists-in-progress-specs.md`. The next rung is the Q2 sitting's.
+
+**The de-facto detectors are named**: a wrong owed-set result **noticed in ordinary use** is how the first rung fired and is how the script's defects are found, and the two ordinary-use surfaces are **(1) the LIVENESS read at the monthly Civitas health check** and **(2) this release step**. No detection project is created and no new obligation is added — the two places the query is already run are the two places a wrong answer is already visible. *Recorded honestly: this is detection-by-use, not detection-by-guard. It cannot catch an omission that neither reader recognizes. It converts an unfireable trigger into a fireable one; it does not make the pipeline self-checking.*
 
 **Successor release tooling inherits this step as a REQUIREMENT, not as a convention it may re-derive.** Any future release tooling that replaces this document carries step 5 forward in both halves — the run-and-paste owed-set query and the arming line. **There is to be no parallel second mechanism**: the ladder above is the only path from documented pipeline to automation.
 
