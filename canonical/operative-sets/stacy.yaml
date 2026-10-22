@@ -221,7 +221,7 @@ units:
   #   confirmer ruling read as operative inside stages 1a and 1b is the script's now (contract item 1), exercised by
   #   scripts/__tests__/owed-set.test.ts. 8 ids retired: the resolve command, stages 1a-4, three-copies, staged-mechanization.
   "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script":
-    canonicalHash: sha256:e3f6f82a3b33e37b2e4862e259510551fd4c3d33b19da0357164b26f2742f837
+    canonicalHash: sha256:c33de65dbe1f520848954760b2d2abcc539c3454b81de434e75ff6721d85dbd4
     items:
       - id: owed-set-predicate
         kind: obligation

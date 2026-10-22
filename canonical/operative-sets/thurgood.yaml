@@ -504,7 +504,7 @@ units:
         text: "**Unowned** (involves infrastructure-level doc): Thurgood resolves directly. If domain expertise is needed, Thurgood flags → closest domain agent resolves."
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#resolution-path-for-flagged-inconsistencies
   "#trigger-types":
-    canonicalHash: sha256:c0eae17781843d50c34fec00c2c31a7772924a04ce3e9c017f1efa2cbc1205fd
+    canonicalHash: sha256:032199e154a7922469a7310d32e68bec6979556093fd8650420434b2a074b036
     items:
       - id: instruments-named
         kind: member
