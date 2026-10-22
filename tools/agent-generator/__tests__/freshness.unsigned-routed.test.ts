@@ -57,15 +57,16 @@ const R1 = { disposition: 're-pointed', keep: 1 } as RowState;
 const R6 = { disposition: 'no-consumer-counterpart' } as RowState;
 const R14 = { disposition: 'no-consumer-counterpart', sig: 'stale' } as RowState;
 
-// Stacy's table, by row: which list it is on.
-const UNSIGNED = ['#alpha', '#beta', '#zeta', '#eta', 'fm:writeScope[a]', 'fm:writeScope[b]'];
+// Stacy's table, by row: which list it is on. r10 (`fm:tools[x]`, re-pointed) joined unsigned-routed
+// with C18 clause 5 (ballot 2026-10-21-routes-floor-re-pointed-frontmatter-members § 3 site 4).
+const UNSIGNED = ['#alpha', '#beta', '#zeta', '#eta', 'fm:writeScope[a]', 'fm:writeScope[b]', 'fm:tools[x]'];
 const STALE_ROWS = ['#iota', '#kappa'];
 const RECORD_STALE = 'canonical/operative-sets/kenya.yaml#nu';
 
 describe('FU1–FU9: the sweep emits the stale list and the unsigned-routed list (T-UR)', () => {
   const full = (): string[] => lines(build(FULL_TABLE));
 
-  it('FU1: over Stacy\'s table, unsigned = {r1,r2,r6,r7,r8,r9}; stale = {r14,r15,r19}', () => {
+  it('FU1: over Stacy\'s table, unsigned = {r1,r2,r6,r7,r8,r9,r10}; stale = {r14,r15,r19}', () => {
     const out = full();
     expect(listed(out, 'unsigned-routed')).toEqual(UNSIGNED.map(idOf));
     expect(listed(out, 'stale')).toEqual([RECORD_STALE, ...STALE_ROWS.map(idOf)]);
@@ -81,7 +82,7 @@ describe('FU1–FU9: the sweep emits the stale list and the unsigned-routed list
     ['r7', '#eta', 'unsigned'],
     ['r8', 'fm:writeScope[a]', 'unsigned'],
     ['r9', 'fm:writeScope[b]', 'unsigned'],
-    ['r10', 'fm:tools[x]', 'neither'],
+    ['r10', 'fm:tools[x]', 'unsigned'], // C18 clause 5: a re-pointed frontmatter entry ROUTES (re-pointed-entry)
     ['r11', 'fm:model', 'neither'],
     ['r13', '#theta', 'neither'],
     ['r14', '#iota', 'stale'],
@@ -201,7 +202,7 @@ describe('FU1–FU9: the sweep emits the stale list and the unsigned-routed list
     expect(out[0]).toMatch(/^operative-set-freshness: PASS — \d+ record\(s\), \d+ unit\(s\), \d+ note\(s\), \d+ dispositions file\(s\), \d+ overlay\(s\)$/);
   });
 
-  it('FU8: the real profile with every signature removed → unsigned = the frozen signedPopulation oracle (360 at b42874bd0), stale ∅', () => {
+  it('FU8: the real profile with every signature removed → unsigned = the frozen signedPopulation oracle (389 at dae569756), stale ∅', () => {
     const root = tmpRoot();
     for (const d of ['canonical/agents', 'canonical/always-set', 'canonical/shared', 'canonical/operative-sets', 'canonical/profiles']) {
       if (fs.existsSync(path.join(REPO_ROOT, d))) fs.cpSync(path.join(REPO_ROOT, d), path.join(root, d), { recursive: true });
@@ -222,8 +223,9 @@ describe('FU1–FU9: the sweep emits the stale list and the unsigned-routed list
     const got = (r.unsignedRouted ?? []).map((x) => `${x.file} ${x.section} ${x.key}`).sort();
     const want = oracle(root).sort();
     expect(got).toEqual(want);
-    expect(got.length).toBe(oraclePopulationAtMain()); // 360 at b42874bd0 (Stacy's census)
-    // The real profile's signed-but-not-routed rows (16 at b42874bd0; the count moves with the
+    expect(got.length).toBe(oraclePopulationAtMain()); // 389 at dae569756 (the application's own-base census; 388 at the ratified 9359c3805)
+    // The real profile's signed-but-not-routed rows (7 after C18 clause 5, the closed set of the
+    // routes-floor ballot § 6 residual 1; 16 at b42874bd0; the count moves with the
     // profile, so it is not pinned) are not among them — derived from the oracle, never the module.
     const signedNotRouted = signedRowsOutsidePopulation();
     expect(got.filter((g) => signedNotRouted.includes(g))).toEqual([]);
@@ -281,8 +283,11 @@ describe('FU30–FU31: determinism, no write, the paste', () => {
 
 // ---------------------------------------------------------------------------------------------
 // FU8's oracle: a FROZEN copy of `signedPopulation` from consumer-profile.real.test.ts at
-// b42874bd0 (kept here, never imported from the module under test). Common-mode caveat (Stacy's
-// residual): it calls classifyCharter too, so a defect inside the floor is invisible to both.
+// b42874bd0 (kept here, never imported from the module under test), re-frozen at the routes-floor
+// application (base dae569756) with C18 clause 5: a re-pointed frontmatter or members row joins.
+// The clause is written out inline here, never through routesEntry, so the oracle stays a second
+// statement of the rule. Common-mode caveat (Stacy's residual): it calls classifyCharter too, so a
+// defect inside the floor is invisible to both.
 // ---------------------------------------------------------------------------------------------
 const PROFILE = 'canonical/profiles/consumer';
 const IDENTITY: Record<string, string> = {
@@ -309,7 +314,7 @@ function oracle(root: string): string[] {
         if (x.entered && x.verdict === 'ROUTES') want.push(`${file} body ${x.anchor}`);
     }
     for (const sec of ['body', 'frontmatter', 'members']) for (const [k, row] of Object.entries<any>(d[sec] ?? {}))
-      if (row.disposition === 'no-consumer-counterpart' || row.disposition === 'superseded-by') want.push(`${file} ${sec} ${k}`);
+      if (row.disposition === 'no-consumer-counterpart' || row.disposition === 'superseded-by' || (sec !== 'body' && row.disposition === 're-pointed')) want.push(`${file} ${sec} ${k}`);
     return want;
   };
   const BUCKETS: [string, string | undefined][] = [...LEDGER.map((a) => [a, a] as [string, string]), ['_shared', undefined], ...Object.keys(IDENTITY).map((id) => [`always-set/${id}`, id] as [string, string])];
