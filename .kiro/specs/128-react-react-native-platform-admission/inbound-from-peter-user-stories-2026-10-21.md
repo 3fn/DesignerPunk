@@ -138,12 +138,32 @@ Peter's agreement is to the option. The seven rulings themselves are not made (�
 
 ## 6. Open for Peter — recorded, NOT ruled
 
+> *Dated pointer (2026-10-21, Thurgood)*: the four lines below stayed unanswered at the merge of #434 (`739673c5b`); Peter ruled the same day, after that merge — see **Ruled (2026-10-21)** at the end of this section. The heading and the four lines are kept as written: they are the question of record; the block is the answer of record.
+
 - **Open for Peter**: 1. Does he accept **"same rule and path, pace by evidence cost, badge shows evidence kind"** as the reading of "supported equally" (message 4)? His message 7 pushed back on the first reading (§ 3 item 6); the orchestrator's answer is § 3 item 10; the fork it restates is F-8 (§ 4 item 9).
 - **Open for Peter**: 2. Floor versus default, per lane — seven rulings, each before that lane's first slice (the class option, § 5). The first instance the orchestrator named: which principles are the **floor** an adopter cannot remove and which are **defaults** they may decline with a recorded reason (True Native? the mathematics?).
 - **Open for Peter**: 3. The story that ships first: story 2's chooser with Spec 129, or story 3's first slice jumping it (§ 2's ranking sentence does not decide this).
 - **Open for Peter**: 4. The Spec 129 acceptance verb (typecheck versus host build) — owed at 129's outline gate; carried here by pointer only (priorities record § 3.1; the harness ruling).
 
 These lines hold any PR that puts them to Peter (Task-Completion-Protocol § "Branch and PR Conventions"). This inbound records them; it does not ask them in a PR body, and the orchestrator's PR says what it asks.
+
+**Ruled (2026-10-21, Peter, relayed by the orchestrator)** — answer of record for the four `**Open for Peter**:` lines above. **Source**: Peter, in chat to the orchestrator, 2026-10-21, after the orchestrator reported that #434 had merged with the four questions unanswered on the record; relayed to Thurgood by that orchestrator (the session that started this one) and appended here. No committed file or PR comment of Peter's carries these words other than this append. Peter's two messages, verbatim:
+
+> 1. "Honestly, I think I'd rather resolve these questions in their respective specs when I can focus on them in context better. Honest thoughts?"
+> 2. After the orchestrator's assessment: "That's the ruling".
+
+**The ruling**: all four questions are resolved in their respective spec rounds, in context — not here and not in a standalone ballot. The merge of #434 did **not** answer them (a merge never answers a question — Task-Completion-Protocol § "Branch and PR Conventions"); this block does. It is the "Not now — merge" form of answer that the same section names, so each question is filed with a home and a trigger (issues README rule 10, the filing rule; rule 1 token forms). The four lines above are not deleted or rewritten: they remain the question of record, this is the answer of record.
+
+| # | Question | Home (where it is ruled) | Trigger token (the event that owes the close) |
+|---|---|---|---|
+| 1 | The reading of "supported equally" | Spec 128's outline round — the first item of its "Context for Reviewers" | `path:.kiro/specs/128-react-react-native-platform-admission/design-outline.md` — the commit that replaces the STUB with the outline the round reviews |
+| 2 | Floor versus default, per lane | One ruling per lane, each before that lane's first slice, per the class option Peter agreed to (§ 5) | First instance: the same `path:.kiro/specs/128-react-react-native-platform-admission/design-outline.md`; each later instance: the opening child spec's own `design-outline.md` path, named when that child is opened |
+| 3 | The story that ships first | Spec 128's outline round — the second item of its "Context for Reviewers" | `path:.kiro/specs/128-react-react-native-platform-admission/design-outline.md` — the same commit as question 1 |
+| 4 | The Spec 129 acceptance verb (typecheck versus host build) | Spec 129's outline gate, with the harness evaluation entry as its evidence — `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md` § "Evaluation entry (2026-10-20)" (landed via #433, merged) | `path:.kiro/specs/129-consumer-generation-completeness/design-outline.md` — the commit that replaces the PLACEHOLDER with the outline the gate reviews |
+
+**Sprawl mitigation Peter accepted** (the orchestrator's assessment that drew "That's the ruling"): 128's outline round's "Context for Reviewers" names exactly the questions the round answers — questions 1 and 3 above plus the identity-scoped list from the 2026-10-20 cross-read, carried verbatim in § 9 ledger row 1 ("128 R1 scope = …"); everything else goes to tasks rounds or to later child specs.
+
+**Hold released for these four.** The sentence above ("These lines hold any PR that puts them to Peter") is discharged for questions 1–4 by this answer of record: a PR may now cite this block instead of re-asking them. A PR that puts a **new** question to Peter — including any of the seven lane rulings when its turn comes — still holds under the same rule.
 
 ---
 
@@ -203,6 +223,7 @@ These are the record-keeper's observations for the outline round. None changes w
 | Thurgood, Ada, Lina, Kenya, Data, Leonardo, Stacy | R1 + R2 cross-read | 2026-10-20 | Facts and converged scope: 129 first; 128 R1 scope = D1, D2, D5, F-4, F-5 (+F-5w/F-5f), Q1, Q2 asked-not-ruled, D3 direction-only, F-3 identity sentence, per-axis validator named as instrument; registry + selection as 128's first unit is the truthfulness-over-reach pick; Ada's `PLATFORM_KEYS` chooser is 129 item (v)'s front door; under Model B package components are never copied, so "components installed per platform" is served-scoped only. |
 | Ada | read on the stories framing (read-only, on the orchestrator's brief) | 2026-10-21 | READ: the shape is sound, but three named reuses (translator tolerance, DTCG ingestion, strategic-flexibility) are builds or misfits dressed as reuse — size the first ingestion slice as new work. |
 | Lina | read on the stories framing (read-only, on the orchestrator's brief) | 2026-10-21 | READ: the component floor is contracts + platform-agnostic types + evidence-per-contract-version — but the readiness instrument and the contracts-cache shadowing fix must exist before any slice can record a departure against it. |
+| Peter (ruling, not a consult — relayed by the orchestrator, chat) | ruling on § 6's four open lines | 2026-10-21 (after #434 merged) | RULED: all four resolved in their respective spec rounds, in context (Q1, Q3 → 128 outline round's reviewer context items 1–2; Q2 → one ruling per lane before its first slice; Q4 → 129's outline gate on the #433 harness evidence); the merge of #434 answered nothing; hold released for these four — § 6 "Ruled (2026-10-21)". |
 
 ---
 
