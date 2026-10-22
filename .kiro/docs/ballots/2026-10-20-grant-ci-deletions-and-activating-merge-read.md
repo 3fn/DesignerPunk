@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-20
 **Drafted by**: Thurgood (Civitas steward; author of ballot `2026-09-27-ci-regime-standing-scope`; owner of `.kiro/issues/README.md`)
-**Status**: **DRAFT** — not ratified. No edit site below is applied. Stacy's R1 folded at R2 (§ 6).
+**Status**: **RATIFIED (Peter, 2026-10-20)** — "Let's proceed with revised option 2 as recommended." (§ 7): § 2 as it stands at R3 (`b27862964`); F-1 (b); F-2 (i). **Record-first**: this commit is the record, made before any edit site is applied. *(Superseded status, kept verbatim: "**DRAFT** — not ratified. No edit site below is applied. Stacy's R1 folded at R2 (§ 6).")*
 **Required reviewer**: **Stacy** — she raised both advisories (`.kiro/specs/127-completion-claims-integrity/completion/arming-2026-10-02-pr256-workflow-comment-grant.md` § "Standards implications" items 1–3), and edit site 1 is her ARMING row, which she edits in her own commit at application.
 **Authority to draft**: Peter, 2026-10-20 (chat, relayed by the orchestrator), on the walk's PETER item 7: *"fix it now"*. Rule 11 fix-now on a record whose open half is LAW means this draft, committed now; the ruling on it is a sitting (`.kiro/issues/2026-10-02-issues-dir-write-scope-gap-and-grant-advisories.md` § "Outcome (2026-10-20)").
 **Amends**: ballot `2026-09-27-ci-regime-standing-scope` § 3 (M2, the issue-row grant) as operationalized in Stacy's charter ARMING and LIVENESS rows; `.kiro/issues/README.md` rule 8 (pointer-grade); Thurgood's charter LIVENESS item.
@@ -203,10 +203,17 @@ Beyond R1, from the fold-back:
 
 ## 7. Ratification
 
-*Pending.* Peter's ruling on F-1, F-2 and the ballot as § 2 stands is recorded here, record-first, before any edit site is applied.
+- **Peter, 2026-10-20 (his time), ruled in chat**, answering the options put to him for sitting 3 (this ballot and `2026-10-20-manual-records-routed-readers.md`, ruled together); recorded by the orchestrator and relayed to the author, who commits it here. **His words, verbatim: "Let's proceed with revised option 2 as recommended."**
+- **The options as put**:
+  1. **Option 1**: ratify all six forks as recommended (this ballot's F-1 (b) and F-2 (i); the records ballot's F-1 (a), F-2 (i), F-3 (a′) and F-4 (b)).
+  2. **Revised option 2**: option 1, with two conditions added to the records ballot's E1 (the session-start item): (i) fail-soft — the script exits 0 always, its fetch has a timeout, and on any error it prints one line `issues-owned: unavailable (<why>) — continue` and exits 0; the Start Up Tasks item says "if the command fails, note it and continue"; (ii) the item's own revisit trigger — the first health-check walk after application reports run count, false-`FIRED` count and any startup complaint, and one false `FIRED` line or one blocked session start re-opens the item for re-ruling.
+- **The picks, for this ballot**: **ratify § 2** as it stands at R3; **F-1 (b)**, any CI-path line may be deleted once quoted at activation in the grant's `**Deleted lines**:` block, a non-comment weakening still under clause 5; **F-2 (i)**, the activating-merge read is Thurgood's LIVENESS item 4, monthly. The two E1 conditions touch the records ballot only; nothing in § 2 here changes.
+- **Form** (A4): Peter's words, dated, in chat, recorded by the orchestrator; this commit precedes every edit site in the application PR.
+- **In force**: § 2 binds from this commit on the branch and on `main` from the application PR's merge. Retroactivity is none (§ 5): candidates merged before that merge owe no marker line.
 
 ## 8. Application ledger
 
 *(Appended as each step lands; nothing above is rewritten.)*
 - **2026-10-20 (Thurgood)**: DRAFT merged in #431 (`50f89e6f9`) with Stacy's R1. R2 folded all eight of her amendments, her two corrections and her evidence on branch `chore/sitting-3-peter-gated-and-grant-reads`. No edit site is applied.
 - **2026-10-20 (Thurgood)**: R3 folded Stacy's R2-1 (column-0 marker) and R2-2 (full `.kiro/issues/` path). No edit site is applied.
+- **2026-10-21 (Thurgood), RATIFIED recorded** (§ 7): Peter's ruling of 2026-10-20, revised option 2, F-1 (b), F-2 (i), committed record-first on `chore/sitting-3-peter-gated-and-grant-reads` before any edit site.
