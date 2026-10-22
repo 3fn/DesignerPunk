@@ -259,9 +259,139 @@ What this doc promises is bounded by what DesignerPunk can support at solo scale
 
 <!-- designerpunk:install-region:end -->
 
+## Walkthroughs
+
+Each walkthrough is one thing you want to get done, written so you can follow it with your agent beside you. You don't need to read the install steps above first: each walkthrough names the part of them it needs, and your agent can read that part for you. "Your agent" means the AI agent in your agent tool, Claude Code or Kiro, working in your project folder.
+
+Every walkthrough has the same six parts: **Goal**, **You'll need**, **Ask your agent** (words you can paste), **What the agent does**, **How you know it worked**, and **If not**.
+
+| If you want to… | Walkthrough |
+|---|---|
+| look at DesignerPunk before committing to anything | Walkthrough: See DesignerPunk working |
+| describe a screen so it can be built | Walkthrough: Specify your first screen |
+| work in a design system a teammate already set up | Walkthrough: Join a teammate's design system |
+| change a colour and see it on a web page | Walkthrough: Change a token and see it on web |
+| make it look like your brand | Walkthrough: Make it look like your brand (coming with Spec 129) |
+| build for iPhone or Android | Walkthrough: Build for iOS or Android (coming with Spec 129) |
+
+### Walkthrough: See DesignerPunk working
+
+**Goal**: see DesignerPunk's components and patterns from inside your agent tool, without setting up a design system of your own.
+
+**You'll need**: Node.js and npm (see "Prerequisites"), Claude Code or Kiro, and a project folder. Nothing in the folder becomes a design system.
+
+**Ask your agent**:
+
+> Set DesignerPunk up in this folder as a reference only, following the install guide's section "2. CONSUME — the reference corpus, no init". Don't run init. Tell me when it's time to restart.
+
+Then, once you have restarted your agent session:
+
+> Show me DesignerPunk's component catalog, then the components it suggests for a form.
+
+**What the agent does**:
+- Runs the two commands in "2. CONSUME — the reference corpus, no init": it installs `@3fn/core`, then runs `attach` with `--reference`, which writes the MCP configuration and its approvals and no agents. Your agent tool may ask you to approve each command.
+- Hands the restart to you. The session that ran the commands cannot see the servers they configured; the reason is step 5 of "3. BECOME — birth".
+- After the restart, asks the Application MCP for `get_component_catalog()`, then `find_components({ context: "forms" })`.
+
+**How you know it worked**: the catalog comes back as a list of components with their names, families and readiness, and the forms query names form components such as `Input-Text-Base` and `Button-CTA`. More checks are in "Verify — Explore the Component Catalog".
+
+**If not**:
+- The agent says it has no DesignerPunk tools: the session was not restarted, or the servers were not enabled when your agent tool asked. Restart, and accept them.
+- A server shows as not connected: the checks are in "Configure Agent Connections".
+- You want a design system of your own after all: that is the other posture, "3. BECOME — birth". The choice between the two is explained in "1. Which posture? CONSUME or BECOME".
+
+### Walkthrough: Specify your first screen
+
+**Goal**: describe a screen (what is on it, what it does, and which DesignerPunk components and tokens it uses) in a file your agents and teammates can find, check and build from.
+
+**You'll need**: a design system of your own ("3. BECOME — birth") or a teammate's ("Walkthrough: Join a teammate's design system"). A reference-only setup is not enough: `attach --reference` does not configure the Product MCP, which is where screens are found.
+
+**Ask your agent**:
+
+> Ask Leonardo to specify a [settings] screen for our product: [what it is for, who uses it, what they need to get done there]. Start from the example screen in product/, put the new screen where find_screens reads it, and tell me if it needs a component that doesn't exist.
+
+Leonardo is the product-architect agent in your agent layer; replace the words in brackets with your own.
+
+**What the agent does**:
+- Reads the example screen `init` placed at `product/experience-map/pages/example-home.yaml`, and the product overview at `product/overview.yaml`.
+- Picks components and patterns with the Application MCP (for example `find_components`, `get_experience_pattern` and `validate_assembly`), and tokens by what they mean (for example `color.structure.canvas` or `space.inset.200`), not by pixel values.
+- Writes the screen as `product/experience-map/pages/<name>.yaml` (or `<name>/<name>.yaml` when it is split into facet files), in the format in "Writing Screen Specs" and "UI Tree Convention (Draft)".
+- Reads it back through the Product MCP: `find_screens({ context: "<name>" })`, then `get_screen_spec({ name: "<name>" })`.
+
+**How you know it worked**: `find_screens` lists your screen, and `get_screen_spec` returns it with an empty `_componentGaps` list. A gap is a component the screen names that neither DesignerPunk nor your product has: a typo, an old name, or something still to be built.
+
+**If not**:
+- `find_screens` does not list the screen: check that the file is YAML and sits under `product/experience-map/` (the layout is in "Product Data Directory"). The servers pick up edits on their own (see "Starting the MCP servers by hand"), so ask again after a moment.
+- `_componentGaps` is not empty: ask your agent whether each gap is a misspelling of an existing component or a component you need. A component only this product needs is a one-off ("One-off Component Metadata").
+- The agent says it has no Product MCP tools: the folder was set up as a reference only, or the session was not restarted after setup.
+
+### Walkthrough: Join a teammate's design system
+
+**Goal**: work in a design system a teammate already set up, with your own agent layer and your own personal note.
+
+**You'll need**: access to the product repo, Node.js and npm, and Claude Code or Kiro. You do **not** run `init`: it runs once for the whole design system, and your teammate already ran it.
+
+**Ask your agent**, in the cloned repo:
+
+> This repo already has a DesignerPunk design system. Walk me through joining it, following the install guide's section "7. Joining an existing design system". First check whether the agent layer for my agent tool is committed.
+
+**What the agent does**:
+- Checks whether the repo's committed agent layer is for your agent tool (`.claude/`, `.mcp.json` and `CLAUDE.md` for Claude Code; `.kiro/` for Kiro). <!-- LINA: verify --> If it is, the join is the five steps in "7. Joining an existing design system". If it is not, or nothing is committed, it is the six-step path in the same section, which adds `attach`.
+- Runs the install and `npx designerpunk generate` for you. On a join, `generate` writes what is per-machine and never committed: `token-index/` and your personal note, `.designerpunk/personal-note.local.md`.
+- If it ran `attach`, shows you what to commit so the next teammate on your agent tool does not run it again. The list, and the one file not to commit, are in the same section.
+- Hands the restart to you. After the restart, it can walk you through your personal note.
+
+**How you know it worked**: after the restart, your agent answers DesignerPunk questions from its MCP tools (try "show me the component catalog"), and `.designerpunk/personal-note.local.md` exists on your machine. Your note stays on your machine: you never inherit your teammate's.
+
+**If not**:
+- `init` refused and printed some steps: that is expected in a repo that already has a design system. The steps it prints are the join steps.
+- No DesignerPunk tools after the restart: enable the servers when your agent tool asks. Claude Code keeps that choice per clone, so you answer once.
+- Not sure which files to commit and which to regenerate: the commit policy, `docs/consumer/COMMIT-POLICY.md`, sets it.
+
+### Walkthrough: Change a token and see it on web
+
+**Goal**: change one of your design system's colours, such as the colour of primary actions, and see the change on a web page in light mode, dark mode and the WCAG theme.
+
+**You'll need**: a design system of your own ("3. BECOME — birth"), and a web page that loads **your** generated `DesignTokens.web.css`, not DesignerPunk's base `@3fn/core/tokens.css`. The difference is explained in "Web", under "Platforms". A page that still loads the base file never shows your changes.
+
+**Ask your agent**:
+
+> Change our primary action colour, color.action.primary, to purple300. Regenerate the tokens, then show me what changed in light mode, dark mode and the WCAG theme.
+
+Replace `purple300` with the palette colour you want.
+
+**What the agent does**:
+- Edits the token in your token source: in `src/tokens/semantic/ColorTokens.ts`, it changes `color.action.primary`'s palette reference from `cyan300` (the value `init` copied) to the one you asked for. <!-- ADA: verify -->
+- Runs `npx designerpunk generate`.
+- Shows you the result: in `DesignTokens.web.css`, in your configured `output` directory, the value of `--color-action-primary` in the `:root` block changes.
+
+**How you know it worked**: on your page, anything coloured by the primary action colour, such as a `Button-CTA`'s fill or outline <!-- LINA: verify -->, shows the new colour in light mode and in dark mode. With `data-theme="wcag"` on the `<html>` element, it does not change, and that is expected.
+
+**The exceptions**: DesignerPunk's built-in dark and WCAG overrides come from the installed package, not from your copy (see "4. Your language vs our updating surface"). Two of them pin action colours, so your change does not reach them:
+- the WCAG theme pins `color.action.primary` to `teal300` inside `data-theme="wcag"`;
+- the dark override pins `color.action.navigation` to `cyan100`.
+
+The WCAG theme also pins `color.action.navigation`, to `teal500` (and `teal100` in dark mode). So a change to `color.action.navigation` shows in light mode only. <!-- ADA: verify -->
+
+**If not**:
+- Nothing changed on the page: check that the page loads your own `DesignTokens.web.css` from your `output` directory, not `@3fn/core/tokens.css`, and reload it.
+- `generate` stopped with an "Orphaned override key": a token that DesignerPunk's dark or WCAG overrides name is missing from your token source, so no token files were written (see "Token Source Configuration"). Put the token back.
+- You changed a palette colour itself (what `purple300` is) and nothing changed: the colour palette is one of the parts `generate` still takes from the installed package (see "4. Your language vs our updating surface"). Point the token at a different palette colour instead.
+- `npx designerpunk validate` exits with an error from its mathematical-relationships check: that check currently fails even on unmodified token source, a known defect in the checker (see "Generating tokens — options"). Its other three checks are still worth reading.
+
+### Walkthrough: Make it look like your brand (coming with Spec 129)
+
+**Not available on this release.** A theme you register in `designerpunk.config.ts` does not change your generated output yet: it produces no `[data-theme="<name>"]` block and no native theme output (see "Themes"). Custom-theme output is delivered by Spec 129 (consumer-generation completeness), and this walkthrough is written when that lands.
+
+What works today: pointing individual colour tokens at other palette colours ("Walkthrough: Change a token and see it on web"), light and dark mode, and the built-in WCAG theme.
+
+### Walkthrough: Build for iOS or Android (coming with Spec 129)
+
+**Not available on this release.** The iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference code you can read, not code you can build a product from yet. The reasons are in "iOS" and "Android", under "Platforms". iOS and Android onboarding is a planned follow-up (Spec 129), and this walkthrough is written when that lands.
+
 ## Reference
 
-This part of the guide is reference, not setup steps. The install steps are the region above (and its copy, `docs/consumer/INSTALL.md`).
+This part of the guide is reference, not setup steps. The install steps are the region at the top of this guide (and its copy, `docs/consumer/INSTALL.md`), and the walkthroughs are under "Walkthroughs". This part is written for your agent to look things up in: you can skip it and ask your agent instead.
 
 ### Configuring your design system
 
