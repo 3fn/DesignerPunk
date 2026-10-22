@@ -71,10 +71,37 @@ verdict: assent — surviving 7/10; not surviving: `decision-tree`, `test-comman
 ## `#item-starting-a-parent-task-write-its-instruments-block-first`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-10-21
 row: `canonical/profiles/consumer/always-set/start-up-tasks.dispositions.yaml` · body · `#item-starting-a-parent-task-write-its-instruments-block-first` (re-pointed; ROUTED)
-canonicalHash: sha256:450bc8ccda0592e81e09ec9b06ec82b08cf7c6a8512572d7a7674f27df86a2d2
+canonicalHash: sha256:bab2eca6c2b9f830775c12ea924c2ccb0a2899fffad979c2289d262a94200dca
 renderedHash: sha256:efcc0cd64ec429ae5f89d12787a4689cb76a6f923ff2867550321faf34d2f717
 verdict: assent — surviving 3/6; not surviving: `starting-a-parent-ta-2`, `format-route`, `starting-a-parent-ta-4`
 
-**Survive**: `write-block` (the list, re-grounded without this repo's file path), `missing-stops`, and `-3` (a later gap recorded with its kind, never silently fixed). **Not surviving**: the never-overwrite rule (dropped; it serves this repo's M3 corpus), the format route (this repo's guide), and M4 (keyed to this repo's parser PR).
+**Re-signed 2026-10-21** (prior signature: assent 3/6, 2026-09-29, against `sha256:450bc8ccda0592e81e09ec9b06ec82b08cf7c6a8512572d7a7674f27df86a2d2`). Stale on the canonical side only, and text-neutrally: item 9 now follows this item in `.kiro/steering/start-up-tasks.md` (ballot `2026-10-20-manual-records-routed-readers`, E1, site 1), so the unit ends in one more newline. I verified that mechanically (the old unit reproduces the old hash; the new unit equals the old plus one trailing `\n`; equal under `trimEnd()`) and re-confirmed the set at 6 items, unchanged (`17702702b`). Thurgood pinned the overlay (`77ea79b0d`). the rendering did not change: renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/_tmp_render.ts`), 113 of 113 consumer-output files byte-identical to the committed tree, equal to the prior signature's value.
+- **Judged against**: the rendered unit at this revision and the unchanged operative set at 6 items.
+- **Unchanged from the 2026-09-29 signature**: `write-block`, `missing-stops` and `starting-a-parent-ta-3` survive, re-grounded as signed below; `starting-a-parent-ta-2`, `format-route` and `starting-a-parent-ta-4` are not credited, on the same grounds. Surviving count: 3 of 6.
+
+**Prior signature record (superseded, 2026-09-29)**:
+
+> signer: stacy
+> date: 2026-09-29
+> row: `canonical/profiles/consumer/always-set/start-up-tasks.dispositions.yaml` · body · `#item-starting-a-parent-task-write-its-instruments-block-first` (re-pointed; ROUTED)
+> canonicalHash: sha256:450bc8ccda0592e81e09ec9b06ec82b08cf7c6a8512572d7a7674f27df86a2d2
+> renderedHash: sha256:efcc0cd64ec429ae5f89d12787a4689cb76a6f923ff2867550321faf34d2f717
+> verdict: assent — surviving 3/6; not surviving: `starting-a-parent-ta-2`, `format-route`, `starting-a-parent-ta-4`
+>
+> **Survive**: `write-block` (the list, re-grounded without this repo's file path), `missing-stops`, and `-3` (a later gap recorded with its kind, never silently fixed). **Not surviving**: the never-overwrite rule (dropped; it serves this repo's M3 corpus), the format route (this repo's guide), and M4 (keyed to this repo's parser PR).
+
+
+## `#item-your-open-records`
+
+signer: stacy
+date: 2026-10-21
+row: `canonical/profiles/consumer/always-set/start-up-tasks.dispositions.yaml` · body · `#item-your-open-records` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:42a36743767fe2c303c410d9b9395f8e6ddade32f0934636ed079c11376b9d83
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/9; not surviving: `open-records-run`, `open-records-manual`, `open-records-due`, `open-records-fired`, `open-records-lapse`, `open-records-resolve`, `open-records-broken-pointer`, `open-records-fail-soft`, `open-records-revisit`
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (`subtraction-1`). The unit is Start Up Tasks item 9, added by ballot `2026-10-20-manual-records-routed-readers` (RATIFIED, Peter, 2026-10-20) E1 (site 1, Thurgood `807b8aba1`), with Peter's two conditions (the fail-soft sentence and the revisit line). I confirmed the set at 9 items (`17702702b`).
+- **The cite applies**: the item's first operative sentence names `./scripts/issues-owned.sh <YourName>` by path, a repo-internal tooling invocation, and every other item (the three line states, the Lapse heading, the README rule 3 and 11 references, the broken-pointer report, the fail-soft sentence, the revisit line) is keyed to that command's output and to this repo's root `.kiro/issues/` records. The package ships neither. There is no residue to re-point: without the command, the fail-soft and revisit items have no referent.
+- **Rendering, checked**: 0 rendered pieces for this unit in the fresh temp-tree rendering (113 of 113 consumer-output files byte-identical to the committed tree), so the renderedHash is the empty-span hash. A grep of the fresh and committed rendering for `issues-owned` and "open records" returns 0. The consumer's Start Up Tasks ends at item 8. I assent that nothing survives.

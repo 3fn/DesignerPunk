@@ -74,6 +74,19 @@ verdict: assent — surviving 1/1
 
 Re-pointing "Peter" → "your human lead" carries the same obligation.
 
+## `#step-0-read-the-records-that-name-the-spec`
+
+signer: stacy
+date: 2026-10-21
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#step-0-read-the-records-that-name-the-spec` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:ad3c60d3e1b78b06d44a01035a84a5b2d9c97ef90a935f8d77f5261928117be3
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/1; not surviving: `read-records-first`
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (`subtraction-3`). The unit is Step 0 of Spec Formalization, added by ballot `2026-10-20-manual-records-routed-readers` (RATIFIED, Peter, 2026-10-20) E2 (site 4, Thurgood `fadc095e4`): run Process-Spec-Planning's pre-formalization grep over the root `.kiro/issues/` records and write the disposition lines in the requirements feedback round before Step 1. I confirmed the set at 1 item (`17702702b`).
+- **The cite**: the step is an obligation to read this repo's stewardship record system, the root issue records and their `**Trigger**:` lines, with a disposition convention that section defines for this repo's issue corpus. A consumer install has neither the records nor the convention. That is a stewardship instrument carried as an obligation (`subtraction-3`). `subtraction-1` is the near miss: the step names no tool by invocation. Steps 1 to 5 of this mode are retained for consumers, so consumers do formalize specs; the narrower ground is why this step alone has no counterpart.
+- **Rendering, checked**: 0 rendered pieces for this unit in the fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`; 113 of 113 consumer-output files byte-identical to the committed tree), so the renderedHash is the empty-span hash. A grep of the fresh and committed rendering for "Records That Name the Spec", "pre-formalization grep" and `issues-owned` returns 0. I assent that nothing survives, and `read-records-first` is not credited.
+
 ## `#spec-formalization-is-not-autonomous`
 
 signer: stacy
@@ -143,16 +156,30 @@ Re-pointing "Peter" → "your human lead" carries the same obligation.
 ## `#trigger-types`
 
 signer: stacy
-date: 2026-10-17
+date: 2026-10-21
 row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#trigger-types` (re-pointed; ROUTED)
-canonicalHash: sha256:b4d484bc616d3215424be7d346e2729bca7e8178564925e0a0590795ba38a961
+canonicalHash: sha256:c0eae17781843d50c34fec00c2c31a7772924a04ce3e9c017f1efa2cbc1205fd
 renderedHash: sha256:da5352d42da3a81edb6708dfbbcf6d045da4e019d331e7a473c98729ce7e5f67
-verdict: assent — surviving 11/21; not surviving: `instruments-named`, `event-post-doc`, `liveness-release-complete`, `liveness-charter-walk`, `owed-set-three-copies`, `owed-set-predicate`, `owed-set-pipeline`, `owed-set-exclusion-classes`, `owed-set-promotion`, `register-read`
+verdict: assent — surviving 11/23; not surviving: `instruments-named`, `event-post-doc`, `liveness-release-complete`, `liveness-charter-walk`, `liveness-grant-activations`, `liveness-grant-activations-query`, `owed-set-three-copies`, `owed-set-predicate`, `owed-set-pipeline`, `owed-set-exclusion-classes`, `owed-set-promotion`, `register-read`
 
-**Re-signed 2026-10-17** (prior signature: assent 11/21, 2026-10-03, against `sha256:50cfe904…189414c0`). Stale because the canonical unit and its rendering both moved: the cadence-driven step now reads the newest health-check record instead of a date in Start Up Tasks (canonical `2df26ddee`, the consumer overlay `038ba7838`; Thurgood, as consistency edits to ballot `2026-10-17-no-volatile-metadata-in-signed-units`). renderedHash recomputed from `canonical/_consumer-output/` at this revision with the generator's own `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`.
-- **Judged against**: the rendered unit at this revision and the set re-confirmed at 21 (`8f2639d2c`).
-- **`cadence-health-check` survives, re-grounded**: *"When the newest health-check record is older than your team's cadence, run the health check, review the findings, flag issues to domain agents as needed, and commit the check's record."* That states the step's whole function: the staleness test (against the newest record, at the team's cadence in place of "monthly"), the run, the review, the flag and the closing commit of the record. The record directory is removed (`subtraction-3`, replacing the old `Start Up Tasks` removal); "there" loses its referent with it and is not needed, since the consumer's record location is the team's (as in `start-up-tasks` `#item-civitas-governance-health-check`, re-signed `d4fdd609c`). The step and the start-up item now say the same thing on both sides, which the old pair ("record the new date" / "keep its date recorded here") also did.
-- **Unchanged from the 2026-10-03 signature, below**: the ten other survivors and the ten non-survivors, on the same grounds; their canonical and rendered text did not move.
+**Re-signed 2026-10-21** (prior signature: assent 11/21, 2026-10-17, against `sha256:b4d484bc616d3215424be7d346e2729bca7e8178564925e0a0590795ba38a961`). Stale because the canonical unit changed: LIVENESS gained a fourth read, item 4, **Grant activations**, with its query (ballot `2026-10-20-grant-ci-deletions-and-activating-merge-read` (RATIFIED, Peter, 2026-10-20) § 2 A-2, edit site 3; Thurgood, `3fa2565fa`), and I re-confirmed the set at 23 items (`17702702b`). He pinned the overlay and regenerated (`77ea79b0d`). the rendering did not change: renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/_tmp_render.ts`), 113 of 113 consumer-output files byte-identical to the committed tree, equal to the prior signature's value.
+- **Judged against**: the rendered unit at this revision and the operative set re-confirmed at 23 items.
+- **`liveness-grant-activations` and `liveness-grant-activations-query` are not credited, and their removal (`subtraction-3`) applies.** The read walks root `.kiro/issues/` `**Grant paths**` blocks and the DesignerPunk civitas-health-checks records and routes an `OWED` candidate to a claims seat's ARMING duty that consumers do not receive (consumer-Stacy's ARMING row is removed whole, `signatures/stacy.md`). It is a stewardship instrument carried as an obligation, the same ground as `liveness-charter-walk` and `register-read`. The removal Thurgood added ("The grant-activation read (LIVENESS item 4) and its query over `.kiro/issues/` grant records", `subtraction-3`) names both; I checked it applies. The consumer rendering of the unit contains no grant-activation text (grep over the fresh and committed rendering: 0), so nothing is falsely entailed. No refusal follows.
+- **Unchanged from the 2026-10-17 signature**: the eleven survivors (`instruments-computed`, `event-post-spec`, `event-post-prompt`, `cadence-health-check`, `return-edge`, `liveness-records-not-verdicts`, `liveness-owed-set`, `liveness-records`, `discovery-spec`, `discovery-feedback`, `discovery-audit`) and the ten other non-survivors, on the same grounds; their canonical and rendered text did not move. Surviving count: 11 of 23.
+
+**Prior signature record (superseded, 2026-10-17)**:
+
+> signer: stacy
+> date: 2026-10-17
+> row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#trigger-types` (re-pointed; ROUTED)
+> canonicalHash: sha256:b4d484bc616d3215424be7d346e2729bca7e8178564925e0a0590795ba38a961
+> renderedHash: sha256:da5352d42da3a81edb6708dfbbcf6d045da4e019d331e7a473c98729ce7e5f67
+> verdict: assent — surviving 11/21; not surviving: `instruments-named`, `event-post-doc`, `liveness-release-complete`, `liveness-charter-walk`, `owed-set-three-copies`, `owed-set-predicate`, `owed-set-pipeline`, `owed-set-exclusion-classes`, `owed-set-promotion`, `register-read`
+>
+> **Re-signed 2026-10-17** (prior signature: assent 11/21, 2026-10-03, against `sha256:50cfe904…189414c0`). Stale because the canonical unit and its rendering both moved: the cadence-driven step now reads the newest health-check record instead of a date in Start Up Tasks (canonical `2df26ddee`, the consumer overlay `038ba7838`; Thurgood, as consistency edits to ballot `2026-10-17-no-volatile-metadata-in-signed-units`). renderedHash recomputed from `canonical/_consumer-output/` at this revision with the generator's own `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`.
+> - **Judged against**: the rendered unit at this revision and the set re-confirmed at 21 (`8f2639d2c`).
+> - **`cadence-health-check` survives, re-grounded**: *"When the newest health-check record is older than your team's cadence, run the health check, review the findings, flag issues to domain agents as needed, and commit the check's record."* That states the step's whole function: the staleness test (against the newest record, at the team's cadence in place of "monthly"), the run, the review, the flag and the closing commit of the record. The record directory is removed (`subtraction-3`, replacing the old `Start Up Tasks` removal); "there" loses its referent with it and is not needed, since the consumer's record location is the team's (as in `start-up-tasks` `#item-civitas-governance-health-check`, re-signed `d4fdd609c`). The step and the start-up item now say the same thing on both sides, which the old pair ("record the new date" / "keep its date recorded here") also did.
+> - **Unchanged from the 2026-10-03 signature, below**: the ten other survivors and the ten non-survivors, on the same grounds; their canonical and rendered text did not move.
 
 **Prior signature record (superseded, 2026-10-03)**:
 
@@ -1245,3 +1272,25 @@ verdict: assent — surviving 1/1
 > verdict: refuse: should-re-point
 >
 > `authority-precedence` (the co-signed documents govern where this text and they disagree) has a consumer counterpart, and the rendering drops it. The rendering names the authority ("your team's own decision to run claims audits, recorded where your team records such decisions") but not its precedence over this text. **Should re-point**: where this text and that recorded decision disagree, the decision governs. The pointer to the co-signed documents is repo-bound; the precedence rule is not.
+
+## `#frontmatter:writeScope[scripts/issues-owned.sh]`
+
+signer: stacy
+date: 2026-10-21
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/issues-owned.sh]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:20a312e01fe45da7c36b8ced6634065ad4e9f91e6585b11baf4cf89cdcc870f5
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/issues-owned.sh`: the owner's session-start command (`./scripts/issues-owned.sh <Seat>`), a repo-internal script. Added to the charter's write scope by ballot `2026-10-20-manual-records-routed-readers` (RATIFIED, Peter, 2026-10-20) F-1 (a), so the steward may author the owner's session-start read (Thurgood, `fadc095e4`). It reads this repo's root `.kiro/issues/` records and `origin/main`, and is not in the package's `files`, so a consumer has no copy to own. 0 rendered pieces (fresh temp-tree rendering as above, 113 of 113 byte-identical), so the renderedHash is the empty-span hash. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/__tests__/issues-owned.test.ts]`
+
+signer: stacy
+date: 2026-10-21
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/__tests__/issues-owned.test.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:957cd6438338999dd33e7079983e3d719d53b18bc3b688698f95528fc62df62d
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/__tests__/issues-owned.test.ts`: the Jest file that tests that command (18 cases, including the offline and timeout fixtures). Added to the charter's write scope by ballot `2026-10-20-manual-records-routed-readers` (RATIFIED, Peter, 2026-10-20) F-1 (a), so the steward may author the owner's session-start read (Thurgood, `fadc095e4`). It reads this repo's root `.kiro/issues/` records and `origin/main`, and is not in the package's `files`, so a consumer has no copy to own. 0 rendered pieces (fresh temp-tree rendering as above, 113 of 113 byte-identical), so the renderedHash is the empty-span hash. I assent that nothing survives.
