@@ -201,6 +201,24 @@ No `[@THURGOOD]` mentions. Lina's consult (2026-10-21) is read beside R1. Every 
 - **C17's `present iff ROUTED`** → § 3 site 8: flagged, owner Thurgood, not drafted here.
 - Forks: F-1 only. I disagree with no amendment.
 
+#### [STACY census read]
+
+Census reader, 2026-10-22, on the lawful census of § 4 (README "Conventions", "Instrument census"; "The census reader"). I did not rely on the drafter's run. I made a fresh detached checkout of `9359c3805` outside this worktree, which is a `main` ancestor (the #437 squash), and ran everything in it.
+
+- **Register field**: `git show 9359c3805:governance/classification-map.md`, row `signing-act-consistency`, scope `git links 1-3`, `census: "npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --census-routed"`. It equals the line's `<command>`. CR-1 cleared.
+- **Current arm**: `npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --census-routed --at 9359c3805`, exit 0, empty stderr. Digest **`b423eae8a38e781428581c72b334468084924ca9067db4e0655b8e3d42bbee29`** (sha256 of stdout), last line `1089 rows; 360 routed; 0 unsigned-routed; errors 0`. It equals the line's current digest.
+- **Proposed arm**: the appendix's re-run diff, extracted from this file, passed `git apply --check` and applied. It touches only `tools/agent-generator/regrounding/freshness.ts` (1 insertion, 1 deletion, confirmed by `git diff --name-only`). Same command, same `--at`, exit 0, empty stderr. Digest **`0f5c514495cb293accd3ac79a65196cf6c66f83be85a18d1b1cbd8e940573204`**, last line `1089 rows; 388 routed; 19 unsigned-routed; errors 0`. It equals the line's proposed digest. CR-2 cleared (a `main` SHA, run as `--at <sha>`, the scratch diff touching only the instrument's code).
+- **Delta**: 28 rows differ (`diff` of the two outputs with the count line removed), 28 lines out, 28 in. Against the appendix block, the 28 proposed lines plus the proposed count line match **line for line** (empty diff). Every current line reads `not-routed`, and none moves from routed to not-routed. 27 rows are `frontmatter` and 1 is `members` (`_shared#record-first-ratification`). Current and proposed rows carry the same row ids and the same signed/unsigned value (19 unsigned, 9 signed). The only column that moves is the label, plus the signer column, which the mode prints as `-` for a not-routed row. Nothing else in the 1089 rows differs.
+- **Profile did not move**: `git diff --name-only b42874bd0 9359c3805 -- canonical/profiles canonical/operative-sets canonical/agents canonical/shared .kiro/steering` is empty (0 files). Both digests equal R1's, which I reproduced at `2f98cc645`. No stop condition.
+- **Grammar** against README § "Conventions" (`<command> over <corpus> @ <sha> — current <digest> → proposed <digest>; <N> <unit> change (delta: § Census appendix)`). It conforms: the command, `over` plus the corpus, a short SHA that is a `main` SHA, both 64-hex digests, `28 rows change`, and the delta pointer. R1's two parentheticals are gone, with the unit and counts now in bullets. `signed` comes from the instrument's own predicate (`isSignedRow`), so my R1 grammar finding is closed. The in-scope call stands, since the scratch diff changes `freshness.ts`, which the command loads. The ballot carries no exemption.
+- **Not read here**: the scratch diff is the decision-function change for this census, and the shipped form (`triviality.ts` `routesEntry`) is not in this census. The application PR's own-base re-run, with equal digests and no carve-out, remains the stop condition (README "Re-runs"). `signedPopulation` equalling the 388 is also the application PR's to show (§ 3 site 3).
+
+**Verdict: census VALID.** Both digests and the 28-row delta reproduce exactly at `9359c3805`, the register field equals the command, and the grammar conforms. R1's VOID (CR-1, CR-2, grammar) is discharged. This is a read and never a gate: ratification stays Peter's (§ 8).
+
+#### [STACY R2]
+
+- **F-1 (a) recorded as ruled.** § 7 carries Peter's verbatim word, "437 is merged. Let's go (a)" (2026-10-22), and the pick matches my R1 lean. It rules the fork only. The seven signed-not-routed rows stay the named closed set of § 6 residual 1, and my passes will carry the state line `signed-not-routed: 7 (named set)`. Clause 5 is not ratified by it (§ 8). My R1 assent to clause 5 with A1–A4 stands, and the census it waited on is now VALID.
+
 ---
 
 ## Census appendix
