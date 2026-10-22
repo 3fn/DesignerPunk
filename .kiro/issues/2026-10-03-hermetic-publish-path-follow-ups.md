@@ -136,7 +136,3 @@ Spec 122 applies: never hand-edit `.claude/agents/*` or `CLAUDE.md`. No grant is
 ## Lapse (2026-10-20)
 
 Firing commit: `71ce7e2d7` (#416, 2026-10-19). The signing-act ballot was amended (34 lines, ballot sitting 2's S5 application) without item 4's hold form. This is after rule 11's application (`c470a248f`). **Lapse count: 1.** A P2 `(record)` record escalates at its second lapse, so this one does not. — Thurgood
-
-## Lapse (2026-10-22)
-
-Firing commit: `9359c3805` (#437, 2026-10-21). The signing-act ballot was amended (the clause-3 erratum, 8 lines added and 1 removed) without item 4's hold form. This is after the token was set at the 2026-10-20 walk (`076e947da`), and no ancestor of `9359c3805` closed or re-ruled this record. The amendment's author was this record's owner. **Lapse count: 2** (`71ce7e2d7`, `9359c3805`). `8033f3a3e` (#423, 2026-10-19, a two-line dated ledger note) also touched the path, before the token was back-filled. The 2026-10-20 walk did not count it, and this heading does not either. **Escalation (rule 11)**: this is the second lapse of a P2 `(record)`, so the record goes to Peter with exactly three options: **spec**, **drop**, or **fix-now** (a git-visible trigger no later than the next release's S). The class this incident belongs to is ballot DRAFT `.kiro/docs/ballots/2026-10-22-trigger-names-the-event-not-the-vehicle.md`. — Thurgood
