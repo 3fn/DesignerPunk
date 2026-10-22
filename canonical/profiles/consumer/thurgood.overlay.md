@@ -100,7 +100,7 @@ Thurgood sets the standards. Ada and Lina implement to those standards.
 - **Cross-domain** (docs owned by different agents disagree): Thurgood flags → both domain agents review → they agree on resolution. If they disagree, your human lead arbitrates.
 - **Unowned** (involves infrastructure-level doc): Thurgood resolves directly. If domain expertise is needed, Thurgood flags → closest domain agent resolves.
 
-## @unit #trigger-types @ sha256:c0eae17781843d50c34fec00c2c31a7772924a04ce3e9c017f1efa2cbc1205fd
+## @unit #trigger-types @ sha256:032199e154a7922469a7310d32e68bec6979556093fd8650420434b2a074b036
 ### Trigger Types
 
 Ground truth for this stewardship is COMPUTED at audit time by your repo's own checks — never served from a standing snapshot.

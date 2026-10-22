@@ -98,7 +98,7 @@ Plus, on every pass:
 - **The deferral walk-back** (a WRITTEN CLOSEOUT duty): verify every `Artifact deferred: <path> → <unit>` declaration in the closing spec's completion docs against reality — the path resolves and the named unit's merge delivered it. **An undelivered deferral is a finding** (the promised-annotated-never-shipped shape that reached consumers), never a silent green. A free-prose deferral earned no exclusion and is audited as an ordinary artifact claim.
 - **The never-a-gate sentence, restated wherever the practice is documented**: *no pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.*
 
-## @unit #the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script @ sha256:e3f6f82a3b33e37b2e4862e259510551fd4c3d33b19da0357164b26f2742f837
+## @unit #the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script @ sha256:c33de65dbe1f520848954760b2d2abcc539c3454b81de434e75ff6721d85dbd4
 ### The owed-set query (the closeout-owed query for your repository)
 
 A spec S **owes a closeout claims pass** when three things are all true: S's final declared merge unit has merged; S has no committed closeout record at `$SPECS_DIR/S/completion/claims-pass.md`; and that merge is dated on or after the day your team adopted closeout claims passes. The query reads that day from your adoption record if you keep one (`docs/claims-pass-adoption.md`, with a line `Adopted: YYYY-MM-DD`). Without one, it uses the day `designerpunk.manifest.json` was first committed on your main branch, which is the day `init` set up your repository and this charter arrived with it. It prints which source it used. If this charter reached your repository later than that, through an upgrade from a release that did not carry it, the default starts too early and can list specs closed before your team ran claims passes: write the adoption record with the real day. The query is a script that ships in the DesignerPunk package. It **reports every spec it leaves out, counted by class**, so a wrong answer shows up as a number you can check instead of a short list that merely looks healthy. Run it from your repository root:
@@ -192,7 +192,7 @@ If a standard's application to product work is unclear, ask Thurgood or your hum
 - System-level test health — Thurgood's domain
 
 Run your repo's own audit and test scripts — read them from its `package.json` before you run anything.
-## @entry commands[owed-set] @ sha256:<generator pins this>
+## @entry commands[owed-set] @ sha256:c94626b6c44d7bc48d98e8e945231e581850c0107dffb5804bb340c2f76a416f
 name: owed-set
 cmd: bash node_modules/@3fn/core/scripts/owed-set.sh --specs-dir specs
 runContext: consumer-repo

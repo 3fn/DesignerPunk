@@ -1,7 +1,7 @@
 # canonical/operative-sets/stacy.yaml — operative-set records (design C16; Req 11.6.5d)
 #
 # Exemplar source units: A, B, C(c1), C(c2), D, E (Stacy's constructions, Req 11.6.5).
-# B and E share one source unit (the owed-set pipeline) and so one record.
+# B and E share one source unit (the owed-set unit, now the scripts/owed-set.sh query) and so one record.
 #
 # canonicalHash = "sha256:" + hex SHA-256 over the unit's exact UTF-8 bytes, as returned by
 #   partition(splitFrontmatter(<source>).body) (tools/agent-generator/{frontmatter,partition}.ts).
@@ -216,95 +216,64 @@ units:
         label: Merge-path status
         text: "**Merge-path status, non-negotiable**: **execution-claims verification is a POST-ACCEPTANCE AUDIT. No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.** The ground is the co-signer argument: if the verifier approves at the merge, her later audit audits her own approval. *Even with infinite availability and zero overhead, a merge-path seat would still be wrong.*"
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-trigger-set-the-114-superset-table-names-never-numbers
-  # exemplar B, E — 14 item(s). Confirmer ruling 2026-09-27: the midnight-pin comment is rationale;
-  #   the pin itself (`--since="$RATIFIED 00:00"`) is operative inside stages 1a and 1b.
+  # exemplar B, E — 13 item(s). Since 2026-10-21 the staged pipeline is the committed script scripts/owed-set.sh
+  #   (.kiro/issues/2026-10-19-owed-set-query-over-lists-in-progress-specs.md); the midnight pin the 2026-09-27
+  #   confirmer ruling read as operative inside stages 1a and 1b is the script's now (contract item 1), exercised by
+  #   scripts/__tests__/owed-set.test.ts. 8 ids retired: the resolve command, stages 1a-4, three-copies, staged-mechanization.
   "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script":
     canonicalHash: sha256:e3f6f82a3b33e37b2e4862e259510551fd4c3d33b19da0357164b26f2742f837
     items:
       - id: owed-set-predicate
         kind: obligation
-        label: The predicate
+        label: "The predicate"
         text: "The predicate, verbatim: **`closeout-owed(S)`** ⟺ S's final declared unit has merged **AND** `.kiro/specs/S/completion/claims-pass.md` does not exist **AND** that merge is dated on or after the ratification date recorded in `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`."
       - id: owed-set-emits-exclusions
         kind: obligation
-        label: Emits exclusions by name
-        text: "Four stages; it **emits its exclusions by name** so a wrong answer is a falsifiable count, never a healthy-looking short list:"
-      - id: owed-set-ratification-resolve
+        label: "Emits every exclusion by class"
+        text: "It **emits every spec it leaves out, by class**, so a wrong answer is a falsifiable count, never a healthy-looking short list."
+      - id: owed-set-run
         kind: command
-        label: Resolve the ratification date
-        text: |-
-          BALLOT=.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md
-          RATIFIED=$(grep -m1 '^Ratified-machine: ' "$BALLOT" | awk '{print $2}')
-          [ -n "$RATIFIED" ] || { echo "FATAL: cannot resolve ratification record at $BALLOT"; exit 1; }
-          echo "ratification date: $RATIFIED"
-      - id: owed-set-stage-1a
-        kind: step
-        label: Stage 1a
-        text: |-
-          # Stage 1a — every spec with post-ratification merge activity on main's first-parent line
-          SPECS=$(git log --first-parent --since="$RATIFIED 00:00" --name-only --pretty=format: -- '.kiro/specs/' \
-                  | sed -n 's|^\.kiro/specs/\([^/]*\)/.*|\1|p' | sort -u)
-          echo "specs with post-ratification merge activity: $(echo "$SPECS" | grep -c .)"
-      - id: owed-set-stage-1b
-        kind: step
-        label: Stage 1b
-        text: |-
-          A=0; B=0; C=0; CLOSED=0; OWED=""
-          for S in $SPECS; do
-            T=".kiro/specs/$S/tasks.md"
-            # Stage 1b — classify into exactly one class, units-form precedence first
-            if   grep -qE '^## Declared Merge Units' "$T" 2>/dev/null \
-              || grep -qE '^\*\*Merge units \(' "$T" 2>/dev/null \
-              || grep -qiE '^#{2,4} .*merge unit' "$T" 2>/dev/null; then cls=a; A=$((A+1))
-            else
-              n=$(git log --first-parent --oneline --since="$RATIFIED 00:00" -- ".kiro/specs/$S/" | wc -l | tr -d ' ')
-              if [ "$n" -le 1 ]; then cls=b; B=$((B+1)); else cls=c; C=$((C+1)); fi
-            fi
-      - id: owed-set-stage-2
-        kind: step
-        label: Stage 2
-        text: |-
-          # Stage 2 — the final anchor's merge commit and date
-            ANCHOR=$(git log --first-parent -1 --format='%h %cs' -- ".kiro/specs/$S/")
-      - id: owed-set-stage-3
-        kind: step
-        label: Stage 3
-        text: |-
-          # Stage 3 — does the closeout record exist?
-            if [ -f ".kiro/specs/$S/completion/claims-pass.md" ]; then CLOSED=$((CLOSED+1))
-            else OWED="$OWED  $S ($cls, anchor $ANCHOR)\n"; fi
-          done
-      - id: owed-set-stage-4
-        kind: step
-        label: Stage 4
-        text: |-
-          # Stage 4 — emit the owed set PLUS the enumerated exclusion counts, by name
-          echo "OWED SET:"; [ -n "$OWED" ] && printf "$OWED" || echo "  (empty)"
-          echo "EXCLUSIONS: $CLOSED closed; ${A}(a) / ${B}(b) / ${C}(c) per class; \
-          K excluded as pre-ratification (no first-parent activity since $RATIFIED)"
+        label: "Run the script"
+        text: "./scripts/owed-set.sh"
+      - id: owed-set-row-classes
+        kind: member
+        label: "One class per spec"
+        text: "Each spec has exactly one class: `closed` (`completion/claims-pass.md` exists); `stub` (no `tasks.md`, a charter-only spec; the reason names the files); `open` (at least one unticked parent; the reason reads `N of M parents unticked`); `touch-only` (no first-parent commit since ratification changed `tasks.md` or `completion/**`, so the touch was feedback, an inbound or a post-closure edit; the reason is the last touching commit); otherwise `candidate` (the reason keeps the unit class `a|b|c` and the anchor `<sha> <date>`)."
+      - id: owed-set-count-line
+        kind: obligation
+        label: "The count line and the row-sum identity"
+        text: "The count line reads `owed-set: <n> candidates; excluded: <c> closed, <o> open, <s> stub, <t> touch-only; classes a/b/c = x/y/z; <p> specs without activity since <date>; adoption <date> from <source>; ref <sha>`, and for this repository `adoption` is the ratification date. **Read the row-sum identity first**: the candidate count plus the four excluded counts must equal the number of rows printed; a sum that does not add is a dropped class, and the output is not to be trusted."
+      - id: owed-set-candidate-not-verdict
+        kind: obligation
+        label: "A candidate is not a verdict"
+        text: "**Only a `candidate` row can be owed, and a candidate is not a verdict**: a spec owes a closeout pass only once its final declared unit has merged, and the script reads git and `tasks.md`, not the merge. Confirm the unit's merge (`git log --first-parent -- .kiro/specs/<spec>/`) before you open a pass on a candidate."
+      - id: owed-set-heuristics
+        kind: obligation
+        label: "open and touch-only are heuristics"
+        text: "**`open` and `touch-only` are heuristics over assertions and paths, not merge facts**: a ticked box is a claim, and a path set is a proxy. The reason column says what was assumed, so read it. Before you call the set empty, spot-read any `open` or `touch-only` row whose spec could have merged its final unit (a stale unticked box; a closeout merge that changed neither `tasks.md` nor `completion/**`), because a wrong exclusion hides an owe and a wrong candidate only costs a look."
+      - id: owed-set-unavailable
+        kind: obligation
+        label: "Unavailable is never empty"
+        text: "The script exits 0 always. When it cannot answer it prints one line, `owed-set: unavailable (<why>) — continue`: that is an unanswered question, never an empty set, and you say so instead of writing \"empty\"."
+      - id: owed-set-one-code-path
+        kind: obligation
+        label: "One code path"
+        text: "LIVENESS and the release step (`.kiro/hooks/RELEASE-FLOW.md` step 5a) run this same script and paste its output; no second copy of the logic exists to keep in step."
       - id: owed-set-class-a
         kind: member
-        label: Exclusion class (a)
+        label: "Unit class (a)"
         text: "**(a)** declared units in any recognized form (canonical heading → legacy bold-prose declaration → a \"merge unit\" heading, tried in that precedence order) — CLOSEOUT anchors on the final declared unit;"
       - id: owed-set-class-b
         kind: member
-        label: Exclusion class (b)
+        label: "Unit class (b)"
         text: "**(b)** no units block, single PR — that PR is the spec's only unit (the corpus's most common shape; a stage that silently drops it produces the healthy-looking short list this enumeration makes impossible);"
       - id: owed-set-class-c
         kind: member
-        label: Exclusion class (c)
+        label: "Unit class (c)"
         text: "**(c)** no units block, more than one PR — the anchor is the PR carrying the last parent completion doc."
-      - id: owed-set-three-copies
-        kind: obligation
-        label: Three copies, one text
-        text: This pipeline also lives at `.kiro/hooks/RELEASE-FLOW.md` step 5a (the release surface) and in Thurgood's LIVENESS health-check item; the three copies are the same text by design.
-      - id: owed-set-staged-mechanization
-        kind: obligation
-        label: Staged mechanization pre-committed
-        text: "**Staged mechanization is pre-committed**: the second wrong owed-set result noticed in ordinary use (the LIVENESS read or the release step — the named de-facto detectors) earns a committed script + a scoped grant; the publish-hook question is decided at the Q2 re-evaluation sitting."
       - id: owed-set-git-history
         kind: command
-        label: Git history as provisioning
+        label: "Git history as provisioning"
         text: "**Git history is the other half of your claims-audit provisioning** (the non-glob-able knowledge base): `git log --first-parent` for unit anchors and deltas, `git show <merge>:<path>` for shipped-at-merge state."
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script
   # exemplar C(c1) — 2 item(s). Confirmer ruling 2026-09-27 (5c): the ownership sentence and the
