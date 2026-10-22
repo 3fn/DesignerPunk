@@ -129,3 +129,14 @@ description: Essential pre-task checklist — date verification, governance heal
    Before a parent's first subtask starts, the PRIMARY writes `.kiro/specs/<spec>/completion/task-<N>-instruments.md` — one row per instrument each success criterion's evidence depends on (test, check, fixture, file, command, upstream artifact), each `exists (<path> @ <sha>)` with a one-line fit clause, `built here (<subtask>)`, or `MISSING → <owner>: <record>`; a criterion needing no instrument gets a `none — <why>` row — and commits it on the unit branch. **Any MISSING stops the subtasks that depend on it, before code**; report it for routing (a consult, then an amendment if the plan changes). A `MISSING` row is never overwritten: its resolution is appended in the row. A gap found later is appended under `## Found later` with its kind (`unlisted` or `misfit`), never silently fixed. Format and the completion-doc header line: Completion Documentation Guide § "The instruments line and block". *(Ballot 2026-09-28-parent-instrument-existence-check.)*
 
    **From the first tasks round after `P`** (the instruments parser PR's squash SHA — ballot § 4a, M4), a spec also declares its instruments in `tasks.md` at planning time; for such a spec this file is written at branch cut as M4's execution file — the pasted command-output existence delta, one fit line per row keyed by row id, rows found at the cut, `## Found later` — never restating a plan row's state or path.
+
+9. **Your open records** *(ballot 2026-10-20-manual-records-routed-readers)*. At session start in your seat, run `./scripts/issues-owned.sh <YourName>` and read what it prints, one line per open record of yours:
+   - `manual`: the record's event is one only you can see; re-read it against its prose.
+   - `due:<ver>`: a release token, read at that release's walk.
+   - `FIRED@<sha>`: the event happened. A fired record that no ancestor of the firing commit closed or re-ruled has lapsed (README rule 11). Append its `## Lapse` heading and close it, re-rule it, or report it this session.
+
+   A cited `.kiro/issues/` path that is not at the root resolves by README rule 3. If it is in neither the root nor `archive/`, it is a broken pointer; report it to the owner of the citing sentence.
+
+   If the command fails, note it and continue.
+
+   *Revisit (Peter, 2026-10-20): the first health-check walk after this item lands reports its run count, false-`FIRED` count and any startup complaint. One false `FIRED` line or one blocked session start re-opens this item for re-ruling.*

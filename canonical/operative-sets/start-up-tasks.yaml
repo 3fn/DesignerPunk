@@ -277,3 +277,43 @@ units:
         label: "From the first tasks round after P (the instruments parser P"
         text: "**From the first tasks round after `P`** (the instruments parser PR's squash SHA — ballot § 4a, M4), a spec also declares its instruments in `tasks.md` at planning time; for such a spec this file is written at branch cut as M4's execution file — the pasted command-output existence delta, one fit line per row keyed by row id, rows found at the cut, `## Found later` — never restating a plan row's state or path."
     confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-starting-a-parent-task-write-its-instruments-block-first
+  "#item-your-open-records":
+    canonicalHash: sha256:42a36743767fe2c303c410d9b9395f8e6ddade32f0934636ed079c11376b9d83
+    items:
+      - id: open-records-run
+        kind: step
+        label: "Run the owned-records read at session start"
+        text: "At session start in your seat, run `./scripts/issues-owned.sh <YourName>` and read what it prints, one line per open record of yours:"
+      - id: open-records-manual
+        kind: member
+        label: "manual: re-read against its prose"
+        text: "`manual`: the record's event is one only you can see; re-read it against its prose."
+      - id: open-records-due
+        kind: member
+        label: "due: a release token"
+        text: "`due:<ver>`: a release token, read at that release's walk."
+      - id: open-records-fired
+        kind: member
+        label: "FIRED: the event happened"
+        text: "`FIRED@<sha>`: the event happened. A fired record that no ancestor of the firing commit closed or re-ruled has lapsed (README rule 11)."
+      - id: open-records-lapse
+        kind: obligation
+        label: "Append the Lapse heading and dispose this session"
+        text: "Append its `## Lapse` heading and close it, re-rule it, or report it this session."
+      - id: open-records-resolve
+        kind: route
+        label: "Archive resolution by README rule 3"
+        text: "A cited `.kiro/issues/` path that is not at the root resolves by README rule 3."
+      - id: open-records-broken-pointer
+        kind: obligation
+        label: "Report a broken pointer"
+        text: "If it is in neither the root nor `archive/`, it is a broken pointer; report it to the owner of the citing sentence."
+      - id: open-records-fail-soft
+        kind: obligation
+        label: "A failed command never blocks the session"
+        text: "If the command fails, note it and continue."
+      - id: open-records-revisit
+        kind: member
+        label: "The item's revisit trigger"
+        text: "*Revisit (Peter, 2026-10-20): the first health-check walk after this item lands reports its run count, false-`FIRED` count and any startup complaint. One false `FIRED` line or one blocked session start re-opens this item for re-ruling.*"
+    confirmation: canonical/profiles/consumer/confirmations/start-up-tasks.md#item-your-open-records
