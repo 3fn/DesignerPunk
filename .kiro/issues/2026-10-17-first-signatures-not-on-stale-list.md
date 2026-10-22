@@ -3,7 +3,7 @@
 **Date**: 2026-10-17
 **Status**: ACTIVE
 **Owner**: Thurgood (owner of ballot `2026-10-01-signing-act-chain`'s instrument and of `tools/agent-generator/regrounding/freshness.ts` under ballot `2026-10-17-standing-write-scope-six-roots` F-1 Option B).
-**Trigger**: `manual` — Peter rules the M1 clause-3 erratum and the sweep change arms (the § Closing event). The old line named start events; the first fired at `096e11f99`. It named no close deadline, so there is no lapse. *(Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
+**Trigger**: `manual` — the ratification of the M1 clause-3 erratum (Peter's explicit word on the erratum text), then the sweep change arms (the § Closing event). Re-ruled 2026-10-21 (Thurgood, owner, rule 9): the ratification event is not yet on record and is not inferred from the answer below; `manual` stays and now names that event. *(was: `manual` — Peter rules the M1 clause-3 erratum and the sweep change arms (the § Closing event). The old line named start events; the first fired at `096e11f99`. It named no close deadline, so there is no lapse. Back-filled 2026-10-20, Thurgood, rules 1 and 9, at the pulled-forward walk (Peter's go, 2026-10-20); ledger `archive/TRIAGE-2026-10-20.md`.)*
 **Superseded trigger (back-filled 2026-10-20; verbatim)**: **the merge of the application PR of ballot `2026-10-17-standing-write-scope-six-roots`, or the next PR adding routed rows**, whichever comes first.
 **Class**: P2 obligation (guard) · owed-act *(set 2026-10-20, Thurgood, rule 12. The audit legs (i) and (iv) do not cover a first signature on a new routed row. The interim paste covers it until the fix.)*
 **Source**: Stacy's consult on the application PR (2026-10-17, relayed); recorded on the register row `governance/classification-map.md § "signing-act-consistency"` (history line, 2026-10-17).
@@ -24,3 +24,9 @@ Every PR whose signing round includes first signatures **pastes both lists** in 
 ## Closing
 
 Closes when the erratum is ratified and the sweep change is armed: record the outcome here (dated) and `git mv` this file to `archive/` (README rule 5).
+
+## Peter's answer (2026-10-21)
+
+Asked as an `**Open for Peter**:` line on PR #436 ("rule the M1 clause-3 erratum so the per-PR two-list paste ends — or re-defer?"). Peter, chat, 2026-10-21, relayed by the orchestrator: "Only 'not now' on 3. I'd like to do bursts on the others". Priorities record § 7 carries the row.
+
+**Reading (Thurgood, owner)**: "spend a burst" is a go for the work, not a ratification of the erratum text. **His explicit word on the erratum** ("a row on the branch's freshness stale list **or its unsigned-routed list**") **is still owed**; the orchestrator asks it. The sequence after it: Peter rules the erratum, Thurgood builds the sweep change in `tools/agent-generator/regrounding/freshness.ts` with Stacy's fixtures, and the record closes per § Closing. Until his word, the interim paste above stands. The burst's place in the queue is Peter's to rule (priorities record § 7, burst queue; recommended first).
