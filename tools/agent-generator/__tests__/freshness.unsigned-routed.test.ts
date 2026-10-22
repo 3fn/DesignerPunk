@@ -20,7 +20,7 @@ import { dump as dumpYaml, load as loadYaml } from 'js-yaml';
 import { splitFrontmatter } from '../frontmatter';
 import { parseCutoverLedger } from '../generate';
 import { partition } from '../partition';
-import { formatFreshness, runFreshnessSweep, routedPopulation, type FreshnessReport } from '../regrounding/freshness';
+import { formatFreshness, runFreshnessSweep, type FreshnessReport } from '../regrounding/freshness';
 import { parseOverlay } from '../regrounding/overlay';
 import { hashText } from '../regrounding/hash';
 import { classifyCharter } from '../regrounding/triviality';
@@ -223,9 +223,9 @@ describe('FU1–FU9: the sweep emits the stale list and the unsigned-routed list
     const want = oracle(root).sort();
     expect(got).toEqual(want);
     expect(got.length).toBe(oraclePopulationAtMain()); // 360 at b42874bd0 (Stacy's census)
-    // The 16 signed-not-routed rows of the real profile are not among them.
+    // The real profile's signed-but-not-routed rows (16 at b42874bd0; the count moves with the
+    // profile, so it is not pinned) are not among them — derived from the oracle, never the module.
     const signedNotRouted = signedRowsOutsidePopulation();
-    expect(signedNotRouted.length).toBe(16);
     expect(got.filter((g) => signedNotRouted.includes(g))).toEqual([]);
   }, 60_000);
 
@@ -243,6 +243,19 @@ describe('FU1–FU9: the sweep emits the stale list and the unsigned-routed list
       expect(head).toMatch(/^operative-set-freshness: (PASS|FAIL) — \d+ record\(s\), /);
       for (const l of out.filter((x) => x.startsWith('  ['))) expect(l).toMatch(/^ {2}\[[a-z-]+\] /);
     }
+  });
+});
+
+describe('FU33 (sweep side): an undecidable list never prints a count', () => {
+  it('FU33 (sweep): an unparseable operative-set record → `unsigned-routed: UNDECIDABLE — …` in place of the count line; the list adds no finding', () => {
+    const root = build(ONLY({ '#zeta': R6 }));
+    fs.writeFileSync(path.join(root, 'canonical/operative-sets/broken.yaml'), 'units: [unclosed\n');
+    const r = sweep(root);
+    const out = formatFreshness(r);
+    expect(out.some((l) => /^unsigned-routed: \d+ row\(s\)$/.test(l))).toBe(false);
+    expect(out.filter((l) => l.startsWith('unsigned-routed: UNDECIDABLE — canonical/operative-sets/broken.yaml: YAML failed to parse'))).toHaveLength(1);
+    expect(out).toContain(`  ${idOf('#zeta')} — no-consumer-counterpart`); // the decided rows still follow
+    expect(r.findings.map((f) => f.check)).toEqual(['operative-set-format']); // the record's own finding; none from the list
   });
 });
 
@@ -306,14 +319,14 @@ function oracle(root: string): string[] {
 function oraclePopulationAtMain(): number {
   return oracle(REPO_ROOT).length;
 }
-/** Signed rows of the real profile that are outside the routed population. */
+/** Signed rows of the real profile outside the ORACLE's routed population (never routedPopulation, the module under test). */
 function signedRowsOutsidePopulation(): string[] {
-  const read = (rel: string) => (fs.existsSync(path.join(REPO_ROOT, rel)) ? fs.readFileSync(path.join(REPO_ROOT, rel), 'utf8') : undefined);
-  const tracked = spawnSync('git', ['ls-files', 'canonical/profiles', 'canonical/operative-sets'], { cwd: REPO_ROOT, encoding: 'utf8' }).stdout.split('\n').filter(Boolean);
-  const pop = new Set(routedPopulation(read, tracked).rows.map((r) => `${r.file} ${r.section} ${r.key}`));
+  const read = (rel: string) => fs.readFileSync(path.join(REPO_ROOT, rel), 'utf8');
+  const pop = new Set(oracle(REPO_ROOT));
+  const tracked = spawnSync('git', ['ls-files', 'canonical/profiles'], { cwd: REPO_ROOT, encoding: 'utf8' }).stdout.split('\n').filter(Boolean);
   const out: string[] = [];
   for (const f of tracked.filter((x) => x.endsWith('.dispositions.yaml'))) {
-    const d = loadYaml(read(f)!) as any;
+    const d = loadYaml(read(f)) as any;
     for (const sec of ['body', 'frontmatter', 'members']) for (const [k, row] of Object.entries<any>(d[sec] ?? {})) if (row?.signature && !pop.has(`${f} ${sec} ${k}`)) out.push(`${f} ${sec} ${k}`);
   }
   return out;

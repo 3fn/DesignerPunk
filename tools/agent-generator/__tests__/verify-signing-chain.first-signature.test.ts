@@ -282,6 +282,64 @@ describe('verify-signing-chain --ci — link 1 for a first signature (T-CI)', ()
     expect(r.findings).toEqual([]);
   });
 
+  // ------------------------------------------------------------------ fail-closed (FU33, FU34; Stacy's review)
+  const UNDECIDABLE = /^first signature: the unsigned-routed list at the commit's first parent \S+ is undecidable — .+; a missing link is never green$/;
+  /** Break a file on `pr` in its own commit (the parent of the signing commit), then first-sign #zeta. */
+  function brokenParent(mutate: (repo: string) => void): CiResult {
+    const [repo, base] = repoWith();
+    mutate(repo);
+    commit(repo, 'break an input (authoring)', ['Agent: thurgood']);
+    sign(repo, '#zeta');
+    commit(repo, 'First signature #zeta (kenya)', ['Agent: kenya']);
+    return ci(repo, base);
+  }
+
+  test.each([
+    ['the shared catalog unparseable', (repo: string) => write(repo, 'canonical/shared/shared-catalog.yaml', 'members: [unclosed\n')],
+    ['an operative-set record unparseable', (repo: string) => write(repo, 'canonical/operative-sets/broken.yaml', 'units: [unclosed\n')],
+    ["the row's canonical source absent", (repo: string) => g(repo, ['rm', '-q', 'canonical/agents/kenya.md'])],
+  ])('FU33 (%s at the first-parent tree): a first signature on a listed row → link 1 FAILS undecidable, never a silent pass', (_n, mutate) => {
+    const r = brokenParent(mutate);
+    expect(r.ok).toBe(false);
+    const l1 = r.findings.filter((f) => f.link === 1);
+    expect(l1).toHaveLength(1);
+    expect(l1[0].row).toBe(`${DISP}#zeta`);
+    expect(l1[0].message).toMatch(UNDECIDABLE);
+  });
+
+  test("FU33 (the row's own dispositions file unparseable at the first parent): no act can be confined → fails (link 2), never a silent pass", () => {
+    const [repo, base] = repoWith();
+    const good = read(repo, DISP);
+    write(repo, DISP, `${good}\n  "#broken": {unclosed\n`);
+    commit(repo, 'break the dispositions file (authoring)', ['Agent: thurgood']);
+    write(repo, DISP, good);
+    sign(repo, '#zeta');
+    commit(repo, 'First signature #zeta (kenya)', ['Agent: kenya']);
+    const r = ci(repo, base);
+    expect(r.ok).toBe(false);
+    expect(r.findings.some((f) => f.link === 2 && /YAML does not parse/.test(f.message))).toBe(true);
+  });
+
+  test('FU34: an error in a DIFFERENT dispositions file at the first parent does not fail this row', () => {
+    const r = brokenParent((repo) => write(repo, 'canonical/profiles/consumer/other.dispositions.yaml', 'source: canonical/agents/other.md\nbody: {unclosed\n'));
+    expect(r.findings).toEqual([]);
+    expect(r.ok).toBe(true);
+    expect(r.rowsChecked).toBe(1);
+  });
+
+  test('FU33 (root commit, no first parent): a first signature in a root commit → link 1 fails (nothing is listed before the tree exists)', () => {
+    const [repo, base] = repoWith();
+    g(repo, ['switch', '-q', '--orphan', 'rooted']); // an empty tree: the root commit writes T-UR and the signature at once
+    for (const [rel, text] of Object.entries(treeFiles(FULL_TABLE))) write(repo, rel, text);
+    sign(repo, '#zeta');
+    commit(repo, 'Root: tree + first signature #zeta', ['Agent: kenya']);
+    const r = ci(repo, base);
+    expect(r.ok).toBe(false);
+    const l1 = r.findings.filter((f) => f.link === 1 && f.row === `${DISP}#zeta`);
+    expect(l1).toHaveLength(1);
+    expect(l1[0].message).toMatch(/neither the stale list nor the unsigned-routed list at the commit's first parent \(none — root commit\)/);
+  });
+
   // ------------------------------------------------------------------ pinned current behavior (forks 3, 4)
   test('FU24 (fork 3, pinned): A signs the dispositions row; B adds its sheet section alone → both pass, as today', () => {
     const [repo, base] = repoWith();

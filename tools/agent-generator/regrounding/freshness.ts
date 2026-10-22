@@ -74,7 +74,8 @@
  * members), key in file order. The lists are INFORMATION: they never add a finding, so they never
  * change PASS/FAIL, the diff-guard exit or `--ci`'s `sweepOk` (an unsigned routed row already fails
  * the Jest lane's "every routed row is signed" test). An undecidable list prints
- * `unsigned-routed: UNDECIDABLE — <why>`. {@link routedPopulation} reads through a file reader, so
+ * `unsigned-routed: UNDECIDABLE — <why>` IN PLACE of its count line (never `0 row(s)`), the verdict
+ * unchanged. {@link routedPopulation} reads through a file reader, so
  * `verify-signing-chain --ci` computes the same list at a first signature's first-parent tree
  * (link 1).
  *
@@ -263,6 +264,8 @@ interface SourceView {
  */
 export function routedPopulation(read: (rel: string) => string | undefined, files: readonly string[]): { rows: RoutedRow[]; errors: RoutedError[] } {
   const rows: RoutedRow[] = [];
+  /** One line per error, so a list line or a --ci finding never spans lines (a YAML error carries a snippet). */
+  const firstLine = (e: unknown): string => String((e as Error)?.message ?? e).split('\n')[0].trim();
   const errors: RoutedError[] = [];
   const isMap = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
   const yaml = (rel: string, errorFile = rel): Record<string, unknown> | undefined => {
@@ -272,7 +275,7 @@ export function routedPopulation(read: (rel: string) => string | undefined, file
       const d = loadYaml(text);
       return isMap(d) ? d : undefined;
     } catch (e) {
-      errors.push({ file: errorFile, message: `${rel}: YAML failed to parse — ${(e as Error).message}` });
+      errors.push({ file: errorFile, message: `${rel}: YAML failed to parse — ${firstLine(e)}` });
       return undefined;
     }
   };
@@ -304,7 +307,7 @@ export function routedPopulation(read: (rel: string) => string | undefined, file
     try {
       universe = keyUniverseOf(source, sourceText);
     } catch (e) {
-      errors.push({ file, message: `${file}: the key universe of ${source} cannot be read — ${(e as Error).message}` });
+      errors.push({ file, message: `${file}: the key universe of ${source} cannot be read — ${firstLine(e)}` });
       continue;
     }
     const current: Record<RowSection, (k: string) => boolean> = {
@@ -338,7 +341,7 @@ export function routedPopulation(read: (rel: string) => string | undefined, file
           if (x.entered && x.verdict === 'ROUTES') routes.set(x.anchor, [...x.routedBy]);
         }
       } catch (e) {
-        errors.push({ file, message: `${file}: C18 cannot classify ${source} — ${(e as Error).message}` });
+        errors.push({ file, message: `${file}: C18 cannot classify ${source} — ${firstLine(e)}` });
       }
     }
 
@@ -632,8 +635,12 @@ export function formatFreshness(report: FreshnessReport): string[] {
   const stale = report.stale ?? [];
   lines.push(`stale: ${stale.length} row(s)`, ...stale.map((r) => `  ${listRowId(r)} — ${r.kind}`));
   const unsigned = report.unsignedRouted ?? [];
-  lines.push(`${UNSIGNED_ROUTED_HEAD}: ${unsigned.length} row(s)`, ...unsigned.map((r) => `  ${listRowId(r)} — ${routedLabel(r)}`));
-  for (const e of report.routedErrors ?? []) lines.push(`${UNSIGNED_ROUTED_HEAD}: UNDECIDABLE — ${e.message}`);
+  const errors = report.routedErrors ?? [];
+  // An undecidable list never prints a count: `0 row(s)` would read as an empty list in a paste.
+  // Its UNDECIDABLE line(s) stand in place of the count; the rows that were decided still follow.
+  if (errors.length === 0) lines.push(`${UNSIGNED_ROUTED_HEAD}: ${unsigned.length} row(s)`);
+  else for (const e of errors) lines.push(`${UNSIGNED_ROUTED_HEAD}: UNDECIDABLE — ${e.message}`);
+  lines.push(...unsigned.map((r) => `  ${listRowId(r)} — ${routedLabel(r)}`));
   return lines;
 }
 
