@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-20
 **Drafted by**: Thurgood (Civitas steward; owner of `.kiro/issues/README.md`; owner of agent-prompt currency)
-**Status**: **DRAFT**, not ratified. No edit site below is applied. Stacy's R1 folded at R2 (§ 8).
+**Status**: **RATIFIED (Peter, 2026-10-20)** — "Let's proceed with revised option 2 as recommended." (§ 9): § 2 as it stands at R2 (`b27862964`), with E1's two ratified conditions folded into § 2 (dated); F-1 (a), F-2 (i), F-3 (a′), F-4 (b). **Record-first**: this commit is the record, made before any edit site is applied. *(Superseded status, kept verbatim: "**DRAFT**, not ratified. No edit site below is applied. Stacy's R1 folded at R2 (§ 8).")*
 **Required reviewer**: **Stacy** (E2 touches the spec workflow her LENS reads; she signs the consumer dispositions of sites 1 and 4).
 **Consulted**: Leonardo — rejects a `peter:` token and option A as written; his charter is the incident; he would split Peter-gated items by what the go gates. Stacy — rejects C and A as written (six discretionary rows beside the P0s dilute the floor); recommends D and narrow-A (F-3). Thurgood (consult seat) — the class defect is the reader, not the token (E).
 **Authority to draft**: Peter, 2026-10-20, on walk item 8 (ledger `.kiro/issues/archive/TRIAGE-2026-10-20.md` row 50; item 8 "Still open"): *"aren't the manual designations tied to steering and agent consumption of documentation?"*, and on prompt consumption: *"I think it's likely these docs are also consumed by agents in their personal prompts. Is that something that would impact what might be proposed?"* (both in chat, relayed by the orchestrator).
@@ -29,9 +29,16 @@
 >    - `FIRED@<sha>`: the event happened. A fired record that no ancestor of the firing commit closed or re-ruled has lapsed (README rule 11). Append its `## Lapse` heading and close it, re-rule it, or report it this session.
 >
 >    A cited `.kiro/issues/` path that is not at the root resolves by README rule 3. If it is in neither the root nor `archive/`, it is a broken pointer; report it to the owner of the citing sentence.
+>
+>    If the command fails, note it and continue.
+>
+>    *Revisit (Peter, 2026-10-20): the first health-check walk after this item lands reports its run count, false-`FIRED` count and any startup complaint. One false `FIRED` line or one blocked session start re-opens this item for re-ruling.*
+
+*(Ratified condition (i), Peter, 2026-10-20: the item's sentence "If the command fails, note it and continue." Ratified condition (ii), same date: the item's revisit line above.)*
 
 **The command's contract** (`scripts/issues-owned.sh <Seat>`: a read, never a gate, exit 0):
-- **Ground**: `origin/main`, after `git fetch -q origin main`; if the fetch fails, it says so and reads the ref as it is. Records and history are both read from that ref (`git show origin/main:<f>`), never from the working tree, so a unit branch's own commits neither fire nor hide a record (M2 fires against `main`).
+- **Fail-soft** (ratified condition (i), Peter, 2026-10-20): the command exits 0 always. Its fetch has a timeout. On any error (no argument, an unknown seat, a fetch that fails or times out, no `origin/main`), it prints exactly one line, `issues-owned: unavailable (<why>) — continue`, and exits 0.
+- **Ground**: `origin/main`, after `git fetch -q origin main` under that timeout; if the fetch fails, the command prints the unavailable line and stops (condition (i); the draft's "it says so and reads the ref as it is" is superseded, because a stale ref is what printed the R2 prototype's four false `FIRED` lines). Records and history are both read from that ref (`git show origin/main:<f>`), never from the working tree, so a unit branch's own commits neither fire nor hide a record (M2 fires against `main`).
 - **Attribution**: a root `.kiro/issues/*.md` record other than `README.md` whose first 15 lines include a line containing `**Owner**:` or `**Owners**:`. `<Seat>` is matched as a word only in the text after that token, so "confirmed by Stacy · **Owner**: **Lina**" is Lina's.
 - **The Trigger line** is the record's first line beginning `**Trigger**: `.
 - **Firing**, per ballot 2026-10-18-obligation-drain-and-release-falsity-floor M2:
@@ -41,6 +48,7 @@
   - `tag:v<semver>` is printed as `FIRED@<tag>` when the tag exists.
   - `release:<ver>:phase-1` is printed as `due:<ver>`.
 - **Output**: per record, `<state>\t<path>\t<the Trigger line after "**Trigger**: ", first 160 characters>`. The last line gives the count, the ref and its SHA, and the count of root records with no `**Owner**:`/`**Owners**:` line. That count is 0 after site 9, and any later rise is the regression signal.
+- **Revisit trigger** (ratified condition (ii), Peter, 2026-10-20): the first health-check walk after application reports the command's run count, its false-`FIRED` count and any startup complaint. One false `FIRED` line or one blocked session start re-opens item 9 for re-ruling.
 - **Known gap**: a record with more than one `**Trigger**: ` line can have `<tc>` moved later by a change to a later line, which can hide a `path:` fire. One record has four such lines (`2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md`); its first is a `release:` token, so nothing is hidden today.
 
 **README rule 11**: in its list of lapse observers, replace "the walker, the walk's author, a claims pass" with "the walker, the walk's author, a claims pass, an owner at session start (Start Up Tasks item 9)".
@@ -115,7 +123,7 @@
 ## 5. Edit sites (at ratification), with who applies each
 
 1. `.kiro/steering/start-up-tasks.md` item 9 (E1): **Thurgood**. Its consumer row in `canonical/profiles/consumer/always-set/start-up-tasks.dispositions.yaml` is a removal, signed by **Stacy**. Then regenerate and refresh the lock (`.kiro/steering` is in diff-guard's input closure).
-2. `scripts/issues-owned.sh` and `scripts/__tests__/issues-owned.test.ts` (F-1 (a) only): **Thurgood**. The test's fixtures cover each state and Stacy's false-hit header.
+2. `scripts/issues-owned.sh` and `scripts/__tests__/issues-owned.test.ts` (F-1 (a) only): **Thurgood**. The test's fixtures cover each state and Stacy's false-hit header, and, under condition (i), a failed fetch, a fetch timeout and an unknown seat, each printing the one unavailable line with exit 0.
 3. `governance/Process-Spec-Planning.md`, the new section (E2): **Thurgood**; `Last Reviewed`, `validate_metadata`, `rebuild_index`.
 4. `canonical/agents/thurgood.md`: Spec Formalization Step 0 (E2) and the two write-scope paths (F-1 (a)). **Thurgood authors**; his operative-set unit and consumer disposition are re-confirmed and **signed by Stacy**; then regenerate and refresh the lock.
 5. `.kiro/hooks/RELEASE-FLOW.md` item 3a (F-2 (i) only): **Thurgood**; Peter-merged law.
@@ -238,3 +246,21 @@ Each R1 item, folded or declined, one line of reason:
 - **The consumer-reach disclosure**: confirmed in § 7. The consumer's reader meets the rendered identity doc, with item 9 removed, and the raw file has item 8's exposure. No change.
 
 **Status**: DRAFT, ready for Peter. My positions: F-1 (a), F-2 (i), F-3 (a′), F-4 (b), all matching Stacy's. The picks are Peter's. Before application, E1-2 (site 9) and E3-1 (the `**Open for Peter**:` lines) must be in the application PR.
+
+## 9. Ratification
+
+- **Peter, 2026-10-20 (his time), ruled in chat**, answering the options put to him for sitting 3 (this ballot and `2026-10-20-grant-ci-deletions-and-activating-merge-read.md`, ruled together); recorded by the orchestrator and relayed to the author, who commits it here. **His words, verbatim: "Let's proceed with revised option 2 as recommended."**
+- **The options as put**:
+  1. **Option 1**: ratify all six forks as recommended (the grant ballot's F-1 (b) and F-2 (i); this ballot's F-1 (a), F-2 (i), F-3 (a′) and F-4 (b)).
+  2. **Revised option 2**: option 1, with two conditions added to E1 (the session-start item):
+     - **(i) Fail-soft**: the script's contract exits 0 always, with a timeout on the fetch; on any error it prints one line `issues-owned: unavailable (<why>) — continue` and exits 0. The Start Up Tasks item says "if the command fails, note it and continue".
+     - **(ii) Its own revisit trigger**: the first health-check walk after application reports run count, false-`FIRED` count and any startup complaint. One false `FIRED` line or one blocked session start re-opens the item for re-ruling.
+- **The picks, for this ballot**: **ratify § 2** as it stands at R2, with conditions (i) and (ii) folded into § 2 E1 as ratified text (the contract's Fail-soft and Ground bullets, item 9's sentence, item 9's revisit line, the contract's revisit bullet), each dated; **F-1 (a)**, the command is built in this application; **F-2 (i)**, the RELEASE-FLOW item 3a clause; **F-3 (a′)**, only P1 may not carry `manual`; **F-4 (b)**, convention.
+- **Form** (A4): Peter's words, dated, in chat, recorded by the orchestrator; this commit precedes every edit site in the application PR.
+- **In force**: § 2 binds from this commit on the branch and on `main` from the application PR's merge.
+
+## 10. Application ledger
+
+*(Appended as each step lands; nothing above is rewritten.)*
+- **2026-10-20 (Thurgood)**: DRAFT and Stacy's R1 at `664dccca6`; R2 folded all fourteen R1 amendments at `b27862964`, on branch `chore/sitting-3-peter-gated-and-grant-reads`. No edit site applied.
+- **2026-10-21 (Thurgood), RATIFIED recorded** (§ 9): Peter's ruling of 2026-10-20, revised option 2, F-1 (a), F-2 (i), F-3 (a′), F-4 (b), with conditions (i) and (ii) folded into § 2 E1; committed record-first before any edit site.
