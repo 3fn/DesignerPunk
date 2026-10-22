@@ -156,55 +156,71 @@ Re-pointing "Peter" → "your human lead" carries the same obligation.
 ## `#trigger-types`
 
 signer: stacy
-date: 2026-10-21
+date: 2026-10-22
 row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#trigger-types` (re-pointed; ROUTED)
-canonicalHash: sha256:c0eae17781843d50c34fec00c2c31a7772924a04ce3e9c017f1efa2cbc1205fd
+canonicalHash: sha256:032199e154a7922469a7310d32e68bec6979556093fd8650420434b2a074b036
 renderedHash: sha256:da5352d42da3a81edb6708dfbbcf6d045da4e019d331e7a473c98729ce7e5f67
-verdict: assent — surviving 11/23; not surviving: `instruments-named`, `event-post-doc`, `liveness-release-complete`, `liveness-charter-walk`, `liveness-grant-activations`, `liveness-grant-activations-query`, `owed-set-three-copies`, `owed-set-predicate`, `owed-set-pipeline`, `owed-set-exclusion-classes`, `owed-set-promotion`, `register-read`
+verdict: assent — surviving 11/27; not surviving: `instruments-named`, `event-post-doc`, `liveness-release-complete`, `liveness-charter-walk`, `liveness-grant-activations`, `liveness-grant-activations-query`, `owed-set-roles`, `owed-set-predicate`, `owed-set-row-classes`, `owed-set-candidates-not-verdicts`, `owed-set-count-line`, `owed-set-unavailable`, `owed-set-unit-classes`, `owed-set-anchor-proxy`, `owed-set-wrong-result`, `register-read`
 
-**Re-signed 2026-10-21** (prior signature: assent 11/21, 2026-10-17, against `sha256:b4d484bc616d3215424be7d346e2729bca7e8178564925e0a0590795ba38a961`). Stale because the canonical unit changed: LIVENESS gained a fourth read, item 4, **Grant activations**, with its query (ballot `2026-10-20-grant-ci-deletions-and-activating-merge-read` (RATIFIED, Peter, 2026-10-20) § 2 A-2, edit site 3; Thurgood, `3fa2565fa`), and I re-confirmed the set at 23 items (`17702702b`). He pinned the overlay and regenerated (`77ea79b0d`). the rendering did not change: renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/_tmp_render.ts`), 113 of 113 consumer-output files byte-identical to the committed tree, equal to the prior signature's value.
-- **Judged against**: the rendered unit at this revision and the operative set re-confirmed at 23 items.
-- **`liveness-grant-activations` and `liveness-grant-activations-query` are not credited, and their removal (`subtraction-3`) applies.** The read walks root `.kiro/issues/` `**Grant paths**` blocks and the DesignerPunk civitas-health-checks records and routes an `OWED` candidate to a claims seat's ARMING duty that consumers do not receive (consumer-Stacy's ARMING row is removed whole, `signatures/stacy.md`). It is a stewardship instrument carried as an obligation, the same ground as `liveness-charter-walk` and `register-read`. The removal Thurgood added ("The grant-activation read (LIVENESS item 4) and its query over `.kiro/issues/` grant records", `subtraction-3`) names both; I checked it applies. The consumer rendering of the unit contains no grant-activation text (grep over the fresh and committed rendering: 0), so nothing is falsely entailed. No refusal follows.
-- **Unchanged from the 2026-10-17 signature**: the eleven survivors (`instruments-computed`, `event-post-spec`, `event-post-prompt`, `cadence-health-check`, `return-edge`, `liveness-records-not-verdicts`, `liveness-owed-set`, `liveness-records`, `discovery-spec`, `discovery-feedback`, `discovery-audit`) and the ten other non-survivors, on the same grounds; their canonical and rendered text did not move. Surviving count: 11 of 23.
+**Re-signed 2026-10-22** (prior signature: assent 11/23, 2026-10-21, against canonical `sha256:c0eae177…` and rendered `sha256:da5352d4…`). Stale because the canonical unit changed: its owed-set paragraph now describes the committed script (LIVENESS read 1 names `bash scripts/owed-set.sh`; the pasted pipeline, the exclusion-classes paragraph and the ladder paragraph are replaced by the script contract; Thurgood, `1b51c1f87`, record `b7c32ae44`), and I re-confirmed the set at 27 items (`3c8c43a55`). The rendering did not change: renderedHash recomputed at this revision from a fresh temp-tree rendering of the worktree at `060894526` (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/tools-stacy/fresh-rendered-hash.ts`), equal to the committed rendering's value and to the prior signature's.
+- **Judged against**: the rendered unit at this revision and the operative set re-confirmed at 27 items.
+- **`liveness-owed-set` survives, re-grounded.** Its canonical text changed (it now names `bash scripts/owed-set.sh` and "the owed-set query below"); the rendering reads *"Is the closeout-owed set empty?" — run Stacy's owed-set query and read its output*. The path is this repository's; the consumer's call is in consumer-Stacy's owed-set unit (re-signed in this same set, `bash node_modules/@3fn/core/scripts/owed-set.sh --specs-dir specs`). The step and its pointer survive.
+- **The eight new items are not credited, on the 2026-09-29 ground, and the removal (`subtraction-2`) applies.** They describe the script and its roles: `owed-set-predicate` (changed text, still not credited), `owed-set-row-classes`, `owed-set-candidates-not-verdicts`, `owed-set-count-line`, `owed-set-unavailable`, `owed-set-unit-classes` and `owed-set-anchor-proxy` live in consumer-Stacy's owed-set unit and are reached here through "run Stacy's owed-set query", as the predicate, pipeline, classes, ladder and three-copies clause were. `owed-set-roles` and `owed-set-wrong-result` assign authorship and maintenance of the script to the steward and fix wrong results in this repository's test file; a consumer receives the script in the package, and its counterpart (report a wrong result as a script defect, call the same script from every place) is consumer-Stacy's `owed-set-one-code-path`. No consumer counterpart exists to re-point to in this seat, so no refusal follows. The removal label ("The owed-set query (`bash scripts/owed-set.sh`) and its ballot ratification date", `subtraction-2`) names the material; I checked it applies, and the consumer rendering contains no `scripts/owed-set.sh`, row-class or count-line text (grep over the fresh rendering: 0).
+- **The closest call**: `owed-set-candidates-not-verdicts`. A steward reading LIVENESS read 1 alone could report a candidate as owed. It is reached through the pointer to Stacy's query, whose rendered unit states it ("candidates, not verdicts ... a candidate for a spec still in progress is expected and is not a finding"), and the unit's `liveness-records-not-verdicts` bound survives. I credit the pointer, not the item.
+- **Unchanged from the 2026-10-21 signature**: the eleven survivors (`instruments-computed`, `event-post-spec`, `event-post-prompt`, `cadence-health-check`, `return-edge`, `liveness-records-not-verdicts`, `liveness-owed-set`, `liveness-records`, `discovery-spec`, `discovery-feedback`, `discovery-audit`) and the other non-survivors (`instruments-named`, `event-post-doc`, `liveness-release-complete`, `liveness-charter-walk`, `liveness-grant-activations`, `liveness-grant-activations-query`, `register-read`), on the same grounds; their canonical and rendered text did not move. Surviving count: 11 of 27.
 
-**Prior signature record (superseded, 2026-10-17)**:
+**Prior signature record (superseded, 2026-10-21; canonical `sha256:c0eae177…`)**:
 
 > signer: stacy
-> date: 2026-10-17
+> date: 2026-10-21
 > row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#trigger-types` (re-pointed; ROUTED)
-> canonicalHash: sha256:b4d484bc616d3215424be7d346e2729bca7e8178564925e0a0590795ba38a961
+> canonicalHash: sha256:c0eae17781843d50c34fec00c2c31a7772924a04ce3e9c017f1efa2cbc1205fd
 > renderedHash: sha256:da5352d42da3a81edb6708dfbbcf6d045da4e019d331e7a473c98729ce7e5f67
-> verdict: assent — surviving 11/21; not surviving: `instruments-named`, `event-post-doc`, `liveness-release-complete`, `liveness-charter-walk`, `owed-set-three-copies`, `owed-set-predicate`, `owed-set-pipeline`, `owed-set-exclusion-classes`, `owed-set-promotion`, `register-read`
+> verdict: assent — surviving 11/23; not surviving: `instruments-named`, `event-post-doc`, `liveness-release-complete`, `liveness-charter-walk`, `liveness-grant-activations`, `liveness-grant-activations-query`, `owed-set-three-copies`, `owed-set-predicate`, `owed-set-pipeline`, `owed-set-exclusion-classes`, `owed-set-promotion`, `register-read`
 >
-> **Re-signed 2026-10-17** (prior signature: assent 11/21, 2026-10-03, against `sha256:50cfe904…189414c0`). Stale because the canonical unit and its rendering both moved: the cadence-driven step now reads the newest health-check record instead of a date in Start Up Tasks (canonical `2df26ddee`, the consumer overlay `038ba7838`; Thurgood, as consistency edits to ballot `2026-10-17-no-volatile-metadata-in-signed-units`). renderedHash recomputed from `canonical/_consumer-output/` at this revision with the generator's own `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`.
-> - **Judged against**: the rendered unit at this revision and the set re-confirmed at 21 (`8f2639d2c`).
-> - **`cadence-health-check` survives, re-grounded**: *"When the newest health-check record is older than your team's cadence, run the health check, review the findings, flag issues to domain agents as needed, and commit the check's record."* That states the step's whole function: the staleness test (against the newest record, at the team's cadence in place of "monthly"), the run, the review, the flag and the closing commit of the record. The record directory is removed (`subtraction-3`, replacing the old `Start Up Tasks` removal); "there" loses its referent with it and is not needed, since the consumer's record location is the team's (as in `start-up-tasks` `#item-civitas-governance-health-check`, re-signed `d4fdd609c`). The step and the start-up item now say the same thing on both sides, which the old pair ("record the new date" / "keep its date recorded here") also did.
-> - **Unchanged from the 2026-10-03 signature, below**: the ten other survivors and the ten non-survivors, on the same grounds; their canonical and rendered text did not move.
-
-**Prior signature record (superseded, 2026-10-03)**:
-
-> signer: stacy
-> date: 2026-10-03
-> canonicalHash: sha256:50cfe90475442c31152e04f7f6786332694f9c9e0fc85797ab3b4af8189414c0
-> renderedHash: sha256:91410d9f7178c41b379e2852047aefc7af3f877160a60fccd3d3e672980456f1
-> verdict: assent — surviving 11/21
-
-**Re-signed 2026-10-03** (prior signature: assent 11/20, 2026-09-29, against `sha256:563ec186…`). Stale because LIVENESS read 2 gained one sentence (ballot `2026-10-03-hermetic-publish-path` § 5 item 6 (2b) and A8, canonical commit `59e2b7ff`); the rendering did not change (renderedHash recomputed from `canonical/_consumer-output/` at this revision: unchanged).
-- **Judged against**: the rendered unit at this revision and the operative set re-confirmed at 21 items (`9ebc06ba`), which carries the sentence as its own item, `liveness-release-complete`.
-- **`liveness-release-complete` is not credited, and its removal (`subtraction-3`) applies.** The sentence tests a RELEASE record for this repo's two-phase form: phase 1 on the release squash, the `publish-rail liveness: owed` state, a phase 2 drafted against the open step-6 PR and its merge-confirmation line. Those are this repo's release instruments as obligations. No consumer counterpart exists to re-point to, and consumer-Stacy's RELEASE row carries no two-phase form either (`signatures/stacy.md` `#the-trigger-set-…`), so re-pointing it here would test consumer records for a form their own claims seat never produces. No refusal follows.
-- **`liveness-records` still survives verbatim**: its text did not change, and "events without records = finding" holds for a consumer as written.
-- Unchanged from the 2026-09-29 signature, below: the ten other survivors and the nine other non-survivors, on the same grounds.
-- **History**: on PR #284 (closed, kept at `refs/pull/284/head`) an earlier seat held this re-sign (`94ab3909`) pending the operative-set correction, then signed assent 11/21 (`c526dd09`). The hold was a sheet edit, which the signing-chain instrument reads as a failed act; the branch was re-cut without it (follow-ups issue § 4). This act is taken afresh and stands on its own.
-
-**Prior signature record (superseded, 2026-09-29)**:
-
-> signer: stacy
-> date: 2026-09-29
-> canonicalHash: sha256:563ec1867eb08981fc5ff1f09e849ef8a0d6da784fb7c581b27e4a158596fe9d
-> renderedHash: sha256:91410d9f7178c41b379e2852047aefc7af3f877160a60fccd3d3e672980456f1
-> verdict: assent — surviving 11/20
-
-**2026-09-29 grounds — survive, re-grounded**: `instruments-computed` ("your repo's own checks"), `event-post-spec`, `event-post-prompt`, `cadence-health-check` (the team's cadence), `return-edge`, and `liveness-owed-set` (re-pointed to Stacy's owed-set query). `liveness-records-not-verdicts`, `liveness-records` and the three discovery steps survive verbatim. **Not surviving**: `instruments-named` (this repo's scripts); `event-post-doc` (the rendering drops "layer assignment", DesignerPunk's layering); the active-charter walk and the proposed-row register read (this repo's issue and register conventions); and the owed-set predicate, pipeline, classes, ladder and three-copies clause, which live in consumer-Stacy's owed-set unit and are reached here through "run Stacy's owed-set query".
+> **Re-signed 2026-10-21** (prior signature: assent 11/21, 2026-10-17, against `sha256:b4d484bc616d3215424be7d346e2729bca7e8178564925e0a0590795ba38a961`). Stale because the canonical unit changed: LIVENESS gained a fourth read, item 4, **Grant activations**, with its query (ballot `2026-10-20-grant-ci-deletions-and-activating-merge-read` (RATIFIED, Peter, 2026-10-20) § 2 A-2, edit site 3; Thurgood, `3fa2565fa`), and I re-confirmed the set at 23 items (`17702702b`). He pinned the overlay and regenerated (`77ea79b0d`). the rendering did not change: renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/_tmp_render.ts`), 113 of 113 consumer-output files byte-identical to the committed tree, equal to the prior signature's value.
+> - **Judged against**: the rendered unit at this revision and the operative set re-confirmed at 23 items.
+> - **`liveness-grant-activations` and `liveness-grant-activations-query` are not credited, and their removal (`subtraction-3`) applies.** The read walks root `.kiro/issues/` `**Grant paths**` blocks and the DesignerPunk civitas-health-checks records and routes an `OWED` candidate to a claims seat's ARMING duty that consumers do not receive (consumer-Stacy's ARMING row is removed whole, `signatures/stacy.md`). It is a stewardship instrument carried as an obligation, the same ground as `liveness-charter-walk` and `register-read`. The removal Thurgood added ("The grant-activation read (LIVENESS item 4) and its query over `.kiro/issues/` grant records", `subtraction-3`) names both; I checked it applies. The consumer rendering of the unit contains no grant-activation text (grep over the fresh and committed rendering: 0), so nothing is falsely entailed. No refusal follows.
+> - **Unchanged from the 2026-10-17 signature**: the eleven survivors (`instruments-computed`, `event-post-spec`, `event-post-prompt`, `cadence-health-check`, `return-edge`, `liveness-records-not-verdicts`, `liveness-owed-set`, `liveness-records`, `discovery-spec`, `discovery-feedback`, `discovery-audit`) and the ten other non-survivors, on the same grounds; their canonical and rendered text did not move. Surviving count: 11 of 23.
+>
+> **Prior signature record (superseded, 2026-10-17)**:
+>
+> > signer: stacy
+> > date: 2026-10-17
+> > row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#trigger-types` (re-pointed; ROUTED)
+> > canonicalHash: sha256:b4d484bc616d3215424be7d346e2729bca7e8178564925e0a0590795ba38a961
+> > renderedHash: sha256:da5352d42da3a81edb6708dfbbcf6d045da4e019d331e7a473c98729ce7e5f67
+> > verdict: assent — surviving 11/21; not surviving: `instruments-named`, `event-post-doc`, `liveness-release-complete`, `liveness-charter-walk`, `owed-set-three-copies`, `owed-set-predicate`, `owed-set-pipeline`, `owed-set-exclusion-classes`, `owed-set-promotion`, `register-read`
+> >
+> > **Re-signed 2026-10-17** (prior signature: assent 11/21, 2026-10-03, against `sha256:50cfe904…189414c0`). Stale because the canonical unit and its rendering both moved: the cadence-driven step now reads the newest health-check record instead of a date in Start Up Tasks (canonical `2df26ddee`, the consumer overlay `038ba7838`; Thurgood, as consistency edits to ballot `2026-10-17-no-volatile-metadata-in-signed-units`). renderedHash recomputed from `canonical/_consumer-output/` at this revision with the generator's own `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`.
+> > - **Judged against**: the rendered unit at this revision and the set re-confirmed at 21 (`8f2639d2c`).
+> > - **`cadence-health-check` survives, re-grounded**: *"When the newest health-check record is older than your team's cadence, run the health check, review the findings, flag issues to domain agents as needed, and commit the check's record."* That states the step's whole function: the staleness test (against the newest record, at the team's cadence in place of "monthly"), the run, the review, the flag and the closing commit of the record. The record directory is removed (`subtraction-3`, replacing the old `Start Up Tasks` removal); "there" loses its referent with it and is not needed, since the consumer's record location is the team's (as in `start-up-tasks` `#item-civitas-governance-health-check`, re-signed `d4fdd609c`). The step and the start-up item now say the same thing on both sides, which the old pair ("record the new date" / "keep its date recorded here") also did.
+> > - **Unchanged from the 2026-10-03 signature, below**: the ten other survivors and the ten non-survivors, on the same grounds; their canonical and rendered text did not move.
+>
+> **Prior signature record (superseded, 2026-10-03)**:
+>
+> > signer: stacy
+> > date: 2026-10-03
+> > canonicalHash: sha256:50cfe90475442c31152e04f7f6786332694f9c9e0fc85797ab3b4af8189414c0
+> > renderedHash: sha256:91410d9f7178c41b379e2852047aefc7af3f877160a60fccd3d3e672980456f1
+> > verdict: assent — surviving 11/21
+>
+> **Re-signed 2026-10-03** (prior signature: assent 11/20, 2026-09-29, against `sha256:563ec186…`). Stale because LIVENESS read 2 gained one sentence (ballot `2026-10-03-hermetic-publish-path` § 5 item 6 (2b) and A8, canonical commit `59e2b7ff`); the rendering did not change (renderedHash recomputed from `canonical/_consumer-output/` at this revision: unchanged).
+> - **Judged against**: the rendered unit at this revision and the operative set re-confirmed at 21 items (`9ebc06ba`), which carries the sentence as its own item, `liveness-release-complete`.
+> - **`liveness-release-complete` is not credited, and its removal (`subtraction-3`) applies.** The sentence tests a RELEASE record for this repo's two-phase form: phase 1 on the release squash, the `publish-rail liveness: owed` state, a phase 2 drafted against the open step-6 PR and its merge-confirmation line. Those are this repo's release instruments as obligations. No consumer counterpart exists to re-point to, and consumer-Stacy's RELEASE row carries no two-phase form either (`signatures/stacy.md` `#the-trigger-set-…`), so re-pointing it here would test consumer records for a form their own claims seat never produces. No refusal follows.
+> - **`liveness-records` still survives verbatim**: its text did not change, and "events without records = finding" holds for a consumer as written.
+> - Unchanged from the 2026-09-29 signature, below: the ten other survivors and the nine other non-survivors, on the same grounds.
+> - **History**: on PR #284 (closed, kept at `refs/pull/284/head`) an earlier seat held this re-sign (`94ab3909`) pending the operative-set correction, then signed assent 11/21 (`c526dd09`). The hold was a sheet edit, which the signing-chain instrument reads as a failed act; the branch was re-cut without it (follow-ups issue § 4). This act is taken afresh and stands on its own.
+>
+> **Prior signature record (superseded, 2026-09-29)**:
+>
+> > signer: stacy
+> > date: 2026-09-29
+> > canonicalHash: sha256:563ec1867eb08981fc5ff1f09e849ef8a0d6da784fb7c581b27e4a158596fe9d
+> > renderedHash: sha256:91410d9f7178c41b379e2852047aefc7af3f877160a60fccd3d3e672980456f1
+> > verdict: assent — surviving 11/20
+>
+> **2026-09-29 grounds — survive, re-grounded**: `instruments-computed` ("your repo's own checks"), `event-post-spec`, `event-post-prompt`, `cadence-health-check` (the team's cadence), `return-edge`, and `liveness-owed-set` (re-pointed to Stacy's owed-set query). `liveness-records-not-verdicts`, `liveness-records` and the three discovery steps survive verbatim. **Not surviving**: `instruments-named` (this repo's scripts); `event-post-doc` (the rendering drops "layer assignment", DesignerPunk's layering); the active-charter walk and the proposed-row register read (this repo's issue and register conventions); and the owed-set predicate, pipeline, classes, ladder and three-copies clause, which live in consumer-Stacy's owed-set unit and are reached here through "run Stacy's owed-set query".
 
 ## `#steering-doc-lifecycle`
 

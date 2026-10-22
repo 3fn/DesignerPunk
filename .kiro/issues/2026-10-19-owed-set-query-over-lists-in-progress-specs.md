@@ -3,7 +3,7 @@
 **Date**: 2026-10-19
 **Status**: ACTIVE
 **Owner**: Stacy (the query is in my command catalog on both tiers; I specify the contract and the falsification cases and never author the script). Thurgood (authors and maintains the script, the instrument; and owns) the copies in his LIVENESS item and `.kiro/hooks/RELEASE-FLOW.md` step 5a, which are kept to the same text.
-**Trigger**: `manual` — the script PR (`merge:#<N>` once opened); authorized by Peter 2026-10-21. *(was: `manual` — Peter's answer to the 2026-10-17 health-check question (does the repeat count as "the second wrong owed-set result" that promotes the pipeline to a committed script?). Not computable from git; the walk prints it as `manual`.)*
+**Trigger**: `merge:#439` — the script PR; its merge closes this record (rule 5). Re-ruled 2026-10-22 by Thurgood (co-owner, rule 9) the day the PR opened. *(was: `manual` — the script PR (`merge:#<N>` once opened); authorized by Peter 2026-10-21.)*
 **Class**: P2 obligation (record) · owed-act *(was: P3 improvement · defect; re-read 2026-10-21 — see Ruling)*
 **Source**: the residual of `.kiro/issues/2026-10-18-owed-set-query-lists-specs-before-final-unit-merge.md` (fixed 2026-10-19 by disclosure, shape 1); filed under rule 10 in the PR that carries that fix.
 **Filed by**: Stacy.

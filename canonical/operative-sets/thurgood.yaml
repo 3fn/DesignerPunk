@@ -504,7 +504,7 @@ units:
         text: "**Unowned** (involves infrastructure-level doc): Thurgood resolves directly. If domain expertise is needed, Thurgood flags → closest domain agent resolves."
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#resolution-path-for-flagged-inconsistencies
   "#trigger-types":
-    canonicalHash: sha256:c0eae17781843d50c34fec00c2c31a7772924a04ce3e9c017f1efa2cbc1205fd
+    canonicalHash: sha256:032199e154a7922469a7310d32e68bec6979556093fd8650420434b2a074b036
     items:
       - id: instruments-named
         kind: member
@@ -541,7 +541,7 @@ units:
       - id: liveness-owed-set
         kind: step
         label: "Is the closeout-owed set empty?"
-        text: "**\"Is the closeout-owed set empty?\"** — run the owed-set pipeline below and read its output."
+        text: "**\"Is the closeout-owed set empty?\"** — run `bash scripts/owed-set.sh` (the owed-set query below) and read its output."
       - id: liveness-records
         kind: step
         label: "Events without records"
@@ -562,26 +562,42 @@ units:
         kind: command
         label: "The grant-activation query"
         text: "LAST=$(ls .kiro/docs/civitas-health-checks/ | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}\\.md$' | sort | tail -1 | cut -c1-10)\n     blocks() { git show \"$1\" 2>/dev/null | awk '/^\\*\\*Grant paths\\*\\*/{on=1} on&&/^[[:space:]]*$/{on=0} on'; }\n     for c in $(git log --first-parent --since=\"$LAST 00:00\" --format=%h -- .kiro/issues); do\n       for f in $(git diff-tree --no-commit-id --no-renames --name-only -r \"$c^\" \"$c\" -- .kiro/issues ':!.kiro/issues/archive'); do\n         now=$(blocks \"$c:$f\"); [ \"$now\" != \"$(blocks \"$c^:$f\")\" ] && printf '%s\\n' \"$now\" | grep -q '\\.github/' \\\n           && { m=\"**Grant activation read**: $f @ $(git rev-parse --short=9 \"$c\")\"; git grep -h -F \"$m\" HEAD -- .kiro | cut -c1-${#m} | grep -qxF -- \"$m\" || echo \"OWED: $m\"; }\n       done\n     done\n     echo \"window from $LAST\""
-      - id: owed-set-three-copies
+      - id: owed-set-roles
         kind: obligation
-        label: "Three copies, one text"
-        text: "the same text lives in `.kiro/hooks/RELEASE-FLOW.md` step 5a and Stacy's command catalog — three copies, one text, by design"
+        label: "One script, three run surfaces"
+        text: "Stacy specifies its contract and its falsification cases, you author and maintain it, and `.kiro/hooks/RELEASE-FLOW.md` step 5a and Stacy's command catalog run the same call."
       - id: owed-set-predicate
         kind: member
         label: "The closeout-owed predicate"
-        text: "Predicate: **`closeout-owed(S)`** ⟺ S's final declared unit has merged **AND** `.kiro/specs/S/completion/claims-pass.md` does not exist **AND** that merge is dated on or after the ratification date recorded in `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`. (A MIDPOINT record lives at `completion/claims-pass-midpoint.md` and does NOT discharge closeout-owed — the filename split is load-bearing.)"
-      - id: owed-set-pipeline
-        kind: command
-        label: "The owed-set pipeline"
-        text: "BALLOT=.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md\n  RATIFIED=$(grep -m1 '^Ratified-machine: ' \"$BALLOT\" | awk '{print $2}')\n  [ -n \"$RATIFIED\" ] || { echo \"FATAL: cannot resolve ratification record at $BALLOT\"; exit 1; }\n  echo \"ratification date: $RATIFIED\"\n  # Boundary PINNED TO MIDNIGHT: a bare date resolves via git approxidate to the date\n  # at the CURRENT time of day, silently dropping same-day-earlier merges from stage 1a\n  # (CLOSEOUT pilot F-1, 2026-09-19 — the owed-set's first wrong result, repaired in all\n  # three copies in one commit).\n\n  # Stage 1a — every spec with post-ratification merge activity on main's first-parent line\n  SPECS=$(git log --first-parent --since=\"$RATIFIED 00:00\" --name-only --pretty=format: -- '.kiro/specs/' \\\n          | sed -n 's|^\\.kiro/specs/\\([^/]*\\)/.*|\\1|p' | sort -u)\n  echo \"specs with post-ratification merge activity: $(echo \"$SPECS\" | grep -c .)\"\n\n  A=0; B=0; C=0; CLOSED=0; OWED=\"\"\n  for S in $SPECS; do\n    T=\".kiro/specs/$S/tasks.md\"\n    # Stage 1b — classify into exactly one class, units-form precedence first\n    if   grep -qE '^## Declared Merge Units' \"$T\" 2>/dev/null \\\n      || grep -qE '^\\*\\*Merge units \\(' \"$T\" 2>/dev/null \\\n      || grep -qiE '^#{2,4} .*merge unit' \"$T\" 2>/dev/null; then cls=a; A=$((A+1))\n    else\n      n=$(git log --first-parent --oneline --since=\"$RATIFIED 00:00\" -- \".kiro/specs/$S/\" | wc -l | tr -d ' ')\n      if [ \"$n\" -le 1 ]; then cls=b; B=$((B+1)); else cls=c; C=$((C+1)); fi\n    fi\n    # Stage 2 — the final anchor's merge commit and date\n    ANCHOR=$(git log --first-parent -1 --format='%h %cs' -- \".kiro/specs/$S/\")\n    # Stage 3 — does the closeout record exist?\n    if [ -f \".kiro/specs/$S/completion/claims-pass.md\" ]; then CLOSED=$((CLOSED+1))\n    else OWED=\"$OWED  $S ($cls, anchor $ANCHOR)\\n\"; fi\n  done\n\n  # Stage 4 — emit the owed set PLUS the enumerated exclusion counts, by name\n  echo \"OWED SET:\"; [ -n \"$OWED\" ] && printf \"$OWED\" || echo \"  (empty)\"\n  echo \"EXCLUSIONS: $CLOSED closed; ${A}(a) / ${B}(b) / ${C}(c) per class; \\\n  K excluded as pre-ratification (no first-parent activity since $RATIFIED)\""
-      - id: owed-set-exclusion-classes
+        text: "**`closeout-owed(S)`** ⟺ S's final declared unit has merged **AND** `.kiro/specs/S/completion/claims-pass.md` does not exist **AND** that merge is dated on or after the ratification date recorded in `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`. (A MIDPOINT record lives at `completion/claims-pass-midpoint.md` and does NOT discharge closeout-owed — the filename split is load-bearing.)"
+      - id: owed-set-row-classes
         kind: member
-        label: "The exclusion classes"
-        text: "**The exclusion classes**: **(a)** declared units in any recognized form (canonical `## Declared Merge Units` heading → legacy bold-prose `**Merge units (…** declaration → a \"merge unit\" heading, in that precedence order), anchoring on the final declared unit; **(b)** no units block, single PR — that PR is the spec's only unit; **(c)** no units block, >1 PR — the PR carrying the last parent completion doc."
-      - id: owed-set-promotion
+        label: "One class per spec"
+        text: "It reads that date from the ballot's `Ratified-machine:` line, pins the boundary to 00:00 on that day (CLOSEOUT pilot F-1: a bare date drops that day's earlier merges), and prints one row per spec a first-parent commit since then touched, `<class>\\t<spec>\\t<reason>`, one class per spec in this order: `closed` (`completion/claims-pass.md` exists); `stub` (no `tasks.md`; the reason names the files); `open` (an unticked parent, `- [ ]` at column 0 — a checkbox is an assertion, not a merge fact, and the reason says so); `touch-only` (no post-ratification first-parent commit changed `tasks.md` or `completion/**`; the reason names the last touching commit); `candidate` (the reason gives the unit class and the anchor)."
+      - id: owed-set-candidates-not-verdicts
         kind: obligation
-        label: "Second wrong result promotes to a script"
-        text: "**The second wrong owed-set result noticed in ordinary use** (this read, or the release step) **promotes the pipeline to a committed script with a scoped grant** — the pre-committed ladder's first rung."
+        label: "Candidates, never verdicts"
+        text: "**Rows are candidates, never verdicts.**"
+      - id: owed-set-count-line
+        kind: obligation
+        label: "The count line and its identities"
+        text: "The last line counts each class: the rows sum to the counts and the unit classes split the candidates, so a dropped class is an arithmetic error, not a healthy-looking short list."
+      - id: owed-set-unavailable
+        kind: obligation
+        label: "The unavailable line is the result"
+        text: "It exits 0 always; a failure prints one `owed-set: unavailable (…) — continue` line, which is the result you read."
+      - id: owed-set-unit-classes
+        kind: member
+        label: "The unit classes"
+        text: "**The unit classes** (on `candidate` rows): **(a)** declared units in any recognized form (canonical `## Declared Merge Units` heading → legacy bold-prose `**Merge units (…** declaration → a \"merge unit\" heading), anchoring on the final declared unit; **(b)** no units block, single PR — that PR is the spec's only unit; **(c)** no units block, >1 PR — the PR carrying the last parent completion doc."
+      - id: owed-set-anchor-proxy
+        kind: obligation
+        label: "The anchor is a proxy"
+        text: "The anchor printed is the last first-parent commit touching the spec, a proxy for that merge; where the two differ, the definition governs."
+      - id: owed-set-wrong-result
+        kind: obligation
+        label: "A wrong result is fixed in the script"
+        text: "**A wrong owed-set result noticed in ordinary use** (this read, or the release step) is fixed in the script with a falsification case in `scripts/__tests__/owed-set.test.ts`; the ladder's next rung is the Q2 re-evaluation sitting's publish-hook decision."
       - id: register-read
         kind: step
         label: "The proposed-row register read"
