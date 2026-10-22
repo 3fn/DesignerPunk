@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-21
 **Drafted by**: Thurgood (Civitas steward; owner of `regrounding/triviality.ts`, `regrounding/freshness.ts` and `verify-signing-chain`, the code this rule changes), at Peter's direction: *"Let's go with the class-level fix."* (chat, 2026-10-21, relayed by the orchestrator). The class option as put to him is Stacy's, from her review of burst 1 (2026-10-21): fix the layer where the gap lives, the floor, and let every reader follow from one source.
-**Status**: **DRAFT** — R1 (Stacy) done, woven at THURGOOD R2; ratification waits on the lawful census re-run (§ 8). Nothing in this file is applied. A merge with this line still reading DRAFT is a recording defect, not a ratification.
+**Status**: **DRAFT** — R1 (Stacy) done, woven at THURGOOD R2; **F-1 ruled (a)** (Peter, 2026-10-22, § 7); ratification of clause 5 waits on the lawful census re-run (§ 8). Nothing in this file is applied. A merge with this line still reading DRAFT is a recording defect, not a ratification.
 **Required reviewer**: **Stacy** — the census reader (README § "Conventions", "Instrument census"), the seat whose claims passes count signing acts, and the author of the class option. R1: ASSENT with A1–A4, census VOID as a census (CR-1, CR-2, grammar), F-1 (a).
 **Consulted**: Lina — no objection (`scratchpad/consult-routes-floor-lina.md`, 2026-10-21). Two conditions: the floor and all 19 signatures land in ONE PR, and `classifyCharter` is untouched. Two additions: `RouteReason` widened with `'re-pointed-entry'` (type only), and a `triviality.assignment.test.ts` case pinning `classifyCharter`'s output unchanged. Her fixtures are not dragged, the exemplar scores are unchanged, F-1 (a). All four are woven into § 3.
 **Unit**: this file rides the burst-1 PR (`chore/burst-1-m1-erratum-sweep`) as a DRAFT only. Its application is a later PR (§ 3), Peter-merged under the governance carve-out.
@@ -118,6 +118,8 @@ New clause 5 in Spec 123 `design.md` § C18 ("The triviality floor"), after clau
 - **(b) A separate ballot routing every re-pointed body unit.** Corrected framing (Stacy R1): (b) does not "undo" G1. Peter ruled Branch A (P2-a, "no mechanical floor") an acceptable state in advance on 2026-09-26: "the automated check is an efficiency device, not the protection". What (b) does is take P2-a's effect without its ruled trigger, a second consecutive G1 BREAKS. Lina adds that (b) would re-pin or delete a large share of her G1 fixtures (AX-1, four of the seven run-2 lines, the Lina-2 steps), and that it needs its own ballot with her fixtures consulted first.
 
 Leans: Thurgood (a), Stacy (a), Lina (a). No new fact bears on the floor's soundness; the incident is about signing. The pick is Peter's.
+
+**Ruling — F-1 (Peter, 2026-10-22, ruled in chat, recorded by the orchestrator), verbatim: "437 is merged. Let's go (a)".** Pick: **(a)**. Re-pointed body units that CLEAR stay unsignable; release rulings stop asking for such signatures; `--ci` link 1 enforces it (a first signature on a row on neither list fails). The seven signed-not-routed rows of § 6 residual 1 stay a closed standing set. Entered in this file by Thurgood (drafter) from the orchestrator's relay. This rules the fork only: clause 5 itself is not ratified by it (§ 8).
 
 Otherwise none. The rule is one clause, and the census delta is exactly the tree's re-pointed entries (28 rows: 27 frontmatter, 1 members; 19 unsigned).
 
