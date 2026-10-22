@@ -92,7 +92,35 @@ The consult estimate was "~10 of 30". The recount, every root record's first `**
 
 ## 7. Review round record
 
-*(Stacy R1 pending.)*
+#### [STACY R1] — 2026-10-22
+
+**Verdict: ASSENT with A-items (A1–A4).** § 2's sentence is right, and it is the class fix. Nothing below changes its text. No `[@STACY]` mention appears in either 2026-10-22 ballot, so there is nothing to answer first.
+
+**Grammar** (ballots README § "Conventions"): Status DRAFT ✓ · Required reviewer ✓ · Class LAW ✓ · Census ✗ (A1).
+
+- **A1 — census: the item is presumptively in scope, and "none" is not one of the three forms.** The ground covers only README rule 1, and that site is rightly out of scope. No registered check's command loads it, `scripts/issues-owned.sh` is in no row's `checks`, and no instrument's code cites rule 1 as its law (grep over `scripts/ tools/ mcp-server/src application-mcp-server/src .github`). **Edit site 3 is different.** `governance/classification-map.md` is loaded by two registered instruments: `check-section-citations` (armed; its citing corpus includes `governance/`, `scripts/check-section-citations.ts` L9) and 122-diff-guard (`governance` is an input-closure root, `tools/agent-generator/diff-guard.ts` L69). That meets condition 1. The fix is one `not in scope` line per instrument, in the form of the 2026-10-20 grant ballot (its A3-1). For example, `not in scope — check-section-citations — the history line carries no get_section citation` and `not in scope — 122-diff-guard (with workflow-rules-guard) — governance/ is an ordinary closure input; no rule changes; lock refreshed at application`. No verdict can change, so this is form only. It still goes in, because a "none" line nobody checked is how the census degrades.
+- **A2 — § 4 cannot be applied exactly as written.** (i) The register line moves `canonical/generated.lock`'s `inputClosure`, because `governance/` is in the closure. 122-diff-guard goes red unless the lock is refreshed, and § 4 does not mention the refresh. Add a step for it, plus the pasted `operative-set-freshness` result (PASS, stale 0). (ii) Step 3's education change is described ("gains this ballot as LAW HOME for that sentence") but its text is not written. Give the exact before→after string.
+- **A3 — the reading's edge between a vehicle and a standing per-change duty is not decidable as written.** Rows 4 and 6 are phrased as duties at the next change ("at that PR the residual's boundary question is decided"; "at which the finding is traced or re-ruled"). That is the same surface as the two standing duties § 3 excludes. I count rows 4 and 6 as vehicles, as you do, but § 2 does not say why. My reading of the line: the in-lane ARMING reads are **post-merge reads** that recur at every such merge, so nothing has to be carried inside the change. The calibration charter (`2026-10-17-components-calibration-instrument-charter.md`, "owes a FRESH set … before it is accepted") is a **pre-acceptance act inside the vehicle**, which is § 1's failure shape. It is shielded only by being a `manual` charter. Two exclusions also sit on the line: `2026-10-12-generate-staleness-decided-by-file-times.md` ("the PR that edits `isProductTokenStale`, the fix site") is the same shape as row 12 ("the next commit that edits the file the fix lands in"), yet one is excluded and the other counted. Give § 2's reading a test that separates these cases, and place the four records against it. The wording is yours. Without it, the re-rulers will argue rows 4, 6 and 12 one at a time at the walk.
+- **A4 — the re-rule menu in § 4 step 5 leaves out the intake event that § 2 lists.** Rows 8, 11 and 14 name Spec 129 as their vehicle. Spec 129 is next (priorities ruling, #403), and Process-Spec-Planning § "Before Formalizing: Records That Name the Spec" already owes their read at its outline. If step 5 does not name that option, owners default to `release:next:phase-1`. Rows 8 and 14 are P2 `(guard)`, so they would escalate at release 5's S for work a scheduled spec already absorbs.
+
+**Roster spot-check** (all 17 Trigger lines read at `275b711e5`, beyond the 5 asked). Every one is vehicle-worded under § 2, and owner and class match each record's own header lines. Recount reproduced: 78 root records; `manual` 37, `path:` 30, `release:` 10, `merge:` 1. **Not reproduced**: the 18/17 split itself. That count is heuristic, and I did not re-run the phrase grep over the other 61 records. I re-read three exclusions (A3). Per-row notes:
+- **Row 9** closes by the hold-act application.
+- **Row 13**: the token is `coverage-map.ts`, but the 13 stale rows live in `canonical/coverage-map.yaml`, so the fix may never touch the token's path. That is Lina's to read at the re-rule.
+- **Row 15** already carries an event limb ("or the next full monthly walk"). Its cheapest re-rule promotes that limb.
+- **Row 16** is F-1's sharpest case (below).
+
+The ballot proposes a menu, not a token per row, so "right token" is answered by F-1 and A4.
+
+**F-1 — I recommend (b), a P3 ride takes `manual`.**
+1. A lapse is the signal I count, and rule 11's arithmetic runs on it. Under (a), eight P3s add up to eight `## Lapse` headings at every release, each meaning only that optional work is not yet done. That dilutes the count of owed closes actually missed, which is Goodhart on my own input.
+2. Row 16 is the worst case. Kenya's on-device prototype waits on Peter's own deferral (no hardware access). Under (a), it lapses at every release against an owner who cannot start.
+3. (b) is rule 5's existing design for P3: the two-walk stale archive, rule 4's resurrection, and "archiving is never a ruling on the merits".
+
+Counter-argument, folded: (b) lets a real P3 defect decay quietly (rows 2 and 3, Ada's `TokenIndexer.ts` pair). The fold-back keeps it recorded, because the archive move writes the outcome line and rule 4 brings the record back. **Residual**: nothing prompts anyone to bring it back, so the decay is silent by design. Under (a) the decay is loud but meaningless. The pick is Peter's.
+
+**Lapse reading (#439, the owed-set query record)**: I **decline** the rule-11 reading, so no lapse is counted. I recorded this as a dated line on the archived record (`.kiro/issues/archive/2026-10-19-owed-set-query-over-lists-in-progress-specs.md`), not here, because that is where the walk and LIVENESS read it.
+
+**Register rider** (§ 3, `signing-act-consistency` L1105): noted. My claims passes are its named audit home. I carry it as one counted line at the next RELEASE pass, and I do not re-decide it here.
 
 ---
 
