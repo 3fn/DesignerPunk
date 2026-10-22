@@ -20,9 +20,18 @@ Related, by path only:
 
 ---
 
-## Intake (ruled 2026-10-20)
+## Intake
+
+### 2026-10-20 (ruled)
 
 - **The mathematical-relationship parser validation gaps** (`.kiro/issues/2026-06-24-mathematical-relationship-parser-validation-gaps.md`; owner Ada) **fold into this spec**. **Peter, 2026-10-20** (chat, relayed by the orchestrator), on the issues walk's PETER item 2 (ledger `.kiro/issues/archive/TRIAGE-2026-10-20.md`): *"Fold it into the spec"*. The record's consumer impact: `npx designerpunk validate` exits 1 in every consumer, and the install guide carries the sentence. The record's Trigger is Ada's (`path:` on this spec's `requirements.md`); where it lands in scope (i)–(vi), or as a new item, is the requirements round's to settle. — Thurgood
+
+### 2026-10-21 (intake notes for the outline round, not rulings) — Thurgood
+
+- **Open question 2 is answered** by Peter's 2026-10-20 seam ruling: `.kiro/issues/2026-10-18-spec-priorities-by-outcome.md` § "Walk log", entry "2026-10-20 (Thurgood), Peter's ruling, relayed and confirmed by the orchestrator: the 129/128 seam", with § 5 ("Why 129 comes first": the same generator code) and § 3.2's last bullet (128 inherits). Cited, not restated. — Thurgood, 2026-10-21
+- **Open question 5, first half answered; second half owed here.** The harness evaluation entry EXISTS: `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md` § "Evaluation entry (2026-10-20) — § 3 trigger 2 fired (#432); owners' evaluation" (sub-sections "iOS — Kenya", "Android — Data"), merged 2026-10-21 in PR #433 (squash `d7385b4c2`; GitHub `mergedAt` 2026-10-22T00:02Z). Its own text: evidence for this outline round, "not a ruling". **The acceptance verb (typecheck vs host build) is owed at THIS outline's gate** and is not answered here; the build / fold / drop decision and the builders' tasks-row grant are owed at the tasks round (the charter's Trigger, `path:` on this spec's `tasks.md`, L12). Open-for-Peter pointer of record: `.kiro/specs/128-react-react-native-platform-admission/inbound-from-peter-user-stories-2026-10-21.md` § 6 item 4. — Thurgood, 2026-10-21
+- **Intake of two defect records** (PR #432, squash `94451995c`; headers re-read 2026-10-21): `.kiro/issues/2026-10-20-native-font-family-literals-unescaped-quotes.md` and `.kiro/issues/2026-10-20-kotlin-output-no-import-block.md`. Both: Class P1 consumer-blocking · defect; Owner Ada; Trigger `path:.kiro/specs/129-consumer-generation-completeness/requirements.md` (the first commit adding this spec's requirements takes each in or leaves it out with a reason). Both fired the harness charter's § 3 trigger 2. Where they land in scope (i)–(vi), or as new items, is the requirements round's. — Thurgood, 2026-10-21
+- **Intake from Ada's 2026-10-21 read** (128 inbound above, § 7 [ADA R1] item 6; VERIFIED by Ada, re-run by the orchestrator and by me in this tree on 2026-10-21: `grep -rn PLATFORM_KEYS src application-mcp-server/src mcp-server/src` and `grep -rn 'platforms:' src/config` both empty): **item (v) is new work**, not a change to existing code — `PLATFORM_KEYS` and a `platforms:` config key exist only as recorded recommendations (priorities record, walk-log entry of 2026-10-20). **Item (vi)**, the Model-B theme-override leak, decides in this spec's design phase, and any adopter-ingested theme tier (128's story 3) must wait for that ruling or restate it — a 128 dependency on 129's design, recorded here so the design round names it. — Thurgood, 2026-10-21
 
 ---
 
@@ -48,9 +57,11 @@ Each note carries its source and date. These are recorded positions, not rulings
 
 1. Does the "fast follow" mean a release date or an ordering? What event closes "web-only ready" and opens this spec's formalization trigger?
 2. Which spec owns native theme emission, 129 or 128's stated prerequisite? Is charter scope item (i) delivered once and referenced, or split?
+   - *2026-10-21 (Thurgood): answered by the 2026-10-20 seam ruling — see § Intake, 2026-10-21, first line.*
 3. Item (vi), the Model-B theme-override leak: is the consumer's copied theme tier (or their config `themes`) the source, and what does that do to (i) and to the "custom theme does not emit on web" caveat?
 4. Item (iv): which edit lands first, `init` running `generate` or U3's onboarding amendments, given DD9 and the pinned founder step count? What is the charter's `--output` meant to be?
 5. Acceptance instrument: who builds the platform build-verification harness (Kenya, Data) and does it exist before the tasks round?
+   - *2026-10-21 (Thurgood): the evaluation entry exists (#433); the acceptance verb is owed at this outline's gate, the build unit at the tasks round — see § Intake, 2026-10-21, second line. Not answered here.*
 6. R1 and R5: do they become requirements of scope item (ii), and what does the dated re-trigger line say?
 7. Item (iii), native root-file retirement: which MAJOR, and how is the retirement announced?
 8. Does the release-3 / fast-follow sequencing need a Spec 123 amendment, and who authors it?
