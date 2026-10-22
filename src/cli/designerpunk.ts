@@ -320,7 +320,9 @@ export async function runGenerate(force = false) {
   // --- Status Summary ---
   if (systemFailed || productFailed) {
     console.log('');
-    if (systemFailed && !productFailed) {
+    // The tip names `--product-only`, which only does something when product tokens are
+    // configured (`runProductOnly` errors out otherwise) — so it is offered only then.
+    if (systemFailed && !productFailed && config.productTokens) {
       console.log('💡 Tip: Use --product-only to skip system token generation');
     }
     process.exit(1);
