@@ -54,6 +54,30 @@
  * the same change): every assertion it made has a home here or in the module named above; the
  * map is in `operative-sets.ts`'s header and task-13-6-completion.md.
  *
+ * THE TWO LISTS (ballot 2026-10-01-signing-act-chain § 2 clause 3, erratum ratified 2026-10-21 —
+ * record `.kiro/issues/archive/2026-10-17-first-signatures-not-on-stale-list.md`; fixtures FU1–FU32
+ * specified by Stacy). A signing act is in bound only for a row on one of them, and the sweep
+ * prints both, ALWAYS (a zero list prints `…: 0 row(s)`), after its head line and finding lines,
+ * which are unchanged — one sweep, one paste:
+ *   stale: N row(s)            signed dispositions rows whose pin is stale (`stale-signature`, any
+ *                              disposition) and record units whose `canonicalHash` is stale
+ *                              (confirmations). Overlay pins are authoring: a finding line only.
+ *   unsigned-routed: M row(s)  rows carrying NO signature (a refusal is a signature) whose key names
+ *                              a current unit / entry / member, and that are ROUTED: disposition
+ *                              `no-consumer-counterpart` or `superseded-by` (any section), or a
+ *                              body `re-pointed` unit C18 ROUTES ({@link classifyCharter}: the
+ *                              canonical unit, the overlay's re-grounded text, the record's items).
+ *                              This is the signed population of `consumer-profile.real.test.ts`.
+ * Entries: `  <rowId> — <signature|confirmation|disposition>`, a ROUTES row reading
+ * `re-pointed: below-half`, `re-pointed: repo-specific-removal` or both joined by `+`; the row id
+ * is verify-signing-chain's `rowIdOf`. Order: file (byte order), section (body, frontmatter,
+ * members), key in file order. The lists are INFORMATION: they never add a finding, so they never
+ * change PASS/FAIL, the diff-guard exit or `--ci`'s `sweepOk` (an unsigned routed row already fails
+ * the Jest lane's "every routed row is signed" test). An undecidable list prints
+ * `unsigned-routed: UNDECIDABLE — <why>`. {@link routedPopulation} reads through a file reader, so
+ * `verify-signing-chain --ci` computes the same list at a first signature's first-parent tree
+ * (link 1).
+ *
  * WHAT THIS DOES NOT ESTABLISH: authorship (one git identity — C16's seat-authentication limit);
  * completeness of an item's text (a prefix truncation passes — the confirmer's); that a removal
  * citation applies (clause (iii)); anything about the rendered consumer output.
@@ -70,6 +94,7 @@ import {
   checkOverlayKeys,
   checkRecordKeys,
   keyUniverse,
+  keyUniverseOf,
   readConsumerSpans,
   renderedHashOf,
   rowSpanSource,
@@ -78,11 +103,13 @@ import {
 } from '../derive';
 import { splitFrontmatter } from '../frontmatter';
 import { entryTree, partition } from '../partition';
-import { SHARED_CATALOG, validateDispositions } from './dispositions';
+import { SHARED_CATALOG, validateDispositions, type DispositionRow } from './dispositions';
 import { hashEntry, hashText } from './hash';
 import { checkOperativeSet, type OperativeSetRecord } from './operative-sets';
 import { checkOverlayPins, OverlayFormatError, parseOverlay } from './overlay';
-import { checkDispositionSigners, checkSignatureFreshness } from './signatures';
+import { c1Seat } from './c1';
+import { checkDispositionSigners, checkSignatureFreshness, ownerOf } from './signatures';
+import { classifyCharter, type OperativeItem } from './triviality';
 
 export const SWEEP_NAME = 'operative-set-freshness';
 export const RECORDS_DIR = 'canonical/operative-sets';
@@ -104,6 +131,62 @@ export interface FreshnessReport {
   findings: FreshnessFinding[];
   /** What was checked — printed on every run so a silent zero is visible. */
   counts: { records: number; units: number; notes: number; dispositions: number; overlays: number };
+  /** The stale list (signing ballot § 2 clause 3) — the stale findings, as rows. */
+  stale?: StaleRow[];
+  /** The unsigned-routed list (signing ballot § 2 clause 3) — information, never a finding. */
+  unsignedRouted?: RoutedRow[];
+  /** Why the unsigned-routed list could not be decided, where it could not. */
+  routedErrors?: RoutedError[];
+}
+
+export type RowSection = 'body' | 'frontmatter' | 'members';
+const SECTION_ORDER: readonly (RowSection | 'unit')[] = ['unit', 'body', 'frontmatter', 'members'];
+
+/** A row on the stale list: a stale signature, or a stale record unit (a confirmation). */
+export interface StaleRow {
+  file: string;
+  section: RowSection | 'unit';
+  key: string;
+  kind: 'signature' | 'confirmation';
+}
+
+/** A row of the signed population (Task 15.5): C18 ROUTES, or a whole-unit removal. */
+export interface RoutedRow {
+  /** The dispositions file. */
+  file: string;
+  section: RowSection;
+  key: string;
+  /** The row's disposition. */
+  disposition: 'no-consumer-counterpart' | 'superseded-by' | 're-pointed';
+  /** For a C18-routed body row: why it routes. */
+  routedBy?: string[];
+  /** c1Seat(owner(row)); undefined when the owner does not resolve. */
+  signer?: string;
+  signed: boolean;
+}
+
+/** What made (part of) the list undecidable; `file` is the dispositions file it concerns, or the shared input. */
+export interface RoutedError {
+  file: string;
+  message: string;
+}
+
+/** The row id a signing act is reported under — verify-signing-chain's `rowIdOf`, one grammar for both lists. */
+export const listRowId = (r: { file: string; section: RowSection | 'unit'; key: string }): string =>
+  r.section === 'frontmatter' ? `${r.file}#frontmatter:${r.key}` : r.key.startsWith('#') ? `${r.file}${r.key}` : `${r.file}#${r.key}`;
+
+/** The label an unsigned-routed entry carries. */
+export const routedLabel = (r: Pick<RoutedRow, 'disposition' | 'routedBy'>): string =>
+  r.routedBy && r.routedBy.length > 0 ? `${r.disposition}: ${r.routedBy.join('+')}` : r.disposition;
+
+/** File (byte order), then section, then the order rows were found in (file order). */
+function listOrder<T extends { file: string; section: RowSection | 'unit' }>(rows: T[]): T[] {
+  return rows
+    .map((r, i) => ({ r, i }))
+    .sort((a, b) =>
+      a.r.file < b.r.file ? -1 : a.r.file > b.r.file ? 1 : SECTION_ORDER.indexOf(a.r.section) - SECTION_ORDER.indexOf(b.r.section) || a.i - b.i
+    )
+    .map((x) => x.r);
 }
 
 export interface FreshnessOptions {
@@ -172,6 +255,125 @@ interface SourceView {
   members: Map<string, unknown>;
 }
 
+/**
+ * The signed population over a tree read through `read` (repo-relative path → text, `undefined`
+ * when absent); `files` lists the tree's paths under the profile and records dirs. Records pair
+ * with dispositions files by `source`. Pure; never throws — what cannot be decided goes to
+ * `errors`, naming the dispositions file it concerns. Rows come back in list order.
+ */
+export function routedPopulation(read: (rel: string) => string | undefined, files: readonly string[]): { rows: RoutedRow[]; errors: RoutedError[] } {
+  const rows: RoutedRow[] = [];
+  const errors: RoutedError[] = [];
+  const isMap = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
+  const yaml = (rel: string, errorFile = rel): Record<string, unknown> | undefined => {
+    const text = read(rel);
+    if (text === undefined) return undefined;
+    try {
+      const d = loadYaml(text);
+      return isMap(d) ? d : undefined;
+    } catch (e) {
+      errors.push({ file: errorFile, message: `${rel}: YAML failed to parse — ${(e as Error).message}` });
+      return undefined;
+    }
+  };
+
+  const records = new Map<string, Record<string, unknown>>();
+  const recordOwners: Record<string, string> = {};
+  for (const f of files.filter((x) => x.startsWith(`${RECORDS_DIR}/`) && x.endsWith('.yaml')).sort()) {
+    const r = yaml(f);
+    if (!r || typeof r.source !== 'string') continue;
+    if (!records.has(r.source)) records.set(r.source, r);
+    if (typeof r.owner === 'string' && !(r.source in recordOwners)) recordOwners[r.source] = r.owner;
+  }
+  const sharedOwners: Record<string, string> = {};
+  const shared = yaml(SHARED_CATALOG);
+  for (const m of isMap(shared) && Array.isArray(shared.members) ? shared.members : []) {
+    if (isMap(m) && typeof m.id === 'string' && typeof m.owner === 'string') sharedOwners[m.id] = m.owner;
+  }
+
+  for (const file of files.filter((x) => x.startsWith(`${PROFILE_DIR}/`) && x.endsWith('.dispositions.yaml')).sort()) {
+    const doc = yaml(file);
+    if (!doc) continue; // absent or unparsable (recorded) — the sweep's own findings name it
+    const source = typeof doc.source === 'string' ? doc.source : undefined;
+    const sourceText = source === undefined ? undefined : read(source);
+    if (source === undefined || sourceText === undefined) {
+      errors.push({ file, message: `${file}: source ${String(doc.source)} does not exist — which rows name a current unit is undecidable` });
+      continue;
+    }
+    let universe: KeyUniverse;
+    try {
+      universe = keyUniverseOf(source, sourceText);
+    } catch (e) {
+      errors.push({ file, message: `${file}: the key universe of ${source} cannot be read — ${(e as Error).message}` });
+      continue;
+    }
+    const current: Record<RowSection, (k: string) => boolean> = {
+      body: (k) => universe.units.includes(k),
+      frontmatter: (k) => universe.entryNodes.has(k),
+      members: (k) => universe.members.includes(k),
+    };
+    const section = (name: RowSection): Record<string, unknown> => (isMap(doc[name]) ? (doc[name] as Record<string, unknown>) : {});
+
+    // C18 over the body: which re-pointed units ROUTE.
+    const routes = new Map<string, string[]>();
+    const record = records.get(source);
+    const body = section('body');
+    if (record && source !== SHARED_CATALOG) {
+      try {
+        const units = new Map(partition(splitFrontmatter(sourceText, source).body).units.map((u) => [u.anchor, u.text] as [string, string]));
+        const overlayFile = file.replace(/\.dispositions\.yaml$/, '.overlay.md');
+        const overlayText = read(overlayFile);
+        const overlay = overlayText === undefined ? undefined : parseOverlay(overlayText, overlayFile);
+        const rendered = new Map<string, string>();
+        for (const [a, t] of units) {
+          const row = body[a];
+          const disposition = isMap(row) ? row.disposition : undefined;
+          if (disposition === 'retained') rendered.set(a, t);
+          if (disposition === 're-pointed' && overlay?.units[a] !== undefined) rendered.set(a, overlay.units[a].text);
+        }
+        const recUnits = isMap(record.units) ? record.units : {};
+        const items = new Map(Object.entries(recUnits).map(([a, u]) => [a, (isMap(u) && Array.isArray(u.items) ? u.items : []) as OperativeItem[]]));
+        const rowMap = new Map(Object.entries(body).filter(([, r]) => isMap(r)) as [string, DispositionRow][]);
+        for (const x of classifyCharter({ canonicalUnits: units, renderedUnits: rendered, items, rows: rowMap })) {
+          if (x.entered && x.verdict === 'ROUTES') routes.set(x.anchor, [...x.routedBy]);
+        }
+      } catch (e) {
+        errors.push({ file, message: `${file}: C18 cannot classify ${source} — ${(e as Error).message}` });
+      }
+    }
+
+    for (const name of ['body', 'frontmatter', 'members'] as const) {
+      for (const [key, row] of Object.entries(section(name))) {
+        if (!isMap(row) || !current[name](key)) continue; // an orphan is on no list (the sweep refuses it)
+        const d = row.disposition;
+        const routedBy = name === 'body' && d === 're-pointed' ? routes.get(key) : undefined;
+        if (d !== 'no-consumer-counterpart' && d !== 'superseded-by' && routedBy === undefined) continue;
+        const owner = ownerOf(source, name === 'members' ? key : undefined, { sharedOwners, recordOwners });
+        rows.push({
+          file,
+          section: name,
+          key,
+          disposition: d as RoutedRow['disposition'],
+          ...(routedBy ? { routedBy } : {}),
+          signer: owner === undefined ? undefined : c1Seat(owner),
+          signed: row.signature !== undefined && row.signature !== null,
+        });
+      }
+    }
+  }
+  return { rows: listOrder(rows), errors };
+}
+
+/** The unsigned-routed list over a working tree — the rows the sweep emits. */
+export function unsignedRoutedAt(repoRoot: string, files: readonly string[]): { rows: RoutedRow[]; errors: RoutedError[] } {
+  const read = (rel: string): string | undefined => {
+    const abs = path.join(repoRoot, rel);
+    return fs.existsSync(abs) && fs.statSync(abs).isFile() ? fs.readFileSync(abs, 'utf8') : undefined;
+  };
+  const pop = routedPopulation(read, files);
+  return { rows: pop.rows.filter((r) => !r.signed), errors: pop.errors };
+}
+
 /** Run the sweep over `repoRoot`. Pure over the filesystem; no generation, no MCP. */
 export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {}): FreshnessReport {
   const findings: FreshnessFinding[] = [];
@@ -180,6 +382,8 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
     findings.push({ check, file, key, message });
   };
   const tracked = opts.tracked ?? gitTracked(repoRoot);
+  /** The stale list (signing ballot § 2 clause 3): the stale findings, as rows. */
+  const stale: StaleRow[] = [];
   /** Profile files something below reaches (the unreferenced-file check at the end). */
   const referenced = new Set<string>();
   let spans: RenderedSpans | undefined | null = null; // null = not read yet
@@ -245,7 +449,10 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
       const text = v.units.get(anchor);
       if (text === undefined) continue; // the orphaned-key refusal above
       const now = hashText(text);
-      if (unit.canonicalHash !== now) push(SWEEP_NAME, file, staleRecordMessage(file, anchor, String(unit.canonicalHash), now), anchor);
+      if (unit.canonicalHash !== now) {
+        push(SWEEP_NAME, file, staleRecordMessage(file, anchor, String(unit.canonicalHash), now), anchor);
+        stale.push({ file, section: 'unit', key: anchor, kind: 'confirmation' });
+      }
 
       // The confirmation note.
       const conf = typeof unit.confirmation === 'string' ? unit.confirmation : '';
@@ -368,6 +575,7 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
         }
         const f = checkSignatureFreshness(sig as { canonicalHash: string; renderedHash: string }, key, { canonicalHash: hash(current.get(key)), renderedHash: rendered });
         for (const x of f) push(x.check, file, x.message, key);
+        if (f.some((x) => x.check === 'stale-signature')) stale.push({ file, section: section as RowSection, key, kind: 'signature' });
       }
     }
   }
@@ -410,12 +618,24 @@ export function runFreshnessSweep(repoRoot: string, opts: FreshnessOptions = {})
     if (!referenced.has(file)) push('profile-unreferenced', file, unreferencedProfileFileMessage(file));
   }
 
-  return { findings, counts };
+  // --- the unsigned-routed list (signing ballot § 2 clause 3) — information, never a finding --
+  const routed = unsignedRoutedAt(repoRoot, [...listFiles(repoRoot, RECORDS_DIR), ...profileFiles]);
+  return { findings, counts, stale: listOrder(stale), unsignedRouted: routed.rows, routedErrors: routed.errors };
 }
 
 /** The report lines the diff-guard CLI prints. */
 export function formatFreshness(report: FreshnessReport): string[] {
   const c = report.counts;
   const head = `${SWEEP_NAME}: ${report.findings.length === 0 ? 'PASS' : 'FAIL'} — ${c.records} record(s), ${c.units} unit(s), ${c.notes} note(s), ${c.dispositions} dispositions file(s), ${c.overlays} overlay(s)`;
-  return [head, ...report.findings.map((f) => `  [${f.check}] ${f.message}`)];
+  const lines = [head, ...report.findings.map((f) => `  [${f.check}] ${f.message}`)];
+  // The two lists (signing ballot § 2 clause 3) — always printed, so an empty list is visible.
+  const stale = report.stale ?? [];
+  lines.push(`stale: ${stale.length} row(s)`, ...stale.map((r) => `  ${listRowId(r)} — ${r.kind}`));
+  const unsigned = report.unsignedRouted ?? [];
+  lines.push(`${UNSIGNED_ROUTED_HEAD}: ${unsigned.length} row(s)`, ...unsigned.map((r) => `  ${listRowId(r)} — ${routedLabel(r)}`));
+  for (const e of report.routedErrors ?? []) lines.push(`${UNSIGNED_ROUTED_HEAD}: UNDECIDABLE — ${e.message}`);
+  return lines;
 }
+
+/** The label of the unsigned-routed list. */
+export const UNSIGNED_ROUTED_HEAD = 'unsigned-routed';
