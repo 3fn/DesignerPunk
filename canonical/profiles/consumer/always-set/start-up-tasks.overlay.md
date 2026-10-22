@@ -19,7 +19,7 @@
    
    **WHEN the task involves performance changes THEN** also run your performance suites, on an otherwise-idle machine (they are wall-clock-sensitive).
 
-## @unit #item-starting-a-parent-task-write-its-instruments-block-first @ sha256:450bc8ccda0592e81e09ec9b06ec82b08cf7c6a8512572d7a7674f27df86a2d2
+## @unit #item-starting-a-parent-task-write-its-instruments-block-first @ sha256:bab2eca6c2b9f830775c12ea924c2ccb0a2899fffad979c2289d262a94200dca
 8. **Starting a PARENT task: list its instruments first**
 
    Before a parent's first subtask starts, list every instrument each success criterion's evidence depends on (test, check, fixture, file, command, upstream artifact) — each one that exists (with where, and what in it the criterion reads), is built by one of this parent's subtasks, or is MISSING (with who owns it). **Any MISSING stops the subtasks that depend on it, before code**; route it. A gap found later is recorded with its kind (never listed, or listed but not fit for the criterion), never silently fixed.

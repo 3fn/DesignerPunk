@@ -157,8 +157,27 @@ date: 2026-09-29
 ## `#item-starting-a-parent-task-write-its-instruments-block-first`
 
 confirmer: stacy
-canonicalHash: sha256:450bc8ccda0592e81e09ec9b06ec82b08cf7c6a8512572d7a7674f27df86a2d2
+canonicalHash: sha256:bab2eca6c2b9f830775c12ea924c2ccb0a2899fffad979c2289d262a94200dca
 items: write-block, missing-stops, starting-a-parent-ta-2, starting-a-parent-ta-3, format-route, starting-a-parent-ta-4
-date: 2026-09-29
+date: 2026-10-21
+
+**Re-confirmed 2026-10-21 (Req 11.6.5d).**
+- **What changed**: nothing in the unit's text. The canonicalHash moves from `sha256:450bc8ccda0592e81e09ec9b06ec82b08cf7c6a8512572d7a7674f27df86a2d2` to `sha256:bab2eca6c2b9f830775c12ea924c2ccb0a2899fffad979c2289d262a94200dca` because the unit now ends in one more newline: item 9 follows item 8, so the blank line between them belongs to item 8's unit. Checked mechanically, not assumed: `partition(splitFrontmatter(...).body)` of this unit at `main` hashes to the old value, the new unit equals the old plus one trailing `\n`, and the two are equal under `trimEnd()`.
+- **What did not change**: the operative set, still 6 items, all verbatim substrings as before. The consumer overlay's pin for this unit moves to the new canonicalHash (Thurgood); its body is unchanged, so the rendered hash is expected unchanged.
+
+**Ruling: CONFIRMED at 6 items.**
+
+**Re-confirmed 2026-09-29 (prior record, superseded)**: canonicalHash `sha256:450bc8ccda0592e81e09ec9b06ec82b08cf7c6a8512572d7a7674f27df86a2d2`, 6 items, as below.
 
 **Ruling: CORRECTED 4 → 6.** Removed `-1` (the title line). Added `write-block` (the rule's main obligation, missing from the draft), `missing-stops` and `format-route`.
+
+## `#item-your-open-records`
+
+confirmer: stacy
+canonicalHash: sha256:42a36743767fe2c303c410d9b9395f8e6ddade32f0934636ed079c11376b9d83
+items: open-records-run, open-records-manual, open-records-due, open-records-fired, open-records-lapse, open-records-resolve, open-records-broken-pointer, open-records-fail-soft, open-records-revisit
+date: 2026-10-21
+
+**Ruling: CONFIRMED at 9, as drafted (new unit, 2026-10-21).** Ballot `.kiro/docs/ballots/2026-10-20-manual-records-routed-readers.md` E1 (RATIFIED, Peter, 2026-10-20, with his two conditions: (i) the fail-soft sentence, (ii) the revisit line), edit site 1, applied in `807b8aba1`. I compared the item as it stands in `.kiro/steering/start-up-tasks.md` with the ballot's § 2 E1 blockquote line for line: they are identical (the ballot's trailing note on conditions (i) and (ii) is not part of the item). All 9 texts are verbatim substrings of the unit (one occurrence each).
+- **Operative under 5c**, item by item: `open-records-run` (run the command at session start and read it) is a step an owner can skip; `open-records-manual`, `-due` and `-fired` are the three line states the reader must act on, itemized as `member`s as the table rows of `trigger-*` are, each stating what the reader does with that state; `open-records-lapse` (append the `## Lapse` heading and close, re-rule or report this session) is the obligation a fired, unclosed record creates; `open-records-resolve` (an archive path resolves by README rule 3) is a `route`; `open-records-broken-pointer` (a path in neither the root nor `archive/` is reported to the owner of the citing sentence) is an obligation; `open-records-fail-soft` is Peter's condition (i): a failed command never blocks the session; `open-records-revisit` is Peter's condition (ii), a `member`: the health-check walk reports the run count, the false-`FIRED` count and any startup complaint, and one false `FIRED` line or one blocked session start re-opens the item. The revisit line is a condition that binds the walker, not the session reader, and a walker that does not report them or does not re-open the item violates it; so it is itemized as its own item. The heading is a label (clause (c)); the item's title line and ballot citation are labels.
+- **Consumer rendering (decision (c), for the disposition)**: `no-consumer-counterpart`, **`subtraction-1`**, confirmed. The item's every obligation hangs on `./scripts/issues-owned.sh <YourName>`, a repo-internal tool that reads this repo's root `.kiro/issues/` records, their `**Trigger**:` lines and README rules 3 and 11; the package ships none of them. That is a repo-internal tooling invocation (`subtraction-1`), and I checked the cite applies: the first operative sentence names the script by path. There is no residue to re-point: without the command, the fail-soft and revisit items have no referent, and a consumer's own owner-reads-open-records habit is theirs to define, not ours to render. The whole unit is therefore not rendered, and the unit's numbering does not change for consumers (item 8 is the last numbered item in their Start Up Tasks).

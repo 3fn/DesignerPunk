@@ -11,7 +11,7 @@ description: Standards for creating spec documents — requirements format (EARS
 
 **Date**: 2025-01-10
 **Updated**: October 20, 2025
-**Last Reviewed**: 2026-10-19
+**Last Reviewed**: 2026-10-21
 **Purpose**: Standards for creating requirements, design, and task documents for feature specifications
 **Organization**: process-standard
 **Scope**: cross-project
@@ -27,6 +27,7 @@ description: Standards for creating spec documents — requirements format (EARS
 **Layer Context**: This is a Layer 2 (Frameworks and Patterns) document that provides systematic spec creation methodology. It's conditionally loaded when creating or updating specs, and contains extensive sections for different spec phases (requirements, design, tasks, execution).
 
 ### WHEN Creating Requirements Document THEN Read:
+0. ✅ **Before Formalizing: Records That Name the Spec** (MUST READ — before writing requirements.md)
 1. ✅ **Requirements Document Format** (MUST READ)
 2. ✅ **Spec Workflow: Phase 1** (scroll to Spec Workflow section)
 3. ❌ **SKIP**: Design format, Tasks format, Validation system, Documentation system, Rationale
@@ -123,6 +124,21 @@ This document defines the format and structure for creating feature specificatio
 **When to use this document**: When creating new specs or updating existing spec documents (requirements.md, design.md, tasks.md).
 
 **How to use this document**: See "AI Agent Reading Priorities" above - read only the sections relevant to your current task.
+
+---
+
+## Before Formalizing: Records That Name the Spec
+
+*(Ballot 2026-10-20-manual-records-routed-readers, E2; RATIFIED Peter, 2026-10-20.)*
+
+Before writing a spec's requirements.md, list the root issue records that name the spec and read their Trigger lines (`<id>` is the spec id, `<dir>` the spec directory name):
+`grep -lE '(Spec |specs/)<id>([^A-Za-z0-9-]|$)|<dir>' .kiro/issues/*.md | xargs grep -m1 -H '^\*\*Trigger\*\*: ' | cut -c1-240`
+In the requirements feedback round's Context for Reviewers, write one line per match: `<record> — intake | re-rule | leave — <reason>`.
+- **intake**: the spec takes the record. Its owner re-rules its Trigger to a `path:` on the file whose change delivers it: the carrying parent's completion doc once tasks.md numbers the parent, and until then the spec's `completion/claims-pass.md`. Never `requirements.md` or `design.md`, where any later amendment would fire it.
+- **re-rule**: its owner names another event.
+- **leave**: no change.
+
+A record the outline cites but the grep misses is added by hand.
 
 ---
 

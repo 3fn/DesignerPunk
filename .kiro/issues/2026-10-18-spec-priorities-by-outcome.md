@@ -85,6 +85,17 @@ These are lines, not edits. Each record's owner appends to their own record (rul
 1. **If A and B conflict for a burst, which outcome ranks first: truthfulness (A) or reach (B)?** He was asked, and chose the class option without ranking them. The order above resolves the current case without that ranking, because 128's sitting runs in parallel and 128's implementation needs 129's output anyway. A future conflict would need the ranking.
 2. **Does Spec 130's R1 run now, alongside 128's fork sitting?** This record permits it (§ 3.3) and does not schedule it.
 
+## 7. Peter-gated deferrals
+
+*(Added 2026-10-21, Thurgood, ballot `2026-10-20-manual-records-routed-readers` E3, RATIFIED Peter 2026-10-20. Answered rows only, never a P0 record. RELEASE-FLOW item 3a reprints this list as a notice; it holds no merge. An unanswered Peter-gated item is asked as an `**Open for Peter**:` line on the PR that first lists it and becomes a row on his answer; "not now" is an answer. A row survives rule 5's stale archive, citing the archived path.)*
+
+- `.kiro/issues/2026-09-12-semantic-contrast-adjudication-queue.md` — the contrast spec: Ada's token remaps on Peter's color adjudication, and the guard's 20 pinned sub-AA exemptions removed — deferred (Peter, 2026-10-18, as recorded in the record's § "Measured at the Spec 130 switch read (2026-10-18)", relayed: "accessibility contrast issues are punted for now; a larger redesign is being considered to complement DesignerPunk's development maturation"). Presented: 2026-09-13 (§ "Deferral ruling", deferred to 125-B campaign close), 2026-10-18.
+
+**Not rows, and why**:
+- The rgba-pipeline cleanup and the shadow-color OKLCH migration were taken up, not deferred: Peter ranked both into the color-track spec (§ 3.4, 2026-10-20).
+- The `data-theme` record is P0, so it belongs to the release floor (E3).
+- Five Peter-gated items had no answer on record when this section was written. They are asked as `**Open for Peter**:` lines on the application PR of ballot `2026-10-20-manual-records-routed-readers`: the `generate-product-only` cwd defect, the Integration Guide rewrite charter, the cold human run, the first-signatures erratum and the owed-set-query promotion question.
+
 ## Walk log
 
 - 2026-10-18: record opened (Thurgood).

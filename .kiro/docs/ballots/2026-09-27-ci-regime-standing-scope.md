@@ -154,6 +154,8 @@ The glob cannot carry the limit, so the charter states it.
 
 ## 3. M2 — (e) the issue-row grant (T1-(B)'s shape, applied to issues)
 
+*(Amended 2026-10-20 by ballot `2026-10-20-grant-ci-deletions-and-activating-merge-read`: A-1 deletions clause and `**Deleted lines**:` block; A-2 activating-PR ARMING line, the `**Grant activation read**:` marker and the LIVENESS read. Clauses 1–7 unchanged.)*
+
 > **STANDING RULE — issue-row write-scope grant:**
 > 1. **Extent.** A **merged** chartered issue under `.kiro/issues/` whose body carries a `**Grant paths**:` list grants write access to **exactly the paths in that list**, and to nothing else.
 > 2. **Who.** The issue's **named owner** only. Agents the issue merely consults receive no grant.

@@ -5,6 +5,7 @@
 **Discovered during**: Spec 124 Task 2 (R6 token-index ordering spike) — `findings/r6-ordering-spike.md`
 **Type**: Token-index determinism / filesystem-order dependency
 **Status**: Open (seeded; deliberately not pursued in 124)
+**Owner**: Ada *(added 2026-10-20, Ada, site 9 of ballot 2026-10-20-manual-records-routed-readers)*
 **Primary owner**: Ada (Rosetta token-index pipeline) — to pursue only as a deliberate, separate re-baseline decision
 **Trigger**: `manual` — the deliberate, separate re-baseline decision the `**Primary owner**:` line names, due before any cross-filesystem CI is introduced; no path event names it. At that decision `components.yaml` is re-committed in sorted order or the record is re-ruled. *(Set 2026-10-20, Ada, rules 1 and 9.)*
 **Class**: P3 improvement · defect *(set 2026-10-20, Ada, rule 12. Latent portability risk with no current breakage (macOS/APFS and CI both reproduce the committed order); `generateTokenIndex.ts` still iterates `readdirSync` order with no sort (read 2026-10-20).)*

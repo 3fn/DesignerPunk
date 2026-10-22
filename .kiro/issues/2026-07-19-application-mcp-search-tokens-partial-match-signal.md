@@ -7,6 +7,7 @@
 **Type**: Application MCP token search (match-quality signaling, NOT search correctness)
 **Primary owner**: Ada (ownership accepted on the record — [ADA R3], 119-B feedback/requirements.md)
 **Status**: Open — **LATER**: take up after 119-B's design phase settles the calibration-propagation prose (so the new signal lands against settled prose, not a moving target). No hard trigger; a natural slot is any Ada Application-MCP session touching the search/index surface.
+**Owner**: Ada *(added 2026-10-20, Ada, site 9 of ballot 2026-10-20-manual-records-routed-readers)*
 **Trigger**: `path:application-mcp-server/src/indexer/TokenIndexer.ts` — the next change to the token reader whose `search` (L193) returns the partial match with no signal; the Status line's "natural slot" made an event. It bundles with `2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md`, the sibling this record names. *(Set 2026-10-20, Ada, rules 1 and 9. It replaces the Status line's "No hard trigger"; that line stays as written.)*
 **Class**: P3 improvement · defect *(set 2026-10-20, Ada, rule 12. The record's own double-mitigation stands: token selection is gated independently by the token-governance checkpoints, and the certainty-calibration rule's step 3 is tool-agnostic.)*
 
