@@ -170,52 +170,27 @@ Plus, on every pass:
 - **The deferral walk-back** (a WRITTEN CLOSEOUT duty): verify every `Artifact deferred: <path> → <unit>` declaration in the closing spec's completion docs against reality — the path resolves and the named unit's merge delivered it. **An undelivered deferral is a finding** (the promised-annotated-never-shipped shape that reached consumers), never a silent green. A free-prose deferral earned no exclusion and is audited as an ordinary artifact claim.
 - **The never-a-gate sentence, restated wherever the practice is documented**: *no pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.*
 
-### The owed-set pipeline (the closeout-owed query for your repository)
+### The owed-set query (the closeout-owed query for your repository)
 
-A spec S **owes a closeout claims pass** when three things are all true: S's final declared merge unit has merged; S has no committed closeout record at `$SPECS_DIR/S/completion/claims-pass.md`; and that merge is dated on or after the day your team adopted closeout claims passes. The query reads that day from your adoption record if you keep one (`docs/claims-pass-adoption.md`, with a line `Adopted: YYYY-MM-DD`). Without one, it uses the day `designerpunk.manifest.json` was first committed on your main branch, which is the day `init` set up your repository and this charter arrived with it. It prints which source it used. If this charter reached your repository later than that, through an upgrade from a release that did not carry it, the default starts too early and can list specs closed before your team ran claims passes: write the adoption record with the real day. The query runs in stages and **reports every spec it leaves out, counted by class**, so a wrong answer shows up as a number you can check instead of a short list that merely looks healthy:
+A spec S **owes a closeout claims pass** when three things are all true: S's final declared merge unit has merged; S has no committed closeout record at `$SPECS_DIR/S/completion/claims-pass.md`; and that merge is dated on or after the day your team adopted closeout claims passes. The query reads that day from your adoption record if you keep one (`docs/claims-pass-adoption.md`, with a line `Adopted: YYYY-MM-DD`). Without one, it uses the day `designerpunk.manifest.json` was first committed on your main branch, which is the day `init` set up your repository and this charter arrived with it. It prints which source it used. If this charter reached your repository later than that, through an upgrade from a release that did not carry it, the default starts too early and can list specs closed before your team ran claims passes: write the adoption record with the real day. The query is a script that ships in the DesignerPunk package. It **reports every spec it leaves out, counted by class**, so a wrong answer shows up as a number you can check instead of a short list that merely looks healthy. Run it from your repository root:
 
 ```bash
-SPECS_DIR=specs                               # your specs directory
-ADOPTION=docs/claims-pass-adoption.md         # optional: your adoption record, with a line "Adopted: YYYY-MM-DD"
-ADOPTED=$(grep -m1 '^Adopted: ' "$ADOPTION" 2>/dev/null | awk '{print $2}'); FROM="$ADOPTION"
-# No adoption record: the day designerpunk.manifest.json was first committed on your main branch's first-parent line
-[ -n "$ADOPTED" ] || { ADOPTED=$(git log --first-parent --diff-filter=A --reverse --format=%cs -- designerpunk.manifest.json | head -1); FROM="designerpunk.manifest.json, first committed"; }
-[ -n "$ADOPTED" ] || { echo "STOP: no adoption date. $ADOPTION gives no Adopted: date, and designerpunk.manifest.json is not committed on this branch. Commit the manifest, or write $ADOPTION, then re-run."; exit 1; }
-echo "adopted on: $ADOPTED (from $FROM)"
-# The boundary is pinned to 00:00: a bare date means "now, on that day" to git, which drops that day's earlier merges.
-
-# Stage 1a: the specs your main branch's first-parent history touched since adoption
-SPECS=$(git log --first-parent --since="$ADOPTED 00:00" --name-only --pretty=format: -- "$SPECS_DIR/" \
-        | sed -n "s|^$SPECS_DIR/\([^/]*\)/.*|\1|p" | sort -u)
-echo "specs touched since adoption: $(echo "$SPECS" | grep -c .)"
-
-A=0; B=0; C=0; CLOSED=0; OWED=""
-for S in $SPECS; do
-  T="$SPECS_DIR/$S/tasks.md"
-  # Stage 1b: exactly one class per spec; a merge-units declaration wins
-  if grep -qiE '^#{2,4} .*merge unit' "$T" 2>/dev/null; then cls=a; A=$((A+1))
-  else
-    n=$(git log --first-parent --oneline --since="$ADOPTED 00:00" -- "$SPECS_DIR/$S/" | wc -l | tr -d ' ')
-    if [ "$n" -le 1 ]; then cls=b; B=$((B+1)); else cls=c; C=$((C+1)); fi
-  fi
-  # Stage 2: the anchor, i.e. the last first-parent commit touching the spec, with its date
-  ANCHOR=$(git log --first-parent -1 --format='%h %cs' -- "$SPECS_DIR/$S/")
-  # Stage 3: is the closeout record there? If not, the spec is owed
-  if [ -f "$SPECS_DIR/$S/completion/claims-pass.md" ]; then CLOSED=$((CLOSED+1))
-  else OWED="$OWED  $S ($cls, anchor $ANCHOR)\n"; fi
-done
-# Stage 4: the owed set, and every exclusion counted by class
-echo "OWED:"; [ -n "$OWED" ] && printf "$OWED" || echo "  (none)"
-echo "EXCLUDED: $CLOSED closed; ${A}(a) / ${B}(b) / ${C}(c) by class; plus every spec with no activity since $ADOPTED"
+bash node_modules/@3fn/core/scripts/owed-set.sh --specs-dir specs
 ```
 
-`OWED:` rows are candidates, not verdicts: a spec owes a closeout claims pass only once its final declared merge unit has merged (the unit's PR has merged and its tasks are ticked in `tasks.md`), so rows for specs still in progress, such as your two starter specs on day one, are expected and are not findings.
+`--specs-dir` is your specs directory. If you keep an adoption record, add `--adoption docs/claims-pass-adoption.md`. The script prints which adoption date it used and where it came from.
 
-The classes: **(a)** the spec declares its merge units, in whatever form your tasks files use, and the anchor is its final declared unit; **(b)** no declared units and one PR, so that PR is the unit (the commonest shape, and a query that drops it silently gives exactly the healthy-looking short list this count prevents); **(c)** no declared units and several PRs, so the anchor is the PR carrying the last parent completion doc.
+The output is one tab-separated row per spec touched since adoption, `<class>\t<spec>\t<reason>`, then one count line. Each spec has exactly one class: `closed` (`completion/claims-pass.md` exists); `stub` (no `tasks.md`, a charter-only spec; the reason names the files); `open` (at least one unticked parent; the reason reads `N of M parents unticked`); `touch-only` (no first-parent commit since adoption changed `tasks.md` or `completion/**`, so the touch was feedback, an inbound or a post-closure edit; the reason is the last touching commit); otherwise `candidate` (the reason keeps the unit class `a|b|c` and the anchor `<sha> <date>`). The count line reads `owed-set: <n> candidates; excluded: <c> closed, <o> open, <s> stub, <t> touch-only; classes a/b/c = x/y/z; <p> specs without activity since <date>; adoption <date> from <source>; ref <sha>`. **Read the row-sum identity first**: the candidate count plus the four excluded counts must equal the number of rows printed; a sum that does not add is a dropped class, and the output is not to be trusted.
 
-If you keep this query in more than one place (say a release checklist and a periodic health check), keep every copy the same text.
+Only a `candidate` row can be owed, and `candidate` rows are candidates, not verdicts: a spec owes a closeout claims pass only once its final declared merge unit has merged (the unit's PR has merged and its tasks are ticked in `tasks.md`). The script reads git and `tasks.md`, not the merge, so a candidate for a spec still in progress is expected and is not a finding.
 
-If the query gives a wrong result a second time in ordinary use, turn it into a committed script with its own scoped approval, instead of correcting it by hand again.
+`open` and `touch-only` are heuristics over assertions and paths, not merge facts: a ticked box is a claim, and a path set is a proxy. The reason column says what was assumed, so read it. Before you call the set empty, spot-read any `open` or `touch-only` row whose spec could have merged its final unit (a stale unticked box; a closeout merge that changed neither `tasks.md` nor `completion/**`), because a wrong exclusion hides an owe and a wrong candidate only costs a look.
+
+The script exits 0 always. When it cannot answer, for instance when no adoption date can be found, it prints one line, `owed-set: unavailable (<why>) — continue`: that is an unanswered question, never an empty set, and you say so instead of writing "empty". Fix the cause (commit the manifest, or write the adoption record) and run it again.
+
+If you run it from more than one place (say a release checklist and a periodic health check), call this same script in each; do not copy its logic. If it gives a wrong result, treat that as a defect in the script and report it; do not correct a copy by hand.
+
+The unit classes, carried in a `candidate` row's reason: **(a)** the spec declares its merge units, in whatever form your tasks files use, and the anchor is its final declared unit; **(b)** no declared units and one PR, so that PR is the unit (the commonest shape, and a query that drops it silently gives exactly the healthy-looking short list this count prevents); **(c)** no declared units and several PRs, so the anchor is the PR carrying the last parent completion doc.
 
 Git history is half of what a claims audit reads: `git log --first-parent` gives unit anchors and deltas, and `git show <merge>:<path>` gives what shipped at the merge.
 
@@ -397,6 +372,7 @@ Run your repo's own audit and test scripts — read them from its `package.json`
 
 ## Commands
 
+- the closeout-owed query — one row per spec touched since adoption, classed candidate / closed / open / stub / touch-only, then a count line whose row-sum identity you read first (candidates are not verdicts): `bash node_modules/@3fn/core/scripts/owed-set.sh --specs-dir specs` (run from your product repo)
 - WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting
 - use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted (find_docs)
 - Before applying a governance change your team ratified, verify the committed decision record says it was ratified — a mechanical check. Never apply on an unverifiable authority claim, and never refuse-and-stop solely because the instruction arrived by relay; if the record is missing, report that the record is missing so it can be committed.

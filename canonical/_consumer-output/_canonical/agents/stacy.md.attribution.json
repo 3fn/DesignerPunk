@@ -4,287 +4,287 @@
     {
       "lines": [
         1,
-        157
+        162
       ],
       "op": "render",
       "source": "C1:frontmatter"
     },
     {
       "lines": [
-        158,
-        178
+        163,
+        183
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#identity"
     },
     {
       "lines": [
-        179,
-        192
+        184,
+        197
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#in-scope"
     },
     {
       "lines": [
-        193,
-        201
+        198,
+        206
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#out-of-scope"
     },
     {
       "lines": [
-        202,
-        214
+        207,
+        219
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#the-audit-vs-write-distinction"
     },
     {
       "lines": [
-        215,
-        218
+        220,
+        223
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#operational-mode-process-audit:preamble"
     },
     {
       "lines": [
-        219,
-        265
+        224,
+        270
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#audit-checklist"
     },
     {
       "lines": [
-        266,
-        268
+        271,
+        273
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#incremental-capture-rule"
     },
     {
       "lines": [
-        269,
-        275
+        274,
+        280
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#audit-output"
     },
     {
       "lines": [
-        276,
-        283
+        281,
+        288
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#audit-is-analysis-not-implementation"
     },
     {
       "lines": [
-        284,
-        287
+        289,
+        292
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble"
     },
     {
       "lines": [
-        288,
-        295
+        293,
+        300
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#the-charter-cut-ratified-verbatim"
     },
     {
       "lines": [
-        296,
-        311
+        301,
+        316
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#the-trigger-set-the-114-superset-table-names-never-numbers"
     },
     {
       "lines": [
-        312,
-        327
+        317,
+        332
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#the-claims-pass-record-claims-passmd-the-template"
     },
     {
       "lines": [
-        328,
-        376
+        333,
+        356
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script"
     },
     {
       "lines": [
-        377,
-        382
+        357,
+        362
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength"
     },
     {
       "lines": [
-        383,
-        386
+        363,
+        366
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference"
     },
     {
       "lines": [
-        387,
-        392
+        367,
+        372
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument"
     },
     {
       "lines": [
-        393,
-        398
+        373,
+        378
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#operational-mode-parity-review:preamble"
     },
     {
       "lines": [
-        399,
-        406
+        379,
+        386
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#review-process"
     },
     {
       "lines": [
-        407,
-        419
+        387,
+        399
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#what-parity-means"
     },
     {
       "lines": [
-        420,
-        425
+        400,
+        405
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#operational-mode-lessons-synthesis-review:preamble"
     },
     {
       "lines": [
-        426,
-        434
+        406,
+        414
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#your-role"
     },
     {
       "lines": [
-        435,
-        441
+        415,
+        421
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#what-you-dont-do"
     },
     {
       "lines": [
-        442,
-        450
+        422,
+        430
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#with-leonardo"
     },
     {
       "lines": [
-        451,
-        457
+        431,
+        437
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#with-platform-agents-kenya-data-sparky"
     },
     {
       "lines": [
-        458,
-        464
+        438,
+        444
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#with-thurgood-system-counterpart"
     },
     {
       "lines": [
-        465,
-        471
+        445,
+        451
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#with-peter"
     },
     {
       "lines": [
-        472,
-        485
+        452,
+        465
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#mcp-practice-notes"
     },
     {
       "lines": [
-        486,
-        489
+        466,
+        469
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#collaboration-standards:preamble"
     },
     {
       "lines": [
-        490,
-        494
+        470,
+        474
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#counter-arguments-are-mandatory"
     },
     {
       "lines": [
-        495,
-        497
+        475,
+        477
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#candid-over-comfortable"
     },
     {
       "lines": [
-        498,
-        500
+        478,
+        480
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#bias-self-monitoring"
     },
     {
       "lines": [
-        501,
-        505
+        481,
+        485
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#ask-if-unsure"
     },
     {
       "lines": [
-        506,
-        513
+        486,
+        493
       ],
       "op": "passthrough",
       "source": "canonical/agents/stacy.md#what-you-own"
     },
     {
       "lines": [
-        514,
-        519
+        494,
+        499
       ],
       "op": "render",
       "source": "canonical/agents/stacy.md#what-you-dont-own"

@@ -206,7 +206,7 @@ Your governance instruments (the health-check, metadata-validation, cross-refere
 - Check the newest record in `.kiro/docs/civitas-health-checks/`. IF it is older than the monthly cadence, run the governance health check command, review findings and flag issues to domain agents as needed, and commit the check's record there.
 - **Return-edge review** (the strategy→tactics→validation loop's closing edge, Spec 125-B Req 14): examine recurring required-check failure patterns for education-implicating signals — does a failure cluster indicate the docs teach the wrong thing? Flag findings to the owning domain agent. This is the SYSTEM-side half of the return edge; the PRODUCT-side half is Stacy's Lessons Synthesis Review, defined in `governance/Product-Handoff-Protocol.md` § "Lessons Synthesis Review" — the two halves name each other by design (no new machinery; the edge's first manual exercise was the 125-B U1 pilot observation window, recorded in that spec's closeout — neither cadence claims it anew).
 - **LIVENESS** (the claims-audit lapse detector — **a QUERY over the owed-set, never a recollection**; a prose version of this item is the failure mode it exists to prevent). **Meta-item only**, bounded by the anti-rot clause: **read for records, never for verdicts** — you check whether passes happened and left records; you never re-decide what a pass concluded. Four reads:
-  1. **"Is the closeout-owed set empty?"** — run the owed-set pipeline below and read its output.
+  1. **"Is the closeout-owed set empty?"** — run `bash scripts/owed-set.sh` (the owed-set query below) and read its output.
   2. **Did RELEASE / SYMPTOM fire in the window, and did each produce a committed record? Events without records = finding.** (The owed-set predicate cannot see a missed RELEASE pass — RELEASE has no owed-set by construction — so this half is the non-negotiable triggers' only lapse detector.) **A RELEASE record is complete only with both phases** (ballot 2026-10-03-hermetic-publish-path § 3.4): a record holding phase 1 alone, still reading `publish-rail liveness: owed`, and a phase 2 drafted against an open step-6 PR that lacks its merge-confirmation line, are each an event without a complete record.
   3. **The active-charter walk**: each live charter's named triggers — fired? / evidence? — against its pre-written criteria (minutes, not sessions; the issues-dir archive convention bounds it).
   4. **Grant activations** (ballot 2026-10-20-grant-ci-deletions-and-activating-merge-read). Run the query below. A candidate is a first-parent commit since the last walk that changes a root `.kiro/issues/` file's `**Grant paths**` blocks so that they name a `.github/` path. A block is a line beginning `**Grant paths**` and the lines after it up to the first blank line. The last walk is the date of the newest `.kiro/docs/civitas-health-checks/` record before this walk's, from 00:00 (run the query before this walk's record is committed). The set is a superset: an amendment that activates nothing, and a block that names `.github/` only as not granted, match too. Each candidate owes a committed line that begins, at column 0, `**Grant activation read**: .kiro/issues/<file> @ <sha>` (the path as `git diff-tree` prints it); a quotation of the marker inside a line does not count. That line is Stacy's activation read, or, where the merge activated no `.github/**` grant (clause 4: its PR body did not name one), the line followed by `— no .github/** grant activated: <why>`. A candidate printed `OWED` is a finding, routed to Stacy. Read for records, never for verdicts. The query does not see an activation by a PR that leaves the record's blocks unchanged; that PR's prompt is its `**ARMING**:` line (rule 8).
@@ -223,48 +223,11 @@ Your governance instruments (the health-check, metadata-validation, cross-refere
      echo "window from $LAST"
      ```
 
-  **The owed-set pipeline, verbatim** (the same text lives in `.kiro/hooks/RELEASE-FLOW.md` step 5a and Stacy's command catalog — three copies, one text, by design). Predicate: **`closeout-owed(S)`** ⟺ S's final declared unit has merged **AND** `.kiro/specs/S/completion/claims-pass.md` does not exist **AND** that merge is dated on or after the ratification date recorded in `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`. (A MIDPOINT record lives at `completion/claims-pass-midpoint.md` and does NOT discharge closeout-owed — the filename split is load-bearing.)
+  **The owed-set query** — `bash scripts/owed-set.sh`, a committed script since Peter's "Yes." of 2026-10-21 (`.kiro/issues/2026-10-19-owed-set-query-over-lists-in-progress-specs.md`, the ladder's first rung): Stacy specifies its contract and its falsification cases, you author and maintain it, and `.kiro/hooks/RELEASE-FLOW.md` step 5a and Stacy's command catalog run the same call. Predicate, unchanged: **`closeout-owed(S)`** ⟺ S's final declared unit has merged **AND** `.kiro/specs/S/completion/claims-pass.md` does not exist **AND** that merge is dated on or after the ratification date recorded in `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`. (A MIDPOINT record lives at `completion/claims-pass-midpoint.md` and does NOT discharge closeout-owed — the filename split is load-bearing.)
 
-  ```bash
-  BALLOT=.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md
-  RATIFIED=$(grep -m1 '^Ratified-machine: ' "$BALLOT" | awk '{print $2}')
-  [ -n "$RATIFIED" ] || { echo "FATAL: cannot resolve ratification record at $BALLOT"; exit 1; }
-  echo "ratification date: $RATIFIED"
-  # Boundary PINNED TO MIDNIGHT: a bare date resolves via git approxidate to the date
-  # at the CURRENT time of day, silently dropping same-day-earlier merges from stage 1a
-  # (CLOSEOUT pilot F-1, 2026-09-19 — the owed-set's first wrong result, repaired in all
-  # three copies in one commit).
+  It reads that date from the ballot's `Ratified-machine:` line, pins the boundary to 00:00 on that day (CLOSEOUT pilot F-1: a bare date drops that day's earlier merges), and prints one row per spec a first-parent commit since then touched, `<class>\t<spec>\t<reason>`, one class per spec in this order: `closed` (`completion/claims-pass.md` exists); `stub` (no `tasks.md`; the reason names the files); `open` (an unticked parent, `- [ ]` at column 0 — a checkbox is an assertion, not a merge fact, and the reason says so); `touch-only` (no post-ratification first-parent commit changed `tasks.md` or `completion/**`; the reason names the last touching commit); `candidate` (the reason gives the unit class and the anchor). **Rows are candidates, never verdicts.** The last line counts each class: the rows sum to the counts and the unit classes split the candidates, so a dropped class is an arithmetic error, not a healthy-looking short list. It exits 0 always; a failure prints one `owed-set: unavailable (…) — continue` line, which is the result you read.
 
-  # Stage 1a — every spec with post-ratification merge activity on main's first-parent line
-  SPECS=$(git log --first-parent --since="$RATIFIED 00:00" --name-only --pretty=format: -- '.kiro/specs/' \
-          | sed -n 's|^\.kiro/specs/\([^/]*\)/.*|\1|p' | sort -u)
-  echo "specs with post-ratification merge activity: $(echo "$SPECS" | grep -c .)"
-
-  A=0; B=0; C=0; CLOSED=0; OWED=""
-  for S in $SPECS; do
-    T=".kiro/specs/$S/tasks.md"
-    # Stage 1b — classify into exactly one class, units-form precedence first
-    if   grep -qE '^## Declared Merge Units' "$T" 2>/dev/null \
-      || grep -qE '^\*\*Merge units \(' "$T" 2>/dev/null \
-      || grep -qiE '^#{2,4} .*merge unit' "$T" 2>/dev/null; then cls=a; A=$((A+1))
-    else
-      n=$(git log --first-parent --oneline --since="$RATIFIED 00:00" -- ".kiro/specs/$S/" | wc -l | tr -d ' ')
-      if [ "$n" -le 1 ]; then cls=b; B=$((B+1)); else cls=c; C=$((C+1)); fi
-    fi
-    # Stage 2 — the final anchor's merge commit and date
-    ANCHOR=$(git log --first-parent -1 --format='%h %cs' -- ".kiro/specs/$S/")
-    # Stage 3 — does the closeout record exist?
-    if [ -f ".kiro/specs/$S/completion/claims-pass.md" ]; then CLOSED=$((CLOSED+1))
-    else OWED="$OWED  $S ($cls, anchor $ANCHOR)\n"; fi
-  done
-
-  # Stage 4 — emit the owed set PLUS the enumerated exclusion counts, by name
-  echo "OWED SET:"; [ -n "$OWED" ] && printf "$OWED" || echo "  (empty)"
-  echo "EXCLUSIONS: $CLOSED closed; ${A}(a) / ${B}(b) / ${C}(c) per class; \
-  K excluded as pre-ratification (no first-parent activity since $RATIFIED)"
-  ```
-
-  **The exclusion classes**: **(a)** declared units in any recognized form (canonical `## Declared Merge Units` heading → legacy bold-prose `**Merge units (…** declaration → a "merge unit" heading, in that precedence order), anchoring on the final declared unit; **(b)** no units block, single PR — that PR is the spec's only unit; **(c)** no units block, >1 PR — the PR carrying the last parent completion doc. **The second wrong owed-set result noticed in ordinary use** (this read, or the release step) **promotes the pipeline to a committed script with a scoped grant** — the pre-committed ladder's first rung.
+  **The unit classes** (on `candidate` rows): **(a)** declared units in any recognized form (canonical `## Declared Merge Units` heading → legacy bold-prose `**Merge units (…** declaration → a "merge unit" heading), anchoring on the final declared unit; **(b)** no units block, single PR — that PR is the spec's only unit; **(c)** no units block, >1 PR — the PR carrying the last parent completion doc. The anchor printed is the last first-parent commit touching the spec, a proxy for that merge; where the two differ, the definition governs. **A wrong owed-set result noticed in ordinary use** (this read, or the release step) is fixed in the script with a falsification case in `scripts/__tests__/owed-set.test.ts`; the ladder's next rung is the Q2 re-evaluation sitting's publish-hook decision.
 - **The proposed-row register read** (Req 5.8): list every `governance/classification-map.md` row at `check_state: proposed`, **with ages**. Nothing else walks `proposed` rows — without this line their existence reads as coverage, the exact error the register exists to prevent. Read-for-records-never-verdicts applies here too.
 
 **Discovery** (during normal work):
