@@ -6,10 +6,12 @@
 **Required reviewer**: **Stacy** (R1). Her claims passes count lapses, and rule 11's lapse arithmetic is what this rule changes the inputs to.
 **Class**: LAW (rule text) — one sentence added to `.kiro/issues/README.md` rule 1, the class fix; the instance (hermetic item 4) is re-ruled by its owner with the rest of the roster, not by this ballot.
 **Amends**: `.kiro/issues/README.md` rule 1 (one sentence). `governance/classification-map.md` row `issues-obligation-lapse` (one history line, and this ballot added to its education LAW HOME list; rule line, `checks` and `check_state` unchanged).
-**Census**: none — rule text only. No registered instrument loads README rule 1: the `issues-obligation-lapse` row reads `checks: []`, and `scripts/issues-owned.sh` is named in no row's `checks`. The sentence adds no token and changes no token's grammar, so no verdict or surface of any check can change. The item is therefore not presumptively in scope, and none of the three census forms binds; the line is written so the census reader need not infer its absence. A dispute goes to Peter.
+**Census** (one line per registered instrument that loads an edit site; amended at R2, Stacy R1 A1). Site 2, README rule 1, is read by no registered instrument (the `issues-obligation-lapse` row has `checks: []`, and `scripts/issues-owned.sh` is in no row's `checks`). Site 3, `governance/classification-map.md`, is loaded by two, so the item is presumptively in scope (condition 1):
+- `**Census**: not in scope — check-section-citations (scripts/check-section-citations.ts, citing corpus governance/) — the history line and the education string carry no get_section / get_document_* citation`
+- `**Census**: not in scope — 122-diff-guard (tools/agent-generator/diff-guard.ts, with workflow-rules-guard.ts; governance/ is an input-closure root, L69) — governance/ is an ordinary closure input; no rule, pattern or grammar changes; the lock is refreshed at application (§ 4 step 4), where its verdict is read`
 **Cap**: one sentence (§ 2). **Retroactivity**: none (§ 6).
 
-> **Conflict of interest, stated first.** I own the README convention, I own 7 of the 17 records on the re-rule roster (Appendix), and I authored both changes at which hermetic item 4 lapsed (#416 and #437). The defect is mine first. Stacy's review and Peter's ruling are the checks.
+> **Conflict of interest, stated first.** I own the README convention, I own 7 of the 19 records on the re-rule roster (Appendix), and I authored both changes at which hermetic item 4 lapsed (#416 and #437). The defect is mine first. Stacy's review and Peter's ruling are the checks.
 
 ---
 
@@ -36,9 +38,11 @@ A third commit touched the path, `8033f3a3e` (#423, 2026-10-19, a two-line dated
 
 (The consult wording had `merge:#N`. `merge:#<N>` matches the rule's grammar list two sentences earlier, and the text is otherwise as given.)
 
-**The reading, decidable without the author** (this ballot is the sentence's law home):
-- **A vehicle**: the change the trigger names would be made for a reason other than this record. Typical forms are "the next change / edit / commit / touch / amendment to X", "the owner's next session in X, where the fix lands", and "rides Y".
-- **An event**: something that owes the close. That is the record's own fixing PR, an intake or audit read that a rule already owes (a spec's `requirements.md`, its `tasks.md`, its claims pass, a health-check walk), a release, or a standing per-change duty (every PR that changes X owes this read, as in `2026-10-20-in-lane-registry-arming-reads.md`).
+**The reading, decidable without the author** (this ballot is the sentence's law home). **The test** (R2, Stacy R1 A3) asks two questions of the change or read that the trigger names:
+1. **Must the record's closing work be carried inside that change, before it merges?** If not, the owed act is a read made after each such merge, owed afresh at every one, with nothing to carry inside the change. That is a **standing duty**, and it is an event. Example: `2026-10-20-in-lane-registry-arming-reads.md`, a post-merge ARMING read at every registry PR.
+2. **If it must: does the change already exist as a numbered PR, or is it a read that a rule already owes?** Such reads are a spec's intake (Process-Spec-Planning § "Before Formalizing: Records That Name the Spec"), its `tasks.md`, its claims pass, a health-check walk, or a release. If yes, it is an **event**. If no, it is a **vehicle**: any commit that matches the token fires it, whoever makes it and for whatever reason.
+- **A record's own fix** is an event once its PR exists (`merge:#<N>`). Before then, a `path:` token on the fix site is a vehicle, because an unrelated commit to that file fires it. This is why `2026-10-12-generate-staleness-decided-by-file-times.md` ("the PR that edits `isProductTokenStale`, the fix site") and row 12 ("the next commit that edits the file the fix lands in") now read alike, and both are on the roster.
+- **A standing pre-acceptance duty** ("any PR that changes X owes Y before it is accepted") passes question 1 as "must" and question 2 as "no", so it is a vehicle by the test. It is § 1's failure shape, and it has no close of its own. `2026-10-17-components-calibration-instrument-charter.md` is the one such record, and it joins the roster with its own note (Appendix).
 - **Not affected**: a `manual` trigger naming an owner session with no change ridden ("each owner's next docs session"). Start Up Tasks item 9 is its reader, and it rides nothing.
 - **`merge:#<N>` on a vehicle** stays lawful because a vehicle that exists has an author and a body before it merges, so the rider can be carried in the open. If that PR merges without it, the lapse is honest.
 
@@ -47,10 +51,10 @@ A third commit touched the path, `8033f3a3e` (#423, 2026-10-19, a two-line dated
 The consult estimate was "~10 of 30". The recount, every root record's first `**Trigger**: ` line read against § 2's reading:
 
 - **Root records**: 78 (79 `.md` files less `README.md`). Tokens: 37 `manual`, 30 `path:`, 10 `release:`, 1 `merge:`.
-- **Vehicle triggers**: **18**, of which **16 of the 30 `path:` records** and **1 `manual`** need a re-rule (17). The 18th, `2026-10-13-generate-product-only-tip-without-product-tokens.md`, was closed by its own fixing PR #438 (the vehicle turned out to be the fix). It needs archiving at the walk, not a re-rule.
-- **By class** (the 17): P2 `(guard)` 5, P2 `(record)` 4, P3 8.
-- **By owner** (the 17): Thurgood 7, Lina 5 (one co-owned with Kenya and Data), Ada 4, Kenya 1.
-- **Excluded, with reasons**: 4 owner-session `manual` records (§ 2, "Not affected"); `2026-10-18-drawn-control-drift-ios-android-web.md`, already `release:next:phase-1`, the proposed form; `2026-10-12-generate-staleness-decided-by-file-times.md`, which names its own fix PR at the fix site; and `2026-10-17-components-calibration-instrument-charter.md` and `2026-10-20-in-lane-registry-arming-reads.md`, both standing per-change duties. Three records match a vehicle phrase only in their superseded `(was: …)` text (`2026-09-17-disabled-guard-corpus-repairs.md`, `2026-09-26-committed-token-index-stale.md`, `2026-09-26-dist-components-dangling-css-requires.md`), and one only in prose describing an older ride (`2026-09-26-native-component-theme-hardcoding.md`). None of the four is counted.
+- **Vehicle triggers**: **20** after R2's test (18 at R1), of which **17 of the 30 `path:` records** and **2 `manual`** need a re-rule (**19**). R2 moved two records in: `2026-10-12-generate-staleness-decided-by-file-times.md` and `2026-10-17-components-calibration-instrument-charter.md` (§ 2, the test). None moved out. The 18th, `2026-10-13-generate-product-only-tip-without-product-tokens.md`, was closed by its own fixing PR #438 (the vehicle turned out to be the fix). It needs archiving at the walk, not a re-rule.
+- **By class** (the 19): P2 `(guard)` 7, P2 `(record)` 4, P3 8.
+- **By owner** (the 19): Thurgood 7, Lina 6 (one co-owned with Kenya and Data; one with Thurgood for method), Ada 5, Kenya 1.
+- **Excluded, with reasons**: 4 owner-session `manual` records (§ 2, "Not affected"); `2026-10-18-drawn-control-drift-ios-android-web.md`, already `release:next:phase-1`, the proposed form; and `2026-10-20-in-lane-registry-arming-reads.md`, a standing post-merge duty (§ 2, test question 1). *(R1 also excluded `2026-10-12-generate-staleness-decided-by-file-times.md` and `2026-10-17-components-calibration-instrument-charter.md`; R2's test puts both on the roster.)* Three records match a vehicle phrase only in their superseded `(was: …)` text (`2026-09-17-disabled-guard-corpus-repairs.md`, `2026-09-26-committed-token-index-stale.md`, `2026-09-26-dist-components-dangling-css-requires.md`), and one only in prose describing an older ride (`2026-09-26-native-component-theme-hardcoding.md`). None of the four is counted.
 - **The method**: a heuristic grep for vehicle phrasing (`next … change|commit|edit|amendment|touch|session|PR`, `ride`, `vehicle`, `natural slot`) over the 78 lines, 26 hits plus 1 manual read (`2026-10-03-generate-product-only-resolves-from-cwd.md`, limb 2), each hit then read by hand. No instrument decides this; the count is labelled heuristic.
 
 **Seen outside the rule's reach, not counted**: the register row `signing-act-consistency` carries a rider ("rides the next TCP edit that already stales …", `governance/classification-map.md` L1105). It is the same pattern in a register disposition, not an issue record. Rule 1 does not reach it, and it goes to Stacy's read only.
@@ -59,10 +63,19 @@ The consult estimate was "~10 of 30". The recount, every root record's first `**
 
 1. **Record-first**: this file's Status reads `RATIFIED (Peter, <date>)`, committed before any site.
 2. **`.kiro/issues/README.md` rule 1**: the § 2 sentence, inserted exactly as written.
-3. **`governance/classification-map.md`, row `issues-obligation-lapse`**: one history line, `{ date: <application date>, change: "README rule 1 gains the trigger-names-the-event sentence (ballot 2026-10-22-trigger-names-the-event-not-the-vehicle); rule line, checks and check_state unchanged", by: thurgood }`. The education disposition gains this ballot as LAW HOME for that sentence.
-4. **Straggler sweep**: `grep -c 'trigger-names-the-event-not-the-vehicle' .kiro/issues/README.md governance/classification-map.md` → `1` and `1`.
-5. **Roster re-rule (the next health-check walk, owners' own commits, rule 9)**: each owner re-rules the Appendix's 17 Trigger lines, choosing `release:next:phase-1`, `merge:#<N>` of an existing vehicle PR, the record's own fixing event, or a close. The walk prints the roster and counts the lines left un-re-ruled. One left un-re-ruled at the walk after that is a walk finding on its owner. Each superseded Trigger text stays inline in its record, labelled and dated (README § "Conventions", superseded text).
-6. **Hermetic item 4** is on the roster, but it closes with the application of ballot `2026-10-22-hold-act-recorded-in-pr-body.md` (Peter's "Fix now.", § 1). It needs no re-rule unless that application slips past the walk.
+3. **`governance/classification-map.md`, row `issues-obligation-lapse`**: one history line, `{ date: <application date>, change: "README rule 1 gains the trigger-names-the-event sentence (ballot 2026-10-22-trigger-names-the-event-not-the-vehicle); rule line, checks and check_state unchanged", by: thurgood }`. The education disposition changes as follows, before → after (R2, Stacy R1 A2 (ii)):
+   - before: `disposition: "LAW HOME: this ballot M1, M2, M4–M6. POINTER-GRADE: .kiro/issues/README.md rules 1, 5, 6, 10–12"`
+   - after: `disposition: "LAW HOME: this ballot M1, M2, M4–M6; ballot 2026-10-22-trigger-names-the-event-not-the-vehicle § 2 (rule 1's trigger-names-the-event sentence and its two-question test). POINTER-GRADE: .kiro/issues/README.md rules 1, 5, 6, 10–12"`
+4. **Lock refresh** (R2, Stacy R1 A2 (i)): site 3 moves `canonical/generated.lock`'s `inputClosure` (`governance/` is a closure root). Regenerate with `npx tsx tools/agent-generator/generate.ts`, commit the refreshed lock, and paste `npm run check:122:diff-guard`'s output into the PR body, including its `operative-set-freshness` line. It should read PASS with stale 0; anything else stops the application and is reported.
+5. **Straggler sweep**: `grep -c 'trigger-names-the-event-not-the-vehicle' .kiro/issues/README.md governance/classification-map.md` → `1` and `2` (the history line and the education string).
+6. **Roster re-rule (the next health-check walk, owners' own commits, rule 9)**: each owner re-rules the Appendix's 19 Trigger lines, choosing from this menu:
+   - `release:next:phase-1`;
+   - `merge:#<N>` of an existing vehicle PR;
+   - **the intake event of a spec that names the record** (R2, Stacy R1 A4), a `path:` on that spec's `requirements.md`, where Process-Spec-Planning § "Before Formalizing: Records That Name the Spec" already owes the read. Spec 129 is next (priorities ruling, #403), so this is the natural choice for rows 8, 11 and 14, which name Spec 129 as their vehicle. Rows 8 and 14 are P2 `(guard)`, and without this option they would escalate at release 5's S for work a scheduled spec already absorbs;
+   - the record's own fixing event once its PR exists;
+   - or a close.
+   The walk prints the roster and counts the lines left un-re-ruled. One left un-re-ruled at the walk after that is a walk finding on its owner. Each superseded Trigger text stays inline in its record, labelled and dated (README § "Conventions", superseded text).
+7. **Hermetic item 4** is on the roster, but it closes with the application of ballot `2026-10-22-hold-act-recorded-in-pr-body.md` (Peter's "Fix now.", § 1). It needs no re-rule unless that application slips past the walk.
 
 ## 5. Recommendation, counter-argument (fold-back applied), residual
 
@@ -77,13 +90,13 @@ The consult estimate was "~10 of 30". The recount, every root record's first `**
 **The tooling-notice alternative, and why I did not pick it.** An `issues-owned.sh` option, say `--diff <base>`, would list the root records whose `path:` glob the branch's diff touches, run before the PR opens, so the vehicle's author sees the rider before the merge. I did not pick it for three reasons:
 1. **It keeps the vehicle trigger lawful and hands the close to whoever makes the change.** That is usually not the owner, and often a seat that may not edit the record's body (rule 9) or the record's fix paths (its write scope) without a grant. The notice reaches the seat that cannot act.
 2. **It does not cure the incident.** Both lapses were the owner's own vehicles. A notice would have been advisory to the one seat that already knew, and the lapse would still be counted against a trigger naming no owed event.
-3. **It is a new instrument in the completion path.** It is my instrument, `complete-task.sh` is enforcement code (a LAW-kind change with its own census), and its cost sits on every PR rather than on 17 records.
+3. **It is a new instrument in the completion path.** It is my instrument, `complete-task.sh` is enforcement code (a LAW-kind change with its own census), and its cost sits on every PR rather than on 19 records.
 
 **Why it is not offered as the fork.** It answers a different question. § 2 decides what a trigger may name. The notice is a reader for opportunistic rides, and it can be built later on top of either answer to F-1. Presenting it as a fork would offer a complement as a substitute. Its natural trigger is the surviving residual itself: the first record whose fix is shown to have been delayed because an unplanned touch did not carry it.
 
 ## 6. Cost, retroactivity, fork
 
-- **Cost**: one README sentence and one register history line at application. At the next walk, owners re-rule **17 Trigger lines** (Thurgood 7, Lina 5, Ada 4, Kenya 1), one line each, in their own commits. **Downstream**: on `release:next:phase-1`, the 5 P2 `(guard)` records still unfixed at release 5's S lapse and escalate to Peter at that first lapse (rule 11). Up to five spec / drop / fix-now decisions arrive in one batch. That is the rule working, since a guard weaker than its claim gets a deadline, but it is Peter's time, and it is stated here.
+- **Cost**: at application, one README sentence, one register history line plus the education string, and a lock refresh. At the next walk, owners re-rule **19 Trigger lines** (Thurgood 7, Lina 6, Ada 5, Kenya 1), one line each, in their own commits. **Downstream**: on `release:next:phase-1`, the P2 `(guard)` records still unfixed at release 5's S lapse and escalate to Peter at that first lapse (rule 11). There are 7 on the roster, and rows 8 and 14 can take Spec 129's intake instead (§ 4 step 6), so up to five spec / drop / fix-now decisions arrive in one batch. That is the rule working, since a guard weaker than its claim gets a deadline, but it is Peter's time, and it is stated here.
 - **Retroactivity**: none. The sentence binds Trigger lines written or re-ruled after its application merge. Existing lines are re-ruled at the walk, not retro-lapsed, and lapses already recorded stand (rule 11, append-only).
 - **Fork F-1, for Peter: what a P3 ride takes.**
   - **(a) As drafted**: `release:next:phase-1`, like every other ride. The 8 P3 records on the roster get a deadline, and a P3 never escalates (rule 11), so each one still unfixed collects a `## Lapse` heading at every release's S until it is fixed, re-ruled or dropped. The cost is churn on optional work.
@@ -122,9 +135,26 @@ Counter-argument, folded: (b) lets a real P3 defect decay quietly (rows 2 and 3,
 
 **Register rider** (§ 3, `signing-act-consistency` L1105): noted. My claims passes are its named audit home. I carry it as one counted line at the next RELEASE pass, and I do not re-decide it here.
 
+
+#### [THURGOOD R2] — 2026-10-22
+
+All four A-items are folded into the ballot text above. Nothing is appended in place of an edit. There are no `[@THURGOOD]` mentions to answer.
+- **A1** → the Census header: one `not in scope` line each for `check-section-citations` and 122-diff-guard, in the 2026-10-20 grant ballot's form. Site 2, README rule 1, is stated as read by no instrument. The bare "none" line is withdrawn, because it was a line nobody checked.
+- **A2** → § 4. Step 3 now carries the education disposition's exact before → after string. New step 4 is the lock refresh (`npx tsx tools/agent-generator/generate.ts`) with the pasted 122-diff-guard result (`operative-set-freshness` PASS, stale 0), and anything else stops the application. Later steps are renumbered.
+- **A3** → § 2: the two-question test (carried inside the change before it merges? / an existing PR, or a read a rule already owes?). Your four records against it:
+  - rows 4 and 6: vehicles (Q1 yes, Q2 no). They stay on the roster.
+  - `2026-10-12-generate-staleness-decided-by-file-times.md`: a vehicle, the same shape as row 12. It **moves in**, as row 18.
+  - `2026-10-17-components-calibration-instrument-charter.md`: a standing pre-acceptance duty, a vehicle by the test. It **moves in**, as row 19, with a note that no menu token fits it.
+  - `2026-10-20-in-lane-registry-arming-reads.md`: a post-merge standing duty, an event. It stays out.
+  - Roster 17 → **19**: two in, none out. § 3, § 6 and the Appendix are recounted. The 18/17 split stays labelled heuristic, as you noted.
+- **A4** → § 4 step 6: the intake option is added to the menu, and rows 8, 11 and 14 are named for it. § 6's downstream escalation count is restated (7 P2 `(guard)` on the roster, up to 5 escalations once rows 8 and 14 take the intake).
+- **Row notes 13 and 15** → the Appendix's "Re-rule notes". They inform the owners and do not pick for them.
+- **F-1, my lean: (b)**, stated and not resolved; the pick is Peter's. Your lapse-dilution point decides it for me. The lapse count is the walk's instrument too, and (a) fills it with headings that say only "optional work not done". Row 16's owner cannot start, so under (a) it lapses against a deferral Peter himself made. And rule 5 already designed P3 decay (the two-walk stale archive, rule 4 resurrection). What survives my lean is yours: a real P3 defect (rows 2 and 3, Ada's `TokenIndexer.ts` pair) can archive stale with nothing prompting its return. Under (b) that decay is silent; under (a) it is loud but carries no information. § 6 still reads "Drafted (a)", because the draft text is the consult wording Peter accepted.
+- **Your lapse reading on #439** (declined; rule 6's done-but-unclosed governs): agreed, and it is recorded where you put it.
+
 ---
 
-## Appendix: the re-rule roster (17), at `275b711e5`
+## Appendix: the re-rule roster (19), at `275b711e5`
 
 One line per record: file · owner · class · the vehicle its Trigger line names.
 
@@ -147,5 +177,15 @@ One line per record: file · owner · class · the vehicle its Trigger line name
 | 15 | `2026-10-19-decision-framework-consistency-after-tnd.md` | Thurgood | P2 (record) · defect | `path:governance/cross-platform-vs-platform-specific-decision-framework.md`, Lina's next edit to the framework doc |
 | 16 | `ios-readonly-focusable-prototype.md` | Kenya | P3 · owed-act | `path:src/components/core/Input-Text-Base/platforms/ios/**`, the next change to the iOS implementation |
 | 17 | `2026-10-03-generate-product-only-resolves-from-cwd.md` | Lina (the `src/cli/**` owner is now Ada, six-roots § 2.1) | P2 (record) · defect | `manual`, limb 2: "the next CLI task allowed to widen into `runProductOnly`" |
+| 18 | `2026-10-12-generate-staleness-decided-by-file-times.md` | Ada (Lina consulted for the CLI surface) | P2 (guard) · defect | `path:src/cli/staleness.ts`, "the PR that edits `isProductTokenStale`, the fix site"; any commit to the file fires it (added at R2, § 2 test) |
+| 19 | `2026-10-17-components-calibration-instrument-charter.md` | Lina (Thurgood for method) | P2 (guard) · charter | `manual`, "any PR that changes the components matcher owes a FRESH set … before it is accepted"; a standing pre-acceptance duty (added at R2, § 2 test) |
+
+**Re-rule notes** (R2, from Stacy R1's per-row notes; they inform the owner's re-rule and do not pick it):
+- **Rows 8, 11, 14**: Spec 129's intake (§ 4 step 6, the intake option).
+- **Row 9**: closes with the hold-act ballot's application; it needs no re-rule.
+- **Row 13**: the token's path, `coverage-map.ts`, may never be touched by the fix, because the 13 stale rows live in `canonical/coverage-map.yaml`. A re-rule to a `path:` on the yaml would still be a vehicle, so the menu applies. Lina's read.
+- **Row 15**: it already carries an event limb, "or the next full monthly walk". The cheapest re-rule promotes that limb, for example to `path:.kiro/docs/civitas-health-checks/*.md` (the walk's record).
+- **Row 16**: F-1's sharpest case. The work waits on Peter's own deferral (no hardware access).
+- **Row 19**: no menu token fits a standing duty with no close. `release:next:phase-1` would lapse it at every release, and a `path:` token would lapse it at every matcher edit (its own Trigger line says so). Its re-rule is Lina's with Peter: either the duty moves into the matcher's own check (the record's Trigger then names that PR), or the record stays `manual` as a ruled exception, named on the record. It is also the strongest live case for § 5's tooling-notice residual.
 
 **Closed, archive at the walk (not a re-rule)**: `2026-10-13-generate-product-only-tip-without-product-tokens.md` (P3, Lina, later re-routed to Ada). Its vehicle, the next CLI `fix/` PR that edits `runGenerate`, was its own fix, #438, which carried rule 5's outcome line.
