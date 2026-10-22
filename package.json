@@ -28,6 +28,7 @@
     "dist/mcp/tool-manifest.json",
     "dist/name-contract.json",
     "bin/",
+    "scripts/owed-set.sh",
     "src/cli/templates/",
     "docs/consumer/INSTALL.md",
     "docs/consumer/COMMIT-POLICY.md",
