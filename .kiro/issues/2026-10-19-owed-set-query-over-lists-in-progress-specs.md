@@ -3,7 +3,7 @@
 **Date**: 2026-10-19
 **Status**: ACTIVE
 **Owner**: Stacy (the query is in my command catalog on both tiers). Thurgood for the copies in his LIVENESS item and `.kiro/hooks/RELEASE-FLOW.md` step 5a, which are kept to the same text.
-**Trigger**: `manual` — Peter's answer to the 2026-10-17 health-check question (does the repeat count as "the second wrong owed-set result" that promotes the pipeline to a committed script?). Not computable from git; the walk prints it as `manual`.
+**Trigger**: `manual` — Peter's one-word answer (yes / no) to the health-check question; then, on yes, the script PR (`merge:#<N>`, number set when it is opened). *(was: `manual` — Peter's answer to the 2026-10-17 health-check question (does the repeat count as "the second wrong owed-set result" that promotes the pipeline to a committed script?). Not computable from git; the walk prints it as `manual`.)*
 **Class**: P3 improvement · defect
 **Source**: the residual of `.kiro/issues/2026-10-18-owed-set-query-lists-specs-before-final-unit-merge.md` (fixed 2026-10-19 by disclosure, shape 1); filed under rule 10 in the PR that carries that fix.
 **Filed by**: Stacy.
@@ -19,3 +19,11 @@ The consumer text now tells its reader that `OWED:` rows are candidates, so the 
 3. **(shape 3) A committed script under a scoped grant**: if Peter answers the health-check question "yes", the pipeline becomes a script and shape 2 is built and tested there, with the consumer text pointing at the same rule. Spec-sized, and a Peter ruling.
 
 Neither is authorized by this record. Shape 2 is built inside shape 3 if 3 is chosen, so they are one record. If Peter answers the health-check question "no", this record is closed with that answer and shape 2 is judged on its own.
+
+## Peter's answer, 2026-10-21
+
+Asked in PR #436's `**Open for Peter**:` row 5; his words, chat, 2026-10-21, verbatim: "Only 'not now' on 3. I'd like to do bursts on the others."
+
+**The orchestrator's reading, not Peter's ruling**: "a burst" on this record is read as the **yes** path, shape 3 (a committed script under a scoped grant, shape 2's `open` exclusion built and tested inside it, the consumer text pointing at the script). The words do not say "yes" and no one has inferred it as his answer.
+
+**Owed from Peter, in one word**: does the repeat count as "the second wrong owed-set result" that promotes the pipeline to a committed script? **yes** (shape 3, a burst is spent on the script) or **no** (this record closes with that answer; shape 2 is judged on its own). The orchestrator asks it. Until it is on the record, nothing here is authorized, and the Status stays ACTIVE.
