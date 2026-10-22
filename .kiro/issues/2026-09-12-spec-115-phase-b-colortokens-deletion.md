@@ -5,6 +5,7 @@
 **Domain**: Ada (token pipeline)
 **Severity**: Medium (debt closeout — the live consumer harm is closed by the Option A fix; this ends the defect *class*)
 **Status**: Queued — spec-sized, needs formalization (Thurgood) before execution
+**Owner**: Ada *(added 2026-10-20, Ada, site 9 of ballot 2026-10-20-manual-records-routed-readers)*
 **Class**: P2 obligation (record) · charter *(set 2026-10-20, Ada, rule 12. `src/tokens/ColorTokens.ts` carries a `@deprecated` header promising Phase B removes it, and its unread light/dark matrix still reads as live data, so the record of the migration is wrong while the Option A parity test keeps every consumer correct; no reader of a shipped surface is misled, so not P1. Overrides the steward's proposed P3: an unkept promise in the file's own header is an obligation, not an improvement. Kind charter: it is the standing charter for the color-track spec.)*
 **Trigger**: `manual` — the color-track spec's formalization opens (this record folds into it with the blend/OKLCH alignment record and color-token enforcement; ranked after Spec 130). *(Set 2026-10-20, Ada, rule 9. `manual` for the same reason as the blend record: the spec has no directory or name yet, so a `path:` glob would be a guess; re-rule to `path:` in the PR that creates the directory. Was: no Trigger line; Status "Queued — spec-sized, needs formalization (Thurgood) before execution".)*
 **Ruling (Peter, 2026-10-20, relayed)**: "agreed" — folded into the color-track spec, ranked after Spec 130.

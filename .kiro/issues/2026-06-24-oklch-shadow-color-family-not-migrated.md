@@ -7,6 +7,7 @@
 **Type**: Token foundation / incomplete migration (Spec 112 follow-on)
 **Primary owner**: Ada (Rosetta tokens) — **requires Peter's token-creation review**
 **Status**: Open — deferred (out of scope for Spec 117, which is token-index *integrity*, not token-foundation migration)
+**Owner**: Ada *(added 2026-10-20, Ada, site 9 of ballot 2026-10-20-manual-records-routed-readers)*
 **Trigger**: `manual` — Peter's ranking of Spec 115 Phase B (whose first item is the shadow-primitive migration, walk row 18) or his token-creation review, which the `**Primary owner**:` line already requires at execution. *(Set 2026-10-20, Ada, rules 1 and 9.)*
 **Class**: P3 improvement · defect *(set 2026-10-20, Ada, rule 12. An incomplete migration, not a divergence: the record's own analysis has the index and dist agreeing, and no consumer output is wrong. The reading that would re-class it: a consumer-visible OKLCH/rgba mismatch on a shadow token.)*
 

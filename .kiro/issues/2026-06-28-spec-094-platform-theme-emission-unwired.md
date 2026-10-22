@@ -4,10 +4,11 @@
 **Discovered By**: Kenya / Data (platform-agent AX assessments, Spec 119) → diagnosed by Ada (token pipeline)
 **Spec**: 094-portable-pipeline-and-theme-registry (repair of deferred integration)
 **Status**: Proposed — **DEFERRED** (captured to keep focus on Spec 119 formalization)
+**Owner**: Ada *(added 2026-10-20, Ada, site 9 of ballot 2026-10-20-manual-records-routed-readers)*
 **Priority**: High (live native-platform contract gap)
 **Impact**: All iOS/Android platform token output; migrated native components consume a theming contract the build does not emit
 **Assigned To**: Ada (generator wiring) + Lina (component-contract cross-check) + Thurgood (governance audit signal)
-**Trigger**: `manual` — Spec 129 scope item (i) merges (theme emission wired into the build for Swift and Kotlin); the charter `2026-10-02-consumer-generation-completeness-spec.md` carries the item. *(Set 2026-10-20, Ada, rules 1 and 9.)*
+**Trigger**: `release:next:phase-1` — due before the next release's RELEASE phase 1. The event stays Spec 129 scope item (i) merging (theme emission wired into the build for Swift and Kotlin; the charter `2026-10-02-consumer-generation-completeness-spec.md` carries the item). Under F-3 (a') a P1 record may not carry `manual`, so this line is the floor until the fixing PR is numbered; it then moves to `merge:#<N>`. *(was: `manual` — Spec 129 scope item (i) merges (theme emission wired into the build for Swift and Kotlin); the charter `2026-10-02-consumer-generation-completeness-spec.md` carries the item. *(Set 2026-10-20, Ada, rules 1 and 9.)*)* *(Re-ruled 2026-10-20, Ada, rules 1 and 9, F-3 (a') of ballot 2026-10-20-manual-records-routed-readers.)*
 **Class**: P1 consumer-blocking · defect *(set 2026-10-20, Ada, rule 12. `generateThemeOverrideBlocks` still has no call site outside its tests (read 2026-10-20, `TokenFileGenerator.ts` L1024), so a native consumer who registers a theme gets no theme types. It is disclosed, not a false claim: 15.0.0's notes and release-16.0.0.md L29 say native ships as reference source, not a build input, so it is not P0. The reading that would re-class it to P2 (record): the native trees staying labelled reference source indefinitely.)*
 
 ---
