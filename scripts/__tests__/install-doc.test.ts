@@ -590,7 +590,7 @@ describe('flipped at 19.4 (were test.failing pending entries from 19.2)', () => 
     expect(headings(outsideRegion(GUIDE)).filter((h) => /^#{2,6} \d+[a-z]?\. /.test(h))).toEqual([]);
   });
 
-  it('[flipped: one-reference-heading] the remainder sits under exactly one `## Reference` heading, with its lead line (C9)', () => {
+  it('[flipped: one-reference-heading] the reference remainder sits under exactly one `## Reference` heading, with its lead line (C9; shape per PR-1 as annotated 2026-10-22)', () => {
     const lines = GUIDE.split('\n');
     const refs = lines.flatMap((l, i) => (l === '## Reference' ? [i] : []));
     expect(refs).toHaveLength(1);
@@ -642,6 +642,111 @@ describe('cross-references name headings the docs MCP can return (19.5, item 1)'
 
   it('bite: a pointer to an H4 heading is flagged', () => {
     expect(unreachablePointers('### A\n\n#### Deep\n\nsee "Deep"\n')).toEqual(['Deep (H4)']);
+  });
+});
+
+/**
+ * Guide shape (PR-1 as annotated 2026-10-22, Peter): install region, then exactly
+ * one `## Walkthroughs`, then exactly one `## Reference`, in that order, with
+ * nothing between the region and `## Walkthroughs`. Returns the violations.
+ */
+export function layerShapeViolations(guide: string): string[] {
+  const lines = guide.split('\n');
+  const out: string[] = [];
+  const e = lines.indexOf(REGION_END);
+  if (e < 0) return ['region end marker missing'];
+  const after = lines.slice(e + 1);
+  const h2 = headings(after.join('\n')).filter((h) => /^## /.test(h));
+  if (JSON.stringify(h2) !== JSON.stringify(['## Walkthroughs', '## Reference'])) {
+    out.push(`H2 sequence after the region is ${JSON.stringify(h2)}, expected ["## Walkthroughs","## Reference"]`);
+  }
+  const firstNonBlank = after.find((l) => l.trim() !== '');
+  if (firstNonBlank !== '## Walkthroughs') out.push(`the first non-blank line after the region is ${JSON.stringify(firstNonBlank)}, expected "## Walkthroughs"`);
+  return out;
+}
+
+/** The `## Walkthroughs` span (to the next H2). */
+export function walkthroughSpan(guide: string): string[] {
+  return span(guide, /^## Walkthroughs$/);
+}
+
+const WALKTHROUGH_H3 = /^### (Walkthrough: .+)$/;
+
+/**
+ * Pointers in the walkthrough layer. A double-quoted string outside inline code
+ * counts as a pointer when it follows a pointer cue (`see`, `section`, `in`,
+ * `under`, `of`, or an opening parenthesis) or when it equals a heading. Each
+ * pointer must equal an H2 or H3 of the guide. Residual: a pointer with no cue
+ * whose target was renamed reads as ordinary quoted text.
+ */
+export function walkthroughPointerViolations(guide: string): string[] {
+  const targets = new Set(
+    headings(guide)
+      .filter((h) => /^#{2,3} /.test(h))
+      .map((h) => h.replace(/^#+ /, '').trim()),
+  );
+  const allHeadings = new Set(headings(guide).map((h) => h.replace(/^#+ /, '').trim()));
+  const body = walkthroughSpan(guide).join('\n').replace(/`[^`]*`/g, '``');
+  const out: string[] = [];
+  for (const m of body.matchAll(/(^|[\s(])(?:(see|section|in|under|of)\s+|(\())?"([^"]+)"/g)) {
+    const cued = Boolean(m[2] || m[3]);
+    const name = m[4];
+    if (!cued && !allHeadings.has(name)) continue;
+    if (!targets.has(name)) out.push(name);
+  }
+  return out;
+}
+
+/** The walkthrough table's Walkthrough cells must equal the layer's `### Walkthrough: …` headings, one row each. */
+export function walkthroughTableViolations(guide: string): string[] {
+  const sp = walkthroughSpan(guide);
+  const h3 = sp.flatMap((l) => {
+    const m = WALKTHROUGH_H3.exec(l);
+    return m ? [m[1]] : [];
+  });
+  const cells = sp.filter((l) => /^\|/.test(l) && !/^\|[-| ]+\|$/.test(l)).slice(1).map((l) => l.split('|')[2]?.trim());
+  const out: string[] = [];
+  for (const h of h3) if (cells.filter((c) => c === h).length !== 1) out.push(`heading without exactly one table row: ${h}`);
+  for (const c of cells) if (!h3.includes(c)) out.push(`table row without a heading: ${c}`);
+  return out;
+}
+
+describe('guide shape: install region, then ## Walkthroughs, then ## Reference (PR-1 as annotated 2026-10-22)', () => {
+  it('the guide has that shape and no other H2 after the region', () => {
+    expect(layerShapeViolations(GUIDE)).toEqual([]);
+  });
+
+  it('bite: swapping the two H2s is flagged', () => {
+    const swapped = GUIDE.replace('## Walkthroughs', '## @@').replace('## Reference', '## Walkthroughs').replace('## @@', '## Reference');
+    expect(swapped).not.toBe(GUIDE);
+    expect(layerShapeViolations(swapped)).not.toEqual([]);
+  });
+
+  it('bite: a duplicated `## Walkthroughs`, or a heading between the region and it, is flagged', () => {
+    expect(layerShapeViolations(GUIDE.replace('## Reference', '## Walkthroughs\n\n## Reference'))).not.toEqual([]);
+    expect(layerShapeViolations(GUIDE.replace(`${REGION_END}\n`, `${REGION_END}\n\nstray\n`))).not.toEqual([]);
+  });
+});
+
+describe('the walkthrough layer stays addressable (class guard on the layer)', () => {
+  it('every section name a walkthrough quotes as a pointer resolves to an H2 or H3 of the guide', () => {
+    expect(walkthroughPointerViolations(GUIDE)).toEqual([]);
+  });
+
+  it('bite: a cued pointer to a renamed heading is flagged', () => {
+    const renamed = GUIDE.replace('### Themes', '### Theming');
+    expect(renamed).not.toBe(GUIDE);
+    expect(walkthroughPointerViolations(renamed)).toContain('Themes');
+  });
+
+  it('the walkthrough table rows match the layer’s `### Walkthrough:` headings, one row each', () => {
+    expect(walkthroughTableViolations(GUIDE)).toEqual([]);
+  });
+
+  it('bite: a renamed walkthrough heading is flagged against the table', () => {
+    const renamed = GUIDE.replace('### Walkthrough: See DesignerPunk working', '### Walkthrough: See it working');
+    expect(renamed).not.toBe(GUIDE);
+    expect(walkthroughTableViolations(renamed)).not.toEqual([]);
   });
 });
 
