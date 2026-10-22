@@ -196,7 +196,6 @@ Run your repo's own audit and test scripts — read them from its `package.json`
 name: owed-set
 cmd: bash node_modules/@3fn/core/scripts/owed-set.sh --specs-dir specs
 runContext: consumer-repo
-source: '@3fn/core (scripts/owed-set.sh)'
 cue: the closeout-owed query — one row per spec touched since adoption, classed candidate / closed / open / stub / touch-only, then a count line whose row-sum identity you read first (candidates are not verdicts)
 ## @entry knowledgeBases[completion-docs] @ sha256:82c776bcd02ee331d0598bb4c3b70cf504945269bdc6bbb44ffab2e0bcfb06c0
 name: completion-docs
