@@ -5,7 +5,10 @@
  * The mode prints `freshness.ts` `routedCensus`: one sorted line per dispositions row
  * (`<rowId>\t<routed: label | not-routed>\t<signed|unsigned>\t<signer | ->`), then a count line.
  * The pinned digest is the census at `main`'s `b42874bd0` (the corpus Stacy reproduced at R1 of
- * ballot 2026-10-21-routes-floor-re-pointed-frontmatter-members). The pin reads a committed tree,
+ * ballot 2026-10-21-routes-floor-re-pointed-frontmatter-members). Since that ballot's application
+ * (C18 clause 5, `routesEntry`) the pin is the ballot's PROPOSED digest `0f5c5144…` (388 routed,
+ * 19 unsigned-routed): the shipped code reproduces the ratified scratch diff's output on that tree,
+ * and the pre-clause digest `b423eae8…` (360 routed) is the history. The pin reads a committed tree,
  * so it never moves with the live profile. Where that commit is absent (a shallow checkout), it is
  * skipped by name, never silently.
  */
@@ -19,7 +22,7 @@ import { FULL_TABLE, treeFiles } from './fixtures/unsigned-routed/build';
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..');
 const MAIN_SHA = 'b42874bd0';
-const MAIN_DIGEST = 'b423eae8a38e781428581c72b334468084924ca9067db4e0655b8e3d42bbee29';
+const MAIN_DIGEST = '0f5c514495cb293accd3ac79a65196cf6c66f83be85a18d1b1cbd8e940573204';
 
 afterAll(() => cleanupTmp());
 
@@ -61,16 +64,17 @@ describe('verify-signing-chain --census-routed', () => {
     expect(rows).toContain(`${D}#gamma\tnot-routed\tunsigned\t-`);
     expect(rows).toContain(`${D}#iota\trouted: no-consumer-counterpart\tsigned\tkenya`);
     expect(rows).toContain(`${D}#gone\tnot-routed\tunsigned\t-`); // an orphan: listed, never routed
-    expect(rows).toContain(`${D}#frontmatter:tools[x]\tnot-routed\tunsigned\t-`);
-    expect(r.out[r.out.length - 1]).toBe(`${rows.length} rows; 9 routed; 6 unsigned-routed; errors 0`);
+    expect(rows).toContain(`${D}#frontmatter:tools[x]\trouted: re-pointed: re-pointed-entry\tunsigned\tkenya`); // C18 clause 5
+    expect(rows).toContain(`${D}#frontmatter:model\tnot-routed\tunsigned\t-`); // a retained entry is not routed
+    expect(r.out[r.out.length - 1]).toBe(`${rows.length} rows; 10 routed; 7 unsigned-routed; errors 0`);
     // --at reads the committed tree: the same bytes for a clean checkout.
     expect(run(['--census-routed', '--at', 'HEAD'], repo).out).toEqual(r.out);
   });
 
-  (hasCommit(MAIN_SHA) ? test : test.skip)(`pinned: the census at main ${MAIN_SHA} digests to ${MAIN_DIGEST.slice(0, 12)}… (1089 rows; 360 routed; 0 unsigned-routed) — skipped by name when the commit is absent (shallow checkout)`, () => {
+  (hasCommit(MAIN_SHA) ? test : test.skip)(`pinned: the census at main ${MAIN_SHA} digests to ${MAIN_DIGEST.slice(0, 12)}… (1089 rows; 388 routed; 19 unsigned-routed) — skipped by name when the commit is absent (shallow checkout)`, () => {
     const r = run(['--census-routed', '--at', MAIN_SHA], REPO_ROOT);
     expect(r.code).toBe(0);
-    expect(r.out[r.out.length - 1]).toBe('1089 rows; 360 routed; 0 unsigned-routed; errors 0');
+    expect(r.out[r.out.length - 1]).toBe('1089 rows; 388 routed; 19 unsigned-routed; errors 0');
     expect(digest(r.out)).toBe(MAIN_DIGEST);
   }, 60_000);
 
