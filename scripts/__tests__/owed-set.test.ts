@@ -106,6 +106,7 @@ describe('scripts/owed-set.sh', () => {
     write(repo, 'specs/old-closed-pre/tasks.md', TICKED);
     write(repo, 'specs/old-closed-pre/feedback.md', '# Feedback\n');
     write(repo, 'specs/dormant/tasks.md', TICKED);
+    write(repo, 'specs/closed-elsewhere/tasks.md', TICKED);
     commit(repo, '2026-03-01 12:00:00', 'the early specs');
     write(repo, 'designerpunk.manifest.json', '{}\n');
     commit(repo, '2026-03-05 09:00:00', 'init: the manifest');
@@ -143,6 +144,11 @@ describe('scripts/owed-set.sh', () => {
 
     write(repo, 'specs/old-closed-pre/feedback.md', '# Feedback\n\nA later note.\n');
     sha.feedback = commit(repo, '2026-03-15 09:00:00', 'A feedback edit on a spec closed before adoption (#10)');
+
+    // Known limit: a spec closed before adoption whose only later touch is another PR adding a file
+    // under its completion/ (122's shape, 2026-10-22) still prints candidate.
+    write(repo, 'specs/closed-elsewhere/completion/ruling-from-another-spec.md', '# Ruling\n');
+    sha.elsewhere = commit(repo, '2026-03-15 09:30:00', 'Another spec adds a ruling doc under it (#12)');
 
     write(repo, 'specs/README.md', '# Specs\n'); // a file directly in the specs dir is not a spec
     commit(repo, '2026-03-15 10:00:00', 'specs README');
@@ -234,13 +240,21 @@ describe('scripts/owed-set.sh', () => {
       ]);
     });
 
+    it('known limit: another spec adding a file under completion/ makes a pre-adoption-closed spec a candidate (over-lists, never hides)', () => {
+      expect(rowFor(r, 'closed-elsewhere')).toEqual([
+        'candidate',
+        'closed-elsewhere',
+        `unit class b; anchor ${sha.elsewhere} 2026-03-15 (last first-parent touch)`,
+      ]);
+    });
+
     it('a spec touched one second before the adoption day, an untouched spec and a file in the specs dir print no row', () => {
       for (const s of ['late-eve', 'dormant', 'README.md']) expect(rowFor(r, s)).toBeUndefined();
     });
 
     it('prints candidates first, then closed, open, stub, touch-only', () => {
       expect(r.rows.map((row) => row[0])).toEqual([
-        ...Array(5).fill('candidate'),
+        ...Array(6).fill('candidate'),
         'closed',
         'open',
         'stub',
@@ -250,7 +264,7 @@ describe('scripts/owed-set.sh', () => {
 
     it('the count line, and the row-sum identity', () => {
       expect(r.count).toBe(
-        `owed-set: 5 candidates; excluded: 1 closed, 1 open, 1 stub, 1 touch-only; classes a/b/c = 1/2/2; 2 specs without activity since 2026-03-10; adoption 2026-03-10 from docs/adopt.md; ref ${sha.head}`,
+        `owed-set: 6 candidates; excluded: 1 closed, 1 open, 1 stub, 1 touch-only; classes a/b/c = 1/3/2; 2 specs without activity since 2026-03-10; adoption 2026-03-10 from docs/adopt.md; ref ${sha.head}`,
       );
       const m = COUNT.exec(r.count)!;
       const [n, c, o, s, t, xa, xb, xc] = m.slice(1, 9).map(Number);
@@ -268,7 +282,7 @@ describe('scripts/owed-set.sh', () => {
       const r = run(repo, ['--specs-dir', 'specs', '--adoption-ballot', 'docs/ballot.md']);
       expect(r.status).toBe(0);
       expect(r.count).toMatch(/; adoption 2026-03-10 from docs\/ballot\.md; ref /);
-      expect(r.rows).toHaveLength(9);
+      expect(r.rows).toHaveLength(10);
     });
 
     it('--adoption wins over --adoption-ballot', () => {

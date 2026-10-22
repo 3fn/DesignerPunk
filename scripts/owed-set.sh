@@ -59,6 +59,14 @@
 # not merge facts — a wrong `open` hides a real owe, so each reason says what it assumed. Only
 # `- [ ]` counts as unticked; an in-progress `- [-]` parent leaves a spec a candidate (over-list,
 # never hide). Consumers without bash are unserved.
+#
+# Known limit (Stacy's claims view, 2026-10-22, on this repository's first run): the anchor is a path
+# proxy. A spec whose final unit merged before adoption, then touched after adoption by ANOTHER spec's
+# PR adding a file under its completion/ (a ruling doc), prints `candidate`, not `touch-only`: 122
+# (U11 merged 2026-07-11; anchor 7fa64c6d8 is #227's ruling doc). The row over-lists; it never hides
+# an owe. Pinned in scripts/__tests__/owed-set.test.ts ("known limit").
+# Also assumed: first-parent committer dates rise (true of squash and merge commits); git log --since
+# stops walking at older-dated commits, so a first-parent line with a back-dated commit can drop specs.
 
 DEFAULT_SPECS_DIR=.kiro/specs
 DEFAULT_BALLOT=.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md
