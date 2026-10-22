@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-21
 **Drafted by**: Thurgood (Civitas steward; owner of `regrounding/triviality.ts`, `regrounding/freshness.ts` and `verify-signing-chain`, the code this rule changes), at Peter's direction: *"Let's go with the class-level fix."* (chat, 2026-10-21, relayed by the orchestrator). The class option as put to him is Stacy's, from her review of burst 1 (2026-10-21): fix the layer where the gap lives, the floor, and let every reader follow from one source.
-**Status**: **DRAFT** — R1 (Stacy) done, woven at THURGOOD R2; ratification waits on the lawful census re-run (§ 8). Nothing in this file is applied. A merge with this line still reading DRAFT is a recording defect, not a ratification.
+**Status**: **RATIFIED (Peter, 2026-10-22)**, ruled in chat and relayed by the orchestrator: "Re: 1, Ratify" (2026-10-22), in reply to "Ratify clause 5, the routes floor? … Census valid and independently reproduced." Ratified on the census of § 4 (`9359c3805`, current `b423eae8…` → proposed `0f5c5144…`, 28 rows; census reader VALID at `21e2f21d1`), with F-1 (a) standing (§ 7). This commit is the record (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"), made before any edit site is applied; the application is a later PR (§ 8, "Application"). *(Was: DRAFT, R1 woven at R2; nothing in this file was applied while it was a draft.)*
 **Required reviewer**: **Stacy** — the census reader (README § "Conventions", "Instrument census"), the seat whose claims passes count signing acts, and the author of the class option. R1: ASSENT with A1–A4, census VOID as a census (CR-1, CR-2, grammar), F-1 (a).
 **Consulted**: Lina — no objection (`scratchpad/consult-routes-floor-lina.md`, 2026-10-21). Two conditions: the floor and all 19 signatures land in ONE PR, and `classifyCharter` is untouched. Two additions: `RouteReason` widened with `'re-pointed-entry'` (type only), and a `triviality.assignment.test.ts` case pinning `classifyCharter`'s output unchanged. Her fixtures are not dragged, the exemplar scores are unchanged, F-1 (a). All four are woven into § 3.
 **Unit**: this file rides the burst-1 PR (`chore/burst-1-m1-erratum-sweep`) as a DRAFT only. Its application is a later PR (§ 3), Peter-merged under the governance carve-out.
@@ -81,10 +81,15 @@ New clause 5 in Spec 123 `design.md` § C18 ("The triviality floor"), after clau
 
 ## 4. Census
 
-**Census**: `npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --census-routed` over `canonical/profiles/**` + `canonical/operative-sets/**` + their canonical sources @ `b42874bd0` — current `b423eae8a38e781428581c72b334468084924ca9067db4e0655b8e3d42bbee29` → proposed `0f5c514495cb293accd3ac79a65196cf6c66f83be85a18d1b1cbd8e940573204`; 28 rows change (delta: § Census appendix)
+**Census**: `npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --census-routed` over `canonical/profiles/**` + `canonical/operative-sets/**` + their canonical sources @ `9359c3805` — current `b423eae8a38e781428581c72b334468084924ca9067db4e0655b8e3d42bbee29` → proposed `0f5c514495cb293accd3ac79a65196cf6c66f83be85a18d1b1cbd8e940573204`; 28 rows change (delta: § Census appendix)
 - **Unit**: a dispositions row. **Counts**: routed 360 → 388; unsigned-routed 0 → **19**; signed-not-routed 16 → 7.
 - **The census mode**: `--census-routed` prints `freshness.ts` `routedCensus`, one sorted line per dispositions row (`<rowId>\t<routed: label | not-routed>\t<signed|unsigned>\t<signer | ->`), then a count line. Every value is `routedPopulation`'s own, and `signed` is `RoutedRow.signed`'s predicate (`isSignedRow`), not a YAML read (Stacy R1, grammar). It was built in burst 1 (`858b2b1d7`), and the register field was written there (`a39e2d112`). It reproduces both R1 digests exactly at `b42874bd0` through `--at`, current and with the scratch diff in § Census appendix, and its delta is the R1 appendix's, line for line.
-- **This line is not yet lawful at its SHA**, and it says so. At `b42874bd0` itself the census mode does not exist (`--at` reads `main`'s corpus with burst 1's code), and the field is on no row there, so CR-1 and CR-2 stand until burst 1 merges. **CR-1 clears at burst 1's merge** (the field and the mode land on `main`). The lawful census is then **re-run at the first `main` SHA after it**, as committed and with the scratch diff, and this line is re-stated with that SHA. § 8 makes ratification wait for that re-run.
+- **Lawful at `9359c3805`** (re-run 2026-10-22, by the drafter). `9359c3805` is the #437 squash, the first `main` SHA containing burst 1; the census was run there, not at `e63ab7000` (#430, the next `main` SHA), because it is the first SHA at which the field and the mode exist. #430 touches only `.kiro/specs/113-onboarding-cli-workflows/design-outline.md`; the current mode run `--at e63ab7000` gives the same current digest.
+  - **CR-1 cleared.** `git show 9359c3805:governance/classification-map.md`, row `signing-act-consistency`, scope `git links 1-3`: `census: "npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --census-routed"`, equal to this line's `<command>`.
+  - **CR-2 cleared.** Both runs took place in a detached checkout of `9359c3805` (its code and its corpus), as `<command> --at 9359c3805`. Current: as committed. Proposed: with the re-run scratch diff (§ Census appendix), which passes `git apply --check` there and applies cleanly. It touches only `regrounding/freshness.ts`, which `verify-signing-chain` loads (`routedCensus` / `routedPopulation`).
+  - **The scratch diff is the decision-function change for this census, not the shipped form.** It writes the entry grain inline in `freshness.ts`. § 3 ships it as `triviality.ts` `routesEntry`, called from `freshness.ts` `routedPopulation`. Under README "Re-runs", the application PR runs this scratch diff and the shipped code at its own base. The two digests must be equal (`0f5c5144…` if the corpus has not moved), with no carve-out, or that PR stops and reports.
+  - **Re-run against R1: no stop condition.** `git diff --name-only b42874bd0 9359c3805 -- canonical/profiles canonical/operative-sets canonical/agents canonical/shared .kiro/steering` is empty: nothing in the profile moved. Both digests equal R1's. The delta is R1's line for line: 28 rows, every current line `not-routed`, none from routed to not-routed, 27 `frontmatter` + 1 `members`, 19 `unsigned` + 9 `signed`. Count lines: current `1089 rows; 360 routed; 0 unsigned-routed; errors 0`, proposed `1089 rows; 388 routed; 19 unsigned-routed; errors 0`.
+  - **Reproduction owed**: Stacy, as census reader, reproduces both digests and the delta at `9359c3805` before Peter ratifies (README, "The census reader").
 - **Coverage** (Stacy R1): the census reads `routedPopulation`. The real test's `signedPopulation` is the second reader, and § 3 site 3 shows it equal to the 388 at application.
 
 ## 5. Cost
@@ -119,11 +124,34 @@ New clause 5 in Spec 123 `design.md` § C18 ("The triviality floor"), after clau
 
 Leans: Thurgood (a), Stacy (a), Lina (a). No new fact bears on the floor's soundness; the incident is about signing. The pick is Peter's.
 
+**Ruling — F-1 (Peter, 2026-10-22, ruled in chat, recorded by the orchestrator), verbatim: "437 is merged. Let's go (a)".** Pick: **(a)**. Re-pointed body units that CLEAR stay unsignable; release rulings stop asking for such signatures; `--ci` link 1 enforces it (a first signature on a row on neither list fails). The seven signed-not-routed rows of § 6 residual 1 stay a closed standing set. Entered in this file by Thurgood (drafter) from the orchestrator's relay. This rules the fork only: clause 5 itself is not ratified by it (§ 8).
+
 Otherwise none. The rule is one clause, and the census delta is exactly the tree's re-pointed entries (28 rows: 27 frontmatter, 1 members; 19 unsigned).
 
-## 8. Ratification — pending on the census
+## 8. Ratification — RATIFIED (Peter, 2026-10-22)
 
-This item does not leave DRAFT on this file alone. The census reader voided the census at R1 (CR-1: no `census` field; CR-2: not a `main` SHA). Burst 1 carries the remedy: the census mode (`858b2b1d7`) and the field on `signing-act-consistency` (`a39e2d112`). **CR-1 clears at burst 1's merge.** The lawful census is then re-run at the first `main` SHA after that merge, by the drafter, and reproduced by the census reader (README, "The census reader"). The § 4 line is re-stated with that SHA and both digests. **Peter ratifies clause 5 then, on that re-run, not before.** If the re-run's delta differs from the R1 delta in an input unchanged since `b42874bd0`, the item stops and is reported (README, "Re-runs").
+**Ratification.** Peter ratified clause 5 on 2026-10-22, in chat, relayed by the orchestrator, verbatim: **"Re: 1, Ratify"**, in reply to the orchestrator's list item 1, "Ratify clause 5, the routes floor? … Census valid and independently reproduced." Entered in this file by Thurgood (drafter) from that relay, as the record-first protocol requires, before any edit site is applied.
+
+- **Ratified on**: the census of § 4, run at `main` `9359c3805` (the #437 squash, the first `main` SHA containing the census mode and the register field): `verify-signing-chain.ts --census-routed` over `canonical/profiles/**` + `canonical/operative-sets/**` + their canonical sources, current `b423eae8a38e781428581c72b334468084924ca9067db4e0655b8e3d42bbee29` → proposed `0f5c514495cb293accd3ac79a65196cf6c66f83be85a18d1b1cbd8e940573204`; 28 rows change (27 `frontmatter`, 1 `members`; 19 unsigned, 9 signed); counts routed 360 → 388, unsigned-routed 0 → 19.
+- **Census reader**: Stacy, `[STACY census read]`, VALID at `21e2f21d1` (both digests and the 28-row delta reproduced in her own detached checkout; the register field equals the command; the grammar conforms). It is a read, never a gate; the ratification is Peter's.
+- **F-1 (a) standing** (§ 7, ruled 2026-10-22): re-pointed body units that CLEAR stay unsignable; the seven signed-not-routed rows of § 6 residual 1 are the closed standing set.
+- **Retroactivity**: none. The rule binds signing acts made after its application merges (header, "Cap").
+
+### Application — owed by the application PR (a later PR; nothing here is applied)
+
+Per § 3 and § 6, in the order of § 3, in ONE PR (Lina's condition: between the floor commit and the last signature `consumer-profile.real.test.ts` is red, so no partial merge exists):
+
+1. **The floor**: `tools/agent-generator/regrounding/triviality.ts` `routesEntry(section, row)` (reason `re-pointed-entry`; comment says "no measure exists, so it routes", never a score), `RouteReason` widened to `'below-half' | 'repo-specific-removal' | 're-pointed-entry'` (type only), header gains clause 5; `classifyCharter` UNTOUCHED, with a `triviality.assignment.test.ts` case pinning its output over the existing body-unit inputs unchanged.
+2. **The sweep**: `freshness.ts` `routedPopulation` calls `routesEntry` for frontmatter and members rows; the orphan filter stays in the sweep.
+3. **The real test**: `consumer-profile.real.test.ts` `signedPopulation` adds the re-pointed frontmatter and members rows through `routesEntry` (Lina's file; consulted). The population must equal the census's routed count at the application's own base (388 at the ratified census; see "Re-run" below for the expected 389). The application PR shows it.
+4. **The FU8 oracle**: `freshness.unsigned-routed.test.ts` frozen copy gains the clause, re-frozen at the application SHA; FU1's expected sets move with T-UR's r10 row.
+5. **Spec 123 `design.md` § C18 clause 5**, the § 2 text verbatim, and the header of `triviality.ts`.
+6. **The first signatures, each by its C1 seat in its own seat commit, entered by merge, after the floor commit on the same branch**: Ada 2, Data 4, Kenya 4, Leonardo 2, Lina 1, Sparky 2, Stacy 4 at the ratified census (19); **plus one** (below), so 20. Stacy's acts take the delegate audit (signing ballot § 5.3).
+7. **The register**: `governance/classification-map.md` § `signing-act-consistency` history line recording the execution; `checks[]` and `census` unchanged.
+8. **C17 "present iff ROUTED"**: a dated qualifying note on `design.md` § C17's row schema and the `signatures.ts` header (§ 3 site 8), riding the application PR.
+9. **Shipping-PR digest equality** (README "Re-runs"): the PR runs the scratch diff (§ Census appendix) and the shipped `routesEntry` form at its own base; the two digests must be equal, no carve-out, or it stops and reports.
+
+**Re-run, an input that changed since the census (stated now so it is expected, not a surprise).** Since the census SHA `9359c3805`, `main` moved (#438/#439/#440). PR #439 added `canonical/profiles/consumer/stacy.dispositions.yaml#frontmatter:commands[owed-set]`, a `re-pointed` frontmatter row, and left it unsigned because it was not-routed before the floor. The application's own-base census is therefore **expected to show 29 rows changing, 20 unsigned-routed (routed 389), against the ratified 28 / 19 (388)**, with that one row (`stacy#frontmatter:commands[owed-set]`) the documented difference, in an input that changed since the census SHA. It is listed here under README "Re-runs" ("Differences in inputs that changed since then are listed"). Other canonical inputs (`stacy`/`thurgood` agents, operative-sets, dispositions, overlays) also moved with #439, so the application lists every difference input by input, per README "Re-runs": a difference in an input unchanged since `9359c3805` (`git diff --name-only 9359c3805 <run-sha> -- <corpus>`) stops the application and is reported, not adapted; a difference in a changed input is listed, and `stacy#frontmatter:commands[owed-set]` is the one this ballot expects. Stacy therefore carries 4 + 1 = 5 first signatures (the fifth for `stacy#frontmatter:commands[owed-set]`, her own row), and the application's census appendix is re-printed at its base.
 
 ## Review
 
@@ -194,11 +222,29 @@ No `[@THURGOOD]` mentions. Lina's consult (2026-10-21) is read beside R1. Every 
 - **C17's `present iff ROUTED`** → § 3 site 8: flagged, owner Thurgood, not drafted here.
 - Forks: F-1 only. I disagree with no amendment.
 
+#### [STACY census read]
+
+Census reader, 2026-10-22, on the lawful census of § 4 (README "Conventions", "Instrument census"; "The census reader"). I did not rely on the drafter's run. I made a fresh detached checkout of `9359c3805` outside this worktree, which is a `main` ancestor (the #437 squash), and ran everything in it.
+
+- **Register field**: `git show 9359c3805:governance/classification-map.md`, row `signing-act-consistency`, scope `git links 1-3`, `census: "npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --census-routed"`. It equals the line's `<command>`. CR-1 cleared.
+- **Current arm**: `npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --census-routed --at 9359c3805`, exit 0, empty stderr. Digest **`b423eae8a38e781428581c72b334468084924ca9067db4e0655b8e3d42bbee29`** (sha256 of stdout), last line `1089 rows; 360 routed; 0 unsigned-routed; errors 0`. It equals the line's current digest.
+- **Proposed arm**: the appendix's re-run diff, extracted from this file, passed `git apply --check` and applied. It touches only `tools/agent-generator/regrounding/freshness.ts` (1 insertion, 1 deletion, confirmed by `git diff --name-only`). Same command, same `--at`, exit 0, empty stderr. Digest **`0f5c514495cb293accd3ac79a65196cf6c66f83be85a18d1b1cbd8e940573204`**, last line `1089 rows; 388 routed; 19 unsigned-routed; errors 0`. It equals the line's proposed digest. CR-2 cleared (a `main` SHA, run as `--at <sha>`, the scratch diff touching only the instrument's code).
+- **Delta**: 28 rows differ (`diff` of the two outputs with the count line removed), 28 lines out, 28 in. Against the appendix block, the 28 proposed lines plus the proposed count line match **line for line** (empty diff). Every current line reads `not-routed`, and none moves from routed to not-routed. 27 rows are `frontmatter` and 1 is `members` (`_shared#record-first-ratification`). Current and proposed rows carry the same row ids and the same signed/unsigned value (19 unsigned, 9 signed). The only column that moves is the label, plus the signer column, which the mode prints as `-` for a not-routed row. Nothing else in the 1089 rows differs.
+- **Profile did not move**: `git diff --name-only b42874bd0 9359c3805 -- canonical/profiles canonical/operative-sets canonical/agents canonical/shared .kiro/steering` is empty (0 files). Both digests equal R1's, which I reproduced at `2f98cc645`. No stop condition.
+- **Grammar** against README § "Conventions" (`<command> over <corpus> @ <sha> — current <digest> → proposed <digest>; <N> <unit> change (delta: § Census appendix)`). It conforms: the command, `over` plus the corpus, a short SHA that is a `main` SHA, both 64-hex digests, `28 rows change`, and the delta pointer. R1's two parentheticals are gone, with the unit and counts now in bullets. `signed` comes from the instrument's own predicate (`isSignedRow`), so my R1 grammar finding is closed. The in-scope call stands, since the scratch diff changes `freshness.ts`, which the command loads. The ballot carries no exemption.
+- **Not read here**: the scratch diff is the decision-function change for this census, and the shipped form (`triviality.ts` `routesEntry`) is not in this census. The application PR's own-base re-run, with equal digests and no carve-out, remains the stop condition (README "Re-runs"). `signedPopulation` equalling the 388 is also the application PR's to show (§ 3 site 3).
+
+**Verdict: census VALID.** Both digests and the 28-row delta reproduce exactly at `9359c3805`, the register field equals the command, and the grammar conforms. R1's VOID (CR-1, CR-2, grammar) is discharged. This is a read and never a gate: ratification stays Peter's (§ 8).
+
+#### [STACY R2]
+
+- **F-1 (a) recorded as ruled.** § 7 carries Peter's verbatim word, "437 is merged. Let's go (a)" (2026-10-22), and the pick matches my R1 lean. It rules the fork only. The seven signed-not-routed rows stay the named closed set of § 6 residual 1, and my passes will carry the state line `signed-not-routed: 7 (named set)`. Clause 5 is not ratified by it (§ 8). My R1 assent to clause 5 with A1–A4 stands, and the census it waited on is now VALID.
+
 ---
 
 ## Census appendix
 
-**R1's scratch diff is kept below as reviewed** (it applies at `2f98cc645`, where Stacy reproduced it). **The re-run diff** (it applies at burst 1's census-mode tree `858b2b1d7`, and must be re-checked at the first `main` SHA after burst 1 merges). It is the same one-line change, moved by the census-mode refactor:
+**R1's scratch diff is kept below as reviewed** (it applies at `2f98cc645`, where Stacy reproduced it). **The re-run diff: the lawful census's scratch diff.** It applied at burst 1's census-mode tree `858b2b1d7`. Re-checked on 2026-10-22 at `9359c3805` (the #437 squash): `git apply --check` passes and it applies cleanly. It is the same one-line change as R1's, moved by the census-mode refactor:
 
 ```diff
 --- a/tools/agent-generator/regrounding/freshness.ts
@@ -214,7 +260,7 @@ No `[@THURGOOD]` mentions. Lina's consult (2026-10-21) is read beside R1. Every 
          const routed: RoutedRow = {
 ```
 
-With it, `--census-routed --at b42874bd0` prints `1089 rows; 388 routed; 19 unsigned-routed; errors 0` and digests to `0f5c514495cb293accd3ac79a65196cf6c66f83be85a18d1b1cbd8e940573204`. Its delta equals R1's line for line.
+With it, `--census-routed --at 9359c3805` (and, at R2, `--at b42874bd0`) prints `1089 rows; 388 routed; 19 unsigned-routed; errors 0` and digests to `0f5c514495cb293accd3ac79a65196cf6c66f83be85a18d1b1cbd8e940573204`. Its delta equals R1's line for line.
 
 **R1's scratch diff** (applies with `git apply` at `2f98cc645`):
 

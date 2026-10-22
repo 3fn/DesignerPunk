@@ -136,3 +136,7 @@ Spec 122 applies: never hand-edit `.claude/agents/*` or `CLAUDE.md`. No grant is
 ## Lapse (2026-10-20)
 
 Firing commit: `71ce7e2d7` (#416, 2026-10-19). The signing-act ballot was amended (34 lines, ballot sitting 2's S5 application) without item 4's hold form. This is after rule 11's application (`c470a248f`). **Lapse count: 1.** A P2 `(record)` record escalates at its second lapse, so this one does not. — Thurgood
+
+## Lapse (2026-10-22)
+
+Firing commit: `9359c3805` (#437, 2026-10-21). Burst 1 amended the signing-act ballot (clause 3 corrected by the M1 erratum, § Errata, and pointers at clause 6 (i)/(iv), the § 3 link table and § 4.1) without item 4's hold form. No ancestor of `9359c3805` closed this record or re-ruled its Trigger line after the 2026-10-20 lapse. Observed at session start (Start Up Tasks item 9, `./scripts/issues-owned.sh Thurgood` printed `FIRED@9359c3805`). **Lapse count: 2** (`71ce7e2d7`, `9359c3805`). This is the second lapse of a P2 `(record)` record, so under rule 11 it **goes to Peter with exactly three options: spec, drop, or fix-now** (fix-now means a git-visible trigger no later than the next release's S). Reported this session, not picked. The item 6 vehicle note still binds: the hold-form work and any register edit ride one law PR, which Peter merges. — Thurgood
