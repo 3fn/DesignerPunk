@@ -271,7 +271,7 @@ Every walkthrough has the same six parts: **Goal**, **You'll need**, **Ask your 
 | describe a screen so it can be built | Walkthrough: Specify your first screen |
 | work in a design system a teammate already set up | Walkthrough: Join a teammate's design system |
 | change a colour and see it on a web page | Walkthrough: Change a token and see it on web |
-| make it look like your brand (not yet: Spec 129) | Walkthrough: Make it look like your brand |
+| make it look like your brand (not available yet) | Walkthrough: Make it look like your brand |
 | build for iPhone or Android (not yet: Spec 129) | Walkthrough: Build for iOS or Android |
 
 ### Walkthrough: See DesignerPunk working
@@ -386,7 +386,7 @@ So a change to `color.action.navigation` shows in light mode without the WCAG th
 
 ### Walkthrough: Make it look like your brand
 
-**Not available on this release.** A theme you register in `designerpunk.config.ts` does not change your generated output yet: it produces no `[data-theme="<name>"]` block and no native theme output (see "Themes"). Custom-theme output is delivered by Spec 129 (consumer-generation completeness), and this walkthrough is written when that lands.
+**Not available on this release.** A theme you register in `designerpunk.config.ts` does not change your generated output: it produces no `[data-theme="<name>"]` block and no native theme output (see "Themes"). Whether it ever will is not decided yet. Spec 129 (consumer-generation completeness) is where that is decided, and it has not promised it. This walkthrough is written only if that is built.
 
 What works today: pointing individual colour tokens at other palette colours ("Walkthrough: Change a token and see it on web"), light and dark mode, and the built-in WCAG theme.
 
@@ -446,7 +446,7 @@ export default defineConfig({
 
 ### Themes
 
-`designerpunk.config.ts` accepts a `themes` list of `{ name, mode, overrides }`, with `mode` one of `'light'`, `'dark'` or `'both'`. `generate` does not apply it yet. A theme you register produces no `[data-theme]` block and no native theme output. Its overrides are not validated either, so a misspelled token name passes silently. The `dark` and `wcag` entries that `init` writes do not drive output either: `generate` applies DesignerPunk's built-in dark and WCAG overrides regardless. Light and dark mode work, and the `wcag` theme is built in. Custom-theme output is delivered by Spec 129 (consumer-generation completeness).
+`designerpunk.config.ts` accepts a `themes` list of `{ name, mode, overrides }`, with `mode` one of `'light'`, `'dark'` or `'both'`. `generate` does not apply it yet. A theme you register produces no `[data-theme]` block and no native theme output. Its overrides are not validated either, so a misspelled token name passes silently. The `dark` and `wcag` entries that `init` writes do not drive output either: `generate` applies DesignerPunk's built-in dark and WCAG overrides regardless. Light and dark mode work, and the `wcag` theme is built in. Whether a theme you register will one day drive output is not decided yet: Spec 129 (consumer-generation completeness) is where that is decided, and it has not promised it.
 
 ### Starting the MCP servers by hand
 
