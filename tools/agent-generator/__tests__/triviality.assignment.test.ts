@@ -10,9 +10,25 @@
  *
  * (iii) is triviality.records.test.ts; (iv) and (v) are triviality.g1.test.ts / triviality.floor.test.ts.
  * Scope: any valid assignment is sound (C18); maximality is not asserted (G1 run 2 R2-A2).
+ *
+ * C18 CLAUSE 5, THE ENTRY GRAIN (ballot 2026-10-21-routes-floor-re-pointed-frontmatter-members § 3
+ * site 1, Lina's conditions): `routesEntry`'s cases, and a pin that `classifyCharter`'s output over
+ * the body-unit inputs it already had is unchanged by the clause. The pin's expected lines were
+ * frozen BEFORE clause 5 was written (the application branch's base, `dae569756`) and are
+ * unchanged after it; they move only with an explicit re-derivation, as the g1 record pin does.
  */
 import fc from 'fast-check';
-import { assignmentViolations, assignOccurrences, occurrences, type OperativeItem } from '../regrounding/triviality';
+import {
+  assignmentViolations,
+  assignOccurrences,
+  classifyCharter,
+  occurrences,
+  routesEntry,
+  type OperativeItem,
+  type UnitResult,
+} from '../regrounding/triviality';
+import { loadG1Manifest, readG1Rendering, type G1Fixture } from '../__fixtures__/g1-renderings';
+import { canonicalUnits, readRecord } from './triviality.helpers';
 
 const items = (...texts: string[]): OperativeItem[] => texts.map((text, i) => ({ id: `i${i}`, text }));
 
@@ -104,5 +120,96 @@ describe('(ii) validity — property test over generated renderings', () => {
       }),
       { numRuns: 300, seed: 20260928 }
     );
+  });
+});
+
+describe('C18 clause 5 — the entry grain (routesEntry)', () => {
+  it('a re-pointed frontmatter row ROUTES, reason re-pointed-entry', () => {
+    expect(routesEntry('frontmatter', { disposition: 're-pointed', destination: 'frontmatter:tools[x]' })).toEqual({
+      verdict: 'ROUTES',
+      routedBy: ['re-pointed-entry'],
+    });
+  });
+
+  it('a re-pointed members row ROUTES, reason re-pointed-entry', () => {
+    expect(routesEntry('members', { disposition: 're-pointed', removals: [{ text: 'Peter', cites: 'subtraction-2' }] })).toEqual({
+      verdict: 'ROUTES',
+      routedBy: ['re-pointed-entry'],
+    });
+  });
+
+  it('routes whether or not the entry carries a removal or a signature (no measure exists, so nothing is counted)', () => {
+    const signed = { disposition: 're-pointed', signature: { signer: 'kenya' } };
+    expect(routesEntry('frontmatter', signed)?.routedBy).toEqual(['re-pointed-entry']);
+    expect(routesEntry('frontmatter', { disposition: 're-pointed' })?.routedBy).toEqual(['re-pointed-entry']);
+  });
+
+  it.each(['retained', 'no-consumer-counterpart', 'superseded-by'])('a %s frontmatter or members row is not routed by clause 5', (disposition) => {
+    expect(routesEntry('frontmatter', { disposition })).toBeUndefined();
+    expect(routesEntry('members', { disposition })).toBeUndefined();
+  });
+
+  it('a body unit is never routed by clause 5, re-pointed or not (it is classifyCharter’s)', () => {
+    expect(routesEntry('body', { disposition: 're-pointed' })).toBeUndefined();
+    expect(routesEntry('body', { disposition: 'retained' })).toBeUndefined();
+  });
+
+  it('a row that is not a map is not routed', () => {
+    for (const row of [undefined, null, 're-pointed', ['re-pointed'], 3]) expect(routesEntry('frontmatter', row)).toBeUndefined();
+  });
+
+  it('the verdict is never a score and never a condemnation', () => {
+    const r = routesEntry('frontmatter', { disposition: 're-pointed' });
+    expect(Object.keys(r ?? {}).sort()).toEqual(['routedBy', 'verdict']);
+  });
+});
+
+describe('C18 clause 5 leaves classifyCharter untouched — its output over the existing body-unit inputs is frozen', () => {
+  /** One line per result: `<exemplar> <anchor>: <retained>/<total> <VERDICT> [reasons] @<item:offset,…>`. */
+  const line = (exemplar: string, r: UnitResult): string =>
+    !r.entered
+      ? `${exemplar} ${r.anchor}: outside`
+      : r.verdict === 'INAPPLICABLE'
+        ? `${exemplar} ${r.anchor}: 0/0 INAPPLICABLE`
+        : `${exemplar} ${r.anchor}: ${r.retained}/${r.total} ${r.verdict} [${r.routedBy.join(',')}] @${r.assignment.map((c) => `${c.itemId}:${c.offset}`).join(',')}`;
+
+  it('every G1 rendering, scored at the charter grain per (exemplar, record), gives the lines frozen before clause 5', () => {
+    const groups = new Map<string, G1Fixture[]>();
+    for (const f of loadG1Manifest()) groups.set(`${f.exemplar}\t${f.record}`, [...(groups.get(`${f.exemplar}\t${f.record}`) ?? []), f]);
+    const out: string[] = [];
+    for (const [key, fixtures] of groups) {
+      const [exemplar, rel] = key.split('\t');
+      const record = readRecord(rel);
+      const results = classifyCharter({
+        canonicalUnits: canonicalUnits(record.source),
+        renderedUnits: new Map(fixtures.map((f) => [f.anchor, readG1Rendering(f)] as [string, string])),
+        items: new Map(Object.entries(record.units).map(([a, u]) => [a, u.items] as [string, OperativeItem[]])),
+      });
+      for (const r of results) out.push(line(exemplar, r));
+    }
+    expect(out).toEqual([
+      "A #audit-checklist: 0/30 ROUTES [below-half] @",
+      "B #the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script: 0/13 ROUTES [below-half] @",
+      "C(c2) #what-parity-means: 0/7 ROUTES [below-half] @",
+      "D #the-trigger-set-the-114-superset-table-names-never-numbers: 1/13 ROUTES [below-half] @trigger-closeout:145",
+      "E #the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script: 0/13 ROUTES [below-half] @",
+      "Lina-1 #platform-implementation-true-native-architecture:preamble: 0/2 ROUTES [below-half] @",
+      "Lina-1 #web: 0/4 ROUTES [below-half] @",
+      "Lina-1 #ios: 0/3 ROUTES [below-half] @",
+      "Lina-1 #android: 0/3 ROUTES [below-half] @",
+      "Lina-2 #step-1-verify-component-family-doc: 0/2 ROUTES [below-half] @",
+      "Lina-2 #step-2-create-typests: 0/1 ROUTES [below-half] @",
+      "Lina-2 #step-3-author-contractsyaml: 0/5 ROUTES [below-half] @",
+      "Lina-2 #step-4-create-platform-implementations: 0/5 ROUTES [below-half] @",
+      "Lina-2 #step-5-create-tests: 0/1 ROUTES [below-half] @",
+      "Lina-2 #step-6-create-or-review-component-metayaml: 0/9 ROUTES [below-half] @",
+      "Lina-2 #step-7-create-readme: 0/1 ROUTES [below-half] @",
+      "AX-1 #audit-checklist: 14/30 ROUTES [below-half] @spec-quality-1:22,spec-quality-2:84,spec-quality-3:161,implementation-coverage-1:214,implementation-coverage-2:263,implementation-coverage-3:317,test-coverage-1:361,test-coverage-2:403,test-coverage-3:479,process-adherence-2:557,metadata-accuracy-1:691,metadata-accuracy-2:790,metadata-accuracy-3:871,documentation-3:1025",
+      "G-sketch #item-critical-wait-for-user-authorization-before-starting-new-tasks: 0/7 ROUTES [below-half] @",
+      "G-blanket #item-critical-wait-for-user-authorization-before-starting-new-tasks: 0/7 ROUTES [below-half] @",
+      "A-blanket #audit-checklist: 0/30 ROUTES [below-half] @",
+      "G #item-critical-wait-for-user-authorization-before-starting-new-tasks: 0/7 ROUTES [below-half] @",
+      "G′ #item-civitas-governance-health-check: 0/4 ROUTES [below-half] @",
+    ]);
   });
 });

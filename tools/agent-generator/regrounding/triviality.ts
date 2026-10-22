@@ -11,6 +11,20 @@
  *   ROUTES                  anything else (clause 3) → a C17 signature row, judged by a human
  *                           under Req 11.6.5e's entailment rule.
  *
+ * THE ENTRY GRAIN (C18 clause 5; ballot 2026-10-21-routes-floor-re-pointed-frontmatter-members,
+ * ratified 2026-10-22). {@link routesEntry}, never {@link classifyCharter}, decides it:
+ *
+ *   5. The entry grain. A `frontmatter` row or a `members` row whose disposition is `re-pointed`
+ *      ROUTES (reason `re-pointed-entry`) → a C17 signature row, judged by a human. Clause 1's
+ *      INAPPLICABLE does not reach it: an entry is operative configuration that has no C16 item
+ *      record, not a unit whose committed record holds zero items, so clauses 1–2 have nothing to
+ *      count, and no measure exists by which it could clear. A re-grounded entry is also where
+ *      clause 2's own exclusion lands: 12 of the 28 re-pointed entries today carry removals that
+ *      cite subtraction 1–4 (13 removals), and clause 2 never lets a body unit with such a removal
+ *      clear. Nothing else in C18 changes. Body units are classified exactly as clauses 1–4 say
+ *      (outside the entry set; INAPPLICABLE; CLEARS; ROUTES). A `retained` frontmatter or members
+ *      row is not routed.
+ *
  * THE FLOOR NEVER CONDEMNS (Req 11.6.5b): there is no TRIVIAL verdict here, by type. TRIVIAL /
  * NOT TRIVIAL for a routed unit is the routed judgment's (11.6.5e), established at G1 — never by
  * code. A count below half is not a finding; it routes.
@@ -78,8 +92,11 @@ export interface Credit {
 export const FLOOR_VERDICTS = Object.freeze(['INAPPLICABLE', 'CLEARS', 'ROUTES'] as const);
 export type FloorVerdict = (typeof FLOOR_VERDICTS)[number];
 
-/** Why a unit routed. Both may hold. */
-export type RouteReason = 'below-half' | 'repo-specific-removal';
+/**
+ * Why a unit or entry routed. For a body unit both of the first two may hold; `re-pointed-entry`
+ * is the entry grain's only reason (clause 5) and never appears on a body unit.
+ */
+export type RouteReason = 'below-half' | 'repo-specific-removal' | 're-pointed-entry';
 
 /** Subtraction bullets 1–4 name repo-specifics; a removal citing one forces routing (C18 clause 2). */
 export const REPO_SPECIFIC_CITES: readonly string[] = Object.freeze([
@@ -288,6 +305,38 @@ export function classifyCharter(input: CharterInput): UnitResult[] {
   }
   const order = [...canonicalUnits.keys()];
   return results.sort((a, b) => order.indexOf(a.anchor) - order.indexOf(b.anchor));
+}
+
+// ============================================================================
+// The entry grain (C18 clause 5)
+// ============================================================================
+
+/** The dispositions sections C18 clause 5 speaks to. A body unit is {@link classifyCharter}'s. */
+export type EntrySection = 'frontmatter' | 'members';
+
+/** Clause 5's verdict on a routed entry. A row it does not route gets `undefined`, never a verdict. */
+export interface EntryRoute {
+  verdict: 'ROUTES';
+  routedBy: readonly ['re-pointed-entry'];
+}
+
+const ENTRY_ROUTE: EntryRoute = Object.freeze({ verdict: 'ROUTES', routedBy: Object.freeze(['re-pointed-entry'] as const) });
+
+/**
+ * C18 clause 5 over one dispositions row: a `frontmatter` or `members` row whose disposition is
+ * `re-pointed` ROUTES with reason `re-pointed-entry`; any other row (a `retained` entry, a `body`
+ * unit, a row that is not a map) is not routed by this predicate (`undefined`). No measure exists
+ * by which an entry could clear — it has no C16 item record — so it routes. This is not a score.
+ *
+ * It decides from the section and the disposition alone. Whether the key names a current entry
+ * or member (the orphan filter) is the sweep's, not this predicate's (freshness.ts
+ * `routedPopulation`). `no-consumer-counterpart` / `superseded-by` routing is Req 11.5.1 and
+ * C17's, not C18's, and is not decided here.
+ */
+export function routesEntry(section: string, row: unknown): EntryRoute | undefined {
+  if (section !== 'frontmatter' && section !== 'members') return undefined;
+  if (typeof row !== 'object' || row === null || Array.isArray(row)) return undefined;
+  return (row as { disposition?: unknown }).disposition === 're-pointed' ? ENTRY_ROUTE : undefined;
 }
 
 export type HardFloorResult =
