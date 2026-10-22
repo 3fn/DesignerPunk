@@ -190,6 +190,10 @@ commands:
     cmd: "./tools/agent-generator/verify-gate-registration.sh"
     runContext: this-repo
     cue: "verify the 122 required checks are still registered on the PR gate (count-asserted) — part of coverage-of-coverage"
+  - name: owed-set
+    cmd: "./scripts/owed-set.sh"
+    runContext: this-repo
+    cue: "the closeout-owed query — one row per spec touched since ratification, classed candidate / closed / open / stub / touch-only, then a count line whose row-sum identity you read first (at LIVENESS and the release step; candidates are not verdicts)"
 skills: []                               # Stacy has no skills.
 knowledgeBases:                          # drives the per-agent /knowledge fallback note (Req 11 AC1)
   - name: completion-docs
@@ -432,48 +436,23 @@ Plus, on every pass:
 
 ### The owed-set pipeline (your command catalog's owed-set entry — documented commands, deliberately not a committed script)
 
-The predicate, verbatim: **`closeout-owed(S)`** ⟺ S's final declared unit has merged **AND** `.kiro/specs/S/completion/claims-pass.md` does not exist **AND** that merge is dated on or after the ratification date recorded in `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`. Four stages; it **emits its exclusions by name** so a wrong answer is a falsifiable count, never a healthy-looking short list:
+The predicate, verbatim: **`closeout-owed(S)`** ⟺ S's final declared unit has merged **AND** `.kiro/specs/S/completion/claims-pass.md` does not exist **AND** that merge is dated on or after the ratification date recorded in `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`. The query is a committed script, not pasted commands; Thurgood maintains it and you specify its cases. It **emits every spec it leaves out, by class**, so a wrong answer is a falsifiable count, never a healthy-looking short list. Run it from the repository root with the defaults:
 
 ```bash
-BALLOT=.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md
-RATIFIED=$(grep -m1 '^Ratified-machine: ' "$BALLOT" | awk '{print $2}')
-[ -n "$RATIFIED" ] || { echo "FATAL: cannot resolve ratification record at $BALLOT"; exit 1; }
-echo "ratification date: $RATIFIED"
-# Boundary PINNED TO MIDNIGHT: a bare date resolves via git approxidate to the date
-# at the CURRENT time of day, silently dropping same-day-earlier merges from stage 1a
-# (CLOSEOUT pilot F-1, 2026-09-19 — the owed-set's first wrong result, repaired in all
-# three copies in one commit).
-
-# Stage 1a — every spec with post-ratification merge activity on main's first-parent line
-SPECS=$(git log --first-parent --since="$RATIFIED 00:00" --name-only --pretty=format: -- '.kiro/specs/' \
-        | sed -n 's|^\.kiro/specs/\([^/]*\)/.*|\1|p' | sort -u)
-echo "specs with post-ratification merge activity: $(echo "$SPECS" | grep -c .)"
-
-A=0; B=0; C=0; CLOSED=0; OWED=""
-for S in $SPECS; do
-  T=".kiro/specs/$S/tasks.md"
-  # Stage 1b — classify into exactly one class, units-form precedence first
-  if   grep -qE '^## Declared Merge Units' "$T" 2>/dev/null \
-    || grep -qE '^\*\*Merge units \(' "$T" 2>/dev/null \
-    || grep -qiE '^#{2,4} .*merge unit' "$T" 2>/dev/null; then cls=a; A=$((A+1))
-  else
-    n=$(git log --first-parent --oneline --since="$RATIFIED 00:00" -- ".kiro/specs/$S/" | wc -l | tr -d ' ')
-    if [ "$n" -le 1 ]; then cls=b; B=$((B+1)); else cls=c; C=$((C+1)); fi
-  fi
-  # Stage 2 — the final anchor's merge commit and date
-  ANCHOR=$(git log --first-parent -1 --format='%h %cs' -- ".kiro/specs/$S/")
-  # Stage 3 — does the closeout record exist?
-  if [ -f ".kiro/specs/$S/completion/claims-pass.md" ]; then CLOSED=$((CLOSED+1))
-  else OWED="$OWED  $S ($cls, anchor $ANCHOR)\n"; fi
-done
-
-# Stage 4 — emit the owed set PLUS the enumerated exclusion counts, by name
-echo "OWED SET:"; [ -n "$OWED" ] && printf "$OWED" || echo "  (empty)"
-echo "EXCLUSIONS: $CLOSED closed; ${A}(a) / ${B}(b) / ${C}(c) per class; \
-K excluded as pre-ratification (no first-parent activity since $RATIFIED)"
+./scripts/owed-set.sh
 ```
 
-**The exclusion classes, enumerated**: **(a)** declared units in any recognized form (canonical heading → legacy bold-prose declaration → a "merge unit" heading, tried in that precedence order) — CLOSEOUT anchors on the final declared unit; **(b)** no units block, single PR — that PR is the spec's only unit (the corpus's most common shape; a stage that silently drops it produces the healthy-looking short list this enumeration makes impossible); **(c)** no units block, more than one PR — the anchor is the PR carrying the last parent completion doc. This pipeline also lives at `.kiro/hooks/RELEASE-FLOW.md` step 5a (the release surface) and in Thurgood's LIVENESS health-check item; the three copies are the same text by design. **Staged mechanization is pre-committed**: the second wrong owed-set result noticed in ordinary use (the LIVENESS read or the release step — the named de-facto detectors) earns a committed script + a scoped grant; the publish-hook question is decided at the Q2 re-evaluation sitting.
+The output is one tab-separated row per spec touched since ratification, `<class>\t<spec>\t<reason>`, then one count line. Each spec has exactly one class: `closed` (`completion/claims-pass.md` exists); `stub` (no `tasks.md`, a charter-only spec; the reason names the files); `open` (at least one unticked parent; the reason reads `N of M parents unticked`); `touch-only` (no first-parent commit since ratification changed `tasks.md` or `completion/**`, so the touch was feedback, an inbound or a post-closure edit; the reason is the last touching commit); otherwise `candidate` (the reason keeps the unit class `a|b|c` and the anchor `<sha> <date>`). The count line reads `owed-set: <n> candidates; excluded: <c> closed, <o> open, <s> stub, <t> touch-only; classes a/b/c = x/y/z; <p> specs without activity since <date>; adoption <date> from <source>; ref <sha>`, and for this repository `adoption` is the ratification date. **Read the row-sum identity first**: the candidate count plus the four excluded counts must equal the number of rows printed; a sum that does not add is a dropped class, and the output is not to be trusted.
+
+**Only a `candidate` row can be owed, and a candidate is not a verdict**: a spec owes a closeout pass only once its final declared unit has merged, and the script reads git and `tasks.md`, not the merge. Confirm the unit's merge (`git log --first-parent -- .kiro/specs/<spec>/`) before you open a pass on a candidate.
+
+**`open` and `touch-only` are heuristics over assertions and paths, not merge facts**: a ticked box is a claim, and a path set is a proxy. The reason column says what was assumed, so read it. Before you call the set empty, spot-read any `open` or `touch-only` row whose spec could have merged its final unit (a stale unticked box; a closeout merge that changed neither `tasks.md` nor `completion/**`), because a wrong exclusion hides an owe and a wrong candidate only costs a look.
+
+The script exits 0 always. When it cannot answer it prints one line, `owed-set: unavailable (<why>) — continue`: that is an unanswered question, never an empty set, and you say so instead of writing "empty".
+
+LIVENESS and the release step (`.kiro/hooks/RELEASE-FLOW.md` step 5a) run this same script and paste its output; no second copy of the logic exists to keep in step.
+
+**The unit classes**, carried in a `candidate` row's reason: **(a)** declared units in any recognized form (canonical heading → legacy bold-prose declaration → a "merge unit" heading, tried in that precedence order) — CLOSEOUT anchors on the final declared unit; **(b)** no units block, single PR — that PR is the spec's only unit (the corpus's most common shape; a stage that silently drops it produces the healthy-looking short list this enumeration makes impossible); **(c)** no units block, more than one PR — the anchor is the PR carrying the last parent completion doc.
 
 **Git history is the other half of your claims-audit provisioning** (the non-glob-able knowledge base): `git log --first-parent` for unit anchors and deltas, `git show <merge>:<path>` for shipped-at-merge state.
 
