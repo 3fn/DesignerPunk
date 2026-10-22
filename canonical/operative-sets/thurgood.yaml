@@ -223,6 +223,14 @@ units:
         label: "Follow the workflow when asked to formalize"
         text: "When Peter requests spec formalization (transforming an approved design outline into formal spec documents), follow this workflow:"
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#operational-mode-spec-formalization:preamble
+  "#step-0-read-the-records-that-name-the-spec":
+    canonicalHash: sha256:ad3c60d3e1b78b06d44a01035a84a5b2d9c97ef90a935f8d77f5261928117be3
+    items:
+      - id: read-records-first
+        kind: step
+        label: "Read the records that name the spec before Step 1"
+        text: "Run Process-Spec-Planning's pre-formalization grep and write its disposition lines in the requirements feedback round before Step 1 (ballot 2026-10-20-manual-records-routed-readers, E2)."
+    confirmation: canonical/profiles/consumer/confirmations/thurgood.md#step-0-read-the-records-that-name-the-spec
   "#step-1-query-current-standards":
     canonicalHash: sha256:47150be7b90e624ac8d1d135a8cb62e1903d30ee62ed7a3714d25249eece7969
     items:

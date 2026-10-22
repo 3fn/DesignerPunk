@@ -269,6 +269,9 @@ writeScope:
   - "scripts/relocation-integrity-gate.ts"
   - "scripts/derive-install-doc.ts"
   - "scripts/categorize-tests.ts"
+  # ballot 2026-10-20-manual-records-routed-readers F-1 (a) (RATIFIED Peter 2026-10-20): the owner's session-start read
+  - "scripts/issues-owned.sh"
+  - "scripts/__tests__/issues-owned.test.ts"
   # § 2.3 — the docs MCP
   - "mcp-server/src/**"
   - "mcp-server/tests/**"
@@ -398,6 +401,9 @@ When work touches governance AND implementation (e.g., "this test is failing and
 ## Operational Mode: Spec Formalization
 
 When Peter requests spec formalization (transforming an approved design outline into formal spec documents), follow this workflow:
+
+### Step 0: Read the Records That Name the Spec
+Run Process-Spec-Planning's pre-formalization grep and write its disposition lines in the requirements feedback round before Step 1 (ballot 2026-10-20-manual-records-routed-readers, E2).
 
 ### Step 1: Query Current Standards
 Before writing any spec document, pull the current formatting standards — the requirements/design/tasks format sections and the task-type classification overview are routed in your routing section.
