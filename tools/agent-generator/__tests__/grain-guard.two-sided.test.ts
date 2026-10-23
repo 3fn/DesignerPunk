@@ -29,7 +29,7 @@ const FILE = 'canonical/agents/stacy.md';
 const { frontmatter, body } = splitFrontmatter(fs.readFileSync(path.join(REPO_ROOT, FILE), 'utf8'), FILE);
 
 /** The committed honest `###`-grain re-pointing: exemplar E on S, destination S. */
-const S = '#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script';
+const S = '#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script';
 const TRIGGER = '#the-trigger-set-the-114-superset-table-names-never-numbers';
 const E_TEXT = readG1Rendering(g1Fixture('E', S));
 

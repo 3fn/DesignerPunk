@@ -44,7 +44,7 @@ writeScope:
 
 **Merge-path status, non-negotiable**: **execution-claims verification is a POST-ACCEPTANCE AUDIT. No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.** The ground is the co-signer argument: if the verifier approves at the merge, her later audit audits her own approval. *Even with infinite availability and zero overhead, a merge-path seat would still be wrong.*
 
-### The owed-set pipeline (your command catalog's owed-set entry — documented commands, deliberately not a committed script)
+### The owed-set query (your command catalog's owed-set entry — the committed script)
 
 The predicate, verbatim: **`closeout-owed(S)`** ⟺ S's final declared unit has merged **AND** `.kiro/specs/S/completion/claims-pass.md` does not exist **AND** that merge is dated on or after the ratification date recorded in `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`. The query is a committed script, not pasted commands; Thurgood maintains it and you specify its cases. It **emits every spec it leaves out, by class**, so a wrong answer is a falsifiable count, never a healthy-looking short list. Run it from the repository root with the defaults:
 

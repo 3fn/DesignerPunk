@@ -29,7 +29,7 @@ export const DISPOSITIONS_FILE = 'canonical/profiles/consumer/semguard.dispositi
 export const OVERLAY_FILE = 'canonical/profiles/consumer/semguard.overlay.md';
 
 /** The three re-pointings, each in place. */
-export const S = '#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script';
+export const S = '#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script';
 export const E_FM = 'writeScope[.kiro/specs/**]';
 export const EXTRA = 'commands[claims-pass]';
 

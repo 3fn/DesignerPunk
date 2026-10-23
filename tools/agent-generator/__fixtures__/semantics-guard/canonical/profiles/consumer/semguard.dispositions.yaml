@@ -7,7 +7,7 @@ source: canonical/agents/semguard.md
 body:
   "#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble": { disposition: retained }
   "#the-trigger-set-the-114-superset-table-names-never-numbers": { disposition: retained }
-  "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script": { disposition: re-pointed, destination: "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script" }
+  "#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script": { disposition: re-pointed, destination: "#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script" }
 frontmatter:
   "agent": { disposition: retained }
   "agentType": { disposition: retained }

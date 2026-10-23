@@ -84,7 +84,7 @@ describe('the standing application bites (in a temp copy of the shipped inputs)'
     return tmp;
   }
   const STACY = 'canonical/profiles/consumer/stacy.dispositions.yaml';
-  const S = '#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script';
+  const S = '#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script';
   const T = '#the-trigger-set-the-114-superset-table-names-never-numbers';
 
   it('the copy is faithful: unplanted, it is clean with the same count', () => {
