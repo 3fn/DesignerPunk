@@ -70,7 +70,7 @@ The consult estimate was "~10 of 30". The recount, every root record's first `**
 5. **Straggler sweep**: `grep -c 'trigger-names-the-event-not-the-vehicle' .kiro/issues/README.md governance/classification-map.md` → `1` and `2` (the history line and the education string).
 6. **Roster re-rule (the next health-check walk, owners' own commits, rule 9)**: each owner re-rules the Appendix's 19 Trigger lines, choosing from this menu:
    - `release:next:phase-1` for a P0, P1 or P2 record. **A P3 ride takes `manual`** instead, naming its own fixing PR as the event (F-1 (b), ruled). Rule 5's two-walk stale archive then retires it if it is still unfixed, and rule 4 returns it;
-   - `merge:#<N>` of an existing vehicle PR;
+   - `merge:#<N>` of an existing vehicle PR, for a P0, P1 or P2 record (a P3 that would ride takes `manual`, above);
    - **the intake event of a spec that names the record** (R2, Stacy R1 A4), a `path:` on that spec's `requirements.md`, where Process-Spec-Planning § "Before Formalizing: Records That Name the Spec" already owes the read. Spec 129 is next (priorities ruling, #403), so this is the natural choice for rows 8, 11 and 14, which name Spec 129 as their vehicle. Rows 8 and 14 are P2 `(guard)`, and without this option they would escalate at release 5's S for work a scheduled spec already absorbs;
    - the record's own fixing event once its PR exists;
    - or a close.
@@ -163,6 +163,10 @@ I read the woven text at `50abd6d2f`, not the R2 summary. **OBJECTION: one exact
 - **A3** ✓: the two-question test decides my four records as you place them. Rows 4 and 6 stay. `generate-staleness` comes in as row 18, P2 (guard), owner Ada, which matches its record. The calibration charter comes in as row 19, P2 (guard) · charter, "Lina's with Peter", and that note is right, because no menu token fits a duty that has no close. `in-lane-registry-arming-reads` stays out as a post-merge read. **Beyond the four**: I ran the test over the 13 `path:` records not on the roster, at `275b711e5`. Six key to a claims pass or a spec's `tasks.md`, four to a spec's `requirements.md` intake, one to the health-check records, one is the in-lane read, and one is the closed `tip` record. All pass, so "none moved out" also holds in the other direction. The roster of 19 and the § 3 counts reproduce: 17 `path:` + 2 `manual`; by class P2 (guard) 7, P2 (record) 4, P3 8; by owner Thurgood 7, Lina 6, Ada 5, Kenya 1.
 - **A4** ✓: the intake option is in the menu. A `path:` on `requirements.md` is consistent with the four live records that already use it (`2026-10-20-kotlin-output-no-import-block.md` and others), and Spec 129 has no `requirements.md` on `main` yet, so its first commit is the intake.
 - **F-1 (b)** ✓ in the § 2 sentence and in step 6 bullet 1. § 6 records the ruling with Peter's words, and the residual is kept.
+
+#### [THURGOOD R3] — 2026-10-22
+
+Woven verbatim: § 4 step 6, bullet 2 now reads "`merge:#<N>` of an existing vehicle PR, for a P0, P1 or P2 record (a P3 that would ride takes `manual`, above);", as STACY R2 gave it. Nothing else changed.
 
 ---
 
