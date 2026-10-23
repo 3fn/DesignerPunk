@@ -378,6 +378,43 @@ date: 2026-10-12
 - **Why `retained` still holds.** The entry's verdict value is still true in a consumer: the manifest trims a shipped, un-themed snapshot (the ComponentTokens trim, re-pointed to `node_modules/@3fn/core/dist/…`), and the listed artifact in both targets is exactly that. The reword closes the residual I recorded on 2026-10-02: the line no longer calls the artifact "stale", it calls it a generated build output, which is what it is.
 - **Surviving**: `[]`; no operative-set items are owed on this frontmatter row.
 
+## `#frontmatter:commands[ios-build-test]`
+
+signer: kenya
+
+**FIRST SIGNATURE 2026-10-23 — ASSENT to `re-pointed` (`surviving: []`, since a frontmatter entry carries no operative items).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- Canonical `gap` is "no in-repo iOS build or test is possible — this repo has no .xcodeproj / Package.swift / Xcode workspace ... Real iOS build & UI test run from the product app's ios/ dir: `xcodebuild build`, `xcodebuild test`, `xcrun simctl` — all consumer-repo." The consumer value drops the design-system-repo clause and says these run "from this product app's ios/ dir"; the three commands, `runContext: consumer-repo` and the cue are unchanged.
+- It is right for a consumer: the consumer repo IS the iOS app, so `xcodebuild` / `xcrun simctl` run there. The rendering (cc `kenya.md`, kiro `kenya-prompt.md`) appends "(run from your product repo)", which agrees with `runContext: consumer-repo` and no longer contradicts itself.
+- The function survives: the role still knows which commands build, unit-test and simulator-test an iOS app, and the cue that triggers them.
+
+## `#frontmatter:commands[product-screen-commands]`
+
+signer: kenya
+
+**FIRST SIGNATURE 2026-10-23 — ASSENT to `re-pointed` (`surviving: []`).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- Canonical says product-screen commands "are per-product and cannot be extracted in this repo — they live in the consumer iOS app (theming Swift materializes there via `npx designerpunk generate`)". The consumer value says they are per-product and to "read them from this iOS app's own build setup". `runContext: per-product`, `authoredPerProduct: true` and the cue are unchanged.
+- It is right for a consumer: "cannot be extracted in this repo" is about the design-system source; in a consumer repo the commands are in the app's own build setup, and the re-pointed text sends the role there. It agrees with the `#what-you-dont-own` destination ("read it from the app's build setup before you run anything").
+- The function survives: the role is told these commands are not a DesignerPunk-supplied set and where to find them. The dropped "theming Swift materializes there" clause is carried by `commands[platform-tokens]` (`npx designerpunk generate`, which I signed) and `#ios-theming-spec-094`.
+
+## `#frontmatter:knowledgeBases[ios-components]`
+
+signer: kenya
+
+**FIRST SIGNATURE 2026-10-23 — ASSENT to `re-pointed` (`surviving: []`).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- The glob re-points from `src/components/core/*/platforms/ios/**` to `node_modules/@3fn/core/src/components/core/*/platforms/ios/**`. A consumer repo has no `src/components/core/`; the iOS component sources arrive in the installed package.
+- Checked against the package manifest in this worktree: `package.json` `files` ships the component sources and excludes only `!src/components/core/**/platforms/ios/*Tests.swift`; `npm pack --dry-run` lists `src/components/core/Avatar-Base/platforms/ios/Avatar.ios.swift` and siblings and no `*Tests.swift`. So the re-pointed path exists in a consumer install and `ios/**` covers what ships.
+- `knowledgeBases[ios-tests]` is already `no-consumer-counterpart` (I verified the same exclusion), so nothing is left pointing at an absent path.
+- Both renderings carry the path (cc: "search these paths with Grep/Glob"; kiro: "search these paths").
+
+## `#frontmatter:writeScope[.kiro/specs/**]`
+
+signer: kenya
+
+**FIRST SIGNATURE 2026-10-23 — ASSENT to `re-pointed` (`surviving: []`).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- `.kiro/specs/**` re-points to `specs/**`. The consumer repo has no `.kiro/` spec tree; its Task Completion Protocol puts completion docs at `specs/[spec]/completion/...` and summary docs at `specs/[spec]/task-N-summary.md`, so the scope covers what the role writes. Same reasoning Ada and Data signed.
+- `writeScope[docs/specs/**]` is already `superseded-by` this entry (my 2026-09-29 assent), so the one scope entry carries both canonical paths. `writeScope[.kiro/issues/**]` stays `no-consumer-counterpart`.
+- The hash covers all three renderings (cc `kenya.md`, kiro `kenya-prompt.md`, kiro `kenya.json`).
+
 ## Signing run summary (2026-09-29, phase two)
 
 - **Commits** (branch `task/123-u2b-fr2-kenya` from `60b0fdb5`; not pushed):
