@@ -50,7 +50,7 @@ units:
         text: "When in doubt, consult Ada."
     confirmation: canonical/profiles/consumer/confirmations/ada.md#ownership
   "#in-scope":
-    canonicalHash: sha256:3b0d6343a0952654cac601dd1c966bed4c81b0dcb1c48ed3698a0e7ce19f62cc
+    canonicalHash: sha256:c6d1781d3a66ddc95386269c45446143f127c0c6b0846242469061bfdfaee2ba
     items:
       - id: scope-create
         kind: member
