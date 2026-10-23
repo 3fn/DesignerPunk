@@ -380,6 +380,17 @@ signer: lina
 
 **ASSENT — surviving: [] (nothing survives)** (re-sign run 2026-09-29, against the post-batch rendering and hashes). **Refusal (`6f7b882e`) withdrawn: ASSENT-ON-RULING** (my ruling response below). The disposition is unchanged, `no-consumer-counterpart`, and I now agree with it. Under strict 5e, "run component tests with your repo's own test runner" does not entail "run ALL tests including the performance lanes". No rendering carries the full-suite-with-perf function; its lanes and idle-machine caution are this repo's instruments.
 
+## `#frontmatter:writeScope[.kiro/specs/**]`
+
+signer: lina
+
+**FIRST SIGNATURE 2026-10-23 - ASSENT to `re-pointed` (`surviving: []`).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- `.kiro/specs/**` re-points to `specs/**`. The consumer repo has no `.kiro/` spec tree: its rendered Task Completion Protocol puts completion docs at `specs/[spec]/completion/...` and summary docs at `specs/[spec]/task-N-summary.md` (`_consumer-output/_canonical/always-set/task-completion-protocol.md`, lines 23, 31-32, 39), so `specs/**` is the consumer's spec root and covers where I write spec, completion and summary docs.
+- My rendered write scope is `src/components/**` and `specs/**` (`cc/.claude/agents/lina.md:414-415`, `kiro/.kiro/agents/lina.json`), so the seat keeps its component root and its spec root and nothing here widens it.
+- `writeScope[docs/specs/**]` is already `superseded-by` this entry, so one rendered scope entry carries both canonical paths and nothing is left unreachable.
+- The re-pointed value is the same `specs/**` that Ada, Data, Kenya and Leonardo signed; I judged it from my own rendering, not from theirs. The hash covers all three rendered pieces (cc agent, kiro prompt, kiro json).
+- It is a frontmatter entry with no operative items, so `surviving: []` is the itemized form.
+
 ## Signing run summary (2026-09-29, phase two)
 
 **Seat**: Lina (C1 signer of `canonical/agents/lina.md`'s rows), Spec 123 Task 15.5 phase two · **Branch**: `task/123-u2b-fr2-lina` from `60b0fdb5` · **Sheet**: `first-render/drafting/sheets/lina.md` at `60b0fdb5` (24 rows; hashes taken from it).
