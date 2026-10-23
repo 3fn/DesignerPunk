@@ -173,6 +173,8 @@ verdict: assent — surviving 13/13
 > >
 > > **Every item survives, re-grounded.** The predicate is keyed to the team's adoption record, the pipeline to `$SPECS_DIR` and `$ADOPTION` (the midnight pin kept), the three classes are restated, three-copies becomes "keep every copy the same text", the ladder becomes "a second wrong result → a committed script", and git history is kept. This is the G1 exemplar E rendering. **It is a full-survival assent**, earned item by item; see the tally.
 
+withdrawn: 2026-10-23 — signature withdrawn under the clause-5 grant (Peter, 2026-10-23), `.kiro/issues/2026-10-22-stacy-owed-set-heading-false-after-439.md` § 2a; the key resolves to no unit since 033b3dc3d (charter heading renamed); successor key `#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script`
+
 ## `#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument`
 
 signer: stacy
