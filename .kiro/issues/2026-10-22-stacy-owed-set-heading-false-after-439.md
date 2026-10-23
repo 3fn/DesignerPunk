@@ -60,6 +60,8 @@ The orchestrator's line Peter answered, verbatim: *"Clause-5 grant: Stacy may wi
 
 Then Lina's step 3, and the regeneration and lock after Stacy's acts, as § 2 and the line below say.
 
+**The sheet rule the v3 probe settles (2026-10-23, Thurgood; rule 9 dated line)**: probed on a throwaway branch, both ways, with `verify-signing-chain --ci --base 8c89e8656` after each step and zero link findings at every step. **Variant A** is the rule: the withdrawal commit adds its `withdrawn:` line to the old key's signature section and keeps the section. This passes because the commit's parent still carries the row's `evidence` pointer. (Variant B, removing the section in the withdrawal, also passes, but it takes the ledger off the tree, against § 2 step 4.) **After the withdrawal commit, neither old-key section is ever edited again**: the signature sheet's, or the confirmation sheet's, which has resolved to no unit since `35b6c9b58`. A probed edit to each failed link 2 twice (`a sheet carries a section that is no signing object`). Removing either section later counts as cleanup and passes. The new key's signature section names its predecessor key. Stacy's withdrawal followed this rule at `2f63d2708`.
+
 ## 3. Close
 
 The rename PR's merge closes this record. That PR adds rule 5's outcome line here and `git mv`s the file to `archive/`.
