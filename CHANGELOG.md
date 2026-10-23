@@ -4,6 +4,12 @@ All notable consumer-facing changes to `@3fn/core` are recorded here, one entry 
 
 This file starts with Spec 123 ("Consumer Distribution"). Earlier releases are not backfilled here.
 
+## [Unreleased]
+
+### Changed
+
+- **Input-Checkbox-Base and Input-Checkbox-Legal now submit with their form on web.** A checked box adds `name=value` to `FormData` (`value` defaults to `"on"`), as a native checkbox does; before, neither submitted anything. **If you added a hidden input to work around this, remove it, or the value is submitted twice.** Setting `disabled` on either has no effect: the attribute is removed so it cannot drop the value. Needs a browser with form-associated custom elements (Safari 16.4+). Also fixed: a user's click on `Input-Checkbox-Legal` is no longer refused as a pre-check.
+
 ## [16.0.0] — 2026-10-16 — Release 4 (the `Input-Radio-Set` group name, install-guide corrections, `init` off a terminal)
 
 This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a custom theme you register in `designerpunk.config.ts` does not change your generated output yet; light and dark mode work.
