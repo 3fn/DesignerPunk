@@ -64,12 +64,15 @@
  *                              (confirmations). Overlay pins are authoring: a finding line only.
  *   unsigned-routed: M row(s)  rows carrying NO signature (a refusal is a signature) whose key names
  *                              a current unit / entry / member, and that are ROUTED: disposition
- *                              `no-consumer-counterpart` or `superseded-by` (any section), or a
+ *                              `no-consumer-counterpart` or `superseded-by` (any section), a
  *                              body `re-pointed` unit C18 ROUTES ({@link classifyCharter}: the
- *                              canonical unit, the overlay's re-grounded text, the record's items).
+ *                              canonical unit, the overlay's re-grounded text, the record's items),
+ *                              or a `re-pointed` frontmatter or members entry (C18 clause 5,
+ *                              {@link routesEntry}; ratified 2026-10-22).
  *                              This is the signed population of `consumer-profile.real.test.ts`.
  * Entries: `  <rowId> — <signature|confirmation|disposition>`, a ROUTES row reading
- * `re-pointed: below-half`, `re-pointed: repo-specific-removal` or both joined by `+`; the row id
+ * `re-pointed: below-half`, `re-pointed: repo-specific-removal` or both joined by `+`, an entry
+ * row `re-pointed: re-pointed-entry`; the row id
  * is verify-signing-chain's `rowIdOf`. Order: file (byte order), section (body, frontmatter,
  * members), key in file order. The lists are INFORMATION: they never add a finding, so they never
  * change PASS/FAIL, the diff-guard exit or `--ci`'s `sweepOk` (an unsigned routed row already fails
@@ -110,7 +113,7 @@ import { checkOperativeSet, type OperativeSetRecord } from './operative-sets';
 import { checkOverlayPins, OverlayFormatError, parseOverlay } from './overlay';
 import { c1Seat } from './c1';
 import { checkDispositionSigners, checkSignatureFreshness, ownerOf } from './signatures';
-import { classifyCharter, type OperativeItem } from './triviality';
+import { classifyCharter, routesEntry, type OperativeItem } from './triviality';
 
 export const SWEEP_NAME = 'operative-set-freshness';
 export const RECORDS_DIR = 'canonical/operative-sets';
@@ -159,7 +162,7 @@ export interface RoutedRow {
   key: string;
   /** The row's disposition. */
   disposition: 'no-consumer-counterpart' | 'superseded-by' | 're-pointed';
-  /** For a C18-routed body row: why it routes. */
+  /** For a C18-routed row (a body unit, or a clause-5 entry): why it routes. */
   routedBy?: string[];
   /** c1Seat(owner(row)); undefined when the owner does not resolve. */
   signer?: string;
@@ -392,7 +395,8 @@ export function routedPopulation(
         all.push(census);
         if (!isMap(row) || !current[name](key)) continue; // an orphan is on no list (the sweep refuses it)
         const d = row.disposition;
-        const routedBy = name === 'body' && d === 're-pointed' ? routes.get(key) : undefined;
+        // C18: a body unit by classifyCharter (clauses 1–4); a frontmatter or members entry by routesEntry (clause 5).
+        const routedBy = name === 'body' ? (d === 're-pointed' ? routes.get(key) : undefined) : routesEntry(name, row)?.routedBy.slice();
         if (d !== 'no-consumer-counterpart' && d !== 'superseded-by' && routedBy === undefined) continue;
         const owner = ownerOf(source, name === 'members' ? key : undefined, { sharedOwners, recordOwners });
         const routed: RoutedRow = {

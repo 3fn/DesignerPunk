@@ -176,6 +176,24 @@ date: 2026-10-16
   - (a) "A screen goes under `pages/`" simplifies. A screen that belongs to a flow or a vertical is an experience-map entry under `flows/` or `verticals/`. The bullet hands that case to the guide ("including flows and verticals") instead of stating it.
   - (b) The guide's sibling § "Writing Screen Specs" is the better reference for the spec's format. The pointer correctly names the section about location, which is what it is for.
 
+## `#frontmatter:description`
+
+signer: leonardo
+
+**FIRST SIGNATURE 2026-10-23 — ASSENT to `re-pointed` (`surviving: []`, since a frontmatter entry carries no operative items).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- The value differs from canonical in one clause: "make product decisions (Peter's call)" becomes "(your human lead's call)". The rest, including the Kenya/Data/Sparky hand-off names and the Ada/Lina-via-Thurgood escalation, is byte-identical.
+- Every re-keyed phrase is true of a consumer Leonardo: the product decision is still the human lead's, and my rendered `#identity` already carries the same "Peter" to "your human lead" re-keying (subtraction-2), so the description and the body agree on who decides.
+- The function survives: Leonardo directs and does not implement, create tokens/components, or decide the product. The hash covers every rendered piece (`cc/.claude/agents/leonardo.md` and `kiro/.kiro/agents/leonardo.json`).
+
+## `#frontmatter:writeScope[.kiro/specs/**]`
+
+signer: leonardo
+
+**FIRST SIGNATURE 2026-10-23 — ASSENT to `re-pointed` (`surviving: []`).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- `.kiro/specs/**` re-points to `specs/**`. The consumer repo has no `.kiro/` spec tree: its rendered Task Completion Protocol puts completion docs at `specs/[spec]/completion/...` and summary docs at `specs/[spec]/task-N-summary.md`, so the scope covers where I write screen specs and completion docs.
+- `writeScope[docs/specs/**]` is already `superseded-by` this entry, so one scope entry carries both canonical paths and nothing is left unreachable.
+- The re-pointed value is the same `specs/**` that Ada, Data and Kenya signed. The hash covers all three rendered pieces (cc agent, kiro prompt, kiro json).
+
 ## Signing run summary (2026-09-29, phase two)
 
 - **Commits** (branch `task/123-u2b-fr2-leonardo`, from `60b0fdb5`, not pushed):

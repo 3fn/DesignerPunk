@@ -27,7 +27,9 @@
  * that are not strings, repeat, or (when the unit's operative set is supplied) name no item.
  *
  * NOT HERE: whether a row must carry a signature (present iff ROUTED — C18's outcome, checked
- * over the real profile at Task 15.5); whether `evidence` resolves to a committed note; whether
+ * over the real profile at Task 15.5; 2026-10-22: a signature may persist on a non-routed row —
+ * the closed set of seven, ballot 2026-10-21-routes-floor-re-pointed-frontmatter-members § 6
+ * residual 1); whether `evidence` resolves to a committed note; whether
  * the assent is TRUE (Stacy's audit side, Req 11.5.7).
  *
  * Traces to: Req 11.5.2, 11.5.4, 11.5.6; design C17.

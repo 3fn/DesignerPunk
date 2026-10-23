@@ -229,6 +229,26 @@ date: 2026-10-16
 1. **"Keep" understates the no-build path.** `scripts/build-browser-bundles.js` (`copyTokenCSS`) merges the component tokens into the bundle's `tokens.css`: `--avatar-size-xs` is present in `dist/browser/tokens.css` and absent from `dist/DesignTokens.web.css`. So a no-build page that swaps the bundle's `tokens.css` for the repo's own file loses the component tokens unless it *adds* a link to the package's component-token stylesheet. It cannot simply keep a link, because it never had one. A page that follows "alongside it, keep …" still ends up with the component tokens, so I don't refuse the line. The browser guide L91 has the same wording, and that file is Lina's surface.
 2. **Two files with the same name.** The repo's own output directory also contains a `ComponentTokens.web.css`, and that one is partial. INSTALL L86 lists it as "component tokens" without saying it is not the file to link. This unit avoids the trap by deferring to INSTALL, which names the package's file. The ambiguity lives in INSTALL and belongs to the doc owners, not to this row.
 
+## `#frontmatter:commands[product-screen-commands]`
+
+signer: sparky
+
+**FIRST SIGNATURE 2026-10-23 - ASSENT to `re-pointed` (`surviving: []`).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- Canonical says product-screen build/test/serve commands "are per-product and cannot be extracted in this repo - they live in the consumer product app". The consumer value says they are per-product and to "read them from this product app's own build setup". `runContext: per-product`, `authoredPerProduct: true` and the cue ("you need product-screen build/test/serve commands") are unchanged.
+- It is right for a consumer: "cannot be extracted in this repo" describes the design-system source; in a consumer repo the commands are in the product app's own build setup (its `package.json` scripts), and the re-pointed text sends the role there. The web equivalent is stated truthfully: "build/test/serve" is the web trio (bundle, Jest/runner, static serve or dev server), and the app's own tooling decides which exist. It matches my `#what-you-dont-own` rendering ("read them from its `package.json` before you run anything") and the equivalents Kenya and Data signed ("read them from this iOS/Android app's own build setup").
+- The function survives: the role is told these commands are not a DesignerPunk-supplied set and where to find them. The DesignerPunk-supplied command that does apply here (`npx designerpunk generate`) stays in my Commands section as its own row.
+- A frontmatter entry with no operative items, so `surviving: []` is the itemized form. Hash covers the rendered Commands line in the cc agent (and the kiro pieces).
+
+## `#frontmatter:writeScope[.kiro/specs/**]`
+
+signer: sparky
+
+**FIRST SIGNATURE 2026-10-23 - ASSENT to `re-pointed` (`surviving: []`).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- `.kiro/specs/**` re-points to `specs/**`. The consumer repo has no `.kiro/` spec tree: its rendered Task Completion Protocol puts completion docs at `specs/[spec]/completion/...` and summary docs at `specs/[spec]/task-N-summary.md` (`_consumer-output/_canonical/always-set/task-completion-protocol.md`, lines 23, 31-32, 39), so `specs/**` is the consumer's spec root and covers where I write spec, completion and summary docs.
+- My rendered write scope is `specs/**` alone (`cc/.claude/agents/sparky.md` "Write scope" section; `kiro/.kiro/agents/sparky.json` `toolsSettings.write.allowedPaths`) - judged from my own rendering. It is the same value Ada, Data, Kenya, Leonardo and Lina signed; nothing here widens the seat, and I keep no component or product-source root (consistent with my scope: I implement product screens, which live in the product app and are written under the human lead's per-session confirmation, per the rendered "outside this set" clause).
+- `writeScope[docs/specs/**]` is already `superseded-by` this entry (signed by me), so one rendered entry carries both canonical paths and nothing is left unreachable. `writeScope[.kiro/issues/**]` stays `no-consumer-counterpart`.
+- Frontmatter entry with no operative items, so `surviving: []` is the itemized form.
+
 ## Signing run summary (2026-09-29, phase two)
 
 - **Commits** (branch `task/123-u2b-fr2-sparky`, from `60b0fdb5`):

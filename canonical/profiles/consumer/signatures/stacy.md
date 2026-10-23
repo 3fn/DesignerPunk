@@ -613,6 +613,50 @@ verdict: assent — surviving 2/5; not surviving: `carve-out-scope`, `carve-out-
 >
 > `no-consumer-counterpart` is not true of the whole unit. The steward-verb enumeration and its two falsification conditions are repo-bound, because a consumer does not steward DesignerPunk's docs corpus. But `carve-out-routing-test` ("was this claim verified?" → Stacy; "what must a completion doc contain?" → Thurgood) and `carve-out-tiebreak` (ambiguity resolves to Stacy, the seam fails toward the verifier) are the seam's arbitration, and a consumer's Stacy/Thurgood pair has the same seam. **Should re-point**: keep the routing test and the tiebreak, and drop the verb enumeration.
 
+## `#frontmatter:commands[owed-set]`
+
+signer: stacy
+date: 2026-10-23
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `commands[owed-set]` (re-pointed; first signature)
+canonicalHash: sha256:c94626b6c44d7bc48d98e8e945231e581850c0107dffb5804bb340c2f76a416f
+renderedHash: sha256:7f0f754998d77cbe09f875f8ddce55a27e431ba2226d1adc184cac7e77fafbad
+verdict: assent — surviving 0/0
+
+**FIRST SIGNATURE 2026-10-23 - ASSENT to `re-pointed` (`surviving: []`).** The row was routed (`re-pointed-entry`) with no signature; this is its first. It is the entry I authored in #439 and said I would sign once the routes floor made it routed (see the owed-set unit's 2026-10-22 re-sign, "`commands[owed-set]` is not signed in this act").
+- Canonical: `cmd: ./scripts/owed-set.sh`, `runContext: this-repo`. Consumer: `cmd: bash node_modules/@3fn/core/scripts/owed-set.sh --specs-dir specs`, `runContext: consumer-repo`; the cue drops "since ratification" for "since adoption", which is the consumer's boundary.
+- **Checked against the script's output, not the rendering alone.** `package.json` `files` ships `scripts/owed-set.sh` and the package is `@3fn/core`, so `node_modules/@3fn/core/scripts/owed-set.sh` resolves in an install. I built a scratch consumer repo (a committed `designerpunk.manifest.json`, `specs/001-a/` with `tasks.md` and a completion doc, `specs/002-b/`; the shipped script copied to `node_modules/@3fn/core/scripts/`) and ran the exact rendered command: exit 0; two `candidate` rows (classes b and c); count line `owed-set: 2 candidates; excluded: 0 closed, 0 open, 0 stub, 0 touch-only; classes a/b/c = 0/1/1; 0 specs without activity since 2026-10-23; adoption 2026-10-23 from designerpunk.manifest.json (first commit); ref bab9898`. Row-sum identity holds (2 = 2 + 0). The rendered cue (rows classed candidate / closed / open / stub / touch-only, then a count line whose row-sum identity is read first, candidates not verdicts) describes that output.
+- `--specs-dir specs` matches the rendered spec root (`specs/[spec]/completion/...` in the rendered Task Completion Protocol), and "run from your product repo" (rendered at the Commands line) matches the script's own contract (relative to the current directory, inside the repository).
+- Frontmatter entry with no operative items, so `surviving: []` is the itemized form. Hash covers the rendered Commands line in the cc agent and the kiro prompt.
+
+## `#frontmatter:knowledgeBases[completion-docs]`
+
+signer: stacy
+date: 2026-10-23
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `knowledgeBases[completion-docs]` (re-pointed; first signature)
+canonicalHash: sha256:82c776bcd02ee331d0598bb4c3b70cf504945269bdc6bbb44ffab2e0bcfb06c0
+renderedHash: sha256:e07af49a954f79a49c71447c8d66b153ae8d6682aa9199aab51a35af12d4c6f3
+verdict: assent — surviving 0/0
+
+**FIRST SIGNATURE 2026-10-23 - ASSENT to `re-pointed` (`surviving: []`).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- Canonical glob `.kiro/specs/*/completion/**`; consumer glob `specs/*/completion/**`. The glob names the consumer's own repository path, not a file the package must ship, so `package.json` `files` does not apply to it (`spec-summaries`, `specs/*/task-*-summary.md`, was signed on the same footing). The consumer's rendered Task Completion Protocol puts parent and subtask completion docs at `specs/[spec]/completion/task-N-completion.md` and `task-N-M-completion.md`, which this glob matches, and the rendered claims-pass record path reads `<your specs dir>/<spec>/completion/claims-pass.md`, which it also matches.
+- The rendered knowledge-base line reads "completion-docs: search these paths with Grep/Glob: specs/*/completion/**". Function survives: the role still has a named place to search for completion docs.
+- Frontmatter entry with no operative items, so `surviving: []` is the itemized form.
+
+## `#frontmatter:writeScope[.kiro/specs/**]`
+
+signer: stacy
+date: 2026-10-23
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · frontmatter · `writeScope[.kiro/specs/**]` (re-pointed; first signature)
+canonicalHash: sha256:76dd995bd46d11ee5ec9766b1f42ecc7ef522b514bdab8deb009d3c916fc26b3
+renderedHash: sha256:10c4bda47e82a1de6ad1bbd4bf50cabf60da7d49e5faa755f370a7c6745462cd
+verdict: assent — surviving 0/0
+
+**FIRST SIGNATURE 2026-10-23 - ASSENT to `re-pointed` (`surviving: []`).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- `.kiro/specs/**` re-points to `specs/**`. The consumer repo has no `.kiro/` spec tree; the rendered Task Completion Protocol puts completion docs at `specs/[spec]/completion/...` and summary docs at `specs/[spec]/task-N-summary.md`, so `specs/**` is the consumer's spec root and covers where I write claims-pass records and lessons.
+- My rendered write scope is `specs/**` alone: cc `stacy.md` "Write scope" lists one path, and `kiro/.kiro/agents/stacy.json` `toolsSettings.write.allowedPaths` is `["specs/**"]`. Judged from my own rendering, nothing widens the seat; the value is the one Ada, Data, Kenya, Leonardo, Lina and Sparky signed.
+- `writeScope[docs/specs/**]` is already `superseded-by` this entry (signed by me), so one rendered entry carries both canonical paths. `writeScope[.kiro/issues/**]` stays `no-consumer-counterpart`.
+- Frontmatter entry with no operative items, so `surviving: []` is the itemized form.
+
 ## Signing run summary (2026-09-29, phase two, run 1)
 
 **Scope**: this run covers three dispositions files, 76 rows in all:

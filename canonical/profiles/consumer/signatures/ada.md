@@ -374,6 +374,25 @@ signer: ada
 - The same ground as `commands[functional-suite]`. "Run the token-specific suites" is carried by the destination's "Run token tests with your repo's own test runner and scripts …".
 - The cite (subtraction-1, the repo-specific `npm test -- src/tokens/__tests__/`) applies.
 
+## `#frontmatter:description`
+
+signer: ada
+
+**FIRST SIGNATURE 2026-10-23 — ASSENT to `re-pointed` (`surviving: []`, since a frontmatter entry carries no operative items).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- The value differs from canonical in one clause: "Token creation always requires Peter's review." becomes "...your human lead's review." The rest, including the Lina and Thurgood hand-off names, is byte-identical.
+- The re-pointing is the same "Peter" to "your human lead" re-keying my rendered `#identity` already carries (subtraction-2), so the description and the body agree on who decides.
+- The function survives: the rule that token creation needs human review is kept, and it is also carried inline by the retained `token-governance` embed.
+- The hash covers every rendered piece (`cc/.claude/agents/ada.md` and `kiro/.kiro/agents/ada.json`).
+
+## `#frontmatter:writeScope[.kiro/specs/**]`
+
+signer: ada
+
+**FIRST SIGNATURE 2026-10-23 — ASSENT to `re-pointed` (`surviving: []`).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- `.kiro/specs/**` re-points to `specs/**`. The consumer repo has no `.kiro/` spec tree: the consumer's rendered Task Completion Protocol puts completion docs at `specs/[spec]/completion/...` and summary docs at `specs/[spec]/task-N-summary.md`, so the scope covers what the role must write.
+- `writeScope[docs/specs/**]` is already `superseded-by` this entry, so one scope entry carries both canonical paths, and nothing is left unreachable.
+- The re-pointed value is the same `specs/**` the other six seats carry.
+
 ## Signing run summary (2026-09-29, phase two)
 
 - **Commits** on `task/123-u2b-fr2-ada`, from `60b0fdb5`, not pushed:

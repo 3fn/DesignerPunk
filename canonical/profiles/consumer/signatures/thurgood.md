@@ -1310,3 +1310,18 @@ renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb098
 verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/__tests__/issues-owned.test.ts`: the Jest file that tests that command (18 cases, including the offline and timeout fixtures). Added to the charter's write scope by ballot `2026-10-20-manual-records-routed-readers` (RATIFIED, Peter, 2026-10-20) F-1 (a), so the steward may author the owner's session-start read (Thurgood, `fadc095e4`). It reads this repo's root `.kiro/issues/` records and `origin/main`, and is not in the package's `files`, so a consumer has no copy to own. 0 rendered pieces (fresh temp-tree rendering as above, 113 of 113 byte-identical), so the renderedHash is the empty-span hash. I assent that nothing survives.
+
+## `#frontmatter:writeScope[.kiro/specs/**]`
+
+signer: stacy
+date: 2026-10-23
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[.kiro/specs/**]` (re-pointed; first signature)
+canonicalHash: sha256:76dd995bd46d11ee5ec9766b1f42ecc7ef522b514bdab8deb009d3c916fc26b3
+renderedHash: sha256:b042dea15004fb32164094a758c93babad02a40b1729f5cab9ce646ef2282593
+verdict: assent — surviving 0/0
+
+**FIRST SIGNATURE 2026-10-23 - ASSENT to `re-pointed` (`surviving: []`), C1 carve-out for the profile author's unit.** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- `.kiro/specs/**` re-points to `specs/**`. The consumer's spec root is `specs/` (rendered Task Completion Protocol: `specs/[spec]/completion/...`, `specs/[spec]/task-N-summary.md`), so the path covers where Thurgood formalizes specs, writes feedback docs and holds completion docs.
+- His rendered write scope is `src/__tests__/**` and `specs/**` (cc `thurgood.md` "Write scope"; `kiro/.kiro/agents/thurgood.json` `allowedPaths`): the first is the retained `writeScope[src/__tests__/**]` row, the second this entry. Nothing here widens his seat; it is the same value the other six seats signed for their own units.
+- `writeScope[docs/specs/**]` is `superseded-by` this entry (signed), so the summary location is covered by the same rendered path. `writeScope[.kiro/issues/**]` and the repo-instrument paths stay `no-consumer-counterpart`.
+- Frontmatter entry with no operative items, so `surviving: []` is the itemized form.

@@ -105,6 +105,7 @@ describe('verify-signing-chain --ci — link 1 for a first signature (T-CI)', ()
     ['r7, body superseded-by', '#eta'],
     ['r2, body ROUTES repo-specific-removal', '#beta'],
     ['members no-consumer-counterpart', 'm:m-one'],
+    ['r10, frontmatter re-pointed — C18 clause 5, re-pointed-entry', 'fm:tools[x]'],
   ])('FU11 (%s): a first signature on a listed row → pass', (_n, k) => {
     const [repo, base] = repoWith();
     sign(repo, k);
@@ -130,7 +131,6 @@ describe('verify-signing-chain --ci — link 1 for a first signature (T-CI)', ()
   test.each([
     ['r3, CLEARS', '#gamma'],
     ['r4, INAPPLICABLE', '#delta'],
-    ['r10, frontmatter re-pointed', 'fm:tools[x]'],
     ['r11, retained frontmatter', 'fm:model'],
   ])('FU13 (%s): a first signature on an unrouted row → fail, link 1', (_n, k) => {
     const [repo, base] = repoWith();
