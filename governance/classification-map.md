@@ -1162,9 +1162,10 @@ verification:
   # The ladder (rulings item 26, D-1): held by the walk record and the monthly walk; the second miss on a token-bearing record promotes the grep to a committed script under a scoped grant
   # Rule line updated at application as PRE-DECLARED EXECUTION of Peter's F-A1 = (b) ruling (ballot 2026-10-18-obligation-drain-and-release-falsity-floor § 9, 2026-10-18): a P2 (guard) escalates at lapse 1, like P0 (.kiro/issues/README.md rule 11)
 education:
-  disposition: "LAW HOME: this ballot M1, M2, M4–M6. POINTER-GRADE: .kiro/issues/README.md rules 1, 5, 6, 10–12"
+  disposition: "LAW HOME: this ballot M1, M2, M4–M6; ballot 2026-10-22-trigger-names-the-event-not-the-vehicle § 2 (rule 1's trigger-names-the-event sentence and its two-question test). POINTER-GRADE: .kiro/issues/README.md rules 1, 5, 6, 10–12"
 history:
   - { date: 2026-10-18, change: "entry created (steward, window-free — the certainty-calibration precedent) by ballot 2026-10-18-obligation-drain-and-release-falsity-floor", by: thurgood }
+  - { date: 2026-10-22, change: "README rule 1 gains the trigger-names-the-event sentence (ballot 2026-10-22-trigger-names-the-event-not-the-vehicle); rule line, checks and check_state unchanged", by: thurgood }
 ```
 
 ### release-falsity-floor
