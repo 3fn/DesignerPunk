@@ -4,6 +4,12 @@ All notable consumer-facing changes to `@3fn/core` are recorded here, one entry 
 
 This file starts with Spec 123 ("Consumer Distribution"). Earlier releases are not backfilled here.
 
+## [Unreleased]
+
+### Changed
+
+- **Theme text in the docs and the agent charters now says what `generate` emits.** `data-theme` goes on `<html>` and themes the whole page, because the one emitted theme block, `:root[data-theme="wcag"]`, matches only the document root; whether an element can theme its own subtree is not decided yet. A theme you register in `designerpunk.config.ts` is read and listed as "registered, not applied yet", and the Swift and Kotlin theme types are not generated yet (Spec 129 plans them). The Sparky and Ada charters, `governance/Token-Governance.md`, `Token-Quick-Reference.md`, `Token-Semantic-Structure.md` and `Rosetta-System-Architecture.md` were corrected to match. No generated output changes.
+
 ## [16.0.0] — 2026-10-16 — Release 4 (the `Input-Radio-Set` group name, install-guide corrections, `init` off a terminal)
 
 This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a custom theme you register in `designerpunk.config.ts` does not change your generated output yet; light and dark mode work.
