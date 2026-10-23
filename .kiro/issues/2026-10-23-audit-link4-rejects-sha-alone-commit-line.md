@@ -99,3 +99,4 @@ The joint recommendation is Thurgood's and Stacy's consult R2 on the orchestrato
   - **Trigger** re-ruled to the re-read commit (ballot R1 A7), prior text inline.
   - **§ 6 item 3's summary is narrower in the ballot**: route (ii) requires a `git log` in the call (ballot R1 A6, accepted by Stacy). The summary above stands as written at the time; the ballot governs.
 
+- **2026-10-23 (Thurgood), ballot RATIFIED.** Peter ratified `2026-10-23-link4-candidate-first-sha-after-commit` in chat, 2026-10-23: "Re: 1, ratified." (ballot § 9). The Trigger's event (the re-read commit after the application PR merges, ballot § 5 step 9) now has its authority. Nothing is applied: the application waits for Spec 129's first unit, opens by 2027-03-21, and both re-reads land before 2027-04-21. The record stays ACTIVE and closes at the re-read (step 10).
