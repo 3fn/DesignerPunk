@@ -138,9 +138,8 @@ tokens:
     - icon.size600
     - icon.size700
     - icon.strokeWidth
-  blend:
-    - blend.iconLighter
   color:
+    - color.icon.opticalBalance
     - color.print.default
 
 # Supported platforms

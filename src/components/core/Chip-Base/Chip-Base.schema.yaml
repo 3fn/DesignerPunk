@@ -101,8 +101,6 @@ properties:
 # Behavioral contracts moved to contracts.yaml
 # Design tokens this component requires
 tokens:
-  component:
-    - chip.paddingBlock
   typography:
     - typography.buttonSm
   color:
@@ -111,10 +109,11 @@ tokens:
     - color.text.default
     - color.action.primary
   spacing:
+    - space.inset.075
     - space.inset.150
     - space.grouped.tight
   border:
-    - borderDefault
+    - border.default
     - radius.full
   motion:
     - motion.selectionTransition

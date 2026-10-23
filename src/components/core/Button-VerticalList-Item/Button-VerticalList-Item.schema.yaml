@@ -93,8 +93,8 @@ properties:
 
 tokens:
   component:
-    - verticalListItem.paddingBlock.rest
-    - verticalListItem.paddingBlock.selected
+    - verticallistitem.paddingBlock.rest
+    - verticallistitem.paddingBlock.selected
   color:
     - color.feedback.error.background
     - color.feedback.error.text
@@ -103,9 +103,6 @@ tokens:
     - color.feedback.select.text.default
     - color.feedback.select.text.rest
     - color.icon.opticalBalance
-    - color.select.notSelected.subtle
-    - color.select.selected.strong
-    - color.select.selected.subtle
     - color.structure.canvas
     - color.text.default
     - color.text.muted
@@ -123,14 +120,12 @@ tokens:
     - blend.hoverDarker
     - blend.pressedDarker
   border:
-    - borderDefault
-    - borderEmphasis
+    - border.default
+    - border.emphasis
   radius:
-    - radiusNormal
+    - radius.normal
   spacing:
     - space125
-  opacity:
-    - opacity.animation
 
 platforms:
   - web

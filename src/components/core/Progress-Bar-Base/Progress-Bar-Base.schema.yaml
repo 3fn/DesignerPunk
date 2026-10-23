@@ -79,7 +79,7 @@ tokens:
     - size100
     - size150
   border:
-    - radiusFull
+    - radius.full
   motion:
     - duration150
     - duration350

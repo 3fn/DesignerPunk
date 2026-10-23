@@ -134,10 +134,6 @@ tokens:
   spacing:
     - space.inset.100
     - space.grouped.tight
-  composition:
-    - buttonIcon.inset.medium
-    - buttonIcon.size.medium
-    - icon.size075
   motion:
     - duration150
     - duration350

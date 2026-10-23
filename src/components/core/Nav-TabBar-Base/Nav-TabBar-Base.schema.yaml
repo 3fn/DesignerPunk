@@ -97,7 +97,7 @@ tokens:
     - space.inset.200
     - space.grouped.minimal
   border:
-    - radiusFull
+    - radius.full
   opacity:
     - opacity024
     - opacity000

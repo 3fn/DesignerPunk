@@ -99,10 +99,9 @@ properties:
 
 tokens:
   color:
-    - color.error.strong
     - color.feedback.error.text
   typography:
-    - typography.body.small
+    - typography.bodySm
 
 platforms:
   - web
