@@ -286,6 +286,43 @@ signer: data
 - **Why it holds.** The clause *"including your theme Kotlin"* was removed, not reworded (my R1 and R2 of claims-pass finding R-1). What remains is true: `generate` writes the platform token files and, when `productTokens` is configured, the product Kotlin (`src/cli/generateProductTokens.ts`). "And `designerpunk.config.ts`" does not overclaim: the config drives `tokenSource`, `output`, `productTokens`, component-token directories and `name`/`abbreviation` into the product tokens; it names a trigger to regenerate, not that every config key (the `themes` list is inert) changes output. Ada's fact-check is reported TRUE in the brief; I relied on my own read of the source. The command, `runContext` and source are unchanged and still re-point `npm run generate:platform-tokens` (subtraction-1).
 - **Erratum.** My 2026-09-29 final re-sign above says the rendered cue's command *"materialises the `{Name}Theme` / `Local{Abbreviation}Theme` Kotlin"*. That was wrong: a consumer's `generate` emits no theme surface today. This entry supersedes it.
 
+## `#frontmatter:commands[android-build-test]`
+
+signer: data
+
+**FIRST SIGNATURE 2026-10-23 — ASSENT to `re-pointed` (`surviving: []`, since a frontmatter entry carries no operative items).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- Canonical `gap` is "no gradlew / Android app exists in THIS repo (it is the design-system source, not an Android app) — Android build & instrumentation run from the product app's android/ dir: ...". The consumer value drops the design-system-repo clause and says "run from this product app's android/ dir"; the four `./gradlew` commands (`assembleDebug`, `test`, `connectedAndroidTest`, `connectedDebugAndroidTest`) and the cue are byte-identical.
+- It is right for a consumer: the consumer repo IS the Android app, so the gradle commands run there. The rendering (cc `data.md`, kiro `data-prompt.md`) appends "(run from your product repo)", which agrees with `runContext: consumer-repo`.
+- The function survives: the role still knows which commands build, unit-test and instrument-test an Android app.
+
+## `#frontmatter:commands[product-screen-commands]`
+
+signer: data
+
+**FIRST SIGNATURE 2026-10-23 — ASSENT to `re-pointed` (`surviving: []`).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- Canonical says product-screen commands "are per-product and cannot be extracted in this repo — they live in the consumer Android app". The consumer value says they are per-product and to "read them from this Android app's own build setup". `runContext: per-product`, `authoredPerProduct: true` and the cue are unchanged.
+- It is right for a consumer: the "cannot be extracted in this repo" framing is about the design-system source; in a consumer repo the commands are in the app's own build files, and the re-pointed text points the role there. It matches the `#what-you-dont-own` destination ("read it from the app's build setup before you run anything").
+- The function survives: the role is told these commands are not a DesignerPunk-supplied set and where to find them.
+
+## `#frontmatter:knowledgeBases[android-components]`
+
+signer: data
+
+**FIRST SIGNATURE 2026-10-23 — ASSENT to `re-pointed` (`surviving: []`).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- The glob re-points from `src/components/core/*/platforms/android/**` to `node_modules/@3fn/core/src/components/core/*/platforms/android/**`. A consumer repo has no `src/components/core/`; the Android component sources arrive in the installed package.
+- Checked against the package manifest in this worktree: `package.json` `files` ships `src/components/core/**/platforms/android/*.kt` and `.../android/res/**` (minus `*Test.kt`), so the re-pointed path exists in a consumer install and `android/**` covers what ships.
+- `knowledgeBases[android-tests]` is already `no-consumer-counterpart` (test sources do not ship), so nothing is left pointing at a path that is absent.
+- Both renderings carry the path (cc: "search these paths with Grep/Glob"; kiro: "search these paths").
+
+## `#frontmatter:writeScope[.kiro/specs/**]`
+
+signer: data
+
+**FIRST SIGNATURE 2026-10-23 — ASSENT to `re-pointed` (`surviving: []`).** The row was routed (`re-pointed-entry`) with no signature; this is its first.
+- `.kiro/specs/**` re-points to `specs/**`. The consumer repo has no `.kiro/` spec tree; its Task Completion Protocol puts completion docs at `specs/[spec]/completion/...` and summary docs at `specs/[spec]/task-N-summary.md`, so the scope covers what the role writes. Same reasoning Ada signed at `1ddac1d23`.
+- `writeScope[docs/specs/**]` is already `superseded-by` this entry, so the one scope entry carries both canonical paths. `writeScope[.kiro/issues/**]` stays `no-consumer-counterpart`.
+- The hash covers all three renderings (cc `data.md`, kiro `data-prompt.md`, kiro `data.json`).
+
 ## Signing run summary (2026-09-29, phase two)
 
 - **Commits** (branch `task/123-u2b-fr2-data`, not pushed):
