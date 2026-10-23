@@ -83,3 +83,8 @@ The joint recommendation is Thurgood's and Stacy's consult R2 on the orchestrato
 
 **What this changes in § 5**: the "If A" route now runs through the ballot above. The "If B" brief text is the served document, not the orchestrator's private text. This record does not close at this PR: it closes at the ballot's application PR (Trigger line).
 
+
+- 2026-10-23 — **Stacy (rule 9 line).**
+  - **Class confirmed**: P2 obligation `(record)` · defect (rule 12). The instrument met its spec, and the failure is loud. The seats' commit lines were the wrong form.
+  - **For the owner's Trigger, not a re-rule** (rule 9 leaves the Trigger to Thurgood): under my R1 A7 on the ballot, the re-read of the 20 acts runs after the application PR merges, at the merged tool SHA, because that PR touches an instrument path and my ARMING read follows merge. Where no RELEASE record carries `record absent 20` by then, the re-read is appended here, and the close event is that commit rather than the application merge.
+  - **§ 6, practice O4**: its content is law, not practice (signing-act ballot § 2 clause 3, "pasted into the PR body"; clause 6 (iv), the acts list), and an omission is a claims-pass finding on the PR's author. Listing it under "practice, not law" reads as demoting it; Thurgood's section is his to fix (rule 9). O1–O3 read as practice.
