@@ -137,11 +137,16 @@ async function main() {
     console.log('📊 Token Index Generation:\n');
     const { generateTokenIndex } = await import('../src/generators/generateTokenIndex');
     const { ComponentTokenRegistry } = await import('../src/registries/ComponentTokenRegistry');
-    // Class C′ (Spec 118 Task 9.5.2): resolve the component-schema scan root from the
-    // active config (default `<configDir>/src/components/core`) and pass it in, mirroring
-    // the CLI's runGenerate path — so the package's own build feeds the generator its own
-    // resolved root rather than the generator computing it from __dirname.
-    const componentSchemaDir = path.resolve(config.configDir, 'src/components/core');
+    // The component root set, through the same resolver the CLI's runGenerate and the
+    // Application MCP use (R1-7; `resolveGenerateComponentRoots` in src/cli/designerpunk.ts).
+    // At the package's own root the repo is package-mode, so the set is the package root
+    // alone: `<repo>/src/components/core`, as before.
+    const { resolveComponentRoots } = await import('../src/cli/shared/mcpDataRoots');
+    const { findDesignSystemRoot } = await import('../src/cli/shared/bornRepo');
+    const componentSchemaDir = resolveComponentRoots({
+      dsRoot: findDesignSystemRoot(config.configDir),
+      packageRoot: path.resolve(__dirname, '..'),
+    }).roots;
     generateTokenIndex(path.resolve(process.cwd(), 'token-index'), {
       primitiveTokens: tokenInput.primitiveTokens,
       semanticTokens: tokenInput.semanticTokens,

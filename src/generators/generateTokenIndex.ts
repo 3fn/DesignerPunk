@@ -19,6 +19,7 @@ import { WebFormatGenerator } from '../providers/WebFormatGenerator';
 import { iOSFormatGenerator } from '../providers/iOSFormatGenerator';
 import { AndroidFormatGenerator } from '../providers/AndroidFormatGenerator';
 import type { ModeResolvedTokens, PrimitiveOklchModes } from './ModeResolvedTokens';
+import { resolveComponentSources } from '../cli/shared/componentSources';
 
 /**
  * Required input for token-index generation.
@@ -35,16 +36,16 @@ export interface TokenIndexInput {
    */
   modeResolved: ModeResolvedTokens;
   /**
-   * Absolute path to the consumer's component-schema scan root — the directory whose
-   * `<Component>/*.schema.yaml` files seed the token→[components] consumer map
-   * (Spec 118 Task 9.5.2, Class C′; ratified default-only). This is resolved by the
-   * CALLER from the active config (default `<configDir>/src/components/core`) and passed
-   * in, so `generateTokenIndex` stays a pure function of its inputs — it no longer
-   * computes the scan root from `__dirname` (which hard-bound the scan to the PACKAGE's
-   * components, ignoring the schemas a consumer adds/edits in their own repo and the
-   * same source the application MCP already reads via `COMPONENTS_DIR`).
+   * The component ROOT SET whose `<Component>/*.schema.yaml` files seed the
+   * token→[components] consumer map, in precedence order: the consumer's root first, the
+   * package's `src/components/core` last — what `resolveComponentRoots`
+   * (`src/cli/shared/mcpDataRoots.ts`) produces, the set the Application MCP serves. The
+   * union is resolved by `resolveComponentSources` (`src/cli/shared/componentSources.ts`):
+   * one component per declared name, the consumer's winning (R1-7; ruling 2026-10-23 § 4).
+   * A single string is the single-root form. Resolved by the CALLER and passed in, so
+   * `generateTokenIndex` stays a pure function of its inputs (Spec 118 Task 9.5.2, Class C′).
    */
-  componentSchemaDir: string;
+  componentSchemaDir: string | string[];
   /**
    * Absolute path to the LIVE token tier this index's data came from (e.g.
    * `config.tokenSourceRoot` — the consumer's own tier when born, or the package's
@@ -88,24 +89,25 @@ function buildOklchEntry(modes: PrimitiveOklchModes): {
   };
 }
 
-/** Build a map of token name → consuming component names from schema.yaml files. */
-function buildConsumerMap(componentsDir: string): Map<string, string[]> {
+/**
+ * Build a map of token name → consuming component names from the schema.yaml files of the
+ * component universe `componentRoots` resolves to (one component per declared name; a
+ * consumer's component replaces a package component of the same name).
+ */
+function buildConsumerMap(componentRoots: string | string[]): Map<string, string[]> {
   const map = new Map<string, string[]>();
 
-  if (!fs.existsSync(componentsDir)) return map;
-
-  for (const dir of fs.readdirSync(componentsDir, { withFileTypes: true })) {
-    if (!dir.isDirectory()) continue;
-    const schemaFiles = fs.readdirSync(path.join(componentsDir, dir.name))
+  for (const source of resolveComponentSources(componentRoots).winners) {
+    const schemaFiles = fs.readdirSync(source.dirPath)
       .filter(f => f.endsWith('.schema.yaml'));
 
     for (const schemaFile of schemaFiles) {
       try {
-        const content = fs.readFileSync(path.join(componentsDir, dir.name, schemaFile), 'utf-8');
+        const content = fs.readFileSync(path.join(source.dirPath, schemaFile), 'utf-8');
         const schema = yaml.load(content) as any;
         if (!schema?.tokens) continue;
 
-        const componentName = schema.name || dir.name;
+        const componentName = schema.name || source.dir;
         // `tokens:` is a map of group-name → token refs. The canonical (Stemma) form
         // is an ARRAY of refs per group (e.g. `inherited: [color.action.primary, ...]`);
         // earlier scalar/object forms are tolerated for back-compat. Flatten both.
@@ -153,12 +155,11 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
   const primitives = input.primitiveTokens;
   const semantics = input.semanticTokens;
 
-  // Build consumer map from the consumer's component schemas (Spec 118 Task 9.5.2,
-  // Class C′). The scan root is resolved by the caller from the active config and
-  // passed in via `input.componentSchemaDir` — NOT computed from `__dirname` here.
-  // This aligns the relationship map with the consumer's design system (the same
-  // source the application MCP reads via COMPONENTS_DIR), so a consumer's added/edited
-  // component appears in their generated index.
+  // Build the consumer map from the component universe the caller resolved (Spec 118
+  // Task 9.5.2, Class C′; R1-7): the consumer's components AND DesignerPunk's, the set
+  // the Application MCP serves, so a consumer's added or forked component and every
+  // package component appear in their generated index. Passed in via
+  // `input.componentSchemaDir` — NOT computed from `__dirname` here.
   const consumerMap = buildConsumerMap(input.componentSchemaDir);
 
   // Families that generate inside nested namespaces (enum/object) on iOS/Android.
