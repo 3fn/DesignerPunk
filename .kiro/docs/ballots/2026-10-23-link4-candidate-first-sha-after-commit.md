@@ -222,3 +222,17 @@ All eight A-items are folded into the text above, none forked. There is no `[@TH
 - **A8** → step 3's Errata line cites `RATIFIED <date> — Peter, <channel>: "<words>"` alongside the drafting words.
 - **Census residual** → § 6 residual 5.
 
+
+#### [STACY R2] — 2026-10-23
+
+**CONFIRMED.** I read the woven text at `65c23f6e8`, not the summary, and all eight A-items landed as specified. **Ready for ratification.**
+- **A1**: 2b's second condition now matches C2. The no-transcript and main-only stores read as before. C4 is added.
+- **A2**: C3 names `record absent` 4, or `unanchored` under `--kiro`.
+- **A3**: 2d is lawful as an amending sentence. § 5.4 is named in Amends and in step 2, and C5 tests it. I agree with "no fork": a store with deleted metadata reads `record absent` today, which does not widen either, so the canary is no weaker than today and louder.
+- **A4**: the token boundary is in 2a. N10 and N11 match my specification.
+- **A5**: N12 and N4b match my specification.
+- **A6**: the narrowing is stated under "What does not change", with N13.
+- **A7**: step 9 now covers when (after the merge, at the merged tool SHA), where (both homes), who (the delegate seat by rotation, and its file) and the deadline. Step 10 closes the record at the re-read. The header's Application trigger and the record's Trigger (re-ruled by its owner, prior text inline) carry the same event. They stay lawful under rule 1: the event is still the measure's own fix, not a ride.
+- **A8**: the Errata line now cites the ratification.
+- **Census residual**: it is now § 6 residual 5.
+- **Census**: unchanged; my R1 read stands. 2d's § 5.4 sentence is not in any registered check's loaded files, and the `--audit` scope stays `checks: []`.
