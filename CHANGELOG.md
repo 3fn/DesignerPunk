@@ -4,6 +4,18 @@ All notable consumer-facing changes to `@3fn/core` are recorded here, one entry 
 
 This file starts with Spec 123 ("Consumer Distribution"). Earlier releases are not backfilled here.
 
+## [Unreleased]
+
+### Changed
+
+- **`get_token_consumers` now finds DesignerPunk's components, and finds consumers of primitive and component tokens as well as semantic ones.** Before, it answered only for semantic tokens and, in a repo created with `init`, only for components in your own repo. A component that declared a token under an old or misspelled name was missed as well: 97 of the 532 token names DesignerPunk's component schemas declared matched no token, among them `color.error.strong`, `radiusFull` and `blend.iconLighter`. Those schemas now use the token names in the token index, and the token index lists consumers on primitive and component tokens as well as semantic ones. In a repo created with `init`, the consumers now include DesignerPunk's components as well as your own; where one of yours declares the same name as one of DesignerPunk's, yours is counted and DesignerPunk's is not. **Run `npx designerpunk generate` after upgrading, and after every later upgrade**: your token index is rebuilt then, not at install, and which of DesignerPunk's components it counts depends on the version you have installed. If one of DesignerPunk's components declares a token your token source no longer has, `generate` now names it in a warning: that component reads a CSS variable or constant your generated output no longer has. `generate` also warns about any of your own schemas that declare a token name your token source does not have (the name must match exactly, case included). Neither warning stops `generate`.
+- **In package mode** (a `designerpunk.config.ts` with no `tokenSource`), `generate` now counts DesignerPunk's components as consumers and no longer reads a `src/components/core` folder in your repo, so its token index counts the components the Application MCP serves.
+
+### Known limitations in this release
+
+- The 16.0.0 limitation "In a repo created with `init`, `get_token_consumers` counts only your own components" no longer applies (see "Changed"). What remains: in a repo created with `init`, DesignerPunk's own component tokens, other than the Progress components' (for example `avatar.size.md` and `buttonicon.size.medium`), are not in your token index, so `get_token_details` does not find them and `get_token_consumers` lists no consumers for them. `generate` says so in a one-line note. Tracked: `.kiro/issues/2026-10-23-born-repo-index-lacks-package-component-tokens.md`.
+- `get_token_consumers` lists the components whose schemas declare a token. Some of DesignerPunk's components read tokens their schemas do not declare yet (for example Button-CTA reads `shadow.hover` and `tapAreaMinimum`), and those components are not listed for them. Tracked: `.kiro/issues/2026-10-23-component-token-usage-findings-from-drift-pass.md`, item 4.
+
 ## [16.0.0] — 2026-10-16 — Release 4 (the `Input-Radio-Set` group name, install-guide corrections, `init` off a terminal)
 
 This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a custom theme you register in `designerpunk.config.ts` does not change your generated output yet; light and dark mode work.
