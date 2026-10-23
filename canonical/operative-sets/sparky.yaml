@@ -82,16 +82,20 @@ units:
     items:
       - id: theming-1
         kind: obligation
-        label: "Web theming uses data-theme attribute on HTML elements — all"
-        text: "Web theming uses `data-theme` attribute on HTML elements — all descendant DesignerPunk components inherit themed CSS custom property values automatically (including through Shadow DOM)"
+        label: "Theming is set on <html> and applies page-wide"
+        text: "Web theming uses the `data-theme` attribute on the `<html>` element — all descendant DesignerPunk components inherit themed CSS custom property values automatically (including through Shadow DOM). The generated selector is `:root[data-theme=\"wcag\"]`, which matches only `<html>`, so a theme applies page-wide"
       - id: theming-2
         kind: obligation
-        label: "Base theme applies at :root with no attribute. Custom themes"
-        text: "Base theme applies at `:root` with no attribute. Custom themes activate via `data-theme=\"{name}\"`"
+        label: "Only the wcag block exists; data-theme elsewhere matches nothing"
+        text: "Base theme applies at `:root` with no attribute. One theme block is generated today, `data-theme=\"wcag\"`, set as `<html data-theme=\"wcag\">`. Do not write `data-theme` on any other element expecting scoped theming: on any other element it matches nothing, and the components inside get base values. Whether a subtree can be themed is not decided yet, so it is not available now; do not promise it"
       - id: theming-3
         kind: obligation
-        label: "Dark-only themes set color-scheme: dark and use static value"
-        text: "Dark-only themes set `color-scheme: dark` and use static values (no `light-dark()`)"
+        label: "Dark mode follows the preferred scheme; no dark data-theme block"
+        text: "Dark mode follows the user's preferred colour scheme through the generated `light-dark()` values and `color-scheme` on `:root`. There is no dark `data-theme` block, so there is no dark-only theme to activate"
+      - id: theming-5
+        kind: obligation
+        label: "Registered custom themes do not emit CSS on web yet"
+        text: "A theme registered in `designerpunk.config.ts` does not yet emit CSS on web: `npx designerpunk generate` reports it as \"registered, not applied yet\", and a custom `data-theme=\"{name}\"` value matches nothing. Do not write markup for a custom theme or promise one; if a screen needs one, raise it to Leonardo"
       - id: theming-4
         kind: obligation
         label: "Product repos install @3fn/core and run npx designerpunk gen"
