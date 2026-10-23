@@ -2,8 +2,8 @@
 id: signing-seat-brief
 inclusion: manual
 name: Signing Seat Brief
-description: Every rule a C1 signing or confirming seat follows on a consumer-profile row (bound, own objects, hashes, signature shape, itemized assent, sheet placement, hold form, trailers, the one-line commit print, merge-only), each with its law clause and the place the claims pass checks it, plus the orchestrator's duties when it briefs a seat (quote this doc by path@sha, seats in sequence, the early audit after the first seat). Load when briefing, running or auditing a signing act.
-aliases: signing brief, seat brief, signing act, C1 signing, commit print, git log format, record absent link 4, hold line, early audit
+description: Every rule a C1 signing or confirming seat follows on a consumer-profile row (bound, own objects, hashes, signature shape, itemized assent, sheet placement, hold form, trailers, the one-line commit print, merge-only), each with its law clause and the place the claims pass checks it. A restatement of ratified clauses; it creates no rule. Load when briefing, running or auditing a signing act.
+aliases: signing brief, seat brief, signing act, C1 signing, commit print, git log format, record absent link 4, hold line
 ---
 
 # Signing Seat Brief
@@ -12,7 +12,7 @@ aliases: signing brief, seat brief, signing act, C1 signing, commit print, git l
 
 **Date**: 2026-10-23
 **Last Reviewed**: 2026-10-23
-**Purpose**: The rules a C1 signing or confirming seat follows, each citing its law clause and the place the claims pass checks it, and the orchestrator's duties when it briefs a seat
+**Purpose**: The rules a C1 signing or confirming seat follows, each restating a ratified clause and naming the place the claims pass checks it
 **Organization**: process-standard
 **Scope**: cross-project
 **Layer**: 2
@@ -22,13 +22,14 @@ aliases: signing brief, seat brief, signing act, C1 signing, commit print, git l
 
 ## What this document is
 
-This document creates no rule. Each seat rule below restates a ratified clause and cites it. Where this text and a cited clause differ, the clause governs, and the difference is a defect in this text. The orchestrator section records Peter's 2026-10-23 ruling on the joint recommendation (Thurgood and Stacy, R2): those duties are practice, not law. Record: `.kiro/issues/2026-10-23-audit-link4-rejects-sha-alone-commit-line.md`.
+This document creates no rule. Each rule below restates a ratified clause and cites it. Where this text and a cited clause differ, the clause governs, and the difference is a defect in this text.
 
-Why it exists: on PR #445 all seven seats printed their signing commit in a form `--audit` link 4 cannot read, and all 20 acts read `record absent`. The rule was in the ballot (`2026-10-01-signing-act-chain.md` § 4.3); the seat briefs dropped it. A seat follows its brief exactly, so the rule has to reach the seat through the brief. This document is what the brief points at.
+The authorities it restates:
+- ballot `.kiro/docs/ballots/2026-10-01-signing-act-chain.md` (RATIFIED 2026-10-01), §§ 2, 3, 4.3 and 4.6, with § 2 clause 3 as corrected by its 2026-10-21 erratum and § 2 clause 6 as amended 2026-10-22 by ballot `2026-10-22-hold-act-recorded-in-pr-body` (#444);
+- ballot `.kiro/docs/ballots/2026-10-21-routes-floor-re-pointed-frontmatter-members.md` (RATIFIED 2026-10-22), applied as Spec 123 design § C18 clause 5, for which rows route;
+- the C1 seat function and the signature format: Spec 123 design C16–C17 and Req 11.5.2, 11.5.4 and 11.5.6, implemented in `tools/agent-generator/regrounding/c1.ts` and `signatures.ts`.
 
-Who reads it:
-- **a seat** briefed to sign or confirm a row: § "The seat's rules";
-- **the orchestrator** that writes the brief: § "The orchestrator's duties".
+Why it exists: on PR #445 all seven seats printed their signing commit in a form `--audit` link 4 cannot read, and all 20 acts read `record absent`. The rule was in the ballot (§ 4.3); the seat briefs dropped it. Record: `.kiro/issues/2026-10-23-audit-link4-rejects-sha-alone-commit-line.md`. Under the orchestrator's practice recorded there (§ 6), signing briefs quote this document by path and commit (`governance/signing-seat-brief.md@<sha>`).
 
 Owner: Thurgood (Civitas steward), who maintains it. Edits are Peter-merged.
 
@@ -40,7 +41,7 @@ Owner: Thurgood (Civitas steward), who maintains it. Edits are Peter-merged.
 
 | # | Rule | Law clause | Checked by |
 |---|---|---|---|
-| S1 | **Sign only rows in bound.** A row is in bound when it is on the stale list or the unsigned-routed list your brief pastes. Both are printed by the freshness sweep (`npm run check:122:diff-guard`), taken before signing and re-taken each round. A row outside both lists is not yours to sign under this rule. | signing-act ballot § 2 clause 3 (erratum 2026-10-21); clause 5 | `--ci` link 1 (F5, FU cases) |
+| S1 | **Sign only rows in bound.** A row is in bound when it is on the stale list or the unsigned-routed list your brief pastes. Both are printed by the freshness sweep (`npm run check:122:diff-guard`), taken before signing and re-taken each round. A row outside both lists is not yours to sign under this rule. | signing-act ballot § 2 clause 3 (erratum 2026-10-21); clause 5; which rows route: Spec 123 design § C18 clause 5 (a `re-pointed` frontmatter or members row routes; routes-floor ballot § 2) | `--ci` link 1 (F5, FU cases) |
 | S2 | **Touch only your own objects.** You may write the row's `signature` (or `confirmation`) sub-object, and your section of the row's sheet. Every other field is authoring, not signing: `disposition`, `destination`, `removals`, `cites`, overlay text, operative-set items, any canonical source, your own charter. The signer is `c1Seat(owner)`: the owner, except where the owner is the profile author (Thurgood), where it is Stacy. So Stacy signs the rows of `thurgood.dispositions.yaml` and the `_shared.dispositions.yaml` members Thurgood owns (all of them today). | § 2 clauses 1, 2, 4; `tools/agent-generator/regrounding/c1.ts` | `--ci` link 2 (F4, F12, F12′) and link 3 |
 | S3 | **Leave nothing else in the tree.** A helper script for hashes lives in your session's scratchpad and imports the worktree's modules by absolute path. It never lives in the repo. Before committing, `git status --porcelain` shows only your dispositions file and your sheet. | § 2 clause 6 (iii): every hunk, and every commit carrying one, stays inside the signer's objects | `--ci` link 2 (commit grain) |
 | S4 | **Recompute both hashes; never copy them.** `canonicalHash` equals the unit's pin in the profile's overlay, `<profile>.overlay.md` (`## @unit #<anchor> @ sha256:…` or `## @entry <key> @ sha256:…`), and your recomputation over the current canonical unit (for a frontmatter entry, `hashEntry(value)`, `regrounding/hash.ts`). If the two differ, stop and report: the pin is authoring, not yours to fix. `renderedHash` is `renderedHashOf(readConsumerSpans(<worktree>), rowSpanSource(<canonical source>, <section>, <key>))` (`tools/agent-generator/derive.ts`), over the committed `canonical/_consumer-output/`. A re-sign that moves neither hash is out of bound. | Spec 123 design C17 valve 1 (Req 11.5.6); § 2 clause 3 | `--ci` link 1 (F5) and the freshness sweep (stale signature) |
@@ -70,25 +71,12 @@ EOF
 
 The output is one line: `<40-hex sha> <subject>`. That line is what `--audit` link 4 reads to find the call that created the commit.
 
-This line is the conforming form. When the 2026-10-23 link-4 ballot is applied, the audit test is to take it from this document as its conforming fixture, so the document and the parser cannot drift apart silently.
-
----
-
-## The orchestrator's duties
-
-These are practice, from Peter's ruling of 2026-10-23 ("Proceed with the joint recommendation"). They are not law: omitting one is not a finding on a seat. The audit verdicts stay Stacy's.
-
-| # | Duty | Why |
-|---|---|---|
-| O1 | **Quote this document in every signing or confirming brief** as `governance/signing-seat-brief.md@<sha>`, where `<sha>` is a `main` commit that carries it. Point the seat at § "The seat's rules"; do not paraphrase them. Paste the bound lists (S1) into the brief. | Both #445 misses were in brief assembly. A quoted path@sha shows, in the seat's first message, which rules the brief carried. (It shows in the subagent's first user message and in the parent's `tool_use` input; link 6's `prompt_snapshot` is the charter, not the brief.) |
-| O2 | **Run seats one at a time on one worktree.** Each seat starts from the previous seat's commit. | Two seats in one tree at once can stage each other's files (S3, link 2). |
-| O3 | **Run the early audit after the first seat commits**, before the next seat starts and before the PR opens: `npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --audit --branch <unit-branch>`. If that seat's act reads anything but `anchored`, fix the brief before the next seat runs. | A miss caught after the first seat costs one brief fix. Caught after all seats, it costs one remedy per seat: a re-commit that moves no hash fails F5, and merge-only bars amending. The run is feedback, not a verdict: its output is not a claims-pass record. |
-| O4 | **Carry the record into the PR body**: the stale and unsigned-routed lists as re-taken for the round (S1), and every act and hold line (S8, S12). | § 2 clauses 3 and 6 (iv). |
+This line is the conforming form (§ 4.3). Wiring it into the audit test as the conforming fixture is owed by ballot `.kiro/docs/ballots/2026-10-23-link4-candidate-first-sha-after-commit.md` (DRAFT) at its application.
 
 ---
 
 ## Keeping this document true
 
-- **Edit site.** A ballot that amends a clause cited here lists this document as one of its edit sites, and its application updates the citing row in the same PR.
-- **Fixture.** The audit test takes § "The commit line" as its conforming fixture. That wiring is part of the 2026-10-23 link-4 ballot's application, not of this document's first commit.
+- **Edit site.** A ballot that amends a clause cited here reaches this document through the application's straggler sweep (`.kiro/docs/ballots/README.md` § "Conventions", edit discipline).
+- **Fixture.** Owed by ballot `.kiro/docs/ballots/2026-10-23-link4-candidate-first-sha-after-commit.md` at its application (§ "The commit line").
 - **Kind.** An edit here is Peter-merged (`governance/**`). It names its kind in the PR body (Task-Completion-Protocol § "Branch and PR Conventions").
