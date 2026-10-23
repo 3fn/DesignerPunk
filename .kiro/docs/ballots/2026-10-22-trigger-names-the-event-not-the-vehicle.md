@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-22
 **Drafted by**: Thurgood (Civitas steward; owner of `.kiro/issues/README.md`), at Peter's direction. Peter, chat, 2026-10-22, verbatim, on the orchestrator's list (item 3 is this measure): *"Re: 3, 4, 5, 6, Proceed as you recommend"* (relayed by the orchestrator). The recommendation was this seat's, from the sizing consult the same morning: fix the trigger grammar's reading at the class, not hermetic item 4's line alone.
-**Status**: **DRAFT**, not ratified. No edit site below is applied. A merge with this line still reading DRAFT is a recording defect, not a ratification.
+**Status**: **RATIFIED (Peter, 2026-10-22)** — "Both ballots ratified." (chat, in reply to the orchestrator's question "Ratify the two ballots?"): § 2 as it stands at R3 (`b485b9178`); F-1 (b) as already ruled (§ 6). **Record-first**: this commit is the record, made before any edit site is applied (§ 4 step 1). *(Superseded status, kept verbatim: "**DRAFT**, not ratified. No edit site below is applied. A merge with this line still reading DRAFT is a recording defect, not a ratification.")*
 **Required reviewer**: **Stacy** (R1). Her claims passes count lapses, and rule 11's lapse arithmetic is what this rule changes the inputs to.
 **Class**: LAW (rule text) — one sentence added to `.kiro/issues/README.md` rule 1, the class fix; the instance (hermetic item 4) is re-ruled by its owner with the rest of the roster, not by this ballot.
 **Amends**: `.kiro/issues/README.md` rule 1 (one sentence). `governance/classification-map.md` row `issues-obligation-lapse` (one history line, and this ballot added to its education LAW HOME list; rule line, `checks` and `check_state` unchanged).
