@@ -147,7 +147,7 @@ async function main() {
       dsRoot: findDesignSystemRoot(config.configDir),
       packageRoot: path.resolve(__dirname, '..'),
     }).roots;
-    generateTokenIndex(path.resolve(process.cwd(), 'token-index'), {
+    const indexResult = generateTokenIndex(path.resolve(process.cwd(), 'token-index'), {
       primitiveTokens: tokenInput.primitiveTokens,
       semanticTokens: tokenInput.semanticTokens,
       componentTokens: ComponentTokenRegistry.getAll(),
@@ -156,6 +156,17 @@ async function main() {
       // Spec 123 Task 1.5 (DD24): record the live tier for the theme readers.
       tierDir: config.tokenSourceRoot,
     });
+    // Schema token names the index could not count. Here every schema is DesignerPunk's, and
+    // the same check FAILS as a test (src/generators/__tests__/schemaTokenRefs.test.ts); the
+    // build only warns, so the cause is visible before the suite runs.
+    if (indexResult.unresolved.length > 0 || indexResult.unreadable.length > 0) {
+      const { unresolvedSchemaTokensMessage } = await import('../src/cli/shared/errorCatalog');
+      const rel = (p: string) => path.relative(process.cwd(), p).split(path.sep).join('/');
+      console.warn(`⚠️  ${unresolvedSchemaTokensMessage(
+        indexResult.unresolved.map(r => ({ owner: 'designerpunk' as const, component: r.component, file: rel(r.schemaPath), group: r.group, token: r.token })),
+        indexResult.unreadable.map(u => ({ owner: 'designerpunk' as const, file: rel(u.schemaPath), reason: u.reason })),
+      )}\n`);
+    }
 
     if (allComponentValid) {
       console.log('✨ All platform files generated successfully!');

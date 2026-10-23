@@ -89,48 +89,114 @@ function buildOklchEntry(modes: PrimitiveOklchModes): {
   };
 }
 
+/** One `tokens:` value in one component schema, read the way the consumer map reads it. */
+export interface SchemaTokenRef {
+  /** The component the schema declares (`name`, else the directory name) — the consumer's name. */
+  component: string;
+  /** Absolute path to the schema file. */
+  schemaPath: string;
+  /** The `tokens:` group the value sits under. */
+  group: string;
+  /** The declared token name (a non-string value is stringified, so it can be reported). */
+  token: string;
+  /** Precedence rank of the root the schema came from (0 = the highest; the package root is last). */
+  rank: number;
+}
+
+/** A schema the reader could not parse — all of its declarations are lost, so it is reported. */
+export interface UnreadableSchema {
+  schemaPath: string;
+  reason: string;
+  rank: number;
+}
+
 /**
- * Build a map of token name → consuming component names from the schema.yaml files of the
- * component universe `componentRoots` resolves to (one component per declared name; a
- * consumer's component replaces a package component of the same name).
+ * Read every `tokens:` value of every schema in the component universe `componentRoots`
+ * resolves to (one component per declared name; a consumer's component replaces a package
+ * component of the same name — `resolveComponentSources`).
+ *
+ * The ONE reader of schema token declarations: the consumer map, `generate`'s warning and
+ * the guard test (`__tests__/schemaTokenRefs.test.ts`) all read through it, so they cannot
+ * disagree about what a schema declares. `tokens:` is a map of group → refs; the canonical
+ * (Stemma) form is an ARRAY per group, a scalar group is tolerated, and each ref is a string
+ * or an object's `reference`/`name` (Spec 118 Task 9.5.2 fixed the array reader). An empty
+ * group (`null`) declares nothing. Any other value is kept, stringified, so the guard sees it.
  */
-function buildConsumerMap(componentRoots: string | string[]): Map<string, string[]> {
-  const map = new Map<string, string[]>();
+export function readSchemaTokenRefs(componentRoots: string | string[]): {
+  refs: SchemaTokenRef[];
+  unreadable: UnreadableSchema[];
+  schemaCount: number;
+} {
+  const refs: SchemaTokenRef[] = [];
+  const unreadable: UnreadableSchema[] = [];
+  let schemaCount = 0;
 
   for (const source of resolveComponentSources(componentRoots).winners) {
-    const schemaFiles = fs.readdirSync(source.dirPath)
-      .filter(f => f.endsWith('.schema.yaml'));
-
+    const schemaFiles = fs.readdirSync(source.dirPath).filter(f => f.endsWith('.schema.yaml'));
     for (const schemaFile of schemaFiles) {
+      const schemaPath = path.join(source.dirPath, schemaFile);
+      schemaCount++;
+      let schema: any;
       try {
-        const content = fs.readFileSync(path.join(source.dirPath, schemaFile), 'utf-8');
-        const schema = yaml.load(content) as any;
-        if (!schema?.tokens) continue;
+        schema = yaml.load(fs.readFileSync(schemaPath, 'utf-8'));
+      } catch (err) {
+        unreadable.push({ schemaPath, reason: err instanceof Error ? err.message.split('\n', 1)[0] : String(err), rank: source.rank });
+        continue;
+      }
+      if (!schema?.tokens || typeof schema.tokens !== 'object') continue;
 
-        const componentName = schema.name || source.dir;
-        // `tokens:` is a map of group-name → token refs. The canonical (Stemma) form
-        // is an ARRAY of refs per group (e.g. `inherited: [color.action.primary, ...]`);
-        // earlier scalar/object forms are tolerated for back-compat. Flatten both.
-        // (Spec 118 Task 9.5.2: prior reader treated each group value as a single ref,
-        // so array groups were silently skipped — the consumers map was dead, 0/193.)
-        for (const groupValue of Object.values(schema.tokens) as any[]) {
-          const refs = Array.isArray(groupValue) ? groupValue : [groupValue];
-          for (const tokenRef of refs) {
-            const tokenName = typeof tokenRef === 'string' ? tokenRef : tokenRef?.reference || tokenRef?.name;
-            if (tokenName) {
-              const consumers = map.get(tokenName) || [];
-              if (!consumers.includes(componentName)) consumers.push(componentName);
-              map.set(tokenName, consumers);
-            }
-          }
+      const component = schema.name || source.dir;
+      for (const [group, groupValue] of Object.entries(schema.tokens as Record<string, unknown>)) {
+        const values = Array.isArray(groupValue) ? groupValue : [groupValue];
+        for (const value of values) {
+          if (value === null || value === undefined) continue;
+          const named = typeof value === 'string'
+            ? value
+            : (value as any)?.reference || (value as any)?.name;
+          const token = typeof named === 'string' && named ? named : JSON.stringify(value);
+          refs.push({ component, schemaPath, group, token, rank: source.rank });
         }
-      } catch {
-        // Skip unparseable schemas
       }
     }
   }
 
-  return map;
+  return { refs, unreadable, schemaCount };
+}
+
+/**
+ * Resolve declarations against the token index built in the same run: a declaration
+ * resolves only as an EXACT, case-sensitive key of the primitive, semantic or component-token
+ * index (a component token only under its registry key, `<component lowercased>.<key>`). No
+ * case-folding, no notation normalization, no allowlist (ruling 2026-10-23 § 3a). A resolving
+ * declaration makes its component a consumer of that token; the rest are returned.
+ */
+export function resolveSchemaTokenRefs(
+  refs: SchemaTokenRef[],
+  indexKeys: ReadonlySet<string>,
+): { consumerMap: Map<string, string[]>; unresolved: SchemaTokenRef[] } {
+  const consumerMap = new Map<string, string[]>();
+  const unresolved: SchemaTokenRef[] = [];
+  for (const ref of refs) {
+    if (!indexKeys.has(ref.token)) {
+      unresolved.push(ref);
+      continue;
+    }
+    const consumers = consumerMap.get(ref.token) || [];
+    if (!consumers.includes(ref.component)) consumers.push(ref.component);
+    consumerMap.set(ref.token, consumers);
+  }
+  return { consumerMap, unresolved };
+}
+
+/** What a run wrote, and the schema declarations it could not count. */
+export interface TokenIndexResult {
+  counts: { primitives: number; semantics: number; components: number };
+  /** The component root set the consumer map read, in precedence order. */
+  componentRoots: string[];
+  /** Declarations that are not a key of this run's index — no consumer edge was written. */
+  unresolved: SchemaTokenRef[];
+  /** Schemas that could not be parsed — none of their declarations were read. */
+  unreadable: UnreadableSchema[];
 }
 
 /**
@@ -139,7 +205,7 @@ function buildConsumerMap(componentRoots: string | string[]): Map<string, string
  * @param tokenIndexDir - Absolute or relative (to cwd) path for output. Defaults to 'token-index'.
  * @param input - Required resolved token data from the CLI.
  */
-export function generateTokenIndex(tokenIndexDir: string = 'token-index', input: TokenIndexInput): void {
+export function generateTokenIndex(tokenIndexDir: string = 'token-index', input: TokenIndexInput): TokenIndexResult {
   const outputDir = path.isAbsolute(tokenIndexDir)
     ? tokenIndexDir
     : path.resolve(process.cwd(), tokenIndexDir);
@@ -160,7 +226,14 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
   // the Application MCP serves, so a consumer's added or forked component and every
   // package component appear in their generated index. Passed in via
   // `input.componentSchemaDir` — NOT computed from `__dirname` here.
-  const consumerMap = buildConsumerMap(input.componentSchemaDir);
+  // The universe a declaration can resolve into: every key this run writes, all three tiers.
+  const indexKeys = new Set<string>([
+    ...primitives.map(t => t.name),
+    ...semantics.map(t => t.name),
+    ...input.componentTokens.map(t => t.name),
+  ]);
+  const schemaRefs = readSchemaTokenRefs(input.componentSchemaDir);
+  const { consumerMap, unresolved } = resolveSchemaTokenRefs(schemaRefs.refs, indexKeys);
 
   // Families that generate inside nested namespaces (enum/object) on iOS/Android.
   const NESTED_PRIMITIVE_FAMILIES = new Set([
@@ -297,4 +370,11 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
   console.log(`   Primitives: ${counts.primitives}`);
   console.log(`   Semantics: ${counts.semantics}`);
   console.log(`   Component tokens: ${counts.components}\n`);
+
+  return {
+    counts,
+    componentRoots: resolveComponentSources(input.componentSchemaDir).roots,
+    unresolved,
+    unreadable: schemaRefs.unreadable,
+  };
 }

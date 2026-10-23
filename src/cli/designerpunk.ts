@@ -17,7 +17,8 @@ import * as fs from 'fs';
 import { spawn } from 'child_process';
 import { loadConfig } from '../config/ConfigLoader';
 import { generateTokenFiles } from '../generators/generateTokenFiles';
-import { generateTokenIndex } from '../generators/generateTokenIndex';
+import { generateTokenIndex, type TokenIndexResult } from '../generators/generateTokenIndex';
+import * as yaml from 'js-yaml';
 import { resolveTokens } from './resolveTokens';
 import { loadComponentTokens } from './loadComponentTokens';
 import { runValidate } from './validate';
@@ -39,6 +40,9 @@ import {
   consumerDegradationMessage,
   generateThemesLine,
   INSTALL_GUIDE_PATH,
+  unresolvedSchemaTokensMessage,
+  packageComponentTokensNotIndexedMessage,
+  type UnresolvedSchemaTokenLine,
 } from './shared/errorCatalog';
 import { attachUsage } from './shared/vocabulary';
 
@@ -135,6 +139,53 @@ export function resolveGenerateComponentRoots(
   packageRoot: string,
 ): string[] {
   return resolveComponentRoots({ dsRoot, packageRoot }).roots;
+}
+
+/**
+ * What `generate` says about the schema token declarations it could not count (ruling
+ * 2026-10-23 § 3c): a WARNING naming each one and whose schema it is in — never a failure;
+ * the same check fails as a test in DesignerPunk's own repo. One class is a NOTE, not
+ * warned per name: DesignerPunk's schemas naming DesignerPunk's own component tokens, which
+ * a born repo's token index does not hold (its generate indexes only the component tokens in
+ * its own token source). They are recognised as keys of the installed package's own shipped
+ * `token-index/components.yaml`.
+ *
+ * @internal Exported for testing.
+ */
+export function schemaTokenReport(
+  result: Pick<TokenIndexResult, 'componentRoots' | 'unresolved' | 'unreadable'>,
+  packageRoot: string,
+  generateRoot: string,
+): { warning: string | null; note: string | null } {
+  const packageComponentsRoot = path.resolve(packageRoot, 'src', 'components', 'core');
+  const packageRank = result.componentRoots.indexOf(packageComponentsRoot);
+  const ownerOf = (rank: number): 'yours' | 'designerpunk' => (rank === packageRank ? 'designerpunk' : 'yours');
+  const rel = (p: string) => (path.relative(generateRoot, p) || p).split(path.sep).join('/');
+
+  let packageComponentTokenKeys = new Set<string>();
+  try {
+    const shipped = yaml.load(fs.readFileSync(path.join(packageRoot, 'token-index', 'components.yaml'), 'utf-8')) as any;
+    packageComponentTokenKeys = new Set(Object.keys(shipped?.tokens ?? {}));
+  } catch { /* no shipped index: every name is warned */ }
+
+  const notIndexed = result.unresolved.filter(r => ownerOf(r.rank) === 'designerpunk' && packageComponentTokenKeys.has(r.token));
+  const warned = result.unresolved.filter(r => !notIndexed.includes(r));
+
+  const lines: UnresolvedSchemaTokenLine[] = warned.map(r => ({
+    owner: ownerOf(r.rank),
+    component: r.component,
+    file: rel(r.schemaPath),
+    group: r.group,
+    token: r.token,
+  }));
+  const unreadable = result.unreadable.map(u => ({ owner: ownerOf(u.rank), file: rel(u.schemaPath), reason: u.reason }));
+
+  return {
+    warning: lines.length > 0 || unreadable.length > 0 ? unresolvedSchemaTokensMessage(lines, unreadable) : null,
+    note: notIndexed.length > 0
+      ? packageComponentTokensNotIndexedMessage(new Set(notIndexed.map(r => r.token)).size, notIndexed[0].token)
+      : null,
+  };
 }
 
 /**
@@ -238,7 +289,7 @@ export async function runGenerate(force = false) {
     const componentSchemaDir = resolveGenerateComponentRoots(dsRoot, resolvePackageRoot(__dirname));
 
     // WRITE side anchored at generateRoot, never a bare process.cwd() (Spec 123 C2/Task 1.5).
-    generateTokenIndex(path.resolve(generateRoot, 'token-index'), {
+    const indexResult = generateTokenIndex(path.resolve(generateRoot, 'token-index'), {
       primitiveTokens: tokens.primitiveTokens,
       semanticTokens: tokens.semanticTokens,
       componentTokens: ComponentTokenRegistry.getAll(),
@@ -249,6 +300,12 @@ export async function runGenerate(force = false) {
       // wherever this index ends up being served from.
       tierDir: config.tokenSourceRoot,
     });
+    // Schema token names the index could not count: a warning, never a failure (§ 3c).
+    if (indexResult) {
+      const report = schemaTokenReport(indexResult, resolvePackageRoot(__dirname), generateRoot);
+      if (report.warning) console.warn(`⚠️  ${report.warning}\n`);
+      if (report.note) console.log(`${report.note}\n`);
+    }
     console.log('✅ System tokens generated');
   } catch (err) {
     systemFailed = true;
