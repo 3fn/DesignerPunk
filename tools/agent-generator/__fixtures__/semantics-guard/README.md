@@ -5,7 +5,7 @@
 - **`canonical/agents/semguard.md`**: a minimal agent frontmatter (`commands` ×2, `writeScope` ×2, one tool) and a body of **three units copied byte-for-byte from `canonical/agents/stacy.md`** (blob `46a0dcf8814456e36645ad1fad9d1a0ddc0d1609` at copy; the trigger-set unit re-copied at blob `60dbe42adcbf9c9ab428352fe30a81e935e9ebaa` (unit head `c34ee564`) on 2026-09-29, after #239 extended its LENS row — Task 15.2 doc; its RELEASE row re-copied at blob `70388670cde9dba10d4a20cda40bed65ff151b9b` on 2026-10-03, after the hermetic-publish-path charter follow-up rewrote that row — ballot `2026-10-03-hermetic-publish-path` § 5 item 6):
   - the claims-audit parent's `:preamble`;
   - `#the-trigger-set-…` (S's sibling, attack (a)'s destination);
-  - **S**, `#the-owed-set-pipeline-…`.
+  - **S**, `#the-owed-set-query-…`.
 
   The first unit also carries the fixture's own `# Semguard` title line, because a heading-only title rides forward into the first unit (C13). The anchors are identical to stacy's, so G1's E rendering and `stacy.yaml`'s S items apply unchanged. `semantics-guard.fixture.test.ts` asserts the three units still equal stacy's.
 - **`canonical/profiles/consumer/semguard.dispositions.yaml`**: every body unit and every frontmatter leaf has an **explicit row** (DD25). Three rows are re-pointed **in place** (destination = itself):

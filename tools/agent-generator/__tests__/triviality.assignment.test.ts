@@ -189,10 +189,10 @@ describe('C18 clause 5 leaves classifyCharter untouched — its output over the 
     }
     expect(out).toEqual([
       "A #audit-checklist: 0/30 ROUTES [below-half] @",
-      "B #the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script: 0/13 ROUTES [below-half] @",
+      "B #the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script: 0/13 ROUTES [below-half] @",
       "C(c2) #what-parity-means: 0/7 ROUTES [below-half] @",
       "D #the-trigger-set-the-114-superset-table-names-never-numbers: 1/13 ROUTES [below-half] @trigger-closeout:145",
-      "E #the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script: 0/13 ROUTES [below-half] @",
+      "E #the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script: 0/13 ROUTES [below-half] @",
       "Lina-1 #platform-implementation-true-native-architecture:preamble: 0/2 ROUTES [below-half] @",
       "Lina-1 #web: 0/4 ROUTES [below-half] @",
       "Lina-1 #ios: 0/3 ROUTES [below-half] @",

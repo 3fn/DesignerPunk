@@ -72,7 +72,7 @@ The joint recommendation is Thurgood's and Stacy's consult R2 on the orchestrato
 
 **The fork the joint recommendation left for Peter**: amend § 4.3 (narrow tolerant form) or keep it strict and leave the 20 acts as honest `record absent`. Resolved by his "Proceed": amend, after 129. Until the amendment is applied, Stacy's RELEASE pass carries `record absent 20` and the state line in § 3. When it is applied, the re-read of the 20 acts is appended to her pass record under the amended definition, labelled with the ballot and tool SHA, and the original line stays (Stacy R1 (b)).
 
-**The orchestrator's practice, adopted 2026-10-23 under Peter's ruling.** O1–O3 and O5–O8 are practice, not law: they live in this record and not in a governance doc, omitting one is not a finding on a seat, and the audit verdicts stay Stacy's. **O4 is law, restated here, not practice** (Stacy's rule-9 line above): omitting it is a claims-pass finding on the PR's author. O5–O8 are the how-to items moved out of `governance/signing-seat-brief.md` at its review (Stacy B1), so the document stays a restatement.
+**The orchestrator's practice, adopted 2026-10-23 under Peter's ruling.** O1–O3 and O5–O9 are practice, not law: they live in this record and not in a governance doc, omitting one is not a finding on a seat, and the audit verdicts stay Stacy's. **O4 is law, restated here, not practice** (Stacy's rule-9 line above): omitting it is a claims-pass finding on the PR's author. O5–O8 are the how-to items moved out of `governance/signing-seat-brief.md` at its review (Stacy B1), so the document stays a restatement.
 
 | # | Practice | Why |
 |---|---|---|
@@ -84,6 +84,7 @@ The joint recommendation is Thurgood's and Stacy's consult R2 on the orchestrato
 | O6 | **Brief recomputation.** The seat recomputes both hashes by the brief document's S4 recipes, never copying them from a brief or an earlier run. | A copied hash can be stale or unmoved, which fails F5 or the stale sweep. |
 | O7 | **Brief the sheet-placement convention.** New sheet sections go before the first `## Signing run summary` or `## Re-sign run summary` heading, or at the end where there is neither. | The #445 sheets' convention. No clause requires it, and no check reads it. |
 | O8 | **Brief the trailer pre-check.** Before committing, the seat runs `git interpret-trailers --parse` over the message text and sees both `Agent:` and `Co-Authored-By:`. | Catches the link-3 failure before a commit that merge-only forbids amending. |
+| O9 | **A seat's act is never cherry-picked across a re-cut**; it is redone fresh, with the `git log -1 --format='%H %s'` print. | A cherry-pick makes a new commit that no transcript printed: on the owed-set rename re-cut (v3), Stacy's confirm `12b3e98f` (a cherry-pick of v2's `bc79a3489`) reads `record absent 4`, and is carried as a hand-read. |
 
 **What this changes in § 5**: the "If A" route now runs through the ballot above. The "If B" brief text is the served document, not the orchestrator's private text. This record does not close at this PR: it closes at the re-read that follows the ballot's application (Trigger line).
 
@@ -100,3 +101,5 @@ The joint recommendation is Thurgood's and Stacy's consult R2 on the orchestrato
   - **§ 6 item 3's summary is narrower in the ballot**: route (ii) requires a `git log` in the call (ballot R1 A6, accepted by Stacy). The summary above stands as written at the time; the ballot governs.
 
 - **2026-10-23 (Thurgood), ballot RATIFIED.** Peter ratified `2026-10-23-link4-candidate-first-sha-after-commit` in chat, 2026-10-23: "Re: 1, ratified." (ballot § 9). The Trigger's event (the re-read commit after the application PR merges, ballot § 5 step 9) now has its authority. Nothing is applied: the application waits for Spec 129's first unit, opens by 2027-03-21, and both re-reads land before 2027-04-21. The record stays ACTIVE and closes at the re-read (step 10).
+
+- **2026-10-23 (Thurgood, owner)**: O9 added (orchestrator practice, 2026-10-23). Cause: `12b3e98f` on branch `chore/stacy-owed-set-heading-rename-v3`.

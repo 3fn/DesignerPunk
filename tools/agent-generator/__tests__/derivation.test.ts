@@ -29,7 +29,7 @@ const bodyTree = partition(body);
 const trees = { body: bodyTree, entry: entryTree(frontmatter) };
 
 const PARENT = '#operational-mode-claims-audit-execution-claims-verification-the-q5-cut';
-const S = '#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script';
+const S = '#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script';
 const TRIGGER = '#the-trigger-set-the-114-superset-table-names-never-numbers';
 const E_TEXT = readG1Rendering(g1Fixture('E', S));
 

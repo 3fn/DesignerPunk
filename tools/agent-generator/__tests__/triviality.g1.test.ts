@@ -87,10 +87,10 @@ describe('(iv) the AX-1 bite', () => {
 describe('G1 run 2 `assigned` column, reproduced per rendering', () => {
   const expected: Record<string, string> = {
     'A #audit-checklist': '0/30 ROUTES',
-    'B #the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script': '0/13 ROUTES',
+    'B #the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script': '0/13 ROUTES',
     'C(c2) #what-parity-means': '0/7 ROUTES',
     'D #the-trigger-set-the-114-superset-table-names-never-numbers': '1/13 ROUTES',
-    'E #the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script': '0/13 ROUTES',
+    'E #the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script': '0/13 ROUTES',
     'Lina-1 #platform-implementation-true-native-architecture:preamble': '0/2 ROUTES',
     'Lina-1 #web': '0/4 ROUTES',
     'Lina-1 #ios': '0/3 ROUTES',

@@ -182,7 +182,7 @@ Plus, on every pass:
 - **The instrument-census read** *(ballot 2026-10-19-instrument-census-at-draft)*: on every presumptively in-scope item of every ballot — whether or not you are its required reviewer — the one `**Census**:` line: its presence and grammar (a missing line is a finding on the drafter), the in-scope call, the exemption ground, and, reproduced at the line's `<sha>`, both digests (current and proposed) and the delta; a failure on any of them voids the census. Then `git show <sha>:governance/classification-map.md`: the line's `<command>` equals the row's `census` field — a missing field is a finding from you, never a gate. A disputed exemption or `not in scope` line goes to Peter; where you draft the item, the reader is Thurgood. A read, never a gate.
 - **The never-a-gate sentence, restated wherever the practice is documented**: *no pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.*
 
-### The owed-set pipeline (your command catalog's owed-set entry — documented commands, deliberately not a committed script)
+### The owed-set query (your command catalog's owed-set entry — the committed script)
 
 The predicate, verbatim: **`closeout-owed(S)`** ⟺ S's final declared unit has merged **AND** `.kiro/specs/S/completion/claims-pass.md` does not exist **AND** that merge is dated on or after the ratification date recorded in `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`. The query is a committed script, not pasted commands; Thurgood maintains it and you specify its cases. It **emits every spec it leaves out, by class**, so a wrong answer is a falsifiable count, never a healthy-looking short list. Run it from the repository root with the defaults:
 

@@ -11,8 +11,8 @@ fixtures:
   - file: run1.B.the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands.txt
     exemplar: B
     record: canonical/operative-sets/stacy.yaml
-    anchor: "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script"
-    canonicalHash: sha256:c33de65dbe1f520848954760b2d2abcc539c3454b81de434e75ff6721d85dbd4
+    anchor: "#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script"
+    canonicalHash: sha256:fcf52f052773d8f801d52ae79152e04e167d892cb2d568b549429486b1da75bf
     source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
     sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
     grammar: run-record
@@ -38,8 +38,8 @@ fixtures:
   - file: run1.E.the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands.txt
     exemplar: E
     record: canonical/operative-sets/stacy.yaml
-    anchor: "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script"
-    canonicalHash: sha256:c33de65dbe1f520848954760b2d2abcc539c3454b81de434e75ff6721d85dbd4
+    anchor: "#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script"
+    canonicalHash: sha256:fcf52f052773d8f801d52ae79152e04e167d892cb2d568b549429486b1da75bf
     source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
     sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
     grammar: run-record

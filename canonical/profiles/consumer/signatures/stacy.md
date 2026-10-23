@@ -173,6 +173,36 @@ verdict: assent — surviving 13/13
 > >
 > > **Every item survives, re-grounded.** The predicate is keyed to the team's adoption record, the pipeline to `$SPECS_DIR` and `$ADOPTION` (the midnight pin kept), the three classes are restated, three-copies becomes "keep every copy the same text", the ladder becomes "a second wrong result → a committed script", and git history is kept. This is the G1 exemplar E rendering. **It is a full-survival assent**, earned item by item; see the tally.
 
+withdrawn: 2026-10-23 — signature withdrawn under the clause-5 grant (Peter, 2026-10-23), `.kiro/issues/2026-10-22-stacy-owed-set-heading-false-after-439.md` § 2a; the key resolves to no unit since 033b3dc3d (charter heading renamed); successor key `#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script`
+
+## `#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script`
+
+signer: stacy
+date: 2026-10-23
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script` (re-pointed; ROUTED)
+canonicalHash: sha256:fcf52f052773d8f801d52ae79152e04e167d892cb2d568b549429486b1da75bf
+renderedHash: sha256:7441cad815e15f2200eee8a5548a63c1bc342301d9e8ad26485e144093394204
+verdict: assent — surviving 13/13
+
+**First signature on this key, re-given in full.** The unit's heading was renamed from `#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script` (the heading said "documented commands, deliberately not a committed script" over a body that runs the committed script `scripts/owed-set.sh`; `.kiro/issues/2026-10-22-stacy-owed-set-heading-false-after-439.md`). The old key's signature was withdrawn at its own commit under the clause-5 grant (Peter, 2026-10-23, § 2a of that record), the old row was deleted unsigned (authoring), and this row was added unsigned. I do not carry the 13/13 assent across the rename: I judge it again, below, against the rendering as it stands.
+- **The rendering is unchanged by the rename**, which I checked rather than assumed: `renderedHashOf` over the committed `canonical/_consumer-output/` for this row's span (`_canonical/agents/stacy.md` L333–356, source now the renamed key) is `sha256:7441cad815e15f2200eee8a5548a63c1bc342301d9e8ad26485e144093394204`, equal to the old row's last `renderedHash`. The canonical hash moved (`sha256:c33de65d…` to `sha256:fcf52f05…`) because it covers the heading line, which is the key. The overlay pin was re-pointed by Thurgood and equals the new canonical hash (`sha256:fcf52f05…`).
+- **Judged against**: the committed rendering, the operative set at 13 items (the same ids as before, in the same order; a heading is a label), and the output of `bash scripts/owed-set.sh` at `12b3e98ff`: exit 0; rows `candidate 122-agent-generator`, `closed` ×2, `stub` ×4, `touch-only` ×2 (9 rows); count line `owed-set: 1 candidates; excluded: 2 closed, 0 open, 4 stub, 2 touch-only; classes a/b/c = 1/0/0; 171 specs without activity since 2026-09-19; adoption 2026-09-19 from .kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`. Row-sum identity: 1 + 2 + 0 + 4 + 2 = 9 = rows printed. The flags the rendering names (`--specs-dir`, `--adoption`, `Adopted: YYYY-MM-DD`) are the ones the script's header documents.
+- **Every item survives, each read in the rendering**:
+  - `owed-set-predicate`: the rendering's three conditions (final declared merge unit merged; no committed record at `$SPECS_DIR/S/completion/claims-pass.md`; merge on or after the adoption day), with the team's adoption day for the ratification date.
+  - `owed-set-emits-exclusions`: "reports every spec it leaves out, counted by class, so a wrong answer shows up as a number you can check instead of a short list that merely looks healthy".
+  - `owed-set-run`: the consumer's call, `bash node_modules/@3fn/core/scripts/owed-set.sh --specs-dir specs`.
+  - `owed-set-row-classes`: all five classes with their reasons (`closed`, `stub`, `open`, `touch-only`, `candidate`).
+  - `owed-set-count-line`: the count line stated in full, and "Read the row-sum identity first" with the sum-that-does-not-add warning.
+  - `owed-set-candidate-not-verdict`: the closest call, as at the prior signature. The rendering states that "`candidate` rows are candidates, not verdicts" and that a spec owes a pass "only once its final declared merge unit has merged (the unit's PR has merged and its tasks are ticked)", and that a candidate for a spec in progress "is not a finding". It does not state the instruction "confirm the unit's merge before you open a pass". It entails it: the owed condition is stated as the merge, and the script is stated to read git and `tasks.md`, not the merge. Credited on entailment, limit named.
+  - `owed-set-heuristics`: stated, with the spot-read-before-calling-the-set-empty instruction.
+  - `owed-set-unavailable`: "it prints one line, `owed-set: unavailable (<why>) — continue`: that is an unanswered question, never an empty set, and you say so instead of writing "empty"".
+  - `owed-set-one-code-path`: "call this same script in each; do not copy its logic".
+  - `owed-set-class-a`, `owed-set-class-b`, `owed-set-class-c`: the three unit classes, each with its anchor rule; (b)'s reason for existing (a query that drops the single-PR case gives the healthy-looking short list) is stated.
+  - `owed-set-git-history`: "`git log --first-parent` gives unit anchors and deltas, and `git show <merge>:<path>` gives what shipped at the merge".
+- **Not a refusal**: the function survives in full; the only change is a label.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+- **Predecessor**: `#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script` (signature withdrawn 2026-10-23; its sheet section above is kept as ledger and is not rewritten). Its 2026-09-29 run-1 tally (14/14) and the 2026-10-22 re-sign (13/13) are not rewritten.
+
 ## `#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument`
 
 signer: stacy

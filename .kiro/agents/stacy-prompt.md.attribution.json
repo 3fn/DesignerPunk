@@ -119,7 +119,7 @@
         206
       ],
       "op": "passthrough",
-      "source": "canonical/agents/stacy.md#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script"
+      "source": "canonical/agents/stacy.md#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script"
     },
     {
       "lines": [

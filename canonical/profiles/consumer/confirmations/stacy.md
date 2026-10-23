@@ -165,6 +165,23 @@ date: 2026-10-22
 - **This is a narrowing, which is the direction 5d watches.** It is a reviewed diff in the owner's seat. It moves B's clearing threshold from 8/15 to 7/14, a change of about half an item, and B's verdict rests on its routed judgment anyway.
 - **Not operative**: the heading's parenthetical (a label), the fence lines, and *"The exclusion classes, enumerated"* (a lead-in).
 
+## `#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script`
+
+confirmer: stacy
+canonicalHash: sha256:fcf52f052773d8f801d52ae79152e04e167d892cb2d568b549429486b1da75bf
+items: owed-set-predicate, owed-set-emits-exclusions, owed-set-run, owed-set-row-classes, owed-set-count-line, owed-set-candidate-not-verdict, owed-set-heuristics, owed-set-unavailable, owed-set-one-code-path, owed-set-class-a, owed-set-class-b, owed-set-class-c, owed-set-git-history
+date: 2026-10-23
+
+**Re-confirmed 2026-10-23 under the renamed key (Req 11.6.5d; errata (f)).**
+- **What changed**: one line, the unit's heading, which is the unit's key. It read "The owed-set pipeline (your command catalog's owed-set entry — documented commands, deliberately not a committed script)", which said the opposite of the body since #439 made the query the committed script `scripts/owed-set.sh`. It now reads "The owed-set query (your command catalog's owed-set entry — the committed script)". The text is mine (`.kiro/issues/2026-10-22-stacy-owed-set-heading-false-after-439.md`, § 2 step 1); Thurgood applied it byte for byte at `6a00748ac` (errata (f)) and moved the operative-set key and confirmation fragment at `d06620cdb`. The body under the heading is byte-identical to the one I confirmed on 2026-10-22 (`git diff 6a00748ac^ 6a00748ac -- canonical/agents/stacy.md` is the heading line alone).
+- **The canonicalHash moves** from `sha256:c33de65dbe1f520848954760b2d2abcc539c3454b81de434e75ff6721d85dbd4` to the value above, because the hash covers the heading line. I recomputed it independently (`hashText` over the unit text from `partition(splitFrontmatter(...).body).units`, via a scratchpad script outside the repo): `sha256:fcf52f05…75bf`. It equals the overlay pin Thurgood wrote at `d06620cdb`.
+- **The set is unchanged: 13 items, the same ids in the same order.** A heading is a label, not an operative item, so the rename removes and adds nothing (5c, clause (c)). Items are authoring and I re-confirm them as they stand.
+- **Each of the 13 is a verbatim, unique substring of the renamed unit** (checked by script against the unit text at `0cd0b45d1`: 1 occurrence each, 13 of 13). The five I name as the ones a run can break are unchanged from the 2026-10-22 confirmation: `owed-set-candidate-not-verdict`, `owed-set-heuristics`, `owed-set-unavailable`, `owed-set-count-line` and `owed-set-one-code-path`.
+- **Not a narrowing.** No function leaves; the consumer rendering is untouched (the overlay body is unchanged, only its `@unit` slug and pin moved).
+- **The ledger**: the section under the old key `#the-owed-set-pipeline-…-deliberately-not-a-committed-script` stays above as history and is not rewritten. It no longer corresponds to a record key.
+
+**Ruling: CONFIRMED at 13 items.**
+
 ## `#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument`
 
 confirmer: stacy
