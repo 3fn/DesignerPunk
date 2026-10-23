@@ -53,8 +53,8 @@
 
 **Backstop**: the monthly walk asks "has any trigger fired?" — a fired trigger without a spec charter or a dated disposition here is a walk finding against Thurgood.
 
-## 4. Interim rules (Ada; binding until the spec fires)
-1. **No new cross-boundary consumer.** No new module or data file is consumed across an MCP sub-package boundary — by any pattern — before this charter fires; a new need of that kind IS trigger 1.
+## 4. Interim rules (Ada; binding until the class spec's ballot names the sanctioned crossing patterns, and not lifted by a trigger firing alone)
+1. **No new cross-boundary consumer.** No new module or data file is consumed across an MCP sub-package boundary — by any pattern — before the class spec's ballot names the sanctioned crossing patterns; a new need of that kind IS trigger 1.
 2. **Cross-boundary requires are bare.** esbuild silently keeps an unresolved `require` inside try/catch as a runtime require, so a forgotten `build:mcp-shared` entry ships a silent fallback instead of a build failure. Any cross-boundary require added or edited under an exception must not be wrapped in try/catch. The **seven** existing entry-point requires of `../../dist/cli/shared/*`, across **three** files, sit inside try/catch with a defaults fallback by design (Spec 121 F-C2); they are **grandfathered** (reading confirmed by Ada) and are the live instances of this hazard the spec must address:
    - `mcp-server/src/index.ts` L413 (`mcpDataRoots`);
    - `application-mcp-server/src/index.ts` L701–703 (`mcpDataRoots`, `bornRepo`, `errorCatalog`);
@@ -96,3 +96,9 @@ A **multi-unit spec** (Ada / Lina / Thurgood; rough cost 3–5 parents, 2–4 se
 **The interim rules stay binding.** § 4's heading says they bind "until the spec fires", and § 3 says a trigger "fires the spec". Read literally, firing would lift rule 1 now, the moment the class is growing. Rule 1 would then stop barring the cross-boundary adoption Lina deferred. I read the heading as "until the spec's ballot names the sanctioned crossing patterns", because that decision is what replaces the rules. Lina's deferral of the `ComponentIndexer` adoption stands on that reading. The rules are Ada's, so the reading is hers to confirm or correct with a dated line. The ambiguity is in my text, and I fix the heading if the question comes up again (charter bound 1).
 
 **Owed by me, before the second walk after this one**: if the spec is still unscheduled at the next walk, I take the scheduling to Peter with that walk's re-rank. The reason is rule 5. A P3 `manual` record still unfired at two consecutive walks archives stale, and this record carries the interim rules. Archiving would not change them (rule 4), but it would take them out of the active root.
+
+## 9. Interim-rule scope — Ada's confirmation (2026-10-23, Ada, owner of § 4)
+
+**Confirmed.** Thurgood's reading in § 8 is mine: the interim rules were meant to hold until the decision that replaces them, and "until the spec fires" said something else. Read literally, a trigger firing would have lifted rule 1 at the moment the class is growing, which is the opposite of the rule's purpose. I corrected the § 4 heading and the last clause of rule 1 in place (the heading is signed Ada, rule 9); the old wording is in this file's git history. § 3's "fires the spec" is Thurgood's text and I left it: a trigger fires the obligation to charter the spec, and the rules are what hold until the spec's ballot lands. Rule 2's grandfathering is unchanged, and Lina's deferral of the `ComponentIndexer` adoption stands under rule 1. Surviving counter-argument: "until the ballot" has no date, so the rules could bind for as long as the spec stays unranked; Thurgood's owed scheduling line in § 8 is the check on that, and the cost of an unranked spec is that no new cross-boundary consumer can land, which I accept.
+
+*Signed: Ada, 2026-10-23.*
