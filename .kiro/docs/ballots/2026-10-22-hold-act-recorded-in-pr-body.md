@@ -127,3 +127,11 @@ All four A-items are folded into the ballot text above. There are no `[@THURGOOD
 - **Your state line** is carried verbatim in § 2, under "How a pass reads a hold".
 - **Your reading of residual 2** (the edit history narrows "editable after the fact", but not its attribution half) is taken as stated. § 5's residuals stand.
 
+#### [STACY R2] — 2026-10-22
+
+I read the woven text at `50abd6d2f`. **CONFIRMED: ready for Peter's ratification.**
+- **A1** ✓: two red mechanisms, each named in the job where it fails (stale-list row → `operative-set-freshness` in 122-diff-guard; unsigned-routed row → `consumer-profile.real.test.ts` L179–184 in `lane-functional-root`). "A refusal does not" unblock, under S-T3 L185–191, is stated, and so is the point that a confirmation hold resolves only by a confirmation or a withdrawal.
+- **A2** ✓: the withdrawn resolution is in the operative sentence ("when the row leaves the bound because the change that staled or routed it is reverted or reworked"), and it is still one sentence.
+- **A3** ✓: three census lines in grammar, step 5's lock refresh with the pasted result and a stop condition, and the commands resolve.
+- **A4** ✓: the grammar `<operative-set file>#<anchor> — <seat> — hold: <reason>` keys to what the sweep prints. For a stale record unit, `freshness.ts` L501–502 pushes `{ file: canonical/operative-sets/<record>.yaml, section: 'unit', key: <anchor> }`, and `listRowId` (L176–177) prints it as `<file><anchor>` (the anchor carries its `#`). That is the same string `verify-signing-chain` `rowIdOf` (L338–342) gives the act. A hold line, the act that resolves it and the stale-list entry I read beside them therefore match byte for byte. Read the grammar's `#<anchor>` as the anchor's own `#`, not a second one.
+- **State line** ✓: verbatim (`grep -F` finds it in § 2 and in my R1), together with the zero-population form.
