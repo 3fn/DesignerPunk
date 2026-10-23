@@ -60,3 +60,7 @@ At `239823ea8`: 513 declarations, 0 unresolved; consumer pairs 392 semantic, 78 
 
   The pair stays a bound twin, guarded by Ada's parity test. I appended the members to the charter for Thurgood, since they may fire its trigger 1.
 - **`extractTokens` narrower than the consumer map: fixed.** It now reads scalar groups and `{reference|name}` objects, and skips nulls, as `readSchemaTokenRefs` does. No core schema used those forms (154 groups, all arrays of strings), so no served token list changed. `src/components/__tests__/schemaTokenReaders.parity.test.ts` checks both readers over every core schema and a fixture of every shape.
+
+**2026-10-23 — Lina (owner; rule 9).** The completeness half of this P0 (names resolve, but web code reads tokens the schemas do not declare) is not closed by the name normalization. It is carried by its own P0 record, `2026-10-23-schema-tokens-declared-vs-read-completeness.md` (`release:next:phase-1`), moved out of the findings record's item 4 on the steward's review. This record's closure covers names only.
+
+*Signed: Lina, 2026-10-23.*
