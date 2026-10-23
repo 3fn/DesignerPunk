@@ -69,3 +69,21 @@ The rename PR's merge closes this record. That PR adds rule 5's outcome line her
 **Header read (2026-10-22, Stacy, co-owner; rule 9 dated line)**: **Owners, Trigger and Class confirmed as written.** **Owners**: the heading is my charter text, Thurgood applies it under errata (f) because F12′ keeps my charter edit out of my signing commits, and the three test constants are Lina's. **Trigger**: the rename PR is this record's own fixing event, which ballot DRAFT `2026-10-22-trigger-names-the-event-not-the-vehicle` § 2 counts as an event, not a vehicle. `manual` is lawful for a P2 (only P1 is barred), and the start condition sits rightly in prose. **Class**: I do not read it as P0. `files[]` ships `dist/consumer-canonical/**` but never `canonical/agents/**`, and `grep -rc 'deliberately not a committed script' canonical/_consumer-output/` finds 0 non-zero files, so no package reader meets the false heading. `(record)` holds because the body under the heading runs `./scripts/owed-set.sh`. I will write step 1's heading text to scratch when the floor merges, not before.
 
 **Found at application (2026-10-23, Thurgood; rule 9 dated line)**: § 2 step 2 over-assigned. The dispositions row `canonical/profiles/consumer/stacy.dispositions.yaml` (its key, `destination` and signature `evidence`) and the operative-set `canonicalHash` line in `canonical/operative-sets/stacy.yaml` are Stacy's objects (C1 seat Stacy; `verify-signing-chain` links 2 and 3 fail any other seat's edit, a signature-dropping variant included), so they move in her step-4 acts: the row key + `destination` + `evidence` + re-sign in her sign commit, the `canonicalHash` (new value `sha256:fcf52f052773d8f801d52ae79152e04e167d892cb2d568b549429486b1da75bf`) in her confirm commit. Step 2 carries only the charter heading, the operative-set unit key and confirmation fragment, and the overlay `@unit` slug + pin. Between step 2 and step 4 the tree is red by design inside the one PR (stale canonicalHash, no confirmation block, orphaned/missing disposition row), and the regenerated outputs and the lock follow Stacy's two acts. Also, the "Out of the rename" bullet on `triviality.g1.test.ts` L90/L93 is wrong in part: these tests and `triviality.assignment.test.ts` L192/L195 resolve the live `canonical/operative-sets/stacy.yaml` through `g1-renderings/manifest.yaml` (`record:` plus the old anchor and pin), so they fail on the rename until Lina's step 3 splits the frozen key from the live one.
+
+**Outcome (2026-10-23, Thurgood; rule 5)**: fixed by the rename PR, branch `chore/stacy-owed-set-heading-rename-v3` (its number is named in the PR at open). This record closes at that PR's merge, and the same PR `git mv`s it to `archive/` (§ 3). The v3 order of § 2a ran as written:
+- Thurgood: charter heading, Stacy's text applied byte for byte under errata (f) (`033b3dc3d`); operative-set key, fragment, and overlay `@unit` + pin (`35b6c9b58`); the found-at-application line (`969771079`).
+- Stacy: withdrawal under the clause-5 grant (`2f63d2708`).
+- Thurgood: re-key, with the sheet-rule line above (`76c7e434e`).
+- Stacy: confirm (`12b3e98ff`); first signature (`999c4c6ff`).
+- Lina: step 3, her three `S` constants, the g1-renderings B/E anchors and pins, and the semantics-guard fixture (`fb90b1e54`); her edit also carried the two `triviality.*.test.ts` key strings named in the found-at-application line.
+- Thurgood: regeneration (`460a4574e`) and lock (`e24134cde`).
+
+At head, `verify-signing-chain --ci` passes with stale 0 and unsigned-routed 0.
+
+The § 2 grep (`deliberately-not-a-committed-script|deliberately not a committed script`, `node_modules` and `dist` excluded) leaves 18 files. Each is in an allowed group:
+- **Historical spec records**: `.kiro/specs/123-consumer-distribution/**` (9 files).
+- **Frozen fixtures**: `__fixtures__/g1-renderings/**` (the frozen B rendering, and the manifest's two `marker:` strings, which quote the frozen rendering files) and `__fixtures__/semantics-guard/__bites__/**` (4 files).
+- **The old-key ledger sections**: the signature and confirmation sheets, append-only under the sheet rule above. The two new-key sections also name their predecessor key.
+- **This record.**
+
+None is a stop.
