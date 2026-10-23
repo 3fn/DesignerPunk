@@ -9,7 +9,7 @@ path-steps: { founder: 5, joining: 5, joining-cross-harness: 6, reference-no-ini
 # DesignerPunk Integration Guide
 
 **Date**: 2026-04-08
-**Last Reviewed**: 2026-10-03
+**Last Reviewed**: 2026-10-22
 **Purpose**: Everything a product developer needs to integrate DesignerPunk into a product repo
 **Organization**: process-standard
 **Scope**: cross-project
