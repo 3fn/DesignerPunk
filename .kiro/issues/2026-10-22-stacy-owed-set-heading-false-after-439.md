@@ -38,6 +38,28 @@ Order: **after the routes-floor application PR merges**. The rename moves routed
 
 The application PR runs `grep -rn 'deliberately-not-a-committed-script\|deliberately not a committed script'` and pastes the result. Every survivor is one of the three groups above, or it is a stop.
 
+### 2a. Re-sequenced 2026-10-23 (v3): the old row's signature is withdrawn before the re-key
+
+**Superseded order (2026-10-23, Thurgood; rule 9 dated line)**: v2 (branch `chore/stacy-owed-set-heading-rename-v2` at `ae7e666ff`, not pushed, kept as the record of the failed order) fails `verify-signing-chain --ci --base 8c89e8656`: link 1 at `ae7e666f` (a first signature on the new row, which is on neither list at its parent `bc79a348`) and link 2 twice at `ae7e666f` (the signing commit removes the old row and adds the new one: `disposition`, `removals`, `destination` are authoring, § 2 clause 4). A re-key is not a signing act. v2 is superseded by v3 below. The "Found at application" line (v3 step 3, `0cd0b45d1`, below § 3) is corrected in one point: the row's key and `destination` are authoring (clause 4), not Stacy's objects. Her objects are the row's `signature` sub-object, its sheet sections, and the operative-set `canonicalHash`.
+
+**Clause-5 grant (Peter, 2026-10-23, "Approved. Proceed as collectively recommended, please", on the orchestrator's line quoted above)**: Stacy may withdraw her signature on `stacy.dispositions.yaml#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script`, reported `[orphaned-key]` since the heading rename; one act, counted separately; not precedent; § 2 clause 3's bound unchanged.
+
+The orchestrator's line Peter answered, verbatim: *"Clause-5 grant: Stacy may withdraw her signature on the old owed-set row, orphaned since the heading rename; one act, counted separately; not precedent; the bound is unchanged."* Peter's reply is relayed by the orchestrator; it is dated before the withdrawal because this line's commit precedes it on the branch (§ 2 clause 8: a record written after an act does not authorize it). The act's (iv) line is Stacy's to write; the form she proposed is `<file>#<old-anchor> — stacy — <sha7> — withdrawal, out of bound (orphaned-key; lists recomputed at <parent sha7>: on neither); clause-5 grant: Peter 2026-10-23, <this record>; link-1 pass not evidence (actMoved)`. The class question (why the withdrawal falls outside clause 3's letter, and whether `[orphaned-key]` rows should be in bound) goes to `.kiro/issues/2026-10-23-signing-act-shape-review.md`.
+
+**v3 order** (each step its own commit; `--ci` is re-run after each):
+
+| Step | Seat | Commit |
+|---|---|---|
+| 1 | Thurgood | The charter heading (`6a00748ac`, cherry-picked). |
+| 2 | Thurgood | The operative-set unit key and confirmation fragment, the overlay `@unit` slug and pin (`d06620cdb`, cherry-picked). |
+| 3 | Thurgood | The "Found at application" line (`0cd0b45d1`, cherry-picked). |
+| 4 | **Stacy** | **Withdrawal**: removes the `signature` sub-object from `stacy.dispositions.yaml#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script` and nothing else in that file; the sheet-section rule for the old key is the one the v3 probe settles. Cites this grant. |
+| 5 | Thurgood | Authoring (clause 4): deletes the now-unsigned old row and adds `#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script` unsigned (`re-pointed`, the same `removals`, `destination` the new key). |
+| 6 | **Stacy** | Confirm: the new confirmation section and the operative-set `canonicalHash` (`fcf52f05…`), as at `bc79a3489`. |
+| 7 | **Stacy** | First signature on the new row, which is on the unsigned-routed list at its parent (in bound, § 2 clause 3). Its new sheet section names the predecessor key. |
+
+Then Lina's step 3, and the regeneration and lock after Stacy's acts, as § 2 and the line below say.
+
 ## 3. Close
 
 The rename PR's merge closes this record. That PR adds rule 5's outcome line here and `git mv`s the file to `archive/`.
