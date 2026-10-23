@@ -220,7 +220,7 @@
          ============================================================ -->
     <div class="demo-section">
       <h2>6. Form Integration</h2>
-      <p>Checkbox integration with HTML forms (submission and reset):</p>
+      <p>Checkbox integration with HTML forms (submission and reset). Each checkbox host is a form-associated custom element, so a checked box adds one <code>name=value</code> entry to <code>FormData</code> and an unchecked box adds none. The output lists every entry in order, so a duplicate would show:</p>
 
       <div class="demo-interactive">
         <form id="demo-form">
@@ -247,13 +247,38 @@
             helper-text="Anonymous data helps us improve the product">
           </input-checkbox-base>
 
+          <input-checkbox-legal
+            label="I agree to the Terms of Service"
+            name="tos"
+            value="accepted"
+            legal-text-id="tos-v2"
+            legal-text-version="2.0.0">
+          </input-checkbox-legal>
+
           <div style="display: flex; gap: var(--space-100); margin-block-start: var(--space-100);">
             <button type="submit" style="padding-inline: var(--space-100); padding-block: var(--space-050); border-radius: var(--radius-050); border: none; cursor: pointer; background: var(--cyan-300); color: var(--gray-500);">Submit Form</button>
             <button type="reset" style="padding-inline: var(--space-100); padding-block: var(--space-050); border-radius: var(--radius-050); border: none; cursor: pointer; background: var(--gray-300); color: var(--white-200);">Reset Form</button>
+            <button type="button" id="dump-formdata" style="padding-inline: var(--space-100); padding-block: var(--space-050); border-radius: var(--radius-050); border: none; cursor: pointer; background: var(--gray-300); color: var(--white-200);">Dump FormData</button>
+            <button type="button" id="toggle-indeterminate" style="padding-inline: var(--space-100); padding-block: var(--space-050); border-radius: var(--radius-050); border: none; cursor: pointer; background: var(--gray-300); color: var(--white-200);">Toggle indeterminate on "updates"</button>
           </div>
         </form>
 
         <pre class="demo-code" id="form-output" style="margin-block-start: var(--space-100); min-block-size: 60px;">Submit the form to see the data here...</pre>
+
+        <h3>Checkbox outside its form (<code>form="outside-form"</code>)</h3>
+        <p>The checkbox below is not a descendant of the form it names. Its entry must appear in <code>outside-form</code> and not in <code>demo-form</code>.</p>
+        <input-checkbox-base
+          id="outside-checkbox"
+          label="Outside-form box (form attribute)"
+          name="outside"
+          value="yes"
+          form="outside-form"
+          size="md">
+        </input-checkbox-base>
+        <form id="outside-form">
+          <button type="submit" style="padding-inline: var(--space-100); padding-block: var(--space-050); border-radius: var(--radius-050); border: none; cursor: pointer; background: var(--cyan-300); color: var(--gray-500);">Submit outside-form</button>
+        </form>
+        <pre class="demo-code" id="outside-output" style="margin-block-start: var(--space-100); min-block-size: 40px;">Submit outside-form to see the data here...</pre>
       </div>
 
       <div class="demo-note">
@@ -444,12 +469,37 @@ document.body.appendChild(legalCheckbox);</pre>
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const formData = new FormData(form);
-      const data = {};
-      for (const [key, value] of formData.entries()) {
-        data[key] = value;
-      }
-      formOutput.textContent = JSON.stringify(data, null, 2) || '(no checkboxes selected)';
+      const entries = [...new FormData(form).entries()];
+      formOutput.textContent = entries.length
+        ? entries.map(([key, value]) => `${key} = ${JSON.stringify(value)}`).join('\n')
+        : '(no entries: nothing is checked)';
+    });
+
+    const formatEntries = (f) => {
+      const entries = [...new FormData(f).entries()];
+      return entries.length
+        ? entries.map(([key, value]) => `${key} = ${JSON.stringify(value)}`).join('\n')
+        : '(no entries: nothing is checked)';
+    };
+
+    document.getElementById('dump-formdata').addEventListener('click', () => {
+      formOutput.textContent = formatEntries(form);
+    });
+
+    // Reset clears the dump so a stale list cannot be mistaken for the post-reset state
+    form.addEventListener('reset', () => {
+      formOutput.textContent = 'Form reset. Submit or Dump FormData to see the data here...';
+    });
+
+    document.getElementById('toggle-indeterminate').addEventListener('click', () => {
+      const updates = form.querySelector('input-checkbox-base[name="updates"]');
+      updates.indeterminate = !updates.indeterminate;
+    });
+
+    const outsideForm = document.getElementById('outside-form');
+    outsideForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('outside-output').textContent = formatEntries(outsideForm);
     });
 
     // Audit log for legal checkbox
