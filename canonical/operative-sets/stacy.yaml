@@ -220,7 +220,7 @@ units:
   #   (.kiro/issues/2026-10-19-owed-set-query-over-lists-in-progress-specs.md); the midnight pin the 2026-09-27
   #   confirmer ruling read as operative inside stages 1a and 1b is the script's now (contract item 1), exercised by
   #   scripts/__tests__/owed-set.test.ts. 8 ids retired: the resolve command, stages 1a-4, three-copies, staged-mechanization.
-  "#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script":
+  "#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script":
     canonicalHash: sha256:c33de65dbe1f520848954760b2d2abcc539c3454b81de434e75ff6721d85dbd4
     items:
       - id: owed-set-predicate
@@ -275,7 +275,7 @@ units:
         kind: command
         label: "Git history as provisioning"
         text: "**Git history is the other half of your claims-audit provisioning** (the non-glob-able knowledge base): `git log --first-parent` for unit anchors and deltas, `git show <merge>:<path>` for shipped-at-merge state."
-    confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script
+    confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script
   # exemplar C(c1) — 2 item(s). Confirmer ruling 2026-09-27 (5c): the ownership sentence and the
   #   framing sentence "that binds every reader" are violable; the first two sentences are
   #   instrument/environment facts. C(c1)'s zero-item premise does not hold here either (carried to G1).
