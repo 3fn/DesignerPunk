@@ -7,6 +7,7 @@ tokens:
       web: '--space-000'
       ios: space000
       android: space_000
+    consumers: []
   space025:
     family: spacing
     value: 2
@@ -15,6 +16,7 @@ tokens:
       web: '--space-025'
       ios: space025
       android: space_025
+    consumers: []
   space050:
     family: spacing
     value: 4
@@ -23,6 +25,7 @@ tokens:
       web: '--space-050'
       ios: space050
       android: space_050
+    consumers: []
   space075:
     family: spacing
     value: 6
@@ -31,6 +34,7 @@ tokens:
       web: '--space-075'
       ios: space075
       android: space_075
+    consumers: []
   space100:
     family: spacing
     value: 8
@@ -39,6 +43,8 @@ tokens:
       web: '--space-100'
       ios: space100
       android: space_100
+    consumers:
+      - Button-Icon
   space125:
     family: spacing
     value: 10
@@ -47,6 +53,9 @@ tokens:
       web: '--space-125'
       ios: space125
       android: space_125
+    consumers:
+      - Button-Icon
+      - Button-VerticalList-Item
   space150:
     family: spacing
     value: 12
@@ -55,6 +64,8 @@ tokens:
       web: '--space-150'
       ios: space150
       android: space_150
+    consumers:
+      - Button-Icon
   space200:
     family: spacing
     value: 16
@@ -63,6 +74,7 @@ tokens:
       web: '--space-200'
       ios: space200
       android: space_200
+    consumers: []
   space250:
     family: spacing
     value: 20
@@ -71,6 +83,7 @@ tokens:
       web: '--space-250'
       ios: space250
       android: space_250
+    consumers: []
   space300:
     family: spacing
     value: 24
@@ -79,6 +92,8 @@ tokens:
       web: '--space-300'
       ios: space300
       android: space_300
+    consumers:
+      - Avatar-Base
   space400:
     family: spacing
     value: 32
@@ -87,6 +102,8 @@ tokens:
       web: '--space-400'
       ios: space400
       android: space_400
+    consumers:
+      - Avatar-Base
   space500:
     family: spacing
     value: 40
@@ -95,6 +112,8 @@ tokens:
       web: '--space-500'
       ios: space500
       android: space_500
+    consumers:
+      - Avatar-Base
   space600:
     family: spacing
     value: 48
@@ -103,6 +122,8 @@ tokens:
       web: '--space-600'
       ios: space600
       android: space_600
+    consumers:
+      - Avatar-Base
   space700:
     family: spacing
     value: 56
@@ -111,6 +132,7 @@ tokens:
       web: '--space-700'
       ios: space700
       android: space_700
+    consumers: []
   space800:
     family: spacing
     value: 64
@@ -119,6 +141,7 @@ tokens:
       web: '--space-800'
       ios: space800
       android: space_800
+    consumers: []
   fontSize050:
     family: fontSize
     value: 0.8125
@@ -127,6 +150,8 @@ tokens:
       web: '--font-size-050'
       ios: fontSize050
       android: font_size_050
+    consumers:
+      - Input-Checkbox-Legal
   fontSize075:
     family: fontSize
     value: 0.875
@@ -135,6 +160,7 @@ tokens:
       web: '--font-size-075'
       ios: fontSize075
       android: font_size_075
+    consumers: []
   fontSize100:
     family: fontSize
     value: 1
@@ -143,6 +169,8 @@ tokens:
       web: '--font-size-100'
       ios: fontSize100
       android: font_size_100
+    consumers:
+      - Nav-SegmentedChoice-Base
   fontSize125:
     family: fontSize
     value: 1.125
@@ -151,6 +179,8 @@ tokens:
       web: '--font-size-125'
       ios: fontSize125
       android: font_size_125
+    consumers:
+      - Nav-SegmentedChoice-Base
   fontSize150:
     family: fontSize
     value: 1.25
@@ -159,6 +189,7 @@ tokens:
       web: '--font-size-150'
       ios: fontSize150
       android: font_size_150
+    consumers: []
   fontSize200:
     family: fontSize
     value: 1.4375
@@ -167,6 +198,7 @@ tokens:
       web: '--font-size-200'
       ios: fontSize200
       android: font_size_200
+    consumers: []
   fontSize300:
     family: fontSize
     value: 1.625
@@ -175,6 +207,7 @@ tokens:
       web: '--font-size-300'
       ios: fontSize300
       android: font_size_300
+    consumers: []
   fontSize400:
     family: fontSize
     value: 1.8125
@@ -183,6 +216,7 @@ tokens:
       web: '--font-size-400'
       ios: fontSize400
       android: font_size_400
+    consumers: []
   fontSize500:
     family: fontSize
     value: 2.0625
@@ -191,6 +225,7 @@ tokens:
       web: '--font-size-500'
       ios: fontSize500
       android: font_size_500
+    consumers: []
   fontSize600:
     family: fontSize
     value: 2.3125
@@ -199,6 +234,7 @@ tokens:
       web: '--font-size-600'
       ios: fontSize600
       android: font_size_600
+    consumers: []
   fontSize700:
     family: fontSize
     value: 2.625
@@ -207,6 +243,7 @@ tokens:
       web: '--font-size-700'
       ios: fontSize700
       android: font_size_700
+    consumers: []
   fontFamilySystem:
     family: fontFamily
     value: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
@@ -215,6 +252,7 @@ tokens:
       web: '--font-family-system'
       ios: fontFamilySystem
       android: font_family_system
+    consumers: []
   fontFamilyMono:
     family: fontFamily
     value: '"Commit Mono", "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace'
@@ -223,6 +261,7 @@ tokens:
       web: '--font-family-mono'
       ios: fontFamilyMono
       android: font_family_mono
+    consumers: []
   fontFamilyDisplay:
     family: fontFamily
     value: Rajdhani, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif
@@ -231,6 +270,7 @@ tokens:
       web: '--font-family-display'
       ios: fontFamilyDisplay
       android: font_family_display
+    consumers: []
   fontFamilyBody:
     family: fontFamily
     value: Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif
@@ -239,6 +279,7 @@ tokens:
       web: '--font-family-body'
       ios: fontFamilyBody
       android: font_family_body
+    consumers: []
   fontWeight100:
     family: fontWeight
     value: 100
@@ -247,6 +288,7 @@ tokens:
       web: '--font-weight-100'
       ios: fontWeight100
       android: font_weight_100
+    consumers: []
   fontWeight200:
     family: fontWeight
     value: 200
@@ -255,6 +297,7 @@ tokens:
       web: '--font-weight-200'
       ios: fontWeight200
       android: font_weight_200
+    consumers: []
   fontWeight300:
     family: fontWeight
     value: 300
@@ -263,6 +306,7 @@ tokens:
       web: '--font-weight-300'
       ios: fontWeight300
       android: font_weight_300
+    consumers: []
   fontWeight400:
     family: fontWeight
     value: 400
@@ -271,6 +315,7 @@ tokens:
       web: '--font-weight-400'
       ios: fontWeight400
       android: font_weight_400
+    consumers: []
   fontWeight500:
     family: fontWeight
     value: 500
@@ -279,6 +324,7 @@ tokens:
       web: '--font-weight-500'
       ios: fontWeight500
       android: font_weight_500
+    consumers: []
   fontWeight600:
     family: fontWeight
     value: 600
@@ -287,6 +333,7 @@ tokens:
       web: '--font-weight-600'
       ios: fontWeight600
       android: font_weight_600
+    consumers: []
   fontWeight700:
     family: fontWeight
     value: 700
@@ -295,6 +342,8 @@ tokens:
       web: '--font-weight-700'
       ios: fontWeight700
       android: font_weight_700
+    consumers:
+      - Nav-SegmentedChoice-Base
   fontWeight800:
     family: fontWeight
     value: 800
@@ -303,6 +352,7 @@ tokens:
       web: '--font-weight-800'
       ios: fontWeight800
       android: font_weight_800
+    consumers: []
   fontWeight900:
     family: fontWeight
     value: 900
@@ -311,6 +361,7 @@ tokens:
       web: '--font-weight-900'
       ios: fontWeight900
       android: font_weight_900
+    consumers: []
   lineHeight050:
     family: lineHeight
     value: 1.538
@@ -319,6 +370,7 @@ tokens:
       web: '--line-height-050'
       ios: lineHeight050
       android: line_height_050
+    consumers: []
   lineHeight075:
     family: lineHeight
     value: 1.429
@@ -327,6 +379,7 @@ tokens:
       web: '--line-height-075'
       ios: lineHeight075
       android: line_height_075
+    consumers: []
   lineHeight100:
     family: lineHeight
     value: 1.5
@@ -335,6 +388,8 @@ tokens:
       web: '--line-height-100'
       ios: lineHeight100
       android: line_height_100
+    consumers:
+      - Nav-SegmentedChoice-Base
   lineHeight125:
     family: lineHeight
     value: 1.556
@@ -343,6 +398,8 @@ tokens:
       web: '--line-height-125'
       ios: lineHeight125
       android: line_height_125
+    consumers:
+      - Nav-SegmentedChoice-Base
   lineHeight150:
     family: lineHeight
     value: 1.4
@@ -351,6 +408,7 @@ tokens:
       web: '--line-height-150'
       ios: lineHeight150
       android: line_height_150
+    consumers: []
   lineHeight200:
     family: lineHeight
     value: 1.391
@@ -359,6 +417,7 @@ tokens:
       web: '--line-height-200'
       ios: lineHeight200
       android: line_height_200
+    consumers: []
   lineHeight300:
     family: lineHeight
     value: 1.231
@@ -367,6 +426,7 @@ tokens:
       web: '--line-height-300'
       ios: lineHeight300
       android: line_height_300
+    consumers: []
   lineHeight400:
     family: lineHeight
     value: 1.241
@@ -375,6 +435,7 @@ tokens:
       web: '--line-height-400'
       ios: lineHeight400
       android: line_height_400
+    consumers: []
   lineHeight500:
     family: lineHeight
     value: 1.212
@@ -383,6 +444,7 @@ tokens:
       web: '--line-height-500'
       ios: lineHeight500
       android: line_height_500
+    consumers: []
   lineHeight600:
     family: lineHeight
     value: 1.19
@@ -391,6 +453,7 @@ tokens:
       web: '--line-height-600'
       ios: lineHeight600
       android: line_height_600
+    consumers: []
   lineHeight700:
     family: lineHeight
     value: 1.143
@@ -399,6 +462,7 @@ tokens:
       web: '--line-height-700'
       ios: lineHeight700
       android: line_height_700
+    consumers: []
   letterSpacing025:
     family: letterSpacing
     value: -0.025
@@ -407,6 +471,7 @@ tokens:
       web: '--letter-spacing-025'
       ios: letterSpacing025
       android: letter_spacing_025
+    consumers: []
   letterSpacing050:
     family: letterSpacing
     value: -0.05
@@ -415,6 +480,7 @@ tokens:
       web: '--letter-spacing-050'
       ios: letterSpacing050
       android: letter_spacing_050
+    consumers: []
   letterSpacing100:
     family: letterSpacing
     value: 0
@@ -423,6 +489,7 @@ tokens:
       web: '--letter-spacing-100'
       ios: letterSpacing100
       android: letter_spacing_100
+    consumers: []
   letterSpacing125:
     family: letterSpacing
     value: 0.025
@@ -431,6 +498,7 @@ tokens:
       web: '--letter-spacing-125'
       ios: letterSpacing125
       android: letter_spacing_125
+    consumers: []
   letterSpacing150:
     family: letterSpacing
     value: 0.05
@@ -439,6 +507,7 @@ tokens:
       web: '--letter-spacing-150'
       ios: letterSpacing150
       android: letter_spacing_150
+    consumers: []
   radius000:
     family: radius
     value: 0
@@ -447,6 +516,7 @@ tokens:
       web: '--radius-000'
       ios: radius000
       android: radius_000
+    consumers: []
   radius025:
     family: radius
     value: 2
@@ -455,6 +525,7 @@ tokens:
       web: '--radius-025'
       ios: radius025
       android: radius_025
+    consumers: []
   radius050:
     family: radius
     value: 4
@@ -463,6 +534,8 @@ tokens:
       web: '--radius-050'
       ios: radius050
       android: radius_050
+    consumers:
+      - Container-Base
   radius075:
     family: radius
     value: 6
@@ -471,6 +544,7 @@ tokens:
       web: '--radius-075'
       ios: radius075
       android: radius_075
+    consumers: []
   radius100:
     family: radius
     value: 8
@@ -479,6 +553,10 @@ tokens:
       web: '--radius-100'
       ios: radius100
       android: radius_100
+    consumers:
+      - Button-CTA
+      - Container-Base
+      - Container-Card-Base
   radius125:
     family: radius
     value: 10
@@ -487,6 +565,7 @@ tokens:
       web: '--radius-125'
       ios: radius125
       android: radius_125
+    consumers: []
   radius150:
     family: radius
     value: 12
@@ -495,6 +574,12 @@ tokens:
       web: '--radius-150'
       ios: radius150
       android: radius_150
+    consumers:
+      - Button-CTA
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
   radius200:
     family: radius
     value: 16
@@ -503,6 +588,9 @@ tokens:
       web: '--radius-200'
       ios: radius200
       android: radius_200
+    consumers:
+      - Container-Base
+      - Container-Card-Base
   radius250:
     family: radius
     value: 20
@@ -511,6 +599,7 @@ tokens:
       web: '--radius-250'
       ios: radius250
       android: radius_250
+    consumers: []
   radius300:
     family: radius
     value: 24
@@ -519,6 +608,7 @@ tokens:
       web: '--radius-300'
       ios: radius300
       android: radius_300
+    consumers: []
   radius400:
     family: radius
     value: 32
@@ -527,6 +617,7 @@ tokens:
       web: '--radius-400'
       ios: radius400
       android: radius_400
+    consumers: []
   radiusMax:
     family: radius
     value: 9999
@@ -535,6 +626,7 @@ tokens:
       web: '--radius-max'
       ios: radiusMax
       android: radius_max
+    consumers: []
   radiusHalf:
     family: radius
     value: 50%
@@ -543,6 +635,7 @@ tokens:
       web: '--radius-half'
       ios: radiusHalf
       android: radius_half
+    consumers: []
   densityCompact:
     family: density
     value: 0.75
@@ -551,6 +644,7 @@ tokens:
       web: '--density-compact'
       ios: densityCompact
       android: density_compact
+    consumers: []
   densityDefault:
     family: density
     value: 1
@@ -559,6 +653,7 @@ tokens:
       web: '--density-default'
       ios: densityDefault
       android: density_default
+    consumers: []
   densityComfortable:
     family: density
     value: 1.25
@@ -567,6 +662,7 @@ tokens:
       web: '--density-comfortable'
       ios: densityComfortable
       android: density_comfortable
+    consumers: []
   densitySpacious:
     family: density
     value: 1.5
@@ -575,6 +671,7 @@ tokens:
       web: '--density-spacious'
       ios: densitySpacious
       android: density_spacious
+    consumers: []
   tapAreaMinimum:
     family: tapArea
     value: 44
@@ -583,6 +680,12 @@ tokens:
       web: '--tap-area-minimum'
       ios: tapAreaMinimum
       android: tap_area_minimum
+    consumers:
+      - Input-Checkbox-Base
+      - Input-Radio-Base
+      - Nav-Header-Base
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
   tapAreaRecommended:
     family: tapArea
     value: 48
@@ -591,6 +694,21 @@ tokens:
       web: '--tap-area-recommended'
       ios: tapAreaRecommended
       android: tap_area_recommended
+    consumers:
+      - Button-CTA
+      - Button-Icon
+      - Button-VerticalList-Item
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Input-Checkbox-Base
+      - Input-Radio-Base
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
+      - Nav-Header-Base
+      - Nav-SegmentedChoice-Base
   tapAreaComfortable:
     family: tapArea
     value: 56
@@ -599,6 +717,7 @@ tokens:
       web: '--tap-area-comfortable'
       ios: tapAreaComfortable
       android: tap_area_comfortable
+    consumers: []
   tapAreaGenerous:
     family: tapArea
     value: 64
@@ -607,6 +726,7 @@ tokens:
       web: '--tap-area-generous'
       ios: tapAreaGenerous
       android: tap_area_generous
+    consumers: []
   gray100:
     family: color
     value:
@@ -635,6 +755,7 @@ tokens:
       web: '--gray-100'
       ios: gray100
       android: gray_100
+    consumers: []
   gray200:
     family: color
     value:
@@ -663,6 +784,7 @@ tokens:
       web: '--gray-200'
       ios: gray200
       android: gray_200
+    consumers: []
   gray300:
     family: color
     value:
@@ -691,6 +813,7 @@ tokens:
       web: '--gray-300'
       ios: gray300
       android: gray_300
+    consumers: []
   gray400:
     family: color
     value:
@@ -719,6 +842,7 @@ tokens:
       web: '--gray-400'
       ios: gray400
       android: gray_400
+    consumers: []
   gray500:
     family: color
     value:
@@ -747,6 +871,7 @@ tokens:
       web: '--gray-500'
       ios: gray500
       android: gray_500
+    consumers: []
   black100:
     family: color
     value:
@@ -775,6 +900,7 @@ tokens:
       web: '--black-100'
       ios: black100
       android: black_100
+    consumers: []
   black200:
     family: color
     value:
@@ -803,6 +929,7 @@ tokens:
       web: '--black-200'
       ios: black200
       android: black_200
+    consumers: []
   black300:
     family: color
     value:
@@ -831,6 +958,7 @@ tokens:
       web: '--black-300'
       ios: black300
       android: black_300
+    consumers: []
   black400:
     family: color
     value:
@@ -859,6 +987,7 @@ tokens:
       web: '--black-400'
       ios: black400
       android: black_400
+    consumers: []
   black500:
     family: color
     value:
@@ -887,6 +1016,7 @@ tokens:
       web: '--black-500'
       ios: black500
       android: black_500
+    consumers: []
   white100:
     family: color
     value:
@@ -915,6 +1045,7 @@ tokens:
       web: '--white-100'
       ios: white100
       android: white_100
+    consumers: []
   white200:
     family: color
     value:
@@ -943,6 +1074,7 @@ tokens:
       web: '--white-200'
       ios: white200
       android: white_200
+    consumers: []
   white300:
     family: color
     value:
@@ -971,6 +1103,7 @@ tokens:
       web: '--white-300'
       ios: white300
       android: white_300
+    consumers: []
   white400:
     family: color
     value:
@@ -999,6 +1132,7 @@ tokens:
       web: '--white-400'
       ios: white400
       android: white_400
+    consumers: []
   white500:
     family: color
     value:
@@ -1027,6 +1161,7 @@ tokens:
       web: '--white-500'
       ios: white500
       android: white_500
+    consumers: []
   yellow100:
     family: color
     value:
@@ -1055,6 +1190,7 @@ tokens:
       web: '--yellow-100'
       ios: yellow100
       android: yellow_100
+    consumers: []
   yellow200:
     family: color
     value:
@@ -1083,6 +1219,7 @@ tokens:
       web: '--yellow-200'
       ios: yellow200
       android: yellow_200
+    consumers: []
   yellow300:
     family: color
     value:
@@ -1111,6 +1248,7 @@ tokens:
       web: '--yellow-300'
       ios: yellow300
       android: yellow_300
+    consumers: []
   yellow400:
     family: color
     value:
@@ -1139,6 +1277,7 @@ tokens:
       web: '--yellow-400'
       ios: yellow400
       android: yellow_400
+    consumers: []
   yellow500:
     family: color
     value:
@@ -1167,6 +1306,7 @@ tokens:
       web: '--yellow-500'
       ios: yellow500
       android: yellow_500
+    consumers: []
   orange100:
     family: color
     value:
@@ -1195,6 +1335,7 @@ tokens:
       web: '--orange-100'
       ios: orange100
       android: orange_100
+    consumers: []
   orange200:
     family: color
     value:
@@ -1223,6 +1364,7 @@ tokens:
       web: '--orange-200'
       ios: orange200
       android: orange_200
+    consumers: []
   orange300:
     family: color
     value:
@@ -1251,6 +1393,7 @@ tokens:
       web: '--orange-300'
       ios: orange300
       android: orange_300
+    consumers: []
   orange400:
     family: color
     value:
@@ -1279,6 +1422,7 @@ tokens:
       web: '--orange-400'
       ios: orange400
       android: orange_400
+    consumers: []
   orange500:
     family: color
     value:
@@ -1307,6 +1451,7 @@ tokens:
       web: '--orange-500'
       ios: orange500
       android: orange_500
+    consumers: []
   purple100:
     family: color
     value:
@@ -1335,6 +1480,7 @@ tokens:
       web: '--purple-100'
       ios: purple100
       android: purple_100
+    consumers: []
   purple200:
     family: color
     value:
@@ -1363,6 +1509,7 @@ tokens:
       web: '--purple-200'
       ios: purple200
       android: purple_200
+    consumers: []
   purple300:
     family: color
     value:
@@ -1391,6 +1538,7 @@ tokens:
       web: '--purple-300'
       ios: purple300
       android: purple_300
+    consumers: []
   purple400:
     family: color
     value:
@@ -1419,6 +1567,7 @@ tokens:
       web: '--purple-400'
       ios: purple400
       android: purple_400
+    consumers: []
   purple500:
     family: color
     value:
@@ -1447,6 +1596,7 @@ tokens:
       web: '--purple-500'
       ios: purple500
       android: purple_500
+    consumers: []
   pink100:
     family: color
     value:
@@ -1475,6 +1625,7 @@ tokens:
       web: '--pink-100'
       ios: pink100
       android: pink_100
+    consumers: []
   pink200:
     family: color
     value:
@@ -1503,6 +1654,7 @@ tokens:
       web: '--pink-200'
       ios: pink200
       android: pink_200
+    consumers: []
   pink300:
     family: color
     value:
@@ -1531,6 +1683,7 @@ tokens:
       web: '--pink-300'
       ios: pink300
       android: pink_300
+    consumers: []
   pink400:
     family: color
     value:
@@ -1559,6 +1712,7 @@ tokens:
       web: '--pink-400'
       ios: pink400
       android: pink_400
+    consumers: []
   pink500:
     family: color
     value:
@@ -1587,6 +1741,7 @@ tokens:
       web: '--pink-500'
       ios: pink500
       android: pink_500
+    consumers: []
   green100:
     family: color
     value:
@@ -1615,6 +1770,7 @@ tokens:
       web: '--green-100'
       ios: green100
       android: green_100
+    consumers: []
   green200:
     family: color
     value:
@@ -1643,6 +1799,7 @@ tokens:
       web: '--green-200'
       ios: green200
       android: green_200
+    consumers: []
   green300:
     family: color
     value:
@@ -1671,6 +1828,7 @@ tokens:
       web: '--green-300'
       ios: green300
       android: green_300
+    consumers: []
   green400:
     family: color
     value:
@@ -1699,6 +1857,7 @@ tokens:
       web: '--green-400'
       ios: green400
       android: green_400
+    consumers: []
   green500:
     family: color
     value:
@@ -1727,6 +1886,7 @@ tokens:
       web: '--green-500'
       ios: green500
       android: green_500
+    consumers: []
   cyan100:
     family: color
     value:
@@ -1755,6 +1915,7 @@ tokens:
       web: '--cyan-100'
       ios: cyan100
       android: cyan_100
+    consumers: []
   cyan200:
     family: color
     value:
@@ -1783,6 +1944,7 @@ tokens:
       web: '--cyan-200'
       ios: cyan200
       android: cyan_200
+    consumers: []
   cyan300:
     family: color
     value:
@@ -1811,6 +1973,7 @@ tokens:
       web: '--cyan-300'
       ios: cyan300
       android: cyan_300
+    consumers: []
   cyan400:
     family: color
     value:
@@ -1839,6 +2002,7 @@ tokens:
       web: '--cyan-400'
       ios: cyan400
       android: cyan_400
+    consumers: []
   cyan500:
     family: color
     value:
@@ -1867,6 +2031,7 @@ tokens:
       web: '--cyan-500'
       ios: cyan500
       android: cyan_500
+    consumers: []
   teal100:
     family: color
     value:
@@ -1895,6 +2060,7 @@ tokens:
       web: '--teal-100'
       ios: teal100
       android: teal_100
+    consumers: []
   teal200:
     family: color
     value:
@@ -1923,6 +2089,7 @@ tokens:
       web: '--teal-200'
       ios: teal200
       android: teal_200
+    consumers: []
   teal300:
     family: color
     value:
@@ -1951,6 +2118,7 @@ tokens:
       web: '--teal-300'
       ios: teal300
       android: teal_300
+    consumers: []
   teal400:
     family: color
     value:
@@ -1979,6 +2147,7 @@ tokens:
       web: '--teal-400'
       ios: teal400
       android: teal_400
+    consumers: []
   teal500:
     family: color
     value:
@@ -2007,6 +2176,7 @@ tokens:
       web: '--teal-500'
       ios: teal500
       android: teal_500
+    consumers: []
   shadowBlack100:
     family: color
     value:
@@ -2021,6 +2191,7 @@ tokens:
       web: '--shadow-black-100'
       ios: shadowBlack100
       android: shadow_black_100
+    consumers: []
   shadowBlue100:
     family: color
     value:
@@ -2035,6 +2206,7 @@ tokens:
       web: '--shadow-blue-100'
       ios: shadowBlue100
       android: shadow_blue_100
+    consumers: []
   shadowOrange100:
     family: color
     value:
@@ -2049,6 +2221,7 @@ tokens:
       web: '--shadow-orange-100'
       ios: shadowOrange100
       android: shadow_orange_100
+    consumers: []
   shadowGray100:
     family: color
     value:
@@ -2063,6 +2236,7 @@ tokens:
       web: '--shadow-gray-100'
       ios: shadowGray100
       android: shadow_gray_100
+    consumers: []
   borderWidth000:
     family: borderWidth
     value: 0
@@ -2071,6 +2245,7 @@ tokens:
       web: '--border-width-000'
       ios: borderWidth000
       android: border_width_000
+    consumers: []
   borderWidth100:
     family: borderWidth
     value: 1
@@ -2079,6 +2254,8 @@ tokens:
       web: '--border-width-100'
       ios: borderWidth100
       android: border_width_100
+    consumers:
+      - Nav-Header-Base
   borderWidth200:
     family: borderWidth
     value: 2
@@ -2087,6 +2264,7 @@ tokens:
       web: '--border-width-200'
       ios: borderWidth200
       android: border_width_200
+    consumers: []
   borderWidth400:
     family: borderWidth
     value: 4
@@ -2095,6 +2273,7 @@ tokens:
       web: '--border-width-400'
       ios: borderWidth400
       android: border_width_400
+    consumers: []
   shadowOffsetX.100:
     family: shadow
     value: 4
@@ -2103,6 +2282,7 @@ tokens:
       web: '--shadow-offset-x-100'
       ios: shadowOffsetX100
       android: shadow_offset_x_100
+    consumers: []
   shadowOffsetX.150:
     family: shadow
     value: 6
@@ -2111,6 +2291,7 @@ tokens:
       web: '--shadow-offset-x-150'
       ios: shadowOffsetX150
       android: shadow_offset_x_150
+    consumers: []
   shadowOffsetX.200:
     family: shadow
     value: 8
@@ -2119,6 +2300,7 @@ tokens:
       web: '--shadow-offset-x-200'
       ios: shadowOffsetX200
       android: shadow_offset_x_200
+    consumers: []
   shadowOffsetX.300:
     family: shadow
     value: 12
@@ -2127,6 +2309,7 @@ tokens:
       web: '--shadow-offset-x-300'
       ios: shadowOffsetX300
       android: shadow_offset_x_300
+    consumers: []
   shadowOffsetX.n300:
     family: shadow
     value: -12
@@ -2135,6 +2318,7 @@ tokens:
       web: '--shadow-offset-x-n-300'
       ios: shadowOffsetXN300
       android: shadow_offset_x_n_300
+    consumers: []
   shadowOffsetX.n200:
     family: shadow
     value: -8
@@ -2143,6 +2327,7 @@ tokens:
       web: '--shadow-offset-x-n-200'
       ios: shadowOffsetXN200
       android: shadow_offset_x_n_200
+    consumers: []
   shadowOffsetX.n150:
     family: shadow
     value: -6
@@ -2151,6 +2336,7 @@ tokens:
       web: '--shadow-offset-x-n-150'
       ios: shadowOffsetXN150
       android: shadow_offset_x_n_150
+    consumers: []
   shadowOffsetX.n100:
     family: shadow
     value: -4
@@ -2159,6 +2345,7 @@ tokens:
       web: '--shadow-offset-x-n-100'
       ios: shadowOffsetXN100
       android: shadow_offset_x_n_100
+    consumers: []
   shadowOffsetX.000:
     family: shadow
     value: 0
@@ -2167,6 +2354,7 @@ tokens:
       web: '--shadow-offset-x-000'
       ios: shadowOffsetX000
       android: shadow_offset_x_000
+    consumers: []
   shadowOffsetY.100:
     family: shadow
     value: 4
@@ -2175,6 +2363,7 @@ tokens:
       web: '--shadow-offset-y-100'
       ios: shadowOffsetY100
       android: shadow_offset_y_100
+    consumers: []
   shadowOffsetY.200:
     family: shadow
     value: 8
@@ -2183,6 +2372,7 @@ tokens:
       web: '--shadow-offset-y-200'
       ios: shadowOffsetY200
       android: shadow_offset_y_200
+    consumers: []
   shadowOffsetY.300:
     family: shadow
     value: 12
@@ -2191,6 +2381,7 @@ tokens:
       web: '--shadow-offset-y-300'
       ios: shadowOffsetY300
       android: shadow_offset_y_300
+    consumers: []
   shadowOffsetY.400:
     family: shadow
     value: 16
@@ -2199,6 +2390,7 @@ tokens:
       web: '--shadow-offset-y-400'
       ios: shadowOffsetY400
       android: shadow_offset_y_400
+    consumers: []
   shadowOffsetY.000:
     family: shadow
     value: 0
@@ -2207,6 +2399,7 @@ tokens:
       web: '--shadow-offset-y-000'
       ios: shadowOffsetY000
       android: shadow_offset_y_000
+    consumers: []
   shadowOpacityNone:
     family: shadow
     value: 0
@@ -2215,6 +2408,7 @@ tokens:
       web: '--shadow-opacity-none'
       ios: shadowOpacityNone
       android: shadow_opacity_none
+    consumers: []
   shadowOpacityHard:
     family: shadow
     value: 0.4
@@ -2223,6 +2417,7 @@ tokens:
       web: '--shadow-opacity-hard'
       ios: shadowOpacityHard
       android: shadow_opacity_hard
+    consumers: []
   shadowOpacityModerate:
     family: shadow
     value: 0.3
@@ -2231,6 +2426,7 @@ tokens:
       web: '--shadow-opacity-moderate'
       ios: shadowOpacityModerate
       android: shadow_opacity_moderate
+    consumers: []
   shadowOpacitySoft:
     family: shadow
     value: 0.2
@@ -2239,6 +2435,7 @@ tokens:
       web: '--shadow-opacity-soft'
       ios: shadowOpacitySoft
       android: shadow_opacity_soft
+    consumers: []
   shadowOpacityDepth200:
     family: shadow
     value: 0.35
@@ -2247,6 +2444,7 @@ tokens:
       web: '--shadow-opacity-depth-200'
       ios: shadowOpacityDepth200
       android: shadow_opacity_depth_200
+    consumers: []
   shadowOpacityDepth300:
     family: shadow
     value: 0.4
@@ -2255,6 +2453,7 @@ tokens:
       web: '--shadow-opacity-depth-300'
       ios: shadowOpacityDepth300
       android: shadow_opacity_depth_300
+    consumers: []
   glowOpacity100:
     family: glow
     value: 0.8
@@ -2263,6 +2462,7 @@ tokens:
       web: '--glow-opacity-100'
       ios: glowOpacity100
       android: glow_opacity_100
+    consumers: []
   glowOpacity200:
     family: glow
     value: 0.6
@@ -2271,6 +2471,7 @@ tokens:
       web: '--glow-opacity-200'
       ios: glowOpacity200
       android: glow_opacity_200
+    consumers: []
   glowOpacity300:
     family: glow
     value: 0.4
@@ -2279,6 +2480,7 @@ tokens:
       web: '--glow-opacity-300'
       ios: glowOpacity300
       android: glow_opacity_300
+    consumers: []
   glowOpacity400:
     family: glow
     value: 0.2
@@ -2287,6 +2489,7 @@ tokens:
       web: '--glow-opacity-400'
       ios: glowOpacity400
       android: glow_opacity_400
+    consumers: []
   opacity000:
     family: opacity
     value: 0
@@ -2295,6 +2498,8 @@ tokens:
       web: '--opacity-000'
       ios: opacity000
       android: opacity_000
+    consumers:
+      - Nav-TabBar-Base
   opacity008:
     family: opacity
     value: 0.08
@@ -2303,6 +2508,7 @@ tokens:
       web: '--opacity-008'
       ios: opacity008
       android: opacity_008
+    consumers: []
   opacity016:
     family: opacity
     value: 0.16
@@ -2311,6 +2517,7 @@ tokens:
       web: '--opacity-016'
       ios: opacity016
       android: opacity_016
+    consumers: []
   opacity024:
     family: opacity
     value: 0.24
@@ -2319,6 +2526,8 @@ tokens:
       web: '--opacity-024'
       ios: opacity024
       android: opacity_024
+    consumers:
+      - Nav-TabBar-Base
   opacity032:
     family: opacity
     value: 0.32
@@ -2327,6 +2536,7 @@ tokens:
       web: '--opacity-032'
       ios: opacity032
       android: opacity_032
+    consumers: []
   opacity040:
     family: opacity
     value: 0.4
@@ -2335,6 +2545,7 @@ tokens:
       web: '--opacity-040'
       ios: opacity040
       android: opacity_040
+    consumers: []
   opacity048:
     family: opacity
     value: 0.48
@@ -2343,6 +2554,7 @@ tokens:
       web: '--opacity-048'
       ios: opacity048
       android: opacity_048
+    consumers: []
   opacity056:
     family: opacity
     value: 0.56
@@ -2351,6 +2563,7 @@ tokens:
       web: '--opacity-056'
       ios: opacity056
       android: opacity_056
+    consumers: []
   opacity064:
     family: opacity
     value: 0.64
@@ -2359,6 +2572,7 @@ tokens:
       web: '--opacity-064'
       ios: opacity064
       android: opacity_064
+    consumers: []
   opacity072:
     family: opacity
     value: 0.72
@@ -2367,6 +2581,7 @@ tokens:
       web: '--opacity-072'
       ios: opacity072
       android: opacity_072
+    consumers: []
   opacity080:
     family: opacity
     value: 0.8
@@ -2375,6 +2590,7 @@ tokens:
       web: '--opacity-080'
       ios: opacity080
       android: opacity_080
+    consumers: []
   opacity088:
     family: opacity
     value: 0.88
@@ -2383,6 +2599,7 @@ tokens:
       web: '--opacity-088'
       ios: opacity088
       android: opacity_088
+    consumers: []
   opacity096:
     family: opacity
     value: 0.96
@@ -2391,6 +2608,7 @@ tokens:
       web: '--opacity-096'
       ios: opacity096
       android: opacity_096
+    consumers: []
   opacity100:
     family: opacity
     value: 1
@@ -2399,6 +2617,7 @@ tokens:
       web: '--opacity-100'
       ios: opacity100
       android: opacity_100
+    consumers: []
   blend100:
     family: blend
     value: 0.04
@@ -2407,6 +2626,7 @@ tokens:
       web: '--blend-100'
       ios: blend100
       android: blend_100
+    consumers: []
   blend200:
     family: blend
     value: 0.08
@@ -2415,6 +2635,7 @@ tokens:
       web: '--blend-200'
       ios: blend200
       android: blend_200
+    consumers: []
   blend300:
     family: blend
     value: 0.12
@@ -2423,6 +2644,7 @@ tokens:
       web: '--blend-300'
       ios: blend300
       android: blend_300
+    consumers: []
   blend400:
     family: blend
     value: 0.16
@@ -2431,6 +2653,7 @@ tokens:
       web: '--blend-400'
       ios: blend400
       android: blend_400
+    consumers: []
   blend500:
     family: blend
     value: 0.2
@@ -2439,6 +2662,7 @@ tokens:
       web: '--blend-500'
       ios: blend500
       android: blend_500
+    consumers: []
   breakpointXs:
     family: breakpoint
     value: 320
@@ -2447,6 +2671,7 @@ tokens:
       web: '--breakpoint-xs'
       ios: breakpointXs
       android: breakpoint_xs
+    consumers: []
   breakpointSm:
     family: breakpoint
     value: 375
@@ -2455,6 +2680,7 @@ tokens:
       web: '--breakpoint-sm'
       ios: breakpointSm
       android: breakpoint_sm
+    consumers: []
   breakpointMd:
     family: breakpoint
     value: 1024
@@ -2463,6 +2689,7 @@ tokens:
       web: '--breakpoint-md'
       ios: breakpointMd
       android: breakpoint_md
+    consumers: []
   breakpointLg:
     family: breakpoint
     value: 1440
@@ -2471,6 +2698,7 @@ tokens:
       web: '--breakpoint-lg'
       ios: breakpointLg
       android: breakpoint_lg
+    consumers: []
   duration150:
     family: duration
     value: 150
@@ -2479,6 +2707,11 @@ tokens:
       web: '--duration-150'
       ios: Duration.duration150
       android: Duration.Duration150
+    consumers:
+      - Nav-Header-Page
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
+      - Progress-Bar-Base
   duration250:
     family: duration
     value: 250
@@ -2487,6 +2720,7 @@ tokens:
       web: '--duration-250'
       ios: Duration.duration250
       android: Duration.Duration250
+    consumers: []
   duration350:
     family: duration
     value: 350
@@ -2495,6 +2729,11 @@ tokens:
       web: '--duration-350'
       ios: Duration.duration350
       android: Duration.Duration350
+    consumers:
+      - Nav-Header-Page
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
+      - Progress-Bar-Base
   easingStandard:
     family: easing
     value: cubic-bezier(0.4, 0.0, 0.2, 1)
@@ -2503,6 +2742,10 @@ tokens:
       web: '--easing-standard'
       ios: Easing.easingStandard
       android: Easing.EasingStandard
+    consumers:
+      - Nav-Header-Page
+      - Nav-SegmentedChoice-Base
+      - Progress-Bar-Base
   easingDecelerate:
     family: easing
     value: cubic-bezier(0.0, 0.0, 0.2, 1)
@@ -2511,6 +2754,10 @@ tokens:
       web: '--easing-decelerate'
       ios: Easing.easingDecelerate
       android: Easing.EasingDecelerate
+    consumers:
+      - Nav-Header-Page
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
   easingAccelerate:
     family: easing
     value: cubic-bezier(0.4, 0.0, 1, 1)
@@ -2519,6 +2766,10 @@ tokens:
       web: '--easing-accelerate'
       ios: Easing.easingAccelerate
       android: Easing.EasingAccelerate
+    consumers:
+      - Nav-Header-Page
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
   easingGlideDecelerate:
     family: easing
     value: '[[0,0],[0.009,0.012],[0.02,0.05],[0.092,0.411],[0.118,0.517],[0.146,0.611],[0.177,0.694],[0.211,0.765],[0.248,0.824],[0.289,0.872],[0.334,0.91],[0.384,0.939],[0.509,0.977],[0.684,0.994],[1,1]]'
@@ -2527,6 +2778,9 @@ tokens:
       web: '--easing-glide-decelerate'
       ios: Easing.easingGlideDecelerate
       android: Easing.EasingGlideDecelerate
+    consumers:
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
   scale088:
     family: scale
     value: 0.88
@@ -2535,6 +2789,7 @@ tokens:
       web: '--scale-088'
       ios: Scale.scale088
       android: Scale.Scale088
+    consumers: []
   scale092:
     family: scale
     value: 0.92
@@ -2543,6 +2798,7 @@ tokens:
       web: '--scale-092'
       ios: Scale.scale092
       android: Scale.Scale092
+    consumers: []
   scale096:
     family: scale
     value: 0.96
@@ -2551,6 +2807,9 @@ tokens:
       web: '--scale-096'
       ios: Scale.scale096
       android: Scale.Scale096
+    consumers:
+      - Button-Icon
+      - Input-Checkbox-Base
   scale100:
     family: scale
     value: 1
@@ -2559,6 +2818,8 @@ tokens:
       web: '--scale-100'
       ios: Scale.scale100
       android: Scale.Scale100
+    consumers:
+      - Button-Icon
   scale104:
     family: scale
     value: 1.04
@@ -2567,6 +2828,7 @@ tokens:
       web: '--scale-104'
       ios: Scale.scale104
       android: Scale.Scale104
+    consumers: []
   scale108:
     family: scale
     value: 1.08
@@ -2575,6 +2837,7 @@ tokens:
       web: '--scale-108'
       ios: Scale.scale108
       android: Scale.Scale108
+    consumers: []
   blur000:
     family: blur
     value: 0
@@ -2583,6 +2846,7 @@ tokens:
       web: '--blur-000'
       ios: blur000
       android: blur_000
+    consumers: []
   blur025:
     family: blur
     value: 4
@@ -2591,6 +2855,7 @@ tokens:
       web: '--blur-025'
       ios: blur025
       android: blur_025
+    consumers: []
   blur050:
     family: blur
     value: 8
@@ -2599,6 +2864,8 @@ tokens:
       web: '--blur-050'
       ios: blur050
       android: blur_050
+    consumers:
+      - Nav-Header-Base
   blur075:
     family: blur
     value: 12
@@ -2607,6 +2874,7 @@ tokens:
       web: '--blur-075'
       ios: blur075
       android: blur_075
+    consumers: []
   blur100:
     family: blur
     value: 16
@@ -2615,6 +2883,8 @@ tokens:
       web: '--blur-100'
       ios: blur100
       android: blur_100
+    consumers:
+      - Nav-Header-Base
   blur125:
     family: blur
     value: 20
@@ -2623,6 +2893,7 @@ tokens:
       web: '--blur-125'
       ios: blur125
       android: blur_125
+    consumers: []
   blur150:
     family: blur
     value: 24
@@ -2631,6 +2902,8 @@ tokens:
       web: '--blur-150'
       ios: blur150
       android: blur_150
+    consumers:
+      - Nav-Header-Base
   blur200:
     family: blur
     value: 32
@@ -2639,6 +2912,7 @@ tokens:
       web: '--blur-200'
       ios: blur200
       android: blur_200
+    consumers: []
   blur250:
     family: blur
     value: 40
@@ -2647,6 +2921,7 @@ tokens:
       web: '--blur-250'
       ios: blur250
       android: blur_250
+    consumers: []
   size050:
     family: sizing
     value: 4
@@ -2655,6 +2930,8 @@ tokens:
       web: '--size-050'
       ios: size050
       android: size_050
+    consumers:
+      - Progress-Bar-Base
   size100:
     family: sizing
     value: 8
@@ -2663,6 +2940,8 @@ tokens:
       web: '--size-100'
       ios: size100
       android: size_100
+    consumers:
+      - Progress-Bar-Base
   size150:
     family: sizing
     value: 12
@@ -2671,6 +2950,8 @@ tokens:
       web: '--size-150'
       ios: size150
       android: size_150
+    consumers:
+      - Progress-Bar-Base
   size200:
     family: sizing
     value: 16
@@ -2679,6 +2960,7 @@ tokens:
       web: '--size-200'
       ios: size200
       android: size_200
+    consumers: []
   size250:
     family: sizing
     value: 20
@@ -2687,6 +2969,7 @@ tokens:
       web: '--size-250'
       ios: size250
       android: size_250
+    consumers: []
   size300:
     family: sizing
     value: 24
@@ -2695,6 +2978,7 @@ tokens:
       web: '--size-300'
       ios: size300
       android: size_300
+    consumers: []
   size400:
     family: sizing
     value: 32
@@ -2703,6 +2987,7 @@ tokens:
       web: '--size-400'
       ios: size400
       android: size_400
+    consumers: []
   size500:
     family: sizing
     value: 40
@@ -2711,6 +2996,7 @@ tokens:
       web: '--size-500'
       ios: size500
       android: size_500
+    consumers: []
   size600:
     family: sizing
     value: 48
@@ -2719,6 +3005,7 @@ tokens:
       web: '--size-600'
       ios: size600
       android: size_600
+    consumers: []
   size700:
     family: sizing
     value: 56
@@ -2727,6 +3014,8 @@ tokens:
       web: '--size-700'
       ios: size700
       android: size_700
+    consumers:
+      - Button-CTA
   size800:
     family: sizing
     value: 64
@@ -2735,6 +3024,7 @@ tokens:
       web: '--size-800'
       ios: size800
       android: size_800
+    consumers: []
   size900:
     family: sizing
     value: 72
@@ -2743,6 +3033,8 @@ tokens:
       web: '--size-900'
       ios: size900
       android: size_900
+    consumers:
+      - Button-CTA
   size1000:
     family: sizing
     value: 80
@@ -2751,6 +3043,8 @@ tokens:
       web: '--size-1000'
       ios: size1000
       android: size_1000
+    consumers:
+      - Button-CTA
   size1600:
     family: sizing
     value: 128
@@ -2759,3 +3053,4 @@ tokens:
       web: '--size-1600'
       ios: size1600
       android: size_1600
+    consumers: []

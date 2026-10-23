@@ -197,6 +197,9 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
         ios: iosPath,
         android: androidPath,
       },
+      // Consumers on every tier (ruling 2026-10-23 § 3b): a schema that declares a
+      // primitive is a consumer of it, exactly as for a semantic token.
+      consumers: consumerMap.get(token.name) || [],
     };
 
     primitivesIndex[token.name] = entry;
@@ -240,6 +243,9 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
         ios: `${enumName}.${propertyName}`,
         android: `${enumName}.${propertyName}`,
       },
+      // Keyed by the registry name (`<component lowercased>.<key>`), the only spelling
+      // a schema can declare a component token under.
+      consumers: consumerMap.get(ct.name) || [],
     };
   }
 
