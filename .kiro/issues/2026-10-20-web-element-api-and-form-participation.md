@@ -48,6 +48,7 @@ These defects are owed to **plain web consumers**, whatever Spec 128's F-6 decid
   - **One sub-check not proven**: that a Legal that has had `disabled` set still keeps its value. The attribute strip was observed on Legal; the retention read came after the form was reset in the same step. The Base equivalent is proven. The code path has the same shape, but this line does not claim it.
   - **Not run**: Safari (16.4+; the pane has none) and Firefox. **The contract's "native form submission" is browser-proven in Chromium only; Safari remains owed.**
   - **Status per this record's rule**: the fix is browser-verified in Chromium and **awaits merge**. E1 closes at the PR's merge (README rule 5/11); the P0 Class and the Trigger stay as they are, and Lina re-rules the Trigger to `merge:#<N>` / E2's `release:17.0.0:phase-1` as the Trigger line above describes. I have not edited the Status, Class or Trigger lines (Lina's, rules 9 and 12).
+- **2026-10-23, follow-on (Sparky)**: the Legal-disabled sub-check above is **closed, PASS** (Chromium 152, fresh load, real pointer click): after the click `[true, "[[\"tos\",\"accepted\"]]"]`; after `setAttribute('disabled','')` `[false, true, "[[\"tos\",\"accepted\"]]"]`, so the attribute is stripped and the value is kept, as on Base. **Still owed: Safari (16.4+) and Firefox.** The status above is unchanged: browser-verified in Chromium, E1 closes at the PR's merge.
 
 ## E2. Text inputs carry no form-participation contract (gap); Input-Radio-Set is borderline
 
