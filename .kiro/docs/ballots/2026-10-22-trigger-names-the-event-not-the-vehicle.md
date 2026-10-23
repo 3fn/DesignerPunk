@@ -34,9 +34,9 @@ A third commit touched the path, `8033f3a3e` (#423, 2026-10-19, a two-line dated
 
 `.kiro/issues/README.md` rule 1. After the sentence ending "a start condition, if any, is prose (definitions: ballot 2026-10-18-obligation-drain-and-release-falsity-floor M2).", insert:
 
-> A trigger names the event that owes the close, never a vehicle the work hopes to ride; a record that would ride another change takes `release:next:phase-1`, or `merge:#<N>` once the vehicle PR exists *(ballot 2026-10-22-trigger-names-the-event-not-the-vehicle)*.
+> A trigger names the event that owes the close, never a vehicle the work hopes to ride; a P0, P1 or P2 record that would ride another change takes `release:next:phase-1`, or `merge:#<N>` once the vehicle PR exists, and a P3 that would ride takes `manual`, naming its own fixing PR as the event *(ballot 2026-10-22-trigger-names-the-event-not-the-vehicle)*.
 
-(The consult wording had `merge:#N`. `merge:#<N>` matches the rule's grammar list two sentences earlier, and the text is otherwise as given.)
+(The consult wording had `merge:#N`. `merge:#<N>` matches the rule's grammar list two sentences earlier. The P3 clause is F-1 (b), **ruled by Peter 2026-10-22** (§ 6). Otherwise the text is as given.)
 
 **The reading, decidable without the author** (this ballot is the sentence's law home). **The test** (R2, Stacy R1 A3) asks two questions of the change or read that the trigger names:
 1. **Must the record's closing work be carried inside that change, before it merges?** If not, the owed act is a read made after each such merge, owed afresh at every one, with nothing to carry inside the change. That is a **standing duty**, and it is an event. Example: `2026-10-20-in-lane-registry-arming-reads.md`, a post-merge ARMING read at every registry PR.
@@ -69,7 +69,7 @@ The consult estimate was "~10 of 30". The recount, every root record's first `**
 4. **Lock refresh** (R2, Stacy R1 A2 (i)): site 3 moves `canonical/generated.lock`'s `inputClosure` (`governance/` is a closure root). Regenerate with `npx tsx tools/agent-generator/generate.ts`, commit the refreshed lock, and paste `npm run check:122:diff-guard`'s output into the PR body, including its `operative-set-freshness` line. It should read PASS with stale 0; anything else stops the application and is reported.
 5. **Straggler sweep**: `grep -c 'trigger-names-the-event-not-the-vehicle' .kiro/issues/README.md governance/classification-map.md` → `1` and `2` (the history line and the education string).
 6. **Roster re-rule (the next health-check walk, owners' own commits, rule 9)**: each owner re-rules the Appendix's 19 Trigger lines, choosing from this menu:
-   - `release:next:phase-1`;
+   - `release:next:phase-1` for a P0, P1 or P2 record. **A P3 ride takes `manual`** instead, naming its own fixing PR as the event (F-1 (b), ruled). Rule 5's two-walk stale archive then retires it if it is still unfixed, and rule 4 returns it;
    - `merge:#<N>` of an existing vehicle PR;
    - **the intake event of a spec that names the record** (R2, Stacy R1 A4), a `path:` on that spec's `requirements.md`, where Process-Spec-Planning § "Before Formalizing: Records That Name the Spec" already owes the read. Spec 129 is next (priorities ruling, #403), so this is the natural choice for rows 8, 11 and 14, which name Spec 129 as their vehicle. Rows 8 and 14 are P2 `(guard)`, and without this option they would escalate at release 5's S for work a scheduled spec already absorbs;
    - the record's own fixing event once its PR exists;
@@ -98,10 +98,11 @@ The consult estimate was "~10 of 30". The recount, every root record's first `**
 
 - **Cost**: at application, one README sentence, one register history line plus the education string, and a lock refresh. At the next walk, owners re-rule **19 Trigger lines** (Thurgood 7, Lina 6, Ada 5, Kenya 1), one line each, in their own commits. **Downstream**: on `release:next:phase-1`, the P2 `(guard)` records still unfixed at release 5's S lapse and escalate to Peter at that first lapse (rule 11). There are 7 on the roster, and rows 8 and 14 can take Spec 129's intake instead (§ 4 step 6), so up to five spec / drop / fix-now decisions arrive in one batch. That is the rule working, since a guard weaker than its claim gets a deadline, but it is Peter's time, and it is stated here.
 - **Retroactivity**: none. The sentence binds Trigger lines written or re-ruled after its application merge. Existing lines are re-ruled at the walk, not retro-lapsed, and lapses already recorded stand (rule 11, append-only).
-- **Fork F-1, for Peter: what a P3 ride takes.**
-  - **(a) As drafted**: `release:next:phase-1`, like every other ride. The 8 P3 records on the roster get a deadline, and a P3 never escalates (rule 11), so each one still unfixed collects a `## Lapse` heading at every release's S until it is fixed, re-ruled or dropped. The cost is churn on optional work.
-  - **(b) A P3 ride takes `manual`**, naming its own fixing PR as the event (the § 2 sentence gains "a P0, P1 or P2 record that would ride …"). Rule 5's two-walk stale archive then retires an unfixed P3 as "archived stale — no outcome", and rule 4 brings it back. The cost is that a P3 has no deadline and decays quietly, which is rule 5's existing intent for P3.
-  - Drafted (a), because it is the consult wording Peter accepted. The pick is his.
+- **Fork F-1: what a P3 ride takes. RULED (b)**: Peter, chat, 2026-10-22, verbatim: **"Let's go with (b)"**. He was answering the orchestrator's framing, "(a) a release deadline … (b) `manual` … I agree with (b)" (relayed by the orchestrator). The ruling picks the fork only. The ballot's Status stays DRAFT until he ratifies the measure.
+  - **(a)**, *not picked* (the draft's original text): `release:next:phase-1`, like every other ride. The 8 P3 records on the roster get a deadline, and a P3 never escalates (rule 11), so each one still unfixed collects a `## Lapse` heading at every release's S until it is fixed, re-ruled or dropped. The cost is churn on optional work.
+  - **(b) — RULED.** A P3 ride takes `manual`, naming its own fixing PR as the event (the § 2 sentence gains "a P0, P1 or P2 record that would ride …"). Rule 5's two-walk stale archive then retires an unfixed P3 as "archived stale — no outcome", and rule 4 brings it back. The cost is that a P3 has no deadline and decays quietly, which is rule 5's existing intent for P3.
+  - *Superseded, kept verbatim*: "Drafted (a), because it is the consult wording Peter accepted. The pick is his." The § 2 sentence and § 4 step 6 now carry (b).
+  - **Surviving residual (b)**: a real P3 defect, such as rows 2 and 3 (Ada's `TokenIndexer.ts` pair), can archive stale with nothing prompting its return. The decay is silent by design. The archive move writes the outcome line, so the record survives, but nothing reads it again unless someone brings it back under rule 4.
 
 ## 7. Review round record
 
