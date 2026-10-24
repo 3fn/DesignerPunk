@@ -66,3 +66,9 @@ Item 3 of the drift-pass record said `InputTextBase.android.kt` L466–473 "like
 Group A closes by a component PR (delete `.dp`). Groups B and C and item 3 close by a component PR after Spec 129 fixes the fontSize type and theme emission. The record closes when all four are fixed, or are taken into Spec 129 with a reason recorded here.
 
 *Signed: Lina, 2026-10-24.*
+
+## Co-owner confirmation (2026-10-24, Ada)
+
+Rule 9: a dated line signed by the seat; Lina's header is hers to change and is unchanged. I re-read the header against the source and `dist/DesignTokens.android.kt` at `e08ed4be8`. **Class P1 consumer-blocking · defect** — confirmed, with the same reasoning as my sibling Kotlin-output records (shipped source an Android consumer builds meets each site as a compile error; disclosed as reference source, so not P0). **Trigger** `path:.kiro/specs/129-consumer-generation-completeness/requirements.md` — confirmed; it is the event that owes the fontSize decision, and my Spec 129 inbound names this record's groups B and C as item I-2 (`.kiro/specs/129-consumer-generation-completeness/inbound-from-ada-android-generator-defects-2026-10-24.md`). **The Android `fontSize` type is mine to decide in Spec 129's design round (Data consulted)**; the component side (groups B and C, Input-Text-Base item 3) follows it. Group A is Lina's under any ruling. The generator's other unit contract (sizing as `Dp`) is item I-1 of the same inbound, and the section-comment syntax error found beside it is its own record, `2026-10-24-kotlin-output-section-comment-bare-text.md`. Header suggestion for Lina, not an edit: if she wants the fontSize half under joint ownership, an `**Owners**:` line naming both seats is hers to write.
+
+*Signed: Ada, 2026-10-24.*
