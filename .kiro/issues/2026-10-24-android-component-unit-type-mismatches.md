@@ -24,6 +24,8 @@ The sizing half (sizing is `Float`, components passed it to `Dp`) is items 5 and
 
 Fix: delete the `.dp`. Nav-TabBar's `dotSize.dp` (L367, L370) is correct today, because `dotSize` is a sizing `Float`; the drift-pass record's reading that Nav-TabBar "reads correctly" holds for `dotSize` only.
 
+**Group A fixed (2026-10-24, Lina; Peter, chat 2026-10-24: "Re: 1, add to the PR").** The `.dp` is deleted in the Android interim PR (branch `fix/android-sizing-dp-interim`), 16 lines in 3 files, 18 `.dp` calls: Button-VerticalList-Item `VisualStateStyles.kt` 7 (L254, 263, 272, 281, 290, 300, 446); Nav-Header-Base 1 (L45, where the `.dp` sat on the `minHeight` declaration itself); Nav-TabBar-Base 8 (L280, 281, 317, 318, 319, 320, 355, 369). **Correction to the count above**: the scan counted Nav-TabBar-Base at 6 lines and missed two that carry the `(if (isSelected) … else …).dp` form, L317 (`activePaddingTop`/`inactivePaddingTop`) and L320 (`activePaddingBottom`/`inactivePaddingBottom`), so group A was 16 lines, not 14. Every removed token was read as `Dp` from `dist/DesignTokens.android.kt` before removal (`border_width_*` `1.dp`/`2.dp`, `tap_area_*` `48.dp`/`44.dp`, `space_*` `.dp`, `icon_size_100` `24.dp`), and each receiving position takes a `Dp` (`borderWidth: Dp`, `heightIn(min=)`, `padding(…)`, `size=`, `coerceAtLeast(Dp)`), so no mismatch is left on the same expressions. A guard now holds it: `src/components/__tests__/AndroidDpTokenReads.test.ts`, two-sided on the generated type. One related site seen while re-reading and **not** fixed, because it is not a `.dp` wrap: `NavTabBarBase.android.kt` L326, `NavTabBarTokens.glowHorizontalRadius * density.density` is `Dp * Float` = `Dp`, bound to `hRadius` and used as a `Float` in `drawOval`; it belongs with group C and waits with it. Group A is closed; B, C and item 3 remain open and follow Ada's Spec 129 fontSize ruling (item I-2 of her inbound).
+
 ### Group B — `.dp` or `.sp` on a `Dp` fontSize (12 sites, 5 files). Depends on 129's fontSize type.
 
 | File | Lines | Read |
@@ -63,7 +65,7 @@ Item 3 of the drift-pass record said `InputTextBase.android.kt` L466–473 "like
 
 ## Closing
 
-Group A closes by a component PR (delete `.dp`). Groups B and C and item 3 close by a component PR after Spec 129 fixes the fontSize type and theme emission. The record closes when all four are fixed, or are taken into Spec 129 with a reason recorded here.
+Group A closed in the Android interim PR (2026-10-24, above). Groups B and C and item 3 close by a component PR after Spec 129 fixes the fontSize type and theme emission. The record closes when all four are fixed, or are taken into Spec 129 with a reason recorded here.
 
 *Signed: Lina, 2026-10-24.*
 
