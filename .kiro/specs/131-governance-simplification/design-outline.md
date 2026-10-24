@@ -78,11 +78,11 @@
 
 ## 4. Design principles (PROPOSAL)
 
-**Peter's definitions (2026-10-24), verbatim:**
+**Peter's definitions (2026-10-24), verbatim (typos corrected at his request):**
 - **Thorough**: that all decisions have been made by a clear, informed understanding of the problem space and the dependencies a solution relies on or creates.
 - **Sustainable**: the solution is scalable and elegantly manages exponential weight of load-bearing supports in the long-term
-- **Holistic**: consideration for the needs stakeholders in the blast radius of a decision or solution, and that the needs of those negatively impacted are appropriately mitigated
-- **Thoughtful**: multiple solutions were explored, the solutions were evaluated from an immediate, intermediate, and long-term perspective, stakeholders were consulted, dissenting options were used to better inform solutions, solutions were tested to ensure they delivered on their proposes
+- **Holistic**: consideration for the needs of stakeholders in the blast radius of a decision or solution, and that the needs of those negatively impacted are appropriately mitigated
+- **Thoughtful**: multiple solutions were explored, the solutions were evaluated from an immediate, intermediate, and long-term perspective, stakeholders were consulted, dissenting options were used to better inform solutions, solutions were tested to ensure they delivered on their purposes
 
 **Two proposed additions, for reviewers to accept or reject:**
 1. **Proportionality**: how deep each definition goes scales with how irreversible the decision is and how wide its blast radius. A reversible process tweak needs a line, not a ballot.
