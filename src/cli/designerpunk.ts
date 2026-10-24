@@ -17,7 +17,8 @@ import * as fs from 'fs';
 import { spawn } from 'child_process';
 import { loadConfig } from '../config/ConfigLoader';
 import { generateTokenFiles } from '../generators/generateTokenFiles';
-import { generateTokenIndex } from '../generators/generateTokenIndex';
+import { generateTokenIndex, type TokenIndexResult } from '../generators/generateTokenIndex';
+import * as yaml from 'js-yaml';
 import { resolveTokens } from './resolveTokens';
 import { loadComponentTokens } from './loadComponentTokens';
 import { runValidate } from './validate';
@@ -30,6 +31,7 @@ import { isProductTokenStale, getProductTokenOutputPaths } from './staleness';
 import { runSync, parseSyncArgs } from './sync';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
 import { findDesignSystemRoot } from './shared/bornRepo';
+import { resolveComponentRoots } from './shared/mcpDataRoots';
 import { ensurePersonalNote, printPersonalNoteRows, PERSONAL_NOTE_TEMPLATE_REL } from './shared/personalNote';
 import {
   partialCaseMessage,
@@ -38,6 +40,9 @@ import {
   consumerDegradationMessage,
   generateThemesLine,
   INSTALL_GUIDE_PATH,
+  unresolvedSchemaTokensMessage,
+  packageComponentTokensNotIndexedMessage,
+  type UnresolvedSchemaTokenLine,
 } from './shared/errorCatalog';
 import { attachUsage } from './shared/vocabulary';
 
@@ -108,69 +113,79 @@ async function runValidateCommand() {
 }
 
 /**
- * Resolve the component-schema scan root the token-index's consumer map reads
- * (Class C′, Spec 118 Task 9.5.2; Spec 123 U1 fix-up, 2026-09-26 —
- * `.kiro/issues/2026-09-26-product-server-component-root.md`'s sibling defect).
+ * The component ROOT SET the token-index's consumer map reads (R1-7,
+ * `.kiro/issues/2026-10-15-123-u5-instrument-findings.md`; ruling 2026-10-23 § 4).
  *
- * Design intent, confirmed against requirements.md Req 3.5 (the tasks-round text):
- * "The Class C′ fixture SHALL be re-premised: it builds on the `src/components/core`
- * copy, which Requirement 19A removes ... It SHALL be re-authored to build the
- * consumer's component tree FROM NOTHING" — i.e. in a BORN repo, the consumer's own
- * (Model B) component tree is `<bornRoot>/src/components`, never `.../core` (Req
- * 19A.2 removes the `core` copy; Req 19A.6 creates `src/components/` directly,
- * empty). The consumer map SHALL therefore reflect THAT tree, not a path `init`
- * no longer writes to.
+ * It is `resolveComponentRoots`, the resolver the Application MCP uses: the consumer's own
+ * root (`<bornRoot>/src/components`) when born, then the package's `src/components/core`,
+ * consumer first. The generator resolves the union through `resolveComponentSources`
+ * (`./shared/componentSources`), the MCP's pass-1 rule: the legacy pre-123 `core/` level
+ * under the consumer root, and a consumer component replacing a package component that
+ * declares the same name. So `get_token_consumers` and `get_component_full` count the same
+ * components. Before this, `generate` read only the consumer's own schemas (the retired
+ * `resolveComponentSchemaDir`), and in a born repo DesignerPunk's own components were never
+ * consumers.
  *
- * Every other state (package-mode — including the steward repo's own dev-mode
- * classification — partial, unborn) is UNCHANGED: `<configDir>/src/components/core`,
- * exactly as before this fix. `generate` already refuses outright on `partial`
- * before this function is ever called (see the caller), so only 'born' and
- * 'package-mode'/'unborn' are live branches here in practice.
+ * Package-mode and unborn get the package root alone, as the MCP does. In the steward repo
+ * (package-mode at the package's own root) that is `<repo>/src/components/core`, as before.
  *
- * Legacy `core/` level (born only): a pre-123 consumer who has not yet run
- * `sync --migrate-components` may still have real components nested at
- * `src/components/core/<Name>/` (the pre-123 copy layout). Mirrors
- * `ComponentIndexer.collectComponentSources`'s own precedence (Task 1.4): a
- * `core/` directory that is NOT itself a component dir but CONTAINS component
- * dirs is a legacy level, used only when the flat (post-123) root holds none.
+ * No env value: `COMPONENTS_DIR` is set for the MCP server process (the mcp-config
+ * template sets it to `./src/components`, the born default), not for a shell running
+ * `generate`. A repo whose MCP config points `COMPONENTS_DIR` elsewhere gets a consumer map
+ * from `<bornRoot>/src/components`, not from that directory.
  */
-export function resolveComponentSchemaDir(
-  dsRoot: Pick<import('./shared/bornRepo').DesignSystemRoot, 'state' | 'root'>,
-  configDir: string,
-): string {
-  if (dsRoot.state !== 'born' || !dsRoot.root) {
-    return path.resolve(configDir, 'src/components/core');
-  }
+export function resolveGenerateComponentRoots(
+  dsRoot: import('./shared/bornRepo').DesignSystemRoot,
+  packageRoot: string,
+): string[] {
+  return resolveComponentRoots({ dsRoot, packageRoot }).roots;
+}
 
-  const isComponentDir = (dir: string): boolean => {
-    try {
-      const files = fs.readdirSync(dir);
-      return files.some((f) => f.endsWith('.schema.yaml')) || files.includes('contracts.yaml');
-    } catch {
-      return false;
-    }
+/**
+ * What `generate` says about the schema token declarations it could not count (ruling
+ * 2026-10-23 § 3c): a WARNING naming each one and whose schema it is in — never a failure;
+ * the same check fails as a test in DesignerPunk's own repo. One class is a NOTE, not
+ * warned per name: DesignerPunk's schemas naming DesignerPunk's own component tokens, which
+ * a born repo's token index does not hold (its generate indexes only the component tokens in
+ * its own token source). They are recognised as keys of the installed package's own shipped
+ * `token-index/components.yaml`.
+ *
+ * @internal Exported for testing.
+ */
+export function schemaTokenReport(
+  result: Pick<TokenIndexResult, 'componentRoots' | 'unresolved' | 'unreadable'>,
+  packageRoot: string,
+  generateRoot: string,
+): { warning: string | null; note: string | null } {
+  const packageComponentsRoot = path.resolve(packageRoot, 'src', 'components', 'core');
+  const packageRank = result.componentRoots.indexOf(packageComponentsRoot);
+  const ownerOf = (rank: number): 'yours' | 'designerpunk' => (rank === packageRank ? 'designerpunk' : 'yours');
+  const rel = (p: string) => (path.relative(generateRoot, p) || p).split(path.sep).join('/');
+
+  let packageComponentTokenKeys = new Set<string>();
+  try {
+    const shipped = yaml.load(fs.readFileSync(path.join(packageRoot, 'token-index', 'components.yaml'), 'utf-8')) as any;
+    packageComponentTokenKeys = new Set(Object.keys(shipped?.tokens ?? {}));
+  } catch { /* no shipped index: every name is warned */ }
+
+  const notIndexed = result.unresolved.filter(r => ownerOf(r.rank) === 'designerpunk' && packageComponentTokenKeys.has(r.token));
+  const warned = result.unresolved.filter(r => !notIndexed.includes(r));
+
+  const lines: UnresolvedSchemaTokenLine[] = warned.map(r => ({
+    owner: ownerOf(r.rank),
+    component: r.component,
+    file: rel(r.schemaPath),
+    group: r.group,
+    token: r.token,
+  }));
+  const unreadable = result.unreadable.map(u => ({ owner: ownerOf(u.rank), file: rel(u.schemaPath), reason: u.reason }));
+
+  return {
+    warning: lines.length > 0 || unreadable.length > 0 ? unresolvedSchemaTokensMessage(lines, unreadable) : null,
+    note: notIndexed.length > 0
+      ? packageComponentTokensNotIndexedMessage(new Set(notIndexed.map(r => r.token)).size, notIndexed[0].token)
+      : null,
   };
-  const hasComponentDirs = (dir: string): boolean => {
-    try {
-      return fs
-        .readdirSync(dir, { withFileTypes: true })
-        .filter((d) => d.isDirectory())
-        .some((d) => isComponentDir(path.join(dir, d.name)));
-    } catch {
-      return false;
-    }
-  };
-
-  const flatRoot = path.resolve(dsRoot.root, 'src/components');
-  if (hasComponentDirs(flatRoot)) return flatRoot;
-
-  const legacyRoot = path.join(flatRoot, 'core');
-  if (!isComponentDir(legacyRoot) && hasComponentDirs(legacyRoot)) return legacyRoot;
-
-  // Neither holds components yet (a freshly-born repo, README-only) — the flat
-  // (post-123) convention is the correct root regardless; buildConsumerMap
-  // returns an empty map for it, which is correct (no consumers to report).
-  return flatRoot;
 }
 
 /**
@@ -267,20 +282,14 @@ export async function runGenerate(force = false) {
     // returns the resolved truth; the index consumes the SAME object — no re-derivation.
     const modeResolved = generateTokenFiles(tokens, config);
 
-    // Class C′ (Spec 118 Task 9.5.2, ratified default-only; U1 fix-up 2026-09-26 —
-    // `.kiro/issues/2026-09-26-product-server-component-root.md`): resolve the
-    // component-schema scan root from the consumer's config so the token-index's
-    // consumer map reflects the consumer's design system — the same source the
-    // application MCP reads. In a BORN repo that is `<bornRoot>/src/components`
-    // (Req 19A.2/19A.6 — `init` no longer writes a `core/` copy); every other
-    // state keeps `<configDir>/src/components/core` (the steward repo's own
-    // package-mode classification is UNCHANGED). See `resolveComponentSchemaDir`
-    // above. Resolved HERE (config + dsRoot in scope), passed into the generator,
+    // The component root set the consumer map reads: the consumer's components, then
+    // DesignerPunk's, through the Application MCP's own resolver (R1-7; see
+    // `resolveGenerateComponentRoots` above). Resolved HERE, passed into the generator,
     // which stays a pure function of its inputs.
-    const componentSchemaDir = resolveComponentSchemaDir(dsRoot, config.configDir);
+    const componentSchemaDir = resolveGenerateComponentRoots(dsRoot, resolvePackageRoot(__dirname));
 
     // WRITE side anchored at generateRoot, never a bare process.cwd() (Spec 123 C2/Task 1.5).
-    generateTokenIndex(path.resolve(generateRoot, 'token-index'), {
+    const indexResult = generateTokenIndex(path.resolve(generateRoot, 'token-index'), {
       primitiveTokens: tokens.primitiveTokens,
       semanticTokens: tokens.semanticTokens,
       componentTokens: ComponentTokenRegistry.getAll(),
@@ -291,6 +300,12 @@ export async function runGenerate(force = false) {
       // wherever this index ends up being served from.
       tierDir: config.tokenSourceRoot,
     });
+    // Schema token names the index could not count: a warning, never a failure (§ 3c).
+    if (indexResult) {
+      const report = schemaTokenReport(indexResult, resolvePackageRoot(__dirname), generateRoot);
+      if (report.warning) console.warn(`⚠️  ${report.warning}\n`);
+      if (report.note) console.log(`${report.note}\n`);
+    }
     console.log('✅ System tokens generated');
   } catch (err) {
     systemFailed = true;

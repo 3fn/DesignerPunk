@@ -306,11 +306,11 @@ struct ButtonCTA: View {
     private var minWidth: CGFloat {
         switch size {
         case .small:
-            return 56
+            return DesignTokens.size700 // 56pt
         case .medium:
-            return 72
+            return DesignTokens.size900 // 72pt
         case .large:
-            return 80
+            return DesignTokens.size1000 // 80pt
         }
     }
     

@@ -99,9 +99,11 @@ describe('Backward Compatibility (Spec 114 R9)', () => {
           semanticTokens: tokens.semanticTokens,
           componentTokens: [],
           modeResolved,
-          // Spec 118 Task 9.5.2 (Class C′): runGenerate resolves the consumer schema
-          // root from config.configDir and passes it through TokenIndexInput.
-          componentSchemaDir: require('path').resolve('/tmp', 'src/components/core'),
+          // R1-7 (ruling 2026-10-23 § 4): runGenerate passes the component ROOT SET the
+          // Application MCP serves (`resolveComponentRoots`). This jest process runs in the
+          // steward checkout (package-mode at the package root), so the set is the package
+          // root alone — never derived from config.configDir any more.
+          componentSchemaDir: [require('path').resolve(__dirname, '../../..', 'src/components/core')],
         })
       );
     });

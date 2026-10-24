@@ -202,6 +202,56 @@ describe('generateTokenIndex', () => {
     }
   });
 
+  // Ruling 2026-10-23 § 3b (`.kiro/issues/2026-06-25-component-schema-token-name-drift.md`):
+  // `consumers` is written on all three tiers. Before, only semantic entries carried it, so
+  // `get_token_consumers` answered [] for every primitive and component token a schema
+  // declared (e.g. Avatar-Base's `space300` and `avatar.size.md`).
+  it('writes consumers on primitive and component-token entries, not only semantic ones', () => {
+    const schemaRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'schema-root-'));
+    const compDir = path.join(schemaRoot, 'Avatar-Base');
+    fs.mkdirSync(compDir, { recursive: true });
+    fs.writeFileSync(
+      path.join(compDir, 'Avatar-Base.schema.yaml'),
+      [
+        'name: Avatar-Base',
+        'tokens:',
+        '  spacing:',
+        '    - space300',
+        '  component:',
+        '    - avatar.size.md',
+        '  color:',
+        '    - color.action.primary',
+      ].join('\n') + '\n',
+    );
+
+    try {
+      generateTokenIndex(outputDir, {
+        primitiveTokens: [makePrimitive('space300', TokenCategory.SPACING, 24), makePrimitive('space100')],
+        semanticTokens: [makeSemantic('color.action.primary', 'cyan300', 'color')],
+        componentTokens: [
+          makeComponentToken('avatar.size.md', 'Avatar', 'size600'),
+          makeComponentToken('avatar.size.lg', 'Avatar', 'size700'),
+        ],
+        modeResolved: makeModeResolved(),
+        componentSchemaDir: schemaRoot,
+      });
+
+      const read = (f: string) => (yaml.load(fs.readFileSync(path.join(outputDir, f), 'utf-8')) as any).tokens;
+      const primitives = read('primitives.yaml');
+      const components = read('components.yaml');
+      const semantics = read('semantics.yaml');
+
+      expect(primitives['space300'].consumers).toEqual(['Avatar-Base']);
+      expect(components['avatar.size.md'].consumers).toEqual(['Avatar-Base']);
+      expect(semantics['color.action.primary'].consumers).toEqual(['Avatar-Base']);
+      // An undeclared token on each tier still carries the key, empty — one shape per tier.
+      expect(primitives['space100'].consumers).toEqual([]);
+      expect(components['avatar.size.lg'].consumers).toEqual([]);
+    } finally {
+      fs.rmSync(schemaRoot, { recursive: true, force: true });
+    }
+  });
+
   // Spec 123 Task 1.5 (DD24): meta.json's tierDir is what lets the application MCP's
   // theme readers follow the served index instead of guessing a project root.
   describe('meta.json (Spec 123 Task 1.5, DD24)', () => {

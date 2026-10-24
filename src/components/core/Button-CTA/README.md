@@ -185,10 +185,12 @@ ButtonCTA(
 - `accessibility.focus.offset` - 2px focus ring offset
 - `accessibility.focus.color` - Focus ring color
 
-### Component-Specific
-- `buttonCTA.minWidth.small` - 56px
-- `buttonCTA.minWidth.medium` - 72px
-- `buttonCTA.minWidth.large` - 80px
+### Sizing
+- `size700` - Small button minimum width (56px)
+- `size900` - Medium button minimum width (72px)
+- `size1000` - Large button minimum width (80px)
+
+Button-CTA has no component tokens: each minimum width is a sizing primitive, read directly on web, iOS and Android.
 
 ---
 
@@ -246,7 +248,6 @@ ButtonCTA(
 ```
 src/components/core/Button-CTA/
 ├── Button-CTA.schema.yaml        # Component schema definition
-├── Button-CTA.refs.ts            # Semantic token references (not a defineComponentTokens file)
 ├── types.ts                      # Shared type definitions
 ├── index.ts                      # Module exports
 ├── README.md                     # This documentation

@@ -111,31 +111,28 @@ properties:
 # Design tokens this component requires
 tokens:
   typography:
-    - typography.button.small
-    - typography.button.medium
-    - typography.button.large
+    - typography.buttonMd
+    - typography.buttonLg
     - typography.labelMd
     - typography.labelLg
   color:
-    - color.primary
-    - color.contrast.onPrimary
-    - color.text.primary
-    - color.background
-    - color.border
+    - color.action.primary
+    - color.contrast.onAction
+    - color.structure.canvas
+    - color.icon.opticalBalance
   spacing:
     - space.inset.100
     - space.inset.150
     - space.inset.200
-    - space.inline.100
+    - space.grouped.normal
   motion:
-    - motion.button.press
-    - motion.button.hover
+    - motion.buttonPress
   border:
-    - border.button.default
-    - radius.100
-    - radius.150
+    - border.default
+    - radius100
+    - radius150
   accessibility:
-    - accessibility.tapArea.recommended
+    - tapAreaRecommended
     - accessibility.focus.width
     - accessibility.focus.offset
     - accessibility.focus.color
@@ -145,11 +142,10 @@ tokens:
   blend:
     - blend.hoverDarker
     - blend.pressedDarker
-    - blend.iconLighter
-  component:
-    - buttonCTA.minWidth.small
-    - buttonCTA.minWidth.medium
-    - buttonCTA.minWidth.large
+  sizing:
+    - size700
+    - size900
+    - size1000
 
 # Supported platforms
 platforms:

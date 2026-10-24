@@ -4,6 +4,8 @@
  * Tests each parser against real component files and edge cases.
  */
 
+import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 import { parseSchemaYaml, parseContractsYaml, parseComponentMetaYaml } from '../parsers';
 
@@ -28,6 +30,33 @@ describe('parseSchemaYaml', () => {
     expect(result.data).not.toBeNull();
     expect(result.data!.tokens.length).toBeGreaterThan(0);
     expect(result.data!.tokens).toContain('space.inset.150');
+  });
+
+  it('reads every tokens: shape the token-index consumer map reads (scalar groups, {reference|name}, nulls skipped)', () => {
+    // The same rule as readSchemaTokenRefs (src/generators/generateTokenIndex.ts); the
+    // cross-package parity guard is src/components/__tests__/schemaTokenReaders.parity.test.ts.
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'parse-schema-tokens-'));
+    try {
+      const schemaPath = path.join(tmp, 'Card.schema.yaml');
+      fs.writeFileSync(schemaPath, [
+        'name: Card',
+        'tokens:',
+        '  color:',
+        '    - color.structure.surface',
+        '    - reference: color.structure.border',
+        '    - name: color.text.default',
+        '    - null',
+        '  spacing: space.inset.100',
+        '  empty:',
+        '  size:',
+        '    - 8',
+      ].join('\n') + '\n');
+      expect(parseSchemaYaml(schemaPath).data!.tokens).toEqual([
+        'color.structure.surface', 'color.structure.border', 'color.text.default', 'space.inset.100', '8',
+      ]);
+    } finally {
+      fs.rmSync(tmp, { recursive: true, force: true });
+    }
   });
 
   it('extracts composition from internal field', () => {

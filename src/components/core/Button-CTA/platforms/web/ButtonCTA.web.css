@@ -76,11 +76,11 @@
  * - Typography: typography.labelMd (medium weight for UI controls)
  * - Icon size: icon.size100 (24px)
  * - Icon spacing: space.grouped.tight (4px)
- * - Min width: buttonCTA.minWidth.small (56px)
+ * - Min width: size700 (56px)
  */
 .button-cta--small {
   min-height: var(--tap-area-minimum); /* 44px for accessibility */
-  min-width: 56px; /* buttonCTA.minWidth.small */
+  min-width: var(--size-700); /* 56px */
   padding: var(--space-inset-100) var(--space-inset-200); /* 8px 16px */
   border-radius: var(--radius-100); /* 8px */
   gap: var(--space-grouped-tight); /* 4px for icon-text spacing */
@@ -104,11 +104,11 @@
  * - Typography: typography.labelMd (medium weight for UI controls)
  * - Icon size: icon.size100 (24px)
  * - Icon spacing: space.grouped.normal (8px)
- * - Min width: buttonCTA.minWidth.medium (72px)
+ * - Min width: size900 (72px)
  */
 .button-cta--medium {
   min-height: var(--tap-area-recommended); /* 48px for better usability */
-  min-width: 72px; /* buttonCTA.minWidth.medium */
+  min-width: var(--size-900); /* 72px */
   padding: var(--space-inset-150) var(--space-inset-300); /* 12px 24px */
   border-radius: var(--radius-150); /* 12px */
   gap: var(--space-grouped-normal); /* 8px for icon-text spacing */
@@ -132,11 +132,11 @@
  * - Typography: typography.labelLg (medium weight for UI controls)
  * - Icon size: icon.size125 (32px)
  * - Icon spacing: space.grouped.normal (8px)
- * - Min width: buttonCTA.minWidth.large (80px)
+ * - Min width: size1000 (80px)
  */
 .button-cta--large {
   min-height: var(--tap-area-comfortable); /* 56px for comfortable interaction */
-  min-width: 80px; /* buttonCTA.minWidth.large */
+  min-width: var(--size-1000); /* 80px */
   padding: var(--space-inset-150) var(--space-inset-400); /* 12px 32px */
   border-radius: var(--radius-200); /* 16px */
   gap: var(--space-grouped-normal); /* 8px for icon-text spacing */
