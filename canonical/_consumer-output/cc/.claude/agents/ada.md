@@ -346,7 +346,7 @@ This applies to new dimensions (e.g., density) and new values within existing di
 
 As of Spec 094, themes are managed via a **ThemeRegistry** pattern. Products register themes in `designerpunk.config.ts` using `defineConfig()`.
 
-**A registered theme is not applied yet.** `npx designerpunk generate` reads the config's themes and lists them as "registered, not applied yet": a theme registered in `designerpunk.config.ts` changes no generated output on any platform, and nothing checks its overrides against the token set. Applying registered themes is planned in Spec 129. Today the generator applies DesignerPunk's built-in overrides only; the last rule below says what each platform emits. *(Corrected 2026-10-23 to what the generator emits; DesignerPunk record `2026-10-03-data-theme-scope-charter-vs-generator`.)*
+**A registered theme is not applied yet.** `npx designerpunk generate` reads the config's themes and lists them as "registered, not applied yet": a theme registered in `designerpunk.config.ts` changes no generated output on any platform, and nothing checks its overrides against the token set. Whether and how registered themes are applied is Spec 129's to decide (charter scope items (i) and (vi)). Today the generator applies DesignerPunk's built-in overrides only; the last rule below says what each platform emits. *(Corrected 2026-10-23 to what the generator emits; DesignerPunk record `2026-10-03-data-theme-scope-charter-vs-generator`.)*
 
 **Adding a new theme does NOT require a formal spec.** Themes are product-level configuration, not architectural decisions. A product developer creates a `SemanticOverrides.ts` and registers it in their config:
 
