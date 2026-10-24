@@ -429,7 +429,8 @@ Pre-checked boxes do not constitute valid consent.
 
 ### Web
 - Shadow DOM for style encapsulation
-- Hidden native `<input type="checkbox">` for form compatibility
+- Form-associated custom element with its own `ElementInternals` (see [Form Integration](#form-integration))
+- Visually hidden native `<input type="checkbox">` (inside the wrapped Base) for interaction and assistive technology
 - CSS logical properties for RTL support
 - `:focus-visible` for keyboard-only focus ring
 - Console warning for explicit consent violations
@@ -449,6 +450,41 @@ Pre-checked boxes do not constitute valid consent.
 - Native RTL handling via `Arrangement.Start`/`End`
 - TalkBack support with semantics
 - Log.w for explicit consent violations
+
+---
+
+## Form Integration
+
+On web, `<input-checkbox-legal>` takes part in its form on its own: it is a form-associated custom element with its own `ElementInternals`. The `<input-checkbox-base>` it wraps sits inside Legal's shadow root, where no form can reach it, so it never adds an entry of its own.
+
+```html
+<form id="signup-form">
+  <input-checkbox-legal
+    label="I agree to the Terms of Service"
+    name="tos"
+    value="accepted"
+    legal-text-id="tos-v2"
+    legal-text-version="2.0.0"
+  ></input-checkbox-legal>
+  <button type="submit">Create account</button>
+</form>
+
+<script>
+  document.getElementById('signup-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    console.log('tos:', formData.get('tos')); // 'accepted' once the user checks it, null if not
+  });
+</script>
+```
+
+- **Checked** submits one entry, `name` = `value` (`value` defaults to `"on"`). **Unchecked** submits nothing.
+- **The audit trail is not submitted.** `legalTextId`, `legalTextVersion` and the timestamp arrive on the `consent-change` event; storing them is your job. If you need them in the form post, add them yourself from that event.
+- **A refused pre-check submits nothing**: with `requiresExplicitConsent` (the default), only the user's own click checks the box.
+- **Form reset** unchecks the box.
+- **Setting `disabled` has no effect**; the attribute is removed as soon as it is set, so it cannot silently drop the value from the submission.
+- Needs a browser with form-associated custom elements (current Chrome, Edge, Firefox and Safari 16.4+).
+- **If you added a hidden input as a workaround** (in 16.0.0 and earlier, the value did not reach `FormData`): remove it, or the value is submitted twice.
 
 ---
 

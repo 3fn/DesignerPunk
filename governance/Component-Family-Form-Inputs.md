@@ -214,7 +214,7 @@ All checkbox components in the Form Inputs family inherit these 9 foundational c
 
 **Description**: Checkbox integrates with native form submission and reset.
 
-**Behavior**: Hidden native `<input type="checkbox">` ensures form compatibility. Value included in form submission when checked. Form reset returns checkbox to unchecked state (pre-checked checkboxes not supported per DesignerPunk philosophy).
+**Behavior**: On web the host element is a form-associated custom element and reports its value through `ElementInternals`; the native `<input type="checkbox">` inside its shadow root handles interaction and assistive technology, and cannot reach the form itself. Value included in form submission when checked (`value` defaults to "on"); nothing when unchecked; indeterminate is visual only. Form reset returns checkbox to unchecked state (pre-checked checkboxes not supported per DesignerPunk philosophy). Input-Checkbox-Legal is form-associated in its own right.
 
 **WCAG Compliance**: 4.1.2 Name, Role, Value
 
@@ -1321,7 +1321,7 @@ Form Inputs components resolve tokens through the Rosetta System's semantic-to-p
 - Supports `className` prop for additional styling
 - Uses `:focus-visible` for keyboard-only focus indication
 - Autocomplete attributes for browser autofill
-- Checkbox uses hidden native `<input type="checkbox">` for form compatibility
+- Checkbox and Radio hosts are form-associated custom elements (`ElementInternals`); the native inputs in their shadow roots are visually hidden and handle interaction
 - CSS logical properties for RTL support
 
 #### iOS

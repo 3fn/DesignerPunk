@@ -23,6 +23,18 @@
  * features on top. This reduces code duplication by ~80% and ensures Legal
  * inherits Base improvements automatically.
  * 
+ * Form Participation (contract `validation_form_integration`, inherited):
+ * The wrapped Input-Checkbox-Base sits inside THIS element's shadow root,
+ * where no form can own it, so Legal is form-associated in its own right and
+ * reports its own submission value through its own ElementInternals:
+ * - checked   → one entry, Legal's `name` = Legal's `value` (default "on")
+ * - unchecked → no entry
+ * - the audit trail (legalTextId, legalTextVersion, timestamp) is NOT
+ *   submitted: it is delivered on `consent-change`, and the consumer owns
+ *   persistence (contracts.yaml validation_audit_trail)
+ * The nested Base never submits: it has no form owner (no form element in
+ * Legal's shadow tree), so a checked Legal produces exactly one entry.
+ * 
  * DesignerPunk Philosophy: NO DISABLED STATES
  * 
  * @module Input-Checkbox-Legal/platforms/web
@@ -59,13 +71,30 @@ let legalCheckboxIdCounter = 0;
  * ```
  */
 export class InputCheckboxLegalElement extends HTMLElement {
+  /**
+   * Marks this as a form-associated custom element. Legal needs its own:
+   * the wrapped Base is in Legal's shadow root and cannot reach the form.
+   * @see https://html.spec.whatwg.org/multipage/custom-elements.html#form-associated-custom-elements
+   * @see Input-Checkbox-Base contracts.yaml validation_form_integration
+   */
+  static formAssociated = true;
+
   /** Shadow DOM root */
   private _shadowRoot: ShadowRoot;
+
+  /**
+   * ElementInternals for form association. Null where the UA has no
+   * attachInternals (pre-FACE browsers).
+   */
+  private _internals: ElementInternals | null;
 
   /** Reference to the wrapped Input-Checkbox-Base element */
   private _baseCheckbox: InputCheckboxBaseElement | null = null;
 
-  /** Reference to the parent form element for reset handling */
+  /**
+   * Parent form, for the reset fallback used only where form-associated
+   * custom elements are unsupported (see _attachToForm).
+   */
   private _form: HTMLFormElement | null = null;
 
   /** Generated unique ID for label association */
@@ -87,6 +116,11 @@ export class InputCheckboxLegalElement extends HTMLElement {
     super();
     this._shadowRoot = this.attachShadow({ mode: 'open' });
     this._generatedId = `legal-checkbox-${++legalCheckboxIdCounter}`;
+
+    // Form association, guarded as in Input-Checkbox-Base
+    this._internals = typeof this.attachInternals === 'function'
+      ? this.attachInternals()
+      : null;
   }
 
   // ---------------------------------------------------------------------------
@@ -94,7 +128,9 @@ export class InputCheckboxLegalElement extends HTMLElement {
   // ---------------------------------------------------------------------------
 
   static get observedAttributes(): string[] {
-    return [...INPUT_CHECKBOX_LEGAL_OBSERVED_ATTRIBUTES];
+    // 'disabled' is observed only so attributeChangedCallback can neutralize
+    // it (D1, as in Input-Checkbox-Base and Input-Radio-Base).
+    return [...INPUT_CHECKBOX_LEGAL_OBSERVED_ATTRIBUTES, 'disabled'];
   }
 
   // ---------------------------------------------------------------------------
@@ -105,11 +141,15 @@ export class InputCheckboxLegalElement extends HTMLElement {
     // Enforce explicit consent before rendering
     this._enforceExplicitConsent();
     
-    // Find and attach to parent form for reset handling
+    // Reset fallback for UAs without form-associated custom elements
     this._attachToForm();
     
     this.render();
     this._attachListeners();
+
+    // Register the initial submission value (after consent enforcement, so
+    // a refused pre-check never registers a value)
+    this._updateFormValue();
   }
 
   disconnectedCallback(): void {
@@ -122,10 +162,28 @@ export class InputCheckboxLegalElement extends HTMLElement {
     oldValue: string | null,
     newValue: string | null
   ): void {
+    // D1: form-data hazard neutralization. Legal has no disabled state
+    // (contracts.yaml excludes state_disabled); because it is
+    // form-associated, a consumer-set `disabled` would silently drop its
+    // value from submission, so the attribute is stripped on sight.
+    // @see .kiro/docs/ballots/2026-09-19-disabled-input-parity.md (D1)
+    if (name === 'disabled') {
+      if (newValue !== null) {
+        this.removeAttribute('disabled');
+      }
+      return;
+    }
+
     if (oldValue === newValue) return;
     
-    // Re-enforce explicit consent when checked attribute changes
-    if (name === 'checked') {
+    // Re-enforce explicit consent when the checked attribute is changed by
+    // the consumer, but NOT when the change is the user's own click arriving
+    // from the wrapped Base (_onBaseChange). Enforcing on that path removed
+    // the attribute the user had just given consent through: the box drew
+    // checked, `checked` read false, a "pre-checked" warning fired, and the
+    // form value stayed empty. Explicit consent IS the user's click.
+    // @see contracts.yaml validation_explicit_consent
+    if (name === 'checked' && !this._isHandlingBaseChange) {
       this._enforceExplicitConsent();
     }
     
@@ -140,6 +198,30 @@ export class InputCheckboxLegalElement extends HTMLElement {
     if (this.isConnected && !this._isHandlingBaseChange) {
       this._updateBaseCheckbox();
     }
+
+    // Runs on the Base-originated path too (_isHandlingBaseChange), which
+    // is how a user's click reaches the submission value.
+    // @see Input-Checkbox-Base contracts.yaml validation_form_integration
+    if (this.isConnected) {
+      this._updateFormValue();
+    }
+  }
+
+  /**
+   * Form-associated lifecycle callback: the owning form was reset.
+   * Replaces the hand-wired `reset` listener where FACE is supported.
+   */
+  formResetCallback(): void {
+    this._resetToUnchecked();
+  }
+
+  /**
+   * Form-associated lifecycle callback: computed disabled state changed.
+   * Intentionally a no-op (D1; see Input-Checkbox-Base).
+   * @see .kiro/docs/ballots/2026-09-19-disabled-input-parity.md (D1)
+   */
+  formDisabledCallback(_formDisabled: boolean): void {
+    // Intentional no-op
   }
 
   // ---------------------------------------------------------------------------
@@ -221,8 +303,13 @@ export class InputCheckboxLegalElement extends HTMLElement {
     }
   }
 
+  /**
+   * Value submitted when checked. Defaults to 'on' when the attribute is
+   * absent; an explicit `value=""` submits the empty string (native
+   * checkbox semantics).
+   */
   get value(): string {
-    return this.getAttribute('value') || 'on';
+    return this.getAttribute('value') ?? 'on';
   }
 
   set value(value: string) {
@@ -285,7 +372,30 @@ export class InputCheckboxLegalElement extends HTMLElement {
   // Form Integration
   // ---------------------------------------------------------------------------
 
+  /**
+   * Whether the UA supports form-associated custom elements here (false on
+   * pre-FACE browsers and in jsdom, which lacks setFormValue).
+   */
+  private get _isFormAssociationSupported(): boolean {
+    return typeof this._internals?.setFormValue === 'function';
+  }
+
+  /**
+   * Register Legal's own submission value: checked → `value`, unchecked →
+   * null (no entry). An unnamed Legal is skipped by the UA, like an unnamed
+   * native checkbox.
+   */
+  private _updateFormValue(): void {
+    if (!this._isFormAssociationSupported) return;
+    this._internals!.setFormValue(this.checked ? this.value : null);
+  }
+
+  /**
+   * Reset fallback, used ONLY where FACE is unsupported; otherwise the UA
+   * calls formResetCallback and this listener would run the reset twice.
+   */
   private _attachToForm(): void {
+    if (this._isFormAssociationSupported) return;
     this._form = this.closest('form');
     if (this._form) {
       this._form.addEventListener('reset', this._onFormReset);
@@ -300,11 +410,21 @@ export class InputCheckboxLegalElement extends HTMLElement {
   }
 
   private _onFormReset = (): void => {
+    this._resetToUnchecked();
+  };
+
+  /**
+   * Reset to unchecked (Spec 046 Requirement 8.8) and clear the submission
+   * value. Unchecking never needs consent, so this is always allowed.
+   */
+  private _resetToUnchecked(): void {
     this.checked = false;
     if (this._baseCheckbox) {
       this._baseCheckbox.checked = false;
     }
-  };
+    // Already unchecked → no attribute change fired above, so clear explicitly
+    this._updateFormValue();
+  }
 
   // ---------------------------------------------------------------------------
   // Explicit Consent Enforcement
