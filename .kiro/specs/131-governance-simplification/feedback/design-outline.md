@@ -41,7 +41,7 @@ Not tagged: Sparky (no web-specific surface beyond P2, which Lina carries). Pete
 
 - **(a) The four-values lens (every reviewer).** Run the outline's proposals through Peter's four values (thorough, sustainable, holistic, thoughtful, as defined verbatim in `design-outline.md` § "4. Design principles (PROPOSAL)"). For each proposal, record which value it serves and which it strains.
 - **(b) Lifecycle validation (Ada, Lina, Thurgood).** Check three things about the component and token lifecycle procedures: that they exist, that they agree with each other, and that they describe what the system actually does. Readiness's three disagreeing answers (synthesis F11) are the known crack. **This is not 131 scope** (Peter, item 4 below). Findings feed 131 only where its changes touch them, and anything else is filed with its owner.
-- **(c) A new question for Peter after R1.** Should the four values become steering documentation, and if so, where: Core Goals (always loaded) or a served doc? His own context-economy concern (item 6) bears on that choice. Any steering change is governance law and goes through a ballot. This widens the existing question at `design-outline.md` § 4, "Open for Peter, not a proposal".
+- **(c) One ballot question for Peter after R1: two identity-level changes.** (i) Should the four values become steering documentation, and if so, where: Core Goals (always loaded) or a served doc? His context-economy concern (item 6) bears on that choice. (ii) Fold the Humorphism gaps into AI-Collaboration-Principles and AI-Collaboration-Framework (item 8), under the three cautions he agreed to. That includes his condition on Proactive: the surfacing and drafting align with the four values. Both are identity-level law, so they go through one record-first ballot. Thurgood drafts it (Civitas content). The ballot is not part of 131's execution unless R1 places it there. This widens the existing question at `design-outline.md` § 4, "Open for Peter, not a proposal".
 
 #### [PETER R0]
 
@@ -79,6 +79,20 @@ Not tagged: Sparky (no web-specific surface beyond P2, which Lina carries). Pete
 
 7. **The review lens** → § 4; R1 asks (a) and (c)
    > "The only other thing I'd add is I recommend we run their proposals through the lens of those four values we defined — which we might actually want to consider making part of our steering documentation."
+
+8. **Humorphism, folded into the collaboration docs** → R1 ask (c)
+   > "We also might want to fold in the Humorphism principles into the AI-Human collaboration framework."
+
+   and, on the orchestrator's three cautions:
+   > "Re: Caution 1, Agreed, so long as the surfacing and drafting is in alignment with the values. Re: Caution 2, Agreed. Re: Also, Agreed."
+
+   and:
+   > "Yes, add to 455 before it merges."
+
+   *The three cautions he agreed to (orchestrator's words, summarized):*
+   1. Humorphism's "Proactive" trait conflicts with Start Up Tasks' stop-and-wait. It is reconciled as proactive in surfacing and drafting, never in acting beyond authorization. Peter's condition: the surfacing and drafting align with the four values.
+   2. AI-Collaboration-Principles is always loaded, so it takes only the gaps (Empowering, Attentive, and Proactive once reconciled), with existing text cut or merged so the doc does not grow. The rest goes to the served AI-Collaboration-Framework.
+   3. Humorphism is someone else's published work: paraphrase and cite it, never copy its patterns or examples. The drafter reads the manifesto and the full pattern set first.
 
 **Orchestrator notes for R1 (not Peter's words).** Each is a **proposal for reviewers**.
 - **Promises, not signatures.** Accountability attaches to named promises and their checks. Each promise has a named owner, who records their own found items in their own voice wherever no check reaches. → F-8, row 1
