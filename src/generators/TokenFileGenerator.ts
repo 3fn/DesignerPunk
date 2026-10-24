@@ -1022,7 +1022,7 @@ export class TokenFileGenerator {
    * selector matches only `<html>`, so a theme applies page-wide).
    * iOS/Android: `{Name}Theme` protocol, structs and environment key (Swift);
    * `{Name}Theme` data class, `{Name}Themes` instances and `CompositionLocal` (Kotlin).
-   * Not yet called by the build (Spec 129 item (i));
+   * Not yet called by the build (Spec 129 scope items (i) and (vi));
    * .kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md.
    */
   generateThemeOverrideBlocks(

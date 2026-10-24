@@ -531,7 +531,7 @@ export const ComponentNameTokens = defineComponentTokens({
 | **Config Loader** | `src/config/ConfigLoader.ts` | Loads `designerpunk.config.ts`, resolves paths |
 | **Generation** | `src/generators/TokenFileGenerator.ts` | Platform output generation |
 | **Platform Generators** | `src/providers/*FormatGenerator.ts` | Platform-specific formatting |
-| **Theme Generators** | `generateThemeOverrideBlocks` → `generateWebThemeBlock`, `generateSwiftThemeTypes`, `generateKotlinThemeTypes` | Platform-specific output for registered themes — built and tested, not yet called by the build (planned in Spec 129). The build emits the built-in WCAG overrides through `generateWcagOverrideBlock` |
+| **Theme Generators** | `generateThemeOverrideBlocks` → `generateWebThemeBlock`, `generateSwiftThemeTypes`, `generateKotlinThemeTypes` | Platform-specific output for registered themes — built and tested, not yet called by the build (native wiring is Spec 129 scope item (i); whether registered themes reach web is Spec 129's to decide). The build emits the built-in WCAG overrides through `generateWcagOverrideBlock` |
 | **Output** | Configured output dir (default: `dist/`) | Generated platform files |
 | **Component Tokens** | `src/build/tokens/defineComponentTokens.ts` | Component token authoring |
 | **Color Tokens** | `src/tokens/ColorTokens.ts` | OKLCH channel-primitive definitions |
@@ -560,7 +560,7 @@ export default defineConfig({
 
 **Path resolution**: Token sources resolve from the installed package. Theme overrides and component tokens resolve relative to the config file. Output directory is configurable. When no config exists, defaults match the DesignerPunk repo structure (backward compatible).
 
-**Theme registration**: Themes are explicitly imported and registered in the config — no directory walking, no auto-discovery. The config IS the registry. A registered theme is not applied yet: `generate` lists it as "registered, not applied yet", and it changes no generated output on any platform (planned in Spec 129).
+**Theme registration**: Themes are explicitly imported and registered in the config — no directory walking, no auto-discovery. By design the config is the registry, but a registered theme is not applied yet: `generate` lists it as "registered, not applied yet", and it changes no generated output on any platform (whether and how is Spec 129's to decide).
 
 See: `Token-Governance.md` § "Theme Registry (Spec 094)" for governance rules.
 
