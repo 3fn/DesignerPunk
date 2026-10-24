@@ -295,8 +295,8 @@ tokens:
   shadow:
     - shadow.container
   radius:
-    - radius-100
-    - radius-200
+    - radius100
+    - radius200
   motion:
     - motion.focusTransition
   blend:

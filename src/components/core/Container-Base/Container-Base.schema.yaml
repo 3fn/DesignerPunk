@@ -325,9 +325,9 @@ tokens:
     - border.emphasis
     - border.heavy
   radius:
-    - radius-050
-    - radius-100
-    - radius-200
+    - radius050
+    - radius100
+    - radius200
   layering:
     - zIndex.container
     - zIndex.navigation

@@ -88,7 +88,6 @@ tokens:
     - avatar.size.xxl
   color:
     - color.contrast.onDark
-    - color.contrast.onSurface
     - color.identity.agent
     - color.identity.human
     - color.structure.border

@@ -8,7 +8,11 @@ tokens:
       web: '--color-feedback-success-text'
       ios: theme.colorFeedbackSuccessText
       android: theme.color_feedback_success_text
-    consumers: []
+    consumers:
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
   color.feedback.success.background:
     category: color
     primitiveReferences:
@@ -45,6 +49,10 @@ tokens:
       - Input-Checkbox-Legal
       - Input-Radio-Base
       - Input-Radio-Set
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
   color.feedback.error.background:
     category: color
     primitiveReferences:
@@ -253,10 +261,15 @@ tokens:
       ios: colorActionPrimary
       android: color_action_primary
     consumers:
+      - Button-CTA
       - Button-Icon
       - Chip-Base
       - Chip-Filter
       - Chip-Input
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
   color.action.secondary:
     category: color
     primitiveReferences:
@@ -402,7 +415,9 @@ tokens:
       web: '--color-contrast-on-action'
       ios: colorContrastOnAction
       android: color_contrast_on_action
-    consumers: []
+    consumers:
+      - Button-CTA
+      - Button-Icon
   color.structure.canvas:
     category: color
     primitiveReferences:
@@ -413,8 +428,13 @@ tokens:
       ios: theme.colorStructureCanvas
       android: theme.color_structure_canvas
     consumers:
+      - Button-CTA
       - Button-VerticalList-Item
       - Container-Base
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
       - Nav-Header-Base
       - Nav-SegmentedChoice-Base
       - Nav-TabBar-Base
@@ -482,6 +502,10 @@ tokens:
       - Chip-Input
       - Container-Base
       - Container-Card-Base
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
       - Nav-SegmentedChoice-Base
   color.structure.border.subtle:
     category: color
@@ -733,6 +757,7 @@ tokens:
       android: typography_body_sm
     consumers:
       - Button-VerticalList-Item
+      - Button-VerticalList-Set
   typography.bodyMd:
     category: typography
     primitiveReferences:
@@ -925,6 +950,7 @@ tokens:
       ios: typographyButtonMd
       android: typography_button_md
     consumers:
+      - Button-CTA
       - Button-VerticalList-Item
   typography.buttonLg:
     category: typography
@@ -939,7 +965,8 @@ tokens:
       web: '--typography-button-lg'
       ios: typographyButtonLg
       android: typography_button_lg
-    consumers: []
+    consumers:
+      - Button-CTA
   typography.input:
     category: typography
     primitiveReferences:
@@ -986,6 +1013,8 @@ tokens:
       ios: typographyLabelSm
       android: typography_label_sm
     consumers:
+      - Input-Checkbox-Base
+      - Input-Radio-Base
       - Progress-Indicator-Label-Base
   typography.labelMd:
     category: typography
@@ -1002,6 +1031,8 @@ tokens:
       android: typography_label_md
     consumers:
       - Button-CTA
+      - Input-Checkbox-Base
+      - Input-Radio-Base
       - Input-Text-Base
       - Input-Text-Email
       - Input-Text-Password
@@ -1040,6 +1071,7 @@ tokens:
       android: typography_label_lg
     consumers:
       - Button-CTA
+      - Input-Radio-Base
   typography.codeSm:
     category: typography
     primitiveReferences:
@@ -1443,7 +1475,9 @@ tokens:
       ios: colorIconOpticalBalance
       android: color_icon_optical_balance
     consumers:
+      - Button-CTA
       - Button-VerticalList-Item
+      - Icon-Base
   zIndex.container:
     category: layering
     primitiveReferences: null
@@ -1719,7 +1753,6 @@ tokens:
       - Icon-Base
       - Input-Checkbox-Base
       - Input-Radio-Base
-      - Nav-Header-Page
   icon.size100:
     category: icon
     primitiveReferences:
@@ -1955,6 +1988,7 @@ tokens:
       ios: motionButtonPress
       android: motion_button_press
     consumers:
+      - Button-CTA
       - Button-Icon
       - Input-Checkbox-Base
       - Input-Radio-Base
@@ -2017,7 +2051,16 @@ tokens:
       ios: borderDefault
       android: border_default
     consumers:
+      - Button-CTA
+      - Button-VerticalList-Item
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
       - Container-Base
+      - Input-Text-Base
+      - Input-Text-Email
+      - Input-Text-Password
+      - Input-Text-PhoneNumber
       - Nav-SegmentedChoice-Base
   border.emphasis:
     category: border
@@ -2029,7 +2072,10 @@ tokens:
       ios: borderEmphasis
       android: border_emphasis
     consumers:
+      - Button-VerticalList-Item
       - Container-Base
+      - Input-Checkbox-Base
+      - Input-Radio-Base
   border.heavy:
     category: border
     primitiveReferences:
@@ -2041,6 +2087,7 @@ tokens:
       android: border_heavy
     consumers:
       - Container-Base
+      - Input-Radio-Base
   radius.none:
     category: layout
     primitiveReferences:
@@ -2060,7 +2107,8 @@ tokens:
       web: '--radius-subtle'
       ios: radiusSubtle
       android: radius_subtle
-    consumers: []
+    consumers:
+      - Input-Checkbox-Base
   radius.small:
     category: layout
     primitiveReferences:
@@ -2071,6 +2119,7 @@ tokens:
       ios: radiusSmall
       android: radius_small
     consumers:
+      - Input-Checkbox-Base
       - Nav-SegmentedChoice-Base
   radius.normal:
     category: layout
@@ -2082,6 +2131,7 @@ tokens:
       ios: radiusNormal
       android: radius_normal
     consumers:
+      - Button-VerticalList-Item
       - Nav-SegmentedChoice-Base
   radius.large:
     category: layout
@@ -2106,6 +2156,9 @@ tokens:
       - Chip-Base
       - Chip-Filter
       - Chip-Input
+      - Input-Radio-Base
+      - Nav-TabBar-Base
+      - Progress-Bar-Base
       - Progress-Pagination-Base
   radius.circle:
     category: layout
@@ -2116,7 +2169,8 @@ tokens:
       web: '--radius-circle'
       ios: radiusCircle
       android: radius_circle
-    consumers: []
+    consumers:
+      - Button-Icon
   space.grouped.none:
     category: spacing
     primitiveReferences:
@@ -2176,6 +2230,7 @@ tokens:
       ios: spaceGroupedNormal
       android: space_grouped_normal
     consumers:
+      - Button-CTA
       - Input-Radio-Base
       - Input-Radio-Set
       - Progress-Pagination-Base
@@ -2422,5 +2477,8 @@ tokens:
       ios: spaceInset075
       android: space_inset_075
     consumers:
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
       - Input-Radio-Base
       - Progress-Pagination-Base
