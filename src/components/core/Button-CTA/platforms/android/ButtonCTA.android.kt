@@ -38,6 +38,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.designerpunk.tokens.DesignTokens
@@ -271,37 +272,41 @@ private data class ButtonCTASizeConfig(
  * @return Size configuration object
  */
 private fun getButtonCTASizeConfig(size: ButtonCTASize): ButtonCTASizeConfig {
+    // Sizing primitives (DesignTokens.size_*) are generated as Float on Android, unlike
+    // spacing and radius (Dp), so each read converts with .dp here. Interim: when the
+    // generator emits sizing as Dp (Spec 129 intake), these .dp calls must be removed;
+    // AndroidSizingDpReads.test.ts fails until they are.
     return when (size) {
         ButtonCTASize.SMALL -> ButtonCTASizeConfig(
-            height = DesignTokens.size_500,
+            height = DesignTokens.size_500.dp,
             touchTargetHeight = DesignTokens.tap_area_minimum,
             typography = DesignTokens.typography_button_md,
             horizontalPadding = DesignTokens.space_inset_200,
             verticalPadding = DesignTokens.space_inset_100,
             borderRadius = DesignTokens.radius_100,
-            minWidth = DesignTokens.size_700,
+            minWidth = DesignTokens.size_700.dp,
             iconSize = DesignTokens.icon_size_100,
             iconTextSpacing = DesignTokens.space_grouped_tight
         )
         ButtonCTASize.MEDIUM -> ButtonCTASizeConfig(
-            height = DesignTokens.size_600,
+            height = DesignTokens.size_600.dp,
             touchTargetHeight = DesignTokens.tap_area_recommended,
             typography = DesignTokens.typography_button_md,
             horizontalPadding = DesignTokens.space_inset_300,
             verticalPadding = DesignTokens.space_inset_150,
             borderRadius = DesignTokens.radius_150,
-            minWidth = DesignTokens.size_900,
+            minWidth = DesignTokens.size_900.dp,
             iconSize = DesignTokens.icon_size_100,
             iconTextSpacing = DesignTokens.space_grouped_normal
         )
         ButtonCTASize.LARGE -> ButtonCTASizeConfig(
-            height = DesignTokens.size_700,
-            touchTargetHeight = DesignTokens.size_700,
+            height = DesignTokens.size_700.dp,
+            touchTargetHeight = DesignTokens.size_700.dp,
             typography = DesignTokens.typography_button_lg,
             horizontalPadding = DesignTokens.space_inset_400,
             verticalPadding = DesignTokens.space_inset_150,
             borderRadius = DesignTokens.radius_200,
-            minWidth = DesignTokens.size_1000,
+            minWidth = DesignTokens.size_1000.dp,
             iconSize = DesignTokens.icon_size_125,
             iconTextSpacing = DesignTokens.space_grouped_normal
         )
