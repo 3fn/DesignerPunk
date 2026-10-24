@@ -131,15 +131,15 @@ tokens:
     - blend.hoverDarker
     - blend.pressedDarker
   border:
-    - borderEmphasis
+    - border.emphasis
   radius:
-    - radiusSmall
-    - radiusSubtle
+    - radius.small
+    - radius.subtle
   scale:
     - scale096
   typography:
-    - typography.titleMedium
-    - typography.titleSmall
+    - typography.labelMd
+    - typography.labelSm
 
 platforms:
   - web

@@ -69,7 +69,7 @@ tokens:
     - color.feedback.error.text
     - color.text.muted
   typography:
-    - fontSize.050
+    - fontSize050
     - typography.caption
   spacing:
     - space.grouped.minimal

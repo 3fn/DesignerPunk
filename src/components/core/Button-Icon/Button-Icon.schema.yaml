@@ -71,24 +71,22 @@ properties:
 
 tokens:
   component:
-    - buttonIcon.inset.large
-    - buttonIcon.inset.medium
-    - buttonIcon.inset.small
-    - buttonIcon.size.large
-    - buttonIcon.size.medium
-    - buttonIcon.size.small
+    - buttonicon.inset.large
+    - buttonicon.inset.medium
+    - buttonicon.inset.small
+    - buttonicon.size.large
+    - buttonicon.size.medium
+    - buttonicon.size.small
   color:
     - color.action.primary
     - color.background.primary.subtle
     - color.contrast.onDark
-    - color.contrast.onPrimary
-    - color.primary
+    - color.contrast.onAction
   icon:
     - icon.size050
     - icon.size075
     - icon.size100
   accessibility:
-    - accessibility.focus.buffer
     - accessibility.focus.color
     - accessibility.focus.offset
     - accessibility.focus.width
@@ -106,7 +104,7 @@ tokens:
     - space125
     - space150
   radius:
-    - radiusCircle
+    - radius.circle
 
 platforms:
   - web

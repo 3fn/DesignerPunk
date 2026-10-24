@@ -340,6 +340,70 @@ export function componentTokenFileLoadFailedMessage(file: string, reason: string
   return `generate stopped — ${file} could not be loaded: ${firstLine} Fix the file and run generate again. Nothing was written.`;
 }
 
+/** One schema token declaration `generate` could not count, as its warning names it. */
+export interface UnresolvedSchemaTokenLine {
+  /** Whose schema: the consumer's own, or DesignerPunk's (the installed package's). */
+  owner: 'yours' | 'designerpunk';
+  component: string;
+  /** Repo-relative schema path (`/` separators); shown for your own schemas only. */
+  file: string;
+  group: string;
+  token: string;
+}
+
+/**
+ * `generate` warns: component schemas declare token names that are not keys of the token
+ * index it just wrote, so those components are not counted as consumers of anything under
+ * those names. Never a failure — a consumer's schemas and token vocabulary are theirs to
+ * evolve. In DesignerPunk's own repo the same check FAILS, as a test
+ * (`src/generators/__tests__/schemaTokenRefs.test.ts`).
+ * Source: ruling 2026-10-23 § 3c (`.kiro/issues/2026-06-25-component-schema-token-name-drift.md`).
+ */
+export function unresolvedSchemaTokensMessage(
+  lines: readonly UnresolvedSchemaTokenLine[],
+  unreadable: ReadonlyArray<{ owner: 'yours' | 'designerpunk'; file: string; reason: string }> = [],
+): string {
+  const out: string[] = [];
+  if (lines.length > 0) {
+    out.push(
+      `${lines.length} token name${lines.length === 1 ? '' : 's'} declared in component schemas ${lines.length === 1 ? 'is' : 'are'} not in this token index, ` +
+      `so ${lines.length === 1 ? 'that component is' : 'those components are'} not counted as ${lines.length === 1 ? 'its' : 'their'} consumer${lines.length === 1 ? '' : 's'} (get_token_consumers):`
+    );
+    for (const l of lines) {
+      out.push(l.owner === 'yours'
+        ? `   your ${l.component} (${l.file}), tokens.${l.group}: ${l.token}`
+        : `   DesignerPunk's ${l.component}, tokens.${l.group}: ${l.token}`);
+    }
+    if (lines.some(l => l.owner === 'yours')) {
+      out.push(`   In your own schemas, use the token's exact token-index name (case-sensitive), or add the token to your token source.`);
+    }
+    if (lines.some(l => l.owner === 'designerpunk')) {
+      out.push(
+        `   A DesignerPunk component named here reads that token. If your token source renamed or removed it, ` +
+        `your generated output no longer has the CSS variable or constant that component reads.`
+      );
+    }
+  }
+  for (const u of unreadable) {
+    out.push(`${u.owner === 'yours' ? 'your schema' : "DesignerPunk's schema"} ${u.file} could not be read (${u.reason}); none of its token names were counted.`);
+  }
+  return out.join('\n');
+}
+
+/**
+ * `generate`'s one-line note in a repo whose token index does not hold DesignerPunk's own
+ * component tokens (a born repo indexes only the component tokens in its own token source):
+ * DesignerPunk's schemas declare `count` of them, which are not counted. True of every such
+ * run, so it is a note, not a warning, and one line.
+ */
+export function packageComponentTokensNotIndexedMessage(count: number, example: string): string {
+  return (
+    `Note: ${count} of DesignerPunk's component-token names (for example ${example}) ${count === 1 ? 'is' : 'are'} not in your token index, ` +
+    `because generate indexes only the component tokens in your own token source; DesignerPunk's components are not counted as their consumers, ` +
+    `and get_token_details does not find them.`
+  );
+}
+
 // ---------------------------------------------------------------------------
 // The `.gitignore` managed block (Spec 123 Task 20.2; design.md C24's PR-9 erratum and § "Error
 // Handling — the loud-failure catalog (exact strings)" rows "`.gitignore` block — offer" and

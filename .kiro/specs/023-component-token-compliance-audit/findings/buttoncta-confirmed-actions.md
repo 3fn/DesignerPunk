@@ -67,6 +67,8 @@ Human review of ButtonCTA audit findings complete. All 28 findings have been cat
 
 **Rationale**: Component-specific tokens with semantic naming provide clarity while maintaining compositional architecture. Naming should balance component needs with system conventions.
 
+> **H3 resolved by evaluation, 2026-10-24 (Ada, token owner; appended, nothing above rewritten).** Peter's words (chat, 2026-10-24): "Re: 3, let's go with (b)", ruling the Button-CTA minimum width fork (b) over (a), three `buttoncta.minWidth.*` component tokens. H3 step 1 asked whether minWidth values should be component-specific tokens, with steps 2 to 5 conditional on "yes". The answer recorded is **no**: step 3 (values align to existing primitive tokens) is met directly, because the three values equal `size700`, `size900` and `size1000` exactly, and all three platforms read those primitives. No `button.minWidth` or `buttoncta.minWidth` tokens are created. This supersedes the component-token reading of H3 and of Design Decision 3; it does not carry it out.
+
 ---
 
 ## iOS Issues (I1-I10)

@@ -331,6 +331,8 @@ Due to the process-oriented nature of this spec (audit → confirm → implement
 - Semantic first: Risk of premature abstraction
 - No new tokens: Would leave hard-coded values in place
 
+> **Superseded in part, 2026-10-24 (Ada, token owner; appended, nothing above rewritten).** Peter's words (chat, 2026-10-24): "Re: 3, let's go with (b)", ruling the Button-CTA minimum width fork (b) over (a), three `buttoncta.minWidth.*` component tokens. Decision 3 answers whether a token to be created is component-specific or semantic; it does not require a token where a primitive already carries the value exactly, and the one alternative it rejected ("No new tokens") was rejected because hard-coded values would remain. Option (b) removes the hard-codes: Button-CTA's minimum widths on web, iOS and Android now read the `sizing` primitives `size700`, `size900` and `size1000` (Requirement 6: 56, 72, 80), and no `buttonCTA.minWidth.*` tokens exist. The `buttonCTA.minWidth` token map this decision anticipated was never registered or generated (see the dated correction on `completion/task-4-parent-completion.md`). Record: `.kiro/issues/2026-06-25-component-schema-token-name-drift.md`.
+
 ### Decision 4: Accumulated Documentation Updates
 
 **Context**: When should Component Development Guide be updated?

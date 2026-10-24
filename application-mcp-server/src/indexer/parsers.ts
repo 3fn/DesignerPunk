@@ -82,7 +82,7 @@ export function parseSchemaYaml(filePath: string): ParseResult<ParsedSchema> {
 
   const doc = raw as Record<string, unknown>;
 
-  // Extract tokens — can be nested object or flat list
+  // Extract tokens — the same reading as the token index consumer map (see extractTokens)
   const tokens = extractTokens(doc.tokens);
 
   // Extract composition
@@ -229,20 +229,37 @@ function loadYaml(filePath: string): unknown | null | undefined {
   }
 }
 
-/** Extract a flat token list from schema tokens (handles nested objects or flat arrays). */
+/**
+ * Extract a flat token list from a schema's `tokens:` block.
+ *
+ * This reads the block exactly as `readSchemaTokenRefs` (`src/generators/generateTokenIndex.ts`)
+ * does: that function builds the token index's `consumers` and feeds the schema token-name
+ * guard. If the two readers disagree, `get_component_full` and `get_token_consumers` disagree
+ * about what a component declares. The rule:
+ * - `tokens:` is a map of group to refs. The canonical (Stemma) form is an array per group;
+ *   a scalar group is tolerated.
+ * - Each ref is a string, or an object's `reference`/`name`.
+ * - A null ref declares nothing; any other value is kept, JSON-stringified, so it stays visible.
+ * Before 2026-10-23 this dropped scalar groups and turned objects into "[object Object]".
+ * No core schema used either form, so no served list changed.
+ *
+ * Parity guard (root lane, because it loads both packages' source):
+ * `src/components/__tests__/schemaTokenReaders.parity.test.ts`.
+ */
 function extractTokens(raw: unknown): string[] {
-  if (!raw) return [];
-  if (Array.isArray(raw)) return raw.map(String);
-  if (typeof raw === 'object' && raw !== null) {
-    const tokens: string[] = [];
-    for (const values of Object.values(raw)) {
-      if (Array.isArray(values)) {
-        tokens.push(...values.map(String));
-      }
+  if (!raw || typeof raw !== 'object') return [];
+  const tokens: string[] = [];
+  for (const groupValue of Object.values(raw as Record<string, unknown>)) {
+    const values = Array.isArray(groupValue) ? groupValue : [groupValue];
+    for (const value of values) {
+      if (value === null || value === undefined) continue;
+      const named = typeof value === 'string'
+        ? value
+        : (value as { reference?: unknown; name?: unknown }).reference || (value as { reference?: unknown; name?: unknown }).name;
+      tokens.push(typeof named === 'string' && named ? named : JSON.stringify(value));
     }
-    return tokens;
   }
-  return [];
+  return tokens;
 }
 
 /** Extract composition definition from schema doc. */

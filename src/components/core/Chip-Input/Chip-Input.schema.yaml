@@ -96,7 +96,7 @@ properties:
 # Note: Inherits all tokens from Chip-Base
 tokens:
   inherited:
-    - chip.paddingBlock
+    - space.inset.075
     - typography.buttonSm
     - color.structure.surface
     - color.structure.border
@@ -104,7 +104,7 @@ tokens:
     - color.action.primary
     - space.inset.150
     - space.grouped.tight
-    - borderDefault
+    - border.default
     - radius.full
     - motion.selectionTransition
     - blend.hoverDarker
