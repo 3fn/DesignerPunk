@@ -45,40 +45,40 @@ Not tagged: Sparky (no web-specific surface beyond P2, which Lina carries). Pete
 
 #### [PETER R0]
 
-*Peter's words, chat, relayed — verbatim (relayed by the orchestrator, 2026-10-24). Typos are kept as written.*
+*Peter's words, chat, relayed — verbatim (relayed by the orchestrator, 2026-10-24). Typos corrected at Peter's request (2026-10-24); wording and meaning otherwise unchanged.*
 
 1. **Signing** → `design-outline.md` § 3 rows 1–2; § 6 F-8
-   > "It's a bit of both mechanical and a signal of ownership: a sign that a promise was kept that teammates were partnered with. The signature is just evidence that the promise was fulfilled. We haven't evolved too many of those notions in awhile, and I've been thinking about it more as the industry is similarly aligning to these collaborative practices (https://humorphism.com)."
+   > "It's a bit of both mechanical and a signal of ownership: a sign that a promise was kept that teammates were partnered with. The signature is just evidence that the promise was fulfilled. We haven't evolved too many of those notions in a while, and I've been thinking about it more as the industry is similarly aligning to these collaborative practices (https://humorphism.com)."
 
    and later:
-   > "Agreed; but if we think there's a better method or mechanic than signing, let's discuss it. I think one of the risks in building that system was "an agent can sign anything in anyone's name", but that's true — there are humans that totally do that and it's wrong. So the signature isn't the outcome; the outcome is output is clean, useful, works as intended, is achieving the goal in a way that aligns with the values we discussed earlier."
+   > "Agreed; but if we think there's a better method or mechanic than signing, let's discuss it. I think one of the risks in building that system was "an agent can sign anything in anyone's name", but that's true — there are humans that totally do that and it's wrong. So the signature isn't the outcome; the outcome is that output is clean, useful, works as intended, is achieving the goal in a way that aligns with the values we discussed earlier."
 
 2. **His read** → § 3 row 20; § 6 F-6 (L4)
-   > "This is tricky; because, as a designer, I don't really have the technical prowess to do an informed review of code. I'm better suited to read reports and made decisions based on the findings."
+   > "This is tricky; because, as a designer, I don't really have the technical prowess to do an informed review of code. I'm better suited to read reports and make decisions based on the findings."
 
    and later:
    > "Yes, but I wouldn't cap it to having to be one page. The risk in capping is missing items that should be reviewed in denser specs because they didn't fit the format."
 
 3. **Consumer emphasis** → § 3, the last line of "What the map shows" (P10a); § 7 (Spec 128)
-   > "You've been quite focused on this, and I understand why. The consumer emphasis starts to return around spec 128 — where we starting building infrastructure for React and React Native. But don't discount the work we did around onboarding, which is entirely customer focused — which was done very recently. We've just needed a resolve issues to hinder our ability to deliver on the promises the system makes. In that case, the work is performed on the system that supports the customer rather than working on something the customer uses directly."
+   > "You've been quite focused on this, and I understand why. The consumer emphasis starts to return around spec 128 — where we started building infrastructure for React and React Native. But don't discount the work we did around onboarding, which is entirely customer focused — which was done very recently. We've just needed to resolve issues that hinder our ability to deliver on the promises the system makes. In that case, the work is performed on the system that supports the customer rather than working on something the customer uses directly."
 
    and, on the test01 rehearsal (→ `evidence/2026-10-24-test01-upgrade-rehearsal.md`):
    > "I love that idea"
 
 4. **The boundary, and his vision** → § 6 F-2; § 5 "Peter's role"; R1 ask (b)
-   > "I'd like to get to a place where humans are making design decisions, and the system knows the best way to support those decisions. Example: If a designer needs a new component, the system knows inquire if this component is validated or experimental. The system knows the procedures and architectural guidelines to follow. The system knows what tokens and other assets it can leverage with accuracy and callout what it needs. The system knows how evaluate and promote tokens and/or components. All those procedures and requirements that go into making the system a constant until humans identify a new variable that the system needs to evolve to meet — redesigns, new products or direction, evolving customer needs, etc."
+   > "I'd like to get to a place where humans are making design decisions, and the system knows the best way to support those decisions. Example: If a designer needs a new component, the system knows to inquire if this component is validated or experimental. The system knows the procedures and architectural guidelines to follow. The system knows what tokens and other assets it can leverage with accuracy and call out what it needs. The system knows how to evaluate and promote tokens and/or components. All those procedures and requirements that go into making the system a constant until humans identify a new variable that the system needs to evolve to meet — redesigns, new products or direction, evolving customer needs, etc."
 
    and on scope:
-   > "That shoudn't be part of 131. In-fact, I would think that's already part of the system, so it might be something Ada, Lina, and Thurgood can validate."
+   > "That shouldn't be part of 131. In fact, I would think that's already part of the system, so it might be something Ada, Lina, and Thurgood can validate."
 
 5. **Human conventions** → § 4; § 5 (mechanisms belong to design)
-   > "One other thing I'm thinking about: many of the constructs we've been using are based on human conventions — which is my bias as a human. We also need to think about what are the optimal constructs for AI agents to achieve these same goals. Just something to consider about as start thinking about actual solutions."
+   > "One other thing I'm thinking about: many of the constructs we've been using are based on human conventions — which is my bias as a human. We also need to think about what the optimal constructs are for AI agents to achieve these same goals. Just something to consider about as we start thinking about actual solutions."
 
 6. **Reviews, context and transparency** → § 5 "What self-sustaining requires"; § 6 F-4; § 3 rows 13 and 17
-   > "Just some responses to the human-agent convention fits: We have had instances where agents don't deliver on what they're asked to build — either because of technical mishaps, misalignment of priorities, etc. Agents don't always catch things on their first view of the problem — which is why we have multiple reviews and reviewers. Think of how in this session that the other agents have better informed your thinking, facts, etc. But the context costs and rule/law overload is very real, and it's something I'd like to address. Not sure if/how that impacts how you think the agents might be better served. One of the principles we've developing at my job is that "Ai agents have agency to do the work, and do so with transparency." Humans see the work happening at a high level as it's happening. They don't need to see the actions happening, but the needs to see the actions ARE happening. Just something to think about."
+   > "Just some responses to the human-agent convention fits: We have had instances where agents don't deliver on what they're asked to build — either because of technical mishaps, misalignment of priorities, etc. Agents don't always catch things on their first view of the problem — which is why we have multiple reviews and reviewers. Think of how in this session that the other agents have better informed your thinking, facts, etc. But the context costs and rule/law overload is very real, and it's something I'd like to address. Not sure if/how that impacts how you think the agents might be better served. One of the principles we've been developing at my job is that "AI agents have agency to do the work, and do so with transparency." Humans see the work happening at a high level as it's happening. They don't need to see the actions happening, but they need to see the actions ARE happening. Just something to think about."
 
 7. **The review lens** → § 4; R1 asks (a) and (c)
-   > "The only other thing I add is I recommend is run their proposals though the lens of those four values we defined — which we might want to actually want to consider making part of our steering documentation."
+   > "The only other thing I'd add is I recommend we run their proposals through the lens of those four values we defined — which we might actually want to consider making part of our steering documentation."
 
 **Orchestrator notes for R1 (not Peter's words).** Each is a **proposal for reviewers**.
 - **Promises, not signatures.** Accountability attaches to named promises and their checks. Each promise has a named owner, who records their own found items in their own voice wherever no check reaches. → F-8, row 1
