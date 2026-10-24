@@ -612,7 +612,12 @@ describe('Token Compliance - All Components', () => {
             // REFINED (Spec 030 Task 3.2): Exclude 0.dp as valid edge case
             // Zero values are a valid literal that don't require token references
             // since they represent "no spacing" which is semantically clear
-            const androidSpacingPattern = /[1-9]\d*\.dp\b/;
+            // REFINED (2026-10-24, Android sizing interim fix): the literal must not
+            // follow a word character, so the digits of a token name followed by
+            // .dp (DesignTokens.size_500.dp — a Float sizing primitive converted at
+            // the read) are not read as a hard-coded 500.dp. Literals (8.dp,
+            // = 24.dp, -4.dp, 1.5.dp) are still flagged.
+            const androidSpacingPattern = /(?<!\w)[1-9]\d*\.dp\b/;
             if (androidSpacingPattern.test(line)) {
               hasViolation = true;
             }
