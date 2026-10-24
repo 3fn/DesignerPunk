@@ -64,3 +64,7 @@ At `239823ea8`: 513 declarations, 0 unresolved; consumer pairs 392 semantic, 78 
 **2026-10-23 — Lina (owner; rule 9).** The completeness half of this P0 (names resolve, but web code reads tokens the schemas do not declare) is not closed by the name normalization. It is carried by its own P0 record, `2026-10-23-schema-tokens-declared-vs-read-completeness.md` (`release:next:phase-1`), moved out of the findings record's item 4 on the steward's review. This record's closure covers names only.
 
 *Signed: Lina, 2026-10-23.*
+
+**2026-10-24 — Button-CTA minWidth fork RULED (b) by Peter 2026-10-24** (chat: "Re: 3, let's go with (b)"; the `**Open for Peter**` fork on #452 is answered, ahead of the merge). No tokens are created; web, iOS and Android read `size700`, `size900` and `size1000`. Ada appended the supersession to Spec 023 (`design.md` Decision 3, `findings/buttoncta-confirmed-actions.md` H3) and a correction to `completion/task-4-parent-completion.md` (its "created / generation updated / all platforms use" claims were false at `84c545780`). `CHANGELOG.md` `[Unreleased]` records the removed internal `ButtonCTATokens` and `getButtonCTAMinWidth` export. The surviving counter-argument stays on the record: nothing named `minWidth` now exists to graduate to a semantic token if Chip or another control needs minimum widths; `get_token_consumers(size700)` gives discovery only once declared-vs-read completeness lands (`2026-10-23-schema-tokens-declared-vs-read-completeness.md`).
+
+*Signed: Ada, 2026-10-24.*

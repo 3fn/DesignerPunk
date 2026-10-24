@@ -426,3 +426,7 @@ The following insights should be added to the Component Development Guide:
 ---
 
 *Task 4 parent completion documented December 18, 2025. All success criteria met. Ready for Task 5.*
+
+---
+
+**Correction, 2026-10-24 (Ada, token owner; appended, nothing above rewritten).** Three claims above were false at the task's commit `84c545780`: "Created `buttonCTA.minWidth` component tokens", "Token generation system updated to include component tokens", and "All platforms use `buttonCTA.minWidth` tokens". What shipped was a plain TypeScript constant map (`ButtonCTA.tokens.ts`); no generator file changed; web kept `min-width: 56px; /* buttonCTA.minWidth.small */` as a literal and Android kept `minWidth = 56` as an `Int`. The map was read by no platform. Peter's words (chat, 2026-10-24): "Re: 3, let's go with (b)", ruling the Button-CTA minimum width fork (b) over (a), three `buttoncta.minWidth.*` component tokens. Outcome: the map is retired, and web, iOS and Android read the `sizing` primitives `size700`, `size900` and `size1000`. Record: `.kiro/issues/2026-06-25-component-schema-token-name-drift.md`.
