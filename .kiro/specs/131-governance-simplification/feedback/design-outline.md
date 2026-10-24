@@ -13,7 +13,7 @@
 | Reviewer | Why | Asked to look at |
 |---|---|---|
 | **Stacy (required)** | She specified several layers the map retires, she owns the claims passes that row 10 reshapes, and she is the verifiability reader | The whole outline; especially the "Delivered?" cells, rows 1–3, 5, 7, 9, 10 and 20, and metric 2's denominator |
-| **Lina** | She built the disposition modules (rows 1–3); `runGuard`'s freshness call is in her scope; she owns readiness (row 19) and P2 | Rows 1–3, 7 and 19; § 8's definition of "pure deletion" |
+| **Lina** | She built the disposition modules (rows 1–3), which import Thurgood's `signatures.ts`; she owns readiness (row 19) and P2. *(R2 correction, from `[LINA R1]` item 1: `runGuard`, `diff-guard.ts` and `regrounding/{freshness,signatures,c1,verify-signing-chain}.ts` are Thurgood's under the six-roots ballot § 4, Option B, not hers.)* | Rows 1–3, 7 and 19; the definition of "pure deletion" (now § 9) |
 | **Ada** | Token tier of the compile lane; token governance (row 18); F17's filing failure (row 13); freeze fork F-5 | Rows 13 and 18; F-5; § 7's 129 dependency |
 | **Leonardo** | Consumer surfaces (rows 17 and 19); the fixture's design; P10a; F-6 | Rows 17 and 19; F-6; § 5's "outside source of purpose" |
 | **Kenya** | iOS half of the compile lane and the consumer fixture | § 7: who owns the fixture, and where it lives (129 or 131) |
@@ -22,6 +22,8 @@
 | **Outside read (orchestrator-run)** | One charter-free read at R1, because every seat is one model family | Smoothed-over forks; whether the map re-creates the complexity it diagnoses |
 
 Sparky is tagged for ask (c) only (no web-specific surface beyond P2, which Lina carries). Peter rules; he is not a round reviewer.
+
+*(R2, from `[OUTSIDE R1]` item 6.)* No consumer sits on this table: none exists to ask. The test01 rehearsal (`evidence/`) stands in as consumer evidence, and Leonardo carries the designer's view. That is a stated gap, not a reviewer.
 
 ### Context for Reviewers
 
@@ -492,3 +494,134 @@ So "experimental" means product-tier, deliberately not promoted until proven. R1
 - (d) The Product MCP is listed as "conceptual" (`.kiro/steering/Civitas-System-Overview.md` L39). How much of the product subsystem is live is unverified.
 
 This is a said-vs-built gap in an existing design, not missing design. It stays outside 131's scope per `[PETER R0]` item 4.
+
+---
+
+### Round 2 (R2)
+
+#### [THURGOOD R2]
+
+*Author's incorporation round. The outline is rewritten to current text (`design-outline.md`, R2 draft); this entry is the ledger. Section numbers below are the R2 outline's: § 3a binding constraint, § 3b map, § 3d adds vs removes, § 4 approaches, § 5 principles and outcomes, § 6 metrics, § 7 seat review, § 8 dependencies, § 9 tasks ideas, § 10 forks.*
+
+**Mentions addressed to me**
+- [@THURGOOD] from DATA R1 (theme emission): **yes, as a conditional.** § 8 now reads: a native platform's rows 10 and 19 change only at that lane's green; if 128 owns native theme emission, native rows 10 and 19 stay B through 131. I can't state that 129 owns emission: 129's outline holds that open (L59), and it is 129's question to settle, not 131's. -- [THURGOOD R2]
+- [@THURGOOD] from SPARKY R1 (charter restatements): **yes. I will draft the values ballot so that its execution unit also cuts the charters' AICP restatements to pointers.** I'll find the sites by grep at draft time, not by hand count. Each seat is consulted on its own charter, and Peter merges (`canonical/agents/**`). Your residual is why it has to be the same unit: the added length pays off only if restated and procedural text leaves with it. Counter: that makes the unit touch all eight charters and a regeneration. If Peter wants it smaller, the cut moves to P7's charter rewrites and your residual stands unanswered until then. -- [THURGOOD R2]
+
+**Incorporation ledger**
+
+*[STACY R1]*
+- 1 (F3 corrected): incorporated, row 1. The verdict holds on different evidence: signing worked once, then decayed.
+- 2: incorporated, row 3 stays unmeasured. 3: incorporated, row 4 reads "unread", held for 16.1.0. 4: incorporated, row 5 **D**. 5: incorporated, row 6. 6: incorporated, row 9. 7: incorporated, row 12 (block kept, header **D**).
+- 8 (sunset falsifier): incorporated in § 5 ("sunsets with falsifiers") and F-10.
+- 9: incorporated, row 11's check.
+- 10: incorporated; metric 4 is now fix latency, guarded by a count of unfiled findings.
+- 11: incorporated, metrics 2 and 3. 12: carried as **F-15**.
+- 13: carried as **F-14**. 14 and 15: incorporated in § 5's release findings report.
+- 16: incorporated as § 3b's rule for unmeasured rows.
+- 17 (four values): used in the § 3b verdicts and § 11.
+- 18: incorporated in § 5 addition 2 ("a value is never cited as evidence").
+- 19: incorporated in F-2's evidence. The Humorphism reading itself goes to the values ballot.
+
+*[LINA R1]*
+- 1 (ownership): incorporated in the conflicts block, the § 9 "pure deletion" definition, and the stakeholder table (corrected above).
+- 2 (`readConsumerSpans`): incorporated, row 3 and F-3.
+- 3: carried as **F-11**.
+- 4 (OWNERS ordering): incorporated, § 9. OWNERS lands no later than the signature deletion, in the same unit.
+- 5: incorporated, row 7.
+- 6: incorporated, rows 13 and 19. The `/\.test\.ts$/` detail goes to P2's design.
+- test01, the fork class: incorporated in § 8 (the fixture includes a consumer-owned fork). Your two self-filed records: noted.
+- (b): filed with you, outside 131, except the shared vocabulary, which rides row 19.
+- (c): to the values ballot.
+
+*[ADA R1]*
+- Row 18 split: incorporated as 18a/18b/18c. 18b reads "unmeasured in practice"; your tokens-added line is listed as a candidate, not counted.
+- Ratchet baseline and naming the ratchet as the check: incorporated, § 6 and row 10.
+- F-5 evidence: incorporated.
+- P8 list and both conditions: incorporated, row 17.
+- test01 on `src/cli/**` and the post-condition class option: incorporated in § 5 (transparency) and § 8 (routing). The fixes stay yours.
+- (b) items 1–5: filed with their owners, outside 131. Item 5 is the 18b candidate.
+- (c): to the values ballot.
+
+*[LEONARDO R1]*
+- 1: incorporated as **O-1**, § 5.
+- 2: incorporated in row 17's check (the served-corpus probe after install and upgrade).
+- 3: incorporated, row 19 (`compiles: unverified` may land before 129).
+- 4: incorporated, § 3c and approach B (b), including the design task.
+- 5: home incorporated in § 8 (proposed 129). Your content ownership: incorporated. Keeper: **F-12**.
+- 6: incorporated, F-6. 7: incorporated, § 5.
+- (c): to the values ballot.
+
+*[KENYA R1]*
+- 1: incorporated in § 8. The keeper is **F-12**, the unit is **F-13**.
+- 2: incorporated, § 6 (fingerprints, inventory floor, `-wmo`).
+- 3: incorporated, row 10.
+- 4: incorporated, row 19.
+- (c): to the values ballot.
+
+*[DATA R1]*
+- 1: incorporated in § 8 and F-12.
+- 2: incorporated, § 8; see my mention answer.
+- 3: incorporated, row 19 (`compiles: {verb, sha, result}`).
+- 4: incorporated, row 10.
+- 5: incorporated, metric 2.
+- 6: not incorporated. It is true, and no outline change follows from it.
+- (c): to the values ballot.
+
+*[SPARKY R1]*
+- 2: incorporated, § 5 addition 2.
+- 1, 3–7: to the values ballot. Item 7's residual is carried in my mention answer.
+
+*[OUTSIDE R1]*
+- 1: incorporated as § 3a. F24 is restated there.
+- 2: incorporated in § 8 (owners' filing is owed now; the 16.1.0 re-run is handed to the release work). **I did not file the records**: this unit's write scope is the spec folder, and filing is the owners' act. My own two items (F-1/F-2, the install doc) are listed in § 8.
+- 3: incorporated. Row 1's **E** rests on the rehearsal, and P10b is now **F-10**.
+- 4: incorporated, row 10.
+- 5: answered with a count, § 3d: removes 14, adds 9 (4 of them replacements), so net −5, or −2 with every add-fork taken.
+- 6: thorough → § 3b's unmeasured rule. Holistic → the note under the stakeholder table. Always-set growth → the values ballot. Thoughtful → § 4 (two approaches) and the rehearsal as the re-run's home.
+- 7: incorporated as approach B and proposed as the spine (**F-9**).
+- 8: incorporated as O-1, the transparency items, the agent-native line, and B's sensor-first spine.
+- 9: incorporated, row 20 **D** and F-8.
+
+*[PETER R1]*: incorporated, § 2. The gap is wiring and exercise, outside 131.
+
+*Brief item 4 (Peter, 2026-10-24)*: the two-part seat review is § 7.
+
+**Declined, with reason**
+- Ada's tokens-added PR line: listed, not adopted. It is Ada's design call, and adopting it would add a mechanism without retiring one.
+- Any change from Data 6 (above).
+- Restating the ask-(c) views in the outline: they are inputs to a separate ballot, so the outline points to it rather than absorbing them.
+
+**My four values, applied to my own revision**: § 11 of the outline. In one line each:
+- Thorough: five rows are still unmeasured.
+- Sustainable: five net-new mechanisms, and the rehearsal is a standing duty for one owner.
+- Holistic: native consumers wait on 129, and the seats cut duties they carry.
+- Thoughtful: approach B is reasoned, not tested.
+
+**Length**: the outline is about 4,540 words, just over the ~4,500 guide. The 20-row map needed its R1 facts inline so that it can be checked without opening this file.
+
+**Forks for Peter after R2** (one line each; the full text is in outline § 10)
+- F-1 · `Agent:`-trailer check inside the touch report: yes or no.
+- F-2 · Self-governance boundary: (b) with a deletion asymmetry, or Peter samples deletions too.
+- F-3 · Freshness gap at the first reduced release: keep freshness until then, or accept the gap.
+- F-4 · Word budget: adopt or not.
+- F-5 · Freeze: adopt or not, and whether it exempts 129.
+- F-6 · Peter's read: are reports plus rehearsal plus pack-diff enough, or a sampled read of shipped claims too?
+- F-7 · The unset numbers.
+- F-8 · Partnership: answered toward own-voice found items; remains only as F-10.
+- **F-9 (new)** · Spine: fix-first (B) with the map as backlog, or the map (A).
+- **F-10 (new)** · An owner read of changed paths: keep it with Stacy's falsifier, or drop it and let the rehearsal carry row 1.
+- **F-11 (new)** · Operative item lists: kept as what reads cite, or retired with their readers.
+- **F-12 (new)** · Fixture keeper: Leonardo or Stacy (with Kenya's platform-maintainer variant).
+- **F-13 (new)** · Fixture unit: inside 129's harness unit, or a 129 follow-on.
+- **F-14 (new)** · Claims-pass length: cap the record and generate an uncapped report, or no cap anywhere.
+- **F-15 (new)** · Metrics reader: the release report Peter reads, or Stacy's RELEASE record.
+
+**Mentions to other seats still unanswered (carried to those seats)**
+- [@LEONARDO] from LINA R1: must the fixture include a consumer-owned fork? It is in § 8 as a proposal; the fixture's content owner confirms.
+- [@ADA] from LINA R1: is opening `exports` subpaths that forks can reach your packaging call? This is release work, outside 131.
+- [@LEONARDO] from ADA R1: should Rosetta-System-Architecture stay served (its § "Module-Resolution Contract")?
+- [@DATA] from KENYA R1: one shared driver, yes (your item 1). On the same maintainer duty, your entry reads it the other way, so this is carried as F-12 for you to confirm.
+- [@ADA] from KENYA R1: ratchet baseline, a committed number or main's last measurement? Your R1 gives the packed tarball at the arming sha; whether a fingerprint key changes that is still yours.
+- [@LEONARDO] from KENYA R1: is the Settings spec stable enough to be fixture input?
+- [@LEONARDO] from SPARKY R1: do Humorphism's product-UI patterns belong in product design guidance? This is also a values-ballot input.
+- Answered in R1: [@KENYA] [@DATA] from LEONARDO R1 (Kenya item 1; Data item 1).
