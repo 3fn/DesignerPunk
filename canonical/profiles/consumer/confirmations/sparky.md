@@ -39,11 +39,13 @@ date: 2026-09-29
 ## `#web-theming`
 
 confirmer: sparky
-canonicalHash: sha256:3fe725da5bdda0d13d0c940e7d474b831ec35db2454b7f616e3092b014830c39
-items: theming-1, theming-2, theming-3, theming-4
-date: 2026-09-29
+canonicalHash: sha256:652f612ef3132d946ee6d1b2f2bfc05646257df9bbc3f51409b92ec6a760514d
+items: theming-1, theming-2, theming-3, theming-5, theming-4
+date: 2026-10-23
 
-**Ruling: CONFIRMED at 4 items, as drafted.** Each bullet binds the theming mechanism (`data-theme`, `:root` base, dark-only `color-scheme`, install + generate). `theming-1` bundles a statement of inheritance behavior with the norm; the bundle is kept whole, because splitting would make a partial rendering clear the floor more easily.
+**Ruling: CONFIRMED at 5 items, re-confirmed against the corrected unit** (the 2026-09-29 confirmation at 4 items is superseded). The unit no longer says that custom themes activate via `data-theme="{name}"` or that dark-only themes exist. It now claims four things, each of which a consumer implementation could violate, and I confirmed one item for each: (1) the theme attribute goes on `<html>` and applies page-wide, because the generated selector `:root[data-theme="wcag"]` matches only `<html>` (`theming-1`, kept whole with its inheritance statement); (2) one theme block, `wcag`, is generated today, `data-theme` on any other element matches nothing, and subtree theming is neither available nor to be promised (`theming-2`); (3) dark mode follows the preferred colour scheme through `light-dark()` and `color-scheme` on `:root`, and there is no dark `data-theme` block (`theming-3`); (4) a theme registered in `designerpunk.config.ts` does not yet emit CSS on web, and a custom `data-theme="{name}"` value matches nothing, so no markup is written for one and a need is raised to Leonardo (`theming-5`, new with this unit text). `theming-4` (install `@3fn/core` and run `npx designerpunk generate`) is unchanged and still true. I checked each of the five items as a verbatim substring occurring exactly once in the new unit text.
+
+I judged the unit true against the code, not against its own wording: `src/generators/TokenFileGenerator.ts:973` pushes `:root[data-theme="wcag"] {`, the only `data-theme` selector the generator emits; `src/generators/generateTokenFiles.ts:17-21` imports the built-in override maps statically and does not read `config.themes`; `src/cli/shared/errorCatalog.ts:472` carries the "registered, not applied yet" message; and `dist/DesignTokens.web.css` holds the `:root { color-scheme: light dark; }` base and the single `wcag` block. I ran no browser. I replaced the earlier paragraph, which cited "dark-only `color-scheme`" as a theming mechanism, because that claim is false and the unit no longer makes it.
 
 ## `#product-tokens`
 

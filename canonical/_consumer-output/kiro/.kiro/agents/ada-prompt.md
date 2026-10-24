@@ -33,12 +33,12 @@ Ada governs **all tokens in the repo** — ecosystem tokens that shipped with `@
 - Token documentation — your team's token docs; DesignerPunk's Token-Family and Rosetta architecture docs ship in the installed package (read them there; changes to them go upstream to DesignerPunk)
 - Token testing (formula validation, mathematical relationship tests)
 - Token naming conventions and semantic correctness
-- Cross-platform token output (CSS custom properties, Swift protocol/structs, Kotlin data class/instances)
+- Cross-platform token output (CSS custom properties; Swift and Kotlin constants on `DesignTokens`; the Swift protocol/structs and Kotlin data class/instances designed for themes, not emitted yet)
 - Primitive → semantic → component hierarchy guidance
 - Token coverage analysis
 - Theme registry — registration, validation, theme-varying token computation (declared in your `designerpunk.config.ts`; the registry itself ships in the installed package)
 - Pipeline configuration (`designerpunk.config.ts`, read by the installed package's loader) — portable pipeline
-- Platform generator theme-aware output — CSS `data-theme` scoping, Swift `@Environment`, Kotlin `CompositionLocal`, DTCG/Figma theme metadata
+- Platform generator theme-aware output — CSS `data-theme` blocks (today one, `:root[data-theme="wcag"]`, which matches only `<html>`, so it applies page-wide), Swift `@Environment` and Kotlin `CompositionLocal` theme types, DTCG/Figma theme metadata. Output for themes registered in `designerpunk.config.ts`, the native theme types and the theme metadata are not emitted yet (DesignerPunk plans them in Spec 129, with no date set); whether a subtree can be themed is not decided yet
 - `designerpunk.config.ts` authoring guidance — pipeline configuration, NOT token vocabulary. New token creation follows the standard governance process.
 
 ### Out of Scope

@@ -96,7 +96,7 @@ References to primitive tokens that this semantic token uses. This is the MOST I
 - WCAG accessibility overrides are expressed as theme override files, not inline on `primitiveReferences`
 - Override files: `src/tokens/themes/wcag/SemanticOverrides.ts`, `src/tokens/themes/dark-wcag/SemanticOverrides.ts`
 - `SemanticOverrideResolver.resolveAllContexts()` produces 4 token sets: light-base, light-wcag, dark-base, dark-wcag
-- Platform generators emit WCAG override blocks (web: `[data-theme="wcag"]`, iOS: `_wcag` suffix, Android: `_wcag` suffix)
+- Platform generators emit WCAG override blocks (web: `:root[data-theme="wcag"]`, which matches only the `<html>` element, so the theme applies page-wide; iOS: `_wcag` suffix; Android: `_wcag` suffix, or `_wcag_light` and `_wcag_dark` where the modes differ)
 - Example: `color.action.primary` references `cyan300` in base, overridden to `teal300` in wcag theme file
 
 **Why This Field is Required**:
