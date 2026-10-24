@@ -246,7 +246,9 @@ This applies to new dimensions (e.g., density) and new values within existing di
 
 ### Theme Registry (Spec 094)
 
-As of Spec 094, themes are managed via a **ThemeRegistry** pattern. Products register themes in `designerpunk.config.ts` using `defineConfig()`. The pipeline discovers and generates output for all registered themes.
+As of Spec 094, themes are managed via a **ThemeRegistry** pattern. Products register themes in `designerpunk.config.ts` using `defineConfig()`.
+
+**A registered theme is not applied yet.** `npx designerpunk generate` reads the config's themes and lists them as "registered, not applied yet": a theme registered in `designerpunk.config.ts` changes no generated output on any platform, and nothing checks its overrides against the token set. Whether and how registered themes are applied is Spec 129's to decide (charter scope items (i) and (vi)). Today the generator applies DesignerPunk's built-in overrides only; the last rule below says what each platform emits. *(Corrected 2026-10-23 to what the generator emits; DesignerPunk record `2026-10-03-data-theme-scope-charter-vs-generator`.)*
 
 **Adding a new theme does NOT require a formal spec.** Themes are product-level configuration, not architectural decisions. A product developer creates a `SemanticOverrides.ts` and registers it in their config:
 
@@ -263,11 +265,13 @@ export default defineConfig({
 ```
 
 **Theme governance rules:**
-- Theme overrides reference existing semantic tokens only — the registry validates at registration time
+- Theme overrides reference existing semantic tokens only — `ThemeRegistry.register()` rejects an override that names an unknown semantic token. The build registers DesignerPunk's built-in themes this way; a theme in `designerpunk.config.ts` is not registered with it yet, so its overrides are not checked today
 - Overrides swap primitive references, not token structure — the `SemanticOverrideMap` format is unchanged
-- Theme-varying tokens are determined automatically (union of all overridden token names across registered themes)
+- Theme-varying tokens are determined automatically: the registry computes the union of all overridden token names across the themes registered with it, and the iOS/Android generators add every token whose base light and dark values differ. The build registers DesignerPunk's built-in `dark` and `wcag` themes only, so today the union is over the built-in overrides
 - Non-theme-varying tokens (spacing, sizing, radius, typography, motion) stay as static constants
-- Each platform generates theme-aware output in its native idiom: CSS `data-theme` scoping, Swift `@Environment`, Kotlin `CompositionLocal`
+- Each platform is designed to carry theme-varying tokens in its native idiom: CSS custom properties under a `data-theme` selector, Swift `@Environment`, Kotlin `CompositionLocal`. What the generator emits today:
+  - **Web**: dark mode through `light-dark()` values and `color-scheme: light dark` on `:root`, with no dark `data-theme` block; and one theme block, `:root[data-theme="wcag"]`. That selector matches only the `<html>` element, so a theme applies page-wide, and `data-theme` on any other element matches nothing. Whether a subtree can be themed is not decided yet (Spec 129)
+  - **iOS and Android**: the WCAG overrides as `_wcag` constants on `DesignTokens` (on Android, `_wcag_light` and `_wcag_dark` where the modes differ). No theme types are emitted yet — no `{Name}Theme` protocol or data class, no environment key, no `CompositionLocal` — and the theme-varying semantic colors are left out of `DesignTokens`. Emitting them is planned in Spec 129
 
 **Known limitation**: Theme-varying determination is direct, not transitive. Shadow tokens referencing overridden color primitives will use base values on iOS/Android. See Spec 094 design.md § "Known Limitations".
 
