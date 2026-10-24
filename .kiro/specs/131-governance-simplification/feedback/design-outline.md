@@ -18,9 +18,10 @@
 | **Leonardo** | Consumer surfaces (rows 17 and 19); the fixture's design; P10a; F-6 | Rows 17 and 19; F-6; § 5's "outside source of purpose" |
 | **Kenya** | iOS half of the compile lane and the consumer fixture | § 7: who owns the fixture, and where it lives (129 or 131) |
 | **Data** | Android half of the compile lane and the consumer fixture | § 7, the same question |
+| **Sparky (ask (c) only)** | Every seat lives under AI-Collaboration-Principles, so all eight weigh in on ask (c) | R1 ask (c) only |
 | **Outside read (orchestrator-run)** | One charter-free read at R1, because every seat is one model family | Smoothed-over forks; whether the map re-creates the complexity it diagnoses |
 
-Not tagged: Sparky (no web-specific surface beyond P2, which Lina carries). Peter rules; he is not a round reviewer.
+Sparky is tagged for ask (c) only (no web-specific surface beyond P2, which Lina carries). Peter rules; he is not a round reviewer.
 
 ### Context for Reviewers
 
@@ -41,7 +42,10 @@ Not tagged: Sparky (no web-specific surface beyond P2, which Lina carries). Pete
 
 - **(a) The four-values lens (every reviewer).** Run the outline's proposals through Peter's four values (thorough, sustainable, holistic, thoughtful, as defined verbatim in `design-outline.md` § "4. Design principles (PROPOSAL)"). For each proposal, record which value it serves and which it strains.
 - **(b) Lifecycle validation (Ada, Lina, Thurgood).** Check three things about the component and token lifecycle procedures: that they exist, that they agree with each other, and that they describe what the system actually does. Readiness's three disagreeing answers (synthesis F11) are the known crack. **This is not 131 scope** (Peter, item 4 below). Findings feed 131 only where its changes touch them, and anything else is filed with its owner.
-- **(c) One ballot question for Peter after R1: two identity-level changes.** (i) Should the four values become steering documentation, and where? Peter's direction (item 9), as the orchestrator reads it, points to AI-Collaboration-Principles (always loaded) as their one home, as values shared by agents and humans, with Core Goals pointing to it rather than holding a copy. That is a direction for the ballot, not settled law. His context-economy concern (item 6) then applies to procedures, not to the values. (ii) Fold the Humorphism gaps into AI-Collaboration-Principles and AI-Collaboration-Framework (item 8), under the three cautions he agreed to. That includes his condition on Proactive: the surfacing and drafting align with the four values. Both are identity-level law, so they go through one record-first ballot. Thurgood drafts it (Civitas content). The ballot is not part of 131's execution unless R1 places it there. This widens the existing question at `design-outline.md` § 4, "Open for Peter, not a proposal".
+- **(c) One ballot question for Peter after R1: two identity-level changes.** (i) The four values become shared values for agents and humans: **stated in AI-Collaboration-Principles** (always loaded) and **elaborated in AI-Collaboration-Framework**, with Core Goals pointing to them rather than copying them. That is Peter's direction (item 10, option (c)); the ballot still ratifies it. (ii) The Humorphism traits are stated briefly in Principles, and their patterns go in the Framework, under the three cautions (item 8). Proactive means surfacing and drafting in line with the values, never acting beyond authorization. Growth of the always-loaded set is accepted for values and offset by moving procedural detail out of it. The source is paraphrased and cited, never copied.
+  - **All eight seats weigh in at R1** on (i) and (ii). Each view is recorded as **from an interested party**, because the doc shapes every session that seat runs.
+  - **Read the source first**: `https://humorphism.com/llms-full.txt` (`curl -sL` works) is the site's full text for LLMs: about 5.5k words, 7 traits, 21 patterns. No license is stated, so paraphrase and cite, never copy patterns or examples. The manifesto (Hector Ouilhet, "Manifesto", humorphism.com, 2026-04-20) is a JavaScript page that curl cannot read, and it is not in the full text. Thurgood read the full text on 2026-10-24, and the manifesto is still unread.
+  - **The ballot is its own file** under `.kiro/docs/ballots/`, drafted by Thurgood (Civitas content) after R1 reports, with R1's four-values results as input. It is not gated on 131's later phases. Peter did not object to this, and the orchestrator treats that as a yes. It is identity-level law, so it is ratified record-first.
 
 #### [PETER R0]
 
@@ -107,10 +111,20 @@ Not tagged: Sparky (no web-specific surface beyond P2, which Lina carries). Pete
    - Existing rules may regroup under the values and shrink the doc (counter-argument → thoughtful; certainty calibration → thorough; consult-first → holistic, thoughtful). Humorphism's traits become practices; its patterns go to the served framework.
    - Proportionality must not read as conditioning the values: they always apply; what scales is the effort to satisfy them.
 
+10. **Where the shared values live, and who weighs in** → R1 ask (c)
+   > "Re: 1, Let's go (c)"
+
+   *(Option (c), as offered to him: the values are stated in AI-Collaboration-Principles and elaborated in AI-Collaboration-Framework.)*
+
+   > "Re: 2, I think there's an argument for the Humorphism values to be in the Principles doc, too. Maybe this is something we should ask the other agents to weigh in on since they have digital skin in the game, too."
+
+   and then:
+   > "Yes, brief Thurgood to add item 10 and brief the agents, please"
+
 **Orchestrator notes for R1 (not Peter's words).** Each is a **proposal for reviewers**.
 - **Promises, not signatures.** Accountability attaches to named promises and their checks. Each promise has a named owner, who records their own found items in their own voice wherever no check reaches. → F-8, row 1
 - **Peter's read is a release findings report.** Decisions first, findings ranked by severity, then a machine-generated list of every check that ran; no length cap. Every claim cites a check's output or is marked unverified. → F-6, row 20
-- **The boundary.** Design decisions are human. Knowing and following the procedures, and checking correctness against the stated design, are the system's. "Constant until humans identify a new variable" is the growth rule. Any later delegation means earning autonomy per procedure class (Humorphism; the source was not read here). → F-2, L1
+- **The boundary.** Design decisions are human. Knowing and following the procedures, and checking correctness against the stated design, are the system's. "Constant until humans identify a new variable" is the growth rule. Any later delegation means earning autonomy per procedure class (Humorphism's "Earn autonomy" pattern; source read 2026-10-24). → F-2, L1
 - **Agent-native inside, human-legible at the edge.** This means:
   - executable rules over declarative ones;
   - derivation over attestation;
