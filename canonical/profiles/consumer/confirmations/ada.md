@@ -43,9 +43,22 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: ada
-canonicalHash: sha256:3b0d6343a0952654cac601dd1c966bed4c81b0dcb1c48ed3698a0e7ce19f62cc
+canonicalHash: sha256:c6d1781d3a66ddc95386269c45446143f127c0c6b0846242469061bfdfaee2ba
 items: scope-create, scope-math, scope-compliance, scope-docs, scope-testing, scope-naming, scope-output, scope-hierarchy, scope-coverage, scope-theme-registry, scope-pipeline-config, scope-theme-output, scope-config-authoring, scope-standing-grant, scope-standing-consults, scope-standing-test-rule, scope-standing-pr-names-file, scope-standing-rule-9, scope-standing-grants-compose, scope-standing-law, scope-standing-scope-moves, scope-delegate-audit-run, scope-delegate-audit-file, scope-delegate-audit-report
-date: 2026-10-19
+date: 2026-10-23
+
+**Ruling: CONFIRMED at 24 items** (re-confirmation, 2026-10-23). The unit's hash moved from `sha256:3b0d6343…` to `sha256:c6d1781d…` because two bullets of `### In Scope` now say what the generator emits and what it does not (my text, errata (f) on the data-theme-scope record; Thurgood applied it byte for byte at `207119121`, and pinned the overlay and the two item texts at `3a8d18e07`). I checked the other 22 items and the two edited ones against the new unit: all 24 ids are verbatim substrings of it, each occurring once.
+- **What changed, and nothing else**:
+  - `scope-output`: the text now reads "Cross-platform token output (CSS custom properties; Swift and Kotlin constants on `DesignTokens`; the Swift protocol/structs and Kotlin data class/instances designed for themes, not emitted yet)". It still names the same scope member, and adds that the theme types are not emitted yet.
+  - `scope-theme-output`: "CSS `data-theme` scoping" is now "`data-theme` blocks (today one, `:root[data-theme="wcag"]`, which matches only `<html>`, so it applies page-wide)". "Swift `@Environment` and Kotlin `CompositionLocal`" are now named as theme types. The sentence "Output for themes registered in `designerpunk.config.ts`, the native theme types and the theme metadata are not emitted yet (Spec 129); whether a subtree can be themed is not decided yet" is added.
+- **Three outputs are marked not yet emitted, each judged against the generator**:
+  - *element scoping*: the one web selector the generator writes is `:root[data-theme="wcag"]` (`TokenFileGenerator.ts` L973), and `generateThemeOverrideBlocks` (L1028), the only code that writes per-theme blocks for registered themes, has no caller outside its tests;
+  - *Swift `@Environment` and Kotlin `CompositionLocal` theme types*: the same method is the only source of them, so no build emits them;
+  - *DTCG theme metadata*: `generateTokenFiles.ts` L313 and `scripts/generate-platform-tokens.ts` L121 build `DTCGFormatGenerator` with the default config, `registeredThemes: []` (`DTCGGeneratorConfig.ts` L45), so the `themes` extension (`DTCGFormatGenerator.ts` L236) is never written.
+- **Both items stay scope members, not new duties.** They are still what I own. The added status is part of the member's own text, because an implementation that claimed those outputs as emitted today would be misreporting the scope. I keep the status inside the item rather than splitting a separate item for it: the status has no content without the output it qualifies. Subtree theming is "not decided yet", never "unsupported" (Spec 129 open question 3).
+- **No other item changed.** The 2026-10-19 ruling and the 2026-10-17 ruling below stand for their items.
+
+The 2026-10-19 ruling, kept as the prior record (hash `sha256:3b0d6343…`):
 
 **Ruling: CONFIRMED at 24 items** (re-confirmation, 2026-10-19). The sitting-2 S5 bullet re-hashed the unit (ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form, ratified by Peter 2026-10-18/19). Thurgood drafted the three new items as profile author at `424277a49`, and I agree with all three as drafted. The ruling of 2026-10-17 below stands for its 21 items.
 - **Three obligations from the "Delegate signing audit" bullet**, each breakable on a PR that leaves the rest of the scope untouched:

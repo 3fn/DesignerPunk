@@ -9,6 +9,7 @@ This file starts with Spec 123 ("Consumer Distribution"). Earlier releases are n
 ### Changed
 
 - **Input-Checkbox-Base and Input-Checkbox-Legal now submit with their form on web.** A checked box adds `name=value` to `FormData` (`value` defaults to `"on"`), as a native checkbox does; before, neither submitted anything. **If you added a hidden input to work around this, remove it, or the value is submitted twice.** Setting `disabled` on either has no effect: the attribute is removed so it cannot drop the value. Needs a browser with form-associated custom elements (Safari 16.4+). Also fixed: a user's click on `Input-Checkbox-Legal` is no longer refused as a pre-check.
+- **Theme text in the docs and the agent charters now says what `generate` emits.** `data-theme` goes on `<html>` and themes the whole page, because the one emitted theme block, `:root[data-theme="wcag"]`, matches only the document root; whether an element can theme its own subtree is not decided yet. A theme you register in `designerpunk.config.ts` is read and listed as "registered, not applied yet", and the Swift and Kotlin theme types are not generated yet (Spec 129 plans them). The Sparky and Ada charters, `governance/Token-Governance.md`, `Token-Quick-Reference.md`, `Token-Semantic-Structure.md` and `Rosetta-System-Architecture.md` were corrected to match. No generated output changes.
 
 ## [16.0.0] — 2026-10-16 — Release 4 (the `Input-Radio-Set` group name, install-guide corrections, `init` off a terminal)
 

@@ -34,9 +34,10 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 
 ### Web Theming
 
-- Web theming uses `data-theme` attribute on HTML elements — all descendant DesignerPunk components inherit themed CSS custom property values automatically (including through Shadow DOM)
-- Base theme applies at `:root` with no attribute. Custom themes activate via `data-theme="{name}"`
-- Dark-only themes set `color-scheme: dark` and use static values (no `light-dark()`)
+- Web theming uses the `data-theme` attribute on the `<html>` element — all descendant DesignerPunk components inherit themed CSS custom property values automatically (including through Shadow DOM). The generated selector is `:root[data-theme="wcag"]`, which matches only `<html>`, so a theme applies page-wide
+- Base theme applies at `:root` with no attribute. One theme block is generated today, `data-theme="wcag"`, set as `<html data-theme="wcag">`. Do not write `data-theme` on any other element expecting scoped theming: on any other element it matches nothing, and the components inside get base values. Whether a subtree can be themed is not decided yet, so it is not available now; do not promise it
+- Dark mode follows the user's preferred colour scheme through the generated `light-dark()` values and `color-scheme` on `:root`. There is no dark `data-theme` block, so there is no dark-only theme to activate
+- A theme registered in `designerpunk.config.ts` does not yet emit CSS on web: `npx designerpunk generate` reports it as "registered, not applied yet", and a custom `data-theme="{name}"` value matches nothing. Do not write markup for a custom theme or promise one; if a screen needs one, raise it to Leonardo
 - Product repos install `@3fn/core` and run `npx designerpunk generate` to produce themed token CSS
 
 ### Product Tokens

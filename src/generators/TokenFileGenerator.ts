@@ -1018,8 +1018,12 @@ export class TokenFileGenerator {
    * Generate theme override blocks for any registered theme (Spec 094).
    * Generalizes the WCAG-specific block to work with any ThemeOverrideSet.
    *
-   * Web: produces `[data-theme="name"] { ... }` blocks after `:root` footer.
-   * iOS/Android: stub — full implementation in subtasks 2.3/2.4.
+   * Web: produces `:root[data-theme="name"] { ... }` blocks after `:root` footer (the
+   * selector matches only `<html>`, so a theme applies page-wide).
+   * iOS/Android: `{Name}Theme` protocol, structs and environment key (Swift);
+   * `{Name}Theme` data class, `{Name}Themes` instances and `CompositionLocal` (Kotlin).
+   * Not yet called by the build (Spec 129 scope items (i) and (vi));
+   * .kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md.
    */
   generateThemeOverrideBlocks(
     platform: 'web' | 'ios' | 'android',

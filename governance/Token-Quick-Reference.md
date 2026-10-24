@@ -111,26 +111,30 @@ Mode (light/dark) and theme (base/wcag/custom) are independent dimensions. The b
 | dark-base | dark | base | Dark theme SemanticOverrides |
 | dark-wcag | dark | wcag | Composed: dark + wcag + dark-wcag SemanticOverrides |
 
-**Custom themes (Spec 094)**: Products register additional themes via `designerpunk.config.ts`. Each registered theme adds contexts to the resolution matrix. A dark-only theme adds one context; a theme with mode `'both'` adds two (light + dark).
+**Custom themes (Spec 094)**: Products register additional themes via `designerpunk.config.ts`. A registered theme is not applied yet: `npx designerpunk generate` lists it as "registered, not applied yet" and generates no context for it on any platform, so the generated output carries only the four contexts above. As designed (whether and how registered themes are applied is Spec 129's to decide), each registered theme adds contexts to the resolution matrix: a dark-only or light-only theme adds one context; a theme with mode `'both'` adds two (light + dark).
 
-The **ThemeRegistry** manages all themes. `SemanticOverrideResolver.resolveForRegistry()` produces `ResolvedThemeSet[]` — one entry per theme context.
+The **ThemeRegistry** holds registered themes and computes the theme-varying token names. The build registers DesignerPunk's built-in `dark` and `wcag` themes with it, and resolves the four contexts through `SemanticOverrideResolver.resolveAllContexts()`. `SemanticOverrideResolver.resolveForRegistry()`, which produces `ResolvedThemeSet[]` (one entry per theme context), exists but is not called by the build, and no test calls it.
 
-**Base vs product themes**: The paths in this section (`src/tokens/themes/dark/`, `wcag/`, `dark-wcag/`) are the base system's built-in theme files, shipped with `@3fn/core`. Product teams creating custom themes do NOT edit these files — they create their own `SemanticOverrides.ts` and register it in `designerpunk.config.ts`. See Token-Governance § "Theme Registry (Spec 094)" for product theme governance.
+**Base vs product themes**: The paths in this section (`src/tokens/themes/dark/`, `wcag/`, `dark-wcag/`) are the base system's built-in theme files, shipped with `@3fn/core`. Product teams creating custom themes do NOT edit these files — they create their own `SemanticOverrides.ts` and register it in `designerpunk.config.ts`, which does not change the generated output yet (above). See Token-Governance § "Theme Registry (Spec 094)" for product theme governance.
 
 **Theme-varying vs static tokens** — two distinct computations; do not conflate them:
 
-- **Platform generators (iOS/Android/Web dist output)**: a token is theme-varying if its name appears in the registry-wide union of overridden tokens across *all* registered themes (generated as protocol/data-class properties on iOS/Android, `data-theme`-scoped on web). Everything else stays static.
+- **Platform generators (iOS/Android dist output)**: a token is theme-varying if its name appears in the registry-wide union of overridden tokens across the themes registered with the build — today DesignerPunk's built-in `dark` and `wcag` themes, not the themes in `designerpunk.config.ts` — or if its base light and dark values differ. On iOS/Android these tokens are left out of `DesignTokens`; the theme types designed to carry them (protocol/data-class properties) are not emitted yet. Everything else stays static. The web generator does not use this set: it emits every semantic token on `:root` (mode-varying ones as `light-dark()`) and the WCAG overrides under `:root[data-theme="wcag"]`.
 - **Token-index / MCP `themeVarying` field**: `true` iff the token's resolved value differs between base light and base dark — independent of `config.themes`, and excluding WCAG-only overrides that produce no base-mode light/dark variance.
 
-See Rosetta-System-Architecture § Stage 5: Generation for why these two definitions exist.
+Why both exist: the index's flag must agree with the web base `:root` block, which varies by mode only, while the native generators leave out every token any built-in theme overrides.
 
 ### Platform Theme Output
 
+What each platform emits today:
+
 | Platform | Theme mechanism | Static tokens | Theme-varying tokens |
 |----------|----------------|---------------|---------------------|
-| Web | CSS `data-theme` attribute scoping | CSS custom properties on `:root` | Scoped under `:root[data-theme="{name}"]` |
-| iOS | `@Environment` with `{Name}Theme` protocol | `DesignTokens` static lets | Struct per theme conforming to protocol |
-| Android | `CompositionLocal` with `{Name}Theme` data class | `DesignTokens` object constants | Instance per theme in `{Name}Themes` object |
+| Web | Mode: `light-dark()` values with `color-scheme: light dark` on `:root`. Theme: one block, `:root[data-theme="wcag"]`, which matches only `<html>`, so the theme applies page-wide | CSS custom properties on `:root` | On `:root` (mode-varying values as `light-dark()`); WCAG overrides under `:root[data-theme="wcag"]` |
+| iOS | None emitted yet. Designed: `@Environment` with a `{Name}Theme` protocol | `DesignTokens` static lets | Left out of `DesignTokens`; WCAG overrides as `_wcag` static lets. Designed, not emitted yet: a struct per theme conforming to the protocol |
+| Android | None emitted yet. Designed: `CompositionLocal` with a `{Name}Theme` data class | `DesignTokens` object constants | Left out of `DesignTokens`; WCAG overrides as `_wcag` constants (`_wcag_light` and `_wcag_dark` where the modes differ). Designed, not emitted yet: an instance per theme in a `{Name}Themes` object |
+
+A theme registered in `designerpunk.config.ts` adds nothing to any row yet, and there is no dark `data-theme` block. Whether a subtree can be themed on web is not decided yet (Spec 129).
 
 ### Governance Tools
 
