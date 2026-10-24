@@ -27,7 +27,7 @@
  * the read) and nothing else. Only a build (the platform build-verification
  * harness, Spec 129's first task) proves Android compiles.
  *
- * Record: .kiro/issues/2026-10-23-component-token-usage-findings-from-drift-pass.md
+ * Record: .kiro/issues/archive/2026-10-23-component-token-usage-findings-from-drift-pass.md
  * items 5 and 7. TEMPORARY: retire per @retirementCriteria above.
  */
 
@@ -226,7 +226,7 @@ describe('Android sizing reads agree with the generated sizing type', () => {
       throw new Error(
         `Generator emits sizing as ${shape}. ${violations.length} Android sizing read(s) disagree:\n\n` +
           violations.join('\n') +
-          '\n\nRecord: .kiro/issues/2026-10-23-component-token-usage-findings-from-drift-pass.md (items 5, 7).'
+          '\n\nRecord: .kiro/issues/archive/2026-10-23-component-token-usage-findings-from-drift-pass.md (items 5, 7).'
       );
     }
   });
