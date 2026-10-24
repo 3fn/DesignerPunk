@@ -41,7 +41,7 @@ Not tagged: Sparky (no web-specific surface beyond P2, which Lina carries). Pete
 
 - **(a) The four-values lens (every reviewer).** Run the outline's proposals through Peter's four values (thorough, sustainable, holistic, thoughtful, as defined verbatim in `design-outline.md` § "4. Design principles (PROPOSAL)"). For each proposal, record which value it serves and which it strains.
 - **(b) Lifecycle validation (Ada, Lina, Thurgood).** Check three things about the component and token lifecycle procedures: that they exist, that they agree with each other, and that they describe what the system actually does. Readiness's three disagreeing answers (synthesis F11) are the known crack. **This is not 131 scope** (Peter, item 4 below). Findings feed 131 only where its changes touch them, and anything else is filed with its owner.
-- **(c) One ballot question for Peter after R1: two identity-level changes.** (i) Should the four values become steering documentation, and if so, where: Core Goals (always loaded) or a served doc? His context-economy concern (item 6) bears on that choice. (ii) Fold the Humorphism gaps into AI-Collaboration-Principles and AI-Collaboration-Framework (item 8), under the three cautions he agreed to. That includes his condition on Proactive: the surfacing and drafting align with the four values. Both are identity-level law, so they go through one record-first ballot. Thurgood drafts it (Civitas content). The ballot is not part of 131's execution unless R1 places it there. This widens the existing question at `design-outline.md` § 4, "Open for Peter, not a proposal".
+- **(c) One ballot question for Peter after R1: two identity-level changes.** (i) Should the four values become steering documentation, and where? Peter's direction (item 9), as the orchestrator reads it, points to AI-Collaboration-Principles (always loaded) as their one home, as values shared by agents and humans, with Core Goals pointing to it rather than holding a copy. That is a direction for the ballot, not settled law. His context-economy concern (item 6) then applies to procedures, not to the values. (ii) Fold the Humorphism gaps into AI-Collaboration-Principles and AI-Collaboration-Framework (item 8), under the three cautions he agreed to. That includes his condition on Proactive: the surfacing and drafting align with the four values. Both are identity-level law, so they go through one record-first ballot. Thurgood drafts it (Civitas content). The ballot is not part of 131's execution unless R1 places it there. This widens the existing question at `design-outline.md` § 4, "Open for Peter, not a proposal".
 
 #### [PETER R0]
 
@@ -93,6 +93,19 @@ Not tagged: Sparky (no web-specific surface beyond P2, which Lina carries). Pete
    1. Humorphism's "Proactive" trait conflicts with Start Up Tasks' stop-and-wait. It is reconciled as proactive in surfacing and drafting, never in acting beyond authorization. Peter's condition: the surfacing and drafting align with the four values.
    2. AI-Collaboration-Principles is always loaded, so it takes only the gaps (Empowering, Attentive, and Proactive once reconciled), with existing text cut or merged so the doc does not grow. The rest goes to the served AI-Collaboration-Framework.
    3. Humorphism is someone else's published work: paraphrase and cite it, never copy its patterns or examples. The drafter reads the manifesto and the full pattern set first.
+
+9. **The values are shared, and not conditional** → R1 ask (c)
+   > "Well, you can't add without growing, so that makes sense. The thing about values is they're not conditional; they inform everything from how one contextualizes content to decision making."
+
+   and then:
+   > "That's why I'm wondering if the four values should also be part of the AI-Collaboration framework, too — the idea being they need to be shared values between agents and humans to work as a team."
+
+   *Orchestrator's readings (Peter did not object): proposals for the drafter, not settled.*
+   - Values are always loaded; context economy applies to procedures, whose detail (TCP, Start Up Tasks, Spec-Feedback-Protocol mechanics) moves to skills or served docs.
+   - One home, AI-Collaboration-Principles; Core Goals points to it (two copies drift).
+   - "Shared" runs both ways: agents may hold human decisions to the values. Shared values are not shared authority; Peter decides.
+   - Existing rules may regroup under the values and shrink the doc (counter-argument → thoughtful; certainty calibration → thorough; consult-first → holistic, thoughtful). Humorphism's traits become practices; its patterns go to the served framework.
+   - Proportionality must not read as conditioning the values: they always apply; what scales is the effort to satisfy them.
 
 **Orchestrator notes for R1 (not Peter's words).** Each is a **proposal for reviewers**.
 - **Promises, not signatures.** Accountability attaches to named promises and their checks. Each promise has a named owner, who records their own found items in their own voice wherever no check reaches. → F-8, row 1
