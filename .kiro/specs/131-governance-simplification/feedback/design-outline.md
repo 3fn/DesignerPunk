@@ -470,3 +470,25 @@ No `[@LEONARDO]` mentions were open in the feedback file at this round.
 
 9. **Minor.** Row 20's **B** rebuilds a review Peter says he can't do (item 2). F-8's "No seat has answered" is stale (item 1).
 
+
+---
+
+#### [PETER R1]
+
+*Peter's words, chat, relayed by the orchestrator, 2026-10-24; typos corrected, meaning unchanged.*
+
+1. **"Validated or experimental" is the product tier** → R1 entries [THURGOOD R1 — ask (b)] item 1, [LINA R1] lifecycle findings; outline row 19; R1 ask (b)
+   > "Re: 'validated or experimental', I thought that experimental components and tokens were intentionally not promoted to the system level. I think it was something to the effect of a product component and/or product token. It's a subsystem within Rosetta and Stemma, IIRC."
+
+**Orchestrator note for R2 (not Peter's words; checked against the docs, 2026-10-24).** Peter's recollection matches the written design:
+- **The tiers.** `governance/DesignerPunk-Integration-Guide.md` § "Governance Gradient" (L934). The *product extending* tier holds product tokens (`product/tokens/`) and one-off components, under lighter review. The *design system* tier gets full review.
+- **The promotion path.** It runs *product → system* only when an artifact proves reusable (L944). `governance/MCP-Relationship-Model.md` § "Promotion Path" (L157) gives the signal: two or more verticals independently define the same semantic need. The route is Stacy's Lessons Synthesis Review, then a Tier 3 escalation that Thurgood triages to Ada or Lina, then Peter's approval.
+- **The authoring stance.** `governance/Product-Token-Governance.md` L24: "deviation is welcome; deviation without communication is not."
+
+So "experimental" means product-tier, deliberately not promoted until proven. R1's "never asked" overstated the gap. The construct exists. What R1 found, restated for R2:
+- (a) No step at intake routes a designer's request into the tier choice.
+- (b) Promotion has never run: no Lessons Synthesis Review record exists (Ada, Lina).
+- (c) The Tier 3 triage step has no charter owner (Thurgood ask (b)).
+- (d) The Product MCP is listed as "conceptual" (`.kiro/steering/Civitas-System-Overview.md` L39). How much of the product subsystem is live is unverified.
+
+This is a said-vs-built gap in an existing design, not missing design. It stays outside 131's scope per `[PETER R0]` item 4.
