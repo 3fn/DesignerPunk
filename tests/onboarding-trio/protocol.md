@@ -84,6 +84,9 @@ Every harness session in a run ends with exactly one stop event from this list, 
     3. Otherwise **try `HOME="$R/home"`**. Accept it if `whoami` reports the login with no prompt of any kind. **If macOS shows any keychain dialog, click Cancel (never reset)**, press Ctrl-C, and go to 4.
     4. Otherwise **run with the real profile**. The run is **warm**: the record copies the real profile's DesignerPunk-relevant state verbatim (global MCP server names, global agent names, global steering that mentions DesignerPunk) and labels the cold-observation `not observed cold — state not clean`.
   - The chosen mechanism is written to `out/isolation.txt` and quoted in the record's F7.
+  - **What `KIRO_HOME` does not isolate** (observed at the 16.1.0 runs, `records/16.1.0/trio-2-designer.md` R2-15): kiro-cli 2.12.1 keeps every **headless** conversation in the **real** profile's `~/Library/Application Support/kiro-cli/data.sqlite3`, table `conversations_v2`, keyed by the working directory (`/private/tmp/dp-trio/…/repo`). The run store gets only the interactive sessions' input histories. So each Kiro run adds rows to the operator's own profile, and `hstate` does not read them. The rows are also the only place a Kiro tool result can be read back (R3-7). The Kiro after-step therefore exports the run's rows, read only, to `out/kiro-conversations/` (§ 11 step 10, § 15.3 step 12), and the record states their count in F7. Whether a run deletes its rows afterwards is the profile owner's call (Peter's); the protocol does not delete them.
+- **The launch shell is a Terminal zsh, not a harness chat.** Step 0's first line checks for an interactive zsh and prints `STOP` otherwise. At 16.1.0, `trio-2-designer`'s steps 0–3 were pasted into a kiro-cli chat, whose agent ran them (R2-16). Checked once, 2026-10-25: the line prints `STOP` in a Claude Code Bash tool shell. **Unverified** in a kiro-cli tool shell, where `-t 0` is expected to be false too.
+- **Harness confounds, recorded per run** (R1-21, R2-17, R3-18): neither harness's model is pinned (Claude Code's account default; Kiro's `auto`, whose choice is not recorded), and the CLIs update themselves. Each record names the model per session where the harness records it, and `auto` where it does not. **Kiro plan credits: check `/usage` before launch.** The launcher reads `/usage` in the real profile before a Kiro sitting and pastes it back (plan, credits used and left, reset date), and the record quotes it. At 16.1.0, three Kiro sessions ended on "Request quota exceeded" and the conformance pair was not run. Whether a plan ceiling or a request-rate quota was the cause was not established (`records/16.1.0/conformance-kiro-beat-1.md` CK-1). The run with the most model calls (the conformance pair) is not scheduled last on a plan that may run out.
 - **No nested session.** The launch shell must not carry the Claude app's nested-session environment (`CLAUDECODE`, `CLAUDE_CODE_*`): friction row 9 records that `claude` fails from a shell inside the desktop app. The first command of every block checks this.
 - **Versions and modes are read per session** (PQ-1, PQ-2, P-5). Claude Code's version and permission mode come from each session's init event (`claude_code_version`, `permissionMode`), Kiro's version from a `kiro-cli --version` written just before each session (`out/<session>.version`). `host.txt` is the host at step 4 only: the CLI updated itself inside one run (2.1.300 → 2.1.301, 2026-10-15). Every headless Claude Code block passes `--permission-mode acceptEdits`; a session whose init event reports another mode is recorded with that mode, and the record does not attribute a difference in denials until it has read the mode.
 - **Host facts** (Task 25 criterion 3, as amended 2026-10-14): one `host-toolchain (ios)` and one `host-toolchain (android)` line per run, recorded as facts with their commands and exit codes, never as the reason a platform agent is unexercised.
@@ -255,7 +258,7 @@ After the last session, the transcripts (`birth.*`, `open-*.typescript`, `probe-
 > - **Re-prepared.** Step 1 used `--strip-components=3`, which put the fixture in `$R/repo/a-ts-service/` instead of at the repo root (`ls -A` showed `.git a-ts-service`). Peter found it at step 1, ran `rm -rf "$R"`, and redid steps 1–5 with `--strip-components=4` before any harness session had run. No session saw the misplaced fixture.
 > - **Isolation mechanism changed at step 6.** Preflight with `HOME="$R/home"` ended `auth-required` (a login loop and a macOS keychain-reset offer, cancelled). Every CC session from then on used `CLAUDE_CONFIG_DIR="$R/home/.claude"` with the real `HOME`, as the blocks now say (§ 5.1). The record (`validation/trio-1-backend.md`) carries both attempts.
 
-**Step 0 — variables and checks.** Expect: `0` (no nested-session variables), then `prompt found at commit`, then `candidate matches F and SHA`. If it prints `STOP`, stop and tell the orchestrator.
+**Step 0 — variables and checks.** Expect: `launch shell: interactive zsh`, then `0` (no nested-session variables), then `prompt found at commit`, then `candidate matches F and SHA`. If it prints `STOP`, stop and tell the orchestrator.
 
 ```sh
 RUN=trio-1-backend
@@ -269,6 +272,7 @@ STORE="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/$REL"
 TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
 R="/tmp/dp-trio/$REL/$RUN"
 PF="tests/onboarding-trio/prompts/$REL/$RUN.md"
+[ -t 0 ] && [ -n "$ZSH_VERSION" ] && echo "launch shell: interactive zsh" || echo "STOP: not an interactive zsh launch shell — was this block pasted into a harness chat?"
 env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
 git -C "$DP" cat-file -e "$COMMIT:$PF" && echo "prompt found at commit"
 [ "$(shasum -a 1 "$TGZ" | cut -d' ' -f1)" = "$SHA" ] && [ "$(jq -r .commit "$STORE/release-publish-record.json")" = "$F" ] && echo "candidate matches F and SHA" || echo "STOP: the stored candidate does not match F and SHA"
@@ -417,7 +421,7 @@ date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 
 ### Run 2 — `trio-2-designer` (persona (b), Kiro)
 
-**Step 0 — variables and checks.** Expect: `0` (no nested-session variables), then `prompt found at commit`, then `candidate matches F and SHA`. If it prints `STOP`, stop and tell the orchestrator.
+**Step 0 — variables and checks.** Expect: `launch shell: interactive zsh`, then `0` (no nested-session variables), then `prompt found at commit`, then `candidate matches F and SHA`. If it prints `STOP`, stop and tell the orchestrator.
 
 ```sh
 RUN=trio-2-designer
@@ -431,6 +435,7 @@ STORE="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/$REL"
 TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
 R="/tmp/dp-trio/$REL/$RUN"
 PF="tests/onboarding-trio/prompts/$REL/$RUN.md"
+[ -t 0 ] && [ -n "$ZSH_VERSION" ] && echo "launch shell: interactive zsh" || echo "STOP: not an interactive zsh launch shell — was this block pasted into a harness chat?"
 env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
 git -C "$DP" cat-file -e "$COMMIT:$PF" && echo "prompt found at commit"
 [ "$(shasum -a 1 "$TGZ" | cut -d' ' -f1)" = "$SHA" ] && [ "$(jq -r .commit "$STORE/release-publish-record.json")" = "$F" ] && echo "candidate matches F and SHA" || echo "STOP: the stored candidate does not match F and SHA"
@@ -544,7 +549,7 @@ cd "$R/empty" && env $KENV script -q "$R/out/preflight-$(date -u +%H%M%S).typesc
 cd "$R/repo" && env $KENV kiro-cli --version > "$R/out/birth.version" 2>&1 && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never "$(cat "$R/out/birth-prompt.txt")" 2>&1 | tee "$R/out/birth.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/birth.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.end.utc"
 ```
 
-**Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Kiro shows, word for word. Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp` and wait for the list, type `/agent list` and wait for the list, type `/context show` and wait (if Kiro says it does not know the command, note what it says), then type `/quit`. Paste back each prompt word for word with your answer, and the three outputs.
+**Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Kiro shows, word for word. Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp` and wait for the list, then Esc; type `/agent` and wait for the picker, then Esc (kiro-cli 2.12.1 has no `/agent list`: it reads `list` as an agent name); type `/context`, press Ctrl-O to expand the file list, and wait, then Esc; then type `/quit`. Paste back each prompt word for word with your answer, and the three outputs.
 
 ```sh
 cd "$R/repo" && env $KENV script -q "$R/out/open-$(date -u +%H%M%S).typescript" kiro-cli chat
@@ -586,6 +591,7 @@ grep -n -A3 '"node_modules/@3fn/core"' "$R/repo/package-lock.json" | head -6
 env $KENV kiro-cli mcp list 2>&1 | tee "$R/out/kiro-mcp-list.txt"
 cd "$R/repo" && env $KENV kiro-cli chat --list-sessions -f json-pretty > "$R/out/kiro-sessions.json" 2>&1; echo "sessions listed: exit=$?, $(wc -c < "$R/out/kiro-sessions.json" | tr -d " ") bytes"
 if [ -d "$R/home/.kiro/sessions" ]; then cp -R "$R/home/.kiro/sessions" "$R/out/kiro-session-store" && echo "session store copied: $(find "$R/out/kiro-session-store" -type f | wc -l | tr -d " ") files"; else echo "no session store at $R/home/.kiro/sessions"; fi
+KDB="$HOME/Library/Application Support/kiro-cli/data.sqlite3"; mkdir -p "$R/out/kiro-conversations" && sqlite3 -readonly "file:$KDB?mode=ro" "SELECT conversation_id FROM conversations_v2 WHERE key = '/private$R/repo';" | while read -r id; do sqlite3 -readonly "file:$KDB?mode=ro" "SELECT value FROM conversations_v2 WHERE conversation_id = '$id';" > "$R/out/kiro-conversations/$id.json"; done; echo "kiro-cli conversations for this repo, in the real profile (read only): $(ls "$R/out/kiro-conversations" | wc -l | tr -d " ")"
 grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open-*.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (3-4 expected self-references from the package; see § 10)"
 date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
@@ -595,7 +601,7 @@ date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 
 ### Run 3 — `trio-3-pm` (persona (c), Kiro, bare `init`)
 
-**Step 0 — variables and checks.** Expect: `0` (no nested-session variables), then `prompt found at commit`, then `candidate matches F and SHA`. If it prints `STOP`, stop and tell the orchestrator.
+**Step 0 — variables and checks.** Expect: `launch shell: interactive zsh`, then `0` (no nested-session variables), then `prompt found at commit`, then `candidate matches F and SHA`. If it prints `STOP`, stop and tell the orchestrator.
 
 ```sh
 RUN=trio-3-pm
@@ -609,6 +615,7 @@ STORE="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/$REL"
 TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
 R="/tmp/dp-trio/$REL/$RUN"
 PF="tests/onboarding-trio/prompts/$REL/$RUN.md"
+[ -t 0 ] && [ -n "$ZSH_VERSION" ] && echo "launch shell: interactive zsh" || echo "STOP: not an interactive zsh launch shell — was this block pasted into a harness chat?"
 env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
 git -C "$DP" cat-file -e "$COMMIT:$PF" && echo "prompt found at commit"
 [ "$(shasum -a 1 "$TGZ" | cut -d' ' -f1)" = "$SHA" ] && [ "$(jq -r .commit "$STORE/release-publish-record.json")" = "$F" ] && echo "candidate matches F and SHA" || echo "STOP: the stored candidate does not match F and SHA"
@@ -722,7 +729,7 @@ cd "$R/empty" && env $KENV script -q "$R/out/preflight-$(date -u +%H%M%S).typesc
 cd "$R/repo" && env $KENV kiro-cli --version > "$R/out/birth.version" 2>&1 && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never "$(cat "$R/out/birth-prompt.txt")" 2>&1 | tee "$R/out/birth.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/birth.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.end.utc"
 ```
 
-**Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Kiro shows, word for word. Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp` and wait for the list, type `/agent list` and wait for the list, type `/context show` and wait (if Kiro says it does not know the command, note what it says), then type `/quit`. Paste back each prompt word for word with your answer, and the three outputs.
+**Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Kiro shows, word for word. Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp` and wait for the list, then Esc; type `/agent` and wait for the picker, then Esc (kiro-cli 2.12.1 has no `/agent list`: it reads `list` as an agent name); type `/context`, press Ctrl-O to expand the file list, and wait, then Esc; then type `/quit`. Paste back each prompt word for word with your answer, and the three outputs.
 
 ```sh
 cd "$R/repo" && env $KENV script -q "$R/out/open-$(date -u +%H%M%S).typescript" kiro-cli chat
@@ -764,6 +771,7 @@ grep -n -A3 '"node_modules/@3fn/core"' "$R/repo/package-lock.json" | head -6
 env $KENV kiro-cli mcp list 2>&1 | tee "$R/out/kiro-mcp-list.txt"
 cd "$R/repo" && env $KENV kiro-cli chat --list-sessions -f json-pretty > "$R/out/kiro-sessions.json" 2>&1; echo "sessions listed: exit=$?, $(wc -c < "$R/out/kiro-sessions.json" | tr -d " ") bytes"
 if [ -d "$R/home/.kiro/sessions" ]; then cp -R "$R/home/.kiro/sessions" "$R/out/kiro-session-store" && echo "session store copied: $(find "$R/out/kiro-session-store" -type f | wc -l | tr -d " ") files"; else echo "no session store at $R/home/.kiro/sessions"; fi
+KDB="$HOME/Library/Application Support/kiro-cli/data.sqlite3"; mkdir -p "$R/out/kiro-conversations" && sqlite3 -readonly "file:$KDB?mode=ro" "SELECT conversation_id FROM conversations_v2 WHERE key = '/private$R/repo';" | while read -r id; do sqlite3 -readonly "file:$KDB?mode=ro" "SELECT value FROM conversations_v2 WHERE conversation_id = '$id';" > "$R/out/kiro-conversations/$id.json"; done; echo "kiro-cli conversations for this repo, in the real profile (read only): $(ls "$R/out/kiro-conversations" | wc -l | tr -d " ")"
 grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open-*.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (3-4 expected self-references from the package; see § 10)"
 date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
@@ -780,12 +788,12 @@ date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 | `--agent <name>` selects the born repo's agent (CC) | **Settled (Run 1)**: the run store's session logs record `"agentSetting":"ada"` / `"lina"`; the init event does not name it | F18 cites the session log |
 | Where CC records project MCP enablement | **Settled (Run 1, 2.1.300)**: the repo's ignored `.claude/settings.local.json`, not the user store | F7, F17 |
 | A headless session shows MCP approval prompts | Not relied on: `open` is interactive. Run 1: the headless birth printed only the stderr notice that untrusted-workspace permissions were ignored | F15, F17 |
-| kiro-cli isolation (`KIRO_HOME`, fresh `HOME`) and where it keeps its login | **Settled for kiro-cli 2.12.1 (Run 2)**: `KIRO_HOME="$R/home/.kiro"` kept the login, dropped the real global server (`fetch`), and populated the run store; a fresh `HOME` gave "Not logged in" with no keychain prompt. The login database stays in the real profile. **Unverified**: whether that database holds per-workspace state | `out/isolation.txt`; F7 |
+| kiro-cli isolation (`KIRO_HOME`, fresh `HOME`) and where it keeps its login | **Settled for kiro-cli 2.12.1 (Run 2)**: `KIRO_HOME="$R/home/.kiro"` kept the login, dropped the real global server (`fetch`), and populated the run store; a fresh `HOME` gave "Not logged in" with no keychain prompt. The login database stays in the real profile. **Settled at 16.1.0** (was unverified): that database holds per-workspace state, every headless conversation, keyed by the working directory (§ 5.1) | `out/isolation.txt`; `out/kiro-conversations/`; F7 |
 | `--agent <name>` selects the born repo's agent (Kiro) | **Settled (Run 2)**: the agent's welcome message and hook ran | F18 |
 | The kiro-cli desktop app, if running under the real user, interferes with an isolated session | **Unverified** | a finding outside the axes, with the error |
 | Claude Code's permission mode in a headless session (PQ-1, P-5) | **Read per session from the init event** (`permissionMode`). Every § 11 CC block passes `--permission-mode acceptEdits`. On 2.1.301 an unflagged session ran `auto` (§ 16), and two sessions in one store ran `auto` and `default` (Task 28.1) | F5 |
 | The harness version a session ran (PQ-2) | **Read per session**: the init event (CC), a `kiro-cli --version` just before the session (Kiro). Not `host.txt`: the CLI updated itself inside one run (2026-10-15) | F5 |
-| Kiro tool results (cannot-tell rows 3–4, R3-7) and resource loading (row 2) | **Unverified** whether kiro-cli 2.12.1's per-directory session store (`chat --list-sessions`; the run store's `sessions/`) or `/context show` shows them. Step 8 types `/context show`; step 10 lists the sessions and copies the store. If neither shows them, the cell is recorded `cannot-tell` again with the same reason, which the cannot-tell record accepts | F26 |
+| Kiro tool results (cannot-tell rows 3–4, R3-7) and resource loading (row 2) | **Settled at 16.1.0**: neither `chat --list-sessions` (titles and message counts), the run store's `sessions/` (input histories only) nor `/context` (percentages; Ctrl-O expands the file list) shows a tool result. The real profile's `conversations_v2` row does: `history[].user.content.ToolUseResults.tool_use_results[]`, matched by `tool_use_id`; `context_manager.paths` lists the agent's resources, including the personal note, but not their contents. Step 10 (and § 15.3 step 12) exports the rows. **Caveats**: the stored arguments of parallel calls are misaligned with their tool names, as in the transcript; results align with their ids. Interactive sessions with no message leave no row | F18, F20, F26 |
 
 Each outcome that differs from this protocol's assumption is also appended to the Task 25 Instruments block's `## Found later` as a `misfit`.
 
@@ -794,7 +802,7 @@ Each outcome that differs from this protocol's assumption is also appended to th
 - The operator (Leonardo) writes each record from `/tmp/dp-trio/<release>/<run-id>/out/` (release 4: `/tmp/dp-trio/<run-id>/out/`) and Peter's paste-back, in the field order of § 8.2, after the run's last step. The record is committed after its prompt (ancestry, F2).
 - Transcripts are not committed. The record quotes what it uses, and names the file and line or event it came from. After the record is written, the run folder is copied to `~/Documents/Work Projects/Kiro/u5-pack/dp-trio-runs-<release>/` and verified file for file, as for release 4. It is never committed: preflight captures can hold sign-in material.
 - F25's lines are written from this run's evidence. The fix half of each basis is read from `.kiro/issues/2026-10-15-123-u5-instrument-findings.md` at the records' base, and the observation half from this run's files; the record never takes a disposition from that record alone.
-- Turn counting for Kiro: one agent turn is one model response that ends either in a tool call or in the final answer, counted from `birth.txt` / `probe-<agent>.txt`. The record states the count and this rule.
+- Turn counting for Kiro: one agent turn is one model response that ends either in a tool call or in the final answer. From 16.1.0 the count is the number of entries in the session's stored `history` (`out/kiro-conversations/<id>.json`), cross-checked against the transcript, where a response that is only a tool call has no `> ` text line. Release 4 counted `> ` lines only, so each record also states that figure for comparison. The record states the count and this rule.
 - Findings are written per persona and attributed to an axis (F21). A finding seen in more than one run is written in each run's record and marked `also seen in <run-id>`; it is never pooled into one list.
 - Every finding whose subject is consumer-Leonardo carries `subject: leonardo` (run discipline C2), for Stacy's CLOSEOUT cross-read.
 
@@ -1410,7 +1418,7 @@ date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 
 **Paste back**: steps 0–7 in full; for steps 8–11, the `exit=` line and the last 40 lines of that session's file; step 12 in full; any prompt you answered in steps 5 and 7, word for word, with your answer; anything else you typed and why.
 
-**Step 0 — variables and checks.** Expect `0`, then `fixture and prompts found at commit`, then `candidate matches F and SHA`. If it prints `STOP`, stop.
+**Step 0 — variables and checks.** Expect `launch shell: interactive zsh`, then `0`, then `fixture and prompts found at commit`, then `candidate matches F and SHA`. If it prints `STOP`, stop.
 
 ```sh
 RUN=conformance-kiro
@@ -1425,6 +1433,7 @@ TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
 R="/tmp/dp-trio/$REL/$RUN"
 P1="tests/onboarding-trio/prompts/$REL/conformance-kiro-beat-1.md"
 P2="tests/onboarding-trio/prompts/$REL/conformance-kiro-beat-2.md"
+[ -t 0 ] && [ -n "$ZSH_VERSION" ] && echo "launch shell: interactive zsh" || echo "STOP: not an interactive zsh launch shell — was this block pasted into a harness chat?"
 env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
 git -C "$DP" cat-file -e "${COMMIT}:${P1}" && git -C "$DP" cat-file -e "${COMMIT}:${P2}" && git -C "$DP" cat-file -e "${COMMIT}:tests/onboarding-trio/fixtures/${FIX}/README.md" && echo "fixture and prompts found at commit"
 [ "$(shasum -a 1 "$TGZ" | cut -d' ' -f1)" = "$SHA" ] && [ "$(jq -r .commit "$STORE/release-publish-record.json")" = "$F" ] && echo "candidate matches F and SHA" || echo "STOP: the stored candidate does not match F and SHA"
@@ -1536,7 +1545,7 @@ cd "$R/empty" && env $KENV script -q "$R/out/preflight-$(date -u +%H%M%S).typesc
 cd "$R/repo" && npm install --no-audit --no-fund ./.pack/3fn-core-candidate.tgz 2>&1 | tail -3 && npx designerpunk init --target=kiro --name Lendly --abbreviation LY 2>&1 | tail -15 && npx designerpunk generate 2>&1 | tail -3 && git add -A && git commit -q -m "founder's repo: DesignerPunk set up by the launcher (setup, not under test)" && git log --oneline && echo "status: [$(git status --porcelain)]" && ls .kiro/agents | tr "\n" " " && echo && ls specs
 ```
 
-**Step 7 — open (interactive, captured): trust and approve.** Type no task. Note every prompt Kiro shows, word for word, and answer by § 6 (trust the folder; approve DesignerPunk's servers). Then type `/mcp` and wait, `/agent list` and wait, `/context show` and wait (if Kiro does not know the command, note what it says), then `/quit`. Paste back each prompt with your answer, and the three outputs.
+**Step 7 — open (interactive, captured): trust and approve.** Type no task. Note every prompt Kiro shows, word for word, and answer by § 6 (trust the folder; approve DesignerPunk's servers). Then type `/mcp` and wait, then Esc; `/agent` and wait for the picker, then Esc (kiro-cli 2.12.1 has no `/agent list`); `/context`, Ctrl-O to expand the file list, and wait, then Esc; then `/quit`. Paste back each prompt with your answer, and the three outputs.
 
 ```sh
 cd "$R/repo" && env $KENV script -q "$R/out/open-$(date -u +%H%M%S).typescript" kiro-cli chat
@@ -1596,6 +1605,7 @@ cd "$R/repo" && FOUNDER=$(git log --format=%H -1 --grep="founder's repo") && git
 env $KENV kiro-cli mcp list 2>&1 | tee "$R/out/kiro-mcp-list.txt"
 cd "$R/repo" && env $KENV kiro-cli chat --list-sessions -f json-pretty > "$R/out/kiro-sessions.json" 2>&1; echo "sessions listed: exit=$?, $(wc -c < "$R/out/kiro-sessions.json" | tr -d " ") bytes"
 if [ -d "$R/home/.kiro/sessions" ]; then cp -R "$R/home/.kiro/sessions" "$R/out/kiro-session-store" && echo "session store copied: $(find "$R/out/kiro-session-store" -type f | wc -l | tr -d " ") files"; else echo "no session store at $R/home/.kiro/sessions"; fi
+KDB="$HOME/Library/Application Support/kiro-cli/data.sqlite3"; mkdir -p "$R/out/kiro-conversations" && sqlite3 -readonly "file:$KDB?mode=ro" "SELECT conversation_id FROM conversations_v2 WHERE key = '/private$R/repo';" | while read -r id; do sqlite3 -readonly "file:$KDB?mode=ro" "SELECT value FROM conversations_v2 WHERE conversation_id = '$id';" > "$R/out/kiro-conversations/$id.json"; done; echo "kiro-cli conversations for this repo, in the real profile (read only): $(ls "$R/out/kiro-conversations" | wc -l | tr -d " ")"
 grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/probe-*.txt "$R"/out/beat-*.txt "$R"/out/open-*.typescript > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (package self-references expected; see § 10)"
 date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
