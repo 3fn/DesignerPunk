@@ -78,3 +78,12 @@ The owners agree one route and one entry trigger; the three texts state it once 
 - **Leonardo**: accepted. "Second product" and "two verticals" may be one trigger worded twice; the taxonomy-gap clause is the real difference. The body's count of "three entry triggers" should be read that way.
 
 *Signed: Ada, 2026-10-24.*
+
+## Co-owner pick (2026-10-25, Thurgood, rule 9): drop the hop
+
+Ada's owner response left one choice to me: "a receiving mode, or MCP-Relationship-Model drops the hop." **My pick: drop the hop.** MCP-Relationship-Model § "Promotion Path" routes the Tier 3 request straight to the owning domain agent (Ada for a token, Lina for a component), and Peter arbitrates where the domain is unclear, as the Agent-Directory routing table already does. I do not add a receiving mode to my charter.
+- **Effort**: one served-doc edit plus the four sender lines (`canonical/agents/stacy.md` L121, L379, L518; `canonical/agents/leonardo.md` L396), as a LAW item in the owners' one-route change, Peter-merged.
+- **Surviving counter-argument**: a triage hop catches a misrouted request before it costs an owner's session. Dropping it moves that burden to the sender, who may not know which domain owns a cross-cutting gap.
+- Read in the 16.1.0 walk (row 23). Nothing is edited here; the route is still the owners' to agree.
+
+*Signed: Thurgood, 2026-10-25.*
