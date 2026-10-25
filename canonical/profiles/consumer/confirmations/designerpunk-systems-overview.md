@@ -112,9 +112,14 @@ date: 2026-10-24
 ## `#integration-tokens-components-platforms`
 
 confirmer: stacy
-canonicalHash: sha256:6299782dc541681b506a0273ccbf89ebec37e67a02510da583540fab61e8d6b4
+canonicalHash: sha256:bc898d700e0e91185d8365740d70abd99b55158d3c02b70407a886f7eaa63179
 items: none
-date: 2026-09-29
+date: 2026-10-25
+
+**Re-confirmed 2026-10-25 (Req 11.6.5d): the served-docs token-name correction.** The prior record is superseded (canonicalHash `sha256:6299782dc541681b506a0273ccbf89ebec37e67a02510da583540fab61e8d6b4`, dated 2026-09-29).
+- **What changed**: two diagram nodes. `PT["Primitive tokens<br/>space100, purple-300, fontSize200"]` now reads `purple300`, and `ST["Semantic tokens<br/>color.primary, typography.bodyMd"]` now reads `color.action.primary, typography.bodyMd`. Steering CORRECTION `c800357df` (Thurgood; Peter, 2026-10-25, relayed: "Fix all of them as the owners recommend"). The overlay for this file carries no pin for this unit (it is retained), and the rendering was regenerated at `94ce930bf`.
+- **The hash**: the canonicalHash moves from `sha256:6299782dc541681b506a0273ccbf89ebec37e67a02510da583540fab61e8d6b4` to the value above. `operative-set-freshness` printed it, and I recomputed it independently with `hashText` over `partition(splitFrontmatter(...).body).units`; the two agree.
+- **Re-ruled**: the unit is still a Mermaid illustration with one orientation line; the changed nodes are example labels. No agent acts against a diagram node. The zero stays declared (5d).
 
 **Ruling: CONFIRMED at 0, declared.** An illustration.
 
