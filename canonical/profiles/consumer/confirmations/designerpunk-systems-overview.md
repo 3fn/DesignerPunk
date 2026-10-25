@@ -70,9 +70,14 @@ date: 2026-10-24
 ## `#rosetta-system-token-pipeline-and-layers`
 
 confirmer: stacy
-canonicalHash: sha256:9a42eba814e35b74f06ccbbb72df81e5cfdce8ee227cedd345078cb6c086c676
+canonicalHash: sha256:088f2d40f336b3dbb37b9ff0863328ab80ea3c4e15548b264d2857f629d0c35d
 items: none
-date: 2026-09-29
+date: 2026-10-25
+
+**Re-confirmed 2026-10-25 (Req 11.6.5d): the served-docs token-name correction.** The prior record is superseded (canonicalHash `sha256:9a42eba814e35b74f06ccbbb72df81e5cfdce8ee227cedd345078cb6c086c676`, dated 2026-09-29).
+- **What changed**: one diagram node. The Layer 2 label `L2["Layer 2: Semantic<br/>button.*, input.*, card.*, color.primary"]` now reads `L2["Layer 2: Semantic<br/>color.action.primary, space.inset.100, typography.bodyMd"]`. Steering CORRECTION `c800357df` (Thurgood; Peter, 2026-10-25, relayed: "Fix all of them as the owners recommend"). The overlay for this file carries no pin for this unit (it is retained), and the rendering was regenerated at `94ce930bf`.
+- **The hash**: the canonicalHash moves from `sha256:9a42eba814e35b74f06ccbbb72df81e5cfdce8ee227cedd345078cb6c086c676` to the value above. `operative-set-freshness` printed it, and I recomputed it independently with `hashText` over `partition(splitFrontmatter(...).body).units`; the two agree.
+- **Re-ruled**: the unit is still a Mermaid illustration of the token pipeline and the three layers; the changed node is an example label. No agent acts against a diagram node, and the hierarchy it pictures is still stated operatively in Core Goals and the token docs. The zero stays declared (5d).
 
 **Ruling: CONFIRMED at 0, declared.** An illustration. The token hierarchy it pictures is stated operatively in Core Goals and the token docs.
 

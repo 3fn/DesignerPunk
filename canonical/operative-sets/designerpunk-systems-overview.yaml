@@ -46,7 +46,7 @@ units:
     items: []
     confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#high-level-designerpunk-three-system-architecture
   "#rosetta-system-token-pipeline-and-layers":
-    canonicalHash: sha256:9a42eba814e35b74f06ccbbb72df81e5cfdce8ee227cedd345078cb6c086c676
+    canonicalHash: sha256:088f2d40f336b3dbb37b9ff0863328ab80ea3c4e15548b264d2857f629d0c35d
     items: []
     confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#rosetta-system-token-pipeline-and-layers
   "#stemma-system-families-and-inheritance":
