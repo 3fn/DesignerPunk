@@ -137,7 +137,7 @@ platform_notes:
     file: platforms/web/NavTabBarBase.web.ts
     notes: |
       - Shadow DOM for style encapsulation
-      - Floating pill shape with radiusFull, backdrop blur
+      - Floating pill shape with radius.full, backdrop blur
       - Dynamic chrome tracking via Visual Viewport API
       - CSS logical properties for RTL support
       - role="tablist" container, role="tab" items

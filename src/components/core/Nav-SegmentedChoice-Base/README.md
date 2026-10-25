@@ -261,7 +261,7 @@ NavSegmentedChoiceBase(
 - Container announced as "tab list"
 - Each segment announced as "tab" with selected/unselected state
 - Icon segments announced by their `accessibilityLabel`
-- `aria-controls` generated when `id` prop provided (`[id]-panel-[value]`)
+- With an `id` prop, each tab controls the panel whose id is `[id]-panel-[value]`. Give your panels those ids. On web the segments live in the component's shadow root, where an `aria-controls` ID cannot reach your page's elements, so the component sets an element reference (`ariaControlsElements`) to the panel it finds in its own root node (the document, or the shadow root it sits in). It follows panels you add, remove or replace later. In a browser without `ariaControlsElements`, only the `aria-controls="[id]-panel-[value]"` attribute is set, and it does not reach a panel outside the shadow root, so screen readers get no tab-to-panel association there. *(Changed in 16.1.0: earlier releases set only the attribute, which never reached the panels.)*
 
 ---
 

@@ -319,6 +319,50 @@ describe('Input-Checkbox-Legal Form Participation (validation_form_integration)'
       expect(setFormValue).toHaveBeenLastCalledWith(null);
     });
 
+    it('formResetCallback restores an authored pre-check (requires-explicit-consent="false") and registers its value', async () => {
+      const { legal, setFormValue } = createWithSpy({ name: 'tos', value: 'accepted', 'requires-explicit-consent': 'false', checked: '' });
+      const form = document.createElement('form');
+      form.appendChild(legal);
+      document.body.appendChild(form);
+      await tick();
+      expect(setFormValue).toHaveBeenLastCalledWith('accepted');
+
+      nativeInput(legal).click();
+      await tick();
+      expect(legal.checked).toBe(false);
+      expect(setFormValue).toHaveBeenLastCalledWith(null);
+
+      const consentListener = jest.fn();
+      legal.addEventListener('consent-change', consentListener);
+      legal.formResetCallback();
+      await tick();
+
+      expect(legal.checked).toBe(true);
+      expect(nestedBase(legal).checked).toBe(true);
+      expect(nativeInput(legal).checked).toBe(true);
+      expect(setFormValue).toHaveBeenLastCalledWith('accepted');
+      expect(consentListener).not.toHaveBeenCalled();
+    });
+
+    it('a refused pre-check is never a default: reset leaves the default Legal unchecked', async () => {
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+      const { legal, setFormValue } = createWithSpy({ name: 'tos', value: 'accepted', checked: '' });
+      const form = document.createElement('form');
+      form.appendChild(legal);
+      document.body.appendChild(form);
+      await tick();
+      expect(legal.checked).toBe(false);
+      nativeInput(legal).click();
+      await tick();
+      expect(setFormValue).toHaveBeenLastCalledWith('accepted');
+
+      legal.formResetCallback();
+      await tick();
+      expect(legal.checked).toBe(false);
+      expect(setFormValue).toHaveBeenLastCalledWith(null);
+      warnSpy.mockRestore();
+    });
+
     it('does not also attach the reset listener when form association is supported', async () => {
       const { legal } = createWithSpy({ name: 'tos', value: 'accepted' });
       const form = document.createElement('form');

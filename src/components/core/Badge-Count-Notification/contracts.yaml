@@ -9,8 +9,8 @@ contracts:
     description: Conveys notification/alert meaning through color
     behavior: |
       Uses fixed notification colors conveying urgency:
-      - Background: color.badge.background.notification (pink400 #CC2257)
-      - Text: color.badge.text.notification (white100 #FFFFFF)
+      - Background: color.feedback.notification.background (pink400 #CC2257)
+      - Text: color.feedback.notification.text (white100 #FFFFFF)
       Colors are not configurable by consumers. Contrast ratio: 6.33:1
       (exceeds WCAG AA 4.5:1 minimum).
     wcag: "1.3.1 Info and Relationships"

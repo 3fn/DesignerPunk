@@ -78,7 +78,12 @@ const ICON_SIZE_MAP: Record<CheckboxSize, IconBaseSize> = {
  * - unchecked → no entry
  * - indeterminate is visual only; the entry follows `checked`
  * - no `name` → no entry (the UA skips an unnamed control)
- * - form reset → unchecked (Spec 046 Requirement 8.8)
+ * - form reset → the state the element had when it first connected (its
+ *   authored `checked` and `indeterminate`), as the contract states. The
+ *   element writes its current state back to the `checked` attribute, so
+ *   the attribute cannot hold the default the way a native input's does;
+ *   the default is remembered at first connect instead. Spec 046 Req 8.8,
+ *   amended 2026-10-25 (.kiro/issues/2026-10-25-checkbox-reset-semantics-contract-vs-code.md).
  * 
  * @example
  * ```html
@@ -115,6 +120,16 @@ export class InputCheckboxBaseElement extends HTMLElement {
    * custom elements are unsupported (see _attachToForm).
    */
   private _form: HTMLFormElement | null = null;
+
+  /**
+   * The authored state, remembered at FIRST connect and restored by a form
+   * reset (contract `validation_form_integration`: "Form reset restores
+   * initial checked state"). Null until the element first connects. Later
+   * changes to `checked` / `indeterminate` (by attribute, property or the
+   * user's click) are state, never a new default; moving the element
+   * (disconnect, then connect) keeps the first default.
+   */
+  private _defaultState: { checked: boolean; indeterminate: boolean } | null = null;
 
   /** Change callback (JS property, not attribute) */
   onChange: ((checked: boolean) => void) | null = null;
@@ -163,12 +178,21 @@ export class InputCheckboxBaseElement extends HTMLElement {
   // ---------------------------------------------------------------------------
 
   connectedCallback(): void {
+    // Remember the authored state once, before anything can change it.
+    // Whatever the element holds at first connect is authored: a `checked`
+    // attribute in markup, or a `checked` property set before insertion
+    // (which writes the same attribute).
+    // @see contracts.yaml validation_form_integration
+    if (this._defaultState === null) {
+      this._defaultState = { checked: this.checked, indeterminate: this.indeterminate };
+    }
+
     // Calculate blend colors for hover state
     // @see Requirements: 1.4, 7.4 - Hover applies blend.hoverDarker to border
     this._calculateBlendColors();
     
     // Reset fallback for UAs without form-associated custom elements
-    // @see Requirements: 8.8 - Form reset returns checkbox to unchecked state
+    // @see Requirements: 8.8 (amended 2026-10-25) - Form reset restores the authored state
     this._attachToForm();
     
     this.render();
@@ -222,10 +246,10 @@ export class InputCheckboxBaseElement extends HTMLElement {
    * form-associated custom elements. Per the HTML spec the UA calls it for
    * whatever form owns the element, including an owner set by `form="id"`,
    * which a closest('form') listener cannot see.
-   * @see Requirements: 8.8 - Form reset returns checkbox to unchecked state
+   * @see Requirements: 8.8 (amended 2026-10-25) - Form reset restores the authored state
    */
   formResetCallback(): void {
-    this._resetToUnchecked();
+    this._resetToDefault();
   }
 
   /**
@@ -456,7 +480,7 @@ export class InputCheckboxBaseElement extends HTMLElement {
    * they are supported, the UA calls formResetCallback instead, and adding
    * this listener as well would run the reset twice.
    * 
-   * @see Requirements: 8.8 - Form reset returns checkbox to unchecked state
+   * @see Requirements: 8.8 (amended 2026-10-25) - Form reset restores the authored state
    */
   private _attachToForm(): void {
     if (this._isFormAssociationSupported) return;
@@ -482,28 +506,29 @@ export class InputCheckboxBaseElement extends HTMLElement {
    * Handle form reset event (fallback path; see _attachToForm).
    */
   private _onFormReset = (): void => {
-    this._resetToUnchecked();
+    this._resetToDefault();
   };
 
   /**
-   * Reset to unchecked and clear the submission value.
+   * Restore the authored state (remembered at first connect) and register
+   * its submission value. Like a native reset, this fires no `change`
+   * event and does not call `onChange`.
    * 
-   * Per Spec 046 Requirement 8.8, pre-checked checkboxes are not supported
-   * as defaults, so reset always goes to unchecked.
-   * 
-   * @see Requirements: 8.8 - Form reset returns checkbox to unchecked state
+   * @see contracts.yaml validation_form_integration
+   * @see Requirements: 8.8 (amended 2026-10-25) - Form reset restores the authored state
    */
-  private _resetToUnchecked(): void {
-    this.checked = false;
-    this.indeterminate = false;
+  private _resetToDefault(): void {
+    const { checked, indeterminate } = this._defaultState ?? { checked: false, indeterminate: false };
+    this.checked = checked;
+    this.indeterminate = indeterminate;
     
     // Sync the native input
     if (this._input) {
-      this._input.checked = false;
-      this._input.indeterminate = false;
+      this._input.checked = checked;
+      this._input.indeterminate = indeterminate;
     }
 
-    // Already unchecked → no attribute change fired above, so clear explicitly
+    // Unchanged state → no attribute change fired above, so register explicitly
     this._updateFormValue();
   }
 

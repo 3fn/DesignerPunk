@@ -481,7 +481,7 @@ On web, `<input-checkbox-legal>` takes part in its form on its own: it is a form
 - **Checked** submits one entry, `name` = `value` (`value` defaults to `"on"`). **Unchecked** submits nothing.
 - **The audit trail is not submitted.** `legalTextId`, `legalTextVersion` and the timestamp arrive on the `consent-change` event; storing them is your job. If you need them in the form post, add them yourself from that event.
 - **A refused pre-check submits nothing**: with `requiresExplicitConsent` (the default), only the user's own click checks the box.
-- **Form reset** unchecks the box.
+- **Form reset** returns the box to its authored state. For the default Legal that is always unchecked, because a pre-check is refused. A pre-check authored with `requires-explicit-consent="false"` is restored. Reset fires no `consent-change` event. *(Changed in 16.1.0: earlier releases always unchecked the box.)*
 - **Setting `disabled` has no effect**; the attribute is removed as soon as it is set, so it cannot silently drop the value from the submission.
 - Needs a browser with form-associated custom elements (current Chrome, Edge, Firefox and Safari 16.4+).
 - **If you added a hidden input as a workaround** (in 16.0.0 and earlier, the value did not reach `FormData`): remove it, or the value is submitted twice.

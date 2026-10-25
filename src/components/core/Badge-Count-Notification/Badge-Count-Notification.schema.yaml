@@ -41,8 +41,8 @@ description: |
   - Optional announceChanges prop (default: true)
   
   Fixed Colors (not configurable):
-  - Background: color.badge.background.notification (pink400 #CC2257)
-  - Text: color.badge.text.notification (white100 #FFFFFF)
+  - Background: color.feedback.notification.background (pink400 #CC2257)
+  - Text: color.feedback.notification.text (white100 #FFFFFF)
   - Contrast Ratio: 6.33:1 (exceeds WCAG AA 4.5:1)
 
 # Reusable behaviors this component implements

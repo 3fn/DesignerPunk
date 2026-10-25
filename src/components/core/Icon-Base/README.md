@@ -96,7 +96,7 @@ IconBase(name = "arrow-right", size = DesignTokens.icon_size_100, color = Color.
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
 | `name` | `IconBaseName` | Yes | - | Icon name (type-safe) |
-| `size` | `IconBaseSize` | Yes | - | Icon size in pixels (13, 18, 24, 28, 32, 36, 40, 44, 48) |
+| `size` | `IconBaseSize` | Yes | - | Icon size in pixels (13, 20, 24, 28, 32, 36, 40, 44, 48) |
 | `color` | `'inherit' \| string` | No | `'inherit'` | Color override or token reference |
 | `opticalBalance` | `boolean` | No | `false` | Apply 8% lighter blend for optical weight compensation |
 | `className` | `string` | No | - | Additional CSS class names (web only) |
@@ -119,14 +119,15 @@ IconBase(name = "arrow-right", size = DesignTokens.icon_size_100, color = Color.
 
 ## Size Tokens
 
-Icon sizes are calculated from `fontSize × lineHeight` to maintain optical balance with paired typography:
+Icon sizes are calculated from `fontSize × multiplier` (a `lineHeight` value, or a custom multiplier for `size050`) to maintain optical balance with paired typography. The pixel column is what renders (the token's value in `token-index/semantics.yaml`). The accepted `size` value `13` renders 16px: it names the 13px typography it pairs with, and `icon.size050` computes 13 × 1.231 = 16px.
+
 
 | Token | Size | Typography Pairing |
 |-------|------|-------------------|
-| `size050` | 13px | caption, legal, labelXs |
-| `size075` | 18px | bodySm, buttonSm, labelSm |
+| `size050` | 16px (prop value `13`) | caption, legal, labelXs |
+| `size075` | 20px | bodySm, buttonSm, labelSm |
 | `size100` | 24px | bodyMd, buttonMd, labelMd, input (standard) |
-| `size125` | 32px | bodyLg, buttonLg, labelLg |
+| `size125` | 28px | bodyLg, buttonLg, labelLg |
 | `size150` | 28px | h6 |
 | `size200` | 32px | h5 |
 | `size300` | 32px | h4 |

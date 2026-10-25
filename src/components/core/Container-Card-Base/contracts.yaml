@@ -7,7 +7,7 @@ contracts:
     category: visual
     description: Card has clear visual separation from background
     behavior: |
-      Provides visual boundary through background color (color.surface.primary),
+      Provides visual boundary through background color (color.structure.surface.primary),
       shadow (shadow.container), and border radius (radius.normal).
       Defaults ensure cards are visually distinct without configuration.
     wcag: "1.4.11 Non-text Contrast"

@@ -24,7 +24,9 @@
  *
  * Native semantics matched (HTML `<input type="checkbox">`):
  * checked → `value` (default "on"); unchecked → no entry; indeterminate is
- * visual only; reset → unchecked (Spec 046 Requirement 8.8).
+ * visual only. Reset → the authored state, remembered at first connect
+ * (Spec 046 Requirement 8.8 as amended 2026-10-25; defect record
+ * `.kiro/issues/2026-10-25-checkbox-reset-semantics-contract-vs-code.md`).
  *
  * @module Input-Checkbox-Base/__tests__/form
  */
@@ -299,7 +301,7 @@ describe('Input-Checkbox-Base Form Participation (validation_form_integration)',
   });
 
   describe('Form reset', () => {
-    it('formResetCallback unchecks, clears indeterminate, and registers no entry', async () => {
+    it('formResetCallback restores an authored checked + indeterminate state and registers its value', async () => {
       const { checkbox, setFormValue } = createWithSpy({ name: 'all', value: 'yes', checked: '', indeterminate: '' });
       const form = document.createElement('form');
       form.appendChild(checkbox);
@@ -307,14 +309,106 @@ describe('Input-Checkbox-Base Form Participation (validation_form_integration)',
       await tick();
       expect(setFormValue).toHaveBeenLastCalledWith('yes');
 
+      // The user clicks: indeterminate clears, the box unchecks
+      nativeInput(checkbox).click();
+      await tick();
+      expect(checkbox.checked).toBe(false);
+      expect(checkbox.indeterminate).toBe(false);
+      expect(setFormValue).toHaveBeenLastCalledWith(null);
+
       // A UA calls this when the owning form resets
       checkbox.formResetCallback();
       await tick();
 
+      expect(checkbox.checked).toBe(true);
+      expect(checkbox.indeterminate).toBe(true);
+      expect(nativeInput(checkbox).checked).toBe(true);
+      expect(nativeInput(checkbox).indeterminate).toBe(true);
+      expect(setFormValue).toHaveBeenLastCalledWith('yes');
+    });
+
+    it('formResetCallback unchecks a box authored unchecked that the user checked, and registers no entry', async () => {
+      const { checkbox, setFormValue } = createWithSpy({ name: 'updates', value: 'yes' });
+      const form = document.createElement('form');
+      form.appendChild(checkbox);
+      document.body.appendChild(form);
+      await tick();
+      nativeInput(checkbox).click();
+      await tick();
+      expect(setFormValue).toHaveBeenLastCalledWith('yes');
+
+      checkbox.formResetCallback();
+      await tick();
       expect(checkbox.checked).toBe(false);
-      expect(checkbox.indeterminate).toBe(false);
       expect(nativeInput(checkbox).checked).toBe(false);
       expect(setFormValue).toHaveBeenLastCalledWith(null);
+    });
+
+    it('state set after first connect is state, not a new default: reset returns to the authored state', async () => {
+      const { checkbox, setFormValue } = createWithSpy({ name: 'updates', value: 'yes' });
+      document.body.appendChild(checkbox);
+      await tick();
+
+      checkbox.setAttribute('checked', '');
+      checkbox.indeterminate = true;
+      await tick();
+      expect(setFormValue).toHaveBeenLastCalledWith('yes');
+
+      checkbox.formResetCallback();
+      await tick();
+      expect(checkbox.checked).toBe(false);
+      expect(checkbox.indeterminate).toBe(false);
+      expect(setFormValue).toHaveBeenLastCalledWith(null);
+    });
+
+    it('a checked property set before first connect is authored (it writes the same attribute)', async () => {
+      const { checkbox, setFormValue } = createWithSpy({ name: 'updates', value: 'yes' });
+      checkbox.checked = true;
+      document.body.appendChild(checkbox);
+      await tick();
+      checkbox.checked = false;
+      await tick();
+
+      checkbox.formResetCallback();
+      await tick();
+      expect(checkbox.checked).toBe(true);
+      expect(setFormValue).toHaveBeenLastCalledWith('yes');
+    });
+
+    it('moving the element keeps the default from its first connect', async () => {
+      const { checkbox } = createWithSpy({ name: 'updates', value: 'yes', checked: '' });
+      const first = document.createElement('form');
+      const second = document.createElement('form');
+      document.body.append(first, second);
+      first.appendChild(checkbox);
+      await tick();
+
+      checkbox.checked = false;
+      second.appendChild(checkbox); // disconnect + connect
+      await tick();
+
+      checkbox.formResetCallback();
+      await tick();
+      expect(checkbox.checked).toBe(true);
+    });
+
+    it('a reset fires no change event and does not call onChange (native reset semantics)', async () => {
+      const { checkbox } = createWithSpy({ name: 'updates', value: 'yes', checked: '' });
+      document.body.appendChild(checkbox);
+      await tick();
+      checkbox.checked = false;
+      await tick();
+
+      const onChange = jest.fn();
+      const changeListener = jest.fn();
+      checkbox.onChange = onChange;
+      checkbox.addEventListener('change', changeListener);
+
+      checkbox.formResetCallback();
+      await tick();
+      expect(checkbox.checked).toBe(true);
+      expect(onChange).not.toHaveBeenCalled();
+      expect(changeListener).not.toHaveBeenCalled();
     });
 
     it('formResetCallback on an already-unchecked box still registers no entry', async () => {
@@ -341,7 +435,7 @@ describe('Input-Checkbox-Base Form Participation (validation_form_integration)',
       expect(checkbox.checked).toBe(true);
     });
 
-    it('falls back to a reset listener where form association is unsupported', async () => {
+    it('falls back to a reset listener where form association is unsupported, restoring the authored state', async () => {
       // No spy: jsdom's internals lack setFormValue, i.e. the fallback path
       const checkbox = document.createElement('input-checkbox-base') as InputCheckboxBaseElement;
       checkbox.setAttribute('label', 'Receive updates');
@@ -350,6 +444,26 @@ describe('Input-Checkbox-Base Form Participation (validation_form_integration)',
       form.appendChild(checkbox);
       document.body.appendChild(form);
       await tick();
+
+      nativeInput(checkbox).click();
+      await tick();
+      expect(checkbox.checked).toBe(false);
+
+      form.reset();
+      await tick();
+      expect(checkbox.checked).toBe(true);
+    });
+
+    it('the fallback reset unchecks a box authored unchecked', async () => {
+      const checkbox = document.createElement('input-checkbox-base') as InputCheckboxBaseElement;
+      checkbox.setAttribute('label', 'Receive updates');
+      const form = document.createElement('form');
+      form.appendChild(checkbox);
+      document.body.appendChild(form);
+      await tick();
+      nativeInput(checkbox).click();
+      await tick();
+      expect(checkbox.checked).toBe(true);
 
       form.reset();
       await tick();

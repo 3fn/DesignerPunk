@@ -167,7 +167,7 @@ export function createIconBase(props: IconBaseProps): string {
     20: 'icon-base--size-075',
     24: 'icon-base--size-100',
     28: 'icon-base--size-125',  // Note: size125 and size150 both = 28px
-    32: 'icon-base--size-200',  // Note: size125, size200, size300 all = 32px
+    32: 'icon-base--size-200',  // Note: size200 and size300 both = 32px
     36: 'icon-base--size-400',
     40: 'icon-base--size-500',
     44: 'icon-base--size-600',
@@ -360,7 +360,7 @@ export class IconBaseElement extends HTMLElement {
     if (!sizeAttr) {
       throw new Error(
         `Missing required "size" attribute on <icon-base>. ` +
-        `Valid sizes are: 13, 18, 24, 28, 32, 36, 40, 44, 48.`
+        `Valid sizes are: 13, 20, 24, 28, 32, 36, 40, 44, 48. (13 renders 16px.)`
       );
     }
     
@@ -446,7 +446,7 @@ export class IconBaseElement extends HTMLElement {
       20: 'icon-base--size-075',
       24: 'icon-base--size-100',
       28: 'icon-base--size-125',  // Note: size125 and size150 both = 28px
-      32: 'icon-base--size-200',  // Note: size125, size200, size300 all = 32px
+      32: 'icon-base--size-200',  // Note: size200 and size300 both = 32px
       36: 'icon-base--size-400',
       40: 'icon-base--size-500',
       44: 'icon-base--size-600',
