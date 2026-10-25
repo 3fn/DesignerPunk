@@ -120,18 +120,11 @@ export interface TokenConsumer {
  * What `get_token_consumers` answers from, stated at the reader. The consumer map is built from
  * the `tokens:` lists of component schemas (token-index `consumers`), not from platform code, so
  * a read the schema does not declare is absent from the answer. The same sentence is the tool's
- * description (src/index.ts) and the `scope` field of the response, so the two cannot drift.
+ * description (src/index.ts); the response itself stays a bare array.
  * Record: `.kiro/issues/2026-10-23-schema-tokens-declared-vs-read-completeness.md` (owner line 2026-10-25).
  */
 export const CONSUMERS_SCOPE =
   'Consumers are the components whose schema declares the token, derived from token-index/; this is not a scan of platform code. Reads in web, iOS or Android code that the schema does not declare are not counted.';
-
-/** The `get_token_consumers` response: the consumers and the scope they were derived under. */
-export interface TokenConsumersResult {
-  token: string;
-  consumers: TokenConsumer[];
-  scope: string;
-}
 
 export interface TokenHealth {
   primitives: number;
@@ -361,11 +354,6 @@ export class TokenIndexer {
   getConsumers(token: string): TokenConsumer[] {
     const consumers = this.consumerIndex.get(token) || [];
     return consumers.map(c => ({ component: c, context: `references ${token}` }));
-  }
-
-  /** The `get_token_consumers` response: `getConsumers` plus the scope it answers under. */
-  getConsumersResult(token: string): TokenConsumersResult {
-    return { token, consumers: this.getConsumers(token), scope: CONSUMERS_SCOPE };
   }
 
   getHealth(): TokenHealth {

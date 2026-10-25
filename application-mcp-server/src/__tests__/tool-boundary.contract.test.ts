@@ -654,13 +654,12 @@ describe('get_token_details — tool-boundary contract', () => {
 // ===========================================================================
 // § 4.2b — get_token_consumers contract (scope note, 16.1.0 floor row 4)
 //   The consumer map is built from schema `tokens:` lists, not from platform code. The tool says
-//   so in its description and in a `scope` field on the response, from one constant.
-//   RE-BASELINE (2026-10-25): the response was a bare array of {component, context}; it is now
-//   { token, consumers, scope } so the scope can travel with the answer. `consumers` is the former
-//   array unchanged. Pinned here as an exact key set, not loosened.
+//   so in its DESCRIPTION, from one constant (CONSUMERS_SCOPE). The response stays a bare array of
+//   { component, context } (Peter, 2026-10-25, chat, relayed: "Re: 2, (B)"); it is pinned here so
+//   a later change to its shape is a visible re-baseline, not a silent one.
 // ===========================================================================
 
-const GET_TOKEN_CONSUMERS_EXACT_KEYS = new Set(['token', 'consumers', 'scope']);
+const GET_TOKEN_CONSUMER_EXACT_KEYS = new Set(['component', 'context']);
 
 describe('get_token_consumers — scope note at the tool boundary', () => {
   it('the tool description carries the scope sentence', () => {
@@ -671,27 +670,25 @@ describe('get_token_consumers — scope note at the tool boundary', () => {
     expect(tool!.description).toContain('Reads in web, iOS or Android code that the schema does not declare are not counted.');
   });
 
-  it('pinned corpus: exact key set, consumers unchanged, scope present', async () => {
-    const result = assertResult(await pinnedServer.callTool('get_token_consumers', { name: 'sem.color.info' }));
-    expect(new Set(Object.keys(result))).toEqual(GET_TOKEN_CONSUMERS_EXACT_KEYS);
-    expect(result.token).toBe('sem.color.info');
-    expect(result.consumers).toEqual([{ component: 'Button-CTA', context: 'references sem.color.info' }]);
-    expect(result.scope).toBe(CONSUMERS_SCOPE);
+  it('pinned corpus: the response is a bare array of { component, context }', async () => {
+    const result = assertResult<unknown>(await pinnedServer.callTool('get_token_consumers', { name: 'sem.color.info' }));
+    expect(Array.isArray(result)).toBe(true);
+    expect(result).toEqual([{ component: 'Button-CTA', context: 'references sem.color.info' }]);
+    for (const row of result as Array<Record<string, unknown>>) {
+      expect(new Set(Object.keys(row))).toEqual(GET_TOKEN_CONSUMER_EXACT_KEYS);
+    }
   });
 
-  it('a token with no consumers and an unknown token still carry the scope', async () => {
+  it('a token with no consumers and an unknown token return an empty array', async () => {
     for (const name of ['sem.space.inset', 'nonexistent.token.xyz']) {
-      const result = assertResult(await pinnedServer.callTool('get_token_consumers', { name }));
-      expect(new Set(Object.keys(result))).toEqual(GET_TOKEN_CONSUMERS_EXACT_KEYS);
-      expect(result.consumers).toEqual([]);
-      expect(result.scope).toBe(CONSUMERS_SCOPE);
+      const result = assertResult<unknown>(await pinnedServer.callTool('get_token_consumers', { name }));
+      expect(result).toEqual([]);
     }
   });
 
   it('live corpus: shadow.hover lists Button-CTA, which reads it (row 4 schema pass)', async () => {
-    const result = assertResult(await liveServer.callTool('get_token_consumers', { name: 'shadow.hover' }));
-    expect((result.consumers as Array<{ component: string }>).map(c => c.component)).toContain('Button-CTA');
-    expect(result.scope).toBe(CONSUMERS_SCOPE);
+    const result = assertResult<Array<{ component: string }>>(await liveServer.callTool('get_token_consumers', { name: 'shadow.hover' }));
+    expect(result.map(c => c.component)).toContain('Button-CTA');
   });
 });
 
