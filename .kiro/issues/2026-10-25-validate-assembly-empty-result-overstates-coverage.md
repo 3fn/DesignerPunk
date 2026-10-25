@@ -28,6 +28,6 @@
 
 ## Not in this record
 
-- `form-needs-submit-action` asks for a Button-CTA, which on web does not submit a form. That is E8 of `.kiro/issues/2026-10-20-web-element-api-and-form-participation.md`. *(2026-10-25, Lina: its message now names the web wiring, `press` → `form.requestSubmit()`; E8 (a), branch `fix/button-cta-served-submit-text`. The rule still asks for a Button-CTA by name; that is E8 (b), in the spec.)*
+- `form-needs-submit-action` asks for a Button-CTA, which on web does not submit a form. That is E8 of `.kiro/issues/2026-10-20-web-element-api-and-form-participation.md`. *(2026-10-25, Lina: its message now names the web wiring, `press` → `form.requestSubmit()`; E8 (a), #488. The rule still asks for a Button-CTA by name; that is E8 (b), in the spec.)*
 
 *Signed: Lina, 2026-10-25.*
