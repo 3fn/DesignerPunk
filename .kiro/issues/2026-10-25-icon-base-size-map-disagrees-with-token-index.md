@@ -28,3 +28,18 @@ Is 13px (the `IconBaseSize` literal) the intended smallest icon, with `icon.size
 ## What closes this record
 
 Ada's read is appended here, the fixing PR names this record, and its outcome line is added under rule 5.
+
+---
+
+## Ada's read, Lina's fix, and the fork for Peter (2026-10-25, Lina)
+
+**Ada's read** (`scratchpad/read-3a-icon-ada.md` § 2): "Truth: the token. icon.size050 = fontSize050 13 x custom 1.231 = 16 (deliberate optical correction, IconTokens.ts L100-104, comment '16px icon for 13px text'); icon.size125 = 18 x 1.556 = 28. Generated: dist web 16px/28px, iOS iconSize050=16/iconSize125=28. The '13' is the typography fontSize, conflated with the icon size." The misleading side is the docs and comments, not the rendering: iOS and Android take the token value, and web maps the literal 13 to `size-050` (`sizePixelMap` 13:16), so it renders 16. The prop literal 32 renders 32 (size200); "32px (size125/200/300)" is wrong for size125 only. Wrong served lines: `Icon-Base.schema.yaml` L65 and L69, `contracts.yaml` L45, README L126 and L129. Not served: `types.ts` L102–136, `styles.css` L49–61, the web error message ("18"). **P0 under M7: yes.** No token change (Ada: none).
+
+**Fixed here** in `dc89e261c1f4279107a08a85553002fc48c82b9e` (CORRECTION; truth: `src/tokens/semantic/IconTokens.ts` and `token-index/semantics.yaml`): every line above now states 16px for size050 and 28px for size125; the multipliers in the comments are the token's (13 × 1.231, 14 × 1.429, 18 × 1.556, and so on); the error message lists 20, not 18, and says 13 renders 16px; the schema and README say at the site that the accepted value 13 renders 16px via `icon.size050`. The public literal 13 is still accepted. Icon-Base suite 21/21; `npm run generate:platform-tokens` leaves `token-index/` unchanged.
+
+**Fork for Peter** (Ada's wording): "the public literal `13` renders 16px. Renaming it is a breaking API change. Keeping it needs a note saying the accepted value 13 renders 16px."
+- **My recommendation: keep 13 and the note now** (done above). A rename, if ever, is a 17.0.0 candidate, since `IconBaseSize` is public API and a consumer's `size={13}` would stop compiling.
+- **Ada's surviving counter-argument**: spec 006 may have intended 13, and the 16 override came later as drift. The token comment shows 16 is deliberate, but the record cannot prove who decided. If Peter wants 13 back, that is a token change (Ada's), and every consumer re-renders.
+- **A second item I found, held for Peter, not changed**: `iconBaseSizes.size125` is the value `32` in `types.ts` (a public runtime constant), so `size={iconBaseSizes.size125}` renders 32px on web while the `icon.size125` token and iOS render 28px. I annotated it in the comment and left the value, because changing it re-renders consumers. My recommendation is to change it to 28 (it is still a valid `IconBaseSize`); that is a rendering change, so it is Peter's call. Input-Checkbox-Base's `ICON_SIZE_MAP` (`sm: 13 // icon.size050 → 16px rendered`) is already correct against the note.
+
+Trigger unchanged; it becomes `merge:#<N>` when the PR opens.
