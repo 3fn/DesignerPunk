@@ -448,7 +448,7 @@ units:
         text: "You follow Token Governance for selection but never create tokens."
     confirmation: canonical/profiles/consumer/confirmations/lina.md#token-usage-in-components:preamble
   "#token-selection-priority-must-follow-this-order":
-    canonicalHash: sha256:2688d120f8996dd0b654091329b6dfa698b03cf183ef5dc00d8fcf9f203d0af0
+    canonicalHash: sha256:ad6fd6a1c0b92f63dada5b5bd28888c99db2035f75072a975318a02683aee32a
     items:
       - id: priority-semantic
         kind: step
