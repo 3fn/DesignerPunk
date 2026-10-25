@@ -357,7 +357,7 @@ Button(
 
 - [Component Development Guide](component-development-guide) - Component implementation guidance with collaboration practices
 - [Token Resolution Patterns](token-resolution-patterns) - Strategic guidance on token type selection and validation
-- [True Native Architecture](../../preserved-knowledge/true-native-architecture-concepts.md) - Build-time platform separation principles
+- [Platform Implementation Guidelines](platform-implementation-guidelines) - Behavioral contracts and platform-native implementation rules
 
 ---
 
