@@ -76,6 +76,9 @@ tokens:
     - progress.node.gap.md
     - progress.node.gap.lg
     - progress.connector.thickness
+  spacing:
+    - space100
+    - space150
 
 platforms:
   - web

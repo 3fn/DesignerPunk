@@ -82,6 +82,7 @@ tokens:
     - color.background.primary.subtle
     - color.contrast.onDark
     - color.contrast.onAction
+    - color.print.default
   icon:
     - icon.size050
     - icon.size075
@@ -105,6 +106,10 @@ tokens:
     - space150
   radius:
     - radius.circle
+  border:
+    - border.default
+    - border.emphasis
+    - borderWidth100
 
 platforms:
   - web

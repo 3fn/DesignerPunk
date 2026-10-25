@@ -45,6 +45,8 @@ tokens:
     - color.progress.pending.connector
   component:
     - progress.connector.thickness
+  border:
+    - borderWidth100
 
 platforms:
   - web

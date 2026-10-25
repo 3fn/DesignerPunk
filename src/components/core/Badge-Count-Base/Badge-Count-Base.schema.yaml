@@ -107,6 +107,28 @@ semantic_variants:
     extends: Notification-specific count badges with semantic colors and live region announcements
     status: planned
 
+# Design tokens this component reads (own tokens only: platforms/** code)
+tokens:
+  color:
+    - color.structure.surface
+    - color.text.default
+  typography:
+    - fontSize050
+    - fontSize075
+    - fontSize100
+    - lineHeight050
+    - lineHeight075
+    - lineHeight100
+    - typography.labelMd
+    - typography.labelSm
+    - typography.labelXs
+  border:
+    - radius.full
+  spacing:
+    - space000
+    - space050
+    - space100
+
 # Accessibility compliance
 accessibility:
   wcag_level: AA

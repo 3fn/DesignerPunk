@@ -84,6 +84,7 @@ tokens:
     - duration150
     - duration350
     - easingStandard
+    - motion.settleTransition
 
 composition:
   internal: []

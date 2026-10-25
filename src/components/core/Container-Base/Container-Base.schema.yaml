@@ -309,11 +309,35 @@ tokens:
     - space.inset.200
     - space.inset.300
     - space.inset.400
+    - space.grouped.minimal
   color:
     - color.structure.surface
     - color.structure.border
     - color.structure.border.subtle
     - color.structure.canvas
+    - color.action.primary
+    - color.action.secondary
+    - color.contrast.onDark
+    - color.contrast.onLight
+    - color.feedback.error.background
+    - color.feedback.error.border
+    - color.feedback.error.text
+    - color.feedback.info.background
+    - color.feedback.info.border
+    - color.feedback.info.text
+    - color.feedback.success.background
+    - color.feedback.success.border
+    - color.feedback.success.text
+    - color.feedback.warning.background
+    - color.feedback.warning.border
+    - color.feedback.warning.text
+    - color.icon.default
+    - color.structure.surface.primary
+    - color.structure.surface.secondary
+    - color.structure.surface.tertiary
+    - color.text.default
+    - color.text.muted
+    - color.text.subtle
   shadow:
     - shadow.container
     - shadow.navigation
@@ -347,6 +371,15 @@ tokens:
     - motion.focusTransition
   blend:
     - blend.hoverDarker
+  accessibility:
+    - accessibility.focus.color
+    - accessibility.focus.offset
+    - accessibility.focus.width
+  opacity:
+    - opacity.ghost
+    - opacity.heavy
+    - opacity.medium
+    - opacity.subtle
 
 # Supported platforms
 platforms:

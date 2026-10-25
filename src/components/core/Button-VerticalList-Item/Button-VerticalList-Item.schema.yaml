@@ -116,6 +116,7 @@ tokens:
     - tapAreaRecommended
   motion:
     - motion.selectionTransition
+    - easingStandard
   blend:
     - blend.hoverDarker
     - blend.pressedDarker
@@ -126,6 +127,11 @@ tokens:
     - radius.normal
   spacing:
     - space125
+    - space.grouped.loose
+    - space.inset.200
+    - space200
+  icon:
+    - icon.size100
 
 platforms:
   - web

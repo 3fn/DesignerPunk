@@ -87,6 +87,15 @@ tokens:
     - progress.node.size.sm.current
     - progress.node.size.md.current
     - progress.node.size.lg.current
+  motion:
+    - motion.focusTransition
+    - motion.selectionTransition
+    - motion.settleTransition
+  spacing:
+    - space150
+    - space200
+    - space250
+    - space300
 
 platforms:
   - web

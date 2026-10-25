@@ -103,20 +103,30 @@ properties:
 tokens:
   typography:
     - typography.buttonSm
+    - fontSize075
+    - lineHeight075
   color:
     - color.structure.surface
     - color.structure.border
     - color.text.default
     - color.action.primary
+    - color.print.default
   spacing:
     - space.inset.075
     - space.inset.150
     - space.grouped.tight
+    - space050
+    - space150
   border:
     - border.default
     - radius.full
+    - border.emphasis
+    - border.heavy
+    - borderWidth100
   motion:
     - motion.selectionTransition
+    - duration150
+    - motion.buttonPress
   blend:
     - blend.hoverDarker
     - blend.pressedDarker

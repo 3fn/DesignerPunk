@@ -68,6 +68,7 @@ tokens:
   color:
     - color.feedback.error.text
     - color.text.muted
+    - color.print.default
   typography:
     - fontSize050
     - typography.caption

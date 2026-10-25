@@ -74,8 +74,12 @@ tokens:
     - space.inset.100
     - space.grouped.tight
     - space.grouped.normal
+    - space.inset.150
   radius:
     - radius.full
+  motion:
+    - motion.selectionTransition
+    - motion.settleTransition
 
 platforms:
   - web
