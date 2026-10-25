@@ -113,11 +113,11 @@ All components in the Icons family inherit these 5 foundational contracts from I
 **Description**: Supports 11 size variants calculated from typography scale.
 
 **Behavior**: Icon-Base supports 11 size variants calculated from fontSize × lineHeight formula to maintain optical balance with paired typography:
-- 13px (`typography.caption`, `typography.legal`, `typography.labelXs`)
-- 18px (`typography.bodySm`, `typography.buttonSm`, `typography.labelSm`)
+- 16px (`typography.caption`, `typography.legal`, `typography.labelXs`)
+- 20px (`typography.bodySm`, `typography.buttonSm`, `typography.labelSm`)
 - 24px (`typography.bodyMd`, `typography.buttonMd`, `typography.labelMd`, `typography.input`) - standard
-- 28px (`typography.h6`)
-- 32px (`typography.bodyLg`, `typography.buttonLg`, `typography.h5`, `typography.h4`)
+- 28px (`typography.bodyLg`, `typography.buttonLg`, `typography.labelLg`, `typography.h6`)
+- 32px (`typography.h5`, `typography.h4`)
 - 36px (`typography.h3`)
 - 40px (`typography.h2`)
 - 44px (`typography.h1`)
@@ -175,10 +175,10 @@ All components in the Icons family inherit these 5 foundational contracts from I
 
 | Icon token | Pixels | Typography Pairing |
 |------|--------|-------------------|
-| `icon.size050` | 13px | `typography.caption`, `typography.legal`, `typography.labelXs` |
-| `icon.size075` | 18px | `typography.bodySm`, `typography.buttonSm`, `typography.labelSm` |
+| `icon.size050` | 16px | `typography.caption`, `typography.legal`, `typography.labelXs` |
+| `icon.size075` | 20px | `typography.bodySm`, `typography.buttonSm`, `typography.labelSm` |
 | `icon.size100` | 24px | `typography.bodyMd`, `typography.buttonMd`, `typography.labelMd`, `typography.input` (standard) |
-| `icon.size125` | 32px | `typography.bodyLg`, `typography.buttonLg`, `typography.labelLg` |
+| `icon.size125` | 28px | `typography.bodyLg`, `typography.buttonLg`, `typography.labelLg` |
 | `icon.size150` | 28px | `typography.h6` |
 | `icon.size200` | 32px | `typography.h5` |
 | `icon.size300` | 32px | `typography.h4` |
