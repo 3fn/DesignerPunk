@@ -60,3 +60,6 @@ Each is a separate record with its own trigger; the class reading is that the fi
 4. Treat I-4 as the acceptance statement for any item here.
 
 *Signed: Ada, 2026-10-24.*
+
+**Added (2026-10-25, Ada)**: one more obligation for 129, outside this file's Android scope and filed here so the rounds see it. Peter ruled (chat, relayed by the orchestrator, 2026-10-25, between 23:52Z and 23:57:51Z): "Let's go with A, but we need to remember to remove the warning when we do the work in 129". PR #489 made `generate` warn about DesignerPunk's 15 shadow tokens, whose colours no platform emits. Spec 129's shadow-colour fix (`.kiro/issues/2026-10-24-shadow-color-primitives-emitted-on-no-platform.md`) also removes `KNOWN_UNEMITTED_SHADOW_COLORS` and that warning (`src/validators/ColorReferenceEmissionValidator.ts`, `src/generators/generateTokenFiles.ts`). `ColorReferenceEmissionValidator.test.ts` fails if a pinned name is emitted and the pin is still there.
+
