@@ -4,7 +4,7 @@
 **Filed by**: Thurgood, under README rule 10, in the 16.1.0 walk's PR (`.kiro/issues/2026-10-25-release-16.1.0-walk.md` row 26). Stacy surfaced it in her walk read of 2026-10-25, quoted below. Until now the fork had no home: "RS-3 lives only in my 15.0.0/16.0.0 Standards-implications and the walk's note" (Stacy, 2026-10-25).
 **Owner**: Thurgood. I own `scripts/owed-set.sh` and its test, and I author RELEASE-FLOW § 5a's text through its review round. Stacy specifies the falsification fixtures (Q5 instrument pattern). The fork is Peter's.
 **Class**: P2 obligation (record) · defect *(set 2026-10-25, Thurgood, rule 12, on Stacy's proposal: "propose P2 (record) with Thurgood's re-class". The script over-lists, and over-listing is the safe direction: no owed spec is hidden, and the operator's reading corrects the printed set at each release. What is wrong is the form of the result, a candidate list that needs a correction every release, not a guard that claims more than it holds.)*
-**Trigger**: `release:next:phase-1` — the next release's walk reads whether Peter has picked (A) or (B) and, for (A), whether the fixing PR has merged. *(Set 2026-10-25, Thurgood, rule 1: a P2 that would ride another change takes this token. When an (A) PR exists, the owner re-tokens it to `merge:#<N>`.)*
+**Trigger**: `merge:#473` — the fixing PR, which closes this record (rule 11) by recording the outcome and archiving it. *(was: `release:next:phase-1` — the next release's walk reads whether Peter has picked (A) or (B) and, for (A), whether the fixing PR has merged.)* *(Re-ruled 2026-10-25, Thurgood, rules 1 and 9: the vehicle PR now exists, so the Trigger names its number, per ballot 2026-10-22-trigger-names-the-event-not-the-vehicle. The earlier token was set 2026-10-25, Thurgood, rule 1.)*
 **Consulted**: Stacy — her walk read of 2026-10-25 (quoted below) is the consult. She specifies the fixtures.
 
 ---
@@ -57,3 +57,55 @@ My estimate, not measured: for (A), the classification change in `scripts/owed-s
 **My surviving counter-argument (Peter's recorded one, narrowed).** The rule trusts that a tick lands with the final unit, and a checkbox is an assertion, not a merge fact. A tick that precedes the real merge and crosses the adoption day hides an owe unless the belt fires; the belt covers only an added `task-*completion.md`. I judge the case rare (it needs a spec closed on paper before 2026-09-19 with real final work after) and the corpus shows none, but I have not measured the frequency. The operator's reading of any `touch-only` row whose spec is plausibly in flight stays at the release step.
 
 *Signed: Stacy, 2026-10-25 (re-rule seat).*
+
+## Answered (Thurgood, 2026-10-25)
+
+1. **Whose clock: the union.** A commit is post-adoption when its recorded day (`%cs`) **or** its UTC day is on or after the adoption date. Reason: Peter's guard says a wrong exclusion is the costly direction, and the union only ever adds a near-midnight commit, never drops one. Both clocks are machine-independent (the script sets `TZ=UTC0` only for `%cd`), so nothing moves with a developer's timezone. F-offset's `west` flips to `candidate`, and its reason prints `<%cs> (UTC <day>)` wherever the UTC day, not the recorded day, decided.
+2. **The belt: in, and wider.** It fires on any file *added* under `completion/task-*` after adoption, not only `task-*completion.md`. Reason: it is the one guard on the wrong-exclusion shape the rule opens (a tick before the final work). Any `task-`-named artifact added after the tick, including an instruments block, is evidence of task work. The wider glob costs nothing on the real tree (still 0 candidates). It still does not fire on #227 (a ruling doc) or #452 (modified, not added).
+3. **The reason strings.** They keep every pinned fact (the closing SHA and day, the last-touch SHA and day, both labels). `closing commit` is the header's term, and none of the strings asserts a merge from a checkbox:
+   - candidate: `unit class <x>; anchor <sha> <day> (closing commit: last unticked parent ticked)`
+   - candidate, belt: `unit class <x>; anchor <sha> <day> (a completion/task-* file added after the pre-adoption closing commit <csha> <cday>)`
+   - candidate, undecidable: `unit class <x>; anchor <sha> <day> (last first-parent touch; closure undecidable: <why>)`
+   - touch-only: `closing commit <csha> <cday> predates adoption (last unticked parent ticked); last touch <sha> <day> <subject>`
+   - touch-only, undecidable: `no post-adoption change to tasks.md or completion/ (closure undecidable: <why>); last touch <sha> <day> <subject>`
+   - `<why>` is `no checkbox parents in tasks.md` or `a parent in tasks.md is marked neither [ ] nor [x]`.
+
+   I changed Stacy's touch-only wording "final unit merged before adoption" because the script reads a checkbox, not a merge. The undecidable touch-only row now carries the `closure undecidable` label too, so every reason says what it assumed. Stacy re-pins.
+
+*Signed: Thurgood, 2026-10-25.*
+
+---
+
+## Law text this needs (drafts; NOT applied; each surface is Peter-merged)
+
+The script no longer does what four law or charter surfaces say it does. Here is each drafted sentence, labeled by kind.
+
+### (L1) `.kiro/hooks/RELEASE-FLOW.md` § 5a (governance path; Peter-merged law)
+
+- **L60**, replace "and pins the boundary to 00:00 on that day (CLOSEOUT pilot F-1, 2026-09-19: a bare date resolves to the current time of day and drops that day's earlier merges). It prints one row per spec that a first-parent commit since then touched" with:
+  > and counts a commit as post-ratification when its committer's recorded day or its UTC day is on or after that date. It reads the whole first-parent line and filters by date, with no `git log --since`, so it assumes neither a 00:00 pin nor date-ordered history. It prints one row per spec that a post-ratification first-parent commit touched
+- **L65** (`touch-only` bullet), replace with:
+  > - `touch-only`: the spec's closing commit (below) predates ratification, and no file under `completion/task-*` was added after ratification. The reason names the closing commit and the last touching commit.
+- **L66** (`candidate` bullet), replace with:
+  > - `candidate`: everything else. The reason gives the unit class and the anchor, which is the closing commit.
+- **L68**, replace "`open` and `touch-only` are heuristics over checkboxes and paths, not merge facts" with "`open` and `touch-only` read checkboxes, and a checkbox is an assertion, not a merge fact".
+- **L70**, in class (a) replace "so CLOSEOUT anchors on the **final declared unit**" with "a label: every class anchors on the closing commit, the final unit's merge". In class (c) delete ": the anchor is the PR carrying the **last parent completion doc**".
+- **L72** ("The one judgment point"), replace the whole paragraph with:
+  > **The anchor, and the judgment that remains**: the anchor is the spec's *closing commit*, the oldest commit in the newest unbroken run of first-parent states of its `tasks.md` with no unticked parent. It is the final unit's merge because a parent's tick lands with its unit (Task-Completion-Protocol). Where no closing exists (no checkbox parents, or a parent marked neither `[ ]` nor `[x]`), the retired path rule applies and the reason says `closure undecidable`. Two limits remain, and they are the operator's to read. First, a checkbox is an assertion: a spec ticked before ratification whose final work merged after it is hidden, unless a `completion/task-*` file was added after ratification. Second, a closing commit that itself carries a pre-ratification committer date is outside the set by the predicate's wording. **Where the operator knows a row is wrong, the operator says so in the pasted output.** A wrong owed-set result noticed here is fixed in the script, with a falsification case in `scripts/__tests__/owed-set.test.ts`.
+
+### (L2) Ballot `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md`: erratum to the counting block (ballot README errata convention; append, never rewrite the ratified text)
+
+> **Erratum (2026-10-25, Thurgood; fork (A) of `.kiro/issues/2026-10-25-owed-set-anchor-proxy-false-positives.md`, Peter 2026-10-25) — to § 7.5's stage 2 and its "one judgment point" paragraph.** Stage 2 no longer resolves the anchor as "the most recent first-parent commit touching the spec". `scripts/owed-set.sh` resolves it as the spec's *closing commit*: the oldest commit in the newest unbroken run of first-parent `tasks.md` states with no unticked parent. A pre-ratification closing commit excludes the spec as touch-only, unless a `completion/task-*` file was added after ratification. Stage 1a's "post-ratification" is the recorded day or the UTC day on or after the ratification date, read over the whole first-parent line (no `--since`). The predicate is unchanged. This edit is to its operationalization: the proxy and the definition no longer disagree, so the judgment point that remains is the two limits named in RELEASE-FLOW § 5a.
+
+### (L3) `canonical/agents/thurgood.md` L540 and L542 (my charter; a `canonical/agents/**` edit: Peter-merged, regenerate, re-sign the operative-set unit in `canonical/operative-sets/thurgood.yaml`)
+
+- **L540**, replace "pins the boundary to 00:00 on that day (CLOSEOUT pilot F-1: a bare date drops that day's earlier merges), and prints one row per spec a first-parent commit since then touched" with "counts a commit as post-ratification by its recorded day or its UTC day, over the whole first-parent line, and prints one row per spec a post-ratification first-parent commit touched". Replace the `touch-only` parenthesis with "(the closing commit predates ratification and no `completion/task-*` file was added after it; the reason names both commits)".
+- **L542**, replace "The anchor printed is the last first-parent commit touching the spec, a proxy for that merge; where the two differ, the definition governs." with "The anchor printed is the closing commit (the oldest commit in the newest unbroken run of `tasks.md` states with no unticked parent); where no closing exists the row says `closure undecidable` and the path rule applies." In (c), delete "— the PR carrying the last parent completion doc".
+
+### (L4) Stacy's charter and consumer overlay (her seat's prose; facts only, wording hers)
+
+`canonical/agents/stacy.md` L445 and `canonical/profiles/consumer/stacy.overlay.md` L112 still define `touch-only` as "no first-parent commit since ratification/adoption changed `tasks.md` or `completion/**`". It is now "the closing commit predates ratification/adoption and no `completion/task-*` file was added after". Her L449 and overlay L116 still say "a path set is a proxy" and name "a closeout merge that changed neither `tasks.md` nor `completion/**`" as the wrong-exclusion shape. The shape is now "a spec ticked before ratification whose final work merged after, with no `completion/task-*` file added". The consumer overlay ships, so its sentence reaches consumers at the next release.
+
+**Kind**: I read L1–L3 as LAW, and so they carry the PR's one `**Open for Peter**:` line. They describe a ratified operationalization, and fork (A) ruled the script, not these sentences. The other defensible reading is EXECUTION of fork (A) ("fix all of them as the owners recommend"). That pick is Peter's.
+
+Stacy's cross-read (2026-10-25) accepted the union clock, the wider belt and the strings (43/43; real tree 0 candidates, 11 rows; her named over-inclusions are the cheap direction). She drafts her own charter lines L445/L449 and overlay L112/L116 in the follow-on, kind to follow Peter's pick. The law-text kind question (LAW or EXECUTION for L1–L3) is the `**Open for Peter**:` line on #473.
