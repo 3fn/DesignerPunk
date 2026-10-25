@@ -10,7 +10,9 @@
  * Naming Convention: [Family]-[Type]-[Variant] = Input-Checkbox-Base
  * 
  * Features:
- * - Shadow DOM with hidden native checkbox for form compatibility
+ * - Form-associated custom element (ElementInternals): the host element takes
+ *   part in its form's submission and reset, like a native checkbox
+ * - Shadow DOM with a visually hidden native checkbox for interaction and AT
  * - Three size variants (sm, md, lg) with token-based sizing
  * - Label alignment (center, top) for single/multi-line labels
  * - Attribute reflection for reactive updates
@@ -65,7 +67,18 @@ const ICON_SIZE_MAP: Record<CheckboxSize, IconBaseSize> = {
  * Input-Checkbox-Base Web Component
  * 
  * Custom element implementing a checkbox with Shadow DOM encapsulation,
- * hidden native input for form compatibility, and token-based styling.
+ * a visually hidden native input for interaction, and token-based styling.
+ * 
+ * Form participation (contract `validation_form_integration`): the native
+ * input lives in the shadow root, and a form owns only controls in its own
+ * tree, so the inner input never reaches the outer form. The HOST element is
+ * therefore form-associated and reports its own value through
+ * ElementInternals, matching native `<input type="checkbox">` semantics:
+ * - checked   → one entry, `name` = `value` (`value` defaults to "on")
+ * - unchecked → no entry
+ * - indeterminate is visual only; the entry follows `checked`
+ * - no `name` → no entry (the UA skips an unnamed control)
+ * - form reset → unchecked (Spec 046 Requirement 8.8)
  * 
  * @example
  * ```html
@@ -77,13 +90,30 @@ const ICON_SIZE_MAP: Record<CheckboxSize, IconBaseSize> = {
  * ```
  */
 export class InputCheckboxBaseElement extends HTMLElement {
+  /**
+   * Marks this as a form-associated custom element, so the UA lists the host
+   * among its form's controls and calls the form lifecycle callbacks below.
+   * @see https://html.spec.whatwg.org/multipage/custom-elements.html#form-associated-custom-elements
+   * @see contracts.yaml validation_form_integration
+   */
+  static formAssociated = true;
+
   /** Shadow DOM root */
   private _shadowRoot: ShadowRoot;
+
+  /**
+   * ElementInternals for form association: carries the host's submission
+   * value. Null where the UA has no attachInternals (pre-FACE browsers).
+   */
+  private _internals: ElementInternals | null;
 
   /** Reference to the hidden native checkbox */
   private _input: HTMLInputElement | null = null;
 
-  /** Reference to the parent form element for reset handling */
+  /**
+   * Parent form, for the reset fallback used only where form-associated
+   * custom elements are unsupported (see _attachToForm).
+   */
   private _form: HTMLFormElement | null = null;
 
   /** Change callback (JS property, not attribute) */
@@ -102,6 +132,14 @@ export class InputCheckboxBaseElement extends HTMLElement {
     super();
     this._shadowRoot = this.attachShadow({ mode: 'open' });
     this._generatedId = `checkbox-${++checkboxIdCounter}`;
+
+    // Form association. Guarded: calling attachInternals where it does not
+    // exist would throw and break the element outright; without it the
+    // element still renders and resets, it just cannot submit.
+    // @see contracts.yaml validation_form_integration
+    this._internals = typeof this.attachInternals === 'function'
+      ? this.attachInternals()
+      : null;
     
     // Initialize theme-aware blend utilities
     // Uses getBlendUtilities() factory for consistent state styling
@@ -114,7 +152,10 @@ export class InputCheckboxBaseElement extends HTMLElement {
   // ---------------------------------------------------------------------------
 
   static get observedAttributes(): string[] {
-    return [...INPUT_CHECKBOX_BASE_OBSERVED_ATTRIBUTES];
+    // 'disabled' is observed in addition to INPUT_CHECKBOX_BASE_OBSERVED_ATTRIBUTES
+    // (which stays the shared reactive-attribute contract) purely so
+    // attributeChangedCallback can neutralize it. See the D1 comment there.
+    return [...INPUT_CHECKBOX_BASE_OBSERVED_ATTRIBUTES, 'disabled'];
   }
 
   // ---------------------------------------------------------------------------
@@ -126,12 +167,16 @@ export class InputCheckboxBaseElement extends HTMLElement {
     // @see Requirements: 1.4, 7.4 - Hover applies blend.hoverDarker to border
     this._calculateBlendColors();
     
-    // Find and attach to parent form for reset handling
+    // Reset fallback for UAs without form-associated custom elements
     // @see Requirements: 8.8 - Form reset returns checkbox to unchecked state
     this._attachToForm();
     
     this.render();
     this._attachListeners();
+
+    // Register the initial submission value
+    // @see contracts.yaml validation_form_integration
+    this._updateFormValue();
   }
 
   disconnectedCallback(): void {
@@ -140,15 +185,62 @@ export class InputCheckboxBaseElement extends HTMLElement {
   }
 
   attributeChangedCallback(
-    _name: string,
+    name: string,
     oldValue: string | null,
     newValue: string | null
   ): void {
+    // D1: form-data hazard neutralization, the same shape as Input-Radio-Base.
+    // This element has no disabled state (contracts.yaml excludes
+    // state_disabled), but because it is form-associated, the mere PRESENCE
+    // of a `disabled` attribute would make the UA drop its value from the
+    // form's submission while the control still renders and responds. The
+    // 2026-09-19 ruling makes a consumer-set `disabled` inert, so the
+    // attribute is stripped the instant it is observed.
+    // @see .kiro/docs/ballots/2026-09-19-disabled-input-parity.md (D1)
+    if (name === 'disabled') {
+      if (newValue !== null) {
+        this.removeAttribute('disabled');
+      }
+      return;
+    }
+
     if (oldValue === newValue) return;
     if (this.isConnected) {
       this.render();
       this._attachListeners();
+
+      // checked and value decide the submission value; name is read by the
+      // UA at submission time. Cheap and idempotent, so run on every change.
+      // @see contracts.yaml validation_form_integration
+      this._updateFormValue();
     }
+  }
+
+  /**
+   * Form-associated lifecycle callback: the owning form was reset.
+   * Replaces the hand-wired `reset` listener wherever the UA supports
+   * form-associated custom elements. Per the HTML spec the UA calls it for
+   * whatever form owns the element, including an owner set by `form="id"`,
+   * which a closest('form') listener cannot see.
+   * @see Requirements: 8.8 - Form reset returns checkbox to unchecked state
+   */
+  formResetCallback(): void {
+    this._resetToUnchecked();
+  }
+
+  /**
+   * Form-associated lifecycle callback: the computed disabled state changed
+   * (an ancestor `<fieldset disabled>`, or a `disabled` attribute in the
+   * instant before attributeChangedCallback strips it).
+   *
+   * Intentionally a no-op, as on Input-Radio-Base (D1). A `<fieldset
+   * disabled>` ancestor excluding this control from submission is a
+   * platform-level exclusion the component cannot override from inside,
+   * and is out of D1's scope.
+   * @see .kiro/docs/ballots/2026-09-19-disabled-input-parity.md (D1)
+   */
+  formDisabledCallback(_formDisabled: boolean): void {
+    // Intentional no-op; see doc comment above.
   }
 
   // ---------------------------------------------------------------------------
@@ -285,12 +377,14 @@ export class InputCheckboxBaseElement extends HTMLElement {
   /**
    * Value submitted with form when checkbox is checked.
    * 
-   * Defaults to 'on' (standard HTML checkbox behavior).
+   * Defaults to 'on' when the attribute is absent (standard HTML checkbox
+   * behavior). An explicit empty `value=""` submits the empty string, as a
+   * native checkbox does.
    * 
    * @see Requirements: 8.5, 8.7 - Form submission includes checkbox value
    */
   get value(): string {
-    return this.getAttribute('value') || 'on';
+    return this.getAttribute('value') ?? 'on';
   }
 
   set value(value: string) {
@@ -330,14 +424,42 @@ export class InputCheckboxBaseElement extends HTMLElement {
   // ---------------------------------------------------------------------------
 
   /**
-   * Attach to parent form for reset handling.
+   * Whether the UA supports form-associated custom elements here: the
+   * element has internals AND they can carry a submission value. False on
+   * pre-FACE browsers and in jsdom (which has attachInternals but no
+   * setFormValue).
+   */
+  private get _isFormAssociationSupported(): boolean {
+    return typeof this._internals?.setFormValue === 'function';
+  }
+
+  /**
+   * Register the host's submission value with ElementInternals.
    * 
-   * Finds the closest parent form element and attaches a reset event listener
-   * to implement form reset behavior (always reset to unchecked).
+   * Native checkbox semantics: checked → `value`; unchecked → null (no entry).
+   * Indeterminate does not affect it. An absent or empty `name` is left to
+   * the UA, which skips an unnamed form-associated element when it builds
+   * the entry list, exactly as it skips an unnamed native checkbox.
+   * 
+   * @see contracts.yaml validation_form_integration
+   * @see Requirements: 8.5, 8.7 - Form submission includes checkbox value
+   */
+  private _updateFormValue(): void {
+    if (!this._isFormAssociationSupported) return;
+    this._internals!.setFormValue(this.checked ? this.value : null);
+  }
+
+  /**
+   * Reset fallback: attach a `reset` listener to the closest parent form.
+   * 
+   * Used ONLY where form-associated custom elements are unsupported. Where
+   * they are supported, the UA calls formResetCallback instead, and adding
+   * this listener as well would run the reset twice.
    * 
    * @see Requirements: 8.8 - Form reset returns checkbox to unchecked state
    */
   private _attachToForm(): void {
+    if (this._isFormAssociationSupported) return;
     this._form = this.closest('form');
     if (this._form) {
       this._form.addEventListener('reset', this._onFormReset);
@@ -357,15 +479,21 @@ export class InputCheckboxBaseElement extends HTMLElement {
   }
 
   /**
-   * Handle form reset event.
+   * Handle form reset event (fallback path; see _attachToForm).
+   */
+  private _onFormReset = (): void => {
+    this._resetToUnchecked();
+  };
+
+  /**
+   * Reset to unchecked and clear the submission value.
    * 
-   * Resets the checkbox to unchecked state. Per DesignerPunk philosophy,
-   * pre-checked checkboxes are not supported, so reset always goes to unchecked.
+   * Per Spec 046 Requirement 8.8, pre-checked checkboxes are not supported
+   * as defaults, so reset always goes to unchecked.
    * 
    * @see Requirements: 8.8 - Form reset returns checkbox to unchecked state
    */
-  private _onFormReset = (): void => {
-    // Always reset to unchecked (pre-checked checkboxes not supported)
+  private _resetToUnchecked(): void {
     this.checked = false;
     this.indeterminate = false;
     
@@ -374,7 +502,10 @@ export class InputCheckboxBaseElement extends HTMLElement {
       this._input.checked = false;
       this._input.indeterminate = false;
     }
-  };
+
+    // Already unchecked → no attribute change fired above, so clear explicitly
+    this._updateFormValue();
+  }
 
   // ---------------------------------------------------------------------------
   // Render
@@ -532,6 +663,10 @@ export class InputCheckboxBaseElement extends HTMLElement {
     if (this.indeterminate) {
       this.removeAttribute('indeterminate');
     }
+
+    // Submission value is current before any listener runs
+    // @see contracts.yaml validation_form_integration
+    this._updateFormValue();
 
     // Fire callback
     this.onChange?.(newChecked);
