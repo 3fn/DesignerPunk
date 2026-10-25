@@ -450,22 +450,14 @@ units:
   "#token-selection-priority-must-follow-this-order":
     canonicalHash: sha256:ad6fd6a1c0b92f63dada5b5bd28888c99db2035f75072a975318a02683aee32a
     items:
-      - id: priority-semantic
-        kind: step
-        label: "Semantic first"
-        text: "**Semantic tokens** — purpose-built for specific use cases (e.g., `color.contrast.onAction` for content on action-colored backgrounds, `space.inset.100` for inset padding). Use freely. Verify semantic correctness."
-      - id: priority-primitive
-        kind: step
-        label: "Primitive second"
-        text: "**Primitive tokens** — when no semantic token exists. Requires prior context (spec docs reference it) or Peter's acknowledgment."
-      - id: priority-component
-        kind: step
-        label: "Component tokens third"
-        text: "**Component tokens referencing primitives** — when a component needs a semantic name but the value exists as a primitive. Requires explicit human approval before use."
-      - id: priority-hardcoded
-        kind: step
-        label: "Hard-coded last"
-        text: "**Hard-coded values** — only as last resort. Requires user approval. Always flag these."
+      - id: priority-pointer
+        kind: obligation
+        label: "Query the matrix before choosing"
+        text: "Token selection has one order, and it lives in Token Governance § \"Token Selection Matrix\". Query it before you choose a token: `get_section({ path: \"token-governance\", heading: \"Token Selection Matrix\" })`."
+      - id: priority-no-creation
+        kind: obligation
+        label: "A missing token is a checkpoint, never created or hard-coded"
+        text: "When nothing in that order fits, the step is a checkpoint with Peter and a hand-off to Ada (§ \"When a Token Is Missing\"); you never create a token, or hard-code a value, to finish the selection."
     confirmation: canonical/profiles/consumer/confirmations/lina.md#token-selection-priority-must-follow-this-order
   "#component-token-construction-rule":
     canonicalHash: sha256:93296840c6833f7d3747c491c4fe0dbf780ebd13575ca289148af98f5e97227f
