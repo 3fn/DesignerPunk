@@ -529,7 +529,7 @@ docs/specs/[spec-name]/                   # Public-facing documentation
 
 ---
 
-*For detailed implementation notes, see [task-N-completion.md](../../.kiro/specs/[spec-name]/completion/task-N-completion.md)*
+*For detailed implementation notes, see [task-N-completion.md](../../../.kiro/specs/[spec-name]/completion/task-N-completion.md)*
 ```
 
 ---
@@ -543,14 +543,14 @@ Summary documents should include a link to the detailed completion document at t
 ```markdown
 ---
 
-*For detailed implementation notes, see [task-N-completion.md](../../.kiro/specs/[spec-name]/completion/task-N-completion.md)*
+*For detailed implementation notes, see [task-N-completion.md](../../../.kiro/specs/[spec-name]/completion/task-N-completion.md)*
 ```
 
 **Example** from `docs/specs/release-detection-trigger-fix/task-1-summary.md`:
 ```markdown
 ---
 
-*For detailed implementation notes, see [task-1-completion.md](../../.kiro/specs/release-detection-trigger-fix/completion/task-1-completion.md)*
+*For detailed implementation notes, see [task-1-completion.md](../../../.kiro/specs/release-detection-trigger-fix/completion/task-1-completion.md)*
 ```
 
 ### From Detailed Docs to Summary (Optional)
@@ -567,7 +567,7 @@ Detailed completion documents can optionally link to the summary document:
 
 | From | To | Path |
 |------|-----|------|
-| Summary → Detailed | `docs/specs/[spec]/` → `.kiro/specs/[spec]/completion/` | `../../.kiro/specs/[spec]/completion/task-N-completion.md` |
+| Summary → Detailed | `docs/specs/[spec]/` → `.kiro/specs/[spec]/completion/` | `../../../.kiro/specs/[spec]/completion/task-N-completion.md` |
 | Detailed → Summary | `.kiro/specs/[spec]/completion/` → `docs/specs/[spec]/` | `../../../../docs/specs/[spec]/task-N-summary.md` |
 
 ---

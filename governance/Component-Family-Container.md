@@ -663,8 +663,8 @@ All platforms implement the same behavioral contracts:
 - [Stemma System Principles](stemma-system-principles) - Architecture overview
 - [Token Quick Reference](token-quick-reference) - Token documentation
 - [MCP Component Family Document Template](mcp-component-family-document-template) - Template specification
-- [Container-Base Schema](../../src/components/core/Container-Base/Container-Base.schema.yaml) - Full schema definition
-- [Container-Base README](../../src/components/core/Container-Base/README.md) - Container-Base documentation
-- [Container-Card-Base Schema](../../src/components/core/Container-Card-Base/Container-Card-Base.schema.yaml) - Card-Base schema definition
-- [Container-Card-Base README](../../src/components/core/Container-Card-Base/README.md) - Card-Base documentation
-- [Container-Card-Base Design](../../.kiro/specs/043-container-card-base/design.md) - Design specification
+- [Container-Base Schema](../src/components/core/Container-Base/Container-Base.schema.yaml) - Full schema definition
+- [Container-Base README](../src/components/core/Container-Base/README.md) - Container-Base documentation
+- [Container-Card-Base Schema](../src/components/core/Container-Card-Base/Container-Card-Base.schema.yaml) - Card-Base schema definition
+- [Container-Card-Base README](../src/components/core/Container-Card-Base/README.md) - Card-Base documentation
+- [Container-Card-Base Design](../.kiro/specs/043-container-card-base/design.md) - Design specification

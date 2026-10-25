@@ -480,7 +480,7 @@ This produces `dist/DesignTokens.dtcg.json` (alongside the CSS/Swift/Kotlin outp
 - [Token Governance](token-governance) — Token selection, usage, and creation governance; autonomy levels for different token types
 - [Component Development Guide](component-development-guide) — Component implementation guidance, token selection decision framework
 - [Spec Planning Standards](process-spec-planning) — Spec formalization process (requirements → design → tasks)
-- [Token System Overview](./token-system-overview.md) — Complete Rosetta token system documentation
+- [Token System Overview](../docs/token-system-overview.md) — Complete Rosetta token system documentation
 - [Spec 054a Design](./../.kiro/specs/054a-figma-token-push/design.md) — Token push architecture and implementation details
 - [Spec 054b Design](./../.kiro/specs/054b-figma-design-extract/design.md) — Design extraction architecture (054b) and hierarchical analysis (054d)
 - [Spec 054d Design](./../.kiro/specs/054d-hierarchical-design-extraction/design.md) — Hierarchical design extraction with three-tier classification

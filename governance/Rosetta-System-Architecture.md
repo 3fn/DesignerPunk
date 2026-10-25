@@ -610,11 +610,10 @@ The exemption is **not silent**: each exempt subsystem has a **paired boot/smoke
 ### Rosetta System
 - [Rosetta System Principles](rosetta-system-principles) - Mathematical foundations, naming conventions, governance
 - [Token Quick Reference](token-quick-reference) - Token documentation routing
-- [Token Family Guides](./Token-Family-*.md) - Family-specific documentation
 
 ### Architecture
-- [Token System Overview](../../docs/token-system-overview.md) - Master document mapping token files
-- [Registry-Validator Pattern](../../docs/architecture/registry-validator-pattern.md) - Validation patterns
+- [Token System Overview](../docs/token-system-overview.md) - Master document mapping token files
+- [Registry-Validator Pattern](../docs/architecture/registry-validator-pattern.md) - Validation patterns
 
 ### DTCG Integration
 - [DTCG Integration Guide](dtcg-integration-guide) - Integrating DesignerPunk tokens with external design tools via DTCG format
