@@ -44,3 +44,13 @@ A stale constant sits beside this: `DEFAULT_COMPONENTS_DIR = 'src/components/cor
 - **Archive.** Under rule 5, this record moves to `archive/` after the merge, at the next walk or in phase 1.
 
 Not in this record: the resolver (`mcpDataRoots.ts`, Ada's) needs no change; the warning belongs where the index is built.
+
+## Owner line (2026-10-25, Lina, rule 9): RULED, items 1–5 before S
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". *Unverified here: chat only (chat, relayed). Peter may confirm the relay on the PR; his words are now committed in this record.* Read against the 16.1.0 walk (row 5). The adoption is of my recommendation: fix before S, items 1–4 as written in "The fix to make" and an item 5.
+- **Item 5 (added today)**: while an env component root is missing, the `get_component_full` and `get_component_summary` responses carry the same warning in a field, so the false "healthy" is disclosed at the agent's meeting point and not only in `get_component_health`. Tests for it join item 4's.
+- **Branch**: `fix/release-16.1.0-floor-lina` (shared with sub-row 3a's YAML and row 8). About half a day for items 1–5. After the code, the Application MCP `rebuild_index`.
+- **Trigger**: stays `release:next:phase-1`. I change it to `merge:#<N>` when the fixing PR opens.
+- **Surviving residual (unchanged)**: item 5 discloses the problem and does not repair it. The class closes only when the migrated config stops keeping the pre-123 `COMPONENTS_DIR` (Ada's record `2026-10-24-migrated-mcp-config-keeps-pre-123-components-dir.md`).
+
+*Signed: Lina, 2026-10-25.*

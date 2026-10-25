@@ -147,12 +147,19 @@ async function main() {
       dsRoot: findDesignSystemRoot(config.configDir),
       packageRoot: path.resolve(__dirname, '..'),
     }).roots;
+    // Each component token's defining component (`definedBy`) is written from the file it was
+    // harvested from: a consumer's `generate` reads it to tell which of these entries belong to a
+    // package component it has not replaced (shape (c),
+    // .kiro/issues/2026-10-23-born-repo-index-lacks-package-component-tokens.md).
+    const { componentTokenSourceFile } = await import('../src/cli/loadComponentTokens');
+    const registered = ComponentTokenRegistry.getAll();
     const indexResult = generateTokenIndex(path.resolve(process.cwd(), 'token-index'), {
       primitiveTokens: tokenInput.primitiveTokens,
       semanticTokens: tokenInput.semanticTokens,
-      componentTokens: ComponentTokenRegistry.getAll(),
+      componentTokens: registered,
       modeResolved,
       componentSchemaDir,
+      componentTokenFiles: new Map(registered.map(t => [t.name, componentTokenSourceFile(t)])),
       // Spec 123 Task 1.5 (DD24): record the live tier for the theme readers.
       tierDir: config.tokenSourceRoot,
     });

@@ -31,6 +31,24 @@ import type { RegisteredComponentToken } from '../registries/ComponentTokenRegis
 import { getTokenContract } from '../build/tokens';
 
 /**
+ * The file each harvested token came from. Keyed by the token OBJECT the registry stores (the
+ * registry keeps the harvested object itself), so it needs no "last run" state: a token from
+ * any earlier harvest still answers. Read through {@link componentTokenSourceFile}.
+ */
+const sourceFileByToken = new WeakMap<RegisteredComponentToken, string>();
+
+/**
+ * The token-source file a component token was harvested from, or `undefined` for a token this
+ * loader did not harvest. `generate` passes it to the token index, which writes the defining
+ * component (`definedBy`) for a file in a component directory — what lets a consumer's
+ * `generate` tell which package component an entry of the package's shipped index belongs to
+ * (`.kiro/issues/2026-10-23-born-repo-index-lacks-package-component-tokens.md`, shape (c)).
+ */
+export function componentTokenSourceFile(token: RegisteredComponentToken): string | undefined {
+  return sourceFileByToken.get(token);
+}
+
+/**
  * Discover component token files and harvest branded results into the canonical
  * `ComponentTokenRegistry` as the sole writer. Returns all harvested tokens for
  * downstream consumers.
@@ -200,6 +218,7 @@ function harvestModule(
       // registry's conflict throw at write time).
       if (seenNames.has(token.name)) continue;
       seenNames.add(token.name);
+      sourceFileByToken.set(token, file);
       harvested.push(token);
     }
   }

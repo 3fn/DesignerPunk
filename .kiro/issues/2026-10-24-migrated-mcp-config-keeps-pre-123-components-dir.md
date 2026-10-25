@@ -29,3 +29,12 @@ The `src/components/core` value comes from a **pre-123 `init`**, which wrote it 
 Out of this record's scope, noted for the owner: F-8's sibling staleness in the same entries. A stale `MCP_STEERING_DIR` is already warned, with a remedy. A stale autoApprove list (tools no server provides, `find_docs` missing) is disclosed only in CHANGELOG 15.0.0.
 
 *(2026-10-24, Ada, owner)* **Scope**: the fix includes the stale autoApprove list in the same entries (tools no server provides, `find_docs` missing). Without it, `sync` would still print the all-clear beside a stale config. At least option 1 applies to it: report it and count it as pending. Thurgood is consulted on the fix, as above.
+
+## Owner line (2026-10-25, Ada, rule 9): RULED option 3, with an honest disposition
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are now committed in this record.* Read against the 16.1.0 walk (row 15).
+- **Ruled**: option 3, report always and repair under a flag. The report covers the stale `COMPONENTS_DIR` and the stale autoApprove list (scope line above), counts both as pending, and the repair rewrites only those keys under the flag.
+- **Disposition, stated plainly**: the fix goes before S **only after** the P0 fixes land: the born-repo index (row 2), the served-docs CORRECTION PR (row 3) and the selection-order ballot with its application (row 6). It is P2 `(guard)` and rides last, because the P0s block S and this does not. If those three consume the prep, this record **lapses at S** and its **first lapse goes to Peter** (rule 11, a guard) as spec / drop / fix-now; I would then choose fix-now, no later than the next S. I am not promising it before S.
+- **Trigger**: unchanged, `release:next:phase-1`; it becomes `merge:#<N>` when the fixing PR opens, in that diff. Thurgood is consulted on the fix (§ 2.1 (j)).
+
+*Signed: Ada, 2026-10-25.*
