@@ -5,6 +5,7 @@
 **Owner**: Thurgood. I own `scripts/owed-set.sh` and its test, and I author RELEASE-FLOW § 5a's text through its review round. Stacy specifies the falsification fixtures (Q5 instrument pattern). The fork is Peter's.
 **Class**: P2 obligation (record) · defect *(set 2026-10-25, Thurgood, rule 12, on Stacy's proposal: "propose P2 (record) with Thurgood's re-class". The script over-lists, and over-listing is the safe direction: no owed spec is hidden, and the operator's reading corrects the printed set at each release. What is wrong is the form of the result, a candidate list that needs a correction every release, not a guard that claims more than it holds.)*
 **Trigger**: `merge:#473` — the fixing PR, which closes this record (rule 11) by recording the outcome and archiving it. *(was: `release:next:phase-1` — the next release's walk reads whether Peter has picked (A) or (B) and, for (A), whether the fixing PR has merged.)* *(Re-ruled 2026-10-25, Thurgood, rules 1 and 9: the vehicle PR now exists, so the Trigger names its number, per ballot 2026-10-22-trigger-names-the-event-not-the-vehicle. The earlier token was set 2026-10-25, Thurgood, rule 1.)*
+**Status**: CLOSED for the script defect (2026-10-25, rule 5; fixing PR #473 merged as `1eced6cd5`). The law-text question did NOT close with it: it moved to `.kiro/issues/2026-10-25-owed-set-law-text-after-closing-commit-anchor.md`.
 **Consulted**: Stacy — her walk read of 2026-10-25 (quoted below) is the consult. She specifies the fixtures.
 
 ---
@@ -109,3 +110,23 @@ The script no longer does what four law or charter surfaces say it does. Here is
 **Kind**: I read L1–L3 as LAW, and so they carry the PR's one `**Open for Peter**:` line. They describe a ratified operationalization, and fork (A) ruled the script, not these sentences. The other defensible reading is EXECUTION of fork (A) ("fix all of them as the owners recommend"). That pick is Peter's.
 
 Stacy's cross-read (2026-10-25) accepted the union clock, the wider belt and the strings (43/43; real tree 0 candidates, 11 rows; her named over-inclusions are the cheap direction). She drafts her own charter lines L445/L449 and overlay L112/L116 in the follow-on, kind to follow Peter's pick. The law-text kind question (LAW or EXECUTION for L1–L3) is the `**Open for Peter**:` line on #473.
+
+---
+
+## Lapse (2026-10-25)
+
+Trigger `merge:#473` fired at `1eced6cd5` (#473, merged by Peter 2026-10-25). No ancestor of that commit closed or re-ruled this record: the fixing PR landed the script and tests but carried no rule-5 outcome line, and the `## Outcome` below is added after the merge. Rule 11 therefore counts a lapse, named by its firing commit. First lapse of a P2 (record): it does not escalate (rule 11). The next section closes the script defect.
+
+*Signed: Thurgood, 2026-10-25.*
+
+---
+
+## Outcome (2026-10-25, Thurgood; rule 5, fixing PR: #473)
+
+**What #473 shipped** (merged by Peter 2026-10-25 as `1eced6cd5`, "owed-set anchors on the closing commit of tasks.md, with Stacy's 19 falsification fixtures"): `scripts/owed-set.sh` anchors on the spec's *closing commit* (the oldest commit in the newest unbroken run of first-parent `tasks.md` states with no unticked parent) instead of the last path touch. A pre-adoption closing makes the spec `touch-only`; a post-adoption closing makes it a `candidate`; closure undecidable falls back to the retired path rule and says so; the belt keeps a pre-adoption closing a candidate when a `completion/task-*` file was added after adoption; the post-adoption test is the union of the recorded day and the UTC day, over the whole first-parent line with no `--since`. `scripts/__tests__/owed-set.test.ts` went from 24 to 43 cases (Stacy's 19 are three describe blocks; the 10 expected movements are in the first group), and her specification is committed verbatim at `scripts/__tests__/__fixtures__/owed-set/owed-set-fixtures-stacy.md`. On the real tree (`652074c6b`) `bash scripts/owed-set.sh` prints 0 candidates, 11 rows (0 + 2 closed + 0 open + 5 stub + 4 touch-only), matching Stacy's hand-check with the four closing commits she named. Stacy's cross-read of the commit (2026-10-25) accepted the union clock, the wider belt and the reason strings (43/43; no blocker; the early-tick limit stays an operator read).
+
+**Claimed vs closed.** Claimed by the PR and closed by it: the script defect this record names (false candidates 122 and 023; the back-dated-commit hiding bug as a by-product). **Not closed, and not claimed closed**: (1) the four law and charter surfaces that still describe the retired path rule (the "Law text this needs" section above, L1 to L4); (2) the question of what *kind* of edit they are. The PR body carried that question as an `**Open for Peter**:` line, and **it was not answered before the merge**. A merge never answers (Peter, 2026-10-17; Task-Completion-Protocol, "A question to Peter holds the merge"). This outcome line does not answer it either. It moved, with its drafts and Stacy's charter-line drafts copied verbatim, to the new record `.kiro/issues/2026-10-25-owed-set-law-text-after-closing-commit-anchor.md` (Trigger `release:next:phase-1`), where it can be read and where the follow-on PR will close it.
+
+**Also surfaced by #473, filed in that new record**: `scripts/owed-set.sh`, its test and its fixtures are not in my by-file write-scope list in `canonical/agents/thurgood.md` (a `canonical/agents/**` edit, Peter-merged).
+
+*Signed: Thurgood, 2026-10-25.*

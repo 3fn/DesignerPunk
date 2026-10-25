@@ -4,6 +4,7 @@
 **Owner**: Lina (`application-mcp-server/**` is in her standing write scope)
 **Class**: P0 false-claim · defect *(set 2026-10-24, Lina, rule 12. My reading: two MCP responses are false where an agent reads them, which is the P0 definition in ballot `2026-10-18-obligation-drain-and-release-falsity-floor` M7 ("an MCP contract or response"). `get_component_health` answers `"healthy"` while the root it was configured to read does not exist, and `get_component_full` answers for a name the consumer forked with the package's component, not hers. Only Peter downgrades a P0; Stacy may dispute the reading.)*
 **Trigger**: `merge:#471` — the fixing PR, which closes this record (rule 11) by recording the outcome and archiving it. *(was: `release:next:phase-1` — the fixing PR merged before the next release's RELEASE phase 1. Being P0, this record is a floor-class row at that release's walk: fixed, or carried to Peter in the walk's batch.)* *(Re-ruled 2026-10-25, Lina, rules 1 and 9: the vehicle PR now exists, so the Trigger names its number, per ballot 2026-10-22-trigger-names-the-event-not-the-vehicle.)*
+**Status**: **CLOSED** 2026-10-25 by #471 (`83cfae189`); see the outcome line at the foot.
 **Source**:
 - test01 upgrade rehearsal, 12.0.5 → 16.0.0, 2026-10-24: Spec 131 evidence `.kiro/specs/131-governance-simplification/evidence/2026-10-24-test01-upgrade-rehearsal.md`, **F-8** (second bullet: "Application MCP has `COMPONENTS_DIR=./src/components/core`, a folder the same run deleted. Health says `"healthy"`, it falls back to package components, and it never sees the consumer's forks"), step 11, and "Bottom line" item 6.
 - Lina's code read, 2026-10-24, at `e4e61eea2`.
@@ -52,5 +53,14 @@ On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of
 - **Branch**: `fix/release-16.1.0-floor-lina` (shared with sub-row 3a's YAML and row 8). About half a day for items 1–5. After the code, the Application MCP `rebuild_index`.
 - **Trigger**: stays `release:next:phase-1`. I change it to `merge:#<N>` when the fixing PR opens.
 - **Surviving residual (unchanged)**: item 5 discloses the problem and does not repair it. The class closes only when the migrated config stops keeping the pre-123 `COMPONENTS_DIR` (Ada's record `2026-10-24-migrated-mcp-config-keeps-pre-123-components-dir.md`).
+
+*Signed: Lina, 2026-10-25.*
+
+## Outcome line (rule 5; Lina, 2026-10-25)
+
+**Closed by #471, merged 2026-10-25 as `83cfae189`** (branch `fix/release-16.1.0-floor-lina`); the Trigger `merge:#471` is met. **Status**: **CLOSED**. **Claimed**: `get_component_health` answered `"healthy"` while the consumer's `COMPONENTS_DIR` root did not exist, and queries for a forked name answered with DesignerPunk's component. **Closed**: items 1–5 as written in the Outcome section above and merged unchanged (`75790e3bc`): health is `degraded` with the exact warning, the boot log prints it, `get_component_full` and `get_component_summary` carry it first in `warnings`, and a missing default root is not a warning. Tests: `application-mcp-server` suite 37 suites / 523 tests, six mutations each turn a test red. This record has no browser line (no web-element behaviour). The fix closed it; no waiver was taken.
+
+**Stays open (each with its owner and record; none blocks this close):**
+- *Ada*: the class closes only when the migrated config stops keeping the pre-123 `COMPONENTS_DIR`: `2026-10-24-migrated-mcp-config-keeps-pre-123-components-dir.md` (walk row 15). Item 5 discloses the problem and does not repair it.
 
 *Signed: Lina, 2026-10-25.*

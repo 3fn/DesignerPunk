@@ -6,7 +6,7 @@
 **Filed by**: Lina, under rule 10, from the `**Open for Peter**` (1) line in #450's body. **#450 merged (2026-10-24/25, `07cfb7c41`) with that question open.** Peter has not ruled on the record. Under the don't-merge-until-answered rule a merge never answers a question, so this record is the filing that rule requires. Nothing below is his answer.
 **Class**: P0 false-claim · defect *(set 2026-10-25, Lina, rule 12. The Input-Checkbox-Base contract is served by the application MCP, and its `validation_form_integration` says "Form reset returns checkbox to initial state" and validates "Form reset restores initial checked state" (`src/components/core/Input-Checkbox-Base/contracts.yaml:143–161`). Sparky's Chromium 152 run (2026-10-23) saw the demo's "Receive product updates", loaded checked, become unchecked on reset. For a Base authored `checked`, the contract's statement is false at the place an agent meets it (M7's P0 definition: "a statement false in … an MCP contract"). If Peter reads "initial state" as "unchecked", the contract is not false and he says so in the floor batch; the class costs that routing and no more. Only Peter downgrades a P0. Input-Checkbox-Legal inherits the contract (`inherits: Input-Checkbox-Base`).)*
 **Trigger**: `merge:#471` — the fixing PR, which closes this record (rule 11) by recording the outcome and archiving it. *(was: `release:next:phase-1` — the release falsity floor's due point for a P0: fixed, or waived by Peter in that release's floor batch (ballot `2026-10-18-obligation-drain-and-release-falsity-floor` M7). Start condition (prose): Peter's ruling between options (a) and (b) below; the fixing PR then names this record. When it merges the owner re-rules this line to `merge:#<N>` with a dated reason (rule 11). *(The brief suggested `manual` naming the fixing PR; rule 1 allows that only for a P3, and this record is P0.)*)* *(Re-ruled 2026-10-25, Lina, rules 1 and 9: the vehicle PR now exists, so the Trigger names its number, per ballot 2026-10-22-trigger-names-the-event-not-the-vehicle.)*
-**Status**: **OPEN**, RULED (a) 2026-10-25 (Peter, chat, relayed; see the owner line at the foot). Fix owed before S. *(Was: "waiting on Peter's ruling. Peter has not ruled.")*
+**Status**: **CLOSED** 2026-10-25 by #471 (`83cfae189`); see the outcome line at the foot. RULED (a) 2026-10-25 (Peter, chat, relayed; see the owner line). *(Was: "waiting on Peter's ruling. Peter has not ruled.")*
 
 ---
 
@@ -71,5 +71,15 @@ On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of
 - **Branch**: `fix/release-16.1.0-floor-lina`. About half a day plus one Chromium run by Sparky, whose dated line closes the verification. The E7 claim fix rides the same PR (see the web-element record).
 - **Trigger**: stays `release:next:phase-1`. I change it to `merge:#<N>` when the fixing PR opens.
 - **Surviving residual**: the new authored-state piece and its reflection rule, and the Base/Legal split, as written above.
+
+*Signed: Lina, 2026-10-25.*
+
+## Outcome line (rule 5; Lina, 2026-10-25)
+
+**Closed by #471, merged 2026-10-25 as `83cfae189`** (branch `fix/release-16.1.0-floor-lina`); the Trigger `merge:#471` is met. **Status**: **CLOSED**. **Claimed**: the served `validation_form_integration` contract says form reset "returns checkbox to initial state", and the code reset to unchecked. **Closed**: ruling (a), restore the authored state, as ruled by Peter (chat, 2026-10-25, relayed verbatim in the Ruling section above), merged as `48b6dae8c`: Input-Checkbox-Base restores `{ checked, indeterminate }` as of first connect, Legal restores `checked` after consent is enforced, neither fires `change` on reset, Spec 046 Req 8.8 amended, both READMEs and `governance/Component-Family-Form-Inputs.md` L217 and `demos/checkbox-demo.html` L285 corrected. The contract text is unchanged and now true on web. **Browser**: Sparky's lines above, Chromium 152.0.7977.149 at `b4a4e3755`: R8-1 to R8-6 and R8-X PASS. Safari and Firefox were not run. Checkbox suites 191 tests; four mutations each turn tests red. The fix closed it; no waiver was taken.
+
+**Stays open (each with its owner and record; none blocks this close):**
+- *Peter, optional follow-up (Lina)*: if he wants native's rule (a pre-connect property set is not authored), it needs a new piece of state. Nothing asks for it now; it is the "Surviving residual" in the owner line below.
+- *Real-browser coverage of form participation (Thurgood; Peter's call)*: `2026-10-25-real-browser-test-lane-for-form-participation.md`. The jsdom tests do not prove submission; E7's lane stays open there and in `2026-10-20-web-element-api-and-form-participation.md`.
 
 *Signed: Lina, 2026-10-25.*

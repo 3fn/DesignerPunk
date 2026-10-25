@@ -6,7 +6,7 @@
 **Filed by**: Lina, under rule 10, while fixing sub-row 3a of `2026-10-23-served-docs-teach-non-key-token-names.md` on branch `fix/release-16.1.0-floor-lina`.
 **Class**: P0 false-claim · defect *(set 2026-10-25, Lina, rule 12. `Icon-Base.schema.yaml` is served by the application MCP, and its `size` description pairs `size050` with 13px and `size125` with 32px, while `icon.size050` and `icon.size125` generate 16px and 28px. An agent that reads the schema and then uses the token gets a different size than it was told. Only Peter downgrades a P0. Filed after the 16.1.0 walk, so under the walk's own rule this is a phase-1 finding, not a walk row.)*
 **Trigger**: `merge:#471` — the fixing PR, which closes this record (rule 11) by recording the outcome and archiving it. *(was: `release:next:phase-1` — the release falsity floor's due point for a P0: fixed, or waived by Peter in that release's floor batch (ballot `2026-10-18-obligation-drain-and-release-falsity-floor` M7). Start condition (prose): Ada's read of which side is true.)* *(Re-ruled 2026-10-25, Lina, rules 1 and 9: the vehicle PR now exists, so the Trigger names its number, per ballot 2026-10-22-trigger-names-the-event-not-the-vehicle.)*
-**Status**: **OPEN**.
+**Status**: **CLOSED** 2026-10-25 by #471 (`83cfae189`); two forks for Peter stay open in the walk's Line 29 (see the outcome line at the foot).
 
 ---
 
@@ -43,3 +43,13 @@ Ada's read is appended here, the fixing PR names this record, and its outcome li
 - **A second item I found, held for Peter, not changed**: `iconBaseSizes.size125` is the value `32` in `types.ts` (a public runtime constant), so `size={iconBaseSizes.size125}` renders 32px on web while the `icon.size125` token and iOS render 28px. I annotated it in the comment and left the value, because changing it re-renders consumers. My recommendation is to change it to 28 (it is still a valid `IconBaseSize`); that is a rendering change, so it is Peter's call. Input-Checkbox-Base's `ICON_SIZE_MAP` (`sm: 13 // icon.size050 → 16px rendered`) is already correct against the note.
 
 Trigger unchanged; it becomes `merge:#<N>` when the PR opens.
+
+## Outcome line (rule 5; Lina, 2026-10-25)
+
+**Closed by #471, merged 2026-10-25 as `83cfae189`** (CORRECTION `dc89e261c`; truth: `src/tokens/semantic/IconTokens.ts` and `token-index/semantics.yaml`); the Trigger `merge:#471` is met. **Status**: **CLOSED**. **Claimed**: served Icon-Base text (schema L65 and L69, `contracts.yaml` L45, README L126 and L129) said `icon.size050` is 13px and `icon.size125` is 32px, while the token index and the generated CSS and Swift give 16px and 28px. **Closed**: every served line, the `types.ts` and `styles.css` comments and the web error message now state 16px and 28px (Ada's read: the token is the truth, no token change); the public literal 13 is still accepted and the schema and README say it renders 16px. Icon-Base suite 21/21; `npm run generate:platform-tokens` leaves `token-index/` unchanged. This is a text correction; there is no browser line.
+
+**Stays open: the merge did NOT answer Peter's two forks, and they are not closed by this move.** They are held in the release 16.1.0 walk's **Line 29** (`.kiro/issues/2026-10-25-release-16.1.0-walk.md`, the `**Open for Peter**: Line 29` entry) and in the "Fork for Peter" section above, which is point-in-time and travels with this record to `archive/` (README rule 3):
+- *(i) the public literal `13`, which renders 16px*: keep it with the note (Lina's and Ada's recommendation; done) or rename it (a 17.0.0 candidate, since `IconBaseSize` is public API). Ada's surviving counter-argument: Spec 006 may have intended 13, and getting 13 back is a token change (Ada's) that re-renders every consumer.
+- *(ii) the `iconBaseSizes.size125` constant is `32`* while the token and iOS render 28: Lina recommends changing it to 28 (re-renders web consumers of the constant); held, not changed. Owner of the code change: Lina; the call is Peter's.
+
+*Signed: Lina, 2026-10-25.*
