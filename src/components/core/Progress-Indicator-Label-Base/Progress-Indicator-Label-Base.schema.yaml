@@ -53,6 +53,12 @@ properties:
 tokens:
   typography:
     - typography.labelSm
+  color:
+    - color.text.default
+    - color.text.subtle
+  spacing:
+    - space025
+    - fontSize075
 
 platforms:
   - web

@@ -96,8 +96,16 @@ tokens:
     - space.inset.150
     - space.inset.200
     - space.grouped.minimal
+    - space.inset.075
+    - space050
+    - space075
+    - space150
+    - space200
+    - space600
+    - space700
   border:
     - radius.full
+    - border.default
   opacity:
     - opacity024
     - opacity000
@@ -107,6 +115,7 @@ tokens:
     - easingAccelerate
     - easingGlideDecelerate
     - easingDecelerate
+    - motion.selectionTransition
   blend:
     - blend.pressedLighter
   accessibility:
@@ -114,6 +123,10 @@ tokens:
     - accessibility.focus.width
     - accessibility.focus.offset
     - accessibility.focus.color
+  icon:
+    - icon.size100
+  sizing:
+    - size050
 
 composition:
   internal:

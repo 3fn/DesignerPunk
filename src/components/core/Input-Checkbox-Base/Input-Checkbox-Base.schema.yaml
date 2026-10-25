@@ -117,6 +117,7 @@ tokens:
     - color.feedback.select.border.rest
     - color.text.default
     - color.text.muted
+    - color.print.default
   icon:
     - icon.size050
     - icon.size075
@@ -124,14 +125,20 @@ tokens:
   accessibility:
     - tapAreaMinimum
     - tapAreaRecommended
+    - accessibility.focus.color
+    - accessibility.focus.offset
+    - accessibility.focus.width
   motion:
     - motion.buttonPress
     - motion.selectionTransition
+    - duration250
+    - easingStandard
   blend:
     - blend.hoverDarker
     - blend.pressedDarker
   border:
     - border.emphasis
+    - border.heavy
   radius:
     - radius.small
     - radius.subtle
@@ -140,6 +147,20 @@ tokens:
   typography:
     - typography.labelMd
     - typography.labelSm
+  spacing:
+    - space.grouped.loose
+    - space.grouped.minimal
+    - space.grouped.normal
+    - space.grouped.tight
+    - space.inset.050
+    - space.inset.075
+    - space.inset.100
+    - fontSize050
+    - fontSize075
+    - fontSize100
+    - fontSize125
+    - typography.caption
+    - typography.labelLg
 
 platforms:
   - web

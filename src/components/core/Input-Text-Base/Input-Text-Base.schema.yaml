@@ -170,6 +170,8 @@ tokens:
     - space.inset.100
     - space.grouped.tight
     - space.grouped.minimal
+    - space.inset.200
+    - space.inset.none
   motion:
     - motion.floatLabel
     - motion.focusTransition
@@ -181,6 +183,7 @@ tokens:
     - accessibility.focus.width
     - accessibility.focus.offset
     - accessibility.focus.color
+    - tapAreaComfortable
   icon:
     - icon.size100
   blend:

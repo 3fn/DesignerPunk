@@ -107,6 +107,10 @@ tokens:
     - typography.labelLg
     - typography.labelMd
     - typography.labelSm
+    - fontSize050
+    - fontSize075
+    - fontSize100
+    - fontSize125
   accessibility:
     - accessibility.focus.color
     - accessibility.focus.offset
@@ -116,6 +120,8 @@ tokens:
   motion:
     - motion.buttonPress
     - motion.selectionTransition
+    - duration250
+    - easingStandard
   blend:
     - blend.hoverDarker
     - blend.pressedDarker

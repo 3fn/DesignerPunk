@@ -96,6 +96,7 @@ tokens:
     - icon.size075
     - icon.size100
     - icon.size500
+    - icon.strokeWidth
   motion:
     - motion.focusTransition
   opacity:
@@ -105,6 +106,19 @@ tokens:
     - space400
     - space500
     - space600
+  border:
+    - border.default
+    - border.emphasis
+    - borderWidth100
+    - borderWidth200
+    - radiusHalf
+  sizing:
+    - size1000
+    - size1600
+    - size300
+    - size400
+    - size500
+    - size600
 
 platforms:
   - web

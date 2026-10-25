@@ -114,6 +114,18 @@ tokens:
     - accessibility.focus.offset
     - accessibility.focus.color
     - icon.size075
+  border:
+    - borderWidth100
+  motion:
+    - duration150
+    - motion.buttonPress
+  typography:
+    - fontSize075
+    - lineHeight075
+  spacing:
+    - space050
+    - space075
+    - space150
 
 # Supported platforms
 platforms:

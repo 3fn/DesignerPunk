@@ -144,6 +144,16 @@ tokens:
   color:
     - color.icon.opticalBalance
     - color.print.default
+  sizing:
+    - size050
+    - size100
+    - size150
+    - size200
+    - size300
+    - size400
+    - size500
+    - size600
+    - size700
 
 # Supported platforms
 platforms:

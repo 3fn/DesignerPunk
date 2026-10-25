@@ -120,6 +120,19 @@ tokens:
     - color.feedback.select.background.rest
     - color.feedback.select.border.rest
     - color.feedback.select.text.rest
+  border:
+    - border.emphasis
+    - borderWidth100
+  motion:
+    - duration150
+    - motion.buttonPress
+  typography:
+    - fontSize075
+    - lineHeight075
+  spacing:
+    - space050
+    - space075
+    - space150
 
 # Supported platforms
 platforms:

@@ -120,22 +120,34 @@ tokens:
     - color.contrast.onAction
     - color.structure.canvas
     - color.icon.opticalBalance
+    - color.contrast.onDark
+    - color.print.default
   spacing:
     - space.inset.100
     - space.inset.150
     - space.inset.200
     - space.grouped.normal
+    - space.grouped.tight
+    - space.inset.300
+    - space.inset.400
   motion:
     - motion.buttonPress
   border:
     - border.default
     - radius100
     - radius150
+    - border.emphasis
+    - border.heavy
+    - borderWidth000
+    - borderWidth100
+    - radius200
   accessibility:
     - tapAreaRecommended
     - accessibility.focus.width
     - accessibility.focus.offset
     - accessibility.focus.color
+    - tapAreaComfortable
+    - tapAreaMinimum
   icon:
     - icon.size100
     - icon.size125
@@ -146,6 +158,10 @@ tokens:
     - size700
     - size900
     - size1000
+  shadow:
+    - shadow.hover
+    - size500
+    - size600
 
 # Supported platforms
 platforms:
