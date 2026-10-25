@@ -46,11 +46,30 @@ date: 2026-09-29
 ## `#what-civitas-contains`
 
 confirmer: stacy
-canonicalHash: sha256:1cf39e5cf23bce5b04edc831db1e0d71c5881b086a58fddbd862115c9797937b
+canonicalHash: sha256:77dc3cb69a10ba754447dfc278d64cead1ff80013763931a9235e8fd574f8a26
 items: what-civitas-con-2, what-civitas-con-3, what-civitas-con-4, what-civitas-con-5, what-civitas-con-6, what-civitas-con-7, what-civitas-con-8, what-civitas-con-9, what-civitas-con-10, what-civitas-con-17
 date: 2026-10-24
 
-**Re-confirmed 2026-10-24 (Req 11.6.5d).**
+**Re-confirmed 2026-10-24, second time (Req 11.6.5d): the count correction.**
+- **What changed**: counts only, plus one clause. Steering CORRECTION `cf53ef403` (Peter, 2026-10-25, relayed: "Let's fix them"):
+  - steering docs 92 (83 + 9) → 93 (84 + 9);
+  - Docs MCP 83 docs / 2,833 sections / 333 cross-references → 84 / 2,535 / 331;
+  - hooks 13 → 12;
+  - knowledge bases 24 → 13;
+  - the shell-scripts line drops "release management".
+  Thurgood re-authored item `what-civitas-con-6`'s `text` at `d25990912`, under the grant `.kiro/issues/2026-10-25-identity-doc-stale-counts-grant.md`, which #466 (`311d3a42f`) activated. The canonicalHash moves from `sha256:1cf39e5cf23bce5b04edc831db1e0d71c5881b086a58fddbd862115c9797937b` to the value above. `operative-set-freshness` printed it, and I recomputed it independently; the two agree.
+- **`what-civitas-con-6`, read against the unit**: its text is verbatim (`grep -F`: 1 hit). Its numbers are true by command, which I re-ran myself at `d25990912` after `cd mcp-server && npm run build`. The steward's `docs-count.js` (`DocumentIndexer.indexDirectory(<worktree>/governance)`, `getIndexHealth().metrics`) gives `"totalDocuments":84,"totalSections":2535,"totalCrossReferences":331`, and `ls governance/*.md | wc -l` gives `84`. The counts ride inside the item text; they are not items (my 2026-09-29 ruling).
+- **Other numbers in the unit, re-run**, not items:
+  - `ls .kiro/steering/*.md | wc -l` → 9;
+  - hooks (`git ls-files '.kiro/hooks/*.kiro.hook' ':!.kiro/hooks/archive/**'`) → 12, and shell scripts → 5. None of the five does release work.
+  - knowledge-base entries in the canonical charters → 13;
+  - charters excluding `_fixture` → 8;
+  - `*mcp-server` directories → 3;
+  - application MCP `get_component_health` → 34 components, 217 + 193 + 33 = 443 tokens, 9 patterns.
+  The knowledge-base count follows the steward's definition (canonical declarations, 13; the emitted Kiro configs carry 6). It is not an item, so the definition question does not reach this confirmation.
+- **What did not change**: the set, still 10 items. The other 9 items are untouched and still verbatim.
+
+**Re-confirmed 2026-10-24, first time (prior record, superseded; canonicalHash `sha256:1cf39e5cf23bce5b04edc831db1e0d71c5881b086a58fddbd862115c9797937b`, 10 items) (Req 11.6.5d).**
 - **What changed**: one line of the unit. The Product MCP line said "(conceptual — specs 081, 096, 097)". It now says the server reads a consumer's `product/` directory, has 14 tools and ships as `dist/mcp/product-mcp.js`, and that this repository has no `product/` directory. Steering CORRECTION `d4bd2ea49`, Peter-merged under the carve-out (Spec 131 ballot audit fix-now item 8). Thurgood re-authored item `what-civitas-con-8` (`label`, `text`) at `0e2a2bd41`, under the issue-row grant `.kiro/issues/2026-10-24-product-mcp-correction-signed-units-grant.md`, which #464 (`2eafd7296`) activated. The canonicalHash moves from `sha256:6d5bb7e904c10be1b5bf04b25fd03b6f5222b3e5ea2b46c92b40aa4b6debf137` to the value above. `operative-set-freshness` printed it, and I recomputed it independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts`; the two agree.
 - **`what-civitas-con-8`, read against the unit**: its `text` is a verbatim substring of the unit (`grep -F`: 1 hit), with the list marker left out as formatting. The sweep no longer reports it as not verbatim. Its facts hold at `0e2a2bd41`:
   - `product-mcp-server/src/index.ts` registers 14 tools;
