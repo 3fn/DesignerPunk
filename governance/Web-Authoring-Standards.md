@@ -103,7 +103,7 @@ There is no step 4. If no system token exists, create a product token.
 
 **Classification heuristic**: If the token name describes purpose or context (`inset`, `grouped`, `action`, `feedback`, `tap-area`), it's semantic. If it describes scale position (`space-200`, `gray-300`, `radius-100`), it's primitive.
 
-**Note**: This priority chain is Sparky's decision tree for screen CSS. Lina follows Core Goals' token selection priority which includes component tokens. Component tokens are not part of Sparky's workflow.
+**Note**: This priority chain is Sparky's decision tree for screen CSS: the one order in Token Governance § "Token Selection Matrix", with the component step removed because screens have none. Lina follows that order whole, including a component's own token. Component tokens are not part of Sparky's workflow.
 
 ### 4. Focus Patterns
 
@@ -383,7 +383,7 @@ gap: 24px; /* "I'll tokenize this later" — no you won't, session memory is los
 - **Product-Token-Governance.md** — Full product token authoring governance
 - **platform-implementation-guidelines.md** — Cross-platform implementation patterns
 - **Component-Development-Standards.md** — Component-specific development workflow
-- **Core Goals.md** — System token priority (semantic → primitive → component)
+- **Token-Governance.md** § "Token Selection Matrix" — The token selection order (Core Goals points to it)
 
 ---
 
