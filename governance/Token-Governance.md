@@ -36,35 +36,18 @@ This document defines the governance framework for token selection, usage, and c
 
 ## Token Selection Matrix
 
-When you need a token value, follow this priority order:
+When you need a token value, take the first step that applies. This is the one token-selection order: Core Goals points here and does not restate it. *(Amended 2026-10-25 by ballot 2026-10-25-token-selection-order-one-rule, item 1; prior text at `1eced6cd5`.)*
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                        TOKEN SELECTION PRIORITY                              │
-│                     (Concept-First Approach)                                 │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│   1. SEMANTIC CONCEPT TOKEN EXISTS?                                          │
-│      └── YES → Use it (verify semantic correctness)                         │
-│      └── NO  → Continue to step 2                                           │
-│                                                                              │
-│   2. COMPONENT TOKEN EXISTS?                                                 │
-│      └── YES → Use it (requires human checkpoint)                           │
-│      └── NO  → Continue to step 3                                           │
-│                                                                              │
-│   3. PRIMITIVE TOKEN EXISTS?                                                 │
-│      └── YES → Use it (requires context/acknowledgment)                     │
-│      └── NO  → Continue to step 4                                           │
-│                                                                              │
-│   4. NO EXISTING TOKEN WORKS?                                                │
-│      └── STOP → Human checkpoint required                                   │
-│          └── Present: value needed, what was checked, recommendation        │
-│          └── Human decides: component token vs new primitive vs new semantic│
-│                                                                              │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+1. **The component you are building has its own component token for this property** → use it **with no checkpoint** (§ "Component Token Usage"). A component token is named for its component (`buttonicon.inset.medium` belongs to Button-Icon), so this step applies only inside that component. A token that belongs to another component is not a selection step: using one goes to step 4.
+2. **A semantic token exists for the use** → use it. Verify it is semantically correct (§ "Semantic Concept Token Usage").
+3. **A primitive token exists** → use it, with prior context or the human's acknowledgment (§ "Primitive Token Usage").
+4. **Nothing above fits** → **STOP. Human checkpoint.** Present the value needed, what you checked, and your recommendation (§ "Creation Checkpoint Format"). The human decides one of:
+   - a new component token, built by the Component Token Construction Rule (§ "Token Creation Governance");
+   - a new primitive token;
+   - a new semantic token;
+   - as the last resort, a hard-coded value. If the human chooses it, tell the user where the value is and why no token fits.
 
-**Key Insight**: Steps 1-3 are about USING existing tokens. Step 4 is about CREATING new tokens. These have fundamentally different governance requirements.
+**Key Insight**: Steps 1–3 USE existing tokens. Step 4 CREATES a token, or uses a hard-coded value as the last resort, and only the human decides it. These have different governance requirements.
 
 ### Concept-First Selection Guidance
 
@@ -90,6 +73,8 @@ The DesignerPunk token system follows the **Nathan Curtis concept-first naming m
 ---
 
 ## Token Usage Governance
+
+A use-time checkpoint applies only where that use was not reviewed when the token was made. *(Amended 2026-10-25 by ballot 2026-10-25-token-selection-order-one-rule, item 1; prior text at `1eced6cd5`.)*
 
 ### Semantic Concept Token Usage
 
@@ -150,26 +135,24 @@ D) Something else?"
 
 ### Component Token Usage
 
-**Autonomy Level**: Human checkpoint required
-**Friction**: High
-**Requirement**: Explicit human approval
+**Autonomy Level**: Full autonomy inside the owning component
+**Friction**: Low
+**Requirement**: The token belongs to the component being built and is for this property
 
-AI agents MUST checkpoint with human before using component tokens, even if the component token already exists.
+Inside the component a token belongs to, AI agents use that component token for the property it was made for without a checkpoint, as step 1 of § "Token Selection Matrix". A token that belongs to another component, or the owner's token for another property, is not a selection step: using one needs the step-4 checkpoint, in this format:
 
-**Why?** Component tokens represent an acknowledgment that the existing semantic token system is insufficient for a specific component's needs. Using them should be a deliberate decision, not a default.
+**Why?** A component token exists because a human decided, when it was created, that the semantic tokens did not meet this component's need (§ "Token Creation Governance"). Using it inside its own component carries out that decision; a checkpoint would ask the same question again.
 
-**Checkpoint format:**
+**Checkpoint format (another component's token, or the owner's token for another property):**
 ```
 AI: "This component needs [value]. I've checked:
 - Semantic concept tokens: [what was checked, why insufficient]
 - Primitive tokens: [what was checked, why insufficient]
-- Existing component token: [token name] exists for this component
+- Another component's token, or the owner's token for another property: [token name] belongs to [component]
 
-Recommendation: Use existing component token [token name]
-Awaiting your approval to proceed."
+Recommendation: [use it / create a token for this component / new primitive / new semantic]
+Awaiting your decision before proceeding."
 ```
-
-**Exception**: If the spec explicitly calls for using a specific component token, the AI can proceed without additional checkpoint (prior acknowledgment).
 
 **Component Token Pattern**: `<component>.<property>…`, with no family segment (component names are lowercased in the index)
 - Component tokens are declared with `defineComponentTokens`, which takes numeric families only (spacing, sizing, borderWidth); there is no color family
@@ -187,6 +170,10 @@ Awaiting your approval to proceed."
 
 This is non-negotiable. Token creation is an architectural decision that affects the entire design system. AI agents should never autonomously create tokens.
 
+### Component Token Construction Rule
+
+Component tokens must either reference an existing primitive token OR conform to how that primitive token family's values are defined. Never introduce arbitrary values at the component level that don't align with the underlying token family's value system. *(Moved verbatim from Core Goals § "Development Practices" by ballot 2026-10-25-token-selection-order-one-rule, item 1; prior home `.kiro/steering/core-goals.md` L73–74 at `1eced6cd5`.)*
+
 ### Creation Checkpoint Format
 
 When an AI agent determines a new token is needed:
@@ -197,9 +184,9 @@ AI: "No existing token meets this requirement.
 NEEDED: [specific value and context]
 
 CHECKED:
+- This component's own component tokens: [what was checked]
 - Semantic tokens: [what was checked]
 - Primitive tokens: [what was checked]
-- Component tokens: [what was checked]
 
 ANALYSIS:
 - Is this a one-off need? [yes/no and reasoning]
@@ -427,27 +414,13 @@ Awaiting your decision."
 
 ---
 
-### Example 7: Avatar Component Token Usage
+### Example 7: A Component's Own Token
 
-**Situation**: Building an avatar component, need the medium size.
+**Situation**: Building Button-Icon's small size, need its inset (8px).
 
 **Correct approach**:
-1. Check semantic tokens → none covers avatar sizing
-2. Check primitives → `size500` exists
-3. Check component tokens → `avatar.size.md` exists (references `size500`)
-4. Component token exists → Checkpoint required
-
-```
-AI: "Avatar medium variant needs a size. I've checked:
-- Semantic concept tokens: none covers avatar sizing
-- Primitive tokens: size500 exists
-- Existing component token: avatar.size.md exists (references size500)
-
-Recommendation: Use component token avatar.size.md
-REASONING: Component token provides component-scoped discovery while referencing the primitive
-
-Awaiting your approval to proceed."
-```
+1. The component has its own token for this property → `buttonicon.inset.small` (references `space100`). Use it, even though the semantic `space.inset.100` is also 8px: inside its own component, the component's own token comes first
+2. Use `buttonicon.inset.small` → no checkpoint needed.
 
 ---
 
