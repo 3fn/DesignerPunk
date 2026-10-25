@@ -158,10 +158,10 @@ tokens:
     - size700
     - size900
     - size1000
-  shadow:
-    - shadow.hover
     - size500
     - size600
+  shadow:
+    - shadow.hover
 
 # Supported platforms
 platforms:

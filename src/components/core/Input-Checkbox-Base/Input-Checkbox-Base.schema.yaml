@@ -147,6 +147,12 @@ tokens:
   typography:
     - typography.labelMd
     - typography.labelSm
+    - fontSize050
+    - fontSize075
+    - fontSize100
+    - fontSize125
+    - typography.caption
+    - typography.labelLg
   spacing:
     - space.grouped.loose
     - space.grouped.minimal
@@ -155,12 +161,6 @@ tokens:
     - space.inset.050
     - space.inset.075
     - space.inset.100
-    - fontSize050
-    - fontSize075
-    - fontSize100
-    - fontSize125
-    - typography.caption
-    - typography.labelLg
 
 platforms:
   - web

@@ -3030,7 +3030,6 @@ tokens:
       ios: size050
       android: size_050
     consumers:
-      - Icon-Base
       - Nav-TabBar-Base
       - Progress-Bar-Base
   size100:
@@ -3042,7 +3041,6 @@ tokens:
       ios: size100
       android: size_100
     consumers:
-      - Icon-Base
       - Progress-Bar-Base
   size150:
     family: sizing
@@ -3053,7 +3051,6 @@ tokens:
       ios: size150
       android: size_150
     consumers:
-      - Icon-Base
       - Progress-Bar-Base
   size200:
     family: sizing
@@ -3063,8 +3060,7 @@ tokens:
       web: '--size-200'
       ios: size200
       android: size_200
-    consumers:
-      - Icon-Base
+    consumers: []
   size250:
     family: sizing
     value: 20
@@ -3084,7 +3080,6 @@ tokens:
       android: size_300
     consumers:
       - Avatar-Base
-      - Icon-Base
   size400:
     family: sizing
     value: 32
@@ -3095,7 +3090,6 @@ tokens:
       android: size_400
     consumers:
       - Avatar-Base
-      - Icon-Base
   size500:
     family: sizing
     value: 40
@@ -3107,7 +3101,6 @@ tokens:
     consumers:
       - Avatar-Base
       - Button-CTA
-      - Icon-Base
   size600:
     family: sizing
     value: 48
@@ -3119,7 +3112,6 @@ tokens:
     consumers:
       - Avatar-Base
       - Button-CTA
-      - Icon-Base
   size700:
     family: sizing
     value: 56
@@ -3130,7 +3122,6 @@ tokens:
       android: size_700
     consumers:
       - Button-CTA
-      - Icon-Base
   size800:
     family: sizing
     value: 64

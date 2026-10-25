@@ -127,11 +127,11 @@ tokens:
     - radius.normal
   spacing:
     - space125
-  icon:
-    - icon.size100
     - space.grouped.loose
     - space.inset.200
     - space200
+  icon:
+    - icon.size100
 
 platforms:
   - web
