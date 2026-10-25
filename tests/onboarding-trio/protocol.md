@@ -211,7 +211,7 @@ The host facts are separate lines, under `host-toolchain`, recorded as facts wit
 
 ## 9. The schema check (25.5) — presence, not quality
 
-The check establishes that every field is present with a well-formed value. It does not judge observations (S-T-A3). Stacy's CLOSEOUT pass reads the operator logs' content and the `subject: leonardo` findings.
+The check establishes that every field is present with a well-formed value. It does not judge observations (S-T-A3). Stacy's RELEASE pass, phase 1, over the release's delta reads the operator logs' content and the `subject: leonardo` findings *(re-pointed 2026-10-25 from Spec 123's CLOSEOUT, which has run and does not fire for a recurring run; `.kiro/issues/2026-10-25-consumer-screen-spec-complete-unbound.md` row 2)*.
 
 Run from the repo root at the records' commit; paste the output into the records PR body (release 4: the Task 25 completion doc). Set `REL` to the release; the disposition count is 36 per record for release 5 (F25):
 
@@ -804,7 +804,7 @@ Each outcome that differs from this protocol's assumption is also appended to th
 - F25's lines are written from this run's evidence. The fix half of each basis is read from `.kiro/issues/2026-10-15-123-u5-instrument-findings.md` at the records' base, and the observation half from this run's files; the record never takes a disposition from that record alone.
 - Turn counting for Kiro: one agent turn is one model response that ends either in a tool call or in the final answer. From 16.1.0 the count is the number of entries in the session's stored `history` (`out/kiro-conversations/<id>.json`), cross-checked against the transcript, where a response that is only a tool call has no `> ` text line. Release 4 counted `> ` lines only, so each record also states that figure for comparison. The record states the count and this rule.
 - Findings are written per persona and attributed to an axis (F21). A finding seen in more than one run is written in each run's record and marked `also seen in <run-id>`; it is never pooled into one list.
-- Every finding whose subject is consumer-Leonardo carries `subject: leonardo` (run discipline C2), for Stacy's CLOSEOUT cross-read.
+- Every finding whose subject is consumer-Leonardo carries `subject: leonardo` (run discipline C2), for Stacy's cross-read at the RELEASE pass, phase 1 (re-pointed 2026-10-25 from Spec 123's CLOSEOUT; see § 9).
 
 ## 14. Join runs (Task 26)
 
