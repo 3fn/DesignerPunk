@@ -366,7 +366,7 @@ contracts:
     wcag: "4.1.2 Name, Role, Value"
     platforms: [web, ios, android]
     validation:
-      - With id prop, aria-controls follows [id]-panel-[value] pattern (web - the reference resolves to no element; no association is provided)
+      - With id prop, aria-controls follows [id]-panel-[value] pattern (web - where the element reference is set, the attribute reads empty and the reference resolves; where ariaControlsElements is absent, the attribute is set and no association is provided)
       - With id prop and no such element, the segment's reference resolves to no element, never to another one
       - Without id prop, no aria-controls attribute and no element reference
     test_approach: |

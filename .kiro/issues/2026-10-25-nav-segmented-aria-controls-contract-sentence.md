@@ -17,9 +17,13 @@ The behavior text said the `aria-controls="[id]-panel-[value]"` attribute "is se
 
 Behavior sentence now reads: "The `aria-controls="[id]-panel-[value]"` attribute is set where no such panel is found or the browser has no `ariaControlsElements`; where the element reference is set, the attribute reads as empty." The preceding sentence (no tab-to-panel association is provided on web) is untouched, per Peter's ruling. `test_approach` says the double is a stand-in and records the Chromium observation.
 
-## Left for a decision (not touched, per the brief)
+## Second correction (2026-10-25, Lina, at the orchestrator's direction)
 
-The first `validation:` line of the same contract (L368) still reads "web - the reference resolves to no element; no association is provided". It carries the same claim as the corrected sentence. Whether to correct it in this PR or leave it for Peter's call on timing is open to the orchestrator and Peter.
+The first `validation:` line (L368) carried the same claim as the corrected sentence ("web - the reference resolves to no element; no association is provided"). It now reads: "web - where the element reference is set, the attribute reads empty and the reference resolves; where ariaControlsElements is absent, the attribute is set and no association is provided". Why: the same E6-1 observation falsifies it; the orchestrator widened the brief to cover it. Same PR.
+
+## Left for a decision (Peter's; the two corrections above do not depend on it)
+
+The contract's kept sentence (Peter's ruled text, #484 / E6-2), "on web no tab-to-panel association is provided", sits against the code and `Nav-SegmentedChoice-Base/README.md` L264, which set `ariaControlsElements` to the panel in browsers that support it (E6-1 PASS in Chromium) and provide no association only where the browser lacks it. Proposed wording: "on web, no tab-to-panel association is provided where the browser lacks `ariaControlsElements`; where it is supported, the element reference is set". Whether to change the ruled sentence, or let it stand as is, is Peter's call. The PR body carries it as its `**Open for Peter**:` line.
 
 ## What closes it
 
