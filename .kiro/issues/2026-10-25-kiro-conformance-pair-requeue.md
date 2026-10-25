@@ -36,7 +36,17 @@ The Kiro conformance pair (protocol § 15.3): identity probe consumer-Thurgood, 
 
 - **Read `/usage` in the real profile before the window and record it** (the credits used and left, and the reset date). The 16.1.0 sitting met "Request quota exceeded" three times (`trio-2-designer` twice, `trio-3-pm` once) and stopped this pair. Peter's screen after the stops read "KIRO FREE", "Credits (43.79 of 50 covered in plan)", 87.6%, "resets on 2026-11-01". **Whether that ceiling or a request-rate quota caused the stops is not established**: 6.21 credits were left, and `trio-2-designer`'s third attempt succeeded later the same day (`conformance-kiro-beat-1.md` CK-1).
 - The pair needs the most model calls of any run (probes 30 + 30, beats 120 + 60 turns of guard). It runs alone in its window, with nothing else drawing on the plan.
-- The protocol's step-10/step-12 read of kiro-cli's conversation table (`trio-2-designer` R2-15) applies, so the beats' tool results can be read back.
+- The protocol's step-10/step-12 read of kiro-cli's conversation table (`trio-2-designer` R2-15) applies, so the beats' tool results can be read back. **The runs keep their rows**: no run deletes its `conversations_v2` rows from Peter's real profile, before or after the export (ruling below).
+  *Was (2026-10-25, Leonardo, before the ruling):* "The protocol's step-10/step-12 read of kiro-cli's conversation table (`trio-2-designer` R2-15) applies, so the beats' tool results can be read back."
+
+## The rows in the real profile — RULED: keep
+
+**RULED (Peter, 2026-10-25, about 23:45Z, chat, relayed by the orchestrator)**: "Keep the rows". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are committed in this record.* The question was whether a Kiro run deletes its headless-conversation rows (`~/Library/Application Support/kiro-cli/data.sqlite3`, table `conversations_v2`, keyed by the run's repo path) from Peter's real profile after the read-only export to `out/kiro-conversations/`. It does not: the 16.1.0 rows stay, and the November pair's rows stay.
+
+- **Where the question was presented open, and what supersedes it.** `tests/onboarding-trio/records/16.1.0/trio-2-designer.md` R2-15, owner column: "whether runs should remove their rows afterwards is Peter's call, as it is his profile". Its F7 (`harness-user-state`) states the rows and does not put the question. `tests/onboarding-trio/protocol.md` § 12 (the "What `KIRO_HOME` does not isolate" bullet): "Whether a run deletes its rows afterwards is the profile owner's call (Peter's); the protocol does not delete them." Both files are on main and outside any open grant, so neither is edited here. **R2-15's open wording is superseded by this ruling.** The protocol sentence already matches it in effect (the protocol deletes nothing); its "owner's call" clause is restated as ruled at the next protocol revision made under a grant.
+- **What follows for the run.** Nothing changes in the launch blocks: no step deletes rows today. Each record still states its rows' count, keys and times in F7, and the `harness-user-state` verdict keeps `trio-2-designer`'s caveat (the conversations live in the real profile) as a stated fact, not an open item.
+
+*Signed: Leonardo, 2026-10-25.*
 
 ## Walk
 
