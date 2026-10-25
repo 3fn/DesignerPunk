@@ -6,6 +6,10 @@ This file starts with Spec 123 ("Consumer Distribution"). Earlier releases are n
 
 ## [Unreleased]
 
+### Added
+
+- **`<button-cta>` and `<button-icon>` now have the `variant` and `onPress` properties the component schema lists.** Before, the schema served `variant` and `onPress` as properties, but the web elements had neither: `el.variant = "secondary"` set a plain JavaScript field and the button stayed primary, and `el.onPress = fn` never ran, because the elements only had a `buttonVariant` property and dispatched a `press` event. `el.variant` now reads and writes the `variant` attribute, so setting either re-renders. `buttonVariant` still works, as an alias. `el.onPress = fn` now runs `fn` on each press (click, Enter or Space); assigning again replaces the callback, and `el.onPress = null` removes it. The `press` event is unchanged. If you wire both `onPress` and a `press` listener, each runs once per press. Nothing you wrote against 16.0.0 changes behaviour.
+
 ### Changed
 
 - **Input-Checkbox-Base and Input-Checkbox-Legal now submit with their form on web.** A checked box adds `name=value` to `FormData` (`value` defaults to `"on"`), as a native checkbox does; before, neither submitted anything. **If you added a hidden input to work around this, remove it, or the value is submitted twice.** Setting `disabled` on either has no effect: the attribute is removed so it cannot drop the value. Needs a browser with form-associated custom elements (Safari 16.4+). Also fixed: a user's click on `Input-Checkbox-Legal` is no longer refused as a pre-check.
