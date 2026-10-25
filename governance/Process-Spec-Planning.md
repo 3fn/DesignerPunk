@@ -2435,7 +2435,7 @@ Developers can now:
 
 ---
 
-*For detailed implementation notes, see [task-N-parent-completion.md](../../.kiro/specs/[spec-name]/completion/task-N-parent-completion.md)*
+*For detailed implementation notes, see [task-N-parent-completion.md](../../../.kiro/specs/[spec-name]/completion/task-N-parent-completion.md)*
 ```
 
 **Deliverables Field**: Optional. Classifies what this task delivered for release notes.
@@ -2484,7 +2484,7 @@ Enables automatic release detection by creating summary documents in a location 
 
 ---
 
-*For detailed implementation notes, see [task-1-parent-completion.md](../../.kiro/specs/release-detection-trigger-fix/completion/task-1-parent-completion.md)*
+*For detailed implementation notes, see [task-1-parent-completion.md](../../../.kiro/specs/release-detection-trigger-fix/completion/task-1-parent-completion.md)*
 ```
 
 **Naming Convention**:
@@ -2505,14 +2505,14 @@ Format:
 ```markdown
 ---
 
-*For detailed implementation notes, see [task-N-parent-completion.md](../../.kiro/specs/[spec-name]/completion/task-N-parent-completion.md)*
+*For detailed implementation notes, see [task-N-parent-completion.md](../../../.kiro/specs/[spec-name]/completion/task-N-parent-completion.md)*
 ```
 
-Example from `docs/specs/release-detection-trigger-fix/task-1-summary.md`:
+Example for `docs/specs/release-detection-trigger-fix/task-1-summary.md`:
 ```markdown
 ---
 
-*For detailed implementation notes, see [task-1-parent-completion.md](../../.kiro/specs/release-detection-trigger-fix/completion/task-1-parent-completion.md)*
+*For detailed implementation notes, see [task-1-parent-completion.md](../../../.kiro/specs/release-detection-trigger-fix/completion/task-1-parent-completion.md)*
 ```
 
 **From Detailed Docs to Summary (Optional)**:
@@ -2523,14 +2523,14 @@ Format:
 ```markdown
 ## Related Documentation
 
-- [Task N Summary](../../../docs/specs/[spec-name]/task-N-summary.md) - Public-facing summary that triggered release detection
+- [Task N Summary](../../../../docs/specs/[spec-name]/task-N-summary.md) - Public-facing summary that triggered release detection
 ```
 
-Example from `.kiro/specs/release-detection-trigger-fix/completion/task-1-parent-completion.md`:
+Example for `.kiro/specs/release-detection-trigger-fix/completion/task-1-parent-completion.md`:
 ```markdown
 ## Related Documentation
 
-- [Task 1 Summary](../../../docs/specs/release-detection-trigger-fix/task-1-summary.md) - Public-facing summary that triggered release detection
+- [Task 1 Summary](../../../../docs/specs/release-detection-trigger-fix/task-1-summary.md) - Public-facing summary that triggered release detection
 ```
 
 **In Tasks.md**:
@@ -2556,12 +2556,12 @@ Example:
 When creating cross-references, calculate relative paths based on the source document location:
 
 - **From summary to detailed**: Summary docs are in `docs/specs/[spec-name]/`, detailed docs are in `.kiro/specs/[spec-name]/completion/`
-  - Path: `../../.kiro/specs/[spec-name]/completion/task-N-parent-completion.md`
-  - Breakdown: `../..` (up to root) → `.kiro/specs/[spec-name]/completion/` (down to target)
+  - Path: `../../../.kiro/specs/[spec-name]/completion/task-N-parent-completion.md`
+  - Breakdown: `../../..` (up to root) → `.kiro/specs/[spec-name]/completion/` (down to target)
 
 - **From detailed to summary**: Detailed docs are in `.kiro/specs/[spec-name]/completion/`, summary docs are in `docs/specs/[spec-name]/`
-  - Path: `../../../docs/specs/[spec-name]/task-N-summary.md`
-  - Breakdown: `../../..` (up to root) → `docs/specs/[spec-name]/` (down to target)
+  - Path: `../../../../docs/specs/[spec-name]/task-N-summary.md`
+  - Breakdown: `../../../..` (up to root) → `docs/specs/[spec-name]/` (down to target)
 
 **Best Practices**:
 
