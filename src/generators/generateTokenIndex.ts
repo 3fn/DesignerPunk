@@ -20,6 +20,12 @@ import { iOSFormatGenerator } from '../providers/iOSFormatGenerator';
 import { AndroidFormatGenerator } from '../providers/AndroidFormatGenerator';
 import type { ModeResolvedTokens, PrimitiveOklchModes } from './ModeResolvedTokens';
 import { resolveComponentSources } from '../cli/shared/componentSources';
+import type { ComponentSource } from '../cli/shared/componentSources';
+import {
+  mergePackageComponentTokens,
+  type PackageComponentTokenIndex,
+  type PackageEntrySource,
+} from '../cli/shared/packageComponentTokens';
 
 /**
  * Required input for token-index generation.
@@ -54,6 +60,36 @@ export interface TokenIndexInput {
    * relative to the SERVED index, not a guessed project root (Spec 123 Task 1.5, DD24).
    */
   tierDir?: string;
+  /**
+   * The token-source file each component token was harvested from, keyed by token name
+   * (`componentTokenSourceFile` in `src/cli/loadComponentTokens.ts`). A token whose file sits
+   * in a component directory of the universe is written with `definedBy`: that directory's
+   * declared component name. Absent, or a token with no file here, gets no `definedBy`.
+   */
+  componentTokenFiles?: ReadonlyMap<string, string | undefined>;
+  /**
+   * In a consumer repo, the installed package's own shipped `token-index/components.yaml`
+   * (shape (c), `.kiro/issues/2026-10-23-born-repo-index-lacks-package-component-tokens.md`).
+   * Its entries are merged for every package component this universe does not replace; see
+   * {@link mergePackageComponentTokens}. Never passed in DesignerPunk's own repo.
+   */
+  packageComponentTokens?: PackageComponentTokenIndex;
+}
+
+/**
+ * The component a token-source file belongs to: the declared name of the deepest component
+ * directory of the universe that contains it (winners and shadowed candidates alike, so a
+ * steward's or a consumer's own token file is attributed wherever it sits). `undefined` for a
+ * file outside every component directory (the token-source tier).
+ */
+function definingComponent(file: string | undefined, sources: readonly ComponentSource[]): string | undefined {
+  if (!file) return undefined;
+  const abs = path.resolve(file);
+  let best: ComponentSource | undefined;
+  for (const s of sources) {
+    if (abs.startsWith(s.dirPath + path.sep) && (!best || s.dirPath.length > best.dirPath.length)) best = s;
+  }
+  return best?.declaredName;
 }
 
 /**
@@ -227,10 +263,19 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
   // package component appear in their generated index. Passed in via
   // `input.componentSchemaDir` — NOT computed from `__dirname` here.
   // The universe a declaration can resolve into: every key this run writes, all three tiers.
+  const universe = resolveComponentSources(input.componentSchemaDir);
+  const allSources = [...universe.winners, ...universe.shadowed.map(s => s.source)];
+  // Shape (c): in a consumer repo, the package's own component-token entries for every
+  // package component this universe does not replace. They are index entries only: nothing
+  // here emits platform output (the package's component-token stylesheet already defines them).
+  const merged = input.packageComponentTokens
+    ? mergePackageComponentTokens(input.packageComponentTokens, universe, new Set(input.componentTokens.map(t => t.name)))
+    : [];
   const indexKeys = new Set<string>([
     ...primitives.map(t => t.name),
     ...semantics.map(t => t.name),
     ...input.componentTokens.map(t => t.name),
+    ...merged.map(m => m.name),
   ]);
   const schemaRefs = readSchemaTokenRefs(input.componentSchemaDir);
   const { consumerMap, unresolved } = resolveSchemaTokenRefs(schemaRefs.refs, indexKeys);
@@ -309,8 +354,11 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
       i === 0 ? part : part.charAt(0).toUpperCase() + part.slice(1)
     ).join('');
 
+    const definedBy = definingComponent(input.componentTokenFiles?.get(ct.name), allSources);
     componentTokensIndex[ct.name] = {
       component: ct.component,
+      // The component directory whose token file defines it; absent for the token-source tier.
+      ...(definedBy ? { definedBy } : {}),
       primitiveReferences: ct.primitiveReference ? { value: ct.primitiveReference } : { value: String(ct.value) },
       platforms: {
         web: webGen.getTokenName(ct.name, 'component'),
@@ -320,6 +368,23 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
       // Keyed by the registry name (`<component lowercased>.<key>`), the only spelling
       // a schema can declare a component token under.
       consumers: consumerMap.get(ct.name) || [],
+    };
+  }
+
+  // The merged package entries, after the repo's own, each tagged with the package version
+  // it came from: a package upgrade without a new `generate` leaves this tag behind, which is
+  // how `sync` tells (`assessIndexedPackageComponentTokens`). Consumers are counted over this
+  // run's universe, never copied from the package's index.
+  for (const { name, entry, definedBy } of merged) {
+    const pkg = input.packageComponentTokens!;
+    const source: PackageEntrySource = { package: pkg.name, version: pkg.version };
+    componentTokensIndex[name] = {
+      ...(entry.component !== undefined ? { component: entry.component } : {}),
+      definedBy,
+      ...(entry.primitiveReferences !== undefined ? { primitiveReferences: entry.primitiveReferences } : {}),
+      platforms: entry.platforms,
+      consumers: consumerMap.get(name) || [],
+      source,
     };
   }
 
@@ -369,11 +434,14 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
   console.log(`✅ Token index generated at ${outputDir}`);
   console.log(`   Primitives: ${counts.primitives}`);
   console.log(`   Semantics: ${counts.semantics}`);
-  console.log(`   Component tokens: ${counts.components}\n`);
+  const fromPackage = merged.length > 0 && input.packageComponentTokens
+    ? ` (${merged.length} of them DesignerPunk's, from ${input.packageComponentTokens.name} ${input.packageComponentTokens.version})`
+    : '';
+  console.log(`   Component tokens: ${counts.components}${fromPackage}\n`);
 
   return {
     counts,
-    componentRoots: resolveComponentSources(input.componentSchemaDir).roots,
+    componentRoots: universe.roots,
     unresolved,
     unreadable: schemaRefs.unreadable,
   };

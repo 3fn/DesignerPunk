@@ -391,17 +391,38 @@ export function unresolvedSchemaTokensMessage(
 }
 
 /**
- * `generate`'s one-line note in a repo whose token index does not hold DesignerPunk's own
- * component tokens (a born repo indexes only the component tokens in its own token source):
- * DesignerPunk's schemas declare `count` of them, which are not counted. True of every such
- * run, so it is a note, not a warning, and one line.
+ * `sync`'s token-index line (shape (c), `.kiro/issues/2026-10-23-born-repo-index-lacks-package-component-tokens.md`):
+ * the consumer's `token-index/` is behind the installed package's component tokens — a merged
+ * entry is tagged with another version, or an entry the installed version adds is absent. Both
+ * mean an upgrade without a new `generate`; `sync` never runs it, so it says so and counts it as
+ * still to do.
  */
-export function packageComponentTokensNotIndexedMessage(count: number, example: string): string {
-  return (
-    `Note: ${count} of DesignerPunk's component-token names (for example ${example}) ${count === 1 ? 'is' : 'are'} not in your token index, ` +
-    `because generate indexes only the component tokens in your own token source; DesignerPunk's components are not counted as their consumers, ` +
-    `and get_token_details does not find them.`
-  );
+export function tokenIndexBehindPackageMessage(a: {
+  packageName: string;
+  installedVersion: string;
+  indexedVersions: readonly string[];
+  missing: number;
+  example: string;
+}): string {
+  const parts: string[] = [];
+  if (a.indexedVersions.length > 0) {
+    parts.push(
+      `your token-index/ holds DesignerPunk's component tokens from ${a.packageName} ${a.indexedVersions.join(', ')}, and ${a.installedVersion} is installed, ` +
+      `so get_token_details answers for them (for example ${a.example}) from the older version`,
+    );
+  }
+  if (a.missing > 0) {
+    parts.push(
+      `${a.indexedVersions.length > 0 ? 'it also lacks' : 'your token-index/ lacks'} ${a.missing} of DesignerPunk's component tokens the installed ${a.installedVersion} adds to it` +
+      `${a.indexedVersions.length > 0 ? '' : ` (for example ${a.example})`}, so get_token_details does not find them`,
+    );
+  }
+  return `${parts.join('; ')}. Run \`npx designerpunk generate\` to rebuild it. Nothing was changed.`;
+}
+
+/** `sync`'s token-index line when the check could not run (an unreadable index, or a damaged install). */
+export function tokenIndexCannotCheckMessage(reason: string): string {
+  return `could not check your token-index/ against the installed package (${reason}). Running \`npx designerpunk generate\` rebuilds it.`;
 }
 
 // ---------------------------------------------------------------------------

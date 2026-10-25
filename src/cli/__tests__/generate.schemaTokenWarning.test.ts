@@ -4,8 +4,9 @@
  * @purpose `generate` WARNS about component-schema token names its token index does not hold
  *   (ruling 2026-10-23 § 3c; the same check FAILS as src/generators/__tests__/schemaTokenRefs.test.ts
  *   in DesignerPunk's own repo). Each name is labelled with whose schema it is in. DesignerPunk's
- *   schemas naming DesignerPunk's own component tokens — which a born repo's index does not hold —
- *   are one note, not a warning per name.
+ *   schemas naming DesignerPunk's own component tokens resolve: `generate` merges those tokens from
+ *   the package's shipped index (shape (c), .kiro/issues/2026-10-23-born-repo-index-lacks-package-component-tokens.md),
+ *   so the one-line "not in your token index" note is retired.
  */
 
 import * as fs from 'fs';
@@ -16,6 +17,7 @@ import { schemaTokenReport, resolveGenerateComponentRoots } from '../designerpun
 import { generateTokenIndex } from '../../generators/generateTokenIndex';
 import type { DesignSystemRoot } from '../shared/bornRepo';
 import type { SemanticToken } from '../../types/SemanticToken';
+import { readPackageComponentTokenIndex } from '../shared/packageComponentTokens';
 
 function writeSchema(root: string, dir: string, name: string, tokens: string[]): void {
   fs.mkdirSync(path.join(root, dir), { recursive: true });
@@ -45,8 +47,9 @@ describe('generate — schema token names the token index does not hold', () => 
     fs.mkdirSync(path.join(pkgRoot, 'token-index'), { recursive: true });
     fs.writeFileSync(
       path.join(pkgRoot, 'token-index', 'components.yaml'),
-      yaml.dump({ tokens: { 'avatar.size.md': { component: 'Avatar' } } }),
+      yaml.dump({ tokens: { 'avatar.size.md': { component: 'Avatar', definedBy: 'Avatar-Base', primitiveReferences: { value: 'size500' }, platforms: { web: '--avatar-size-md', ios: 'AvatarTokens.sizeMd', android: 'AvatarTokens.sizeMd' } } } }),
     );
+    fs.writeFileSync(path.join(pkgRoot, 'package.json'), JSON.stringify({ name: '@3fn/core', version: '16.1.0' }));
     // The consumer's own component declares a misspelled name.
     writeSchema(path.join(bornRoot, 'src', 'components'), 'Pricing-Card', 'PricingCard', ['color.identity.Human']);
     jest.spyOn(console, 'log').mockImplementation(() => {});
@@ -66,6 +69,7 @@ describe('generate — schema token names the token index does not hold', () => 
       componentTokens: [],
       modeResolved: { resolvedLight: [], resolvedDark: [], themeVaryingTokens: new Set(), primitiveOklch: new Map() } as any,
       componentSchemaDir: resolveGenerateComponentRoots(dsRoot, pkgRoot),
+      packageComponentTokens: readPackageComponentTokenIndex(pkgRoot).index!,
     });
     return schemaTokenReport(result, pkgRoot, bornRoot);
   }
@@ -83,16 +87,14 @@ describe('generate — schema token names the token index does not hold', () => 
     expect(warning).toContain('your generated output no longer has the CSS variable or constant that component reads');
   });
 
-  it('DesignerPunk\'s own component tokens are one note, not a warning line', () => {
-    const { warning, note } = run();
-    expect(warning).not.toContain('avatar.size.md');
-    expect(note).toBe(
-      "Note: 1 of DesignerPunk's component-token names (for example avatar.size.md) is not in your token index, because generate indexes only the component tokens in your own token source; DesignerPunk's components are not counted as their consumers, and get_token_details does not find them.",
-    );
+  it('DesignerPunk\'s own component tokens resolve from the package\'s index: no warning line, no note', () => {
+    const report = run();
+    expect(report.warning).not.toContain('avatar.size.md');
+    expect(report).not.toHaveProperty('note');
   });
 
   it('says nothing when every name resolves', () => {
     const result = { componentRoots: [], unresolved: [], unreadable: [] };
-    expect(schemaTokenReport(result, pkgRoot, bornRoot)).toEqual({ warning: null, note: null });
+    expect(schemaTokenReport(result, pkgRoot, bornRoot)).toEqual({ warning: null });
   });
 });

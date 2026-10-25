@@ -118,6 +118,7 @@ tokens:
       - Progress-Stepper-Detailed
   avatar.size.xs:
     component: Avatar
+    definedBy: Avatar-Base
     primitiveReferences:
       value: size300
     platforms:
@@ -128,6 +129,7 @@ tokens:
       - Avatar-Base
   avatar.size.sm:
     component: Avatar
+    definedBy: Avatar-Base
     primitiveReferences:
       value: size400
     platforms:
@@ -138,6 +140,7 @@ tokens:
       - Avatar-Base
   avatar.size.md:
     component: Avatar
+    definedBy: Avatar-Base
     primitiveReferences:
       value: size500
     platforms:
@@ -148,6 +151,7 @@ tokens:
       - Avatar-Base
   avatar.size.lg:
     component: Avatar
+    definedBy: Avatar-Base
     primitiveReferences:
       value: size600
     platforms:
@@ -158,6 +162,7 @@ tokens:
       - Avatar-Base
   avatar.size.xl:
     component: Avatar
+    definedBy: Avatar-Base
     primitiveReferences:
       value: size1000
     platforms:
@@ -168,6 +173,7 @@ tokens:
       - Avatar-Base
   avatar.size.xxl:
     component: Avatar
+    definedBy: Avatar-Base
     primitiveReferences:
       value: size1600
     platforms:
@@ -178,6 +184,7 @@ tokens:
       - Avatar-Base
   avatar.icon.size.xs:
     component: Avatar
+    definedBy: Avatar-Base
     primitiveReferences:
       value: '12'
     platforms:
@@ -188,6 +195,7 @@ tokens:
       - Avatar-Base
   avatar.icon.size.xxl:
     component: Avatar
+    definedBy: Avatar-Base
     primitiveReferences:
       value: '64'
     platforms:
@@ -198,6 +206,7 @@ tokens:
       - Avatar-Base
   badgelabelbase.maxWidth:
     component: BadgeLabelBase
+    definedBy: Badge-Label-Base
     primitiveReferences:
       value: '120'
     platforms:
@@ -207,6 +216,7 @@ tokens:
     consumers: []
   buttonicon.inset.large:
     component: ButtonIcon
+    definedBy: Button-Icon
     primitiveReferences:
       value: space150
     platforms:
@@ -217,6 +227,7 @@ tokens:
       - Button-Icon
   buttonicon.inset.medium:
     component: ButtonIcon
+    definedBy: Button-Icon
     primitiveReferences:
       value: space125
     platforms:
@@ -227,6 +238,7 @@ tokens:
       - Button-Icon
   buttonicon.inset.small:
     component: ButtonIcon
+    definedBy: Button-Icon
     primitiveReferences:
       value: space100
     platforms:
@@ -237,6 +249,7 @@ tokens:
       - Button-Icon
   buttonicon.size.large:
     component: ButtonIcon
+    definedBy: Button-Icon
     primitiveReferences:
       value: size600
     platforms:
@@ -247,6 +260,7 @@ tokens:
       - Button-Icon
   buttonicon.size.medium:
     component: ButtonIcon
+    definedBy: Button-Icon
     primitiveReferences:
       value: size500
     platforms:
@@ -257,6 +271,7 @@ tokens:
       - Button-Icon
   buttonicon.size.small:
     component: ButtonIcon
+    definedBy: Button-Icon
     primitiveReferences:
       value: size400
     platforms:
@@ -267,6 +282,7 @@ tokens:
       - Button-Icon
   verticallistitem.paddingBlock.rest:
     component: VerticalListItem
+    definedBy: Button-VerticalList-Item
     primitiveReferences:
       value: '11'
     platforms:
@@ -277,6 +293,7 @@ tokens:
       - Button-VerticalList-Item
   verticallistitem.paddingBlock.selected:
     component: VerticalListItem
+    definedBy: Button-VerticalList-Item
     primitiveReferences:
       value: space125
     platforms:
@@ -287,6 +304,7 @@ tokens:
       - Button-VerticalList-Item
   inputcheckbox.box.sm:
     component: InputCheckbox
+    definedBy: Input-Checkbox-Base
     primitiveReferences:
       value: size300
     platforms:
@@ -296,6 +314,7 @@ tokens:
     consumers: []
   inputcheckbox.box.md:
     component: InputCheckbox
+    definedBy: Input-Checkbox-Base
     primitiveReferences:
       value: size400
     platforms:
@@ -305,6 +324,7 @@ tokens:
     consumers: []
   inputcheckbox.box.lg:
     component: InputCheckbox
+    definedBy: Input-Checkbox-Base
     primitiveReferences:
       value: size500
     platforms:
@@ -314,6 +334,7 @@ tokens:
     consumers: []
   inputradio.box.sm:
     component: InputRadio
+    definedBy: Input-Radio-Base
     primitiveReferences:
       value: size300
     platforms:
@@ -323,6 +344,7 @@ tokens:
     consumers: []
   inputradio.box.md:
     component: InputRadio
+    definedBy: Input-Radio-Base
     primitiveReferences:
       value: size400
     platforms:
@@ -332,6 +354,7 @@ tokens:
     consumers: []
   inputradio.box.lg:
     component: InputRadio
+    definedBy: Input-Radio-Base
     primitiveReferences:
       value: size500
     platforms:

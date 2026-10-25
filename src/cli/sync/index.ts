@@ -73,6 +73,8 @@ import {
   gitignoreBlockConfigUnreadableMessage,
   gitignoreBlockAddedMessage,
   consumerDegradationMessage,
+  tokenIndexBehindPackageMessage,
+  tokenIndexCannotCheckMessage,
 } from '../shared/errorCatalog';
 import {
   GITIGNORE_FILE,
@@ -85,6 +87,8 @@ import {
 } from '../shared/gitignoreRegion';
 import { confirmGitignoreBlock } from './Prompter';
 import { findDesignSystemRoot } from '../shared/bornRepo';
+import { resolveComponentRoots } from '../shared/mcpDataRoots';
+import { assessIndexedPackageComponentTokens, type IndexedPackageTokensAssessment } from '../shared/packageComponentTokens';
 import { ensurePersonalNote, printPersonalNoteRows, PERSONAL_NOTE_TEMPLATE_REL } from '../shared/personalNote';
 import type { CreationRow, PersonalNoteStatus } from '../shared/personalNote';
 import { emitAgentLayer, resolveAgentTarget, attachRefusal, REFERENCE_SERVERS } from '../attach';
@@ -247,6 +251,11 @@ export interface SyncOutcome {
   personalNote?: PersonalNoteStatus;
   /** The installed package's root, for steps that run after the main flow. */
   pkgRoot?: string;
+  /**
+   * DesignerPunk's component tokens in your token index against the installed package (shape (c)) —
+   * report only: `sync` never runs `generate`. `stale` is counted as still to do.
+   */
+  tokenIndex?: IndexedPackageTokensAssessment;
 }
 
 /** Parse `sync`'s CLI flags (everything after `sync`). */
@@ -607,6 +616,13 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
     if (outcome.typeContract.lines.length > 0) sections.push({ title: '🧾 Type contract:', lines: outcome.typeContract.lines });
   }
 
+  // 6d. Your token index against the installed package's component tokens (shape (c)) — REPORT ONLY.
+  //     `generate` merges DesignerPunk's component tokens into token-index/, each tagged with the
+  //     version it came from; after an upgrade that tag, or an entry the new version adds, says the
+  //     index is behind until `generate` runs again.
+  const tokenIndexLines = tokenIndexSection(projectRoot, pkg.root, outcome);
+  if (tokenIndexLines.length > 0) sections.push({ title: '🗂  Token index:', lines: tokenIndexLines });
+
   // 7. REPORT — always, before anything applies. Its closing line is the all-clear ONLY when nothing in it is
   //    still offered (R4, test01 F-9); a run that may apply something says the report is the BEFORE state.
   const keyOf = (s: SurfaceKeyResult, key: string) => `${s.surface.file}#${key}`;
@@ -811,7 +827,26 @@ function pendingOffers(projectRoot: string, outcome: SyncOutcome, offers: Repair
     if (o.kind === 'tsconfig' && !outcome.applied.includes('tsconfig.test.json')) out.push('the tsconfig.test.json repair');
   }
   if (detectStaleSteeringDir(projectRoot).length > 0) out.push('MCP_STEERING_DIR (see its warning)');
+  if (outcome.tokenIndex?.state === 'stale') out.push('running npx designerpunk generate (your token-index/ is behind the installed package)');
   return out;
+}
+
+/**
+ * The token-index section's lines (step 6d), recording the assessment on `outcome`. Reads the index
+ * `generate` writes, at the design-system root, and the component universe `generate` reads.
+ */
+function tokenIndexSection(projectRoot: string, pkgRoot: string, outcome: SyncOutcome): string[] {
+  const dsRoot = findDesignSystemRoot(projectRoot);
+  const root = dsRoot.root ?? projectRoot;
+  const assessment = assessIndexedPackageComponentTokens({
+    tokenIndexDir: path.join(root, 'token-index'),
+    packageRoot: pkgRoot,
+    componentRoots: resolveComponentRoots({ dsRoot, packageRoot: pkgRoot }).roots,
+  });
+  outcome.tokenIndex = assessment;
+  if (assessment.state === 'cannot-check') return [tokenIndexCannotCheckMessage(assessment.reason)];
+  if (assessment.state !== 'stale') return [];
+  return [tokenIndexBehindPackageMessage(assessment)];
 }
 
 /** What this run applied, one line per kind of change (R4). Empty when it applied nothing. */

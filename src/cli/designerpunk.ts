@@ -18,9 +18,8 @@ import { spawn } from 'child_process';
 import { loadConfig } from '../config/ConfigLoader';
 import { generateTokenFiles } from '../generators/generateTokenFiles';
 import { generateTokenIndex, type TokenIndexResult } from '../generators/generateTokenIndex';
-import * as yaml from 'js-yaml';
 import { resolveTokens } from './resolveTokens';
-import { loadComponentTokens } from './loadComponentTokens';
+import { loadComponentTokens, componentTokenSourceFile } from './loadComponentTokens';
 import { runValidate } from './validate';
 import { runInit } from './init';
 import { runAttach } from './attach';
@@ -32,6 +31,7 @@ import { runSync, parseSyncArgs } from './sync';
 import { resolvePackageRoot } from './shared/resolvePackageRoot';
 import { findDesignSystemRoot } from './shared/bornRepo';
 import { resolveComponentRoots } from './shared/mcpDataRoots';
+import { readPackageComponentTokenIndex, PACKAGE_COMPONENT_TOKEN_INDEX_REL } from './shared/packageComponentTokens';
 import { ensurePersonalNote, printPersonalNoteRows, PERSONAL_NOTE_TEMPLATE_REL } from './shared/personalNote';
 import {
   partialCaseMessage,
@@ -41,7 +41,6 @@ import {
   generateThemesLine,
   INSTALL_GUIDE_PATH,
   unresolvedSchemaTokensMessage,
-  packageComponentTokensNotIndexedMessage,
   type UnresolvedSchemaTokenLine,
 } from './shared/errorCatalog';
 import { attachUsage } from './shared/vocabulary';
@@ -144,11 +143,13 @@ export function resolveGenerateComponentRoots(
 /**
  * What `generate` says about the schema token declarations it could not count (ruling
  * 2026-10-23 § 3c): a WARNING naming each one and whose schema it is in — never a failure;
- * the same check fails as a test in DesignerPunk's own repo. One class is a NOTE, not
- * warned per name: DesignerPunk's schemas naming DesignerPunk's own component tokens, which
- * a born repo's token index does not hold (its generate indexes only the component tokens in
- * its own token source). They are recognised as keys of the installed package's own shipped
- * `token-index/components.yaml`.
+ * the same check fails as a test in DesignerPunk's own repo.
+ *
+ * The one-line NOTE this used to print for DesignerPunk's own component tokens ("not in your
+ * token index") is retired with shape (c): `generate` now merges those tokens from the
+ * package's shipped index, so a DesignerPunk schema naming one resolves. One that still does
+ * not (its defining component is one you replaced, and your copy does not define it) is
+ * warned like any other name.
  *
  * @internal Exported for testing.
  */
@@ -156,22 +157,13 @@ export function schemaTokenReport(
   result: Pick<TokenIndexResult, 'componentRoots' | 'unresolved' | 'unreadable'>,
   packageRoot: string,
   generateRoot: string,
-): { warning: string | null; note: string | null } {
+): { warning: string | null } {
   const packageComponentsRoot = path.resolve(packageRoot, 'src', 'components', 'core');
   const packageRank = result.componentRoots.indexOf(packageComponentsRoot);
   const ownerOf = (rank: number): 'yours' | 'designerpunk' => (rank === packageRank ? 'designerpunk' : 'yours');
   const rel = (p: string) => (path.relative(generateRoot, p) || p).split(path.sep).join('/');
 
-  let packageComponentTokenKeys = new Set<string>();
-  try {
-    const shipped = yaml.load(fs.readFileSync(path.join(packageRoot, 'token-index', 'components.yaml'), 'utf-8')) as any;
-    packageComponentTokenKeys = new Set(Object.keys(shipped?.tokens ?? {}));
-  } catch { /* no shipped index: every name is warned */ }
-
-  const notIndexed = result.unresolved.filter(r => ownerOf(r.rank) === 'designerpunk' && packageComponentTokenKeys.has(r.token));
-  const warned = result.unresolved.filter(r => !notIndexed.includes(r));
-
-  const lines: UnresolvedSchemaTokenLine[] = warned.map(r => ({
+  const lines: UnresolvedSchemaTokenLine[] = result.unresolved.map(r => ({
     owner: ownerOf(r.rank),
     component: r.component,
     file: rel(r.schemaPath),
@@ -182,9 +174,6 @@ export function schemaTokenReport(
 
   return {
     warning: lines.length > 0 || unreadable.length > 0 ? unresolvedSchemaTokensMessage(lines, unreadable) : null,
-    note: notIndexed.length > 0
-      ? packageComponentTokensNotIndexedMessage(new Set(notIndexed.map(r => r.token)).size, notIndexed[0].token)
-      : null,
   };
 }
 
@@ -286,15 +275,36 @@ export async function runGenerate(force = false) {
     // DesignerPunk's, through the Application MCP's own resolver (R1-7; see
     // `resolveGenerateComponentRoots` above). Resolved HERE, passed into the generator,
     // which stays a pure function of its inputs.
-    const componentSchemaDir = resolveGenerateComponentRoots(dsRoot, resolvePackageRoot(__dirname));
+    const packageRoot = resolvePackageRoot(__dirname);
+    const componentSchemaDir = resolveGenerateComponentRoots(dsRoot, packageRoot);
+
+    // Shape (c) (`.kiro/issues/2026-10-23-born-repo-index-lacks-package-component-tokens.md`):
+    // in a consumer repo, DesignerPunk's own component tokens come into the index from the
+    // installed package's shipped index, for every package component you have not replaced.
+    // Never in DesignerPunk's own repo, whose index IS that shipped index.
+    let packageComponentTokens: ReturnType<typeof readPackageComponentTokenIndex>['index'] = null;
+    if (path.resolve(packageRoot) !== path.resolve(generateRoot)) {
+      const shipped = readPackageComponentTokenIndex(packageRoot);
+      packageComponentTokens = shipped.index;
+      if (!shipped.index) {
+        console.warn(`⚠️  ${consumerDegradationMessage(
+          "DesignerPunk's token index",
+          PACKAGE_COMPONENT_TOKEN_INDEX_REL,
+          `${shipped.reason}; DesignerPunk's own component tokens (for example avatar.size.md) are not in your token index, so get_token_details does not find them`,
+        )}\n`);
+      }
+    }
+    const registered = ComponentTokenRegistry.getAll();
 
     // WRITE side anchored at generateRoot, never a bare process.cwd() (Spec 123 C2/Task 1.5).
     const indexResult = generateTokenIndex(path.resolve(generateRoot, 'token-index'), {
       primitiveTokens: tokens.primitiveTokens,
       semanticTokens: tokens.semanticTokens,
-      componentTokens: ComponentTokenRegistry.getAll(),
+      componentTokens: registered,
       modeResolved,
       componentSchemaDir,
+      componentTokenFiles: new Map(registered.map(t => [t.name, componentTokenSourceFile(t)])),
+      ...(packageComponentTokens ? { packageComponentTokens } : {}),
       // DD24: the live tier this index's data came from — written into
       // token-index/meta.json so the theme readers can follow it later,
       // wherever this index ends up being served from.
@@ -302,9 +312,8 @@ export async function runGenerate(force = false) {
     });
     // Schema token names the index could not count: a warning, never a failure (§ 3c).
     if (indexResult) {
-      const report = schemaTokenReport(indexResult, resolvePackageRoot(__dirname), generateRoot);
+      const report = schemaTokenReport(indexResult, packageRoot, generateRoot);
       if (report.warning) console.warn(`⚠️  ${report.warning}\n`);
-      if (report.note) console.log(`${report.note}\n`);
     }
     console.log('✅ System tokens generated');
   } catch (err) {
