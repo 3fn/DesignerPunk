@@ -151,8 +151,8 @@ AI agents should pause implementation and ask Peter for clarification when:
 - `src/tokens/semantic/index.ts` - Complete semantic token exports
 
 **Example**: Button needs text color
-- ❌ DON'T: Use primitive `blue500`
-- ✅ DO: Read `ColorTokens.ts`, find `color.primary`
+- ❌ DON'T: Use primitive `cyan300`
+- ✅ DO: Read `ColorTokens.ts`, find `color.action.primary`
 
 ### Step 2: Use Primitives Only When Unavoidable
 
@@ -189,18 +189,18 @@ AI agents should pause implementation and ask Peter for clarification when:
 // ButtonCTA/tokens.ts
 export const buttonCTATokens = {
   small: {
-    paddingX: 'space.inset.tight',
+    paddingX: 'space.inset.050',
     paddingY: 'space.grouped.minimal',
     typography: 'typography.buttonSm'
   },
   medium: {
-    paddingX: 'space.inset.normal',
-    paddingY: 'space.inset.tight',
+    paddingX: 'space.inset.100',
+    paddingY: 'space.inset.050',
     typography: 'typography.buttonMd'
   },
   large: {
-    paddingX: 'space.inset.comfortable',
-    paddingY: 'space.inset.normal',
+    paddingX: 'space.inset.150',
+    paddingY: 'space.inset.100',
     typography: 'typography.buttonLg'
   }
 };
@@ -230,7 +230,7 @@ export const buttonCTATokens = {
 - **Benefit**: No runtime overhead, platform-specific optimizations
 
 **Semantic Tokens**
-- **Meaning**: Tokens with contextual meaning (color.primary, typography.button)
+- **Meaning**: Tokens with contextual meaning (color.action.primary, typography.buttonMd)
 - **Purpose**: Express design intent, not implementation details
 - **Usage**: Always prefer semantic over primitive tokens in components
 
@@ -249,12 +249,12 @@ export const buttonCTATokens = {
 
 **Primitive Tokens**
 - **Location**: `src/tokens/*.ts`
-- **Examples**: `space100`, `fontSize100`, `blue500`
+- **Examples**: `space100`, `fontSize100`, `cyan300`
 - **Usage**: Foundation for semantic tokens, rarely used directly in components
 
 **Semantic Tokens**
 - **Location**: `src/tokens/semantic/*.ts`
-- **Examples**: `color.primary`, `typography.button`, `space.inset.normal`
+- **Examples**: `color.action.primary`, `typography.buttonMd`, `space.inset.100`
 - **Usage**: Primary token layer for component development
 
 **Component-Level Tokens**
@@ -571,12 +571,12 @@ The `tokens.ts` file at component root defines **which tokens** the component us
 // Platform-agnostic token references
 export const buttonCTATokens = {
   // Sizing - references semantic tokens
-  paddingX: 'space.inset.normal',
-  paddingY: 'space.inset.tight',
+  paddingX: 'space.inset.100',
+  paddingY: 'space.inset.050',
   minWidth: 'space400',
   
   // Colors - references semantic tokens
-  background: 'color.primary',
+  background: 'color.action.primary',
   text: 'color.text.default',
   
   // Typography - references semantic token
@@ -596,8 +596,8 @@ Each platform implementation uses **generated platform-specific tokens** from th
 // platforms/web/ButtonCTA.web.ts
 static styles = css`
   :host {
-    padding: var(--space-inset-tight) var(--space-inset-normal);
-    background: var(--color-primary);
+    padding: var(--space-inset-050) var(--space-inset-100);
+    background: var(--color-action-primary);
     color: var(--color-text-default);
     font: var(--typography-button-md);
     border-radius: var(--radius-100);
@@ -613,9 +613,9 @@ Button(action: action) {
         .font(typographyButtonMd)
         .foregroundColor(colorTextDefault)
 }
-.padding(.horizontal, spaceInsetNormal)
-.padding(.vertical, spaceInsetTight)
-.background(colorPrimary)
+.padding(.horizontal, spaceInset100)
+.padding(.vertical, spaceInset050)
+.background(colorActionPrimary)
 .cornerRadius(radius100)
 ```
 
@@ -625,7 +625,7 @@ Button(action: action) {
 Button(
     onClick = onClick,
     modifier = modifier
-        .padding(horizontal = spaceInsetNormal.dp, vertical = spaceInsetTight.dp)
+        .padding(horizontal = spaceInset100.dp, vertical = spaceInset050.dp)
 ) {
     Text(
         text = label,
@@ -657,7 +657,7 @@ Platform implementations handle platform-specific requirements that are **not** 
 **Web Example**: Focus visible styles
 ```css
 :host(:focus-visible) {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-action-primary);
   outline-offset: 2px;
 }
 ```
@@ -732,14 +732,14 @@ This component uses direct SF Symbols for status indicators because:
 
 | Token | Pixels | Typography Pairing | Use Cases |
 |-------|--------|-------------------|-----------|
-| `iconSize050` | 12px | caption, legal, labelXs | Smallest text, fine print |
-| `iconSize075` | 16px | bodySm, buttonSm, labelSm | Compact layouts, small UI |
-| `iconSize100` | 24px | bodyMd, buttonMd, labelMd | Standard UI (default) |
-| `iconSize125` | 32px | bodyLg, buttonLg, labelLg | Large UI elements |
-| `iconSize150` | 40px | h2 | Large headings |
+| `icon.size050` | 16px | `typography.caption`, `typography.legal`, `typography.labelXs` | Smallest text, fine print |
+| `icon.size075` | 20px | `typography.bodySm`, `typography.buttonSm`, `typography.labelSm` | Compact layouts, small UI |
+| `icon.size100` | 24px | `typography.bodyMd`, `typography.buttonMd`, `typography.labelMd` | Standard UI (default) |
+| `icon.size125` | 28px | `typography.bodyLg`, `typography.buttonLg`, `typography.labelLg` | Large UI elements |
+| `icon.size500` | 40px | `typography.h2` | Large headings |
 
 **Size Selection Guidelines**:
-- **Default to `iconSize100` (24px)**: Use when in doubt
+- **Default to `icon.size100` (24px)**: Use when in doubt
 - **Match typography context**: Use icon size that pairs with the text typography
 - **Consider visual hierarchy**: Larger icons create stronger visual presence
 
@@ -795,7 +795,7 @@ Icon(name: "arrow-right", size: iconSize100)
 
 // With custom color
 Icon(name: "check", size: iconSize100)
-    .foregroundColor(colorSuccess)
+    .foregroundColor(colorFeedbackSuccessText)
 ```
 
 **Using Direct SF Symbols with Tokens**:
@@ -829,7 +829,7 @@ Icon(name = "arrow_right", size = iconSize100)
 Icon(
     name = "check",
     size = iconSize100,
-    tint = colorSuccess
+    tint = colorFeedbackSuccessText
 )
 ```
 
@@ -948,24 +948,24 @@ Before implementing icons in a component, verify:
 **1. Component defines token references** (platform-agnostic):
 ```typescript
 // tokens.ts
-paddingX: 'space.inset.normal'
+paddingX: 'space.inset.100'
 ```
 
 **2. Build system generates platform-specific values**:
 
 **Web Output** (CSS):
 ```css
---space-inset-normal: 8px;
+--space-inset-100: 8px;
 ```
 
 **iOS Output** (Swift):
 ```swift
-let spaceInsetNormal: CGFloat = 8
+let spaceInset100: CGFloat = 8
 ```
 
 **Android Output** (Kotlin):
 ```kotlin
-val spaceInsetNormal = 8.dp
+val spaceInset100 = 8.dp
 ```
 
 **3. Platform implementations use generated tokens**:
@@ -1009,15 +1009,15 @@ theme.colorActionPrimary
 
 **In component tokens.ts**, use dot notation for semantic tokens:
 ```typescript
-'space.inset.normal'      // Semantic spacing token
-'color.primary'           // Semantic color token
+'space.inset.100'         // Semantic spacing token
+'color.action.primary'    // Semantic color token
 'typography.buttonMd'     // Semantic typography token
 ```
 
 **Or direct primitive token names**:
 ```typescript
 'space100'                // Primitive spacing token
-'blue500'                 // Primitive color token
+'cyan300'                 // Primitive color token
 'fontSize100'             // Primitive font size token
 ```
 
@@ -1028,22 +1028,22 @@ theme.colorActionPrimary
 ## Common Component Patterns
 
 ### Button Components
-- **Text**: `typography.buttonSm/Md/Lg`
-- **Background**: `color.primary` (primary), or use primitive colors directly for variants
-- **Padding**: `space.inset.normal` or `space.inset.comfortable`
+- **Text**: `typography.buttonSm`, `typography.buttonMd`, `typography.buttonLg`
+- **Background**: `color.action.primary` (primary), or use primitive colors directly for variants
+- **Padding**: `space.inset.100` or `space.inset.150`
 - **Border radius**: `radius100` or `radius150`
 - **Min width**: `space400` (128px minimum for accessibility)
 
 ### Input Components
 - **Text**: `typography.input`
-- **Label**: `typography.labelSm/Md/Lg`
-- **Padding**: `space.inset.normal`
-- **Border**: `border.default`, `color.border`
+- **Label**: `typography.labelSm`, `typography.labelMd`, `typography.labelLg`
+- **Padding**: `space.inset.100`
+- **Border**: `border.default`, `color.structure.border`
 - **Sizing**: Follow component-sizing-token-guide.md
 
 ### Container Components
-- **Background**: `color.surface`
-- **Padding**: `space.inset.comfortable` or `space.inset.spacious`
+- **Background**: `color.structure.surface`
+- **Padding**: `space.inset.150` or `space.inset.200`
 - **Spacing**: `space.separated.normal` between containers
 - **Shadow**: `shadow.dusk` or `shadow.sunrise`
 - **Border radius**: `radius100` or `radius150`
@@ -1105,7 +1105,7 @@ class MyComponent extends HTMLElement {
   connectedCallback() {
     // Read theme color from CSS custom properties
     const computedStyle = getComputedStyle(document.documentElement);
-    const primaryColor = computedStyle.getPropertyValue('--color-primary').trim();
+    const primaryColor = computedStyle.getPropertyValue('--color-action-primary').trim();
     
     // Get blend utilities
     const blendUtils = getBlendUtilities();
@@ -1457,7 +1457,7 @@ All component-scoped CSS custom properties MUST use the `--_[abbrev]-*` naming p
 --_bi-icon-color: #...;     /* ButtonIcon internal */
 
 /* Design system tokens (external) - no underscore */
---color-primary: #...;
+--color-action-primary: #...;
 --motion-button-press-duration: 150ms;
 --space-inset-200: 16px;
 ```
@@ -1501,7 +1501,7 @@ All component-scoped CSS custom properties MUST use the `--_[abbrev]-*` naming p
 /* Button-CTA CSS showing both types */
 :host {
   /* Design system tokens - external, themeable */
-  --color-primary: var(--color-primary);
+  --color-action-primary: var(--color-action-primary);
   --motion-button-press-duration: var(--motion-button-press-duration);
   
   /* Component-scoped properties - internal, calculated */
@@ -1510,7 +1510,7 @@ All component-scoped CSS custom properties MUST use the `--_[abbrev]-*` naming p
 }
 
 .button-cta {
-  background-color: var(--color-primary);
+  background-color: var(--color-action-primary);
   transition: background-color var(--motion-button-press-duration) ease-out;
 }
 
@@ -1546,16 +1546,16 @@ All component-scoped CSS custom properties MUST use the `--_[abbrev]-*` naming p
 **❌ Don't use component-scoped naming for design tokens**:
 ```css
 /* WRONG: Design tokens shouldn't have component prefix */
---_cta-primary-color: var(--color-primary);
+--_cta-primary-color: var(--color-action-primary);
 
 /* CORRECT: Reference design token directly */
-background-color: var(--color-primary);
+background-color: var(--color-action-primary);
 ```
 
 **❌ Don't expose calculated values as design tokens**:
 ```css
 /* WRONG: Calculated values are implementation details */
---color-primary-hover: /* blend calculation */;
+--color-action-primary-hover: /* blend calculation */;
 
 /* CORRECT: Keep calculated values component-scoped */
 --_cta-hover-bg: /* blend calculation */;
@@ -1593,10 +1593,10 @@ When using component-scoped properties, add a documentation comment explaining t
 ### ❌ Using Primitives When Semantics Exist
 ```typescript
 // DON'T
-background: blue500
+background: cyan300
 
 // DO
-background: color.primary
+background: color.action.primary
 ```
 
 ### ❌ Hard-Coded Values
@@ -1605,7 +1605,7 @@ background: color.primary
 padding: 16px
 
 // DO
-padding: space.inset.normal
+padding: space.inset.200
 ```
 
 ### ❌ Creating Semantic Tokens Prematurely
@@ -1633,8 +1633,8 @@ export const buttonTokens = {
 
 // DO: Reference semantic or primitive tokens
 export const buttonTokens = {
-  paddingX: 'space.inset.normal',  // Token reference
-  paddingY: 'space.inset.tight'    // Token reference
+  paddingX: 'space.inset.100',  // Token reference
+  paddingY: 'space.inset.050'    // Token reference
 };
 ```
 
@@ -1693,7 +1693,7 @@ export interface ButtonProps {
 // DON'T: Silent fallback to hard-coded value
 const duration = this.getAttribute('duration') || '250ms';
 const spacing = tokenValue || 8;
-const color = getToken('color.primary') ?? '#3B82F6';
+const color = getToken('color.action.primary') ?? '#3B82F6';
 ```
 
 **Why This is Wrong**:
