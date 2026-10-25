@@ -43,3 +43,9 @@ Found in the 16.1.0 walk (row 18). Row 5 has two remedies. They are separated he
 - **Moved to its own record**: the bundle manifest (`dist/mcp/bundled-packages.json`, written from esbuild's metafile) is `.kiro/issues/2026-10-25-mcp-bundled-packages-manifest.md` (P3, `manual`). This row closes on the audit result appended, not on the manifest.
 
 *Signed: Ada, 2026-10-25.*
+
+## Owner line (2026-10-25, Ada, rule 9): ruling cite for row 5
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are now committed in this record.* Read against the 16.1.0 walk (row 18, row 5). The ruling is **the audit at release prep**, as the co-owner line above already states: `npm audit --omit=dev` on the root tree and the two servers' lockfiles, result appended at S, naming each tree; any inlined library with a fixed version bumped before tagging. The bundle manifest stays in its own P3 record. Trigger unchanged, `release:next:phase-1`.
+
+*Signed: Ada, 2026-10-25.*

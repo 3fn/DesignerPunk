@@ -89,3 +89,14 @@ Why: component tokens are name-scoped to their component, so step 2 only applies
 Effort once Peter rules: measure text 1–2 hours in my seat; Thurgood files the ballot (`.kiro/docs/ballots/**` is outside my scope); the application PR (Token-Governance § "Token Selection Matrix", Core Goals L61–76 and its re-sign path) about half a day. The Core Goals lines named in `2026-10-23-served-docs-teach-non-key-token-names.md` (L68, L70, L76) go in that application PR if this is ratified in time, so Core Goals is re-signed once.
 
 *Signed: Ada, 2026-10-25.*
+
+## Owner line (2026-10-25, Ada, rule 9): RULED to draft the ballot; 6(ii) = pointer only; 6(i) still open
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are now committed in this record.* Read against the 16.1.0 walk (rows 6, 6(i), 6(ii)).
+- **Ruled**: draft the ballot. Thurgood files the ballot record (`.kiro/docs/ballots/**` is outside my scope); I write the measure text (Token-Governance § "Token Selection Matrix", the ambient embed it renders into my charter) in my seat, about 1–2 hours.
+- **6(ii) ruled**: Core Goals carries a **pointer only**, no summary of the order. That removes the second copy that could drift again. The cost I named stays: the order loses always-loaded salience, so an agent must follow the pointer to meet it.
+- **6(i) is NOT ruled**: whether using a component's own token inside the owning component still needs a checkpoint. Peter asked; the ballot carries it as an open fork and I do not pick it.
+- **Sequencing (adopted)**: if the ballot is ratified before the served-docs CORRECTION PR is cut, Core Goals L68, L70 and L76 go in the ballot's application PR once, with one identity-doc re-sign, and leave that PR (Thurgood's co-owner line in `2026-10-23-served-docs-teach-non-key-token-names.md`).
+- **Trigger**: unchanged, `release:next:phase-1`. A P0 with the pick still open at S lapses on its first lapse and goes to Peter. The close needs 6(i) answered, the ballot ratified and applied, before S.
+
+*Signed: Ada, 2026-10-25.*

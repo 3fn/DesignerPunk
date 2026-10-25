@@ -41,3 +41,13 @@ Found in the 16.1.0 walk (row 2). The class option above names (a). I now recomm
 Effort for (c): about 0.5–1 day; (a): about 2–3 days plus the grant. The pick between (c), (a) and a written waiver is Peter's; this line does not rule it.
 
 *Signed: Ada, 2026-10-25.*
+
+## Owner line (2026-10-25, Ada, rule 9): RULED (c), under Peter's batch ruling
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are now committed in this record.* Read against the 16.1.0 walk (row 2), where my pick is (c), fed from the package's own shipped `token-index/components.yaml`, each added entry carrying the package version it came from.
+- **Ruled**: (c). The waiver and (a) are not taken. (a) remains the end state only if Spec 129 decides consumers own component-token output.
+- **Fixing branch**: `fix/release-16.1.0-born-repo-index-c`. About 0.5–1 day, in `src/cli/**` (my scope); Lina is consulted on the fix. No `package.json` or `pack-assert.ts` change, so no grant.
+- **Trigger**: stays `release:next:phase-1` until the fixing PR opens. At open I change it to `merge:#<N>` in the same diff (rule 1: a P0 that rides a vehicle takes the vehicle once it exists), with a dated reason. The record closes by rule 5's outcome line in that PR (rule 11). As a P0 it must merge before S; an unmerged P0 at S lapses and goes to Peter on the first lapse.
+- **Surviving counter-argument** (unchanged): (c) gives a born repo two sources of component-token truth until Spec 129 rules.
+
+*Signed: Ada, 2026-10-25.*

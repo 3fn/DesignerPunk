@@ -103,3 +103,12 @@ On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of
 - **Riding the same CORRECTION PR (row 9 of the walk, Ada's pick)**: `canonical/agents/kenya.md:281` and `canonical/agents/data.md:283` take the consumer bullet's wording. Truth: `src/generators/TokenFileGenerator.ts`, where `generateThemeOverrideBlocks` has no caller. Kenya and Data re-confirm.
 
 *Signed: Thurgood, 2026-10-25.*
+
+## Owner line (2026-10-25, Ada, rule 9): RULED, my part goes in the one CORRECTION PR before S
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are now committed in this record.* Read against the 16.1.0 walk (row 3).
+- **Ruled**: one CORRECTION PR before S, on branch `fix/release-16.1.0-served-docs-token-names`. My part is the token docs and the lines I found in § "What is false, and where". Lina's component docs and charter line, and Thurgood's Core Goals lines (his co-owner line above, with the ballot-sequencing exception), ride the same PR.
+- **Trigger**: stays `release:next:phase-1` until that PR opens; at open I change it to `merge:#<N>` in the same diff with a dated reason, and the PR adds rule 5's outcome line. A P0, so it must merge before S.
+- **Not ruled**: the key-set instrument I describe above (a line, not a record). It stays unscheduled until Peter says so.
+
+*Signed: Ada, 2026-10-25.*
