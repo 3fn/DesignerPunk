@@ -4,9 +4,9 @@
  * (Spec 127, design C5/C6; Reqs 6.1–6.4).
  *
  * Sanctioned by register row `governance/classification-map.md § "completion-
- * criteria-parity"` (check_state: proposed; the ARMING is Q2's decision, not
- * this script's — until armed the CI job runs NON-required and this check name
- * stays OUT of EXPECTED_CONTEXTS).
+ * criteria-parity"` (check_state: armed — REQUIRED from the 2026-10-03 flip,
+ * with this check name in EXPECTED_CONTEXTS; the arming was Q2's decision, not
+ * this script's). (Comment corrected 2026-10-24; prior text at e4e61eea2.)
  *
  * Scan scope (DD1): the parity predicate runs as a FULL SCAN of the declared
  * population — every spec whose tasks.md declares `per-parent` — on every run.

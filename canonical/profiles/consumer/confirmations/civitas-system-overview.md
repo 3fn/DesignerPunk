@@ -46,9 +46,20 @@ date: 2026-09-29
 ## `#what-civitas-contains`
 
 confirmer: stacy
-canonicalHash: sha256:6d5bb7e904c10be1b5bf04b25fd03b6f5222b3e5ea2b46c92b40aa4b6debf137
+canonicalHash: sha256:1cf39e5cf23bce5b04edc831db1e0d71c5881b086a58fddbd862115c9797937b
 items: what-civitas-con-2, what-civitas-con-3, what-civitas-con-4, what-civitas-con-5, what-civitas-con-6, what-civitas-con-7, what-civitas-con-8, what-civitas-con-9, what-civitas-con-10, what-civitas-con-17
-date: 2026-09-29
+date: 2026-10-24
+
+**Re-confirmed 2026-10-24 (Req 11.6.5d).**
+- **What changed**: one line of the unit. The Product MCP line said "(conceptual — specs 081, 096, 097)". It now says the server reads a consumer's `product/` directory, has 14 tools and ships as `dist/mcp/product-mcp.js`, and that this repository has no `product/` directory. Steering CORRECTION `d4bd2ea49`, Peter-merged under the carve-out (Spec 131 ballot audit fix-now item 8). Thurgood re-authored item `what-civitas-con-8` (`label`, `text`) at `0e2a2bd41`, under the issue-row grant `.kiro/issues/2026-10-24-product-mcp-correction-signed-units-grant.md`, which #464 (`2eafd7296`) activated. The canonicalHash moves from `sha256:6d5bb7e904c10be1b5bf04b25fd03b6f5222b3e5ea2b46c92b40aa4b6debf137` to the value above. `operative-set-freshness` printed it, and I recomputed it independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts`; the two agree.
+- **`what-civitas-con-8`, read against the unit**: its `text` is a verbatim substring of the unit (`grep -F`: 1 hit), with the list marker left out as formatting. The sweep no longer reports it as not verbatim. Its facts hold at `0e2a2bd41`:
+  - `product-mcp-server/src/index.ts` registers 14 tools;
+  - `DEFAULT_PRODUCT_DIR = 'product'`;
+  - `build:mcp` writes `dist/mcp/product-mcp.js`, which `files` ships under `dist/**/*.js`;
+  - the server's first commit is Spec 081 Task 2.1 (`3a8ab1385`);
+  - there is no `product/` at the repository root.
+  The item stays operative: it says which server serves product context and where that server reads. Under the 11.3 convention, the repo-scoped clause is part of the item's text.
+- **What did not change**: the set, still 10 items. The other 9 items are untouched and still verbatim.
 
 **Ruling: CORRECTED 18 → 10.**
 - **Removed** inventory that no agent acts on:

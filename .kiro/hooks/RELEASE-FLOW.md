@@ -83,6 +83,8 @@ It reads the ratification date from the ballot's `Ratified-machine:` line and pi
 
 > **Note (Peter, 2026-09-26, PR #205 — added adjacent to the ratified paragraph above, not part of it):** this same sitting also decides `.kiro/hooks/complete-task.sh`'s **authoring-time** parity check — whether it stays advisory or becomes blocking. That check is **advisory until this sitting decides otherwise**; see the script's header comment and its parity-check block.
 
+*Recorder's note (Thurgood, 2026-10-24), not part of Peter's note above: the sitting ran at 15.0.0 release-prep on 2026-10-02. It armed the CI check, and this authoring-time check stays **advisory** — the `completion-criteria-parity` register row's 2026-10-02 history entry, merged by #267 (`70f8fe54f`). Peter's quoted words there name the CI half; the advisory local mode rides the entry he merged.*
+
 #### The staged-mechanization ladder, and its named de-facto detectors
 
 The owed-set query began as **documented commands, not a committed script**, deliberately. Its promotion path is pre-committed and is the only path:
