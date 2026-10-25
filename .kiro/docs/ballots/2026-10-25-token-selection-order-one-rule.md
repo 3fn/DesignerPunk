@@ -6,7 +6,7 @@
 **Owners**: Ada (item 1, Token Governance) and Thurgood (item 2, Core Goals). Each follow-on site's owner is named at the site (§ 4).
 **Proposers**: Ada (the order, §§ 2–3, F-1 (a) and F-2 as drafted; her 6(i) consult of the same day moves her to F-1 (b), § 7), Lina (sites 3–5; picks F-1 (b), F-2 (B), F-3 (A)). Thurgood, as Core Goals owner, picks F-2 (B) and F-3 (A) for the lines he owns (L51, L73–74; § 7, R2).
 **Required reviewer**: **Stacy** (R1). She is the census reader (README § "Conventions", "Instrument census"), the C1 confirmer and signer of Core Goals' `#development-practices` (§ 6), and the reader of the governance-edit-kind lines.
-**Reviewers**: **Lina** (sites 3–5 are hers; F-1 and F-2 change how her components read their own tokens); **Sparky** (site 5's L106 sits in the `web-authoring-standards` § "Hard Rules" embed in his charter, and § 7 Q-S asked him whether his screen chain is a second order; answered at R1). **Peter** ratifies (site 2 edits Core Goals, his document). Kenya and Data are notified, not reviewers: site 8 (added at R2) changes one line rendered in their `product-token-governance` embeds, regeneration only (§ 6). **R1 is recorded** (Stacy, Sparky, Ada, Lina; § 12) and incorporated at [THURGOOD R2].
+**Reviewers**: **Lina** (sites 3–5 are hers; F-1 and F-2 change how her components read their own tokens); **Sparky** (site 5's L106 sits in the `web-authoring-standards` § "Hard Rules" embed in his charter, and § 7 Q-S asked him whether his screen chain is a second order; answered at R1). **Peter** ratifies (site 2 edits Core Goals, his document). Kenya and Data are notified, not reviewers: site 8 (added at R2, text Ada's) changes one line rendered in their `product-token-governance` embeds, regeneration only (§ 6). **R1 and R2 are recorded** (Stacy, Sparky, Ada, Lina; § 12), incorporated at [THURGOOD R2] and [THURGOOD R3].
 **Class**: LAW. It changes what governance requires: it makes one of two contradictory MUST orders the law, moves the hard-coded last resort into the STOP step, and, under F-1 (b), removes a checkpoint. A normative order has no truth referent, so no item can be a CORRECTION (README § "When a governance edit needs a ballot — three kinds"; the row's record, Thurgood review, 2026-10-24).
 **Amends**: `governance/Token-Governance.md` §§ "Token Selection Matrix", "Component Token Usage", "Token Creation Governance", "Example 7"; `.kiro/steering/core-goals.md` § "Development Practices" L61–76 (and L58 under F-1 (b), L51 under F-2 (B)). Follow-on sites in § 4, six since R2 (site 8, `governance/Product-Token-Governance.md` L77). § 11 step 5 re-points two `governance/classification-map.md` rows' education citations (EXECUTION of this ballot; no requirement or `check_state` changes).
 **Cap**: four Token-Governance hunks, one Core Goals hunk (plus at most two one-line hunks under F-1 (b) and F-2 (B)), six follow-on sites (sites 3–8: R2 struck site 3's verbatim fallback and added site 8). **Retroactivity**: none. It binds from its application merge; shipped component code is not re-judged by it.
@@ -138,7 +138,7 @@ Under F-2 (B) three other hunks carry the swap (Ada R1): site 1b's "step 2" read
 >
 > AI agents MUST checkpoint with human before using component tokens, even if the component token already exists.
 >
-> **Why?** *(unchanged)*
+> **Why?** Component tokens represent an acknowledgment that the existing semantic token system is insufficient for a specific component's needs. Using them should be a deliberate decision, not a default.
 >
 > **Checkpoint format:**
 > ```
@@ -150,14 +150,14 @@ Under F-2 (B) three other hunks carry the swap (Ada R1): site 1b's "step 2" read
 > Awaiting your approval to proceed."
 > ```
 >
-> **Exception**: *(unchanged)*
+> **Exception**: If the spec explicitly calls for using a specific component token, the AI can proceed without additional checkpoint (prior acknowledgment).
 
 **After, F-1 (b)** (no checkpoint inside the owner; the checkpoint kept for another component's token):
 > **Autonomy Level**: Full autonomy inside the owning component
 > **Friction**: Low
 > **Requirement**: The token belongs to the component being built and is for this property
 >
-> Inside the component a token belongs to, AI agents use that component token without a checkpoint, as step 2 of § "Token Selection Matrix". A token that belongs to another component, or is for another property, is not a selection step: using one needs the step-4 checkpoint, in this format:
+> Inside the component a token belongs to, AI agents use that component token for the property it was made for without a checkpoint, as step 2 of § "Token Selection Matrix". A token that belongs to another component, or the owner's token for another property, is not a selection step: using one needs the step-4 checkpoint, in this format:
 >
 > **Why?** A component token exists because a human decided, when it was created, that the semantic tokens did not meet this component's need (§ "Token Creation Governance"). Using it inside its own component carries out that decision; a checkpoint would ask the same question again.
 >
@@ -174,11 +174,20 @@ Under F-2 (B) three other hunks carry the swap (Ada R1): site 1b's "step 2" read
 
 (Under (b) the **Exception** line goes: nothing inside the owner is left to pre-authorize. L174–178, "**Component Token Pattern**", are untouched by either option.)
 
-*Resolved at R2 (Ada R1)*: under (b) the heading, the format line and the step-2 sentence name both cases, "another component's token, or the owner's token for another property", as written above. Ada's residual stands: nothing checks "the property it was made for".
+*Resolved at R2 (Ada R1)*: under (b) the heading, the format line and the step-2 sentence name both cases, "another component's token, or the owner's token for another property", as written above. Ada's residual stands: nothing checks "the property it was made for". *Aligned at R3 (Ada R2 (d))*: the sentence now says "the owner's token for another property", as the heading does, and its first sentence says "for the property it was made for".
 
-**Under F-2 (B)** (Ada R1): every "step 2" in this site reads "step 1". The (a) Scope line reads `**Scope**: step 1 of § "Token Selection Matrix": a component's own token, used inside that component.`, and the (b) sentence reads "… use that component token without a checkpoint, as step 1 of § "Token Selection Matrix". …".
+**Under F-2 (B)** (Ada R1): every "step 2" in this site reads "step 1". The (a) Scope line reads `**Scope**: step 1 of § "Token Selection Matrix": a component's own token, used inside that component.`, and the (b) sentence reads "… use that component token for the property it was made for without a checkpoint, as step 1 of § "Token Selection Matrix". …".
 
-[@ADA] One more (B) carry-over, by the rule this site's (a) text already applies to the primitive line ("step 2 now comes before primitives, so none were checked"): under F-2 (B) with F-1 (a), the own token is step 1, so no semantic token was checked either, and the (a) format's "- Semantic concept tokens: [what was checked, why insufficient]" line goes too. The same holds for site 4's (B) Step 1 checkpoint ([@LINA], site 4). Confirm or reject in the bytes-only R2; until then this line is the filer's reading, not owner text. -- [THURGOOD R2]
+**Under F-2 (B) with F-1 (a)** (Ada R2 (c) confirms the drop): the own token is step 1, so no semantic token was checked, and the "Semantic concept tokens" line leaves the (a) format, as the "Primitive tokens" line already does. The (a) format under (B) reads, in full:
+> ```
+> AI: "This component needs [value]. I've checked:
+> - Existing component token: [token name] exists for this component
+>
+> Recommendation: Use existing component token [token name]
+> Awaiting your approval to proceed."
+> ```
+
+The (b) format keeps both lines ("Semantic concept tokens", "Primitive tokens"), because there steps 2 and 3 were checked before the step-4 checkpoint. The same drop holds for site 4's (B) Step 1 checkpoint (Lina R2 (b)). -- [THURGOOD R3]
 
 ### Site 1c: § "Token Creation Governance" — the construction rule's new home (F-3) and the checklist order
 
@@ -243,7 +252,7 @@ Its defect under the ruled order: it checks primitives (its step 2) before the c
 > ```
 > 3. [F-1 (b)] Use `buttonicon.inset.medium` → no checkpoint needed.
 
-**After, F-2 (B)** (Ada R1: under (B) "Example 7's 'Correct approach' lists the own-token check before the semantic check", optionally with Button-Icon small, "since it shows the case F-2 is about"; the filer's write-out of that instruction, with her optional example; her bytes-only read is owed):
+**After, F-2 (B)** (Ada R1: under (B) "Example 7's 'Correct approach' lists the own-token check before the semantic check", optionally with Button-Icon small, "since it shows the case F-2 is about"; the filer's write-out of that instruction, with her optional example; **confirmed by Ada R2 (b)**. Her optional addition to the checkpoint's Recommendation line, "(the semantic `space.inset.100` is also 8px)", is not adopted: she does not need it):
 > ### Example 7: A Component's Own Token
 >
 > **Situation**: Building Button-Icon's small size, need its inset (8px).
@@ -311,13 +320,13 @@ Heading L499 stays, so the anchor and the unit key `#token-selection-priority-mu
 **After, pointer form** (Lina recommends; the same under F-1 (a) and (b), and under F-2 (A) and (B)):
 > Token selection has one order, and it lives in Token Governance § "Token Selection Matrix". Query it before you choose a token: `get_section({ path: "token-governance", heading: "Token Selection Matrix" })`. This charter does not restate it.
 >
-> When nothing in that order fits, the step is a checkpoint with Peter and a hand-off to Ada (§ "When a Token Is Missing"); you never create the token to finish the selection.
+> When nothing in that order fits, the step is a checkpoint with Peter and a hand-off to Ada (§ "When a Token Is Missing"); you never create a token, or hard-code a value, to finish the selection.
 
-(Lina: the second paragraph keeps the one rule that is hers, not creating a token to make a selection work, under the MUST heading. It states no order, so it cannot drift from the matrix.)
+(Lina: the second paragraph keeps the one rule that is hers, not creating a token, and not hard-coding a value, to make a selection work, under the MUST heading. It states no order, so it cannot drift from the matrix. The hard-code half was added at R3 on Lina R2 (c); it matches Ada's site 6 wording.)
 
 **Verbatim fallback: struck at R2** (Stacy R1, M-1). It was a second, ambient copy of the order in a charter, offered "only if Peter wants the steps ambient for Lina", and so an unlisted fork. Lina's R1 wrote its F-2 (B) variants but gives no reason to keep it, and her own pick is the pointer form above; 6(ii) ruled that the order is stated once, and a charter copy would be the drift this ballot removes. Her fallback texts stay in her R1 entry (§ 12). Bringing it back would be a fourth fork, which this ballot does not carry.
 
-[@LINA] Optional, not blocking: the pointer form removes L504 ("Hard-coded values — only as last resort. Requires user approval. Always flag these."), which register row `no-hardcoded-color` scores KEEP as education (§ 5). Its content survives in the matrix's step 4, reached through your pointer. Ada's site-6 text carries the same rule ambient in one phrase, "never create a token, or hard-code a value, to finish a selection"; your second paragraph says "you never create the token to finish the selection". If you want the hard-code half ambient in your charter too, say so in the bytes-only R2 and give the words; otherwise the pointer form stands as written. -- [THURGOOD R2]
+*Resolved at R3 (Lina R2 (c))*: the hard-code half is in the second paragraph, one phrase, so L504's content survives in the matrix's step 4 (through the pointer) and in her charter's second paragraph, and her `priority-no-creation` item covers both halves. -- [THURGOOD R3]
 
 L506–507 (her construction rule) and L509–516 (§ "When a Token Is Missing", including L516's routed-query sentence) are unchanged under every option; no route is added.
 
@@ -331,10 +340,20 @@ The section heading L142 is unchanged (Lina's route `token-selection-framework` 
 
 > ## Token Selection Decision Framework
 >
-> The selection order is Token Governance § "Token Selection Matrix". This section is the component-side how-to for each step; it is not a second copy of the order.
+> The selection order is Token Governance § "Token Selection Matrix". This section is the component-side how-to for each step; its steps follow that order, number for number, and change in the same PR when it changes.
 >
 > ### Step 1: Check Semantic Tokens First
-> *(L146–155 unchanged: the token-file list and the example, Button text color → `color.action.primary`, not `cyan300`)*
+>
+> **ALWAYS start by reading semantic token files** to see what exists:
+> - `src/tokens/semantic/ColorTokens.ts` - Brand, status, text, surface colors
+> - `src/tokens/semantic/TypographyTokens.ts` - Body, heading, UI, specialized text
+> - `src/tokens/semantic/SpacingTokens.ts` - Layout and inset spacing
+> - `src/tokens/semantic/ShadowTokens.ts` - Elevation shadows
+> - `src/tokens/semantic/index.ts` - Complete semantic token exports
+>
+> **Example**: Button needs text color
+> - ❌ DON'T: Use primitive `cyan300`
+> - ✅ DO: Read `ColorTokens.ts`, find `color.action.primary`
 >
 > ### Step 2: Use the Component's Own Token for the Property
 >
@@ -387,7 +406,7 @@ The section heading L142 is unchanged (Lina's route `token-selection-framework` 
 >   tokens: {
 >     'inset.medium': {
 >       reference: spacingTokens.space125,
->       reasoning: 'Medium variant uses 10px padding (1.25× base) for compact appearance...',
+>       reasoning: 'Medium button variant uses 10px padding (1.25× base strategic flexibility token) for compact appearance while maintaining adequate touch area',
 >     },
 >     // 'inset.large' → space150, 'inset.small' → space100
 >   },
@@ -395,7 +414,11 @@ The section heading L142 is unchanged (Lina's route `token-selection-framework` 
 > ```
 >
 > ### After the Decision: Propose Semantic Token Elevation *(not a selection step)*
-> *(L211–214 body unchanged: "If 3+ components use same pattern ...")*
+>
+> **If 3+ components use same pattern**, propose semantic token elevation:
+> - Document the pattern in component completion notes
+> - Suggest semantic token name and structure
+> - Reference component-sizing-token-guide.md for elevation criteria
 
 (Verified at `1eced6cd5`: `buttonIcon.tokens.ts` L55–65 defines `ButtonIconInsetTokens` with `component: 'ButtonIcon'`, `family: 'spacing'`, `'inset.medium'` → `spacingTokens.space125`; `ButtonIcon.web.css` L76 reads `var(--buttonicon-inset-medium)`.)
 
@@ -411,13 +434,17 @@ The section heading L142 is unchanged (Lina's route `token-selection-framework` 
 >
 > A component token belongs to the component it is named for. Another component's token is not a selection step; using one goes to Step 4.
 >
-> [F-1 (a):] **Checkpoint first** unless the spec names the token: "This component needs [value]. Semantic tokens checked: [why insufficient]. Existing component token: [name]. Recommendation: use it. Awaiting your approval."
+> [F-1 (a):] **Checkpoint first** unless the spec names the token: "This component needs [value]. Existing component token: [name], made for this property. Recommendation: use it. Awaiting your approval."
 > [F-1 (b):] **No checkpoint inside the owning component.** A human approved the token when it was created; use it as the spec and the contract describe.
 >
 > ### Step 2: Check Semantic Tokens First
 >
 > **For a property the component has no token of its own for**, read the semantic token files to see what exists:
-> - (the five file bullets, unchanged)
+> - `src/tokens/semantic/ColorTokens.ts` - Brand, status, text, surface colors
+> - `src/tokens/semantic/TypographyTokens.ts` - Body, heading, UI, specialized text
+> - `src/tokens/semantic/SpacingTokens.ts` - Layout and inset spacing
+> - `src/tokens/semantic/ShadowTokens.ts` - Elevation shadows
+> - `src/tokens/semantic/index.ts` - Complete semantic token exports
 >
 > **Example**: Button needs text color
 > - ❌ DON'T: Use primitive `cyan300`
@@ -427,7 +454,7 @@ Under F-2 (B), Step 3 (primitives) opens "**If no token of the component's own a
 
 **Site 4 is a dependent copy** (Stacy R1, M-2). Its Steps 1–4 are numbered in the matrix's order, so they copy the order by nature, and F-2 (B) swaps both: site 1a's steps 1 and 2 and this site's Step 1 and Step 2 blocks, in the same PR. § 11 step 6's sweep checks that the two orders match after application.
 
-[@LINA] Two items for the bytes-only R2, both in your text. (1) The After-text's second sentence, "This section is the component-side how-to for each step; it is not a second copy of the order", reads against M-2: the section does carry the order, as a dependent copy. A wording that keeps your point: "This section is the component-side how-to for each step; its steps follow that order, number for number, and change when it changes." Keep, replace or reword. (2) The (B) Step 1 checkpoint under F-1 (a) still says "Semantic tokens checked: [why insufficient]", but under (B) the own token wins "even where a semantic token has the same value", so no semantic token was checked or found insufficient; site 1b has the same line ([@ADA], site 1b). Drop it, or say why it stays. -- [THURGOOD R2]
+*Resolved at R3 (Lina R2 (a), (b))*: the section's sentence is the final wording above ("its steps follow that order, number for number, and change in the same PR when it changes"), which reads with M-2 (a dependent copy). "Semantic tokens checked" is dropped from the (B) Step 1 checkpoint (Lina's replacement checkpoint text above); under (A) the line stays in Step 2 (Step 2 of the (A) text is where semantic is checked first). -- [THURGOOD R3]
 
 **Adjunct A** (L43 and L48, § "WHEN creating component-level tokens / semantic tokens THEN read"):
 - L43 before: `1. ✅ **Step 3: Create Component-Level Tokens for Variants**` → after: `1. ✅ **After the Decision: Component Tokens for Variants**`
@@ -482,14 +509,18 @@ L25–31 (the Component Token Rule copy) is unchanged under both F-3 options (Ad
 - After, F-1 (b): `Your token-governance autonomy levels (semantic freely / primitive with prior context / component freely inside its own component, another component's token with explicit approval / creation always human-reviewed) are delivered as ambient law — see the Ambient section's `token-governance` embed; apply them as written there.`
 - Under F-1 (a): unchanged. Ada's charter has no "Token Selection Priority" restatement (`grep -n -i priority canonical/agents/ada.md` → none); L314's hierarchy line is the reference hierarchy, not the order, and does not move.
 
-### Site 8: `governance/Product-Token-Governance.md` L77 (Ada's file; found at R2; **Ada's bytes owed**)
+### Site 8: `governance/Product-Token-Governance.md` L77 (Ada's file and text; found at R2 by the filer; Ada's after-text replaced the filer's at R2)
 
 Found by the filer at R2 while checking Ada's § 1 correction. L77, in § "System-First Value Selection" → "The Workflow" step 2, sends the reader to Core Goals for the order: "Check semantic tokens first per Core Goals token priority." After site 2 Core Goals states no priority, so the sentence points at nothing. § 11 step 6's patterns did not catch it ("Core Goals token priority"); step 6 now does.
 
 - Before: `2. **Query system tokens (semantic first, then primitives)** — `search_tokens({ family: "opacity" })` or `get_token_family({ family: "opacity" })`. Check semantic tokens first per Core Goals token priority.`
-- After (the filer's proposal, the same under every option; product tokens have no component step, so F-2 does not reach it): `2. **Query system tokens (semantic first, then primitives)** — `search_tokens({ family: "opacity" })` or `get_token_family({ family: "opacity" })`. Check semantic tokens first, per Token Governance § "Token Selection Matrix".`
+- After (Ada R2 (a), replacing the filer's proposal; the same under every option, since product tokens have no component step and F-2 does not reach it). Whole L77:
 
-**[@ADA]** Confirm, replace, or strike the site (bytes-only R2). The section is a retained ambient embed in Sparky's, Kenya's and Data's charters (`ambient[product-token-governance#system-first-value-selection]`, retained in each consumer dispositions file), so the hunk is regeneration only, no act; the pinned `mustContain` sentence (L68, "If a system token (semantic or primitive) exists within perceptual tolerance of your intended value, use `ref:` instead.") is outside it. -- [THURGOOD R2]
+```
+2. **Query system tokens (semantic first, then primitives)** — `search_tokens({ family: "opacity" })` or `get_token_family({ family: "opacity" })`. Check semantic tokens first, then primitives, in the order of Token Governance § "Token Selection Matrix"; step 5 below decides `ref:` or `value:`.
+```
+
+Ada's reason (R2): the filer's line "drops the one thing the old sentence carried". Product tokens have no component step, and the Matrix's step 4 STOP is a creation rule that Core Goals L59 and Token-Governance L186 already answer for product authors, so pointing the lookup at the Matrix and leaving that question alone keeps the meaning. The heading, the tool calls and the L68 pin are untouched. The section is a retained ambient embed in Sparky's, Kenya's and Data's charters (`ambient[product-token-governance#system-first-value-selection]`, retained in each consumer dispositions file), so the hunk is regeneration only, no act; the pinned `mustContain` sentence (L68, "If a system token (semantic or primitive) exists within perceptual tolerance of your intended value, use `ref:` instead.") is outside it.
 
 ### Not edited, and why
 
@@ -500,7 +531,7 @@ Found by the filer at R2 while checking Ada's § 1 correction. L77, in § "Syste
 - Ledgers that cite Core Goals L73–74 (`.kiro/issues/2026-10-24-component-token-custom-values-unvalidated.md` L14): a dated append under F-3 (A), never a rewrite.
 - `.kiro/steering/core-goals.md` L84–87: unchanged (§ 3).
 - `.cursor/rules/{components,specs,tests}.mdc` (eleven legacy `get_section` paths, with this ballot's L41–42): **a rule-10 record, filed by Thurgood in the R2 commit**, `.kiro/issues/2026-10-25-cursor-rules-legacy-steering-paths.md` (§ 4, site 6).
-- Core Goals L59 ("Creating ANY token: Always requires human review") read against product-token authoring, where platform agents add product tokens with review by audit (Ada R1, § 1): **a rule-10 record, Ada's to file, Leonardo consulted**. It predates this ballot and this ballot does not change either text.
+- Core Goals L59 ("Creating ANY token: Always requires human review") read against product-token authoring, where platform agents add product tokens with review by audit (Ada R1, § 1): **a rule-10 record, Ada's, Leonardo consulted, filed in this PR** (`.kiro/issues/2026-10-25-core-goals-l59-vs-product-token-authoring.md`; she commits it after R3). It predates this ballot and this ballot does not change either text.
 - `governance/Process-Spec-Planning.md` L1732, L2106 ("### Decision 2: Token Selection Priority") and L2259: a worked example of a completion document for a past build-system TokenSelector ("semantic > primitive"). It records that implementation's decision, not the order, and it is true under both F-2 options outside an owning component. Not edited; an expected hit of § 11 step 6's sweep.
 
 ## 5. Census
@@ -541,13 +572,13 @@ Item 3 (follow-on sites):
 | Signed / retained unit | Moves under | Acts |
 |---|---|---|
 | Core Goals `#development-practices` (`canonical/operative-sets/core-goals.yaml` L52–147; owner Thurgood, confirmer Stacy) | always | **The second re-sign in two days**: #472 re-confirmed (`e73a4fc1b`) and re-signed (`3c7a41c1d`) this unit on 2026-10-25, the outcome Ada's co-owner line foresaw if the served-docs PR merged first. Thurgood re-authors the items: `token-governance-query` and `practice-15`…`practice-18` go; one pointer item is added (`token-selection-pointer`, kind obligation, text = the pointer line); `construction-rule` goes under F-3 (A); `practice-13` is re-authored under F-1 (b); `practice-8` is re-authored under F-2 (B). Stacy re-confirms (C16) in `canonical/profiles/consumer/confirmations/core-goals.md` § `#development-practices`; its ruling that `practice-15` carries "MUST follow this order" so a reordering is detected retires with the item, and the pointer item carries the order's only home instead |
-| Core Goals consumer row `#development-practices` (`canonical/profiles/consumer/always-set/core-goals.dispositions.yaml` L9, re-pointed, signer Stacy) and its overlay unit (`always-set/core-goals.overlay.md` L23) | always | Thurgood re-renders the overlay unit. **The amendment pointer is subtracted** (decided at R2, Stacy R1 item 5): the row gains a fourth removal, `{"text": " *(Amended <ratification date> by ballot 2026-10-25-token-selection-order-one-rule, item 2; prior text at `1eced6cd5`.)*", "cites": "subtraction-2"}` (the leading space included, so the rendered pointer line ends at "…heading: "Token Selection Matrix" })`."), on the precedent of `ai-collaboration-principles.dispositions.yaml` L10, whose `#counter-argument-requirement` row removes the fold-back ballot's pointer under `subtraction-2`; a ballot path and a DesignerPunk commit SHA mean nothing in a consumer repo. The rendered overlay unit then reads the pointer line without it. The row's three existing removals quote text outside the hunk and stand. Stacy re-signs (C1), `canonical/profiles/consumer/signatures/core-goals.md` § `#development-practices` |
-| Lina `#token-selection-priority-must-follow-this-order` (`canonical/operative-sets/lina.yaml` L450–469; confirmer Lina; consumer row `canonical/profiles/consumer/lina.dispositions.yaml` L26, re-pointed, signer Lina; overlay `canonical/profiles/consumer/lina.overlay.md` L48) | always (site 3) | Also its second re-sign (#472: `137dd98c2` confirm, `d45e17e02` sign). Thurgood applies site 3 byte for byte, re-authors the items (the four `priority-*` items go; under the pointer form Lina proposes `priority-pointer`, obligation: query the matrix before choosing, and `priority-no-creation`, obligation: a missing token is a checkpoint and a hand-off, never created to finish a selection), and re-renders the overlay unit; the row's `removals` entry ("Peter") still quotes text in the pointer form and stands. Lina re-confirms and re-signs |
+| Core Goals consumer row `#development-practices` (`canonical/profiles/consumer/always-set/core-goals.dispositions.yaml` L9, re-pointed, signer Stacy) and its overlay unit (`always-set/core-goals.overlay.md` L23) | always | Thurgood re-renders the overlay unit. **The amendment pointer is subtracted** (decided at R2, Stacy R1 item 5): the row gains a fourth removal, `{"text": " *(Amended <ratification date> by ballot 2026-10-25-token-selection-order-one-rule, item 2; prior text at `1eced6cd5`.)*", "cites": "subtraction-2"}` (the leading space included, so the rendered pointer line ends at "…heading: "Token Selection Matrix" })`."), on the precedent of `canonical/profiles/consumer/always-set/ai-collaboration-principles.dispositions.yaml` L10, whose `#counter-argument-requirement` row removes the fold-back ballot's pointer under `subtraction-2`; a ballot path and a DesignerPunk commit SHA mean nothing in a consumer repo. The rendered overlay unit then reads the pointer line without it. The row's three existing removals quote text outside the hunk and stand. Stacy re-signs (C1), `canonical/profiles/consumer/signatures/core-goals.md` § `#development-practices` |
+| Lina `#token-selection-priority-must-follow-this-order` (`canonical/operative-sets/lina.yaml` L450–469; confirmer Lina; consumer row `canonical/profiles/consumer/lina.dispositions.yaml` L26, re-pointed, signer Lina; overlay `canonical/profiles/consumer/lina.overlay.md` L48) | always (site 3) | Also its second re-sign (#472: `137dd98c2` confirm, `d45e17e02` sign). Thurgood applies site 3 byte for byte, re-authors the items (the four `priority-*` items go; under the pointer form Lina proposes `priority-pointer`, obligation: query the matrix before choosing, and `priority-no-creation`, obligation: a missing token is a checkpoint and a hand-off, never created, and no value hard-coded, to finish a selection), and re-renders the overlay unit; the row's `removals` entry ("Peter") still quotes text in the pointer form and stands. Lina re-confirms and re-signs |
 | Ada `#what-this-means-in-practice` (`canonical/operative-sets/ada.yaml` L284–307, item `practice-ambient-law`; consumer row `canonical/profiles/consumer/ada.dispositions.yaml` L19, re-pointed, signer Ada; overlay `canonical/profiles/consumer/ada.overlay.md` L67) | **F-1 (b) only** (site 7) | Thurgood applies L389 byte for byte, re-authors the item and re-renders the overlay unit. Ada re-confirms and re-signs |
 | Ada `#in-scope` | does not move | none |
 | Ada's ambient `token-governance` embed (§ "Token Usage Governance" + § "Token Creation Governance"; consumer rows retained) | always (sites 1b, 1c; the class-rule sentence under F-1 (b)) | Rendered text changes in `.claude/agents/ada.md`, `.kiro/agents/ada-prompt.md` and the consumer outputs. A retained embed carries no signature (`tools/agent-generator/regrounding/dispositions.ts` L34: an embed is never re-pointed): regeneration only, no act. *(Read from the dispositions rule; that the freshness sweep reports nothing for it is confirmed by the application run's sweep.)* Site 1a is outside the embed |
 | Sparky's ambient `web-authoring-standards#hard-rules` (retained) | always (site 5, L106) | regeneration only, no act (Sparky R1 agrees) |
-| Sparky's, Kenya's and Data's ambient `product-token-governance#system-first-value-selection` (retained in each consumer dispositions file) | always (site 8, L77; if Ada keeps the site) | regeneration only, no act |
+| Sparky's, Kenya's and Data's ambient `product-token-governance#system-first-value-selection` (retained in each consumer dispositions file) | always (site 8, L77; Ada kept the site with her own text, R2) | regeneration only, no act |
 
 **Grants**: Thurgood's authoring acts above are outside his standing write scope. Peter's ratification names the files, or a grant record does before the application PR: `.kiro/steering/core-goals.md`; `canonical/operative-sets/{core-goals,lina}.yaml` (and `ada.yaml` under F-1 (b)); `canonical/profiles/consumer/always-set/core-goals.{dispositions.yaml,overlay.md}`; `canonical/profiles/consumer/lina.{dispositions.yaml,overlay.md}` (and `ada.*` under F-1 (b)); `canonical/agents/lina.md` L499–504 (and `canonical/agents/ada.md` L389 under F-1 (b)), byte for byte from the owner's text; `governance/classification-map.md`, the two rows' `education` and `history` fields only (§ 11 step 5; Thurgood applies, Ada consulted as both rows' owner); `canonical/generated.lock` and the generated roots, for the regeneration and the lock refresh. **Ada** applies item 1 (`governance/Token-Governance.md`), site 6 (`.cursor/rules/tokens.mdc`) and site 8 (`governance/Product-Token-Governance.md`); **Lina** applies sites 4–5 (`governance/Component-Development-Guide.md`, `governance/Web-Authoring-Standards.md`); each is named in the grant. **The grant overrides Ada's charter for the two `governance/` files she applies**: `canonical/agents/ada.md` L384 reads "You do NOT write to `.kiro/steering/` or `governance/` files", with no "unilaterally" (Lina's L557 and Thurgood's charter carry it). Her charter's own process (L377–380, "**Apply**: If approved, apply precisely as approved") is what a ratification is, and Peter's grant naming her as the applying seat is that approval (#472's squash message cites, as its authority for her governance-doc edits, Peter's direction "Fix all of them as the owners recommend"); the override is for the named files in the application PR only. `.cursor/rules/tokens.mdc` is not a governance path, so no override reaches it. Each seat's confirmation and signature sections are its own acts and need no grant (signing-act ballot M1).
 
@@ -564,7 +595,7 @@ Item 3 (follow-on sites):
 ## 8. Sequencing
 
 1. **This PR files the DRAFT.** Its merge records the measure; it ratifies nothing and applies nothing.
-2. **R1 is done** (Stacy required; Sparky, Ada, Lina; § 12) and incorporated at R2. **Before Peter rules**, a bytes-only R2 (Stacy R1 item 8): Stacy reads every text written since R1 byte for byte, and each owner reads the items tagged to it in [THURGOOD R2] ("Still open"). An item an owner rejects is struck or rewritten by that owner before the ruling; none of them is a fork.
+2. **R1 and the bytes-only R2 are done** (Stacy required; Sparky, Ada, Lina; § 12). R2 passed with items (Stacy), and every owner read is answered: Ada (site 8 replaced, Example 7 (B), the (B)×(a) format, the 1b wording), Lina (site 4 sentence, site 4 checkpoint, site 3 hard-code half), Sparky (accepted as drafted). All are folded at [THURGOOD R3]; none was a fork. Nothing remains before Peter rules except his F-1, F-2 and F-3.
 3. **Peter ratifies** in chat with his F-1, F-2 and F-3 answers; the receiving session commits the Status line first (record-first), with the README roll entry in the same commit.
 4. **One application PR**, Peter-merged, in § 11's order: **authoring → regeneration → seat acts → lock refresh** (Stacy R1 B-2). A C1 signature's `renderedHash` is computed over the committed rendering, so no seat signs before the regeneration commit; #472 did the same (regeneration `94ce930bf` before its confirm and sign commits, lock `f218beb42` after them). The lock refresh is a second generator run, because the signatures land in dispositions rows, which are inputs to the closure the lock hashes.
 5. **With the fix-now ballot** (`2026-10-24-ballot-audit-fix-now-law.md`, DRAFT): its item 4 re-signs Core Goals `#core-project-context`, a different unit with no shared before-text. Applied in one window, they share one regeneration and one lock refresh.
@@ -578,7 +609,7 @@ Item 3 (follow-on sites):
 1. **The salience loss is real** (6(ii)'s named cost, accepted by Peter's ruling): an agent that does not follow the pointer meets no order. L51 still keeps it from the worst mistake (primitive before semantic).
 2. **F-2 is a defect in the ruled order**, not a style question. Ratifying F-2 (A) makes shipped Button-Icon code read as non-compliant.
 3. **Two adjacent contradictions stay, and this ballot does not fix them**: Example 6 and the Creation Decision Matrix row "One-off value, doesn't fit math → Component token" (L228) against the construction rule; and `src/build`'s encoded old order. They go to rule-10 records, or into `2026-10-24-component-token-custom-values-unvalidated.md`, at Ada's call (walk record L363). *(A third the measure listed, Token Governance L85 "Component tokens should reference semantic tokens", was rewritten by #472 to "Component colors reference semantic tokens" and no longer contradicts the construction rule.)*
-4. **Filer texts in owners' sites, now labelled and tagged**: site 1a's F-2 (B) write-out is owner-confirmed (Ada R1), and site 6 is Ada's own text. What the filer still wrote: site 1d's (B) Example 7 (from Ada's instruction), the dropped "Semantic concept tokens" line in site 1b's (B)×(a) format and the matching line in Lina's site 4, and site 8's after-text. Each carries an owner tag for the bytes-only R2; until an owner reads it, a reader cannot tell the owner agreed.
+4. **Filer texts in owners' sites** (all read by their owners at R2, none left open): site 1a's F-2 (B) write-out was confirmed at R1; site 6 is Ada's own text; site 1d's (B) Example 7 was confirmed by Ada R2 (b); the dropped "Semantic concept tokens" line in site 1b's (B)×(a) format was confirmed by Ada R2 (c) and the matching line in site 4 dropped by Lina R2 (b); site 8's after-text is Ada's own (R2 (a)), replacing the filer's.
 5. **The census rule's reach** (Stacy R1, residual): condition 2 put two rows in scope whose checks never load the edited files (§ 5), and their lines cost a read of each check's code to say so. Thurgood's answer as the rule's drafter is in [THURGOOD R2] (§ 12): the reach is intended, and a revisit, if the lines keep finding nothing, belongs to register row `instrument-census-at-draft`, not to this ballot.
 
 ## 10. Cost
@@ -592,18 +623,18 @@ Item 3 (follow-on sites):
 
 1. **The Status commit** (record-first; README § "The Ratification Protocol"), before any edit site. It flips the Status line to `**Status**: **RATIFIED (Peter, <date>)** — <F-1, F-2, F-3 answers>`, fills `<ratification date>` in every amendment pointer (and in the overlay removal of § 6), and adds the README roll entry. **It also appends `## 13. Resolved after-texts`** (Stacy R1, M-4): for each site, the after-text exactly as it will be applied under Peter's answers, with every fork bracket, bracket label, "/" alternative and duplicated step resolved (site 1d's two step 3s, site 4's F-3 "/" pair, site 4's two checkpoint lines), and the § 11 step 5 register text. The claims pass compares the application diff with § 13 byte for byte; nothing in § 13 is new text, and a § 13 line that is not a resolution of a line above is a finding.
 2. Branch `chore/token-selection-order-one-rule`. Stop on any before-text that does not match at the application base, and report: `git diff --quiet 1eced6cd5 <base> -- governance/Token-Governance.md .kiro/steering/core-goals.md canonical/agents/lina.md canonical/agents/ada.md governance/Component-Development-Guide.md governance/Web-Authoring-Standards.md governance/Product-Token-Governance.md .cursor/rules/tokens.mdc governance/classification-map.md` first. (`governance/classification-map.md` is checked over the two rows' `education` and `history` only; other rows may move.)
-3. PR body: one `**Edit kind**: <path> — LAW (.kiro/docs/ballots/2026-10-25-token-selection-order-one-rule.md)` line per governance-path file (Token-Governance, core-goals, Component-Development-Guide, Web-Authoring-Standards, Product-Token-Governance if site 8 stands, `canonical/agents/lina.md`, and `canonical/agents/ada.md` under F-1 (b)), and `**Edit kind**: governance/classification-map.md — EXECUTION (ballot 2026-10-25-token-selection-order-one-rule § 11 step 5)`; `**Consulted**:` Ada, Lina, Sparky, Stacy; Kenya and Data named as notified (site 8, regeneration only).
+3. PR body: one `**Edit kind**: <path> — LAW (.kiro/docs/ballots/2026-10-25-token-selection-order-one-rule.md)` line per governance-path file (Token-Governance, core-goals, Component-Development-Guide, Web-Authoring-Standards, Product-Token-Governance (site 8), `canonical/agents/lina.md`, and `canonical/agents/ada.md` under F-1 (b)), and `**Edit kind**: governance/classification-map.md — EXECUTION (ballot 2026-10-25-token-selection-order-one-rule § 11 step 5)`; `**Consulted**:` Ada, Lina, Sparky, Stacy; Kenya and Data named as notified (site 8, regeneration only).
 4. **Authoring**, under the grant (§ 6): Ada applies item 1 and sites 6 and 8; Lina applies sites 4 and 5; Thurgood applies site 2, sites 3 and 7 byte for byte from § 13, and the operative-set items, overlay units and dispositions-row fields of § 6 (the Core Goals row's fourth removal included). Each commit under its author's `Agent:` trailer, the trailer in the message's final paragraph.
 5. **Register (EXECUTION of this step; Thurgood applies, Ada consulted as both rows' owner)**, `governance/classification-map.md` (Stacy R1, B-1). The education citations of two rows cite text the ballot moves; they are re-pointed by section, so later line moves cannot stale them again, and each row gains one history entry.
    - `no-autonomous-token-creation`, `education.disposition`: `Token-Governance.md:180-186 the canonical statement + creation checkpoint + decision matrix` → `Token-Governance.md § 'Token Creation Governance' the canonical statement + creation checkpoint + decision matrix`. History entry: `- { date: <application date>, change: "EXECUTION (ballot 2026-10-25-token-selection-order-one-rule § 11 step 5). Education citation re-pointed by section: Token-Governance.md:180-186 (two lines off since #472, and moved again by the ballot's site 1a) is now § 'Token Creation Governance'. core-goals.md:55-59 keeps its lines[F-1 (b): ; its component rung now reads 'Use freely inside the component they belong to, for the property they were made for; any other use requires explicit human approval']. The Component Development Guide's token-selection framework no longer creates component tokens inside selection (its old Step 3): a missing token stops at a checkpoint, and creation goes to Ada. No requirement, scope or check_state changes; census: the ballot's § 5, not in scope.", by: thurgood }`
    - `no-hardcoded-color`, `education.disposition`, four replacements: (i) `core-goals.md:50/:53/:71 (the token-selection priority ladder — teaches the ORDER and the escalation, which no detector supplies)` → `core-goals.md:50/:53 and Token-Governance.md § 'Token Selection Matrix' step 4 (the selection order and its escalation, a hard-coded value only as the human's last resort — which no detector supplies)`; (ii) `Component-Development-Guide.md:183 ('Never use hard-coded values'` → `Component-Development-Guide.md § 'Token Selection Decision Framework', 'After the Decision: Component Tokens for Variants' ('Never use hard-coded values'`; (iii) `canonical/agents/lina.md:459 ('Hard-coded values — only as last resort. Requires user approval. Always flag these.')` → `canonical/agents/lina.md § 'Token Selection Priority (MUST follow this order)' (a pointer to Token-Governance § 'Token Selection Matrix', whose step 4 carries the last resort)`; (iv) `(core-goals:50/:53/:71, CDG:183, PIG:410-422)` → `(core-goals:50/:53, Token-Governance § 'Token Selection Matrix' step 4, CDG § 'Token Selection Decision Framework', PIG:410-422)`. Each before-string occurs once in the file at `fa8aa254f`. History entry: `- { date: <application date>, change: "EXECUTION (ballot 2026-10-25-token-selection-order-one-rule § 11 step 5). Education citations re-pointed after the ballot moved the text they cite: core-goals.md:71 (the ladder's hard-coded step) is gone, and its content is Token-Governance § 'Token Selection Matrix' step 4 (a hard-coded value only as the human's last resort); Component-Development-Guide.md:183 is cited by section; canonical/agents/lina.md:459 (L504 before the ballot) is removed by her pointer form, and her charter reaches the last resort through that pointer. The KEEP scores stand: the content is still taught, in one home. No requirement, scope or check_state changes; census: the ballot's § 5, not in scope.", by: thurgood }`
    - `<application date>` is the application PR's date, the one value § 13 cannot fix in advance.
 6. **Straggler sweep over the source tree**, before the regeneration (Stacy R1 item 9): `git grep -n -i -E "Token Selection Priority|Core Goals' token selection|Core Goals token priority|semantic → primitive → component|COMPONENT TOKEN EXISTS" -- . ':!.kiro/specs' ':!.kiro/issues' ':!.kiro/docs' ':!.claude' ':!.kiro/agents' ':!canonical/_consumer-output'`. **Expected hits, and only these** (each read at `fa8aa254f`): (a) the kept heading `### Token Selection Priority (MUST follow this order)` at `canonical/agents/lina.md` L499 and in `canonical/profiles/consumer/lina.overlay.md`; (b) ledgers that quote superseded text: `canonical/profiles/consumer/confirmations/core-goals.md` and `canonical/profiles/consumer/signatures/core-goals.md`; (c) frozen fixtures, `tests/onboarding-trio/fixtures/born-{cc,kiro}/**`; (d) `src/build/**`: `tokens/TokenSelector.ts`, `tokens/TokenSelection.ts`, `tokens/TokenIntegrator.ts`, `tokens/ComponentToken.ts`, `tokens/ComponentTokenGenerator.ts`, `tokens/__tests__/TokenSelector.test.ts`, `errors/ErrorDocumentation.ts`, `errors/ErrorReporter.ts`, `errors/README.md` (Ada's rule-10 record, § 4); (e) `tools/agent-generator/__tests__/partition.golden.test.ts` L283, a slug-function test literal; (f) `governance/Process-Spec-Planning.md` L1732, L2106 and L2259 (§ 4, "Not edited"). Any other hit stops the PR and is reported. **Dependent-copy check** (M-2): site 4's Step 1–4 headings name the same steps, in the same order, as site 1a's list.
-7. **Regeneration**: `npm run build:generator`; commit the generated roots as the pre-signature rendering (as #472's `94ce930bf`). Re-run step 6's command without the three generated-root exclusions: the only new hits are Lina's kept heading in her generated charters (`.claude/agents/lina.md`, `.kiro/agents/lina-prompt.md`, `canonical/_consumer-output/**/lina*`).
+7. **Regeneration**: `npm run build:generator`; commit the generated roots as the pre-signature rendering (as #472's `94ce930bf`). Re-run step 6's command without the three generated-root exclusions: the only new hits are Lina's kept heading in her generated charters (`.claude/agents/lina.md`, `.kiro/agents/lina-prompt.md`, `canonical/_consumer-output/**/lina*`). **Order check** (Stacy R2, residual: the ballot's authoring → regeneration order, with the operative-set items edited before the regeneration, was reasoned from #472's order and not run): run the generator once on the authoring commits before the profile-author items commit and once after it; the generated roots must be byte-identical. A difference means the items enter the rendering: stop and report it to Stacy before any seat acts.
 8. **Seat acts**, against the committed rendering: Stacy re-confirms and re-signs Core Goals `#development-practices`; Lina re-confirms and re-signs `#token-selection-priority-must-follow-this-order`; Ada re-confirms and re-signs `#what-this-means-in-practice` under F-1 (b). Each act is the seat's own commit under its own `Agent:` trailer.
 9. **Lock refresh**: a second `npm run build:generator`. The signatures sit in dispositions rows, which the lock's input closure hashes, so the lock moves; **every output must stay byte-identical** (#472's `f218beb42`: "the fresh regen wrote 387 files and left every output byte identical"). Commit `canonical/generated.lock` only. A changed output means a signed rendering moved after its signature: stop and report.
 10. Checks: `npm run -s check:122:diff-guard` (with `verify-signing-chain --ci`); `npm run -s check:section-citations`; `node scripts/validate-steering-metadata.js`; `npm test` (canonical-vs-truth and the sweeps run in the root lane); docs MCP `rebuild_index` (Token-Governance, Component-Development-Guide, Web-Authoring-Standards, Product-Token-Governance and the register are served).
-11. Close `.kiro/issues/2026-10-24-token-selection-order-core-goals-vs-token-governance.md` by a dated outcome line in the application PR. Under F-3 (A), append the dated L73–74 note to `2026-10-24-component-token-custom-values-unvalidated.md`. File the rule-10 records of § 4 "Not edited" that are not filed earlier (Lina: CDG § "Component Token Files"; Ada: `src/build`; Ada: Core Goals L59 against product-token authoring).
+11. Close `.kiro/issues/2026-10-24-token-selection-order-core-goals-vs-token-governance.md` by a dated outcome line in the application PR. Under F-3 (A), append the dated L73–74 note to `2026-10-24-component-token-custom-values-unvalidated.md`. File the rule-10 records of § 4 "Not edited" that are not filed earlier (Lina: CDG § "Component Token Files"; Ada: `src/build`). The Core Goals L59 record is already filed in the #480 draft PR: `.kiro/issues/2026-10-25-core-goals-l59-vs-product-token-authoring.md` (Ada; cite it in the application PR's close-out line).
 
 ## 12. Review record
 
@@ -752,3 +783,92 @@ Merged `origin/main` (`fa8aa254f`) into the branch first; no site file moved (he
 4. **[@SPARKY]**: Ada's § 1 wording (the ballot's reading; it edits no site) and Lina's replacement L106 bytes.
 
 Nothing is applied; the Status line still reads DRAFT. -- [THURGOOD R2]
+
+*(R2 entries, reproduced as each reviewer wrote them, in the order received: Stacy, Ada, Lina, Sparky.)*
+
+#### [STACY R2]
+**Verdict: R2 PASS with items.** Read at `c0d0fe5c6`; `main` is `d740624b8`, the branch base.
+
+1. **B-1: resolved.** The five lines name the right instruments, with right reasons and grammar.
+   - I re-ran the check. The 17 family suites exist and none matches the file-read pattern. All 7 stemma suites read only `platforms/web`. The validator's one doc is an `@see` comment.
+   - I swept every row's `education` for edit-site files. Only these two rows cite them as law, so no other line is owed.
+   - The § 11 step 5 re-points and history entries are well formed, and their before-strings are in the file.
+2. **B-2: matches #472, with a nuance.** The SHAs and the "387 files" quote are true (`94ce930bf` → signs → `f218beb42`). #472 also ran items (`46ae0efda`) after the regeneration and a dispositions edit (`ce735ba7c`) after Kenya's and Data's signs. The ballot's order is stricter and safe, since items do not enter the rendering. Low: the § 6 precedent path is `always-set/ai-collaboration-principles.dispositions.yaml`; add the directory.
+3. **M-1: resolved** (fallback struck, reason accepted). **M-2: resolved** (dependent copy, step 6 check), but Lina's "not a second copy" still stands at site 4 L334; her call is owed. **M-3: resolved** (Ada applies, override scoped, class filed as a rule-10 record). **M-4: resolved** (§ 13 at the Status commit). **Items 3, 5, 9: resolved.** I ran step 6's sweep: every hit is expected or an edit site, and L2106 is listed.
+4. **Before-texts: all match.** The eight site files and the register are byte-identical `1eced6cd5` → HEAD. All 52 R1 blockquote lines that are file text are unchanged at R2, and R2 added only after-text.
+5. **Placeholders still open.** No "[…]" remains. Owed reads, all named in [THURGOOD R2]:
+   - **Site 8**: Ada's bytes (the filer's proposal).
+   - **Ada**: site 1d's (B) Example 7, site 1b's (B)×(a) format line, and the L181 carry-over.
+   - **Lina**: the L334 wording, and "Semantic tokens checked" in site 4's (B) Step 1 checkpoint (L416).
+   - **Sparky**: § 1 and L106.
+   - **`(the five file bullets, unchanged)`** at site 4: § 13 must expand this elision, or the claims pass cannot compare bytes.
+   
+   None blocks this PASS. Ratification waits on them.
+
+**Counter-argument (folded)**: the order check is by commit order, not by a run. **Residual**: I did not test that regenerating before the items edit gives identical bytes.
+
+
+#### [ADA R2]
+Bytes-only read against main `d740624b8` and branch HEAD `c0d0fe5c6`.
+
+- **(a) Site 8: replace.** The filer's line is accurate but drops the one thing the old sentence carried. Product tokens have no component step, and the Matrix's step 4 STOP is a creation rule that Core Goals L59 and Token-Governance L186 already answer for product authors. Pointing the lookup at the Matrix and leaving that question alone keeps the meaning. Heading, tool calls and the L68 pin are untouched. After-text, whole L77:
+
+```
+2. **Query system tokens (semantic first, then primitives)** — `search_tokens({ family: "opacity" })` or `get_token_family({ family: "opacity" })`. Check semantic tokens first, then primitives, in the order of Token Governance § "Token Selection Matrix"; step 5 below decides `ref:` or `value:`.
+```
+
+- **(b) Example 7 under F-2 (B): confirmed.** `buttonicon.inset.small` and `space.inset.100` both resolve to `space100` (`token-index/components.yaml` L240–244). The checkpoint lists only the component token, which agrees with (c). Optional: add "(the semantic `space.inset.100` is also 8px)" to the checkpoint's Recommendation line, so the human sees the shadowed token. I don't need it.
+- **(c) Dropping "Semantic concept tokens": confirmed.** Under (B) the own token is step 1, so no semantic token was checked. The same drop holds for Lina's site 4 Step 1 checkpoint. The (b) format keeps both lines, because there steps 2 and 3 were checked.
+- **(d) Placement: correct.** "Or is for another property" reads as any token, a semantic one included. Rewrite the 1b (b) sentence to match the heading: "A token that belongs to another component, or the owner's token for another property, is not a selection step …". Also make the first sentence say "uses that component token *for the property it was made for* without a checkpoint".
+- **Rule-10 record (Core Goals L59 vs product-token authoring): rides #480.** Rule 10 puts the filing in the PR that records the obligation, and § 11 step 11 is a plan line citing no record. One file under `.kiro/issues/`, mine to author. Review by audit; Leonardo consulted. Its trigger is the application merge. Core Goals L59 stays after site 2, and Token-Governance L186 is unchanged.
+
+
+#### [LINA R2]
+- **M-1, site 3 verbatim fallback** → site 3. Strike accepted. A second ambient copy is what 6(ii) removes, and my pick was always the pointer form. My (B) fallback texts stay in my R1 entry as a record, not as a live option.
+- **(a) Site 4 sentence** → site 4 After. Your rewording is confirmed, because my sentence was wrong against M-2. Final text, applied as written (one change: it names the same-PR duty, so a later edit to the matrix cannot leave this section stale):
+
+  > The selection order is Token Governance § "Token Selection Matrix". This section is the component-side how-to for each step; its steps follow that order, number for number, and change in the same PR when it changes.
+
+- **(b) "Semantic tokens checked"** → site 4, (B) Step 1, F-1 (a). Drop it. Under (B) the own token wins "even where a semantic token has the same value", so no semantic token was checked. I made the same mistake in R1. Under (A) the line stays in Step 2, where semantic really is checked first. The (B) line reads:
+
+  > [F-1 (a):] **Checkpoint first** unless the spec names the token: "This component needs [value]. Existing component token: [name], made for this property. Recommendation: use it. Awaiting your approval."
+
+  This matches the line you propose to drop at site 1b ([@ADA]). The line stays in the (A)-order texts at site 4 Step 2 and site 1b.
+- **(c) Hard-code half** → site 3, second paragraph. Yes, add it. It is one phrase, states no order, and matches Ada's site 6 wording. Replace "you never create the token to finish the selection" with:
+
+  > you never create a token, or hard-code a value, to finish the selection.
+
+  The `priority-no-creation` item then covers both halves, and I will carry that at the re-confirm. L504's content still survives in the matrix, reached through the pointer.
+- No other changes. My F-2 (B) pick and the stated cost of (B) stand.
+
+
+#### [SPARKY R2]
+- § 1 scope sentence: **Accept** Ada's wording. Both differences are true of my chain (Web-Authoring-Standards L94-104: no acknowledgment gate on the primitive step; "no step 4", product token not STOP). "Review by audit" holds against Product-Token-Governance L56-62 and L230. Her reading replaces mine.
+- Site 5, L106: before-text matches `d740624b8` byte for byte (file L106). My `mustContain` string (L34, "These are non-negotiable...") is outside the hunk; the L386 hunk is also outside it. Row stays regeneration-only; no re-sign act.
+- One non-blocking note: the after sentence names only "component step removed". It omits Ada's other two differences (no ack gate; product token, not STOP). It is true, so I accept as drafted. Ballot § 1 carries the full statement.
+
+
+### [THURGOOD R3] — incorporation (2026-10-25)
+
+Four R2 entries reproduced above as written; their text is woven into §§ 2–11. Base unchanged (`d740624b8`; no site file moved).
+
+**Stacy R2 (PASS with items)**
+- § 6 precedent path now `canonical/profiles/consumer/always-set/ai-collaboration-principles.dispositions.yaml` (her item 2).
+- The "(the five file bullets, unchanged)" elision at site 4 is expanded into the five bytes. The same was done for every other elision a § 13 comparison would meet: site 1b (a)'s "(unchanged)" Why and Exception lines, site 4's Step 1 body and the elevation-step body (both are now written out), and the `reasoning: '…'` string in site 4's Button-Icon example, which read "…compact appearance..." and now carries the source string from `buttonIcon.tokens.ts` L63 (the one place I expanded text of Lina's: it is the true source string, and her re-confirm reads it). A grep of the ballot body (§§ 0–11) for `[…]`, `[@`, "bytes owed", `(unchanged)` and `...` finds nothing in any after-text; the remaining `…` and `...` hits are quotations of before-text (the old matrix's step 4 line in § 1) and prose.
+- Her residual (regenerating before the items edit is untested for byte identity) is now a check: § 11 step 7, "Order check".
+- Her M-2 note (Lina's "not a second copy" at site 4) is closed by Lina R2 (a).
+
+**Ada R2**
+- (a) Site 8: her fenced block replaces the filer's after-text; whole L77. § 6 and § 11 step 3 no longer condition on Ada keeping the site.
+- (b) Example 7 (B): confirmed. Her optional parenthetical on the Recommendation line is not adopted.
+- (c) The "Semantic concept tokens" line is dropped from the (B)×(a) format at site 1b, which is now written out in full; the (b) format keeps both lines.
+- (d) Site 1b (b) rewritten: first sentence "for the property it was made for"; second "A token that belongs to another component, or the owner's token for another property, is not a selection step". The F-2 (B) carry-over sentence matches.
+- Her rule-10 record on Core Goals L59 rides this PR. She commits it after this commit: `.kiro/issues/2026-10-25-core-goals-l59-vs-product-token-authoring.md`; § 4 "Not edited" and § 11 step 11 cite it by that name.
+
+**Lina R2**
+- Site 3: strike accepted; second paragraph now ends "you never create a token, or hard-code a value, to finish the selection." The § 6 `priority-no-creation` item covers both halves.
+- Site 4: the sentence is final as she wrote it; "Semantic tokens checked" is out of the (B) Step 1 checkpoint, replaced by her text; the (A) texts keep the line.
+
+**Sparky R2**: accepted as drafted. Nothing to change.
+
+**State.** The ballot is ready for ratification pending Peter's F-1, F-2 and F-3 answers. Nothing else is open: no owner read, placeholder or elision remains. The Status line still reads DRAFT, and nothing is applied. -- [THURGOOD R3]
