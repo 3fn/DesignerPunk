@@ -190,7 +190,7 @@ Is this animation cross-platform?
 **Token mapping** is how platform implementations consume design tokens while respecting platform idioms.
 
 **Cross-platform token equivalence**: Same token → same visual result
-- `space.inset.normal` = 8px on web = 8pt on iOS = 8dp on Android
+- `space.inset.100` = 8px on web = 8pt on iOS = 8dp on Android
 - Mathematical relationships preserved across platforms
 
 **Platform-appropriate idioms for token consumption**:
@@ -205,8 +205,8 @@ Is this animation cross-platform?
 /* Token-based styling with CSS custom properties */
 .button {
   padding: var(--space-inset-200);
-  background: var(--color-primary);
-  transition: var(--motion-duration-normal) var(--motion-easing-standard);
+  background: var(--color-action-primary);
+  transition: var(--duration-250) var(--easing-standard);
 }
 
 /* Platform-specific enhancement */
@@ -223,7 +223,7 @@ Button(action: action) {
     Text(label)
 }
 .padding(DesignTokens.spaceInset200)
-.background(colorPrimary)
+.background(colorActionPrimary)
 
 // Platform-specific enhancement
 .animation(.spring(response: 0.3, dampingFraction: 0.7))

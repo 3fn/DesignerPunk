@@ -581,11 +581,11 @@ Input-Text-Base:
     # 2026-07-15). If unavailable, don't render the component.
   
   tokens:
-    - typography.input.*
-    - color.input.*
-    - space.input.*
-    - motion.float-label.*
-    - radius.input.*
+    - typography.input
+    - color.structure.border
+    - space.inset.100
+    - motion.floatLabel
+    - radius150
   
   platforms: [web, ios, android]
   readiness: production-ready
@@ -704,7 +704,7 @@ LoginForm:
     - Container-Base (layout)
   
   token_dependencies:
-    - space.stack.* (vertical spacing)
+    - space.grouped.* (vertical spacing)
     - space.inset.* (form padding)
   
   behavioral_contracts:
@@ -728,10 +728,10 @@ FeedPost:
     - Container-Base (card layout)
   
   token_dependencies:
-    - space.inline.* (horizontal spacing)
-    - space.stack.* (vertical spacing)
-    - radius.card.* (container radius)
-    - shadow.card.* (elevation)
+    - space.grouped.* (horizontal spacing)
+    - space.related.* (vertical spacing)
+    - radius.normal (container radius)
+    - shadow.container (elevation)
   
   behavioral_contracts:
     - avatar_links_to_profile
