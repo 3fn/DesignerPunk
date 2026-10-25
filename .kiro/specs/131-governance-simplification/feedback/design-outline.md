@@ -890,3 +890,28 @@ No `[@LINA]` mentions open (at `bc468a411`). The audit leaves TND F-3 on #452 to
    - Lina's R2/R4/R6 fix is the first measured fix.
 
    **And the two mechanisms that make fix-first more than a hope:** Sparky's blocking rehearsal gate, and `[OUTSIDE R2]`'s rule that no 131 unit opens while a finding it cites has no record.
+
+3. **F-2, the boundary: RULED** → `design-outline.md` § 10 F-2; § 4 of the synthesis
+   > "I think I'd be okay with this, but one thing I need is to know that any one agent isn't working unilaterally. By your own experience, one agent in isolation can make mistaken assumptions about the facts in areas outside of their direct ownership. Imagine if an agent decided by themselves that rules it wasn't aware impacted another agent's work weren't necessary and deleted them."
+   > "This needs to apply to more than rules though: it's everything. Tools, schemas, processes... everything in the system depends on everything in the system — that's why teamwork is foundational."
+   > "I'd also add the idea of 'Trust, but verify' if you're familiar with that expression. Agents should be proactive about maximizing the talents and capabilities of the other agents. If an agent is assigned a task, they should consider 'who's the right teammate to review this? who can help better inform the work? who's impacted by this? etc.'"
+   > "Let's give it a shot"
+
+   *The ruling as put to Peter (orchestrator's words):*
+   - **Trust, but verify.** Agents act on their own within their own surface.
+   - **The scope is everything.** It covers rules, tools, schemas, processes and generated output, not only rules.
+   - **Crossing a surface needs a read.** A change whose computed reach crosses another owner's surface needs those owners' evidence-bearing reads, saying what was checked and what was found. Any flagged dependency stops it, and a disagreement goes to Peter.
+     - Reach is computed from references, imports, schema consumers, CLI flags and exported names, doc anchors and routes, CI usage, and generator inputs. It is mapped to owners through one OWNERS map.
+   - **The author adds teammates, never removes them.** The author proactively adds the teammates who can review, inform, or are impacted in ways the computation can't see. The author cannot remove the computed ones.
+   - **Some changes are always cross-checked:** removals and contract changes (renames, schema or interface shape, CLI behaviour, served anchors).
+   - **Proportionality applies.** Depth scales with reach and irreversibility.
+   - **Some things stay Peter's:**
+     - identity-level law (Core Goals, the values, the agent model, merge authority);
+     - anything consumer-facing (MCP contracts, readiness, release notes, served docs);
+     - removing or weakening checks that run the real artifact;
+     - token creation and removal.
+   - **Process-rule deletions are batched** per release, each listed in the release report with the removed sentence and its reason. A regression traced to a deletion restores the rule and returns that class to Peter. There is no deletion sampling.
+   - **One ballot delegates this, once.** It replaces the write-scope grant machinery, the `Consulted`-line count, the `Agent:`-trailer question (F-1), and most edit-kind lines.
+   - **Merge-on-green (c) comes later,** after the compile lane and fixture are green for N releases, with consumer-facing surfaces excluded.
+   - **A known limit, named:** seats cannot yet call each other directly, so the author names the teammates it needs and why, and the orchestrator routes.
+   - *What survives:* implicit dependencies nobody wrote down, rubber-stamp reads, and slower cross-seam changes. The reviewers are one model, so they bring different knowledge, not different judgment.
