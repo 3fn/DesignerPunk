@@ -357,17 +357,15 @@ contracts:
       the element whose id is [id]-panel-[value] in the adopter's tree.
       When id is omitted, aria-controls is not set. id is independent
       of testID.
-      Web: the segments are in the component's shadow root, where an
-      aria-controls ID cannot reach the adopter's elements, so each
-      segment's reference is set as an element reference
-      (ariaControlsElements), looked up in the host's root node and kept
-      current as the adopter adds, removes or replaces panels. The
-      aria-controls="[id]-panel-[value]" attribute is set where no such
-      element exists, and where the browser has no ariaControlsElements.
+      Web: the segments are in the component's shadow root, and an
+      aria-controls reference does not cross a shadow root, so on web no
+      tab-to-panel association is provided. The
+      aria-controls="[id]-panel-[value]" attribute is set for tooling
+      only and resolves to no element.
     wcag: "4.1.2 Name, Role, Value"
     platforms: [web, ios, android]
     validation:
-      - With id prop, each segment's aria-controls reference resolves to the element with id [id]-panel-[value] in the adopter's tree, when that element exists (web - through ariaControlsElements)
+      - With id prop, aria-controls follows [id]-panel-[value] pattern (web - the reference resolves to no element; no association is provided)
       - With id prop and no such element, the segment's reference resolves to no element, never to another one
       - Without id prop, no aria-controls attribute and no element reference
     test_approach: |
