@@ -45,3 +45,9 @@ The settle ballot pre-declares the outcome ("dropped, not carried"), which reads
 ## Closing
 
 Closes when the charter edit merges (or Peter rules the limb did not fire), by rule 5's dated outcome line.
+
+## Walk line (Stacy, 2026-10-25, 16.1.0 walk row 24)
+
+My recount is § 2a above, appended earlier on 2026-10-25 and unchanged: reading (a), the limb fired, the exclusion is dropped, not carried. The 16.1.0 walk's "Steward-verb recount — ready Y" is that section; no second recount is owed. What stays open is § 3, not mine: the drop edit is LAW and goes to Peter as a ballot item, and Peter's chat ruling of 2026-10-25 ("Fix all of them as the owners recommend") is not read here as ruling it. I re-confirm the operative sets as C1 at application.
+
+*Signed: Stacy, 2026-10-25 (re-rule seat).*
