@@ -5,6 +5,7 @@
 **Owner**: Ada (`src/cli/**`: `generate`'s component-token harvest and `init`'s copy steps). Lina is consulted on the fix (the component-token files live in her component directories).
 **Class**: P0 false-claim · defect *(set 2026-10-23, Ada, rule 12, on the reading the drift record and R1-7 were classed under: in a born repo the Application MCP's `get_token_details` answers "not found" for a token DesignerPunk's shipped Avatar-Base reads, and `get_token_consumers` answers `[]` for it. That is an MCP response a package reader meets, and it is wrong. One reading Stacy may press: "not in your index" is true of the consumer's index, so the response is incomplete rather than false; I class it P0 because the tool is named for the question it answers wrongly. Only Peter downgrades.)*
 **Trigger**: `merge:#470` — the fixing PR, which closes this record (rule 11) by recording the outcome and archiving it. *(was: `release:next:phase-1` — the release-5 walk reads it: fixed, waived in writing, or blocking.)* *(Re-ruled 2026-10-25, Ada, rules 1 and 9: the vehicle PR now exists, so the Trigger names its number, per ballot 2026-10-22-trigger-names-the-event-not-the-vehicle.)*
+**Status**: CLOSED 2026-10-25 by #470, merged as `25dacf3e2`. Outcome line below (rule 5); archived at `.kiro/issues/archive/` (rule 3). *(Ada, owner, rule 9.)*
 
 ---
 
@@ -90,3 +91,15 @@ What the fix does:
 - *The end state, unchanged from the ruling's counter-argument.* If Spec 129 decides that consumers own component-token output, shape (a) supersedes this, and the merge retires.
 
 #470 merged 2026-10-25 (`25dacf3e2`); row 2 closes under rule 5 at Ada's outcome line (hers to write); walk row 2 → fixed before S.
+
+## Outcome line (rule 5; Ada, 2026-10-25)
+
+**Closed by #470, merged 2026-10-25 as `25dacf3e2`** (branch `fix/release-16.1.0-born-repo-index-c`); the Trigger `merge:#470` is met. **Claimed**: a born repo's `components.yaml` held 10 component tokens against the package's 33, so `get_token_details` answered "not found" and `get_token_consumers` answered `[]` for tokens DesignerPunk's shipped components read. **Closed**: shape (c), as ruled by Peter (chat, 2026-10-25, relayed verbatim in the record above): `generate` merges the installed package's shipped `components.yaml` entries for every package component the repo has not replaced, each tagged `source: { package, version }`; `sync` reports an index behind the installed package. Verified on a packed install (above). The fix closed it; no waiver was taken.
+
+**Stays open (each with its owner and record; none blocks this close):**
+- *Lina, `application-mcp-server/**`*: the `TokenIndexer` warning when a component entry's `source.version` differs from the installed version, plus `definedBy?` and `source?` on `TokenIndexEntry`. Rule 10 record, Trigger `merge:#470` per her cross-read; hers to file or confirm.
+- *The Consumer Guard (`tests/consumer-integration.test.ts`)*: the assertion in #470's body; `tests/**` is in no seat's scope, so Peter routes it.
+- *`token-index/README.md`*: the row text in #470's body; outside my write scope, owner to be named by Peter.
+- *Spec 129, end-state note*: if consumers own component-token output, shape (a) supersedes (c) and the merge retires. Carried in Spec 129's intake, not here.
+
+*Signed: Ada, 2026-10-25.*
