@@ -36,7 +36,7 @@ Civitas is architecturally different from its siblings. Rosetta has a unified ar
 **MCP servers** (3):
 - Docs MCP: serves steering documentation with progressive disclosure (83 docs, 2,833 sections, 333 cross-references)
 - Application MCP: serves component metadata and token metadata (34 components, 443 tokens, 9 experience patterns)
-- Product MCP: serves product-specific context (conceptual — specs 081, 096, 097)
+- Product MCP: serves product-specific context from a consumer's `product/` directory (built in Spec 081: 14 tools, shipped in the package as `dist/mcp/product-mcp.js`; see also specs 096, 097). This repository has no `product/` directory, so here it serves an empty product set.
 
 **Agent configurations** (8 agents):
 - 3 system agents (Ada/Rosetta, Lina/Stemma, Thurgood/Civitas) that build and maintain the design system
