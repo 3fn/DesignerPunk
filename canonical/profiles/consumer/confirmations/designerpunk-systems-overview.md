@@ -55,9 +55,15 @@ date: 2026-09-29
 ## `#high-level-designerpunk-three-system-architecture`
 
 confirmer: stacy
-canonicalHash: sha256:cb4d6d996773c1253896915cd34e6f718679dac9766a2ee86020a25779f203b0
+canonicalHash: sha256:11ade1ad6da002d22718fb043fbc35828e0eecb4feb449a3a47020d8b4ba6254
 items: none
-date: 2026-09-29
+date: 2026-10-24
+
+**Re-confirmed 2026-10-24 (Req 11.6.5d).**
+- **What changed**: one diagram node. `C_Steer["Steering Docs (92: 83 MCP-served + 9 identity)"]` now reads `(93: 84 MCP-served + 9 identity)`. Steering CORRECTION `cf53ef403` (Peter, 2026-10-25, relayed: "Let's fix them").
+- **The numbers hold at `d25990912`**: `ls .kiro/steering/*.md | wc -l` → 9; the docs MCP indexer over `governance/` → `totalDocuments` 84 (and `ls governance/*.md | wc -l` → 84).
+- **The hash**: the canonicalHash moves from `sha256:cb4d6d996773c1253896915cd34e6f718679dac9766a2ee86020a25779f203b0` to the value above. `operative-set-freshness` printed it, and I recomputed it independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts`; the two agree.
+- **Re-ruled**: still an illustration with one orientation line. No agent acts against a diagram count, so the zero stays declared (5d).
 
 **Ruling: CONFIRMED at 0, declared.** A Mermaid illustration with one orientation line.
 
