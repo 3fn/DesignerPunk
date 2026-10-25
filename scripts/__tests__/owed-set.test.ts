@@ -9,12 +9,16 @@
  *
  * What is pinned (Stacy's cases first):
  *   - each class from a throwaway repo: closed, stub, open, touch-only, candidate (a, b, c);
- *   - a same-day-earlier merge (00:00:05 on the adoption day) is not dropped (the midnight pin);
+ *   - a same-day-earlier merge (00:00:05 on the adoption day) is not dropped (once the midnight pin,
+ *     now the date filter that replaced `git log --since`);
  *   - a class (b) single-PR spec appears, including one merged by a real merge commit;
  *   - a ticked-only tasks.md stays a candidate (the `open` rule reads `- [ ]` at column 0 only);
  *   - the row-sum identity: rows = n + c + o + s + t, and a/b/c split the candidates;
  *   - a non-repository and a missing adoption date exit 0 with the one `unavailable` line;
  *   - a spec closed before adoption and touched after by a feedback edit prints touch-only;
+ *   - the anchor is the CLOSING COMMIT of tasks.md, not the last touch (.kiro/issues/2026-10-25-owed-
+ *     set-anchor-proxy-false-positives.md, fork (A), Peter 2026-10-25): Stacy's 19 cases in the
+ *     three describe blocks after the first group, F-122 … F-offset, with Thurgood's reason strings;
  * and around them: the adoption-date sources and their order (--adoption, --adoption-ballot, the
  * default ballot, the manifest's first commit), the ground is HEAD and not the working tree, a
  * midpoint record does not close, and a run from a subdirectory reads the same rows.
@@ -107,7 +111,7 @@ describe('scripts/owed-set.sh', () => {
     write(repo, 'specs/old-closed-pre/feedback.md', '# Feedback\n');
     write(repo, 'specs/dormant/tasks.md', TICKED);
     write(repo, 'specs/closed-elsewhere/tasks.md', TICKED);
-    commit(repo, '2026-03-01 12:00:00', 'the early specs');
+    sha.early = commit(repo, '2026-03-01 12:00:00', 'the early specs');
     write(repo, 'designerpunk.manifest.json', '{}\n');
     commit(repo, '2026-03-05 09:00:00', 'init: the manifest');
     write(repo, 'specs/late-eve/tasks.md', TICKED);
@@ -123,7 +127,7 @@ describe('scripts/owed-set.sh', () => {
     commit(repo, '2026-03-11 10:00:00', 'Closed one (#2)');
 
     write(repo, 'specs/midpoint-only/tasks.md', TICKED);
-    commit(repo, '2026-03-11 11:00:00', 'Midpoint only unit 1 (#3)');
+    sha.midpoint1 = commit(repo, '2026-03-11 11:00:00', 'Midpoint only unit 1 (#3)');
     write(repo, 'specs/midpoint-only/completion/claims-pass-midpoint.md', '# Midpoint\n');
     sha.midpoint = commit(repo, '2026-03-12 11:00:00', 'Midpoint only unit 2 (#4)');
 
@@ -138,15 +142,16 @@ describe('scripts/owed-set.sh', () => {
     sha.unitsA = commit(repo, '2026-03-13 10:00:00', 'Units A (#7)');
 
     write(repo, 'specs/ticked-only/tasks.md', TICKED);
-    commit(repo, '2026-03-13 11:00:00', 'Ticked only unit 1 (#8)');
+    sha.tickedOnly1 = commit(repo, '2026-03-13 11:00:00', 'Ticked only unit 1 (#8)');
     write(repo, 'specs/ticked-only/completion/task-2-completion.md', '# Task 2\n');
     sha.tickedOnly = commit(repo, '2026-03-14 11:00:00', 'Ticked only unit 2 (#9)');
 
     write(repo, 'specs/old-closed-pre/feedback.md', '# Feedback\n\nA later note.\n');
     sha.feedback = commit(repo, '2026-03-15 09:00:00', 'A feedback edit on a spec closed before adoption (#10)');
 
-    // Known limit: a spec closed before adoption whose only later touch is another PR adding a file
-    // under its completion/ (122's shape, 2026-10-22) still prints candidate.
+    // 122's shape (2026-10-22): a spec closed before adoption whose only later touch is another PR
+    // adding a file under its completion/. Once the proxy's known limit (it printed candidate); the
+    // closing-commit anchor prints touch-only.
     write(repo, 'specs/closed-elsewhere/completion/ruling-from-another-spec.md', '# Ruling\n');
     sha.elsewhere = commit(repo, '2026-03-15 09:30:00', 'Another spec adds a ruling doc under it (#12)');
 
@@ -192,7 +197,7 @@ describe('scripts/owed-set.sh', () => {
       expect(rowFor(r, 'midpoint-only')).toEqual([
         'candidate',
         'midpoint-only',
-        `unit class c; anchor ${sha.midpoint} 2026-03-12 (last first-parent touch)`,
+        `unit class c; anchor ${sha.midpoint1} 2026-03-11 (closing commit: last unticked parent ticked)`,
       ]);
     });
 
@@ -212,39 +217,39 @@ describe('scripts/owed-set.sh', () => {
       expect(rowFor(r, 'old-closed-pre')).toEqual([
         'touch-only',
         'old-closed-pre',
-        `no post-adoption change to tasks.md or completion/; last touch ${sha.feedback} 2026-03-15 A feedback edit on a spec closed before adoption (#10)`,
+        `closing commit ${sha.early} 2026-03-01 predates adoption (last unticked parent ticked); last touch ${sha.feedback} 2026-03-15 A feedback edit on a spec closed before adoption (#10)`,
       ]);
     });
 
     it('candidate (a): merge units declared in tasks.md', () => {
-      expect(rowFor(r, 'units-a')).toEqual(['candidate', 'units-a', `unit class a; anchor ${sha.unitsA} 2026-03-13 (last first-parent touch)`]);
+      expect(rowFor(r, 'units-a')).toEqual(['candidate', 'units-a', `unit class a; anchor ${sha.unitsA} 2026-03-13 (closing commit: last unticked parent ticked)`]);
     });
 
-    it('the midnight pin: a merge at 00:00:05 on the adoption day is not dropped, and is class (b)', () => {
+    it('the adoption day from 00:00: a merge at 00:00:05 on the adoption day is not dropped, and is class (b)', () => {
       expect(rowFor(r, 'early-bird')).toEqual([
         'candidate',
         'early-bird',
-        `unit class b; anchor ${sha.earlyBird} 2026-03-10 (last first-parent touch)`,
+        `unit class b; anchor ${sha.earlyBird} 2026-03-10 (closing commit: last unticked parent ticked)`,
       ]);
     });
 
     it('class (b) from a real merge commit: the merge is the one first-parent commit', () => {
-      expect(rowFor(r, 'merged-side')).toEqual(['candidate', 'merged-side', `unit class b; anchor ${sha.merge} 2026-03-16 (last first-parent touch)`]);
+      expect(rowFor(r, 'merged-side')).toEqual(['candidate', 'merged-side', `unit class b; anchor ${sha.merge} 2026-03-16 (closing commit: last unticked parent ticked)`]);
     });
 
-    it('a ticked-only tasks.md stays a candidate', () => {
+    it('a ticked-only tasks.md stays a candidate, anchored on the unit that ticked it, not the later completion doc', () => {
       expect(rowFor(r, 'ticked-only')).toEqual([
         'candidate',
         'ticked-only',
-        `unit class c; anchor ${sha.tickedOnly} 2026-03-14 (last first-parent touch)`,
+        `unit class c; anchor ${sha.tickedOnly1} 2026-03-13 (closing commit: last unticked parent ticked)`,
       ]);
     });
 
-    it('known limit: another spec adding a file under completion/ makes a pre-adoption-closed spec a candidate (over-lists, never hides)', () => {
+    it('the retired known limit, inverted (F-122\'s shape): another spec adding a file under completion/ leaves a pre-adoption-closed spec touch-only', () => {
       expect(rowFor(r, 'closed-elsewhere')).toEqual([
-        'candidate',
+        'touch-only',
         'closed-elsewhere',
-        `unit class b; anchor ${sha.elsewhere} 2026-03-15 (last first-parent touch)`,
+        `closing commit ${sha.early} 2026-03-01 predates adoption (last unticked parent ticked); last touch ${sha.elsewhere} 2026-03-15 Another spec adds a ruling doc under it (#12)`,
       ]);
     });
 
@@ -254,17 +259,18 @@ describe('scripts/owed-set.sh', () => {
 
     it('prints candidates first, then closed, open, stub, touch-only', () => {
       expect(r.rows.map((row) => row[0])).toEqual([
-        ...Array(6).fill('candidate'),
+        ...Array(5).fill('candidate'),
         'closed',
         'open',
         'stub',
+        'touch-only',
         'touch-only',
       ]);
     });
 
     it('the count line, and the row-sum identity', () => {
       expect(r.count).toBe(
-        `owed-set: 6 candidates; excluded: 1 closed, 1 open, 1 stub, 1 touch-only; classes a/b/c = 1/3/2; 2 specs without activity since 2026-03-10; adoption 2026-03-10 from docs/adopt.md; ref ${sha.head}`,
+        `owed-set: 5 candidates; excluded: 1 closed, 1 open, 1 stub, 2 touch-only; classes a/b/c = 1/2/2; 2 specs without activity since 2026-03-10; adoption 2026-03-10 from docs/adopt.md; ref ${sha.head}`,
       );
       const m = COUNT.exec(r.count)!;
       const [n, c, o, s, t, xa, xb, xc] = m.slice(1, 9).map(Number);
@@ -315,7 +321,7 @@ describe('scripts/owed-set.sh', () => {
       const r = run(tier, []);
       expect(r.status).toBe(0);
       expect(r.lines).toEqual([
-        `candidate\t127-x\tunit class b; anchor ${s} 2026-09-19 (last first-parent touch)`,
+        `candidate\t127-x\tunit class b; anchor ${s} 2026-09-19 (closing commit: last unticked parent ticked)`,
         `owed-set: 1 candidates; excluded: 0 closed, 0 open, 0 stub, 0 touch-only; classes a/b/c = 0/1/0; 0 specs without activity since 2026-09-19; adoption 2026-09-19 from .kiro/docs/ballots/2026-09-19-completion-claims-integrity.md; ref ${s}`,
       ]);
     });
@@ -373,5 +379,283 @@ describe('scripts/owed-set.sh', () => {
       expect(b.lines).toHaveLength(1);
       expect(b.lines[0]).toMatch(UNAVAILABLE);
     });
+  });
+});
+
+// --- Line R (16.1.0 walk): the definition, not the proxy. Cases specified by Stacy, 2026-10-25
+// (scripts/__tests__/__fixtures__/owed-set/owed-set-fixtures-stacy.md); reason strings are Thurgood's. ---
+
+const UNT = '# Tasks\n\n- [ ] 1. First parent\n- [ ] 2. Second parent\n';
+const T2 = '# Tasks\n\n- [x] 1. First parent\n- [x] 2. Second parent\n';
+const UNITS = '## Declared Merge Units\n\n- U1: Tasks 1-2\n\n';
+const at2 = (when: string, offset: string): NodeJS.ProcessEnv => ({ GIT_AUTHOR_DATE: `${when} ${offset}`, GIT_COMMITTER_DATE: `${when} ${offset}` });
+
+describe('scripts/owed-set.sh: the definition, not the proxy (Line R; Stacy\'s falsification cases)', () => {
+  let base: string;
+  let repo: string;
+  const sha: Record<string, string> = {};
+  let r: Run;
+
+  beforeAll(() => {
+    base = fs.mkdtempSync(path.join(os.tmpdir(), 'owed-set-def-'));
+    repo = path.join(base, 'consumer');
+    init(repo);
+
+    // --- before adoption (the adoption day is 2026-03-10, from docs/adopt.md) ---
+    write(repo, 'docs/adopt.md', '# Adoption\n\nAdopted: 2026-03-10\n');
+    write(repo, 'specs/f122/tasks.md', `# Tasks\n\n${UNITS}- [x] 1. Everything\n`);          // F-122: closed before adoption
+    write(repo, 'specs/f023/tasks.md', T2);                                                    // F-023: closed before adoption
+    write(repo, 'specs/f023/design.md', '# Design\n');
+    write(repo, 'specs/f023/completion/task-2-parent-completion.md', '# Task 2\n');
+    write(repo, 'specs/f-tasks-edit/tasks.md', T2);
+    write(repo, 'specs/f-reopen/tasks.md', T2);
+    write(repo, 'specs/f-late-doc/tasks.md', T2);
+    write(repo, 'specs/f-nocheck/tasks.md', '# Tasks\n\nProse only, no checkboxes.\n');
+    write(repo, 'specs/f-dormant/tasks.md', T2);
+    sha.p1 = commit(repo, '2026-03-01 12:00:00', 'the early specs, closed before adoption');
+    write(repo, 'specs/f-ticked/tasks.md', UNT);
+    write(repo, 'specs/f-pass/tasks.md', UNT);
+    write(repo, 'specs/f-partial/tasks.md', UNT);
+    write(repo, 'specs/f-partial-done/tasks.md', UNT);
+    write(repo, 'specs/f-boundary/tasks.md', UNT);
+    write(repo, 'specs/f-noff/tasks.md', UNT);
+    write(repo, 'specs/f-units/tasks.md', `# Tasks\n\n${UNITS}- [ ] 1. First parent\n- [ ] 2. Second parent\n`);
+    write(repo, 'specs/f-inprogress/tasks.md', '# Tasks\n\n- [ ] 1. First parent\n- [x] 2. Second parent\n');
+    write(repo, 'specs/f-reopen-open/tasks.md', T2);
+    write(repo, 'specs/f-eve/tasks.md', UNT);
+    commit(repo, '2026-03-02 12:00:00', 'the specs still open before adoption');
+    write(repo, 'specs/f-eve/tasks.md', T2);
+    sha.eve = commit(repo, '2026-03-09 23:59:59', 'f-eve: its last parent ticked one second before the adoption day');
+
+    // --- after adoption ---
+    write(repo, 'specs/f-boundary/tasks.md', T2);
+    sha.boundary = commit(repo, '2026-03-10 00:00:05', 'f-boundary: last parent ticked five seconds into the adoption day (#1)');
+
+    write(repo, 'specs/f122/completion/ruling-from-another-spec.md', '# A ruling another spec\'s PR filed here\n');
+    sha.f122 = commit(repo, '2026-03-11 10:00:00', 'Another spec files a ruling under f122/completion (#2)');          // F-122
+
+    write(repo, 'specs/f023/design.md', '# Design\n\nSuperseded by a later spec.\n');
+    write(repo, 'specs/f023/completion/task-2-parent-completion.md', '# Task 2\n\nCorrected.\n');
+    sha.f023 = commit(repo, '2026-03-12 10:00:00', 'A supersession note and a completion-doc correction on f023 (#3)');   // F-023
+
+    write(repo, 'specs/f-tasks-edit/tasks.md', `${T2}\nNote: wording clarified.\n`);
+    sha.tasksEdit = commit(repo, '2026-03-12 11:00:00', 'f-tasks-edit: a prose edit to tasks.md, no checkbox moved (#4)');
+
+    write(repo, 'specs/f-eve/feedback.md', '# Feedback\n');
+    sha.eveFeedback = commit(repo, '2026-03-12 12:00:00', 'f-eve: a feedback note (#5)');
+
+    write(repo, 'specs/f-reopen/tasks.md', `${T2}- [ ] 3. A new parent\n`);
+    write(repo, 'specs/f-reopen-open/tasks.md', `${T2}- [ ] 3. A new parent\n`);
+    sha.reopen = commit(repo, '2026-03-12 13:00:00', 'Two closed specs gain a new unticked parent (#6)');
+
+    write(repo, 'specs/f-inprogress/tasks.md', '# Tasks\n\n- [-] 1. First parent\n- [x] 2. Second parent\n');
+    write(repo, 'specs/f-nocheck/feedback.md', '# Feedback\n');
+    sha.inprogress = commit(repo, '2026-03-12 14:00:00', 'f-inprogress: parent 1 marked in progress; f-nocheck: feedback (#7)');
+
+    write(repo, 'specs/f-late-doc/completion/task-3-completion.md', '# Task 3\n');
+    sha.lateDoc = commit(repo, '2026-03-13 10:00:00', 'f-late-doc: a parent completion doc added after a pre-adoption closure (#8)');
+
+    write(repo, 'specs/f-ticked/tasks.md', T2);
+    sha.ticked = commit(repo, '2026-03-14 10:00:00', 'f-ticked: both parents ticked (#9)');
+    write(repo, 'specs/f-pass/tasks.md', T2);
+    write(repo, 'specs/f-pass/completion/claims-pass.md', '# Claims pass\n');
+    commit(repo, '2026-03-14 11:00:00', 'f-pass: both parents ticked, claims pass filed (#10)');
+    write(repo, 'specs/f-partial/tasks.md', '# Tasks\n\n- [x] 1. First parent\n- [ ] 2. Second parent\n');
+    write(repo, 'specs/f-partial/completion/task-1-completion.md', '# Task 1\n');
+    commit(repo, '2026-03-14 12:00:00', 'f-partial: a non-final unit merges, parent 1 ticked (#11)');
+    write(repo, 'specs/f-partial-done/tasks.md', '# Tasks\n\n- [x] 1. First parent\n- [ ] 2. Second parent\n');
+    sha.partialDone1 = commit(repo, '2026-03-14 13:00:00', 'f-partial-done: parent 1 ticked (#12)');
+    write(repo, 'specs/f-reopen/tasks.md', `${T2}- [x] 3. A new parent\n`);
+    sha.reopenDone = commit(repo, '2026-03-14 14:00:00', 'f-reopen: the new parent ticked (#13)');
+    write(repo, 'specs/f-units/tasks.md', `# Tasks\n\n${UNITS}- [x] 1. First parent\n- [x] 2. Second parent\n`);
+    sha.units = commit(repo, '2026-03-14 15:00:00', 'f-units: both parents ticked (#14)');
+
+    write(repo, 'specs/f-ticked/design.md', '# Design\n\nA post-closure note.\n');
+    commit(repo, '2026-03-15 10:00:00', 'f-ticked: a post-closure design note (#15)');
+    write(repo, 'specs/f-partial-done/tasks.md', T2);
+    sha.partialDone2 = commit(repo, '2026-03-16 10:00:00', 'f-partial-done: the final parent ticked (#16)');
+    write(repo, 'specs/f-partial-done/feedback.md', '# Feedback\n');
+    commit(repo, '2026-03-17 10:00:00', 'f-partial-done: feedback after closure (#17)');
+
+    // F-no-ff: a long-lived side branch ticks the spec on 2026-03-02 and merges by a true merge commit
+    // on 2026-03-18. The merge is the one first-parent commit; the tick dates inside the branch do not count.
+    git(repo, ['checkout', '-q', '-b', 'side']);
+    write(repo, 'specs/f-noff/tasks.md', '# Tasks\n\n- [x] 1. First parent\n- [ ] 2. Second parent\n');
+    commit(repo, '2026-03-02 13:00:00', 'side: parent 1');
+    write(repo, 'specs/f-noff/tasks.md', T2);
+    commit(repo, '2026-03-02 14:00:00', 'side: parent 2');
+    git(repo, ['checkout', '-q', 'main']);
+    git(repo, ['merge', '-q', '--no-ff', '-m', 'Merge f-noff (#18)', 'side'], at('2026-03-18 10:00:00'));
+    sha.noff = git(repo, ['rev-parse', '--short', 'HEAD']);
+    r = run(repo, ['--specs-dir', 'specs', '--adoption', 'docs/adopt.md']);
+  });
+
+  afterAll(() => fs.rmSync(base, { recursive: true, force: true }));
+
+  const touch = (s: string, closing: string, closingDate: string, last: string, lastDate: string, subject: string): string[] => [
+    'touch-only', s, `closing commit ${closing} ${closingDate} predates adoption (last unticked parent ticked); last touch ${last} ${lastDate} ${subject}`,
+  ];
+
+  it('exits 0, three TSV fields per row, nothing on stderr', () => {
+    expect(r.status).toBe(0);
+    expect(r.stderr).toBe('');
+    for (const row of r.rows) expect(row).toHaveLength(3);
+  });
+
+  it('F-122: a pre-adoption-closed spec whose only later touch is a ruling doc filed under its completion/ prints touch-only', () => {
+    expect(rowFor(r, 'f122')).toEqual(touch('f122', sha.p1, '2026-03-01', sha.f122, '2026-03-11', 'Another spec files a ruling under f122/completion (#2)'));
+  });
+
+  it('F-023: a pre-adoption-closed spec whose design.md and completion doc are edited later prints touch-only', () => {
+    expect(rowFor(r, 'f023')).toEqual(touch('f023', sha.p1, '2026-03-01', sha.f023, '2026-03-12', 'A supersession note and a completion-doc correction on f023 (#3)'));
+  });
+
+  it('F-tasks-edit: a post-adoption edit to tasks.md that moves no checkbox is not a closing (the retired rule called it a candidate)', () => {
+    expect(rowFor(r, 'f-tasks-edit')).toEqual(touch('f-tasks-edit', sha.p1, '2026-03-01', sha.tasksEdit, '2026-03-12', 'f-tasks-edit: a prose edit to tasks.md, no checkbox moved (#4)'));
+  });
+
+  it('F-ticked: the post-adoption merge that ticked the last parent is the anchor, and a later post-closure touch does not move it', () => {
+    expect(rowFor(r, 'f-ticked')).toEqual(['candidate', 'f-ticked', `unit class c; anchor ${sha.ticked} 2026-03-14 (closing commit: last unticked parent ticked)`]);
+  });
+
+  it('F-ticked-with-pass: the same merge, with completion/claims-pass.md present, is closed', () => {
+    expect(rowFor(r, 'f-pass')).toEqual(['closed', 'f-pass', 'completion/claims-pass.md present']);
+  });
+
+  it('F-partial: a post-adoption merge that ticks a non-final parent leaves the spec open, never a candidate', () => {
+    expect(rowFor(r, 'f-partial')).toEqual(['open', 'f-partial', '1 of 2 parents unticked in tasks.md (a checkbox is an assertion, not a merge fact)']);
+  });
+
+  it('F-partial-done: the anchor is the tick of the LAST parent, not the first tick and not the last touch', () => {
+    expect(rowFor(r, 'f-partial-done')).toEqual(['candidate', 'f-partial-done', `unit class c; anchor ${sha.partialDone2} 2026-03-16 (closing commit: last unticked parent ticked)`]);
+  });
+
+  it('F-boundary: the closing at 00:00:05 on the adoption day is a candidate; one second before the day is touch-only', () => {
+    expect(rowFor(r, 'f-boundary')).toEqual(['candidate', 'f-boundary', `unit class b; anchor ${sha.boundary} 2026-03-10 (closing commit: last unticked parent ticked)`]);
+    expect(rowFor(r, 'f-eve')).toEqual(touch('f-eve', sha.eve, '2026-03-09', sha.eveFeedback, '2026-03-12', 'f-eve: a feedback note (#5)'));
+  });
+
+  it('F-no-ff: a true merge commit is the closing; the tick dates inside the side branch do not count', () => {
+    expect(rowFor(r, 'f-noff')).toEqual(['candidate', 'f-noff', `unit class b; anchor ${sha.noff} 2026-03-18 (closing commit: last unticked parent ticked)`]);
+  });
+
+  it('F-reopen: a closed spec that gains an unticked parent is open; once that parent is ticked it is a candidate anchored there', () => {
+    expect(rowFor(r, 'f-reopen-open')).toEqual(['open', 'f-reopen-open', '1 of 3 parents unticked in tasks.md (a checkbox is an assertion, not a merge fact)']);
+    expect(rowFor(r, 'f-reopen')).toEqual(['candidate', 'f-reopen', `unit class c; anchor ${sha.reopenDone} 2026-03-14 (closing commit: last unticked parent ticked)`]);
+  });
+
+  it('F-units: a class (a) spec anchors on the closing too', () => {
+    expect(rowFor(r, 'f-units')).toEqual(['candidate', 'f-units', `unit class a; anchor ${sha.units} 2026-03-14 (closing commit: last unticked parent ticked)`]);
+  });
+
+  it('F-undecidable: an in-progress parent, or no checkbox at all, falls back to the retired path rule, labeled (never a wrong exclusion)', () => {
+    expect(rowFor(r, 'f-inprogress')).toEqual([
+      'candidate',
+      'f-inprogress',
+      `unit class b; anchor ${sha.inprogress} 2026-03-12 (last first-parent touch; closure undecidable: a parent in tasks.md is marked neither [ ] nor [x])`,
+    ]);
+    expect(rowFor(r, 'f-nocheck')).toEqual([
+      'touch-only',
+      'f-nocheck',
+      `no post-adoption change to tasks.md or completion/ (closure undecidable: no checkbox parents in tasks.md); last touch ${sha.inprogress} 2026-03-12 f-inprogress: parent 1 marked in progress; f-nocheck: feedback (#7)`,
+    ]);
+  });
+
+  it('F-late-doc (the belt, Q2 answered in): a completion/task-* file ADDED after a pre-adoption closure keeps the spec a candidate', () => {
+    expect(rowFor(r, 'f-late-doc')).toEqual([
+      'candidate',
+      'f-late-doc',
+      `unit class b; anchor ${sha.lateDoc} 2026-03-13 (a completion/task-* file added after the pre-adoption closing commit ${sha.p1} 2026-03-01)`,
+    ]);
+  });
+
+  it('prints candidates first, then closed, open, stub, touch-only; specs in name order within each class', () => {
+    expect(r.rows.map((row) => `${row[0]} ${row[1]}`)).toEqual([
+      'candidate f-boundary', 'candidate f-inprogress', 'candidate f-late-doc', 'candidate f-noff',
+      'candidate f-partial-done', 'candidate f-reopen', 'candidate f-ticked', 'candidate f-units',
+      'closed f-pass',
+      'open f-partial', 'open f-reopen-open',
+      'touch-only f-eve', 'touch-only f-nocheck', 'touch-only f-tasks-edit', 'touch-only f023', 'touch-only f122',
+    ]);
+  });
+
+  it('the count line, and the row-sum identity', () => {
+    expect(r.count).toBe(
+      `owed-set: 8 candidates; excluded: 1 closed, 2 open, 0 stub, 5 touch-only; classes a/b/c = 1/4/3; 1 specs without activity since 2026-03-10; adoption 2026-03-10 from docs/adopt.md; ref ${sha.noff}`,
+    );
+    const [n, c, o, s, t, xa, xb, xc] = COUNT.exec(r.count)!.slice(1, 9).map(Number);
+    expect(r.rows).toHaveLength(n + c + o + s + t);
+    expect(xa + xb + xc).toBe(n);
+  });
+});
+
+describe('scripts/owed-set.sh: the first-parent line is not trusted to be date-ordered (F-backdated)', () => {
+  let base: string;
+  let repo: string;
+  const sha: Record<string, string> = {};
+
+  beforeAll(() => {
+    base = fs.mkdtempSync(path.join(os.tmpdir(), 'owed-set-bd-'));
+    repo = path.join(base, 'consumer');
+    init(repo);
+    write(repo, 'docs/adopt.md', 'Adopted: 2026-03-10\n');
+    write(repo, 'specs/a/tasks.md', UNT);
+    write(repo, 'specs/c/tasks.md', UNT);
+    commit(repo, '2026-03-02 12:00:00', 'two specs open before adoption');
+    write(repo, 'specs/a/tasks.md', T2);
+    sha.a = commit(repo, '2026-03-12 10:00:00', 'a: the last parent ticked (#1)');
+    // one first-parent commit carrying an old committer date (a rebase that kept an old date, a clock error)
+    write(repo, 'docs/note.md', '# A note\n');
+    commit(repo, '2026-03-01 09:00:00', 'a commit with a back-dated committer date');
+    write(repo, 'specs/b/tasks.md', T2);
+    sha.b = commit(repo, '2026-03-13 10:00:00', 'b: a single-PR spec (#2)');
+    // the closing commit itself back-dated: the predicate says "dated on or after", so it is outside the set
+    write(repo, 'specs/c/tasks.md', T2);
+    commit(repo, '2026-03-01 10:00:00', 'c: closed by a commit carrying a pre-adoption committer date (#3)');
+  });
+
+  afterAll(() => fs.rmSync(base, { recursive: true, force: true }));
+
+  it('F-backdated: a spec closed below a back-dated first-parent commit is still listed (the retired --since walk dropped it)', () => {
+    const r = run(repo, ['--specs-dir', 'specs', '--adoption', 'docs/adopt.md']);
+    expect(r.status).toBe(0);
+    expect(r.rows).toEqual([
+      ['candidate', 'a', `unit class b; anchor ${sha.a} 2026-03-12 (closing commit: last unticked parent ticked)`],
+      ['candidate', 'b', `unit class b; anchor ${sha.b} 2026-03-13 (closing commit: last unticked parent ticked)`],
+    ]);
+  });
+
+  it('known limit, pinned: a closing commit that itself carries a pre-adoption committer date prints no row and counts under "specs without activity"', () => {
+    const r = run(repo, ['--specs-dir', 'specs', '--adoption', 'docs/adopt.md']);
+    expect(rowFor(r, 'c')).toBeUndefined();
+    expect(r.count).toMatch(/^owed-set: 2 candidates; excluded: 0 closed, 0 open, 0 stub, 0 touch-only; classes a\/b\/c = 0\/2\/0; 1 specs without activity since 2026-03-10; /);
+  });
+});
+
+describe('scripts/owed-set.sh: "dated on or after" is the recorded day OR the UTC day (F-offset; Q1 answered union)', () => {
+  it('a commit recorded 2026-03-09 23:30 -0500 (04:30 UTC on the 10th) is post-adoption by its UTC day; one recorded 2026-03-10 00:30 +1000 (14:30 UTC on the 9th) is post-adoption by its recorded day', () => {
+    const base = fs.mkdtempSync(path.join(os.tmpdir(), 'owed-set-clock-'));
+    try {
+      const repo = path.join(base, 'consumer');
+      init(repo);
+      write(repo, 'docs/adopt.md', 'Adopted: 2026-03-10\n');
+      write(repo, 'specs/west/tasks.md', UNT);
+      write(repo, 'specs/east/tasks.md', UNT);
+      commit(repo, '2026-03-02 12:00:00', 'two open specs');
+      write(repo, 'specs/west/tasks.md', T2);
+      git(repo, ['add', '-A']);
+      const west = (git(repo, ['commit', '-q', '--no-verify', '-m', 'west: closed late on the 9th, west of UTC'], at2('2026-03-09 23:30:00', '-0500')), git(repo, ['rev-parse', '--short', 'HEAD']));
+      write(repo, 'specs/west/feedback.md', '# Feedback\n');
+      commit(repo, '2026-03-12 10:00:00', 'west: a later note');
+      write(repo, 'specs/east/tasks.md', T2);
+      git(repo, ['add', '-A']);
+      git(repo, ['commit', '-q', '--no-verify', '-m', 'east: closed early on the 10th, east of UTC'], at2('2026-03-10 00:30:00', '+1000'));
+      const east = git(repo, ['rev-parse', '--short', 'HEAD']);
+      const r = run(repo, ['--specs-dir', 'specs', '--adoption', 'docs/adopt.md']);
+      expect(rowFor(r, 'east')).toEqual(['candidate', 'east', `unit class b; anchor ${east} 2026-03-10 (closing commit: last unticked parent ticked)`]);
+      expect(rowFor(r, 'west')).toEqual(['candidate', 'west', `unit class c; anchor ${west} 2026-03-09 (UTC 2026-03-10) (closing commit: last unticked parent ticked)`]);
+    } finally {
+      fs.rmSync(base, { recursive: true, force: true });
+    }
   });
 });
