@@ -94,6 +94,17 @@
   - Behavioral contract tests `accessibility_radiogroup_role: accessible name` in `InputRadioSet.test.ts` failed before the fix and pass after; the iOS/Android halves are checked by source in `InputRadioSet.stemma.test.ts`. No native build ran (no harness).
   - **Correction to "Catalog today" above**: iOS did label the group, with a hardcoded `.accessibilityLabel("Radio group")`. That names the role, not the choice, so the defect stood; the fix replaces it.
 
+### G7 — The starter screen `init` ships leads to the one component on it that is a web scaffold (added 2026-10-25, Lina, from the 16.1.0 trio's R3-14)
+
+- **What happened**: consumer-Leonardo specified a web-only screen on Nav-Header-App, which is `scaffold` on web, and did not say so (`tests/onboarding-trio/records/16.1.0/trio-3-pm.md` R3-14, L344, `subject: leonardo`). He took it "used in the example": `init`'s starter `product/experience-map/pages/example-home.yaml` L21, whose `home-layout` template asks for "An app header". Stacy's cross-read (`.kiro/issues/2026-10-25-consumer-screen-spec-complete-unbound.md`) adds that the Integration Guide's own examples lead with it too (`governance/DesignerPunk-Integration-Guide.md` L758, L829). The claims side (that he did not consult readiness) is Stacy's; the `status.spec: complete` question is her record's.
+- **Verified (Lina, 2026-10-25, at `c543bc29f`)**: the starter screen names three components (`src/cli/templates/product/experience-map/pages/example-home.yaml`): Container-Base and Button-CTA are production-ready on web, and Nav-Header-App is `scaffold` on all three platforms with `hasTests: false` (served readiness), described "Readiness: scaffold — architectural foundation, not production-ready" (`Nav-Header-App.schema.yaml` L33). `governance/Component-Readiness-Status.md` L603 reads "permissive scaffold by design". There is no production-ready alternative for a root screen: Nav-Header-Page is for pushed or presented screens (Nav-Header-App's `when_not_to_use`), so Leonardo's choice was the right component and the gap is its readiness, not his selection.
+- **Disposition**: **defect to fix**, mine. Fix shape, with a fork I surface rather than pick alone:
+  - **(a) bring Nav-Header-App's web to production-ready**: web tests for what the frame does (landmark, safe area, slots), README, review. Container-Base shows that a permissive component can meet the web bar.
+  - **(b) keep it a scaffold**, and the starter screen says so on its line (or drops the header).
+  - **Either way, the guard**: a test that every component a file under `src/cli/templates/product/**` names is production-ready on web, or carries a readiness comment on its line. That is the class fix: a starter file can never again lead to a component it does not label.
+  - **My lean is (a) plus the guard.** Surviving counter-argument: tests on a frame whose content is product-defined vouch only for the frame, so "production-ready" would promise less for Nav-Header-App than it does for Button-CTA, and the label's meaning widens unless the readiness doc says so in the same PR.
+- **Trigger**: the item's fixing PR (the record's `manual` covers it; G7 closes at that merge or moves to its own record).
+
 ---
 
 ## Tool lessons (Application MCP — Lina's write scope)
@@ -158,3 +169,5 @@ First pick, **G6**: a production-ready component fails its own accessibility con
 *(dated entries appended here as items execute)*
 
 **Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 62, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P3 improvement · owed-act`. G6 shipped (#352, in 16.0.0) and has no entry under § Outcomes.
+
+**2026-10-25 (Lina, owner, rule 9)**: G7 added (the starter screen leads to Nav-Header-App, a web scaffold; from the 16.1.0 trio's R3-14). The section heading still says "six"; there are now seven. Class and Trigger unchanged: G7 is a P3 item and closes at its own fixing PR. In priority it comes first among the open items, because `init` ships it to every consumer.
