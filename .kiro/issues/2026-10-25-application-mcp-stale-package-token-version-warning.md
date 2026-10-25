@@ -1,0 +1,32 @@
+# The application MCP does not say when a born repo's merged component tokens are from another `@3fn/core` version
+
+**Date**: 2026-10-25
+**Owner**: Lina (`application-mcp-server/**` is in her standing write scope). Ada is consulted on the version check (she owns `assessIndexedPackageComponentTokens`, `src/cli/shared/packageComponentTokens.ts`).
+**Filed by**: Lina, under rule 10, as the deferred item Ada's record named for "Lina's server" and Lina accepted in her cross-read of `definedBy` (2026-10-25, trigger `merge:#470`). **#470 merged as `25dacf3e2` on 2026-10-25, so that trigger has fired and the record is owed now.** The cross-read is not committed; this record carries its substance. Source record: `.kiro/issues/2026-10-23-born-repo-index-lacks-package-component-tokens.md` § "Deferred" (Ada), where the wording below is hers.
+**Filed on**: PR #471's branch (`fix/release-16.1.0-floor-lina`), because #470 merged while #471 was open; the record rides #471, and the fix does not.
+**Class**: P2 obligation (guard) · defect *(set 2026-10-25, Lina, rule 12. My reading: `get_component_health` is a health instrument, and after a package upgrade without a new `generate` it reports `healthy` over component-token entries tagged with the old version, while `sync --dry-run` already reports the same index as behind. The instrument is weaker than the claim "healthy", so `(guard)`. I do not class it P0: every merged entry carries its own `source.version`, so what is served is labelled, and the values are the previous release's, not invented. One reading Stacy may press: it is the sibling of the missing-component-root record (`2026-10-24-application-mcp-healthy-with-missing-component-root.md`, which I classed P0 because "healthy" was false over a root that did not exist). Here the index exists and is only behind, which is why I class it lower. Only Peter downgrades a P0; if Stacy reads this one P0 she says so in a finding.)*
+**Trigger**: `release:next:phase-1` — closes at the fix PR's merge; the owner re-rules this line to `merge:#<N>` at the fix PR's open, with a dated reason (rule 11; ballot 2026-10-22-trigger-names-the-event-not-the-vehicle). *(The fixing PR does not exist yet. A P2 that would ride another change takes the release token, not `manual`.)*
+
+---
+
+## What an agent sees today
+
+After a package upgrade (for example 16.0.0 to 16.1.0) and before `npx designerpunk sync` or `generate`, a born repo's `token-index/components.yaml` still holds DesignerPunk's component tokens as of the old version. #470 tags each merged entry `source: {package: '@3fn/core', version: <X>}` and `definedBy: <component>`.
+
+- `get_token_details <name>` returns the entry with `source.version` = the old version. That field is the only signal. An agent has to know to compare it with an installed version it is not shown.
+- `get_component_health` says `healthy`, with no warning about the index.
+- `get_token_consumers` answers from the old merge.
+- `sync --dry-run` already reports the index as behind (`assessIndexedPackageComponentTokens`, #470). The MCP does not use it.
+
+## The fix
+
+1. **Warning** in `TokenIndexer` (it already collects `warnings` and `getHealth()` reports them, which `get_component_health` surfaces): when a component-tier entry's `source.version` differs from the installed `@3fn/core` version, add once per distinct version: "token-index/components.yaml holds DesignerPunk's component tokens from @3fn/core <X>; <Y> is installed. Run `npx designerpunk generate`." Health goes `degraded` through the existing warnings path.
+2. **Types**: `definedBy?: string` and `source?: { package: string; version: string }` on `TokenIndexEntry`. Both fields already pass through at runtime (`loadTier` spreads the entry), so this is a type-only change plus tests that assert them.
+3. **Where the installed version comes from.** The server cannot reuse `assessIndexedPackageComponentTokens`: it lives in `src/cli/**` and imports the CLI's component-root resolution, and `application-mcp-server` is a separate build. It reads the installed version itself from the `package.json` at the package root. `index.ts` already computes that root (`shared.resolvePackageRoot(__dirname)`, L747), so `indexTokens` takes it as an argument, or reads it from the root `index.ts` passes. In DesignerPunk's own checkout the package root's version is the repo's, and no entry carries a tag, so no warning fires there.
+4. **Not in the first fix**: the "an entry the installed package would merge is absent" half of Ada's assessment. That needs the shipped `token-index/components.yaml` and the component-root universe, which is her function's job. The version-tag half is the cheap, local half and is all this record promises. If the absent-entry half is wanted, it is a separate record, with Ada.
+
+**Effort**: small. About 25 lines in `TokenIndexer.ts` plus the `indexTokens` signature and its call site, and about 5 tests in `application-mcp-server/src/indexer/__tests__/` (stale tag warns; current tag silent; untagged entries silent; two old versions give two lines; no `package.json` gives no warning and no throw). It needs `application-mcp-server`'s own suite (not in root `npm test`) and the MCP `rebuild_index`.
+
+## Surviving counter-argument
+
+The warning compares tags with the installed version, so it cannot tell whether the index is *behind* only in version string. A patch release that did not touch any component token still trips it, and the remedy is a no-op regeneration. That is noise on every patch upgrade, in the one place (health) that agents are taught to trust as signal. The version-tag check is cheap and wrong in that direction. The exact check (`assessIndexedPackageComponentTokens`, which also compares the merged set) does not have this fault, but the server cannot call it without either duplicating its merge logic or moving it into a package both builds import; both are larger than this record and cross into Ada's surface. I judge the noise acceptable (a patch upgrade is the moment `generate` should run anyway), and I name it as the residual rather than absorbing it. If Peter prefers the exact check, the class option is to move `packageComponentTokens.ts` to a shared module both builds import, with Ada owning it. Cost: a cross-build refactor that touches the CLI, and Ada's consent.
