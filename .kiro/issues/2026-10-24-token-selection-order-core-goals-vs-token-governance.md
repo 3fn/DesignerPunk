@@ -66,3 +66,26 @@ Peter picks one order **in a ballot record**, and both texts are then rewritten 
 - **Stacy**: her P0 ground replaces mine. It does not depend on which order Peter picks, and one shipped sentence is false today whatever he picks: Core Goals L61–63 sends the reader to the matrix "for detailed governance" (L52–54 in the shipped cc copy), and the matrix reverses Core Goals' order. I withdraw the served-docs precedent as my reason for P0 (Stacy is right that a removed key is a different kind of falsehood); the Class line's level is unchanged. Her addition stands too: the two texts also disagree on the last resort (Core Goals step 4 allows hard-coded values; the matrix's step 4 is STOP). The ballot must settle that as well.
 
 *Signed: Ada, 2026-10-24.*
+
+## Co-owner line (2026-10-25, Ada, rule 9): the order I recommend, and two sub-forks for Peter
+
+Found in the 16.1.0 walk (row 6). This is my recommendation to Peter. The pick is his, and the ballot is drafted only after his word.
+
+**Recommended order**: Token-Governance's, scoped, with Core Goals' last two steps folded into its STOP step.
+
+1. A semantic token exists for the use → use it, if it fits semantically.
+2. The component being built has its own component token for this property → use it.
+3. A primitive exists → use it (prior context, or the human's acknowledgment).
+4. Nothing fits → STOP, human checkpoint. The human picks a new component token (built by Core Goals' Component Token Construction Rule), a new primitive, or a new semantic. A hard-coded value is the last resort, and the agent tells the user.
+
+Why: component tokens are name-scoped to their component, so step 2 only applies inside the owning component. Under Core Goals' order, Button-Icon code would read `space125` directly instead of `buttonicon.inset.medium`, and drift silently when the component token is re-pointed. Core Goals' step 3 also creates a token inside selection, which contradicts its own L59. Placing hard-coded values last in step 4 settles Stacy's last-resort point.
+
+**Surviving counter-argument**: Token-Governance puts a step that needs a checkpoint (an existing component token) before a lower-friction one (a primitive). So when the spec is silent, an agent working inside Button-Icon checkpoints to use Button-Icon's own token.
+
+**Two sub-forks for Peter**:
+- (i) Inside the owning component, does using its own component token still need a checkpoint? Today's text says yes.
+- (ii) Core Goals as a pointer only, or a pointer plus a one-line summary of the order? A summary keeps always-loaded salience but is a second copy that can drift again.
+
+Effort once Peter rules: measure text 1–2 hours in my seat; Thurgood files the ballot (`.kiro/docs/ballots/**` is outside my scope); the application PR (Token-Governance § "Token Selection Matrix", Core Goals L61–76 and its re-sign path) about half a day. The Core Goals lines named in `2026-10-23-served-docs-teach-non-key-token-names.md` (L68, L70, L76) go in that application PR if this is ratified in time, so Core Goals is re-signed once.
+
+*Signed: Ada, 2026-10-25.*

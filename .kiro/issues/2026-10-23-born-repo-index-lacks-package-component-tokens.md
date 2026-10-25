@@ -28,3 +28,16 @@ This was already true in 16.0.0 and was not disclosed. R1-7's fix makes it visib
 
 - CHANGELOG `## [Unreleased]` → "Known limitations in this release" names this record.
 - Ada's drift ruling of 2026-10-23, § 4 (quoted in the fixing PR's body) — the union read whose counter-argument this extends.
+
+## Owner line (2026-10-25, Ada, rule 9): my pick moved from (a) to (c)
+
+Found in the 16.1.0 walk (row 2). The class option above names (a). I now recommend **(c), fed from the package's own shipped `token-index/components.yaml`**, for 16.1.0. Two facts, read at `652074c6b`:
+
+- **No `.tokens.ts` ships.** The package's `files[]` includes only `src/components/**/{*.schema.yaml,contracts.yaml,component-meta.yaml}` from `src/components/core`. So (a) would need a `files[]` change (a grant, as `package.json` is outside my write scope), a `pack-assert.ts` floor change, and loading package TypeScript from `node_modules` under Spec 118's contract. That is a packaging change under Spec 123's containment, not only a CLI change.
+- **The package already emits these tokens to the consumer's page.** `./component-tokens.css` (→ `dist/ComponentTokens.web.css`) defines `--avatar-size-md` and the rest, and INSTALL tells consumers to keep importing it. The shipped `components.yaml` entries carry references and platform names, not resolved values. So an index entry taken from the package is true of what the page loads. (a) would emit each of those tokens a second time into the consumer's own `ComponentTokens.web.css`.
+
+**Lina agrees with (c) over (a)** (named in the 16.1.0 walk). **Surviving counter-argument**: (c) gives a born repo two sources of component-token truth, its own generated tokens and package entries fixed at the installed version. Each added entry must therefore carry the package version it came from, so a reader can tell. If Spec 129 decides consumers own component-token output, (a) is the end state and (c) is reworked.
+
+Effort for (c): about 0.5–1 day; (a): about 2–3 days plus the grant. The pick between (c), (a) and a written waiver is Peter's; this line does not rule it.
+
+*Signed: Ada, 2026-10-25.*

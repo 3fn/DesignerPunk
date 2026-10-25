@@ -34,3 +34,12 @@ At each monthly health check: has the first release trio after 16.0.0 run? If ye
   - **Disposition**: carried to release 5 with this record. The remedy is Ada's to name there. Nothing here blocks 16.0.0 (rulings item 15).
 
 **Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 72, call BACK-FILL (Leonardo))**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `release:next:phase-1` · `P2 obligation (record) · owed-act`.
+
+## Co-owner line (2026-10-25, Ada, rule 9): row 5's remedy at 16.1.0
+
+Found in the 16.1.0 walk (row 18). Row 5 has two remedies. They are separated here so the row has one open act.
+
+- **Open act, minutes, at 16.1.0 release prep**: run `npm audit --omit=dev` on the root tree (the tree `build:mcp`'s esbuild bundles from; package.json L149) and on the lockfiles of the two servers. Append the result below, at S, naming the tree each count came from. Bump any inlined library that has a fixed version before tagging. The lockfiles disagree on `js-yaml` (4.2.0 root, 3.14.2 in `mcp-server`, 4.1.1 in `application-mcp-server`), so the run states which tree the bundle actually resolves.
+- **Moved to its own record**: the bundle manifest (`dist/mcp/bundled-packages.json`, written from esbuild's metafile) is `.kiro/issues/2026-10-25-mcp-bundled-packages-manifest.md` (P3, `manual`). This row closes on the audit result appended, not on the manifest.
+
+*Signed: Ada, 2026-10-25.*

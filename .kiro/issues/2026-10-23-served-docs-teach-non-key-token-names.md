@@ -82,3 +82,15 @@ Found in the 16.1.0 walk (sub-row 3a). It is the same falsity as the lines above
 - **Residual**: the README lines stay false after this PR unless they ride it. I would take them in the same PR if the diff stays reviewable, and say so in its body.
 
 *Signed: Lina, 2026-10-25.*
+
+## Co-owner line (2026-10-25, Ada, rule 9): a served-doc token-name check, named so it has a home
+
+Found in the 16.1.0 walk (row 3). This is the class option for this record; it is not part of the 16.1.0 fix.
+
+- **What it checks**: every backticked token name in a served or always-loaded doc (`governance/**`, `.kiro/steering/**`, `canonical/agents/**` prose, component YAML) either is a token-index key or sits inside a fenced platform code block, which is exempt. It extends the key rule that `src/generators/__tests__/schemaTokenRefs.test.ts` already defines, from schemas to docs.
+- **Rough size**: medium, about 1.5–2 days. The extractor is small; the cost is the adjudication list for names that are not tokens (CSS properties, file names, patterns like `color.{component}.{variant}`) and the platform-identifier cases.
+- **Ownership**: Ada builds and owns the instrument (`src/validators/**`); Thurgood is consulted on wiring it into the lanes. It fits Spec 131 or a follow-on record.
+- **Trigger**: none yet. It is filed here as a line, not a record, so it has a home. If Peter wants it scheduled, I file it as its own record at that word.
+- **Surviving counter-argument**: my own grep for this PR covered radius, border, the avatar pattern and the names on record; other families' docs were not swept against the full key set, so the instrument may surface more than the fixing PR corrects.
+
+*Signed: Ada, 2026-10-25.*
