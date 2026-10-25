@@ -56,3 +56,32 @@ On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of
 **Counter-argument, surviving**: a preview candidate is not the published tarball. Anything the publish step changes (registry metadata, the scope mapping) is not exercised by the pre-S runs. What survives: the post-publish smoke covers that, and the trio does not claim to.
 
 *Signed: Leonardo, 2026-10-25.*
+
+## Owner line (2026-10-25, Leonardo, rule 9): the run plan, and the launch count reconciled
+
+Appended after the grant row went active (Peter's merge of #469, `264c25661`) and the prep landed on `chore/onboarding-trio-16.1.0`. The owed list above is not rewritten; this line corrects what it counts and fixes the plan it left open. Plan text: `scratchpad/trio-16.1.0/run-plan.md` (scratch; the facts it carries are here).
+
+**The count.** Item 4 above says "five launches". That counted the Kiro conformance pair as two. It is one window, because beat 2 must follow beat 1 in the same repo (protocol § 15.3). The measured shape is **4 Terminal windows and 19 harness sessions (8 interactive, 11 headless)**:
+
+| Window | Run | Harness | Sessions (interactive · headless) |
+|---|---|---|---|
+| A | `trio-1-backend` | Claude Code | preflight, open · birth, probe-ada, probe-lina |
+| B | `trio-2-designer` | Kiro | preflight, open · birth, probe-sparky |
+| C | `trio-3-pm` | Kiro, bare `init` | preflight, open · birth, probe-leonardo |
+| D | `conformance-kiro` | Kiro | preflight, open · probe-thurgood, probe-stacy, beat-1, beat-2 |
+
+"Both targets represented" (item 4) holds: A is `cc`; B, C and D are `kiro`.
+
+**The order.** trio-2, trio-3, conformance-kiro, trio-1. The cheapest run goes first, so a defect in the new step-0/step-2 lines surfaces there; the run with the browser sign-in goes last. Any order is valid; each run is independent.
+
+**Peter's time.** About 2–2.5 h attended (range 1.75–3 h), plus about 5 min per run of reading and pasting. **One browser sign-in is expected** (trio-1's Claude Code preflight, a fresh `CLAUDE_CONFIG_DIR`); one more only if the real Kiro profile's login has lapsed (one `kiro-cli login` covers all three Kiro runs). Re-login loops come on top: release 4's cost about 15 minutes. Not counted: Peter's two merges (this PR, then the release PR) and his review of the draft.
+
+**What changes in the owed list.** Items 2 and 5 are **one PR**, not two. The grant expires at the merge of the one PR carrying the protocol, the prompts and the records (grant row, line 9), so the prompts commit P goes first on the branch and the runs read `COMMIT=P` from the main checkout's object store; the records commit after P, so `git merge-base --is-ancestor P <record commit>` holds. Item 2's "lands first" is satisfied by P being committed and pushed before any launch, not by a merge.
+
+**The ordering constraint.** This PR merges **before the release PR**: S is the release PR's squash commit, so a record merged earlier is an ancestor of S (rule 11). The rest of release prep (branch, bump, notes, CHANGELOG) can run in parallel. Only the release PR's merge waits.
+
+**Still open (Peter).** The **S window**: no date is named, so launches cannot be booked backward from it. About a day after F is the earliest the release PR can merge, gated on Peter's four sittings. If the runs cannot all happen before S, that is a miss under (A), not a plan: the record lapses at S (rule 11) and Req 23.7's "released without a record" finding fires. Running part of the set pre-S is option (C), which Peter did not pick and would need his dated re-ruling.
+
+**Trigger**: unchanged by this line. Still `release:next:phase-1` with the prose and the `merge:#<N>` re-token as ruled above.
+
+*Signed: Leonardo, 2026-10-25.*
