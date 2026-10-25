@@ -915,3 +915,26 @@ No `[@LINA]` mentions open (at `bc468a411`). The audit leaves TND F-3 on #452 to
    - **Merge-on-green (c) comes later,** after the compile lane and fixture are green for N releases, with consumer-facing surfaces excluded.
    - **A known limit, named:** seats cannot yet call each other directly, so the author names the teammates it needs and why, and the orchestrator routes.
    - *What survives:* implicit dependencies nobody wrote down, rubber-stamp reads, and slower cross-seam changes. The reviewers are one model, so they bring different knowledge, not different judgment.
+
+4. **F-6, Peter's read: RULED** → `design-outline.md` § 10 F-6; outline row 20
+   > "(i) sounds good. I think a little extra insight I might provide is here's what I need to know:
+   > - What's changing and why
+   > - If there's something I need to decide something, I need to know: What's the problem(s)? What are our options? What are the risks and opportunities associated with the options? And if applicable, how can we avoid this from happening again?"
+
+   *The ruling as put to Peter (orchestrator's words), option (i):*
+   - **A release findings report, generated from checks and state,** never written as an agent's summary. No page cap.
+   - **Order:**
+     1. decisions for Peter;
+     2. findings ranked by severity;
+     3. a machine-generated list of every check that ran.
+   - **Every shipped claim either cites a check that ran or reads `owed — needs <actor>`,** broken down by platform.
+   - **The deletion list** (F-2) is included.
+   - **Peter's read** is of the decisions and the owed items, and of whether the system put design decisions to him (Leonardo).
+
+   **Peter's shape for the report, adopted as part of the ruling:**
+   - **Every report opens with what's changing and why.**
+   - **Every decision put to him carries four things:**
+     - the problem(s);
+     - the options;
+     - the risks and opportunities of each option;
+     - where applicable, how to keep it from happening again. This is the class-level option, in his words.
