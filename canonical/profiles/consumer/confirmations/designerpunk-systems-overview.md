@@ -82,9 +82,13 @@ date: 2026-09-29
 ## `#civitas-system-governance-infrastructure`
 
 confirmer: stacy
-canonicalHash: sha256:05dfb306f63dc5eacf86ccaa02dd41897f8fef417b887f5c051dee41ee10ad06
+canonicalHash: sha256:9751b1889d6e335ee645e098db78bc7d94ef3df5c7023e34cad717ce2e14e790
 items: none
-date: 2026-09-29
+date: 2026-10-24
+
+**Re-confirmed 2026-10-24 (Req 11.6.5d).**
+- **What changed**: one diagram node. `ProdMCP["Product MCP<br/>(conceptual)"]` now reads `ProdMCP["Product MCP<br/>14 tools, reads product/"]`. Steering CORRECTION `d4bd2ea49`, Peter-merged under the carve-out (Spec 131 ballot audit fix-now item 8). Both facts hold at `0e2a2bd41`: `product-mcp-server/src/index.ts` registers 14 tools and sets `DEFAULT_PRODUCT_DIR = 'product'`. The canonicalHash moves from `sha256:05dfb306f63dc5eacf86ccaa02dd41897f8fef417b887f5c051dee41ee10ad06` to the value above. `operative-set-freshness` printed it, and I recomputed it independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts`; the two agree.
+- **Re-ruled**: the unit is still a diagram with its caption. No agent acts against a diagram node, so the zero stays declared (5d).
 
 **Ruling: CONFIRMED at 0, declared.** An illustration.
 
