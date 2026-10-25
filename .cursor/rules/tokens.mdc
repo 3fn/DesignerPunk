@@ -6,12 +6,9 @@ alwaysApply: false
 
 # Token Usage Rules
 
-## Token Selection Priority (MUST follow this order)
+## Token Selection
 
-1. **Semantic tokens** - purpose-built for use cases (e.g., `tapAreaRecommended`, `color.contrast.onPrimary`)
-2. **Primitive tokens** - when no semantic token exists
-3. **Component tokens referencing primitives** - when component needs semantic name but value exists as primitive
-4. **Hard-coded values** - LAST RESORT, requires user approval
+The one token-selection order is Token Governance § "Token Selection Matrix". Query it before you choose a token (see "For Detailed Guidance" below); this file does not restate it. When nothing in it fits, stop and ask the human; never create a token, or hard-code a value, to finish a selection.
 
 ## Token Governance (Autonomy Levels)
 
@@ -19,7 +16,7 @@ alwaysApply: false
 |------------|----------|
 | Semantic tokens | Use freely (verify semantic correctness) |
 | Primitive tokens | Requires prior context or human acknowledgment |
-| Component tokens | Requires explicit human approval |
+| Component tokens | Use freely inside the component they belong to, for the property they were made for; any other use requires explicit human approval |
 | Creating ANY token | Always requires human review |
 
 ## Component Token Rule
@@ -38,6 +35,6 @@ Reference tokens, not pixel values: `icon.size100` not `24px`
 
 Query MCP:
 ```
-get_section({ path: ".kiro/steering/Token-Governance.md", heading: "Token Selection Matrix" })
-get_section({ path: ".kiro/steering/Component-Development-Guide.md", heading: "Token Selection Decision Framework" })
+get_section({ path: "token-governance", heading: "Token Selection Matrix" })
+get_section({ path: "component-development-guide", heading: "Token Selection Decision Framework" })
 ```
