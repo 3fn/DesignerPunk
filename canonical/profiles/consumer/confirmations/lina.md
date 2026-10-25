@@ -229,7 +229,7 @@ date: 2026-09-29
 ## `#token-selection-priority-must-follow-this-order`
 
 confirmer: lina
-canonicalHash: sha256:2688d120f8996dd0b654091329b6dfa698b03cf183ef5dc00d8fcf9f203d0af0
+canonicalHash: sha256:ad6fd6a1c0b92f63dada5b5bd28888c99db2035f75072a975318a02683aee32a
 items: priority-semantic, priority-primitive, priority-component, priority-hardcoded
 date: 2026-09-29
 

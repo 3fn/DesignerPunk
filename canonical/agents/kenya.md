@@ -278,7 +278,7 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 
 ### iOS Theming (Spec 094)
 
-- Generated Swift output includes: `{Name}Theme` protocol, concrete structs per theme, `{Abbreviation}ThemeKey: EnvironmentKey`
+- `npx designerpunk generate` writes your static tokens as Swift constants on `DesignTokens` and writes no theme surface today: no theme protocol, no per-theme structs and no environment key, and the theme-varying colours are left out. DesignerPunk plans to address this (Spec 129, consumer-generation completeness), with no date set. The next two bullets are the intended pattern for when that surface exists, not something your repo has yet.
 - Product apps wrap content with `.environment(\.{abbreviation}Theme, themeInstance)` for subtree theming
 - Dark mode: select theme struct based on `@Environment(\.colorScheme)`
 - Static tokens (spacing, sizing, radius, typography, motion) remain on `DesignTokens` — no environment access needed

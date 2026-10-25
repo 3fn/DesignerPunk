@@ -161,8 +161,8 @@ Nav-Header-Base (Primitive) [PLANNED]
 | Radius | `radius.normal` | Container border radius |
 | Radius | `radius.small` | Indicator and segment radius |
 | Shadow | `shadow.navigation.indicator` | Indicator depth shadow |
-| Spacing | `space.050` | Container padding |
-| Spacing | `space.100`, `space.150`, `space.200` | Size-variant padding |
+| Spacing | `space.inset.050` | Container padding |
+| Spacing | `space.inset.100`, `space.inset.150`, `space.inset.200` | Size-variant padding |
 | Typography | `fontSize100`, `fontSize125` | Size-variant font sizes |
 | Typography | `lineHeight100`, `lineHeight125` | Size-variant line heights |
 | Typography | `fontWeight700` | Segment text weight |
@@ -180,8 +180,8 @@ Nav-Header-Base (Primitive) [PLANNED]
 | Color | `color.action.navigation` | Active icon + dot |
 | Color | `color.icon.navigation.inactive` | Inactive icon |
 | Color | `color.background.primary.subtle` | Glow center (active) |
-| Opacity | `opacity.024` | Glow edge opacity |
-| Spacing | `space.050`, `space.100`, `space.150`, `space.200` | Padding variants |
+| Opacity | `opacity024` | Glow edge opacity |
+| Spacing | `space.inset.050`, `space.inset.100`, `space.inset.150`, `space.inset.200` | Padding variants |
 | Spacing | `space.grouped.minimal` | Icon-to-dot spacing |
 | Touch | `tapAreaMinimum` | Minimum tab width |
 | Easing | `easingGlideDecelerate` | Dot glide curve |

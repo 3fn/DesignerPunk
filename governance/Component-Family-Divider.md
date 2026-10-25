@@ -92,12 +92,12 @@ Divider-Base (Primitive) [PLANNED]
 
 | Category | Token Pattern | Purpose |
 |----------|---------------|---------|
-| Color | `color.divider` | Divider line color |
-| Border | `border.divider.*` | Divider thickness |
-| Spacing | `space.divider.inset.*` | Inset spacing |
-| Typography | `typography.divider.label` | Label text styling |
+| Color | `color.structure.border`, `color.structure.border.subtle` | Divider line color |
+| Border | `border.default`, `border.emphasis`, `border.heavy` | Divider thickness |
+| Spacing | `space.inset.*` | Inset spacing |
+| Typography | None yet (`typography.labelSm` is the nearest key) | Label text styling |
 
-> **Note**: Token patterns are planned and may change during implementation.
+> **Note**: Token patterns are planned and may change during implementation. Names are token-index keys where one exists; a row reading "None yet" marks a gap to settle with Ada (token creation is hers) when the family is specified.
 
 ---
 

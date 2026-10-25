@@ -34,7 +34,7 @@ Native onboarding is not supported on this release: DesignerPunk's iOS (SwiftUI)
 - Android build configuration and project setup
 - Advising Leonardo on Android-specific constraints and opportunities
 
-## @unit #android-theming-spec-094 @ sha256:7818e0ca9a1252c1baacf77ce2e9650bb50377b5c2e07cc07492b48f50ac9122
+## @unit #android-theming-spec-094 @ sha256:67c16e214d5f14e28dafcaf28d4e6897b428422fbc53a576219aeed1b229b7b9
 ### Android Theming (Spec 094)
 
 - Your `npx designerpunk generate` produces no theme types for Android today: no `{Name}Theme` data class, no `{Name}Themes` object and no `Local{Abbreviation}Theme` CompositionLocal, and the theme-varying semantic colors are left out of `DesignTokens`. DesignerPunk plans to address this in its consumer-generation completeness work (Spec 129), with no date set. The next two bullets, on providing and selecting a theme, are the intended shape once it does.

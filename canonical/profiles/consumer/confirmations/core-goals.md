@@ -46,9 +46,15 @@ date: 2026-09-29
 ## `#development-practices`
 
 confirmer: stacy
-canonicalHash: sha256:06bfac06966cb2bd1b0344f3e6ee26d2db6577e0ca62b05f88fe3e6106fa548f
+canonicalHash: sha256:034af0fe252b4662058e6c4db8545e60cb5f6be71120c2a452044d1bcb6673f7
 items: practice-1, practice-2, practice-3, practice-7, practice-8, practice-9, practice-10, practice-11, practice-12, practice-13, practice-14, token-governance-query, practice-15, practice-16, practice-17, practice-18, practice-19, practice-20, practice-21, practice-22, practice-26, practice-27, construction-rule
-date: 2026-09-29
+date: 2026-10-25
+
+**Re-confirmed 2026-10-25 (Req 11.6.5d): the served-docs token-name correction.** The prior record is superseded (canonicalHash `sha256:06bfac06966cb2bd1b0344f3e6ee26d2db6577e0ca62b05f88fe3e6106fa548f`, dated 2026-09-29).
+- **What changed**: three sentences in the unit, all token names. The first example in the Token Selection Priority list reads `color.contrast.onAction` for content on action-colored backgrounds, `space.inset.100` for inset padding, where it read `tapAreaRecommended` and `color.contrast.onPrimary`. The third example reads `buttonicon.inset.medium = space125`, where it read `buttonIcon.inset.medium`. The rationale line under "Why semantic first?" now reads `space.inset.100` instead of `space100`, where it read `tapAreaRecommended`. Steering CORRECTION `ace4ff232` (Thurgood; Peter, 2026-10-25, relayed: "Fix all of them as the owners recommend"). The overlay pin was re-grounded at `3071015d2`, the rendering regenerated at `94ce930bf`, and the two items re-quoted at `46ae0efda`.
+- **The hash**: the canonicalHash moves from `sha256:06bfac06966cb2bd1b0344f3e6ee26d2db6577e0ca62b05f88fe3e6106fa548f` to the value above. `operative-set-freshness` printed it, and I recomputed it independently with `hashText` over `partition(splitFrontmatter(...).body).units` (unit `#development-practices`); the two agree, and the value equals the overlay pin.
+- **Items re-read against the unit**: `practice-15` and `practice-17` are verbatim substrings of the corrected unit as it now stands (L68 and L70). The "Why semantic first?" sentence is rationale, not an item, as ruled below. No other text in the unit changed, so the set stays at 23, not corrected again.
+- **Re-ruled**: the 2026-09-29 ruling below stands.
 
 **Ruling: CORRECTED 21 → 23.**
 - Added `practice-3`: the repository is PR-gated, with branch protection that includes admins. Agents push against that.

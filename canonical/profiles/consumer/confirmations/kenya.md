@@ -40,7 +40,7 @@ date: 2026-09-29
 ## `#ios-theming-spec-094`
 
 confirmer: kenya
-canonicalHash: sha256:ced2085af0c675dbb3e27cc0f93bd50feef8f21a31b28cec74f2034781da4d31
+canonicalHash: sha256:5c2f0d3218adaa084461ed041e9cd7843f5e5d19bfcd07d1597a7ad424e681c9
 items: theming-1, theming-2, theming-3, theming-4, theming-5
 date: 2026-09-29
 

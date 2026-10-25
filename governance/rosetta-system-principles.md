@@ -43,7 +43,7 @@ Primitive Tokens (Mathematical Foundation)
 │   └── Provide raw values for composition
 └── Semantic Tokens (Purpose-Driven Compositions)
     └── Compose primitives for specific use cases
-    └── Named with descriptive purposes (bodyMd, color.primary)
+    └── Named with descriptive purposes (typography.bodyMd, color.action.primary)
     └── Reference primitives by name, not value
 ```
 
@@ -133,19 +133,19 @@ Mathematical foundation allows documented exceptions for design requirements:
 | Family | Purpose | Primitive Examples | Semantic Examples |
 |--------|---------|-------------------|-------------------|
 | **Spacing** | Layout and positioning | space100, space200 | space.grouped.*, space.inset.* |
-| **Typography** | Text styling | fontSize100, lineHeight150 | bodyMd, labelSm, h1 |
-| **Color** | Visual identity | cyan300, gray500 | color.primary, color.error |
-| **Radius** | Shape definition | radius100, radius200 | radius.button, radius.card |
-| **Shadow** | Depth and elevation | shadowBlur200, shadowOpacity300 | shadow.container, shadow.modal |
-| **Glow** | Emphasis effects | glowBlur200, glowOpacity100 | glow.focus, glow.highlight |
+| **Typography** | Text styling | fontSize100, lineHeight150 | typography.bodyMd, typography.labelSm, typography.h1 |
+| **Color** | Visual identity | cyan300, gray500 | color.action.primary, color.feedback.error.text |
+| **Radius** | Shape definition | radius100, radius200 | radius.small, radius.normal |
+| **Shadow** | Depth and elevation | shadowOffsetY.200, shadowOpacityDepth300 | shadow.container, shadow.modal |
+| **Glow** | Emphasis effects | glowOpacity100, glowOpacity200 | glow.neonCyan, glow.neonPink |
 | **Opacity** | Transparency | opacity048, opacity080 | opacity.ghost, opacity.heavy |
 | **Blend** | Color modification | blend100, blend200 | blend.hoverDarker, blend.focusSaturate |
-| **Border** | Edge definition | borderWidth100, borderWidth200 | border.input, border.focus |
+| **Border** | Edge definition | borderWidth100, borderWidth200 | border.default, border.emphasis |
 | **Motion** | Animation timing | duration250, easingStandard | motion.floatLabel |
 | **Sizing** | Component dimensions (width, height, box size) | size100, size300 | - |
 | **Blur** | Edge softness, radial spread, backdrop obscuring (composed into Shadow, Glow) | blur100, blur200 | - |
-| **Layering** | Stacking order | - | zIndex.modal, elevation.card |
-| **Accessibility** | WCAG compliance | tapArea44, tapArea48 | accessibility.touchTarget |
+| **Layering** | Stacking order | - | zIndex.modal, elevation.container |
+| **Accessibility** | WCAG compliance | tapAreaMinimum, tapAreaRecommended | accessibility.focus.width, accessibility.focus.offset |
 
 ### Primitive Token Structure
 
@@ -176,7 +176,7 @@ Every semantic token follows this structure:
 ```typescript
 interface SemanticToken {
   // Identity
-  name: string;                    // Token name (e.g., "bodyMd")
+  name: string;                    // Token name (e.g., "typography.bodyMd")
   category: string;                // Token category (e.g., "typography")
   context: string;                 // Usage context (e.g., "body text")
   description: string;             // Human-readable description
@@ -229,14 +229,14 @@ interface SemanticToken {
 
 | Pattern | When to Use | Examples |
 |---------|-------------|----------|
-| `[category].[context]` | Categorical tokens | `color.primary`, `shadow.container` |
-| `[category].[context].[variant]` | Tokens with variants | `space.grouped.tight`, `space.inset.normal` |
-| `[purpose][Size]` | Typography tokens | `bodyMd`, `labelSm`, `h1` |
+| `[category].[context]` | Categorical tokens | `color.action.primary`, `shadow.container` |
+| `[category].[context].[variant]` | Tokens with variants | `space.grouped.tight`, `space.inset.100` |
+| `typography.[purpose][Size]` | Typography tokens | `typography.bodyMd`, `typography.labelSm`, `typography.h1` |
 
 **Examples**:
-- `color.primary` - Primary brand color
+- `color.action.primary` - Primary brand color
 - `space.grouped.tight` - Tight spacing for grouped elements
-- `bodyMd` - Medium body text style
+- `typography.bodyMd` - Medium body text style
 - `shadow.modal` - Shadow for modal overlays
 
 ### Platform-Specific Naming Conventions
@@ -259,7 +259,7 @@ INVALID: Space100 (wrong case)
 
 **Rule 2: Semantic Pattern Compliance**
 ```
-VALID:   color.primary, space.grouped.tight, bodyMd
+VALID:   color.action.primary, space.grouped.tight, typography.bodyMd
 INVALID: colorPrimary (missing dot separator for categorical)
 INVALID: body-md (wrong separator for typography)
 ```
@@ -335,7 +335,7 @@ radius075 = 8px × 0.75 = 6px (strategic flexibility)
 radius100 = 8px × 1.0 = 8px
 radius150 = 8px × 1.5 = 12px
 radius200 = 8px × 2.0 = 16px
-radiusFull = 9999px (pill shape)
+radiusMax = 9999px (pill shape)
 ```
 
 ### Validation Tolerances
@@ -357,19 +357,19 @@ Semantic tokens depend on primitives through documented relationships:
 
 ```
 Typography Token Dependencies:
-bodyMd
+typography.bodyMd
 ├── fontSize: fontSize100 (16px)
-├── lineHeight: lineHeight150 (1.5)
+├── lineHeight: lineHeight100 (1.5)
 ├── fontFamily: fontFamilyBody
 ├── fontWeight: fontWeight400
-└── letterSpacing: letterSpacingNormal
+└── letterSpacing: letterSpacing100
 
 Shadow Token Dependencies:
 shadow.container
-├── offsetX: shadowOffsetMorning.x
-├── offsetY: shadowOffsetMorning.y
-├── blur: shadowBlur200
-├── opacity: shadowOpacity200
+├── offsetX: shadowOffsetX.000
+├── offsetY: shadowOffsetY.100
+├── blur: blur075
+├── opacity: shadowOpacityModerate
 └── color: shadowBlack100
 ```
 
@@ -380,9 +380,9 @@ Some tokens have relationships across families:
 | Relationship | Description | Example |
 |--------------|-------------|---------|
 | **Typography ↔ Spacing** | Line height affects vertical rhythm | lineHeight150 aligns to 8px grid |
-| **Color ↔ Opacity** | Transparency modifies colors | color.primary + opacity.hover |
-| **Shadow ↔ Layering** | Elevation implies shadow depth | elevation.card → shadow.container |
-| **Blend ↔ Color** | Blend modifies base colors | darkerBlend(color.primary, blend.hoverDarker) |
+| **Color ↔ Opacity** | Transparency modifies colors | color.action.primary + opacity.subtle |
+| **Shadow ↔ Layering** | Elevation implies shadow depth | elevation.container → shadow.container |
+| **Blend ↔ Color** | Blend modifies base colors | darkerBlend(color.action.primary, blend.hoverDarker) |
 
 ### Composition Patterns
 
@@ -390,20 +390,20 @@ Some tokens have relationships across families:
 ```typescript
 const bodyMd = {
   fontSize: 'fontSize100',      // 16px
-  lineHeight: 'lineHeight150',  // 1.5
+  lineHeight: 'lineHeight100',  // 1.5
   fontFamily: 'fontFamilyBody', // system-ui
   fontWeight: 'fontWeight400',  // 400
-  letterSpacing: 'letterSpacingNormal' // 0
+  letterSpacing: 'letterSpacing100' // 0
 };
 ```
 
 **Shadow Composition**:
 ```typescript
 const shadowContainer = {
-  offsetX: 'shadowOffsetMorning.x',  // 2px
-  offsetY: 'shadowOffsetMorning.y',  // 4px
-  blur: 'shadowBlur200',             // 8px
-  opacity: 'shadowOpacity200',       // 0.2
+  offsetX: 'shadowOffsetX.000',      // 0px
+  offsetY: 'shadowOffsetY.100',      // 4px
+  blur: 'blur075',                   // 12px
+  opacity: 'shadowOpacityModerate',  // 0.3
   color: 'shadowBlack100'            // oklch(0 0 0)
 };
 ```

@@ -143,7 +143,7 @@ All components in the Containers family inherit these 7 foundational contracts f
 
 **Description**: Visual feedback on hover (pointer devices only).
 
-**Behavior**: When hoverable prop is true and user hovers with a pointer device, Container-Base shows visual feedback by darkening the background using `darkerBlend(color.surface, blend.hoverDarker)` - 8% darker.
+**Behavior**: When hoverable prop is true and user hovers with a pointer device, Container-Base shows visual feedback by darkening the background using `darkerBlend(color.structure.surface, blend.hoverDarker)` - 8% darker.
 
 **WCAG Compliance**: 1.4.13 Content on Hover or Focus
 
@@ -171,7 +171,7 @@ All components in the Containers family inherit these 7 foundational contracts f
 | `background` | `ColorTokenName` | No | - | Background color token |
 | `shadow` | `ShadowTokenName` | No | - | Shadow token |
 | `border` | `'none' \| 'default' \| 'emphasis' \| 'heavy'` | No | - | Border width |
-| `borderColor` | `ColorTokenName` | No | `color.border.default` | Border color token |
+| `borderColor` | `ColorTokenName` | No | `color.structure.border` | Border color token |
 | `borderRadius` | `'none' \| 'tight' \| 'normal' \| 'loose'` | No | - | Border radius |
 | `opacity` | `OpacityTokenName` | No | - | Opacity token |
 | `layering` | `'container' \| 'navigation' \| 'dropdown' \| 'modal' \| 'toast' \| 'tooltip'` | No | - | Stacking order |
@@ -225,7 +225,7 @@ Container-Base supports granular padding control with a clear override hierarchy
 <!-- Web -->
 <container-base
   padding="200"
-  background="color.surface"
+  background="color.structure.surface"
   border-radius="normal"
   shadow="shadow.container"
 >
@@ -237,7 +237,7 @@ Container-Base supports granular padding control with a clear override hierarchy
 <container-base
   semantic="section"
   padding="300"
-  background="color.canvas"
+  background="color.structure.canvas"
 >
   <h1>Page Section</h1>
 </container-base>
@@ -319,6 +319,8 @@ Container-Card-Base intentionally restricts the Container-Base API to provide:
 
 **Note**: Vertical padding includes `'050'` for fine-tuning typography rhythm. Horizontal padding excludes `'050'` as it's rarely needed for horizontal spacing.
 
+**Note**: The `background` and `borderColor` values above are Card shorthand, not token names. They resolve to `color.structure.surface.primary`, `color.structure.surface.secondary` and `color.structure.surface.tertiary`, and to `color.structure.border` (`'border.default'`) and `color.structure.border.subtle` (`'border.subtle'`). `border.default` as a token key is the 1px border width.
+
 #### Card-Specific Properties
 
 | Property | Type | Required | Default | Description |
@@ -333,10 +335,10 @@ Container-Card-Base intentionally restricts the Container-Base API to provide:
 | Purpose | Token | Value |
 |---------|-------|-------|
 | Default padding | `space.inset.150` | 12px |
-| Default background | `color.surface.primary` | Primary surface color |
+| Default background | `color.structure.surface.primary` | Primary surface color |
 | Default shadow | `shadow.container` | Container shadow |
 | Default border radius | `radius.normal` | 8px |
-| Default border color | `color.border.default` | Default border color |
+| Default border color | `color.structure.border` | Default border color |
 | Hover feedback | `blend.hoverDarker` | 8% darker |
 | Press feedback | `blend.pressedDarker` | 12% darker |
 | Focus transition | `motion.focusTransition` | 150ms ease-out |
@@ -460,12 +462,12 @@ Components in the Containers family consume these design tokens:
 | Category | Token Pattern | Purpose |
 |----------|---------------|---------|
 | Spacing | `space.inset.*` | Internal padding |
-| Color | `color.background`, `color.surface`, `color.canvas` | Background colors |
-| Color | `color.surface.primary`, `color.surface.secondary`, `color.surface.tertiary` | Card background colors |
-| Color | `color.border`, `color.border.default`, `color.border.subtle` | Border colors |
+| Color | `color.structure.canvas`, `color.structure.surface` | Background colors |
+| Color | `color.structure.surface.primary`, `color.structure.surface.secondary`, `color.structure.surface.tertiary` | Card background colors |
+| Color | `color.structure.border`, `color.structure.border.subtle` | Border colors |
 | Shadow | `shadow.*`, `shadow.container` | Shadow styling |
-| Border | `border.border.*` | Border widths |
-| Border | `radius-*`, `radius.normal`, `radius.loose` | Border radius |
+| Border | `border.default`, `border.emphasis`, `border.heavy` | Border widths |
+| Border | `radius050`, `radius100`, `radius200` | Border radius |
 | Layering | `zIndex.*` | Stacking order (web/iOS) |
 | Layering | `elevation.*` | Stacking order + shadow (Android) |
 | Motion | `motion.focusTransition` | Hover/focus transition |
@@ -548,10 +550,10 @@ Use Container-Base directly when you need props not exposed by Container-Card-Ba
 <!-- Web: Card with opacity -->
 <container-base
   padding="200"
-  background="color.surface"
+  background="color.structure.surface"
   border-radius="normal"
   shadow="shadow.container"
-  opacity="opacity.80"
+  opacity="opacity.medium"
 >
   <!-- Card content -->
 </container-base>
@@ -564,7 +566,7 @@ Use Container-Base directly when you need props not exposed by Container-Card-Ba
 <container-base
   semantic="section"
   padding="300"
-  background="color.canvas"
+  background="color.structure.canvas"
 >
   <h2>Section Title</h2>
   <!-- Section content -->

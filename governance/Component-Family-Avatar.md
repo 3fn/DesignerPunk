@@ -117,7 +117,7 @@ Avatar-Base (Primitive) [IMPLEMENTED]
 
 ### Color Tokens
 
-Avatar uses a **compositional token architecture** where component tokens reference semantic concept tokens. This follows the Nathan Curtis concept-first naming model.
+Avatar uses a **compositional color architecture**: each color role (`human.background`, `agent.icon`, …) resolves to a semantic concept token. This follows the Nathan Curtis concept-first naming model. The role names are keys of the `AvatarColorTokens` constant in `src/components/core/Avatar-Base/avatar.tokens.ts`, not token-index keys: the token index holds no Avatar color token, so the semantic tokens below are what an agent declares and looks up.
 
 #### Semantic Concept Tokens (Foundation)
 
@@ -131,19 +131,19 @@ Avatar relies on two semantic concepts:
 
 #### Component Tokens (Avatar-Specific)
 
-Component tokens follow the pattern: `color.{component}.{variant}.{property}`
+Avatar's color roles are the keys of `AvatarColorTokens` (`avatar.tokens.ts`), a TypeScript constant outside the token pipeline. The only Avatar component tokens in the token index are the size tokens above (`avatar.size.*`, `avatar.icon.size.*`).
 
-| Token | References | Purpose |
-|-------|------------|---------|
-| `color.avatar.human.background` | `color.identity.human` | Human avatar background color |
-| `color.avatar.agent.background` | `color.identity.agent` | Agent avatar background color |
-| `color.avatar.human.icon` | `color.contrast.onDark` | Icon color on human avatar |
-| `color.avatar.agent.icon` | `color.contrast.onDark` | Icon color on agent avatar |
-| `color.avatar.default.border` | gray100 | Border color for all avatar variants |
+| Role (`AvatarColorTokens` key) | Resolves to (token-index key) | Purpose |
+|--------------------------------|-------------------------------|---------|
+| `human.background` | `color.identity.human` | Human avatar background color |
+| `agent.background` | `color.identity.agent` | Agent avatar background color |
+| `human.icon` | `color.contrast.onDark` | Icon color on human avatar |
+| `agent.icon` | `color.contrast.onDark` | Icon color on agent avatar |
+| `default.border` | `color.structure.border` (gray100) | Border color for all avatar variants |
 
-**Why Component Tokens Reference Semantic Tokens**:
-- **Semantic clarity**: `color.avatar.human.background` clearly indicates avatar-specific usage
-- **Compositional architecture**: Component tokens reference semantic tokens, not primitives directly
+**Why the color roles resolve to semantic tokens**:
+- **Semantic clarity**: `human.background` clearly indicates avatar-specific usage
+- **Compositional architecture**: The roles reference semantic tokens, not primitives directly
 - **Maintainability**: If identity colors change, avatar automatically inherits the change
 - **Discoverability**: Developers can find all avatar colors grouped together
 
@@ -151,14 +151,14 @@ Component tokens follow the pattern: `color.{component}.{variant}.{property}`
 
 | Size | Width Token | Color | Opacity |
 |------|-------------|-------|---------|
-| xs-xl | `borderDefault` | `color.avatar.default.border` | `opacity.heavy` |
-| xxl | `borderEmphasis` | `color.contrast.onSurface` | 100% |
+| xs-xl | `border.default` | `color.structure.border` | `opacity.heavy` |
+| xxl | `border.emphasis` | `color.contrast.onDark` | 100% |
 
 ### Motion Tokens
 
 | Token | Purpose |
 |-------|---------|
-| `motion.duration.fast` | Interactive hover transition |
+| `motion.focusTransition` | Interactive hover border-width transition (150ms, standard easing) |
 
 ---
 
@@ -261,18 +261,15 @@ When using Avatar in an interactive context, the wrapper element is responsible 
   "tokens": {
     "size": ["avatar.size.*"],
     "iconSize": ["avatar.icon.size.*", "icon.size*"],
-    "color": {
-      "semantic": ["color.identity.human", "color.identity.agent", "color.contrast.onDark"],
-      "component": ["color.avatar.human.background", "color.avatar.agent.background", "color.avatar.human.icon", "color.avatar.agent.icon", "color.avatar.default.border"]
-    },
-    "border": ["borderDefault", "borderEmphasis"],
+    "color": ["color.identity.human", "color.identity.agent", "color.contrast.onDark", "color.structure.border"],
+    "border": ["border.default", "border.emphasis"],
     "opacity": ["opacity.heavy"],
-    "motion": ["motion.duration.fast"]
+    "motion": ["motion.focusTransition"]
   }
 }
 ```
 
-**Token Architecture Note**: The schema distinguishes between semantic tokens (concept-level) and component tokens (avatar-specific). Component tokens reference semantic tokens, creating a compositional hierarchy.
+**Token Architecture Note**: The schema lists semantic color tokens (concept-level) and Avatar's own component tokens (`avatar.size.*`, `avatar.icon.size.*`). The color roles in `AvatarColorTokens` resolve to those semantic tokens; they are not separate token-index entries.
 
 ---
 

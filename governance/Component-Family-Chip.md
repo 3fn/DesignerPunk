@@ -137,10 +137,10 @@ Inherits most contracts from Chip-Base, plus:
 
 | Property | Token | Value |
 |----------|-------|-------|
-| Block Padding | chip.paddingBlock | 6px (references space075) |
+| Block Padding | space.inset.075 | 6px |
 | Inline Padding | space.inset.150 | 12px |
 | Icon Gap | space.grouped.tight | 4px |
-| Border Width | borderDefault | 1px |
+| Border Width | border.default | 1px |
 | Border Radius | radius.full | pill shape |
 | Typography | typography.buttonSm | 14px, medium |
 | Visual Height | (derived) | 32px |
@@ -269,13 +269,13 @@ Components in this family consume these design tokens:
 
 | Category | Token | Purpose |
 |----------|-------|---------|
-| Component | chip.paddingBlock | Block padding (6px, references space075) |
+| Spacing | space.inset.075 | Block padding (6px) |
 | Typography | typography.buttonSm | Label text styling |
 | Spacing | space.inset.150 | Inline padding (12px) |
 | Spacing | space.grouped.tight | Icon-to-label gap (4px) |
-| Border | borderDefault | Border width (1px) |
+| Border | border.default | Border width (1px) |
 | Border | radius.full | Pill shape |
-| Motion | motion.duration.fast | State transition animation |
+| Motion | motion.selectionTransition | State transition animation |
 | Accessibility | tapAreaRecommended | Minimum tap area (48px) |
 | Accessibility | accessibility.focus.width | Focus ring width |
 | Accessibility | accessibility.focus.offset | Focus ring offset |
