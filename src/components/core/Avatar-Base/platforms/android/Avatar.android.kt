@@ -218,33 +218,37 @@ enum class AvatarSize(
      */
     val iconTokenReference: String
 ) {
+    // Sizing primitives (DesignTokens.size_*) are generated as Float on Android, unlike
+    // spacing and radius (Dp), so each read converts with .dp here. Interim: when the
+    // generator emits sizing as Dp (Spec 129 intake), these .dp calls must be removed;
+    // AndroidSizingDpReads.test.ts fails until they are.
     Xs(
-        dimension = DesignTokens.size_300,  // 24dp - avatar.size.xs
+        dimension = DesignTokens.size_300.dp,  // 24dp - avatar.size.xs
         iconDimension = AvatarTokens.iconSizeXs,  // 12dp - component token gap filler
         iconTokenReference = "avatar.icon.size.xs"
     ),
     Sm(
-        dimension = DesignTokens.size_400,  // 32dp - avatar.size.sm
+        dimension = DesignTokens.size_400.dp,  // 32dp - avatar.size.sm
         iconDimension = DesignTokens.icon_size_050,  // 16dp
         iconTokenReference = "icon.size050"
     ),
     Md(
-        dimension = DesignTokens.size_500,  // 40dp - avatar.size.md
+        dimension = DesignTokens.size_500.dp,  // 40dp - avatar.size.md
         iconDimension = DesignTokens.icon_size_075,  // 20dp
         iconTokenReference = "icon.size075"
     ),
     Lg(
-        dimension = DesignTokens.size_600,  // 48dp - avatar.size.lg
+        dimension = DesignTokens.size_600.dp,  // 48dp - avatar.size.lg
         iconDimension = DesignTokens.icon_size_100,  // 24dp
         iconTokenReference = "icon.size100"
     ),
     Xl(
-        dimension = DesignTokens.size_1000,  // 80dp - avatar.size.xl
+        dimension = DesignTokens.size_1000.dp,  // 80dp - avatar.size.xl
         iconDimension = DesignTokens.icon_size_500,  // 40dp
         iconTokenReference = "icon.size500"
     ),
     Xxl(
-        dimension = DesignTokens.size_1600,  // 128dp - avatar.size.xxl
+        dimension = DesignTokens.size_1600.dp,  // 128dp - avatar.size.xxl
         iconDimension = AvatarTokens.iconSizeXxl,  // 64dp - component token gap filler
         iconTokenReference = "avatar.icon.size.xxl"
     );

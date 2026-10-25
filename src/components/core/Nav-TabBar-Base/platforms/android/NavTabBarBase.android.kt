@@ -277,8 +277,8 @@ fun NavTabBarBase(
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier
                             .weight(1f)
-                            .width(with(density) { tabWidthPx.toDp() }.coerceAtLeast(NavTabBarTokens.minTapWidth.dp))
-                            .heightIn(min = NavTabBarTokens.minTabHeight.dp)
+                            .width(with(density) { tabWidthPx.toDp() }.coerceAtLeast(NavTabBarTokens.minTapWidth))
+                            .heightIn(min = NavTabBarTokens.minTabHeight)
                             .clickable(
                                 interactionSource = interactionSource,
                                 indication = null, // custom pressed state via blend
@@ -314,10 +314,10 @@ fun NavTabBarBase(
                                 }
                             }
                             .padding(
-                                top = (if (isSelected) NavTabBarTokens.activePaddingTop else NavTabBarTokens.inactivePaddingTop).dp,
-                                start = NavTabBarTokens.activePaddingInline.dp,
-                                end = NavTabBarTokens.activePaddingInline.dp,
-                                bottom = (if (isSelected) NavTabBarTokens.activePaddingBottom else NavTabBarTokens.inactivePaddingBottom).dp
+                                top = (if (isSelected) NavTabBarTokens.activePaddingTop else NavTabBarTokens.inactivePaddingTop),
+                                start = NavTabBarTokens.activePaddingInline,
+                                end = NavTabBarTokens.activePaddingInline,
+                                bottom = (if (isSelected) NavTabBarTokens.activePaddingBottom else NavTabBarTokens.inactivePaddingBottom)
                             )
                             // Glow gradient — active only (contract: visual_gradient_glow)
                             .drawBehind {
@@ -352,7 +352,7 @@ fun NavTabBarBase(
                         // Icon — solid (active) or outline (inactive)
                         IconBase(
                             name = if (isSelected) tab.activeIcon else tab.icon,
-                            size = NavTabBarTokens.iconSize.dp,
+                            size = NavTabBarTokens.iconSize,
                             color = iconTint
                         )
                         // Badge composition slot (empty in v1)
@@ -366,7 +366,7 @@ fun NavTabBarBase(
                 modifier = Modifier
                     .offset { IntOffset(dotOffsetPx.value.toInt() - with(density) { (NavTabBarTokens.dotSize / 2).dp.toPx() }.toInt(), 0) }
                     .align(Alignment.BottomStart)
-                    .padding(bottom = NavTabBarTokens.activePaddingBottom.dp)
+                    .padding(bottom = NavTabBarTokens.activePaddingBottom)
                     .size(NavTabBarTokens.dotSize.dp)
                     .background(theme.color_action_navigation, CircleShape)
             )
