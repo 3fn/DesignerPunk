@@ -625,3 +625,28 @@ This is a said-vs-built gap in an existing design, not missing design. It stays 
 - [@LEONARDO] from KENYA R1: is the Settings spec stable enough to be fixture input?
 - [@LEONARDO] from SPARKY R1: do Humorphism's product-UI patterns belong in product design guidance? This is also a values-ballot input.
 - Answered in R1: [@KENYA] [@DATA] from LEONARDO R1 (Kenya item 1; Data item 1).
+
+---
+
+#### [PETER R2]
+
+*Peter's words, chat, relayed by the orchestrator, 2026-10-24; typos corrected, meaning unchanged ("parody" → "parity").*
+
+1. **The layer test** → `design-outline.md` § 1 ("What this spec is, then")
+   > "Re: 'A layer can go when its outcome is sustained by something cheaper, when it is enhanced by something better, or when it is knowingly dropped for a stated reason.' I would frame closer to something like: 'A layer can go when its outcome is sustained by something that provides parity, or enhancement, at cheaper cost or faster execution, or is knowingly dropped for a stated reason.'"
+2. **The ballot audit and triggers** → `evidence/2026-10-24-ballot-audit.md`; outline § 3a
+   > "Re: the ballot audit, does this more-or-less mean we need a triggering mechanism to surface the ballots? (Because another layer is exactly what we need... this is sarcasm)"
+   > "Re: 2, this is not a suggestion, but could tying the ballots to CI be effective?"
+3. **Holistic, amended** → outline § 5 (design principles); Peter's own definition
+   > "We might consider a reframe to something like 'the needs of those negatively impacted are appropriately mitigated' to 'additional burdens are appropriately acknowledged, mitigated and supported'"
+4. **A proactive learning loop** → outline self-sustaining requirements; the composed learning loop (`2026-09-19-completion-claims-integrity.md` R6; `canonical/agents/stacy.md` L425)
+   > "Re: self-sustaining requirements, we might consider including pro-active learning loop: the ability to proactively learn from errors, mistakes, and recognize the need to act on and/or preserve those learnings. I think we have a framing for that somewhere in our documentation already maybe."
+   > "Re: 4, we might think of a simple mechanic to flag when a learning should be converted to a rule. 1. Record the learning 2. Keep a counter of the number of times the learning's applied. 3. Each time the agent applies the learning, update the count. 4. When the counter reaches an appropriate threshold, convert to rule ... maybe, I'm not sure."
+5. **The next round** → this feedback doc
+   > "I'm very interested to see how the agents assess this outline in the framing of the values and what their suggestions/proposals are"
+
+**Orchestrator notes for the round (not Peter's words; proposals for reviewers):**
+- *Layer test (1):* "cost" should name context and human attention, not only maintenance — or a fast replacement that adds always-loaded text or questions for Peter passes the test while making things worse.
+- *Triggers (2):* the audit points away from a surfacing layer. Rules lapse when their triggers are prose and their duties scattered. Non-layer moves: put the rule in the command or check where the work happens (RS-13's "guards in the command the operator runs"); fewer rules, fewer triggers; a rule whose trigger passed unnoticed is evidence it wasn't load-bearing. On CI: the register already ties rules to checks, and rules **with** a CI check are the ones that held; the audit's lapses are rules ratified with `checks: []` (three since 2026-09-19). The tie works when the check *is* the rule — replacing the prose, not added beside it — and a rule that can't be checked is ratified as advice.
+- *Holistic (3):* full text as amended: "consideration for the needs of stakeholders in the blast radius of a decision or solution, and that additional burdens placed on them are appropriately acknowledged, mitigated and supported."
+- *Learning loop (4):* the existing loop is run unreliably (its one-line outcome is missing in 4 of 7 passes, audit) and has been a growth engine. Proposed shape: **learn → act or preserve** — act defaults to fix, delete or narrow; preserve puts the learning where it is read when it matters (a check, the operating rules, the owner's records), not a new ballot. On Peter's counter: counting *applications* relies on self-report (seats don't persist across sessions, so "I applied it" is attestation) and is bookkeeping per use. Counting **recurrences of the mistake** a recorded learning was meant to prevent is cheaper and not self-reported: a finding that matches a recorded learning cites it; at N recurrences the learning is promoted — preferably to an executable check. A learning applied reliably without a rule may not need one.
