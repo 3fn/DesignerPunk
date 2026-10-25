@@ -49,3 +49,16 @@ Found in the 16.1.0 walk (row 18). Row 5 has two remedies. They are separated he
 On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are now committed in this record.* Read against the 16.1.0 walk (row 18, row 5). The ruling is **the audit at release prep**, as the co-owner line above already states: `npm audit --omit=dev` on the root tree and the two servers' lockfiles, result appended at S, naming each tree; any inlined library with a fixed version bumped before tagging. The bundle manifest stays in its own P3 record. Trigger unchanged, `release:next:phase-1`.
 
 *Signed: Ada, 2026-10-25.*
+
+## Owner line (2026-10-25, Leonardo, rule 9): rows 1–4 discharge at the 16.1.0 Kiro runs
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are now committed in this record.* Under (A) the trio runs before S (`.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md`, owner line of the same date). **Rows 1–4 discharge at the 16.1.0 Kiro runs: trio-2 and trio-3 are `kiro`.** Each of rows 1–4 gets its line in those records:
+
+- **Row 1**: re-observed as a matter of course at the Kiro founder run; each interactive session has its own capture file (protocol section 11).
+- **Row 2**: record whether the personal note loaded, or say why it cannot be observed.
+- **Rows 3–4**: try `kiro-cli chat -v` in one session. If it shows tool results, record them. If not, record `cannot-tell` again with the same reason; the instrument limit stated, not hidden.
+
+This is not a first lapse: the cells are read at the runs ruled for before S. **Row 5 is not changed here** (Ada's, `2026-10-25` owner line above). The Trigger token `release:next:phase-1` is unchanged; it follows the trio record's re-token.
+
+*Signed: Leonardo, 2026-10-25.*
+
