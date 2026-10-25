@@ -5,6 +5,7 @@
 **Owner**: Ada (`src/cli/**`: `generate`'s component-token harvest and `init`'s copy steps). Lina is consulted on the fix (the component-token files live in her component directories).
 **Class**: P0 false-claim · defect *(set 2026-10-23, Ada, rule 12, on the reading the drift record and R1-7 were classed under: in a born repo the Application MCP's `get_token_details` answers "not found" for a token DesignerPunk's shipped Avatar-Base reads, and `get_token_consumers` answers `[]` for it. That is an MCP response a package reader meets, and it is wrong. One reading Stacy may press: "not in your index" is true of the consumer's index, so the response is incomplete rather than false; I class it P0 because the tool is named for the question it answers wrongly. Only Peter downgrades.)*
 **Trigger**: `merge:#470` — the fixing PR, which closes this record (rule 11) by recording the outcome and archiving it. *(was: `release:next:phase-1` — the release-5 walk reads it: fixed, waived in writing, or blocking.)* *(Re-ruled 2026-10-25, Ada, rules 1 and 9: the vehicle PR now exists, so the Trigger names its number, per ballot 2026-10-22-trigger-names-the-event-not-the-vehicle.)*
+**Status**: CLOSED 2026-10-25 by #470, merged as `25dacf3e2`. Outcome line below (rule 5); archived at `.kiro/issues/archive/` (rule 3). *(Ada, owner, rule 9.)*
 
 ---
 
@@ -28,6 +29,29 @@ This was already true in 16.0.0 and was not disclosed. R1-7's fix makes it visib
 
 - CHANGELOG `## [Unreleased]` → "Known limitations in this release" named this record until the fix (2026-10-25); the fix rewrites that bullet and adds a "Changed" bullet.
 - Ada's drift ruling of 2026-10-23, § 4 (quoted in the fixing PR's body) — the union read whose counter-argument this extends.
+
+## Owner line (2026-10-25, Ada, rule 9): my pick moved from (a) to (c)
+
+Found in the 16.1.0 walk (row 2). The class option above names (a). I now recommend **(c), fed from the package's own shipped `token-index/components.yaml`**, for 16.1.0. Two facts, read at `652074c6b`:
+
+- **No `.tokens.ts` ships.** The package's `files[]` includes only `src/components/**/{*.schema.yaml,contracts.yaml,component-meta.yaml}` from `src/components/core`. So (a) would need a `files[]` change (a grant, as `package.json` is outside my write scope), a `pack-assert.ts` floor change, and loading package TypeScript from `node_modules` under Spec 118's contract. That is a packaging change under Spec 123's containment, not only a CLI change.
+- **The package already emits these tokens to the consumer's page.** `./component-tokens.css` (→ `dist/ComponentTokens.web.css`) defines `--avatar-size-md` and the rest, and INSTALL tells consumers to keep importing it. The shipped `components.yaml` entries carry references and platform names, not resolved values. So an index entry taken from the package is true of what the page loads. (a) would emit each of those tokens a second time into the consumer's own `ComponentTokens.web.css`.
+
+**Lina agrees with (c) over (a)** (named in the 16.1.0 walk). **Surviving counter-argument**: (c) gives a born repo two sources of component-token truth, its own generated tokens and package entries fixed at the installed version. Each added entry must therefore carry the package version it came from, so a reader can tell. If Spec 129 decides consumers own component-token output, (a) is the end state and (c) is reworked.
+
+Effort for (c): about 0.5–1 day; (a): about 2–3 days plus the grant. The pick between (c), (a) and a written waiver is Peter's; this line does not rule it.
+
+*Signed: Ada, 2026-10-25.*
+
+## Owner line (2026-10-25, Ada, rule 9): RULED (c), under Peter's batch ruling
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are now committed in this record.* Read against the 16.1.0 walk (row 2), where my pick is (c), fed from the package's own shipped `token-index/components.yaml`, each added entry carrying the package version it came from.
+- **Ruled**: (c). The waiver and (a) are not taken. (a) remains the end state only if Spec 129 decides consumers own component-token output.
+- **Fixing branch**: `fix/release-16.1.0-born-repo-index-c`. About 0.5–1 day, in `src/cli/**` (my scope); Lina is consulted on the fix. No `package.json` or `pack-assert.ts` change, so no grant.
+- **Trigger**: stays `release:next:phase-1` until the fixing PR opens. At open I change it to `merge:#<N>` in the same diff (rule 1: a P0 that rides a vehicle takes the vehicle once it exists), with a dated reason. The record closes by rule 5's outcome line in that PR (rule 11). As a P0 it must merge before S; an unmerged P0 at S lapses and goes to Peter on the first lapse.
+- **Surviving counter-argument** (unchanged): (c) gives a born repo two sources of component-token truth until Spec 129 rules.
+
+*Signed: Ada, 2026-10-25.*
 
 ## Ruled and fixed here (2026-10-25)
 
@@ -65,3 +89,17 @@ What the fix does:
 - *The Consumer Guard (`tests/consumer-integration.test.ts`; `tests/**` is in no seat's scope).* The assertion is in the fixing PR's body.
 - *`token-index/README.md`.* It describes `components.yaml` without consumers, `definedBy` or `source`, and names a retired standalone script. It is outside my write scope as listed. The text is in the fixing PR's body.
 - *The end state, unchanged from the ruling's counter-argument.* If Spec 129 decides that consumers own component-token output, shape (a) supersedes this, and the merge retires.
+
+#470 merged 2026-10-25 (`25dacf3e2`); row 2 closes under rule 5 at Ada's outcome line (hers to write); walk row 2 → fixed before S.
+
+## Outcome line (rule 5; Ada, 2026-10-25)
+
+**Closed by #470, merged 2026-10-25 as `25dacf3e2`** (branch `fix/release-16.1.0-born-repo-index-c`); the Trigger `merge:#470` is met. **Claimed**: a born repo's `components.yaml` held 10 component tokens against the package's 33, so `get_token_details` answered "not found" and `get_token_consumers` answered `[]` for tokens DesignerPunk's shipped components read. **Closed**: shape (c), as ruled by Peter (chat, 2026-10-25, relayed verbatim in the record above): `generate` merges the installed package's shipped `components.yaml` entries for every package component the repo has not replaced, each tagged `source: { package, version }`; `sync` reports an index behind the installed package. Verified on a packed install (above). The fix closed it; no waiver was taken.
+
+**Stays open (each with its owner and record; none blocks this close):**
+- *Lina, `application-mcp-server/**`*: the `TokenIndexer` warning when a component entry's `source.version` differs from the installed version, plus `definedBy?` and `source?` on `TokenIndexEntry`. Rule 10 record, Trigger `merge:#470` per her cross-read; hers to file or confirm.
+- *The Consumer Guard (`tests/consumer-integration.test.ts`)*: the assertion in #470's body; `tests/**` is in no seat's scope, so Peter routes it.
+- *`token-index/README.md`*: the row text in #470's body; outside my write scope, owner to be named by Peter.
+- *Spec 129, end-state note*: if consumers own component-token output, shape (a) supersedes (c) and the merge retires. Carried in Spec 129's intake, not here.
+
+*Signed: Ada, 2026-10-25.*

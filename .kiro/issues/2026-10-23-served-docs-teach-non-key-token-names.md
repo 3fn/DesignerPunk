@@ -71,3 +71,54 @@ Found in my Spec 131 R1 read (`.kiro/specs/131-governance-simplification/feedbac
 - **Lina**: accepted; her Badge-Count-Notification gap is closed by Stacy's L38–40 read.
 
 *Signed: Ada, 2026-10-24.*
+
+## Co-owner addition (2026-10-25, Lina, rule 9): the same names are in component YAML that the Application MCP serves
+
+Found in the 16.1.0 walk (sub-row 3a). It is the same falsity as the lines above, at a reader they do not cover: an agent that calls `get_component_full` or `get_component_summary` receives the component's `contracts.yaml` prose and `.schema.yaml` text, so these names reach it in an MCP response. Re-read in `wt-walk` at `652074c6b`.
+
+- **Where**: `contracts.yaml` prose in Chip-Base, Button-Icon, Avatar-Base and Progress-Indicator-Connector-Base, using `borderDefault` and `color.contrast.onPrimary`. `Button-CTA.schema.yaml:214` `visual_variants` names `color.contrast.onPrimary`, and L213–224 also name `color.primary` and `color.background` as values, which are not token-index keys. `Icon-Base.schema.yaml:92` names `blend.iconLighter` (the key is `color.icon.opticalBalance`).
+- **Count, two readings**: `grep -rnE 'borderDefault|color\.contrast\.onPrimary|blend\.iconLighter|color\.error\.strong|accessibility\.tapArea\.recommended' src/components --include='*.yaml'` returns 14 lines in 7 files (Avatar-Base contracts 2, Button-CTA schema 1, Button-Icon contracts 3, Chip-Base contracts 2, Icon-Base schema 1, Progress-Indicator-Connector-Base schema 1 and contracts 4). My first walk estimate of about 35–45 occurrences in about 10 files was a wider grep that also counted other non-key names (`color.primary`, `color.background` and the like). I have not re-run that wider grep, so the fixing PR owns the final list. Shipped component READMEs carry 24 more lines on the five-name grep; they are not MCP-served, so they rank lower.
+- **Pick**: fix before S, in a `src/components/**` PR (my scope), about 2–3 hours plus an Application MCP `rebuild_index`. This is a CORRECTION against `token-index/` (the truth referent is the key list, with `src/generators/__tests__/schemaTokenRefs.test.ts`'s rule as the definition of a key). Each replacement is chosen by its use on the line, not mechanically, as with the governance-doc lines above.
+- **Residual**: the README lines stay false after this PR unless they ride it. I would take them in the same PR if the diff stays reviewable, and say so in its body.
+
+*Signed: Lina, 2026-10-25.*
+
+## Co-owner line (2026-10-25, Ada, rule 9): a served-doc token-name check, named so it has a home
+
+Found in the 16.1.0 walk (row 3). This is the class option for this record; it is not part of the 16.1.0 fix.
+
+- **What it checks**: every backticked token name in a served or always-loaded doc (`governance/**`, `.kiro/steering/**`, `canonical/agents/**` prose, component YAML) either is a token-index key or sits inside a fenced platform code block, which is exempt. It extends the key rule that `src/generators/__tests__/schemaTokenRefs.test.ts` already defines, from schemas to docs.
+- **Rough size**: medium, about 1.5–2 days. The extractor is small; the cost is the adjudication list for names that are not tokens (CSS properties, file names, patterns like `color.{component}.{variant}`) and the platform-identifier cases.
+- **Ownership**: Ada builds and owns the instrument (`src/validators/**`); Thurgood is consulted on wiring it into the lanes. It fits Spec 131 or a follow-on record.
+- **Trigger**: none yet. It is filed here as a line, not a record, so it has a home. If Peter wants it scheduled, I file it as its own record at that word.
+- **Surviving counter-argument**: my own grep for this PR covered radius, border, the avatar pattern and the names on record; other families' docs were not swept against the full key set, so the instrument may surface more than the fixing PR corrects.
+
+*Signed: Ada, 2026-10-25.*
+
+## Co-owner line (2026-10-25, Thurgood, rule 9): my part, under Peter's ruling
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)" (16.1.0 walk lines 3, 6 and 6(ii)). *Unverified here: chat only. Peter may confirm the relay on the PR, and his words are now committed in this record.*
+- **My part**: `.kiro/steering/core-goals.md` L68, plus L70 and L76, which Ada found. It goes in the one CORRECTION PR before S.
+- **One sequencing exception (Ada's, adopted)**: if the selection-order ballot (line 6, Core Goals as a pointer only per line 6(ii)) is ratified before that PR is cut, the Core Goals lines go in the ballot's application PR once, with one identity-doc re-sign, and leave this one.
+- **Riding the same CORRECTION PR (row 9 of the walk, Ada's pick)**: `canonical/agents/kenya.md:281` and `canonical/agents/data.md:283` take the consumer bullet's wording. Truth: `src/generators/TokenFileGenerator.ts`, where `generateThemeOverrideBlocks` has no caller. Kenya and Data re-confirm.
+
+*Signed: Thurgood, 2026-10-25.*
+
+## Owner line (2026-10-25, Ada, rule 9): RULED, my part goes in the one CORRECTION PR before S
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are now committed in this record.* Read against the 16.1.0 walk (row 3).
+- **Ruled**: one CORRECTION PR before S, on branch `fix/release-16.1.0-served-docs-token-names`. My part is the token docs and the lines I found in § "What is false, and where". Lina's component docs and charter line, and Thurgood's Core Goals lines (his co-owner line above, with the ballot-sequencing exception), ride the same PR.
+- **Trigger**: stays `release:next:phase-1` until that PR opens; at open I change it to `merge:#<N>` in the same diff with a dated reason, and the PR adds rule 5's outcome line. A P0, so it must merge before S.
+- **Not ruled**: the key-set instrument I describe above (a line, not a record). It stays unscheduled until Peter says so.
+
+*Signed: Ada, 2026-10-25.*
+
+## Owner line (2026-10-25, Lina, rule 9): RULED, my part and sub-row 3a go before S
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". *Unverified here: chat only (chat, relayed). Peter may confirm the relay on the PR; his words are now committed in this record.* Read against the 16.1.0 walk (row 3 and sub-row 3a). The adoption is of my recommendation, "fix before S".
+- **Ruled, my docs part**: the component docs (`governance/Component-Family-{Avatar,Button,Chip,Form-Inputs,Icon}.md`, `governance/Component-Inheritance-Structures.md`) and the charter sentence (`canonical/agents/lina.md` L501, then regenerate; a Peter-merged `canonical/agents/**` edit) ride the one CORRECTION PR on branch `fix/release-16.1.0-served-docs-token-names`. Each file carries its `**Edit kind**:` line. About 1 hour for my text.
+- **Ruled, sub-row 3a (component YAML)**: the 14 lines in 7 files in my co-owner addition above (Avatar-Base, Button-Icon, Chip-Base and Progress-Indicator-Connector-Base `contracts.yaml`; Button-CTA, Icon-Base and Progress-Indicator-Connector-Base `.schema.yaml`) are fixed against `token-index/`, each replacement chosen by its use on the line. They ride branch `fix/release-16.1.0-floor-lina`, with the Application MCP `rebuild_index` after. The final list is re-grepped at that branch; the shipped README lines (24 more) ride only if the diff stays reviewable, and the PR says which.
+- **Trigger**: not mine to change here. Ada's line above has her set `merge:#<N>` at her PR's open; I append a dated line when my branches open.
+- **Still open for me**: nothing owed beyond the two branches. 3a is floor-class, so "carried" never stands for it; it closes at those PRs' merge, before S.
+
+*Signed: Lina, 2026-10-25.*

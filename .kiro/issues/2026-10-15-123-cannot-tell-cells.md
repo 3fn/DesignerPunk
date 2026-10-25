@@ -34,3 +34,31 @@ At each monthly health check: has the first release trio after 16.0.0 run? If ye
   - **Disposition**: carried to release 5 with this record. The remedy is Ada's to name there. Nothing here blocks 16.0.0 (rulings item 15).
 
 **Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 72, call BACK-FILL (Leonardo))**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `release:next:phase-1` · `P2 obligation (record) · owed-act`.
+
+## Co-owner line (2026-10-25, Ada, rule 9): row 5's remedy at 16.1.0
+
+Found in the 16.1.0 walk (row 18). Row 5 has two remedies. They are separated here so the row has one open act.
+
+- **Open act, minutes, at 16.1.0 release prep**: run `npm audit --omit=dev` on the root tree (the tree `build:mcp`'s esbuild bundles from; package.json L149) and on the lockfiles of the two servers. Append the result below, at S, naming the tree each count came from. Bump any inlined library that has a fixed version before tagging. The lockfiles disagree on `js-yaml` (4.2.0 root, 3.14.2 in `mcp-server`, 4.1.1 in `application-mcp-server`), so the run states which tree the bundle actually resolves.
+- **Moved to its own record**: the bundle manifest (`dist/mcp/bundled-packages.json`, written from esbuild's metafile) is `.kiro/issues/2026-10-25-mcp-bundled-packages-manifest.md` (P3, `manual`). This row closes on the audit result appended, not on the manifest.
+
+*Signed: Ada, 2026-10-25.*
+
+## Owner line (2026-10-25, Ada, rule 9): ruling cite for row 5
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are now committed in this record.* Read against the 16.1.0 walk (row 18, row 5). The ruling is **the audit at release prep**, as the co-owner line above already states: `npm audit --omit=dev` on the root tree and the two servers' lockfiles, result appended at S, naming each tree; any inlined library with a fixed version bumped before tagging. The bundle manifest stays in its own P3 record. Trigger unchanged, `release:next:phase-1`.
+
+*Signed: Ada, 2026-10-25.*
+
+## Owner line (2026-10-25, Leonardo, rule 9): rows 1–4 discharge at the 16.1.0 Kiro runs
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are now committed in this record.* Under (A) the trio runs before S (`.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md`, owner line of the same date). **Rows 1–4 discharge at the 16.1.0 Kiro runs: trio-2 and trio-3 are `kiro`.** Each of rows 1–4 gets its line in those records:
+
+- **Row 1**: re-observed as a matter of course at the Kiro founder run; each interactive session has its own capture file (protocol section 11).
+- **Row 2**: record whether the personal note loaded, or say why it cannot be observed.
+- **Rows 3–4**: try `kiro-cli chat -v` in one session. If it shows tool results, record them. If not, record `cannot-tell` again with the same reason; the instrument limit stated, not hidden.
+
+This is not a first lapse: the cells are read at the runs ruled for before S. **Row 5 is not changed here** (Ada's, `2026-10-25` owner line above). The Trigger token `release:next:phase-1` is unchanged; it follows the trio record's re-token.
+
+*Signed: Leonardo, 2026-10-25.*
+
