@@ -82,7 +82,7 @@ units:
     items:
       - id: theming-1
         kind: obligation
-        label: "Generated Swift output includes: {Name}Theme protocol, concr"
+        label: "`npx designerpunk generate` writes your static tokens as Swift c"
         text: "`npx designerpunk generate` writes your static tokens as Swift constants on `DesignTokens` and writes no theme surface today: no theme protocol, no per-theme structs and no environment key, and the theme-varying colours are left out. DesignerPunk plans to address this (Spec 129, consumer-generation completeness), with no date set. The next two bullets are the intended pattern for when that surface exists, not something your repo has yet."
       - id: theming-2
         kind: obligation
