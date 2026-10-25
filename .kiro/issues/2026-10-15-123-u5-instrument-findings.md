@@ -184,3 +184,15 @@ The three rows' cells say "Trigger: the first release trio run after 16.0.0". Th
 **Counts note, for the record owner**: if this line is accepted, PQ-1, PQ-2 and P-5 move from carried to fixed (protocol commit `a486dbbb5`). The Counts line is Thurgood's to restate at the next walk; I do not edit it.
 
 *Signed: Leonardo, 2026-10-25.*
+
+### Owner line — 2026-10-25 (Lina, row owner of R3-3 and R3-4 (CLI); rule 9)
+
+Read against the 16.1.0 trio (`tests/onboarding-trio/records/16.1.0/trio-1-backend.md` R1-20 and R1-15) and the source at `c543bc29f`. The cells are not rewritten; this line is where the two rows' dispositions live. I write under my rows only; the record-level read is Thurgood's.
+
+- **R3-4 (CLI) — fixed #372, both halves of the INSTALL pointer.** `init`'s closing line "📖 The install guide: …" (`src/cli/shared/errorCatalog.ts` L637) came in with #372 itself (`git blame`: `1423c15a6`), so the cell's "`init`'s output still does not" was already wrong when it was written. **Observed**: trio-1's birth printed it. **Still present, and moved**: the global `--help` still says "See the DesignerPunk repo's designerpunk.config.ts for an example" (`src/cli/designerpunk.ts` L576), a repo a consumer does not have, though `init` writes the file into theirs. That half is item C3 of `.kiro/issues/2026-10-25-cli-per-command-help-and-one-parser.md`. (The same reading applies to the parenthesis in R3-4 (doc)'s cell, which is Thurgood's row; I do not edit it.)
+- **R3-3 — fixed #372 for the case that was observed.** `init` refuses off a terminal before the DD9 notice (`src/cli/init.ts` L181–188), so the notice no longer offers `attach --target=kiro` ahead of an `init` that fails for want of a name there. **Observed**: trio-1's `init --help` (no `--target`, no name) printed the refusal and no notice. **Residual, not observed**: in a terminal, a founder who answers the name prompt with nothing gets the notice (L194) and then "Name and abbreviation are required." (L206). It is the same shape, narrower and user-caused, and it is item C4 of the same record (one `ask()`, release-4 rulings item 24).
+- **A home for my other § 2 rows**: the cells of R2-4, R1-1 / R1-2 (code), J-3 / K-5 (code), R1-5 (code) and FR-2 read "Trigger: Lina's CLI follow-up", a vehicle no record held. The record above is now that vehicle's home (its § "Carried rows this record is the home of"). Their cells, and the release-6 walk's reading of them, are unchanged.
+
+**Counts note, for the record owner**: if this line is accepted, R3-3 moves from carried to fixed (#372). R3-4 (CLI)'s cell already reads fixed. The Counts line is Thurgood's to restate.
+
+*Signed: Lina, 2026-10-25.*
