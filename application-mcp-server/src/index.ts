@@ -17,6 +17,7 @@ import { ComponentQueryEngine } from './query/QueryEngine';
 import { AssemblyValidator } from './validation/AssemblyValidator';
 import { FileWatcher } from './watcher/FileWatcher';
 import { DesignPhilosophyIndexer } from './indexer/DesignPhilosophyIndexer';
+import { CONSUMERS_SCOPE } from './indexer/TokenIndexer';
 import { StalenessGate, isImmutableContext } from './staleness/StalenessGate';
 
 const SERVER_NAME = 'mcp-component-server';
@@ -235,7 +236,7 @@ export const tools = [
   {
     name: 'get_token_consumers',
     annotations: { readOnlyHint: true },
-    description: 'Get all components that reference a token.',
+    description: `Get all components that reference a token. ${CONSUMERS_SCOPE}`,
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -579,7 +580,7 @@ class ComponentMCPServer {
       case 'get_token_family':
         return this.indexer.getTokenIndexer().getFamily(params.family as string);
       case 'get_token_consumers':
-        return this.indexer.getTokenIndexer().getConsumers(params.name as string);
+        return this.indexer.getTokenIndexer().getConsumersResult(params.name as string);
       case 'get_design_philosophy':
         return this.philosophyIndexer.getPhilosophy() || { status: 'not_authored', message: 'Design philosophy has not been authored yet.' };
       case 'get_design_rules':

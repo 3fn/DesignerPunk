@@ -70,7 +70,7 @@
           "name": "get_prop_guidance"
         },
         {
-          "description": "Get all components that reference a token.",
+          "description": "Get all components that reference a token. Consumers are the components whose schema declares the token, derived from token-index/; this is not a scan of platform code. Reads in web, iOS or Android code that the schema does not declare are not counted.",
           "inputSchemaHash": "sha256:df997933343ffa2684745ae5393b7e51319fbc5cc35ad8a3e496da16e30d0f9b",
           "name": "get_token_consumers"
         },

@@ -93,6 +93,7 @@ tokens:
     - color.print.default
   typography:
     - typography.caption
+    - fontSize050
   spacing:
     - space.grouped.normal
 

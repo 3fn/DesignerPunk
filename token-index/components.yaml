@@ -213,7 +213,8 @@ tokens:
       web: '--badgelabelbase-max-width'
       ios: BadgeLabelBaseTokens.maxWidth
       android: BadgeLabelBaseTokens.maxWidth
-    consumers: []
+    consumers:
+      - Badge-Label-Base
   buttonicon.inset.large:
     component: ButtonIcon
     definedBy: Button-Icon

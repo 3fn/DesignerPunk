@@ -292,6 +292,7 @@ tokens:
     - color.structure.surface.tertiary
     - color.structure.border
     - color.structure.border.subtle
+    - color.structure.surface
   shadow:
     - shadow.container
   radius:
@@ -302,6 +303,15 @@ tokens:
   blend:
     - blend.hoverDarker
     - blend.pressedDarker
+  accessibility:
+    - accessibility.focus.color
+    - accessibility.focus.offset
+    - accessibility.focus.width
+  border:
+    - border.default
+    - border.emphasis
+  elevation:
+    - elevation.container
 
 
 # Supported platforms

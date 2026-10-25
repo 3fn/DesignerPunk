@@ -134,12 +134,14 @@ tokens:
   spacing:
     - space.inset.100
     - space.grouped.tight
+    - space.grouped.minimal
   motion:
     - duration150
     - duration350
     - easingStandard
     - easingAccelerate
     - easingDecelerate
+    - motion.selectionTransition
 
 composition:
   internal:

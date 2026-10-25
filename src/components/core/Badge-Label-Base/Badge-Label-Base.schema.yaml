@@ -115,6 +115,38 @@ semantic_variants:
     extends: Category-specific label badges with custom styling
     status: planned
 
+# Design tokens this component reads (own tokens only: platforms/** code)
+tokens:
+  component:
+    - badgelabelbase.maxWidth
+  color:
+    - color.icon.default
+    - color.structure.surface
+    - color.text.default
+  typography:
+    - fontSize050
+    - fontSize075
+    - fontSize100
+    - lineHeight050
+    - lineHeight075
+    - lineHeight100
+    - typography.labelMd
+    - typography.labelSm
+    - typography.labelXs
+  icon:
+    - icon.size050
+    - icon.size075
+    - icon.size100
+  border:
+    - radius.subtle
+    - radius025
+  spacing:
+    - space000
+    - space025
+    - space050
+    - space100
+    - space150
+
 # Accessibility compliance
 accessibility:
   wcag_level: AA
