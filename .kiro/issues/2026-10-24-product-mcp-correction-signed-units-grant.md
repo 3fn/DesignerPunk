@@ -7,7 +7,7 @@
 **Class**: P0 false-claim · grant *(set 2026-10-24, Thurgood, rule 12. The shipped consumer rendering of the Systems Overview (`canonical/_consumer-output/**/designerpunk-systems-overview.md`) tells consumers that the Product MCP is "conceptual", while the package ships it (`dist/mcp/product-mcp.js`, 14 tools). Stacy may confirm or dispute the P0 reading; only Peter downgrades it.)*
 **Source**:
 - The finding: Spec 131 ballot audit fix-now item 8 (`[THURGOOD R3]` "Corrected, with evidence" item 2, `.kiro/specs/131-governance-simplification/feedback/design-outline.md`). The steering correction itself is CORRECTION, committed at `d4bd2ea49` on the fixing branch. That commit stales two signed units, so the fixing PR cannot go green without the acts below.
-- **Peter's direction**, relayed by the orchestrator, 2026-10-24, in chat, verbatim: **"Let's go (a)"**. As put to him, (a) was: grant the `canonical/**` re-authoring for the two signed units that `.kiro/steering/Civitas-System-Overview.md` ~L39 and `.kiro/steering/DesignerPunk-Systems-Overview.md` ~L180 render from, those two units only, so that the correction ships with 16.1.0 and the release falsity floor is not tripped. Thurgood re-authors; Stacy re-confirms and re-signs. *This record holds the relay only. The authority is Peter's merge of the PR that adds this list and names it in its body (rule 8; ballot `2026-09-27-ci-regime-standing-scope` § 3 clause 4).*
+- **Peter's direction**, relayed by the orchestrator, 2026-10-24, in chat, verbatim: **"Let's go (a)"**. As put to him, (a) was: grant the `canonical/**` re-authoring for the two signed units that `.kiro/steering/Civitas-System-Overview.md` ~L39 and `.kiro/steering/DesignerPunk-Systems-Overview.md` ~L180 render from, those two units only, so that the correction ships with 16.1.0 and the release falsity floor is not tripped. Thurgood re-authors; Stacy re-confirms and re-signs. *This record holds the relay only. The authority is Peter's merge of the PR of branch `chore/product-mcp-grant-record`, which adds this list and names it in its body (rule 8; ballot `2026-09-27-ci-regime-standing-scope` § 3 clause 4).*
 **Consulted**: none needed — filing only. Stacy's C1 acts follow, in her seat.
 
 ---
@@ -15,7 +15,7 @@
 **Grant paths**: `canonical/operative-sets/civitas-system-overview.yaml`, `canonical/profiles/consumer/always-set/civitas-system-overview.overlay.md`, `canonical/_consumer-output/_canonical/always-set/designerpunk-systems-overview.md`, `canonical/_consumer-output/cc/.claude/identity/designerpunk-designerpunk-systems-overview.md`, `canonical/_consumer-output/kiro/.kiro/steering/designerpunk-designerpunk-systems-overview.md`, `canonical/generated.lock`
 
 - **Grantee**: Thurgood, this record's named owner.
-- **Activation**: Peter's merge of the PR whose diff adds this list and whose body names this grant: this record's path and the six paths (rule 8).
+- **Activation**: Peter's merge of the PR of branch `chore/product-mcp-grant-record`, a one-file PR whose diff adds this list and whose body names this grant: this record's path and the six paths (rule 8). That PR merges before the fixing PR, and no other PR activates this grant.
 - **Expiry**: the fixing PR's merge (`fix/ballot-audit-product-mcp-correction`).
 - **What each path is for**. The enumeration comes from a dry run, made 2026-10-24 in the working tree and discarded before this record was committed: the two author edits below, then `npx tsx tools/agent-generator/generate.ts`. It wrote these five files and nothing else in `canonical/`; the lock moves at the guard's full run.
   - `canonical/operative-sets/civitas-system-overview.yaml`: the **item text** of `what-civitas-con-8` (`label` and `text`), re-authored to the corrected L39, verbatim. **Not** the unit's `canonicalHash`, which is the confirmer's object and moves only by Stacy's re-confirm (#396 precedent).
@@ -29,7 +29,7 @@
 
 ## The sequence
 
-1. Peter merges the PR that carries this record and names the grant in its body. That merge activates the grant.
+1. Peter merges the PR of branch `chore/product-mcp-grant-record`, which carries only this record and names the grant in its body. That merge activates the grant.
 2. After the activating merge, and not before, Thurgood makes one authoring commit on the fixing branch: the item text and the overlay pin, then `generate.ts` for the renderings. Merging `main` into the fixing branch first is optional; if it is done, it is a merge, never a rebase.
 3. Stacy, in her seat, makes three C1 acts, one commit each, by the signing-seat brief: re-confirm `civitas-system-overview #what-civitas-contains`, re-confirm `designerpunk-systems-overview #civitas-system-governance-infrastructure`, and re-sign `civitas-system-overview.dispositions.yaml#what-civitas-contains`.
 4. `canonical/generated.lock` is refreshed by a green full guard run. `verify-signing-chain --ci` passes.
