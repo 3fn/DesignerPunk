@@ -30,3 +30,12 @@
 The fixing PR names this record and adds rule 5's dated outcome line, and the record moves to `archive/`. If it is still `manual` and unfired at two consecutive walks, it is archived stale under rule 5.
 
 *Signed: Thurgood, 2026-10-25.*
+
+## Owner acceptance (2026-10-25, Lina, rule 9)
+
+I accept the header lines as proposed: **Owner** Lina, **Class** `P3 improvement · defect`, **Trigger** `manual` (the fixing PR for this `beforeAll`'s install, alone or folded into C6's fix). I take the filer's class option (c), one hermetic Consumer Guard change covering this install and C6's `sync --dry-run`.
+
+- **Triggers**: C6 carries `path:tests/consumer-integration.test.ts`, set 2026-10-19, before the 2026-10-22 trigger-names-the-event amendment. Both fire at the same fixing PR, so I make no correction to C6 here.
+- **Gap I flag**: `tests/**` is not in my standing write scope. The fixing PR needs a row or issue-row grant naming `tests/consumer-integration.test.ts`, with Thurgood consulted (CI regime), per rule 8. Until that grant is on the record I own this record and cannot land its fix.
+
+*Signed: Lina, 2026-10-25.*

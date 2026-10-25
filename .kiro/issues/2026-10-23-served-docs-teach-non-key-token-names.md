@@ -71,3 +71,14 @@ Found in my Spec 131 R1 read (`.kiro/specs/131-governance-simplification/feedbac
 - **Lina**: accepted; her Badge-Count-Notification gap is closed by Stacy's L38–40 read.
 
 *Signed: Ada, 2026-10-24.*
+
+## Co-owner addition (2026-10-25, Lina, rule 9): the same names are in component YAML that the Application MCP serves
+
+Found in the 16.1.0 walk (sub-row 3a). It is the same falsity as the lines above, at a reader they do not cover: an agent that calls `get_component_full` or `get_component_summary` receives the component's `contracts.yaml` prose and `.schema.yaml` text, so these names reach it in an MCP response. Re-read in `wt-walk` at `652074c6b`.
+
+- **Where**: `contracts.yaml` prose in Chip-Base, Button-Icon, Avatar-Base and Progress-Indicator-Connector-Base, using `borderDefault` and `color.contrast.onPrimary`. `Button-CTA.schema.yaml:214` `visual_variants` names `color.contrast.onPrimary`, and L213–224 also name `color.primary` and `color.background` as values, which are not token-index keys. `Icon-Base.schema.yaml:92` names `blend.iconLighter` (the key is `color.icon.opticalBalance`).
+- **Count, two readings**: `grep -rnE 'borderDefault|color\.contrast\.onPrimary|blend\.iconLighter|color\.error\.strong|accessibility\.tapArea\.recommended' src/components --include='*.yaml'` returns 14 lines in 7 files (Avatar-Base contracts 2, Button-CTA schema 1, Button-Icon contracts 3, Chip-Base contracts 2, Icon-Base schema 1, Progress-Indicator-Connector-Base schema 1 and contracts 4). My first walk estimate of about 35–45 occurrences in about 10 files was a wider grep that also counted other non-key names (`color.primary`, `color.background` and the like). I have not re-run that wider grep, so the fixing PR owns the final list. Shipped component READMEs carry 24 more lines on the five-name grep; they are not MCP-served, so they rank lower.
+- **Pick**: fix before S, in a `src/components/**` PR (my scope), about 2–3 hours plus an Application MCP `rebuild_index`. This is a CORRECTION against `token-index/` (the truth referent is the key list, with `src/generators/__tests__/schemaTokenRefs.test.ts`'s rule as the definition of a key). Each replacement is chosen by its use on the line, not mechanically, as with the governance-doc lines above.
+- **Residual**: the README lines stay false after this PR unless they ride it. I would take them in the same PR if the diff stays reviewable, and say so in its body.
+
+*Signed: Lina, 2026-10-25.*
