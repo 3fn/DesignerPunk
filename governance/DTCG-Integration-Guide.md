@@ -595,6 +595,6 @@ generator.writeToFile('dist/DesignTokens.resolved.dtcg.json');
 
 - [DTCG Format Module 2025.10 Specification](https://tr.designtokens.org/format/)
 - [Figma Workflow Guide](figma-workflow-guide) — Complete Figma integration: token push, design extraction, MCP setup, Desktop Bridge, troubleshooting
-- [Token System Overview](./token-system-overview.md) — Complete Rosetta token system documentation
+- [Token System Overview](../docs/token-system-overview.md) — Complete Rosetta token system documentation
 - [Transformer Development Guide](transformer-development-guide) — Building custom transformers for tool-specific output
 - [MCP Integration Guide](mcp-integration-guide) — Loading and querying DTCG tokens programmatically
