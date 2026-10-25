@@ -1,7 +1,7 @@
 # Grant: re-author the three signed units the identity-doc count correction stales
 
 **Date**: 2026-10-25
-**Status**: ACTIVE. It carries a grant that does nothing until Peter's merge activates it (rule 8; § "Activation").
+**Status**: **CLOSED at #467's merge** *(set 2026-10-25, Thurgood, owner, rule 5; was: ACTIVE, the grant inert until activation)*. Activated by #466 (`311d3a42f`); every act is on the fixing branch (outcome below), and the grant expires at the fixing PR's merge.
 **Owner**: Thurgood (owner of the operative set `canonical/operative-sets/civitas-system-overview.yaml`, `owner: thurgood`, and author of the consumer profile it re-grounds)
 **Trigger**: `merge:#467` — the fixing PR's merge (branch `fix/identity-doc-stale-counts`) owes the close, and the grant expires there. The correction is owed before 16.1.0 ships. *(Re-ruled 2026-10-25, Thurgood, owner, rules 1 and 9: was `release:next:phase-1`, pending the PR number. The grant was activated by #466, merge `311d3a42f`, 2026-10-25T03:44:50Z.)*
 **Class**: P0 false-claim · grant *(set 2026-10-25, Thurgood, rule 12. By M7's P0 definition — "a statement false in a surface where a reader of the package meets it", which includes an agent profile — this is P0. The consumer's always-loaded Systems Overview member (`canonical/_consumer-output/**/designerpunk-systems-overview.md`, unit `#high-level-designerpunk-three-system-architecture` and `#civitas-system-governance-infrastructure`, both `retained`) ships "Steering Docs (92: 83 MCP-served + 9 identity)" and "Docs MCP 83 docs, 2,833 sections"; the measured values are 93 (84 + 9) and 84 / 2,535. The Civitas Overview's counts are subtracted from the consumer copy (its overlay), so on their own they would be in-repo only, P2 `(record)`. Stacy may confirm or dispute the P0 reading; only Peter downgrades it.)*
@@ -34,3 +34,21 @@
 3. Stacy, in her seat, makes four C1 acts, one commit each, by the signing-seat brief: re-confirm `civitas-system-overview #what-civitas-contains`, re-confirm `designerpunk-systems-overview #high-level-designerpunk-three-system-architecture`, re-confirm `designerpunk-systems-overview #civitas-system-governance-infrastructure`, and re-sign `civitas-system-overview.dispositions.yaml#what-civitas-contains`.
 4. `canonical/generated.lock` is refreshed by a green full guard run. `verify-signing-chain --ci` passes.
 5. Peter merges the fixing PR. The grant expires, and this record closes by rule 5's dated outcome line in that PR (and moves to `archive/` there).
+
+---
+
+**2026-10-25 — CLOSED at #467's merge (Thurgood, owner, rule 5).** Every act is done on `fix/identity-doc-stale-counts` (PR #467). The record closes, and the grant expires, at that PR's merge. It is archived in the same PR, as rule 5 asks ("ideally in the PR that closes it"; "a grant archives at its fixing PR's merge").
+- **Steering CORRECTION**: `cf53ef403`, under the carve-out. Every count was measured by command and re-measured at `94e8bbec5` after `main` (with #450) was merged in; none moved.
+- **Activation**: Peter merged #466 (`311d3a42f`) at 2026-10-25T03:44:50Z. `main` was merged into the fixing branch at `94e8bbec5`, and no authoring preceded the activation.
+- **Authoring (Thurgood, under the grant)**: `d25990912`. It re-authored the `what-civitas-con-6` text verbatim from the corrected Docs MCP line (label unchanged); moved the overlay's `@unit #what-civitas-contains` pin to `sha256:77dc3cb6…8a26` (overlay text unchanged); and regenerated the three `designerpunk-systems-overview` renderings with `generate.ts`. No `canonicalHash` moved.
+- **C1 acts (Stacy, no grant needed)**:
+  - `3f2d178b9`: re-confirm, civitas-system-overview `#what-civitas-contains`.
+  - `027b8904a`: re-confirm, designerpunk-systems-overview `#high-level-designerpunk-three-system-architecture`.
+  - `58fc1abbc`: re-confirm, designerpunk-systems-overview `#civitas-system-governance-infrastructure`.
+  - `ced8d7220`: re-sign, `civitas-system-overview.dispositions.yaml#what-civitas-contains`, assent 7/10.
+  - No holds. She re-ran every count, and all match the fixing PR's table.
+- **Class, confirmed by Stacy**: P0 for the Systems Overview, whose consumer member ships the counts. The Civitas counts alone are P2/P3, because the consumer overlay strips them (`subtraction-3`). **Her precision**: the doc count was **true at 16.0.0**. It went false on 2026-10-23, when `58b8714aa` added the 84th `governance/` doc. So the false statement was in what the next release would ship, not in 16.0.0. She did not check 16.0.0's section count.
+- **Lock (the sixth grant path)**: refreshed from the guard's green full run, in the commit that archives this record. `inputClosure` `93fa1e73…` → `07f20a32…`. **`outputs` `8bc3301c…cb09c` → `5f91053b…b5af`**: the consumer Systems Overview renderings now carry the measured counts.
+- **Scope** (clause 6, against the list as it stood at `311d3a42f`): the fixing PR's diff is the six grant paths, Stacy's C1 files, the two steering files under the carve-out, and this record (moved to `archive/`). Each was named ahead of time in § "Grant paths".
+- **Checks**: `check:122:diff-guard` no-op-green, 0 stale; `verify-signing-chain --ci` PASS at base `311d3a42f` (Stacy's run, after her acts).
+
