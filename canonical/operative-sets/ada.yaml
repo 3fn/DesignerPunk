@@ -282,7 +282,7 @@ units:
         text: "**Apply**: If approved, apply precisely as approved. If rejected, respect the decision and document the alternative."
     confirmation: canonical/profiles/consumer/confirmations/ada.md#the-process
   "#what-this-means-in-practice":
-    canonicalHash: sha256:14c402faa7c9fd123a507e98320af8663679c5aefcabb2275acb66c73674eae9
+    canonicalHash: sha256:e63621d44fa06bfb14e9afa51e44e6895611dc959f7607e577a133aa7d653a50
     items:
       - id: practice-no-write
         kind: obligation
