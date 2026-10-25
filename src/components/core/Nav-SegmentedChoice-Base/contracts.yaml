@@ -353,16 +353,31 @@ contracts:
     category: accessibility
     description: Optional panel association via id prop
     behavior: |
-      When id prop is provided, each segment generates
-      aria-controls="[id]-panel-[value]". When id is omitted,
-      aria-controls is not rendered. id is independent of testID.
+      When id prop is provided, each segment's aria-controls refers to
+      the element whose id is [id]-panel-[value] in the adopter's tree.
+      When id is omitted, aria-controls is not set. id is independent
+      of testID.
+      Web: the segments are in the component's shadow root, where an
+      aria-controls ID cannot reach the adopter's elements, so each
+      segment's reference is set as an element reference
+      (ariaControlsElements), looked up in the host's root node and kept
+      current as the adopter adds, removes or replaces panels. The
+      aria-controls="[id]-panel-[value]" attribute is set where no such
+      element exists, and where the browser has no ariaControlsElements.
     wcag: "4.1.2 Name, Role, Value"
     platforms: [web, ios, android]
     validation:
-      - With id prop, aria-controls follows [id]-panel-[value] pattern
-      - Without id prop, no aria-controls attribute
+      - With id prop, each segment's aria-controls reference resolves to the element with id [id]-panel-[value] in the adopter's tree, when that element exists (web - through ariaControlsElements)
+      - With id prop and no such element, the segment's reference resolves to no element, never to another one
+      - Without id prop, no aria-controls attribute and no element reference
     test_approach: |
-      Render with and without id prop, verify aria-controls presence/absence.
+      Render with and without id prop, with panels in the document and in
+      an enclosing shadow root, added before and after the component,
+      replaced and removed; verify the element each segment's reference
+      resolves to (web, jsdom - a test double of the HTML reflection
+      rules for ariaControlsElements), and the [id]-panel-[value]
+      attribute where ariaControlsElements is absent. Browser (manual):
+      the accessibility tree shows each tab's "controls" relation.
     required: true
 
   accessibility_alt_text:
