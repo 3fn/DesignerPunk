@@ -37,13 +37,16 @@ export class AccessibilityChecker {
           severity: 'error',
         });
       }
+      // The message names the web wiring: Button-CTA's web element is not form-associated and
+      // renders type="button", so a bare Button-CTA does not submit its form (F-E8 fix (a);
+      // .kiro/issues/2026-10-20-web-element-api-and-form-participation.md § E8).
       // TODO: Hardcodes Button-CTA. When role-based component flexibility is resolved,
       // check for any component with a submit-action role instead. (Thurgood, Task 3.2 review)
       if (!this.hasDescendant(node, 'Button-CTA')) {
         issues.push({
           rule: 'form-needs-submit-action',
           wcag: '1.3.1',
-          message: `${node.component} with semantic="${semantic}" should contain a Button-CTA for form submission`,
+          message: `${node.component} with semantic="${semantic}" has no submit action (no Button-CTA descendant). On web, Button-CTA does not submit a form by itself: it renders type="button" and is not form-associated, so call form.requestSubmit() from its press event and handle Enter in the page (browser-distribution-guide § ButtonCTA). On iOS and Android, call your submit handler from onPress.`,
           severity: 'warning',
         });
       }

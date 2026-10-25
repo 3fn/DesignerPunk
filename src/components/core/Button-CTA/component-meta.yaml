@@ -2,7 +2,7 @@ purpose: "Provide a prominent call-to-action button for primary user actions."
 
 usage:
   when_to_use:
-    - "Text-labeled actions that move a task forward, such as submit, save, continue, or get started"
+    - "Text-labeled actions that move a task forward, such as submit, save, continue, or get started (on web, a form submit needs page wiring: see when_not_to_use)"
     - "Paired confirm/cancel actions where the hierarchy is set with primary, secondary, and tertiary variants"
     - "The single most important action on a screen or form footer, where the label must say what happens"
   when_not_to_use:
@@ -10,6 +10,7 @@ usage:
     - "Creating inline text links (use Link component when available)"
     - "Building toggle controls (use Toggle component when available)"
     - "In-flight async actions — no loading state yet (16.x)"
+    - "As a drop-in for a native <button type=\"submit\"> on web: the element renders type=\"button\" in its shadow root and is not form-associated, so it does not submit its form, and once no native submit button is left in the form, Enter in a text field does not submit a form that has more than one text field. Call form.requestSubmit() from its press event and handle Enter in the page (browser-distribution-guide § ButtonCTA). iOS and Android have no HTML form: call your submit handler from onPress"
 
 contexts:
   - "forms"

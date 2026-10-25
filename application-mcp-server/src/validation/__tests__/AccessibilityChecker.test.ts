@@ -46,6 +46,20 @@ describe('AccessibilityChecker', () => {
       expect(issue!.severity).toBe('warning');
     });
 
+    it('names the web wiring and does not recommend a bare Button-CTA as the submit', () => {
+      const issues = checker.check({
+        component: 'Container-Base',
+        props: { semantic: 'form', accessibilityLabel: 'Login' },
+        children: [{ component: 'Input-Text-Email' }],
+      });
+      const issue = issues.find(i => i.rule === 'form-needs-submit-action');
+      expect(issue!.message).toContain('does not submit a form by itself');
+      expect(issue!.message).toContain('form.requestSubmit()');
+      expect(issue!.message).toContain('press event');
+      expect(issue!.message).toContain('browser-distribution-guide § ButtonCTA');
+      expect(issue!.message).not.toContain('for form submission');
+    });
+
     it('passes when form contains Button-CTA', () => {
       const issues = checker.check({
         component: 'Container-Base',
