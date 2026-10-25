@@ -431,9 +431,9 @@ await customElements.whenDefined('button-cta');
 const btn = document.createElement('button-cta');
 btn.label = 'Dynamic Button';
 btn.size = 'large';
-btn.buttonVariant = 'primary';
+btn.variant = 'primary';  // same as the variant attribute (buttonVariant is an alias)
 btn.icon = 'arrow-right';
-btn.addEventListener('press', () =&gt; console.log('Pressed!'));
+btn.onPress = () =&gt; console.log('Pressed!'); // or addEventListener('press', ...)
 document.body.appendChild(btn);
 
 // Dynamic state changes

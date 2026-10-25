@@ -63,6 +63,61 @@ This is not a first lapse: the cells are read at the runs ruled for before S. **
 *Signed: Leonardo, 2026-10-25.*
 
 
+## Outcome (2026-10-25, Ada, rule 9): row 5's audit, run at 16.1.0 release prep against `main` @ `d740624b8`
+
+Source: Leonardo's trio run plan, open item 5 (a result appended at S is not an ancestor of S, so this lands before the release PR merges). The audit is read-only; nothing was bumped.
+
+**Commands.** `npm audit --omit=dev --json` in the root, in `mcp-server/` and in `application-mcp-server/`, each against that tree's committed `package-lock.json`. To state which tree each bundle resolves from, `build:mcp`'s three esbuild entries (`application-mcp-server/src/index.ts`, `mcp-server/src/index.ts`, `product-mcp-server/src/index.ts`, same flags) were rebuilt to a scratch directory with `--metafile`, and the `node_modules` packages in each metafile's inputs were listed. The installed versions of every flagged package equal the lockfile's, tree by tree.
+
+**Counts, by the tree each came from (`--omit=dev`).**
+
+| Tree | Total | low | moderate | high | critical |
+|---|---|---|---|---|---|
+| root (`package-lock.json`) | 12 | 1 | 3 | 7 | 1 |
+| `mcp-server/package-lock.json` | 9 | 0 | 3 | 5 | 1 |
+| `application-mcp-server/package-lock.json` | 10 | 0 | 3 | 6 | 1 |
+
+**Which tree each bundle resolves from.** `dist/mcp/application-mcp.js` resolves from `application-mcp-server/node_modules`; `dist/mcp/docs-mcp.js` from `mcp-server/node_modules`; `dist/mcp/product-mcp.js` from the root `node_modules` (`product-mcp-server/` has no lockfile of its own). **`js-yaml` is in two bundles, not three**: the application bundle inlines 4.1.1 and the product bundle 4.2.0; the docs bundle inlines none (its `js-yaml` 3.14.2 is not bundled). This corrects the 2026-10-15 attribution above, which listed `js-yaml` 4.2.0 among all three.
+
+**What is inlined and flagged (the bundled set is `@modelcontextprotocol/sdk`, `ajv`, `ajv-formats`, `fast-deep-equal`, `fast-uri`, `json-schema-traverse`, `zod`, `zod-to-json-schema`, and `js-yaml` in two bundles; `ajv` 8.20.0 and 8.18.0 are not flagged).**
+
+| Inlined package | In bundle (version) | Fixed version exists | Flagged advisories |
+|---|---|---|---|
+| `@modelcontextprotocol/sdk` | all three (1.29.0) | yes, 1.32.2 is `latest` (advisories end at `<1.32.0`) | 5 (3 high, 2 moderate): OAuth client credentials, experimental tasks not tied to session, cross-origin redirects, one HTTP request exhausts memory, bearer token for another service |
+| `fast-uri` | all three (3.1.3) | yes, 3.1.9 (`three` tag) | 12 (8 high), host confusion and SSRF in URI parsing |
+| `js-yaml` | application (4.1.1), product (4.2.0) | yes, 4.3.2 (`v4-legacy` tag) | 3 high (4.2.0) or 4 high (4.1.1): quadratic CPU on merge keys and `!!omap` |
+| `zod` | docs and application (3.25.76), product (4.3.6) | 4.6.7 on 4.x; the advisory range is `<4.6.6`, so 3.25.76 is flagged and has no 3.x fix | 1 high, memory use on oversized constrained collections |
+
+Of the 11 SDK modules in each bundle, `server/stdio`, `server/index`, `shared/protocol`, `shared/stdio` and `types` are the stdio server; **no `client`, `auth`, `streamableHttp` or `sse` module is inlined**, and neither is any of `express`, `hono`, `@hono/node-server`, `body-parser`, `qs`, `proxy-addr` or `ip-address` (zero metafile inputs). So 7 of the root tree's 12 findings (`@hono/node-server`, `body-parser`, `brace-expansion`, `hono`, `ip-address`, `proxy-addr`, `qs`) are in packages no bundle contains, and `diff` (low) is DesignerPunk's own CLI dependency. **One flagged SDK module is inlined**: `experimental/tasks/server` (and `helpers`, `interfaces`). Over stdio there is one session, so the "not tied to the session" advisory has no second session to cross; I did not test it.
+
+**Verdict.** The audit the row owed is done and its result is here, so the row's own close condition (the audit appended, naming the tree) is met. **The bump is not done, and the 2026-10-25 ruling asks for it**: "bump any inlined library that has a fixed version before tagging". All four inlined families above have a fixed version. I did not bump, for three reasons: the root `package.json` and `package-lock.json` and `application-mcp-server/package-lock.json` are outside my write scope; a bump changes what ships in the bundles and so needs `npm run build:mcp` and the consumer-install checks re-run; and `zod` 3.25.76 to 4.x is a major bump that the SDK's own `zod` range may not accept (unchecked here). **Open act, before the tag**: Peter says whether the four bumps are in 16.1.0 and who writes the lockfile PR (the root `package.json` and lockfile, and the application server's lockfile, are not in my write scope), or that they are carried to the next release with this paragraph in the CHANGELOG's Known limitations. Until then this record's Trigger stands for the bump; the row is not closed on the audit alone if Peter's answer is "bump".
+
+*Signed: Ada, 2026-10-25.*
+
+## Outcome line (2026-10-25, Thurgood, rule 5): row 5's bump done for 16.1.0
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Bump the three now, carry zod". *Unverified here: chat only; his words are committed in this record.* This answers the open act in Ada's verdict above (the bump, and who writes the lockfile PR): the three bumps are in 16.1.0 and Thurgood wrote the lockfile PR (root `package.json` and lockfile and the servers' lockfiles are the CI-regime/packaging surface; Ada consulted, her audit is the source).
+
+- **Done** (commit `889cde7aa`, in-range `npm update`; no `package.json` range changed, sdk `^1.29.0` already admits 1.32.2): `@modelcontextprotocol/sdk` 1.29.0 to 1.32.2; `fast-uri` 3.1.3 to 3.1.9; `js-yaml` 4.1.1 (application tree) and 4.2.0 (root) to 4.3.2. The SDK's `zod` range (`^3.25 || ^4.0`) still admits the installed zod.
+- **`npm audit --omit=dev`, total before to after**: root 12 to 9 (1 low, 3 moderate, 4 high, 1 critical); `mcp-server` 9 to 7; `application-mcp-server` 10 to 7. What remains is `zod` plus the seven packages no bundle contains (Ada's list above) and `diff` (root, low).
+- **Bundled versions after** (esbuild metafile of the three `build:mcp` entries): sdk 1.32.2, `fast-uri` 3.1.9 in all three; `js-yaml` 4.3.2 in application and product, none in docs. The three rebuilt `dist/mcp/*.js` are byte-identical to the metafile builds.
+- **A correction to the bundle composition above, found here**: the table was read from a working checkout, where the application and docs bundles resolve from their servers' own `node_modules`. The publish path resolves every module from the root `node_modules` (`scripts/pack-assert.ts` 10d, "root modules 0; nested roots" red in a working checkout). Built root-only, all three bundles inline `zod` 4.3.6, not 3.25.76; so the shipped bundles' lockfile of record is the root `package-lock.json`, and the servers' lockfiles only govern their own dev builds.
+- **Carried by Peter's words: `zod`.** Not bumped. The shipped bundles inline 4.3.6, and 4.6.7 (the advisory's fix; range `<4.6.6`) is inside the SDK's range, so for the shipped bundles the fix is an in-range root `npm update zod`, not a major. Probed here and reverted: it resolves root zod to 4.6.7, `build:mcp` builds, the mcp-boot and tool-boot smokes pass (7, 49) and `tsc` is clean. Whether to take it is Peter's; the CHANGELOG `[Unreleased]` "Known limitations" line states the carry (zod 4.3.6 bundled, fixed in 4.6.7, not taken).
+- **Row 5's act is discharged for 16.1.0** (audit appended by Ada; bump done here; `zod` carried and stated). Trigger unchanged, `release:next:phase-1`; the record closes at S with the release walk.
+
+*Signed: Thurgood, 2026-10-25.*
+
+## Outcome line (2026-10-25, Thurgood, rule 5): zod bumped too, on Peter's later ruling
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator, on the new fact in the line above (the shipped bundles inline zod 4.3.6 and 4.6.7 is inside the SDK's range): "Let's take 4.6.7 now". *Unverified here: chat only; his words are committed in this record.* This supersedes the "carry zod" half of "Bump the three now, carry zod" (and of his #469 comment); the line above is kept as written and its zod paragraph no longer holds.
+
+- **Done** (commit `3ef6c4d1e`, in-range `npm update zod`): root `package-lock.json` zod 4.3.6 to 4.6.7; `mcp-server` and `application-mcp-server` lockfiles 3.25.76 to 4.6.7 (so the dev builds match the shipped bundles; neither server imports zod directly). No `package.json` changed.
+- **Bundled zod after** (metafile, working checkout and root-only publish path alike): 4.6.7 in all three bundles; sdk 1.32.2 and `fast-uri` 3.1.9 as before.
+- **`npm audit --omit=dev` total, after the three bumps to after zod**: root 9 to 8 (1 low, 3 moderate, 3 high, 1 critical); `mcp-server` 7 to 6; `application-mcp-server` 7 to 6. No `zod` finding remains in any tree; what is left is the seven packages no bundle contains and `diff` (root, low). From the start of this row: root 12 to 8, `mcp-server` 9 to 6, `application-mcp-server` 10 to 6.
+- **CHANGELOG `[Unreleased]`**: the zod "Known limitations" bullet is deleted; zod 4.3.6 to 4.6.7 is in the "Changed" bump bullet (four libraries).
+- **Row 5's act is fully discharged for 16.1.0**: audit appended (Ada), all four inlined libraries with a fixed version bumped, nothing carried. Trigger unchanged, `release:next:phase-1`; the record closes at S with the release walk.
+
+*Signed: Thurgood, 2026-10-25.*
 ## Outcome (2026-10-25, Leonardo, row owner of rows 1–4; rules 5 and 9): re-observed at the 16.1.0 Kiro runs
 
 Read from `tests/onboarding-trio/records/16.1.0/trio-2-designer.md` and `trio-3-pm.md`, field F26. The release-4 cells stay as written (a record is not rewritten); these lines are their re-observation.

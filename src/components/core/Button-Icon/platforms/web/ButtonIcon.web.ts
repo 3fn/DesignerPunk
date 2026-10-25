@@ -356,6 +356,23 @@ export class ButtonIcon extends HTMLElement {
   }
   
   /**
+   * Get the button visual variant (the served prop name; `buttonVariant` is an alias).
+   *
+   * Forwards to the `variant` attribute, so `el.variant = 'secondary'` and
+   * `setAttribute('variant', 'secondary')` are the same operation.
+   */
+  get variant(): ButtonIconVariant {
+    return this.buttonVariant;
+  }
+
+  /**
+   * Set the button visual variant (forwards to the `variant` attribute).
+   */
+  set variant(value: ButtonIconVariant) {
+    this.buttonVariant = value;
+  }
+
+  /**
    * Get the button visual variant.
    * 
    * @see Requirements 2.1, 2.2, 2.3, 2.4
@@ -392,6 +409,40 @@ export class ButtonIcon extends HTMLElement {
     }
   }
   
+  /**
+   * Get the press callback.
+   */
+  get onPress(): (() => void) | null {
+    return this._onPress;
+  }
+
+  /**
+   * Set the press callback (the served prop name for the `press` event).
+   *
+   * Attaches a `press` listener on the host, so the callback fires once per
+   * press alongside any `press` listeners a consumer wires with
+   * addEventListener. Re-assigning replaces the previous callback (never
+   * stacks); setting null detaches it. The `press` event is unchanged.
+   */
+  set onPress(value: (() => void) | null) {
+    this._onPress = typeof value === 'function' ? value : null;
+    if (this._onPress) {
+      // One shared listener: addEventListener dedupes the same function, so
+      // re-assigning never stacks; the listener reads the current callback.
+      this.addEventListener('press', this._onPressListener);
+    } else {
+      this.removeEventListener('press', this._onPressListener);
+    }
+  }
+
+  private _onPress: (() => void) | null = null;
+
+  private _onPressListener = (): void => {
+    if (this._onPress) {
+      this._onPress();
+    }
+  };
+
   // ============================================================================
   // Rendering (Incremental Update Architecture)
   // ============================================================================

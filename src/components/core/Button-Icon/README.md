@@ -75,8 +75,8 @@ const button = document.createElement('button-icon') as ButtonIcon;
 button.icon = 'settings';
 button.ariaLabel = 'Open settings';
 button.size = 'medium';
-button.variant = 'primary';
-button.addEventListener('press', () => console.log('Pressed'));
+button.variant = 'primary'; // same as the variant attribute; buttonVariant is an alias
+button.onPress = () => console.log('Pressed'); // or addEventListener('press', ...)
 document.body.appendChild(button);
 ```
 

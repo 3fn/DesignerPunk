@@ -236,7 +236,7 @@ describe('Button-CTA Component Rendering', () => {
     });
     
     it('should render icon with correct size for large buttons', () => {
-      // Requirement 8.3: Large buttons use icon.size125 (32px)
+      // Requirement 8.3: Large buttons use icon.size125 (28px)
       const button = createButton({ label: 'Large Button', size: 'large', icon: 'plus' });
       
       const iconElement = button.shadowRoot?.querySelector('.button-cta__icon');
