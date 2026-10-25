@@ -444,15 +444,15 @@ const btn = document.createElement('button-icon');
 btn.icon = 'settings';
 btn.ariaLabel = 'Open settings';
 btn.size = 'large';
-btn.buttonVariant = 'primary';
-btn.addEventListener('press', () =&gt; console.log('Pressed!'));
+btn.variant = 'primary';  // same as the variant attribute (buttonVariant is an alias)
+btn.onPress = () =&gt; console.log('Pressed!'); // or addEventListener('press', ...)
 document.body.appendChild(btn);
 
 // Dynamic updates
 btn.icon = 'check';              // Change icon
 btn.ariaLabel = 'Confirm action'; // Update label
 btn.size = 'small';              // Change size
-btn.buttonVariant = 'secondary'; // Change variant</pre>
+btn.variant = 'secondary';       // Change variant</pre>
     </div>
 
   </main>

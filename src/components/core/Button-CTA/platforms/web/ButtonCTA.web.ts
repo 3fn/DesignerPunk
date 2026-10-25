@@ -43,7 +43,7 @@ import buttonStyles from './ButtonCTA.web.css';
  * 
  * Provides type-safe mapping from button size variants to icon sizes:
  * - small/medium: iconBaseSizes.size100 (24px)
- * - large: iconBaseSizes.size125 (32px)
+ * - large: iconBaseSizes.size125 (28px)
  * 
  * Fails loudly if icon size token is missing to prevent silent fallback issues.
  * 
@@ -318,6 +318,23 @@ export class ButtonCTA extends HTMLElement {
   }
   
   /**
+   * Get the button visual variant (the served prop name; `buttonVariant` is an alias).
+   *
+   * Forwards to the `variant` attribute, so `el.variant = 'secondary'` and
+   * `setAttribute('variant', 'secondary')` are the same operation.
+   */
+  get variant(): ButtonStyle {
+    return this.buttonVariant;
+  }
+
+  /**
+   * Set the button visual variant (forwards to the `variant` attribute).
+   */
+  set variant(value: ButtonStyle) {
+    this.buttonVariant = value;
+  }
+
+  /**
    * Get the button visual variant.
    */
   get buttonVariant(): ButtonStyle {
@@ -382,6 +399,40 @@ export class ButtonCTA extends HTMLElement {
     }
   }
   
+  /**
+   * Get the press callback.
+   */
+  get onPress(): (() => void) | null {
+    return this._onPress;
+  }
+
+  /**
+   * Set the press callback (the served prop name for the `press` event).
+   *
+   * Attaches a `press` listener on the host, so the callback fires once per
+   * press alongside any `press` listeners a consumer wires with
+   * addEventListener. Re-assigning replaces the previous callback (never
+   * stacks); setting null detaches it. The `press` event is unchanged.
+   */
+  set onPress(value: (() => void) | null) {
+    this._onPress = typeof value === 'function' ? value : null;
+    if (this._onPress) {
+      // One shared listener: addEventListener dedupes the same function, so
+      // re-assigning never stacks; the listener reads the current callback.
+      this.addEventListener('press', this._onPressListener);
+    } else {
+      this.removeEventListener('press', this._onPressListener);
+    }
+  }
+
+  private _onPress: (() => void) | null = null;
+
+  private _onPressListener = (): void => {
+    if (this._onPress) {
+      this._onPress();
+    }
+  };
+
   // ============================================================================
   // Rendering (Incremental Update Architecture)
   // ============================================================================
@@ -438,7 +489,7 @@ export class ButtonCTA extends HTMLElement {
     // Get icon size for button size variant
     // Icon sizes are type-safe mapped from button size:
     // - Small/Medium: 24px (iconBaseSize100)
-    // - Large: 32px (iconBaseSize125)
+    // - Large: 28px (iconBaseSize125)
     const iconSize: IconBaseSize = getIconSizeForButton(size);
     
     // Generate label class

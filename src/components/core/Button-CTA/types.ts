@@ -154,7 +154,7 @@ export interface ButtonProps {
    * Displays an icon before the button text. Icon size is automatically
    * determined by button size:
    * - small/medium: icon.size100 (24px)
-   * - large: icon.size125 (32px)
+   * - large: icon.size125 (28px)
    * 
    * @remarks
    * - Icons use optical weight compensation (blend token) for visual balance

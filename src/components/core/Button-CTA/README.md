@@ -77,7 +77,8 @@ import { ButtonCTA } from './platforms/web/ButtonCTA.web';
 const button = document.createElement('button-cta') as ButtonCTA;
 button.label = 'Click me';
 button.size = 'large';
-button.addEventListener('press', () => console.log('Clicked'));
+button.variant = 'secondary'; // same as the variant attribute; buttonVariant is an alias
+button.onPress = () => console.log('Clicked'); // or addEventListener('press', ...)
 document.body.appendChild(button);
 ```
 
@@ -140,7 +141,7 @@ ButtonCTA(
 |------|--------|--------------|-----------|------------|-----------|
 | `small` | 40px | 44px | 56px | labelMd | 24px |
 | `medium` | 48px | 48px | 72px | labelMd | 24px |
-| `large` | 56px | 56px | 80px | labelLg | 32px |
+| `large` | 56px | 56px | 80px | labelLg | 28px |
 
 ---
 

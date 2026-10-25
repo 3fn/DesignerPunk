@@ -168,7 +168,7 @@ export const iconBaseSizes = {
   size050: 13,  // icon.size050 - caption, legal, labelXs (accepted value 13 renders 16px)
   size075: 20,  // icon.size075 - bodySm, buttonSm, labelSm (14px × 1.429 = 20px)
   size100: 24,  // icon.size100 - bodyMd, buttonMd, labelMd, input (standard)
-  size125: 32,  // bodyLg, buttonLg, labelLg. NOTE: the value 32 renders as size200 (32px); the icon.size125 token is 28px. Held for Peter, see .kiro/issues/2026-10-25-icon-base-size-map-disagrees-with-token-index.md
+  size125: 28,  // icon.size125 - bodyLg, buttonLg, labelLg (18px × 1.556 = 28px; was 32 before 16.1.0, which rendered as size200)
   size150: 28,  // icon.size150 - h6
   size200: 32,  // icon.size200 - h5
   size300: 32,  // icon.size300 - h4
