@@ -16,7 +16,15 @@
 
 ## 1. What is owed
 
-Apply the drop: remove the carve-out from both charters (and from any generated or served text that restates it), with a dated pointer to this record and the settle ballot, Peter-merged under the charter carve-out with both seats consulted. The Q5 cut itself is unchanged; only the steward-verb exception goes, so every claim's verification decision is Stacy's.
+Apply the drop, with a dated pointer to this record and the settle ballot, Peter-merged with both seats consulted. Only the steward-verb exception goes, so every claim's verification decision is Stacy's. **The drop is not a charters-only edit** (amended 2026-10-24 at Stacy's request; her read, `stacy-fixnow-verification.md` § 3(ii)). It reaches:
+
+- **The ratified Q5 cut sentence itself**, in `.kiro/steering/Agent-Directory.md` (an identity doc), Thurgood's "Charter cut" line: "and the verification of claims whose evidence requires the steward toolset". The drop therefore edits a ratified verbatim cut sentence, and the cut's other copies with it: `canonical/agents/thurgood.md` § "The charter cut (ratified verbatim)" and § "The steward-verb carve-out", and `canonical/agents/stacy.md` § "The steward-verb carve-out (his side of the seam, enumerated …)".
+- **Operative sets**, Stacy re-confirming as C1: `canonical/operative-sets/agent-directory.yaml`, `stacy.yaml`, `thurgood.yaml`.
+- **Consumer profile**: the overlays `canonical/profiles/consumer/always-set/agent-directory.overlay.md`, `stacy.overlay.md`, `thurgood.overlay.md`; `confirmations/stacy.md` and `confirmations/thurgood.md`; the dispositions units in `stacy.dispositions.yaml` and `thurgood.dispositions.yaml` and their signatures (`signatures/stacy.md`, `signatures/thurgood.md`), re-signed by their signers.
+- **Generated outputs**: everything under `canonical/_consumer-output/**` and the generated charters and `CLAUDE.md`, regenerated, never hand-edited.
+- **To read at application** (they match the grep; whether each restates the carve-out is checked then): `governance/Process-Spec-Planning.md`, `governance/classification-map.md`.
+
+The enumeration is `git grep -l -i 'steward toolset\|steward-verb\|steward MCP verbs' -- canonical .kiro/steering governance` at `e4e61eea2` (29 files), re-run at application, never trusted as a list.
 
 ## 2. The reading question (for both owners)
 
@@ -24,11 +32,11 @@ Pass 3's zero is silence, not a count. Two readings:
 - (a) the limb fired: no steward-verb-gated claim exists in 123 MIDPOINT's population, so the passes never encountered one across the first three, and the exclusion is dropped;
 - (b) the limb is undetermined for pass 3, and a recount of 123 MIDPOINT's population against the three verbs settles it before anything is dropped.
 
-Stacy owns the claims-pass record; the recount, if any, is hers. Either reading ends in a ruling recorded here.
+**The recount is owed by Stacy, before the charter edit** (amended 2026-10-24 at her request). She owns the claims-pass record; she counts 123 MIDPOINT's population against the three verbs and records the result here. Her expectation, stated 2026-10-24: reading (a) — a grep of that pass finds no `rebuild_index`, `validate_metadata` or `list_cross_references` claim, and 127 CLOSEOUT already ruled the nearest case (the `rebuild_index` obligation) not steward-verb-gated. The reading is ruled here, dated, before § 1's edit is drafted.
 
 ## 3. The kind question
 
-The settle ballot pre-declares the outcome ("dropped, not carried"), which reads as PRE-DECLARED EXECUTION. But `.kiro/docs/ballots/README.md` § "three kinds" says "an edit to a seat's write scope or role is always LAW." The carve-out is part of both seats' roles. **When in doubt, LAW**: the steward's read is that the charter edit goes as a one-item ballot, or as an item in the next ballot that edits these charters, and Peter rules it.
+The settle ballot pre-declares the outcome ("dropped, not carried"), which reads as PRE-DECLARED EXECUTION. But `.kiro/docs/ballots/README.md` § "three kinds" says "an edit to a seat's write scope or role is always LAW." The carve-out is part of both seats' roles, and the drop edits the ratified Q5 cut sentence in an identity doc (§ 1), which makes it Peter's. **When in doubt, LAW**: the steward's read is that the charter edit goes as a one-item ballot, or as an item in the next ballot that edits these charters, and Peter rules it.
 
 ## Closing
 
