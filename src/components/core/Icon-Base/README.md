@@ -96,7 +96,7 @@ IconBase(name = "arrow-right", size = DesignTokens.icon_size_100, color = Color.
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
 | `name` | `IconBaseName` | Yes | - | Icon name (type-safe) |
-| `size` | `IconBaseSize` | Yes | - | Icon size in pixels (13, 18, 24, 28, 32, 36, 40, 44, 48) |
+| `size` | `IconBaseSize` | Yes | - | Icon size in pixels (13, 20, 24, 28, 32, 36, 40, 44, 48) |
 | `color` | `'inherit' \| string` | No | `'inherit'` | Color override or token reference |
 | `opticalBalance` | `boolean` | No | `false` | Apply 8% lighter blend for optical weight compensation |
 | `className` | `string` | No | - | Additional CSS class names (web only) |
@@ -124,7 +124,7 @@ Icon sizes are calculated from `fontSize × lineHeight` to maintain optical bala
 | Token | Size | Typography Pairing |
 |-------|------|-------------------|
 | `size050` | 13px | caption, legal, labelXs |
-| `size075` | 18px | bodySm, buttonSm, labelSm |
+| `size075` | 20px | bodySm, buttonSm, labelSm |
 | `size100` | 24px | bodyMd, buttonMd, labelMd, input (standard) |
 | `size125` | 32px | bodyLg, buttonLg, labelLg |
 | `size150` | 28px | h6 |

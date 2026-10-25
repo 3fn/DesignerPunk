@@ -235,9 +235,9 @@ contracts:
 
   visual_pill_container:
     category: visual
-    description: "Web: floating pill with radiusFull, backdrop blur, chrome tracking"
+    description: "Web: floating pill with radius.full, backdrop blur, chrome tracking"
     behavior: |
-      On web, the container is a floating pill shape with radiusFull
+      On web, the container is a floating pill shape with radius.full
       border-radius, backdrop blur, and space200 inline margins.
       On mobile web, dynamically tracks browser chrome via Visual Viewport
       API with --chrome-offset CSS custom property and 100ms ease-out
@@ -246,7 +246,7 @@ contracts:
     wcag: null
     platforms: [web]
     validation:
-      - Container has radiusFull border-radius
+      - Container has radius.full border-radius
       - Container has backdrop blur
       - Container has space200 inline margins
       - Chrome offset computed from visualViewport

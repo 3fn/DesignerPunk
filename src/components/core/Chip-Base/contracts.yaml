@@ -120,7 +120,7 @@ contracts:
       When focused via keyboard, displays focus ring using accessibility tokens:
       2px outline (accessibility.focus.width), primary color (accessibility.focus.color),
       2px offset (accessibility.focus.offset). Uses :focus-visible for keyboard-only
-      indication. High contrast mode increases to 4px (borderHeavy).
+      indication. High contrast mode increases to 4px (border.heavy).
     wcag: "2.4.7 Focus Visible"
     platforms: [web, ios, android]
     validation:

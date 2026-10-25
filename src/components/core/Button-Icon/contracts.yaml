@@ -109,16 +109,16 @@ contracts:
 
   visual_circular_shape:
     category: visual
-    description: Circular button shape via radiusCircle token
+    description: Circular button shape via radius.circle token
     behavior: |
-      Button renders as a circle using radiusCircle semantic token (50%).
+      Button renders as a circle using the radius.circle semantic token (radiusHalf, 50%).
       Visual circle size = iconSize + (padding × 2).
       Total box size = visualCircle + (focusBuffer × 2).
     wcag: null
     platforms: [web, ios, android]
     validation:
       - Button renders as circle
-      - Shape uses radiusCircle token
+      - Shape uses radius.circle token
     test_approach: |
       - Render button and verify circular shape
       - Verify border-radius is 50% (web)

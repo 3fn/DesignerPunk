@@ -82,7 +82,7 @@ contracts:
       - Each size variant renders at correct dimensions
       - Icon size is 50% of avatar size
       - Default size is md (40px)
-      - xxl uses borderEmphasis width
+      - xxl uses border.emphasis width
     test_approach: |
       - Render Avatar at each size variant
       - Verify dimensions match token values
@@ -93,10 +93,10 @@ contracts:
     category: visual
     description: Border with entity-appropriate color token
     behavior: |
-      Avatar renders a border using color.avatar.border token.
+      Avatar renders a border using the color.structure.border token.
       xs-xl sizes use border.default width with opacity.heavy.
-      xxl size uses borderEmphasis width with full opacity and
-      color.contrast.onSurface color.
+      xxl size uses border.emphasis width with full opacity and
+      color.contrast.onDark color.
     wcag: null
     platforms: [web, ios, android]
     validation:
@@ -190,9 +190,9 @@ contracts:
     category: accessibility
     description: Icon-on-background meets WCAG AA contrast
     behavior: |
-      Icon color tokens (color.avatar.contrast.onHuman, color.avatar.contrast.onAgent)
-      ensure minimum 4.5:1 contrast ratio against their respective backgrounds
-      (color.avatar.human, color.avatar.agent).
+      The icon color token (color.contrast.onDark, for both types)
+      ensures minimum 4.5:1 contrast ratio against each type's background
+      (color.identity.human, color.identity.agent).
     wcag: "1.4.3 Contrast (Minimum)"
     platforms: [web, ios, android]
     validation:

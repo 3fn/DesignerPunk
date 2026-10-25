@@ -32,7 +32,7 @@ description: |
   - Non-interactive: display-only, no user interaction
   - Fail loudly: runtime error on value outside 0–1
   - Milestone announcements: screen reader at 0/25/50/75/100%
-  - Capsule shape: radiusFull on track and fill
+  - Capsule shape: radius.full on track and fill
 
 behaviors:
   - renderable

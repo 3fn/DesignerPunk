@@ -59,11 +59,11 @@ properties:
     required: true
     description: |
       Icon size in pixels. Must be one of the predefined IconBaseSize values
-      (13, 18, 24, 28, 32, 36, 40, 44, 48). Sizes are calculated from
+      (13, 20, 24, 28, 32, 36, 40, 44, 48). Sizes are calculated from
       fontSize × lineHeight formula to maintain optical balance with paired
       typography.
       - 13px (size050): caption, legal, labelXs
-      - 18px (size075): bodySm, buttonSm, labelSm
+      - 20px (size075): bodySm, buttonSm, labelSm
       - 24px (size100): bodyMd, buttonMd, labelMd, input (standard)
       - 28px (size150): h6
       - 32px (size125/200/300): bodyLg, buttonLg, h5, h4
