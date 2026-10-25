@@ -90,3 +90,6 @@ Emit the shadow-colour primitives on every platform (from the rgba source until 
 - **Thurgood**: form ok; nothing to change.
 
 *Signed: Ada, 2026-10-24.*
+
+**Pinned by the colour-reference check (2026-10-25, Ada, rule 9)**: PR #489 makes `generate` abort on any semantic colour reference to a primitive the platform files do not define. It pins this record's four names (`KNOWN_UNEMITTED_SHADOW_COLORS` in `src/validators/ColorReferenceEmissionValidator.ts`), so the 15 shadow tokens give one warning per run instead of an abort. **The fixing PR for this record removes each name it starts emitting from that list.** `ColorReferenceEmissionValidator.test.ts` › "pins only colours that are still not emitted" fails until it does. Class and Trigger unchanged.
+
