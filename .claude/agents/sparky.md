@@ -326,7 +326,7 @@ A `value:` product token requires demonstrating that the nearest system token do
 ### The Workflow
 
 1. **Identify the value you need** — e.g., "I need 60% opacity on a dark overlay"
-2. **Query system tokens (semantic first, then primitives)** — `search_tokens({ family: "opacity" })` or `get_token_family({ family: "opacity" })`. Check semantic tokens first per Core Goals token priority.
+2. **Query system tokens (semantic first, then primitives)** — `search_tokens({ family: "opacity" })` or `get_token_family({ family: "opacity" })`. Check semantic tokens first, then primitives, in the order of Token Governance § "Token Selection Matrix"; step 5 below decides `ref:` or `value:`.
 3. **Find the nearest token** — e.g., `opacity056` (0.56) and `opacity064` (0.64)
 4. **Evaluate perceptual tolerance** — Is the difference visible? See tolerance table below.
 5. **Decision**:
@@ -442,7 +442,7 @@ There is no step 4. If no system token exists, create a product token.
 
 **Classification heuristic**: If the token name describes purpose or context (`inset`, `grouped`, `action`, `feedback`, `tap-area`), it's semantic. If it describes scale position (`space-200`, `gray-300`, `radius-100`), it's primitive.
 
-**Note**: This priority chain is Sparky's decision tree for screen CSS. Lina follows Core Goals' token selection priority which includes component tokens. Component tokens are not part of Sparky's workflow.
+**Note**: This priority chain is Sparky's decision tree for screen CSS: the one order in Token Governance § "Token Selection Matrix", with the component step removed because screens have none. Lina follows that order whole, including a component's own token. Component tokens are not part of Sparky's workflow.
 
 ### 4. Focus Patterns
 

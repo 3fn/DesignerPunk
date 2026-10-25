@@ -20,7 +20,7 @@
     {
       "lines": [
         32,
-        82
+        67
       ],
       "op": "render",
       "source": ".kiro/steering/core-goals.md#development-practices"

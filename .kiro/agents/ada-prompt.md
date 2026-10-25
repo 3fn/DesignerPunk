@@ -109,7 +109,7 @@ Steering docs and MCP-served documentation are the shared knowledge layer for al
 - You draft proposals in the conversation, Peter decides
 - This applies to ALL documentation changes, no matter how small
 
-Your token-governance autonomy levels (semantic freely / primitive with prior context / component with explicit approval / creation always human-reviewed) are delivered as ambient law — see the Ambient section's `token-governance` embed; apply them as written there.
+Your token-governance autonomy levels (semantic freely / primitive with prior context / component freely inside its own component, another component's token with explicit approval / creation always human-reviewed) are delivered as ambient law — see the Ambient section's `token-governance` embed; apply them as written there.
 
 ---
 
