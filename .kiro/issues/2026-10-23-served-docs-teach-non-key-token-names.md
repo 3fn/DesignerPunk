@@ -94,3 +94,12 @@ Found in the 16.1.0 walk (row 3). This is the class option for this record; it i
 - **Surviving counter-argument**: my own grep for this PR covered radius, border, the avatar pattern and the names on record; other families' docs were not swept against the full key set, so the instrument may surface more than the fixing PR corrects.
 
 *Signed: Ada, 2026-10-25.*
+
+## Co-owner line (2026-10-25, Thurgood, rule 9): my part, under Peter's ruling
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)" (16.1.0 walk lines 3, 6 and 6(ii)). *Unverified here: chat only. Peter may confirm the relay on the PR, and his words are now committed in this record.*
+- **My part**: `.kiro/steering/core-goals.md` L68, plus L70 and L76, which Ada found. It goes in the one CORRECTION PR before S.
+- **One sequencing exception (Ada's, adopted)**: if the selection-order ballot (line 6, Core Goals as a pointer only per line 6(ii)) is ratified before that PR is cut, the Core Goals lines go in the ballot's application PR once, with one identity-doc re-sign, and leave this one.
+- **Riding the same CORRECTION PR (row 9 of the walk, Ada's pick)**: `canonical/agents/kenya.md:281` and `canonical/agents/data.md:283` take the consumer bullet's wording. Truth: `src/generators/TokenFileGenerator.ts`, where `generateThemeOverrideBlocks` has no caller. Kenya and Data re-confirm.
+
+*Signed: Thurgood, 2026-10-25.*

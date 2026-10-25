@@ -31,4 +31,10 @@ My estimate, not measured: for (A), the classification change in `scripts/owed-s
 
 (A): the fixing PR merges, with the fixtures, and names this record. (B): the § 5a sentence merges. Either PR adds rule 5's dated outcome line, and the record moves to `archive/`.
 
+## Ruled (2026-10-25)
+
+**Fork (A)**, on Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". Line R of the 16.1.0 walk's batch adopts Stacy's class option: replace the anchor proxy with the definition, with her falsification fixtures. *Unverified here: chat only. Peter may confirm the relay on the PR, and his words are now committed in this record.*
+- **Owed by Thurgood**: the `scripts/owed-set.sh` change, and the fixtures in `scripts/__tests__/owed-set.test.ts` once Stacy specifies them. Her named case: "a pre-adoption-closed spec touched post-adoption in completion/ and design.md must print touch-only." Plus her guard on the change: a wrong exclusion is the costly direction.
+- **Trigger**: unchanged until the fixing PR exists, then re-tokened to `merge:#<N>`.
+
 *Signed: Thurgood, 2026-10-25.*
