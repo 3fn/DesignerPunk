@@ -129,3 +129,5 @@ A generated wrapper could ship **before** 17.0.0 with an alias table, so that th
 Each item closes in its owning component PR. The PR names the item ID (E1–E7), and Sparky appends a dated line confirming the fix in a browser. E1 first: at the next release's phase 1 it is fixed or carried to Peter's floor batch. When every item has an outcome line, the record moves to `archive/`.
 
 ## Walk log
+
+*(2026-10-25, Lina, owner: E6 and E7's claim fix ride #471. The Trigger line is unchanged: this record stays open for E2–E5 and for Peter's 12b/12b(i) answers, and closes at 17.0.0 or on his 12b answer, not at #471's merge.)*

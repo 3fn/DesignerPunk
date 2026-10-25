@@ -84,3 +84,5 @@ Found in my Spec 131 R1 read (`.kiro/specs/131-governance-simplification/feedbac
 - **Lina**: accepted; her Badge-Count-Notification gap is closed by Stacy's L38–40 read.
 
 *Signed: Ada, 2026-10-24.*
+
+*(2026-10-25, Lina, owner of the component parts: my 3a component-YAML part rides #471; the governance-doc part rides the docs PR (Ada/Thurgood), not yet open. The Trigger line is unchanged: this record is shared, and closes when both parts have merged.)*

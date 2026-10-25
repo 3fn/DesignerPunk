@@ -5,7 +5,7 @@
 **Owner**: **Lina** (Icon-Base's `types.ts`, schema and README are hers). **Consulted**: Ada (the icon-size tokens and their formula are hers).
 **Filed by**: Lina, under rule 10, while fixing sub-row 3a of `2026-10-23-served-docs-teach-non-key-token-names.md` on branch `fix/release-16.1.0-floor-lina`.
 **Class**: P0 false-claim · defect *(set 2026-10-25, Lina, rule 12. `Icon-Base.schema.yaml` is served by the application MCP, and its `size` description pairs `size050` with 13px and `size125` with 32px, while `icon.size050` and `icon.size125` generate 16px and 28px. An agent that reads the schema and then uses the token gets a different size than it was told. Only Peter downgrades a P0. Filed after the 16.1.0 walk, so under the walk's own rule this is a phase-1 finding, not a walk row.)*
-**Trigger**: `release:next:phase-1` — the release falsity floor's due point for a P0: fixed, or waived by Peter in that release's floor batch (ballot `2026-10-18-obligation-drain-and-release-falsity-floor` M7). Start condition (prose): Ada's read of which side is true.
+**Trigger**: `merge:#471` — the fixing PR, which closes this record (rule 11) by recording the outcome and archiving it. *(was: `release:next:phase-1` — the release falsity floor's due point for a P0: fixed, or waived by Peter in that release's floor batch (ballot `2026-10-18-obligation-drain-and-release-falsity-floor` M7). Start condition (prose): Ada's read of which side is true.)* *(Re-ruled 2026-10-25, Lina, rules 1 and 9: the vehicle PR now exists, so the Trigger names its number, per ballot 2026-10-22-trigger-names-the-event-not-the-vehicle.)*
 **Status**: **OPEN**.
 
 ---
