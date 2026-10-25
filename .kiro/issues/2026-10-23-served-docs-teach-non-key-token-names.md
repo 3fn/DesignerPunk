@@ -145,3 +145,25 @@ Peter's ruling of 2026-10-25 (chat, relayed): "Fix all of them as the owners rec
 - `**Edit kind**: canonical/agents/data.md L283 — CORRECTION (same record and truth as kenya.md L281; same ballot)`
 
 *Signed: Thurgood, 2026-10-25.*
+
+## Branch closed (2026-10-25, Thurgood, rule 9)
+
+Authority: Peter 2026-10-25 (chat, relayed): "Fix all of them as the owners recommend; T is (A)." Branch `fix/release-16.1.0-served-docs-token-names`.
+
+**Seat acts (S12, each a re-confirmation then a re-sign, all C1; `verify-signing-chain --ci` found 10 rows across 10 signing commits, PASS)**:
+- Lina `137dd98c2` / `d45e17e02` (`#token-selection-priority-must-follow-this-order`)
+- Kenya `439274285` / `2c03a3c4a` (`#ios-theming-spec-094`)
+- Data `1a53a2c6d` / `50d90847d` (`#android-theming-spec-094`)
+- Stacy `e73a4fc1b` (core-goals `#development-practices`), `c989dacf2` (systems-overview `#rosetta-system-token-pipeline-and-layers`), `08140e61d` (systems-overview `#integration-tokens-components-platforms`), `3c7a41c1d` (core-goals re-sign, assent)
+
+**Regeneration**: `94ce930bf` (consumer charters, embeds, attribution; pre-signature rendering) is the only regeneration commit. The closing `npx tsx tools/agent-generator/generate.ts` (387 files, 10 guarded roots) wrote nothing new: no output file moved, only `canonical/generated.lock`.
+
+**Thurgood authoring fixes at the close** (`ce735ba7c`): the second `removals` entry ("Generated Swift/Kotlin output includes: ...", `cites: subtraction-1`) on `#ios-theming-spec-094` (kenya) and `#android-theming-spec-094` (data) was dropped. `Removal.text` is the removed canonical block (`tools/agent-generator/regrounding/dispositions.ts`); canonical no longer holds that sentence, so the entry was dead. Only `cites` is read by any logic (`triviality.ts` REPO_SPECIFIC_CITES); the remaining first entry (dist snapshots, still in canonical) carries the same `subtraction-1`, so the route is unchanged. The two `theming-1` `label:` fields in `canonical/operative-sets/{kenya,data}.yaml` now read the first 64 characters of the corrected item text. No `canonicalHash`, signature, confirmation or sheet touched; `stale: 0`, `unsigned-routed: 0`, sweep-7 PASS before and after. Note for the signed record: Kenya's and Data's 2026-10-25 re-sign lines say their removals "stand as authored"; the second entry was removed afterwards, by the row's non-seat field, because it quoted nothing. They can say so out loud if they disagree.
+
+**Lock**: `f218beb42` (`canonical/generated.lock` alone). Its commit message says the outputs hash was unchanged by the regeneration; read that as "unchanged by the closing regeneration". Against `main`'s lock both `inputClosure` and `outputs` moved, as expected for the branch.
+
+**Verification at HEAD `f218beb42`** (worktree needed `npm run generate:types` and `npm run build` first; both gitignored output, nothing committed): diff-guard `--base 652074c6b` PASS (stale 0, unsigned-routed 0; exit 0); `verify-signing-chain --ci` PASS (exit 0); `check:122:canonical-vs-truth` clean (exit 0); `validate-steering-metadata.js` PASS (exit 0); `tsc --noEmit` exit 0; `npm test` 408/408 suites, 9729/9729 tests; `test:scripts` 22/22 suites, 597 tests; `mcp-server` 47/47 suites, 741 tests; `application-mcp-server` 36/36 suites, 513 tests; `test:consumer` 1 suite passed, 56 passed and 1 skipped (it ran offline here; the open record `2026-10-13-consumer-guard-c6-sync-dry-run-hits-npm-registry.md` was not exercised).
+
+**Stacy's spelling note, resolved**: `buttonicon.inset.medium` (lowercase) is the registry key. `src/registries/ComponentTokenRegistry.ts` L224 builds `${component.toLowerCase()}.${key}`, `token-index/components.yaml` carries `buttonicon.inset.{small,medium,large}` and no camelCase form, and the registry's own doc comments use `buttonicon.inset.large`. The camelCase `buttonIcon.inset.*` appears only in source comments under `src/components/core/Button-Icon/`, which are not the key. Core Goals L70's `buttonicon.inset.medium` is correct (Ada's walk-line finding stands).
+
+*Signed: Thurgood, 2026-10-25.*
