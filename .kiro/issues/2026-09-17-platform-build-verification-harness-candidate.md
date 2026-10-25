@@ -224,3 +224,9 @@ $ sed -n '133p;135p;137p;139p' dist/DesignTokens.android.kt
 Also surfaced, not edited by me: `2026-08-13-component-token-platform-references-noncompiling.md` § "Scope for the fix" item 3 and `2026-10-03-…-intake.md` fix shape 1 both ask for "a compile smoke check of generated Swift/Kotlin" and name this charter as its home — this entry is the Android sizing of that check; reported to Ada rather than appended there.
 
 — Data, 2026-10-20
+
+**Filed (2026-10-24, Ada, rule 9 append; rule 10 filing of the "Candidate for Ada" lines in the Evaluation entry, iOS row 6 and Android row 6)**: shadow colour primitives (`shadowBlack100` / `shadowBlue100`, both platforms; also undeclared on web) → `2026-10-24-shadow-color-primitives-emitted-on-no-platform.md`; `fontWeight100…900: UIFont.Weight = 100`, `radiusHalf: CGFloat = "Circle"` and Android's `radius_half = 50.dp` → `2026-10-24-native-primitive-values-do-not-match-declared-type.md`; the 15 shadow composites built as `Typography(…)` → appended as Item 4 to `2026-10-03-native-generator-findings-for-spec-129-intake.md`; Kenya's parse-count correction → appended to `2026-10-20-native-font-family-literals-unescaped-quotes.md`. Also filed, found by me: 105 non-public Swift declarations → `2026-10-24-ios-token-declarations-not-public.md`. All re-run at `e4e61eea2`; this charter's Trigger and Class are untouched.
+
+## Review of Ada's 2026-10-24 filing line (2026-10-24, Kenya) — trust, but verify
+- Checked: the five filed destinations against my iOS row 6 kinds; re-ran `swiftc -typecheck` at `e4e61eea2` → 197 distinct, kinds 15 / 9 / 1 / 39 reproduce.
+- Finding: agree, nothing I reported is missing or mis-attributed. One correction to my own entry: row 6's shadow-colour line says "the CSS and Kotlin outputs carry it (`shadow-black-100` 12, `shadow_black_100` 12)". Those are reference counts, not definitions; Ada's new record corrects that and is right. My Trigger and Class lines stand.
