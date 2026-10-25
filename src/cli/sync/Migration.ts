@@ -34,6 +34,7 @@ import { hashBuffer, hashFile } from './FileScanner';
 import { COPY_ROOTS, isUnder } from './Manifest';
 import type { ManifestEntry } from './Manifest';
 import { attachUsage } from '../shared/vocabulary';
+import { registryAuthFailedMessage, cannotTellGroupMessage } from '../shared/errorCatalog';
 
 export const LEGACY_COMPONENT_ROOT = 'src/components/core';
 export const CONSUMER_COMPONENT_ROOT = 'src/components';
@@ -51,24 +52,63 @@ export interface PackageFetcher {
   fetch(version: string): string | null;
   /** Remove any scratch state. */
   dispose?(): void;
+  /**
+   * The first login refusal (E401 / E403 / ENEEDAUTH) any call above met, or null (R2 (b)). The report
+   * names it once, as a login problem, instead of once per copy as "could not be retrieved".
+   */
+  authFailure?(): RegistryAuthFailure | null;
+}
+
+/** A registry's login refusal: npm's error code, and the registry origin npm named (never a token). */
+export interface RegistryAuthFailure {
+  code: string;
+  registry: string | null;
 }
 
 const NPM = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 
+const AUTH_CODE_RE = /\b(E401|E403|ENEEDAUTH)\b/;
+
+/**
+ * Read an `npm view` / `npm pack` failure (an `execFileSync` error: `stdout`, `stderr`, `message`) as a login
+ * refusal, or null when it is any other failure (offline, not found, timeout). The registry is the origin of
+ * the request npm names (`GET https://npm.pkg.github.com/...` → `https://npm.pkg.github.com`): only the origin
+ * is kept, so nothing from the consumer's `.npmrc` beyond the registry's address is ever printed.
+ */
+export function classifyNpmAuthError(err: unknown): RegistryAuthFailure | null {
+  const e = (err ?? {}) as { stdout?: unknown; stderr?: unknown; message?: unknown };
+  const text = [e.stdout, e.stderr, e.message]
+    .map((x) => (Buffer.isBuffer(x) ? x.toString('utf-8') : typeof x === 'string' ? x : ''))
+    .join('\n');
+  const code =
+    AUTH_CODE_RE.exec(text)?.[1] ?? (/\b401 Unauthorized\b/.test(text) ? 'E401' : /\b403 Forbidden\b/.test(text) ? 'E403' : null);
+  if (!code) return null;
+  const origin = /\b(?:GET|HEAD|PUT|POST)\s+(https?:\/\/[^\s/"'<>]+)/.exec(text)?.[1] ?? null;
+  return { code, registry: origin };
+}
+
 /**
  * The production fetcher: `npm view` / `npm pack --prefer-offline`, run with
  * `cwd = projectRoot` so HER `.npmrc` (scope → registry mapping, auth) applies.
+ * It keeps trying every version after a login refusal (the npm cache may still
+ * serve some), and records the first refusal for the report.
  */
-export function npmRailFetcher(projectRoot: string): PackageFetcher {
+export function npmRailFetcher(projectRoot: string, seam: { npm?: string } = {}): PackageFetcher {
   const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'dp-sync-migration-'));
+  const npm = seam.npm ?? NPM; // test seam: an absolute path to a stub npm (Jest's sandboxed process.env cannot move PATH)
   const run = (args: string[]) =>
-    execFileSync(NPM, args, { cwd: projectRoot, encoding: 'utf-8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 180_000 });
+    execFileSync(npm, args, { cwd: projectRoot, encoding: 'utf-8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 180_000 });
+  let auth: RegistryAuthFailure | null = null;
+  const noteFailure = (err: unknown) => {
+    if (!auth) auth = classifyNpmAuthError(err);
+  };
   return {
     listVersions() {
       try {
         const out = JSON.parse(run(['view', '@3fn/core', 'versions', '--json', '--prefer-offline']));
         return Array.isArray(out) ? out.map(String) : typeof out === 'string' ? [out] : null;
-      } catch {
+      } catch (err) {
+        noteFailure(err);
         return null;
       }
     },
@@ -82,9 +122,13 @@ export function npmRailFetcher(projectRoot: string): PackageFetcher {
         execFileSync('tar', ['-xzf', path.join(dest, path.basename(filename)), '-C', dest], { stdio: 'ignore', timeout: 180_000 });
         const root = path.join(dest, 'package');
         return fs.existsSync(root) ? root : null;
-      } catch {
+      } catch (err) {
+        noteFailure(err);
         return null;
       }
+    },
+    authFailure() {
+      return auth;
     },
     dispose() {
       fs.rmSync(scratch, { recursive: true, force: true });
@@ -225,6 +269,16 @@ export interface MigrationAssessment {
   /** Consumer-side token files found in the copied tree (Lina A5; token-side report strings). */
   oldNameReferenceMaps: string[];
   brandedTokenFiles: string[];
+  /** The installed version, judged from `node_modules/@3fn/core` on disk before any fetch (R2 (a)); absent when it ships no copies' directory. */
+  judgedInstalled?: string;
+  /** The first login refusal the fetcher met (R2 (b)) — reported once, as a login problem. */
+  authFailure?: RegistryAuthFailure;
+  /**
+   * The oldest version the registry lists, when it is newer than the oldest version the copies may have come
+   * from (the legacy manifest's last sync, else the installed bound): content older than it cannot be retrieved
+   * through this registry, so a copy matching nothing listed is `cannot-tell`, never `modified`.
+   */
+  unlistedBefore?: string;
 }
 
 /** The migration trigger (C7): a legacy manifest, or legacy copies on disk. */
@@ -258,9 +312,27 @@ interface VersionSide {
   transform: TransformLoad;
 }
 
+/**
+ * A version list for a `cannot tell` reason slot (R6): up to three versions are listed; a longer list
+ * names its newest and oldest and counts the rest, so 38 failed versions read as one short clause.
+ * `versions` is newest first (the range's order).
+ */
+export function condenseVersions(versions: readonly string[]): string {
+  if (versions.length <= 3) return versions.join(', ');
+  return `${versions[0]} and ${versions.length - 1} older versions back to ${versions[versions.length - 1]}`;
+}
+
 export function assessComponentCopies(
   projectRoot: string,
-  opts: { fetcher: PackageFetcher; upperBound: UpperBound; trigger: MigrationAssessment['trigger'] },
+  opts: {
+    fetcher: PackageFetcher;
+    upperBound: UpperBound;
+    trigger: MigrationAssessment['trigger'];
+    /** The installed package on disk (`node_modules/@3fn/core`): judged FIRST, with no fetch (R2 (a)). */
+    installed?: { version: string; root: string };
+    /** The legacy manifest's `version` (the last sync), when there is one — the oldest version the copies are known to need. */
+    lastSyncVersion?: string | null;
+  },
 ): MigrationAssessment {
   const coreDir = path.join(projectRoot, LEGACY_COMPONENT_ROOT);
   const names = fs
@@ -288,16 +360,6 @@ export function assessComponentCopies(
     brandedTokenFiles: [],
   };
 
-  // The range: earliest available → the installed version, newest first.
-  let listed: string[] | null = null;
-  if (opts.upperBound.version) listed = opts.fetcher.listVersions();
-  const rangeKnown = listed !== null && opts.upperBound.version !== null;
-  if (rangeKnown) {
-    assessment.range = listed!
-      .filter((v) => parseVersion(v) && compareVersions(v, opts.upperBound.version!) <= 0)
-      .sort((a, b) => compareVersions(b, a));
-  }
-
   // Per-file state.
   const matched = new Map<string, Map<string, string>>(); // name → file → version
   const poisoned = new Map<string, Map<string, Set<string>>>(); // name → file → unknown-transform versions that left it undecidable
@@ -311,8 +373,42 @@ export function assessComponentCopies(
   const allMatched = () =>
     names.every((n) => consumer.get(n)!.size > 0 && [...consumer.get(n)!.keys()].every((f) => matched.get(n)!.has(f)));
 
+  // R2 (a): the installed package is already on disk — judge it FIRST, before listing or fetching anything.
+  // Its content is shipped content, so a match is a match whatever the range. A package that ships no
+  // `src/components/core/` (most 15.x+ installs ship only native files there, if anything) adds nothing.
+  const installed =
+    opts.installed && parseVersion(opts.installed.version) && fs.existsSync(path.join(opts.installed.root, LEGACY_COMPONENT_ROOT))
+      ? opts.installed
+      : null;
+  if (installed) {
+    assessment.judgedInstalled = installed.version;
+    judgeSide({ version: installed.version, root: installed.root, transform: loadTransform(installed.root) });
+  }
+
+  // The range: earliest available → the installed version, newest first. Nothing is listed when the
+  // installed package alone settled every file.
+  let listed: string[] | null = null;
+  if (opts.upperBound.version && !allMatched()) listed = opts.fetcher.listVersions();
+  const rangeKnown = listed !== null && opts.upperBound.version !== null;
+  let rangeIncomplete = false;
+  let oldestNeeded = '';
+  if (rangeKnown) {
+    assessment.range = listed!
+      .filter((v) => parseVersion(v) && compareVersions(v, opts.upperBound.version!) <= 0)
+      .sort((a, b) => compareVersions(b, a));
+    // A registry that lists nothing as old as the copies may be (the public registry lists 13.0.0 and later)
+    // cannot settle a copy that matches nothing it lists: that copy is `cannot-tell`, not `modified`.
+    oldestNeeded = opts.lastSyncVersion && parseVersion(opts.lastSyncVersion) ? opts.lastSyncVersion : opts.upperBound.version!;
+    const oldestListed = listed!.filter((v) => parseVersion(v)).sort(compareVersions)[0];
+    if (oldestListed === undefined || compareVersions(oldestNeeded, oldestListed) < 0) {
+      rangeIncomplete = true;
+      if (oldestListed !== undefined) assessment.unlistedBefore = oldestListed;
+    }
+  }
+
   for (const version of assessment.range) {
     if (allMatched()) break;
+    if (installed && version === installed.version) continue; // judged from disk above
     assessment.fetchLog.push(version);
     const root = opts.fetcher.fetch(version);
     if (!root) {
@@ -320,7 +416,13 @@ export function assessComponentCopies(
       continue;
     }
     assessment.fetched.push(version);
-    const side: VersionSide = { version, root, transform: loadTransform(root) };
+    judgeSide({ version, root, transform: loadTransform(root) });
+  }
+  const auth = opts.fetcher.authFailure?.() ?? null;
+  if (auth) assessment.authFailure = auth;
+
+  function judgeSide(side: VersionSide): void {
+    const { version, root } = side;
     if (side.transform.kind === 'unknown') assessment.unknownTransform[version] = side.transform.reason;
     const perName = new Map<string, Set<string>>();
     versionFileSets.set(version, perName);
@@ -347,7 +449,7 @@ export function assessComponentCopies(
     }
   }
 
-  const undecidableRange = !rangeKnown || assessment.failed.length > 0;
+  const undecidableRange = !rangeKnown || assessment.failed.length > 0 || rangeIncomplete;
   for (const name of names) {
     const files: FileVerdict[] = [];
     for (const file of consumer.get(name)!.keys()) {
@@ -355,11 +457,18 @@ export function assessComponentCopies(
       if (v) files.push({ file, verdict: 'unmodified', matchedVersion: v });
       else if (undecidableRange || poisoned.get(name)!.has(file)) {
         // Cause precedence: an unknown installed version, then a retrieval failure
-        // (the version list or a version's tarball), then an unrecoverable transform.
+        // (the version list, a version's tarball, or versions the registry does not
+        // list), then an unrecoverable transform.
         let cause: CannotTellCause;
         if (!opts.upperBound.version) cause = { kind: 'version-unknown' };
         else if (!rangeKnown) cause = { kind: 'fetch-failed', version: opts.upperBound.version };
-        else if (assessment.failed.length > 0) cause = { kind: 'fetch-failed', version: assessment.failed.join(', ') };
+        else if (assessment.failed.length > 0) cause = { kind: 'fetch-failed', version: condenseVersions(assessment.failed) };
+        else if (rangeIncomplete) {
+          const listedNote = assessment.unlistedBefore
+            ? `your registry lists no version before ${assessment.unlistedBefore}`
+            : 'your registry lists no version of @3fn/core';
+          cause = { kind: 'fetch-failed', version: `${oldestNeeded} (${listedNote})` };
+        }
         else cause = { kind: 'transform-unrecoverable', version: [...poisoned.get(name)!.get(file)!].sort(compareVersions).join(', ') };
         files.push({ file, verdict: 'cannot-tell', cause });
       }
@@ -443,13 +552,16 @@ export type CannotTellCause =
  * installed version is unknown>. Review before removing.`
  */
 export function cannotTellMessage(p: string, cause: CannotTellCause): string {
-  const reason =
-    cause.kind === 'fetch-failed'
-      ? `the package content for version ${cause.version} could not be retrieved`
-      : cause.kind === 'transform-unrecoverable'
-        ? `version ${cause.version}'s copy transform cannot be recovered`
-        : 'the installed version is unknown';
-  return `cannot tell whether ${p} was modified — ${reason}. Review before removing.`;
+  return `cannot tell whether ${p} was modified — ${cannotTellReason(cause)}. Review before removing.`;
+}
+
+/** The catalog row's three-cause reason clause, shared with the grouped row (`errorCatalog.cannotTellGroupMessage`). */
+export function cannotTellReason(cause: CannotTellCause): string {
+  return cause.kind === 'fetch-failed'
+    ? `the package content for version ${cause.version} could not be retrieved`
+    : cause.kind === 'transform-unrecoverable'
+      ? `version ${cause.version}'s copy transform cannot be recovered`
+      : 'the installed version is unknown';
 }
 
 /**
@@ -510,19 +622,50 @@ export function migrationReportLines(a: MigrationAssessment): string[] {
   if (unmodified.length > 0) lines.push(unmodifiedCopiesMessage(unmodified.length, unmodified.map((c) => c.name)));
   if (forks.length > 0) lines.push(modifiedCopiesMessage(forks.length, forks.map((c) => c.name)));
   if (yours.length > 0) lines.push(yoursUnderCoreMessage(yours.length, yours.map((c) => c.name)));
-  for (const c of unknown) {
-    const undecided = c.files.filter((f) => f.verdict === 'cannot-tell');
-    const causes = new Set(undecided.map((f) => JSON.stringify(f.cause)));
-    if (undecided.length === c.files.length && causes.size === 1) {
-      lines.push(cannotTellMessage(`${LEGACY_COMPONENT_ROOT}/${c.name}/`, undecided[0].cause!));
-    } else {
-      for (const f of undecided) lines.push(cannotTellMessage(`${LEGACY_COMPONENT_ROOT}/${c.name}/${f.file}`, f.cause!));
-    }
-  }
+  lines.push(...cannotTellLines(a, unknown));
   if (unknown.length > 0) lines.push(cannotTellRemedyMessage(unknown.map((c) => c.name)));
   if (a.oldNameReferenceMaps.length > 0) lines.push(TOKEN_SIDE_SLOTS.oldNameReferenceMaps(a.oldNameReferenceMaps));
   if (a.brandedTokenFiles.length > 0) lines.push(TOKEN_SIDE_SLOTS.brandedTokenFiles(a.brandedTokenFiles));
   return lines;
+}
+
+/**
+ * The `cannot tell` lines, condensed (R2 (b), R6):
+ *  - a login refusal is ONE line naming the problem as a login problem, covering every copy that could not be
+ *    judged only because content could not be retrieved;
+ *  - copies sharing one reason share one line (the grouped row); a copy alone with its reason keeps the
+ *    catalog's per-path row; a copy whose files differ in reason keeps one catalog row per file.
+ * The remedy row (printed after these) names every copy either way.
+ */
+function cannotTellLines(a: MigrationAssessment, unknown: ComponentVerdict[]): string[] {
+  const lines: string[] = [];
+  const perFile: string[] = [];
+  const undecidedOf = (c: ComponentVerdict) => c.files.filter((f) => f.verdict === 'cannot-tell');
+  const byLogin = a.authFailure ? unknown.filter((c) => undecidedOf(c).every((f) => f.cause?.kind === 'fetch-failed')) : [];
+  if (a.authFailure && byLogin.length > 0) {
+    lines.push(registryAuthFailedMessage(a.authFailure.code, a.authFailure.registry, byLogin.length));
+  }
+  const groups = new Map<string, { cause: CannotTellCause; names: string[] }>();
+  for (const c of unknown) {
+    if (byLogin.includes(c)) continue;
+    const undecided = undecidedOf(c);
+    const causes = new Set(undecided.map((f) => JSON.stringify(f.cause)));
+    if (undecided.length === c.files.length && causes.size === 1) {
+      const key = JSON.stringify(undecided[0].cause);
+      if (!groups.has(key)) groups.set(key, { cause: undecided[0].cause!, names: [] });
+      groups.get(key)!.names.push(c.name);
+    } else {
+      for (const f of undecided) perFile.push(cannotTellMessage(`${LEGACY_COMPONENT_ROOT}/${c.name}/${f.file}`, f.cause!));
+    }
+  }
+  for (const { cause, names } of groups.values()) {
+    lines.push(
+      names.length === 1
+        ? cannotTellMessage(`${LEGACY_COMPONENT_ROOT}/${names[0]}/`, cause)
+        : cannotTellGroupMessage(names, cannotTellReason(cause)),
+    );
+  }
+  return [...lines, ...perFile];
 }
 
 // ---------------------------------------------------------------------------
@@ -606,6 +749,21 @@ export const REGISTRY_PIN_MESSAGE =
 export const REGISTRY_PIN_ORDER_CAUTION =
   "Do this after 'sync --migrate-components': once the mapping is gone, versions before 13.0.0 can no longer be fetched to judge your component copies.";
 
+/**
+ * Replaces the ordering caution when the registry refused this run's requests (R2 (c)). With a refused token
+ * the mapping already blocks every fetch, so waiting protects nothing; the consumer chooses between renewing
+ * the token (the only way to judge copies made before 13.0.0) and removing the mapping now (copies are then
+ * judged against what npm's default registry lists, and a copy that cannot be judged stays in place).
+ */
+export function registryPinRefusedTokenMessage(code: string): string {
+  return (
+    `Your registry refused this run's requests (${code}), so the mapping already blocks every fetch and waiting for 'sync --migrate-components' protects nothing. ` +
+    `Either renew the token and run 'npx designerpunk sync' again (versions before 13.0.0 exist only on GitHub Packages, so this is the only way sync can judge copies made from them), ` +
+    `or remove the mapping now and run 'npx designerpunk sync' again: it then judges your copies against the versions npm's default registry lists (13.0.0 and later), ` +
+    `and a copy it still cannot judge stays where it is.`
+  );
+}
+
 export function tsconfigPinMessage(keys: string[]): string {
   return `tsconfig.test.json re-pins ${keys.join(', ')} to raw TypeScript in node_modules/@3fn/core/src — an older 'init' wrote that. The package resolves those subpaths to its compiled types, and several of the pinned source files no longer ship. To remove just those paths entries: npx designerpunk sync --repair-tsconfig`;
 }
@@ -616,12 +774,14 @@ export const TSCONFIG_UNPARSEABLE_MESSAGE =
 /**
  * Build the offers. Called AFTER the migration assessment (the fetch runs
  * through the pin the npmrc repair removes — L2-D2). `copiesPending` adds the
- * ordering caution while pre-123 copies are still on disk.
+ * ordering caution while pre-123 copies are still on disk — or, when the registry
+ * refused this run's requests (`refused`), the refused-token advice instead (R2 (c)).
  */
-export function repairOffers(projectRoot: string, copiesPending: boolean): RepairOffer[] {
+export function repairOffers(projectRoot: string, copiesPending: boolean, refused?: RegistryAuthFailure | null): RepairOffer[] {
   const offers: RepairOffer[] = [];
   if (detectRegistryPin(projectRoot)) {
-    offers.push({ kind: 'npmrc', lines: copiesPending ? [REGISTRY_PIN_MESSAGE, REGISTRY_PIN_ORDER_CAUTION] : [REGISTRY_PIN_MESSAGE] });
+    const caution = refused ? registryPinRefusedTokenMessage(refused.code) : REGISTRY_PIN_ORDER_CAUTION;
+    offers.push({ kind: 'npmrc', lines: copiesPending ? [REGISTRY_PIN_MESSAGE, caution] : [REGISTRY_PIN_MESSAGE] });
   }
   const ts = detectTsconfigPins(projectRoot);
   if (ts.keys.length > 0) offers.push({ kind: 'tsconfig', lines: [tsconfigPinMessage(ts.keys)] });

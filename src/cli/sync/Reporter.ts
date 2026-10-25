@@ -42,6 +42,39 @@ export const STEWARD_REPO_MESSAGE =
 export const OFF_TTY_REPORT_ONLY_MESSAGE =
   'not a terminal and --apply was not given — reported only; nothing was changed. Re-run with --apply to apply the updates above.';
 
+/** Off a terminal without --apply, after a flag (`--repair-*`, `--migrate-components`) applied its own step: the rest stayed unapplied (R4). */
+export const OFF_TTY_PARTIAL_MESSAGE =
+  'not a terminal and --apply was not given — only what you named by flag was applied (listed above); the other updates in the report were not. Re-run with --apply to apply them.';
+
+/** The closing line when nothing is pending — printed only then (R4, test01 F-9). */
+export const ALL_CLEAR_MESSAGE = '✅ Everything DesignerPunk manages is up to date.';
+
+/**
+ * The closing line when no managed file needs an update but the report still offers something (a migration,
+ * a repair, the manifest's conversion): never the all-clear (R4, test01 F-9).
+ */
+export function notAllClearMessage(pending: readonly string[]): string {
+  return `⏳ No managed file needs an update, but this is not an all-clear. Still to do (see above): ${pending.join('; ')}.`;
+}
+
+/** Heads a report that this run may act on: the report is the repo BEFORE anything applies (R4). */
+export const PRE_APPLY_REPORT_NOTE =
+  '📝 This report shows your repo before this run applies anything; what the run applies is listed after it.';
+
+/**
+ * The result of a run that applied something (R4): what it did, then what is still to do. Printed after
+ * the applies, so a reader never takes the pre-apply report above for the outcome.
+ */
+export function resultLines(done: readonly string[], pending: readonly string[]): string[] {
+  const out = ['', '📋 Result of this run:'];
+  for (const d of done) out.push(`   ✓ ${d}`);
+  if (pending.length > 0) {
+    out.push('⏳ Still to do:');
+    for (const p of pending) out.push(`   ${p}`);
+  }
+  return out;
+}
+
 export const RETIRED_FORCE_MESSAGE =
   '--force / --accept-all are retired: updates apply with --apply (or one confirmation on a terminal); a conflict applies only with --overwrite <path>, and a file you deleted only with --restore <path>.';
 
@@ -69,12 +102,21 @@ export interface ReportModel {
   keys: SurfaceKeyResult[];
   /** Additional sections (migration, repairs), already rendered. */
   sections: Array<{ title: string; lines: string[] }>;
+  /**
+   * What the report offers that is not a managed-file update (legacy copies, component copies, repairs, the
+   * manifest's conversion or update, a stale MCP_STEERING_DIR), one short label each. Non-empty → the closing
+   * line is never the all-clear (R4, test01 F-9).
+   */
+  pending?: string[];
+  /** This run may apply something after the report: head it with `PRE_APPLY_REPORT_NOTE` (R4). */
+  applying?: boolean;
 }
 
 export function buildReport(model: ReportModel): string[] {
   const out: string[] = [];
   const { files } = model;
   if (model.dryRun) out.push('🔍 Dry-run mode — no changes will be applied.', '');
+  else if (model.applying) out.push(PRE_APPLY_REPORT_NOTE, '');
 
   if (model.manifestLines.length > 0) {
     out.push('📋 Manifest:');
@@ -132,7 +174,10 @@ export function buildReport(model: ReportModel): string[] {
 
   const unchangedCount = files.unchanged.length + model.keys.reduce((n, s) => n + s.classified.filter((c) => c.classification === 'unchanged').length, 0);
   if (unchangedCount > 0) out.push(`✓ ${unchangedCount} managed item${unchangedCount === 1 ? '' : 's'} unchanged`);
-  if (newItems.length === 0 && updated.length === 0 && conflicts.length === 0) out.push('✅ Everything DesignerPunk manages is up to date.');
+  if (newItems.length === 0 && updated.length === 0 && conflicts.length === 0) {
+    const pending = model.pending ?? [];
+    out.push(pending.length === 0 ? ALL_CLEAR_MESSAGE : notAllClearMessage(pending));
+  }
   return out;
 }
 

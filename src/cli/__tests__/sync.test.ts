@@ -19,7 +19,17 @@ import { runSync, parseSyncArgs } from '../sync';
 import { runInit } from '../init';
 import { resolveTokens } from '../resolveTokens';
 import { LEGACY_MANIFEST_PATH, LEGACY_POINTER_TEXT, MANIFEST_FILE, serializeManifest, parseManifest } from '../sync/Manifest';
-import { STEWARD_REPO_MESSAGE, OFF_TTY_REPORT_ONLY_MESSAGE } from '../sync/Reporter';
+import {
+  STEWARD_REPO_MESSAGE,
+  OFF_TTY_REPORT_ONLY_MESSAGE,
+  OFF_TTY_PARTIAL_MESSAGE,
+  ALL_CLEAR_MESSAGE,
+  PRE_APPLY_REPORT_NOTE,
+  notAllClearMessage,
+  resultLines,
+} from '../sync/Reporter';
+import { legacyCopiesMessage } from '../sync/Migration';
+import { restartLineSequencedMessage } from '../shared/errorCatalog';
 import {
   REPO_ROOT,
   createScratch,
@@ -227,11 +237,133 @@ describe('sync — end to end (Task 5)', () => {
       expect(serializeManifest(parseManifest(text))).toBe(text);
       expect(parseManifest(text).entries).toEqual({ '.kiro/steering/Doc.md': { hash: sha('same\n'), grain: 'file', origin: 'copy' } });
       expect(JSON.parse(readText(scratch, LEGACY_MANIFEST_PATH))['//']).toBe(LEGACY_POINTER_TEXT);
+      // R4: the old file is CONVERTED and KEPT (its content intact), and every message says exactly that — none says "moves".
+      const legacyAfter = JSON.parse(readText(scratch, LEGACY_MANIFEST_PATH));
+      expect(legacyAfter.version).toBe('12.0.3');
+      expect(Object.keys(legacyAfter.files)).toEqual(['.kiro/steering/Doc.md', 'src/tokens/A.ts']);
+      expect(con.output()).toContain(
+        `found the pre-123 manifest ${LEGACY_MANIFEST_PATH} (last synced at 12.0.3) — when changes apply, sync converts it to ${MANIFEST_FILE} at the repo root and keeps the old file, with a note saying so`,
+      );
+      expect(con.output()).toContain(`${MANIFEST_FILE} written from ${LEGACY_MANIFEST_PATH}; the old file is kept, with a note saying when you can delete it`);
+      expect(con.output()).not.toMatch(/\bmoves? to\b/);
+      expect(LEGACY_POINTER_TEXT).not.toMatch(/\bmoved\b|no longer read\b/);
+      expect(LEGACY_POINTER_TEXT).toMatch(/^converted to designerpunk\.manifest\.json/);
 
       const before = dirHash(scratch);
       const second = await runSync({ projectRoot: scratch, apply: true, isTTY: false });
       expect(second.manifestWritten).toBe(false);
       expect(dirHash(scratch)).toEqual(before);
+    });
+  });
+
+  describe('R4 — the report before, the result after, and the all-clear only when nothing is pending (test01 F-9)', () => {
+    const PIN_NPMRC = '@3fn:registry=https://npm.pkg.github.com\n';
+    const OLD_TSCONFIG = { compilerOptions: { paths: { '@3fn/core/build': ['./node_modules/@3fn/core/src/build/tokens/index.ts'] } } };
+    const noAgents = stubAgentLayer({});
+    function bornRepo(opts: { pins?: boolean; docPending?: boolean } = {}) {
+      const pkgDir = setupPackage(scratch);
+      birthKeys(scratch, pkgDir, {}, opts.docPending ? { [DOC]: { hash: sha('v1\n'), grain: 'file', origin: 'generated' } } : {});
+      if (opts.docPending) writeFile(scratch, DOC, 'v1\n');
+      if (opts.pins) {
+        writeFile(scratch, '.npmrc', PIN_NPMRC);
+        writeFile(scratch, 'tsconfig.test.json', JSON.stringify(OLD_TSCONFIG, null, 2) + '\n');
+      }
+    }
+    const REPAIRS = ['the .npmrc repair (--repair-npmrc)', 'the tsconfig.test.json repair'];
+
+    test('a clean repo: the all-clear', async () => {
+      bornRepo();
+      await runSync({ projectRoot: scratch, isTTY: false, agentLayer: noAgents });
+      expect(con.output()).toContain(ALL_CLEAR_MESSAGE);
+    });
+
+    test('report only (no --apply): repairs still offered → never the all-clear; the closing line names what is pending', async () => {
+      bornRepo({ pins: true });
+      const out = await runSync({ projectRoot: scratch, isTTY: false, agentLayer: noAgents });
+      expect(out.report[out.report.length - 1]).toBe(notAllClearMessage(REPAIRS));
+      expect(con.output()).not.toContain(ALL_CLEAR_MESSAGE);
+      expect(con.output()).not.toContain(PRE_APPLY_REPORT_NOTE); // nothing can apply off a terminal without a flag
+    });
+
+    test('dry-run with legacy copies pending: never the all-clear', async () => {
+      setupPackage(scratch, { files: { '.kiro/steering/Doc.md': 'same\n' } });
+      writeFile(scratch, '.kiro/steering/Doc.md', 'same\n');
+      writeFile(scratch, LEGACY_MANIFEST_PATH, JSON.stringify({ version: '12.0.3', files: { '.kiro/steering/Doc.md': { hash: sha('same\n'), managed: true } } }));
+      await runSync({ projectRoot: scratch, dryRun: true, isTTY: false });
+      expect(con.output()).not.toContain(ALL_CLEAR_MESSAGE);
+      expect(con.output()).toContain('1 legacy copy from an earlier init (--migrate-legacy)');
+      expect(con.output()).toContain(`converting ${LEGACY_MANIFEST_PATH} to ${MANIFEST_FILE}`);
+    });
+
+    test('an apply run: the report is headed as the BEFORE state, the result follows it, and the closing reflects what is left', async () => {
+      bornRepo({ pins: true });
+      await runSync({ projectRoot: scratch, isTTY: false, apply: true, repairTsconfig: true, agentLayer: noAgents });
+      const outText = con.output();
+      const result = resultLines(['tsconfig.test.json: removed the raw-src @3fn/core paths entries'], ['the .npmrc repair (--repair-npmrc)']).join('\n');
+      expect(outText).toContain(PRE_APPLY_REPORT_NOTE);
+      expect(outText).toContain(result);
+      expect(outText.indexOf(PRE_APPLY_REPORT_NOTE)).toBeLessThan(outText.indexOf(notAllClearMessage(REPAIRS)));
+      expect(outText.indexOf(notAllClearMessage(REPAIRS))).toBeLessThan(outText.indexOf(result));
+      expect(outText.trimEnd().endsWith('✅ Sync complete.')).toBe(true);
+      expect(outText).not.toContain(ALL_CLEAR_MESSAGE);
+    });
+
+    test('an apply run that clears everything: the report before still says pending; the result after says up to date', async () => {
+      bornRepo({ pins: true });
+      await runSync({ projectRoot: scratch, isTTY: false, apply: true, repairNpmrc: true, repairTsconfig: true, agentLayer: noAgents });
+      const outText = con.output();
+      expect(outText).toContain(notAllClearMessage(REPAIRS));
+      expect(outText).toContain(
+        resultLines(['.npmrc: removed the @3fn → GitHub Packages mapping line', 'tsconfig.test.json: removed the raw-src @3fn/core paths entries'], []).join('\n'),
+      );
+      expect(outText.trimEnd().endsWith('✅ Sync complete. Everything DesignerPunk manages is up to date.')).toBe(true);
+    });
+
+    test('off a terminal without --apply, after a flag ran its own step: never "nothing was changed"', async () => {
+      bornRepo({ pins: true, docPending: true });
+      const out = await runSync({ projectRoot: scratch, isTTY: false, repairTsconfig: true, agentLayer: stubAgentLayer({ cc: [{ path: DOC, content: 'v2\n' }] }) });
+      expect(out.stopped).toBe('off-tty');
+      expect(con.output()).toContain(OFF_TTY_PARTIAL_MESSAGE);
+      expect(con.output()).not.toContain(OFF_TTY_REPORT_ONLY_MESSAGE);
+      expect(con.output()).toContain('1 managed update (--apply)');
+      expect(readText(scratch, DOC)).toBe('v1\n');
+    });
+
+    test('--migrate-legacy: the report before lists the copies (no all-clear); the result after names the removal, the attach and the manifest', async () => {
+      // A born repo with the real package installed (its built agent-layer lane), one release-1 copy recorded.
+      writeFile(scratch, 'src/tokens/index.ts', '\nexport function getAllPrimitiveTokens() { return []; }\n');
+      writeFile(scratch, 'src/tokens/semantic/index.ts', '\nexport function getAllSemanticTokens() { return []; }\n');
+      writeFile(scratch, 'designerpunk.config.ts', `export default { name: 'R4Fixture', abbreviation: 'RF', tokenSource: './src/tokens' };\n`);
+      fs.mkdirSync(path.join(scratch, '.git'));
+      fs.mkdirSync(path.join(scratch, 'node_modules/@3fn'), { recursive: true });
+      fs.symlinkSync(REPO_ROOT, path.join(scratch, 'node_modules/@3fn/core'), 'dir');
+      const copy = '.kiro/steering/Old-Copy.md';
+      writeFile(scratch, copy, 'copied\n');
+      writeFile(scratch, MANIFEST_FILE, serializeManifest({
+        version: '1',
+        posture: 'born',
+        installedVersion: '14.1.0',
+        contractHash: '',
+        attachedTargets: [],
+        entries: { [copy]: { hash: sha('copied\n'), grain: 'file', origin: 'copy' } },
+      }));
+
+      const out = await runSync({ projectRoot: scratch, isTTY: false, migrateLegacy: true, targets: ['cc'] });
+
+      expect(out.trace).toContain('attach:cc');
+      const outText = con.output();
+      const resultAt = outText.indexOf('📋 Result of this run:');
+      expect(resultAt).toBeGreaterThan(0);
+      const before = outText.slice(0, resultAt);
+      const after = outText.slice(resultAt);
+      expect(before).toContain(PRE_APPLY_REPORT_NOTE);
+      expect(before).toContain(legacyCopiesMessage(1, ['.kiro/steering']));
+      expect(before).not.toContain(ALL_CLEAR_MESSAGE);
+      expect(after).toContain('✓ legacy copies: removed 1 unmodified');
+      expect(after).toContain('✓ attached cc');
+      expect(after).toContain(`✓ ${MANIFEST_FILE} updated`);
+      expect(after.indexOf('✅ Sync complete.')).toBeLessThan(after.indexOf(restartLineSequencedMessage()));
+      expect(fs.existsSync(path.join(scratch, copy))).toBe(false);
     });
   });
 

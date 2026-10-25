@@ -24,7 +24,9 @@
  * Order: resolve → steward guard → manifest (load | relocate legacy) → prune →
  * classify (generated files + regions, keys) → legacy copies → migration →
  * repairs → REPORT → decide → (--migrate-legacy: removal, then attach) → apply →
- * save.
+ * save → RESULT (what the run applied and what is still to do; the report above
+ * is the before state, and its closing line is the all-clear only when nothing
+ * in it is still offered).
  */
 
 import * as fs from 'fs';
@@ -98,13 +100,16 @@ import {
   displayReport,
   STEWARD_REPO_MESSAGE,
   OFF_TTY_REPORT_ONLY_MESSAGE,
+  OFF_TTY_PARTIAL_MESSAGE,
+  ALL_CLEAR_MESSAGE,
+  resultLines,
   RETIRED_FORCE_MESSAGE,
   corruptManifestMessage,
   packageKeysUnavailableMessage,
   untrackedNewMessage,
 } from './Reporter';
 import { applyKeys } from './Applier';
-import { reportAndMaybeFixStaleSteeringDir } from './SteeringDirCheck';
+import { reportAndMaybeFixStaleSteeringDir, detectStaleSteeringDir } from './SteeringDirCheck';
 import {
   migrationTrigger,
   hasLegacyCopies,
@@ -123,7 +128,7 @@ import {
   migrateLegacyNeedsTargetMessage,
   migrateLegacyRefusedMessage,
 } from './Migration';
-import type { MigrationAssessment, PackageFetcher, RelocationResult, AttachAvailability, LegacyCopyAssessment, LegacyRemoval } from './Migration';
+import type { MigrationAssessment, PackageFetcher, RelocationResult, AttachAvailability, LegacyCopyAssessment, LegacyRemoval, RepairOffer } from './Migration';
 import {
   loadNameContract,
   readPresentNames,
@@ -405,8 +410,9 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
       pruned = conv.pruned;
       relocateLegacy = true;
       persistManifest = true;
+      // R4: the old file is CONVERTED, not moved — it stays, with a note (`LEGACY_POINTER_TEXT` says why), so the line says so.
       manifestLines.push(
-        `found the pre-123 manifest ${LEGACY_MANIFEST_PATH} (last synced at ${legacy.version}) — it moves to ${MANIFEST_FILE} at the repo root when changes apply`,
+        `found the pre-123 manifest ${LEGACY_MANIFEST_PATH} (last synced at ${legacy.version}) — when changes apply, sync converts it to ${MANIFEST_FILE} at the repo root and keeps the old file, with a note saying so`,
       );
     } else {
       manifest = {
@@ -448,10 +454,13 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
   // 3b. Generated surfaces (C7 rows ADDED) — file and region grain, for attachedTargets ONLY.
   const ignore = loadIgnoreFilter(projectRoot);
   const sections: Array<{ title: string; lines: string[] }> = [];
+  /** Managed surfaces this run could not check — the closing line is never the all-clear beside them (R4). */
+  const notChecked: string[] = [];
   let files: ClassificationResult = emptyClassification();
   if (manifest.attachedTargets.length > 0) {
     if (!agentLayer) {
       sections.push({ title: '⚠️  Generated agent layer:', lines: [agentLayerUnavailableMessage(agentLayerReason)] });
+      notChecked.push(AGENT_LAYER_NOT_CHECKED);
     } else {
       try {
         outcome.generated = await classifyGenerated(projectRoot, manifest.attachedTargets, emitFor, entries, ignore);
@@ -465,6 +474,7 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
         if (lines.length > 0) sections.push({ title: '🧩 Generated agent layer:', lines });
       } catch (err) {
         sections.push({ title: '⚠️  Generated agent layer:', lines: [agentLayerUnavailableMessage((err as Error).message)] });
+        notChecked.push(AGENT_LAYER_NOT_CHECKED);
       }
     }
   }
@@ -478,6 +488,7 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
     const pkgKeys = computePackageKeys(pkg.root, keyTargets);
     if (pkgKeys.kind === 'unavailable') {
       sections.push({ title: '⚠️  MCP configuration:', lines: [packageKeysUnavailableMessage(pkgKeys.reason)] });
+      notChecked.push('checking your MCP config files (sync could not, see above)');
     } else {
       if (manifest.posture === 'consume') restrictToReference(pkgKeys.keys);
       for (const surface of KEY_SURFACES) {
@@ -542,10 +553,19 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
       const fetcher = options.fetcher ?? npmRailFetcher(projectRoot);
       try {
         const upperBound = resolveUpperBound(projectRoot, loaded.kind === 'ok' ? manifest.installedVersion : null);
-        outcome.migration = assessComponentCopies(projectRoot, { fetcher, upperBound, trigger });
+        outcome.migration = assessComponentCopies(projectRoot, {
+          fetcher,
+          upperBound,
+          trigger,
+          // R2 (a): the installed package on disk is judged first, with no fetch.
+          installed: { version: pkg.version, root: pkg.root },
+          // The legacy manifest's last sync — read even after conversion, since the old file is kept.
+          lastSyncVersion: loadLegacyManifest(projectRoot)?.version ?? null,
+        });
       } finally {
         fetcher.dispose?.();
       }
+      if (outcome.migration.judgedInstalled) outcome.trace.push(`judged-installed:${outcome.migration.judgedInstalled}`);
       for (const v of outcome.migration.fetchLog) outcome.trace.push(`fetch:${v}`);
       lines.push(...migrationReportLines(outcome.migration));
     }
@@ -554,7 +574,7 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
 
   // 6. Repairs (C7 step 6) — OFFERED only now, after the migration fetch ran
   //    through the consumer's rail (the npmrc repair removes that rail).
-  const offers = repairOffers(projectRoot, hasLegacyCopies(projectRoot));
+  const offers = repairOffers(projectRoot, hasLegacyCopies(projectRoot), outcome.migration?.authFailure);
   for (const o of offers) outcome.trace.push(`repair-offered:${o.kind}`);
   if (offers.length > 0) sections.push({ title: '🔧 Repairs offered:', lines: offers.flatMap((o) => o.lines) });
 
@@ -587,14 +607,40 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
     if (outcome.typeContract.lines.length > 0) sections.push({ title: '🧾 Type contract:', lines: outcome.typeContract.lines });
   }
 
-  // 7. REPORT — always, before anything applies.
-  const report = buildReport({ dryRun: Boolean(options.dryRun), manifestLines, files, keys: keyResults, sections });
+  // 7. REPORT — always, before anything applies. Its closing line is the all-clear ONLY when nothing in it is
+  //    still offered (R4, test01 F-9); a run that may apply something says the report is the BEFORE state.
+  const keyOf = (s: SurfaceKeyResult, key: string) => `${s.surface.file}#${key}`;
+  const manifestChanges =
+    relocateLegacy ||
+    pruned.length > 0 ||
+    files.adoptable.length > 0 ||
+    files.dropEntries.length > 0 ||
+    keyResults.some((s) => s.dropEntries.length > 0) ||
+    (persistManifest && manifest.installedVersion !== pkg.version) ||
+    (persistManifest && installedContract !== undefined && manifest.contractHash !== installedContract.hash);
+  for (const k of keyResults) if (k.invalid) notChecked.push(`checking ${k.surface.file} (not valid JSON, see above)`);
+  const pending = [...notChecked, ...pendingOffers(projectRoot, outcome, offers)];
+  if (manifestChanges) pending.unshift(relocateLegacy ? `converting ${LEGACY_MANIFEST_PATH} to ${MANIFEST_FILE}` : `updating ${MANIFEST_FILE}`);
+  const flagged = Boolean(options.migrateLegacy || options.migrateComponents || options.repairNpmrc || options.repairTsconfig);
+  const applying = !options.dryRun && (Boolean(options.apply) || isTTY || flagged);
+  const report = buildReport({ dryRun: Boolean(options.dryRun), applying, manifestLines, files, keys: keyResults, sections, pending });
   displayReport(report);
   outcome.report = report;
   await reportAndMaybeFixStaleSteeringDir(projectRoot, { dryRun: Boolean(options.dryRun) || !isTTY });
 
   // 8. Decide.
   if (options.dryRun) return { ...outcome, stopped: 'dry-run' };
+  /**
+   * The result block (R4): what this run applied, then what is still to do — after the applies, never before.
+   * Prints nothing when the run applied nothing. Returns true iff nothing is still to do.
+   */
+  const printResult = (managed: { applied: number; unapplied: string[] }): boolean => {
+    const done = resultDone(outcome, managed.applied, relocateLegacy);
+    if (done.length === 0) return false;
+    const still = [...notChecked, ...pendingOffers(projectRoot, outcome, offers), ...managed.unapplied];
+    for (const l of resultLines(done, still)) console.log(l);
+    return still.length === 0;
+  };
   // Explicit per-repair flags are their own authorization (after the report).
   if (options.repairNpmrc && offers.some((o) => o.kind === 'npmrc') && repairRegistryPin(projectRoot)) {
     outcome.trace.push('repair-applied:npmrc');
@@ -626,6 +672,7 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
       if (installedContract) manifest.contractHash = installedContract.hash;
       outcome.manifestWritten = saveManifest(projectRoot, manifest);
       if (relocateLegacy && !legacyHasPointer(projectRoot)) writeLegacyPointer(projectRoot);
+      printResult({ applied: 0, unapplied: [] });
       console.log(`✅ Sync complete. ${MANIFEST_FILE} updated. Run 'npx designerpunk sync' again to review the migrated repo.`);
       personalNoteStep(options, outcome, 'naming'); // the naming row, before the sequenced restart row (printed LAST)
       console.log('');
@@ -635,7 +682,6 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
   }
   const restore = new Set(options.restore ?? []);
   const overwrite = new Set(options.overwrite ?? []);
-  const keyOf = (s: SurfaceKeyResult, key: string) => `${s.surface.file}#${key}`;
 
   const isRegion = (p: string) => p.endsWith('#managed');
   const fileBatch = [...files.new, ...files.updatedSafe].map((f) => f.relativePath);
@@ -656,20 +702,26 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
     ),
   }));
   const keyCount = keyWork.reduce((n, w) => n + w.items.length, 0);
-  const manifestChanges =
-    relocateLegacy ||
-    pruned.length > 0 ||
-    files.adoptable.length > 0 ||
-    files.dropEntries.length > 0 ||
-    keyResults.some((s) => s.dropEntries.length > 0) ||
-    (persistManifest && manifest.installedVersion !== pkg.version) ||
-    (persistManifest && installedContract !== undefined && manifest.contractHash !== installedContract.hash);
   const workCount = fileBatch.length + fileRestore.length + fileOverwrite.length + keyCount;
-  if (workCount === 0 && !manifestChanges) return outcome;
+  const conflictsLeft =
+    files.conflicts.length -
+    fileOverwrite.length +
+    keyResults.reduce((n, s) => n + s.classified.filter((c) => c.classification === 'conflict' && !overwrite.has(keyOf(s, c.key))).length, 0);
+  const conflictsLine = conflictsLeft > 0 ? [`${conflictsLeft} conflict${conflictsLeft === 1 ? '' : 's'} left as you have them (per path: --overwrite <path>)`] : [];
+  const notApplied = workCount > 0 ? [`${workCount} managed update${workCount === 1 ? '' : 's'} (--apply)`] : [];
+  if (workCount === 0 && !manifestChanges) {
+    // Only a flag's own step (a repair, --migrate-components) can have applied here.
+    if (resultDone(outcome, 0, relocateLegacy).length > 0) {
+      console.log(printResult({ applied: 0, unapplied: conflictsLine }) ? SYNC_COMPLETE_ALL_CLEAR : '✅ Sync complete.');
+    }
+    return outcome;
+  }
 
   if (!options.apply) {
     if (!isTTY) {
-      console.log(`\n${OFF_TTY_REPORT_ONLY_MESSAGE}`);
+      const showed = resultDone(outcome, 0, relocateLegacy).length > 0;
+      if (showed) printResult({ applied: 0, unapplied: [...notApplied, ...conflictsLine] });
+      console.log(`\n${showed ? OFF_TTY_PARTIAL_MESSAGE : OFF_TTY_REPORT_ONLY_MESSAGE}`);
       return { ...outcome, stopped: 'off-tty' };
     }
     const confirm = options.confirm ?? terminalConfirm;
@@ -677,12 +729,15 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
       `\nApply ${workCount} change${workCount === 1 ? '' : 's'}${manifestChanges ? ' and update the manifest' : ''}?`,
     );
     if (!ok) {
-      console.log('  ⏭ Nothing applied.');
+      const showed = resultDone(outcome, 0, relocateLegacy).length > 0;
+      if (showed) printResult({ applied: 0, unapplied: [...notApplied, ...conflictsLine] });
+      console.log(showed ? '  ⏭ The managed updates above were not applied.' : '  ⏭ Nothing applied.');
       return { ...outcome, stopped: 'declined' };
     }
   }
 
   // 9. Apply — generated content from the package side computed above (never a package-file copy).
+  const appliedBefore = outcome.applied.length;
   const contents = new Map<string, string>([...(outcome.generated?.contents ?? new Map<string, string>()), ...gitignoreContents]);
   for (const rel of [...fileBatch, ...fileRestore, ...fileOverwrite]) {
     const content = contents.get(rel);
@@ -714,9 +769,72 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
     outcome.manifestWritten = saveManifest(projectRoot, manifest);
     if (relocateLegacy && !legacyHasPointer(projectRoot)) writeLegacyPointer(projectRoot);
   }
-  if (outcome.applied.length > 0) console.log(`\n  ✓ ${outcome.applied.length} change${outcome.applied.length === 1 ? '' : 's'} applied`);
-  console.log(outcome.manifestWritten ? `✅ Sync complete. ${MANIFEST_FILE} updated.` : '✅ Sync complete.');
+  const clear = printResult({ applied: outcome.applied.length - appliedBefore, unapplied: conflictsLine });
+  console.log(clear ? SYNC_COMPLETE_ALL_CLEAR : '✅ Sync complete.');
   return outcome;
+}
+
+const AGENT_LAYER_NOT_CHECKED = 'checking your generated agent files (sync could not, see above)';
+/** The closing line of a run that applied something and left nothing to do (R4). */
+const SYNC_COMPLETE_ALL_CLEAR = `✅ Sync complete. ${ALL_CLEAR_MESSAGE.replace(/^✅ /, '')}`;
+
+/**
+ * What the report offers that is not a managed-file update, as short labels (R4, test01 F-9). Read from disk
+ * and from this run's outcome, so the same function gives the BEFORE list (the report's closing line) and the
+ * AFTER list (the result block's "Still to do").
+ */
+function pendingOffers(projectRoot: string, outcome: SyncOutcome, offers: RepairOffer[]): string[] {
+  const out: string[] = [];
+  const legacy = outcome.legacyCopies;
+  if (legacy && !outcome.legacyRemoval) {
+    const n = legacy.unmodified.length + legacy.modified.length + legacy.missing.length;
+    out.push(`${n} legacy cop${n === 1 ? 'y' : 'ies'} from an earlier init (--migrate-legacy)`);
+  }
+  const m = outcome.migration;
+  if (m && m.components.length > 0) {
+    const r = outcome.relocation;
+    if (!r) {
+      out.push(`${m.components.length} pre-123 component cop${m.components.length === 1 ? 'y' : 'ies'} under src/components/core/ (--migrate-components)`);
+    } else {
+      if (r.leftInPlace.length > 0) out.push(`${r.leftInPlace.length} component cop${r.leftInPlace.length === 1 ? 'y' : 'ies'} sync cannot judge, left in src/components/core/ (decide each by hand)`);
+      if (r.skipped.length > 0) out.push(`${r.skipped.length} fork${r.skipped.length === 1 ? '' : 's'} not moved because src/components/<Name>/ exists (${r.skipped.join(', ')})`);
+    }
+  }
+  for (const o of offers) {
+    if (o.kind === 'npmrc' && !outcome.applied.includes('.npmrc')) out.push('the .npmrc repair (--repair-npmrc)');
+    if (o.kind === 'tsconfig' && !outcome.applied.includes('tsconfig.test.json')) out.push('the tsconfig.test.json repair');
+  }
+  if (detectStaleSteeringDir(projectRoot).length > 0) out.push('MCP_STEERING_DIR (see its warning)');
+  return out;
+}
+
+/** What this run applied, one line per kind of change (R4). Empty when it applied nothing. */
+function resultDone(outcome: SyncOutcome, managedApplied: number, relocateLegacy: boolean): string[] {
+  const out: string[] = [];
+  if (outcome.applied.includes('.npmrc')) out.push('.npmrc: removed the @3fn → GitHub Packages mapping line');
+  if (outcome.applied.includes('tsconfig.test.json')) out.push('tsconfig.test.json: removed the raw-src @3fn/core paths entries');
+  const r = outcome.relocation;
+  if (r && (r.removed.length > 0 || r.relocated.length > 0)) {
+    out.push(`component copies: removed ${r.removed.length} unmodified, relocated ${r.relocated.length} to src/components/<Name>/`);
+  }
+  const lr = outcome.legacyRemoval;
+  if (lr) {
+    out.push(
+      `legacy copies: removed ${lr.removed.length} unmodified` +
+        (lr.keptAsYours.length ? `, kept ${lr.keptAsYours.length} edited on disk as yours` : '') +
+        (lr.dropped.length ? `, dropped ${lr.dropped.length} record${lr.dropped.length === 1 ? '' : 's'} of copies already deleted` : ''),
+    );
+  }
+  for (const t of outcome.trace) if (t.startsWith('attach:')) out.push(`attached ${t.slice('attach:'.length)}`);
+  if (managedApplied > 0) out.push(`${managedApplied} managed update${managedApplied === 1 ? '' : 's'} applied`);
+  if (outcome.manifestWritten) {
+    out.push(
+      relocateLegacy
+        ? `${MANIFEST_FILE} written from ${LEGACY_MANIFEST_PATH}; the old file is kept, with a note saying when you can delete it`
+        : `${MANIFEST_FILE} updated`,
+    );
+  }
+  return out;
 }
 
 const displayPath = (projectRoot: string, abs: string, dir = false): string => {
