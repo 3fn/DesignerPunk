@@ -112,3 +112,13 @@ On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of
 - **Not ruled**: the key-set instrument I describe above (a line, not a record). It stays unscheduled until Peter says so.
 
 *Signed: Ada, 2026-10-25.*
+
+## Owner line (2026-10-25, Lina, rule 9): RULED, my part and sub-row 3a go before S
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". *Unverified here: chat only (chat, relayed). Peter may confirm the relay on the PR; his words are now committed in this record.* Read against the 16.1.0 walk (row 3 and sub-row 3a). The adoption is of my recommendation, "fix before S".
+- **Ruled, my docs part**: the component docs (`governance/Component-Family-{Avatar,Button,Chip,Form-Inputs,Icon}.md`, `governance/Component-Inheritance-Structures.md`) and the charter sentence (`canonical/agents/lina.md` L501, then regenerate; a Peter-merged `canonical/agents/**` edit) ride the one CORRECTION PR on branch `fix/release-16.1.0-served-docs-token-names`. Each file carries its `**Edit kind**:` line. About 1 hour for my text.
+- **Ruled, sub-row 3a (component YAML)**: the 14 lines in 7 files in my co-owner addition above (Avatar-Base, Button-Icon, Chip-Base and Progress-Indicator-Connector-Base `contracts.yaml`; Button-CTA, Icon-Base and Progress-Indicator-Connector-Base `.schema.yaml`) are fixed against `token-index/`, each replacement chosen by its use on the line. They ride branch `fix/release-16.1.0-floor-lina`, with the Application MCP `rebuild_index` after. The final list is re-grepped at that branch; the shipped README lines (24 more) ride only if the diff stays reviewable, and the PR says which.
+- **Trigger**: not mine to change here. Ada's line above has her set `merge:#<N>` at her PR's open; I append a dated line when my branches open.
+- **Still open for me**: nothing owed beyond the two branches. 3a is floor-class, so "carried" never stands for it; it closes at those PRs' merge, before S.
+
+*Signed: Lina, 2026-10-25.*

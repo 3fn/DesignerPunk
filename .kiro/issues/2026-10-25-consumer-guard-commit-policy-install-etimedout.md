@@ -39,3 +39,5 @@ I accept the header lines as proposed: **Owner** Lina, **Class** `P3 improvement
 - **Gap I flag**: `tests/**` is not in my standing write scope. The fixing PR needs a row or issue-row grant naming `tests/consumer-integration.test.ts`, with Thurgood consulted (CI regime), per rule 8. Until that grant is on the record I own this record and cannot land its fix.
 
 *Signed: Lina, 2026-10-25.*
+
+**Owner line (2026-10-25, Lina, rule 9)**: row 25 of the 16.1.0 walk is accepted as carried (P3, `manual`; Peter's batch ruling, chat, relayed: "Fix all of them as the owners recommend; T is (A)"). Nothing new is owed on this record: my acceptance above stands, and the grant gap for `tests/consumer-integration.test.ts` is still the open act. *Signed: Lina, 2026-10-25.*

@@ -25,3 +25,13 @@ Platform scope: the 94 is web-read only. iOS and Android reads are not counted a
 - `2026-06-25-component-schema-token-name-drift.md` (names: RESOLVED-pending-merge) cites this record for the completeness half, so that record's closure is not read as closing this.
 
 *Signed: Lina, 2026-10-23.*
+
+## Owner line (2026-10-25, Lina, rule 9): RULED, (i) and the scope note before S; Ada's instrument is not in 16.1.0
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)". *Unverified here: chat only (chat, relayed). Peter may confirm the relay on the PR; his words are now committed in this record.* Read against the 16.1.0 walk (row 4). The adoption is of my recommendation.
+- **Ruled, mine**: (i) the schema pass, and a one-line scope note on the `get_token_consumers` response and its tool description (it answers from schema-declared tokens only; web reads are counted when declared, iOS and Android reads are not covered), both before S. The note is needed either way: (i) alone still leaves native silent. The count is re-run at the fixing branch (my re-run found 80 web `var(--…)` reads in 20 components against Ada's 94; the PR states the number it fixed).
+- **Ruled, Ada's**: the declared-versus-read instrument (ii) is not in 16.1.0 (Ada's pick, adopted). Its start condition is (i)'s merge.
+- **Trigger**: stays `release:next:phase-1`. I change it to `merge:#<N>` in the same diff when the fixing PR opens, with a dated reason (README rule 1).
+- **Residual, unchanged**: with (i) merged and no instrument, nothing stops the gap reopening; that is the exposure between 16.1.0 and (ii).
+
+*Signed: Lina, 2026-10-25.*
