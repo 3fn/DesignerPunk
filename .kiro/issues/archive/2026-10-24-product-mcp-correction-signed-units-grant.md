@@ -1,7 +1,7 @@
 # Grant: re-author the two signed units the Product MCP correction stales (audit fix-now item 8)
 
 **Date**: 2026-10-24
-**Status**: ACTIVE. It carries a grant that does nothing until Peter's merge activates it (rule 8; § "Activation").
+**Status**: **CLOSED at #465's merge** *(set 2026-10-25, Thurgood, owner, rule 5; was: ACTIVE, the grant inert until activation)*. Activated by #464 (`2eafd7296`); every act is on the fixing branch (outcome below), and the grant expires at the fixing PR's merge.
 **Owner**: Thurgood (owner of the operative set `canonical/operative-sets/civitas-system-overview.yaml`, `owner: thurgood`, and author of the consumer profile it re-grounds)
 **Trigger**: `merge:#465` — the fixing PR's merge (`fix/ballot-audit-product-mcp-correction`) owes the close, and the grant expires there. The correction is owed before 16.1.0 ships. *(Re-ruled 2026-10-25, Thurgood, owner, rules 1 and 9: was `release:next:phase-1`, pending the PR number. The grant was activated by #464, merge `2eafd7296`, 2026-10-25T02:56:43Z.)*
 **Class**: P0 false-claim · grant *(set 2026-10-24, Thurgood, rule 12. The shipped consumer rendering of the Systems Overview (`canonical/_consumer-output/**/designerpunk-systems-overview.md`) tells consumers that the Product MCP is "conceptual", while the package ships it (`dist/mcp/product-mcp.js`, 14 tools). Stacy may confirm or dispute the P0 reading; only Peter downgrades it.)*
@@ -34,3 +34,18 @@
 3. Stacy, in her seat, makes three C1 acts, one commit each, by the signing-seat brief: re-confirm `civitas-system-overview #what-civitas-contains`, re-confirm `designerpunk-systems-overview #civitas-system-governance-infrastructure`, and re-sign `civitas-system-overview.dispositions.yaml#what-civitas-contains`.
 4. `canonical/generated.lock` is refreshed by a green full guard run. `verify-signing-chain --ci` passes.
 5. Peter merges the fixing PR. The grant expires, and this record closes by rule 5's dated outcome line in that PR.
+
+---
+
+**2026-10-25 — CLOSED at #465's merge (Thurgood, owner, rule 5).** Every act is done on `fix/ballot-audit-product-mcp-correction` (PR #465). The record closes, and the grant expires, at that PR's merge. It is archived in the same PR, as rule 5 asks ("ideally in the PR that closes it"; "a grant archives at its fixing PR's merge").
+- **Activation**: Peter merged #464 (`2eafd7296`) at 2026-10-25T02:56:43Z. `main` was merged into the fixing branch at `0953ddf0c`, and no authoring preceded that merge.
+- **Authoring (Thurgood, under the grant)**: `0e2a2bd41`. It changed the `what-civitas-con-8` label and text, verbatim from the corrected L39; moved the overlay's `@unit #what-civitas-contains` pin to `sha256:1cf39e5c…937b` (overlay text unchanged); and regenerated the three `designerpunk-systems-overview` renderings with `generate.ts`. No `canonicalHash` was moved.
+- **C1 acts (Stacy, no grant needed)**:
+  - `a7fb52020`: re-confirm, civitas-system-overview `#what-civitas-contains` (`canonicalHash` → `sha256:1cf39e5cf23bce5b04edc831db1e0d71c5881b086a58fddbd862115c9797937b`).
+  - `6fe7822f1`: re-confirm, designerpunk-systems-overview `#civitas-system-governance-infrastructure` (→ `sha256:9751b1889d6e335ee645e098db78bc7d94ef3df5c7023e34cad717ce2e14e790`).
+  - `8cb55bbeb`: re-sign, `civitas-system-overview.dispositions.yaml#what-civitas-contains`, assent 7/10.
+  - She confirmed the P0 class.
+- **Lock (the sixth grant path)**: refreshed from the guard's green full run, in the commit that archives this record. `inputClosure` `de5bea3e…` → `623ccb0c…`. **`outputs` `e7aa902c…` → `8bc3301c…`**: the consumer renderings changed, as intended. The shipped Systems Overview no longer calls the Product MCP "conceptual".
+- **Scope** (clause 6, against the list as it stood at `2eafd7296`): `git diff --name-only 0953ddf0c HEAD` lists the six grant paths, Stacy's C1 files and this record (moved to `archive/`). Each was named ahead of time in § "Grant paths". The two steering CORRECTION files came in at `d4bd2ea49`, under the carve-out.
+- **Checks at the closing commit**: `check:122:diff-guard` no-op-green with 0 stale rows; `verify-signing-chain --ci` PASS at bases `e4e61eea2` and `2eafd7296` (orchestrator's run, after Stacy's acts).
+
