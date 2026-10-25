@@ -46,8 +46,8 @@ units:
         text: "Application MCP: serves component metadata and token metadata (34 components, 443 tokens, 9 experience patterns)"
       - id: what-civitas-con-8
         kind: obligation
-        label: "Product MCP: serves product-specific context (conceptual — s"
-        text: "Product MCP: serves product-specific context (conceptual — specs 081, 096, 097)"
+        label: "Product MCP: serves product-specific context from a consumer"
+        text: "Product MCP: serves product-specific context from a consumer's `product/` directory (built in Spec 081: 14 tools, shipped in the package as `dist/mcp/product-mcp.js`; see also specs 096, 097). This repository has no `product/` directory, so here it serves an empty product set."
       - id: what-civitas-con-9
         kind: obligation
         label: "3 system agents (Ada/Rosetta, Lina/Stemma, Thurgood/Civitas)"

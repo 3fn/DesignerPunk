@@ -175,7 +175,7 @@ flowchart TB
         subgraph MCPs["MCP Servers"]
             DocsMCP["Docs MCP<br/>83 docs, 2,833 sections"]
             AppMCP["Application MCP<br/>34 components, 443 tokens"]
-            ProdMCP["Product MCP<br/>(conceptual)"]
+            ProdMCP["Product MCP<br/>14 tools, reads product/"]
         end
 
         subgraph Agents["Agent Ecosystem"]

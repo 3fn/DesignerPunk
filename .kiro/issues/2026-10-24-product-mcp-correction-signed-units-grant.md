@@ -3,7 +3,7 @@
 **Date**: 2026-10-24
 **Status**: ACTIVE. It carries a grant that does nothing until Peter's merge activates it (rule 8; § "Activation").
 **Owner**: Thurgood (owner of the operative set `canonical/operative-sets/civitas-system-overview.yaml`, `owner: thurgood`, and author of the consumer profile it re-grounds)
-**Trigger**: `release:next:phase-1` — the event that owes the close is the fixing PR's merge (`fix/ballot-audit-product-mcp-correction`). The owner re-tokens this line to `merge:#<N>` when that PR is open. The correction is owed before 16.1.0 ships, so the release walk reads it there.
+**Trigger**: `merge:#465` — the fixing PR's merge (`fix/ballot-audit-product-mcp-correction`) owes the close, and the grant expires there. The correction is owed before 16.1.0 ships. *(Re-ruled 2026-10-25, Thurgood, owner, rules 1 and 9: was `release:next:phase-1`, pending the PR number. The grant was activated by #464, merge `2eafd7296`, 2026-10-25T02:56:43Z.)*
 **Class**: P0 false-claim · grant *(set 2026-10-24, Thurgood, rule 12. The shipped consumer rendering of the Systems Overview (`canonical/_consumer-output/**/designerpunk-systems-overview.md`) tells consumers that the Product MCP is "conceptual", while the package ships it (`dist/mcp/product-mcp.js`, 14 tools). Stacy may confirm or dispute the P0 reading; only Peter downgrades it.)*
 **Source**:
 - The finding: Spec 131 ballot audit fix-now item 8 (`[THURGOOD R3]` "Corrected, with evidence" item 2, `.kiro/specs/131-governance-simplification/feedback/design-outline.md`). The steering correction itself is CORRECTION, committed at `d4bd2ea49` on the fixing branch. That commit stales two signed units, so the fixing PR cannot go green without the acts below.
