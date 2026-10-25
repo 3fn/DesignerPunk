@@ -62,3 +62,17 @@ This is not a first lapse: the cells are read at the runs ruled for before S. **
 
 *Signed: Leonardo, 2026-10-25.*
 
+
+## Outcome (2026-10-25, Leonardo, row owner of rows 1–4; rules 5 and 9): re-observed at the 16.1.0 Kiro runs
+
+Read from `tests/onboarding-trio/records/16.1.0/trio-2-designer.md` and `trio-3-pm.md`, field F26. The release-4 cells stay as written (a record is not rewritten); these lines are their re-observation.
+
+- **Row 1 (Kiro founder-cold `cannot-tell`)** — **re-observed: `observed`, twice.** `trio-2-designer` F16 and `trio-3-pm` F16 both read `cold-observation: kiro founder-cold: observed`. Each `open` had its own intact capture, and kiro-cli 2.12.1 asked nothing at first open in a repo born by `init --target=kiro`. **Discharged.**
+- **Row 2 (the personal note at session start)** — **re-observed: loaded, by kiro-cli's own record; the text reaching the model is not directly evidenced.** Each probe session's stored conversation lists `.designerpunk/personal-note.local.md` in `context_manager.paths` for its agent profile (`sparky`, `leonardo`). Context file contents are not stored, so the text cannot be read back. Both answers or artifacts are consistent with the note (`trio-2-designer` F17 (2), `trio-3-pm` F17 (2)). `/context` showed "Agent files 8.0%" unexpanded. **Discharged** as the row's exit allows ("record whether the note loaded … or say why it cannot be observed"): the load is recorded; the content check is stated as what cannot be observed.
+- **Row 3 (probe-sparky `get_component_full` result content)** — **re-observed: the result is read.** kiro-cli stores every headless conversation, tool results included, in the **real** profile's database: `~/Library/Application Support/kiro-cli/data.sqlite3`, table `conversations_v2`, keyed by the working directory; results sit in `history[].user.content.ToolUseResults.tool_use_results[]`, matched by `tool_use_id`. The 16.1.0 probe's `get_component_full {"name":"Button-CTA"}` reads `Success`: web `production-ready`, properties `icon`, `label`, `noWrap`, `onPress`, `size`, `testID`, `variant` (`trio-2-designer` F26). **Discharged.** **Not done as my owner line of 2026-10-25 said**: `kiro-cli chat -v` was not tried, because the step-9 block does not carry it. The database replaced it, read only and after the run.
+- **Row 4 (probe-leonardo `get_product_overview`, `find_screens`, `get_design_philosophy` result content)** — **re-observed, and the release-4 cells themselves are now readable.** The 16.1.0 probe's results: `get_product_overview` → `"name": "Lendly"`; `get_design_philosophy` → "Electric Precision"; `find_screens {"context":"browse"}` → `browse-tools` (`trio-3-pm` F26). **Release 4's probe row is still in the same table** (key `/private/tmp/dp-trio/trio-3-pm/repo`, profile `leonardo`), and its stored results read `get_product_overview` → `"name": "Lendly"` and `find_screens {"context":"home"}` → `example-home`. Those are the values release 4's record wrote as "not shown". **Discharged.** Task 28.3's Kiro-side bar is checkable from that row, which is Thurgood's to read (`trio-3-pm` F18).
+- **The instrument limit, restated**: the transcripts still show calls, not results (R3-7, still present). The database is the workaround. It lives in the operator's real profile, which `KIRO_HOME` does not isolate (`trio-2-designer` R2-15, routed to the protocol).
+
+**This record's rows 1–4 are discharged**; row 5 is Ada's. When row 5's outcome is recorded too, the record closes under rule 5.
+
+*Signed: Leonardo, 2026-10-25.*
