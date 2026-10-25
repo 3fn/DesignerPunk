@@ -43,7 +43,7 @@ import buttonStyles from './ButtonCTA.web.css';
  * 
  * Provides type-safe mapping from button size variants to icon sizes:
  * - small/medium: iconBaseSizes.size100 (24px)
- * - large: iconBaseSizes.size125 (32px)
+ * - large: iconBaseSizes.size125 (28px)
  * 
  * Fails loudly if icon size token is missing to prevent silent fallback issues.
  * 
@@ -489,7 +489,7 @@ export class ButtonCTA extends HTMLElement {
     // Get icon size for button size variant
     // Icon sizes are type-safe mapped from button size:
     // - Small/Medium: 24px (iconBaseSize100)
-    // - Large: 32px (iconBaseSize125)
+    // - Large: 28px (iconBaseSize125)
     const iconSize: IconBaseSize = getIconSizeForButton(size);
     
     // Generate label class

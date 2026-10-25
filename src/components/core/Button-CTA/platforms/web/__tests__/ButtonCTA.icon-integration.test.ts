@@ -165,7 +165,7 @@ describe('Button-CTA Icon Integration', () => {
       expect(svg!.classList.contains('icon-base--size-100')).toBe(true);
     });
 
-    it('should use icon.size125 (32px) for large button', () => {
+    it('should use icon.size125 (28px) for large button', () => {
       const button = document.createElement('button-cta') as ButtonCTA;
       button.label = 'Click me';
       button.size = 'large';
@@ -175,12 +175,12 @@ describe('Button-CTA Icon Integration', () => {
       const shadowRoot = button.shadowRoot;
       const iconBase = shadowRoot!.querySelector('icon-base');
       
-      // Check icon-base has correct size attribute (iconSizes.size125 = 32)
-      expect(iconBase!.getAttribute('size')).toBe('32');
+      // Check icon-base has correct size attribute (iconBaseSizes.size125 = 28)
+      expect(iconBase!.getAttribute('size')).toBe('28');
       
       // Check for size class in nested Shadow DOM
       const svg = getIconSvg(button);
-      expect(svg!.classList.contains('icon-base--size-200')).toBe(true);
+      expect(svg!.classList.contains('icon-base--size-125')).toBe(true);
     });
   });
 
@@ -418,10 +418,10 @@ describe('Button-CTA Icon Integration', () => {
       const iconBase = shadowRoot!.querySelector('icon-base');
       
       expect(iconBase).not.toBeNull();
-      expect(iconBase!.getAttribute('size')).toBe('32');
+      expect(iconBase!.getAttribute('size')).toBe('28');
       
       const svg = getIconSvg(button);
-      expect(svg!.classList.contains('icon-base--size-200')).toBe(true);
+      expect(svg!.classList.contains('icon-base--size-125')).toBe(true);
     });
 
     it('should render icon with medium tertiary button', () => {
@@ -469,7 +469,7 @@ describe('Button-CTA Icon Integration', () => {
       const iconBase = shadowRoot!.querySelector('icon-base');
       
       expect(iconBase!.getAttribute('name')).toBe('check');
-      expect(iconBase!.getAttribute('size')).toBe('32'); // Large button = 32px icon
+      expect(iconBase!.getAttribute('size')).toBe('28'); // Large button = 28px icon (icon.size125)
       expect(iconBase!.getAttribute('color')).toBe('inherit');
     });
   });

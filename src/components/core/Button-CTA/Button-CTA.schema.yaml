@@ -79,7 +79,7 @@ properties:
     required: false
     description: |
       Optional leading icon from Icon System. Icon size is automatically
-      determined by button size (small/medium: 24px, large: 32px).
+      determined by button size (small/medium: 24px, large: 28px).
       Icons use optical weight compensation for visual balance.
   
   noWrap:

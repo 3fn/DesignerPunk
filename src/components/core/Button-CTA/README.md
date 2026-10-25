@@ -141,7 +141,7 @@ ButtonCTA(
 |------|--------|--------------|-----------|------------|-----------|
 | `small` | 40px | 44px | 56px | labelMd | 24px |
 | `medium` | 48px | 48px | 72px | labelMd | 24px |
-| `large` | 56px | 56px | 80px | labelLg | 32px |
+| `large` | 56px | 56px | 80px | labelLg | 28px |
 
 ---
 
