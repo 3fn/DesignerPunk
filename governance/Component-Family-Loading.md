@@ -96,13 +96,13 @@ Loading-Base (Primitive) [PLANNED]
 
 | Category | Token Pattern | Purpose |
 |----------|---------------|---------|
-| Color | `color.loading.primary` | Primary loading color |
-| Color | `color.loading.track` | Progress track color |
-| Motion | `motion.loading.spin` | Spinner animation timing |
-| Motion | `motion.loading.pulse` | Skeleton pulse animation |
-| Spacing | `loading.size.*` | Loading indicator sizes |
+| Color | None yet | Primary loading color |
+| Color | None yet | Progress track color |
+| Motion | None yet (`duration150`, `duration250`, `duration350` and the `easing*` primitives exist) | Spinner animation timing |
+| Motion | None yet | Skeleton pulse animation |
+| Size | None yet (`size*` primitives exist) | Loading indicator sizes |
 
-> **Note**: Token patterns are planned and may change during implementation.
+> **Note**: Token patterns are planned and may change during implementation. Names are token-index keys where one exists; a row reading "None yet" marks a gap to settle with Ada (token creation is hers) when the family is specified.
 
 ---
 

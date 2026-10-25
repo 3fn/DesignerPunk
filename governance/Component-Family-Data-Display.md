@@ -103,12 +103,12 @@ Display-Base (Primitive) [PLANNED]
 
 | Category | Token Pattern | Purpose |
 |----------|---------------|---------|
-| Typography | `typography.body.*`, `typography.heading.*` | Text styling |
-| Spacing | `space.stack.*`, `space.inline.*` | Content spacing |
-| Color | `color.text.*` | Text colors |
-| Border | `border.table.*` | Table borders |
+| Typography | `typography.bodySm`, `typography.bodyMd`, `typography.bodyLg`, `typography.h1` through `typography.h6` | Text styling |
+| Spacing | `space.grouped.*`, `space.related.*` | Content spacing |
+| Color | `color.text.default`, `color.text.muted`, `color.text.subtle` | Text colors |
+| Border | `border.default` | Table borders (width) |
 
-> **Note**: Token patterns are planned and may change during implementation.
+> **Note**: Token patterns are planned and may change during implementation. Names are token-index keys where one exists; a row reading "None yet" marks a gap to settle with Ada (token creation is hers) when the family is specified.
 
 ---
 
