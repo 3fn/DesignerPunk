@@ -30,7 +30,6 @@ A stale constant sits beside this: `DEFAULT_COMPONENTS_DIR = 'src/components/cor
 3. `DEFAULT_COMPONENTS_DIR` becomes `src/components`, matching C3.
 4. Tests in `application-mcp-server/`: a missing env root with an existing package root gives `degraded` and the warning text; an existing env root is unchanged (`healthy`); a missing **default** root (a born repo with no `src/components/`) is not a warning, since a consumer with no forks is normal.
 
-Not in this record: the resolver (`mcpDataRoots.ts`, Ada's) needs no change; the warning belongs where the index is built.
 
 ## Outcome (2026-10-25)
 
@@ -43,3 +42,5 @@ Not in this record: the resolver (`mcpDataRoots.ts`, Ada's) needs no change; the
 - **Tests.** `application-mcp-server` suite (not in root `npm test`): 37 suites, 523 tests pass (was 36 / 513). Mutation check: six mutations (no health warning; `cwd` treated as `env`; the clause always on; either query-engine path drops the line; the boot-log loop removed), and each turns at least one test red.
 - **Residual (unchanged from the walk).** This discloses the missing root and does not repair the migrated config. The class closes with row 15 (`2026-10-24-migrated-mcp-config-keeps-pre-123-components-dir.md`, Ada's).
 - **Archive.** Under rule 5, this record moves to `archive/` after the merge, at the next walk or in phase 1.
+
+Not in this record: the resolver (`mcpDataRoots.ts`, Ada's) needs no change; the warning belongs where the index is built.

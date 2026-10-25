@@ -29,9 +29,6 @@
 - (a) needs the element to remember the authored `checked` state separately from the current one. That is a new piece of state, and the attribute/property reflection rules (does a later `setAttribute('checked')` redefine "authored"?) would need a ruling of their own. (b) needs no such rule.
 - Neither option was tested in a browser; the tests cover the registered value per transition, not the reset.
 
-## What closes this record (rules 5 and 11)
-
-Peter's ruling on (a) or (b) is on the record, the fixing PR (the code and Req 8.8 for (a); `contracts.yaml` and both READMEs for (b)) names this record, and Sparky appends a dated line confirming reset in a browser. Then the owner adds rule 5's outcome line and archives it.
 
 ## Ruling (2026-10-25)
 
@@ -51,3 +48,7 @@ Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of th
   - `governance/Component-Family-Form-Inputs.md` L217 (MCP-served) still says "Form reset returns checkbox to unchecked state (pre-checked checkboxes not supported per DesignerPunk philosophy)". **After this merge that sentence is false at an MCP reader**, which is the same P0 class. It needs a CORRECTION before S, either in the row-3 CORRECTION PR or by a grant to me on this branch.
   - `demos/checkbox-demo.html` L285 says "form reset always returns checkboxes to unchecked state". That is false now, and it is the page Sparky verifies on.
 - **Sparky's browser line (owed, closes this record with rule 5).** Run in Chromium on the demo page: "Receive product updates" (loaded checked) stays checked across Reset; a box authored unchecked that the user checked unchecks on Reset; an authored-checked box the user unchecked comes back checked, and the FormData dump after Reset shows its entry; a default Legal the user checked unchecks on Reset; no `change` or `consent-change` fires on Reset (DevTools event listener breakpoint or console).
+
+## What closes this record (rules 5 and 11)
+
+Peter's ruling on (a) or (b) is on the record, the fixing PR (the code and Req 8.8 for (a); `contracts.yaml` and both READMEs for (b)) names this record, and Sparky appends a dated line confirming reset in a browser. Then the owner adds rule 5's outcome line and archives it.
