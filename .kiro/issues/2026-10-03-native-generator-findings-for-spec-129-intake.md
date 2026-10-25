@@ -93,3 +93,42 @@ None proposed here. Spec 129's tasks will carry Primary Artifacts. `src/generato
 **No fix is authorized by this record.**
 
 **Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 53, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` (Spec 129's requirements round) · `P2 obligation (record) · defect`.
+
+## Item 4 (appended 2026-10-24, Ada, owner, rule 9): the 15 shadow composites are built with the `Typography` constructor, on both platforms
+
+**Source**: Data's Android evaluation row 6, "One kind on no record I read, both platforms" (`.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md` § "Evaluation entry (2026-10-20)", "Android — Data"), reported to me "by report under rule 10 at her next PR". Appended here rather than filed new because Item 1 already names `Typography` as undefined, and the fix that defines it must not stop there. Re-run at `e4e61eea2` against `dist/` regenerated the same day.
+
+**Evidence — VERIFIED**:
+
+```
+$ grep -c 'static let shadow.*= Typography(' dist/DesignTokens.ios.swift
+15
+$ grep -c 'static let typography.*= Typography(' dist/DesignTokens.ios.swift
+24
+$ grep -c 'val shadow_.*= Typography(' dist/DesignTokens.android.kt
+15
+$ grep -c 'val typography_.*= Typography(' dist/DesignTokens.android.kt
+24
+$ sed -n 481p dist/DesignTokens.ios.swift
+    public static let shadowContainer = Typography(offsetX: shadowOffsetX000, offsetY: shadowOffsetY100, blur: blur075, opacity: shadowOpacityModerate, color: shadowBlack100)
+```
+
+`grep -n 'struct Typography\|class Typography'` → empty in both files. `swiftc -typecheck` gives 39 distinct `cannot find 'Typography'` (24 typography + 15 shadow sites).
+
+**Cause** (VERIFIED by reading): every multi-reference semantic token goes through `formatMultiReferenceToken`. iOS picks the wrapper as `semantic.name.startsWith('motion.') ? 'Motion' : 'Typography'` (`src/providers/iOSFormatGenerator.ts:440`); Android hard-codes `Typography(` (`src/providers/AndroidFormatGenerator.ts:514`). In today's output shadows are the only other family that reaches it (39 = 24 + 15), so they fall into `Typography`.
+
+**What it changes in Item 1's fix**: defining a `Typography` type (Item 1; `2026-10-20-kotlin-output-no-import-block.md` fix shape, "settle the `Typography` data class") closes 24 sites and turns the other 15 into calls of a typography constructor with shadow parameters (`offsetX`, `blur`, `color`). The fix needs a shadow type and a family-to-wrapper map. The 15 also reference the undeclared shadow colours: `2026-10-24-shadow-color-primitives-emitted-on-no-platform.md`.
+
+**Readers**: Data and Kenya (the counts are theirs first); Lina (any native component that consumes a shadow composite).
+
+*Signed: Ada, 2026-10-24.*
+
+## Review (2026-10-24, Data) — trust, but verify (Item 4, Android)
+- Checked: `grep -c 'val shadow_.*= Typography(' dist/DesignTokens.android.kt` → 15; `grep -c 'val typography_.*= Typography(' ...` → 24; `grep -c 'Typography(' ...` → 39; `grep -n 'class Typography\|object Typography\|import ' ...` → no declaration, no import. Source: `AndroidFormatGenerator.ts:514` returns `` `    val ${semanticName} = Typography(${parameters})` `` for the `kotlin` output format with no family branch (the iOS `Motion` switch has no Android counterpart). Reading only; no `kotlinc` here.
+- Finding: agree. All 39 are `Unresolved reference: Typography` compile errors. The 15 shadow lines additionally pass named arguments `offsetX`, `offsetY`, `blur`, `opacity`, `color` that no typography constructor has, so defining the `Typography` data class (Item 1 fix) would not clear them; they would then fail on "no parameter named offsetX" etc. The record's reading ("needs a shadow type and a family-to-wrapper map") is right for Android too.
+- Gaps (Android-side): (a) the type mismatch is wider than the name: shadow arguments are `Float` (`shadow_offset_x_000: Float`, `blur_075: Float`) plus a color, whereas the typography arguments mix `Dp` (`font_size_*`), `Float`, `String`, `Int`; a single wrapper cannot serve both, so the Kotlin shape needs two data classes (or a generic pairing). (b) Note for the shadow side: Compose has no shadow-composite type; consumption is `Modifier.shadow(elevation, shape, ambientColor, spotColor)`, which takes an elevation `Dp` and not x/y/blur, so Spec 129 should decide what a Kotlin shadow composite is for before choosing the data class fields. (c) Not blocking: in-repo Android components do not read these composites (grep of `src/components/core/*/platforms/android` for `shadow_` is a Lina check; I did not run it as part of this review).
+- Correction to gap (c) above (Data, same day, after running the grep): one in-repo Android component does read a shadow composite: `src/components/core/Nav-SegmentedChoice-Base/platforms/android/NavSegmentedChoiceBase.android.kt:84` `val indicatorShadow = DesignTokens.shadow_navigation_indicator` (grep `shadow_` over `src/components/core/*/platforms/android` → this one hit). So the Typography/shadow defect reaches a shipped component source, not only the token file; Lina is the reader for whether that line is used or inert.
+
+## Review of Item 4 (2026-10-24, Kenya) — trust, but verify
+- Checked: `grep -c 'static let shadow.*= Typography(' dist/DesignTokens.ios.swift` → 15; `typography.*= Typography(` → 24; `grep -n 'struct Typography\|class Typography'` → none; `grep -c 'Motion('` → 0 (the `Motion` branch of `iOSFormatGenerator.ts:440` fires on no token today); `swiftc -typecheck` → 39 distinct `cannot find 'Typography'`. L489 reads `shadowNavigationIndicator = Typography(offsetX:…, color: shadowBlack100)`.
+- Finding: agree. The 39 = 24 + 15 matches my row-6 sum (8+18+107+39+15+9+1 = 197), so Item 4 is Item 1's `Typography` count correctly split, not a new count. Not a new iOS fact but relevant to the fix: `NavSegmentedChoiceBase.ios.swift:30` consumes one of the 15 (`shadowNavigationIndicator`), so a shadow type with a `Shadow`-shaped initializer is what that component would read.

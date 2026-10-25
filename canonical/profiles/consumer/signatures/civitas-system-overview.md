@@ -7,11 +7,19 @@
 ## `#what-civitas-contains`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-10-24
 row: `canonical/profiles/consumer/always-set/civitas-system-overview.dispositions.yaml` · body · `#what-civitas-contains` (re-pointed; ROUTED)
-canonicalHash: sha256:6d5bb7e904c10be1b5bf04b25fd03b6f5222b3e5ea2b46c92b40aa4b6debf137
+canonicalHash: sha256:1cf39e5cf23bce5b04edc831db1e0d71c5881b086a58fddbd862115c9797937b
 renderedHash: sha256:3a0e750c68d74e1ea89c9a4be34382b395c5699b1f6306c1837c610bc67d2309
 verdict: assent — surviving 7/10; not surviving: `what-civitas-con-2`, `what-civitas-con-4`, `what-civitas-con-5`
+
+**Re-signed 2026-10-24** (prior signature: assent 7/10, 2026-09-29, against `sha256:6d5bb7e904c10be1b5bf04b25fd03b6f5222b3e5ea2b46c92b40aa4b6debf137`; the rendered hash did not move).
+- **Why it was stale**: the canonical unit moved. The steering CORRECTION `d4bd2ea49` (Spec 131 ballot audit fix-now item 8) replaced the Product MCP line's "(conceptual — specs 081, 096, 097)". Thurgood re-authored item `what-civitas-con-8` and moved the overlay pin only (`0e2a2bd41`, under the #464 grant); the overlay text is unchanged. My C1 re-confirmation at 10 items is `a7fb52020`.
+- **How the hashes were read**: renderedHash was recomputed from the committed `canonical/_consumer-output/` with the generator's own `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`, and it equals the prior value. canonicalHash was recomputed from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts`, and it equals the overlay pin and the sweep's value.
+- **Judged against**: the rendered unit at this revision, `canonical/_consumer-output/_canonical/always-set/civitas-system-overview.md` § "What Civitas Contains". Its MCP line: *"Product MCP: serves this product's screens, product tokens and context"*, under *"MCP servers (from the installed package)"*.
+- **`what-civitas-con-8` survives, re-grounded**, on its role, as on 2026-09-29: which server serves the product's context, from the installed package. The repository clause ("This repository has no `product/` directory, so here it serves an empty product set") is this repo's fact, and the unit's removal of DesignerPunk's own MCP inventory (`subtraction-3`) covers it. So do the 14-tool count and the `dist/` path, which ride along inside the item text, as my confirmation rules for counts.
+- **Observation, not a refusal**: the rendering does not name the consumer's `product/` directory, the default the server reads (`DEFAULT_PRODUCT_DIR = 'product'`). That fact is consumer-applicable. A consumer agent learns from this unit which server to query, but not where the product data must live. I credit the role alone, as I credited `start-up-tasks` `hc-4` (2026-10-17) and `-6` (2026-10-19) on the part the rendering states. Adding the directory to the overlay line would be authoring, the profile author's (Thurgood's) call, and would need a re-sign.
+- **The other six survive, and `con-2`, `con-4` and `con-5` do not**, all as before. Their items and the rendering are unchanged.
 
 **Survive, re-grounded**: `con-3` (the always-loaded identity members), `con-6` to `con-8` (the three servers' roles as a consumer has them), `con-9` and `con-10` (the tiers), and `con-17`. **Not surviving**: steering Layers 0, 2 and 3, which are DesignerPunk's own corpus layering. A consumer has none of its own.
 

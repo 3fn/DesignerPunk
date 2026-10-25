@@ -473,14 +473,14 @@ Platform parity is verified by dedicated test suite (`src/__tests__/platform-par
 - [Stemma System Principles](stemma-system-principles) — Architecture overview
 - [Component MCP Document Template](mcp-component-family-document-template) — Template this document follows
 - [Token Quick Reference](token-quick-reference) — Token documentation
-- [Node-Base README](../../src/components/core/Progress-Indicator-Node-Base/README.md) — Primitive node component
-- [Connector-Base README](../../src/components/core/Progress-Indicator-Connector-Base/README.md) — Primitive connector component
-- [Label-Base README](../../src/components/core/Progress-Indicator-Label-Base/README.md) — Primitive label component
-- [Pagination-Base README](../../src/components/core/Progress-Pagination-Base/README.md) — Semantic pagination variant
-- [Stepper-Base README](../../src/components/core/Progress-Stepper-Base/README.md) — Semantic stepper variant
-- [Stepper-Detailed README](../../src/components/core/Progress-Stepper-Detailed/README.md) — Semantic detailed stepper variant
-- [Spec Requirements](../../.kiro/specs/048-progress-family/requirements.md) — Full requirements document
-- [Spec Design](../../.kiro/specs/048-progress-family/design.md) — Design specification
+- [Node-Base README](../src/components/core/Progress-Indicator-Node-Base/README.md) — Primitive node component
+- [Connector-Base README](../src/components/core/Progress-Indicator-Connector-Base/README.md) — Primitive connector component
+- [Label-Base README](../src/components/core/Progress-Indicator-Label-Base/README.md) — Primitive label component
+- [Pagination-Base README](../src/components/core/Progress-Pagination-Base/README.md) — Semantic pagination variant
+- [Stepper-Base README](../src/components/core/Progress-Stepper-Base/README.md) — Semantic stepper variant
+- [Stepper-Detailed README](../src/components/core/Progress-Stepper-Detailed/README.md) — Semantic detailed stepper variant
+- [Spec Requirements](../.kiro/specs/048-progress-family/requirements.md) — Full requirements document
+- [Spec Design](../.kiro/specs/048-progress-family/design.md) — Design specification
 
 ---
 

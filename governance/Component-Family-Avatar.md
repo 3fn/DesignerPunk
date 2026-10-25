@@ -282,7 +282,7 @@ When using Avatar in an interactive context, the wrapper element is responsible 
 - [Stemma System Principles](stemma-system-principles) - Architecture overview
 - [Token-Family-Color](token-family-color) - Color token reference including identity and contrast concepts
 - [Token Governance](token-governance) - Token selection and usage governance
-- [Avatar README](../src/components/core/Avatar/README.md) - Component usage documentation
+- [Avatar-Base README](../src/components/core/Avatar-Base/README.md) - Component usage documentation
 - [Avatar Design Document](../.kiro/specs/042-avatar-component/design.md) - Detailed architecture
 - [Avatar Requirements](../.kiro/specs/042-avatar-component/requirements.md) - EARS format requirements
 - [Semantic Token Naming Design Authority](../.kiro/specs/051-semantic-token-naming-restructure/design-outline.md) - Naming model reference

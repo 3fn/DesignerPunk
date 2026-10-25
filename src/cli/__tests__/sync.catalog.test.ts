@@ -20,7 +20,7 @@ const CANNOT_TELL_REASONS = {
 
 import { deletedByYouMessage, untrackedNewMessage, yoursUnderPrefixMessage } from '../sync/Reporter';
 import { prunedMessage } from '../sync/Manifest';
-import { modifiedCopiesMessage, cannotTellMessage, cannotTellRemedyMessage, unmodifiedCopiesMessage } from '../sync/Migration';
+import { modifiedCopiesMessage, cannotTellMessage, cannotTellRemedyMessage, unmodifiedCopiesMessage, cannotTellReason } from '../sync/Migration';
 
 const DESIGN_ROWS = {
   'migration — modified copies (Le-D1(3))': (n: number, names: string) =>
@@ -67,6 +67,12 @@ describe('sync — catalog string conformance', () => {
     expect(cannotTellMessage('src/components/core/X/', { kind: 'version-unknown' })).toBe(
       DESIGN_ROWS['migration — cannot tell']('src/components/core/X/', CANNOT_TELL_REASONS['version-unknown']()),
     );
+  });
+
+  test('the grouped cannot-tell row (R6) carries the catalog row\'s reason clause exactly — one comparand per cause', () => {
+    expect(cannotTellReason({ kind: 'fetch-failed', version: '12.0.5' })).toBe(CANNOT_TELL_REASONS['fetch-failed']('12.0.5'));
+    expect(cannotTellReason({ kind: 'transform-unrecoverable', version: '11.3.0' })).toBe(CANNOT_TELL_REASONS['transform-unrecoverable']('11.3.0'));
+    expect(cannotTellReason({ kind: 'version-unknown' })).toBe(CANNOT_TELL_REASONS['version-unknown']());
   });
 
   test('migration — cannot tell (remedy), singular and plural', () => {

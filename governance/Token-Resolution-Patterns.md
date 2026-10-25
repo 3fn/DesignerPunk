@@ -530,7 +530,7 @@ interface ContainerProps {
 
 - [Component Development Guide](component-development-guide) - Component implementation guidance with token selection framework
 - [Cross-Platform vs Platform-Specific Decision Framework](cross-platform-vs-platform-specific-decision-framework) - Strategic guidance on cross-platform vs platform-specific decisions
-- [Token System Overview](../../docs/token-system-overview.md) - Complete token system documentation
+- [Token System Overview](../docs/token-system-overview.md) - Complete token system documentation
 
 ---
 

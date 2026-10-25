@@ -463,9 +463,9 @@ The current primitive tokens provide the foundation for experimentation and proo
 ## Related Documentation
 
 - [Shadow Token Documentation](token-family-shadow) - Shadow primitive and semantic tokens for depth effects
-- [Token System Overview](../../docs/token-system-overview.md) - Complete token system architecture
-- [Shadow and Glow Design Document](../../.kiro/specs/shadow-glow-token-system/design.md) - Detailed design decisions and rationale
-- [Shadow and Glow Requirements](../../.kiro/specs/shadow-glow-token-system/requirements.md) - System requirements and acceptance criteria
+- [Token System Overview](../docs/token-system-overview.md) - Complete token system architecture
+- [Shadow and Glow Design Document](../.kiro/specs/shadow-glow-token-system/design.md) - Detailed design decisions and rationale
+- [Shadow and Glow Requirements](../.kiro/specs/shadow-glow-token-system/requirements.md) - System requirements and acceptance criteria
 - [Component Development Guide](component-development-guide) - Token usage in component development
 - [Token Resolution Patterns](token-resolution-patterns) - Strategic guidance on token type selection and validation
 

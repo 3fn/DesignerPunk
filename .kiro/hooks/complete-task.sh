@@ -66,15 +66,17 @@
 # § 6 step 3. Ignores every other flag.
 #
 # Advisory completion-criteria-parity check (Spec 127 register row
-# `completion-criteria-parity`, check_state: proposed — arming is Q2's
-# decision, NOT this script's): parent and unit-member modes run
-# `scripts/check-completion-criteria-parity.ts` before committing and print
-# its output. Non-zero output is a LOUD warning, never a block — pass
-# --skip-parity to bypass entirely (e.g. the checker itself is broken).
-# RULED (Peter, 2026-09-26, PR #205): this authoring-time check stays advisory
-# until the Q2 sitting decides otherwise — that same sitting decides both the
-# CI required-flag AND this script's local mode. See RELEASE-FLOW.md § 5b
-# (the note adjacent to the ratified arming-decision paragraph).
+# `completion-criteria-parity`, check_state: armed — a REQUIRED CI check since
+# the 2026-10-03 flip; this script's local mode is advisory): parent and
+# unit-member modes run `scripts/check-completion-criteria-parity.ts` before
+# committing and print its output. Non-zero output is a LOUD warning, never a
+# block — pass --skip-parity to bypass entirely (e.g. the checker itself is
+# broken). RULED (Peter, 2026-09-26, PR #205): this authoring-time check stays
+# advisory until the Q2 sitting decides otherwise — that sitting decides both
+# the CI required-flag AND this script's local mode. DECIDED at the Q2 sitting
+# (2026-10-02, the register row's history entry merged by #267, 70f8fe54f):
+# the CI check is armed, and this local check stays ADVISORY. See
+# RELEASE-FLOW.md § 5b. (Comment corrected 2026-10-24; prior text at e4e61eea2.)
 #
 # Credential discipline (Req 4.3): preflights gh auth + repo push permission and
 # fails LOUD with an actionable message when credentials are missing/under-scoped.
@@ -105,10 +107,17 @@ die()  { echo "" >&2; echo "❌ $1" >&2; shift; for line in "$@"; do echo "   $l
 # ---------------------------------------------------------------------------
 # Ballot B-CI — the required-workflows list (multi-homed copy set, S-6).
 # This array is count-asserted (six) against the six workflow files that
-# together produce tools/agent-generator/verify-gate-registration.sh's 18
-# required contexts. If that script's workflow set ever changes, this array
+# together produce 18 of tools/agent-generator/verify-gate-registration.sh's
+# 19 required contexts. If that script's workflow set ever changes, this array
 # moves with it in the SAME recorded change (C9 discipline extended to CI
-# dispatch — ballot B-CI § 5 grant item 2(a)).
+# dispatch — ballot B-CI § 5 grant item 2(a)). The 19th context,
+# completion-criteria-parity (required since 2026-10-03), comes from a seventh
+# file, completion-criteria-parity.yml, which has no workflow_dispatch and is
+# not in this array: its exclusion was decided while it was not required
+# (.kiro/issues/archive/2026-09-27-unit-branch-ci-feedback.md), and whether it
+# should now be dispatched is open in
+# .kiro/issues/2026-10-24-b-ci-post-flip-owed-acts.md. (Comment corrected
+# 2026-10-24; prior text at e4e61eea2.)
 # ---------------------------------------------------------------------------
 REQUIRED_WORKFLOWS=(
   "consumer-guard.yml"
@@ -120,8 +129,8 @@ REQUIRED_WORKFLOWS=(
 )
 if [[ ${#REQUIRED_WORKFLOWS[@]} -ne 6 ]]; then
   echo "❌ Internal error: REQUIRED_WORKFLOWS must have exactly 6 entries (it is a" >&2
-  echo "   multi-homed copy set with verify-gate-registration.sh's 6 workflow files" >&2
-  echo "   producing 18 required contexts) — found ${#REQUIRED_WORKFLOWS[@]}." >&2
+  echo "   multi-homed copy set with the 6 workflow files producing 18 of" >&2
+  echo "   verify-gate-registration.sh's 19 required contexts) — found ${#REQUIRED_WORKFLOWS[@]}." >&2
   exit 1
 fi
 
@@ -391,8 +400,9 @@ BEHAVIOR NOTES:
     1d.7), parent mode pushes, re-reports the existing PR URL, and re-runs the
     zero-runs detector against the new push.
   - Parent and unit-member modes run the advisory completion-criteria-parity
-    checker before committing (register row completion-criteria-parity,
-    check_state: proposed — this is a warning, never a block).
+    checker before committing (register row completion-criteria-parity is
+    armed as a required CI check; this local run is advisory — a warning,
+    never a block).
   - Unit-branch dispatch runs (subtask/unit-member) report under context names
     distinct from the required set (ballot B-CI a2) — feedback, not the gate.
     The parent-mode zero-runs detector (F-A) DOES fail loudly (non-zero exit)
@@ -610,20 +620,22 @@ fi
 # Advisory completion-criteria-parity check (parent + unit-member modes only).
 #
 # Register row `completion-criteria-parity` (governance/classification-map.md)
-# is check_state: proposed — ARMING is Q2's decision, not this script's. This
-# call is deliberately non-blocking: it prints the checker's own output and,
-# on a non-zero exit, prints a loud warning and CONTINUES. RULED (Peter,
+# is check_state: armed — a required CI check since the 2026-10-03 flip. This
+# local call is deliberately non-blocking: it prints the checker's own output
+# and, on a non-zero exit, prints a loud warning and CONTINUES. RULED (Peter,
 # 2026-09-26, PR #205): stays advisory until the Q2 sitting decides otherwise
 # — that sitting decides this script's local mode alongside the CI
-# required-flag (RELEASE-FLOW.md § 5b note). --skip-parity bypasses entirely
-# (e.g. the checker itself is broken).
+# required-flag (RELEASE-FLOW.md § 5b note). DECIDED at that sitting
+# (2026-10-02, register history entry merged by #267): it stays ADVISORY.
+# --skip-parity bypasses entirely (e.g. the checker itself is broken).
+# (Comment corrected 2026-10-24; prior text at e4e61eea2.)
 # ---------------------------------------------------------------------------
 if [[ "$MODE" != "subtask" && "$RUN_PARITY" == true ]]; then
   if [[ -f "scripts/check-completion-criteria-parity.ts" ]]; then
     say "Running completion-criteria-parity (advisory — not blocking)..."
     if ! npx tsx scripts/check-completion-criteria-parity.ts; then
       warn "completion-criteria-parity reported RED findings above."
-      warn "ADVISORY ONLY — not blocking this completion (register row completion-criteria-parity is check_state: proposed; arming is Q2's decision). Review before your unit's PR merges."
+      warn "ADVISORY ONLY — not blocking this completion (this local run is advisory; completion-criteria-parity is a required check on the unit PR, where a red blocks the merge). Review before your unit's PR merges."
     fi
   else
     warn "scripts/check-completion-criteria-parity.ts not found — skipping advisory parity check."
