@@ -59,6 +59,31 @@ export interface IndexComponentsOptions {
    * legacy default decide alone.
    */
   tierDir?: string;
+  /**
+   * Parallel to `componentsDir` (array form): which source produced each root — `env`, `cwd` or
+   * `package` (`resolveComponentRoots`'s `sources`). Only an `env` root that does not exist is a
+   * warning (`missingEnvRootWarning`); a missing `cwd` root is a consumer with no forks, which is
+   * normal. OMITTED → no root is treated as `env` (legacy callers).
+   * (.kiro/issues/2026-10-24-application-mcp-healthy-with-missing-component-root.md, item 1.)
+   */
+  rootSources?: string[];
+  /** The variable that named the `env` root (`COMPONENTS_DIR` or `COMPONENT_DIR`). Default `COMPONENTS_DIR`. */
+  envVarName?: string;
+}
+
+/**
+ * The warning for a consumer component root named by an env variable that does not exist
+ * (.kiro/issues/2026-10-24-application-mcp-healthy-with-missing-component-root.md, items 1, 2, 5).
+ * One text, used by `getHealth().warnings`, the boot log and the `get_component_full` /
+ * `get_component_summary` responses. `otherRootsIndexed` is whether any other root (the
+ * package's) exists, so the "only DesignerPunk's are" clause is never false.
+ */
+export function missingEnvRootWarning(envVarName: string, root: string, otherRootsIndexed: boolean): string {
+  return (
+    `${envVarName} points at ${root}, which does not exist, so your own components are not indexed` +
+    (otherRootsIndexed ? `; only DesignerPunk's are` : '') +
+    `. Point it at src/components (the default), or remove it.`
+  );
 }
 
 /**
@@ -204,6 +229,8 @@ export class ComponentIndexer {
   private lastIndexTime = '';
   private lastIndexTimeMs = 0;
   private indexWarnings: string[] = [];
+  /** The missing-`env`-root warnings of the last full index (also in `indexWarnings`). */
+  private rootWarnings: string[] = [];
   private dataDirs: string[] = [];
   /** Keyword index built at index time — Task 2, Spec 121 */
   private keywordIndex: KeywordIndex = new Map();
@@ -233,6 +260,7 @@ export class ComponentIndexer {
     this.ownerByDeclaredName.clear();
     this.indexKeyByDir.clear();
     this.indexWarnings = [];
+    this.rootWarnings = [];
 
     const roots = normalizeRoots(componentsDir);
     this.componentRoots = roots;
@@ -250,8 +278,26 @@ export class ComponentIndexer {
       .filter(Boolean) as string[];
 
     const existingRoots = roots.filter(r => fs.existsSync(r));
+
+    // A consumer root named by an env variable that does not exist: say so, by name, path and
+    // remedy (the root is otherwise dropped in silence and health reads "healthy" on the package's
+    // components alone). Item 1 of the 2026-10-24 record.
+    const missingEnvRoots = new Set<string>();
+    const rawRoots = Array.isArray(componentsDir) ? componentsDir : [componentsDir];
+    (options.rootSources ?? []).forEach((source, i) => {
+      if (source !== 'env' || !rawRoots[i]) return;
+      const abs = path.resolve(rawRoots[i]);
+      if (fs.existsSync(abs) || missingEnvRoots.has(abs)) return;
+      missingEnvRoots.add(abs);
+      const warning = missingEnvRootWarning(options.envVarName ?? 'COMPONENTS_DIR', abs, existingRoots.length > 0);
+      this.rootWarnings.push(warning);
+      this.indexWarnings.push(warning);
+    });
+
     if (existingRoots.length === 0) {
-      for (const r of roots) this.indexWarnings.push(`Components directory not found: ${r}`);
+      for (const r of roots) {
+        if (!missingEnvRoots.has(r)) this.indexWarnings.push(`Components directory not found: ${r}`);
+      }
       this.lastIndexTime = new Date().toISOString();
       return;
     }
@@ -449,6 +495,14 @@ export class ComponentIndexer {
       platforms: m.platforms,
       contractCount: Object.keys(m.contracts.active).length,
     }));
+  }
+
+  /**
+   * The missing-`env`-root warnings of the last full index, for responses that answer about one
+   * component (`get_component_full`, `get_component_summary` — the 2026-10-24 record's item 5).
+   */
+  getRootWarnings(): string[] {
+    return [...this.rootWarnings];
   }
 
   /**

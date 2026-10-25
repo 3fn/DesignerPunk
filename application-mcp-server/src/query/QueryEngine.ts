@@ -178,7 +178,9 @@ export class ComponentQueryEngine {
     return {
       data,
       error: data ? null : `Component "${name}" not found`,
-      warnings: data?.warnings ?? [],
+      // A missing env component root comes first: it can make this answer the package's
+      // component, or "not found", for a name the consumer forked (2026-10-24 record, item 5).
+      warnings: [...this.indexer.getRootWarnings(), ...(data?.warnings ?? [])],
       metrics: { responseTimeMs: Date.now() - start },
     };
   }
@@ -198,7 +200,7 @@ export class ComponentQueryEngine {
     const start = Date.now();
     const meta = this.indexer.getComponent(name);
     if (!meta) {
-      return { data: null, error: `Component "${name}" not found`, warnings: [], metrics: { responseTimeMs: Date.now() - start } };
+      return { data: null, error: `Component "${name}" not found`, warnings: this.indexer.getRootWarnings(), metrics: { responseTimeMs: Date.now() - start } };
     }
     const summary: ComponentSummary = {
       name: meta.name,
@@ -215,7 +217,7 @@ export class ComponentQueryEngine {
       requiredChildren: meta.composition?.children?.requires ?? [],
       inheritsFrom: meta.contracts.inheritsFrom,
     };
-    return { data: summary, error: null, warnings: [], metrics: { responseTimeMs: Date.now() - start } };
+    return { data: summary, error: null, warnings: this.indexer.getRootWarnings(), metrics: { responseTimeMs: Date.now() - start } };
   }
 
   findByCategory(category: string): QueryResult<ComponentSummary[]> {
