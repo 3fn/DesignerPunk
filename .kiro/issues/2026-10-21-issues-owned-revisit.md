@@ -19,3 +19,5 @@
 
 - **One false `FIRED` line, or one blocked session start** → item 9 is re-opened for re-ruling: the walk sends it to Peter with the evidence, as a ballot item.
 - Otherwise → the walk records the three counts here, dated, and closes this record by rule 5.
+
+**Pointer (2026-10-25, Thurgood, owner, rule 9)**: two records closed by their own fixing PR under rule 5 were printed `FIRED@<sha>` at every session start because the script does not read Outcome lines (`261982b63` #438, `722ea5bb0` #442). The event happened in both, so on this record's literal test (item 2 above) they are not false FIRED lines; whether the clause's spirit counts a misleading line is Peter's to say. The walk counts them under the reading he gives, citing `2026-10-25-issues-owned-fired-ignores-outcome-lines.md`.

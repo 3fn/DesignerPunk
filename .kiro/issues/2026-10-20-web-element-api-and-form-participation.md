@@ -140,3 +140,5 @@ Each item closes in its owning component PR. The PR names the item ID (E1–E7),
 *Signed: Lina, 2026-10-25.*
 
 *(2026-10-25, Lina, owner: E6 and E7's claim fix ride #471. The Trigger line is unchanged: this record stays open for E2–E5 and for Peter's 12b/12b(i) answers, and closes at 17.0.0 or on his 12b answer, not at #471's merge.)*
+
+*(2026-10-25, Lina, owner: #471 MERGED as `83cfae189`, with E6-2's `**Open for Peter**:` question unanswered. A merge never answers a question, and as with #450's two forks, this line does not treat it as answered. E6 (the `ariaControlsElements` fix) and E7's claim fix are on `main`, Chromium 152 browser lines by Sparky above. **Still open for Peter's words:** (1) whether the fallback contract text in E6 applies, given E6-2 is CANNOT TELL (accessibility exposure not observable in the verifier's pane); (2) whether his E6 wording reaches browsers without `ariaControlsElements`, where the contract's "refers to the element" is false and only the README says so. E5 (walk sub-line 12b(i)) was not in #471. This record stays OPEN for E2–E5, 12b and 12b(i), and E7 as a real-browser lane; the Trigger is unchanged.)*
