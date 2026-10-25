@@ -75,7 +75,7 @@ contracts:
       Avatar supports 6 size variants using component tokens:
       xs=24px, sm=32px, md=40px (default), lg=48px, xl=80px, xxl=128px.
       Icon sizes scale at 50% ratio. Border width changes at xxl
-      (borderEmphasis instead of borderDefault).
+      (border.emphasis instead of border.default).
     wcag: null
     platforms: [web, ios, android]
     validation:
@@ -94,7 +94,7 @@ contracts:
     description: Border with entity-appropriate color token
     behavior: |
       Avatar renders a border using color.avatar.border token.
-      xs-xl sizes use borderDefault width with opacity.heavy.
+      xs-xl sizes use border.default width with opacity.heavy.
       xxl size uses borderEmphasis width with full opacity and
       color.contrast.onSurface color.
     wcag: null

@@ -9,14 +9,14 @@ contracts:
     behavior: |
       Chip-Base renders a pill-shaped container using radius.full token.
       Displays label text using typography.buttonSm. Visual height is 32px.
-      Container has 1px border using borderDefault token.
+      Container has 1px border using border.default token.
     wcag: null
     platforms: [web, ios, android]
     validation:
       - Container renders with pill shape (radius.full)
       - Label text visible with typography.buttonSm
       - Visual height is 32px
-      - Border width is 1px (borderDefault)
+      - Border width is 1px (border.default)
     test_approach: |
       - Render chip, verify pill shape and label
     required: true

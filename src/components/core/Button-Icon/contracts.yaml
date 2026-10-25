@@ -147,9 +147,9 @@ contracts:
     category: visual
     description: Three visual variants with distinct treatments
     behavior: |
-      - Primary: solid color.primary background, color.contrast.onPrimary icon
-      - Secondary: transparent background, borderDefault border with color.primary, color.primary icon
-      - Tertiary: transparent background, no border, color.primary icon
+      - Primary: solid color.action.primary background, color.contrast.onAction icon
+      - Secondary: transparent background, border.default border with color.action.primary, color.action.primary icon
+      - Tertiary: transparent background, no border, color.action.primary icon
     wcag: null
     platforms: [web, ios, android]
     validation:
@@ -208,8 +208,8 @@ contracts:
     description: Icon colors meet WCAG AA contrast requirements
     behavior: |
       Icon color tokens ensure minimum 4.5:1 contrast ratio:
-      - Primary: color.contrast.onPrimary on color.primary background
-      - Secondary/Tertiary: color.primary on transparent/page background
+      - Primary: color.contrast.onAction on color.action.primary background
+      - Secondary/Tertiary: color.action.primary on transparent/page background
       Focus ring meets 3:1 non-text contrast ratio.
     wcag: "1.4.3 Contrast (Minimum)"
     platforms: [web, ios, android]

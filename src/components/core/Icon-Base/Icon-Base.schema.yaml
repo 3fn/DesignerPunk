@@ -89,9 +89,9 @@ properties:
     default: false
     description: |
       Optional optical balance adjustment using blend utilities. When true,
-      applies lighterBlend(color, blend.iconLighter) to the icon color to
+      applies lighterBlend(color, color.icon.opticalBalance) to the icon color to
       compensate for icons appearing heavier than adjacent text due to stroke
-      density and fill area. Uses the design system's blend token (8% lighter).
+      density and fill area. Uses the design system's blend token (blend200, 8% lighter).
       Requires a hex color to be provided via the color prop.
   
   className:

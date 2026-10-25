@@ -20,7 +20,7 @@ description: |
   
   Key Characteristics:
   - 2 states: active, inactive
-  - 1px thickness (borderDefault token)
+  - 1px thickness (progress.connector.thickness token, borderWidth100)
   - Flexible length (fills space between nodes)
   - Non-interactive, decorative (a11y handled by semantic variants)
 
