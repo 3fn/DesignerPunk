@@ -9,11 +9,18 @@
 signer: stacy
 date: 2026-10-24
 row: `canonical/profiles/consumer/always-set/civitas-system-overview.dispositions.yaml` · body · `#what-civitas-contains` (re-pointed; ROUTED)
-canonicalHash: sha256:1cf39e5cf23bce5b04edc831db1e0d71c5881b086a58fddbd862115c9797937b
+canonicalHash: sha256:77dc3cb69a10ba754447dfc278d64cead1ff80013763931a9235e8fd574f8a26
 renderedHash: sha256:3a0e750c68d74e1ea89c9a4be34382b395c5699b1f6306c1837c610bc67d2309
 verdict: assent — surviving 7/10; not surviving: `what-civitas-con-2`, `what-civitas-con-4`, `what-civitas-con-5`
 
-**Re-signed 2026-10-24** (prior signature: assent 7/10, 2026-09-29, against `sha256:6d5bb7e904c10be1b5bf04b25fd03b6f5222b3e5ea2b46c92b40aa4b6debf137`; the rendered hash did not move).
+**Re-signed 2026-10-24, second time: the count correction** (prior signature: assent 7/10, earlier the same day, against `sha256:1cf39e5cf23bce5b04edc831db1e0d71c5881b086a58fddbd862115c9797937b`; the rendered hash did not move).
+- **Why it was stale**: the canonical unit moved. Steering CORRECTION `cf53ef403` corrected the unit's counts: steering docs, Docs MCP docs/sections/cross-references, hooks and knowledge bases. It also dropped "release management" from the shell-scripts line. Thurgood re-authored `what-civitas-con-6` and moved the overlay pin only (`d25990912`, under the #466 grant); the overlay text is unchanged. My C1 re-confirmation at 10 items is `3f2d178b9`.
+- **How the hashes were read**: renderedHash was recomputed from the committed `canonical/_consumer-output/` with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`, and it equals the prior value. canonicalHash was recomputed independently, and it equals the overlay pin and the sweep's value.
+- **Judged against**: the same rendered unit, which carries none of the corrected numbers. They are DesignerPunk's own corpus inventory, removed by `subtraction-3`.
+- **`what-civitas-con-6` survives, re-grounded**, as before: the docs server's role, *"Docs MCP: serves DesignerPunk's shipped documentation corpus, read-only"*. Its counts ride inside the item text and are not credited items.
+- **The other items**: they stand as judged below. That includes the `con-8` observation (the rendering does not name `product/`), which still stands.
+
+**Re-signed 2026-10-24, first time** (prior signature: assent 7/10, 2026-09-29, against `sha256:6d5bb7e904c10be1b5bf04b25fd03b6f5222b3e5ea2b46c92b40aa4b6debf137`; the rendered hash did not move).
 - **Why it was stale**: the canonical unit moved. The steering CORRECTION `d4bd2ea49` (Spec 131 ballot audit fix-now item 8) replaced the Product MCP line's "(conceptual — specs 081, 096, 097)". Thurgood re-authored item `what-civitas-con-8` and moved the overlay pin only (`0e2a2bd41`, under the #464 grant); the overlay text is unchanged. My C1 re-confirmation at 10 items is `a7fb52020`.
 - **How the hashes were read**: renderedHash was recomputed from the committed `canonical/_consumer-output/` with the generator's own `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`, and it equals the prior value. canonicalHash was recomputed from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts`, and it equals the overlay pin and the sweep's value.
 - **Judged against**: the rendered unit at this revision, `canonical/_consumer-output/_canonical/always-set/civitas-system-overview.md` § "What Civitas Contains". Its MCP line: *"Product MCP: serves this product's screens, product tokens and context"*, under *"MCP servers (from the installed package)"*.

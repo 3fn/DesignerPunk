@@ -55,9 +55,15 @@ date: 2026-09-29
 ## `#high-level-designerpunk-three-system-architecture`
 
 confirmer: stacy
-canonicalHash: sha256:cb4d6d996773c1253896915cd34e6f718679dac9766a2ee86020a25779f203b0
+canonicalHash: sha256:11ade1ad6da002d22718fb043fbc35828e0eecb4feb449a3a47020d8b4ba6254
 items: none
-date: 2026-09-29
+date: 2026-10-24
+
+**Re-confirmed 2026-10-24 (Req 11.6.5d).**
+- **What changed**: one diagram node. `C_Steer["Steering Docs (92: 83 MCP-served + 9 identity)"]` now reads `(93: 84 MCP-served + 9 identity)`. Steering CORRECTION `cf53ef403` (Peter, 2026-10-25, relayed: "Let's fix them").
+- **The numbers hold at `d25990912`**: `ls .kiro/steering/*.md | wc -l` → 9; the docs MCP indexer over `governance/` → `totalDocuments` 84 (and `ls governance/*.md | wc -l` → 84).
+- **The hash**: the canonicalHash moves from `sha256:cb4d6d996773c1253896915cd34e6f718679dac9766a2ee86020a25779f203b0` to the value above. `operative-set-freshness` printed it, and I recomputed it independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts`; the two agree.
+- **Re-ruled**: still an illustration with one orientation line. No agent acts against a diagram count, so the zero stays declared (5d).
 
 **Ruling: CONFIRMED at 0, declared.** A Mermaid illustration with one orientation line.
 
@@ -82,11 +88,17 @@ date: 2026-09-29
 ## `#civitas-system-governance-infrastructure`
 
 confirmer: stacy
-canonicalHash: sha256:9751b1889d6e335ee645e098db78bc7d94ef3df5c7023e34cad717ce2e14e790
+canonicalHash: sha256:dc689ab05d1bb5afbd36b80878f69e0190da89ec9709b804496a42f8204ff028
 items: none
 date: 2026-10-24
 
-**Re-confirmed 2026-10-24 (Req 11.6.5d).**
+**Re-confirmed 2026-10-24, second time (Req 11.6.5d): the count correction.**
+- **What changed**: one diagram node. `DocsMCP["Docs MCP<br/>83 docs, 2,833 sections"]` now reads `84 docs, 2,535 sections`. Steering CORRECTION `cf53ef403` (Peter, 2026-10-25, relayed: "Let's fix them").
+- **The numbers hold**: I re-ran the docs MCP indexer at `d25990912` (`DocumentIndexer.indexDirectory(<worktree>/governance)`), and it gives `totalDocuments` 84 and `totalSections` 2535. The node `AppMCP` (34 / 443) is unchanged and still true: `get_component_health` → 34 components, 217 + 193 + 33 tokens.
+- **The hash**: the canonicalHash moves from `sha256:9751b1889d6e335ee645e098db78bc7d94ef3df5c7023e34cad717ce2e14e790` to the value above. `operative-set-freshness` printed it, and I recomputed it independently; the two agree.
+- **Re-ruled**: still an illustration, so the zero stays declared (5d).
+
+**Re-confirmed 2026-10-24, first time (prior record, superseded; canonicalHash `sha256:9751b1889d6e335ee645e098db78bc7d94ef3df5c7023e34cad717ce2e14e790`) (Req 11.6.5d).**
 - **What changed**: one diagram node. `ProdMCP["Product MCP<br/>(conceptual)"]` now reads `ProdMCP["Product MCP<br/>14 tools, reads product/"]`. Steering CORRECTION `d4bd2ea49`, Peter-merged under the carve-out (Spec 131 ballot audit fix-now item 8). Both facts hold at `0e2a2bd41`: `product-mcp-server/src/index.ts` registers 14 tools and sets `DEFAULT_PRODUCT_DIR = 'product'`. The canonicalHash moves from `sha256:05dfb306f63dc5eacf86ccaa02dd41897f8fef417b887f5c051dee41ee10ad06` to the value above. `operative-set-freshness` printed it, and I recomputed it independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts`; the two agree.
 - **Re-ruled**: the unit is still a diagram with its caption. No agent acts against a diagram node, so the zero stays declared (5d).
 

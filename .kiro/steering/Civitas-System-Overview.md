@@ -27,14 +27,14 @@ Civitas is architecturally different from its siblings. Rosetta has a unified ar
 
 ## What Civitas Contains
 
-**Steering documentation** (92 docs across 4 layers; 83 MCP-served + 9 always-loaded identity docs):
+**Steering documentation** (93 docs across 4 layers; 84 MCP-served + 9 always-loaded identity docs):
 - Layer 0: Meta-guide for the steering system itself
 - Layer 1: Foundation docs loaded by all agents (Core Goals, Agent Directory, this document)
 - Layer 2: Frameworks and patterns queryable via MCP (governance, architecture, process standards)
 - Layer 3: Specific implementations (token family docs, component family docs, platform guides)
 
 **MCP servers** (3):
-- Docs MCP: serves steering documentation with progressive disclosure (83 docs, 2,833 sections, 333 cross-references)
+- Docs MCP: serves steering documentation with progressive disclosure (84 docs, 2,535 sections, 331 cross-references)
 - Application MCP: serves component metadata and token metadata (34 components, 443 tokens, 9 experience patterns)
 - Product MCP: serves product-specific context from a consumer's `product/` directory (built in Spec 081: 14 tools, shipped in the package as `dist/mcp/product-mcp.js`; see also specs 096, 097). This repository has no `product/` directory, so here it serves an empty product set.
 
@@ -43,11 +43,11 @@ Civitas is architecturally different from its siblings. Rosetta has a unified ar
 - 5 product agents (Leonardo, Sparky, Kenya, Data, Stacy) that consume the design system to build products
 - Each agent has a JSON config (MCP access, steering doc references, skills) and a prompt file (domain boundaries, operational modes)
 
-**Automation** (13 hooks + 5 shell scripts):
+**Automation** (12 hooks + 5 shell scripts):
 - Agent hooks for domain-specific compliance checks (token health, component scaffolding, test coverage)
-- Shell scripts for task completion, release management, and file organization
+- Shell scripts for task completion and file organization
 
-**Knowledge bases** (24 definitions):
+**Knowledge bases** (13 definitions):
 - Per-agent indexed content for domain-scoped semantic search
 - Covers component source, token source, test infrastructure, spec history
 

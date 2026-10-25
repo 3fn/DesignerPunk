@@ -18,7 +18,7 @@ units:
     items: []
     confirmation: canonical/profiles/consumer/confirmations/civitas-system-overview.md#overview
   "#what-civitas-contains":
-    canonicalHash: sha256:1cf39e5cf23bce5b04edc831db1e0d71c5881b086a58fddbd862115c9797937b
+    canonicalHash: sha256:77dc3cb69a10ba754447dfc278d64cead1ff80013763931a9235e8fd574f8a26
     items:
       - id: what-civitas-con-2
         kind: obligation
@@ -39,7 +39,7 @@ units:
       - id: what-civitas-con-6
         kind: obligation
         label: "Docs MCP: serves steering documentation with progressive dis"
-        text: "Docs MCP: serves steering documentation with progressive disclosure (83 docs, 2,833 sections, 333 cross-references)"
+        text: "Docs MCP: serves steering documentation with progressive disclosure (84 docs, 2,535 sections, 331 cross-references)"
       - id: what-civitas-con-7
         kind: obligation
         label: "Application MCP: serves component metadata and token metadat"
