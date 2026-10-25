@@ -91,3 +91,18 @@ Appended after the grant row went active (Peter's merge of #469, `264c25661`) an
 On Peter, 2026-10-25, in chat, relayed by the orchestrator: "Go with Leonardo's fresh-birth repo for the Kiro pair". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are committed in this record.* **Ruled**: the Kiro conformance pair's repo is born fresh by the launcher from the candidate (`fixtures/c-near-empty`, `init --target=kiro`, `generate`, one commit), not `fixtures/born-kiro` plus `sync`. Reason (mine, as instrument owner): `born-kiro` carries the release-4 renderings and a lock pinned to the old tarball, so a `sync` would be a second thing under test. Cost, accepted: the pair's repo has no prior product work, so Thurgood's task-4 judgment meets a thinner repo and the two harnesses' pairs are not like-for-like. Protocol § 15.3 states this as settled. **The S window is still open** (the line above stands unchanged).
 
 *Signed: Leonardo, 2026-10-25.*
+
+## Owner line (2026-10-25, Leonardo, rule 9): RULED — the S window is event-anchored, not a date
+
+On Peter, 2026-10-25, in chat, relayed by the orchestrator: "Re: S window, as soon as we wrap up the remaining issues that should go into 16.1.0, we should release it". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are committed in this record.* **Ruled**: the S window has no calendar date. It is anchored to an event, and the plan below follows from it. This closes the "Still open (Peter)" paragraph of the run-plan line above; that line stands unedited.
+
+1. **F is the merge commit of the last 16.1.0 fix PR.** Today's remaining two are the row-4 shape revert on #479 and Lina's E5 + size125 branch (PR number pending). F is named at the later of their merges. No one names F earlier, and no date stands in for it.
+2. **The candidate pack is built from F immediately** (`npx tsx scripts/release-publish.ts --dry-run <F>` from the main checkout), then copied to the launcher's `.pack/3fn-core-candidate.tgz`.
+3. **The four runs follow at Peter's next sitting** (order trio-2, trio-3, conformance-kiro, trio-1), then this PR's records merge, then the release PR. The ordering constraint above is unchanged: this PR merges before the release PR, so every record is an ancestor of S.
+4. **Fallback**: if Peter ever sets a date for 16.1.0, the "F no later than <date>" form returns, and the pack is built from F at that date's latest.
+
+**Counter-argument, surviving**: an event anchor has no deadline of its own. If a fix PR slips, F slips, and the trio waits on it; the release waits on the trio. That is the intended coupling (the trio must run on the content that ships), but a long slip is not visible as a miss until someone reads the clock. The cost of a miss is unchanged: the record lapses at S (rule 11) and Req 23.7's finding fires.
+
+**Trigger**: unchanged by this line. Still `merge:#474`.
+
+*Signed: Leonardo, 2026-10-25.*
