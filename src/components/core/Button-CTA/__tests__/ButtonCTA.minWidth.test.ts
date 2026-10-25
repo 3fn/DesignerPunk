@@ -95,7 +95,8 @@ function androidRead(size: Size): string {
 function resolved(size: Size): Record<Platform, string | undefined> {
   const web = webRead(size).match(/^var\((--[\w-]+)\)$/);
   const ios = iosRead(size).match(/^DesignTokens\.(\w+)$/);
-  const android = androidRead(size).match(/^DesignTokens\.(\w+)$/);
+  // `.dp` is the conversion Android needs while sizing is emitted as Float (AndroidSizingDpReads.test.ts); the token read is the name before it.
+  const android = androidRead(size).match(/^DesignTokens\.(\w+?)(?:\.dp)?$/);
   return {
     web: web ? keyFor('web', web[1]) : undefined,
     ios: ios ? keyFor('ios', ios[1]) : undefined,

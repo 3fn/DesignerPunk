@@ -42,7 +42,7 @@ object NavHeaderTokens {
     val separatorWidth = DesignTokens.border_width_100
 
     // Touch target (contract: accessibility_touch_target)
-    val minHeight = DesignTokens.tap_area_recommended.dp
+    val minHeight = DesignTokens.tap_area_recommended
 }
 
 /** Appearance mode for Nav-Header-Base. */

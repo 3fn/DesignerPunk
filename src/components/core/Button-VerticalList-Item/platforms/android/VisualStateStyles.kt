@@ -251,7 +251,7 @@ data class VisualStateStyles(
          */
         fun rest(theme: DesignerPunkTheme) = VisualStateStyles(
             background = theme.color_structure_canvas,
-            borderWidth = DesignTokens.border_default.dp,
+            borderWidth = DesignTokens.border_default,
             borderColor = Color.Transparent,
             labelColor = theme.color_text_default,
             iconColor = theme.color_text_default,
@@ -260,7 +260,7 @@ data class VisualStateStyles(
         
         fun selected(theme: DesignerPunkTheme) = VisualStateStyles(
             background = theme.color_feedback_select_background_rest,
-            borderWidth = DesignTokens.border_emphasis.dp,
+            borderWidth = DesignTokens.border_emphasis,
             borderColor = theme.color_feedback_select_text_rest,
             labelColor = theme.color_feedback_select_text_rest,
             iconColor = theme.color_feedback_select_text_rest,
@@ -269,7 +269,7 @@ data class VisualStateStyles(
         
         fun notSelected(theme: DesignerPunkTheme) = VisualStateStyles(
             background = theme.color_feedback_select_background_default,
-            borderWidth = DesignTokens.border_default.dp,
+            borderWidth = DesignTokens.border_default,
             borderColor = Color.Transparent,
             labelColor = theme.color_feedback_select_text_default,
             iconColor = theme.color_feedback_select_text_default,
@@ -278,7 +278,7 @@ data class VisualStateStyles(
         
         fun checked(theme: DesignerPunkTheme) = VisualStateStyles(
             background = theme.color_feedback_select_background_rest,
-            borderWidth = DesignTokens.border_default.dp,
+            borderWidth = DesignTokens.border_default,
             borderColor = Color.Transparent,
             labelColor = theme.color_feedback_select_text_rest,
             iconColor = theme.color_feedback_select_text_rest,
@@ -287,7 +287,7 @@ data class VisualStateStyles(
         
         fun unchecked(theme: DesignerPunkTheme) = VisualStateStyles(
             background = theme.color_structure_canvas,
-            borderWidth = DesignTokens.border_default.dp,
+            borderWidth = DesignTokens.border_default,
             borderColor = Color.Transparent,
             labelColor = theme.color_text_default,
             iconColor = theme.color_text_default,
@@ -297,7 +297,7 @@ data class VisualStateStyles(
         fun errorSelectMode(checkmarkVisible: Boolean, theme: DesignerPunkTheme): VisualStateStyles {
             return VisualStateStyles(
                 background = theme.color_feedback_error_background,
-                borderWidth = DesignTokens.border_emphasis.dp,
+                borderWidth = DesignTokens.border_emphasis,
                 borderColor = theme.color_feedback_error_text,
                 labelColor = theme.color_feedback_error_text,
                 iconColor = theme.color_feedback_error_text,
@@ -443,7 +443,7 @@ fun calculatePaddingBlock(borderWidth: Dp): Dp {
     // borderEmphasis (2dp) requires 10dp padding
     // borderDefault (1dp) requires 11dp padding
     // Uses component tokens for consistency with design system
-    return if (borderWidth >= DesignTokens.border_emphasis.dp) {
+    return if (borderWidth >= DesignTokens.border_emphasis) {
         VERTICAL_LIST_ITEM_PADDING_BLOCK_SELECTED
     } else {
         VERTICAL_LIST_ITEM_PADDING_BLOCK_REST
