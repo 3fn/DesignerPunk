@@ -106,3 +106,15 @@ On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Bump the t
 - **Row 5's act is discharged for 16.1.0** (audit appended by Ada; bump done here; `zod` carried and stated). Trigger unchanged, `release:next:phase-1`; the record closes at S with the release walk.
 
 *Signed: Thurgood, 2026-10-25.*
+
+## Outcome line (2026-10-25, Thurgood, rule 5): zod bumped too, on Peter's later ruling
+
+On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator, on the new fact in the line above (the shipped bundles inline zod 4.3.6 and 4.6.7 is inside the SDK's range): "Let's take 4.6.7 now". *Unverified here: chat only; his words are committed in this record.* This supersedes the "carry zod" half of "Bump the three now, carry zod" (and of his #469 comment); the line above is kept as written and its zod paragraph no longer holds.
+
+- **Done** (commit `3ef6c4d1e`, in-range `npm update zod`): root `package-lock.json` zod 4.3.6 to 4.6.7; `mcp-server` and `application-mcp-server` lockfiles 3.25.76 to 4.6.7 (so the dev builds match the shipped bundles; neither server imports zod directly). No `package.json` changed.
+- **Bundled zod after** (metafile, working checkout and root-only publish path alike): 4.6.7 in all three bundles; sdk 1.32.2 and `fast-uri` 3.1.9 as before.
+- **`npm audit --omit=dev` total, after the three bumps to after zod**: root 9 to 8 (1 low, 3 moderate, 3 high, 1 critical); `mcp-server` 7 to 6; `application-mcp-server` 7 to 6. No `zod` finding remains in any tree; what is left is the seven packages no bundle contains and `diff` (root, low). From the start of this row: root 12 to 8, `mcp-server` 9 to 6, `application-mcp-server` 10 to 6.
+- **CHANGELOG `[Unreleased]`**: the zod "Known limitations" bullet is deleted; zod 4.3.6 to 4.6.7 is in the "Changed" bump bullet (four libraries).
+- **Row 5's act is fully discharged for 16.1.0**: audit appended (Ada), all four inlined libraries with a fixed version bumped, nothing carried. Trigger unchanged, `release:next:phase-1`; the record closes at S with the release walk.
+
+*Signed: Thurgood, 2026-10-25.*
