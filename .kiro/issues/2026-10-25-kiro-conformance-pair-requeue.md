@@ -3,7 +3,7 @@
 **Date**: 2026-10-25
 **Status**: ACTIVE
 **Owner**: **Leonardo** — the trio's operator and the protocol's owner. **Peter** launches every harness session (Decision 1, 2026-10-14).
-**Trigger**: `manual` — the event is **the Kiro plan's 2026-11-01 credit reset**, which only the launcher's `/usage` screen shows. The re-run is owed in the first week of November 2026, after that reset. Start condition: Peter's answer to the open fork below, and a grant row for the records' paths (the 16.1.0 trio grant expires at the records PR's merge, `.kiro/issues/README.md` rule 8).
+**Trigger**: `manual` — the event is **the Kiro plan's 2026-11-01 credit reset**, which only the launcher's `/usage` screen shows. The re-run is owed in the first week of November 2026, after that reset. Start condition: a grant row for the records' paths, on the branch the candidate ruling below selects *(2026-10-25, Leonardo: the fork is ruled. Was: "Start condition: Peter's answer to the open fork below, and a grant row for the records' paths")*, (the 16.1.0 trio grant expires at the records PR's merge, `.kiro/issues/README.md` rule 8).
 **Class**: P2 obligation (record) · owed-act *(set 2026-10-25, Leonardo, rule 12. Nothing is false at a reader: the two 16.1.0 records say `not run` with the reason. What is owed is the run.)*
 **Source**: Peter, 2026-10-25, about 21:55Z, in chat, relayed by the orchestrator: **"Go with the last option, re-queue the Kiro pair for November"**. The option, as the orchestrator put it to him: "Release with four records and a disclosed gap. The conformance record is written as 'not run, plan credits exhausted' with a trigger carrying it to release 6." *Unverified here: chat only. Peter may confirm the relay on the PR; his words are committed in this record.* Filed under rule 10, in the PR that records the ruling (the 16.1.0 trio records PR, `chore/release-16.1.0-trio`).
 **Grant paths**: none here. The November records need their own grant row, whose paths follow Peter's pick below.
@@ -17,13 +17,20 @@ The Kiro conformance pair (protocol § 15.3): identity probe consumer-Thurgood, 
 
 **Why it matters, measured**: both Kiro renderings changed since release 4 (`thurgood-prompt.md` 6 lines, `stacy-prompt.md` 54 lines, against `tests/onboarding-trio/fixtures/born-kiro/`; `conformance-kiro-beat-1.md` § `why-run:`). Until this runs, consumer-Thurgood and consumer-Stacy on Kiro have no behavioural run of this release's rendering.
 
-## Open for Peter
+## The candidate — RULED
 
-**Open for Peter**: which candidate does the November re-run use? The protocol does not say: § 5.0 places every run before S on a preview of F, and § 15.3 adds nothing for a run after S. No pick is made here.
+**RULED (Peter, 2026-10-25, about 22:50Z, chat, relayed by the orchestrator)**: "Use the shipped tarball if it's out, otherwise the preview". That is (b) if 16.1.0 has shipped by the November window, and (a) if it has not. *Unverified here: chat only. Peter may confirm the relay on the PR; his words are committed in this record.*
+
+**What follows, per branch of the pick** (read at the window, from whether a `v16.1.0` tag and its publish exist):
+- **16.1.0 has shipped → (b), the shipped tarball.** A fresh founder's birth from the published `@3fn/core` 16.1.0 tarball, placed as `.pack/3fn-core-candidate.tgz` (the frozen prompts' release-neutral name, unchanged). Step 0 checks the tarball's sha1 against the publish record and S in place of F. **Records folder**: `tests/onboarding-trio/records/16.1.0-post/` (a 16.1.0 addendum, read as release 6's early Kiro pair; not 16.1.0's discharge, since its commit is not an ancestor of S). **Grant row paths**: `tests/onboarding-trio/records/16.1.0-post/**`, plus `tests/onboarding-trio/protocol.md` only if the launch blocks need the S/published-tarball step-0 variant.
+- **16.1.0 has not shipped → (a), the preview candidate** (F `de63033b9`, sha1 `42515c34…`, the stored pack). **Records folder**: `tests/onboarding-trio/records/16.1.0/` (the two `conformance-kiro-beat-*.md` records are completed in place, with a dated note; they then merge before S as § 5.0 wants). **Grant row paths**: `tests/onboarding-trio/records/16.1.0/conformance-kiro-beat-1.md` and `conformance-kiro-beat-2.md`.
+- Either way the folder name and the grant row are mine to file as owner (rule 10), in the PR that opens the November run.
+
+*Was (2026-10-25, Leonardo, before the ruling):* "**Open for Peter**: which candidate does the November re-run use? The protocol does not say: § 5.0 places every run before S on a preview of F, and § 15.3 adds nothing for a run after S. No pick is made here.
 - **(a) The same preview candidate** (F `de63033b9bfacb7da3e8fdd8a2b13538f2092a6a`, sha1 `42515c34784552f6d87453ac3e67dc033a773d19`, stored at `/Users/3fn/Documents/Work Projects/Kiro/u5-pack/16.1.0/`). Like-for-like with the four 16.1.0 records. If 16.1.0 has shipped by then, it measures a tarball consumers do not install.
 - **(b) The shipped 16.1.0 tarball**, if 16.1.0 has shipped, through a fresh founder's birth (the prompts' release-neutral `.pack/3fn-core-candidate.tgz` name needs no change; step 0 checks the published tarball's sha1 and S in place of F). It measures what shipped. Its records are not ancestors of 16.1.0's S, so they read as release 6's early pair or a 16.1.0 addendum, not as 16.1.0's discharge.
 - **Operator's lean, offered only as a lean**: (b) if 16.1.0 has shipped, (a) if it has not. The release PR's diff touches no rendering, so (b) loses little comparability.
-- **What follows from the pick**: the records' folder (`records/16.1.0/` addendum or a release-6 folder) and the grant row's paths.
+- **What follows from the pick**: the records' folder (`records/16.1.0/` addendum or a release-6 folder) and the grant row's paths." *(End of the earlier text.)*
 
 ## Before the launch (the class fix, from the 16.1.0 runs)
 
