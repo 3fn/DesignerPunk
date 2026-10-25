@@ -161,6 +161,7 @@ Both components follow True Native Architecture with build-time platform separat
 6. WHEN checkbox attributes change THEN the system SHALL reactively update rendering
 7. WHEN checkbox is used in a form THEN native form submission SHALL include checkbox value
 8. WHEN form is reset THEN checkbox SHALL return to unchecked state (pre-checked checkboxes are not supported)
+   - *Amended 2026-10-25 (Lina, owner; authority: Peter, 2026-10-25, "Fix all of them as the owners recommend; T is (A)", adopting option (a) of `.kiro/issues/2026-10-25-checkbox-reset-semantics-contract-vs-code.md` at the release 16.1.0 walk, Floor batch line 8):* AC 8 is superseded. WHEN the form is reset THEN the checkbox SHALL return to its authored state, meaning the `checked` and `indeterminate` it had when it first connected, as contract `validation_form_integration` states ("Form reset restores initial checked state"). The same applies to Input-Checkbox-Legal (Requirement 9), where a pre-check refused under `requiresExplicitConsent` is never an authored state.
 
 ---
 

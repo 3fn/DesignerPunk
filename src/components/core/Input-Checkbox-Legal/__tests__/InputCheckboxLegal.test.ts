@@ -585,7 +585,7 @@ describe('Input-Checkbox-Legal Web Component', () => {
   // ============================================================================
   
   describe('Form Integration', () => {
-    it('should reset to unchecked on form reset', async () => {
+    it('should restore an authored pre-check on form reset when explicit consent is not required', async () => {
       const form = document.createElement('form');
       const checkbox = document.createElement('input-checkbox-legal') as InputCheckboxLegalElement;
       checkbox.setAttribute('label', 'I agree to terms');
@@ -597,11 +597,31 @@ describe('Input-Checkbox-Legal Web Component', () => {
       await new Promise(resolve => setTimeout(resolve, 0));
       
       expect(checkbox.checked).toBe(true);
+      checkbox.checked = false;
+      
+      form.reset();
+      await new Promise(resolve => setTimeout(resolve, 0));
+      
+      expect(checkbox.checked).toBe(true);
+    });
+
+    it('should reset to unchecked when a pre-check was refused (explicit consent, the default)', async () => {
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+      const form = document.createElement('form');
+      const checkbox = document.createElement('input-checkbox-legal') as InputCheckboxLegalElement;
+      checkbox.setAttribute('label', 'I agree to terms');
+      checkbox.setAttribute('checked', '');
+      form.appendChild(checkbox);
+      document.body.appendChild(form);
+      
+      await new Promise(resolve => setTimeout(resolve, 0));
+      expect(checkbox.checked).toBe(false);
       
       form.reset();
       await new Promise(resolve => setTimeout(resolve, 0));
       
       expect(checkbox.checked).toBe(false);
+      warnSpy.mockRestore();
     });
 
     it('should include name attribute on native input', async () => {

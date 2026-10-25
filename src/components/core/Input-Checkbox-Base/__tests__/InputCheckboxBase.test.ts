@@ -479,7 +479,7 @@ describe('Input-Checkbox-Base Web Component', () => {
       expect(checkbox.value).toBe('on');
     });
 
-    it('should reset to unchecked on form reset', async () => {
+    it('should restore the authored checked state on form reset', async () => {
       const form = document.createElement('form');
       const checkbox = document.createElement('input-checkbox-base') as InputCheckboxBaseElement;
       checkbox.setAttribute('label', 'Form field');
@@ -490,29 +490,34 @@ describe('Input-Checkbox-Base Web Component', () => {
       await new Promise(resolve => setTimeout(resolve, 0));
       
       expect(checkbox.checked).toBe(true);
+      checkbox.checked = false;
       
       form.reset();
       await new Promise(resolve => setTimeout(resolve, 0));
       
-      expect(checkbox.checked).toBe(false);
+      expect(checkbox.checked).toBe(true);
     });
 
-    it('should clear indeterminate on form reset', async () => {
+    it('should clear an indeterminate state set after connect on form reset, and restore an authored one', async () => {
       const form = document.createElement('form');
-      const checkbox = document.createElement('input-checkbox-base') as InputCheckboxBaseElement;
-      checkbox.setAttribute('label', 'Form field');
-      checkbox.setAttribute('indeterminate', '');
-      form.appendChild(checkbox);
+      const later = document.createElement('input-checkbox-base') as InputCheckboxBaseElement;
+      later.setAttribute('label', 'Set later');
+      const authored = document.createElement('input-checkbox-base') as InputCheckboxBaseElement;
+      authored.setAttribute('label', 'Authored');
+      authored.setAttribute('indeterminate', '');
+      form.append(later, authored);
       document.body.appendChild(form);
       
       await new Promise(resolve => setTimeout(resolve, 0));
       
-      expect(checkbox.indeterminate).toBe(true);
+      later.indeterminate = true;
+      authored.indeterminate = false;
       
       form.reset();
       await new Promise(resolve => setTimeout(resolve, 0));
       
-      expect(checkbox.indeterminate).toBe(false);
+      expect(later.indeterminate).toBe(false);
+      expect(authored.indeterminate).toBe(true);
     });
   });
 
