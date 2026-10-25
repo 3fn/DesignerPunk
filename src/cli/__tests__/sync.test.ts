@@ -277,6 +277,19 @@ describe('sync — end to end (Task 5)', () => {
       expect(con.output()).toContain(ALL_CLEAR_MESSAGE);
     });
 
+    test('on a terminal, a run with nothing to apply is NOT headed as a before state (Ada, review item 3); one with work is', async () => {
+      bornRepo();
+      await runSync({ projectRoot: scratch, isTTY: true, agentLayer: noAgents, confirm: async () => false });
+      expect(con.output()).not.toContain(PRE_APPLY_REPORT_NOTE);
+      expect(con.output()).toContain(ALL_CLEAR_MESSAGE);
+    });
+
+    test('on a terminal, a run with a managed update to apply IS headed as a before state', async () => {
+      bornRepo({ docPending: true });
+      await runSync({ projectRoot: scratch, isTTY: true, agentLayer: stubAgentLayer({ cc: [{ path: DOC, content: 'v2\n' }] }), confirm: async () => false });
+      expect(con.output()).toContain(PRE_APPLY_REPORT_NOTE);
+    });
+
     test('report only (no --apply): repairs still offered → never the all-clear; the closing line names what is pending', async () => {
       bornRepo({ pins: true });
       const out = await runSync({ projectRoot: scratch, isTTY: false, agentLayer: noAgents });

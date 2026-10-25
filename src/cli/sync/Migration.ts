@@ -73,7 +73,8 @@ const AUTH_CODE_RE = /\b(E401|E403|ENEEDAUTH)\b/;
  * Read an `npm view` / `npm pack` failure (an `execFileSync` error: `stdout`, `stderr`, `message`) as a login
  * refusal, or null when it is any other failure (offline, not found, timeout). The registry is the origin of
  * the request npm names (`GET https://npm.pkg.github.com/...` → `https://npm.pkg.github.com`): only the origin
- * is kept, so nothing from the consumer's `.npmrc` beyond the registry's address is ever printed.
+ * (scheme, host, port) is kept — never a login part, path or query string — so nothing from the consumer's
+ * `.npmrc` beyond the registry's address is ever printed.
  */
 export function classifyNpmAuthError(err: unknown): RegistryAuthFailure | null {
   const e = (err ?? {}) as { stdout?: unknown; stderr?: unknown; message?: unknown };
@@ -83,7 +84,18 @@ export function classifyNpmAuthError(err: unknown): RegistryAuthFailure | null {
   const code =
     AUTH_CODE_RE.exec(text)?.[1] ?? (/\b401 Unauthorized\b/.test(text) ? 'E401' : /\b403 Forbidden\b/.test(text) ? 'E403' : null);
   if (!code) return null;
-  const origin = /\b(?:GET|HEAD|PUT|POST)\s+(https?:\/\/[^\s/"'<>]+)/.exec(text)?.[1] ?? null;
+  // Only the ORIGIN is kept: `new URL(…).origin` drops a login part (`https://user:token@host`), the path and
+  // any query string (`?token=…`), so a credential npm echoes in its error never reaches the report.
+  const raw = /\b(?:GET|HEAD|PUT|POST)\s+(https?:\/\/[^\s"'<>]+)/.exec(text)?.[1];
+  let origin: string | null = null;
+  if (raw) {
+    try {
+      const o = new URL(raw).origin;
+      origin = o === 'null' ? null : o;
+    } catch {
+      origin = null;
+    }
+  }
   return { code, registry: origin };
 }
 
@@ -274,9 +286,14 @@ export interface MigrationAssessment {
   /** The first login refusal the fetcher met (R2 (b)) — reported once, as a login problem. */
   authFailure?: RegistryAuthFailure;
   /**
-   * The oldest version the registry lists, when it is newer than the oldest version the copies may have come
-   * from (the legacy manifest's last sync, else the installed bound): content older than it cannot be retrieved
-   * through this registry, so a copy matching nothing listed is `cannot-tell`, never `modified`.
+   * The oldest version the registry lists, when it is newer than a HEURISTIC floor: the legacy manifest's last
+   * sync, else the installed bound. When that happens, a copy that matches nothing listed is `cannot-tell`,
+   * not `modified`. The floor is NOT a proven lower bound. Design C7 says the last sync is not the copy version,
+   * and a skipped update leaves older copies (legacy sync never managed `src/components/core`). So a copy older
+   * than the oldest listed version, in a repo whose last sync (or bound) is listed, still reads as `modified`.
+   * The guard only ever turns `modified` into `cannot-tell`; it never makes a copy `unmodified`, so it cannot
+   * cause a removal. The sound alternative (a constant floor) is a fork filed as
+   * `.kiro/issues/2026-10-24-sync-migration-unlisted-copy-floor.md`.
    */
   unlistedBefore?: string;
 }
@@ -330,7 +347,10 @@ export function assessComponentCopies(
     trigger: MigrationAssessment['trigger'];
     /** The installed package on disk (`node_modules/@3fn/core`): judged FIRST, with no fetch (R2 (a)). */
     installed?: { version: string; root: string };
-    /** The legacy manifest's `version` (the last sync), when there is one — the oldest version the copies are known to need. */
+    /**
+     * The legacy manifest's `version` (the last sync), when there is one. Used as a HEURISTIC floor for the
+     * unlisted-range guard; it is not the copy version, and copies can be older (design C7).
+     */
     lastSyncVersion?: string | null;
   },
 ): MigrationAssessment {
@@ -396,8 +416,9 @@ export function assessComponentCopies(
     assessment.range = listed!
       .filter((v) => parseVersion(v) && compareVersions(v, opts.upperBound.version!) <= 0)
       .sort((a, b) => compareVersions(b, a));
-    // A registry that lists nothing as old as the copies may be (the public registry lists 13.0.0 and later)
-    // cannot settle a copy that matches nothing it lists: that copy is `cannot-tell`, not `modified`.
+    // The unlisted-range guard (a heuristic, see `unlistedBefore`). If the registry lists nothing as old as the
+    // last sync (else the installed bound), a copy matching nothing it lists is `cannot-tell`, not `modified`.
+    // A copy older than the oldest listed version in a repo whose floor IS listed is not caught: still `modified`.
     oldestNeeded = opts.lastSyncVersion && parseVersion(opts.lastSyncVersion) ? opts.lastSyncVersion : opts.upperBound.version!;
     const oldestListed = listed!.filter((v) => parseVersion(v)).sort(compareVersions)[0];
     if (oldestListed === undefined || compareVersions(oldestNeeded, oldestListed) < 0) {
@@ -751,16 +772,19 @@ export const REGISTRY_PIN_ORDER_CAUTION =
 
 /**
  * Replaces the ordering caution when the registry refused this run's requests (R2 (c)). With a refused token
- * the mapping already blocks every fetch, so waiting protects nothing; the consumer chooses between renewing
- * the token (the only way to judge copies made before 13.0.0) and removing the mapping now (copies are then
- * judged against what npm's default registry lists, and a copy that cannot be judged stays in place).
+ * the mapping already blocks every fetch, so waiting protects nothing. Renewing the token is the safe route
+ * for copies made before 13.0.0 (only GitHub Packages serves those versions). Removing the mapping lets sync
+ * judge against what npm's default registry lists, but the unlisted-range guard only keeps a pre-13 copy in
+ * place when the old manifest's last sync is before 13.0.0 (a heuristic floor, `unlistedBefore`); otherwise
+ * such a copy can read as a fork. The text says exactly that, and promises nothing more.
  */
 export function registryPinRefusedTokenMessage(code: string): string {
   return (
     `Your registry refused this run's requests (${code}), so the mapping already blocks every fetch and waiting for 'sync --migrate-components' protects nothing. ` +
-    `Either renew the token and run 'npx designerpunk sync' again (versions before 13.0.0 exist only on GitHub Packages, so this is the only way sync can judge copies made from them), ` +
-    `or remove the mapping now and run 'npx designerpunk sync' again: it then judges your copies against the versions npm's default registry lists (13.0.0 and later), ` +
-    `and a copy it still cannot judge stays where it is.`
+    `The safe route for copies made before 13.0.0 is to renew the token and run 'npx designerpunk sync' again: those versions exist only on GitHub Packages. ` +
+    `If you remove the mapping instead, sync judges your copies against the versions npm's default registry lists (13.0.0 and later). ` +
+    `A copy made before 13.0.0 is then left in place only if your old .kiro/sync-manifest.json records a last sync before 13.0.0; ` +
+    `otherwise it can read as your fork, and 'sync --migrate-components' would move it.`
   );
 }
 

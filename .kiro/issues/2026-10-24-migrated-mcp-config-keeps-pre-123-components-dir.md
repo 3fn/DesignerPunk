@@ -4,8 +4,8 @@
 **Owner**: Ada (`src/cli/**`, ballot `2026-10-17-standing-write-scope-six-roots` § 2.1)
 **Consulted**: the paths a fix is likely to touch, `src/cli/shared/mcpConfig/**`, `src/cli/attach.ts`, `src/cli/sync/SteeringDirCheck.ts` and `src/cli/templates/mcp-config.json.template`, are shared with Thurgood under § 2.1 (j), so Thurgood is consulted on the fix.
 **Filer**: Lina, 2026-10-24 (README rule 10). Rule 9 applies to every later edit: the body and the Trigger line are Ada's from here.
-**Class**: P2 obligation (guard) · defect *(set by the filer for the owner to confirm or change, rule 12. `sync`'s "up to date" check is weaker than what it claims: it never reads the MCP entries it leaves in place. The false MCP answers this causes are the P0 in the related record, `2026-10-24-application-mcp-healthy-with-missing-component-root.md`.)*
-**Trigger**: `release:next:phase-1` — the fixing PR merged before the next release's RELEASE phase 1. *(Proposed by the filer; Ada sets or changes it, rules 1 and 9.)*
+**Class**: P2 obligation (guard) · defect *(Accepted 2026-10-24, Ada, owner, rule 12: P2 `(guard)`, not P0, because the false all-clear is CLI output, which is not one of M7's P0 surfaces; the P0 reader-facing falsehood is the MCP health answer, in the related record. Set by the filer for the owner to confirm or change, rule 12. `sync`'s "up to date" check is weaker than what it claims: it never reads the MCP entries it leaves in place. The false MCP answers this causes are the P0 in the related record, `2026-10-24-application-mcp-healthy-with-missing-component-root.md`.)*
+**Trigger**: `release:next:phase-1` — the fixing PR merged before the next release's RELEASE phase 1. *(Set 2026-10-24, Ada, owner, rules 1 and 9: accepted as the filer proposed; rule 1 gives a P2 that rides another change this token. As a `(guard)` P2, its first lapse goes to Peter (rule 11). Proposed by the filer.)*
 **Source**:
 - test01 upgrade rehearsal, 12.0.5 → 16.0.0, 2026-10-24: Spec 131 evidence `.kiro/specs/131-governance-simplification/evidence/2026-10-24-test01-upgrade-rehearsal.md`, **F-8** ("Migration leaves the MCP config stale and `sync` calls it up to date": "`COMPONENTS_DIR=./src/components/core`, a folder the same run deleted"; "The `COMPONENTS_DIR` problem gets no specific warning"), step 11 and step 11b (the repair that worked: delete the entries, then `attach --target=kiro`).
 - Lina's code read, 2026-10-24, at `e4e61eea2`.
@@ -27,3 +27,5 @@ The `src/components/core` value comes from a **pre-123 `init`**, which wrote it 
 3. Both: report always, repair under a flag.
 
 Out of this record's scope, noted for the owner: F-8's sibling staleness in the same entries. A stale `MCP_STEERING_DIR` is already warned, with a remedy. A stale autoApprove list (tools no server provides, `find_docs` missing) is disclosed only in CHANGELOG 15.0.0.
+
+*(2026-10-24, Ada, owner)* **Scope**: the fix includes the stale autoApprove list in the same entries (tools no server provides, `find_docs` missing). Without it, `sync` would still print the all-clear beside a stale config. At least option 1 applies to it: report it and count it as pending. Thurgood is consulted on the fix, as above.

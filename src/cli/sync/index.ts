@@ -621,8 +621,37 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
   for (const k of keyResults) if (k.invalid) notChecked.push(`checking ${k.surface.file} (not valid JSON, see above)`);
   const pending = [...notChecked, ...pendingOffers(projectRoot, outcome, offers)];
   if (manifestChanges) pending.unshift(relocateLegacy ? `converting ${LEGACY_MANIFEST_PATH} to ${MANIFEST_FILE}` : `updating ${MANIFEST_FILE}`);
-  const flagged = Boolean(options.migrateLegacy || options.migrateComponents || options.repairNpmrc || options.repairTsconfig);
-  const applying = !options.dryRun && (Boolean(options.apply) || isTTY || flagged);
+  const restore = new Set(options.restore ?? []);
+  const overwrite = new Set(options.overwrite ?? []);
+
+  const isRegion = (p: string) => p.endsWith('#managed');
+  const fileBatch = [...files.new, ...files.updatedSafe].map((f) => f.relativePath);
+  const fileRestore = files.deletedByYou.filter((f) => restore.has(f.relativePath)).map((f) => f.relativePath);
+  // A region conflict is the catalog's "edited inside" row — "not applying without --apply": --apply (or
+  // --overwrite <file>#managed) replaces it; the terminal's batch confirmation alone never does.
+  const fileOverwrite = files.conflicts
+    .filter((f) => overwrite.has(f.relativePath) || (isRegion(f.relativePath) && Boolean(options.apply)))
+    .map((f) => f.relativePath);
+  const keyWork = keyResults.map((s) => ({
+    s,
+    items: s.classified.filter(
+      (c) =>
+        c.classification === 'new' ||
+        c.classification === 'updated-safe' ||
+        (c.classification === 'deleted-by-you' && restore.has(keyOf(s, c.key))) ||
+        (c.classification === 'conflict' && overwrite.has(keyOf(s, c.key))),
+    ),
+  }));
+  const keyCount = keyWork.reduce((n, w) => n + w.items.length, 0);
+  const workCount = fileBatch.length + fileRestore.length + fileOverwrite.length + keyCount;
+  // The before-state heading is printed only when this run will actually apply something: a flag whose step
+  // has something to act on, or managed work / a manifest change that --apply (or a terminal's yes) applies.
+  const flagged =
+    (Boolean(options.migrateLegacy) && outcome.legacyCopies !== undefined) ||
+    (Boolean(options.migrateComponents) && outcome.migration !== undefined) ||
+    (Boolean(options.repairNpmrc) && offers.some((o) => o.kind === 'npmrc')) ||
+    (Boolean(options.repairTsconfig) && offers.some((o) => o.kind === 'tsconfig'));
+  const applying = !options.dryRun && (flagged || ((Boolean(options.apply) || isTTY) && (workCount > 0 || manifestChanges)));
   const report = buildReport({ dryRun: Boolean(options.dryRun), applying, manifestLines, files, keys: keyResults, sections, pending });
   displayReport(report);
   outcome.report = report;
@@ -680,29 +709,6 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
       return outcome;
     }
   }
-  const restore = new Set(options.restore ?? []);
-  const overwrite = new Set(options.overwrite ?? []);
-
-  const isRegion = (p: string) => p.endsWith('#managed');
-  const fileBatch = [...files.new, ...files.updatedSafe].map((f) => f.relativePath);
-  const fileRestore = files.deletedByYou.filter((f) => restore.has(f.relativePath)).map((f) => f.relativePath);
-  // A region conflict is the catalog's "edited inside" row — "not applying without --apply": --apply (or
-  // --overwrite <file>#managed) replaces it; the terminal's batch confirmation alone never does.
-  const fileOverwrite = files.conflicts
-    .filter((f) => overwrite.has(f.relativePath) || (isRegion(f.relativePath) && Boolean(options.apply)))
-    .map((f) => f.relativePath);
-  const keyWork = keyResults.map((s) => ({
-    s,
-    items: s.classified.filter(
-      (c) =>
-        c.classification === 'new' ||
-        c.classification === 'updated-safe' ||
-        (c.classification === 'deleted-by-you' && restore.has(keyOf(s, c.key))) ||
-        (c.classification === 'conflict' && overwrite.has(keyOf(s, c.key))),
-    ),
-  }));
-  const keyCount = keyWork.reduce((n, w) => n + w.items.length, 0);
-  const workCount = fileBatch.length + fileRestore.length + fileOverwrite.length + keyCount;
   const conflictsLeft =
     files.conflicts.length -
     fileOverwrite.length +

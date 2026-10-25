@@ -435,6 +435,18 @@ describe('sync — component-copy migration (Task 5.5)', () => {
       expect(classifyNpmAuthError(undefined)).toBeNull();
     });
 
+    test('classifyNpmAuthError keeps the bare ORIGIN only: never a login part or a query-string token (Ada, review 2026-10-24)', () => {
+      const refused = (url: string) => ({ stderr: `npm error code E401\nnpm error 401 Unauthorized - GET ${url} - unauthenticated\n` });
+      const bare = { code: 'E401', registry: 'https://npm.example.com' };
+      expect(classifyNpmAuthError(refused('https://bob:s3cr3tTOKEN@npm.example.com/@3fn%2fcore'))).toEqual(bare);
+      expect(classifyNpmAuthError(refused('https://***@npm.example.com/@3fn%2fcore'))).toEqual(bare);
+      expect(classifyNpmAuthError(refused('https://npm.example.com/@3fn%2fcore?token=abc'))).toEqual(bare);
+      for (const url of ['https://bob:s3cr3tTOKEN@npm.example.com/x', 'https://npm.example.com/x?token=abc']) {
+        const r = classifyNpmAuthError(refused(url))!;
+        expect(registryAuthFailedMessage(r.code, r.registry, 2)).not.toMatch(/s3cr3tTOKEN|bob|token=abc/);
+      }
+    });
+
     (process.platform === 'win32' ? test.skip : test)('npmRailFetcher records the first refusal from a real npm invocation (a stub npm answering E401; no network)', () => {
       const bin = path.join(scratch, '.bin');
       writeFile(
@@ -471,16 +483,18 @@ describe('sync — component-copy migration (Task 5.5)', () => {
       expect(con.output()).not.toContain('FIXTURE_DEAD_TOKEN');
     });
 
-    test('the advice names both ways out and says what each costs', () => {
+    test('the advice names both ways out, says renewing is the safe route, and states the guard\'s limit (no promise beyond it)', () => {
       const m = registryPinRefusedTokenMessage('E401');
       expect(m).toMatch(/already blocks every fetch/);
-      expect(m).toMatch(/renew the token/);
-      expect(m).toMatch(/versions before 13\.0\.0 exist only on GitHub Packages/);
-      expect(m).toMatch(/remove the mapping now/);
-      expect(m).toMatch(/a copy it still cannot judge stays where it is/);
+      expect(m).toMatch(/The safe route for copies made before 13\.0\.0 is to renew the token/);
+      expect(m).toMatch(/those versions exist only on GitHub Packages/);
+      expect(m).toMatch(/If you remove the mapping instead/);
+      expect(m).toMatch(/left in place only if your old \.kiro\/sync-manifest\.json records a last sync before 13\.0\.0/);
+      expect(m).toMatch(/otherwise it can read as your fork/);
+      expect(m).not.toMatch(/stays where it is/);
     });
 
-    test('what makes "stays where it is" true: a registry listing nothing as old as the last sync → cannot-tell, never modified', () => {
+    test('the guard\'s covered case: a registry listing nothing as old as the last sync → cannot-tell, never modified', () => {
       writeCopiesAt(scratch, PRE_104); // 11.2.1 copies: the raw import matches nothing from 13.0.0 on
       const publicRail = snapshotFetcher(scratch, { listed: ['13.0.0', '14.0.0', '14.1.0'] }).fetcher;
       const a = assessComponentCopies(scratch, {
@@ -499,6 +513,21 @@ describe('sync — component-copy migration (Task 5.5)', () => {
       // Bite: without the last-sync floor, the same copies read as forks (the defect this guards).
       const unguarded = assess(scratch, snapshotFetcher(scratch, { listed: ['13.0.0', '14.0.0', '14.1.0'] }).fetcher, '14.1.0');
       expect(unguarded.components.find((c) => c.name === 'Badge-Label-Base')!.verdict).toBe('modified');
+    });
+
+    test('the guard\'s RESIDUAL, pinned so it stays visible: last sync 13.2.0, copies from 11.2.1, public listing → still modified (a heuristic floor, not a proven bound)', () => {
+      // design.md C7: the last sync is not the copy version, and a skipped update leaves older copies. The guard
+      // reads the last sync as a floor, so it misses this. The sound fix is a fork:
+      // .kiro/issues/2026-10-24-sync-migration-unlisted-copy-floor.md. If that lands, this expectation flips.
+      writeCopiesAt(scratch, PRE_104);
+      const a = assessComponentCopies(scratch, {
+        fetcher: snapshotFetcher(scratch, { listed: ['13.0.0', '14.0.0', '14.1.0'] }).fetcher,
+        upperBound: { version: '14.1.0', source: 'lockfile' },
+        trigger: 'legacy-manifest',
+        lastSyncVersion: '13.2.0',
+      });
+      expect(a.unlistedBefore).toBeUndefined();
+      expect(a.components.find((c) => c.name === 'Badge-Label-Base')!.verdict).toBe('modified');
     });
   });
 
