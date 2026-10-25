@@ -56,7 +56,7 @@ describe('AccessibilityChecker', () => {
       expect(issue!.message).toContain('does not submit a form by itself');
       expect(issue!.message).toContain('form.requestSubmit()');
       expect(issue!.message).toContain('press event');
-      expect(issue!.message).toContain('browser-distribution-guide § ButtonCTA');
+      expect(issue!.message).toContain('browser-distribution-guide § "ButtonCTA (`<button-cta>`)"');
       expect(issue!.message).not.toContain('for form submission');
     });
 

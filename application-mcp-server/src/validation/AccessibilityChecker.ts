@@ -46,7 +46,7 @@ export class AccessibilityChecker {
         issues.push({
           rule: 'form-needs-submit-action',
           wcag: '1.3.1',
-          message: `${node.component} with semantic="${semantic}" has no submit action (no Button-CTA descendant). On web, Button-CTA does not submit a form by itself: it renders type="button" and is not form-associated, so call form.requestSubmit() from its press event and handle Enter in the page (browser-distribution-guide § ButtonCTA). On iOS and Android, call your submit handler from onPress.`,
+          message: `${node.component} with semantic="${semantic}" has no submit action (no Button-CTA descendant). On web, Button-CTA does not submit a form by itself: it renders type="button" and is not form-associated, so call form.requestSubmit() from its press event and handle Enter in the page (browser-distribution-guide § "ButtonCTA (\`<button-cta>\`)"). On iOS and Android, call your submit handler from onPress.`,
           severity: 'warning',
         });
       }

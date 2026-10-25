@@ -10,7 +10,7 @@ usage:
     - "Creating inline text links (use Link component when available)"
     - "Building toggle controls (use Toggle component when available)"
     - "In-flight async actions — no loading state yet (16.x)"
-    - "As a drop-in for a native <button type=\"submit\"> on web: the element renders type=\"button\" in its shadow root and is not form-associated, so it does not submit its form, and once no native submit button is left in the form, Enter in a text field does not submit a form that has more than one text field. Call form.requestSubmit() from its press event and handle Enter in the page (browser-distribution-guide § ButtonCTA). iOS and Android have no HTML form: call your submit handler from onPress"
+    - "As a drop-in for a native <button type=\"submit\"> on web: the element renders type=\"button\" in its shadow root and is not form-associated, so it does not submit its form, and once no native submit button is left in the form, Enter in a text field does not submit a form that has more than one text field. Call form.requestSubmit() from its press event and handle Enter in the page (browser-distribution-guide § \"ButtonCTA (`<button-cta>`)\"). iOS and Android have no HTML form: call your submit handler from onPress"
 
 contexts:
   - "forms"
