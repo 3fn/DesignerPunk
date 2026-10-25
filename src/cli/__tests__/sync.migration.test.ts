@@ -36,8 +36,14 @@ import {
   REGISTRY_PIN_ORDER_CAUTION,
   tsconfigPinMessage,
   TSCONFIG_UNPARSEABLE_MESSAGE,
+  cannotTellReason,
+  condenseVersions,
+  classifyNpmAuthError,
+  npmRailFetcher,
+  registryPinRefusedTokenMessage,
 } from '../sync/Migration';
-import type { PackageFetcher, MigrationAssessment } from '../sync/Migration';
+import type { PackageFetcher, MigrationAssessment, RegistryAuthFailure } from '../sync/Migration';
+import { registryAuthFailedMessage, cannotTellGroupMessage } from '../shared/errorCatalog';
 import { createScratch, setupPackage, writeFile, captureConsole, sha, readText } from './syncTestKit';
 
 const SNAP = require('./fixtures/sync/package-snapshots.json') as {
@@ -72,12 +78,17 @@ function writeCopiesAt(root: string, version: string): void {
 }
 
 /** A fixture fetcher over the snapshots — `available` models the rail (which versions it can serve). */
-function snapshotFetcher(scratch: string, opts: { listed?: string[] | null; available?: string[] } = {}) {
+function snapshotFetcher(scratch: string, opts: { listed?: string[] | null; available?: string[]; auth?: RegistryAuthFailure } = {}) {
   const listed = opts.listed === undefined ? Object.keys(SNAP.versions) : opts.listed;
   const available = new Set(opts.available ?? Object.keys(SNAP.versions));
   const calls: string[] = [];
+  const lists: number[] = [];
   const fetcher: PackageFetcher = {
-    listVersions: () => (listed ? [...listed] : null),
+    listVersions: () => {
+      lists.push(calls.length);
+      return listed ? [...listed] : null;
+    },
+    ...(opts.auth ? { authFailure: () => opts.auth! } : {}),
     fetch: (v) => {
       calls.push(v);
       if (!available.has(v) || !SNAP.versions[v]) return null;
@@ -89,7 +100,18 @@ function snapshotFetcher(scratch: string, opts: { listed?: string[] | null; avai
       return root;
     },
   };
-  return { fetcher, calls };
+  return { fetcher, calls, lists };
+}
+
+/** The 38 versions test01's GitHub Packages rail listed (R6's "all 38 versions"), newest first: the snapshot six plus 32 synthesized. */
+const THIRTY_EIGHT = [
+  ...Object.keys(SNAP.versions),
+  ...Array.from({ length: 32 }, (_, i) => `10.${Math.floor(i / 8)}.${i % 8}`),
+].sort((a, b) => compareVersions(b, a));
+
+function migrationLines(a: MigrationAssessment): string[] {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  return (require('../sync/Migration') as typeof import('../sync/Migration')).migrationReportLines(a);
 }
 
 function lockAt(root: string, version: string): void {
@@ -259,7 +281,7 @@ describe('sync — component-copy migration (Task 5.5)', () => {
   });
 
   describe('(c) cannot-tell — never "unmodified"', () => {
-    test('offline: the version list cannot be read → every component cannot-tell, with the catalog string', async () => {
+    test('offline: the version list cannot be read → every component cannot-tell, ONE grouped line (R6)', async () => {
       setupPackage(scratch, { version: '15.0.0' });
       lockAt(scratch, '12.0.5');
       writeCopiesAt(scratch, '12.0.5');
@@ -267,7 +289,9 @@ describe('sync — component-copy migration (Task 5.5)', () => {
       const out = await runSync({ projectRoot: scratch, dryRun: true, fetcher });
       expect(out.migration!.components.map((c) => c.verdict)).toEqual(['cannot-tell', 'cannot-tell']);
       expect(calls).toHaveLength(0);
-      for (const n of COMPONENTS) expect(con.output()).toContain(cannotTellMessage(`src/components/core/${n}/`, { kind: 'fetch-failed', version: '12.0.5' }));
+      // Two copies, one reason → one line naming both (R6); the per-path catalog row is not repeated per copy.
+      expect(con.output()).toContain(cannotTellGroupMessage(COMPONENTS, cannotTellReason({ kind: 'fetch-failed', version: '12.0.5' })));
+      for (const n of COMPONENTS) expect(con.output()).not.toContain(cannotTellMessage(`src/components/core/${n}/`, { kind: 'fetch-failed', version: '12.0.5' }));
       // Peter's ruling (2026-09-26), condition 1: the cannot-tell outcome is ACTIONABLE.
       expect(con.output()).toContain(cannotTellRemedyMessage(COMPONENTS));
     });
@@ -298,6 +322,242 @@ describe('sync — component-copy migration (Task 5.5)', () => {
       expect(a.components.every((c) => c.verdict === 'cannot-tell')).toBe(true);
       expect(a.components.flatMap((c) => c.files).every((f) => f.cause?.kind === 'version-unknown')).toBe(true);
       expect(calls).toHaveLength(0);
+    });
+  });
+
+  describe('R2 (a) — the installed version, judged from node_modules/@3fn/core before anything is fetched', () => {
+    test('copies of the installed 14.1.0: settled from disk — no version list, no fetch, and the trace says so', async () => {
+      setupPackage(scratch, { version: '14.1.0', files: shipped('14.1.0') });
+      lockAt(scratch, '14.1.0');
+      writeCopiesAt(scratch, '14.1.0');
+      const { fetcher, calls, lists } = snapshotFetcher(scratch);
+
+      const out = await runSync({ projectRoot: scratch, dryRun: true, fetcher });
+
+      expect(out.migration!.judgedInstalled).toBe('14.1.0');
+      expect(out.migration!.components.map((c) => c.verdict)).toEqual(['unmodified', 'unmodified']);
+      expect(calls).toEqual([]);
+      expect(lists).toEqual([]);
+      expect(out.trace.filter((t) => t.startsWith('fetch:'))).toEqual([]);
+      expect(out.trace).toContain('judged-installed:14.1.0');
+    });
+
+    test('a dead registry cannot hide the installed version: every fetch refused, the installed 14.1.0 still settles its copies', async () => {
+      setupPackage(scratch, { version: '14.1.0', files: shipped('14.1.0') });
+      lockAt(scratch, '14.1.0');
+      writeCopiesAt(scratch, '14.1.0');
+      const { fetcher, calls } = snapshotFetcher(scratch, { available: [], auth: { code: 'E401', registry: 'https://npm.pkg.github.com' } });
+      const out = await runSync({ projectRoot: scratch, dryRun: true, fetcher });
+      expect(out.migration!.components.map((c) => c.verdict)).toEqual(['unmodified', 'unmodified']);
+      expect(calls).toEqual([]);
+      expect(con.output()).not.toContain('could not be retrieved');
+    });
+
+    test('older copies: the installed version is judged FIRST (trace order), then the range is fetched for what it left', async () => {
+      setupPackage(scratch, { version: '14.1.0', files: shipped('14.1.0') });
+      lockAt(scratch, '14.1.0');
+      writeCopiesAt(scratch, PRE_104);
+      const { fetcher, calls } = snapshotFetcher(scratch);
+      const out = await runSync({ projectRoot: scratch, dryRun: true, fetcher });
+      const judged = out.trace.indexOf('judged-installed:14.1.0');
+      const firstFetch = out.trace.findIndex((t) => t.startsWith('fetch:'));
+      expect(judged).toBeGreaterThanOrEqual(0);
+      expect(firstFetch).toBeGreaterThan(judged);
+      expect(calls).not.toContain('14.1.0'); // never fetched: it is on disk
+      expect(out.migration!.components.map((c) => c.verdict)).toEqual(['unmodified', 'unmodified']);
+    });
+
+    test('a package that ships no src/components/core/ adds nothing and is not reported as judged', () => {
+      const pkg = setupPackage(scratch, { version: '15.0.0' });
+      writeCopiesAt(scratch, '14.1.0');
+      const a = assessComponentCopies(scratch, {
+        fetcher: snapshotFetcher(scratch).fetcher,
+        upperBound: { version: '14.1.0', source: 'lockfile' },
+        trigger: 'legacy-copies',
+        installed: { version: '15.0.0', root: pkg },
+      });
+      expect(a.judgedInstalled).toBeUndefined();
+      expect(a.components.map((c) => c.verdict)).toEqual(['unmodified', 'unmodified']);
+    });
+  });
+
+  describe('R2 (b) — a registry login refusal is reported ONCE, as a login problem', () => {
+    const AUTH: RegistryAuthFailure = { code: 'E401', registry: 'https://npm.pkg.github.com' };
+
+    test('38 versions refused for 2 copies → one login line and the remedy; no per-copy or per-version "could not be retrieved"', async () => {
+      setupPackage(scratch, { version: '15.0.0' });
+      lockAt(scratch, '14.1.0');
+      writeCopiesAt(scratch, '12.0.5');
+      const { fetcher, calls } = snapshotFetcher(scratch, { listed: THIRTY_EIGHT, available: [], auth: AUTH });
+
+      const out = await runSync({ projectRoot: scratch, dryRun: true, fetcher });
+
+      expect(THIRTY_EIGHT).toHaveLength(38);
+      expect(out.migration!.authFailure).toEqual(AUTH);
+      expect(out.migration!.components.map((c) => c.verdict)).toEqual(['cannot-tell', 'cannot-tell']);
+      expect(calls.length).toBeGreaterThan(30); // the cache may still serve some, so every version is tried
+      const loginLine = registryAuthFailedMessage('E401', 'https://npm.pkg.github.com', 2);
+      expect(con.output().split(loginLine)).toHaveLength(2); // exactly once
+      expect(con.output()).not.toContain('could not be retrieved');
+      expect(con.output().split('\n').filter((l) => l.trim().startsWith('cannot tell whether'))).toEqual([]);
+      expect(con.output()).toContain(cannotTellRemedyMessage(COMPONENTS));
+    });
+
+    test('the login line covers only copies a retrieval failure left undecided: with every version retrieved, an unrecoverable transform keeps its catalog row and no login line prints', () => {
+      writeCopiesAt(scratch, '12.0.5');
+      const a = assess(scratch, snapshotFetcher(scratch, { listed: ['11.3.0'], auth: AUTH }).fetcher, '14.1.0');
+      expect(a.failed).toEqual([]);
+      const lines = migrationLines(a);
+      expect(lines.some((l) => l.startsWith('your npm registry refused'))).toBe(false);
+      expect(lines).toContain(
+        cannotTellMessage('src/components/core/Badge-Label-Base/tokens.ts', { kind: 'transform-unrecoverable', version: '11.3.0' }),
+      );
+    });
+
+    test('classifyNpmAuthError: npm\'s E401 output → the code and the registry ORIGIN only; other failures → null', () => {
+      const e401 = {
+        stdout: '',
+        stderr:
+          'npm error code E401\nnpm error 401 Unauthorized - GET https://npm.pkg.github.com/@3fn%2fcore - unauthenticated: User cannot be authenticated with the token provided.\n',
+        message: 'Command failed: npm pack @3fn/core@14.1.0',
+      };
+      expect(classifyNpmAuthError(e401)).toEqual({ code: 'E401', registry: 'https://npm.pkg.github.com' });
+      expect(classifyNpmAuthError({ stdout: '{"error":{"code":"E403","summary":"403 Forbidden - GET https://r.example/@3fn%2fcore"}}' })).toEqual({
+        code: 'E403',
+        registry: 'https://r.example',
+      });
+      expect(classifyNpmAuthError({ stderr: 'npm error code ENEEDAUTH\nnpm error need auth This command requires you to be logged in.' })).toEqual({
+        code: 'ENEEDAUTH',
+        registry: null,
+      });
+      expect(classifyNpmAuthError({ stderr: 'npm error code ETARGET\nnpm error notarget No matching version found for @3fn/core@9.9.9.' })).toBeNull();
+      expect(classifyNpmAuthError({ stderr: 'npm error code ENOTFOUND\nnpm error network request to https://registry.npmjs.org failed' })).toBeNull();
+      expect(classifyNpmAuthError(undefined)).toBeNull();
+    });
+
+    test('classifyNpmAuthError keeps the bare ORIGIN only: never a login part or a query-string token (Ada, review 2026-10-24)', () => {
+      const refused = (url: string) => ({ stderr: `npm error code E401\nnpm error 401 Unauthorized - GET ${url} - unauthenticated\n` });
+      const bare = { code: 'E401', registry: 'https://npm.example.com' };
+      expect(classifyNpmAuthError(refused('https://bob:s3cr3tTOKEN@npm.example.com/@3fn%2fcore'))).toEqual(bare);
+      expect(classifyNpmAuthError(refused('https://***@npm.example.com/@3fn%2fcore'))).toEqual(bare);
+      expect(classifyNpmAuthError(refused('https://npm.example.com/@3fn%2fcore?token=abc'))).toEqual(bare);
+      for (const url of ['https://bob:s3cr3tTOKEN@npm.example.com/x', 'https://npm.example.com/x?token=abc']) {
+        const r = classifyNpmAuthError(refused(url))!;
+        expect(registryAuthFailedMessage(r.code, r.registry, 2)).not.toMatch(/s3cr3tTOKEN|bob|token=abc/);
+      }
+    });
+
+    (process.platform === 'win32' ? test.skip : test)('npmRailFetcher records the first refusal from a real npm invocation (a stub npm answering E401; no network)', () => {
+      const bin = path.join(scratch, '.bin');
+      writeFile(
+        bin,
+        'npm',
+        "#!/bin/sh\necho 'npm error code E401' >&2\necho 'npm error 401 Unauthorized - GET https://npm.pkg.github.com/@3fn%2fcore - unauthenticated' >&2\nexit 1\n",
+      );
+      fs.chmodSync(path.join(bin, 'npm'), 0o755);
+      const f = npmRailFetcher(scratch, { npm: path.join(bin, 'npm') });
+      try {
+        expect(f.authFailure!()).toBeNull();
+        expect(f.listVersions()).toBeNull();
+        expect(f.fetch('14.1.0')).toBeNull();
+        expect(f.authFailure!()).toEqual({ code: 'E401', registry: 'https://npm.pkg.github.com' });
+      } finally {
+        f.dispose?.();
+      }
+    });
+  });
+
+  describe('R2 (c) — the npmrc ordering advice, for a consumer whose token is refused', () => {
+    const PIN_NPMRC = '@3fn:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=FIXTURE_DEAD_TOKEN\n';
+
+    test('refused: the "do this after --migrate-components" caution is replaced by the renew-or-remove advice', async () => {
+      setupPackage(scratch, { version: '15.0.0' });
+      lockAt(scratch, '12.0.5');
+      writeCopiesAt(scratch, '12.0.5');
+      writeFile(scratch, '.npmrc', PIN_NPMRC);
+      const { fetcher } = snapshotFetcher(scratch, { available: [], auth: { code: 'E401', registry: 'https://npm.pkg.github.com' } });
+      await runSync({ projectRoot: scratch, dryRun: true, fetcher });
+      expect(con.output()).toContain(REGISTRY_PIN_MESSAGE);
+      expect(con.output()).toContain(registryPinRefusedTokenMessage('E401'));
+      expect(con.output()).not.toContain(REGISTRY_PIN_ORDER_CAUTION);
+      expect(con.output()).not.toContain('FIXTURE_DEAD_TOKEN');
+    });
+
+    test('the advice names both ways out, says renewing is the safe route, and states the guard\'s limit (no promise beyond it)', () => {
+      const m = registryPinRefusedTokenMessage('E401');
+      expect(m).toMatch(/already blocks every fetch/);
+      expect(m).toMatch(/The safe route for copies made before 13\.0\.0 is to renew the token/);
+      expect(m).toMatch(/those versions exist only on GitHub Packages/);
+      expect(m).toMatch(/If you remove the mapping instead/);
+      expect(m).toMatch(/left in place only if your old \.kiro\/sync-manifest\.json records a last sync before 13\.0\.0/);
+      expect(m).toMatch(/otherwise it can read as your fork/);
+      expect(m).not.toMatch(/stays where it is/);
+    });
+
+    test('the guard\'s covered case: a registry listing nothing as old as the last sync → cannot-tell, never modified', () => {
+      writeCopiesAt(scratch, PRE_104); // 11.2.1 copies: the raw import matches nothing from 13.0.0 on
+      const publicRail = snapshotFetcher(scratch, { listed: ['13.0.0', '14.0.0', '14.1.0'] }).fetcher;
+      const a = assessComponentCopies(scratch, {
+        fetcher: publicRail,
+        upperBound: { version: '14.1.0', source: 'lockfile' },
+        trigger: 'legacy-manifest',
+        lastSyncVersion: '12.0.3',
+      });
+      expect(a.unlistedBefore).toBe('13.0.0');
+      const badge = a.components.find((c) => c.name === 'Badge-Label-Base')!;
+      expect(badge.verdict).toBe('cannot-tell');
+      expect(badge.files.find((f) => f.file === 'tokens.ts')!.cause).toEqual({
+        kind: 'fetch-failed',
+        version: '12.0.3 (your registry lists no version before 13.0.0)',
+      });
+      // Bite: without the last-sync floor, the same copies read as forks (the defect this guards).
+      const unguarded = assess(scratch, snapshotFetcher(scratch, { listed: ['13.0.0', '14.0.0', '14.1.0'] }).fetcher, '14.1.0');
+      expect(unguarded.components.find((c) => c.name === 'Badge-Label-Base')!.verdict).toBe('modified');
+    });
+
+    test('the guard\'s RESIDUAL, pinned so it stays visible: last sync 13.2.0, copies from 11.2.1, public listing → still modified (a heuristic floor, not a proven bound)', () => {
+      // design.md C7: the last sync is not the copy version, and a skipped update leaves older copies. The guard
+      // reads the last sync as a floor, so it misses this. The sound fix is a fork:
+      // .kiro/issues/2026-10-24-sync-migration-unlisted-copy-floor.md. If that lands, this expectation flips.
+      writeCopiesAt(scratch, PRE_104);
+      const a = assessComponentCopies(scratch, {
+        fetcher: snapshotFetcher(scratch, { listed: ['13.0.0', '14.0.0', '14.1.0'] }).fetcher,
+        upperBound: { version: '14.1.0', source: 'lockfile' },
+        trigger: 'legacy-manifest',
+        lastSyncVersion: '13.2.0',
+      });
+      expect(a.unlistedBefore).toBeUndefined();
+      expect(a.components.find((c) => c.name === 'Badge-Label-Base')!.verdict).toBe('modified');
+    });
+  });
+
+  describe('R6 — the cannot-tell lines, condensed', () => {
+    test('condenseVersions: up to three listed; more → newest, a count and the oldest', () => {
+      expect(condenseVersions(['12.0.5'])).toBe('12.0.5');
+      expect(condenseVersions(['12.0.5', '11.3.0', '11.2.1'])).toBe('12.0.5, 11.3.0, 11.2.1');
+      expect(condenseVersions(THIRTY_EIGHT)).toBe(`14.1.0 and 37 older versions back to ${THIRTY_EIGHT[37]}`);
+    });
+
+    test('38 failed versions (no login refusal): ONE line for both copies, and no line lists more than three versions', async () => {
+      setupPackage(scratch, { version: '15.0.0' });
+      lockAt(scratch, '14.1.0');
+      writeCopiesAt(scratch, '12.0.5');
+      const { fetcher } = snapshotFetcher(scratch, { listed: THIRTY_EIGHT, available: [] });
+      const out = await runSync({ projectRoot: scratch, dryRun: true, fetcher });
+      expect(out.migration!.failed).toHaveLength(38);
+      const cannot = con.output().split('\n').filter((l) => l.includes('cannot tell whether'));
+      expect(cannot).toHaveLength(1);
+      expect(cannot[0]).toContain(cannotTellGroupMessage(COMPONENTS, cannotTellReason({ kind: 'fetch-failed', version: condenseVersions(THIRTY_EIGHT) })));
+      for (const l of con.output().split('\n')) expect((l.match(/\b\d+\.\d+\.\d+\b/g) ?? []).length).toBeLessThanOrEqual(3);
+    });
+
+    test('a single copy keeps the catalog\'s per-path row (string-equal), with the condensed version slot', () => {
+      writeCopiesAt(scratch, '12.0.5');
+      fs.rmSync(path.join(scratch, 'src/components/core/Badge-Label-Base'), { recursive: true });
+      const a = assess(scratch, snapshotFetcher(scratch, { listed: THIRTY_EIGHT, available: [] }).fetcher, '14.1.0');
+      expect(migrationLines(a)).toContain(
+        cannotTellMessage('src/components/core/Button-Icon/', { kind: 'fetch-failed', version: condenseVersions(THIRTY_EIGHT) }),
+      );
     });
   });
 

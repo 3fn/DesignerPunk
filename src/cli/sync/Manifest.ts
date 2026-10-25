@@ -3,7 +3,7 @@
  *
  * Spec 123 Task 5.2 (design.md § "C7 … Manifest" + its tasks-round erratum;
  * DD21). Replaces Spec 111's `.kiro/sync-manifest.json` (now the LEGACY
- * manifest: read once, relocated, and left with a one-line pointer).
+ * manifest: converted once, and kept with a one-line pointer — never moved).
  *
  * - **Path**: the repo root, beside the config (DD21 — a tool-dotdir gitignore
  *   cannot silently remove the teammate's baseline).
@@ -315,12 +315,19 @@ export function convertLegacyManifest(legacy: LegacyManifest, installedVersion: 
 }
 
 /**
- * The one-line pointer left in the legacy file for one release (C7 step 1).
- * JSON has no comment syntax, so the pointer is a leading `"//"` member; the
- * rest of the legacy content is preserved byte-for-byte in meaning.
+ * The one-line pointer left in the legacy file (C7 step 1). JSON has no comment
+ * syntax, so the pointer is a leading `"//"` member; the rest of the legacy
+ * content is preserved byte-for-byte in meaning.
+ *
+ * The file is CONVERTED, not moved, and it stays (R4, 2026-10-24): the
+ * conversion prunes entries, so this is the only record of the pre-123
+ * baseline; the component-copy migration still reads its `version` (the last
+ * sync) while copies remain under `src/components/core/`; and birth detection
+ * reports its presence (`bornRepo` signal `legacyManifest`). The text says
+ * exactly that, so it never claims the file moved or is unread.
  */
 export const LEGACY_POINTER_TEXT =
-  `moved to ${MANIFEST_FILE} at the repo root by 'npx designerpunk sync' — this file is no longer read and can be deleted after the next release`;
+  `converted to ${MANIFEST_FILE} at the repo root by 'npx designerpunk sync', which records nothing here any more. It reads only this file's "version", while pre-123 component copies remain under src/components/core/. Delete this file once they are gone.`;
 
 /** Returns true iff the pointer was written (false when already present or unreadable). */
 export function writeLegacyPointer(projectRoot: string): boolean {

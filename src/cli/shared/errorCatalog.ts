@@ -616,3 +616,34 @@ unmodified token source (a known defect in the checker, not in your tokens).
 📖 The install guide: ${INSTALL_GUIDE_PATH}`;
 }
 
+
+// ---------------------------------------------------------------------------
+// `sync`'s component-copy migration: the registry-login row and the grouped `cannot tell` row (the one-hop
+// upgrade rehearsal's residuals R2 (b) and R6, `.kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md`).
+// AUTHORED 2026-10-24 (Lina): design.md § Error Handling carries no row for either, so there is no catalog
+// string to be equal to; the rows are owed at 123's next design touch, as for the issue rows above.
+// `sync.migration.test.ts` and `errorCatalog.test.ts` assert THESE functions' output.
+// ---------------------------------------------------------------------------
+
+/**
+ * The npm registry refused `sync`'s requests for `@3fn/core` with a login error (E401, E403 or ENEEDAUTH).
+ * Printed ONCE per report, in place of one "could not be retrieved" line per copy (R2 (b)). `registry` is the
+ * origin npm named in its error (never a token, never a path); null when npm named none.
+ */
+export function registryAuthFailedMessage(code: string, registry: string | null, copies: number): string {
+  const where = registry ? ` from ${registry}` : '';
+  const them = copies === 1 ? '1 copy' : `${copies} copies`;
+  return (
+    `your npm registry refused sync's requests for @3fn/core (${code}${where}): the access token your .npmrc gives that registry is missing, expired or not allowed to read the package. ` +
+    `That is a login problem, not a finding about your copies, but it means sync could not retrieve the package content it judges them against, ` +
+    `so it cannot tell whether ${them} under src/components/core/ ${copies === 1 ? 'was' : 'were'} modified (named below). Review before removing.`
+  );
+}
+
+/**
+ * Several copies share one `cannot tell` reason, so one line names them all (R6) instead of the catalog's
+ * per-path `cannot tell` row once per copy. `reason` is that row's reason clause (`Migration.cannotTellReason`).
+ */
+export function cannotTellGroupMessage(names: readonly string[], reason: string): string {
+  return `cannot tell whether these ${names.length} copies under src/components/core/ were modified (${names.join(', ')}) — ${reason}. Review before removing.`;
+}
