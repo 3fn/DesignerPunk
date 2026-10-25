@@ -938,3 +938,44 @@ No `[@LINA]` mentions open (at `bc468a411`). The audit leaves TND F-3 on #452 to
      - the options;
      - the risks and opportunities of each option;
      - where applicable, how to keep it from happening again. This is the class-level option, in his words.
+
+---
+
+### Round 3 (R3)
+
+#### [THURGOOD R3]
+
+*Cleanup round before the pause (Peter ruled (a), 2026-10-24): fold in his rulings, update stale text, settle three facts. No new forks, no new proposals. The outline is rewritten to current text; this entry is the ledger. Peter's correction during the round: "The outline can be as large as it needs to be. If it's too big, that's a scoping problem that we can break-up, but let's not lose context." So the rulings went in whole, and I cut nothing to hit a word count.*
+
+**Folded (as current text)**
+- **F-9 → `design-outline.md` § 4**, "The spine: fix-first (RULED, F-9)". B is the spine and the map is its backlog (§ 3's new lead paragraph). All six conditions are in place: missing rows before any deletion cites them (§ 3, § 4 (c)); the onboarding trio named, not paralleled (§ 4 (b)); the freeze per platform and CORRECTION-exempt (§ 4 (d)); Lina's R2/R4/R6 as the first measured fix (§ 4 (a)). Both mechanisms are in too: the blocking rehearsal gate, and no 131 unit opening while a finding it cites has no record (§ 4; § 8). Approach A is kept as "considered and not taken".
+- **F-2 → § 5**, "Trust, but verify (RULED, F-2)". The whole ruling is there, with Peter's words quoted: everything, not only rules; computed reach through OWNERS; the author adds teammates and never removes them; removals and contract changes always cross-checked; proportionality; what stays Peter's; deletions batched into the report with a restore-on-regression rule and no sampling; the one delegation ballot and what it replaces; merge-on-green later; the routing limit; what survives. Rows 4, 6 and 7 and § 9 now point at it.
+- **F-6 → § 5**, "The release findings report (RULED, F-6)", in Peter's shape: it opens with what's changing and why, and each decision carries the problem(s), the options, the risks and opportunities of each, and how to keep it from happening again. Row 20 points at it.
+- **§ 3d recount**: adds 9 → 11 (the freeze and the record-before-unit gate came in with F-9, and both end on their own), and five now replace a removed mechanism. So the net is −5 → **−3**, and −1 if Peter also takes F-4 and F-10.
+
+**Stale text updated**
+- **§ 1**: Peter's amended layer test, verbatim, plus "cost includes context and human attention" (`[PETER R2]` orchestrator note; agreed in Stacy, Lina and outside R2).
+- **§ 5 Holistic**: Peter's amended text ("…additional burdens placed on them are appropriately acknowledged, mitigated and supported"), as Kenya, Ada and the outside read flagged.
+- **§ 5 self-sustaining**: the proactive learning loop, in the shape the round converged on. Learn, then act or preserve; count recurrences, not applications; promote on recurrence to an executable check, at N=1 for P0 or irreversible classes and N=2 for consumer-visible ones; a recurrence after promotion means the promotion failed.
+- **§ 10 F-12**: Data's R2 convergence with Kenya replaces the R1 disagreement in the fork's evidence. The fork is unchanged. § 11 no longer says the dissent is unresolved.
+- **§ 3a and § 8**: test01's finding numbers now carry a "test01" prefix (F-1, F-9, F-3/F-5), because the closed fork labels use the same numbers.
+
+**Corrected, with evidence**
+1. **Row 1 counts refusals, not signatures.** Stacy's R1 numbers are refusals: 25 issued at the first render (`claims-pass-midpoint.md` L215), and 0 issued since (15.1.0 L311 and 16.0.0 L311 both read "Refusal count … 0 issued"). Running `git show <sha> -- canonical/profiles/consumer | grep '^+' | grep -c 'verdict: *refuse'` over #397 (`096e11f99`), #445 (`05513944e`) and #451 (`76f4b95cd`) gives 0 each. **Signatures never stopped.** The same passes count assents (15.1.0: kenya 4/4, data 4/4, stacy 3/3; 16.0.0: leonardo 2/2, sparky 1/1), and then come #397 (123 first signatures + 4 re-signs), #445 (20 first signatures by 7 seats) and #451 (Sparky and Ada re-signed). `[OUTSIDE R2]` item 3 was right that signing is live and recurring. The row now says "Refusals stopped; signing did not". That is the 11.5.6 prediction (assent holds, attention fails), so the **D** verdict stands on a stronger cost case.
+2. **The Product MCP is built and shipped, not conceptual.** This corrects item (d) of the orchestrator note under `[PETER R1]` (Peter's entry is not edited). `product-mcp-server/src/index.ts` defines 14 tools, including `get_product_tokens`, `get_screen_spec` and `rebuild_product_index` (Sparky's finding, relayed). It was scaffolded in Spec 081 (`3a8ab1385`, 2026-04-09). `build:mcp` bundles it to `dist/mcp/product-mcp.js`, which `package.json` `files` ships (`dist/**/*.js`). It is wired in `.kiro/settings/mcp.json`, in the tool lists of Leonardo, Sparky, Kenya, Data and Stacy, and in the consumer config template (`PRODUCT_DIR ./product`, scaffolded from `src/cli/templates/product/`). **What is not live**: this repo has no `product/` directory, so here it serves an empty product set. Whether any consumer has queried it is unverified. Corrected in outline § 2. **Fix-now item, for filing (mine, as the Civitas content owner)**: "conceptual" in `.kiro/steering/Civitas-System-Overview.md` L39 and `.kiro/steering/DesignerPunk-Systems-Overview.md` L180 (the diagram). Both docs ship to consumers. It is a CORRECTION edit on a steering path, so it is Peter-merged. It is listed in § 8 with the other owed findings.
+3. **The composed loop's outcome is missing in 4 of 7 claims passes.** The command: `grep -LE '^## \[THURGOOD\] Composed-loop outcome' .kiro/specs/{123-consumer-distribution,127-completion-claims-integrity}/completion/claims-pass*.md`. It is **absent** in 123's `claims-pass-midpoint.md`, `-release-15.0.0.md`, `-release-15.1.0.md` and `-release-16.0.0.md`. It is **present** in 127's midpoint and closeout passes and 123's closeout (`claims-pass.md` L351, "Outcome: adopted"). A repo-wide search for an outcome recorded outside the pass files found none. The nearest, `task-12-2-completion.md` L158, records outcomes on a verdict record, not a claims pass. I could not reproduce a count of 3. **All four misses are my seat's**: the duty is mine (`canonical/agents/thurgood.md` § "The composed learning loop", item 2). Every one of the four passes carries the `Standards implications` input the duty reads (2–4 hits each).
+
+**Forks**
+- **Closed**: F-9 (item 2); F-2 (item 3); F-6 (item 4); F-1 (closed by item 3, since the delegation ballot replaces the `Agent:`-trailer question); F-8 (answered in R2, with its remainder carried as F-10).
+- **Narrowed**: F-5. The freeze is ruled in as B (d); only "does it exempt 129?" stays open.
+- **Open for requirements, unchanged**: F-3, F-4, F-5 (exemption), F-7, F-10, F-11, F-12, F-13, F-14, F-15.
+- **Carried input, not a fork**: `[OUTSIDE R2]` item 6 (the freeze would also catch 131's own new law: the values ballot, OWNERS, the admission rule). It belongs with F-5 in the requirements round.
+
+**Scoping observation (per Peter's correction; not a proposal).** The outline is now 6,108 words, up from 4,536. It still reads as one spec, but it has three seams, and it would split along them:
+- (i) the release instrument: the blocking rehearsal, the findings report, the pack-diff and the metrics;
+- (ii) the delegation and deletions: "Trust, but verify", OWNERS, and rows 1–9 and 20;
+- (iii) the never-delivered builds: rows 17 and 19, the served corpus and readiness, whose native halves wait on 129.
+
+(ii) cannot be cut finer, because OWNERS must land in the same unit as the signature deletion (§ 9). (iii) is the most separable: those rows are builds, not simplification. Whether to split is a requirements-phase call.
+
+**131 pauses here, under the stop rule.** It does not enter requirements. It resumes on Spec 129 progress, per Peter's priority order (129 → 131 → 128 → 130), and on his go. Meanwhile the owed fixes go ahead with their owners (§ 8), including my two: the install doc and the overview correction. -- [THURGOOD R3]
