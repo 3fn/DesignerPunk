@@ -352,8 +352,8 @@ tokens:
   - typography.labelMd
   - typography.input
   - color.text.*
-  - color.primary
-  - color.error
+  - color.action.primary
+  - color.feedback.error.text
   - space.inset.*
   - motion.floatLabel
   - accessibility.focus.*
