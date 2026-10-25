@@ -420,9 +420,9 @@ token_bypasses:
     - Hardcoded motion (use motion.* tokens)
     
   examples:
-    - ❌ color: #FF0000 (use color.error)
-    - ❌ padding: 16px (use space.inset.md)
-    - ❌ duration: 200ms (use motion.floatLabel.duration)
+    - ❌ color: #FF0000 (use color.feedback.error.text)
+    - ❌ padding: 16px (use space.inset.200)
+    - ❌ duration: 200ms (use motion.floatLabel)
 ```
 
 ### Category 4: Accessibility Regressions (PROHIBITED)
@@ -683,8 +683,8 @@ ios_patterns:
   
   token_consumption:
     method: DesignTokens Swift package
-    access: DesignTokens.category.subcategory
-    example: DesignTokens.color.primary
+    access: DesignTokens.<iOS identifier from the token index>
+    example: DesignTokens.spaceInset100
     
   accessibility:
     method: SwiftUI accessibility modifiers
@@ -708,8 +708,8 @@ android_patterns:
   
   token_consumption:
     method: DesignTokens Kotlin package
-    access: DesignTokens.category.subcategory
-    example: DesignTokens.color.primary
+    access: DesignTokens.<Android identifier from the token index>
+    example: DesignTokens.space_inset_100
     
   accessibility:
     method: Compose semantics

@@ -83,14 +83,14 @@ Semantic border width tokens provide contextual meaning for specific component p
 
 | Semantic Token | Primitive Reference | Value | Use Case |
 |----------------|---------------------|-------|----------|
-| `borderNone` | borderWidth000 | 0px | Borderless elements, removing borders |
-| `borderDefault` | borderWidth100 | 1px | Standard borders, cards, inputs at rest |
-| `borderEmphasis` | borderWidth200 | 2px | Focus states, selected elements, active states |
-| `borderHeavy` | borderWidth400 | 4px | Strong visual weight, rare use cases |
+| `border.none` | borderWidth000 | 0px | Borderless elements, removing borders |
+| `border.default` | borderWidth100 | 1px | Standard borders, cards, inputs at rest |
+| `border.emphasis` | borderWidth200 | 2px | Focus states, selected elements, active states |
+| `border.heavy` | borderWidth400 | 4px | Strong visual weight, rare use cases |
 
 ### Semantic Token Details
 
-#### borderNone (No Border)
+#### border.none (No Border)
 
 **References**: borderWidth000 (0px)
 
@@ -104,7 +104,7 @@ Semantic border width tokens provide contextual meaning for specific component p
 
 **Rationale**: Explicit "none" token improves search/discoverability, communicates intent (removing border vs. forgetting to add one), and provides consistent maintenance pattern.
 
-#### borderDefault (Standard Borders)
+#### border.default (Standard Borders)
 
 **References**: borderWidth100 (1px)
 
@@ -120,18 +120,18 @@ Semantic border width tokens provide contextual meaning for specific component p
 **Component Examples**:
 ```typescript
 // Card with standard border
-<Card borderWidth="borderDefault">
+<Card borderWidth="border.default">
   <Content />
 </Card>
 
 // Input field at rest
-<Input borderWidth="borderDefault" />
+<Input borderWidth="border.default" />
 
 // Divider line
-<Divider borderWidth="borderDefault" />
+<Divider borderWidth="border.default" />
 ```
 
-#### borderEmphasis (Emphasized Borders)
+#### border.emphasis (Emphasized Borders)
 
 **References**: borderWidth200 (2px)
 
@@ -152,10 +152,10 @@ Semantic border width tokens provide contextual meaning for specific component p
 **Component Examples**:
 ```typescript
 // Input field on focus
-<Input borderWidth="borderEmphasis" state="focused" />
+<Input borderWidth="border.emphasis" state="focused" />
 
 // Selected card
-<Card borderWidth="borderEmphasis" selected={true}>
+<Card borderWidth="border.emphasis" selected={true}>
   <Content />
 </Card>
 
@@ -167,7 +167,7 @@ Semantic border width tokens provide contextual meaning for specific component p
 }
 ```
 
-#### borderHeavy (Heavy Borders)
+#### border.heavy (Heavy Borders)
 
 **References**: borderWidth400 (4px)
 
@@ -179,12 +179,12 @@ Semantic border width tokens provide contextual meaning for specific component p
 
 **Visual Weight**: Heavy, dominant
 
-**Warning**: Use sparingly. Heavy borders can overwhelm interfaces. Consider if `borderEmphasis` (2px) would be sufficient before using this token.
+**Warning**: Use sparingly. Heavy borders can overwhelm interfaces. Consider if `border.emphasis` (2px) would be sufficient before using this token.
 
 **Component Examples**:
 ```typescript
 // Strong emphasis element (rare)
-<FeatureCard borderWidth="borderHeavy">
+<FeatureCard borderWidth="border.heavy">
   <HighlightedContent />
 </FeatureCard>
 ```
@@ -199,16 +199,16 @@ Form elements use border tokens to communicate state:
 
 | State | Semantic Token | Visual Effect |
 |-------|----------------|---------------|
-| Rest | `borderDefault` | Standard 1px border |
-| Focus | `borderEmphasis` | Emphasized 2px border |
-| Disabled | `borderDefault` + reduced opacity | Muted standard border |
-| Error | `borderDefault` + error color | Standard border with error color |
+| Rest | `border.default` | Standard 1px border |
+| Focus | `border.emphasis` | Emphasized 2px border |
+| Disabled | `border.default` + reduced opacity | Muted standard border |
+| Error | `border.default` + error color | Standard border with error color |
 
 **Example Implementation**:
 ```typescript
 // Input component with state-based borders
 const Input = ({ state, error }) => {
-  const borderWidth = state === 'focused' ? 'borderEmphasis' : 'borderDefault';
+  const borderWidth = state === 'focused' ? 'border.emphasis' : 'border.default';
   const borderColor = error ? 'colorError' : 'colorBorder';
   
   return <input style={{ borderWidth, borderColor }} />;
@@ -221,18 +221,18 @@ Cards use border tokens for visual hierarchy:
 
 | Card Type | Semantic Token | Use Case |
 |-----------|----------------|----------|
-| Standard | `borderDefault` | Default card appearance |
-| Selected | `borderEmphasis` | User-selected card |
-| Borderless | `borderNone` | Cards relying on shadow/background |
-| Featured | `borderHeavy` | Rare, high-emphasis cards |
+| Standard | `border.default` | Default card appearance |
+| Selected | `border.emphasis` | User-selected card |
+| Borderless | `border.none` | Cards relying on shadow/background |
+| Featured | `border.heavy` | Rare, high-emphasis cards |
 
 **Example Implementation**:
 ```typescript
 // Card component with selection state
 const Card = ({ selected, borderless }) => {
-  let borderWidth = 'borderDefault';
-  if (borderless) borderWidth = 'borderNone';
-  if (selected) borderWidth = 'borderEmphasis';
+  let borderWidth = 'border.default';
+  if (borderless) borderWidth = 'border.none';
+  if (selected) borderWidth = 'border.emphasis';
   
   return <div style={{ borderWidth }}>{children}</div>;
 };
@@ -244,15 +244,15 @@ Dividers use border tokens for content separation:
 
 | Divider Type | Semantic Token | Use Case |
 |--------------|----------------|----------|
-| Standard | `borderDefault` | Normal content separation |
-| Subtle | `borderNone` + background color | Very subtle separation |
-| Emphasized | `borderEmphasis` | Section breaks, major divisions |
+| Standard | `border.default` | Normal content separation |
+| Subtle | `border.none` + background color | Very subtle separation |
+| Emphasized | `border.emphasis` | Section breaks, major divisions |
 
 **Example Implementation**:
 ```typescript
 // Divider component
 const Divider = ({ emphasis }) => {
-  const borderWidth = emphasis ? 'borderEmphasis' : 'borderDefault';
+  const borderWidth = emphasis ? 'border.emphasis' : 'border.default';
   
   return <hr style={{ borderTopWidth: borderWidth }} />;
 };
@@ -260,7 +260,7 @@ const Divider = ({ emphasis }) => {
 
 ### Focus Indicators (Web)
 
-For web accessibility, use `borderEmphasis` with the `outline` property:
+For web accessibility, use `border.emphasis` with the `outline` property:
 
 ```css
 /* Focus indicator using border token */
@@ -416,11 +416,11 @@ Use semantic border width tokens for:
 **Example**:
 ```typescript
 // Component using semantic tokens
-<Card borderWidth="borderDefault">  {/* 1px standard border */}
+<Card borderWidth="border.default">  {/* 1px standard border */}
   <Content />
 </Card>
 
-<Input borderWidth="borderEmphasis" state="focused">  {/* 2px focus border */}
+<Input borderWidth="border.emphasis" state="focused">  {/* 2px focus border */}
   Enter text
 </Input>
 ```
@@ -430,31 +430,31 @@ Use semantic border width tokens for:
 When applying border widths:
 
 1. **No border (borderless elements, removing borders)?**
-   → Use `borderNone`
+   → Use `border.none`
    → Explicitly communicates intent to remove border
    → Better than 0 for search/discoverability and maintenance
 
 2. **Standard borders (cards, inputs at rest, buttons at rest, dividers)?**
-   → Use `borderDefault`
+   → Use `border.default`
    → Provides neutral, standard visual weight
 
 3. **Emphasized states (focus, selection, active)?**
-   → Use `borderEmphasis`
+   → Use `border.emphasis`
    → Draws attention without overwhelming
    → For web focus: Use with `outline` property, not `border`
 
 4. **Strong visual weight (rare, special cases)?**
-   → Use `borderHeavy`
-   → Consider if `borderEmphasis` would be sufficient first
+   → Use `border.heavy`
+   → Consider if `border.emphasis` would be sufficient first
    → Use sparingly to avoid overwhelming interface
 
 5. **Platform-specific focus indicators?**
-   → Web: Use `borderEmphasis` with `outline` property
+   → Web: Use `border.emphasis` with `outline` property
    → iOS: Use system-provided focus indicators
    → Android: Use ripple effects and elevation changes
 
 6. **Component-specific needs?**
-   → Prioritize semantic tokens (borderNone, borderDefault, borderEmphasis, borderHeavy)
+   → Prioritize semantic tokens (border.none, border.default, border.emphasis, border.heavy)
    → If semantic tokens don't meet requirements, use primitive tokens
    → If primitive tokens don't meet requirements, request component-specific token
 

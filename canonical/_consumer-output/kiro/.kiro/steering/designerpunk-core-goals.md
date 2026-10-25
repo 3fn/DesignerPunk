@@ -61,15 +61,15 @@ get_section({ path: "token-governance", heading: "Token Usage Governance" })
 ```
 
 **Token Selection Priority (MUST follow this order):**
-1. **Semantic tokens** — purpose-built for specific use cases (e.g., `tapAreaRecommended` for touch targets, `color.contrast.onPrimary` for content on primary backgrounds)
+1. **Semantic tokens** — purpose-built for specific use cases (e.g., `color.contrast.onAction` for content on action-colored backgrounds, `space.inset.100` for inset padding)
 2. **Primitive tokens** — when no semantic token exists, check if a primitive token provides the needed value
-3. **Component tokens referencing primitives** — when a component needs a semantic name but the value exists as a primitive, create a component token that references the primitive (e.g., `buttonIcon.inset.medium = space125`)
+3. **Component tokens referencing primitives** — when a component needs a semantic name but the value exists as a primitive, create a component token that references the primitive (e.g., `buttonicon.inset.medium = space125`)
 4. **Hard-coded values** — only as last resort, requires user approval
 
 **Component Token Construction Rule:**
 Component tokens must either reference an existing primitive token OR conform to how that primitive token family's values are defined. Never introduce arbitrary values at the component level that don't align with the underlying token family's value system.
 
-**Why semantic first?** Semantic tokens are self-documenting, theme-aware, and encode design intent. Using `tapAreaRecommended` instead of `space600` makes code readable and maintainable.
+**Why semantic first?** Semantic tokens are self-documenting, theme-aware, and encode design intent. Using `space.inset.100` instead of `space100` makes code readable and maintainable.
 
 **Token-First in Specs:**
 - Specs reference tokens, not pixel values: `icon.size100` not `24px`

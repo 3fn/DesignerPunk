@@ -113,15 +113,15 @@ All components in the Icons family inherit these 5 foundational contracts from I
 **Description**: Supports 11 size variants calculated from typography scale.
 
 **Behavior**: Icon-Base supports 11 size variants calculated from fontSize × lineHeight formula to maintain optical balance with paired typography:
-- 13px (caption, legal, labelXs)
-- 18px (bodySm, buttonSm, labelSm)
-- 24px (bodyMd, buttonMd, labelMd, input) - standard
-- 28px (h6)
-- 32px (bodyLg, buttonLg, h5, h4)
-- 36px (h3)
-- 40px (h2)
-- 44px (h1)
-- 48px (display)
+- 16px (`typography.caption`, `typography.legal`, `typography.labelXs`)
+- 20px (`typography.bodySm`, `typography.buttonSm`, `typography.labelSm`)
+- 24px (`typography.bodyMd`, `typography.buttonMd`, `typography.labelMd`, `typography.input`) - standard
+- 28px (`typography.bodyLg`, `typography.buttonLg`, `typography.labelLg`, `typography.h6`)
+- 32px (`typography.h5`, `typography.h4`)
+- 36px (`typography.h3`)
+- 40px (`typography.h2`)
+- 44px (`typography.h1`)
+- 48px (`typography.display`)
 
 **WCAG Compliance**: N/A
 
@@ -129,7 +129,7 @@ All components in the Icons family inherit these 5 foundational contracts from I
 
 **Description**: Optional 8% lighter blend for icon-text pairing.
 
-**Behavior**: When opticalBalance prop is true and a hex color is provided, Icon-Base applies `lighterBlend(color, blend.iconLighter)` to compensate for icons appearing heavier than adjacent text due to stroke density and fill area.
+**Behavior**: When opticalBalance prop is true and a hex color is provided, Icon-Base applies `blendUtils.iconColor(color)` (a `lighterBlend` by `blend200`, 8%, the primitive that `color.icon.opticalBalance` references) to compensate for icons appearing heavier than adjacent text due to stroke density and fill area.
 
 **WCAG Compliance**: 1.4.3 Contrast (Minimum)
 
@@ -173,19 +173,19 @@ All components in the Icons family inherit these 5 foundational contracts from I
 
 #### Size Variants
 
-| Size | Pixels | Typography Pairing |
+| Icon token | Pixels | Typography Pairing |
 |------|--------|-------------------|
-| size050 | 13px | caption, legal, labelXs |
-| size075 | 18px | bodySm, buttonSm, labelSm |
-| size100 | 24px | bodyMd, buttonMd, labelMd, input (standard) |
-| size125 | 32px | bodyLg, buttonLg, labelLg |
-| size150 | 28px | h6 |
-| size200 | 32px | h5 |
-| size300 | 32px | h4 |
-| size400 | 36px | h3 |
-| size500 | 40px | h2 |
-| size600 | 44px | h1 |
-| size700 | 48px | display |
+| `icon.size050` | 16px | `typography.caption`, `typography.legal`, `typography.labelXs` |
+| `icon.size075` | 20px | `typography.bodySm`, `typography.buttonSm`, `typography.labelSm` |
+| `icon.size100` | 24px | `typography.bodyMd`, `typography.buttonMd`, `typography.labelMd`, `typography.input` (standard) |
+| `icon.size125` | 28px | `typography.bodyLg`, `typography.buttonLg`, `typography.labelLg` |
+| `icon.size150` | 28px | `typography.h6` |
+| `icon.size200` | 32px | `typography.h5` |
+| `icon.size300` | 32px | `typography.h4` |
+| `icon.size400` | 36px | `typography.h3` |
+| `icon.size500` | 40px | `typography.h2` |
+| `icon.size600` | 44px | `typography.h1` |
+| `icon.size700` | 48px | `typography.display` |
 
 #### Usage Example
 
@@ -234,7 +234,7 @@ Components in the Icons family consume these design tokens:
 |----------|---------------|---------|
 | Icon | `icon.size050` through `icon.size700` | Icon sizing |
 | Icon | `icon.strokeWidth` | Stroke width |
-| Blend | `blend.iconLighter` | Optical balance (8% lighter) |
+| Color | `color.icon.opticalBalance` | Optical balance (references `blend200`, 8% lighter) |
 | Color | `color.print.default` | Default icon color |
 
 ### Token Resolution

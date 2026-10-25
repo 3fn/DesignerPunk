@@ -448,12 +448,12 @@ units:
         text: "You follow Token Governance for selection but never create tokens."
     confirmation: canonical/profiles/consumer/confirmations/lina.md#token-usage-in-components:preamble
   "#token-selection-priority-must-follow-this-order":
-    canonicalHash: sha256:2688d120f8996dd0b654091329b6dfa698b03cf183ef5dc00d8fcf9f203d0af0
+    canonicalHash: sha256:ad6fd6a1c0b92f63dada5b5bd28888c99db2035f75072a975318a02683aee32a
     items:
       - id: priority-semantic
         kind: step
         label: "Semantic first"
-        text: "**Semantic tokens** — purpose-built for specific use cases (e.g., `tapAreaRecommended` for touch targets, `color.contrast.onPrimary` for content on primary backgrounds). Use freely. Verify semantic correctness."
+        text: "**Semantic tokens** — purpose-built for specific use cases (e.g., `color.contrast.onAction` for content on action-colored backgrounds, `space.inset.100` for inset padding). Use freely. Verify semantic correctness."
       - id: priority-primitive
         kind: step
         label: "Primitive second"

@@ -39,7 +39,7 @@ In the token system, primitive tokens should be avoided whenever possible:
 | Pattern emerges (3+ uses) | 🔄 Elevate to semantic token | Reduce primitive usage over time |
 
 **Why primitives are discouraged for tokens:**
-- Primitive tokens lack semantic meaning (`blue500` vs `color.primary`)
+- Primitive tokens lack semantic meaning (`cyan300` vs `color.action.primary`)
 - Using primitives bypasses design intent
 - Primitive usage indicates a gap that should be filled
 - Goal: Eliminate primitive token usage through semantic elevation
@@ -47,10 +47,10 @@ In the token system, primitive tokens should be avoided whenever possible:
 **Example - Token Anti-Pattern:**
 ```typescript
 // ❌ DON'T - Using primitive token
-background: blue500
+background: cyan300
 
 // ✅ DO - Using semantic token
-background: color.primary
+background: color.action.primary
 ```
 
 ### Component Usage Philosophy (Stemma System)
@@ -87,8 +87,8 @@ In the component system, primitive components are expected and appropriate:
 ### Tokens: Design Intent Encoding
 
 Tokens encode **design decisions** that should be consistent across the system:
-- `color.primary` means "the primary brand color" everywhere
-- `blue500` is just a color value with no semantic meaning
+- `color.action.primary` means "the primary action color" everywhere
+- `cyan300` is just a color value with no semantic meaning
 - Using primitives loses the design intent
 
 **Consequence**: Primitive token usage is a problem to be solved.
@@ -210,10 +210,10 @@ Need a component?
 **Token Example:**
 ```typescript
 // ❌ DON'T
-color: blue500
+color: cyan300
 
 // ✅ DO
-color: color.primary
+color: color.action.primary
 ```
 
 **Component Example:**
@@ -248,7 +248,7 @@ color: purple300  // TODO: Evaluate for semantic token elevation
 ```typescript
 // Before: Multiple components using purple300
 // After: Create semantic token
-color: color.accent  // New semantic token
+color: color.accent  // New semantic token (hypothetical: not a token-index key)
 ```
 
 **Component Example:**

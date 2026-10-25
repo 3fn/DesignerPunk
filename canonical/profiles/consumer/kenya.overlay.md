@@ -34,7 +34,7 @@ Native onboarding is not supported on this release: DesignerPunk's iOS (SwiftUI)
 - iOS build configuration and project setup
 - Advising Leonardo on iOS-specific constraints and opportunities
 
-## @unit #ios-theming-spec-094 @ sha256:ced2085af0c675dbb3e27cc0f93bd50feef8f21a31b28cec74f2034781da4d31
+## @unit #ios-theming-spec-094 @ sha256:5c2f0d3218adaa084461ed041e9cd7843f5e5d19bfcd07d1597a7ad424e681c9
 ### iOS Theming (Spec 094)
 
 - `npx designerpunk generate` writes your static tokens as Swift constants on `DesignTokens` and writes no theme surface today: no theme protocol, no per-theme structs and no environment key, and the theme-varying colours are left out. DesignerPunk plans to address this (Spec 129, consumer-generation completeness), with no date set. The next two bullets are the intended pattern for when that surface exists, not something your repo has yet.

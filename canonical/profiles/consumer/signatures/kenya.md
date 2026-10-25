@@ -32,9 +32,9 @@ date: 2026-10-13
 
 signer: kenya
 disposition: re-pointed
-canonicalHash: sha256:ced2085af0c675dbb3e27cc0f93bd50feef8f21a31b28cec74f2034781da4d31
+canonicalHash: sha256:5c2f0d3218adaa084461ed041e9cd7843f5e5d19bfcd07d1597a7ad424e681c9
 renderedHash: sha256:48e5f42f374425d123fa8595e7172cd00e5eba1ff0a4c1018b6716b2a4713469
-date: 2026-10-12
+date: 2026-10-25
 
 **Ruling: ASSENT — 5/5 surviving.** All 5 survive. `theming-1` to `theming-4` are verbatim. In a consumer, `theming-1` is *more* true than in-repo, because the theme surface materializes consumer-side via `npx designerpunk generate`.
 - **`theming-5`** survives on the rendered directive *"query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set"*. Sourcing a value or name from a Swift file violates that directive, so the item's violation is still a violation of this unit's rendering (5e, in-unit entailment).
@@ -50,6 +50,13 @@ date: 2026-10-12
 - **Facts the new bullet rests on, checked**: nothing in a consumer's generate emits a theme surface (`generateThemeOverrideBlocks`, `TokenFileGenerator.ts` L1028, has no production caller; read); the consumer's `DesignTokens.ios.swift` leaves out the theme-varying colours (`docs/releases/release-15.0.0.md` L72, L127; the guide's § Platforms › iOS); Spec 129's directory name is `129-consumer-generation-completeness`.
 - **Residual, not a refusal (fork A, named at 31.0)**: bullets 2 and 3 are verbatim and are framed by bullet 1, directly above. A reader that quotes bullet 2 alone can still write against an environment key nothing defines. I judged the framing sufficient for the signature; the conditional form (B) remains open to Peter.
 - **Erratum.** My 2026-09-29 entry above says `theming-1` is *"more true than in-repo, because the theme surface materializes consumer-side via `npx designerpunk generate`"*. That was wrong: a consumer's `generate` emits no theme surface (`TokenFileGenerator.ts` L1028 has no production caller; my R2 § D, 2026-10-03, and the 19.4 review). This entry supersedes it; it is a correction of my reading, not a new claim.
+
+**Re-signed 2026-10-25 (served-docs token-name correction): ASSENT, `surviving: [theming-1, theming-2, theming-3, theming-4, theming-5]`.** This is a new act and closes no divergent. The canonical source's first bullet (`canonical/agents/kenya.md:281`) was corrected to say what `generate` writes today, which is the sentence the consumer overlay already carried; the overlay pin was re-grounded at `3071015d2`, the rendering regenerated at `94ce930bf`, and `theming-1` re-quoted at `46ae0efda`.
+- **What I read, in this session.** The unit as rendered in `canonical/_consumer-output/cc/.claude/agents/kenya.md` L66-72 (committed at `94ce930bf`). The first bullet reads: *"`npx designerpunk generate` writes your static tokens as Swift constants on `DesignTokens` and writes no theme surface today: no theme protocol, no per-theme structs and no environment key, and the theme-varying colours are left out. DesignerPunk plans to address this (Spec 129, consumer-generation completeness), with no date set. The next two bullets are the intended pattern for when that surface exists, not something your repo has yet."*
+- **`theming-1` is credited again.** The operative-set item was re-quoted to this same sentence, and the rendering states it verbatim. The 2026-10-12 entry above did not credit it only because the item then quoted the old "Generated Swift output includes: ..." text, which the rendering contradicted; that contradiction is gone. No removal of mine is reversed: the `removals` entries (`subtraction-1`) stand as authored.
+- **Credited, unchanged**: `theming-2` (L69, verbatim), `theming-3` (L70, verbatim), `theming-4` (L71, verbatim) and `theming-5` (L72, verbatim-strong: the rendering names the installed-package snapshots and points the reader to the application MCP).
+- **Hashes.** `canonicalHash` moves `ced2085a...` to `5c2f0d32...` (`hashText` of the unit from `partition(body).units`, equal to the overlay pin). `renderedHash` stays `48e5f42f...`: the rendering text is the same as the one I signed on 2026-10-12, because the overlay already carried the corrected sentence.
+- **Residual, unchanged from 2026-10-12 (fork A)**: bullets 2 and 3 are verbatim and are framed by bullet 1 directly above; a reader quoting bullet 2 alone can still write against an environment key nothing defines. The conditional form (B) remains open to Peter.
 
 ## `#out-of-scope`
 

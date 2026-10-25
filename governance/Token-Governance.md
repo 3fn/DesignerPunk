@@ -82,9 +82,10 @@ The DesignerPunk token system follows the **Nathan Curtis concept-first naming m
    - Identity tokens ARE the color: `color.identity.human` (no property needed)
    - Action tokens ARE the color: `color.action.primary` (no property needed)
 
-3. **Component tokens reference semantic tokens**: Component-specific tokens should reference semantic tokens, not primitives directly.
-   - `color.avatar.human.background` → references `color.identity.human`
-   - `color.avatar.human.icon` → references `color.contrast.onDark`
+3. **Component colors reference semantic tokens**: A component's color choices should reference semantic tokens, not primitives directly.
+   - Avatar's human background → references `color.identity.human`
+   - Avatar's human icon → references `color.contrast.onDark`
+   - These live as `AvatarColorTokens` constants in `avatar.tokens.ts`, outside the token index; they are not component-token keys.
 
 ---
 
@@ -170,10 +171,11 @@ Awaiting your approval to proceed."
 
 **Exception**: If the spec explicitly calls for using a specific component token, the AI can proceed without additional checkpoint (prior acknowledgment).
 
-**Component Token Pattern**: `color.{component}.{variant}.{property}`
-- Component tokens should reference semantic tokens when possible
-- Example: `color.avatar.human.background` references `color.identity.human`
-- Example: `color.avatar.human.icon` references `color.contrast.onDark`
+**Component Token Pattern**: `<component>.<property>…`, with no family segment (component names are lowercased in the index)
+- Component tokens are declared with `defineComponentTokens`, which takes numeric families only (spacing, sizing, borderWidth); there is no color family
+- Component tokens should reference primitives or the family's pattern, e.g. `buttonicon.inset.medium` references `space125`
+- Example: `avatar.size.md` references `size500`
+- A component's colors reference semantic tokens directly (Avatar's human background uses `color.identity.human`, its icon `color.contrast.onDark`) and are not component tokens in the index
 
 ---
 
@@ -333,9 +335,9 @@ When writing specs, be explicit about token decisions:
 **Situation**: Building a card component, need internal padding.
 
 **Correct approach**:
-1. Check semantic tokens → `space.inset.comfortable` (12px) exists
-2. Verify semantic correctness → Yes, "comfortable inset" matches card padding intent
-3. Use `space.inset.comfortable` → No checkpoint needed
+1. Check semantic tokens → `space.inset.150` (12px) exists
+2. Verify semantic correctness → Yes, a 12px inset matches card padding intent
+3. Use `space.inset.150` → No checkpoint needed
 
 ---
 
@@ -383,18 +385,18 @@ When writing specs, be explicit about token decisions:
 
 ### Example 5: Primitive Needed, Spec Silent
 
-**Situation**: Building a tooltip, need 6px padding. Spec says "small padding."
+**Situation**: Building a tooltip, need 10px padding. Spec says "small padding."
 
 **Correct approach**:
-1. Check semantic tokens → `space.inset.tight` (4px) too small, `space.inset.normal` (8px) too large
-2. Check primitives → `space075` (6px) exists
+1. Check semantic tokens → `space.inset.100` (8px) too small, `space.inset.150` (12px) too large
+2. Check primitives → `space125` (10px) exists
 3. Spec is silent on specific token → Checkpoint required
 
 ```
-AI: "Tooltip needs 6px padding. Semantic tokens don't have this value.
-space075 (6px) primitive exists. Spec says 'small padding' but doesn't specify.
-Should I use space075 directly, or should we create a semantic token like 
-space.inset.compact for this pattern?"
+AI: "Tooltip needs 10px padding. Semantic tokens don't have this value.
+space125 (10px) primitive exists. Spec says 'small padding' but doesn't specify.
+Should I use space125 directly, or should we create a semantic token like 
+space.inset.125 for this pattern?"
 ```
 
 ---
@@ -427,21 +429,22 @@ Awaiting your decision."
 
 ### Example 7: Avatar Component Token Usage
 
-**Situation**: Building an avatar component, need background color for human variant.
+**Situation**: Building an avatar component, need the medium size.
 
 **Correct approach**:
-1. Think concept first → This is identity (human entity)
-2. Check semantic concept tokens → `color.identity.human` exists
-3. Check component tokens → `color.avatar.human.background` exists (references `color.identity.human`)
+1. Check semantic tokens → none covers avatar sizing
+2. Check primitives → `size500` exists
+3. Check component tokens → `avatar.size.md` exists (references `size500`)
 4. Component token exists → Checkpoint required
 
 ```
-AI: "Avatar human variant needs background color. I've checked:
-- Semantic concept tokens: color.identity.human exists (orange300)
-- Component token: color.avatar.human.background exists (references color.identity.human)
+AI: "Avatar medium variant needs a size. I've checked:
+- Semantic concept tokens: none covers avatar sizing
+- Primitive tokens: size500 exists
+- Existing component token: avatar.size.md exists (references size500)
 
-Recommendation: Use component token color.avatar.human.background
-REASONING: Component token provides component-scoped discovery while referencing semantic token
+Recommendation: Use component token avatar.size.md
+REASONING: Component token provides component-scoped discovery while referencing the primitive
 
 Awaiting your approval to proceed."
 ```
@@ -513,7 +516,7 @@ C. Something else?"
 
 | Segment | Required | Description | Examples |
 |---------|----------|-------------|----------|
-| `color` | ✅ | Token family | Always `color` |
+| `color` | ✅ | Token family (this pattern is for color tokens; other families name their own, e.g. `space.inset.*`, `typography.*`, `shadow.*`) | `color` |
 | `concept` | ✅ | Semantic category | `feedback`, `identity`, `action`, `contrast`, `structure` |
 | `role` | ✅ | Specific meaning | `success`, `error`, `human`, `primary`, `onDark`, `canvas` |
 | `property` | ❌ | Visual styling property (when disambiguation needed) | `background`, `text`, `border`, `icon` |
@@ -555,30 +558,30 @@ New semantic tokens should have a base primitive reference. The theme drift audi
 
 ```typescript
 // In a theme's SemanticOverrides:
-// color.new.token.name: { value: 'primitiveRef' }
+// color.<concept>.<role>: { value: 'primitiveRef' }
 ```
 
 ---
 
 ### Creating Component Tokens
 
-**Location**: `src/components/[ComponentName]/tokens.ts`
+*(Corrected 2026-10-25 (Ada): the component-token name shape, location, import and examples in this document were corrected to the token index (`token-index/`) and the source tree, including the names in the Component Token Usage, Decision Examples and Creating Semantic Tokens passages; DesignerPunk record `2026-10-23-served-docs-teach-non-key-token-names`.)*
 
-**Component Token Pattern**: `color.{component}.{variant}.{property}`
+**Location**: `src/components/core/<Name>/tokens.ts` or `<name>.tokens.ts`; the Progress tokens live in `src/tokens/component/progress.ts`
+
+**Component Token Pattern**: `<component>.<property>…` (component lowercased in the index, no family segment), for example `avatar.size.md` and `buttonicon.inset.medium`
 
 | Segment | Required | Description | Examples |
 |---------|----------|-------------|----------|
-| `color` | ✅ | Token family | Always `color` |
-| `component` | ✅ | UI component | `avatar`, `badge` |
-| `variant` | ✅ | Component-specific variant | `human`, `agent`, `notification` |
-| `property` | ✅ | Visual styling property | `background`, `text`, `border`, `icon` |
+| `component` | ✅ | UI component, passed as `component: 'Name'` and lowercased in the index | `avatar`, `buttonicon`, `progress` |
+| `property…` | ✅ | The token name given in `tokens`, one or more dotted segments | `size.md`, `inset.medium`, `node.gap.sm` |
 
-**Note**: Variant comes BEFORE property in component tokens — this groups all properties for a variant together.
+**Note**: The `family` is given once per `defineComponentTokens` call and applies to every token in it: `spacing`, `sizing` or `borderWidth`. Tokens of different families go in separate calls. There is no color family, so a component's colors are not component tokens.
 
 **Format**:
 ```typescript
-import { defineComponentTokens } from '../../build/tokens/defineComponentTokens';
-import { spacingTokens } from '../../tokens/SpacingTokens';
+import { defineComponentTokens } from '../../../build/tokens';
+import { spacingTokens } from '../../../tokens/SpacingTokens';
 
 export const ComponentNameTokens = defineComponentTokens({
   component: 'ComponentName',
@@ -597,18 +600,20 @@ export const ComponentNameTokens = defineComponentTokens({
 });
 ```
 
-**Best Practice**: Component tokens should reference semantic tokens when possible:
+**Best Practice**: A component's colors reference semantic tokens directly. Avatar does this with constants outside `defineComponentTokens`, in `avatar.tokens.ts`:
 ```typescript
-// Avatar component tokens referencing semantic tokens
-'color.avatar.human.background': { reference: 'color.identity.human' },
-'color.avatar.human.icon': { reference: 'color.contrast.onDark' },
-'color.avatar.agent.background': { reference: 'color.identity.agent' },
-'color.avatar.agent.icon': { reference: 'color.contrast.onDark' },
+export const AvatarColorTokens = {
+  'human.background': 'color.identity.human',
+  'human.icon': 'color.contrast.onDark',
+  'agent.background': 'color.identity.agent',
+  'agent.icon': 'color.contrast.onDark',
+  'default.border': 'color.structure.border',
+} as const;
 ```
 
 **Key requirements**:
 - `reasoning` field is mandatory — explains why existing tokens are insufficient
-- Prefer `reference` to semantic tokens over primitives when semantic meaning exists
+- `reference` takes a primitive token (it needs a `baseValue`), not a semantic token
 - Prefer `reference` to primitives over custom `value`
 - Custom values must conform to the token family's mathematical foundation
 

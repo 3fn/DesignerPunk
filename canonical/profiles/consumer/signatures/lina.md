@@ -44,6 +44,8 @@ signer: lina
 
 **ASSENT — surviving: priority-semantic, priority-primitive, priority-component, priority-hardcoded.** All four steps, in order. `priority-primitive` is re-keyed ("or your human lead's acknowledgment"). The ordering constraint in the heading is also rendered, though as a label it is not an item (phase-one residual).
 
+**Re-signed 2026-10-25 (served-docs token-name correction).** The first step's examples were corrected in the canonical source to `color.contrast.onAction` and `space.inset.100`; the rendering carries the corrected text. Re-read against the rendering at 94ce930bf: all four steps still stated, in order, each with its condition and approval requirement. Surviving list unchanged.
+
 ## `#trust-by-default`
 
 signer: lina

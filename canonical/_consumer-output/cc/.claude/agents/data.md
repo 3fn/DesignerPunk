@@ -317,8 +317,8 @@ android_patterns:
   
   token_consumption:
     method: DesignTokens Kotlin package
-    access: DesignTokens.category.subcategory
-    example: DesignTokens.color.primary
+    access: DesignTokens.<Android identifier from the token index>
+    example: DesignTokens.space_inset_100
     
   accessibility:
     method: Compose semantics

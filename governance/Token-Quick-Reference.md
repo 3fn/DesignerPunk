@@ -221,12 +221,12 @@ Color tokens follow the **Nathan Curtis concept-first naming model**. Use this t
 
 ### Component Tokens
 
-Component tokens follow the pattern `color.{component}.{variant}.{property}`:
+Component tokens are keyed `<component>.<property>…`, with no family segment: `avatar.size.md`, `buttonicon.inset.medium`, `progress.node.gap.sm`. They are declared with `defineComponentTokens`, which takes numeric families only (spacing, sizing, borderWidth), so there is no `color.{component}…` component-token shape. A component's colors reference the semantic color tokens directly:
 
-| Component | Tokens | References |
-|-----------|--------|------------|
-| Avatar | `color.avatar.{human\|agent}.{background\|icon}` | Identity, Contrast concepts |
-| Badge | `color.badge.notification.{background\|text}` | Direct primitive references |
+| Component | Color tokens | References |
+|-----------|--------------|------------|
+| Avatar | `color.identity.human` / `color.identity.agent` (background), `color.contrast.onDark` (icon), `color.structure.border` (border) | Identity, Contrast, Structure concepts |
+| Badge-Count-Notification | `color.feedback.notification.background`, `color.feedback.notification.text` | Feedback concept |
 
 ---
 
@@ -238,20 +238,20 @@ These are frequently used token combinations for common UI scenarios. Doc refere
 - **Typography**: `token-family-typography` → label styles (`typography.labelSm`, `typography.labelMd`, `typography.labelLg`) or button styles (`typography.buttonSm|buttonMd|buttonLg`)
 - **Spacing**: `token-family-spacing` → inset patterns for padding (`space.inset.150`, `space.inset.200`)
 - **Color**: `token-family-color` → `color.action.primary`, `color.action.secondary`, `color.contrast.onAction`
-- **Radius**: `token-family-radius` → `radiusSmall` / `radiusNormal`
-- **Border**: `token-family-border` → `borderDefault` for outlined variants
+- **Radius**: `token-family-radius` → `radius.small` / `radius.normal`
+- **Border**: `token-family-border` → `border.default` for outlined variants
 
 ### Card Component
 - **Shadow**: `token-family-shadow` → `shadow.container` (resting), `shadow.hover`
-- **Radius**: `token-family-radius` → `radiusNormal` / `radiusLarge`
+- **Radius**: `token-family-radius` → `radius.normal` / `radius.large`
 - **Spacing**: `token-family-spacing` → inset patterns for padding, `space.related.*` / `space.separated.*` for stacking
-- **Border**: `token-family-border` → `borderDefault`
+- **Border**: `token-family-border` → `border.default`
 - **Color**: `token-family-color` → `color.structure.surface`, `color.structure.border`
 
 ### Form Input
 - **Typography**: `token-family-typography` → `typography.input` for input text, `typography.labelMd` / `typography.labelMdFloat` for labels
-- **Border**: `token-family-border` → `borderDefault` at rest, `borderEmphasis` for focus
-- **Radius**: `token-family-radius` → `radiusSmall` / `radiusNormal`
+- **Border**: `token-family-border` → `border.default` at rest, `border.emphasis` for focus
+- **Radius**: `token-family-radius` → `radius.small` / `radius.normal`
 - **Spacing**: `token-family-spacing` → inset for padding
 - **Color**: `token-family-color` → `color.feedback.error.text`, `color.feedback.success.text` for validation
 - **Accessibility**: `token-family-accessibility` → focus indicators, tap areas
@@ -262,15 +262,15 @@ These are frequently used token combinations for common UI scenarios. Doc refere
   - Error: `color.feedback.error.{text|background|border}`
   - Warning: `color.feedback.warning.{text|background|border}`
   - Info: `color.feedback.info.{text|background|border}`
-- **Radius**: `token-family-radius` → `radiusNormal`
+- **Radius**: `token-family-radius` → `radius.normal`
 - **Spacing**: `token-family-spacing` → inset patterns
 
 ### Avatar Component
 - **Color**: `token-family-color` → Identity and Contrast concepts:
-  - Human: `color.avatar.human.background`, `color.avatar.human.icon`
-  - Agent: `color.avatar.agent.background`, `color.avatar.agent.icon`
-  - Border: `color.avatar.default.border`
-- **Radius**: `token-family-radius` → `radiusCircle` (50% — circle from a square); `radiusFull` is the pill/capsule case
+  - Human: `color.identity.human` (background), `color.contrast.onDark` (icon)
+  - Agent: `color.identity.agent` (background), `color.contrast.onDark` (icon)
+  - Border: `color.structure.border`
+- **Radius**: `token-family-radius` → `radius.circle` (50% — circle from a square); `radius.full` is the pill/capsule case
 
 ### Progress Indicator (Pagination/Stepper)
 - **Color**: `token-family-color` → Progress concept tokens:
@@ -280,7 +280,7 @@ These are frequently used token combinations for common UI scenarios. Doc refere
   - Error: `color.progress.error.{background|text}`
 - **Sizing**: `token-family-sizing` → Progress component node dimensions:
   - Node sizes: `progress.node.size.{sm|md|lg}` (base), `progress.node.size.{sm|md|lg}.current` (emphasized, +4 over base)
-  - Connector: `progress.connector.thickness` (references `borderDefault`)
+  - Connector: `progress.connector.thickness` (references `borderWidth100`)
 - **Spacing**: `token-family-spacing` → `progress.node.gap.{sm|md|lg}`
 - **Accessibility**: `token-family-accessibility` → tap areas for interactive nodes
 
@@ -288,7 +288,7 @@ These are frequently used token combinations for common UI scenarios. Doc refere
 - **Shadow**: `token-family-shadow` → `shadow.modal`
 - **Layering**: `token-family-layering` → `zIndex.modal`, `elevation.modal`
 - **Opacity**: `token-family-opacity` → `opacity.heavy` for backdrop scrim
-- **Radius**: `token-family-radius` → `radiusNormal` / `radiusLarge`
+- **Radius**: `token-family-radius` → `radius.normal` / `radius.large`
 - **Motion**: `token-family-motion` → `motion.modalSlide` for enter/exit
 - **Color**: `token-family-color` → `color.structure.surface` for modal background, `color.scrim.standard` for the scrim
 

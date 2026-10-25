@@ -89,17 +89,17 @@ Semantic radius tokens provide contextual meaning for specific component pattern
 
 | Semantic Token | Primitive Reference | Value | Use Case |
 |----------------|---------------------|-------|----------|
-| `radiusNone` | radius000 | 0px | Sharp corners, angular design |
-| `radiusSubtle` | radius025 | 2px | Minimal softening, dense interfaces |
-| `radiusSmall` | radius050 | 4px | Compact elements, chips, small buttons |
-| `radiusNormal` | radius100 | 8px | Standard elements, buttons, cards, modals |
-| `radiusLarge` | radius200 | 16px | Prominent elements, feature cards, hero sections |
-| `radiusFull` | radiusMax | 9999px | Pills and capsules from rectangular elements |
-| `radiusCircle` | radiusHalf | 50% | True circles from square elements (Button-Icon, avatars, badges) |
+| `radius.none` | radius000 | 0px | Sharp corners, angular design |
+| `radius.subtle` | radius025 | 2px | Minimal softening, dense interfaces |
+| `radius.small` | radius050 | 4px | Compact elements, chips, small buttons |
+| `radius.normal` | radius100 | 8px | Standard elements, buttons, cards, modals |
+| `radius.large` | radius200 | 16px | Prominent elements, feature cards, hero sections |
+| `radius.full` | radiusMax | 9999px | Pills and capsules from rectangular elements |
+| `radius.circle` | radiusHalf | 50% | True circles from square elements (Button-Icon, avatars, badges) |
 
 ### Semantic Token Details
 
-#### radiusNone (Sharp Corners)
+#### radius.none (Sharp Corners)
 
 **References**: radius000 (0px)
 
@@ -114,7 +114,7 @@ Semantic radius tokens provide contextual meaning for specific component pattern
 
 **Rationale**: Explicit "none" token improves search/discoverability, communicates intent (sharp corners vs. forgetting to add radius), and provides consistent maintenance pattern.
 
-#### radiusSubtle (Minimal Softening)
+#### radius.subtle (Minimal Softening)
 
 **References**: radius025 (2px)
 
@@ -125,7 +125,7 @@ Semantic radius tokens provide contextual meaning for specific component pattern
 
 **Visual Style**: Barely perceptible rounding, subtle softening
 
-#### radiusSmall (Compact Elements)
+#### radius.small (Compact Elements)
 
 **References**: radius050 (4px)
 
@@ -137,7 +137,7 @@ Semantic radius tokens provide contextual meaning for specific component pattern
 
 **Visual Style**: Noticeable but compact rounding
 
-#### radiusNormal (Standard Elements)
+#### radius.normal (Standard Elements)
 
 **References**: radius100 (8px)
 
@@ -150,7 +150,7 @@ Semantic radius tokens provide contextual meaning for specific component pattern
 
 **Visual Style**: Standard, balanced rounding
 
-#### radiusLarge (Prominent Elements)
+#### radius.large (Prominent Elements)
 
 **References**: radius200 (16px)
 
@@ -162,7 +162,7 @@ Semantic radius tokens provide contextual meaning for specific component pattern
 
 **Visual Style**: Prominent, soft rounding
 
-#### radiusFull (Pills and Circles)
+#### radius.full (Pills and Circles)
 
 **References**: radiusMax (9999px)
 
@@ -348,15 +348,15 @@ Use semantic radius tokens for:
 **Example**:
 ```typescript
 // Component using semantic tokens
-<Card borderRadius="radiusNormal">  {/* 8px standard rounding */}
+<Card borderRadius="radius.normal">  {/* 8px standard rounding */}
   <Content />
 </Card>
 
-<Button borderRadius="radiusSmall">  {/* 4px compact rounding */}
+<Button borderRadius="radius.small">  {/* 4px compact rounding */}
   Submit
 </Button>
 
-<Avatar borderRadius="radiusFull">  {/* Perfect circle */}
+<Avatar borderRadius="radius.full">  {/* Perfect circle */}
   <Image />
 </Avatar>
 ```
@@ -383,32 +383,32 @@ export const chipTokens = {
 When applying border radius:
 
 1. **No rounding (sharp corners, angular design)?**
-   → Use `radiusNone`
+   → Use `radius.none`
    → Explicitly communicates intent for sharp corners
    → Better than 0 for search/discoverability and maintenance
 
 2. **Minimal softening (subtle rounding)?**
-   → Use `radiusSubtle`
+   → Use `radius.subtle`
    → Barely perceptible rounding for subtle softening
 
 3. **Compact elements (small buttons, chips, dense UI)?**
-   → Use `radiusSmall`
+   → Use `radius.small`
    → Noticeable but compact rounding
 
 4. **Standard elements (buttons, cards, containers, modals)?**
-   → Use `radiusNormal`
+   → Use `radius.normal`
    → Standard, balanced rounding for most UI elements
 
 5. **Prominent elements (large cards, hero sections)?**
-   → Use `radiusLarge`
+   → Use `radius.large`
    → Prominent, soft rounding for emphasized elements
 
 6. **Pills and circular elements (badges, avatars)?**
-   → Use `radiusFull`
+   → Use `radius.full`
    → Perfect circles or pill shapes
 
 7. **Component-specific needs?**
-   → Prioritize semantic tokens (radiusNone through radiusFull)
+   → Prioritize semantic tokens (radius.none through radius.full)
    → If semantic tokens don't meet requirements, use primitive tokens
    → If primitive tokens don't meet requirements, request component-specific token
 

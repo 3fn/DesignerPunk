@@ -99,7 +99,7 @@ flowchart LR
     subgraph Layers["Token definition layers"]
         direction TB
         L1["Layer 1: Primitive<br/>spacing, color, typography, motion, radius"]
-        L2["Layer 2: Semantic<br/>button.*, input.*, card.*, color.primary"]
+        L2["Layer 2: Semantic<br/>color.action.primary, space.inset.100, typography.bodyMd"]
         L3["Layer 3: Component<br/>defineComponentTokens() per component"]
         L1 --> L2 --> L3
     end
@@ -201,8 +201,8 @@ This diagram shows how Rosetta tokens flow into Stemma components, which then ge
 ```mermaid
 flowchart TB
     subgraph Rosetta["Rosetta System"]
-        PT["Primitive tokens<br/>space100, purple-300, fontSize200"]
-        ST["Semantic tokens<br/>color.primary, typography.bodyMd"]
+        PT["Primitive tokens<br/>space100, purple300, fontSize200"]
+        ST["Semantic tokens<br/>color.action.primary, typography.bodyMd"]
         CT["Component token files<br/>tokens.ts per component"]
         PT --> ST --> CT
     end
