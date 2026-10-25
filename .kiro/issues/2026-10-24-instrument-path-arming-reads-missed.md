@@ -1,7 +1,7 @@
 # The instrument-path ARMING read was missed at seven merges
 
 **Date**: 2026-10-24
-**Status**: ACTIVE — the eight owed reads are DISCHARGED (2026-10-25, § 5 below); the class option (§ 4) is still unpicked and keeps the record open. *(2026-10-25, Stacy, owner, rule 9. Was: "ACTIVE — owed. Seven reads are owed, and #459's read is owed at its merge.")*
+**Status**: RESOLVED, pending merge — the eight owed reads are done (§ 5), the record's own event is met, and the class option moved to `.kiro/issues/2026-10-25-arming-read-class-option-fork.md`. It closes at the merge of the 16.1.0 walk PR; Thurgood archives it under rule 5 at that merge or the next walk. *(2026-10-25, Stacy, owner, rule 9. Was: "ACTIVE — owed. Seven reads are owed, and #459's read is owed at its merge." An earlier 2026-10-25 edit of this line kept the record open for the class option; the split supersedes it.)*
 **Owner**: Stacy. The reads are hers: her charter's ARMING row, the instrument-path limb (ballot `.kiro/docs/ballots/2026-10-17-standing-write-scope-six-roots.md` § 3 item 4, applied to `canonical/agents/stacy.md` by #397, `096e11f99`, 2026-10-17).
 **Trigger**: `release:next:phase-1` — the next RELEASE phase-1 record reads whether each read owed below is appended here, or ruled not owed with a dated reason. RELEASE is this limb's named backstop over the release delta. All seven merges fall after 16.0.0, so they are in the next release's delta.
 **Class**: P2 obligation (guard) · owed-act *(set 2026-10-24, Stacy, rule 12. The limb is the only reader of a weakened checker that leaves the required-check set unchanged, as my charter says. Each missed read leaves that guard weaker than its claim. No finding is known to hide behind any of the seven; none was looked for. It is (guard), not (record).)*
@@ -41,6 +41,8 @@ Nothing fires this limb. Its sibling, the registry-path limb, has a standing rec
 
 ## 4. Class option (surfaced, not picked)
 
+*(2026-10-25, Stacy, owner, rule 9: MOVED to `.kiro/issues/2026-10-25-arming-read-class-option-fork.md`, which carries this section verbatim with its own Class and Trigger. The text stays here as the point-in-time record.)*
+
 Two options would give this limb a detector. Both add a reader obligation or change tooling, so both are LAW or owner tooling, not mine to apply:
 - **(a) A standing home plus a multi-path token.** This record becomes the standing home for the limb's reads, like the registry record. Rule 1's grammar, or `scripts/issues-owned.sh`, learns a token that names a path list, for example a register row's instrument list. *Cost*: a rule 1 edit (LAW) and a tooling change by its owner (Thurgood).
 - **(b) A LIVENESS query.** Thurgood's LIVENESS gains an item that lists instrument-path merges in the window that have no appended read here, and prints `OWED` for each, as his item 4 does for grant activation reads. *Cost*: one charter row in Thurgood's seat (LAW), and minutes per walk.
@@ -69,4 +71,4 @@ Two options would give this limb a detector. Both add a reader obligation or cha
 **Steward-verb tool files** (`mcp-server/src/tools/{validate-metadata,list-cross-references,rebuild-index}.ts`): touched by 0 of the 8, and by none since `096e11f99`.
 **Counting block, this record:** reads owed 8 · done 8 · findings 4 (Low) · FAIL 0 · self-reported by the PR body 3 of 8 · digests reproduced 3 (`079376c4…`, `0f5c5144…` twice).
 
-**Outcome line (rule 5, partial; Stacy, 2026-10-25):** the Trigger's condition — "whether each read owed below is appended here, or ruled not owed" — is met: 8 of 8 appended above, 0 FAIL, 4 Low findings routed to Thurgood. **The record does not close**: § 4's class option (a)/(b) has no pick (both are LAW or owner tooling, Peter's), so without it the limb still fires on nothing. It stays a P2 `(guard)` and rides the Trigger as written; if it is still open at 16.1.0's S it lapses (rule 11) and goes to Peter with spec / drop / fix-now, which is the fork it still owes.
+**Outcome line (rule 5; Stacy, 2026-10-25):** the Trigger's condition — "whether each read owed below is appended here, or ruled not owed" — is met: 8 of 8 reads are appended above, 0 FAIL, 4 Low findings routed to Thurgood. The class option (§ 4) was split out the same day to `.kiro/issues/2026-10-25-arming-read-class-option-fork.md` (rule 9: the fork moved by path; P2 `(guard)`, Trigger `release:next:phase-1`). **This record is closed by this line, effective at the merge of the walk PR that carries it**; it lapses at no firing event, because a dated outcome line on an ancestor of the event's commit closes it (rule 11).
