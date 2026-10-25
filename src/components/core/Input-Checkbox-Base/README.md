@@ -296,7 +296,8 @@ InputCheckboxBase(
 
 ### Web
 - Shadow DOM for style encapsulation
-- Hidden native `<input type="checkbox">` for form compatibility
+- Form-associated custom element: the host element takes part in its form through `ElementInternals` (see [Form Integration](#form-integration))
+- Visually hidden native `<input type="checkbox">` inside the shadow root for interaction and assistive technology
 - CSS logical properties for RTL support
 - `:focus-visible` for keyboard-only focus ring
 - Hover state with `blend.hoverDarker` border color
@@ -340,9 +341,25 @@ InputCheckboxBase(
 </script>
 ```
 
+On web, `<input-checkbox-base>` is a form-associated custom element: the host element reports its value to its form through `ElementInternals`, the same way a native `<input type="checkbox">` does. (The native input it draws lives in its shadow root, and a form cannot reach into a shadow root, so the host does the submitting.) It follows native checkbox rules:
+
+| State | What the form submits |
+|-------|-----------------------|
+| Checked | One entry: `name` = `value` |
+| Unchecked | Nothing (no entry) |
+| Indeterminate | Follows `checked`; indeterminate is visual only |
+| No `name` | Nothing, as for an unnamed native checkbox |
+| No `value` attribute | `value` is `"on"`; an explicit `value=""` submits `""` |
+
+It needs a browser with form-associated custom elements (current Chrome, Edge, Firefox and Safari 16.4+); in an older browser the checkbox still works and resets with its form, but its value is not submitted.
+
+**If you added a hidden input as a workaround** (in 16.0.0 and earlier, the checkbox's value did not reach `FormData`): remove it, or the value is submitted twice.
+
+**Setting `disabled` has no effect.** This component has no disabled state. Because the element is form-associated, a `disabled` attribute would otherwise drop its value from the submission while the box still responds, so the attribute is removed as soon as it is set.
+
 ### Form Reset
 
-When a form is reset, the checkbox returns to unchecked state. Pre-checked checkboxes are not supported per DesignerPunk philosophy.
+When a form is reset, the checkbox returns to unchecked state and indeterminate is cleared, even if it was authored with `checked`. Pre-checked checkboxes are not supported as reset defaults (Spec 046 Requirement 8.8).
 
 ---
 
