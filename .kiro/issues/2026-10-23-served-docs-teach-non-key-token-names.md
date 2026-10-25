@@ -71,3 +71,19 @@ Found in my Spec 131 R1 read (`.kiro/specs/131-governance-simplification/feedbac
 - **Lina**: accepted; her Badge-Count-Notification gap is closed by Stacy's L38–40 read.
 
 *Signed: Ada, 2026-10-24.*
+
+## Ada's part fixed (2026-10-25, Ada, co-owner, rule 9)
+
+Peter ruled the 16.1.0 floor batch in chat on 2026-10-25: "Fix all of them as the owners recommend; T is (A)." This is row 3, one CORRECTION PR before S across all owners' sites; I went first on branch `fix/release-16.1.0-served-docs-token-names` (from `652074c6b`), Lina and Thurgood append. Truth referent for every hunk below is `token-index/` (`primitives.yaml`, `semantics.yaml`, `components.yaml`), except the two path/import fixes in Token-Governance's "Creating Component Tokens" (L565/L580 of the earlier text), whose referent is the source tree (`src/components/core/<Name>/`, `src/tokens/component/progress.ts`, `src/build/tokens/index.ts`): `truth: src/…`.
+
+- `governance/Token-Family-Border.md` (`01736c303`): `borderNone|Default|Emphasis|Heavy` to `border.none|default|emphasis|heavy` in prose, headings, tables and the illustrative TypeScript/TSX blocks (41 lines). The Swift block (L330–333) is unchanged; the CSS and Kotlin blocks hold platform identifiers (`--border-default`, `border_default`) and are unchanged.
+- `governance/Token-Family-Radius.md` (`69a8c3fd9`): `radiusNone|Subtle|Small|Normal|Large|Full|Circle` to `radius.none|subtle|small|normal|large|full|circle` (23 lines). The Swift block (L284–289) is unchanged.
+- `governance/Token-Quick-Reference.md` (`15b2bb60c`): radius and border names; the "Component Tokens" section rewritten to the real `<component>.<property>` shape with Avatar's and Badge-Count-Notification's colors given as the semantic keys they reference (`color.identity.human|agent`, `color.contrast.onDark`, `color.structure.border`, `color.feedback.notification.*`); the Progress connector line says `borderWidth100`, the primitive `components.yaml` records. The `color.progress.*` lines were already keys and stay.
+- `governance/Token-Governance.md` (`78b35fc66`): the Component Token Pattern block, the Creating Component Tokens section (name shape, location, import, example), Usage Governance rule 3, Examples 1, 5 and 7, the second "Always `color`" row (now scoped to color tokens), and one dated pointer in "Creating Component Tokens" (no quoted old text). Two examples changed their situation, not only a name, so they stay true: Example 5 now needs 10px (`space.inset.075` is a key for 6px, so the old 6px premise was false) and Example 7 now uses `avatar.size.md`. The sentence "Prefer `reference` to semantic tokens" is replaced by what the API does (`reference` takes a primitive).
+- `governance/rosetta-system-principles.md` (`a667b01cf`): `radiusFull` to `radiusMax` (L338) as listed, and more than the record lists, the same class at the same readers: the family table, naming examples and composition trees named `color.primary`, `space.inset.normal`, `bodyMd`, `radius.button`, `border.input`, `elevation.card`, `shadowBlur200` and others that are not keys; each is now a key.
+
+Not touched, by the ruling: `.kiro/steering/core-goals.md` (Thurgood) and `canonical/agents/**` (errata (f); Lina writes her L501 text to scratch, Thurgood applies). The `token-governance` embed in my charter (`canonical/_consumer-output/cc/.claude/agents/ada.md` L271–274, `.claude/agents/ada.md` L273) now differs from its source; regeneration is Thurgood's at the end. `npm run check:122:canonical-vs-truth` reports 0 findings on this branch.
+
+**Surviving, stated plainly**: the check is a scan of backticked and family-prefixed names against the key set (this record's rule), not a grep that proves the five docs hold no wrong sentence; other families' docs were not swept. One name left in my docs is not an index key on purpose: `space.inset.125` in Token-Governance Example 5 is a proposed new token the example asks about.
+
+*Signed: Ada, 2026-10-25.*
