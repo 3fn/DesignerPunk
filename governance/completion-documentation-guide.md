@@ -192,7 +192,7 @@ A `<run URL>` is a GitHub Actions run (`https://github.com/<owner>/<repo>/action
    - `git diff --name-only <S>..<D>` lists only paths under `.kiro/specs/<spec>/completion/`, paths under `docs/specs/<spec>/`, and `.kiro/specs/<spec>/tasks.md`;
    - `git diff -U0 <S>..<D> -- .kiro/specs/<spec>/tasks.md` changes only checkbox marks (`- [ ]` ↔ `- [x]`).
 
-   The citation may be added in a docs-only commit after the runs finish. **This rule rests on a premise**: no required check reads those paths. That holds for today's 18 contexts (verified 2026-09-27). **It stops holding when `completion-criteria-parity` becomes a required check (the Q2 flip)**, because that check reads exactly those paths. Rule 5 is re-evaluated at that flip, before it lands.
+   The citation may be added in a docs-only commit after the runs finish. **This rule rests on a premise**: no required check reads those paths. That held for the 18 required contexts of 2026-09-27. **It stopped holding on 2026-10-03, when `completion-criteria-parity` became the 19th required check (the Q2 flip)**, because that check reads exactly those paths. Rule 5 is re-evaluated at that flip, before it lands. *(Dated note, 2026-10-24, Thurgood: the flip landed without that re-evaluation. It is carried in `.kiro/issues/2026-10-24-b-ci-post-flip-owed-acts.md` and in DRAFT ballot `2026-10-24-ballot-audit-fix-now-law` item 1. The count and tense above were corrected the same day (Spec 131 ballot audit § 4 item 3); prior text at `e4e61eea2`.)*
 6. **How a claims pass records a missing line, a non-compliant line, or a dispatch line written up as the gate is Stacy's.** See her charter § "The claims-pass record". The verdict vocabulary, and whether a case is a finding on the authoring agent, are hers; this guide does not restate them.
 
 **In force** for completion docs authored after B-CI's ratification. Two commits decide it, and **both are read on `main`'s first-parent history**:
@@ -529,7 +529,7 @@ docs/specs/[spec-name]/                   # Public-facing documentation
 
 ---
 
-*For detailed implementation notes, see [task-N-completion.md](../../.kiro/specs/[spec-name]/completion/task-N-completion.md)*
+*For detailed implementation notes, see [task-N-completion.md](../../../.kiro/specs/[spec-name]/completion/task-N-completion.md)*
 ```
 
 ---
@@ -543,14 +543,14 @@ Summary documents should include a link to the detailed completion document at t
 ```markdown
 ---
 
-*For detailed implementation notes, see [task-N-completion.md](../../.kiro/specs/[spec-name]/completion/task-N-completion.md)*
+*For detailed implementation notes, see [task-N-completion.md](../../../.kiro/specs/[spec-name]/completion/task-N-completion.md)*
 ```
 
 **Example** from `docs/specs/release-detection-trigger-fix/task-1-summary.md`:
 ```markdown
 ---
 
-*For detailed implementation notes, see [task-1-completion.md](../../.kiro/specs/release-detection-trigger-fix/completion/task-1-completion.md)*
+*For detailed implementation notes, see [task-1-completion.md](../../../.kiro/specs/release-detection-trigger-fix/completion/task-1-completion.md)*
 ```
 
 ### From Detailed Docs to Summary (Optional)
@@ -567,7 +567,7 @@ Detailed completion documents can optionally link to the summary document:
 
 | From | To | Path |
 |------|-----|------|
-| Summary → Detailed | `docs/specs/[spec]/` → `.kiro/specs/[spec]/completion/` | `../../.kiro/specs/[spec]/completion/task-N-completion.md` |
+| Summary → Detailed | `docs/specs/[spec]/` → `.kiro/specs/[spec]/completion/` | `../../../.kiro/specs/[spec]/completion/task-N-completion.md` |
 | Detailed → Summary | `.kiro/specs/[spec]/completion/` → `docs/specs/[spec]/` | `../../../../docs/specs/[spec]/task-N-summary.md` |
 
 ---

@@ -1362,4 +1362,4 @@ All platforms implement the same behavioral contracts:
 - [Stemma System Principles](stemma-system-principles) - Architecture overview
 - [Token Quick Reference](token-quick-reference) - Token documentation
 - [MCP Component Family Document Template](mcp-component-family-document-template) - Template specification
-- [Input-Text-Base Schema](../../src/components/core/Input-Text-Base/Input-Text-Base.schema.yaml) - Full schema definition
+- [Input-Text-Base Schema](../src/components/core/Input-Text-Base/Input-Text-Base.schema.yaml) - Full schema definition

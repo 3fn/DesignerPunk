@@ -652,9 +652,9 @@ get_section({ path: "token-governance", heading: "Token Creation Guides" })
 - [Rosetta System Architecture](rosetta-system-architecture) — Token pipeline architecture
 - [Rosetta System Principles](rosetta-system-principles) — Mathematical foundations
 - [Token Quick Reference](token-quick-reference) — Token documentation routing
-- [Token Category Pattern Guide](../specs/token-system/token-category-pattern-guide.md) — Detailed primitive/semantic creation patterns
+- [Token Category Pattern Guide](../.kiro/specs/token-system/token-category-pattern-guide.md) — Detailed primitive/semantic creation patterns
 - [Core Goals](../.kiro/steering/core-goals.md) — Project principles including token-first approach
-- [Design Authority](../specs/051-semantic-token-naming-restructure/design-outline.md) — Semantic token naming restructure design
+- [Design Authority](../.kiro/specs/051-semantic-token-naming-restructure/design-outline.md) — Semantic token naming restructure design
 
 ### DTCG Integration
 - [DTCG Integration Guide](dtcg-integration-guide) — Integrating DesignerPunk tokens with external design tools via DTCG format

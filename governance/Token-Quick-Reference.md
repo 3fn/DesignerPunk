@@ -392,7 +392,7 @@ What are you building?
 ## Related Documentation
 
 ### Token System
-- [Token System Overview](../../docs/token-system-overview.md) - Complete token system architecture
+- [Token System Overview](../docs/token-system-overview.md) - Complete token system architecture
 - [Rosetta System Architecture](rosetta-system-architecture) - Token pipeline architecture
 - [Token Governance](token-governance) - Token selection and creation governance
 

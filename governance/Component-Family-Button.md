@@ -651,7 +651,7 @@ All platforms implement the same behavioral contracts:
 - [Token-Family-Color](token-family-color) - Color token reference including action, feedback, and contrast concepts
 - [Token Governance](token-governance) - Token selection and usage governance
 - [MCP Component Family Document Template](mcp-component-family-document-template) - Template specification
-- [Button-CTA Schema](../../src/components/core/Button-CTA/Button-CTA.schema.yaml) - Full schema definition
-- [Button-VerticalList-Set README](../../src/components/core/Button-VerticalList-Set/README.md) - Set component documentation
-- [Button-VerticalList-Item README](../../src/components/core/Button-VerticalList-Item/README.md) - Item component documentation
+- [Button-CTA Schema](../src/components/core/Button-CTA/Button-CTA.schema.yaml) - Full schema definition
+- [Button-VerticalList-Set README](../src/components/core/Button-VerticalList-Set/README.md) - Set component documentation
+- [Button-VerticalList-Item README](../src/components/core/Button-VerticalList-Item/README.md) - Item component documentation
 - [Semantic Token Naming Design Authority](../.kiro/specs/051-semantic-token-naming-restructure/design-outline.md) - Naming model reference

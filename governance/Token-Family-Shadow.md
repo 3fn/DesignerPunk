@@ -769,9 +769,9 @@ Shadow values preferably align to the 4px baseline grid:
 ## Related Documentation
 
 - [Glow Token Documentation](token-family-glow) - Glow primitive tokens for emphasis effects
-- [Token System Overview](../../docs/token-system-overview.md) - Complete token system architecture
-- [Shadow and Glow Design Document](../../.kiro/specs/shadow-glow-token-system/design.md) - Detailed design decisions and rationale
-- [Shadow and Glow Requirements](../../.kiro/specs/shadow-glow-token-system/requirements.md) - System requirements and acceptance criteria
+- [Token System Overview](../docs/token-system-overview.md) - Complete token system architecture
+- [Shadow and Glow Design Document](../.kiro/specs/shadow-glow-token-system/design.md) - Detailed design decisions and rationale
+- [Shadow and Glow Requirements](../.kiro/specs/shadow-glow-token-system/requirements.md) - System requirements and acceptance criteria
 - [Component Development Guide](component-development-guide) - Token usage in component development
 - [Token Resolution Patterns](token-resolution-patterns) - Strategic guidance on token type selection and validation
 

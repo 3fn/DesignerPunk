@@ -612,7 +612,7 @@ gridMarginLg (40px) = space500 = 5 × space100
 
 ## Migration from Old Names
 
-If you're migrating from the old subjective naming convention, see the [Inset Token Renaming Migration Guide](../../.kiro/specs/011-inset-token-renaming/migration-guide.md) for complete mapping tables and migration instructions.
+If you're migrating from the old subjective naming convention, see the [Inset Token Renaming Migration Guide](../.kiro/specs/011-inset-token-renaming/migration-guide.md) for complete mapping tables and migration instructions.
 
 **Quick Reference**:
 - `tight` → `050` (token name) / `inset050` (prop value)
