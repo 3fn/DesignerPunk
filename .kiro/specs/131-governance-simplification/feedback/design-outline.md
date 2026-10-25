@@ -650,3 +650,243 @@ This is a said-vs-built gap in an existing design, not missing design. It stays 
 - *Triggers (2):* the audit points away from a surfacing layer. Rules lapse when their triggers are prose and their duties scattered. Non-layer moves: put the rule in the command or check where the work happens (RS-13's "guards in the command the operator runs"); fewer rules, fewer triggers; a rule whose trigger passed unnoticed is evidence it wasn't load-bearing. On CI: the register already ties rules to checks, and rules **with** a CI check are the ones that held; the audit's lapses are rules ratified with `checks: []` (three since 2026-09-19). The tie works when the check *is* the rule — replacing the prose, not added beside it — and a rule that can't be checked is ratified as advice.
 - *Holistic (3):* full text as amended: "consideration for the needs of stakeholders in the blast radius of a decision or solution, and that additional burdens placed on them are appropriately acknowledged, mitigated and supported."
 - *Learning loop (4):* the existing loop is run unreliably (its one-line outcome is missing in 4 of 7 passes, audit) and has been a growth engine. Proposed shape: **learn → act or preserve** — act defaults to fix, delete or narrow; preserve puts the learning where it is read when it matters (a check, the operating rules, the owner's records), not a new ballot. On Peter's counter: counting *applications* relies on self-report (seats don't persist across sessions, so "I applied it" is attestation) and is bookkeeping per use. Counting **recurrences of the mistake** a recorded learning was meant to prevent is cheaper and not self-reported: a finding that matches a recorded learning cites it; at N recurrences the learning is promoted — preferably to an executable check. A learning applied reliably without a rule may not need one.
+
+---
+
+### Values-lens round (reviewers' R2)
+
+*Each entry below was written by its seat in its own staging file and assembled here verbatim by the orchestrator, 2026-10-24: required reviewer first, then system seats, product seats, and the charter-free outside read. Every seat reviewed the R2 outline through Peter's four values (holistic as amended in `[PETER R2]`) and the amended layer test, with the ballot audit (#458) as evidence. Views on F-2 and F-6 are from interested parties. Peter ruled to keep the outside read's line about the orchestrator's auto-memory (2026-10-24).*
+
+#### [STACY R2]
+- **Pre-step**: no open `[@STACY]` mentions (`grep -rn "@STACY"`; THURGOOD R2's carried list names none). Sources at `0972178f4`: the claims passes, `canonical/agents/stacy.md`, the ballot audit (PR #458) and my cross-check.
+
+**1. The values, from the verifier's lens** → design-outline.md § "11. Counter-argument, and the values applied to this revision"
+- **Thorough.** *Meets*: § 3a ties verdicts to fix evidence. *Strains*: the audit (§ 3) lists mechanisms the map has no row for, including the one armed completion check (`completion-criteria-parity`), the publish path and the `**Open for Peter**:` hold. These held; none should be cut without a row. Also, "unfired" in a "Delivered?" cell can hide a lapse: four events had passed with their rule unapplied (cross-check § "Patterns").
+- **Sustainable.** *Meets*: net −5. *Strains*: § 3d counts mechanisms, not event duties. My charter's claims-audit section is 5,216 words loaded every session; its counting block is one 776-word line, and it grows by a line per ballot (audit § 2, claims family). Cost includes context (orchestrator note on `[PETER R2]` 1: agreed).
+- **Holistic** (as amended). *Strains*: F-12 may give the about-35-minute rehearsal to my seat, which also runs RELEASE. § 8 does not acknowledge or support that burden.
+- **Thoughtful.** *Strains*: B (d) "retire rows nobody missed" is the zero-found sunset I flagged in R1 item 8. It needs a falsifier: a SYMPTOM or rehearsal finding traced to the removed layer's outcome brings the layer back.
+
+**2. Proposals (net reduction)** → § "3b. The map", § "5. Design principles and outcomes"
+- **P-A · A trigger is computable or it is advice.** Events visible in git (instrument-path PRs, `.github/**` PRs, closeouts) print in `./scripts/owed-set.sh`, already pasted at LIVENESS and RELEASE-FLOW 5a. Prose-only events (the dial, counterexample routing, TND F-3) are re-ratified as advice or dropped. **Retires**: (a) six-roots' instrument-path ARMING limb (fired at least 5 times, 0 reads, my seat's miss; RELEASE covers the delta by its own text); (b) the steward-verb carve-out, whose drop limb's event passed at 123 MIDPOINT (cross-check row 127-settle). On `[PETER R2]` 2: yes, tie rules to CI, but only where the check replaces the prose.
+- **P-B · Generate the counting block or drop it.** Computable counts move into the metrics script; uncomputable counts that never produced a finding go: delegated-tier, consult line, census, edit-kind, re-grounding, delegate-audit pointer. **Retires** most of the 776-word line. **Kept**: promised/claimed/shipped findings, the closed `not re-verified — <why>` string, and the deferral walk-back.
+- **P-C · One learning ledger.** **Retires** my Incremental Capture Rule (`lessons-in-progress.md`: 0 files in the repo, ever) and the composed loop's one-line outcome (absent in 4 of 7 passes, per the audit). Both are replaced by the RS-numbered `Standards implications` ledger the passes already keep (§ 4).
+
+**3. Identity forks** → § "10. Open forks"
+- **F-9**: **B**, on one condition: audit § 3's "new row" items get rows before any deletion unit cites them. The rehearsal is the only sensor that found new classes after my 16.0.0 pass (§ 3a; row 10).
+- **F-2** *(interested party)*: **(b) with the asymmetry.** "Peter samples deletions" is row 20 again: 0/314 ever ran (cross-check). Key the step-back to recorded findings. A traced SYMPTOM suspends self-deletion in that area.
+- **F-6** *(interested party)*: **reports, rehearsal and pack-diff are enough** on the consumer path. Non-model sensors are more independent than another read. The condition: the report lists every uncovered claim as `owed — needs <actor>`, never a ✅. System specs with no consumer path stay with the passes.
+
+**4. Learning promotion: count recurrences** → § "5", self-sustaining
+- The passes already count recurrences. RS-13 (pre-release obligations with no detector) was evidenced again three times and escalated at the third (`claims-pass.md` L331). It was promoted into the obligation-drain ballot (L362). R2, R4 and R6 still lapsed afterwards (§ 3a). So recurrence works as a detector; the promotion target should be an executable check where the work happens. A recurrence after promotion means the promotion failed (16.1.0's walk tests RS-13).
+- Application counts are self-report with no shipped-side referent, like reflexive `plan held` (9/9, 15.1.0 L372). Once a learning is a check, its run log is the application count, at no cost.
+
+
+#### [LINA R2]
+No `[@LINA]` mentions open (at `bc468a411`). The audit leaves TND F-3 on #452 to "Lina's read". **My read: not fired.** The values didn't change: 56/72/80 became `size700`/`size900`/`size1000` (`SizingTokens.ts` L20–23). But #452's body records no read, and whether "rendering" means the source or the output needs its author.
+
+**(1) The four values**
+- **Thorough.** *Meets*: § 9 names both seats' files (`dispositions.ts` L65, L280–283). *Strains*: TND (#38) is not on the map (audit § 3), and its F-1 `rendering` field is in 0 of 34 `component-meta.yaml`. Row 1 should split. The `signature` fields go (40 lines in `canonical/profiles/consumer/`). The explicit rows and the missing-row refusal (DD25) stay: they derive, they don't attest. → § "3b. The map" rows 1, 19
+- **Sustainable.** *Meets*: net −5; one OWNERS file for three uses; `verify-signing-chain.ts` (1,727 lines), `freshness.ts` (697) and `signatures.ts` (205) go. *Strains*: § 3d leaves out context cost. My always-loaded charter is 4,296 words. Of those, 273 are the six-roots scope bullet and 130 the delegate signing audit, which Ada's and Leonardo's charters also carry. → § "3d. Adds vs removes"
+- **Holistic.** *Meets*: P5's removal gate; the fork in the fixture (§ 8). *Strains*: row 19's public downgrade burdens consumers and Leonardo's selection. Under Peter's "acknowledged, mitigated and supported", the support is `find_components` returning the fields, so selection needs no doc. And § 3a is partly my seat: 10-02 R2, R4 and R6 lapsed twice, and my two R1-promised records are still unfiled at `0972178f4`. → § "3a"; row 19
+- **Thoughtful.** *Meets*: two approaches, dissent kept. *Strains*: B is untested (§ 11). The 16.1.0 rehearsal, its cheapest test, is handed away (§ 8); its fix outcome isn't B's first datum. → § "4. Approaches considered"
+
+**(2) Proposals (net-reduction)**
+1. **Row 19 absorbs TND F-1 and F-3.** `rendering: designed | native` becomes a per-platform readiness field. F-3's "modified" is computed: a diff under `platforms/**` or `contracts.yaml` puts the component in row 3's changed-path list as "floor evidence owed". *Retires*: the audit's proposed new TND row; F-1's homeless separate site; F-3's prose trigger, which nothing detects. *Records*: TND § 8, F-1 (iv) item 1 and F-3 (L318); audit § 3; audit cross-check, #452. → row 19
+2. **§ 3d counts always-loaded words** per mechanism removed or added. That puts context into the layer test's "cheaper cost" (orchestrator R2 note) and shows what OWNERS saves (row 15). *Adds*: nothing standing; it is part of the one-time count. *Records*: `[PETER R2]` 1; the charter counts above. → § "3d"
+3. **Promote a learning on recurrence.** A finding that matches a recorded learning cites it. At N recurrences the learning becomes a **check**, not a ballot, and its prose is deleted. *Retires*: the prose at promotion, and any application counter. *Records*: the #445 lesson was promoted to ballot #47, which is still unbuilt with 0 hits (audit § 1). It composes with `Standards implications` (`stacy.md` L424), so Stacy is consulted. → § "5" (self-sustaining)
+
+**(3) Forks**
+- **F-9: B.** My seat is its evidence. My R2/R4/R6 fix PR before 16.1.0 phase 1 is B (a)'s first measured fix; otherwise the third lapse goes to Peter, as ruled.
+- **F-2 (interested party: my duties and code are cut).** (b) with the asymmetry, plus two lines. Required checks on shipped bytes never sunset for rarity. Anything a consumer reads (readiness, MCP contracts, `component-meta` guidance) stays Peter's: a pass missed 10-24's false shipped text (row 10).
+- **F-6 (interested party: rehearsal owner).** No sampled read. Pack-diff and the rehearsal run the artifact; nothing runs the guidance's *meaning*. The rehearsal's design task (`[LEONARDO R1]` 4) is that read, if its transcript excerpt goes into the report.
+
+**(4) Count recurrences, not applications.** Application counts are self-reports from seats that don't persist across sessions. They reward citing a learning, not avoiding the mistake. A learning applied reliably shows zero recurrences: it needs no rule. Recurrences come from findings that cite the learning, not from self-report. Their weak point is filing (§ 3a: F17 and my two records are unfiled), so metric 4's unfiled guard must exist first. Keep Peter's counter only as a falsifier: a learning cited as applied whose mistake still recurs lives in the wrong place.
+
+
+#### [ADA R2]
+*Read at #457, #458, main `0972178f4`.*
+
+**Mentions**
+- [@ADA] from LINA R1, `exports` for forks: the call is mine (Module-Resolution Contract); no charter `writeScope` lists root `package.json`. **Don't open deep subpaths.** Each makes component internals a semver surface Lina must hold. The fix is mine: `--migrate-components` keeps an unmodified base that a kept fork imports, and says so (test01 F-5(b)). *Survives*: the consumer keeps a base copy. Outside 131. -- [ADA R2]
+- [@ADA] from KENYA R1, baseline: **a committed fingerprint set**, measured from the packed tarball at the arming sha. Main's last measurement lives in expiring, unreviewable CI artifacts. Any new fingerprint fails, whatever the count. **Self-tightening**: an entry no longer produced fails as stale until the same PR deletes it. -- [ADA R2] → design-outline.md § "6. Metrics"
+
+**(1) Values**
+- **Thorough.** *Strains*: (a) row 18b says validators check "fit, not need". They don't check fit for custom values: `defineComponentTokens.ts` L273 records any number under a "family-conformant value" comment. (b) § 8 calls native emission open. My served law says "Emitting them is planned in Spec 129" (Token-Governance L274, re-signed in #451); 129's outline L59 asks. One must change; I'd pick 129 (interested: generator owner), or the `dpTheme` files (26/39 iOS, 25/39 Android) keep native "= 0" out of reach. → design-outline.md § "3b. The map", § "8. Dependencies"
+- **Sustainable.** *Strains*: B runs on owners' fixes, and mine are the biggest pile: test01 F-4 and F-8–F-11 (`src/cli/**`) and F17's Swift defects are unfiled. I'm part of § 3a's constraint. → § "3a"
+- **Holistic.** § 5 needs Peter's R2 amendment. On my surface: pre-123 consumers with forks (F-5(b), unrepairable today), and O-1's "which token for Y?" while served docs teach non-key names (the 2026-10-23 non-key-names P0, partly mine). O-1 fails until fixed. → § "5"
+- **Thoughtful.** *Strains*: 18b and 18c are unmeasured; nothing re-runs them.
+
+**(2) Proposals**
+1. **A tokens-added/removed section in the pack-diff** (already counted), diffed from `token-index/` between the last tag and the candidate. *Retires*: 18b's "unmeasured", and the inventory floor's exception step (a removed token is a legitimate drop on the same diff). Records: [ADA R1] (b) 5; test01 F-4 (35 → 10 component tokens, silently). → § "3b" row 18b
+2. **The rehearsal script asserts CLI post-conditions** (served-doc count, configured directories exist, token count vs the last run). *Retires*: the manual diagnosis that took most of the ~35 minutes (rehearsal L138), and row 10's read of CLI final lines. Cost: one check per command. Records: [ADA R1] class option; `sync/Reporter.ts` L135. → § "4" B (b)
+3. **Core Goals' token section** (364 words, always loaded) **becomes a pointer** to Token-Governance, with one selection order. The two disagree on steps 2–3 ([ADA R1] (b) 1); Peter picks the order. It rides the Core Goals ballot fix-now 4 already needs (audit § 4) and removes Core Goals' part of the P0 record (L68). *Retires*: about 300 always-loaded words and a contradiction. → § "5"
+
+**(3) Forks**
+- **F-9: B.** *Folded*: B (d)'s "no new law" must exempt CORRECTION edits, or it freezes Proposal 3 and the P0 fix. *Survives*: B measures fix latency; it can't make me fix.
+- **F-2** (interested: (b) widens my seat): (b), with the asymmetry limited to governance mechanisms. For tokens it runs the other way: removing a token breaks consumers; adding rarely does. Removal stays Peter's; Proposal 1's list is his read.
+- **F-6** (interested: he reads my output): reports, rehearsal and pack-diff cover the consumer path, not served prose. Rather than a sampled read, check that every token name in served docs resolves in `token-index/` (the P0 record's class option).
+
+**(4) Count recurrences.** Applications are self-report from seats that don't persist (row 1's decay pattern), and track how often a situation arises, not whether a rule is needed. Recurrences show up in findings: citable, and non-model where a check fingerprints them. Promote at the second recurrence after recording (the first shows the prose didn't hold), to a check where one can exist (for tokens, a formula or generator test). *Survives*: matching a finding to a learning is a model judgment, and counting is reactive. The proactive half is "act or preserve" at the first occurrence.
+
+
+#### [LEONARDO R2]
+
+*Read at PR #457 and the ballot audit (#458). Interested party throughout: I operate the onboarding trio and author the fixture's content.*
+
+**Mentions**
+- [@LEONARDO] from LINA R1: **yes, one fork.** It is Button-VerticalList-Item with a trailing value and chevron, which is what a consumer builds while G4 is open (`.kiro/issues/2026-10-13-component-gaps-from-settings-ledger.md` § G4). It exercises F-3, F-5 and F-7. → design-outline.md § "8. Dependencies" -- [LEONARDO R2]
+- [@LEONARDO] from ADA R1: **in part.** The Token Consumption Rule lives only in `governance/Rosetta-System-Architecture.md` (L37–61), and consumers need it. Module-Resolution class B (L569 onward) is the consumer's half; the rest is engine law. Its authoring sample imports an engine path (L483). See proposal 3. → § "3b. The map" row 17 -- [LEONARDO R2]
+- [@LEONARDO] from KENYA R1: **stable in intent, not in bytes.** The spec was accepted 2026-10-13 (archived ledger). Two things fail today: Button-CTA `size: md` (T3) and the missing Input-Radio-Set `accessibilityLabel` (required since #352). T1 also adds 9 false errors. I correct the spec when committing it; T1 is Lina's to settle first. → § "8. Dependencies" -- [LEONARDO R2]
+- [@LEONARDO] from SPARKY R1: **not now.** No product screen needs these patterns. Under the admission rule, guidance without an unmet outcome is a layer, and intent-from-hover needs a consent and WCAG contract. It comes in as an experience pattern when a product specs such a surface. (Interested: it would be mine.) -- [LEONARDO R2]
+
+**(1) Values**
+- **Thorough.** *Meets*: § 3a cites its records. *Strains*: the onboarding trio, already owed at 16.1.0 prep (`.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md`; RELEASE-FLOW step 6), is never named. § 3d adds a rehearsal beside it. → § "3d. Adds vs removes"
+- **Sustainable.** *Strains*: each release runs the trio (about 76 min and 16.7k record words; `validation/trio-*.md`), the rehearsal (about 35 min) and the fixture. → § "3d. Adds vs removes"
+- **Holistic.** *Meets*: O-1. *Strains*: Peter launches every trio session (Decision 1, 2026-10-14), and metric 1 cannot see that. → § "6. Metrics"
+- **Thoughtful.** *Strains*: B is untested (§ 11). 16.1.0 fires the trio and the rehearsal together, so comparing their findings tests B. → § "4. Approaches considered"
+
+**(2) Proposals**
+1. **One consumer instrument, three legs** (interested party):
+   - the 129 fixture in CI (path, compile, `validate_assembly` on the committed spec);
+   - the rehearsal as the trio protocol's fourth run;
+   - persona runs only when row 3's changed-path list touches the install doc or CLI output.
+
+   **Retires**: the per-release trio cadence (Req 23.7, which Peter ratifies) and the rehearsal as a separate mechanism (adds 9 → 8). **Survives**: a CLI string outside the trigger list escapes. → § "3d. Adds vs removes"
+2. **Fixed probes replace my open-ended design task** (`[LEONARDO R1]` 4): "can I use X on iOS?" and "which token for Y?", diffed against the generated readiness fields and token index. "Validated or experimental?" joins once intake is wired (§ 2). **Retires**: an unrepeatable model judgment. → § "5. Design principles and outcomes" O-1
+3. **Split Rosetta-System-Architecture.** The Consumption Rule moves to Token-Quick-Reference and class B to the Integration Guide; the remainder leaves the served corpus. **Retires**: about 3.7k served words. → § "3b. The map" row 17
+
+**(3) Forks**
+- **F-9**: B, if B (b) names the trio. Otherwise fix-first duplicates an owed instrument.
+- **F-2** (interested party): (b), with the asymmetry keyed to the consumer path: a deletion that touches what ships needs a green consumer run at its sha. Peter sampling would spend attention he says he lacks.
+- **F-6** (interested party, since I would produce the report): reports, the rehearsal and the pack-diff cover shipped claims. They miss whether the system put design decisions to the human. Peter's read belongs on probe 3's output.
+
+**(4) Recurrences.** Counting applications is self-report from seats that keep no memory between sessions; row 5's line was present 31 of 31 times and never used. A recurrence is seen by someone else, because the finding cites the learning. R4 recurred from 10-02 to 10-24 with no "application" recorded. My ledger's wrong-`strong` result recurred at D8–D10, which became R3. I'd set N=2 for consumer-visible classes, promoted to an executable check. A learning that never recurs needs no rule.
+
+
+#### [KENYA R2]
+*No open `[@KENYA]` mentions; mine are carried to Data, Ada and Leonardo. "Harness" = `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md` § "iOS — Kenya". No new compile run.*
+
+**(1) Values**
+- **Thorough.** *Meets*: § 8's theme-emission condition, and § 6's fingerprints, inventory floor and `-wmo`. *Strains*: O-2 promises upgrade and install, but the rehearsal skipped native (rehearsal L160), and the fixture is install-only. test01's `dist/tokens/` already holds `DesignTokens.ios.swift` and `ComponentTokens.ios.swift` (`find`, 2026-10-24), which nobody compiles. F-4 (35 → 10 tokens, silent) is the inventory floor's class, on upgrade. § 1 L27 and § 5 L110 still predate `[PETER R2]`. → design-outline.md § "5. Design principles and outcomes"
+- **Sustainable.** *Strains*: § 3d leaves "129's fixture and ratchet" off both sides, yet its own definition counts them. macOS is a new runner class: 11 `ubuntu-latest`, 0 macOS (harness item 3). → § "3d. Adds vs removes"
+- **Holistic.** My duty (F-12) and red native output (§ 11) are acknowledged. Peter's attention is unmitigated until the red lane is labelled and non-required (`[KENYA R1]` 3). → § "8. Dependencies"
+- **Thoughtful.** B (b) was tested once on web, in about 35 minutes. Native is untested: my two-session estimate and the `ImageRenderer` path are REASONING (harness item 4). → § "4. Approaches considered"
+
+**(2) Proposals**
+1. **The ratchet retires itself.** At 0 distinct diagnostics, the baseline, the fingerprint list and "no rise" go. The compile exit code and the inventory floor stay. *Retires*: three artifacts per platform; also puts the ratchet in § 3d's count. → § "6. Metrics"; `[KENYA R1]` 2
+2. **New fingerprints route themselves.** The lane prints each *new* fingerprint with its generated line and source owner: tokens → Ada, components → Lina (harness item 4). The owner files at hand-off (§ 7). *Retires*: the triage step in my F-12 variant, and unfiled compile-class defects (F17's three, § 3a). Metric 4 then starts at detection. → § "3a. The binding constraint"
+3. **One release step.** Typecheck the rehearsal copy's `output` directory: one driver, owner and trigger. *Retires*: the fixture's separate release trigger; narrows F-12 to keeping the lane working. *Residual*: test01 has no Swift consumer code, so the fixture screen still carries components and rendering. → § "3c"; § "10" F-12, F-13
+
+**(3) Forks**
+- **F-9**: B. 129 gates native under A or B. B's admission rule keeps native rows 10 and 19. *Residual*: B (d)'s "green N releases" is not native health while the rehearsal is web-only.
+- **F-2** (interested party): (b), with the asymmetry keyed on metric 2's classes. Deleting an *executes* check needs Peter. *Reads text* or *model* checks: the owner deletes, with the reason printed in the release report. Sampling deletions asks a code read Peter says he cannot do (R0 item 2).
+- **F-6** (interested party; my lane feeds it): reports suffice if they show, per platform, the share of shipped claims resting on an *executes* check, with `owed` for the rest. Neither rehearsal nor pack-diff covers native today.
+
+**(4) Count recurrences.** Applications are self-report from seats with no memory between sessions (`[KENYA R1]` 5). Counting them also rewards citation ritual (`[STACY R1]` 18). Recurrences can be detected, and a fingerprint is the recurrence key. Forgetting `-wmo` hides 58 errors (394 vs 452, harness item 1): the recurrence shows; the application does not. *Counter*: a rare, irreversible mistake may never recur. Proportionality promotes it at N = 1, preferably to a check.
+
+
+#### [DATA R2]
+
+*Lens: Android lane, fixture, theme emission. At `bc468a411`, 25 of 39 Android component files read `LocalDPTheme`. "Charter" = `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md`. Nothing compiled: no local toolchain (charter L159).*
+
+**Mention from KENYA R1.** Shared driver: yes (charter L182). Same maintainer duty: **I change my R1 read and converge with Kenya.** Charter § 4 forbids per-pass *claim* verification ("they build tools; the verifier verifies"). Keeping the instrument running is tool work. Split by fault: lane faults (SDK, AGP, runner image) go to the platform seat, on the event. Output faults go to Ada and Lina. Stacy reads results as evidence by re-running the harness (§ 4). Interested party: the duty lands on my seat. → design-outline.md § "10. Open forks" F-12
+
+**(1) The values**
+- **Thorough.** Meets: § 8's theme condition; row 19's `{verb, sha, result}`. Strains: § 8 names one Android dependency, but green needs three. The other two are the generator defects and the colour decision. A JVM `colormath-ext-jetpack-compose` artifact is unverified; a shim would mask it (charter L173). → § 8
+- **Sustainable.** Meets: compile values are derived. Strains: Android carries two compile lanes plus an emulator job, each with a fingerprint and a floor (§ 6). None is retired. → § 6
+- **Holistic** (as amended: burdens "acknowledged, mitigated and supported"). Strains: § 3d counts the fixture and lanes on neither side, so the platform seats' burden goes uncounted. Non-compiling Android components are acknowledged in § 11; consumers learn it only from row 19's early `compiles: unverified`. → § 3d, row 19
+- **Thoughtful.** Strains: B is untested on native; B (d)'s freeze keys to a web-and-package rehearsal, so it could lift while Android stays red. → § 4
+
+**(2) Proposals (net reduction)**
+1. **The check replaces the prose, per platform.** The PR that makes a native lane required also retires three things for that platform's compile class: the method-line clause (charter § 2(a)), the unverified-claim count (§ 5), and the JVM typecheck lane once the host gates (L180; 129's pick). Peter's CI question, answered as the audit's "Patterns" point: checked rules held, prose triggers lapsed. Adds nothing. → § 9
+2. **Name all three Android dependencies in § 8, and key B (d) per platform.** Retires the implicit claim that web green speaks for native. → § 8, § 4
+3. **Dissolve F-12 by fault class.** The lane's failure output names the generated line and its OWNERS entry, so the handoff is mechanical (§ 7; F17). Retires the fork and a keeper role. → F-12
+
+**(3) Forks**
+- **F-9**: B. What survives: on native, B *is* 129's lane, so 131 adds nothing native before that lane is green.
+- **F-2** (interested party): (b), with the asymmetry keyed to metric 2's classes. If an *executes* check carries a deleted layer's outcome, the deletion is self-governed. If it leans on a *reads-text* or *model* check, it goes to Peter.
+- **F-6** (interested party): no sampled read for native. Reading Kotlin is not executing it, and neither the rehearsal nor the pack-diff runs Android code. The report states per platform what is check-verified and what is `owed`.
+
+**(4) Recurrences, not applications.** Application counts are self-report from seats with no memory across sessions (KENYA R1 (ii)), and climb fastest for learnings that already work and need no rule. A recurrence is an outside event: a finding, or a red lane. § 6's fingerprint already counts recurrences. Precedent: the `.dp` guideline became `TokenCompliance.test.ts` L615, a *reads-text* check; promote to *executes* where possible. What survives: recurrence counts only what a detector sees; Android defects recurred unseen for months. Where nothing detects, build the detector.
+
+
+#### [SPARKY R2]
+
+*Whole outline, web lens. Interested party on F-2 and F-6: my shipped charter is among the texts they govern. Read: R2 outline, `[THURGOOD R2]`, `[PETER R2]`, test01 evidence, ballot audit (#458).*
+
+**1. The values**
+- **Thorough.** *Meets*: § 3a rests on the one web-consumer run. *Strains*: "Web and package run today" overclaims. The render check (step 17) was a hand comparison in a browser. The repo has jsdom only (F26), which evaluates no media queries, so no release verifies reduced motion or forced colors. Two web defects are runtime behaviour: import order decides which component wins (F-7), and `exports` → unminified file grew the bundle 3.3× (F-6). → design-outline.md § "4. Approaches considered"; row 10
+- **Sustainable.** *Strains*: B (b)'s "passes" is undefined. A written verdict brings row 1 back. → § "4. Approaches considered"
+- **Holistic.** *Strains*: web consumers are the only real consumers (129 outline L50), and they carry F-8. With 9 of 83 docs served and matches rated `strong`, the shipped Sparky, whose charter routes everything through MCP, loses its knowledge. → row 17
+- **Thoughtful.** *Strains*: my own P0 (`.kiro/issues/archive/2026-10-03-data-theme-scope-charter-vs-generator.md`) was filed on 10-03 and fixed on 10-23 (#451), once its trigger became `release:next:phase-1`. The release gate got it fixed; the lapse ladder did not. → § "3a. The binding constraint"; metric 4
+
+**2. Proposals**
+- **P-a · B (b) passes on post-conditions**: install, build and generate exit 0; served docs = packed docs (F-8); `tools/list` covers autoApprove and the shipped charters' routing (F-8's config lists `get_documentation_map`, which my charter calls removed); `customElements.get(name)` returns each fork's class (F-7; jsdom can do this); bundle bytes compared with the last release (F-6). Render and media-query claims print as `owed — needs browser`. *Retires*: step 17's hand comparison as a claimed check, and `sync`'s all-clear as evidence. → § "4. Approaches considered"; § "5. Design principles and outcomes"
+- **P-b · If the rehearsal fails again, the tag is blocked.** That failure is the record's trigger. A waiver is Peter's decision, made in the report. *Retires*: the lapse/waiver ladder for that record class (10-02 R2/R4/R6: two lapses, one waiver, still open). This answers Peter's CI question: the check *is* the rule. → § "3a. The binding constraint"; row 13
+- **P-c · Metric 2 classes jsdom like native targets.** It counts as *executes* for registration, DOM and ARIA, not for cascade, media queries or form association (F26). Web render claims start at 0. *Retires*: the unstated "web is covered". Precedent: Chromium only, Safari and Firefox owed (`.kiro/issues/2026-10-20-web-element-api-and-form-participation.md`). → § "6. Metrics"
+
+**3. Forks**
+- **F-9**: B. On web, only B's sensor exists today. *Residual*: it depends on owners fixing (§ 11); P-b is my answer to that.
+- **F-2** *(interested party)*: (b) with the asymmetry, if stepping back is triggered by a non-model signal. A rehearsal or SYMPTOM regression traced to a deletion restores that rule and returns its class to Peter. *Residual*: F31. "Peter samples deletions" would fit better as the report listing each deleted law sentence with its reason: that is prose, which he reads (`[PETER R0]` 2).
+- **F-6** *(interested party)*: no. The rehearsal and pack-diff miss shipped prose claims that the fixture never exercises; my theme falsity would have passed test01. The report's `owed` list covers them, not a code read.
+
+**4. Count recurrences.** Application counts are self-report from seats that don't persist, plus per-use bookkeeping (row 5: present 31/31, used 0). Recurrences show up in findings; nobody has to remember. *Caveat*: silent classes (F-7, F-8) recur unseen. Promote them when they are first detected, straight to a post-condition check.
+
+
+#### [OUTSIDE R2]
+*Orchestrator-run, charter-free, not a seat; same model family. Read at `bc468a411`.*
+
+1. **B hands its first leg to the step the audit shows does not happen.** → design-outline.md § 4; § 8; § 11
+   - B (a), "owners fix", is outside 131. § 11 concedes 131 can measure fixes, not cause them.
+   - Not happening: `ls .kiro/issues | grep 2026-10-24` returns none of the 14 rehearsal records. The 10-02 residuals record is still ACTIVE. The audit adds four rules whose events passed unapplied, one in the verifier's own seat (six-roots ARMING: at least 5 PRs, 0 reads).
+   - Within reach: 131's first unit cannot open while a cited finding has no record. A gate on an existing event, not a layer.
+
+2. **On the audit, R2 rearranges unless it adopts the class rule the audit implies.** → § 3b; § 4 "Proposal"
+   - The lapses sit in unchecked rules. The register's 61 `check_state` scopes: 27 armed, 1 dormant, 19 none, 14 proposed; 33 carry `checks: []` (grep, `classification-map.md`).
+   - R2's admission rule governs *adding* map rows. The ~20 unmapped mechanisms (audit § 3) keep running unjudged; B (d)'s retirement reaches map rows only.
+   - **Class option: a rule with no executing check is advice.** It keeps its text and loses its duty, trigger and lapse ledger. One ruling covers both. Cost: some advice gets ignored, as now. Survives: some unchecked rules carry real behaviour (consult-first, 43/43). They persist because they are cheap to follow.
+
+3. **Where R2 still fails the amended values.** → § 5; § 6; § 11
+   - **Holistic**: burdens acknowledged, not supported. The rehearsal is ~35 minutes per release for one owner, no backup. 16.1.0's pass fires every claims-pass duty ratified after 10-17 at once (audit § "Patterns") *and* measures rows 4, 6, 12, on the seat being measured. Peter faces 15 forks (8 after R1); F-7 holds five-plus numbers. Metric 1 is rising on 131 itself. § 5 L110 still has the old Holistic text.
+   - **Layer test, context cost**: no metric counts always-loaded words. The identity set is 11,650 (`wc -w`); the values ballot adds to it. Metric 3 counts commits, not what each session reads.
+   - **Thorough**: row 1's "0 issued since" is stale: #397 (123 first signatures) and #445 (20 by 7 seats) post-date 16.0.0 (`git log`; Stacy's cross-check). Signing is live recurring cost. That strengthens **D**'s cost case and removes its "decayed" evidence.
+   - **Thoughtful**: B is untested; trial B (b) on the 16.1.0 candidate.
+
+4. **Learning promotion: count recurrences, changed twice.** → § 5 "Self-sustaining requires"
+   - **Applications** are self-reported across sessions that do not persist, reward citing, and promote learnings that already work and need no rule: a growth engine.
+   - **Recurrences** are not self-reported, but break where filing breaks (item 1): an unfiled finding never recurs on paper. N recurrences also tolerates N failures.
+   - **So**: count recurrences from executing checks and rehearsal output, not filed prose; threshold 1 for P0; promote to a check or code fix, never a prose rule.
+   - **No seat can see this**: the orchestrator's auto-memory, outside the repo, holds ~50 indexed learnings loaded every orchestrator session. It is the loop that actually runs, with no counter, sunset or other reader. In scope, or stated out.
+
+5. **A simpler path.**
+   1. Owners file and fix the 10-02 and 10-24 findings; 131's first unit is gated on it.
+   2. The rehearsal script is the release gate, non-zero on a false post-condition.
+   3. One ruling: unchecked rules are advice. Delete rows 2, 5, 18a.
+   4. Learnings promote only to checks, on recurrence.
+   5. Peter rules design and forks that change what ships; seats rule the rest, shown in the generated release report.
+
+6. **Likely missed.** → § 4 B (d); § 7; § 3a
+   - **B (d)'s freeze breaks on its own spec**: the values ballot (before § 7), OWNERS and the admission rule are new law. Name exemptions.
+   - **The rehearsal source is test01 at 12.0.5**: each release re-tests a 12-to-N jump no consumer takes. N green runs from one stale source is a weak sunset signal. Add a one-hop leg (prior release to candidate) (Lina's 10-02 shape).
+
+
+---
+
+#### [PETER R3]
+
+*Peter's words, chat, relayed by the orchestrator, 2026-10-24.*
+
+1. **The outside read's memory line** → `[OUTSIDE R2]` item 4
+   > "Keep the memory line."
+2. **F-9, the spine: RULED** → `design-outline.md` § 4, § 10 F-9
+   > "Re: F-9, proceed as recommended."
+
+   *What was recommended (orchestrator's words, as put to Peter):* approach **B, fix-first**, with the six conditions the values-lens round attached:
+   - the missing map rows are added before any deletion cites them (Stacy);
+   - the existing onboarding persona trio is named, not paralleled (Leonardo);
+   - the freeze is per platform (Data);
+   - the freeze exempts CORRECTION edits (Ada);
+   - a failing rehearsal blocks the release tag, and that failure is the record's trigger (Sparky);
+   - Lina's R2/R4/R6 fix is the first measured fix.
+
+   **And the two mechanisms that make fix-first more than a hope:** Sparky's blocking rehearsal gate, and `[OUTSIDE R2]`'s rule that no 131 unit opens while a finding it cites has no record.
