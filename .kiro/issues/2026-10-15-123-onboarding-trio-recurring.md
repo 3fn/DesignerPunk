@@ -85,3 +85,9 @@ Appended after the grant row went active (Peter's merge of #469, `264c25661`) an
 **Trigger**: unchanged by this line. Still `release:next:phase-1` with the prose and the `merge:#<N>` re-token as ruled above.
 
 *Signed: Leonardo, 2026-10-25.*
+
+## Owner line (2026-10-25, Leonardo, rule 9): RULED — the Kiro conformance pair's repo is born fresh
+
+On Peter, 2026-10-25, in chat, relayed by the orchestrator: "Go with Leonardo's fresh-birth repo for the Kiro pair". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are committed in this record.* **Ruled**: the Kiro conformance pair's repo is born fresh by the launcher from the candidate (`fixtures/c-near-empty`, `init --target=kiro`, `generate`, one commit), not `fixtures/born-kiro` plus `sync`. Reason (mine, as instrument owner): `born-kiro` carries the release-4 renderings and a lock pinned to the old tarball, so a `sync` would be a second thing under test. Cost, accepted: the pair's repo has no prior product work, so Thurgood's task-4 judgment meets a thinner repo and the two harnesses' pairs are not like-for-like. Protocol § 15.3 states this as settled. **The S window is still open** (the line above stands unchanged).
+
+*Signed: Leonardo, 2026-10-25.*
