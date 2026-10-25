@@ -28,7 +28,7 @@ description: Guide for building components with appropriate token usage, True Na
 1. ✅ **Token Selection Decision Framework** (Step 1-4)
 2. ✅ **Semantic tokens**: Read `src/tokens/semantic/index.ts` for available tokens
 3. ✅ **Component Structure Pattern** (file organization)
-4. ✅ **True Native Architecture**: `preserved-knowledge/true-native-architecture-concepts.md`
+4. ✅ **True Native Architecture**: Cross-Platform vs Platform-Specific Decision Framework § "Overview" (Key Principle: implementation is always native, design is a choice) and this guide's § "Component Structure Pattern" (build-time platform separation, `platforms/` layout)
 5. ✅ **Contract System Reference**: `Contract-System-Reference.md` (taxonomy, naming, format for contracts.yaml)
 6. ✅ **Icon System Integration** (if component uses icons)
 7. ✅ **Validation Checklist** (before implementation)
@@ -47,7 +47,7 @@ description: Guide for building components with appropriate token usage, True Na
 **WHEN creating semantic tokens THEN read:**
 1. ✅ **Step 4: Propose Semantic Token Elevation**
 2. ✅ **Primitive tokens**: Read `src/tokens/*.ts` for primitive token foundation
-3. ✅ **Token architecture**: `preserved-knowledge/token-architecture-2-0-mathematics.md`
+3. ✅ **Token architecture**: Rosetta System Principles § "Mathematical Relationships" (spacing, typography, radius formulas) and § "Principle 2: Mathematical Foundation"; other families' formulas are in their Token-Family docs (Token Quick Reference § "Token Documentation Map")
 
 **WHEN implementing cross-platform components THEN read:**
 1. ✅ **Component Structure Pattern** (True Native Architecture)

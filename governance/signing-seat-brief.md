@@ -71,12 +71,12 @@ EOF
 
 The output is one line: `<40-hex sha> <subject>`. That line is what `--audit` link 4 reads to find the call that created the commit.
 
-This line is the conforming form (§ 4.3). Wiring it into the audit test as the conforming fixture is proposed by DRAFT ballot `.kiro/docs/ballots/2026-10-23-link4-candidate-first-sha-after-commit.md`, and owed at its application only if it is ratified.
+This line is the conforming form (§ 4.3). Wiring it into the audit test as the conforming fixture (P8) is owed by ballot `.kiro/docs/ballots/2026-10-23-link4-candidate-first-sha-after-commit.md`, RATIFIED (Peter, 2026-10-23), at its application. That application waits for its start condition, Spec 129's first unit merge (the ballot's § 5), and it rewrites this sentence when it lands. *(Corrected 2026-10-24: this sentence called the ballot DRAFT; prior text at `e4e61eea2`.)*
 
 ---
 
 ## Keeping this document true
 
 - **Edit site.** A ballot that amends a clause cited here reaches this document through the application's straggler sweep (`.kiro/docs/ballots/README.md` § "Conventions", edit discipline).
-- **Fixture.** Proposed by DRAFT ballot `.kiro/docs/ballots/2026-10-23-link4-candidate-first-sha-after-commit.md`; owed at its application only if it is ratified (§ "The commit line").
+- **Fixture.** Owed (P8) by ballot `.kiro/docs/ballots/2026-10-23-link4-candidate-first-sha-after-commit.md`, RATIFIED 2026-10-23, at its application after Spec 129's first unit merge (§ "The commit line"). *(Corrected 2026-10-24; prior text at `e4e61eea2`.)*
 - **Kind.** An edit here is Peter-merged (`governance/**`). It names its kind in the PR body (Task-Completion-Protocol § "Branch and PR Conventions").
