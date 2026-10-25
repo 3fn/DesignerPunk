@@ -4,7 +4,7 @@
 **Filed by**: Ada, found while fixing R1-7 (`.kiro/issues/2026-10-15-123-u5-instrument-findings.md`) and the schema token-name drift (`.kiro/issues/2026-06-25-component-schema-token-name-drift.md`) on branch `fix/schema-token-name-drift-and-consumer-index`
 **Owner**: Ada (`src/cli/**`: `generate`'s component-token harvest and `init`'s copy steps). Lina is consulted on the fix (the component-token files live in her component directories).
 **Class**: P0 false-claim · defect *(set 2026-10-23, Ada, rule 12, on the reading the drift record and R1-7 were classed under: in a born repo the Application MCP's `get_token_details` answers "not found" for a token DesignerPunk's shipped Avatar-Base reads, and `get_token_consumers` answers `[]` for it. That is an MCP response a package reader meets, and it is wrong. One reading Stacy may press: "not in your index" is true of the consumer's index, so the response is incomplete rather than false; I class it P0 because the tool is named for the question it answers wrongly. Only Peter downgrades.)*
-**Trigger**: `release:next:phase-1` — the release-5 walk reads it: fixed, waived in writing, or blocking.
+**Trigger**: `merge:#470` — the fixing PR, which closes this record (rule 11) by recording the outcome and archiving it. *(was: `release:next:phase-1` — the release-5 walk reads it: fixed, waived in writing, or blocking.)* *(Re-ruled 2026-10-25, Ada, rules 1 and 9: the vehicle PR now exists, so the Trigger names its number, per ballot 2026-10-22-trigger-names-the-event-not-the-vehicle.)*
 
 ---
 
