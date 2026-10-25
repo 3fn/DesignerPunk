@@ -120,22 +120,34 @@ tokens:
     - color.contrast.onAction
     - color.structure.canvas
     - color.icon.opticalBalance
+    - color.contrast.onDark
+    - color.print.default
   spacing:
     - space.inset.100
     - space.inset.150
     - space.inset.200
     - space.grouped.normal
+    - space.grouped.tight
+    - space.inset.300
+    - space.inset.400
   motion:
     - motion.buttonPress
   border:
     - border.default
     - radius100
     - radius150
+    - border.emphasis
+    - border.heavy
+    - borderWidth000
+    - borderWidth100
+    - radius200
   accessibility:
     - tapAreaRecommended
     - accessibility.focus.width
     - accessibility.focus.offset
     - accessibility.focus.color
+    - tapAreaComfortable
+    - tapAreaMinimum
   icon:
     - icon.size100
     - icon.size125
@@ -146,6 +158,10 @@ tokens:
     - size700
     - size900
     - size1000
+    - size500
+    - size600
+  shadow:
+    - shadow.hover
 
 # Supported platforms
 platforms:
@@ -210,18 +226,18 @@ size_variants:
 # Visual variant specifications
 visual_variants:
   primary:
-    background: color.primary
-    text: color.contrast.onPrimary
+    background: color.action.primary
+    text: color.contrast.onAction
     border: none
     emphasis: highest
   secondary:
-    background: color.background
-    text: color.primary
-    border: 1px color.primary
+    background: color.structure.canvas
+    text: color.action.primary
+    border: border.default color.action.primary
     emphasis: medium
   tertiary:
     background: transparent
-    text: color.primary
+    text: color.action.primary
     border: none
     emphasis: lowest
 

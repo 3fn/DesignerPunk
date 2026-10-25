@@ -41,8 +41,8 @@ description: |
   - Optional announceChanges prop (default: true)
   
   Fixed Colors (not configurable):
-  - Background: color.badge.background.notification (pink400 #CC2257)
-  - Text: color.badge.text.notification (white100 #FFFFFF)
+  - Background: color.feedback.notification.background (pink400 #CC2257)
+  - Text: color.feedback.notification.text (white100 #FFFFFF)
   - Contrast Ratio: 6.33:1 (exceeds WCAG AA 4.5:1)
 
 # Reusable behaviors this component implements
@@ -87,6 +87,29 @@ properties:
       - Badge is in a context where announcements are redundant
 
 # Behavioral contracts moved to contracts.yaml
+
+# Design tokens this component reads (own tokens only: platforms/** code)
+tokens:
+  color:
+    - color.feedback.notification.background
+    - color.feedback.notification.text
+  typography:
+    - fontSize050
+    - fontSize075
+    - fontSize100
+    - lineHeight050
+    - lineHeight075
+    - lineHeight100
+    - typography.labelMd
+    - typography.labelSm
+    - typography.labelXs
+  border:
+    - radius.full
+  spacing:
+    - space000
+    - space050
+    - space100
+
 # Accessibility compliance
 accessibility:
   wcag_level: AA

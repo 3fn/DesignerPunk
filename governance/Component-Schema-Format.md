@@ -297,10 +297,10 @@ tokens:
     - typography.labelSm
     - typography.labelMd
   color:
-    - color.input.background
-    - color.input.border
+    - color.structure.canvas
+    - color.structure.border
   spacing:
-    - space.input.padding
+    - space.inset.100
 ```
 
 ---

@@ -103,14 +103,13 @@ Modal-Base (Primitive) [PLANNED]
 | Category | Token Pattern | Purpose |
 |----------|---------------|---------|
 | Layering | `zIndex.modal`, `elevation.modal` | Modal stacking order |
-| Color | `color.backdrop` | Backdrop color |
-| Opacity | `opacity.backdrop` | Backdrop opacity |
-| Motion | `motion.modal.enter`, `motion.modal.exit` | Entry/exit animations |
+| Color | `color.scrim.standard` | Backdrop color |
+| Motion | `motion.modalSlide` | Entry/exit animation |
 | Shadow | `shadow.modal` | Modal elevation shadow |
 | Spacing | `space.inset.*` | Modal content padding |
 | Border | `radius.*` | Modal corner radius |
 
-> **Note**: Token patterns are planned and may change during implementation.
+> **Note**: Token patterns are planned and may change during implementation. Names are token-index keys where one exists; a row reading "None yet" marks a gap to settle with Ada (token creation is hers) when the family is specified.
 
 ---
 

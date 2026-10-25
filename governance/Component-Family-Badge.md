@@ -173,7 +173,7 @@ Inherits all contracts from Badge-Count-Base, plus:
 | md | typography.labelSm | space.inset.050 | space.inset.100 | icon.size075 | space.grouped.tight |
 | lg | typography.labelMd | space.inset.100 | space.inset.150 | icon.size100 | space.grouped.tight |
 
-**Shape**: radiusSubtle (2px)
+**Shape**: `radius.subtle` (2px)
 
 #### Usage Example
 
@@ -280,8 +280,8 @@ BadgeCountBase(count = 0, showZero = true)
 
 | Property | Token | Value |
 |----------|-------|-------|
-| Background | color.badge.background.notification | pink400 (#CC2257) |
-| Text | color.badge.text.notification | white100 (#FFFFFF) |
+| Background | color.feedback.notification.background | pink400 (#CC2257) |
+| Text | color.feedback.notification.text | white100 (#FFFFFF) |
 
 **Contrast Ratio**: 6.33:1 ✅ (exceeds WCAG AA 4.5:1)
 
@@ -324,14 +324,14 @@ Components in this family consume these design tokens:
 | Typography | typography.labelXs, typography.labelSm, typography.labelMd | Text sizing per badge size variant |
 | Spacing | space.inset.none, space.inset.050, space.inset.100, space.inset.150 | Padding per size variant |
 | Spacing | space.grouped.minimal, space.grouped.tight | Icon-to-label gap |
-| Radius | radiusSubtle | Badge-Label-Base border radius (2px) |
+| Radius | radius.subtle | Badge-Label-Base border radius (2px) |
 | Radius | radiusHalf | Badge-Count-Base border radius (circular/pill) |
 | Icon | icon.size050, icon.size075, icon.size100 | Icon sizing per badge size |
-| Color | color.surface | Default background |
+| Color | color.structure.surface | Default background |
 | Color | color.text.default | Default text color |
 | Color | color.icon.default | Default icon color |
-| Color | color.badge.background.notification | Notification badge background (pink400) |
-| Color | color.badge.text.notification | Notification badge text (white100) |
+| Color | color.feedback.notification.background | Notification badge background (pink400) |
+| Color | color.feedback.notification.text | Notification badge text (white100) |
 
 ### Component Tokens
 

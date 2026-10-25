@@ -6,7 +6,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
-import { TokenIndexer } from '../TokenIndexer';
+import { TokenIndexer, CONSUMERS_SCOPE } from '../TokenIndexer';
 
 const TEST_DIR = path.join(__dirname, 'fixtures', 'token-index');
 
@@ -105,6 +105,21 @@ describe('TokenIndexer', () => {
 
   it('getConsumers returns empty for token with no consumers', () => {
     expect(indexer.getConsumers('space100')).toHaveLength(0);
+  });
+
+  it('getConsumersResult carries the consumers and the scope they were derived under', () => {
+    const result = indexer.getConsumersResult('color.action.primary');
+    expect(Object.keys(result).sort()).toEqual(['consumers', 'scope', 'token']);
+    expect(result.token).toBe('color.action.primary');
+    expect(result.consumers).toEqual(indexer.getConsumers('color.action.primary'));
+    expect(result.scope).toBe(CONSUMERS_SCOPE);
+    expect(result.scope).toContain('this is not a scan of platform code');
+    expect(result.scope).toContain('web, iOS or Android');
+  });
+
+  it('getConsumersResult states the scope when the token has no consumers or is unknown', () => {
+    expect(indexer.getConsumersResult('space100')).toEqual({ token: 'space100', consumers: [], scope: CONSUMERS_SCOPE });
+    expect(indexer.getConsumersResult('no.such.token').scope).toBe(CONSUMERS_SCOPE);
   });
 
   it('handles missing directory gracefully', async () => {

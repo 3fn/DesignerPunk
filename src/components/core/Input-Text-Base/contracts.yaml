@@ -77,7 +77,7 @@ contracts:
     category: state
     description: Shows error message and styling
     behavior: |
-      When in error state, component displays red border (color.error),
+      When in error state, component displays red border (color.feedback.error.text),
       red label text, error icon in trailing position, and error message
       below helper text.
     wcag: "3.3.1 Error Identification"
@@ -169,7 +169,7 @@ contracts:
     description: Shows success styling
     behavior: |
       When in success state, component displays green border
-      (color.success.strong), green label text, and success icon
+      (color.feedback.success.text), green label text, and success icon
       in trailing position.
     wcag: "1.4.1 Use of Color"
     platforms: [web, ios, android]

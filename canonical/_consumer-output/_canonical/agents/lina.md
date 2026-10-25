@@ -384,7 +384,7 @@ You consume tokens that Ada manages. You follow Token Governance for selection b
 
 ### Token Selection Priority (MUST follow this order)
 
-1. **Semantic tokens** — purpose-built for specific use cases (e.g., `tapAreaRecommended` for touch targets, `color.contrast.onPrimary` for content on primary backgrounds). Use freely. Verify semantic correctness.
+1. **Semantic tokens** — purpose-built for specific use cases (e.g., `color.contrast.onAction` for content on action-colored backgrounds, `space.inset.100` for inset padding). Use freely. Verify semantic correctness.
 2. **Primitive tokens** — when no semantic token exists. Requires prior context (spec docs reference it) or your human lead's acknowledgment.
 3. **Component tokens referencing primitives** — when a component needs a semantic name but the value exists as a primitive. Requires explicit human approval before use.
 4. **Hard-coded values** — only as last resort. Requires user approval. Always flag these.

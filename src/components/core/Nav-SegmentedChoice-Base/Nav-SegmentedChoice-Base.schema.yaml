@@ -109,6 +109,10 @@ tokens:
     - space.inset.150
     - space.inset.200
     - space.grouped.none
+    - space050
+    - space100
+    - space150
+    - space200
   border:
     - border.default
     - radius.normal
@@ -136,6 +140,9 @@ tokens:
     - accessibility.focus.width
     - accessibility.focus.offset
     - accessibility.focus.color
+  icon:
+    - icon.size100
+    - icon.size125
 
 platforms:
   - web

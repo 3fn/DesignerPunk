@@ -42,7 +42,7 @@ contracts:
     description: Supports 11 size variants from typography scale
     behavior: |
       11 sizes calculated from fontSize × lineHeight for optical balance
-      with paired typography. Range: size050 (13px) to size700 (48px).
+      with paired typography. Range: size050 (renders 16px; accepted prop value 13) to size700 (48px).
       Standard size is size100 (24px).
     wcag: null
     platforms: [web, ios, android]

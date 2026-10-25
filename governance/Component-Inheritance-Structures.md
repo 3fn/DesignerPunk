@@ -99,7 +99,7 @@ Input-Text-Base (Primitive) │ ├── Input-Text-Email (Semantic) │ └─
 | Category | Tokens |
 |----------|--------|
 | Typography | `typography.labelMd`, `typography.labelMdFloat`, `typography.input`, `typography.caption` |
-| Color | `color.text.muted`, `color.text.default`, `color.primary`, `color.error`, `color.success.strong` |
+| Color | `color.text.muted`, `color.text.default`, `color.action.primary`, `color.feedback.error.text`, `color.feedback.success.text` |
 | Spacing | `space.inset.100`, `space.grouped.tight`, `space.grouped.minimal` |
 | Motion | `motion.floatLabel`, `motion.focusTransition` |
 | Accessibility | `tapAreaRecommended`, `accessibility.focus.*` |
@@ -160,9 +160,9 @@ No loading state yet — planned for 16.x.
 | Category | Tokens |
 |----------|--------|
 | Typography | `typography.buttonMd`, `typography.buttonSm`, `typography.buttonLg` |
-| Color | `color.primary`, `color.secondary`, `color.text.inverse`, `color.background` |
-| Spacing | `space.inset.*`, `space.inline.*` |
-| Border | `radius.*`, `borderDefault` |
+| Color | `color.action.primary`, `color.contrast.onAction`, `color.structure.canvas` |
+| Spacing | `space.inset.*`, `space.grouped.*` |
+| Border | `radius.*`, `border.default` |
 | Accessibility | `tapAreaRecommended`, `accessibility.focus.*` |
 
 ### MCP Documentation
@@ -214,10 +214,10 @@ Container-Base uses the `[Family]-Base` pattern because:
 
 | Category | Tokens |
 |----------|--------|
-| Color | `color.background`, `color.surface`, `color.border` |
-| Spacing | `space.inset.*`, `space.stack.*` |
-| Border | `radius.*`, `borderDefault` |
-| Shadow | `shadow.sm`, `shadow.md`, `shadow.lg` |
+| Color | `color.structure.canvas`, `color.structure.surface`, `color.structure.border` |
+| Spacing | `space.inset.*` |
+| Border | `radius.*`, `border.default` |
+| Shadow | `shadow.container`, `shadow.navigation`, `shadow.dropdown`, `shadow.modal`, `shadow.toast`, `shadow.tooltip` |
 
 ### MCP Documentation
 
@@ -266,7 +266,7 @@ Icon-Base uses the `[Family]-Base` pattern because:
 | Category | Tokens |
 |----------|--------|
 | Size | `icon.size100`, `icon.size200`, `icon.size300`, `icon.size400` |
-| Color | `color.icon.default`, `color.icon.muted`, `color.icon.inverse` |
+| Color | `color.icon.default`, `color.icon.opticalBalance` |
 
 ### MCP Documentation
 
@@ -316,11 +316,11 @@ Modal-Base (Primitive) [Placeholder] │ ├── Modal-Dialog (Semantic) [Plac
 
 | Category | Tokens |
 |----------|--------|
-| Color | `color.backdrop`, `color.surface`, `color.border` |
-| Spacing | `space.inset.*`, `space.stack.*` |
-| Shadow | `shadow.lg`, `shadow.xl` |
-| Motion | `motion.modalEntry`, `motion.modalExit` |
-| Z-Index | `zIndex.modal`, `zIndex.backdrop` |
+| Color | `color.scrim.standard`, `color.structure.surface`, `color.structure.border` |
+| Spacing | `space.inset.*` |
+| Shadow | `shadow.modal` |
+| Motion | `motion.modalSlide` |
+| Z-Index | `zIndex.modal` |
 
 ### MCP Documentation
 
@@ -369,10 +369,9 @@ Avatar-Base (Primitive) [Shipped] │ ├── Avatar-User (Semantic) [Planned]
 
 | Category | Tokens |
 |----------|--------|
-| Size | `avatar.sizeXs`, `avatar.sizeSm`, `avatar.sizeMd`, `avatar.sizeLg`, `avatar.sizeXl` |
-| Color | `color.avatar.background`, `color.avatar.text`, `color.presence.*` |
-| Border | `radius.full`, `radius.md` |
-| Typography | `typography.avatarInitials` |
+| Size | `avatar.size.xs`, `avatar.size.sm`, `avatar.size.md`, `avatar.size.lg`, `avatar.size.xl`, `avatar.size.xxl` |
+| Color | `color.identity.human`, `color.identity.agent`, `color.contrast.onDark`, `color.structure.border` |
+| Border | `border.default`, `border.emphasis` |
 
 ### MCP Documentation
 
@@ -426,10 +425,10 @@ Planned (not shipped): a Badge-Status semantic variant, removable Badge-Tag.
 
 | Category | Tokens |
 |----------|--------|
-| Typography | `typography.badgeSm`, `typography.badgeMd` |
-| Color | `color.badge.*`, `color.status.*` |
-| Spacing | `space.inset.50`, `space.inline.50` |
-| Border | `radius.full`, `radius.sm` |
+| Typography | `typography.labelXs`, `typography.labelSm`, `typography.labelMd` |
+| Color | `color.structure.surface`, `color.text.default`, `color.feedback.notification.*` |
+| Spacing | `space.inset.050`, `space.inset.100`, `space.grouped.tight` |
+| Border | `radius.subtle`, `radiusHalf` |
 
 ### MCP Documentation
 
@@ -479,9 +478,9 @@ Display-Base (Primitive) [Placeholder] │ ├── Display-Text (Semantic) [Pl
 
 | Category | Tokens |
 |----------|--------|
-| Typography | `typography.heading*`, `typography.body*`, `typography.caption` |
-| Color | `color.text.*`, `color.background.*` |
-| Spacing | `space.stack.*`, `space.inline.*` |
+| Typography | `typography.h1` through `typography.h6`, `typography.bodySm`, `typography.bodyMd`, `typography.bodyLg`, `typography.caption` |
+| Color | `color.text.default`, `color.text.muted`, `color.text.subtle`, `color.structure.canvas` |
+| Spacing | `space.grouped.*`, `space.related.*` |
 
 ### MCP Documentation
 
@@ -525,9 +524,9 @@ Divider-Base (Primitive) [Placeholder] │ ├── Divider-Horizontal (Semanti
 
 | Category | Tokens |
 |----------|--------|
-| Color | `color.border`, `color.divider` |
+| Color | `color.structure.border`, `color.structure.border.subtle` |
 | Spacing | `space.inset.*` |
-| Border | `borderDefault`, `borderThick` |
+| Border | `border.default`, `border.emphasis`, `border.heavy` |
 
 ### MCP Documentation
 
@@ -573,9 +572,7 @@ Loading-Base (Primitive) [Placeholder] │ ├── Loading-Spinner (Semantic) 
 
 | Category | Tokens |
 |----------|--------|
-| Color | `color.loading.primary`, `color.loading.track`, `color.skeleton` |
-| Size | `loading.sizeSm`, `loading.sizeMd`, `loading.sizeLg` |
-| Motion | `motion.spinner`, `motion.progress`, `motion.shimmer` |
+| All | None yet. The token index holds no Loading tokens; the names are a gap to settle with Ada when the family is specified. |
 
 ### MCP Documentation
 
@@ -633,10 +630,10 @@ Planned (not shipped): Nav-Breadcrumb, Nav-List.
 
 | Category | Tokens |
 |----------|--------|
-| Typography | `typography.navItem`, `typography.navItemActive` |
-| Color | `color.nav.default`, `color.nav.active`, `color.nav.hover` |
-| Spacing | `space.inline.*`, `space.stack.*` |
-| Border | `borderDefault`, `radius.*` |
+| Color | `color.structure.canvas`, `color.structure.border.subtle`, `color.action.navigation`, `color.icon.navigation.inactive` |
+| Spacing | `space.inset.*`, `space.grouped.*` |
+| Border | `border.default`, `radius.*` |
+| Accessibility | `tapAreaMinimum`, `accessibility.focus.*` |
 
 ### MCP Documentation
 
@@ -727,7 +724,7 @@ Node/bar/pagination/stepper components carry step-state and progress-value contr
 
 
 **Components**: Container-Base, Input-Text-Email, Input-Text-Password, Button-CTA
-**Token Dependencies**: `space.stack.*`, `space.inset.*`
+**Token Dependencies**: `space.grouped.*`, `space.inset.*`
 
 ### Feed Post Pattern
 
@@ -735,7 +732,7 @@ Node/bar/pagination/stepper components carry step-state and progress-value contr
 
 
 **Components**: Container-Base, Avatar-User, Display-Text, Button-CTA (icon variants)
-**Token Dependencies**: `space.inline.*`, `space.stack.*`, `radius.card.*`, `shadow.card.*`
+**Token Dependencies**: `space.grouped.*`, `space.related.*`, `radius.normal`, `shadow.container`
 
 ---
 

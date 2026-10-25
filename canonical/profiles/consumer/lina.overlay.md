@@ -45,10 +45,10 @@ When work touches both components and tokens (e.g., "this component needs a new 
 ### Step 1: Verify Component-Family Doc
 Before creating any files, check whether a Component-Family doc exists for this component's family (your routing section's family cues reach each one). If no family doc exists, draft one from the Component-MCP-Document-Template (docs MCP) and present it to your human lead for approval (ballot measure model) before proceeding.
 
-## @unit #token-selection-priority-must-follow-this-order @ sha256:2688d120f8996dd0b654091329b6dfa698b03cf183ef5dc00d8fcf9f203d0af0
+## @unit #token-selection-priority-must-follow-this-order @ sha256:ad6fd6a1c0b92f63dada5b5bd28888c99db2035f75072a975318a02683aee32a
 ### Token Selection Priority (MUST follow this order)
 
-1. **Semantic tokens** — purpose-built for specific use cases (e.g., `tapAreaRecommended` for touch targets, `color.contrast.onPrimary` for content on primary backgrounds). Use freely. Verify semantic correctness.
+1. **Semantic tokens** — purpose-built for specific use cases (e.g., `color.contrast.onAction` for content on action-colored backgrounds, `space.inset.100` for inset padding). Use freely. Verify semantic correctness.
 2. **Primitive tokens** — when no semantic token exists. Requires prior context (spec docs reference it) or your human lead's acknowledgment.
 3. **Component tokens referencing primitives** — when a component needs a semantic name but the value exists as a primitive. Requires explicit human approval before use.
 4. **Hard-coded values** — only as last resort. Requires user approval. Always flag these.

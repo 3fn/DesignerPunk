@@ -154,9 +154,16 @@ contracts:
       - Unchecked checkbox value excluded from form submission
       - Form reset restores initial checked state
     test_approach: |
-      - Place checkbox in form, check it, submit
-      - Verify value in form data
-      - Reset form and verify initial state restored
+      - jsdom (automated): with a spy in place of ElementInternals, assert the
+        value registered through setFormValue after each state transition
+        (connect, the user's click, programmatic checked and value changes,
+        indeterminate) and after formResetCallback and the fallback reset
+        listener (the authored state restored). jsdom builds no FormData
+        entry for a form-associated element, so no automated test submits
+        a form.
+      - Browser (manual, Chromium; demo page runbook): place the checkbox in
+        a form, check it, read new FormData(form) or submit, and verify the
+        entry; reset the form and verify the authored state returns.
     required: true
 
 excludes:

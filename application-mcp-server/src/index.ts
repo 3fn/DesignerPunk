@@ -17,11 +17,21 @@ import { ComponentQueryEngine } from './query/QueryEngine';
 import { AssemblyValidator } from './validation/AssemblyValidator';
 import { FileWatcher } from './watcher/FileWatcher';
 import { DesignPhilosophyIndexer } from './indexer/DesignPhilosophyIndexer';
+import { CONSUMERS_SCOPE } from './indexer/TokenIndexer';
 import { StalenessGate, isImmutableContext } from './staleness/StalenessGate';
 
 const SERVER_NAME = 'mcp-component-server';
 const SERVER_VERSION = '0.1.0';
-const DEFAULT_COMPONENTS_DIR = 'src/components/core';
+/**
+ * The PACKAGE component root, cwd-relative, for the dev fallback below (the root `dist` is not
+ * built, so this runs only in a DesignerPunk checkout, where cwd is the package root). There C3
+ * (`resolveComponentRoots`) gives `packageRoot/src/components/core`, plus the env value if one is
+ * set: the checkout is `package-mode`, so no `bornRoot/src/components` consumer root is added.
+ * Renamed from `DEFAULT_COMPONENTS_DIR` (2026-10-24 record, item 3): its value already matched C3
+ * for the only place it runs; `src/components` would index the checkout's `core/` as a legacy
+ * level and its `__tests__/` as a component, and degrade health.
+ */
+const DEFAULT_PACKAGE_COMPONENTS_DIR = 'src/components/core';
 const DEFAULT_TOKEN_INDEX_DIR = 'token-index';
 
 /** Explicit data paths for the Application MCP. All optional — defaults derive from package root. */
@@ -31,6 +41,14 @@ interface DataPaths {
    * C3, from `resolveComponentRoots`). A single string is the legacy single-root form.
    */
   componentsDir: string | string[];
+  /**
+   * Parallel to `componentsDir`: which source produced each root (`resolveComponentRoots`'s
+   * `sources` — `env` / `cwd` / `package`). A missing `env` root is a health warning
+   * (2026-10-24 record, item 1). Omitted → no root is treated as `env`.
+   */
+  componentRootSources?: string[];
+  /** The variable that named the `env` root (`COMPONENTS_DIR` or `COMPONENT_DIR`). */
+  componentsEnvVar?: string;
   /**
    * C3 `projectRoot = bornRoot` (unborn → the package root). Omitted → the indexer's legacy
    * derivation from the package root (single-root callers).
@@ -218,7 +236,7 @@ export const tools = [
   {
     name: 'get_token_consumers',
     annotations: { readOnlyHint: true },
-    description: 'Get all components that reference a token.',
+    description: `Get all components that reference a token. ${CONSUMERS_SCOPE}`,
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -288,6 +306,8 @@ export interface TestableServer {
   stopWatching(): void;
   /** The directories the staleness gate scans / the component roots the watcher watches. Spec 123 Task 1.4. */
   getWatchedDirs(): { stalenessDataDirs: string[]; watchedComponentRoots: string[] };
+  /** The boot log's post-index lines, as `start()` prints them (2026-10-24 record, item 2). */
+  logIndexSummary(): void;
 }
 
 /** Test-only server options (Spec 123 Task 1.4). */
@@ -315,6 +335,7 @@ export function createTestableServer(paths: DataPaths, options: TestableServerOp
     startWatching: () => server.startWatching(),
     stopWatching: () => server.stopWatching(),
     getWatchedDirs: () => server.getWatchedDirs(),
+    logIndexSummary: () => server.logIndexSummary(),
   };
 }
 
@@ -384,7 +405,11 @@ class ComponentMCPServer {
       this.paths.templatesDir,
       this.paths.guidanceDir,
       this.paths.tokenIndexDir,
-      { projectRoot: this.paths.projectRoot },
+      {
+        projectRoot: this.paths.projectRoot,
+        rootSources: this.paths.componentRootSources,
+        envVarName: this.paths.componentsEnvVar,
+      },
     );
   }
 
@@ -414,23 +439,7 @@ class ComponentMCPServer {
   async start(): Promise<void> {
     await this.fullIndex();
     this.fileWatcher.start();
-
-    // Token index status (loaded inside indexComponents if tokenIndexDir provided)
-    if (this.paths.tokenIndexDir) {
-      const th = this.indexer.getTokenIndexer().getHealth();
-      console.error(`[${SERVER_NAME}] Token index: ${th.primitives} primitives, ${th.semantics} semantics, ${th.componentTokens} component tokens`);
-    }
-
-    const health = this.indexer.getHealth();
-    console.error(`[${SERVER_NAME}] Indexed ${health.componentsIndexed} components (${health.warnings.length} warnings)`);
-    // Spec 123 Task 1.6: this line USED TO print a stale, wrong "(Spec 096 pending)"
-    // excuse whenever `tokenIndexDir` was undefined. It fires now for real
-    // birth-detection reasons (a partial refusal, an absent/empty index, an
-    // unreadable explicit TOKEN_INDEX_DIR) — the SPECIFIC catalog-string message for
-    // that reason is already printed earlier, in the `require.main` bootstrap block
-    // (before this server is even constructed). Printing a second, vaguer, wrong-spec
-    // message here would just contradict the accurate one — removed rather than
-    // reworded.
+    this.logIndexSummary();
 
     // Design philosophy
     if (this.paths.designLanguagePath) {
@@ -446,6 +455,31 @@ class ComponentMCPServer {
     await this.server.connect(transport);
     console.error(`[${SERVER_NAME}] Server running on stdio`);
     this.setupShutdownHandlers();
+  }
+
+  /** The boot log's post-index lines (stderr — never stdout, the JSON-RPC channel). */
+  logIndexSummary(): void {
+    // Token index status (loaded inside indexComponents if tokenIndexDir provided)
+    if (this.paths.tokenIndexDir) {
+      const th = this.indexer.getTokenIndexer().getHealth();
+      console.error(`[${SERVER_NAME}] Token index: ${th.primitives} primitives, ${th.semantics} semantics, ${th.componentTokens} component tokens`);
+    }
+
+    const health = this.indexer.getHealth();
+    console.error(`[${SERVER_NAME}] Indexed ${health.componentsIndexed} components (${health.warnings.length} warnings)`);
+    // A missing env component root: the same line health and the per-component answers carry
+    // (2026-10-24 record, item 2).
+    for (const w of this.indexer.getRootWarnings()) {
+      console.error(`[${SERVER_NAME}] WARNING: ${w}`);
+    }
+    // Spec 123 Task 1.6: this line USED TO print a stale, wrong "(Spec 096 pending)"
+    // excuse whenever `tokenIndexDir` was undefined. It fires now for real
+    // birth-detection reasons (a partial refusal, an absent/empty index, an
+    // unreadable explicit TOKEN_INDEX_DIR) — the SPECIFIC catalog-string message for
+    // that reason is already printed earlier, in the `require.main` bootstrap block
+    // (before this server is even constructed). Printing a second, vaguer, wrong-spec
+    // message here would just contradict the accurate one — removed rather than
+    // reworded.
   }
 
   /**
@@ -546,7 +580,7 @@ class ComponentMCPServer {
       case 'get_token_family':
         return this.indexer.getTokenIndexer().getFamily(params.family as string);
       case 'get_token_consumers':
-        return this.indexer.getTokenIndexer().getConsumers(params.name as string);
+        return this.indexer.getTokenIndexer().getConsumersResult(params.name as string);
       case 'get_design_philosophy':
         return this.philosophyIndexer.getPhilosophy() || { status: 'not_authored', message: 'Design philosophy has not been authored yet.' };
       case 'get_design_rules':
@@ -686,6 +720,16 @@ export function resolveTokenIndexUnavailableMessage(
   }
 }
 
+/**
+ * The env variable that names the consumer component root, as the bootstrap reads it
+ * (`COMPONENTS_DIR` first, then the legacy `COMPONENT_DIR`); undefined when neither is set.
+ */
+export function componentsEnvVarName(env: Record<string, string | undefined>): string | undefined {
+  if (env.COMPONENTS_DIR) return 'COMPONENTS_DIR';
+  if (env.COMPONENT_DIR) return 'COMPONENT_DIR';
+  return undefined;
+}
+
 // Start server — resolve data roots (Spec 121 F-C2), then boot.
 // Guard: skip auto-start when this module is imported (e.g. by the tool-boundary contract test).
 // The `require.main === module` check is the standard Node.js "am I the entry point?" idiom.
@@ -714,6 +758,7 @@ if (require.main === module) {
       dsRoot,
       packageRoot,
     });
+    const componentsEnvVar = componentsEnvVarName(process.env);
 
     // C3: projectRoot = bornRoot (any state with a resolved root); unborn → the package root, labelled.
     const projectRoot = dsRoot.root ?? packageRoot;
@@ -790,6 +835,8 @@ if (require.main === module) {
 
     dataPaths = {
       componentsDir: componentRoots.roots,
+      componentRootSources: componentRoots.sources,
+      componentsEnvVar,
       projectRoot,
       patternsDir: patterns.path,
       templatesDir: templates.path,
@@ -804,8 +851,13 @@ if (require.main === module) {
     console.error(
       `[${SERVER_NAME}] WARNING: shared data-root resolution unavailable (root dist not built?) — using legacy env/cwd-relative defaults`
     );
+    // C3's set, as `resolveComponentRoots` gives it in a package-mode checkout: the env value (if
+    // set) first, the package root last — the env value names the consumer root, never the only root.
+    const fallbackEnv = process.env.COMPONENTS_DIR || process.env.COMPONENT_DIR;
     dataPaths = {
-      componentsDir: process.env.COMPONENTS_DIR || DEFAULT_COMPONENTS_DIR,
+      componentsDir: fallbackEnv ? [fallbackEnv, DEFAULT_PACKAGE_COMPONENTS_DIR] : [DEFAULT_PACKAGE_COMPONENTS_DIR],
+      componentRootSources: fallbackEnv ? ['env', 'package'] : ['package'],
+      componentsEnvVar: componentsEnvVarName(process.env),
       patternsDir: process.env.PATTERNS_DIR,
       templatesDir: process.env.TEMPLATES_DIR,
       guidanceDir: process.env.GUIDANCE_DIR,

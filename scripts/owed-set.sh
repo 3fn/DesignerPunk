@@ -26,28 +26,49 @@
 # The adoption date is the first of: --adoption's date, the ballot's date, the day
 # designerpunk.manifest.json was first committed on the first-parent line (the C-4 rule). A file
 # that is missing or gives no date is skipped, and the count line names the source used. No date:
-# the unavailable line. The boundary is pinned to 00:00 on that day (CLOSEOUT pilot F-1: a bare
-# date means "now, on that day" to git and drops that day's earlier merges).
+# the unavailable line.
+#
+# "Dated on or after" the adoption date: a commit is post-adoption when its committer's recorded day
+# (%cs) OR its UTC day is on or after that date. The union over-lists by at most a few hours either
+# side of midnight, never under-lists: a wrong exclusion is the costly direction (Peter, 2026-10-25,
+# via the record below). There is no `git log --since`: the whole first-parent line is read and
+# filtered by date, so neither the 00:00 pin (CLOSEOUT pilot F-1) nor date-ordered history is
+# assumed. Where the union, not the recorded day, decided, the day prints as `<%cs> (UTC <day>)`.
 #
 # Ground: the commit at HEAD, read with git (never the working tree), printed as `ref <sha>`.
 # Run it on an up-to-date main; on a unit branch the branch's own commits count as first-parent.
 #
-# Output: one row per spec directory that a first-parent commit since the adoption day touched,
+# Output: one row per spec directory that a post-adoption first-parent commit touched,
 #   <class>\t<spec>\t<reason>
 # exactly one class per spec, decided in this order:
 #   closed      completion/claims-pass.md exists (a claims-pass-midpoint.md does NOT close)
 #   stub        no tasks.md (a charter-only spec, or a directory gone at the ref); reason names the files
 #   open        at least one unticked parent (`- [ ]` at column 0) in tasks.md; reason `N of M`;
 #               a checkbox is an assertion, not a merge fact, and the reason says so
-#   touch-only  no post-adoption first-parent commit changed tasks.md or completion/** — a
-#               feedback / inbound / post-closure touch; reason names the last touching commit
-#   candidate   everything else; reason keeps the unit class and the anchor:
+#   touch-only  the closing commit (below) predates adoption, and no task completion file was added
+#               after adoption; reason names the closing commit and the last touching commit
+#   candidate   the closing commit is post-adoption; anchor = the closing commit; reason keeps the
+#               unit class:
 #                 a  merge units declared in tasks.md (`## Declared Merge Units`, the legacy
 #                    `**Merge units (` bold prose, or a heading containing "merge unit")
 #                 b  no units declared, one post-adoption first-parent commit (that PR is the unit)
 #                 c  no units declared, more than one
-#               anchor = the last first-parent commit touching the spec (a proxy for the final
-#               unit's merge; where the two differ, the definition governs)
+#
+# The anchor: the CLOSING COMMIT of a spec with no unticked parent is the oldest commit in the newest
+# unbroken run of first-parent states of its tasks.md with no unticked parent (any column-0
+# `- [<not x>]` line ends the run; `open` above still counts `- [ ]` only). A later edit that moves no
+# checkbox is not a closing; a reopened spec closes at its re-tick. It is the final unit's merge
+# because a parent's tick lands with its unit (Task-Completion-Protocol), for every unit class: the
+# units block is read for the class label only. A closing commit that predates adoption makes the
+# spec touch-only whatever touched it later (an erratum, a ruling filed by another spec's PR).
+#   The belt: a spec that would be touch-only stays a candidate if a post-adoption first-parent
+#   commit ADDED a file matching completion/task-* (a task completion doc, an instruments block):
+#   evidence of task work after the tick. Anchor = the newest such commit.
+#   Closure undecidable: tasks.md has no checkbox parents, or a parent that is neither `[ ]` nor
+#   `[x]` (an in-progress `[-]`). The path rule applies, labeled `closure undecidable`: touch-only
+#   only if no post-adoption commit changed tasks.md or completion/**, otherwise a candidate anchored
+#   on the last first-parent touch. The fallback never excludes on a closing it could not find.
+#
 # Candidates print first, then closed, open, stub, touch-only; specs in name order within each.
 # The last line is the count:
 #   owed-set: <n> candidates; excluded: <c> closed, <o> open, <s> stub, <t> touch-only; classes
@@ -55,18 +76,17 @@
 # Identities a reader can check: rows = n + c + o + s + t, and x + y + z = n (the classes split
 # the candidates). A dropped class is an arithmetic error, never a healthy-looking short list.
 #
-# Residuals (Stacy's, carried): `open` and `touch-only` are heuristics over assertions and paths,
-# not merge facts — a wrong `open` hides a real owe, so each reason says what it assumed. Only
-# `- [ ]` counts as unticked; an in-progress `- [-]` parent leaves a spec a candidate (over-list,
-# never hide). Consumers without bash are unserved.
-#
-# Known limit (Stacy's claims view, 2026-10-22, on this repository's first run): the anchor is a path
-# proxy. A spec whose final unit merged before adoption, then touched after adoption by ANOTHER spec's
-# PR adding a file under its completion/ (a ruling doc), prints `candidate`, not `touch-only`: 122
-# (U11 merged 2026-07-11; anchor 7fa64c6d8 is #227's ruling doc). The row over-lists; it never hides
-# an owe. Pinned in scripts/__tests__/owed-set.test.ts ("known limit").
-# Also assumed: first-parent committer dates rise (true of squash and merge commits); git log --since
-# stops walking at older-dated commits, so a first-parent line with a back-dated commit can drop specs.
+# Residuals and known limits (Stacy's, carried and pinned in scripts/__tests__/owed-set.test.ts):
+#   - A checkbox is an assertion, not a merge fact. `open` hides a real owe if a box is left
+#     unticked; a spec ticked before adoption whose final work merged after it is hidden unless the
+#     belt fires. Each reason says what it read.
+#   - A closing commit that itself carries a pre-adoption committer date (a back-dated rebase, a
+#     clock error) is outside the set by the predicate's wording ("dated on or after") and, with no
+#     other post-adoption touch, prints no row: it counts under "specs without activity".
+#   - Consumers without bash are unserved.
+# Authority for the anchor: .kiro/issues/2026-10-25-owed-set-anchor-proxy-false-positives.md (fork
+# (A), Peter 2026-10-25; Stacy's fixtures). It retires the path proxy ("anchor = the last
+# first-parent commit touching the spec") that listed 122 and 023, closed specs, at 16.1.0.
 
 DEFAULT_SPECS_DIR=.kiro/specs
 DEFAULT_BALLOT=.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md
@@ -122,7 +142,7 @@ case "$SPECS_ABS" in
 esac
 
 cd "$TOP" 2>/dev/null || unavailable "cannot enter the repository root"
-G() { git -c core.quotePath=false "$@"; }
+G() { TZ=UTC0 git -c core.quotePath=false "$@"; } # TZ only moves %cd (the UTC day below)
 REF=$(G rev-parse -q --verify 'HEAD^{commit}' 2>/dev/null) || unavailable "no commit at HEAD"
 REFS=$(G rev-parse --short "$REF" 2>/dev/null) || unavailable "cannot abbreviate HEAD"
 
@@ -136,11 +156,17 @@ if [ -z "$DATE" ]; then
   else TRIED="${TRIED}designerpunk.manifest.json is not committed on the first-parent line"; fi
 fi
 [ -n "$DATE" ] || unavailable "no adoption date: ${TRIED%; }"
-SINCE="$DATE 00:00"
+# --- dates: every dated git log line is  <sha>\t<%cs>\t<UTC day>[\t<subject>] ---
+DF=--date=format-local:%Y-%m-%d
+is_post() { [ ! "$1" \< "$DATE" ] || [ ! "$2" \< "$DATE" ]; } # <%cs> <UTC day>
+post_lines() { awk -F'\t' -v d="$DATE" '$2 >= d || $3 >= d'; }
+day() { if [ "$1" \< "$DATE" ] && [ ! "$2" \< "$DATE" ]; then printf '%s (UTC %s)' "$1" "$2"; else printf '%s' "$1"; fi; }
+fp_log() { G log --first-parent "$DF" "$@" 2>/dev/null; } # first-parent, from REF unless given
 
-# --- every spec a first-parent commit since the adoption day touched ---
-NAMES=$(G log --first-parent --since="$SINCE" --name-only --pretty=format: "$REF" -- "$SD/" 2>/dev/null) \
+# --- every spec a post-adoption first-parent commit touched (the whole line, filtered by date) ---
+RAW=$(G log --first-parent "$DF" --name-only --format='@%cs%x09%cd' "$REF" -- "$SD/" 2>/dev/null) \
   || unavailable "git log over $SD failed"
+NAMES=$(printf '%s\n' "$RAW" | awk -F'\t' -v d="$DATE" '/^@/ { ok = (substr($1, 2) >= d || $2 >= d); next } ok && NF')
 SPECS=$(printf '%s\n' "$NAMES" | while IFS= read -r p; do
   case "$p" in ("$SD"/*/*) r=${p#"$SD"/}; printf '%s\n' "${r%%/*}" ;; esac
 done | LC_ALL=C sort -u)
@@ -156,6 +182,7 @@ EOF
 
 has() { G cat-file -e "$REF:$1" 2>/dev/null; }
 oneline() { head -1 | tr '\t' ' ' | cut -c1-"$1"; }
+last_touch() { fp_log -1 --format='%h %cs %s' "$REF" -- "$1/" | oneline 90; }
 
 N=0; CC=0; O=0; ST=0; T=0; XA=0; XB=0; XC=0
 R_CAND=""; R_CLOSED=""; R_OPEN=""; R_STUB=""; R_TOUCH=""
@@ -190,22 +217,59 @@ while IFS= read -r S; do
 "
     continue
   fi
-  work=$(G log --first-parent --since="$SINCE" --format=%h "$REF" -- "$D/tasks.md" "$D/completion/" 2>/dev/null | head -1)
-  if [ -z "$work" ]; then
-    last=$(G log --first-parent -1 --format='%h %cs %s' "$REF" -- "$D/" 2>/dev/null | oneline 90)
-    T=$((T + 1)); R_TOUCH="$R_TOUCH$(row touch-only "$S" "no post-adoption change to tasks.md or completion/; last touch $last")
-"
-    continue
+
+  # --- the closing commit: the oldest of the newest unbroken run of tasks.md states with no unticked parent ---
+  CS=""; CD=""; CU=""
+  if [ "$m" -gt 0 ]; then
+    HIST=$(fp_log --format='%h%x09%cs%x09%cd' "$REF" -- "$D/tasks.md") || unavailable "git log over $D/tasks.md failed"
+    while IFS="$(printf '\t')" read -r h cs ud; do
+      [ -n "$h" ] || break
+      state=$(G show "$h:$D/tasks.md" 2>/dev/null) || break
+      printf '%s\n' "$state" | grep -qE '^- \[[^xX]\]' && break
+      CS=$h; CD=$cs; CU=$ud
+    done <<EOF
+$HIST
+EOF
   fi
+
+  if [ -z "$CS" ]; then
+    # closure undecidable: the path rule, labeled; it never excludes on a closing it could not find
+    if [ "$m" -eq 0 ]; then undec="no checkbox parents in tasks.md"; else undec="a parent in tasks.md is marked neither [ ] nor [x]"; fi
+    work=$(fp_log --format='%h%x09%cs%x09%cd' "$REF" -- "$D/tasks.md" "$D/completion/" | post_lines | head -1)
+    if [ -z "$work" ]; then
+      T=$((T + 1)); R_TOUCH="$R_TOUCH$(row touch-only "$S" "no post-adoption change to tasks.md or completion/ (closure undecidable: $undec); last touch $(last_touch "$D")")
+"
+      continue
+    fi
+    IFS="$(printf '\t')" read -r ah acs aud <<EOF
+$(fp_log -1 --format='%h%x09%cs%x09%cd' "$REF" -- "$D/")
+EOF
+    note="last first-parent touch; closure undecidable: $undec"
+  elif is_post "$CD" "$CU"; then
+    ah=$CS; acs=$CD; aud=$CU
+    note="closing commit: last unticked parent ticked"
+  else
+    # the belt: a completion/task-* file ADDED after adoption keeps a pre-adoption closing a candidate
+    belt=$(fp_log --diff-filter=A --format='%h%x09%cs%x09%cd' "$REF" -- "$D/completion/task-*" | post_lines | head -1)
+    if [ -z "$belt" ]; then
+      T=$((T + 1)); R_TOUCH="$R_TOUCH$(row touch-only "$S" "closing commit $CS $(day "$CD" "$CU") predates adoption (last unticked parent ticked); last touch $(last_touch "$D")")
+"
+      continue
+    fi
+    IFS="$(printf '\t')" read -r ah acs aud <<EOF
+$belt
+EOF
+    note="a completion/task-* file added after the pre-adoption closing commit $CS $CD"
+  fi
+
   if printf '%s\n' "$tasks" | grep -qE '^## Declared Merge Units' \
     || printf '%s\n' "$tasks" | grep -qE '^\*\*Merge units \(' \
     || printf '%s\n' "$tasks" | grep -qiE '^#{2,4} .*merge unit'; then cls=a; XA=$((XA + 1))
   else
-    k=$(G log --first-parent --since="$SINCE" --format=%h "$REF" -- "$D/" 2>/dev/null | grep -c .)
+    k=$(fp_log --format='%h%x09%cs%x09%cd' "$REF" -- "$D/" | post_lines | grep -c .)
     if [ "$k" -le 1 ]; then cls=b; XB=$((XB + 1)); else cls=c; XC=$((XC + 1)); fi
   fi
-  anchor=$(G log --first-parent -1 --format='%h %cs' "$REF" -- "$D/" 2>/dev/null)
-  N=$((N + 1)); R_CAND="$R_CAND$(row candidate "$S" "unit class $cls; anchor $anchor (last first-parent touch)")
+  N=$((N + 1)); R_CAND="$R_CAND$(row candidate "$S" "unit class $cls; anchor $ah $(day "$acs" "$aud") ($note)")
 "
 done <<EOF
 $SPECS

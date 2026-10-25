@@ -175,9 +175,9 @@ All Button-CTA instances implement these 5 foundational contracts:
 
 | Size | Height | Touch Target | Min Width | Typography | Icon Size |
 |------|--------|--------------|-----------|------------|-----------|
-| small | 40px | 44px | 56px | labelMd | 24px |
-| medium | 48px | 48px | 72px | labelMd | 24px |
-| large | 56px | 56px | 80px | labelLg | 32px |
+| small | 40px | 44px | 56px | `typography.labelMd` | 24px |
+| medium | 48px | 48px | 72px | `typography.labelMd` | 24px |
+| large | 56px | 56px | 80px | `typography.labelLg` | 32px |
 
 #### Visual Variants
 
@@ -459,13 +459,12 @@ Button components rely on three semantic concepts:
 
 | Category | Token Pattern | Purpose |
 |----------|---------------|---------|
-| Typography | `typography.button.*` | Button text sizing |
+| Typography | `typography.buttonMd`, `typography.buttonLg` | Button text sizing |
 | Typography | `typography.labelMd`, `typography.labelLg` | Label typography |
-| Typography | `typography.body.sm` | Description text, error messages |
-| Color | `color.action.primary` | Primary button background |
+| Typography | `typography.bodySm` | Description text, error messages |
+| Color | `color.action.primary` | Primary button background; secondary/tertiary button text and secondary border |
 | Color | `color.action.secondary` | Secondary button text/border |
 | Color | `color.contrast.onDark` | Content (text/icons) on primary background |
-| Color | `color.text.primary` | Secondary/tertiary text |
 | Color | `color.text.muted` | Description text |
 | Color | `color.structure.canvas` | Secondary button background |
 | Color | `color.structure.border` | Secondary button border |
@@ -476,17 +475,15 @@ Button components rely on three semantic concepts:
 | Color | `color.feedback.error.text` | Error state border/text |
 | Color | `color.feedback.error.background` | Error state background |
 | Spacing | `space.inset.*` | Button padding |
-| Spacing | `space.inline.100` | Icon-label gap |
+| Spacing | `space.grouped.tight`, `space.grouped.normal` | Icon-label gap (small: 4px; medium and large: 8px) |
 | Spacing | `space.grouped.normal` | Gap between list items (8px) |
-| Motion | `motion.button.press` | Press animation timing |
-| Motion | `motion.button.hover` | Hover transition timing |
+| Motion | `motion.buttonPress` | Press and hover transition timing |
 | Motion | `motion.selectionTransition` | Selection animation (250ms) |
-| Border | `border.button.default` | Border width |
-| Border | `borderDefault` | 1px default border |
-| Border | `borderEmphasis` | 2px emphasis border |
-| Border | `radius.100`, `radius.150` | Border radius |
-| Border | `radiusNormal` | 8px border radius |
-| Accessibility | `accessibility.tapArea.recommended` | Touch target (48px) |
+| Border | `border.default` | 1px default border (border width) |
+| Border | `border.emphasis` | 2px emphasis border |
+| Border | `radius100`, `radius150` | Button-CTA border radius (primitives) |
+| Border | `radius.normal` | 8px border radius |
+| Accessibility | `tapAreaRecommended` | Touch target (48px; a primitive token) |
 | Accessibility | `accessibility.focus.*` | Focus ring styling |
 | Icon | `icon.size100`, `icon.size125` | Icon sizing |
 | Blend | `blend.hoverDarker` | Hover state (8% darker) |

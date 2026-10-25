@@ -787,7 +787,7 @@ state_error:
   description: Shows error message and styling
   behavior: |
     When in error state, component displays:
-    - Error color styling (color.error)
+    - Error color styling (color.feedback.error.text)
     - Error icon (if applicable)
     - Error message (if provided)
     Error state is communicated to assistive technology.
@@ -808,7 +808,7 @@ state_success:
   description: Shows success styling
   behavior: |
     When in success state, component displays:
-    - Success color styling (color.success.strong)
+    - Success color styling (color.feedback.success.text)
     - Success icon (if applicable)
     Success state provides positive feedback to user.
   wcag: "1.4.1 Use of Color"

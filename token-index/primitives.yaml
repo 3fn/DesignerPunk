@@ -7,7 +7,10 @@ tokens:
       web: '--space-000'
       ios: space000
       android: space_000
-    consumers: []
+    consumers:
+      - Badge-Count-Base
+      - Badge-Count-Notification
+      - Badge-Label-Base
   space025:
     family: spacing
     value: 2
@@ -16,7 +19,9 @@ tokens:
       web: '--space-025'
       ios: space025
       android: space_025
-    consumers: []
+    consumers:
+      - Badge-Label-Base
+      - Progress-Indicator-Label-Base
   space050:
     family: spacing
     value: 4
@@ -25,7 +30,15 @@ tokens:
       web: '--space-050'
       ios: space050
       android: space_050
-    consumers: []
+    consumers:
+      - Badge-Count-Base
+      - Badge-Count-Notification
+      - Badge-Label-Base
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
   space075:
     family: spacing
     value: 6
@@ -34,7 +47,10 @@ tokens:
       web: '--space-075'
       ios: space075
       android: space_075
-    consumers: []
+    consumers:
+      - Chip-Filter
+      - Chip-Input
+      - Nav-TabBar-Base
   space100:
     family: spacing
     value: 8
@@ -44,7 +60,14 @@ tokens:
       ios: space100
       android: space_100
     consumers:
+      - Badge-Count-Base
+      - Badge-Count-Notification
+      - Badge-Label-Base
       - Button-Icon
+      - Button-VerticalList-Set
+      - Nav-SegmentedChoice-Base
+      - Progress-Stepper-Base
+      - Progress-Stepper-Detailed
   space125:
     family: spacing
     value: 10
@@ -65,7 +88,16 @@ tokens:
       ios: space150
       android: space_150
     consumers:
+      - Badge-Label-Base
       - Button-Icon
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
+      - Progress-Indicator-Node-Base
+      - Progress-Stepper-Base
+      - Progress-Stepper-Detailed
   space200:
     family: spacing
     value: 16
@@ -74,7 +106,11 @@ tokens:
       web: '--space-200'
       ios: space200
       android: space_200
-    consumers: []
+    consumers:
+      - Button-VerticalList-Item
+      - Nav-SegmentedChoice-Base
+      - Nav-TabBar-Base
+      - Progress-Indicator-Node-Base
   space250:
     family: spacing
     value: 20
@@ -83,7 +119,8 @@ tokens:
       web: '--space-250'
       ios: space250
       android: space_250
-    consumers: []
+    consumers:
+      - Progress-Indicator-Node-Base
   space300:
     family: spacing
     value: 24
@@ -94,6 +131,7 @@ tokens:
       android: space_300
     consumers:
       - Avatar-Base
+      - Progress-Indicator-Node-Base
   space400:
     family: spacing
     value: 32
@@ -124,6 +162,7 @@ tokens:
       android: space_600
     consumers:
       - Avatar-Base
+      - Nav-TabBar-Base
   space700:
     family: spacing
     value: 56
@@ -132,7 +171,8 @@ tokens:
       web: '--space-700'
       ios: space700
       android: space_700
-    consumers: []
+    consumers:
+      - Nav-TabBar-Base
   space800:
     family: spacing
     value: 64
@@ -151,7 +191,13 @@ tokens:
       ios: fontSize050
       android: font_size_050
     consumers:
+      - Badge-Count-Base
+      - Badge-Count-Notification
+      - Badge-Label-Base
+      - Input-Checkbox-Base
       - Input-Checkbox-Legal
+      - Input-Radio-Base
+      - Input-Radio-Set
   fontSize075:
     family: fontSize
     value: 0.875
@@ -160,7 +206,16 @@ tokens:
       web: '--font-size-075'
       ios: fontSize075
       android: font_size_075
-    consumers: []
+    consumers:
+      - Badge-Count-Base
+      - Badge-Count-Notification
+      - Badge-Label-Base
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
+      - Input-Checkbox-Base
+      - Input-Radio-Base
+      - Progress-Indicator-Label-Base
   fontSize100:
     family: fontSize
     value: 1
@@ -170,6 +225,11 @@ tokens:
       ios: fontSize100
       android: font_size_100
     consumers:
+      - Badge-Count-Base
+      - Badge-Count-Notification
+      - Badge-Label-Base
+      - Input-Checkbox-Base
+      - Input-Radio-Base
       - Nav-SegmentedChoice-Base
   fontSize125:
     family: fontSize
@@ -180,6 +240,8 @@ tokens:
       ios: fontSize125
       android: font_size_125
     consumers:
+      - Input-Checkbox-Base
+      - Input-Radio-Base
       - Nav-SegmentedChoice-Base
   fontSize150:
     family: fontSize
@@ -370,7 +432,10 @@ tokens:
       web: '--line-height-050'
       ios: lineHeight050
       android: line_height_050
-    consumers: []
+    consumers:
+      - Badge-Count-Base
+      - Badge-Count-Notification
+      - Badge-Label-Base
   lineHeight075:
     family: lineHeight
     value: 1.429
@@ -379,7 +444,13 @@ tokens:
       web: '--line-height-075'
       ios: lineHeight075
       android: line_height_075
-    consumers: []
+    consumers:
+      - Badge-Count-Base
+      - Badge-Count-Notification
+      - Badge-Label-Base
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
   lineHeight100:
     family: lineHeight
     value: 1.5
@@ -389,6 +460,9 @@ tokens:
       ios: lineHeight100
       android: line_height_100
     consumers:
+      - Badge-Count-Base
+      - Badge-Count-Notification
+      - Badge-Label-Base
       - Nav-SegmentedChoice-Base
   lineHeight125:
     family: lineHeight
@@ -525,7 +599,8 @@ tokens:
       web: '--radius-025'
       ios: radius025
       android: radius_025
-    consumers: []
+    consumers:
+      - Badge-Label-Base
   radius050:
     family: radius
     value: 4
@@ -589,6 +664,7 @@ tokens:
       ios: radius200
       android: radius_200
     consumers:
+      - Button-CTA
       - Container-Base
       - Container-Card-Base
   radius250:
@@ -635,7 +711,8 @@ tokens:
       web: '--radius-half'
       ios: radiusHalf
       android: radius_half
-    consumers: []
+    consumers:
+      - Avatar-Base
   densityCompact:
     family: density
     value: 0.75
@@ -681,8 +758,10 @@ tokens:
       ios: tapAreaMinimum
       android: tap_area_minimum
     consumers:
+      - Button-CTA
       - Input-Checkbox-Base
       - Input-Radio-Base
+      - Input-Text-Password
       - Nav-Header-Base
       - Nav-SegmentedChoice-Base
       - Nav-TabBar-Base
@@ -717,7 +796,10 @@ tokens:
       web: '--tap-area-comfortable'
       ios: tapAreaComfortable
       android: tap_area_comfortable
-    consumers: []
+    consumers:
+      - Button-CTA
+      - Input-Text-Base
+      - Input-Text-Password
   tapAreaGenerous:
     family: tapArea
     value: 64
@@ -2245,7 +2327,8 @@ tokens:
       web: '--border-width-000'
       ios: borderWidth000
       android: border_width_000
-    consumers: []
+    consumers:
+      - Button-CTA
   borderWidth100:
     family: borderWidth
     value: 1
@@ -2255,7 +2338,14 @@ tokens:
       ios: borderWidth100
       android: border_width_100
     consumers:
+      - Avatar-Base
+      - Button-CTA
+      - Button-Icon
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
       - Nav-Header-Base
+      - Progress-Indicator-Connector-Base
   borderWidth200:
     family: borderWidth
     value: 2
@@ -2264,7 +2354,8 @@ tokens:
       web: '--border-width-200'
       ios: borderWidth200
       android: border_width_200
-    consumers: []
+    consumers:
+      - Avatar-Base
   borderWidth400:
     family: borderWidth
     value: 4
@@ -2708,6 +2799,9 @@ tokens:
       ios: Duration.duration150
       android: Duration.Duration150
     consumers:
+      - Chip-Base
+      - Chip-Filter
+      - Chip-Input
       - Nav-Header-Page
       - Nav-SegmentedChoice-Base
       - Nav-TabBar-Base
@@ -2720,7 +2814,9 @@ tokens:
       web: '--duration-250'
       ios: Duration.duration250
       android: Duration.Duration250
-    consumers: []
+    consumers:
+      - Input-Checkbox-Base
+      - Input-Radio-Base
   duration350:
     family: duration
     value: 350
@@ -2743,6 +2839,9 @@ tokens:
       ios: Easing.easingStandard
       android: Easing.EasingStandard
     consumers:
+      - Button-VerticalList-Item
+      - Input-Checkbox-Base
+      - Input-Radio-Base
       - Nav-Header-Page
       - Nav-SegmentedChoice-Base
       - Progress-Bar-Base
@@ -2931,6 +3030,7 @@ tokens:
       ios: size050
       android: size_050
     consumers:
+      - Nav-TabBar-Base
       - Progress-Bar-Base
   size100:
     family: sizing
@@ -2978,7 +3078,8 @@ tokens:
       web: '--size-300'
       ios: size300
       android: size_300
-    consumers: []
+    consumers:
+      - Avatar-Base
   size400:
     family: sizing
     value: 32
@@ -2987,7 +3088,8 @@ tokens:
       web: '--size-400'
       ios: size400
       android: size_400
-    consumers: []
+    consumers:
+      - Avatar-Base
   size500:
     family: sizing
     value: 40
@@ -2996,7 +3098,9 @@ tokens:
       web: '--size-500'
       ios: size500
       android: size_500
-    consumers: []
+    consumers:
+      - Avatar-Base
+      - Button-CTA
   size600:
     family: sizing
     value: 48
@@ -3005,7 +3109,9 @@ tokens:
       web: '--size-600'
       ios: size600
       android: size_600
-    consumers: []
+    consumers:
+      - Avatar-Base
+      - Button-CTA
   size700:
     family: sizing
     value: 56
@@ -3044,6 +3150,7 @@ tokens:
       ios: size1000
       android: size_1000
     consumers:
+      - Avatar-Base
       - Button-CTA
   size1600:
     family: sizing
@@ -3053,4 +3160,5 @@ tokens:
       web: '--size-1600'
       ios: size1600
       android: size_1600
-    consumers: []
+    consumers:
+      - Avatar-Base

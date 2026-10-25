@@ -270,10 +270,11 @@ Awaiting your approval to proceed."
 
 **Exception**: If the spec explicitly calls for using a specific component token, the AI can proceed without additional checkpoint (prior acknowledgment).
 
-**Component Token Pattern**: `color.{component}.{variant}.{property}`
-- Component tokens should reference semantic tokens when possible
-- Example: `color.avatar.human.background` references `color.identity.human`
-- Example: `color.avatar.human.icon` references `color.contrast.onDark`
+**Component Token Pattern**: `<component>.<property>…`, with no family segment (component names are lowercased in the index)
+- Component tokens are declared with `defineComponentTokens`, which takes numeric families only (spacing, sizing, borderWidth); there is no color family
+- Component tokens should reference primitives or the family's pattern, e.g. `buttonicon.inset.medium` references `space125`
+- Example: `avatar.size.md` references `size500`
+- A component's colors reference semantic tokens directly (Avatar's human background uses `color.identity.human`, its icon `color.contrast.onDark`) and are not component tokens in the index
 
 ---
 

@@ -46,14 +46,14 @@ contracts:
       Track: full width, color.progress.pending.background.
       Fill (determinate): color.progress.completed.background, width = value × track width.
       Fill (indeterminate): color.progress.current.background, pulsing opacity.
-      Both track and fill use radiusFull for capsule shape.
+      Both track and fill use radius.full for capsule shape.
     wcag: null
     platforms: [web, ios, android]
     validation:
       - Track uses pending background color
       - Determinate fill uses completed background color
       - Indeterminate fill uses current background color
-      - Both elements have radiusFull border radius
+      - Both elements have radius.full border radius
     test_approach: |
       Render in both modes, verify colors and border radius.
     required: true

@@ -94,7 +94,7 @@ contracts:
     description: Meets WCAG AA contrast requirements (4.5:1)
     behavior: |
       Uses design tokens ensuring WCAG AA compliance:
-      - Text color (color.text.default) on background (color.surface)
+      - Text color (color.text.default) on background (color.structure.surface)
       - Contrast ratio >= 4.5:1 for normal text
       - Icon color (color.icon.default) maintains visual consistency
       High contrast mode support via CSS media query (web).

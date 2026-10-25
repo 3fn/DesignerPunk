@@ -200,7 +200,7 @@ properties:
       - default: 1px (border.default)
       - emphasis: 2px (border.emphasis)
       - heavy: 4px (border.heavy)
-      Border color uses borderColor prop or defaults to color.border.default.
+      Border color uses borderColor prop or defaults to color.structure.border.
   
   borderColor:
     type: ColorTokenName
@@ -210,13 +210,14 @@ properties:
       Border color for the container. Accepts any semantic color token name.
       Use generated ColorTokenName type for compile-time validation.
       - When specified: Uses the provided color token for border color
-      - When undefined: Defaults to color.border.default
+      - When undefined: Defaults to color.structure.border
       - When border is 'none': borderColor has no visible effect
       
       Common values:
-      - color.border.default: Standard border color
+      - color.structure.border: Standard border color
       - color.structure.border.subtle: Subtle/muted border color
-      - color.border.emphasis: Emphasized border color
+      - For emphasis, raise the width with border 'emphasis'; there is no
+        separate emphasis border color token
   
   borderRadius:
     type: "'none' | 'tight' | 'normal' | 'loose'"
@@ -282,7 +283,7 @@ properties:
     default: false
     description: |
       Whether hover state is enabled. When true, Container-Base shows a
-      darkened background on hover using darkerBlend(color.surface, blend.hoverDarker).
+      darkened background on hover using darkerBlend(color.structure.surface, blend.hoverDarker).
       Platform-specific implementation:
       - Web: CSS :hover pseudo-class with blend utility
       - iOS: SwiftUI .onHover modifier (macOS/iPadOS with pointer)
@@ -308,11 +309,35 @@ tokens:
     - space.inset.200
     - space.inset.300
     - space.inset.400
+    - space.grouped.minimal
   color:
     - color.structure.surface
     - color.structure.border
     - color.structure.border.subtle
     - color.structure.canvas
+    - color.action.primary
+    - color.action.secondary
+    - color.contrast.onDark
+    - color.contrast.onLight
+    - color.feedback.error.background
+    - color.feedback.error.border
+    - color.feedback.error.text
+    - color.feedback.info.background
+    - color.feedback.info.border
+    - color.feedback.info.text
+    - color.feedback.success.background
+    - color.feedback.success.border
+    - color.feedback.success.text
+    - color.feedback.warning.background
+    - color.feedback.warning.border
+    - color.feedback.warning.text
+    - color.icon.default
+    - color.structure.surface.primary
+    - color.structure.surface.secondary
+    - color.structure.surface.tertiary
+    - color.text.default
+    - color.text.muted
+    - color.text.subtle
   shadow:
     - shadow.container
     - shadow.navigation
@@ -346,6 +371,15 @@ tokens:
     - motion.focusTransition
   blend:
     - blend.hoverDarker
+  accessibility:
+    - accessibility.focus.color
+    - accessibility.focus.offset
+    - accessibility.focus.width
+  opacity:
+    - opacity.ghost
+    - opacity.heavy
+    - opacity.medium
+    - opacity.subtle
 
 # Supported platforms
 platforms:

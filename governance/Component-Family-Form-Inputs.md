@@ -139,7 +139,7 @@ All text input components in the Form Inputs family inherit these 8 foundational
 
 **Description**: When in error state, component displays red border, red label text, error icon, and error message.
 
-**Behavior**: Error state uses `color.error` tokens. Error message is associated via `aria-describedby`. Error state is announced to screen readers.
+**Behavior**: Error state uses `color.feedback.error.*` tokens. Error message is associated via `aria-describedby`. Error state is announced to screen readers.
 
 **WCAG Compliance**: 3.3.1 Error Identification, 1.4.1 Use of Color
 
@@ -214,7 +214,7 @@ All checkbox components in the Form Inputs family inherit these 9 foundational c
 
 **Description**: Checkbox integrates with native form submission and reset.
 
-**Behavior**: On web the host element is a form-associated custom element and reports its value through `ElementInternals`; the native `<input type="checkbox">` inside its shadow root handles interaction and assistive technology, and cannot reach the form itself. Value included in form submission when checked (`value` defaults to "on"); nothing when unchecked; indeterminate is visual only. Form reset returns checkbox to unchecked state (pre-checked checkboxes not supported per DesignerPunk philosophy). Input-Checkbox-Legal is form-associated in its own right.
+**Behavior**: On web the host element is a form-associated custom element and reports its value through `ElementInternals`; the native `<input type="checkbox">` inside its shadow root handles interaction and assistive technology, and cannot reach the form itself. Value included in form submission when checked (`value` defaults to "on"); nothing when unchecked; indeterminate is visual only. Form reset returns the checkbox to its authored state: the `checked` and `indeterminate` it had when it first connected (Input-Checkbox-Legal: `checked` only, and a pre-check refused under `requiresExplicitConsent` is never authored). Input-Checkbox-Legal is form-associated in its own right.
 
 **WCAG Compliance**: 4.1.2 Name, Role, Value
 
@@ -551,9 +551,9 @@ InputTextPhoneNumber(
 
 | Size | Box Size | Icon Size | Inset | Gap | Typography |
 |------|----------|-----------|-------|-----|------------|
-| `sm` | 24px | `icon.size050` (16px) | `inset.050` (4px) | `space.grouped.normal` | `labelSm` |
-| `md` | 32px | `icon.size075` (20px) | `inset.075` (6px) | `space.grouped.normal` | `labelMd` |
-| `lg` | 40px | `icon.size100` (24px) | `inset.100` (8px) | `space.grouped.loose` | `labelLg` |
+| `sm` | 24px | `icon.size050` (16px) | `space.inset.050` (4px) | `space.grouped.normal` | `typography.labelSm` |
+| `md` | 32px | `icon.size075` (20px) | `space.inset.075` (6px) | `space.grouped.normal` | `typography.labelMd` |
+| `lg` | 40px | `icon.size100` (24px) | `space.inset.100` (8px) | `space.grouped.loose` | `typography.labelLg` |
 
 **Box Size Formula**: `iconSize + (inset × 2)`
 
@@ -620,7 +620,7 @@ Input-Checkbox-Legal uses fixed configuration that cannot be changed:
 | Aspect | Fixed Value | Rationale |
 |--------|-------------|-----------|
 | Box Size | 40px (lg) | Larger touch target for important legal actions |
-| Typography | `labelSm` (14px) | Readable for longer legal text |
+| Typography | `typography.labelSm` (14px) | Readable for longer legal text |
 | Label Alignment | top | Checkbox aligns to first line of multi-line text |
 | Indeterminate | Not supported | Legal consent is binary (yes/no) |
 | Label Truncation | Disabled | Full legal text must always be visible |
@@ -743,9 +743,9 @@ InputCheckboxLegal(
 
 | Size | Circle Size | Dot Size | Inset | Gap | Typography |
 |------|-------------|----------|-------|-----|------------|
-| `sm` | 24px | `icon.size050` (16px) | `inset.050` (4px) | `space.grouped.normal` | `labelSm` |
-| `md` | 32px | `icon.size075` (20px) | `inset.075` (6px) | `space.grouped.normal` | `labelMd` |
-| `lg` | 40px | `icon.size100` (24px) | `inset.100` (8px) | `space.grouped.loose` | `labelLg` |
+| `sm` | 24px | `icon.size050` (16px) | `space.inset.050` (4px) | `space.grouped.normal` | `typography.labelSm` |
+| `md` | 32px | `icon.size075` (20px) | `space.inset.075` (6px) | `space.grouped.normal` | `typography.labelMd` |
+| `lg` | 40px | `icon.size100` (24px) | `space.inset.100` (8px) | `space.grouped.loose` | `typography.labelLg` |
 
 **Circle Size Formula**: `dotSize + (inset × 2)`
 
@@ -891,17 +891,17 @@ Components in the Form Inputs family consume these design tokens:
 | Typography | `typography.caption` | Helper text and error messages (13px) |
 | Color | `color.text.muted` | Label and helper text (default state) |
 | Color | `color.text.default` | Input text |
-| Color | `color.primary` | Label and border (focused state) |
-| Color | `color.error` / `color.error.strong` | Error state |
-| Color | `color.success.strong` | Success state |
-| Color | `color.border` | Border (default state) |
-| Color | `color.background` | Input background |
+| Color | `color.action.primary` | Label and border (focused state) |
+| Color | `color.feedback.error.text` | Error state |
+| Color | `color.feedback.success.text` | Success state |
+| Color | `color.structure.border` | Border (default state) |
+| Color | `color.structure.canvas` | Input background |
 | Spacing | `space.inset.100` | Input padding (8px) |
 | Spacing | `space.grouped.tight` | Space between floated label and input (4px) |
 | Spacing | `space.grouped.minimal` | Space between input and helper text (2px) |
 | Motion | `motion.floatLabel` | Label float animation timing (250ms) |
 | Motion | `motion.focusTransition` | Focus state transition timing (150ms) |
-| Border | `borderDefault` | Default border width |
+| Border | `border.default` | Default border width |
 | Border | `radius150` | Border radius |
 | Accessibility | `tapAreaRecommended` | Minimum touch target height (48px) |
 | Accessibility | `accessibility.focus.width` | Focus ring width (2px) |
@@ -924,14 +924,14 @@ Components in the Form Inputs family consume these design tokens:
 | Color | `color.feedback.error.border` | Error state border |
 | Color | `color.contrast.onDark` | Checkmark/minus icon color |
 | Color | `color.contrast.onLight` | Label text color |
-| Spacing | `inset.050` | Small size internal padding (4px) |
-| Spacing | `inset.075` | Medium size internal padding (6px) |
-| Spacing | `inset.100` | Large size internal padding (8px) |
+| Spacing | `space.inset.050` | Small size internal padding (4px) |
+| Spacing | `space.inset.075` | Medium size internal padding (6px) |
+| Spacing | `space.inset.100` | Large size internal padding (8px) |
 | Spacing | `space.grouped.normal` | Gap for sm/md sizes |
 | Spacing | `space.grouped.loose` | Gap for lg size |
-| Border | `borderEmphasis` | Checkbox border width (2px) |
-| Border | `radiusSubtle` | Small size corner radius (2px) |
-| Border | `radiusSmall` | Medium/large size corner radius (4px) |
+| Border | `border.emphasis` | Checkbox border width (2px) |
+| Border | `radius.subtle` | Small size corner radius (2px) |
+| Border | `radius.small` | Medium/large size corner radius (4px) |
 | Motion | `motion.selectionTransition` | State change animation (250ms) |
 | Motion | `motion.buttonPress` | iOS press feedback (150ms) |
 | Blend | `blend.hoverDarker` | Web hover state (8% darker) |
@@ -957,12 +957,12 @@ Components in the Form Inputs family consume these design tokens:
 | Color | `color.feedback.select.border.rest` | Selected border |
 | Color | `color.feedback.error.border` | Error state border |
 | Color | `color.contrast.onLight` | Label text color |
-| Spacing | `inset.050` | Small size internal padding (4px) |
-| Spacing | `inset.075` | Medium size internal padding (6px) |
-| Spacing | `inset.100` | Large size internal padding (8px) |
+| Spacing | `space.inset.050` | Small size internal padding (4px) |
+| Spacing | `space.inset.075` | Medium size internal padding (6px) |
+| Spacing | `space.inset.100` | Large size internal padding (8px) |
 | Spacing | `space.grouped.normal` | Gap for sm/md sizes |
 | Spacing | `space.grouped.loose` | Gap for lg size |
-| Border | `borderEmphasis` | Radio border width (2px) |
+| Border | `border.emphasis` | Radio border width (2px) |
 | Border | `radius.full` | Fully rounded circle (50%) |
 | Motion | `motion.selectionTransition` | State change animation (250ms) |
 | Motion | `motion.buttonPress` | iOS press feedback (150ms) |

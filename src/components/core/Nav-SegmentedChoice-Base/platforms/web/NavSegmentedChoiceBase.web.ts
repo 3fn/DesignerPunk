@@ -42,6 +42,19 @@ function isTextSegment(seg: SegmentOption): seg is { value: string; label: strin
 }
 
 /**
+ * Whether this browser reflects `aria-controls` as an element reference
+ * (`Element.ariaControlsElements`, HTML § "Reflecting content attributes in
+ * IDL attributes", `FrozenArray<T>?`). Read at call time, not cached, so a
+ * test can install or remove it.
+ */
+function supportsAriaControlsElements(): boolean {
+  return typeof Element !== 'undefined' && 'ariaControlsElements' in Element.prototype;
+}
+
+/** A segment button whose `ariaControlsElements` may be set (lib.dom types it read-only). */
+type ReflectingButton = HTMLButtonElement & { ariaControlsElements: ReadonlyArray<Element> | null };
+
+/**
  * NavSegmentedChoiceBase Web Component
  * 
  * @example
@@ -71,6 +84,14 @@ export class NavSegmentedChoiceBase extends HTMLElement {
   // Animation state
   private _isInitialRender = true;
   private _animating = false;
+
+  /**
+   * Watches the adopter's tree (the host's root node) while `id` is set and
+   * the browser reflects element references, so a panel added, removed or
+   * replaced after render is re-resolved (contract accessibility_aria_controls).
+   */
+  private _panelObserver: MutationObserver | null = null;
+  private _observedRoot: Node | null = null;
 
   static get observedAttributes(): readonly string[] {
     return OBSERVED_ATTRIBUTES;
@@ -149,6 +170,7 @@ export class NavSegmentedChoiceBase extends HTMLElement {
   disconnectedCallback(): void {
     this._shadowRoot.removeEventListener('click', this._handleClick);
     this._shadowRoot.removeEventListener('keydown', this._handleKeydown);
+    this._stopObservingPanels();
   }
 
   attributeChangedCallback(name: string, _old: string | null, value: string | null): void {
@@ -168,6 +190,10 @@ export class NavSegmentedChoiceBase extends HTMLElement {
         break;
       case 'test-id':
         this._updateTestID();
+        break;
+      case 'id':
+        // id drives each segment's panel reference ([id]-panel-[value])
+        this._render();
         break;
     }
   }
@@ -198,6 +224,7 @@ export class NavSegmentedChoiceBase extends HTMLElement {
     }
 
     this._updateSegments();
+    this._resolvePanelReferences();
     this._updateIndicator();
     this._updateTestID();
   }
@@ -259,7 +286,10 @@ export class NavSegmentedChoiceBase extends HTMLElement {
       btn.setAttribute('aria-selected', String(isSelected));
       btn.tabIndex = isSelected ? 0 : -1;
 
-      // aria-controls when id prop provided (Req 6.1–6.3)
+      // aria-controls when id prop provided (Req 6.1–6.3). The attribute is
+      // the fallback: inside this shadow root an ID reference cannot reach the
+      // adopter's panels, so _resolvePanelReferences() replaces it with an
+      // element reference where the browser supports one.
       if (componentId) {
         btn.setAttribute('aria-controls', `${componentId}-panel-${seg.value}`);
       } else {
@@ -282,6 +312,70 @@ export class NavSegmentedChoiceBase extends HTMLElement {
       // Data attribute for value lookup
       btn.dataset.value = seg.value;
     }
+  }
+
+  /**
+   * Point each segment's aria-controls at its panel in the ADOPTER's tree.
+   *
+   * The segments live in this element's shadow root. An `aria-controls` ID is
+   * looked up in the element's own root only (HTML: "candidate's root is the
+   * same as element's root"), so the attribute set in _updateSegments()
+   * resolves to nothing. An element reference set through
+   * `ariaControlsElements` may point outward: the getter returns an element
+   * that "is a descendant of any of element's shadow-including ancestors",
+   * which the host's root node (a Document, or an enclosing ShadowRoot) is.
+   *
+   * - Panel found → `ariaControlsElements = [panel]` (per the spec this
+   *   sets the content attribute to the empty string).
+   * - Panel not found → the `[id]-panel-[value]` attribute stays, which also
+   *   clears any element reference set before (attribute change steps). The
+   *   segment never points at another element.
+   * - No `ariaControlsElements` in this browser → the attribute only.
+   *
+   * @see contracts.yaml accessibility_aria_controls
+   * @see .kiro/issues/2026-10-20-web-element-api-and-form-participation.md (E6)
+   */
+  private _resolvePanelReferences(): void {
+    const componentId = this.id || null;
+    if (!componentId || !supportsAriaControlsElements() || !this.isConnected) {
+      this._stopObservingPanels();
+      return;
+    }
+
+    const root = this.getRootNode() as Document | ShadowRoot;
+    for (let i = 0; i < this._segmentEls.length; i++) {
+      const btn = this._segmentEls[i] as ReflectingButton;
+      const seg = this._segments[i];
+      if (!seg) continue;
+      const panelId = `${componentId}-panel-${seg.value}`;
+      const panel = typeof root.getElementById === 'function' ? root.getElementById(panelId) : null;
+      const current = btn.ariaControlsElements;
+      if (panel) {
+        if (!(current && current.length === 1 && current[0] === panel)) {
+          btn.ariaControlsElements = [panel];
+        }
+      } else if (btn.getAttribute('aria-controls') !== panelId) {
+        btn.setAttribute('aria-controls', panelId);
+      }
+    }
+
+    this._observePanels(root);
+  }
+
+  /** Start (or move) the panel observer onto the host's root node. */
+  private _observePanels(root: Node): void {
+    if (this._panelObserver && this._observedRoot === root) return;
+    this._stopObservingPanels();
+    if (typeof MutationObserver === 'undefined') return;
+    this._panelObserver = new MutationObserver(() => this._resolvePanelReferences());
+    this._panelObserver.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['id'] });
+    this._observedRoot = root;
+  }
+
+  private _stopObservingPanels(): void {
+    this._panelObserver?.disconnect();
+    this._panelObserver = null;
+    this._observedRoot = null;
   }
 
   /**

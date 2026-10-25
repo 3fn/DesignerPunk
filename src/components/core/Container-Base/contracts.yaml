@@ -73,7 +73,7 @@ contracts:
     description: Applies border styling with configurable color
     behavior: |
       When border prop set, applies border with specified width.
-      Border color from borderColor prop or defaults to color.border.default.
+      Border color from borderColor prop or defaults to color.structure.border.
       Border respects border radius.
     wcag: "1.4.11 Non-text Contrast"
     platforms: [web, ios, android]

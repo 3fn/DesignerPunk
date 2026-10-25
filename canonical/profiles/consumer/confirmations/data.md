@@ -40,7 +40,7 @@ date: 2026-09-29
 ## `#android-theming-spec-094`
 
 confirmer: data
-canonicalHash: sha256:7818e0ca9a1252c1baacf77ce2e9650bb50377b5c2e07cc07492b48f50ac9122
+canonicalHash: sha256:67c16e214d5f14e28dafcaf28d4e6897b428422fbc53a576219aeed1b229b7b9
 items: theming-1, theming-2, theming-3, theming-4, theming-5, theming-6
 date: 2026-09-29
 

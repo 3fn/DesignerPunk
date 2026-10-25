@@ -100,8 +100,12 @@ properties:
 tokens:
   color:
     - color.feedback.error.text
+    - color.print.default
   typography:
     - typography.bodySm
+  spacing:
+    - space.grouped.normal
+    - space100
 
 platforms:
   - web
