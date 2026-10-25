@@ -3,16 +3,15 @@
 **Date**: 2026-10-24
 **Spec**: 131-governance-simplification
 **Author**: Thurgood (spec formalization), briefed by the orchestrator
-**Status**: **R0 DRAFT — planning.** Nothing here is ruled. Every proposal below is for the R1 round. Execution starts only after the full spec process and after Peter's open release PRs close (§ 7).
-**Priority**: after Spec 129, then 128, then 130. Peter, 2026-10-24: "Yes, immediately after 129: 129 → 131 → 128 → 130" (chat, relayed by the orchestrator; recorded in `.kiro/issues/2026-10-18-spec-priorities-by-outcome.md` § "Walk log").
-**Source**: `synthesis-2026-10-23.md` (v4.1, in this folder). It is kept as history and cited by § / F# / P# / L#, not restated. Where this outline and the synthesis differ, this outline is the current thinking.
+**Status**: **R3 — planning, paused at the edge of requirements.** R1 and R2 are incorporated. R3 folds in Peter's three rulings (F-9 → § 4; F-2 → § 5 "Trust, but verify"; F-6 → § 5's release findings report; `feedback/design-outline.md` § "[PETER R3]"). The ledgers are § "[THURGOOD R2]" and § "[THURGOOD R3]". Everything not marked **RULED** is still a proposal. Under the stop rule (Peter, 2026-10-24), 131 pauses here while Spec 129 and the owed fixes go ahead. It resumes on Spec 129 progress, per Peter's priority order, and his go. Execution starts only after the full spec process and after Peter's open release PRs close (§ 8).
+**Priority**: after Spec 129, then 128, then 130. Peter, 2026-10-24: "Yes, immediately after 129: 129 → 131 → 128 → 130" (`.kiro/issues/2026-10-18-spec-priorities-by-outcome.md` § "Walk log").
+**Source**: `synthesis-2026-10-23.md` (v4.1), history, cited by § / F# / P# / L#. Where they differ, this outline is current.
 
 > **Conflicts, stated.**
-> - **The author wrote much of what this spec would retire.** I authored or co-drafted most of the ballots in § 3's map (synthesis F31). Retiring them lightens my seat. That pulls my judgment toward retiring them, and reviewers should read the "delivered?" cells with that in mind.
-> - **Stacy specified several of these layers** (fixtures, the census reader, ARMING reads), and some of the proposed cuts are hers.
-> - **Lina built the disposition modules** the signatures sit on.
-> - **Every seat is one model family.** The synthesis's agreement is low-independence evidence (its § "Read this first", "Weight of this document"). The evidence that counts is the command-verified facts in its § 1.
-> - **Required reviewer: Stacy.** The orchestrator also runs one charter-free outside read at R1.
+> - **The author wrote much of what this spec retires** (F31) **and owns code it would delete**: `diff-guard.ts` and `regrounding/{freshness,signatures,c1,verify-signing-chain}.ts` are mine (ballot `2026-10-17-standing-write-scope-six-roots` § 4, Option B). Read the "Delivered?" cells with that in mind.
+> - **Stacy specified several of these layers**; some proposed cuts are hers. **Lina built the disposition modules**, which import my `signatures.ts`.
+> - **Every seat is one model family.** Seat agreement is low-independence evidence; what counts is command-verified fact (synthesis § 1) and real use (§ 3a).
+> - **Required reviewer: Stacy.** One charter-free outside read runs each round.
 
 ---
 
@@ -22,154 +21,255 @@
 - **Aim**: "I really want this project to be as self-governed and self-sustaining by the agents as possible; and many of these choices and directions to operate holistically, sustainably, thoroughly, and thoughtful have been in service of that aim."
 - **The problem (2026-10-24)**: "what would governance simplification mean while sustaining, or enhancing, the outcomes that the accountability layers we aim to remove provide?"
 - **Vehicle (2026-10-24)**: "If we were going to do this, I would want to do it in a spec and would consider this planning. Execution would begin after we follow spec development processes and I complete the series of open issues I'm resolving in the PRs that I've been keeping you aware of."
-- **Gates (2026-10-24)**: "I'm not waiving the sequential gates. Most of the time, waiving those is how we get into situations like this, but that's a 'tomorrow problem'."
+- **Gates (2026-10-24)**: "I'm not waiving the sequential gates."
+- **What a signature is for (2026-10-24)**: "the signature isn't the outcome; the outcome is that output is clean, useful, works as intended, is achieving the goal in a way that aligns with the values we discussed earlier."
 
-**What this spec is, then:** simplification is measured by outcomes, not by the number of layers removed. A layer can go when its outcome is sustained by something cheaper, when it is enhanced by something better, or when it is knowingly dropped for a stated reason. Where a layer never delivered its outcome, simplifying means building the replacement, not deleting and calling it a saving.
+- **The layer test (2026-10-24)**: "A layer can go when its outcome is sustained by something that provides parity, or enhancement, at cheaper cost or faster execution, or is knowingly dropped for a stated reason." (`[PETER R2]` item 1)
+
+**So**: simplification is measured by outcomes, not layers removed. The layer test above is the rule. **Cost includes context and human attention**, not only maintenance: a replacement that is faster but adds always-loaded text or questions for Peter does not pass (`[PETER R2]` orchestrator note; agreed by Stacy, Lina and the outside read in R2). Where a layer never delivered, simplifying means building the replacement.
 
 ---
 
 ## 2. Settled context (pointers only)
 
-- **Rulings already given**: synthesis § "Rulings". 16.1.0 ships under current rules through its tag (item 0a, (i)). P1's suspension scope, option (i), is a hypothetical planning input (item 1a), not a ruling to execute. No suspension record is issued outside this spec (vehicle ruling).
-- **Facts**: synthesis § 1, F1–F31. The ones this outline leans on most are F3, F4, F13, F14, F17, F24 and F30.
-- **The accountability tests** A1–A4: synthesis § 0. The outcome map (§ 3) checks each layer against these.
-- **Not re-opened here**: L3, L5, L6, L7 and L8, which closed in round A (synthesis § 3 "Closed in round A"). L7 (vehicle = suspension record) is now superseded by the vehicle ruling: the vehicle is this spec.
+- **Rulings in this spec** (`[PETER R3]`): F-9, the spine (§ 4); F-2, the self-governance boundary (§ 5); F-6, Peter's read (§ 5). Peter also kept `[OUTSIDE R2]`'s line about the orchestrator's auto-memory (item 1).
+- **Rulings before this spec**: synthesis § "Rulings". 16.1.0 ships under current rules through its tag (item 0a, (i)). P1's scope (i) is a hypothetical planning input (item 1a). No suspension record is issued outside this spec.
+- **Facts**: synthesis § 1, F1–F31, corrected here at F3 (row 1) and F24 (§ 3a). **Tests** A1–A4: synthesis § 0. **Closed**: L3, L5, L6, L8; L7 superseded.
+- **Out of scope, gap stated**: "validated or experimental" is the existing product tier (`governance/DesignerPunk-Integration-Guide.md` § "Governance Gradient", L934, L944; `governance/MCP-Relationship-Model.md` § "Promotion Path", L157; `governance/Product-Token-Governance.md` L24), as Peter recalled (`[PETER R1]` item 1). The gap is wiring and exercise: no intake step routes a request into the tier, promotion has never run, Tier 3 triage has no charter owner, and nothing serves product data in this repo. The Product MCP itself is **built, not conceptual**: `product-mcp-server/src/index.ts` defines 14 tools (including `get_product_tokens`, `get_screen_spec`, `rebuild_product_index`), Spec 081 (2026-04-09); `build:mcp` bundles it to `dist/mcp/product-mcp.js`; it is wired in `.kiro/settings/mcp.json`, in five product charters' tool lists, and in the consumer config template (`src/cli/templates/mcp-config.json.template`, `PRODUCT_DIR ./product`, scaffolded from `src/cli/templates/product/`). Its default `product/` directory does not exist here. The "conceptual" label in Civitas-System-Overview L39 and DesignerPunk-Systems-Overview L180 is wrong, a fix-now item (`[THURGOOD R3]`). The gap is filed with its owners, outside 131 (`[PETER R0]` item 4).
 
 ---
 
-## 3. The outcome map (PROPOSAL — the core of this outline)
+## 3. The outcome map: fix-first's backlog (rows PROPOSAL)
 
-**How to read it.**
-- **Outcome**: what the layer was built to provide, taken from that layer's own ballot or requirement, at the § cited. Where no ballot exists, the cell says so.
-- **Delivered?**: evidence from the synthesis (F#). "Unmeasured" means the synthesis has no fact either way, and R1 owes one.
-- **Verdict**: **S** = sustains · **E** = enhances · **D** = knowingly dropped, with the reason · **B** = never delivered, so build the replacement.
-- **Autonomy**: who acts, and the **non-model check** that verifies them. "None" is written out where there is none.
+Under the ruled spine (§ 4), the map is the backlog, not the plan. A row is worked when fix-first reaches it or when it names an outcome fix-first leaves unmet. Before any deletion unit cites a mechanism, that mechanism gets a row, including the ballot audit's unmapped ones (`evidence/2026-10-24-ballot-audit.md` § 3; `[STACY R2]`).
 
-| # | Layer (synthesis ref) | Outcome it was built for (source) | Delivered? | What sustains or enhances it | Verdict | Autonomy: who acts / non-model check |
+### 3a. The binding constraint: fixing, not detecting
+
+The system finds defects faster than it fixes them.
+- **Use happened, and found real defects.** test01's repo has had no commit since 2026-06-15 and no consumer tracks releases; F24's "use stopped" overstated it. Two rehearsals ran on copies: Lina's on 2026-10-02 and the 2026-10-24 run (`evidence/2026-10-24-test01-upgrade-rehearsal.md`).
+- **The 10-02 findings were carried, not fixed.** In `.kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md`, R2, R4 and R6 lapsed twice, were waived for 16.0.0, and are still open. R4 is the same false "✅ Everything DesignerPunk manages is up to date" that 10-24 found again (test01 F-9); R2 is test01 F-1's `.npmrc` class. The trigger meets the 16.1.0 walk; a third lapse goes to Peter as spec-or-drop.
+- **The 10-24 findings are unfiled**, and F17's three Swift defects still have no records (`[ADA R1]`).
+
+So the records system re-rules what it should repair. **Every row is judged against this**: better detection that moves no fix is not an enhancement. Metric 4 measures fix latency for this reason.
+
+### 3b. The map
+
+*Outcome*: what the layer was built for, from its own ballot or requirement. *Delivered?*: evidence. *Verdict*: **S** sustains · **E** enhances · **D** knowingly dropped · **B** never delivered, build the replacement. *Check*: who acts / the non-model check.
+
+**Unmeasured rows** (`[OUTSIDE R1]` item 6): the 16.1.0 RELEASE pass, which runs under current rules anyway, supplies rows 4, 6 and 12 (`[STACY R1]` item 16). A row still unmeasured at requirements is kept if it costs one checkable line, otherwise **D**, with "unmeasured" as the reason.
+
+| # | Layer | Outcome (source) | Delivered? | What carries it | Verdict | Check |
 |---|---|---|---|---|---|---|
-| 1 | Consumer-profile signatures and C1 routing (P1, P5) | Shipped agents re-grounded on the consumer's repo, "a capability rather than an imposter"; signed by the owning seat; "assent should cost at least as much as refusal" (Spec 123 `requirements.md` Req 11 user story; 11.5.2; 11.5.4; 11.5.6 VALVE 2) | **No, as measured**: 364 signatures, 0 refusals, 258 `surviving: []` (F3). 11.5.6 (L396) predicted this itself: per-row signing "holds syntactically and fails attentionally" (bold removed); the R3 answer at L904 reads "holds syntactically, fails attentionally" | P10b: owners read only the rendered paths that changed, and record what they **found**. P10a: a consumer that actually runs the re-grounded agents | **E**, if P10b's found-items rule holds; per-row assent **D** | Owners of changed paths / CI prints the changed rendered paths; the consumer session exercises the agents |
-| 2 | Signing chain: `verify-signing-chain`, fixtures, routes floor, hold act, link 4 (P1, P5) | "Assurance that the seat whose signature appears is the seat that signed"; threat model: error and shortcut, not forgery (`.kiro/docs/ballots/2026-10-01-signing-act-chain.md` § 1, "The threat model, in proportion") | **Mostly against its own shape**: about 6 signing-shape ballots in 22 days, none from shipped bytes (F21); #445 read `record absent 20` from a format slip (`2026-10-23-link4-candidate-first-sha-after-commit.md` § 1) | Nothing needed once row 1's signatures go: the chain protects a record that no longer exists. The honest-error class it also caught (a seat editing outside its box) moves to row 7 | **D** — the outcome is moot without row 1 | n/a |
-| 3 | Confirmation-hash freshness sweep inside `runGuard` (P1; F6) | A consumer-shipped operative item never changes silently after its owner confirmed it (Spec 123 `design.md` C16; Req 11.6.5d; signing ballot § 4.1, F11) | **Unmeasured** for real drift caught. Its known cost: volatile metadata in signed units made the health check red the gate (`2026-10-17-no-volatile-metadata-in-signed-units.md` § 1) | P10b | **Fork F-3** (§ 6) | Owners / the CI path diff |
-| 4 | Edit-kind lines (P1) | Whether a governance edit needs a ballot is "decidable without consulting the author" (`2026-10-18-governance-edit-kinds.md` § 1, "The rot mode") | **Unmeasured** | P1 keeps "a LAW edit cites its ballot" | **S** for LAW; the EXECUTION/CORRECTION distinction **D**, and the undecidability it closed returns | Author / git: the cited ballot exists and reads RATIFIED. No check for the kind |
-| 5 | Delegated-tier line and its audit (P1) | End the ambiguity of silence between "plan held" and "divergence unrecorded"; feed tier recalibration (`2026-09-19-delegated-tier-capture.md` §§ 1, 4) | **Partly**: lines are present, but the ballot's own § 4 says a false `plan held` cannot be detected. Use for recalibration is **unmeasured** | Nothing proposed | **D**, unless R1 shows recalibration consumed the lines | n/a |
-| 6 | Consulted-line presence count (P1) | Options reach Peter vetted by their owners; four skipped consults in one day each changed the plan (`2026-09-28-orchestrator-consult-first.md` § 1) | **The behaviour persists**: the synthesis consulted five seats and ran a cross-read. Whether the count adds anything is unmeasured | The consult rule stays; only the count goes | **S** (the behaviour); the count **D** | Orchestrator / none. Knowingly |
-| 7 | Write-scope grants: tasks-row grant, issue-row grants (README rule 8), their ARMING reads, the grant-activation query (P1) | **Two outcomes, not one.** (a) Enablement: seats can do the work they are seated for instead of declining it (`2026-09-26-tasks-row-write-scope-grant.md` § 1; `2026-09-27-ci-regime-standing-scope.md` § 1, "the owner may not touch what he owns"). (b) Decidable reads of `.github/**` changes (`2026-10-20-grant-ci-deletions-and-activating-merge-read.md` § 1) | (a) **Yes.** (b) **Partly**; and the out-of-scope class recurred four times, once through a Peter merge (MP-2, F30) | (a) **Only if the charters' "treat paths outside this set as read-only" clause changes in the same unit.** Otherwise retiring the grants brings back the refusals of 2026-09-27. P7's OWNERS file is the likely home. (b) A computed owners/touch report (L2, § 6) | (a) **S** only if done together; (b) **B** | Seats / OWNERS file vs the changed paths, printed in CI. The `Agent:` trailer is still typed text (L2) |
-| 8 | Instrument census at draft (P1) | No hand count is ratified where the instrument can compute it (`2026-10-19-instrument-census-at-draft.md` § 1, "The class this rule closes") | **Its one real catch came from a stop condition, before the full rule** (F22) | P1's one sentence: run it, don't hand-count it | **S**; the census mode, register field and reader **D** | Drafter / the instrument itself |
-| 9 | Subtask completion docs, S-4 (P1) | Application-time adaptations get recorded (the loss in 127 Task 1) (`2026-09-19-completion-audit-standards-package.md` § S-4) | **Unmeasured** | A one-line adaptations entry in the parent doc, checkable at a sha (L6, closed) | **S** | Author / proposed: the parity checker reports the entry's presence |
-| 10 | Claims-pass shape: MIDPOINT optional, ARMING narrowed, records under about 3k words (P6) | Claims match what shipped (A1); RELEASE and SYMPTOM non-negotiable (`2026-09-17-spec-127-outline-settle.md` § 11.4) | **For packaging and text, yes**: they ran things (F14). **For behaviour, never**: no compiler or browser (F13) | P4's fixture covers behaviour; the pack-diff runs before the tag (F27) | **E**, once P4 exists. Until then the blind spot is unchanged, and it is stated in each pass | Stacy / pack-diff and fixture results |
-| 11 | EDUCATION route (P6; F29) | The docs stop teaching the wrong thing (127 settle § 11.4, EDUCATION row) | **Yes**, and it is a growth engine (F29) | It defaults to deleting or narrowing a rule | **S**, with growth bounded | Thurgood / none |
-| 12 | Instruments block → an evidence-command column (P7) | No parent starts with criteria whose evidence doesn't exist (`2026-09-28-parent-instrument-existence-check.md` § 1) | **Unmeasured** since ratification | The column's commands are run at branch cut | **S**, if run rather than read | PRIMARY / the commands' exit codes |
-| 13 | Issues README, 12 rules → about 5 (P7) | A3: problems are recorded, routed, and read when their event fires (`2026-10-18-obligation-drain-and-release-falsity-floor.md` § 1; `2026-10-20-manual-records-routed-readers.md` § 1) | **Partly.** A3 failed inside one seat under these rules (F17). P0/P1 ages run to 2026-06-24 (F16) | A filing rule with an owner and a trigger; `issues-owned.sh`; the oldest-P0/P1-age signal (§ 5, metric 4) | **E**, if the age signal triggers action; otherwise **S** at lower cost | Owners / the age query |
-| 14 | Register → a table (P7) | Each rule's enforcement owner is decided and addressable (`.kiro/specs/125-B-classification-map/requirements.md` Req 1) | **Yes** | The same content in a table | **S** | Thurgood / `audit:coverage-map` |
-| 15 | Charters rewritten around duties; six-roots scope moved to an OWNERS file (P7) | Charters state the scope practice uses (`2026-10-17-standing-write-scope-six-roots.md` § 1) | **Yes**, as of that ballot | One OWNERS file, rendered into the charters | **S** | Generator / diff-guard |
-| 16 | Record-first ratification, shortened (P7) | A2: authority is a committed record (`.kiro/docs/ballots/README.md` § "The Ratification Protocol") | **Yes** | Kept; shorter text | **S** | Ratifying session / git |
-| 17 | Process law in the shipped and served corpus (P8) | Consumer agents get content about their own repo: "law I cannot follow does not arrive as always-loaded context" (Spec 123 Req 12 user story) | **No**: 84 `governance/` docs ship, and process law outweighs the domain docs (F15) | Move process law out; a short always-set authored by the consumer | **B** | Leonardo, Ada, Lina / the pack listing |
-| 18 | Ada's hooks; component-token approval (P9) | No autonomous token creation (Core Goals § "Token Governance"; **no ballot**) | Hooks: **no** — they enforce nothing (F23). Creation review: **yes** | Creation review stays via the PR gate | Hooks **D**; review **S** | Peter / validators check fit, not need (Ada) |
-| 19 | Readiness claims (P2) | A consumer knows what they can use, per platform (**no ballot**: the schema `readiness` fields and `Component-Readiness-Status.md`) | **No**: three disagreeing answers (F11); native "scaffold" only because of a pattern miss (F12) | Evidence per platform: `compiles`, `contractEvidence`, generated `knownDefects` | **B** | Lina / compile-lane results, generated fields |
-| 20 | Peter's sample of Stacy-signed acts (signing ballot § 5.3) | An independent check on the verifier's own acts | **Never performed**: 0/297, then 0/309 (F4) | L4 (§ 6) | **B** or **D**: Peter's call | Peter / none |
+| 1 | Consumer-profile signatures, C1 routing | Shipped agents re-grounded on the consumer's repo, signed by the owning seat; "assent should cost at least as much as refusal" (Spec 123 Req 11; 11.5.2; 11.5.4; 11.5.6) | **Refusals stopped; signing did not.** **Refusals**: 25 at the first render, each resolved, 0 standing (`claims-pass-midpoint.md` L215); **0 refusals issued since** (15.1.0 L311; 16.0.0 L311; none added in #397, #445 or #451, by grep of `verdict: refuse` over their diffs). **Signatures** keep being issued: 15.1.0 and 16.0.0 count assents (kenya 4/4, data 4/4, stacy 3/3; leonardo 2/2, sparky 1/1), then #397 (123 first signatures), #445 (20 by 7 seats) and #451 (Sparky, Ada re-signed). So the cost is live and recurring, and what stopped is refusal. Blind re-judgment disagreed in 9 of 46 (15.0.0 L267). 11.5.6 predicted "holds syntactically and fails attentionally" | The outcome is output that works (§ 1); the per-release rehearsal measures it. The changed-path list (row 3) shows owners where to look | Per-row assent **D**; **E** rests on the rehearsal, not a read (**F-10**) | Rehearsal owner / its exit and served-corpus probe |
+| 2 | Signing chain: `verify-signing-chain`, fixtures, routes floor, hold act, link 4, local `check-agent-trailer.ts` | "Assurance that the seat whose signature appears is the seat that signed" (`2026-10-01-signing-act-chain.md` § 1) | About 6 signing-shape ballots in 22 days, none from shipped bytes (F21) | Moot once row 1 goes; honest error moves to row 7 | **D** | n/a |
+| 3 | Freshness sweep in `runGuard` (F6) | An operative item never changes silently after confirmation (Spec 123 C16; Req 11.6.5d) | **Unmeasured**: no recorded re-sign changed shipped text (`[STACY R1]` item 2). Cost: volatile metadata reddened the gate | `readConsumerSpans` (`derive.ts` L571) joined to `git diff <last-tag>` over `canonical/_consumer-output/**`: changed rendered lines per release, by owner (`[LINA R1]` item 2) | **S** at release grain (**F-3**); operative sets lose readers (**F-11**) | CI prints the list |
+| 4 | Edit-kind lines | Whether an edit needs a ballot is "decidable without consulting the author" (`2026-10-18-governance-edit-kinds.md` § 1) | **Unread**: ratified after the last pass; one dry run (CL OB-12) | "A LAW edit cites its ballot". Most other edit-kind lines are replaced by the F-2 delegation ballot (§ 5) | LAW **S**; the rest go with the delegation, after 16.1.0's reading | Git: the ballot reads RATIFIED |
+| 5 | Delegated-tier line, audit | End ambiguous silence; feed tier recalibration (`2026-09-19-delegated-tier-capture.md` §§ 1, 4) | Present 31/31, divergent 4/31, 1 contradiction found (MP-4). **Recalibration use: none**; the model-selection doc unchanged since 2026-07-09 (`[STACY R1]` item 4) | Nothing | **D** | n/a |
+| 6 | Consulted-line count | Options reach Peter vetted by owners (`2026-09-28-orchestrator-consult-first.md` § 1) | Present 43/43; 9 spot-checks clean; **never produced a finding** (`[STACY R1]` item 5) | The consult rule; computed reach under the F-2 delegation (§ 5), which replaces the count | Behaviour **S**; count **D** | None, knowingly |
+| 7 | Write-scope grants (tasks-row, issue-row), ARMING reads, activation query | (a) Seats can do their seated work (`2026-09-26-tasks-row-write-scope-grant.md` § 1). (b) Decidable reads of `.github/**` changes (`2026-10-20-grant-ci-deletions-and-activating-merge-read.md` § 1) | (a) Yes. (b) Partly; out-of-scope edits recurred four times, once past a Peter merge (F30) | (a) One OWNERS file, rendered into the charters' read-only clause and Kiro `allowedPaths`; on Claude Code the barrier is behavioural either way (`[LINA R1]` items 4–5). (b) Computed reach mapped through OWNERS, with the crossed owners' evidence-bearing reads (§ 5, F-2 ruling). The delegation ballot replaces the grant machinery and the `Agent:`-trailer question | (a) **S**, only with OWNERS in the same unit; (b) **B** | OWNERS vs changed paths, in CI |
+| 8 | Census at draft | No hand count ratified where an instrument computes it (`2026-10-19-instrument-census-at-draft.md` § 1) | One catch, from a stop condition (F22) | One sentence: run it | Sentence **S**; apparatus **D** | The instrument |
+| 9 | Subtask completion docs (S-4) | Adaptations get recorded (`2026-09-19-completion-audit-standards-package.md` § S-4) | Present 148/151; 30.3 unwritten, owner disputed (16.0.0 L377); downstream reading unmeasured | One adaptations line in the parent doc | **S** | Parity reports the line |
+| 10 | Claims-pass shape (P6) | Claims match what shipped (A1); RELEASE, SYMPTOM non-negotiable (`2026-09-17-spec-127-outline-settle.md` § 11.4) | **Partly.** Passes caught packaging and text defects on the claims they listed (F14), not on the consumer's path: after 16.0.0's pass, 10-24 found false shipped text (`--help`, the `sync` all-clear) and packaging defects (`exports` → unminified bundle). Behaviour: never (F13) | Rehearsal (consumer path); pack-diff before the tag (F27); 129's lane (compile class on native). Native behaviour needs simulator and emulator targets (`[KENYA R1]` 3; `[DATA R1]` 4) | **E per platform at green**, compile class and consumer path; behaviour stays outside, stated (**F-14**) | Stacy / pack-diff, rehearsal, lane results |
+| 11 | EDUCATION route (F29) | The docs stop teaching the wrong thing (127 settle § 11.4) | Yes; a growth engine | Defaults to delete or narrow | **S** | Implications that add vs narrow, computed from pass records (`[STACY R1]` item 9) |
+| 12 | Instruments block → evidence-command column | No parent starts with evidence that doesn't exist (`2026-09-28-parent-instrument-existence-check.md` § 1) | **Yes**: about 58 self-reported gaps vs 1 by a pass; Task 28 resolved 5 `MISSING` before code. The header grammar failed 3 times (MP-3, CL-2) | The block as a column, run at branch cut | Block **S**; header **D** | The commands' exits |
+| 13 | Issues README, 12 → about 5 rules | A3: problems recorded, routed, read when their event fires (`2026-10-18-obligation-drain-and-release-falsity-floor.md` § 1) | **Partly**; § 3a lives here: triggers produce re-rulings, not repairs; F17 never filed | Filing rule with owner and trigger; a component field (row 19's `knownDefects`); the reporter files when handing a defect over | **S** cheaper; **E** only if fix latency falls | Metric 4 |
+| 14 | Register → a table | Each rule's enforcement owner addressable (125-B Req 1) | Yes | Table form | **S** | `audit:coverage-map` |
+| 15 | Charters around duties; scope → OWNERS | Charters state the scope practice uses (six-roots § 1) | Yes | OWNERS, rendered; shaped by § 7 | **S** | diff-guard |
+| 16 | Record-first ratification, shortened | A2: authority is a committed record | Yes | Kept, shorter | **S** | git |
+| 17 | Process law in the shipped and served corpus (P8) | Consumer agents get content about their own repo (Spec 123 Req 12) | **No**: 84 `governance/` docs ship (F15). After an upgrade the docs MCP served 9 of 83 while rating matches `strong` (10-24 F-8), defeating Certainty Calibration | Move process law out; keep the token docs consumers select from (`[ADA R1]` P8 list), native samples labelled or stripped first (F18); a short consumer-authored always-set | **B** | Leonardo, Ada, Lina / **served-doc count after install and upgrade**, not the pack listing |
+| 18a | Ada's four hooks | none stated | All four are user-triggered prompts; none enforces (F23) | Nothing | **D** | n/a |
+| 18b | Token-creation review | No autonomous token creation (Core Goals; no ballot) | **Unmeasured in practice**: it is Peter's merge, and nothing marks a token-adding PR (`[ADA R1]` (b) 5) | Candidate: a generated tokens-added/removed PR line from `token-index/` | **S** | Peter / validators check fit, not need |
+| 18c | Component-token **usage** approval | "Using them should be a deliberate decision" (Token-Governance § "Component Token Usage") | Unmeasured | Narrowed to creation (P9) | **D**; residual: "is the semantic tier insufficient?" is asked only at creation | n/a |
+| 19 | Readiness claims (P2) | A consumer knows what they can use, per platform (schema; `Component-Readiness-Status.md`; no ballot) | **No**: four answers (F11; `Component-Quick-Reference.md` L38–53). `ReadinessCompliance.test.ts` checks the indexer against its own patterns (`[LINA R1]` 6) | One served answer per platform: `compiles: {verb, sha, result}`, generated (Android has two compiles; iOS attributes from the whole-package `-wmo` run); `contractEvidence` (iOS `runtime` for 2 components, else `none`); `knownDefects` from records. Prose columns generated or deleted. `compiles: unverified` may land before 129 | **B**, closing per platform at green | Lina / lane results |
+| 20 | Peter's sample of Stacy-signed acts | An independent check on the verifier (signing ballot § 5.3) | **Never ran**: 0/297, 0/309 (F4) | Peter reads reports (`[PETER R0]` 2): the generated release findings report (§ 5, F-6 ruling) | **D**, recorded "never ran" | The report's check list |
 
-**What the map shows, in four lines.**
-- Five rows were **never delivered** (1 as measured, 17, 19, 20, and row 7's (b)). Simplifying them means building their replacements: P10b, P8, P2 and a touch report.
-- Rows 2, 5, 18 (hooks) and the apparatus in row 8 are **true deletions**. Each one's outcome is moot, unmeasured, or already covered.
-- Row 7 is the trap: **the grants were built to enable work, not to police it.** Deleting them alone brings back the refusals.
-- **Nothing in the map covers new defect classes.** Only use does that (synthesis § 0, thesis 3), and today use has stopped (F24). So P10a is not optional for A1, even though it is not a "layer".
+### 3c. What the map shows
+
+- **Never delivered** (17, 19, 7(b)) needs building. Row 1 delivered once and decayed. Row 20 is dropped, not rebuilt: it asks Peter for a review he says he cannot do.
+- **Deletions with nothing replacing them**: 2, 5, 6's count, 8's apparatus, 12's header, 18a, 18c.
+- **Row 7 is the trap**: the grants enabled work; without OWNERS the refusals return.
+- **Only use finds new classes.** Four of the six 10-24 repairs exist only on upgrade, where a fresh-install fixture cannot look (`[LEONARDO R1]` 4). So the rehearsal carries rows 1 and 10.
+
+### 3d. Adds vs removes (answers `[OUTSIDE R1]` item 5)
+
+A *mechanism* is a standing rule, check, record type or duty someone runs or maintains; one-time acts (§ 7, migrations) are excluded.
+- **Removes 14**: signatures and C1 (1); signing chain (2); freshness sweep (3); EXECUTION/CORRECTION lines (4); delegated-tier line (5); Consulted count (6); grants, ARMING reads, activation query (7a); census apparatus (8); subtask docs (9); mandatory MIDPOINT and broad ARMING (10); instruments header (12); Ada's hooks (18a); usage approval (18c); Peter's sample (20).
+- **Adds 11**: OWNERS; computed-reach check under the delegation ballot (was "touch report"); changed-path list; per-release rehearsal, now a blocking release gate; release findings report; pack-diff before tag; admission rule; metrics script; readiness fields; and two the F-9 ruling brought in, the freeze (B (d)) and the record-before-unit gate (§ 4). Both of those end on their own: the freeze lifts at N green releases per platform, and the gate ends with 131. **Five replace a removed mechanism**: OWNERS ← grants and C1's unit→seat map; computed-reach check ← ARMING reads, the activation query, the Consulted count and the `Agent:`-trailer question; changed-path list ← freshness; report ← Peter's sample; readiness fields ← prose columns and the self-checking test.
+- **Net −3**; −1 if Peter also takes the two remaining add-forks (F-4, F-10). The freeze, F-5's add, is ruled in. On neither side: reshapes that keep a mechanism smaller (census sentence, evidence column, README, register table, the parent doc's adaptations line; subtask docs count as removed because their record type goes), 129's fixture and ratchet, and Ada's candidate tokens-added line.
 
 ---
 
-## 4. Design principles (PROPOSAL)
+## 4. The spine: fix-first (RULED, F-9)
 
-**Peter's definitions (2026-10-24), verbatim (typos corrected at his request):**
+Peter, 2026-10-24: "Re: F-9, proceed as recommended." (`[PETER R3]` item 2). **B, fix-first, is the spine; the map (§ 3) is its backlog.** Its source is `[OUTSIDE R1]` item 7.
+
+- **(a) Owners fix the 10-02 and 10-24 findings.** Lina's 10-02 R2/R4/R6 fix is **the first measured fix** (`[LINA R2]`). B (a) belongs to the owners (§ 8).
+- **(b) The rehearsal becomes a scripted release step with one owner**: "the rehearsal passes on a scratch copy of a standing consumer", plus one design task by its agents (`[LEONARDO R1]` 4). It **names the existing onboarding persona trio rather than running beside it** (`.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md`; `[LEONARDO R2]`). Web and package run today, in about 35 minutes; native waits for 129.
+- **(c) The true deletions.** **The missing map rows come first**: a mechanism gets a row before any deletion cites it (`[STACY R2]`; ballot audit § 3).
+- **(d) The freeze**: no new law except deletions until the rehearsal is green for N releases, then retire rows nobody missed. The freeze is **per platform** (`[DATA R2]`): a web-and-package green does not lift it for a native platform. It **exempts CORRECTION edits** (`[ADA R2]`), so fixes to false text are never frozen.
+
+**Two mechanisms make fix-first more than a hope:**
+1. **A failing rehearsal blocks the release tag, and that failure is the record's trigger** (`[SPARKY R2]` P-b). A waiver is Peter's decision, made in the release findings report. This is the answer to Peter's CI question (`[PETER R2]` item 2): the check *is* the rule.
+2. **No 131 unit opens while a finding it cites has no record** (`[OUTSIDE R2]` item 1). This is a gate on an existing event, not a new layer.
+
+B (b) and (c) are 131's first unit (§ 9). A map row beyond them is admitted only when it names an outcome B leaves unmet.
+
+*Considered and not taken*: **A, the map as the spine**, working every row to its verdict. It is thorough, and it is the most governance work.
+
+---
+
+## 5. Design principles and outcomes (PROPOSAL, except the two RULED items)
+
+**Peter's definitions (2026-10-24), verbatim (typos corrected at his request; Holistic as he amended it in `[PETER R2]` item 3):**
 - **Thorough**: that all decisions have been made by a clear, informed understanding of the problem space and the dependencies a solution relies on or creates.
 - **Sustainable**: the solution is scalable and elegantly manages exponential weight of load-bearing supports in the long-term
-- **Holistic**: consideration for the needs of stakeholders in the blast radius of a decision or solution, and that the needs of those negatively impacted are appropriately mitigated
+- **Holistic**: consideration for the needs of stakeholders in the blast radius of a decision or solution, and that additional burdens placed on them are appropriately acknowledged, mitigated and supported
 - **Thoughtful**: multiple solutions were explored, the solutions were evaluated from an immediate, intermediate, and long-term perspective, stakeholders were consulted, dissenting options were used to better inform solutions, solutions were tested to ensure they delivered on their purposes
 
-**Two proposed additions, for reviewers to accept or reject:**
-1. **Proportionality**: how deep each definition goes scales with how irreversible the decision is and how wide its blast radius. A reversible process tweak needs a line, not a ballot.
-2. **A paired check for each definition**, so that each one can be verified rather than asserted:
-   - *Thorough*: each named dependency is verified. A dependency found later is recorded as a miss.
-   - *Sustainable*: "does this need another mechanism to work?" A yes is the warning sign.
-   - *Holistic*: the stakeholder list names consumers, Peter's time, and future agents' context.
-   - *Thoughtful*: each solution names its success check up front, and the check is re-run after shipping.
+Where the values live is the values ballot's question (R1 ask (c)).
 
-**My counter to addition 2, after fold-back**: four checks per decision is itself a mechanism, which is the pattern this spec diagnoses. Proportionality (addition 1) absorbs most of that, because a small decision owes one line per check. **What survives**: the "re-run after shipping" half of *thoughtful* is a standing obligation, so it needs a home with a trigger, or it is the F20 pattern again (an instrument with no owner).
+**Two additions, kept after R1:**
+1. **Proportionality**: the effort to satisfy the values scales with irreversibility and blast radius; the values always apply (`[PETER R0]` 9).
+2. **One question per value** (`[SPARKY R1]` 2). A value is never cited as evidence, only its answer (`[STACY R1]` 18). Written answers are owed only where proportionality calls for them, or this becomes row 5 again. *Thorough*: is each named dependency verified? *Sustainable*: does this need another mechanism to work? *Holistic*: who is in the blast radius (consumers, the designer, Peter's time, future agents' context)? *Thoughtful*: what is the success check, and when is it re-run after shipping? **The rehearsal is that re-run's home** for consumer-facing changes.
 
-**Open for Peter, not a proposal**: whether the definitions belong in Core Goals.
+**Agent-native inside, human-legible at the edge** (`[PETER R0]` 5): executable over declarative; derivation over attestation; a small always-set; machine-readable state; independence through different tools, not headcount; stop rules. Each design proposal names which it uses.
+
+**Transparency** (`[PETER R0]` 6) is generated from state and checks, never agent-written:
+- **CLI final lines derive from post-conditions** (served-doc count, configured directories exist, output count vs the last run), not bookkeeping (`[ADA R1]` class option). All three silent 10-24 failures were bookkeeping all-clears. Product code, Ada's; 131 states the outcome.
+- **The release findings report (RULED, F-6)**. Peter, 2026-10-24: "(i) sounds good" (`[PETER R3]` item 4).
+  - **Generated from checks and state, never written as an agent's summary.** No page cap (`[PETER R0]` 2).
+  - **It opens with what's changing and why** (Peter's shape).
+  - **Order**: (1) decisions for Peter; (2) findings ranked by severity; (3) a machine-generated list of every check that ran.
+  - **Every decision put to Peter carries four things** (Peter's shape): the problem(s); the options; the risks and opportunities of each option; and, where applicable, how to keep it from happening again. The last is the class-level option, in his words.
+  - **Every shipped claim either cites a check that ran or reads `owed — needs <actor>`**, broken down by platform (`[STACY R1]` 14). Unverified wording stays closed.
+  - **It includes the deletion list** from "Trust, but verify" below.
+  - **Peter's read** is of the decisions and the owed items, and of whether the system put design decisions to him (`[LEONARDO R2]`). It replaces row 20's sample, and there is no separate sampled read of shipped claims.
+
+**Trust, but verify (RULED, F-2).** Peter, 2026-10-24 (`[PETER R3]` item 3): "one thing I need is to know that any one agent isn't working unilaterally"; "This needs to apply to more than rules though: it's everything. Tools, schemas, processes... everything in the system depends on everything in the system — that's why teamwork is foundational"; "If an agent is assigned a task, they should consider 'who's the right teammate to review this? who can help better inform the work? who's impacted by this?'"; "Let's give it a shot."
+- **Agents act on their own within their own surface.**
+- **The scope is everything**: rules, tools, schemas, processes and generated output, not only rules.
+- **Crossing a surface needs a read.** A change whose computed reach crosses another owner's surface needs those owners' evidence-bearing reads, saying what was checked and what was found. Any flagged dependency stops it, and a disagreement goes to Peter.
+  - **Reach is computed** from references, imports, schema consumers, CLI flags and exported names, doc anchors and routes, CI usage, and generator inputs. It is mapped to owners through the one OWNERS map.
+- **The author adds teammates and never removes them.** The author proactively adds the teammates who can review, inform the work, or are impacted in ways the computation can't see. The author cannot remove the computed ones.
+- **Always cross-checked**: removals and contract changes (renames, schema or interface shape, CLI behaviour, served anchors).
+- **Proportionality applies**: depth scales with reach and irreversibility.
+- **What stays Peter's**:
+  - identity-level law (Core Goals, the values, the agent model, merge authority);
+  - anything consumer-facing (MCP contracts, readiness, release notes, served docs);
+  - removing or weakening checks that run the real artifact;
+  - token creation and removal.
+- **Process-rule deletions are batched** per release. Each is listed in the release findings report with the removed sentence and its reason. A regression traced to a deletion restores the rule and returns that class to Peter. There is no deletion sampling.
+- **One ballot delegates this, once.** It replaces the write-scope grant machinery (row 7), the `Consulted`-line count (row 6), the `Agent:`-trailer question (former F-1) and most edit-kind lines (row 4).
+- **Merge-on-green comes later**, after the compile lane and fixture are green for N releases, with consumer-facing surfaces excluded.
+- **A known limit**: seats cannot yet call each other directly. The author names the teammates it needs and why, and the orchestrator routes.
+- *What survives*: implicit dependencies nobody wrote down; rubber-stamp reads; slower cross-seam changes. The reviewers are one model, so they bring different knowledge, not different judgment.
+
+**Outcome requirements, for the requirements phase:**
+- **O-1 · The designer is supported**: a consumer's agent answers "can I use X on iOS?" and "which token for Y?" from served truth, with confidence that drops when its sources do (`[LEONARDO R1]` 1).
+- **O-2 · A1 on the consumer path**: upgrade and fresh install on the release candidate succeed by the docs alone, and their final lines are true.
+- **O-3 · A3 as repair**: fix latency falls.
+- **Admission**: any future layer names the unmet outcome requirement it serves (L1 part 1).
+
+**Self-sustaining requires**: non-model sensors that execute the artifact; computed signals with a reader and trigger (§ 6); sunsets with falsifiers, never counters that reward finding nothing (`[STACY R1]` 8); one OWNERS file; real use and Peter's direction as the outside source of purpose; and **a proactive learning loop** (`[PETER R2]` item 4; every R2 entry converged on its shape):
+- **Learn, then act or preserve**, at the first occurrence. *Act* defaults to fix, delete or narrow. *Preserve* puts the learning where it is read when it matters: a check, the operating rules, or the owner's records. It is not a new ballot.
+- **Count recurrences of the mistake, not applications of the learning.** An application count is self-report from seats that don't persist across sessions, and it rewards citing the learning. A finding that matches a recorded learning cites it.
+- **Promote on recurrence to an executable check**, where one can exist: at **N=1** for P0 or irreversible classes, **N=2** for consumer-visible ones.
+- **A recurrence after promotion means the promotion failed.**
+
+**Peter's role** shrinks to direction, identity, the independent check read as reports, and what "Trust, but verify" keeps his. It goes no lower than that, since every seat is one model family.
 
 ---
 
-## 5. Requirements approach, aim and metrics (PROPOSAL)
+## 6. Metrics (PROPOSAL)
 
-**Requirements are written as outcomes, not mechanisms.** Each requirement states an outcome (A1–A4, or one from § 3's map) and the observable evidence that it holds. Mechanisms belong to design. **Any future layer names the unmet outcome requirement it serves**, or it is not admitted. That is L1 part 1's admission rule, re-keyed to outcomes. No requirements are written in this outline.
+One script computes them; the output prints into the release findings report on the release PR (**F-15**).
 
-**What "self-sustaining" requires** (from the synthesis's lens):
-1. **Non-model sensors**: compilers, a browser, registry bytes, the fixture (P4).
-2. **A direction feedback loop**: computed signals that trigger action without Peter (metrics 2 and 4 below).
-3. **The power to prune**: deletion is easier than addition, and kept rules sunset (P10c; § 6 F-2).
-4. **Explicit, bounded authority**: one OWNERS file and stated lines (synthesis § 4).
-5. **An outside source of purpose**: real use and Peter's direction (P10a).
-
-**Peter's role** shrinks to direction, identity and the independent check. It likely does not go below that, because every seat is the same model family and cannot supply independent judgment of itself (synthesis § 0, thesis 1).
-
-**Success metrics for the aim, each paired with how it can be gamed:**
-
-| # | Metric | Direction | How it can be gamed, and the guard |
+| # | Metric | Dir. | Gaming, and the guard |
 |---|---|---|---|
-| 1 | Peter's required decisions per release | ↓ | By not asking. Guard: "Open for Peter" lines are counted with their answers, and a dropped question is a finding |
-| 2 | Share of claims verified by non-model checks | ↑ | By redefining "claim". Guard: the denominator is the shipped claim surfaces in row 17/19's sense, enumerated |
-| 3 | Governance share of commits | ↓ | By batching governance into fewer, larger commits. Guard: measure in changed lines under `.kiro/`, `governance/` and `canonical/` as well (F1's method) |
-| 4 | Age of the oldest open P0/P1 | ↓ | By re-classing records. Guard: a downgrade carries a dated reason (README rule 11's re-rule form) |
-| 5 | Rules retired by agents ≥ rules added | ≥ | By splitting or merging rules. Guard: measure law in words and count required checks, not rules |
+| 1 | Peter's required decisions per release | ↓ | By not asking. Guard: "Open for Peter" lines counted with answers. Limit: counts only written questions |
+| 2 | Share of shipped claims verified by checks that **execute the artifact** | ↑ | By counting text readers (#453's guards). Guard: checks classed *executes* / *reads text* / *model*; only the first counts (`[DATA R1]` 5). Denominator committed at a sha first; native starts at 0 |
+| 3 | Governance share of commits and lines | ↓ | By batching. Guard: lines under `.kiro/`, `governance/`, `canonical/`, **`tools/agent-generator/**`** |
+| 4 | **Fix latency**: P0/P1 filing → fixing PR merged | ↓ | By not filing (F17) or re-classing. Guard: count pass, SYMPTOM and rehearsal findings with no record; downgrades carry a dated reason |
+| 5 | Rules retired ≥ added | ≥ | By splitting. Guard: law words and required checks |
 
-Metrics 1 and 3 can move the wrong way for a good reason: a release that needs Peter's judgment should get it. These are signals for a walk to read, not targets.
+Metrics 1 and 3 can rightly move the wrong way; they are signals, not targets.
 
----
-
-## 6. Open forks (attributed, unresolved)
-
-- **F-1 · L2, the `Agent:`-trailer check.** Now likely part of an owners/touch report (row 7 (b)). *For* (Thurgood, Stacy): honest error is the realistic failure; the class recurred four times (F30), and MP-2 got through a Peter merge. *Against* (outside reader): the trailer is typed text, "apparatus, not a truth check". *Fact* (Lina): every `canonical/agents/**` edit is already Peter-merged; the check only detects ahead of his merge. Synthesis § 3 L2.
-- **F-2 · § 4 boundary, where self-governance stops.** The seats converged on (b) with a deletion asymmetry, and (c) later. The counter-position no seat took: **"Peter samples deletions too."** Under (b), Peter's merge of a seat-authored deletion becomes de facto ratification, which Task-Completion-Protocol § "Completion State in the PR Flow", point 9, says a checks-only merge is not. Synthesis § 4.
-- **F-3 · The freshness gap.** Keep freshness until P10b runs, or accept a gap. **Ruling 0a changes this fork.** 16.1.0 ships under current rules, so the gap is no longer at 16.1.0. It falls at the first release under the reduced regime, if P10b is still "after one release". Synthesis P1, "A gap release".
-- **F-4 · L1 part 2, the word budget.** It is the only mechanical part, and it is itself a new check, in a spec arguing that growth came from additions. Synthesis § 3 L1.
-- **F-5 · L1 part 3, the freeze.** It fires today on Ada's four P1s. **Does it exempt Spec 129?** Peter ranked 129 first, and Ada's objection is not answered. Synthesis § 3 L1.
-- **F-6 · L4, Peter's read.** No read duty for Peter as law unless he commits to it. Still open: whether the fixture plus a scripted pack-diff covers what a human read covers (Leonardo: no; Stacy: a narrow, real 10–15 minutes; Ada: on the token tier, the compile lane replaces any human read). Synthesis § 3 L4.
-- **F-7 · Unset numbers.** N for the freeze; N for P10b's sunset; N green releases before (c); the word budget's size; an acceptable regeneration time (L5). Synthesis § 5 item 8.
-- **F-8 · Signatures as a partnership ritual.** Peter's personal note values agents as partners. Signatures are, among other things, each seat speaking for its own text. Is P10b's own-voice "found items" read enough of that, or does something else carry it? No seat has answered.
+**For 129's lane, stated as a requirement**: "no rise" keys on diagnostic fingerprints (message plus declaration name), so 26 fixes cannot cover 26 new defects; an inventory floor (declarations per file) stops an emptied file reading as a fix; distinct diagnostics; `-wmo` mandatory (`[KENYA R1]` 2). Baseline from the packed tarball at the arming sha (`[ADA R1]`).
 
 ---
 
-## 7. Dependencies
+## 7. Design-phase input: the two-part seat review
 
-- **Spec 129 owns the compile lane and the platform harness** (its first task: `.kiro/issues/2026-10-18-spec-priorities-by-outcome.md` § 3, item 1). 131 depends on it and does not build it. Rows 10 and 19 of § 3 cannot reach **E** or close **B** until it exists.
-- **Open question: who owns the consumer fixture, and where does it live (129 or 131)?** P4's owner seat is unnamed (synthesis P4, "Survives"), which is the F20 pattern. This goes to the R1 round, with Kenya and Data on its native half.
-- **Peter's open PRs and 16.1.0.** At last check #450 and #453 were open. 131's execution waits for them, and 16.1.0 ships under current rules (ruling 0a).
-- **No suspension record is issued outside this spec** (vehicle ruling).
-- **Spec 123 requirement amendments**: removing the signatures (rows 1–2) amends Req 11.5 and VALVE-1 (F19). That is a law change, and it is Peter's to ratify.
+Peter, 2026-10-24. **After the values ballot ratifies**, each seat reviews, through the four values and the collaboration principles, (1) **its own area** and (2) **its seams** with other seats and system areas, explicitly including **the orchestrator seam** (briefs that failed the seats).
+- Each item is **stop**, **simplify** or **fix**, and cites its record or incident.
+- **Net reduction**: an addition names what it retires.
+- **Three items per part.**
+- Each seam is reviewed from both sides, and the views are paired.
+- **Mechanical handoffs over prose protocols** (e.g. the reporter files the record when handing a defect to its owner, F17).
+- **One charter-free cross-check** reads the set for self-serving proposals (F31).
 
----
-
-## 8. Tasks phase: an idea, noted only
-
-**The first merge unit is pure deletion, effective at its merge.** Two cautions from the map, for the tasks round to settle:
-- **"Pure deletion" needs a definition.** Row 3's freshness removal is a code change in `runGuard` (F6), in Lina's scope. Row 7's grants cannot go without changing the charters' read-only clause in the same unit.
-- **Deletions with no replacement go first** (rows 2, 5, the hooks in 18, and row 8's apparatus). Deletions whose outcome needs a replacement (rows 1, 3 and 20) wait for that replacement, or carry an explicit **D** ruled by Peter.
-
-No tasks are planned here.
+Outputs feed each charter rewrite (P7), the OWNERS file and Agent-Directory's routing table. It precedes design.md, so design starts from the seats' evidence.
 
 ---
 
-## 9. Counter-argument (fold-back applied)
+## 8. Dependencies
 
-**The strongest counter**: this outline is itself governance work — a 20-row map, eight forks and five metrics — in a spec about too much governance, while native output does not compile (F8). The cheapest act with the most outcome is still P3's fixes plus P4's compile lane, and those are 129's.
-
-**What fold-back changed**: the map cites the synthesis rather than restating it; requirements are deferred to outcomes; and the tasks idea makes deletions with no replacement go first, so the first unit removes weight before anything is added.
-
-**What survives**: this spec cannot deliver its main outcome (A1 for behaviour) on its own. That outcome depends on 129's compile lane and on restoring real use (P10a), which no governance document can do. If 129 slips, 131 can only delete. Deleting without the replacements turns rows 1, 3 and 20 from **E** into **D**, and that is Peter's call to make knowingly, not a default.
+- **Spec 129 owns the lane and the harness; the consumer fixture's proposed home is 129 too** (all four R1 answers). It runs on the harness's pack → init → generate driver; building it in 131 builds that driver twice (`[LEONARDO R1]` 5; `[KENYA R1]` 1; `[DATA R1]` 1). Each leg is the platform's host target plus one screen; content is Leonardo's and includes a consumer-owned fork (`[LINA R1]`). Keeper: **F-12**; unit: **F-13**.
+- **Native theme emission.** 26 of 39 iOS and 25 of 39 Android component files read a theme nothing emits; 129 or 128 ownership is open in 129's outline (L59). **A native platform's rows 10 and 19 change only at that lane's green. If 128 owns emission, native rows 10 and 19 stay B through 131.**
+- **The rehearsal does not wait for 129.** Re-running it on the 16.1.0 candidate before the tag is handed to the release work, not ruled here.
+- **The findings are their owners'**, owed now under the existing filing rule, and no 131 unit opens while one it cites has no record (§ 4): 10-02 R2/R4/R6 (Lina's record); the 10-24 CLI items (Ada, consulting me on `shared/mcpConfig/**` and `SteeringDirCheck.ts`, Lina on test01 F-3/F-5); component items (Lina); test01 F-1/F-2's install doc (mine, `scripts/derive-install-doc.ts`, Ada consulted); the Product MCP "conceptual" label in the two overview docs (mine, § 2).
+- **Peter's open PRs and 16.1.0**: execution waits; 16.1.0 ships under current rules.
+- **Spec 123 amendments**: removing rows 1–2 amends Req 11.5 and VALVE-1 (F19); Peter ratifies.
+- **Removal gate (P5)**: consumer `sync`/`derive` must not break when signatures are absent.
 
 ---
 
-## 10. Left out on purpose
+## 9. Tasks phase: ideas, noted only
 
-- **Requirements, design and tasks**: the sequential gates hold.
-- **Restating the synthesis**: § 1 facts, P1–P10 text and the § 4 options are cited, not copied.
-- **The release work**: disclosure wording, Ada's parse fixes and #450's held questions (synthesis § "Rulings", item 0 scope).
+**"Pure deletion"** means a unit that removes a mechanism and edits only its importers, its CI steps and the law sentences citing it, adding nothing.
+- **Unreplaced deletions first**: rows 2, 5, 6's count, 8's apparatus, 12's header, 18a. Row 2 is a two-seat code change plus shared core: my `diff-guard.ts` and `regrounding/` files; Lina's importers (`dispositions.ts` L65 imports `signatures.ts`; L280–283 check each row's `signature`); `hash.ts` and `operative-sets.ts`. Each seat is consulted on the other's.
+- **The rehearsal step** (B (b)) lands in the first unit.
+- **OWNERS lands no later than the signature deletion, in the same unit**, via a new source in `source.ts`/`schema.ts` rendered through `adapters/cc.ts` and `adapters/kiro.ts`. Earlier forces re-signing 123 `writeScope[...]` rows; later leaves no unit→seat map (`[LINA R1]` 4). Row 7's grants go in that unit, replaced by the F-2 delegation ballot, which needs OWNERS to compute reach (§ 5).
+- **Replaced deletions** (rows 1, 3, 20) wait for their replacement, or carry a **D** Peter rules.
+
+---
+
+## 10. Forks
+
+**Closed** (`[PETER R3]`, 2026-10-24):
+- **F-9 · The spine**: closed by the F-9 ruling (item 2). B, fix-first, with its conditions and two mechanisms (§ 4).
+- **F-2 · Where self-governance stops**: closed by the F-2 ruling (item 3), "Trust, but verify" (§ 5).
+- **F-6 · Peter's read**: closed by the F-6 ruling (item 4), the generated release findings report (§ 5). It has no separate sampled read.
+- **F-1 · The `Agent:`-trailer check**: closed by the F-2 ruling. The one delegation ballot replaces the question.
+- **F-8 · Signatures as partnership**: closed. R2 answered it (the outcome is working output; a seat's own-voice found items carry the partnership), and its remainder is F-10.
+- **F-5 is narrowed**, not closed: the freeze itself is ruled in as B (d), per platform and CORRECTION-exempt. Its exemption question stays open below.
+
+**Open, for the requirements phase** (attributed; Peter picks):
+- **F-3 · Freshness gap**, narrowed to the first reduced release by the changed-path list.
+- **F-4 · The word budget**: a new check in a spec about additions.
+- **F-5 · The freeze's exemption**: does it exempt 129? *R1 evidence* (`[ADA R1]`, against her own objection): F17 still unfiled; four P1s with no fixing PR.
+- **F-7 · Unset numbers**: freeze N; N green rehearsals for B (d); N before (c); word budget; regeneration time.
+- **F-10 · An owner read of changed paths (P10b)**: keep it, with Stacy's falsifier (a SYMPTOM traced to a changed path whose owner recorded `found: none`) replacing the zero-found sunset; or drop it and let the rehearsal carry row 1. *Against keeping* (outside): `surviving: []` becomes "found: none".
+- **F-11 · Operative item lists**: what reads cite, or gone with their readers (`[LINA R1]` 3).
+- **F-12 · Fixture keeper**: Leonardo or Stacy (`[DATA R1]` 1). Kenya proposes platform seats maintain their legs without verifying. Data at first read harness charter § 4 as ruling that out, then converged in R2 (`[DATA R2]`): charter § 4 forbids claim verification, not keeping the lane running; lane faults go to the platform seat, output faults to Ada and Lina. The fork itself is unchanged. Stacy flags the rehearsal burden if it lands on her seat (`[STACY R2]`).
+- **F-13 · Fixture unit**: inside 129's harness unit, or a follow-on (`[KENYA R1]` 1).
+- **F-14 · Claims-pass length**: cap the record near 3k words with an uncapped generated report, or no cap anywhere (`[STACY R1]` 13).
+- **F-15 · Metrics reader**: the release report Peter reads, or Stacy's RELEASE record (adds to her seat).
+
+---
+
+## 11. Counter-argument, and the values applied to this revision
+
+**Strongest counter**: this is still governance work; the most outcome per hour is the owners' fixes and 129's lane. **Fold-back added** approach B, § 3a and the count; R3's ruling added the blocking rehearsal gate and the record-before-unit gate. **What survives**: B depends on owners fixing, which § 3a says is not happening. The two gates make an unfiled or unfixed finding block a release or a 131 unit. They do not make a fix happen.
+
+**Where the revision still strains:**
+- **Thorough**: rows 3, 4, 9 (downstream), 18b and 18c stay unmeasured, and the unmeasured rule can drop a layer that worked uncounted. Computed reach misses dependencies nobody wrote down (§ 5).
+- **Sustainable**: net −3 standing mechanisms, two of them self-ending. The rehearsal is about 35 minutes per release on one owner, now a blocking gate with no backup owner yet (F-12).
+- **Holistic** (as amended): native consumers get non-compiling output until 129 is green. Seats are asked to cut duties they carry (F31). The burdens are acknowledged; support for the rehearsal owner is still open (F-12).
+- **Thoughtful**: B is reasoned, not tested; its cheapest test is the 16.1.0 candidate (§ 8). "Trust, but verify" is a trial ("Let's give it a shot"); its falsifier is a regression traced to a deletion.
+
+---
+
+## 12. Left out on purpose
+
+Requirements, design and tasks (the gates hold); restating the synthesis; the release work; the values ballot's content (its own file); the product-tier wiring (§ 2).
