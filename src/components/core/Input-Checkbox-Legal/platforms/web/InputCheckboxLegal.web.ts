@@ -106,6 +106,14 @@ export class InputCheckboxLegalElement extends HTMLElement {
   /** Flag to prevent re-syncing Base when change originates from Base */
   private _isHandlingBaseChange: boolean = false;
 
+  /**
+   * The authored `checked`, remembered at FIRST connect (after explicit
+   * consent is enforced, so a refused pre-check is never a default) and
+   * restored by a form reset, as in Input-Checkbox-Base (contract
+   * `validation_form_integration`, inherited). Null until first connect.
+   */
+  private _defaultChecked: boolean | null = null;
+
   /** Base onChange callback (JS property, not attribute) */
   onChange: ((checked: boolean) => void) | null = null;
 
@@ -140,6 +148,12 @@ export class InputCheckboxLegalElement extends HTMLElement {
   connectedCallback(): void {
     // Enforce explicit consent before rendering
     this._enforceExplicitConsent();
+
+    // Remember the authored state once (a pre-check survives only with
+    // requiresExplicitConsent="false"). See Input-Checkbox-Base.
+    if (this._defaultChecked === null) {
+      this._defaultChecked = this.checked;
+    }
     
     // Reset fallback for UAs without form-associated custom elements
     this._attachToForm();
@@ -212,7 +226,7 @@ export class InputCheckboxLegalElement extends HTMLElement {
    * Replaces the hand-wired `reset` listener where FACE is supported.
    */
   formResetCallback(): void {
-    this._resetToUnchecked();
+    this._resetToDefault();
   }
 
   /**
@@ -410,19 +424,23 @@ export class InputCheckboxLegalElement extends HTMLElement {
   }
 
   private _onFormReset = (): void => {
-    this._resetToUnchecked();
+    this._resetToDefault();
   };
 
   /**
-   * Reset to unchecked (Spec 046 Requirement 8.8) and clear the submission
-   * value. Unchecking never needs consent, so this is always allowed.
+   * Restore the authored `checked` (remembered at first connect) and
+   * register its submission value (Spec 046 Requirement 8.8, amended
+   * 2026-10-25). For the default Legal (requiresExplicitConsent) the
+   * authored state is always unchecked. Restoring a pre-check goes through
+   * the `checked` setter, so it is refused if consent became required
+   * since. Like a native reset, it fires no `change` or `consent-change`.
    */
-  private _resetToUnchecked(): void {
-    this.checked = false;
+  private _resetToDefault(): void {
+    this.checked = this._defaultChecked ?? false;
     if (this._baseCheckbox) {
-      this._baseCheckbox.checked = false;
+      this._baseCheckbox.checked = this.checked;
     }
-    // Already unchecked → no attribute change fired above, so clear explicitly
+    // Unchanged state → no attribute change fired above, so register explicitly
     this._updateFormValue();
   }
 

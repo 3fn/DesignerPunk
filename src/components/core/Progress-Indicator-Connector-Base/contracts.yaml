@@ -22,17 +22,18 @@ contracts:
 
   visual_thickness:
     category: visual
-    description: Uses 1px thickness from borderDefault token
+    description: Uses 1px thickness from the progress.connector.thickness token
     behavior: |
       Connector renders at 1px height using the progress.connector.thickness
-      token which references borderDefault (borderWidth100).
+      token, which references borderWidth100 (the primitive border.default
+      also references).
     wcag: null
     platforms: [web, ios, android]
     validation:
       - Thickness is 1px/1pt/1dp across platforms
-      - Value references borderDefault token
+      - Value references borderWidth100 through progress.connector.thickness
     test_approach: |
-      Render connector. Verify height is 1px and references borderDefault token.
+      Render connector. Verify height is 1px and reads progress.connector.thickness.
     required: true
 
   layout_flexible_length:

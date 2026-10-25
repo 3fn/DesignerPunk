@@ -282,7 +282,7 @@
       </div>
 
       <div class="demo-note">
-        <strong>Form Reset:</strong> Per DesignerPunk philosophy, form reset always returns checkboxes to unchecked state (pre-checked checkboxes are not supported as default values).
+        <strong>Form Reset:</strong> Form reset returns each checkbox to its authored state: the <code>checked</code> and <code>indeterminate</code> it had when it first connected. A box authored checked stays checked; a box authored unchecked returns to unchecked. Input-Checkbox-Legal restores <code>checked</code> only, and a pre-check refused under <code>requiresExplicitConsent</code> is never authored.
       </div>
     </div>
 

@@ -94,23 +94,27 @@ export type IconBaseName =
  * 
  * Icon sizes are mathematically derived to maintain perfect optical balance
  * with their paired typography. Each size corresponds to a typography scale
- * and is calculated using the formula: iconSize = fontSize × lineHeight (rounded).
+ * and is calculated using the formula: iconSize = fontSize × multiplier (rounded),
+ * where the multiplier is the paired lineHeight value (size050 uses a custom 1.231).
+ * Rendered pixels are the icon token's value (token-index/semantics.yaml).
  * 
  * Core sizes (90% of use cases):
  * - 20px (size075): Small UI, compact layouts (bodySm, buttonSm, labelSm)
  * - 24px (size100): Standard UI, body text (bodyMd, buttonMd, labelMd, input)
- * - 32px (size125/200/300): Large UI, medium headings (bodyLg, buttonLg, h5, h4)
+ * - 28px (size125): Large UI (bodyLg, buttonLg, labelLg)
+ * - 32px (size200/300): Medium headings (h5, h4)
  * - 36px (size400): Large headings (h3)
  * - 40px (size500): Primary headings (h2)
  * 
  * Available sizes (10% of use cases):
- * - 13px (size050): Smallest text (caption, legal, labelXs)
+ * - 16px (size050, accepted value 13): Smallest text (caption, legal, labelXs)
  * - 28px (size150): Smallest heading (h6)
  * - 44px (size600): Primary heading (h1)
  * - 48px (size700): Display text (hero sections)
  * 
- * All sizes maintain 4pt subgrid alignment (except 13px, which is the
- * smallest size where alignment trade-off is acceptable).
+ * All rendered sizes maintain 4pt subgrid alignment. The accepted value 13
+ * renders 16px (icon.size050 = 13 × 1.231); 13 is the paired typography's
+ * fontSize, kept as the public literal.
  * 
  * @example
  * ```typescript
@@ -130,10 +134,10 @@ export type IconBaseSize = 13 | 20 | 24 | 28 | 32 | 36 | 40 | 44 | 48;
  * fontSize × lineHeight formula.
  * 
  * Token names follow the pattern `sizeXXX` where XXX is the scale level:
- * - size050: 13px (caption, legal, labelXs)
+ * - size050: 16px, accepted value 13 (caption, legal, labelXs)
  * - size075: 20px (bodySm, buttonSm, labelSm)
  * - size100: 24px (bodyMd, buttonMd, labelMd, input) - standard
- * - size125: 32px (bodyLg, buttonLg, labelLg)
+ * - size125: 28px (bodyLg, buttonLg, labelLg)
  * - size150: 28px (h6)
  * - size200: 32px (h5)
  * - size300: 32px (h4)
@@ -161,10 +165,10 @@ export type IconBaseSize = 13 | 20 | 24 | 28 | 32 | 36 | 40 | 44 | 48;
  * ```
  */
 export const iconBaseSizes = {
-  size050: 13,  // icon.size050 - caption, legal, labelXs
+  size050: 13,  // icon.size050 - caption, legal, labelXs (accepted value 13 renders 16px)
   size075: 20,  // icon.size075 - bodySm, buttonSm, labelSm (14px × 1.429 = 20px)
   size100: 24,  // icon.size100 - bodyMd, buttonMd, labelMd, input (standard)
-  size125: 32,  // icon.size125 - bodyLg, buttonLg, labelLg
+  size125: 32,  // bodyLg, buttonLg, labelLg. NOTE: the value 32 renders as size200 (32px); the icon.size125 token is 28px. Held for Peter, see .kiro/issues/2026-10-25-icon-base-size-map-disagrees-with-token-index.md
   size150: 28,  // icon.size150 - h6
   size200: 32,  // icon.size200 - h5
   size300: 32,  // icon.size300 - h4
@@ -205,7 +209,8 @@ export interface IconBaseProps {
   /**
    * Icon size in pixels.
    * 
-   * Must be one of the predefined IconBaseSize values (13, 18, 24, 28, 32, 36, 40, 44, 48).
+   * Must be one of the predefined IconBaseSize values (13, 20, 24, 28, 32, 36, 40, 44, 48).
+   * The value 13 renders 16px (icon.size050).
    * Sizes are calculated from fontSize × lineHeight formula to maintain optical balance
    * with paired typography.
    */

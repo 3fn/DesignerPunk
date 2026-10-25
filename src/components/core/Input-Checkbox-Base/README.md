@@ -359,7 +359,11 @@ It needs a browser with form-associated custom elements (current Chrome, Edge, F
 
 ### Form Reset
 
-When a form is reset, the checkbox returns to unchecked state and indeterminate is cleared, even if it was authored with `checked`. Pre-checked checkboxes are not supported as reset defaults (Spec 046 Requirement 8.8).
+When a form is reset, the checkbox returns to the state it was authored with: the `checked` and `indeterminate` it had when it first connected to the page. A `checked` attribute in the markup and a `checked` property set before the element is added both count. Changes after that (the user's click, or setting `checked` or `indeterminate` from script) are state, not a new default, and moving the element to another place keeps its first default. Reset fires no `change` event and does not call `onChange`, as for a native checkbox.
+
+One difference from a native checkbox: setting the `checked` attribute after the checkbox is on the page does not change what reset returns to, because the component writes its current state to that attribute.
+
+*Changed in 16.1.0.* Earlier releases reset every checkbox to unchecked, even one authored `checked` (Spec 046 Requirement 8.8 as first written, amended 2026-10-25).
 
 ---
 

@@ -214,7 +214,7 @@ All checkbox components in the Form Inputs family inherit these 9 foundational c
 
 **Description**: Checkbox integrates with native form submission and reset.
 
-**Behavior**: On web the host element is a form-associated custom element and reports its value through `ElementInternals`; the native `<input type="checkbox">` inside its shadow root handles interaction and assistive technology, and cannot reach the form itself. Value included in form submission when checked (`value` defaults to "on"); nothing when unchecked; indeterminate is visual only. Form reset returns checkbox to unchecked state (pre-checked checkboxes not supported per DesignerPunk philosophy). Input-Checkbox-Legal is form-associated in its own right.
+**Behavior**: On web the host element is a form-associated custom element and reports its value through `ElementInternals`; the native `<input type="checkbox">` inside its shadow root handles interaction and assistive technology, and cannot reach the form itself. Value included in form submission when checked (`value` defaults to "on"); nothing when unchecked; indeterminate is visual only. Form reset returns the checkbox to its authored state: the `checked` and `indeterminate` it had when it first connected (Input-Checkbox-Legal: `checked` only, and a pre-check refused under `requiresExplicitConsent` is never authored). Input-Checkbox-Legal is form-associated in its own right.
 
 **WCAG Compliance**: 4.1.2 Name, Role, Value
 

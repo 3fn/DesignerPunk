@@ -35,6 +35,19 @@ Header lines confirmed as co-owner for my parts: **Owners** names me for the com
 
 *Signed: Lina, 2026-10-23.*
 
+## Sub-row 3a outcome (2026-10-25, Lina, co-owner, rule 9): component YAML corrected
+
+*Placed here, not at the foot, so that it merges cleanly with the 16.1.0 walk PR, which adds my co-owner addition and owner line at the foot.*
+
+**2026-10-25: RESOLVED-pending-merge**, on branch `fix/release-16.1.0-floor-lina`, in the commit that adds this section. Authority: Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of them as the owners recommend; T is (A)" (walk Floor batch line 3a: "fix before S in a `src/components/**` PR … the fixing PR owns the final list"). Edit kind: CORRECTION; truth: `token-index/` keys, each replacement chosen by what the component's code reads.
+- **The 14 lines on the five-name grep, plus their blocks** (13 edits in 7 files). `borderDefault` → `border.default` (Chip-Base ×2, Avatar-Base ×2, Button-Icon). `borderEmphasis` → `border.emphasis` (Avatar-Base, on the same line). `color.contrast.onPrimary` → `color.contrast.onAction` and `color.primary` → `color.action.primary` (Button-Icon L150–152 and L211–212; Button-CTA L213–224, where `color.background` → `color.structure.canvas`, which the secondary CTA's CSS reads, and `1px color.primary` → `border.default color.action.primary`). `blend.iconLighter` → `color.icon.opticalBalance` (blend200) in Icon-Base L92. Progress-Indicator-Connector-Base (contracts ×4, schema ×1) is a different correction, not a rename: `progress.connector.thickness` references the primitive `borderWidth100` (`token-index/components.yaml`), not `border.default`, so the lines now name the component token and its primitive.
+- **Re-grep after**: `grep -rnE 'borderDefault|color\.contrast\.onPrimary|blend\.iconLighter|color\.error\.strong|accessibility\.tapArea\.recommended' src/components --include='*.yaml'` → no lines (exit 1).
+- **Index**: `npm run generate:platform-tokens` leaves `token-index/` unchanged, since prose does not feed `consumers`. **Post-merge**: run the application MCP `rebuild_index` so served responses carry the new text. Its staleness gate would also pick it up.
+- **Tests**: `npm test -- src/components` 91 suites, 2489 tests pass; the `application-mcp-server` suite passes 523.
+- **The wider list: the final list this PR owns** (separate commit, 29 edits in 17 files). A scan of every token-like name in `src/components/**/*.yaml` against the `token-index/` keys (and their family prefixes) found these served non-key names beyond the five-name grep. Each was fixed by what the code reads: `radiusFull` → `radius.full` (Nav-TabBar-Base ×4, Progress-Bar-Base ×3); `radiusCircle` → `radius.circle` (Button-Icon ×3); `borderEmphasis`/`borderHeavy` → `border.emphasis`/`border.heavy` (Avatar-Base, Chip-Base); `color.surface` → `color.structure.surface` (Badge-Count-Base, Badge-Label-Base, Container-Base); `color.surface.primary` → `color.structure.surface.primary` (Container-Card-Base); `color.border.default` → `color.structure.border` (Container-Base ×4). Container-Base's "color.border.emphasis" common value has no key, and the line now says to use `border: 'emphasis'`. `color.badge.*.notification` → `color.feedback.notification.*` (Badge-Count-Notification ×4). `color.error` / `color.success.strong` → `color.feedback.error.text` / `color.feedback.success.text`, which is what Input-Text-Base's CSS reads for the border. Avatar-Base's `color.avatar.border`, `color.contrast.onSurface` and `color.avatar.{human,agent}` → `color.structure.border`, `color.contrast.onDark`, `color.identity.{human,agent}`; its icon line now names the one icon token both types use (`color.contrast.onDark`). Icon-Base's `18px (size075)` → `20px`, in the schema and README, because `IconBaseSize` has 20 and no 18.
+- **Left as they are, on purpose**: Container-Card-Base's `'border.default' | 'border.subtle'` are `borderColor` prop values (API), not token names. `iconBlend()` is an iOS function. Icon-Base's `sizeNNN` labels are `iconBaseSizes` keys. **Found, not fixed**: that map's `size050` = 13px and `size125` = 32px disagree with the token index (16px and 28px). Filed as `.kiro/issues/2026-10-25-icon-base-size-map-disagrees-with-token-index.md` (P0, Lina, Ada's read first). It is a phase-1 finding, since it was filed after the walk.
+- **Not done here: the 24 README lines on the five-name grep.** They are shipped but not MCP-served, and not floor-class on my reading. They are deferred because they are not renames: Button-VerticalList-Item's table also names the retired `color.select.*` and `color.error.*` palette, which maps onto `color.feedback.select.*` by state, and that needs a read of the CSS for each state. That is more than this diff should carry. They stay open in this record.
+
 ## Ada's part, addition (2026-10-24, Ada, co-owner, rule 9): Token-Governance teaches a component-token name shape no component token has
 
 Found in my Spec 131 R1 read (`.kiro/specs/131-governance-simplification/feedback/design-outline.md` § "[ADA R1]", (b) item 2); filed here, not as a new record, because it is the same falsity at the same readers (a served doc and my shipped charter) and the same fix: one CORRECTION against `token-index/`. *(2026-10-24, Ada: except L565/L580, whose referent is `src/`; see that bullet.)* Re-read at `e4e61eea2`.
@@ -122,6 +135,8 @@ On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of
 - **Still open for me**: nothing owed beyond the two branches. 3a is floor-class, so "carried" never stands for it; it closes at those PRs' merge, before S.
 
 *Signed: Lina, 2026-10-25.*
+
+*(2026-10-25, Lina, owner of the component parts: my 3a component-YAML part rides #471; the governance-doc part rides the docs PR (Ada/Thurgood), not yet open. The Trigger line is unchanged: this record is shared, and closes when both parts have merged.)*
 
 ## Ada's part fixed (2026-10-25, Ada, co-owner, rule 9)
 
@@ -218,3 +233,5 @@ Authority: Peter 2026-10-25 (chat, relayed): "Fix all of them as the owners reco
 **Stacy's spelling note, resolved**: `buttonicon.inset.medium` (lowercase) is the registry key. `src/registries/ComponentTokenRegistry.ts` L224 builds `${component.toLowerCase()}.${key}`, `token-index/components.yaml` carries `buttonicon.inset.{small,medium,large}` and no camelCase form, and the registry's own doc comments use `buttonicon.inset.large`. The camelCase `buttonIcon.inset.*` appears only in source comments under `src/components/core/Button-Icon/`, which are not the key. Core Goals L70's `buttonicon.inset.medium` is correct (Ada's walk-line finding stands).
 
 *Signed: Thurgood, 2026-10-25.*
+
+#471 merged 2026-10-25 (`83cfae189`): the 3a component-YAML part is on main; the governance-doc part is this PR.
