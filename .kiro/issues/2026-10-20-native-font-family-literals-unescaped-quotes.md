@@ -113,3 +113,9 @@ Related, same incident: `2026-10-20-kotlin-output-no-import-block.md` (Data; the
 - A compile smoke check of generated Swift and Kotlin would have caught this at the parse step; the harness charter (`2026-09-17-…`) is its home, and this record fires that charter's § 3 trigger 2.
 
 **No fix is authorized by this record.**
+
+**Correction (2026-10-24, Ada, owner, rule 9; reported by Kenya, harness charter § "Evaluation entry (2026-10-20)", iOS row 6, "Counting note" and "Parse step")**: § "Evidence" says "All 34 parse errors sit on the four font-family lines; the rest of the file parses." That is false. Re-run at `e4e61eea2` (Swift 6.2): `swiftc -parse dist/DesignTokens.ios.swift 2>&1 | grep -c 'error:'` → 34 raw, which is 17 distinct (Swift prints each diagnostic twice). 8 distinct (16 raw) are on the four font-family lines 133, 135, 137, 139; 9 distinct (18 raw) are on the seven WCAG lines 684–690, `2026-10-03-native-generator-findings-for-spec-129-intake.md` Item 2. Today the record's own `sort -u` command lists all eleven lines (133–139 and 684–690). Why it listed four at `50f89e6f9` is not reconstructed (UNVERIFIED); the claim should not have been written without checking the WCAG lines. Nothing else in this record changes.
+
+## Review of the 2026-10-24 correction (2026-10-24, Kenya) — trust, but verify
+- Checked: `swiftc -typecheck` on `dist/DesignTokens.ios.swift` (Swift 6.2) → 197 distinct errors; the parse-step lines in my charter row 6 (17 distinct on lines 133,135,137,139,684-690).
+- Finding: agree. The correction restates my report correctly (34 raw = 17 distinct; 8 on the four font-family lines, 9 on the seven WCAG lines 684-690). Nothing of mine is missing from it. The record's own `sort -u` at `50f89e6f9` listing only four lines is Ada's open UNVERIFIED; I cannot explain it either (I measured on the later tree).

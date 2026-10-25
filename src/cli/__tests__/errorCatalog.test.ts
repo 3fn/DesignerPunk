@@ -334,3 +334,33 @@ describe('errorCatalog — init off a terminal (R3-1)', () => {
     expect(m).toContain(`The install guide: ${INSTALL_GUIDE_PATH}`);
   });
 });
+
+// ---------------------------------------------------------------------------
+// `sync`'s migration rows (one-hop rehearsal residuals R2 (b) and R6,
+// `.kiro/issues/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md`).
+// AUTHORED 2026-10-24 (Lina): no design.md row yet (owed at 123's next design touch).
+// ---------------------------------------------------------------------------
+
+describe('errorCatalog — sync migration: the registry-login row and the grouped cannot-tell row (R2 (b), R6)', () => {
+  const { registryAuthFailedMessage, cannotTellGroupMessage } = require('../shared/errorCatalog') as typeof import('../shared/errorCatalog');
+
+  test('the login row, verbatim (plural, with the registry origin)', () => {
+    expect(registryAuthFailedMessage('E401', 'https://npm.pkg.github.com', 34)).toBe(
+      "your npm registry refused sync's requests for @3fn/core (E401 from https://npm.pkg.github.com): the access token your .npmrc gives that registry is missing, expired or not allowed to read the package. " +
+        "That is a login problem, not a finding about your copies, but it means sync could not retrieve the package content it judges them against, " +
+        'so it cannot tell whether 34 copies under src/components/core/ were modified (named below). Review before removing.',
+    );
+  });
+
+  test('the login row: singular, and no registry when npm named none', () => {
+    const m = registryAuthFailedMessage('ENEEDAUTH', null, 1);
+    expect(m).toContain('(ENEEDAUTH):');
+    expect(m).toContain('whether 1 copy under src/components/core/ was modified');
+  });
+
+  test('the grouped cannot-tell row, verbatim', () => {
+    expect(cannotTellGroupMessage(['A', 'B'], 'the installed version is unknown')).toBe(
+      'cannot tell whether these 2 copies under src/components/core/ were modified (A, B) — the installed version is unknown. Review before removing.',
+    );
+  });
+});
