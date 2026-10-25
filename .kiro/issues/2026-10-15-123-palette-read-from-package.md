@@ -31,3 +31,9 @@ Has the completeness spec kicked off, or has release-5 prep begun? If either, is
 ## Trigger fired (2026-10-18, Ada)
 
 The start condition fired: Spec 129's kickoff trigger is recorded as FIRED by the priorities record (#403, `.kiro/issues/2026-10-18-spec-priorities-by-outcome.md` § 3). Firing event: `merge:#403`. 129 is ranked first; PR 0 is done (#368); PR 1 rides 129's first tasks and folds this record into 129's design question at the kickoff, as this record's Trigger line provided. Deadline token now on the Trigger line: `release:next:phase-1`. If PR 1 has not landed by then, the release owner carries the CHANGELOG known-limitation sentence forward, corrected to whatever is then true. Not closed: nothing has shipped.
+
+## C-1 done (2026-10-25, Ada, 16.1.0 walk row 20)
+
+The CHANGELOG sentence for human readers is added to `CHANGELOG.md` `## [Unreleased]` § "Known limitations in this release", in the commit that adds this line (`git log -1 --format=%H -- CHANGELOG.md` on `chore/release-16.1.0-ada-prerelease`, and on `main` once merged), at the orchestrator's direction. It states where the parts come from, says "unchanged from 16.0.0", and points to `docs/consumer/INSTALL.md` § 4, which carries the full list (Stacy F-D: the reader-facing truth is INSTALL L77 and L97, present and unchanged since `v16.0.0`; there is no diff to that file over `v16.0.0..HEAD`). Checked at `d740624b8`: `src/generators/generateTokenFiles.ts` has no diff over `v16.0.0..HEAD`, and `TokenFileGenerator.ts`'s diff is a docstring and import comment only, so the sentence is true. The record is not closed: Spec 129's PR 1 has not landed, so it closes at the release under its Trigger as it stands (`release:next:phase-1`), and stays P2 `(record)` while the sentence is true.
+
+*Signed: Ada, 2026-10-25.*
