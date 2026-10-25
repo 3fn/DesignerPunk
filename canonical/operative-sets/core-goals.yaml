@@ -103,7 +103,7 @@ units:
       - id: practice-15
         kind: obligation
         label: "Semantic tokens — purpose-built for specific use cases (e.g."
-        text: "**Token Selection Priority (MUST follow this order):**\n1. **Semantic tokens** — purpose-built for specific use cases (e.g., `tapAreaRecommended` for touch targets, `color.contrast.onPrimary` for content on primary backgrounds)"
+        text: "**Token Selection Priority (MUST follow this order):**\n1. **Semantic tokens** — purpose-built for specific use cases (e.g., `color.contrast.onAction` for content on action-colored backgrounds, `space.inset.100` for inset padding)"
       - id: practice-16
         kind: obligation
         label: "Primitive tokens — when no semantic token exists, check if a"
@@ -111,7 +111,7 @@ units:
       - id: practice-17
         kind: obligation
         label: "Component tokens referencing primitives — when a component n"
-        text: "**Component tokens referencing primitives** — when a component needs a semantic name but the value exists as a primitive, create a component token that references the primitive (e.g., `buttonIcon.inset.medium = space125`)"
+        text: "**Component tokens referencing primitives** — when a component needs a semantic name but the value exists as a primitive, create a component token that references the primitive (e.g., `buttonicon.inset.medium = space125`)"
       - id: practice-18
         kind: obligation
         label: "Hard-coded values — only as last resort, requires user appro"

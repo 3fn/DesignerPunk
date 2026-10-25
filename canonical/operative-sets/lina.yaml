@@ -453,7 +453,7 @@ units:
       - id: priority-semantic
         kind: step
         label: "Semantic first"
-        text: "**Semantic tokens** — purpose-built for specific use cases (e.g., `tapAreaRecommended` for touch targets, `color.contrast.onPrimary` for content on primary backgrounds). Use freely. Verify semantic correctness."
+        text: "**Semantic tokens** — purpose-built for specific use cases (e.g., `color.contrast.onAction` for content on action-colored backgrounds, `space.inset.100` for inset padding). Use freely. Verify semantic correctness."
       - id: priority-primitive
         kind: step
         label: "Primitive second"
