@@ -37,7 +37,7 @@
 - **Visual change on web**: the large Button-CTA's icon is 28px (was 32px) and `iconBaseSizes.size125` is `28` (was `32`) (#482; walk line 29 (ii)). The accepted size `13` still draws 16px; Peter kept the literal with the note (walk line 29 (i), his comment on #469).
 - **Button-CTA's `ButtonCTATokens` and `getButtonCTAMinWidth` are removed** (#452). Not reachable through `exports`; the web and iOS components read the `sizing` tokens like Android.
 - **`generate`** warns about a component token or an own schema name your token source does not have (#452); `sync` says when your token index is behind the installed package (#470); the upgrade report no longer ends with a false all-clear (#462).
-- **Theme claims corrected to what `generate` emits** (#451): the Sparky and Ada charters and five served token docs; no generated output changes.
+- **Theme claims corrected to what `generate` emits** (#451): the Sparky and Ada charters and 11 sites in served token docs; no generated output changes.
 - **Bundled libraries** (#483): see "Dependency disclosure".
 - **Served governance documents and charters**: 31 governance docs, Core Goals and the Systems Overview name token-index keys (#472); 48 broken relative links fixed (#463); the always-loaded overviews' counts and the Product MCP description corrected (#465, #467); the deprecated disabled blend is no longer "scheduled for removal" (#394); one `Process-Spec-Planning.md` sentence about a parser a consumer does not have (#412); the Form-Inputs reset sentence and the Icon-Base size map (#471).
 
