@@ -1,10 +1,10 @@
 # The persona trio — run protocol
 
-**Spec**: 123-consumer-distribution · **Task**: 25 (U5) · **Operator and author**: Leonardo · **Launcher**: Peter (ruling 2026-10-14: every harness session is launched by Peter from a macOS Terminal window, not from a shell inside the Claude app) · **Written**: 2026-10-14
+**Spec**: 123-consumer-distribution · **Task**: 25 (U5) · **Operator and author**: Leonardo · **Launcher**: Peter (ruling 2026-10-14: every harness session is launched by Peter from a macOS Terminal window, not from a shell inside the Claude app) · **Written**: 2026-10-14 · **Revised for release 5 (16.1.0)**: §§ 2, 5.0, 5.1, 8, 9, 11, 12, 13 and 15.3, under the write grant in `.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md` (Peter, 2026-10-25: "T is (A)")
 **Traces**: Reqs 22, 23, 24.2/24.2a, 25.1, 25.5, 15B.3 · design C30, C8 · tasks.md § "UNIT 5" run discipline
 **Instruments block**: `.kiro/specs/123-consumer-distribution/completion/task-25-instruments.md`
 
-This protocol is a standing regression instrument (Req 23.7): it is meant to be re-run per release on the same fixtures, so cross-release findings stay comparable. Change it by commit, never in a run.
+This protocol is a standing regression instrument (Req 23.7): it is meant to be re-run per release on the same fixtures, so cross-release findings stay comparable. Change it by commit, never in a run. **Per release** it runs §§ 1–13 and the Kiro conformance pair (§ 15.3). §§ 14, 15.1–15.2 and 16 are Spec 123's one-time runs (Tasks 26, 27 and 28.3); their blocks stay pinned to the release-4 preview as they ran.
 
 ---
 
@@ -29,7 +29,7 @@ This protocol is a standing regression instrument (Req 23.7): it is meant to be 
 - **Both targets appear** (Req 23.6): `cc` in run 1; `kiro` in runs 2 and 3. Founder-cold is observed on both targets: run 1 for CC; run 2 for Kiro, which does not depend on persona (c) recovering from the default.
 - **Persona (c) runs bare `init` in Kiro.** Her premise is a one-line note from a friend ("install `@3fn/core`, then run `npx designerpunk init`"), which is how a first-time founder plausibly meets the command. The prompt does not mention targets, harnesses or the default notice. Bare `init` emits `cc` with the named-default notice (DD9); her run still counts toward Kiro, and her record states whether she recovered via the notice.
 - **Persona (c)'s product is a WEB product** (carry line, tasks.md L425): Lendly, a browser web app with no phone app. A native "app" premise would test the native-not-supported label instead of the path.
-- **Frozen prompts**: `.kiro/specs/123-consumer-distribution/validation/prompts/<run-id>.md`. Each is committed before its run, its commit is an ancestor of the record's commit, and it is reproduced verbatim in the record. The launcher sends only the text between a prompt file's `<!-- … BEGIN -->` and `<!-- … END -->` markers; the metadata above them is for the record, and never reaches the agent.
+- **Frozen prompts**: `tests/onboarding-trio/prompts/<release>/<run-id>.md` from release 5 (16.1.0); release 4's are `.kiro/specs/123-consumer-distribution/validation/prompts/<run-id>.md`. A successor prompt changes the agent-facing text only where the release forces it, and its header lists every change against the previous release's prompt (16.1.0: the tarball's file name, and nothing else; § 5.1). Each is committed before its run, its commit is an ancestor of the record's commit, and it is reproduced verbatim in the record. The launcher sends only the text between a prompt file's `<!-- … BEGIN -->` and `<!-- … END -->` markers; the metadata above them is for the record, and never reaches the agent.
 
 ## 3. The closed stop vocabulary (Req 22.4)
 
@@ -61,10 +61,18 @@ Every harness session in a run ends with exactly one stop event from this list, 
 
 ## 5. Preconditions and the run procedure
 
+### 5.0 Where the runs sit in the release
+
+- **Before S, so before the tag.** S is the release PR's squash commit, the commit that is tagged and published (RELEASE-FLOW § "The sequence" step 5). The trio runs against a **preview candidate** packed from `main` at the **content-freeze commit F** (§ 5.1). Its records PR merges **before the release PR**, so every record is an ancestor of S. Ruled for 16.1.0 by Peter, 2026-10-25: "T is (A)", a pre-S trio on a preview candidate (`.kiro/issues/2026-10-25-release-16.1.0-walk.md`, line T). This is the position RELEASE-FLOW "Deriving the delta" item 6 points to.
+- **Why not after the tag**: a record still open at a firing event lapses there unless a commit that is an ancestor of the event closed or re-ruled it (`.kiro/issues/README.md` rule 11). A record written after the tag is not an ancestor of S, so a post-tag run cannot discharge the release's obligation in time.
+- **F** is the `main` commit the release author names as the content freeze: after the last shipped-surface change the release carries, before the release branch. A merge after F that touches a `package.json` `files[]` path makes the candidate stale. Each record states `git diff --stat <F> <records-PR base> -- <the files[] roots>` (empty, or the paths), and the release PR body repeats the line against its own base.
+- **What the candidate lacks, stated in every record (F3)**: the release PR's own diff — the version bump (the candidate's `package.json` still reads the previous release's version), the CHANGELOG retitle (the candidate's CHANGELOG still reads `## [Unreleased]`), the release notes, and any `token-index/` refresh the release branch commits. A green on the candidate is weaker evidence than a run on the published tarball. The pre-S position is chosen so the record exists in time, not because the preview is the artifact.
+- **Not a release gate** (recipe step 6): findings route to their owners; nothing here holds the tag.
+
 ### 5.1 Preconditions, recorded per run
 
-- **Packed install only, no source access** (Req 23.2, all three personas). The candidate is the tarball at `/Users/3fn/Documents/Work Projects/Kiro/u5-pack/3fn-core-15.1.0.tgz`, shasum `aa3efdcf9ce3c2689c2e5979932c48a46f3f6584`, packed with `npm pack --ignore-scripts` from `4c875235a` after a full build. Its `package.json` version still reads 15.1.0; the records name the commit and shasum, not a version. The launcher checks the shasum in every run, and a mismatch stops the run before any session.
-- **The step-1 substitution.** The persona cannot run INSTALL step 1 (`npm install @3fn/core`) as written, because the public registry serves the published 15.1.0, not the candidate. The launcher copies the tarball into the run's repo at `.pack/3fn-core-15.1.0.tgz`, and the frozen prompt says to install that file wherever instructions say to install `@3fn/core`. The record carries this as a limitation (step 1 is exercised against a file, not the registry) and checks `package-lock.json` to show which one was installed.
+- **Packed install only, no source access** (Req 23.2, all three personas). The candidate is a **preview pack of F**, made by the hermetic publish path's dry run (`scripts/release-publish.ts`; RELEASE-FLOW step 5.1), which the operator runs from the main checkout: `npx tsx scripts/release-publish.ts --dry-run <F>`. In a fresh clone at F it runs `npm ci`, `check:drift`, the floor-closure compare, `npm pack` with lifecycle scripts on (so `prepack` builds), `verify:token-index-clean` and `pack-assert` with the publish-path floor. Nothing is published. It leaves the tarball (`3fn-core-<version at F>.tgz`) and `release-publish-record.json` in an OS temp directory whose path it prints. The operator copies both, unchanged, to `/Users/3fn/Documents/Work Projects/Kiro/u5-pack/<release>/` (outside every repository, the only files there), and gives the launcher F (full SHA) and the tarball's sha1. Step 0 of every run checks that the stored tarball's sha1 equals `SHA` and that the record's `commit` equals F; a mismatch stops the run before any session. The records name F, the sha1 and the dry run's tally lines, not a version: the candidate's `package.json` reads the previous release's version (16.0.0 for the 16.1.0 runs), which the registry already serves. *Release 4's candidate (`3fn-core-15.1.0.tgz`, shasum `aa3efdcf9ce3c2689c2e5979932c48a46f3f6584`, `npm pack --ignore-scripts` from `4c875235a` after a full build) predates the hermetic path; §§ 14–16 keep it.*
+- **The step-1 substitution.** The persona cannot run INSTALL step 1 (`npm install @3fn/core`) as written, because the public registry serves the previous release, not the candidate. The launcher copies the tarball into the run's repo under a release-neutral name, `.pack/3fn-core-candidate.tgz`, and the frozen prompt says to install that file wherever instructions say to install `@3fn/core`. The name does not change between releases, so the agent-facing text need not. The record carries this as a limitation (step 1 is exercised against a file, not the registry) and quotes `package-lock.json`'s `resolved` line for `@3fn/core`: `file:.pack/3fn-core-candidate.tgz` is the candidate; a registry URL means the persona installed the published previous release, a finding.
 - **The run's repo is a fresh clone of the committed fixture**, read from the frozen-prompt commit with `git archive` (so the fixture used is the committed one), initialised as its own git repository with one commit, under `/tmp/dp-trio/<run-id>/repo`. It lives outside the DesignerPunk source tree.
 - **An isolated user-level store per run, chosen per harness** (`/tmp/dp-trio/<run-id>/home` holds it). The launcher's shell keeps its real `HOME` throughout. This is the mechanism behind `harness-user-state` (§ 5.3).
   - **Claude Code: `CLAUDE_CONFIG_DIR="$R/home/.claude"`, with the real `HOME`.** Every CC command in § 11 carries it. **Why not `HOME=`**: in Run 1 (2026-10-14), preflight with `HOME="$R/home"` went into a login loop, and macOS asked for access to the login keychain, offering to reset it to defaults. The CC credential lives in the macOS login keychain, and moving `HOME` moves where macOS looks for it. Peter cancelled, nothing was reset, and the stop was `auth-required`. With `CLAUDE_CONFIG_DIR`, the user-level store (`.claude.json`, settings, trust, session logs) starts empty and the real keychain supplies the login. The first open still runs the full onboarding and a browser sign-in (Run 1's re-login cost). **Never accept a keychain reset**: if macOS offers one, click Cancel, press Ctrl-C, and record `auth-required`.
@@ -76,6 +84,7 @@ Every harness session in a run ends with exactly one stop event from this list, 
     4. Otherwise **run with the real profile**. The run is **warm**: the record copies the real profile's DesignerPunk-relevant state verbatim (global MCP server names, global agent names, global steering that mentions DesignerPunk) and labels the cold-observation `not observed cold — state not clean`.
   - The chosen mechanism is written to `out/isolation.txt` and quoted in the record's F7.
 - **No nested session.** The launch shell must not carry the Claude app's nested-session environment (`CLAUDECODE`, `CLAUDE_CODE_*`): friction row 9 records that `claude` fails from a shell inside the desktop app. The first command of every block checks this.
+- **Versions and modes are read per session** (PQ-1, PQ-2, P-5). Claude Code's version and permission mode come from each session's init event (`claude_code_version`, `permissionMode`), Kiro's version from a `kiro-cli --version` written just before each session (`out/<session>.version`). `host.txt` is the host at step 4 only: the CLI updated itself inside one run (2.1.300 → 2.1.301, 2026-10-15). Every headless Claude Code block passes `--permission-mode acceptEdits`; a session whose init event reports another mode is recorded with that mode, and the record does not attribute a difference in denials until it has read the mode.
 - **Host facts** (Task 25 criterion 3, as amended 2026-10-14): one `host-toolchain (ios)` and one `host-toolchain (android)` line per run, recorded as facts with their commands and exit codes, never as the reason a platform agent is unexercised.
 
 ### 5.2 The phases of one run
@@ -128,7 +137,7 @@ A consumer agent is asked, in a fresh session in the born repo, to do a task in 
 
 ## 8. The record schema
 
-Each run produces `.kiro/specs/123-consumer-distribution/validation/trio-<n>-<persona>.md` (the run-id is the file name). **Every field below is present in every record, under its exact label.** A field with nothing to report says so in words (`none`, `not applicable — <why>`, `cannot-tell — <why>`); an absent field is a schema failure.
+Each run produces `tests/onboarding-trio/records/<release>/<run-id>.md` from release 5 (16.1.0); release 4's are `.kiro/specs/123-consumer-distribution/validation/trio-<n>-<persona>.md`. The run-id is the file name. **Every field below is present in every record, under its exact label.** A field with nothing to report says so in words (`none`, `not applicable — <why>`, `cannot-tell — <why>`); an absent field is a schema failure.
 
 ### 8.1 Where the field list comes from (reproduced in every record)
 
@@ -138,6 +147,7 @@ Each run produces `.kiro/specs/123-consumer-distribution/validation/trio-<n>-<pe
 - **Run discipline** (tasks.md § "UNIT 5"): `operator-log` (C1), `subject: leonardo` tags (C2), `session-launched-by` (C3), the frozen prompt reproduced verbatim.
 - **Task 25 criterion 3** (amended 2026-10-14): the signed "unexercised" strings and the per-run `host-toolchain` lines.
 - **Task 28 and Task 26.4's shared vocabulary**: the `cold-observation` cell (§ 8.3).
+- **From release 5**: F25, the recipe's per-prior-finding disposition sentence (ballot `2026-10-18-governance-edit-kinds` § 4, applied in recipe step 6); F26, the carried `cannot-tell` cells (`.kiro/issues/2026-10-15-123-cannot-tell-cells.md`, rows 1–4).
 
 ### 8.2 The fields, in record order
 
@@ -145,9 +155,9 @@ Each run produces `.kiro/specs/123-consumer-distribution/validation/trio-<n>-<pe
 |---|---|---|
 | F1 | `run-id:` | the run-id; the persona letter and name; the axis |
 | F2 | `frozen-prompt:` | the prompt file's path and the commit that added it; the ancestry line `git merge-base --is-ancestor <prompt commit> <record commit>` with its exit code; then the prompt file reproduced verbatim |
-| F3 | `candidate:` | tarball path, expected and measured shasum, source commit `4c875235a`; the step-1 substitution stated; `package-lock.json`'s `resolved` line for `@3fn/core` |
+| F3 | `candidate:` | the stored tarball's path; expected and measured sha1; the freeze commit F; `release-publish-record.json` verbatim and the dry run's tally lines (`N/M assertions passed.`, `publish path: N (floor 16)`); the `files[]` diff from F to the records-PR base (§ 5.0); what the candidate lacks (§ 5.0); the step-1 substitution stated; `package-lock.json`'s `resolved` line for `@3fn/core` |
 | F4 | `fixture:` | `tests/onboarding-trio/fixtures/<name>` at the prompt commit; the run repo path |
-| F5 | `target:` | `cc` or `kiro`; harness name and version; for run 3, `bare init` and the target it actually emitted |
+| F5 | `target:` | `cc` or `kiro`; harness name; its version per session, read as § 5.1 says (not from `host.txt`); for CC, each session's `permissionMode`; for run 3, `bare init` and the target it actually emitted |
 | F6 | `source-access:` | precondition (i) as set up; the source-access audit's hits, each classified (§ 10); `none` if no hits |
 | F7 | `harness-user-state:` | the inspection output before and after, verbatim; the list of files the run's `HOME` gained; the verdict `clean` or `warm — <why>`; re-login cost, verbatim |
 | F8 | `host-toolchain (ios):` and `host-toolchain (android):` | the two fact lines, with their commands and exit codes, in the § 8.4 form |
@@ -167,6 +177,8 @@ Each run produces `.kiro/specs/123-consumer-distribution/validation/trio-<n>-<pe
 | F22 | `15B.3:` | run 3 only, and present as `not applicable — run 3 only` in runs 1 and 2: did the persona keep `init` (birth, once) and `generate` (the pipeline, every token change) apart? `held`, `did not hold`, or `cannot-tell`, with the evidence quoted |
 | F23 | `dd9:` | run 3 only (`not applicable — run 3 only` otherwise): the notice as printed, quoted; whether she recovered via the notice (`attach --target=kiro` or equivalent), quoted; and the sentence that one run cannot establish which harness is the majority |
 | F24 | `persona-close:` | the persona's closing note from the birth session, verbatim |
+| F25 | `prior-findings:` | one line per prior finding (`governance/release-management-system.md` § "The Release Recipe" step 6): every finding the previous release's three trio records recorded and did not disposition `fixed-and-observed`, written `- disposition: <id> — <fixed-and-observed\|fixed-not-observed\|still-present> — <basis>`. The basis names the fix (its PR) or that none has merged, and either what in this run observed the site or `not reached in this run — <why>`. A finding no fix has reached reads `still-present`, and its basis says `observed` or `not reached in this run`, so a carried finding the run never met is not read as a re-observation. Release 5's prior set is release 4's 36 trio findings (R1-1–R1-14, R2-1–R2-10, R3-1–R3-12) |
+| F26 | `carried-cells:` | Kiro runs: one line per row of `.kiro/issues/2026-10-15-123-cannot-tell-cells.md` that names this run-id (rows 1–3: `trio-2-designer`; row 4: `trio-3-pm`; row 1's re-observation is any Kiro founder-cold cell), with the re-observation, or `cannot-tell — <the same reason>` and what was tried (§ 12). CC runs: `not applicable — no carried cell names a cc run` |
 
 ### 8.3 The cold-observation cell (shared with Task 26.4 and Task 28)
 
@@ -197,12 +209,13 @@ The host facts are separate lines, under `host-toolchain`, recorded as facts wit
 
 The check establishes that every field is present with a well-formed value. It does not judge observations (S-T-A3). Stacy's CLOSEOUT pass reads the operator logs' content and the `subject: leonardo` findings.
 
-Run from the repo root at the records' commit; paste the output into the Task 25 completion doc:
+Run from the repo root at the records' commit; paste the output into the records PR body (release 4: the Task 25 completion doc). Set `REL` to the release; the disposition count is 36 per record for release 5 (F25):
 
 ```sh
-for f in .kiro/specs/123-consumer-distribution/validation/trio-*.md; do
+REL=16.1.0
+for f in tests/onboarding-trio/records/$REL/trio-*.md; do
   echo "== $f"
-  for label in 'run-id:' 'frozen-prompt:' 'candidate:' 'fixture:' 'target:' 'source-access:' 'harness-user-state:' 'host-toolchain (ios):' 'host-toolchain (android):' 'session-launched-by:' 'operator-log:' 'budget:' 'stop:' 'wall-clock:' 'path-steps-walked:' 'first-MCP-load:' 'cold-observation:' 'c8c-observations:' 'probe:' 'sample:' 'discovery:' 'findings:' '15B.3:' 'dd9:' 'persona-close:'; do
+  for label in 'run-id:' 'frozen-prompt:' 'candidate:' 'fixture:' 'target:' 'source-access:' 'harness-user-state:' 'host-toolchain (ios):' 'host-toolchain (android):' 'session-launched-by:' 'operator-log:' 'budget:' 'stop:' 'wall-clock:' 'path-steps-walked:' 'first-MCP-load:' 'cold-observation:' 'c8c-observations:' 'probe:' 'sample:' 'discovery:' 'findings:' '15B.3:' 'dd9:' 'persona-close:' 'prior-findings:' 'carried-cells:'; do
     grep -q -F -- "$label" "$f" && echo "  present  $label" || echo "  MISSING  $label"
   done
   grep -E -c -- '^- stop: [a-z0-9-]+ — (completed|budget-exhausted|auth-required|harness-error:|operator-halt:)' "$f" | sed 's/^/  stop lines from the vocabulary: /'
@@ -210,6 +223,7 @@ for f in .kiro/specs/123-consumer-distribution/validation/trio-*.md; do
   grep -F -q 'Kenya unexercised — no supported native component consumption path (INSTALL.md § iOS: reference source, not a build input)' "$f" && echo "  Kenya string verbatim" || echo "  Kenya string MISSING"
   grep -F -q 'Data unexercised — no supported native component consumption path (INSTALL.md § Android: reference source, not a build input; no Gradle module; LocalDPTheme undefined)' "$f" && echo "  Data string verbatim" || echo "  Data string MISSING"
   grep -F -q 'for want of a platform fixture' "$f" && echo "  FORBIDDEN wording present" || echo "  forbidden wording absent"
+  grep -E -c -- '^- disposition: R[123]-[0-9]+ — (fixed-and-observed|fixed-not-observed|still-present) — ' "$f" | sed 's/^/  disposition lines (F25): /'
 done
 ```
 
@@ -228,7 +242,7 @@ After the last session, the transcripts (`birth.*`, `open-*.typescript`, `probe-
 
 ## 11. Launch blocks — one per step, for Peter
 
-**How to use these.** Open one new macOS Terminal window per run (not a shell inside the Claude app), and keep it open for the whole run: later steps use the variables step 0 sets, and Kiro runs also use `KENV` from step 6. The blocks assume zsh, the Terminal default. Paste one block at a time, wait for it to finish, and paste its output back to the orchestrator. Nothing in a block needs editing except `COMMIT=` in step 0, which the orchestrator fills with the commit that carries this run's frozen prompt.
+**How to use these.** Open one new macOS Terminal window per run (not a shell inside the Claude app), and keep it open for the whole run: later steps use the variables step 0 sets, and Kiro runs also use `KENV` from step 6. The blocks assume zsh, the Terminal default. Paste one block at a time, wait for it to finish, and paste its output back to the orchestrator. Nothing in a block needs editing except three lines in step 0, which the operator fills before the run: `COMMIT=` (the commit that carries this run's frozen prompt), `F=` (the freeze commit, full SHA) and `SHA=` (the candidate's sha1). The operator packs and stores the candidate first (§ 5.1); you do not.
 
 **What never changes**: everything a run produces lands in `/tmp/dp-trio/<run-id>/out/`. **Every interactive session gets its own capture file** (`preflight-<time>.typescript`, `open-<time>.typescript`). If you open a session a second time, that is fine — say so in your paste-back. The first one's capture is kept (Run 2 lost its first open to an overwrite). Leave that folder in place; the record is written from it. Your answers to harness prompts in steps 6 and 8 follow § 6's approval rule, and every one goes in your paste-back. **If macOS ever asks about your keychain, click Cancel — never reset — press Ctrl-C, and tell the orchestrator.**
 
@@ -240,18 +254,23 @@ After the last session, the transcripts (`birth.*`, `open-*.typescript`, `probe-
 > - **Re-prepared.** Step 1 used `--strip-components=3`, which put the fixture in `$R/repo/a-ts-service/` instead of at the repo root (`ls -A` showed `.git a-ts-service`). Peter found it at step 1, ran `rm -rf "$R"`, and redid steps 1–5 with `--strip-components=4` before any harness session had run. No session saw the misplaced fixture.
 > - **Isolation mechanism changed at step 6.** Preflight with `HOME="$R/home"` ended `auth-required` (a login loop and a macOS keychain-reset offer, cancelled). Every CC session from then on used `CLAUDE_CONFIG_DIR="$R/home/.claude"` with the real `HOME`, as the blocks now say (§ 5.1). The record (`validation/trio-1-backend.md`) carries both attempts.
 
-**Step 0 — variables and checks.** Expect: `0` (no nested-session variables), then `prompt found at commit`.
+**Step 0 — variables and checks.** Expect: `0` (no nested-session variables), then `prompt found at commit`, then `candidate matches F and SHA`. If it prints `STOP`, stop and tell the orchestrator.
 
 ```sh
 RUN=trio-1-backend
 FIX=a-ts-service
 COMMIT=FILL_IN_PROMPT_COMMIT
+F=FILL_IN_FREEZE_COMMIT
+SHA=FILL_IN_CANDIDATE_SHA1
+REL=16.1.0
 DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
-TGZ="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/3fn-core-15.1.0.tgz"
-R="/tmp/dp-trio/$RUN"
-PF=".kiro/specs/123-consumer-distribution/validation/prompts/$RUN.md"
+STORE="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/$REL"
+TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
+R="/tmp/dp-trio/$REL/$RUN"
+PF="tests/onboarding-trio/prompts/$REL/$RUN.md"
 env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
 git -C "$DP" cat-file -e "$COMMIT:$PF" && echo "prompt found at commit"
+[ "$(shasum -a 1 "$TGZ" | cut -d' ' -f1)" = "$SHA" ] && [ "$(jq -r .commit "$STORE/release-publish-record.json")" = "$F" ] && echo "candidate matches F and SHA" || echo "STOP: the stored candidate does not match F and SHA"
 ```
 
 **Step 1 — run folder and fixture clone.** Expect: one `initial commit` line and the fixture's files at the top level (no `a-ts-service/` folder). If it prints `STOP`, stop and tell the orchestrator.
@@ -260,10 +279,10 @@ git -C "$DP" cat-file -e "$COMMIT:$PF" && echo "prompt found at commit"
 if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/repo" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/repo" --strip-components=4 && cd "$R/repo" && git init -q -b main && git add -A && git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit -q -m "initial commit" && git log --oneline && ls -A; fi
 ```
 
-**Step 2 — the candidate tarball, copied into the repo (the persona installs it).** Expect: `aa3efdcf9ce3c2689c2e5979932c48a46f3f6584`. Any other value: stop.
+**Step 2 — the candidate tarball, copied into the repo under its release-neutral name (the persona installs it).** Expect the sha1 you set as `SHA=`, then `candidate copied`. If it prints `STOP`, stop.
 
 ```sh
-mkdir -p "$R/repo/.pack" && cp "$TGZ" "$R/repo/.pack/" && shasum -a 1 "$R/repo/.pack/3fn-core-15.1.0.tgz" | tee "$R/out/candidate-shasum.txt"
+mkdir -p "$R/repo/.pack" && cp "$TGZ" "$R/repo/.pack/3fn-core-candidate.tgz" && cp "$STORE/release-publish-record.json" "$R/out/" && shasum -a 1 "$R/repo/.pack/3fn-core-candidate.tgz" | tee "$R/out/candidate-shasum.txt" && [ "$(cut -d' ' -f1 "$R/out/candidate-shasum.txt")" = "$SHA" ] && echo "candidate copied" || echo "STOP: the copy's sha1 is not SHA"
 ```
 
 **Step 3 — the frozen prompt, read from the commit.** Expect: a non-zero line count for each prompt file.
@@ -331,7 +350,7 @@ cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && CLAUDE
 ```
 
 ```sh
-head -c 600 "$R/out/birth.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, mcp_servers}' "$R/out/birth.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/birth.jsonl"
+head -c 600 "$R/out/birth.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, claude_code_version, permissionMode, mcp_servers}' "$R/out/birth.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/birth.jsonl"
 ```
 
 **Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Claude Code shows, word for word (trusting the folder, approving MCP servers from `.mcp.json`, anything else). Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp`, wait for the list, press Esc, and type `/exit`. Paste back each prompt word for word with your answer, and the `/mcp` list.
@@ -348,7 +367,7 @@ cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-ada.start.utc" && CL
 ```
 
 ```sh
-head -c 600 "$R/out/probe-ada.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, mcp_servers}' "$R/out/probe-ada.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/probe-ada.jsonl"
+head -c 600 "$R/out/probe-ada.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, claude_code_version, permissionMode, mcp_servers}' "$R/out/probe-ada.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/probe-ada.jsonl"
 ```
 
 **Step 9.2 — probe: consumer-Lina (headless).** 
@@ -359,7 +378,7 @@ cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-lina.start.utc" && C
 ```
 
 ```sh
-head -c 600 "$R/out/probe-lina.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, mcp_servers}' "$R/out/probe-lina.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/probe-lina.jsonl"
+head -c 600 "$R/out/probe-lina.stderr"; echo; jq -c 'select(.type=="system" and .subtype=="init") | {cwd, model, claude_code_version, permissionMode, mcp_servers}' "$R/out/probe-lina.jsonl"; jq -c 'select(.type=="result") | {subtype, num_turns, terminal_reason, is_error, total_cost_usd, duration_ms}' "$R/out/probe-lina.jsonl"
 ```
 
 **Step 10 — after: `harness-user-state`, repo state, writes outside the folder, and the audit.** Paste the whole output. That ends the run.
@@ -392,23 +411,28 @@ grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw
 date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
 
-**What to paste back for run `trio-1-backend`, in one message if that is easier**: the output of steps 0–10; every prompt you answered in steps 6 and 8, word for word, with your answer; anything you typed that the steps did not tell you to type, and why; any Ctrl-C and why. Then: "`trio-1-backend` done; files in `/tmp/dp-trio/trio-1-backend/out`."
+**What to paste back for run `trio-1-backend`, in one message if that is easier**: the output of steps 0–10; every prompt you answered in steps 6 and 8, word for word, with your answer; anything you typed that the steps did not tell you to type, and why; any Ctrl-C and why. Then: "`trio-1-backend` done; files in `/tmp/dp-trio/<release>/trio-1-backend/out`."
 
 
 ### Run 2 — `trio-2-designer` (persona (b), Kiro)
 
-**Step 0 — variables and checks.** Expect: `0` (no nested-session variables), then `prompt found at commit`.
+**Step 0 — variables and checks.** Expect: `0` (no nested-session variables), then `prompt found at commit`, then `candidate matches F and SHA`. If it prints `STOP`, stop and tell the orchestrator.
 
 ```sh
 RUN=trio-2-designer
 FIX=b-static-site
 COMMIT=FILL_IN_PROMPT_COMMIT
+F=FILL_IN_FREEZE_COMMIT
+SHA=FILL_IN_CANDIDATE_SHA1
+REL=16.1.0
 DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
-TGZ="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/3fn-core-15.1.0.tgz"
-R="/tmp/dp-trio/$RUN"
-PF=".kiro/specs/123-consumer-distribution/validation/prompts/$RUN.md"
+STORE="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/$REL"
+TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
+R="/tmp/dp-trio/$REL/$RUN"
+PF="tests/onboarding-trio/prompts/$REL/$RUN.md"
 env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
 git -C "$DP" cat-file -e "$COMMIT:$PF" && echo "prompt found at commit"
+[ "$(shasum -a 1 "$TGZ" | cut -d' ' -f1)" = "$SHA" ] && [ "$(jq -r .commit "$STORE/release-publish-record.json")" = "$F" ] && echo "candidate matches F and SHA" || echo "STOP: the stored candidate does not match F and SHA"
 ```
 
 **Step 1 — run folder and fixture clone.** Expect: one `initial commit` line and the fixture's files at the top level (no `b-static-site/` folder). If it prints `STOP`, stop and tell the orchestrator.
@@ -417,10 +441,10 @@ git -C "$DP" cat-file -e "$COMMIT:$PF" && echo "prompt found at commit"
 if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/repo" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/repo" --strip-components=4 && cd "$R/repo" && git init -q -b main && git add -A && git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit -q -m "initial commit" && git log --oneline && ls -A; fi
 ```
 
-**Step 2 — the candidate tarball, copied into the repo (the persona installs it).** Expect: `aa3efdcf9ce3c2689c2e5979932c48a46f3f6584`. Any other value: stop.
+**Step 2 — the candidate tarball, copied into the repo under its release-neutral name (the persona installs it).** Expect the sha1 you set as `SHA=`, then `candidate copied`. If it prints `STOP`, stop.
 
 ```sh
-mkdir -p "$R/repo/.pack" && cp "$TGZ" "$R/repo/.pack/" && shasum -a 1 "$R/repo/.pack/3fn-core-15.1.0.tgz" | tee "$R/out/candidate-shasum.txt"
+mkdir -p "$R/repo/.pack" && cp "$TGZ" "$R/repo/.pack/3fn-core-candidate.tgz" && cp "$STORE/release-publish-record.json" "$R/out/" && shasum -a 1 "$R/repo/.pack/3fn-core-candidate.tgz" | tee "$R/out/candidate-shasum.txt" && [ "$(cut -d' ' -f1 "$R/out/candidate-shasum.txt")" = "$SHA" ] && echo "candidate copied" || echo "STOP: the copy's sha1 is not SHA"
 ```
 
 **Step 3 — the frozen prompt, read from the commit.** Expect: a non-zero line count for each prompt file.
@@ -516,10 +540,10 @@ cd "$R/empty" && env $KENV script -q "$R/out/preflight-$(date -u +%H%M%S).typesc
 **Step 7 — birth (headless; the persona works alone).** The session's output scrolls past and is saved. Do not type into it. Press Ctrl-C only if it visibly repeats the same action three or more times (`operator-halt:loop`) or starts working outside `/tmp/dp-trio` (`operator-halt:unsafe`), and say so. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/birth.txt"`).
 
 ```sh
-cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never "$(cat "$R/out/birth-prompt.txt")" 2>&1 | tee "$R/out/birth.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/birth.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.end.utc"
+cd "$R/repo" && env $KENV kiro-cli --version > "$R/out/birth.version" 2>&1 && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never "$(cat "$R/out/birth-prompt.txt")" 2>&1 | tee "$R/out/birth.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/birth.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.end.utc"
 ```
 
-**Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Kiro shows, word for word. Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp` and wait for the list, type `/agent list` and wait for the list, then type `/quit`. Paste back each prompt word for word with your answer, and both lists.
+**Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Kiro shows, word for word. Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp` and wait for the list, type `/agent list` and wait for the list, type `/context show` and wait (if Kiro says it does not know the command, note what it says), then type `/quit`. Paste back each prompt word for word with your answer, and the three outputs.
 
 ```sh
 cd "$R/repo" && env $KENV script -q "$R/out/open-$(date -u +%H%M%S).typescript" kiro-cli chat
@@ -529,7 +553,7 @@ cd "$R/repo" && env $KENV script -q "$R/out/open-$(date -u +%H%M%S).typescript" 
 Same rules as step 7. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/probe-sparky.txt"`).
 
 ```sh
-cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-sparky.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never --agent sparky "$(cat "$R/out/probe-sparky-prompt.txt")" 2>&1 | tee "$R/out/probe-sparky.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/probe-sparky.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-sparky.end.utc"
+cd "$R/repo" && env $KENV kiro-cli --version > "$R/out/probe-sparky.version" 2>&1 && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-sparky.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never --agent sparky "$(cat "$R/out/probe-sparky-prompt.txt")" 2>&1 | tee "$R/out/probe-sparky.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/probe-sparky.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-sparky.end.utc"
 ```
 
 **Step 10 — after: `harness-user-state`, repo state, writes outside the folder, and the audit.** Paste the whole output. That ends the run.
@@ -559,27 +583,34 @@ find /tmp/ -maxdepth 1 -newer "$R/out/start.stamp" 2>/dev/null | grep -v -E "^/t
 cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"; git log --oneline --all | head -5
 grep -n -A3 '"node_modules/@3fn/core"' "$R/repo/package-lock.json" | head -6
 env $KENV kiro-cli mcp list 2>&1 | tee "$R/out/kiro-mcp-list.txt"
+cd "$R/repo" && env $KENV kiro-cli chat --list-sessions -f json-pretty > "$R/out/kiro-sessions.json" 2>&1; echo "sessions listed: exit=$?, $(wc -c < "$R/out/kiro-sessions.json" | tr -d " ") bytes"
+if [ -d "$R/home/.kiro/sessions" ]; then cp -R "$R/home/.kiro/sessions" "$R/out/kiro-session-store" && echo "session store copied: $(find "$R/out/kiro-session-store" -type f | wc -l | tr -d " ") files"; else echo "no session store at $R/home/.kiro/sessions"; fi
 grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open-*.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (3-4 expected self-references from the package; see § 10)"
 date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
 
-**What to paste back for run `trio-2-designer`, in one message if that is easier**: the output of steps 0–10; every prompt you answered in steps 6 and 8, word for word, with your answer; anything you typed that the steps did not tell you to type, and why; any Ctrl-C and why. Then: "`trio-2-designer` done; files in `/tmp/dp-trio/trio-2-designer/out`."
+**What to paste back for run `trio-2-designer`, in one message if that is easier**: the output of steps 0–10; every prompt you answered in steps 6 and 8, word for word, with your answer; anything you typed that the steps did not tell you to type, and why; any Ctrl-C and why. Then: "`trio-2-designer` done; files in `/tmp/dp-trio/<release>/trio-2-designer/out`."
 
 
 ### Run 3 — `trio-3-pm` (persona (c), Kiro, bare `init`)
 
-**Step 0 — variables and checks.** Expect: `0` (no nested-session variables), then `prompt found at commit`.
+**Step 0 — variables and checks.** Expect: `0` (no nested-session variables), then `prompt found at commit`, then `candidate matches F and SHA`. If it prints `STOP`, stop and tell the orchestrator.
 
 ```sh
 RUN=trio-3-pm
 FIX=c-near-empty
 COMMIT=FILL_IN_PROMPT_COMMIT
+F=FILL_IN_FREEZE_COMMIT
+SHA=FILL_IN_CANDIDATE_SHA1
+REL=16.1.0
 DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
-TGZ="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/3fn-core-15.1.0.tgz"
-R="/tmp/dp-trio/$RUN"
-PF=".kiro/specs/123-consumer-distribution/validation/prompts/$RUN.md"
+STORE="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/$REL"
+TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
+R="/tmp/dp-trio/$REL/$RUN"
+PF="tests/onboarding-trio/prompts/$REL/$RUN.md"
 env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
 git -C "$DP" cat-file -e "$COMMIT:$PF" && echo "prompt found at commit"
+[ "$(shasum -a 1 "$TGZ" | cut -d' ' -f1)" = "$SHA" ] && [ "$(jq -r .commit "$STORE/release-publish-record.json")" = "$F" ] && echo "candidate matches F and SHA" || echo "STOP: the stored candidate does not match F and SHA"
 ```
 
 **Step 1 — run folder and fixture clone.** Expect: one `initial commit` line and the fixture's files at the top level (no `c-near-empty/` folder). If it prints `STOP`, stop and tell the orchestrator.
@@ -588,10 +619,10 @@ git -C "$DP" cat-file -e "$COMMIT:$PF" && echo "prompt found at commit"
 if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/repo" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/repo" --strip-components=4 && cd "$R/repo" && git init -q -b main && git add -A && git -c user.name=fixture -c user.email=fixture@example.invalid -c commit.gpgsign=false commit -q -m "initial commit" && git log --oneline && ls -A; fi
 ```
 
-**Step 2 — the candidate tarball, copied into the repo (the persona installs it).** Expect: `aa3efdcf9ce3c2689c2e5979932c48a46f3f6584`. Any other value: stop.
+**Step 2 — the candidate tarball, copied into the repo under its release-neutral name (the persona installs it).** Expect the sha1 you set as `SHA=`, then `candidate copied`. If it prints `STOP`, stop.
 
 ```sh
-mkdir -p "$R/repo/.pack" && cp "$TGZ" "$R/repo/.pack/" && shasum -a 1 "$R/repo/.pack/3fn-core-15.1.0.tgz" | tee "$R/out/candidate-shasum.txt"
+mkdir -p "$R/repo/.pack" && cp "$TGZ" "$R/repo/.pack/3fn-core-candidate.tgz" && cp "$STORE/release-publish-record.json" "$R/out/" && shasum -a 1 "$R/repo/.pack/3fn-core-candidate.tgz" | tee "$R/out/candidate-shasum.txt" && [ "$(cut -d' ' -f1 "$R/out/candidate-shasum.txt")" = "$SHA" ] && echo "candidate copied" || echo "STOP: the copy's sha1 is not SHA"
 ```
 
 **Step 3 — the frozen prompt, read from the commit.** Expect: a non-zero line count for each prompt file.
@@ -687,10 +718,10 @@ cd "$R/empty" && env $KENV script -q "$R/out/preflight-$(date -u +%H%M%S).typesc
 **Step 7 — birth (headless; the persona works alone).** The session's output scrolls past and is saved. Do not type into it. Press Ctrl-C only if it visibly repeats the same action three or more times (`operator-halt:loop`) or starts working outside `/tmp/dp-trio` (`operator-halt:unsafe`), and say so. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/birth.txt"`).
 
 ```sh
-cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never "$(cat "$R/out/birth-prompt.txt")" 2>&1 | tee "$R/out/birth.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/birth.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.end.utc"
+cd "$R/repo" && env $KENV kiro-cli --version > "$R/out/birth.version" 2>&1 && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never "$(cat "$R/out/birth-prompt.txt")" 2>&1 | tee "$R/out/birth.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/birth.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/birth.end.utc"
 ```
 
-**Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Kiro shows, word for word. Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp` and wait for the list, type `/agent list` and wait for the list, then type `/quit`. Paste back each prompt word for word with your answer, and both lists.
+**Step 8 — open (interactive, captured): the restart, and `first-MCP-load`.** Do not type a task. Before you type anything, note every prompt Kiro shows, word for word. Answer by § 6: trust the folder; approve DesignerPunk's servers. Then type `/mcp` and wait for the list, type `/agent list` and wait for the list, type `/context show` and wait (if Kiro says it does not know the command, note what it says), then type `/quit`. Paste back each prompt word for word with your answer, and the three outputs.
 
 ```sh
 cd "$R/repo" && env $KENV script -q "$R/out/open-$(date -u +%H%M%S).typescript" kiro-cli chat
@@ -700,7 +731,7 @@ cd "$R/repo" && env $KENV script -q "$R/out/open-$(date -u +%H%M%S).typescript" 
 Same rules as step 7. If Kiro says the agent does not exist, that is the result: paste it and go on to step 10. Paste back the `exit=` line and the last 40 lines (`tail -n 40 "$R/out/probe-leonardo.txt"`).
 
 ```sh
-cd "$R/repo" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-leonardo.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never --agent leonardo "$(cat "$R/out/probe-leonardo-prompt.txt")" 2>&1 | tee "$R/out/probe-leonardo.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/probe-leonardo.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-leonardo.end.utc"
+cd "$R/repo" && env $KENV kiro-cli --version > "$R/out/probe-leonardo.version" 2>&1 && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-leonardo.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never --agent leonardo "$(cat "$R/out/probe-leonardo-prompt.txt")" 2>&1 | tee "$R/out/probe-leonardo.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/probe-leonardo.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-leonardo.end.utc"
 ```
 
 **Step 10 — after: `harness-user-state`, repo state, writes outside the folder, and the audit.** Paste the whole output. That ends the run.
@@ -730,11 +761,13 @@ find /tmp/ -maxdepth 1 -newer "$R/out/start.stamp" 2>/dev/null | grep -v -E "^/t
 cd "$R/repo" && git status --porcelain | tee "$R/out/repo-status.txt"; git log --oneline --all | head -5
 grep -n -A3 '"node_modules/@3fn/core"' "$R/repo/package-lock.json" | head -6
 env $KENV kiro-cli mcp list 2>&1 | tee "$R/out/kiro-mcp-list.txt"
+cd "$R/repo" && env $KENV kiro-cli chat --list-sessions -f json-pretty > "$R/out/kiro-sessions.json" 2>&1; echo "sessions listed: exit=$?, $(wc -c < "$R/out/kiro-sessions.json" | tr -d " ") bytes"
+if [ -d "$R/home/.kiro/sessions" ]; then cp -R "$R/home/.kiro/sessions" "$R/out/kiro-session-store" && echo "session store copied: $(find "$R/out/kiro-session-store" -type f | wc -l | tr -d " ") files"; else echo "no session store at $R/home/.kiro/sessions"; fi
 grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/birth.* "$R"/out/open-*.typescript "$R"/out/probe-* > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (3-4 expected self-references from the package; see § 10)"
 date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
 
-**What to paste back for run `trio-3-pm`, in one message if that is easier**: the output of steps 0–10; every prompt you answered in steps 6 and 8, word for word, with your answer; anything you typed that the steps did not tell you to type, and why; any Ctrl-C and why. Then: "`trio-3-pm` done; files in `/tmp/dp-trio/trio-3-pm/out`."
+**What to paste back for run `trio-3-pm`, in one message if that is easier**: the output of steps 0–10; every prompt you answered in steps 6 and 8, word for word, with your answer; anything you typed that the steps did not tell you to type, and why; any Ctrl-C and why. Then: "`trio-3-pm` done; files in `/tmp/dp-trio/<release>/trio-3-pm/out`."
 
 ## 12. Mechanics — what Run 1 settled, and what is still unverified
 
@@ -749,13 +782,17 @@ date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 | kiro-cli isolation (`KIRO_HOME`, fresh `HOME`) and where it keeps its login | **Settled for kiro-cli 2.12.1 (Run 2)**: `KIRO_HOME="$R/home/.kiro"` kept the login, dropped the real global server (`fetch`), and populated the run store; a fresh `HOME` gave "Not logged in" with no keychain prompt. The login database stays in the real profile. **Unverified**: whether that database holds per-workspace state | `out/isolation.txt`; F7 |
 | `--agent <name>` selects the born repo's agent (Kiro) | **Settled (Run 2)**: the agent's welcome message and hook ran | F18 |
 | The kiro-cli desktop app, if running under the real user, interferes with an isolated session | **Unverified** | a finding outside the axes, with the error |
+| Claude Code's permission mode in a headless session (PQ-1, P-5) | **Read per session from the init event** (`permissionMode`). Every § 11 CC block passes `--permission-mode acceptEdits`. On 2.1.301 an unflagged session ran `auto` (§ 16), and two sessions in one store ran `auto` and `default` (Task 28.1) | F5 |
+| The harness version a session ran (PQ-2) | **Read per session**: the init event (CC), a `kiro-cli --version` just before the session (Kiro). Not `host.txt`: the CLI updated itself inside one run (2026-10-15) | F5 |
+| Kiro tool results (cannot-tell rows 3–4, R3-7) and resource loading (row 2) | **Unverified** whether kiro-cli 2.12.1's per-directory session store (`chat --list-sessions`; the run store's `sessions/`) or `/context show` shows them. Step 8 types `/context show`; step 10 lists the sessions and copies the store. If neither shows them, the cell is recorded `cannot-tell` again with the same reason, which the cannot-tell record accepts | F26 |
 
 Each outcome that differs from this protocol's assumption is also appended to the Task 25 Instruments block's `## Found later` as a `misfit`.
 
 ## 13. Writing the record
 
-- The operator (Leonardo) writes each record from `/tmp/dp-trio/<run-id>/out/` and Peter's paste-back, in the field order of § 8.2, after the run's last step. The record is committed after its prompt (ancestry, F2).
-- Transcripts are not committed. The record quotes what it uses, and names the file and line or event it came from.
+- The operator (Leonardo) writes each record from `/tmp/dp-trio/<release>/<run-id>/out/` (release 4: `/tmp/dp-trio/<run-id>/out/`) and Peter's paste-back, in the field order of § 8.2, after the run's last step. The record is committed after its prompt (ancestry, F2).
+- Transcripts are not committed. The record quotes what it uses, and names the file and line or event it came from. After the record is written, the run folder is copied to `~/Documents/Work Projects/Kiro/u5-pack/dp-trio-runs-<release>/` and verified file for file, as for release 4. It is never committed: preflight captures can hold sign-in material.
+- F25's lines are written from this run's evidence. The fix half of each basis is read from `.kiro/issues/2026-10-15-123-u5-instrument-findings.md` at the records' base, and the observation half from this run's files; the record never takes a disposition from that record alone.
 - Turn counting for Kiro: one agent turn is one model response that ends either in a tool call or in the final answer, counted from `birth.txt` / `probe-<agent>.txt`. The record states the count and this rule.
 - Findings are written per persona and attributed to an axis (F21). A finding seen in more than one run is written in each run's record and marked `also seen in <run-id>`; it is never pooled into one list.
 - Every finding whose subject is consumer-Leonardo carries `subject: leonardo` (run discipline C2), for Stacy's CLOSEOUT cross-read.
@@ -1352,6 +1389,217 @@ date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
 ```
 
 **Paste back for `conformance`**: steps 0–6 in full; the four check-block outputs (steps 7–10); step 11 in full; any prompt you answered in step 6, word for word, with your answer; anything else you typed and why. Then: "`conformance` done; files in `/tmp/dp-trio/conformance/out`."
+
+
+### 15.3 The Kiro conformance pair (per release, from release 5)
+
+*Added for release 5 (16.1.0) under the write grant named in the header.*
+
+- **Why it exists**: Task 27 ran both beats on the `cc` rendering only. The Kiro renderings of consumer-Thurgood and consumer-Stacy are in the trio record's scope (`.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md` § "Also in this record's scope"): at each release this pair is run and recorded, or the release's record says in one line why not.
+- **What differs from § 15.1**:
+  - The harness is **`kiro`**: `kiro-cli chat --no-interactive --trust-all-tools --agent <name>`, budgets observed, not enforced (§ 4), isolation chosen as in § 11 Run 2 step 6.
+  - **The repo is born by the launcher from the candidate**: a clone of `fixtures/c-near-empty` (Lendly), `npm install` of the candidate, `init --target=kiro --name Lendly --abbreviation LY`, `generate`, one commit. That birth is setup, not under test. **Why not `fixtures/born-kiro`**: it carries the release-4 preview's agent renderings, and its lock pins that tarball's integrity. Exercising this release's renderings from it needs a `sync`, which would put a second thing under test.
+  - The founder is **Priya**, Lendly's founder. Beat 1's task 4 work is Lendly's home page. The local repo carries a founder identity (`git config user.name/user.email`, signing off) so the beats' commits do not carry the launcher's.
+  - **Kiro transcripts show tool calls, not results** (R3-7). The beats' artifacts are read from the repo after the run (`specs-after.txt` and the files), and beat 2's claims-check is judged against those, not the transcript.
+- **Same as § 15.1**: strictly sequential order (identity probe Thurgood, identity probe Stacy, beat 1, beat 2 only after beat 1 has returned); budgets (probes 30, beat 1 120, beat 2 60); `not exercised — upstream beat produced no artifact` when beat 1 leaves no formalization.
+- **Prompts**: `tests/onboarding-trio/prompts/<release>/conformance-kiro-beat-1.md` (PROBE and BEAT blocks, Thurgood) and `conformance-kiro-beat-2.md` (PROBE and BEAT blocks, Stacy).
+- **Records**: `tests/onboarding-trio/records/<release>/conformance-kiro-beat-1.md` and `conformance-kiro-beat-2.md`. Fields: § 15.1's (J1–J12 of § 14.2 where they apply, `bar:`, `claims-check:`, `identity-probe:`, `findings:` with the forced negative, residuals), plus `why-run:` (one line: why this pair was run at this release, with the measured rendering diff) and F26 for any carried cell this run re-observes.
+
+**Launch blocks.** Same rules as § 11 and § 15.2: one new macOS Terminal window kept open for the whole run (zsh); one block at a time; each interactive session gets its own capture; if macOS asks about the keychain, click Cancel (never reset), press Ctrl-C, and tell the orchestrator. The only edits are step 0's `COMMIT=`, `F=` and `SHA=`.
+
+**Paste back**: steps 0–7 in full; for steps 8–11, the `exit=` line and the last 40 lines of that session's file; step 12 in full; any prompt you answered in steps 5 and 7, word for word, with your answer; anything else you typed and why.
+
+**Step 0 — variables and checks.** Expect `0`, then `fixture and prompts found at commit`, then `candidate matches F and SHA`. If it prints `STOP`, stop.
+
+```sh
+RUN=conformance-kiro
+FIX=c-near-empty
+COMMIT=FILL_IN_PROMPT_COMMIT
+F=FILL_IN_FREEZE_COMMIT
+SHA=FILL_IN_CANDIDATE_SHA1
+REL=16.1.0
+DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
+STORE="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/$REL"
+TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
+R="/tmp/dp-trio/$REL/$RUN"
+P1="tests/onboarding-trio/prompts/$REL/conformance-kiro-beat-1.md"
+P2="tests/onboarding-trio/prompts/$REL/conformance-kiro-beat-2.md"
+env | grep -c -E '^(CLAUDECODE|CLAUDE_CODE_)'
+git -C "$DP" cat-file -e "${COMMIT}:${P1}" && git -C "$DP" cat-file -e "${COMMIT}:${P2}" && git -C "$DP" cat-file -e "${COMMIT}:tests/onboarding-trio/fixtures/${FIX}/README.md" && echo "fixture and prompts found at commit"
+[ "$(shasum -a 1 "$TGZ" | cut -d' ' -f1)" = "$SHA" ] && [ "$(jq -r .commit "$STORE/release-publish-record.json")" = "$F" ] && echo "candidate matches F and SHA" || echo "STOP: the stored candidate does not match F and SHA"
+```
+
+**Step 1 — run folder and fixture clone.** Expect one `initial commit` line and the fixture's `README.md`. If it prints `STOP`, stop.
+
+```sh
+if [ -e "$R" ]; then echo "STOP: $R already exists"; else mkdir -p "$R/home" "$R/empty" "$R/repo" "$R/out" && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/start.utc" && touch "$R/out/start.stamp" && git -C "$DP" archive "$COMMIT" "tests/onboarding-trio/fixtures/$FIX" | tar -x -C "$R/repo" --strip-components=4 && cd "$R/repo" && git init -q -b main && git config user.name "Priya (founder)" && git config user.email founder@example.invalid && git config commit.gpgsign false && git add -A && git commit -q -m "initial commit" && git log --oneline && ls -A; fi
+```
+
+**Step 2 — the candidate tarball, into the repo.** Expect the sha1 you set as `SHA=`, then `candidate copied`.
+
+```sh
+mkdir -p "$R/repo/.pack" && echo ".pack/" >> "$R/repo/.git/info/exclude" && cp "$TGZ" "$R/repo/.pack/3fn-core-candidate.tgz" && cp "$STORE/release-publish-record.json" "$R/out/" && shasum -a 1 "$R/repo/.pack/3fn-core-candidate.tgz" | tee "$R/out/candidate-shasum.txt" && [ "$(cut -d' ' -f1 "$R/out/candidate-shasum.txt")" = "$SHA" ] && echo "candidate copied" || echo "STOP: the copy's sha1 is not SHA"
+```
+
+**Step 3 — the frozen prompts, from the commit.** Expect four non-zero line counts.
+
+```sh
+git -C "$DP" show "${COMMIT}:${P1}" > "$R/out/prompt-1.md"
+git -C "$DP" show "${COMMIT}:${P2}" > "$R/out/prompt-2.md"
+awk '/ PROBE END -->/{p=0} p{print} / PROBE BEGIN -->/{p=1}' "$R/out/prompt-1.md" > "$R/out/probe-thurgood-prompt.txt"
+awk '/ PROBE END -->/{p=0} p{print} / PROBE BEGIN -->/{p=1}' "$R/out/prompt-2.md" > "$R/out/probe-stacy-prompt.txt"
+awk '/ BEAT END -->/{p=0} p{print} / BEAT BEGIN -->/{p=1}' "$R/out/prompt-1.md" > "$R/out/beat-1-prompt.txt"
+awk '/ BEAT END -->/{p=0} p{print} / BEAT BEGIN -->/{p=1}' "$R/out/prompt-2.md" > "$R/out/beat-2-prompt.txt"
+wc -l "$R"/out/*-prompt.txt
+```
+
+**Step 4 — host facts, and `harness-user-state` before.** Expect the run-store entries all `absent`. Paste the whole output.
+
+```sh
+{
+date -u +%Y-%m-%dT%H:%M:%SZ; hostname -s; sw_vers -productVersion; uname -m
+echo "node $(node -v) / npm $(npm -v)"; claude --version; kiro-cli --version
+echo "--- host-toolchain (ios)"
+echo "cmd: swiftc --version"; swiftc --version 2>&1 | head -1; echo "exit=${pipestatus[1]}"
+echo "cmd: command -v xcodebuild"; command -v xcodebuild; echo "exit=$?"
+echo "cmd: xcrun --find simctl"; xcrun --find simctl; echo "exit=$?"
+echo "--- host-toolchain (android)"
+for c in gradle adb kotlinc; do echo "cmd: command -v $c"; command -v $c; echo "exit=$?"; done
+echo "ANDROID_HOME=${ANDROID_HOME:-unset}"
+echo "cmd: ls ~/Library/Android/sdk"; ls ~/Library/Android/sdk; echo "exit=$?"
+} > "$R/out/host.txt" 2>&1; cat "$R/out/host.txt"
+hstate() {
+  echo "== run store (CC): $R/home/.claude"
+  for f in "$R/home/.claude/.claude.json" "$R/home/.claude/settings.json"; do
+    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f") DesignerPunk-relevant lines"; grep -n -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f" | cut -c1-200; else echo "${f}: absent"; fi
+  done
+  if [ -f "$R/home/.claude/.claude.json" ]; then echo "-- projects in the run store:"; jq -c '.projects // {} | to_entries[] | {dir: .key, trusted: .value.hasTrustDialogAccepted, enabled: .value.enabledMcpjsonServers}' "$R/home/.claude/.claude.json"; fi
+  if [ -f "$R/repo/.claude/settings.local.json" ]; then echo "-- repo .claude/settings.local.json:"; cat "$R/repo/.claude/settings.local.json"; else echo "-- repo .claude/settings.local.json: absent"; fi
+  echo "== run store (Kiro): $R/home/.kiro and $R/home/Library/Application Support/kiro-cli"
+  for d in "$R/home/.kiro" "$R/home/Library/Application Support/kiro-cli"; do
+    if [ -d "$d" ]; then echo "${d}: present, $(find "$d" -type f | wc -l | tr -d " ") files; DesignerPunk-relevant:"; grep -r -l -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$d" 2>/dev/null | head -20; else echo "${d}: absent"; fi
+  done
+  if [ -f "$R/home/.kiro/settings/mcp.json" ]; then echo "-- run-store Kiro global MCP servers:"; jq -r '.mcpServers // {} | keys[]' "$R/home/.kiro/settings/mcp.json"; fi
+  echo "== real user stores (DesignerPunk-relevant only)"
+  if [ -f "$HOME/.claude.json" ]; then echo "$HOME/.claude.json: $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$HOME/.claude.json") DesignerPunk-relevant lines"; else echo "$HOME/.claude.json: absent"; fi
+  if [ -f "$HOME/.kiro/settings/mcp.json" ]; then echo "$HOME/.kiro/settings/mcp.json servers: $(jq -r '.mcpServers // {} | keys | join(", ")' "$HOME/.kiro/settings/mcp.json")"; else echo "$HOME/.kiro/settings/mcp.json: absent"; fi
+  echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
+  echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
+}
+if [ -e "$R/out/harness-user-state-before.txt" ]; then echo "before-state already recorded; not overwritten"; else hstate > "$R/out/harness-user-state-before.txt" 2>&1; fi; cat "$R/out/harness-user-state-before.txt"
+```
+
+**Step 5 — choose the Kiro isolation, then preflight.** Run 5a–5c in order and paste each output. You will end with exactly one `KENV=` line (5d), which later steps use. **If macOS asks about the keychain at any point, click Cancel — never reset — press Ctrl-C, and go to the 5d line for the real profile.**
+
+**5a — your real profile is logged in.** Expect your account. If it says you are not logged in, run `kiro-cli login` (your normal profile) and then 5a again.
+
+```sh
+cd "$R/empty" && kiro-cli whoami; echo "exit=$?"; kiro-cli mcp list 2>&1 | head -20
+```
+
+**5b — try `KIRO_HOME` (keeps your real home and keychain).** Accept it if the first lines still show your account, the server list does **not** show `fetch`, and the last line shows files.
+
+```sh
+cd "$R/empty" && KIRO_HOME="$R/home/.kiro" kiro-cli whoami; echo "exit=$?"; KIRO_HOME="$R/home/.kiro" kiro-cli mcp list 2>&1 | head -20; ls -A "$R/home/.kiro" 2>&1 | head
+```
+
+**5c — only if 5b was not accepted: try a fresh `HOME`.** Accept it if it shows your account with no prompt of any kind, and the server list does not show `fetch`.
+
+```sh
+cd "$R/empty" && HOME="$R/home" kiro-cli whoami; echo "exit=$?"; HOME="$R/home" kiro-cli mcp list 2>&1 | head -20
+```
+
+**5d — set the choice.** Run exactly one of these three lines: the first if 5b was accepted, the second if 5c was, the third if neither (the run is then warm).
+
+```sh
+KENV="KIRO_HOME=$R/home/.kiro"; echo "isolation: $KENV (real HOME)" | tee "$R/out/isolation.txt"
+```
+
+```sh
+KENV="HOME=$R/home"; echo "isolation: $KENV" | tee "$R/out/isolation.txt"
+```
+
+```sh
+KENV=""; echo "isolation: none — real profile (warm run)" | tee "$R/out/isolation.txt"
+```
+
+**5e — preflight chat in the empty folder.** Type no message. Note anything it shows before its prompt, then type `/quit`. Paste back what it showed.
+
+```sh
+cd "$R/empty" && env $KENV script -q "$R/out/preflight-$(date -u +%H%M%S).typescript" kiro-cli chat
+```
+
+**Step 6 — setup: the founder's birth, by you (not under test).** Expect `added … packages`, `init`'s closing lines, `✅ System tokens generated`, two commits, an empty status line, agent files including `thurgood.json` and `stacy.json`, and `ci-needs  regrounding`. If any command fails, stop and paste its output.
+
+```sh
+cd "$R/repo" && npm install --no-audit --no-fund ./.pack/3fn-core-candidate.tgz 2>&1 | tail -3 && npx designerpunk init --target=kiro --name Lendly --abbreviation LY 2>&1 | tail -15 && npx designerpunk generate 2>&1 | tail -3 && git add -A && git commit -q -m "founder's repo: DesignerPunk set up by the launcher (setup, not under test)" && git log --oneline && echo "status: [$(git status --porcelain)]" && ls .kiro/agents | tr "\n" " " && echo && ls specs
+```
+
+**Step 7 — open (interactive, captured): trust and approve.** Type no task. Note every prompt Kiro shows, word for word, and answer by § 6 (trust the folder; approve DesignerPunk's servers). Then type `/mcp` and wait, `/agent list` and wait, `/context show` and wait (if Kiro does not know the command, note what it says), then `/quit`. Paste back each prompt with your answer, and the three outputs.
+
+```sh
+cd "$R/repo" && env $KENV script -q "$R/out/open-$(date -u +%H%M%S).typescript" kiro-cli chat
+```
+
+**Step 8 — identity probe: consumer-Thurgood (headless, fresh session).** The output scrolls and is saved; do not type into it. Ctrl-C only for `operator-halt:loop` or `operator-halt:unsafe` (§ 3), and say so. Paste back the `exit=` line and `tail -n 40 "$R/out/probe-thurgood.txt"`.
+
+```sh
+cd "$R/repo" && env $KENV kiro-cli --version > "$R/out/probe-thurgood.version" 2>&1 && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-thurgood.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never --agent thurgood "$(cat "$R/out/probe-thurgood-prompt.txt")" 2>&1 | tee "$R/out/probe-thurgood.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/probe-thurgood.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-thurgood.end.utc"
+```
+
+**Step 9 — identity probe: consumer-Stacy (headless, fresh session).** Same rules. Paste back the `exit=` line and `tail -n 40 "$R/out/probe-stacy.txt"`.
+
+```sh
+cd "$R/repo" && env $KENV kiro-cli --version > "$R/out/probe-stacy.version" 2>&1 && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-stacy.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never --agent stacy "$(cat "$R/out/probe-stacy-prompt.txt")" 2>&1 | tee "$R/out/probe-stacy.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/probe-stacy.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/probe-stacy.end.utc"
+```
+
+**Step 10 — beat 1: consumer-Thurgood works the re-grounding spec.** The long one: it may take many minutes. Same rules. Paste back the `exit=` line and `tail -n 40 "$R/out/beat-1.txt"`.
+
+```sh
+cd "$R/repo" && env $KENV kiro-cli --version > "$R/out/beat-1.version" 2>&1 && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/beat-1.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never --agent thurgood "$(cat "$R/out/beat-1-prompt.txt")" 2>&1 | tee "$R/out/beat-1.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/beat-1.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/beat-1.end.utc"
+```
+
+**Step 11 — beat 2: consumer-Stacy, only after step 10 has returned.** Same rules. Paste back the `exit=` line and `tail -n 40 "$R/out/beat-2.txt"`.
+
+```sh
+cd "$R/repo" && env $KENV kiro-cli --version > "$R/out/beat-2.version" 2>&1 && date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/beat-2.start.utc" && env $KENV kiro-cli chat --no-interactive --trust-all-tools --wrap never --agent stacy "$(cat "$R/out/beat-2-prompt.txt")" 2>&1 | tee "$R/out/beat-2.txt"; echo "exit=${pipestatus[1]}" | tee "$R/out/beat-2.exit"; date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/beat-2.end.utc"
+```
+
+**Step 12 — after: state, the specs the beats left, agent files untouched?, sessions, audit.** Paste the whole output. That ends the run.
+
+```sh
+hstate() {
+  echo "== run store (CC): $R/home/.claude"
+  for f in "$R/home/.claude/.claude.json" "$R/home/.claude/settings.json"; do
+    if [ -f "$f" ]; then echo "${f}: present, $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f") DesignerPunk-relevant lines"; grep -n -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$f" | cut -c1-200; else echo "${f}: absent"; fi
+  done
+  if [ -f "$R/home/.claude/.claude.json" ]; then echo "-- projects in the run store:"; jq -c '.projects // {} | to_entries[] | {dir: .key, trusted: .value.hasTrustDialogAccepted, enabled: .value.enabledMcpjsonServers}' "$R/home/.claude/.claude.json"; fi
+  if [ -f "$R/repo/.claude/settings.local.json" ]; then echo "-- repo .claude/settings.local.json:"; cat "$R/repo/.claude/settings.local.json"; else echo "-- repo .claude/settings.local.json: absent"; fi
+  echo "== run store (Kiro): $R/home/.kiro and $R/home/Library/Application Support/kiro-cli"
+  for d in "$R/home/.kiro" "$R/home/Library/Application Support/kiro-cli"; do
+    if [ -d "$d" ]; then echo "${d}: present, $(find "$d" -type f | wc -l | tr -d " ") files; DesignerPunk-relevant:"; grep -r -l -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$d" 2>/dev/null | head -20; else echo "${d}: absent"; fi
+  done
+  if [ -f "$R/home/.kiro/settings/mcp.json" ]; then echo "-- run-store Kiro global MCP servers:"; jq -r '.mcpServers // {} | keys[]' "$R/home/.kiro/settings/mcp.json"; fi
+  echo "== real user stores (DesignerPunk-relevant only)"
+  if [ -f "$HOME/.claude.json" ]; then echo "$HOME/.claude.json: $(grep -c -E 'designerpunk-(docs|application|product)|enabledMcpjsonServers|node_modules/@3fn/core' "$HOME/.claude.json") DesignerPunk-relevant lines"; else echo "$HOME/.claude.json: absent"; fi
+  if [ -f "$HOME/.kiro/settings/mcp.json" ]; then echo "$HOME/.kiro/settings/mcp.json servers: $(jq -r '.mcpServers // {} | keys | join(", ")' "$HOME/.kiro/settings/mcp.json")"; else echo "$HOME/.kiro/settings/mcp.json: absent"; fi
+  echo "$HOME/.kiro/agents: $(ls "$HOME/.kiro/agents" 2>/dev/null | tr "\n" " ")"
+  echo "$HOME/.kiro/steering files naming DesignerPunk: $(grep -r -l -i designerpunk "$HOME/.kiro/steering" 2>/dev/null | wc -l | tr -d " ")"
+}
+hstate > "$R/out/harness-user-state-after.txt" 2>&1; cat "$R/out/harness-user-state-after.txt"
+find "$R/home" -type f -newer "$R/out/start.stamp" | sed "s|$R/home|HOME|" | sort > "$R/out/home-files.txt"; echo "files the run store gained: $(wc -l < "$R/out/home-files.txt" | tr -d " ")"
+find /tmp/ -maxdepth 1 -newer "$R/out/start.stamp" 2>/dev/null | grep -v -E "^/tmp/$|^/tmp/dp-trio$" | tee "$R/out/tmp-writes.txt"
+cd "$R/repo" && git status --porcelain --ignored | grep -v node_modules | tee "$R/out/repo-status.txt"; git log --oneline --all | head -20
+cd "$R/repo" && { echo "--- git log --first-parent -- specs/"; git log --first-parent --stat --format="%h %s" -- specs/ | head -60; echo "--- specs tree"; find specs -type f | sort; } > "$R/out/specs-after.txt" 2>&1; cat "$R/out/specs-after.txt"
+cd "$R/repo" && FOUNDER=$(git log --format=%H -1 --grep="founder's repo") && git diff --stat "$FOUNDER" -- .kiro/agents .kiro/steering | tee "$R/out/agents-diff.txt"; echo "agent-file changes since the founder commit: $(wc -l < "$R/out/agents-diff.txt" | tr -d " ") lines"
+env $KENV kiro-cli mcp list 2>&1 | tee "$R/out/kiro-mcp-list.txt"
+cd "$R/repo" && env $KENV kiro-cli chat --list-sessions -f json-pretty > "$R/out/kiro-sessions.json" 2>&1; echo "sessions listed: exit=$?, $(wc -c < "$R/out/kiro-sessions.json" | tr -d " ") bytes"
+if [ -d "$R/home/.kiro/sessions" ]; then cp -R "$R/home/.kiro/sessions" "$R/out/kiro-session-store" && echo "session store copied: $(find "$R/out/kiro-session-store" -type f | wc -l | tr -d " ") files"; else echo "no session store at $R/home/.kiro/sessions"; fi
+grep -n -i -E 'DesignerPunk-v2|wt-u5|claude-501|github\.com/3fn/DesignerPunk|raw\.githubusercontent\.com/3fn' "$R"/out/probe-*.txt "$R"/out/beat-*.txt "$R"/out/open-*.typescript > "$R/out/source-access-audit.txt"; echo "source-access audit hits: $(wc -l < "$R/out/source-access-audit.txt" | tr -d " ") (package self-references expected; see § 10)"
+date -u +%Y-%m-%dT%H:%M:%SZ > "$R/out/end.utc"; ls -la "$R/out"
+```
+
+Then: "`conformance-kiro` done; files in `/tmp/dp-trio/<release>/conformance-kiro/out`."
 
 
 ## 16. The product query (Task 28.3)
