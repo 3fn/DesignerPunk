@@ -5,6 +5,7 @@
 **Owners**: Ada (token docs), Lina (component docs and her charter line), Thurgood (`.kiro/steering/core-goals.md`). Each owner writes their own part (rule 9). An owner who files a part as its own record writes the move here as a dated line.
 **Class**: P0 false-claim · defect *(set 2026-10-23, Thurgood, filer, rule 12, on the M7 reading. Each line below is served to an agent reader, as a governance doc, an always-loaded steering doc, or an agent charter shipped to consumers. Each names a token key that does not exist: removed, or a platform identifier written in the key's place. An agent that follows the line declares or reads a name the token index does not hold, and that is the drift `2026-06-25-component-schema-token-name-drift.md` fixed. The reading Stacy may press: an example in a doc is guidance, not a claim. I class it P0 because core goals says "MUST use semantic tokens first" and its example is a token that was removed. Only Peter downgrades.)*
 **Trigger**: `release:next:phase-1`. The release-5 walk reads it: fixed, waived in writing, or blocking.
+**Status**: CLOSED 2026-10-25 by #471 (`83cfae189`, the component-YAML part, row 3a) and #472 (`1524a96aa`, the governance-doc and charter part, row 3). Outcome section below (rule 5); archived at `.kiro/issues/archive/` (rule 3). Claimed versus closed is in the outcome; wider token-name hits in other token docs moved to `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`. *(Ada, lead owner, rule 9.)*
 
 ---
 
@@ -235,3 +236,27 @@ Authority: Peter 2026-10-25 (chat, relayed): "Fix all of them as the owners reco
 *Signed: Thurgood, 2026-10-25.*
 
 #471 merged 2026-10-25 (`83cfae189`): the 3a component-YAML part is on main; the governance-doc part is this PR.
+
+## Outcome (2026-10-25, Ada, lead owner, rule 5): both parts merged; closed for the named sites, not for the unvetted ones
+
+Both fixing PRs merged on 2026-10-25, so the trigger (`release:next:phase-1`, the 16.1.0 walk's row 3 and sub-row 3a) is met and Lina's dated line ("closes when both parts have merged") is satisfied.
+
+**What shipped, by owner** (truth referent `token-index/` unless a part's own section names another):
+- **#471, `83cfae189` (row 3a, Lina)**: the 14 lines on the five-name grep in 7 component YAML files, as 13 edits, plus the wider scan's 29 edits in 17 files. The application MCP serves them after its `rebuild_index`. The Icon-Base size map found while fixing was filed and closed in its own record.
+- **#472, `1524a96aa` (row 3)**:
+  - **Ada, 5 docs, 6 commits**: `Token-Family-Border.md`, `Token-Family-Radius.md`, `Token-Quick-Reference.md`, `Token-Governance.md` (the component-token name shape, location, import and examples, my 2026-10-24 addition) and `rosetta-system-principles.md` (beyond the record's list: composition trees and naming examples that named non-keys).
+  - **Lina, 14 commits**: 13 on the component docs (Avatar, Badge, Button, Chip, Form-Inputs, Icon, Container, the five planned-family docs, Component-Inheritance-Structures, Component-Development-Guide, the four Component-* standards docs) and 1 on her three maintained docs (`platform-implementation-guidelines.md`, `cross-platform-vs-platform-specific-decision-framework.md`, `stemma-system-principles.md`). Where a sentence was false and not only misnamed (Icon sizes, `16px` padding, merged Button rows), she fixed the sentence.
+  - **Thurgood**: `core-goals.md` (3 lines), `DesignerPunk-Systems-Overview.md` (3 lines, found by the scan), three charter lines (Lina's L501 under errata (f), Kenya's L281, Data's L283), the overlays, and 10 re-sign acts (Lina, Kenya, Data, Stacy) with the regeneration and lock. His close line records `verify-signing-chain --ci` and the diff-guard passing at his head.
+
+**Claimed vs closed.**
+- **Claimed**: every site this record names, and the further sites each owner's scan found, now name token-index keys, or a platform identifier only inside a block that shows that platform's code.
+- **Closed**: those sites, by the shared definition of a key (the rule in `src/generators/__tests__/schemaTokenRefs.test.ts`, the 443 keys of `token-index/`), with each owner's grep or scan proof in their part above. Authority: Peter, 2026-10-25, "Fix all of them as the owners recommend; T is (A)."
+- **Not closed, and not claimed closed**:
+  1. The docs nobody vetted. The scans ran over the docs named above, `governance/Component-*.md` and `.kiro/steering/*.md`, and they are name scans, not proof that no wrong sentence is left. Lina's raw-hit list of other token docs (Token-Semantic-Structure, Token-Resolution-Patterns, Rosetta-System-Architecture, Product-Token-Governance, Transformer-Development-Guide, MCP-Relationship-Model, a-vision-of-the-future, the Token-Family-{Shadow,Blend,Layering,Accessibility,Typography,Spacing,Blur} counts, DTCG-Integration-Guide, Process-Cross-Reference-Standards, MCP-Integration-Guide) was not vetted by anyone. Filed as `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md` (Owner Ada, P2 record, `release:next:phase-1`).
+  2. The 24 component README lines on the five-name grep, which Lina deferred because they are not renames (Button-VerticalList-Item's table also names the retired `color.select.*` and `color.error.*` palette). They are Lina's; the same new record carries them as her item, so the archive move leaves them an owner and a trigger.
+  3. Lina's non-name observations in her part (Avatar's "initials fallback" claim, the Button doc's `color.action.secondary` row) are hers to confirm or drop; nothing here closes them.
+  4. The row-6 ballot's later re-sign of Core Goals' `#development-practices` (Thurgood's sequencing note) belongs to that ballot.
+
+**Post-merge, mine**: the docs MCP `rebuild_index`, so the served governance docs carry the corrected text; the application MCP `rebuild_index` for #471's YAML (Lina's line).
+
+*Signed: Ada, 2026-10-25.*
