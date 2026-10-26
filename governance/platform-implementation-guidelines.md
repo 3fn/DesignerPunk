@@ -307,7 +307,7 @@ animation_equivalence:
 
 ```swift
 // iOS - SwiftUI Animation
-withAnimation(.easeOut(duration: DesignTokens.motion.floatLabel.duration)) {
+withAnimation(.easeOut(duration: DesignTokens.MotionFloatLabel.duration)) {
   labelOffset = isFocused || !value.isEmpty ? -20 : 0
   labelScale = isFocused || !value.isEmpty ? 0.75 : 1.0
 }
@@ -318,7 +318,7 @@ withAnimation(.easeOut(duration: DesignTokens.motion.floatLabel.duration)) {
 val labelOffset by animateFloatAsState(
   targetValue = if (isFocused || value.isNotEmpty()) -20f else 0f,
   animationSpec = tween(
-    durationMillis = DesignTokens.motion.floatLabel.duration,
+    durationMillis = DesignTokens.MotionFloatLabel.duration,
     easing = FastOutSlowInEasing
   )
 )
