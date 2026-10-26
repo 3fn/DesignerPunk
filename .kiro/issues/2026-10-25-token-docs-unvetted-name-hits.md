@@ -73,3 +73,16 @@ I made these at S `a95d6bf3d` while writing `[ADA R1]` on the DRAFT ballot `.kir
 **4. The fix shape gains one clause.** If the guard is built before the sweep merges, these 56 go pending in it, homed here (ballot § 2.4, keyed per `[LINA R1]` L-6), and the sweep PR removes them. If the sweep merges first, nothing is pending for them. The trigger does not change.
 
 *Signed: Ada, 2026-10-26.*
+
+## Correction, 2026-10-26: the rule labels in my R-5 list
+
+CORRECTION (truth: `scripts/governance-examples/check.ts`, the candidate pattern's group 2, built on `feat/governance-examples-guard` at `fe2177a3c`). My R-5 list in the ballot (§ 7, `[ADA R1]`) gives the wrong rules in its labels. The outcomes it asks for still hold.
+
+- `color.select.*` is not read as a glob. Group 2 is `*` only where `*` directly follows a segment (`icon.size*`). In `color.select.*` a `.` comes before the `*`, so the candidate is `color.select` with no glob. No rule from 1 to 6 holds for it, and it fails at the final "otherwise", not at rule 1. It is still a red case.
+- `space.inset.*` resolves as a namespace (rule 4), not as a glob. The candidate is `space.inset`. It is still a green case.
+- A `<prefix>.*` string resolves under rule 4 exactly when a glob on `<prefix>.` would resolve under rule 1, so the outcome does not change and there is no version bump.
+- The ballot is a ratified record and is not edited. This entry is the correction. The test names in `scripts/governance-examples/__tests__/governance-examples.test.ts` give the true rules.
+
+The same commit fixes `governance/Rosetta-System-Architecture.md` L481. It adds the `<!-- example: consumer -->` marker (§ 8.4, as Lina read it; EXECUTION) and corrects the block's comment path and its two imports to the real depth (CORRECTION; truth: `src/components/core/Button-Icon/buttonIcon.tokens.ts`). It is not a pending entry.
+
+*Signed: Ada, 2026-10-26.*
