@@ -229,11 +229,13 @@ date: 2026-09-29
 ## `#token-selection-priority-must-follow-this-order`
 
 confirmer: lina
-canonicalHash: sha256:ad6fd6a1c0b92f63dada5b5bd28888c99db2035f75072a975318a02683aee32a
-items: priority-semantic, priority-primitive, priority-component, priority-hardcoded
-date: 2026-09-29
+canonicalHash: sha256:92a5e797c7aebad385a926505a2bdef609b0f70fc2f9ca3b4120ec268335f69f
+items: priority-pointer, priority-no-creation
+date: 2026-10-25
 
 **Ruling: CONFIRMED at 4 items.** Each step's complete text, its condition and its approval requirement included. **Residual, recorded, not an item**: the ORDERING obligation ("MUST follow this order") lives only in the heading, which is a label (clause (c)) and cannot be an item. A rendering that keeps all four steps verbatim but reorders them clears the floor. Routed review catches it; the mechanical half does not.
+
+**Re-confirmed 2026-10-25 (ballot `2026-10-25-token-selection-order-one-rule`, site 3): CONFIRMED at 2 items, as proposed; no item corrected.** The unit is now the pointer form (L501–503, byte-identical to the ballot's § 13.3 text, which is mine), so the four `priority-*` step items left with the restated order. `priority-pointer`: querying the matrix before choosing a token is violable (a consumer that picks a token without the query breaks it); the `get_section` call is the means inside the same sentence, so it stays one obligation, not a separate `command`. `priority-no-creation`: the checkpoint-and-hand-off, with no created token and no hard-coded value, is violable on either branch. Both texts are verbatim substrings of the unit. **Not an item**: "This charter does not restate it." describes this document, not anything a consumer implementation does, so nothing can violate it. **Residual 1 (phase one) moves**: the order no longer lives only in the heading here. `priority-pointer` makes "one order, query it first" operative, and the order's own fidelity is Token Governance § "Token Selection Matrix", which is Ada's unit, not this one. The 2026-09-29 ruling above is kept as the record of the four-item set.
 
 ## `#component-token-construction-rule`
 

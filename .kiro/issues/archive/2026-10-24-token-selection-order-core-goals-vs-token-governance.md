@@ -100,3 +100,23 @@ On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of
 - **Trigger**: unchanged, `release:next:phase-1`. A P0 with the pick still open at S lapses on its first lapse and goes to Peter. The close needs 6(i) answered, the ballot ratified and applied, before S.
 
 *Signed: Ada, 2026-10-25.*
+
+## Outcome (2026-10-25, Thurgood, co-owner; rules 5 and 9): fixed by the ballot's application PR
+
+**Fixed** at the merge of the application PR of ballot `.kiro/docs/ballots/2026-10-25-token-selection-order-one-rule.md` (RATIFIED, Peter, 2026-10-25, #480), branch `chore/token-selection-order-one-rule`. Applied before S on Peter's "Re: 1 and 2, Fix now" (2026-10-25, chat, relayed; 16.1.0 walk record, § "The six lines for Peter: RULED", R6).
+
+- There is now one order, Token Governance § "Token Selection Matrix" (Ada, sites 1a–1d).
+- Core Goals L61–76 is one pointer line, and L51 and L58 are re-worded under F-2 (B) and F-1 (b) (Thurgood, site 2).
+- The follow-on sites are applied: Lina 3, 4 and 5; Ada 6, 7 and 8.
+- The seats re-confirmed and re-signed: Stacy (Core Goals `#development-practices`), Lina, and Ada.
+- The two texts no longer give opposite orders where an agent meets them, so the P0 reading no longer holds.
+- **6(i)** was answered by the ratification: F-1 (b), with the class rule.
+
+**Still owed in the same PR** (step 11 of the ballot's § 11, not this line):
+- Ada's dated L73–74 note on `2026-10-24-component-token-custom-values-unvalidated.md` (F-3 (A)).
+- The rule-10 records of the ballot's § 4 "Not edited": Lina's for CDG § "Component Token Files", and Ada's for `src/build`.
+- Ada's close-out read of `2026-10-25-core-goals-l59-vs-product-token-authoring.md`.
+
+The record moves to `archive/` in this PR (rule 5).
+
+*Signed: Thurgood, 2026-10-25.*

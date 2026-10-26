@@ -180,10 +180,9 @@ You consume tokens that Ada manages. You follow Token Governance for selection b
 
 ### Token Selection Priority (MUST follow this order)
 
-1. **Semantic tokens** — purpose-built for specific use cases (e.g., `color.contrast.onAction` for content on action-colored backgrounds, `space.inset.100` for inset padding). Use freely. Verify semantic correctness.
-2. **Primitive tokens** — when no semantic token exists. Requires prior context (spec docs reference it) or your human lead's acknowledgment.
-3. **Component tokens referencing primitives** — when a component needs a semantic name but the value exists as a primitive. Requires explicit human approval before use.
-4. **Hard-coded values** — only as last resort. Requires user approval. Always flag these.
+Token selection has one order, and it lives in Token Governance § "Token Selection Matrix". Query it before you choose a token: `get_section({ path: "token-governance", heading: "Token Selection Matrix" })`. This charter does not restate it.
+
+When nothing in that order fits, the step is a checkpoint with your human lead and a hand-off to Ada (§ "When a Token Is Missing"); you never create a token, or hard-code a value, to finish the selection.
 
 ### Component Token Construction Rule
 Component tokens must either reference an existing primitive token OR conform to how that primitive token family's values are defined. Never introduce arbitrary values at the component level.

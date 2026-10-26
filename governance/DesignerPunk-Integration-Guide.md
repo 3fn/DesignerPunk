@@ -777,6 +777,8 @@ state-model:
 template: card-grid                   # Optional — references product/templates/
 ```
 
+`status.spec` is a value the spec's author sets, and nothing in DesignerPunk checks it: `complete` means the author says the spec is finished, not that components' readiness, an assembly check or a person's review was confirmed. Platform agents filtering by `status` take it as written.
+
 **`tokens:` block convention**: Token references go in a dedicated `tokens:` block per UI tree node, separate from `props:`. Props describe what a component does (label, variant). Tokens describe how it looks (color, spacing). Only `tokens:` blocks are indexed by the Product MCP — tokens in `props:` are not discoverable via `find_screens({ usesToken })`.
 
 Use canonical Rosetta token names as-is (dot-notation for semantic tokens like `color.action.primary`, flat names for primitives like `space100` or `bodyMd`). The indexer stores token names exactly as written — no normalization.

@@ -107,6 +107,17 @@ signer: ada
 
 signer: ada
 
+**RE-SIGNED 2026-10-25 — ASSENT, surviving 5 of 5.** Signed against canonical `sha256:e63621d4…` and rendered `sha256:cd9728ee…`, and judged against the 5-item set re-confirmed at `40943bce1`, with the overlay pinned at `77d4ab6f9` and the consumer rendering regenerated at `f8ab6d643`.
+- **What changed**: in canonical, L389 only (ballot `2026-10-25-token-selection-order-one-rule`, F-1 (b), ratified #480; my § 13.7 text, applied by Thurgood byte for byte at `d9817512d`). The component level now reads "component freely inside its own component, another component's token with explicit approval". The overlay unit carries the same line, and the row's two removals are untouched; each still applies as a substring of the new unit. I recomputed the rendered hash with `readConsumerSpans` and `renderedHashOf` over the committed rendering: `sha256:cd9728ee…`. It moved from `sha256:901f97a1…` because the L389 line moved, in all three rendered targets, and nothing else in the unit's span did.
+- **I re-read the rendered unit (`_consumer-output/_canonical/agents/ada.md`, `### What This Means in Practice`) against the items, one by one.** All five survive:
+  - **Verbatim in the rendering** (three): `practice-no-edit-docs`, `practice-all-changes`, and `practice-ambient-law`, the line that changed. The rendering carries the new L389 whole, with the embed pointer and "apply them as written there" intact, and the CC rendering's ambient `token-governance` embed carries the amended § "Component Token Usage" it points to ("Full autonomy inside the owning component"), so the pointer resolves to law that agrees with it.
+  - **Re-keyed, entailed** (`practice-no-write`, `practice-propose`): unchanged from the 2026-09-29 signature. The repo paths read as DesignerPunk's shipped docs and the generated identity files, with the team's shared docs changed only through the process; "Peter decides" reads as "your human lead decides".
+- **What I weighed on `practice-ambient-law`**: the line is a summary, and it leaves out the embed's "for the property it was made for" condition (Core Goals L58 states it). I credit the item because the line tells the reader to apply the embed as written, and the embed states the condition; a consumer Ada that follows the rendering checkpoints the owner's token for another property. The gap is in the canonical summary, which is my own text, and is recorded in the confirmation; it is not the rendering's.
+
+No refusal.
+
+**SUPERSEDED — the signature of 2026-09-29 (surviving 5 of 5; canonical `sha256:14c402fa…`, rendered `sha256:901f97a1…`), kept as the prior record:**
+
 **RE-SIGNED 2026-09-29 — ASSENT, surviving 5/5** (stale; renderedHash now `sha256:901f97a1…`).
 - **What changed**: `practice-no-write`'s bullet gains "…and you change your team's shared docs only through this process". That is the scoping clause Lina's and Thurgood's renderings carry.
   - It strengthens the entailment of `practice-no-write`, re-keyed as "never write the shared governance layer": the shipped docs and identity files are forbidden, and the team's shared docs change only via the ballot.

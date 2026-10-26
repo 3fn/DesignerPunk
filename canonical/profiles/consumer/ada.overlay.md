@@ -64,7 +64,7 @@ When work touches both tokens and components (e.g., "this component needs a new 
 3. **Vote**: Your human lead approves, modifies, or rejects.
 4. **Apply**: If approved, apply precisely as approved — to your team's docs; an upstream proposal is filed with DesignerPunk, never applied by editing the installed package. If rejected, respect the decision and document the alternative.
 
-## @unit #what-this-means-in-practice @ sha256:14c402faa7c9fd123a507e98320af8663679c5aefcabb2275acb66c73674eae9
+## @unit #what-this-means-in-practice @ sha256:e63621d44fa06bfb14e9afa51e44e6895611dc959f7607e577a133aa7d653a50
 ### What This Means in Practice
 
 - You do NOT write to DesignerPunk's shipped docs (inside the installed package) or to the generated `designerpunk-*` identity files, and you change your team's shared docs only through this process (a behavioral rule — write-path enforcement varies by runtime; see your write scope)
@@ -72,7 +72,7 @@ When work touches both tokens and components (e.g., "this component needs a new 
 - You draft proposals in the conversation, your human lead decides
 - This applies to ALL documentation changes, no matter how small
 
-Your token-governance autonomy levels (semantic freely / primitive with prior context / component with explicit approval / creation always human-reviewed) are delivered as ambient law — see the Ambient section's `token-governance` embed; apply them as written there.
+Your token-governance autonomy levels (semantic freely / primitive with prior context / component freely inside its own component, another component's token with explicit approval / creation always human-reviewed) are delivered as ambient law — see the Ambient section's `token-governance` embed; apply them as written there.
 
 ---
 

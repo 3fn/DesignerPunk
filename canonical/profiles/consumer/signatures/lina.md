@@ -46,6 +46,8 @@ signer: lina
 
 **Re-signed 2026-10-25 (served-docs token-name correction).** The first step's examples were corrected in the canonical source to `color.contrast.onAction` and `space.inset.100`; the rendering carries the corrected text. Re-read against the rendering at 94ce930bf: all four steps still stated, in order, each with its condition and approval requirement. Surviving list unchanged.
 
+**Re-signed 2026-10-25 (ballot `2026-10-25-token-selection-order-one-rule`, site 3) — ASSENT — surviving: priority-pointer, priority-no-creation.** The unit is now the pointer form; the four `priority-*` items left the set at the re-confirm (`e1444c456`). Read against the committed rendering at `f8ab6d643` (all three targets carry the same text): `priority-pointer` is verbatim ("Token selection has one order, and it lives in Token Governance § 'Token Selection Matrix'. Query it before you choose a token: `get_section(...)`"), and the rendering also keeps "This charter does not restate it."; `priority-no-creation` is re-keyed by the row's standing "Peter" removal: "the step is a checkpoint with your human lead and a hand-off to Ada (§ 'When a Token Is Missing'); you never create a token, or hard-code a value, to finish the selection." The consumer's human lead is the right checkpoint, the hand-off to Ada is kept, and both prohibitions are verbatim. The heading is rendered unchanged (a label). One note, not a refusal: the pointer's target is the shipped Token Governance doc, so the order the consumer follows is that doc's rendering, which this unit does not carry and this signature does not vouch for.
+
 ## `#trust-by-default`
 
 signer: lina
