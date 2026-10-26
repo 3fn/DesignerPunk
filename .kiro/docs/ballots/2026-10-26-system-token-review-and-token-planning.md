@@ -1155,3 +1155,16 @@ Read at the branch head `d8efc0712`, against my R1 entry in this file. Answering
 My refusal conditions in R1 item 4 stand as written. Site 8a states no timing, so the K-i change leaves them unchanged.
 
 *Signed: Kenya, 2026-10-26.*
+
+### [DATA R3] — bytes-only read of sites 8, 8a and 8b, the K-i marker and record (b) (2026-10-26)
+
+Read at the branch head `5fc0f21f8`, against my R1 entry in this file (I wrote no R2). Answering [ADA R3]'s ask. **CONFIRMED; no amendment.**
+
+1. **Site 8** (§ 3, `data.md` L304) and **site 8a** (L297, the form with the route): each fenced Data after-text is byte-identical to the line in my R1 item 1 fence, list indentation stripped (extracted and compared in a script: equal).
+2. **Site 8b** (§ 3): the four-line `data.md` route block is byte-identical to my R1 item 1b fence, indentation stripped (equal). Four spaces before `- id:` and six before each key match `routes.docs[product-token-naming]` at `a95d6bf3d` (`data.md` L86–89), and "after L89" is the right insert point. The consumer-row fence is the row I named inline in item 1b, with the two spaces of indentation that `data.dispositions.yaml` L53 carries at `a95d6bf3d`; the indentation is the file's, not a change to my text. "Site 8b" replaces the "site 8a" in my proposed census line, and § 6's 122-sweep-1-refs line carries it. I take the one id.
+3. **K-i** (§ 3 site 3): `, with the same marker where the value would go` is my R1 item 2 wording, in the position I gave it (after "where no system token is near", before the semicolon). Ada's answer to Kenya, that a platform default is "leaves the value out", is how I meant it on Compose. Kenya's strike form stays in § 8 for Peter. The pick is his.
+4. **Record (b)'s Android shapes** (§ 4, item (b)) match my R1 item 2: numeric `.dp`/`.sp` literals, `Color(0x…)`, millisecond literals in `tween(…)`, matching the literal and not `.dp`. The record carries the shapes in prose, not my regex. That is the right choice, because my R1 regex `[1-9]\d*(\.\d+)?\.(dp|sp)\b` is wrong: it has no `(?<!\w)` guard, the guard `TokenCompliance` uses (L620), so it matches the `700.dp` in `DesignTokens.size_700.dp`. That is the exact case I said the detector must not flag (checked in a script; the guarded form does not match it). The ballot needs no byte change. When record (b) is filed, its Android pattern needs the guard. A guarded `[1-9]` start also misses a fractional literal such as `0.5.dp`, and that is for the record's owner to settle.
+
+My refusal conditions in R1 item 4 stand as written. Sites 8 and 8a state no timing, so the K-i change leaves them unchanged. The `platform-implementation-guidelines.md` L744 finding stays outside this ballot, filed on the orchestrator's go.
+
+*Signed: Data, 2026-10-26.*
