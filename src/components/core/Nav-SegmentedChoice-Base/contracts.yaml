@@ -358,8 +358,10 @@ contracts:
       When id is omitted, aria-controls is not set. id is independent
       of testID.
       Web: the segments are in the component's shadow root, and an
-      aria-controls reference does not cross a shadow root, so on web no
-      tab-to-panel association is provided. The
+      aria-controls ID reference does not cross a shadow root. On web, no
+      tab-to-panel association is provided where the browser lacks
+      ariaControlsElements; where it is supported, the element reference
+      is set. The
       aria-controls="[id]-panel-[value]" attribute is set where no such
       panel is found or the browser has no ariaControlsElements; where
       the element reference is set, the attribute reads as empty.

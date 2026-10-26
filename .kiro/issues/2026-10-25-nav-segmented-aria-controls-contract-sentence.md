@@ -21,9 +21,11 @@ Behavior sentence now reads: "The `aria-controls="[id]-panel-[value]"` attribute
 
 The first `validation:` line (L368) carried the same claim as the corrected sentence ("web - the reference resolves to no element; no association is provided"). It now reads: "web - where the element reference is set, the attribute reads empty and the reference resolves; where ariaControlsElements is absent, the attribute is set and no association is provided". Why: the same E6-1 observation falsifies it; the orchestrator widened the brief to cover it. Same PR.
 
-## Left for a decision (Peter's; the two corrections above do not depend on it)
+## RULED (Peter, 2026-10-26; chat, relayed by the orchestrator)
 
-The contract's kept sentence (Peter's ruled text, #484 / E6-2), "on web no tab-to-panel association is provided", sits against the code and `Nav-SegmentedChoice-Base/README.md` L264, which set `ariaControlsElements` to the panel in browsers that support it (E6-1 PASS in Chromium) and provide no association only where the browser lacks it. Proposed wording: "on web, no tab-to-panel association is provided where the browser lacks `ariaControlsElements`; where it is supported, the element reference is set". Whether to change the ruled sentence, or let it stand as is, is Peter's call. The PR body carries it as its `**Open for Peter**:` line.
+The question was: the contract's kept sentence (Peter's ruled text, #484 / E6-2), "on web no tab-to-panel association is provided", sits against the code and `Nav-SegmentedChoice-Base/README.md` L264, which set `ariaControlsElements` to the panel in browsers that support it (E6-1 PASS in Chromium) and provide no association only where the browser lacks it. May the sentence read "on web, no tab-to-panel association is provided where the browser lacks `ariaControlsElements`; where it is supported, the element reference is set", or does the ruled text stand as is?
+
+Peter's words, in chat: "Re: 1, Yes" (item 1 in the orchestrator's list to him was this question). Received on 2026-10-26, before 2026-10-26T00:21Z (`date -u` at the commit; the orchestrator's relay gave a window of after 01:15Z and before 01:30Z, which disagrees with this machine's clock: the exact receipt time is not recoverable here, only that it precedes this commit). Applied in this PR: the contract's behavior text now reads "On web, no tab-to-panel association is provided where the browser lacks ariaControlsElements; where it is supported, the element reference is set." The README L264 already says this and is unchanged.
 
 ## What closes it
 
