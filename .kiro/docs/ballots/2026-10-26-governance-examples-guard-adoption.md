@@ -1,16 +1,16 @@
 # Ballot Measure: adopting the governance-examples guard into the seats (the ARMING path, Stacy's counting-block read, the guard's paths in Thurgood's scope, and who edits `pending.json` after adoption)
 
-**Date**: 2026-10-26
+**Date**: 2026-10-26 (R2: 2026-10-26)
 **Drafted by**: Thurgood (Civitas steward; owner of the instrument, register row `governance-examples`, `owner: thurgood`). Ballot `2026-10-26-governance-examples-guard` (RATIFIED, Peter, 2026-10-26, #495 `f55bf3e04`) § 2.6 defers these items "to a ballot of their own, filed with the build PR (steward's call, R2)". The build PR is #519 (`feat/governance-examples-guard`, head `38cc6a4b5`). Peter's standing go for parallel items covers the drafting (the orchestrator's reading). Peter, chat, relayed by the orchestrator, received before 2026-10-26T18:05Z (the orchestrator's clock), verbatim: *"If there are any other items of the list that can/should be done in parallel with those running, please, proceed"*. The orchestrator's brief to draft was received before 2026-10-26T18:54:48Z (`date -u`, the drafter's clock).
-**Status**: **DRAFT**, not ratified. No edit site below is applied. A merge with this line still reading DRAFT records the measure and ratifies nothing.
-**Required reviewer**: **Stacy**. Sites 1, 2 and 7 are her charter row, her counting block and her record, and she is the census reader.
+**Status**: **DRAFT, R2** (the three consults folded, § 7), not ratified. No edit site below is applied. A merge with this line still reading DRAFT records the measure and ratifies nothing.
+**Required reviewer**: **Stacy**. Sites 1, 2 and 7 are her charter's trigger-set table, her counting block and her record, and she is the census reader.
 **Reviewers**: **Ada** and **Lina**, for § 2: 64 of the 69 pending entries are homed in their records (Ada 60, Lina 4; the other 5 are Thurgood's).
-**Consulted**: Stacy — <pending: her counting-block line in her words (site 2), and the ARMING entry (site 1)>; Ada — <pending: entry deletion for her home record (§ 2, F-1)>; Lina — <pending: entry deletion for her home record (§ 2, F-1), and the dragged fixture (site 1)>
+**Consulted**: Stacy — reads F-1 (a); wrote site 2 and the RELEASE-row pointer (site 2b) verbatim, RELEASE phase 1 only; 1c decidable under (a) and (b), with three gaps folded at R2 (Owner-line match, RATIFIED at `<m>`, 1b's referent); site 7 order, re-arm and retroactivity folded; disposition `no-consumer-counterpart` / `subtraction-1` and all six census lines confirmed; Ada — reads F-1 (a): her sweep PR deletes her 60 entries; zero cross-seat staling today; surviving: her hits in Thurgood's docs need her commit to delete; Lina — reads F-1 (a); commits site 1d herself after the stacy.md commit; asked what clause 4's "names the change" means (answered in § 2 clause 4: a class, with the list attached at application) (consults 2026-10-26, relayed by the orchestrator; § 7)
 **Class**: LAW. Sites 1–3 are `canonical/agents/**` edits, and § 2 gives write scope over a file that no seat holds today (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds"; ballot `2026-10-17-standing-write-scope-six-roots` § 3 item 1: "Scope moves only by a `canonical/agents/**` edit", or by a grant the law provides).
 
 **Amends**:
 - `canonical/agents/stacy.md`, the ARMING row, instrument-path limb: `scripts/governance-examples/**` joins the path list, the guard's test joins the deletion read, and a fourth read covers `pending.json` (§ 3 site 1). **LAW**.
-- `canonical/agents/stacy.md`, the counting block: one added item, the governance-examples read (§ 3 site 2). **LAW**. Stacy writes its words.
+- `canonical/agents/stacy.md`, the counting block: one added item, the governance-examples read, on RELEASE phase 1 only (§ 3 site 2); and the RELEASE row (L400): one pointer sentence to it (§ 3 site 2b). **LAW**. Both texts are Stacy's, verbatim.
 - `canonical/agents/thurgood.md`, `writeScope`: one glob, `scripts/governance-examples/**` (§ 3 site 3). **LAW**.
 - **The pending-entry rule** (§ 2): its law home is this ballot, § 2. `governance/classification-map.md`, row `governance-examples`, gains a LAW HOME pointer and a history line (§ 3 site 4). **EXECUTION** of § 2.
 - `.kiro/docs/ballots/2026-10-17-standing-write-scope-six-roots.md` § Errata: one dated ledger line (§ 3 site 5). **EXECUTION**.
@@ -30,7 +30,7 @@
 - `**Census**: not in scope — governance-examples (scripts/governance-examples/check.ts, row governance-examples) — no edit site is a file it loads (its scope excludes classification-map.md; it reads the scoped docs, the parent ballot, the pending homes, token-index/ and dist/, and § 3 edits none of them), and § 2 governs who edits pending.json and who reads the PR, not what the guard selects or decides`. This line holds under either answer to #519's row-state question (§ 4.3). Under "keep proposed", the row's `checks` is `[]` at this ballot's base, so the guard is not yet a registered instrument. Under "arm now", it is one.
 - `**Census**: not in scope — semantics-guard fixture test (tools/agent-generator/__tests__/semantics-guard.fixture.test.ts) — the fixture's copy of Stacy's trigger-set unit is kept byte-identical in the same PR (Lina's dragged commit, § 4.2); the test's rule is unchanged`. The line is written whether or not that test is a registered instrument; it costs nothing.
 
-**Cap**: one path added to one existing ARMING limb, plus one read in it; one counting-block item; one `writeScope` glob; one pending-entry rule with one register pointer; three ledger or record lines. **No** new trigger, token, lane, required check, record kind or register row. **Retroactivity**: none. A `pending.json` change merged before this ballot's application is read by RELEASE, the limb's existing backstop.
+**Cap**: one path added to one existing ARMING limb, plus one read in it; one counting-block item and one RELEASE-row pointer; one `writeScope` glob; one pending-entry rule with one register pointer; three ledger or record lines. **No** new trigger, token, lane, required check, record kind or register row. **Retroactivity**: none for doc authors. The new glob's range reaches back to #519's merge and the interim PRs (§ 4.2 step 7); whether Stacy reads those under the limb or leaves them to RELEASE, the limb's existing backstop, is her choice at application, recorded in her record (§ 3 site 7).
 
 > **Conflict of interest, stated first.** I own the instrument. This ballot widens my standing scope to cover it, and it writes the rule on who may edit that instrument's list. Under § 2 I gain no deletion of another seat's entries. My additions are barred by an existing sentence of my own charter, and site 1's read enforces that bar. The checks on me are Stacy's review and her post-merge read, and Peter's ratification.
 
@@ -52,21 +52,22 @@ The text below is the rule, applied as written at ratification. It has one fork,
 
 > **`scripts/governance-examples/pending.json` after adoption** *(ballot 2026-10-26-governance-examples-guard-adoption § 2)*.
 > 1. Thurgood holds the file in his standing scope, as the instrument's owner.
-> 2. **(a)** A seat named on the `**Owner**:` or `**Owners**:` line of an entry's `home` record may delete that entry, and only that entry, in a PR whose `**Agent**:` line names that seat. The grant needs no activating merge. It is held by this rule, and it lasts while the entry is listed.
+> 2. **(a)** An owner of an entry's `home` record may delete that entry, and only that entry, in a PR whose `**Agent**:` line names that owner. The owners are the seat names in the record's `**Owner**:` or `**Owners**:` field: the text after that token up to the first `(`, `.`, `;` or ` — `, read as names separated by `,` or `and`. A seat named elsewhere on the line, consulted or co-owning a part, is not an owner here. The grant needs no activating merge. It is held by this rule, and it lasts while the entry is listed.
 >
 >    **(b)** Any PR that makes an entry stale deletes that entry, and it may delete nothing else.
 > 3. Where a fix shifts the occurrence indices of a string, the PR deletes the entry the guard reports as stale and rewrites no other entry. The informational `line` field may be updated by any PR that edits the file.
-> 4. No PR adds an entry, changes an entry's `doc`, `half`, `string`, `occurrence` or `home`, or changes the `header`, unless it executes a ballot that names the change. Owning the instrument does not authorize it.
+> 4. No PR adds an entry, changes an entry's `doc`, `half`, `string`, `occurrence` or `home`, or changes the `header`, unless it executes a ballot, RATIFIED at that PR's merge, that names the change. A ballot names the change as a class, for example "the entries a predicate version bump makes fail", and need not list each entry. The PR that applies it attaches the list: its body names every entry it adds or re-keys and the header before → after, and the entries the diff adds equal that list. Owning the instrument does not authorize it.
 > 5. Whether a deleted entry was stale is the guard's to decide, not a reader's. The required check fails a deletion whose hit still fails, as an unlisted hit.
 
 **Why the law home is this ballot, with a pointer in the register row, and not a clause in the row** (the brief left this to the steward):
 - **Precedent.** The one standing grant rule outside the charters, `tasks-row-write-scope-grant`, has its law in its ballot. Its register row points to it and leaves the charters unedited on purpose.
 - **The row's `rule:` says what the check requires of a doc.** Who edits the list is not something the guard checks. A write-scope clause in `rule:` would read as covered by the barrier: false coverage, which is the error the register exists to prevent.
+- **Why clause 4 takes a class, not an entry list** (Lina's question, § 7): a predicate bump is ratified on its census, whose delta names the docs whose verdict moves, before the entries can be cut against the final base. The entries exist only at application. Requiring them in the ballot would force a re-ratification for every base drift; requiring them in the applying PR's body keeps the read decidable at `<m>`.
 - **Reach.** The fixer meets the rule through the guard's own failure line ("remove it"), and the reader meets it in Stacy's ARMING row (site 1). The register row points both of them here.
 
 ## 3. Edit sites, byte for byte (after the Status commit)
 
-Each Before is quoted from `origin/main` = `6615a6774`, except site 4, which is quoted from #519's head `38cc6a4b5`, and site 7, which is quoted from #516's site 4 text. Each anchor is unique in its file. That was checked at `6615a6774` for sites 1–3.
+Each Before is quoted from `origin/main` = `6615a6774`, except site 4, which is quoted from #519's head `38cc6a4b5`, and site 7, which is quoted from #516's site 4 text. Each anchor is unique in its file. That was checked at `6615a6774` for sites 1–3 and 2b.
 
 ### Site 1 — `canonical/agents/stacy.md`, the ARMING row (L404), instrument-path limb (LAW)
 
@@ -91,8 +92,10 @@ and in `mcp-server/src/tools/__tests__/{validate-metadata,list-cross-references,
 After:
 
 ```text
-in `mcp-server/src/tools/__tests__/{validate-metadata,list-cross-references,rebuild-index}.test.ts`, and in `scripts/governance-examples/__tests__/*.test.ts`, unless the PR body names the file and its spec amendment
+in `mcp-server/src/tools/__tests__/{validate-metadata,list-cross-references,rebuild-index}.test.ts`, and in `scripts/governance-examples/__tests__/*.test.ts`, unless the PR body names the file and its spec amendment (for the guard's test, the ballot that amends the guard, its Status reading RATIFIED at `<m>`)
 ```
+
+The parenthesis gives the guard's test a referent: the guard is governed by ballots, not by a spec, so "its spec amendment" alone would make every deletion in the test a finding (Stacy, consult item 2).
 
 **1c. The `pending.json` read.** It reads parsed entries, not `--numstat`, because the informational `line` field moves on routine edits. Before:
 
@@ -103,14 +106,16 @@ in `mcp-server/src/tools/__tests__/{validate-metadata,list-cross-references,rebu
 After, under F-1 (a):
 
 ```text
-(the body read with `gh pr view <n> --json body`, run for this seat by a session holding credentials). For a PR touching `scripts/governance-examples/pending.json`, a fourth read, decidable from git and the PR body (ballot 2026-10-26-governance-examples-guard-adoption § 2): `git show <m>:` against `git show <m>^:` that file — its `header` unchanged; every entry at `<m>` an entry at `<m>^`, keyed by `doc`, `half`, `string` and `occurrence`, with `home` unchanged (`line` is informational and not read); and for each entry at `<m>^` absent at `<m>`, a seat named on the `**Owner**:` or `**Owners**:` line of its `home` record at `<m>^` named on the PR body's `**Agent**:` line — unless the PR body names the ballot that admits the change. An added entry, a changed key, `home` or `header` is a finding on the author, routed to Peter as an unadmitted weakening of a floor; a deletion by another seat is a finding on the author. Whether a deleted entry was stale is not read here: the required guard fails a deletion whose hit still fails. Beside these reads
+(the body read with `gh pr view <n> --json body`, run for this seat by a session holding credentials). For a PR touching `scripts/governance-examples/pending.json`, a fourth read, decidable from git and the PR body (ballot 2026-10-26-governance-examples-guard-adoption § 2): `git show <m>:` against `git show <m>^:` that file — its `header` unchanged; every entry at `<m>` an entry at `<m>^`, keyed by `doc`, `half`, `string` and `occurrence`, with `home` unchanged (`line` is informational and not read); and for each entry at `<m>^` absent at `<m>`, an owner of its `home` record at `<m>^` (the seat names in its `**Owner**:` or `**Owners**:` field, up to the first `(`, `.`, `;` or ` — `) named on the PR body's `**Agent**:` line — unless the PR body names a ballot whose Status reads RATIFIED at `<m>` (`git show <m>:<ballot>`) that admits the class of change, and lists every entry added or re-keyed and the header before → after, the list equal to the entries the diff adds. An added entry, a changed key, `home` or `header` is a finding on the author, routed to Peter as an unadmitted weakening of a floor; a deletion by a seat that owns no entry's home is a finding on the author. Whether a deleted entry was stale is not read here: the required guard fails a deletion whose hit still fails. Beside these reads
 ```
 
-After, under F-1 (b): the same text without the clause "and for each entry at `<m>^` absent at `<m>`, … `**Agent**:` line" and without the sentence's last clause, "a deletion by another seat is a finding on the author".
+After, under F-1 (b): the same text without the clause "and for each entry at `<m>^` absent at `<m>`, … `**Agent**:` line" and without the clause "a deletion by a seat that owns no entry's home is a finding on the author".
+
+The owner field is read up to its first delimiter so that a seat named as consulted on the same line is not an owner (Stacy's gap: the TDS record's Owner line also reads "**Consulted when the fix opens**: Lina"). At `6615a6774` the field gives Ada for her record, Lina for the CDG record and Thurgood for the TDS record. Lina no longer matches Ada's record as item B's co-owner. Ada accepted either reading, and item B has no entries.
 
 **1d. Dragged, not a fourth edit**: the byte-identical copy of the trigger-set unit in `tools/agent-generator/__fixtures__/semantics-guard/canonical/agents/semguard.md` (Lina's path; precedent: six-roots § Errata (h)).
 
-### Site 2 — `canonical/agents/stacy.md`, the counting block (L426) (LAW; **Stacy's words**)
+### Site 2 — `canonical/agents/stacy.md`, the counting block (L426) (LAW; **Stacy's text, verbatim**)
 
 The item goes in before the block's last item. Before:
 
@@ -118,13 +123,29 @@ The item goes in before the block's last item. Before:
 never a gate; and **M3 / M4 / M5** as standing audit output
 ```
 
-After. *This is the drafter's proposal, made from Stacy's own R1 words (her charter note and S-9) and the parent ballot's § 2.4 and F-3. **Stacy rewrites it**, and the ratified text is hers:*
+After (Stacy, consult 2026-10-26, verbatim):
 
 ```text
-never a gate; **the governance-examples read** *(ballots 2026-10-26-governance-examples-guard § 2.4 and 2026-10-26-governance-examples-guard-adoption)*: on a RELEASE pass, the guard's report line at S (`npx tsx scripts/governance-examples/check.ts` on a checkout of S, after `npm run build`; otherwise `not re-verified — toolchain unavailable`), pasted; while the register row `governance-examples` does not read `armed` at S, the line reads `not adopted at S` and nothing below is counted; P at S against the `pending.json` baseline header and against P at the previous release's S (P not falling makes each true-positive entry a walk row at that release); the opt-outs by value (`generic`, `consumer`) and K, against the baseline measured after Ada's sweep merges; the predicate and file-shape rule versions the `--census` line prints; each remaining entry's home record at the issues root with a trigger (a home record closed with its entries still listed is claimed fixed and shipped not fixed); and the count of `pending.json` reads under the ARMING row, with their findings — observation, never a gate; and **M3 / M4 / M5** as standing audit output
+never a gate; **the governance-examples read** *(ballots 2026-10-26-governance-examples-guard § 2.4 and 2026-10-26-governance-examples-guard-adoption)*, on RELEASE phase 1 only: adopted at S is the register row `governance-examples` reading `armed` at S and `scripts/governance-examples/pending.json` at S carrying its `adopted:` header, and until then the item is the one line `not adopted at S`; the guard's report line at S, pasted (`npx tsx scripts/governance-examples/check.ts` on a checkout of S after `npm run build`, else `not re-verified — toolchain unavailable`); P at S against the header's count and against P at the previous release's S (at the first release after adoption, the header's count), and where P has not fallen, whether the walk record carries each true-positive entry as a row; the opt-outs by value and K, against K at the merge of the sweep PR Ada's record names; the markers added in the delta, spot-checked against their PR-body `marker:` lines, the fraction itself counted (checked / total); the predicate and rule versions the `--census` output prints; each remaining entry's `home` open at the issues root with a trigger (a closed home with its entries still listed is claimed fixed, shipped not fixed); and the delta's ARMING `pending.json` reads, counted with their findings — observation, never a gate; and **M3 / M4 / M5** as standing audit output
 ```
 
-The block carries a `volatile-ok` marker that exempts the whole line, and "an addition to this line is checked for volatile facts by hand". The proposal names no version string and no count. The hand check is § 4.2 step 8.
+The block carries a `volatile-ok` marker that exempts the whole line, and "an addition to this line is checked for volatile facts by hand". The text names no version string and no count. The hand check is § 4.2 step 8.
+
+### Site 2b — `canonical/agents/stacy.md`, the RELEASE row (L400) (LAW; **Stacy's text, verbatim**)
+
+The pointer is inserted before "Phase 2 reads the committed step-6 record". Before:
+
+```text
+A read, never a gate. Phase 2 reads the committed step-6 record
+```
+
+After (Stacy, consult 2026-10-26, verbatim, inserted):
+
+```text
+A read, never a gate. Phase 1 also carries the governance-examples read (the counting block; ballot 2026-10-26-governance-examples-guard § 2.4). Phase 2 reads the committed step-6 record
+```
+
+The RELEASE row is in the trigger-set unit that site 1 already moves, so it adds no re-sign; Lina's dragged copy (site 1d) follows it.
 
 ### Site 3 — `canonical/agents/thurgood.md`, `writeScope` (LAW)
 
@@ -147,7 +168,7 @@ After:
   # § 2.3 — the docs MCP
 ```
 
-The directory is owned whole, as `scripts/completion-claims/**` is, because every file in it is the instrument (six-roots: "no umbrellas except where a root is owned whole"). The new frontmatter row `writeScope[scripts/governance-examples/**]` is first-signed by Stacy. Its consumer disposition is hers to confirm: the drafter expects `no-consumer-counterpart` with `subtraction-1`, as `writeScope[scripts/issues-owned.sh]` has.
+The directory is owned whole, as `scripts/completion-claims/**` is, because every file in it is the instrument (six-roots: "no umbrellas except where a root is owned whole"). The new frontmatter row `writeScope[scripts/governance-examples/**]` is first-signed by Stacy, disposition `no-consumer-counterpart` with `subtraction-1`, as `writeScope[scripts/issues-owned.sh]` has (Stacy confirmed, consult item 4).
 
 ### Site 4 — `governance/classification-map.md`, row `governance-examples` (EXECUTION, this ballot § 2)
 
@@ -201,8 +222,9 @@ After:
 scripts/completion-claims/**,scripts/governance-examples/**,mcp-server/src/tools/validate-metadata.ts
 ```
 
-- **Order with #516.** If #516's site 4 has not merged when this ballot applies, Stacy writes the 20-glob token in her site-4 edit. If it has merged, she edits the token in her own commit. The condition either way: at the later merge, the token equals her row's brace-expanded list.
-- **The re-arm** (#516 site 4): a Trigger-line edit moves `<tc>`. The edit therefore rides a read commit, or it keeps the `read through <sha>` prose as it stood, so the range rule still covers every merge since the last read.
+- **Order.** Never before site 1a: her commit lands in the application PR, after Thurgood's `stacy.md` commit, or in a PR of hers merged after it. If #516's site 4 has not merged by then, she writes the 20-glob token in her site-4 edit; if it has, she edits the token in her own commit. The condition either way: at the later merge, the token equals her row's brace-expanded list.
+- **The re-arm** (#516 site 4): a Trigger-line edit moves `<tc>`. The edit rides a read commit. Keeping the old `read through <sha>` prose keeps the range rule covering every merge since the last read, but it does not make the script fire on them (Stacy, consult item 3). The edit lands alone only if `git log --first-parent <last read-through sha>..<base> -- <the globs>` is empty.
+- **Retroactivity, Stacy's choice at application.** The new glob's range reaches back past this ballot: #519's merge (which adds the whole directory) and any interim PR touching the path (§ 4.2 step 7). She either (i) reads them under the limb, in the read commit that carries the edit, or (ii) leaves them to RELEASE, the limb's existing backstop over the release delta. Her record states which, in the same commit. #519 is also read under ARMING's "a new barrier arms" event whenever its row arms (§ 4.3).
 
 ## 4. Application
 
@@ -219,11 +241,11 @@ It waits for #519 because `pending.json`, the row and the grant record must be o
    - site 3, with its new dispositions row authored unsigned;
    - sites 4, 5 and 6;
    - the regeneration and the lock, with the `outputs` hash before → after in the PR body (six-roots § 3 item 3).
-2. **Lina**: the dragged `semguard.md` copy, byte-identical to the new trigger-set unit (§ 3 site 1d), in her own commit.
+2. **Lina**: the dragged `semguard.md` copy, byte-identical to the new trigger-set unit (§ 3 sites 1, 2b and 1d), in her own commit after Thurgood's `stacy.md` commit. She works from § 9's ratified site-1 and site-2b texts and his branch head. His commit alone is red on the byte-identity test until hers lands, so the two are pushed together.
 3. **Stacy**:
    - she re-confirms `#the-trigger-set-the-114-superset-table-names-never-numbers` and `#the-claims-pass-record-claims-passmd-the-template`, and re-signs their dispositions rows;
    - she first-signs `writeScope[scripts/governance-examples/**]`, each in her own seat commit;
-   - she makes site 7 (§ 3 site 7's order).
+   - she makes site 7, in § 3 site 7's order, with its retroactivity choice.
 
    Her signatures are Stacy-signed, so Peter samples them (C1's collapse seat).
 4. **Checks**:
@@ -232,7 +254,7 @@ It waits for #519 because `pending.json`, the row and the grant record must be o
    - `npm run -s check:section-citations`;
    - `npm run -s check:122:diff-guard` (no-op-green after the lock refresh);
    - `verify-signing-chain`, which runs in that job.
-5. **Straggler sweep**: `git grep -n -F 'scripts/governance-examples/**' -- canonical/agents .kiro/steering governance .kiro/docs/ballots/2026-10-17-standing-write-scope-six-roots.md`. Expected: `stacy.md` L404, `thurgood.md` `writeScope`, the register row's history line and the site-5 line, plus their renderings in `.claude/agents/` and `.kiro/agents/`. The consumer output carries none of them.
+5. **Straggler sweep**: `git grep -n -F 'scripts/governance-examples/**' -- canonical/agents .kiro/steering governance .kiro/docs/ballots/2026-10-17-standing-write-scope-six-roots.md`. Expected: `stacy.md` L404 and the counting block, `thurgood.md` `writeScope`, the register row's history line and the site-5 line, plus their renderings in `.claude/agents/` and `.kiro/agents/`. The consumer output carries none of them.
 6. **PR body**:
    - `**Edit kind**:` lines. `canonical/agents/stacy.md — LAW (this ballot)`, the same for `canonical/agents/thurgood.md`, and site 4's EXECUTION line. The ballot, the ledger and the record lines are carve-out or non-governance paths.
    - The `**Consulted**:` line, and the lock hashes.
@@ -275,8 +297,8 @@ It waits for #519 because `pending.json`, the row and the grant record must be o
 - From (iii): (iii) is right about correctness, and (a) is recommended for a different reason. **A marker can be a launder.** Under (b), a seat can add `<!-- example: generic -->` at another seat's hit and then delete the now-stale entry; that is the planned route for Ada's 20 entries, and it is open to anyone. Under (a), only the home owner, who wrote the hit's disposition, can complete that conversion. The marker's PR-body line and the K count remain the readers under both options.
 
 **What survives**:
-1. **Under (a), the grain is real, and it costs cross-seat PRs.** A PR by one seat that stales an entry homed in another seat's record needs the home owner on the PR's `**Agent**:` line, with a commit. One example: an Ada token-index change that makes a name in Lina's CDG record resolve. Under (b), the record holding a disposition can fall behind its list. The test blocks archiving a home that still has entries, but nothing flags a home whose entries were removed by someone else. The owner learns at close, or at the RELEASE read.
-2. **Under (a), the owner match is mechanical but broad.** It keys on any seat named on the home record's Owner line. Ada's record names Lina as co-owner of item B (READMEs, which have no entries), so Lina could delete Ada-homed entries. Keying on the first named seat would be narrower and would mis-read a joint record. The match also reads the PR's `**Agent**:` line, which is self-attested.
+1. **Under (a), the grain is real, and it costs cross-seat PRs.** (a) keys on who wrote the disposition, not on who owns the doc. A PR by one seat that stales an entry homed in another seat's record needs the home owner on the PR's `**Agent**:` line, with a commit. The consults name two cases. Several of Ada's 36 corrections sit in Thurgood's docs (MCP-Relationship-Model, Test-Behavioral-Contract-Validation), so if he fixes his line first, his PR needs her commit (Ada). A component tokens-file rename can make the bare `tokens.ts` at CDG L998 match exactly one file, and that PR is red until Lina signs on (Lina). Ada counts zero cross-seat staling by a token-index change today: the 9 entries homed outside her record are path and shape entries. Under (b), the record holding a disposition can fall behind its list. The test blocks archiving a home that still has entries, but nothing flags a home whose entries were removed by someone else. The owner learns at close, or at the RELEASE read.
+2. **Under (a), the author check is consistency, not identity** (Stacy). The match reads the PR's `**Agent**:` line, which is self-attested, and it shuts only the cross-seat launder; a home owner can still launder her own entries, read only by the marker lines and K. The owner field is read up to its first delimiter (R2), so a joint record whose co-owners are named in prose after a `(` or `.` gives only the first-named seats.
 3. **Additions stay detectable, not preventable** (parent residual 3, unchanged). The read comes after acceptance, so a laundered entry is green on `main` until Stacy reads the merge.
 4. **The limb's list now lives in five places**: six-roots § 3 item 4 with its ledger line, Stacy's row, #516's Trigger token, and Thurgood's `writeScope`. #516's counter-argument (ii) grows by one. A path added to one place and not another fires nothing, or fires on paths no one reads.
 5. **The interim window** (§ 4.2 step 7) exists because § 2.6 deferred these items, rather than carrying them in the parent measure. It is the price of not widening a measure after Peter ratified it as presented.
@@ -290,7 +312,15 @@ It waits for #519 because `pending.json`, the row and the grant record must be o
   - **(b) The PR that makes an entry stale** deletes it, whoever wrote it.
     - *For*: no grain, and the guard is the whole oracle.
     - *Against*: any seat can complete a marker conversion on another seat's hit, and home records can fall behind the list.
-- **Not a fork for Peter**: whether the site-2 read rides every claims pass or RELEASE only, and whether her RELEASE row also needs a pointer. Both are Stacy's words for her seat (§ 7).
+  - **The three reads** (consults 2026-10-26; none picks for Peter):
+
+    | Seat | Read | Surviving counter-argument, in the seat's terms |
+    |---|---|---|
+    | Ada | (a). Her sweep PR deletes her 60 entries (36 corrections, 20 `generic` markers, 4 path or import fixes). The 20 markers are the launder route, so only the seat that ruled "correct mention" should finish them. | (a) keys on who wrote the disposition, not who owns the doc. Her hits in Thurgood's docs need her commit to delete if he fixes first; `**Agent**:` is self-attested. |
+    | Lina | (a). Her 4 CDG entries are homed in a record she alone owns, and the only fix is her ballot-measure rewrite. | Another PR can still stale an entry (a tokens-file rename resolving CDG L998's bare `tokens.ts`); that PR is red until she signs on; `**Agent**:` is self-attested. |
+    | Stacy | (a) gives an author check she can decide. | The author is self-attested (consistency, not identity), and (a) shuts only the cross-seat launder. The pick is Peter's. |
+
+- **Settled in Stacy's seat, not a fork**: the site-2 read rides RELEASE phase 1 only, and the RELEASE row carries a pointer to it (site 2b).
 
 ## 7. Review round record
 
@@ -312,6 +342,21 @@ Questions put:
   2. The dragged `semguard.md` copy (site 1d) in your commit.
   3. Does anything in § 2 touch your attribute-predicate amendment's ground?
 
+#### [CONSULTS R1] (2026-10-26; relayed by the orchestrator, in substance; each seat's own entry, if written, supersedes)
+- **Ada**: F-1 (a), with her reasons and surviving point as in § 6. Item B: leave the rule as drafted (item B has no entries; keying per item needs a new entry field). Cross-seat staling by a token-index change: zero today.
+- **Lina**: F-1 (a), as in § 6. Site 1d: yes, her own commit after Thurgood's `stacy.md` commit, from § 9's ratified site-1 text and his head. § 2 leaves her predicate alone but constrains the version bump (new `half` values, added entries, a re-cut header or ceiling must be named by the amendment ballot; site 1c needs the bump PR's body to cite it). Question: does "names the change" mean each entry, or a class whose list is attached at application?
+- **Stacy**: site 2 rides RELEASE phase 1 only; her site-2 text and the L400 pointer, verbatim. Site 1c decidable under (a) and (b), reading the home at `<m>^` (a fixing PR may archive its home). Three gaps: the Owner-line match catches a consulted seat (TDS record); "names the ballot" is met by a DRAFT; 1b's "its spec amendment" has no referent for a ballot-governed guard. The test glob is the right grain. Site 7: never before 1a; rides a read commit (alone only if the range is empty); the record says whether she reads #519 and the interim PRs or leaves them to RELEASE. Disposition confirmed; all six census lines hold; her texts add no `get_section` citation.
+
+#### [THURGOOD R2] (2026-10-26; incorporation)
+- Stacy's three 1c gaps fixed in the site text: (a) keys on the owner field up to its first delimiter (§ 2 clause 2, site 1c); the admitting ballot must read RATIFIED at `<m>` (§ 2 clause 4, site 1c); 1b names the guard's referent, the amending ballot RATIFIED at `<m>`.
+- Site 2 replaced by Stacy's text, byte for byte; site 2b added with her pointer, byte for byte.
+- Site 7: the order (never before 1a), the re-arm (rides a read commit unless the range is empty) and the retroactivity choice (hers at application, both branches written).
+- Lina's question answered in § 2 clause 4: a class in the ballot, the list attached at application in the applying PR's body, and the diff's added entries equal to it; the reason is in § 2. Site 1c reads it.
+- Lina's site 1d ordering written into § 4.2 step 2.
+- Ada's surviving point folded into residual 1; residual 2 rewritten for the narrowed owner field and Stacy's identity point.
+- F-1 stays Peter's fork; the three reads and their surviving counter-arguments are in § 6's table.
+
 ## 8. Application ledger
 
 - **2026-10-26 (Thurgood)**: DRAFT on branch `chore/ballot-governance-examples-guard-adoption`, cut from `origin/main` = `6615a6774`. #519 was read at `38cc6a4b5` (not merged in). Ballot only; no edit site is applied.
+- **2026-10-26 (Thurgood)**: R2 on `911b79246`: the three consults folded (§ 7). Ballot only; no edit site is applied.
