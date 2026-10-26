@@ -352,6 +352,36 @@ Call-to-action button with variants, sizes, and icon support.
 **Events:**
 - `press` - Fired when button is clicked or activated via keyboard
 
+**In a form.** `<button-cta>` does not submit a form by itself. It renders `<button type="button">` inside its shadow root and is not a form-associated element, so pressing it fires `press` and does nothing to the form. If it replaces a form's native `<button type="submit">`, wire two things in the page: call `form.requestSubmit()` from `press` (this runs the form's constraint validation and fires its `submit` event, as a submit button would), and handle Enter in the text fields, because once no native submit button is left in the form, Enter does not submit a form that has more than one text field (HTML's implicit submission). The fields must be native form controls: DesignerPunk's text inputs do not add their value to a form on web yet. Load the tokens and the bundle first, as this guide's Quick Start and its "Your own tokens" paragraph say; the script below is only the form wiring.
+
+```html
+<form class="contact-form">
+  <input name="email" type="email" required>
+  <input name="subject" type="text">
+  <button-cta label="Send" variant="primary"></button-cta>
+</form>
+
+<script type="module">
+  await customElements.whenDefined('button-cta');
+  const form = document.querySelector('form.contact-form');
+  const send = form.querySelector('button-cta');
+
+  // Click, tap, Enter or Space on the button.
+  send.addEventListener('press', () => form.requestSubmit());
+
+  // Enter in a text field.
+  const TEXT_TYPES = ['text', 'email', 'password', 'search', 'tel', 'url', 'number'];
+  form.addEventListener('keydown', (event) => {
+    const field = event.target;
+    if (event.key === 'Enter' && !event.isComposing &&
+        field instanceof HTMLInputElement && TEXT_TYPES.includes(field.type)) {
+      event.preventDefault();
+      form.requestSubmit();
+    }
+  });
+</script>
+```
+
 ### InputTextBase (`<input-text-base>`)
 
 Text input with validation states, helper text, and accessibility features.
