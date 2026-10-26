@@ -589,3 +589,108 @@ counts (beside the per-act lines, never in place of them; no total is green): 1 
 - **Transcript retention (A4)**: `cleanupPeriodDays: 180` is set in the user-level `~/.claude/settings.json`, per the brief; this walk did not read that file. Whether each act's transcript survived was not checked act by act. The instrument reads a missing transcript as `record absent`, and this file does not tell that cause apart from the instrument's other `record absent` causes.
 - **N**: this file does not count N. Stacy counts it from signature history (§ 5.3). Per PR, the earlier records' expected counts (#262 297, #285 4, #313 1, the 16 PRs of 16.1.0 135, every other PR 0; total 437) are what the instrument selected here.
 - **Identity**: the instrument checks consistency, not identity (its own label).
+
+---
+
+## Addendum, 2026-10-26: the re-read with the default store set (#262, #465, #467)
+
+**Why**: owed act 7 on `.kiro/issues/2026-10-26-signing-chain-delegate-audit-not-run-trigger-d.md` (#465 and #467), and Peter's answer to Q3 on #514 (#262). That answer reached me as the orchestrator's relay in chat, received before 2026-10-26T18:32:15Z; his words, verbatim: "Re: 514, pre-chain history and re-check". As relayed, it accepts #262's 119 pre-ratification `record absent` acts as pre-chain history, with one re-read after the store fix; an act the re-read recovers moves to its tool reading, and the rest stay history.
+**Tree SHA**: `99eabf854a288386527e88e3cd61bd059fc8a5fc` (`origin/main`, which has the store-set fix #524 = `5119afe4b`, merged 2026-10-26T19:12:56Z). The first walk ran the instrument at `38f4ece47`. Between the two, `tools/agent-generator/regrounding/verify-signing-chain.ts` differs (107 insertions, 20 deletions, all from #524), so before and after are two versions of the instrument, not one.
+**Command** (once per PR; default base; default store set, no `--store`):
+
+```
+npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --audit --pr <N> --signer stacy
+```
+
+**Runs** (`date -u`): #262 19:16:35Z–19:18:40Z, #465 19:18:40Z–19:18:47Z, #467 19:18:47Z–19:18:54Z. Every run exited 0; none exited 2.
+**Stores**: the header names 17 stores, the main store and 16 `…--claude-worktrees-*` siblings. The full header line is in each block below.
+**Before**: this file's first walk, committed as `a15a0ee20`. The 21 PRs not re-read keep their first-walk readings.
+
+### Before → after, per PR
+
+| PR | before (first walk @ `a15a0ee20`) | after (re-read @ `99eabf854`) | acts changed |
+|---|---|---|---|
+| #262 | 297 — anchored 0 · unanchored 0 · record absent 119 · FAIL 0 · anomaly 178 | 297 — anchored 0 · unanchored 0 · record absent 119 · FAIL 0 · anomaly 178 | 0 |
+| #465 | 3 — anchored 0 · unanchored 0 · record absent 3 · FAIL 0 · anomaly 0 | 3 — anchored 3 · unanchored 0 · record absent 0 · FAIL 0 · anomaly 0 | 3 |
+| #467 | 4 — anchored 0 · unanchored 0 · record absent 4 · FAIL 0 · anomaly 0 | 4 — anchored 3 · unanchored 0 · record absent 0 · FAIL 1 · anomaly 0 | 4 |
+
+That is 7 acts changed: 6 now read `anchored` and 1 reads `FAIL 7`. This is the count the steward measured in owed act 7.
+
+### Changed acts, each by its line
+
+#465:
+
+| path#row @ SHA | before | after |
+|---|---|---|
+| `canonical/operative-sets/civitas-system-overview.yaml#what-civitas-contains` @ `a7fb5202` | record absent 4 | anchored |
+| `canonical/operative-sets/designerpunk-systems-overview.yaml#civitas-system-governance-infrastructure` @ `6fe7822f` | record absent 4 | anchored |
+| `canonical/profiles/consumer/always-set/civitas-system-overview.dispositions.yaml#what-civitas-contains` @ `8cb55bbe` | record absent 4 | anchored |
+
+#467:
+
+| path#row @ SHA | before | after |
+|---|---|---|
+| `canonical/operative-sets/civitas-system-overview.yaml#what-civitas-contains` @ `3f2d178b` | record absent 4 | anchored |
+| `canonical/operative-sets/designerpunk-systems-overview.yaml#high-level-designerpunk-three-system-architecture` @ `027b8904` | record absent 4 | **FAIL 7** |
+| `canonical/operative-sets/designerpunk-systems-overview.yaml#civitas-system-governance-infrastructure` @ `58fc1abb` | record absent 4 | anchored |
+| `canonical/profiles/consumer/always-set/civitas-system-overview.dispositions.yaml#what-civitas-contains` @ `ced8d722` | record absent 4 | anchored |
+
+**#467's `FAIL 7`**, by name, as the instrument prints it:
+
+```
+FAIL 7 — canonical/operative-sets/designerpunk-systems-overview.yaml#high-level-designerpunk-three-system-architecture — stacy — 027b8904 — no tool result contains the row's rendered line "This diagram shows the relationship between Rosetta (mathematical), Stemma (rela" — spawnDepth 1, model opus — widening (§ 5.4)
+```
+
+It is a post-ratification act.
+
+### PR #465 (re-read, exit 0)
+
+```
+verify-signing-chain --audit — consistency, not identity — PR #465 (refs/pull/465/head = 464f5b6d); stores (17): /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-128-inbound-user-stories-0b746d, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ada-lifecycle-and-swift-records-9342f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-compassionate-kirch-7d6f44, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-eager-shamir-429bab, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-dewdney-0ecc8f, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-lederberg-4ca84b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-festive-goldberg-8db53b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-infallible-agnesi-2edb89, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-modest-cartwright-3de183, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-musing-shamir-a061f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-recursing-kowalevski-95eb91, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-serene-feistel-0cefc8, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-sync-r2-r4-r6-ae5e84, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-tender-feistel-38b382, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-wonderful-galileo-9b6154
+filter --signer stacy: 3 of 3 act(s) selected; 0 withheld
+anchored — canonical/operative-sets/civitas-system-overview.yaml#what-civitas-contains — stacy — a7fb5202 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6/9a934627-db40-4509-9fda-9c94445f110e/subagents/agent-afc0e39cd0302851b.jsonl — spawnDepth 1, model opus
+anchored — canonical/operative-sets/designerpunk-systems-overview.yaml#civitas-system-governance-infrastructure — stacy — 6fe7822f — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6/9a934627-db40-4509-9fda-9c94445f110e/subagents/agent-afc0e39cd0302851b.jsonl — spawnDepth 1, model opus
+anchored — canonical/profiles/consumer/always-set/civitas-system-overview.dispositions.yaml#what-civitas-contains — stacy — 8cb55bbe — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6/9a934627-db40-4509-9fda-9c94445f110e/subagents/agent-afc0e39cd0302851b.jsonl — spawnDepth 1, model opus
+counts (beside the per-act lines, never in place of them; no total is green): 3 act(s) — anchored 3 · unanchored 0 · record absent 0 · FAIL 0 · anomaly 0
+```
+
+### PR #467 (re-read, exit 0)
+
+```
+verify-signing-chain --audit — consistency, not identity — PR #467 (refs/pull/467/head = d98764dd); stores (17): /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-128-inbound-user-stories-0b746d, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ada-lifecycle-and-swift-records-9342f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-compassionate-kirch-7d6f44, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-eager-shamir-429bab, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-dewdney-0ecc8f, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-lederberg-4ca84b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-festive-goldberg-8db53b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-infallible-agnesi-2edb89, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-modest-cartwright-3de183, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-musing-shamir-a061f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-recursing-kowalevski-95eb91, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-serene-feistel-0cefc8, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-sync-r2-r4-r6-ae5e84, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-tender-feistel-38b382, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-wonderful-galileo-9b6154
+filter --signer stacy: 4 of 4 act(s) selected; 0 withheld
+anchored — canonical/operative-sets/civitas-system-overview.yaml#what-civitas-contains — stacy — 3f2d178b — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6/9a934627-db40-4509-9fda-9c94445f110e/subagents/agent-afc0e39cd0302851b.jsonl — spawnDepth 1, model opus
+FAIL 7 — canonical/operative-sets/designerpunk-systems-overview.yaml#high-level-designerpunk-three-system-architecture — stacy — 027b8904 — no tool result contains the row's rendered line "This diagram shows the relationship between Rosetta (mathematical), Stemma (rela" — spawnDepth 1, model opus — widening (§ 5.4)
+anchored — canonical/operative-sets/designerpunk-systems-overview.yaml#civitas-system-governance-infrastructure — stacy — 58fc1abb — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6/9a934627-db40-4509-9fda-9c94445f110e/subagents/agent-afc0e39cd0302851b.jsonl — spawnDepth 1, model opus
+anchored — canonical/profiles/consumer/always-set/civitas-system-overview.dispositions.yaml#what-civitas-contains — stacy — ced8d722 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6/9a934627-db40-4509-9fda-9c94445f110e/subagents/agent-afc0e39cd0302851b.jsonl — spawnDepth 1, model opus
+counts (beside the per-act lines, never in place of them; no total is green): 4 act(s) — anchored 3 · unanchored 0 · record absent 0 · FAIL 1 · anomaly 0
+```
+
+### PR #262 (re-read, exit 0)
+
+The 297 per-act lines match the first walk's, line for line: I sorted and compared both outputs, and the diff is empty. This block is shaped like the first walk's: the header and filter lines, the brief's one line in place of the 178 pre-ratification `anomaly` lines, and the counts line. The 119 `record absent` lines are not written again here. They are the same lines as in § "PR #262 (exit 0)" above, all with the same path, SHA and reading.
+
+```
+verify-signing-chain --audit — consistency, not identity — PR #262 (refs/pull/262/head = e6f19748); stores (17): /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-128-inbound-user-stories-0b746d, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ada-lifecycle-and-swift-records-9342f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-compassionate-kirch-7d6f44, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-eager-shamir-429bab, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-dewdney-0ecc8f, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-lederberg-4ca84b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-festive-goldberg-8db53b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-infallible-agnesi-2edb89, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-modest-cartwright-3de183, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-musing-shamir-a061f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-recursing-kowalevski-95eb91, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-serene-feistel-0cefc8, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-sync-r2-r4-r6-ae5e84, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-tender-feistel-38b382, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-wonderful-galileo-9b6154
+filter --signer stacy: 297 of 682 act(s) selected; 385 withheld
+pre-ratification: 178 anomaly by rule, not triaged individually
+[119 record absent lines, identical to § "PR #262 (exit 0)" above]
+counts (beside the per-act lines, never in place of them; no total is green): 297 act(s) — anchored 0 · unanchored 0 · record absent 119 · FAIL 0 · anomaly 178
+```
+
+**#262 recovery**: the re-read recovers 0 of the 119 pre-ratification `record absent` acts. All 119 still read `record absent 4` ("no transcript shows this commit being created"). None moves to another reading. In Peter's words above (before 2026-10-26T18:32:15Z, by the orchestrator's relay), all 119 stay pre-chain history. The 178 pre-ratification `anomaly` acts are unchanged, as the per-act diff shows.
+
+### Totals after the re-read (the 24 PRs)
+
+These combine the re-read readings of #262, #465 and #467 with the first walk's readings of the other 21 PRs. Those 21 were not re-read with the default store set.
+
+- **All**: 437 act(s) — anchored 29 · unanchored 0 · record absent 154 · FAIL 71 · anomaly 183 (before: anchored 23 · record absent 161 · FAIL 70 · anomaly 183)
+- **Pre-ratification**: 297 act(s) — anchored 0 · unanchored 0 · record absent 119 · FAIL 0 · anomaly 178 (unchanged)
+- **Post-ratification**: 140 act(s) — anchored 29 · unanchored 0 · record absent 35 · FAIL 71 · anomaly 5 (before: anchored 23 · record absent 42 · FAIL 70 · anomaly 5)
+
+### Not verified (this addendum)
+
+- **The other 21 PRs**: these were not re-run with the default store set. Some of their `record absent` acts (35 post-ratification, across #408 #419 #427 #436 #439 #445 #449 #472) could read differently now. This addendum does not say whether they would.
+- **Store coverage**: the default set holds only the stores derivable from the repo path. The instrument's own comment says a scratchpad-worktree session's store is read only when `--store` names it. No such store was passed here.
+- **Instrument version**: before and after ran two versions of the instrument (`38f4ece47` and `99eabf854`). A change in an act's reading may come from the store set or from the code change around it. I did not separate the two.
+- **Peter's words**: they reached me through the orchestrator's relay in chat. I did not see them in a committed file or on #514.
