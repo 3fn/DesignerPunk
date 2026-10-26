@@ -1168,11 +1168,12 @@ verification:
   # The ladder (rulings item 26, D-1): held by the walk record and the monthly walk; the second miss on a token-bearing record promotes the grep to a committed script under a scoped grant
   # Rule line updated at application as PRE-DECLARED EXECUTION of Peter's F-A1 = (b) ruling (ballot 2026-10-18-obligation-drain-and-release-falsity-floor § 9, 2026-10-18): a P2 (guard) escalates at lapse 1, like P0 (.kiro/issues/README.md rule 11)
 education:
-  disposition: "LAW HOME: this ballot M1, M2, M4–M6; ballot 2026-10-22-trigger-names-the-event-not-the-vehicle § 2 (rule 1's trigger-names-the-event sentence and its two-question test); ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers § 2 (rule 11's post-walk carry and the spec answer's end point). POINTER-GRADE: .kiro/issues/README.md rules 1, 5, 6, 10–12"
+  disposition: "LAW HOME: this ballot M1, M2, M4–M6; ballot 2026-10-22-trigger-names-the-event-not-the-vehicle § 2 (rule 1's trigger-names-the-event sentence and its two-question test); ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers § 2 (rule 11's post-walk carry and the spec answer's end point); ballot 2026-10-26-issues-multi-path-trigger-token § 2 (rule 1's `path:` list form). POINTER-GRADE: .kiro/issues/README.md rules 1, 5, 6, 10–12"
 history:
   - { date: 2026-10-18, change: "entry created (steward, window-free — the certainty-calibration precedent) by ballot 2026-10-18-obligation-drain-and-release-falsity-floor", by: thurgood }
   - { date: 2026-10-22, change: "README rule 1 gains the trigger-names-the-event sentence (ballot 2026-10-22-trigger-names-the-event-not-the-vehicle); rule line, checks and check_state unchanged", by: thurgood }
   - { date: 2026-10-26, change: "README rule 11 gains two sentences (ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers § 2): a release:next:phase-1 record filed after the walk merged and rowed there first lapses at the next S; a spec answer is carried out at the outline merge, with the record kept at the root until its items close. Rule line and LAW HOME updated as EXECUTION (§ 4 step 3); checks and check_state unchanged", by: thurgood }
+  - { date: 2026-10-26, change: "README rule 1 gains the path: list form (ballot 2026-10-26-issues-multi-path-trigger-token § 2); scripts/issues-owned.sh evaluates it. LAW HOME updated as EXECUTION (§ 3 site 5); rule line, checks and check_state unchanged", by: thurgood }
 ```
 
 ### release-falsity-floor
