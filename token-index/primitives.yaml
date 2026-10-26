@@ -2270,9 +2270,13 @@ tokens:
         wcag: rgba(0, 0, 0, 1)
     formula: Systematic shadow color family - pure black (0, 0, 0) - mode-agnostic
     platforms:
-      web: '--shadow-black-100'
-      ios: shadowBlack100
-      android: shadow_black_100
+      web: null
+      ios: null
+      android: null
+    platformNotes:
+      web: 'Not emitted on any platform: the generators emit colour primitives from the composed OKLCH palette, and this one is not in it'
+      ios: 'Not emitted on any platform: the generators emit colour primitives from the composed OKLCH palette, and this one is not in it'
+      android: 'Not emitted on any platform: the generators emit colour primitives from the composed OKLCH palette, and this one is not in it'
     consumers: []
   shadowBlue100:
     family: color
@@ -2285,9 +2289,13 @@ tokens:
         wcag: rgba(20, 25, 40, 1)
     formula: Systematic shadow color family - blue-tinted gray for sunrise/sunset lighting - mode-agnostic
     platforms:
-      web: '--shadow-blue-100'
-      ios: shadowBlue100
-      android: shadow_blue_100
+      web: null
+      ios: null
+      android: null
+    platformNotes:
+      web: 'Not emitted on any platform: the generators emit colour primitives from the composed OKLCH palette, and this one is not in it'
+      ios: 'Not emitted on any platform: the generators emit colour primitives from the composed OKLCH palette, and this one is not in it'
+      android: 'Not emitted on any platform: the generators emit colour primitives from the composed OKLCH palette, and this one is not in it'
     consumers: []
   shadowOrange100:
     family: color
@@ -2300,9 +2308,13 @@ tokens:
         wcag: rgba(25, 20, 15, 1)
     formula: Systematic shadow color family - warm-tinted gray for cool lighting environments - mode-agnostic
     platforms:
-      web: '--shadow-orange-100'
-      ios: shadowOrange100
-      android: shadow_orange_100
+      web: null
+      ios: null
+      android: null
+    platformNotes:
+      web: 'Not emitted on any platform: the generators emit colour primitives from the composed OKLCH palette, and this one is not in it'
+      ios: 'Not emitted on any platform: the generators emit colour primitives from the composed OKLCH palette, and this one is not in it'
+      android: 'Not emitted on any platform: the generators emit colour primitives from the composed OKLCH palette, and this one is not in it'
     consumers: []
   shadowGray100:
     family: color
@@ -2315,9 +2327,13 @@ tokens:
         wcag: rgba(15, 20, 30, 1)
     formula: Systematic shadow color family - blue-gray for ambient/overcast conditions - mode-agnostic
     platforms:
-      web: '--shadow-gray-100'
-      ios: shadowGray100
-      android: shadow_gray_100
+      web: null
+      ios: null
+      android: null
+    platformNotes:
+      web: 'Not emitted on any platform: the generators emit colour primitives from the composed OKLCH palette, and this one is not in it'
+      ios: 'Not emitted on any platform: the generators emit colour primitives from the composed OKLCH palette, and this one is not in it'
+      android: 'Not emitted on any platform: the generators emit colour primitives from the composed OKLCH palette, and this one is not in it'
     consumers: []
   borderWidth000:
     family: borderWidth

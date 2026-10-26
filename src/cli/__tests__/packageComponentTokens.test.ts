@@ -69,7 +69,7 @@ function generate(scratch: string, pkgRoot: string, componentTokens: RegisteredC
     primitiveTokens: [],
     semanticTokens: [],
     componentTokens,
-    modeResolved: { resolvedLight: [], resolvedDark: [], themeVaryingTokens: new Set(), primitiveOklch: new Map() } as any,
+    modeResolved: { resolvedLight: [], resolvedDark: [], themeVaryingTokens: new Set(), nativeThemeVaryingTokens: new Set(), primitiveOklch: new Map() } as any,
     componentSchemaDir: resolveGenerateComponentRoots(born(scratch), pkgRoot),
     componentTokenFiles: files,
     ...(shipped.index ? { packageComponentTokens: shipped.index } : {}),

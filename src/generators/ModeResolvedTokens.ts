@@ -49,6 +49,18 @@ export interface ModeResolvedTokens {
   themeVaryingTokens: Set<string>;
 
   /**
+   * The registry-wide theme-varying set the NATIVE generators consume (`generateTokenFiles`'s
+   * `themeVaryingTokens` local: every override of every registered theme, dark AND wcag, plus
+   * the base light/dark differences). The iOS and Android generators leave these tokens out
+   * of `DesignTokens` for the theme types, so the index gives them a `theme.` name on those
+   * two platforms. It is carried beside `themeVaryingTokens`, not merged into it: the index's
+   * `themeVarying` flag keeps its Spec 117 meaning (base light/dark only), and only the native
+   * columns read this set (`.kiro/issues/2026-10-26-token-index-platform-names-not-emitted.md`,
+   * plan item 5).
+   */
+  nativeThemeVaryingTokens: Set<string>;
+
+  /**
    * Per-primitive mode-resolved OKLCH for the R3 value readout, keyed by primitive name.
    * For OKLCH color primitives light === dark by construction (mode variance lives at the
    * semantic layer via overrides, not at the primitive tier); both halves are carried to
