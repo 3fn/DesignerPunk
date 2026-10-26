@@ -119,7 +119,10 @@ Lina's text, byte-exact, from [LINA R1] items 1, 2 and 4 (L-1, L-2, L-3, the F-2
   - `class: functional`; `owner: thurgood` (the instrument).
   - Predicates: Ada's (token-name) and Lina's (file-shape). `check_state` is `proposed` at the build PR and `armed` at its merge, with `checks` naming the test.
   - **`census:`**: `npx tsx scripts/governance-examples/check.ts --census`, which prints one sorted line per doc (`<doc>\t<candidates>:<failing>:<opted out>`) and then the selected count (Stacy S-4). A predicate version bump, which Ada decides with a re-measured count, is then a census, not a hand count.
-- **Write scope for the build**: `scripts/governance-examples/**` is in no seat's standing scope. The build PR takes a rule-8 grant record naming those paths and the marker hunk, activated by Peter's merge of a PR whose body names it, and Ada and Lina are named as the predicates' authors.
+- **Write scope for the build**: `scripts/governance-examples/**` is in no seat's standing scope, so the build PR takes a rule-8 grant record naming exactly those paths. It is activated by Peter's merge of a PR whose body names it, and it names Ada and Lina as the predicates' authors.
+- **The grant does not cover**:
+  - the two governance-path hunks, the register row and the Integration Guide marker. Rule 8 never grants a governance-law path; each is EXECUTION of this ballot (§ 4 step 3, § 2.3), Peter-merged under the carve-out;
+  - `.github/in-lane-guards.json`, which is my standing lane scope (P1b, additive).
 - **Deferred to a ballot of their own, filed with the build PR (steward's call, R2)**:
   - adding `scripts/governance-examples/**` to the ARMING instrument-path list (the 2026-10-17 ballot's § 4 B list and Stacy's charter row);
   - a counting-block line in Stacy's charter (opt-outs by value and K, pending against baseline, predicate and rule versions);
@@ -150,7 +153,7 @@ Lina's text, byte-exact, from [LINA R1] items 1, 2 and 4 (L-1, L-2, L-3, the F-2
 ## 4. Edit sites and application (after the Status commit)
 
 1. **The Status commit** (record-first), with the resolved convention texts (§ 2's byte-exact parts, P-1 and the F-answers resolved), and the ballots README roll entry.
-2. **A grant record** (rule 8): owner Thurgood; paths `scripts/governance-examples/**` and the § Amends marker hunk; Ada and Lina named as the predicates' authors.
+2. **A grant record** (rule 8): owner Thurgood; paths `scripts/governance-examples/**` only; Ada and Lina named as the predicates' authors. The governance-path hunks rest on this ballot as EXECUTION, not on the grant (§ 2.6).
 3. **The build PR**, under that grant:
    - The instrument, the report command, the census mode, the test with fixtures, and `pending.json` with the baseline header. Each entry is homed, and the homes hold their dispositions.
    - The registry entry, the register row, and the Integration Guide L699 `consumer` marker.
