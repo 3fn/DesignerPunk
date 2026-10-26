@@ -8,6 +8,8 @@ description: Token governance framework — selection matrix, usage autonomy lev
 
 # Token Governance Guide
 
+> **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the amendment notes and ballot paths, the Spec 073, 080 and 094 references, Peter's approval gates and DesignerPunk's own token names in the examples are DesignerPunk's. **Transferable**: the token-selection order (a component's own token, then a semantic token, then a primitive, then a human checkpoint), the three autonomy levels and the creation checkpoint format.
+
 **Date**: 2026-01-05
 **Purpose**: Comprehensive governance for token selection, usage, and creation decisions
 **Organization**: process-standard
