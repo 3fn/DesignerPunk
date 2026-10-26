@@ -1,0 +1,33 @@
+# Readers of `token-index/` that assume one string per platform: the index now gives a composite several names, `null` where a platform has none, and `theme.` names the `themeVarying` flag does not predict
+
+**Date**: 2026-10-26
+**Owner**: Ada (the index and the product-token generator are token-build code). Lina is named on items 1 and 2 (her files); they are hers to take or decline, and this record's close waits on item 1 only.
+**Filed by**: Ada, under README rule 10, in the PR that changes the index's `platforms` block (`fix/token-index-platform-names`; record `.kiro/issues/2026-10-26-token-index-platform-names-not-emitted.md`, plan items 1 and 5). Every line below was read on that branch, cut from `0218632d1`. Rule 9 applies to every later edit.
+**Class**: P1 consumer-blocking · defect *(set 2026-10-26, Ada, rule 12, for item 3, the highest item. A product token whose `ref` is one of the five WCAG-only colours, or a composite, is emitted as Swift and Kotlin that does not compile (below). That was already so before the index change, under other spellings, so the index change does not make it newly blocking; it changes which wrong name is written. P1 on the precedent of the other native-generation records (`2026-10-20-native-font-family-literals-unescaped-quotes.md`). Items 1 and 2 alone would be P2 `(guard)`: a test and a type weaker than the data they read.)*
+**Trigger**: `path:.kiro/specs/129-consumer-generation-completeness/requirements.md` — the first commit that adds Spec 129's requirements, where item 3 is taken into them or left out with a reason. *(Set 2026-10-26, Ada, rule 9. Item 1 is owed before the index PR merges, on its branch; item 2 at Lina's next edit of the Application MCP or with item 3. A P1 takes a git-visible token (rule 1).)*
+
+---
+
+## What changed in the index
+
+`token-index/*.yaml` `platforms.<web|ios|android>` was always one string. From the index PR it is one of:
+
+- one string, as before (most rows);
+- a **list**, for a composite the generators write as several definitions: on web every typography token (one custom property per property), every shadow token (its composite first, then one property per part) and every semantic motion token; on iOS and Android every semantic motion token (`MotionFloatLabel.duration`, `MotionFloatLabel.easing`);
+- **`null`**, where the platform carries no name for the token (`elevation.*` on web and iOS, `zIndex.*` on Android, the four shadow-colour primitives everywhere), with the reason in a new top-level key, `platformNotes`.
+
+The iOS and Android columns now take `theme.` from the set the native generators use, so five semantic colours with `themeVarying: false` have `theme.` names (`color.action.primary`, `color.contrast.onAction`, `color.feedback.info.text|background|border`). Shape and rule: `token-index/README.md` § "Platform names".
+
+## The readers, and what each needs
+
+1. **Lina — the two web resolve-guards** (owed on the index PR's branch, before it merges): `src/components/core/Container-Base/__tests__/ContainerBase.token-resolution.test.ts` goes red on the new index (2 tests: the derivation check compares one derived string with a list, 47 rows; and the closed-set check no longer finds `--shadow-container`, because a list is filtered out of its oracle). `src/components/core/Input-Text-Base/__tests__/InputTextFamily.token-resolution.test.ts` stays green, but its oracle silently drops every listed name. The change both need is three lines: the `IndexEntry` type takes `string | string[] | null`, the oracle flattens lists (`.flatMap(entry => [entry.platforms?.web ?? []].flat())`), and Container's derivation check skips a non-string (`if (typeof web !== 'string') continue;`). With it applied, both suites pass (11 of 11) and the full `npm test` has no other failure from the index change.
+2. **Lina — the Application MCP's types and key-set guard**: `application-mcp-server/src/indexer/TokenIndexer.ts` L30 types `platforms` as `{ web: string; ios: string; android: string }`, and `get_token_details` passes the entry through unchanged (`loadTier` spreads it), so it now serves lists, `null` and `platformNotes` under that type. Nothing fails: its suite passes (528 of 528), because `tool-boundary.contract.test.ts` pins its exact key sets on a fixture index, not the real one. Its own rule is to re-baseline when a field is added; `platformNotes` is one, on primitive and semantic rows.
+3. **Ada — the product-token generator** (`src/build/product/**`, in no seat's standing write scope, so the fix needs a grant):
+   - `TokenIndexReader.ts` L15 and `ProductTokenGenerator.ts` L20 type the names as strings. `WebEmitter.ts` L42 writes `var(${web})`, `SwiftEmitter.ts` L67–L69 `DesignTokens.${ios}` and `KotlinEmitter.ts` L68 `DesignTokens.${android}`, so a `ref` to a composite now writes the list joined by commas (`var(--typography-body-md-font-size,--typography-body-md-line-height,…)`, `DesignTokens.MotionFloatLabel.duration,MotionFloatLabel.easing`) and a `ref` to `elevation.*` on web writes `var(null)`. Before, they wrote the stem, which no output defines. The fix: refuse a `ref` with no single name on the platform (in `validateProductTokens`, `src/cli/validateProductTokens.ts`, mine), and type the reader as the index is.
+   - The Swift and Kotlin emitters choose the theme path by the `themeVarying` flag (`SwiftEmitter.ts` L32 and L47, `KotlinEmitter.ts` L50), not by the `theme.` prefix, so for the five WCAG-only colours they now write `DesignTokens.theme.colorActionPrimary` (before: `DesignTokens.colorActionPrimary`, which `DesignTokens` does not define either). The fix: branch on the `theme.` prefix. Read, not run: no product fixture references those five.
+
+**Grant paths** *(owed; not yet a grant: README rule 10 forbids authoring the list only inside the diff it bounds, so Peter's direction naming these paths, or a merged line in this record, comes first)*: `src/build/product/TokenIndexReader.ts`, `src/build/product/ProductTokenGenerator.ts`, `src/build/product/emitters/WebEmitter.ts`, `src/build/product/emitters/SwiftEmitter.ts`, `src/build/product/emitters/KotlinEmitter.ts`, and their tests under `src/build/product/__tests__/`.
+
+## Not a reader to change
+
+`scripts/build-name-contract.ts` (`buildTierIndex`) reads `platforms.web` and is changed in the index PR to read lists; `dist/name-contract.json` is byte-identical before and after (built from `0218632d1`'s script and index, then from the branch's).
