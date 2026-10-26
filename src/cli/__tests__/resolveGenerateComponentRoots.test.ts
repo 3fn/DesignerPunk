@@ -123,7 +123,7 @@ describe('resolveGenerateComponentRoots + resolveComponentSources (generate read
         primitiveTokens: [],
         semanticTokens: [semantic('color.action.primary'), semantic('color.identity.human'), semantic('color.brand.accent')],
         componentTokens: [],
-        modeResolved: { resolvedLight: [], resolvedDark: [], themeVaryingTokens: new Set(), primitiveOklch: new Map() } as any,
+        modeResolved: { resolvedLight: [], resolvedDark: [], themeVaryingTokens: new Set(), nativeThemeVaryingTokens: new Set(), primitiveOklch: new Map() } as any,
         componentSchemaDir: resolveGenerateComponentRoots(ds('born', bornRoot), pkgRoot),
       });
     } finally {
