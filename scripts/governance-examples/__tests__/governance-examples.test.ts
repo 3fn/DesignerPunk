@@ -161,7 +161,7 @@ describe("Ada's R-5 cases", () => {
     const r = runGuard(synth({ 'a.md': `${KEY_LINE}\n${fence('ts', "const p = 'space.inset.comfortable';")}` }));
     expect(r.hits.map((h) => h.string)).toEqual(['space.inset.comfortable']);
   });
-  it('red: `color.select.*` (no key starts with color.select.)', () => {
+  it('red: `color.select.*` (read as `color.select`, not a glob; no rule holds, fails at "otherwise")', () => {
     expect(resolveAll('color.select.*')).toEqual([{ s: 'color.select', r: 'fail' }]);
     const r = runGuard(synth({ 'a.md': `${KEY_LINE}\nThe \`color.select.*\` family.\n` }));
     expect(r.hits.map((h) => h.string)).toEqual(['color.select']);
