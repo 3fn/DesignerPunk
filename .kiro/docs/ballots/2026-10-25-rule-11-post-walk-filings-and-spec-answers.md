@@ -77,9 +77,9 @@ Peter answered row 12 (`2026-10-20-web-element-api-and-form-participation.md`, L
 
 **Site 3 (severable, F-3)**: `.kiro/hooks/RELEASE-FLOW.md`, the **Phase 1** bullet (L199 at `a03b92f02`). After "It covers the release delta, the walk record (item 3a: its paste, its `main at:` SHA and each row's disposition), the 5a owed-set paste, the 5b arming line and 5.1's tally.", insert:
 
-> It also re-runs item 3a's two greps at S and reads each hit the walk record does not row: a P0 among them is a floor-class row for this release, owed a fix or Peter's quoted, dated waiver before the tag; any other is listed with its rule-11 state *(ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers, site 3)*.
+> It also re-runs item 3a's two greps at S and reads each hit the walk record does not row under rule 11's row test: a P0 among them is a floor-class row for this release, owed a fix or Peter's quoted, dated waiver before the tag (put to him as an `**Open for Peter**:` line in the phase-1 record's PR, which that rule holds until he answers; the read reports, and the tag stays his act); any other is listed with its rule-11 state *(ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers, site 3)*.
 
-Stacy already runs this read by habit (R1, § 1). Site 3 makes it the law's read, so it no longer rests on one reviewer's habit (her A2).
+Stacy already runs this read by habit (R1, § 1). Site 3 makes it the law's read, so it no longer rests on one reviewer's habit (her A2). The parenthesis is her A5 (R2): it says how a post-walk P0 reaches Peter, and that the read reports and is not a gate on the tag or on any PR.
 
 ## 3. Recommendation, counter-argument (fold-back applied), residual
 
@@ -160,7 +160,9 @@ Stacy already runs this read by habit (R1, § 1). Site 3 makes it the law's read
 2. **The same application's step-10 check list left out `npm run test:scripts`** (#491). Ada's § 13.1 after-text carried an amendment note containing "ballot", which is the audience-banner guard's predicate string 4. That made `governance/Token-Governance.md` match the predicate, and `lane-functional-root` went red until Ada added a banner (`0df43455b`). **Lesson**: a ballot's application check list names the lanes whose guards read its edit sites, not only the checks its own text implies. This ballot's § 4 step 5 does that.
 3. **`scripts/issues-owned.sh` has no register row** (Stacy R1, standards implication). The script implements rule 1 and rule 11 firing semantics. So a ballot that changes those semantics has no census reach to it, and its effect on the script's output is checked only if the drafter thinks to. This ballot checks it by hand (the census block: sentence 1 changes no `due:next` or `FIRED` line). **The class fix**: add the script to the `issues-obligation-lapse` row's `checks`, which brings it under the census rule. That is a register change of mine, owed in a later round, not in this ballot's cap.
 
-**Outcomes for the composed loop**: item 1 is `adopted` for drafting. Item 2 is `adopted` and applied in § 4 step 5. Item 3 is `adopted` for drafting.
+4. **The same ballot's § 13 after-texts carried no dated pointer for two law-doc sites** (Lina's finding on #491, recorded in her R1 on ballot `2026-10-26-system-token-review-and-token-planning`). `governance/Web-Authoring-Standards.md` L106 and L386 were applied byte for byte from § 13 without the `amended <date> by <ballot> <item>; prior text at <SHA>` pointer that the ballots README § "Conventions" requires for every document agents read as law. The claims pass compares against § 13, so the defect was in § 13, which was the filer's text (mine), and not in the application. **Lesson**: when a Status commit writes resolved after-texts, every law-doc site's after-text includes its dated pointer, and the drafter checks that with a grep for `Amended` per site before the commit. That ballot's application (#493) carries Lina's CORRECTION for the two lines.
+
+**Outcomes for the composed loop**: item 1 is `adopted` for drafting. Item 2 is `adopted` and applied in § 4 step 5. Item 3 is `adopted` for drafting. Item 4 is `adopted` and applied in this ballot's own resolved after-texts (§ 9).
 
 ## 8. Review round record
 
