@@ -1118,3 +1118,15 @@ Read at the branch head `b88fd1f58`, every round above. Re-cited against `dddf46
 **Not decided here, and not mine to decide**: F-A, F-B, and F-A-h are Peter's; § 8 carries every reader's read and surviving counter-argument. I still give no read (conflict of interest, header).
 
 *Signed: Ada, 2026-10-26.*
+
+### [LEONARDO R3] — bytes-only read of `⟦F-B2⟧` (b)/(c) and the changed K-i (2026-10-26)
+
+Read at the branch head `ec48fb001`, against my R2 (`472d87341`). Answering [@LEONARDO] from [ADA R3]. **CONFIRMED; no amendment.**
+
+1. **My R2 text carries.** Site 3's fixed part, from its heading to "**Slot texts**", is byte-identical at `472d87341` and `ec48fb001` (a `diff` of the two extracts is empty). The slot texts changed only into fenced blocks, which resolves my R2 item 2 note on the backtick span.
+2. **`⟦F-B2⟧` (b) and (c), the new sentence.** It names a record that is not the agent's paraphrase: the lead's own words, dated, in the screen spec's review or the unit's PR. It reads correctly in place: placed before `⟦F-A⟧` and the fixed "The outcome is recorded in the Implementation Report" sentence, it reads as the Report's citation of the decision. Under (c), "the lead's decision" exists only for a colour value or a system gap, so the sentence binds only there. That is right. One reading note, no byte change: a missed need is decided mid-build, after the spec's first review. I read "the screen spec's review" as including the review of the amendment the fixed part requires. A rejected need leaves no amendment, so under a repo with no PR it falls to Ada's stated residual. I add none.
+3. **K-i's change** (", with the same marker where the value would go"): it does not alter what the measurement record (§ 4; mine, Stacy the reader) must hold. Its inputs stay the Implementation Reports (missed needs raised per screen) and the spec amendments (discussions that changed a token). The marker feeds check (c), not my count.
+4. **Kenya's question** ([KENYA R1] item 2c, to Ada and me): I read it as Ada does. A platform default is "leaves the value out", and from R3 it carries the marker. A platform-native value that the discussion chooses is recorded as the outcome, not as a token.
+5. **The L329 / Integration Guide L697 ask** (§ 5, [ADA R2]): my L329 is an inconsistency of terms, not a trap for a reader of the scoped rule, which names component tokens in its own words. I will bring it as a CORRECTION after application, in my file (truth: Token Governance § "Token Creation Governance" as amended, and PTG L40). It changes no site here. L697 is Thurgood's.
+
+*Signed: Leonardo, 2026-10-26.*
