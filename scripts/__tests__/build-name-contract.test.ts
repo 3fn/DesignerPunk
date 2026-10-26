@@ -16,6 +16,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import {
   buildNameContract,
+  buildTierIndex,
   readBuildInputs,
   extractBundleReferences,
   scanDynamicSites,
@@ -274,5 +275,43 @@ describe('build-name-contract — the real compiled surface', () => {
     const onDisk = JSON.parse(fs.readFileSync(p, 'utf8'));
     expect(onDisk.referencedNames).toEqual(real.contract!.referencedNames);
     expect(onDisk.typeContract).toEqual(real.contract!.typeContract);
+  });
+});
+
+// The token index lists a composite's names (`.kiro/issues/2026-10-26-token-index-platform-names-not-emitted.md`).
+describe('buildTierIndex reads both index forms', () => {
+  it('a listed composite maps each name to its part; the shadow composite has none; null is skipped', () => {
+    const idx = buildTierIndex({
+      semantic: {
+        'typography.bodyMd': {
+          platforms: { web: ['--typography-body-md-font-size', '--typography-body-md-line-height'] },
+          primitiveReferences: { fontSize: 'fontSize100', lineHeight: 'lineHeight100' },
+        },
+        'shadow.container': {
+          platforms: { web: ['--shadow-container', '--shadow-container-offset-x'] },
+          primitiveReferences: { offsetX: 'shadowOffsetX.000', color: 'shadowBlack100' },
+        },
+        'elevation.container': { platforms: { web: null } },
+      },
+      primitive: {},
+      component: {},
+    });
+    expect(idx.get('--typography-body-md-font-size')).toEqual({ tier: 'semantic', token: 'typography.bodyMd', part: 'fontSize' });
+    expect(idx.get('--typography-body-md-line-height')).toEqual({ tier: 'semantic', token: 'typography.bodyMd', part: 'lineHeight' });
+    expect(idx.get('--shadow-container')).toEqual({ tier: 'semantic', token: 'shadow.container' });
+    expect(idx.get('--shadow-container-offset-x')).toEqual({ tier: 'semantic', token: 'shadow.container', part: 'offsetX' });
+    expect(idx.has('--typography-body-md')).toBe(false);
+    expect([...idx.values()].some((e) => e.token === 'elevation.container')).toBe(false);
+  });
+
+  it('an older index (one stem string) still expands to the per-key names', () => {
+    const idx = buildTierIndex({
+      semantic: {
+        'typography.bodyMd': { platforms: { web: '--typography-body-md' }, primitiveReferences: { fontSize: 'fontSize100' } },
+      },
+      primitive: {},
+      component: {},
+    });
+    expect(idx.get('--typography-body-md-font-size')).toEqual({ tier: 'semantic', token: 'typography.bodyMd', part: 'fontSize' });
   });
 });

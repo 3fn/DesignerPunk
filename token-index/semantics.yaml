@@ -122,8 +122,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-info-text'
-      ios: colorFeedbackInfoText
-      android: color_feedback_info_text
+      ios: theme.colorFeedbackInfoText
+      android: theme.color_feedback_info_text
     consumers:
       - Container-Base
   color.feedback.info.background:
@@ -133,8 +133,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-info-background'
-      ios: colorFeedbackInfoBackground
-      android: color_feedback_info_background
+      ios: theme.colorFeedbackInfoBackground
+      android: theme.color_feedback_info_background
     consumers:
       - Container-Base
   color.feedback.info.border:
@@ -144,8 +144,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-info-border'
-      ios: colorFeedbackInfoBorder
-      android: color_feedback_info_border
+      ios: theme.colorFeedbackInfoBorder
+      android: theme.color_feedback_info_border
     consumers:
       - Container-Base
   color.feedback.select.text.rest:
@@ -272,8 +272,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-action-primary'
-      ios: colorActionPrimary
-      android: color_action_primary
+      ios: theme.colorActionPrimary
+      android: theme.color_action_primary
     consumers:
       - Button-CTA
       - Button-Icon
@@ -439,8 +439,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-contrast-on-action'
-      ios: colorContrastOnAction
-      android: color_contrast_on_action
+      ios: theme.colorContrastOnAction
+      android: theme.color_contrast_on_action
     consumers:
       - Button-CTA
       - Button-Icon
@@ -792,7 +792,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-body-sm'
+      web:
+        - '--typography-body-sm-font-size'
+        - '--typography-body-sm-line-height'
+        - '--typography-body-sm-font-family'
+        - '--typography-body-sm-font-weight'
+        - '--typography-body-sm-letter-spacing'
       ios: typographyBodySm
       android: typography_body_sm
     consumers:
@@ -808,7 +813,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-body-md'
+      web:
+        - '--typography-body-md-font-size'
+        - '--typography-body-md-line-height'
+        - '--typography-body-md-font-family'
+        - '--typography-body-md-font-weight'
+        - '--typography-body-md-letter-spacing'
       ios: typographyBodyMd
       android: typography_body_md
     consumers: []
@@ -822,7 +832,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-body-lg'
+      web:
+        - '--typography-body-lg-font-size'
+        - '--typography-body-lg-line-height'
+        - '--typography-body-lg-font-family'
+        - '--typography-body-lg-font-weight'
+        - '--typography-body-lg-letter-spacing'
       ios: typographyBodyLg
       android: typography_body_lg
     consumers: []
@@ -836,7 +851,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-h-1'
+      web:
+        - '--typography-h-1-font-size'
+        - '--typography-h-1-line-height'
+        - '--typography-h-1-font-family'
+        - '--typography-h-1-font-weight'
+        - '--typography-h-1-letter-spacing'
       ios: typographyH1
       android: typography_h_1
     consumers: []
@@ -850,7 +870,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-h-2'
+      web:
+        - '--typography-h-2-font-size'
+        - '--typography-h-2-line-height'
+        - '--typography-h-2-font-family'
+        - '--typography-h-2-font-weight'
+        - '--typography-h-2-letter-spacing'
       ios: typographyH2
       android: typography_h_2
     consumers: []
@@ -864,7 +889,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-h-3'
+      web:
+        - '--typography-h-3-font-size'
+        - '--typography-h-3-line-height'
+        - '--typography-h-3-font-family'
+        - '--typography-h-3-font-weight'
+        - '--typography-h-3-letter-spacing'
       ios: typographyH3
       android: typography_h_3
     consumers: []
@@ -878,7 +908,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-h-4'
+      web:
+        - '--typography-h-4-font-size'
+        - '--typography-h-4-line-height'
+        - '--typography-h-4-font-family'
+        - '--typography-h-4-font-weight'
+        - '--typography-h-4-letter-spacing'
       ios: typographyH4
       android: typography_h_4
     consumers: []
@@ -892,7 +927,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-h-5'
+      web:
+        - '--typography-h-5-font-size'
+        - '--typography-h-5-line-height'
+        - '--typography-h-5-font-family'
+        - '--typography-h-5-font-weight'
+        - '--typography-h-5-letter-spacing'
       ios: typographyH5
       android: typography_h_5
     consumers: []
@@ -906,7 +946,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-h-6'
+      web:
+        - '--typography-h-6-font-size'
+        - '--typography-h-6-line-height'
+        - '--typography-h-6-font-family'
+        - '--typography-h-6-font-weight'
+        - '--typography-h-6-letter-spacing'
       ios: typographyH6
       android: typography_h_6
     consumers: []
@@ -920,7 +965,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-caption'
+      web:
+        - '--typography-caption-font-size'
+        - '--typography-caption-line-height'
+        - '--typography-caption-font-family'
+        - '--typography-caption-font-weight'
+        - '--typography-caption-letter-spacing'
       ios: typographyCaption
       android: typography_caption
     consumers:
@@ -942,7 +992,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-legal'
+      web:
+        - '--typography-legal-font-size'
+        - '--typography-legal-line-height'
+        - '--typography-legal-font-family'
+        - '--typography-legal-font-weight'
+        - '--typography-legal-letter-spacing'
       ios: typographyLegal
       android: typography_legal
     consumers: []
@@ -956,7 +1011,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-display'
+      web:
+        - '--typography-display-font-size'
+        - '--typography-display-line-height'
+        - '--typography-display-font-family'
+        - '--typography-display-font-weight'
+        - '--typography-display-letter-spacing'
       ios: typographyDisplay
       android: typography_display
     consumers: []
@@ -970,7 +1030,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-button-sm'
+      web:
+        - '--typography-button-sm-font-size'
+        - '--typography-button-sm-line-height'
+        - '--typography-button-sm-font-family'
+        - '--typography-button-sm-font-weight'
+        - '--typography-button-sm-letter-spacing'
       ios: typographyButtonSm
       android: typography_button_sm
     consumers:
@@ -987,7 +1052,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-button-md'
+      web:
+        - '--typography-button-md-font-size'
+        - '--typography-button-md-line-height'
+        - '--typography-button-md-font-family'
+        - '--typography-button-md-font-weight'
+        - '--typography-button-md-letter-spacing'
       ios: typographyButtonMd
       android: typography_button_md
     consumers:
@@ -1003,7 +1073,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-button-lg'
+      web:
+        - '--typography-button-lg-font-size'
+        - '--typography-button-lg-line-height'
+        - '--typography-button-lg-font-family'
+        - '--typography-button-lg-font-weight'
+        - '--typography-button-lg-letter-spacing'
       ios: typographyButtonLg
       android: typography_button_lg
     consumers:
@@ -1018,7 +1093,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-input'
+      web:
+        - '--typography-input-font-size'
+        - '--typography-input-line-height'
+        - '--typography-input-font-family'
+        - '--typography-input-font-weight'
+        - '--typography-input-letter-spacing'
       ios: typographyInput
       android: typography_input
     consumers:
@@ -1036,7 +1116,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-label-xs'
+      web:
+        - '--typography-label-xs-font-size'
+        - '--typography-label-xs-line-height'
+        - '--typography-label-xs-font-family'
+        - '--typography-label-xs-font-weight'
+        - '--typography-label-xs-letter-spacing'
       ios: typographyLabelXs
       android: typography_label_xs
     consumers:
@@ -1053,7 +1138,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-label-sm'
+      web:
+        - '--typography-label-sm-font-size'
+        - '--typography-label-sm-line-height'
+        - '--typography-label-sm-font-family'
+        - '--typography-label-sm-font-weight'
+        - '--typography-label-sm-letter-spacing'
       ios: typographyLabelSm
       android: typography_label_sm
     consumers:
@@ -1073,7 +1163,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-label-md'
+      web:
+        - '--typography-label-md-font-size'
+        - '--typography-label-md-line-height'
+        - '--typography-label-md-font-family'
+        - '--typography-label-md-font-weight'
+        - '--typography-label-md-letter-spacing'
       ios: typographyLabelMd
       android: typography_label_md
     consumers:
@@ -1098,7 +1193,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-label-md-float'
+      web:
+        - '--typography-label-md-float-font-size'
+        - '--typography-label-md-float-line-height'
+        - '--typography-label-md-float-font-family'
+        - '--typography-label-md-float-font-weight'
+        - '--typography-label-md-float-letter-spacing'
       ios: typographyLabelMdFloat
       android: typography_label_md_float
     consumers:
@@ -1116,7 +1216,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-label-lg'
+      web:
+        - '--typography-label-lg-font-size'
+        - '--typography-label-lg-line-height'
+        - '--typography-label-lg-font-family'
+        - '--typography-label-lg-font-weight'
+        - '--typography-label-lg-letter-spacing'
       ios: typographyLabelLg
       android: typography_label_lg
     consumers:
@@ -1133,7 +1238,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-code-sm'
+      web:
+        - '--typography-code-sm-font-size'
+        - '--typography-code-sm-line-height'
+        - '--typography-code-sm-font-family'
+        - '--typography-code-sm-font-weight'
+        - '--typography-code-sm-letter-spacing'
       ios: typographyCodeSm
       android: typography_code_sm
     consumers: []
@@ -1147,7 +1257,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-code-md'
+      web:
+        - '--typography-code-md-font-size'
+        - '--typography-code-md-line-height'
+        - '--typography-code-md-font-family'
+        - '--typography-code-md-font-weight'
+        - '--typography-code-md-letter-spacing'
       ios: typographyCodeMd
       android: typography_code_md
     consumers: []
@@ -1161,7 +1276,12 @@ tokens:
       letterSpacing: letterSpacing100
     themeVarying: false
     platforms:
-      web: '--typography-code-lg'
+      web:
+        - '--typography-code-lg-font-size'
+        - '--typography-code-lg-line-height'
+        - '--typography-code-lg-font-family'
+        - '--typography-code-lg-font-weight'
+        - '--typography-code-lg-letter-spacing'
       ios: typographyCodeLg
       android: typography_code_lg
     consumers: []
@@ -1175,7 +1295,13 @@ tokens:
       color: shadowBlack100
     themeVarying: false
     platforms:
-      web: '--shadow-none'
+      web:
+        - '--shadow-none'
+        - '--shadow-none-offset-x'
+        - '--shadow-none-offset-y'
+        - '--shadow-none-blur'
+        - '--shadow-none-opacity'
+        - '--shadow-none-color'
       ios: shadowNone
       android: shadow_none
     consumers: []
@@ -1189,7 +1315,13 @@ tokens:
       color: shadowBlack100
     themeVarying: false
     platforms:
-      web: '--shadow-container'
+      web:
+        - '--shadow-container'
+        - '--shadow-container-offset-x'
+        - '--shadow-container-offset-y'
+        - '--shadow-container-blur'
+        - '--shadow-container-opacity'
+        - '--shadow-container-color'
       ios: shadowContainer
       android: shadow_container
     consumers:
@@ -1205,7 +1337,13 @@ tokens:
       color: shadowBlack100
     themeVarying: false
     platforms:
-      web: '--shadow-navigation'
+      web:
+        - '--shadow-navigation'
+        - '--shadow-navigation-offset-x'
+        - '--shadow-navigation-offset-y'
+        - '--shadow-navigation-blur'
+        - '--shadow-navigation-opacity'
+        - '--shadow-navigation-color'
       ios: shadowNavigation
       android: shadow_navigation
     consumers:
@@ -1220,7 +1358,13 @@ tokens:
       color: shadowBlack100
     themeVarying: false
     platforms:
-      web: '--shadow-dropdown'
+      web:
+        - '--shadow-dropdown'
+        - '--shadow-dropdown-offset-x'
+        - '--shadow-dropdown-offset-y'
+        - '--shadow-dropdown-blur'
+        - '--shadow-dropdown-opacity'
+        - '--shadow-dropdown-color'
       ios: shadowDropdown
       android: shadow_dropdown
     consumers:
@@ -1235,7 +1379,13 @@ tokens:
       color: shadowBlack100
     themeVarying: false
     platforms:
-      web: '--shadow-modal'
+      web:
+        - '--shadow-modal'
+        - '--shadow-modal-offset-x'
+        - '--shadow-modal-offset-y'
+        - '--shadow-modal-blur'
+        - '--shadow-modal-opacity'
+        - '--shadow-modal-color'
       ios: shadowModal
       android: shadow_modal
     consumers:
@@ -1250,7 +1400,13 @@ tokens:
       color: shadowBlack100
     themeVarying: false
     platforms:
-      web: '--shadow-toast'
+      web:
+        - '--shadow-toast'
+        - '--shadow-toast-offset-x'
+        - '--shadow-toast-offset-y'
+        - '--shadow-toast-blur'
+        - '--shadow-toast-opacity'
+        - '--shadow-toast-color'
       ios: shadowToast
       android: shadow_toast
     consumers:
@@ -1265,7 +1421,13 @@ tokens:
       color: shadowBlack100
     themeVarying: false
     platforms:
-      web: '--shadow-tooltip'
+      web:
+        - '--shadow-tooltip'
+        - '--shadow-tooltip-offset-x'
+        - '--shadow-tooltip-offset-y'
+        - '--shadow-tooltip-blur'
+        - '--shadow-tooltip-opacity'
+        - '--shadow-tooltip-color'
       ios: shadowTooltip
       android: shadow_tooltip
     consumers:
@@ -1280,7 +1442,13 @@ tokens:
       color: shadowBlue100
     themeVarying: false
     platforms:
-      web: '--shadow-fab'
+      web:
+        - '--shadow-fab'
+        - '--shadow-fab-offset-x'
+        - '--shadow-fab-offset-y'
+        - '--shadow-fab-blur'
+        - '--shadow-fab-opacity'
+        - '--shadow-fab-color'
       ios: shadowFab
       android: shadow_fab
     consumers: []
@@ -1294,7 +1462,13 @@ tokens:
       color: shadowBlack100
     themeVarying: false
     platforms:
-      web: '--shadow-hover'
+      web:
+        - '--shadow-hover'
+        - '--shadow-hover-offset-x'
+        - '--shadow-hover-offset-y'
+        - '--shadow-hover-blur'
+        - '--shadow-hover-opacity'
+        - '--shadow-hover-color'
       ios: shadowHover
       android: shadow_hover
     consumers:
@@ -1309,7 +1483,13 @@ tokens:
       color: shadowBlack100
     themeVarying: false
     platforms:
-      web: '--shadow-navigation-indicator'
+      web:
+        - '--shadow-navigation-indicator'
+        - '--shadow-navigation-indicator-offset-x'
+        - '--shadow-navigation-indicator-offset-y'
+        - '--shadow-navigation-indicator-blur'
+        - '--shadow-navigation-indicator-opacity'
+        - '--shadow-navigation-indicator-color'
       ios: shadowNavigationIndicator
       android: shadow_navigation_indicator
     consumers:
@@ -1324,7 +1504,13 @@ tokens:
       color: shadowBlue100
     themeVarying: false
     platforms:
-      web: '--shadow-sunrise'
+      web:
+        - '--shadow-sunrise'
+        - '--shadow-sunrise-offset-x'
+        - '--shadow-sunrise-offset-y'
+        - '--shadow-sunrise-blur'
+        - '--shadow-sunrise-opacity'
+        - '--shadow-sunrise-color'
       ios: shadowSunrise
       android: shadow_sunrise
     consumers: []
@@ -1338,7 +1524,13 @@ tokens:
       color: shadowBlack100
     themeVarying: false
     platforms:
-      web: '--shadow-morning'
+      web:
+        - '--shadow-morning'
+        - '--shadow-morning-offset-x'
+        - '--shadow-morning-offset-y'
+        - '--shadow-morning-blur'
+        - '--shadow-morning-opacity'
+        - '--shadow-morning-color'
       ios: shadowMorning
       android: shadow_morning
     consumers: []
@@ -1352,7 +1544,13 @@ tokens:
       color: shadowBlack100
     themeVarying: false
     platforms:
-      web: '--shadow-noon'
+      web:
+        - '--shadow-noon'
+        - '--shadow-noon-offset-x'
+        - '--shadow-noon-offset-y'
+        - '--shadow-noon-blur'
+        - '--shadow-noon-opacity'
+        - '--shadow-noon-color'
       ios: shadowNoon
       android: shadow_noon
     consumers: []
@@ -1366,7 +1564,13 @@ tokens:
       color: shadowBlack100
     themeVarying: false
     platforms:
-      web: '--shadow-dusk'
+      web:
+        - '--shadow-dusk'
+        - '--shadow-dusk-offset-x'
+        - '--shadow-dusk-offset-y'
+        - '--shadow-dusk-blur'
+        - '--shadow-dusk-opacity'
+        - '--shadow-dusk-color'
       ios: shadowDusk
       android: shadow_dusk
     consumers: []
@@ -1380,7 +1584,13 @@ tokens:
       color: shadowBlue100
     themeVarying: false
     platforms:
-      web: '--shadow-sunset'
+      web:
+        - '--shadow-sunset'
+        - '--shadow-sunset-offset-x'
+        - '--shadow-sunset-offset-y'
+        - '--shadow-sunset-blur'
+        - '--shadow-sunset-opacity'
+        - '--shadow-sunset-color'
       ios: shadowSunset
       android: shadow_sunset
     consumers: []
@@ -1541,7 +1751,9 @@ tokens:
     platforms:
       web: '--z-index-container'
       ios: zIndexContainer
-      android: z_index_container
+      android: null
+    platformNotes:
+      android: Use elevation tokens instead
     consumers:
       - Container-Base
   zIndex.navigation:
@@ -1551,7 +1763,9 @@ tokens:
     platforms:
       web: '--z-index-navigation'
       ios: zIndexNavigation
-      android: z_index_navigation
+      android: null
+    platformNotes:
+      android: Use elevation tokens instead
     consumers:
       - Container-Base
   zIndex.dropdown:
@@ -1561,7 +1775,9 @@ tokens:
     platforms:
       web: '--z-index-dropdown'
       ios: zIndexDropdown
-      android: z_index_dropdown
+      android: null
+    platformNotes:
+      android: Use elevation tokens instead
     consumers:
       - Container-Base
   zIndex.modal:
@@ -1571,7 +1787,9 @@ tokens:
     platforms:
       web: '--z-index-modal'
       ios: zIndexModal
-      android: z_index_modal
+      android: null
+    platformNotes:
+      android: Use elevation tokens instead
     consumers:
       - Container-Base
   zIndex.toast:
@@ -1581,7 +1799,9 @@ tokens:
     platforms:
       web: '--z-index-toast'
       ios: zIndexToast
-      android: z_index_toast
+      android: null
+    platformNotes:
+      android: Use elevation tokens instead
     consumers:
       - Container-Base
   zIndex.tooltip:
@@ -1591,7 +1811,9 @@ tokens:
     platforms:
       web: '--z-index-tooltip'
       ios: zIndexTooltip
-      android: z_index_tooltip
+      android: null
+    platformNotes:
+      android: Use elevation tokens instead
     consumers:
       - Container-Base
   elevation.none:
@@ -1599,18 +1821,24 @@ tokens:
     primitiveReferences: null
     themeVarying: false
     platforms:
-      web: '--elevation-none'
-      ios: elevationNone
+      web: null
+      ios: null
       android: elevation_none
+    platformNotes:
+      web: Use z-index + shadow tokens instead
+      ios: Use z-index + shadow tokens instead
     consumers: []
   elevation.container:
     category: layering
     primitiveReferences: null
     themeVarying: false
     platforms:
-      web: '--elevation-container'
-      ios: elevationContainer
+      web: null
+      ios: null
       android: elevation_container
+    platformNotes:
+      web: Use z-index + shadow tokens instead
+      ios: Use z-index + shadow tokens instead
     consumers:
       - Container-Base
       - Container-Card-Base
@@ -1619,9 +1847,12 @@ tokens:
     primitiveReferences: null
     themeVarying: false
     platforms:
-      web: '--elevation-navigation'
-      ios: elevationNavigation
+      web: null
+      ios: null
       android: elevation_navigation
+    platformNotes:
+      web: Use z-index + shadow tokens instead
+      ios: Use z-index + shadow tokens instead
     consumers:
       - Container-Base
   elevation.dropdown:
@@ -1629,9 +1860,12 @@ tokens:
     primitiveReferences: null
     themeVarying: false
     platforms:
-      web: '--elevation-dropdown'
-      ios: elevationDropdown
+      web: null
+      ios: null
       android: elevation_dropdown
+    platformNotes:
+      web: Use z-index + shadow tokens instead
+      ios: Use z-index + shadow tokens instead
     consumers:
       - Container-Base
   elevation.modal:
@@ -1639,9 +1873,12 @@ tokens:
     primitiveReferences: null
     themeVarying: false
     platforms:
-      web: '--elevation-modal'
-      ios: elevationModal
+      web: null
+      ios: null
       android: elevation_modal
+    platformNotes:
+      web: Use z-index + shadow tokens instead
+      ios: Use z-index + shadow tokens instead
     consumers:
       - Container-Base
   elevation.toast:
@@ -1649,9 +1886,12 @@ tokens:
     primitiveReferences: null
     themeVarying: false
     platforms:
-      web: '--elevation-toast'
-      ios: elevationToast
+      web: null
+      ios: null
       android: elevation_toast
+    platformNotes:
+      web: Use z-index + shadow tokens instead
+      ios: Use z-index + shadow tokens instead
     consumers:
       - Container-Base
   elevation.tooltip:
@@ -1659,9 +1899,12 @@ tokens:
     primitiveReferences: null
     themeVarying: false
     platforms:
-      web: '--elevation-tooltip'
-      ios: elevationTooltip
+      web: null
+      ios: null
       android: elevation_tooltip
+    platformNotes:
+      web: Use z-index + shadow tokens instead
+      ios: Use z-index + shadow tokens instead
     consumers:
       - Container-Base
   gridGutterXs:
@@ -2025,9 +2268,15 @@ tokens:
       easing: easingStandard
     themeVarying: false
     platforms:
-      web: '--motion-float-label'
-      ios: motionFloatLabel
-      android: motion_float_label
+      web:
+        - '--motion-float-label-duration'
+        - '--motion-float-label-easing'
+      ios:
+        - MotionFloatLabel.duration
+        - MotionFloatLabel.easing
+      android:
+        - MotionFloatLabel.duration
+        - MotionFloatLabel.easing
     consumers:
       - Input-Text-Base
       - Input-Text-Email
@@ -2040,9 +2289,15 @@ tokens:
       easing: easingStandard
     themeVarying: false
     platforms:
-      web: '--motion-focus-transition'
-      ios: motionFocusTransition
-      android: motion_focus_transition
+      web:
+        - '--motion-focus-transition-duration'
+        - '--motion-focus-transition-easing'
+      ios:
+        - MotionFocusTransition.duration
+        - MotionFocusTransition.easing
+      android:
+        - MotionFocusTransition.duration
+        - MotionFocusTransition.easing
     consumers:
       - Avatar-Base
       - Container-Base
@@ -2059,9 +2314,15 @@ tokens:
       easing: easingAccelerate
     themeVarying: false
     platforms:
-      web: '--motion-button-press'
-      ios: motionButtonPress
-      android: motion_button_press
+      web:
+        - '--motion-button-press-duration'
+        - '--motion-button-press-easing'
+      ios:
+        - MotionButtonPress.duration
+        - MotionButtonPress.easing
+      android:
+        - MotionButtonPress.duration
+        - MotionButtonPress.easing
     consumers:
       - Button-CTA
       - Button-Icon
@@ -2077,9 +2338,15 @@ tokens:
       easing: easingDecelerate
     themeVarying: false
     platforms:
-      web: '--motion-modal-slide'
-      ios: motionModalSlide
-      android: motion_modal_slide
+      web:
+        - '--motion-modal-slide-duration'
+        - '--motion-modal-slide-easing'
+      ios:
+        - MotionModalSlide.duration
+        - MotionModalSlide.easing
+      android:
+        - MotionModalSlide.duration
+        - MotionModalSlide.easing
     consumers: []
   motion.selectionTransition:
     category: interaction
@@ -2088,9 +2355,15 @@ tokens:
       easing: easingStandard
     themeVarying: false
     platforms:
-      web: '--motion-selection-transition'
-      ios: motionSelectionTransition
-      android: motion_selection_transition
+      web:
+        - '--motion-selection-transition-duration'
+        - '--motion-selection-transition-easing'
+      ios:
+        - MotionSelectionTransition.duration
+        - MotionSelectionTransition.easing
+      android:
+        - MotionSelectionTransition.duration
+        - MotionSelectionTransition.easing
     consumers:
       - Button-VerticalList-Item
       - Chip-Base
@@ -2109,9 +2382,15 @@ tokens:
       easing: easingDecelerate
     themeVarying: false
     platforms:
-      web: '--motion-settle-transition'
-      ios: motionSettleTransition
-      android: motion_settle_transition
+      web:
+        - '--motion-settle-transition-duration'
+        - '--motion-settle-transition-easing'
+      ios:
+        - MotionSettleTransition.duration
+        - MotionSettleTransition.easing
+      android:
+        - MotionSettleTransition.duration
+        - MotionSettleTransition.easing
     consumers:
       - Progress-Bar-Base
       - Progress-Indicator-Node-Base

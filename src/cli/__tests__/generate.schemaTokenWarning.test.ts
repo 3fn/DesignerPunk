@@ -67,7 +67,7 @@ describe('generate — schema token names the token index does not hold', () => 
       // The consumer's token source no longer has color.action.primary.
       semanticTokens: [semantic('color.identity.human')],
       componentTokens: [],
-      modeResolved: { resolvedLight: [], resolvedDark: [], themeVaryingTokens: new Set(), primitiveOklch: new Map() } as any,
+      modeResolved: { resolvedLight: [], resolvedDark: [], themeVaryingTokens: new Set(), nativeThemeVaryingTokens: new Set(), primitiveOklch: new Map() } as any,
       componentSchemaDir: resolveGenerateComponentRoots(dsRoot, pkgRoot),
       packageComponentTokens: readPackageComponentTokenIndex(pkgRoot).index!,
     });

@@ -18,6 +18,10 @@ import type { RegisteredComponentToken } from '../registries/ComponentTokenRegis
 import { WebFormatGenerator } from '../providers/WebFormatGenerator';
 import { iOSFormatGenerator } from '../providers/iOSFormatGenerator';
 import { AndroidFormatGenerator } from '../providers/AndroidFormatGenerator';
+import { WebMotionTokenFormatter } from '../build/platforms/WebMotionTokenFormatter';
+import { iOSMotionTokenFormatter } from '../build/platforms/iOSMotionTokenFormatter';
+import { AndroidMotionTokenFormatter } from '../build/platforms/AndroidMotionTokenFormatter';
+import { TokenFileGenerator, semanticEmissionShape } from './TokenFileGenerator';
 import type { ModeResolvedTokens, PrimitiveOklchModes } from './ModeResolvedTokens';
 import { resolveComponentSources } from '../cli/shared/componentSources';
 import type { ComponentSource } from '../cli/shared/componentSources';
@@ -123,6 +127,70 @@ function buildOklchEntry(modes: PrimitiveOklchModes): {
       dark: { l: modes.dark.oklch.l, c: modes.dark.oklch.c, h: modes.dark.oklch.h, channels: modes.dark.channels },
     },
   };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Platform names: what the generators emit for a token
+// ─────────────────────────────────────────────────────────────────────────────
+
+export type IndexPlatform = 'web' | 'ios' | 'android';
+const INDEX_PLATFORMS: readonly IndexPlatform[] = ['web', 'ios', 'android'];
+
+/**
+ * A row's name on one platform: one name, the several names a composite is emitted as, or
+ * `null` when that platform's output carries no name for the token. iOS and Android names are
+ * members of `DesignTokens` (`colorTextDefault`, `Duration.duration150`,
+ * `MotionFloatLabel.duration`), or `theme.<name>` for a token the native generators leave out
+ * of `DesignTokens` for the theme types (Spec 094; not emitted yet, Spec 129).
+ *
+ * Every name is checked against the generated files by `tokenIndexPlatformNames.test.ts`
+ * (`.kiro/issues/2026-10-26-token-index-platform-names-not-emitted.md`).
+ */
+export type IndexPlatformName = string | string[] | null;
+
+/** Notes for the platforms a row has no name on, as in the DTCG export's `platforms` extension. */
+export const PLATFORM_NOTES = {
+  /** `elevation.*` is Android-only (`ElevationTokens.ts`; `DTCGFormatGenerator.generateElevationTokens`). */
+  elevation: 'Use z-index + shadow tokens instead',
+  /** `zIndex.*` is web and iOS only (`ZIndexTokens.ts`; `DTCGFormatGenerator.generateZIndexTokens`). */
+  zIndex: 'Use elevation tokens instead',
+  /** A colour primitive outside the composed OKLCH palette (`TokenFileGenerator.emittedColorPrimitiveNames`). */
+  unemittedColor:
+    'Not emitted on any platform: the generators emit colour primitives from the composed OKLCH palette, and this one is not in it',
+} as const;
+
+/** One name stays a string; several become a list, the composite (`stem`) first when it is one of them. */
+function collapse(names: string[], stem?: string): IndexPlatformName {
+  const unique = [...new Set(names)];
+  if (unique.length === 0) return null;
+  if (unique.length === 1) return unique[0];
+  if (stem && unique.includes(stem)) return [stem, ...unique.filter(n => n !== stem)];
+  return unique;
+}
+
+/** The custom properties a CSS fragment declares, in order. */
+function declaredCustomProperties(css: string): string[] {
+  return [...css.matchAll(/^\s*(--[A-Za-z0-9_-]+)\s*:/gm)].map(m => m[1]);
+}
+
+/** `Type.member` for each member a Swift `struct`/`enum` or a Kotlin `object` fragment declares. */
+function declaredNestedMembers(source: string): string[] {
+  const out: string[] = [];
+  let type: string | undefined;
+  for (const line of source.split('\n')) {
+    const t = line.match(/^\s*(?:public\s+)?(?:struct|enum|object)\s+(\w+)\s*\{/);
+    if (t) { type = t[1]; continue; }
+    if (/^\s*\}/.test(line)) { type = undefined; continue; }
+    const m = line.match(/^\s*(?:public\s+)?(?:static\s+let|val)\s+(\w+)/);
+    if (m && type) out.push(`${type}.${m[1]}`);
+  }
+  return out;
+}
+
+/** The token's `platforms` list, when it declares one (`zIndex.*`, `elevation.*`). */
+function declaredPlatforms(token: SemanticToken): readonly string[] | undefined {
+  const p = (token as { platforms?: unknown }).platforms;
+  return Array.isArray(p) ? p.map(String) : undefined;
 }
 
 /** One `tokens:` value in one component schema, read the way the consumer map reads it. */
@@ -253,6 +321,15 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
   const androidGen = new AndroidFormatGenerator('kotlin');
 
   const themeVarying = input.modeResolved.themeVaryingTokens;
+  // The iOS and Android columns' `theme.` names come from the set the native generators
+  // consume, not from the base-scoped flag (plan item 5 of the record named above).
+  const nativeThemeVarying = input.modeResolved.nativeThemeVaryingTokens;
+  const emittedColors = TokenFileGenerator.emittedColorPrimitiveNames();
+  const motionFormatters = {
+    web: new WebMotionTokenFormatter(),
+    ios: new iOSMotionTokenFormatter(),
+    android: new AndroidMotionTokenFormatter(),
+  };
   const primitiveOklch = input.modeResolved.primitiveOklch;
   const primitives = input.primitiveTokens;
   const semantics = input.semanticTokens;
@@ -311,11 +388,20 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
         ? buildOklchEntry(oklchModes)
         : { value: token.platforms.web.value }),
       formula: token.mathematicalRelationship || null,
-      platforms: {
-        web: webGen.getTokenName(token.name, token.category),
-        ios: iosPath,
-        android: androidPath,
-      },
+      // A colour primitive the generators do not emit has no name on any platform
+      // (`.kiro/issues/2026-10-24-shadow-color-primitives-emitted-on-no-platform.md`).
+      ...(token.category === TokenCategory.COLOR && !emittedColors.has(token.name)
+        ? {
+            platforms: { web: null, ios: null, android: null },
+            platformNotes: { web: PLATFORM_NOTES.unemittedColor, ios: PLATFORM_NOTES.unemittedColor, android: PLATFORM_NOTES.unemittedColor },
+          }
+        : {
+            platforms: {
+              web: webGen.getTokenName(token.name, token.category),
+              ios: iosPath,
+              android: androidPath,
+            },
+          }),
       // Consumers on every tier (ruling 2026-10-23 § 3b): a schema that declares a
       // primitive is a consumer of it, exactly as for a semantic token.
       consumers: consumerMap.get(token.name) || [],
@@ -328,18 +414,39 @@ export function generateTokenIndex(tokenIndexDir: string = 'token-index', input:
   const semanticsIndex: Record<string, any> = {};
   for (const token of semantics) {
     const isThemeVarying = themeVarying.has(token.name);
-    const iosName = iosGen.getTokenName(token.name, token.category);
-    const androidName = androidGen.getTokenName(token.name, token.category);
+    const supported = declaredPlatforms(token);
+    const note = token.name.startsWith('elevation.') ? PLATFORM_NOTES.elevation
+      : token.name.startsWith('zIndex.') ? PLATFORM_NOTES.zIndex
+      : undefined;
 
+    /** The name(s) the generators emit for this token on one platform (TokenFileGenerator's paths). */
+    const namesOn = (platform: IndexPlatform): IndexPlatformName => {
+      if (supported && !supported.includes(platform)) return null;
+      const gen = platform === 'web' ? webGen : platform === 'ios' ? iosGen : androidGen;
+      const stem = gen.getTokenName(token.name, token.category);
+      // Semantic motion: the dedicated motion section (generateMotionSection) writes it.
+      if (token.name.startsWith('motion.')) {
+        const fragment: string = motionFormatters[platform].generateSemanticMotionTokens({ [token.name]: token });
+        return platform === 'web'
+          ? collapse(declaredCustomProperties(fragment))
+          : collapse(declaredNestedMembers(fragment));
+      }
+      // A multi-reference token on web is one custom property per key (and the composite, for shadow).
+      if (platform === 'web' && token.primitiveReferences && semanticEmissionShape(token) === 'multi') {
+        return collapse(declaredCustomProperties(webGen.formatMultiReferenceToken(token)), stem);
+      }
+      if (platform !== 'web' && nativeThemeVarying.has(token.name)) return `theme.${stem}`;
+      return stem;
+    };
+
+    const platforms = Object.fromEntries(INDEX_PLATFORMS.map(p => [p, namesOn(p)])) as Record<IndexPlatform, IndexPlatformName>;
+    const nullOn = INDEX_PLATFORMS.filter(p => platforms[p] === null);
     semanticsIndex[token.name] = {
       category: token.category,
       primitiveReferences: token.primitiveReferences || null,
       themeVarying: isThemeVarying,
-      platforms: {
-        web: webGen.getTokenName(token.name, token.category),
-        ios: isThemeVarying ? `theme.${iosName}` : iosName,
-        android: isThemeVarying ? `theme.${androidName}` : androidName,
-      },
+      platforms,
+      ...(nullOn.length > 0 && note ? { platformNotes: Object.fromEntries(nullOn.map(p => [p, note])) } : {}),
       consumers: consumerMap.get(token.name) || [],
     };
   }
