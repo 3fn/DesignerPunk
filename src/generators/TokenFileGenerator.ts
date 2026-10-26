@@ -2030,6 +2030,21 @@ export class TokenFileGenerator {
 
   // --- OKLCH Color Generation Helpers (Spec 112) ---
 
+  /**
+   * The colour primitives every platform file defines: the installed package's composed
+   * palette, never the token source's colour primitives (INSTALL § 4). The web, iOS and Android
+   * emitters below iterate this list and nothing else, so it is also the set a semantic colour
+   * reference must name to resolve in the output (ColorReferenceEmissionValidator).
+   */
+  private static emittedColors(): ReadonlyArray<typeof allComposedColors[number]> {
+    return allComposedColors;
+  }
+
+  /** Names of the colour primitives every platform file defines (see {@link emittedColors}). */
+  static emittedColorPrimitiveNames(): ReadonlySet<string> {
+    return new Set(TokenFileGenerator.emittedColors().map(c => c.name));
+  }
+
   private generateOklchWebColors(): string[] {
     const lines: string[] = [];
 
@@ -2056,7 +2071,7 @@ export class TokenFileGenerator {
     lines.push(...this.webGenerator.formatOklchChannels('black', neutralHue, blackLightness as any, blackChroma as any));
 
     // Emit composed colors
-    for (const color of allComposedColors) {
+    for (const color of TokenFileGenerator.emittedColors()) {
       lines.push(this.webGenerator.formatOklchColor(color.name, color.resolved.l, color.resolved.c, color.resolved.h));
     }
 
@@ -2067,7 +2082,7 @@ export class TokenFileGenerator {
     const lines: string[] = [];
     const gen = platform === 'ios' ? this.iosGenerator : this.androidGenerator;
 
-    for (const color of allComposedColors) {
+    for (const color of TokenFileGenerator.emittedColors()) {
       lines.push(gen.formatOklchColor(color.name, color.resolved.l, color.resolved.c, color.resolved.h));
     }
 

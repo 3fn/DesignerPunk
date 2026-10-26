@@ -15,16 +15,31 @@ import { jestTsModuleLoader } from '../../__tests__/helpers/tsModuleLoader';
 import { generateTokenFiles } from '../generateTokenFiles';
 import { resolveTokens } from '../../cli/resolveTokens';
 
+// generateTokenFiles reports DesignerPunk's own 15 shadow tokens, whose colours no platform file
+// defines (.kiro/issues/2026-10-24-shadow-color-primitives-emitted-on-no-platform.md), as one
+// warning per run. This suite captures that one line and asserts it; every other warning still
+// reaches console-fail-setup.
+const SHADOW_WARNING = '15 shadow token(s) reference shadow colour primitive(s) that no platform file defines';
+
 describe('Product repo simulation (Spec 094)', () => {
   let tmpDir: string;
+  let shadowWarnings: string[];
 
   beforeEach(() => {
     tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'dp-product-sim-'));
     fs.mkdirSync(path.join(tmpDir, 'dist'), { recursive: true });
+    shadowWarnings = [];
+    const passThrough = console.warn;
+    jest.spyOn(console, 'warn').mockImplementation((...args: unknown[]) => {
+      const line = args.join(' ');
+      if (line.includes(SHADOW_WARNING)) shadowWarnings.push(line);
+      else passThrough(...args);
+    });
   });
 
   afterEach(() => {
     fs.rmSync(tmpDir, { recursive: true, force: true });
+    jest.restoreAllMocks();
   });
 
   test('generates token files with default config (no config file)', async () => {
@@ -42,6 +57,7 @@ describe('Product repo simulation (Spec 094)', () => {
     expect(fs.existsSync(path.join(distDir, 'DesignTokens.web.css'))).toBe(true);
     expect(fs.existsSync(path.join(distDir, 'DesignTokens.ios.swift'))).toBe(true);
     expect(fs.existsSync(path.join(distDir, 'DesignTokens.android.kt'))).toBe(true);
+    expect(shadowWarnings).toHaveLength(1);
   });
 
   test('loads custom name and abbreviation from config', async () => {
