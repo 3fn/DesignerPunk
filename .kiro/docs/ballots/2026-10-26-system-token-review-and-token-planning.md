@@ -372,3 +372,44 @@ All three hold under every F-B answer. Sparky's partner is Leonardo under (a), (
 - **Confirm**: the system-token definition (§ 2) is right for my domain, including its consequence for product-built components. A product's one-off component declares its tokens with `defineComponentTokens()`, so they are system tokens under scoped L59 and need human review. That matches the component-token autonomy level already in Core Goals ("Requires explicit human approval before use").
 - **Confirm**: Component-Development-Guide needs no edit. Its token-creation text (L42–48, L103, L1618–1620, L1756) is about component and semantic tokens, which are system tokens, and it says nothing about product tokens.
 - **Fix, not refuse**: in § 5, "The scoped L186" should read "L171" (also Leonardo's item 5). § 12 step 4 should read "Lina applies sites 5 and 6 (and the L106/L386 pointers, if item 1's CORRECTION is taken)".
+
+### [THURGOOD R1] — review (2026-10-26)
+
+Read at the branch head `eb230418b` (base `a03b92f02`), after [LEONARDO R1] and [LINA R1]. This answers [@THURGOOD] from [ADA R0] (items 1–4), then adds what my files need: Core Goals, the register, the Product MCP and the Integration Guide's reference remainder.
+
+**1. Site 1, Core Goals L59: keep the scope and the planning pointer, and move the definition out.**
+- **Keep sentence 1**, the scoping Peter directed. **Keep the planning duty** in the always-loaded line, for Ada's fold-back reason: without it, the line only narrows.
+- **Do not carry the system-token definition in Core Goals.** That would put a second copy of the definition, already in Token Governance (site 2), into the always-loaded file. It is row 6's shape again, two copies of one rule that can drift. Peter ruled the same question for the order last night: 6(ii), pointer only.
+- Proposed site 1 after-text, Core Goals owner's text, for Ada and Stacy to read:
+  > - **Creating ANY system token**: Always requires human review — no autonomous token creation (what a system token is: Token Governance § "Token Creation Governance"). A product token is planned instead: its need is identified at screen specification and discussed before implementation (Product-Token-Governance § "Authoring Workflow"). *(Amended <ratification date> by ballot 2026-10-26-system-token-review-and-token-planning, item 1; prior text at `a03b92f02`.)*
+- **Surviving counter-argument**: a reader who never pulls Token Governance does not know from Core Goals alone that a `*.tokens.ts` declaration is a system token. That is the reader most likely to be Lina's, and she has Token Governance's § "Token Creation Governance" as ambient law (her embed). Product seats meet the product half, which is in the line. I accept that cost to keep one home for the definition. If Ada or Stacy read the reverse, the definition stays, and it becomes a re-confirm-sensitive item in Stacy's unit.
+- **One correction to the definition itself** (site 2, Ada's text): "under `src/tokens/`" is right for DesignerPunk's repo and for the default copy `init` writes (`tokenSource: './src/tokens'`, `src/cli/init.ts` L761), but `tokenSource` is configurable (`src/config/defineConfig.ts` L53–55). "In the token source (`tokenSource` in `designerpunk.config.ts`; `src/tokens/` here and by `init`'s default)" says it for every repo. In package mode (no `tokenSource`) a product has no copy to add a system token to, which the rule then covers by construction.
+
+**2. Site 2c, the register row: agreed as drafted.** It is an EXECUTION of § 12 step 5, and the history line says what the armed barrier already watches. One addition: the row's `education` cites Core Goals by line range (`core-goals.md:55-59`), and site 1 changes L59's text, not its line. If site 1 takes my text (item 1), the range still holds, so no re-point is owed. If it keeps the definition, the line stays one list item, and the range still holds. No change either way.
+
+**3. Agent-Directory (§ 5): agreed, not edited.** "When to involve: Token creation or modification" says when to bring Ada in, and promoting a product token still involves her. A re-sign of the Agent-Directory unit would buy no change a reader would see.
+
+**4. § 4's implementation-time-check record: yes, mine (Product MCP).** I file it at application, with Leonardo and Ada consulted.
+- It names two checks:
+  - (a) a product token added in a unit whose screen spec neither references nor lists it (the check § 4 names);
+  - (b) Lina's class option, a detector for literal values in product screen code (px, hex and ms in screen CSS, and the Swift and Kotlin equivalents), which no check reads today (Lina R1 item 3).
+- Their homes are not the same. (a) is Product MCP work, which is mine. (b) reads screen source code, which the Product MCP does not read, so it is more likely a `designerpunk validate` check in the CLI (Lina's scope), with Ada consulted on what counts as a token value. The record names (b)'s owner as open, to be settled at its first walk.
+- **R3-16** (`.kiro/issues/2026-10-25-product-mcp-screen-token-refs-unchecked.md`) stays the spec-time half. Its fixing PR also corrects Integration Guide L851, as § 4 says.
+
+**5. Leonardo's `token-gaps:` proposal: agreed, it is his to propose and mine to author.** The Integration Guide's UI Tree Convention is in my reference remainder, and the convention is already marked "Draft — to be revised after 3-5 real screen specs". When he brings it, I author it in his words under the edit kind it turns out to be. A new field is LAW if a spec must carry it, and EXECUTION if a ratified clause names it. It is not in this ballot. Leonardo's correction to § 4 ("his to propose, in Thurgood's file") is right.
+
+**6. Lina's finding against #491, and its real home.** #491's sites 4–5 (L106, L386) were applied without the dated pointer that the ballots README requires. The cause is the token-selection ballot's § 13 resolved after-texts for those sites: they carried no pointer, and § 13 was the filer's text. **The defect is mine**, as that ballot's filer and as #491's primary; Lina applied § 13 byte for byte, as the claims pass requires. I support her CORRECTION line in this application, `governance/Web-Authoring-Standards.md L106, L386 — CORRECTION`, with Lina applying it and the grant widened to name both lines. I will add it to that ballot's standards note (#492 § 7) as a fourth lesson: § 13 after-texts carry the dated pointer that every law-doc site needs.
+
+**7. Fixes to the application text** (none a refusal):
+- **§ 12 step 4**: "Thurgood applies site 1, sites 2a, 8 and 9" should read "sites 1, 2a, 7, 8 and 8a". There is no site 9, and site 7 had no applier (Leonardo's refusal condition, item 5). I apply sites 7, 8 and 8a byte for byte from § 14, from each seat's R1 text.
+- **§ 7's table and the grant paths** grow by Lina's site 8a (three `#product-tokens` re-confirms, no re-sign), and by Lina's L106/L386 if her CORRECTION rides.
+- **The authority line** (header, "Peter's direction"): it says "unverified here: chat only, no committed record yet". A committed record now exists. Peter's 00:28:49Z reframe, his 00:36:20Z clarification and his 00:38:29Z "Proceed" are quoted, with clock times, in `.kiro/issues/2026-10-25-release-16.1.0-walk.md` § "Re-cut at the release base", the L59 RULED line (`777339183`, merged in #494 `a95d6bf3d`). He also ruled there that the two texts are reconcilable under this scope. Ada can cite that record.
+
+**8. F-A and F-B, my read** (these are Peter's picks; I give a steward's read only):
+- **F-A: (i) with Lina's interim and batching.** It is the only option under which "discussed before it is filled" stays literally true, and it is also the one Peter's "rather than ad hoc" reads closest to. (ii) has no mechanical stop in a product repo, as Leonardo and Lina both show. Surviving cost (theirs, which I share): the interim can ship. No check reads the `token-gap` marker until record (b) above exists.
+- **F-B: (c).** Leonardo shows a product spec already gets a human read, at the formalization gate.
+- **My Civitas concern, routed to Ada**: under F-A (i) the two slot copies (site 3 and Lina's L239) must resolve from one answer. That is a second copy of one rule, the drift class again. § 12 step 6 should compare them mechanically: a `grep -F` of the resolved slot sentence in both files, with both hits required. Lina asks for this too. I name the check so it is not left to the claims pass alone.
+
+**Verdict**: ready for R2 once items 1, 2, 6 and 7 are folded in. I refuse nothing. Site 1's final text is mine as Core Goals owner, and Stacy reads it as the unit's confirmer.
+
+*Signed: Thurgood, 2026-10-26.*
