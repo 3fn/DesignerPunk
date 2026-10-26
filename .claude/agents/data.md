@@ -405,26 +405,26 @@ token_consistency:
 ```css
 /* Web */
 .input-text-base:focus-visible {
-  outline: var(--dp-accessibility-focus-width) solid var(--dp-accessibility-focus-color);
-  outline-offset: var(--dp-accessibility-focus-offset);
+  outline: var(--accessibility-focus-width) solid var(--accessibility-focus-color);
+  outline-offset: var(--accessibility-focus-offset);
 }
 ```
 
 ```swift
 // iOS
 .overlay(
-  RoundedRectangle(cornerRadius: DesignTokens.radius.input)
-    .stroke(DesignTokens.accessibility.focus.color, lineWidth: DesignTokens.accessibility.focus.width)
-    .padding(-DesignTokens.accessibility.focus.offset)
+  RoundedRectangle(cornerRadius: DesignTokens.radius150)
+    .stroke(DesignTokens.accessibilityFocusColor, lineWidth: DesignTokens.accessibilityFocusWidth)
+    .padding(-DesignTokens.accessibilityFocusOffset)
 )
 ```
 
 ```kotlin
 // Android
 Modifier.border(
-  width = DesignTokens.accessibility.focus.width,
-  color = DesignTokens.accessibility.focus.color,
-  shape = RoundedCornerShape(DesignTokens.radius.input)
+  width = DesignTokens.accessibility_focus_width,
+  color = DesignTokens.accessibility_focus_color,
+  shape = RoundedCornerShape(DesignTokens.radius_150)
 )
 ```
 
