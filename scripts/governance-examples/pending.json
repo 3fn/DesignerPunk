@@ -1,0 +1,557 @@
+{
+  "header": "adopted: bdbe72a32 2026-10-26; entries: 69 (token-name 56, declared-path 9, shape 2, import 2)",
+  "entries": [
+    {
+      "doc": "governance/Component-Development-Guide.md",
+      "half": "declared-path",
+      "string": "ButtonCTA/tokens.ts",
+      "occurrence": 0,
+      "line": 577,
+      "home": ".kiro/issues/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md"
+    },
+    {
+      "doc": "governance/Component-Development-Guide.md",
+      "half": "shape",
+      "string": "ButtonCTA/tokens.ts",
+      "occurrence": 0,
+      "line": 577,
+      "home": ".kiro/issues/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md"
+    },
+    {
+      "doc": "governance/Component-Development-Guide.md",
+      "half": "declared-path",
+      "string": "tokens.ts",
+      "occurrence": 0,
+      "line": 998,
+      "home": ".kiro/issues/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md"
+    },
+    {
+      "doc": "governance/Component-Development-Guide.md",
+      "half": "shape",
+      "string": "tokens.ts",
+      "occurrence": 0,
+      "line": 998,
+      "home": ".kiro/issues/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md"
+    },
+    {
+      "doc": "governance/Component-Family-Container.md",
+      "half": "token-name",
+      "string": "border.subtle",
+      "occurrence": 0,
+      "line": 311,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Component-Family-Container.md",
+      "half": "token-name",
+      "string": "border.subtle",
+      "occurrence": 1,
+      "line": 322,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/DTCG-Integration-Guide.md",
+      "half": "token-name",
+      "string": "glow.blur",
+      "occurrence": 0,
+      "line": 117,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/DTCG-Integration-Guide.md",
+      "half": "token-name",
+      "string": "glow.opacity",
+      "occurrence": 0,
+      "line": 117,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/DTCG-Integration-Guide.md",
+      "half": "token-name",
+      "string": "glow.blur",
+      "occurrence": 1,
+      "line": 198,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Layout-Specification-Vocabulary.md",
+      "half": "token-name",
+      "string": "space350",
+      "occurrence": 0,
+      "line": 78,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/MCP-Relationship-Model.md",
+      "half": "token-name",
+      "string": "color.primary",
+      "occurrence": 0,
+      "line": 225,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Product-Token-Governance.md",
+      "half": "token-name",
+      "string": "space.inset.comfortable",
+      "occurrence": 0,
+      "line": 157,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Rosetta-System-Architecture.md",
+      "half": "token-name",
+      "string": "pinkL300",
+      "occurrence": 0,
+      "line": 77,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Rosetta-System-Architecture.md",
+      "half": "token-name",
+      "string": "pinkC300",
+      "occurrence": 0,
+      "line": 78,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Rosetta-System-Architecture.md",
+      "half": "token-name",
+      "string": "pinkL300",
+      "occurrence": 1,
+      "line": 85,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Rosetta-System-Architecture.md",
+      "half": "token-name",
+      "string": "pinkC300",
+      "occurrence": 1,
+      "line": 85,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Rosetta-System-Architecture.md",
+      "half": "token-name",
+      "string": "color.primary",
+      "occurrence": 0,
+      "line": 220,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Test-Behavioral-Contract-Validation.md",
+      "half": "token-name",
+      "string": "color.error",
+      "occurrence": 0,
+      "line": 291,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Test-Development-Standards.md",
+      "half": "declared-path",
+      "string": "src/components/core/Input-Text-Search/platforms/web/InputTextSearch.web.ts",
+      "occurrence": 0,
+      "line": 1556,
+      "home": ".kiro/issues/2026-10-26-tds-workflow-examples-declare-files-that-do-not-exist.md"
+    },
+    {
+      "doc": "governance/Test-Development-Standards.md",
+      "half": "declared-path",
+      "string": "src/components/core/Input-Text-Search/__tests__/InputTextSearch.test.ts",
+      "occurrence": 0,
+      "line": 1583,
+      "home": ".kiro/issues/2026-10-26-tds-workflow-examples-declare-files-that-do-not-exist.md"
+    },
+    {
+      "doc": "governance/Test-Development-Standards.md",
+      "half": "declared-path",
+      "string": "src/components/core/Input-Text-Search/__tests__/InputTextSearch.integration.test.ts",
+      "occurrence": 0,
+      "line": 1620,
+      "home": ".kiro/issues/2026-10-26-tds-workflow-examples-declare-files-that-do-not-exist.md"
+    },
+    {
+      "doc": "governance/Test-Development-Standards.md",
+      "half": "declared-path",
+      "string": "src/components/core/Input-Text-Search/__tests__/InputTextSearch.property.test.ts",
+      "occurrence": 0,
+      "line": 1659,
+      "home": ".kiro/issues/2026-10-26-tds-workflow-examples-declare-files-that-do-not-exist.md"
+    },
+    {
+      "doc": "governance/Test-Development-Standards.md",
+      "half": "declared-path",
+      "string": "src/__tests__/stemma-system/input-text-email-contracts.test.ts",
+      "occurrence": 0,
+      "line": 1902,
+      "home": ".kiro/issues/2026-10-26-tds-workflow-examples-declare-files-that-do-not-exist.md"
+    },
+    {
+      "doc": "governance/Token-Family-Blend.md",
+      "half": "import",
+      "string": "@3fn/core/ThemeAwareBlendUtilities",
+      "occurrence": 0,
+      "line": 89,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Blur.md",
+      "half": "token-name",
+      "string": "shadowBlurDepth200",
+      "occurrence": 0,
+      "line": 111,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Blur.md",
+      "half": "token-name",
+      "string": "shadowBlurDepth300",
+      "occurrence": 0,
+      "line": 111,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Blur.md",
+      "half": "token-name",
+      "string": "glowBlur100",
+      "occurrence": 0,
+      "line": 112,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Blur.md",
+      "half": "token-name",
+      "string": "glowBlur200",
+      "occurrence": 0,
+      "line": 112,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Blur.md",
+      "half": "token-name",
+      "string": "glowBlur300",
+      "occurrence": 0,
+      "line": 112,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Blur.md",
+      "half": "token-name",
+      "string": "glowBlur400",
+      "occurrence": 0,
+      "line": 112,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Blur.md",
+      "half": "token-name",
+      "string": "glowBlur500",
+      "occurrence": 0,
+      "line": 112,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Layering.md",
+      "half": "import",
+      "string": "@3fn/core",
+      "occurrence": 0,
+      "line": 78,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Layering.md",
+      "half": "token-name",
+      "string": "shadowBlurDepth200",
+      "occurrence": 0,
+      "line": 273,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Layering.md",
+      "half": "token-name",
+      "string": "color.shadow.default",
+      "occurrence": 0,
+      "line": 275,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Shadow.md",
+      "half": "token-name",
+      "string": "color.shadow",
+      "occurrence": 0,
+      "line": 124,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Spacing.md",
+      "half": "token-name",
+      "string": "space900",
+      "occurrence": 0,
+      "line": 199,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Spacing.md",
+      "half": "token-name",
+      "string": "space1000",
+      "occurrence": 0,
+      "line": 199,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Family-Spacing.md",
+      "half": "token-name",
+      "string": "space350",
+      "occurrence": 0,
+      "line": 488,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Governance.md",
+      "half": "token-name",
+      "string": "space.inset.125",
+      "occurrence": 0,
+      "line": 388,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Governance.md",
+      "half": "token-name",
+      "string": "space175",
+      "occurrence": 0,
+      "line": 443,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Governance.md",
+      "half": "token-name",
+      "string": "space175",
+      "occurrence": 1,
+      "line": 446,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Resolution-Patterns.md",
+      "half": "token-name",
+      "string": "color.primary",
+      "occurrence": 0,
+      "line": 100,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Resolution-Patterns.md",
+      "half": "token-name",
+      "string": "color.secondary",
+      "occurrence": 0,
+      "line": 100,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Resolution-Patterns.md",
+      "half": "token-name",
+      "string": "color.primary",
+      "occurrence": 1,
+      "line": 133,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Resolution-Patterns.md",
+      "half": "token-name",
+      "string": "color.secondary",
+      "occurrence": 1,
+      "line": 134,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Resolution-Patterns.md",
+      "half": "token-name",
+      "string": "color.success",
+      "occurrence": 0,
+      "line": 135,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Resolution-Patterns.md",
+      "half": "token-name",
+      "string": "color.error",
+      "occurrence": 0,
+      "line": 136,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Resolution-Patterns.md",
+      "half": "token-name",
+      "string": "shadow.afternoon",
+      "occurrence": 0,
+      "line": 142,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Resolution-Patterns.md",
+      "half": "token-name",
+      "string": "color.primary",
+      "occurrence": 2,
+      "line": 179,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Resolution-Patterns.md",
+      "half": "token-name",
+      "string": "color.secondary",
+      "occurrence": 2,
+      "line": 180,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Resolution-Patterns.md",
+      "half": "declared-path",
+      "string": "scripts/generate-token-resolvers.ts",
+      "occurrence": 0,
+      "line": 204,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Resolution-Patterns.md",
+      "half": "token-name",
+      "string": "color.primary",
+      "occurrence": 3,
+      "line": 211,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Resolution-Patterns.md",
+      "half": "token-name",
+      "string": "color.secondary",
+      "occurrence": 3,
+      "line": 212,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Resolution-Patterns.md",
+      "half": "declared-path",
+      "string": "scripts/validate-token-references.ts",
+      "occurrence": 0,
+      "line": 247,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Semantic-Structure.md",
+      "half": "token-name",
+      "string": "color.primary",
+      "occurrence": 0,
+      "line": 85,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Semantic-Structure.md",
+      "half": "token-name",
+      "string": "color.error",
+      "occurrence": 0,
+      "line": 85,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Semantic-Structure.md",
+      "half": "token-name",
+      "string": "spacing.grouped.normal",
+      "occurrence": 0,
+      "line": 86,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Semantic-Structure.md",
+      "half": "token-name",
+      "string": "color.primary",
+      "occurrence": 1,
+      "line": 150,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Semantic-Structure.md",
+      "half": "token-name",
+      "string": "color.error",
+      "occurrence": 1,
+      "line": 150,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Semantic-Structure.md",
+      "half": "token-name",
+      "string": "spacing.grouped.normal",
+      "occurrence": 1,
+      "line": 152,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Semantic-Structure.md",
+      "half": "token-name",
+      "string": "color.primary",
+      "occurrence": 2,
+      "line": 171,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Semantic-Structure.md",
+      "half": "token-name",
+      "string": "color.error",
+      "occurrence": 2,
+      "line": 171,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Semantic-Structure.md",
+      "half": "token-name",
+      "string": "color.primary",
+      "occurrence": 3,
+      "line": 232,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Semantic-Structure.md",
+      "half": "token-name",
+      "string": "spacing.grouped.normal",
+      "occurrence": 2,
+      "line": 233,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Semantic-Structure.md",
+      "half": "token-name",
+      "string": "color.error",
+      "occurrence": 3,
+      "line": 625,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Token-Semantic-Structure.md",
+      "half": "token-name",
+      "string": "spacing.related.normal",
+      "occurrence": 0,
+      "line": 637,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Transformer-Development-Guide.md",
+      "half": "token-name",
+      "string": "color.primary",
+      "occurrence": 0,
+      "line": 318,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Transformer-Development-Guide.md",
+      "half": "token-name",
+      "string": "shadow.elevation200",
+      "occurrence": 0,
+      "line": 324,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    },
+    {
+      "doc": "governance/Transformer-Development-Guide.md",
+      "half": "token-name",
+      "string": "typography.heading200",
+      "occurrence": 0,
+      "line": 326,
+      "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
+    }
+  ]
+}
