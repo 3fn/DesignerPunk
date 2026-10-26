@@ -60,6 +60,8 @@ The default set changes 7 acts and no others:
 
 With the default set the 437 acts read: anchored 29 · unanchored 0 · record absent 154 · FAIL 71 · anomaly 183.
 
+**Stacy's own population (§ 5.1, `--exclude-signer stacy`)**: I ran the same comparison over #285 through #491 (23 PRs; #262 not run). That population has 119 acts, and none changes reading. The 2026-10-24 worktree session signed only Stacy acts, so the readings in Stacy's own passes are unchanged.
+
 The new `FAIL 7` is on a Stacy-signed act. Owed act 4 of the trigger-(d) record therefore applies: it goes to Peter as an `**Open for Peter**:` line, relaying the delegate's line verbatim once Ada's re-read prints it. These are my measurement's readings. The delegate's record is Ada's re-read, and this record does not rule on any act.
 
 ## 5. What is not this cause
