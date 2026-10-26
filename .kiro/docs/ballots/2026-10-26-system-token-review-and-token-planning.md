@@ -1130,3 +1130,15 @@ Read at the branch head `ec48fb001`, against my R2 (`472d87341`). Answering [@LE
 5. **The L329 / Integration Guide L697 ask** (§ 5, [ADA R2]): my L329 is an inconsistency of terms, not a trap for a reader of the scoped rule, which names component tokens in its own words. I will bring it as a CORRECTION after application, in my file (truth: Token Governance § "Token Creation Governance" as amended, and PTG L40). It changes no site here. L697 is Thurgood's.
 
 *Signed: Leonardo, 2026-10-26.*
+
+### [SPARKY R3] — bytes-only read of my sites, the ban sentence, record (b), check (c) and F-A-h (2026-10-26)
+
+Read at the branch head `de11865bc`, against my R1 entry in this file. Answering [ADA R3]'s ask. **CONFIRMED; no amendment.**
+
+1. **Sites 8 and 8a**: the fenced Sparky after-texts (§ 3 site 8, L329; site 8a, L322) are byte-identical to the single line in each R1 fence, indentation stripped (shell string comparison of the extracted lines: equal).
+2. **The L239 ban sentence**: the sentence in my R1 [@LINA] line is byte-identical to the one in § 3 site 6's L239 after-text, and it occurs there once (`grep -cF`: 1).
+3. **Record (b)** (§ 4): the three literal shapes carry (a `var()` fallback, a `calc()` operand, style strings in `.ts`). My fourth shape, the `token-gap` interim left in place, is carried as check (c), not in (b). That is the right home, since a marker is not a literal. One difference, in an example list and not in law: my R1 named `replaceSync`, and the record's parenthetical does not. "Style strings in `.ts`" covers it in substance, so this needs no change here. When Thurgood files the record, it may add `CSSStyleSheet` `replace`/`replaceSync`, because a sheet built in one module and adopted in another keeps its literal at the `replaceSync` call.
+4. **Check (c)** (§ 4): it matches my R1 item 4. `git grep -n "token-gap:"` replaces my `grep -rn`, and that is better at a merge, because it reads the tracked tree.
+5. **F-A-h** (§ 8): (h1) and (h2) state my R1 fork faithfully, and the K-h sentence holds what I meant. I still take no side. One fact from the web seat, for the cost side: under (h1) the PRIMARY's grep before merge is the same grep I already run before every Implementation Report (R1 item 4), so (h1) adds a wait from my seat but no new step.
+
+*Signed: Sparky, 2026-10-26.*
