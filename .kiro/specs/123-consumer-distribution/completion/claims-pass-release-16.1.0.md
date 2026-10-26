@@ -32,6 +32,10 @@
 
 **My verdict line: the tag should wait for Peter's answer on these two forks, not for a fix.** Nothing else in phase 1 holds it. The forks are in RL-19 and RL-22.
 
+**RULED (2026-10-26)**: Peter, chat, relayed by the orchestrator, received before 2026-10-26T12:42:58Z (the orchestrator's clock; after its message presenting both forks), verbatim: "Re: 1, (A) / Re: 2, (i)". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are committed in this record.*
+- **Fork 1 → (a), fix before the tag.** A CHANGELOG fix PR (Thurgood, under a fresh grant) carries RL-19, RL-20 and RL-21. Its squash is the new S, 5.1 re-runs there, and this record takes a dated phase-1 addendum on the new S. The tag waits for that.
+- **Fork 2 → (i), RL-22 is read floor-class, and waived for 16.1.0.** The waiver is the reading of his "(i)" against the option text the orchestrator put to him, which was "(i) floor-class, waived for 16.1.0 in his words with the fix riding #473's follow-on". This record's own (i) read "the tag waits for the follow-on PR …, or for his own-words waiver". His words do not say "waive"; the waiver rests on the option text he answered. The charter fix rides #473's follow-on. RL-22 does not hold the tag.
+
 ---
 
 ## Scope
@@ -335,6 +339,7 @@ Each finding takes two routes, and they are additive: an explicit message to the
   - **(b) Tag S.** Correct the notes before step 7 (they are not packed; the files grant over `docs/releases/release-16.1.0.md` expired at #494's merge, so this needs a grant), and carry the three CHANGELOG corrections as errata in the next release's entry. Needs Peter's own-words exception, as rulings item 13 was for R1-7 at 16.0.0.
   - **(c) Ship as is**, with the corrections carried in phase 2 and the next release. Also needs an exception in his words.
   - Text, if (a): the replacement wording is the author's (Thurgood) and Leonardo's (the trio's owner) to write, not mine. RS-33 is why.
+  - **RULED (2026-10-26): (a).** Peter, chat, relayed by the orchestrator, received before 2026-10-26T12:42:58Z (the orchestrator's clock; after its message presenting both forks): "Re: 1, (A)". The questions above stay as asked. The fix PR is Thurgood's; the addendum on the new S is mine.
 - **Route**: **Thurgood** (the CHANGELOG's release author); **Leonardo** (the trio evidence); **Peter** (the fork).
 
 ### RL-20: Low (tag-relevant) — "no … shipped file … was removed"; two shipped files were removed, and the same entry says so
@@ -365,6 +370,10 @@ Each finding takes two routes, and they are additive: an explicit message to the
   - (i) **floor-class**: the tag waits for the follow-on PR (his kind answer first), or for his own-words waiver;
   - (ii) **not floor-class**: carried in the law-text record, which lapses at S and goes to its second lapse at the next release.
   - Notes L57 ("none of them is a disclosure that is missing from a served surface") is false under (i).
+  - **RULED (2026-10-26): (i), floor-class, waived for 16.1.0.** Peter, chat, relayed by the orchestrator, received before 2026-10-26T12:42:58Z (the orchestrator's clock; after its message presenting both forks): "Re: 2, (i)". The option text he answered was the orchestrator's ("(i) floor-class, waived for 16.1.0 in his words with the fix riding #473's follow-on"), which differs from the (i) written above. The waiver is the reading of his "(i)" against it, and his words do not say "waive". The questions above stay as asked. **What follows**:
+    - the charter fix rides #473's follow-on PR (its EXECUTION-or-LAW kind is still his unanswered question there);
+    - `2026-10-25-owed-set-law-text-after-closing-commit-anchor.md` carries the row;
+    - notes L57 is false under this ruling. The notes are not packed, so its correction can ride the CHANGELOG fix PR (Thurgood's call).
 - **Route**: **Peter** (the reading, and the kind question); **Thurgood** (the record's owner, RELEASE-FLOW § 5a and his charter's lines).
 
 ### RL-23: Low (record form) — three merges outran the questions their bodies put to Peter
@@ -567,6 +576,8 @@ My readings by class. These are readings, not triage of anyone's act. The instru
 ## Open items carried (to phase 2, or to the next release unless resolved first)
 
 **Before 5.2**: Peter's answers to RL-19's fork (RL-19/20/21) and to RL-22's reading. If (a) is taken in either, a new S, 5.1 again, and a dated phase-1 addendum on the new S.
+
+**RULED (2026-10-26)**: "Re: 1, (A) / Re: 2, (i)" (Peter, chat, relayed by the orchestrator, received before 2026-10-26T12:42:58Z (the orchestrator's clock; after its message presenting both forks)). Owed before 5.2: the CHANGELOG fix PR's merge (the new S), 5.1 at the new S, and my dated phase-1 addendum on it. RL-22 is waived for 16.1.0 and does not hold the tag.
 
 **To phase 2**:
 1. The tag `v16.1.0` on S (or on a new S).
