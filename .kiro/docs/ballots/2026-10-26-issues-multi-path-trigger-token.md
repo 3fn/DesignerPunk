@@ -4,7 +4,7 @@
 **Drafted by**: Thurgood (Civitas steward; owner of `.kiro/issues/README.md` and of `scripts/issues-owned.sh`), at Peter's direction. Peter, chat, relayed by the orchestrator, received before 2026-10-26T18:15:14Z (the orchestrator's clock), verbatim: *"Go with (a)"*. It answers the first-lapse escalation of `.kiro/issues/2026-10-25-arming-read-class-option-fork.md` (owner Stacy; `## Lapse (2026-10-26)`, firing commit `38f4ece47`, appended on branch `chore/stacy-lapse-headings` at `ad7fe9845`, PR #512): **fix-now**, in shape **(a)**, "A standing home plus a multi-path token". The record states (a)'s cost: "a rule 1 edit (LAW) and a tooling change by its owner (Thurgood)". This ballot is that rule-1 edit; the tooling change is its execution.
 **Status**: **DRAFT**, not ratified. No edit site below is applied. A merge with this line still reading DRAFT records the measure and ratifies nothing.
 **Required reviewer**: **Stacy**. She owns the record and the limb (her charter's ARMING row, instrument-path limb), she reads what the detector prints, and she is the census reader.
-**Consulted**: Stacy — <pending; she owns the record and the limb; I send her the draft>
+**Consulted**: Stacy — grammar confirmed (the 19 globs equal her row's list, brace groups expanded, 14 + 2 + 3); site 4 confirmed with two amendments, both folded (the record's kind re-classed to `owed-act`; `read through <sha>` names the base the read ran at, re-fetched and extended to `origin/main` just before each read's commit); the rule-11 standing-records question carried to a root record on her two conditions, not in this ballot (consult 2026-10-26, relayed by the orchestrator; § 8)
 **Class**: LAW. Rule 1's grammar is what every owner may write on a Trigger line and what the session-start read evaluates (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds").
 **Amends**:
 - `.kiro/issues/README.md` rule 1, one sentence (§ 3 site 1). **LAW**.
@@ -77,8 +77,8 @@ The record becomes the limb's standing home. It lands after PR #512 (her lapse h
 
   The token is the limb's list in her row, brace groups expanded: the § 4 B checkers and sweeps (14), `scripts/check-completion-criteria-parity.ts` and `scripts/completion-claims/**`, and the three steward-verb tool files. `verify-gate-registration.sh` is in § 4 B and is named once. Each glob matches at least one tracked file at `7554fd4e3`.
 - **Status**: standing (one read per instrument-path merge, appended below; the record does not close while the limb exists), as the registry record's Status reads.
-- **Class**: stays P2 obligation (guard); the kind, `charter` today, is hers to re-class (the registry record is `owed-act`).
-- **How a read re-arms the record** (a line, hers): the commit that appends a read also rewrites the Trigger line's `read through` prose. That moves `<tc>`, so the script is quiet until the next instrument-path merge. The read covers every commit in `git log --first-parent <the last read-through sha>..<base> -- <the 19 globs>`, not only the commit the script printed.
+- **Class**: stays P2 obligation (guard); the kind is re-classed `charter` → `owed-act` (Stacy's amendment 1, consult 2026-10-26: a standing home where each merge owes a read, the registry record's shape).
+- **How a read re-arms the record** (a line, hers): the commit that appends a read also rewrites the Trigger line's `read through` prose. That moves `<tc>`, so the script is quiet until the next instrument-path merge. `read through <sha>` names the base the read ran at (Stacy's amendment 2). The read covers every commit in `git log --first-parent <the last read-through sha>..<base> -- <the 19 globs>`, not only the commit the script printed. *Her method, a method note and not law text (amendment 2): just before committing each read she re-fetches and extends the range to `origin/main`, so the base is as late as the read can make it.*
 - **The backfill window**: one read of the commits between `0218632d1` (the end of her lapse heading's window) and the application merge, because those precede the new `<tc>` and the script will never print them.
 
 ### Site 5 — `governance/classification-map.md` row `issues-obligation-lapse` (EXECUTION, this ballot § 3 site 5)
@@ -120,8 +120,8 @@ Appended:
 
 **What survives**:
 1. **Grammar was added while Spec 131 shrinks it.** Without it, the limb rests on Stacy's memory, which missed seven merges. The record's own counter-argument, unchanged.
-2. **Standing records are a shape rule 11 does not name.** By rule 11's letter, a record lapses at a firing that no ancestor of the firing commit closed or re-ruled. A standing record's read always comes after the firing merge (Q5: she reads after acceptance), so each firing is, by the letter, a lapse, and a P2 `(guard)` escalates at its first. The registry record (`2026-10-20-in-lane-registry-arming-reads.md`) has had this shape since 2026-10-20 and has not fired since. This ballot adds a second instance and does not fix the rule. Its failure is the safe direction (an escalation Peter can rule on, not a hidden miss). A rule-11 sentence for standing records ("a firing owes a read, not a close; it lapses when a release's S arrives with an unread firing") is a later ballot, outside this cap. **It is recorded here as an open question, not a fork**; I would draft it if Peter wants it.
-3. **A window merge waits.** A merge between a read's base and its merge is read at the next read, so it waits for the next fire or for RELEASE's backstop over the release delta, which already covers it.
+2. **Standing records are a shape rule 11 does not name.** By rule 11's letter, a record lapses at a firing that no ancestor of the firing commit closed or re-ruled. A standing record's read always comes after the firing merge (Q5: she reads after acceptance), so each firing is, by the letter, a lapse, and a P2 `(guard)` escalates at its first. The registry record (`2026-10-20-in-lane-registry-arming-reads.md`) has had this shape since 2026-10-20 and has not fired since. This ballot adds a second instance and does not fix the rule. Its failure is the safe direction (an escalation Peter can rule on, not a hidden miss). A rule-11 sentence for standing records ("a firing owes a read, not a close; it lapses when a release's S arrives with an unread firing") is a later ballot, outside this cap. **Carried, not in this ballot** (Stacy's consult, 2026-10-26): filed as `.kiro/issues/2026-10-26-rule-11-standing-records-lapse-reading.md`, owner Thurgood, Trigger `release:next:phase-1`, so it cannot sit unowned; and if either standing record fires before then, the escalation it causes cites that record (her two conditions).
+3. **A window merge waits.** A merge between a read's base and its merge is read at the next read, so it waits for the next fire or for RELEASE's backstop over the release delta, which already covers it. Stacy's method (re-fetch and extend to `origin/main` just before each read's commit) narrows the window to minutes; it is a method, not a rule, so the residual stands.
 4. **The limb's population is still the 19 source paths.** A PR that weakens only a checker's test, not the checker, does not fire it; the row's deletion read covers those tests only when the population fires. That is the row as ratified; changing it is Stacy's row and Peter's LAW, outside this cap.
 
 ## 6. Forks for Peter
@@ -130,15 +130,24 @@ None. Peter picked (a) on 2026-10-26. The grammar of § 2 is the drafter's, and 
 
 ## 7. Standards notes (no edit in this ballot)
 
-1. **The register debt is unfiled.** Ballot `2026-10-25-rule-11-post-walk-filings-and-spec-answers` § 7 item 3 states that adding `scripts/issues-owned.sh` to the `issues-obligation-lapse` row's `checks` is "owed in a later round", and no root record carries it. Under rule 10 that is a finding on that ballot (mine). This ballot is outside census reach for the same reason. It is filed in the application PR, owner Thurgood, unless Peter strikes it.
+1. **The register debt is unfiled.** Ballot `2026-10-25-rule-11-post-walk-filings-and-spec-answers` § 7 item 3 states that adding `scripts/issues-owned.sh` to the `issues-obligation-lapse` row's `checks` is "owed in a later round", and no root record carries it. Under rule 10 that is a finding on that ballot (mine). This ballot is outside census reach for the same reason. Filed in this PR as `.kiro/issues/2026-10-26-issues-owned-register-row-checks.md`, owner Thurgood (rule 10), so no rule-10 finding on #492 stays unfiled.
 
 ## 8. Review round record
 
-*(Empty: Stacy's R1 is owed.)*
+#### [STACY consult] (2026-10-26; relayed by the orchestrator, in substance; her own entry, if she writes one, supersedes this summary)
+- Grammar: confirmed. The 19 globs equal her row's brace-expanded list (14 + 2 + 3). → § 2, § 3 site 4
+- Site 4: confirmed, with two amendments. (1) Re-class the record's kind to `owed-act`: a standing home where each merge owes a read, the registry record's shape. (2) `read through <sha>` names the base the read ran at; her method is to re-fetch and extend the range to `origin/main` just before committing each read, which narrows residual 3 to minutes (a method note, not law text). → § 3 site 4
+- Site 1b (a rule-11 sentence for standing records): carry, not in this ballot. Her conditions: file it as a root record, owner Thurgood, Trigger `release:next:phase-1`, so it cannot sit unowned; and if either standing record fires before then, the escalation it causes cites that record. → § 5 residual 2
+
+#### [THURGOOD R2] (2026-10-26; incorporation)
+- Amendments (1) and (2) folded into § 3 site 4, attributed; her method recorded as a method note, and residual 3 now says what it narrows and why it stands.
+- Site 1b carried: `.kiro/issues/2026-10-26-rule-11-standing-records-lapse-reading.md` filed in this PR on her two conditions; § 5 residual 2 points to it.
+- § 7 item 1 filed in this PR as its own record, `.kiro/issues/2026-10-26-issues-owned-register-row-checks.md`: a different event and class from the rule-11 question, so a separate record closes on its own.
 
 ## 9. Application ledger
 
 - **2026-10-26 (Thurgood)**: DRAFT on branch `chore/ballot-issues-multi-path-token`, cut from `0218632d1`. Appendix A written and tested in the worktree, uncommitted (record-first: no edit site before the Status commit).
+- **2026-10-26 (Thurgood)**: Stacy's consult folded (§ 8); the two root records of § 5 residual 2 and § 7 item 1 filed on this branch. Appendix A unchanged.
 
 ---
 
