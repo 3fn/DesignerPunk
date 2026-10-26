@@ -168,6 +168,24 @@ One line per floor-class row. Each line gives the walk-record line (record path 
 
 **A floor-class reading this pass offers, not in the walk**: RL-22. It is disputed, and Peter decides.
 
+**Post-walk P0 filings, put to Peter through this phase-1 record (added 2026-10-26)**
+
+Two P0 records were filed after the walk merged, on the upkeep branch. Neither is on `main` or on any pushed branch at this writing, so **this pass has not read either record**. Their content below is as the orchestrator relayed it. A P0 filed after the walk is a phase-1 finding, not a walk row (the walk record's § "How to read this record"), and the falsity floor is unchanged (RELEASE-FLOW 3a). The asking and the answer both happened in chat, so these are RULED lines, not `**Open for Peter**:` lines. The options put to Peter were: fix before the tag / waive in his words, with Spec 129 as the vehicle / rule it not P0.
+
+**RULED (Peter, 2026-10-26, chat, relayed by the orchestrator, received before 13:29:02Z, the orchestrator's clock)**, verbatim: "Okay, waive the Android type issue and capture it in 129; resolve the radius names issue now, please". *Unverified here: chat only. Peter may confirm the relay on the PR; his words are committed in this record.*
+
+- **`2026-10-26-android-guidelines-spacing-float-dp-claim.md`** (Data; P0 as filed).
+  - **The claim**: `governance/platform-implementation-guidelines.md` L744 says spacing tokens are `Float` with an implicit `Dp`. `AndroidFormatGenerator.ts` L151–173 contradicts that, and the examples at L750 and L753–767 do not compile.
+  - **WAIVED for 16.1.0** by his words ("waive the Android type issue and capture it in 129"). The vehicle is Spec 129: the Android section is regenerated from the final type table. Ada adds the 129 inbound line, and Lina re-rules the record.
+  - **It does not hold the tag.**
+  - My re-check at S: not run. The record is not readable from this worktree, and Android is `not re-verified — toolchain unavailable` in any case.
+- **`2026-10-26-guidelines-platform-token-names-radius-input-motion-floatlabel.md`** (Lina; P0 as filed).
+  - **The radius pair** (L145/L156 `DesignTokens.radius.input` → `radius150`): **FIXED BEFORE THE TAG**, by his words ("resolve the radius names issue now"). The vehicle is Lina's CORRECTION PR (number to follow). Its squash, or #499's, is the new S.
+  - **My re-check of the radius pair belongs to the phase-1 addendum on the final S.** Until then the row is **owed**, not fixed, in this record.
+  - **The motion pair** (L310/L321): it waits on Ada's name answer, and is then fixed by the same class of fix, or by Spec 129. **It does not hold the tag** under his words: they name the radius pair only.
+- **The class**: both records are instances of the class that ballot #495 (RATIFIED, `f55bf3e04`: "governance-examples guard (token names resolve; declared files exist and have the right shape; package imports type-check)") guards. Neither was caught by it, because the guard is not yet built.
+- **Distinct from F-3**: Peter's F-3 ruling (that pending-list true positives are not walk rows while the count falls) is a separate act. These two were put to him as **P0 filings**, and answered as such.
+
 **I do not press Lina's invited reading** on `2026-10-25-application-mcp-stale-package-token-version-warning.md` (that "healthy" over a stale index is row 5's sibling). Every merged entry carries its own `source.version`, so the served data describes itself, and "healthy" there is a weak guard, not a false statement. P2 `(guard)` stands on my read (O-25).
 
 ### What lapses at S, recounted from commits that are ancestors of S
@@ -578,6 +596,8 @@ My readings by class. These are readings, not triage of anyone's act. The instru
 **Before 5.2**: Peter's answers to RL-19's fork (RL-19/20/21) and to RL-22's reading. If (a) is taken in either, a new S, 5.1 again, and a dated phase-1 addendum on the new S.
 
 **RULED (2026-10-26)**: "Re: 1, (A) / Re: 2, (i)" (Peter, chat, relayed by the orchestrator, received before 2026-10-26T12:42:58Z (the orchestrator's clock; after its message presenting both forks)). Owed before 5.2: the CHANGELOG fix PR's merge (the new S), 5.1 at the new S, and my dated phase-1 addendum on it. RL-22 is waived for 16.1.0 and does not hold the tag.
+
+**Also owed before 5.2 (added 2026-10-26)**: Lina's radius-pair CORRECTION PR (the post-walk P0 above, ruled "resolve the radius names issue now"), and my re-check of it in the addendum on the final S. The Android record is waived for 16.1.0 (Spec 129). The motion pair does not hold the tag.
 
 **To phase 2**:
 1. The tag `v16.1.0` on S (or on a new S).
