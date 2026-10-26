@@ -413,7 +413,7 @@ token_consistency:
 ```swift
 // iOS
 .overlay(
-  RoundedRectangle(cornerRadius: DesignTokens.radius.input)
+  RoundedRectangle(cornerRadius: DesignTokens.radius150)
     .stroke(DesignTokens.accessibility.focus.color, lineWidth: DesignTokens.accessibility.focus.width)
     .padding(-DesignTokens.accessibility.focus.offset)
 )
@@ -424,7 +424,7 @@ token_consistency:
 Modifier.border(
   width = DesignTokens.accessibility.focus.width,
   color = DesignTokens.accessibility.focus.color,
-  shape = RoundedCornerShape(DesignTokens.radius.input)
+  shape = RoundedCornerShape(DesignTokens.radius_150)
 )
 ```
 
