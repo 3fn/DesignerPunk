@@ -1,28 +1,32 @@
-# Ballot Measure: a guard on the examples the served governance docs teach (token names that are keys; files and shapes that exist)
+# Ballot Measure: a guard on the examples the served governance docs teach (token names that resolve; declared files that exist and have the right shape; package imports that type-check)
 
-**Date**: 2026-10-26
-**Drafted by**: Thurgood (Civitas steward; the instrument would sit in my lane scope). At Peter's direction: Peter, chat, 2026-10-26, relayed by the orchestrator: *"Re: 3, let's go with the class move"* (00:28:49Z, clock), then *"Proceed as the team recommends"* (00:38:29Z, clock). The class move answers the instances below. Ada's and Lina's records each found by hand what a mechanical read of the served examples would have found.
-**Status**: **DRAFT**, not ratified. No edit site below is applied. A merge with this line still reading DRAFT records the measure, ratifies nothing, and answers no fork in § 6.
-**Required reviewers**: **Ada** (R1). The token-name half's predicate is hers: what counts as a token reference in a served example, and what counts as a key. **Lina** (R1). The file-shape half's rule is hers: which code blocks must compile, against which types, and what a declared file path must resolve to. **Stacy** (R1, census reader). This ballot introduces an instrument, so it carries a census line.
-**Class**: LAW. It adds a requirement on every served governance doc (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds"). Today a doc may show a token name that is not a key, or a file the repo does not have; after application, a new instance fails a required check.
-**Amends**:
-- New instrument: `scripts/governance-examples/` (the check, its test, its pending list).
+**Date**: 2026-10-26 (R2: 2026-10-26)
+**Drafted by**: Thurgood (Civitas steward; the instrument sits in my lane scope). At Peter's direction: Peter, chat, 2026-10-26, relayed by the orchestrator: *"Re: 3, let's go with the class move"* (00:28:49Z, clock), then *"Proceed as the team recommends"* (00:38:29Z, clock). The class move answers the instances in § 1.
+**Status**: **DRAFT, R2; ratified in substance, one scope item open.** Peter, chat, relayed by the orchestrator, verbatim:
+- *"Ratified"*, received before 2026-10-26T01:51:31Z (clock), on the measure as presented: F-1 (a) READMEs out, F-2 (c) the import-surface check, and Lina's file-shape amendments.
+- *"Proceeded as recommended"*, received before 01:54:41Z (clock), on three recommendations: Ada's resolution forms (P-1, yes), pending-list growth detectable with a baseline header (F-4, detect), and true-positive entries not being walk rows while the count falls (F-3).
+
+**One item is not covered by either answer: P-2** (§ 6), the exclusion of `governance/classification-map.md` from the scope. It is a scope change from the measure as presented, so the Status commit waits on it. No edit site below is applied. A merge with this line still reading DRAFT records the measure and ratifies nothing.
+**Required reviewers**: **Ada** (R1 done; the token-name predicate is her text). **Lina** (R1 done; the file-shape rule is her text). **Stacy** (R1 done; census reader, and the future reader of this instrument in the claims passes).
+**Class**: LAW. It adds a requirement on every served governance doc (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds"): after application, a new instance fails a required check.
+
+**Amends** (R2, Stacy S-3):
+- **The instrument** (new): `scripts/governance-examples/`, containing the check, its runnable report command, its test with fixtures, and `pending.json`.
 - `.github/in-lane-guards.json`: one added entry (my standing lane scope, P1b additive).
-- `governance/classification-map.md`: one new row, `governance-examples`.
-- No edit to any governance doc's text: the pending list carries today's hits (§ 2.4).
+- `governance/classification-map.md`: one new row, `governance-examples`, with a `census:` field (§ 2.6). `**Edit kind**: … — EXECUTION (this ballot § 4 step 3)`.
+- **One marker edit site**: `governance/DesignerPunk-Integration-Guide.md`, the `# product/tokens/layout.yaml` block (L699 at `a19481725`), gains `<!-- example: consumer -->`. That path is correct, but it is in the consumer's repo (Lina L-5). `**Edit kind**: … — EXECUTION (this ballot § 2.3)`.
+- **Not edit sites of this ballot**: every other hit at adoption goes on the pending list. Ada's 20 `generic` markers and 36 corrections land in her sweep PR. Lina's CDG hits land in her rewrite. Each converts its own entries (§ 2.4).
 
-**Census**:
-- `**Census**: exempt — (1) the instrument does not exist at a95d6bf3d; ran: the measurements in § 1 (a token-index key set of 443; 258 `ts`/`typescript` fences in `governance/*.md`; 11 docs naming `@3fn/core`); count: heuristic, no instrument`
-- The new register row is a file loaded by two instruments (condition 1):
-  - `**Census**: not in scope — check-section-citations (scripts/check-section-citations.ts, citing corpus governance/) — the new row carries no get_section / get_document_* citation`
-  - `**Census**: not in scope — 122-diff-guard (tools/agent-generator/diff-guard.ts; governance/ is an input-closure root) — an ordinary closure input; the lock is refreshed at application`
-- `.github/in-lane-guards.json` is read by the in-lane guard registry check:
-  - `**Census**: not in scope — the in-lane registry check — the edit adds one entry, and the additivity predicate holds by construction (P1b)`
-  - The entry's own count line (`N registered; N selected`) is read at application.
+**Census** (R2, Stacy S-1, S-2, S-4):
+- `**Census**: exempt — (1) the instrument does not exist at a19481725; ran: Ada's predicate v1 (§ 2.1) over the 91 scoped docs, Lina's L-1/L-3 and import-surface rules (§ 2.2), at a95d6bf3d (no scoped input changed by a19481725: Stacy R1); count: heuristic, the pending list's starting size per half. Token-name: 56 failing of 1,958 candidates (36 true positives; 20 needing generic). Declared paths: 10 failing of 16, of which CDG L576 and L956 also fail the shape rule. Import surface: 3 failing of 7 package-importing blocks. Fences are paired as CommonMark defines them: 257 ts/typescript blocks (258 opening lines; the 258th is nested inside a markdown fence at Token-Family-Layering L358–371)`
+- `**Census**: not in scope — check-section-citations (scripts/check-section-citations.ts, citing corpus governance/) — the new row and the one marker hunk carry no get_section / get_document_* citation (checked at the build PR with a grep of the row)`
+- `**Census**: not in scope — 122-diff-guard (tools/agent-generator/diff-guard.ts; governance/ is an input-closure root) — an ordinary closure input; the lock is refreshed at the build PR`
+- `**Census**: not in scope — check-in-lane-guards (the in-lane registry step) — the added entry is an ordinary input that the check must select (the 2026-10-20 ballot's own form); the step's line N registered; N selected is read at the build PR`. Stacy notes that this check is named in no register row's `checks`, so whether it is a registered instrument is arguable. The line costs nothing, and it stays.
+- **From the build PR on**, the new row is registered with a `census:` field (§ 2.6). A later ballot on either predicate is then presumptively in scope (condition 3), and it runs that census.
 
-**Cap**: one instrument with two halves, one pending list, one registry entry, one register row. **Retroactivity**: none for doc authors. Every hit at adoption goes on the pending list (§ 2.4).
+**Cap**: one instrument with two halves and one import-surface check; one pending list with a baseline header; one registry entry; one register row; one marker hunk. **Retroactivity**: none for doc authors. Every other hit at adoption is pending (§ 2.4).
 
-> **Conflict of interest, stated first.** I would own the instrument, and I own several of the docs it reads (Civitas shared docs). A guard I own that reads text I wrote is exactly the configuration where its predicate could be drawn to miss my own docs. The predicates are Ada's and Lina's for that reason (§ 2), and Stacy reads the census.
+> **Conflict of interest, stated first.** I would own the instrument, and I own several of the docs it reads, including TDS L1556–L1902 among Lina's file-shape hits. A guard I own that reads text I wrote is exactly the configuration where its predicate could be drawn to miss my own docs. The predicates are Ada's and Lina's for that reason, and Stacy reads the census and audits the instrument.
 
 ---
 
@@ -32,99 +36,159 @@
 - **File shapes (Lina's record)**: `.kiro/issues/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md` (P2 `(record)`). `governance/Component-Development-Guide.md` § "Component Token Files" opens its example with `// ButtonCTA/tokens.ts`. `src/components/core/Button-CTA/` has no tokens file, and no component has the plain-object shape the example teaches. **Measured: every token name in that example is a key** (`space.inset.100`, `space.inset.050`, `space400`, `color.action.primary`, `color.text.default`, `typography.buttonMd`, `radius100`). So the token-name half alone does not catch this instance; the file-shape half has to (§ 2.2).
 - **Why a guard, not another sweep**: each instance was found by a person reading. The schema half of the class already has a guard (`src/generators/__tests__/schemaTokenRefs.test.ts`, Ada's: every schema `tokens:` value is an exact key). The served-doc half has none, so the next example written in a doc ships unread.
 
-## 2. The instrument (proposed)
+## 2. The instrument (proposed, R2)
 
-### 2.1 Token-name half (Ada's predicate class)
+### 2.1 Token-name half (Ada's predicate, version 1)
 
-- **Scope**: `governance/*.md` and the eight shipped steering docs named in `package.json` `files[]`. Fork **F-1** asks whether component READMEs join (Ada's record, item B).
-- **Candidates**: strings inside fenced code blocks and inline code spans that match a **token-reference predicate**. The predicate is **Ada's text, versioned like the audience-banner predicate** (`scripts/audience-banner/predicate.ts`, "PREDICATE VERSION 1"): it is the artifact, and the set it selects is only its output. The drafter does not write it.
-- **Shape of the predicate**: dot-notation names whose first segment is a token family, and the flat primitive forms (`space100`, `radius100`). Ada decides the family list, the forms, and what is excluded: CSS custom properties, platform identifiers and prop names.
-- **The key set**: the union of keys in the committed `token-index/{primitives,semantics,components}.yaml`. The match is exact and case-sensitive, by the same rule `schemaTokenRefs.test.ts` states ("No allowlist, no case-folding, no notation normalization"). The guard reads the committed index, so a doc that names a token before the index has it fails until the index is regenerated, as the schema guard does.
-- **Verdict**: a candidate that is not a key fails, unless it is opted out (§ 2.3) or pending (§ 2.4).
+The predicate and its under-inclusion limit are **Ada's text, byte-exact**, from [ADA R1] items 1 and 3. They are carried into the module header with a `PREDICATE_VERSION = 1` constant, as the audience-banner predicate is. In outline:
+- **Scope**: every `governance/*.md` except `governance/classification-map.md` (a ledger, whose rows quote names as they were found; Ada A-7; **P-2, open**), plus the eight `.kiro/steering/*.md` files that `files[]` names.
+- **Regions**: inline code spans; string literals inside program-language fences; whole lines of other fences. Fences are paired as CommonMark defines them.
+- **Name set**: read from the committed `token-index/` each run: KEYS and CHANNELS. FAMILIES and STEMS are derived from KEYS at run time, never hand-kept. The one hand-kept list is RETIRED_FAMILIES (`spacing`), and a test asserts it shares no member with FAMILIES (A-5).
+- **Resolution (P-1, Peter: yes)**: Ada's rules 0–6. Rule 0 fails a retired family. Rules 1–5 resolve a candidate as a glob, a key, a channel, a namespace or a DTCG path. Rule 6 counts it as a file name. Anything else fails. **This departs from the draft's "exact key only"**; Peter adopted it ("Proceeded as recommended"). There is still no case-folding, no normalization and no allowlist of names.
+- **Report line**: Ada's, in her item 1.
+- **Measured at S (heuristic)**: 1,958 candidates in 91 docs. 1,898 resolve (1,796 key, 10 channel, 84 namespace, 7 dtcg-path, 1 glob), 4 are file names, and 56 fail. Under exact-key-only, the 84 namespace, 10 channel and 7 dtcg-path resolutions would fail too. That would be about 157 failures, and almost all of the added ones would be correct names.
 
-### 2.2 File-shape half (Lina's file shapes)
+### 2.2 File-shape half (Lina's rule)
 
-- **Declared paths**: a fenced block whose first line is a comment naming a repo path (for example `// ButtonCTA/tokens.ts`, `// platforms/web/ButtonCTA.web.ts`) must name a file that exists under `src/components/core/` or the repo root, by the resolution rule Lina states. Otherwise it is opted out or pending. **This is the check that catches the CDG instance.**
-- **Compiled blocks**: a fenced `ts` or `typescript` block that imports from `@3fn/core` (or a subpath its `exports` map lists) is type-checked with `tsc --noEmit` against the package's built types (`dist/**/*.d.ts`, the files a consumer resolves).
-  - Blocks that import nothing from the package are counted as "not compiled". They are not checked.
-  - Fork **F-2** asks whether the compiled set widens.
-  - Lina decides the tag rule and the compiler options. The default is the consumer `tsconfig` that `init` writes, if one exists, and `strict` otherwise.
-- **Verdict**: a declared path that does not resolve, or a compiled block that does not type-check, fails, unless it is opted out or pending.
+Lina's text, byte-exact, from [LINA R1] items 1, 2 and 4 (L-1, L-2, L-3, the F-2 (c) options, L-5).
+- **Declared paths (L-3)**: a fenced block whose first line is a comment naming a path resolves if the path exists from the repo root, or is a suffix of exactly one tracked path (`git ls-files`). A suffix that matches no path, or several, fails. *Measured*: 16 declared-path blocks, 6 resolve, 10 fail.
+- **Declared-kind shape (L-1)**: when a declared path's basename is one the loader's `isTokenFileName` accepts, the block must contain an exported binding whose initializer is a `defineComponentTokens(...)` call. The check keys on the basename, so it runs whether or not the path resolves. It reads syntax only (L-2): `ts.createSourceFile`, with no program and no `dist/`.
+  - A **twin-agreement test** holds this syntax copy to the loader's `getTokenContract` harvest. The test runs over the seven real token files and one plain-map fixture, and asserts they agree on every file.
+  - This is the check that fails the CDG instance by its **shape**, not only by its name (CDG L576 and L956).
+- **Import surface (F-2 (c), as ratified)**: take every fenced block tagged `ts`, `typescript`, `tsx`, `js`, `javascript`, or not tagged. Extract only the import and `export … from` declarations whose specifier begins with `@3fn/core`, and type-check those lines alone against the built types, resolved through the `exports` map.
+  - Options: `moduleResolution: "bundler"`, `module: "esnext"`, `strict: true`, `skipLibCheck: true`, `noEmit: true`, `types: []`.
+  - **A specifier that the `exports` map does not list fails.** It is not a reason to skip the block.
+  - *Measured*: 7 blocks import from the package, and 3 fail. All three are real defects: CDG L1108, Token-Family-Blend L88, Token-Family-Layering L76.
+  - The extraction must not match prose, or trees that quote an import line (Stacy, F-2).
+- **Scope**: the same as § 2.1, with `governance/classification-map.md` excluded from this half too (Stacy S-5). The exclusion is stated once, in the instrument's text, so the report cannot read as covering all of `governance/`.
+- **The guard throws, and never passes empty**, when `dist/`, the `exports` map or `token-index/` cannot be read (Lina R-d, Ada R-4).
 
-### 2.3 Opt-out marker
+### 2.3 Markers (Lina L-5, Ada A-3)
 
-- **Form**: one HTML comment, `<!-- example: generic -->`, on the line directly before a fence, or at the end of a line that carries an inline code span. It marks a deliberately generic example (a placeholder `<component>.<property>`, a hypothetical name in a teaching contrast), which the guard then skips.
-- **Visible in the report**: the guard prints the opt-out count, so a doc that opts out of everything shows in the count, and Stacy's claims pass can read it.
-- **Not a pending entry**: an opt-out is permanent and authored. A pending entry is temporary and comes from adoption.
+- **The values are a closed set of two.**
+  - `<!-- example: generic -->` skips both halves and the import surface.
+  - `<!-- example: consumer -->` skips **only** declared-path resolution. The shape check, the import surface and the token-name half still run.
+  - Any other value fails, and a fixture covers that.
+- **Scope**:
+  - On the line before a fence, a marker covers that one fence only.
+  - Placed directly after an inline code span, it covers that one span only (Stacy C-f; per-span, so a real defect on the same line is still read).
+- **Edit kind**: a hunk that only adds or removes a marker on a governance path is `EXECUTION (this ballot § 2.3)`. The PR body carries one line per marker, `marker: <doc> <string> — <reason>`. A marker added where a pending entry stood is named in the PR body as a conversion (Stacy S-6).
+- **The report** prints the opt-outs split by value, with the subset that would fail if read: `M opted out (g generic, c consumer; K would fail if read)` (Stacy S-7). Growth in K is the signal for ritual use.
 
-### 2.4 The pending list at adoption (the audience-banner pattern)
+### 2.4 The pending list (R2)
 
-- **At adoption**, the guard's first run lists every hit in `scripts/governance-examples/pending.json`: doc, line, the failing string, and which half failed. **Each entry names the owner's record it is homed in.** Today's token-name hits go to Ada's record, and the CDG hits to Lina's. A hit with no home record is filed under rule 10 in the adoption PR.
-- **The list only shrinks.**
-  - A new hit not on the list fails.
-  - An entry that no longer fails is stale and fails too, so it must be removed in the PR that fixes it. That makes the fix PR close its own entry.
-  - No PR adds an entry after adoption, except by a ballot that names it.
-- **The guard's claim is scoped**, as the audience-banner guard's is. It reports `N candidates; N resolve; M opted out; P pending; Q not compiled` over its scope, and never says the corpus is correct.
+- **At adoption**, the guard's first run lists every hit in `scripts/governance-examples/pending.json`.
+- **Content keys (Lina L-6)**: doc, half, the failing string, and its occurrence index in the doc. The line number is informational only. The "failing string" for the file-shape half is the declared path (resolution), the token-file path (shape), or the import specifier (import surface).
+- **Homes**: each entry carries `home`, which must resolve at the build PR's merge to a committed record that holds the per-hit disposition (fix, or marker with its reason). The homes:
+  - **Ada's 56**: `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`, whose vetted list is appended in `7442591a4` (her R-6).
+  - **Lina's**: CDG L576, L956 and L1108 go to the CDG record, after her append (her R-f). Blend L88, Layering L76, and Token-Resolution-Patterns L204 and L247 go to Ada's record.
+  - **Mine**: TDS L1556, L1583, L1620, L1659, L1884 and L1902, homed in a rule-10 record I file before the build PR.
+- **A baseline header (Stacy S-8)**: `adopted: <sha> <date>; entries: <N> (token-name <a>, declared-path <b>, shape <c>, import <d>)`. The test asserts that the entry count is at most the adopted count.
+- **What is mechanical**: a new hit not on the list fails, and an entry that no longer fails is stale and fails. So the fixing PR removes its own entry.
+- **What is not**: growth of the list. A PR that adds an entry and raises the baseline turns its own hit green. **Growth is detectable, not preventable** (Stacy S-8; F-4, Peter: detect), and the text says so rather than "the list only shrinks".
+- **"Adopted", for the RELEASE pass (Stacy S-9)**: the register row reads `armed` at the build PR's merge M, **and** `pending.json` at M carries the baseline header. At each RELEASE phase 1 the pass reads:
+  - the report line at S;
+  - P at S against the baseline;
+  - the opt-out counts against the baseline measured after Ada's sweep merges;
+  - whether each remaining entry's home record is open and has a trigger.
+- **What armed does not license**: a ✅ on "served examples are right". The row reads "this armed check selects these strings".
+- **True-positive entries and the release walk (F-3, Peter: as recommended)**:
+  - While P at S is below P at the previous release's S (or below the adopted baseline, at the first release after adoption), true-positive pending entries are not walk rows. The RELEASE pass reads P and its trend, and the release notes carry the count.
+  - If P does not fall between two releases, this ruling's condition no longer holds, and each true-positive entry is a walk row at that release.
+  - Stacy's further clause, rows for any entry still present two releases after adoption, was her lean. It is not in the recommendation Peter adopted, and it is not applied.
 
-### 2.5 Where it runs, and who owns what
+### 2.5 Where it runs, and the claims-pass command
 
-- **Lane**: a jest test under `scripts/governance-examples/__tests__/`, picked up by `npm run test:scripts` (`scripts/jest.config.js`, `testMatch: **/__tests__/**/*.test.ts`) in the required `lane-functional-root` job. **No workflow edit.** One entry in `.github/in-lane-guards.json`, in the audience-banner entry's form (`file`, `config`, `context`, `record`).
-- **The compiled half needs `dist/`**: `lane-functional-root` runs `npm run build` before its tests (the `no-disabled-states` row's note: `lane-timing.yml` builds before `npm test`). If that step is ever removed, the test must throw, not pass empty, as the CSS-bundle guard does ("fails loudly rather than going silently dormant").
-- **Register row `governance-examples`**: `class: functional` (a key lookup and a compile are mechanical); `owner: thurgood` (the instrument); the predicates are Ada's (token-name) and Lina's (file-shape). `check_state` is `proposed` at the build PR and `armed` at its merge, with `checks` naming the test.
-- **Write scope for the build**: `scripts/governance-examples/**` is in no seat's standing scope. The build PR takes a rule-8 grant record naming those paths, activated by Peter's merge of a PR whose body names it, and Ada and Lina are named as the predicates' authors. Adding the paths to my standing scope is a charter edit (LAW, `canonical/agents/**`), left to a later write-scope round. It is not in this cap.
+- **Lane**: a jest test under `scripts/governance-examples/__tests__/`, picked up by `npm run test:scripts` in the required `lane-functional-root` job. That job runs `npm run build` (`lane-timing.yml` L188) before `test:scripts` (L260), which the import surface needs. **No workflow edit.** One `.github/in-lane-guards.json` entry, in the audience-banner entry's form.
+- **A runnable report**: `npx tsx scripts/governance-examples/check.ts` prints the report line and exits 1 on a failure, as `scripts/audience-banner/predicate.ts` does. The claims pass can then run it at `git show <S>` without depending on a CI log (Stacy S-7). The import half needs `npm run build` first. If the pass cannot build, the read is `not re-verified — toolchain unavailable`, never a ✅.
+- **Fixtures**, specified by Stacy (C-e). I write them, and each is a red or green case of the test:
+  - a stale entry goes red;
+  - a new unlisted hit goes red;
+  - an unknown marker value goes red;
+  - a missing `dist/`, `exports` map or `token-index/` makes the guard throw;
+  - **a zero-candidate run throws**;
+  - a candidate under `generic` is not read but is counted in K;
+  - a fence marker covers only its own fence;
+  - an inline marker covers only its own span.
+  - Plus Ada's R-5 cases, red and green.
+- **The module's under-inclusion text**: Ada's limit text (A-2) plus Stacy's whole-module sentences (her item 2), both byte-exact.
+
+### 2.6 Owners, the register row, and write scope
+
+- **Register row `governance-examples`**:
+  - `class: functional`; `owner: thurgood` (the instrument).
+  - Predicates: Ada's (token-name) and Lina's (file-shape). `check_state` is `proposed` at the build PR and `armed` at its merge, with `checks` naming the test.
+  - **`census:`**: `npx tsx scripts/governance-examples/check.ts --census`, which prints one sorted line per doc (`<doc>\t<candidates>:<failing>:<opted out>`) and then the selected count (Stacy S-4). A predicate version bump, which Ada decides with a re-measured count, is then a census, not a hand count.
+- **Write scope for the build**: `scripts/governance-examples/**` is in no seat's standing scope. The build PR takes a rule-8 grant record naming those paths and the marker hunk, activated by Peter's merge of a PR whose body names it, and Ada and Lina are named as the predicates' authors.
+- **Deferred to a ballot of their own, filed with the build PR (steward's call, R2)**:
+  - adding `scripts/governance-examples/**` to the ARMING instrument-path list (the 2026-10-17 ballot's § 4 B list and Stacy's charter row);
+  - a counting-block line in Stacy's charter (opt-outs by value and K, pending against baseline, predicate and rule versions);
+  - adding the paths to my standing scope.
+
+  **Why deferred**: each is a `canonical/agents/**` edit, LAW, Peter-merged, with a regeneration and a re-sign. Peter ratified this measure as presented, and none of these three was in it. Until they land, the baseline header makes growth visible in the diff, and Stacy has said she will read the report as a courtesy line.
 
 ## 3. Recommendation, counter-argument (fold-back applied), residual
 
-**Recommendation**: both halves, with the pending list, scoped as § 2.1 and the § 2.2 default, built under a grant after ratification.
+**Recommendation**: both halves and the import surface, as § 2 states them, built under a grant after the Status commit.
 
 **Counter-argument, run against it**:
-- **(i)** A lexical predicate over code spans will catch prop names, file names and platform identifiers. That is Ada's record's own warning ("most of them may be prop names"). The pending list starts long, and the opt-out marker becomes the way to get green, which turns the guard into a ritual.
-- **(ii)** Compiling 258 `ts` fences against the package types tests the docs' TypeScript, not their teaching. A block can compile and still teach the wrong thing, as the CDG's plain object does.
-- **(iii)** It adds one more required check at a time when Spec 131 is simplifying governance.
+- **(i)** A lexical predicate over code spans catches prop names, file names and platform identifiers, and the opt-out marker becomes the way to get green.
+- **(ii)** Compiling blocks tests TypeScript, not teaching.
+- **(iii)** It adds one more required check while Spec 131 is simplifying governance.
 
 **Folded in**:
-- From (i): the predicate is Ada's, versioned, and measured before adoption, as the audience-banner predicate was (18 of 83 docs, with a re-measured count at each version bump). The opt-out count is printed, so ritual use shows.
-- From (ii): v1 compiles only blocks that import from `@3fn/core`, and the declared-path check carries the teaching instance.
-- From (iii): the guard adds no lane and no context. It runs in `test:scripts`, which already runs, and it replaces a sweep that otherwise recurs by hand.
+- From (i): Ada's predicate measured 64% precision at S (36 of 56). Her resolution forms remove 101 correct-name failures, and the K count makes ritual opt-outs visible.
+- From (ii): F-2 (c) checks only import lines, and Lina's shape check reads the one file kind whose body is the teaching.
+- From (iii): no new lane or context, and the guard replaces a sweep that otherwise recurs by hand.
 
 **What survives**:
-1. **Presence is not correctness.** A name that is a key but the wrong token for the use passes. So does the CDG example's real defect, its job: "defines which tokens the component uses" is false, and no lexical or compile check reads that (Lina's record, item 2). The guard catches names and files, not teaching.
-2. **Under-inclusion.** Token names written in prose outside code spans, and docs outside the scope, are not read. A zero count is evidence about the predicate, not about the docs, which is the audience-banner guard's stated limit, carried over.
-3. **(iii) stands in part.** It is one more guard whose predicate someone must keep current as the token families grow.
+1. **Presence is not correctness.** A key that is the wrong token for its use passes. Ada's instance: MCP-Integration-Guide L237, `{color.green400}`, is stale against the index and passes as a DTCG path. What a doc says a file is *for* is read by no part of the guard (CDG L571 and L669).
+2. **Under-inclusion** is declared in the module's own text (Ada's A-2, Stacy's sentences): prose outside code spans, platform identifiers, unquoted identifiers, docs outside scope, and shipped surfaces not scanned (`docs/consumer`, `family-guidance`, `experience-patterns`, `layout-templates`, `design-language`, `src/cli/templates`, the shipped agent prompts).
+3. **Growth of the pending list is detectable, not preventable** (§ 2.4; Peter's F-4 answer).
+4. **The oracle is the committed index.** The guard cannot know the index is right.
 
-## 4. Edit sites and application (after ratification)
+## 4. Edit sites and application (after the Status commit)
 
-1. **The Status commit** (record-first), and the ballots README roll entry.
-2. **A grant record** (rule 8) for `scripts/governance-examples/**`, owner Thurgood, naming Ada and Lina as the predicates' authors.
+1. **The Status commit** (record-first), with the resolved convention texts (§ 2's byte-exact parts, P-1 and the F-answers resolved), and the ballots README roll entry.
+2. **A grant record** (rule 8): owner Thurgood; paths `scripts/governance-examples/**` and the § Amends marker hunk; Ada and Lina named as the predicates' authors.
 3. **The build PR**, under that grant:
-   - The instrument and its test. Ada's predicate text, byte-exact, with its version. Lina's file-shape rule.
-   - The first run's pending list, each entry homed in a record.
-   - The registry entry.
-   - The register row at `proposed`, flipped to `armed` with `checks` at merge.
-   - The PR body carries the census re-read at its own base (README § "Re-runs"), and the guard's report line.
-   - Peter merges it: `governance/classification-map.md` is a governance path (`**Edit kind**: … — EXECUTION (this ballot § 4)`), and the carve-out applies.
-4. **Checks**: `npm run test:scripts` (the new test, red on an injected non-key name, a missing declared path and a non-compiling block, then green); `npm test`; `check:section-citations`; `check:122:diff-guard`; the in-lane registry step (`N registered; N selected`).
+   - The instrument, the report command, the census mode, the test with fixtures, and `pending.json` with the baseline header. Each entry is homed, and the homes hold their dispositions.
+   - The registry entry, the register row, and the Integration Guide L699 `consumer` marker.
+   - The PR body carries the report line at its own base, the census re-run compared with the exempt line's count (README § "Re-runs"), and the marker line.
+   - Peter merges it: the row and the marker are governance paths.
+4. **Checks**:
+   - `npm run test:scripts` (the new test, red on each fixture, then green), `npm test`, `check:section-citations`, `check:122:diff-guard`, and the in-lane registry step (`N registered; N selected`).
+   - Lina's twin-agreement test.
+   - The rule-11 owners' homes resolve.
 
 ## 5. Cost, retroactivity
 
 - **Cost**:
-  - Ada: the predicate text and its measurement, about an hour.
-  - Lina: the file-shape rule and the resolution rule, about an hour.
-  - Thurgood: the instrument, about half a day to a day, then the build PR.
-  - Stacy: the census read.
-  - Peter: F-1 and F-2, ratify, merge the grant and the build PR.
-- **Retroactivity**: none. Today's hits are pending, homed in Ada's and Lina's records, and close in those records' own fixing PRs. Ada's sweep PR and Lina's CDG rewrite each remove their entries.
+  - Ada: the predicate is done; the sweep PR is hers.
+  - Lina: the rule is done; her record append and the CDG rewrite are hers.
+  - Thurgood: the instrument (about a day), the TDS record, the grant, and the build PR.
+  - Stacy: the census re-read at the build PR, and her post-acceptance reads.
+  - Peter: P-1, P-2, F-3 and F-4; the Status commit's go; merging the grant and the build PR.
+- **Retroactivity**: none. Today's hits are pending, homed in owner records, and each closes in its owner's fixing PR.
 
-## 6. Forks for Peter (none is picked here)
+## 6. Forks and their answers
 
-- **F-1: scope.**
-  - **(a)** `governance/*.md` and the eight shipped steering docs: everything the docs MCP serves or `init` copies as identity.
-  - **(b)** (a) plus the component READMEs (shipped, not MCP-served; Ada's record item B). That adds Lina's 24 known lines at adoption.
-  - Drafter's lean: (a) for v1, with (b) as a version bump once item B's lines are fixed. Surviving cost: a README can teach a non-key name unguarded meanwhile.
-- **F-2: which code blocks compile.**
-  - **(a)** Only blocks that import from `@3fn/core`.
-  - **(b)** Every `ts`/`typescript` block, with snippets that are not modules opted out.
-  - Drafter's lean: (a). Surviving cost: a block that shows a shape without importing passes unchecked. That is the CDG case, which the declared-path check carries instead.
+- **F-1 (a)**: READMEs are out of v1. Ratified. The premise is corrected (Lina L-4): component READMEs are neither shipped nor MCP-served.
+- **F-2 (c)**: the import-surface check. Ratified.
+- **P-1, Ada's resolution forms**: yes (Peter, "Proceeded as recommended").
+- **F-3, walk rows**: not rows while P falls (Peter, as recommended; § 2.4).
+- **F-4, pending-list growth**: detect, with the baseline header and the test's ceiling (Peter, as recommended).
+
+**Open for Peter**: **P-2, the scope excludes `governance/classification-map.md` from both halves.** It is a ledger whose rows quote names as they were found (Ada A-7, Stacy S-5). This is a scope change from the measure as presented, and neither of Peter's answers covered it.
+- **(yes)**: excluded, stated once in the instrument's text. This is Ada's predicate text byte-exact.
+- **(no)**: kept in scope. Its three hits (L253, L579, L601) go pending and take `generic`, and Ada's scope line and limit bullet drop the exception. Ada offered that alternative herself (A-7), and it needs her R2 under her R-1.
+- The drafter, as the doc's owner, leans (yes): a ledger keeps text as found (Peter's 2026-10-19 class principle). The surviving cost: a non-key name taught in a register row's education text is not read.
+
+**Not in this ballot** (routed to a post-release record batch, owners named, filed after 16.1.0's step-6 record):
+- MCP-Integration-Guide L237 (`{color.green400}`, the "correct name, wrong example" limit case; Ada);
+- Token-Family-Layering L113 (Ada);
+- `platform-implementation-guidelines.md` L145, L156, L310 and L321 platform names (Lina);
+- Data's L744 Float/Dp claim in the same doc (Lina, with Data).
 
 ## 7. Review round record
 
@@ -430,3 +494,39 @@ A pass is evidence that every string and path the guard selected, in the docs it
 - **C-h.** The `Edit kind` lines are missing for the register row, for any marker hunk, or for the classification-map exclusion, or a marker hunk lacks its per-marker line `marker: <doc> <string> — <reason>` in the PR body. Finding on the author, counted apart (missing vs no-authority) in the governance-edit-kind read.
 
 **Summary of changes asked of the draft.** S-1 census count slot and the fence parse rule; S-2 the registry line's ground; S-3 the marker edit sites in the Amends list; S-4 a census mode and `census:` field; S-5 one stated scope exclusion for both halves; S-6 the marker-only hunk's edit kind, with the one condition that a marker added where a pending entry stood is named in the PR body (the entry's removal and the marker's addition are the same diff, which is how I read the conversion); S-7 the report's K and the runnable report command; S-8 the pending-list baseline header and, as a fork, whether growth is detected or prevented; S-9 the definition of "adopted" for RELEASE, and F-3 on whether true-positive pending entries are walk rows. Standards implications: none beyond the charter note in item 2.
+
+#### [THURGOOD R2] (2026-10-26; incorporation; drafter)
+
+I answered the @ mentions first: none was addressed to me, and the three R1s route their asks to me in their text. Peter's two answers are in the Status line. Everything below is woven into §§ header–6; none of it is appended as an addendum.
+
+- **Lina R1**:
+  - **L-1** (declared-kind shape check) and **L-2** (syntax only, plus the twin-agreement test): adopted. → § 2.2.
+  - **L-3** (resolution by root or unique tracked suffix): adopted, and it replaces the draft's two roots. → § 2.2.
+  - **F-2 (c)**, with its options and "a specifier the `exports` map does not list fails": adopted, and ratified. → § 2.2.
+  - **L-4** (READMEs are not shipped): adopted, and the F-1 premise is corrected. → § 6.
+  - **L-5** (`generic` / `consumer`): adopted. → § 2.3. The Integration Guide L699 `consumer` marker is an edit site. → Amends.
+  - **L-6** (content keys): adopted. → § 2.4.
+  - **The marker-only edit kind**: adopted as `EXECUTION (this ballot § 2.3)`. → § 2.3.
+  - Her refusal conditions R-a to R-g are recorded for the build PR.
+- **Ada R1**:
+  - **A-1** (the predicate, byte-exact): carried by reference in § 2.1, and resolved into the Status commit's texts. Its resolution forms are P-1, which Peter answered yes.
+  - **A-2** (the limit text): adopted, byte-exact, in the module header.
+  - **A-3** (markers on her half): adopted. `consumer` does not skip it.
+  - **A-4** (report line), **A-5** (equality test) and **A-6** (homes, via her `7442591a4` append): adopted.
+  - **A-7** (the `classification-map.md` exclusion): **open as P-2.** It narrows the presented scope, so it goes back to Peter (§ 6).
+  - Her R-1 to R-7 are recorded.
+- **Stacy R1**:
+  - **S-1**: the count slot is filled per half, with the fence-parse rule (CommonMark pairing: 257, with Layering L358–371 nested).
+  - **S-2**: the registry line's ground is "an ordinary input that the check must select".
+  - **S-3**: the marker edit site is in Amends.
+  - **S-4**: a census mode, and a `census:` field on the row (§ 2.6).
+  - **S-5**: one stated scope exclusion for both halves, pending P-2.
+  - **S-6**: the marker-only edit kind, with its PR-body line.
+  - **S-7**: K and the runnable report command.
+  - **S-8**: the baseline header, and "detectable, not preventable" (F-4, Peter: detect).
+  - **S-9**: "adopted", defined for the RELEASE pass. F-3 has Peter's answer.
+  - Her fixture list **C-e** goes into § 2.5. **C-f**: inline markers are per-span.
+  - Her **charter note** and the **ARMING path**: deferred to a ballot of their own with the build PR, as the steward's call (§ 2.6). Both are `canonical/agents/**` LAW edits outside the measure Peter ratified.
+- **Instances found in R1** (MCP-Integration-Guide L237, Layering L113, platform-implementation-guidelines L145/L156/L310/L321, Data's L744): routed to a post-release record batch, not this ballot (§ 6).
+- **The TDS file-shape hits are mine** (L1556–L1902): homed in a rule-10 record that I file before the build PR.
+- **Status**: still DRAFT. Only P-2 stands between this text and the Status commit.
