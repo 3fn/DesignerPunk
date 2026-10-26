@@ -2,11 +2,12 @@
 
 **Date**: 2026-10-26 (R2: 2026-10-26)
 **Drafted by**: Thurgood (Civitas steward; the instrument sits in my lane scope). At Peter's direction: Peter, chat, 2026-10-26, relayed by the orchestrator: *"Re: 3, let's go with the class move"* (00:28:49Z, clock), then *"Proceed as the team recommends"* (00:38:29Z, clock). The class move answers the instances in § 1.
-**Status**: **DRAFT, R2; ratified in substance, one scope item open.** Peter, chat, relayed by the orchestrator, verbatim:
-- *"Ratified"*, received before 2026-10-26T01:51:31Z (clock), on the measure as presented: F-1 (a) READMEs out, F-2 (c) the import-surface check, and Lina's file-shape amendments.
-- *"Proceeded as recommended"*, received before 01:54:41Z (clock), on three recommendations: Ada's resolution forms (P-1, yes), pending-list growth detectable with a baseline header (F-4, detect), and true-positive entries not being walk rows while the count falls (F-3).
+**Status**: **RATIFIED (Peter, 2026-10-26)**: F-1 (a), READMEs out; F-2 (c), the import-surface check; Ada's resolution forms (P-1, yes); `governance/classification-map.md` excluded from both halves (P-2, yes); pending-list growth detectable, with a baseline header (F-4); true-positive entries not walk rows while P falls (F-3). Peter, chat, relayed by the orchestrator, verbatim:
+- *"Ratified"*, received before 2026-10-26T01:51:31Z (clock), on the measure as presented (F-1 (a), F-2 (c), Lina's file-shape amendments);
+- *"Proceeded as recommended"*, received before 01:54:41Z (clock), on P-1, F-4 and F-3 as recommended;
+- *"yes"*, received before 01:58:00Z (clock), on P-2, presented with the recommendation to exclude.
 
-**One item is not covered by either answer: P-2** (§ 6), the exclusion of `governance/classification-map.md` from the scope. It is a scope change from the measure as presented, so the Status commit waits on it. No edit site below is applied. A merge with this line still reading DRAFT records the measure and ratifies nothing.
+**Record-first**: this commit is the record. It is made before any edit site is applied, and it appends § 8, the resolved texts. *(Superseded status, R2, kept verbatim: "**DRAFT, R2; ratified in substance, one scope item open.** Peter, chat, relayed by the orchestrator, verbatim: - *"Ratified"*, received before 2026-10-26T01:51:31Z (clock), on the measure as presented: F-1 (a) READMEs out, F-2 (c) the import-surface check, and Lina's file-shape amendments. - *"Proceeded as recommended"*, received before 01:54:41Z (clock), on three recommendations: Ada's resolution forms (P-1, yes), pending-list growth detectable with a baseline header (F-4, detect), and true-positive entries not being walk rows while the count falls (F-3).  **One item is not covered by either answer: P-2** (§ 6), the exclusion of `governance/classification-map.md` from the scope. It is a scope change from the measure as presented, so the Status commit waits on it. No edit site below is applied. A merge with this line still reading DRAFT records the measure and ratifies nothing.")*
 **Required reviewers**: **Ada** (R1 done; the token-name predicate is her text). **Lina** (R1 done; the file-shape rule is her text). **Stacy** (R1 done; census reader, and the future reader of this instrument in the claims passes).
 **Class**: LAW. It adds a requirement on every served governance doc (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds"): after application, a new instance fails a required check.
 
@@ -41,7 +42,7 @@
 ### 2.1 Token-name half (Ada's predicate, version 1)
 
 The predicate and its under-inclusion limit are **Ada's text, byte-exact**, from [ADA R1] items 1 and 3. They are carried into the module header with a `PREDICATE_VERSION = 1` constant, as the audience-banner predicate is. In outline:
-- **Scope**: every `governance/*.md` except `governance/classification-map.md` (a ledger, whose rows quote names as they were found; Ada A-7; **P-2, open**), plus the eight `.kiro/steering/*.md` files that `files[]` names.
+- **Scope**: every `governance/*.md` except `governance/classification-map.md` (a ledger, whose rows quote names as they were found; Ada A-7; P-2, Peter: yes), plus the eight `.kiro/steering/*.md` files that `files[]` names.
 - **Regions**: inline code spans; string literals inside program-language fences; whole lines of other fences. Fences are paired as CommonMark defines them.
 - **Name set**: read from the committed `token-index/` each run: KEYS and CHANNELS. FAMILIES and STEMS are derived from KEYS at run time, never hand-kept. The one hand-kept list is RETIRED_FAMILIES (`spacing`), and a test asserts it shares no member with FAMILIES (A-5).
 - **Resolution (P-1, Peter: yes)**: Ada's rules 0–6. Rule 0 fails a retired family. Rules 1–5 resolve a candidate as a glob, a key, a channel, a namespace or a DTCG path. Rule 6 counts it as a file name. Anything else fails. **This departs from the draft's "exact key only"**; Peter adopted it ("Proceeded as recommended"). There is still no case-folding, no normalization and no allowlist of names.
@@ -60,7 +61,7 @@ Lina's text, byte-exact, from [LINA R1] items 1, 2 and 4 (L-1, L-2, L-3, the F-2
   - **A specifier that the `exports` map does not list fails.** It is not a reason to skip the block.
   - *Measured*: 7 blocks import from the package, and 3 fail. All three are real defects: CDG L1108, Token-Family-Blend L88, Token-Family-Layering L76.
   - The extraction must not match prose, or trees that quote an import line (Stacy, F-2).
-- **Scope**: the same as § 2.1, with `governance/classification-map.md` excluded from this half too (Stacy S-5). The exclusion is stated once, in the instrument's text, so the report cannot read as covering all of `governance/`.
+- **Scope**: the same as § 2.1, with `governance/classification-map.md` excluded from this half too (Stacy S-5; P-2, Peter: yes). The exclusion is stated once, in the instrument's text, so the report cannot read as covering all of `governance/`.
 - **The guard throws, and never passes empty**, when `dist/`, the `exports` map or `token-index/` cannot be read (Lina R-d, Ada R-4).
 
 ### 2.3 Markers (Lina L-5, Ada A-3)
@@ -182,10 +183,7 @@ Lina's text, byte-exact, from [LINA R1] items 1, 2 and 4 (L-1, L-2, L-3, the F-2
 - **F-3, walk rows**: not rows while P falls (Peter, as recommended; § 2.4).
 - **F-4, pending-list growth**: detect, with the baseline header and the test's ceiling (Peter, as recommended).
 
-**Open for Peter**: **P-2, the scope excludes `governance/classification-map.md` from both halves.** It is a ledger whose rows quote names as they were found (Ada A-7, Stacy S-5). This is a scope change from the measure as presented, and neither of Peter's answers covered it.
-- **(yes)**: excluded, stated once in the instrument's text. This is Ada's predicate text byte-exact.
-- **(no)**: kept in scope. Its three hits (L253, L579, L601) go pending and take `generic`, and Ada's scope line and limit bullet drop the exception. Ada offered that alternative herself (A-7), and it needs her R2 under her R-1.
-- The drafter, as the doc's owner, leans (yes): a ledger keeps text as found (Peter's 2026-10-19 class principle). The surviving cost: a non-key name taught in a register row's education text is not read.
+- **P-2, the `governance/classification-map.md` exclusion**: yes (Peter, "yes", before 01:58:00Z). It applies to both halves, is stated once in the instrument's text (Ada A-7, byte-exact; Stacy S-5), and its surviving cost is the one the drafter named: a non-key name taught in a register row's education text is not read.
 
 **Not in this ballot** (routed to a post-release record batch, owners named, filed after 16.1.0's step-6 record):
 - MCP-Integration-Guide L237 (`{color.green400}`, the "correct name, wrong example" limit case; Ada);
@@ -533,3 +531,175 @@ I answered the @ mentions first: none was addressed to me, and the three R1s rou
 - **Instances found in R1** (MCP-Integration-Guide L237, Layering L113, platform-implementation-guidelines L145/L156/L310/L321, Data's L744): routed to a post-release record batch, not this ballot (§ 6).
 - **The TDS file-shape hits are mine** (L1556–L1902): homed in a rule-10 record that I file before the build PR.
 - **Status**: still DRAFT. Only P-2 stands between this text and the Status commit.
+
+## 8. Resolved texts (the Status commit, 2026-10-26)
+
+**Under Peter's answers**: F-1 (a), F-2 (c), P-1 yes, P-2 yes, F-3 as recommended, F-4 detect. Each block below is applied exactly: the bytes between the four-backtick fences, without the fences. Ada's and Lina's texts are copied programmatically from their R1 entries, and nothing here is new text. The build PR's claims pass compares the instrument's module header and the edit sites with these blocks byte for byte. `<build PR date>` is the one value left open.
+
+### 8.1 The token-name predicate, version 1 (Ada's text, byte-exact; module header)
+
+````
+TOKEN-NAME PREDICATE, VERSION 1 (Ada's text, byte-exact)
+
+SCOPE. Every governance/*.md except governance/classification-map.md, and the eight
+.kiro/steering/*.md files that package.json files[] names.
+
+REGIONS. Code spans and fenced code blocks as CommonMark defines them. A candidate is read
+only from:
+  (a) an inline code span: the whole span;
+  (b) a fenced block whose info string's first word, lowercased, is in PROGRAM_LANGS: only
+      the contents of '...', "..." and `...` string literals, line by line;
+  (c) any other fenced block (untagged, yaml, json, text, markdown, and the rest): the whole
+      line.
+  PROGRAM_LANGS = ts typescript tsx js javascript jsx mjs swift kotlin kt java css scss
+
+THE NAME SET, read from the committed token-index/{primitives,semantics,components}.yaml:
+  KEYS     every key under `tokens:`;
+  CHANNELS every value of a `channels:` map (the OKLCH hue, lightness and chroma names).
+Derived from KEYS at run time, never hand-kept:
+  FAMILIES the first segments of the dotted keys;
+  STEMS    the leading lowercase word of each undotted key that ends in three or four digits.
+Hand-kept, changed only by a version bump:
+  RETIRED_FAMILIES = spacing
+  It names a family the index does not have and docs were measured using. The test asserts it
+  shares no member with FAMILIES.
+
+CANDIDATE. Each match of this JavaScript pattern, with FAMILY the alternation of FAMILIES and
+RETIRED_FAMILIES and STEM the alternation of STEMS, longest first:
+  (?<![A-Za-z0-9_$./\-])((?:FAMILY)(?:\.[A-Za-z0-9]+)+|(?:STEM)(?:[A-Z][a-z]*)*[0-9]{3,4})(\*?)(?![A-Za-z0-9_(\-])
+Group 1 is the candidate. Group 2 marks a glob.
+
+RESOLUTION. The first rule that holds decides. Exact and case-sensitive; no case-folding, no
+notation normalization, no allowlist of names.
+  0 retired    its first segment is in RETIRED_FAMILIES: it fails (or rule 6 applies);
+  1 glob       group 2 is "*", and some key in KEYS starts with the candidate;
+               a glob that rule 1 does not resolve fails;
+  2 key        the candidate is in KEYS;
+  3 channel    the candidate is in CHANNELS;
+  4 namespace  the candidate followed by "." is a prefix of some key in KEYS (space.inset);
+  5 dtcg-path  the candidate is <f>.<rest>, with <f> in FAMILIES and <rest> in KEYS
+               (color.green500, the DTCG alias form);
+  6 file-name  the candidate ends in .ts .tsx .js .jsx .mjs .cjs .md .yaml .yml .json .swift
+               .kt .css .html .sh. It is counted as a file name, not as a token;
+  otherwise it fails.
+
+REPORT. "<N> candidates; <R> resolve (<k> key, <c> channel, <n> namespace, <d> dtcg-path,
+<g> glob); <f> file names; <M> opted out; <P> pending". It never says the docs are correct.
+
+A version bump is any change to SCOPE, REGIONS, PROGRAM_LANGS, RETIRED_FAMILIES, the
+pattern, a resolution rule or the derivation of FAMILIES or STEMS. Ada decides it, with a
+re-measured count.
+````
+
+### 8.2 The under-inclusion limit (Ada's A-2, byte-exact; module header)
+
+````
+UNDER-INCLUSION LIMIT (declared here, in the predicate's own text).
+
+This predicate is lexical. A pass is evidence that the strings it selects are names the
+committed index carries. It is not evidence that a doc names the right token for its use.
+A run with zero failures is evidence about this predicate, not about the docs. It does not read:
+  - prose outside code spans and fences, or indented code blocks (known at version 1:
+    a-vision-of-the-future.md L213 and L418, Token-Semantic-Structure.md L691, "color.primary"
+    in plain text);
+  - names whose first segment is not in FAMILIES or RETIRED_FAMILIES (bodyMd, colour.primary),
+    undotted names without three or four trailing digits (fontFamilyPrimary), names on a
+    stem the palette lacks (blue500), and component tokens in display case
+    (ButtonIcon.inset.medium);
+  - platform identifiers (DesignTokens.radius.input, theme.colorPrimary, --color-primary).
+    A dot or a hyphen comes before them, so they are not candidates, and a wrong platform name
+    passes (known at version 1: platform-implementation-guidelines.md L145, L156, L310, L321;
+    Token-Resolution-Patterns.md L218);
+  - unquoted identifiers in a program block;
+  - governance/classification-map.md, whose rows quote names as they were found;
+  - any doc outside SCOPE, including component READMEs.
+It also resolves more than keys. A namespace (color.feedback.select), a DTCG path whose tail
+is a key, and a glob prefix all pass. So a namespace taught as if it were a token passes, and
+so does a DTCG alias with a stale value (known at version 1: MCP-Integration-Guide.md L237,
+"{color.green400}" for color.feedback.success.text, which the index maps to green500).
+````
+
+### 8.3 The whole-module sentences (Stacy R1 item 2, byte-exact; module header)
+
+````
+A pass is evidence that every string and path the guard selected, in the docs it scans, resolved against the committed index, the tracked files and the built types. A pass with P pending entries is not a clean corpus: the P strings fail and are not read as passing. A string under an <!-- example: ... --> marker is not read, and the marker is the author's assertion. Surfaces that ship but are not scanned include docs/consumer, family-guidance, experience-patterns, layout-templates, design-language, src/cli/templates and the shipped agent prompts. Presence is not correctness: a real key that is the wrong token passes, and a doc that says what a file is for is read by no part of this guard.
+````
+
+### 8.4 The file-shape rule (Lina's text, byte-exact; module header)
+
+````
+- **L-1: add a declared-kind shape check.** When a block's declared path has a basename that the loader's `isTokenFileName` accepts, the block must contain at least one exported binding whose initializer is a call to `defineComponentTokens(...)`. The check keys on the declared **basename** and runs whether or not the path resolves. So a consumer-located `// src/components/MyCard/MyCard.tokens.ts` holding a plain map fails too, which is the case that matters for consumers.
+- **L-2: the check reads syntax and does not compile or run the block.** Use `ts.createSourceFile`, with no program and no `dist/`. Teaching blocks are partial on purpose. The CDG's own good example at L203 uses `spacingTokens` without importing it and puts `// 'inset.large' → space150` in place of entries. A compiled or executed predicate would fail the correct example. That makes the syntax check a static copy of a runtime signal (the brand is non-enumerable and the return type `ComponentTokenValues<T>` does not carry it), so the copy has to be pinned. **A twin-agreement test** runs the syntax predicate and the loader's `getTokenContract` harvest over the seven real token files and one plain-map fixture, and asserts they agree on every file. Req 8.2 ("no second detection mechanism") binds the loader. This copy sits outside the loader and is held to it by the test.
+**L-3: the resolution rule for declared paths (the rule § 2.2 leaves to me).** A declared path resolves if it exists from the repo root, or if it is a suffix of exactly one tracked path (`git ls-files`). A suffix that matches no path fails. A suffix that matches several paths also fails: it does not tell the reader which file. This replaces "under `src/components/core/` or the repo root".
+- **(c), the rule.** Take every fenced block tagged `ts`, `typescript`, `tsx`, `js`, `javascript`, or not tagged. Extract only the import and `export … from` declarations whose specifier begins with `@3fn/core`. Type-check those lines alone against the built types, resolved through the `exports` map. The options are stated, because `init` writes no consumer `tsconfig` (only `tsconfig.test.json`), so the draft's default does not exist: `moduleResolution: "bundler"`, `module: "esnext"`, `strict: true`, `skipLibCheck: true`, `noEmit: true`, `types: []`. **A specifier that the `exports` map does not list is a failure, not a reason to skip the block.** The draft's wording, "imports from `@3fn/core` (or a subpath its `exports` map lists)", could be read as a filter that drops exactly the defects below.
+  - `<!-- example: generic -->` skips the block entirely.
+  - `<!-- example: consumer -->` skips **only** path resolution. The import-surface check (item 2) and the shape check (L-1) still run.
+  - Key: doc, half, the failing string or declared path, and its occurrence index in the doc. The line number is informational only.
+````
+
+### 8.5 Marker scope and edit kind (the drafter's text, § 2.3; module header and ballot law)
+
+````
+A marker on the line directly before a fence covers that one fence. A marker placed directly after an inline code span covers that one span. The values are generic and consumer; any other value fails. A hunk that only adds or removes a marker on a governance path is EXECUTION (ballot 2026-10-26-governance-examples-guard § 2.3), and the PR body carries one line per marker, marker: <doc> <string> — <reason>; a marker added where a pending entry stood is named as a conversion.
+````
+
+### 8.6 The report line and the pending-list header
+
+````
+<N> candidates; <R> resolve (<k> key, <c> channel, <n> namespace, <d> dtcg-path, <g> glob); <f> file names; <dp> declared paths (<dpr> resolve); <s> token-file shapes (<sr> pass); <i> import lines (<ir> type-check); <M> opted out (<gn> generic, <cn> consumer; <K> would fail if read); <P> pending
+````
+
+````
+adopted: <sha> <date>; entries: <N> (token-name <a>, declared-path <b>, shape <c>, import <d>)
+````
+
+### 8.7 `.github/in-lane-guards.json`, the added entry (P1b additive)
+
+````
+{
+  "file": "scripts/governance-examples/__tests__/governance-examples.test.ts",
+  "config": "scripts/jest.config.js",
+  "context": "lane-functional-root",
+  "record": ".kiro/docs/ballots/2026-10-26-governance-examples-guard.md (the governance-examples guard: token-name half, file-shape half, import surface; ratified 2026-10-26)"
+}
+````
+
+### 8.8 `governance/classification-map.md`, the new row (EXECUTION, § 4 step 3)
+
+````
+### governance-examples
+
+```yaml
+rule: "A served governance example (governance/*.md except classification-map.md, and the eight shipped steering docs) names tokens that resolve against the committed token-index/ (Ada's predicate v1: key, channel, namespace, DTCG path or glob; file names counted), declares only paths that exist (root or unique tracked suffix), shows a token file only with defineComponentTokens(), and imports from @3fn/core only through specifiers the exports map lists, type-checked against the built types; a deliberately generic or consumer-located example carries <!-- example: generic --> or <!-- example: consumer -->; hits at adoption are pending, content-keyed and homed, under a baseline header"
+boundary_call:
+  class: functional
+  rationale: "A key lookup against the committed index, a tracked-path lookup, a syntax read and a type-check of import lines are mechanical; whether an example teaches the right thing is not, and stays education's (ballot 2026-10-26-governance-examples-guard § 3, residual 1)"
+verification:
+  disposition: barrier
+  owner: thurgood
+  check_state: proposed
+  checks: []
+  census: "npx tsx scripts/governance-examples/check.ts --census"
+  # Flips to armed at the build PR's merge, with checks naming scripts/governance-examples/__tests__/governance-examples.test.ts in lane-functional-root (npm run test:scripts). Predicates: token-name Ada's (v1), file-shape Lina's.
+education:
+  disposition: "LAW HOME: ballot 2026-10-26-governance-examples-guard § 2 and § 8. The module header carries the predicate, the limit text and the whole-module sentences byte-exact"
+history:
+  - { date: <build PR date>, change: "entry created by ballot 2026-10-26-governance-examples-guard (EXECUTION, § 4 step 3), check_state proposed; armed at the build PR's merge", by: thurgood }
+```
+````
+
+### 8.9 The rule-8 grant record's grant line (§ 2.6, as written)
+
+````
+**Grant paths**: `scripts/governance-examples/**`. Owner Thurgood. The predicates' authors are Ada (token-name, v1) and Lina (file-shape). Activated by Peter's merge of a PR whose body names this grant; it expires at the build PR's merge. It does not cover the register row or the Integration Guide marker: both are governance paths, and each is EXECUTION of ballot 2026-10-26-governance-examples-guard (§ 4 step 3, § 2.3). It does not cover `.github/in-lane-guards.json` either, which is Thurgood's standing lane scope (P1b, additive).
+````
+
+### 8.10 `governance/DesignerPunk-Integration-Guide.md`, the marker hunk (EXECUTION, § 2.3)
+
+The fence opening `# product/tokens/layout.yaml` (L699 at `a19481725`) is preceded by the marker line:
+
+````
+<!-- example: consumer -->
+```yaml
+# product/tokens/layout.yaml
+````
