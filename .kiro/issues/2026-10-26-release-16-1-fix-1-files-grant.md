@@ -1,4 +1,4 @@
-# Grant: write scope for 16.1.0's second release PR (the CHANGELOG fixes RL-19, RL-20 and RL-21 before the tag)
+# Grant: write scope for 16.1.0's second release PR (the CHANGELOG fixes RL-19, RL-20 and RL-21, and the release notes' L57, before the tag)
 
 **Date**: 2026-10-26
 **Owner**: Thurgood (the 16.1.0 release author)
@@ -9,7 +9,7 @@
 
 ---
 
-**Grant paths**: `CHANGELOG.md`, `canonical/generated.lock`
+**Grant paths**: `CHANGELOG.md`, `docs/releases/release-16.1.0.md`, `canonical/generated.lock`
 
 ## What each path is for
 
@@ -17,8 +17,9 @@
   - **RL-21**: the heading's `— TBD —` becomes the date, in the form 15.1.0 and 16.0.0 used.
   - **RL-20**: the "no … shipped file … was removed" sentence becomes true. `dist/components/core/Button-CTA/Button-CTA.refs.{js,d.ts}` were removed.
   - **RL-19**: the Kiro known-limitation sentence becomes true.
+- **`docs/releases/release-16.1.0.md`**: the walk-rows bullet (L57 at `a19481725`) only. It says none of the rows that lapse at S is a disclosure missing from a served surface. Stacy's #497 update rules RL-22 floor-class, waived for 16.1.0 by Peter's "(i)", so one of them is: the consumer-Stacy charter's owed-set lines (`dist/consumer-canonical/agents/stacy.md` L343 and L347; record `.kiro/issues/2026-10-25-owed-set-law-text-after-closing-commit-anchor.md`). The bullet is corrected to say so and to cite the waiver. The notes are not packed, but they are the record. They do not repeat RL-19's Kiro sentence.
 - **`canonical/generated.lock`**: only if the guard's input closure includes `CHANGELOG.md` and moves. It is written by a green `npm run check:122:diff-guard`, never by hand. If `outputs` moves, the author stops and reports.
 
 ## What this grant does not cover
 
-Anything else. The release notes do not repeat RL-19's sentence, so `docs/releases/release-16.1.0.md` is not on the list. An edit outside the list is a claims-pass finding.
+Anything else, including any other line of the release notes (the `**Date**: TBD` line among them). An edit outside the list is a claims-pass finding. *(Amended 2026-10-26, Thurgood, before this record's activating PR #498 merged: the notes path was added on Stacy's #497 update, RL-22.)*
