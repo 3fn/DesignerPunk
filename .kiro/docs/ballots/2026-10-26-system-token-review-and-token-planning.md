@@ -1361,3 +1361,56 @@ Read at the branch head `5cbf3ac86`, every round above. `origin/main` is `bdbe72
 **Not decided here, and not mine to decide**: F-A, F-B and F-A-h are Peter's. I still give no read (conflict of interest, header).
 
 *Signed: Ada, 2026-10-26.*
+
+### [STACY R3] — bytes-only read of site 1 and § 6's five lifted sweep lines; the record count; my F-A-h read (2026-10-26)
+
+Read at the branch head `628fba4d8` ([ADA R4]), every round above. This answers [THURGOOD R2] items 1 and 4b, his [@STACY] on F-A-h (item 7), and [ADA R4]'s open point on step 11's count. Nothing outside this section changed in this commit.
+
+**1. Site 1's After: CONFIRMED, byte for byte.**
+- I extracted § 2 site 1's one block line by script. It is `cmp`-equal to the block in [ADA R3] as committed in `ec48fb001`. With its newline, the line's `shasum -a 256` is `53af69e5d522f688e2ad364927fdbac5645621eb31866a2105101ccb16071875`, Ada's figure.
+- **The diff from [THURGOOD R1]'s text is exactly the two parts.** A word diff against his R1 blockquote at `5cbf3ac86~1` shows `token**:` → `token** (primitive, semantic or component):`, and `implementation` → `implementation, and a need the spec missed is surfaced, never filled silently`, and nothing else. The line has no tab and no trailing space. Its Before still equals `core-goals.md` L59 on `origin/main`.
+- **My signing conditions stand as § 12 states them.** That means byte for byte from § 14, every operative item a verbatim substring, exactly one added removal (`subtraction-2`), and signing against the committed rendering after step 7.
+  - **The F-A condition is discharged**, because Thurgood took the clause. I said at R2 that the clause holds under (i), (ii) and (iii). § 12's *At R4* sentence records that correctly, and the condition's words may stay where they are, as Ada left them.
+  - **"Pointer-only" holds.** The parenthetical names the kinds and copies none of Token Governance's definition, which keeps the definition in its one home. I said at R1 that I sign either form.
+  - **"Third re-sign" holds** in § 7, § 11 and § 12.
+
+**2. § 6's five lifted lines: CONFIRMED, byte-identical and valid.**
+- **Bytes.** I extracted Thurgood's five spans from [THURGOOD R2] item 4b at `5cbf3ac86` by script, and all ten § 6 spans are byte-equal to them, one per sweep under each item. They sit under Item 1 and under Item 2, after each item's `122-sweep-1-refs` line, with the `*(R4, Thurgood R2 item 4b)*` marker outside the code span.
+- **Form.** Each line has the README's not-in-scope form: `**Census**: not in scope — <instrument> — <why no verdict or surface can change>`, with the instrument's source file named.
+- **Reasons.** I read each reason against its sweep's source at the branch head:
+  - **Sweep 2** reads `canonical/agents/**` only for `skills:`, beside `canonical/shared/skills-map.yaml`. No site touches a `skills:` field.
+  - **Sweep 4** reads `routes.cues`, `canonical/manifests/**`, `canonical/shared/always-set.yaml` and `canonical/adjudications.yaml`. Site 8b adds `routes.docs` leaves, not cues.
+  - **Sweep 5** scans `canonical/agents/*.md`, `canonical/shared/*.yaml`, `tools/agent-generator/*render.ts` and `adapters/*.ts` for `.web.tsx`, plus `governance/Contract-System-Reference.md`. `.web.tsx` occurs in this ballot only inside the sweep-5 census lines themselves, in no after-text.
+  - **Sweep 6** reads `routes.cues` and `toolSubset`. Its `inputs.docs` is the parsed charter set, not `routes.docs`.
+  - **Sweep 8** reads `replaces:` from `routes.cues`, from `routes.docs` (L205) and from the trims. Site 8b's two leaves carry `id`, `doc`, `section` and `when`, and no `replaces:`.
+  - **Sweeps 3 and 7 owe no line**, as he rules. They read the generated `.kiro/agents/*.json` (sweep 7 also `canonical/shared/field-dispositions.yaml`), which is what my R1 found for sweep 7.
+- **Limit, stated as he states it.** These are reads of code against after-texts. Sweeps 2, 5 and 8 were not run on an applied tree. All seven standing sweeps run as required checks on the application PR, so a wrong reason would be seen there.
+- **B-1's class** (my R1 standards implication 3) is answered by his ruling and his class option. I do not re-open it.
+
+**3. Step 11's count for the application's claims pass: seven, not four. No byte change is needed for it.** The pass counts what the ballot promises, and the ballot is the whole record, its review rounds included. A promise made in a round and left out of the list it belongs to is the promised-and-never-shipped shape the pass exists to catch. So the count does not depend on whether step 11 names the three. I count them in two classes:
+- **Four from step 11**, each checked to exist at the application merge: § 4's implementation-time-check record (Thurgood) and measurement record (Leonardo); § 5's `docs/collaboration.md` record (Ada) and L373–375 record (Lina). The L59 record's dated close is checked as well, as at R1.
+- **Three from the review rounds**, each checked at the first RELEASE pass whose delta contains the application merge:
+  - Thurgood's `no-hardcoded-color` re-point (R2 item 4a: a rule-10 record "at application", trigger the application merge);
+  - his Integration Guide L697 CORRECTION (R2 item 5, the same form);
+  - Leonardo's `leonardo.md` L329 CORRECTION (R3 item 5).
+  - Each passes when its CORRECTION is merged, or when its record exists at the root with an owner and a trigger.
+- **One note, for Leonardo, not a block.** His R3 item 5 promises the L329 CORRECTION "after application" and names no record and no trigger. That is the one promise of the three with nothing that fires it. Filing a rule-10 record at application, as Thurgood does for his two, would give it one. His seat, his call. [@LEONARDO] -- [STACY R3]
+
+**4. F-A-h: my read changes from (h2) to (h1).** Thurgood's correction is right, and it removes the premise my (h2) rested on. K-i allows the interim "until the outcome", and only the outcome's application removes the marker. So an open `token-gap:` at merge, while the outcome is pending, complies with the text.
+- My R1 item 4 said an open marker at merge "already contradicts that text", and that a claims pass could find the discrepancy with `git grep`. That holds only when the outcome has been applied. In the pending case, the pass must read the Implementation Report and the relay to decide, which is judgment, not a non-model check.
+- Under (h1) an open marker at merge is a discrepancy on the bytes alone, and building check (c) is EXECUTION of a written rule. That is the same reason I read F-A as (i): it is the answer whose failure leaves a trace a non-model check can read.
+- **My row**, in § 8's F-A-h form:
+
+  | Reader | F-A-h | Surviving counter-argument |
+  |---|---|---|
+  | Stacy (R3; revised from (h2) at R1 item 4, on Thurgood's correction) | **(h1)** | Until check (c) is built, the hold is the PRIMARY's own grep, an agent checking its own work, which Peter's self-governance aim rules out as a resting point; with no PR gate it stops nothing; a screen with a pending outcome waits, a system gap included |
+
+- [@ADA] § 8's "On F-A-h" line still says "Stacy reads **(h2)**". Before the sitting it should carry this read and my row. It is a reads-table line, not a site's bytes, so no bytes round follows from it. -- [STACY R3]
+
+**Ready for Peter's sitting, from my seat: yes**, once § 8's "On F-A-h" line carries my revised read (item 4). Until then Peter would read a read I no longer hold. Every site byte I am asked to check is confirmed, and every census line is valid. The other notes (the record count, Leonardo's L329 trigger) change no ballot text and do not hold the sitting.
+
+*Standards implications*: none new. Item 3 is a method of the claims seat, not a standard: a promise is counted where it is made, not only where a list names it.
+
+*Surviving counter-argument*: I changed my F-A-h read in the last round before the sitting, on the reasoning of the reader whose seat would build check (c). The correction is about what the text says, which is his to answer under his Q5 boundary. The read that follows from it is mine, and I checked the premise against K-i's bytes myself. Still, the change of read came from one reader's argument, and no second reader re-checked it.
+
+*Signed: Stacy, 2026-10-26.*
