@@ -14,6 +14,10 @@
  *   - attribution: the Owner token anywhere in the first 15 lines, the seat matched only after it
  *     (Stacy's false-hit header); a record with no Owner line is counted, never printed;
  *   - the first Trigger line is the one read (a multi-Trigger record);
+ *   - the path: list form (ballot 2026-10-26-issues-multi-path-trigger-token, README rule 1): a
+ *     list fires on a touch of any of its globs, at the earliest such commit whatever the glob's
+ *     place in the list; it is bounded below by the Trigger line like one glob; a list with an
+ *     empty element or a space beside a comma prints untokened;
  *   - the ground is origin/main after a fetch: a stale local main and a unit branch's own
  *     commits neither fire nor hide a record;
  *   - condition (i): an offline origin, a fetch that hangs past the timeout, an unknown seat and a
@@ -151,8 +155,18 @@ describe('scripts/issues-owned.sh', () => {
     );
     write(seed, '.kiro/issues/archive/archived.md', record(T, '`manual` — archived, never printed'));
     write(seed, '.kiro/issues/co-owned.md', record('**Owners**: Ada, Lina', '`manual` — two owners'));
+    // The path: list form. Stacy's records, so the Thurgood read above is unchanged.
+    const S = '**Owner**: Stacy';
+    write(seed, '.kiro/issues/list-fires-later-glob.md', record(S, '`path:src/never/*.ts,src/fires/*.ts` — fires on its second glob'));
+    write(seed, '.kiro/issues/list-fires-earliest.md', record(S, '`path:src/fires/*.ts,src/early/**` — two globs touched; the earlier commit is printed'));
+    write(seed, '.kiro/issues/list-unfired.md', record(S, '`path:src/never/*.ts,src/also-never/*.ts` — no glob touched on main'));
+    write(seed, '.kiro/issues/list-bounded.md', record(S, '`path:src/never/*.ts,src/before/*.ts` — one glob touched only before this line'));
+    write(seed, '.kiro/issues/list-trailing-comma.md', record(S, '`path:src/fires/*.ts,` — an empty element'));
+    write(seed, '.kiro/issues/list-space.md', record(S, '`path:src/never/*.ts, src/fires/*.ts` — a space after the comma'));
     commit(seed, 'records');
     git(seed, 'tag', 'v1.2.3');
+    write(seed, 'src/early/deep/e.ts', 'export {};\n');
+    sha.early = commit(seed, 'feat: an earlier change under a listed glob');
     git(seed, 'push', '-q', 'origin', 'main', '--tags');
 
     // The clone is taken now, so its local main is STALE once origin advances below.
@@ -232,6 +246,38 @@ describe('scripts/issues-owned.sh', () => {
       expect(r.lines.length - 1).toBe(8);
       expect(r.lines[r.lines.length - 1]).toBe(
         `8 record(s) for Thurgood at origin/main ${sha.fires}; 2 root record(s) carry no **Owner**:/**Owners**: line`,
+      );
+    });
+  });
+
+  describe('the path: list form, for Stacy', () => {
+    let r: Run;
+    beforeAll(() => {
+      r = run(clone, ['Stacy']);
+    });
+
+    it('fires a list on a touch of any of its globs', () => {
+      expect(lineFor(r, 'list-fires-later-glob.md')?.split('\t')[0]).toBe(`FIRED@${sha.fires}`);
+    });
+
+    it('prints the earliest commit across the globs, whatever their order in the list', () => {
+      expect(lineFor(r, 'list-fires-earliest.md')?.split('\t')[0]).toBe(`FIRED@${sha.early}`);
+    });
+
+    it('is quiet when no glob is touched after the Trigger line', () => {
+      expect(lineFor(r, 'list-unfired.md')).toBeUndefined();
+      expect(lineFor(r, 'list-bounded.md')).toBeUndefined();
+    });
+
+    it('prints a malformed list as untokened, never as a silent non-fire', () => {
+      expect(lineFor(r, 'list-trailing-comma.md')?.split('\t')[0]).toBe('untokened');
+      expect(lineFor(r, 'list-space.md')?.split('\t')[0]).toBe('untokened');
+    });
+
+    it('ends with the count line for Stacy', () => {
+      expect(r.lines.length - 1).toBe(4);
+      expect(r.lines[r.lines.length - 1]).toBe(
+        `4 record(s) for Stacy at origin/main ${sha.fires}; 2 root record(s) carry no **Owner**:/**Owners**: line`,
       );
     });
   });

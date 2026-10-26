@@ -3,7 +3,8 @@
 #
 # Law: ballot .kiro/docs/ballots/2026-10-20-manual-records-routed-readers.md § 2 E1 (RATIFIED,
 # Peter, 2026-10-20, with conditions (i) fail-soft and (ii) a revisit trigger); Start Up Tasks
-# item 9. Firing follows ballot 2026-10-18-obligation-drain-and-release-falsity-floor M2.
+# item 9. Firing follows ballot 2026-10-18-obligation-drain-and-release-falsity-floor M2. The
+# path: list form follows ballot 2026-10-26-issues-multi-path-trigger-token (README rule 1).
 #
 # A READ, NEVER A GATE: exits 0 always. On any error it prints exactly one line,
 #   issues-owned: unavailable (<why>) — continue
@@ -17,11 +18,13 @@
 # Output, one line per printed record:  <state>\t<path>\t<Trigger line after "**Trigger**: ", 160 chars>
 #   manual        always printed
 #   due:<ver>     a release:<ver>:phase-1 token
-#   FIRED@<sha>   a path: token with a first-parent commit touching the glob after the commit that
+#   FIRED@<sha>   a path: token with a first-parent commit touching the glob (or any glob of a
+#                 comma-separated list; <sha> is the earliest such commit) after the commit that
 #                 last changed a **Trigger**: line in the record; a merge:#<N> token with a
 #                 first-parent subject ending (#<N>) anywhere on origin/main
 #   FIRED@<tag>   a tag:v<semver> token whose tag exists
-#   untokened     a Trigger line with no recognised token (README rule 1; a walk finding)
+#   untokened     a Trigger line with no recognised token (README rule 1; a walk finding), including
+#                 a path: list with an empty element or an element that begins or ends with a space
 # Unfired path:/merge:/tag: records print nothing. The last line gives the count, the ref and its
 # SHA, and the number of root records with no **Owner**:/**Owners**: line.
 #
@@ -117,10 +120,21 @@ for f in $FILES; do
   case "$tok" in
     manual) state=manual ;;
     path:?*)
-      tc=$(git log -1 --format=%H -G'^\*\*Trigger\*\*: ' "$REF" -- "$f" 2>/dev/null)
-      if [ -n "$tc" ]; then range="$tc..$REF"; else range="$REF"; fi
-      fc=$(git log --first-parent --reverse --format=%h "$range" -- ":(glob)${tok#path:}" 2>/dev/null | head -1)
-      [ -n "$fc" ] && state="FIRED@$fc"
+      # One glob, or a comma-separated list of globs (README rule 1). A malformed list prints
+      # untokened, never a silent non-fire.
+      globs=${tok#path:}
+      case ",$globs," in
+        *,,* | *', '* | *' ,'*) state=untokened ;;
+        *)
+          specs=()
+          IFS=',' read -r -a parts <<<"$globs"
+          for g in "${parts[@]}"; do specs+=(":(glob)$g"); done
+          tc=$(git log -1 --format=%H -G'^\*\*Trigger\*\*: ' "$REF" -- "$f" 2>/dev/null)
+          if [ -n "$tc" ]; then range="$tc..$REF"; else range="$REF"; fi
+          fc=$(git log --first-parent --reverse --format=%h "$range" -- "${specs[@]}" 2>/dev/null | head -1)
+          [ -n "$fc" ] && state="FIRED@$fc"
+          ;;
+      esac
       ;;
     merge:\#[0-9]*)
       num=${tok#merge:#}
