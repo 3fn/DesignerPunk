@@ -606,7 +606,11 @@ static styles = css`
     padding: var(--space-inset-050) var(--space-inset-100);
     background: var(--color-action-primary);
     color: var(--color-text-default);
-    font: var(--typography-button-md);
+    font-family: var(--typography-button-md-font-family);
+    font-size: var(--typography-button-md-font-size);
+    font-weight: var(--typography-button-md-font-weight);
+    line-height: var(--typography-button-md-line-height);
+    letter-spacing: var(--typography-button-md-letter-spacing);
     border-radius: var(--radius-100);
   }
 `;
@@ -615,29 +619,31 @@ static styles = css`
 **iOS**: Swift constants
 ```swift
 // platforms/ios/ButtonCTA.ios.swift
+// theme: theme-varying colors, read as in "Token Consumption by Platform (Spec 094)" below
 Button(action: action) {
     Text(label)
-        .font(typographyButtonMd)
-        .foregroundColor(colorTextDefault)
+        .font(DesignTokens.typographyButtonMd)
+        .foregroundColor(theme.colorTextDefault)
 }
-.padding(.horizontal, spaceInset100)
-.padding(.vertical, spaceInset050)
-.background(colorActionPrimary)
-.cornerRadius(radius100)
+.padding(.horizontal, DesignTokens.spaceInset100)
+.padding(.vertical, DesignTokens.spaceInset050)
+.background(theme.colorActionPrimary)
+.cornerRadius(DesignTokens.radius100)
 ```
 
 **Android**: Kotlin constants
 ```kotlin
 // platforms/android/ButtonCTA.android.kt
+// theme: theme-varying colors, read as in "Token Consumption by Platform (Spec 094)" below
 Button(
     onClick = onClick,
     modifier = modifier
-        .padding(horizontal = spaceInset100.dp, vertical = spaceInset050.dp)
+        .padding(horizontal = DesignTokens.space_inset_100, vertical = DesignTokens.space_inset_050)
 ) {
     Text(
         text = label,
-        style = typographyButtonMd,
-        color = colorTextDefault
+        style = DesignTokens.typography_button_md,
+        color = theme.color_text_default
     )
 }
 ```
@@ -714,7 +720,7 @@ const iconElement = createIcon({
 // iOS: SF Symbols for status indicators (internal implementation)
 // ✅ CORRECT: Use icon size token
 Image(systemName: "exclamationmark.circle.fill")
-    .font(.system(size: iconSize075))
+    .font(.system(size: DesignTokens.iconSize075))
 
 // ❌ WRONG: Hard-coded size
 Image(systemName: "exclamationmark.circle.fill")
@@ -760,7 +766,7 @@ This component uses direct SF Symbols for status indicators because:
 <icon-base name="arrow-right" size="24"></icon-base>
 
 <!-- With color override -->
-<icon-base name="check" size="24" color="color-success"></icon-base>
+<icon-base name="check" size="24" color="color-feedback-success-text"></icon-base>
 ```
 
 **Using Icon Size Tokens in CSS**:
@@ -798,22 +804,22 @@ const icon = createIcon({
 **Using Icon Component**:
 ```swift
 // Icon component with token-based sizing
-Icon(name: "arrow-right", size: iconSize100)
+Icon(name: "arrow-right", size: DesignTokens.iconSize100)
 
 // With custom color
-Icon(name: "check", size: iconSize100)
-    .foregroundColor(colorFeedbackSuccessText)
+Icon(name: "check", size: DesignTokens.iconSize100)
+    .foregroundColor(theme.colorFeedbackSuccessText)
 ```
 
 **Using Direct SF Symbols with Tokens**:
 ```swift
 // ✅ CORRECT: SF Symbol with icon size token
 Image(systemName: "exclamationmark.circle.fill")
-    .font(.system(size: iconSize075))
+    .font(.system(size: DesignTokens.iconSize075))
 
 // ✅ CORRECT: SF Symbol with frame using token
 Image(systemName: "checkmark.circle.fill")
-    .frame(width: iconSize100, height: iconSize100)
+    .frame(width: DesignTokens.iconSize100, height: DesignTokens.iconSize100)
 
 // ❌ WRONG: Hard-coded size
 Image(systemName: "exclamationmark.circle.fill")
@@ -830,13 +836,13 @@ Image(systemName: "exclamationmark.circle.fill")
 **Using Icon Component**:
 ```kotlin
 // Icon component with token-based sizing
-Icon(name = "arrow_right", size = iconSize100)
+Icon(name = "arrow_right", size = DesignTokens.icon_size_100)
 
 // With custom color
 Icon(
     name = "check",
-    size = iconSize100,
-    tint = colorFeedbackSuccessText
+    size = DesignTokens.icon_size_100,
+    tint = theme.color_feedback_success_text
 )
 ```
 
@@ -846,14 +852,14 @@ Icon(
 Icon(
     imageVector = Icons.Default.CheckCircle,
     contentDescription = "Success",
-    modifier = Modifier.size(iconSize100)
+    modifier = Modifier.size(DesignTokens.icon_size_100)
 )
 
 // ✅ CORRECT: Custom drawable with size token
 Icon(
     painter = painterResource(id = R.drawable.ic_status),
     contentDescription = "Status",
-    modifier = Modifier.size(iconSize075)
+    modifier = Modifier.size(DesignTokens.icon_size_075)
 )
 
 // ❌ WRONG: Hard-coded size
@@ -879,7 +885,7 @@ Image(systemName: "icon-name")
 
 // DO: Use icon size tokens
 Image(systemName: "icon-name")
-    .font(.system(size: iconSize075))
+    .font(.system(size: DesignTokens.iconSize075))
 ```
 
 #### ❌ Inconsistent Icon Usage Within Component
@@ -909,7 +915,7 @@ class MyComponent {
 ```swift
 // DON'T: Use direct platform icons without documentation
 Image(systemName: "exclamationmark.circle.fill")
-    .font(.system(size: iconSize075))
+    .font(.system(size: DesignTokens.iconSize075))
 
 // DO: Document rationale in component README
 // See "When Direct Platform Icons Are Acceptable" section above
@@ -972,7 +978,7 @@ let spaceInset100: CGFloat = 8
 
 **Android Output** (Kotlin):
 ```kotlin
-val spaceInset100 = 8.dp
+val space_inset_100 = 8.dp
 ```
 
 **3. Platform implementations use generated tokens**:
@@ -989,6 +995,8 @@ Tokens are split into two categories: **static tokens** (spacing, sizing, radius
 var(--space-inset-100)          /* Static — same in all themes */
 var(--color-action-primary)     /* Theme-varying — changes with data-theme attribute */
 ```
+
+The build does not yet emit the native theme surface: `generate` writes no `{Name}Theme` protocol or data class, environment key or `CompositionLocal`, and leaves the theme-varying colors out of `DesignTokens`, so on iOS and Android the `theme.` names below match the token index and the components but no generated file (`.kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md`; Spec 129).
 
 **iOS** — Static tokens via `DesignTokens`, theme-varying via `@Environment`:
 ```swift
@@ -1007,7 +1015,7 @@ DesignTokens.space_inset_100
 
 // Theme-varying tokens — read from CompositionLocal
 val theme = Local{Abbreviation}Theme.current
-theme.colorActionPrimary
+theme.color_action_primary
 ```
 
 **Key rule**: Components should NOT mix static and theme-aware access for the same token. If a token is in the theme-varying set (determined by the ThemeRegistry), always use the theme-aware access pattern on iOS/Android. On web, all tokens use CSS custom properties regardless.
@@ -1461,7 +1469,7 @@ All component-scoped CSS custom properties MUST use the `--_[abbrev]-*` naming p
 --_cta-hover-bg: #...;      /* Button-CTA internal */
 --_vlbi-background: #...;   /* Button-VerticalList-Item internal */
 --_itb-focus-color: #...;   /* Input-Text-Base internal */
---_bi-icon-color: #...;     /* ButtonIcon internal */
+--_bi-pressed-bg: #...;     /* ButtonIcon internal */
 
 /* Design system tokens (external) - no underscore */
 --color-action-primary: #...;
@@ -1485,7 +1493,7 @@ All component-scoped CSS custom properties MUST use the `--_[abbrev]-*` naming p
 |-----------|--------------|-------------------|
 | Button-CTA | `_cta` | `--_cta-hover-bg`, `--_cta-pressed-bg` |
 | Button-VerticalList-Item | `_vlbi` | `--_vlbi-background`, `--_vlbi-border-color` |
-| ButtonIcon | `_bi` | `--_bi-hover-bg`, `--_bi-icon-color` |
+| ButtonIcon | `_bi` | `--_bi-hover-bg`, `--_bi-pressed-bg` |
 | Input-Text-Base | `_itb` | `--_itb-focus-color` |
 
 ### When to Use Each Type
