@@ -27,7 +27,7 @@ Icon-Base is the foundational primitive component for all icon components in the
 <icon-base name="arrow-right" size="24"></icon-base>
 
 <!-- With color override -->
-<icon-base name="check" size="32" color="color-success"></icon-base>
+<icon-base name="check" size="32" color="color-feedback-success-text"></icon-base>
 
 <!-- With optical balance -->
 <icon-base name="arrow-right" size="24" color="#A855F7" optical-balance="true"></icon-base>
