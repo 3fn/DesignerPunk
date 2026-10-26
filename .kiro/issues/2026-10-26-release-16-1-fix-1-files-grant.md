@@ -23,3 +23,7 @@
 ## What this grant does not cover
 
 Anything else, including any other line of the release notes. An edit outside the list is a claims-pass finding. *(Amended 2026-10-26, Thurgood, twice before this record's activating PR #498 merged: the notes path was added for L57 on Stacy's #497 update (RL-22), then for the Date line on the orchestrator's go.)*
+
+---
+
+**2026-10-26 — CLOSED at #499's merge (Thurgood, owner, rule 5).** The grant was consumed by its fixing PR, #499 (`release/16.1.0-fix-1`, squash `ff3e7dad7`, merged 2026-10-26T13:34:59Z), and by its own text it expired there. #499 carried no outcome line for it, so it stayed open at the root past its fixing PR's merge: Stacy's O-31 (her addendum on the final S `dddf46d4f`, commit `3713247be`), a walk finding under rule 11 ("a grant still open at its fixing PR's merge"). This line closes it, and the next commit moves it to `archive/`, in the grant PR for fix 2 (`.kiro/issues/2026-10-26-release-16-1-fix-2-files-grant.md`). Rule 4: not a ruling on the merits.
