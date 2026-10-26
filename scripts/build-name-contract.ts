@@ -251,7 +251,12 @@ export interface TierEntry {
 }
 
 interface IndexEntry {
-  platforms?: { web?: string };
+  /**
+   * One name, the several names a composite is emitted as, or `null` where web carries no name
+   * (`generateTokenIndex.ts` § IndexPlatformName;
+   * `.kiro/issues/2026-10-26-token-index-platform-names-not-emitted.md`).
+   */
+  platforms?: { web?: string | string[] | null };
   primitiveReferences?: Record<string, string>;
   component?: string;
 }
@@ -259,9 +264,12 @@ interface IndexEntry {
 const kebab = (s: string): string => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 
 /**
- * CSS custom-property name → tier. A composite token (typography, motion) is ONE
- * index entry but several CSS properties: `<web>-<kebab(key)>` for each
- * `primitiveReferences` key other than `value` (the generator's expansion).
+ * CSS custom-property name → tier. A composite token (typography, shadow, motion) is ONE
+ * index entry but several CSS properties. The index lists them (`platforms.web` is a list);
+ * each listed name maps to the token, with `part` the `primitiveReferences` key it carries
+ * (`--typography-body-md-font-size` → `fontSize`; a shadow's composite `--shadow-container`
+ * has no part). An older index gave a composite its stem as one string; for that form the
+ * names are `<web>-<kebab(key)>` for each key other than `value` (the generator's expansion).
  */
 export function buildTierIndex(docs: Record<Tier, Record<string, IndexEntry>>): Map<string, TierEntry> {
   const idx = new Map<string, TierEntry>();
@@ -270,12 +278,16 @@ export function buildTierIndex(docs: Record<Tier, Record<string, IndexEntry>>): 
       const web = entry.platforms?.web;
       if (!web) continue;
       const family = entry.component;
-      if (!idx.has(web)) idx.set(web, { tier, token, ...(family ? { family } : {}) });
       const keys = Object.keys(entry.primitiveReferences ?? {}).filter((k) => k !== 'value');
-      for (const key of keys) {
-        const sub = `${web}-${kebab(key)}`;
-        if (!idx.has(sub)) idx.set(sub, { tier, token, part: key, ...(family ? { family } : {}) });
+      const put = (name: string, part?: string) => {
+        if (!idx.has(name)) idx.set(name, { tier, token, ...(part ? { part } : {}), ...(family ? { family } : {}) });
+      };
+      if (Array.isArray(web)) {
+        for (const name of web) put(name, keys.find((key) => name.endsWith(`-${kebab(key)}`)));
+        continue;
       }
+      put(web);
+      for (const key of keys) put(`${web}-${kebab(key)}`, key);
     }
   }
   return idx;

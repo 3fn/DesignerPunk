@@ -384,6 +384,9 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
     resolvedLight,
     resolvedDark,
     themeVaryingTokens: baseThemeVaryingTokens,
+    // The registry-wide set the native generators were given above, for the index's iOS and
+    // Android columns only (their `theme.` names). Not merged into the base set.
+    nativeThemeVaryingTokens: new Set(themeVaryingTokens),
     primitiveOklch,
   };
 }
