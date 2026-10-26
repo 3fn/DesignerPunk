@@ -1,22 +1,29 @@
 # Ballot Measure: when a record filed after the release walk first lapses, and when Peter's "spec" answer is carried out
 
-**Date**: 2026-10-25
-**Drafted by**: Thurgood (Civitas steward; owner of `.kiro/issues/README.md`), with Stacy as co-drafter and required reviewer. This is at Peter's direction: Peter, chat, 2026-10-25, relayed verbatim by the orchestrator, *"Re: class-level problem: Let's go with the fix, please."* The class-level problem is the one stated in the 16.1.0 walk record, `.kiro/issues/2026-10-25-release-16.1.0-walk.md` § "Records filed after the walk: when they first lapse (a standards implication, mine)". Peter's answer is recorded there in § "The six lines for Peter: RULED".
+**Date**: 2026-10-25 (R2: 2026-10-26)
+**Drafted by**: Thurgood (Civitas steward; owner of `.kiro/issues/README.md`), at Peter's direction. Peter, chat, 2026-10-25, relayed verbatim by the orchestrator, *"Re: class-level problem: Let's go with the fix, please."* The class-level problem is the one stated in the 16.1.0 walk record, `.kiro/issues/2026-10-25-release-16.1.0-walk.md` § "Records filed after the walk: when they first lapse (a standards implication, mine)". Peter's answer is recorded there in § "The six lines for Peter: RULED". *(R2: Stacy reviews rather than co-drafts. She writes no text she then reviews (her R1). Sentence 2's text is Lina's, from her R1.)*
 **Status**: **DRAFT**, not ratified. No edit site below is applied. A merge with this line still reading DRAFT records the measure, ratifies nothing, and answers no fork in § 6.
-**Required reviewer**: **Stacy** (R1). She counts lapses in her claims passes, raised the inflation point (§ 1), and is re-ruling her own instance record.
-**Reviewers**: **Lina** (R1, on F-2 only). Her web-element record is the "spec"-answer instance (§ 1.2), and F-2 asks her question back.
-**Class**: LAW. It changes when a record lapses and when an escalation answer is carried out (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds").
+**Required reviewer**: **Stacy** (R1 done; R2 on this revision). She counts lapses in her claims passes, raised the inflation point (§ 1), and is the census reader.
+**Reviewers**: **Lina** (R1 done, on F-2 and item (2)). Her web-element record is the "spec"-answer instance (§ 1.2).
+**Class**: LAW. It changes when a record lapses, when an escalation answer is carried out, and, at the severable site 3, what phase 1 reads (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds").
 **Amends**:
 - `.kiro/issues/README.md` rule 11, two sentences (§ 2).
 - `governance/classification-map.md` row `issues-obligation-lapse`: the `rule:` line gains two clauses; `education` LAW HOME gains this ballot; one history line. `checks` and `check_state` are unchanged.
+- **Site 3, severable (F-3)**: `.kiro/hooks/RELEASE-FLOW.md`, the **Phase 1** bullet of step 6's "The RELEASE claims pass runs in two phases" (L199 at `a03b92f02`), one sentence. Also `governance/classification-map.md` row `release-falsity-floor`, one history line and a POINTER-GRADE entry.
 
-**Census**: rule 11 is read by no registered instrument. The `issues-obligation-lapse` row has `checks: []`, and `scripts/issues-owned.sh` is in no row's `checks`. The register file is loaded by two instruments, so the item is presumptively in scope (condition 1):
-- `**Census**: not in scope — check-section-citations (scripts/check-section-citations.ts, citing corpus governance/) — the rule-line clauses, the education string and the history line carry no get_section / get_document_* citation`
-- `**Census**: not in scope — 122-diff-guard (tools/agent-generator/diff-guard.ts; governance/ is an input-closure root) — governance/ is an ordinary closure input; no rule, pattern or grammar changes; the lock is refreshed at application, where its verdict is read`
+**Census** (amended at R2 for site 3):
+- Rule 11 is read by no registered instrument. The `issues-obligation-lapse` row has `checks: []`. `scripts/issues-owned.sh` implements rule 1 and rule 11 firing semantics, but it is in no row's `checks`, so no census line is owed for it. That is the census rule's known gap (Stacy R1), and § 7 records it. Sentence 1 is limited to `release:next:phase-1`, for which the script prints `due:next` and computes no lapse. Its output is therefore unchanged, and it can print no false `FIRED` line.
+- The register file is loaded by two instruments, so the item is presumptively in scope (condition 1):
+  - `**Census**: not in scope — check-section-citations (scripts/check-section-citations.ts, citing corpus governance/) — the rule-line clauses, the education strings and the history lines carry no get_section / get_document_* citation`
+  - `**Census**: not in scope — 122-diff-guard (tools/agent-generator/diff-guard.ts; governance/ is an input-closure root) — governance/ is an ordinary closure input; no rule, pattern or grammar changes; the lock is refreshed at application, where its verdict is read`
+- Site 3's file, `.kiro/hooks/RELEASE-FLOW.md`, is cited as law by the `education` of two rows with registered checks, so the item is presumptively in scope (condition 2):
+  - `**Census**: not in scope — hermetic-publish-path (scripts/release-publish.ts) — site 3 adds a read to phase 1, a claims-pass step; no dry-run, publish or tag check, assertion or floor changes`
+  - `**Census**: not in scope — publish-rail-guard (scripts/verify-publish-rail.sh) — site 3 does not touch step 6; no rail assertion or verdict changes`
+  - The `release-falsity-floor` row has `checks: []`, so no census line is owed for it.
 
-**Cap**: two sentences in rule 11, plus the register row's matching edits. **Retroactivity**: none (§ 5).
+**Cap**: two sentences in rule 11, one sentence in RELEASE-FLOW (severable), and the two register rows' matching edits. **Retroactivity**: none (§ 5).
 
-> **Conflict of interest, stated first.** I own the README convention. I wrote the 16.1.0 guidance this measure replaces, and the earlier framing it corrected, which made the owner's re-rule wait on Peter's "carry". I am also the owner of row 1 of one of the three instance records. Stacy's review and Peter's ruling are the checks.
+> **Conflict of interest, stated first.** I own the README convention. I wrote the 16.1.0 guidance this measure replaces, and the earlier framing it corrected, which made the owner's re-rule wait on Peter's "carry". I owned row 1 of one of the three instance records. I also authored the walk text that sentence 1's row condition reads. Stacy's review, Lina's review and Peter's ruling are the checks.
 
 ---
 
@@ -41,75 +48,119 @@ Peter answered row 12 (`2026-10-20-web-element-api-and-form-participation.md`, L
 
 **Sentence 1.** After "**A record still open after a lapse lapses again at each later release's S.**", insert:
 
-> **A record filed after the release's walk record merged** — its adding commit is not an ancestor of that merge — does not lapse at that release's S if the walk record carries a row for it in a commit that is an ancestor of S; its first firing is the next release's S. A record filed then and not rowed lapses at S like any other. The release falsity floor is unchanged (RELEASE-FLOW 3a) *(ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers)*.
+> **A record filed after the release's walk record merged** — its adding commit is not an ancestor of that merge — whose Trigger token is `release:next:phase-1` does not lapse at that release's S if the walk record has a row for it at S; its first firing is then the next release's S. A record filed then and not rowed lapses at S like any other. A row is a line of the walk record that begins `|` and contains the record's file name (`<date>-<slug>.md`, with or without a `.kiro/issues/` prefix). Records whose token is `release:<V>:phase-1` or `tag:v<V>` are not carried. The release falsity floor is unchanged (RELEASE-FLOW 3a) *(ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers)*.
 
-**Sentence 2.** After "A lapsed fix-now returns without that option.", insert:
+**Sentence 2** (Lina's wording, R1). After "A lapsed fix-now returns without that option.", insert:
 
-> A **spec** answer is carried out when the spec's design outline merges and names the record; that merge closes it (rule 5, its outcome line naming the spec). Until then, each later lapse returns the record to Peter with his spec answer quoted.
+> A **spec** answer is carried out when the spec's design outline merges and names the record. From that merge the record's owner re-rules its Trigger to the event that owes its close (the record's own deadline, or the spec's fixing PR once it exists), and the record closes under rule 5 when its items close. Until the outline merges, each later lapse returns the record to Peter with his spec answer quoted.
 
 **The reading, decidable without the author** (this ballot is the law home for both sentences):
-- **"Filed after the walk record merged"** is a git fact. Take the commit that added the record's file (`git log --diff-filter=A --format=%H -- <file>`, oldest). Take the walk record's merge commit, the first-parent commit on `main` that added `.kiro/issues/<date>-release-<V>-walk.md`. Then run `git merge-base --is-ancestor <adding> <walk-merge>`; exit 1 means the record was filed after.
-- **"Carries a row for it"** means the walk record names the record's path in a table row or a row line, in a commit that is an ancestor of S. An addendum appended before S counts, as 16.1.0's rows 30–45 did.
-- **The floor**: a P0 filed after the walk is still a phase-1 finding, and a floor-class reading still holds the tag (RELEASE-FLOW 3a). Sentence 1 moves a lapse and nothing else.
-- **"Names the record"**: the design outline cites the record's path. A record a spec takes in with no outline citation is not closed by sentence 2.
-- **Spec answers already given are covered by sentence 2.** That includes row 12's. Its next lapse before the charter returns it to Peter with "Spec" quoted.
+- **"Filed after the walk record merged"** is a git fact.
+  - Take the record's adding commit: `git log --diff-filter=A --format=%H -- <file>`, the oldest result.
+  - Take the walk record's merge: the first-parent commit on `main` that added `.kiro/issues/<date>-release-<V>-walk.md`.
+  - Run `git merge-base --is-ancestor <adding> <walk-merge>`. Exit 1 means the record was filed after the walk merged.
+  - At 16.1.0 the walk merge is `264c25661`, and row 36's adding commit is `56fdf50ca`, which gives exit 1 (Stacy R1, § 1).
+- **"Has a row for it at S"** (A1): run `git show <S>:<walk record> | grep '^|' | grep -F <file name>`, and count one or more lines.
+  - A G-line, guidance prose or a pointer is not a row. At 16.1.0, row 36's file name appears three times in the walk record and only one of those lines is a row (Stacy R1).
+  - An addendum appended before S counts, as 16.1.0's rows 30–45 did.
+  - The row is a **condition** of the carry, not a duty on the walk's author. Stacy R1, A4, notes that this differs from Peter's ruled sentence ("and is rowed in the walk addendum"), which makes the row a duty. The condition fails safe: an unrowed record lapses as it does today, and the lapse is visible. **It is a change to his words, and it is put to him as such at ratification (§ 6, F-1).**
+- **Which tokens** (A3):
+  - Only `release:next:phase-1` is carried.
+  - A `release:<V>:phase-1` that names the release being cut is the event its owner chose, so carrying it would contradict rule 1.
+  - A `tag:v<V>` fires at the tag, not at S, and `scripts/issues-owned.sh` would print `FIRED@v<V>` for a record the rule called unfired, which is a false `FIRED` line.
+- **The floor** (A2): sentence 1 moves a lapse and nothing else. **The draft's claim that "a P0 filed after the walk is still a phase-1 finding" is withdrawn as written**: under current law nothing re-reads the root at S, so no reader sees such a P0. Site 3 (F-3, severable) names that read. If site 3 is struck, a post-walk P0 reaches the release only through someone's P0 line, as it does today.
+- **"Names the record"** (sentence 2): the design outline contains the record's file name, with or without a `.kiro/issues/` prefix, by the same `grep -F` test.
+- **"Re-rules its Trigger"** (sentence 2) is a re-rule in rule 11's sense: the Trigger line changed in a diff carrying a dated reason and authority. Peter's spec answer, quoted, is the authority. The outline PR can carry the re-rule, or the owner's next commit can.
+  - The record stays at the root and keeps its kind, so the walk's greps and 3a's floor still see it (Stacy R1, § 4). It is archived only under rule 5, when its items are resolved, because rule 2 says `archive/` holds resolved defects (Lina R1).
+  - From the outline merge on, the record carries **status only**: per-item outcome lines citing the spec's fixing PRs, and verifiers' lines. The spec carries the plan. This is an owner's rule-9 duty, which Lina accepts (R1).
+- **Spec answers already given** are covered by sentence 2 from the application merge on. That includes row 12. Lina waits for ratification and then re-rules it to the option Peter picks (her R1).
+
+**Site 3 (severable, F-3)**: `.kiro/hooks/RELEASE-FLOW.md`, the **Phase 1** bullet (L199 at `a03b92f02`). After "It covers the release delta, the walk record (item 3a: its paste, its `main at:` SHA and each row's disposition), the 5a owed-set paste, the 5b arming line and 5.1's tally.", insert:
+
+> It also re-runs item 3a's two greps at S and reads each hit the walk record does not row: a P0 among them is a floor-class row for this release, owed a fix or Peter's quoted, dated waiver before the tag; any other is listed with its rule-11 state *(ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers, site 3)*.
+
+Stacy already runs this read by habit (R1, § 1). Site 3 makes it the law's read, so it no longer rests on one reviewer's habit (her A2).
 
 ## 3. Recommendation, counter-argument (fold-back applied), residual
 
-**Recommendation**: both sentences as written.
-- Sentence 1 replaces a per-record owner act (the interim re-rule, which costs one commit per owner per release) with a git fact, and keeps the release's view of the record through the row it requires.
-- Sentence 2 gives the spec answer the same kind of end point fix-now already has.
+**Recommendation**:
+- **Sentence 1 as amended (F-1 (A))**: a git fact plus a row condition, limited to `release:next:phase-1`. It replaces a per-record owner act (the interim re-rule, about three ritual commits a release) and fails safe.
+- **Sentence 2 in Lina's (b′) form (F-2 (b′))**: the spec answer has an end point, and the record keeps the clock and the floor's sight until what it describes is resolved. Stacy withdraws her block for this form (R1, § 4 and verdict).
+- **Site 3 included (F-3 include)**: without it, § 2's floor bullet can promise nothing about a post-walk P0.
 
 **Counter-argument, run against the proposal**:
-- **(i)** A default carry takes away the owner's decision point. A fresh `(guard)` record that could have been fixed before S is deferred without anyone choosing that. Post-walk filings also cluster in the release window (trio findings, claims-pass findings), so the records most likely to bite the release being cut are exactly the ones carried past it.
-- **(ii)** Closing at the charter removes the release walk as a backstop. A chartered spec can stall for months while the defect stays in shipped code, and a deadline the record carried (row 12's 17.0.0) would then live only in the spec's prose.
+- **(i)** A default carry is a deferral nobody chose. Post-walk filings cluster in the release window: at 16.1.0, three P2 `(guard)` records came in one PR on S's day. If Peter does not rule at the row, a guard weaker than its claim ships for one more release by default.
+- **(ii)** Under (b′), once the outline merges, the record's clock is whatever its owner re-rules it to. A deadline nobody plans (`release:17.0.0:phase-1`, with 17.0.0 uncharted) never fires. The walk then sees the items every month and is forced to do nothing (Lina R1).
+- **(iii)** Site 3 adds a step to the claims pass at the release's most crowded point, between 5.1 and the tag.
 
 **Folded in**:
-- From (i): the carry needs a walk row, so the release still sees the record, and Peter can rule on it at that release (16.1.0's G lines did this). The floor is untouched, so a post-walk P0 still holds the tag.
-- From (ii): the record closes only when the outline *names* it, so the spec's requirements inherit its items by citation. F-2 puts the deadline question to Lina and Peter rather than deciding it here.
+- From (i): the carry needs a row, so Peter sees the record at that release and may rule on it there, as he did at 16.1.0. Stacy will count carries by class, rowed and unrowed, in each RELEASE record (R1, § 5). A rising rate is the signal for rote rowing and late filing. Whether that count belongs in her charter's counting block is her edit and Peter's pick. It is outside this ballot's cap.
+- From (ii): the record stays at the root as a `defect`, with per-item status, so a stall is visible at each monthly walk. The 17.0.0 bound is carried as a token rather than as prose.
+- From (iii): the read reuses 3a's two commands at S, and Stacy runs it already. Its new cost is only that it is required.
 
 **What survives**:
-1. A carried `(guard)` record filed on the day of S first escalates one full release later, and the walk row is a read, not a disposition. If Peter does not rule at the row, nothing forces a decision on it at that release.
-2. Under sentence 2, once a spec is chartered, nothing in the issues convention checks that spec's progress. The spec process (its tasks, its claims pass, the owed-set query) becomes the only backstop. A spec that stalls before its tasks round is not on the owed-set until it lands one.
+1. A carried `(guard)` record filed on S's day first escalates one release later, and a row is a read, not a ruling. If the rowing is rote, the row condition always holds (Stacy R1, § 2).
+2. **A stalled spec has no clock.** A chartered spec that stalls appears in the owed-set output only as a `stub` row, never as a candidate: visible, never owed (Stacy R1, § 4, correcting the R1 draft's residual). Spec 113 is the instance: its outline merged on 2026-06-05 (`17e0262e2`), and its only later touch is the DORMANT line (#430, 2026-10-21). Under (b′) a record its outline named would sit at the root, seen at every walk, with a token that need not fire. **Whether a stalled spec should count as a lapse is a new rule. It is outside this ballot's cap, and it is recorded here as an open question for a later ballot, not as a fork.**
+3. 3a's due-row grep matches only `release:(<V>|next)`. So a record re-ruled under (b′) to `release:17.0.0:phase-1` is not a due row at any minor release's walk. The monthly walk sees it; the release walk does not, unless it carries `**Class**: P0` (Stacy R1, § 6). This gap already exists for every record whose token is not due at the release. It is named so that (b′) is not read as closing it.
+4. The no-window lapse also reaches records filed *with* the walk whenever the walk and S are hours apart (16.1.0's rows 25–28). Sentence 1 measures its window from the walk to S, because the walk is the designed point of observation (Stacy R1, residual).
 
 ## 4. Edit sites and application (after ratification, one PR, Peter-merged)
 
-1. **The Status commit** (record-first): `**Status**: **RATIFIED (Peter, <date>)** — <F-1, F-2 answers>`, and the ballots README roll entry.
-2. `.kiro/issues/README.md` rule 11: sentences 1 and 2 as ratified (§ 2, with F-1 and F-2 resolved). The README is not on the edit-kinds path list, so no `**Edit kind**:` line is owed for it; the PR body cites this ballot as its authority.
+1. **The Status commit** (record-first): `**Status**: **RATIFIED (Peter, <date>)** — <F-1, F-2, F-3 answers>`, and the ballots README roll entry.
+2. `.kiro/issues/README.md` rule 11: sentences 1 and 2 as ratified (§ 2, with F-1 and F-2 resolved). The README is not on the edit-kinds path list, so no `**Edit kind**:` line is owed for it; the PR body cites this ballot.
 3. `governance/classification-map.md` row `issues-obligation-lapse`:
-   - The `rule:` line gains the clauses "a record filed after the release's walk record merged and rowed there first lapses at the next release's S" and "a spec answer is carried out when the spec's design outline merges naming the record".
+   - The `rule:` line gains the clauses "a `release:next:phase-1` record filed after the release's walk record merged and rowed there first lapses at the next release's S" and "a spec answer is carried out when the spec's design outline merges naming the record; the owner then re-rules the Trigger, and the record closes when its items do".
    - `education` LAW HOME gains "ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers § 2".
    - One history line.
-   - Edit kind: EXECUTION (this ballot § 4 step 3).
-4. Checks: `npm run -s check:section-citations`; `npm run -s check:122:diff-guard` (the lock refresh, if the closure moves); `node scripts/validate-steering-metadata.js`.
-5. **No straggler sweep is owed beyond the register row.** The 16.1.0 walk record's guidance paragraph is a ledger, and it keeps its text.
+   - `**Edit kind**: governance/classification-map.md — EXECUTION (this ballot § 4 step 3)`.
+4. **If F-3 is "include"**:
+   - `.kiro/hooks/RELEASE-FLOW.md` gets site 3's sentence: `**Edit kind**: .kiro/hooks/RELEASE-FLOW.md — LAW (.kiro/docs/ballots/2026-10-25-rule-11-post-walk-filings-and-spec-answers.md)`.
+   - The `release-falsity-floor` row's `education` gains a POINTER-GRADE entry ("RELEASE-FLOW Phase 1, the S re-read (this ballot, site 3)"), and the row gains one history line, under the same EXECUTION line as step 3.
+5. Checks:
+   - `npm run -s check:section-citations`.
+   - `npm run -s check:122:diff-guard` (the lock refresh, if the closure moves).
+   - `node scripts/validate-steering-metadata.js`.
+   - **`npm run test:scripts`**: the audience-banner guard scans `governance/*.md` (`scripts/audience-banner/predicate.ts`, `SCAN_SCOPE`), and the register edits add "ballot" strings to `governance/classification-map.md` (§ 7).
+   - The census lines re-read at application.
+6. **No straggler sweep is owed beyond the register rows and site 3.** The 16.1.0 walk record's guidance paragraph is a ledger, and it keeps its text.
 
 ## 5. Cost, retroactivity
 
-- **Cost**: two sentences and one register row; no instrument, no regeneration (`.kiro/issues/README.md` is not an embed source). Stacy R1 and Lina's F-2 read take minutes each. Peter: F-1, F-2, ratify, merge two PRs.
-- **Retroactivity**: none. It binds from its application merge, and 16.1.0's three post-walk records are not re-decided by it.
-  - Their dispositions are Peter's G-1 ("Fix now"), G-2 ("Carry") and G-3 ("Ride along"), each applied by its owner.
-  - Row 12's "Spec" is covered going forward by sentence 2 (§ 2, last bullet), which takes effect at the application merge.
+- **Cost**: two sentences in the README, one in RELEASE-FLOW (severable), and two register rows. No instrument changes and no regeneration: neither file is an embed source. Stacy's R2 and Lina's reading of R2 take minutes each. Peter answers F-1, F-2 and F-3, ratifies, and merges two PRs.
+- **Retroactivity**: none. The ballot binds from its application merge, and 16.1.0's post-walk records are not re-decided by it.
+  - Their dispositions were Peter's G-1 ("Fix now", fixed by #489), G-2 ("Carry", re-ruled by Lina) and G-3 ("Ride along", fixed by #490; Stacy closed the record).
+  - Lina's CDG record was filed with #491 and re-ruled by her on the release branch.
+  - Row 12's "Spec" is covered by sentence 2 from the application merge on.
 
 ## 6. Forks for Peter (none is picked here)
 
 - **F-1: what carries a post-walk filing.**
-  - **(A)** Sentence 1: carried by rule, through a git fact plus a walk row.
-  - **(B)** No rule change for item 1. Owners re-rule each such record under rules 9 and 11, as the 16.1.0 guidance did; each re-rule is one commit per owner per release.
-  - The drafter's lean is (A). Its surviving cost is § 3 residual 1.
-- **F-2: a deadline the record carried, when a spec answer closes it** (Lina's question, asked back).
-  - **(a)** The closing outcome line names the deadline, and the spec's requirements carry it. One record closes and none opens.
-  - **(b)** The closing PR also opens a `charter`-kind record that holds the deadline as its trigger (`release:<V>:phase-1` once the version is chartered). "A charter cannot lapse before its trigger fires", so it waits without re-lapsing, and the walk reads it.
-  - The drafter has no lean until Lina's read: (b) keeps § 3 residual 2 visible to the walk at the price of one more record.
+  - **(A)** Sentence 1 as amended: carried by rule, through a git fact plus a row condition. The row is a condition, not his sentence's duty (§ 2).
+  - **(B)** No rule change for item 1: owners re-rule each such record under rules 9 and 11, as the 16.1.0 guidance did. **(B) reverses Peter's class-level answer ("Let's go with the fix, please")**, which adopted a rule change (Stacy R1, A4). It is listed because it is the cost-free way back.
+  - The drafter leans (A), and so does Stacy (R1, § 5). The cost that survives is § 3 residual 1.
+- **F-2: what a spec answer does to the record.**
+  - **(b′)**, Lina's: sentence 2 as written. The record stays at the root and the owner re-rules it to the event that owes its close.
+  - **(b)**: the outline merge closes the record and opens a `charter`-kind record holding the deadline.
+  - **(a)**: the outline merge closes the record, and the deadline goes into the spec's requirements.
+  - **Stacy blocks (a)** and accepts (b) only for non-floor-class records, because a closed and archived record leaves 3a's sight (R1, § 4).
+  - Lina's ranking and Stacy's are the same: (b′), then (b), then (a). The drafter leans (b′). The cost that survives is § 3 residuals 2 and 3.
+- **F-3: site 3, the S re-read in phase 1.**
+  - **Include**: the floor reaches a post-walk P0 by a named read.
+  - **Strike**: § 2's floor bullet then promises nothing about post-walk P0s, and they reach the release only through someone's P0 line.
+  - The drafter leans include. The cost that survives is § 3's (iii): one required step at the crowded point.
 
-## 7. Standards note (no edit in this ballot)
+## 7. Standards notes (no edit in this ballot)
 
-**The straggler sweep's expected list was compiled against before-texts only** (ballot `2026-10-25-token-selection-order-one-rule` § 11 step 6, and step 7's "the only new hits are Lina's kept heading"). At the application (#491), the sweep found three hits that are not on the list:
-- `governance/Token-Governance.md:144`, the § 13.1 after-text.
-- `governance/classification-map.md:601`, the § 13.10 (iii) after-text.
-- Generated copies of the first: `.claude/agents/ada.md:260`, the consumer copy, and `canonical/_fixture-output/cc/.claude/agents/_fixture.md:103`.
+1. **The straggler sweep's expected list was compiled against before-texts only** (ballot `2026-10-25-token-selection-order-one-rule` § 11 step 6, and step 7's "the only new hits are Lina's kept heading"). At its application (#491), the sweep found hits that are not on the list:
+   - `governance/Token-Governance.md:144`, the § 13.1 after-text;
+   - `governance/classification-map.md:601`, the § 13.10 (iii) after-text;
+   - generated copies of the first: `.claude/agents/ada.md:260`, the consumer copy, and `canonical/_fixture-output/cc/.claude/agents/_fixture.md:103`.
 
-Stacy cleared them as ratified § 13 bytes. The defect is the drafter's (mine). The lesson for future ballots that carry a sweep: compile the expected hits against the resolved after-texts and their generated copies too, and state the sweep's pattern case-sensitivity. That ballot's text stays as ratified. Whether this becomes a sentence in the ballots README § "Conventions", "Edit discipline", is a later round's question, raised through the normal review round. Outcome for the composed loop: `adopted` for drafting.
+   Stacy cleared them as ratified § 13 bytes. The defect is the drafter's (mine). **Lesson**: a ballot that carries a sweep compiles its expected hits against the resolved after-texts and their generated copies too, and states whether the pattern is case-sensitive.
+2. **The same application's step-10 check list left out `npm run test:scripts`** (#491). Ada's § 13.1 after-text carried an amendment note containing "ballot", which is the audience-banner guard's predicate string 4. That made `governance/Token-Governance.md` match the predicate, and `lane-functional-root` went red until Ada added a banner (`0df43455b`). **Lesson**: a ballot's application check list names the lanes whose guards read its edit sites, not only the checks its own text implies. This ballot's § 4 step 5 does that.
+3. **`scripts/issues-owned.sh` has no register row** (Stacy R1, standards implication). The script implements rule 1 and rule 11 firing semantics. So a ballot that changes those semantics has no census reach to it, and its effect on the script's output is checked only if the drafter thinks to. This ballot checks it by hand (the census block: sentence 1 changes no `due:next` or `FIRED` line). **The class fix**: add the script to the `issues-obligation-lapse` row's `checks`, which brings it under the census rule. That is a register change of mine, owed in a later round, not in this ballot's cap.
+
+**Outcomes for the composed loop**: item 1 is `adopted` for drafting. Item 2 is `adopted` and applied in § 4 step 5. Item 3 is `adopted` for drafting.
 
 ## 8. Review round record
 
@@ -223,3 +274,29 @@ I am named co-drafter, but I write this entry as the reviewer. I state what the 
 - This is a review read. It is not a gate on any PR.
 
 *Signed: Stacy, 2026-10-25.*
+
+#### [THURGOOD R2] (2026-10-26; incorporation; drafter)
+
+I answered the @ mentions first: neither R1 addresses me by @, and both route items to me in their text.
+
+- **Stacy A1 ("row")**: adopted. A row is a line of the walk record that begins `|` and contains the record's file name, with or without a `.kiro/issues/` prefix, read at S with `git show`. "Names the record" in sentence 2 uses the same test. → § 2 sentence 1 and the reading.
+- **Stacy A2 (the floor's reach)**: adopted, both halves of her either/or.
+  - The draft's claim that a post-walk P0 "is still a phase-1 finding" is withdrawn as written.
+  - Site 3 names the read: RELEASE-FLOW's Phase 1 bullet re-runs 3a's two greps at S. It is severable, as F-3, so Peter can strike it and keep the withdrawal.
+  - → § 2, "The floor" and site 3; § 4 step 4; § 6 F-3. The census block gains two not-in-scope lines for site 3's file, which two rows' `education` cites (condition 2).
+- **Stacy A3 (tokens)**: adopted. Sentence 1 carries only `release:next:phase-1`. It does not carry `release:<V>:phase-1` (the owner's named event) or `tag:v<V>` (which would make `issues-owned.sh` print a false `FIRED` line). I checked the script's output by hand: `release:next:phase-1` prints `due:next` and computes no lapse, so its output is unchanged. → § 2; the census block.
+- **Stacy A4 (Peter's words)**: adopted. F-1 (B) is labelled as reversing his class-level answer. The row is a condition where his sentence made it a duty; § 2 says so, and F-1 puts that change to him. → § 2; § 6 F-1.
+- **Stacy § 4 (sentence 2 blocked) and Lina R1 ((b′))**: adopted. Sentence 2 is now Lina's wording, verbatim.
+  - The record stays at the root until it is resolved, is re-ruled at the outline merge, and closes under rule 5.
+  - Stacy's closure question ("an outline PR with no outcome line") is moot under (b′), because the outline merge closes nothing.
+  - (a) and (b) stay in F-2 with Stacy's block stated: she blocks (a), and accepts (b) only for non-floor-class records.
+  - → § 2, § 3, § 6 F-2.
+- **Lina's fold-back (status only)**: carried into § 2's reading as an owner duty, which she accepts.
+- **Stacy's correction to residual 2** (a stalled spec shows as a `stub`, with 113 as the instance): adopted. → § 3 residual 2.
+- **Lina's stall fork** (should a stalled spec count as a lapse?): recorded as an open question for a later ballot, not as a fork here. It is a new rule, outside this ballot's cap, and neither reviewer picks it. → § 3 residual 2.
+- **Stacy § 6, second half** (a `release:17.0.0` token is not a due row at a minor walk): adopted as § 3 residual 3, named so that (b′) is not read as closing it.
+- **Stacy's carry count**: recorded in § 3 as her own commitment. Whether it goes in her charter's counting block is her edit and Peter's pick. It is outside this cap.
+- **Stacy's standards implication** (`issues-owned.sh` has no register row): adopted for drafting as § 7 item 3. The class fix, adding the script to `issues-obligation-lapse`'s `checks`, is my register change in a later round.
+- **The orchestrator's `test:scripts` item**: § 7 item 2. It is applied here as § 4 step 5's `test:scripts` line, because the register edits add "ballot" strings inside the banner guard's scan scope.
+- **Not changed**: Stacy's residual on records filed *with* the walk is kept as § 3 residual 4, with her reasoning. § 5 and § 7 item 1 are unchanged in substance.
+- **Status**: still DRAFT. R2 asks Stacy to re-read A1–A4 and sentence 2 as revised, and Lina to read sentence 2 in place.
