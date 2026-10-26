@@ -36,12 +36,13 @@ Peter waived RL-35 for 16.1.0, in chat, relayed by the orchestrator, received be
 
 > "Go with an amended option 2 ("Waive under the rule now with a plan"), with the rule approved by relevant agents"
 
-**The rule** is 16.1.0's post-walk example-falsity rule. Its seat-approved text lands in Stacy's phase 1 addendum 5 in `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` (#497's branch, `chore/release-16.1.0-claims-pass-phase-1`). This record applies the rule's clauses as numbered in that text:
-- **Clause 1**: 16.1.0 only.
-- **Clause 2**: a served-example falsity found by a phase-1 read after the walk's rows were fixed at S, not itself a walk row.
-- **Clause 3**: it does not hold the tag. The owner files this record with a dated plan due before the next release's walk, and the release notes disclose it.
+**The rule** is 16.1.0's post-walk example-falsity rule (Thurgood's amended text; my approval proposes an amendment to clause 6's reader, and addendum 5 records which text the seats approved). Its seat-approved text lands in Stacy's phase 1 addendum 5 in `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` (#497's branch, `chore/release-16.1.0-claims-pass-phase-1`). This record applies the rule's clauses as numbered in that text:
+- **Clause 1**: 16.1.0 only; the rule expires at the v16.1.0 tag.
+- **Clause 2**: both finds meet all three conditions. Each is a falsity in a fenced example in a packed `governance/**` doc. Each was found after the walk record's At-S section (addendum 4), and neither is a walk row. Both were already present at `v16.0.0` (§ "Finding", Age).
+- **Clause 3**: they do not hold the tag. I file this record with a dated plan due before the next release's walk, and the release notes disclose it.
+- **Clause 4**: Peter may take up either find individually.
 - **Clause 5**: RL-35 is the first application.
-- **Clause 6**: the class fix.
+- **Clause 6**: the class fix (plan item 3).
 
 **Scope**: 16.1.0 only, and RL-35 only.
 
@@ -57,11 +58,11 @@ Peter waived RL-35 for 16.1.0, in chat, relayed by the orchestrator, received be
    - **(D)** L602–L617: replace Lit's `static styles = css\`…\`` with the plain-`HTMLElement` form shipped Button-CTA uses (a `<style>` in the shadow root, `ButtonCTA.web.ts` L515–L516), keeping the token names.
    - **(E)** L1862 and L1885–L1887: `src/components/core/ButtonCTA/…` → `src/components/core/Button-CTA/…`.
 3. **The class fix (rule clause 6).** A behavior/attribute check, as a version bump of the governance-examples guard. **Owner**: Thurgood (the instrument). **Predicate**: Lina, who writes it. The predicate checks:
-   - every attribute on a packed web tag against that element's `observedAttributes` and `getAttribute`/`hasAttribute` reads;
+   - every attribute on a packed web tag against that element's `observedAttributes` and `getAttribute`/`hasAttribute` reads. Those are the hyphenated attribute names, not the schema's camelCase prop names: a check against schema props would pass (B), because `borderRadius` *is* a schema prop;
    - every enumerated value against the prop's type union;
    - CSS fences for a `var()` that references the property being declared.
 
-   **Due**: built before the next release's walk. Item 1 does not wait on it. **Home**: this record holds my predicate obligation. Thurgood's build is his to record; this record does not file it for him.
+   Clause 6 proposes it as an amendment to ballot `2026-10-26-governance-examples-guard` after the guard's v1 is built. **Due**: built before the next release's walk; if it is not built by then, the standing question returns to Peter at that walk. Item 1 does not wait on it. **Home**: this record holds my predicate obligation. Thurgood's build and the ballot amendment are his to record; this record does not file them for him.
 
 ## Close
 
