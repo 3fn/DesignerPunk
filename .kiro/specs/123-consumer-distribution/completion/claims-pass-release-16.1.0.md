@@ -1808,3 +1808,175 @@ My verdict holds the tag a sixth time today, on two Low, pre-existing examples t
 - The cost is now visible as a pattern: each whole-file read finds the next pre-existing defect, and nothing in the method says when that stops. The other served docs have not been read for behavior. A tag held until they are would wait on an unbounded read.
 - I hold the fork anyway because both are the RL-31 (i) kind he has answered "fix now" three times, and the floor gives the waiver to him, not to me. I cannot rule the other reading out.
 - The class option above is the honest way to stop the pattern for this release; RS-44's attribute check is the way to stop it for the next one. If his answer is (b), (c) or the class option, this round cost a fork that a behavior read at addendum 3 would have folded into RL-31.
+
+## Phase 1 addendum 5 — final S `38f4ece47c425cc83cac6739cae7a1806bfb0818`, the rule's home (16.1.0 post-walk example-falsity rule; RL-35 waived under it), 2026-10-26
+
+**Written**: 2026-10-26. Reads taken 17:03:04Z → 17:08:10Z; this section appended after 17:08:10Z (each from `date -u` when taken).
+**Final S**: unchanged, `38f4ece47c425cc83cac6739cae7a1806bfb0818` (#505). `origin/main` is still S at 17:07:46Z. Nothing packed has changed since addendum 4, so 5.1's tally there stands (105/105, sha1 `e3d86894…`, 1694 files) and no new dry run was owed.
+**State at this writing** (17:07:46Z): no `v16.1.0` tag on `origin` (`git ls-remote --tags origin`: 0 matches). **Nothing is tagged or published.**
+**Firing event**: Peter's answer to RL-35's fork. This addendum is the committed home of the rule he ordered, as its Authority line says ("verbatim in Stacy's addendum 5"). The working files it quotes live only in the orchestrator's scratch directory, so their text is reproduced here byte for byte.
+**Append-only**: every section above stays as written.
+
+> **No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.** This addendum gates neither the tag nor the publish.
+
+### For the tag (read this first)
+
+- **RL-35 is waived under the 16.1.0 post-walk example-falsity rule.** Lina's record `.kiro/issues/2026-10-26-cdg-button-variant-and-container-attribute-examples.md` @ `a4328afd0` is committed and pushed before the tag, and both finds meet all four of clause 2's conditions (checked below).
+- **The rule is Peter's, release-scoped, approved by the three seats in their own words**, and it expires at the v16.1.0 tag.
+- **Three notes items hold step 7, not the tag**: RL-32 (#504 and #505 in the post-F list), RL-33 (the file-shape and import counts, with addendum 4's erratum), and the RL-35 disclosure the rule's clause 3 requires.
+- **My verdict line for the tag at the final S `38f4ece47`: nothing holds it.**
+
+### Peter's words, and their bound
+
+Peter, chat, relayed by the orchestrator, received before **2026-10-26T17:01:28Z** (the orchestrator's clock), verbatim:
+
+> "Go with an amended option 2 ("Waive under the rule now with a plan"), with the rule approved by relevant agents"
+
+**Reading, the orchestrator's and mine**: he took addendum 4's class option (pre-existing examples found after the walk take the (b) shape, a rule-10 record with a dated plan, with no new S), and he amended it: the rule needs the relevant agents' approval in their own words. The approvals below were all given after the bound (mine at 17:03:04Z by my clock), and Lina's records were committed after it (`05a491406` at 17:04:02Z, `2b6653fcb` at 17:04:43Z, `a4328afd0` at 17:07:08Z), so nothing outran his answer.
+
+### The rule (the consolidated text, verbatim)
+
+The consolidated rule as the orchestrator holds it, `scratchpad/release-16.1.0/stopping-rule-consolidated.md`, sha1 `02041eb77295f173bc9e48ea9198c8f619e3c2c4` when I read it at 17:07:46Z. Every line below is the file's text, unaltered:
+
+````markdown
+# 16.1.0 post-walk example-falsity rule — CONSOLIDATED (Thurgood and Stacy, 2026-10-26; Lina's clause-6 sentence folded in)
+
+Authority: Peter, chat, relayed by the orchestrator, received before 2026-10-26T17:01:28Z (orchestrator's clock), verbatim: "Go with an amended option 2 ("Waive under the rule now with a plan"), with the rule approved by relevant agents". Approved by Thurgood (release-flow owner), Stacy (claims passes), Lina (CDG owner) in their own words (texts in stopping-rule-draft.md; verbatim in Stacy's addendum 5).
+
+1. **Scope**: release 16.1.0 only. It expires at the v16.1.0 tag. Making it standing for later releases needs a ballot, because it would amend how RELEASE-FLOW 3a treats findings made after the walk.
+2. **Trigger**: a falsity in a fenced example in a packed `governance/**` doc that meets all four conditions:
+   - it was found after the walk record merged (`264c25661`, #469) and before the v16.1.0 tag;
+   - it is not a walk row;
+   - it is pre-existing, meaning present in substance at `v16.0.0`;
+   - it is not something a PR in the 16.1.0 delta introduced. Those are the release's own claims and hold the tag as before.
+   Prose claims, MCP contracts (schemas and tool output) and agent charters are not covered. They stay fixed, not disclosed (M7), and go to Peter one find at a time.
+3. **Effect**: it does not hold the tag.
+   - Before the tag, its owner commits and pushes a rule-10 record, and the phase-1 record cites it by path @ SHA. A promise to file does not count.
+   - The owner classes the record under rule 12. Its dated plan is due before the next release's walk. If the fix is not an ancestor of the next release's S, the record lapses there and goes to Peter (rule 11).
+   - The release notes disclose the find, the record, and this rule as the waiver, in L57's form. The notes line holds step 7, not the tag.
+   - The phase-1 claims pass reads it as waived by this rule and cites the record.
+4. **Limit**:
+   - This rule waives nothing that becomes a walk row; any floor-class row stays Peter's to waive individually, in quoted, dated words (M7).
+   - Peter may pull any single find out of this rule, in his own words, to fix it now.
+   - A find whose harm goes beyond a wrong example goes to Peter on its own and is not waived by this rule. That means an example teaching an accessibility violation (WCAG 2.1 AA) or a security weakness. Any seat that reads a find that way sends it to Peter.
+5. **First application**: RL-35, Lina's record `.kiro/issues/2026-10-26-cdg-button-variant-and-container-attribute-examples.md` @ `a4328afd0` (upkeep branch; filing commit `05a491406`, clause-2 bullet aligned in `a4328afd0`) with its dated plan. It covers CDG L422/L442 `variant="danger"` and L1682–L1693 `borderRadius=`. All four lines are inside fenced blocks, checked at S, and both were present at `v16.0.0`.
+6. **Class fix**: a behavior and attribute check, as a version bump of the governance-examples guard. It is Thurgood's instrument, and Lina writes the predicate. It reads every attribute on a packed web tag against that element's `observedAttributes` and `getAttribute`/`hasAttribute` reads (the hyphenated attribute names, not the schema's camelCase prop names), and every enumerated value against that prop's type union, plus a syntax check for CSS custom properties that reference themselves. It is proposed as an amendment to ballot `2026-10-26-governance-examples-guard` after v1 is built, due before the next release's walk. If it is not built by then, the standing question returns to Peter at that walk.
+
+Where it sits against 3a and M7 (Thurgood): it covers only findings outside the walk record's rows, which 3a's "Knows" does not reach. It waives no row, so M7's "Only Peter waives a floor-class row" is untouched. It replaces only the practice of holding the tag for each new find, which is precedent, not law. Its authority is Peter's own release-scoped words.
+
+Surviving counter-argument (Stacy, carried by Thurgood): disclosing a falsity in a record and the notes is weaker than M7's "fixed, not disclosed" for a reader who never sees the notes. The expiry, the pre-existing condition and Peter's override limit that cost but do not remove it.
+````
+
+**Confirmations** (relayed by the orchestrator, 2026-10-26, after the consolidated text was sent to each seat): Thurgood, verbatim, "CONFIRMED, no amendment"; Lina, verbatim, "CONFIRMED: my approval carries to the consolidated text". **Mine (Stacy, 2026-10-26, read at 17:07:46Z): CONFIRMED.** The consolidated text carries my four amendments as accepted. Two wordings differ from mine, and I accept both: clause 2 adds prose claims to what is not covered (narrower than my text), and clause 4 names WCAG 2.1 AA and lets any seat send a harmful find to Peter (sharper than my text). Clause 6's reader is Lina's sentence, which states my correction of fact.
+
+### The three approval texts (verbatim)
+
+From `scratchpad/release-16.1.0/stopping-rule-draft.md`, sha1 `5b5266b94f34565252da3a2c660f3c0e1af89374` when I read it at 17:08Z. Each section is the file's text, unaltered, under its own label. The file holds no reconciliation note apart from the "Where it sits" paragraph at the end of Thurgood's section; the consolidated header records that he accepted all four of my amendments.
+
+**Thurgood (release-flow owner), 2026-10-26: his AMENDED text, the text the other two seats approved against:**
+
+````markdown
+## AMENDED text (Thurgood, release-flow owner, 2026-10-26) — the current text for approval
+
+1. **Scope**: release 16.1.0 only. It expires at the v16.1.0 tag. Making it standing for later releases needs a ballot, because it would amend how RELEASE-FLOW 3a treats findings made after the walk.
+2. **Trigger**: a falsity in a fenced example in a packed `governance/**` doc that meets all three of these: it was found by any seat after the walk record's At-S section; it is not a walk row; it was already present at `v16.0.0`. Prose claims, agent charters, MCP contracts, and falsities introduced after `v16.0.0` are not covered. They go to Peter one find at a time.
+3. **Effect**: it does not hold the tag. Its owner files a rule-10 record with a dated plan due before the next release's walk. The release notes disclose it in L57's form before step 7. A find made after the notes are final is disclosed by a record-only notes PR before step 7, or, after step 7, in the next release's notes. The phase-1 claims pass reads it as waived by this rule and cites the record.
+4. **Limit**: this rule waives nothing that becomes a walk row. Any floor-class row stays Peter's to waive individually, in quoted, dated words (M7). Peter may also take up any find under this rule individually.
+5. **First application**: RL-35 (CDG L422/L442 `variant="danger"`; L1682–L1693 `borderRadius=`), present at `v16.0.0`, in Lina's record with its dated plan.
+6. **Class fix**: a behavior and attribute check, as a version bump of the governance-examples guard. It reads element attributes and their values against each component's schema props, plus a syntax check for CSS custom properties that reference themselves. It is Thurgood's instrument, and Lina writes the predicate. It is proposed as an amendment to ballot `2026-10-26-governance-examples-guard` after v1 is built, due before the next release's walk. If it is not built by then, the standing question returns to Peter at that walk.
+
+Where it sits against 3a and M7 (Thurgood): it governs only findings outside the walk record's rows, which 3a's "Knows" does not reach. It waives no row, so M7's "Only Peter waives a floor-class row" is untouched. What it replaces is the habit of holding the tag per find, which is precedent, not law. Its authority is Peter's own release-scoped words. Why "present at v16.0.0": the case for waiving rests on the public 16.0.0 package already shipping these falsities; a falsity that 16.1.0 itself introduced has no such case.
+````
+
+**Stacy (claims passes), 2026-10-26, read at 17:03:04Z:**
+
+````markdown
+## Stacy's approval (2026-10-26, read at 17:03:04Z): APPROVED with four amendments (to the first draft; items 1, 4, 5 as written)
+
+**Item 2, amended:** "Trigger: a falsity in an example in a packed `governance/**` doc. It is found after the walk record merged (`264c25661`, #469) and before the v16.1.0 tag, and it is not a walk row. It must be **pre-existing**: present in substance at `v16.0.0`. A falsity that a PR in the 16.1.0 delta introduced is the release's own claim. This rule does not cover it, and it holds the tag as before. MCP contracts (schemas and tool output) and agent charters are not covered; they stay fixed, not disclosed (M7)."
+
+**Item 3, amended:** "Effect: it does not hold the tag. Before the tag, its owner files a rule-10 record, committed and pushed, which the phase-1 record cites by path @ SHA. A promise to file does not count. The owner classes the record under rule 12. Its dated plan is due before the next release's walk. If the fix is not an ancestor of the next release's S, the record lapses there and goes to Peter (rule 11). The release notes disclose it in L57's form: the find, the record, and this rule as the waiver. The notes line holds step 7, not the tag. The phase-1 claims pass reads it as waived by this rule and cites the record."
+
+**Item 4, one sentence added:** "Peter may pull any single find out of this rule, in his own words, to fix it now. A find whose harm goes beyond a wrong example, such as an example teaching an accessibility or security violation, goes to Peter on its own and is not waived by this rule."
+
+**Item 6, one correction of fact:** "The check must read each web element's own attributes (its `observedAttributes` and `getAttribute` reads, in hyphenated form) and its exported value unions. It must not read the cross-platform schema prop names: schema `borderRadius` is a real prop, so a check against schema props would pass RL-35 (B)."
+
+How the phase-1 pass reads a find under it: recorded in full (promised / claimed / shipped, present at v16.0.0?, record path @ SHA), marked "waived under the 16.1.0 post-walk example-falsity rule", listed to Peter as a line, never an Open-for-Peter hold; a find failing any condition holds the tag as before.
+
+Surviving counter-argument (Stacy): "disclosed in a record and the notes" is weaker than M7's "fixed, not disclosed" for a reader who never sees the notes; bounded by expiry, the pre-existing condition and Peter's override, not removed.
+````
+
+**Lina (CDG owner), 2026-10-26:**
+
+````markdown
+## Lina's approval (2026-10-26): APPROVED Thurgood's amended clauses 1–5 as written, clause 6 second sentence amended
+
+> "It reads every attribute on a packed web tag against that element's `observedAttributes` and `getAttribute`/`hasAttribute` reads (the hyphenated attribute names, not the schema's camelCase prop names), and every enumerated value against that prop's type union, plus a syntax check for CSS custom properties that reference themselves."
+
+Reason: a check against schema props would pass RL-35 (B), because `borderRadius` is a schema prop. Surviving counter-argument (Lina): the "present at v16.0.0" condition means a falsity 16.1.0 introduced into a fenced example still holds the tag one find at a time; that is the rule working as intended, not a gap.
+
+RL-35 record: `.kiro/issues/2026-10-26-cdg-button-variant-and-container-attribute-examples.md` @ `2b6653fcb` (upkeep branch; P0, waived under the rule, trigger release:next:phase-1).
+````
+
+### RL-35 at the final S: waived under the 16.1.0 post-walk example-falsity rule
+
+**Row: RL-35 → waived under the 16.1.0 post-walk example-falsity rule**, citing Lina's record `.kiro/issues/2026-10-26-cdg-button-variant-and-container-attribute-examples.md` @ `a4328afd0` (`origin/chore/post-16.1.0-record-upkeep`, head `a4328afd0` at 17:07:46Z; filing commit `05a491406`; `2b6653fcb` cites the rule's clauses; `a4328afd0` aligns its clause-2 bullet to the four conditions). Not an ancestor of S, by design: `git merge-base --is-ancestor 2b6653fcb 38f4ece47` fails.
+
+**Clause 2, in my form** (promised / claimed / shipped is addendum 4's § "RL-35"; these are the rule's conditions):
+
+| Condition | Finding (A): CDG L422 / L442 `variant="danger"` | Finding (B): CDG L1682–L1693 `borderRadius=` | Evidence |
+|---|---|---|---|
+| A falsity in a **fenced example** in a packed `governance/**` doc | yes: L422 in the `html` fence L418–L423; L442 in the `typescript` fence L438–L448 | yes: the `html` fence L1680–L1694 | packed CDG at S (`cp1-add4/`), byte-equal to `git show 38f4ece47:<path>` |
+| **Found after the walk record merged** (`264c25661`, #469, 2026-10-25T12:28:40Z) **and before the tag** | yes: first recorded in addendum 4, `b0f618d14` (2026-10-26T16:47:18Z) | yes: same | `git log -1 264c25661`, `b0f618d14`; no `v16.1.0` tag at 17:07:46Z |
+| **Not a walk row** | yes | yes | `git grep` at S over `.kiro/issues/**` for `variant="danger"`, `'danger'`, `borderRadius="`, `borderradius`: no hit on point (addendum 4) |
+| **Pre-existing**: present in substance at `v16.0.0` | yes: v16.0.0 L415 and L435 | yes: v16.0.0 L1664–L1675 | `git show v16.0.0:governance/Component-Development-Guide.md` (addendum 4) |
+| **Not introduced by a PR in the 16.1.0 delta** | yes: `git blame` at S gives `8b3872ec7` for L422 and L442, an ancestor of `v16.0.0`; `git log -S'variant="danger"'` and `-S"'danger'"` over `v16.0.0..38f4ece47` on the file: no commit | yes: `git blame` at S gives `4622c9bab` for every tag line of L1682–L1693 (the text lines are `2cdea0858`), both ancestors of `v16.0.0`; `git log -S'borderRadius="normal"'` and `-S'borderRadius="none"'` over the delta: no commit | run by me at S; Lina's record states the same from a byte comparison |
+
+- **Clause 2's exclusions**: neither find is a prose claim, an MCP contract or an agent charter.
+- **Clause 3**: the record is committed and pushed before the tag and cited here by path @ SHA. Lina classes it P0 false-claim · defect under rule 12, with the downgrade argument left to Peter. Its trigger is `release:next:phase-1` with a lapse condition (if plan item 1 is not an ancestor of the next release's S, it lapses there and goes to Peter). Its dated plan: (1) one CORRECTION PR, the same PR as her icon-example record's item 2, due before the next release's walk, with byte-exact replacements (L422 → `variant="tertiary" label="Learn More"`; L442's union with `tertiary`; `border-radius=` on L1682, L1683, L1689 and L1690); it also aligns L438–L446 with the shipped interface (`ButtonProps`, not `ButtonCTAProps`; `icon?: IconBaseName`, not `string`), which I had not raised; (2) addendum 4's (C), (D) and (E), in the same PR; (3) the clause-6 predicate (hers), beside Thurgood's build.
+- **Clause 4, the harm test**: I do not read either find as teaching a WCAG 2.1 AA violation or a security weakness. (A) renders a Delete action with primary emphasis: a hierarchy fault, not a WCAG criterion, and the primary style's own contrast is the shipped one. (B) leaves both containers square, which has no accessibility effect. No seat has sent either to Peter on that ground.
+- **Lina's citations, spot-checked at S**: Button-CTA `types.ts` L54 (`variant="tertiary" label="Learn More"`), L57 (`ButtonStyle`), L90 (`ButtonProps`), L173 (`icon?: IconBaseName`); `ContainerBase.web.ts` L167 (`'border-radius'` observed) and L306 (`getAttribute('border-radius')`); Container-Base `types.ts` L61–L65 (`BorderRadiusValue`); `ButtonCTA.web.ts` L515–L516 (the `<style>` in the shadow root). All true as cited.
+- **Owed, not a tag item**: the release notes disclosure clause 3 requires (the find, the record, the rule as the waiver, in L57's form). Per the orchestrator, it is hunk (c) of Thurgood's notes grant. That grant record was not on `origin` at 17:08Z, so I have not read it. → **Thurgood**, before step 7.
+
+### How this pass reads a find under the rule, from here to the tag
+
+A find is recorded in full (promised / claimed / shipped, the five checks in the table above, the record path @ SHA) and marked "waived under the 16.1.0 post-walk example-falsity rule". It is listed to Peter as a line, never as an `**Open for Peter**:` hold. A find that fails any condition, or that a seat reads as clause 4's harm, holds the tag as before and goes to Peter on its own. The rule expires at the tag; it governs no later release.
+
+### Open items at the final S (none holds the tag)
+
+- **Step 7 (the GitHub release), Thurgood's notes PR, under a grant**: RL-32 (add #504 and #505 to L67's list); RL-33 (the file-shape and import counts, sourced from the guard ballot's census line L22 and Lina's R1, § 7, L224–L226; all three import defects ship); RL-35's disclosure (the rule's clause 3; his grant's hunk (c)).
+- **The rule's clause 6**: the behavior and attribute check. Thurgood owns the instrument and Lina the predicate, due before the next release's walk; if it is not built, the standing question returns to Peter there. A standing version of the rule needs a ballot (clause 1).
+- **Lina**: RL-31 (ii) and RL-35, both due in one CORRECTION PR before the next release's walk.
+- **Carried unchanged**: RL-24 and RL-25 (`Delegate audit (Stacy-signed, Ada): 0 / 135 — no file at S (not run)`; `Peter sample (Stacy-signed): 0 / 135`); O-37; my three lapses (Start Up Tasks item 9), reported, with their `## Lapse` headings not appended in this record-only PR.
+- **Phase 2** stays owed at the step-6 record's merge: `publish-rail liveness: owed`.
+
+### Observations (not findings)
+
+- **O-43 — the working files are not committed anywhere else.** The rule's text and the three approvals exist only in the orchestrator's scratch files and in this addendum. Lina's record points here for the approved text. If those files change after my reads, this addendum's quoted bytes and sha1s are the record.
+- **O-44 — Lina's record still says "Thurgood's amended text" in its § "Waiver" paragraph**, while its clause-2 bullet now follows the consolidated four conditions. The record points here for "which text the seats approved", so a reader lands on the right text. A wording residue, not a falsity. → Lina, at her next edit of the record.
+
+### Standards implications (this addendum)
+
+For Thurgood, read in full.
+- **RS-47 (new)**: a release-scoped rule ordered in chat and approved by seats has no ratification home in the ballot protocol. Here a claims-pass record holds it, by the rule's own Authority line. That works for one release, but a claims pass is the auditor's record, not a law home: if the rule is made standing (clause 1's ballot), the ballot is its home and this addendum is history. **Owner**: Thurgood (the ballot protocol), with Peter.
+- **RS-44, answered for the next release**: the rule's clause 6 is the check RS-44 asked for, with the reader corrected to the element's own attributes.
+
+**Standards implications: list — RS-47 (new); RS-44 answered by clause 6.**
+
+### Method (this addendum)
+
+**Run by me** (worktree at `b0f618d14`, branch `chore/release-16.1.0-claims-pass-phase-1`; `git status --porcelain` empty before, and only this file after):
+- `git fetch origin`; `git rev-parse` of `origin/main` and the upkeep branch; `git log`, `git show`, `git diff 2b6653fcb a4328afd0`; `git merge-base --is-ancestor`; `git blame -L` and `git log -S` on the CDG over `v16.0.0..38f4ece47`; `git show 38f4ece47:<path>` for Lina's source citations; `git ls-remote --tags origin`;
+- the two scratch files read and hashed with `shasum`, and their text copied into this addendum by a script, byte for byte.
+
+**Not run**: a new 5.1 (nothing packed changed); the 3a greps (no `.kiro/issues/` path changed on `main` since addendum 4, where they ran at S); any browser or compile (the readings are addendum 4's); `gh` (no credentials, none read).
+
+### Forced negative (this addendum)
+
+- **No find is re-read here.** RL-35's promised / claimed / shipped is addendum 4's; this addendum checks the rule's conditions and the record.
+- **Not read**: Thurgood's notes grant (not on `origin`), so the RL-35 disclosure is owed on his word, not my read.
+- **Waived, not fixed**: RL-35 and RL-31 (ii) ship false in 16.1.0's CDG, disclosed in records and, before step 7, in the notes.
+
+### Surviving counter-argument
+
+The rule makes "disclosed in a record and the notes" enough for pre-existing served examples for the rest of 16.1.0. For an agent reading the CDG through the MCP, who never reads the notes, the examples are as false as before, and M7's "fixed, not disclosed" names exactly that reader. The expiry at the tag, the pre-existing and not-introduced conditions, the harm test and Peter's override bound the cost; they do not remove it. My own part in the cost: both RL-35 finds could have been fixed for the price of one more S if I had read the CDG for behavior at addendum 3. The rule exists partly because my method arrived one round late.
