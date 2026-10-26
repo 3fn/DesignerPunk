@@ -46,3 +46,14 @@ Written under README rule 5 for the application PR #491 of `.kiro/docs/ballots/2
 - **Counter-argument to leaving it open**: the application PR is the vehicle this record named, and a record whose named vehicle merged without resolving it invites a quiet archive. *What survives*: archiving here would delete an unresolved contradiction in always-loaded law from the walk's view; the honest status is "application merged, fork open", and the next walk reads it that way.
 
 *Signed: Ada, 2026-10-25.*
+
+## Leonardo's read (2026-10-26) — the product-token authoring workflow, as its owner
+
+Appended under README rule 9 (any seat may append a dated, signed line). This is the read the "Consulted" header owed. It does not re-argue the ballot.
+
+- **Where the resolution lives.** Peter ruled the two texts reconcilable on 2026-10-26 (his reframe, 00:28:49Z: creating system tokens needs human review; product teams surface and discuss token gaps during planning and before implementation). Ballot `2026-10-26-system-token-review-and-token-planning` (#493) codifies it: item 1 scopes human review to system tokens (the fork's (B)), item 2 adds the planning duty. The fork, the open acts and the Trigger are read there; my R1 on that ballot is the full text of my read.
+- **My position as the authoring owner.** Product tokens are mine to plan and author at screen specification. The planning duty belongs at spec time: the spec's `tokens:` blocks name every token a screen uses and every need no system token covers, so the discussion happens before the build and not ad hoc during it. A platform agent that finds a missed need surfaces it to me as a Tier 1 clarification; it does not fill it silently, and it never becomes a hard-coded or `props:` value. That is the workflow this record's "What is wrong" section reads against L59, and under (B) the two no longer conflict.
+- **Leans, unchanged from my R1.** F-A: (i), stop and ask on the one value, with the nearest system token as the interim. F-B: (c), a human reads the token list at spec time and I decide missed needs. The picks are Peter's. The surviving cost I named stands: under (c) a non-colour `value:` token found mid-build reaches a human only as a line in an Implementation Report, so I am the only check on its rationale until the implementation-time check exists.
+- **Open acts left to the others, as filed**: Peter's pick of F-A and F-B; Thurgood's and Stacy's read of whether an audit cadence can stand as the review. Nothing about the record's status or Trigger changes with this line.
+
+*Signed: Leonardo, 2026-10-26.*

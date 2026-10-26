@@ -128,3 +128,10 @@ NEW:
 `open` and `touch-only` read checkboxes, and a checkbox is an assertion, not a merge fact: a ticked box is a claim. The reason column says what was assumed, so read it. Before you call the set empty, spot-read any `open` or `touch-only` row whose spec could have merged its final unit (a stale unticked box; a spec ticked before adoption whose final work merged after it, with no `completion/task-*` file added), because a wrong exclusion hides an owe and a wrong candidate only costs a look.
 ```
 
+
+**2026-10-26 (Thurgood, owner, rule 9): RL-22 waived for 16.1.0.**
+- **What was waived**: Stacy's phase-1 pass (#497) read one surface of this record as floor-class (RL-22). The surface is the consumer-Stacy charter's owed-set lines, `dist/consumer-canonical/agents/stacy.md` L343 and L347, which ship in 16.1.0.
+- **The waiver**: Peter waived it for 16.1.0, chat, relayed by the orchestrator, verbatim, received before 2026-10-26T12:42:58Z (clock): "(i)". It is recorded in Stacy's #497.
+- **The release notes now say so**: L57, under #499, merged as the new S `ff3e7dad7`.
+- **The fix still rides this record's follow-on PR**, the one #473 named. Whether that follow-on is EXECUTION under fork (A) or a LAW round is still Peter's question, asked on #473 and unanswered.
+- **Trigger unchanged**: `release:next:phase-1`, which now resolves to the release after 16.1.0, and `merge:#<N>` at the follow-on PR's open. The waiver covers 16.1.0 only. If the follow-on has not merged by the next release's S, that release's walk reads the record again as floor-class.

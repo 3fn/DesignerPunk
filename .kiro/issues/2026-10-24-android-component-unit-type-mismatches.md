@@ -63,6 +63,8 @@ Item 3 of the drift-pass record said `InputTextBase.android.kt` L466–473 "like
 - Button-CTA's `typography: TextStyle` is assigned `DesignTokens.typography_button_md`, which is generated as `Typography(…)`, a type nothing defines (`2026-10-03-native-generator-findings-for-spec-129-intake.md` Item 1). The component side follows whatever 129 emits.
 - `ComponentTokens.android.kt` reads `SizingTokens`, `SpacingTokens` and `BorderWidthTokens`, which do not exist (`2026-08-13-component-token-platform-references-noncompiling.md`).
 
+- *(Added 2026-10-26, Lina, from Ada's observation in `2026-10-26-guidelines-platform-token-names-radius-input-motion-floatlabel.md`; unverified, nothing compiled.)* `InputTextBase.android.kt` L481 declares `private const val motionFloatLabelDuration: Int // Generated from motion.floatLabel.duration (250ms)` with no initializer. A `const val` without a value does not compile. The generated name the component should read is `DesignTokens.MotionFloatLabel.duration` (an `Int` of milliseconds, which is what `durationMillis` takes; `generateMotionSection`, `src/generators/TokenFileGenerator.ts` L1466–1505). The same declaration block uses the same bodyless style for `radius150: Dp` (L486) and its neighbors, so it is probably the same defect as the rest of that block, not motion-specific. It is component code; it follows the component PR that closes this record, and Spec 129 does not change motion.
+
 ## Closing
 
 Group A closed in the Android interim PR (2026-10-24, above). Groups B and C and item 3 close by a component PR after Spec 129 fixes the fontSize type and theme emission. The record closes when all four are fixed, or are taken into Spec 129 with a reason recorded here.
