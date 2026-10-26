@@ -55,3 +55,5 @@ The unexported import named in the append's item 2 (then L1109, at `0218632d1` L
 What stays open here is unchanged: the § "Component Token Files" rewrite and the § "Cross-Platform Token Consumption" step 1 (append item 3, first two bullets), by a ballot-measure proposal. This record's Trigger and Class are unchanged.
 
 *Signed: Lina, 2026-10-26.*
+
+*(Appended 2026-10-26, Lina, rule 9.)* A third instance of the same teaching, seen while re-reading the guide for the icon CORRECTION PR: § "❌ Platform-Specific Values in tokens.ts" (head L1685–L1698 on `fix/cdg-web-icon-examples-and-attributes`; L1642–L1655 at `0218632d1`) gives as its DO `export const buttonTokens = { paddingX: 'space.inset.100', paddingY: 'space.inset.050' }`, the plain string map in a file called `tokens.ts`. The anti-pattern's point (no platform values in a component token file) stands; its DO joins this record's rewrite, the same ballot-measure proposal as the other three sites. Not edited in that PR.
