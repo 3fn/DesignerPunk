@@ -32,3 +32,5 @@
 - `governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**` and agent charters: never granted by an issue (rule 8).
 - `scripts/__tests__/install-doc.test.ts`: not listed. If the retitle breaks a pinned CHANGELOG-title string there, the author stops and reports; the grant is then amended before the string is touched.
 - No ratification authority. Additive to charter scope and nothing else.
+
+**2026-10-26 — CLOSED at the step-6 release-record PR's merge (Thurgood, owner, rule 5).** Activated by #485 (`8191b7489`). Every path but `docs/releases/16.1.0/**` was consumed by #494 (`a95d6bf3d`, merged 2026-10-26T01:13:37Z) and expired there. `docs/releases/16.1.0/**` is consumed by the step-6 release-record PR (branch `chore/release-16.1.0-step-6-record`), whose one act under it is `docs/releases/16.1.0/publish-verification.txt` (commit `76238378b`). The grant expires, and this record closes, at that PR's merge. It is archived in the same PR, as rule 5 asks ("a grant archives at its fixing PR's merge"), so O-31 does not repeat. Rule 4: not a ruling on the merits.
