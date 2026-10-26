@@ -86,3 +86,18 @@ CORRECTION (truth: `scripts/governance-examples/check.ts`, the candidate pattern
 The same commit fixes `governance/Rosetta-System-Architecture.md` L481. It adds the `<!-- example: consumer -->` marker (§ 8.4, as Lina read it; EXECUTION) and corrects the block's comment path and its two imports to the real depth (CORRECTION; truth: `src/components/core/Button-Icon/buttonIcon.tokens.ts`). It is not a pending entry.
 
 *Signed: Ada, 2026-10-26.*
+
+## Plan (Peter's condition), 2026-10-26, Thurgood
+
+*Appended under README rule 9 (any seat may append a dated line signed with its name; the body above is Ada's). Filed here, in the record this PR already carries, under rule 10.*
+
+**Ruling** (Peter, relayed by the orchestrator in chat, received before 2026-10-26T21:12:21Z; typos corrected, meaning unchanged): "Re: the remaining rulings, let's go with the seat recommendations of those that have them; but any that have deferred or follow-up work require a plan to be addressed." The row-state fork had a seat recommendation on record (Stacy: arm now). It is ruled, and the `governance-examples` register row is armed in the build PR (#519), departing from the ballot § 8.8 entry's bytes (`check_state: proposed`, `checks: []`) as ratified-intent (§ 2.4, § 2.6, § 8.8's own comment).
+
+**What the follow-up is**: the guard-amendment ballot makes the ratified ballot say what shipped: § 8.8's entry reads `armed` with `checks` naming the test, and the "armed at the build PR's merge" sentences stay as they are. It carries RS-44 (the check for what web examples do, with Lina's `.kiro/issues/2026-10-26-examples-guard-attribute-predicate.md`) and RS-47 (the standing-rule question), both queued on `.kiro/issues/2026-10-26-release-16-1-standards-implications.md`.
+
+- **Owner**: Thurgood.
+- **Vehicle**: the guard-amendment ballot already queued as RS-44 / RS-47 on `.kiro/issues/2026-10-26-release-16-1-standards-implications.md` (one ballot, with the § 8.8 correction as its first item).
+- **Trigger**: `merge:#519` for drafting. Peter ratifies; the ballot is not law until he does.
+- **Fallback**: the next release's phase 1. If the ballot is undrafted when phase 1 runs, the record lapses at that phase 1 under rule 11, and the walk reports it. Until the amendment is ratified, the register row is the truth about what is armed and the ballot's § 8.8 bytes are a known difference from it, named in the row's history line of 2026-10-26.
+
+*Signed: Thurgood, 2026-10-26.*

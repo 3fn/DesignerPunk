@@ -1230,12 +1230,13 @@ boundary_call:
 verification:
   disposition: barrier
   owner: thurgood
-  check_state: proposed
-  checks: []
+  check_state: armed
+  checks: ["the governance-examples guard: scripts/governance-examples/__tests__/governance-examples.test.ts, run by npm run test:scripts in lane-functional-root (a required context) and registered in .github/in-lane-guards.json (the named-guard selection floor); the served-corpus assertion 'has no unlisted hit, no stale or duplicate pending entry, and no unknown marker value' bites on a new hit, a stale entry or an unknown marker"]
   census: "npx tsx scripts/governance-examples/check.ts --census"
-  # Flips to armed at the build PR's merge, with checks naming scripts/governance-examples/__tests__/governance-examples.test.ts in lane-functional-root (npm run test:scripts). Predicates: token-name Ada's (v1), file-shape Lina's.
+  # Armed in the build PR (Peter, 2026-10-26: the seat recommendation, Stacy's arm-now lean), effective at its merge. Predicates: token-name Ada's (v1), file-shape Lina's.
 education:
   disposition: "LAW HOME: ballot 2026-10-26-governance-examples-guard § 2 and § 8. The module header carries the predicate, the limit text and the whole-module sentences byte-exact"
 history:
   - { date: 2026-10-26, change: "entry created by ballot 2026-10-26-governance-examples-guard (EXECUTION, § 4 step 3), check_state proposed; armed at the build PR's merge", by: thurgood }
+  - { date: 2026-10-26, change: "armed in the build PR, not in a follow-up EXECUTION PR: a departure from the ballot § 8.8 entry's bytes (check_state proposed, checks empty) as ratified-intent, § 2.4, § 2.6 and § 8.8's own comment that the row flips to armed at the build PR's merge. Peter, relayed by the orchestrator in chat before 2026-10-26T21:12:21Z (typos corrected, meaning unchanged): 'Re: the remaining rulings, let's go with the seat recommendations of those that have them; but any that have deferred or follow-up work require a plan to be addressed.' The seat recommendation was Stacy's: arm now, because it opens a window where the lane enforces a guard the register calls proposed, and entries can be added before adoption. The deferred work is the guard-amendment ballot that makes the ballot's bytes say what shipped; its plan is in .kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md § 'Plan (Peter's condition)'", by: thurgood }
 ```
