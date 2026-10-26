@@ -67,3 +67,9 @@ The new `FAIL 7` is on a Stacy-signed act. Owed act 4 of the trigger-(d) record 
 32 commits still read `record absent 4` in these 24 PRs with the default set. The four I checked by grep (#436's `17702702`, #445's `4c0f6977`, #449's `12b3e98f`, #472's `08140e61`) appear by SHA in the main store, which was already read. Their cause is elsewhere: the link-4 commit-line form (`2026-10-23-audit-link4-rejects-sha-alone-commit-line.md` for #445), or a SHA that a transcript only quotes. This fix does not touch them.
 
 *Signed: Thurgood, 2026-10-26.*
+
+## Outcome (2026-10-26, Thurgood)
+
+The fix and its test are in this record's own PR, in the commit after the one that filed this record: the default store set, a repeatable `--store`, de-duplication of copied candidates, the link-5 lookup across stores, and `verify-signing-chain.stores.test.ts`. The record closes when that PR merges (rule 5). The re-read of the 7 acts is owed act 7 of `.kiro/issues/2026-10-26-signing-chain-delegate-audit-not-run-trigger-d.md`, and stays open there.
+
+*Signed: Thurgood, 2026-10-26.*
