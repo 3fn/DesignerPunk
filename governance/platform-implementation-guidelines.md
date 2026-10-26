@@ -125,9 +125,9 @@ token_consistency:
     - No hardcoded values that bypass tokens
     
   platform_mechanisms:
-    web: CSS Custom Properties (--dp-*)
-    ios: DesignTokens Swift package
-    android: DesignTokens Kotlin package
+    web: CSS Custom Properties (--<name>, no namespace prefix)
+    ios: DesignTokens Swift struct (generated DesignTokens.ios.swift)
+    android: DesignTokens Kotlin object (package com.designerpunk.tokens)
 ```
 
 **Example - Focus Ring Token Usage**:
@@ -296,8 +296,8 @@ animation_equivalence:
 ```css
 /* Web - CSS Transitions */
 .label {
-  transition: transform var(--dp-motion-float-label-duration) ease-out,
-              font-size var(--dp-motion-float-label-duration) ease-out;
+  transition: transform var(--motion-float-label-duration) ease-out,
+              font-size var(--motion-float-label-duration) ease-out;
 }
 .label.floated {
   transform: translateY(-20px);
@@ -658,8 +658,8 @@ web_patterns:
   
   token_consumption:
     method: CSS Custom Properties
-    prefix: --dp-
-    example: var(--dp-color-primary)
+    prefix: -- (plain; no namespace prefix)
+    example: var(--color-action-primary)
     
   accessibility:
     method: ARIA attributes
@@ -682,7 +682,7 @@ ios_patterns:
   component_format: SwiftUI Views
   
   token_consumption:
-    method: DesignTokens Swift package
+    method: DesignTokens Swift struct (generated DesignTokens.ios.swift)
     access: DesignTokens.<iOS identifier from the token index>
     example: DesignTokens.spaceInset100
     
@@ -707,7 +707,7 @@ android_patterns:
   component_format: Jetpack Compose Composables
   
   token_consumption:
-    method: DesignTokens Kotlin package
+    method: DesignTokens Kotlin object (package com.designerpunk.tokens)
     access: DesignTokens.<Android identifier from the token index>
     example: DesignTokens.space_inset_100
     
