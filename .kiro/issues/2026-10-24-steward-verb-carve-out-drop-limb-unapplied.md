@@ -51,3 +51,14 @@ Closes when the charter edit merges (or Peter rules the limb did not fire), by r
 My recount is § 2a above, appended earlier on 2026-10-25 and unchanged: reading (a), the limb fired, the exclusion is dropped, not carried. The 16.1.0 walk's "Steward-verb recount — ready Y" is that section; no second recount is owed. What stays open is § 3, not mine: the drop edit is LAW and goes to Peter as a ballot item, and Peter's chat ruling of 2026-10-25 ("Fix all of them as the owners recommend") is not read here as ruling it. I re-confirm the operative sets as C1 at application.
 
 *Signed: Stacy, 2026-10-25 (re-rule seat).*
+
+## Lapse (2026-10-26)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S, RELEASE-FLOW step 5). Signed Stacy (co-owner, rule 11; observed by my RELEASE phase-1 claims pass, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S", and reported there and in each later section of that record; appended now).
+
+- **The firing event**: this record's Trigger, `release:next:phase-1`, resolved to release 16.1.0 when it was set. Phase 1 first read it at #494's squash and re-read it at each later S. S moved to `38f4ece47`, the commit that was tagged and published, so that is the one firing commit named here.
+- **What lapsed**: the close this Trigger names. Neither the drop applied by a Peter-merged charter edit, nor a dated ruling that the limb did not fire, is in any ancestor of `38f4ece47`. The record's last change is the 16.1.0 walk (`264c25661`, #469, row 24, "carried"), and its Trigger line is unchanged since filing (`6cf38d7b5`). Both charters, the Agent-Directory cut sentence and the consumer profile still carry the carve-out as live. My recount (§ 2a, reading (a): the limb fired) is done. What is open is § 3: the drop is LAW and needs a ballot item that Peter rules. Peter's 2026-10-25 chat words ("Fix all of them as the owners recommend") are not read as ruling it, as my walk line says.
+- **Count**: first lapse (one distinct SHA). Class P2 obligation (record): a first lapse does not escalate. The second does (rule 11), at the next release's S, if this record is still open then.
+- **My line: report and carry. No re-rule, no close.** The token stays `release:next:phase-1`, and now resolves to the release after 16.1.0 (rule 11: a record still open after a lapse lapses again at each later release's S). My part is unchanged: re-confirm the operative sets as C1 when the drop is applied. The ballot item is Thurgood's to file (§ 3), and its ruling is Peter's.
+
+*Signed: Stacy, 2026-10-26.*
