@@ -419,7 +419,7 @@ Quality enforcement lives in `application-mcp-server/src/indexer/__tests__/Guida
 <!-- ✅ CORRECT: Use variant attribute -->
 <button-cta variant="primary" label="Submit"></button-cta>
 <button-cta variant="secondary" label="Cancel"></button-cta>
-<button-cta variant="danger" label="Delete"></button-cta>
+<button-cta variant="tertiary" label="Learn More"></button-cta>
 ```
 
 **Anti-Pattern**:
@@ -436,12 +436,13 @@ Quality enforcement lives in `application-mcp-server/src/indexer/__tests__/Guida
 
 **TypeScript Interface Pattern**:
 ```typescript
-// Component props interface
-export interface ButtonCTAProps {
+// Component props interface: Button-CTA's own, abridged
+// (src/components/core/Button-CTA/types.ts; noWrap, onPress and testID omitted)
+export interface ButtonProps {
   label: string;
-  variant?: 'primary' | 'secondary' | 'danger';  // ✅ Use variant
+  variant?: 'primary' | 'secondary' | 'tertiary';  // ✅ Use variant
   size?: 'small' | 'medium' | 'large';
-  icon?: string;
+  icon?: IconBaseName;  // from Icon-Base's types
   // No `disabled` prop — DesignerPunk components do not support disabled
   // states (see "No Disabled States" under Behavioral Contracts Workflow).
 }
@@ -600,44 +601,60 @@ Each platform implementation uses **generated platform-specific tokens** from th
 
 **Web**: CSS custom properties
 ```typescript
-// platforms/web/ButtonCTA.web.ts
-static styles = css`
+// platforms/web/ButtonCTA.web.ts (abridged): a plain HTMLElement with a shadow root, no Lit.
+// Shipped Button-CTA imports its rules from ButtonCTA.web.css and injects them as a <style>.
+const styles = `
   :host {
     padding: var(--space-inset-050) var(--space-inset-100);
     background: var(--color-action-primary);
     color: var(--color-text-default);
-    font: var(--typography-button-md);
+    font-family: var(--typography-button-md-font-family);
+    font-size: var(--typography-button-md-font-size);
+    font-weight: var(--typography-button-md-font-weight);
+    line-height: var(--typography-button-md-line-height);
+    letter-spacing: var(--typography-button-md-letter-spacing);
     border-radius: var(--radius-100);
   }
 `;
+
+class ButtonCTA extends HTMLElement {
+  connectedCallback() {
+    const root = this.shadowRoot ?? this.attachShadow({ mode: 'open' });
+    root.innerHTML = `<style>${styles}</style><button type="button">${this.getAttribute('label') ?? ''}</button>`;
+  }
+}
 ```
 
 **iOS**: Swift constants
 ```swift
 // platforms/ios/ButtonCTA.ios.swift
+// theme: theme-varying colors, read as in "Token Consumption by Platform (Spec 094)" below
+// typography: DesignTokens.typographyButtonMd is a Typography(...) value, not a Font (no Typography type is emitted yet: Spec 129); shipped Button-CTA reads its fontSize
 Button(action: action) {
     Text(label)
-        .font(typographyButtonMd)
-        .foregroundColor(colorTextDefault)
+        .font(.system(size: DesignTokens.typographyButtonMd.fontSize, weight: .medium))
+        .foregroundColor(theme.colorTextDefault)
 }
-.padding(.horizontal, spaceInset100)
-.padding(.vertical, spaceInset050)
-.background(colorActionPrimary)
-.cornerRadius(radius100)
+.padding(.horizontal, DesignTokens.spaceInset100)
+.padding(.vertical, DesignTokens.spaceInset050)
+.background(theme.colorActionPrimary)
+.cornerRadius(DesignTokens.radius100)
 ```
 
 **Android**: Kotlin constants
 ```kotlin
 // platforms/android/ButtonCTA.android.kt
+// theme: theme-varying colors, read as in "Token Consumption by Platform (Spec 094)" below
+// typography: DesignTokens.typography_button_md is a Typography(...) value, not a TextStyle (no Typography type is emitted yet: Spec 129); shipped Button-CTA reads it the same way
 Button(
     onClick = onClick,
     modifier = modifier
-        .padding(horizontal = spaceInset100.dp, vertical = spaceInset050.dp)
+        .padding(horizontal = DesignTokens.space_inset_100, vertical = DesignTokens.space_inset_050)
 ) {
     Text(
         text = label,
-        style = typographyButtonMd,
-        color = colorTextDefault
+        style = DesignTokens.typography_button_md,
+        color = theme.color_text_default
     )
 }
 ```
@@ -692,12 +709,12 @@ The Icon component provides a unified API for displaying vector icons across web
 // Web component using Icon system
 <button-cta icon="arrow-right" label="Next"></button-cta>
 
-// Component internally uses Icon component
-const iconElement = createIcon({ 
-  name: this.getAttribute('icon'),
-  size: iconSize100,  // Token-based sizing
-  color: 'currentColor'
-});
+// The component renders <icon-base> in its shadow root (in-repo component source,
+// as Button-CTA does: platforms/web/ButtonCTA.web.ts L29, L60, L526)
+import { IconBaseSize, iconBaseSizes } from '../../../Icon-Base/types';
+
+const iconSize: IconBaseSize = iconBaseSizes.size100;  // icon.size100
+const iconMarkup = `<icon-base name="${this.getAttribute('icon')}" size="${iconSize}" color="inherit"></icon-base>`;
 ```
 
 ### When Direct Platform Icons Are Acceptable
@@ -714,7 +731,7 @@ const iconElement = createIcon({
 // iOS: SF Symbols for status indicators (internal implementation)
 // ✅ CORRECT: Use icon size token
 Image(systemName: "exclamationmark.circle.fill")
-    .font(.system(size: iconSize075))
+    .font(.system(size: DesignTokens.iconSize075))
 
 // ❌ WRONG: Hard-coded size
 Image(systemName: "exclamationmark.circle.fill")
@@ -760,7 +777,7 @@ This component uses direct SF Symbols for status indicators because:
 <icon-base name="arrow-right" size="24"></icon-base>
 
 <!-- With color override -->
-<icon-base name="check" size="24" color="color-success"></icon-base>
+<icon-base name="check" size="24" color="color-feedback-success-text"></icon-base>
 ```
 
 **Using Icon Size Tokens in CSS**:
@@ -771,49 +788,70 @@ This component uses direct SF Symbols for status indicators because:
 }
 
 .small-icon {
-  width: var(--icon-size-075);   /* 16px */
-  height: var(--icon-size-075);  /* 16px */
+  width: var(--icon-size-075);   /* 20px */
+  height: var(--icon-size-075);  /* 20px */
 }
 ```
 
 **Using Icon Size Tokens in JavaScript**:
-```typescript
-import { createIcon } from '@/components/core/Icon/platforms/web/Icon.web';
 
-// ✅ CORRECT: Use token reference
-const icon = createIcon({ 
+`size` is a key into the closed set `IconBaseSize` (13, 20, 24, 28, 32, 36, 40, 44, 48), not a free pixel value: `<icon-base>` turns `size="24"` into the class `icon-base--size-100`, which reads `var(--icon-size-100)`. So the literal is the token-consuming form; write the token beside it.
+
+For a package reader, the package exports the element (`IconBaseElement`, also exported as `Icon` and `IconBase`), not `createIconBase` or `iconBaseSizes`, so script sets the size on the element:
+```typescript
+// Package reader (@3fn/core): <icon-base> is registered when the package loads
+const icon = document.createElement('icon-base');
+icon.setAttribute('name', 'check');
+icon.setAttribute('size', '24');  // icon.size100
+```
+
+For in-repo component source (a file under `src/components/core/<Component>/platforms/web/`), import the function and the size map from Icon-Base:
+```typescript
+import { createIconBase } from '../../../Icon-Base/platforms/web/IconBase.web';
+import { iconBaseSizes } from '../../../Icon-Base/types';
+
+// ✅ CORRECT: a size from IconBaseSize, named by its token
+const icon = createIconBase({ 
   name: 'check', 
-  size: iconSize100  // Token-based sizing
+  size: iconBaseSizes.size100  // icon.size100 (24)
 });
 
-// ❌ WRONG: Hard-coded size
-const icon = createIcon({ 
+// ✅ ALSO CORRECT: the same key, written as the literal
+const sameIcon = createIconBase({ 
   name: 'check', 
-  size: 24  // Hard-coded value
+  size: 24  /* icon.size100 */
+});
+
+// ❌ WRONG: a size outside IconBaseSize (a type error; createIconBase throws on it at runtime)
+const offScaleIcon = createIconBase({ 
+  name: 'check', 
+  size: 18
 });
 ```
+
+A pixel `width` or `height` set on the element, or on a wrapper to resize it, bypasses the icon tokens the same way.
 
 #### iOS Platform (SwiftUI)
 
 **Using Icon Component**:
 ```swift
 // Icon component with token-based sizing
-Icon(name: "arrow-right", size: iconSize100)
+IconBase(name: "arrow-right", size: DesignTokens.iconSize100)
 
-// With custom color
-Icon(name: "check", size: iconSize100)
-    .foregroundColor(colorFeedbackSuccessText)
+// With custom color (IconBase's color parameter; IconBase sets its own foregroundColor inside)
+// theme: theme-varying colors, read as in "Token Consumption by Platform (Spec 094)" below
+IconBase(name: "check", size: DesignTokens.iconSize100, color: theme.colorFeedbackSuccessText)
 ```
 
 **Using Direct SF Symbols with Tokens**:
 ```swift
 // ✅ CORRECT: SF Symbol with icon size token
 Image(systemName: "exclamationmark.circle.fill")
-    .font(.system(size: iconSize075))
+    .font(.system(size: DesignTokens.iconSize075))
 
 // ✅ CORRECT: SF Symbol with frame using token
 Image(systemName: "checkmark.circle.fill")
-    .frame(width: iconSize100, height: iconSize100)
+    .frame(width: DesignTokens.iconSize100, height: DesignTokens.iconSize100)
 
 // ❌ WRONG: Hard-coded size
 Image(systemName: "exclamationmark.circle.fill")
@@ -830,13 +868,14 @@ Image(systemName: "exclamationmark.circle.fill")
 **Using Icon Component**:
 ```kotlin
 // Icon component with token-based sizing
-Icon(name = "arrow_right", size = iconSize100)
+IconBase(name = "arrow-right", size = DesignTokens.icon_size_100)
 
 // With custom color
-Icon(
+// theme: theme-varying colors, read as in "Token Consumption by Platform (Spec 094)" below
+IconBase(
     name = "check",
-    size = iconSize100,
-    tint = colorFeedbackSuccessText
+    size = DesignTokens.icon_size_100,
+    color = theme.color_feedback_success_text
 )
 ```
 
@@ -846,14 +885,14 @@ Icon(
 Icon(
     imageVector = Icons.Default.CheckCircle,
     contentDescription = "Success",
-    modifier = Modifier.size(iconSize100)
+    modifier = Modifier.size(DesignTokens.icon_size_100)
 )
 
 // ✅ CORRECT: Custom drawable with size token
 Icon(
     painter = painterResource(id = R.drawable.ic_status),
     contentDescription = "Status",
-    modifier = Modifier.size(iconSize075)
+    modifier = Modifier.size(DesignTokens.icon_size_075)
 )
 
 // ❌ WRONG: Hard-coded size
@@ -879,16 +918,19 @@ Image(systemName: "icon-name")
 
 // DO: Use icon size tokens
 Image(systemName: "icon-name")
-    .font(.system(size: iconSize075))
+    .font(.system(size: DesignTokens.iconSize075))
 ```
 
 #### ❌ Inconsistent Icon Usage Within Component
 ```typescript
+// In-repo component source; createIconBase and iconBaseSizes imported as in
+// "Using Icon Size Tokens in JavaScript" above
+
 // DON'T: Mix Icon component and direct assets inconsistently
 class MyComponent {
   render() {
     // Some icons use Icon component
-    const navIcon = createIcon({ name: 'arrow-right', size: iconSize100 });
+    const navIcon = createIconBase({ name: 'arrow-right', size: iconBaseSizes.size100 });
     
     // Other icons use direct SVG (inconsistent)
     const statusIcon = '<svg width="16" height="16">...</svg>';
@@ -899,8 +941,8 @@ class MyComponent {
 class MyComponent {
   render() {
     // All icons use Icon component
-    const navIcon = createIcon({ name: 'arrow-right', size: iconSize100 });
-    const statusIcon = createIcon({ name: 'check', size: iconSize075 });
+    const navIcon = createIconBase({ name: 'arrow-right', size: iconBaseSizes.size100 });
+    const statusIcon = createIconBase({ name: 'check', size: iconBaseSizes.size075 });
   }
 }
 ```
@@ -909,7 +951,7 @@ class MyComponent {
 ```swift
 // DON'T: Use direct platform icons without documentation
 Image(systemName: "exclamationmark.circle.fill")
-    .font(.system(size: iconSize075))
+    .font(.system(size: DesignTokens.iconSize075))
 
 // DO: Document rationale in component README
 // See "When Direct Platform Icons Are Acceptable" section above
@@ -972,7 +1014,7 @@ let spaceInset100: CGFloat = 8
 
 **Android Output** (Kotlin):
 ```kotlin
-val spaceInset100 = 8.dp
+val space_inset_100 = 8.dp
 ```
 
 **3. Platform implementations use generated tokens**:
@@ -989,6 +1031,8 @@ Tokens are split into two categories: **static tokens** (spacing, sizing, radius
 var(--space-inset-100)          /* Static — same in all themes */
 var(--color-action-primary)     /* Theme-varying — changes with data-theme attribute */
 ```
+
+The build does not yet emit the native theme surface: `generate` writes no `{Name}Theme` protocol or data class, environment key or `CompositionLocal`, and leaves the theme-varying colors out of `DesignTokens`, so on iOS and Android the `theme.` names below match the components but no generated file (`.kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md`; Spec 129). The token index does not list them yet: it gives `color.action.primary` bare (`colorActionPrimary` / `color_action_primary`) until its native-name fix lands (`.kiro/issues/2026-10-26-token-index-platform-names-not-emitted.md`, item 5).
 
 **iOS** — Static tokens via `DesignTokens`, theme-varying via `@Environment`:
 ```swift
@@ -1007,7 +1051,7 @@ DesignTokens.space_inset_100
 
 // Theme-varying tokens — read from CompositionLocal
 val theme = Local{Abbreviation}Theme.current
-theme.colorActionPrimary
+theme.color_action_primary
 ```
 
 **Key rule**: Components should NOT mix static and theme-aware access for the same token. If a token is in the theme-varying set (determined by the ThemeRegistry), always use the theme-aware access pattern on iOS/Android. On web, all tokens use CSS custom properties regardless.
@@ -1106,7 +1150,7 @@ Blend utilities enable components to create new opaque colors for interaction st
 ### Web Platform Usage
 
 ```typescript
-import { getBlendUtilities } from '@3fn/core/ThemeAwareBlendUtilities';
+import { getBlendUtilities } from '@3fn/core/blend';
 
 class MyComponent extends HTMLElement {
   connectedCallback() {
@@ -1244,6 +1288,8 @@ The incremental DOM update pattern enables CSS transitions to work correctly by 
 ### Architecture Pattern
 
 ```typescript
+// Abridged: styles, the label and icon getters, _getStateClass() and the blend colors
+// are elided (see ButtonVerticalListItem.web.ts for the whole element)
 class MyComponent extends HTMLElement {
   private _shadowRoot: ShadowRoot;
   private _domCreated: boolean = false;
@@ -1252,6 +1298,11 @@ class MyComponent extends HTMLElement {
   private _button: HTMLButtonElement | null = null;
   private _labelEl: HTMLSpanElement | null = null;
   private _iconEl: HTMLElement | null = null;
+  
+  // attributeChangedCallback fires only for the attributes listed here
+  static get observedAttributes(): string[] {
+    return ['label', 'icon'];
+  }
   
   constructor() {
     super();
@@ -1461,7 +1512,7 @@ All component-scoped CSS custom properties MUST use the `--_[abbrev]-*` naming p
 --_cta-hover-bg: #...;      /* Button-CTA internal */
 --_vlbi-background: #...;   /* Button-VerticalList-Item internal */
 --_itb-focus-color: #...;   /* Input-Text-Base internal */
---_bi-icon-color: #...;     /* ButtonIcon internal */
+--_bi-pressed-bg: #...;     /* ButtonIcon internal */
 
 /* Design system tokens (external) - no underscore */
 --color-action-primary: #...;
@@ -1485,7 +1536,7 @@ All component-scoped CSS custom properties MUST use the `--_[abbrev]-*` naming p
 |-----------|--------------|-------------------|
 | Button-CTA | `_cta` | `--_cta-hover-bg`, `--_cta-pressed-bg` |
 | Button-VerticalList-Item | `_vlbi` | `--_vlbi-background`, `--_vlbi-border-color` |
-| ButtonIcon | `_bi` | `--_bi-hover-bg`, `--_bi-icon-color` |
+| ButtonIcon | `_bi` | `--_bi-hover-bg`, `--_bi-pressed-bg` |
 | Input-Text-Base | `_itb` | `--_itb-focus-color` |
 
 ### When to Use Each Type
@@ -1507,9 +1558,10 @@ All component-scoped CSS custom properties MUST use the `--_[abbrev]-*` naming p
 ```css
 /* Button-CTA CSS showing both types */
 :host {
-  /* Design system tokens - external, themeable */
-  --color-action-primary: var(--color-action-primary);
-  --motion-button-press-duration: var(--motion-button-press-duration);
+  /* Design system tokens - external, themeable: not declared here.
+     They inherit from the token stylesheet's :root and are referenced
+     directly where consumed (.button-cta below). Redeclaring a token as
+     var() of itself is a cycle: it computes to the guaranteed-invalid value. */
   
   /* Component-scoped properties - internal, calculated */
   --_cta-hover-bg: /* calculated by blend utilities */;
@@ -1670,15 +1722,15 @@ export interface ButtonProps {
 
 ```html
 <!-- DON'T: Same radius creates awkward visual overlap -->
-<container-base borderRadius="normal" padding="200">
-  <container-base borderRadius="normal">
+<container-base border-radius="normal" padding="200">
+  <container-base border-radius="normal">
     Awkward corner overlap
   </container-base>
 </container-base>
 
 <!-- DO: Reduce inner radius by padding amount -->
-<container-base borderRadius="normal" padding="200">
-  <container-base borderRadius="none">
+<container-base border-radius="normal" padding="200">
+  <container-base border-radius="none">
     Harmonious corner alignment
   </container-base>
 </container-base>
@@ -1850,7 +1902,7 @@ Components come with their own unique properties that might include, but are not
 
 **Validation file disclaimer**: Always note that validation files are automated tests, not documentation source of truth.
 
-**Reference example**: `src/components/core/ButtonCTA/README.md` - Shows comprehensive component documentation with cross-links and validation disclaimer.
+**Reference example**: `src/components/core/Button-CTA/README.md` - Shows comprehensive component documentation with cross-links and validation disclaimer.
 
 ### HTML Canary Validation
 
@@ -1873,9 +1925,9 @@ Components come with their own unique properties that might include, but are not
 - Warning comments present
 
 **Reference examples**:
-- `src/components/core/ButtonCTA/examples/BasicUsage.html` - Validates basic button functionality
-- `src/components/core/ButtonCTA/examples/WithIcon.html` - Validates icon integration
-- `src/components/core/ButtonCTA/examples/Variants.html` - Validates all size/style combinations
+- `src/components/core/Button-CTA/examples/BasicUsage.html` - Validates basic button functionality
+- `src/components/core/Button-CTA/examples/WithIcon.html` - Validates icon integration
+- `src/components/core/Button-CTA/examples/Variants.html` - Validates all size/style combinations
 - `scripts/validate-examples.js` - Validation script that checks HTML examples
 
 ### Workflow Summary

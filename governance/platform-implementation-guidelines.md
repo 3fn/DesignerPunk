@@ -125,35 +125,35 @@ token_consistency:
     - No hardcoded values that bypass tokens
     
   platform_mechanisms:
-    web: CSS Custom Properties (--dp-*)
-    ios: DesignTokens Swift package
-    android: DesignTokens Kotlin package
+    web: CSS Custom Properties (--<name>, no namespace prefix)
+    ios: DesignTokens Swift struct (generated DesignTokens.ios.swift)
+    android: DesignTokens Kotlin object (package com.designerpunk.tokens)
 ```
 
 **Example - Focus Ring Token Usage**:
 ```css
 /* Web */
 .input-text-base:focus-visible {
-  outline: var(--dp-accessibility-focus-width) solid var(--dp-accessibility-focus-color);
-  outline-offset: var(--dp-accessibility-focus-offset);
+  outline: var(--accessibility-focus-width) solid var(--accessibility-focus-color);
+  outline-offset: var(--accessibility-focus-offset);
 }
 ```
 
 ```swift
 // iOS
 .overlay(
-  RoundedRectangle(cornerRadius: DesignTokens.radius.input)
-    .stroke(DesignTokens.accessibility.focus.color, lineWidth: DesignTokens.accessibility.focus.width)
-    .padding(-DesignTokens.accessibility.focus.offset)
+  RoundedRectangle(cornerRadius: DesignTokens.radius150)
+    .stroke(DesignTokens.accessibilityFocusColor, lineWidth: DesignTokens.accessibilityFocusWidth)
+    .padding(-DesignTokens.accessibilityFocusOffset)
 )
 ```
 
 ```kotlin
 // Android
 Modifier.border(
-  width = DesignTokens.accessibility.focus.width,
-  color = DesignTokens.accessibility.focus.color,
-  shape = RoundedCornerShape(DesignTokens.radius.input)
+  width = DesignTokens.accessibility_focus_width,
+  color = DesignTokens.accessibility_focus_color,
+  shape = RoundedCornerShape(DesignTokens.radius_150)
 )
 ```
 
@@ -296,8 +296,8 @@ animation_equivalence:
 ```css
 /* Web - CSS Transitions */
 .label {
-  transition: transform var(--dp-motion-float-label-duration) ease-out,
-              font-size var(--dp-motion-float-label-duration) ease-out;
+  transition: transform var(--motion-float-label-duration) ease-out,
+              font-size var(--motion-float-label-duration) ease-out;
 }
 .label.floated {
   transform: translateY(-20px);
@@ -307,7 +307,7 @@ animation_equivalence:
 
 ```swift
 // iOS - SwiftUI Animation
-withAnimation(.easeOut(duration: DesignTokens.motion.floatLabel.duration)) {
+withAnimation(.easeOut(duration: DesignTokens.MotionFloatLabel.duration)) {
   labelOffset = isFocused || !value.isEmpty ? -20 : 0
   labelScale = isFocused || !value.isEmpty ? 0.75 : 1.0
 }
@@ -318,7 +318,7 @@ withAnimation(.easeOut(duration: DesignTokens.motion.floatLabel.duration)) {
 val labelOffset by animateFloatAsState(
   targetValue = if (isFocused || value.isNotEmpty()) -20f else 0f,
   animationSpec = tween(
-    durationMillis = DesignTokens.motion.floatLabel.duration,
+    durationMillis = DesignTokens.MotionFloatLabel.duration,
     easing = FastOutSlowInEasing
   )
 )
@@ -658,8 +658,8 @@ web_patterns:
   
   token_consumption:
     method: CSS Custom Properties
-    prefix: --dp-
-    example: var(--dp-color-primary)
+    prefix: -- (plain; no namespace prefix)
+    example: var(--color-action-primary)
     
   accessibility:
     method: ARIA attributes
@@ -682,7 +682,7 @@ ios_patterns:
   component_format: SwiftUI Views
   
   token_consumption:
-    method: DesignTokens Swift package
+    method: DesignTokens Swift struct (generated DesignTokens.ios.swift)
     access: DesignTokens.<iOS identifier from the token index>
     example: DesignTokens.spaceInset100
     
@@ -707,7 +707,7 @@ android_patterns:
   component_format: Jetpack Compose Composables
   
   token_consumption:
-    method: DesignTokens Kotlin package
+    method: DesignTokens Kotlin object (package com.designerpunk.tokens)
     access: DesignTokens.<Android identifier from the token index>
     example: DesignTokens.space_inset_100
     

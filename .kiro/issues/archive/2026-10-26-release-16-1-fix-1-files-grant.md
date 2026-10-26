@@ -1,0 +1,29 @@
+# Grant: write scope for 16.1.0's second release PR (the CHANGELOG fixes RL-19, RL-20 and RL-21, and the release notes' L57, before the tag)
+
+**Date**: 2026-10-26
+**Owner**: Thurgood (the 16.1.0 release author)
+**Trigger**: `release:16.1.0:phase-1` — 16.1.0's second release PR, branch `release/16.1.0-fix-1`. Its squash commit is the new S, which phase 1's dated addendum reads. The grant is activated by Peter's merge of a PR whose body names this file and lists the paths below (`.kiro/issues/README.md` rule 8). It expires at the release-fix PR's merge.
+**Class**: P3 improvement · grant
+**Source**: Stacy's RELEASE phase-1 pass on S = `a95d6bf3d` (PR #497), findings RL-19, RL-20 and RL-21 in the packed `CHANGELOG.md` `[16.1.0]` entry. Peter's ruling, chat, relayed by the orchestrator, verbatim, received before 2026-10-26T12:42:58Z (clock): *"Re: 1, (A)"*, which is option (a): fix before the tag, with a new S, 5.1 run again, and a dated phase-1 addendum.
+- **Why a new grant**: the 16.1.0 files grant (`.kiro/issues/2026-10-25-release-16-1-files-grant.md`) expired over `CHANGELOG.md` at #494's merge. Only its `docs/releases/16.1.0/**` path is still open, for step 6.
+
+---
+
+**Grant paths**: `CHANGELOG.md`, `docs/releases/release-16.1.0.md`, `canonical/generated.lock`
+
+## What each path is for
+
+- **`CHANGELOG.md`**: the `[16.1.0]` entry only, three edits:
+  - **RL-21**: the heading's `— TBD —` becomes the date, in the form 15.1.0 and 16.0.0 used.
+  - **RL-20**: the "no … shipped file … was removed" sentence becomes true. `dist/components/core/Button-CTA/Button-CTA.refs.{js,d.ts}` were removed.
+  - **RL-19**: the Kiro known-limitation sentence becomes true.
+- **`docs/releases/release-16.1.0.md`**: two hunks only. (a) The `**Date**: TBD (written at the tag)` line becomes the new S's date, in the form 16.0.0's notes used. (b) The walk-rows bullet (L57 at `a19481725`). It says none of the rows that lapse at S is a disclosure missing from a served surface. Stacy's #497 update rules RL-22 floor-class, waived for 16.1.0 by Peter's "(i)", so one of them is: the consumer-Stacy charter's owed-set lines (`dist/consumer-canonical/agents/stacy.md` L343 and L347; record `.kiro/issues/2026-10-25-owed-set-law-text-after-closing-commit-anchor.md`). The bullet is corrected to name that row and the waiver; its fix rides #473's follow-on. The notes are not packed, but they are the record. They do not repeat RL-19's Kiro sentence.
+- **`canonical/generated.lock`**: only if the guard's input closure includes `CHANGELOG.md` and moves. It is written by a green `npm run check:122:diff-guard`, never by hand. If `outputs` moves, the author stops and reports.
+
+## What this grant does not cover
+
+Anything else, including any other line of the release notes. An edit outside the list is a claims-pass finding. *(Amended 2026-10-26, Thurgood, twice before this record's activating PR #498 merged: the notes path was added for L57 on Stacy's #497 update (RL-22), then for the Date line on the orchestrator's go.)*
+
+---
+
+**2026-10-26 — CLOSED at #499's merge (Thurgood, owner, rule 5).** The grant was consumed by its fixing PR, #499 (`release/16.1.0-fix-1`, squash `ff3e7dad7`, merged 2026-10-26T13:34:59Z), and by its own text it expired there. #499 carried no outcome line for it, so it stayed open at the root past its fixing PR's merge: Stacy's O-31 (her addendum on the final S `dddf46d4f`, commit `3713247be`), a walk finding under rule 11 ("a grant still open at its fixing PR's merge"). This line closes it, and the next commit moves it to `archive/`, in the grant PR for fix 2 (`.kiro/issues/2026-10-26-release-16-1-fix-2-files-grant.md`). Rule 4: not a ruling on the merits.

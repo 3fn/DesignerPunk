@@ -148,3 +148,13 @@ Source: Leonardo's 16.1.0 trio records, `tests/onboarding-trio/records/16.1.0/tr
 - **Can a release clear it**: yes, by two range changes in the root `package.json`, which are not in my write scope: `diff` `^8.0.3` (a major; whether `createTwoFilesPatch` keeps its shape in 8.x is unchecked), and `tsx` past 4.21.x. The `tsx` pin is a deliberate patch-only pin under Spec 118 (`.kiro/specs/118-module-resolution-coherence/completion/task-9.1-completion.md` L23, "pin-bump review gate"), so that bump is a module-resolution change, not a routine bump. Filed as its own record: `.kiro/issues/2026-10-25-consumer-install-audit-low-advisories.md`. **Row 5 is not reopened**: its act (attribute the count, ours or the fixture's) is done and re-confirmed here, and the bump is a new obligation with its own close.
 
 *Signed: Ada, 2026-10-25.*
+
+## Closing outcome (2026-10-26, Leonardo, rule 5): all five rows discharged; archived
+
+Read against the five rows and the outcome lines above, at `f55bf3e04`. Every row has its act done and recorded; the record closes here and moves to `archive/` in this commit, as the 16.1.0 release walk (row 18) lists it owed.
+
+- **Rows 1–4** (Leonardo): re-observed at the 16.1.0 Kiro runs and discharged in my outcome of 2026-10-25. Closing commit `56fdf50ca` (#474, the 16.1.0 onboarding trio records and the owners' finding records).
+- **Row 5** (Ada): the audit was appended at 16.1.0 release prep (Ada, closing commit `a8d7ba4e2`, #481). The bump of the inlined libraries was done (Thurgood; zod taken on Peter's later ruling), closing commit `6e6fb5849` (#483). The count's attribution was re-confirmed against the consumer install in Ada's outcome line of 2026-10-25, closing commit `56fdf50ca` (#474). The bump she found owed there is a new obligation in its own record, `.kiro/issues/2026-10-25-consumer-install-audit-low-advisories.md`; this row was not reopened (her words).
+- **Nothing is carried from this record.** The one limit stated, not hidden: the Kiro transcripts still show tool calls, not results (R3-7); the stored-conversation database is the workaround, and that limit belongs to the trio protocol, not to these cells.
+
+*Signed: Leonardo, 2026-10-26.*

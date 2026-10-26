@@ -316,7 +316,7 @@ android_patterns:
   component_format: Jetpack Compose Composables
   
   token_consumption:
-    method: DesignTokens Kotlin package
+    method: DesignTokens Kotlin object (package com.designerpunk.tokens)
     access: DesignTokens.<Android identifier from the token index>
     example: DesignTokens.space_inset_100
     
@@ -397,35 +397,35 @@ token_consistency:
     - No hardcoded values that bypass tokens
     
   platform_mechanisms:
-    web: CSS Custom Properties (--dp-*)
-    ios: DesignTokens Swift package
-    android: DesignTokens Kotlin package
+    web: CSS Custom Properties (--<name>, no namespace prefix)
+    ios: DesignTokens Swift struct (generated DesignTokens.ios.swift)
+    android: DesignTokens Kotlin object (package com.designerpunk.tokens)
 ```
 
 **Example - Focus Ring Token Usage**:
 ```css
 /* Web */
 .input-text-base:focus-visible {
-  outline: var(--dp-accessibility-focus-width) solid var(--dp-accessibility-focus-color);
-  outline-offset: var(--dp-accessibility-focus-offset);
+  outline: var(--accessibility-focus-width) solid var(--accessibility-focus-color);
+  outline-offset: var(--accessibility-focus-offset);
 }
 ```
 
 ```swift
 // iOS
 .overlay(
-  RoundedRectangle(cornerRadius: DesignTokens.radius.input)
-    .stroke(DesignTokens.accessibility.focus.color, lineWidth: DesignTokens.accessibility.focus.width)
-    .padding(-DesignTokens.accessibility.focus.offset)
+  RoundedRectangle(cornerRadius: DesignTokens.radius150)
+    .stroke(DesignTokens.accessibilityFocusColor, lineWidth: DesignTokens.accessibilityFocusWidth)
+    .padding(-DesignTokens.accessibilityFocusOffset)
 )
 ```
 
 ```kotlin
 // Android
 Modifier.border(
-  width = DesignTokens.accessibility.focus.width,
-  color = DesignTokens.accessibility.focus.color,
-  shape = RoundedCornerShape(DesignTokens.radius.input)
+  width = DesignTokens.accessibility_focus_width,
+  color = DesignTokens.accessibility_focus_color,
+  shape = RoundedCornerShape(DesignTokens.radius_150)
 )
 ```
 
