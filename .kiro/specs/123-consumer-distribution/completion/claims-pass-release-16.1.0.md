@@ -1035,3 +1035,294 @@ For Thurgood, read in full as above.
 My verdict holds the tag a third time today, for findings rated Low.
 
 **What survives**: Peter ruled on the radius names in his words ("resolve the radius names issue now"), and then widened #500 by name to the focus lines. A reader can say he scoped both the fix and the release, and that a fresh find in the same file belongs to the post-tag CORRECTION, not to the tag. I cannot rule that reading out. I hold the fork in front of the tag only because the floor's letter and both of today's precedents say a known falsity in a served doc is his to waive. L299–L300 also sits in the very example he had fixed. If his standing reading for finds like this is (b), this record has spent his attention on Low items once more.
+
+---
+
+## Phase 1 addendum 2 — final S `503fbfb84cfa48dee2929363e25493546b9a56d1` (#503), 2026-10-26
+
+**Written**: 2026-10-26. Reads taken 14:39:07Z → 14:52:36Z; this section appended at 14:54:47Z (each from `date -u` when taken).
+**Final S**: `503fbfb84cfa48dee2929363e25493546b9a56d1`, the squash of **PR #503** (Thurgood, fix 2; head `962c7e919`, branch `release/16.1.0-fix-2`), merged by `3fn` at **2026-10-26T14:36:53Z**. Its first-parent chain back to the prior S `dddf46d4f`:
+- **#501** (grant record; head `fd3af02e3`, branch `chore/release-16.1.0-fix-2-grant`): squash `dce3199908fb0af06cdd9cb324929efeae630307`, merged **14:17:18Z**;
+- **#502** (Lina's sweep; head `a9f1753ec`, branch `fix/platform-guidelines-dp-prefix-sweep`): squash `f1433b5bd798674297587faf33f2e23270099341`, merged **14:25:25Z**;
+- **#503**: as above.
+
+Merge times, merge commits, heads and merger are from GitHub's public API, read by me.
+**Peter's answer, and its bound**: chat, relayed by the orchestrator, received before 2026-10-26T14:04:13Z (the orchestrator's clock), verbatim: *"Fix it now, and do the whole-file sweep"*. That is option (a) of the RL-27/RL-28 fork, plus the remedy of Lina's counter-argument. It is recorded on #497's body as an `**Answered (RL-27/RL-28 fork)**:` line (read by me from the public API; #497 head `3713247be`). All three merges are after the bound, so none outran the question (RL-23 does not repeat).
+**Firing event**: RELEASE phase 1 on the new S, owed by option (a) ("a new S, 5.1 again, and a second dated addendum").
+**State at this writing** (14:48:10Z): no `v16.1.0` tag on `origin`. `registry.npmjs.org/@3fn%2fcore`: `dist-tags.latest` = `16.0.0`, and no `16.1.0` key in `versions` or `time`. `origin/main` is the final S. **Nothing is tagged or published.**
+**Append-only**: every section above stays as written. Where this addendum corrects one, it says so.
+
+> **No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.** This addendum gates neither the tag nor the publish. Where a finding meets the release floor, it names the fork for Peter and does not pick it.
+
+### For the tag (read this first)
+
+- **RL-27 and RL-28 are fixed in the packed bytes.** No packed file has a `--dp-` name. Each of the four extra sweep lines is true against the generators. CHANGELOG L37 and the notes carry Ada's count, so **F-3's "the release notes carry the count" is met**. O-31 and O-32 are resolved.
+- **Nothing else this record owed moved.** The packed delta is the two files the fix PRs edited, plus three re-stamped timestamps. Every claim group I read in bytes carries over.
+- **One new reading, RL-29, is Peter's.** The token index's web names for 30 composite tokens (24 typography, 6 motion) and 7 elevation tokens are names that no packed CSS defines. `get_token_details` serves them, with no caveat. One served doc copies one of them: `governance/Component-Development-Guide.md` L609, `font: var(--typography-button-md);`. That line sits in the CSS block #472 corrected (floor row 3), against the index.
+  - It is pre-existing: the index rows are the same at `v16.0.0`, where the line was L602.
+  - It is not a walk row, and no record holds it at S.
+  - I read it as P0-shaped at the web reader. The fork is below.
+- **The L686/L711 access rule** ("`DesignTokens.<iOS|Android identifier from the token index>`"): **I rule it a rule with unlisted exceptions, not a false sentence under the floor.** The reasons are below. It does not hold the tag.
+- **My verdict line for the tag at the final S `503fbfb84`: it should wait for Peter's answer on RL-29, not for a fix. Nothing else holds it.** By 3a's letter RL-29 does not hold it, because it is not a walk row. I hold it on the precedent of RL-27, and the counter-argument below says what that costs.
+- **Open for Peter**: RL-29's fork, (a) / (b) / (c), below. This line belongs in #497's body as an `**Open for Peter**:` line.
+
+### RELEASE-FLOW 5.1 at the final S
+
+The orchestrator's dry run from the main checkout, 14:37:31Z → 14:38:00Z, `EXIT 0`. I read its log (`dry-run-finalS3.out`, 2083 lines) for these lines:
+
+```text
+release-publish: dry-run of @3fn/core@16.1.0 at 503fbfb84cfa48dee2929363e25493546b9a56d1 (fresh clone of https://github.com/3fn/DesignerPunk.git)
+✓ No package name drift detected (1540 files scanned)
+Closure 1: 54 files checked, 0 escaping references
+Closure 2: 54 seed files, 16 closure files, 0 bare specifiers
+105/105 assertions passed.
+sha1:       d63b8af4321dcf0ea90f6215410d9848c1842f76
+files:      1694   bytes: 6589802   pack-assert: 105/105   publish path: 16 (floor 16)
+```
+
+- **105 `PASS` lines, 0 `FAIL`.** 16 of them are `PASS: publish path:`, and all three MCP bundles read `nested roots []`. With the temp-dir name masked, the 105 lines equal the prior S's line for line.
+- **The log against the prior S's log**, timestamps and temp-dir names masked: they differ only in the commit line, two esbuild timings, the `npm notice` sizes of `CHANGELOG.md` (71.1kB → 71.3kB) and `governance/platform-implementation-guidelines.md` (30.4kB → 30.6kB), and the shasum/integrity lines.
+- **`release-publish-record.json`**: `mode` `dry-run`, `commit` = the final S, `sha1` `d63b8af4…`, `fileCount` 1694, `bytes` 6589802, `checks` 105/105, `publishedTo` `[]`, `createdAt` 2026-10-26T14:37:56.784Z.
+- **The tarball**: I copied it and the record from the run's `out/` directory (still present at 14:39Z), re-hashed the tarball (sha1 equal), and extracted it.
+- As before, 5.3 rebuilds at the tag, so the published sha1 will differ. 6b's comparand is the 5.3 record.
+
+### The delta since the prior S `dddf46d4f`
+
+**The packed delta** (the prior tarball `2c8e1907…` against the final `d63b8af4…`, both extracted):
+- **The same 1694-path file set** (`comm -3` prints nothing).
+- **5 files differ**:
+  - three re-stamped timestamps, and nothing else: `dist/mcp/tool-manifest.json` (`generatedAt`), `dist/types/generated/TokenTypes.{d.ts,js}` (`Generated:`);
+  - `CHANGELOG.md` (#503: L37 only);
+  - `governance/platform-implementation-guidelines.md` (#502: L128–L130, L299–L300, L661–L662, L685, L710).
+  - Both are byte-equal to their files at the final S (`git show 503fbfb84:<path> | cmp`).
+- **Not packed**: `docs/releases/release-16.1.0.md`. The package has no `docs/releases/` path; its only `docs/` paths are `docs/consumer/{COMMIT-POLICY,INSTALL}.md`. The repo-local outputs #502 regenerated (`.claude/agents/data.md`, `canonical/_consumer-output/cc/.claude/agents/data.md`, `canonical/generated.lock`) are not packed either.
+- **Byte-equal**: `package.json`; the token files (`dist/DesignTokens.{web.css,ios.swift,android.kt,dtcg.json}`, `dist/browser/tokens.css`, `dist/ComponentTokens.*`); `token-index/**`; `.kiro/steering/**`; `dist/consumer-canonical/**`.
+- **What this means for my sample**:
+  - **The L266 row's counts hold.** The token index is byte-equal, so its keys are 217/193/33, with 0 removed. The file set is unchanged, so against public 16.0.0 it is still 21 added and 2 removed.
+  - **No sample claim group needs a re-verify.** Every group I read in bytes under `dist/`, `token-index/`, `src/components/**`, `.kiro/steering/` or `dist/consumer-canonical/` carries over. The two changed files are re-read below.
+- **Signing acts in the delta**: `verify-signing-chain --audit --pr <N> --exclude-signer stacy` for #501, #502 and #503 reads `0 of 0 act(s)` each, exit 0. No path under `canonical/profiles/` or `canonical/operative-sets/` changed. RL-24's and RL-25's counts are unchanged: `Delegate audit (Stacy-signed, Ada): 0 / 135 — no file at S (not run)`; `Peter sample (Stacy-signed): 0 / 135`.
+- **Grant reads**:
+  - **#501** is record-only. It adds the fix-2 grant, and it closes and archives the fix-1 grant. The fix-1 change is append-only: an outcome line, then the move. **O-31 is resolved.**
+  - **#503**: `git diff --numstat` lists `CHANGELOG.md` 1/1 and `docs/releases/release-16.1.0.md` 3/2. Both are in the fix-2 grant's list. The CHANGELOG hunk is L37 inside `[16.1.0]`. The notes hunks are L55, a new L59 and L67 (the grant's L66, moved down by the new bullet). `canonical/generated.lock` is not touched.
+  - The fix-2 grant's acts on `release/16.1.0-fix-2` are `55533feb4`, `5300b4831` (14:27:19Z) and `962c7e919` (14:30:02Z), all after its activation at #501's merge (14:17:18Z). Its close (the outcome line) and archive move are in #503 itself, append-only.
+  - No out-of-list edit.
+  - **#502 rides no grant.** `governance/**` is outside Lina's charter write scope, and the PR is a Peter-merged CORRECTION by the file's content owner, as #500 was. Whether the edit-kinds law gives a content owner write access for a CORRECTION is not read here. I did not read it for #500 either.
+
+### RL-27 at the final S: fixed
+
+- **The whole packed artifact, `grep -rnI -- '--dp-'`: 0 hits in 0 files** (5 lines at the prior S). The `dp-` strings that remain are temp-dir prefixes (`dp-sync-keys-`, `dp-ts-`, and the like) and the consumer repo name `dp-portfolio`. None of them is a CSS name.
+- **At S in git**: `git grep -- '--dp-'` over `governance`, `.kiro/steering`, `canonical`, `src` returns nothing. The one remaining hit in the repo is the frozen fixture (O-35), which is not a shipped path.
+- **The five RL-27 lines, against the packed CSS** (`dist/DesignTokens.web.css`, `dist/browser/tokens.css`):
+  - L128 `web: CSS Custom Properties (--<name>, no namespace prefix)`: **true**. `src/providers/WebFormatGenerator.ts` L116/L123 return `` `--${kebabName}` ``. 694 custom-property lines in `DesignTokens.web.css`, and every one is `--<lowercase>`.
+  - L299–L300 `var(--motion-float-label-duration)`: **true** (`DesignTokens.web.css` and `browser/tokens.css` L902).
+  - L661 `prefix: -- (plain; no namespace prefix)`: **true**, as L128.
+  - L662 `example: var(--color-action-primary)`: **true** (L545, and L935 for the override set). `color.action.primary` is a key (`token-index/semantics.yaml` L268, web `--color-action-primary`).
+- **The four extra sweep lines**, against the generators and the packed files:
+
+| Line | At the final S | Generator | Packed file | True? |
+|---|---|---|---|---|
+| L129 | `ios: DesignTokens Swift struct (generated DesignTokens.ios.swift)` | `src/providers/iOSFormatGenerator.ts` L77 `'public struct DesignTokens {'` (also `iOSFileOrganizer.ts` L97) | `dist/DesignTokens.ios.swift` L9 `public struct DesignTokens {` | **true** |
+| L130 | `android: DesignTokens Kotlin object (package com.designerpunk.tokens)` | `src/providers/AndroidFormatGenerator.ts` L63 `'package com.designerpunk.tokens'`, L65 `'object DesignTokens {'` | `dist/DesignTokens.android.kt` L7 `package com.designerpunk.tokens`, L9 `object DesignTokens {` | **true** |
+| L685 | `method: DesignTokens Swift struct (generated DesignTokens.ios.swift)` | as L129 | as L129 | **true** |
+| L710 | `method: DesignTokens Kotlin object (package com.designerpunk.tokens)` | as L130 | as L130 | **true** |
+
+- "Package" was wrong for both, the old lines' error: the package ships no Swift package manifest (Integration Guide L164, as #502's ledger cites), and the Kotlin file's `package` is a namespace declaration, not a container. The new text names each container kind as generated.
+- **#500's claim, re-read**: "Float Label examples name the emitted tokens" is now true for all three platform blocks (L299–L300 web, L310 iOS, L321 Android).
+- **Row: RL-27 → fixed (#502).** The fix text is Lina's, not mine (RS-33).
+
+### RL-28 at the final S: fixed; F-3's cost-bound met
+
+**Packed `CHANGELOG.md` L37** (byte-equal to S) now reads: "A heuristic check of the other governance docs found 56 strings in 15 docs that are not keys: 36 wrong names that still ship in this release, and 20 example names not yet marked as examples (tracked: `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`)".
+
+**The notes at S** (`docs/releases/release-16.1.0.md`, not packed):
+- **L55**: "Three additions that belong to the record". It is followed by three bullets (L57, L58, L59), so it is true.
+- **L59** (new) carries: Ada's predicate v1, run at `a95d6bf3d`; 56 strings in 15 governance docs, none in a steering doc; 36 wrong names that ship; 20 correct example names not yet marked; the 15 docs unchanged between `a95d6bf3d` and S; the guard ratified in #495 and not built yet; the CHANGELOG carrying the same count.
+
+**L37 and L59, against the record and repo at S**:
+- **The counts** equal Ada's section "Corrections and the vetted list (2026-10-26, Ada)": "56 failures in 15 docs", "36 corrections", "20 correct mentions". Her lists name 8 + 7 = **15 docs**, all under `governance/`. The ballot's scope includes the eight `.kiro/steering/*.md` files (`2026-10-26-governance-examples-guard.md` L45), so "none in a steering doc" holds.
+- Her lists cite 31 lines for the 36 and 13 lines for the 20, so some lines hold more than one string. The string counts are hers; I did not re-run her predicate.
+- **"The 15 docs did not change between `a95d6bf3d` and this release's S"**: `git diff --name-only a95d6bf3d 503fbfb84` is empty for each of the 15. **True.**
+- **"The guard … is not built yet"**: `git grep` at S over `scripts`, `tools`, `src`, `.github` and `package.json` finds no `governance-examples` instrument. **True.**
+- **"36 wrong names that still ship"**: the 15 docs are packed (`governance/**`) and unchanged. **True.**
+
+**L67, against `git log --first-parent de63033b9..503fbfb84`** (F is an ancestor of S; 19 commits). I classed each by whether its diff touches a packed path, or source that builds into one:
+- **Shipped-path PRs**: #488, #486, #489, #490, #491, (#494), #496, #499, #500, #502, #503.
+- **Record-only PRs**: #480, #474, #487, #485, #492, #498, #495, #501.
+- **L67 names #486, #488, #489, #490, #491, #496, #499, #500, #502 and #503**, and names #498 and #501 as record-only ("such as"). **It matches, with one omission: #494**, the release PR itself (version, CHANGELOG, README, the generated CSS header). L67 calls #494 "the release PR" ("diff line in the release PR"), so I read the omission as the sentence's frame, not a falsity (O-36).
+- "No trio run saw these changes" stays true, because F precedes every one.
+- **The Data charter clause** ("with the Data charter lines that embed them (#500 and #502)"): the packed `dist/consumer-canonical/agents/data.md` is byte-equal across the delta. The embedded guidelines text reaches a consumer's Data agent at `sync`, from the packed guidelines. So the clause is true in effect.
+
+**F-3's cost-bound** (Peter's answer, ballot `2026-10-26-governance-examples-guard`: "the release notes carry the count"): **met**. The count is in notes L59, and in CHANGELOG L37 for the human reader. **O-32 is resolved by L67.**
+
+**Row: RL-28 → fixed (#503).** The fix text is Thurgood's, not mine.
+
+### The two 3a greps at the final S (RELEASE-FLOW Phase 1, as amended by #496)
+
+The commands are verbatim from RELEASE-FLOW 3a at S, with `V=16.1.0`. I ran them at 14:45:27Z over `git archive 503fbfb84 .kiro/issues`, extracted to scratch, so these are S's bytes. Output cut at 140 characters:
+
+```text
+main at: 503fbfb84cfa48dee2929363e25493546b9a56d1
+… 33 Trigger lines in 32 records …
+due-rows exit 0
+.kiro/issues/2026-06-25-component-schema-token-name-drift.md:11:**Class**: P0 false-claim · defect *(set 2026-10-20, Lina, rule 12. Accepte
+P0 exit 0
+```
+
+- **Against the prior S** (34 lines in 33 records, compared sorted by path):
+  - **In**: none.
+  - **Out (1)**: `2026-10-26-release-16-1-fix-1-files-grant.md`, closed and archived by #501.
+  - **Never at the root at either S**: the fix-2 grant, which #501 added and #503 archived.
+  - **P0**: identical, 1 line in 1 record (row 1, fixed by #452).
+- **By token**: 2 records carry `release:16.1.0:phase-1` (the walk record and the 16.1.0 files grant, whose `docs/releases/16.1.0/**` path stays open for step 6). 30 carry `release:next:phase-1`, the same 30 as at the prior S.
+- **What lapses at the final S, recounted from ancestors of the final S**: the same as at the prior S. The delta's only `.kiro/issues/` changes are the two grant closes and moves. No `release:next` record was closed, re-ruled or added in the delta.
+  - **No lapse: 6. Lapse: 24** (P1 3, P2 `(guard)` 8, P2 `(record)` 13). **Escalations: 9.** 6 + 24 = 30.
+  - **My erratum carries**: 8 of the 24 were filed after the walk merged (`264c25661`, #469), and none of the 8 is rowed. The lapse totals do not change.
+  - Mine (Start Up Tasks item 9): unchanged. Three lapses, reported; the `## Lapse` headings are not appended in this record-only PR.
+- **Lina's upkeep record** `2026-10-26-guidelines-platform-token-names-radius-input-motion-floatlabel.md` (trigger `merge:#500`) is still not an ancestor of S. `origin/chore/post-16.1.0-record-upkeep` is at `7678b314e`, and `git merge-base --is-ancestor` fails. My greps cannot reach it, and it cannot fire here. The Android Float/Dp record on the same branch stays waived to Spec 129 by Peter.
+
+### The governance-edit-kind read, #499–#503 (an erratum: my first addendum did not run it for #499 or #500)
+
+The PR bodies are read from GitHub's public API, never from the squash message:
+- **#499**: "**Edit kind**: none. No governance path is in the diff." True: `CHANGELOG.md` and the notes are not governance paths.
+- **#500** (`governance/platform-implementation-guidelines.md` L137–L138, L145–L147, L154–L156, L310, L321): CORRECTION, citing `.kiro/issues/2026-10-26-guidelines-platform-token-names-radius-input-motion-floatlabel.md`. **That record does not resolve at the merge**: `git cat-file -e dddf46d4f:<path>` fails, because it is on the unmerged upkeep branch.
+- **#502** (`governance/platform-implementation-guidelines.md`): CORRECTION, citing the same record @ `7678b314e` and RL-27 in this file @ `3713247be`. **Neither resolves at the merge `f1433b5bd`**: one is on the upkeep branch, the other on #497's branch.
+  - Both truth referents resolve: the three `dist/DesignTokens.*` files as generated, and `src/providers/{Web,iOS,Android}FormatGenerator.ts`.
+  - The three regeneration lines (`.claude/agents/data.md`, `canonical/_consumer-output/…`, `canonical/generated.lock`) are not governance paths; they are given for the record.
+- **#501 and #503** touch no governance path. Their lines are given for the record.
+- **The rot-mode count**: **2** CORRECTION lines (#500, #502) whose observation record does not resolve at the merge. There are no LAW hunks, so nothing goes to Peter from this read. → **RL-30** below.
+- **Consult lines**: #500 and #502 (the trigger-surface PRs) both carry `**Consulted**:`. #501 and #503 carry one as well.
+
+### #502's open items for Ada, and its fixture observation
+
+Lina's #502 body lists three items as "Open for Ada (not guessed, not blocking; routed after the tag)", and one observation. My read of each:
+
+**(1) The access rule at L686 and L711.** The lines read `access: DesignTokens.<iOS identifier from the token index>` and `access: DesignTokens.<Android identifier from the token index>`, with examples `DesignTokens.spaceInset100` / `DesignTokens.space_inset_100` (both true; Swift and Kotlin L563). They came from #472 (floor row 3), replacing `DesignTokens.category.subcategory`, which was false for every token.
+- **I ran the rule over every primitive and semantic entry** (a scratch script over packed `token-index/*.yaml` and `dist/DesignTokens.{ios.swift,android.kt}`): it **holds for 379 of 410 on iOS and 380 of 410 on Android** (primitives 213/217 on both; semantics 166/193 iOS, 167/193 Android).
+- **The iOS exceptions (31)**:
+  - 4 shadow-colour primitives that no platform emits (`2026-10-24-shadow-color-primitives-emitted-on-no-platform.md`, P1; CHANGELOG L58);
+  - 14 semantic colours that native output does not emit (CHANGELOG "Known limitations" L229; `docs/consumer/INSTALL.md` L157 and Integration Guide L171, both served; `2026-10-03-native-generator-findings-for-spec-129-intake.md`). Nine of them carry `theme.` names in the index, which the rule turns into `DesignTokens.theme.…`;
+  - 6 motion composites, emitted as nested `public struct MotionFloatLabel {…}` and the like. The index's `motionFloatLabel` resolves only as a top-level `public let` in the hand-kept `src/tokens/platforms/ios/MotionTokens.swift` L146;
+  - 7 `elevation.*` entries: iOS emits z-index, and the index gives iOS names for an Android family.
+- **The Android exceptions (30)**: the same 4 and 14; 6 motion composites, where the index's `motion_float_label` resolves in no packed `.kt` file (the hand-kept `MotionTokens.kt` L220 uses `motionFloatLabel`); and 6 `zIndex.*` entries (Android emits elevation).
+- **The 33 component tokens** carry their own container in the index (`ProgressTokens.connectorThickness`, `public enum ProgressTokens` in `dist/ComponentTokens.ios.swift` L75). The `DesignTokens.` prefix is wrong for them, and the index name alone is the access path.
+- Also known: the iOS colour and z-index members are not `public` (`2026-10-24-ios-token-declarations-not-public.md`, P3). This fails only across a module boundary.
+
+**My ruling: a rule with unlisted exceptions, not a false sentence under the floor.**
+- The sentence is a schema whose output is true wherever the index row is true and the member is emitted, which is 92–93% of the entries. Each exception traces to an index row or a native-emission gap, not to the rule.
+- Every exception is native-only. The owners' standing reading for native-name defects is that "native ships as reference source, so no reader is misled about it building, which keeps this out of P0" (Lina, `2026-10-25-native-reads-of-names-the-theme-does-not-hold.md`; Ada, the same frame in the 10-03 record). I do not dispute that reading for these lines.
+- The largest exception (the 14 colours) is disclosed in two served docs, though not where L686 sits.
+- **What survives**: an agent that applies L711 to `motion.floatLabel` writes `DesignTokens.motion_float_label`, which nothing defines. That is the shape of RL-27. The difference is that RL-27's lines were false for every reader, while this rule is false only where the index row or the emitter is.
+- **Route**: **Lina** (the exception clause, or a narrowed rule; her text, not mine) and **Ada** (the exception list's facts). → O-33.
+
+**(2) The index's web name `--motion-float-label` is not emitted.** True. Packed CSS has `--motion-float-label-duration` and `--motion-float-label-easing` (L902–L903), and no `--motion-float-label`. **This is one instance of RL-29**, which is a web falsity, outside the reference-source frame.
+
+**(3) `accessibilityFocusColor` is not `public`.** This is O-29, unchanged: known and classed P3 at S (`2026-10-24-ios-token-declarations-not-public.md`, Ada). It is not floor-class, and it carries.
+
+**The fixture observation**: `tests/onboarding-trio/fixtures/born-cc/.claude/agents/data.md` at S still carries `--dp-` and `radius.input` (L400, L409–L410, L417, L428). It was last changed in #362 (2026-10-15).
+- The package has no `tests/` path, so it is **not shipped**, and it is not a floor row.
+- It is a frozen born-repo snapshot. Whether a fixture should keep the text as it was born or follow the source is the harness owner's call. → O-35.
+
+### RL-29: Low (tag-relevant if Peter reads it floor-class) — the token index's web names for composite and elevation tokens name CSS properties no packed file defines; one served doc copies one
+
+- **Promised** (M7, RELEASE-FLOW 3a): "served docs, MCP contracts and agent charters are fixed, not disclosed". Floor row 3 (#472): "Served docs and charters name token-index keys".
+- **Claimed**: `get_token_details` returns `platforms.web` as the token's web name, with no caveat. I read it for `motion.floatLabel` (`"web": "--motion-float-label"`) and `elevation.container` (`"web": "--elevation-container"`) from this session's Application MCP; the rows equal packed `token-index/semantics.yaml`.
+- **Shipped** (the packed artifact at the final S):
+  - **37 of 193 semantic web names in the index are defined in no packed CSS** (`dist/DesignTokens.web.css`, `dist/ComponentTokens.web.css`, `dist/browser/*.css`; 720 distinct custom properties):
+    - **24 typography composites** and **6 motion composites**: the emitter writes per-property names (`--typography-body-sm-font-size`, `--motion-float-label-duration`), never the stem;
+    - **7 `elevation.*`**: web emits `--z-index-*`, and `--elevation-container` is defined nowhere.
+  - The 4 shadow-colour primitives are the fifth case. They are known and classed (P1, CHANGELOG L58), so I leave them out of this finding.
+  - **One served doc copies a stem**: `governance/Component-Development-Guide.md` L609, `font: var(--typography-button-md);`. I searched packed `governance/` and `.kiro/steering/` for every `var(--typography-…|--motion-…|--elevation-…)` that does not end in a property suffix, and L609 is the only hit.
+  - **L609 sits in the fenced CSS block (L602–L613) that #472 corrected** (L606–L607: `--space-inset-050`, `--space-inset-100`, `--color-action-primary`). Against row 3's own truth, the index, L609 is right: `--typography-button-md` is the index's web name for the key. Against the CSS, it renders nothing.
+  - Served docs elsewhere teach the right form (`browser-distribution-guide.md` L307; `Web-Authoring-Standards.md` L76, L78, L138; `Token-Family-Motion.md` L176).
+- **Age**: the index rows for `motion.floatLabel`, `elevation.container` and `zIndex.container` are identical at `v16.0.0`, and CDG had the same line at L602 there. **Pre-existing**, not introduced by this release.
+- **Known?**:
+  - No record at S holds the index part (searched `.kiro/issues/**` for composite, platform-name and the stems). The archived `2026-09-26-container-base-phantom-css-vars.md` item 4 notes that composites "expand into sub-properties … that are not single index entries", which is the mechanism, recorded as a guard limit, not as a defect.
+  - My first addendum's O-30 saw the Android motion name and the web stem's mechanism, and did not offer it as a floor row. **Erratum to O-30**: "I did not trace what it serves for this key" is now traced (above). I should have read the web side against the floor then.
+  - Lina's #502 body reads (2) as "not blocking; routed after the tag".
+- **Reading**:
+  - The truth chain for token names ends at `token-index/`. Row 3's sweep, the guard ratified in #495 and Lina's whole-file sweep all take the index as truth, so L609 passes all three. The false link is the index's web name for these 37 entries.
+  - At the web reader, an agent calling `get_token_details` or reading CDG, it is a name that resolves to nothing. **Web CSS is a build input, so the reference-source frame that keeps native-name defects out of P0 does not reach it.** I read it as **P0-shaped**.
+  - Harm: low. A `font:` or `transition:` that names an undefined property drops silently, which is worse than a native compile error, because nothing reports it.
+  - **By 3a's letter it is not "known"**: it is not a walk row, and no record holds it.
+- **Route**: **Ada** (the index's platform names; file the record and class it, rule 12; the owner classes, Stacy's P0 reading is offered and is not an upgrade); **Lina** (CDG L609, content owner); **Peter** (the fork). → RS-42.
+
+### The fork (RL-29), surfaced and not picked: Peter's
+
+- **(a) Fix before the tag.**
+  - Only CDG L609 is a minutes fix: Lina's CORRECTION, with truth the packed CSS's per-property names.
+  - The index rows need a change to Ada's index generator, or to what `platforms.web` means for a composite. That is not a pre-tag edit, so under (a) the index part still needs (b) or (c).
+  - (a) means a fourth S, 5.1 again, and a third addendum.
+- **(b) Tag the final S with his own-words waiver for 16.1.0.** Ada files the index record (trigger `release:next:phase-1`, or into Spec 129, which owns generation completeness), and Lina fixes L609 in her post-tag CORRECTION.
+- **(c) Rule it not floor-class.** For example, `platforms.web` for a composite could be read as a stem by design. That needs his words, and the tool's description would then be the gap to close.
+- **Already answered?** I checked his dated words for a ruling that covers this case.
+  - "Fix it now, and do the whole-file sweep" ruled RL-27/RL-28 and the guidelines file.
+  - F-3 ruled the guard's true-positive entries. L609 would not be one, because the guard resolves it against the index.
+  - "resolve the radius names issue now" ruled the radius pair.
+  - None of them covers the index or CDG L609, so I put the fork.
+- **Open for Peter**: RL-29's fork, (a) / (b) / (c). The tag waits for his answer, not for a fix.
+
+### RL-30: Low (record form, counted) — two CORRECTIONs cite an observation record that does not resolve at their merge
+
+- **Promised** (ballot `2026-10-18-governance-edit-kinds`, as my charter's edit-kind read restates it): a CORRECTION hunk's observation record resolves at the merge.
+- **Shipped**: #500 (`dddf46d4f`) and #502 (`f1433b5bd`) cite Lina's `2026-10-26-guidelines-platform-token-names-radius-input-motion-floatlabel.md`, which is on the unmerged upkeep branch. #502 also cites RL-27 in this record, which is on #497's unmerged branch. Neither resolves at either merge.
+- **Reading**: the observations are real, and both are reachable by SHA on `origin`. The record form is wrong: a merge on `main` cites what `main` does not hold. When the upkeep branch lands, the citation will resolve on `main`, but never at those merges. The count stands.
+- **Route**: **Lina** (the authoring agent: land the upkeep branch, or file observation records on `main` before their CORRECTION); the class question is RS-43.
+
+### Observations (not findings)
+
+- **O-31 — resolved** (#501: fix-1 grant closed, with the outcome line, and archived). The fix-2 grant closed and archived in its own fixing PR (#503), so the pattern did not repeat.
+- **O-32 — resolved** (notes L67, above).
+- **O-33 — the L686/L711 exception list**, ruled above (rule with unlisted exceptions). → Lina, Ada.
+- **O-34 — `token-index/` `themeVarying` reads `false` for five of the 14 colours that native output omits** (`color.feedback.info.{text,background,border}`, `color.action.primary`, `color.contrast.onAction`). Their index iOS/Android names carry no `theme.` prefix, and no native file defines them. It is known: `2026-10-03-native-generator-findings-for-spec-129-intake.md` L59–L60 ("a token overridden only by WCAG is marked `themeVarying: false` … but it is absent from native output"), P2 `(record)`, Ada, trigger Spec 129's claims pass. Not a floor row on the owner's reading (native reference source), which I do not dispute.
+- **O-35 — the born-cc fixture's old names** (above). → **Thurgood** (the onboarding-trio harness), with Lina for the text.
+- **O-36 — notes L67 does not name #494** among the post-F PRs that changed shipped paths. #494 is the release PR, and L67 points at it as the diff line's home, so I do not read it as false. If Thurgood wants the list exhaustive, the step-6 record is the place.
+- **O-37 — #502's write authority, not read** (above, under the grant reads).
+
+### Standards implications (this addendum)
+
+For Thurgood, read in full.
+- **RS-42 (RL-29)**: the truth referent for token names, in row 3's sweep, the #495 guard's predicate and two CORRECTIONs today, is `token-index/`. The index's platform names are not checked against the emitted files, so a wrong index name passes every check downstream of it.
+  - The class question: does a platform name in the index need a resolve-check against the generated output? The archived item 4 above says a family-wide guard needs "the generated CSS … or a composite-expansion map".
+  - **Owner**: Ada (the index and the guard's predicate scope), with Thurgood (the standard: what counts as truth for a name).
+- **RS-43 (RL-30)**: the edit-kind rule needs a CORRECTION's observation record to resolve at the merge. Today's pattern (an observation filed on a long-lived upkeep branch, then cited by a CORRECTION that merges first) defeats it every time. Should an observation record land first, or travel in the CORRECTION PR? **Owner**: Thurgood.
+- **RS-40, evidenced and answered for this instance**: Peter's "do the whole-file sweep" is the per-file answer. #502 found four more wrong lines that a ruled-list fix would have left. The standard is still unwritten.
+- **RS-41, evidenced**: RL-28 is the case. The cited record moved before the tag, and only this pass re-read it.
+
+**Standards implications: list — RS-42 and RS-43 (new); RS-40 and RS-41 evidenced.**
+
+### Method (this addendum)
+
+**Run by me** (worktree at `3713247be`, branch `chore/release-16.1.0-claims-pass-phase-1`; `git status --porcelain` empty before, and only this file after):
+- `git fetch origin`; `git log --first-parent`, `git show`, `git diff` and `git blame` over `dddf46d4f..503fbfb84`, `de63033b9..503fbfb84` and `v16.0.0..503fbfb84`; `git merge-base --is-ancestor`; `git cat-file -e` at the merges; `git fetch origin chore/post-16.1.0-record-upkeep` and `pull/503/head` (`FETCH_HEAD` writes only; no ref or branch written);
+- the public GitHub API, unauthenticated, for #497, #499–#503 (merge facts and bodies); `git ls-remote --tags origin`; the npm packument;
+- both 3a greps over `git archive 503fbfb84 .kiro/issues`;
+- the copy, re-hash and extraction of the final tarball; `comm` and `diff -rq` against the prior tarball; `cmp` of packed files against `git show 503fbfb84:<path>`; the `--dp-` grep and the composite-name greps over the packed bytes;
+- two scratch scripts (`python3 -I`, outside the extracted tree): the L686/L711 rule over every index entry, and the index-web-name-vs-packed-CSS set difference;
+- `get_token_details` for `motion.floatLabel` and `elevation.container` (this session's Application MCP);
+- `verify-signing-chain --audit --exclude-signer stacy` for #501, #502 and #503 (three `FETCH_HEAD` writes).
+
+**Read, not re-run**: the 5.1 dry run (the orchestrator's); Ada's predicate counts (56/36/20).
+
+**Not run**:
+- any compile (every iOS and Android read is of names and declared kinds: `not re-verified — toolchain unavailable`);
+- the root suite and the MCP suites;
+- `owed-set.sh` (the delta touches no `.kiro/specs/` path);
+- `gh` (this session holds no credentials, and I read none);
+- `verify-gate-registration.sh`.
+
+### Forced negative (this addendum)
+
+- **One packed text class is P0-shaped by my reading at its reader**: RL-29, the 37 index web names and CDG L609. It is not a walk row, and it is Peter's.
+- **No ✅ here rests on a compile.** The L129/L130/L685/L710 rows are reads of generator source and emitted declarations.
+- **Not re-derived**: Ada's 56/36/20 counts, beyond the doc count and the unchanged-docs claim.
+- No other claim group in my sample moved between the two S's.
+
+### Surviving counter-argument
+
+My verdict holds the tag a fourth time today, for a finding I rate Low, which is pre-existing since at least 16.0.0 and which the release did not introduce.
+
+**What survives**:
+- By 3a's letter, "knows" means the rows of the walk record, and RL-29 is not one. The content owner who raised the index half (Lina, in #502) read it as not blocking.
+- Spec 129 already owns native generation completeness, and the index's platform names are the same class of work. A reader can say this belongs to the next release's walk, not to this tag.
+- I cannot rule that reading out. I hold the fork in front of the tag for two reasons. The served-doc half (CDG L609) is the RL-27 shape in a block this release corrected. And the floor gives the waiver to Peter, not to me.
+- If his standing answer for pre-existing finds outside the delta is (b), this record has spent his attention a fourth time on a Low item. The class option is RS-42: check the index's names against the output once, so these finds stop arriving one at a time.
