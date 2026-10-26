@@ -1,6 +1,6 @@
 # Release 16.1.0
 
-**Date**: TBD (written at the tag)
+**Date**: 2026-10-26
 **Previous**: 16.0.0
 **Bump**: minor
 
@@ -54,7 +54,7 @@
 
 The CHANGELOG's "Known limitations in this release" is the consumer-facing list and is not repeated here. Two additions that belong to the record:
 
-- **Walk rows that lapse at S** are listed in `.kiro/issues/2026-10-25-release-16.1.0-walk.md` § "At S (release 16.1.0)" and its re-cut section; none of them is a disclosure that is missing from a served surface (the blocking test, RELEASE-FLOW item 3a). Every floor-class row is fixed: row 6 by #491, F-E8 by #488.
+- **Walk rows that lapse at S** are listed in `.kiro/issues/2026-10-25-release-16.1.0-walk.md` § "At S (release 16.1.0)" and its re-cut section; one of them is a disclosure missing from a served surface (the blocking test, RELEASE-FLOW item 3a): the consumer-Stacy charter's owed-set lines (`dist/consumer-canonical/agents/stacy.md` L343 and L347; `.kiro/issues/2026-10-25-owed-set-law-text-after-closing-commit-anchor.md`). Stacy's phase-1 pass (#497) found it as RL-22, and Peter ruled it floor-class and waived it for 16.1.0 ("(i)"); its fix rides #473's follow-on. Every other floor-class row is fixed: row 6 by #491, F-E8 by #488.
 - **Android is disclosed as reference source** (Peter, 2026-10-24); Spec 129's first task is a build check that compiles the Android output.
 
 ## Upgrading from 16.0.0
