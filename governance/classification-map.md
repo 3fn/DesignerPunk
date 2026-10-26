@@ -1218,3 +1218,23 @@ education:
 history:
   - { date: 2026-10-19, change: "entry created by ballot 2026-10-19-instrument-census-at-draft, RATIFIED by Peter 2026-10-19 (record-first). ORIGIN: sitting-2 S6, ratified on a hand census of 7 files; the instrument's decision function changed 14 (653e5a5d… → 0bffa3cd…)", by: thurgood }
 ```
+
+### governance-examples
+
+```yaml
+rule: "A served governance example (governance/*.md except classification-map.md, and the eight shipped steering docs) names tokens that resolve against the committed token-index/ (Ada's predicate v1: key, channel, namespace, DTCG path or glob; file names counted), declares only paths that exist (root or unique tracked suffix), shows a token file only with defineComponentTokens(), and imports from @3fn/core only through specifiers the exports map lists, type-checked against the built types; a deliberately generic or consumer-located example carries <!-- example: generic --> or <!-- example: consumer -->; hits at adoption are pending, content-keyed and homed, under a baseline header"
+boundary_call:
+  class: functional
+  rationale: "A key lookup against the committed index, a tracked-path lookup, a syntax read and a type-check of import lines are mechanical; whether an example teaches the right thing is not, and stays education's (ballot 2026-10-26-governance-examples-guard § 3, residual 1)"
+verification:
+  disposition: barrier
+  owner: thurgood
+  check_state: proposed
+  checks: []
+  census: "npx tsx scripts/governance-examples/check.ts --census"
+  # Flips to armed at the build PR's merge, with checks naming scripts/governance-examples/__tests__/governance-examples.test.ts in lane-functional-root (npm run test:scripts). Predicates: token-name Ada's (v1), file-shape Lina's.
+education:
+  disposition: "LAW HOME: ballot 2026-10-26-governance-examples-guard § 2 and § 8. The module header carries the predicate, the limit text and the whole-module sentences byte-exact"
+history:
+  - { date: 2026-10-26, change: "entry created by ballot 2026-10-26-governance-examples-guard (EXECUTION, § 4 step 3), check_state proposed; armed at the build PR's merge", by: thurgood }
+```
