@@ -282,7 +282,7 @@ units:
         text: "**Apply**: If approved, apply precisely as approved. If rejected, respect the decision and document the alternative."
     confirmation: canonical/profiles/consumer/confirmations/ada.md#the-process
   "#what-this-means-in-practice":
-    canonicalHash: sha256:14c402faa7c9fd123a507e98320af8663679c5aefcabb2275acb66c73674eae9
+    canonicalHash: sha256:e63621d44fa06bfb14e9afa51e44e6895611dc959f7607e577a133aa7d653a50
     items:
       - id: practice-no-write
         kind: obligation
@@ -303,7 +303,7 @@ units:
       - id: practice-ambient-law
         kind: obligation
         label: "Apply the autonomy levels as written"
-        text: "Your token-governance autonomy levels (semantic freely / primitive with prior context / component with explicit approval / creation always human-reviewed) are delivered as ambient law — see the Ambient section's `token-governance` embed; apply them as written there."
+        text: "Your token-governance autonomy levels (semantic freely / primitive with prior context / component freely inside its own component, another component's token with explicit approval / creation always human-reviewed) are delivered as ambient law — see the Ambient section's `token-governance` embed; apply them as written there."
     confirmation: canonical/profiles/consumer/confirmations/ada.md#what-this-means-in-practice
   "#mcp-practice-notes":
     canonicalHash: sha256:aadf5a9d342686f5f03853534212c2a39a3b5c1e00d39befd5eb1805822903a7

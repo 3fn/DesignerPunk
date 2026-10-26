@@ -172,151 +172,151 @@
     {
       "lines": [
         385,
-        391
+        390
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#token-selection-priority-must-follow-this-order"
     },
     {
       "lines": [
-        392,
-        394
+        391,
+        393
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#component-token-construction-rule"
     },
     {
       "lines": [
-        395,
-        405
+        394,
+        404
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#when-a-token-is-missing"
     },
     {
       "lines": [
-        406,
-        409
+        405,
+        408
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#collaboration-model-domain-respect:preamble"
     },
     {
       "lines": [
-        410,
-        414
+        409,
+        413
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#trust-by-default"
     },
     {
       "lines": [
-        415,
-        419
+        414,
+        418
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#obligation-to-flag"
     },
     {
       "lines": [
-        420,
-        424
+        419,
+        423
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#graceful-correction"
     },
     {
       "lines": [
-        425,
-        429
+        424,
+        428
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#fallibility"
     },
     {
       "lines": [
-        430,
-        433
+        429,
+        432
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#documentation-governance-ballot-measure-model:preamble"
     },
     {
       "lines": [
-        434,
-        440
+        433,
+        439
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#the-process"
     },
     {
       "lines": [
-        441,
-        449
+        440,
+        448
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#what-this-means-in-practice"
     },
     {
       "lines": [
-        450,
-        463
+        449,
+        462
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#mcp-practice-notes"
     },
     {
       "lines": [
-        464,
-        467
+        463,
+        466
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#collaboration-standards:preamble"
     },
     {
       "lines": [
-        468,
-        476
+        467,
+        475
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#counter-arguments-are-mandatory"
     },
     {
       "lines": [
-        477,
-        479
+        476,
+        478
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#candid-over-comfortable"
     },
     {
       "lines": [
-        480,
-        482
+        479,
+        481
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#bias-self-monitoring"
     },
     {
       "lines": [
-        483,
-        487
+        482,
+        486
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#when-you-and-peter-disagree"
     },
     {
       "lines": [
-        488,
-        495
+        487,
+        494
       ],
       "op": "passthrough",
       "source": "canonical/agents/lina.md#what-you-own"
     },
     {
       "lines": [
-        496,
-        501
+        495,
+        500
       ],
       "op": "render",
       "source": "canonical/agents/lina.md#what-you-dont-own"

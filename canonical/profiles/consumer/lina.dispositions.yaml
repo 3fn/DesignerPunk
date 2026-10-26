@@ -23,7 +23,7 @@ body:
   "#android": {"disposition": "retained"}
   "#cross-platform-consistency": {"disposition": "retained"}
   "#token-usage-in-components:preamble": {"disposition": "retained"}
-  "#token-selection-priority-must-follow-this-order": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#token-selection-priority-must-follow-this-order", "signature": {"signer": "lina", "canonicalHash": "sha256:ad6fd6a1c0b92f63dada5b5bd28888c99db2035f75072a975318a02683aee32a", "renderedHash": "sha256:fb1876195f4f7b463695b5d81e2918f14e56dae3ad47b2ff69a80762c4d45fed", "assent": {"surviving": ["priority-semantic", "priority-primitive", "priority-component", "priority-hardcoded"]}, "evidence": "canonical/profiles/consumer/signatures/lina.md#token-selection-priority-must-follow-this-order"}}
+  "#token-selection-priority-must-follow-this-order": {"disposition": "re-pointed", "removals": [{"text": "Peter", "cites": "subtraction-2"}], "destination": "#token-selection-priority-must-follow-this-order", "signature": {"signer": "lina", "canonicalHash": "sha256:92a5e797c7aebad385a926505a2bdef609b0f70fc2f9ca3b4120ec268335f69f", "renderedHash": "sha256:181a388b9379006a4ae6777e9c6122d9c0b366bc23c8e5c17a13870ad4416847", "assent": {"surviving": ["priority-pointer", "priority-no-creation"]}, "evidence": "canonical/profiles/consumer/signatures/lina.md#token-selection-priority-must-follow-this-order"}}
   "#component-token-construction-rule": {"disposition": "retained"}
   "#when-a-token-is-missing": {"disposition": "retained"}
   "#collaboration-model-domain-respect:preamble": {"disposition": "retained"}

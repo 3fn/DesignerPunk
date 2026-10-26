@@ -442,7 +442,7 @@ A `value:` product token requires demonstrating that the nearest system token do
 ### The Workflow
 
 1. **Identify the value you need** — e.g., "I need 60% opacity on a dark overlay"
-2. **Query system tokens (semantic first, then primitives)** — `search_tokens({ family: "opacity" })` or `get_token_family({ family: "opacity" })`. Check semantic tokens first per Core Goals token priority.
+2. **Query system tokens (semantic first, then primitives)** — `search_tokens({ family: "opacity" })` or `get_token_family({ family: "opacity" })`. Check semantic tokens first, then primitives, in the order of Token Governance § "Token Selection Matrix"; step 5 below decides `ref:` or `value:`.
 3. **Find the nearest token** — e.g., `opacity056` (0.56) and `opacity064` (0.64)
 4. **Evaluate perceptual tolerance** — Is the difference visible? See tolerance table below.
 5. **Decision**:

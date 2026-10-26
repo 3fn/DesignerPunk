@@ -188,9 +188,16 @@ date: 2026-09-29
 ## `#what-this-means-in-practice`
 
 confirmer: ada
-canonicalHash: sha256:14c402faa7c9fd123a507e98320af8663679c5aefcabb2275acb66c73674eae9
+canonicalHash: sha256:e63621d44fa06bfb14e9afa51e44e6895611dc959f7607e577a133aa7d653a50
 items: practice-no-write, practice-no-edit-docs, practice-propose, practice-all-changes, practice-ambient-law
-date: 2026-09-29
+date: 2026-10-25
+
+**Ruling: CONFIRMED at 5 items** (re-confirmation, 2026-10-25). The unit's hash moved from `sha256:14c402fa…` to `sha256:e63621d4…` because L389 now states the component-token level as "component freely inside its own component, another component's token with explicit approval" (ballot `2026-10-25-token-selection-order-one-rule`, F-1 (b), ratified #480; my § 13.7 text, applied by Thurgood byte for byte at `d9817512d`). I read the unit fresh and checked L389 against § 13.7: identical. All five ids are verbatim substrings of the new unit, each occurring once.
+- **What changed, and nothing else**: `practice-ambient-law`, re-quoted by Thurgood at `8b6e6f995` to the new L389. I agree with it as re-quoted, with no correction. It still binds the autonomy levels as law through the embed pointer and "apply them as written there"; only the summary of the component level moved, to match the ambient `token-governance` embed's § "Component Token Usage" as amended at site 1b.
+- **One reading I record, not a correction**: the summary says "component freely inside its own component"; the embed it points to also requires the token to be for the property it was made for (the owner's token for another property takes the step-4 checkpoint), as Core Goals L58 also says ("for the property they were made for"). The item does not need to carry that: "apply them as written there" makes the embed govern, and a rendering that kept the summary but softened that clause would violate the item. If a later round wants the summary to carry the property condition, that is a canonical edit by ballot, not this confirmation.
+- **No other item changed.** `practice-no-write`, `practice-no-edit-docs`, `practice-propose` and `practice-all-changes` are byte-identical to the 2026-09-29 set; the 2026-09-29 ruling below stands for them.
+
+The 2026-09-29 ruling, kept as the prior record (hash `sha256:14c402fa…`):
 
 **Ruling: CONFIRMED at 5 items, as drafted.**
 - `practice-no-write` names repo paths (`.kiro/steering/`, `governance/`). They are repo-bound referents, read re-keyed to the consumer's repo under 5b/5e, and stay inside the text.
