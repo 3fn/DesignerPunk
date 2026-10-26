@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-26 (R2: 2026-10-26)
 **Drafted by**: Thurgood (Civitas steward; owner of the instrument, register row `governance-examples`, `owner: thurgood`). Ballot `2026-10-26-governance-examples-guard` (RATIFIED, Peter, 2026-10-26, #495 `f55bf3e04`) § 2.6 defers these items "to a ballot of their own, filed with the build PR (steward's call, R2)". The build PR is #519 (`feat/governance-examples-guard`, head `38cc6a4b5`). Peter's standing go for parallel items covers the drafting (the orchestrator's reading). Peter, chat, relayed by the orchestrator, received before 2026-10-26T18:05Z (the orchestrator's clock), verbatim: *"If there are any other items of the list that can/should be done in parallel with those running, please, proceed"*. The orchestrator's brief to draft was received before 2026-10-26T18:54:48Z (`date -u`, the drafter's clock).
-**Status**: **DRAFT, R2** (the three consults folded, § 7), not ratified. No edit site below is applied. A merge with this line still reading DRAFT records the measure and ratifies nothing.
+**Status**: **RATIFIED (Peter, 2026-10-26)**, on the measure as it stands at R2 (`8b713b123`, the three consults folded), with **F-1 answered (a)**. Peter, chat, relayed by the orchestrator, verbatim (typos corrected, meaning unchanged), received before 2026-10-26T21:12:21Z (the orchestrator's clock): *"Re: the remaining rulings, let's go with the seat recommendations of those that have them; but any that have deferred or follow-up work require a plan to be addressed."* The ruling covers this ballot because it has seat recommendations on record: all three consulted seats read F-1 (a) (§ 6's table: Ada, Lina, Stacy), and Stacy's site-2 and site-2b texts are in § 3 verbatim. The follow-up work this ballot defers, its application PR, has its plan in § 9 and in the record `.kiro/issues/2026-10-26-governance-examples-guard-adoption-application.md` (owner, sites, the baseline it relies on, trigger, fallback). **Record-first**: this commit is the record. It is made before any edit site is applied, and it touches this ballot, the ballots README roll and that record only. **Resolved texts**: § 9 (clause 2 and site 1c under (a); the row-state reading of § 4.3 for #519's answer). The ballots README roll entry rides this commit, at the orchestrator's direction, not the application PR (§ 4.1 allowed either).
 **Required reviewer**: **Stacy**. Sites 1, 2 and 7 are her charter's trigger-set table, her counting block and her record, and she is the census reader.
 **Reviewers**: **Ada** and **Lina**, for § 2: 64 of the 69 pending entries are homed in their records (Ada 60, Lina 4; the other 5 are Thurgood's).
 **Consulted**: Stacy — reads F-1 (a); wrote site 2 and the RELEASE-row pointer (site 2b) verbatim, RELEASE phase 1 only; 1c decidable under (a) and (b), with three gaps folded at R2 (Owner-line match, RATIFIED at `<m>`, 1b's referent); site 7 order, re-arm and retroactivity folded; disposition `no-consumer-counterpart` / `subtraction-1` and all six census lines confirmed; Ada — reads F-1 (a): her sweep PR deletes her 60 entries; zero cross-seat staling today; surviving: her hits in Thurgood's docs need her commit to delete; Lina — reads F-1 (a); commits site 1d herself after the stacy.md commit; asked what clause 4's "names the change" means (answered in § 2 clause 4: a class, with the list attached at application) (consults 2026-10-26, relayed by the orchestrator; § 7)
@@ -312,6 +312,7 @@ It waits for #519 because `pending.json`, the row and the grant record must be o
   - **(b) The PR that makes an entry stale** deletes it, whoever wrote it.
     - *For*: no grain, and the guard is the whole oracle.
     - *Against*: any seat can complete a marker conversion on another seat's hit, and home records can fall behind the list.
+  - **Answered (Peter, 2026-10-26; relayed, received before 2026-10-26T21:12:21Z)**: (a), by his ruling to go with the seat recommendations (quoted in the Status line). The text under (b) in § 2 clause 2 and in site 1c is void and is not applied.
   - **The three reads** (consults 2026-10-26; none picks for Peter):
 
     | Seat | Read | Surviving counter-argument, in the seat's terms |
@@ -360,3 +361,27 @@ Questions put:
 
 - **2026-10-26 (Thurgood)**: DRAFT on branch `chore/ballot-governance-examples-guard-adoption`, cut from `origin/main` = `6615a6774`. #519 was read at `38cc6a4b5` (not merged in). Ballot only; no edit site is applied.
 - **2026-10-26 (Thurgood)**: R2 on `911b79246`: the three consults folded (§ 7). Ballot only; no edit site is applied.
+- **2026-10-26 (Thurgood)**: Status commit on this branch: RATIFIED with F-1 (a) (Peter's ruling, quoted in the Status line); § 9 added; the ballots README roll entry added; the application record filed (README rule 10). Ballot, README roll and one issues record only; no edit site is applied.
+
+## 9. Resolved texts and the plan for the application (written at the Status commit)
+
+**F-1 (a).** The texts below are the ones applied. The (b) alternatives are void.
+
+- **§ 2 clause 2** reads as the (a) paragraph in § 2, verbatim: "An owner of an entry's `home` record may delete that entry, and only that entry, in a PR whose `**Agent**:` line names that owner", with the owner field read up to its first `(`, `.`, `;` or ` — `.
+- **Site 1c** is the "After, under F-1 (a)" text in § 3, verbatim. Its `<m>` and `<m>^` are the merge commit of the PR under read and its first parent, as written there; they are not placeholders to resolve here.
+- **Site 2 and site 2b** are Stacy's texts in § 3, verbatim. They have no open value; the volatile-fact hand check is § 4.2 step 8.
+- **Sites 3 to 7** keep their `<date>` and `<sha>` values for the application PR: the application date and the application merge's SHA. Each is filled at application and named in that PR's body.
+
+**The row-state answer reads as § 4.3's first bullet, "Arm in #519".** Peter ruled the same day, on the same words (the Status line), that the `governance-examples` register row is armed in #519 (`check_state: armed`, `checks` naming the test, history line dated 2026-10-26). So adoption is #519's merge M (the row reads `armed`, and `pending.json` at M carries the header), site 4 edits the armed row, the site-2 read counts from the first RELEASE after M, the guard is a registered instrument at this ballot's application base, and the census line in the header stands as written. A difference the application PR must name: § 8.8 of the parent ballot reads `proposed`; #519 arms the row as ratified-intent, and the amendment that makes § 8.8 say what shipped is owed on `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md` § "Plan (Peter's condition)".
+
+### The plan (Peter's condition: a ruled item with follow-up work carries its plan)
+
+The follow-up this ballot defers is the **application PR** (§ 4.2). The obligation is filed as a root record, so it has a trigger the walk and the session-start read can see (README rule 10): `.kiro/issues/2026-10-26-governance-examples-guard-adoption-application.md`.
+
+| Field | Plan |
+|---|---|
+| **Owner** | Thurgood authors the application PR. Lina commits the dragged `semguard.md` copy (site 1d) after his `stacy.md` commit. Stacy re-confirms and re-signs the two trigger-set units, first-signs `writeScope[scripts/governance-examples/**]`, and makes site 7 (§ 4.2 steps 1 to 3). |
+| **Sites** | 1a, 1b, 1c (a), 2, 2b, 3, 4, 5, 6, 7, with the dragged 1d (§ 3, § 4.2). |
+| **The baseline it relies on** | It adopts none. The baseline is #519's: the `pending.json` header at #519's merge, `adopted: bdbe72a32 2026-10-26; entries: 69 (token-name 56, declared-path 9, shape 2, import 2)` as that PR carries it (parent § 2.4, "Adopted"). Site 1c's read compares the header at each later merge to it, and § 2 clause 4 bars a change to it without a ratified ballot. If #519's merge changes the header, the application PR cites the header it finds on `main`, not this one. |
+| **Trigger** | Two events, **both required**: the merge of **this ballot's PR (#525)** and the merge of **#519**, because the sites read `pending.json`, the row and the grant record, which are on `main` only after #519 (§ 4.2). Opens, as one PR, on the later of the two merges. Filed as `release:next:phase-1` with the two merges as its start condition, because the vehicle PR does not exist yet (README rule 1); re-ruled to `merge:#<N>` when it opens. |
+| **Fallback** | The next release's phase 1. If the application has not opened by then, the record lapses at that phase 1 (README rule 11) and the walk reports it to Peter. Until it merges, the interim of § 4.2 step 7 stands: `pending.json` is in no seat's scope, and a fixing PR that would stale an entry merges before #519, carries a rule-8 grant of its own naming the file, or waits. |
