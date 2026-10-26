@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-25 (R2: 2026-10-26)
 **Drafted by**: Thurgood (Civitas steward; owner of `.kiro/issues/README.md`), at Peter's direction. Peter, chat, 2026-10-25, relayed verbatim by the orchestrator, *"Re: class-level problem: Let's go with the fix, please."* The class-level problem is the one stated in the 16.1.0 walk record, `.kiro/issues/2026-10-25-release-16.1.0-walk.md` § "Records filed after the walk: when they first lapse (a standards implication, mine)". Peter's answer is recorded there in § "The six lines for Peter: RULED". *(R2: Stacy reviews rather than co-drafts. She writes no text she then reviews (her R1). Sentence 2's text is Lina's, from her R1.)*
-**Status**: **DRAFT**, not ratified. No edit site below is applied. A merge with this line still reading DRAFT records the measure, ratifies nothing, and answers no fork in § 6.
+**Status**: **RATIFIED (Peter, 2026-10-26)**: F-1 **(A)**, sentence 1 as amended; F-2 **(b′)**, sentence 2 in Lina's wording; F-3 **include**, site 3 with Stacy's A5. Peter, chat, relayed by the orchestrator, verbatim, received before 2026-10-26T01:22:29Z (clock), after the ratification message that followed Lina's R2 push at `f83c5589a`: *"Ratify 492 / Re: F-1, (A) / Re: F-2, b′, then b, then a. / Re: F-3, include"*. His F-2 answer ranks (b′) first, with (b) and then (a) as his order behind it. (b′) is applied. **Record-first**: this commit is the record. It is made before any edit site is applied, and it appends § 9, the resolved after-texts. *(Superseded status, kept verbatim: "**DRAFT**, not ratified. No edit site below is applied. A merge with this line still reading DRAFT records the measure, ratifies nothing, and answers no fork in § 6.")*
 **Required reviewer**: **Stacy** (R1 done; R2 on this revision). She counts lapses in her claims passes, raised the inflation point (§ 1), and is the census reader.
 **Reviewers**: **Lina** (R1 done, on F-2 and item (2)). Her web-element record is the "spec"-answer instance (§ 1.2).
 **Class**: LAW. It changes when a record lapses, when an escalation answer is carried out, and, at the severable site 3, what phase 1 reads (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds").
@@ -338,3 +338,67 @@ Read at `c41b978fa`. This entry answers [THURGOOD R2]'s ask that I read sentence
 - **Sentence 2 reads as I meant, with no fix.** It is my R1 wording verbatim. The reading carries the rest: the record stays at the root, keeps its kind, carries status only from the outline merge, and is archived only under rule 5. One case is left without a bound: the reading says "the outline PR can carry the re-rule, or the owner's next commit can", and nothing bounds how soon that next commit comes. I accept that edge for the reason Stacy gives in her R2: until I re-rule, the old Trigger keeps firing, which fails safe and is visible. I will carry row 12's re-rule in the outline PR so that the gap is zero for it. → § 2 sentence 2 and the reading.
 - **Row 12 is covered from *this* ballot's application merge on, not from #491's.** § 2 and § 5 both say "the application merge", meaning this ballot's. #491 is the token-selection application and has nothing to do with rule 11. Between now and that merge, row 12 runs under rule 11 as it stands. Its Trigger is `release:next:phase-1`, so if the next S comes first with no spec PR open, the record lapses there. As a P2 `(guard)` it goes to Peter with "Spec" quoted. My R1 accepted that lapse as a true signal (the spec has not started) that costs him one line. From the application merge on, sentence 2's last clause governs the same case. One condition belongs to me: sentence 2 fires only if the outline "names the record" by the `grep -F` test. When Thurgood drafts that outline, I will ask that it cite `2026-10-20-web-element-api-and-form-participation.md` by file name. → § 2, "Spec answers already given"; § 5.
 - **F-2, final: (b′) > (b) > (a).** My read is unchanged from R1 and matches Stacy's. *Surviving counter-argument*: (b′) gives visibility, not force. A stalled spec has no clock (§ 3 residual 2), and a `release:17.0.0:phase-1` token is not a due row at a minor walk (residual 3). I agree that the stall question is a later ballot and not a fork here.
+
+## 9. Resolved after-texts (the Status commit, 2026-10-26)
+
+**Under Peter's answers**: F-1 (A), F-2 (b′), F-3 include. Each block below is an after-text exactly as it is applied: the bytes between the four-backtick fence lines, without the fences. Each one resolves the lines it cites above, and nothing here is new text. Each law-doc insertion carries its dated pointer (§ 7 lesson 4). The application's claims pass compares the diff with these blocks byte for byte. `<application date>` is the application PR's date, the one value left open.
+
+### 9.1 `.kiro/issues/README.md` rule 11, sentence 1
+
+Inserted after "**A record still open after a lapse lapses again at each later release's S.**", separated by one space:
+
+````
+**A record filed after the release's walk record merged** — its adding commit is not an ancestor of that merge — whose Trigger token is `release:next:phase-1` does not lapse at that release's S if the walk record has a row for it at S; its first firing is then the next release's S. A record filed then and not rowed lapses at S like any other. A row is a line of the walk record that begins `|` and contains the record's file name (`<date>-<slug>.md`, with or without a `.kiro/issues/` prefix). Records whose token is `release:<V>:phase-1` or `tag:v<V>` are not carried. The release falsity floor is unchanged (RELEASE-FLOW 3a) *(added 2026-10-26 by ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers, sentence 1)*.
+````
+
+### 9.2 `.kiro/issues/README.md` rule 11, sentence 2
+
+Inserted after "A lapsed fix-now returns without that option.", separated by one space:
+
+````
+A **spec** answer is carried out when the spec's design outline merges and names the record. From that merge the record's owner re-rules its Trigger to the event that owes its close (the record's own deadline, or the spec's fixing PR once it exists), and the record closes under rule 5 when its items close. Until the outline merges, each later lapse returns the record to Peter with his spec answer quoted *(added 2026-10-26 by ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers, sentence 2)*.
+````
+
+### 9.3 `.kiro/hooks/RELEASE-FLOW.md`, the Phase 1 bullet (site 3)
+
+Inserted after "It covers the release delta, the walk record (item 3a: its paste, its `main at:` SHA and each row's disposition), the 5a owed-set paste, the 5b arming line and 5.1's tally.", separated by one space:
+
+````
+It also re-runs item 3a's two greps at S and reads each hit the walk record does not row under rule 11's row test: a P0 among them is a floor-class row for this release, owed a fix or Peter's quoted, dated waiver before the tag (put to him as an `**Open for Peter**:` line in the phase-1 record's PR, which that rule holds until he answers; the read reports, and the tag stays his act); any other is listed with its rule-11 state *(added 2026-10-26 by ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers, site 3)*.
+````
+
+### 9.4 `governance/classification-map.md`, row `issues-obligation-lapse` (EXECUTION, § 4 step 3)
+
+`rule:` before (the full string, at `a95d6bf3d`) ends `…with spec / drop / fix-now; obligations created by a ruling or pass are filed in the same PR"`. After, the closing `"` is preceded by:
+
+````
+; a release:next:phase-1 record filed after the release's walk record merged and rowed there first lapses at the next release's S; a spec answer is carried out when the spec's design outline merges naming the record, after which the owner re-rules the Trigger and the record closes when its items do
+````
+
+`education.disposition`: in the LAW HOME list, after `ballot 2026-10-22-trigger-names-the-event-not-the-vehicle § 2 (rule 1's trigger-names-the-event sentence and its two-question test)`, insert:
+
+````
+; ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers § 2 (rule 11's post-walk carry and the spec answer's end point)
+````
+
+`history` gains:
+
+````
+  - { date: <application date>, change: "README rule 11 gains two sentences (ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers § 2): a release:next:phase-1 record filed after the walk merged and rowed there first lapses at the next S; a spec answer is carried out at the outline merge, with the record kept at the root until its items close. Rule line and LAW HOME updated as EXECUTION (§ 4 step 3); checks and check_state unchanged", by: thurgood }
+````
+
+### 9.5 `governance/classification-map.md`, row `release-falsity-floor` (EXECUTION, § 4 step 4; owner Stacy, consulted)
+
+`education.disposition` before: `"LAW HOME: this ballot M7. POINTER-GRADE: RELEASE-FLOW 'Deriving the delta' items 1 and 3a"`. After:
+
+````
+"LAW HOME: this ballot M7. POINTER-GRADE: RELEASE-FLOW 'Deriving the delta' items 1 and 3a; RELEASE-FLOW Phase 1, the S re-read (ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers, site 3)"
+````
+
+`history` gains:
+
+````
+  - { date: <application date>, change: "RELEASE-FLOW's Phase 1 bullet gains the S re-read of 3a's two greps (ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers, site 3): a post-walk P0 is a floor-class row put to Peter as an Open-for-Peter line in the phase-1 record's PR; the read reports and the tag stays his act. POINTER-GRADE entry added as EXECUTION (§ 4 step 4); rule, checks and check_state unchanged", by: thurgood }
+````
+
+The `rule:` line of `release-falsity-floor` is unchanged: its "knows = the rows of the release's walk record" holds, because the S re-read reports what the rows do not carry, as a finding put to Peter.
