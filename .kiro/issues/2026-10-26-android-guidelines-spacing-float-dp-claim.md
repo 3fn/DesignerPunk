@@ -4,7 +4,7 @@
 **Filed by**: Data, under README rule 10, from his R1 on #493 (the Android reading of the governance-examples guard). The finding is Data's; the file it is about is Lina's, so the fix is hers. Rule 9 applies to every later edit.
 **Owner**: Lina (she maintains `governance/platform-implementation-guidelines.md`'s content; the change itself goes by ballot, as `2026-10-25-web-prop-mapping-rule-gap.md` states for the same file). Filed by Data.
 **Class**: P0 false-claim · defect *(set 2026-10-26, Data, rule 12. **My reading**: the release falsity floor's P0 definition (ballot 2026-10-18-obligation-drain-and-release-falsity-floor M7) is "a statement false in a surface where a reader of the package meets it", and its list names a served doc. `governance/platform-implementation-guidelines.md` is served to agents through the docs MCP, and L744 is false against the generator at `main` (`f55bf3e04`) on both of its claims; the examples at L746–771 inherit the falsehood and do not compile. **The counter-reading** (P2 `(record)`, or P1 consumer-blocking): the section's headline rule, "never append `.dp`", gives the right call-site code for the families the generator emits as `Dp`, which includes spacing, so the commonest use works whatever the stated reason; only the reason and the examples are wrong, and Native ships as reference source. That reading is weaker in two places. The rule is stated for "`DesignTokens` values" in general and the section's reason is spacing, so the one family the reader tests it on (sizing, `Float`) is where it fails; and an agent that follows L750 or the enum example writes code that does not compile. Only Peter downgrades a P0. Stacy may press or dispute the reading.)*
-**Trigger**: `release:next:phase-1` *(rule 1: a P0 that would ride the fixing change takes this token, and `merge:#<N>` once the fixing PR exists. Only the owner writes or changes this line (rule 9); Lina re-rules it with her own dated reason.)*
+**Trigger**: `release:next:phase-1` *(re-ruled 2026-10-26 by Lina, rule 1 and rule 9, on Peter's waiver below: this record is waived for 16.1.0 and its vehicle is Spec 129, which regenerates the Android section of the guideline from the final type table. It closes at the 129 PR that lands the Android type table. The token stays `release:next:phase-1` until a 129 PR exists, then becomes `merge:#<N>` of that PR.)*
 
 ---
 
@@ -65,3 +65,11 @@ Rewrite L744 (and the dependent L746–767 and L774) to say that `DesignTokens` 
 ## Not in this record
 
 The component code that reads tokens at the wrong type is `2026-10-24-android-component-unit-type-mismatches.md` (Lina). What type `fontSize` should be emitted at is Ada's Spec 129 question in that record; this guideline cannot state the fontSize line finally until she rules it, so the fix should name the family list as of the generator at its fixing commit.
+
+## Peter's waiver (2026-10-26)
+
+*(Appended under README rule 9 by Lina, the owner. Peter's words are quoted as received; they came in chat, relayed by the orchestrator, before 2026-10-26T13:29:02Z by the orchestrator's clock.)*
+
+> "Okay, waive the Android type issue and capture it in 129; resolve the radius names issue now, please"
+
+Waived for 16.1.0: the L744 claim and the examples that inherit it (L746–L774) ship as they are in this release. Vehicle: Spec 129. The Android section of `governance/platform-implementation-guidelines.md` is regenerated from the final type table, so the fix reads `getKotlinType` at 129's fixing commit rather than a family list restated from memory (this record's "Not in this record" paragraph already names fontSize as Ada's 129 question). Ada is adding the 129 inbound line. This record stays open at the root with the re-ruled Trigger above; it is closed by the 129 PR that lands the Android type table, with rule 5's dated outcome line.
