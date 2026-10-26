@@ -1,0 +1,290 @@
+# Release 16.1.0 — publish verification (RELEASE-FLOW step 6: 6a rail guard + 6b two-registry record)
+
+Date: 2026-10-26 · Operator: the orchestrator ran every step-6 and 6b command, from the MAIN checkout (/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2); Peter ran 5.3 and 5.4 in his own terminal. Record author: Thurgood (the 16.1.0 release author), from the orchestrator's captured outputs, pasted verbatim.
+S (the final release commit, tagged and published): 38f4ece47c425cc83cac6739cae7a1806bfb0818 (the squash of PR #505).
+Tag: v16.1.0 → 38f4ece47c425cc83cac6739cae7a1806bfb0818 · tag object 145254cd7831ef802178ca53c48026a185da34d8 · tagger time 2026-10-26T17:17:54Z (the tag object's own timestamp) · pushed 2026-10-26T17:17:56Z (the orchestrator's clock read).
+Grant: .kiro/issues/2026-10-25-release-16-1-files-grant.md, path docs/releases/16.1.0/** (the post-publish record PR's extent), activated by #485's merge (8191b7489, cited in #494's body). Its other paths expired at #494's merge; this path expires at this PR's merge. The fix-1 and fix-2 grants (both archived) record this path as still open for step 6.
+Practice (rulings item 19 / RS-17): EVERY run is pasted, failing ones included, in order, with its clock and exit code. Every timestamp below is a registry's own time or a clock read; none is an estimate.
+
+## How S moved (for the reader)
+
+S0 a95d6bf3d (#494, the release PR; merged 2026-10-26T01:13:37Z)
+ → S1 ff3e7dad7 (#499, release fix 1)
+ → S2 dddf46d4f (#500, Lina, platform guidelines)
+ → S3 503fbfb84 (#503, release fix 2)
+ → S4 4abfbe6de (#504, Lina, CDG token names)
+ → S5 38f4ece47 (#505, Lina, CDG Button-CTA CSS example) — the final S; tagged and published.
+Phase 1 (Stacy): .kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md, merged by #497 (55c218cfd), with Phase 1 addenda 1–5 (addendum 1 on dddf46d4f, 2 on 503fbfb84, 3 on 4abfbe6de, 4 and 5 on 38f4ece47). It states `publish-rail liveness: owed`; phase 2 is owed at this PR's merge.
+Post-tag PRs: #506 (the notes-fix grant record, merged 2026-10-26T17:31:59Z), #507 (post-16.1.0 record upkeep, merged 2026-10-26T17:32:13Z), the notes-fix PR (branch release/16.1.0-notes): pending — not opened when this record was written.
+Stacy's O-36 (phase-1 addendum 3): the release notes' L67 list of post-F PRs that changed shipped paths does not name #494. Named here: #494 (the release PR, S0) changed three paths that ship in the tarball — package.json (the version), CHANGELOG.md and README.md (read against the 5.3 tarball's file list) — and it is in the release delta at S. (Its other changed paths, docs/tokens.css, docs/releases/release-16.1.0.md, package-lock.json, canonical/generated.lock and .kiro/issues/**, do not ship.)
+
+## Comparands (6b)
+
+### 5.3 release-publish-record.json (verbatim)
+{
+  "mode": "publish",
+  "version": "16.1.0",
+  "commit": "38f4ece47c425cc83cac6739cae7a1806bfb0818",
+  "source": "https://github.com/3fn/DesignerPunk.git",
+  "tarball": "/var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-UaQY7H/out/3fn-core-16.1.0.tgz",
+  "sha1": "cc42f4f9897677ee53b3f75d18ef52535a346c6a",
+  "fileCount": 1694,
+  "bytes": 6590393,
+  "checks": {
+    "passed": 105,
+    "total": 105
+  },
+  "publishedTo": [
+    "https://npm.pkg.github.com"
+  ],
+  "createdAt": "2026-10-26T17:28:33.583Z"
+}
+
+### 5.1 dry run at S (before the tag), tally — orchestrator, main checkout, 2026-10-26T16:35:49Z–16:36:19Z (the capture's own clock lines)
+$ npx tsx scripts/release-publish.ts --dry-run <S>   (the command line is not in the capture; its first output line names the commit)
+release-publish: dry-run of @3fn/core@16.1.0 at 38f4ece47c425cc83cac6739cae7a1806bfb0818 (fresh clone of https://github.com/3fn/DesignerPunk.git)
+[… npm ci, check:drift, closure compare, npm pack with prepack build, verify:token-index-clean, pack-assert; 1694 npm notice file-list lines and the 105 assertion lines elided …]
+105/105 assertions passed.
+
+tarball:    /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-ImV9at/out/3fn-core-16.1.0.tgz
+sha1:       e3d86894fbaba47f765ff4b8c6bb488a71cb15e7
+files:      1694   bytes: 6590391   pack-assert: 105/105   publish path: 16 (floor 16)
+record:     /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-ImV9at/out/release-publish-record.json
+
+DRY RUN — nothing was published. At 5.3, `release-publish.ts <version> --expect-sha <S>` would run, from a fresh clone at the tag:
+  npm publish /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-ImV9at/out/3fn-core-16.1.0.tgz --registry=https://npm.pkg.github.com --@3fn:registry=https://npm.pkg.github.com
+and hand this command over for 5.4:
+  npm publish /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-ImV9at/out/3fn-core-16.1.0.tgz --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public
+EXIT=0
+Mon Oct 26 16:36:19 UTC 2026
+5.1's sha1 e3d86894fbaba47f765ff4b8c6bb488a71cb15e7 (6590391 bytes) differs from 5.3's cc42f4f9897677ee53b3f75d18ef52535a346c6a (6590393 bytes) by design: 5.3 rebuilds in a fresh clone at the TAG, and the build-timestamp files move (the same class the 16.0.0 record names). The file count is 1694 in both. 6b compares against the 5.3 record's sha1, never 5.1's.
+
+### 5.3 publish to GitHub Packages — Peter, his terminal, from the MAIN checkout
+(The orchestrator's sandbox refused to run 5.3 as a public-surface action, so Peter ran it.)
+- Attempt 1: REFUSED by the script's preflight before any build — no public-npm login (the RS-31 two-login whoami check, working as written). No output of this attempt is on record.
+- Peter then ran `npm login --auth-type=web` (the login appears at the head of the terminal excerpt under 5.4 below).
+- Attempt 2: one successful run. Only its last lines were pasted by Peter; the record JSON above is the authoritative artifact (tarball path, sha1, fileCount, bytes, checks, publishedTo, createdAt 2026-10-26T17:28:33.583Z). One run only: no second concurrent run, no E409, no orphan work dir.
+- GitHub Packages' own time["16.1.0"]: 2026-10-26T17:28:36Z (6b below).
+
+### 5.4 public npm — Peter's terminal (web 2FA); verbatim, per-file tarball listings elided as [...]
+# Peter's terminal, 5.4 (pasted into chat 2026-10-26, between 17:28:33Z (5.3 createdAt) and 17:34:46Z (npmjs time["16.1.0"])). Verbatim lines; the per-file "npm notice" tarball listings (~1,700 lines each) are elided as [...].
+
+3fn@Peters-MacBook-Pro-2 ~ % npm login --auth-type=web --registry https://registry.npmjs.org
+npm notice Log in on https://registry.npmjs.org/
+npm notice npm tokens that bypass 2FA are being restricted for account changes and direct publishing. Learn how to prepare: https://gh.io/npm-gat-bypass2fa-deprecation
+Login at:
+https://www.npmjs.com/login?next=/login/cli/955ad3a9-f48a-49d3-a018-c4197ea9a157
+Press ENTER to open in the browser...
+
+Logged in on https://registry.npmjs.org/.
+
+## An extra, out-of-flow command: the 16.0.0 tarball (from the 16.0.0 release's temp dir) was published to public npm first
+3fn@Peters-MacBook-Pro-2 ~ % npm publish /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-vFNgYW/out/3fn-core-16.0.0.tgz --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public
+npm notice
+npm notice 📦  @3fn/core@16.0.0
+npm notice Tarball Contents
+[...]
+npm notice Tarball Details
+npm notice name: @3fn/core
+npm notice version: 16.0.0
+npm notice filename: 3fn-core-16.0.0.tgz
+npm notice package size: 6.5 MB
+npm notice unpacked size: 23.5 MB
+npm notice shasum: e9d8bfca5371eacc6fdf30579a512b280c1c165a
+npm notice integrity: sha512-IGo88WwPv8hny[...]uDNG0WPRJ04tQ==
+npm notice total files: 1675
+npm notice
+npm notice Publishing to https://registry.npmjs.org with tag latest and public access
+Authenticate your account at:
+https://www.npmjs.com/auth/cli/19db3dcd-234a-4adf-92ae-1222c9d7c074
+Press ENTER to open in the browser...
+
+npm notice Your package is being processed and may take a few minutes to become available.
++ @3fn/core@16.0.0
+
+## Then the flow's 5.4, as printed by 5.3
+3fn@Peters-MacBook-Pro-2 ~ % shasum /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-UaQY7H/out/3fn-core-16.1.0.tgz
+cc42f4f9897677ee53b3f75d18ef52535a346c6a  /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-UaQY7H/out/3fn-core-16.1.0.tgz
+3fn@Peters-MacBook-Pro-2 ~ % npm publish /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-UaQY7H/out/3fn-core-16.1.0.tgz --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public
+npm notice
+npm notice 📦  @3fn/core@16.1.0
+npm notice Tarball Contents
+[...]
+npm notice Tarball Details
+npm notice name: @3fn/core
+npm notice version: 16.1.0
+npm notice filename: 3fn-core-16.1.0.tgz
+npm notice package size: 6.6 MB
+npm notice unpacked size: 23.7 MB
+npm notice shasum: cc42f4f9897677ee53b3f75d18ef52535a346c6a
+npm notice integrity: sha512-qD/kAQJ9wWXXH[...]C/0VlaUE5Y2lQ==
+npm notice total files: 1694
+npm notice
+npm notice Publishing to https://registry.npmjs.org with tag latest and public access
+Authenticate your account at:
+https://www.npmjs.com/auth/cli/6d13a053-8b94-4148-8fdf-74e3efb6eef6
+Press ENTER to open in the browser...
+
+npm notice Your package is being processed and may take a few minutes to become available.
++ @3fn/core@16.1.0
+
+# Orchestrator's registry reads after the paste: public npm time["16.0.0"] = 2026-10-16T14:52:24.127Z (unchanged; the 16.0.0 republish did not change the registry's record), dist.shasum e9d8bfca… (equal to the republished file's shasum, so same bytes); time["16.1.0"] = 2026-10-26T17:34:46.376Z, dist.shasum cc42f4f9…
+
+### Out of flow, before 16.1.0's 5.4 — the 16.0.0 tarball was published to public npm again (a SECOND run of a finished release's 5.4)
+What ran (verbatim above, under "An extra, out-of-flow command"): Peter's terminal, after the npm login and before the flow's 5.4,
+  npm publish /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-vFNgYW/out/3fn-core-16.0.0.tgz --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public
+— the 16.0.0 release's own 5.3 tarball, from that release's temp dir (dp-release-vFNgYW, the same path the 16.0.0 record names), npm notice shasum e9d8bfca5371eacc6fdf30579a512b280c1c165a, total files 1675. npm printed "Your package is being processed and may take a few minutes to become available." and "+ @3fn/core@16.0.0". No clock read bounds these lines beyond the excerpt's header.
+What the registry shows (the orchestrator's packument reads after the paste): public npm time["16.0.0"] = 2026-10-16T14:52:24.127Z, unchanged from the 16.0.0 record; versions["16.0.0"].dist.shasum = e9d8bfca5371eacc6fdf30579a512b280c1c165a, equal to the 16.0.0 record's 5.3 sha1 and to the file just re-sent (same bytes). The orchestrator's reads at 17:32:53Z and 17:33:28Z (reported in its brief; no capture file) showed dist-tags.latest = 16.0.0 and time.modified on 2026-10-16. GitHub Packages' time["16.0.0"] = 2026-10-16T14:31:56Z (6b below), unchanged. So the registry's record of 16.0.0 did not change: its 16.0.0 entry is the one the 16.0.0 record verified (same time, same sha1).
+Not adjudicated here. Whether this act is a finding, and of what class, is for Stacy's phase 2. Recorded beside it, without a reading: npm's CLI printed a success line for a version the registry already held, and the registry's record shows no change, so under npm's processing notice the `+ <pkg>@<v>` line is not, by itself, evidence of what the registry accepted.
+
+## 6a — the rail guard (full output, exit code) — every run
+
+### rail run 1 — 2026-10-26T17:32:47Z — main checkout — FAIL, exit 10
+  $ VERSION=16.1.0 ./scripts/verify-publish-rail.sh
+  Mon Oct 26 17:32:47 UTC 2026
+  FAIL[version]: @3fn/core@16.1.0 is not visible on https://registry.npmjs.org (HTTP 404) — do not announce this release. Before re-running, read the registry's own record: if the packument (curl -s https://registry.npmjs.org/@3fn%2fcore) has no time["16.1.0"], the version is not published yet and this 404 is the correct answer, not indexing lag; only if time["16.1.0"] is present, re-run by hand within a few minutes of it.
+  EXIT=10
+  Mon Oct 26 17:32:48 UTC 2026
+Registry read before re-running (step 6's rule): the orchestrator's packument reads at 17:32:53Z and 17:33:28Z showed no time["16.1.0"] (dist-tags.latest 16.0.0, time.modified on 2026-10-16). Peter's 5.4 paste above shows npm's notice "Your package is being processed and may take a few minutes to become available." for 16.1.0. The registry's own time["16.1.0"] is 2026-10-26T17:34:46.376Z, after run 1.
+Reading: the 404 was npm's asynchronous processing window after an accepted publish, not a missing publish. This rests on the orchestrator's account that rail run 1 followed Peter's 5.4 paste; the `+ @3fn/core@16.1.0` line carries no clock of its own, so the window's length is not measured in this record (the 16.0.0 record gives 10 min 59 s for its window).
+Standards observation, for phase 2's standards implications (the RELEASE-FLOW text is Thurgood's): step 6's sentence "If the packument … has no time["<version>"], the version is not published yet. A 404 is then the correct answer, not indexing lag (15.0.0's R-4)" now has a second reading. Under npm's "being processed" notice, an absent time["<v>"] can mean "accepted and still processing", as here and on 16.0.0, not only "not published". The rail's answer (404, do not announce) was right both times; the sentence's cause is what has two readings.
+
+### rail run 2 — 2026-10-26T17:35:22Z — main checkout — PASS, exit 0
+(re-run by hand; the registry's time["16.1.0"] = 2026-10-26T17:34:46.376Z precedes this run by 35.6 s)
+  $ VERSION=16.1.0 ./scripts/verify-publish-rail.sh
+  Mon Oct 26 17:35:22 UTC 2026
+  PASS: @3fn/core@16.1.0 visible on npmjs; tarball host verified
+  EXIT=0
+  Mon Oct 26 17:35:23 UTC 2026
+
+## 6b — the two-registry reads (full capture, verbatim, in order)
+
+### Block 1 — 2026-10-26T17:35:23Z–17:35:36Z — two FAILED attempts at the GitHub Packages read (not the flow's commands)
+Attempt 1: a curl read of GitHub Packages (not the flow's command) — returned nothing ("github: None None", "github dist-tags: None"). The same block's "public" line is an npmjs packument read and "local" the shasum of the 5.3 tarball; both cc42f4f9….
+Attempt 2: `npm view` against GitHub Packages with an extra token flag (not the flow's command; the command text is not in the capture) — E403. No read in this record rests on either attempt.
+Mon Oct 26 17:35:23 UTC 2026
+public:  cc42f4f9897677ee53b3f75d18ef52535a346c6a https://registry.npmjs.org/@3fn/core/-/core-16.1.0.tgz
+github:  None None
+github dist-tags: None
+local:   cc42f4f9897677ee53b3f75d18ef52535a346c6a
+Mon Oct 26 17:35:23 UTC 2026
+Mon Oct 26 17:35:35 UTC 2026
+github (npm view): npm error code E403
+npm error 403 In most cases, you or one of your dependencies are requesting
+npm error 403 a package version that is forbidden by your security policy, or
+npm error 403 on a server you do not have access to.
+github dist-tags: npm error code E403
+npm error 403 In most cases, you or one of your dependencies are requesting
+npm error 403 a package version that is forbidden by your security policy, or
+Mon Oct 26 17:35:36 UTC 2026
+
+### Block 2 — 2026-10-26T17:36:09Z–17:36:11Z — the flow's commands, from the MAIN checkout
+npmjs metadata (curl packument), GitHub Packages metadata (`npm view @3fn/core@16.1.0 dist.shasum time --json --registry https://npm.pkg.github.com --@3fn:registry=https://npm.pkg.github.com`), npmjs `npm pack` (`--registry https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --pack-destination <tmp>/npmjs`), then the GitHub `npm pack`.
+The GitHub `npm pack` in this block FAILED, E401: the shell had cd'd out of the main checkout, so the main checkout's gitignored .npmrc (the GitHub Packages auth 5.3's preflight proved, A2) was not read. Nothing was fetched ("files: 0"). Re-run from the main checkout in block 3.
+The GitHub `npm view` time object in this capture ends at 14.0.0 (the capture truncates it); GitHub's time["16.1.0"] and time["16.0.0"] were read in block 3.
+=== 6b run from MAIN checkout, flow commands, Mon Oct 26 17:36:09 UTC 2026 ===
+--- npmjs metadata (curl packument) ---
+time[16.1.0]: 2026-10-26T17:34:46.376Z
+dist.shasum: cc42f4f9897677ee53b3f75d18ef52535a346c6a
+dist.tarball: https://registry.npmjs.org/@3fn/core/-/core-16.1.0.tgz
+dist-tags: {'latest': '16.1.0'}
+--- GitHub Packages metadata (npm view, registry named twice) ---
+{
+  "dist.shasum": "cc42f4f9897677ee53b3f75d18ef52535a346c6a",
+  "time": {
+    "10.2.0": "2026-04-08T19:00:04Z",
+    "11.0.0": "2026-05-07T02:52:27Z",
+    "11.1.0": "2026-05-07T18:26:19Z",
+    "11.1.1": "2026-05-08T02:33:51Z",
+    "11.1.2": "2026-05-08T15:15:22Z",
+    "11.1.3": "2026-05-08T15:27:26Z",
+    "11.1.4": "2026-05-08T16:58:26Z",
+    "11.1.5": "2026-05-08T20:30:05Z",
+    "11.10.0": "2026-06-09T16:48:00Z",
+    "11.2.0": "2026-05-09T15:00:34Z",
+    "11.2.1": "2026-05-09T15:21:34Z",
+    "11.3.0": "2026-05-09T17:25:03Z",
+    "11.3.1": "2026-05-09T17:55:03Z",
+    "11.3.2": "2026-05-09T18:14:44Z",
+    "11.3.3": "2026-05-09T18:19:59Z",
+    "11.4.0": "2026-05-10T20:53:29Z",
+    "11.4.1": "2026-05-10T21:45:16Z",
+    "11.4.2": "2026-05-10T21:51:20Z",
+    "11.5.0": "2026-05-10T23:40:14Z",
+    "11.5.1": "2026-05-11T00:49:11Z",
+    "11.5.2": "2026-05-11T00:55:52Z",
+    "11.6.0": "2026-05-21T02:23:18Z",
+    "11.7.0": "2026-05-25T21:37:57Z",
+    "11.7.1": "2026-05-26T01:19:26Z",
+    "11.7.2": "2026-05-26T02:18:34Z",
+    "11.7.3": "2026-05-26T02:36:26Z",
+    "11.7.4": "2026-05-26T03:04:22Z",
+    "11.8.0": "2026-06-01T16:38:14Z",
+    "11.9.0": "2026-06-05T20:43:56Z",
+    "12.0.0": "2026-06-11T01:02:53Z",
+    "12.0.1": "2026-06-11T01:57:19Z",
+    "12.0.2": "2026-06-11T02:24:12Z",
+    "12.0.3": "2026-06-11T02:45:49Z",
+    "12.0.4": "2026-06-11T20:54:50Z",
+    "12.0.5": "2026-06-13T03:25:27Z",
+    "13.0.0": "2026-07-05T14:01:18Z",
+    "14.0.0": "2026-08-12T03:15:13Z",
+--- npm pack from npmjs ---
+npm notice total files: 1694
+npm notice
+cc42f4f9897677ee53b3f75d18ef52535a346c6a  /private/tmp/claude-501/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/scratchpad/release-16.1.0/6b-packs/npmjs/3fn-core-16.1.0.tgz
+files: 1694
+--- npm pack from GitHub Packages ---
+npm error code E401
+npm error A complete log of this run can be found in: /Users/3fn/.npm/_logs/2026-10-26T17_36_11_102Z-debug-0.log
+(eval):1: no matches found: /private/tmp/claude-501/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/scratchpad/release-16.1.0/6b-packs/github/*.tgz
+(eval):1: no matches found: /private/tmp/claude-501/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/scratchpad/release-16.1.0/6b-packs/github/*.tgz
+files: 0
+--- 5.3 record comparand ---
+cc42f4f9897677ee53b3f75d18ef52535a346c6a  /private/tmp/claude-501/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/scratchpad/release-16.1.0/publish-5.3/3fn-core-16.1.0.tgz
+Mon Oct 26 17:36:11 UTC 2026
+
+### Block 3 — 2026-10-26T17:36:28Z–17:36:30Z — GitHub Packages re-run, cwd = the MAIN checkout
+=== 6b GitHub Packages re-run, cwd = MAIN checkout, Mon Oct 26 17:36:28 UTC 2026 ===
+--- GitHub time[16.1.0] ---
+time[16.1.0]: 2026-10-26T17:28:36Z
+time[16.0.0]: 2026-10-16T14:31:56Z
+--- npm pack from GitHub Packages (cwd main) ---
+npm notice integrity: sha512-qD/kAQJ9wWXXH[...]C/0VlaUE5Y2lQ==
+npm notice total files: 1694
+npm notice
+cc42f4f9897677ee53b3f75d18ef52535a346c6a  /private/tmp/claude-501/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/scratchpad/release-16.1.0/6b-packs/github/3fn-core-16.1.0.tgz
+files: 1694
+Mon Oct 26 17:36:30 UTC 2026
+
+### Independent re-read of the fetched files (Thurgood, 2026-10-26T17:40:09Z; local files only, no registry command)
+$ shasum / wc -c / tar -tzf | wc -l, on 6b-packs/npmjs/3fn-core-16.1.0.tgz, 6b-packs/github/3fn-core-16.1.0.tgz and the 5.3 tarball publish-5.3/3fn-core-16.1.0.tgz
+cc42f4f9897677ee53b3f75d18ef52535a346c6a  6b-packs/npmjs/3fn-core-16.1.0.tgz   6590393 bytes   1694 files
+cc42f4f9897677ee53b3f75d18ef52535a346c6a  6b-packs/github/3fn-core-16.1.0.tgz  6590393 bytes   1694 files
+cc42f4f9897677ee53b3f75d18ef52535a346c6a  publish-5.3/3fn-core-16.1.0.tgz      6590393 bytes   1694 files
+$ cmp npmjs github → identical bytes; cmp npmjs 5.3 → identical bytes
+
+### Per registry
+registry.npmjs.org
+- version present: yes · registry publish time time["16.1.0"] = 2026-10-26T17:34:46.376Z · file count 1694 · dist.shasum cc42f4f9897677ee53b3f75d18ef52535a346c6a · fetched-bytes sha1 cc42f4f9897677ee53b3f75d18ef52535a346c6a · 6590393 bytes · dist-tags.latest = 16.1.0 · dist.tarball https://registry.npmjs.org/@3fn/core/-/core-16.1.0.tgz
+npm.pkg.github.com
+- version present: yes · registry publish time time["16.1.0"] = 2026-10-26T17:28:36Z · file count 1694 · dist.shasum cc42f4f9897677ee53b3f75d18ef52535a346c6a · fetched-bytes sha1 cc42f4f9897677ee53b3f75d18ef52535a346c6a · 6590393 bytes
+
+### Comparand table (all four must equal the 5.3 record's sha1)
+| read                              | sha1                                     | files | equals 5.3 record |
+|-----------------------------------|------------------------------------------|-------|-------------------|
+| 5.3 record (comparand)            | cc42f4f9897677ee53b3f75d18ef52535a346c6a | 1694  | —                 |
+| npmjs dist.shasum                 | cc42f4f9897677ee53b3f75d18ef52535a346c6a | —     | yes               |
+| npmjs fetched bytes               | cc42f4f9897677ee53b3f75d18ef52535a346c6a | 1694  | yes               |
+| GitHub Packages dist.shasum       | cc42f4f9897677ee53b3f75d18ef52535a346c6a | —     | yes               |
+| GitHub Packages fetched bytes     | cc42f4f9897677ee53b3f75d18ef52535a346c6a | 1694  | yes               |
+No mismatch: no release incident.
+
+## Verdict
+All four sha1s (npmjs dist.shasum, npmjs fetched bytes, GitHub Packages dist.shasum, GitHub Packages fetched bytes) equal the 5.3 record's sha1 cc42f4f9897677ee53b3f75d18ef52535a346c6a. Both registries carry the ONE tarball built in a fresh clone at the tag v16.1.0 (S = 38f4ece47c425cc83cac6739cae7a1806bfb0818), 1694 files, 6590393 bytes. Rail guard: PASS, exit 0 (run 2; run 1 was FAIL, exit 10, inside npm's processing window). Failed 6b attempts, in order: GitHub curl (nothing returned), GitHub npm view with an extra token flag (E403), GitHub npm pack outside the main checkout (E401); each was superseded by the flow's command from the main checkout. Release 16.1.0 is published and verified on both registries. The out-of-flow 16.0.0 re-publish left the registry's 16.0.0 record unchanged; its class is phase 2's.
+
+## Post-merge obligations recorded here (for Stacy's phase 2)
+- Phase 2 (Stacy) triggers at this PR's merge: it reads this file (the rail result and the 6b record) and classes the out-of-flow 16.0.0 re-publish above. If drafted against this PR while open, it ends with the merge-confirmation line.
+- The notes-fix PR (branch release/16.1.0-notes, grant .kiro/issues/2026-10-26-release-16-1-notes-grant.md): pending; it merges before step 7, which reads the notes from main.
+- GitHub release: NOT yet created; step 7 runs LAST, after the notes-fix PR's merge and a matching 6b record: gh release create v16.1.0 --notes-file docs/releases/release-16.1.0.md
+- The 16.1.0 files grant (docs/releases/16.1.0/**) expires at this PR's merge; it is closed and archived in this PR (rule 5).
