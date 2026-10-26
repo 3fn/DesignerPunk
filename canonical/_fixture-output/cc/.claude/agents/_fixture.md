@@ -33,6 +33,8 @@ every pull request — content-agnostically, before any real agent rides the pip
 
 ## Token Usage Governance
 
+A use-time checkpoint applies only where that use was not reviewed when the token was made. *(Amended 2026-10-25 by ballot 2026-10-25-token-selection-order-one-rule, item 1; prior text at `1eced6cd5`.)*
+
 ### Semantic Concept Token Usage
 
 **Autonomy Level**: Full autonomy
@@ -92,26 +94,24 @@ D) Something else?"
 
 ### Component Token Usage
 
-**Autonomy Level**: Human checkpoint required
-**Friction**: High
-**Requirement**: Explicit human approval
+**Autonomy Level**: Full autonomy inside the owning component
+**Friction**: Low
+**Requirement**: The token belongs to the component being built and is for this property
 
-AI agents MUST checkpoint with human before using component tokens, even if the component token already exists.
+Inside the component a token belongs to, AI agents use that component token for the property it was made for without a checkpoint, as step 1 of § "Token Selection Matrix". A token that belongs to another component, or the owner's token for another property, is not a selection step: using one needs the step-4 checkpoint, in this format:
 
-**Why?** Component tokens represent an acknowledgment that the existing semantic token system is insufficient for a specific component's needs. Using them should be a deliberate decision, not a default.
+**Why?** A component token exists because a human decided, when it was created, that the semantic tokens did not meet this component's need (§ "Token Creation Governance"). Using it inside its own component carries out that decision; a checkpoint would ask the same question again.
 
-**Checkpoint format:**
+**Checkpoint format (another component's token, or the owner's token for another property):**
 ```
 AI: "This component needs [value]. I've checked:
 - Semantic concept tokens: [what was checked, why insufficient]
 - Primitive tokens: [what was checked, why insufficient]
-- Existing component token: [token name] exists for this component
+- Another component's token, or the owner's token for another property: [token name] belongs to [component]
 
-Recommendation: Use existing component token [token name]
-Awaiting your approval to proceed."
+Recommendation: [use it / create a token for this component / new primitive / new semantic]
+Awaiting your decision before proceeding."
 ```
-
-**Exception**: If the spec explicitly calls for using a specific component token, the AI can proceed without additional checkpoint (prior acknowledgment).
 
 **Component Token Pattern**: `<component>.<property>…`, with no family segment (component names are lowercased in the index)
 - Component tokens are declared with `defineComponentTokens`, which takes numeric families only (spacing, sizing, borderWidth); there is no color family

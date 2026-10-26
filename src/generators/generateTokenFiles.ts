@@ -21,13 +21,21 @@ import { wcagSemanticOverrides } from '../tokens/themes/wcag/SemanticOverrides';
 import { darkWcagSemanticOverrides } from '../tokens/themes/dark-wcag/SemanticOverrides';
 import { composedColorMap } from '../tokens/color';
 import { getOklchMetadata } from './oklch/OklchTokenIndexMetadata';
+import {
+  findUnemittedColorReferences,
+  unemittedColorReferenceMessage,
+  knownShadowColorWarning,
+  type UnemittedColorReference,
+} from '../validators/ColorReferenceEmissionValidator';
 import type { ModeResolvedTokens } from './ModeResolvedTokens';
 import type { ResolvedConfig } from '../config/ConfigLoader';
 import type { TokenInput } from '../cli/resolveTokens';
+import type { SemanticToken } from '../types/SemanticToken';
 
 /**
  * Thrown when `generateTokenFiles` stops because the token source failed its own validation
- * (semantic references, or the built-in override maps naming tokens the source lacks).
+ * (semantic references; a semantic colour reference naming a primitive the platform files do
+ * not define; or the built-in override maps naming tokens the source lacks).
  *
  * The details are logged before the throw; the message carries the first one so a caller
  * that prints only the message still names the cause. Nothing has been written when this
@@ -36,15 +44,17 @@ import type { TokenInput } from '../cli/resolveTokens';
  * paths used to RETURN an empty result, which callers read as success.)
  */
 export class TokenGenerationAbortedError extends Error {
-  constructor(public readonly stage: 'semantic-references' | 'override-maps' | 'context-override-maps',
+  constructor(public readonly stage: 'semantic-references' | 'unemitted-color-references' | 'override-maps' | 'context-override-maps',
               public readonly errors: string[]) {
     const first = errors[0] ?? '(no detail)';
     const more = errors.length > 1 ? ` (+${errors.length - 1} more, listed above)` : '';
     const what = stage === 'semantic-references'
       ? 'semantic token validation failed'
-      : stage === 'override-maps'
-        ? 'semantic override validation failed'
-        : 'context override validation failed';
+      : stage === 'unemitted-color-references'
+        ? 'a semantic colour references a primitive the output does not define'
+        : stage === 'override-maps'
+          ? 'semantic override validation failed'
+          : 'context override validation failed';
     super(`Token generation aborted: ${what}: ${first}${more}`);
     this.name = 'TokenGenerationAbortedError';
   }
@@ -84,6 +94,29 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
     semanticRegistry.register(token);
   }
   
+  // Colour references first: the check below validates against the token source, but colour
+  // primitives are emitted from the installed package's palette, so a colour the source adds
+  // passes it and is never written out (.kiro/issues/2026-10-25-generate-passes-semantic-
+  // references-to-unemitted-primitives.md). Checked again after theme resolution, below.
+  const emittedColorNames = TokenFileGenerator.emittedColorPrimitiveNames();
+  const knownDefectReferences: UnemittedColorReference[] = [];
+  const checkColorReferences = (contexts: Array<Array<Omit<SemanticToken, 'primitiveTokens'>>>): void => {
+    const findings = findUnemittedColorReferences(contexts, primitiveTokens, emittedColorNames);
+    const blocking = findings.filter(f => !f.knownDefect);
+    for (const f of findings) {
+      if (f.knownDefect && !knownDefectReferences.some(k => k.token === f.token && k.key === f.key && k.primitive === f.primitive)) {
+        knownDefectReferences.push(f);
+      }
+    }
+    if (blocking.length === 0) return;
+    const messages = blocking.map(unemittedColorReferenceMessage);
+    console.error('❌ Semantic colour reference check failed:\n');
+    messages.forEach(m => console.error(`   ${m}`));
+    console.error('');
+    throw new TokenGenerationAbortedError('unemitted-color-references', messages);
+  };
+  checkColorReferences([semanticTokens.map(t => resolveSemanticTokenValue(t, 'light', 'base'))]);
+
   const validationResult = validator.validateSemanticReferences(semanticTokens, primitiveTokens);
   
   if (validationResult.level === 'Error') {
@@ -178,6 +211,12 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
   const resolvedDark = contextSets['dark-base'].map(t => resolveSemanticTokenValue(t, 'dark', 'base'));
   const resolvedLightWcag = contextSets['light-wcag'].map(t => resolveSemanticTokenValue(t, 'light', 'wcag'));
   const resolvedDarkWcag = contextSets['dark-wcag'].map(t => resolveSemanticTokenValue(t, 'dark', 'wcag'));
+
+  // Every context the platform files carry, after the theme overrides (which can re-point a token).
+  checkColorReferences([resolvedLight, resolvedDark, resolvedLightWcag, resolvedDarkWcag]);
+  if (knownDefectReferences.length > 0) {
+    console.warn(`⚠️  ${knownShadowColorWarning(knownDefectReferences)}\n`);
+  }
 
   // Generate all platform files (passing resolved tokens for all 4 contexts)
   const wcagOverrideKeys = new Set([

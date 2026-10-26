@@ -45,13 +45,12 @@ When work touches both components and tokens (e.g., "this component needs a new 
 ### Step 1: Verify Component-Family Doc
 Before creating any files, check whether a Component-Family doc exists for this component's family (your routing section's family cues reach each one). If no family doc exists, draft one from the Component-MCP-Document-Template (docs MCP) and present it to your human lead for approval (ballot measure model) before proceeding.
 
-## @unit #token-selection-priority-must-follow-this-order @ sha256:ad6fd6a1c0b92f63dada5b5bd28888c99db2035f75072a975318a02683aee32a
+## @unit #token-selection-priority-must-follow-this-order @ sha256:92a5e797c7aebad385a926505a2bdef609b0f70fc2f9ca3b4120ec268335f69f
 ### Token Selection Priority (MUST follow this order)
 
-1. **Semantic tokens** — purpose-built for specific use cases (e.g., `color.contrast.onAction` for content on action-colored backgrounds, `space.inset.100` for inset padding). Use freely. Verify semantic correctness.
-2. **Primitive tokens** — when no semantic token exists. Requires prior context (spec docs reference it) or your human lead's acknowledgment.
-3. **Component tokens referencing primitives** — when a component needs a semantic name but the value exists as a primitive. Requires explicit human approval before use.
-4. **Hard-coded values** — only as last resort. Requires user approval. Always flag these.
+Token selection has one order, and it lives in Token Governance § "Token Selection Matrix". Query it before you choose a token: `get_section({ path: "token-governance", heading: "Token Selection Matrix" })`. This charter does not restate it.
+
+When nothing in that order fits, the step is a checkpoint with your human lead and a hand-off to Ada (§ "When a Token Is Missing"); you never create a token, or hard-code a value, to finish the selection.
 
 ## @unit #trust-by-default @ sha256:6fb35b82038d7efdf5604b7691385b856082d30cecdaf2e1d33aa7dec6affdc0
 ### Trust by Default

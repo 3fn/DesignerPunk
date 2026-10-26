@@ -40,12 +40,12 @@ description: Guide for building components with appropriate token usage, True Na
 4. ✅ **Anti-Patterns to Avoid** (what NOT to do)
 
 **WHEN creating component-level tokens THEN read:**
-1. ✅ **Step 3: Create Component-Level Tokens for Variants**
+1. ✅ **After the Decision: Component Tokens for Variants**
 2. ✅ **Component Token Files** section
 3. ✅ **Component sizing guide**: `.kiro/specs/responsive-layout-system/component-sizing-token-guide.md`
 
 **WHEN creating semantic tokens THEN read:**
-1. ✅ **Step 4: Propose Semantic Token Elevation**
+1. ✅ **After the Decision: Propose Semantic Token Elevation**
 2. ✅ **Primitive tokens**: Read `src/tokens/*.ts` for primitive token foundation
 3. ✅ **Token architecture**: Rosetta System Principles § "Mathematical Relationships" (spacing, typography, radius formulas) and § "Principle 2: Mathematical Foundation"; other families' formulas are in their Token-Family docs (Token Quick Reference § "Token Documentation Map")
 
@@ -141,9 +141,23 @@ AI agents should pause implementation and ask Peter for clarification when:
 
 ## Token Selection Decision Framework
 
-### Step 1: Check Semantic Tokens First
+The selection order is Token Governance § "Token Selection Matrix". This section is the component-side how-to for each step; its steps follow that order, number for number, and change in the same PR when it changes.
 
-**ALWAYS start by reading semantic token files** to see what exists:
+### Step 1: Use the Component's Own Token for the Property
+
+**Read the component's token file first** (`src/components/core/<Component>/*.tokens.ts`, e.g. `Button-Icon/buttonIcon.tokens.ts`). **If it has a token for this property, use it, even where a semantic token has the same value.** "This property" is the one the token's name and its `reasoning` field say it was made for; a token for another property is not this step.
+
+**Example**: Button-Icon small needs an 8px inset.
+- ❌ DON'T: use `space.inset.100` because it is also 8px; that splits one inset family across two tiers
+- ✅ DO: use `buttonicon.inset.small` (references `space100`), as `inset.medium` and `inset.large` do
+
+A component token belongs to the component it is named for. Another component's token is not a selection step; using one goes to Step 4.
+
+**No checkpoint inside the owning component.** A human approved the token when it was created; use it as the spec and the contract describe.
+
+### Step 2: Check Semantic Tokens First
+
+**For a property the component has no token of its own for**, read the semantic token files to see what exists:
 - `src/tokens/semantic/ColorTokens.ts` - Brand, status, text, surface colors
 - `src/tokens/semantic/TypographyTokens.ts` - Body, heading, UI, specialized text
 - `src/tokens/semantic/SpacingTokens.ts` - Layout and inset spacing
@@ -154,59 +168,52 @@ AI agents should pause implementation and ask Peter for clarification when:
 - ❌ DON'T: Use primitive `cyan300`
 - ✅ DO: Read `ColorTokens.ts`, find `color.action.primary`
 
-### Step 2: Use Primitives Only When Unavoidable
+### Step 3: Use Primitives Only When Unavoidable
 
-**If no semantic token exists**, use primitives and document why:
-- Read `src/tokens/*.ts` to find appropriate primitive
-- Add comment explaining why semantic token doesn't exist
-- Consider proposing semantic token elevation if pattern emerges
+**If no token of the component's own and no semantic token fits**, use a primitive **with prior context (the spec names it) or Peter's acknowledgment**, and document why:
+- Read `src/tokens/*.ts` to find the appropriate primitive
+- Add a comment explaining why no semantic token exists
+- Consider proposing semantic token elevation if a pattern emerges
 
 **Example**: Custom brand color not in semantic tokens
 - ✅ OK: Use `purple300` with comment: `// TODO: Evaluate for semantic token elevation`
 
-### What If Tokens Don't Exist?
+### Step 4: Nothing Fits — Stop and Ask
 
-**When you need a token that doesn't exist:**
+**When you need a token that no step above supplies:**
 
-1. **Pause and ask**: "I need [semantic token] for [use case]. Should I use [primitive token] as fallback, or should we create the semantic token first?"
-2. **Document the gap**: Add to design doc's "Token Gaps" section
-3. **Never assume**: Don't assume primitive tokens are acceptable fallbacks
-4. **Wait for guidance**: Let Peter decide whether to create token or use alternative approach
+1. **Pause and ask**: "I need [token] for [use case]. I checked this component's own tokens, semantic tokens and primitives: [why each is insufficient]. Options: a component token, a new primitive, a new semantic token, or, as the last resort, a hard-coded value. Which?"
+2. **Document the gap**: Add to the design doc's "Token Gaps" section
+3. **Never assume**: Don't assume a primitive or a hard-coded value is an acceptable fallback
+4. **Wait for guidance**: Peter decides. Token creation is never part of selection and is not yours to do: the decision goes to Ada (Token Creation Governance)
 
-**Why this matters**: Token gaps often indicate design system opportunities. Pausing to discuss prevents premature decisions and helps the design system evolve intentionally.
+**Why this matters**: Token gaps often indicate design system opportunities. Pausing prevents premature decisions and helps the design system evolve intentionally.
 
 **For strategic guidance on token resolution**, see [Token Resolution Patterns](token-resolution-patterns)
 
-### Step 3: Create Component-Level Tokens for Variants
+### After the Decision: Component Tokens for Variants *(not a selection step)*
 
-**If component needs multiple variants**, create component-level tokens:
+**If the decision in Step 4 is a component token**, Ada creates it; you consume it afterwards as Step 1.
 - Reference: `.kiro/specs/responsive-layout-system/component-sizing-token-guide.md`
-- Component tokens should reference semantic or primitive tokens
+- A component token references an existing primitive or conforms to that family's values: Token Governance § "Component Token Construction Rule"
 - Never use hard-coded values
 
-**Example**: Button sizing variants
+**Example**: Button-Icon inset variants (`src/components/core/Button-Icon/buttonIcon.tokens.ts`)
 ```typescript
-// ButtonCTA/tokens.ts
-export const buttonCTATokens = {
-  small: {
-    paddingX: 'space.inset.050',
-    paddingY: 'space.grouped.minimal',
-    typography: 'typography.buttonSm'
+export const ButtonIconInsetTokens = defineComponentTokens({
+  component: 'ButtonIcon',
+  family: 'spacing',
+  tokens: {
+    'inset.medium': {
+      reference: spacingTokens.space125,
+      reasoning: 'Medium button variant uses 10px padding (1.25× base strategic flexibility token) for compact appearance while maintaining adequate touch area',
+    },
+    // 'inset.large' → space150, 'inset.small' → space100
   },
-  medium: {
-    paddingX: 'space.inset.100',
-    paddingY: 'space.inset.050',
-    typography: 'typography.buttonMd'
-  },
-  large: {
-    paddingX: 'space.inset.150',
-    paddingY: 'space.inset.100',
-    typography: 'typography.buttonLg'
-  }
-};
+});
 ```
 
-### Step 4: Propose Semantic Token Elevation
+### After the Decision: Propose Semantic Token Elevation *(not a selection step)*
 
 **If 3+ components use same pattern**, propose semantic token elevation:
 - Document the pattern in component completion notes
@@ -258,7 +265,7 @@ export const buttonCTATokens = {
 - **Usage**: Primary token layer for component development
 
 **Component-Level Tokens**
-- **Location**: Within component directory (e.g., `ButtonCTA/tokens.ts`)
+- **Location**: Within component directory (e.g., `Button-Icon/buttonIcon.tokens.ts`)
 - **Examples**: Button sizing variants, state-specific colors
 - **Usage**: When component needs variants not covered by semantic tokens
 

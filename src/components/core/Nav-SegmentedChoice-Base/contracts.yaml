@@ -358,24 +358,31 @@ contracts:
       When id is omitted, aria-controls is not set. id is independent
       of testID.
       Web: the segments are in the component's shadow root, and an
-      aria-controls reference does not cross a shadow root, so on web no
-      tab-to-panel association is provided. The
-      aria-controls="[id]-panel-[value]" attribute is set for tooling
-      only and resolves to no element.
+      aria-controls ID reference does not cross a shadow root. On web, no
+      tab-to-panel association is provided where the browser lacks
+      ariaControlsElements; where it is supported, the element reference
+      is set. The
+      aria-controls="[id]-panel-[value]" attribute is set where no such
+      panel is found or the browser has no ariaControlsElements; where
+      the element reference is set, the attribute reads as empty.
     wcag: "4.1.2 Name, Role, Value"
     platforms: [web, ios, android]
     validation:
-      - With id prop, aria-controls follows [id]-panel-[value] pattern (web - the reference resolves to no element; no association is provided)
+      - With id prop, aria-controls follows [id]-panel-[value] pattern (web - where the element reference is set, the attribute reads empty and the reference resolves; where ariaControlsElements is absent, the attribute is set and no association is provided)
       - With id prop and no such element, the segment's reference resolves to no element, never to another one
       - Without id prop, no aria-controls attribute and no element reference
     test_approach: |
       Render with and without id prop, with panels in the document and in
       an enclosing shadow root, added before and after the component,
       replaced and removed; verify the element each segment's reference
-      resolves to (web, jsdom - a test double of the HTML reflection
-      rules for ariaControlsElements), and the [id]-panel-[value]
-      attribute where ariaControlsElements is absent. Browser (manual):
-      the accessibility tree shows each tab's "controls" relation.
+      resolves to (web, jsdom - the test double implements the HTML
+      reflection rules for ariaControlsElements; jsdom itself has no
+      ariaControlsElements, so the double is the test's stand-in, not
+      the browser's behaviour), and the [id]-panel-[value] attribute
+      where ariaControlsElements is absent. Browser (manual, Chromium):
+      with a matching panel the element reference is set and the
+      attribute reads empty; the accessibility tree shows each tab's
+      "controls" relation.
     required: true
 
   accessibility_alt_text:

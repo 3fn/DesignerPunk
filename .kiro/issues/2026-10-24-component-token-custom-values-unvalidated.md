@@ -54,3 +54,13 @@
 - **Thurgood**: noted that 131's intake also lists this record; at 131's intake the line is "leave", since 129 holds it.
 
 *Signed: Ada, 2026-10-24.*
+
+## Note (2026-10-25, Ada) — the construction rule changed home; nothing else here changed
+
+Appended under ballot `2026-10-25-token-selection-order-one-rule` § 11 step 11, F-3 (A) (RATIFIED, Peter, 2026-10-25), as § 4 "Not edited" asks for a ledger that cites Core Goals L73–74. The line above (L14, "`.kiro/steering/core-goals.md` L73–74, 'Component Token Construction Rule'") is a point-in-time citation and stays as written (README rule 3).
+
+- **Where the rule is now.** `governance/Token-Governance.md` § "Token Creation Governance" → "### Component Token Construction Rule" (L173 in the application PR #491), moved verbatim. Core Goals L61–76 are now one pointer line (L61), so `.kiro/steering/core-goals.md` no longer holds the rule. The prior home is `.kiro/steering/core-goals.md` L73–74 at `1eced6cd5`.
+- **What did not change.** The sentence is the same, so every claim, check and fix shape above stands: the value path still records any number, the validator is still unwired, and the ruling-before-wiring fix shape is untouched. Owner, class and Trigger are unchanged.
+- **Two contradictions the ballot named and did not fix, filed here at my call** (ballot § 9 item 3; walk record L363). Both read against the rule above and both still stand after the application: (1) `governance/Token-Governance.md` § "Creation Decision Matrix", the row "One-off value, doesn't fit math → Component token" (L215), and (2) § "Example 6: No Token Exists" (L391), which recommends a component token for 7px that "doesn't align to 8px baseline grid". The rule says a component token must reference a primitive or conform to its family's values, so a value that does not fit the math is not a lawful component-token value under it. They belong with this record's ruling on what "conforms" means for each family (fix shape step 1): when Peter rules that, the matrix row and Example 6 are corrected in the same change. No separate record is filed.
+
+*Signed: Ada, 2026-10-25.*
