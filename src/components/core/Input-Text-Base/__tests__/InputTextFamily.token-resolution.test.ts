@@ -43,7 +43,13 @@ import * as yaml from 'js-yaml';
 const REPO_ROOT = path.resolve(__dirname, '../../../../..');
 const INDEX_DIR = path.join(REPO_ROOT, 'token-index');
 
-type IndexEntry = { platforms?: { web?: string } };
+/**
+ * `platforms.web` is one custom property, a list (a composite the generator writes as several
+ * properties: typography per property, shadow as its composite plus its parts, semantic motion
+ * per part), or null (the platform carries no name; reason in `platformNotes`).
+ * See token-index/README.md § "Platform names".
+ */
+type IndexEntry = { platforms?: { web?: string | string[] | null } };
 
 function loadIndex(file: string): Record<string, IndexEntry> {
   const doc = yaml.load(fs.readFileSync(path.join(INDEX_DIR, file), 'utf8')) as {
@@ -60,8 +66,10 @@ const component = loadIndex('components.yaml');
 const GENERATED_WEB_NAMES: Set<string> = new Set(
   [semantic, primitive, component]
     .flatMap(tokens => Object.values(tokens))
-    .map(entry => entry.platforms?.web)
-    .filter((web): web is string => typeof web === 'string')
+    .flatMap(entry => {
+      const web = entry.platforms?.web;
+      return Array.isArray(web) ? web : typeof web === 'string' ? [web] : [];
+    })
 );
 
 /**
