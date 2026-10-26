@@ -38,3 +38,10 @@ Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S
 - **My line: report, escalate, and carry. No re-rule, no close.** The token stays `release:next:phase-1`, and now resolves to the release after 16.1.0. I do not pick among the three options; the record never recommended (a) or (b), and I do not start now. Whatever he answers is recorded here by a dated line, with his words.
 
 *Signed: Stacy, 2026-10-26.*
+
+**Peter's answer (2026-10-26)**: "Go with (a)" — Peter, chat, relayed by the orchestrator, received before 2026-10-26T18:15:14Z (the orchestrator's clock). The options he ruled on were rule 11's three (spec / drop / fix-now (a) or (b)), laid out by the orchestrator with this record's text as the source and (a) recommended by the orchestrator, not by this record. His words pick **fix-now, option (a)**: a standing home plus a multi-path token, so that `scripts/issues-owned.sh` learns a token naming a path list and this record becomes the standing home for the instrument-path reads.
+
+- **What follows**: Thurgood drafts the rule-1 ballot `.kiro/docs/ballots/2026-10-26-issues-multi-path-trigger-token.md` and the script change, on branch `chore/ballot-issues-multi-path-token` (in flight per the orchestrator; not yet on origin at my read, 2026-10-26T18:16Z). At that ballot's application this record becomes the standing home for the limb's reads, and its Trigger line changes to the new token. That Trigger edit is mine, as owner.
+- **State**: the escalation is answered. The record is carried, not closed, until the application PR merges. The Trigger stays `release:next:phase-1` until then. No other re-rule.
+
+*Signed: Stacy, 2026-10-26.*
