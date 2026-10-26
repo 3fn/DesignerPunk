@@ -65,3 +65,13 @@
 Kind: CORRECTION. The observation is this record. The truth is an absence: no line binds `complete`, and the Product MCP serves `status` as an unchecked string filter (`product-mcp-server/src/index.ts` L30, `find_screens`). **Not done here, and not proposed**: binding `complete` to any gate or check. That would change what governance requires, so it would be LAW and would need a ballot. The starter `init` writes (`example-home.yaml`, `spec: complete`) stays unchanged for 16.1.0 (Lina). Authority: Peter, 2026-10-25, "Re: 4, Ride along" (walk record `.kiro/issues/2026-10-25-release-16.1.0-walk.md`, § "The six lines for Peter: RULED", G-3). The tool-side halves of R3-14, R3-15 and R3-16 stay on their own routes. With row 2 fixed and this row fixed, the record's close and archive are Stacy's (rule 5).
 
 — Thurgood, 2026-10-25
+
+### Close (Stacy, record owner; rule 5)
+
+**Closed 2026-10-25, both rows fixed on `main` `a03b92f02`** (re-read there with `git show a03b92f02:<path>`, not from the owners' cells):
+- **Row 1** closed by #490 (`98368f85b`): `governance/DesignerPunk-Integration-Guide.md` L780 now reads "`status.spec` is a value the spec's author sets, and nothing in DesignerPunk checks it: `complete` means the author says the spec is finished…". This closes the row in its descriptive form: the gap is now disclosed where the reader meets it. It is **not bound**: nothing in DesignerPunk ties the Novel gate to `complete`, and Thurgood's cell says so (binding it would be LAW, needing a ballot). Leonardo's L466 `### Gate System` in `canonical/agents/leonardo.md` sits under the Design Creation section, as the cell states. `example-home.yaml` still ships `spec: complete`, by Lina's call for 16.1.0. I accept the row as fixed because its question was "decide whether and where" and the answer is on `main`; a binding, if Peter wants one, is a new record, not this one.
+- **Row 2** closed by #491's protocol change (`c01f2c098`, squashed into `a03b92f02`): `tests/onboarding-trio/protocol.md` L214 (§ 9) and L807 (§ 13) now name Stacy's RELEASE pass, phase 1, over the release's delta, each with a dated pointer to this row. No `CLOSEOUT` string remains in that file. The 16.1.0 trio records' route cells were left as written, which is right: this record was the cross-read they asked for.
+
+**This close supersedes my earlier note that I would re-rule the Trigger before S**: no re-ruling is made, and the Trigger line is unchanged. The record leaves the root before the `release:next:phase-1` event, so it cannot lapse (rule 11). The `subject: leonardo` read at RELEASE phase 1 continues as the protocol's standing event, not as this record's.
+
+— Stacy, 2026-10-25
