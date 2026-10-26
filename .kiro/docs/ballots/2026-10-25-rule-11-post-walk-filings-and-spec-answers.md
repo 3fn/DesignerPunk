@@ -114,3 +114,31 @@ Stacy cleared them as ratified § 13 bytes. The defect is the drafter's (mine). 
 ## 8. Review round record
 
 *(Stacy R1 and Lina's F-2 read are recorded here, stamped per the Spec-Feedback-Protocol.)*
+
+#### [LINA R1] (2026-10-25, on F-2 and item (2); self-written)
+
+I own the instance record (`.kiro/issues/2026-10-20-web-element-api-and-form-participation.md`) and asked the question in #488, so my read is interested. Facts below were read at `c9186750f`.
+
+- **What my #488 question was about.** It was about re-escalation, not closure: once Peter has said "spec" and the spec exists, the record should stop going back to him on the same answer. Sentence 2 answers that by closing the record. Closing does more than the question needed → § 2 sentence 2.
+- **Why closing at the outline is wrong for a defect record.** Rule 2 says `archive/` holds "**Resolved** defects". At the outline merge, none of E2–E5 or E8 (b) is resolved: the elements ship with them. Sentence 2 would move an unresolved defect record to the archive. It would also remove the home of the record's own close rule ("each item closes in its owning component PR … and Sparky appends a dated line confirming the fix in a browser"), so Sparky's verifier lines would have nowhere to go. Under (a) and (b) alike, the archive would say "closed" while the code says "open". → § 2 sentence 2; README rules 2 and 5.
+- **My pick: neither (a) nor (b) as written. I propose a third option, (b′), and Peter picks among the three.** Under (b′), the outline merge carries out the spec answer and does **not** close the record. In the outline PR, or the next commit, the owner re-rules the record's Trigger under rules 1, 9 and 11 to the event that now owes the close:
+  - **E3–E5** (breaking element API): `release:17.0.0:phase-1`. This token is legal now under M2 ("the release squash S that `<ver>`'s phase-1 record names"). It does not fire until 17.0.0 has a phase-1 record, so the record stops re-lapsing at every minor S. When it fires, it fires at the major's phase 1, before the tag, and the walk holds it there. The "once the version is chartered" clause in (b) is not needed.
+  - **E2 and E8 (b)** (a contract addition and an additive behaviour; neither waits for a major): `merge:#<N>` once the spec's fixing PR exists, as rule 1 already provides.
+  - The record keeps kind `defect` and closes under rule 5 when its items do. No second record opens.
+  - Suggested wording for sentence 2: *"A **spec** answer is carried out when the spec's design outline merges and names the record. From that merge the record's owner re-rules its Trigger to the event that owes its close (the record's own deadline, or the spec's fixing PR once it exists), and the record closes under rule 5 when its items close. Until the outline merges, each later lapse returns the record to Peter with his spec answer quoted."*
+  - Ranking if (b′) is declined: **(b) over (a)**. (b) keeps the 17.0.0 bound where the walk reads it. (a) leaves it in spec prose, and the spec's owed-set backstop begins only at its tasks round (§ 3 residual 2).
+- **Fold-back applied.** The counter-argument I ran against (b′) is duplication. The open record and the spec's requirements both carry E2–E5, and the two can drift, which leaves a stale record for the walk to misread.
+  - What I folded in: from the outline merge on, the record carries **status only**: per-item outcome lines citing the spec's fixing PRs, and Sparky's browser lines. It carries no plan; the spec owns the plan. That is a rule-9 owner duty I accept.
+  - **What survives** (1): one owner commit per item-closing PR, the same cost the record has today.
+  - **What survives** (2), and it matters more: if 17.0.0 is never planned, `release:17.0.0:phase-1` never fires. The walk then **sees** E3–E5 every month and is **forced** to do nothing about them. (b′) buys visibility, not force, the same gap as § 3 residual 2, made visible. The fork it leaves for Peter: is a visible-but-unforced bound enough, or should a stalled spec (no phase merged between two walks) count as a lapse? I do not pick that here. It would be a new rule, outside this ballot's cap.
+- **What I want the walk to see while the spec runs.**
+  - (i) The record at root, open, with per-item status: which items have shipped, and with whose browser line.
+  - (ii) The spec's current phase (outline / requirements / design / tasks merged), one pointer line per walk, so a stall shows as "unchanged since the last walk".
+  - (iii) The 17.0.0 bound, as the Trigger token rather than as prose.
+  - (iv) That the floor still reaches these elements. The floor is unchanged (§ 2, "The floor"): if any served text about them becomes false (E6's shape, which Peter took up as floor-class), that item is a phase-1 P0 regardless of the spec.
+- **Row 12: I wait for ratification and do not re-rule now.**
+  - Re-ruling now would rest on a DRAFT.
+  - Re-ruling now to "close at the charter" would apply the option I argue against above.
+  - The current Trigger is correct under current law: `release:next:phase-1`, closing at the spec's merge, re-ruled to `merge:#<N>` when the spec PR exists.
+  - If the next S arrives with no outline merged, the record lapses and goes to Peter with "Spec" quoted. That lapse is a true signal (the spec has not started), not the inflation § 1.1 describes, and it costs him one line to re-confirm.
+  - After ratification I re-rule to whichever option he picks, with a dated line citing this ballot.
