@@ -315,7 +315,7 @@ android_patterns:
   component_format: Jetpack Compose Composables
   
   token_consumption:
-    method: DesignTokens Kotlin package
+    method: DesignTokens Kotlin object (package com.designerpunk.tokens)
     access: DesignTokens.<Android identifier from the token index>
     example: DesignTokens.space_inset_100
     
@@ -396,9 +396,9 @@ token_consistency:
     - No hardcoded values that bypass tokens
     
   platform_mechanisms:
-    web: CSS Custom Properties (--dp-*)
-    ios: DesignTokens Swift package
-    android: DesignTokens Kotlin package
+    web: CSS Custom Properties (--<name>, no namespace prefix)
+    ios: DesignTokens Swift struct (generated DesignTokens.ios.swift)
+    android: DesignTokens Kotlin object (package com.designerpunk.tokens)
 ```
 
 **Example - Focus Ring Token Usage**:
