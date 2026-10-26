@@ -38,7 +38,11 @@ Peter waived RL-35 for 16.1.0, in chat, relayed by the orchestrator, received be
 
 **The rule** is 16.1.0's post-walk example-falsity rule (Thurgood's amended text; my approval proposes an amendment to clause 6's reader, and addendum 5 records which text the seats approved). Its seat-approved text lands in Stacy's phase 1 addendum 5 in `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` (#497's branch, `chore/release-16.1.0-claims-pass-phase-1`). This record applies the rule's clauses as numbered in that text:
 - **Clause 1**: 16.1.0 only; the rule expires at the v16.1.0 tag.
-- **Clause 2**: both finds meet all three conditions. Each is a falsity in a fenced example in a packed `governance/**` doc. Each was found after the walk record's At-S section (addendum 4), and neither is a walk row. Both were already present at `v16.0.0` (§ "Finding", Age).
+- **Clause 2**: both finds are falsities in fenced examples in a packed `governance/**` doc, and both meet all four conditions:
+  - **Found after the walk record merged and before the tag.** The walk record merged as `264c25661` (#469, 2026-10-25). Stacy's addendum 4 found both at `b0f618d14` (2026-10-26), and no `v16.1.0` tag existed at filing.
+  - **Not a walk row.**
+  - **Pre-existing.** Both are present at `v16.0.0` (§ "Finding", Age).
+  - **Not introduced by a PR in the 16.1.0 delta.** The lines are byte-identical at `v16.0.0` and at `38f4ece47`: L415 → L422 and L435 → L442 (each line matched in full), and L1664–L1672 → L1682–L1690 (the block `diff`s clean). So no 16.1.0 PR wrote them; they only moved down the file.
 - **Clause 3**: they do not hold the tag. I file this record with a dated plan due before the next release's walk, and the release notes disclose it.
 - **Clause 4**: Peter may take up either find individually.
 - **Clause 5**: RL-35 is the first application.
