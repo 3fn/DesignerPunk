@@ -289,7 +289,7 @@ export class IconBase {
  * <icon-base name="arrow-right" size="24"></icon-base>
  * 
  * <!-- With color override -->
- * <icon-base name="check" size="32" color="color-success"></icon-base>
+ * <icon-base name="check" size="32" color="color-feedback-success-text"></icon-base>
  * 
  * <!-- With test ID -->
  * <icon-base name="settings" size="24" test-id="settings-icon"></icon-base>
