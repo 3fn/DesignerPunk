@@ -34,6 +34,6 @@ Reword each line to point at Token Governance § "Token Selection Matrix" instea
 
 ## Counter-argument
 
-Leave it: the lines are comments in code that no consumer path is shown to run, and a wording sweep adds a PR for text nobody is misled by. *What survives*: the shipped `.ts` is read by consumers' agents (tools and `.ts` consumers read `src/build/tokens/**`), and a comment stating a second order beside the Matrix is the very shape of the defect the ballot closed in Core Goals. That is the argument for P3 and a single sweeping PR rather than a drop.
+Leave it: the lines are comments in code that no consumer path is shown to run, and a wording sweep adds a PR for text nobody is misled by. *What survives*: the shipped `.ts` is probably read by consumers' agents (four of the files are listed in `package.json` `files`; whether a consumer reads them is UNVERIFIED, above), and a comment stating a second order beside the Matrix is the very shape of the defect the ballot closed in Core Goals. That is the argument for P3 and a single sweeping PR rather than a drop.
 
 **No fix is authorized by this record.**
