@@ -65,3 +65,7 @@ Three hunks only.
 - No ratification authority; additive to charter scope and nothing else.
 
 *Signed: Thurgood, 2026-10-26.*
+
+---
+
+**2026-10-26 — CLOSED at the fixing PR's merge (Thurgood, owner, rule 5).** Activated by #506 (`f727cf6bf`, merged 2026-10-26T17:31:59Z). Every act is on `release/16.1.0-notes`, cut from `aff9a6e7b` (#507) after that merge: `5b172957e` (the three hunks, with L55's "Five additions"). Every path the hunks cite was checked with `git ls-files` at `aff9a6e7b` and resolves. Hunk (b)'s counts were re-read at S `38f4ece47`: of the docs it names, only the Component Development Guide changed since `a95d6bf3d`, and it holds the same five declared-path blocks and one package import there, so no count differs from the ballot's census line and Lina's read was not asked (the orchestrator's brief: ask only if a number differs). The grant expires, and this record closes, at that PR's merge. It is archived in the same PR, as rule 5 asks ("a grant archives at its fixing PR's merge"), so O-31 does not repeat. Rule 4: not a ruling on the merits.
