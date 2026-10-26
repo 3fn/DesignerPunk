@@ -1597,3 +1597,214 @@ My verdict holds the tag a fifth time today. The finding is Low, and it has been
 - A reader can say Peter's two "fix it now" answers ruled specific defects, not a standard that every pre-existing served-doc find holds the tag. On that reading, I am spending his attention on a pattern he has not asked me to enforce.
 - I cannot rule that reading out. I hold the fork for three reasons. (i) is the RL-29 kind (silent, at the web reader) in a block this release corrected. Both items are in the one file he ordered swept whole. And the floor gives the waiver to him, not to me.
 - If his answer is (b) or (c), this round cost a fork that a whole-file read at addendum 2 would have folded into RL-29's. The class option is RS-44: check what web examples do, not only what they name. With RS-45, these finds would arrive once per file, not once per round.
+
+## Phase 1 addendum 4 — final S `38f4ece47c425cc83cac6739cae7a1806bfb0818` (#505), 2026-10-26
+
+**Written**: 2026-10-26. Reads taken 16:36:24Z → 16:44:39Z; this section appended after 16:44:39Z (each from `date -u` when taken).
+**Final S**: `38f4ece47c425cc83cac6739cae7a1806bfb0818`, the squash of **PR #505** (Lina's CORRECTION of `governance/Component-Development-Guide.md` L1518–L1520; one commit `70d64f8e4`, 16:27:57Z; branch `fix/cdg-css-self-reference`; PR opened 16:29:17Z), merged by `3fn` at **2026-10-26T16:35:14Z**. It is the only first-parent commit in `4abfbe6de..38f4ece47`. Merge facts, head, commit and merger are from GitHub's public API, read by me.
+**Peter's answer, and its bound**: chat, relayed by the orchestrator, received before 2026-10-26T16:24:20Z (the orchestrator's clock), verbatim: *"Fix the CSS cycle now, waive the icon example with the plan"*. It is recorded on #497's body as an `**Answered (RL-31 fork)**:` line (read by me from the public API; #497 open, head `737ff3e4e`). The commit, the PR's opening and the merge are all after the bound, so nothing outran the question (RL-23 does not repeat).
+**Firing event**: RELEASE phase 1 on the new S, owed by Peter's answer (a fifth S, 5.1 again, a fourth addendum).
+**State at this writing** (16:42:35Z): no `v16.1.0` tag on `origin` (`git ls-remote --tags origin`: 0 matches). `registry.npmjs.org/@3fn%2fcore`: `dist-tags.latest` = `16.0.0`, and no `16.1.0` key in `versions` or `time`. `origin/main` is the final S. **Nothing is tagged or published.**
+**Append-only**: every section above stays as written. Where this addendum corrects one, it says so, as an erratum.
+
+> **No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.** This addendum gates neither the tag nor the publish. Where a finding meets the release floor, it names the fork for Peter and does not pick it.
+
+### For the tag (read this first)
+
+- **RL-31 holds nothing now.** (i) is fixed in the packed bytes: the `:host` block declares no design-system token, and a self-reference scan over the packed served and component trees finds 0. (ii) is waived for 16.1.0 by Peter's words, in Lina's P0 record with a dated plan, which merges after the tag by design.
+- **One new reading, RL-35, is Peter's.** This addendum read every web fence in the packed CDG for what it does, not only what it names (RS-44, RS-45). Two complete, presented-as-correct web examples using real shipped tags silently do not do what they show:
+  - L422 (under "✅ CORRECT") `<button-cta variant="danger" label="Delete">`, with L442's interface listing `'danger'`. Button-CTA's variants are `primary | secondary | tertiary`; any other value renders `primary`, with no warning.
+  - L1682–L1693 (§ "Nested Containers with Same Border Radius", both the DON'T and the DO): `<container-base borderRadius="…">`. HTML lowercases the name to `borderradius`; Container-Base reads `border-radius`. Neither container gets a radius, so both examples render the same square corners and the lesson renders nothing.
+  - Both are pre-existing at `v16.0.0`. Neither is a walk row, and no record at S, or on the upkeep branch, holds either.
+- **The notes items still hold step 7, not the tag.** #505 joins RL-32's list. RL-33 takes an erratum (Thurgood's read, below).
+- **My verdict line for the tag at the final S `38f4ece47`: it should wait for Peter's answer on RL-35, not for a fix. Nothing else holds it.** By 3a's letter RL-35 does not hold it, since it is not a walk row. I hold it on the precedent of RL-27, RL-29 and RL-31 (i), each of which he answered "fix it now" for a silent web falsity. The counter-argument below says what that costs, and that this is my miss again.
+- **Open for Peter**: RL-35's fork, (a) / (b) / (c), below, with a class-level option beside it. This line belongs in #497's body as an `**Open for Peter**:` line.
+
+### RELEASE-FLOW 5.1 at the final S
+
+The orchestrator's dry run from the main checkout, 16:35:49Z → 16:36:19Z, `EXIT=0`. I read its log (`dry-run-finalS5.out`, 2083 lines) only after its last lines showed `EXIT=0` and the second `UTC 2026` timestamp:
+
+```text
+release-publish: dry-run of @3fn/core@16.1.0 at 38f4ece47c425cc83cac6739cae7a1806bfb0818 (fresh clone of https://github.com/3fn/DesignerPunk.git)
+✓ No package name drift detected (1540 files scanned)
+Closure 1: 54 files checked, 0 escaping references
+Closure 2: 54 seed files, 16 closure files, 0 bare specifiers
+105/105 assertions passed.
+sha1:       e3d86894fbaba47f765ff4b8c6bb488a71cb15e7
+files:      1694   bytes: 6590391   pack-assert: 105/105   publish path: 16 (floor 16)
+```
+
+- **105 `PASS` lines, 0 `FAIL`.** 16 of them are `PASS: publish path:`, and all three MCP bundles read `nested roots []`.
+- **The log against the prior S's log** (`dry-run-finalS4.out`), with timestamps, temp-dir names and millisecond timings masked: they differ only in the commit line, the `npm notice` size of `governance/Component-Development-Guide.md` (78.4kB → 78.6kB), and the shasum, integrity, sha1 and bytes lines.
+- **`release-publish-record.json`**: `mode` `dry-run`, `commit` = the final S, `sha1` `e3d86894…`, `fileCount` 1694, `bytes` 6590391, `checks` 105/105, `publishedTo` `[]`, `createdAt` 2026-10-26T16:36:15.963Z.
+- **The tarball**: I copied it and the record from the run's `out/` directory, re-hashed the tarball (sha1 equal) and extracted it to scratch (`cp1-add4/`).
+- As before, 5.3 rebuilds at the tag, so the published sha1 will differ. 6b's comparand is the 5.3 record.
+
+### The delta since the prior S `4abfbe6de`
+
+**In git**: `git diff --numstat 4abfbe6de 38f4ece47` lists `governance/Component-Development-Guide.md` 4/3 and `canonical/generated.lock` 1/1. The lock change is `inputClosure` only; `outputs` stays `78ead3ba…`, so no agent output changed. `canonical/` is not packed.
+
+**The packed delta** (the prior tarball `37801355…` against the final `e3d86894…`, both extracted):
+- **The same 1694-path file set** (`comm -3` prints nothing).
+- **4 files differ**:
+  - three re-stamped timestamps, and nothing else: `dist/mcp/tool-manifest.json` (`generatedAt`), `dist/types/generated/TokenTypes.{d.ts,js}` (`Generated:`);
+  - `governance/Component-Development-Guide.md`, byte-equal to its file at the final S (`git show 38f4ece47:<path> | cmp`).
+- **Byte-equal**: everything else, including `CHANGELOG.md` and `package.json` (both also equal to S), the token files, `token-index/**`, `.kiro/steering/**` and `dist/consumer-canonical/**`.
+- **What this means for my sample**:
+  - **The L266 row's counts hold.** The token index is byte-equal, so its keys are 217/193/33, with 0 removed. The file set is unchanged, so against public 16.0.0 it is still 21 added and 2 removed.
+  - **No sample claim group needs a re-verify** beyond the one changed file, read below.
+- **Signing acts in the delta**: `verify-signing-chain --audit --pr 505 --exclude-signer stacy` reads `0 of 0 act(s) selected; 0 withheld`, counts all 0, exit 0 (`refs/pull/505/head` = `70d64f8e`). No path under `canonical/profiles/` or `canonical/operative-sets/` changed. RL-24's and RL-25's counts are unchanged: `Delegate audit (Stacy-signed, Ada): 0 / 135 — no file at S (not run)`; `Peter sample (Stacy-signed): 0 / 135`.
+- **Grant reads**: #505 rides no grant. It is a Peter-merged CORRECTION by the file's content owner, as #500, #502 and #504 were; its write authority is not read here (O-37 carries).
+
+### RL-31 at the final S: (i) fixed, (ii) waived
+
+**(i), against the packed CDG.** L1515–L1539 now read: `:host {` then a four-line comment (L1518–L1521) saying the design-system tokens are not declared there, inherit from the token stylesheet's `:root`, are referenced directly where consumed, and that redeclaring a token as `var()` of itself is a cycle. Then the two `--_cta-*` placeholders, unchanged, and `.button-cta { background-color: var(--color-action-primary); transition: background-color var(--motion-button-press-duration) ease-out; }`, unchanged.
+- **True at the web reader.** Both tokens are defined on `:root` in packed `dist/DesignTokens.web.css` and inherit into a shadow tree. Button-CTA's own CSS at S has no `:host` rule (0 matches) and reads both directly: `ButtonCTA.web.css` L49 (the transition) and L165 (`background-color: var(--color-action-primary)`), as #505's ledger says.
+- **The scan**: a self-referencing custom property (`--x: var(--x…`) over packed `dist/components/`, `dist/browser/`, `governance/`, `.kiro/steering/` and `docs/`: **0 hits** (2 at the prior S, these lines). The new comment does not trip it, by Lina's design.
+- **What #505 left as written, read**: the `--_cta-hover-bg: /* calculated by blend utilities */;` placeholders are labelled as placeholders; Lina's body records that the component sets them inline on the `<button>`, not on `:host`. Not false.
+- **Row: RL-31 (i) → fixed (#505).** The text is Lina's.
+
+**(ii) → waived for 16.1.0** by Peter's words above. The record is Lina's `.kiro/issues/2026-10-26-cdg-web-icon-typescript-example-false.md`, which I read on `origin/chore/post-16.1.0-record-upkeep` at `6b0d01980` (12:30:36-04:00, i.e. 16:30:36Z, after the bound).
+- **Class**: P0 false-claim · defect, set by Lina at the definition, with the downgrade argument stated and left to Peter.
+- **Trigger**: `release:next:phase-1`, with a lapse condition: if item 2's commit is not an ancestor of the next release's S, it lapses there and, being P0, goes to Peter at the first lapse (rule 11).
+- **The waiver section** quotes Peter's sentence with the bound above and scopes it to 16.1.0 and RL-31 (ii) only.
+- **The dated plan**: (1) Ada's answer on a web TypeScript token export; (2) one CORRECTION PR to the CDG's icon examples, due before the next release's walk, not waiting on (1) past its date; (3) RL-34's pointer lines, in (2)'s PR; (4) #504's other observations homed, one of them (a compile defect in shipped `ButtonCTA.android.kt`) to Lina's existing P1 record.
+- **Not an ancestor of S**: `git merge-base --is-ancestor 6b0d01980 38f4ece47` fails, and `git cat-file -e 38f4ece47:<path>` fails. My greps cannot reach it, and it is not read at this walk, by design.
+
+**Lina's two premise corrections, against my addendum 3.** Her record corrects the brief she was given; I checked each against my own text.
+- *`createIcon` is a real legacy alias; only L787's path is false.* My addendum 3 already says so (§ RL-31 (ii): "`createIcon` is an alias of `createIconBase`"). One bullet of mine groups L787 with the identifier lines ("L704, L787, L792, L897, L908, L909: … TypeScript names that nothing defines, and an import path that does not exist"); read with its last clause it is true, but it is loosely worded. No erratum of substance; this note is the clarification: **L787 is the import path, not an undefined name.**
+- *The native false calls are L807/L810/L839/L842, plus L845 `tint =`.* My O-38 (addendum 3) named the `Icon(...)` / `IconBase` mismatch without line numbers and did not notice `tint =` (Android `IconBase`'s parameter is `color`). **Erratum to O-38: add L845 `tint =`.** Native, reference-source frame; it does not change O-38's reading.
+- **A third erratum to O-38, my own**: O-38 said `src/components/core/Icon-Base/README.md` L30 is "packed but not MCP-served". It is **not packed**: from `src/components/**`, `files[]` takes the schema, contracts and meta YAML, the native `.swift`/`.kt` sources and the Android `res/**` trees, and no component README; the only `README.md` under `src/components/` in the extracted tarball is `Icon-Base/platforms/android/res/drawable/README.md`, through the `res/**` glob. A package reader never meets it. Lina's plan item 4 still corrects it, which is right for the repo reader.
+
+### The two 3a greps at the final S (RELEASE-FLOW Phase 1, as amended by #496)
+
+The commands are verbatim from RELEASE-FLOW 3a at S, with `V=16.1.0`. I ran them at 16:40:56Z over `git archive 38f4ece47 .kiro/issues`, extracted to scratch, so these are S's bytes. Output cut at 140 characters:
+
+```text
+main at: 38f4ece47c425cc83cac6739cae7a1806bfb0818
+… 33 Trigger lines in 32 records …
+due-rows exit 0
+.kiro/issues/2026-06-25-component-schema-token-name-drift.md:11:**Class**: P0 false-claim · defect *(set 2026-10-20, Lina, rule 12. Accepte
+P0 exit 0
+```
+
+- **Against the prior S**: identical. `git diff --stat 4abfbe6de 38f4ece47 -- .kiro/issues` is empty, and `diff -rq` of the two archived trees prints nothing.
+  - 33 lines in 32 records; by token, 2 carry `release:16.1.0:phase-1` and 31 lines carry `release:next:phase-1` (30 records, one on two lines).
+  - P0: 1 line in 1 record (row 1, fixed by #452).
+- **A method note, so a reader can reproduce this**: in this session's shell, `grep` is a wrapper over `ugrep`, which prints matches across files in a non-deterministic order. My first comparison against the prior S therefore showed spurious line moves. I compared the two outputs sorted (identical), and recounted with the system `grep` (`command grep`: 33 lines, 32 files, 1 P0). The counts above are those.
+- **What lapses at the final S**: unchanged. **No lapse: 6. Lapse: 24** (P1 3, P2 `(guard)` 8, P2 `(record)` 13). **Escalations: 9.** My erratum carries (8 of the 24 filed after the walk merged, none rowed). Mine (Start Up Tasks item 9): three lapses, reported; the `## Lapse` headings are not appended in this record-only PR.
+- **Not ancestors of S**, so not reachable by these greps: everything on `origin/chore/post-16.1.0-record-upkeep` (`6b0d01980`), including Lina's RL-31 (ii) record and Ada's index record.
+
+### The governance-edit-kind read, #505 (RL-30, counted)
+
+#505's body, read from GitHub's public API, never from the squash message:
+- `governance/Component-Development-Guide.md` — CORRECTION, citing RL-31 (i) in this file @ `737ff3e4e` "on origin/chore/release-16.1.0-claims-pass-phase-1, not yet on main"; truth: the CSS custom-property cycle rule and `src/components/core/Button-CTA/platforms/web/ButtonCTA.web.css` L49, L165. **The observation record does not resolve at the merge**: `git cat-file -e 38f4ece47:<this file>` fails, and `737ff3e4e` is not an ancestor of S. The truth referent resolves (read above). The body states the non-resolution itself ("Counted as an RL-30-class citation").
+- `canonical/generated.lock` — EXECUTION (regeneration). Not a governance path; the line is given for the record.
+- **`**Consulted**:`** is present (Lina; Stacy). The Stacy half cites my addendum 3, a committed trace, so it is a named read with a trace, not a self-attested consult.
+- **The rot-mode count**: **4** CORRECTION lines across #500, #502, #504 and #505 whose observation record does not resolve at the merge. No LAW hunks, so nothing goes to Peter from this read. **Same finding class as RL-30. Counted, not new.**
+
+### RL-32 and RL-33 at the final S (notes; hold step 7, not the tag)
+
+- **RL-32**: notes L67 (`docs/releases/release-16.1.0.md` at S, unchanged by the delta) still lists "#486, #488, #489, #490, #491, #496, #499, #500, #502 and #503". **The list the notes need now adds #504 and #505**: both changed `governance/Component-Development-Guide.md`, a `files[]` path, after F. #505's own body says so. Route unchanged: **Thurgood**, before step 7, under a new grant record or Peter's direct edit.
+- **RL-33, erratum (Thurgood's read, relayed by the orchestrator, 2026-10-26)**. My addendum 3 wrote: "The CDG L1117 import is the one packed instance among them." **That sentence is false.** `files[]` lists `governance/` whole, so all three import defects ship. I read each in the final tarball:
+  - CDG L1117: `from '@3fn/core/ThemeAwareBlendUtilities'`;
+  - `governance/Token-Family-Blend.md` L88–L93: the same dead subpath (`L93`);
+  - `governance/Token-Family-Layering.md` L76–L78: `import { zIndexTokens } from '@3fn/core'`; packed `dist/browser-entry.d.ts` has 0 `zIndex` matches.
+  - The package's export map has `./blend` and no `ThemeAwareBlendUtilities` subpath.
+  - **What I meant**: I had read the CDG whole and the other two files not at all, and wrote "packed" where I meant "in the file I read". The conclusion that sentence served still holds, for all three: each is a true-positive pending entry of the guard's import half, so F-3 covers each once the notes carry the count, and none is RL-31's.
+- **RL-33, a second precision (also Thurgood's)**: the source of the file-shape and import counts is the ballot `.kiro/docs/ballots/2026-10-26-governance-examples-guard.md`'s census line (L22: "Declared paths: 10 failing of 16, of which CDG L576 and L956 also fail the shape rule. Import surface: 3 failing of 7 package-importing blocks") and Lina's R1 in its § 7 (L224–L226, the three import sites). It is not Ada's section of the token-docs record. My addendum 3 wrote "the ballot measured those at `a95d6bf3d`", which is the same source named loosely; this names it exactly, so the notes line can cite it. The census line's token-name count (56 failing of 1,958 candidates; 36 true positives; 20 needing generic) agrees with the count the notes already carry.
+- Both stay Thurgood's, with Lina's count for her halves, before step 7.
+
+### RL-35: Low (tag-relevant if Peter reads it floor-class) — two CDG web examples, presented as correct and using real shipped tags, silently do not do what they show
+
+- **Promised** (M7, RELEASE-FLOW 3a): "served docs, MCP contracts and agent charters are fixed, not disclosed". Peter's answers to RL-27, RL-29 and RL-31 (i): fix now, each time for a web falsity that fails silently.
+- **Claimed**: no PR claims these lines. #504 and #505 each scoped themselves (token names; the `:host` cycle) and touched neither.
+- **Shipped** (the packed CDG at the final S):
+  - **(A) L417–L448, § "Variant Attribute Naming"**. L418–L423, headed `<!-- ✅ CORRECT: Use variant attribute -->`: `<button-cta variant="primary" …>`, `variant="secondary"`, and **`<button-cta variant="danger" label="Delete">`** (L422). L437–L448, "TypeScript Interface Pattern": `export interface ButtonCTAProps { … variant?: 'primary' | 'secondary' | 'danger'; … }` (L442).
+    - Packed `dist/components/core/Button-CTA/types.d.ts` L54: `ButtonStyle = 'primary' | 'secondary' | 'tertiary'`; the exported props interface is `ButtonProps` (L86), with `variant?: ButtonStyle`.
+    - Packed `ButtonCTA.web.js` L349–L352: `get buttonVariant()` returns the attribute only if it is one of the three, else `'primary'`; the render reads it (L470, L478; L543). No warning is logged.
+    - So the "CORRECT" Delete button renders as a primary button, without an error, and the interface teaches a variant that does not exist and omits `tertiary`.
+    - The section's subject is the attribute's *name* (`variant`, not `style`), and that teaching is true. The false part is the value, inside a block labelled correct, on a real tag.
+  - **(B) L1678–L1700, § "❌ Nested Containers with Same Border Radius"**. Both the DON'T (L1682–L1686) and the DO (L1689–L1693) write `<container-base borderRadius="normal" padding="200">` with an inner `<container-base borderRadius="normal|none">`.
+    - HTML attribute names are case-insensitive, so the parser stores `borderradius`. Packed `ContainerBase.web.js` observes and reads `border-radius` (L145, L271); `mapBorderRadiusToCSS(null)` returns no radius. The `borderRadius` *prop* (types.d.ts L142, values `none | tight | normal | loose`) is the cross-platform name; on the web element it is the hyphenated attribute.
+    - So neither container gets a radius: the DON'T shows no overlap, the DO shows no alignment, and both render the same. `padding="200"` is read and applied. Nothing reports an error.
+    - **This is read from the packed source and the HTML attribute rule, not run in a browser.**
+  - **A mechanical scan over every packed served doc** (`governance/`, `.kiro/steering/`, `docs/`; `python3 -I`, outside the extracted tree): every `<tag attr=…>` whose tag one of the 34 packed web components defines, with each attribute checked against the element's `observedAttributes` and `getAttribute`/`hasAttribute` reads. **8 hits: the 4 `borderRadius` lines above, and 4 that are the scanner misparsing words inside quoted values** (`label="Very Long …"`, `error-message="Please select …"`), read by eye. So (B) is the only unread attribute in any packed served doc. A tally of `variant=` / `size=` values on those tags finds `variant="danger"` once (L422) and every other value valid (`size="lg"` on `badge-label-base` and `avatar-base` is in both unions).
+  - **`'danger'` elsewhere**: `governance/Token-Resolution-Patterns.md` L47 and L449 use `'primary' | 'secondary' | 'danger'` in a generic `ButtonProps` under "Example 2: Button Component (Hypothetical)". Labelled hypothetical, on no shipped tag: **not false**, and not part of RL-35.
+- **Age**: both are pre-existing. At `v16.0.0` the CDG had (A) at L415 / L435 and (B) at L1664–L1675.
+- **Known?** No record at S holds either: a search of `.kiro/issues/**` at S and on the upkeep branch for `borderRadius="`, `borderradius` and `variant="danger"` finds nothing on point. The served-prop sweep record (`2026-10-25-web-elements-served-prop-sweep.md`) compares served schema names with element accessors; it does not read doc examples, so it does not reach either. F-3's guard reads names, declared paths, shapes and package imports; it reaches neither (RS-44).
+- **Reading**:
+  - Web is a build input, so the reference-source frame that keeps native defects out of P0 does not reach either. **I read both as P0-shaped at the web reader**, the RL-31 (i) kind: complete examples, presented as correct, on real tags, that fail silently.
+  - Harm: low. (A)'s sentence about the attribute's name is true; (B) is an anti-pattern section whose fix is a one-word rename (`border-radius`). Neither is copied by a shipped component.
+  - **By 3a's letter it is not "known"**: not a walk row, and no record holds it.
+- **Route**: **Lina** (the CDG's content: the CORRECTION text, or a rule-10 record with a dated plan; her text, not mine); **Peter** (the fork).
+
+### Also read in the whole-file pass, and not floor-class on my reading (named so Peter can disagree in the same answer)
+
+- **(C) L1252–L1336, the incremental-DOM "Architecture Pattern"** has `attributeChangedCallback` but no `static get observedAttributes()`, so as shown the callback never fires and `_updateDOM()` never runs on an attribute change, silently. The canonical file it names (`ButtonVerticalListItem.web.ts`) has it, as does every packed web component I read. I read it as an omission in a fragment that is visibly incomplete (`styles`, `this.label`, `this.icon`, `_getStateClass`, `_hoverColor`, `_pressedColor` are all undefined, and fail loudly first), not a false statement. It is the closest of these to the line. → Lina.
+- **(D) L602–L617** shows `static styles = css\`…\`` (Lit's form) for `ButtonCTA.web.ts`. No Lit is in the package's dependencies, and shipped Button-CTA is a plain `HTMLElement`. It fails loudly (`css` undefined), and its token names are all true (addendum 3's script). → Lina.
+- **(E) L1862, L1885–L1887** name `src/components/core/ButtonCTA/README.md` and `…/ButtonCTA/examples/*.html`; the directory is `Button-CTA`. Prose paths, so outside F-3's declared-path half (fenced first-line comments only); not packed (no README or example HTML from `src/components/**` is in the tarball, apart from the Android `res/drawable/README.md` above); loud. → Lina.
+- The other web fences (L202–L214, L284–L296, L426–L429, L451–L459, L576–L595, L671–L676, L764–L783, L962–L997, L1026–L1037, L1116–L1134, L1185–L1206, L1342–L1443, L1467–L1478, L1545–L1596, L1610–L1676, L1708–L1749) are illustrative fragments or anti-patterns whose names resolve (addendum 3) and whose behavior, where they have one, matches the packed source: the blend function names and values (`hoverColor`/`pressedColor`/`focusColor`/`iconColor`, `darkerBlend`/`lighterBlend`; 8 % / 12 % / 8 % / 4 %, `ThemeAwareBlendUtilities.web.d.ts` L37–L103 and `DesignTokens.web.css` L799–L805), the `data-theme` selector (`:root[data-theme="wcag"]`, L931), `<icon-base>`'s `name`/`size`/`color` attributes (observed, `IconBase.web.js` L292), Button-CTA's `icon` attribute, and every `--_…` component-scoped name in the tables (each defined in packed component code). L1117's import is RL-33's.
+
+### The fork (RL-35), surfaced and not picked: Peter's
+
+- **(a) Fix before the tag.** Lina's CORRECTION of L422 / L442 (a real variant, `tertiary` in the union, the shipped interface name or a label that it is a pattern) and L1682–L1693 (`border-radius`). (C)–(E) can ride it at her choice. (a) means a sixth S, 5.1 again and a fifth addendum, which would read only that delta: this addendum's whole-file behavior read of the CDG is done.
+- **(b) Tag the final S with his own-words waiver for 16.1.0.** Lina files a rule-10 record with a dated plan, trigger `release:next:phase-1`, or appends both to her RL-31 (ii) record's plan. This is the shape of his RL-31 (ii) answer.
+- **(c) Rule them not floor-class**, for example as low-harm illustrations whose subject (the attribute's name; the radius arithmetic) is true. That needs his words.
+- **The class option, beside the fork**: Peter rules, for 16.1.0 only, that a pre-existing served-doc example defect found after the walk, and not rowed, takes (b)'s shape by default (a rule-10 record with a dated plan, no new S), and RS-44's check (what web examples *do*) is the class fix for the next release. **Cost**: every such find this release ships, disclosed only in a record a package reader cannot see, which is weaker than M7's "fixed, not disclosed"; and it is a release-scoped rule decided under time pressure. It has not been vetted with Thurgood or Lina; I name it, I do not recommend it.
+- **Already answered?** I mapped his dated words first. His RL-31 answer split exactly along silent (fix now) and loud (waive with plan), and (A) and (B) are silent. One reading makes (a) his answer already. I do not take it for him: his words ruled the named lines of RL-31, these are other lines, and a pattern in his answers is not an answer.
+- **Open for Peter**: RL-35's fork, (a) / (b) / (c), or the class option. The tag waits for his answer, not for a fix.
+
+### Observations (not findings)
+
+- **O-37 carries** (#505's write authority, not read).
+- **O-41 — #505's two body observations, read**: the `--_cta-*` placeholders sit on `:host` where the component sets them inline on `<button>` (inherited either way; not false), and the example's `ease-out` stands in for `var(--motion-button-press-easing)` (valid CSS; a simplification). Agreed: neither is a falsity.
+- **O-42 — Lina's record homes a compile defect in shipped `ButtonCTA.android.kt`** (bare `colorActionPrimary`, `colorBackground`, `colorContrastOnDark`, none declared or imported) to her existing P1 record (`2026-10-24-android-component-unit-type-mismatches.md`). Native source ships as reference source, so it is not floor-class on the owners' standing reading, which I do not dispute. Noted here because it is shipped source, not a doc. → Lina (already routed by her).
+
+### Standards implications (this addendum)
+
+For Thurgood, read in full.
+- **RS-44, evidenced again and sharpened**: two more silent web-example defects (RL-35) pass every name check this release ran. The cheap half of a behavior check exists now as a scratch script: custom-element attributes in served docs against the element's observed and read attributes, plus attribute values against the element's exported unions. It found (B) and, with the value tally, (A); it costs seconds and has no fence-intent problem, because it reads only tags the package defines. That is a candidate for the guard's next half. **Owner**: Thurgood (the instrument), with Lina (scope).
+- **RS-45, evidenced against me twice**: I wrote it at addendum 3 and applied it to names only. Reading a file whole means reading what its examples do. **Owner**: me (method).
+- **RS-46 (new)**: a claims pass that compares grep output across commits in this environment must sort, or use the system `grep`, because the session's `grep` wrapper prints in a non-deterministic order. **Owner**: me (method); Thurgood if the 3a commands should pipe through `sort` so the walk record's paste is reproducible byte for byte.
+- **RS-43, evidenced a fourth time**: #505 is the fourth CORRECTION this cycle whose observation record does not resolve at its merge.
+
+**Standards implications: list — RS-46 (new); RS-44, RS-45 and RS-43 evidenced.**
+
+### Method (this addendum)
+
+**Run by me** (worktree at `737ff3e4e`, branch `chore/release-16.1.0-claims-pass-phase-1`; `git status --porcelain` empty before, and only this file after):
+- `git fetch origin`; `git log --first-parent`, `git show`, `git diff` over `4abfbe6de..38f4ece47` and against `v16.0.0`; `git merge-base --is-ancestor`; `git cat-file -e` at S; `git grep` at S and on `origin/chore/post-16.1.0-record-upkeep`;
+- the public GitHub API, unauthenticated, for #497 and #505 (merge facts, commit, body); `git ls-remote --tags origin`; the npm packument;
+- both 3a greps over `git archive 38f4ece47 .kiro/issues`, compared sorted with the same greps over `git archive 4abfbe6de .kiro/issues`, and recounted with the system `grep`;
+- the copy, re-hash and extraction of the final tarball; `comm` and `diff -rq` against the prior tarball; `cmp` of packed files against `git show 38f4ece47:<path>`; a masked `diff` of the two dry-run logs;
+- a read of every line of the packed CDG (1906 lines), every web fence read for what it does against the packed component JS, `.d.ts` and CSS;
+- two scratch scripts (`perl` and `python3 -I`, outside the extracted tree): the self-reference scan; the custom-element attribute scan over all packed served docs; plus a `grep` tally of `variant=` / `size=` values;
+- `verify-signing-chain --audit --pr 505 --exclude-signer stacy`.
+
+**Read, not re-run**: the 5.1 dry run (the orchestrator's); the guard ballot's census counts (RL-33).
+
+**Not run**:
+- any browser, for RL-35 (A) and (B) or RL-31 (i): the readings are of packed source and the HTML and CSS rules;
+- any compile: every iOS and Android read is of names and declared kinds, `not re-verified — toolchain unavailable`;
+- a behavior read of packed served docs other than the CDG, beyond the mechanical attribute scan and value tally: their fences were not read line by line for what they do;
+- the root suite and the MCP suites; `owed-set.sh` (the delta touches no `.kiro/specs/` path); `verify-gate-registration.sh`;
+- `gh` (this session holds no credentials, and I read none).
+
+### Forced negative (this addendum)
+
+- **One packed text class is P0-shaped by my reading at its reader**: RL-35, two web examples in the CDG. It is not a walk row, and it is Peter's.
+- **No ✅ here rests on a browser or a compile.** RL-31 (i) and RL-35 are readings of packed source against the CSS and HTML rules.
+- **Not re-derived**: the guard ballot's counts (RL-33); whether `Token-Family-Blend` L88 and `Token-Family-Layering` L76 are the only import defects in those two files.
+- **Not read for behavior**: the other packed served docs, line by line (see Method). This addendum is the last for the CDG; it is not a claim that no other served doc teaches a silent web example.
+- No other claim group in my sample moved between the two S's.
+
+### Surviving counter-argument
+
+My verdict holds the tag a sixth time today, on two Low, pre-existing examples that have shipped since at least 16.0.0, and that I should have found at addendum 3, where I wrote the very rule (RS-45) that would have found them.
+
+**What survives**:
+- By 3a's letter, "knows" means the walk record's rows, and RL-35 is not one. A reader can say Peter's three "fix it now" answers ruled named defects, not a standard that every later find holds the tag.
+- The cost is now visible as a pattern: each whole-file read finds the next pre-existing defect, and nothing in the method says when that stops. The other served docs have not been read for behavior. A tag held until they are would wait on an unbounded read.
+- I hold the fork anyway because both are the RL-31 (i) kind he has answered "fix now" three times, and the floor gives the waiver to him, not to me. I cannot rule the other reading out.
+- The class option above is the honest way to stop the pattern for this release; RS-44's attribute check is the way to stop it for the next one. If his answer is (b), (c) or the class option, this round cost a fork that a behavior read at addendum 3 would have folded into RL-31.
