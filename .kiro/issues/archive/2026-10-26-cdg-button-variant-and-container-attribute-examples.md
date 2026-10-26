@@ -71,3 +71,21 @@ Peter waived RL-35 for 16.1.0, in chat, relayed by the orchestrator, received be
 ## Close
 
 Item 1's PR adds rule 5's dated outcome line here, naming whether item 3's predicate had landed, and moves this record to `archive/`. If item 3 is still open then, the PR moves its line to Thurgood's record for the guard, with a pointer here.
+
+## Outcome (2026-10-26, Lina, rule 5)
+
+**Closed by** the post-release CORRECTION PR on branch `fix/cdg-web-icon-examples-and-attributes` (CDG commit `a8319b0f9`), the same PR as plan item 2 of `2026-10-26-cdg-web-icon-typescript-example-false.md`, on Peter's go: "Let's start with item 1, Lina's correction PRs" (2026-10-26, relayed by the orchestrator, received before 17:59:29Z by its clock). Old line numbers are at `0218632d1` (unchanged from `38f4ece47`); new ones are at the PR's head.
+
+**Item 1**:
+- L422 → `<button-cta variant="tertiary" label="Learn More"></button-cta>` (head L422).
+- L440 `ButtonCTAProps` → `ButtonProps`, with a comment naming it Button-CTA's own interface, abridged, and the omitted fields (head L439–L441); L442 → `variant?: 'primary' | 'secondary' | 'tertiary';  // ✅ Use variant` (head L443); L444 `icon?: string` → `icon?: IconBaseName` (head L445). `size`'s union already matched `ButtonSize` (`types.ts` L33). Source: `src/components/core/Button-CTA/types.ts` L57, L90, L173.
+- L1682, L1683, L1689, L1690 `borderRadius=` → `border-radius=`, values unchanged (head L1725, L1726, L1732, L1733). L1695's prose names the prop and stays.
+
+**Item 2**:
+- **(C)** the incremental-DOM pattern (head L1290–L1305) gains `static get observedAttributes()` returning `['label', 'icon']`, so the shown `attributeChangedCallback` fires, and a comment marks the fragment abridged (its getters, styles and blend colors are elided; `ButtonVerticalListItem.web.ts` L251 is the whole element).
+- **(D)** L602–L617: Lit's `static styles = css\`…\`` → a `styles` string injected as a `<style>` in a plain `HTMLElement`'s shadow root, as shipped Button-CTA does (`ButtonCTA.web.ts` L39, L516), token names unchanged (head L603–L626).
+- **(E)** L1862, L1885–L1887: `src/components/core/ButtonCTA/…` → `src/components/core/Button-CTA/…` (head L1905, L1928–L1930); all four paths exist.
+
+**Item 3 had not landed.** The guard is not built (`scripts/governance-examples/` does not exist at `0218632d1`), and no record of Thurgood's for the guard exists to move the line to, so my predicate obligation moves to its own record, `2026-10-26-examples-guard-attribute-predicate.md`, filed in this PR. Thurgood's build and the ballot amendment stay his.
+
+*Signed: Lina, 2026-10-26.*
