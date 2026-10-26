@@ -1515,9 +1515,10 @@ All component-scoped CSS custom properties MUST use the `--_[abbrev]-*` naming p
 ```css
 /* Button-CTA CSS showing both types */
 :host {
-  /* Design system tokens - external, themeable */
-  --color-action-primary: var(--color-action-primary);
-  --motion-button-press-duration: var(--motion-button-press-duration);
+  /* Design system tokens - external, themeable: not declared here.
+     They inherit from the token stylesheet's :root and are referenced
+     directly where consumed (.button-cta below). Redeclaring a token as
+     var() of itself is a cycle: it computes to the guaranteed-invalid value. */
   
   /* Component-scoped properties - internal, calculated */
   --_cta-hover-bg: /* calculated by blend utilities */;
