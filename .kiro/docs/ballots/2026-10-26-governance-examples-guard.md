@@ -200,3 +200,151 @@
 - **R-g.** The scope reaches `src/components/**` without an F-1 ruling for it.
 
 **Requested changes, not refusals.** L-4 (the F-1 premise), L-6 (content keys), the marker edit-kind sentence, and the F-2 wording fix in item 2 ("a specifier the `exports` map does not list fails").
+
+#### [ADA R1]
+
+**Verdict: ACCEPT-WITH-CHANGES** on the token-name half (§ 2.1) and on F-1/F-2. My changes are A-1 to A-7 below, and my refusal conditions are in item 6. No @ mentions were addressed to me. Lina's R1 routed four hits and one wording fix to me (item 5). I accept her L-6 content keys and her marker edit-kind ask (`EXECUTION (this ballot § 2.3)`). Every count here is mine, made with a scratch script at `a95d6bf3d`. They are **heuristic, not an instrument** (Census convention). I read this worktree at `7bc1edee6`. Its diff from `a95d6bf3d` touches only this ballot, so `governance/`, `.kiro/steering/` and `token-index/` are identical to S. The build PR's instrument re-measures, and its count is the one that counts.
+
+**1. The predicate (A-1). The rules are my text, byte-exact. The lists are what they produce at S.**
+
+```text
+TOKEN-NAME PREDICATE, VERSION 1 (Ada's text, byte-exact)
+
+SCOPE. Every governance/*.md except governance/classification-map.md, and the eight
+.kiro/steering/*.md files that package.json files[] names.
+
+REGIONS. Code spans and fenced code blocks as CommonMark defines them. A candidate is read
+only from:
+  (a) an inline code span: the whole span;
+  (b) a fenced block whose info string's first word, lowercased, is in PROGRAM_LANGS: only
+      the contents of '...', "..." and `...` string literals, line by line;
+  (c) any other fenced block (untagged, yaml, json, text, markdown, and the rest): the whole
+      line.
+  PROGRAM_LANGS = ts typescript tsx js javascript jsx mjs swift kotlin kt java css scss
+
+THE NAME SET, read from the committed token-index/{primitives,semantics,components}.yaml:
+  KEYS     every key under `tokens:`;
+  CHANNELS every value of a `channels:` map (the OKLCH hue, lightness and chroma names).
+Derived from KEYS at run time, never hand-kept:
+  FAMILIES the first segments of the dotted keys;
+  STEMS    the leading lowercase word of each undotted key that ends in three or four digits.
+Hand-kept, changed only by a version bump:
+  RETIRED_FAMILIES = spacing
+  It names a family the index does not have and docs were measured using. The test asserts it
+  shares no member with FAMILIES.
+
+CANDIDATE. Each match of this JavaScript pattern, with FAMILY the alternation of FAMILIES and
+RETIRED_FAMILIES and STEM the alternation of STEMS, longest first:
+  (?<![A-Za-z0-9_$./\-])((?:FAMILY)(?:\.[A-Za-z0-9]+)+|(?:STEM)(?:[A-Z][a-z]*)*[0-9]{3,4})(\*?)(?![A-Za-z0-9_(\-])
+Group 1 is the candidate. Group 2 marks a glob.
+
+RESOLUTION. The first rule that holds decides. Exact and case-sensitive; no case-folding, no
+notation normalization, no allowlist of names.
+  0 retired    its first segment is in RETIRED_FAMILIES: it fails (or rule 6 applies);
+  1 glob       group 2 is "*", and some key in KEYS starts with the candidate;
+               a glob that rule 1 does not resolve fails;
+  2 key        the candidate is in KEYS;
+  3 channel    the candidate is in CHANNELS;
+  4 namespace  the candidate followed by "." is a prefix of some key in KEYS (space.inset);
+  5 dtcg-path  the candidate is <f>.<rest>, with <f> in FAMILIES and <rest> in KEYS
+               (color.green500, the DTCG alias form);
+  6 file-name  the candidate ends in .ts .tsx .js .jsx .mjs .cjs .md .yaml .yml .json .swift
+               .kt .css .html .sh. It is counted as a file name, not as a token;
+  otherwise it fails.
+
+REPORT. "<N> candidates; <R> resolve (<k> key, <c> channel, <n> namespace, <d> dtcg-path,
+<g> glob); <f> file names; <M> opted out; <P> pending". It never says the docs are correct.
+
+A version bump is any change to SCOPE, REGIONS, PROGRAM_LANGS, RETIRED_FAMILIES, the
+pattern, a resolution rule or the derivation of FAMILIES or STEMS. Ada decides it, with a
+re-measured count.
+```
+
+- **Why the lists are derived, not decided (fold-back).** I first wrote FAMILIES and STEMS as fixed lists pinned to the index by a twin test. The counter-argument: a token PR that adds a family would turn a test red in `scripts/governance-examples/**`, a path its author cannot write. Derived lists remove that coupling. A new family's names in docs simply become candidates. The rules are the artifact. The 23 families and 24 stems they produce at S are illustrative, as the banner guard's "18 of 83" is. The one hand-kept list is RETIRED_FAMILIES (`spacing`). It is backed by an instance (below).
+- **What is excluded, and how.** CSS custom properties (`--color-…`) have no dot, and a hyphen comes before them. Platform constants and property paths (`DesignTokens.size700`, `theme.colorFeedbackSuccessText`, `MaterialTheme.typography.h1`) have a dot before them. Android names (`space_100`) do not match. Undotted names with no digits (`radiusMax`, `fontFamilyBody`, `gridGutterSm`) are not candidates. I measured that form and dropped it: its 16 failures were all identifiers or correct iOS names (`densityValue`, `tapAreaValue`, `radiusNone`). Unquoted identifiers in a program block are not read (Swift `spaceInset100`, `shadow.offset`). That costs nothing at S and removes 19 noise hits (6 in CDG, 7 in Token-Family-Spacing, 5 in Token-Family-Shadow, 1 in Component-Primitive-vs-Semantic-Philosophy).
+- **Product tokens.** They are not in DesignerPunk's index. In a consumer example they take a marker (A-3). At S, no consumer-located block in scope names a family-prefixed product token.
+- **Deprecated and retired names.** The predicate does not exclude them, because they are the drift class itself (`color.select.*`, `color.error`). A deliberate mention, such as a history line, a "there is no X" contrast or a hypothetical in a checkpoint example, takes `generic` (A-3). The marker does not check a dated pointer.
+
+**2. Measured at S (91 docs: 83 `governance/*.md` plus 8 steering docs; 1163 fences, 460 of them program blocks).**
+
+- **1958 candidates. 1898 resolve**: 1796 key, 10 channel, 84 namespace, 7 dtcg-path, 1 glob. **4 are file names. 56 fail, in 15 docs. None of the failures is in the steering docs** (9 candidates there, all keys).
+- **36 of the 56 are true positives**: a name that is not a key, taught as a current name.
+  - `Token-Semantic-Structure.md` (12): L85, L150, L171, L232, L625 (`color.primary`, `color.error`); L86, L152, L233, L637 (`spacing.grouped.normal`, `spacing.related.normal`). The `spacing` hits are the four that RETIRED_FAMILIES adds, with no noise.
+  - `Token-Resolution-Patterns.md` (11): L100, L133–136, L142, L179–180, L211–212 (`color.primary`, `color.secondary`, `color.success`, `color.error`, `shadow.afternoon`).
+  - `Rosetta-System-Architecture.md` (5): L77, L78, L85 (`pinkL300`, `pinkC300`; the index names them `pinkLightness300` and `pinkChroma300`); L220 (`color.primary`).
+  - `Transformer-Development-Guide.md` (3): L318, L324, L326 (`color.primary`, `shadow.elevation200`, `typography.heading200`).
+  - `Token-Family-Layering.md` (2): L273 (`shadowBlurDepth200`, retired by Spec 089), L275 (`color.shadow.default`; `ColorTokens.ts` L34–35 says that tier was removed).
+  - `Product-Token-Governance.md` L157 (`space.inset.comfortable`); `MCP-Relationship-Model.md` L225 (`color.primary`); `Test-Behavioral-Contract-Validation.md` L291 (`color.error`).
+- **20 of the 56 are correct mentions that need `generic`**:
+  - `Token-Family-Blur.md` L111–112 (7): pre-Spec-089 names in its History section.
+  - `Token-Family-Spacing.md` L199, L488 (3), `Layout-Specification-Vocabulary.md` L78 (1), `Token-Family-Shadow.md` L124 (1): "there is no X" contrasts.
+  - `Token-Governance.md` L388, L443, L446 (3): proposed tokens in a checkpoint example.
+  - `DTCG-Integration-Guide.md` L117, L198 (3): DTCG group names (`glow.blur`, `glow.opacity`), which `DTCGFormatGenerator.ts` L1040–1073 emits.
+  - `Component-Family-Container.md` L311, L322 (2): Card prop shorthand, which the doc itself labels "not token names".
+- **Precision: 36 of 56 (64%).** Without the namespace rule, 84 more correct names would fail, mostly category names such as `space.inset` and `accessibility.focus`. Without the channel and DTCG-path rules, 17 more would fail.
+- **Lina's raw list, compared.** Four of her lines are outside the predicate, and item 3 names each one. `a-vision-of-the-future.md` L213 and L418 and `Token-Semantic-Structure.md` L691 are prose, outside any code span. `Token-Resolution-Patterns.md` L218 is a platform path, `DesignTokens.color.primary`. Her other lines are all in the 36.
+
+**3. The under-inclusion limit (A-2). This is the convention's own text, and it goes into the module header beside the predicate, byte-exact.**
+
+```text
+UNDER-INCLUSION LIMIT (declared here, in the predicate's own text).
+
+This predicate is lexical. A pass is evidence that the strings it selects are names the
+committed index carries. It is not evidence that a doc names the right token for its use.
+A run with zero failures is evidence about this predicate, not about the docs. It does not read:
+  - prose outside code spans and fences, or indented code blocks (known at version 1:
+    a-vision-of-the-future.md L213 and L418, Token-Semantic-Structure.md L691, "color.primary"
+    in plain text);
+  - names whose first segment is not in FAMILIES or RETIRED_FAMILIES (bodyMd, colour.primary),
+    undotted names without three or four trailing digits (fontFamilyPrimary), names on a
+    stem the palette lacks (blue500), and component tokens in display case
+    (ButtonIcon.inset.medium);
+  - platform identifiers (DesignTokens.radius.input, theme.colorPrimary, --color-primary).
+    A dot or a hyphen comes before them, so they are not candidates, and a wrong platform name
+    passes (known at version 1: platform-implementation-guidelines.md L145, L156, L310, L321;
+    Token-Resolution-Patterns.md L218);
+  - unquoted identifiers in a program block;
+  - governance/classification-map.md, whose rows quote names as they were found;
+  - any doc outside SCOPE, including component READMEs.
+It also resolves more than keys. A namespace (color.feedback.select), a DTCG path whose tail
+is a key, and a glob prefix all pass. So a namespace taught as if it were a token passes, and
+so does a DTCG alias with a stale value (known at version 1: MCP-Integration-Guide.md L237,
+"{color.green400}" for color.feedback.success.text, which the index maps to green500).
+```
+
+**4. Changes to the draft.**
+
+- **A-1. § 2.1 carries the predicate in item 1.** The predicate replaces "Shape of the predicate" and "The key set". It departs from `schemaTokenRefs.test.ts`'s exact-key-only rule on purpose. A schema's `tokens:` value is a reference, so it must be a key. A doc also names namespaces, globs, DTCG paths and channels, correctly. No case-folding, no normalization and no allowlist of names still holds.
+- **A-2. The limit text** in item 3 goes into the module header, as the banner guard's does.
+- **A-3. The markers on the token-name half.**
+  - `<!-- example: generic -->` skips the half.
+  - `<!-- example: consumer -->` does **not** skip it, which fits Lina's L-5 ("skips only path resolution"). A consumer example still has to name DesignerPunk's keys correctly. A product token in a consumer example takes `generic`.
+  - I propose no third `retired` value. There is one site at S (Blur L111–112), and the closed set stays at two.
+- **A-4. The token-name half's report line** is the one in item 1.
+- **A-5. One equality test**: RETIRED_FAMILIES shares no member with FAMILIES. If a retired family comes back into the index, it must leave the list.
+- **A-6. Homes.** All 56 failures go pending in `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`, keyed per Lina's L-6: doc, `token-name`, candidate, occurrence index. My sweep PR removes them. It fixes the 36 and puts markers on the 20. For a doc I do not own, its owner reviews the text, as the record's fix shape says.
+- **A-7. The scope excludes `governance/classification-map.md`.** Its three hits are the hypothetical `opacity112` (L253) and `color.primary` quoted from past findings (L579, L601). That is ledger text, and by Peter's 2026-10-19 class principle a ledger keeps the text as found. The doc is Thurgood's. If he keeps it in scope, those three go pending and take `generic`, and the scope line drops its exception (a version bump before adoption costs nothing).
+- **§ 3 residual 1 gets its instance**: MCP-Integration-Guide L237 passes and is stale.
+
+**5. F-1 and F-2.**
+
+- **F-1: I agree with Lina: (a), READMEs out of v1.**
+  - I confirmed her L-4 premise independently. `files[]` has no `README.md` pattern. `npm pack --dry-run --ignore-scripts` in this worktree (705 files, with no `dist/` built) lists one README under `src/components`, `Icon-Base/platforms/android/res/drawable/README.md`, the same as her 1752-file run.
+  - Her oracle for READMEs is the better one: agreement with the component's own `.schema.yaml` `tokens:` list. That list is already held to the index.
+  - **Surviving counter-argument**: in-repo agents still read READMEs through file-system fallback, so a retired name there (`color.select.*`) can reach an agent until her PR fixes the 24 lines.
+- **F-2: I agree with Lina: (c), the import surface only.**
+  - From the token side: both of my routed defects (Blend L88, Layering L76) are import-surface defects, and (c) catches both.
+  - The names that matter in a TypeScript body are string literals, and region (b) of my predicate already reads those without compiling. So (c) plus the token-name half covers what (a) would, without (a)'s four noise failures out of seven.
+  - **Surviving counter-argument**: (c) passes a body that misuses an export it imports correctly. For example, `zIndexTokens['zIndex.modal'].value` would pass, if the export existed, even with the wrong shape. And (c) needs `npm run build` to run before `test:scripts` in `lane-functional-root`. That ordering stays load-bearing, and a missing `dist/` must throw.
+
+**6. Refusal conditions: what makes me withhold the token-name half's sign-off at the build PR.**
+
+- **R-1.** The predicate or the limit text appears in a form other than byte-exact, or without a `PREDICATE_VERSION` constant, and without my R2.
+- **R-2.** FAMILIES or STEMS ships as a hand-kept list, or RETIRED_FAMILIES ships without the equality test (A-5).
+- **R-3.** Resolution adds a rule beyond 0 to 6: case-folding, normalization, or an allowlist of names.
+- **R-4.** The guard reads anything other than the committed `token-index/` for its name set (`src/tokens`, `dist`, a regenerated index), or it passes when the index cannot be read instead of throwing.
+- **R-5.** The report claims more than item 1's line, or the test lacks red cases for: `color.primary` in a span, `'space.inset.comfortable'` in a `ts` string, `color.select.*` as a glob, and `spacing.grouped.normal`. It also lacks green cases for: `--color-primary` and `DesignTokens.size700` (not candidates), `space.inset.*` and `space.inset` (glob, namespace), `pinkLightness300` (channel), and `{color.green500}` (dtcg-path).
+- **R-6.** A pending entry is homed in my record before the record carries the vetted list. My append, in the commit after this one, does that.
+- **R-7.** `consumer` skips the token-name half.
+
+**Cost, re-stated.** The predicate and its measurement are done (this entry). My sweep PR covers 36 corrections and 20 markers across 15 docs, plus the four routed hits (item 5 of the record append). It is Peter-merged, with one `**Edit kind**:` line per file.
