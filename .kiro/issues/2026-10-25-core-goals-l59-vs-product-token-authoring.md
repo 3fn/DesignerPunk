@@ -34,3 +34,7 @@ Both cannot be read as written for a product token. A platform agent that follow
 ## Fix shape
 
 One sentence in whichever document Peter's pick names, in the ballot's application PR or at the next Core Goals ballot. The application PR closes this record by a dated outcome line (rule 5) and cites this file in its close-out line (ballot § 11 step 11). Leonardo's read of the product workflow is owed in R1 of the application.
+
+## Ballot drafted (2026-10-26, Ada)
+
+Peter resolved the fork in chat on 2026-10-26, relayed verbatim by the orchestrator (*unverified here: chat only*). He chose (B), scoping, and added a planning duty: *"creating system tokens needs human review"* and *"product teams should surface and discuss token gaps during planning and before implementation"*, then *"Proceed as the team recommends"* (00:38:29Z). The DRAFT ballot is `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md`. It scopes L59, Token-Governance L186–188, the register row's `rule:`, Ada's asserted string and `.cursor/rules/tokens.mdc` L23 to system tokens. It adds the duty to Product-Token-Governance § "Authoring Workflow" and Web-Authoring-Standards L102, L239 and L281. It scopes four charter Out-of-Scope lines (Leonardo, Sparky, Kenya, Data). Leonardo's consult surfaced two forks for Peter (§ 8: F-A, the escape hatch's shape; F-B, who "discussed" is with). The record stays open: its trigger is unchanged and becomes `merge:#<N>` when the ballot's application PR opens. That PR closes this record by a dated outcome line (ballot § 12 step 11).
