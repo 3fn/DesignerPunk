@@ -1,4 +1,4 @@
-# Release 16.1.0's standards implications: the queue (RS-37, RS-42 to RS-49), each with its source, the law text it touches, a proposed disposition and a vehicle
+# Release 16.1.0's standards implications: the queue (RS-33 to RS-49), each with its source, the law text it touches, a proposed disposition and a vehicle
 
 **Date**: 2026-10-26
 **Owner**: Thurgood (the composed loop's standards side, `canonical/agents/thurgood.md` § "The composed learning loop"; the instruments and RELEASE-FLOW text named below). Rule 9 applies to every later edit.
@@ -23,8 +23,16 @@
 | RS-47 | a claims-pass record can home a rule for one release only | ballots README (no home for a release-scoped rule); the post-walk rule's clauses 1 and 6 | LAW via ballot (Peter's call on standing) | the later guard-amendment ballot, with RS-44 |
 | RS-48 | npm's `+ <pkg>@<v>` line is not evidence; step 6's 404 sentence has a second reading | RELEASE-FLOW step 6 (L150), and 5.3/5.4 if the `+`-line point is taken | LAW via ballot | RELEASE-FLOW batch ballot |
 | RS-49 | 5.4's "never a tarball the script did not produce" binds who produced it, not which version | RELEASE-FLOW step 5.4 (L136) | LAW via ballot, with Ada consulted | RELEASE-FLOW batch ballot |
+| RS-33 | does an auditor's pre-S replacement text get a second reader, or does the pre-S read only name what is false | `canonical/agents/stacy.md` L461 (the mirror clause, scoped to criterion text); no pre-S text in RELEASE-FLOW | LAW via ballot; a fork surfaced (appended 2026-10-26) | RELEASE-FLOW batch ballot + a Stacy charter site |
+| RS-34 | where the packed CHANGELOG's date comes from at S | RELEASE-FLOW step 2 (L108) and `governance/release-management-system.md` recipe step 4 (L40) | LAW via ballot (the text is silent, not false) | RELEASE-FLOW batch ballot |
+| RS-35 | no instrument reads a PR body for an `**Open for Peter**:` line at merge time | Task-Completion-Protocol § "Branch and PR Conventions" (the hold rule); register | `declined-with-reason` for new law, provisional; a fork for Peter on an instrument | a dated line here; Peter's pick |
+| RS-36 | the signing-act walk's link 6, H3, double-candidate and link 7 readings | ballot `2026-10-01-signing-act-chain` § 3 link 6, § 4 H3; `verify-signing-chain.ts` | LAW via ballot (amendment) + a checker build | a third vehicle: a signing-act-chain amendment ballot |
+| RS-38 | law text that restates a script's behaviour has no straggler sweep | RELEASE-FLOW § 5a; both charters; the consumer overlay (instance: `2026-10-25-owed-set-law-text-after-closing-commit-anchor.md`) | instance homed by pointer; the class half is LAW via ballot, with RS-29 | RELEASE-FLOW batch ballot |
+| RS-39 | CHANGELOG summary lines are written from intent, not from the packed file set | RELEASE-FLOW step 2 / 3a; recipe step 4 | LAW via ballot | RELEASE-FLOW batch ballot |
+| RS-40 | does a served-doc CORRECTION sweep its file for the class it corrects | ballots README § "three kinds", CONTENT CORRECTION row; Task-Completion-Protocol § "Edit kind" | LAW via ballot, with RS-43 | RELEASE-FLOW batch ballot's second surface (the CORRECTION form), with RS-43 |
+| RS-41 | a CHANGELOG disclosure that cites a record goes stale before the tag | RELEASE-FLOW Phase 1 re-read at the final S | LAW via ballot | RELEASE-FLOW batch ballot |
 
-Two vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (RS-37, RS-46's 3a half, RS-48, RS-49, and RS-43's sentence) and **the later guard-amendment ballot** (RS-44, RS-47). Both are due before the next release's walk. Neither is drafted here.
+Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (RS-33, RS-34, RS-37, RS-38's class half, RS-39, RS-41, RS-46's 3a half, RS-48, RS-49, and the CORRECTION-form sentences of RS-40 and RS-43), **the later guard-amendment ballot** (RS-44, RS-47) and **a signing-act-chain amendment ballot** (RS-36; appended 2026-10-26). The first two are due before the next release's walk; the third rides the same trigger. None is drafted here.
 
 ---
 
@@ -107,10 +115,82 @@ Two vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (RS
 
 ---
 
+## RS-33 — an auditor's pre-S replacement text shipped with one false sentence and no second reader
+
+- **Source**: claims-pass § "Standards implications" L633 @ `55c218cfd` (RL-19, finding at L343); evidenced at L1005 ("evidenced and kept"). *(Rows RS-33 to RS-36 and RS-38 to RS-41 were appended 2026-10-26, Thurgood, at the orchestrator's request; line numbers checked at `55c218cfd`.)*
+- **Law touched**: `canonical/agents/stacy.md` L461, the mirror clause: *"Stacy may say a criterion is unverifiable; she may never say what it should say"*, scoped to criterion text. Nothing in RELEASE-FLOW or her charter governs a pre-S release consult at all (`grep -n -i "pre-S" .kiro/hooks/RELEASE-FLOW.md canonical/agents/stacy.md` finds only an Authority line). My side: the caller-out duty (`canonical/agents/thurgood.md` L582) is also written for criteria.
+- **Disposition (proposed)**: **LAW via ballot.** Extending either charter's clause to a new act is a new duty. **Fork, surfaced and not picked**: (i) the pre-S read names what is false and why, and leaves the replacement to the text's owner (the mirror clause's own shape; costs nothing); (ii) auditor-drafted text is allowed and gets a second reader before it ships. My lean is (i). **Surviving counter to (i)**: Stacy's rate was 1 false of 7 proposed sentences; making the owner author every sentence under release-day time pressure moves the error to the owner, who has no second reader either. **Counter to (ii)**: the release has no second seat free on release day, and a reader of a sentence the auditor wrote is a reader of the audit's own conclusion.
+- **My own part, stated**: the release PR (#494) was mine and took the sentence as written. The owner of a text that receives auditor-drafted text is the second reader the pass says was missing. The row records that as the same finding from the other side; it is not a defence.
+- **Vehicle**: the RELEASE-FLOW batch ballot (a pre-S sentence in 3a's neighbourhood) and a Stacy charter site (Peter-merged, Stacy consulted, regeneration).
+- **Consult**: Stacy (she names it and does not draft it); Peter (the fork).
+
+## RS-34 — where the packed CHANGELOG's date comes from at S
+
+- **Source**: § "Standards implications" L634 @ `55c218cfd` (RL-21, finding at L370).
+- **Law touched**: RELEASE-FLOW step 2 (L108): "retitle `## [Unreleased]` to the version"; `governance/release-management-system.md` recipe step 4 (L40): "the release PR retitles it to the version". **Neither text mentions a date**; the 16.1.0 grant planned one "at the tag", which no step can reach in a packed file (5.3 packs from the tag, the tag goes on S). The text is silent, not false, so this is a LAW addition, not a CORRECTION.
+- **Disposition (proposed)**: **LAW via ballot.** **Fork surfaced**: (i) the heading carries a date written in the release PR (the day it is opened or the day it is expected to merge), and a one-day mismatch at the tag is not a falsity (Stacy's own reading at L906); (ii) the heading carries no date and the notes carry it (15.1.0 and 16.0.0 shipped dated headings, so (ii) is a change of practice). My lean is (i). **Surviving counter to (i)**: a date written before the merge can be wrong by the merge's day, and the only repair is a new S; with (ii) nothing can be wrong.
+- **Vehicle**: the RELEASE-FLOW batch ballot (step 2, plus the recipe's step 4 as a second surface, which is Peter-merged law in `governance/`).
+- **Consult**: Stacy (the packed-file read).
+
+## RS-35 — no instrument reads a PR body for an open question at merge time
+
+- **Source**: § "Standards implications" L635 @ `55c218cfd` (RL-23, finding at L397): #469, #474 and #494 merged outside the hold, and one body cast the merge as the answer. Stacy's note: "The author-side marking worked."
+- **Law touched**: Task-Completion-Protocol § "Branch and PR Conventions" (the `**Open for Peter**:` hold, ratified 2026-10-17, ballot `2026-10-18-obligation-drain-and-release-falsity-floor` M8). The hold binds the merger, and the merger is Peter. `grep -rn "Open for Peter" scripts .github` finds no reader.
+- **Disposition (proposed): `declined-with-reason` for new law from me, provisional.** Reason: the rule is ratified and the failure is in its execution at the merge act, which is Peter's; the author-side form held on #469 and #474. An instrument that reads a PR body at merge time is a required check (new context), and a new required context is Peter's (branch protection, `EXPECTED_CONTEXTS`), never mine. **Fork for Peter, not picked**: (a) no instrument; the findings stay a claims-pass count (RL-23's form); (b) a required check that fails while the body carries an `**Open for Peter**:` line with no answer line citing a record dated before `mergedAt`. **Surviving counter to my decline**: three merges in one cycle is a rate, not an accident, and the old failure ("an accumulation of missed questions", the ballot's own words) is exactly what the rule was ratified to end. **Counter to (b)**: the check cannot see an answer given in chat (the `mergedAt` comparison needs a record) and would block merges on a body-text convention.
+- **Part that is mine and not a fork**: #494's body wording ("Peter's merge ratifies the bump") is an author-side defect of the release PR's author. The correction is a dated line here: the release author writes the question as a question and the ratification as a second act (recipe step 3 names two acts).
+- **Vehicle**: a dated disposition line here, and Peter's pick on (a)/(b).
+- **Consult**: Stacy (her RL-23 count); Peter.
+
+## RS-36 — the signing-act walk's link 6, H3, double-candidate and link 7 readings
+
+- **Source**: § "Standards implications" L636 @ `55c218cfd` (RL-24, finding at L408); RS-10 (15.1.0's RL-1) is the same link-6 class, "evidenced at scale" here: `FAIL 6` on 67 of 108 non-Stacy acts, 62% of the population.
+- **Law touched**: ballot `2026-10-01-signing-act-chain` § 3 link 6 (the charter resolves through the seat branch; the fallback recorded in Stacy's R1 (L375, folded into § 3) is the parent of the seat's earliest commit and does not read pull refs) and § 4.3 H3 (a main-session commit with a seat trailer reads `FAIL`; L112, L143); the checker `tools/agent-generator/regrounding/verify-signing-chain.ts` (mine). No record holds the link-6 defect: `grep -rl -i "link 6\|pull ref" .kiro/issues` finds only the archived CI-step record and the link-4 record, neither about it. **RS-10 itself has no record I can find either** (not searched in git history; see the note under "Adjacent").
+- **Four items, each with its own kind**: (1) link 6 resolving through `refs/pull/<n>/head` after a branch is deleted; (2) H3 reading the session's `agent-setting` record, so a top-level `--agent` run is not a "primary creating a seat commit"; (3) a double-printed commit line counted as two candidates; (4) link 7 on a `no-consumer-counterpart` row that renders nothing.
+- **Disposition (proposed)**: **LAW via ballot (amendment) and a build.** Items (1) and (2) change what the ballot says a link reads (§ 3, § 4.3), so they are LAW; owning the checker does not authorize changing the law it serves. Items (3) and (4) are defects against the ballot's intent (H2a, link 7's frame) and are checker fixes with falsification fixtures, issue-driven, in my write scope. Item (2) carries a **fork**: whether a top-level seat session's creating a commit is `FAIL`, `anchored`, or a new reading, since the 16.1.0 sample shows the commit's `Co-Authored-By` line naming a different model, which bears on § 5.4. That is Stacy's and Peter's, not mine to rule.
+- **Not verified by me, not by Stacy**: that restoring the deleted ref would turn the 62% anchored (her counter at L670). The amendment's first act is that measurement.
+- **Vehicle**: a signing-act-chain amendment ballot, then the checker PR and tests under `tools/agent-generator/__tests__/verify-signing-chain.*`.
+- **Consult**: Stacy (the walk's reader); Ada and Lina (the seats whose acts read `FAIL`); Peter (the item (2) fork).
+
+## RS-38 — law text that restates a script's behaviour has no straggler sweep
+
+- **Source**: § "Standards implications" L638 @ `55c218cfd` (RL-22, finding at L377): "RS-29 turned around".
+- **Law touched**: RELEASE-FLOW § 5a, both charters (mine, Stacy's) and the consumer overlay. **The instance is already homed**: `.kiro/issues/2026-10-25-owed-set-law-text-after-closing-commit-anchor.md` (the four surfaces and the kind question, P2 `(record)`, trigger `release:next:phase-1`; Stacy's waiver for 16.1.0 is recorded on it). RL-22 shipped waived and the follow-on PR is still unmerged at `6615a6774`.
+- **Class half (what is not homed)**: a rule that a PR changing a script's behaviour sweeps the law text that restates it, with RS-29's mirror (a flip of register state sweeps the scripts' comments). No record or ballot cites RS-29 either (searched `.kiro/issues`, `.kiro/docs`). My charter already names STRAGGLER as mine, so the sweep's owner is clear; what is missing is a trigger.
+- **Disposition (proposed)**: instance **homed by pointer** (do not duplicate it). Class: **LAW via ballot**, one sentence, **with RS-29** (its first half). **Surviving counter**: a sweep rule on every behaviour-changing script PR is broad, and the 16.1.0 instance was caught by the owner's own record the same day (L218 of the pass: "RL-22 makes it tag-relevant if Peter reads that row as floor-class"); a narrower form is a PR-body line, `**Straggler sweep**: <grep> — <hits>`, only for scripts a charter or RELEASE-FLOW names. I lean to the narrow form.
+- **Vehicle**: the RELEASE-FLOW batch ballot (the narrow form), with RS-29's surface named; the instance's own PR is the follow-on above.
+- **Consult**: Stacy (her overlay and charter lines).
+
+## RS-39 — CHANGELOG summary lines are written from intent, not from the packed file set
+
+- **Source**: § "Standards implications" L639 @ `55c218cfd` (RL-20, finding at L363); the RS-25 class (16.0.0), for the file set instead of the generated files.
+- **Law touched**: RELEASE-FLOW step 2 (the entry's authoring) and the recipe's step 4 (L40, which says the entry is "hand-authored and never generated from the delta"). The 5.1 dry run already produces the packed tarball, and Stacy's phase 1 already compares it with the public artifact; nothing asks the author to.
+- **Disposition (proposed)**: **LAW via ballot.** One sentence: before the entry says a file or export was added, kept or removed, the author lists the packed set against the previous public artifact (`comm` on the two `tar -tzf` lists) and pastes the result in the release PR. **Surviving counter**: the dry run runs after the release PR merges (it is on S, step 5.1), so the author's `comm` needs a local `npm pack` before S, which costs minutes and may differ from S's tarball. Stacy's phase-1 read is the detector today; a check by the author adds a second reader of the same fact, which is the second-reader shape RS-33 asks for.
+- **Vehicle**: the RELEASE-FLOW batch ballot.
+- **Consult**: Stacy (the packed-artifact read); Ada (the build and what `npm pack` produces before S).
+
+## RS-40 — does a served-doc CORRECTION sweep its file for the class it corrects
+
+- **Source**: addendum § "Standards implications" L1003 @ `55c218cfd` (RL-27, finding at L963); evidenced again at L1291 (addendum 2's list). Stacy poses it as a class question and does not draft the standard.
+- **Law touched**: ballots README § "When a governance edit needs a ballot — three kinds" (the CONTENT CORRECTION row: "the observation (record cited) **and a referent**"), and Task-Completion-Protocol § "Edit kind". The text says a CORRECTION establishes that the old text was false "by the cited observation" and that "the new text matches the cited referent"; it says nothing about the rest of the file. A CORRECTION scoped to a ruled list is a valid CORRECTION by its words.
+- **Disposition (proposed)**: **LAW via ballot, with RS-43.** The shape: a CORRECTION whose observation names a class of text carries one line `**Sweep**: <grep over the whole file> — <hits fixed / hits left with reason>`. It is the same second surface as RS-43's sentence (what a CORRECTION PR must carry). Lina's #504 is titled "whole-file sweep, RL-29", so the practice exists where the miss was found; the rule would make it survive a change of author. **Surviving counter**: it adds a line to every CORRECTION, and the practice already exists where it mattered (Lina's, after RL-27's miss); a CORRECTION that touches a spec-ruled list is sometimes scoped narrowly on purpose, to keep a diff reviewable, and a mandatory sweep widens the diff. A fork: sweep required, or the PR states what it did not sweep.
+- **Guard's half, not mine to decide**: whether the governance-examples guard selects `var(--dp-…)` inside a fence is in Ada's predicate scope and the guard's v1 build (not merged); Stacy did not verify it and I have not. It is a question for the build PR's falsification cases, recorded here so the build does not drop it.
+- **Vehicle**: the RELEASE-FLOW batch ballot's second surface (the CORRECTION form), with RS-43; the guard question rides the guard's build PR.
+- **Consult**: Lina (served-doc corrections are hers); Ada (the guard's predicate scope); Stacy.
+
+## RS-41 — a CHANGELOG disclosure that cites a record goes stale before the tag
+
+- **Source**: addendum § "Standards implications" L1004 @ `55c218cfd` (RL-28, finding at L976): CHANGELOG L37 said token docs "were not checked … yet" after Ada had checked them (#495).
+- **Law touched**: RELEASE-FLOW's Phase 1 bullet (the S re-read of 3a's greps, added by the 2026-10-25 post-walk ballot) re-reads the walk's rows; **no step re-reads the records a CHANGELOG sentence cites at the final S**.
+- **Disposition (proposed)**: **LAW via ballot**, one sentence in the same Phase 1 bullet: each record a packed sentence cites ("tracked: …") is re-read at the final S, and a sentence whose record moved is re-worded or its count refreshed. **Surviving counter**: the 16.1.0 instance was fixed in #503 (a count, not a re-wording), and Stacy re-read it at the final S without the rule; the rule turns her read into the author's duty. It also couples two moving things (the CHANGELOG sentence and the cited record) that stale at the same rate, so the structural alternative is to stop citing records in packed text: a disclosure states its fact, and the record number sits only in the unpacked notes. That alternative is a fork, not mine to pick.
+- **Vehicle**: the RELEASE-FLOW batch ballot.
+- **Consult**: Stacy.
+
+---
+
 ## Adjacent, not dispositioned here (named so they are not read as covered)
 
-- **RS-33, RS-34, RS-35, RS-36, RS-38, RS-39, RS-40, RS-41** (the same pass's first-round and addendum items): the orchestrator's routing did not list them. A search of `.kiro/issues/` and `.kiro/docs/` at `6615a6774` finds no record or ballot citing any of them (only RS-37 and RL-30's archived record match). Whether they are filed elsewhere under another name I have not checked beyond that search. Rule 10 says an obligation arising from a pass files in the pass's PR; they are Thurgood's per the pass (RS-33 to RS-36, RS-38, RS-39, RS-41 name him as owner; RS-40 left the standard "unwritten"). **I am not filing or dispositioning them in this record**; the orchestrator or Peter says whether to add them.
-- **The composed-loop outcome line for this pass** is owed under `.kiro/issues/2026-10-24-composed-loop-outcome-lines-missing.md` ("The next RELEASE claims pass owes its own line at its merge as well"); Stacy's phase-2 record names it owed (L2114). It is a different duty from this queue and I have not written it here. The dispositions above are not the outcome line.
+- **RS-33, RS-34, RS-35, RS-36, RS-38, RS-39, RS-40, RS-41**: dispositioned above (appended 2026-10-26 at the orchestrator's request; at filing they were not listed). **Adjacent and also unhomed, not filed here**: RS-10 (the link-6 class, see RS-36; first claimed in 15.1.0's pass) and RS-29 (the straggler class, see RS-38) have no record or ballot citing them in `.kiro/issues`, `.kiro/docs` or `governance` at `6615a6774` (a text search, not a history search). RS-25 likewise. Whether each is already homed under another name I have not checked beyond that search; they are 15.1.0 and 16.0.0 items and Stacy's passes name them as Thurgood's, so the orchestrator or Peter says whether to add them to this queue.
+- **The composed-loop outcome line for this pass** is owed under `.kiro/issues/2026-10-24-composed-loop-outcome-lines-missing.md` ("The next RELEASE claims pass owes its own line at its merge as well"); Stacy's phase-2 record names it owed (L2114). It is a different duty from this queue. **Its line is on the claims-pass record's own `## [THURGOOD] Composed-loop outcome` section** (the form of 123's closeout and 127's passes, `claims-pass.md` L351; `claims-pass-midpoint.md` L182), which is Stacy's file; the text was reported to the orchestrator for routing on 2026-10-26 and is not in this record. The dispositions above are not the outcome line.
 - **Anti-rot**: nothing in this record re-decides what Stacy concluded; each row reads her item, names the law it touches, and proposes what to do with the standard.
 
 ## Surviving counter-argument
