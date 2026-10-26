@@ -23,3 +23,7 @@
 ## What this grant does not cover
 
 Anything else, including any other line of either file and `governance/platform-implementation-guidelines.md` (Lina's sweep). An edit outside the list is a claims-pass finding.
+
+---
+
+**2026-10-26 — CLOSED at the fixing PR's merge (Thurgood, owner, rule 5).** Activated by #501 (`dce319990`, merged 2026-10-26T14:17:18Z). Every act is on `release/16.1.0-fix-2`, written after that merge: `55533feb4` (`CHANGELOG.md` L37) and `5300b4831` (the notes' count line with L55, and L66), plus the commit that fills in the fixing PR's own number in L66. The grant expires, and this record closes, at that PR's merge. It is archived in the same PR, as rule 5 asks ("a grant archives at its fixing PR's merge"), so O-31 does not repeat. Rule 4: not a ruling on the merits.

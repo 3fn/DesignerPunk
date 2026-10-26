@@ -52,10 +52,11 @@
 
 ## ⚠️ Known limitations (disclosed, tracked)
 
-The CHANGELOG's "Known limitations in this release" is the consumer-facing list and is not repeated here. Two additions that belong to the record:
+The CHANGELOG's "Known limitations in this release" is the consumer-facing list and is not repeated here. Three additions that belong to the record:
 
 - **Walk rows that lapse at S** are listed in `.kiro/issues/2026-10-25-release-16.1.0-walk.md` § "At S (release 16.1.0)" and its re-cut section; one of them is a disclosure missing from a served surface (the blocking test, RELEASE-FLOW item 3a): the consumer-Stacy charter's owed-set lines (`dist/consumer-canonical/agents/stacy.md` L343 and L347; `.kiro/issues/2026-10-25-owed-set-law-text-after-closing-commit-anchor.md`). Stacy's phase-1 pass (#497) found it as RL-22, and Peter ruled it floor-class and waived it for 16.1.0 ("(i)"); its fix rides #473's follow-on. Every other floor-class row is fixed: row 6 by #491, F-E8 by #488.
 - **Android is disclosed as reference source** (Peter, 2026-10-24); Spec 129's first task is a build check that compiles the Android output.
+- **Token names in served docs that are not keys: the count** (Peter's F-3 answer, ballot `2026-10-26-governance-examples-guard`: "the release notes carry the count"). Ada's heuristic predicate (v1), run at `a95d6bf3d`, found 56 strings in 15 governance docs that are not keys, and none in a steering doc. 36 are wrong names, and they ship in this release; 20 are correct example names not yet marked as examples. The 15 docs did not change between `a95d6bf3d` and this release's S. Tracked: `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md` (Ada's sweep). The guard that will read these names was ratified in #495 and is not built yet. The CHANGELOG carries the same count.
 
 ## Upgrading from 16.0.0
 
@@ -63,7 +64,7 @@ See the CHANGELOG's "Upgrading from 16.0.0" (six steps). **From 15.1.0 or earlie
 
 ## 🧪 Onboarding evidence
 
-Onboarding trio: three runs on a preview candidate packed at F `de63033b9` (records `tests/onboarding-trio/records/16.1.0/`; Kiro conformance pair re-queued to November). After F, PRs #486, #488, #489, #490 and #491 changed shipped paths, so by protocol § 5.0 the candidate is stale for this release (diff line in the release PR). No trio run saw these changes: the token-selection order (Core Goals, Token Governance, the consumer Ada and Lina charters), Button-CTA's served text, the Nav-SegmentedChoice-Base contract sentence (#486), `generate`'s dangling-reference check, and one Integration Guide sentence. The trio's findings describe agents that loaded the text as it stood at F. `generate`'s new check is covered on the founder path by `npm run test:consumer` at `bb9abb934` (the release branch with `a03b92f02` merged): 56 passed, 1 skipped (57). Findings fixed after F are re-observed at the next release's trio (F25).
+Onboarding trio: three runs on a preview candidate packed at F `de63033b9` (records `tests/onboarding-trio/records/16.1.0/`; Kiro conformance pair re-queued to November). After F, PRs #486, #488, #489, #490, #491, #496, #499, #500, #502 and #503 changed shipped paths (record-only PRs after F, such as the grant records #498 and #501, changed none), so by protocol § 5.0 the candidate is stale for this release (diff line in the release PR). No trio run saw these changes: the token-selection order (Core Goals, Token Governance, the consumer Ada and Lina charters), Button-CTA's served text, the Nav-SegmentedChoice-Base contract sentence (#486), `generate`'s dangling-reference check, one Integration Guide sentence, two register rows in `governance/classification-map.md` (#496), the CHANGELOG corrections (#499 and #503), and the platform guidelines' token names and naming rules, with the Data charter lines that embed them (#500 and #502). The trio's findings describe agents that loaded the text as it stood at F. `generate`'s new check is covered on the founder path by `npm run test:consumer` at `bb9abb934` (the release branch with `a03b92f02` merged): 56 passed, 1 skipped (57). Findings fixed after F are re-observed at the next release's trio (F25).
 
 | Record | Harness | What ran | F25 dispositions (fixed-and-observed / fixed-not-observed / still-present) |
 |---|---|---|---|
