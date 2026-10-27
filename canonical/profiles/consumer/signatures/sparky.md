@@ -17,6 +17,16 @@ signer: sparky
 ## `#out-of-scope`
 
 signer: sparky
+canonicalHash: sha256:bf74a286be1191112b87d64478b37bbb0f4db4115663cacd3bed09de61cbd7ee
+renderedHash: sha256:f6f92282ab16c1a0f56e78d15d3d7f948abcd5fe7b4f68e036d402fd4c847e35
+assent: surviving 7 of 7 — out-1, out-2, out-3, out-4, out-5, out-6, out-7
+
+**Re-signed 2026-10-27 (system-token review and token planning ballot, item 2, site 8): ASSENT, `surviving` 7 of 7 (`out-1` to `out-7`).** A new act, read fresh against the new rendering; nothing is carried from the 2026-09-29 signature below (canonicalHash `sha256:2a194f0ea5b813a6ea71d33ec46613e0fc1f672688ded1ace3c7eccf808cbbe2`, renderedHash `sha256:2e8e4e874cb61acbbde442b5b63db650d7eeeb7b2240aab4e478219761b47dfd`).
+- **The ballot**: `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493). Site 8 was applied at `eb91cd5b1`, with the profile author's re-quoted `out-4` and the re-pinned overlay unit. The rendering was regenerated at `5addae6b2`, and I re-confirmed the set at 7 at `ecea474c7`.
+- **What I read, in this session, through tool results**: the unit as `readConsumerSpans` returns it from the committed rendering, one piece each in `canonical/_consumer-output/_canonical/agents/sparky.md` (L191–L199; the applied line at L196), `cc/.claude/agents/sparky.md` and `kiro/.kiro/agents/sparky-prompt.md`. By script, the three pieces are byte-identical and equal the overlay's `## @unit #out-of-scope` text. I also read this row. The rendered `out-4` line reads: *"**System token creation or modification** — escalate through Leonardo to Thurgood (who triages to Ada). Product tokens are in scope: § "Product Tokens" above says when you author one"*. Its pointer resolves in every rendering: `### Product Tokens` is a retained unit, present above `### Out of Scope` in all three pieces' files.
+- **Credited**: `out-1` to `out-6` survive verbatim in all three pieces (checked by script), `out-4` with its new sentence. `out-7` (*"… — Peter's job"*) renders *"… — your human lead's job"*, as before: product decisions stay outside my seat and with the consumer's human lead. Credited by entailment.
+- **The row's `removals`** (`Peter`, `subtraction-2`) is unchanged and still the only removal; the new sentence contains no `Peter` (checked: the rendered unit contains none), so nothing new is subtracted.
+- **Hashes.** `canonicalHash` moves `2a194f0e...` to `bf74a286...` (`hashText` of the unit from `partition(body).units`, equal to the overlay pin and to the sweep's value). `renderedHash` moves `2e8e4e87...` to `f6f92282...` (`renderedHashOf` over the committed rendering, `rowSpanSource('canonical/agents/sparky.md', 'body', '#out-of-scope')`), equal to the profile author's value.
 
 **ASSENT — surviving 7**: `out-1`, `out-2`, `out-3`, `out-4`, `out-5`, `out-6`, `out-7`. All 7 items survive. `out-1`–`out-6` are verbatim. `out-7` is re-keyed ("Product decisions — that's your human lead's job"), which is the same boundary.
 
