@@ -33,7 +33,7 @@ Product tokens exist within a clear tier hierarchy:
 
 | Tier | Scope | Governance |
 |------|-------|-----------|
-| **Product token** | One product vertical, any number of surfaces | Product team authors freely |
+| **Product token** | One product vertical, any number of surfaces | Product team authors, with no system review; needs planned at screen specification (§ "Authoring Workflow") *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)* |
 | **System token** | All product verticals (organizational) | Promotion requires Ada review |
 
 Component tokens are orthogonal — they are system-level tokens with component-scoped consumption, governed by Ada + Lina. They are not a tier below product tokens; they are a different axis entirely.
@@ -71,7 +71,7 @@ Use this to classify where a value belongs:
 
 A `value:` product token requires demonstrating that the nearest system token doesn't serve the need. The `rationale` field must state which system token was considered and why it was rejected.
 
-**Responsibility**: This rule applies at the *authoring* point — Leonardo during screen spec, platform agents when discovering new needs during implementation. Platform agents consuming generated CSS custom properties don't need to worry about ref vs value at consumption time. If Leonardo's spec already includes a `value:` token with rationale, platform agents trust that decision during implementation.
+**Responsibility**: This rule applies at the *authoring* point — Leonardo during screen spec, and a platform agent for a need the spec missed, under § "Authoring Workflow". Platform agents consuming generated CSS custom properties don't need to worry about ref vs value at consumption time. If Leonardo's spec already includes a `value:` token with rationale, platform agents trust that decision during implementation. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
 
 ### The Workflow
 
