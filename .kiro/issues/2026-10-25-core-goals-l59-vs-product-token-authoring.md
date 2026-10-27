@@ -47,6 +47,10 @@ Written under README rule 5 for the application PR #491 of `.kiro/docs/ballots/2
 
 *Signed: Ada, 2026-10-25.*
 
+## Ballot drafted (2026-10-26, Ada)
+
+Peter resolved the fork in chat on 2026-10-26, relayed verbatim by the orchestrator (*unverified here: chat only*). He chose (B), scoping, and added a planning duty: *"creating system tokens needs human review"* and *"product teams should surface and discuss token gaps during planning and before implementation"*, then *"Proceed as the team recommends"* (00:38:29Z). The DRAFT ballot is `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md`. It scopes L59, Token-Governance L186–188, the register row's `rule:`, Ada's asserted string and `.cursor/rules/tokens.mdc` L23 to system tokens. It adds the duty to Product-Token-Governance § "Authoring Workflow" and Web-Authoring-Standards L102, L239 and L281. It scopes four charter Out-of-Scope lines (Leonardo, Sparky, Kenya, Data). Leonardo's consult surfaced two forks for Peter (§ 8: F-A, the escape hatch's shape; F-B, who "discussed" is with). The record stays open: its trigger is unchanged and becomes `merge:#<N>` when the ballot's application PR opens. That PR closes this record by a dated outcome line (ballot § 12 step 11).
+
 ## Leonardo's read (2026-10-26) — the product-token authoring workflow, as its owner
 
 Appended under README rule 9 (any seat may append a dated, signed line). This is the read the "Consulted" header owed. It does not re-argue the ballot.
@@ -57,3 +61,20 @@ Appended under README rule 9 (any seat may append a dated, signed line). This is
 - **Open acts left to the others, as filed**: Peter's pick of F-A and F-B; Thurgood's and Stacy's read of whether an audit cadence can stand as the review. Nothing about the record's status or Trigger changes with this line.
 
 *Signed: Leonardo, 2026-10-26.*
+
+## Ratified (2026-10-27, Ada)
+
+Appended under README rule 9.
+
+- **The ballot is ratified whole.** Ballot `2026-10-26-system-token-review-and-token-planning` is **RATIFIED (Peter, 2026-10-26/27)**. Its Status line quotes his relayed words with the orchestrator's clock bounds, and labels "Ada's plan" as the orchestrator's reading.
+  - **Item 1** resolves this record's fork as **(B)**: L59, Token-Governance § "Token Creation Governance", the register `rule:`, Ada's asserted string and `.cursor/rules/tokens.mdc` L20 are scoped to system tokens.
+  - **Item 2** adds the planning duty, with **F-A (i)**, **F-B (c)** and **F-A-h (h1)**.
+  - The orchestrator's earlier split reading (item 2 carried to Spec 129) is withdrawn and was never applied.
+  - Leonardo's read above stands as written. Its assumption, "under (B) the two no longer conflict", holds under the whole ballot, so no `[@LEONARDO]` line is owed.
+- **Close and trigger.** The application PR closes this record by a dated outcome line (ballot § 12 step 11). When that PR opens, the Trigger becomes `merge:#<N>` (rule 1). It is not changed now, because the PR does not exist yet.
+- **The open acts this record named are answered**:
+  - Peter's pick: (B), plus item 2.
+  - Leonardo's read: appended above, and his C1 in the ballot's § 13.
+  - Whether an audit cadence can stand as the review: answered by item 2's planning duty and item 3's checks rather than by an audit alone. The follow-ups are in the ballot's § "Plans (Peter's condition)".
+
+*Signed: Ada, 2026-10-27.*
