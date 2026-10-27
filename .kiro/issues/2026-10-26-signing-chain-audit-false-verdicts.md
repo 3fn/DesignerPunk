@@ -55,3 +55,37 @@ Six acts hang on it, where the chosen rendered line (a table header or a first l
 4. Close under rule 5 with the dated outcome line, or lapse under rule 11.
 
 *Signed: Thurgood, 2026-10-26.*
+
+---
+
+**Link-7 readings under Peter's ruling (2026-10-27, Stacy; rule 9 dated line).** The ruling, relayed by the orchestrator: "Re: 4, I support the recommendation". A loaded charter is not a read, with one narrow exception: the rendered line counts only if it sits in the session's recorded `prompt_snapshot` and link 6 holds against the charter at the act's own commit. His picks were received before 2026-10-26T21:28:31Z, and he confirmed them ("Cool. Let's go with my answers plus (b) for O-23") before 2026-10-27T02:25:42Z.
+
+What I ran:
+- `verify-signing-chain --audit --pr <N> --signer stacy` on #427, #467 and #472, with the default store set and no `--store` flag, at `08b9c7a8e`.
+- The exception test, using the instrument's own `readTranscript`, `charterBody` and `snapshotMatches`. "In the snapshot" means `systemPrompt[0]`, the part that link 6 compares.
+
+| Act | Row | Line in `prompt_snapshot` | Link 6 at the act's own commit | Exception | Row hash now (`08b9c7a8e`) | Outcome |
+|---|---|---|---|---|---|---|
+| #427 `8674be2e` | `stacy.yaml#the-trigger-set-…` (confirm) | yes (the table header) | holds | **holds** | moved; superseded at #436 `17702702` | no act owed |
+| #427 `1ea854d1` | `stacy.dispositions.yaml#the-trigger-set-…` (sign) | yes (the table header) | **fails**: `.claude/agents/stacy.md` changed between the session's start and this commit (the regeneration of the ARMING row) | fails | moved; superseded at #436 `ec5046ea` | no act owed: superseded |
+| #467 `027b8904` | `designerpunk-systems-overview.yaml#high-level-…` (confirm) | no | holds | fails | unchanged: the live act | re-confirm owed; it comes into bound at the O-23 fixing PR |
+| #472 `c989dacf` | `designerpunk-systems-overview.yaml#rosetta-system-token-pipeline-and-layers` (confirm) | no | holds | fails | unchanged: the live act | re-confirm owed; out of bound (below) |
+
+The Systems Overview reaches a session as CLAUDE.md context, not inside `systemPrompt`, so no Systems Overview line can meet the exception. #427's `thurgood#in-scope` acts (the same two commits) are this record's cause 3, the line form. They fail the exception, which is expected for another seat's charter, and they wait for the link-7 fix.
+
+**No C1 commit made.** No row above is on the stale list or the unsigned-routed list at `08b9c7a8e`. A re-confirm that moves no hash is out of bound under signing-act ballot § 2 clause 5 ("needs a real grant"), and it fails `--ci` link 1 (F5). My C1 consult named "a re-sign" as the remedy without that bound. That was my error.
+
+The plan:
+- **`027b8904`**: its in-bound re-confirm is step 3 of `.kiro/issues/2026-10-26-overview-counts-pointer-grant.md`, and I will read the unit's rendering in a tool result there.
+- **`c989dacf`**: needs either a clause-5 grant (Peter's), or the unit's next change. Until then the `FAIL 7` stands, and the claims passes keep counting it.
+
+**Substance, read beside the verdicts (not verdicts).** In all three seats, tool results do contain the text that changed:
+- #427: the new ARMING event phrase, 2 tool results;
+- #467: the `Steering Docs (` line, 2 tool results;
+- #472: the new Layer 2 token names, 1 tool result.
+
+Link 7's evidence line is each unit's first line, which none of these edits touched.
+
+**For RS-36**: at `8674be2e` the exception passes on a loaded charter that predates the change it confirms. The snapshot equals the generated `.claude/agents/stacy.md` at that commit, but the canonical ARMING row being confirmed differs from it (the regeneration followed). The exception's two tests cannot see this. Here the tool reads of the changed row show the read happened, but the exception would pass equally without them.
+
+*Signed: Stacy, 2026-10-27.*
