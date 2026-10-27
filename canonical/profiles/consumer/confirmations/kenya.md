@@ -62,9 +62,16 @@ date: 2026-09-29
 ## `#out-of-scope`
 
 confirmer: kenya
-canonicalHash: sha256:79a201ad2dcfa69d1aeaa343024cc011e73790b162c90aac612534e35468d4b9
+canonicalHash: sha256:5eb940fb724e8ac91f67575d6ac30c45713e66d0caa7d6de4a7554043948aa85
 items: out-1, out-2, out-3, out-4, out-5, out-6, out-7
-date: 2026-09-29
+date: 2026-10-27
+
+**Re-confirmed 2026-10-27 (Req 11.6.5d): the system-token review and token planning ballot, item 2 (site 8).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:79a201ad2dcfa69d1aeaa343024cc011e73790b162c90aac612534e35468d4b9`, 7 items).
+- **What changed**: ballot `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493), site 8, was applied at `eb91cd5b1` (Thurgood). `canonical/agents/kenya.md` L305 (L301 before site 8b's insert at `8e6818685`) now scopes the escalation to *system* tokens (primitive, semantic or component) and adds: *"A product token is not system work: § "Product Tokens (Spec 108/109)" above says when you author one"*. It is my R1 text. In the same commit the profile author re-quoted `out-4` and re-pinned the overlay unit. I checked by script that L305 equals § 14's site 8 block for `kenya.md` on `main` at `bad7222ef` byte for byte (`cmp`, no difference).
+- **What I read, in this session, through tool results**: `canonical/agents/kenya.md` L290–L310 (the whole `### Product Tokens (Spec 108/109)` unit, whose heading at L291 the new pointer names, and the whole `### Out of Scope` unit); the unit as `partition` returns it (body lines 50–59); the whole `#out-of-scope` record in `canonical/operative-sets/kenya.yaml`; the overlay unit in `kenya.overlay.md`; ballot § 14 site 8 for `kenya.md` and § 7's row for this unit.
+- **The hash**: I recomputed it with `hashText` over `partition(splitFrontmatter(src).body).units` (unit `#out-of-scope`): `sha256:5eb940fb724e8ac91f67575d6ac30c45713e66d0caa7d6de4a7554043948aa85`. It equals the overlay pin and the value the profile author's sweep printed.
+- **Items re-read against the unit**: all 7 item texts are verbatim substrings of the unit as it now stands (checked by script). The added sentence is operative: I can act against it by escalating a product token to Ada as if it were system work, or by creating or modifying a system token myself. `out-4` carries it with the escalation rule, as one member for one line. When I author a product token is said by the retained `#product-tokens-spec-108109` unit (`product-tokens-6`) and its route to Product-Token-Governance § "Authoring Workflow" (`routes.docs[product-token-authoring]`, site 8b). No other line of the unit changed.
+- **Ruling: CONFIRMED at 7 items, not corrected.** The 2026-09-29 ruling below stands.
 
 **Ruling: CONFIRMED at 7 items, as drafted.** These are boundary members. Taking any listed decision, or skipping the named escalation path (`out-4`, `out-5`), violates them.
 
