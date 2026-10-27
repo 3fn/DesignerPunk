@@ -42,7 +42,7 @@ units:
         text: "See `rosetta-system-architecture` § \"Module-Resolution Contract\"."
     confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#pointer-1-module-resolution-contract-spec-118
   "#high-level-designerpunk-three-system-architecture":
-    canonicalHash: sha256:11ade1ad6da002d22718fb043fbc35828e0eecb4feb449a3a47020d8b4ba6254
+    canonicalHash: sha256:3ba6703b516c20e31a97da02b8aa251c8e4b0b3cfb483b6be7f88592ce08d8ee
     items: []
     confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#high-level-designerpunk-three-system-architecture
   "#rosetta-system-token-pipeline-and-layers":
