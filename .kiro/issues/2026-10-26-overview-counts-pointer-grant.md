@@ -34,3 +34,16 @@
 3. Stacy, in her seat, makes four C1 acts, one commit each, by the signing-seat brief: re-confirm `civitas-system-overview #what-civitas-contains`, re-confirm `designerpunk-systems-overview #high-level-designerpunk-three-system-architecture`, re-confirm `designerpunk-systems-overview #civitas-system-governance-infrastructure`, and re-sign `civitas-system-overview.dispositions.yaml#what-civitas-contains`.
 4. `canonical/generated.lock` is refreshed by a green full guard run. `verify-signing-chain --ci` passes.
 5. Peter merges the fixing PR. The grant expires, and this record closes by rule 5's dated outcome line in that PR (and moves to `archive/` there).
+
+## Owner lines
+
+- *2026-10-27 (Thurgood, rule 9; O-23 scope (b), Peter, "Cool. Let's go with my answers plus (b) for O-23", in chat, relayed by the orchestrator and received before 2026-10-27T02:25:42Z, after Stacy's O23-C1 read agreed with (b))*:
+  - **Two more hunks, both in `.kiro/steering/Civitas-System-Overview.md` unit `#what-civitas-contains`.** That file is a governance path, Peter-merged under the carve-out, and no part of this grant. L46 `**Automation** (12 hooks + 5 shell scripts):` and L50 `**Knowledge bases** (13 definitions):` become pointers to how each count is measured.
+  - **Measured at `08b9c7a8e`, with #467's definitions:**
+    - `git ls-files '.kiro/hooks/*.kiro.hook' ':!.kiro/hooks/archive/**' | wc -l` → `12`.
+    - `git ls-files '.kiro/hooks/*.sh' ':!.kiro/hooks/archive/**' | wc -l` → `5`.
+    - The `  - ` entries under `knowledgeBases:` in the eight non-fixture `canonical/agents/*.md` → `13` (ada 3, data 2, kenya 2, leonardo 0, lina 2, sparky 1, stacy 3, thurgood 0).
+  - **Both figures are true at that SHA, so neither hunk rests on a falsehood.** Their ground is ballot `2026-10-17-no-volatile-metadata-in-signed-units` § 2: "a signed unit holds only text whose change is a change of law". Each count has changed without any change of law; #467 corrected 13→12 hooks and 24→13 knowledge bases. **This line is the observation the fixing PR's `**Edit kind**:` lines cite for L46 and L50.** For L37 and L38 they cite O-23 and this record's Source.
+  - **Path list unchanged.** No item of `#what-civitas-contains` quotes L46 or L50; its items are `what-civitas-con-2` to `-10` and `-17`. So there is no further item re-author, and the four C1 acts in "The sequence" step 3 stand as written.
+  - **The overlay pin's new target is `sha256:8bd2b48ef0fb20b950c7c1dd0466f7a4c96154da800d5787bc142536fab4533f`, not the dry run's `sha256:1048a3e5…ff0973`.** The dry-run hash was the unit as it stood at `506da09b0`, without L46/L50. The new value is the unit's SHA-256 over `partition(splitFrontmatter(src).body)`, read at the authoring commit. The same computation gives `1048a3e5…ff0973` at `506da09b0` and the signed `77dc3cb6…8a26` at `08b9c7a8e`.
+  - **The clause-6 note's "exactly" gains two entries.** One is this line. The other is the record `.kiro/issues/2026-10-27-civitas-overview-product-mcp-provenance-false.md`, filed under rule 10 in the fixing PR, inside my standing `.kiro/issues/**` scope and not this grant. It covers the Product MCP's false "built in Spec 081: 14 tools", which is scope (c), not taken: `what-civitas-con-8`, Civitas L39 and Systems Overview L180 are untouched here.

@@ -43,11 +43,11 @@ Civitas is architecturally different from its siblings. Rosetta has a unified ar
 - 5 product agents (Leonardo, Sparky, Kenya, Data, Stacy) that consume the design system to build products
 - Each agent has a JSON config (MCP access, steering doc references, skills) and a prompt file (domain boundaries, operational modes)
 
-**Automation** (12 hooks + 5 shell scripts):
+**Automation** (Kiro hooks and shell scripts in `.kiro/hooks/`, `archive/` excluded; current counts: `git ls-files '.kiro/hooks/*.kiro.hook' ':!.kiro/hooks/archive/**' | wc -l` and `git ls-files '.kiro/hooks/*.sh' ':!.kiro/hooks/archive/**' | wc -l`):
 - Agent hooks for domain-specific compliance checks (token health, component scaffolding, test coverage)
 - Shell scripts for task completion and file organization
 
-**Knowledge bases** (13 definitions):
+**Knowledge bases** (the `knowledgeBases:` entries in the canonical charters, `canonical/agents/*.md`; the current count is the number of those entries):
 - Per-agent indexed content for domain-scoped semantic search
 - Covers component source, token source, test infrastructure, spec history
 
