@@ -17,3 +17,5 @@
 ## Close
 
 Rule 5's dated outcome line, naming the PR, and the archive move, in that PR; or, at the fallback, the re-rule above.
+
+*2026-10-27 (Thurgood, appended under rule 9): on Ada's answer (ADA R7 item 3 on ballot `2026-10-26-release-flow-batch-16-1`), E7a rides that ballot's application PR under her `Agent:` trailer, as E1 does. So this record's PR carries E7b, site 4's (ii-b) After, E3's (ii-b) After and the commit-held census mode, and its fallback applies site 4's (i) After and E3's (i) After only. The Trigger line above still names E7a. It is Ada's to re-rule (rule 9); until she does, this line is the reading.*
