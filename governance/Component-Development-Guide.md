@@ -1032,7 +1032,7 @@ var(--space-inset-100)          /* Static — same in all themes */
 var(--color-action-primary)     /* Theme-varying — changes with data-theme attribute */
 ```
 
-The build does not yet emit the native theme surface: `generate` writes no `{Name}Theme` protocol or data class, environment key or `CompositionLocal`, and leaves the theme-varying colors out of `DesignTokens`, so on iOS and Android the `theme.` names below match the components but no generated file (`.kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md`; Spec 129). The token index does not list them yet: it gives `color.action.primary` bare (`colorActionPrimary` / `color_action_primary`) until its native-name fix lands (`.kiro/issues/2026-10-26-token-index-platform-names-not-emitted.md`, item 5).
+The build does not yet emit the native theme surface: `generate` writes no `{Name}Theme` protocol or data class, environment key or `CompositionLocal`, and leaves the theme-varying colors out of `DesignTokens`, so on iOS and Android the `theme.` names below match the token index and the components but no generated file (`.kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md`; Spec 129).
 
 **iOS** — Static tokens via `DesignTokens`, theme-varying via `@Environment`:
 ```swift
