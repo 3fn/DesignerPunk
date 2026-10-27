@@ -47,7 +47,7 @@ This design system is built on DesignerPunk — a True Native cross-platform des
 - **Semantic tokens**: Use freely (verify semantic correctness)
 - **Primitive tokens**: Requires prior context (spec docs) or human acknowledgment
 - **Component tokens**: Use freely inside the component they belong to, for the property they were made for; any other use requires explicit human approval
-- **Creating ANY token**: Always requires human review — no autonomous token creation
+- **Creating ANY system token** (primitive, semantic or component): Always requires human review — no autonomous token creation (what a system token is: Token Governance § "Token Creation Governance"). A product token is planned instead: its need is identified at screen specification and discussed before implementation, and a need the spec missed is surfaced, never filled silently (Product-Token-Governance § "Authoring Workflow").
 
 **Token selection**: the one order is Token Governance § "Token Selection Matrix"; query it before you choose a token: `get_section({ path: "token-governance", heading: "Token Selection Matrix" })`.
 
