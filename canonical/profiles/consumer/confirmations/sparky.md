@@ -61,9 +61,16 @@ date: 2026-09-29
 ## `#out-of-scope`
 
 confirmer: sparky
-canonicalHash: sha256:2a194f0ea5b813a6ea71d33ec46613e0fc1f672688ded1ace3c7eccf808cbbe2
+canonicalHash: sha256:bf74a286be1191112b87d64478b37bbb0f4db4115663cacd3bed09de61cbd7ee
 items: out-1, out-2, out-3, out-4, out-5, out-6, out-7
-date: 2026-09-29
+date: 2026-10-27
+
+**Re-confirmed 2026-10-27 (Req 11.6.5d): the system-token review and token planning ballot, item 2 (site 8).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:2a194f0ea5b813a6ea71d33ec46613e0fc1f672688ded1ace3c7eccf808cbbe2`, 7 items).
+- **What changed**: ballot `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493), site 8, was applied at `eb91cd5b1` (Thurgood). `canonical/agents/sparky.md` L329 now scopes the escalation to *system* tokens and adds: *"Product tokens are in scope: § "Product Tokens" above says when you author one"*. In the same commit the profile author re-quoted `out-4` and re-pinned the overlay unit. I checked by script that L329 equals § 14's site 8 block on `main` at `bad7222ef` byte for byte (`cmp`, no difference).
+- **What I read, in this session, through tool results**: `canonical/agents/sparky.md` L318–L332 (the tail of `### Product Tokens`, whose heading its pointer names, and the whole unit); the unit as `partition` returns it (body lines 49–58); the whole `#out-of-scope` record in `canonical/operative-sets/sparky.yaml`; the overlay unit in `sparky.overlay.md`; ballot § 14 site 8 and § 7's row for this unit.
+- **The hash**: I recomputed it with `hashText` over `partition(splitFrontmatter(src).body).units` (unit `#out-of-scope`): `sha256:bf74a286be1191112b87d64478b37bbb0f4db4115663cacd3bed09de61cbd7ee`. It equals the overlay pin and the value the profile author's sweep printed.
+- **Items re-read against the unit**: all 7 item texts are verbatim substrings of the unit as it now stands (checked by script). The added sentence is operative: I can act against it by escalating a product token to Ada as if it were system work, or by authoring a system token myself. `out-4` carries it with the escalation rule, as one member for one line; when I author a product token is said by the retained `#product-tokens` unit and its route to Web-Authoring-Standards § "Product Token Authoring (Sparky)". No other line of the unit changed.
+- **Ruling: CONFIRMED at 7 items, not corrected.** The 2026-09-29 ruling below stands.
 
 **Ruling: CONFIRMED at 7 items, as drafted.** Each is a boundary a consumer implementation can cross.
 
