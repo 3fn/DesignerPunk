@@ -1,13 +1,13 @@
 # Ballot Measure: the RELEASE-FLOW batch from release 16.1.0's claims pass (eleven rows of the standards queue)
 
-**Date**: 2026-10-26 (R1 drafted from 19:31:42Z; R2 from 20:00:02Z; R3 from 20:24:27Z; R4 from 21:11:01Z; the drafter's `date -u`)
+**Date**: 2026-10-26 (R1 drafted from 19:31:42Z; R2 from 20:00:02Z; R3 from 20:24:27Z; R4 from 21:11:01Z; R5 from 2026-10-27T02:30:30Z; the drafter's `date -u`)
 **Drafted by**: Thurgood (Civitas steward; author of `.kiro/hooks/RELEASE-FLOW.md`'s text through its review rounds, owner of `.kiro/issues/README.md` and the standards side of the composed loop). The queue is `.kiro/issues/2026-10-26-release-16-1-standards-implications.md` (#521, `d5cb99023`), which names this ballot as the vehicle for its RELEASE-FLOW rows. Drafted under Peter's standing go for the queue's parallel items, relayed by the orchestrator, which covers drafting the ballots the queue names. That go covers drafting only; nothing here is ratified by it.
-**Status**: **DRAFT (R4)**, not ratified (PR #528, draft). No edit site below is applied. A merge with this line still reading DRAFT records the measure, ratifies nothing and answers no fork in § 7.
+**Status**: **DRAFT (R5)**, not ratified (PR #528, draft). **Every fork is ruled except F-34** (Peter, 2026-10-26; § 7 and `[THURGOOD R5]`); the Status commit flips this line to RATIFIED only after Peter answers F-34. No edit site below is applied. A merge with this line still reading DRAFT records the measure, ratifies nothing and answers no fork in § 7.
 **Base**: every Before text is byte for byte at `08b9c7a8e` (`origin/main` after #517). R1 was cut at `99eabf854`, R2 and R3 at `61581c641`; neither #527 nor #517 changed a cited line (#517 changed none of the edited files: `git diff --stat 61581c641 08b9c7a8e` over them is empty), so line citations given at `61581c641` elsewhere in this ballot hold at `08b9c7a8e`. R4 re-cut every block at `08b9c7a8e` by script (`batchbuild/sites4.py`, not retyped). The branch carries merges of `61581c641` (`91abcc92f`) and `08b9c7a8e` (`9562f59cb`).
 **Required reviewer**: **Stacy**. Every row comes from her RELEASE pass for 16.1.0; she is the census reader (ballots README § "Conventions"); sites 11, 12 and 13 are her charter.
 **Required consult**: **Ada**, on RS-49 and the RS-48 straggler (`scripts/release-publish.ts` and `scripts/verify-publish-rail.sh` are hers, ballot `2026-10-17-standing-write-scope-six-roots` § 2.6).
 **Reviewers**: **Lina**, on site 10 (RS-40; served-doc CORRECTIONs are hers).
-**Consulted**: Stacy — R1, R2, R3 (§ 11): S-2 reproduced; F-33a (i), F-33b include with wording free of release-flow vocabulary and the pointer removed for consumers (her removal row, a new overlay entry); her census disputes resolved; L400 rides as site 12; L198's lead-in now names the bullets' method and consequences; takes the Sweep line only through site 13, now with its finding clause; F-38d's sentence made decidable (one diff predicate, PR-body source, SHA at each merge); leans F-34 (ii), F-39 (b), F-40 (a′), F-41 (i), F-49 (ii-b); Ada — R1, R2, R3 (§ 11): every Before block byte-exact; the dry run fetches a non-main SHA (measured twice); 5.1 and 5.3 tarballs share a version with different bytes at three releases; F-49 (ii-b) as a script mode with her E1, E3 and E7 texts; her `census: none` field amended to a closed list, every git-held decision on the census side, so (ii-b) now owes a row split and a census mode for its commit-held half; the rail field's reason holds, its text taken; Lina — R1, R2, R3 (§ 11): R1's (a) gave the author a waiver M7 withholds; a left false hit is filed so the walk reads it; one line per class; (a′) and (b′) worded to differ only on fixing other owned files in the same PR; lean (a′)
+**Consulted**: Stacy — R1, R2, R3 (§ 11): S-2 reproduced; F-33a (i), F-33b include with wording free of release-flow vocabulary and the pointer removed for consumers (her removal row, a new overlay entry); her census disputes resolved; L400 rides as site 12; L198's lead-in now names the bullets' method and consequences; takes the Sweep line only through site 13, now with its finding clause; F-38d's sentence made decidable (one diff predicate, PR-body source, SHA at each merge); leans F-34 (ii), F-39 (b), F-40 (a′), F-41 (i), F-49 (ii-b); Ada — R1, R2, R3 (§ 11): every Before block byte-exact; the dry run fetches a non-main SHA (measured twice); 5.1 and 5.3 tarballs share a version with different bytes at three releases; F-49 (ii-b) as a script mode with her E1, E3 and E7 texts; her `census: none` field amended to a closed list, every git-held decision on the census side, so (ii-b) now owes a row split and a census mode for its commit-held half; the rail field's reason holds, its text taken; Lina — R1, R2, R3 (§ 11): R1's (a) gave the author a waiver M7 withholds; a left false hit is filed so the walk reads it; one line per class; (a′) and (b′) worded to differ only on fixing other owned files in the same PR; lean (a′); C1 (Peter's request that the relevant seats evaluate the orchestrator's two proposals, § 11): Stacy — F-0 (a), sites 12 and L198 are CORRECTIONs that ship regardless, RS-37 is already law, a carried row needs its own record, never a closing carry line; Ada — F-0 (a), RS-49 under (ii-b) on her plan (c-1): build E7b and the commit-held census mode before the next 5.4, (i)'s shape if a release comes first; Lina — F-0 (a), site 10 in any ratify-now set; Thurgood — F-0 (a), and (c) costed
 **Class**: LAW. Each row changes what the release author, the pre-S reader, a CORRECTION's author or an instrument PR's author must do (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds": "If a reader must now do something that nothing already required before the PR, the edit is LAW").
 **Amends**:
 - `.kiro/hooks/RELEASE-FLOW.md`: sites 1–6 (RS-46b, RS-33, RS-37, RS-34, RS-39 with RS-25, RS-49, RS-48, RS-41, the Phase 1 lead-in, and under F-38d the straggler read). **LAW**.
@@ -20,9 +20,9 @@
 **Census** (ballots README § "Conventions", "Instrument census"; one line per presumptively in-scope instrument; redrafted at R2 on Stacy's S-5 and Ada's item 17, and at R3 on Stacy R2 Q5 and Ada R2 items 9–10):
 - `**Census**: not in scope — publish-rail-guard (scripts/verify-publish-rail.sh; its field is written under every option, E8) — site 5 rewords step 6's reading of an absent time["<version>"]; E1 changes the script's exit-10 header comment and its FAIL[version] message only (messages are out of the census's scope); no exit code, assertion or verdict changes; the recorded bite scripts/__bites__/bite-2-version-mismatch-exit10.txt is re-recorded with the new message in E1's commit`
 - **hermetic-publish-path (scripts/release-publish.ts), one line per F-49 option.** R1's single not-in-scope line is withdrawn (Stacy's S-5 dispute, recorded for Peter). **The row's `census` field is written under every option** (E8), on Ada's word, in her R3 text: `none` is a **closed list** (the two `npm whoami` preflights, the GitHub Packages publish's exit, the `prepublishOnly` tripwire; 6b's sha1s are operator-compared), and every decision whose input git holds verbatim (the tag checks, HEAD and version, clean-tree, `check:drift`, the floor-closure compare, the one-tarball count, `verify:token-index-clean`, pack-assert's listing checks, the publish-path floor) is on the census side, with no mode yet. With it:
-  - F-49 (i): `**Census**: not in scope — hermetic-publish-path (scripts/release-publish.ts) — sites 3, 4 and 7 are text in the row's education homes; E7a removes two runnable lines from the dry run's output (output only); no decision on either side of the row's census field changes`
-  - F-49 (ii-a): `**Census**: exempt — (3) the added refusals run in the operator's shell, in a printed line that no registered check's command composes; ran: none; count: no count` *(Stacy's form, S-5; it does not rest on Ada's field)*
-  - F-49 (ii-b): **two lines, because the field places the mode's four refusals on two sides** (Ada R3 item 3; her R2 single exempt line is withdrawn as false). The sha1 read and the npmjs absence read are `none` (the tarball is not kept; live state); the record-mode and tag-to-commit refusals are on the census side (the 5.3 records are pasted in the step-6 records since 15.1.0, and git holds the tags). So the row is split by scope (the steward's ruling, E8), and:
+  - F-49 (i) — **FALLBACK** (Ada's plan: applied only if the next release's phase 1 opens before the (ii-b) PR merges; § "Plans", P1): `**Census**: not in scope — hermetic-publish-path (scripts/release-publish.ts) — sites 3, 4 and 7 are text in the row's education homes; E7a removes two runnable lines from the dry run's output (output only); no decision on either side of the row's census field changes`
+  - F-49 (ii-a) — *void (R5; not the ruled option, kept as the record)*: `**Census**: exempt — (3) the added refusals run in the operator's shell, in a printed line that no registered check's command composes; ran: none; count: no count` *(Stacy's form, S-5; it does not rest on Ada's field)*
+  - F-49 (ii-b) — **RULED** (Peter, 2026-10-26; § 7): **two lines, because the field places the mode's four refusals on two sides** (Ada R3 item 3; her R2 single exempt line is withdrawn as false). The sha1 read and the npmjs absence read are `none` (the tarball is not kept; live state); the record-mode and tag-to-commit refusals are on the census side (the 5.3 records are pasted in the step-6 records since 15.1.0, and git holds the tags). So the row is split by scope (the steward's ruling, E8), and:
     - live scope: `**Census**: exempt — (2) hermetic-publish-path, the scope whose input git holds verbatim nowhere, reads census: none; the --npmjs mode's sha1 read and npmjs absence read fall in it by the field's last sentence; ran: none; count: heuristic — two refusals added, none removed, no existing refusal changed` *(Ada's line)*
     - commit-held scope: **a census line is owed and its census mode does not exist.** Ada builds it (corpus: the three pasted 5.3 records and their `v<version>` tags; scratch diff: E7b's two decision functions) before the item leaves DRAFT. Until then the item waits.
   - **What the rule says if a field or mode is missing at the census read** (`governance/classification-map.md` Entry Schema L109–L110; census ballot L36): "Until the field exists, the item waits", and "A missing field is a finding from the reader, never a gate: Peter may ratify past it." The same holds for (ii-b)'s missing commit-held mode.
@@ -123,7 +123,7 @@ Before:
    The walk record reprints the priorities record's "Peter-gated deferrals" list (answered rows only, no P0 record) as one block headed `Peter-gated deferrals: answers on record, reprinted; nothing here holds the merge`, never as `**Open for Peter**:` lines. A row Peter takes up is re-ruled by its owner. *(Ballot 2026-10-20-manual-records-routed-readers, E3, F-2 (i).)*
 ````
 
-After, F-33a (i):
+After, F-33a (i) — **RULED** (Peter, 2026-10-26; § 7):
 
 ````text
    The walk record reprints the priorities record's "Peter-gated deferrals" list (answered rows only, no P0 record) as one block headed `Peter-gated deferrals: answers on record, reprinted; nothing here holds the merge`, never as `**Open for Peter**:` lines. A row Peter takes up is re-ruled by its owner. *(Ballot 2026-10-20-manual-records-routed-readers, E3, F-2 (i).)*
@@ -133,7 +133,7 @@ After, F-33a (i):
    **The delegate audit is owed before phase 1** (ballot `2026-10-01-signing-act-chain` § 5.3, whose rotation and backlog clauses name the seat and the population). The walk record carries one row for it, which is not a record row: the delegate seat, the path of Thurgood's brief, and the output path that brief names. Its disposition is `owed` until the seat commits that file, then the file's path @ SHA. The orchestrator dispatches the seat (§ 5.3). A file not committed when phase 1 runs is § 8's trigger (d) at this release. *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-37)*
 ````
 
-After, F-33a (ii):
+After, F-33a (ii) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
    The walk record reprints the priorities record's "Peter-gated deferrals" list (answered rows only, no P0 record) as one block headed `Peter-gated deferrals: answers on record, reprinted; nothing here holds the merge`, never as `**Open for Peter**:` lines. A row Peter takes up is re-ruled by its owner. *(Ballot 2026-10-20-manual-records-routed-readers, E3, F-2 (i).)*
@@ -153,42 +153,42 @@ Before:
    - release notes (`docs/releases/release-<version>.md`) **and the consumer `CHANGELOG.md` entry** (retitle `## [Unreleased]` to the version; recipe step 4 in `governance/release-management-system.md`),
 ````
 
-After, F-34 (i), F-39 (a):
+After, F-34 (i), F-39 (a) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
    - release notes (`docs/releases/release-<version>.md`) **and the consumer `CHANGELOG.md` entry** (retitle `## [Unreleased]` to the version and a date, `## [<version>] — <YYYY-MM-DD> — <title>`; every PR that changes the entry before the tag sets the date to the UTC day of its own last edit to the entry, `date -u +%F` then, so a later fix PR corrects a wrong date and the date at S is the last such PR's, between that PR's opening and its merge; it dates the entry's last change, not the tag; recipe step 4 in `governance/release-management-system.md`; *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-34; prior text at `08b9c7a8e`)*),
    - **before the entry says that a file, an export or a generated output was added, kept, removed or changed, compare the packed output with the previous public artifact**, and paste the results, naming the commit they ran at, in the release PR body. This release's tarball: after `git fetch origin`, `npx tsx scripts/release-publish.ts --dry-run <the release branch's pushed head>`, run from the main checkout (a dry run of a commit not on `origin/main` is allowed, with a warning). The previous release's tarball: `npm pack @3fn/core@<previous version> --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --pack-destination <tmp>`, its sha1 shown equal to the previous release's step-6 record. The file set: `LC_ALL=C comm -3 <(tar -tzf <previous>.tgz | LC_ALL=C sort) <(tar -tzf <this>.tgz | LC_ALL=C sort)` (column 1 removed, column 2 added). The generated files the entry describes: a `diff` of each between the two extracted tarballs; the build-timestamp files (`TokenTypes.*`, `tool-manifest.json` and the others the release records name) differ in their stamps alone. *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-39 and RS-25)*
 ````
 
-After, F-34 (i), F-39 (b):
+After, F-34 (i), F-39 (b) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
    - release notes (`docs/releases/release-<version>.md`) **and the consumer `CHANGELOG.md` entry** (retitle `## [Unreleased]` to the version and a date, `## [<version>] — <YYYY-MM-DD> — <title>`; every PR that changes the entry before the tag sets the date to the UTC day of its own last edit to the entry, `date -u +%F` then, so a later fix PR corrects a wrong date and the date at S is the last such PR's, between that PR's opening and its merge; it dates the entry's last change, not the tag; recipe step 4 in `governance/release-management-system.md`; *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-34; prior text at `08b9c7a8e`)*),
    - **before the entry says that a file, an export or a generated output was added, kept, removed or changed, compare the packed output with the previous public artifact**, and paste the results, naming the commit they ran at, in the release PR body. This release's tarball: after `git fetch origin`, `npx tsx scripts/release-publish.ts --dry-run <the release branch's pushed head>`, run from the main checkout (a dry run of a commit not on `origin/main` is allowed, with a warning). The previous release's tarball: `npm pack @3fn/core@<previous version> --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --pack-destination <tmp>`, its sha1 shown equal to the previous release's step-6 record. The file set: `LC_ALL=C comm -3 <(tar -tzf <previous>.tgz | LC_ALL=C sort) <(tar -tzf <this>.tgz | LC_ALL=C sort)` (column 1 removed, column 2 added). The generated files the entry describes: a `diff` of each between the two extracted tarballs; the build-timestamp files (`TokenTypes.*`, `tool-manifest.json` and the others the release records name) differ in their stamps alone. The compare holds for S only while `git diff --quiet <the commit the compare names> <S>` exits 0; if it does not, the author repeats the file-set compare on 5.1's tarball at that S, before the tag, and pastes it in the step-6 `.txt` (`docs/releases/<v>/publish-verification.txt`) under its own heading, with the UTC time it ran. *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-39 and RS-25)*
 ````
 
-After, F-34 (i), F-39 (b-always):
+After, F-34 (i), F-39 (b-always) — **RULED for F-39, awaits F-34** (§ 7):
 
 ````text
    - release notes (`docs/releases/release-<version>.md`) **and the consumer `CHANGELOG.md` entry** (retitle `## [Unreleased]` to the version and a date, `## [<version>] — <YYYY-MM-DD> — <title>`; every PR that changes the entry before the tag sets the date to the UTC day of its own last edit to the entry, `date -u +%F` then, so a later fix PR corrects a wrong date and the date at S is the last such PR's, between that PR's opening and its merge; it dates the entry's last change, not the tag; recipe step 4 in `governance/release-management-system.md`; *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-34; prior text at `08b9c7a8e`)*),
    - **before the entry says that a file, an export or a generated output was added, kept, removed or changed, compare the packed output with the previous public artifact**, and paste the results, naming the commit they ran at, in the release PR body. This release's tarball: after `git fetch origin`, `npx tsx scripts/release-publish.ts --dry-run <the release branch's pushed head>`, run from the main checkout (a dry run of a commit not on `origin/main` is allowed, with a warning). The previous release's tarball: `npm pack @3fn/core@<previous version> --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --pack-destination <tmp>`, its sha1 shown equal to the previous release's step-6 record. The file set: `LC_ALL=C comm -3 <(tar -tzf <previous>.tgz | LC_ALL=C sort) <(tar -tzf <this>.tgz | LC_ALL=C sort)` (column 1 removed, column 2 added). The generated files the entry describes: a `diff` of each between the two extracted tarballs; the build-timestamp files (`TokenTypes.*`, `tool-manifest.json` and the others the release records name) differ in their stamps alone. At each S, the author repeats the file-set compare on 5.1's tarball before the tag, and pastes it in the step-6 `.txt` (`docs/releases/<v>/publish-verification.txt`) under its own heading, with the UTC time it ran. *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-39 and RS-25)*
 ````
 
-After, F-34 (ii), F-39 (a):
+After, F-34 (ii), F-39 (a) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
    - release notes (`docs/releases/release-<version>.md`) **and the consumer `CHANGELOG.md` entry** (retitle `## [Unreleased]` to the version, with no date in the heading: the packed file is S's, so no step after S can date it, and the release's date is its tag's; recipe step 4 in `governance/release-management-system.md`; *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-34; prior text at `08b9c7a8e`)*),
    - **before the entry says that a file, an export or a generated output was added, kept, removed or changed, compare the packed output with the previous public artifact**, and paste the results, naming the commit they ran at, in the release PR body. This release's tarball: after `git fetch origin`, `npx tsx scripts/release-publish.ts --dry-run <the release branch's pushed head>`, run from the main checkout (a dry run of a commit not on `origin/main` is allowed, with a warning). The previous release's tarball: `npm pack @3fn/core@<previous version> --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --pack-destination <tmp>`, its sha1 shown equal to the previous release's step-6 record. The file set: `LC_ALL=C comm -3 <(tar -tzf <previous>.tgz | LC_ALL=C sort) <(tar -tzf <this>.tgz | LC_ALL=C sort)` (column 1 removed, column 2 added). The generated files the entry describes: a `diff` of each between the two extracted tarballs; the build-timestamp files (`TokenTypes.*`, `tool-manifest.json` and the others the release records name) differ in their stamps alone. *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-39 and RS-25)*
 ````
 
-After, F-34 (ii), F-39 (b):
+After, F-34 (ii), F-39 (b) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
    - release notes (`docs/releases/release-<version>.md`) **and the consumer `CHANGELOG.md` entry** (retitle `## [Unreleased]` to the version, with no date in the heading: the packed file is S's, so no step after S can date it, and the release's date is its tag's; recipe step 4 in `governance/release-management-system.md`; *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-34; prior text at `08b9c7a8e`)*),
    - **before the entry says that a file, an export or a generated output was added, kept, removed or changed, compare the packed output with the previous public artifact**, and paste the results, naming the commit they ran at, in the release PR body. This release's tarball: after `git fetch origin`, `npx tsx scripts/release-publish.ts --dry-run <the release branch's pushed head>`, run from the main checkout (a dry run of a commit not on `origin/main` is allowed, with a warning). The previous release's tarball: `npm pack @3fn/core@<previous version> --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --pack-destination <tmp>`, its sha1 shown equal to the previous release's step-6 record. The file set: `LC_ALL=C comm -3 <(tar -tzf <previous>.tgz | LC_ALL=C sort) <(tar -tzf <this>.tgz | LC_ALL=C sort)` (column 1 removed, column 2 added). The generated files the entry describes: a `diff` of each between the two extracted tarballs; the build-timestamp files (`TokenTypes.*`, `tool-manifest.json` and the others the release records name) differ in their stamps alone. The compare holds for S only while `git diff --quiet <the commit the compare names> <S>` exits 0; if it does not, the author repeats the file-set compare on 5.1's tarball at that S, before the tag, and pastes it in the step-6 `.txt` (`docs/releases/<v>/publish-verification.txt`) under its own heading, with the UTC time it ran. *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-39 and RS-25)*
 ````
 
-After, F-34 (ii), F-39 (b-always):
+After, F-34 (ii), F-39 (b-always) — **RULED for F-39, awaits F-34** (§ 7):
 
 ````text
    - release notes (`docs/releases/release-<version>.md`) **and the consumer `CHANGELOG.md` entry** (retitle `## [Unreleased]` to the version, with no date in the heading: the packed file is S's, so no step after S can date it, and the release's date is its tag's; recipe step 4 in `governance/release-management-system.md`; *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-34; prior text at `08b9c7a8e`)*),
@@ -207,7 +207,7 @@ Before:
    - **5.4 Publish the same tarball to public npm** (Peter's terminal, web 2FA): first check the printed sha1 against the file, then run `npm publish <tarball> --registry https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public`. **Never a folder publish, never `--ignore-scripts`, never a tarball the script did not produce.** A folder publish is refused by `prepublishOnly`, which names this script. That refusal is the tripwire, not the guard: the guard is the script.
 ````
 
-After, F-49 (i):
+After, F-49 (i) — **FALLBACK** (Ada's plan: applied only if the next release's phase 1 opens before the (ii-b) PR merges; § "Plans", P1):
 
 ````text
      - It then records the tarball's path, file count and sha1 in `release-publish-record.json` (in an OS temp dir; the script prints its path), publishes **that tarball** to GitHub Packages, and prints the public-npm command for 5.4 with the sha1 to check.
@@ -215,7 +215,7 @@ After, F-49 (i):
    - **5.4 Publish the same tarball to public npm** (Peter's terminal, web 2FA): first check the printed sha1 against the file, then run `npm publish <tarball> --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public`, as 5.3 printed it. **Never a folder publish, never `--ignore-scripts`, never a tarball other than the one this release's 5.3 run printed**: its path is 5.3's `tarball:` line, and its sha1 equals that run's `release-publish-record.json`, whose `mode` is `publish` (only 5.3 writes one, after GitHub Packages accepted that tarball). A tarball the script made at 5.1, at a pre-S dry run (step 2) or for another release is not it, though the script produced it: at 15.1.0, 16.0.0 and 16.1.0 the 5.1 tarball had 5.3's version and different bytes. *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-49; prior text at `08b9c7a8e`)* A folder publish is refused by `prepublishOnly`, which names this script. That refusal is the tripwire, not the guard: the guard is the script.
 ````
 
-After, F-49 (ii-a):
+After, F-49 (ii-a) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
      - It then records the tarball's path, file count and sha1 in `release-publish-record.json` (in an OS temp dir; the script prints its path), publishes **that tarball** to GitHub Packages, and prints the 5.4 line, which carries its own two checks (5.4). *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-49; prior text at `08b9c7a8e`)*
@@ -223,7 +223,7 @@ After, F-49 (ii-a):
    - **5.4 Publish the same tarball to public npm** (Peter's terminal, web 2FA): run the 5.4 line that 5.3 printed, copied and never typed: it checks the file's sha1 against the record and that `<version>` is not yet on npmjs, and runs `npm publish <tarball> --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public` only if both hold. **Never a folder publish, never `--ignore-scripts`, never a tarball other than the one this release's 5.3 run printed**: its path is 5.3's `tarball:` line, and its sha1 equals that run's `release-publish-record.json`, whose `mode` is `publish` (only 5.3 writes one, after GitHub Packages accepted that tarball). A tarball the script made at 5.1, at a pre-S dry run (step 2) or for another release is not it, though the script produced it: at 15.1.0, 16.0.0 and 16.1.0 the 5.1 tarball had 5.3's version and different bytes. *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-49; prior text at `08b9c7a8e`)* A folder publish is refused by `prepublishOnly`, which names this script. That refusal is the tripwire, not the guard: the guard is the script.
 ````
 
-After, F-49 (ii-b):
+After, F-49 (ii-b) — **RULED** (Peter, 2026-10-26; § 7):
 
 ````text
      - It then records the tarball's path, file count and sha1 in `release-publish-record.json` (in an OS temp dir; the script prints its path), publishes **that tarball** to GitHub Packages, and prints the 5.4 command, `npx tsx scripts/release-publish.ts --npmjs <the record path>` (5.4). *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-49; prior text at `08b9c7a8e`)*
@@ -258,42 +258,42 @@ Before:
    - **Phase 1** runs on **S after 5.1 is green and before the tag (5.2)**. A red 5.1 moves S, so phase 1 never reads a commit that will not be tagged (A7). It covers the release delta, the walk record (item 3a: its paste, its `main at:` SHA and each row's disposition), the 5a owed-set paste, the 5b arming line and 5.1's tally. It also re-runs item 3a's two greps at S and reads each hit the walk record does not row under rule 11's row test: a P0 among them is a floor-class row for this release, owed a fix or Peter's quoted, dated waiver before the tag (put to him as an `**Open for Peter**:` line in the phase-1 record's PR, which that rule holds until he answers; the read reports, and the tag stays his act); any other is listed with its rule-11 state *(added 2026-10-26 by ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers, site 3)*. Its record lands by a record-only PR and states `publish-rail liveness: owed`.
 ````
 
-After, F-41 (i), F-38d (phase 1):
+After, F-41 (i), F-38d (phase 1) — **RULED** (Peter, 2026-10-26; § 7):
 
 ````text
    **The RELEASE claims pass runs in two phases, recorded in one file** (Stacy's pass; this text sets *when* each phase runs, *what* each phase reads, and the method and the consequences each bullet below states; how she reads beyond that is hers) *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, site 6, Stacy R2 and R3; prior text at `08b9c7a8e`)*:
    - **Phase 1** runs on **S after 5.1 is green and before the tag (5.2)**. A red 5.1 moves S, so phase 1 never reads a commit that will not be tagged (A7). It covers the release delta, the walk record (item 3a: its paste, its `main at:` SHA and each row's disposition), the 5a owed-set paste, the 5b arming line and 5.1's tally. It also re-runs item 3a's two greps at S and reads each hit the walk record does not row under rule 11's row test: a P0 among them is a floor-class row for this release, owed a fix or Peter's quoted, dated waiver before the tag (put to him as an `**Open for Peter**:` line in the phase-1 record's PR, which that rule holds until he answers; the read reports, and the tag stays his act); any other is listed with its rule-11 state *(added 2026-10-26 by ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers, site 3)*. At each S it also re-reads each `.kiro/issues/` record that a packed `CHANGELOG.md` sentence cites, and reads the sentence against it: a sentence its record has since made false is a finding against that S under 3a's blocking test *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-41)*. It also reads, for each first-parent PR in the release delta whose diff changes a script named by path in `.kiro/hooks/RELEASE-FLOW.md` or in a `checks` line of `governance/classification-map.md`, both read at that PR's merge `<m>` (`git show <m>:<path>`), that PR's `**Straggler sweep**:` line (`.kiro/docs/ballots/README.md` § "Conventions"), read from the PR body (`gh pr view <n> --json body`, run for this seat by a session holding credentials), never from the squash message: a missing line is a finding on the PR's author, and each section the line lists is re-read at `<m>`, a section read as still false being a finding on the author too *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-38)*. Its record lands by a record-only PR and states `publish-rail liveness: owed`.
 ````
 
-After, F-41 (i), F-38d (none):
+After, F-41 (i), F-38d (none) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
    **The RELEASE claims pass runs in two phases, recorded in one file** (Stacy's pass; this text sets *when* each phase runs, *what* each phase reads, and the method and the consequences each bullet below states; how she reads beyond that is hers) *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, site 6, Stacy R2 and R3; prior text at `08b9c7a8e`)*:
    - **Phase 1** runs on **S after 5.1 is green and before the tag (5.2)**. A red 5.1 moves S, so phase 1 never reads a commit that will not be tagged (A7). It covers the release delta, the walk record (item 3a: its paste, its `main at:` SHA and each row's disposition), the 5a owed-set paste, the 5b arming line and 5.1's tally. It also re-runs item 3a's two greps at S and reads each hit the walk record does not row under rule 11's row test: a P0 among them is a floor-class row for this release, owed a fix or Peter's quoted, dated waiver before the tag (put to him as an `**Open for Peter**:` line in the phase-1 record's PR, which that rule holds until he answers; the read reports, and the tag stays his act); any other is listed with its rule-11 state *(added 2026-10-26 by ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers, site 3)*. At each S it also re-reads each `.kiro/issues/` record that a packed `CHANGELOG.md` sentence cites, and reads the sentence against it: a sentence its record has since made false is a finding against that S under 3a's blocking test *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-41)*. Its record lands by a record-only PR and states `publish-rail liveness: owed`.
 ````
 
-After, F-41 (ii), F-38d (phase 1):
+After, F-41 (ii), F-38d (phase 1) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
    **The RELEASE claims pass runs in two phases, recorded in one file** (Stacy's pass; this text sets *when* each phase runs, *what* each phase reads, and the method and the consequences each bullet below states; how she reads beyond that is hers) *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, site 6, Stacy R2 and R3; prior text at `08b9c7a8e`)*:
    - **Phase 1** runs on **S after 5.1 is green and before the tag (5.2)**. A red 5.1 moves S, so phase 1 never reads a commit that will not be tagged (A7). It covers the release delta, the walk record (item 3a: its paste, its `main at:` SHA and each row's disposition), the 5a owed-set paste, the 5b arming line and 5.1's tally. It also re-runs item 3a's two greps at S and reads each hit the walk record does not row under rule 11's row test: a P0 among them is a floor-class row for this release, owed a fix or Peter's quoted, dated waiver before the tag (put to him as an `**Open for Peter**:` line in the phase-1 record's PR, which that rule holds until he answers; the read reports, and the tag stays his act); any other is listed with its rule-11 state *(added 2026-10-26 by ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers, site 3)*. It also reads, for each first-parent PR in the release delta whose diff changes a script named by path in `.kiro/hooks/RELEASE-FLOW.md` or in a `checks` line of `governance/classification-map.md`, both read at that PR's merge `<m>` (`git show <m>:<path>`), that PR's `**Straggler sweep**:` line (`.kiro/docs/ballots/README.md` § "Conventions"), read from the PR body (`gh pr view <n> --json body`, run for this seat by a session holding credentials), never from the squash message: a missing line is a finding on the PR's author, and each section the line lists is re-read at `<m>`, a section read as still false being a finding on the author too *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-38)*. Its record lands by a record-only PR and states `publish-rail liveness: owed`.
 ````
 
-After, F-41 (ii), F-38d (none):
+After, F-41 (ii), F-38d (none) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
    **The RELEASE claims pass runs in two phases, recorded in one file** (Stacy's pass; this text sets *when* each phase runs, *what* each phase reads, and the method and the consequences each bullet below states; how she reads beyond that is hers) *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, site 6, Stacy R2 and R3; prior text at `08b9c7a8e`)*:
    - **Phase 1** runs on **S after 5.1 is green and before the tag (5.2)**. A red 5.1 moves S, so phase 1 never reads a commit that will not be tagged (A7). It covers the release delta, the walk record (item 3a: its paste, its `main at:` SHA and each row's disposition), the 5a owed-set paste, the 5b arming line and 5.1's tally. It also re-runs item 3a's two greps at S and reads each hit the walk record does not row under rule 11's row test: a P0 among them is a floor-class row for this release, owed a fix or Peter's quoted, dated waiver before the tag (put to him as an `**Open for Peter**:` line in the phase-1 record's PR, which that rule holds until he answers; the read reports, and the tag stays his act); any other is listed with its rule-11 state *(added 2026-10-26 by ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers, site 3)*. Its record lands by a record-only PR and states `publish-rail liveness: owed`.
 ````
 
-After, F-41 (iii), F-38d (phase 1):
+After, F-41 (iii), F-38d (phase 1) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
    **The RELEASE claims pass runs in two phases, recorded in one file** (Stacy's pass; this text sets *when* each phase runs, *what* each phase reads, and the method and the consequences each bullet below states; how she reads beyond that is hers) *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, site 6, Stacy R2 and R3; prior text at `08b9c7a8e`)*:
    - **Phase 1** runs on **S after 5.1 is green and before the tag (5.2)**. A red 5.1 moves S, so phase 1 never reads a commit that will not be tagged (A7). It covers the release delta, the walk record (item 3a: its paste, its `main at:` SHA and each row's disposition), the 5a owed-set paste, the 5b arming line and 5.1's tally. It also re-runs item 3a's two greps at S and reads each hit the walk record does not row under rule 11's row test: a P0 among them is a floor-class row for this release, owed a fix or Peter's quoted, dated waiver before the tag (put to him as an `**Open for Peter**:` line in the phase-1 record's PR, which that rule holds until he answers; the read reports, and the tag stays his act); any other is listed with its rule-11 state *(added 2026-10-26 by ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers, site 3)*. At each S it also re-reads each `.kiro/issues/` record that a packed `CHANGELOG.md` sentence rests on, cited in the sentence or, for that sentence, in the release notes, and reads the sentence against it: a sentence its record has since made false is a finding against that S under 3a's blocking test *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-41)*. It also reads, for each first-parent PR in the release delta whose diff changes a script named by path in `.kiro/hooks/RELEASE-FLOW.md` or in a `checks` line of `governance/classification-map.md`, both read at that PR's merge `<m>` (`git show <m>:<path>`), that PR's `**Straggler sweep**:` line (`.kiro/docs/ballots/README.md` § "Conventions"), read from the PR body (`gh pr view <n> --json body`, run for this seat by a session holding credentials), never from the squash message: a missing line is a finding on the PR's author, and each section the line lists is re-read at `<m>`, a section read as still false being a finding on the author too *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-38)*. Its record lands by a record-only PR and states `publish-rail liveness: owed`.
 ````
 
-After, F-41 (iii), F-38d (none):
+After, F-41 (iii), F-38d (none) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
    **The RELEASE claims pass runs in two phases, recorded in one file** (Stacy's pass; this text sets *when* each phase runs, *what* each phase reads, and the method and the consequences each bullet below states; how she reads beyond that is hers) *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, site 6, Stacy R2 and R3; prior text at `08b9c7a8e`)*:
@@ -310,25 +310,25 @@ Before:
 4. **Hand-author the notes and the consumer CHANGELOG entry** — two artifacts for two readers. **(a) The release notes** at `docs/releases/release-X.Y.Z.md` (v14.0.0 is the format precedent): the full delta, internal changes included. They are DesignerPunk's record and do not ship in the package. **(b) One entry in the root `CHANGELOG.md`**: consumer-facing changes only, in plain language for the people who install the package, hand-authored and never generated from the delta. The entry accumulates under `## [Unreleased]` as work merges, and the release PR retitles it to the version. A release with no consumer-facing change still gets an entry that says so. `CHANGELOG.md` ships in the package. Both ride the release PR with the version bump and any token-index regeneration.
 ````
 
-After, F-34 (i), F-41 (i):
+After, F-34 (i), F-41 (i) — **RULED for F-41, awaits F-34** (§ 7):
 
 ````text
 4. **Hand-author the notes and the consumer CHANGELOG entry** — two artifacts for two readers. **(a) The release notes** at `docs/releases/release-X.Y.Z.md` (v14.0.0 is the format precedent): the full delta, internal changes included. They are DesignerPunk's record and do not ship in the package. **(b) One entry in the root `CHANGELOG.md`**: consumer-facing changes only, in plain language for the people who install the package, hand-authored and never generated from the delta. The entry accumulates under `## [Unreleased]` as work merges, and the release PR retitles it to the version and a date; every PR that changes the entry before the tag sets the date to the UTC day of its edit (RELEASE-FLOW step 2). *(Amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-34; prior text at `08b9c7a8e`.)* A release with no consumer-facing change still gets an entry that says so. `CHANGELOG.md` ships in the package. Both ride the release PR with the version bump and any token-index regeneration.
 ````
 
-After, F-34 (i), F-41 (ii) or (iii):
+After, F-34 (i), F-41 (ii) or (iii) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
 4. **Hand-author the notes and the consumer CHANGELOG entry** — two artifacts for two readers. **(a) The release notes** at `docs/releases/release-X.Y.Z.md` (v14.0.0 is the format precedent): the full delta, internal changes included. They are DesignerPunk's record and do not ship in the package. **(b) One entry in the root `CHANGELOG.md`**: consumer-facing changes only, in plain language for the people who install the package, hand-authored and never generated from the delta. The entry accumulates under `## [Unreleased]` as work merges, and the release PR retitles it to the version and a date; every PR that changes the entry before the tag sets the date to the UTC day of its edit (RELEASE-FLOW step 2). *(Amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-34; prior text at `08b9c7a8e`.)* A release with no consumer-facing change still gets an entry that says so. A packed sentence states its fact without citing a DesignerPunk record path (`.kiro/issues/`, `.kiro/docs/ballots/`, `.kiro/specs/`, `docs/releases/`): none is in the package, so the path does not resolve for the entry's reader; the record path goes in the release notes, beside the sentence it supports. *(Added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-41.)* `CHANGELOG.md` ships in the package. Both ride the release PR with the version bump and any token-index regeneration.
 ````
 
-After, F-34 (ii), F-41 (i):
+After, F-34 (ii), F-41 (i) — **RULED for F-41, awaits F-34** (§ 7):
 
 ````text
 4. **Hand-author the notes and the consumer CHANGELOG entry** — two artifacts for two readers. **(a) The release notes** at `docs/releases/release-X.Y.Z.md` (v14.0.0 is the format precedent): the full delta, internal changes included. They are DesignerPunk's record and do not ship in the package. **(b) One entry in the root `CHANGELOG.md`**: consumer-facing changes only, in plain language for the people who install the package, hand-authored and never generated from the delta. The entry accumulates under `## [Unreleased]` as work merges, and the release PR retitles it to the version, with no date in the heading (RELEASE-FLOW step 2). *(Amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-34; prior text at `08b9c7a8e`.)* A release with no consumer-facing change still gets an entry that says so. `CHANGELOG.md` ships in the package. Both ride the release PR with the version bump and any token-index regeneration.
 ````
 
-After, F-34 (ii), F-41 (ii) or (iii):
+After, F-34 (ii), F-41 (ii) or (iii) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
 4. **Hand-author the notes and the consumer CHANGELOG entry** — two artifacts for two readers. **(a) The release notes** at `docs/releases/release-X.Y.Z.md` (v14.0.0 is the format precedent): the full delta, internal changes included. They are DesignerPunk's record and do not ship in the package. **(b) One entry in the root `CHANGELOG.md`**: consumer-facing changes only, in plain language for the people who install the package, hand-authored and never generated from the delta. The entry accumulates under `## [Unreleased]` as work merges, and the release PR retitles it to the version, with no date in the heading (RELEASE-FLOW step 2). *(Amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-34; prior text at `08b9c7a8e`.)* A release with no consumer-facing change still gets an entry that says so. A packed sentence states its fact without citing a DesignerPunk record path (`.kiro/issues/`, `.kiro/docs/ballots/`, `.kiro/specs/`, `docs/releases/`): none is in the package, so the path does not resolve for the entry's reader; the record path goes in the release notes, beside the sentence it supports. *(Added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-41.)* `CHANGELOG.md` ships in the package. Both ride the release PR with the version bump and any token-index regeneration.
@@ -344,13 +344,13 @@ Before:
 10. **Filing rule.** A ruling or a claims pass that creates an obligation files an issue record for it, or appends to the existing one, **in the same PR that records the ruling or the pass**. An obligation stated only in a plan line, a carry list, a walk table, a rulings row or a PR body, citing no record, is a finding on the PR that wrote it. A record filed for another owner names its filer; rule 9 applies to every later edit. A grant list is never authored only inside the diff it bounds: it is in a merged record first, or Peter's direction naming its paths is on the record **outside** that diff — a dated line in a record merged earlier, or Peter's own comment on the PR.
 ````
 
-After, F-43b either:
+After, F-43b either — **RULED** (Peter, 2026-10-26; § 7):
 
 ````text
 10. **Filing rule.** A ruling or a claims pass that creates an obligation files an issue record for it, or appends to the existing one, **in the same PR that records the ruling or the pass**. An obligation stated only in a plan line, a carry list, a walk table, a rulings row or a PR body, citing no record, is a finding on the PR that wrote it. A record filed for another owner names its filer; rule 9 applies to every later edit. A grant list is never authored only inside the diff it bounds: it is in a merged record first, or Peter's direction naming its paths is on the record **outside** that diff — a dated line in a record merged earlier, or Peter's own comment on the PR. An observation record that a CORRECTION cites (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds") may be merged before the CORRECTION or travel in its PR, provided it resolves at the CORRECTION's merge commit `<m>`: `git cat-file -e <m>:<the path as cited>` succeeds *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-43)*.
 ````
 
-After, F-43b land first:
+After, F-43b land first — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
 10. **Filing rule.** A ruling or a claims pass that creates an obligation files an issue record for it, or appends to the existing one, **in the same PR that records the ruling or the pass**. An obligation stated only in a plan line, a carry list, a walk table, a rulings row or a PR body, citing no record, is a finding on the PR that wrote it. A record filed for another owner names its filer; rule 9 applies to every later edit. A grant list is never authored only inside the diff it bounds: it is in a merged record first, or Peter's direction naming its paths is on the record **outside** that diff — a dated line in a record merged earlier, or Peter's own comment on the PR. An observation record that a CORRECTION cites (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds") is merged before the CORRECTION: `git cat-file -e <m>^:<the path as cited>` succeeds, where `<m>` is the CORRECTION's merge commit *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-43)*.
@@ -366,14 +366,14 @@ Before:
 - **Re-runs**: at application the census is re-run and compared input by input with the ratified delta. A difference in an input unchanged since the census SHA (`git diff --name-only <census-sha> <run-sha> -- <corpus>`) stops that item, which is reported, not adapted. Differences in inputs that changed since then are listed. An exempt item's application run is compared with its count, and a difference stops it in the same way. The PR that ships the instrument change runs the scratch diff and the shipped code at its own base. Their digests must be equal, with no carve-out, or the PR stops and reports.
 ````
 
-After, F-38 narrow, F-38d (phase 1):
+After, F-38 narrow, F-38d (phase 1) — **RULED** (Peter, 2026-10-26; § 7):
 
 ````text
 - **Re-runs**: at application the census is re-run and compared input by input with the ratified delta. A difference in an input unchanged since the census SHA (`git diff --name-only <census-sha> <run-sha> -- <corpus>`) stops that item, which is reported, not adapted. Differences in inputs that changed since then are listed. An exempt item's application run is compared with its count, and a difference stops it in the same way. The PR that ships the instrument change runs the scratch diff and the shipped code at its own base. Their digests must be equal, with no carve-out, or the PR stops and reports.
 - **Straggler sweep on an instrument PR** *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-38 and RS-29)*. A PR whose diff changes a script named by path in `.kiro/hooks/RELEASE-FLOW.md` or in the `checks` of a `governance/classification-map.md` row, both as they stand at the PR's merge, carries one line in its body, `**Straggler sweep**: <command> — <n> hits`, where the command is `git grep -n -F <the script's file name> -- .kiro/hooks/RELEASE-FLOW.md governance canonical/agents canonical/profiles/consumer .kiro/steering`. The section that holds each hit (heading to next heading) is read whole, because a restatement is a paragraph and a hit is a line, and the line lists each section read as `<path> § "<heading>" — true`, `— fixed` or `— left: <reason>`. A PR that changes a row's `check_state` carries the same line for `git grep -n -F <the row's id> -- scripts .kiro/hooks tools`, read the same way. A comment or a message change counts here, unlike in the census. A section left false is filed under `.kiro/issues/README.md` rule 10. The census above reads what a law change does to an instrument; this sweep reads what an instrument change does to the law text. Its reader is the RELEASE claims pass's phase 1 (RELEASE-FLOW step 6).
 ````
 
-After, F-38 narrow, F-38d (none):
+After, F-38 narrow, F-38d (none) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
 - **Re-runs**: at application the census is re-run and compared input by input with the ratified delta. A difference in an input unchanged since the census SHA (`git diff --name-only <census-sha> <run-sha> -- <corpus>`) stops that item, which is reported, not adapted. Differences in inputs that changed since then are listed. An exempt item's application run is compared with its count, and a difference stops it in the same way. The PR that ships the instrument change runs the scratch diff and the shipped code at its own base. Their digests must be equal, with no carve-out, or the PR stops and reports.
@@ -390,7 +390,7 @@ Before:
 **The rot mode, named**: a LAW change dressed as an EXECUTION or a CORRECTION to skip the ballot. Its detector is the claims-pass read (Stacy's charter, "The governance-edit-kind read").
 ````
 
-After, F-40 (a′), F-40d (charter):
+After, F-40 (a′), F-40d (charter) — **RULED** (Peter, 2026-10-26; § 7):
 
 ````text
 **The rot mode, named**: a LAW change dressed as an EXECUTION or a CORRECTION to skip the ballot. Its detector is the claims-pass read (Stacy's charter, "The governance-edit-kind read").
@@ -398,7 +398,7 @@ After, F-40 (a′), F-40d (charter):
 **A CORRECTION's sweep** *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-40)*: a CORRECTION carries one line in its PR body per class of text it corrects, `**Sweep**: <the class> — <a command, or a named read, over the class's reach> — <n> hits; fixed: <path:line, …>; left: <path:line — reason — owner — record, …>`. The reach is everywhere the class can occur, not only the files the PR corrects; a diff's size is never a reason to leave a hit. Every hit whose fix is a CORRECTION is fixed in each file the PR corrects, at its source where the file is generated; in such a file a hit is left only when its fix is not a CORRECTION (it needs a ruling). A hit in a file the PR does not correct is left, with its file's owner named; a file the PR does correct takes the sentence above. Every left hit is filed under `.kiro/issues/README.md` rule 10. A left hit that is false where its reader meets it is filed with the trigger `release:next:phase-1` (or `**Class**: P0` where it meets that definition), so the next release's walk reads it as a floor-class row, which only Peter waives (RELEASE-FLOW 3a): filing defers a hit and waives nothing. The claims pass's governance-edit-kind read reads the line (Stacy's charter).
 ````
 
-After, F-40 (a′), F-40d (none):
+After, F-40 (a′), F-40d (none) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
 **The rot mode, named**: a LAW change dressed as an EXECUTION or a CORRECTION to skip the ballot. Its detector is the claims-pass read (Stacy's charter, "The governance-edit-kind read").
@@ -406,7 +406,7 @@ After, F-40 (a′), F-40d (none):
 **A CORRECTION's sweep** *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-40)*: a CORRECTION carries one line in its PR body per class of text it corrects, `**Sweep**: <the class> — <a command, or a named read, over the class's reach> — <n> hits; fixed: <path:line, …>; left: <path:line — reason — owner — record, …>`. The reach is everywhere the class can occur, not only the files the PR corrects; a diff's size is never a reason to leave a hit. Every hit whose fix is a CORRECTION is fixed in each file the PR corrects, at its source where the file is generated; in such a file a hit is left only when its fix is not a CORRECTION (it needs a ruling). A hit in a file the PR does not correct is left, with its file's owner named; a file the PR does correct takes the sentence above. Every left hit is filed under `.kiro/issues/README.md` rule 10. A left hit that is false where its reader meets it is filed with the trigger `release:next:phase-1` (or `**Class**: P0` where it meets that definition), so the next release's walk reads it as a floor-class row, which only Peter waives (RELEASE-FLOW 3a): filing defers a hit and waives nothing.
 ````
 
-After, F-40 (b′), F-40d (charter):
+After, F-40 (b′), F-40d (charter) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
 **The rot mode, named**: a LAW change dressed as an EXECUTION or a CORRECTION to skip the ballot. Its detector is the claims-pass read (Stacy's charter, "The governance-edit-kind read").
@@ -414,7 +414,7 @@ After, F-40 (b′), F-40d (charter):
 **A CORRECTION's sweep** *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-40)*: a CORRECTION carries one line in its PR body per class of text it corrects, `**Sweep**: <the class> — <a command, or a named read, over the class's reach> — <n> hits; fixed: <path:line, …>; left: <path:line — reason — owner — record, …>`. The reach is everywhere the class can occur, not only the files the PR corrects; a diff's size is never a reason to leave a hit. Every hit whose fix is a CORRECTION is fixed in the same PR, in every file of the reach the author's seat owns, at its source where the file is generated; a file a merged grant names is the author's for this purpose. A hit is left only when its fix is not a CORRECTION (it needs a ruling), or when it sits in a file the author's seat does not own, or in a record kept as written (a ledger, a ratified or signed record, a completion doc), with that file's owner named. Every left hit is filed under `.kiro/issues/README.md` rule 10. A left hit that is false where its reader meets it is filed with the trigger `release:next:phase-1` (or `**Class**: P0` where it meets that definition), so the next release's walk reads it as a floor-class row, which only Peter waives (RELEASE-FLOW 3a): filing defers a hit and waives nothing. The claims pass's governance-edit-kind read reads the line (Stacy's charter).
 ````
 
-After, F-40 (b′), F-40d (none):
+After, F-40 (b′), F-40d (none) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
 **The rot mode, named**: a LAW change dressed as an EXECUTION or a CORRECTION to skip the ballot. Its detector is the claims-pass read (Stacy's charter, "The governance-edit-kind read").
@@ -432,7 +432,7 @@ Before:
 Named prohibition, named caller-out, **called at the exchange** rather than in a later ledger. It binds the LENS seat specifically. The clause is symmetric with Thurgood's (he may check that an audit happened, never re-decide what it concluded); the two are enforced the same way.
 ````
 
-After, F-33a (i), F-33b include:
+After, F-33a (i), F-33b include — **RULED** (Peter, 2026-10-26; § 7):
 
 ````text
 Named prohibition, named caller-out, **called at the exchange** rather than in a later ledger. It binds the LENS seat specifically, and her read of release text (below). The clause is symmetric with Thurgood's (he may check that an audit happened, never re-decide what it concluded); the two are enforced the same way.
@@ -440,7 +440,7 @@ Named prohibition, named caller-out, **called at the exchange** rather than in a
 **It binds her read of release text too**: when she reads release text before the release is published, she names each sentence she finds false and why, with the evidence, and never proposes its replacement. The text is its owner's, and an owner handed replacement text calls it out at that exchange. *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-33, with the sentence "It binds the LENS seat specifically" amended; prior text at `08b9c7a8e`)*
 ````
 
-After, F-33a (ii), F-33b include:
+After, F-33a (ii), F-33b include — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
 Named prohibition, named caller-out, **called at the exchange** rather than in a later ledger. It binds the LENS seat specifically. The clause is symmetric with Thurgood's (he may check that an audit happened, never re-decide what it concluded); the two are enforced the same way.
@@ -448,7 +448,7 @@ Named prohibition, named caller-out, **called at the exchange** rather than in a
 **At her read of release text**, before the release is published, she names each sentence she finds false and why, with the evidence, and may propose a replacement; a sentence she proposed ships only after a seat other than her has read it against that evidence. *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-33)*
 ````
 
-After, F-33b strike:
+After, F-33b strike — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
 (no change)
@@ -480,13 +480,13 @@ Before:
 - **The governance-edit-kind read** *(ballot 2026-10-18-governance-edit-kinds)*: on every PR in the population whose diff touches a path the edit kinds cover (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds"), the `**Edit kind**:` lines — read from the PR body (`gh pr view <n> --json body`, run for this seat by a session holding credentials), never from the squash message — against the merge's diff: every changed file, and every hunk where a file's lines split it, is named by a line giving its kind and authority. **A file or hunk with no line, or a line with no authority, is a finding on the authoring agent** (counted apart: missing vs no-authority). The rot-mode count: LAW hunks whose ballot did not read RATIFIED at the merge (`git show <merge>:<ballot>`), each also routed to Peter, who alone ratifies or reverts; EXECUTION hunks whose clause was not merged or ratified at the merge, or does not name the edit; CORRECTION hunks whose observation record does not resolve at the merge, or whose only referent is governance text or enforcement code changed in the same PR (the ballot's § 2 list). A kind you read as wrong is a finding on the authoring agent; whether the text is right is its owner's. **Observation, not a guard** — never a gate.
 ````
 
-After, F-40d (charter):
+After, F-40d (charter) — **RULED** (Peter, 2026-10-26; § 7):
 
 ````text
 - **The governance-edit-kind read** *(ballot 2026-10-18-governance-edit-kinds)*: on every PR in the population whose diff touches a path the edit kinds cover (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds"), the `**Edit kind**:` lines — read from the PR body (`gh pr view <n> --json body`, run for this seat by a session holding credentials), never from the squash message — against the merge's diff: every changed file, and every hunk where a file's lines split it, is named by a line giving its kind and authority. **A file or hunk with no line, or a line with no authority, is a finding on the authoring agent** (counted apart: missing vs no-authority). The rot-mode count: LAW hunks whose ballot did not read RATIFIED at the merge (`git show <merge>:<ballot>`), each also routed to Peter, who alone ratifies or reverts; EXECUTION hunks whose clause was not merged or ratified at the merge, or does not name the edit; CORRECTION hunks whose observation record does not resolve at the merge, or whose only referent is governance text or enforcement code changed in the same PR (the ballot's § 2 list). On a PR carrying a CORRECTION line, it also reads the `**Sweep**:` lines (`.kiro/docs/ballots/README.md`, "A CORRECTION's sweep"): at least one present; their grammar; for a command read, the command re-run at the merge hits exactly the `left:` list; each `left:` hit names a record that resolves at the merge and carries a `**Trigger**:` line; and the rate of `0 hits` lines, counted. Each failed check is a finding on the authoring agent, a missing line and a malformed line counted apart. Whether there is one line per class, whether the class and its reach are right, whether a named read happened, and whether a `left:` reason is honest stay judgment, read by sample *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-40)*. A kind you read as wrong is a finding on the authoring agent; whether the text is right is its owner's. **Observation, not a guard** — never a gate.
 ````
 
-After, F-40d (none):
+After, F-40d (none) — *void (R5; not the ruled option, kept as the record)*:
 
 ````text
 (no change)
@@ -540,9 +540,9 @@ Its L2 is then the new message and its L3 `exit code: 10`, in the bite's three-l
 
 **E3 — row `hermetic-publish-path`, `disposition` (L914), the HONEST REACH clause. Thurgood as steward, in Ada's words** (ADA R1 item 15; row owner `ada`). EXECUTION of site 4.
 - Before (substring of L914): `HONEST REACH: a publish run with --ignore-scripts, or of a tarball the script did not produce, is NOT detected before publish; 6b's sha1 comparison detects it after publish, and published bytes cannot be replaced`
-- After, F-49 (i): `HONEST REACH: a folder publish with --ignore-scripts, or a publish of any tarball other than this release's 5.3 tarball (the one whose release-publish-record.json has mode publish), is NOT detected before publish. That includes the tarballs the script itself makes at 5.1 and at a pre-S dry run: they carry the same version with different bytes at every measured release (the build-timestamp files), so one published at 5.4 is a second artifact under the version, which npmjs keeps. 6b's sha1 comparison detects it after publish, and published bytes cannot be replaced`
-- After, F-49 (ii-a) (ADA R2 item 3; R2 had built it on the (i) text, which says the printed line detects nothing): `HONEST REACH: a folder publish with --ignore-scripts, or a publish of any tarball other than this release's 5.3 tarball (the one whose release-publish-record.json has mode publish), is NOT detected before publish unless the operator runs the 5.4 line 5.3 printed, which checks the file's sha1 against that record and that the version is not yet on npmjs. That includes the tarballs the script itself makes at 5.1 and at a pre-S dry run: they carry the same version with different bytes at every measured release (the build-timestamp files), so one published at 5.4 is a second artifact under the version, which npmjs keeps; a checking line printed by a dry run would check only that dry run's sha1, so the dry run prints none (E7a). 6b's sha1 comparison detects it after publish, and published bytes cannot be replaced`
-- After, F-49 (ii-b): `HONEST REACH: 5.4's mode (release-publish.ts --npmjs <record>) refuses before publish a record that is not 5.3's (mode publish), a file whose sha1 differs from it, a tag that does not name its commit, and any npmjs answer other than a readable packument without the version (a network error refuses). A raw npm publish typed by the operator, and a folder publish with --ignore-scripts, are NOT detected before publish; 6b's sha1 comparison detects them after, and published bytes cannot be replaced`
+- After, F-49 (i) — **FALLBACK** (Ada's plan: applied only if the next release's phase 1 opens before the (ii-b) PR merges; § "Plans", P1): `HONEST REACH: a folder publish with --ignore-scripts, or a publish of any tarball other than this release's 5.3 tarball (the one whose release-publish-record.json has mode publish), is NOT detected before publish. That includes the tarballs the script itself makes at 5.1 and at a pre-S dry run: they carry the same version with different bytes at every measured release (the build-timestamp files), so one published at 5.4 is a second artifact under the version, which npmjs keeps. 6b's sha1 comparison detects it after publish, and published bytes cannot be replaced`
+- After, F-49 (ii-a) — *void (R5; not the ruled option, kept as the record)* (ADA R2 item 3; R2 had built it on the (i) text, which says the printed line detects nothing): `HONEST REACH: a folder publish with --ignore-scripts, or a publish of any tarball other than this release's 5.3 tarball (the one whose release-publish-record.json has mode publish), is NOT detected before publish unless the operator runs the 5.4 line 5.3 printed, which checks the file's sha1 against that record and that the version is not yet on npmjs. That includes the tarballs the script itself makes at 5.1 and at a pre-S dry run: they carry the same version with different bytes at every measured release (the build-timestamp files), so one published at 5.4 is a second artifact under the version, which npmjs keeps; a checking line printed by a dry run would check only that dry run's sha1, so the dry run prints none (E7a). 6b's sha1 comparison detects it after publish, and published bytes cannot be replaced`
+- After, F-49 (ii-b) — **RULED** (Peter, 2026-10-26; § 7): `HONEST REACH: 5.4's mode (release-publish.ts --npmjs <record>) refuses before publish a record that is not 5.3's (mode publish), a file whose sha1 differs from it, a tag that does not name its commit, and any npmjs answer other than a readable packument without the version (a network error refuses). A raw npm publish typed by the operator, and a folder publish with --ignore-scripts, are NOT detected before publish; 6b's sha1 comparison detects them after, and published bytes cannot be replaced`
 - Under (ii-b) only, `checks` item 1 gains `; the 5.4 mode's four refusals (record mode, sha1, tag-to-commit, npmjs absence read that refuses on a network error)` (ADA R1 item 16).
 - One history line, the same form as E2's, naming RS-49, site 4 and E7.
 
@@ -572,7 +572,7 @@ Its L2 is then the new message and its L3 `exit code: 10`, in the bite's three-l
 
 **E7 — `scripts/release-publish.ts` and its test. Ada** (standing scope; no grant). Split at Ada's request (item 5):
 - **E7a, under every F-49 option**: the dry run's two runnable lines (L382–L385: the GitHub Packages command and "and hand this command over for 5.4" with the npmjs command) are replaced by a line nobody can run, for example Ada's `DRY RUN — nothing was published, and this tarball is never published: 5.3 builds the release tarball again at the tag, and 5.4 publishes only that one.` The `tarball:` line stays (site 3 needs the path). Output only. EXECUTION of site 4: the law says this tarball is never the one, so the script stops handing it over.
-- **E7b, under F-49 (ii-a)**: 5.3's printed 5.4 line carries the sha1 check and the "not yet on npmjs" check before `npm publish`. **Under F-49 (ii-b)**: a `--npmjs <record>` mode, in Ada's five steps (ADA R1 item 6): record `mode` `publish` with GitHub Packages in `publishedTo`; the file's sha1 equals the record's; `git ls-remote` names the record's commit for `v<record.version>`; the npmjs packument reads HTTP 200, parses, and holds neither `versions["<v>"]` nor `time["<v>"]` (a network error, a timeout, any other status or a body that does not parse refuses); only then `npm publish <tarball> --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public` with inherited stdio, followed by the note that npm's `+` line is not evidence and step 6 reads the packument (ADA R2 item 6). 5.3 then prints that one command and no raw publish line.
+- **E7b, under F-49 (ii-a)** *(void, R5)*: 5.3's printed 5.4 line carries the sha1 check and the "not yet on npmjs" check before `npm publish`. **Under F-49 (ii-b)** (ruled; Ada's PR, § "Plans" P1): a `--npmjs <record>` mode, in Ada's five steps (ADA R1 item 6): record `mode` `publish` with GitHub Packages in `publishedTo`; the file's sha1 equals the record's; `git ls-remote` names the record's commit for `v<record.version>`; the npmjs packument reads HTTP 200, parses, and holds neither `versions["<v>"]` nor `time["<v>"]` (a network error, a timeout, any other status or a body that does not parse refuses); only then `npm publish <tarball> --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public` with inherited stdio, followed by the note that npm's `+` line is not evidence and step 6 reads the packument (ADA R2 item 6). 5.3 then prints that one command and no raw publish line.
 - **Tests**: E7a adds one assertion to the dry-run case: no printed line, trimmed, starts with `npm publish`; L312's pattern still matches (ADA R2 item 5). Under E7b, `scripts/__tests__/release-publish.test.ts` L362 (5.3's `shasum … # must print` line) and L363 (the log contains `publicCommand`) change; L313 asserts the returned `publicCommand` and may stay under E7a alone (ADA R1 item 2). Under (ii-b), Ada's list (R2 item 6): one test per refusal (a dry-run record, a sha1 mismatch, a tag naming another commit, the packument holding the version, a network error, a non-200 status, a body that does not parse), a happy path asserting the `npm publish` arguments and inherited stdio, and 5.3's log containing the `--npmjs <recordPath>` line and no line starting `npm publish` (replacing L362–L363). Her PR body names the exercised file (six-roots test rule).
 
 **E8 — records. Thurgood.**
@@ -592,6 +592,8 @@ Its L2 is then the new message and its L3 `exit code: 10`, in the bite's three-l
   - **A question for the census rule's owners, not this ballot** (Ada R3 residual (ii)): whether a corpus outside git counts, such as the immutable version documents of published `@3fn/core` versions. The owners are Stacy (row `instrument-census-at-draft`, `owner: stacy`) and Thurgood (the ballots README convention's steward). It is owed as a dated line on the queue record, filed with this ballot's next record commit; if they rule that it counts, both fields' "git holds" test is too narrow.
 
 ## 5. Application (after the Status commit)
+
+*R5: under Peter's ruling (Ada's plan), site 4, E3 and E7 ride Ada's own PR (§ "Plans" P1), not the application PR; P2's register PR merges before the application PR; read the steps below with those two changes.*
 
 1. **The Status commit** (record-first, ballot only): `**Status**: **RATIFIED (Peter, <date>)**`, his words and the clock bound they were received before, each fork's answer, and a `## Resolved after-texts` section carrying the picked After of every site and E-site, each law-doc site's pointer included (checked by `grep -c 'release-flow-batch-16-1'` per site before the commit). A struck row's sites are removed there, not left. The census fields of E8 are on `main` before Stacy's census read; if they are not, the in-scope item waits and the missing field is a finding, never a gate, and Peter may ratify past it (Census).
 2. **Ada**, E1 and E7: her commits under `Agent: Ada`, on the application branch, so the rail's message and step 6 never disagree on `main` (ADA R1 item 14). E7b under (ii-b) rides the same PR; its size is code and tests, and one diff keeps the text and the mode in step.
@@ -620,7 +622,7 @@ Its L2 is then the new message and its L3 `exit code: 10`, in the bite's three-l
 
 ## 6. Recommendation, counter-argument (fold-back applied), residual
 
-**Recommendation** (the drafter's; every seat's lean is in § 7): ratify with F-0 (a) (with (b) and the orchestrator's severance (c) open to Peter), F-33a (i), F-33b include, F-34 (i), F-38 narrow, F-38d (phase 1), F-39 (b-always), F-40 (b′), F-40d (charter), F-41 (i), F-43a ride, F-43b either and F-49 (ii-b). Every row is severable.
+**Recommendation** (the drafter's, before the rulings; Peter's rulings are in § 7, and they follow it except F-40, where he took the seats' (a′) over the drafter's weak (b′), and F-34, still open): ratify with F-0 (a) (with (b) and the orchestrator's severance (c) open to Peter), F-33a (i), F-33b include, F-34 (i), F-38 narrow, F-38d (phase 1), F-39 (b-always), F-40 (b′), F-40d (charter), F-41 (i), F-43a ride, F-43b either and F-49 (ii-b). Every row is severable.
 
 **Counter-argument, run against the proposal**:
 - **(i) Spec 131 is shrinking governance, and its ruled spine includes a freeze**: "no new law except deletions until the rehearsal is green for N releases", CORRECTION edits exempt (outline § 4 (d), F-9 ruled 2026-10-24). This batch adds law to the document read at the release's busiest point, and each round has made it larger (R2: site 12, L134, E7a, E7b; R3: L198, site 13, a new overlay entry, two census fields, a phase-1 straggler read under F-38d).
@@ -646,7 +648,7 @@ Its L2 is then the new message and its L3 `exit code: 10`, in the bite's three-l
 9. **Ada's `none` list rests on her word for its three decisions**, and "verbatim" is a judgment at its edge (a pasted record JSON counts, 6b's packument value does not); Stacy reads that line, and a reader could draw it elsewhere (ADA R3 residual (i)). Whether a corpus outside git counts is open for the census rule's owners (E8).
 10. **Under (c), the severed batch is amended twice** and its carried rows wait on a paused spec (F-0).
 
-## 7. Forks for Peter (none is picked here)
+## 7. Forks for Peter (ruled at R5, except F-34)
 
 Each: the problem, the options that survived two consult rounds, with their risk and opportunity, every seat's lean in brackets, and what prevents a recurrence.
 
@@ -664,20 +666,55 @@ Each: the problem, the options that survived two consult rounds, with their risk
 - **F-43b · Before, or travel in.** **Either**, `git cat-file -e <m>:<path>`, or **land first**, the same at `<m>^`. *Risk of either*: observation and fix share a diff. *Risk of land first*: long-lived upkeep branches defeat it (#500, #502, #504, #505), and it straggles Stacy's charter. [Thurgood either; Stacy either]
 - **F-49 · What 5.4 may publish.** Under every option the text binds 5.4 to 5.3's record (`mode` `publish`) and the dry run prints no runnable publish line (E7a). **(i)** Nothing more. **(ii-a)** 5.3 prints a checking line: it refuses a file swapped at 5.3's path and a version npmjs already holds, but its network-error logic is a shell string; census exempt on ground (3). **(ii-b)** A `--npmjs <record>` script mode with four refusals that fail closed; census split across the row's two scopes (below). *Opportunity of (ii-b)*: the guard is in the command (RS-7). *Risk of (ii-b)*: code and tests for a class whose RL-36 member immutability made harmless; web 2FA under the script unmeasured; a typed raw `npm publish` still bypasses it. **(ii-b)'s stated cost (R4)**: under Ada's amended census field, (ii-b)'s four refusals fall on two sides of the `hermetic-publish-path` row, so picking (ii-b) splits the row by scope and owes a census mode for its commit-held half (the record-mode and tag-to-commit refusals), built by Ada before (ii-b) leaves DRAFT; until it exists the item waits, and that is a finding, never a gate: Peter may ratify past it (census ballot L36). (i) and (ii-a) are unaffected. [Thurgood (ii-b); Ada (ii-b); Stacy (ii-b)]
 
-**Open for Peter**: ratify? (every row is severable; name any to strike)
-**Open for Peter**: F-0 — the batch now (a), into Spec 131 (b), or severed, four rows now and the rest into 131 (c)?
-**Open for Peter**: F-33a — the pre-S read names only (i), or may propose with a second reader (ii)?
-**Open for Peter**: F-33b — Stacy's charter site 11: include or strike?
-**Open for Peter**: F-34 — the heading's date: set by each PR that changes the entry (i), or none (ii)?
-**Open for Peter**: F-38 — the straggler line: narrow or broad?
-**Open for Peter**: F-38d — the straggler line's reader: RELEASE phase 1, or none?
-**Open for Peter**: F-39 — the compare at S: strike (a), repeat when the tree differs (b), or repeat at every S (b-always)?
-**Open for Peter**: F-40 — a CORRECTION's sweep: per corrected file, the rest filed (a′), or across every file the author may write (b′)?
-**Open for Peter**: F-40d — the Sweep line's reader: Stacy's governance-edit-kind read (site 13), or none?
-**Open for Peter**: F-41 — the stale disclosure: phase-1 re-read (i), no record paths in packed text (ii), or both (iii)?
-**Open for Peter**: F-43a — RS-43 rides this ballot, or a separate one?
-**Open for Peter**: F-43b — the observation record: either, provided it resolves at merge, or land first?
-**Open for Peter**: F-49 — 5.4: the record binding only (i), a printed checking line (ii-a), or a `--npmjs` script mode (ii-b), which now owes a row split and a census mode, or your ratification past that finding?
+**Rulings (Peter, 2026-10-26; his words and clock bounds in `[THURGOOD R5]`).** The fork texts above stay as the record of what he chose between.
+- **F-0: (a)**, the batch whole ("Re: 1, Ada's plan"; every seat's lean).
+- **F-49: (ii-b), on Ada's plan** ("Re: 1, Ada's plan"): E7b and the census mode for the commit-held half are built before the next 5.4; if a release comes first, its 5.4 runs on the (i) shape (§ "Plans", P1). Seats: Thurgood, Ada, Stacy (ii-b).
+- **F-39: (b-always)** ("Re: 2, Thurgood + Ada's plan"). Seats: Thurgood (b-always), Ada (b-always) weakly; Stacy (b).
+- **By his standing ruling** ("go with the seat recommendations of those that have them"): **F-33a (i)** (Thurgood, Stacy); **F-33b include** (Thurgood, Stacy); **F-38 narrow** (Thurgood, Stacy); **F-38d phase 1** (Thurgood; Stacy no lean); **F-40 (a′)** (Lina, Stacy; Thurgood weakly (b′)); **F-40d charter** (Thurgood; Stacy takes the line only this way); **F-41 (i)** (Thurgood, Stacy; Ada (iii) weakly); **F-43a ride** (Thurgood, Stacy); **F-43b either** (Thurgood, Stacy).
+
+**Open for Peter**: F-34 — the CHANGELOG heading's date: **(i)** every PR that changes the entry before the tag sets the date to the UTC day of its own last edit, so a later fix PR corrects a wrong date (it can trail the tag by the whole hold; 0 days at three releases), or **(ii)** no date in the heading (breaks the dated headings of 15.0.0 to 16.1.0; nothing can be wrong). No seat majority: Thurgood (i), weakly; Stacy (ii); Ada no lean. Sites 3 and 7 carry both resolved Afters until he answers, and the Status commit waits on it.
+
+## Plans (Peter's condition)
+
+*Peter, before 2026-10-26T21:12:21Z: "any that have deferred or follow-up work require a plan to be addressed." One entry per deferred item: owner, vehicle, the record the walk reads, its trigger, and the fallback. A plan that needs a record has one, filed under README rule 10 in `8073decc1` on this branch. None closes a queue row by a dated line (Stacy C1: a dated carry line would discharge the row and silence it); each queue row closes only at the merge of the vehicle named.*
+
+- **P1 · RS-49 under F-49 (ii-b), Ada's plan.**
+  - **Owner**: Ada (E7a, E7b and their tests; the census mode for the commit-held scope); Thurgood (site 4's (ii-b) After in RELEASE-FLOW, E3's (ii-b) After and the commit-held scope's `census` field, on Ada's word).
+  - **Vehicle**: Ada's PR, Peter-merged, carrying E7a, E7b, site 4 (ii-b), E3 (ii-b) and the mode. It is separate from the application PR (P7), which does not carry site 4, E3 or E7.
+  - **Record and trigger**: `.kiro/issues/2026-10-27-npmjs-mode-and-commit-held-census-mode-owed.md`, P2 obligation (guard), `release:next:phase-1`; it closes when Ada's PR merges before the next release's S.
+  - **Fallback (Peter's)**: if the next release's phase 1 opens before Ada's PR merges, that release applies site 4's (i) After, E3's (i) After and E7a before its S (the FALLBACK texts in § "Resolved after-texts"), and its 5.4 runs on the (i) shape. Ada re-rules the record's Trigger to the following release's phase 1, citing Peter's words, in a diff before that S, so the walk reads a re-rule, not a lapse (rule 11). The (i)-shape census line (Census block, FALLBACK) is the line for that application.
+- **P2 · The two publish rows' `census` fields, and the `hermetic-publish-path` split.**
+  - **Owner**: Thurgood (steward; `publish-rail-guard` is mine), on Ada's word for `hermetic-publish-path`.
+  - **Vehicle**: one steward register PR, Peter-merged, with E8's two fields verbatim and the split by scope (the live-state scope's `none`; the commit-held scope's field is written in P1's PR when the mode exists).
+  - **Record and trigger**: `.kiro/issues/2026-10-27-publish-rows-census-fields.md`, P2 obligation (guard), `release:next:phase-1`; it closes at that PR's merge.
+  - **Sequence**: before the application PR (P7). **It does not gate the Status flip.** The census rule says a missing field is "a finding from the reader, never a gate: Peter may ratify past it" (Entry Schema L110), and Peter ruled the batch with Ada's plan, which builds the commit-held mode after ratification.
+  - **Fallback**: if it has not merged when the application PR opens, the application PR waits for it; the record lapses at the next S like any other.
+- **P3 · RS-50, where a RELEASE claims-pass record lives once Spec 123 closes.**
+  - **Owner**: Thurgood.
+  - **Vehicle**: a small ballot of its own, with Stacy (her record's home) and Ada (the delegate seat's output path) consulted.
+  - **Record and trigger**: the queue record's row RS-50 (`0a07a3601`), under the queue record's `release:next:phase-1`; the row closes when that ballot merges.
+  - **Fallback**: until it merges, site 2's delegate row names the output path in Thurgood's brief, so the next walk does not wait on RS-50. If the row is still open at the next S, the queue record lapses on it and, being P2 (guard), goes to Peter.
+- **P4 · Whether a census corpus outside git counts.**
+  - **Owners**: Stacy (row `instrument-census-at-draft`) and Thurgood (the ballots README convention).
+  - **Vehicle**: the owners' answer, recorded by a dated line; if yes, a ballot amending the census rule's ground (2) test, which re-reads both publish fields.
+  - **Record and trigger**: `.kiro/issues/2026-10-27-census-corpus-outside-git-question.md`, P3 improvement, `manual`; the monthly walk reads it. Nothing in this ballot waits on it.
+- **P5 · Ada's finding against her own rail bites** (§ 10 item 10: no bite covers the version-mismatch or network-error branch; bite-2 records a real 404 under a mismatch name).
+  - **Owner**: Ada, who said she files it "on go"; Peter's rulings are the go.
+  - **Vehicle**: her rule-10 record, then a bite PR in her scope.
+  - **Fallback**: if no record exists when the application PR opens, Thurgood files it for her in that PR, naming himself as filer (rule 10), so it does not sit only in this ballot's text.
+- **P6 · Stacy's C1 acts and the E5 overlay entry, for sites 11, 12 and 13.**
+  - **Owners**: Thurgood (the operative-set items and the new mirror-unit overlay entry, as profile author); Stacy (the re-confirms, the re-signs and her removal row's signature, in her seat).
+  - **Vehicle**: the application PR (P7).
+  - **Trigger**: every C1 act lands before the application PR's final push; otherwise the 122-diff-guard job's `verify-signing-chain --ci` step fails the PR (Stacy S-5).
+  - **Record**: the queue record's rows RS-33 and RS-40, which close at the application PR's merge.
+- **P7 · The application PR.**
+  - **Owner**: Thurgood (branch `chore/apply-release-flow-batch-16-1`), with Ada's E1 commit in it under `Agent: Ada`.
+  - **Scope**: sites 1–3 and 5–13 as resolved; E1, E2, E4, E5, E6; E8's queue-record lines. Site 4, E3 and E7 are P1's.
+  - **Prerequisites**: the Status commit (after F-34), and P2 merged.
+  - **Record and trigger**: the queue record (`.kiro/issues/2026-10-26-release-16-1-standards-implications.md`, P2 (guard), `release:next:phase-1`); each row closes at this PR's merge.
+  - **Fallback**: a row not applied by the next release's S lapses there and, the record being P2 (guard), goes to Peter with spec, drop or fix-now.
+- **P8 · F-34.** Peter's answer. The Status commit (record-first, ballot only, with the ballots README roll line) is made after it, and § "Resolved after-texts" then keeps one After for sites 3 and 7.
+
 
 ## 8. Consult questions
 
@@ -685,11 +722,158 @@ Each: the problem, the options that survived two consult rounds, with their risk
 
 **R3 questions**: answered in § 11 (STACY R3, ADA R3, LINA R3); incorporated in `[THURGOOD R4]`.
 
-**R4 questions** (only what R4 changed; nothing else is open):
+**R4 questions** (only what R4 changed; still owed at R5, bytes reads before the Status commit, not forks):
 - **Stacy**: (1) site 6's L198 lead-in as reworded; (2) the F-38d sentence and site 9's predicate as reworded: decidable now? (3) site 13's finding clause and "at least one" floor; (4) site 11's pointer, which names the amended sentence; your removal row's `text` updated to it in E5.
 - **Ada**: your R3 field and history line as carried in E8; the (ii-b) cost sentence in § 7.
 - **Lina**: (a′) and (b′) as reworded from your R3 (one addition of mine in (a′): "in such a file a hit is left only when its fix is not a CORRECTION", kept from R3 so a corrected file's non-CORRECTION hits still have a rule).
 - **Peter**: F-0 (c), the severance, as § 7 states its cost.
+
+## Resolved after-texts (R5; sites 3 and 7 await F-34)
+
+*The ruled After of every site, reprinted from § 3 byte for byte (by script). Where F-34 is still open (sites 3 and 7), both F-34 Afters are printed; the Status commit keeps the one Peter picks. Site 4's FALLBACK is printed after its ruled text, for P1's fallback. E-sites: § 4 as written, with E3's (ii-b) After ruled and its (i) After the FALLBACK; E7 per P1; E8 per P2.*
+
+### Site 1 — `.kiro/hooks/RELEASE-FLOW.md` L32–L34
+
+Resolved:
+
+````text
+   (set -o pipefail; grep -nE '^\*\*Trigger\*\*: `(release:('"$VE"'|next):phase-1|tag:v'"$VE"')`' .kiro/issues/*.md | LC_ALL=C sort); echo "due-rows exit $?"
+   (set -o pipefail; grep -nE '^\*\*Class\*\*: P0' .kiro/issues/*.md | LC_ALL=C sort); echo "P0 exit $?"
+   ```
+   Both greps print their hits sorted (`LC_ALL=C sort`), so the walk record's paste is the same in every shell, and `pipefail` keeps the printed exit code grep's: `1` still means no hit. *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-46; prior text at `08b9c7a8e`)*
+
+````
+
+### Site 2 — `.kiro/hooks/RELEASE-FLOW.md` L39
+
+Resolved, F-33a (i) — **RULED** (Peter, 2026-10-26; § 7):
+
+````text
+   The walk record reprints the priorities record's "Peter-gated deferrals" list (answered rows only, no P0 record) as one block headed `Peter-gated deferrals: answers on record, reprinted; nothing here holds the merge`, never as `**Open for Peter**:` lines. A row Peter takes up is re-ruled by its owner. *(Ballot 2026-10-20-manual-records-routed-readers, E3, F-2 (i).)*
+
+   **A pre-S read of release text** (any seat's read, before S, of the release notes, the `CHANGELOG.md` entry or other packed text) names each sentence it finds false and why, with the evidence. It proposes no replacement sentence. The replacement is written by the text's owner (the release author for the notes and the `CHANGELOG.md` entry, the content owner for a served doc or a charter), who reads it against that evidence before the release PR merges. An owner who is handed replacement text by the reader says so at that exchange, and writes its own. *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-33)*
+
+   **The delegate audit is owed before phase 1** (ballot `2026-10-01-signing-act-chain` § 5.3, whose rotation and backlog clauses name the seat and the population). The walk record carries one row for it, which is not a record row: the delegate seat, the path of Thurgood's brief, and the output path that brief names. Its disposition is `owed` until the seat commits that file, then the file's path @ SHA. The orchestrator dispatches the seat (§ 5.3). A file not committed when phase 1 runs is § 8's trigger (d) at this release. *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-37)*
+````
+
+### Site 3 — `.kiro/hooks/RELEASE-FLOW.md` L108
+
+Resolved, F-34 (i), F-39 (b-always) — **RULED for F-39, awaits F-34** (§ 7):
+
+````text
+   - release notes (`docs/releases/release-<version>.md`) **and the consumer `CHANGELOG.md` entry** (retitle `## [Unreleased]` to the version and a date, `## [<version>] — <YYYY-MM-DD> — <title>`; every PR that changes the entry before the tag sets the date to the UTC day of its own last edit to the entry, `date -u +%F` then, so a later fix PR corrects a wrong date and the date at S is the last such PR's, between that PR's opening and its merge; it dates the entry's last change, not the tag; recipe step 4 in `governance/release-management-system.md`; *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-34; prior text at `08b9c7a8e`)*),
+   - **before the entry says that a file, an export or a generated output was added, kept, removed or changed, compare the packed output with the previous public artifact**, and paste the results, naming the commit they ran at, in the release PR body. This release's tarball: after `git fetch origin`, `npx tsx scripts/release-publish.ts --dry-run <the release branch's pushed head>`, run from the main checkout (a dry run of a commit not on `origin/main` is allowed, with a warning). The previous release's tarball: `npm pack @3fn/core@<previous version> --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --pack-destination <tmp>`, its sha1 shown equal to the previous release's step-6 record. The file set: `LC_ALL=C comm -3 <(tar -tzf <previous>.tgz | LC_ALL=C sort) <(tar -tzf <this>.tgz | LC_ALL=C sort)` (column 1 removed, column 2 added). The generated files the entry describes: a `diff` of each between the two extracted tarballs; the build-timestamp files (`TokenTypes.*`, `tool-manifest.json` and the others the release records name) differ in their stamps alone. At each S, the author repeats the file-set compare on 5.1's tarball before the tag, and pastes it in the step-6 `.txt` (`docs/releases/<v>/publish-verification.txt`) under its own heading, with the UTC time it ran. *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-39 and RS-25)*
+````
+
+Resolved, F-34 (ii), F-39 (b-always) — **RULED for F-39, awaits F-34** (§ 7):
+
+````text
+   - release notes (`docs/releases/release-<version>.md`) **and the consumer `CHANGELOG.md` entry** (retitle `## [Unreleased]` to the version, with no date in the heading: the packed file is S's, so no step after S can date it, and the release's date is its tag's; recipe step 4 in `governance/release-management-system.md`; *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-34; prior text at `08b9c7a8e`)*),
+   - **before the entry says that a file, an export or a generated output was added, kept, removed or changed, compare the packed output with the previous public artifact**, and paste the results, naming the commit they ran at, in the release PR body. This release's tarball: after `git fetch origin`, `npx tsx scripts/release-publish.ts --dry-run <the release branch's pushed head>`, run from the main checkout (a dry run of a commit not on `origin/main` is allowed, with a warning). The previous release's tarball: `npm pack @3fn/core@<previous version> --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --pack-destination <tmp>`, its sha1 shown equal to the previous release's step-6 record. The file set: `LC_ALL=C comm -3 <(tar -tzf <previous>.tgz | LC_ALL=C sort) <(tar -tzf <this>.tgz | LC_ALL=C sort)` (column 1 removed, column 2 added). The generated files the entry describes: a `diff` of each between the two extracted tarballs; the build-timestamp files (`TokenTypes.*`, `tool-manifest.json` and the others the release records name) differ in their stamps alone. At each S, the author repeats the file-set compare on 5.1's tarball before the tag, and pastes it in the step-6 `.txt` (`docs/releases/<v>/publish-verification.txt`) under its own heading, with the UTC time it ran. *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-39 and RS-25)*
+````
+
+### Site 4 — `.kiro/hooks/RELEASE-FLOW.md` L134–L136
+
+Resolved, F-49 (i) — **FALLBACK** (Ada's plan: applied only if the next release's phase 1 opens before the (ii-b) PR merges; § "Plans", P1):
+
+````text
+     - It then records the tarball's path, file count and sha1 in `release-publish-record.json` (in an OS temp dir; the script prints its path), publishes **that tarball** to GitHub Packages, and prints the public-npm command for 5.4 with the sha1 to check.
+     - **Keep the tarball and its record until 6b is recorded** (A11). The record's full contents (commit, sha1, fileCount, bytes, pack-assert passed/total, createdAt) are pasted into the step-6 `.txt` (A3), because the temp dir is never committed and 6b's comparand must be.
+   - **5.4 Publish the same tarball to public npm** (Peter's terminal, web 2FA): first check the printed sha1 against the file, then run `npm publish <tarball> --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public`, as 5.3 printed it. **Never a folder publish, never `--ignore-scripts`, never a tarball other than the one this release's 5.3 run printed**: its path is 5.3's `tarball:` line, and its sha1 equals that run's `release-publish-record.json`, whose `mode` is `publish` (only 5.3 writes one, after GitHub Packages accepted that tarball). A tarball the script made at 5.1, at a pre-S dry run (step 2) or for another release is not it, though the script produced it: at 15.1.0, 16.0.0 and 16.1.0 the 5.1 tarball had 5.3's version and different bytes. *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-49; prior text at `08b9c7a8e`)* A folder publish is refused by `prepublishOnly`, which names this script. That refusal is the tripwire, not the guard: the guard is the script.
+````
+
+Resolved, F-49 (ii-b) — **RULED** (Peter, 2026-10-26; § 7):
+
+````text
+     - It then records the tarball's path, file count and sha1 in `release-publish-record.json` (in an OS temp dir; the script prints its path), publishes **that tarball** to GitHub Packages, and prints the 5.4 command, `npx tsx scripts/release-publish.ts --npmjs <the record path>` (5.4). *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-49; prior text at `08b9c7a8e`)*
+     - **Keep the tarball and its record until 6b is recorded** (A11). The record's full contents (commit, sha1, fileCount, bytes, pack-assert passed/total, createdAt) are pasted into the step-6 `.txt` (A3), because the temp dir is never committed and 6b's comparand must be.
+   - **5.4 Publish the same tarball to public npm** (Peter's terminal, web 2FA): run `npx tsx scripts/release-publish.ts --npmjs <the record path 5.3 printed>` from the main checkout: it refuses unless the record is 5.3's (`mode` `publish`), the file's sha1 equals the record's, the tag names the record's commit, and npmjs's packument reads without `<version>` (a network error refuses), and only then runs `npm publish <tarball> --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public`. **Never a folder publish, never `--ignore-scripts`, never a tarball other than the one this release's 5.3 run printed**: its path is 5.3's `tarball:` line, and its sha1 equals that run's `release-publish-record.json`, whose `mode` is `publish` (only 5.3 writes one, after GitHub Packages accepted that tarball). A tarball the script made at 5.1, at a pre-S dry run (step 2) or for another release is not it, though the script produced it: at 15.1.0, 16.0.0 and 16.1.0 the 5.1 tarball had 5.3's version and different bytes. *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-49; prior text at `08b9c7a8e`)* A folder publish is refused by `prepublishOnly`, which names this script. That refusal is the tripwire, not the guard: the guard is the script.
+````
+
+### Site 5 — `.kiro/hooks/RELEASE-FLOW.md` L150
+
+Resolved:
+
+````text
+   - If the packument (`curl -s https://registry.npmjs.org/@3fn%2fcore`) has no `time["<version>"]`, the registry has not recorded the version. Either it was never accepted (15.0.0's R-4: six 404s preceded the publish), or npm accepted it and is still processing it: npm prints "Your package is being processed and may take a few minutes to become available", and the measured windows are 10 min 59 s (16.0.0) and at least 1 min 59 s (16.1.0). Either way the 404 is the correct answer, not indexing lag, and the release is not announced. Read the packument again until `time["<version>"]` appears, and re-run the rail only then; this step sets no bound on the wait, because no publish has yet been measured that npm accepted and never recorded. npm's `+ @3fn/core@<version>` line is not evidence that the registry recorded the version: it printed for an out-of-flow publish of 16.0.0's tarball that the registry did not record (16.1.0's RL-36). *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-48; prior text at `08b9c7a8e`)*
+````
+
+### Site 6 — `.kiro/hooks/RELEASE-FLOW.md` L198–L199
+
+Resolved, F-41 (i), F-38d (phase 1) — **RULED** (Peter, 2026-10-26; § 7):
+
+````text
+   **The RELEASE claims pass runs in two phases, recorded in one file** (Stacy's pass; this text sets *when* each phase runs, *what* each phase reads, and the method and the consequences each bullet below states; how she reads beyond that is hers) *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, site 6, Stacy R2 and R3; prior text at `08b9c7a8e`)*:
+   - **Phase 1** runs on **S after 5.1 is green and before the tag (5.2)**. A red 5.1 moves S, so phase 1 never reads a commit that will not be tagged (A7). It covers the release delta, the walk record (item 3a: its paste, its `main at:` SHA and each row's disposition), the 5a owed-set paste, the 5b arming line and 5.1's tally. It also re-runs item 3a's two greps at S and reads each hit the walk record does not row under rule 11's row test: a P0 among them is a floor-class row for this release, owed a fix or Peter's quoted, dated waiver before the tag (put to him as an `**Open for Peter**:` line in the phase-1 record's PR, which that rule holds until he answers; the read reports, and the tag stays his act); any other is listed with its rule-11 state *(added 2026-10-26 by ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers, site 3)*. At each S it also re-reads each `.kiro/issues/` record that a packed `CHANGELOG.md` sentence cites, and reads the sentence against it: a sentence its record has since made false is a finding against that S under 3a's blocking test *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-41)*. It also reads, for each first-parent PR in the release delta whose diff changes a script named by path in `.kiro/hooks/RELEASE-FLOW.md` or in a `checks` line of `governance/classification-map.md`, both read at that PR's merge `<m>` (`git show <m>:<path>`), that PR's `**Straggler sweep**:` line (`.kiro/docs/ballots/README.md` § "Conventions"), read from the PR body (`gh pr view <n> --json body`, run for this seat by a session holding credentials), never from the squash message: a missing line is a finding on the PR's author, and each section the line lists is re-read at `<m>`, a section read as still false being a finding on the author too *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-38)*. Its record lands by a record-only PR and states `publish-rail liveness: owed`.
+````
+
+### Site 7 — `governance/release-management-system.md` L40
+
+Resolved, F-34 (i), F-41 (i) — **RULED for F-41, awaits F-34** (§ 7):
+
+````text
+4. **Hand-author the notes and the consumer CHANGELOG entry** — two artifacts for two readers. **(a) The release notes** at `docs/releases/release-X.Y.Z.md` (v14.0.0 is the format precedent): the full delta, internal changes included. They are DesignerPunk's record and do not ship in the package. **(b) One entry in the root `CHANGELOG.md`**: consumer-facing changes only, in plain language for the people who install the package, hand-authored and never generated from the delta. The entry accumulates under `## [Unreleased]` as work merges, and the release PR retitles it to the version and a date; every PR that changes the entry before the tag sets the date to the UTC day of its edit (RELEASE-FLOW step 2). *(Amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-34; prior text at `08b9c7a8e`.)* A release with no consumer-facing change still gets an entry that says so. `CHANGELOG.md` ships in the package. Both ride the release PR with the version bump and any token-index regeneration.
+````
+
+Resolved, F-34 (ii), F-41 (i) — **RULED for F-41, awaits F-34** (§ 7):
+
+````text
+4. **Hand-author the notes and the consumer CHANGELOG entry** — two artifacts for two readers. **(a) The release notes** at `docs/releases/release-X.Y.Z.md` (v14.0.0 is the format precedent): the full delta, internal changes included. They are DesignerPunk's record and do not ship in the package. **(b) One entry in the root `CHANGELOG.md`**: consumer-facing changes only, in plain language for the people who install the package, hand-authored and never generated from the delta. The entry accumulates under `## [Unreleased]` as work merges, and the release PR retitles it to the version, with no date in the heading (RELEASE-FLOW step 2). *(Amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-34; prior text at `08b9c7a8e`.)* A release with no consumer-facing change still gets an entry that says so. `CHANGELOG.md` ships in the package. Both ride the release PR with the version bump and any token-index regeneration.
+````
+
+### Site 8 — `.kiro/issues/README.md` L19
+
+Resolved, F-43b either — **RULED** (Peter, 2026-10-26; § 7):
+
+````text
+10. **Filing rule.** A ruling or a claims pass that creates an obligation files an issue record for it, or appends to the existing one, **in the same PR that records the ruling or the pass**. An obligation stated only in a plan line, a carry list, a walk table, a rulings row or a PR body, citing no record, is a finding on the PR that wrote it. A record filed for another owner names its filer; rule 9 applies to every later edit. A grant list is never authored only inside the diff it bounds: it is in a merged record first, or Peter's direction naming its paths is on the record **outside** that diff — a dated line in a record merged earlier, or Peter's own comment on the PR. An observation record that a CORRECTION cites (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds") may be merged before the CORRECTION or travel in its PR, provided it resolves at the CORRECTION's merge commit `<m>`: `git cat-file -e <m>:<the path as cited>` succeeds *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-43)*.
+````
+
+### Site 9 — `.kiro/docs/ballots/README.md` L37
+
+Resolved, F-38 narrow, F-38d (phase 1) — **RULED** (Peter, 2026-10-26; § 7):
+
+````text
+- **Re-runs**: at application the census is re-run and compared input by input with the ratified delta. A difference in an input unchanged since the census SHA (`git diff --name-only <census-sha> <run-sha> -- <corpus>`) stops that item, which is reported, not adapted. Differences in inputs that changed since then are listed. An exempt item's application run is compared with its count, and a difference stops it in the same way. The PR that ships the instrument change runs the scratch diff and the shipped code at its own base. Their digests must be equal, with no carve-out, or the PR stops and reports.
+- **Straggler sweep on an instrument PR** *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-38 and RS-29)*. A PR whose diff changes a script named by path in `.kiro/hooks/RELEASE-FLOW.md` or in the `checks` of a `governance/classification-map.md` row, both as they stand at the PR's merge, carries one line in its body, `**Straggler sweep**: <command> — <n> hits`, where the command is `git grep -n -F <the script's file name> -- .kiro/hooks/RELEASE-FLOW.md governance canonical/agents canonical/profiles/consumer .kiro/steering`. The section that holds each hit (heading to next heading) is read whole, because a restatement is a paragraph and a hit is a line, and the line lists each section read as `<path> § "<heading>" — true`, `— fixed` or `— left: <reason>`. A PR that changes a row's `check_state` carries the same line for `git grep -n -F <the row's id> -- scripts .kiro/hooks tools`, read the same way. A comment or a message change counts here, unlike in the census. A section left false is filed under `.kiro/issues/README.md` rule 10. The census above reads what a law change does to an instrument; this sweep reads what an instrument change does to the law text. Its reader is the RELEASE claims pass's phase 1 (RELEASE-FLOW step 6).
+````
+
+### Site 10 — `.kiro/docs/ballots/README.md` L56
+
+Resolved, F-40 (a′), F-40d (charter) — **RULED** (Peter, 2026-10-26; § 7):
+
+````text
+**The rot mode, named**: a LAW change dressed as an EXECUTION or a CORRECTION to skip the ballot. Its detector is the claims-pass read (Stacy's charter, "The governance-edit-kind read").
+
+**A CORRECTION's sweep** *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-40)*: a CORRECTION carries one line in its PR body per class of text it corrects, `**Sweep**: <the class> — <a command, or a named read, over the class's reach> — <n> hits; fixed: <path:line, …>; left: <path:line — reason — owner — record, …>`. The reach is everywhere the class can occur, not only the files the PR corrects; a diff's size is never a reason to leave a hit. Every hit whose fix is a CORRECTION is fixed in each file the PR corrects, at its source where the file is generated; in such a file a hit is left only when its fix is not a CORRECTION (it needs a ruling). A hit in a file the PR does not correct is left, with its file's owner named; a file the PR does correct takes the sentence above. Every left hit is filed under `.kiro/issues/README.md` rule 10. A left hit that is false where its reader meets it is filed with the trigger `release:next:phase-1` (or `**Class**: P0` where it meets that definition), so the next release's walk reads it as a floor-class row, which only Peter waives (RELEASE-FLOW 3a): filing defers a hit and waives nothing. The claims pass's governance-edit-kind read reads the line (Stacy's charter).
+````
+
+### Site 11 — `canonical/agents/stacy.md` L463
+
+Resolved, F-33a (i), F-33b include — **RULED** (Peter, 2026-10-26; § 7):
+
+````text
+Named prohibition, named caller-out, **called at the exchange** rather than in a later ledger. It binds the LENS seat specifically, and her read of release text (below). The clause is symmetric with Thurgood's (he may check that an audit happened, never re-decide what it concluded); the two are enforced the same way.
+
+**It binds her read of release text too**: when she reads release text before the release is published, she names each sentence she finds false and why, with the evidence, and never proposes its replacement. The text is its owner's, and an owner handed replacement text calls it out at that exchange. *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-33, with the sentence "It binds the LENS seat specifically" amended; prior text at `08b9c7a8e`)*
+````
+
+### Site 12 — `canonical/agents/stacy.md` L400
+
+Resolved:
+
+````text
+| **RELEASE** | **Two phases, one record**: phase 1 on the release squash S, before the tag; phase 2 at the merge of the step-6 release-record PR | **Claims pass over the release delta (`git log <last-tag>..main`) — parent criteria tables vs `tasks.md` vs shipped source**. **Non-negotiable.** Paired with the release-step condition: the checklist runs the owed-set query and pastes its output, and carries Q2 guard (i)'s arming line. Phase 1 also carries the `release-falsity-floor` read (ballot 2026-10-18-obligation-drain-and-release-falsity-floor M7). What phase 1 reads, and at which SHA, is RELEASE-FLOW step 6's Phase 1 bullet, not restated here *(amended <application date> by ballot 2026-10-26-release-flow-batch-16-1, site 12; prior text at `08b9c7a8e`)*. Your record's lines: per floor-class row, one line — the walk-record line (record path, `main at:` SHA); for a row carried or read as not false at its reader, the citation of Peter's dated answer (quoted words, dated before the walk PR's `mergedAt`), a row without one being a finding routed to Peter; and your re-check of the surface at S (`git show S:<path>`: fixed, disclosed where its reader meets it, or still false under the cited waiver), or `not re-verified — <why>` (this read's own negative, outside the criterion-row vocabulary). A read, never a gate. Phase 2 reads the committed step-6 record — the rail result and the two-registry record (each registry's time[<v>], file count and sha1, equal to the publish script's recorded sha1) — against the published bytes; until it does, the record reads publish-rail liveness: owed. Drafted against the open record PR, it ends with the merge-confirmation line. | Stacy |
+````
+
+### Site 13 — `canonical/agents/stacy.md` L432
+
+Resolved, F-40d (charter) — **RULED** (Peter, 2026-10-26; § 7):
+
+````text
+- **The governance-edit-kind read** *(ballot 2026-10-18-governance-edit-kinds)*: on every PR in the population whose diff touches a path the edit kinds cover (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds"), the `**Edit kind**:` lines — read from the PR body (`gh pr view <n> --json body`, run for this seat by a session holding credentials), never from the squash message — against the merge's diff: every changed file, and every hunk where a file's lines split it, is named by a line giving its kind and authority. **A file or hunk with no line, or a line with no authority, is a finding on the authoring agent** (counted apart: missing vs no-authority). The rot-mode count: LAW hunks whose ballot did not read RATIFIED at the merge (`git show <merge>:<ballot>`), each also routed to Peter, who alone ratifies or reverts; EXECUTION hunks whose clause was not merged or ratified at the merge, or does not name the edit; CORRECTION hunks whose observation record does not resolve at the merge, or whose only referent is governance text or enforcement code changed in the same PR (the ballot's § 2 list). On a PR carrying a CORRECTION line, it also reads the `**Sweep**:` lines (`.kiro/docs/ballots/README.md`, "A CORRECTION's sweep"): at least one present; their grammar; for a command read, the command re-run at the merge hits exactly the `left:` list; each `left:` hit names a record that resolves at the merge and carries a `**Trigger**:` line; and the rate of `0 hits` lines, counted. Each failed check is a finding on the authoring agent, a missing line and a malformed line counted apart. Whether there is one line per class, whether the class and its reach are right, whether a named read happened, and whether a `left:` reason is honest stay judgment, read by sample *(added <application date> by ballot 2026-10-26-release-flow-batch-16-1, RS-40)*. A kind you read as wrong is a finding on the authoring agent; whether the text is right is its owner's. **Observation, not a guard** — never a gate.
+````
+
 
 ## 9. Not in this ballot (named so they are not read as covered)
 
@@ -718,7 +902,7 @@ Each: the problem, the options that survived two consult rounds, with their risk
 
 ## 11. Review round record
 
-*The R1, R2 and R3 entries below are the authors' own, spliced byte for byte from the files the orchestrator relayed (`batch-consults/{stacy,ada,lina}-r1.md` `-r2.md` and `-r3.md` in the session scratchpad); each block was compared with its file by `cmp` before its commit.*
+*The R1, R2, R3 and C1 entries below are the authors' own, spliced byte for byte from the files the orchestrator relayed (`batch-consults/{stacy,ada,lina}-r1.md` `-r2.md`, `-r3.md` and `-c1.md` in the session scratchpad); each block was compared with its file by `cmp` before its commit.*
 
 #### [STACY R1]
 
@@ -1432,9 +1616,236 @@ Each: the problem, the options that survived two consult rounds, with their risk
 
 **Declined at R4**: none. **Directed questions still open to me**: none. § 8 lists the R4 questions.
 
+#### [THURGOOD C1]
+
+*Read-only consult, 2026-10-26 (from 21:21:03Z, `date -u`), on the orchestrator's two proposals and two #514 questions, at Peter's direction that the relevant seats evaluate them before he rules. Read: the batch ballot at #528's head `b093a93d6`; the system-token ballot on `origin/chore/ballot-system-tokens-and-planning` (§§ 2–3, 8, 10); `.kiro/specs/129-consumer-generation-completeness/` at `08b9c7a8e` and its charter `.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` § "Scope"; the delegate-audit file on `origin/chore/delegate-audit-release-16.1.0` (`4409463c1`, #514's head); signing-act ballot § 3 (the link table) and § 5.3. No repo write, no credential read; I did not read #514's PR body, so where the orchestrator's framing quotes it I work from the committed file.*
+
+**A mapping first, so nothing is re-asked.** Peter's first words ("go with the seat recommendations of those that have them") already resolve every fork whose seats gave a recommendation. On the batch ballot that includes F-0, where every seat that read it leans (a) (Thurgood, Stacy, Ada); (c) is the orchestrator's proposal, which no seat had read as a whole, and that is what his second message sends back to us. On the system-token ballot it includes F-A, F-B and F-A-h, where the seats converged on (i), (c) and (h1). This entry evaluates the two proposals against those recommendations; it does not reopen the recommendations.
+
+---
+
+**(1) F-0 (c), the severance — lean (a), whole.**
+
+- **Why (a)**: every row fixes a finding measured at a release; the freeze is not in force (N unset, 131 paused); and (c) leaves two of the falsest texts in place for a spec with no date. The two texts: Stacy's RELEASE row (L400), already wrong against #492's S re-read, and RELEASE-FLOW L198's lead-in, already false against its own bullet. Both are wrong today, not only after this ballot.
+- **If Peter picks (c), the list I would sever** (a corrected (c), because the orchestrator's list strands two sites and splits one line):
+  - **Ratify now**: site 1 (RS-46b); site 3's compare sub-bullet only (RS-39 with RS-25, with F-39), with L108's date clause left unchanged; site 4 (RS-49, F-49) with E3 and E7; site 5 (RS-48) with E1 and E2; E8's two census fields (owed under every option, by Stacy's finding); and two placements the orchestrator's list left open:
+    - **site 12** (Stacy's L400 pointer). It corrects a restatement that is false today, independent of RS-41, so it ratifies now, with her C1 re-sign.
+    - **site 6's L198 lead-in sentence** alone. It is false today against the bullet, independent of F-41 and F-38d, so it ratifies now. Site 6's L199 additions (RS-41 and F-38d's read) carry.
+  - **I would also move RS-37 (site 2's second paragraph) into the ratify-now set.** It adds no duty (§ 5.3 already names the brief, the dispatch and the walk), only a walk row. Its miss is measured: 0 / 135 at 16.1.0, and trigger (d) fired. If it carries, the next walk can miss it again, which is the one outcome the queue record's trigger exists to prevent.
+  - **Carry into Spec 131**: RS-33 (site 2's first paragraph, site 11, F-33a/b); RS-34 (L108's date clause, site 7's first sentence, F-34); RS-38 with RS-29 (site 9, F-38, F-38d); RS-40 (site 10, site 13, F-40, F-40d); RS-41 (site 6's L199 additions, site 7's second sentence, E4, F-41); RS-43 (site 8, F-43a/b).
+- **Amendment cost, in commits**:
+  - **+1 queue commit**: one dated disposition line per carried row on the queue record.
+  - **+1 Spec 131 commit**: an inbound to 131 listing the carried rows with their sources, sites and the seats' leans.
+  - **The Status commit is larger**: struck sites removed, site 3 resolved as L108-unchanged plus the sub-bullet, site 6 resolved as L198-only.
+  - **Later**: a second RELEASE-FLOW amendment when 131 decides the carried rows. That is the cost that does not go away: RELEASE-FLOW and the ballot are each amended twice.
+  - **No commit saved**: the application PR stays one PR, with Stacy's C1 acts for site 12 only.
+- **The plan Peter requires for the carried rows**:
+  - **Owner**: Thurgood. I own the queue record and author 131's artifacts (the spec-authoring cost ruling).
+  - **Vehicle**: Spec 131's requirements, each carried row as a fix-first finding (outline § 4 (a)) and a map row (outline § 3), cited by RS number and queue-record path.
+  - **Record and trigger**: the queue record's own Trigger, `release:next:phase-1`, already does what Peter asks, provided each carried row's dated line says "carried to Spec 131 requirements; closes when 131's requirements merge naming it". At the next release's walk, 3a's due-row grep finds the record (`release:(<V>|next):phase-1`) and rows it, and phase 1 re-reads it at S. If 131's requirements have not merged by then, the carried rows show as open in that walk and in Stacy's pass: found again, not lost.
+  - **Lapse**: the record is P2 `(guard)`, so a lapse at that S goes to Peter with spec, drop or fix-now. A spec answer is already given (131), so his choice is drop or fix-now.
+  - **No new record**: the queue record carries this, so nothing new needs a trigger.
+- **Surviving counter-argument against my lean**: Peter's ruled spine is fix-first with a freeze. (c) is the shape that honours the freeze for the prose rows while shipping the guards, and the batch has grown each round (13 sites, R4). Under (a), 131's deletion units inherit about eleven more RELEASE-FLOW lines to weigh, and five of the rows stay prose that only a later read detects (ballot § 6 residual 2). Ada's own smaller set (RS-49 and RS-48) agrees with (c)'s core. If Peter weighs the freeze's intent above the stranded falsities, (c) as corrected above is the honest form, and its real cost is the double amendment.
+
+**(2) #493 item 2 carried to Spec 129, against ratifying Ada's ballot whole — lean: ratify whole.**
+
+- **Does 129 have a home?** Mechanically, yes. `.kiro/specs/129-consumer-generation-completeness/` exists at `08b9c7a8e`: a PLACEHOLDER outline with an "Intake" section, a `feedback/` directory and one inbound file (`inbound-from-ada-android-generator-defects-2026-10-24.md`).
+- **By subject, no.** 129's charter scope is generation: (i) theme emission on iOS and Android; (ii) the component tier in the consumer's harvest; (iii) retiring the native root files; (iv) `init` running `generate`; (v) per-platform output paths; (vi) the Model-B theme-override leak. Item 2 is product-workflow law: when a product token is planned and who decides a missed one, in Product-Token-Governance, Web-Authoring-Standards and four product-agent charters. No 129 scope item reads or writes that workflow. Carrying it there gives it a directory, not an owner who will decide it.
+- **Consumer-workflow question or identity fact?** It is a workflow rule, an execution question: what a platform agent does mid-build. That is unlike item 1, which is an identity fact (what "system token" means, and that human review binds its creation). By the 128 lesson, execution forks age badly when deferred to a spec that has not reached them. Here they are also not open: all seven seat reads converged (F-A (i); F-B (c); F-A-h (h1) where it applies), so Peter's first ruling covers them.
+- **Item 1 and item 2 are coupled.** Site 1's second sentence carries the planning duty into Core Goals. The system-token ballot's own fold-back (§ 10) is that scoping L59 without item 2 "removes the only always-loaded human-review sentence that reaches product tokens". Severing item 2 either strands that sentence or cuts it, and cutting it brings the fold-back's defect back. Leonardo's charter line (site 7) and the three platform Out-of-Scope lines (site 8) also say "token" where the scoped rule says "system token", so they belong to item 1's scoping, not to item 2.
+- **Surviving counter**: no product screen has ever been built here. F-A (i)'s relay cost and the frequency of missed needs are reasoning, not data (§ 10 residual 5). A spec that builds the first product screen would measure them before the rule binds. But that spec is not 129, and the better guard against a wrong rule is Leonardo's measurement record (§ 4 of that ballot), which re-opens F-A at a measured threshold. If Peter wants item 2 deferred anyway, its home is a product-side record with that trigger (the first product screen built), not Spec 129.
+
+**(3) #514's two questions.**
+
+**(a) The 12 pre-ratification acts in #222/#228/#239 — lean: outside the delegate backlog, treated as pre-chain history by the rule Peter already gave for #262.**
+- **What the file shows**: all three PRs merged before #262 and before the ballot's ratification (`2da74864`, #243). § 5.3's backlog clause starts at #262 inclusive ("every Stacy-signed act from Spec 123's MIDPOINT population (#262 …) inclusive, through the walk's base").
+- **Peter's answer on #514 Q3**, "pre-chain history and re-check", accepted #262's pre-ratification acts as pre-chain history with one re-read after the store fix. The consistent reading puts the 12 in the same class: outside the backlog's k, labelled, and re-checked once.
+- **Follow-up plan (Peter requires one)**: the 12 have not had that re-read. The addendum re-read #262, #465 and #467 only. **Owner**: Ada (the delegate). **Vehicle**: one addendum in the same delegate file, `--audit --pr <N> --signer stacy` with the default store set for #222, #228 and #239. **Event**: before #514 merges, or, if it merges first, at the next RELEASE walk's delegate brief, which I write (§ 5.3).
+- **Consequence of the other answer** (in the backlog): k grows from 437 to 449. Stacy's N gains 12, counted from signature history. The block's 11 `record absent` and 1 `anomaly` enter trigger (d)'s arithmetic and widen into Peter's J at this release (§ 5.4). That is a cost with no protective yield: the acts predate the rule they would be read against.
+
+**(b) Does a seat's loaded charter count as having read one of her own units? — lean: no as a general rule, with a narrow decidable exception Peter may take or leave.** First, a correction of fact from the committed file: of the six acts named, four are not link-7 readings, so this question does not decide them.
+- `ce4ead62` and `acc8df54` read **FAIL 6** (prompt_snapshot ≠ `.claude/agents/stacy.md` at `fc57947a`). That is the link-6 class, RS-36 item (1) with RS-10.
+- `17e0bf93` and `2e7ae81d` read **anomaly 4** (two candidates, the same transcript printed twice). That is RS-36 item (3), the double-candidate.
+- The link-7 acts are #427 L417 and L420 (`8674be2e`, `1ea854d1`: FAIL 7 on her trigger-set unit), #467 `027b8904` and #472 L519 (`c989dacf`: FAIL 7 on Systems Overview units, always-loaded identity docs, not her charter).
+
+The rule, the consequences and the vehicle:
+- **Why no**: link 7 exists against a read-less hash refresh (H6; ballot § 7.1: "stronger (was sampled)"). A loaded charter is the text at session start. A re-confirm after an edit to her own unit is exactly the case where the loaded text can be the old bytes, so counting it would make H6 undetectable on her own units. A tool read of the unit costs one call.
+- **Consequence of "no"**: the four link-7 acts stay FAIL 7 and widen into Peter's J for this release (§ 5.4). They are not re-labelled. The practice fix is a line in the signing-seat brief: a seat reads the unit by a tool call before signing it, its own charter and the always-loaded docs included. I would file that as an EXECUTION of § 3 link 7, not as law.
+- **Consequence of "yes" (general)**: link 7 gains a second source, the session's loaded text. The instrument must read `systemPrompt[0]`, and for identity docs whatever record holds the loaded CLAUDE.md, which link 6 does not read today. H6 is open for every unit a seat loads.
+- **The narrow exception**: the rendered line counts if it appears in the transcript's `prompt_snapshot` **and** link 6 holds against the charter at the act's own commit. That closes H6, because the snapshot then holds the new bytes. It is decidable from records the instrument already reads, and it covers her charter units only. It would not rescue the two Systems Overview acts, which are not in `systemPrompt[0]`.
+- **Where the general rule belongs**: yes, any answer other than "no" is a change to what link 7 reads, so it is LAW, and its vehicle is the RS-36 signing-act-chain amendment ballot, beside items (1)–(4). Under "no", nothing in the ballot changes; only the brief line is owed.
+- **Surviving counter**: under "no", a seat that read her own unit by loading it, with its text verbatim in front of her, reads FAIL 7 by a record-form rule. That raises Peter's J load on a seat whose acts he already walks (§ 5.3), and is friction without protection in exactly the case the narrow exception covers.
+
+**One line per question** (for the orchestrator):
+1. F-0: lean (a) whole; if (c), sever with sites 12 and L198 and RS-37 in the ratify-now set, carry six rows to 131 on the queue record's own `release:next:phase-1` trigger; counter: the freeze's intent and a batch that grew each round.
+2. #493 item 2: lean ratify whole; 129 has a directory but not the subject (generation, not product workflow), and item 2 is coupled to item 1's site 1; counter: no product screen measured yet, and that measurement belongs to Leonardo's record, not 129.
+3. #514: (a) outside the backlog as pre-chain history, re-read once by Ada before #514 merges; (b) no as a general rule (H6), narrow exception decidable from link 6 at the act's commit; any change rides the RS-36 amendment; four of the six named acts are link-6 and link-4 readings, not link 7.
+
+#### [STACY C1]
+
+*Read-only consult, 2026-10-26 (from 21:20:19Z by `date -u`). Sources: the ballot at `b093a93d6` (§ 7); the delegate file `delegate-audit-release-16.1.0-ada.md` at #514's head `4409463c1` (`git ls-remote`: branch and `refs/pull/514/head` equal); my MIDPOINT, 15.0.0 and 15.1.0 claims-pass records; signing-act ballot § 5.3; `.kiro/issues/README.md` rule 1; the queue record's Trigger and Class lines. I did no repo write and no git write, and read no credentials. I could not read #514's PR body (it needs `gh`), so for Q2 I read "§ 6" as the delegate file's labelled block and the question it carries to Peter.*
+
+**Conflict of interest, stated first.** Q2 and Q3 decide how my own signing acts are counted and read. Under § 5.3 a `FAIL` or `anomaly` on one of my acts goes straight to Peter, and I neither triage it nor rule on it. So my leans below are on the general rules only, and they are conflicted. I give no verdict on any of the eight acts.
+
+- **Q1 · F-0 · lean (a), unchanged after reading (c) as a whole.** → ballot § 7 F-0
+  - **Why (a)**: two of (c)'s carried items are not new law. They correct text that is false today against ratified law:
+    - site 12: my L400 restates phase 1's reads, and it has been wrong against #492 since #492 merged;
+    - L198's lead-in ("this text sets only *when*") is false against the bullet beneath it.
+    131's freeze exempts CORRECTIONs, so carrying them leaves false law standing for no gain.
+  - **RS-37's duty is already law** (§ 5.3), so carrying its site removes a walk row, not the obligation. My next RELEASE pass would find the same miss again, a release later.
+  - Under (a) every row is severable, and every seat's lean is (a). Under Peter's ruling ("go with the seat recommendations"), F-0 reads (a).
+  - **If (c)** (the plan Peter's condition asks for):
+    - **(i) Do not close the carried rows with a "carried to 131" line on the queue record.** Its lapse condition is "neither a merged vehicle nor a dated disposition line", so a dated carry line discharges the row, and the carry goes silent. That is the opposite of a plan.
+    - **(ii) File one record** for the carried rows: RS-33, 34, 37, 38, 40, 41, 43, F-38d, F-40d and sites 11 and 13. Owner Thurgood; Class `P2 obligation (guard)`, so its first lapse goes to Peter as spec, drop or fix-now; `**Trigger**: \`release:next:phase-1\``.
+      - Rule 1 says a trigger names the event that owes the close, never the vehicle. 131 is the vehicle, so it is named only in prose.
+      - The close condition, decidable at the next S: each row is applied by a merged PR, or rowed as a fix-first finding in `git show <S>:.kiro/specs/131-governance-simplification/requirements.md`. Otherwise the row lapses there.
+      - The queue record's rows then take dated lines that point to that record, not closing lines.
+    - **(iii) Ship sites 12 and the L198 lead-in now under either option**, as CORRECTIONs. L400's truth referent is RELEASE-FLOW L199 at #492; L198's is the current bullet. They need wording that is true of the bullet as it stands (my R3-4).
+    - **(iv) RS-37 needs no new law.** The orchestrator dispatches the delegate before phase 1 under § 5.3 as it stands.
+  - **What (a) also owes under Peter's condition**: (a)'s own deferred items each need the same treatment: RS-50; the two census fields; under F-49 (ii-b), Ada's census mode and the row split. Each needs a record and a trigger, or Peter ratifying past it with a dated plan.
+  - **Surviving counter against (a)**: five of the rows (RS-33, 37, 40, 41, 43) are prose whose only detector is my read after the act. That is agent-on-agent attestation, which Peter's self-governance aim says autonomy must not rest on, and which 131 exists to shrink. (a) makes RELEASE-FLOW bigger now, and some of it may be undone when 131 decides what the flow keeps. (c) is the principled answer to that. What it costs is a second amendment cycle and a release of known gaps.
+
+- **Q2 · the 12 pre-#262 acts (#222 10, #228 1, #239 1) · lean: count them in the delegate backlog.** → signing-act ballot § 5.3 "The backlog"; delegate file § "Labelled block"
+  - **The letter excludes them.** The backlog clause reads "from Spec 123's MIDPOINT population (#262, 297 acts at that count) inclusive". My MIDPOINT record agrees: `0 / 297`, #262 only.
+  - **My own frame includes them.** My 15.0.0 record added them, since they were in that release's population ("#262's 297 … and the 12 Stacy acts in the four pre-R PRs walked here", L304), and the frame has read `0 / 309` and then `0 / 314` since.
+  - **So the two counts disagree**, and the clause's purpose (no Stacy-signed act goes unread by a seat other than mine) covers these 12, which no later walk reaches.
+  - **Consequence of "count them"**: no new walk is needed, because Ada's labelled block already walked them: 11 `record absent`, 1 `anomaly`, all pre-ratification observations, so no new finding arises. The block joins the backlog's totals (k 437 → 449), my count line's N for this backlog includes them, and the delegate frame matches my Peter-sample frame.
+  - **Consequence of "exclude"**: the 12 are never read by any seat other than mine under any rule, and my 0 / 314 frame keeps counting acts no walk will ever reach. The record should then say so, and my frame should drop to 302 with an erratum.
+  - **The clause's text is an RS-36 item either way**: its parenthetical "(#262, 297 acts at that count)" is narrower than the population it names.
+
+- **Q3 · link 7 and loaded context · lean: no, loaded context does not count as a read of one's own unit.** → RS-36, the signing-chain amendment ballot
+  - **Why**:
+    - (1) The loaded charter is the version generated when the session started. When the act signs a changed unit, that is the pre-change text, so loaded text attests to having read the wrong bytes.
+    - (2) What is loaded is the internal rendering. The signature binds the consumer rendering (`renderedHash`), and for re-pointed units the two differ.
+    - (3) The transcript does not record which version was loaded. A "yes" would rest on the signer's word, turning a non-model check into agent attestation, against Peter's stated aim.
+  - **What "yes" lets through**: a signature on a changed unit whose signer only ever saw the old text, while link 7 reads green.
+  - **What "no" costs**: each of the eight acts reads `FAIL 7`, which goes to Peter, not to me. If he wants them cleared, the remedy is a re-sign: read the rendered unit at the signing commit through a tool (`git show` or Read), then make a new merge-only C1 signature commit, which the next delegate walk reads. That is minutes per act and about eight acts. Where a unit has since been re-signed, the old act is superseded, and only its record stands.
+  - **A narrower "yes" that would be mechanical**, for Thurgood to weigh, not a pick: count loaded context only if the instrument can pin the loaded file to a commit and show that the rendered line is byte-equal at that commit and at the signing commit. Today the store records no such commit, so this needs instrument work first.
+  - **Where the rule belongs**: in RS-36's signing-chain amendment, as a link-7 rule for every signer (Ada, Lina, Leonardo and Thurgood also sign units that sit in their always-loaded context). It should not be a Stacy carve-out. Peter should decide it before he disposes of the eight acts.
+
+**One-line read for the `**Consulted**:` line**: Stacy C1 — F-0 (a): sites 12 and L198 are CORRECTIONs (ship regardless), RS-37 is already law; if (c), a separate P2 (guard) record with `release:next:phase-1` and a 131-requirements close test, never a closing carry line; Q2 count the 12 (no new walk, frames reconcile, clause text to RS-36); Q3 no (stale and internal context, unverifiable), re-sign costs minutes per act, rule goes in RS-36 for all signers.
+
+#### [LINA C1]
+*(Site 10 / RS-40 only, as the seat whose correction practice it governs. Read-only at head `b093a93d6`: § 7 F-0 (a), (b), (c), § 6 residuals 1, 2 and 10, `[THURGOOD R4]` "orchestrator's severance"; Spec 131's outline § 4 (d) and the F-5 line. I ran nothing and edited nothing. The other sites are not read here.)*
+
+- **Lean: (a), the whole batch now, for site 10; if Peter takes (c), site 10 belongs in its ratify-now list, not its carry list.** Of the three, I would not pick (b) for this row.
+  - *Why site 10 is not like the prose rows (c) carries.* It adds no duty to RELEASE-FLOW and no instrument. It is one README paragraph (sites 10's text lands after L56) plus a PR-body line, and under F-40d (none) it needs no seat's re-sign, no consumer unit re-pointed, no charter touched. Of the seven rows (c) would carry, it is the one with the smallest cost to apply and the cost it imposes lands on CORRECTION authors, the channel Spec 131's freeze itself exempts (outline § 4 (d): "exempts CORRECTION edits"). A rule about how a CORRECTION is swept does not add law to the busy part of the release document that the freeze is aimed at (§ 6 residual 1), so the freeze argument that carries RS-37 or RS-41 bites it least.
+  - *Why not (b).* The finding it answers is already measured: at 16.1.0 a narrow ruled CORRECTION (#500, one reference) left its neighbours in the same file, and the sweeps (#502, #504) arrived only because Peter ordered them. Spec 131 is at its outline and paused before requirements (the memory record says so; the outline lists F-5/F-7 open and the freeze's N unset), so "carry into 131" has no date a CORRECTION author can plan against.
+
+- **What waiting for 131 costs my next correction PR.** Concretely, not much for me, and more for everyone else.
+  1. *For my PRs, nothing is blocked.* I can write the `**Sweep**:` line in my own PR bodies as practice, in site 10's form (class, command or named read, n hits, fixed, left with owner and record). My writing it is not law and no seat reads it; it is the discipline I already applied at #502 and #504 when Peter ordered it, now done without the order. That is the plan Peter's "anything deferred needs a plan" asks for, for my seat, and it costs me one line per class.
+  2. *What is lost is the rule on authors other than me, and the filing of left hits.* Without site 10, a CORRECTION by Ada, Thurgood or the orchestrator-run PR has nothing that says "sweep the class" or "file what you leave", so the 16.1.0 shape repeats: a narrow fix, neighbours found two PRs later, by someone else. Of my own, the next owed CORRECTIONs are the ones already on the record (for example the overview count-pointer and the Leonardo charter L329 term), and those are the very kind of single-reference fix where a sweep matters.
+  3. *The left-hit filing clause (a false-where-read hit filed `release:next:phase-1` or `Class: P0`) is what 3a's greps would otherwise miss.* Without it a hit I leave in another owner's file for a good reason has no rule that routes it to Peter. Under practice alone, I would put the trigger on the record myself, but a different author's left hit may carry `manual` and fall outside both greps (RELEASE-FLOW L32-L34).
+  4. *If 131 slips past the next release*, the carried row is found again by Stacy's RELEASE pass as the same finding one release older, and the cost of re-finding falls on the CORRECTION that ran with no sweep, not on the row.
+
+- **Surviving counter-argument against my lean.** *(1)* The freeze, ruled in by Peter on 2026-10-24 (F-9) though not in force, says no new law except deletions; site 10 is new law however small, and ratifying it with the batch is the pattern 131 was spun up to stop (batches growing each round: R2's site 12, R3's site 13). A smaller (a) or (c) that leaves site 10 out would be the more consistent reading of Peter's own ruling. *(2)* Site 10's detector is the weakest in the batch: under F-40d (none) no seat reads the line, and with it (site 13) the read is by sample and `0 hits` is the rote signal (§ 6 residual 3). Law whose only check is the author's honesty is law the practice already supplies; my own PRs show it. *(3)* Not mine to settle: both options keep "needs a ruling" and, under (b′), "owns / kept as written" as the author's calls. **What I cannot answer**: whether (1) outweighs the cost of a second re-finding of the sweep class. That is Peter's; I would put the pick as "site 10 now, the rest of (a) or (c) as he rules", and say plainly that my seat has a stake in site 10 being law, since it names my own practice as the standard.
+
+- **Not read**: the other sites; whether a smaller (c) leaves L400 and site 6's L198 lead-in coherent (Thurgood's read of placement); F-0 for the rows that are not mine.
+
+#### [ADA C1]
+
+*Read-only consult, 2026-10-26 (from 21:14:47Z, `date -u`). Peter's added words, relayed: "If they haven't been evaluated by the relevant agents, they should be." Read: #493 at its branch head `d8661e86f` (§§ 2–12); Spec 129's tree at `08b9c7a8e` (`.kiro/specs/129-consumer-generation-completeness/`: `design-outline.md` PLACEHOLDER, `feedback/design-outline.md`, one inbound) and its charter `.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` § "Scope"; `.kiro/issues/README.md` rules 1 and 11 at `08b9c7a8e`; #528 at `b093a93d6` (header, Census block, §§ 4, 6, 7, my R1 and R3). No repo edit, no git write. #493's branch is unchanged (`d8661e86f`); my two Status drafts are in `batch-consults/ada-493-status-drafts.md`.*
+
+**Conflict of interest, stated first.** On read 1 I am the filer of #493 and I picked (B) on the L59 record. On read 2 I own RS-49's and RS-48's execution sites (`scripts/release-publish.ts`, `scripts/verify-publish-rail.sh`). Both reads below are leans, not picks.
+
+---
+
+### 1 · #493: item 2 carried to Spec 129, or the ballot ratified whole
+
+**The question, split the way it bites.**
+- **Item 1 is an identity fact that already bites.** Core Goals L59 is always loaded into every seat and tells each of them "any token needs human review". Product-Token-Governance L60 tells Sparky, Kenya and Data they may add product tokens during implementation. Every session reads both. No scenario is needed to see the contradiction, and nothing a scenario finds would change the answer: Peter gave it (the reframe, 00:28:49Z).
+- **Item 2 has two layers.**
+  - **The duty itself** ("token needs are identified at screen specification and discussed before implementation; a missed need is surfaced, never filled silently") is also Peter's stated outcome, in the same reframe and in his 00:36:20Z clarification. That is an identity statement: it says what the product workflow is for. It is not a choice of mechanism.
+  - **F-A, F-B and F-A-h** are execution choices: what sits in the code while a missed need is discussed, and who decides it. Every reader's surviving counter-argument on F-A says the same thing: the frequency of missed needs, and so the relay cost of (i), is reasoning, not data, because no product screen has been built here. These are the forks a user scenario would improve.
+- **Does it bite now?** The duty binds a product build. This repo has no `product/`, so nothing here is exercised by it today. A consumer repo (test01, or a founder's) is where it bites, from its next screen spec.
+
+**Where the scenario that tests item 2 actually happens.** It is not Spec 129. 129's charter scope (i)–(vi) is generation completeness: theme emission, the component-tier harvest, retirement of the native root files, `init` runs `generate`, per-platform paths and the Model-B leak. None of its user scenarios writes a screen spec or builds a screen. Leonardo, who owns the workflow, is not one of its charter owners. Carried to 129, item 2 is an off-charter item in a spec whose outline is a PLACEHOLDER with no round open (design-outline.md § "Status"), and the outline round would have to admit it as a new scope item before reading it. The scenario that exercises F-A and F-B is the **first product build**, the same event Leonardo's measurement record (#493 § 4) already names as its trigger. On Spec 128 I can say only that its stories involve product teams adopting the system; I have not checked whether any of them builds a screen spec, so I make no claim that 128 fits better.
+
+**The options as I see them** (the pick is Peter's):
+- **(B) Ratify whole**, with the seats' recommendations: F-A (i), F-B (c), F-A-h (h1). The first product build re-opens F-A through Leonardo's measurement record (a high missed-need count re-opens it for (iii)), so the scenario correction is already wired to the event that produces evidence.
+- **(A′) Carry item 2 to Spec 129's outline round** (the orchestrator's reading).
+- **(A″) Carry item 2 to the first product build** (a class option). Law about a workflow no build has run waits for that workflow's first run, with its forks pre-written. *Cost*: the planning direction stays unwritten until then. Like (A′), it creates the fork for item 1 described below.
+
+**What any carry does to item 1 (applies to (A′) and (A″)).** Site 1's second sentence (Thurgood's, taken at his R2 item 1) and the end of site 2 (mine) already state item 2's duty. Applied without item 2, they contradict PTG L60 in the reverse direction, which is the defect class the ballot exists to remove. So a carry forces a further pick: apply item 1 as written (A-1, a live contradiction) or trim those two sentences into the carry (A-2, changed ratified bytes, needing Thurgood's and Stacy's words). Both are worked out in the drafts file, § A.0.
+
+**My lean: (B)**, for four reasons:
+- The duty is Peter's outcome statement, and his outcome statements are the forks that age well.
+- The execution forks have unanimous seat reads: seven of seven on F-A (i), seven of seven on F-B (c), and two (h1) reads with no (h2) on F-A-h.
+- The correction that needs a scenario is already tied to the scenario's event (the measurement record).
+- A carry to 129 parks the item off-charter, and it splits item 1 in a way that re-creates the defect or changes ratified bytes.
+
+Second choice: (A″) over (A′), because it carries the item to the event that tests it rather than to a spec that does not. I lean least towards (A′).
+
+**Surviving counter-argument (Lina's, from #493 § 3, and the strongest one).** Item 2 is eight sites and six seat acts on the three platform seats (three re-sign pairs and three re-confirms; Leonardo adds a fourth re-sign pair), whose consumers do not exist in this repo, for law no build has exercised. A narrower ballot after the first product build would cost the same acts once, with evidence. It also sits against Spec 131's ruled direction (no new law once its freeze is in force), which is not in force yet: (B) adds about forty lines of law during a governance simplification. What fold-back could not absorb: under (B), if the first build shows (i)'s relay cost is high, F-A is re-opened and the eight sites are amended a second time. That cost is real, and only (A″) avoids it.
+
+**If carried to Spec 129, the plan** (the drafts file, § A.3, has it in full):
+- **Receiving artifact**: 129 has a directory at `08b9c7a8e`, with a PLACEHOLDER outline and one inbound (`inbound-from-ada-android-generator-defects-2026-10-24.md`). No inbound for this item exists yet. I would file `.kiro/specs/129-consumer-generation-completeness/inbound-from-ada-product-token-planning-2026-10-26.md`: pointer-only, naming #493 at its Status commit as the text of record. Listing it under the outline's § "Intake" is Thurgood's act, since the outline is his file.
+- **Owners**: Ada files and carries it, as owner of PTG. Leonardo is the workflow's authoring owner and is named as a required reviewer of the outline round for this item. Lina owns sites 5 and 6. Thurgood applies sites 7–8b.
+- **Trigger**: rule 1 has no spec token. A new rule-10 record, `.kiro/issues/2026-10-26-product-token-planning-carried-to-spec-129.md` (P2 obligation (record) · deferred), with Trigger `release:next:phase-1`. That is rule 1's form for a P2 that rides another change; it closes when 129's outline merges with the item taken in or declined with a reason, and becomes `merge:#<N>` once that PR exists. Not a `path:` token: the outline file exists and takes intake notes, so a touch would fire it early, and a `path:` that never fires never lapses.
+- **Fallback**: the `release:next:phase-1` token itself. If 129's round has not opened by the next release's phase 1, the token fires there, and Stacy's RELEASE pass and the walk read it as fired. Its owner re-rules it or it lapses under rule 11, and a second lapse goes to Peter with spec, drop or fix-now.
+
+**One line**: Ada C1-1 — lean (B), ratify #493 whole with the seats' F-A (i), F-B (c), F-A-h (h1). The duty is Peter's identity statement. Item 2's execution forks are the scenario-sensitive part, and Leonardo's measurement record already re-opens them at the first product build. 129's charter has no product-workflow item, and any carry forces an A-1/A-2 fork on item 1's two duty sentences. Second choice is carrying to the first product build, not to 129. Lina's unexercised-law cost survives.
+
+---
+
+### 2 · #528 F-0: (a), (b) or (c)
+
+**My lean: (a)**, unchanged from R1 item 18 and consistent with every seat's read (Thurgood (a), Stacy (a)). The rows are measured findings, which is fix-first's (a). The freeze is not in force (its N is unset). RS-49's hazard is live at every 5.4.
+
+**Does (c)'s list (RS-49, RS-46b, RS-48, RS-39) match what I would keep?** It is a superset of my R1 "if smaller" pair (RS-49 and RS-48). Row by row:
+- **RS-48 (site 5, E1 mine, E2 Thurgood's): keep, ready now.** It has no fork. E1 needs one fresh live rail run (`VERSION=99.99.99 ./scripts/verify-publish-rail.sh`, an HTTP GET) re-recorded in my commit at application.
+- **RS-46b (site 1): keep, ready now.** I add it to my pair. It is a command fix with no fork, the nearest of the four to a CORRECTION, and it makes the walk's paste byte-reproducible. S-2 is settled.
+- **RS-49 (site 4, E3, E7): keep, but under F-49 (ii-b) not every part of it is ready to ship now.** It has two parts:
+  - **Ready now, under every F-49 option**: E7a (the dry run prints no runnable publish line) and site 4's binding of 5.4 to 5.3's record. This removes the harmful member (Ada R1 item 3).
+  - **Not ready under (ii-b)**: site 4's (ii-b) text tells 5.4 to run `release-publish.ts --npmjs <record>`. That needs E7b's code and tests, and (my R3 item 3) a census mode for the commit-held half of the four refusals (record-mode and tag-to-commit), with the row split by scope (the steward's call, E8). None of that exists, and I have not timed it. My unmeasured estimate is half a day to a day for E7b, its tests and the mode. Until then the item waits: a finding, not a gate, and Peter may ratify past it. E3's HONEST REACH text also depends on the F-49 answer.
+  - **The sub-fork this creates inside (c), which is Peter's:**
+    - (c-1) Ratify (ii-b) now and hold RS-49's application until I build E7b and the census mode, which has to be done before the next 5.4. The next release has no date, and 16.1.0 is published, so there is room.
+    - (c-2) Ship RS-49 now in the F-49 (i) shape (E7a plus the record binding) and bring (ii-b) as its own item when the mode exists. *Cost*: site 4 is amended twice.
+
+    My lean is (c-1): it keeps the guard in the command, the RS-7 principle. Fall back to (c-2) if the next release's phase 1 opens before the mode exists.
+- **RS-39 with RS-25 (site 3's compare sub-bullet): not my row; its content is ready but its rulings are not.** (I measured its non-`main` fetch, at exit 0 in 7 s and again in 6 s.) Two things are unresolved:
+  - **F-39 has no single seat recommendation**: Thurgood (b-always), me (b-always) weakly with (b) acceptable, Stacy (b). So "the seat recommendations" does not settle it, and Peter has to pick.
+  - **Under (c), the sub-bullet must be split from RS-34's date sentence**, which is carried. F-34 is split too: Thurgood (i) weakly, Stacy (ii), me none. Thurgood's § 7 cost names that split.
+
+  I would not strike RS-39: the false "no shipped file was removed" class bites at the next entry. But it is the one row of the four that needs Peter's pick and a line edit before it ships.
+- **Not in either list, and they need a home under (c)** (Thurgood's cost, which I confirm from my seat): site 12 (Stacy's L400 pointer) and site 6's L198 lead-in.
+
+**Surviving counter-argument against my (a)**: Spec 131's freeze, if it lands as ruled, would bar every prose row, and (a) adds law to the document read at the release's busiest moment. (c) is the honest middle. Its cost is two artefacts amended twice, and the risk that carried rows are found again, one release older, if 131 slips past the next release.
+
+**One line**: Ada C1-2 — lean F-0 (a). (c)'s list covers what I would keep (RS-49 and RS-48) plus RS-46b, which I endorse. Under (ii-b), RS-49's E7a and the 5.4 record binding are ready now, but site 4's (ii-b) text needs E7b and a not-yet-built census mode for its commit-held half: build them before the next 5.4 (c-1, my lean) or ship (i)'s shape now and (ii-b) later (c-2). RS-39 is ready in content but needs Peter's F-39 pick (seats split) and a split from RS-34's line.
+
+#### [THURGOOD R5]
+*Recording Peter's rulings, 2026-10-27 (from 02:30:30Z, `date -u`), at branch head `b093a93d6` plus the plan records `8073decc1`. The four C1 entries above are byte-equal to their files (`cmp`).*
+
+**Peter's words**, relayed by the orchestrator, typos corrected (meaning unchanged), with the bounds the orchestrator's clock gives:
+- Before 2026-10-26T21:12:21Z: *"Re: the remaining rulings, let's go with the seat recommendations of those that have them; but any that have deferred or follow-up work require a plan to be addressed."*
+- Before about 2026-10-26T21:25Z (the orchestrator's approximation; no clock read is on record for it): *"If they haven't been evaluated by the relevant agents, they should be."* The C1 entries above are that evaluation.
+- His picks, before 2026-10-26T21:28:31Z: *"Re: 1, Ada's plan"* and *"Re: 2, Thurgood + Ada's plan"*. As the orchestrator relays their mapping, item 1 is F-0 with F-49: the batch whole with F-49 (ii-b) on Ada's C1-2 plan (c-1); item 2 is F-39 (b-always), Thurgood's and Ada's lean.
+- His confirmation, before 2026-10-27T02:25:42Z: *"Cool. Let's go with my answers plus (b) for O-23."* The O-23 part is not this ballot's.
+
+**Each fork, ruled**: F-0 (a); F-49 (ii-b) on Ada's plan; F-39 (b-always); and by the standing ruling, F-33a (i), F-33b include, F-38 narrow, F-38d phase 1, F-40 (a′), F-40d charter, F-41 (i), F-43a ride, F-43b either. Seats are cited in § 7.
+
+**F-34 is not ruled.** Its seats split: Thurgood (i) weakly, Stacy (ii), Ada none, so the standing ruling does not reach it. It is the one `**Open for Peter**` line left in § 7, and the Status line waits on it.
+
+**What the rulings did to the ballot**:
+- Every After block in § 3, E3's three Afters and the Census block's F-49 lines are marked in place: RULED, FALLBACK (site 4's (i), E3's (i) and its census line, for Peter's "if a release comes first" case) or void. Nothing is deleted, because a ballot is a record that keeps superseded text inline (ballots README § "Conventions").
+- § "Resolved after-texts" reprints the ruled texts. Sites 3 and 7 keep both F-34 Afters until he answers.
+- § "Plans (Peter's condition)" gives each deferred item an owner, a vehicle, a record and a fallback.
+
+**C1 incorporation**:
+- **Stacy C1, item 1**: her rule for plans is **adopted**: a carried or deferred item gets its own record with a trigger, and never a dated line on the queue record, which would discharge the row. P1, P2 and P4 have their own records; RS-50 stays an open queue row. Her other items (the 12 pre-#262 acts; link 7 and loaded context) are #514's, not this ballot's. The file is spliced whole so the `cmp` holds.
+- **Ada C1-2**: her plan (c-1) is what Peter picked. RS-49's sites move out of the application PR into her own PR (P1), and the (i) shape is the stated fallback. Her C1-1 (#493) is that ballot's, spliced whole for the same reason.
+- **Lina C1**: recorded. Site 10 is in the ruled batch. Her practice of writing the `**Sweep**:` line before the application is her own.
+- **Thurgood C1**: my F-0 part is moot under (a). My #493 and #514 parts are those ballots'.
+
+**Questions still owed before the Status commit** (bytes reads, not forks):
+- the R4 questions in § 8 (Stacy's five, Ada's one, Lina's one);
+- **for Ada**: should E7a (the dry run prints no runnable publish line) ride the application PR, ahead of the rest of P1? It is ready under every option and removes the measured hazard sooner. Her plan as picked keeps it in P1.
+
 ## 12. Application ledger
 
 - **2026-10-26 (Thurgood)**: DRAFT on branch `chore/ballot-release-flow-batch`, cut from `99eabf854`. Site blocks cut from the files at that SHA by script; site 1's after-text run in this worktree with `bash --noprofile --norc` (3.2.57) and `zsh -f`. Nothing applied.
 - **2026-10-26 (Thurgood), R2**: `origin/main` (`61581c641`, #527) merged into the branch (`91abcc92f`); every site re-cut at `61581c641` by `batchbuild/sites2.py`; Stacy's, Ada's and Lina's R1 entries spliced into § 11 and compared by `cmp`; `[THURGOOD R2]` added; site 12 added; site 4 widened to L134–L136; forks F-39 (new), F-40, F-41 and F-49 redrafted. Nothing applied.
 - **2026-10-26 (Thurgood), R3**: at branch head `6b04cd12e` (after the queue lines `0a07a3601` and Stacy's erratum `6b04cd12e`); every site rebuilt by `batchbuild/sites3.py` at `61581c641`; site 6 widened to L198–L199; site 13 added (F-40d); forks F-38d and F-40d added, F-34, F-39, F-40 and F-41 redrafted; the census fields moved under every option; Stacy's, Ada's and Lina's R2 entries spliced into § 11 and compared by `cmp`; `[THURGOOD R3]` added. Nothing applied.
 - **2026-10-26 (Thurgood), R4**: `origin/main` (`08b9c7a8e`, #517) merged into the branch (`9562f59cb`); every site rebuilt by `batchbuild/sites4.py` at `08b9c7a8e`; Stacy's, Ada's and Lina's R3 entries spliced into § 11 and compared by `cmp`; `[THURGOOD R4]` added; F-0 (c) and (ii-b)'s census cost stated; Ada's amended census field and the steward's split ruling in E8. Nothing applied.
+- **2026-10-27 (Thurgood), R5**: Peter's rulings recorded (every fork but F-34); After blocks marked RULED, FALLBACK or void in place; § "Plans (Peter's condition)" and § "Resolved after-texts" added; three plan records filed (`8073decc1`); the four C1 evaluations spliced into § 11 and compared by `cmp`; `[THURGOOD R5]` added. Nothing applied; the Status line waits on F-34.
