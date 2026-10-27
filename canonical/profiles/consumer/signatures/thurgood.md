@@ -1311,6 +1311,17 @@ verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/__tests__/issues-owned.test.ts`: the Jest file that tests that command (18 cases, including the offline and timeout fixtures). Added to the charter's write scope by ballot `2026-10-20-manual-records-routed-readers` (RATIFIED, Peter, 2026-10-20) F-1 (a), so the steward may author the owner's session-start read (Thurgood, `fadc095e4`). It reads this repo's root `.kiro/issues/` records and `origin/main`, and is not in the package's `files`, so a consumer has no copy to own. 0 rendered pieces (fresh temp-tree rendering as above, 113 of 113 byte-identical), so the renderedHash is the empty-span hash. I assent that nothing survives.
 
+## `#frontmatter:writeScope[scripts/governance-examples/**]`
+
+signer: stacy
+date: 2026-10-27
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/governance-examples/**]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:2d3e842b71b5afee62d7ed8486d3cb8c1c312ea1695753582a9c98faee31adb2
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/governance-examples/**`: this repo's governance-examples guard (`check.ts`, `pending.json` and `__tests__/` with its fixtures), owned whole by the steward (register row `governance-examples`). Added to the charter's write scope by ballot `2026-10-26-governance-examples-guard-adoption` (RATIFIED, Peter, 2026-10-26, F-1 (a)) § 3 site 3, applied by Thurgood at `e870cf84d`; the row was authored unsigned at `ad9d4053c`. It is repo-internal tooling: the directory is not in the package's `files`, so a consumer has no copy to own, and the consumer output carries no `governance-examples` string (grep under `canonical/_consumer-output/`: 0). It is the same ground as `writeScope[scripts/completion-claims/**]`. The glob does not carry `pending.json`'s limits (the ballot's § 2 does, and my ARMING row's fourth read checks them); that is a charter fact, not a consumer one, and does not reach this row. canonicalHash is `hashEntry` of the entry's value, recomputed with `entryTree` + `regrounding/hash.ts` (the same computation reproduces `writeScope[scripts/completion-claims/**]`'s signed `afcd81bd…ea9c`); the renderedHash is the empty-span hash, recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` (no pieces). I assent that nothing survives.
+
 ## `#frontmatter:writeScope[.kiro/specs/**]`
 
 signer: stacy
