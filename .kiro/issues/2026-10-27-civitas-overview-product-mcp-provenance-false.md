@@ -22,3 +22,10 @@
 - **Grant needed first**: a grant naming `canonical/operative-sets/civitas-system-overview.yaml` for the `what-civitas-con-8` item re-author, the overlay pin in `canonical/profiles/consumer/always-set/civitas-system-overview.overlay.md`, and the regenerated `canonical/_consumer-output/**/designerpunk-systems-overview.md` and `canonical/generated.lock`. Enumerate them by a dry run, as `2026-10-26-overview-counts-pointer-grant.md` did.
 - **Then Stacy's C1 acts**: re-confirm both units, and re-sign the `#what-civitas-contains` disposition.
 - **Batching**: if another change already re-signs these units, ride it. Its grant names this record.
+
+## Dated lines
+
+- *2026-10-27 (Thurgood)*: a slip to correct at the next re-confirm. Stacy's re-confirm of `designerpunk-systems-overview #civitas-system-governance-infrastructure` (`f4466db5f`, PR #530) has a bullet header that calls Systems Overview **L180** "known false as history only". The false history is **Civitas L39** (`what-civitas-con-8`, "built in Spec 081: 14 tools"). L180 is a present count, true at `08b9c7a8e` but volatile, and her bullet's body says exactly that. Only the header is wrong.
+  - Her confirmation is her signed ledger line, so it is not edited in #530.
+  - **This record owes a further re-confirm of that unit** (§ "The fix"). That re-confirm corrects the header in her own entry. Until then, this line is the reminder.
+
