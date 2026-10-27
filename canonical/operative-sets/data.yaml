@@ -106,7 +106,7 @@ units:
         text: "**Ground truth for these token values is LIVE, not a file** — never read the built `dist/*.kt` snapshots (see the Ground truth section); query the application MCP for the resolved value, formula, per-platform (Kotlin) name, and the per-theme set for theme-varying tokens"
     confirmation: canonical/profiles/consumer/confirmations/data.md#android-theming-spec-094
   "#product-tokens-spec-108109":
-    canonicalHash: sha256:ff4aac618c5f0fdba25def08eb62d0ba2089e70c5afde72ea95f28371bd8e89e
+    canonicalHash: sha256:10bcc691b24d63a64c4f80707d9f60c6407f435903083ae3e8212945afa9f631
     items:
       - id: product-tokens-1
         kind: obligation
