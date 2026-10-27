@@ -3,7 +3,21 @@
 **Date**: 2026-10-26
 **Drafted by**: Ada (Rosetta; owner of `governance/Token-Governance.md`, `governance/Product-Token-Governance.md` and the L59 record), at Peter's direction. Leonardo's consult (relayed by the orchestrator, verified by him at `main` `df56d0ebc`) was folded in at R0. **R1s woven in at R2** (§ 13, [ADA R2]): Leonardo (site 3's text, site 7's line, his F-A and F-B reads, two corrected examples), Lina (sites 5–6, site 6a, site 8a, the F-A (i) interim, the agreement check), Thurgood (site 1's text, the `tokenSource` correction to the definition, the authority record, the agreement check, the implementation-time-check record). **R1s and R2s woven in at R3** (§ 13, [ADA R3]): Kenya, Sparky and Data (sites 8 and 8a in their own bytes, site 8b, Data's marker on an omitted value), Stacy (the `no-hardcoded-color` census lines, the one-commit bindings, one id for the route, the re-sign count, § 14's form, the `governance-examples` step), Leonardo R2 (the measurement record is his) and Lina R2 (Sparky's ban wording; the marker-removal sentence in L239's web form). **The confirmation round woven in at R4** (§ 13, [ADA R4]): Thurgood R2 (site 1's two parts, already in his commit; the 2/2a commit and its stop; the `docs/collaboration.md`, L697 and `no-hardcoded-color` owners; five sweep census lines; step 2's extended command; his F-A-h row and the (h2) correction), Stacy R2 (B-1 cleared; step 2's command form) and Leonardo R3 (L329).
 **Peter's direction** (chat, 2026-10-26). **Committed record**: `.kiro/issues/2026-10-25-release-16.1.0-walk.md` § "Re-cut at the release base `a03b92f02`", the line "Corrected (2026-10-26, Thurgood, on Peter's own correction, relayed): RULED, not waived" (Thurgood, `777339183`, merged in #494 at `a95d6bf3d`), which quotes him with clock times: before 00:21:54Z, *"I don't necessarily see these things in conflict; because both can be true at the same time"*; at 00:28:49Z, the reframe, *"We might refine it to 'creating system tokens needs human review' and 'product teams should surface and discuss token gaps during planning and before implementation'"*; at 00:36:20Z, a clarification, which the record paraphrases as "identifying token needs before implementation rather than ad hoc" (the orchestrator relayed it verbatim, chat only: *"I'm trying to imply it's better to identify what tokens will be needed before implementation starts so the token needs can be identified and discussed — rather than ad hoc."*); at 00:38:29Z, *"Proceed as the team recommends."* The record rules that the two texts can be reconciled under this scope, that this ballot writes his reframe into them, and that "Proceed" settles only the sequencing (this ballot is applied after 16.1.0's S). This resolves the L59 record's fork toward (B), scoping, and adds a planning duty the record did not have. It does not answer F-A or F-B (§ 8), which Leonardo's consult found after the shape was recommended.
-**Status**: **DRAFT** — records the measure. It ratifies nothing and applies nothing.
+**Status**: **RATIFIED (Peter, 2026-10-26/27) — whole: items 1, 2 and 3, with F-A (i), F-B (c) and F-A-h (h1).** Peter's words, in chat, relayed by the orchestrator (typos corrected, meaning unchanged):
+- received before 2026-10-26T21:12:21Z: *"Re: the remaining rulings, let's go with the seat recommendations of those that have them; but any that have deferred or follow-up work require a plan to be addressed."*
+- received before 2026-10-26T21:28:31Z, and before the seats' C1 entries were asked for: *"If they haven't been evaluated by the relevant agents, they should be."*
+- on this ballot, received before 2026-10-26T21:28:31Z: *"Re: 1, Ada's plan"*
+- confirmed, received before 2026-10-27T02:25:42Z: *"Cool. Let's go with my answers plus (b) for O-23"* (O-23 is not this ballot).
+
+The clock bounds are the orchestrator's.
+
+**The orchestrator's reading, recorded as its own**: "Ada's plan" is [ADA C1] item 1 (§ 13): ratify the ballot whole on the seats' recommendations.
+- **F-A (i)**: all seven readers (Leonardo, Lina, Thurgood, Kenya, Sparky, Data, Stacy).
+- **F-B (c)**: the same seven.
+- **F-A-h (h1)**: Thurgood (R2), Stacy (R3) and Leonardo ([LEONARDO C1] item 3). Sparky surfaced the fork with no read, and no reader took (h2).
+- Kenya's strike form of K-i (§ 8) is not taken.
+
+The seats evaluated whole against split before the ruling ([LEONARDO C1], [THURGOOD C1], [ADA C1], § 13). The orchestrator's earlier reading (item 1 now, item 2 carried to Spec 129) is withdrawn by the orchestrator and was never committed here. Peter's earlier words, quoted in the header (00:28:49Z, 00:36:20Z, 00:38:29Z), still bind. Every amendment pointer carries 2026-10-27, the date of the confirming words. Peter's condition is met in § "Plans (Peter's condition)". § 14 holds the resolved after-texts (§ 12 step 1). *(Prior status: DRAFT.)*
 **Owners**: Ada (item 1's Token Governance site; item 2's Product-Token-Governance sites); Lina (sites 5, 6 and 6a, Web-Authoring-Standards); Thurgood (item 1's Core Goals site, the register row, and the charter and profile acts of § 7). Each other site's owner is named at the site.
 **Required reviewer**: **Stacy** (R1, R2 and R3 in; B-1 cleared at R2; site 1 and § 6's five sweep lines confirmed at R3): census reader (README § "Conventions", "Instrument census"), confirmer and signer of Core Goals `#development-practices` (§ 7), reader of the edit-kind lines.
 **Reviewers**: **Thurgood** (Core Goals owner and register steward; Product MCP owner, § 4; R1 and R2 in), **Leonardo** (the product workflow, site 3's text and site 7; R1, R2 and R3 in), **Lina** (owner of `governance/Web-Authoring-Standards.md`, sites 5–6a; proposer of site 8a; R1, R2 and R3 in), **Sparky** (sites 5–6 are his routed law; sites 8 and 8a; R1 and R3 in), **Kenya** and **Data** (Product-Token-Governance binds them; sites 8, 8a and 8b; R1 and R3 in). **Peter** ratifies (site 1 edits Core Goals).
@@ -51,7 +65,7 @@ Two more texts restate L59: `.cursor/rules/tokens.mdc` L20 ("| Creating ANY toke
 
 **After** (L59, one list item; Thurgood's text, with the kinds parenthetical and the sentence-2 clause taken at [THURGOOD R2] item 1; the bytes are the block's one line):
 ```
-- **Creating ANY system token** (primitive, semantic or component): Always requires human review — no autonomous token creation (what a system token is: Token Governance § "Token Creation Governance"). A product token is planned instead: its need is identified at screen specification and discussed before implementation, and a need the spec missed is surfaced, never filled silently (Product-Token-Governance § "Authoring Workflow"). *(Amended <ratification date> by ballot 2026-10-26-system-token-review-and-token-planning, item 1; prior text at `a95d6bf3d`.)*
+- **Creating ANY system token** (primitive, semantic or component): Always requires human review — no autonomous token creation (what a system token is: Token Governance § "Token Creation Governance"). A product token is planned instead: its need is identified at screen specification and discussed before implementation, and a need the spec missed is surfaced, never filled silently (Product-Token-Governance § "Authoring Workflow"). *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 1; prior text at `a95d6bf3d`.)*
 ```
 
 The second sentence keeps the planning duty in the always-loaded line, so the line does not only narrow (§ 10). It carries no F-A slot: it states the duty for the needs a spec names, and a need the spec missed is met during the build under every F-A answer; the pointer reaches that path.
@@ -76,7 +90,7 @@ Either part may be taken alone. Stacy signs either form of the parenthetical (R1
 > This is non-negotiable. Token creation is an architectural decision that affects the entire design system. AI agents should never autonomously create tokens.
 
 **After** (L171 replaced by one paragraph; L173's last sentence scoped; the Component Token Construction Rule after L173 is unchanged):
-> **Creating ANY system token (semantic, primitive, or component) requires human review.** A system token is a Rosetta token: a primitive or semantic token in the token source, or a component token declared with `defineComponentTokens()` (a component's `*.tokens.ts`). The token source is `src/tokens/` in DesignerPunk's repo; in a product it is the directory `tokenSource` names in `designerpunk.config.ts` (`init` writes `./src/tokens`), and in package mode, with no `tokenSource`, a product's primitives and semantics come from the package and are added only upstream. A product token (`product/tokens/*.yaml`) is governed by Product-Token-Governance: its need is planned at screen specification and discussed before implementation, and the indexer checks its naming and that it carries a rationale. *(Amended <ratification date> by ballot 2026-10-26-system-token-review-and-token-planning, item 1; prior text at `a95d6bf3d`.)*
+> **Creating ANY system token (semantic, primitive, or component) requires human review.** A system token is a Rosetta token: a primitive or semantic token in the token source, or a component token declared with `defineComponentTokens()` (a component's `*.tokens.ts`). The token source is `src/tokens/` in DesignerPunk's repo; in a product it is the directory `tokenSource` names in `designerpunk.config.ts` (`init` writes `./src/tokens`), and in package mode, with no `tokenSource`, a product's primitives and semantics come from the package and are added only upstream. A product token (`product/tokens/*.yaml`) is governed by Product-Token-Governance: its need is planned at screen specification and discussed before implementation, and the indexer checks its naming and that it carries a rationale. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 1; prior text at `a95d6bf3d`.)*
 >
 > This is non-negotiable. Token creation is an architectural decision that affects the entire design system. AI agents should never autonomously create system tokens.
 
@@ -142,7 +156,7 @@ One history entry, appended as the row's last `history` item (two spaces of inde
 **After**:
 > ## Authoring Workflow
 >
-> **Token needs are planned before implementation.** A screen's token needs are identified while the screen is specified, so they can be discussed rather than decided ad hoc during the build. The screen spec names every token its nodes use in their `tokens:` blocks (Integration Guide § "Writing Screen Specs"): system tokens, semantic first, and the product tokens the screen introduces. It also names each need no system token covers, as a new product token or as a system gap. A system gap goes to Thurgood, who triages it to Ada; creating a system token needs human review (Token Governance § "Token Creation Governance"). Until the gap is resolved, the spec names the product token the screen uses in its place, with `promotionCandidate: true`, or the screen waits; the discussion decides which. ⟦F-B1⟧ *(Amended <ratification date> by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
+> **Token needs are planned before implementation.** A screen's token needs are identified while the screen is specified, so they can be discussed rather than decided ad hoc during the build. The screen spec names every token its nodes use in their `tokens:` blocks (Integration Guide § "Writing Screen Specs"): system tokens, semantic first, and the product tokens the screen introduces. It also names each need no system token covers, as a new product token or as a system gap. A system gap goes to Thurgood, who triages it to Ada; creating a system token needs human review (Token Governance § "Token Creation Governance"). Until the gap is resolved, the spec names the product token the screen uses in its place, with `promotionCandidate: true`, or the screen waits; the discussion decides which. ⟦F-B1⟧ *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
 >
 > **Leonardo** defines product tokens during screen specification. He identifies product-level values, names them, and documents their purpose. This is the primary authoring path.
 >
@@ -214,12 +228,12 @@ The naming-authority paragraph is unchanged: it governs how a token is named, no
 - **L36** before: `| **Product token** | One product vertical, any number of surfaces | Product team authors freely |`
 - **L36** after:
 ```
-| **Product token** | One product vertical, any number of surfaces | Product team authors, with no system review; needs planned at screen specification (§ "Authoring Workflow") *(Amended <ratification date> by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)* |
+| **Product token** | One product vertical, any number of surfaces | Product team authors, with no system review; needs planned at screen specification (§ "Authoring Workflow") *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)* |
 ```
 - **L72** before: `**Responsibility**: This rule applies at the *authoring* point — Leonardo during screen spec, platform agents when discovering new needs during implementation. Platform agents consuming generated CSS custom properties don't need to worry about ref vs value at consumption time. If Leonardo's spec already includes a `value:` token with rationale, platform agents trust that decision during implementation.`
 - **L72** after:
 ```
-**Responsibility**: This rule applies at the *authoring* point — Leonardo during screen spec, and a platform agent for a need the spec missed, under § "Authoring Workflow". Platform agents consuming generated CSS custom properties don't need to worry about ref vs value at consumption time. If Leonardo's spec already includes a `value:` token with rationale, platform agents trust that decision during implementation. *(Amended <ratification date> by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
+**Responsibility**: This rule applies at the *authoring* point — Leonardo during screen spec, and a platform agent for a need the spec missed, under § "Authoring Workflow". Platform agents consuming generated CSS custom properties don't need to worry about ref vs value at consumption time. If Leonardo's spec already includes a `value:` token with rationale, platform agents trust that decision during implementation. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
 ```
 
 Both now carry the dated pointer every law-doc site needs (README § "Conventions"; the lesson of Lina's and Thurgood's R1 on #491); my R0 omitted them. L24 ("Deviation is welcome; deviation without communication is not") is unchanged: the duty is that principle, applied before the build.
@@ -229,7 +243,7 @@ Both now carry the dated pointer every law-doc site needs (README § "Convention
 - Before: `There is no step 4. If no system token exists, create a product token.`
 - After:
 ```
-There is no step 4. If no system token exists, the value is a product token, never a hard-coded value: the one the screen spec names, or, for a need the spec did not name, one you surface to Leonardo and never add silently (§ "Product Token Authoring (Sparky)" below says when it may be written). *(Amended <ratification date> by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
+There is no step 4. If no system token exists, the value is a product token, never a hard-coded value: the one the screen spec names, or, for a need the spec did not name, one you surface to Leonardo and never add silently (§ "Product Token Authoring (Sparky)" below says when it may be written). *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
 ```
 
 L102 sits inside § "Hard Rules", item 3, which renders into Sparky's charter; it is short and the same under every fork (Lina R1 item 1). #491 rewrote L106 of the same item; the hunks do not overlap (site 6a adds L106's pointer).
@@ -241,7 +255,7 @@ L239 carries the web form of site 3's `⟦F-A⟧`, resolved from the same answer
 - **L239** before: `If you need a spacing, color, typography, motion, radius, border, shadow, z-index, or grid value and no system token (semantic or primitive) covers it — create a product token immediately.`
 - **L239** after (the ban sentence is Sparky's wording, taken by Lina at R2 item 4, byte for byte):
 ```
-If you need a spacing, color, typography, motion, radius, border, shadow, z-index, or grid value and no system token (semantic or primitive) covers it, the value is a product token. If the screen spec names it, use it, or author it as the spec names it. If the spec does not, it is a need the spec missed: surface it to Leonardo as a Tier 1 clarification (Product-Handoff-Protocol § "Tier 1: Quick Clarifications"), with the need, the system tokens you checked (semantic first), and a proposed name with its `ref:` or `value:` and rationale. ⟦F-A, web form⟧ The outcome goes in your Implementation Report under "Decisions Made During Implementation". The gap is never filled with a hard-coded value (a literal `var()` fallback or `calc()` operand included), or with a value under a node's `props:` in the screen spec. Product-Token-Governance § "Authoring Workflow" is the rule for every platform; this is its web form. *(Amended <ratification date> by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
+If you need a spacing, color, typography, motion, radius, border, shadow, z-index, or grid value and no system token (semantic or primitive) covers it, the value is a product token. If the screen spec names it, use it, or author it as the spec names it. If the spec does not, it is a need the spec missed: surface it to Leonardo as a Tier 1 clarification (Product-Handoff-Protocol § "Tier 1: Quick Clarifications"), with the need, the system tokens you checked (semantic first), and a proposed name with its `ref:` or `value:` and rationale. ⟦F-A, web form⟧ The outcome goes in your Implementation Report under "Decisions Made During Implementation". The gap is never filled with a hard-coded value (a literal `var()` fallback or `calc()` operand included), or with a value under a node's `props:` in the screen spec. Product-Token-Governance § "Authoring Workflow" is the rule for every platform; this is its web form. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
 ```
 - `⟦F-A, web form⟧` under (i): K-i, one space, then this text; under (h1), one space and K-h follow it:
 ```
@@ -252,7 +266,7 @@ On web the comment is `/* token-gap: <need> */`. Surface every gap from one buil
 - **L283** before: `5. **Nothing exists** → Create it following the naming schema`
 - **L283** after:
 ```
-5. **Nothing exists** → If the screen spec names it, create it following the naming schema. If it does not, it is a need the spec missed: follow § "The Rule" above before you create it. *(Amended <ratification date> by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
+5. **Nothing exists** → If the screen spec names it, create it following the naming schema. If it does not, it is a need the spec missed: follow § "The Rule" above before you create it. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
 ```
 
 The web forms open with site 3's keys byte for byte, as Lina said she would mirror them. Her web-specific sentences follow the key. The last sentence of the (i) web form, "Remove the marker when the outcome is applied.", is Lina's R2 item 2, taken at R3: without it Sparky's copy lacks the clause that makes an open marker at a unit's merge a discrepancy (Stacy R1 item 4), and it sits outside every key.
@@ -427,7 +441,7 @@ The seat-object boundary holds as in the token-selection ballot § 6: operative-
 
 | Signed / retained unit | Moves under | Acts |
 |---|---|---|
-| Core Goals `#development-practices` (`canonical/operative-sets/core-goals.yaml`, item `practice-14`, L95–98; consumer row `canonical/profiles/consumer/always-set/core-goals.dispositions.yaml` L9; overlay `always-set/core-goals.overlay.md`, unit at L23, item text at L42) | site 1 | Thurgood re-authors `practice-14` to site 1's text without its amendment parenthetical, re-renders the overlay unit, and adds one removal to the consumer row for the amendment pointer (the token-selection ballot's § 13.9 precedent): `{"text": " *(Amended <ratification date> by ballot 2026-10-26-system-token-review-and-token-planning, item 1; prior text at `a95d6bf3d`.)*", "cites": "subtraction-2"}`. Stacy re-confirms and re-signs, on her conditions (§ 12). Her **third** re-sign of this unit in about two days, after #472 (`1524a96aa`) and #491 (`a03b92f02`) (Stacy R1 item 3, correcting R2's "second") |
+| Core Goals `#development-practices` (`canonical/operative-sets/core-goals.yaml`, item `practice-14`, L95–98; consumer row `canonical/profiles/consumer/always-set/core-goals.dispositions.yaml` L9; overlay `always-set/core-goals.overlay.md`, unit at L23, item text at L42) | site 1 | Thurgood re-authors `practice-14` to site 1's text without its amendment parenthetical, re-renders the overlay unit, and adds one removal to the consumer row for the amendment pointer (the token-selection ballot's § 13.9 precedent): `{"text": " *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 1; prior text at `a95d6bf3d`.)*", "cites": "subtraction-2"}`. Stacy re-confirms and re-signs, on her conditions (§ 12). Her **third** re-sign of this unit in about two days, after #472 (`1524a96aa`) and #491 (`a03b92f02`) (Stacy R1 item 3, correcting R2's "second") |
 | Leonardo `#out-of-scope` (`canonical/operative-sets/leonardo.yaml` L136–, item at L149–150; consumer row `leonardo.dispositions.yaml` L10; overlay `leonardo.overlay.md`, unit at L35, item text at L40) | site 7 | Thurgood applies L340, re-authors the item, re-renders the overlay unit. Leonardo re-confirms and re-signs |
 | Sparky, Kenya, Data `#out-of-scope` (operative sets `sparky.yaml` L145–146, `kenya.yaml` L149–150, `data.yaml` L153–154; consumer rows `sparky.dispositions.yaml` L10, `kenya.dispositions.yaml` L11, `data.dispositions.yaml` L11; overlays, item text at `sparky.overlay.md` L41, `kenya.overlay.md` L52, `data.overlay.md` L53) | site 8 | The same, per seat: Thurgood authors; Sparky, Kenya and Data each re-confirm and re-sign |
 | Sparky `#product-tokens`, Kenya and Data `#product-tokens-spec-108109` (operative items `sparky.yaml` `product-tokens-5` L123–126, `kenya.yaml` `product-tokens-6` L127–130, `data.yaml` `product-tokens-6` L131–134; consumer rows `retained`: `sparky.dispositions.yaml` L9, `kenya.dispositions.yaml` L10, `data.dispositions.yaml` L10) | site 8a | Thurgood applies the three charter lines and re-authors the three items. Each seat re-confirms; no re-sign, the units being retained (Lina's read, confirmed by Stacy, R1 item 2: `not-routed unsigned`, each with a confirmation-sheet section dated 2026-09-29) |
@@ -442,20 +456,23 @@ The seat-object boundary holds as in the token-selection ballot § 6: operative-
 Both came from Leonardo's consult, after the shape Peter accepted was recommended. Each changes what a platform agent does when the spec missed a need, so neither is wording. Each answer's text is written in § 3 (slots `⟦F-A⟧`, `⟦F-B1⟧`, `⟦F-B2⟧`, and L239's web form).
 
 **Open for Peter**: **F-A — the escape hatch's shape**: what happens to the value while a missed need is discussed.
+*Answered (Peter, 2026-10-26/27; Status line): **(i)**.*
 - **(i) Stop and ask, per value, with an interim.** The platform agent keeps building; on the one value, it raises a Tier 1 clarification (Product-Handoff-Protocol § "Tier 1: Quick Clarifications") with the need, the system tokens it checked (semantic first), and a proposed name with its `ref:` or `value:` and rationale. Until the outcome, the code uses the nearest system token, marked `token-gap`, or leaves the value out with the same marker where the value would go (Data's addition, R3); every gap from one build pass goes in one message (Lina's interim and batching). Leonardo resolves it (or, where F-B sends it to the product's human lead, the human through him; Leonardo R1 item 5) in one of three ways: the spec is amended to name an existing token; the spec is amended to name a new product token, which the platform agent then authors; or it is a system gap, routed to Thurgood and Ada, where creating the token needs human review under scoped L59. The outcome goes in the Implementation Report. *Keeps*: Peter's "discussed before" literally, since the interim creates no value; every product token is named in a spec. *Costs*: one relay per build pass with gaps (one per value without batching), through Peter when agents run in separate sessions; a second short pass on each screen that had gaps. *Risk*: the interim can ship, since no check reads the marker until § 4's check (c) exists (F-A-h below asks whether the text should hold the merge on it now), and a value within tolerance of a system token is never raised, by design; the workaround risk (a literal or a `props:` value) is reduced by the ban and the interim, not removed.
 - **(ii) Provisional, but not mergeable.** The platform agent writes the token on the unit branch, provisionally, under the naming and rationale rules, and raises it in the same session with the same content as (i). The unit's PR does not merge until the outcome is recorded in the Implementation Report and the PR body; the spec is amended to name a kept token, and a rejected one is removed before the merge. *Keeps*: the build moves, and the interim is in the index, where the indexer checks its naming and rationale. *Costs*: it is filled before it is discussed, which is closer to the "ad hoc" Peter named; the discussion starts from a token that already works, which tilts it toward keeping the token (Lina); a provisional token and a kept one are the same bytes, since the product-token schema has no `status` field, and nothing in the toolchain reads "provisional"; in a product repo with no PR gate, "does not merge" stops nothing (Leonardo, Lina).
 - **(iii) Split by kind.** (i) for colour values (already under the two-gate rule) and for a need that may be a system gap; (ii) for other values. *Costs*: two paths in one workflow; the split rests on the agent's judgment of "may be a system gap", and a wrong judgment fails toward (ii) (Leonardo, Lina). It was my reading of Leonardo's consult lean; he has revised his lean to (i) throughout (R1 item 3), so no reviewer reads (iii) now. It stays on the ballot because it is defensible, and Leonardo's measurement record (§ 4) names it as what a high missed-need count would re-open.
 
 **Open for Peter**: **F-B — "discussed" with whom**: the partner at spec time (`⟦F-B1⟧`) and who decides a missed need (`⟦F-B2⟧`).
+*Answered (Peter, 2026-10-26/27; Status line): **(c)**. `⟦F-B1⟧` takes the (b)/(c) text and `⟦F-B2⟧` the (c) text (§ 14).*
 - **(a) Leonardo with the platform agents.** The product architect is the discussion partner at spec time and decides missed needs. *Costs*: once L59 is scoped, no human sees a product token unless an audit does; agreement between two agents is not a check independent of the agents (Leonardo), and a `value:` token's rationale has no human reader (Lina would not take it).
 - **(b) The product's human lead** (Peter in this repo; the founder in a product repo), through Leonardo, at spec time and for every missed need. *Keeps*: the one human contact point the scoping would otherwise remove. *Costs*: human time on every screen spec's token list, and on every missed need. In this repo Peter already carries every Tier 1 message, so the added cost is his attention to the decision, not the relay; in a product repo run from one session, it adds an interruption for each need (Leonardo).
 - **(c) Human at spec time, Leonardo for missed needs**, with colour values and system gaps reaching the human in both. *Keeps*: one human read per screen, at the point Peter's direction names, and implementation-time gaps stay fast. *Cost at spec time*: little. A product spec's `design.md` and `tasks.md` already pass the sequential formalization gate with feedback rounds and are Peter-merged (Product-Handoff-Protocol § "Leo → Platform (Screen Spec Handoff)"), so the token list has to be legible inside a read that already happens; verified in the text, not observed, since no product screen has been built (Leonardo R1 item 4). *Surviving cost*: a non-colour product token found mid-build and agreed with Leonardo reaches a human only as a line in a committed Implementation Report at the PR merge (in a product repo, only if it has a PR gate), never as a decision; on a `value:` token Leonardo is the only check on the rationale until § 4's implementation-time check exists. A Trivial surface gets no human gate (Leonardo's follow-up, § 4).
 
 **Open for Peter, only if F-A is (i) or (iii)**: **F-A-h — does an open `token-gap:` marker hold the unit's merge?** (Sparky R1 item 4, surfaced and not picked.) Each changes what happens at a unit's merge, so it is not wording.
+*Answered (Peter, 2026-10-26/27; Status line): **(h1)**.*
 - **(h1) Hold now.** One sentence after the (i) text, in both copies, as its own key K-h (§ 3 site 3, `⟦F-A-h⟧`; step 6b greps it). *Keeps*: (i) gains the mechanical stop (ii) was offered for. *Costs*: a stop only where a PR gate exists; until check (c) is built it is enforced by the PRIMARY's own grep; every screen with gaps waits for its outcomes before it merges, a system gap included unless the outcome is a `promotionCandidate` product token.
 - **(h2) Wait for check (c)** (§ 4). Nothing is added. *Keeps*: one sentence fewer. The text makes an open marker at merge a discrepancy only once the outcome has been applied ("the marker is removed when the outcome is applied", in both copies from R3). While the outcome is pending, an open marker at merge is what K-i allows, and § 10 residual 5 says the interim can ship. So a claims pass that reads `git grep -n "token-gap:" <merge>` (Stacy R1 item 4) must also read the Implementation Report and the relay to tell which it is (Thurgood R2 item 7, correcting R3's "the text already makes an open marker at merge a discrepancy"). *Costs*: until (c) exists, the first time anything sees an open marker is after the merge, and in a consumer repo that runs no claims pass, nothing sees it. Built under (h2), check (c) can only report: a check that failed a merge on an open marker would enforce more than the text says, and stopping a merge needs a second ballot that adds the hold. Under (h1), building (c) is EXECUTION of a rule already written (Thurgood R2 item 7).
 
-**Recorded, not a fork on the ballot: Kenya's other form of K-i** (R1 item 3, "(i) with K-i's 'or leaves the value out where no system token is near' struck for all platforms"). I took Data's form at R3 (keep the omission, mark it; § 3 site 3), which gives a check what the strike would give it, a marker at every interim, without forcing a nearest token where the honest interim is the platform's default. Kenya leaned to (i) as written, Data and Stacy to the marker. Peter may still pick the strike; its text is K-i without the clause ", or leaves the value out where no system token is near, with the same marker where the value would go", and it costs Lina's mirror and 6b's key.
+**Recorded, not a fork on the ballot: Kenya's other form of K-i** (R1 item 3, "(i) with K-i's 'or leaves the value out where no system token is near' struck for all platforms"). I took Data's form at R3 (keep the omission, mark it; § 3 site 3), which gives a check what the strike would give it, a marker at every interim, without forcing a nearest token where the honest interim is the platform's default. Kenya leaned to (i) as written, Data and Stacy to the marker. Peter may still pick the strike; its text is K-i without the clause ", or leaves the value out where no system token is near, with the same marker where the value would go", and it costs Lina's mirror and 6b's key. *Not taken (Peter, 2026-10-26/27; Status line).*
 
 **The reads** (attached for Peter; none is a pick). Every reviewer has read both forks; the surviving counter-argument is each reader's own, in short, with the round it is in.
 
@@ -524,7 +541,7 @@ On F-A-h: Thurgood reads **(h1)** (his row below, R2 item 7); Stacy reads **(h1)
 8. **Seat acts**, against the committed rendering: Stacy (Core Goals `#development-practices`, her third re-sign of the unit, on her conditions below), Leonardo, Sparky, Kenya and Data (`#out-of-scope`, re-confirm and re-sign), and Sparky, Kenya and Data (`#product-tokens` / `#product-tokens-spec-108109`, re-confirm), each in its own commit under its own `Agent:` trailer. These are the **five signature events** (stacy, leonardo, sparky, kenya, data) and three re-dated confirmation sections the claims pass counts (Stacy R1 item 7); site 8b's rows owe none.
 9. **Lock refresh**: a second `npm run build:generator`; every output byte-identical; commit `canonical/generated.lock` only. A changed output stops the application.
 10. Checks: `npm run -s check:122:diff-guard` (with `verify-signing-chain --ci`); `npm run -s check:section-citations`; `node scripts/validate-steering-metadata.js`; `npm test`; docs MCP `rebuild_index` (Token-Governance, Product-Token-Governance, Web-Authoring-Standards and the register are served).
-11. Close `.kiro/issues/2026-10-25-core-goals-l59-vs-product-token-authoring.md` by a dated outcome line in the application PR (Ada). File § 4's implementation-time-check record with checks (a), (b) and (c) (Thurgood; Leonardo and Ada consulted) and measurement record (Leonardo; Stacy the reader at the trigger), § 5's `docs/collaboration.md` record (Ada) and § 5's L373–375 record (Lina). Data's L744 record (§ 5) is outside this ballot.
+11. Close `.kiro/issues/2026-10-25-core-goals-l59-vs-product-token-authoring.md` by a dated outcome line in the application PR (Ada). File § 4's implementation-time-check record with checks (a), (b) and (c) (Thurgood; Leonardo and Ada consulted) and measurement record (Leonardo; Stacy the reader at the trigger), § 5's `docs/collaboration.md` record (Ada) and § 5's L373–375 record (Lina). Data's L744 record (§ 5) is outside this ballot. *Added at ratification (2026-10-27, [ADA R6])*: Thurgood also files the `no-hardcoded-color` re-point record and the L697 record ([THURGOOD R2] items 4a and 5). Leonardo files three rule-10 records ([LEONARDO C1] item 4): the L329 CORRECTION; the gate-rule follow-up (a modification that introduces a `value:` product token or a system gap is not Trivial); and the `token-gaps:` proposal. The claims pass counts nine records: the four above and these five (§ "Plans (Peter's condition)", rows 1–9).
 
 **Refusal conditions recorded at R1** (each seat's own act; the application meets them or stops; Kenya, Sparky, Data and Stacy added at R3):
 - Leonardo: he re-confirms and re-signs `#out-of-scope` only against site 7 applied byte for byte from his R1 item 2 (or a later Leonardo round); he would refuse a resolved site 3 that requires a separate per-element list of system tokens besides the `tokens:` blocks.
@@ -534,6 +551,29 @@ On F-A-h: Thurgood reads **(h1)** (his row below, R2 item 7); Stacy reads **(h1)
 - Sparky: he re-confirms and re-signs `#out-of-scope` only against site 8 from his R1 item 1, and re-confirms `#product-tokens` only against site 8a from his item 1 (or a later Sparky round); he refuses to re-confirm `#product-tokens` in an application that does not also land L239, and to re-sign `#out-of-scope` if site 8a is not applied with it.
 - Data: he re-confirms and re-signs `#out-of-scope` only against site 8 from his R1 item 1 (or a later Data round), and only if the rendered consumer unit keeps both sentences of the new `out-4` with no removal beyond the existing `Peter` one (`subtraction-2`, from `out-7`); he re-confirms `#product-tokens-spec-108109` only against site 8a from his item 1 (the route form, since 8b is taken), and only if sites 8 and 8a land in the same PR; he refuses an 8a line that states the F-A timing itself.
 - Stacy (Core Goals `#development-practices`): she re-confirms and re-signs only if site 1 is applied byte for byte from § 14; every operative item is a verbatim substring of the applied line; the consumer row carries exactly one added removal (the new amendment pointer, `subtraction-2`); and she signs against the committed rendering, after step 7. **Under F-A (ii) or (iii)**, she signs only after Thurgood, as Core Goals' owner, has ruled on her reading of sentence 2 against the resolved site 3, in a round or at the Status commit; under (i) there is no such condition. If Thurgood takes R3's sentence-2 clause (§ 2 site 1), the reading no longer arises, and whether that discharges her condition is hers to say. *At R4*: Thurgood took the clause ([THURGOOD R2] item 1), and Stacy R2 item 2 says the clause discharges this condition if he does; the condition stays here in her words. Her proof, as at #472 and #491: the items checked as substrings by script, and the hash recomputed against the overlay pin.
+
+## Plans (Peter's condition) (2026-10-27)
+
+Peter's condition: *"any that have deferred or follow-up work require a plan to be addressed."* This table lists every follow-up the rounds and the C1 entries named, with its owner, artifact, trigger and when it is filed.
+- A record not yet filed is filed by its owner in the application PR (§ 12 step 11), unless the row says otherwise.
+- Each owner writes its own Trigger line (`.kiro/issues/README.md` rule 9). A trigger in *italics* is the owner's stated intent, not a token chosen here.
+- The claims pass counts rows 1–9.
+
+| # | Follow-up | Owner (consulted) | Artifact | Trigger | Filed |
+|---|---|---|---|---|---|
+| 1 | Implementation-time checks: (a) a product token added in a unit whose screen spec neither references nor lists it; (b) a detector for literal values in product screen source; (c) an open `token-gap:` marker in a product unit's screen sources at its merge. Under F-A-h (h1), building (c) is EXECUTION of K-h. Until (c) is built, K-h is enforced by the PRIMARY's own grep at each product unit's merge (§ 8, the F-A-h residual) | Thurgood (Leonardo, Ada); (b)'s owner is settled at its first walk | new rule-10 record (§ 4) | *Thurgood's* | application PR |
+| 2 | Measurement: missed needs raised per screen, and how many discussions changed the token; also, Leonardo's second count: whether the first product build had a PR gate, and whether the lead's F-B2 decisions reached a record ([LEONARDO C1] item 3). A high count re-opens F-A for (iii) | Leonardo (Stacy reads it at the Review) | new rule-10 record (§ 4) | *the first product build's Lessons Synthesis Review* | application PR |
+| 3 | `docs/collaboration.md` L70–71 ("Creating any token"; stale on component tokens since #491). Thurgood applies under an issue-row grant; Peter approves the bytes | Ada files (Thurgood applies) | new rule-10 record (§ 5) | *`manual`, naming its fixing PR (P3)* | application PR |
+| 4 | Web-Authoring-Standards § "Common Mistakes" L373–375. F-A is (i), so the outcome is decidable at once: a CORRECTION to the illustration, or "leave" with the reason | Lina | new rule-10 record (§ 5) | *the application PR merges* (her R2 item 5) | application PR |
+| 5 | `no-hardcoded-color` `education` re-point: Kenya L411 → L415 and Data L414 → L418 after site 8b; Sparky L438 and Ada L357 unmoved | Thurgood | new rule-10 record, with an issue-row grant | *the application PR merges* ([THURGOOD R2] item 4a) | application PR |
+| 6 | Integration Guide L697 CORRECTION ("system tokens" read as excluding component tokens; truth: Token Governance § "Token Creation Governance" as amended, and PTG L40), worded with Leonardo | Thurgood (Leonardo) | new rule-10 record | *the application PR merges* ([THURGOOD R2] item 5) | application PR |
+| 7 | `canonical/agents/leonardo.md` L329 CORRECTION, the same truth as row 6, worded with Thurgood so the two lines match | Leonardo (Thurgood) | new rule-10 record | *`merge:#<application PR>`* ([LEONARDO C1] item 4) | application PR |
+| 8 | Gate-rule follow-up: a modification that introduces a `value:` product token or a system gap does not count as Trivial (§ 4). Outcome: a charter ballot draft, or "leave" with the reason | Leonardo | new rule-10 record | *the application PR merges* | application PR |
+| 9 | The `token-gaps:` list for the UI Tree Convention revision, in the Integration Guide's reference remainder (§ 4) | Leonardo proposes; Thurgood authors | new rule-10 record | *the first product build's Lessons Synthesis Review*, the same event as row 2 | application PR |
+| 10 | R3-16, the spec-time check that a screen spec's `tokens:` references exist. Its fixing PR also corrects Integration Guide L851 | Thurgood | `.kiro/issues/2026-10-25-product-mcp-screen-token-refs-unchecked.md` (exists) | its own | filed |
+| 11 | `governance/platform-implementation-guidelines.md` L744 (`Float → Dp`; Data R1 item 2). Outside this ballot | Data, or Lina folds it into row 4 | rule-10 record | its owner's | on the orchestrator's go |
+| 12 | A register row of its own for 122-canonical-vs-truth and sweeps 1–8, with the aside moved out of `never-hand-edit-122-generated`'s `checks` (Thurgood's class option, [THURGOOD R2] item 4b) | Thurgood | register item, record-first | his | his call; not owed by this ballot |
+| 13 | Close the L59 record | Ada | `.kiro/issues/2026-10-25-core-goals-l59-vs-product-token-authoring.md` | becomes `merge:#<N>` when the application PR opens | dated outcome line in the application PR |
 
 ## 13. Review record
 
@@ -1423,3 +1463,402 @@ Read at the branch head `628fba4d8` ([ADA R4]), every round above. This answers 
 Read at `b234bb54b`. § 8's "On F-A-h" line carries Stacy's revised read, (h1), and her R3 item 4 row is added to the F-A-h table byte for byte (copied by script). Her F-A row does not name (h2), so it is unchanged. A note under the table records her item 3: seven records for the claims pass, and Leonardo's L329 promise with no record or trigger, which does not block the sitting. § 9 step 2 and the header now say nothing remains. **No site bytes changed.** Every fenced block hashes the same as at `b234bb54b`.
 
 *Signed: Ada, 2026-10-26.*
+
+*Spliced 2026-10-27 (Ada) from `scratchpad/batch-consults/leonardo-c1.md`, byte for byte; a read-only consult for the orchestrator, before Peter's ruling.*
+
+#### [LEONARDO C1]
+
+*Read-only consult for the orchestrator, 2026-10-26, on whether ballot `2026-10-26-system-token-review-and-token-planning` (PR #493, head `d8661e86f`) should be ratified whole or split: item 1 now, item 2 carried into Spec 129's outline round. I read the ballot at `d8661e86f` (§§ 1–12; my R1, R2, R3; [ADA R5]), the L59 record at `08b9c7a8e`, and Spec 129's outline, feedback file, inbound and charter at `08b9c7a8e`. I re-quoted every live before-text at `08b9c7a8e`: Core Goals L59, PTG L56–62, Web-Authoring-Standards L102/L239/L283, Kenya L294/L301. `git diff --stat a95d6bf3d 08b9c7a8e` over the eight edit-site files is empty, so the ballot's base still holds.*
+
+**0. A premise to check before you weigh my lean: Spec 129 has no seat for item 2.** (This is verified, not inferred.)
+- 129 is Consumer-Generation Completeness. Its scope is (i) native theme emission, (ii) the component-tier harvest, (iii) retiring the native root files, (iv) `init` runs `generate`, (v) a `platforms:` config, and (vi) the Model-B theme leak, plus intake of the parser gaps and the Android generator defects. Its acceptance reads: "A stranger's `init` → `generate` yields a compiling, themed target on all three platforms." → `.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` §§ "Scope", "Acceptance"; `design-outline.md` § "Intake".
+- `git grep -i -E 'product.token|screen spec|planning duty|token.gap'` over `.kiro/specs/129-*` and its charter returns **zero hits**. 129's scenario builds no screen, so it raises no missed token need. It cannot produce the evidence F-A turns on, which is how often a missed need comes up and whether discussing it changes the token.
+- The lesson cited for carrying item 2 (the 128 sitting, 2026-10-20) has its own test. A fork stays on a pre-spec ballot "only if it changes what is built or what Core Goals/charters say". Forks about how a spec executes go to that spec's rounds "when the spec is not scheduled to build yet, because the surfaces they govern will have changed by then". F-A and F-B govern law that is live today, and no scheduled spec changes it: PTG § "Authoring Workflow" is ambient law for Kenya and Data, and Web-Authoring-Standards L239 is Sparky's routed law. The precondition the lesson names is absent.
+- [@ORCHESTRATOR] If the carry target was meant to be some other venue, such as the first product build or test01, my answer to (3) below covers it: that venue would supply data, and 129 would not. → design-outline.md (129) § "Intake"; ballot § 8
+
+**1. My lean: ratify the whole ballot, with the seats' reads: F-A (i), F-B (c), F-A-h (h1).**
+- **Peter's ruling today points here on its own terms.** "Go with the seat recommendations of those that have them." All seven readers read F-A (i) and F-B (c) (§ 8 table). On F-A-h, Thurgood and Stacy read (h1), and I add mine in item 3. No reader recommends carrying item 2. Carrying it would depart from his ruling, so it needs his explicit word, not an inference from the 128 lesson.
+- **Item 1 cannot stand alone as drafted.** Site 1 (Thurgood's text, both parts taken at [THURGOOD R2]) says "A product token is planned instead: its need is identified at screen specification and discussed before implementation, and a need the spec missed is surfaced, never filled silently (Product-Token-Governance § "Authoring Workflow")". Site 2 says the same ("its need is planned at screen specification and discussed before implementation"). Without item 2, both point at PTG L60 as it stands: "Platform agents … may add product tokens during implementation when they discover needs not anticipated in the screen spec". Core Goals would then be stricter than the law it cites. Stacy's R1 item 3 named exactly this shape as the ballot's own defect. → ballot § 2 site 1, site 2; § 3 site 3
+- **Carrying item 2 is not neutral. It picks the option no seat reads.** Today's text answers F-A already: fill on discovery, no merge hold, review by audit (PTG L60; WAS L239 "create a product token immediately"; L283 "Create it"). If item 1 lands without item 2, that answer governs every platform agent until 129 rules, and the always-loaded human sentence that used to reach product tokens is gone. That is the ballot-level counter-argument of § 10, with its fold-back undone. It is also only the first half of Peter's reframe; the second half was "surface and discuss token gaps during planning and before implementation", "rather than ad hoc". → ballot § 10; § 1 header (Peter's 00:28:49Z and 00:36:20Z words)
+- **A user-scenario walk, a few lines long, as the 128 lesson asks.** Kenya builds a sheet. The spec does not name the spacing between the last field and the keyboard.
+  - *Under item 1 alone*, she finds three answers: Core Goals says surface it; PTG L60 and her § "Product Tokens" L294 say add it; her Out-of-Scope L301 says "Token creation or modification — escalate".
+  - *Under the whole ballot with (i)/(c)/(h1)*, she finds one. She checks the system tokens (`space.inset.200`) and uses the nearest one with a `token-gap:` marker. She sends me one Tier 1 message for the build pass. I decide, since the value is not a colour. The spec is amended or the system token stands, the marker comes off, and the unit merges once no marker is left. Data's R1 item 2 walked the same need in Compose and reached the same single answer.
+
+*Surviving counter-argument (against my lean)*:
+- **The forks are decided on reasoning, not data.** No product screen has been built under this law, and this repo has no `product/`.
+- **The cost lands on unexercised law.** Five re-sign pairs and three re-confirms (Lina's surviving counter, § 3 site 8b), and Stacy's third re-sign of Core Goals `#development-practices` in about two days, which is the pattern the ritual-stub signal watches for (§ 11).
+- **If missed needs turn out to be common**, (i) costs a human relay per build pass and (h1) holds every merge that has gaps. We would re-ballot and pay those seat acts a second time.
+- **What this exposes is a fork for Peter, and it is not "item 1 now, item 2 later".** (A) Ratify the whole ballot now, with the seats' reads. (B) Hold the whole ballot, both items, until the first product build, with the L59 record kept open and its trigger re-anchored to that event. (B) is defensible: the record classes the defect P2 with "no consumer blocked". Its cost is that the contradiction keeps shipping in every consumer's Core Goals and PTG, and test01 is a real consumer. Splitting the items is the one option I read as incoherent, unless sites 1 and 2 are re-cut (item 2 below). I lean (A). The pick is Peter's.
+
+**2. If item 2 is carried anyway, the plan has to contain the following, or my workflow is ambiguous in the meantime.**
+- **(a) New text for sites 1 and 2.** Site 1's sentence 2 and site 2's "its need is planned at screen specification and discussed before implementation" must come out, or they point at a section that says the opposite. That is new Core Goals text in Thurgood's file. Stacy's signing conditions are tied to § 14's bytes, so it needs her re-read, and Ada's for site 2. Core Goals would then read: "**Creating ANY system token** (primitive, semantic or component): Always requires human review — no autonomous token creation (what a system token is: Token Governance § "Token Creation Governance")." It would say nothing about product tokens. That is the record's fork (B) without the planning duty.
+- **(b) A plain statement of what a platform agent does today with a missed need.** The plan must say this outright: until the carried item rules, PTG L60 and WAS L239/L283 govern as written. The agent authors the product token during the build, under the naming and rationale rules, with no human checkpoint, and review comes from the indexer plus the L230 audit. An interim placed in an issue record does not reach the platform agents, because they read their charters and PTG, not `.kiro/issues/`. Any interim law that tells an agent what to do with a missed need *is* an F-A answer, so the plan cannot create a neutral interim. It can only name the current answer.
+- **(c) Sites 7, 8 and 8a held back as well.** Kenya, Sparky and Data each refuse site 8 without 8a, or 8a without 8 (§ 12 refusal conditions). Site 8a states the planning duty, so it cannot ride item 1 alone. The pre-existing collision between the charters and PTG stays live: Out-of-Scope says "Token creation — escalate", while § "Product Tokens" says "author when you discover". My site 7 should also wait, since "you plan and author them" refers to a duty that would not exist yet.
+- **(d) A venue that can actually decide it, and a trigger.** Either Peter rules that 129's scope expands to take a product-workflow item, in which case Leonardo, Kenya, Data and Sparky become required reviewers there, or the carry goes to the first product build. That is the event my measurement record (§ 4) already keys on. A `path:`-trigger record owned by Ada, with my read attached, would carry it.
+- **(e) The L59 record kept open**, not closed by item 1's application, since its Peter-ruled reframe would be half applied. (§ 12 step 11 currently closes it at the application.)
+
+**3. Can F-A and F-B be decided now from my workflow? Yes.** Nothing in 129's scenario changes the answer.
+- **F-A: decidable now; (i).** The machinery it uses is all current law: the Tier 1 message, the pre-implementation catch, the Implementation Report section, the spec amendment, `promotionCandidate`. The one fact it lacks is how often missed needs occur, and only a product build supplies that. The measurement record (mine; Stacy reads it at the first product build's Lessons Synthesis Review) is already the re-open mechanism: a high count re-opens F-A for (iii). Decide now, and measure at the first build.
+- **F-B: decidable now; (c).** It rests on the existing human read of a product spec: `design.md` and `tasks.md` go through the sequential formalization gate and Peter merges them (Product-Handoff-Protocol § "Leo → Platform (Screen Spec Handoff)"). That is verified in the text but not yet observed in practice. My surviving cost stands: a non-colour `value:` token found mid-build reaches a human only as a line in an Implementation Report, and until check (a) exists I am the only check on its rationale.
+- **F-A-h: decidable now; my read is (h1)**, which I did not give at R1–R3. It fits my workflow. A spec-time system gap already has its interim (`promotionCandidate: true`, site 3). A mid-build system gap goes to the human under (c), and holding the merge until the human decides is the point. (h1) also makes check (c) an EXECUTION of a rule already written, not a second ballot (Thurgood R2 item 7). *Surviving counter*: until (c) is built, the hold is the PRIMARY's own grep, an agent checking its own work. In a product repo with no PR gate it stops nothing.
+- **The one question that really is about consumer workflow, and is not settled now**: a product repo run from one session, with no PR gate. There, (h1) bites nothing, and the human's decision under (c) reaches a record only if the lead writes it (Ada's residual on `⟦F-B2⟧`). That belongs with consumer onboarding and governance, not with 129's generators. I propose carrying it as a second count in my measurement record: whether the first product build had a PR gate, and whether the lead's decisions reached a record. It needs no new record of its own.
+
+**4. The plan for the deferred and follow-up work (Peter's second clause), with the gaps marked.**
+- *Already owned, with triggers in the ballot:*
+  - Thurgood's implementation-time-check record, checks (a)/(b)/(c), filed at application; (b)'s owner is open until its first walk (§ 4).
+  - My measurement record, filed at application, triggered by the first product build's Lessons Synthesis Review, with Stacy as reader (§ 4).
+  - The `docs/collaboration.md` record (Ada files it; Thurgood applies; Peter approves the bytes).
+  - Lina's L373–375 record.
+  - Thurgood's L697 CORRECTION record.
+  - Thurgood's correction of Integration Guide L851, which rides the R3-16 fix PR.
+  - Data's L744 record, outside this ballot.
+- *Mine, with **no record and no trigger** today. I commit to filing each under README rule 10 in the application PR (my `.kiro/issues/**` scope):*
+  - **L329 CORRECTION** (Stacy R3 item 3 flagged it). Trigger: `merge:#<application PR>`. Worded with Thurgood so it matches his L697.
+  - **The gate-rule follow-up**: a modification that introduces a `value:` product token or a system gap does not count as Trivial (§ 4; my R1 item 4). Trigger: the application merges. The outcome is either a charter ballot draft or "leave" with the reason.
+  - **The `token-gaps:` proposal** for the UI Tree Convention revision, in Thurgood's file (§ 4). Trigger: the convention's revision event ("after 3–5 real screen specs"). Since nothing fires that today, I would bind it to the first product build's Lessons Synthesis Review, the same event as the measurement record.
+- [@ADA] Would you add those three to § 12 step 11's list? Then the claims pass counts ten records, not seven, and none of them rests on my memory alone. Your file; or I file them without the list and say so in the PR body. → ballot § 12 step 11; § 8 note under the F-A-h table -- [LEONARDO C1]
+
+*Signed: Leonardo, 2026-10-26.*
+
+*Spliced 2026-10-27 (Ada) from `scratchpad/batch-consults/thurgood-c1.md`, byte for byte, the whole entry. Part (2) is this ballot's; parts (1) and (3) are the batch ballot's (#528, F-0) and #514's, recorded here only so the entry is whole.*
+
+#### [THURGOOD C1]
+
+*Read-only consult, 2026-10-26 (from 21:21:03Z, `date -u`), on the orchestrator's two proposals and two #514 questions, at Peter's direction that the relevant seats evaluate them before he rules. Read: the batch ballot at #528's head `b093a93d6`; the system-token ballot on `origin/chore/ballot-system-tokens-and-planning` (§§ 2–3, 8, 10); `.kiro/specs/129-consumer-generation-completeness/` at `08b9c7a8e` and its charter `.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` § "Scope"; the delegate-audit file on `origin/chore/delegate-audit-release-16.1.0` (`4409463c1`, #514's head); signing-act ballot § 3 (the link table) and § 5.3. No repo write, no credential read; I did not read #514's PR body, so where the orchestrator's framing quotes it I work from the committed file.*
+
+**A mapping first, so nothing is re-asked.** Peter's first words ("go with the seat recommendations of those that have them") already resolve every fork whose seats gave a recommendation. On the batch ballot that includes F-0, where every seat that read it leans (a) (Thurgood, Stacy, Ada); (c) is the orchestrator's proposal, which no seat had read as a whole, and that is what his second message sends back to us. On the system-token ballot it includes F-A, F-B and F-A-h, where the seats converged on (i), (c) and (h1). This entry evaluates the two proposals against those recommendations; it does not reopen the recommendations.
+
+---
+
+**(1) F-0 (c), the severance — lean (a), whole.**
+
+- **Why (a)**: every row fixes a finding measured at a release; the freeze is not in force (N unset, 131 paused); and (c) leaves two of the falsest texts in place for a spec with no date. The two texts: Stacy's RELEASE row (L400), already wrong against #492's S re-read, and RELEASE-FLOW L198's lead-in, already false against its own bullet. Both are wrong today, not only after this ballot.
+- **If Peter picks (c), the list I would sever** (a corrected (c), because the orchestrator's list strands two sites and splits one line):
+  - **Ratify now**: site 1 (RS-46b); site 3's compare sub-bullet only (RS-39 with RS-25, with F-39), with L108's date clause left unchanged; site 4 (RS-49, F-49) with E3 and E7; site 5 (RS-48) with E1 and E2; E8's two census fields (owed under every option, by Stacy's finding); and two placements the orchestrator's list left open:
+    - **site 12** (Stacy's L400 pointer). It corrects a restatement that is false today, independent of RS-41, so it ratifies now, with her C1 re-sign.
+    - **site 6's L198 lead-in sentence** alone. It is false today against the bullet, independent of F-41 and F-38d, so it ratifies now. Site 6's L199 additions (RS-41 and F-38d's read) carry.
+  - **I would also move RS-37 (site 2's second paragraph) into the ratify-now set.** It adds no duty (§ 5.3 already names the brief, the dispatch and the walk), only a walk row. Its miss is measured: 0 / 135 at 16.1.0, and trigger (d) fired. If it carries, the next walk can miss it again, which is the one outcome the queue record's trigger exists to prevent.
+  - **Carry into Spec 131**: RS-33 (site 2's first paragraph, site 11, F-33a/b); RS-34 (L108's date clause, site 7's first sentence, F-34); RS-38 with RS-29 (site 9, F-38, F-38d); RS-40 (site 10, site 13, F-40, F-40d); RS-41 (site 6's L199 additions, site 7's second sentence, E4, F-41); RS-43 (site 8, F-43a/b).
+- **Amendment cost, in commits**:
+  - **+1 queue commit**: one dated disposition line per carried row on the queue record.
+  - **+1 Spec 131 commit**: an inbound to 131 listing the carried rows with their sources, sites and the seats' leans.
+  - **The Status commit is larger**: struck sites removed, site 3 resolved as L108-unchanged plus the sub-bullet, site 6 resolved as L198-only.
+  - **Later**: a second RELEASE-FLOW amendment when 131 decides the carried rows. That is the cost that does not go away: RELEASE-FLOW and the ballot are each amended twice.
+  - **No commit saved**: the application PR stays one PR, with Stacy's C1 acts for site 12 only.
+- **The plan Peter requires for the carried rows**:
+  - **Owner**: Thurgood. I own the queue record and author 131's artifacts (the spec-authoring cost ruling).
+  - **Vehicle**: Spec 131's requirements, each carried row as a fix-first finding (outline § 4 (a)) and a map row (outline § 3), cited by RS number and queue-record path.
+  - **Record and trigger**: the queue record's own Trigger, `release:next:phase-1`, already does what Peter asks, provided each carried row's dated line says "carried to Spec 131 requirements; closes when 131's requirements merge naming it". At the next release's walk, 3a's due-row grep finds the record (`release:(<V>|next):phase-1`) and rows it, and phase 1 re-reads it at S. If 131's requirements have not merged by then, the carried rows show as open in that walk and in Stacy's pass: found again, not lost.
+  - **Lapse**: the record is P2 `(guard)`, so a lapse at that S goes to Peter with spec, drop or fix-now. A spec answer is already given (131), so his choice is drop or fix-now.
+  - **No new record**: the queue record carries this, so nothing new needs a trigger.
+- **Surviving counter-argument against my lean**: Peter's ruled spine is fix-first with a freeze. (c) is the shape that honours the freeze for the prose rows while shipping the guards, and the batch has grown each round (13 sites, R4). Under (a), 131's deletion units inherit about eleven more RELEASE-FLOW lines to weigh, and five of the rows stay prose that only a later read detects (ballot § 6 residual 2). Ada's own smaller set (RS-49 and RS-48) agrees with (c)'s core. If Peter weighs the freeze's intent above the stranded falsities, (c) as corrected above is the honest form, and its real cost is the double amendment.
+
+**(2) #493 item 2 carried to Spec 129, against ratifying Ada's ballot whole — lean: ratify whole.**
+
+- **Does 129 have a home?** Mechanically, yes. `.kiro/specs/129-consumer-generation-completeness/` exists at `08b9c7a8e`: a PLACEHOLDER outline with an "Intake" section, a `feedback/` directory and one inbound file (`inbound-from-ada-android-generator-defects-2026-10-24.md`).
+- **By subject, no.** 129's charter scope is generation: (i) theme emission on iOS and Android; (ii) the component tier in the consumer's harvest; (iii) retiring the native root files; (iv) `init` running `generate`; (v) per-platform output paths; (vi) the Model-B theme-override leak. Item 2 is product-workflow law: when a product token is planned and who decides a missed one, in Product-Token-Governance, Web-Authoring-Standards and four product-agent charters. No 129 scope item reads or writes that workflow. Carrying it there gives it a directory, not an owner who will decide it.
+- **Consumer-workflow question or identity fact?** It is a workflow rule, an execution question: what a platform agent does mid-build. That is unlike item 1, which is an identity fact (what "system token" means, and that human review binds its creation). By the 128 lesson, execution forks age badly when deferred to a spec that has not reached them. Here they are also not open: all seven seat reads converged (F-A (i); F-B (c); F-A-h (h1) where it applies), so Peter's first ruling covers them.
+- **Item 1 and item 2 are coupled.** Site 1's second sentence carries the planning duty into Core Goals. The system-token ballot's own fold-back (§ 10) is that scoping L59 without item 2 "removes the only always-loaded human-review sentence that reaches product tokens". Severing item 2 either strands that sentence or cuts it, and cutting it brings the fold-back's defect back. Leonardo's charter line (site 7) and the three platform Out-of-Scope lines (site 8) also say "token" where the scoped rule says "system token", so they belong to item 1's scoping, not to item 2.
+- **Surviving counter**: no product screen has ever been built here. F-A (i)'s relay cost and the frequency of missed needs are reasoning, not data (§ 10 residual 5). A spec that builds the first product screen would measure them before the rule binds. But that spec is not 129, and the better guard against a wrong rule is Leonardo's measurement record (§ 4 of that ballot), which re-opens F-A at a measured threshold. If Peter wants item 2 deferred anyway, its home is a product-side record with that trigger (the first product screen built), not Spec 129.
+
+**(3) #514's two questions.**
+
+**(a) The 12 pre-ratification acts in #222/#228/#239 — lean: outside the delegate backlog, treated as pre-chain history by the rule Peter already gave for #262.**
+- **What the file shows**: all three PRs merged before #262 and before the ballot's ratification (`2da74864`, #243). § 5.3's backlog clause starts at #262 inclusive ("every Stacy-signed act from Spec 123's MIDPOINT population (#262 …) inclusive, through the walk's base").
+- **Peter's answer on #514 Q3**, "pre-chain history and re-check", accepted #262's pre-ratification acts as pre-chain history with one re-read after the store fix. The consistent reading puts the 12 in the same class: outside the backlog's k, labelled, and re-checked once.
+- **Follow-up plan (Peter requires one)**: the 12 have not had that re-read. The addendum re-read #262, #465 and #467 only. **Owner**: Ada (the delegate). **Vehicle**: one addendum in the same delegate file, `--audit --pr <N> --signer stacy` with the default store set for #222, #228 and #239. **Event**: before #514 merges, or, if it merges first, at the next RELEASE walk's delegate brief, which I write (§ 5.3).
+- **Consequence of the other answer** (in the backlog): k grows from 437 to 449. Stacy's N gains 12, counted from signature history. The block's 11 `record absent` and 1 `anomaly` enter trigger (d)'s arithmetic and widen into Peter's J at this release (§ 5.4). That is a cost with no protective yield: the acts predate the rule they would be read against.
+
+**(b) Does a seat's loaded charter count as having read one of her own units? — lean: no as a general rule, with a narrow decidable exception Peter may take or leave.** First, a correction of fact from the committed file: of the six acts named, four are not link-7 readings, so this question does not decide them.
+- `ce4ead62` and `acc8df54` read **FAIL 6** (prompt_snapshot ≠ `.claude/agents/stacy.md` at `fc57947a`). That is the link-6 class, RS-36 item (1) with RS-10.
+- `17e0bf93` and `2e7ae81d` read **anomaly 4** (two candidates, the same transcript printed twice). That is RS-36 item (3), the double-candidate.
+- The link-7 acts are #427 L417 and L420 (`8674be2e`, `1ea854d1`: FAIL 7 on her trigger-set unit), #467 `027b8904` and #472 L519 (`c989dacf`: FAIL 7 on Systems Overview units, always-loaded identity docs, not her charter).
+
+The rule, the consequences and the vehicle:
+- **Why no**: link 7 exists against a read-less hash refresh (H6; ballot § 7.1: "stronger (was sampled)"). A loaded charter is the text at session start. A re-confirm after an edit to her own unit is exactly the case where the loaded text can be the old bytes, so counting it would make H6 undetectable on her own units. A tool read of the unit costs one call.
+- **Consequence of "no"**: the four link-7 acts stay FAIL 7 and widen into Peter's J for this release (§ 5.4). They are not re-labelled. The practice fix is a line in the signing-seat brief: a seat reads the unit by a tool call before signing it, its own charter and the always-loaded docs included. I would file that as an EXECUTION of § 3 link 7, not as law.
+- **Consequence of "yes" (general)**: link 7 gains a second source, the session's loaded text. The instrument must read `systemPrompt[0]`, and for identity docs whatever record holds the loaded CLAUDE.md, which link 6 does not read today. H6 is open for every unit a seat loads.
+- **The narrow exception**: the rendered line counts if it appears in the transcript's `prompt_snapshot` **and** link 6 holds against the charter at the act's own commit. That closes H6, because the snapshot then holds the new bytes. It is decidable from records the instrument already reads, and it covers her charter units only. It would not rescue the two Systems Overview acts, which are not in `systemPrompt[0]`.
+- **Where the general rule belongs**: yes, any answer other than "no" is a change to what link 7 reads, so it is LAW, and its vehicle is the RS-36 signing-act-chain amendment ballot, beside items (1)–(4). Under "no", nothing in the ballot changes; only the brief line is owed.
+- **Surviving counter**: under "no", a seat that read her own unit by loading it, with its text verbatim in front of her, reads FAIL 7 by a record-form rule. That raises Peter's J load on a seat whose acts he already walks (§ 5.3), and is friction without protection in exactly the case the narrow exception covers.
+
+**One line per question** (for the orchestrator):
+1. F-0: lean (a) whole; if (c), sever with sites 12 and L198 and RS-37 in the ratify-now set, carry six rows to 131 on the queue record's own `release:next:phase-1` trigger; counter: the freeze's intent and a batch that grew each round.
+2. #493 item 2: lean ratify whole; 129 has a directory but not the subject (generation, not product workflow), and item 2 is coupled to item 1's site 1; counter: no product screen measured yet, and that measurement belongs to Leonardo's record, not 129.
+3. #514: (a) outside the backlog as pre-chain history, re-read once by Ada before #514 merges; (b) no as a general rule (H6), narrow exception decidable from link 6 at the act's commit; any change rides the RS-36 amendment; four of the six named acts are link-6 and link-4 readings, not link 7.
+
+*Spliced 2026-10-27 (Ada) from `scratchpad/batch-consults/ada-c1.md`, byte for byte. Part 1 is this ballot's; part 2 is the batch ballot's (#528, F-0).*
+
+#### [ADA C1]
+
+*Read-only consult, 2026-10-26 (from 21:14:47Z, `date -u`). Peter's added words, relayed: "If they haven't been evaluated by the relevant agents, they should be." Read: #493 at its branch head `d8661e86f` (§§ 2–12); Spec 129's tree at `08b9c7a8e` (`.kiro/specs/129-consumer-generation-completeness/`: `design-outline.md` PLACEHOLDER, `feedback/design-outline.md`, one inbound) and its charter `.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` § "Scope"; `.kiro/issues/README.md` rules 1 and 11 at `08b9c7a8e`; #528 at `b093a93d6` (header, Census block, §§ 4, 6, 7, my R1 and R3). No repo edit, no git write. #493's branch is unchanged (`d8661e86f`); my two Status drafts are in `batch-consults/ada-493-status-drafts.md`.*
+
+**Conflict of interest, stated first.** On read 1 I am the filer of #493 and I picked (B) on the L59 record. On read 2 I own RS-49's and RS-48's execution sites (`scripts/release-publish.ts`, `scripts/verify-publish-rail.sh`). Both reads below are leans, not picks.
+
+---
+
+### 1 · #493: item 2 carried to Spec 129, or the ballot ratified whole
+
+**The question, split the way it bites.**
+- **Item 1 is an identity fact that already bites.** Core Goals L59 is always loaded into every seat and tells each of them "any token needs human review". Product-Token-Governance L60 tells Sparky, Kenya and Data they may add product tokens during implementation. Every session reads both. No scenario is needed to see the contradiction, and nothing a scenario finds would change the answer: Peter gave it (the reframe, 00:28:49Z).
+- **Item 2 has two layers.**
+  - **The duty itself** ("token needs are identified at screen specification and discussed before implementation; a missed need is surfaced, never filled silently") is also Peter's stated outcome, in the same reframe and in his 00:36:20Z clarification. That is an identity statement: it says what the product workflow is for. It is not a choice of mechanism.
+  - **F-A, F-B and F-A-h** are execution choices: what sits in the code while a missed need is discussed, and who decides it. Every reader's surviving counter-argument on F-A says the same thing: the frequency of missed needs, and so the relay cost of (i), is reasoning, not data, because no product screen has been built here. These are the forks a user scenario would improve.
+- **Does it bite now?** The duty binds a product build. This repo has no `product/`, so nothing here is exercised by it today. A consumer repo (test01, or a founder's) is where it bites, from its next screen spec.
+
+**Where the scenario that tests item 2 actually happens.** It is not Spec 129. 129's charter scope (i)–(vi) is generation completeness: theme emission, the component-tier harvest, retirement of the native root files, `init` runs `generate`, per-platform paths and the Model-B leak. None of its user scenarios writes a screen spec or builds a screen. Leonardo, who owns the workflow, is not one of its charter owners. Carried to 129, item 2 is an off-charter item in a spec whose outline is a PLACEHOLDER with no round open (design-outline.md § "Status"), and the outline round would have to admit it as a new scope item before reading it. The scenario that exercises F-A and F-B is the **first product build**, the same event Leonardo's measurement record (#493 § 4) already names as its trigger. On Spec 128 I can say only that its stories involve product teams adopting the system; I have not checked whether any of them builds a screen spec, so I make no claim that 128 fits better.
+
+**The options as I see them** (the pick is Peter's):
+- **(B) Ratify whole**, with the seats' recommendations: F-A (i), F-B (c), F-A-h (h1). The first product build re-opens F-A through Leonardo's measurement record (a high missed-need count re-opens it for (iii)), so the scenario correction is already wired to the event that produces evidence.
+- **(A′) Carry item 2 to Spec 129's outline round** (the orchestrator's reading).
+- **(A″) Carry item 2 to the first product build** (a class option). Law about a workflow no build has run waits for that workflow's first run, with its forks pre-written. *Cost*: the planning direction stays unwritten until then. Like (A′), it creates the fork for item 1 described below.
+
+**What any carry does to item 1 (applies to (A′) and (A″)).** Site 1's second sentence (Thurgood's, taken at his R2 item 1) and the end of site 2 (mine) already state item 2's duty. Applied without item 2, they contradict PTG L60 in the reverse direction, which is the defect class the ballot exists to remove. So a carry forces a further pick: apply item 1 as written (A-1, a live contradiction) or trim those two sentences into the carry (A-2, changed ratified bytes, needing Thurgood's and Stacy's words). Both are worked out in the drafts file, § A.0.
+
+**My lean: (B)**, for four reasons:
+- The duty is Peter's outcome statement, and his outcome statements are the forks that age well.
+- The execution forks have unanimous seat reads: seven of seven on F-A (i), seven of seven on F-B (c), and two (h1) reads with no (h2) on F-A-h.
+- The correction that needs a scenario is already tied to the scenario's event (the measurement record).
+- A carry to 129 parks the item off-charter, and it splits item 1 in a way that re-creates the defect or changes ratified bytes.
+
+Second choice: (A″) over (A′), because it carries the item to the event that tests it rather than to a spec that does not. I lean least towards (A′).
+
+**Surviving counter-argument (Lina's, from #493 § 3, and the strongest one).** Item 2 is eight sites and six seat acts on the three platform seats (three re-sign pairs and three re-confirms; Leonardo adds a fourth re-sign pair), whose consumers do not exist in this repo, for law no build has exercised. A narrower ballot after the first product build would cost the same acts once, with evidence. It also sits against Spec 131's ruled direction (no new law once its freeze is in force), which is not in force yet: (B) adds about forty lines of law during a governance simplification. What fold-back could not absorb: under (B), if the first build shows (i)'s relay cost is high, F-A is re-opened and the eight sites are amended a second time. That cost is real, and only (A″) avoids it.
+
+**If carried to Spec 129, the plan** (the drafts file, § A.3, has it in full):
+- **Receiving artifact**: 129 has a directory at `08b9c7a8e`, with a PLACEHOLDER outline and one inbound (`inbound-from-ada-android-generator-defects-2026-10-24.md`). No inbound for this item exists yet. I would file `.kiro/specs/129-consumer-generation-completeness/inbound-from-ada-product-token-planning-2026-10-26.md`: pointer-only, naming #493 at its Status commit as the text of record. Listing it under the outline's § "Intake" is Thurgood's act, since the outline is his file.
+- **Owners**: Ada files and carries it, as owner of PTG. Leonardo is the workflow's authoring owner and is named as a required reviewer of the outline round for this item. Lina owns sites 5 and 6. Thurgood applies sites 7–8b.
+- **Trigger**: rule 1 has no spec token. A new rule-10 record, `.kiro/issues/2026-10-26-product-token-planning-carried-to-spec-129.md` (P2 obligation (record) · deferred), with Trigger `release:next:phase-1`. That is rule 1's form for a P2 that rides another change; it closes when 129's outline merges with the item taken in or declined with a reason, and becomes `merge:#<N>` once that PR exists. Not a `path:` token: the outline file exists and takes intake notes, so a touch would fire it early, and a `path:` that never fires never lapses.
+- **Fallback**: the `release:next:phase-1` token itself. If 129's round has not opened by the next release's phase 1, the token fires there, and Stacy's RELEASE pass and the walk read it as fired. Its owner re-rules it or it lapses under rule 11, and a second lapse goes to Peter with spec, drop or fix-now.
+
+**One line**: Ada C1-1 — lean (B), ratify #493 whole with the seats' F-A (i), F-B (c), F-A-h (h1). The duty is Peter's identity statement. Item 2's execution forks are the scenario-sensitive part, and Leonardo's measurement record already re-opens them at the first product build. 129's charter has no product-workflow item, and any carry forces an A-1/A-2 fork on item 1's two duty sentences. Second choice is carrying to the first product build, not to 129. Lina's unexercised-law cost survives.
+
+---
+
+### 2 · #528 F-0: (a), (b) or (c)
+
+**My lean: (a)**, unchanged from R1 item 18 and consistent with every seat's read (Thurgood (a), Stacy (a)). The rows are measured findings, which is fix-first's (a). The freeze is not in force (its N is unset). RS-49's hazard is live at every 5.4.
+
+**Does (c)'s list (RS-49, RS-46b, RS-48, RS-39) match what I would keep?** It is a superset of my R1 "if smaller" pair (RS-49 and RS-48). Row by row:
+- **RS-48 (site 5, E1 mine, E2 Thurgood's): keep, ready now.** It has no fork. E1 needs one fresh live rail run (`VERSION=99.99.99 ./scripts/verify-publish-rail.sh`, an HTTP GET) re-recorded in my commit at application.
+- **RS-46b (site 1): keep, ready now.** I add it to my pair. It is a command fix with no fork, the nearest of the four to a CORRECTION, and it makes the walk's paste byte-reproducible. S-2 is settled.
+- **RS-49 (site 4, E3, E7): keep, but under F-49 (ii-b) not every part of it is ready to ship now.** It has two parts:
+  - **Ready now, under every F-49 option**: E7a (the dry run prints no runnable publish line) and site 4's binding of 5.4 to 5.3's record. This removes the harmful member (Ada R1 item 3).
+  - **Not ready under (ii-b)**: site 4's (ii-b) text tells 5.4 to run `release-publish.ts --npmjs <record>`. That needs E7b's code and tests, and (my R3 item 3) a census mode for the commit-held half of the four refusals (record-mode and tag-to-commit), with the row split by scope (the steward's call, E8). None of that exists, and I have not timed it. My unmeasured estimate is half a day to a day for E7b, its tests and the mode. Until then the item waits: a finding, not a gate, and Peter may ratify past it. E3's HONEST REACH text also depends on the F-49 answer.
+  - **The sub-fork this creates inside (c), which is Peter's:**
+    - (c-1) Ratify (ii-b) now and hold RS-49's application until I build E7b and the census mode, which has to be done before the next 5.4. The next release has no date, and 16.1.0 is published, so there is room.
+    - (c-2) Ship RS-49 now in the F-49 (i) shape (E7a plus the record binding) and bring (ii-b) as its own item when the mode exists. *Cost*: site 4 is amended twice.
+
+    My lean is (c-1): it keeps the guard in the command, the RS-7 principle. Fall back to (c-2) if the next release's phase 1 opens before the mode exists.
+- **RS-39 with RS-25 (site 3's compare sub-bullet): not my row; its content is ready but its rulings are not.** (I measured its non-`main` fetch, at exit 0 in 7 s and again in 6 s.) Two things are unresolved:
+  - **F-39 has no single seat recommendation**: Thurgood (b-always), me (b-always) weakly with (b) acceptable, Stacy (b). So "the seat recommendations" does not settle it, and Peter has to pick.
+  - **Under (c), the sub-bullet must be split from RS-34's date sentence**, which is carried. F-34 is split too: Thurgood (i) weakly, Stacy (ii), me none. Thurgood's § 7 cost names that split.
+
+  I would not strike RS-39: the false "no shipped file was removed" class bites at the next entry. But it is the one row of the four that needs Peter's pick and a line edit before it ships.
+- **Not in either list, and they need a home under (c)** (Thurgood's cost, which I confirm from my seat): site 12 (Stacy's L400 pointer) and site 6's L198 lead-in.
+
+**Surviving counter-argument against my (a)**: Spec 131's freeze, if it lands as ruled, would bar every prose row, and (a) adds law to the document read at the release's busiest moment. (c) is the honest middle. Its cost is two artefacts amended twice, and the risk that carried rows are found again, one release older, if 131 slips past the next release.
+
+**One line**: Ada C1-2 — lean F-0 (a). (c)'s list covers what I would keep (RS-49 and RS-48) plus RS-46b, which I endorse. Under (ii-b), RS-49's E7a and the 5.4 record binding are ready now, but site 4's (ii-b) text needs E7b and a not-yet-built census mode for its commit-held half: build them before the next 5.4 (c-1, my lean) or ship (i)'s shape now and (ii-b) later (c-2). RS-39 is ready in content but needs Peter's F-39 pick (seats split) and a split from RS-34's line.
+
+### [ADA R6] — ratification (2026-10-27)
+
+*Committed under Peter's ruling as the Status line quotes it, relayed by the orchestrator (hold lifted; `date -u` 02:27:53Z at receipt). Base: `origin/main` `08b9c7a8e`, merged into this branch first.*
+
+1. **Status line**: RATIFIED whole, with F-A (i), F-B (c) and F-A-h (h1). The orchestrator's split reading is withdrawn and recorded as such. [LEONARDO C1], [THURGOOD C1] and [ADA C1] are spliced above byte for byte from the consult files (`cmp` equal). [THURGOOD C1] parts (1) and (3), and [ADA C1] part 2, are the other ballots' (#528's F-0 and #514's two questions), and they decide nothing here.
+2. **§ 9 step 3, read at the ratification base `08b9c7a8e`**:
+   - `git grep -n -E '^### governance-examples$' 08b9c7a8e -- governance/classification-map.md` prints nothing, so no census line is owed before ratification.
+   - § 12 step 2's register grep over `a95d6bf3d..08b9c7a8e` prints 0 lines.
+   - `git diff --stat a95d6bf3d 08b9c7a8e` over step 2's path list (with the two 8b dispositions files) shows `governance/classification-map.md` only, outside row `no-autonomous-token-creation`. Every before-text holds.
+3. **§ 14 is built by script** from the §§ 2–3 blocks, as its preamble says. A dry run of step 6b on its site 3 and L239 blocks gives K-i 1 and 1, K-h 1 and 1, and K-ii 0 and 0. The governance files themselves are checked at application.
+4. **The date**: `2026-10-27` in every pointer. The ratification-date placeholder is filled in §§ 2–3's after-texts and in § 7's removal row. It is left as written in § 12 step 1's instruction, in [ADA R3]'s proposal block under site 1 and in this review record, which are ledger.
+5. **[@LEONARDO] your [LEONARDO C1] item 4 ask: yes.** Your three records are added to § 12 step 11 and are rows 7–9 of § "Plans (Peter's condition)". The count is **nine**, not ten. Stacy's seven ([STACY R3] item 3) already included your L329 promise, so your three add two records, not three.
+6. [@LINA] Site 6a rides this application as § 3 states, with you applying it (your R1 item 1; Thurgood R1 item 6). Confirm at the application, or say it goes in its own PR. § 14 carries its two lines either way. -- [ADA R6]
+
+*Signed: Ada, 2026-10-27.*
+
+---
+
+## 14. Resolved after-texts (2026-10-27, at ratification)
+
+Built by script (`build14.py`, scratchpad, Ada) from this ballot's own blocks at the Status commit's parent. § 2 and § 3's fenced blocks are copied whole. The blockquoted after-texts of sites 2 and 3 lose only their `> ` prefixes. Each slot takes the text of Peter's answer: F-B1 the (b)/(c) text; F-B2 the (c) text; F-A the (i) text, then one space and K-h (F-A-h (h1)); and L239's web-form slot K-i, one space, the (i) web text, one space and K-h. The ratification date is `2026-10-27` in every pointer. Site 6a's two lines are the lines at `08b9c7a8e`, each with one space and the pointer appended. The form follows § 12 step 1: one heading per site and file, and one unindented fenced block per applied text, fenced with more backticks than any run inside it. No slot label appears below.
+
+### Site 1 — `.kiro/steering/core-goals.md` L59 (Thurgood applies)
+
+```
+- **Creating ANY system token** (primitive, semantic or component): Always requires human review — no autonomous token creation (what a system token is: Token Governance § "Token Creation Governance"). A product token is planned instead: its need is identified at screen specification and discussed before implementation, and a need the spec missed is surfaced, never filled silently (Product-Token-Governance § "Authoring Workflow"). *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 1; prior text at `a95d6bf3d`.)*
+```
+
+### Site 2 — `governance/Token-Governance.md` L171–173 (Thurgood applies, with site 2a in one commit; Ada's text)
+
+```
+**Creating ANY system token (semantic, primitive, or component) requires human review.** A system token is a Rosetta token: a primitive or semantic token in the token source, or a component token declared with `defineComponentTokens()` (a component's `*.tokens.ts`). The token source is `src/tokens/` in DesignerPunk's repo; in a product it is the directory `tokenSource` names in `designerpunk.config.ts` (`init` writes `./src/tokens`), and in package mode, with no `tokenSource`, a product's primitives and semantics come from the package and are added only upstream. A product token (`product/tokens/*.yaml`) is governed by Product-Token-Governance: its need is planned at screen specification and discussed before implementation, and the indexer checks its naming and that it carries a rationale. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 1; prior text at `a95d6bf3d`.)*
+
+This is non-negotiable. Token creation is an architectural decision that affects the entire design system. AI agents should never autonomously create system tokens.
+```
+
+### Site 2a — `canonical/agents/ada.md` L28 (Thurgood applies, with site 2 in one commit)
+
+```
+            - "Creating ANY system token (semantic, primitive, or component) requires human review"
+```
+
+### Site 2b — `.cursor/rules/tokens.mdc` L20 (Ada applies)
+
+```
+| Creating ANY system token | Always requires human review (product tokens: Product-Token-Governance) |
+```
+
+### Site 2c — `governance/classification-map.md` row `no-autonomous-token-creation`, `rule:` (L242) (Thurgood applies)
+
+```
+rule: "Creating ANY system token (primitive, semantic, or component) requires human review — no autonomous token creation"
+```
+
+### Site 2c — the same row, the history entry appended as its last `history` item (Thurgood applies; `<application date>` is the one placeholder left, filled at application)
+
+```
+  - { date: <application date>, change: "EXECUTION (ballot 2026-10-26-system-token-review-and-token-planning § 12 step 5). rule: scoped to system tokens (primitives and semantics in the token source, src/tokens/ here and tokenSource in a product; component tokens declared with defineComponentTokens()); product tokens are governed by Product-Token-Governance. No checks, check_state or scope change: the armed barrier's 17 suites already watch only system-token families", by: thurgood }
+```
+
+### Site 3 — `governance/Product-Token-Governance.md` § "Authoring Workflow" L56–62, replaced whole (Ada applies)
+
+```
+## Authoring Workflow
+
+**Token needs are planned before implementation.** A screen's token needs are identified while the screen is specified, so they can be discussed rather than decided ad hoc during the build. The screen spec names every token its nodes use in their `tokens:` blocks (Integration Guide § "Writing Screen Specs"): system tokens, semantic first, and the product tokens the screen introduces. It also names each need no system token covers, as a new product token or as a system gap. A system gap goes to Thurgood, who triages it to Ada; creating a system token needs human review (Token Governance § "Token Creation Governance"). Until the gap is resolved, the spec names the product token the screen uses in its place, with `promotionCandidate: true`, or the screen waits; the discussion decides which. Leonardo discusses them with the product's human lead (Peter in DesignerPunk's repo; the founder in a product repo) in the screen spec's review, before implementation starts. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
+
+**Leonardo** defines product tokens during screen specification. He identifies product-level values, names them, and documents their purpose. This is the primary authoring path.
+
+**A need the spec missed.** A platform agent (Sparky, Kenya, Data) that sees a missing need while reading the spec raises it before building (Product-Handoff-Protocol § "Platform → Leo (Raising Concerns Before Implementation)"). Some needs appear only during the build on one platform, such as spacing added to a safe-area or keyboard inset (the inset itself is the platform's value, not a token) or a sheet detent height. A platform agent that meets one first checks the system tokens, semantic first; a need they cover is not a gap. Otherwise it surfaces the need to Leonardo as a Tier 1 clarification (Product-Handoff-Protocol § "Tier 1: Quick Clarifications"), stating the need, the system tokens it checked, and a proposed name with its `ref:` or `value:` and rationale. Leonardo decides the outcome, except for a colour value or a system gap, which he takes to the product's human lead to decide. The Implementation Report cites where the lead's decision is written, in the lead's own words and dated: the screen spec's review or the unit's PR. Until the outcome, the code uses the nearest system token (semantic first), marked with a `token-gap: <need>` comment, or leaves the value out where no system token is near, with the same marker where the value would go; the product token is written only once the screen spec names it. Every gap found in one build pass is surfaced in one message, the rest of the build goes on, and the marker is removed when the outcome is applied. A unit does not merge while its screen sources carry a `token-gap:` marker. The outcome is recorded in the Implementation Report under "Decisions Made During Implementation", and the screen spec is amended to name any token that is kept. A need is never filled silently and left to a later audit. It never becomes a hard-coded value, or a value under a node's `props:`, which no index reads. The prototype escape hatch (§ "System-First Value Selection", `# TODO: snap to system`) is the design-phase counterpart: the value is marked, and it is resolved before the work moves on.
+
+**Naming authority**: The indexer validates naming mechanically (camelCase enforcement). Leonardo sets naming patterns for the vertical (e.g., "layout tokens use `content*` prefix for content-area constraints"), but enforcement is the indexer's job, not a human routing step.
+```
+
+### Site 4 — `governance/Product-Token-Governance.md` L36 (Ada applies)
+
+```
+| **Product token** | One product vertical, any number of surfaces | Product team authors, with no system review; needs planned at screen specification (§ "Authoring Workflow") *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)* |
+```
+
+### Site 4 — `governance/Product-Token-Governance.md` L72 (Ada applies)
+
+```
+**Responsibility**: This rule applies at the *authoring* point — Leonardo during screen spec, and a platform agent for a need the spec missed, under § "Authoring Workflow". Platform agents consuming generated CSS custom properties don't need to worry about ref vs value at consumption time. If Leonardo's spec already includes a `value:` token with rationale, platform agents trust that decision during implementation. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
+```
+
+### Site 5 — `governance/Web-Authoring-Standards.md` L102 (Lina applies)
+
+```
+There is no step 4. If no system token exists, the value is a product token, never a hard-coded value: the one the screen spec names, or, for a need the spec did not name, one you surface to Leonardo and never add silently (§ "Product Token Authoring (Sparky)" below says when it may be written). *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
+```
+
+### Site 6 — `governance/Web-Authoring-Standards.md` L239 (Lina applies)
+
+```
+If you need a spacing, color, typography, motion, radius, border, shadow, z-index, or grid value and no system token (semantic or primitive) covers it, the value is a product token. If the screen spec names it, use it, or author it as the spec names it. If the spec does not, it is a need the spec missed: surface it to Leonardo as a Tier 1 clarification (Product-Handoff-Protocol § "Tier 1: Quick Clarifications"), with the need, the system tokens you checked (semantic first), and a proposed name with its `ref:` or `value:` and rationale. Until the outcome, the code uses the nearest system token (semantic first), marked with a `token-gap: <need>` comment, or leaves the value out where no system token is near, with the same marker where the value would go; the product token is written only once the screen spec names it. On web the comment is `/* token-gap: <need> */`. Surface every gap from one build pass in one message. Remove the marker when the outcome is applied. A unit does not merge while its screen sources carry a `token-gap:` marker. The outcome goes in your Implementation Report under "Decisions Made During Implementation". The gap is never filled with a hard-coded value (a literal `var()` fallback or `calc()` operand included), or with a value under a node's `props:` in the screen spec. Product-Token-Governance § "Authoring Workflow" is the rule for every platform; this is its web form. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
+```
+
+### Site 6 — `governance/Web-Authoring-Standards.md` L283 (Lina applies)
+
+```
+5. **Nothing exists** → If the screen spec names it, create it following the naming schema. If it does not, it is a need the spec missed: follow § "The Rule" above before you create it. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
+```
+
+### Site 6a — `governance/Web-Authoring-Standards.md` L106, the whole line after the append (CORRECTION; Lina applies, if she agrees, [ADA R6])
+
+```
+**Note**: This priority chain is Sparky's decision tree for screen CSS: the one order in Token Governance § "Token Selection Matrix", with the component step removed because screens have none. Lina follows that order whole, including a component's own token. Component tokens are not part of Sparky's workflow. *(Amended 2026-10-25 by ballot 2026-10-25-token-selection-order-one-rule, item 3; prior text at `1eced6cd5`.)*
+```
+
+### Site 6a — `governance/Web-Authoring-Standards.md` L386, the whole line after the append (CORRECTION; Lina applies, if she agrees, [ADA R6])
+
+```
+- **Token-Governance.md** § "Token Selection Matrix" — The token selection order (Core Goals points to it) *(Amended 2026-10-25 by ballot 2026-10-25-token-selection-order-one-rule, item 3; prior text at `1eced6cd5`.)*
+```
+
+### Site 7 — `canonical/agents/leonardo.md` L340 (Thurgood applies)
+
+```
+- **System token creation or modification** — escalate to Ada via system feedback (through Thurgood). Product tokens are yours: you plan and author them at screen specification (§ "Product Tokens" above)
+```
+
+### Site 8 — `canonical/agents/sparky.md` L329 (Thurgood applies)
+
+```
+- **System token creation or modification** — escalate through Leonardo to Thurgood (who triages to Ada). Product tokens are in scope: § "Product Tokens" above says when you author one
+```
+
+### Site 8 — `canonical/agents/kenya.md` L301 (L305 after site 8b's insert; Thurgood applies)
+
+```
+- **System token creation or modification** (primitive, semantic or component) — escalate through Leonardo to Thurgood (who triages to Ada). A product token is not system work: § "Product Tokens (Spec 108/109)" above says when you author one
+```
+
+### Site 8 — `canonical/agents/data.md` L304 (L308 after site 8b's insert; Thurgood applies)
+
+```
+- **System token creation or modification** (primitive, semantic or component) — escalate through Leonardo to Thurgood (who triages to Ada). Deciding a product token the screen spec does not name is not yours either: § "Product Tokens (Spec 108/109)" above says what you do with one
+```
+
+### Site 8a — `canonical/agents/sparky.md` L322 (Thurgood applies)
+
+```
+- Author a product token in `product/tokens/{category}.yaml` when the screen spec names it. When you review the spec (§ "Step 1: Review the Specification"), raise, before you build, any need its `tokens:` blocks do not name. A value the spec did not anticipate that you meet during the build is surfaced to Leonardo and never filled silently; the routed product-token authoring section says what the code uses until the outcome, and when the token may be written. Follow Product-Token-Governance (your ambient law), and the routed product-token authoring + naming sections
+```
+
+### Site 8a — `canonical/agents/kenya.md` L294 (L298 after site 8b's insert; Thurgood applies)
+
+```
+- Author a product token in `product/tokens/{category}.yaml` when the screen spec names it. A value the spec did not anticipate is surfaced to Leonardo and never filled silently or with a hard-coded value (Product-Token-Governance § "Authoring Workflow", routed, says when it may be written). Follow Product-Token-Governance (your ambient law), and the routed product-token authoring + naming sections
+```
+
+### Site 8a — `canonical/agents/data.md` L297 (L301 after site 8b's insert; Thurgood applies)
+
+```
+- Author a product token in `product/tokens/{category}.yaml` when the screen spec names it. A value the spec did not anticipate is a need the spec missed: surface it to Leonardo and never fill it silently or with a hard-coded value (Product-Token-Governance § "Authoring Workflow", routed, says when it may be written and what the code holds until the outcome). A safe-area, system-bar or IME inset is the platform's runtime value (`WindowInsets`), never a token; only spacing added to it can be a need. Follow Product-Token-Governance (your ambient law), and the routed product-token authoring and naming sections
+```
+
+### Site 8b — `canonical/agents/kenya.md` `routes.docs`, inserted after `product-token-naming` (after L90) (Thurgood applies, with its consumer row in one commit)
+
+```
+    - id: product-token-authoring
+      doc: product-token-governance
+      section: "Authoring Workflow"
+      when: "a value the screen spec did not anticipate comes up while you build an iOS screen (what you surface, and what sits in the code until the outcome)"
+```
+
+### Site 8b — `canonical/agents/data.md` `routes.docs`, inserted after `product-token-naming` (after L89) (Thurgood applies, with its consumer row in one commit)
+
+```
+    - id: product-token-authoring
+      doc: product-token-governance
+      section: "Authoring Workflow"
+      when: "a value you need has no system token and the screen spec does not name it (a need the spec missed)"
+```
+
+### Site 8b — `canonical/profiles/consumer/kenya.dispositions.yaml` and `canonical/profiles/consumer/data.dispositions.yaml`, one row each beside `routes.docs[product-token-naming]` (Thurgood applies)
+
+```
+  "routes.docs[product-token-authoring]": {"disposition": "retained"}
+```
+
+### Agreement keys (step 6b reads each from its block below, written to a file; never typed)
+
+#### K-i (used under F-A (i); step 6b expects `1` in each of `governance/Product-Token-Governance.md` and `governance/Web-Authoring-Standards.md`)
+
+```
+Until the outcome, the code uses the nearest system token (semantic first), marked with a `token-gap: <need>` comment, or leaves the value out where no system token is near, with the same marker where the value would go; the product token is written only once the screen spec names it.
+```
+
+#### K-h (used under F-A-h (h1); step 6b expects `1` in each file)
+
+```
+A unit does not merge while its screen sources carry a `token-gap:` marker.
+```
+
+#### K-ii (not used; step 6b expects `0` in each file)
+
+```
+The value may be written now, provisionally, as a product token on the unit branch, under the naming and rationale rules; the unit does not merge until the outcome is recorded in the PR body, the screen spec names a kept token, and a rejected one is removed.
+```
