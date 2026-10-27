@@ -362,6 +362,7 @@ Two routes for each, additive: an explicit message to the named owner (the orche
 ## Peter sample (Stacy-signed acts, § 5.3)
 
 **`Peter sample (Stacy-signed): 0 / 0`** in this population. The cumulative frame since MIDPOINT is unchanged at `0 / 314`, with 15.1.0's five (including #285's `FAIL 7`) inside it. Trigger (d): "keep as is" (rulings item 18). I name the zero; I do not adjudicate my own acts.
+*(Erratum pointer, 2026-10-27, Stacy: the cumulative frame reads `0 / 302`, not `0 / 314`. Peter ruled the twelve pre-#262 acts (#222 10, #228 1, #239 1) pre-chain history; see `claims-pass-release-16.1.0.md` § "[STACY] Erratum: the cumulative Stacy-signed frame (2026-10-27)". This line is added; the line above stands as written.)*
 
 ---
 
