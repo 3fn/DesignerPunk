@@ -39,8 +39,14 @@
  *
  *   --audit     links 4–7, local, post-acceptance, never blocking (§§ 4.2–4.4). `--pr N` reads
  *               `refs/pull/N/head`; `--branch <b>` reads a unit branch. Walks EVERY act (never a
- *               sample) against the harness store (`--store`, default
- *               `~/.claude/projects/<project>/`). One verdict per act from the closed set
+ *               sample) against the harness stores: every `--store <dir>` given (repeatable, in
+ *               order), else the default set — the main checkout's store
+ *               `~/.claude/projects/<slug>/` and every sibling `<slug>--claude-worktrees-*` (a
+ *               session started in a `.claude/worktrees/<name>` worktree writes there, not to the
+ *               main store; `.kiro/issues/2026-10-26-signing-chain-audit-reads-one-session-store.md`).
+ *               A store whose cwd lies outside the repo root (a scratchpad worktree session) is
+ *               not derivable from the repo path and is read only when passed by `--store`.
+ *               One verdict per act from the closed set
  *               `anchored` · `unanchored` · `record absent` · `FAIL` · `anomaly`, link-numbered,
  *               never rolled up. Exit 0 unless the command itself cannot run.
  *               `--signer <seat>` keeps only the acts whose signer — the `seat` field every line
@@ -1013,6 +1019,8 @@ export interface ActVerdict {
 
 interface Candidate {
   file: string;
+  /** The store the transcript was read from. */
+  store: string;
   isMain: boolean;
   toolUseId: string;
   prefix: string;
@@ -1158,8 +1166,40 @@ export function candidateLines(command: string, output: string): { prefix: strin
   return out;
 }
 
-/** Index every candidate in the store (one pass over the transcripts). */
-export function indexCandidates(store: string): Candidate[] {
+/** A store argument as the de-duplicated list it names (order kept; `path.resolve` equality). */
+export function storeList(store: string | string[]): string[] {
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const s of Array.isArray(store) ? store : [store]) {
+    const r = path.resolve(s);
+    if (!seen.has(r)) {
+      seen.add(r);
+      out.push(s);
+    }
+  }
+  return out;
+}
+
+/**
+ * Index every candidate in the store(s) (one pass over the transcripts). A candidate found twice
+ * with the same tool call id, prefix and subject (one record copied into two stores) is one
+ * candidate — tool call ids are unique per call, so two distinct calls are never merged.
+ */
+export function indexCandidates(store: string | string[]): Candidate[] {
+  const out: Candidate[] = [];
+  const seenCall = new Set<string>();
+  for (const st of storeList(store)) {
+    for (const c of indexStore(st)) {
+      const k = `${c.toolUseId}\0${c.prefix}\0${c.subject}`;
+      if (seenCall.has(k)) continue;
+      seenCall.add(k);
+      out.push(c);
+    }
+  }
+  return out;
+}
+
+function indexStore(store: string): Candidate[] {
   const out: Candidate[] = [];
   for (const t of listTranscripts(store)) {
     const text = fs.readFileSync(t.file, 'utf8');
@@ -1201,7 +1241,7 @@ export function indexCandidates(store: string): Candidate[] {
         for (const c of per) {
           const k = `${c.prefix}\0${c.subject}`;
           const prev = byKey.get(k);
-          byKey.set(k, { file: t.file, isMain: t.isMain, toolUseId: b.tool_use_id, prefix: c.prefix, subject: c.subject, proven: (prev?.proven ?? false) || c.proven });
+          byKey.set(k, { file: t.file, store, isMain: t.isMain, toolUseId: b.tool_use_id, prefix: c.prefix, subject: c.subject, proven: (prev?.proven ?? false) || c.proven });
         }
         out.push(...byKey.values());
       }
@@ -1250,13 +1290,18 @@ export function readTranscript(file: string): TranscriptInfo {
   return info;
 }
 
-/** The parent's `tool_use` for a spawn id: the session file, then its subagents (nested spawns). */
-function spawnTypeOf(store: string, sessionId: string | undefined, toolUseId: string): string | undefined {
+/**
+ * The parent's `tool_use` for a spawn id: the session file, then its subagents (nested spawns) —
+ * in the transcript's own store first, then the other stores in order.
+ */
+function spawnTypeOf(stores: string[], sessionId: string | undefined, toolUseId: string): string | undefined {
   const files: string[] = [];
   if (sessionId) {
-    files.push(path.join(store, `${sessionId}.jsonl`));
-    const sub = path.join(store, sessionId, 'subagents');
-    if (fs.existsSync(sub)) for (const s of fs.readdirSync(sub)) if (s.endsWith('.jsonl')) files.push(path.join(sub, s));
+    for (const store of stores) {
+      files.push(path.join(store, `${sessionId}.jsonl`));
+      const sub = path.join(store, sessionId, 'subagents');
+      if (fs.existsSync(sub)) for (const s of fs.readdirSync(sub)) if (s.endsWith('.jsonl')) files.push(path.join(sub, s));
+    }
   }
   for (const f of files) {
     if (!fs.existsSync(f)) continue;
@@ -1331,7 +1376,8 @@ export interface AuditOptions {
   repo: string;
   base: string;
   head: string;
-  store: string;
+  /** One store, or several (read in order; `--store` repeated, or {@link defaultStores}). */
+  store: string | string[];
   rg: Regrounding;
   /** Commits (sha prefixes) declared Kiro-run: no harness record exists → `unanchored`. */
   kiro?: string[];
@@ -1349,7 +1395,8 @@ export function runAudit(opts: AuditOptions): ActVerdict[] {
   const analyses = readRange(repo, b, h)
     .map((c) => analyzeCommit(repo, c, rg))
     .filter((a) => !a.merge && a.acts.size > 0);
-  const candidates = indexCandidates(opts.store);
+  const stores = storeList(opts.store);
+  const candidates = indexCandidates(stores);
   const transcripts = new Map<string, TranscriptInfo>();
   const transcript = (f: string): TranscriptInfo => {
     if (!transcripts.has(f)) transcripts.set(f, readTranscript(f));
@@ -1404,11 +1451,13 @@ export function runAudit(opts: AuditOptions): ActVerdict[] {
       } else {
         const cand = l.cand as Candidate;
         const t = transcript(cand.file);
-        v.transcript = path.relative(opts.store, cand.file);
+        // One store: relative to it, as before. Several: prefixed with the store's directory name,
+        // so the line says which store anchored it.
+        v.transcript = stores.length === 1 ? path.relative(cand.store, cand.file) : path.join(path.basename(cand.store), path.relative(cand.store, cand.file));
         v.spawnDepth = t.meta?.spawnDepth;
         v.model = t.meta?.model;
         // Link 5.
-        const parentType = t.meta?.toolUseId ? spawnTypeOf(opts.store, t.first?.sessionId ?? path.basename(path.dirname(path.dirname(cand.file))), t.meta.toolUseId) : undefined;
+        const parentType = t.meta?.toolUseId ? spawnTypeOf([cand.store, ...stores.filter((x) => x !== cand.store)], t.first?.sessionId ?? path.basename(path.dirname(path.dirname(cand.file))), t.meta.toolUseId) : undefined;
         if (!t.meta) done('record absent', 5, 'the transcript has no meta record');
         else if (t.meta.agentType !== seat) done('FAIL', 5, `meta agentType ${String(t.meta.agentType)} ≠ signer ${seat}`);
         else if (parentType === undefined) done('record absent', 5, `the parent tool_use ${String(t.meta.toolUseId)} is not in the store`);
@@ -1583,15 +1632,51 @@ export function formatAudit(acts: ActVerdict[], header: string, filter?: SignerF
 // ============================================================================
 
 /** The harness store for a repo: `~/.claude/projects/<slug of the main checkout's path>`. */
-export function defaultStore(repo: string): string {
+export function defaultStore(repo: string, home: string = os.homedir()): string {
   const common = gitTry(repo, ['rev-parse', '--path-format=absolute', '--git-common-dir'])?.trim();
   const root = common ? path.dirname(common) : repo;
-  return path.join(os.homedir(), '.claude', 'projects', root.replace(/[^A-Za-z0-9]/g, '-'));
+  return path.join(home, '.claude', 'projects', root.replace(/[^A-Za-z0-9]/g, '-'));
 }
+
+/** The slug a session started in `<root>/.claude/worktrees/<name>` writes under: `<slug>--claude-worktrees-<name>`. */
+export const WORKTREE_STORE_INFIX = '--claude-worktrees-';
+
+/**
+ * The default store set: the main checkout's store, then every sibling directory named
+ * `<slug>--claude-worktrees-*` (sorted) — the stores whose names derive from the repo path. A
+ * sibling is matched by that exact prefix, never by `<slug>-`, so another checkout whose path
+ * extends this one's (`…-v2-copy`) is never read.
+ */
+export function defaultStores(repo: string, home: string = os.homedir()): string[] {
+  const main = defaultStore(repo, home);
+  const dir = path.dirname(main);
+  const prefix = `${path.basename(main)}${WORKTREE_STORE_INFIX}`;
+  const siblings = fs.existsSync(dir)
+    ? fs
+        .readdirSync(dir, { withFileTypes: true })
+        .filter((e) => e.isDirectory() && e.name.startsWith(prefix))
+        .map((e) => e.name)
+        .sort()
+        .map((n) => path.join(dir, n))
+    : [];
+  return [main, ...siblings];
+}
+
+/** The header's store clause: `store <dir>` for one (unchanged), `stores (<n>): <a>, <b>, …` for several. */
+export const storeClause = (stores: string[]): string => (stores.length === 1 ? `store ${stores[0]}` : `stores (${stores.length}): ${stores.join(', ')}`);
 
 function arg(argv: string[], name: string): string | undefined {
   const i = argv.indexOf(name);
   return i >= 0 ? argv[i + 1] : undefined;
+}
+
+/** Every value of a repeatable flag, in order. */
+function args(argv: string[], name: string): string[] {
+  const out: string[] = [];
+  argv.forEach((t, i) => {
+    if (t === name && i + 1 < argv.length) out.push(argv[i + 1]);
+  });
+  return out;
 }
 
 function defaultBase(repo: string, head: string): string {
@@ -1635,7 +1720,8 @@ export function censusRouted(repo: string, argv: string[], rg: Regrounding | und
   return 0;
 }
 
-export function main(argv: string[], cwd: string = process.cwd()): number {
+/** `home` is where the default store set is looked up (`~`; a test passes a fixture home). */
+export function main(argv: string[], cwd: string = process.cwd(), home: string = os.homedir()): number {
   const repo = gitTry(cwd, ['rev-parse', '--show-toplevel'])?.trim() ?? cwd;
   const rgLoaded = loadRegrounding();
   if (argv.includes('--census-routed')) return censusRouted(repo, argv, rgLoaded);
@@ -1690,7 +1776,8 @@ export function main(argv: string[], cwd: string = process.cwd()): number {
     }
     const baseRef = arg(argv, '--base');
     const base = baseRef ? (gitTry(repo, ['merge-base', baseRef, head])?.trim() ?? baseRef) : defaultBase(repo, head);
-    const store = arg(argv, '--store') ?? defaultStore(repo);
+    const given = args(argv, '--store');
+    const store = storeList(given.length > 0 ? given : defaultStores(repo, home));
     const kiro = arg(argv, '--kiro')?.split(',').filter(Boolean);
     const acts = runAudit({ repo, base, head, store, rg: rgLoaded, kiro, since: R_SHA });
     const filter = sf.filter;
@@ -1712,13 +1799,13 @@ export function main(argv: string[], cwd: string = process.cwd()): number {
     if (argv.includes('--json')) {
       console.log(JSON.stringify(payload, null, 2));
     } else {
-      for (const l of formatAudit(acts, `${header}; store ${store}`, filter)) console.log(l);
+      for (const l of formatAudit(acts, `${header}; ${storeClause(store)}`, filter)) console.log(l);
       console.log('--- machine-readable ---');
       console.log(JSON.stringify(payload));
     }
     return 0;
   }
-  console.error('usage: verify-signing-chain --ci [--base <sha>] [--head <sha>] [--since <sha>|none]\n       verify-signing-chain --census-routed [--at <sha>]\n       verify-signing-chain --audit (--pr <N> | --branch <b>) [--base <ref>] [--store <dir>] [--kiro <sha,…>] [--signer <seat> | --exclude-signer <seat>] [--json]');
+  console.error('usage: verify-signing-chain --ci [--base <sha>] [--head <sha>] [--since <sha>|none]\n       verify-signing-chain --census-routed [--at <sha>]\n       verify-signing-chain --audit (--pr <N> | --branch <b>) [--base <ref>] [--store <dir>]… [--kiro <sha,…>] [--signer <seat> | --exclude-signer <seat>] [--json]');
   return 2;
 }
 

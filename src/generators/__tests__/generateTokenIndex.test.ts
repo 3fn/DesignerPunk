@@ -48,12 +48,19 @@ function makeComponentToken(name: string, component: string, primitiveRef: strin
   };
 }
 
-/** Minimal ModeResolvedTokens for the generator (Spec 117 Task 3 shared-source input). */
-function makeModeResolved(themeVaryingTokens = new Set<string>()) {
+/**
+ * Minimal ModeResolvedTokens for the generator (Spec 117 Task 3 shared-source input).
+ * `nativeThemeVaryingTokens` defaults to the base set; pass it to tell the two apart.
+ */
+function makeModeResolved(
+  themeVaryingTokens = new Set<string>(),
+  nativeThemeVaryingTokens: Set<string> = themeVaryingTokens,
+) {
   return {
     resolvedLight: [],
     resolvedDark: [],
     themeVaryingTokens,
+    nativeThemeVaryingTokens,
     primitiveOklch: new Map(),
   };
 }
@@ -154,6 +161,114 @@ describe('generateTokenIndex', () => {
     const platforms = content.tokens['color.action.primary'].platforms;
     expect(platforms.ios).toMatch(/^theme\./);
     expect(platforms.android).toMatch(/^theme\./);
+  });
+
+  // .kiro/issues/2026-10-26-token-index-platform-names-not-emitted.md, plan item 5: the native
+  // columns take `theme.` from the set the native generators consume; `themeVarying` keeps the
+  // base-scoped (light/dark) meaning.
+  it('takes the native theme. prefix from the native set, and themeVarying from the base set', () => {
+    generateTokenIndex(outputDir, {
+      primitiveTokens: [],
+      semanticTokens: [
+        makeSemantic('color.action.primary', 'cyan300', 'color'),
+        makeSemantic('color.text.default', 'gray300', 'color'),
+        makeSemantic('color.structure.canvas', 'white100', 'color'),
+      ],
+      componentTokens: [],
+      modeResolved: makeModeResolved(
+        new Set(['color.text.default']),
+        new Set(['color.text.default', 'color.action.primary']),
+      ),
+      componentSchemaDir: NO_SCHEMA_DIR,
+    });
+
+    const t = (yaml.load(fs.readFileSync(path.join(outputDir, 'semantics.yaml'), 'utf-8')) as any).tokens;
+    // A WCAG-only override: not light/dark-varying, but out of DesignTokens on native.
+    expect(t['color.action.primary'].themeVarying).toBe(false);
+    expect(t['color.action.primary'].platforms).toEqual({
+      web: '--color-action-primary', ios: 'theme.colorActionPrimary', android: 'theme.color_action_primary',
+    });
+    expect(t['color.text.default'].themeVarying).toBe(true);
+    expect(t['color.text.default'].platforms.ios).toBe('theme.colorTextDefault');
+    expect(t['color.structure.canvas'].platforms).toEqual({
+      web: '--color-structure-canvas', ios: 'colorStructureCanvas', android: 'color_structure_canvas',
+    });
+  });
+
+  // Same record, plan item 1: a composite row lists the names the generators emit for it.
+  it('lists a composite token by the names each generator emits', () => {
+    generateTokenIndex(outputDir, {
+      primitiveTokens: [],
+      semanticTokens: [
+        { name: 'typography.bodyMd', category: 'typography', description: '', context: '',
+          primitiveReferences: { fontSize: 'fontSize100', lineHeight: 'lineHeight100' } } as SemanticToken,
+        { name: 'shadow.container', category: 'shadow', description: '', context: '',
+          primitiveReferences: { offsetX: 'shadowOffsetX.000', offsetY: 'shadowOffsetY.100', blur: 'blur075', opacity: 'shadowOpacityModerate', color: 'shadowBlack100' } } as SemanticToken,
+        { name: 'motion.floatLabel', category: 'interaction', description: '', context: '',
+          primitiveReferences: { duration: 'duration250', easing: 'easingStandard' } } as SemanticToken,
+      ],
+      componentTokens: [],
+      modeResolved: makeModeResolved(),
+      componentSchemaDir: NO_SCHEMA_DIR,
+    });
+
+    const t = (yaml.load(fs.readFileSync(path.join(outputDir, 'semantics.yaml'), 'utf-8')) as any).tokens;
+    expect(t['typography.bodyMd'].platforms).toEqual({
+      web: ['--typography-body-md-font-size', '--typography-body-md-line-height'],
+      ios: 'typographyBodyMd',
+      android: 'typography_body_md',
+    });
+    // Shadow: the composite first, then one property per key.
+    expect(t['shadow.container'].platforms.web).toEqual([
+      '--shadow-container',
+      '--shadow-container-offset-x', '--shadow-container-offset-y', '--shadow-container-blur',
+      '--shadow-container-opacity', '--shadow-container-color',
+    ]);
+    expect(t['shadow.container'].platforms.ios).toBe('shadowContainer');
+    expect(t['motion.floatLabel'].platforms).toEqual({
+      web: ['--motion-float-label-duration', '--motion-float-label-easing'],
+      ios: ['MotionFloatLabel.duration', 'MotionFloatLabel.easing'],
+      android: ['MotionFloatLabel.duration', 'MotionFloatLabel.easing'],
+    });
+    expect(t['typography.bodyMd'].platformNotes).toBeUndefined();
+  });
+
+  // Same record, plan item 1: a row respects the token's `platforms` list.
+  it('gives null, with a note, on a platform the token does not declare', () => {
+    generateTokenIndex(outputDir, {
+      primitiveTokens: [],
+      semanticTokens: [
+        { name: 'elevation.container', category: 'layering', value: 8, platforms: ['android'], description: '' } as unknown as SemanticToken,
+        { name: 'zIndex.container', category: 'layering', value: 100, platforms: ['web', 'ios'], description: '' } as unknown as SemanticToken,
+      ],
+      componentTokens: [],
+      modeResolved: makeModeResolved(),
+      componentSchemaDir: NO_SCHEMA_DIR,
+    });
+
+    const t = (yaml.load(fs.readFileSync(path.join(outputDir, 'semantics.yaml'), 'utf-8')) as any).tokens;
+    expect(t['elevation.container'].platforms).toEqual({ web: null, ios: null, android: 'elevation_container' });
+    expect(t['elevation.container'].platformNotes).toEqual({
+      web: 'Use z-index + shadow tokens instead', ios: 'Use z-index + shadow tokens instead',
+    });
+    expect(t['zIndex.container'].platforms).toEqual({ web: '--z-index-container', ios: 'zIndexContainer', android: null });
+    expect(t['zIndex.container'].platformNotes).toEqual({ android: 'Use elevation tokens instead' });
+  });
+
+  it('gives null on every platform to a colour primitive the generators do not emit', () => {
+    generateTokenIndex(outputDir, {
+      primitiveTokens: [makePrimitive('shadowBlack100', TokenCategory.COLOR, 0), makePrimitive('teal300', TokenCategory.COLOR, 0)],
+      semanticTokens: [],
+      componentTokens: [],
+      modeResolved: makeModeResolved(),
+      componentSchemaDir: NO_SCHEMA_DIR,
+    });
+
+    const t = (yaml.load(fs.readFileSync(path.join(outputDir, 'primitives.yaml'), 'utf-8')) as any).tokens;
+    expect(t['shadowBlack100'].platforms).toEqual({ web: null, ios: null, android: null });
+    expect(Object.keys(t['shadowBlack100'].platformNotes)).toEqual(['web', 'ios', 'android']);
+    expect(t['teal300'].platforms).toEqual({ web: '--teal-300', ios: 'teal300', android: 'teal_300' });
+    expect(t['teal300'].platformNotes).toBeUndefined();
   });
 
   it('does not include tokens not in the provided input', () => {

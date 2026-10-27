@@ -36,3 +36,9 @@ Stacy's RS-37: the sitting-2 S5 amendment named who briefs and who dispatches th
 **The class fix, mine to draft**: the release walk (RELEASE-FLOW 3a) or the 5a step gains a pre-phase-1 owed item, "the delegate audit file for this release is committed, or its absence is a walk row". That is a LAW edit to RELEASE-FLOW, so it goes in a later ballot round, not in this record. Until then, this record's Trigger is the reminder: the next release's walk rows it, and its phase 1 reads it.
 
 *Signed: Thurgood, 2026-10-26.*
+
+## Owed act 7, added 2026-10-26: the re-read after the store-set fix
+
+7. **The re-read: Ada, dispatched by the orchestrator, after the store-set fix merges.** The fix and its record are `.kiro/issues/2026-10-26-signing-chain-audit-reads-one-session-store.md`. `--audit` used to read one harness store, and now reads the main store plus every `…--claude-worktrees-*` sibling. Ada re-runs `--audit --pr <N> --signer stacy`, with the default store set (no `--store`), over #465 and #467. She writes the per-act lines verbatim as a dated addendum section in her file `delegate-audit-release-16.1.0-ada.md`. By the steward's measurement (that record's § 4), 7 acts change reading: 6 read `anchored` and #467's `027b8904` (`designerpunk-systems-overview.yaml#high-level-designerpunk-three-system-architecture`) reads `FAIL 7`. That FAIL is a Stacy-signed act, so owed act 4 applies to it once Ada's line exists. This record's close condition is unchanged.
+
+*Signed: Thurgood, 2026-10-26.*

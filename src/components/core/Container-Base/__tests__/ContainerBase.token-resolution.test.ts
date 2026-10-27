@@ -45,7 +45,13 @@ import {
 const REPO_ROOT = path.resolve(__dirname, '../../../../..');
 const INDEX_DIR = path.join(REPO_ROOT, 'token-index');
 
-type IndexEntry = { platforms?: { web?: string } };
+/**
+ * `platforms.web` is one custom property, a list (a composite the generator writes as several
+ * properties: typography per property, shadow as its composite plus its parts, semantic motion
+ * per part), or null (the platform carries no name; reason in `platformNotes`).
+ * See token-index/README.md § "Platform names".
+ */
+type IndexEntry = { platforms?: { web?: string | string[] | null } };
 
 function loadIndex(file: string): Record<string, IndexEntry> {
   const doc = yaml.load(fs.readFileSync(path.join(INDEX_DIR, file), 'utf8')) as {
@@ -62,8 +68,10 @@ const component = loadIndex('components.yaml');
 const GENERATED_WEB_NAMES: Set<string> = new Set(
   [semantic, primitive, component]
     .flatMap(tokens => Object.values(tokens))
-    .map(entry => entry.platforms?.web)
-    .filter((web): web is string => typeof web === 'string')
+    .flatMap(entry => {
+      const web = entry.platforms?.web;
+      return Array.isArray(web) ? web : typeof web === 'string' ? [web] : [];
+    })
 );
 
 /** Token names fed into CSS-variable construction by the Container family (closed sets). */
@@ -120,10 +128,19 @@ describe('Container family — emitted CSS custom properties resolve (resolve-gu
     for (const tokens of [semantic, primitive]) {
       for (const [name, entry] of Object.entries(tokens)) {
         const web = entry.platforms?.web;
-        if (!web) continue;
+        if (web == null) continue; // no web name for this token (platformNotes says why)
         checked++;
         const derived = tokenToCssCustomProperty(name);
-        if (derived !== web) mismatches.push(`${name}: derived ${derived}, generator ${web}`);
+        if (typeof web === 'string') {
+          if (derived !== web) mismatches.push(`${name}: derived ${derived}, generator ${web}`);
+        } else {
+          // A composite: each emitted property is the derived stem itself (shadow's composite)
+          // or the stem plus a part suffix, so the derivation rule still covers these rows.
+          const off = web.filter(w => w !== derived && !w.startsWith(`${derived}-`));
+          if (web.length === 0 || off.length > 0) {
+            mismatches.push(`${name}: derived stem ${derived}, generator [${web.join(', ')}]`);
+          }
+        }
       }
     }
     expect(checked).toBeGreaterThan(300);
