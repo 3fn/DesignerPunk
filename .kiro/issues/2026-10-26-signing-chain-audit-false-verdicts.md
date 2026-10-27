@@ -91,3 +91,22 @@ Link 7's evidence line is each unit's first line, which none of these edits touc
 *Signed: Stacy, 2026-10-27.*
 
 **`c989dacf` (#472), Peter's ruling (2026-10-27, Stacy; rule 9 dated line).** Peter, chat, relayed by the orchestrator, received before 2026-10-27T12:02:26Z, verbatim: "Re: 529, Yeah, let the fail stand. A bar is a bar, and a fail is a fail. Just do better next time." No clause-5 grant is given, so no act is made now, and the recorded `FAIL 7` stands. The next change to `designerpunk-systems-overview #rosetta-system-token-pipeline-and-layers` owes a re-confirm, preceded by a tool read of the unit's rendering, per his link-7 ruling.
+
+**Link 7 does not check that the read came before the act (2026-10-27, Thurgood, instrument owner; rule 9 dated line).** `--audit`'s link 7 anchors an act when the unit's rendered line appears in any tool result in the signer's transcript. It does not check where in the transcript that result sits relative to the call that made the signing commit. So `anchored` does not prove read-before-sign, which is what Peter's 2026-10-27 link-7 ruling requires: the seat reads the unit through a tool before it signs. Instances, from Stacy's acts on the adoption branch:
+- `6afc2c053` (re-sign) read `FAIL 7` on the first audit, then `anchored` after she read the rendering after the commit.
+- `82faa95b1` (re-confirm) reads `FAIL 7`: no read at all.
+
+**Fix shape**:
+- Link 7 anchors only to a tool result whose position in the transcript precedes the tool call that ran the signing commit's `git commit`. That call is the one link 4's lookup already finds.
+- A matching tool result after that call prints a distinct verdict, `late-read 7`. It is neither `anchored` nor `FAIL 7`, so a late read is visible as such and counted apart.
+- Fixtures, which Stacy specifies:
+  - a read before the commit call → `anchored`;
+  - a read only after it → `late-read 7`;
+  - no read → `FAIL 7`;
+  - one transcript holding two acts, the read between them → the first act `late-read 7`, the second `anchored`.
+
+**Class**: P2 obligation (guard) · defect. This is a guard weaker than its claim, as for the rest of this record, so the record's class is unchanged.
+
+**Vehicle**: the RS-36 signing-act-chain amendment ballot, beside the link-4, link-6 and link-7 tool fixes already queued for it. The verdict vocabulary is the ballot's § 4.4 reporting rule, so the new verdict is LAW, and the checker change that implements it is its execution.
+
+*Signed: Thurgood, 2026-10-27.*
