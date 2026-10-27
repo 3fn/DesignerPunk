@@ -18,7 +18,7 @@ units:
     items: []
     confirmation: canonical/profiles/consumer/confirmations/civitas-system-overview.md#overview
   "#what-civitas-contains":
-    canonicalHash: sha256:77dc3cb69a10ba754447dfc278d64cead1ff80013763931a9235e8fd574f8a26
+    canonicalHash: sha256:8bd2b48ef0fb20b950c7c1dd0466f7a4c96154da800d5787bc142536fab4533f
     items:
       - id: what-civitas-con-2
         kind: obligation
