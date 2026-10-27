@@ -62,9 +62,16 @@ date: 2026-10-25
 
 signer: kenya
 disposition: re-pointed
-canonicalHash: sha256:79a201ad2dcfa69d1aeaa343024cc011e73790b162c90aac612534e35468d4b9
-renderedHash: sha256:2cd0d550b4d748a25f9b1ca8989c70c9a892d379113db17556ecf1ad47663f98
-date: 2026-09-29
+canonicalHash: sha256:5eb940fb724e8ac91f67575d6ac30c45713e66d0caa7d6de4a7554043948aa85
+renderedHash: sha256:078321001e3350a9fa3b25b21a84538db032c226cf670adec057e74465ccedfb
+date: 2026-10-27
+
+**Re-signed 2026-10-27 (system-token review and token planning ballot, item 2, site 8): ASSENT, `surviving` 7 of 7 (`out-1` to `out-7`).** A new act, read fresh against the new rendering; nothing is carried from the 2026-09-29 signature below (canonicalHash `sha256:79a201ad2dcfa69d1aeaa343024cc011e73790b162c90aac612534e35468d4b9`, renderedHash `sha256:2cd0d550b4d748a25f9b1ca8989c70c9a892d379113db17556ecf1ad47663f98`).
+- **The ballot**: `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493). Site 8 was applied at `eb91cd5b1`, with the profile author's re-quoted `out-4` and the re-pinned overlay unit. The rendering was regenerated at `5addae6b2`, and I re-confirmed the set at 7 at `7b203bf3e`.
+- **What I read, in this session, through tool results**: the unit as `readConsumerSpans` returns it from the committed rendering, one piece each in `canonical/_consumer-output/_canonical/agents/kenya.md` (L200–L209; the applied line at L205), `cc/.claude/agents/kenya.md` (applied line at L88) and `kiro/.kiro/agents/kenya-prompt.md` (applied line at L59). By script, the three pieces are byte-identical and equal the overlay's `## @unit #out-of-scope` text. I also read this row. The rendered `out-4` line reads: *"**System token creation or modification** (primitive, semantic or component) — escalate through Leonardo to Thurgood (who triages to Ada). A product token is not system work: § "Product Tokens (Spec 108/109)" above says when you author one"*. Its pointer resolves in every rendering: `### Product Tokens (Spec 108/109)` is a retained unit, present above `### Out of Scope` in all three pieces' files (L191, L74 and L45), and it carries the applied site 8a line (L198, L81, L52).
+- **Credited**: `out-1` to `out-6` survive verbatim in all three pieces (checked by script), `out-4` with its new sentence. `out-7` (*"… — Peter's job"*) renders *"… — your human lead's job"*, as before: product decisions stay outside my seat and with the consumer's human lead. Credited by entailment.
+- **The row's `removals`** (`Peter`, `subtraction-2`) is unchanged and still the only removal; the new sentence contains no `Peter` (checked: the rendered unit contains none), so nothing new is subtracted.
+- **Hashes.** `canonicalHash` moves `79a201ad...` to `5eb940fb...` (`hashText` of the unit from `partition(body).units`, equal to the overlay pin and to the sweep's value). `renderedHash` moves `2cd0d550...` to `07832100...` (`renderedHashOf` over the committed rendering, `rowSpanSource('canonical/agents/kenya.md', 'body', '#out-of-scope')`), equal to the profile author's value.
 
 **Ruling: ASSENT — 7/7 surviving.** All 7 survive. `out-1` to `out-6` are verbatim. `out-7` is re-grounded: *"Product decisions — that's your human lead's job"*.
 
