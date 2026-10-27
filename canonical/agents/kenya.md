@@ -88,6 +88,10 @@ routes:
       doc: product-token-governance
       section: "Naming Conventions"
       when: "naming a product token you author during implementation (--product-{category}-{token-name})"
+    - id: product-token-authoring
+      doc: product-token-governance
+      section: "Authoring Workflow"
+      when: "a value the screen spec did not anticipate comes up while you build an iOS screen (what you surface, and what sits in the code until the outcome)"
     - id: completion-doc-guidance
       doc: completion-documentation-guide
       section: "Two-Document Workflow"

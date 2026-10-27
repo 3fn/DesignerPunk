@@ -50,6 +50,7 @@ frontmatter:
   "routes.docs[token-doc-map]": {"disposition": "retained"}
   "routes.docs[ios-impl-patterns]": {"disposition": "retained"}
   "routes.docs[product-token-naming]": {"disposition": "retained"}
+  "routes.docs[product-token-authoring]": {"disposition": "retained"}
   "routes.docs[completion-doc-guidance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "kenya", "canonicalHash": "sha256:51510b1c872f9a6b0168508a41c2cdebe0b07a316461996cc546daa292e67405", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/kenya.md#frontmatter:routes.docs[completion-doc-guidance]"}}
   "routes.docs[contract-concept-names]": {"disposition": "retained"}
   "routes.docs[stemma-principles]": {"disposition": "retained"}

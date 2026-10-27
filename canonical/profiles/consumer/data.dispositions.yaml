@@ -51,6 +51,7 @@ frontmatter:
   "ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt]": {"disposition": "re-pointed", "removals": [{"text": "a stale generated artifact, not the source of truth", "cites": "subtraction-1"}], "destination": "frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt]", "signature": {"signer": "data", "canonicalHash": "sha256:5d43bad7331fc257725c9eb6bcd32c8c1ac4c7b1c7314ecba2237f0d9ea45839", "renderedHash": "sha256:e644f5b5b9ceaf0076806967bce80608e466f9a0816893b39a593336e41171b0", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:ambient.groundTruthManifest.trims[dist/ComponentTokens.android.kt]"}}
   "routes.docs[token-doc-map]": {"disposition": "retained"}
   "routes.docs[product-token-naming]": {"disposition": "retained"}
+  "routes.docs[product-token-authoring]": {"disposition": "retained"}
   "routes.docs[completion-doc-guidance]": {"disposition": "no-consumer-counterpart", "cites": "subtraction-4", "signature": {"signer": "data", "canonicalHash": "sha256:51510b1c872f9a6b0168508a41c2cdebe0b07a316461996cc546daa292e67405", "renderedHash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570", "assent": {"surviving": []}, "evidence": "canonical/profiles/consumer/signatures/data.md#frontmatter:routes.docs[completion-doc-guidance]"}}
   "routes.docs[contract-concept-names]": {"disposition": "retained"}
   "routes.docs[stemma-principles]": {"disposition": "retained"}
