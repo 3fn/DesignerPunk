@@ -102,7 +102,7 @@ units:
         text: "Product repos install `@3fn/core` and run `npx designerpunk generate` to produce themed token CSS"
     confirmation: canonical/profiles/consumer/confirmations/sparky.md#web-theming
   "#product-tokens":
-    canonicalHash: sha256:fbaea5ecb2b1acc271141fc708fd4e121f1a6dcae81ba14a2047b4762c5f0825
+    canonicalHash: sha256:510059a555d5fe7e13a5515b0bdf61209304ddc8db7383842d380182ac2eaa38
     items:
       - id: product-tokens-1
         kind: obligation
