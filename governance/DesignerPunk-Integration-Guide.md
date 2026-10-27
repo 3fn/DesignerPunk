@@ -696,6 +696,7 @@ product/
 
 Product tokens are product-level values that don't belong in Rosetta (system tokens) or Stemma (component tokens). Define them in `product/tokens/{category}.yaml`:
 
+<!-- example: consumer -->
 ```yaml
 # product/tokens/layout.yaml
 category: layout
