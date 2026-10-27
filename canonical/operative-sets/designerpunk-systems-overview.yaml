@@ -54,7 +54,7 @@ units:
     items: []
     confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#stemma-system-families-and-inheritance
   "#civitas-system-governance-infrastructure":
-    canonicalHash: sha256:dc689ab05d1bb5afbd36b80878f69e0190da89ec9709b804496a42f8204ff028
+    canonicalHash: sha256:7bfddb6a396bed8890df341955dc06f746ea826885041212891238397b12404b
     items: []
     confirmation: canonical/profiles/consumer/confirmations/designerpunk-systems-overview.md#civitas-system-governance-infrastructure
   "#integration-tokens-components-platforms":
