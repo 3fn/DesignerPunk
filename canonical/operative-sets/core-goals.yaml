@@ -94,8 +94,8 @@ units:
         text: "**Component tokens**: Use freely inside the component they belong to, for the property they were made for; any other use requires explicit human approval"
       - id: practice-14
         kind: obligation
-        label: "Creating ANY token: Always requires human review — no autono"
-        text: "**Creating ANY token**: Always requires human review — no autonomous token creation"
+        label: "Creating ANY system token: human review; product tokens plan"
+        text: "**Creating ANY system token** (primitive, semantic or component): Always requires human review — no autonomous token creation (what a system token is: Token Governance § \"Token Creation Governance\"). A product token is planned instead: its need is identified at screen specification and discussed before implementation, and a need the spec missed is surfaced, never filled silently (Product-Token-Governance § \"Authoring Workflow\")."
       - id: token-selection-pointer
         kind: obligation
         label: "Token selection: the one order is Token Governance's matrix"
