@@ -41,3 +41,9 @@
 When (c) is registered and (a) and (b) are built or re-chartered, add rule 5's dated outcome line naming the PRs, and archive.
 
 *(2026-10-27, Leonardo)* **Consulted**: Leonardo — the checks match the product workflow site 3 sets: (a) must compare against the screen spec as amended after each Tier 1 outcome, because the spec's `tokens:` blocks are the plan; (c) reads the `token-gap:` marker that K-h names, but in a product repo with no PR gate it has no merge to stop, and the second count in `.kiro/issues/2026-10-27-product-token-planning-measurement.md` measures exactly that.
+
+*(2026-10-27, Ada)* **Consulted**: Ada, the Rosetta side of "what counts as a token value". The definition above is my ballot text, carried verbatim, and I confirm it. Two notes for (b)'s owner, read against the token index (`search_tokens`, 2026-10-27):
+- **A literal zero counts.** `space000`, `radius000`, `borderWidth000`, `opacity000` and `blur000` exist, so `0.dp`, `padding: 0` and `.cornerRadius(0)` flag, as the Android fixtures already have it.
+- **Categorical families count where a token exists.** A literal font-family string (`fontFamilyBody` and the rest) and a literal easing curve (`cubic-bezier(…)`; `easingStandard` and the rest) are token values, though no formula relates them.
+
+Not a token value: a family with no token for the use. That is a token gap, which the planning duty surfaces; it is not a literal for (b) to flag.

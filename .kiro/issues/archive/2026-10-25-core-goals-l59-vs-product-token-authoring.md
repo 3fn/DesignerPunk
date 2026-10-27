@@ -5,7 +5,7 @@
 **Consulted**: Leonardo — product-token authoring is his consumers' workflow (he authors them at screen specification; the platform agents who add them during implementation are his consumers). His read is **owed in R1 of the application** of `.kiro/docs/ballots/2026-10-25-token-selection-order-one-rule.md`; it does not block this filing.
 **Filed by**: Ada, under README rule 10, in the #480 draft PR (branch `chore/ballot-token-selection-order-r2`), from her R1 and R2 reads of that ballot (§ 1; § 4 "Not edited"; § 11 step 11). Rule 9 applies to every later edit.
 **Class**: P2 obligation (record) · defect *(set 2026-10-25, Ada, rule 12. The record is wrong in one of two places and no consumer is blocked: a reader of Core Goals L59 and a reader of Product-Token-Governance § "Authoring Workflow" are told opposite things about who may create a product token, but the indexer enforces naming and rationale mechanically either way and the workflow is the one in use, so no reader is misled about what the system does. The resolution is a Core Goals or Product-Token-Governance sentence, which is LAW, so P2 and not P3.)*
-**Trigger**: `release:next:phase-1` — closes at the application PR's merge or at the next Core Goals ballot, whichever comes first; the trigger becomes `merge:#<N>` at that PR's open. *(Set 2026-10-25, Ada, rule 9. A P2 record that would ride another change takes `release:next:phase-1`, then `merge:#<N>` once the vehicle PR exists, per rule 1.)*
+**Trigger**: `merge:#535` — the application PR of ballot 2026-10-26-system-token-review-and-token-planning, which closes this record (ballot § 12 step 11). *(Re-ruled 2026-10-27, Ada, rules 1 and 9: the application PR is open as #535, so the token becomes `merge:#<N>`, as this line said it would at that PR's open.)* *(was: `release:next:phase-1` — closes at the application PR's merge or at the next Core Goals ballot, whichever comes first; the trigger becomes `merge:#<N>` at that PR's open. *(Set 2026-10-25, Ada, rule 9. A P2 record that would ride another change takes `release:next:phase-1`, then `merge:#<N>` once the vehicle PR exists, per rule 1.)*)*
 
 ---
 
@@ -78,3 +78,7 @@ Appended under README rule 9.
   - Whether an audit cadence can stand as the review: answered by item 2's planning duty and item 3's checks rather than by an audit alone. The follow-ups are in the ballot's § "Plans (Peter's condition)".
 
 *Signed: Ada, 2026-10-27.*
+
+## Outcome (2026-10-27, Ada)
+
+2026-10-27 (Ada): closed by the application of ballot 2026-10-26-system-token-review-and-token-planning (#535). Core Goals L59 and Token Governance § "Token Creation Governance" scope the human-review rule to system tokens, which resolves this record's fork as (B). Product-Token-Governance § "Authoring Workflow" carries the planning duty Peter added, with F-A (i), F-B (c) and F-A-h (h1). The record is archived in the same PR (rule 5). Its follow-ups are owned elsewhere, in the ballot's § "Plans (Peter's condition)", rows 1–12.
