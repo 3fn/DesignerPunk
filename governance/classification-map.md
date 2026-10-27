@@ -923,7 +923,7 @@ verification:
       # The whoami preflights and the GitHub Packages publish's exit run inside scripts/release-publish.ts, which the commit-held
       # scope's checks[] item names; they sit here because their input is live state. F-49 (ii-b)'s sha1 read and npmjs absence
       # read (E7b, Ada's PR) fall here by the field's last sentence (the tarball is not kept).
-      rationale: "Each input is read once, at that run, and nothing commits it, so a census over git has no corpus for this scope: census none, in the owner's words"
+      rationale: "The whoami preflights' and the GitHub Packages publish's inputs are read once, at that run, and nothing commits them; the tripwire reads none; 6b's sha1s are pasted in the step-6 record but compared by operator commands, not by code a check runs. Either way a census over git has no code or corpus for this scope: census none, in the owner's words"
     - surface: "commit-held: every other decision of scripts/release-publish.ts, whose input git holds at the commit it decides (with the root lockfile's packages, for those that run after npm ci): the argument refusals; the three tag checks; the clone's HEAD and package.json version at the tag; the two clean-tree checks; check:drift; the floor-closure compare (sameFloorClosure); the one-tarball count; verify:token-index-clean; pack-assert's listing checks; the publish-path floor; and, when they land, F-49 (ii-b)'s record-mode and tag-to-commit refusals (E7b)"
       disposition: barrier
       check_state: armed
