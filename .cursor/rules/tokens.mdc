@@ -17,7 +17,7 @@ The one token-selection order is Token Governance § "Token Selection Matrix". Q
 | Semantic tokens | Use freely (verify semantic correctness) |
 | Primitive tokens | Requires prior context or human acknowledgment |
 | Component tokens | Use freely inside the component they belong to, for the property they were made for; any other use requires explicit human approval |
-| Creating ANY token | Always requires human review |
+| Creating ANY system token | Always requires human review (product tokens: Product-Token-Governance) |
 
 ## Component Token Rule
 
