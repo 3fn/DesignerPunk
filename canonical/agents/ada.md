@@ -25,7 +25,7 @@ ambient:
         - claim: creation-requires-human-review
           section: "Token Creation Governance"
           mustContain:
-            - "Creating ANY token (semantic, primitive, or component) requires human review"
+            - "Creating ANY system token (semantic, primitive, or component) requires human review"
   # ground-truth-manifest (design block: none-standing — search_tokens/get_token_details
   # serve the manifest's payload fresh; a standing snapshot would re-introduce the §5.3
   # snapshot anti-pattern).
