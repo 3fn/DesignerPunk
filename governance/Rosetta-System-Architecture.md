@@ -478,10 +478,11 @@ Component tokens represent a third layer in the token hierarchy, sitting between
 
 Component tokens are defined using the `defineComponentTokens()` helper:
 
+<!-- example: consumer -->
 ```typescript
-// src/components/[ComponentName]/tokens.ts
-import { defineComponentTokens } from '../../build/tokens/defineComponentTokens';
-import { spacingTokens } from '../../tokens/SpacingTokens';
+// src/components/core/[ComponentName]/tokens.ts
+import { defineComponentTokens } from '../../../build/tokens';
+import { spacingTokens } from '../../../tokens/SpacingTokens';
 
 export const ComponentNameTokens = defineComponentTokens({
   component: 'ComponentName',

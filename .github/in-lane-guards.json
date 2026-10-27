@@ -246,6 +246,12 @@
       "config": "jest.functional.config.js",
       "context": "lane-functional-root",
       "record": "governance/classification-map.md § no-autonomous-token-creation"
+    },
+    {
+      "file": "scripts/governance-examples/__tests__/governance-examples.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/docs/ballots/2026-10-26-governance-examples-guard.md (the governance-examples guard: token-name half, file-shape half, import surface; ratified 2026-10-26)"
     }
   ]
 }
