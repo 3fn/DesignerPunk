@@ -50,7 +50,7 @@ units:
         text: "Web: Not yet constrained"
     confirmation: canonical/profiles/consumer/confirmations/core-goals.md#core-project-context
   "#development-practices":
-    canonicalHash: sha256:fcf0a61a2bd10969d9ccf666ed58ec66dfe36f658abcf4516ec2c6fce4e952f4
+    canonicalHash: sha256:32062538bc2af63fb4f40fbcd0f063e08cc01a097e467f1b76e423117bae4da1
     items:
       - id: practice-1
         kind: obligation
