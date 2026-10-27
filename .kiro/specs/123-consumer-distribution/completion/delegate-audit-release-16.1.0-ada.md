@@ -694,3 +694,68 @@ These combine the re-read readings of #262, #465 and #467 with the first walk's 
 - **Store coverage**: the default set holds only the stores derivable from the repo path. The instrument's own comment says a scratchpad-worktree session's store is read only when `--store` names it. No such store was passed here.
 - **Instrument version**: before and after ran two versions of the instrument (`38f4ece47` and `99eabf854`). A change in an act's reading may come from the store set or from the code change around it. I did not separate the two.
 - **Peter's words**: they reached me through the orchestrator's relay in chat. I did not see them in a committed file or on #514.
+
+---
+
+## Addendum (2026-10-27, Ada): pre-#262 re-read with the default store set
+
+**Why**: Peter ruled that the twelve pre-#262 Stacy acts in #222 (10), #228 (1) and #239 (1), the labelled block above, are pre-chain history, and Thurgood's plan was one re-read by me with the default store set before #514 merges. The first walk read them with one explicit `--store`; the #262 re-read above covered #262, #465 and #467 only. This addendum re-reads the twelve.
+**Peter's words**, relayed by the orchestrator in chat (verbatim, typos fixed): "Re: 3, pre-chain history", received before 2026-10-26T21:28:31Z; and "Cool. Let's go with my answers plus (b) for O-23", received before 2026-10-27T02:25:42Z. I did not see them in a committed file or on #514.
+**Instrument**: `tools/agent-generator/regrounding/verify-signing-chain.ts` as on this branch, which contains #524 (`5119afe4b`, the store-set fix). Run on 2026-10-27 (02:29Z at the last read), branch head `4409463c1`, read-only.
+**Command** (once per PR; default base; default store set, no `--store`):
+
+```
+npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --audit --pr <N> --signer stacy
+```
+
+**Store count**: `stores (17)` on all three runs (the repo-path store and 16 worktree stores). The 17 paths are the ones listed in the #467 and #262 re-read headers above. Below, the header's store list is shortened to its count; every other line is verbatim. The machine-readable JSON the instrument prints after each counts line is not copied here.
+
+### PR #222 (re-read, exit 0)
+
+```
+verify-signing-chain --audit — consistency, not identity — PR #222 (refs/pull/222/head = 7e5091ce); stores (17): [same 17 paths as the #467 header above]
+filter --signer stacy: 10 of 25 act(s) selected; 15 withheld
+record absent 4 — canonical/operative-sets/start-up-tasks.yaml#item-critical-wait-for-user-authorization-before-starting-new-tasks — stacy — ae190618 — no transcript shows this commit being created — pre-ratification observation
+record absent 4 — canonical/operative-sets/start-up-tasks.yaml#item-civitas-governance-health-check — stacy — ae190618 — no transcript shows this commit being created — pre-ratification observation
+record absent 4 — canonical/operative-sets/stacy.yaml#audit-checklist — stacy — e91e9a3e — no transcript shows this commit being created — pre-ratification observation
+record absent 4 — canonical/operative-sets/stacy.yaml#the-charter-cut-ratified-verbatim — stacy — e91e9a3e — no transcript shows this commit being created — pre-ratification observation
+record absent 4 — canonical/operative-sets/stacy.yaml#the-trigger-set-the-114-superset-table-names-never-numbers — stacy — e91e9a3e — no transcript shows this commit being created — pre-ratification observation
+record absent 4 — canonical/operative-sets/stacy.yaml#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script — stacy — e91e9a3e — no transcript shows this commit being created — pre-ratification observation
+record absent 4 — canonical/operative-sets/stacy.yaml#honest-reach-carried-so-you-never-inherit-an-over-claimed-instrument — stacy — e91e9a3e — no transcript shows this commit being created — pre-ratification observation
+record absent 4 — canonical/operative-sets/stacy.yaml#what-parity-means — stacy — e91e9a3e — no transcript shows this commit being created — pre-ratification observation
+record absent 4 — canonical/operative-sets/start-up-tasks.yaml#item-critical-wait-for-user-authorization-before-starting-new-tasks — stacy — e91e9a3e — no transcript shows this commit being created — pre-ratification observation
+record absent 4 — canonical/operative-sets/start-up-tasks.yaml#item-civitas-governance-health-check — stacy — e91e9a3e — no transcript shows this commit being created — pre-ratification observation
+counts (beside the per-act lines, never in place of them; no total is green): 10 act(s) — anchored 0 · unanchored 0 · record absent 10 · FAIL 0 · anomaly 0
+```
+
+### PR #228 (re-read, exit 0)
+
+```
+verify-signing-chain --audit — consistency, not identity — PR #228 (refs/pull/228/head = e8fcfc8d); stores (17): [same 17 paths as the #467 header above]
+filter --signer stacy: 1 of 1 act(s) selected; 0 withheld
+record absent 4 — canonical/operative-sets/stacy.yaml#the-trigger-set-the-114-superset-table-names-never-numbers — stacy — 4164337b — no transcript shows this commit being created — pre-ratification observation
+counts (beside the per-act lines, never in place of them; no total is green): 1 act(s) — anchored 0 · unanchored 0 · record absent 1 · FAIL 0 · anomaly 0
+```
+
+### PR #239 (re-read, exit 0)
+
+```
+verify-signing-chain --audit — consistency, not identity — PR #239 (refs/pull/239/head = 58b422ce); stores (17): [same 17 paths as the #467 header above]
+filter --signer stacy: 1 of 1 act(s) selected; 0 withheld
+anomaly 4 — canonical/operative-sets/stacy.yaml#the-trigger-set-the-114-superset-table-names-never-numbers — stacy — d2b6c0af — the one candidate (agent-ae061b900f78abe99.jsonl) cannot show the commit succeeded — form outside the closed success-evidence set — widening (§ 5.4) — pre-ratification observation
+counts (beside the per-act lines, never in place of them; no total is green): 1 act(s) — anchored 0 · unanchored 0 · record absent 0 · FAIL 0 · anomaly 1
+```
+
+### Comparison to the labelled block
+
+- **No act changed reading.** All 11 `record absent 4` acts (#222 ten, #228 one) read the same, line for line: I sorted and compared them against the first walk's lines, and the diff is empty. The re-read recovers none of them. #239's one act still reads `anomaly`.
+- **One difference in form, not in reading.** For #239, the first walk's block carries the brief's one line, "pre-ratification: 1 anomaly by rule, not triaged individually". This run's instrument printed the act's own `anomaly 4` line (SHA `d2b6c0af`, "cannot show the commit succeeded — form outside the closed success-evidence set — widening (§ 5.4)"), which is shown above. The count is the same, one `anomaly`. I did not separate whether the difference comes from the store set or from the instrument change (#524) around it.
+- **Block totals after the re-read**: 12 act(s) — anchored 0 · unanchored 0 · record absent 11 · FAIL 0 · anomaly 1 (before: the same).
+
+**Status**: by Peter's ruling (words above, with both clock bounds), these twelve acts stay pre-chain history whatever the reading. The labelled block is an observation, not backlog: no act in it is owed a recovery, a re-sign or a finding. This addendum reports; it does not rule, and it makes no finding about Stacy.
+
+### Not verified (this addendum)
+
+- **Store coverage**: the default set holds only the stores derivable from the repo path. A scratchpad-worktree session's store is read only when `--store` names it, and none was passed. Whether such a store holds a transcript for any of the twelve acts is not known.
+- **Instrument version**: the first walk and this re-read ran two versions of the instrument; see the form difference above.
+- **Transcript retention (A4)** and **identity**: as in § "Not verified" above.
