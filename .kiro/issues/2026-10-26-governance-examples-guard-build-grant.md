@@ -52,3 +52,5 @@ Adoption is the build PR's merge M: the row reads `armed` at M, and `pending.jso
 - No ratification authority; additive to charter scope and nothing else.
 
 *Signed: Thurgood, 2026-10-26.*
+
+- **2026-10-27 (Thurgood)**: the gap named in § "An entry fixed between adoption and the build PR's merge" is answered by ballot `2026-10-26-governance-examples-guard-adoption` § 2, in force at its application merge (#<N>).
