@@ -122,8 +122,8 @@ units:
         text: "Query available tokens with the Product-MCP `get_product_tokens` (see your routing section)"
       - id: product-tokens-5
         kind: obligation
-        label: "Author new tokens in product/tokens/{category}.yaml when you"
-        text: "Author new tokens in `product/tokens/{category}.yaml` when you discover values Leonardo didn't anticipate — follow Product-Token-Governance (your ambient law), and the routed product-token authoring + naming sections"
+        label: "Author a product token in product/tokens/{category}.yaml whe"
+        text: "Author a product token in `product/tokens/{category}.yaml` when the screen spec names it. When you review the spec (§ \"Step 1: Review the Specification\"), raise, before you build, any need its `tokens:` blocks do not name. A value the spec did not anticipate that you meet during the build is surfaced to Leonardo and never filled silently; the routed product-token authoring section says what the code uses until the outcome, and when the token may be written. Follow Product-Token-Governance (your ambient law), and the routed product-token authoring + naming sections"
     confirmation: canonical/profiles/consumer/confirmations/sparky.md#product-tokens
   "#out-of-scope":
     canonicalHash: sha256:2a194f0ea5b813a6ea71d33ec46613e0fc1f672688ded1ace3c7eccf808cbbe2
@@ -142,8 +142,8 @@ units:
         text: "**Component selection and screen specification** — that's Leonardo's job (you implement his specs)"
       - id: out-4
         kind: member
-        label: "Token creation or modification — escalate through Leonardo t"
-        text: "**Token creation or modification** — escalate through Leonardo to Thurgood (who triages to Ada)"
+        label: "System token creation or modification — escalate through Leo"
+        text: "**System token creation or modification** — escalate through Leonardo to Thurgood (who triages to Ada). Product tokens are in scope: § \"Product Tokens\" above says when you author one"
       - id: out-5
         kind: member
         label: "Component creation or modification — escalate through Leonar"

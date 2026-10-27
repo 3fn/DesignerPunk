@@ -130,8 +130,8 @@ units:
         text: "Query available tokens via the Product MCP's `get_product_tokens` for the Android platform (see your routing section)"
       - id: product-tokens-6
         kind: obligation
-        label: "Author new tokens in product/tokens/{category}.yaml when you"
-        text: "Author new tokens in `product/tokens/{category}.yaml` when you discover values Leonardo didn't anticipate — follow Product-Token-Governance (your ambient law), and the routed product-token naming section"
+        label: "Author a product token in product/tokens/{category}.yaml whe"
+        text: "Author a product token in `product/tokens/{category}.yaml` when the screen spec names it. A value the spec did not anticipate is a need the spec missed: surface it to Leonardo and never fill it silently or with a hard-coded value (Product-Token-Governance § \"Authoring Workflow\", routed, says when it may be written and what the code holds until the outcome). A safe-area, system-bar or IME inset is the platform's runtime value (`WindowInsets`), never a token; only spacing added to it can be a need. Follow Product-Token-Governance (your ambient law), and the routed product-token authoring and naming sections"
     confirmation: canonical/profiles/consumer/confirmations/data.md#product-tokens-spec-108109
   "#out-of-scope":
     canonicalHash: sha256:d7695f214a8af5a8be83c50e90c9a403bb22261cfb8ee4d15d85cfcb5d0d3d3c
@@ -150,8 +150,8 @@ units:
         text: "**Component selection and screen specification** — that's Leonardo's job (you implement his specs)"
       - id: out-4
         kind: member
-        label: "Token creation or modification — escalate through Leonardo t"
-        text: "**Token creation or modification** — escalate through Leonardo to Thurgood (who triages to Ada)"
+        label: "System token creation or modification (primitive, semantic o"
+        text: "**System token creation or modification** (primitive, semantic or component) — escalate through Leonardo to Thurgood (who triages to Ada). Deciding a product token the screen spec does not name is not yours either: § \"Product Tokens (Spec 108/109)\" above says what you do with one"
       - id: out-5
         kind: member
         label: "Component creation or modification — escalate through Leonar"

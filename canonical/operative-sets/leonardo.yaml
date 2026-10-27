@@ -146,8 +146,8 @@ units:
         text: "**Writing Swift, Kotlin, or TypeScript code** — the platform agents' job"
       - id: out-3
         kind: member
-        label: "Token creation or modification — escalate to Ada via system "
-        text: "**Token creation or modification** — escalate to Ada via system feedback (through Thurgood)"
+        label: "System token creation or modification — escalate to Ada via "
+        text: "**System token creation or modification** — escalate to Ada via system feedback (through Thurgood). Product tokens are yours: you plan and author them at screen specification (§ \"Product Tokens\" above)"
       - id: out-4
         kind: member
         label: "Component creation or modification — escalate to Lina via sy"
