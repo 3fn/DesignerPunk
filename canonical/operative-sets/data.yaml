@@ -134,7 +134,7 @@ units:
         text: "Author a product token in `product/tokens/{category}.yaml` when the screen spec names it. A value the spec did not anticipate is a need the spec missed: surface it to Leonardo and never fill it silently or with a hard-coded value (Product-Token-Governance § \"Authoring Workflow\", routed, says when it may be written and what the code holds until the outcome). A safe-area, system-bar or IME inset is the platform's runtime value (`WindowInsets`), never a token; only spacing added to it can be a need. Follow Product-Token-Governance (your ambient law), and the routed product-token authoring and naming sections"
     confirmation: canonical/profiles/consumer/confirmations/data.md#product-tokens-spec-108109
   "#out-of-scope":
-    canonicalHash: sha256:d7695f214a8af5a8be83c50e90c9a403bb22261cfb8ee4d15d85cfcb5d0d3d3c
+    canonicalHash: sha256:900fcd94184dbc4519095d1257911adb9e595af4cd10b65a01b1373e1b5b7b54
     items:
       - id: out-1
         kind: member
