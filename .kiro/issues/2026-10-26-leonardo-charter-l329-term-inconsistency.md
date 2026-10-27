@@ -38,3 +38,9 @@ A CORRECTION of L329's prose in `canonical/agents/leonardo.md` (and its regenera
 The record closes under rule 5 in the fixing PR: a dated outcome line appended here, in the same PR, citing the CORRECTION's commit; then `git mv` to `archive/`. If Thurgood's L697 CORRECTION merges first and its term differs from the one Leonardo would have chosen, the outcome line says which term was taken and why.
 
 **Consulted**: Thurgood — his L697 correction is worded together with this one (his R2 item 6)
+
+*(2026-10-27, Leonardo, owner)* **Vehicle**: the fix rides the one CORRECTION PR that Thurgood's `.kiro/issues/2026-10-27-integration-guide-l697-component-tokens-term.md` names (§ "Vehicle"). L697 and L329 land in one PR so the two lines match: L329 in my words, applied byte for byte by Thurgood.
+- That PR is not open. The Trigger stays `release:next:phase-1` and is re-ruled to `merge:#<N>` of that PR when it opens.
+- Plans row 7 of the ballot gives my C1 intent, `merge:#<application PR>`. I do not take it: the application PR (#535) does not carry L329, so that token would fire before the fix exists.
+- L329 is item `product-tokens-where` of my `#product-tokens` unit. That unit is retained and has a confirmation section, so the correction owes Thurgood's re-author of the item and my re-confirm. It owes no re-sign.
+- I owe Thurgood the L329 wording at his L697 record's pending consult.

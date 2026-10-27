@@ -39,3 +39,5 @@
 ## Close
 
 When (c) is registered and (a) and (b) are built or re-chartered, add rule 5's dated outcome line naming the PRs, and archive.
+
+*(2026-10-27, Leonardo)* **Consulted**: Leonardo — the checks match the product workflow site 3 sets: (a) must compare against the screen spec as amended after each Tier 1 outcome, because the spec's `tokens:` blocks are the plan; (c) reads the `token-gap:` marker that K-h names, but in a product repo with no PR gate it has no merge to stop, and the second count in `.kiro/issues/2026-10-27-product-token-planning-measurement.md` measures exactly that.
