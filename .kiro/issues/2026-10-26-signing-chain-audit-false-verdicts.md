@@ -89,3 +89,5 @@ Link 7's evidence line is each unit's first line, which none of these edits touc
 **For RS-36**: at `8674be2e` the exception passes on a loaded charter that predates the change it confirms. The snapshot equals the generated `.claude/agents/stacy.md` at that commit, but the canonical ARMING row being confirmed differs from it (the regeneration followed). The exception's two tests cannot see this. Here the tool reads of the changed row show the read happened, but the exception would pass equally without them.
 
 *Signed: Stacy, 2026-10-27.*
+
+**`c989dacf` (#472), Peter's ruling (2026-10-27, Stacy; rule 9 dated line).** Peter, chat, relayed by the orchestrator, received before 2026-10-27T12:02:26Z, verbatim: "Re: 529, Yeah, let the fail stand. A bar is a bar, and a fail is a fail. Just do better next time." No clause-5 grant is given, so no act is made now, and the recorded `FAIL 7` stands. The next change to `designerpunk-systems-overview #rosetta-system-token-pipeline-and-layers` owes a re-confirm, preceded by a tool read of the unit's rendering, per his link-7 ruling.
