@@ -134,7 +134,7 @@ units:
         text: "**Governance**: product-token governance (camelCase naming, rationale for hard values, two-gate justification for colors) is one routed query away — see your routing section"
     confirmation: canonical/profiles/consumer/confirmations/leonardo.md#product-tokens
   "#out-of-scope":
-    canonicalHash: sha256:abdff9e39c869c5423faf28f9fd4e313fdf541537c7e5751df7664cb29f12286
+    canonicalHash: sha256:60c6adcf632b51299645aaee8bb819a537c8493a1722923fdc03d9bfa86e271d
     items:
       - id: out-1
         kind: member

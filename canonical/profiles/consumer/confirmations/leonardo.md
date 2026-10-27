@@ -67,9 +67,16 @@ date: 2026-09-29
 ## `#out-of-scope`
 
 confirmer: leonardo
-canonicalHash: sha256:abdff9e39c869c5423faf28f9fd4e313fdf541537c7e5751df7664cb29f12286
+canonicalHash: sha256:60c6adcf632b51299645aaee8bb819a537c8493a1722923fdc03d9bfa86e271d
 items: out-1, out-2, out-3, out-4, out-5, out-6
-date: 2026-09-29
+date: 2026-10-27
+
+**Re-confirmed 2026-10-27 (Req 11.6.5d): the system-token review and token planning ballot, item 2 (site 7).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:abdff9e39c869c5423faf28f9fd4e313fdf541537c7e5751df7664cb29f12286`, 6 items).
+- **What changed**: ballot `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493), site 7, was applied at `eb91cd5b1` (Thurgood). `canonical/agents/leonardo.md` L340 now scopes the escalation to *system* tokens and adds: *"Product tokens are yours: you plan and author them at screen specification (§ "Product Tokens" above)"*. It is my R1 item 2 text. In the same commit the profile author re-quoted `out-3` and re-pinned the overlay unit. I checked by script that L340 equals § 14's site 7 block on `main` at `bad7222ef` byte for byte (both sha256 `2a4b1b46…03610a6`).
+- **What I read, in this session, through tool results**: `canonical/agents/leonardo.md` L330–L350 (the unit, `### Out of Scope`, and the tail of `### Product Tokens`, whose heading at L327 its pointer names); the unit as `partition` returns it (body lines 50–58); the whole `#out-of-scope` record in `canonical/operative-sets/leonardo.yaml`; the overlay unit in `leonardo.overlay.md`; ballot § 14 site 7 and § 7's row for this unit.
+- **The hash**: I recomputed it with `hashText` over `partition(splitFrontmatter(src).body).units` (unit `#out-of-scope`). It equals the overlay pin and the value the profile author's sweep printed.
+- **Items re-read against the unit**: all 6 item texts are verbatim substrings of the unit as it now stands (checked by script). The added sentence is operative: I can act against it by leaving a screen's product-token needs unplanned at specification, or by escalating a product token to Ada as if it were a system token. `out-3` carries it with the escalation rule, as one member for one line; it is the boundary line, not a separate duty, and the planning procedure itself is reached through my retained `#product-tokens` unit and its route to Product-Token-Governance § "Authoring Workflow". No other line of the unit changed.
+- **Ruling: CONFIRMED at 6 items, not corrected.** The 2026-09-29 ruling below stands.
 
 **Ruling: CONFIRMED at 6 items.** Boundary members: writing platform code, creating tokens/components, owning test governance, or making product decisions each violates one. `out-6` will not strict-match the re-pointed rendering (*Peter's job* → *your human lead's job*); credit by entailment.
 
