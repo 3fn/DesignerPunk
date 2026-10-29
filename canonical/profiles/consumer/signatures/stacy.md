@@ -64,9 +64,18 @@ Both cuts survive verbatim.
 signer: stacy
 date: 2026-10-29
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-claims-pass-record-claims-passmd-the-template` (re-pointed; ROUTED)
-canonicalHash: sha256:e34637d77b83861846c927149c655b3386d9d096bfb6df79daec934f137df423
+canonicalHash: sha256:3c2a1c1fe5b77b2b69d2f6d60ec50aa5f6126d23380911bd38b33a8f9bb0db04
 renderedHash: sha256:ac788d09a695a9a4f828e4e9c5ea3c3c1d51d96eb387c3ce2c65a13447ee5e75
 verdict: assent — surviving 18/36; not surviving: `counting-6`, `counting-8`, `counting-9`, `counting-9b-census`, `counting-10-buckets`, `counting-10-ncc-rate`, `counting-10-assent-refusal`, `counting-10-spot-check`, `counting-10-full-survival`, `counting-11`, `counting-11b-governance-examples`, `counting-12`, `emission-reading`, `delegated-tier-read`, `instruments-read`, `governance-edit-kind-read`, `delegate-audit-pointer`, `instrument-census-read`
+
+**Re-signed 2026-10-29, second time** (prior signature: assent 18/36, 2026-10-29, against `sha256:e34637d77b83861846c927149c655b3386d9d096bfb6df79daec934f137df423`; the rendered hash did not move). Stale because the canonical governance-edit-kind bullet changed: ballot `2026-10-29-dated-pointer-paths-and-edit-kind-check` (RATIFIED, Peter, 2026-10-29) § 3 site 2 removed its dated pointer and added the `edit-kind-pointers.ts` clause (`fe6ab7470`). My re-confirmation at 36 items is act 2 (`59309e836`); the clause stays inside `governance-edit-kind-read`.
+- **Read before this act**: the three consumer renderings of the unit, read through tool calls (`sed -n`) at `95b740414` before this commit: `_canonical/agents/stacy.md` L317–L332, `cc/.claude/agents/stacy.md` L191–L206, `kiro/.kiro/agents/stacy-prompt.md` L157–L172. All three are identical.
+- **Judged against**: those renderings and the operative set at 36 items. The rendered bullet list is the mandatory line, the counting block, the report-set comparison, the deferral walk-back and the never-a-gate sentence. It has no governance-edit-kind read, so neither the pointer that came out nor the new clause reaches a consumer: the `subtraction-3` labels removal drops the bullet by its head, and the clause goes with it. The clause runs `scripts/completion-claims/edit-kind-pointers.ts` against DesignerPunk's own `**Edit kind**:` lines and README rule, which a consumer does not have, so `governance-edit-kind-read` stays not credited.
+- **Hashes**: canonicalHash `sha256:3c2a1c1fe5b77b2b69d2f6d60ec50aa5f6126d23380911bd38b33a8f9bb0db04`, recomputed independently with `partition` + `regrounding/hash.ts`; it equals the overlay pin and the chain's freshness value. renderedHash recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` over the three renderings (3 pieces); it equals the prior value, as Lina found.
+- **Unchanged**: the same 18 items survive and the same 18 are not credited; `assent.surviving` is unchanged. Fourteen of the 18 survive verbatim in all three renderings; `closeout-path`, `section-findings`, `counting-4` and `counting-7` survive re-pointed: the rendering carries their re-pointed text, unchanged by this ballot (for example `<your specs dir>` and "classified by kind"). No non-surviving item occurs in any rendering (checked by script).
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-10-29, first time)**: assent 18/36, against `sha256:e34637d77b83861846c927149c655b3386d9d096bfb6df79daec934f137df423`, as below.
 
 **Re-signed 2026-10-29** (prior signature: assent 18/36, 2026-10-27, against `sha256:f6d74d3343f268919882d4c7011091ef7774f9784e67fddfbb53a428e5f9a280`; the rendered hash did not move). Stale because the canonical unit's governance-edit-kind bullet changed: ballot `2026-10-26-release-flow-batch-16-1` (RATIFIED, Peter, 2026-10-26/27) site 13, the `**Sweep**:` read (`ae6a84d77`). My re-confirmation at 36 items is `94eb99d66`.
 - **Read before this act**: the three consumer renderings of the unit, read through tool calls (`sed -n`) at `94eb99d66` before this commit: `_canonical/agents/stacy.md` L317–L332, `cc/.claude/agents/stacy.md` L191–L206, `kiro/.kiro/agents/stacy-prompt.md` L157–L172. All three are identical.
@@ -526,9 +535,18 @@ verdict: assent — surviving 1/1
 signer: stacy
 date: 2026-10-29
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-trigger-set-the-114-superset-table-names-never-numbers` (re-pointed)
-canonicalHash: sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae
+canonicalHash: sha256:ffc489a33dd65f3da04df8d79ac6d72ec09cd2d4b427ffd09eb434be15f496ce
 renderedHash: sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5
 verdict: assent — surviving 5/13; not surviving: `trigger-lens`, `trigger-release`, `trigger-closeout`, `trigger-arming`, `trigger-gate`, `trigger-straggler`, `trigger-liveness`, `trigger-burst`
+
+**Re-signed 2026-10-29, second time** (prior signature: assent 5/13, 2026-10-29, against `sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae`; the rendered hash did not move). Stale because the canonical RELEASE row changed: ballot `2026-10-29-dated-pointer-paths-and-edit-kind-check` (RATIFIED, Peter, 2026-10-29) § 3 site 2 removed the row's dated pointer (`fe6ab7470`). My re-confirmation at 13 items is act 1 (`a9f144798`).
+- **Read before this act**: the three consumer renderings of the unit, read through tool calls (`sed -n`) at `b2a21530b` before this commit: `canonical/_consumer-output/_canonical/agents/stacy.md` L301–L316, `cc/.claude/agents/stacy.md` L175–L190, `kiro/.kiro/agents/stacy-prompt.md` L141–L156. All three carry the same table and paragraphs.
+- **Judged against**: those renderings and the operative set at 13 items. The consumer RELEASE row reads "Before a version publishes / at the release tag | … the release checklist runs the owed-set query and pastes its output". It is unchanged. The pointer that came out sat inside the row's range removal (`subtraction-3`), so the consumer never carried it, and the removal still keeps both end strings.
+- **Hashes**: canonicalHash `sha256:ffc489a33dd65f3da04df8d79ac6d72ec09cd2d4b427ffd09eb434be15f496ce`, recomputed independently with `partition` + `regrounding/hash.ts`; it equals the overlay pin and the chain's freshness value. renderedHash recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` over the three renderings (3 pieces); it equals the prior value, as Lina found.
+- **Unchanged**: `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing` and `merge-path-status` survive, each verbatim in all three renderings; the other eight occur in none (checked by script). Surviving count: 5 of 13.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-10-29, first time)**: assent 5/13, against `sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae`, as below.
 
 **Re-signed 2026-10-29** (prior signature: assent 5/13, 2026-10-27, against `sha256:7b2664513beb395592f793b497590e8a031039c286cf5c72d8c072336e1f5fe7`; the rendered hash did not move). Stale because the canonical RELEASE row changed: ballot `2026-10-26-release-flow-batch-16-1` (RATIFIED, Peter, 2026-10-26/27) site 12, composed with #536's site-2b sentence (`13bd1d57d`). My re-confirmation at 13 items is `5f325e895`.
 - **Read before this act**: the three consumer renderings of the unit, read through tool calls (`sed -n`) at `5f325e895` before this commit: `canonical/_consumer-output/_canonical/agents/stacy.md` L301–L316, `cc/.claude/agents/stacy.md` L175–L190, `kiro/.kiro/agents/stacy-prompt.md` L141–L156. All three carry the same table and paragraphs.
@@ -679,6 +697,11 @@ verdict: assent — surviving 4/4
 - **The removal applies**: the pointer names a DesignerPunk ballot (`subtraction-2`). It occurs once in the canonical unit and nowhere in the renderings. No other byte differs between the canonical unit and the rendering.
 - **Hashes**: canonicalHash recomputed independently with `partition` + `regrounding/hash.ts` (body lines 205–212); it equals the overlay pin and the record's value. renderedHash recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` over the three renderings (3 pieces), not the overlay text; it equals Thurgood's computed value.
 - **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Signature withdrawn, 2026-10-29.** Ballot `2026-10-29-dated-pointer-paths-and-edit-kind-check` (RATIFIED, Peter, 2026-10-29) § 3 site 2 removed the unit's only removal, the ballot pointer, from the canonical text (`fe6ab7470`), and site 3 moved the row `re-pointed` → `retained`, with its `removals` and `destination` gone and the overlay entry out. A `retained` row is not routed and carries no signature, so I remove this one, and the row now reads `{"disposition": "retained"}`. Nothing else in the row changes.
+- **`retained` is faithful**: the three consumer renderings, read through tool calls (`sed -n`) at `727b3f390` before this commit (`canonical/_consumer-output/_canonical/agents/stacy.md` L357–L364, `cc/.claude/agents/stacy.md` L231–L238, `kiro/.kiro/agents/stacy-prompt.md` L197–L204, each span now `passthrough`), each equal the canonical unit byte for byte (973 characters, checked by script at `59309e836`). The renderedHash did not move (`sha256:c8aad0f5042005eb9ddf29b65e8435208d251478c64c8ea4e11781b57394a17e`). No removal remains, so there is nothing left to sign.
+- **The operative set** stays at 4 items, re-confirmed in act 3 (`b2a21530b`) at `sha256:dc6152aebad7909eafdce25f08da3c0a4826a0f98666429cf8046722a8feb160`; all four reach consumers verbatim.
+- **This section stays** as ledger history: the signature above, of 2026-10-29 against `sha256:f6bfb7a081874a7f899d171cee0ad71a4da69c180689e6f96cfbed8729b37da5`, is superseded by this withdrawal, and no row cites this section as its evidence any more.
 
 ## `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference`
 

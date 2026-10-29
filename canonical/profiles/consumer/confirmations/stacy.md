@@ -56,9 +56,20 @@ date: 2026-09-27
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 confirmer: stacy
-canonicalHash: sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae
+canonicalHash: sha256:ffc489a33dd65f3da04df8d79ac6d72ec09cd2d4b427ffd09eb434be15f496ce
 items: trigger-lens, trigger-release, trigger-symptom, trigger-closeout, trigger-midpoint, trigger-arming, trigger-gate, trigger-education, trigger-straggler, trigger-liveness, trigger-burst, finding-routing, merge-path-status
 date: 2026-10-29
+
+**Re-confirmed 2026-10-29, second time (Req 11.6.5d).**
+- **What changed**: one row, RELEASE (canonical L400). Ballot `.kiro/docs/ballots/2026-10-29-dated-pointer-paths-and-edit-kind-check.md` (RATIFIED, Peter, 2026-10-29; Status read at `origin/main` `f535dc942`) § 3 site 2 removes the row's pointer, with the one space before it: `*(amended 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, site 12; prior text at `08b9c7a8e`)*`. The sentence now ends "…is RELEASE-FLOW step 6's Phase 1 bullet, not restated here." Charters carry no dated pointer (the ballot's site 1, "Where the pointer is owed"); the history lives in the ballot, the PR's `**Edit kind**:` line, git and these sheets. Thurgood applied it at `fe6ab7470` and re-quoted `trigger-release` there (authoring; it does not move this canonicalHash).
+- **Byte-identity, checked**: the charter's diff from `f535dc942` to `7b66cbc25` is three changed lines (L400, L432, L465). At L400 the old line minus the pointer string equals the new line, byte for byte. `trigger-release` equals the canonical row byte for byte (1,701 characters) and occurs once in the unit.
+- **What did not change**: the operative set, still 13 items; the row stays one `member` item. All 13 items are verbatim, one occurrence each. The canonicalHash moves from `sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae` to the value above, recomputed independently with `partition(splitFrontmatter(...).body)` and `regrounding/hash.ts`; it equals the chain's freshness value and the overlay pin.
+- **Consumer rendering**: unchanged (renderedHash `sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5`, three pieces). The RELEASE row's range removal already spanned the pointer.
+- **Read before this act**: the canonical unit, `canonical/agents/stacy.md` L395–L414, read through a tool call (`sed -n`) at `7b66cbc25` before this commit.
+
+**Ruling: CONFIRMED at 13 items.**
+
+**Re-confirmed 2026-10-29, first time (prior record, superseded)**: canonicalHash `sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae`, 13 items, as below.
 
 **Re-confirmed 2026-10-29 (Req 11.6.5d).**
 - **What changed**: one row, RELEASE (canonical L400). Ballot `.kiro/docs/ballots/2026-10-26-release-flow-batch-16-1.md` (RATIFIED, Peter, 2026-10-26/27; Status read at `origin/main` `0bfc45621`) site 12 replaces the phase-1 floor-read lead-in ("the walk record … exists, its greps re-run at its `main at:` SHA, and every row carries a disposition;") with a pointer: "What phase 1 reads, and at which SHA, is RELEASE-FLOW step 6's Phase 1 bullet, not restated here *(amended 2026-10-29 by …, site 12; prior text at `08b9c7a8e`)*. Your record's lines:". It is composed with #536's site-2b sentence, which stays at its anchor (Peter: "Allow the Composition"; `9b43dfc33`). Thurgood applied it at `13bd1d57d` and re-quoted `trigger-release` at `70fe68a8d` (authoring; neither moves this canonicalHash).
@@ -327,9 +338,22 @@ date: 2026-09-29
 ## `#the-claims-pass-record-claims-passmd-the-template`
 
 confirmer: stacy
-canonicalHash: sha256:e34637d77b83861846c927149c655b3386d9d096bfb6df79daec934f137df423
+canonicalHash: sha256:3c2a1c1fe5b77b2b69d2f6d60ec50aa5f6126d23380911bd38b33a8f9bb0db04
 items: record-committed, closeout-path, midpoint-path, section-scope, section-findings, section-method, method-honesty, closed-negative-string, mandatory-line, counting-1, counting-2, counting-3, counting-4, counting-5, counting-6, counting-7, counting-8, counting-9, counting-9b-census, counting-10-buckets, counting-10-ncc-rate, counting-10-assent-refusal, counting-10-spot-check, counting-10-full-survival, counting-11, counting-11b-governance-examples, counting-12, report-set-comparison, emission-reading, delegated-tier-read, deferral-walk-back, instruments-read, governance-edit-kind-read, delegate-audit-pointer, instrument-census-read, never-a-gate
 date: 2026-10-29
+
+**Re-confirmed 2026-10-29, second time (Req 11.6.5d).**
+- **What changed**: one bullet, "The governance-edit-kind read" (canonical L432). Ballot `.kiro/docs/ballots/2026-10-29-dated-pointer-paths-and-edit-kind-check.md` (RATIFIED, Peter, 2026-10-29; Status read at `origin/main` `f535dc942`) § 3 site 2 does two things here. It removes the bullet's pointer, with the one space before it: `*(added 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, RS-40)*`. And it inserts, after "read by sample." and before "A kind you read as wrong", the clause that runs `npx tsx scripts/completion-claims/edit-kind-pointers.ts --pr <n>` on the same population (my R1 S2, condition 1). Thurgood applied both at `fe6ab7470` and re-quoted `governance-edit-kind-read` there (authoring; it does not move this canonicalHash).
+- **Byte-identity, checked**: the clause on L432 equals site 2's blockquote byte for byte (the blockquote's `> ` removed), preceded by one space after "read by sample." and followed by " A kind you read as wrong". The old line, with the pointer removed and the clause inserted there, equals the new line. `governance-edit-kind-read` equals the bullet minus its `- ` marker (2,610 characters) and occurs once in the unit.
+- **The clause, checked against its instrument**: the verdict words it names (`pointer-missing`, `pointer-on-exempt`, `listed`, `unlisted-path`, `ok`) are the tool's `Verdict` type at `scripts/completion-claims/edit-kind-pointers.ts` L58, and `unavailable` is its one-line `edit-kind-pointers: unavailable (<reason>) — continue` form (L215–L216). The clause reads them as the tool emits them.
+- **My call at this re-confirm (§ 3 site 3): one item, not split.** The clause is a limb of the governance-edit-kind read: same population, same PR-body `**Edit kind**:` lines, findings on the same authoring agent. It sits where the `**Sweep**:` limb sits, and on 2026-10-29 I kept that limb inside this item for the same reason. Splitting it would also break the item: the bullet's last two sentences come after the clause, so `governance-edit-kind-read` would become two items or lose its tail. A drift in the clause still fails this item's verbatim check. *Counter, carried*: a separate item would name the tool run as its own obligation in the record, so a later edit to the clause alone would show as one item moving. I judged that the verbatim check already catches it, and that one rule about one read is one item.
+- **What did not change**: the operative set, still 36 items. All 36 are verbatim, one occurrence each. The canonicalHash moves from `sha256:e34637d77b83861846c927149c655b3386d9d096bfb6df79daec934f137df423` to the value above, recomputed independently with `partition(splitFrontmatter(...).body)` and `regrounding/hash.ts`; it equals the chain's freshness value and the overlay pin.
+- **Consumer rendering**: unchanged (renderedHash `sha256:ac788d09a695a9a4f828e4e9c5ea3c3c1d51d96eb387c3ce2c65a13447ee5e75`, three pieces). The bullet is removed whole for consumers, and the clause goes with it.
+- **Read before this act**: the canonical unit, `canonical/agents/stacy.md` L415–L436, read through a tool call (`sed -n`) at `a9f144798` before this commit.
+
+**Ruling: CONFIRMED at 36 items.**
+
+**Re-confirmed 2026-10-29, first time (prior record, superseded)**: canonicalHash `sha256:e34637d77b83861846c927149c655b3386d9d096bfb6df79daec934f137df423`, 36 items, as below.
 
 **Re-confirmed 2026-10-29 (Req 11.6.5d).**
 - **What changed**: one bullet, "The governance-edit-kind read" (canonical L432). Ballot `.kiro/docs/ballots/2026-10-26-release-flow-batch-16-1.md` (RATIFIED, Peter, 2026-10-26/27) site 13, under F-40d (charter), inserts the `**Sweep**:` read: on a PR carrying a CORRECTION line, the sweep lines' presence, grammar and command re-run, the `left:` records' resolution and Trigger line, and the `0 hits` rate. Judgment stays judgment, read by sample, and the pointer is "*(added 2026-10-29 … RS-40)*". Thurgood applied it at `ae6a84d77` and re-quoted item `governance-edit-kind-read` at `a620ff970` (authoring).
@@ -395,9 +419,21 @@ date: 2026-10-29
 ## `#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength`
 
 confirmer: stacy
-canonicalHash: sha256:f6bfb7a081874a7f899d171cee0ad71a4da69c180689e6f96cfbed8729b37da5
+canonicalHash: sha256:dc6152aebad7909eafdce25f08da3c0a4826a0f98666429cf8046722a8feb160
 items: mirror-clause, mirror-called-at-exchange, mirror-binds-lens, mirror-binds-release-read
 date: 2026-10-29
+
+**Re-confirmed 2026-10-29, second time (Req 11.6.5d).**
+- **What changed**: ballot `.kiro/docs/ballots/2026-10-29-dated-pointer-paths-and-edit-kind-check.md` (RATIFIED, Peter, 2026-10-29; Status read at `origin/main` `f535dc942`) § 3 site 2 removes the last paragraph's pointer, with the one space before it: `*(added 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, RS-33, with the sentence "It binds the LENS seat specifically" amended; prior text at `08b9c7a8e`)*`. The paragraph now ends "…calls it out at that exchange." Thurgood applied it at `fe6ab7470` (authoring; it does not move this canonicalHash).
+- **Byte-identity, checked**: at L465 the old line minus the pointer string equals the new line, byte for byte, with no trailing space.
+- **The items**: all four occur once in the unit (L459–L466), unchanged. `mirror-binds-release-read` ran from the paragraph's first character through the full stop before the pointer (300 characters); with the pointer gone it now runs to the paragraph's end, so the item and the paragraph are one text. No item quoted the pointer, so none is re-authored.
+- **What did not change**: the operative set, still 4 items. The canonicalHash moves from `sha256:f6bfb7a081874a7f899d171cee0ad71a4da69c180689e6f96cfbed8729b37da5` to the value above, recomputed independently with `partition(splitFrontmatter(...).body)` and `regrounding/hash.ts`; it equals the chain's freshness value.
+- **Consumer rendering**: the disposition moved `re-pointed` → `retained` (Thurgood, `fe6ab7470`; site 3), because the only removal was this pointer. `retained` is faithful: each of the three consumer pieces equals the canonical unit byte for byte (973 characters, checked by script at `59309e836`), and the renderedHash is unchanged (`sha256:c8aad0f5042005eb9ddf29b65e8435208d251478c64c8ea4e11781b57394a17e`). The row's signature is withdrawn in act 6.
+- **Read before this act**: the canonical unit, `canonical/agents/stacy.md` L459–L466, read through a tool call (`sed -n`) at `59309e836` before this commit.
+
+**Ruling: CONFIRMED at 4 items.**
+
+**Re-confirmed 2026-10-29, first time (prior record, superseded)**: canonicalHash `sha256:f6bfb7a081874a7f899d171cee0ad71a4da69c180689e6f96cfbed8729b37da5`, 4 items, as below.
 
 **Re-confirmed 2026-10-29 (Req 11.6.5d): CORRECTED 3 → 4.**
 - **What changed**: ballot `.kiro/docs/ballots/2026-10-26-release-flow-batch-16-1.md` (RATIFIED, Peter, 2026-10-26/27) site 11, under F-33a (i) and F-33b include (RS-33). "It binds the LENS seat specifically." becomes "It binds the LENS seat specifically, and her read of release text (below).", and a new paragraph follows, "**It binds her read of release text too**: …", with its pointer "*(added 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, RS-33, with the sentence "It binds the LENS seat specifically" amended; prior text at `08b9c7a8e`)*". Thurgood applied it at `ae6a84d77` and authored the items at `a620ff970` (E5).

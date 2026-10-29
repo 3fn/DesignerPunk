@@ -30,7 +30,7 @@ fixtures:
     exemplar: D
     record: canonical/operative-sets/stacy.yaml
     anchor: "#the-trigger-set-the-114-superset-table-names-never-numbers"
-    canonicalHash: sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae
+    canonicalHash: sha256:ffc489a33dd65f3da04df8d79ac6d72ec09cd2d4b427ffd09eb434be15f496ce
     source: .kiro/specs/123-consumer-distribution/completion/re-grounding-c3-falsification-run-1.md
     sourceBlob: dd69678bf3a751db42837cbf4cb08a262d07bc89
     grammar: run-record
