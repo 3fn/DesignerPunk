@@ -1,0 +1,24 @@
+# BITE fixture-edit (RS-53): the fixture's own trigger-set unit edited, the live charter untouched — the frozen-copy test turns RED naming the unit (two-sided with rs-53-bite-charter-edit-green.txt)
+# mutation: tools/agent-generator/__fixtures__/semantics-guard/canonical/agents/semguard.md
+# command: npx jest --config tools/agent-generator/jest.config.js tools/agent-generator/__tests__/semantics-guard.fixture.test.ts --verbose
+# base commit: 6f23bc6f + the working tree under test; run 2026-10-29T05:17:20Z
+# --- mutation diff ---
+diff --git a/tools/agent-generator/__fixtures__/semantics-guard/canonical/agents/semguard.md b/tools/agent-generator/__fixtures__/semantics-guard/canonical/agents/semguard.md
+index 2327abb6f..163ff0c52 100644
+--- a/tools/agent-generator/__fixtures__/semantics-guard/canonical/agents/semguard.md
++++ b/tools/agent-generator/__fixtures__/semantics-guard/canonical/agents/semguard.md
+@@ -33 +33 @@ writeScope:
+-| **SYMPTOM** | A consumer symptom traced to "it was reported done" | Retrospective claims audit of the originating spec, **all ticked items**. **Non-negotiable** | Stacy |
++| **SYMPTOM** | A consumer symptom traced to "it was reported done" | Retrospective claims audit of the originating spec, **every ticked item**. **Non-negotiable** | Stacy |
+# --- output ---
+    ✕ its three body units are the frozen copy of stacy.md at FROZEN_FROM.commit, byte for byte by hash (the first also carries the fixture’s own title line)
+    ✓ E’s re-grounded text is G1 run 1’s committed E rendering, byte for byte
+    ✓ passes Task 13’s checks: the 13.1 schema, 13.5 orphan + missing row, 13.2 pin freshness
+    ✓ re-points exactly E, E-fm and the extra, each in place
+    ✓ E stays ZERO-VERBATIM against S’s operative items in the LIVE record (10.S Constraint 3): 0 credited
+    ✓ E-fm’s re-grounded text does not carry the canonical glob verbatim
+    ✓ _fixture.md: the re-pointed #doc and writeScope member are VERIFIED in each target’s prompt, under _fixture-output-consumer/<target>/
+    -   "#the-trigger-set-the-114-superset-table-names-never-numbers @ sha256:ffc489a33dd65f3da04df8d79ac6d72ec09cd2d4b427ffd09eb434be15f496ce",
+    +   "#the-trigger-set-the-114-superset-table-names-never-numbers @ sha256:a12026c6e9fcf4b3c2a9ded084b386eb81d6c5b46980d9abfd2aa150f2b5478b",
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 6 passed, 7 total
