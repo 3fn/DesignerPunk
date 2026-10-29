@@ -2,11 +2,11 @@
 
 **Date**: 2026-10-29
 **Drafted by**: Thurgood (Civitas steward; owner of the ballots README convention), at Peter's direction on RS-54. Peter, chat, relayed by the orchestrator, received before 2026-10-29T03:00:31Z (the orchestrator's clock), verbatim: *"Let's go class fix"*.
-**Status**: **DRAFT** — R1 in (Stacy, Ada, Leonardo, Lina), THURGOOD R2; R2 in (Stacy, Ada), THURGOOD R3 incorporates it (§ 8). Ready for Peter.
-**Open for Peter**: ratify, or not; confirm or overturn the orchestrator's reading of "Let's go class fix" (§ 2.2); and answer F-1, whether the two READMEs are bound (§ 6). No merge of the Status commit answers these: his words do.
+**Status**: **RATIFIED (Peter, 2026-10-29)**, chat, relayed by the orchestrator. Items 1 and 2, received before 2026-10-29T03:35:35Z (the orchestrator's clock), verbatim: *"Re: 1, Ratify / Re: 2, let's go with the recommendation"* — the measure ratified, and the orchestrator's reading of "Let's go class fix" (§ 2.2) confirmed: charters exempt. F-1, received before 2026-10-29T03:52:42Z, verbatim: *"B with the wording and record"* — F-1 (b), site 1 with Ada's R3 wording, and the governance-paths record filed (`.kiro/issues/2026-10-29-governance-paths-four-lists.md`). Before F-1 was ruled, Peter asked whether the (b) lean had been read by Ada; it had not, so Ada and Stacy read it (§ 8, `[ADA R3]`, `[STACY R3]`), and their corrections are applied in this Status commit (§ 6, site 1; `[THURGOOD R4]`).
+**Ruled**: ratify — *"Re: 1, Ratify"*; the reading (§ 2.2) — *"Re: 2, let's go with the recommendation"*; F-1 — *"B with the wording and record"*. No question remains open.
 **Required reviewer**: **Stacy**. Her charter units pay the application (§ 4), the check (B) becomes a limb of her governance-edit-kind read (site 2), and she is the census reader.
 **Reviewers**: Ada (her (ii-a), the frontmatter assertion and the pointer forms); Leonardo (raised the finding; L329); Lina (the semguard fixture, and (iii)'s generator question, § 6).
-**Consulted**: Stacy — RS-54 (ii), and R1: six acts, not five (her signature's withdrawal is her act), the limb into her L432 bullet, nine fixtures, census lines owed for sweep 1 on the README and for canonical-vs-truth and sweeps 1, 2, 4, 5, 6 and 8 on `stacy.md`, S4 leans (a); R2: the L432 clause true and decidable at no extra act, with `unlisted-path` given its consequence and a start point, the six acts and the order right, the census holds, F-1 (a) held more weakly, no objection to (b); Ada — RS-54 (ii-a), and R1: site 1 true, add `git log` to the history homes, name the forms, L28 covered; R2: a ballot citation is not a pointer (one sentence), her R1 regex passed a dateless pointer naming a dated ballot, so the date goes directly after the verb, F-1 leans (a); Leonardo — RS-54 follows the letter until ruled, and R1: the homes serve him, add that the changing commit names its record; Lina — R1: site 4 in her scope after site 2 and before the lock, the overlay entry out in the same commit as the row change, `retained` faithful (checked), leave (iii); Sparky — RS-54 (ii) with the homes named, (iii) named; Kenya — RS-54 (ii) with the sheets named; Data — RS-54 (ii) with the sheets named, the date tags raised
+**Consulted**: Stacy — RS-54 (ii), and R1: six acts, not five (her signature's withdrawal is her act), the limb into her L432 bullet, nine fixtures, census lines owed for sweep 1 on the README and for canonical-vs-truth and sweeps 1, 2, 4, 5, 6 and 8 on `stacy.md`, S4 leans (a); R2: the L432 clause true and decidable at no extra act, with `unlisted-path` given its consequence and a start point, the six acts and the order right, the census holds, F-1 (a) held more weakly, no objection to (b); R3: read the orchestrator's (b), (a) held weakly, cost measured, the four-lists record; Ada — RS-54 (ii-a), and R1: site 1 true, add `git log` to the history homes, name the forms, L28 covered; R2: a ballot citation is not a pointer (one sentence), her R1 regex passed a dateless pointer naming a dated ballot, so the date goes directly after the verb, F-1 leans (a); R3: read the orchestrator's (b), moved to (b), two premises corrected, site 1 wording; Leonardo — RS-54 follows the letter until ruled, and R1: the homes serve him, add that the changing commit names its record; Lina — R1: site 4 in her scope after site 2 and before the lock, the overlay entry out in the same commit as the row change, `retained` faithful (checked), leave (iii); Sparky — RS-54 (ii) with the homes named, (iii) named; Kenya — RS-54 (ii) with the sheets named; Data — RS-54 (ii) with the sheets named, the date tags raised
 **Class**: LAW. The README sentence says which documents owe a dated pointer, and so what every governance edit must carry (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds"). Site 2's L432 clause gives Stacy a read; that is LAW too.
 **Amends**:
 - `.kiro/docs/ballots/README.md` § "Conventions", Edit discipline: one sentence added after "Superseded text" (§ 3 site 1). **LAW**.
@@ -14,26 +14,27 @@
 - Stacy's consumer profile and operative set: two overlay pins, one overlay entry out, one dispositions row to `retained` (its signature withdrawn by her), two operative items re-authored (§ 3 site 3). **EXECUTION**.
 - The semguard fixture and the g1-renderings pin (§ 3 site 4). **EXECUTION**, Lina's, in her standing scope (RS-53).
 - `governance/classification-map.md`: one new row, `dated-pointer-paths`, at `check_state: none` (§ 3 site 5). **EXECUTION**.
-- Under F-1 (a) only: the edit-kinds path lists in the ballots README L42 and `.kiro/steering/Task-Completion-Protocol.md` L123 (§ 3 sites 6 and 7). **LAW**.
+- Sites 6 and 7 (the edit-kinds path lists, F-1 (a) only): **not applied**; F-1 was ruled (b).
+- `.kiro/issues/2026-10-29-governance-paths-four-lists.md`, filed in the Status commit (README rule 10): which paths are governance paths, carried to Spec 131's requirements round, as Peter ruled.
 - The check (B), `scripts/completion-claims/edit-kind-pointers.ts` and its test (§ 5). **EXECUTION**, Thurgood's, in its own PR, merged before the application.
 - `.kiro/issues/2026-10-29-charter-date-tags-ship-to-consumers.md`, filed with this DRAFT (README rule 10): the date-tag finding, left outside the carve-out (§ 2.4).
 
 **Census** (re-cut at R2 after Stacy's S3; the lines for site 2 follow #493 § 6's):
 - The check (B) is named in no register row's `checks`: its row is created at `check_state: none` (site 5), so it is not a registered instrument and no census line is owed for it (the `issues-owned.sh` precedent, ballot `2026-10-26-issues-multi-path-trigger-token`).
-- `**Census**: not in scope — 122-sweep-1-refs (tools/agent-generator/sweeps/sweep-1-refs.ts) — it resolves the shared catalog's source ".kiro/docs/ballots/README.md § \"The Ratification Protocol (record-first)\"" (canonical/shared/shared-catalog.yaml L41) against the README; site 1, and under F-1 (a) site 6, add sentences inside § "Conventions" and § "three kinds" and add, remove or rename no heading, so the ref resolves before and after; in canonical/agents/stacy.md no routed heading changes, and site 2's clause adds no § ref (it names the README in the comma-quote form the bullet already uses) and one script path that exists at the application's base, since the build PR merges first`
+- `**Census**: not in scope — 122-sweep-1-refs (tools/agent-generator/sweeps/sweep-1-refs.ts) — it resolves the shared catalog's source ".kiro/docs/ballots/README.md § \"The Ratification Protocol (record-first)\"" (canonical/shared/shared-catalog.yaml L41) against the README; site 1 adds a sentence inside § "Conventions" and adds, removes or renames no heading, so the ref resolves before and after; in canonical/agents/stacy.md no routed heading changes, and site 2's clause adds no § ref (it names the README in the comma-quote form the bullet already uses) and one script path that exists at the application's base, since the build PR merges first`
 - `**Census**: not in scope — 122-canonical-vs-truth (governanceAsLaw mustContain over the asserted sections) — site 2 edits prose in three units of canonical/agents/stacy.md and no assert declaration; no asserted section is an edit site`
 - `**Census**: not in scope — 122-sweep-2-skills (tools/agent-generator/sweeps/sweep-2-skills.ts) — it reads canonical/agents/** for the skills: field only; site 2 changes no skills: field`
 - `**Census**: not in scope — 122-sweep-4-ambient (tools/agent-generator/sweeps/sweep-4-ambient.ts) — it reads canonical/agents/** for routes.cues only; site 2 adds or removes no cue and no ambient member`
 - `**Census**: not in scope — 122-sweep-5-corrected-state (tools/agent-generator/sweeps/sweep-5-corrected.ts) — it counts .web.tsx occurrences in canonical/agents/*.md and the generator sources; no after-text contains .web.tsx`
 - `**Census**: not in scope — 122-sweep-6-declarations (tools/agent-generator/sweeps/sweep-6-declarations.ts) — it reads routes.cues and toolSubset; site 2 changes neither`
 - `**Census**: not in scope — 122-sweep-8-demotion (tools/agent-generator/sweeps/sweep-8-demotion.ts) — it reads the replaces: keys of routes.cues, routes.docs and the ambient trims; site 2 touches none, and the mirror unit's move to retained removes no ambient member and no Kiro config resource`
-- `**Census**: not in scope — signing-act-consistency (verify-signing-chain --ci; census mode --census-routed) — no instrument code changes, so the census mode's committed and scratch-diff runs are identical by construction; site 2 changes the bytes of three of Stacy's units (under F-1 (a), site 7 a fourth, her TCP #branch-and-pr-conventions), which the instrument reads as stale until her § 4 acts, and site 3 moves one unit from re-pointed to retained, its signature withdrawn by her act; all of these are the instrument's input, not its rule`
+- `**Census**: not in scope — signing-act-consistency (verify-signing-chain --ci; census mode --census-routed) — no instrument code changes, so the census mode's committed and scratch-diff runs are identical by construction; site 2 changes the bytes of three of Stacy's units, which the instrument reads as stale until her § 4 acts, and site 3 moves one unit from re-pointed to retained, its signature withdrawn by her act; all of these are the instrument's input, not its rule`
 - `**Census**: not in scope — 122-diff-guard (tools/agent-generator/diff-guard.ts) — an ordinary closure input; no rule, pattern or grammar changes; the lock is refreshed at application, where its verdict is read`
 - `**Census**: not in scope — section-citation-resolution (scripts/check-section-citations.ts, citing corpus governance/, .kiro/steering/, canonical/) — no site adds or removes a get_section / get_document_* citation`
-- `**Census**: not in scope — governance-examples (scripts/governance-examples/check.ts) — site 5's new row carries no served example and classification-map.md is outside the guard's scope; under F-1 (a), site 7's TCP sentence carries no token, file or import example (reasoning, not a run: TCP is a shipped steering doc in the guard's scope, so the application pastes the guard's plain-run report line, § 4 step 7; Stacy R2)`
+- `**Census**: not in scope — governance-examples (scripts/governance-examples/check.ts) — site 5's new row carries no served example and classification-map.md is outside the guard's scope` *(F-1 (b): no TCP site, so the R3 note on site 7's TCP sentence no longer applies)*
 - Site 4's fixtures are named by no register row's `checks`; no line is owed (Stacy R1 S3).
 
-**Cap**: one README sentence (three under F-1 (a), with one TCP sentence); three pointer removals and one clause in Stacy's charter; the profile, fixture and register follow-ons; one new script and its test in its own PR. **Retroactivity**: none beyond site 2. Pointers already in served governance docs, identity docs and RELEASE-FLOW stay; legacy pointer forms stay, since the check reads added lines only. Charter amendments that never carried a pointer stay without one.
+**Cap**: one README sentence; three pointer removals and one clause in Stacy's charter; the profile, fixture and register follow-ons; one new script and its test in its own PR. **Retroactivity**: none beyond site 2. Pointers already in served governance docs, identity docs and RELEASE-FLOW stay; legacy pointer forms stay, since the check reads added lines only. Charter amendments that never carried a pointer stay without one.
 
 > **Conflict of interest, stated first.** I own the README convention, and the check (B) is mine to build and maintain. Stacy's review and Peter's ratification are the checks.
 
@@ -55,14 +56,14 @@ The finding is RS-54 on `.kiro/issues/2026-10-26-release-16-1-standards-implicat
 
 Chat, relayed by the orchestrator, received before 2026-10-29T03:00:31Z, verbatim: *"Let's go class fix"*.
 
-### 2.2 The reading (the orchestrator's, flagged to Peter for overturn)
+### 2.2 The reading (the orchestrator's; confirmed by Peter, 2026-10-29)
 
 The class fix is (A), the convention names the paths it binds and the paths it exempts, and (B), a merge-time check on the PR body's `**Edit kind**:` lines. The path list's content follows his standing ruling to go with the seat recommendations, and six of seven seats leaned (ii-a):
 - `canonical/agents/**` exempt;
 - served governance docs and identity docs bound;
 - the 26 short date tags left outside the carve-out.
 
-Ratifying this ballot confirms that reading. A Status commit that reads it otherwise sends the ballot back to a round.
+**Confirmed**: Peter, chat, relayed by the orchestrator, received before 2026-10-29T03:35:35Z, verbatim: *"Re: 2, let's go with the recommendation"*.
 
 ### 2.3 Identity docs: converged, not a fork
 
@@ -83,13 +84,9 @@ Data counted 26 charter lines matching `(ballot 20|ratified 20|Ada 20|Peter, 20`
 
 - **Edit discipline**: apply "exactly as written"; if a before-text does not match, stop on that block and report — never adapt silently. Application should end with a mechanical sweep for the edit-class (a straggler grep), not trust in the enumerated list — every count in this directory's first ballot was wrong at least once (two → three → four occurrences); the sweep caught what the lists missed. **Superseded text**: a document agents read as law carries only the current text plus a dated pointer (`amended <date> by <ballot> <item>; prior text at <SHA>`); ledgers — issue records, claims-pass records, signature sheets, completion docs — keep superseded text inline, labelled and dated *(Peter, 2026-10-19; ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form S5, F-S5-record)*.
 
-**After, under F-1 (b)** (the two READMEs not bound):
+**After** (F-1 (b), Ada's R3 wording for the README clause):
 
-- **Edit discipline**: apply "exactly as written"; if a before-text does not match, stop on that block and report — never adapt silently. Application should end with a mechanical sweep for the edit-class (a straggler grep), not trust in the enumerated list — every count in this directory's first ballot was wrong at least once (two → three → four occurrences); the sweep caught what the lists missed. **Superseded text**: a document agents read as law carries only the current text plus a dated pointer (`amended <date> by <ballot> <item>; prior text at <SHA>`); ledgers — issue records, claims-pass records, signature sheets, completion docs — keep superseded text inline, labelled and dated *(Peter, 2026-10-19; ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form S5, F-S5-record)*. **Where the pointer is owed** *(added <application date> by ballot 2026-10-29-dated-pointer-paths-and-edit-kind-check)*: on exactly `governance/**`, `.kiro/steering/**` (identity docs included) and `.kiro/hooks/RELEASE-FLOW.md`. Its forms: `amended <date> by <ballot> <item>; prior text at <SHA>`; `added <date> by <ballot> <item>` for new text; `moved <date> from <home> by <ballot> <item>; prior home <path> L<a>–<b> at <SHA>`; and, for a CORRECTION, `corrected <date>: <what>; <record>; prior text at <SHA>`. A ballot citation (`*(ballot <name>)*`, or a ballot named in a sentence) names a source and is not a pointer: it carries no date and no prior text. In `governance/classification-map.md` a row's added `history` line is its pointer. `canonical/agents/**`, prose and frontmatter, and `canonical/shared/**`, which renders into every charter, carry none: a charter loads whole into every session of its seat, and its history lives in the ballot or record that names the site, the PR's `**Edit kind**:` line, the git history of `canonical/agents/**`, the seat's confirmation and signature sheets, `canonical/generated.lock` and the signing chain; the commit that changes a charter line names, in its message, the ballot or record that names the site. No other path owes one: this README and `.kiro/issues/README.md` cite their ballots inline, and `docs/**` and `.cursor/rules/**` restate law and are not its home. Short date tags in charters (`ratified <date>`, `<Name> <date>`) are not pointers, and this sentence does not reach them.
-
-**After, under F-1 (a)** (both READMEs bound; sites 6 and 7 also apply):
-
-- **Edit discipline**: apply "exactly as written"; if a before-text does not match, stop on that block and report — never adapt silently. Application should end with a mechanical sweep for the edit-class (a straggler grep), not trust in the enumerated list — every count in this directory's first ballot was wrong at least once (two → three → four occurrences); the sweep caught what the lists missed. **Superseded text**: a document agents read as law carries only the current text plus a dated pointer (`amended <date> by <ballot> <item>; prior text at <SHA>`); ledgers — issue records, claims-pass records, signature sheets, completion docs — keep superseded text inline, labelled and dated *(Peter, 2026-10-19; ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form S5, F-S5-record)*. **Where the pointer is owed** *(added <application date> by ballot 2026-10-29-dated-pointer-paths-and-edit-kind-check)*: on exactly `governance/**`, `.kiro/steering/**` (identity docs included), `.kiro/hooks/RELEASE-FLOW.md`, this README and `.kiro/issues/README.md`. Its forms: `amended <date> by <ballot> <item>; prior text at <SHA>`; `added <date> by <ballot> <item>` for new text; `moved <date> from <home> by <ballot> <item>; prior home <path> L<a>–<b> at <SHA>`; and, for a CORRECTION, `corrected <date>: <what>; <record>; prior text at <SHA>`. A ballot citation (`*(ballot <name>)*`, or a ballot named in a sentence) names a source and is not a pointer: it carries no date and no prior text. In `governance/classification-map.md` a row's added `history` line is its pointer. `canonical/agents/**`, prose and frontmatter, and `canonical/shared/**`, which renders into every charter, carry none: a charter loads whole into every session of its seat, and its history lives in the ballot or record that names the site, the PR's `**Edit kind**:` line, the git history of `canonical/agents/**`, the seat's confirmation and signature sheets, `canonical/generated.lock` and the signing chain; the commit that changes a charter line names, in its message, the ballot or record that names the site. No other path owes one: `docs/**` and `.cursor/rules/**` restate law and are not its home. Short date tags in charters (`ratified <date>`, `<Name> <date>`) are not pointers, and this sentence does not reach them.
+- **Edit discipline**: apply "exactly as written"; if a before-text does not match, stop on that block and report — never adapt silently. Application should end with a mechanical sweep for the edit-class (a straggler grep), not trust in the enumerated list — every count in this directory's first ballot was wrong at least once (two → three → four occurrences); the sweep caught what the lists missed. **Superseded text**: a document agents read as law carries only the current text plus a dated pointer (`amended <date> by <ballot> <item>; prior text at <SHA>`); ledgers — issue records, claims-pass records, signature sheets, completion docs — keep superseded text inline, labelled and dated *(Peter, 2026-10-19; ballot 2026-10-18-sitting-2-subtask-tests-tasks-sweep-criteria-form S5, F-S5-record)*. **Where the pointer is owed** *(added <application date> by ballot 2026-10-29-dated-pointer-paths-and-edit-kind-check)*: on exactly `governance/**`, `.kiro/steering/**` (identity docs included) and `.kiro/hooks/RELEASE-FLOW.md`. Its forms: `amended <date> by <ballot> <item>; prior text at <SHA>`; `added <date> by <ballot> <item>` for new text; `moved <date> from <home> by <ballot> <item>; prior home <path> L<a>–<b> at <SHA>`; and, for a CORRECTION, `corrected <date>: <what>; <record>; prior text at <SHA>`. A ballot citation (`*(ballot <name>)*`, or a ballot named in a sentence) names a source and is not a pointer: it carries no date and no prior text. In `governance/classification-map.md` a row's added `history` line is its pointer. `canonical/agents/**`, prose and frontmatter, and `canonical/shared/**`, which renders into every charter, carry none: a charter loads whole into every session of its seat, and its history lives in the ballot or record that names the site, the PR's `**Edit kind**:` line, the git history of `canonical/agents/**`, the seat's confirmation and signature sheets, `canonical/generated.lock` and the signing chain; the commit that changes a charter line names, in its message, the ballot or record that names the site. No other path owes one. This README and `.kiro/issues/README.md` owe none: an edit to the rules of either cites its ballot inline, and that ballot carries the before-text. `docs/**` and `.cursor/rules/**` restate law and are not its home. Short date tags in charters (`ratified <date>`, `<Name> <date>`) are not pointers, and this sentence does not reach them.
 
 *Why each part:*
 - `governance/**`, `.kiro/steering/**` and RELEASE-FLOW are the edit-kinds ballot's governance paths minus the charters.
@@ -98,6 +95,8 @@ Data counted 26 charter lines matching `(ballot 20|ratified 20|Ada 20|Peter, 20`
 - **The git history of `canonical/agents/**`** is a home every seat can read: a `retained` unsigned unit has no sheet (Ada R1 A1).
 - **The commit that changes a charter line names its record** (Leonardo R1 Le1). `git log -L` then reaches the record from every charter line, sheet or not, credential or not. *Counter, carried*: squash-merge replaces branch commits on `main`, so the rule binds the branch commit, and it holds on `main` only while the squash message keeps the PR body, as this repo's does.
 - **`canonical/shared/**`** renders into every charter and loads with it, so it follows the charters (Stacy R1, Low). **`docs/**` and `.cursor/rules/**`** restate law and are not its home, so "exactly" leaves them out on purpose.
+
+- **The two READMEs owe none** (F-1 (b)): every rule edit to either has gone through a ballot, which holds the before-text, so the ballot is the history home the charters also rely on (Ada R3). Their five dated `added` pointers stay ("Retroactivity: none").
 
 *What it leaves*: ledgers keep superseded text inline, as the sentence before says.
 
@@ -151,35 +150,16 @@ history:
   - { date: <application date>, change: "entry created by ballot 2026-10-29-dated-pointer-paths-and-edit-kind-check (EXECUTION, § 3 site 5), check_state none: an audit tool read by Stacy, never a gate", by: thurgood }
 ```
 
-### Sites 6 and 7 — under F-1 (a) only: the edit-kinds path lists (LAW)
+### Sites 6 and 7 — not applied
 
-**Site 6, `.kiro/docs/ballots/README.md` L42. Before** (at `0bee92a3e`, verbatim):
-
-*(Ballot 2026-10-18-governance-edit-kinds.)* Every edit to a **governance path** — `governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, and the prose of `canonical/agents/**` — is exactly one kind, named in the PR body (Task-Completion-Protocol § "Branch and PR Conventions"). **The kinds decide whether a ballot is needed, never who merges**: every PR on these paths stays Peter-merged under the carve-out. "Governance text" includes every one of these paths, and an edit to a seat's write scope or role is always LAW.
-
-**After**:
-
-*(Ballot 2026-10-18-governance-edit-kinds.)* Every edit to a **governance path** — `governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, `.kiro/docs/ballots/README.md`, `.kiro/issues/README.md`, and the prose of `canonical/agents/**` — is exactly one kind, named in the PR body (Task-Completion-Protocol § "Branch and PR Conventions"). **The kinds decide whether a ballot is needed, never who merges**: every PR on these paths stays Peter-merged under the carve-out. "Governance text" includes every one of these paths, and an edit to a seat's write scope or role is always LAW. *(amended <application date> by ballot 2026-10-29-dated-pointer-paths-and-edit-kind-check, F-1 (a); prior text at `<application base>`)*
-
-**Site 7, `.kiro/steering/Task-Completion-Protocol.md` L123. Before** (at `0bee92a3e`, verbatim):
-
-- **Edit kind** (ballot 2026-10-18-governance-edit-kinds): a PR whose diff touches a governance path (`governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, the prose of `canonical/agents/**`) carries one line per changed file — `**Edit kind**: <path> — LAW (<ballot path>)`, `— EXECUTION (<clause>)` or `— CORRECTION (<observation record>; truth: <referent>)`. Where one file's lines are of different kinds, it carries one line per part instead, with `<path> L<a>–<b>`: the line range in the file as it stands at the merge commit. The lines are read from the PR body (`gh pr view <n> --json body`), never from the squash message.
-
-**After**:
-
-- **Edit kind** (ballot 2026-10-18-governance-edit-kinds): a PR whose diff touches a governance path (`governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, `.kiro/docs/ballots/README.md`, `.kiro/issues/README.md`, the prose of `canonical/agents/**`) carries one line per changed file — `**Edit kind**: <path> — LAW (<ballot path>)`, `— EXECUTION (<clause>)` or `— CORRECTION (<observation record>; truth: <referent>)`. Where one file's lines are of different kinds, it carries one line per part instead, with `<path> L<a>–<b>`: the line range in the file as it stands at the merge commit. The lines are read from the PR body (`gh pr view <n> --json body`), never from the squash message. *(amended <application date> by ballot 2026-10-29-dated-pointer-paths-and-edit-kind-check, F-1 (a); prior text at `<application base>`)*
-
-- **What site 7 costs.** TCP's `#branch-and-pr-conventions` unit is re-pointed and signed, with Stacy as its confirmer. Its consumer removal takes the whole Edit-kind bullet, so the rendering does not change.
-  - Stacy owes one re-confirm and one re-sign (acts 7 and 8).
-  - Thurgood owes the overlay pin and the item `edit-kind` re-authored.
-- **What site 6 costs.** The README sentence also says every PR on these paths stays Peter-merged. Today every PR is Peter-merged anyway, so for the issues README that is a statement, not a change.
+F-1 was ruled (b) (Peter, 2026-10-29), so the edit-kinds path lists (ballots README L42, Task-Completion-Protocol L123) gain no README paths. Their drafted Before and After texts are in the history of this file at `86ebb0729`.
 
 ## 4. Application (after the Status commit)
 
 1. **The Status commit** (record-first, ballot only). It carries `**Status**: **RATIFIED (Peter, <date>)**`, his words and their clock bound, his answer on the reading (§ 2.2) and his answer to F-1.
 2. **Thurgood, the check's build PR** (§ 5), merged first. It is EXECUTION of this ballot, in his standing scope, and its body carries Stacy's ARMING reads: `scripts/completion-claims/**` is on her instrument-path limb. Merging it first makes site 2's clause and site 5's comment true at the application's merge, and lets the check's first read be the application PR.
 3. **Thurgood, the application PR** (branch `chore/apply-dated-pointer-paths`), in one authoring commit:
-   - sites 1, 2 and 5 (and 6 and 7 under F-1 (a));
+   - sites 1, 2 and 5;
    - site 3's items, pins, the overlay entry out, and the row's `disposition`, `removals` and `destination`, with `signature` left in place.
 
    Then a regeneration commit, with no lock. The message of each commit names this ballot (site 1's rule).
@@ -192,7 +172,7 @@ history:
    5. re-sign the claims-pass-record unit (the same);
    6. withdraw the mirror row's `signature`, with the dated paragraph in her sheet.
 
-   **Under F-1 (a)**, two more: (7) re-confirm and (8) re-sign TCP's `#branch-and-pr-conventions`. The order within her acts does not matter to the instrument (Stacy R1 S1).
+   Six acts, under F-1 (b) (no TCP site). The order within her acts does not matter to the instrument (Stacy R1 S1).
 6. **Thurgood**: the lock refreshed (full-run-green `check:122:diff-guard`, then no-op-green).
 7. **Checks**, each pasted in the PR body with its result:
    - `npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --ci` (stale 0, unsigned-routed 0, PASS);
@@ -201,29 +181,26 @@ history:
    - `npm test`;
    - `npm run -s check:section-citations`;
    - `node scripts/validate-steering-metadata.js`;
-   - under F-1 (a), the governance-examples guard's plain-run report line at the application's base (site 7 edits a shipped steering doc; Stacy R2);
    - `git diff --stat <base> -- canonical/_consumer-output/` empty apart from attribution files (Lina R1 L2: the mirror unit's consumer rendering does not change);
    - and the check itself, `npx tsx scripts/completion-claims/edit-kind-pointers.ts --pr <this PR>`: every LAW or CORRECTION line `ok`.
 8. **Straggler sweep**, case-sensitive, over `canonical/ .claude/agents/ .kiro/agents/ tools/agent-generator/__fixtures__/`, with expected hits compiled against the after-texts:
    - `release-flow-batch-16-1`: none after.
    - `edit-kind-pointers.ts`: `canonical/agents/stacy.md` L432 and its generated copies only.
 9. **The PR body carries**:
-   - `**Edit kind**: .kiro/docs/ballots/README.md — LAW (.kiro/docs/ballots/2026-10-29-dated-pointer-paths-and-edit-kind-check.md)`. Under F-1 (b) the README is not on the edit-kinds list, and the body cites this ballot for it.
+   - `**Edit kind**: .kiro/docs/ballots/README.md — LAW (.kiro/docs/ballots/2026-10-29-dated-pointer-paths-and-edit-kind-check.md)`. The README is not on the edit-kinds list (F-1 (b)), and the body cites this ballot for it.
    - `**Edit kind**: canonical/agents/stacy.md — LAW (…)`
    - `**Edit kind**: governance/classification-map.md — EXECUTION (… § 3 site 5)`
-   - Under F-1 (a): `**Edit kind**: .kiro/steering/Task-Completion-Protocol.md — LAW (…)`
    - The grant below, with its path list; the `**Consulted**:` line; and `semantics-guard.fixture.test.ts` named as the exercised test.
    - A note: a checkpoint pushed between the authoring commit and Stacy's act 6 shows a red sweep on the unit-branch run, because the head carries a `retained` row that still has a signature. That run is feedback, not the gate (Stacy R2).
 
 **Grant (activated by this ratification)**: Peter's ratification grants, until the application PR merges:
 - **Thurgood**:
-  - `.kiro/docs/ballots/README.md` (site 1, and site 6 under F-1 (a));
+  - `.kiro/docs/ballots/README.md` (site 1);
   - `canonical/agents/stacy.md` (site 2, byte for byte);
   - `canonical/operative-sets/stacy.yaml` (the two items' `text` only);
   - `canonical/profiles/consumer/stacy.overlay.md` (two pins, one entry out);
   - `canonical/profiles/consumer/stacy.dispositions.yaml` (the mirror row's `disposition`, `removals` and `destination` only, never its `signature`);
   - `governance/classification-map.md` (site 5's row only);
-  - under F-1 (a): `.kiro/steering/Task-Completion-Protocol.md` (site 7), `canonical/operative-sets/task-completion-protocol.yaml` (the `edit-kind` item's `text`) and `canonical/profiles/consumer/always-set/task-completion-protocol.overlay.md` (the pin);
   - `canonical/generated.lock` and the generator's outputs.
 - **Not granted**:
   - Lina's site 4 is in her standing scope (Lina R1 L1).
@@ -269,21 +246,27 @@ history:
   10. Token Governance L177's moved-text form as an added line → `pointer-missing`; with a date (`moved 2026-10-25 …`) → `ok`.
   11. A pointer naming a dated ballot with no date of its own (`*(amended by ballot <dated-name>, …)*`) → `pointer-missing`. This is the case that tells the R1 and R2 patterns apart (Ada R2).
 
-## 6. Forks for Peter
+## 6. Forks for Peter — ruled
 
-- **The reading of "Let's go class fix" (§ 2.2)** is the orchestrator's and is flagged for overturn. Ratification confirms it. Any other reading sends the ballot back to a round.
-- **F-1. Are the two READMEs bound?** (Stacy R1 S4.) Neither README is on the edit-kinds path list. So no rule asks for an `**Edit kind**:` line on an edit to them, (B) cannot see one, and Stacy's read never selects one.
-  - **(a) Bind them, and add them to the edit-kinds list** (sites 6 and 7). **Leans: Stacy (held more weakly at R2; she would not object to (b)) and Ada (R2).**
-    - Stacy: both are law, their edits already go by ballot, and under (b) a README edit is outside every reader that catches a LAW edit dressed as EXECUTION.
-    - Ada: the charters are exempt because other homes carry their history; under (b) the READMEs have only `git log` and an unenforced citation practice, the opposite case. A roll-entry edit is EXECUTION, so it costs one PR-body line and no pointer.
-    - Cost: two more LAW sentences, one of them in always-loaded TCP.
-    - Two more acts by Stacy (TCP's unit).
-    - An `**Edit kind**:` line on every PR touching either README, which includes every ballot roll entry.
-    - From then on, a new README rule written in the ballot-first form, as the READMEs' rules have been, reads `pointer-missing`: the check working, at the cost of an author habit (Stacy R2).
-  - **(b) Leave them unbound.** **Lean: Thurgood.** The READMEs keep citing their ballots inline, by practice: the ballots README carries a roll entry per ballot, and issues-README rules name their ballot in-line.
-    - Cost: two law documents sit outside the pointer rule, with no detector over them, as today.
-  - *What survives either way*: under (b), a README rule changed without a citation is visible only in git, and two law documents rest on the fewest history homes (Ada's test). Under (a), permanent costs (an always-loaded TCP sentence, two acts, a line per ballot PR, an author habit) buy coverage against a risk no read has observed, while Spec 131 shrinks governance (Thurgood's counter, which Stacy and Ada both carry as surviving).
-  - *A softer form, named, not recommended* (Ada R2): site 6 only, the READMEs on the edit-kinds list without binding them to pointers. It saves site 1's README clause but not site 7, so it saves little.
+- **The reading of "Let's go class fix" (§ 2.2)**: confirmed (Peter, *"Re: 2, let's go with the recommendation"*).
+- **F-1. Are the two READMEs bound?** Ruled **(b)**, with Ada's wording and the record (Peter, *"B with the wording and record"*). Neither README is on the edit-kinds path list (ballots README L42; TCP L123), so no rule asks for an `**Edit kind**:` line on an edit to them, (B) cannot see one, and Stacy's read never selects one.
+  - **Leans, as held**:
+    - Stacy: (a), weakly, on consistency, with no objection to (b) (R1, R2, R3).
+    - Ada: (a) at R2, moved to (b) at R3.
+    - Thurgood: (b).
+  - **Facts established at R3**, which correct this section's R2 text:
+    - **The READMEs do not uniformly "cite their ballots inline".** The split RS-54 names happened inside the issues README:
+      - ballot-first `*(ballot …)*` citations in #436 (`b42874bd0`), #444 (`f985e2079`) and #527 (`61581c641`);
+      - dated `added` pointers in #496 (`a19481725`) and #541 (`52f874275`).
+      - Rules 1, 8 and 11 were rewritten in place, and the file holds no "prior text at" string.
+      - No harm has been found: each ballot holds the before-text, and `git log -L` reaches it (Ada R3 item 2; verified in git by the orchestrator).
+    - **The READMEs do not have "the fewest history homes".** Every rule edit to either went through a ballot, which holds the before-text. That is the first home the charters' exemption rests on (Ada R3 item 1; she withdrew her R2 premise).
+    - **(a)'s cost was overstated here.** Sites 6 and 7 added about 25 words to two existing sentences, with no new rule. The two acts are one-time. Of 19 commits touching either README since `c470a248f` (2026-10-18), 7 touched no covered path, and 6 of those 7 already carry an `**Edit kind**:` line (Stacy R3; squash messages read, PR bodies unverified).
+    - **The roll has decayed once.** `6cf38d7b5` (#459) restored 15 missing roll entries. It was an absent edit, so neither (a) nor (B) would have caught it (Stacy R3).
+    - Neither README ships to consumers, and nothing loads either whole (Ada R3 item 5).
+  - **What decided it**: Thurgood's counter, which Stacy and Ada both carry. (a)'s costs are permanent, and no README defect of the kind it covers has been seen. Under (b) the ballot is the README's history home, as for a charter.
+  - **What survives (b)** (Ada R3 item 4; Stacy R3): two law documents that bind every seat stay outside the one non-model check this ballot builds. A README rule edit made outside a ballot, or declared EXECUTION, is caught only by a reader who goes to git.
+  - **Where the class goes**: "which paths are governance paths" (four lists that disagree) is carried to Spec 131's requirements round by `.kiro/issues/2026-10-29-governance-paths-four-lists.md`.
 - **(iii), stripping pointers from consumer renderings in the generator (Sparky's)**: **declined**. Lina R1 L3 read it:
   - The pointers' text is not regular (L465's carries a quoted sentence and nested backticks), so a pattern under-matches or eats content.
   - It turns `retained` into an unsigned re-pointed unit, which C1 would have to except.
@@ -293,7 +276,7 @@ history:
 
 ## 7. Recommendation, counter-argument (fold-back applied), residual
 
-**Recommendation**: ratify sites 1–5 under F-1 (b), with the check (§ 5) built first.
+**Recommendation** (as drafted; ratified): ratify sites 1–5 under F-1 (b), with the check (§ 5) built first.
 
 **Counter-argument, run against it, and what it changed**:
 - **(1) "The check is a new instrument while Spec 131 shrinks governance."** It made (B) an audit tool, never a gate: its row at `check_state: none`, its home a directory I already own. That also takes it out of the census rule's population.
@@ -304,8 +287,9 @@ history:
 **What survives**:
 - **A charter line no longer shows that it is new** (Stacy, Kenya, Data, RS-54 R2). Leonardo reads this as small for a charter's own seat (R1). It is real for a reader with remembered text, who now reaches the record through `git log -L` and the commit message.
 - **The rule now has an exception**, and the next whole-loaded doc that wants one will cite this one.
-- **Six acts by Stacy (eight under F-1 (a)) and one by Lina**, for no change in what any reader is told to do.
+- **Six acts by Stacy and one by Lina**, for no change in what any reader is told to do.
 - **(B) reads only what an author declared**, one verdict per file.
+- **Under F-1 (b), the two READMEs stay outside (B)** (Ada R3, Stacy R3).
 - **The commit-message rule holds on `main` only while the squash keeps the PR body** (Leonardo R1).
 
 ## 8. Review round record
@@ -546,7 +530,7 @@ Questions for R1:
 - **Standards notes from Stacy's R1**, carried to the RS queue, not filed here:
   - a ballot that returns a row to `retained` owes the signer's withdrawal act;
   - a census check-list item crossing every edit site with every registered instrument whose command loads it.
-- **Open for Peter**: ratify; confirm the reading (§ 2.2); F-1.
+- **Ruled since** (Peter, 2026-10-29; see the Status line): ratify, *"Re: 1, Ratify"*; the reading, *"Re: 2, let's go with the recommendation"*; F-1, *"B with the wording and record"*.
 
 #### [STACY R2]
 
@@ -660,7 +644,122 @@ Questions for R1:
   - Ada's test is the strongest argument against my lean, and I carry it as the residual. The charters' exemption does rest on their other homes, and under (b) the READMEs have fewest.
   - I hold (b) because (a)'s costs are permanent and the risk is unobserved. Both of them carry that counter as surviving too.
   - The pick is Peter's. → § 6.
-- **Open for Peter**: ratify; confirm the reading (§ 2.2); F-1.
+- **Ruled since** (Peter, 2026-10-29; see the Status line): ratify, *"Re: 1, Ratify"*; the reading, *"Re: 2, let's go with the recommendation"*; F-1, *"B with the wording and record"*.
+
+#### [ADA R3]
+
+*Read-only, 2026-10-29.*
+- *Ballot read at `86ebb0729`: site 1's (b) variant, § 5, § 6 F-1, my R2, THURGOOD R3.*
+- *For the ballots README, the text above "## Ballots on record" hashed at each of its 41 commits and compared with the parent.*
+- *For the issues README, each of its 13 commits read in its diff.*
+- *Pointer and citation forms counted with `grep` on each file and on each commit's added lines.*
+
+**1 · F-1: my lean moves from (a) to (b). I withdraw my R2 premise that the READMEs have the fewest history homes.** → § 6 F-1
+- **Every rule edit to either README went through a ballot** (verified). A ballot holds the before-text verbatim, so the READMEs share the charters' first home: "the ballot or record that names the site".
+  - Ballots README: the text above "## Ballots on record" changed in exactly five of its 41 commits: `1dc26252e`, `c470a248f` (#408), `71ce7e2d7` (#416), `58ec2aea5` (#419) and `52f874275` (#541). Each is a ballot ratification or application. The other 36 commits are roll entries.
+  - Issues README: every one of its 13 commits that changed rule text is a ballot commit. The four that are not (#173, #174, #188, #189) edited rows of the old roster table, before L31 existed.
+- My R2 said the READMEs had "only `git log` and an unenforced citation practice". That left out the ballot record, and it was wrong.
+- What the READMEs lack next to the charters is the Edit-kind line, the sheets, the lock and the chain. Those detect an edit. They do not hold its history. So under (b) the history-homes test does not separate the READMEs from the charters, and Thurgood's counter decides: (a)'s costs are permanent, and the risk it covers has not been seen.
+
+**2 · Correction to § 6 (b) and site 1: the split did occur in the issues README.** → § 6 F-1 (b); § 3 "Site 1", (b) variant
+- After L31 landed (`71ce7e2d7`, 2026-10-19), rule edits to the issues README went (verified):
+  - ballot-first `*(ballot …)*` in #436 (`b42874bd0`) and #444 (`f985e2079`);
+  - a dated `*(added 2026-10-26 by ballot …)*` in #496 (`a19481725`);
+  - ballot-first again in #527 (`61581c641`);
+  - a dated `added` in #541 (`52f874275`).
+- Rules 1, 8 and 11 were rewritten in place in #436, and rule 1's token list again in #527. The issues README contains zero "prior text at" strings.
+- So "cite their ballots inline" is not uniform practice: the two READMEs now carry five dated `added` pointers next to ballot-first citations. And "never occurred there" is false. RS-54's pattern, ballots days apart reading L31 two ways, happened inside one README. No harm from it has been found, because each ballot holds the before-text and `git log -L` reaches it.
+
+**3 · Site 1's (b) clause, replacement wording.** → § 3 "Site 1", (b) variant
+- Current: "No other path owes one: this README and `.kiro/issues/README.md` cite their ballots inline, and `docs/**` and `.cursor/rules/**` restate law and are not its home."
+- Replacement, to paste:
+  ```
+  No other path owes one. This README and `.kiro/issues/README.md` owe none: an edit to the rules of either cites its ballot inline, and that ballot carries the before-text. `docs/**` and `.cursor/rules/**` restate law and are not its home.
+  ```
+- It turns the description into a rule. It adds no TCP sentence, no act by Stacy and no Edit-kind line. No check reads it.
+- The five dated pointers already in the READMEs stay ("Retroactivity: none").
+
+**4 · Surviving counter-argument to (b), which I cannot fold away.** → § 7 "What survives"
+- Under (b), two law documents stay outside the one non-model check this ballot builds.
+- A README rule edit made outside a ballot, or declared as EXECUTION, is caught only by Peter reading the diff at merge. That runs against Peter's aim that agent self-governance rest on non-model checks.
+- No instance has been seen in the READMEs' 41 and 13 commits. (B) would not fully close the gap under (a) either, since it reads only declared lines (§ 5 "Its reach, stated").
+
+**5 · Neither README ships to consumers or loads in any session.** → § 6 F-1
+- Neither is in `package.json` `files`, which carries only the eight identity steering docs from `.kiro/steering/` (verified). Charters and TCP cite them, and nothing loads them whole (verified).
+- Whether the docs MCP indexes them: unverified.
+
+#### [STACY R3]
+
+*Read-only, 2026-10-29, on the DRAFT R3 at `86ebb0729`; `main` read at `24a527c91`. The orchestrator consulted me on F-1 after the R3 draft and before Peter's ruling; this entry records that consult.*
+- *What I read: § 3 sites 1, 6 and 7; § 6 F-1; `[THURGOOD R3]`; `.kiro/docs/ballots/README.md` L42; `.kiro/issues/README.md`; Task-Completion-Protocol L123 and L129; Agent-Directory L42; and `git log` on both READMEs.*
+- *I made no repo write.*
+- *@-mention scan: none.*
+- *Mirror clause: where a line is false, I give the measured facts, and the wording stays Thurgood's.*
+- *PR bodies were not read (`gh pr view` was not run). Where I cite a body, I read the squash message, which in this repo has carried the body. Each such cite is marked unverified.*
+
+- **F-1, my lean at the consult: (a), still weak, with no objection to (b). The reason changed.** → § 6 F-1
+  - **"No reader sees a README edit" is weaker than I put it at R1.** I have never had a README edit I could not verify from git and the body. I also never had to: neither README is in my edit-kind read's population. My first read of them, below, found nothing wrong.
+  - **What kept me on (a) is consistency, not an observed defect.**
+    - Task-Completion-Protocol L129, the merge carve-out, calls `.kiro/docs/ballots/**` governance law.
+    - The edit-kinds list leaves out both READMEs (ballots README L42; TCP L123). Verified.
+    - So the README that holds the edit-kinds law, and under site 1 the pointer law, is the one law document that can be edited without declaring its kind.
+
+- **§ 6's cost of (a) is overstated. Measured:** → § 6 F-1 (a), the "Cost" bullets
+  - **"Two more LAW sentences."** Sites 6 and 7 add two path names and a dated pointer to two existing sentences: about 25 words, with no new rule. Verified from the two Afters.
+  - **Two acts.** One-time: re-confirm and re-sign TCP's `#branch-and-pr-conventions`.
+  - **"An `**Edit kind**:` line on every PR touching either README."**
+    - Since `c470a248f` (2026-10-18), 19 commits touched either README.
+    - 12 of them also touched a covered path, so they carried Edit-kind lines anyway.
+    - The other 7 touched only `.kiro/docs/ballots/` files. 6 of the 7 already carry an `**Edit kind**:` line ("none owed" or "none"). `3a41f0023` (#528) carries none.
+    - So under (a) the recurring cost is swapping a line authors already write. The counts are verified on the squash messages; the bodies are unverified.
+  - **The author habit is already moving.** The two newest README rule additions use the dated form: `a19481725` (rule 11, `added 2026-10-26 by ballot …`) and `52f874275` (three `added 2026-10-29 by ballot …`). Verified.
+
+- **The one real README history failure is the roll omission, and neither (a) nor (B) catches it.** → § 6 F-1 (b); § 5 "Its reach"
+  - `6cf38d7b5` (#459, 2026-10-24) added 15 ballots missing from the "Ballots on record" roll, as a CORRECTION of omission. They are dated 2026-07-07 → 2026-10-23. The Spec 131 ballot audit found them; no standing reader did. Verified.
+  - It undercuts (b)'s "the ballots README carries a roll entry per ballot" as a reliable practice.
+  - It is an absent edit, though. My edit-kind read and (B) read only declared edits that happened, so (a) would not have caught it either.
+
+- **Six README rule amendments sampled: none silently rewritten, and each one's history is recoverable without a pointer.** → site 1 under F-1 (b), "this README and `.kiro/issues/README.md` cite their ballots inline"
+  - Samples: `f985e2079` (#444, rule 1, an insertion, the old text intact), `a19481725` (rule 11), `52f874275`, `61581c641`, `58ec2aea5`, and the roll correction `6cf38d7b5`. Each carries its citation inline. Verified.
+  - Declaring a README edit's kind is voluntary today, and inconsistent:
+    - `f985e2079` declared `.kiro/issues/README.md — LAW`;
+    - `58ec2aea5` wrote "Carve-out paths, no Edit-kind line: `.kiro/docs/ballots/README.md`";
+    - `a19481725` declared nothing for the README.
+    - Squash messages; the bodies are unverified.
+  - The site 1 (b) clause is true of these samples.
+
+- **My surviving counter-argument to (b).** Under (b), two documents that bind every seat stay outside the one mechanical check this ballot builds. Their history rests on a citation practice that no rule reads, and the same README's roll practice has already decayed once without anyone noticing. A silently rewritten README rule would be caught only by a reader who goes looking in git.
+
+- **Peter's ruling on F-1 is (b), with Ada's rule wording and the record. I accept it.** → § 6 F-1; § 4 step 1
+  - Peter, chat, relayed by the orchestrator, received before 2026-10-29T03:52:42Z, verbatim: *"B with the wording and record"*.
+  - **The record.** "Which paths are governance paths" goes to Spec 131's requirements round. My draft is given to Thurgood to file as owner (README rules 9 and 10). Today the paths are stated in four places that disagree:
+    - the merge carve-out (TCP L129, and the register row `record-first-ratification`);
+    - the edit-kinds list (ballots README L42 and TCP L123);
+    - the consult-line trigger surfaces (Agent-Directory L42, and the register row `orchestrator-consult-line`);
+    - site 1's bound and exempt list.
+  - **Rule 10 timing.** The record is owed in the same PR that records the ruling, which is this ballot's Status commit (README rule 10).
+  - **Ada's wording.** It is Thurgood's to apply at site 1, and I propose no text. I checked one fact: the four ballots behind the sampled rule additions each carry a before-text or an insertion point. That was a grep, not a full read of each site, so it is unverified for each site.
+
+*Signed: Stacy, 2026-10-29.*
+
+#### [THURGOOD R4]
+
+*At the Status commit, 2026-10-29. @-mention scan: none outstanding.*
+
+- **Peter's rulings recorded**: the Status line, § 2.2, § 6, and the header's "Ruled" line. The two R2 and R3 "Open for Peter" lines are rewritten as "Ruled since", so no open question remains in the file.
+- **Ada R3 items 1 and 2, taken as corrections.** § 6's R2 text said the READMEs "cite their ballots inline, by practice" and had "the fewest history homes". Both are false, and § 6 now states the measured facts. My earlier reasoning, that the split RS-54 names never occurred there, was also false: the issues README shows it. I withdraw it. No false premise is carried into RATIFIED.
+- **Ada R3 item 3, applied verbatim** to site 1's README clause. Only the (b) After remains. The (a) After and sites 6 and 7 are dropped from § 3, and their texts stay in this file's history at `86ebb0729`.
+  - `scratchpad/batch-consults/l31-after-b.txt` is updated to match.
+  - `l31-after-a.txt` is deleted (declined).
+- **Stacy R3, taken as fact into § 6**: (a)'s measured cost, and the roll-omission instance. Her surviving counter is carried in § 6 and § 7.
+- **Under F-1 (b)**, confirmed in the record:
+  - Stacy owes six acts, as listed in § 4 step 5.
+  - The census block names no TCP site.
+  - The grant carries no TCP path.
+- **The governance-paths record is filed**: `.kiro/issues/2026-10-29-governance-paths-four-lists.md`, from Stacy's draft, with me as Owner and Stacy as an interested party.
+  - Class: P2 obligation (record) · defect.
+  - Trigger: `path:.kiro/specs/131-governance-simplification/requirements.md`, as in the 2026-10-24 precedents.
+  - Its four lists were re-read at `24a527c91`.
 
 ## 9. Application ledger
 
