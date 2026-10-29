@@ -419,9 +419,21 @@ date: 2026-10-29
 ## `#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength`
 
 confirmer: stacy
-canonicalHash: sha256:f6bfb7a081874a7f899d171cee0ad71a4da69c180689e6f96cfbed8729b37da5
+canonicalHash: sha256:dc6152aebad7909eafdce25f08da3c0a4826a0f98666429cf8046722a8feb160
 items: mirror-clause, mirror-called-at-exchange, mirror-binds-lens, mirror-binds-release-read
 date: 2026-10-29
+
+**Re-confirmed 2026-10-29, second time (Req 11.6.5d).**
+- **What changed**: ballot `.kiro/docs/ballots/2026-10-29-dated-pointer-paths-and-edit-kind-check.md` (RATIFIED, Peter, 2026-10-29; Status read at `origin/main` `f535dc942`) § 3 site 2 removes the last paragraph's pointer, with the one space before it: `*(added 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, RS-33, with the sentence "It binds the LENS seat specifically" amended; prior text at `08b9c7a8e`)*`. The paragraph now ends "…calls it out at that exchange." Thurgood applied it at `fe6ab7470` (authoring; it does not move this canonicalHash).
+- **Byte-identity, checked**: at L465 the old line minus the pointer string equals the new line, byte for byte, with no trailing space.
+- **The items**: all four occur once in the unit (L459–L466), unchanged. `mirror-binds-release-read` ran from the paragraph's first character through the full stop before the pointer (300 characters); with the pointer gone it now runs to the paragraph's end, so the item and the paragraph are one text. No item quoted the pointer, so none is re-authored.
+- **What did not change**: the operative set, still 4 items. The canonicalHash moves from `sha256:f6bfb7a081874a7f899d171cee0ad71a4da69c180689e6f96cfbed8729b37da5` to the value above, recomputed independently with `partition(splitFrontmatter(...).body)` and `regrounding/hash.ts`; it equals the chain's freshness value.
+- **Consumer rendering**: the disposition moved `re-pointed` → `retained` (Thurgood, `fe6ab7470`; site 3), because the only removal was this pointer. `retained` is faithful: each of the three consumer pieces equals the canonical unit byte for byte (973 characters, checked by script at `59309e836`), and the renderedHash is unchanged (`sha256:c8aad0f5042005eb9ddf29b65e8435208d251478c64c8ea4e11781b57394a17e`). The row's signature is withdrawn in act 6.
+- **Read before this act**: the canonical unit, `canonical/agents/stacy.md` L459–L466, read through a tool call (`sed -n`) at `59309e836` before this commit.
+
+**Ruling: CONFIRMED at 4 items.**
+
+**Re-confirmed 2026-10-29, first time (prior record, superseded)**: canonicalHash `sha256:f6bfb7a081874a7f899d171cee0ad71a4da69c180689e6f96cfbed8729b37da5`, 4 items, as below.
 
 **Re-confirmed 2026-10-29 (Req 11.6.5d): CORRECTED 3 → 4.**
 - **What changed**: ballot `.kiro/docs/ballots/2026-10-26-release-flow-batch-16-1.md` (RATIFIED, Peter, 2026-10-26/27) site 11, under F-33a (i) and F-33b include (RS-33). "It binds the LENS seat specifically." becomes "It binds the LENS seat specifically, and her read of release text (below).", and a new paragraph follows, "**It binds her read of release text too**: …", with its pointer "*(added 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, RS-33, with the sentence "It binds the LENS seat specifically" amended; prior text at `08b9c7a8e`)*". Thurgood applied it at `ae6a84d77` and authored the items at `a620ff970` (E5).

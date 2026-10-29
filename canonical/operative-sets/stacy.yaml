@@ -691,7 +691,7 @@ units:
         text: "**The never-a-gate sentence, restated wherever the practice is documented**: *no pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.*"
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-claims-pass-record-claims-passmd-the-template
   "#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength":
-    canonicalHash: sha256:f6bfb7a081874a7f899d171cee0ad71a4da69c180689e6f96cfbed8729b37da5
+    canonicalHash: sha256:dc6152aebad7909eafdce25f08da3c0a4826a0f98666429cf8046722a8feb160
     items:
       - id: mirror-clause
         kind: obligation
