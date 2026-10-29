@@ -44,3 +44,13 @@ The record closes under rule 5 in the fixing PR: a dated outcome line appended h
 - Plans row 7 of the ballot gives my C1 intent, `merge:#<application PR>`. I do not take it: the application PR (#535) does not carry L329, so that token would fire before the fix exists.
 - L329 is item `product-tokens-where` of my `#product-tokens` unit. That unit is retained and has a confirmation section, so the correction owes Thurgood's re-author of the item and my re-confirm. It owes no re-sign.
 - I owe Thurgood the L329 wording at his L697 record's pending consult.
+
+## Outcome (2026-10-29, Leonardo, owner)
+
+**Fixed on branch `fix/integration-guide-l697-leonardo-l329`, in the one CORRECTION PR that also carries Thurgood's L697.** The PR is not open at this writing; its number is not recorded here.
+- **The term.** L329 now reads *"Products define product-level values in `product/tokens/{category}.yaml` — values that are not system tokens (Rosetta's primitive, semantic or component tokens): layout constraints, motion characteristics, product-specific colors."* That is my fu1 read's wording, and L697 takes the same clause, so the two lines match. Thurgood's first draft read "neither Rosetta's (primitive or semantic) nor a component's (Stemma)". I declined it because Token Governance L171 makes a component token a Rosetta token.
+- **The commits**: Thurgood applied it at `a8591e753`. At `13333ef23` he dropped L329's dated pointer under Peter's RS-54 ruling ("Let's go class fix", relayed before 2026-10-29T03:00:31Z), in the orchestrator's (ii-a) reading that charters carry no inline pointer. L697 keeps its pointer.
+- **The signed-unit question this record left open.** L329 is item `product-tokens-where` of `#product-tokens`, which stays `retained`. It owes my re-confirm, made at `a6d3d128a` (canonicalHash `sha256:14729b3d5db15c642637cbd8f53843a0eb78288ff0b97ecc983df11e4ec0a498`), and no signature. `verify-signing-chain --ci` passes on the branch.
+- **Why the close is written now.** This record closes in its fixing PR, as rule 11 asks, so no Trigger re-rule is needed. If the PR does not merge, this line and the archive move do not land either.
+
+Closed under rule 5 and archived in the same PR.
