@@ -12,7 +12,7 @@ Spec 123 Task 13.4 (criterion: *"The G1 renderings are copied fixtures with pinn
   | `file` | the fixture file in this directory |
   | `exemplar` | the run record's exemplar label (`A`, `AX-1`, `Lina-2`, `G′`, …) |
   | `record`, `anchor` | the operative-set record and unit the rendering is scored against |
-  | `canonicalHash` | that record unit's hash at copy time — **the record state the expected scores assume** |
+  | `canonicalHash` | the record unit's hash when its expected row was last derived or re-checked — **the record state the expected table was derived at**; provenance, not asserted (RS-60) |
   | `source` | the run record the block was copied from |
   | `sourceBlob` | `git hash-object <source>` at copy time |
   | `grammar`, `marker` | which marker grammar the block uses, and its exact opening line |
@@ -31,9 +31,11 @@ Byte-identical renderings (C(c1)'s two units, Lina-2's `:preamble`) are **not** 
 3. Each fixture equals the marked block in its source, re-extracted under its grammar; each marker occurs exactly once.
 4. Every marked block in the three sources has a fixture — the copy is complete.
 
-The record pin (`canonicalHash`) is asserted where the scores are (`triviality.g1.test.ts`): if a record unit is re-confirmed, the expected scores are re-derived explicitly, never silently moved.
+`canonicalHash` is **not asserted** by any test (RS-60, 2026-10-29). `triviality.g1.test.ts` scores each fixture against the **live** record — its items, and the canonical unit from its source — so a re-confirmation that moves a score turns that fixture's expected-table row red by itself, and the row is re-derived explicitly, never silently moved. **The limit**: a re-confirmation that changes a unit's items but leaves every score the same passes unseen. Only AX-1's witness test pins which items are credited.
 
-**When a record unit is re-confirmed** (its `canonicalHash` in `canonical/operative-sets/<seat>.yaml` moves), the record-pin test in `triviality.g1.test.ts` goes red, naming the record, the anchor and both hashes. The pin is owed in the same PR as the re-confirmation: check that the unit's row in the same file's expected table is still green, then set the fixture entry's `canonicalHash` here to the record's new value. A rendering file is never edited for a re-confirmation. The semguard fixture (`../semantics-guard/`) is a separate fixture: it is frozen, and a charter edit owes it nothing.
+**When a record unit is re-confirmed** (its `canonicalHash` in `canonical/operative-sets/<seat>.yaml` moves), nothing here is owed. Refreshing a fixture's `canonicalHash` is never required. Refresh it when that fixture's expected row is re-derived, to the record's value at the re-derivation, so the hash keeps naming the state the row was derived at. A rendering file is never edited for a re-confirmation. The semguard fixture (`../semantics-guard/`) is a separate fixture: it is frozen, and a charter edit owes it nothing.
+
+Bite logs: `__bites__/rs-60-bite-reconfirm-red-before.txt` and `__bites__/rs-60-bite-reconfirm-green.txt` (a score-neutral re-confirmation, red on the pin before RS-60, green after) and `__bites__/rs-60-bite-item-red.txt` (an item change that moves a score still fails the score test).
 
 ## Regenerating
 

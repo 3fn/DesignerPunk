@@ -1,0 +1,126 @@
+# BITE re-confirm, BEFORE RS-60: the same stacy.yaml #audit-checklist canonicalHash move, items unchanged — triviality.g1 RED on the record pin alone (the score rows stay green)
+# mutation: canonical/operative-sets/stacy.yaml
+# command: npx jest --config tools/agent-generator/jest.config.js tools/agent-generator/__tests__/triviality.g1.test.ts --verbose
+# base commit: ee9ae4725 + the working tree under test; run 2026-10-29T23:12:53Z
+# the instance RS-60 removes: no score moved, yet 3 pin rows failed and a manifest re-pin was owed
+# --- mutation diff ---
+diff --git a/canonical/operative-sets/stacy.yaml b/canonical/operative-sets/stacy.yaml
+index 3ceb3859d..f2bdb845f 100644
+--- a/canonical/operative-sets/stacy.yaml
++++ b/canonical/operative-sets/stacy.yaml
+@@ -24 +24 @@ units:
+-    canonicalHash: sha256:e8a4873d6fac46e8ad81bb94168464be2bd4705494f9cb74687a79e4d8e3d221
++    canonicalHash: sha256:e8a4873d6fac46e8ad81bb94168464be2bd4705494f9cb74687a79e4d8e3d220
+# --- output ---
+FAIL tools/agent-generator/__tests__/triviality.g1.test.ts
+  the record pin — every fixture is scored against the record state it names
+    ✕ A #audit-checklist
+    ✓ B #the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script
+    ✓ C(c2) #what-parity-means
+    ✓ D #the-trigger-set-the-114-superset-table-names-never-numbers
+    ✓ E #the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script
+    ✓ Lina-1 #platform-implementation-true-native-architecture:preamble
+    ✓ Lina-1 #web
+    ✓ Lina-1 #ios
+    ✓ Lina-1 #android
+    ✓ Lina-2 #step-1-verify-component-family-doc
+    ✓ Lina-2 #step-2-create-typests
+    ✓ Lina-2 #step-3-author-contractsyaml
+    ✓ Lina-2 #step-4-create-platform-implementations
+    ✓ Lina-2 #step-5-create-tests
+    ✓ Lina-2 #step-6-create-or-review-component-metayaml
+    ✓ Lina-2 #step-7-create-readme
+    ✕ AX-1 #audit-checklist
+    ✓ G-sketch #item-critical-wait-for-user-authorization-before-starting-new-tasks
+    ✓ G-blanket #item-critical-wait-for-user-authorization-before-starting-new-tasks
+    ✕ A-blanket #audit-checklist
+    ✓ G #item-critical-wait-for-user-authorization-before-starting-new-tasks
+    ✓ G′ #item-civitas-governance-health-check
+  (iv) the AX-1 bite
+    ✓ AX-1 #audit-checklist scores 14/30 and ROUTES
+    ✓ its witness is the assignment it counted — ids with offsets; the shared text credits documentation-3 once, never lessons-learned-capture-2
+    ✓ CONTRAST: per-item includes gives 15/30 on the same fixture — the fixture discriminates
+  G1 run 2 `assigned` column, reproduced per rendering
+    ✓ covers exactly the 22 fixtures
+    ✓ A #audit-checklist
+    ✓ B #the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script
+    ✓ C(c2) #what-parity-means
+    ✓ D #the-trigger-set-the-114-superset-table-names-never-numbers
+    ✓ E #the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script
+    ✓ Lina-1 #platform-implementation-true-native-architecture:preamble
+    ✓ Lina-1 #web
+    ✓ Lina-1 #ios
+    ✓ Lina-1 #android
+    ✓ Lina-2 #step-1-verify-component-family-doc
+    ✓ Lina-2 #step-2-create-typests
+    ✓ Lina-2 #step-3-author-contractsyaml
+    ✓ Lina-2 #step-4-create-platform-implementations
+    ✓ Lina-2 #step-5-create-tests
+    ✓ Lina-2 #step-6-create-or-review-component-metayaml
+    ✓ Lina-2 #step-7-create-readme
+    ✓ AX-1 #audit-checklist
+    ✓ G-sketch #item-critical-wait-for-user-authorization-before-starting-new-tasks
+    ✓ G-blanket #item-critical-wait-for-user-authorization-before-starting-new-tasks
+    ✓ A-blanket #audit-checklist
+    ✓ G #item-critical-wait-for-user-authorization-before-starting-new-tasks
+    ✓ G′ #item-civitas-governance-health-check
+  the criteria rows, named
+    ✓ each of Lina-2's seven step units scores 0/k and ROUTES
+    ✓ Lina-1 #ios and #android score 0/3 and ROUTE — the floor does not condemn them (G1: NOT TRIVIAL, 2/3 by 5e)
+
+  ● the record pin — every fixture is scored against the record state it names › A #audit-checklist
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "canonical/operative-sets/stacy.yaml #audit-checklist @ sha256:e8a4873d6fac46e8ad81bb94168464be2bd4705494f9cb74687a79e4d8e3d221"
+    Received: "canonical/operative-sets/stacy.yaml #audit-checklist @ sha256:e8a4873d6fac46e8ad81bb94168464be2bd4705494f9cb74687a79e4d8e3d220"
+
+      48 |   it.each(manifest.map((f) => [`${f.exemplar} ${f.anchor}`, f] as const))('%s', (_l, f) => {
+      49 |     const current = readRecord(f.record).units[f.anchor]?.canonicalHash;
+    > 50 |     expect(`${f.record} ${f.anchor} @ ${current}`).toBe(`${f.record} ${f.anchor} @ ${f.canonicalHash}`);
+         |                                                    ^
+      51 |   });
+      52 | });
+      53 |
+
+      at __tests__/triviality.g1.test.ts:50:52
+
+  ● the record pin — every fixture is scored against the record state it names › AX-1 #audit-checklist
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "canonical/operative-sets/stacy.yaml #audit-checklist @ sha256:e8a4873d6fac46e8ad81bb94168464be2bd4705494f9cb74687a79e4d8e3d221"
+    Received: "canonical/operative-sets/stacy.yaml #audit-checklist @ sha256:e8a4873d6fac46e8ad81bb94168464be2bd4705494f9cb74687a79e4d8e3d220"
+
+      48 |   it.each(manifest.map((f) => [`${f.exemplar} ${f.anchor}`, f] as const))('%s', (_l, f) => {
+      49 |     const current = readRecord(f.record).units[f.anchor]?.canonicalHash;
+    > 50 |     expect(`${f.record} ${f.anchor} @ ${current}`).toBe(`${f.record} ${f.anchor} @ ${f.canonicalHash}`);
+         |                                                    ^
+      51 |   });
+      52 | });
+      53 |
+
+      at __tests__/triviality.g1.test.ts:50:52
+
+  ● the record pin — every fixture is scored against the record state it names › A-blanket #audit-checklist
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "canonical/operative-sets/stacy.yaml #audit-checklist @ sha256:e8a4873d6fac46e8ad81bb94168464be2bd4705494f9cb74687a79e4d8e3d221"
+    Received: "canonical/operative-sets/stacy.yaml #audit-checklist @ sha256:e8a4873d6fac46e8ad81bb94168464be2bd4705494f9cb74687a79e4d8e3d220"
+
+      48 |   it.each(manifest.map((f) => [`${f.exemplar} ${f.anchor}`, f] as const))('%s', (_l, f) => {
+      49 |     const current = readRecord(f.record).units[f.anchor]?.canonicalHash;
+    > 50 |     expect(`${f.record} ${f.anchor} @ ${current}`).toBe(`${f.record} ${f.anchor} @ ${f.canonicalHash}`);
+         |                                                    ^
+      51 |   });
+      52 | });
+      53 |
+
+      at __tests__/triviality.g1.test.ts:50:52
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 47 passed, 50 total
+Snapshots:   0 total
+Time:        0.852 s, estimated 2 s
+Ran all test suites matching tools/agent-generator/__tests__/triviality.g1.test.ts.
