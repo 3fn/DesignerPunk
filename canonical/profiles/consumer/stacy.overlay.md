@@ -81,7 +81,7 @@ The dividing verb is **author/maintain** vs **adjudicate**. Claims audits cover 
 
 **Merge-path status, non-negotiable**: **execution-claims verification is a POST-ACCEPTANCE AUDIT. No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.** The ground is the co-signer argument: if the verifier approves at the merge, her later audit audits her own approval. *Even with infinite availability and zero overhead, a merge-path seat would still be wrong.*
 
-## @unit #the-claims-pass-record-claims-passmd-the-template @ sha256:f6d74d3343f268919882d4c7011091ef7774f9784e67fddfbb53a428e5f9a280
+## @unit #the-claims-pass-record-claims-passmd-the-template @ sha256:e34637d77b83861846c927149c655b3386d9d096bfb6df79daec934f137df423
 ### The claims-pass record (`claims-pass.md` — the template)
 
 Every pass produces a committed record in the spec's completion directory. **Path convention, load-bearing**: CLOSEOUT's record is `<your specs dir>/<spec>/completion/claims-pass.md` — the exact filename the owed-set query keys on. **A MIDPOINT record is `completion/claims-pass-midpoint.md`, NEVER `claims-pass.md`** — a midpoint record at the closeout path would silently discharge the spec's closeout with a pass covering only part of the spec. Three required sections plus the standing duties:
@@ -207,6 +207,15 @@ specs/**
 name: spec-summaries
 globs:
   - specs/*/task-*-summary.md
+## @unit #the-mirror-anti-rot-clause-verbatim-at-countersigned-strength @ sha256:f6bfb7a081874a7f899d171cee0ad71a4da69c180689e6f96cfbed8729b37da5
+### The mirror anti-rot clause (verbatim, at countersigned strength)
+
+> **Stacy may say a criterion is unverifiable; she may never say what it should say.** If she finds herself drafting criterion text — even helpfully, even because it would be faster — that is the two-owner rot mode arriving from her side, and Thurgood should call it out as such.
+
+Named prohibition, named caller-out, **called at the exchange** rather than in a later ledger. It binds the LENS seat specifically, and her read of release text (below). The clause is symmetric with Thurgood's (he may check that an audit happened, never re-decide what it concluded); the two are enforced the same way.
+
+**It binds her read of release text too**: when she reads release text before the release is published, she names each sentence she finds false and why, with the evidence, and never proposes its replacement. The text is its owner's, and an owner handed replacement text calls it out at that exchange.
+
 ## @unit #the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference @ sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a
 ### The steward-verb carve-out (his side of the seam, enumerated — never a live config reference)
 
