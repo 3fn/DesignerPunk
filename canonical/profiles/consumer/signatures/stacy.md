@@ -62,11 +62,20 @@ Both cuts survive verbatim.
 ## `#the-claims-pass-record-claims-passmd-the-template`
 
 signer: stacy
-date: 2026-10-27
+date: 2026-10-29
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-claims-pass-record-claims-passmd-the-template` (re-pointed; ROUTED)
-canonicalHash: sha256:f6d74d3343f268919882d4c7011091ef7774f9784e67fddfbb53a428e5f9a280
+canonicalHash: sha256:e34637d77b83861846c927149c655b3386d9d096bfb6df79daec934f137df423
 renderedHash: sha256:ac788d09a695a9a4f828e4e9c5ea3c3c1d51d96eb387c3ce2c65a13447ee5e75
 verdict: assent — surviving 18/36; not surviving: `counting-6`, `counting-8`, `counting-9`, `counting-9b-census`, `counting-10-buckets`, `counting-10-ncc-rate`, `counting-10-assent-refusal`, `counting-10-spot-check`, `counting-10-full-survival`, `counting-11`, `counting-11b-governance-examples`, `counting-12`, `emission-reading`, `delegated-tier-read`, `instruments-read`, `governance-edit-kind-read`, `delegate-audit-pointer`, `instrument-census-read`
+
+**Re-signed 2026-10-29** (prior signature: assent 18/36, 2026-10-27, against `sha256:f6d74d3343f268919882d4c7011091ef7774f9784e67fddfbb53a428e5f9a280`; the rendered hash did not move). Stale because the canonical unit's governance-edit-kind bullet changed: ballot `2026-10-26-release-flow-batch-16-1` (RATIFIED, Peter, 2026-10-26/27) site 13, the `**Sweep**:` read (`ae6a84d77`). My re-confirmation at 36 items is `94eb99d66`.
+- **Read before this act**: the three consumer renderings of the unit, read through tool calls (`sed -n`) at `94eb99d66` before this commit: `_canonical/agents/stacy.md` L317–L332, `cc/.claude/agents/stacy.md` L191–L206, `kiro/.kiro/agents/stacy-prompt.md` L157–L172. All three are identical.
+- **Judged against**: those renderings and the operative set at 36 items. The rendered bullet list is the mandatory line, the counting block, the report-set comparison, the deferral walk-back and the never-a-gate sentence. It has no governance-edit-kind read and no sweep read. Those read DesignerPunk's `**Edit kind**:` and `**Sweep**:` lines, and the `subtraction-3` labels removal drops them by head, so `governance-edit-kind-read` stays not credited.
+- **Hashes**: canonicalHash recomputed independently with `partition` + `regrounding/hash.ts`; it equals the overlay pin and the sweep's value. renderedHash recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` over the three renderings (3 pieces), not the overlay text; it equals the prior value.
+- **Unchanged**: the same 18 items survive and the same 18 are not credited; `assent.surviving` is unchanged.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-10-27)**: assent 18/36, against `sha256:f6d74d3343f268919882d4c7011091ef7774f9784e67fddfbb53a428e5f9a280`, as below. *(Its act, `6afc2c053`, reads anchored on `--audit` only through a rendering read made after it. Peter let that stand, 2026-10-29; `.kiro/issues/2026-10-26-signing-chain-audit-false-verdicts.md`.)*
 
 **Re-signed 2026-10-27** (prior signature: assent 18/35, 2026-10-19, against `sha256:006d7a0b20b48f56a4769ba2d44042284270b2a9bd7e620b4c79cfd2cc247b74`; the rendered hash did not move). Stale because the canonical unit gained one item, mine from ballot `2026-10-26-governance-examples-guard-adoption` § 3 site 2 (RATIFIED, Peter, 2026-10-26): the counting block's `**the governance-examples read**`, applied by Thurgood byte for byte at `6a29412fe` and as item `counting-11b-governance-examples` at `c1fd0e06e`, which also added it to the `subtraction-3` removal of the counting block's labels and moved the overlay pin only. My re-confirmation at 36 items is `82faa95b1`.
 - **Judged against**: the rendered unit at this revision (`canonical/_consumer-output/_canonical/agents/stacy.md`, the claims-pass section, read through `readConsumerSpans`) and the operative set at 36 items. The consumer counting block reads omissions, vagueness, declared-none rates, exemption usage, bundled-claim instances and subtask-doc presence only.
@@ -515,11 +524,20 @@ verdict: assent — surviving 1/1
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 signer: stacy
-date: 2026-10-27
+date: 2026-10-29
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-trigger-set-the-114-superset-table-names-never-numbers` (re-pointed)
-canonicalHash: sha256:7b2664513beb395592f793b497590e8a031039c286cf5c72d8c072336e1f5fe7
+canonicalHash: sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae
 renderedHash: sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5
 verdict: assent — surviving 5/13; not surviving: `trigger-lens`, `trigger-release`, `trigger-closeout`, `trigger-arming`, `trigger-gate`, `trigger-straggler`, `trigger-liveness`, `trigger-burst`
+
+**Re-signed 2026-10-29** (prior signature: assent 5/13, 2026-10-27, against `sha256:7b2664513beb395592f793b497590e8a031039c286cf5c72d8c072336e1f5fe7`; the rendered hash did not move). Stale because the canonical RELEASE row changed: ballot `2026-10-26-release-flow-batch-16-1` (RATIFIED, Peter, 2026-10-26/27) site 12, composed with #536's site-2b sentence (`13bd1d57d`). My re-confirmation at 13 items is `5f325e895`.
+- **Read before this act**: the three consumer renderings of the unit, read through tool calls (`sed -n`) at `5f325e895` before this commit: `canonical/_consumer-output/_canonical/agents/stacy.md` L301–L316, `cc/.claude/agents/stacy.md` L175–L190, `kiro/.kiro/agents/stacy-prompt.md` L141–L156. All three carry the same table and paragraphs.
+- **Judged against**: those renderings and the operative set at 13 items. The consumer RELEASE row reads "Before a version publishes / at the release tag | … the release checklist runs the owed-set query and pastes its output". It is unchanged, and it carries neither the site-12 pointer nor the floor read. Both sit inside the range removal (`subtraction-3`), which keeps both end strings: the pointer names RELEASE-FLOW, a DesignerPunk process with no consumer counterpart. `trigger-release` stays not credited.
+- **Hashes**: canonicalHash recomputed independently with `partition` + `regrounding/hash.ts`; it equals the overlay pin and the sweep's value. renderedHash recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` over the three renderings (3 pieces), not the overlay text; it equals the prior value.
+- **Unchanged**: `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing` and `merge-path-status` survive, each verbatim in the renderings. Surviving count: 5 of 13.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-10-27)**: assent 5/13, against `sha256:7b2664513beb395592f793b497590e8a031039c286cf5c72d8c072336e1f5fe7`, as below.
 
 **Re-signed 2026-10-27** (prior signature: assent 5/13, 2026-10-21, against `sha256:17ef45beb34513cb4d848de44544358d44ad5d99e13791e56b8f8b522cb5ca12`; the rendered hash did not move). Stale because the canonical ARMING and RELEASE rows changed: ballot `2026-10-26-governance-examples-guard-adoption` (RATIFIED, Peter, 2026-10-26, F-1 (a)) § 3 site 1 (1a the `scripts/governance-examples/**` path, 1b the guard's test in the deletion read, 1c the `pending.json` read) and site 2b (the RELEASE pointer sentence, my text). Thurgood applied them (`6a29412fe`) and re-authored the ARMING removal and the new RELEASE removal (`c1fd0e06e`); my re-confirmation at 13 items is `d069e7dbd`.
 - **Judged against**: the rendered unit at this revision (`canonical/_consumer-output/_canonical/agents/stacy.md`, the trigger-set table, read through `readConsumerSpans`) and the operative set at 13 items.
@@ -640,6 +658,27 @@ verdict: assent — surviving 5/13; not surviving: `trigger-lens`, `trigger-rele
 > verdict: refuse: should-re-point
 >
 > The LENS row (`trigger-lens`) keeps question 6 but replaces the **five verifiability questions** with one summary ("can each criterion be verified from the repo"). The five questions are: a criteria set exists; evidence of a named kind could exist; some state of the world reads UNMET; "met" is decidable without the author; and the task text promises no artifact the criteria do not cover. They are repo-independent and they are the seat's content. Only the pointer to the lifecycle amendment is repo-bound. **Should re-point**: carry the five questions inline. For the record, the rest of the unit would assent at `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing` and `merge-path-status` (5/13). Not surviving would be RELEASE (its Q2 guard), CLOSEOUT (the rider-(a) discharge), ARMING, GATE, STRAGGLER, LIVENESS (the charter walk) and BURST, all repo-bound.
+
+## `#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength`
+
+signer: stacy
+date: 2026-10-29
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength` (re-pointed; ROUTED; first signature)
+canonicalHash: sha256:f6bfb7a081874a7f899d171cee0ad71a4da69c180689e6f96cfbed8729b37da5
+renderedHash: sha256:c8aad0f5042005eb9ddf29b65e8435208d251478c64c8ea4e11781b57394a17e
+verdict: assent — surviving 4/4
+
+**First signature, 2026-10-29.** The unit was `retained` until ballot `2026-10-26-release-flow-batch-16-1` (RATIFIED, Peter, 2026-10-26/27) site 11 (RS-33, F-33a (i), F-33b include) added a ballot pointer. My E5 removal row (`11cd1d4ca`) re-points the unit with that pointer removed (`subtraction-2`). Thurgood's overlay entry carries the heading and paragraphs with the pointer removed and nothing else changed. His regeneration (`4f88c4c6e`) renders the unit from it. My re-confirmation at 4 items is `ad1f5b952`.
+- **Read before this act**: the three re-pointed renderings, read through tool calls (`sed -n`) at `4f88c4c6e` before this commit: `canonical/_consumer-output/_canonical/agents/stacy.md` L357–L364, `cc/.claude/agents/stacy.md` L231–L238, `kiro/.kiro/agents/stacy-prompt.md` L197–L204. The three are identical, and none carries `release-flow-batch-16-1` (0 hits each).
+- **Itemized assent, all four survive**, each verbatim in each rendering (one occurrence apiece):
+  - `mirror-clause`: the prohibition in the blockquote.
+  - `mirror-called-at-exchange`: the named-caller-out sentence.
+  - `mirror-binds-lens`: "It binds the LENS seat specifically, and her read of release text (below)."
+  - `mirror-binds-release-read`: the new paragraph, through "calls it out at that exchange."
+  A consumer's verifier seat has a LENS round and reads its team's release text, so every item has a consumer counterpart. This is the full-survival shape by construction; the only removal is provenance.
+- **The removal applies**: the pointer names a DesignerPunk ballot (`subtraction-2`). It occurs once in the canonical unit and nowhere in the renderings. No other byte differs between the canonical unit and the rendering.
+- **Hashes**: canonicalHash recomputed independently with `partition` + `regrounding/hash.ts` (body lines 205–212); it equals the overlay pin and the record's value. renderedHash recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` over the three renderings (3 pieces), not the overlay text; it equals Thurgood's computed value.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
 
 ## `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference`
 

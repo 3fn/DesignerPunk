@@ -161,7 +161,7 @@ units:
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-charter-cut-ratified-verbatim
   # exemplar D — 13 item(s)
   "#the-trigger-set-the-114-superset-table-names-never-numbers":
-    canonicalHash: sha256:7b2664513beb395592f793b497590e8a031039c286cf5c72d8c072336e1f5fe7
+    canonicalHash: sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae
     items:
       - id: trigger-lens
         kind: member
@@ -170,7 +170,7 @@ units:
       - id: trigger-release
         kind: member
         label: RELEASE
-        text: "| **RELEASE** | **Two phases, one record**: phase 1 on the release squash S, before the tag; phase 2 at the merge of the step-6 release-record PR | **Claims pass over the release delta (`git log <last-tag>..main`) — parent criteria tables vs `tasks.md` vs shipped source**. **Non-negotiable.** Paired with the release-step condition: the checklist runs the owed-set query and pastes its output, and carries Q2 guard (i)'s arming line. Phase 1 also carries the `release-falsity-floor` read (ballot 2026-10-18-obligation-drain-and-release-falsity-floor M7): the walk record (`.kiro/issues/<date>-release-<V>-walk.md`, RELEASE-FLOW item 3a) exists, its greps re-run at its `main at:` SHA, and every row carries a disposition; per floor-class row, one line — the walk-record line (record path, `main at:` SHA); for a row carried or read as not false at its reader, the citation of Peter's dated answer (quoted words, dated before the walk PR's `mergedAt`), a row without one being a finding routed to Peter; and your re-check of the surface at S (`git show S:<path>`: fixed, disclosed where its reader meets it, or still false under the cited waiver), or `not re-verified — <why>` (this read's own negative, outside the criterion-row vocabulary). A read, never a gate. Phase 1 also carries the governance-examples read (the counting block; ballot 2026-10-26-governance-examples-guard § 2.4). Phase 2 reads the committed step-6 record — the rail result and the two-registry record (each registry's time[<v>], file count and sha1, equal to the publish script's recorded sha1) — against the published bytes; until it does, the record reads publish-rail liveness: owed. Drafted against the open record PR, it ends with the merge-confirmation line. | Stacy |"
+        text: "| **RELEASE** | **Two phases, one record**: phase 1 on the release squash S, before the tag; phase 2 at the merge of the step-6 release-record PR | **Claims pass over the release delta (`git log <last-tag>..main`) — parent criteria tables vs `tasks.md` vs shipped source**. **Non-negotiable.** Paired with the release-step condition: the checklist runs the owed-set query and pastes its output, and carries Q2 guard (i)'s arming line. Phase 1 also carries the `release-falsity-floor` read (ballot 2026-10-18-obligation-drain-and-release-falsity-floor M7). What phase 1 reads, and at which SHA, is RELEASE-FLOW step 6's Phase 1 bullet, not restated here *(amended 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, site 12; prior text at `08b9c7a8e`)*. Your record's lines: per floor-class row, one line — the walk-record line (record path, `main at:` SHA); for a row carried or read as not false at its reader, the citation of Peter's dated answer (quoted words, dated before the walk PR's `mergedAt`), a row without one being a finding routed to Peter; and your re-check of the surface at S (`git show S:<path>`: fixed, disclosed where its reader meets it, or still false under the cited waiver), or `not re-verified — <why>` (this read's own negative, outside the criterion-row vocabulary). A read, never a gate. Phase 1 also carries the governance-examples read (the counting block; ballot 2026-10-26-governance-examples-guard § 2.4). Phase 2 reads the committed step-6 record — the rail result and the two-registry record (each registry's time[<v>], file count and sha1, equal to the publish script's recorded sha1) — against the published bytes; until it does, the record reads publish-rail liveness: owed. Drafted against the open record PR, it ends with the merge-confirmation line. | Stacy |"
       - id: trigger-symptom
         kind: member
         label: SYMPTOM
@@ -543,7 +543,7 @@ units:
         text: "the co-signed joint working agreement + lifecycle amendment (`.kiro/specs/127-completion-claims-integrity/pre-spec/`, PRs #158/#165) are the underlying authority where this text and they disagree."
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#operational-mode-claims-audit-execution-claims-verification-the-q5-cut:preamble
   "#the-claims-pass-record-claims-passmd-the-template":
-    canonicalHash: sha256:f6d74d3343f268919882d4c7011091ef7774f9784e67fddfbb53a428e5f9a280
+    canonicalHash: sha256:e34637d77b83861846c927149c655b3386d9d096bfb6df79daec934f137df423
     items:
       - id: record-committed
         kind: obligation
@@ -676,7 +676,7 @@ units:
       - id: governance-edit-kind-read
         kind: obligation
         label: "Governance-edit-kind read"
-        text: "**The governance-edit-kind read** *(ballot 2026-10-18-governance-edit-kinds)*: on every PR in the population whose diff touches a path the edit kinds cover (`.kiro/docs/ballots/README.md` § \"When a governance edit needs a ballot — three kinds\"), the `**Edit kind**:` lines — read from the PR body (`gh pr view <n> --json body`, run for this seat by a session holding credentials), never from the squash message — against the merge's diff: every changed file, and every hunk where a file's lines split it, is named by a line giving its kind and authority. **A file or hunk with no line, or a line with no authority, is a finding on the authoring agent** (counted apart: missing vs no-authority). The rot-mode count: LAW hunks whose ballot did not read RATIFIED at the merge (`git show <merge>:<ballot>`), each also routed to Peter, who alone ratifies or reverts; EXECUTION hunks whose clause was not merged or ratified at the merge, or does not name the edit; CORRECTION hunks whose observation record does not resolve at the merge, or whose only referent is governance text or enforcement code changed in the same PR (the ballot's § 2 list). A kind you read as wrong is a finding on the authoring agent; whether the text is right is its owner's. **Observation, not a guard** — never a gate."
+        text: "**The governance-edit-kind read** *(ballot 2026-10-18-governance-edit-kinds)*: on every PR in the population whose diff touches a path the edit kinds cover (`.kiro/docs/ballots/README.md` § \"When a governance edit needs a ballot — three kinds\"), the `**Edit kind**:` lines — read from the PR body (`gh pr view <n> --json body`, run for this seat by a session holding credentials), never from the squash message — against the merge's diff: every changed file, and every hunk where a file's lines split it, is named by a line giving its kind and authority. **A file or hunk with no line, or a line with no authority, is a finding on the authoring agent** (counted apart: missing vs no-authority). The rot-mode count: LAW hunks whose ballot did not read RATIFIED at the merge (`git show <merge>:<ballot>`), each also routed to Peter, who alone ratifies or reverts; EXECUTION hunks whose clause was not merged or ratified at the merge, or does not name the edit; CORRECTION hunks whose observation record does not resolve at the merge, or whose only referent is governance text or enforcement code changed in the same PR (the ballot's § 2 list). On a PR carrying a CORRECTION line, it also reads the `**Sweep**:` lines (`.kiro/docs/ballots/README.md`, \"A CORRECTION's sweep\"): at least one present; their grammar; for a command read, the command re-run at the merge hits exactly the `left:` list; each `left:` hit names a record that resolves at the merge and carries a `**Trigger**:` line; and the rate of `0 hits` lines, counted. Each failed check is a finding on the authoring agent, a missing line and a malformed line counted apart. Whether there is one line per class, whether the class and its reach are right, whether a named read happened, and whether a `left:` reason is honest stay judgment, read by sample *(added 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, RS-40)*. A kind you read as wrong is a finding on the authoring agent; whether the text is right is its owner's. **Observation, not a guard** — never a gate."
       - id: delegate-audit-pointer
         kind: obligation
         label: "Delegate-audit pointer"
@@ -691,7 +691,7 @@ units:
         text: "**The never-a-gate sentence, restated wherever the practice is documented**: *no pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.*"
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-claims-pass-record-claims-passmd-the-template
   "#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength":
-    canonicalHash: sha256:c460743c0430e9fa04163a6d13a0d880ce59bb401480896fd12d7d70445171f3
+    canonicalHash: sha256:f6bfb7a081874a7f899d171cee0ad71a4da69c180689e6f96cfbed8729b37da5
     items:
       - id: mirror-clause
         kind: obligation
@@ -704,7 +704,11 @@ units:
       - id: mirror-binds-lens
         kind: obligation
         label: "It binds the LENS seat"
-        text: "It binds the LENS seat specifically."
+        text: "It binds the LENS seat specifically, and her read of release text (below)."
+      - id: mirror-binds-release-read
+        kind: obligation
+        label: "It binds her read of release text"
+        text: "**It binds her read of release text too**: when she reads release text before the release is published, she names each sentence she finds false and why, with the evidence, and never proposes its replacement. The text is its owner's, and an owner handed replacement text calls it out at that exchange."
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength
   "#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference":
     canonicalHash: sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a
