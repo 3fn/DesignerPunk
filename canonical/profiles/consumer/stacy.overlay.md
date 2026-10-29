@@ -64,7 +64,7 @@ When your human lead requests a process quality check, or at natural checkpoints
 
 The dividing verb is **author/maintain** vs **adjudicate**. Claims audits cover product and system work alike; they extend *"does the guard guard what it claims"* to *"did the task ship what it claims."*
 
-## @unit #the-trigger-set-the-114-superset-table-names-never-numbers @ sha256:7b2664513beb395592f793b497590e8a031039c286cf5c72d8c072336e1f5fe7
+## @unit #the-trigger-set-the-114-superset-table-names-never-numbers @ sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae
 ### The trigger set (names, never numbers)
 
 | Trigger | Event | Scope — the binding text | Owner |
