@@ -327,9 +327,21 @@ date: 2026-09-29
 ## `#the-claims-pass-record-claims-passmd-the-template`
 
 confirmer: stacy
-canonicalHash: sha256:f6d74d3343f268919882d4c7011091ef7774f9784e67fddfbb53a428e5f9a280
+canonicalHash: sha256:e34637d77b83861846c927149c655b3386d9d096bfb6df79daec934f137df423
 items: record-committed, closeout-path, midpoint-path, section-scope, section-findings, section-method, method-honesty, closed-negative-string, mandatory-line, counting-1, counting-2, counting-3, counting-4, counting-5, counting-6, counting-7, counting-8, counting-9, counting-9b-census, counting-10-buckets, counting-10-ncc-rate, counting-10-assent-refusal, counting-10-spot-check, counting-10-full-survival, counting-11, counting-11b-governance-examples, counting-12, report-set-comparison, emission-reading, delegated-tier-read, deferral-walk-back, instruments-read, governance-edit-kind-read, delegate-audit-pointer, instrument-census-read, never-a-gate
-date: 2026-10-27
+date: 2026-10-29
+
+**Re-confirmed 2026-10-29 (Req 11.6.5d).**
+- **What changed**: one bullet, "The governance-edit-kind read" (canonical L432). Ballot `.kiro/docs/ballots/2026-10-26-release-flow-batch-16-1.md` (RATIFIED, Peter, 2026-10-26/27) site 13, under F-40d (charter), inserts the `**Sweep**:` read: on a PR carrying a CORRECTION line, the sweep lines' presence, grammar and command re-run, the `left:` records' resolution and Trigger line, and the `0 hits` rate. Judgment stays judgment, read by sample, and the pointer is "*(added 2026-10-29 … RS-40)*". Thurgood applied it at `ae6a84d77` and re-quoted item `governance-edit-kind-read` at `a620ff970` (authoring).
+- **Byte-identity, checked**: the resolved site-13 After, with `<application date>` → `2026-10-29`, occurs once in the charter. `governance-edit-kind-read` equals that bullet less its list marker, byte for byte (2,036 characters), and occurs once. All 36 items are verbatim substrings, in document order (checked by script).
+- **Item grain**: still one `obligation`. The sweep read sits inside the same bullet, is read at the same surface (the PR body's lines against the merge's diff) and is scoped by the same tail ("Observation, not a guard — never a gate"), so it is not split out.
+- **What did not change**: the operative set, still 36 items. The canonicalHash moves from `sha256:f6d74d3343f268919882d4c7011091ef7774f9784e67fddfbb53a428e5f9a280` to the value above. `operative-set-freshness` printed it at `4428ec6e7`, and I recomputed it independently with `partition` + `regrounding/hash.ts` (body lines 161–182). The two agree and equal the overlay pin.
+- **Consumer rendering**: unchanged. The bullet is dropped for consumers by its head, in the `subtraction-3` removal of the read bullets' labels ("… **The governance-edit-kind read**; …"). The sweep read audits DesignerPunk's own `**Sweep**:` lines (`.kiro/docs/ballots/README.md`), which a consumer does not have.
+- **Read before this act**: the canonical unit, `canonical/agents/stacy.md` L415–L436, read through a tool call (`sed -n`) at `039090923` before this commit.
+
+**Ruling: CONFIRMED at 36 items.**
+
+**Re-confirmed 2026-10-27 (prior record, superseded)**: canonicalHash `sha256:f6d74d3343f268919882d4c7011091ef7774f9784e67fddfbb53a428e5f9a280`, 36 items, as below. *(Its act, `82faa95b1`, reads FAIL 7 on `--audit`: no tool read of the unit preceded it. Peter let that stand, 2026-10-29; `.kiro/issues/2026-10-26-signing-chain-audit-false-verdicts.md`.)*
 
 **Re-confirmed 2026-10-27 (Req 11.6.5d).**
 - **What changed**: one insertion inside "The counting block, in full", between "**populations**" and "**M3 / M4 / M5**": "**the governance-examples read**", my text from ballot `.kiro/docs/ballots/2026-10-26-governance-examples-guard-adoption.md` § 3 site 2 (RATIFIED, Peter, 2026-10-26; Status read at `bad7222ef`). Thurgood applied it byte for byte to the charter at `6a29412fe` and as item `counting-11b-governance-examples` at `c1fd0e06e` (authoring); this act moves only the canonicalHash.
