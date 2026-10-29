@@ -43,10 +43,14 @@
 #        `version` field that does not match ${VERSION}. On a 404, read the
 #        registry's own record before re-running: if the packument
 #        (`curl -s https://registry.npmjs.org/@3fn%2fcore`) has no
-#        `time["<version>"]`, the version is not published yet and the 404 is
-#        the correct answer, not indexing lag (15.0.0's R-4: six 404s preceded
-#        the publish). Only if `time["<version>"]` is present and the 404
-#        persists within a few minutes of it, re-run by hand (the message says so).
+#        `time["<version>"]`, the registry has not recorded the version:
+#        either it was never accepted (15.0.0's R-4: six 404s preceded the
+#        publish) or npm accepted it and is still processing it (16.0.0,
+#        16.1.0). Either way the 404 is the correct answer, not indexing lag.
+#        Read the packument again until `time["<version>"]` appears; re-run
+#        only then, by hand, and again within a few minutes of it if the 404
+#        persists. npm's `+ @3fn/core@<version>` line is not evidence that
+#        the registry recorded the version (16.1.0's RL-36).
 #   11 — FAIL[host]: the tarball is served from a host other than registry.npmjs.org
 #   12 — self-test only (never reaches PASS; never runs the version check)
 #   13 — FAIL[host-empty]: could not read a tarball URL from the registry response
@@ -78,7 +82,7 @@ RESPONSE="$(curl -q -sS --max-time 15 -w '\n%{http_code}' "${REGISTRY}/${PKG_PAT
 HTTP_CODE="${RESPONSE##*$'\n'}"
 BODY="${RESPONSE%$'\n'*}"
 if [ "$HTTP_CODE" != "200" ]; then
-  echo "FAIL[version]: ${PKG}@${VERSION} is not visible on ${REGISTRY} (HTTP ${HTTP_CODE}) — do not announce this release. Before re-running, read the registry's own record: if the packument (curl -s ${REGISTRY}/${PKG_PATH}) has no time[\"${VERSION}\"], the version is not published yet and this 404 is the correct answer, not indexing lag; only if time[\"${VERSION}\"] is present, re-run by hand within a few minutes of it."
+  echo "FAIL[version]: ${PKG}@${VERSION} is not visible on ${REGISTRY} (HTTP ${HTTP_CODE}) — do not announce this release. Before re-running, read the registry's own record (curl -s ${REGISTRY}/${PKG_PATH}). If it has no time[\"${VERSION}\"], the registry has not recorded the version (never accepted, or accepted and still processing): this ${HTTP_CODE} is the correct answer, not indexing lag, and npm's \"+ ${PKG}@${VERSION}\" line is not evidence. Read the packument again until time[\"${VERSION}\"] appears, then re-run by hand."
   exit 10
 fi
 
