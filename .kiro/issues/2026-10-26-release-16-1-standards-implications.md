@@ -37,6 +37,8 @@
 | RS-50 | where a RELEASE claims-pass record lives once Spec 123 closes (appended 2026-10-26) | ballot `2026-10-01-signing-act-chain` § 5.3 (the delegate file sits "in the directory of the event's claims-pass record"); Stacy's charter, § "The claims-pass record"; no rule names a RELEASE record's home | LAW via ballot; homes named, not picked | a small ballot of its own, before the next release's phase 1 |
 | RS-51 | an application that edits `governance/*.md` runs `npm run test:scripts`, which root `npm test` does not run (appended 2026-10-29) | ballots README § "The Ratification Protocol" step 4 ("verification per the measure's own mechanics") and § "Conventions" (Edit discipline); Start Up Tasks item 5 ("`npm test` validates all functionality"); `.kiro/hooks/complete-task.sh` | three homes named, not picked: a ballots-README sentence (LAW), a `complete-task.sh` check (tooling, my scope), or `none` (the required gate already catches it) | the next ballots-README ballot, or a tooling PR of mine |
 | RS-52 | a ratified edit site whose Before line a later ratified merge has changed needs a named remedy, the composition round (appended 2026-10-29) | ballots README § "Conventions", Edit discipline ("if a before-text does not match, stop on that block and report") | LAW via ballot: one sentence naming the composition round | the next ballots-README ballot, with RS-51 if its LAW home is picked |
+| RS-53 | an edit to a Stacy charter unit that the semguard fixture copies fails `semantics-guard.fixture.test.ts` unless the application re-copies the unit and re-pins the manifest in the same PR (appended 2026-10-29) | `tools/agent-generator/__tests__/semantics-guard.fixture.test.ts` (byte-identity with `canonical/agents/stacy.md`); `__fixtures__/semantics-guard/canonical/agents/semguard.md`; `__fixtures__/g1-renderings/manifest.yaml` L33; the ballots README protocol step 4 check list | a named duty on the application's check list, beside RS-51's `test:scripts` line; the class fix named, not picked: the test's own failure message names the re-copy, or a generator step mirrors the unit | the next ballots-README ballot with RS-51 (a), or Lina's tooling PR for the class fix |
+| RS-54 | two ratified ballots disagree on whether charter lines carry dated pointers (appended 2026-10-29) | ballots README § "Conventions", Edit discipline, "Superseded text"; #528 (charter pointers plus consumer removals) against #535 (no charter pointers); `canonical/agents/**` | Peter's settlement: (i) charters carry pointers and earlier sites are backfilled, or (ii) a stated charter carve-out; my lean (ii); the class fix: the convention names its paths | the next ballots-README ballot, with RS-51 and RS-52; before #528's application merges |
 
 Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (RS-33, RS-34, RS-37, RS-38's class half, RS-39, RS-41, RS-46's 3a half, RS-48, RS-49, and the CORRECTION-form sentences of RS-40 and RS-43), **the later guard-amendment ballot** (RS-44, RS-47) and **a signing-act-chain amendment ballot** (RS-36; appended 2026-10-26). The first two are due before the next release's walk; the third rides the same trigger. None is drafted here.
 
@@ -263,6 +265,49 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **Surviving counter**: Peter's word is still needed each time. The sentence names the form, not a delegation, so it saves deciding the form again and costs him nothing he would not already be asked. A composition that is purely positional (two inserts at different points of one line) might be safe without his word. I do not propose that carve-out: the completeness observation above is a counterexample in this very case.
 - **Vehicle**: the next ballots-README ballot, with RS-51 (a) if that home is picked.
 - **Consult**: Stacy (text owner in this instance, and claims-pass reader of applications).
+
+## RS-53 — the semguard fixture copies Stacy's units byte for byte: an edit to one owes the re-copy in the same PR (appended 2026-10-29)
+
+- **Source**: Lina's standing note from #536 and #541, relayed by the orchestrator on 2026-10-29: "The `semguard.md` fixture's trigger-set unit must be re-copied byte-for-byte from `canonical/agents/stacy.md` (and `g1-renderings/manifest.yaml` L33 re-pinned) in the same application PR as any edit to that unit — `semantics-guard.fixture.test.ts` requires byte-identity, so the next edit will fail it (#536, #541)." Filed by Thurgood under README rule 10.
+- **What the test holds** (read at `3e2c722e6`): `semantics-guard.fixture.test.ts` L30–L40 requires each of the fixture's three body units to be byte-identical to `stacy.md`'s unit of the same anchor. The fixture's units are § "Operational Mode: Claims Audit" (its preamble), § "The trigger set" and § "The owed-set query". So the duty covers all three units, not only the trigger set. `g1-renderings/manifest.yaml` L33 pins the trigger-set unit's `canonicalHash`.
+- **Harm**: one red CI round per edit, as with RS-51. The test runs in `npm run test:agent-generator`, which root `npm test` does not run either; the required check holds the floor, so nothing false merges. The cost falls on whoever applies a ballot that edits one of the three units. The trigger table is the most frequent site (#528 site 12 at L400; #536).
+- **Disposition (proposed)**: a named duty on the application's check list, written beside RS-51's `test:scripts` line: "an edit to `canonical/agents/stacy.md` § 'Operational Mode: Claims Audit', § 'The trigger set' or § 'The owed-set query' re-copies the unit into `tools/agent-generator/__fixtures__/semantics-guard/canonical/agents/semguard.md` byte for byte, and re-pins `tools/agent-generator/__fixtures__/g1-renderings/manifest.yaml` L33 for the trigger set, in the same PR." The fixture and its test are Lina's, so the re-copy is her act or under her consult.
+- **The class fix, named and not picked** (Lina's surface; I am consulted):
+  - (a) The test's own failure message names the re-copy step, the three anchors and the manifest pin. The detector then teaches its remedy, and no list has to.
+  - (b) A generator step mirrors the three units into the fixture, so byte-identity holds by construction.
+- **Surviving counter**:
+  - Against (b): the fixture's other assertions (14.2's checks, the expected verdicts) are written against a fixed input. Mirroring changes the input under them silently, while a manual re-copy makes someone look at the new text.
+  - Against (a) and the list line alike: both still cost one red round to whoever has not read them. Only (b) removes the round.
+- **Vehicle**: the list line rides the next ballots-README ballot, with RS-51 (a) if that home is picked. The class fix is a tooling PR of Lina's.
+- **Consult**: Lina (owner of the fixture and its test); Stacy (owner of the units it copies).
+
+## RS-54 — two ratified ballots disagree on whether charter lines carry dated pointers (appended 2026-10-29)
+
+- **Source**: Leonardo's read on the fu1 CORRECTION (L697 and his charter L329), relayed by the orchestrator on 2026-10-29: "Two ratified ballots, one day apart, disagree on whether charter lines carry dated pointers." Filed by Thurgood under README rule 10, as the convention's owner.
+- **The two readings**:
+  - **#528** (ballot `2026-10-26-release-flow-batch-16-1`, ratified 2026-10-28; application not merged) gives every resolved charter site a pointer in canonical, and a consumer removal for it (E5, and § 5 item 6's sweep line, L619).
+  - **#535** (ballot `2026-10-26-system-token-review-and-token-planning`, merged) applied its charter sites without one: `leonardo.md` L340 (site 7); `ada.md` L28; Sparky's, Kenya's and Data's sites 8 and 8a.
+  - **Main**: no charter carries a pointer. `git grep -E '\*\((Amended|Corrected|Added) 20' origin/main -- canonical/agents` returns 0 hits at `3e2c722e6`. The first is the fu1 CORRECTION's L329 (branch `fix/integration-guide-l697-leonardo-l329`, `a8591e753`). Leonardo picked the pointer there "by the letter until it is ruled".
+- **The law**: ballots README § "Conventions", "Superseded text": "a document agents read as law carries only the current text plus a dated pointer". It names no path list, and a charter is read as law. So #528 follows the letter. #535, and every charter amendment before it, does not.
+- **Settlement options, for Peter** (Leonardo's two, as relayed):
+  - (i) **Charters carry pointers.** #535's charter sites are backfilled with pointers and consumer removals. That costs a re-sign for each signed unit (`#out-of-scope` of Leonardo, Sparky, Kenya and Data). `ada.md` L28 is an asserted string, and its assertion is mine to update. One cost the relay does not state: consistent application reaches past #535 to every earlier charter amendment, none of which carries a pointer. So (i) needs a start date, or the backfill has no bound.
+  - (ii) **A stated charter carve-out** in the convention. #528's application then drops its charter pointers and their removals before it merges, and the fu1 PR drops L329's pointer and its overlay entry.
+- **My lean, as the convention's owner: (ii)**, with the carve-out worded by path: "`canonical/agents/**` carries no inline pointer; the ballot or record that names the site is its history, cited by the PR's `**Edit kind**:` line". Three reasons:
+  - **Constant load.** A charter is loaded whole into every session of its seat, so its pointers cost context on every turn and accumulate with each ballot. A served doc is read only when it is queried.
+  - **The history already exists.** The lock, the signing chain and the PR's Edit-kind line already record every charter change. `git log -L` finds the prior text.
+  - **Permanent signing cost.** For consumers, each pointer turns a `retained` unit into a signed `re-pointed` one for good, as Leonardo notes. Every later edit to the unit then costs a re-sign.
+
+  (ii) also writes down what has been the practice on `main` until now.
+- **Surviving counter**:
+  - **It departs from Peter's letter.** His 2026-10-19 ruling made no carve-out. A seat reading its charter cannot see that a line changed, which matters to any seat working from remembered text.
+  - **It changes ratified bytes.** (ii) changes #528's ratified text at application: its charter pointers come out. That needs Peter's word on #528 itself, not only on the README sentence.
+  - **It is one more exception** in a convention whose value is having none.
+- **The class fix, named and not picked**:
+  - (A) The convention names its paths, as the edit-kinds ballot names its list (`governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, and `canonical/agents/**` in or out). A ballot drafter then reads the scope instead of inferring it, which is how #528 and #535 came apart.
+  - (B) A guard beside (A): the application check list confirms that each `LAW` or `CORRECTION` Edit-kind line's file gains a pointer in the diff, on the paths (A) names.
+- **Order**: Peter's ruling is on #528's application path (P7, branch `chore/apply-release-flow-batch-16-1`) and on the fu1 PR. Until it is ruled, both follow the letter.
+- **Vehicle**: the next ballots-README ballot, with RS-51 and RS-52. Before then, Peter's word on #528's charter pointers, if (ii) is his pick.
+- **Consult**: Leonardo (raised it; L329); Stacy (#528's charter sites are hers); Sparky, Kenya and Data (their signed units under (i)); Lina (the generator's removal path).
 
 ## Finding (appended 2026-10-26): two publish rows have no `census` field
 
