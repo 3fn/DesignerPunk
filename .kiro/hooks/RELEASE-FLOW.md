@@ -154,7 +154,7 @@ The owed-set query began as **documented commands, not a committed script**, del
    variables such as `HTTPS_PROXY` are honoured)*. A non-zero exit means the release did not land
    where consumers install from: **do not announce it.** Fix and re-run before
    proceeding. **If it fails, read the registry's own record before re-running.**
-   - If the packument (`curl -s https://registry.npmjs.org/@3fn%2fcore`) has no `time["<version>"]`, the version is not published yet. A 404 is then the correct answer, not indexing lag (15.0.0's R-4).
+   - If the packument (`curl -s https://registry.npmjs.org/@3fn%2fcore`) has no `time["<version>"]`, the registry has not recorded the version. Either it was never accepted (15.0.0's R-4: six 404s preceded the publish), or npm accepted it and is still processing it: npm prints "Your package is being processed and may take a few minutes to become available", and the measured windows are 10 min 59 s (16.0.0) and at least 1 min 59 s (16.1.0). Either way the 404 is the correct answer, not indexing lag, and the release is not announced. Read the packument again until `time["<version>"]` appears, and re-run the rail only then; this step sets no bound on the wait, because no publish has yet been measured that npm accepted and never recorded. npm's `+ @3fn/core@<version>` line is not evidence that the registry recorded the version: it printed for an out-of-flow publish of 16.0.0's tarball that the registry did not record (16.1.0's RL-36). *(amended 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, RS-48; prior text at `08b9c7a8e`)*
    - If `time["<version>"]` is present and the rail still fails within a few minutes of it, re-run by hand.
    - This step never retries automatically.
 
