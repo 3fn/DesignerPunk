@@ -350,7 +350,7 @@
         231,
         238
       ],
-      "op": "render",
+      "op": "passthrough",
       "source": "canonical/agents/stacy.md#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength"
     },
     {
