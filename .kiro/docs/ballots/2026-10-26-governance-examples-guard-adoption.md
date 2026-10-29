@@ -362,6 +362,23 @@ Questions put:
 - **2026-10-26 (Thurgood)**: DRAFT on branch `chore/ballot-governance-examples-guard-adoption`, cut from `origin/main` = `6615a6774`. #519 was read at `38cc6a4b5` (not merged in). Ballot only; no edit site is applied.
 - **2026-10-26 (Thurgood)**: R2 on `911b79246`: the three consults folded (§ 7). Ballot only; no edit site is applied.
 - **2026-10-26 (Thurgood)**: Status commit on this branch: RATIFIED with F-1 (a) (Peter's ruling, quoted in the Status line); § 9 added; the ballots README roll entry added; the application record filed (README rule 10). Ballot, README roll and one issues record only; no edit site is applied.
+- **2026-10-29 (Thurgood)**: application PR #536 (branch `chore/apply-governance-examples-guard-adoption`).
+  - **Re-cut.** A first authoring draft moved Stacy's two units' `canonicalHash` inside an authoring commit. Stacy caught it before signing, since an authoring commit that moves a signed hash fails `verify-signing-chain` F12′ (six-roots § Errata (f)). The authoring commits were re-cut before any signature, and the retired branch was deleted (the orchestrator's record; it is absent from `origin` at this line).
+  - **Regeneration and lock.** `origin/main` `716b81bcf` was merged in at `fe587a567`, a plain non-signing merge with git's default message.
+    - `35d04844a`: the regeneration (`npm run build:generator`, then `generate.ts`) changed the CC and Kiro renderings of `stacy.md` and `thurgood.md`, `thurgood.json` and its attribution, and no `canonical/_consumer-output` file.
+    - `3f42be897`: the lock. `check:122:diff-guard --base 716b81bcf` gave `full-run-green (input-closure-changed)` with stale 0 and unsigned-routed 0, then `no-op-green` at HEAD.
+    - `inputClosure` `ab7bf3a2…486d` → `284e5bb8…bc81`. **`outputs` moved**: `07422646…1586` → `93a08c13…2cc3` (six-roots § 3 item 3; the PR body carries both).
+  - **Step 5, the straggler sweep.** Hits: `canonical/agents/stacy.md` L404 (ARMING row), `canonical/agents/thurgood.md` L277 (`writeScope`), and this file's site-5 ledger line in six-roots (L281). Their renderings in `.claude/agents/` and `.kiro/agents/` also hit. The consumer output has 0 hits.
+    - **Two of step 5's expected entries do not contain the literal `scripts/governance-examples/**` glob.** The counting block names `scripts/governance-examples/pending.json`, and site 4's history line says "the guard's paths". Both are byte for byte as ratified.
+    - This is an imprecise expectation in step 5, not a straggler.
+  - **Step 8, the volatile-fact hand check on site 2.** The L426 addition is byte-equal to § 3 site 2. Its only numerals are the two `2026-10-26` dates in the cited ballot names and `§ 2.4`. It names no version and no count.
+  - **Checks at `3f42be897`:**
+    - `verify-signing-chain --ci --base origin/main`: PASS (5 rows across 5 signing commits).
+    - `check:section-citations`: PASS (192).
+    - Lina's three fixture suites: 92/92.
+    - The guard's suite: 45/45.
+    - `npm run test:scripts`: 669/669.
+    - `npm test`: 9814/9814 in 414 suites.
 
 ## 9. Resolved texts and the plan for the application (written at the Status commit)
 

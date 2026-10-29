@@ -272,6 +272,9 @@ writeScope:
   # ballot 2026-10-20-manual-records-routed-readers F-1 (a) (RATIFIED Peter 2026-10-20): the owner's session-start read
   - "scripts/issues-owned.sh"
   - "scripts/__tests__/issues-owned.test.ts"
+  # ballot 2026-10-26-governance-examples-guard-adoption (RATIFIED Peter 2026-10-26): the governance-examples guard,
+  # owned whole (register row governance-examples); the glob cannot carry pending.json's limits — that ballot's § 2 does
+  - "scripts/governance-examples/**"
   # § 2.3 — the docs MCP
   - "mcp-server/src/**"
   - "mcp-server/tests/**"

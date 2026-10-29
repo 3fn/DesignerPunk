@@ -62,11 +62,21 @@ Both cuts survive verbatim.
 ## `#the-claims-pass-record-claims-passmd-the-template`
 
 signer: stacy
-date: 2026-10-19
+date: 2026-10-27
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-claims-pass-record-claims-passmd-the-template` (re-pointed; ROUTED)
-canonicalHash: sha256:006d7a0b20b48f56a4769ba2d44042284270b2a9bd7e620b4c79cfd2cc247b74
+canonicalHash: sha256:f6d74d3343f268919882d4c7011091ef7774f9784e67fddfbb53a428e5f9a280
 renderedHash: sha256:ac788d09a695a9a4f828e4e9c5ea3c3c1d51d96eb387c3ce2c65a13447ee5e75
-verdict: assent — surviving 18/35; not surviving: `counting-6`, `counting-8`, `counting-9`, `counting-9b-census`, `counting-10-buckets`, `counting-10-ncc-rate`, `counting-10-assent-refusal`, `counting-10-spot-check`, `counting-10-full-survival`, `counting-11`, `counting-12`, `emission-reading`, `delegated-tier-read`, `instruments-read`, `governance-edit-kind-read`, `delegate-audit-pointer`, `instrument-census-read`
+verdict: assent — surviving 18/36; not surviving: `counting-6`, `counting-8`, `counting-9`, `counting-9b-census`, `counting-10-buckets`, `counting-10-ncc-rate`, `counting-10-assent-refusal`, `counting-10-spot-check`, `counting-10-full-survival`, `counting-11`, `counting-11b-governance-examples`, `counting-12`, `emission-reading`, `delegated-tier-read`, `instruments-read`, `governance-edit-kind-read`, `delegate-audit-pointer`, `instrument-census-read`
+
+**Re-signed 2026-10-27** (prior signature: assent 18/35, 2026-10-19, against `sha256:006d7a0b20b48f56a4769ba2d44042284270b2a9bd7e620b4c79cfd2cc247b74`; the rendered hash did not move). Stale because the canonical unit gained one item, mine from ballot `2026-10-26-governance-examples-guard-adoption` § 3 site 2 (RATIFIED, Peter, 2026-10-26): the counting block's `**the governance-examples read**`, applied by Thurgood byte for byte at `6a29412fe` and as item `counting-11b-governance-examples` at `c1fd0e06e`, which also added it to the `subtraction-3` removal of the counting block's labels and moved the overlay pin only. My re-confirmation at 36 items is `82faa95b1`.
+- **Judged against**: the rendered unit at this revision (`canonical/_consumer-output/_canonical/agents/stacy.md`, the claims-pass section, read through `readConsumerSpans`) and the operative set at 36 items. The consumer counting block reads omissions, vagueness, declared-none rates, exemption usage, bundled-claim instances and subtask-doc presence only.
+- **The new item is not credited**: the rendered unit states nothing of it (checked: no `governance-examples` string anywhere under `canonical/_consumer-output/`). It reads DesignerPunk's own guard (`scripts/governance-examples/check.ts`, `pending.json`, register row `governance-examples`, the issues root), which a consumer repo does not have, so it has no consumer counterpart. The removal text names it ("; **the governance-examples read**"), so the removal and the non-credit agree, and `subtraction-3` applies (the item names `scripts/governance-examples/`).
+- **Hashes**: canonicalHash recomputed independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts`; it equals the overlay pin and the sweep's value. renderedHash recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` (three pieces); it equals the prior value.
+- **Unchanged from the prior signature**: the same 18 items survive and the same 17 are not credited, for the reasons in the prior records below; the new item is the 18th not credited. `assent.surviving` is unchanged.
+- **The run-1 tally** (§ "Signing run summary (2026-09-29, phase two, run 1)", 18/31) is not rewritten. At this re-sign the row reads 18/36.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-10-19, second this date)**: assent 18/35, against `sha256:006d7a0b20b48f56a4769ba2d44042284270b2a9bd7e620b4c79cfd2cc247b74`, as below.
 
 **Re-signed 2026-10-19, second this date** (prior signature: assent 18/33, 2026-10-19, against `sha256:11c50738271b1e8436109a51b12d12a8f2b19463d04dfdeb805b6bd69570c5e9`). Stale because the canonical unit gained two items, both mine from ballot `2026-10-19-instrument-census-at-draft` (site 3): the instrument-census read bullet and the `instrument census` counting-block entry, applied by Thurgood byte for byte at `cd6ee604c` and re-confirmed by me at 35 items (`c4c9ef2f2`). Thurgood moved the overlay pin only and added both to the `subtraction-3` removals, then regenerated (`c50bcbd51`). The rendering did not change: renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/r.ts`), equal to the committed rendering's value and to the prior signatures'.
 - **Judged against**: the rendered unit at this revision and the operative set at 35 items.
@@ -505,11 +515,21 @@ verdict: assent — surviving 1/1
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 signer: stacy
-date: 2026-10-21
+date: 2026-10-27
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-trigger-set-the-114-superset-table-names-never-numbers` (re-pointed)
-canonicalHash: sha256:17ef45beb34513cb4d848de44544358d44ad5d99e13791e56b8f8b522cb5ca12
+canonicalHash: sha256:7b2664513beb395592f793b497590e8a031039c286cf5c72d8c072336e1f5fe7
 renderedHash: sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5
 verdict: assent — surviving 5/13; not surviving: `trigger-lens`, `trigger-release`, `trigger-closeout`, `trigger-arming`, `trigger-gate`, `trigger-straggler`, `trigger-liveness`, `trigger-burst`
+
+**Re-signed 2026-10-27** (prior signature: assent 5/13, 2026-10-21, against `sha256:17ef45beb34513cb4d848de44544358d44ad5d99e13791e56b8f8b522cb5ca12`; the rendered hash did not move). Stale because the canonical ARMING and RELEASE rows changed: ballot `2026-10-26-governance-examples-guard-adoption` (RATIFIED, Peter, 2026-10-26, F-1 (a)) § 3 site 1 (1a the `scripts/governance-examples/**` path, 1b the guard's test in the deletion read, 1c the `pending.json` read) and site 2b (the RELEASE pointer sentence, my text). Thurgood applied them (`6a29412fe`) and re-authored the ARMING removal and the new RELEASE removal (`c1fd0e06e`); my re-confirmation at 13 items is `d069e7dbd`.
+- **Judged against**: the rendered unit at this revision (`canonical/_consumer-output/_canonical/agents/stacy.md`, the trigger-set table, read through `readConsumerSpans`) and the operative set at 13 items.
+- **The ARMING removal still applies, under `subtraction-3`, and 1a–1c are removed with it.** The new path, the guard's test and the `pending.json` read audit DesignerPunk's own governance-examples guard and its pending list; a consumer repo has none. The removal text reproduces the whole new row (checked: one occurrence in the canonical unit, 7,698 characters). The consumer output carries no ARMING row (`grep -c ARMING` → 0) and no `governance-examples` string anywhere under `canonical/_consumer-output/`.
+- **The new RELEASE removal applies, under `subtraction-3`**: "Phase 1 also carries the governance-examples read (the counting block; ballot 2026-10-26-governance-examples-guard § 2.4)." (one occurrence). It points to a DesignerPunk instrument read that the consumer counting block also omits (the claims-pass row, below). The consumer RELEASE row is unchanged; `trigger-release` stays not credited, as before.
+- **Hashes**: canonicalHash recomputed independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts`; it equals the overlay pin and the sweep's value. renderedHash recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` (three pieces: `_canonical/`, `cc/`, `kiro/`); it equals the prior value.
+- **Unchanged from the 2026-10-21 signature**: `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing` and `merge-path-status` survive, each verbatim in the rendering. Surviving count: 5 of 13.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-10-21)**: assent 5/13, against `sha256:17ef45beb34513cb4d848de44544358d44ad5d99e13791e56b8f8b522cb5ca12`, as below.
 
 **Re-signed 2026-10-21** (prior signature: assent 5/13, 2026-10-20, against `sha256:ad17a9e68ed401c046c11a9917f9b1059f7a112aade4ba8accf98dc65fb5fcca`). Stale because the canonical ARMING and LIVENESS rows changed: ballot `2026-10-20-grant-ci-deletions-and-activating-merge-read` (RATIFIED, Peter, 2026-10-20) § 2 A-1 (the `**Deleted lines**:` block read, the `**Grant activation read**:` marker, the quoted-deleted-lines clause) and A-2 (the LIVENESS row's grant-activation sentence). They are my text; Thurgood applied them byte for byte (`3978fdfb0`; I checked the whole-file byte identity against the ballot, `17702702b`), I re-confirmed the set at 13 items (`17702702b`), and he pinned the overlay and regenerated (`77ea79b0d`). the rendering did not change: renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/_tmp_render.ts`), 113 of 113 consumer-output files byte-identical to the committed tree, equal to the prior signature's value.
 - **Judged against**: the rendered unit at this revision and the operative set at 13 items.
