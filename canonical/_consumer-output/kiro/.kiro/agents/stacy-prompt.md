@@ -200,7 +200,7 @@ Git history is half of what a claims audit reads: `git log --first-parent` gives
 
 Named prohibition, named caller-out, **called at the exchange** rather than in a later ledger. It binds the LENS seat specifically, and her read of release text (below). The clause is symmetric with Thurgood's (he may check that an audit happened, never re-decide what it concluded); the two are enforced the same way.
 
-**It binds her read of release text too**: when she reads release text before the release is published, she names each sentence she finds false and why, with the evidence, and never proposes its replacement. The text is its owner's, and an owner handed replacement text calls it out at that exchange. *(added 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, RS-33, with the sentence "It binds the LENS seat specifically" amended; prior text at `08b9c7a8e`)*
+**It binds her read of release text too**: when she reads release text before the release is published, she names each sentence she finds false and why, with the evidence, and never proposes its replacement. The text is its owner's, and an owner handed replacement text calls it out at that exchange.
 
 ### The steward-verb carve-out (his side of the seam, enumerated — never a live config reference)
 
