@@ -12,7 +12,12 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import {
+  BuildArgs,
+  CENSUS_DECISIONS,
+  CENSUS_HEADING,
+  censusCorpus,
   Deps,
+  extractPastedRecord,
   GH_REGISTRY,
   ghPublishArgs,
   parseArgs,
@@ -21,13 +26,14 @@ import {
   publicPublishArgs,
   publishPathPasses,
   Refusal,
-  ReleaseArgs,
   renderCommand,
+  runCensus,
   runRelease,
   RunResult,
   sameFloorClosure,
   sha1OfFile,
   shellQuote,
+  tagVerdict,
 } from '../release-publish';
 import { Finding, PUBLISH_PATH_FLOOR } from '../pack-assert';
 
@@ -66,6 +72,11 @@ describe('parseArgs', () => {
     expect(() => parseArgs(['15.0.1', '--expect-sha', '9E1A3106A18C4A1554A3705E3559AE5797028A24'])).toThrow(/full 40-character/);
   });
 
+  it('parses the census mode, with an optional --source for the tags', () => {
+    expect(parseArgs(['--census'])).toEqual({ mode: 'census', source: undefined });
+    expect(parseArgs(['--census', '--source', '/repo'])).toEqual({ mode: 'census', source: '/repo' });
+  });
+
   it.each([
     [[], /usage/],
     [['--dry-run'], /needs a value/],
@@ -77,6 +88,9 @@ describe('parseArgs', () => {
     [['15.0.1', '--expect-sha'], /needs a value/],
     [['15.0.1', '16.0.0'], /unexpected argument/],
     [['15.0.1', '--ignore-scripts'], /unknown option/],
+    [['--census', '15.0.1'], /--census takes only --source/],
+    [['--census', '--dry-run', '1d75c5e5'], /--census takes only --source/],
+    [['--census', '--keep'], /--census takes only --source/],
   ])('refuses %j', (argv, message) => {
     expect(() => parseArgs(argv as string[])).toThrow(Refusal);
     expect(() => parseArgs(argv as string[])).toThrow(message as RegExp);
@@ -98,6 +112,19 @@ describe('parseLsRemote', () => {
   it('returns undefined when the tag is absent, and never matches a longer tag name', () => {
     expect(parseLsRemote('', 'v1.0.0')).toBeUndefined();
     expect(parseLsRemote('abc1234\trefs/tags/v1.0.0-rc.1\n', 'v1.0.0')).toBeUndefined();
+  });
+});
+
+describe('tagVerdict — the tag-to-commit decision (5.3 with --expect-sha)', () => {
+  const ls = 'b05719f6717b4e8e2dce23dfd260223f2812a782\trefs/tags/v15.0.0\n9e1a3106a18c4a1554a3705e3559ae5797028a24\trefs/tags/v15.0.0^{}\n';
+  it('passes when the tag names exactly the expected commit', () => {
+    expect(tagVerdict(ls, 'v15.0.0', '9e1a3106a18c4a1554a3705e3559ae5797028a24')).toEqual({ ok: true });
+  });
+  it('refuses another commit, a prefix, the tag object, and an absent tag', () => {
+    expect(tagVerdict(ls, 'v15.0.0', 'f'.repeat(40))).toEqual({ ok: false, found: '9e1a3106a18c4a1554a3705e3559ae5797028a24' });
+    expect(tagVerdict(ls, 'v15.0.0', '9e1a3106').ok).toBe(false);
+    expect(tagVerdict(ls, 'v15.0.0', 'b05719f6717b4e8e2dce23dfd260223f2812a782').ok).toBe(false);
+    expect(tagVerdict('', 'v15.0.0', '9e1a3106a18c4a1554a3705e3559ae5797028a24')).toEqual({ ok: false, found: undefined });
   });
 });
 
@@ -267,8 +294,8 @@ function fake(o: FakeOptions = {}): Fake {
 
 const line = (c: Call): string => `${c.cmd} ${c.args.join(' ')}`;
 const publishCalls = (f: Fake): Call[] => f.calls.filter((c) => c.cmd === 'npm' && c.args[0] === 'publish');
-const DRY: ReleaseArgs = { mode: 'dry-run', sha: '9e1a3106', keep: false };
-const PUB: ReleaseArgs = { mode: 'publish', version: '15.0.1', expectSha: S, keep: false };
+const DRY: BuildArgs = { mode: 'dry-run', sha: '9e1a3106', keep: false };
+const PUB: BuildArgs = { mode: 'publish', version: '15.0.1', expectSha: S, keep: false };
 
 // Silence pack-assert's report printing (reportFindings writes to the console).
 let logSpy: jest.SpyInstance;
@@ -387,7 +414,7 @@ describe('runRelease — publish (RELEASE-FLOW 5.3)', () => {
 });
 
 describe('runRelease — refusals: each stops before anything is published', () => {
-  const cases: Array<[string, ReleaseArgs, FakeOptions, RegExp]> = [
+  const cases: Array<[string, BuildArgs, FakeOptions, RegExp]> = [
     ['the tag does not exist', PUB, { tagCommit: null }, /tag v15\.0\.1 does not exist/],
     ['the tag does not resolve to --expect-sha', { ...PUB, expectSha: 'deadbeef'.repeat(5) }, {}, /not the expected (deadbeef){5}/],
     ['the tagged commit is not on origin/main', PUB, { onMain: false }, /is not on this checkout's origin\/main/],
@@ -483,5 +510,87 @@ describe('runRelease — refusals: each stops before anything is published', () 
   it('a dry run with a stale token index refuses too (5.1 stops the release before any tag exists)', () => {
     const f = fake({ fail: 'verify:token-index-clean' });
     expect(() => runRelease(DRY, f.deps, PROJECT)).toThrow(/verify:token-index-clean failed/);
+  });
+});
+
+// ─── the census mode (hermetic-publish-path, commit-held scope) ───────────────────────────────────
+
+describe('census mode — corpus reading', () => {
+  const RECORD = '{\n  "mode": "publish",\n  "version": "15.1.0",\n  "commit": "e49359e49dc338078669a90aa5b37aa2436b60a4"\n}';
+  const step6 = (record: string): string => `# Release\n\n## Comparands (6b)\n\n${CENSUS_HEADING}\n${record}\n\n\n### 5.1 dry run\n{\n  "x": 1\n}\n`;
+
+  it('extracts the pasted record verbatim, from its { line to the first } line after it', () => {
+    expect(extractPastedRecord(step6(RECORD))).toBe(RECORD);
+  });
+
+  it('selects no input from a file without the heading (15.0.0 predates the script)', () => {
+    expect(extractPastedRecord('# Release 15.0.0\n{\n}\n')).toBeUndefined();
+  });
+
+  it('reads docs/releases/*/publish-verification.txt in sorted order and skips directories without one', () => {
+    const files: Record<string, string> = {
+      '/r/docs/releases/16.0.0/publish-verification.txt': step6(RECORD),
+      '/r/docs/releases/15.1.0/publish-verification.txt': step6(RECORD),
+      '/r/docs/releases/15.0.0/publish-verification.txt': '# no record\n',
+    };
+    const corpus = censusCorpus('/r', {
+      listDir: () => ['RELEASE-NOTES-9.0.0.md', '16.0.0', '15.0.0', '15.1.0'],
+      readFile: (f) => {
+        if (!(f in files)) throw new Error('ENOENT');
+        return files[f];
+      },
+    });
+    expect(corpus.map((c) => c.input)).toEqual(['docs/releases/15.1.0/publish-verification.txt', 'docs/releases/16.0.0/publish-verification.txt']);
+  });
+});
+
+describe('census mode — runCensus calls the decision functions once per input and adds no logic', () => {
+  const commitA = 'e49359e49dc338078669a90aa5b37aa2436b60a4';
+  const commitB = '13adf005a65d74ccf240a5c8a8b865962e5b67c1';
+  const rec = (version: string, commit: string, mode = 'publish'): string =>
+    `{\n  "mode": "${mode}",\n  "version": "${version}",\n  "commit": "${commit}",\n  "publishedTo": [\n    "${GH_REGISTRY}"\n  ]\n}`;
+  const censusDeps = (records: Record<string, string>, tags: Record<string, string>): { deps: Deps; calls: Call[] } => {
+    const calls: Call[] = [];
+    const base = fake().deps;
+    const deps: Deps = {
+      ...base,
+      listDir: () => Object.keys(records),
+      readFile: (f) => {
+        const v = Object.keys(records).find((k) => f === `/r/docs/releases/${k}/publish-verification.txt`);
+        if (!v) throw new Error('ENOENT');
+        return `${CENSUS_HEADING}\n${records[v]}\n`;
+      },
+      run(cmd, args, cwd) {
+        calls.push({ cmd, args, cwd });
+        const tag = args[2].replace('refs/tags/', '');
+        return { status: 0, stdout: tags[tag] ? `${'a'.repeat(40)}\trefs/tags/${tag}\n${tags[tag]}\trefs/tags/${tag}^{}\n` : '' };
+      },
+    };
+    return { deps, calls };
+  };
+
+  it('prints one sorted line per input and the selected count, reading tags from the source by git ls-remote', () => {
+    const { deps, calls } = censusDeps({ '16.0.0': rec('16.0.0', commitB), '15.1.0': rec('15.1.0', commitA) }, { 'v15.1.0': commitA, 'v16.0.0': commitB });
+    const out = runCensus(deps, '/r', '/r');
+    const names = CENSUS_DECISIONS.map((d) => d.name);
+    expect(out).toHaveLength(3);
+    expect(out[0].startsWith('docs/releases/15.1.0/publish-verification.txt\t')).toBe(true);
+    expect(out[1].startsWith('docs/releases/16.0.0/publish-verification.txt\t')).toBe(true);
+    for (const l of out.slice(0, 2)) expect(l.split('\t')[1]).toBe(names.map((n) => `${n}=pass`).join(';'));
+    expect(out[2]).toMatch(/^selected: 2 pasted 5\.3 records/);
+    expect(calls.every((c) => c.cmd === 'git' && c.args[0] === 'ls-remote' && c.args[1] === '/r')).toBe(true);
+  });
+
+  it('shows a refusing input as a refusal, not a pass (a moved tag, an absent tag)', () => {
+    const { deps } = censusDeps({ '15.1.0': rec('15.1.0', commitA), '16.0.0': rec('16.0.0', commitB) }, { 'v15.1.0': commitB });
+    const out = runCensus(deps, '/r', '/r');
+    expect(out[0]).toContain(`tag-5.3=refuse(names ${commitB})`);
+    expect(out[1]).toContain('tag-5.3=refuse(absent)');
+  });
+
+  it('refuses when git ls-remote fails (the census never guesses a tag)', () => {
+    const { deps } = censusDeps({ '15.1.0': rec('15.1.0', commitA) }, {});
+    const failing: Deps = { ...deps, run: () => ({ status: 128, stdout: '' }) };
+    expect(() => runCensus(failing, '/r', '/r')).toThrow(/git ls-remote \/r failed \(exit 128\)/);
   });
 });
