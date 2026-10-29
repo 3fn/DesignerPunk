@@ -7,6 +7,8 @@ description: Product token authoring governance — scope model, naming conventi
 
 # Product Token Governance
 
+> **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the amendment notes and their ballot paths, the Spec 109 reference, Peter named as this repo's human lead, and Peter's approval of promotions are DesignerPunk's. **Transferable**: the product-token scope model, the naming conventions and litmus test, colour governance, the promotion signals, and the authoring workflow (token needs planned at screen specification; a need the spec missed is surfaced, never filled silently).
+
 **Date**: 2026-05-25
 **Purpose**: Governance framework for authoring, naming, and promoting product tokens
 **Organization**: process-standard
