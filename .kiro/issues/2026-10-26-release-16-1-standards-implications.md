@@ -298,13 +298,13 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 
 - **Source**: Leonardo's read on the fu1 CORRECTION (L697 and his charter L329), relayed by the orchestrator on 2026-10-29: "Two ratified ballots, one day apart, disagree on whether charter lines carry dated pointers." Filed by Thurgood under README rule 10, as the convention's owner.
 - **The two readings**:
-  - **#528** (ballot `2026-10-26-release-flow-batch-16-1`, ratified 2026-10-28; application not merged) gives every resolved charter site a pointer in canonical, and a consumer removal for it (E5, and § 5 item 6's sweep line, L619).
+  - **#528** (ballot `2026-10-26-release-flow-batch-16-1`, ratified 2026-10-28; applied by #541, `52f874275`) gives every resolved charter site a pointer in canonical, and a consumer removal for it (E5, and § 5 item 6's sweep line, L619).
   - **#535** (ballot `2026-10-26-system-token-review-and-token-planning`, merged) applied its charter sites without one: `leonardo.md` L340 (site 7); `ada.md` L28; Sparky's, Kenya's and Data's sites 8 and 8a.
-  - **Main**: no charter carries a pointer. `git grep -E '\*\((Amended|Corrected|Added) 20' origin/main -- canonical/agents` returns 0 hits at `3e2c722e6`. The first is the fu1 CORRECTION's L329 (branch `fix/integration-guide-l697-leonardo-l329`, `a8591e753`). Leonardo picked the pointer there "by the letter until it is ruled".
+  - **Main**: `git grep -i -E '\*\((amended|corrected|added) 20' <sha> -- canonical/agents` returns 0 hits at `3e2c722e6`. At `52f874275` it returns 3, all from #541 and all in `stacy.md` (L400, L432, L465), each with its consumer removal. The fu1 CORRECTION's L329 (branch `fix/integration-guide-l697-leonardo-l329`, `a8591e753`) would be the fourth, and the first in another seat's charter. Leonardo picked the pointer there "by the letter until it is ruled".
 - **The law**: ballots README § "Conventions", "Superseded text": "a document agents read as law carries only the current text plus a dated pointer". It names no path list, and a charter is read as law. So #528 follows the letter. #535, and every charter amendment before it, does not.
 - **Settlement options, for Peter** (Leonardo's two, as relayed):
   - (i) **Charters carry pointers.** #535's charter sites are backfilled with pointers and consumer removals. That costs a re-sign for each signed unit (`#out-of-scope` of Leonardo, Sparky, Kenya and Data). `ada.md` L28 is an asserted string, and its assertion is mine to update. One cost the relay does not state: consistent application reaches past #535 to every earlier charter amendment, none of which carries a pointer. So (i) needs a start date, or the backfill has no bound.
-  - (ii) **A stated charter carve-out** in the convention. #528's application then drops its charter pointers and their removals before it merges, and the fu1 PR drops L329's pointer and its overlay entry.
+  - (ii) **A stated charter carve-out** in the convention. A follow-up then takes #541's three `stacy.md` pointers and their removals out again, which costs Stacy a re-confirm and a re-sign per unit. The fu1 PR drops L329's pointer and its overlay entry.
 - **My lean, as the convention's owner: (ii)**, with the carve-out worded by path: "`canonical/agents/**` carries no inline pointer; the ballot or record that names the site is its history, cited by the PR's `**Edit kind**:` line". Three reasons:
   - **Constant load.** A charter is loaded whole into every session of its seat, so its pointers cost context on every turn and accumulate with each ballot. A served doc is read only when it is queried.
   - **The history already exists.** The lock, the signing chain and the PR's Edit-kind line already record every charter change. `git log -L` finds the prior text.
@@ -313,12 +313,12 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
   (ii) also writes down what has been the practice on `main` until now.
 - **Surviving counter**:
   - **It departs from Peter's letter.** His 2026-10-19 ruling made no carve-out. A seat reading its charter cannot see that a line changed, which matters to any seat working from remembered text.
-  - **It changes ratified bytes.** (ii) changes #528's ratified text at application: its charter pointers come out. That needs Peter's word on #528 itself, not only on the README sentence.
+  - **It undoes applied ratified text.** (ii) takes out the charter pointers #541 applied from #528's ratified bytes. That needs Peter's word on #528 itself, not only on the README sentence, and three more of Stacy's signing acts.
   - **It is one more exception** in a convention whose value is having none.
 - **The class fix, named and not picked**:
   - (A) The convention names its paths, as the edit-kinds ballot names its list (`governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, and `canonical/agents/**` in or out). A ballot drafter then reads the scope instead of inferring it, which is how #528 and #535 came apart.
   - (B) A guard beside (A): the application check list confirms that each `LAW` or `CORRECTION` Edit-kind line's file gains a pointer in the diff, on the paths (A) names.
-- **Order**: Peter's ruling is on #528's application path (P7, branch `chore/apply-release-flow-batch-16-1`) and on the fu1 PR. Until it is ruled, both follow the letter.
+- **Order**: #528's application merged first (#541), with the pointers. Peter's ruling is now on the fu1 PR's path, and under (ii) it adds a follow-up for #541's three. Until it is ruled, new charter sites follow the letter. *(Line updated 2026-10-29 after #541 merged; at filing, `e4a856188`, it read #541 as unmerged.)*
 - **Vehicle**: the next ballots-README ballot, with RS-51 and RS-52. Before then, Peter's word on #528's charter pointers, if (ii) is his pick.
 - **Consult**: Leonardo (raised it; L329); Stacy (#528's charter sites are hers); Sparky, Kenya and Data (their signed units under (i)); Lina (the generator's removal path).
 
