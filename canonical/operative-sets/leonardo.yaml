@@ -106,12 +106,12 @@ units:
         text: "Generated type names use the product's name (e.g., `WrKingClassTheme`) — the system disappears into the product"
     confirmation: canonical/profiles/consumer/confirmations/leonardo.md#product-configuration-context
   "#product-tokens":
-    canonicalHash: sha256:ba16cfe01837021e91887864df5afe5b1f966e74e3d4f58af8cd6c40cff8c84c
+    canonicalHash: sha256:14729b3d5db15c642637cbd8f53843a0eb78288ff0b97ecc983df11e4ec0a498
     items:
       - id: product-tokens-where
         kind: obligation
         label: "Where product tokens live"
-        text: "Products define product-level values in `product/tokens/{category}.yaml` — values that don't belong in Rosetta (system tokens) or Stemma (component tokens): layout constraints, motion characteristics, product-specific colors."
+        text: "Products define product-level values in `product/tokens/{category}.yaml` — values that are not system tokens (Rosetta's primitive, semantic or component tokens): layout constraints, motion characteristics, product-specific colors."
       - id: product-tokens-1
         kind: step
         label: "Query: get_product_tokens() via Product MCP — returns values"

@@ -58,9 +58,16 @@ date: 2026-09-29
 ## `#product-tokens`
 
 confirmer: leonardo
-canonicalHash: sha256:ba16cfe01837021e91887864df5afe5b1f966e74e3d4f58af8cd6c40cff8c84c
+canonicalHash: sha256:14729b3d5db15c642637cbd8f53843a0eb78288ff0b97ecc983df11e4ec0a498
 items: product-tokens-where, product-tokens-1, product-tokens-2, product-tokens-3, product-tokens-4, product-tokens-5
-date: 2026-09-29
+date: 2026-10-29
+
+**Re-confirmed 2026-10-29 (Req 11.6.5d): the L697/L329 CORRECTION (records `.kiro/issues/2026-10-26-leonardo-charter-l329-term-inconsistency.md` and `.kiro/issues/2026-10-27-integration-guide-l697-component-tokens-term.md`).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:ba16cfe01837021e91887864df5afe5b1f966e74e3d4f58af8cd6c40cff8c84c`, 6 items).
+- **What changed**: `canonical/agents/leonardo.md` L329, item `product-tokens-where`, now reads *"… — values that are not system tokens (Rosetta's primitive, semantic or component tokens): layout constraints, motion characteristics, product-specific colors."* Before, it read *"values that don't belong in Rosetta (system tokens) or Stemma (component tokens)"*, which put component tokens outside "system tokens". The truth it now matches is Token Governance L171 ("A system token is a Rosetta token: a primitive or semantic token …, or a component token") and Product-Token-Governance L40. Thurgood applied it at `a8591e753`, and at `13333ef23` dropped its dated pointer under Peter's RS-54 ruling ("Let's go class fix", relayed before 2026-10-29T03:00:31Z), in the orchestrator's (ii-a) reading that charters carry no inline pointer. The unit stays `retained`, so it owes no signature. I checked by script that L329 equals my fu1 read's replacement byte for byte.
+- **What I read, in this session, through tool results**: L329 in `canonical/agents/leonardo.md` and in the three renderings (`_canonical/agents/leonardo.md` L273, `cc/.claude/agents/leonardo.md` L93, `kiro/.kiro/agents/leonardo-prompt.md` L44); the unit as `partition` returns it (body lines 41–49); the whole `#product-tokens` record in `canonical/operative-sets/leonardo.yaml`; this row in `leonardo.dispositions.yaml` (`retained`); and the overlay, which carries no `#product-tokens` entry. By script, the three rendered pieces equal the canonical unit byte for byte.
+- **The hash**: I recomputed it with `hashText` over `partition(splitFrontmatter(src).body).units` (unit `#product-tokens`). It equals the value the profile author's sweep printed.
+- **Items re-read against the unit**: all 6 item texts are verbatim substrings of the unit as it now stands (checked by script). `product-tokens-where` still carries one obligation, the placement rule: a product's own values live in `product/tokens/{category}.yaml`, and a system token (primitive, semantic or component) does not. An agent can still act against it, by authoring a product-level value as a system or component token, or a system value as a product token. The term changed and the rule did not. No other line of the unit changed.
+- **Ruling: CONFIRMED at 6 items, not corrected.** The 2026-09-29 ruling below stands, except that its gloss "not Rosetta or Stemma" now reads "not a system token". *If Peter overturns the (ii-a) reading and L329 takes a pointer, the unit's bytes change and this confirmation is re-made.*
 
 **Ruling: CONFIRMED at 6 items.** The placement rule (product values in `product/tokens/{category}.yaml`, not Rosetta or Stemma) and the query → author → validate → generate → governance lifecycle are each violable: hand-reading token files instead of querying, skipping validation, or authoring without the routed governance.
 

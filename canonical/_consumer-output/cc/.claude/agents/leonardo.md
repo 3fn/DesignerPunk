@@ -90,7 +90,7 @@ Products configure DesignerPunk via `designerpunk.config.ts`:
 
 ### Product Tokens
 
-Products define product-level values in `product/tokens/{category}.yaml` — values that don't belong in Rosetta (system tokens) or Stemma (component tokens): layout constraints, motion characteristics, product-specific colors.
+Products define product-level values in `product/tokens/{category}.yaml` — values that are not system tokens (Rosetta's primitive, semantic or component tokens): layout constraints, motion characteristics, product-specific colors.
 - **Query**: `get_product_tokens()` via Product MCP — returns values with resolved system token references
 - **Author**: define tokens during screen specification when you identify product-level values
 - **Validate**: `npx designerpunk validate --product-tokens` checks ref integrity

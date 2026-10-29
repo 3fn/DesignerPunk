@@ -27,3 +27,15 @@
 ## Close
 
 Rule 5's dated outcome line in the CORRECTION PR, and the archive move there.
+
+## Outcome (2026-10-29, Thurgood, owner)
+
+**Fixed on branch `fix/integration-guide-l697-leonardo-l329`, in the PR of this branch: the one CORRECTION PR that carries both lines.** The PR number is in its body, not here.
+- **L697** (`governance/DesignerPunk-Integration-Guide.md`) now reads *"Product tokens are product-level values that are not system tokens (Rosetta's primitive, semantic or component tokens)."* It carries its CORRECTION pointer (prior text at `3e2c722e6`). Applied at `a8591e753`.
+- **L329** (`canonical/agents/leonardo.md`) takes the same clause in Leonardo's words, applied byte for byte at `a8591e753`. At `13333ef23` its dated pointer was removed under Peter's RS-54 ruling (charters carry no inline pointer). Leonardo re-confirmed `#product-tokens` at `a6d3d128a`; no signature is owed, because the unit stays `retained`. His record (`.kiro/issues/archive/2026-10-26-leonardo-charter-l329-term-inconsistency.md`) closed in the same PR at `4c04d28b4`.
+- **The consult** this record's `**Consulted**:` line left pending happened: Leonardo's fu1 read gave the wording both lines now carry. He declined my first draft ("neither Rosetta's (primitive or semantic) nor a component's (Stemma)") because Token Governance L171 makes a component token a Rosetta token.
+- **Truth**: Token Governance § "Token Creation Governance" L171 ("A system token is a Rosetta token: … or a component token"), and the Systems Overview's Rosetta Layer 3, the component tokens.
+- **L851** is not this record's. It rides R3-16's fixing PR.
+- **Why the close is written now**: this record closes in its fixing PR (rule 11), so no Trigger re-rule is owed. If the PR does not merge, this line and the archive move do not land either.
+
+Closed under rule 5 and archived in the same PR.
