@@ -8,6 +8,8 @@ aliases: RTL, internationalization, i18n, bidi, right-to-left, text direction
 
 # Web Authoring Standards
 
+> **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the amendment notes and their ballot paths, and the agent roles the document names (Lina, Sparky, Leonardo), are DesignerPunk's. **Transferable**: the CSS authoring rules (logical properties, the token priority chain, accessibility media queries, focus patterns), product-token authoring on web, and the naming schema.
+
 **Date**: 2026-06-01
 **Last Reviewed**: 2026-06-01
 **Purpose**: Shared CSS quality rules for all web platform work (components and product screens)
