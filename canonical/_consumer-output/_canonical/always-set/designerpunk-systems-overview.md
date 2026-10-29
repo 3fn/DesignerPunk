@@ -61,7 +61,7 @@ flowchart TB
         subgraph Civitas["Civitas System — Governance Foundation"]
             direction TB
             C_Desc["How the system is governed<br/>Standards, processes, coordination"]
-            C_Steer["Steering Docs (93: 84 MCP-served + 9 identity)"]
+            C_Steer["Steering Docs (MCP-served + 9 identity)"]
             C_MCP["MCP Servers (3)"]
             C_Agents["Agent Configs (8)"]
             C_Auto["Hooks & Tooling"]
@@ -168,8 +168,8 @@ flowchart TB
         end
 
         subgraph MCPs["MCP Servers"]
-            DocsMCP["Docs MCP<br/>84 docs, 2,535 sections"]
-            AppMCP["Application MCP<br/>34 components, 443 tokens"]
+            DocsMCP["Docs MCP<br/>counts: get_index_health"]
+            AppMCP["Application MCP<br/>counts: get_component_health"]
             ProdMCP["Product MCP<br/>14 tools, reads product/"]
         end
 

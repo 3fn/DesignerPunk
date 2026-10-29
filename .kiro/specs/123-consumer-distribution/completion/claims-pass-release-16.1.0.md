@@ -2185,6 +2185,12 @@ Read per the charter duty: all of phase 1 and phase 2, every finding RL-19 to RL
 
 ---
 
+## [STACY] Erratum to phase 2 (2026-10-26)
+
+- **Erratum to my phase-2 RS-49 item ("5.4's command is typed by hand")**: that premise is false. `scripts/release-publish.ts` prints the command: at 5.3, L388–L390 print the `shasum … # must print <sha1>` line and the `npm publish` command, and a dry run prints it at L384–L385 ("and hand this command over for 5.4"), at `61581c641`. RL-36's command (`docs/releases/16.1.0/publish-verification.txt` L135) has the form the script prints, `--registry=` (`publicPublishArgs`, L138–L140), which RELEASE-FLOW L136's space form is not; no cause is inferred. The RS-49 question stands on the corrected premise: the printed command binds no version, and a dry run hands over a runnable publish line for a tarball with 5.3's version and different bytes (ballot `2026-10-26-release-flow-batch-16-1` § 11, `[ADA R1]` items 3 and 4). Found by Ada's consult and my R1 read of that ballot, not by this pass. No finding, count or verdict above changes.
+
+---
+
 ## [STACY] Erratum: the cumulative Stacy-signed frame (2026-10-27)
 
 - **Erratum, the cumulative frame since MIDPOINT: `0 / 314` → `0 / 302`.** My 15.0.0 record added the twelve Stacy-signed acts of #222 (10), #228 (1) and #239 (1) to the frame (`0 / 309`, its L303–L304), and my 15.1.0 (L356, L428) and 16.0.0 (L364) records carried it as `0 / 314`. Peter ruled those twelve pre-chain history: "Re: 3, pre-chain history" (chat, relayed by the orchestrator; his picks received before 2026-10-26T21:28:31Z, and confirmed in his words "Cool. Let's go with my answers plus (b) for O-23", received before 2026-10-27T02:25:42Z). They merged before #262, so they are outside the § 5.3 backlog and outside this frame. Before this release the frame is `0 / 302`: #262's 297 and 15.1.0's 5. With this release's N = 135 (RL-25) it is `0 / 437`, which equals the k of the delegate file over the same 24 PRs (`delegate-audit-release-16.1.0-ada.md` @ `4409463c1`, #514). The backlog clause's parenthetical, "(#262, 297 acts at that count)", is narrower than the population it names. Its wording is an RS-36 fix (the signing-chain amendment ballot). No finding, verdict or count above changes. RL-25's N = 135 stands.

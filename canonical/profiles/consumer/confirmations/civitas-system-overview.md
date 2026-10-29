@@ -46,11 +46,25 @@ date: 2026-09-29
 ## `#what-civitas-contains`
 
 confirmer: stacy
-canonicalHash: sha256:77dc3cb69a10ba754447dfc278d64cead1ff80013763931a9235e8fd574f8a26
+canonicalHash: sha256:8bd2b48ef0fb20b950c7c1dd0466f7a4c96154da800d5787bc142536fab4533f
 items: what-civitas-con-2, what-civitas-con-3, what-civitas-con-4, what-civitas-con-5, what-civitas-con-6, what-civitas-con-7, what-civitas-con-8, what-civitas-con-9, what-civitas-con-10, what-civitas-con-17
-date: 2026-10-24
+date: 2026-10-27
 
-**Re-confirmed 2026-10-24, second time (Req 11.6.5d): the count correction.**
+**Re-confirmed 2026-10-27 (Req 11.6.5d): the count pointers (O-23, scope (b)).**
+- **What changed**: five figures in the unit became pointers to how each count is read. Steering CORRECTION on branch `fix/overview-section-counts` (`506da09b0` for L30, L37 and L38; `b3b447d57` for L46 and L50). Peter ruled scope (b) on 2026-10-27, before 02:25:42Z, relayed by the orchestrator: "Cool. Let's go with my answers plus (b) for O-23". My O23-C1 read agreed with (b) beforehand.
+  - the steering-docs line: "93 docs across 4 layers; 84 MCP-served + 9" → "4 layers; the MCP-served docs + 9 …; the docs MCP serves the current served count via `get_index_health`";
+  - Docs MCP: "84 docs, 2,535 sections, 331 cross-references" → "it serves its current document, section and cross-reference counts via `get_index_health`";
+  - Application MCP: "34 components, 443 tokens, 9 experience patterns" → "it serves its current component, token and experience-pattern counts via `get_component_health`";
+  - Automation: "12 hooks + 5 shell scripts" → the two `git ls-files … | wc -l` commands;
+  - Knowledge bases: "13 definitions" → the `knowledgeBases:` entries in `canonical/agents/*.md`.
+  Thurgood re-authored the `text` of items `what-civitas-con-6` and `-7` at `b3b447d57`, under the grant `.kiro/issues/2026-10-26-overview-counts-pointer-grant.md` (#526), whose dated owner line (2026-10-27) names L46/L50 and the new pin. Labels unchanged.
+- **The hash**: the canonicalHash moves from `sha256:77dc3cb69a10ba754447dfc278d64cead1ff80013763931a9235e8fd574f8a26` to the value above. `operative-set-freshness` (`check:122:diff-guard --base 08b9c7a8e` at `b3b447d57`) printed it, and I recomputed it independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts` (unit body lines 23–55); the two agree, and they equal the overlay pin.
+- **`what-civitas-con-6` and `-7`, read against the unit**: each `text` is verbatim (`grep -F`: 1 hit each). Their pointers resolve: `mcp-server/src/index.ts` handles `get_index_health`, and `application-mcp-server/src/index.ts` registers `get_component_health`. Each item is still operative, on the same ground as before (which server to query), and the pointer adds one more thing an agent acts on: where to read the count. Neither item carries a number now.
+- **L46 and L50 are not items**, as before (my 2026-09-29 ruling removed `-12` to `-15`). Their pointers, re-run at `b3b447d57`: hooks → 12, shell scripts → 5, knowledge-base entries in the eight non-fixture charters → 13 (ada 3, data 2, kenya 2, leonardo 0, lina 2, sparky 1, stacy 3, thurgood 0). Thurgood's owner line gives the same figures at `08b9c7a8e`.
+- **Known false clause, not this act's object**: `what-civitas-con-8` still says "built in Spec 081: 14 tools". Thurgood's record `.kiro/issues/2026-10-27-civitas-overview-product-mcp-provenance-false.md` finds that Spec 081 built 7 (scope (c), not taken). The item is verbatim and still operative on its role, so the set does not change. The record's fix re-confirms this unit again. My 2026-10-24 line "the server's first commit is Spec 081 Task 2.1" stays true; it never verified the count as history.
+- **What did not change**: the set, still 10 items. The other 8 items are untouched and still verbatim.
+
+**Re-confirmed 2026-10-24, second time (prior record, superseded; canonicalHash `sha256:77dc3cb69a10ba754447dfc278d64cead1ff80013763931a9235e8fd574f8a26`, 10 items) (Req 11.6.5d): the count correction.**
 - **What changed**: counts only, plus one clause. Steering CORRECTION `cf53ef403` (Peter, 2026-10-25, relayed: "Let's fix them"):
   - steering docs 92 (83 + 9) → 93 (84 + 9);
   - Docs MCP 83 docs / 2,833 sections / 333 cross-references → 84 / 2,535 / 331;

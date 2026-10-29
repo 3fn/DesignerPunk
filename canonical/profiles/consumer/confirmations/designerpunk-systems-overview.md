@@ -55,11 +55,17 @@ date: 2026-09-29
 ## `#high-level-designerpunk-three-system-architecture`
 
 confirmer: stacy
-canonicalHash: sha256:11ade1ad6da002d22718fb043fbc35828e0eecb4feb449a3a47020d8b4ba6254
+canonicalHash: sha256:3ba6703b516c20e31a97da02b8aa251c8e4b0b3cfb483b6be7f88592ce08d8ee
 items: none
-date: 2026-10-24
+date: 2026-10-27
 
-**Re-confirmed 2026-10-24 (Req 11.6.5d).**
+**Re-confirmed 2026-10-27 (Req 11.6.5d): the count pointer (O-23, scope (b)).**
+- **What changed**: one diagram node. `C_Steer["Steering Docs (93: 84 MCP-served + 9 identity)"]` now reads `C_Steer["Steering Docs (MCP-served + 9 identity)"]` (steering L71). Steering CORRECTION `506da09b0` on branch `fix/overview-section-counts`; Peter ruled O-23 scope (b) on 2026-10-27, before 02:25:42Z, relayed by the orchestrator: "Cool. Let's go with my answers plus (b) for O-23". The node keeps "9 identity", which changes only with law (Thurgood's sweep, `b3b447d57`'s message).
+- **Read**: the unit in `.kiro/steering/DesignerPunk-Systems-Overview.md` (L40–L86) and the regenerated consumer rendering `canonical/_consumer-output/_canonical/always-set/designerpunk-systems-overview.md` (its L64 carries the same node; the unit is `retained`, and the `cc/` and `kiro/` renderings carry the same diff).
+- **The hash**: the canonicalHash moves from `sha256:11ade1ad6da002d22718fb043fbc35828e0eecb4feb449a3a47020d8b4ba6254` to the value above. `operative-set-freshness` (`check:122:diff-guard --base 08b9c7a8e` at `b3b447d57`) printed it, and I recomputed it independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts`; the two agree.
+- **Re-ruled**: still an illustration with one orientation line. The node now carries no volatile number, and no agent acts against a diagram node, so the zero stays declared (5d).
+
+**Re-confirmed 2026-10-24 (prior record, superseded; canonicalHash `sha256:11ade1ad6da002d22718fb043fbc35828e0eecb4feb449a3a47020d8b4ba6254`) (Req 11.6.5d).**
 - **What changed**: one diagram node. `C_Steer["Steering Docs (92: 83 MCP-served + 9 identity)"]` now reads `(93: 84 MCP-served + 9 identity)`. Steering CORRECTION `cf53ef403` (Peter, 2026-10-25, relayed: "Let's fix them").
 - **The numbers hold at `d25990912`**: `ls .kiro/steering/*.md | wc -l` → 9; the docs MCP indexer over `governance/` → `totalDocuments` 84 (and `ls governance/*.md | wc -l` → 84).
 - **The hash**: the canonicalHash moves from `sha256:cb4d6d996773c1253896915cd34e6f718679dac9766a2ee86020a25779f203b0` to the value above. `operative-set-freshness` printed it, and I recomputed it independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts`; the two agree.
@@ -93,11 +99,18 @@ date: 2026-09-29
 ## `#civitas-system-governance-infrastructure`
 
 confirmer: stacy
-canonicalHash: sha256:dc689ab05d1bb5afbd36b80878f69e0190da89ec9709b804496a42f8204ff028
+canonicalHash: sha256:7bfddb6a396bed8890df341955dc06f746ea826885041212891238397b12404b
 items: none
-date: 2026-10-24
+date: 2026-10-27
 
-**Re-confirmed 2026-10-24, second time (Req 11.6.5d): the count correction.**
+**Re-confirmed 2026-10-27 (Req 11.6.5d): the count pointers (O-23, scope (b)).**
+- **What changed**: two diagram nodes. `DocsMCP["Docs MCP<br/>84 docs, 2,535 sections"]` now reads `DocsMCP["Docs MCP<br/>counts: get_index_health"]`, and `AppMCP["Application MCP<br/>34 components, 443 tokens"]` now reads `AppMCP["Application MCP<br/>counts: get_component_health"]` (steering L178, L179). Steering CORRECTION `506da09b0` on branch `fix/overview-section-counts`; Peter ruled O-23 scope (b) on 2026-10-27, before 02:25:42Z, relayed by the orchestrator: "Cool. Let's go with my answers plus (b) for O-23".
+- **Read**: the unit in `.kiro/steering/DesignerPunk-Systems-Overview.md` (L162–L202) and the regenerated consumer rendering `canonical/_consumer-output/_canonical/always-set/designerpunk-systems-overview.md` (its L171–L172 carry the same nodes; the unit is `retained`, and the `cc/` and `kiro/` renderings carry the same diff). Both tool names resolve: `mcp-server/src/index.ts` handles `get_index_health`, and `application-mcp-server/src/index.ts` registers `get_component_health`.
+- **Not changed, and known false as history only**: `ProdMCP["Product MCP<br/>14 tools, reads product/"]` (L180). Its count is true at `08b9c7a8e` but volatile. Thurgood's record `.kiro/issues/2026-10-27-civitas-overview-product-mcp-provenance-false.md` (scope (c), not taken) owes its pointer and a further re-confirm of this unit.
+- **The hash**: the canonicalHash moves from `sha256:dc689ab05d1bb5afbd36b80878f69e0190da89ec9709b804496a42f8204ff028` to the value above. `operative-set-freshness` (`check:122:diff-guard --base 08b9c7a8e` at `b3b447d57`) printed it, and I recomputed it independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts`; the two agree.
+- **Re-ruled**: still an illustration, so the zero stays declared (5d).
+
+**Re-confirmed 2026-10-24, second time (prior record, superseded; canonicalHash `sha256:dc689ab05d1bb5afbd36b80878f69e0190da89ec9709b804496a42f8204ff028`) (Req 11.6.5d): the count correction.**
 - **What changed**: one diagram node. `DocsMCP["Docs MCP<br/>83 docs, 2,833 sections"]` now reads `84 docs, 2,535 sections`. Steering CORRECTION `cf53ef403` (Peter, 2026-10-25, relayed: "Let's fix them").
 - **The numbers hold**: I re-ran the docs MCP indexer at `d25990912` (`DocumentIndexer.indexDirectory(<worktree>/governance)`), and it gives `totalDocuments` 84 and `totalSections` 2535. The node `AppMCP` (34 / 443) is unchanged and still true: `get_component_health` → 34 components, 217 + 193 + 33 tokens.
 - **The hash**: the canonicalHash moves from `sha256:9751b1889d6e335ee645e098db78bc7d94ef3df5c7023e34cad717ce2e14e790` to the value above. `operative-set-freshness` printed it, and I recomputed it independently; the two agree.

@@ -8,7 +8,7 @@
 **Primary owner**: Ada (ownership accepted on the record — [ADA R3], 119-B feedback/requirements.md)
 **Status**: Open — **LATER**: take up after 119-B's design phase settles the calibration-propagation prose (so the new signal lands against settled prose, not a moving target). No hard trigger; a natural slot is any Ada Application-MCP session touching the search/index surface.
 **Owner**: Ada *(added 2026-10-20, Ada, site 9 of ballot 2026-10-20-manual-records-routed-readers)*
-**Trigger**: `path:application-mcp-server/src/indexer/TokenIndexer.ts` — the next change to the token reader whose `search` (L193) returns the partial match with no signal; the Status line's "natural slot" made an event. It bundles with `2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md`, the sibling this record names. *(Set 2026-10-20, Ada, rules 1 and 9. It replaces the Status line's "No hard trigger"; that line stays as written.)*
+**Trigger**: `manual` — closes at the merge of the Lina PR that carries item 2 of `2026-10-26-token-index-platform-name-readers.md` (the token tools' payload PR), which carries the `search` signal below. If item 2 has not opened when her stale-version fix PR merges, it closes instead at the merge of her own small PR carrying the signal alone. It becomes `merge:#<N>` at that PR's open. *(Re-ruled 2026-10-27, Ada, rule 9, on Peter's words and Lina's consult, § "Scheduled" below.)* *(was: `manual` — closes at its fixing PR's merge, which carries the grant over the Application MCP files it edits (rule 10), since `application-mcp-server/**` is outside Ada's standing write scope. It bundles with `2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md`: one fixing PR for both. *(Re-ruled 2026-10-27, Ada, rules 1, 9 and 11, after the lapse below. Same reason as the sibling: the `path:` on `TokenIndexer.ts` fired on two edits that did not touch `search`.)* *(was: `path:application-mcp-server/src/indexer/TokenIndexer.ts` — the next change to the token reader whose `search` (L193) returns the partial match with no signal; the Status line's "natural slot" made an event. It bundles with `2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md`, the sibling this record names. *(Set 2026-10-20, Ada, rules 1 and 9. It replaces the Status line's "No hard trigger"; that line stays as written.)*)*)*
 **Class**: P3 improvement · defect *(set 2026-10-20, Ada, rule 12. The record's own double-mitigation stands: token selection is gated independently by the token-governance checkpoints, and the certainty-calibration rule's step 3 is tool-agnostic.)*
 
 ---
@@ -44,3 +44,31 @@ Option (b) has a built-in payoff: 119-B's signal-scoped calibration boundary **e
 - Sibling Ada-owned Application-MCP item (candidate to bundle in one issue-driven session): `.kiro/issues/2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md`
 
 **Walk 2026-10-20 (Thurgood, walk line under rule 9; ledger `archive/TRIAGE-2026-10-20.md` row 14, call BACK-FILL)**: this record lacks the rule-1 Trigger token (`**Trigger**: ` followed by one of `tag:v<semver>`, `merge:#<N>`, `path:<glob>`, `release:<ver>:phase-1` or `manual`) and the rule-12 `**Class**:` header. That is a walk finding. The owner writes both (rule 9); the steward writes neither. Steward's proposal, which the owner may override: Proposed `manual` · `P3 improvement · defect`.
+
+## Lapse (2026-10-27)
+
+Firing commit: `26b7f5648cf15187f5bfd64876894f22a7adc7a5` (#478, merged 2026-10-25T09:21:13-04:00). It was the first touch of `application-mcp-server/src/indexer/TokenIndexer.ts` after the Trigger was set (`./scripts/issues-owned.sh Ada` at `08b9c7a8e`: `FIRED@26b7f5648`). No ancestor of it closed or re-ruled this record. Signed: Ada, 2026-10-27.
+
+- **What the firing commit changed in the file**: `get_token_consumers`' scope constant, result type and wrapper (22 lines added), later trimmed by #479 (`852914a17`). Neither touched `search()`. The edits were unrelated to this record.
+- **The owed act is not done**, read at `08b9c7a8e`:
+  - `search()` (`TokenIndexer.ts` L203–222) still filters by `e.name.toLowerCase().includes(n)` and returns each result with no `matchType` or `matchConfidence`. So `search_tokens({ name: "space10" })` still returns `space100` unmarked.
+  - The one signal an agent gets is the input schema's `name: "Token name (partial match)"` (`application-mcp-server/src/index.ts` L207). It describes the mode of matching, not the quality of each result.
+- **Re-ruled, not closed** (Trigger line above). It needs one fixing PR with the sibling, under a grant over the Application MCP files (Lina's surface, outside my scope). The design call, option (a) or (b), stays mine.
+
+## Scheduled (2026-10-27, Ada)
+
+Under rule 9. Peter's words: *"Re: 533, Let's schedule in as part of one of the upcoming specs or where most optimally resolved"* (Peter, chat, relayed by the orchestrator, received before 2026-10-27T11:56:09Z).
+
+**Consulted**: Lina — the description sentence rides her first `TokenIndexer.ts` PR, the stale-version fix, with the tool-registry hash re-based in that diff; the `search` signal is a payload change under Peter's B on #479, so it rides her item-2 PR or a small PR of its own; the shape is `matchConfidence` plus mandatory `matchedOn`, with no top-level `none`; pointer lines allowed, one per record (`batch-consults/lina-533-vehicle.md`, 2026-10-27).
+
+- **Vehicle**: the Lina PR that carries item 2 of `2026-10-26-token-index-platform-name-readers.md`. That PR changes what `search_tokens` and `get_token_details` return, and this signal is a payload change to the same tool. If item 2 has not opened when her stale-version fix PR merges, the vehicle is instead a small PR of her own carrying the signal alone. Both are in her scope, so no grant is needed. The Trigger above names both, and the old text is kept there.
+- **The shape, agreed with Lina; I take it and do not fork it**:
+  - When `name` is given, each result carries `matchConfidence` (`strong` for an exact name match, `partial` for a substring) and `matchedOn: ['name']`. The contract test makes `matchedOn` mandatory wherever `matchConfidence` is emitted.
+  - `family` or `tier` alone emits neither, as keywordless `find_components` does.
+  - **There is no top-level `none` on zero hits.** The array stays bare (Peter's B, #479), and `[]` already means "no match".
+  - The token results' exact key sets in `tool-boundary.contract.test.ts` re-baseline with a RE-BASELINE LOG line (Lina).
+  - When the PR opens, Thurgood adds `search_tokens` to the emitting surfaces of `governance/classification-map.md` § `certainty-calibration`. This is my record's option (b) in its signal layer only; `rank` is not added.
+- A pointer line naming this rider is appended to `2026-10-26-token-index-platform-name-readers.md`, with Lina's consent. It does not hold the stale-version record's close.
+- **Surviving counter-argument (Lina's)**: Peter asked for one schedule, and his ruling now has two vehicles. Item 2 rides Spec 129's requirements, which may slip. The fallback in the Trigger (her own small PR once the stale-version fix merges) limits how long this can wait, but if neither PR opens, the record sits `manual` and unfired, and is archived stale after two walks (rule 5).
+
+*Signed: Ada, 2026-10-27.*
