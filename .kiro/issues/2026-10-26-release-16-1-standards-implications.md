@@ -51,6 +51,7 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **Disposition (proposed)**: **LAW edit via ballot.** The record half is done: `.kiro/issues/2026-10-26-signing-chain-delegate-audit-not-run-trigger-d.md` carries the instance and its trigger. What remains is the class fix, a pre-phase-1 item in the walk so the first walk under § 5.3 cannot be missed again.
 - **Vehicle**: the RELEASE-FLOW batch ballot.
 - **Consult**: Stacy (her delegate-audit pointer, `canonical/agents/stacy.md` § "The claims-pass record"); Ada (the first delegate).
+- *2026-10-29 (Thurgood), vehicle (rule 9; the record is mine)*: site 2's delegate-audit paragraph rides the application PR of ballot 2026-10-26-release-flow-batch-16-1 (branch `chore/apply-release-flow-batch-16-1`, P7). The row closes at that PR's merge.
 
 ## RS-42 — the index's platform names are not checked against generated output
 
@@ -68,6 +69,7 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **The question asked (before or travel in?)**: my proposal is **either, provided the record resolves at the merge commit** (it is in the CORRECTION PR's own diff, or an ancestor of the merge). **Surviving counter**: "travel in" puts the observation and the fix in one diff, the circularity the CORRECTION test already excludes for governance text and enforcement code as a referent; the record is the observation, not the referent, so I read the exclusion as not reaching it, but a reader could disagree. "Land first" is cleaner for the claims-pass read and is exactly what long-lived upkeep branches defeat. If Peter wants one, it is a fork he picks; I do not.
 - **Vehicle**: one sentence in README rule 10, as the orchestrator proposed. Note that it is a ballot-cited edit (rule 11's own sentences carry their ballot), so it needs a ballot: I propose it rides the RELEASE-FLOW batch as a second surface. **Fork**: a separate small ballot instead, since the batch's subject is the release flow. I lean to one ballot with two named surfaces; the pick is Peter's.
 - **Consult**: Stacy (her edit-kind read), Lina (the upkeep-branch practice is hers).
+- *2026-10-29 (Thurgood), vehicle (rule 9; the record is mine)*: site 8 (rule 10, F-43b either) rides the application PR of ballot 2026-10-26-release-flow-batch-16-1 (branch `chore/apply-release-flow-batch-16-1`, P7). The row closes at that PR's merge.
 
 ## RS-44 — check what web examples do, not only what they name
 
@@ -95,6 +97,7 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **Disposition (proposed)**: **split.** (a) A method note, **Stacy's** (sort, or call the system grep, when comparing across commits). No law from me. (b) The 3a commands: **LAW edit via ballot** (adding `| sort` changes what the walk record's pasted output must equal); I propose it, with the counter that it encodes an environment bug into law: a `| sort` is harmless on any grep, and the walk's commands are the walk's evidence. This half is an addition to the orchestrator's list; the pick whether it goes into the batch is Peter's.
 - **Vehicle**: (a) her record; (b) the RELEASE-FLOW batch ballot.
 - **Consult**: Stacy.
+- *2026-10-29 (Thurgood), vehicle (rule 9; the record is mine)*: the 3a half (site 1: the two greps sorted under `pipefail`) rides the application PR of ballot 2026-10-26-release-flow-batch-16-1 (branch `chore/apply-release-flow-batch-16-1`, P7). The method half stays Stacy's, as above. The row closes at that PR's merge.
 
 ## RS-47 — a claims-pass record can home a rule for one release only
 
@@ -112,6 +115,7 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **Disposition (proposed)**: **LAW edit via ballot.** The rail's answer was right both times; the stated cause is what has two readings. Stacy names it and does not draft it; it is mine to draft, not here.
 - **Vehicle**: the RELEASE-FLOW batch ballot.
 - **Consult**: Stacy (the step-6 record).
+- *2026-10-29 (Thurgood), vehicle (rule 9; the record is mine)*: site 5 (step 6's two readings of an absent `time["<version>"]`), E1 (Ada's: the rail's header, its FAIL[version] message and bite-2, under her trailer) and E2 (the `publish-rail-guard` row's checks[] sentence) ride the application PR of ballot 2026-10-26-release-flow-batch-16-1 (branch `chore/apply-release-flow-batch-16-1`, P7). The row closes at that PR's merge.
 
 ## RS-49 — 5.4 binds the tarball's producer, not its version
 
@@ -123,6 +127,7 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - *2026-10-26 (Thurgood), correction (rule 9; the record is mine)*: **the fork (ii) premise above is false.** "5.4's is typed by hand" is wrong: 5.3 already prints the exact 5.4 command (`scripts/release-publish.ts` L388–L390 at `61581c641`: the `shasum <tarball>` check with the sha1 to expect, then `npm publish <tarball> --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org --access public`; RELEASE-FLOW L134 says so). The premise came from the 16.1.0 pass's L2154 and was copied here without reading the script; the pass's erratum is Stacy's. **The row's gap, restated**: 5.4 is not bound to 5.3's tarball. At 15.1.0, 16.0.0 and 16.1.0 the 5.1 tarball had 5.3's version and different bytes (the build-timestamp files; Ada, R1 item 3 on the batch ballot), and the dry run prints a runnable publish line for it (L382–L385), so the harmful member of the class is a second artifact under the release's own version, not RL-36's other-version publish that npm refused. The vehicle is unchanged: the RELEASE-FLOW batch ballot, whose R2 binds 5.4 to the record with `mode` `publish` under every option and offers (i) / (ii-a) / (ii-b) as F-49.
 
 ---
+- *2026-10-29 (Thurgood), vehicle (rule 9; the record is mine)*: E7a (Ada's: the dry run prints no runnable publish line) rides the application PR of ballot 2026-10-26-release-flow-batch-16-1 (branch `chore/apply-release-flow-batch-16-1`, P7). Site 4 (ii-b), E3 (ii-b) and E7b ride Ada's own PR (P1, `.kiro/issues/2026-10-27-npmjs-mode-and-commit-held-census-mode-owed.md`), or site 4 (i) and E3 (i) under P1's fallback. The row closes at the merge of that PR, not of the application PR.
 
 ## RS-33 — an auditor's pre-S replacement text shipped with one false sentence and no second reader
 
@@ -132,6 +137,7 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **My own part, stated**: the release PR (#494) was mine and took the sentence as written. The owner of a text that receives auditor-drafted text is the second reader the pass says was missing. The row records that as the same finding from the other side; it is not a defence.
 - **Vehicle**: the RELEASE-FLOW batch ballot (a pre-S sentence in 3a's neighbourhood) and a Stacy charter site (Peter-merged, Stacy consulted, regeneration).
 - **Consult**: Stacy (she names it and does not draft it); Peter (the fork).
+- *2026-10-29 (Thurgood), vehicle (rule 9; the record is mine)*: site 2's pre-S read paragraph (F-33a (i)) and site 11 in Stacy's charter (F-33b include), with E5's operative-set items and overlay entry, ride the application PR of ballot 2026-10-26-release-flow-batch-16-1 (branch `chore/apply-release-flow-batch-16-1`, P7); Stacy's re-confirm and her removal row ride it too (P6). The row closes at that PR's merge.
 
 ## RS-34 — where the packed CHANGELOG's date comes from at S
 
@@ -140,6 +146,7 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **Disposition (proposed)**: **LAW via ballot.** **Fork surfaced**: (i) the heading carries a date written in the release PR (the day it is opened or the day it is expected to merge), and a one-day mismatch at the tag is not a falsity (Stacy's own reading at L906); (ii) the heading carries no date and the notes carry it (15.1.0 and 16.0.0 shipped dated headings, so (ii) is a change of practice). My lean is (i). **Surviving counter to (i)**: a date written before the merge can be wrong by the merge's day, and the only repair is a new S; with (ii) nothing can be wrong.
 - **Vehicle**: the RELEASE-FLOW batch ballot (step 2, plus the recipe's step 4 as a second surface, which is Peter-merged law in `governance/`).
 - **Consult**: Stacy (the packed-file read).
+- *2026-10-29 (Thurgood), vehicle (rule 9; the record is mine)*: site 3 (F-34 (ii): the undated retitle) and site 7 (the recipe's step 4) ride the application PR of ballot 2026-10-26-release-flow-batch-16-1 (branch `chore/apply-release-flow-batch-16-1`, P7). The row closes at that PR's merge.
 
 ## RS-35 — no instrument reads a PR body for an open question at merge time
 
@@ -168,6 +175,7 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **Disposition (proposed)**: instance **homed by pointer** (do not duplicate it). Class: **LAW via ballot**, one sentence, **with RS-29** (its first half). **Surviving counter**: a sweep rule on every behaviour-changing script PR is broad, and the 16.1.0 instance was caught by the owner's own record the same day (L218 of the pass: "RL-22 makes it tag-relevant if Peter reads that row as floor-class"); a narrower form is a PR-body line, `**Straggler sweep**: <grep> — <hits>`, only for scripts a charter or RELEASE-FLOW names. I lean to the narrow form.
 - **Vehicle**: the RELEASE-FLOW batch ballot (the narrow form), with RS-29's surface named; the instance's own PR is the follow-on above.
 - **Consult**: Stacy (her overlay and charter lines).
+- *2026-10-29 (Thurgood), vehicle (rule 9; the record is mine)*: the class half (narrow form, F-38 narrow, with F-38d phase 1) rides the application PR of ballot 2026-10-26-release-flow-batch-16-1 (branch `chore/apply-release-flow-batch-16-1`, P7) as site 9 (the ballots README's straggler line) and site 6's Phase 1 straggler read; RS-29's class half rides with it. The instance half stays homed by pointer, as above. The row closes at that PR's merge.
 
 ## RS-39 — CHANGELOG summary lines are written from intent, not from the packed file set
 
@@ -176,6 +184,7 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **Disposition (proposed)**: **LAW via ballot.** One sentence: before the entry says a file or export was added, kept or removed, the author lists the packed set against the previous public artifact (`comm` on the two `tar -tzf` lists) and pastes the result in the release PR. **Surviving counter**: the dry run runs after the release PR merges (it is on S, step 5.1), so the author's `comm` needs a local `npm pack` before S, which costs minutes and may differ from S's tarball. Stacy's phase-1 read is the detector today; a check by the author adds a second reader of the same fact, which is the second-reader shape RS-33 asks for.
 - **Vehicle**: the RELEASE-FLOW batch ballot.
 - **Consult**: Stacy (the packed-artifact read); Ada (the build and what `npm pack` produces before S).
+- *2026-10-29 (Thurgood), vehicle (rule 9; the record is mine)*: site 3's compare sub-bullet (F-39 (b-always)), with RS-25, rides the application PR of ballot 2026-10-26-release-flow-batch-16-1 (branch `chore/apply-release-flow-batch-16-1`, P7). The row closes at that PR's merge.
 
 ## RS-40 — does a served-doc CORRECTION sweep its file for the class it corrects
 
@@ -185,6 +194,7 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **Guard's half, not mine to decide**: whether the governance-examples guard selects `var(--dp-…)` inside a fence is in Ada's predicate scope and the guard's v1 build (not merged); Stacy did not verify it and I have not. It is a question for the build PR's falsification cases, recorded here so the build does not drop it.
 - **Vehicle**: the RELEASE-FLOW batch ballot's second surface (the CORRECTION form), with RS-43; the guard question rides the guard's build PR.
 - **Consult**: Lina (served-doc corrections are hers); Ada (the guard's predicate scope); Stacy.
+- *2026-10-29 (Thurgood), vehicle (rule 9; the record is mine)*: site 10 (F-40 (a′): a CORRECTION's `**Sweep**:` line) and site 13 in Stacy's charter (F-40d charter: her governance-edit-kind read takes it) ride the application PR of ballot 2026-10-26-release-flow-batch-16-1 (branch `chore/apply-release-flow-batch-16-1`, P7), with E5's item. The row closes at that PR's merge.
 
 ## RS-41 — a CHANGELOG disclosure that cites a record goes stale before the tag
 
@@ -193,6 +203,7 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **Disposition (proposed)**: **LAW via ballot**, one sentence in the same Phase 1 bullet: each record a packed sentence cites ("tracked: …") is re-read at the final S, and a sentence whose record moved is re-worded or its count refreshed. **Surviving counter**: the 16.1.0 instance was fixed in #503 (a count, not a re-wording), and Stacy re-read it at the final S without the rule; the rule turns her read into the author's duty. It also couples two moving things (the CHANGELOG sentence and the cited record) that stale at the same rate, so the structural alternative is to stop citing records in packed text: a disclosure states its fact, and the record number sits only in the unpacked notes. That alternative is a fork, not mine to pick.
 - **Vehicle**: the RELEASE-FLOW batch ballot.
 - **Consult**: Stacy.
+- *2026-10-29 (Thurgood), vehicle (rule 9; the record is mine)*: site 6 (the cited-record re-read, F-41 (i)) and E4 (the `release-falsity-floor` row's pointer-grade home) ride the application PR of ballot 2026-10-26-release-flow-batch-16-1 (branch `chore/apply-release-flow-batch-16-1`, P7). The row closes at that PR's merge.
 
 ## RS-10 — link 6 resolves the charter through branch refs that Branch Cleanup deletes (appended 2026-10-26)
 
@@ -211,6 +222,7 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **Disposition (proposed)**: **LAW via ballot, one sentence with RS-39.** RS-39 is this class for the file set; RS-25 is it for the generated files' contents. One sentence covers both: before the entry says what was added, kept, removed or changed in the packed output, the author compares the locally packed tarball with the previous public one (the file list, and a `diff` over the generated root files) and pastes the result in the release PR. **Surviving counter**: RS-39's, unchanged — the comparison runs before S on a local `npm pack` that may differ from S's tarball, and Stacy's phase-1 read already detects it; the rule adds the author as a second reader of the same fact.
 - **Vehicle**: the RELEASE-FLOW batch ballot, in RS-39's sentence.
 - **Consult**: Ada (the release seat, and what `npm pack` produces before S); Stacy.
+- *2026-10-29 (Thurgood), vehicle (rule 9; the record is mine)*: rides with RS-39, in site 3's compare sub-bullet, in the application PR of ballot 2026-10-26-release-flow-batch-16-1 (branch `chore/apply-release-flow-batch-16-1`, P7). The row closes at that PR's merge.
 
 ## RS-29 — script text that restates register state has no straggler sweep (appended 2026-10-26)
 
@@ -221,6 +233,7 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **Consult**: Stacy; as RS-38.
 
 ---
+- *2026-10-29 (Thurgood), vehicle (rule 9; the record is mine)*: the class half rides with RS-38, as site 9, in the application PR of ballot 2026-10-26-release-flow-batch-16-1 (branch `chore/apply-release-flow-batch-16-1`, P7); the instance stays done by pointer (#459). The row closes at that PR's merge.
 
 ## RS-50 — where a RELEASE claims-pass record lives once Spec 123 closes (appended 2026-10-26)
 

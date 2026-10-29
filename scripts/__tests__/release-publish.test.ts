@@ -310,6 +310,8 @@ describe('runRelease — dry run (RELEASE-FLOW 5.1)', () => {
     expect(r.record).toMatchObject({ mode: 'dry-run', version: '15.0.1', commit: S, tarball: TARBALL, sha1: '65d2ec0b140192bc0f0adc17b9ac6526332a6594', fileCount: 1638, publishedTo: [] });
     expect(JSON.parse(f.written[`${OUT}/release-publish-record.json`])).toEqual(r.record);
     expect(f.logs.join('\n')).toMatch(/DRY RUN — nothing was published/);
+    // E7a (batch ballot 2026-10-26-release-flow-batch-16-1): a dry run hands over no runnable publish line.
+    expect(f.logs.some((l) => l.trim().startsWith('npm publish'))).toBe(false);
     expect(r.publicCommand).toBe(`npm publish ${TARBALL} --registry=${PUBLIC_REGISTRY} --@3fn:registry=${PUBLIC_REGISTRY} --access public`);
     // The clone is removed; the tarball and record are kept.
     expect(f.removed).toEqual([CLONE]);
