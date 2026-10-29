@@ -302,6 +302,7 @@ These are not J results. They go to the profile author (Thurgood) and the G2 fin
 
 **`Peter sample (Stacy-signed): 0 / 309`** — **owed to Peter's seat.**
 - The 309 are: #262's 297 (122 dispositions signature events + 175 operative-set confirmations, all pre-R) and the 12 Stacy acts in the four pre-R PRs walked here (#222 10, #228 1, #239 1).
+  *(Erratum pointer, 2026-10-27, Stacy: the cumulative frame reads `0 / 297`, not `0 / 309`. Peter ruled the twelve pre-#262 acts (#222 10, #228 1, #239 1) pre-chain history; see `claims-pass-release-16.1.0.md` § "[STACY] Erratum: the cumulative Stacy-signed frame (2026-10-27)". This line is added; the line above stands as written.)*
 - Post-R Stacy-signed acts: 0.
 - Peter plans about three blind seats; none has run. Stacy does not rule on her own acts.
 - **With MIDPOINT's `0 / 297`, this is the second consecutive walk at `0 / N`: trigger (d) fires** (§ "Recorded events").
