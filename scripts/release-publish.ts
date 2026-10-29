@@ -18,8 +18,16 @@
  *                                                        RELEASE-FLOW 5.3: the same, in a fresh clone at tag
  *                                                        v<version>, then publishes THAT tarball to GitHub
  *                                                        Packages and prints the public-npm command for 5.4.
+ *   npx tsx scripts/release-publish.ts --census [--source <repo>]
+ *                                                        The census mode of `hermetic-publish-path`'s commit-held
+ *                                                        scope (ballots README § "Conventions", "Instrument
+ *                                                        census"): one line per pasted 5.3 record in
+ *                                                        docs/releases/<v>/publish-verification.txt, its verdicts
+ *                                                        from this script's own decision functions. Reads git
+ *                                                        and committed files only; publishes nothing.
  * Options:
- *   --source <git-url-or-path>   clone from here (default: this checkout's `origin` URL)
+ *   --source <git-url-or-path>   clone from here (default: this checkout's `origin` URL); for --census, the repo
+ *                                whose v<version> tags are read (default: this checkout)
  *   --expect-sha <S>             REQUIRED in publish mode: the full 40-character SHA of the release squash S;
  *                                refuse unless v<version> resolves to exactly S (tag-to-S identity is a script
  *                                check, not one that holds only if the operator types the right command)
@@ -67,7 +75,11 @@ export const PACKAGE_SCOPE = '@3fn';
 
 export type ReleaseArgs =
   | { mode: 'dry-run'; sha: string; source?: string; keep: boolean }
-  | { mode: 'publish'; version: string; expectSha: string; source?: string; keep: boolean };
+  | { mode: 'publish'; version: string; expectSha: string; source?: string; keep: boolean }
+  | { mode: 'census'; source?: string };
+
+/** The two modes that build a tarball (5.1 and 5.3). */
+export type BuildArgs = Extract<ReleaseArgs, { mode: 'dry-run' | 'publish' }>;
 
 const SHA_RE = /^[0-9a-f]{7,40}$/;
 const FULL_SHA_RE = /^[0-9a-f]{40}$/;
@@ -81,6 +93,7 @@ export function parseArgs(argv: string[]): ReleaseArgs {
   let source: string | undefined;
   let expectSha: string | undefined;
   let keep = false;
+  let census = false;
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     const value = (flag: string): string => {
@@ -92,9 +105,16 @@ export function parseArgs(argv: string[]): ReleaseArgs {
     else if (a === '--source') source = value('--source');
     else if (a === '--expect-sha') expectSha = value('--expect-sha');
     else if (a === '--keep') keep = true;
+    else if (a === '--census') census = true;
     else if (a.startsWith('--')) throw new Refusal(`unknown option: ${a}`);
     else if (version === undefined) version = a.replace(/^v/, '');
     else throw new Refusal(`unexpected argument: ${a}`);
+  }
+  if (census) {
+    if (dryRunSha !== undefined || version !== undefined || expectSha !== undefined || keep) {
+      throw new Refusal('--census takes only --source <repo>');
+    }
+    return { mode: 'census', source };
   }
   if (dryRunSha !== undefined) {
     if (version !== undefined) throw new Refusal('give either --dry-run <S> or <version>, not both');
@@ -124,6 +144,17 @@ export function parseLsRemote(output: string, tag: string): string | undefined {
     else if (ref === `refs/tags/${tag}`) direct = sha;
   }
   return peeled ?? direct;
+}
+
+/**
+ * The tag-to-commit decision: whether `git ls-remote` output names exactly `expected` for `tag`. 5.3 calls it with
+ * --expect-sha. It is one of the commit-held scope's decisions, so the census mode calls it as is.
+ */
+export type TagVerdict = { ok: true } | { ok: false; found: string | undefined };
+
+export function tagVerdict(lsRemoteOutput: string, tag: string, expected: string): TagVerdict {
+  const found = parseLsRemote(lsRemoteOutput, tag);
+  return found !== undefined && found === expected ? { ok: true } : { ok: false, found };
 }
 
 /** POSIX single-quote a shell word when it needs it. */
@@ -233,7 +264,7 @@ export interface RunOutcome {
   publicCommand: string;
 }
 
-export function runRelease(args: ReleaseArgs, deps: Deps, projectRoot: string = PROJECT_ROOT): RunOutcome {
+export function runRelease(args: BuildArgs, deps: Deps, projectRoot: string = PROJECT_ROOT): RunOutcome {
   const must = (r: RunResult, what: string): string => {
     if (r.status !== 0) throw new Refusal(`${what} failed (exit ${r.status})`);
     return r.stdout;
@@ -248,11 +279,12 @@ export function runRelease(args: ReleaseArgs, deps: Deps, projectRoot: string = 
   if (args.mode === 'publish') {
     const tag = `v${args.version}`;
     const ls = must(git(projectRoot, 'ls-remote', source, `refs/tags/${tag}`, `refs/tags/${tag}^{}`), `git ls-remote ${source}`);
-    const commit = parseLsRemote(ls, tag);
-    if (!commit) throw new Refusal(`tag ${tag} does not exist at ${source}. Tag S and push the tag first (RELEASE-FLOW 5.2).`);
-    if (commit !== args.expectSha) {
-      throw new Refusal(`tag ${tag} resolves to ${commit}, not the expected ${args.expectSha}.`);
+    const verdict = tagVerdict(ls, tag, args.expectSha);
+    if (!verdict.ok) {
+      if (!verdict.found) throw new Refusal(`tag ${tag} does not exist at ${source}. Tag S and push the tag first (RELEASE-FLOW 5.2).`);
+      throw new Refusal(`tag ${tag} resolves to ${verdict.found}, not the expected ${args.expectSha}.`);
     }
+    const commit = args.expectSha;
     if (git(projectRoot, 'merge-base', '--is-ancestor', commit, 'origin/main').status !== 0) {
       throw new Refusal(`tag ${tag} (${commit}) is not on this checkout's origin/main. Run \`git fetch origin\` and check that the tag names the release squash S.`);
     }
@@ -396,9 +428,113 @@ export function runRelease(args: ReleaseArgs, deps: Deps, projectRoot: string = 
   }
 }
 
+// ─── The census mode: hermetic-publish-path's commit-held scope ──────────────────────────────────
+
+/**
+ * Corpus: every 5.3 `release-publish-record.json` pasted verbatim in a step-6 record (15.1.0 onward; 15.0.0
+ * predates this script), and the v<version> tag of each, read from git. Ballot
+ * 2026-10-26-release-flow-batch-16-1, Census block and § "Plans" P1; record
+ * .kiro/issues/2026-10-27-npmjs-mode-and-commit-held-census-mode-owed.md.
+ */
+export const CENSUS_RECORDS_DIR = 'docs/releases';
+export const CENSUS_RECORD_FILE = 'publish-verification.txt';
+export const CENSUS_HEADING = '### 5.3 release-publish-record.json (verbatim)';
+
+export interface CensusInput {
+  /** The step-6 record's path, relative to the repo root. */
+  input: string;
+  /** The pasted record's JSON text, exactly as committed (the `{` line through the first `}` line after it). */
+  recordText: string;
+}
+
+/** The pasted record under CENSUS_HEADING, or undefined when the file has no such heading. Reads; decides nothing. */
+export function extractPastedRecord(text: string): string | undefined {
+  const lines = text.split('\n');
+  const at = lines.indexOf(CENSUS_HEADING);
+  if (at < 0) return undefined;
+  const open = lines.findIndex((l, i) => i > at && l === '{');
+  const close = open < 0 ? -1 : lines.findIndex((l, i) => i > open && l === '}');
+  if (open < 0 || close < 0) return '';
+  return lines.slice(open, close + 1).join('\n');
+}
+
+export function censusCorpus(projectRoot: string, deps: Pick<Deps, 'listDir' | 'readFile'>): CensusInput[] {
+  const inputs: CensusInput[] = [];
+  for (const entry of [...deps.listDir(path.join(projectRoot, CENSUS_RECORDS_DIR))].sort()) {
+    const rel = `${CENSUS_RECORDS_DIR}/${entry}/${CENSUS_RECORD_FILE}`;
+    let text: string;
+    try {
+      text = deps.readFile(path.join(projectRoot, rel));
+    } catch {
+      continue; // not a release directory with a step-6 record
+    }
+    const recordText = extractPastedRecord(text);
+    if (recordText !== undefined) inputs.push({ input: rel, recordText });
+  }
+  return inputs;
+}
+
+/** What a census decision reads: the pasted record, and `git ls-remote` output for a tag at the census source. */
+export interface CensusContext {
+  recordText: string;
+  lsRemote(tag: string): string;
+}
+
+/** The pasted record's fields a tag decision is called with. Corpus reading only; no verdict. */
+function pastedFields(recordText: string): { version: string; commit: string } | undefined {
+  try {
+    const r = JSON.parse(recordText) as { version?: unknown; commit?: unknown };
+    return typeof r.version === 'string' && typeof r.commit === 'string' ? { version: r.version, commit: r.commit } : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function renderTagVerdict(v: TagVerdict): string {
+  return v.ok ? 'pass' : v.found ? `refuse(names ${v.found})` : 'refuse(absent)';
+}
+
+/**
+ * The commit-held decisions the census calls, one entry per decision function, in output order. Each entry calls
+ * the script's own function and renders its verdict; it adds no logic. `tag-5.3`: 5.3's tag check, called with the
+ * --expect-sha the pasted record carries as `commit` (5.3 writes `commit` only after the tag named it exactly).
+ */
+export const CENSUS_DECISIONS: Array<{ name: string; decide(c: CensusContext): string }> = [
+  {
+    name: 'tag-5.3',
+    decide(c) {
+      const f = pastedFields(c.recordText);
+      if (!f) return 'unreadable';
+      return renderTagVerdict(tagVerdict(c.lsRemote(`v${f.version}`), `v${f.version}`, f.commit));
+    },
+  },
+];
+
+/** The census output: one sorted `<input>\t<name>=<verdict>;…` line per input, then the selected count. */
+export function runCensus(deps: Deps, projectRoot: string = PROJECT_ROOT, source: string = projectRoot): string[] {
+  const lsRemote = (tag: string): string => {
+    const r = deps.run('git', ['ls-remote', source, `refs/tags/${tag}`, `refs/tags/${tag}^{}`], projectRoot);
+    if (r.status !== 0) throw new Refusal(`git ls-remote ${source} failed (exit ${r.status})`);
+    return r.stdout;
+  };
+  const corpus = censusCorpus(projectRoot, deps);
+  const lines = corpus
+    .map(({ input, recordText }) => {
+      const ctx: CensusContext = { recordText, lsRemote };
+      return `${input}\t${CENSUS_DECISIONS.map((d) => `${d.name}=${d.decide(ctx)}`).join(';')}`;
+    })
+    .sort();
+  lines.push(`selected: ${corpus.length} pasted 5.3 records under ${CENSUS_RECORDS_DIR}/*/${CENSUS_RECORD_FILE}; decisions: ${CENSUS_DECISIONS.map((d) => d.name).join(', ')}`);
+  return lines;
+}
+
 function main(): void {
   try {
     const args = parseArgs(process.argv.slice(2));
+    if (args.mode === 'census') {
+      for (const l of runCensus(realDeps, PROJECT_ROOT, args.source ?? PROJECT_ROOT)) console.log(l);
+      return;
+    }
     runRelease(args, realDeps);
   } catch (e) {
     if (e instanceof Refusal) {
