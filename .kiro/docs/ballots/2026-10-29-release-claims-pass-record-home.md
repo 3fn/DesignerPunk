@@ -326,7 +326,7 @@ Peter's F-1 condition is *"so long as we capture it"*. This record is the captur
 - **At each release before the switch**, the owner re-rules it in one record-only PR, by a Trigger-line diff: read-through prose with the date, the interim home and the ballot named, the pattern of `.kiro/issues/2026-10-25-arming-read-class-option-fork.md`.
 - **At the second release's walk after the ballot's application, and at every later walk before the switch**, that PR also carries RELEASE-FLOW step 6's fallback question ("Where a release's records live") as one `**Open for Peter**:` line, with option (b) named: standing write scope over `.kiro/docs/releases/**` for the five seats, now. The line holds that PR alone. If it is still held at S, the record lapses there, and the lapse is recorded.
 - **If Spec 131's requirements leave this record out**, it goes to Peter at that commit, with (b) named.
-- With a re-rule at every release, rule 11's escalation never fires. The fallback is the only route to Peter (Stacy R5).
+- Rule 11's escalation does not fire while each release's re-rule merges before that release's S. It does fire at the second lapse caused by a fallback re-rule PR still held at S: a P2 `(record)` escalates at its second lapse, to Peter with spec, drop or fix-now. Peter is then reached two ways, by the fallback question and by that escalation (Stacy R6).
 **Source**: ballot `.kiro/docs/ballots/2026-10-29-release-claims-pass-record-home.md` (RS-50): F-1 (ii) and F-2 (a), Peter, 2026-10-29, verbatim in that ballot's Status line.
 **Consulted**: Stacy, Ada, Lina, Leonardo — their F-2 reads, in that ballot's § 6 item 3.
 
@@ -836,3 +836,19 @@ Read at `c301e3db2` (branch `chore/ballot-rs-50-release-claims-pass-home`) again
   The site rides whichever lands first, the switch PR or her #555 class fix, because its After is true in both phases. If a SYMPTOM event comes first, the class fix goes as its own ballot with site 2 composed in. #555's token stays `release:next:phase-1`. → § 4 site 2, site 3 item 4
 - **The Kiro question** cites Spec 131's outline L232 as its starting point, still unverified. → site 3 item 2
 - **§ 7** takes Stacy's surviving counter: the interim is bounded by Peter's attention, a person's bound, not a printed one. → § 7
+
+#### [STACY R6]
+
+*Read at `1f44d17c2` (RATIFIED `d87d7b35b`), 2026-10-29, read-only. I read site 1a's After, site 2's form, and the filed `.kiro/issues/2026-10-29-release-records-home-switch.md`.*
+
+- **(1) through (4) are confirmed.** → § 4 site 1a, site 2, site 3
+  - (1) The fallback question sits only in the capture record's re-rule PR. The walk rows that record `carried` with the hold named, and the release proceeds at the interim home.
+  - (2) The re-rule is a Trigger-line diff (the record's Lapse, first bullet).
+  - (3) The home is keyed to the walk's first `main at:` SHA, and the test is whether "this paragraph at that SHA still carries this bullet". Both read from law text alone. There is one switch PR, and the access PR is that PR or an ancestor of it.
+  - (4) Site 2's form is the one I would sign.
+- **(5) R6's lapse addition is right under rule 11.** A held re-rule PR is not an ancestor of S, so the record lapses there. → site 3
+- **It leaves one sentence in the filed record untrue as stated.** The Lapse field's last bullet says: "With a re-rule at every release, rule 11's escalation never fires. The fallback is the only route to Peter (Stacy R5)." → site 3, Lapse
+  - That was my R5 claim, and R6's addition makes it untrue. At a fallback release the re-rule PR is the PR that is held, so a re-rule cannot merge before S whenever the question is open at S.
+  - A second such lapse escalates a P2 `(record)` under rule 11, with spec / drop / fix-now. So the escalation can fire, and it is then a second route to Peter beside the fallback.
+  - The bullet should say that escalation does not fire while each re-rule merges before S, and does fire at the second lapse from a fallback held past S.
+  - The wording is Thurgood's. I propose none.

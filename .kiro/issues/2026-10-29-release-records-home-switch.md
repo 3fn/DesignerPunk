@@ -8,7 +8,7 @@
 - **At each release before the switch**, the owner re-rules it in one record-only PR, by a Trigger-line diff: read-through prose with the date, the interim home and the ballot named, the pattern of `.kiro/issues/2026-10-25-arming-read-class-option-fork.md`.
 - **At the second release's walk after the ballot's application, and at every later walk before the switch**, that PR also carries RELEASE-FLOW step 6's fallback question ("Where a release's records live") as one `**Open for Peter**:` line, with option (b) named: standing write scope over `.kiro/docs/releases/**` for the five seats, now. The line holds that PR alone. If it is still held at S, the record lapses there, and the lapse is recorded.
 - **If Spec 131's requirements leave this record out**, it goes to Peter at that commit, with (b) named.
-- With a re-rule at every release, rule 11's escalation never fires. The fallback is the only route to Peter (Stacy R5).
+- Rule 11's escalation does not fire while each release's re-rule merges before that release's S. It does fire at the second lapse caused by a fallback re-rule PR still held at S: a P2 `(record)` escalates at its second lapse, to Peter with spec, drop or fix-now. Peter is then reached two ways, by the fallback question and by that escalation (Stacy R6).
 **Source**: ballot `.kiro/docs/ballots/2026-10-29-release-claims-pass-record-home.md` (RS-50): F-1 (ii) and F-2 (a), Peter, 2026-10-29, verbatim in that ballot's Status line.
 **Consulted**: Stacy, Ada, Lina, Leonardo — their F-2 reads, in that ballot's § 6 item 3.
 
