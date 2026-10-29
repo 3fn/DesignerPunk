@@ -3,7 +3,7 @@
 **Date**: 2026-10-26
 **Status**: **ACTIVE**, the grant inert until activation (rule 8).
 **Owner**: Thurgood (owner of the operative set `canonical/operative-sets/civitas-system-overview.yaml`, `owner: thurgood`, and author of the consumer profile it re-grounds)
-**Trigger**: `release:next:phase-1` — the fixing PR's merge (branch `fix/overview-section-counts`) owes the close, and the grant expires there; the owner re-rules this line to `merge:#<N>` once that PR is open (rule 1). The correction is owed before the next release ships.
+**Trigger**: `merge:#530` — the fixing PR (branch `fix/overview-section-counts`) owes the close, and the grant expires at its merge. *(Re-ruled 2026-10-27, Thurgood, owner, rule 1: the fixing PR is open as #530. Was `release:next:phase-1`.)*
 **Class**: P0 false-claim · grant *(set 2026-10-26, Thurgood, rule 12. By M7's P0 definition, as read for the same two units at #467 and confirmed there by Stacy: the consumer's always-loaded Systems Overview member (`canonical/_consumer-output/**/designerpunk-systems-overview.md`, unit `#civitas-system-governance-infrastructure`, `retained`) ships "Docs MCP 84 docs, 2,535 sections"; `get_index_health` at `6615a6774` reads 84 / 2,537 / 331. Stacy's O-23 (claims pass for 16.1.0, L447 @ `b1a07fb7b`) calls the harm nil and does not offer it as a floor row; she may dispute the P0 reading, and only Peter downgrades it.)*
 **Source**:
 - The finding: O-23, homed in `.kiro/issues/2026-10-26-release-16-1-standards-implications.md` (its O-23 entry @ `e7fa33220`, branch `chore/record-release-16-1-standards-implications`). The steering CORRECTION is committed at `506da09b0` on the fixing branch.
@@ -34,3 +34,36 @@
 3. Stacy, in her seat, makes four C1 acts, one commit each, by the signing-seat brief: re-confirm `civitas-system-overview #what-civitas-contains`, re-confirm `designerpunk-systems-overview #high-level-designerpunk-three-system-architecture`, re-confirm `designerpunk-systems-overview #civitas-system-governance-infrastructure`, and re-sign `civitas-system-overview.dispositions.yaml#what-civitas-contains`.
 4. `canonical/generated.lock` is refreshed by a green full guard run. `verify-signing-chain --ci` passes.
 5. Peter merges the fixing PR. The grant expires, and this record closes by rule 5's dated outcome line in that PR (and moves to `archive/` there).
+
+## Owner lines
+
+- *2026-10-27 (Thurgood, rule 9; O-23 scope (b), Peter, "Cool. Let's go with my answers plus (b) for O-23", in chat, relayed by the orchestrator and received before 2026-10-27T02:25:42Z, after Stacy's O23-C1 read agreed with (b))*:
+  - **Two more hunks, both in `.kiro/steering/Civitas-System-Overview.md` unit `#what-civitas-contains`.** That file is a governance path, Peter-merged under the carve-out, and no part of this grant. L46 `**Automation** (12 hooks + 5 shell scripts):` and L50 `**Knowledge bases** (13 definitions):` become pointers to how each count is measured.
+  - **Measured at `08b9c7a8e`, with #467's definitions:**
+    - `git ls-files '.kiro/hooks/*.kiro.hook' ':!.kiro/hooks/archive/**' | wc -l` → `12`.
+    - `git ls-files '.kiro/hooks/*.sh' ':!.kiro/hooks/archive/**' | wc -l` → `5`.
+    - The `  - ` entries under `knowledgeBases:` in the eight non-fixture `canonical/agents/*.md` → `13` (ada 3, data 2, kenya 2, leonardo 0, lina 2, sparky 1, stacy 3, thurgood 0).
+  - **Both figures are true at that SHA, so neither hunk rests on a falsehood.** Their ground is ballot `2026-10-17-no-volatile-metadata-in-signed-units` § 2: "a signed unit holds only text whose change is a change of law". Each count has changed without any change of law; #467 corrected 13→12 hooks and 24→13 knowledge bases. **This line is the observation the fixing PR's `**Edit kind**:` lines cite for L46 and L50.** For L37 and L38 they cite O-23 and this record's Source.
+  - **Path list unchanged.** No item of `#what-civitas-contains` quotes L46 or L50; its items are `what-civitas-con-2` to `-10` and `-17`. So there is no further item re-author, and the four C1 acts in "The sequence" step 3 stand as written.
+  - **The overlay pin's new target is `sha256:8bd2b48ef0fb20b950c7c1dd0466f7a4c96154da800d5787bc142536fab4533f`, not the dry run's `sha256:1048a3e5…ff0973`.** The dry-run hash was the unit as it stood at `506da09b0`, without L46/L50. The new value is the unit's SHA-256 over `partition(splitFrontmatter(src).body)`, read at the authoring commit. The same computation gives `1048a3e5…ff0973` at `506da09b0` and the signed `77dc3cb6…8a26` at `08b9c7a8e`.
+  - **The clause-6 note's "exactly" gains two entries.** One is this line. The other is the record `.kiro/issues/2026-10-27-civitas-overview-product-mcp-provenance-false.md`, filed under rule 10 in the fixing PR, inside my standing `.kiro/issues/**` scope and not this grant. It covers the Product MCP's false "built in Spec 081: 14 tools", which is scope (c), not taken: `what-civitas-con-8`, Civitas L39 and Systems Overview L180 are untouched here.
+
+## Outcome
+
+**Outcome (2026-10-27, Thurgood, rule 5)**: done in PR #530 (branch `fix/overview-section-counts`). The grant expires at that PR's merge, and this record moves to `archive/` in the same PR.
+- **Scope**: (b), as Peter ruled (owner line above).
+- **The six grant paths, as written on the branch**:
+  - In `b3b447d57`:
+    - `canonical/operative-sets/civitas-system-overview.yaml`: the item text of `what-civitas-con-6` and `-7` only, now matching Civitas L37 and L38 word for word; labels unchanged.
+    - `canonical/profiles/consumer/always-set/civitas-system-overview.overlay.md`: the `#what-civitas-contains` pin moved to `sha256:8bd2b48e…b4533f`.
+    - The three `canonical/_consumer-output/**/designerpunk-systems-overview.md` renderings, regenerated by `generate.ts`.
+  - In `a7d0c5b34`: `canonical/generated.lock`, as written by the green full guard run (`inputClosure` `0a937eab…dc0e`, `outputs` `07422646…1586`).
+  - No other commit on the branch touches a grant path except Stacy's `canonicalHash` moves, which are C1 acts and need no grant.
+- **Stacy's four C1 acts**, one commit each:
+  - `22fde5e0e`: re-confirm `civitas-system-overview #what-civitas-contains`.
+  - `6379843a6`: re-confirm `designerpunk-systems-overview #high-level-designerpunk-three-system-architecture`.
+  - `f4466db5f`: re-confirm `designerpunk-systems-overview #civitas-system-governance-infrastructure`.
+  - `94b1abd1c`: re-sign `civitas-system-overview.dispositions.yaml#what-civitas-contains`.
+- **Checks at `a7d0c5b34`**: `check:122:diff-guard --base 08b9c7a8e` gives `no-op-green`, with 0 stale rows. `verify-signing-chain --ci` gives PASS, with 4 rows across 4 signing commits.
+- **The PR's `git diff --name-only`** against `origin/main` `08b9c7a8e` is the clause-6 list, widened as the owner line above records, plus this record's archive move.
+- **Still owed**: the Product MCP count (scope (c)). It is carried by `.kiro/issues/2026-10-27-civitas-overview-product-mcp-provenance-false.md`.
