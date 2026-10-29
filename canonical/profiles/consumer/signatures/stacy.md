@@ -659,6 +659,27 @@ verdict: assent — surviving 5/13; not surviving: `trigger-lens`, `trigger-rele
 >
 > The LENS row (`trigger-lens`) keeps question 6 but replaces the **five verifiability questions** with one summary ("can each criterion be verified from the repo"). The five questions are: a criteria set exists; evidence of a named kind could exist; some state of the world reads UNMET; "met" is decidable without the author; and the task text promises no artifact the criteria do not cover. They are repo-independent and they are the seat's content. Only the pointer to the lifecycle amendment is repo-bound. **Should re-point**: carry the five questions inline. For the record, the rest of the unit would assent at `trigger-symptom`, `trigger-midpoint`, `trigger-education`, `finding-routing` and `merge-path-status` (5/13). Not surviving would be RELEASE (its Q2 guard), CLOSEOUT (the rider-(a) discharge), ARMING, GATE, STRAGGLER, LIVENESS (the charter walk) and BURST, all repo-bound.
 
+## `#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength`
+
+signer: stacy
+date: 2026-10-29
+row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength` (re-pointed; ROUTED; first signature)
+canonicalHash: sha256:f6bfb7a081874a7f899d171cee0ad71a4da69c180689e6f96cfbed8729b37da5
+renderedHash: sha256:c8aad0f5042005eb9ddf29b65e8435208d251478c64c8ea4e11781b57394a17e
+verdict: assent — surviving 4/4
+
+**First signature, 2026-10-29.** The unit was `retained` until ballot `2026-10-26-release-flow-batch-16-1` (RATIFIED, Peter, 2026-10-26/27) site 11 (RS-33, F-33a (i), F-33b include) added a ballot pointer. My E5 removal row (`11cd1d4ca`) re-points the unit with that pointer removed (`subtraction-2`). Thurgood's overlay entry carries the heading and paragraphs with the pointer removed and nothing else changed. His regeneration (`4f88c4c6e`) renders the unit from it. My re-confirmation at 4 items is `ad1f5b952`.
+- **Read before this act**: the three re-pointed renderings, read through tool calls (`sed -n`) at `4f88c4c6e` before this commit: `canonical/_consumer-output/_canonical/agents/stacy.md` L357–L364, `cc/.claude/agents/stacy.md` L231–L238, `kiro/.kiro/agents/stacy-prompt.md` L197–L204. The three are identical, and none carries `release-flow-batch-16-1` (0 hits each).
+- **Itemized assent, all four survive**, each verbatim in each rendering (one occurrence apiece):
+  - `mirror-clause`: the prohibition in the blockquote.
+  - `mirror-called-at-exchange`: the named-caller-out sentence.
+  - `mirror-binds-lens`: "It binds the LENS seat specifically, and her read of release text (below)."
+  - `mirror-binds-release-read`: the new paragraph, through "calls it out at that exchange."
+  A consumer's verifier seat has a LENS round and reads its team's release text, so every item has a consumer counterpart. This is the full-survival shape by construction; the only removal is provenance.
+- **The removal applies**: the pointer names a DesignerPunk ballot (`subtraction-2`). It occurs once in the canonical unit and nowhere in the renderings. No other byte differs between the canonical unit and the rendering.
+- **Hashes**: canonicalHash recomputed independently with `partition` + `regrounding/hash.ts` (body lines 205–212); it equals the overlay pin and the record's value. renderedHash recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` over the three renderings (3 pieces), not the overlay text; it equals Thurgood's computed value.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
 ## `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference`
 
 signer: stacy
