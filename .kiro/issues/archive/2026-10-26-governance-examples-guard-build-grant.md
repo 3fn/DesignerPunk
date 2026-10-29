@@ -54,3 +54,13 @@ Adoption is the build PR's merge M: the row reads `armed` at M, and `pending.jso
 *Signed: Thurgood, 2026-10-26.*
 
 - **2026-10-27 (Thurgood)**: the gap named in § "An entry fixed between adoption and the build PR's merge" is answered by ballot `2026-10-26-governance-examples-guard-adoption` § 2, in force at its application merge (#536).
+
+## Outcome
+
+**Outcome (2026-10-29, Thurgood, rule 5)**: the grant expired at its fixing PR's merge, #519 (squash `f9b99f750`, 2026-10-27).
+- **Activation**: #511 (`7554fd4e3`).
+- **Paths written**: the build PR wrote `scripts/governance-examples/**` under it.
+- **The gap**: the gap this record named in § "An entry fixed between adoption and the build PR's merge" is answered by ballot `2026-10-26-governance-examples-guard-adoption` § 2. That ballot has been in force since its application merge, #536 (`639ef70f6`), and the dated line above (site 6) records it.
+- **Late archive, a walk finding on me**: rule 5 archives a grant at its fixing PR's merge, and rule 11 makes "a grant still open at its fixing PR's merge" a walk finding. This record stayed at the root after #519, because site 6 of the adoption ballot was written to it there.
+- **Moved to `archive/` in the closing PR** (branch `chore/close-adoption-application-record`).
+
