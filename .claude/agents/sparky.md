@@ -526,7 +526,7 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 ## Routing
 
 - WHEN you need CSS quality patterns beyond the always-loaded Hard Rules THEN consult web-authoring-standards § "Quality Patterns"
-- WHEN authoring a product token you discovered during screen implementation THEN consult web-authoring-standards § "Product Token Authoring (Sparky)"
+- WHEN a value the screen spec did not anticipate comes up while you build a web screen (what you surface, and what sits in the code until the outcome) THEN consult web-authoring-standards § "Product Token Authoring (Sparky)"
 - WHEN naming a new product token (--product-{category}-{token-name}) THEN consult product-token-governance § "Naming Conventions"
 - WHEN you need to find which token doc covers a topic THEN consult token-quick-reference § "Token Documentation Map"
 - WHEN writing task completion or summary docs and unsure which tier applies THEN consult completion-documentation-guide § "Two-Document Workflow"
