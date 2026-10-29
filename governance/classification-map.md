@@ -1272,3 +1272,24 @@ history:
   - { date: 2026-10-26, change: "armed in the build PR, not in a follow-up EXECUTION PR: a departure from the ballot § 8.8 entry's bytes (check_state proposed, checks empty) as ratified-intent, § 2.4, § 2.6 and § 8.8's own comment that the row flips to armed at the build PR's merge. Peter, relayed by the orchestrator in chat before 2026-10-26T21:12:21Z (typos corrected, meaning unchanged): 'Re: the remaining rulings, let's go with the seat recommendations of those that have them; but any that have deferred or follow-up work require a plan to be addressed.' The seat recommendation was Stacy's: arm now, because it opens a window where the lane enforces a guard the register calls proposed, and entries can be added before adoption. The deferred work is the guard-amendment ballot that makes the ballot's bytes say what shipped; its plan is in .kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md § 'Plan (Peter's condition)'", by: thurgood }
   - { date: 2026-10-27, change: "LAW HOME gains ballot 2026-10-26-governance-examples-guard-adoption § 2 (pending.json after adoption: deletions by the rule of its F-1 answer, no addition or re-key without a ballot); the guard's paths join Stacy's ARMING instrument-path limb and Thurgood's writeScope. EXECUTION (that ballot § 3 site 4); rule line, checks and check_state unchanged", by: thurgood }
 ```
+
+### dated-pointer-paths
+
+```yaml
+rule: "A LAW or CORRECTION edit declared on a PR's **Edit kind**: line adds a dated pointer in one of the named forms when its path is bound by .kiro/docs/ballots/README.md § 'Conventions' ('Where the pointer is owed'), and adds none when its path is canonical/agents/** or canonical/shared/**"
+boundary_call:
+  class: functional
+  rationale: "Presence of an added line matching the pointer pattern in a declared file's diff is decidable from the PR body and git; whether the pointer's text is true is not, and stays the claims-pass read's"
+verification:
+  disposition: audit
+  owner: thurgood
+  check_state: none
+  checks: []
+  # Audit tool, never a gate: scripts/completion-claims/edit-kind-pointers.ts --pr <n>, run by Stacy as a limb of her
+  #   governance-edit-kind read (canonical/agents/stacy.md, the L432 bullet). Thurgood maintains it. Its reach: one verdict
+  #   per declared file or range, read lexically from added lines; an undeclared edit escapes it.
+education:
+  disposition: "LAW HOME: .kiro/docs/ballots/README.md § 'Conventions', Edit discipline ('Where the pointer is owed'); canonical/agents/stacy.md (the governance-edit-kind read); LAW RECORD: ballot 2026-10-29-dated-pointer-paths-and-edit-kind-check"
+history:
+  - { date: 2026-10-29, change: "entry created by ballot 2026-10-29-dated-pointer-paths-and-edit-kind-check (EXECUTION, § 3 site 5), check_state none: an audit tool read by Stacy, never a gate", by: thurgood }
+```
