@@ -34,7 +34,7 @@ routes:
     - id: product-token-authoring
       doc: web-authoring-standards
       section: Product Token Authoring (Sparky)
-      when: authoring a product token you discovered during screen implementation
+      when: a value the screen spec did not anticipate comes up while you build a web screen (what you surface, and what sits in the code until the outcome)
     - id: product-token-naming
       doc: product-token-governance
       section: Naming Conventions

@@ -39,3 +39,7 @@
 ## Close
 
 Rule 5's dated outcome line in the fixing PR, and the archive move there.
+
+## Outcome (2026-10-28, Thurgood)
+
+Fixed by branch `chore/sparky-product-token-authoring-route-cue` (this record's fixing PR). `canonical/agents/sparky.md` L87's `when:` reads "a value the screen spec did not anticipate comes up while you build a web screen (what you surface, and what sits in the code until the outcome)", Kenya's site 8b form with "web" for "iOS". The renderings are regenerated and the lock is refreshed. The consumer row stays `retained` and unsigned, so no seat act is owed. Sparky's read of the words is owed in the PR before merge (the record's Consulted line); if he rewords, his text replaces this one in the same PR. Archived in this PR (rule 5).
