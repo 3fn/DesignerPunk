@@ -1,52 +1,51 @@
 # Ballot Measure: where a RELEASE claims-pass record lives once Spec 123 closes (RS-50)
 
 **Date**: 2026-10-29
-**Drafted by**: Thurgood (Civitas steward; owner of `.kiro/hooks/RELEASE-FLOW.md`, and of the RS queue's standards side), at Peter's go, chat, relayed by the orchestrator, 2026-10-29, verbatim: *"Continue with the remaining items."* RS-50 is one of those items. Drafter's clock at the start of drafting: 2026-10-29T05:21:13Z (`date -u`).
-**Status**: **DRAFT**
+**Drafted by**: Thurgood (Civitas steward; owner of `.kiro/hooks/RELEASE-FLOW.md`, and of the RS queue's standards side), at Peter's go, chat, relayed by the orchestrator, 2026-10-29, verbatim: *"Continue with the remaining items."* RS-50 is one of those items. Drafter's clock at the start of drafting: 2026-10-29T05:21:13Z (`date -u`); at R5: 2026-10-29T13:02:45Z.
+**Status**: **DRAFT** (R5; text settled for Peter's rulings below, pending Stacy's R5 read; the Status commit then records his words).
+**Ruled in chat, relayed by the orchestrator, not yet recorded as ratification**:
+- **F-1**, received before 2026-10-29T12:45:12Z (the orchestrator's clock), verbatim: *"Let's go (ii). This problem only gets worse the longer we let it persist, and we've got four specs on the horizon. If the scope necessary to complete this naturally falls into one of those specs, I'm fine with deferring it there so long as we capture it. Honest thoughts?"*
+- **F-2**, received before 2026-10-29T12:59:53Z (the orchestrator's clock), verbatim: *"Thank you. Let's go (a) with the informed perspectives the agents provided, please."* (a) is: rule the home now, apply it when Spec 131's owners file gives the writing seats access, with Spec 123's completion directory named as the interim home. Every seat leaned (a): Stacy, Thurgood, Ada (who moved from (b)), Lina and Leonardo.
+- **The orchestrator's reading of "with the informed perspectives"** is § 6 item 3. It is flagged for Peter to confirm or overturn.
 **Base**: `6f23bc6fe` (#549). Every Before block below was cut from that SHA by `git show 6f23bc6fe:<path> | sed -n <L>p`, and is byte-exact.
-**Required reviewer**: **Stacy**. The record is hers, and she writes both phases into it. Site 2 is her charter, and the acts it costs are hers. She is also the census reader.
+**Required reviewer**: **Stacy**. The record is hers, and she writes both phases into it. Site 2, now deferred to the switch PR, is her charter, and its acts are hers. She is also the census reader.
 **Reviewers**:
-- **Ada**: the first delegate under signing-act ballot § 5.3, whose output path this ballot fixes. She was the packaging seat for 15.0.0 to 16.0.0, and owned those releases' files grants; at 16.1.0 Thurgood was the release author and wrote the step-6 record (#509) (Ada R1).
-- **Lina**, only if F-1 (ii) or (iv) is ruled: site 2 is then applied, and owes a `removals` entry and an item split in her generator's dispositions model (§ 4 site 2), and her own write scope would move. Under F-1 (i) site 2 is not applied (Stacy R1), so Lina has nothing to read.
-- **Leonardo**, only under F-1 (ii) or (iv): his write scope would move, because he is the third delegate in the rotation.
-**Consulted**: Stacy — R1: leans (i); site 2 not applied under (i) (L417 incomplete, not false), its two acts kept for one edit of the unit's three unnamed homes (ARMING limbs, SYMPTOM's filename, the consumer overlay), filed by her under rule 10; under (ii)/(iv) site 2 owed, two acts, a `removals` entry, and an item text the rendering contains whole; census present and in-scope calls hold; the straggler sweep's false stop; site 1a's list not closed; R2: site 1b's file half decidable from git alone, its brief half needed three properties (the row names the path, "its terms" are § 5.3's three, one closed value for a brief on record nowhere), all met at R3; R3: the three properties met, the finding's addressee not decidable from the row, two forms offered ((b) picked at R4); Ada — R1: leans (i); 1b's brief check is uncheckable (her 16.1.0 brief was never committed), so the check lands on the file; addenda in the delegate file; the trio records missing from site 1a; L32 → L31; "the release author", not "Ada", at 16.1.0; the placeholder date is the application merge's squash date; R2: the brief clause right as written (item 1 of the trigger-(d) record carried all three terms, on `main` in #507 before her runs), "as at 16.1.0" names where the terms were recorded, not a row that existed then (cut from the law text at R3)
-**Class**: LAW. A home is a rule that two other rules key on: § 5.3 places the delegate's file "in the directory of the event's claims-pass record", and LIVENESS read 2 asks whether each RELEASE "produce[d] a committed record". So naming the home is not a CORRECTION. No referent names it today (§ 1). It also gives the brief a duty, and that is a requirement.
-**Class option**: one paragraph in RELEASE-FLOW step 6 that names **every record a release produces at a fixed path**, in one place: the notes, the walk record, the claims pass with its delegate file, the onboarding-trio records and the step-6 record; the release's grant and findings records, the release PR body's pastes and its `CHANGELOG.md` entry are reached through the walk record's rows (Stacy R1, Ada R1). It addresses the class at the release grain (five homes, findable only by memory), not just the claims pass. Site 1a is that paragraph. Cost: the paragraph. The wider class, records that an event rather than a spec fires (ARMING limbs, SYMPTOM's filename, the consumer overlay's RELEASE line), is Stacy's own rule-10 record, filed after this round (Stacy R1, S4), and is not legislated here.
+- **Ada**: the first delegate under signing-act ballot § 5.3, whose output path this ballot fixes. She was the packaging seat for 15.0.0 to 16.0.0 and owned those releases' files grants; at 16.1.0 Thurgood was the release author and wrote the step-6 record (#509) (Ada R1).
+- **Lina and Leonardo**: their reviews move to the switch PR. That is where write scope, the `removals` entry and the item split land (site 3, items 1, 2 and 4). This application touches neither seat's surface.
+**Consulted**: Stacy — R1: leans (i); site 2 not applied under (i) (L417 incomplete, not false), its two acts kept for one edit of the unit's three unnamed homes (ARMING limbs, SYMPTOM's filename, the consumer overlay), filed by her under rule 10; under (ii)/(iv) site 2 owed, two acts, a `removals` entry, and an item text the rendering contains whole; census present and in-scope calls hold; the straggler sweep's false stop; site 1a's list not closed; R2: site 1b's file half decidable from git alone, its brief half needed three properties (the row names the path, "its terms" are § 5.3's three, one closed value for a brief on record nowhere), all met at R3; R3: the three properties met, the finding's addressee not decidable from the row, two forms offered ((b) picked at R4); F-2 consult: leaned (a), raised the separation-of-duties problem with any grant (she would audit her own grant compliance); Ada — R1: leans (i); 1b's brief check is uncheckable (her 16.1.0 brief was never committed), so the check lands on the file; addenda in the delegate file; the trio records missing from site 1a; L32 → L31; "the release author", not "Ada", at 16.1.0; the placeholder date is the application merge's squash date; R2: the brief clause right as written (item 1 of the trigger-(d) record carried all three terms, on `main` in #507 before her runs), "as at 16.1.0" names where the terms were recorded, not a row that existed then (cut from the law text at R3); F-2 consult: moved from (b) to (a), with three must-says for the next delegate (the interim path in full, a switch point that one release never straddles, the file check stays) and the condition that every scope or grant line names `.kiro/docs/releases/**` exactly; Lina — F-2 consult: leaned (a); unverified, whether Spec 131's owners file reaches Kiro's generated `allowedPaths` (site 3 item 2); Leonardo — F-2 consult: leaned (a), a dated fallback on the interim; the trio records keep their own home and grant (protocol § 8 L144)
+**Class**: LAW. A home is a rule that two other rules key on: § 5.3 places the delegate's file "in the directory of the event's claims-pass record", and LIVENESS read 2 asks whether each RELEASE "produce[d] a committed record". So naming the home is not a CORRECTION. No referent names it today (§ 1). The ballot also gives the brief cell and the fallback walk duties, and those are requirements.
+**Class option**: one paragraph in RELEASE-FLOW step 6 that names **every record a release produces at a fixed path**, in one place: the notes, the walk record, the claims pass with its delegate file, the onboarding-trio records and the step-6 record. The release's grant and findings records, the release PR body's pastes and its `CHANGELOG.md` entry are reached through the walk record's rows (Stacy R1, Ada R1). It addresses the class at the release grain (five homes, findable only by memory), not just the claims pass. Site 1a is that paragraph. Cost: the paragraph. The wider class, records that an event rather than a spec fires (ARMING limbs, SYMPTOM's filename, the consumer overlay's RELEASE line), is Stacy's own record, `.kiro/issues/2026-10-29-claims-pass-record-homes-unnamed-arming-symptom-overlay.md` (#555). Its fix rides the switch PR with site 2 (site 3 item 4), and is not legislated here.
 **Amends** (one application PR, Peter-merged):
-- `.kiro/hooks/RELEASE-FLOW.md` step 6: one paragraph added after L215 (site 1a), and one clause and one pointer in L45, which is RS-37's interim delegate row (site 1b). **LAW**.
-- `canonical/agents/stacy.md` L417, the first sentence (site 2). **LAW**. **Not applied under F-1 (i)** (Stacy R1); **required under F-1 (ii) or (iv)**. Its follow-ons (operative item, overlay pin, a `removals` entry, regeneration, lock) are **EXECUTION**.
+- `.kiro/hooks/RELEASE-FLOW.md` step 6: one paragraph added after L215, naming the interim home, the switch and the fallback (site 1a). Also one clause and one pointer in L45, RS-37's interim delegate row (site 1b). **LAW**.
+- `.kiro/issues/2026-10-29-release-records-home-switch.md`: the capture record, filed in the Status commit under README rule 10 (site 3). This is a record, not law text.
+- **Pre-declared here and applied by the switch PR**, a later PR that needs no new ballot:
+  - site 1a's switch, whose After is drafted in § 4 (**EXECUTION** at that PR);
+  - site 2, `canonical/agents/stacy.md` L417, with Stacy's three conditions and her #555 class fix composed in (site 3 item 4).
 - **Not edited**:
   - Ballot `2026-10-01-signing-act-chain` § 5.3 (§ 3.5): its wording already follows the record's home.
   - No register row (§ 3.6).
   - `.kiro/issues/2026-10-26-release-16-1-standards-implications.md`, the RS-50 row's home, is held by another session. Its closing line is owed after the merge (§ 5, step 6).
-- **Under F-1 (ii) or (iv) only**: four charters' `writeScope` (Stacy, Ada, Lina, Leonardo), or a per-release grant (F-2). Those sites are **not drafted here**: § 6 F-2 says why, and what that does to ratification.
+  - No charter, no write scope, no grant: F-2 (a).
 
-**Census** (ballots README § "Conventions", "Instrument census"; one line per presumptively in-scope instrument):
-- Site 1 (`.kiro/hooks/RELEASE-FLOW.md`). No registered check's command loads RELEASE-FLOW. Three rows' education homes cite it.
-  - `**Census**: not in scope — publish-rail-guard (scripts/verify-publish-rail.sh; row census: none) — site 1 adds a paragraph to step 6 and a clause to item 3a; it adds no command, and changes no rail text, exit code, assertion or verdict; the script reads the registry and $VERSION, never a claims-pass record`
-  - `**Census**: not in scope — hermetic-publish-path (scripts/release-publish.ts; both scopes' census fields) — site 1 is text in the row's education home (steps 5–7) and adds nothing the script reads; the script decides from the commit's tree, its arguments and the registries; no decision in either scope changes`
-  - `**Census**: not in scope — signing-act-consistency (verify-signing-chain --ci; census mode --census-routed) — site 1 names the directory of § 5.3's delegate file at RELEASE; --audit writes no file and --ci reads no claims-pass record; no instrument code changes, so the census mode's committed and scratch-diff runs are identical by construction` *(a disclosure: site 1 is not presumptively in this row's scope, since its command does not load RELEASE-FLOW and its education names no RELEASE-FLOW path; Stacy R1)*
-  - `**Census**: not in scope — governance-examples (scripts/governance-examples/check.ts; census mode --census) — its scope is governance/*.md (the register excluded) and the eight .kiro/steering/*.md files package.json files[] names (check.ts L25–L26); no site edits either`
-  - **No line owed**:
-    - `release-falsity-floor`, whose education cites RELEASE-FLOW Phase 1, has `checks: []`.
-    - `scripts/owed-set.sh` and `scripts/issues-owned.sh` are named in no row's `checks`.
-    - Neither script reads a RELEASE record's path. `owed-set.sh` keys on `<spec>/completion/claims-pass.md` exactly (L194). `issues-owned.sh` prints `due:<v>` from the token alone (L147–L149).
-- Site 2 (`canonical/agents/stacy.md`; applied only under F-1 (ii) or (iv); these lines follow ballot `2026-10-29-dated-pointer-paths-and-edit-kind-check`'s, which Stacy read):
-  - `**Census**: not in scope — section-citation-resolution (scripts/check-section-citations.ts, citing corpus governance/, .kiro/steering/, canonical/; canonical is a CITING_ROOT, L57) — site 2 adds no get_section / get_document_* citation; RELEASE-FLOW (site 1) is outside the citing corpus`
-  - `**Census**: not in scope — 122-sweep-1-refs (tools/agent-generator/sweeps/sweep-1-refs.ts) — it resolves canonical id/section refs (law, routes, crossRefs) and shared-catalog source refs, and scans for retired names; site 2 changes prose in one unit, adds no ref and no retired name, and adds, removes or renames no heading`
-  - `**Census**: not in scope — 122-canonical-vs-truth (governanceAsLaw mustContain over the asserted sections) — site 2 edits prose in one unit of canonical/agents/stacy.md and no assert declaration; no asserted section is an edit site`
-  - `**Census**: not in scope — 122-sweep-2-skills, 122-sweep-4-ambient, 122-sweep-5-corrected-state, 122-sweep-6-declarations, 122-sweep-8-demotion (tools/agent-generator/sweeps/) — they read the skills: field, routes.cues and the ambient members, .web.tsx occurrences, routes.cues and toolSubset, and the replaces: keys; site 2 touches none and its After contains no .web.tsx`
-  - `**Census**: not in scope — signing-act-consistency (verify-signing-chain --ci; census mode --census-routed) — no instrument code changes; site 2 changes the bytes of one of Stacy's units (#the-claims-pass-record-claims-passmd-the-template), which the instrument reads as stale until her two acts (§ 5); that is the instrument's input, not its rule`
-  - `**Census**: not in scope — 122-diff-guard (tools/agent-generator/diff-guard.ts) — canonical/ is an input-closure root and site 2 is an ordinary closure input; no rule, pattern or grammar changes; the lock is refreshed at application, where its verdict is read`
+**Census** (ballots README § "Conventions", "Instrument census"; one line per presumptively in-scope instrument). Site 1 (`.kiro/hooks/RELEASE-FLOW.md`) is the only law site in this application. No registered check's command loads RELEASE-FLOW. Two rows' education homes cite it.
+- `**Census**: not in scope — publish-rail-guard (scripts/verify-publish-rail.sh; row census: none) — site 1 adds a paragraph to step 6 and a clause to item 3a; it adds no command, and changes no rail text, exit code, assertion or verdict; the script reads the registry and $VERSION, never a claims-pass record`
+- `**Census**: not in scope — hermetic-publish-path (scripts/release-publish.ts; both scopes' census fields) — site 1 is text in the row's education home (steps 5–7) and adds nothing the script reads; the script decides from the commit's tree, its arguments and the registries; no decision in either scope changes`
+- `**Census**: not in scope — signing-act-consistency (verify-signing-chain --ci; census mode --census-routed) — site 1 names the directory of § 5.3's delegate file at RELEASE; --audit writes no file and --ci reads no claims-pass record; no instrument code changes, so the census mode's committed and scratch-diff runs are identical by construction` *(a disclosure: site 1 is not presumptively in this row's scope, since its command does not load RELEASE-FLOW and its education names no RELEASE-FLOW path; Stacy R1)*
+- `**Census**: not in scope — governance-examples (scripts/governance-examples/check.ts; census mode --census) — its scope is governance/*.md (the register excluded) and the eight .kiro/steering/*.md files package.json files[] names (check.ts L25–L26); no site edits either`
+- **No line owed**:
+  - `release-falsity-floor`, whose education cites RELEASE-FLOW Phase 1, has `checks: []`.
+  - `scripts/owed-set.sh` and `scripts/issues-owned.sh` are named in no row's `checks`. Neither reads a RELEASE record's path: `owed-set.sh` keys on `<spec>/completion/claims-pass.md` exactly (L194), and `issues-owned.sh` prints `due:<v>` from the token alone (L147–L149). Site 3 is a `.kiro/issues/` record, which `issues-owned.sh` prints by its Trigger token. That is its input, not its rule.
+  - **The site-2 lines are cut**: site 2 is not in this application. The switch PR carries site 2's census, cut at its own base (site 3 item 4).
 
-**Cap**: one paragraph and one clause in RELEASE-FLOW; under F-1 (ii) or (iv), also one clause in Stacy's charter and its follow-ons.
+**Cap**: one paragraph and one clause in RELEASE-FLOW, and one issue record.
 
-**Retroactivity**: none. The four RELEASE records and the 16.1.0 delegate file stay where they are under every option. They are ledgers, and 38 files cite them by path (`git grep -l claims-pass-release` at the base, the records themselves excluded).
+**Retroactivity**: none. The four RELEASE records and the 16.1.0 delegate file stay where they are under every option. They are ledgers, and 38 files cite them by path (`git grep -l claims-pass-release` at the base, the records themselves excluded). Site 1a's "beside the records of 15.0.0 to 16.1.0" is the pointer (§ 6 item 3 (5)).
 
 > **Conflicts, stated first.**
 > - I own RELEASE-FLOW. I also wrote L45's interim, "the output path that brief names", which this ballot replaces (ballot `2026-10-26-release-flow-batch-16-1`, RS-37).
-> - I write the delegate's brief under § 5.3, so the path I fix here is the one my own briefs must name.
-> - The option I recommend is the one that costs my seat least work, and is also the status quo. Stacy's review and Peter's ruling are the checks.
+> - I write the delegate's brief under § 5.3, so the path I fix here is the one my own briefs must name. I also take the default finding when no brief is on record (site 1b).
+> - I own the capture record (site 3) and am one of the five writing seats it asks access for.
+> - Stacy's review and Peter's ruling are the checks.
 
 ---
 
@@ -101,7 +100,7 @@ The **filename is the same under every option**, `claims-pass-release-<v>.md`, w
 
 Only the directory differs between the options.
 
-### 3.1 (i) Spec 123's completion directory, fixed (recommended)
+### 3.1 (i) Spec 123's completion directory, fixed — the interim home (F-2 (a))
 
 `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-<v>.md`, for every release, whatever specs its delta carries.
 
@@ -127,18 +126,18 @@ Only the directory differs between the options.
   - R1, R2 and R3 read one sentence.
 - **If nothing is ratified before the next walk**, L45's interim lets the brief name the path, and habit puts it here. So (i) is also what happens without a ruling, and is the only option that needs no ruling to be safe.
 
-### 3.2 (ii) A standing release directory
+### 3.2 (ii) A standing release directory — ruled (F-1), applied at the switch (F-2 (a))
 
 `.kiro/docs/releases/<v>/claims-pass-release-<v>.md`, or `.kiro/releases/<v>/…`. The first follows the precedent of `.kiro/docs/civitas-health-checks/`, a standing record directory for an event that belongs to no spec. The second is a new root.
 
 - **Cost**:
-  - **No writing seat holds either path.** R1 and R2 need write scope for Stacy, Ada, Lina and Leonardo, because the delegate rotates. Either:
-    - **standing**: four `canonical/agents/**` frontmatter edits. That is LAW, with every affected seat consulted (standing-write-scope ballot § 3). Each adds a `writeScope[…]` row to its seat's consumer dispositions, which needs that seat's signature: at least four first-sign acts, plus site 2's two Stacy acts. Then regeneration and the lock.
+  - **No writing seat holds either path.** R1 and R2 need write scope for five seats: Stacy; Thurgood, who writes the composed-loop outcome line into every pass; and the delegate rotation, Ada, Lina and Leonardo. Either:
+    - **standing**: five `canonical/agents/**` frontmatter edits. That is LAW, with every affected seat consulted (standing-write-scope ballot § 3). Each adds a `writeScope[…]` row to its seat's consumer dispositions, which needs that seat's signature: at least five first-sign acts, plus site 2's two Stacy acts. Then regeneration and the lock.
     - **or per release**: an issue-row grant (`.kiro/issues/README.md` rule 8) for Stacy and the delegate, filed at every release. Every release already files grant records (for 16.1.0: four, the files, notes, fix-1 and fix-2 grants; for each of 15.0.0 to 16.0.0, a files grant and a lock-refresh grant), so this adds two seats to work a release already does, not a new kind of work (Ada R1). It is still an act someone must remember at every release, and a missed delegate grant blocks the walk, which is § 8's trigger (d).
   - Site 2 is required, because L417's "spec's completion directory" becomes false for RELEASE: two Stacy acts, a `removals` entry and an item split (§ 4 site 2).
   - The four existing records stay in 123 (§ "Retroactivity"). History splits across two homes for good: every reader that walks release records (LIVENESS read 2, R7, Stacy's prior-release reads at each phase 1) carries two roots (Stacy R1).
   - **Timing**: L45 makes the delegate's file owed before phase 1, so under (ii) the delegate creates the release directory before the record it is named after exists (Stacy R1).
-  - **Ratifying (ii) needs one more round**, to draft the write-scope or grant sites (F-2).
+  - **F-2 ruled (a)**: neither standing scope nor a grant now. The access comes with Spec 131's owners file (site 3).
 - **What it breaks**: nothing at runtime.
 - **What it gains**: one directory per release, holding only that release's audit and the delegate's file, tied to no spec. Its meaning is the cleanest of the four options.
 
@@ -146,7 +145,7 @@ Only the directory differs between the options.
 
 It has the "which spec" problem of the orchestrator's (i). It also inverts the two-document split: `docs/specs/` holds the concise summaries, and `.kiro/specs/<spec>/completion/` holds the internal records (Completion Documentation Guide § "Two-Document Workflow"). A claims pass is an internal ledger. No reviewer has argued for it, and no fork is put to Peter on it.
 
-### 3.4 (iv) Beside the step-6 record, `docs/releases/<v>/claims-pass-release-<v>.md`
+### 3.4 (iv) Beside the step-6 record, `docs/releases/<v>/claims-pass-release-<v>.md` — not taken
 
 RS-50's record listed this one first, as its (a).
 
@@ -171,11 +170,12 @@ No row's `rule`, `checks`, owner, `check_state` or `education` changes.
 
 A row for a path convention would be a second home for one sentence while Spec 131 is shrinking governance.
 
+
 ## 4. Edit sites (after ratification, one application PR, Peter-merged)
 
 ### Site 1a — `.kiro/hooks/RELEASE-FLOW.md` step 6, a paragraph after L215 (LAW)
 
-**Anchor** (L215–L217 at `6f23bc6fe`, verbatim; the paragraph goes between L215 and the blank L216, with one blank line before it):
+**Anchor** (L215–L217 at `6f23bc6fe`, verbatim). The paragraph goes between L215 and the blank L216, with one blank line before it:
 
 ```
    - Until that line exists, the liveness reading is "read, not committed". (RS-9: on 15.0.0 the merged file differed from the one phase 2 read, and only the confirmation line caught it.)
@@ -183,27 +183,45 @@ A row for a path convention would be a second home for one sentence while Spec 1
 7. **Announce last**: create the GitHub release (`gh release create v<version> --notes-file docs/releases/release-<version>.md`) **only after** step 6's rail PASS and a matching 6b record. Notes must not state a guard as applied before the step that applies it has run (R-3).
 ```
 
-**After, under F-1 (i)** (inserted text only, three-space indent as step 6's other paragraphs):
+**After** (F-1 (ii), F-2 (a); inserted text only, three-space indent as step 6's other paragraphs):
 
 ```
 
-   **Where a release's records live.** The RELEASE claims pass, both phases and every addendum, is one file, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-<v>.md`, whatever specs the release delta carries. Spec 123 is closed (its CLOSEOUT record is `completion/claims-pass.md`), and its completion directory stays the home: the records of 15.0.0 to 16.1.0 are there, and a fixed path names no carrying spec to decide. The delegate's file of ballot `2026-10-01-signing-act-chain` § 5.3 is `delegate-audit-release-<v>-<seat>.md`, in the same directory, with its addenda in it. The release's other records at fixed paths are its notes, `docs/releases/release-<v>.md` (Deriving item 3); its walk record, `.kiro/issues/<date>-release-<v>-walk.md` (item 3a; in `archive/` after phase 1, rule 5); its onboarding-trio records, `tests/onboarding-trio/records/<v>/` (item 6; the trio protocol § 8); and its step-6 record, `docs/releases/<v>/publish-verification.txt` (this step). Its grant and findings records are issue records, and its release PR body's pastes and its `CHANGELOG.md` entry are read where step 2 puts them; the walk record's rows reach each of them. *(added <application date> by ballot 2026-10-29-release-claims-pass-record-home, site 1a)*
+   **Where a release's records live.** The RELEASE claims pass, both phases and every addendum, is one file, whatever specs the release delta carries. Its home is fixed for each release by the walk record's `main at:` SHA (item 3a), before anything is written, so no release's records straddle two directories:
+   - **The interim home**, while the switch PR is not an ancestor of that SHA, is `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-<v>.md`, beside the records of 15.0.0 to 16.1.0.
+   - **The switch PR** is the PR that gives Stacy, Thurgood, Ada, Lina and Leonardo write access to `.kiro/docs/releases/**` (Spec 131's owners file; `.kiro/issues/2026-10-29-release-records-home-switch.md`). It replaces this paragraph's first sentence after the heading, and these three bullets, with the final sentence that ballot `2026-10-29-release-claims-pass-record-home` § 4 site 1a words. From then on the home is `.kiro/docs/releases/<v>/claims-pass-release-<v>.md`.
+   - **The fallback**: at the walk of the second release whose `main at:` SHA descends from that ballot's application merge, if the switch PR is not an ancestor of it, the walk record's PR carries one `**Open for Peter**:` line, which holds that PR until he answers. The question it asks is: standing write scope for the five seats now (that ballot's option (b)), or the interim home for one more release, and then the same question again. That release's record stays at the interim home.
+
+   The delegate's file of ballot `2026-10-01-signing-act-chain` § 5.3 is `delegate-audit-release-<v>-<seat>.md`, in the same directory as the claims pass, with its addenda in it. The release's other records at fixed paths are:
+   - its notes, `docs/releases/release-<v>.md` (Deriving item 3);
+   - its walk record, `.kiro/issues/<date>-release-<v>-walk.md` (item 3a; in `archive/` after phase 1, rule 5);
+   - its onboarding-trio records, `tests/onboarding-trio/records/<v>/` (item 6; the trio protocol § 8);
+   - its step-6 record, `docs/releases/<v>/publish-verification.txt` (this step).
+
+   Its grant and findings records are issue records. Its release PR body's pastes and its `CHANGELOG.md` entry are read where step 2 puts them. The walk record's rows reach each of them. *(added <application date> by ballot 2026-10-29-release-claims-pass-record-home, site 1a)*
 ```
 
-**After, under F-1 (ii)**: the first three sentences become:
+**The switch's After**, pre-declared here, so the switch PR is **EXECUTION** of this ballot. It replaces the paragraph's opening sentence after the heading and the three bullets, keeping the heading and everything from "The delegate's file" on, and adds a pointer at the paragraph's end after site 1a's:
 
-> The RELEASE claims pass, both phases and every addendum, is one file, `.kiro/docs/releases/<v>/claims-pass-release-<v>.md` *(or `.kiro/releases/<v>/…`, F-2)*, whatever specs the release delta carries. The records of 15.0.0 to 16.1.0 stay where they were written, in `.kiro/specs/123-consumer-distribution/completion/`.
+```
+   **Where a release's records live.** The RELEASE claims pass, both phases and every addendum, is one file, `.kiro/docs/releases/<v>/claims-pass-release-<v>.md`, whatever specs the release delta carries, for every release whose walk record's `main at:` SHA descends from the merge of the PR that made it the home; the records of earlier releases stay where they were written, in `.kiro/specs/123-consumer-distribution/completion/`.
+```
 
-The delegate-file sentence and the other-records sentence are unchanged.
-
-**After, under F-1 (iv)**: the same, with `docs/releases/<v>/claims-pass-release-<v>.md` and "beside the step-6 record" after the path.
+The switch pointer, appended after site 1a's: `*(amended <switch date> by ballot 2026-10-29-release-claims-pass-record-home, site 1a, the switch; prior text at <the switch PR's base SHA>)*`.
 
 *Why each part*:
-- **"Both phases and every addendum, … one file"**: L205 already says "one file". 16.1.0's pass carried five phase-1 addenda in it.
-- **"Whatever specs the release delta carries"**: this is what makes it decidable.
-- **The delegate-file sentence** restates § 5.3's consequence at the release, so R2 reads one place. "With its addenda in it": at 16.1.0 the re-read under the trigger-(d) record's item 7 went into the delegate file as a dated addendum (Ada R1).
-- **The other-records sentence** is the class option. It names the records at fixed paths, each already law where its item says, and claims no more: grant and findings records have no fixed path, and the PR body's pastes and the `CHANGELOG.md` entry are not files of their own (Stacy R1, Ada R1). Stacy's routing records filed under rule 10 are routing artifacts, not a second home of the pass (Stacy R1, S2).
-- **The pointer** is the `added` form; RELEASE-FLOW is a bound path (ballots README L31, "Where the pointer is owed"). `<application date>` is replaced at application by the date of the application PR's merge as its squash commit records it (§ 5 step 2). A literal placeholder left in place reads `pointer-missing` under `edit-kind-pointers.ts`'s `POINTER_RE` (Ada R1).
+- **"Fixed … by the walk record's `main at:` SHA"** answers Ada's must-say that one release never straddles two directories. It departs from the orchestrator's "the first release whose S descends from" on purpose. The delegate's file is owed before phase 1, and can land before S is cut. If the switch PR merged between the walk and S, an S-keyed switch would put that release's delegate file in the interim directory and its pass in the final one. The walk's `main at:` SHA precedes every write and is pasted in the walk record, so the directory is decidable from git. This departure is put to Peter (§ 6 item 3).
+- **The interim path in full** is Ada's first must-say: the delegate's file is `.kiro/specs/123-consumer-distribution/completion/delegate-audit-release-<v>-<seat>.md`, beside `claims-pass-release-<v>.md`.
+- **The switch PR is named by what it does**, not by Spec 131's unit name. 131's owners file does not exist yet, and its path can't be tokened.
+  - Naming the five seats and the exact glob `.kiro/docs/releases/**` gives the switch PR a test.
+  - Thurgood is a writer: he writes the composed-loop outcome line into every pass, and any § 5.3 annotation beside it.
+  - Ada's condition (a scope line names `.kiro/docs/releases/**`, never `.kiro/docs/**`) is site 3 item 1.
+- **The fallback** is the seats' dated mitigation (§ 6 item 3 (1)). It lives in law, read at the walk, because the walk author must resolve the delegate row's directory (site 1b) and so reads this paragraph at every release. Counting from the application merge makes "the second release" decidable (`git merge-base --is-ancestor`). It holds the walk PR, under the existing rule, so the question cannot be skipped.
+  - *Counter, carried*: the hold can delay a release for a governance question.
+  - *Counter, carried*: the fallback is read by a person, not printed by `issues-owned.sh`.
+- **The delegate-file sentence** restates § 5.3's consequence at the release, so R2 reads one place. "With its addenda in it": at 16.1.0, the re-read under the trigger-(d) record's item 7 went into the delegate file as a dated addendum (Ada R1).
+- **The other-records sentence** is the class option. It names the records at fixed paths, each already law where its item says, and claims no more (Stacy R1, Ada R1). The trio records keep their own home and grant (Leonardo). Stacy's routing records filed under rule 10 are routing artifacts, not a second home of the pass (Stacy R1, S2).
+- **The pointer** is the `added` form, because RELEASE-FLOW is a bound path (ballots README L31, "Where the pointer is owed"). `<application date>` is replaced at application by the date of the application PR's merge, as its squash commit records it (§ 5 step 2). A literal placeholder left in place reads `pointer-missing` under `edit-kind-pointers.ts`'s `POINTER_RE` (Ada R1).
 
 ### Site 1b — `.kiro/hooks/RELEASE-FLOW.md` L45, RS-37's interim delegate row (LAW)
 
@@ -230,7 +248,8 @@ The delegate-file sentence and the other-records sentence are unchanged.
 - **`brief: none on record` is a finding on Thurgood by default, and stops nothing.** The delegate cannot commit someone else's brief, and the walk can be done from law and the record (Ada R2). The finding goes to Thurgood, the seat § 5.3 names to write the brief, unless a committed line names the orchestrator as the briefer (§ 5.3 lets it write the brief; Stacy R2, Low). The addressee is then decidable from git (Stacy R3; THURGOOD R4).
 - RS-37's pointer stays, and the amendment adds a second pointer beside it, as L205 carries two.
 
-### Site 2 — `canonical/agents/stacy.md` L417, the first sentence (LAW; not applied under F-1 (i), required under (ii) and (iv))
+
+### Site 2 — `canonical/agents/stacy.md` L417, the first sentence (LAW, ratified here; applied by the switch PR, not by this application)
 
 **Before** (L417 at `6f23bc6fe`, the first sentence; the rest of the line is unchanged):
 
@@ -250,11 +269,17 @@ Every pass produces a committed record in the spec's completion directory. **Pat
 Every pass produces a committed record in the spec's completion directory, except a RELEASE pass, whose record's home `.kiro/hooks/RELEASE-FLOW.md` step 6 names.
 ```
 
+- **Why not now**: L417 stays true during the interim, because the record sits in a spec's completion directory. Stacy reads it as incomplete, not false (Stacy R1). It becomes false at the switch, so the switch PR carries it.
+- **Why the switch PR**: Stacy's acts happen once, there, together with her #555 class fix on the same unit (SYMPTOM's filename, the consumer overlay's RELEASE line).
+  - If her class fix's ballot rewrites L417 first, or in the same PR, its text governs, and this After is composed into it under the README's edit discipline. Stacy reads that composition as the text's owner.
+  - If Spec 131 has removed the signing acts by then, they follow 131's form.
 - **No pointer**: charters carry none (ballots README L31). The commit that changes this line names this ballot in its message.
-- **Under F-1 (i), not applied** (Stacy R1, S1). The sentence is not false, because the record does sit in a spec's completion directory; it is incomplete, because on its own it does not say which spec. Stacy's RELEASE row defers to RELEASE-FLOW for *what phase 1 reads, and at which SHA*, not for where the record lives, so under (i) L417 is complete only because she reads step 6 at every RELEASE (Stacy R1's correction of this bullet). The same unit has two more unnamed homes (SYMPTOM's filename, the consumer overlay's RELEASE line), and each edit of the unit costs her two acts, so she spends them once on the class, through her own rule-10 record.
-- **Under (ii) and (iv)**, the sentence is false without the clause, so site 2 is owed.
-- **Follow-ons** (EXECUTION, Thurgood, authoring, under the grant):
-  - **Operative item** `record-committed`, `canonical/operative-sets/stacy.yaml` L548–L551 at `6f23bc6fe`:
+- **Stacy's three conditions, binding on the switch PR** (Stacy R1):
+  - **two acts**: re-confirm `#the-claims-pass-record-claims-passmd-the-template`, then re-sign it;
+  - **a `removals` entry**, my authoring before her re-sign, because the overlay keeps the clause-free sentence. The nearest precedent is the owed-set unit's row, which records its dropped `.kiro/hooks/RELEASE-FLOW.md` as `subtraction-1`;
+  - **the `record-committed` item's `text` must be a span the consumer rendering contains whole.** The C18 floor credits an item only when its complete `text` occurs in the rendered unit (`triviality.ts` header). So the item is split or re-worded, and the RELEASE clause is accounted as the removal. The split is my authoring and Lina's model.
+- **The follow-ons it touches, for the switch PR's grant** (all EXECUTION; none of these files is a governance path):
+  - **the operative item**, `canonical/operative-sets/stacy.yaml` L548–L551 at `6f23bc6fe`:
 
 ```
       - id: record-committed
@@ -263,96 +288,126 @@ Every pass produces a committed record in the spec's completion directory, excep
         text: "Every pass produces a committed record in the spec's completion directory."
 ```
 
-The item's `text` must be a span the consumer rendering contains whole, because the C18 floor credits an item only when its complete `text` occurs in the rendered unit (`triviality.ts` header), and the overlay keeps the clause-free sentence. So the RELEASE clause is accounted as a removal, and the item is split or re-worded so that what survives for consumers is credited (Stacy R1). The split is my authoring and Lina's model, drafted at the extra round with F-2's sites. Its unit's `canonicalHash` (L546) is Stacy's to move (§ 5, act 1).
-  - **Overlay pin**, `canonical/profiles/consumer/stacy.overlay.md` L84 at `6f23bc6fe`:
+  - **the overlay pin**, `canonical/profiles/consumer/stacy.overlay.md` L84 at `6f23bc6fe`, which moves to the new unit hash while the overlay's text stays unchanged:
 
 ```
 ## @unit #the-claims-pass-record-claims-passmd-the-template @ sha256:3c2a1c1fe5b77b2b69d2f6d60ec50aa5f6126d23380911bd38b33a8f9bb0db04
 ```
 
-The pin's hash moves to the new unit hash, and the overlay's text is unchanged. A consumer project has no RELEASE-FLOW, so the clause does not go into its rendering.
-  - **A `removals` entry is owed** (Stacy R1): the unit's consumer row is `re-pointed`, and every span its rendering drops is accounted in its signed `removals` (six at the base); the nearest precedent is the owed-set unit's row, which records its dropped `.kiro/hooks/RELEASE-FLOW.md` as `subtraction-1`. Stacy will not assent to a rendering that drops a canonical clause with no entry. The entry is my authoring, before her re-sign. No check enforces it mechanically (Stacy R1, by grep); whether one should is Lina's L1.
-  - **Regeneration, then `canonical/generated.lock`**, by a full-run-green `check:122:diff-guard`.
-  - **Expected**: `git diff --stat <base> -- canonical/_consumer-output/` is empty apart from attribution files. If it is not, the application stops and reports.
+  - **the dispositions row's `removals`**;
+  - **regeneration and `canonical/generated.lock`**. The expected `git diff --stat <base> -- canonical/_consumer-output/` is empty apart from attribution files.
+
+  Lina reviews the `removals` entry and the item split at that PR.
+
+### Site 3 — the capture record, `.kiro/issues/2026-10-29-release-records-home-switch.md` (filed in the Status commit, README rule 10; Thurgood's standing scope)
+
+Peter's F-1 condition is *"so long as we capture it"*. This record is the capture. Its text, to be filed as written (the Status commit fills `<Status date>`):
+
+```markdown
+# The RELEASE records' final home: the switch to `.kiro/docs/releases/<v>/` when Spec 131's owners file gives the five writing seats access
+
+**Date**: <Status date>
+**Owner**: Thurgood (owner of `.kiro/hooks/RELEASE-FLOW.md` and author of the ballot that names the switch). Interested: Stacy (the record is hers, site 2 is her charter unit, and its acts are hers).
+**Trigger**: `release:next:phase-1` — the next release's walk reads this record. Its work rides Spec 131's owners file, so rule 1 gives it this token, not the vehicle's. Start condition, in prose: when Spec 131's requirements are written (`.kiro/specs/131-governance-simplification/requirements.md`), they take this record in or leave it out with a reason.
+**Class**: P2 obligation (record) · owed-act
+**Lapse**: rule 11. At a release's S, the record has lapsed unless an ancestor of S closed it or re-ruled it with a dated line.
+- At the first release after the ballot's application, the owner re-rules it with a dated line naming the interim home.
+- At the second, RELEASE-FLOW step 6's fallback ("Where a release's records live") puts the question to Peter in the walk record's PR, with option (b) named (standing write scope over `.kiro/docs/releases/**` for the five seats, now), and his answer re-rules the record.
+- If Spec 131's requirements leave this record out, it goes to Peter at that commit, with (b) named.
+**Source**: ballot `.kiro/docs/ballots/2026-10-29-release-claims-pass-record-home.md` (RS-50): F-1 (ii) and F-2 (a), Peter, 2026-10-29, verbatim in that ballot's Status line.
+**Consulted**: Stacy, Ada, Lina, Leonardo — their F-2 reads, in that ballot's § 6 item 3.
+
+---
+
+## Items (each closes at the switch PR's merge, or by a dated re-rule)
+
+1. **Write access** to `.kiro/docs/releases/**`, named exactly so (never `.kiro/docs/**`, which would sweep in `.kiro/docs/ballots/`; Ada's condition), for Stacy, Thurgood and the delegate rotation Ada, Lina and Leonardo, through Spec 131's owners file. Until it lands, no seat writes there.
+2. **Kiro enforcement** (Lina, unverified): whether Spec 131's owners file reaches Kiro's generated `allowedPaths`, which are generated from `writeScope` today (Ada, verified). Spec 131's requirements answer it. If they do not, (a) defers Kiro-side enforcement of item 1 with no end date, and they say so.
+3. **The switch** to RELEASE-FLOW step 6's paragraph, in the PR that lands item 1 or the first PR after it: the switch's After in the ballot's § 4 site 1a. This is pre-declared EXECUTION.
+4. **Stacy's charter, L417** (the ballot's § 4 site 2), in the switch PR: two acts, a `removals` entry, and the `record-committed` item's text as a span the rendering contains whole. It is composed with her class fix, `.kiro/issues/2026-10-29-claims-pass-record-homes-unnamed-arming-symptom-overlay.md` (#555), so the unit is edited once.
+5. **The second glob root** in the composed-loop outcome count (`.kiro/issues/2026-10-24-composed-loop-outcome-lines-missing.md`, the count command), in the switch PR or the first record PR after it.
+```
+
+*Why this shape*:
+- **The token is `release:next:phase-1`, not `path:` on 131's requirements.** That departs from the brief I was given, on purpose. Rule 1: "a P0, P1 or P2 record that would ride another change takes `release:next:phase-1`". This record's close is the switch PR, which rides 131's owners file. Stacy's #555 record took the same token for the same reason. 131's requirements are kept as the start condition, in prose.
+- **The token also answers the stall case** (131 paused before requirements), which a `path:` token could not see:
+  - every release's walk rows the record (the 3a due-rows grep, and `issues-owned.sh` prints `due:next`);
+  - rule 11 forces a dated re-rule or a lapse at each S;
+  - site 1a's fallback forces Peter's answer at the second release.
+- *Counter, carried*: a re-rule line at every release while 131 is paused is a recurring act on the owner (one dated line per release). It also puts this record in the walk's batch of carried rows until the switch. I accept both: they are the visibility Peter's "so long as we capture it" asks for.
 
 ## 5. Application (after the Status commit)
 
-1. **The Status commit** (record-first, ballot only): `**Status**: **RATIFIED (Peter, <date>)**`, with his words, their clock bound, and his F-1 (and F-2) answers.
-2. **Thurgood, the application PR** (branch `chore/apply-release-claims-pass-record-home`), in one authoring commit:
-   - sites 1a and 1b, under the ruled F-1;
-   - under F-1 (ii) or (iv) only, site 2's text and follow-ons, with `signature` and the `canonicalHash` values untouched.
-
-   `<application date>` in sites 1a and 1b is the date of the application PR's merge as its squash commit records it (the rule #491 and #550 followed; Ada R1, A5).
-
-   Then, if site 2 is applied, a regeneration commit, with no lock. Each commit message names this ballot.
-3. **Stacy's C1 acts**, only if site 2 is applied (F-1 (ii) or (iv)). Each is its own commit, in her seat, after step 2 and before the lock. Merge-only, never amended:
-   1. re-confirm `#the-claims-pass-record-claims-passmd-the-template` (its `canonicalHash` moves);
-   2. re-sign it (the `signature`'s `canonicalHash` moves; her `assent` re-judges `record-committed`).
-
-   **Act count**:
-   - F-1 (i): **0** (site 2 not applied; Stacy R1).
-   - F-1 (ii) or (iv): **2 + at least 4** (§ 3.2), drafted at the extra round.
-4. **Thurgood**: the lock refreshed (full-run-green, then no-op-green), if site 2 is applied.
+1. **The Status commit** (record-first): it carries `**Status**: **RATIFIED (Peter, <date>)**`, his F-1 and F-2 words with their clock bounds, his answer on § 6 item 3, and the README roll entry. It also files site 3's record, as written, under rule 10.
+2. **Thurgood, the application PR** (branch `chore/apply-release-claims-pass-record-home`), in one commit: sites 1a and 1b.
+   - `<application date>` in both is the date of the application PR's merge, as its squash commit records it (the rule #491 and #550 followed; Ada R1, A5).
+   - The commit message names this ballot.
+3. **Seat acts: zero.** No charter, operative set, overlay or dispositions file changes.
+4. **No regeneration and no lock refresh.** `.kiro/hooks/RELEASE-FLOW.md` is outside the generator's input closure: `INPUT_CLOSURE_ROOTS` is `canonical`, `skills`, `tools/agent-generator`, the three MCP `src` trees, `governance` and `.kiro/steering`, and `INPUT_CLOSURE_FILES` is `package.json` and `.kiro/hooks/complete-task.sh` (`tools/agent-generator/diff-guard.ts` L62–L72). The precedent is `0baeadda8`, which changed RELEASE-FLOW 5.3 without touching `canonical/generated.lock`. Every RELEASE-FLOW commit that did move the lock also changed a `governance/` or `canonical/` file. If the PR's `122-diff-guard` reads otherwise, the application stops and reports.
 5. **Checks**, each pasted in the PR body with its result:
-   - `npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --ci` (stale 0, unsigned-routed 0, PASS);
-   - `npm run test:scripts`;
-   - `npm run test:agent-generator`;
    - `npm test`;
+   - `npm run test:scripts`;
    - `npm run -s check:section-citations`;
    - `node scripts/validate-steering-metadata.js`;
-   - if site 2 is applied, `git diff --stat <base> -- canonical/_consumer-output/`, expected empty apart from attribution files;
-   - `npx tsx scripts/completion-claims/edit-kind-pointers.ts --pr <this PR>`: RELEASE-FLOW `ok`; under (ii) or (iv), `canonical/agents/stacy.md` `ok` (no pointer). The check gives one verdict per file and any added line with a dated pointer satisfies it, and site 1b's rewritten L45 keeps RS-37's pointer, so its `ok` does not prove site 1b's new pointer: that pointer is read by hand at application (Stacy R1).
-6. **Straggler sweep**, case-sensitive, over `.kiro/hooks/RELEASE-FLOW.md canonical/agents canonical/profiles/consumer .kiro/steering governance`, with the hits expected after the edit:
+   - `npx tsx scripts/completion-claims/edit-kind-pointers.ts --pr <this PR>`: RELEASE-FLOW reads `ok`. The check gives one verdict per file, and any added line with a dated pointer satisfies it. Site 1b's rewritten L45 keeps RS-37's pointer, so the `ok` does not prove site 1b's new pointer. That pointer is read by hand (Stacy R1).
+6. **Straggler sweep**, case-sensitive, over `.kiro/hooks/RELEASE-FLOW.md canonical/agents canonical/profiles/consumer .kiro/steering governance`. The hits expected after the edit:
    - `the output path that brief names`: none.
-   - `Where a release's records live`: RELEASE-FLOW only (sites 1a and 1b); site 2, if applied, names step 6, not the paragraph.
-   - `claims-pass-release-`: RELEASE-FLOW site 1a, and `governance/classification-map.md` L945, a pre-existing history entry of `publish-rail-guard` citing `completion/claims-pass-release-15.1.0.md` (RL-7, #353), a ledger citation that is left as it is. At the base the sweep's roots give `governance/classification-map.md:1` and RELEASE-FLOW 0 (Stacy R1). Any other hit stops the application.
+   - `Where a release's records live`: RELEASE-FLOW only (sites 1a and 1b).
+   - `.kiro/docs/releases`: RELEASE-FLOW site 1a only.
+   - `claims-pass-release-`: RELEASE-FLOW site 1a (the interim path), plus `governance/classification-map.md` L945. L945 is a pre-existing `publish-rail-guard` history entry citing `completion/claims-pass-release-15.1.0.md` (RL-7, #353), a ledger citation left as it is. At the base the sweep's roots give `governance/classification-map.md:1` and RELEASE-FLOW 0 (Stacy R1).
+
+   Any other hit stops the application.
 7. **Owed after merge**:
-   - A dated vehicle-and-close line on RS-50, in `.kiro/issues/2026-10-26-release-16-1-standards-implications.md`, by that record's holder.
-   - The next delegate brief names site 1a's path.
+   - A dated vehicle-and-close line on RS-50 in `.kiro/issues/2026-10-26-release-16-1-standards-implications.md`, by that record's holder.
+   - The next delegate brief names the interim path in full (site 1a; Ada's must-say).
    - No `rebuild_index`: no site is in `governance/`, the docs MCP's corpus (`mcp-server/src/index.ts` L61).
 8. **The PR body carries**:
-   - `**Edit kind**: .kiro/hooks/RELEASE-FLOW.md — LAW (.kiro/docs/ballots/2026-10-29-release-claims-pass-record-home.md)`
-   - if site 2 is applied: `**Edit kind**: canonical/agents/stacy.md — LAW (.kiro/docs/ballots/2026-10-29-release-claims-pass-record-home.md)`
-   - the grant below and its path list;
+   - `**Edit kind**: .kiro/hooks/RELEASE-FLOW.md — LAW (.kiro/docs/ballots/2026-10-29-release-claims-pass-record-home.md)`;
    - the `**Consulted**:` line;
    - the census lines, re-run at the PR's base.
 
-**Grant (activated by this ratification)**: Peter's ratification grants, until the application PR merges:
-- **Thurgood**: `.kiro/hooks/RELEASE-FLOW.md` is already his. If site 2 is applied (F-1 (ii) or (iv)), he also gets:
-  - `canonical/agents/stacy.md` (site 2's sentence, byte for byte);
-  - `canonical/operative-sets/stacy.yaml` (the `record-committed` item and the split § 4 site 2 owes, drafted at the extra round);
-  - `canonical/profiles/consumer/stacy.overlay.md` (the L84 pin only);
-  - `canonical/profiles/consumer/stacy.dispositions.yaml` (the `removals` entry § 4 site 2 owes, on that row only; never its `signature`);
-  - `canonical/generated.lock` and the generator's outputs.
-- **Not granted**:
-  - C1 acts need no grant (signing-act ballot M1).
-  - No `.github/**` path is touched, so no `**ARMING**:` line is owed.
-  - Under F-1 (ii) or (iv), the write-scope or grant sites need their own text at the extra round.
-- As `.kiro/issues/README.md` rule 8 has it for a grant, the application PR's body names this grant and cites its path list, and an out-of-list edit is a claims-pass finding.
+   No grant is needed: RELEASE-FLOW is Thurgood's, and `.kiro/issues/**` is his standing scope.
 
-## 6. Forks for Peter
+**The switch PR**, later, outside this application. It carries:
+- `**Edit kind**: .kiro/hooks/RELEASE-FLOW.md — EXECUTION (.kiro/docs/ballots/2026-10-29-release-claims-pass-record-home.md § 4 site 1a, the switch)`;
+- `**Edit kind**: canonical/agents/stacy.md — EXECUTION (… § 4 site 2)`, or the class-fix ballot's kind where that ballot's text governs.
 
-**Open for Peter**: F-1 — where a RELEASE claims-pass record lives from the next release on: **(i)** `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-<v>.md`, fixed, where all four records already are (recommended: site 1 only; site 2 not applied under (i) (Stacy R1), zero seat acts; Stacy and Ada both lean (i)); **(ii)** a standing `.kiro/docs/releases/<v>/` directory (or `.kiro/releases/<v>/`); or **(iv)** `docs/releases/<v>/`, beside the step-6 record. (iii) `docs/specs/` is declined (§ 3.3). Under every option the filename is `claims-pass-release-<v>.md`, and the delegate's file sits beside it.
+Site 2's census, Stacy's acts, the `removals` entry, the item split, regeneration and the lock all land there, under that PR's own grant or Spec 131's owners file, with Lina's and Leonardo's reviews.
 
-**Open for Peter**: F-2, **only if F-1 is (ii) or (iv)** — how Stacy and the rotating delegate (Ada, Lina, Leonardo) get write access to the new path: **standing** write scope (four charter edits, LAW, each seat consulted, at least six acts in all, and one more drafting round before ratification), or a **per-release grant** record for the two writing seats at each release (no charter edit, but a record every release). Under (ii), also: `.kiro/docs/releases/` (my lean, after the `civitas-health-checks/` precedent) or `.kiro/releases/`.
+## 6. Forks for Peter — ruled, and one reading to confirm
 
-*Why F-2's sites are not drafted here*: drafting four frontmatter blocks, their dispositions rows and their census lines for an option I do not recommend would spend the round on text that will probably never apply. If Peter rules (ii) or (iv), I draft them at R2 and the seats read them before ratification. That costs one round, which I am saying plainly here.
+1. **F-1, the home: ruled (ii)** (Peter, before 2026-10-29T12:45:12Z, verbatim in the Status line). It is applied at the switch, not by this application. (i), Spec 123's completion directory, is **the interim home**, not the home. (iii) `docs/specs/` was declined (§ 3.3). (iv) `docs/releases/<v>/` was not taken.
+2. **F-2, the access: ruled (a)** (Peter, before 2026-10-29T12:59:53Z): the home is ruled now and applied when Spec 131's owners file gives the five writing seats access. The two options not taken:
+   - **(b) not taken**: standing `.kiro/docs/releases/**` write scope now for the five seats. That was five to ten acts once; it works on Kiro; and it builds rows Spec 131 deletes (131's outline L232). It stays the named remedy at the fallback (site 1a) and at the record's lapse (site 3).
+   - **(c) not taken**: a rule-8 multi-PR release grant. That is LAW 131 retires; it has no Kiro effect (Ada verified that `allowedPaths` are generated from `writeScope`); and Stacy would audit her own grant compliance.
+3. **The orchestrator's reading of "with the informed perspectives the agents provided"**: adopt the seats' mitigations as they were presented to Peter. Each one is applied here as stated:
+   1. **A dated fallback on the interim** (Thurgood, Ada, Leonardo; the orchestrator recommended two releases): site 1a's fallback, at the walk of the second release after the application merge. There, (b) is put to Peter as an Open-for-Peter line. **Departure, for confirmation**: the orchestrator worded the switch point as "the first release whose S descends from" the access PR. Site 1a fixes it at the walk record's `main at:` SHA instead, so one release never straddles two directories (Ada's must-say; § 4 site 1a, "Why").
+   2. **Five writers**, not four: Stacy, Thurgood, Ada, Lina and Leonardo (§ 3.2 corrected).
+   3. **Lina's Kiro question** as a capture-record item that 131's requirements must answer (site 3 item 2).
+   4. **The directory** is `.kiro/docs/releases/<v>/`. Every scope or grant line names `.kiro/docs/releases/**` exactly, never `.kiro/docs/**` (Ada's condition; site 3 item 1).
+   5. **The four existing records stay** where they are. Site 1a's "beside the records of 15.0.0 to 16.1.0", and the switch's "the records of earlier releases stay where they were written", are the pointer.
+   6. **The trio records stay** at `tests/onboarding-trio/records/<v>/`, under their own grant (Leonardo; protocol § 8 L144).
 
-## 7. Recommendation, counter-argument (fold-back applied), residual
+   **One more departure, for confirmation**: the orchestrator proposed the capture record's trigger as `path:.kiro/specs/131-governance-simplification/requirements.md`. Site 3 uses `release:next:phase-1`, with 131's requirements as a prose start condition. Rule 1 gives that token to a P2 record that rides another change, and it is the token that also catches a stall before 131's requirements (site 3, "Why this shape").
 
-**Recommendation**: F-1 (i), sites 1a and 1b; site 2 not applied (Stacy R1).
+**Open for Peter**: § 6 item 3 — the orchestrator's reading of "with the informed perspectives the agents provided": the six mitigations above as applied, including two departures from the orchestrator's wording (the switch point fixed at the walk record's `main at:` SHA, not at S; the capture record's trigger `release:next:phase-1`, not `path:` on Spec 131's requirements). Confirm, or name what to overturn.
 
-**Counter-arguments, run against it, and what they changed**:
-- **(1) "A carrier-dependent home ('the releasing spec') is undecidable."** This changed (i) from the orchestrator's carrier form into a **fixed path**. The home asks no judgment, and no closure of any spec can break it.
-- **(2) "A closed spec's directory is a strange home, and the next reader will ask why 123."** This added the sentence that says why (Spec 123 is closed and the directory stays; every record so far is there), and the class-option sentence listing a release's records at fixed paths. The reader no longer has to know the history.
-- **(3) "(ii) has the cleanest meaning."** I checked what it costs, and that changed § 3.2: no writing seat holds the path, so (ii) needs four charter edits or a grant every release. It also splits history across two homes, because the records are ledgers and stay. At R1, Ada's fold-back made § 3.2 weigh the grant route against the grants every release already files; her lean stayed (i).
-- **(4) "Site 2 is cheap honesty."** Stacy started there and moved: the unit has two more unnamed homes, so site 2 is deferred to one edit of the class (Stacy R1).
+## 7. Ruling, counter-argument (fold-back applied), residual
+
+**Ruled**: F-1 (ii) and F-2 (a). Sites 1a and 1b are applied now, with Spec 123's directory as the interim home and a named switch and fallback. Site 2 and the access move to the switch PR (site 3).
+
+**Counter-arguments, run against the ruled shape, and what they changed**:
+- **(1) "A carrier-dependent home ('the releasing spec') is undecidable."** This made both homes **fixed paths**, and keyed the switch to a named PR, not to a spec's closure.
+- **(2) "A switch can split one release across two directories."** This fixed the home per release at the walk's `main at:` SHA, which precedes every write.
+- **(3) "Deferring to a paused spec makes the interim permanent by default."** This added the dated fallback in law (site 1a) and gave the capture record a token that the walk reads every release (site 3).
+- **(4) "Site 2 is cheap honesty now."** Stacy moved off this herself: the unit has two more unnamed homes, so site 2 waits for one edit of the class, at the switch (Stacy R1).
 
 **What survives**:
-- **Meaning**: under (i), a closed spec's completion directory grows by about two files per release, with audits of deltas that are not 123's. A reader of that directory has to know that `claims-pass-release-*` files are not 123's own.
-- **Coupling**: the home holds only as long as 123's directory is never moved or archived. It is weaker than it first looked, because any mover already sweeps `claims-pass-release` for the 38 citing files, but it is not zero: the mover could re-home the ledgers and miss that one hit is a rule, and no instrument would catch it (Stacy R1, Ada R1).
-- **A fork remains**: (i) prefers findability and zero cost, (ii) prefers meaning and independence from any spec. Both can be defended, and the choice is Peter's.
-- **L417 without site 2** (Stacy R1): until her class record's fix lands, L417 does not on its own tell a reader where a RELEASE record lives. A delegate, or a later Stacy session that does not open step 6 first, could guess "the releasing spec". The guard is her habit of reading step 6 at every RELEASE, the same memory-only dependence RS-50 removes, now at one sentence instead of one rule.
+- **Peter's own reason**, "this problem only gets worse the longer we let it persist": under (a), about two files per release keep landing in a closed spec's directory for as long as 131 stays paused. The fallback bounds that at two releases before he is asked, not before it ends.
+- **The fallback holds a walk PR on a governance question**, so it can delay a release. That is the price of making it unskippable.
+- **The interim path costs meaning**: `git log` of 123's directory keeps gaining merges that are not 123's work, and the `(123)` PR-title suffix labels them as 123's (Stacy R1).
+- **Kiro enforcement** of the final path waits on 131 and may have no end date (site 3 item 2; Lina, unverified).
+- **L417 during the interim** does not, on its own, tell a reader which spec's directory. The guard is Stacy's habit of reading step 6 at every RELEASE (Stacy R1).
 
 ## 8. Review round record
 
@@ -666,3 +721,34 @@ Read at `c301e3db2` (branch `chore/ballot-rs-50-release-claims-pass-home`) again
   - **Why Thurgood by default**: § 5.3 gives the brief to Thurgood, the instrument's owner, and gives it to the orchestrator only "when Thurgood's seat cannot". Making sure some brief is committed is the default briefer's duty.
   - **Surviving counter**: (b) can put on Thurgood a finding for a chat brief the orchestrator wrote, when nothing committed says so. The rule does not read who actually briefed; it reads what is committed. The remedy is the committed line the rule names. That line is cheap, but it is one more thing to remember at the very moment a brief was not committed, so misattribution will sometimes stand. I accept that cost to keep the addressee decidable. The finding gates nothing (Stacy R3).
 - Everything else in site 1b is as Stacy confirmed at R3.
+
+#### [THURGOOD R5]
+
+*Redraft for Peter's F-1 (ii) and F-2 (a), relayed by the orchestrator, at R4 `5ebe9f36a` on base `6f23bc6fe`, 2026-10-29T13:02:45Z (`date -u`). The ballot body is rewritten above § 8. Every review entry in § 8 is unchanged.*
+
+- **Site 1a in the (a) form** → § 4 site 1a. It carries:
+  - the interim home, with the delegate's path in full (Ada's must-say);
+  - the switch PR, named by what it does: five seats get write access to `.kiro/docs/releases/**`;
+  - the fallback at the second release's walk, which puts (b) to Peter in the walk PR;
+  - the switch's exact After, so the switch PR is EXECUTION;
+  - the other-records list, unchanged from R2.
+- **The switch point is the walk record's `main at:` SHA, not S.** This departs from the orchestrator's wording, and § 6 item 3 puts it to Peter. The delegate's file can land before S, so a switch keyed on S could split one release across two directories.
+- **Site 2 moves to the switch PR**, ratified here as text, with Stacy's three conditions binding and her #555 class fix composed in. Under the interim, L417 stays true; it becomes false only at the switch. → § 4 site 2
+- **Site 3, the capture record**, is drafted in full, for the Status commit to file. It has four items, plus the composed-loop glob:
+  - access for the five seats, with the exact glob;
+  - the Kiro `allowedPaths` question (Lina);
+  - the switch;
+  - site 2 together with #555.
+
+  **Its token is `release:next:phase-1`**, not the `path:` token I was asked to use. Rule 1 gives that token to a P2 record that rides another change, and it answers the stall-before-requirements case: the walk rows the record every release, and rule 11 forces a re-rule or a lapse. 131's requirements stay as the start condition, in prose. *Counter, carried*: one dated re-rule line per release while 131 is paused. → § 4 site 3
+- **Five writers** (Stacy, Thurgood, Ada, Lina, Leonardo), not four. § 3.2 is corrected.
+- **§ 5 rewritten**:
+  - zero seat acts;
+  - **no regeneration and no lock refresh**. This corrects the orchestrator's premise: RELEASE-FLOW is outside the generator's input closure (`diff-guard.ts` L62–L72), and `0baeadda8` changed it with no lock move;
+  - one Edit-kind line, for RELEASE-FLOW;
+  - no grant;
+  - the straggler sweep redone, adding a `.kiro/docs/releases` line.
+- **Census**: the site-2 lines are cut and ride the switch PR. The site-1 lines hold, and the section-citation line goes with site 2.
+- **§ 6**: F-1 (ii) and F-2 (a) are recorded as ruled, and (b) and (c) as not taken. One `**Open for Peter**:` line remains, for the orchestrator's reading and my two departures from it.
+- **§ 7**: restated as the ruling, with the residual. Peter's own "only gets worse" survives, bounded by the fallback at two releases.
+- **Not changed**: site 1b (Stacy confirmed it at R3), § 1, § 2, § 3.3, § 3.5 and § 3.6.
