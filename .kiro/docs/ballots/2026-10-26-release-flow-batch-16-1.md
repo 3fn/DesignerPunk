@@ -1904,6 +1904,50 @@ Second choice: (A″) over (A′), because it carries the item to the event that
 
 **No `**Open for Peter**` line remains.** The next commit is the Status commit.
 
+#### [STACY census-reader, 2026-10-29]
+
+*Census reader's ruling for P7's pre-authoring register check, read-only. Ballot `2026-10-26-release-flow-batch-16-1` (RATIFIED), read at `937915411`. I reproduced Thurgood's measurement independently and did not use his clone or his `apply.py`.*
+- *Tree: `git archive 937915411` into a scratch directory, with a scratch `git init` index (not the project repo), and `node_modules` and `dist/` symlinked from the main checkout.*
+- *Edit: site 7's resolved After (§ "Resolved after-texts", F-34 (ii), F-41 (i)), applied at `governance/release-management-system.md` L40, after asserting that L40 equals § 3's Before. `<application date>` was filled as `2026-10-29`.*
+- *Runs: `check.ts --census`, the plain run and the registered test, before and after. The scratch tree was restored afterwards.*
+- *Thurgood owns the instrument.*
+
+*Since then `origin/main` has moved to `639ef70f6`. Between `937915411` and `639ef70f6` only `governance/classification-map.md` changed among the guard's inputs and code (`git diff --stat` over `governance`, `.kiro/steering`, `token-index`, `scripts/governance-examples` and `package.json`), and that file is excluded from the guard's scope, so the measurement holds at the current head. I wrote no repo file.*
+
+**The hit**: one, `### governance-examples` (#519, `armed`, `census: "npx tsx scripts/governance-examples/check.ts --census"`).
+- **In SCOPE**: site 7 (`governance/release-management-system.md`), presumptively in scope by condition 1.
+- **Out of SCOPE**: E2–E4 (`governance/classification-map.md`) are in `governance/`, but the row's rule and the code's `EXCLUDED_DOCS` exclude them. Sites 1–6 (`.kiro/hooks/`), 8–10 (the two READMEs), 11–13 and E5–E6 (`canonical/**`) and E1/E7 (`scripts/`) are outside the SCOPE.
+
+**Ruling for that hit: a line, in the `not in scope` form, with Thurgood's text and the exclusion named:**
+
+> `**Census**: not in scope — governance-examples (scripts/governance-examples/check.ts; census mode --census) — site 7 edits governance/release-management-system.md, a scoped doc, and its After adds no token-name candidate, declared path, token-file shape or @3fn/core import line, so no verdict can change; no other P7 edit site is in SCOPE (E2–E4's governance/classification-map.md is excluded by the row's rule); measured, heuristic: --census at 937915411 as committed and with site 7 applied is byte-identical (sha256 6c5b98efdd10b5e30f6d3efecb60f220cb21aa715be8a719fe8e32b18fba4573; governance/release-management-system.md 0:0:0), and the registered test passes 45/45`
+
+**Why this form.** As at #493, no instrument code changes, so the in-scope census's scratch-diff delta is zero by construction. No exemption ground holds. The measured run on these bytes is what makes "no verdict can change" true for a doc edit.
+
+**What I reproduced:**
+- **The census digest**: the same sha256, byte-identical before and after. `governance/release-management-system.md 0:0:0` on both sides.
+- **The plain run**: exits 0; report line `1958 candidates; … 69 pending`, unchanged.
+- **The registered test**: 45 / 45 pass.
+- **Beyond the counts**: the guard's own `candidatePattern`, run over the raw text of site 7's removed line and added line, finds **zero candidates on either side**. Neither side has a fence line or a marker.
+
+**Disputed**: no. Nothing goes to Peter.
+
+**What the application carries for the lane**:
+- **Nothing for this guard.** No markers, no pending entries and no baseline change.
+- **In the PR body**: this `**Census**:` line, and the guard's report line and exit code, run at the PR's own base (README § "Conventions", "Re-runs").
+- **If Thurgood's verbatim text differs from the line above** only inside the parentheses the orchestrator elided, it stands. The exclusion clause is the one addition I ask for, because "no other P7 edit site is in SCOPE" is true only through that exclusion.
+
+**The hermetic-publish-path split (#534): the (i)-shape line is true in substance. Its wording names a field the row no longer has, so it needs a re-statement.**
+- **Why it is still true**: #534 (`937915411`) made the row `scoped`.
+  - The live-state scope has `census: none — …`.
+  - The commit-held scope has no field. Its census mode is owed in P1's PR (record `.kiro/issues/2026-10-27-npmjs-mode-and-commit-held-census-mode-owed.md`).
+  - The split follows the line Ada's field drew, so "either side of the row's census field" still names the same two partitions.
+  - E7a replaces two printed lines of the dry run, which is output only (README: "Changes to messages or output format only are out of scope"). Its added test assertion reads output. Sites 3 and 7 are text in the row's education homes. No decision in either scope changes.
+- **What is stale**: the line refers to "the row's census field", and the row now carries no row-level field. A reader who meets the line beside the split row could take it to mean the live scope's `none` covers E7a, which edits `scripts/release-publish.ts`, the commit-held scope's checked code.
+- **The re-statement this round should carry** in place of the clause: "no decision in either scope of the row (live state, commit-held) changes; E7a is an output-only change to the commit-held scope's code, so it does not wait on that scope's owed census mode".
+
+**Standards implications**: none.
+
 ## 12. Application ledger
 
 - **2026-10-26 (Thurgood)**: DRAFT on branch `chore/ballot-release-flow-batch`, cut from `99eabf854`. Site blocks cut from the files at that SHA by script; site 1's after-text run in this worktree with `bash --noprofile --norc` (3.2.57) and `zsh -f`. Nothing applied.
@@ -1913,3 +1957,4 @@ Second choice: (A″) over (A′), because it carries the item to the event that
 - **2026-10-27 (Thurgood), R5**: Peter's rulings recorded (every fork but F-34); After blocks marked RULED, FALLBACK or void in place; § "Plans (Peter's condition)" and § "Resolved after-texts" added; three plan records filed (`8073decc1`); the four C1 evaluations spliced into § 11 and compared by `cmp`; `[THURGOOD R5]` added. Nothing applied; the Status line waits on F-34.
 - **2026-10-27 (Thurgood), R6**: F-34 ruled (ii) by Peter's words; sites 3 and 7 resolved; the R4 byte reads (STACY R4, ADA R7, LINA R4) spliced and compared by `cmp`; E8's history line restored; (ii-b)'s cost sentence states the ratification past the finding; E7a moved to the application PR; P5 marked filed. No `**Open for Peter**` line remains.
 - **2026-10-27 (Thurgood), Status commit**: Status → RATIFIED (Peter, 2026-10-26/27), whole, with his words and every clock bound; the ballots README roll line added. Record-first: no edit site is applied in this commit.
+- **2026-10-29 (Thurgood), application step 2, the register check** (P7, branch `chore/apply-release-flow-batch-16-1`; the drafter's `date -u` 2026-10-29T01:53:40Z): **Base** `937915411` (#534), re-checked at `639ef70f6` (#536) and `3a628724f` (#514). Every § 3 Before of sites 1–3 and 5–13 compared with its file by script (the stated line cut, and the block's occurrence count): all byte-equal except site 12 (below); E2's Before substring once at L890; E4's anchor once at L1221 (L1194 at `08b9c7a8e`, the same bytes). **Register check**, #493 § 12 step 2's form over `git diff 08b9c7a8e 937915411 -- governance/classification-map.md`: one hit, `### governance-examples` (#519, `f9b99f750`, `armed`, `census: "npx tsx scripts/governance-examples/check.ts --census"`), registered after this ballot's census SHA, so no line was drafted for it; site 7 (`governance/release-management-system.md`) is presumptively in its scope by condition 1, and no other P7 site is in its SCOPE. The application stopped before authoring. **Measured** (heuristic): `npx tsx scripts/governance-examples/check.ts --census` at `937915411`, as committed and with site 7's resolved After applied (`<application date>` as 2026-10-28), printed byte-identical output, sha256 `6c5b98efdd10b5e30f6d3efecb60f220cb21aa715be8a719fe8e32b18fba4573`, the doc's line `governance/release-management-system.md 0:0:0`, `selected: 1990 … over 91 docs`; the plain run exited 0 on both. The outputs were scratch files, not committed (`scratchpad/p7tools/census-committed.txt`, `census-site7.txt`). **Census reader's ruling** (Stacy, `[STACY census-reader, 2026-10-29]` above, reproduced independently on a `git archive` tree; not disputed): a line, in the not-in-scope form, with the exclusion named. The line, as ruled: `**Census**: not in scope — governance-examples (scripts/governance-examples/check.ts; census mode --census) — site 7 edits governance/release-management-system.md, a scoped doc, and its After adds no token-name candidate, declared path, token-file shape or @3fn/core import line, so no verdict can change; no other P7 edit site is in SCOPE (E2–E4's governance/classification-map.md is excluded by the row's rule); measured, heuristic: --census at 937915411 as committed and with site 7 applied is byte-identical (sha256 6c5b98efdd10b5e30f6d3efecb60f220cb21aa715be8a719fe8e32b18fba4573; governance/release-management-system.md 0:0:0), and the registered test passes 45/45`. The application PR body carries this line and the guard's report line and exit code at its own base. **The hermetic-publish-path split (#534)**: the Census block's (i)-shape line, which applies to E7a and to sites 3 and 7, is true, but its clause "no decision on either side of the row's census field changes" names a field the row no longer has at row level. For this application it reads, on her ruling: "no decision in either scope of the row (live state, commit-held) changes; E7a is an output-only change to the commit-held scope's code, so it does not wait on that scope's owed census mode". **Site 12, found at `639ef70f6`**: its Before (`canonical/agents/stacy.md` L400) occurs 0 times. #536 (ballot 2026-10-26-governance-examples-guard-adoption, its site 2b, Stacy's text) inserted one sentence, ` Phase 1 also carries the governance-examples read (the counting block; ballot 2026-10-26-governance-examples-guard § 2.4).`, directly after `A read, never a gate.`, and changed nothing else in the line (checked: the current line equals the Before with that insertion). The resolved After, applied as written, would delete it. A composed text (the resolved After with that sentence at the same anchor, which occurs once in each) is at `scratchpad/p7tools/site12-composed.txt`, not committed. Site 12 and E5's `trigger-release` item are **held for the text owner's read and Peter's word**; a dated round records the composition only after both. Not adapted. **Resumption**: sites 1, 2, 3, 5, 6, 7, 8, 9, 10, 11 and 13, E2, E4, E5 without `trigger-release`, and E8's queue-record lines, applied after this commit; E6 after Ada's E1 and E7a.
