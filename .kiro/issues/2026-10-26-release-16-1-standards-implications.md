@@ -35,6 +35,8 @@
 | RS-25 | nothing compares the packed generated files with the previous public artifact before the notes say what changed (16.0.0) | RELEASE-FLOW § "Deriving the delta", step 2, step 5.1 | LAW via ballot, one sentence with RS-39; appended 2026-10-26 | RELEASE-FLOW batch ballot |
 | RS-29 | script text that restates register state has no straggler sweep (16.0.0) | none for the instance (fixed); the class: RELEASE-FLOW / the register flip procedure | instance done by pointer (#459); class folded into RS-38's class half; appended 2026-10-26 | RELEASE-FLOW batch ballot, with RS-38 |
 | RS-50 | where a RELEASE claims-pass record lives once Spec 123 closes (appended 2026-10-26) | ballot `2026-10-01-signing-act-chain` § 5.3 (the delegate file sits "in the directory of the event's claims-pass record"); Stacy's charter, § "The claims-pass record"; no rule names a RELEASE record's home | LAW via ballot; homes named, not picked | a small ballot of its own, before the next release's phase 1 |
+| RS-51 | an application that edits `governance/*.md` runs `npm run test:scripts`, which root `npm test` does not run (appended 2026-10-29) | ballots README § "The Ratification Protocol" step 4 ("verification per the measure's own mechanics") and § "Conventions" (Edit discipline); Start Up Tasks item 5 ("`npm test` validates all functionality"); `.kiro/hooks/complete-task.sh` | three homes named, not picked: a ballots-README sentence (LAW), a `complete-task.sh` check (tooling, my scope), or `none` (the required gate already catches it) | the next ballots-README ballot, or a tooling PR of mine |
+| RS-52 | a ratified edit site whose Before line a later ratified merge has changed needs a named remedy, the composition round (appended 2026-10-29) | ballots README § "Conventions", Edit discipline ("if a before-text does not match, stop on that block and report") | LAW via ballot: one sentence naming the composition round | the next ballots-README ballot, with RS-51 if its LAW home is picked |
 
 Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (RS-33, RS-34, RS-37, RS-38's class half, RS-39, RS-41, RS-46's 3a half, RS-48, RS-49, and the CORRECTION-form sentences of RS-40 and RS-43), **the later guard-amendment ballot** (RS-44, RS-47) and **a signing-act-chain amendment ballot** (RS-36; appended 2026-10-26). The first two are due before the next release's walk; the third rides the same trigger. None is drafted here.
 
@@ -226,6 +228,41 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **Surviving counter**: a fourth place for release records (notes, step-6 `.txt`, walk record, claims pass) when Spec 131 is shrinking governance; (a) puts the claims pass beside the record it audits, which is the cheapest to find and the least independent.
 - **Vehicle**: a small ballot of its own (the batch ballot's cap is its eleven rows and Stacy's S-4), before the next release's phase 1.
 - **Consult**: Stacy (her record's home); Ada (the delegate seat's output path).
+
+## RS-51 — an application that edits `governance/*.md` must run `npm run test:scripts` (appended 2026-10-29)
+
+- **Source**: the orchestrator's note from the 2026-10-29 applications. Filed by Thurgood under README rule 10.
+- **What happened**: the audience-banner guard tripped twice in the PR's required checks, not before.
+  - The guard is `scripts/audience-banner/predicate.ts`, predicate v1, `complete-task\.sh|Peter merges|RATIFIED|ballot` over `governance/*.md` (Spec 123 Req 20.5).
+  - #491 (`a03b92f02`), on `governance/Token-Governance.md`: its squash message records the banner added after the guard's test fired.
+  - #535 (open, branch `chore/system-token-review-and-token-planning`), on `governance/Product-Token-Governance.md` and `governance/Web-Authoring-Standards.md`. At branch head `8f95a08f5` they hit the predicate 3 and 5 times, and their opening lines carry no `> **Audience framing**:` banner (0 hits on `main`, before the edits). Every ratified dated amendment pointer contains "ballot", so any LAW edit to a `governance/*.md` doc without a banner trips it.
+  - I read the predicate counts by grep at that head. I did not run the test there.
+- **Why local validation missed it**: root `npm test` is `jest --config jest.functional.config.js`, whose `roots` admit only `scripts/completion-claims` from `scripts/`. `npm run test:scripts` (`scripts/jest.config.js`) is a separate lane, run in CI by `lane-functional-root` (`lane-timing.yml` L259–260). Start Up Tasks item 5 says "`npm test` validates all functionality", which is not true of `scripts/`.
+- **Harm**: one red CI round per instance. The required gate caught both, so nothing false merged.
+- **Disposition (proposed), the homes named and not picked**:
+  - (a) **LAW**: a sentence in the ballots README's protocol step 4, "an application that edits `governance/*.md` runs `npm run test:scripts` before its PR opens".
+  - (b) **Tooling, the class fix**: `complete-task.sh`, and the unit-branch dispatch it fires, run `npm run test:scripts` when `git diff --name-only origin/main...HEAD` touches `governance/*.md`. That is EXECUTION in my standing scope (`.kiro/hooks/complete-task.sh`), with no ballot. It covers every PR, not only ballot applications.
+  - (c) **`none`**, with a reason: the required gate already holds the floor, and the cost is one CI round.
+  - Start Up Tasks item 5's sentence is a separate CORRECTION candidate under any of the three, since it overclaims `npm test`.
+- **Surviving counter**: (b) adds a minute-scale lane to every governance-touching completion run, to save a CI round the gate already pays. Under (a) only applications learn it, and most governance edits are applications.
+- **Vehicle**: (a) rides the next ballots-README ballot, with RS-52. (b) is a tooling PR of mine. (c) is a dated `none` line here.
+- **Consult**: Stacy (she reads the application's check list at the claims pass).
+
+## RS-52 — a ratified edit site cut before a later merge edits the same line: name the composition round (appended 2026-10-29)
+
+- **Source**: the batch ballot's application (P7, branch `chore/apply-release-flow-batch-16-1`, not pushed at this line). Filed by Thurgood under README rule 10.
+- **What happened, recorded as a dated round on the ballot** (`9b43dfc33`, § "Application", "2026-10-29 (Thurgood), site 12 composed"):
+  - Site 12, `canonical/agents/stacy.md` L400, was cut against `08b9c7a8e`. #536's site 2b then inserted into the same line, and the Before no longer matched.
+  - I stopped, per the README's edit discipline.
+  - Stacy, the text's owner, read the composition: "her text byte for byte, nothing lost or doubled".
+  - Peter allowed it, received before 2026-10-29T01:58:41Z, verbatim: *"Allow the Composition. Make the correction"*.
+  - The applied text is composed from two ratified Afters, with no new text.
+- **The gap**: the edit discipline names the stop and nothing after it. The remedy used here worked, but it is in no rule, so the next mismatch of this kind is decided again from scratch.
+- **Disposition (proposed)**: **LAW via ballot.** One sentence in § "Conventions", Edit discipline: when a Before mismatch is a later ratified insertion into the same line (both texts ratified, no new text), the remedy is a composition round. It has three parts: the composed text, printed; the text owner's read; Peter's word, as a dated round on the ballot. A mismatch that needs any new text is not a composition; it goes back to a ballot round.
+- **Stacy's observation, carried**: a pointer that claims completeness can lose it at composition. Site 12's pointer to "what phase 1 reads" needed the Phase-1 CORRECTION once site 2b's text joined the line. So a composition round also re-reads every completeness claim in the composed line.
+- **Surviving counter**: Peter's word is still needed each time. The sentence names the form, not a delegation, so it saves deciding the form again and costs him nothing he would not already be asked. A composition that is purely positional (two inserts at different points of one line) might be safe without his word. I do not propose that carve-out: the completeness observation above is a counterexample in this very case.
+- **Vehicle**: the next ballots-README ballot, with RS-51 (a) if that home is picked.
+- **Consult**: Stacy (text owner in this instance, and claims-pass reader of applications).
 
 ## Finding (appended 2026-10-26): two publish rows have no `census` field
 
