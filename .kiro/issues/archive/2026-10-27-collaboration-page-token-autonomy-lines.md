@@ -37,3 +37,14 @@ The fix applies after #535 merges, so L71's new text is true when it lands. `doc
 The page is stale beyond these two lines: it describes "three specialized AI agents", and there are eight (`docs/index.md` L69 says the same). Whether the showcase is refreshed is Peter's call ([THURGOOD R2] item 3).
 
 *Signed: Ada, 2026-10-27.*
+
+## Outcome
+
+**Outcome (2026-10-29, Thurgood, rule 5)**: fixed in the PR of branch `chore/collaboration-page-token-autonomy-lines`, under this record's grant, activated by #535's merge (`0577bb24c`). The grant expires at that PR's merge, and this record moves to `archive/` in it.
+- **Peter's approval of the bytes**: chat, relayed by the orchestrator, received before 2026-10-29T02:45:13Z, verbatim: *"Let's go with Thurgood's edit."*
+- **The bytes**: two texts were before him. One was the filer's offer in § "Fix" above (Ada's). The other was Thurgood's draft, which keeps Core Goals' "for the property they were made for" in L70, and carries Core Goals' whole product-token sentence in L71. Peter picked the draft. Both were true at the time of offering.
+- **`docs/collaboration.md` L70–71 as applied**. The Before matched at `3e2c722e6`, and no other line of the page changed:
+  - `- **Component tokens**: Agents use them freely inside the component they belong to, for the property they were made for; any other use requires explicit human approval`
+  - `- **Creating any system token** (primitive, semantic or component): Always requires human review. A product token is planned instead: its need is identified at screen specification and discussed before implementation, and a need the spec missed is surfaced, never filled silently`
+- **Still open, and not this record's**: § "Noted, not this record's" (the page's "three specialized AI agents"; `docs/index.md` L69) is unchanged, and remains Peter's call.
+
