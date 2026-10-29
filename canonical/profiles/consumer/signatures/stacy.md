@@ -62,11 +62,20 @@ Both cuts survive verbatim.
 ## `#the-claims-pass-record-claims-passmd-the-template`
 
 signer: stacy
-date: 2026-10-27
+date: 2026-10-29
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-claims-pass-record-claims-passmd-the-template` (re-pointed; ROUTED)
-canonicalHash: sha256:f6d74d3343f268919882d4c7011091ef7774f9784e67fddfbb53a428e5f9a280
+canonicalHash: sha256:e34637d77b83861846c927149c655b3386d9d096bfb6df79daec934f137df423
 renderedHash: sha256:ac788d09a695a9a4f828e4e9c5ea3c3c1d51d96eb387c3ce2c65a13447ee5e75
 verdict: assent — surviving 18/36; not surviving: `counting-6`, `counting-8`, `counting-9`, `counting-9b-census`, `counting-10-buckets`, `counting-10-ncc-rate`, `counting-10-assent-refusal`, `counting-10-spot-check`, `counting-10-full-survival`, `counting-11`, `counting-11b-governance-examples`, `counting-12`, `emission-reading`, `delegated-tier-read`, `instruments-read`, `governance-edit-kind-read`, `delegate-audit-pointer`, `instrument-census-read`
+
+**Re-signed 2026-10-29** (prior signature: assent 18/36, 2026-10-27, against `sha256:f6d74d3343f268919882d4c7011091ef7774f9784e67fddfbb53a428e5f9a280`; the rendered hash did not move). Stale because the canonical unit's governance-edit-kind bullet changed: ballot `2026-10-26-release-flow-batch-16-1` (RATIFIED, Peter, 2026-10-26/27) site 13, the `**Sweep**:` read (`ae6a84d77`). My re-confirmation at 36 items is `94eb99d66`.
+- **Read before this act**: the three consumer renderings of the unit, read through tool calls (`sed -n`) at `94eb99d66` before this commit: `_canonical/agents/stacy.md` L317–L332, `cc/.claude/agents/stacy.md` L191–L206, `kiro/.kiro/agents/stacy-prompt.md` L157–L172. All three are identical.
+- **Judged against**: those renderings and the operative set at 36 items. The rendered bullet list is the mandatory line, the counting block, the report-set comparison, the deferral walk-back and the never-a-gate sentence. It has no governance-edit-kind read and no sweep read. Those read DesignerPunk's `**Edit kind**:` and `**Sweep**:` lines, and the `subtraction-3` labels removal drops them by head, so `governance-edit-kind-read` stays not credited.
+- **Hashes**: canonicalHash recomputed independently with `partition` + `regrounding/hash.ts`; it equals the overlay pin and the sweep's value. renderedHash recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` over the three renderings (3 pieces), not the overlay text; it equals the prior value.
+- **Unchanged**: the same 18 items survive and the same 18 are not credited; `assent.surviving` is unchanged.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-10-27)**: assent 18/36, against `sha256:f6d74d3343f268919882d4c7011091ef7774f9784e67fddfbb53a428e5f9a280`, as below. *(Its act, `6afc2c053`, reads anchored on `--audit` only through a rendering read made after it. Peter let that stand, 2026-10-29; `.kiro/issues/2026-10-26-signing-chain-audit-false-verdicts.md`.)*
 
 **Re-signed 2026-10-27** (prior signature: assent 18/35, 2026-10-19, against `sha256:006d7a0b20b48f56a4769ba2d44042284270b2a9bd7e620b4c79cfd2cc247b74`; the rendered hash did not move). Stale because the canonical unit gained one item, mine from ballot `2026-10-26-governance-examples-guard-adoption` § 3 site 2 (RATIFIED, Peter, 2026-10-26): the counting block's `**the governance-examples read**`, applied by Thurgood byte for byte at `6a29412fe` and as item `counting-11b-governance-examples` at `c1fd0e06e`, which also added it to the `subtraction-3` removal of the counting block's labels and moved the overlay pin only. My re-confirmation at 36 items is `82faa95b1`.
 - **Judged against**: the rendered unit at this revision (`canonical/_consumer-output/_canonical/agents/stacy.md`, the claims-pass section, read through `readConsumerSpans`) and the operative set at 36 items. The consumer counting block reads omissions, vagueness, declared-none rates, exemption usage, bundled-claim instances and subtask-doc presence only.
