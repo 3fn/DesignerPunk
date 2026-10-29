@@ -12,9 +12,13 @@
  *   - "The floor never condemns, per unit": over the committed G1 renderings Lina-1 `#ios` and
  *     `#android` score 0/3 and ROUTE.
  *
- * THE RECORD PIN: every fixture names the record unit's canonicalHash it is scored against. If a
- * record unit is re-confirmed (e.g. 13.8's counting-block edit), the pin test goes red NAMING the
- * unit, and the expected scores are re-derived explicitly — they never move silently.
+ * NO RECORD PIN (RS-60, 2026-10-29): every score below is computed from the LIVE record (its
+ * items, and the canonical unit from its source), so a re-confirmation that moves a score turns the
+ * expected-score row red by itself. The manifest's `canonicalHash` is unasserted provenance: the
+ * record state the expected table was derived at. A score-neutral re-confirmation stays green here.
+ * Before RS-60 a describe asserted that pin on every fixture, which owed a manifest re-pin on every
+ * re-confirmation of a pinned unit, including the score-neutral ones
+ * (`.kiro/issues/2026-10-26-release-16-1-standards-implications.md` § RS-60).
  *
  * The expected table is G1 run 2's `assigned` column (re-grounding-c3-falsification-run-2.md
  * § "Its output at this commit"), per rendering.
@@ -43,13 +47,6 @@ const line = (f: G1Fixture, r: UnitResult): string =>
 
 const manifest = loadG1Manifest();
 const AX1 = g1Fixture('AX-1', '#audit-checklist');
-
-describe('the record pin — every fixture is scored against the record state it names', () => {
-  it.each(manifest.map((f) => [`${f.exemplar} ${f.anchor}`, f] as const))('%s', (_l, f) => {
-    const current = readRecord(f.record).units[f.anchor]?.canonicalHash;
-    expect(`${f.record} ${f.anchor} @ ${current}`).toBe(`${f.record} ${f.anchor} @ ${f.canonicalHash}`);
-  });
-});
 
 describe('(iv) the AX-1 bite', () => {
   const r = score(AX1);

@@ -15,7 +15,7 @@
  * site 1, Lina's conditions): `routesEntry`'s cases, and a pin that `classifyCharter`'s output over
  * the body-unit inputs it already had is unchanged by the clause. The pin's expected lines were
  * frozen BEFORE clause 5 was written (the application branch's base, `dae569756`) and are
- * unchanged after it; they move only with an explicit re-derivation, as the g1 record pin does.
+ * unchanged after it; they move only with an explicit re-derivation.
  */
 import fc from 'fast-check';
 import {
