@@ -29,3 +29,7 @@ The cited clause is "- Never hard-code values that have token equivalents" in th
 ## Close
 
 Rule 5's dated outcome line in the CORRECTION PR, and the archive move there.
+
+## Outcome (2026-10-28, Thurgood)
+
+Fixed by branch `fix/no-hardcoded-color-education-cites` (this record's fixing CORRECTION PR). The row's `education` cites read kenya.md:415, data.md:418, sparky.md:438 and ada.md:357, re-read at `6f51055ba`, with one history line. No grant (README rule 8). The lock is refreshed. Archived in this PR (rule 5).
