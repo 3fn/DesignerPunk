@@ -1,0 +1,129 @@
+# BITE item text (RS-60): stacy.yaml #audit-checklist spec-quality-1's text changed so AX-1 no longer carries it — the score test still goes RED with no pin
+# mutation: canonical/operative-sets/stacy.yaml
+# command: npx jest --config tools/agent-generator/jest.config.js tools/agent-generator/__tests__/triviality.g1.test.ts --verbose
+# base commit: 8ec561378 + the working tree under test; run 2026-10-29T23:17:05Z
+# the score is computed from the live record, so an item change that moves a score fails on the score itself: 'Expected: "AX-1 #audit-checklist: 14/30 ROUTES" / Received: "AX-1 #audit-checklist: 13/30 ROUTES"'
+# --- mutation diff ---
+diff --git a/canonical/operative-sets/stacy.yaml b/canonical/operative-sets/stacy.yaml
+index 3ceb3859d..1d341bfdb 100644
+--- a/canonical/operative-sets/stacy.yaml
++++ b/canonical/operative-sets/stacy.yaml
+@@ -29 +29 @@ units:
+-        text: Does the screen/feature have a specification from Leonardo?
++        text: Does the screen/feature have a specification from Leonardo (the product architect)?
+# --- output ---
+FAIL tools/agent-generator/__tests__/triviality.g1.test.ts
+  (iv) the AX-1 bite
+    ✕ AX-1 #audit-checklist scores 14/30 and ROUTES
+    ✕ its witness is the assignment it counted — ids with offsets; the shared text credits documentation-3 once, never lessons-learned-capture-2
+    ✕ CONTRAST: per-item includes gives 15/30 on the same fixture — the fixture discriminates
+  G1 run 2 `assigned` column, reproduced per rendering
+    ✓ covers exactly the 22 fixtures
+    ✓ A #audit-checklist
+    ✓ B #the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script
+    ✓ C(c2) #what-parity-means
+    ✓ D #the-trigger-set-the-114-superset-table-names-never-numbers
+    ✓ E #the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script
+    ✓ Lina-1 #platform-implementation-true-native-architecture:preamble
+    ✓ Lina-1 #web
+    ✓ Lina-1 #ios
+    ✓ Lina-1 #android
+    ✓ Lina-2 #step-1-verify-component-family-doc
+    ✓ Lina-2 #step-2-create-typests
+    ✓ Lina-2 #step-3-author-contractsyaml
+    ✓ Lina-2 #step-4-create-platform-implementations
+    ✓ Lina-2 #step-5-create-tests
+    ✓ Lina-2 #step-6-create-or-review-component-metayaml
+    ✓ Lina-2 #step-7-create-readme
+    ✕ AX-1 #audit-checklist
+    ✓ G-sketch #item-critical-wait-for-user-authorization-before-starting-new-tasks
+    ✓ G-blanket #item-critical-wait-for-user-authorization-before-starting-new-tasks
+    ✓ A-blanket #audit-checklist
+    ✓ G #item-critical-wait-for-user-authorization-before-starting-new-tasks
+    ✓ G′ #item-civitas-governance-health-check
+  the criteria rows, named
+    ✓ each of Lina-2's seven step units scores 0/k and ROUTES
+    ✓ Lina-1 #ios and #android score 0/3 and ROUTE — the floor does not condemn them (G1: NOT TRIVIAL, 2/3 by 5e)
+
+  ● (iv) the AX-1 bite › AX-1 #audit-checklist scores 14/30 and ROUTES
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "AX-1 #audit-checklist: 14/30 ROUTES [below-half]"
+    Received: "AX-1 #audit-checklist: 13/30 ROUTES [below-half]"
+
+      53 |
+      54 |   it('AX-1 #audit-checklist scores 14/30 and ROUTES', () => {
+    > 55 |     expect(line(AX1, r)).toBe('AX-1 #audit-checklist: 14/30 ROUTES [below-half]');
+         |                          ^
+      56 |   });
+      57 |
+      58 |   it('its witness is the assignment it counted — ids with offsets; the shared text credits documentation-3 once, never lessons-learned-capture-2', () => {
+
+      at Object.<anonymous> (__tests__/triviality.g1.test.ts:55:26)
+
+  ● (iv) the AX-1 bite › its witness is the assignment it counted — ids with offsets; the shared text credits documentation-3 once, never lessons-learned-capture-2
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 0
+
+    @@ -1,7 +1,6 @@
+      Array [
+    -   "spec-quality-1@22",
+        "spec-quality-2@84",
+        "spec-quality-3@161",
+        "implementation-coverage-1@214",
+        "implementation-coverage-2@263",
+        "implementation-coverage-3@317",
+
+      58 |   it('its witness is the assignment it counted — ids with offsets; the shared text credits documentation-3 once, never lessons-learned-capture-2', () => {
+      59 |     const witness = r.entered && r.verdict !== 'INAPPLICABLE' ? r.assignment.map((c) => `${c.itemId}@${c.offset}`) : [];
+    > 60 |     expect(witness).toEqual([
+         |                     ^
+      61 |       'spec-quality-1@22',
+      62 |       'spec-quality-2@84',
+      63 |       'spec-quality-3@161',
+
+      at Object.<anonymous> (__tests__/triviality.g1.test.ts:60:21)
+
+  ● (iv) the AX-1 bite › CONTRAST: per-item includes gives 15/30 on the same fixture — the fixture discriminates
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 15
+    Received: 14
+
+      78 |   it('CONTRAST: per-item includes gives 15/30 on the same fixture — the fixture discriminates', () => {
+      79 |     const record = readRecord(AX1.record);
+    > 80 |     expect(includesCount(readG1Rendering(AX1), record.units[AX1.anchor].items)).toBe(15);
+         |                                                                                 ^
+      81 |   });
+      82 | });
+      83 |
+
+      at Object.<anonymous> (__tests__/triviality.g1.test.ts:80:81)
+
+  ● G1 run 2 `assigned` column, reproduced per rendering › AX-1 #audit-checklist
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "AX-1 #audit-checklist: 14/30 ROUTES"
+    Received: "AX-1 #audit-checklist: 13/30 ROUTES"
+
+      116 |     expect(r.entered).toBe(true);
+      117 |     if (r.entered) expect(FLOOR_VERDICTS).toContain(r.verdict);
+    > 118 |     expect(line(f, r).replace(/ \[.*\]$/, '')).toBe(`${key}: ${expected[key]}`);
+          |                                                ^
+      119 |   });
+      120 | });
+      121 |
+
+      at __tests__/triviality.g1.test.ts:118:48
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 24 passed, 28 total
+Snapshots:   0 total
+Time:        0.688 s, estimated 1 s
+Ran all test suites matching tools/agent-generator/__tests__/triviality.g1.test.ts.

@@ -20,7 +20,7 @@ export interface G1Fixture {
   record: string;
   /** The canonical unit's partition anchor. */
   anchor: string;
-  /** That record unit's `canonicalHash` when the fixture was copied — the state it is scored against. */
+  /** That record unit's `canonicalHash` when its expected row was last derived or re-checked — provenance, unasserted (RS-60). */
   canonicalHash: string;
   /** The run record the rendering was copied from (repo-relative). */
   source: string;

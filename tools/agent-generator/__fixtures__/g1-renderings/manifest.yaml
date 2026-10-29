@@ -1,3 +1,6 @@
+# G1 renderings manifest — format: README.md in this directory.
+# canonicalHash: the record state the expected table was derived at; provenance, not asserted (RS-60).
+# No test asserts it, so a record re-confirmation owes nothing here.
 fixtures:
   - file: run1.A.audit-checklist.txt
     exemplar: A
