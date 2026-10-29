@@ -698,6 +698,11 @@ verdict: assent — surviving 4/4
 - **Hashes**: canonicalHash recomputed independently with `partition` + `regrounding/hash.ts` (body lines 205–212); it equals the overlay pin and the record's value. renderedHash recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` over the three renderings (3 pieces), not the overlay text; it equals Thurgood's computed value.
 - **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
 
+**Signature withdrawn, 2026-10-29.** Ballot `2026-10-29-dated-pointer-paths-and-edit-kind-check` (RATIFIED, Peter, 2026-10-29) § 3 site 2 removed the unit's only removal, the ballot pointer, from the canonical text (`fe6ab7470`), and site 3 moved the row `re-pointed` → `retained`, with its `removals` and `destination` gone and the overlay entry out. A `retained` row is not routed and carries no signature, so I remove this one, and the row now reads `{"disposition": "retained"}`. Nothing else in the row changes.
+- **`retained` is faithful**: the three consumer renderings, read through tool calls (`sed -n`) at `727b3f390` before this commit (`canonical/_consumer-output/_canonical/agents/stacy.md` L357–L364, `cc/.claude/agents/stacy.md` L231–L238, `kiro/.kiro/agents/stacy-prompt.md` L197–L204, each span now `passthrough`), each equal the canonical unit byte for byte (973 characters, checked by script at `59309e836`). The renderedHash did not move (`sha256:c8aad0f5042005eb9ddf29b65e8435208d251478c64c8ea4e11781b57394a17e`). No removal remains, so there is nothing left to sign.
+- **The operative set** stays at 4 items, re-confirmed in act 3 (`b2a21530b`) at `sha256:dc6152aebad7909eafdce25f08da3c0a4826a0f98666429cf8046722a8feb160`; all four reach consumers verbatim.
+- **This section stays** as ledger history: the signature above, of 2026-10-29 against `sha256:f6bfb7a081874a7f899d171cee0ad71a4da69c180689e6f96cfbed8729b37da5`, is superseded by this withdrawal, and no row cites this section as its evidence any more.
+
 ## `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference`
 
 signer: stacy
