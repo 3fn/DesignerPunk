@@ -2,11 +2,11 @@
 
 **Date**: 2026-10-29
 **Drafted by**: Thurgood (Civitas steward; owner of `.kiro/hooks/RELEASE-FLOW.md`, and of the RS queue's standards side), at Peter's go, chat, relayed by the orchestrator, 2026-10-29, verbatim: *"Continue with the remaining items."* RS-50 is one of those items. Drafter's clock at the start of drafting: 2026-10-29T05:21:13Z (`date -u`); at R5: 2026-10-29T13:02:45Z.
-**Status**: **DRAFT** (R5; text settled for Peter's rulings below, pending Stacy's R5 read; the Status commit then records his words).
-**Ruled in chat, relayed by the orchestrator, not yet recorded as ratification**:
-- **F-1**, received before 2026-10-29T12:45:12Z (the orchestrator's clock), verbatim: *"Let's go (ii). This problem only gets worse the longer we let it persist, and we've got four specs on the horizon. If the scope necessary to complete this naturally falls into one of those specs, I'm fine with deferring it there so long as we capture it. Honest thoughts?"*
-- **F-2**, received before 2026-10-29T12:59:53Z (the orchestrator's clock), verbatim: *"Thank you. Let's go (a) with the informed perspectives the agents provided, please."* (a) is: rule the home now, apply it when Spec 131's owners file gives the writing seats access, with Spec 123's completion directory named as the interim home. Every seat leaned (a): Stacy, Thurgood, Ada (who moved from (b)), Lina and Leonardo.
-- **The orchestrator's reading of "with the informed perspectives"** is § 6 item 3. It is flagged for Peter to confirm or overturn.
+**Status**: **RATIFIED (Peter, 2026-10-29)**, chat, relayed by the orchestrator. F-1, received before 2026-10-29T12:45:12Z (the orchestrator's clock), verbatim: *"Let's go (ii). This problem only gets worse the longer we let it persist, and we've got four specs on the horizon. If the scope necessary to complete this naturally falls into one of those specs, I'm fine with deferring it there so long as we capture it. Honest thoughts?"* F-2, received before 2026-10-29T12:59:53Z (the orchestrator's clock), verbatim: *"Thank you. Let's go (a) with the informed perspectives the agents provided, please."* The orchestrator's reading of "with the informed perspectives the agents provided" is recorded as applied (§ 6 item 3: the six mitigations, Thurgood's two departures from the orchestrator's wording, and R6's fixes). It is flagged: Peter may overturn it at the application PR, whose body repeats the reading.
+**Ruled**:
+- **F-1 (ii)**: the home is `.kiro/docs/releases/<v>/`, applied at the switch.
+- **F-2 (a)**: the home is ruled now and applied when Spec 131's owners file gives the five writing seats access, with Spec 123's completion directory as the interim home. Every seat leaned (a): Stacy, Thurgood, Ada (who moved from (b)), Lina and Leonardo.
+- No question remains open in this ballot. The capture record, `.kiro/issues/2026-10-29-release-records-home-switch.md`, is filed in this Status commit (site 3).
 **Base**: `6f23bc6fe` (#549). Every Before block below was cut from that SHA by `git show 6f23bc6fe:<path> | sed -n <L>p`, and is byte-exact.
 **Required reviewer**: **Stacy**. The record is hers, and she writes both phases into it. Site 2, now deferred to the switch PR, is her charter, and its acts are hers. She is also the census reader.
 **Reviewers**:
@@ -319,11 +319,11 @@ Peter's F-1 condition is *"so long as we capture it"*. This record is the captur
 # The RELEASE records' final home: the switch to `.kiro/docs/releases/<v>/` when Spec 131's owners file gives the five writing seats access
 
 **Date**: <Status date>
-**Owner**: Thurgood (owner of `.kiro/hooks/RELEASE-FLOW.md` and author of the ballot that names the switch). Interested: Stacy (the record is hers, site 2 is her charter unit, and its acts are hers).
+**Owner**: Thurgood (owner of `.kiro/hooks/RELEASE-FLOW.md` and author of the ballot that names the switch). Interested: Stacy (the RELEASE claims-pass record is hers; site 2 is her charter unit, and its acts are hers).
 **Trigger**: `release:next:phase-1` — the next release's walk reads this record. Its work rides Spec 131's owners file, so rule 1 gives it this token, not the vehicle's. Start condition, in prose: when Spec 131's requirements are written (`.kiro/specs/131-governance-simplification/requirements.md`), they take this record in or leave it out with a reason.
 **Class**: P2 obligation (record) · owed-act
 **Lapse**: rule 11. At a release's S, the record has lapsed unless an ancestor of S closed it or re-ruled it, a re-rule being a change to its Trigger line in a diff carrying a dated reason and authority.
-- **At each release before the switch**, the owner re-rules it in one record-only PR, by a Trigger-line diff: read-through prose with the date, the interim home and this ballot named, the pattern of `.kiro/issues/2026-10-25-arming-read-class-option-fork.md`.
+- **At each release before the switch**, the owner re-rules it in one record-only PR, by a Trigger-line diff: read-through prose with the date, the interim home and the ballot named, the pattern of `.kiro/issues/2026-10-25-arming-read-class-option-fork.md`.
 - **At the second release's walk after the ballot's application, and at every later walk before the switch**, that PR also carries RELEASE-FLOW step 6's fallback question ("Where a release's records live") as one `**Open for Peter**:` line, with option (b) named: standing write scope over `.kiro/docs/releases/**` for the five seats, now. The line holds that PR alone. If it is still held at S, the record lapses there, and the lapse is recorded.
 - **If Spec 131's requirements leave this record out**, it goes to Peter at that commit, with (b) named.
 - With a re-rule at every release, rule 11's escalation never fires. The fallback is the only route to Peter (Stacy R5).
@@ -351,7 +351,7 @@ Peter's F-1 condition is *"so long as we capture it"*. This record is the captur
 
 ## 5. Application (after the Status commit)
 
-1. **The Status commit** (record-first): it carries `**Status**: **RATIFIED (Peter, <date>)**`, his F-1 and F-2 words with their clock bounds, his answer on § 6 item 3, and the README roll entry. It also files site 3's record, as written, under rule 10.
+1. **The Status commit** (record-first): it carries `**Status**: **RATIFIED (Peter, <date>)**` with his F-1 and F-2 words and their clock bounds, the orchestrator's reading of § 6 item 3 as recorded, and the README roll entry. It also files site 3's record, as written, under rule 10.
 2. **Thurgood, the application PR** (branch `chore/apply-release-claims-pass-record-home`), in one commit: sites 1a and 1b.
    - `<application date>` in both is the date of the application PR's merge, as its squash commit records it (the rule #491 and #550 followed; Ada R1, A5).
    - The commit message names this ballot.
@@ -387,7 +387,7 @@ Peter's F-1 condition is *"so long as we capture it"*. This record is the captur
 
 Site 2's census, Stacy's acts, the `removals` entry, the item split, regeneration and the lock all land there, under that PR's own grant or Spec 131's owners file, with Lina's and Leonardo's reviews.
 
-## 6. Forks for Peter — ruled, and one reading to confirm
+## 6. Forks for Peter — ruled, and the reading recorded
 
 1. **F-1, the home: ruled (ii)** (Peter, before 2026-10-29T12:45:12Z, verbatim in the Status line). It is applied at the switch, not by this application. (i), Spec 123's completion directory, is **the interim home**, not the home. (iii) `docs/specs/` was declined (§ 3.3). (iv) `docs/releases/<v>/` was not taken.
 2. **F-2, the access: ruled (a)** (Peter, before 2026-10-29T12:59:53Z): the home is ruled now and applied when Spec 131's owners file gives the five writing seats access. The two options not taken:
@@ -403,7 +403,7 @@ Site 2's census, Stacy's acts, the `removals` entry, the item split, regeneratio
 
    **One more departure, for confirmation**: the orchestrator proposed the capture record's trigger as `path:.kiro/specs/131-governance-simplification/requirements.md`. Site 3 uses `release:next:phase-1`, with 131's requirements as a prose start condition. Rule 1 gives that token to a P2 record that rides another change, and it is the token that also catches a stall before 131's requirements (site 3, "Why this shape").
 
-**Open for Peter**: § 6 item 3 — the orchestrator's reading of "with the informed perspectives the agents provided": the six mitigations above as applied, including two departures from the orchestrator's wording (the switch point fixed at the walk record's `main at:` SHA, not at S; the capture record's trigger `release:next:phase-1`, not `path:` on Spec 131's requirements). Confirm, or name what to overturn.
+**Recorded, not asked** (the Status line): § 6 item 3, the orchestrator's reading of "with the informed perspectives the agents provided", is applied as written above. That covers the six mitigations; the two departures from the orchestrator's wording (the switch point fixed at the first `main at:` SHA the walk record pastes, not at S; the capture record's trigger `release:next:phase-1`, not `path:` on Spec 131's requirements); and R6's fixes (one switch PR read from the law text; the fallback recurs, and sits in the capture record's own record-only re-rule PR; Trigger-line re-rules; site 2's signed item form). Peter may overturn any part of it at the application PR, whose body repeats this reading.
 
 ## 7. Ruling, counter-argument (fold-back applied), residual
 

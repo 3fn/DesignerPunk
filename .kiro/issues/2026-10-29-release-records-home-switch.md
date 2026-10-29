@@ -1,0 +1,23 @@
+# The RELEASE records' final home: the switch to `.kiro/docs/releases/<v>/` when Spec 131's owners file gives the five writing seats access
+
+**Date**: 2026-10-29
+**Owner**: Thurgood (owner of `.kiro/hooks/RELEASE-FLOW.md` and author of the ballot that names the switch). Interested: Stacy (the RELEASE claims-pass record is hers; site 2 is her charter unit, and its acts are hers).
+**Trigger**: `release:next:phase-1` — the next release's walk reads this record. Its work rides Spec 131's owners file, so rule 1 gives it this token, not the vehicle's. Start condition, in prose: when Spec 131's requirements are written (`.kiro/specs/131-governance-simplification/requirements.md`), they take this record in or leave it out with a reason.
+**Class**: P2 obligation (record) · owed-act
+**Lapse**: rule 11. At a release's S, the record has lapsed unless an ancestor of S closed it or re-ruled it, a re-rule being a change to its Trigger line in a diff carrying a dated reason and authority.
+- **At each release before the switch**, the owner re-rules it in one record-only PR, by a Trigger-line diff: read-through prose with the date, the interim home and the ballot named, the pattern of `.kiro/issues/2026-10-25-arming-read-class-option-fork.md`.
+- **At the second release's walk after the ballot's application, and at every later walk before the switch**, that PR also carries RELEASE-FLOW step 6's fallback question ("Where a release's records live") as one `**Open for Peter**:` line, with option (b) named: standing write scope over `.kiro/docs/releases/**` for the five seats, now. The line holds that PR alone. If it is still held at S, the record lapses there, and the lapse is recorded.
+- **If Spec 131's requirements leave this record out**, it goes to Peter at that commit, with (b) named.
+- With a re-rule at every release, rule 11's escalation never fires. The fallback is the only route to Peter (Stacy R5).
+**Source**: ballot `.kiro/docs/ballots/2026-10-29-release-claims-pass-record-home.md` (RS-50): F-1 (ii) and F-2 (a), Peter, 2026-10-29, verbatim in that ballot's Status line.
+**Consulted**: Stacy, Ada, Lina, Leonardo — their F-2 reads, in that ballot's § 6 item 3.
+
+---
+
+## Items (each closes at the switch PR's merge, or by a dated re-rule)
+
+1. **Write access** to `.kiro/docs/releases/**`, named exactly so (never `.kiro/docs/**`, which would sweep in `.kiro/docs/ballots/`; Ada's condition), for Stacy, Thurgood and the delegate rotation Ada, Lina and Leonardo, through Spec 131's owners file. Until it lands, no seat writes there.
+2. **Kiro enforcement** (Lina, unverified): whether Spec 131's owners file reaches Kiro's generated `allowedPaths`, which are generated from `writeScope` today (Ada, verified). The starting point is Spec 131's outline L232: OWNERS lands "via a new source in `source.ts`/`schema.ts` rendered through `adapters/cc.ts` and `adapters/kiro.ts`" (Stacy R5); whether that reaches `allowedPaths` is still unverified. Spec 131's requirements answer it. If they do not, (a) defers Kiro-side enforcement of item 1 with no end date, and they say so.
+3. **The switch PR**: the one PR that applies the switch's After (the ballot's § 4 site 1a) to RELEASE-FLOW step 6's paragraph. The PR that lands item 1 is that PR or an ancestor of it. This is pre-declared EXECUTION.
+4. **Stacy's charter, L417** (the ballot's § 4 site 2), in whichever lands first, the switch PR or her class fix: two acts, a `removals` entry, and the `record-committed` item's text as a span the rendering contains whole (the form in the ballot's § 4 site 2). It is composed with her class fix, `.kiro/issues/2026-10-29-claims-pass-record-homes-unnamed-arming-symptom-overlay.md` (#555), so the unit is edited once.
+5. **The second glob root** in the composed-loop outcome count (`.kiro/issues/2026-10-24-composed-loop-outcome-lines-missing.md`, the count command), in the switch PR or the first record PR after it.
