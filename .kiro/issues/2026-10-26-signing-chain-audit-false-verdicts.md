@@ -56,4 +56,59 @@ Six acts hang on it, where the chosen rendered line (a table header or a first l
 
 *Signed: Thurgood, 2026-10-26.*
 
+---
+
+**Link-7 readings under Peter's ruling (2026-10-27, Stacy; rule 9 dated line).** The ruling, relayed by the orchestrator: "Re: 4, I support the recommendation". A loaded charter is not a read, with one narrow exception: the rendered line counts only if it sits in the session's recorded `prompt_snapshot` and link 6 holds against the charter at the act's own commit. His picks were received before 2026-10-26T21:28:31Z, and he confirmed them ("Cool. Let's go with my answers plus (b) for O-23") before 2026-10-27T02:25:42Z.
+
+What I ran:
+- `verify-signing-chain --audit --pr <N> --signer stacy` on #427, #467 and #472, with the default store set and no `--store` flag, at `08b9c7a8e`.
+- The exception test, using the instrument's own `readTranscript`, `charterBody` and `snapshotMatches`. "In the snapshot" means `systemPrompt[0]`, the part that link 6 compares.
+
+| Act | Row | Line in `prompt_snapshot` | Link 6 at the act's own commit | Exception | Row hash now (`08b9c7a8e`) | Outcome |
+|---|---|---|---|---|---|---|
+| #427 `8674be2e` | `stacy.yaml#the-trigger-set-…` (confirm) | yes (the table header) | holds | **holds** | moved; superseded at #436 `17702702` | no act owed |
+| #427 `1ea854d1` | `stacy.dispositions.yaml#the-trigger-set-…` (sign) | yes (the table header) | **fails**: `.claude/agents/stacy.md` changed between the session's start and this commit (the regeneration of the ARMING row) | fails | moved; superseded at #436 `ec5046ea` | no act owed: superseded |
+| #467 `027b8904` | `designerpunk-systems-overview.yaml#high-level-…` (confirm) | no | holds | fails | unchanged: the live act | re-confirm owed; it comes into bound at the O-23 fixing PR |
+| #472 `c989dacf` | `designerpunk-systems-overview.yaml#rosetta-system-token-pipeline-and-layers` (confirm) | no | holds | fails | unchanged: the live act | re-confirm owed; out of bound (below) |
+
+The Systems Overview reaches a session as CLAUDE.md context, not inside `systemPrompt`, so no Systems Overview line can meet the exception. #427's `thurgood#in-scope` acts (the same two commits) are this record's cause 3, the line form. They fail the exception, which is expected for another seat's charter, and they wait for the link-7 fix.
+
+**No C1 commit made.** No row above is on the stale list or the unsigned-routed list at `08b9c7a8e`. A re-confirm that moves no hash is out of bound under signing-act ballot § 2 clause 5 ("needs a real grant"), and it fails `--ci` link 1 (F5). My C1 consult named "a re-sign" as the remedy without that bound. That was my error.
+
+The plan:
+- **`027b8904`**: its in-bound re-confirm is step 3 of `.kiro/issues/2026-10-26-overview-counts-pointer-grant.md`, and I will read the unit's rendering in a tool result there.
+- **`c989dacf`**: needs either a clause-5 grant (Peter's), or the unit's next change. Until then the `FAIL 7` stands, and the claims passes keep counting it.
+
+**Substance, read beside the verdicts (not verdicts).** In all three seats, tool results do contain the text that changed:
+- #427: the new ARMING event phrase, 2 tool results;
+- #467: the `Steering Docs (` line, 2 tool results;
+- #472: the new Layer 2 token names, 1 tool result.
+
+Link 7's evidence line is each unit's first line, which none of these edits touched.
+
+**For RS-36**: at `8674be2e` the exception passes on a loaded charter that predates the change it confirms. The snapshot equals the generated `.claude/agents/stacy.md` at that commit, but the canonical ARMING row being confirmed differs from it (the regeneration followed). The exception's two tests cannot see this. Here the tool reads of the changed row show the read happened, but the exception would pass equally without them.
+
+*Signed: Stacy, 2026-10-27.*
+
+**`c989dacf` (#472), Peter's ruling (2026-10-27, Stacy; rule 9 dated line).** Peter, chat, relayed by the orchestrator, received before 2026-10-27T12:02:26Z, verbatim: "Re: 529, Yeah, let the fail stand. A bar is a bar, and a fail is a fail. Just do better next time." No clause-5 grant is given, so no act is made now, and the recorded `FAIL 7` stands. The next change to `designerpunk-systems-overview #rosetta-system-token-pipeline-and-layers` owes a re-confirm, preceded by a tool read of the unit's rendering, per his link-7 ruling.
+
+**Link 7 does not check that the read came before the act (2026-10-27, Thurgood, instrument owner; rule 9 dated line).** `--audit`'s link 7 anchors an act when the unit's rendered line appears in any tool result in the signer's transcript. It does not check where in the transcript that result sits relative to the call that made the signing commit. So `anchored` does not prove read-before-sign, which is what Peter's 2026-10-27 link-7 ruling requires: the seat reads the unit through a tool before it signs. Instances, from Stacy's acts on the adoption branch:
+- `6afc2c053` (re-sign) read `FAIL 7` on the first audit, then `anchored` after she read the rendering after the commit.
+- `82faa95b1` (re-confirm) reads `FAIL 7`: no read at all.
+
+**Fix shape**:
+- Link 7 anchors only to a tool result whose position in the transcript precedes the tool call that ran the signing commit's `git commit`. That call is the one link 4's lookup already finds.
+- A matching tool result after that call prints a distinct verdict, `late-read 7`. It is neither `anchored` nor `FAIL 7`, so a late read is visible as such and counted apart.
+- Fixtures, which Stacy specifies:
+  - a read before the commit call → `anchored`;
+  - a read only after it → `late-read 7`;
+  - no read → `FAIL 7`;
+  - one transcript holding two acts, the read between them → the first act `late-read 7`, the second `anchored`.
+
+**Class**: P2 obligation (guard) · defect. This is a guard weaker than its claim, as for the rest of this record, so the record's class is unchanged.
+
+**Vehicle**: the RS-36 signing-act-chain amendment ballot, beside the link-4, link-6 and link-7 tool fixes already queued for it. The verdict vocabulary is the ballot's § 4.4 reporting rule, so the new verdict is LAW, and the checker change that implements it is its execution.
+
+*Signed: Thurgood, 2026-10-27.*
+
 - *2026-10-29 (Stacy, rule 9; a dated line on my own acts)*: Peter, chat, relayed by the orchestrator, received before 2026-10-29T01:23:31Z (typo corrected, meaning unchanged): "Let's let Stacy's fresh FAIL on one re-confirm stand." Both readings come from `--audit --signer stacy` on `chore/apply-governance-examples-guard-adoption`. **`82faa95b1`** (re-confirm, `stacy.yaml#the-claims-pass-record-claims-passmd-the-template`) is **FAIL 7**, and the verdict is true: I never read the unit's text through a tool call. **`6afc2c053`** (re-sign, same unit) reads **anchored**, but only through a rendering read I made after the commit. That anchor is the late-read gap, not a read before signing. Neither act is re-made. **Consequence**: the next change to `#the-claims-pass-record-claims-passmd-the-template` owes its re-confirm and its re-sign, each preceded by a tool read of the unit (canonical text for the confirmation, rendering for the signature).

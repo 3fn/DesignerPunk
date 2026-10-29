@@ -354,6 +354,7 @@ This is my seat's lapse. RELEASE is the named backstop, so here is the read:
 ## Peter sample (Stacy-signed acts, § 5.3)
 
 **`Peter sample (Stacy-signed): 0 / 5`**. The five: #285's 4 (two re-signs, two C16 confirmations, one of which reads `FAIL 7`) and #313's 1. The cumulative frame since MIDPOINT is `0 / 314`.
+*(Erratum pointer, 2026-10-27, Stacy: the cumulative frame reads `0 / 302`, not `0 / 314`. Peter ruled the twelve pre-#262 acts (#222 10, #228 1, #239 1) pre-chain history; see `claims-pass-release-16.1.0.md` § "[STACY] Erratum: the cumulative Stacy-signed frame (2026-10-27)". This line is added; the line above stands as written.)*
 - **This is the third consecutive walk at `0 / N`.** The hybrid ruling (PR-10: a delegate runs `--audit`, and Peter keeps blind J on at least one Stacy act per release) has no recorded rule yet (RL-3). Trigger (d) stands fired.
 - The `FAIL 7` on a Stacy act is in Peter's sample by § 5.3 and § 5.4. I name it and do not adjudicate it.
 
@@ -426,6 +427,7 @@ This is my seat's lapse. RELEASE is the named backstop, so here is the read:
 2. **F-4 ARMING of `hermetic-publish-path`** at the step-6 PR's merge (my read); item 6's register text is the natural rider (RL-3).
 3. **J blind seats** for the 8-act frame (RL-2, RL-1 widening).
 4. `Peter sample (Stacy-signed): 0 / 5` (cumulative 0 / 314), including #285's `FAIL 7`; trigger (d) still fired.
+   *(Erratum pointer, 2026-10-27, Stacy: the cumulative frame reads `0 / 302`, not `0 / 314`. Peter ruled the twelve pre-#262 acts (#222 10, #228 1, #239 1) pre-chain history; see `claims-pass-release-16.1.0.md` § "[STACY] Erratum: the cumulative Stacy-signed frame (2026-10-27)". This line is added; the line above stands as written.)*
 5. **RL-1**: instrument fix; the trigger-(a) fork.
 6. **RL-3**'s nine lapsed obligations, each with its owner.
 7. **RL-4, RL-5, RL-6.**
