@@ -102,6 +102,8 @@ Firing commit `f9b99f750` (#519, merged 2026-10-27T11:52:31Z), the first commit 
 
 *Signed: Stacy, 2026-10-29.*
 
+**Peter's ruling on the escalation (2026-10-29, Stacy; rule 9 dated line).** Peter, chat, relayed by the orchestrator, received before 2026-10-29T01:52:22Z, verbatim (a typo corrected, meaning unchanged): "Re: 536, let's go "fix now"". **Fix-now**, and the fix is already done: the five reads of the registry-path limb at #519 (below), committed at `8f5d4e432` and merged in #536 (`639ef70f6`). The class fix stays with the standing-records ballot `.kiro/docs/ballots/2026-10-26-rule-11-standing-records-lapse-reading.md`. This record stays standing, with one read per registry merge, and is not closed.
+
 ## ARMING read, registry-path limb, at #519 — Stacy, 2026-10-29
 
 **Verdict: the merge holds against the clause.** All five reads are decided. #519's one registry entry is additive, in lane and biting. No finding. Read at `<m>` = `f9b99f750` (#519's squash; `<m>^` = `9bfe4bfdc`, one parent), against my ARMING row's registry-path limb as it stands in `canonical/agents/stacy.md`. The source was git and a detached scratch worktree at `<m>` (node_modules linked; removed after; nothing committed there). The PR body is the orchestrator's credentialed read, relayed 2026-10-27 (`gh pr view 519 --json mergedAt,mergeCommit,body`, 12:58:58Z his clock; received before 12:59:25Z mine).
