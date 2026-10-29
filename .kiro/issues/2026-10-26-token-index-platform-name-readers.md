@@ -31,3 +31,5 @@ The iOS and Android columns now take `theme.` from the set the native generators
 ## Not a reader to change
 
 `scripts/build-name-contract.ts` (`buildTierIndex`) reads `platforms.web` and is changed in the index PR to read lists; `dist/name-contract.json` is byte-identical before and after (built from `0218632d1`'s script and index, then from the branch's).
+
+*(2026-10-27, Ada, rule 9, a pointer line with Lina's consent; it changes neither the Trigger nor the Class.)* **Rider for item 2's PR**: the `search_tokens` match signal. When `name` is given, each result carries `matchConfidence` (`strong` exact, `partial` substring) and `matchedOn: ['name']`; there is no top-level `none`. Its merge closes `.kiro/issues/2026-07-19-application-mcp-search-tokens-partial-match-signal.md` (Peter, 2026-10-27, on #533). If item 2 has not opened when the fix for `2026-10-25-application-mcp-stale-package-token-version-warning.md` merges, the signal moves to a small PR of Lina's own, and this line no longer applies. The rider holds neither this record's close nor the stale-version record's. *Signed: Ada, 2026-10-27.*
