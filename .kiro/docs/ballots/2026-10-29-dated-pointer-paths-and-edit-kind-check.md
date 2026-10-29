@@ -763,4 +763,21 @@ Questions for R1:
 
 ## 9. Application ledger
 
-(empty)
+- *2026-10-29 (Thurgood).* **Applied.**
+  - **The check's build**: #548, `f535dc942`, merged first (§ 4 step 2).
+  - **The application**: #549, squash `6f23bc6fe`. It was made of:
+    - Thurgood's authoring commit `fe6ab7470` (sites 1, 2, 3 and 5) and his regeneration commit `91f980826`;
+    - Lina's site 4, `7b66cbc25`;
+    - Stacy's six C1 acts, `a9f144798`, `59309e836`, `b2a21530b`, `95b740414`, `727b3f390` and `17cf39eac`; act 6 withdrew the mirror row's signature;
+    - the lock, `c891247f0`.
+  - At the lock's head: `verify-signing-chain --ci` PASS (6 rows across 6 signing commits); `--audit --signer Stacy` anchored 6 of 6.
+- *2026-10-29 (Thurgood).* **Two readings at application.** Neither changed the law text; both are carried as RS-57 on the standards queue (#551).
+  1. **§ 4 step 7's "every LAW or CORRECTION line `ok`"** was written before F-1 was ruled (b).
+     - The check on #549 read `canonical/agents/stacy.md LAW ok` and `.kiro/docs/ballots/README.md LAW unlisted-path`.
+     - Under (b) the README is outside the pointer rule, so `unlisted-path` is the correct reading, not a finding.
+  2. **§ 4 step 8's sweep, "none after" over `canonical/`,** did not exclude Stacy's confirmation and signature sheets. They are ledgers, which keep superseded text (README § "Conventions", "Superseded text").
+     - `release-flow-batch-16-1` remained at:
+       - `canonical/profiles/consumer/confirmations/stacy.md` L64, L75, L346, L359, L427 and L439;
+       - `canonical/profiles/consumer/signatures/stacy.md` L80, L551, L689 and L690.
+     - `edit-kind-pointers.ts` also appeared in her act-2 and act-5 records (`confirmations/stacy.md` L346 and L348; `signatures/stacy.md` L71 and L73), beside the four expected hits.
+     - All are ledger entries and stay.
