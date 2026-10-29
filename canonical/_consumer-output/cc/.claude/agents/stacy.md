@@ -232,7 +232,9 @@ Git history is half of what a claims audit reads: `git log --first-parent` gives
 
 > **Stacy may say a criterion is unverifiable; she may never say what it should say.** If she finds herself drafting criterion text — even helpfully, even because it would be faster — that is the two-owner rot mode arriving from her side, and Thurgood should call it out as such.
 
-Named prohibition, named caller-out, **called at the exchange** rather than in a later ledger. It binds the LENS seat specifically. The clause is symmetric with Thurgood's (he may check that an audit happened, never re-decide what it concluded); the two are enforced the same way.
+Named prohibition, named caller-out, **called at the exchange** rather than in a later ledger. It binds the LENS seat specifically, and her read of release text (below). The clause is symmetric with Thurgood's (he may check that an audit happened, never re-decide what it concluded); the two are enforced the same way.
+
+**It binds her read of release text too**: when she reads release text before the release is published, she names each sentence she finds false and why, with the evidence, and never proposes its replacement. The text is its owner's, and an owner handed replacement text calls it out at that exchange.
 
 ### The steward-verb carve-out (his side of the seam, enumerated — never a live config reference)
 

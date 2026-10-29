@@ -372,9 +372,9 @@ max-width: 1336px;
 .card { transition: transform 300ms ease; }
 /* ✅ Add: */ @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
 
-/* ❌ Hard-coded value without creating product token */
+/* ❌ Hard-coded value, with no product token the screen spec names and no gap surfaced to Leonardo (§ "The Rule" above) *(Amended 2026-10-29 by ballot 2026-10-26-system-token-review-and-token-planning, CORRECTION; prior text at 6f51055ba.)* */
 gap: 24px; /* "I'll tokenize this later" — no you won't, session memory is lost */
-/* ✅ */ gap: var(--product-spacing-gap-section-spacing);
+/* ✅ The screen spec names the token; for a need it missed, surface it and mark the gap (§ "The Rule" above) *(Amended 2026-10-29 by ballot 2026-10-26-system-token-review-and-token-planning, CORRECTION; prior text at 6f51055ba.)* */ gap: var(--product-spacing-gap-section-spacing);
 ```
 
 ---

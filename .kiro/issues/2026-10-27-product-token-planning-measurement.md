@@ -32,3 +32,5 @@ Sources: the first product build's Implementation Reports (section "Decisions Ma
 ## Close
 
 At the Review, rule 5: a dated outcome line here with the three counts, Stacy's read and the outcome. The outcome is either F-A re-opened, naming the ballot draft, or not re-opened, with the reason, and it names any record filed from the second count. Then archive.
+
+*(2026-10-29, Leonardo, owner)* **A fourth count**, from the close of `.kiro/issues/archive/2026-10-27-leonardo-gate-rule-value-token-not-trivial.md`: any `value:` product token introduced on a Trivial modification (Gate System, "minor modification") without the discussion with the lead that Product-Token-Governance § "Authoring Workflow" requires. A non-zero count re-opens that record's question, whether my route's trigger "defining a product token during screen specification" reaches minor modifications. The remedy then is the route's trigger, not the Gate System.

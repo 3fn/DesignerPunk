@@ -362,7 +362,6 @@ export function runRelease(args: ReleaseArgs, deps: Deps, projectRoot: string = 
     };
     const recordPath = path.join(out, 'release-publish-record.json');
 
-    const ghCommand = renderCommand('npm', ghPublishArgs(tarball));
     const publicCommand = renderCommand('npm', publicPublishArgs(tarball));
 
     if (args.mode === 'publish') {
@@ -379,10 +378,7 @@ export function runRelease(args: ReleaseArgs, deps: Deps, projectRoot: string = 
     deps.log(`record:     ${recordPath}`);
     if (args.mode === 'dry-run') {
       deps.log('');
-      deps.log('DRY RUN — nothing was published. At 5.3, `release-publish.ts <version> --expect-sha <S>` would run, from a fresh clone at the tag:');
-      deps.log(`  ${ghCommand}`);
-      deps.log('and hand this command over for 5.4:');
-      deps.log(`  ${publicCommand}`);
+      deps.log('DRY RUN — nothing was published, and this tarball is never published: 5.3 builds the release tarball again at the tag, and 5.4 publishes only that one.');
     } else {
       deps.log('');
       deps.log(`Published to ${GH_REGISTRY}. RELEASE-FLOW 5.4 (Peter's terminal, web 2FA) — first check the file, then publish the SAME tarball:`);
