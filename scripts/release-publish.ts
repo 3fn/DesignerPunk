@@ -707,7 +707,11 @@ function main(): void {
   try {
     const args = parseArgs(process.argv.slice(2));
     if (args.mode === 'census') {
-      for (const l of runCensus(realDeps, PROJECT_ROOT, args.source ?? PROJECT_ROOT)) console.log(l);
+      const source = args.source ?? PROJECT_ROOT;
+      // RS-63: name where the tags were read. On stderr, so the census output (stdout) and its digest are unchanged.
+      // The census reads them from this checkout (or --source); 5.4's refusal 3 reads them live from origin.
+      console.error(`census: v<version> tags read by git ls-remote of ${source}; 5.4's refusal 3 reads them from origin`);
+      for (const l of runCensus(realDeps, PROJECT_ROOT, source)) console.log(l);
       return;
     }
     if (args.mode === 'npmjs') {
