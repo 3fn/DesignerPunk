@@ -102,7 +102,7 @@ units:
         text: "Product repos install `@3fn/core` and run `npx designerpunk generate` to produce themed token CSS"
     confirmation: canonical/profiles/consumer/confirmations/sparky.md#web-theming
   "#product-tokens":
-    canonicalHash: sha256:fbaea5ecb2b1acc271141fc708fd4e121f1a6dcae81ba14a2047b4762c5f0825
+    canonicalHash: sha256:510059a555d5fe7e13a5515b0bdf61209304ddc8db7383842d380182ac2eaa38
     items:
       - id: product-tokens-1
         kind: obligation
@@ -122,11 +122,11 @@ units:
         text: "Query available tokens with the Product-MCP `get_product_tokens` (see your routing section)"
       - id: product-tokens-5
         kind: obligation
-        label: "Author new tokens in product/tokens/{category}.yaml when you"
-        text: "Author new tokens in `product/tokens/{category}.yaml` when you discover values Leonardo didn't anticipate — follow Product-Token-Governance (your ambient law), and the routed product-token authoring + naming sections"
+        label: "Author a product token in product/tokens/{category}.yaml whe"
+        text: "Author a product token in `product/tokens/{category}.yaml` when the screen spec names it. When you review the spec (§ \"Step 1: Review the Specification\"), raise, before you build, any need its `tokens:` blocks do not name. A value the spec did not anticipate that you meet during the build is surfaced to Leonardo and never filled silently; the routed product-token authoring section says what the code uses until the outcome, and when the token may be written. Follow Product-Token-Governance (your ambient law), and the routed product-token authoring + naming sections"
     confirmation: canonical/profiles/consumer/confirmations/sparky.md#product-tokens
   "#out-of-scope":
-    canonicalHash: sha256:2a194f0ea5b813a6ea71d33ec46613e0fc1f672688ded1ace3c7eccf808cbbe2
+    canonicalHash: sha256:bf74a286be1191112b87d64478b37bbb0f4db4115663cacd3bed09de61cbd7ee
     items:
       - id: out-1
         kind: member
@@ -142,8 +142,8 @@ units:
         text: "**Component selection and screen specification** — that's Leonardo's job (you implement his specs)"
       - id: out-4
         kind: member
-        label: "Token creation or modification — escalate through Leonardo t"
-        text: "**Token creation or modification** — escalate through Leonardo to Thurgood (who triages to Ada)"
+        label: "System token creation or modification — escalate through Leo"
+        text: "**System token creation or modification** — escalate through Leonardo to Thurgood (who triages to Ada). Product tokens are in scope: § \"Product Tokens\" above says when you author one"
       - id: out-5
         kind: member
         label: "Component creation or modification — escalate through Leonar"

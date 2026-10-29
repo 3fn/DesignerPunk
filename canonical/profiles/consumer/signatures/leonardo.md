@@ -40,9 +40,16 @@ assent: surviving 8 of 11 — scope-1, scope-2, scope-3, scope-4, scope-5, scope
 ## `#out-of-scope`
 
 signer: leonardo
-canonicalHash: sha256:abdff9e39c869c5423faf28f9fd4e313fdf541537c7e5751df7664cb29f12286
-renderedHash: sha256:312c5d3e17b94f1df4733b56b3b9759a6e47a17f89b1ca5d475ec0cd6d32ce0f
+canonicalHash: sha256:60c6adcf632b51299645aaee8bb819a537c8493a1722923fdc03d9bfa86e271d
+renderedHash: sha256:bc18bdfb44b08115f4549bd0c0a94e7c882b6650cc554ec4751ac5525dc05a33
 assent: surviving 6 of 6 — out-1, out-2, out-3, out-4, out-5, out-6
+
+**Re-signed 2026-10-27 (system-token review and token planning ballot, item 2, site 7): ASSENT, `surviving` 6 of 6 (`out-1` to `out-6`).** A new act, read fresh against the new rendering; nothing is carried from the 2026-09-29 signature below (canonicalHash `sha256:abdff9e39c869c5423faf28f9fd4e313fdf541537c7e5751df7664cb29f12286`, renderedHash `sha256:312c5d3e17b94f1df4733b56b3b9759a6e47a17f89b1ca5d475ec0cd6d32ce0f`).
+- **The ballot**: `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493). Site 7 was applied at `eb91cd5b1`, with the profile author's re-quoted `out-3` and the re-pinned overlay unit. The rendering was regenerated at `5addae6b2`, and I re-confirmed the set at 6 at `b14a2b350`.
+- **What I read, in this session, through tool results**: the unit as `readConsumerSpans` returns it from the committed rendering at `5addae6b2`, one piece each in `canonical/_consumer-output/_canonical/agents/leonardo.md` (L278–L287), `cc/.claude/agents/leonardo.md` and `kiro/.kiro/agents/leonardo-prompt.md`. By script, the three pieces are byte-identical and equal the overlay's `## @unit #out-of-scope` text. I also read this row. The rendered `out-3` line reads: *"**System token creation or modification** — escalate to Ada via system feedback (through Thurgood). Product tokens are yours: you plan and author them at screen specification (§ "Product Tokens" above)"*. Its pointer resolves in every rendering: `### Product Tokens` is a retained unit, present in all three pieces' files.
+- **Credited**: `out-1` to `out-5` survive verbatim in all three pieces (checked by script), `out-3` with its new sentence. `out-6` (*"… — Peter's job"*) renders *"… — your human lead's job"*, as before: product decisions stay outside my seat and with the consumer's human lead. Credited by entailment.
+- **My R1 conditions** (ballot § 13, [LEONARDO R1] item 5), each checked: site 7 was applied by Thurgood, byte for byte from my R1 item 2 text (equal to § 14's block at `bad7222ef`, by script); the applied site 3 (`governance/Product-Token-Governance.md` L58) names a screen's tokens in its nodes' `tokens:` blocks and asks for no separate per-element list, so my one would-refuse condition does not arise; I sign against the committed rendering, after § 12 step 7. The row's `removals` (`Peter`, `subtraction-2`) is unchanged and still the only removal; the new sentence contains no `Peter`, so nothing new is subtracted.
+- **Hashes.** `canonicalHash` moves `abdff9e3...` to `60c6adcf...` (`hashText` of the unit from `partition(body).units`, equal to the overlay pin and to the sweep's value). `renderedHash` moves `312c5d3e...` to `bc18bdfb...` (`renderedHashOf` over the committed rendering, `rowSpanSource('canonical/agents/leonardo.md', 'body', '#out-of-scope')`), equal to the profile author's value.
 
 - `out-1` to `out-5`: verbatim.
 - `out-6` (*"… — Peter's job"*) → *"… — your human lead's job"*. Product decisions stay outside my seat and stay with the human. Credited by entailment.

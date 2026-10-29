@@ -14,7 +14,7 @@ ambient:
         - claim: creation-requires-human-review
           section: Token Creation Governance
           mustContain:
-            - Creating ANY token (semantic, primitive, or component) requires human review
+            - Creating ANY system token (semantic, primitive, or component) requires human review
   groundTruthManifest:
     verdict: none-standing
 routes:

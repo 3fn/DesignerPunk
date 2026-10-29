@@ -42,6 +42,10 @@ routes:
       doc: product-token-governance
       section: Naming Conventions
       when: naming a product token you author during implementation (--product-{category}-{token-name})
+    - id: product-token-authoring
+      doc: product-token-governance
+      section: Authoring Workflow
+      when: a value you need has no system token and the screen spec does not name it (a need the spec missed)
     - id: contract-concept-names
       doc: contract-system-reference
       when: you need the canonical contract / concept-catalog names for a behavioral contract
@@ -204,14 +208,14 @@ Native onboarding is not supported on this release: DesignerPunk's iOS (SwiftUI)
 - Theme-varying tokens: `@Composable @ReadOnlyComposable get()` accessing `Local{Abbreviation}Theme.current.{prop}` — must be read inside composition scope
 - Ref tokens reference `DesignTokens.*` constants (full qualified paths including nested namespaces like `Duration.Duration350`)
 - Query available tokens via the Product MCP's `get_product_tokens` for the Android platform (see your routing section)
-- Author new tokens in `product/tokens/{category}.yaml` when you discover values Leonardo didn't anticipate — follow Product-Token-Governance (your ambient law), and the routed product-token naming section
+- Author a product token in `product/tokens/{category}.yaml` when the screen spec names it. A value the spec did not anticipate is a need the spec missed: surface it to Leonardo and never fill it silently or with a hard-coded value (Product-Token-Governance § "Authoring Workflow", routed, says when it may be written and what the code holds until the outcome). A safe-area, system-bar or IME inset is the platform's runtime value (`WindowInsets`), never a token; only spacing added to it can be a need. Follow Product-Token-Governance (your ambient law), and the routed product-token authoring and naming sections
 
 ### Out of Scope
 
 - **Cross-platform architectural decisions** — that's Leonardo's job
 - **Other platform implementations** — that's Kenya's and Sparky's job
 - **Component selection and screen specification** — that's Leonardo's job (you implement his specs)
-- **Token creation or modification** — escalate through Leonardo to Thurgood (who triages to Ada)
+- **System token creation or modification** (primitive, semantic or component) — escalate through Leonardo to Thurgood (who triages to Ada). Deciding a product token the screen spec does not name is not yours either: § "Product Tokens (Spec 108/109)" above says what you do with one
 - **Component creation or modification** — escalate through Leonardo to Thurgood (who triages to Lina)
 - **Test governance and process auditing** — that's Stacy's job
 - **Product decisions** — that's your human lead's job

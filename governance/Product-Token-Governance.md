@@ -7,6 +7,8 @@ description: Product token authoring governance — scope model, naming conventi
 
 # Product Token Governance
 
+> **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the amendment notes and their ballot paths, the Spec 109 reference, Peter named as this repo's human lead, and Peter's approval of promotions are DesignerPunk's. **Transferable**: the product-token scope model, the naming conventions and litmus test, colour governance, the promotion signals, and the authoring workflow (token needs planned at screen specification; a need the spec missed is surfaced, never filled silently).
+
 **Date**: 2026-05-25
 **Purpose**: Governance framework for authoring, naming, and promoting product tokens
 **Organization**: process-standard
@@ -33,7 +35,7 @@ Product tokens exist within a clear tier hierarchy:
 
 | Tier | Scope | Governance |
 |------|-------|-----------|
-| **Product token** | One product vertical, any number of surfaces | Product team authors freely |
+| **Product token** | One product vertical, any number of surfaces | Product team authors, with no system review; needs planned at screen specification (§ "Authoring Workflow") *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)* |
 | **System token** | All product verticals (organizational) | Promotion requires Ada review |
 
 Component tokens are orthogonal — they are system-level tokens with component-scoped consumption, governed by Ada + Lina. They are not a tier below product tokens; they are a different axis entirely.
@@ -55,9 +57,11 @@ Use this to classify where a value belongs:
 
 ## Authoring Workflow
 
+**Token needs are planned before implementation.** A screen's token needs are identified while the screen is specified, so they can be discussed rather than decided ad hoc during the build. The screen spec names every token its nodes use in their `tokens:` blocks (Integration Guide § "Writing Screen Specs"): system tokens, semantic first, and the product tokens the screen introduces. It also names each need no system token covers, as a new product token or as a system gap. A system gap goes to Thurgood, who triages it to Ada; creating a system token needs human review (Token Governance § "Token Creation Governance"). Until the gap is resolved, the spec names the product token the screen uses in its place, with `promotionCandidate: true`, or the screen waits; the discussion decides which. Leonardo discusses them with the product's human lead (Peter in DesignerPunk's repo; the founder in a product repo) in the screen spec's review, before implementation starts. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
+
 **Leonardo** defines product tokens during screen specification. He identifies product-level values, names them, and documents their purpose. This is the primary authoring path.
 
-**Platform agents** (Sparky, Kenya, Data) may add product tokens during implementation when they discover needs not anticipated in the screen spec. They follow the same naming conventions and governance rules.
+**A need the spec missed.** A platform agent (Sparky, Kenya, Data) that sees a missing need while reading the spec raises it before building (Product-Handoff-Protocol § "Platform → Leo (Raising Concerns Before Implementation)"). Some needs appear only during the build on one platform, such as spacing added to a safe-area or keyboard inset (the inset itself is the platform's value, not a token) or a sheet detent height. A platform agent that meets one first checks the system tokens, semantic first; a need they cover is not a gap. Otherwise it surfaces the need to Leonardo as a Tier 1 clarification (Product-Handoff-Protocol § "Tier 1: Quick Clarifications"), stating the need, the system tokens it checked, and a proposed name with its `ref:` or `value:` and rationale. Leonardo decides the outcome, except for a colour value or a system gap, which he takes to the product's human lead to decide. The Implementation Report cites where the lead's decision is written, in the lead's own words and dated: the screen spec's review or the unit's PR. Until the outcome, the code uses the nearest system token (semantic first), marked with a `token-gap: <need>` comment, or leaves the value out where no system token is near, with the same marker where the value would go; the product token is written only once the screen spec names it. Every gap found in one build pass is surfaced in one message, the rest of the build goes on, and the marker is removed when the outcome is applied. A unit does not merge while its screen sources carry a `token-gap:` marker. The outcome is recorded in the Implementation Report under "Decisions Made During Implementation", and the screen spec is amended to name any token that is kept. A need is never filled silently and left to a later audit. It never becomes a hard-coded value, or a value under a node's `props:`, which no index reads. The prototype escape hatch (§ "System-First Value Selection", `# TODO: snap to system`) is the design-phase counterpart: the value is marked, and it is resolved before the work moves on.
 
 **Naming authority**: The indexer validates naming mechanically (camelCase enforcement). Leonardo sets naming patterns for the vertical (e.g., "layout tokens use `content*` prefix for content-area constraints"), but enforcement is the indexer's job, not a human routing step.
 
@@ -69,7 +73,7 @@ Use this to classify where a value belongs:
 
 A `value:` product token requires demonstrating that the nearest system token doesn't serve the need. The `rationale` field must state which system token was considered and why it was rejected.
 
-**Responsibility**: This rule applies at the *authoring* point — Leonardo during screen spec, platform agents when discovering new needs during implementation. Platform agents consuming generated CSS custom properties don't need to worry about ref vs value at consumption time. If Leonardo's spec already includes a `value:` token with rationale, platform agents trust that decision during implementation.
+**Responsibility**: This rule applies at the *authoring* point — Leonardo during screen spec, and a platform agent for a need the spec missed, under § "Authoring Workflow". Platform agents consuming generated CSS custom properties don't need to worry about ref vs value at consumption time. If Leonardo's spec already includes a `value:` token with rationale, platform agents trust that decision during implementation. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
 
 ### The Workflow
 

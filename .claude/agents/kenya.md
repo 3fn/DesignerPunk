@@ -76,14 +76,14 @@ Peter is the human lead. He makes final decisions. You are his partner, not his 
 - Theme-varying tokens: protocol extension on `{Name}Theme` — access via `theme.product{Category}{Name}`
 - Ref tokens reference `DesignTokens.*` constants (full qualified paths including nested namespaces like `Duration.duration350`)
 - Query available tokens via the Product MCP's `get_product_tokens` for the iOS platform (see your routing section)
-- Author new tokens in `product/tokens/{category}.yaml` when you discover values Leonardo didn't anticipate — follow Product-Token-Governance (your ambient law), and the routed product-token naming section
+- Author a product token in `product/tokens/{category}.yaml` when the screen spec names it. A value the spec did not anticipate is surfaced to Leonardo and never filled silently or with a hard-coded value (Product-Token-Governance § "Authoring Workflow", routed, says when it may be written). Follow Product-Token-Governance (your ambient law), and the routed product-token authoring + naming sections
 
 ### Out of Scope
 
 - **Cross-platform architectural decisions** — that's Leonardo's job
 - **Other platform implementations** — that's Data's and Sparky's job
 - **Component selection and screen specification** — that's Leonardo's job (you implement his specs)
-- **Token creation or modification** — escalate through Leonardo to Thurgood (who triages to Ada)
+- **System token creation or modification** (primitive, semantic or component) — escalate through Leonardo to Thurgood (who triages to Ada). A product token is not system work: § "Product Tokens (Spec 108/109)" above says when you author one
 - **Component creation or modification** — escalate through Leonardo to Thurgood (who triages to Lina)
 - **Test governance and process auditing** — that's Stacy's job
 - **Product decisions** — that's Peter's job
@@ -296,7 +296,7 @@ Your in-repo commands (with their triggering cues) and named gaps are in the Com
 
 A `value:` product token requires demonstrating that the nearest system token doesn't serve the need. The `rationale` field must state which system token was considered and why it was rejected.
 
-**Responsibility**: This rule applies at the *authoring* point — Leonardo during screen spec, platform agents when discovering new needs during implementation. Platform agents consuming generated CSS custom properties don't need to worry about ref vs value at consumption time. If Leonardo's spec already includes a `value:` token with rationale, platform agents trust that decision during implementation.
+**Responsibility**: This rule applies at the *authoring* point — Leonardo during screen spec, and a platform agent for a need the spec missed, under § "Authoring Workflow". Platform agents consuming generated CSS custom properties don't need to worry about ref vs value at consumption time. If Leonardo's spec already includes a `value:` token with rationale, platform agents trust that decision during implementation. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
 
 ### The Workflow
 
@@ -356,6 +356,7 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 - WHEN selecting a token or finding which token-family doc covers a token type THEN consult token-quick-reference § "Token Documentation Map"
 - WHEN you need the iOS implementation patterns (SwiftUI render target, token consumption, accessibility) — demoted to on-demand per the consumer decomposition THEN consult platform-implementation-guidelines § "iOS Implementation Patterns"
 - WHEN naming a product token you author during implementation (--product-{category}-{token-name}) THEN consult product-token-governance § "Naming Conventions"
+- WHEN a value the screen spec did not anticipate comes up while you build an iOS screen (what you surface, and what sits in the code until the outcome) THEN consult product-token-governance § "Authoring Workflow"
 - WHEN writing task completion or summary docs and unsure which tier applies THEN consult completion-documentation-guide § "Two-Document Workflow"
 - WHEN you need the canonical contract / concept-catalog names for a behavioral contract THEN consult contract-system-reference (summary-first)
 - WHEN you need the component philosophy or family inheritance principles THEN consult stemma-system-principles (summary-first)

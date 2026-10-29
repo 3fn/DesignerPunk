@@ -282,9 +282,9 @@ Awaiting your decision before proceeding."
 
 ### Universal Rule: Human Review Required
 
-**Creating ANY token (semantic, primitive, or component) requires human review.**
+**Creating ANY system token (semantic, primitive, or component) requires human review.** A system token is a Rosetta token: a primitive or semantic token in the token source, or a component token declared with `defineComponentTokens()` (a component's `*.tokens.ts`). The token source is `src/tokens/` in DesignerPunk's repo; in a product it is the directory `tokenSource` names in `designerpunk.config.ts` (`init` writes `./src/tokens`), and in package mode, with no `tokenSource`, a product's primitives and semantics come from the package and are added only upstream. A product token (`product/tokens/*.yaml`) is governed by Product-Token-Governance: its need is planned at screen specification and discussed before implementation, and the indexer checks its naming and that it carries a rationale. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 1; prior text at `a95d6bf3d`.)*
 
-This is non-negotiable. Token creation is an architectural decision that affects the entire design system. AI agents should never autonomously create tokens.
+This is non-negotiable. Token creation is an architectural decision that affects the entire design system. AI agents should never autonomously create system tokens.
 
 ### Component Token Construction Rule
 
