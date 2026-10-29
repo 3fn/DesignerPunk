@@ -1,0 +1,60 @@
+# BITE charter-edit (RS-53): the live charter's trigger-set unit edited, the fixture untouched — the fixture suites stay GREEN (the RS-53 instance, removed)
+# mutation: canonical/agents/stacy.md
+# command: npx jest --config tools/agent-generator/jest.config.js tools/agent-generator/__tests__/semantics-guard.fixture.test.ts tools/agent-generator/__tests__/semantics-guard.test.ts --verbose
+# base commit: 6f23bc6f + the working tree under test; run 2026-10-29T05:17:18Z
+# before this change the same mutation turned semantics-guard.fixture.test.ts RED: '#the-trigger-set-the-114-superset-table-names-never-numbers: false' (1 failed, 5 passed)
+# --- mutation diff ---
+diff --git a/canonical/agents/stacy.md b/canonical/agents/stacy.md
+index 8ccc09d0e..331fbe48c 100644
+--- a/canonical/agents/stacy.md
++++ b/canonical/agents/stacy.md
+@@ -401 +401 @@ The dividing verb is **author/maintain** vs **adjudicate**. Product-side was not
+-| **SYMPTOM** | A consumer symptom traced to "it was reported done" | Retrospective claims audit of the originating spec, **all ticked items**. **Non-negotiable** | Stacy |
++| **SYMPTOM** | A consumer symptom traced to "it was reported done" | Retrospective claims audit of the originating spec, **every ticked item**. **Non-negotiable** | Stacy |
+# --- output ---
+    ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+    ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+      ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+    ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+    ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+      ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+      ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+    ✓ the declared list drives the blocks: one more target → one more block
+    ✓ a declared target with no registered adapter fails loud, naming it (no silent block)
+      ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+        ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+      ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+        ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+      ✓ body: E (S re-grounded in place) is VERIFIED over this adapter’s own spans
+      ✓ body: E’s re-grounded text is what shipped (the rendering carries the overlay, not canonical S)
+        ✓ E-fm: writeScope[.kiro/specs/**] (re-grounded in place) is VERIFIED over this adapter’s own spans
+        ✓ E-fm’s re-grounded text is what shipped (not the canonical glob)
+        ✓ EXTRA EVIDENCE (disclosed, not a substitute for E-fm): commands[claims-pass] re-grounded in place is VERIFIED
+    ✓ the emitted rendering carries exactly one blank line attributed to S
+    ✓ A1 (sibling destination) and A4 (destination S) → FAIL_NO_DERIVATION
+    ✓ the emitted rendering carries exactly one blank line attributed to S
+    ✓ A1 (sibling destination) and A4 (destination S) → FAIL_NO_DERIVATION
+    ✓ the JSON ALONE derives E-fm (writeScope[.kiro/specs/**], rendered into allowedPaths) and description
+    ✓ the prompt ALONE derives the glob-only knowledge base (knowledgeBases[specs-kb]) through its fallback note
+    ✓ the emitted member span is `- ` (non-empty after trim)
+    ✓ M2 (sibling destination) → FAIL_DISHONEST_NAMING; L5 (itself) → VERIFIED, a named limit
+    ✓ the emitted member span is `- ` (non-empty after trim)
+    ✓ M2 (sibling destination) → FAIL_DISHONEST_NAMING; L5 (itself) → VERIFIED, a named limit
+    ✓ its three body units are the frozen copy of stacy.md at FROZEN_FROM.commit, byte for byte by hash (the first also carries the fixture’s own title line)
+    ✓ E’s re-grounded text is G1 run 1’s committed E rendering, byte for byte
+    ✓ passes Task 13’s checks: the 13.1 schema, 13.5 orphan + missing row, 13.2 pin freshness
+    ✓ re-points exactly E, E-fm and the extra, each in place
+    ✓ E stays ZERO-VERBATIM against S’s operative items in the LIVE record (10.S Constraint 3): 0 credited
+    ✓ E-fm’s re-grounded text does not carry the canonical glob verbatim
+    ✓ _fixture.md: the re-pointed #doc and writeScope member are VERIFIED in each target’s prompt, under _fixture-output-consumer/<target>/
+Test Suites: 2 passed, 2 total
+Tests:       44 passed, 44 total
