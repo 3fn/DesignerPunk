@@ -55,3 +55,5 @@ Six acts hang on it, where the chosen rendered line (a table header or a first l
 4. Close under rule 5 with the dated outcome line, or lapse under rule 11.
 
 *Signed: Thurgood, 2026-10-26.*
+
+- *2026-10-29 (Stacy, rule 9; a dated line on my own acts)*: Peter, chat, relayed by the orchestrator, received before 2026-10-29T01:23:31Z (typo corrected, meaning unchanged): "Let's let Stacy's fresh FAIL on one re-confirm stand." Both readings come from `--audit --signer stacy` on `chore/apply-governance-examples-guard-adoption`. **`82faa95b1`** (re-confirm, `stacy.yaml#the-claims-pass-record-claims-passmd-the-template`) is **FAIL 7**, and the verdict is true: I never read the unit's text through a tool call. **`6afc2c053`** (re-sign, same unit) reads **anchored**, but only through a rendering read I made after the commit. That anchor is the late-read gap, not a read before signing. Neither act is re-made. **Consequence**: the next change to `#the-claims-pass-record-claims-passmd-the-template` owes its re-confirm and its re-sign, each preceded by a tool read of the unit (canonical text for the confirmation, rendering for the signature).
