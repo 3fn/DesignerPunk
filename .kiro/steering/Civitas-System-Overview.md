@@ -27,15 +27,15 @@ Civitas is architecturally different from its siblings. Rosetta has a unified ar
 
 ## What Civitas Contains
 
-**Steering documentation** (93 docs across 4 layers; 84 MCP-served + 9 always-loaded identity docs):
+**Steering documentation** (4 layers; the MCP-served docs + 9 always-loaded identity docs; the docs MCP serves the current served count via `get_index_health`):
 - Layer 0: Meta-guide for the steering system itself
 - Layer 1: Foundation docs loaded by all agents (Core Goals, Agent Directory, this document)
 - Layer 2: Frameworks and patterns queryable via MCP (governance, architecture, process standards)
 - Layer 3: Specific implementations (token family docs, component family docs, platform guides)
 
 **MCP servers** (3):
-- Docs MCP: serves steering documentation with progressive disclosure (84 docs, 2,535 sections, 331 cross-references)
-- Application MCP: serves component metadata and token metadata (34 components, 443 tokens, 9 experience patterns)
+- Docs MCP: serves steering documentation with progressive disclosure (it serves its current document, section and cross-reference counts via `get_index_health`)
+- Application MCP: serves component metadata and token metadata (it serves its current component, token and experience-pattern counts via `get_component_health`)
 - Product MCP: serves product-specific context from a consumer's `product/` directory (built in Spec 081: 14 tools, shipped in the package as `dist/mcp/product-mcp.js`; see also specs 096, 097). This repository has no `product/` directory, so here it serves an empty product set.
 
 **Agent configurations** (8 agents):
@@ -43,11 +43,11 @@ Civitas is architecturally different from its siblings. Rosetta has a unified ar
 - 5 product agents (Leonardo, Sparky, Kenya, Data, Stacy) that consume the design system to build products
 - Each agent has a JSON config (MCP access, steering doc references, skills) and a prompt file (domain boundaries, operational modes)
 
-**Automation** (12 hooks + 5 shell scripts):
+**Automation** (Kiro hooks and shell scripts in `.kiro/hooks/`, `archive/` excluded; current counts: `git ls-files '.kiro/hooks/*.kiro.hook' ':!.kiro/hooks/archive/**' | wc -l` and `git ls-files '.kiro/hooks/*.sh' ':!.kiro/hooks/archive/**' | wc -l`):
 - Agent hooks for domain-specific compliance checks (token health, component scaffolding, test coverage)
 - Shell scripts for task completion and file organization
 
-**Knowledge bases** (13 definitions):
+**Knowledge bases** (the `knowledgeBases:` entries in the canonical charters, `canonical/agents/*.md`; the current count is the number of those entries):
 - Per-agent indexed content for domain-scoped semantic search
 - Covers component source, token source, test infrastructure, spec history
 
