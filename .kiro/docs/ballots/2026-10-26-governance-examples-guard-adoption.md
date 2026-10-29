@@ -379,6 +379,7 @@ Questions put:
     - The guard's suite: 45/45.
     - `npm run test:scripts`: 669/669.
     - `npm test`: 9814/9814 in 414 suites.
+- **2026-10-29 (Thurgood)**: applied at #536 (`639ef70f6`, merged 2026-10-29T01:47:07Z). The application record and the build-grant record are closed and archived in the closing PR (branch `chore/close-adoption-application-record`). The application record carries a `## Lapse (2026-10-29)` heading naming `639ef70f6`, because #536 did not carry its outcome line. It is my miss, escalated under rule 11.
 
 ## 9. Resolved texts and the plan for the application (written at the Status commit)
 
