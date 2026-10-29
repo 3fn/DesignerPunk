@@ -106,7 +106,7 @@ units:
         text: "Generated type names use the product's name (e.g., `WrKingClassTheme`) — the system disappears into the product"
     confirmation: canonical/profiles/consumer/confirmations/leonardo.md#product-configuration-context
   "#product-tokens":
-    canonicalHash: sha256:ba16cfe01837021e91887864df5afe5b1f966e74e3d4f58af8cd6c40cff8c84c
+    canonicalHash: sha256:14729b3d5db15c642637cbd8f53843a0eb78288ff0b97ecc983df11e4ec0a498
     items:
       - id: product-tokens-where
         kind: obligation
