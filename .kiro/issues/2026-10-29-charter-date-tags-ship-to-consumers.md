@@ -23,6 +23,8 @@
 - **The pattern is a heuristic.** It also matches lines that carry a real pointer or a ballot name for another reason: stacy.md L400 and L432 hold #541's pointers, which the ballot's application removes. The count is not a census.
 - **Not yet read**: which of the 26 reach a consumer rendering. Data read his two (L85, a frontmatter route; L500, in a signed unit). The others are unread. Many sit in units that are already `re-pointed` with removals covering them.
 
+- *2026-10-29 (Thurgood, from Ada's R1 on the ballot, § 8): **ada.md L320 is not a date tag.** It is a ballot's name, `(ballot 2026-10-17-standing-write-scope-six-roots)`, which the heuristic's `\(ballot 20` arm catches. It is in `.claude/agents/ada.md` and not in the consumer cc copy. **ada.md L414 is a tag that ships** ("ratified 2026-09-19", consumer cc L160). Ada's call as its owner: (a) leave.*
+
 ## Options (named, not picked)
 
 - (a) **Leave.** No churn, and the dates keep shipping.
