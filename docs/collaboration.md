@@ -67,8 +67,8 @@ Not all tokens carry the same risk. The system defines autonomy levels:
 
 - **Semantic tokens**: Agents use freely (verify semantic correctness)
 - **Primitive tokens**: Requires prior context or human acknowledgment
-- **Component tokens**: Requires explicit human approval
-- **Creating any token**: Always requires human review
+- **Component tokens**: Agents use them freely inside the component they belong to, for the property they were made for; any other use requires explicit human approval
+- **Creating any system token** (primitive, semantic or component): Always requires human review. A product token is planned instead: its need is identified at screen specification and discussed before implementation, and a need the spec missed is surfaced, never filled silently
 
 ### Spec Feedback Protocol
 
