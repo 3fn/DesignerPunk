@@ -33,6 +33,8 @@ Byte-identical renderings (C(c1)'s two units, Lina-2's `:preamble`) are **not** 
 
 The record pin (`canonicalHash`) is asserted where the scores are (`triviality.g1.test.ts`): if a record unit is re-confirmed, the expected scores are re-derived explicitly, never silently moved.
 
+**When a record unit is re-confirmed** (its `canonicalHash` in `canonical/operative-sets/<seat>.yaml` moves), the record-pin test in `triviality.g1.test.ts` goes red, naming the record, the anchor and both hashes. The pin is owed in the same PR as the re-confirmation: check that the unit's row in the same file's expected table is still green, then set the fixture entry's `canonicalHash` here to the record's new value. A rendering file is never edited for a re-confirmation. The semguard fixture (`../semantics-guard/`) is a separate fixture: it is frozen, and a charter edit owes it nothing.
+
 ## Regenerating
 
 Do not hand-edit. If a source record legitimately changes, re-extract the affected blocks with the same grammar, update `sourceBlob` (`git hash-object <source>`), and record the change in the owning subtask's completion doc.

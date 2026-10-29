@@ -5,6 +5,12 @@
  *
  * The per-target guard and its bites are semantics-guard.test.ts (14.3/14.4). This file holds
  * the fixture to its claims so a red there is about routing, never about a malformed fixture.
+ *
+ * THE FROZEN COPY (RS-53, 2026-10-29): the body units are held to the hashes of stacy.md's units
+ * at `FROZEN_FROM.commit`, not to the live charter. Until then this file required byte-identity
+ * with the live `canonical/agents/stacy.md`, so every edit to one of the three units failed here
+ * unless the same PR re-copied it (eleven PRs, #285 to #549). The live record is still read where the
+ * claim is about it: S's operative items in `canonical/operative-sets/stacy.yaml` (Constraint 3).
  */
 import * as fs from 'fs';
 import * as path from 'path';
@@ -22,21 +28,22 @@ import { hashEntry, hashText } from '../regrounding/hash';
 import { checkOverlayPins, parseOverlay } from '../regrounding/overlay';
 import { assignOccurrences } from '../regrounding/triviality';
 import type { Dispositions } from '../spans';
-import { DISPOSITIONS_FILE, E_FM, EXTRA, loadSemguard, OVERLAY_FILE, S, SEMGUARD_ROOT, SOURCE } from '../__fixtures__/semantics-guard';
+import { DISPOSITIONS_FILE, E_FM, EXTRA, FROZEN_FROM, loadSemguard, OVERLAY_FILE, S, SEMGUARD_ROOT, SOURCE, TITLE } from '../__fixtures__/semantics-guard';
+import { g1Fixture, readG1Rendering } from '../__fixtures__/g1-renderings';
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..');
 const fixture = loadSemguard();
 
 describe('the semguard fixture is what it claims (14.2)', () => {
-  it('its three body units are byte-identical to stacy.md’s units of the same anchors (the first also carries the fixture’s own title line)', () => {
-    const stacy = partition(splitFrontmatter(fs.readFileSync(path.join(REPO_ROOT, 'canonical/agents/stacy.md'), 'utf8')).body);
-    const TITLE = '# Semguard\n\n';
+  it('its three body units are the frozen copy of stacy.md at FROZEN_FROM.commit, byte for byte by hash (the first also carries the fixture’s own title line)', () => {
     expect(fixture.trees.body.units[0].text.startsWith(TITLE)).toBe(true);
-    for (const [i, unit] of fixture.trees.body.units.entries()) {
-      const text = i === 0 ? unit.text.slice(TITLE.length) : unit.text;
-      expect(`${unit.anchor}: ${stacy.units.find((u) => u.anchor === unit.anchor)?.text === text}`).toBe(`${unit.anchor}: true`);
-    }
+    const held = fixture.trees.body.units.map((unit, i) => `${unit.anchor} @ ${hashText(i === 0 ? unit.text.slice(TITLE.length) : unit.text)}`);
+    expect(held).toEqual(FROZEN_FROM.units.map(([a, h]) => `${a} @ ${h}`));
     expect(fixture.trees.body.units.map((u) => u.anchor)).toContain(S);
+  });
+
+  it('E’s re-grounded text is G1 run 1’s committed E rendering, byte for byte', () => {
+    expect(fixture.overlay.units?.[S]).toBe(readG1Rendering(g1Fixture('E', S)));
   });
 
   it('passes Task 13’s checks: the 13.1 schema, 13.5 orphan + missing row, 13.2 pin freshness', () => {
@@ -56,8 +63,11 @@ describe('the semguard fixture is what it claims (14.2)', () => {
     expect(Object.keys(fixture.parsedOverlay.entries).sort()).toEqual([EXTRA, E_FM].sort());
   });
 
-  it('E stays ZERO-VERBATIM against S’s operative items (10.S Constraint 3): 0 credited', () => {
+  it('E stays ZERO-VERBATIM against S’s operative items in the LIVE record (10.S Constraint 3): 0 credited', () => {
     const record = loadYaml(fs.readFileSync(path.join(REPO_ROOT, 'canonical/operative-sets/stacy.yaml'), 'utf8')) as { units: Record<string, { items: { id: string; text: string }[] }> };
+    // Reds only if S is re-keyed in stacy.yaml (a withdraw → re-key → confirm act, as at #449) or a
+    // re-confirmed item's text appears verbatim in E — never on a charter edit alone.
+    expect(Object.keys(record.units)).toContain(S);
     const items = record.units[S].items;
     expect(items.length).toBeGreaterThan(0);
     expect(assignOccurrences(fixture.overlay.units?.[S] as string, items)).toEqual([]);
