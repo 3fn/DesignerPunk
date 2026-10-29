@@ -395,9 +395,25 @@ date: 2026-10-29
 ## `#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength`
 
 confirmer: stacy
-canonicalHash: sha256:c460743c0430e9fa04163a6d13a0d880ce59bb401480896fd12d7d70445171f3
-items: mirror-clause, mirror-called-at-exchange, mirror-binds-lens
-date: 2026-09-29
+canonicalHash: sha256:f6bfb7a081874a7f899d171cee0ad71a4da69c180689e6f96cfbed8729b37da5
+items: mirror-clause, mirror-called-at-exchange, mirror-binds-lens, mirror-binds-release-read
+date: 2026-10-29
+
+**Re-confirmed 2026-10-29 (Req 11.6.5d): CORRECTED 3 → 4.**
+- **What changed**: ballot `.kiro/docs/ballots/2026-10-26-release-flow-batch-16-1.md` (RATIFIED, Peter, 2026-10-26/27) site 11, under F-33a (i) and F-33b include (RS-33). "It binds the LENS seat specifically." becomes "It binds the LENS seat specifically, and her read of release text (below).", and a new paragraph follows, "**It binds her read of release text too**: …", with its pointer "*(added 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, RS-33, with the sentence "It binds the LENS seat specifically" amended; prior text at `08b9c7a8e`)*". Thurgood applied it at `ae6a84d77` and authored the items at `a620ff970` (E5).
+- **Byte-identity, checked**: the resolved site-11 After, with `<application date>` → `2026-10-29`, occurs once in the charter (L463–L465).
+- **The items**: all four occur once in the unit (L459–L466).
+  - `mirror-binds-lens` takes the amended sentence verbatim.
+  - `mirror-binds-release-read` (new, `obligation`) runs from the paragraph's first character through the full stop before its pointer, verbatim, as E5 specifies (300 characters).
+- **My ruling on the new item**: operative. It binds an act this seat performs, the pre-publication read of release text. It says what I do (name each false sentence, why, with the evidence) and what I never do (propose replacement text). It names the owner's caller-out at the exchange. An implementation of this seat that drafted replacement release text would act against it.
+- **Grain**: one item, not split; the three clauses are one rule about one read. The pointer is not an item: it is provenance. `mirror-binds-lens` stays as drafted on 2026-09-29, for the containment reason given there.
+- **The hash**: the canonicalHash moves from `sha256:c460743c0430e9fa04163a6d13a0d880ce59bb401480896fd12d7d70445171f3` to the value above. `operative-set-freshness` printed it at `4428ec6e7`, and I recomputed it independently with `partition` + `regrounding/hash.ts` (body lines 205–212). The two agree and equal the new overlay entry's pin.
+- **Consumer rendering (my decision, for the disposition)**: the unit moves `retained` → `re-pointed`. Only the pointer is removed (`subtraction-2`: a ballot name a consumer does not have). The rule itself is kept for consumers: a consumer's verifier seat reads its team's release text too. Thurgood's overlay entry carries the heading and paragraphs with the pointer removed and nothing else changed. My removal row follows in its own commit, unsigned until the regeneration renders it.
+- **Read before this act**: the canonical unit, `canonical/agents/stacy.md` L459–L466, and the operative-set record's four items, read through tool calls at `10ddd38b3` before this commit.
+
+**Ruling: CONFIRMED at 4 items.**
+
+**Confirmed 2026-09-29 (prior record, superseded)**: canonicalHash `sha256:c460743c0430e9fa04163a6d13a0d880ce59bb401480896fd12d7d70445171f3`, 3 items, as below.
 
 **Ruling: CONFIRMED at 3, as drafted.** "Thurgood should call it out as such" binds his seat: no implementation of this seat can act against it. The symmetry sentence describes his clause. **Referent scan**: `mirror-binds-lens` ("It binds …") is left as drafted, for the same containment reason as `capture-both`: widening it would contain `mirror-called-at-exchange`. Its referent is the unit's own clause.
 
