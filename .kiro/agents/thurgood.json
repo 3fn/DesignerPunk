@@ -73,6 +73,7 @@
         "scripts/categorize-tests.ts",
         "scripts/issues-owned.sh",
         "scripts/__tests__/issues-owned.test.ts",
+        "scripts/governance-examples/**",
         "mcp-server/src/**",
         "mcp-server/tests/**",
         "mcp-server/docs/**",

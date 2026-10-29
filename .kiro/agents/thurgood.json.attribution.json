@@ -359,7 +359,7 @@
         76
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[mcp-server/src/**]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[scripts/governance-examples/**]"
     },
     {
       "lines": [
@@ -367,7 +367,7 @@
         77
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[mcp-server/tests/**]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[mcp-server/src/**]"
     },
     {
       "lines": [
@@ -375,7 +375,7 @@
         78
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[mcp-server/docs/**]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[mcp-server/tests/**]"
     },
     {
       "lines": [
@@ -383,7 +383,7 @@
         79
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[mcp-server/README.md]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[mcp-server/docs/**]"
     },
     {
       "lines": [
@@ -391,7 +391,7 @@
         80
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/complete-task.sh]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[mcp-server/README.md]"
     },
     {
       "lines": [
@@ -399,7 +399,7 @@
         81
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/README.md]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/complete-task.sh]"
     },
     {
       "lines": [
@@ -407,7 +407,7 @@
         82
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/task-completion-agent-hook.md]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/README.md]"
     },
     {
       "lines": [
@@ -415,7 +415,7 @@
         83
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/commit-task.sh]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/task-completion-agent-hook.md]"
     },
     {
       "lines": [
@@ -423,7 +423,7 @@
         84
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/commit-task-organized.sh]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/commit-task.sh]"
     },
     {
       "lines": [
@@ -431,7 +431,7 @@
         85
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/task-completion-commit.sh]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/commit-task-organized.sh]"
     },
     {
       "lines": [
@@ -439,7 +439,7 @@
         86
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/organize-after-completion.kiro.hook]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/task-completion-commit.sh]"
     },
     {
       "lines": [
@@ -447,7 +447,7 @@
         87
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/organize-by-metadata.sh]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/organize-after-completion.kiro.hook]"
     },
     {
       "lines": [
@@ -455,7 +455,7 @@
         88
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/archive/**]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/organize-by-metadata.sh]"
     },
     {
       "lines": [
@@ -463,7 +463,7 @@
         89
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/thurgood-*.kiro.hook]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/archive/**]"
     },
     {
       "lines": [
@@ -471,7 +471,7 @@
         90
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/issues/**]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/hooks/thurgood-*.kiro.hook]"
     },
     {
       "lines": [
@@ -479,7 +479,7 @@
         91
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/diff-guard.ts]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[.kiro/issues/**]"
     },
     {
       "lines": [
@@ -487,7 +487,7 @@
         92
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/canonical-vs-truth.ts]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/diff-guard.ts]"
     },
     {
       "lines": [
@@ -495,7 +495,7 @@
         93
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/coverage-map.ts]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/canonical-vs-truth.ts]"
     },
     {
       "lines": [
@@ -503,7 +503,7 @@
         94
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/sweeps/**]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/coverage-map.ts]"
     },
     {
       "lines": [
@@ -511,7 +511,7 @@
         95
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/verify-gate-registration.sh]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/sweeps/**]"
     },
     {
       "lines": [
@@ -519,7 +519,7 @@
         96
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/workflow-rules-guard.ts]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/verify-gate-registration.sh]"
     },
     {
       "lines": [
@@ -527,7 +527,7 @@
         97
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/child-process-guard.ts]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/workflow-rules-guard.ts]"
     },
     {
       "lines": [
@@ -535,7 +535,7 @@
         98
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/regrounding/verify-signing-chain.ts]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/child-process-guard.ts]"
     },
     {
       "lines": [
@@ -543,7 +543,7 @@
         99
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/regrounding/signatures.ts]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/regrounding/verify-signing-chain.ts]"
     },
     {
       "lines": [
@@ -551,7 +551,7 @@
         100
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/regrounding/c1.ts]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/regrounding/signatures.ts]"
     },
     {
       "lines": [
@@ -559,7 +559,7 @@
         101
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/regrounding/freshness.ts]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/regrounding/c1.ts]"
     },
     {
       "lines": [
@@ -567,7 +567,7 @@
         102
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/regrounding/check-catalog.ts]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/regrounding/freshness.ts]"
     },
     {
       "lines": [
@@ -575,7 +575,7 @@
         103
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/regrounding/triviality.ts]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/regrounding/check-catalog.ts]"
     },
     {
       "lines": [
@@ -583,28 +583,36 @@
         104
       ],
       "op": "render",
-      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/__fixtures__/stale-unit/**]"
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/regrounding/triviality.ts]"
     },
     {
       "lines": [
         105,
-        107
+        105
+      ],
+      "op": "render",
+      "source": "canonical/agents/thurgood.md#frontmatter:writeScope[tools/agent-generator/__fixtures__/stale-unit/**]"
+    },
+    {
+      "lines": [
+        106,
+        108
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"
     },
     {
       "lines": [
-        108,
-        108
+        109,
+        109
       ],
       "op": "render",
       "source": "canonical/agents/thurgood.md#frontmatter:kiro.welcomeMessage"
     },
     {
       "lines": [
-        109,
-        109
+        110,
+        110
       ],
       "op": "render",
       "source": "C1:frontmatter+ambient-manifest"
