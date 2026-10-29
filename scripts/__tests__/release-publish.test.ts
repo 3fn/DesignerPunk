@@ -12,27 +12,35 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import {
+  AbsenceVerdict,
   BuildArgs,
   CENSUS_DECISIONS,
   CENSUS_HEADING,
   censusCorpus,
   Deps,
   extractPastedRecord,
+  npmjsAbsenceVerdict,
+  npmjsCurlArgs,
+  NPMJS_PACKUMENT_URL,
   GH_REGISTRY,
   ghPublishArgs,
   parseArgs,
   parseLsRemote,
   PUBLIC_REGISTRY,
   publicPublishArgs,
+  PublishFailed,
   publishPathPasses,
+  recordModeVerdict,
   Refusal,
   renderCommand,
   runCensus,
+  runNpmjs,
   runRelease,
   RunResult,
   sameFloorClosure,
   sha1OfFile,
   shellQuote,
+  tagToCommitVerdict,
   tagVerdict,
 } from '../release-publish';
 import { Finding, PUBLISH_PATH_FLOOR } from '../pack-assert';
@@ -72,6 +80,13 @@ describe('parseArgs', () => {
     expect(() => parseArgs(['15.0.1', '--expect-sha', '9E1A3106A18C4A1554A3705E3559AE5797028A24'])).toThrow(/full 40-character/);
   });
 
+  it('parses the 5.4 mode: --npmjs and the record path, nothing else', () => {
+    expect(parseArgs(['--npmjs', '/var/folders/x/T/dp-release-a/out/release-publish-record.json'])).toEqual({
+      mode: 'npmjs',
+      recordPath: '/var/folders/x/T/dp-release-a/out/release-publish-record.json',
+    });
+  });
+
   it('parses the census mode, with an optional --source for the tags', () => {
     expect(parseArgs(['--census'])).toEqual({ mode: 'census', source: undefined });
     expect(parseArgs(['--census', '--source', '/repo'])).toEqual({ mode: 'census', source: '/repo' });
@@ -91,6 +106,11 @@ describe('parseArgs', () => {
     [['--census', '15.0.1'], /--census takes only --source/],
     [['--census', '--dry-run', '1d75c5e5'], /--census takes only --source/],
     [['--census', '--keep'], /--census takes only --source/],
+    [['--npmjs'], /needs a value/],
+    [['--npmjs', '/r.json', '15.0.1'], /--npmjs takes only the record path/],
+    [['--npmjs', '/r.json', '--expect-sha', '9e1a3106a18c4a1554a3705e3559ae5797028a24'], /--npmjs takes only the record path/],
+    [['--npmjs', '/r.json', '--source', '/mirror'], /--npmjs takes only the record path/],
+    [['--npmjs', '/r.json', '--census'], /--npmjs takes only the record path/],
   ])('refuses %j', (argv, message) => {
     expect(() => parseArgs(argv as string[])).toThrow(Refusal);
     expect(() => parseArgs(argv as string[])).toThrow(message as RegExp);
@@ -339,7 +359,8 @@ describe('runRelease — dry run (RELEASE-FLOW 5.1)', () => {
     expect(f.logs.join('\n')).toMatch(/DRY RUN — nothing was published/);
     // E7a (batch ballot 2026-10-26-release-flow-batch-16-1): a dry run hands over no runnable publish line.
     expect(f.logs.some((l) => l.trim().startsWith('npm publish'))).toBe(false);
-    expect(r.publicCommand).toBe(`npm publish ${TARBALL} --registry=${PUBLIC_REGISTRY} --@3fn:registry=${PUBLIC_REGISTRY} --access public`);
+    // E7b: a dry run returns no 5.4 command either (its record would be refused by --npmjs anyway).
+    expect(r.npmjsCommand).toBeUndefined();
     // The clone is removed; the tarball and record are kept.
     expect(f.removed).toEqual([CLONE]);
   });
@@ -387,9 +408,12 @@ describe('runRelease — publish (RELEASE-FLOW 5.3)', () => {
     expect(seq.indexOf(line(pubs[0]))).toBeGreaterThan(seq.findIndex((l) => l.includes('verify:token-index-clean')));
 
     expect(r.record.publishedTo).toEqual([GH_REGISTRY]);
-    const log = f.logs.join('\n');
-    expect(log).toContain(`shasum ${TARBALL}    # must print 65d2ec0b140192bc0f0adc17b9ac6526332a6594`);
-    expect(log).toContain(r.publicCommand);
+    // E7b (F-49 (ii-b)): 5.3 prints the one 5.4 command, the --npmjs mode on its record, and no raw publish line.
+    const npmjsLine = `npx tsx scripts/release-publish.ts --npmjs ${OUT}/release-publish-record.json`;
+    expect(r.npmjsCommand).toBe(npmjsLine);
+    expect(f.logs).toContain(`  ${npmjsLine}`);
+    expect(f.logs.some((l) => l.trim().startsWith('npm publish'))).toBe(false);
+    expect(f.logs.some((l) => l.trim().startsWith('shasum'))).toBe(false);
   });
 
   it('accepts an --expect-sha equal to the tagged commit', () => {
@@ -548,7 +572,7 @@ describe('census mode — runCensus calls the decision functions once per input 
   const commitA = 'e49359e49dc338078669a90aa5b37aa2436b60a4';
   const commitB = '13adf005a65d74ccf240a5c8a8b865962e5b67c1';
   const rec = (version: string, commit: string, mode = 'publish'): string =>
-    `{\n  "mode": "${mode}",\n  "version": "${version}",\n  "commit": "${commit}",\n  "publishedTo": [\n    "${GH_REGISTRY}"\n  ]\n}`;
+    `{\n  "mode": "${mode}",\n  "version": "${version}",\n  "commit": "${commit}",\n  "tarball": "/t/3fn-core-${version}.tgz",\n  "sha1": "${'c'.repeat(40)}",\n  "publishedTo": [\n    "${GH_REGISTRY}"\n  ]\n}`;
   const censusDeps = (records: Record<string, string>, tags: Record<string, string>): { deps: Deps; calls: Call[] } => {
     const calls: Call[] = [];
     const base = fake().deps;
@@ -592,5 +616,227 @@ describe('census mode — runCensus calls the decision functions once per input 
     const { deps } = censusDeps({ '15.1.0': rec('15.1.0', commitA) }, {});
     const failing: Deps = { ...deps, run: () => ({ status: 128, stdout: '' }) };
     expect(() => runCensus(failing, '/r', '/r')).toThrow(/git ls-remote \/r failed \(exit 128\)/);
+  });
+});
+
+// ─── 5.4: the --npmjs mode (E7b, F-49 (ii-b)) ────────────────────────────────────────────────────
+
+const V = '16.2.0';
+const C = '38f4ece47c425cc83cac6739cae7a1806bfb0818';
+const OTHER = '13adf005a65d74ccf240a5c8a8b865962e5b67c1';
+const RECORD_PATH = '/var/folders/x/T/dp-release-a/out/release-publish-record.json';
+const NPM_TARBALL = '/var/folders/x/T/dp-release-a/out/3fn-core-16.2.0.tgz';
+const SHA1 = 'cc42f4f9897677ee53b3f75d18ef52535a346c6a';
+
+const record54 = (over: Record<string, unknown> = {}): string =>
+  `${JSON.stringify(
+    {
+      mode: 'publish',
+      version: V,
+      commit: C,
+      source: ORIGIN,
+      tarball: NPM_TARBALL,
+      sha1: SHA1,
+      fileCount: 1700,
+      bytes: 6500000,
+      checks: { passed: 110, total: 110 },
+      publishedTo: [GH_REGISTRY],
+      createdAt: '2026-11-01T12:00:00.000Z',
+      ...over,
+    },
+    null,
+    2
+  )}\n`;
+
+/** A packument that holds 16.1.0, and optionally the version under test in `versions`, `time` or both. */
+const packument = (has: { versions?: boolean; time?: boolean } = {}): string =>
+  JSON.stringify({
+    name: '@3fn/core',
+    versions: { '16.1.0': { version: '16.1.0' }, ...(has.versions ? { [V]: { version: V } } : {}) },
+    time: { created: '2026-04-08T19:00:04Z', '16.1.0': '2026-10-26T17:34:46.376Z', ...(has.time ? { [V]: '2026-11-01T12:05:00.000Z' } : {}) },
+  });
+
+interface NpmjsCall extends Call {
+  inherit: boolean;
+}
+
+interface NpmjsFakeOptions {
+  recordText?: string | null; // null: the record cannot be read
+  sha1?: string | null; // null: the tarball cannot be read
+  tagCommit?: string | null; // null: the tag is absent
+  lsRemoteStatus?: number;
+  curl?: RunResult; // the packument GET's result (stdout ends with '\n<http_code>')
+  publishStatus?: number;
+}
+
+function npmjsFake(o: NpmjsFakeOptions = {}): { deps: Deps; calls: NpmjsCall[]; logs: string[] } {
+  const calls: NpmjsCall[] = [];
+  const logs: string[] = [];
+  const base = fake().deps;
+  const deps: Deps = {
+    ...base,
+    readFile: (f) => {
+      if (f !== RECORD_PATH || o.recordText === null) throw new Error(`ENOENT: ${f}`);
+      return o.recordText ?? record54();
+    },
+    sha1: (f) => {
+      if (f !== NPM_TARBALL || o.sha1 === null) throw new Error(`ENOENT: ${f}`);
+      return o.sha1 ?? SHA1;
+    },
+    log: (l) => {
+      logs.push(l);
+    },
+    run(cmd, args, cwd, inherit) {
+      calls.push({ cmd, args, cwd, inherit: inherit === true });
+      if (cmd === 'git' && args[0] === 'remote') return { status: 0, stdout: `${ORIGIN}\n` };
+      if (cmd === 'git' && args[0] === 'ls-remote') {
+        if (o.lsRemoteStatus) return { status: o.lsRemoteStatus, stdout: '' };
+        if (o.tagCommit === null) return { status: 0, stdout: '' };
+        return { status: 0, stdout: `145254cd7831ef802178ca53c48026a185da34d8\trefs/tags/v${V}\n${o.tagCommit ?? C}\trefs/tags/v${V}^{}\n` };
+      }
+      if (cmd === 'curl') return o.curl ?? { status: 0, stdout: `${packument()}\n200` };
+      if (cmd === 'npm' && args[0] === 'publish') return { status: o.publishStatus ?? 0, stdout: '' };
+      throw new Error(`unexpected call: ${cmd} ${args.join(' ')}`);
+    },
+  };
+  return { deps, calls, logs };
+}
+
+const npmPublishes = (calls: NpmjsCall[]): NpmjsCall[] => calls.filter((c) => c.cmd === 'npm' && c.args[0] === 'publish');
+
+describe('runNpmjs — the happy path (RELEASE-FLOW 5.4)', () => {
+  it('checks the record, the sha1, the tag and npmjs, then publishes THAT tarball once, with inherited stdio, from the operator checkout', () => {
+    const f = npmjsFake();
+    const record = runNpmjs(RECORD_PATH, f.deps, PROJECT);
+    expect(record).toMatchObject({ mode: 'publish', version: V, commit: C, tarball: NPM_TARBALL, sha1: SHA1 });
+
+    const seq = f.calls.map(line);
+    expect(seq).toEqual([
+      'git remote get-url origin',
+      `git ls-remote ${ORIGIN} refs/tags/v${V} refs/tags/v${V}^{}`,
+      `curl ${npmjsCurlArgs().join(' ')}`,
+      `npm publish ${NPM_TARBALL} --registry=${PUBLIC_REGISTRY} --@3fn:registry=${PUBLIC_REGISTRY} --access public`,
+    ]);
+    const pubs = npmPublishes(f.calls);
+    expect(pubs).toHaveLength(1);
+    expect(pubs[0].args).toEqual(publicPublishArgs(NPM_TARBALL));
+    expect(pubs[0].inherit).toBe(true); // web 2FA reaches the operator's terminal
+    expect(pubs[0].cwd).toBe(PROJECT); // the operator's npm config authenticates; the script reads none
+    // Only the publish streams to the terminal; every read is captured.
+    expect(f.calls.filter((c) => c.inherit)).toEqual(pubs);
+    expect(seq.some((l) => l.includes('--ignore-scripts'))).toBe(false);
+    // The closing note: npm's + line is not evidence, and step 6 reads the packument.
+    const log = f.logs.join('\n');
+    expect(log).toContain(`npm's "+ @3fn/core@${V}" line is not evidence that the registry recorded the version`);
+    expect(log).toContain('RELEASE-FLOW step 6 reads the packument');
+  });
+
+  it("reads the packument with the rail's curl form: -q first (no curl config), a 15 s timeout, the HTTP code appended", () => {
+    expect(npmjsCurlArgs()).toEqual(['-q', '-sS', '--max-time', '15', '-w', '\n%{http_code}', 'https://registry.npmjs.org/@3fn%2fcore']);
+    expect(NPMJS_PACKUMENT_URL).toBe('https://registry.npmjs.org/@3fn%2fcore');
+  });
+});
+
+describe('runNpmjs — the four refusals: each fails closed and publishes nothing', () => {
+  const cases: Array<[string, NpmjsFakeOptions, RegExp]> = [
+    // 1. The record is 5.3's.
+    ['refusal 1: a dry-run record (5.1 or a pre-S run)', { recordText: record54({ mode: 'dry-run', publishedTo: [] }) }, /is not 5\.3's record: its mode is "dry-run", not "publish"/],
+    ['refusal 1: a publish-mode record without GitHub Packages in publishedTo', { recordText: record54({ publishedTo: [] }) }, /its publishedTo does not hold https:\/\/npm\.pkg\.github\.com/],
+    ['refusal 1: a record that is not JSON', { recordText: 'tarball: /x.tgz\n' }, /the record is not JSON/],
+    ['refusal 1: a record with no commit', { recordText: record54({ commit: undefined }) }, /its commit is not a full 40-character SHA/],
+    ['refusal 1: a record that cannot be read', { recordText: null }, /cannot read the record/],
+    // 2. The file's sha1 equals the record's.
+    ['refusal 2: a sha1 mismatch (a file swapped at the path)', { sha1: 'e3d868940000000000000000000000000000000a' }, /has sha1 e3d86894.*not the record's cc42f4f9/],
+    ['refusal 2: the tarball cannot be read', { sha1: null }, /cannot read the tarball the record names/],
+    // 3. The tag names the record's commit.
+    ['refusal 3: the tag names another commit', { tagCommit: OTHER }, new RegExp(`tag v${V.replace(/\./g, '\\.')} at .* names ${OTHER}, not the record's commit ${C}`)],
+    ['refusal 3: the tag is absent', { tagCommit: null }, /tag v16\.2\.0 does not exist at/],
+    ['refusal 3: git ls-remote fails (no network)', { lsRemoteStatus: 128 }, /git ls-remote .* failed \(exit 128\)/],
+    // 4. npmjs's packument reads without the version.
+    ['refusal 4: the packument holds the version (versions and time)', { curl: { status: 0, stdout: `${packument({ versions: true, time: true })}\n200` } }, /npmjs already holds 16\.2\.0/],
+    ['refusal 4: the packument holds time["<v>"] only', { curl: { status: 0, stdout: `${packument({ time: true })}\n200` } }, /npmjs already holds 16\.2\.0/],
+    ['refusal 4: the packument holds versions["<v>"] only', { curl: { status: 0, stdout: `${packument({ versions: true })}\n200` } }, /npmjs already holds 16\.2\.0/],
+    ['refusal 4: a network error', { curl: { status: 6, stdout: '' } }, /could not establish that 16\.2\.0 is absent from npmjs \(curl exited 6: a network error or a timeout\)/],
+    ['refusal 4: a timeout', { curl: { status: 28, stdout: '' } }, /curl exited 28: a network error or a timeout/],
+    ['refusal 4: a non-200 status (404)', { curl: { status: 0, stdout: '{"error":"Not found"}\n404' } }, /could not establish .* \(HTTP 404 from https:\/\/registry\.npmjs\.org\/@3fn%2fcore\)/],
+    ['refusal 4: a non-200 status (503)', { curl: { status: 0, stdout: '<html>busy</html>\n503' } }, /\(HTTP 503 from/],
+    ['refusal 4: a body that does not parse', { curl: { status: 0, stdout: '{"versions": {\n200' } }, /the body does not parse as JSON/],
+    ['refusal 4: a body that parses but is not a packument', { curl: { status: 0, stdout: '{}\n200' } }, /the body is not a packument/],
+  ];
+
+  it.each(cases)('%s', (_name, opts, message) => {
+    const f = npmjsFake(opts);
+    expect(() => runNpmjs(RECORD_PATH, f.deps, PROJECT)).toThrow(Refusal);
+    const f2 = npmjsFake(opts);
+    expect(() => runNpmjs(RECORD_PATH, f2.deps, PROJECT)).toThrow(message);
+    expect(npmPublishes(f.calls)).toEqual([]);
+  });
+
+  it('stops at the first refusal: a dry-run record reads no tarball, no tag and no registry', () => {
+    const f = npmjsFake({ recordText: record54({ mode: 'dry-run', publishedTo: [] }) });
+    expect(() => runNpmjs(RECORD_PATH, f.deps, PROJECT)).toThrow(Refusal);
+    expect(f.calls).toEqual([]);
+  });
+
+  it('a sha1 mismatch refuses before any network read', () => {
+    const f = npmjsFake({ sha1: '0'.repeat(40) });
+    expect(() => runNpmjs(RECORD_PATH, f.deps, PROJECT)).toThrow(/not the record's/);
+    expect(f.calls).toEqual([]);
+  });
+
+  it('a failed npm publish is reported as PublishFailed, never as "nothing was published", and sends the operator to the packument and this mode', () => {
+    const f = npmjsFake({ publishStatus: 1 });
+    let err: unknown;
+    try {
+      runNpmjs(RECORD_PATH, f.deps, PROJECT);
+    } catch (e) {
+      err = e;
+    }
+    expect(err).toBeInstanceOf(PublishFailed);
+    expect(err).not.toBeInstanceOf(Refusal);
+    const message = (err as Error).message;
+    expect(message).toMatch(/exited 1\. Whether npmjs accepted it is not known from here/);
+    expect(message).toContain('time["16.2.0"]');
+    expect(message).toMatch(/never a raw npm publish/);
+    expect(message).not.toMatch(/nothing was published/i);
+    expect(npmPublishes(f.calls)).toHaveLength(1);
+  });
+});
+
+describe('the --npmjs decision functions', () => {
+  it('recordModeVerdict passes 5.3\'s record shape and refuses a dry-run record', () => {
+    expect(recordModeVerdict(record54()).ok).toBe(true);
+    expect(recordModeVerdict(record54({ mode: 'dry-run', publishedTo: [] })).ok).toBe(false);
+    expect(recordModeVerdict('null').ok).toBe(false);
+    expect(recordModeVerdict('[]').ok).toBe(false);
+    expect(recordModeVerdict(record54({ sha1: 'abc' })).ok).toBe(false);
+    expect(recordModeVerdict(record54({ tarball: '' })).ok).toBe(false);
+    expect(recordModeVerdict(record54({ version: 'sixteen' })).ok).toBe(false);
+  });
+
+  it('tagToCommitVerdict is 5.3\'s tagVerdict called with the record', () => {
+    const ls = `145254cd7831ef802178ca53c48026a185da34d8\trefs/tags/v${V}\n${C}\trefs/tags/v${V}^{}\n`;
+    expect(tagToCommitVerdict({ version: V, commit: C }, ls)).toEqual(tagVerdict(ls, `v${V}`, C));
+    expect(tagToCommitVerdict({ version: V, commit: OTHER }, ls)).toEqual({ ok: false, found: C });
+  });
+
+  it('npmjsAbsenceVerdict passes only a readable packument without the version', () => {
+    const pass: AbsenceVerdict = { ok: true };
+    expect(npmjsAbsenceVerdict({ status: 0, stdout: `${packument()}\n200` }, V)).toEqual(pass);
+    expect(npmjsAbsenceVerdict({ status: 0, stdout: `${packument()}\n200` }, '16.1.0').ok).toBe(false);
+    expect(npmjsAbsenceVerdict({ status: 0, stdout: '' }, V).ok).toBe(false); // no status line at all
+  });
+});
+
+describe('census mode — 5.4\'s commit-held decisions are called; its live-state ones are not', () => {
+  it('lists record-mode and tag-to-commit beside 5.3\'s tag check, and neither the sha1 read nor the npmjs read', () => {
+    expect(CENSUS_DECISIONS.map((d) => d.name)).toEqual(['tag-5.3', 'record-mode', 'tag-to-commit']);
+  });
+
+  it('a pasted dry-run record would show record-mode=refuse', () => {
+    const ctx = { recordText: record54({ mode: 'dry-run', publishedTo: [] }), lsRemote: () => `${C}\trefs/tags/v${V}\n` };
+    const recordMode = CENSUS_DECISIONS.find((d) => d.name === 'record-mode')!;
+    expect(recordMode.decide(ctx)).toMatch(/^refuse\(its mode is "dry-run"/);
+    expect(CENSUS_DECISIONS.find((d) => d.name === 'tag-to-commit')!.decide(ctx)).toBe('pass');
   });
 });
