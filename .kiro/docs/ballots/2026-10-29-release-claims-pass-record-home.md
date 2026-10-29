@@ -187,10 +187,10 @@ A row for a path convention would be a second home for one sentence while Spec 1
 
 ```
 
-   **Where a release's records live.** The RELEASE claims pass, both phases and every addendum, is one file, whatever specs the release delta carries. Its home is fixed for each release by the walk record's `main at:` SHA (item 3a), before anything is written, so no release's records straddle two directories:
-   - **The interim home**, while the switch PR is not an ancestor of that SHA, is `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-<v>.md`, beside the records of 15.0.0 to 16.1.0.
-   - **The switch PR** is the PR that gives Stacy, Thurgood, Ada, Lina and Leonardo write access to `.kiro/docs/releases/**` (Spec 131's owners file; `.kiro/issues/2026-10-29-release-records-home-switch.md`). It replaces this paragraph's first sentence after the heading, and these three bullets, with the final sentence that ballot `2026-10-29-release-claims-pass-record-home` § 4 site 1a words. From then on the home is `.kiro/docs/releases/<v>/claims-pass-release-<v>.md`.
-   - **The fallback**: at the walk of the second release whose `main at:` SHA descends from that ballot's application merge, if the switch PR is not an ancestor of it, the walk record's PR carries one `**Open for Peter**:` line, which holds that PR until he answers. The question it asks is: standing write scope for the five seats now (that ballot's option (b)), or the interim home for one more release, and then the same question again. That release's record stays at the interim home.
+   **Where a release's records live.** The RELEASE claims pass, both phases and every addendum, is one file, whatever specs the release delta carries. Its home is fixed for each release by the first `main at:` SHA its walk record pastes (item 3a), before anything is written, so no release's records straddle two directories:
+   - **The interim home**, while this paragraph at that SHA still carries this bullet, is `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-<v>.md`, beside the records of 15.0.0 to 16.1.0.
+   - **The switch PR** is the one PR that replaces this paragraph's first sentence after the heading, and these three bullets, with the final sentence that ballot `2026-10-29-release-claims-pass-record-home` § 4 site 1a words. The PR that gives Stacy, Thurgood, Ada, Lina and Leonardo write access to `.kiro/docs/releases/**` (Spec 131's owners file; `.kiro/issues/2026-10-29-release-records-home-switch.md`) is the switch PR itself or an ancestor of it. From the switch PR's merge, the home is `.kiro/docs/releases/<v>/claims-pass-release-<v>.md`.
+   - **The fallback**: at the walk of the second release whose walk record's first `main at:` SHA descends from that ballot's application merge, and at every later walk while this paragraph at that SHA still carries these bullets, the capture record's re-rule PR at that release carries one `**Open for Peter**:` line. That PR is record-only and the line holds it alone. The question is: standing write scope for the five seats now (that ballot's option (b)), or the interim home for this release. The walk record rows the capture record as `carried`, with the hold named. Phase 1 reports the open question. The release proceeds at the interim home. If the re-rule PR is still held at S, the capture record lapses at that S under rule 11, and the lapse is recorded.
 
    The delegate's file of ballot `2026-10-01-signing-act-chain` § 5.3 is `delegate-audit-release-<v>-<seat>.md`, in the same directory as the claims pass, with its addenda in it. The release's other records at fixed paths are:
    - its notes, `docs/releases/release-<v>.md` (Deriving item 3);
@@ -204,21 +204,26 @@ A row for a path convention would be a second home for one sentence while Spec 1
 **The switch's After**, pre-declared here, so the switch PR is **EXECUTION** of this ballot. It replaces the paragraph's opening sentence after the heading and the three bullets, keeping the heading and everything from "The delegate's file" on, and adds a pointer at the paragraph's end after site 1a's:
 
 ```
-   **Where a release's records live.** The RELEASE claims pass, both phases and every addendum, is one file, `.kiro/docs/releases/<v>/claims-pass-release-<v>.md`, whatever specs the release delta carries, for every release whose walk record's `main at:` SHA descends from the merge of the PR that made it the home; the records of earlier releases stay where they were written, in `.kiro/specs/123-consumer-distribution/completion/`.
+   **Where a release's records live.** The RELEASE claims pass, both phases and every addendum, is one file, `.kiro/docs/releases/<v>/claims-pass-release-<v>.md`, whatever specs the release delta carries, for every release whose walk record's first `main at:` SHA descends from the merge of the PR that made it the home; the records of earlier releases stay where they were written, in `.kiro/specs/123-consumer-distribution/completion/`.
 ```
 
 The switch pointer, appended after site 1a's: `*(amended <switch date> by ballot 2026-10-29-release-claims-pass-record-home, site 1a, the switch; prior text at <the switch PR's base SHA>)*`.
 
 *Why each part*:
-- **"Fixed … by the walk record's `main at:` SHA"** answers Ada's must-say that one release never straddles two directories. It departs from the orchestrator's "the first release whose S descends from" on purpose. The delegate's file is owed before phase 1, and can land before S is cut. If the switch PR merged between the walk and S, an S-keyed switch would put that release's delegate file in the interim directory and its pass in the final one. The walk's `main at:` SHA precedes every write and is pasted in the walk record, so the directory is decidable from git. This departure is put to Peter (§ 6 item 3).
+- **"Fixed … by the first `main at:` SHA its walk record pastes"** answers Ada's must-say that one release never straddles two directories. It departs from the orchestrator's "the first release whose S descends from" on purpose. The delegate's file is owed before phase 1, and can land before S is cut. If the switch PR merged between the walk and S, an S-keyed switch would put that release's delegate file in the interim directory and its pass in the final one. The walk's `main at:` SHA precedes every write and is pasted in the walk record, so the directory is decidable from git. "First": a walk record can paste several `main at:` SHAs (16.1.0's pastes five, at L32, L77, L524, L618 and L805), and a switch merged between two of them would give two answers (Ada R5). This departure from the orchestrator's wording is recorded in § 6 item 3.
+- **One switch PR, read from the law text alone** (Stacy R5, gap 1). The home test reads only RELEASE-FLOW at the first `main at:` SHA: `git show <main-at>:.kiro/hooks/RELEASE-FLOW.md | grep -cF '**The interim home**'` prints 1 for the interim home and 0 for the final one. Nothing has to find Spec 131's owners file, whose path exists nowhere yet. The access PR can come earlier; until the text switches, the interim holds.
 - **The interim path in full** is Ada's first must-say: the delegate's file is `.kiro/specs/123-consumer-distribution/completion/delegate-audit-release-<v>-<seat>.md`, beside `claims-pass-release-<v>.md`.
 - **The switch PR is named by what it does**, not by Spec 131's unit name. 131's owners file does not exist yet, and its path can't be tokened.
   - Naming the five seats and the exact glob `.kiro/docs/releases/**` gives the switch PR a test.
   - Thurgood is a writer: he writes the composed-loop outcome line into every pass, and any § 5.3 annotation beside it.
   - Ada's condition (a scope line names `.kiro/docs/releases/**`, never `.kiro/docs/**`) is site 3 item 1.
-- **The fallback** is the seats' dated mitigation (§ 6 item 3 (1)). It lives in law, read at the walk, because the walk author must resolve the delegate row's directory (site 1b) and so reads this paragraph at every release. Counting from the application merge makes "the second release" decidable (`git merge-base --is-ancestor`). It holds the walk PR, under the existing rule, so the question cannot be skipped.
-  - *Counter, carried*: the hold can delay a release for a governance question.
+- **The fallback** is the seats' dated mitigation (§ 6 item 3 (1)). It lives in law, read at the walk, because the walk author must resolve the delegate row's directory (site 1b) and so reads this paragraph at every release.
+  - **The count is decidable from git**: for each walk record (`.kiro/issues/{,archive/}*-release-*-walk.md`), run `git merge-base --is-ancestor <application merge> <first main-at>`. The count includes the walk being written, and counts walks, not tags (Stacy R5).
+  - **It fires at the second walk and at every later one**, so the repeat comes from law, not from the wording of Peter's answer (Stacy R5, gap 2).
+  - **It sits in the capture record's own re-rule PR, not the walk record's PR** (Stacy R5, the law conflict). The walk record lands "before the release branch" (item 3a), so holding it would hold the release. Item 3a's Peter-gated block also says "nothing here holds the merge" and is "never" written as `**Open for Peter**:` lines (ballot `2026-10-20-manual-records-routed-readers`, E3). A held record-only PR holds nothing but itself.
+  - **If that PR is still held at S, the capture record lapses there under rule 11.** Its re-rule, a Trigger-line diff, has not merged. The lapse is a recorded consequence, and the release is unaffected.
   - *Counter, carried*: the fallback is read by a person, not printed by `issues-owned.sh`.
+  - *Counter, carried*: a held record-only PR blocks nothing, so the interim is bounded only by Peter's attention (§ 7).
 - **The delegate-file sentence** restates § 5.3's consequence at the release, so R2 reads one place. "With its addenda in it": at 16.1.0, the re-read under the trigger-(d) record's item 7 went into the delegate file as a dated addendum (Ada R1).
 - **The other-records sentence** is the class option. It names the records at fixed paths, each already law where its item says, and claims no more (Stacy R1, Ada R1). The trio records keep their own home and grant (Leonardo). Stacy's routing records filed under rule 10 are routing artifacts, not a second home of the pass (Stacy R1, S2).
 - **The pointer** is the `added` form, because RELEASE-FLOW is a bound path (ballots README L31, "Where the pointer is owed"). `<application date>` is replaced at application by the date of the application PR's merge, as its squash commit records it (§ 5 step 2). A literal placeholder left in place reads `pointer-missing` under `edit-kind-pointers.ts`'s `POINTER_RE` (Ada R1).
@@ -269,15 +274,22 @@ Every pass produces a committed record in the spec's completion directory. **Pat
 Every pass produces a committed record in the spec's completion directory, except a RELEASE pass, whose record's home `.kiro/hooks/RELEASE-FLOW.md` step 6 names.
 ```
 
-- **Why not now**: L417 stays true during the interim, because the record sits in a spec's completion directory. Stacy reads it as incomplete, not false (Stacy R1). It becomes false at the switch, so the switch PR carries it.
-- **Why the switch PR**: Stacy's acts happen once, there, together with her #555 class fix on the same unit (SYMPTOM's filename, the consumer overlay's RELEASE line).
-  - If her class fix's ballot rewrites L417 first, or in the same PR, its text governs, and this After is composed into it under the README's edit discipline. Stacy reads that composition as the text's owner.
+- **Why not in this application**: L417 stays true during the interim, because the record sits in a spec's completion directory. Stacy reads it as incomplete, not false (Stacy R1). The base sentence becomes false at the switch.
+- **When it lands: with whichever comes first, the switch PR or Stacy's #555 class fix** (Stacy R5).
+  - The After is true in both phases ("whose record's home `.kiro/hooks/RELEASE-FLOW.md` step 6 names" holds whether step 6 names the interim home or the final one), so it need not wait for the switch.
+  - Either way, Stacy's acts on the unit are spent once, together with her class fix (SYMPTOM's filename, the consumer overlay's RELEASE line).
+  - If a SYMPTOM event comes first, the class fix goes as its own ballot with this site composed in, because the SYMPTOM-filename collision should not wait on Spec 131.
+  - Where her class fix's ballot rewrites L417, its text governs, and this After is composed into it under the README's edit discipline. Stacy reads that composition as the text's owner.
   - If Spec 131 has removed the signing acts by then, they follow 131's form.
 - **No pointer**: charters carry none (ballots README L31). The commit that changes this line names this ballot in its message.
 - **Stacy's three conditions, binding on the switch PR** (Stacy R1):
   - **two acts**: re-confirm `#the-claims-pass-record-claims-passmd-the-template`, then re-sign it;
   - **a `removals` entry**, my authoring before her re-sign, because the overlay keeps the clause-free sentence. The nearest precedent is the owed-set unit's row, which records its dropped `.kiro/hooks/RELEASE-FLOW.md` as `subtraction-1`;
-  - **the `record-committed` item's `text` must be a span the consumer rendering contains whole.** The C18 floor credits an item only when its complete `text` occurs in the rendered unit (`triviality.ts` header). So the item is split or re-worded, and the RELEASE clause is accounted as the removal. The split is my authoring and Lina's model.
+  - **the `record-committed` item's `text` must be a span the consumer rendering contains whole.** The C18 floor credits an item only when its complete `text` occurs in the rendered unit (`triviality.ts` header). **The form Stacy would sign** (Stacy R5):
+    - `record-committed` keeps `Every pass produces a committed record in the spec's completion directory`, the existing text with no final period. That is a verbatim substring of the new canonical sentence, which `operative-sets.ts` L123 requires, and it occurs whole at overlay L87.
+    - The RELEASE clause becomes its own `obligation` item, whose `text` is the clause's exact span.
+    - A `removals` entry carries the same text, with `cites: subtraction-1`.
+    - This is my authoring and Lina's model to check.
 - **The follow-ons it touches, for the switch PR's grant** (all EXECUTION; none of these files is a governance path):
   - **the operative item**, `canonical/operative-sets/stacy.yaml` L548–L551 at `6f23bc6fe`:
 
@@ -297,7 +309,7 @@ Every pass produces a committed record in the spec's completion directory, excep
   - **the dispositions row's `removals`**;
   - **regeneration and `canonical/generated.lock`**. The expected `git diff --stat <base> -- canonical/_consumer-output/` is empty apart from attribution files.
 
-  Lina reviews the `removals` entry and the item split at that PR.
+  Lina reviews the `removals` entry and the item split at whichever PR carries site 2.
 
 ### Site 3 — the capture record, `.kiro/issues/2026-10-29-release-records-home-switch.md` (filed in the Status commit, README rule 10; Thurgood's standing scope)
 
@@ -310,10 +322,11 @@ Peter's F-1 condition is *"so long as we capture it"*. This record is the captur
 **Owner**: Thurgood (owner of `.kiro/hooks/RELEASE-FLOW.md` and author of the ballot that names the switch). Interested: Stacy (the record is hers, site 2 is her charter unit, and its acts are hers).
 **Trigger**: `release:next:phase-1` — the next release's walk reads this record. Its work rides Spec 131's owners file, so rule 1 gives it this token, not the vehicle's. Start condition, in prose: when Spec 131's requirements are written (`.kiro/specs/131-governance-simplification/requirements.md`), they take this record in or leave it out with a reason.
 **Class**: P2 obligation (record) · owed-act
-**Lapse**: rule 11. At a release's S, the record has lapsed unless an ancestor of S closed it or re-ruled it with a dated line.
-- At the first release after the ballot's application, the owner re-rules it with a dated line naming the interim home.
-- At the second, RELEASE-FLOW step 6's fallback ("Where a release's records live") puts the question to Peter in the walk record's PR, with option (b) named (standing write scope over `.kiro/docs/releases/**` for the five seats, now), and his answer re-rules the record.
-- If Spec 131's requirements leave this record out, it goes to Peter at that commit, with (b) named.
+**Lapse**: rule 11. At a release's S, the record has lapsed unless an ancestor of S closed it or re-ruled it, a re-rule being a change to its Trigger line in a diff carrying a dated reason and authority.
+- **At each release before the switch**, the owner re-rules it in one record-only PR, by a Trigger-line diff: read-through prose with the date, the interim home and this ballot named, the pattern of `.kiro/issues/2026-10-25-arming-read-class-option-fork.md`.
+- **At the second release's walk after the ballot's application, and at every later walk before the switch**, that PR also carries RELEASE-FLOW step 6's fallback question ("Where a release's records live") as one `**Open for Peter**:` line, with option (b) named: standing write scope over `.kiro/docs/releases/**` for the five seats, now. The line holds that PR alone. If it is still held at S, the record lapses there, and the lapse is recorded.
+- **If Spec 131's requirements leave this record out**, it goes to Peter at that commit, with (b) named.
+- With a re-rule at every release, rule 11's escalation never fires. The fallback is the only route to Peter (Stacy R5).
 **Source**: ballot `.kiro/docs/ballots/2026-10-29-release-claims-pass-record-home.md` (RS-50): F-1 (ii) and F-2 (a), Peter, 2026-10-29, verbatim in that ballot's Status line.
 **Consulted**: Stacy, Ada, Lina, Leonardo — their F-2 reads, in that ballot's § 6 item 3.
 
@@ -322,9 +335,9 @@ Peter's F-1 condition is *"so long as we capture it"*. This record is the captur
 ## Items (each closes at the switch PR's merge, or by a dated re-rule)
 
 1. **Write access** to `.kiro/docs/releases/**`, named exactly so (never `.kiro/docs/**`, which would sweep in `.kiro/docs/ballots/`; Ada's condition), for Stacy, Thurgood and the delegate rotation Ada, Lina and Leonardo, through Spec 131's owners file. Until it lands, no seat writes there.
-2. **Kiro enforcement** (Lina, unverified): whether Spec 131's owners file reaches Kiro's generated `allowedPaths`, which are generated from `writeScope` today (Ada, verified). Spec 131's requirements answer it. If they do not, (a) defers Kiro-side enforcement of item 1 with no end date, and they say so.
-3. **The switch** to RELEASE-FLOW step 6's paragraph, in the PR that lands item 1 or the first PR after it: the switch's After in the ballot's § 4 site 1a. This is pre-declared EXECUTION.
-4. **Stacy's charter, L417** (the ballot's § 4 site 2), in the switch PR: two acts, a `removals` entry, and the `record-committed` item's text as a span the rendering contains whole. It is composed with her class fix, `.kiro/issues/2026-10-29-claims-pass-record-homes-unnamed-arming-symptom-overlay.md` (#555), so the unit is edited once.
+2. **Kiro enforcement** (Lina, unverified): whether Spec 131's owners file reaches Kiro's generated `allowedPaths`, which are generated from `writeScope` today (Ada, verified). The starting point is Spec 131's outline L232: OWNERS lands "via a new source in `source.ts`/`schema.ts` rendered through `adapters/cc.ts` and `adapters/kiro.ts`" (Stacy R5); whether that reaches `allowedPaths` is still unverified. Spec 131's requirements answer it. If they do not, (a) defers Kiro-side enforcement of item 1 with no end date, and they say so.
+3. **The switch PR**: the one PR that applies the switch's After (the ballot's § 4 site 1a) to RELEASE-FLOW step 6's paragraph. The PR that lands item 1 is that PR or an ancestor of it. This is pre-declared EXECUTION.
+4. **Stacy's charter, L417** (the ballot's § 4 site 2), in whichever lands first, the switch PR or her class fix: two acts, a `removals` entry, and the `record-committed` item's text as a span the rendering contains whole (the form in the ballot's § 4 site 2). It is composed with her class fix, `.kiro/issues/2026-10-29-claims-pass-record-homes-unnamed-arming-symptom-overlay.md` (#555), so the unit is edited once.
 5. **The second glob root** in the composed-loop outcome count (`.kiro/issues/2026-10-24-composed-loop-outcome-lines-missing.md`, the count command), in the switch PR or the first record PR after it.
 ```
 
@@ -332,7 +345,7 @@ Peter's F-1 condition is *"so long as we capture it"*. This record is the captur
 - **The token is `release:next:phase-1`, not `path:` on 131's requirements.** That departs from the brief I was given, on purpose. Rule 1: "a P0, P1 or P2 record that would ride another change takes `release:next:phase-1`". This record's close is the switch PR, which rides 131's owners file. Stacy's #555 record took the same token for the same reason. 131's requirements are kept as the start condition, in prose.
 - **The token also answers the stall case** (131 paused before requirements), which a `path:` token could not see:
   - every release's walk rows the record (the 3a due-rows grep, and `issues-owned.sh` prints `due:next`);
-  - rule 11 forces a dated re-rule or a lapse at each S;
+  - rule 11 forces a Trigger-line re-rule or a lapse at each S;
   - site 1a's fallback forces Peter's answer at the second release.
 - *Counter, carried*: a re-rule line at every release while 131 is paused is a recurring act on the owner (one dated line per release). It also puts this record in the walk's batch of carried rows until the switch. I accept both: they are the visibility Peter's "so long as we capture it" asks for.
 
@@ -381,7 +394,7 @@ Site 2's census, Stacy's acts, the `removals` entry, the item split, regeneratio
    - **(b) not taken**: standing `.kiro/docs/releases/**` write scope now for the five seats. That was five to ten acts once; it works on Kiro; and it builds rows Spec 131 deletes (131's outline L232). It stays the named remedy at the fallback (site 1a) and at the record's lapse (site 3).
    - **(c) not taken**: a rule-8 multi-PR release grant. That is LAW 131 retires; it has no Kiro effect (Ada verified that `allowedPaths` are generated from `writeScope`); and Stacy would audit her own grant compliance.
 3. **The orchestrator's reading of "with the informed perspectives the agents provided"**: adopt the seats' mitigations as they were presented to Peter. Each one is applied here as stated:
-   1. **A dated fallback on the interim** (Thurgood, Ada, Leonardo; the orchestrator recommended two releases): site 1a's fallback, at the walk of the second release after the application merge. There, (b) is put to Peter as an Open-for-Peter line. **Departure, for confirmation**: the orchestrator worded the switch point as "the first release whose S descends from" the access PR. Site 1a fixes it at the walk record's `main at:` SHA instead, so one release never straddles two directories (Ada's must-say; § 4 site 1a, "Why").
+   1. **A dated fallback on the interim** (Thurgood, Ada, Leonardo; the orchestrator recommended two releases): site 1a's fallback, at the walk of the second release after the application merge and at every later walk before the switch. There, (b) is put to Peter as an Open-for-Peter line, in the capture record's record-only re-rule PR, which holds nothing else (R6; Stacy R5). **Departure, for confirmation**: the orchestrator worded the switch point as "the first release whose S descends from" the access PR. Site 1a fixes it at the first `main at:` SHA the walk record pastes instead, so one release never straddles two directories (Ada's must-say; § 4 site 1a, "Why").
    2. **Five writers**, not four: Stacy, Thurgood, Ada, Lina and Leonardo (§ 3.2 corrected).
    3. **Lina's Kiro question** as a capture-record item that 131's requirements must answer (site 3 item 2).
    4. **The directory** is `.kiro/docs/releases/<v>/`. Every scope or grant line names `.kiro/docs/releases/**` exactly, never `.kiro/docs/**` (Ada's condition; site 3 item 1).
@@ -398,13 +411,13 @@ Site 2's census, Stacy's acts, the `removals` entry, the item split, regeneratio
 
 **Counter-arguments, run against the ruled shape, and what they changed**:
 - **(1) "A carrier-dependent home ('the releasing spec') is undecidable."** This made both homes **fixed paths**, and keyed the switch to a named PR, not to a spec's closure.
-- **(2) "A switch can split one release across two directories."** This fixed the home per release at the walk's `main at:` SHA, which precedes every write.
+- **(2) "A switch can split one release across two directories."** This fixed the home per release at the walk record's first `main at:` SHA, which precedes every write, and made the switch a single PR read from the law text alone (R6).
 - **(3) "Deferring to a paused spec makes the interim permanent by default."** This added the dated fallback in law (site 1a) and gave the capture record a token that the walk reads every release (site 3).
 - **(4) "Site 2 is cheap honesty now."** Stacy moved off this herself: the unit has two more unnamed homes, so site 2 waits for one edit of the class, at the switch (Stacy R1).
 
 **What survives**:
 - **Peter's own reason**, "this problem only gets worse the longer we let it persist": under (a), about two files per release keep landing in a closed spec's directory for as long as 131 stays paused. The fallback bounds that at two releases before he is asked, not before it ends.
-- **The fallback holds a walk PR on a governance question**, so it can delay a release. That is the price of making it unskippable.
+- **The interim is bounded only by Peter's attention** (Stacy R5). The fallback holds a record-only PR that blocks nothing, so nothing makes the question painful enough to answer, and its read is a person's, not a printed one. That is the right trade for a release, but it means the bound is a person's, not a mechanism's. The one mechanical trace is a recorded lapse at each S while the question waits.
 - **The interim path costs meaning**: `git log` of 123's directory keeps gaining merges that are not 123's work, and the `(123)` PR-title suffix labels them as 123's (Stacy R1).
 - **Kiro enforcement** of the final path waits on 131 and may have no end date (site 3 item 2; Lina, unverified).
 - **L417 during the interim** does not, on its own, tell a reader which spec's directory. The guard is Stacy's habit of reading step 6 at every RELEASE (Stacy R1).
@@ -752,3 +765,74 @@ Read at `c301e3db2` (branch `chore/ballot-rs-50-release-claims-pass-home`) again
 - **§ 6**: F-1 (ii) and F-2 (a) are recorded as ruled, and (b) and (c) as not taken. One `**Open for Peter**:` line remains, for the orchestrator's reading and my two departures from it.
 - **§ 7**: restated as the ruling, with the residual. Peter's own "only gets worse" survives, bounded by the fallback at two releases.
 - **Not changed**: site 1b (Stacy confirmed it at R3), § 1, § 2, § 3.3, § 3.5 and § 3.6.
+
+#### [STACY R5]
+
+*Read at `ef0f7a06c` (R5), base `6f23bc6fe`, 2026-10-29. I am the seat that writes the record, runs the RELEASE read and owns site 2. Every `(verified)` is a command I ran at the base. I wrote nothing and committed nothing. I find two decidability gaps and one conflict with standing law. Each has a fix that changes no ruling.*
+
+- **(1) Is the home decidable at my phase-1 read? Mostly.** → § 4 site 1a
+  - **Decidable**: the walk record's `main at:` line is pasted once, by item 3a's `echo "main at: $(git rev-parse HEAD)"`. The test is `git merge-base --is-ancestor <switch merge> <main-at>`, where exit 0 means the final home. Keying the home on the walk's `main at:` rather than on S is right: the walk record lands "before the release branch" (item 3a), the delegate's file comes after it, and so one release cannot straddle two directories. (verified: RELEASE-FLOW L36–L37 at the base)
+  - **Gap 1: the switch PR has two definitions.**
+    - Site 1a defines it as "the PR that gives … write access to `.kiro/docs/releases/**`", and says that same PR replaces the paragraph.
+    - Site 3 item 3 lets the text switch land "in the PR that lands item 1 **or the first PR after it**".
+    - If those are two PRs, then between them RELEASE-FLOW at `main at:` still prints the interim bullets, while the bullets' own test reads the final home.
+    - Identifying the access PR means reading Spec 131's owners file, and that file's path exists nowhere yet.
+    - **What decidability needs**: one PR, so that the test reads the law text at `main at:` and nothing else: `git show <main-at>:.kiro/hooks/RELEASE-FLOW.md | grep -cF '**The interim home**'`, where 1 means interim and 0 means final. Either (a) site 3 item 3 drops "or the first PR after it", or (b) "the switch PR" is defined as the PR that applies the switch After, with the access PR an ancestor of it or the same PR. The text is Thurgood's.
+  - **Gap 2: the fallback fires once, but its question recurs.**
+    - "At the walk of the second release whose `main at:` descends from the application merge" can be counted from git alone: for each walk record (`.kiro/issues/{,archive/}*-release-*-walk.md`), read its `main at:` and run `git merge-base --is-ancestor <application merge> <main-at>`. The count includes the walk being written. A release whose walk ran but was never tagged counts, because the clause counts walks, not tags.
+    - The question offers "the interim home for one more release, and then the same question again". Nothing in law fires that "again" at the third release. The law trigger is only "the second".
+    - **What decidability needs**: the fallback fires at the second **and at each later** walk until the switch is an ancestor, so the repeat comes from law and not from the wording of Peter's answer.
+  - **Low**: `main at:` is the walker's `HEAD`, not necessarily `main`. My read should confirm it with `git merge-base --is-ancestor <main-at> origin/main` before I trust the ancestor test. I say this for my own method; it needs no text change.
+
+- **(2) Should the fallback's Open-for-Peter line sit in the walk record's PR? No.** It would block the release, and it contradicts a ratified rule. → § 4 site 1a, site 3 "Lapse"
+  - **It blocks the release.** The walk record is "landed by a record-only PR **before the release branch**" (item 3a, L37). Holding that PR under RL-14 holds the release branch, so a governance question on a directory would hold a release. Under (a) nothing is wrong with the release meanwhile: the site's own consequence is "That release's record stays at the interim home".
+  - **It contradicts ballot `2026-10-20-manual-records-routed-readers` E3**, already law at L41. The walk record reprints Peter-gated items "as one block headed `… nothing here holds the merge`, **never as `**Open for Peter**:` lines**". The walk PR is deliberately not a holding surface. (verified)
+  - **It is not the P0 precedent either.** A post-walk P0 is put to Peter "in the phase-1 record's PR" (L206), and "the tag stays his act". This question is not floor-class.
+  - **Where it should sit**: in the capture record's own re-rule PR at that release (site 3). That PR is record-only and holds nothing but itself, so RL-14 holds the question and nothing else. The walk record rows the capture record as a due row, with disposition `carried` and the hold named. My phase 1 reads that row and the open question, and reports both. The release proceeds at the interim home. Site 1a's fallback bullet and site 3's "Lapse" second bullet would both point there, so law and record agree.
+
+- **(3) The capture record's trigger, `release:next:phase-1` with a prose start condition: rule 1 accepts it.** It is a P2 that rides another change, and "a start condition, if any, is prose". (verified: rule 1) → site 3
+  - **One correction to its "Lapse" field.** Rule 11 counts as a re-rule only "its **Trigger line** changed in a diff carrying a dated reason and authority". "The owner re-rules it with a dated line naming the interim home" does not avert the lapse unless that line is a Trigger-line edit. The working pattern is the read-through prose on the Trigger line (`.kiro/issues/2026-10-25-arming-read-class-option-fork.md`). So each release's re-rule is one Trigger-line diff with a dated reason, which is the one re-rule line per release you named. I accept that recurring cost; it is the visibility "so long as we capture it" asks for. (verified)
+  - **A P2 `(record)` escalates at its second lapse under rule 11.** With a re-rule at every release there is never a lapse, so rule 11 never escalates, and the fallback is the only route to Peter. That is fine once (2) puts the fallback where it does not hold the release.
+
+- **(4) Site 2 as text: my three conditions are stated correctly. Two additions.** → § 4 site 2, site 3 item 4
+  - **Record the accepted item text, so it is drafted once.** `record-committed` keeps the existing text minus its final period: `Every pass produces a committed record in the spec's completion directory`. The RELEASE clause becomes its own `obligation` item, whose `text` is the exact clause span, accounted by a `removals` entry with the same text and `cites: subtraction-1`.
+    - The kept span is a verbatim substring of the new canonical sentence, which `operative-sets.ts` L123 requires.
+    - It also occurs whole at overlay L87, so the C18 floor credits it.
+    - "Split or re-worded" stays open as written; this is the form I would sign. (verified)
+  - **Site 2's After is true during the interim too.** "whose record's home `.kiro/hooks/RELEASE-FLOW.md` step 6 names" holds whether step 6 names the interim home or the final one. So L417's clause need not wait for the switch. It can ride whichever lands first: the switch PR, or my #555 class fix. R5's "if her class fix's ballot rewrites L417 first … its text governs" already allows that order, and that is what I want.
+    - The SYMPTOM-filename collision (#555, gap 2) should not wait on Spec 131. If a SYMPTOM event comes first, the class fix goes ahead as its own ballot with site 2 composed in, and the acts are spent once there.
+    - "Why not now"'s sentence "It becomes false at the switch" refers to the base sentence. It is accurate.
+  - **#555's trigger stays `release:next:phase-1`.** In my F-2 consult I said I would re-rule it to `path:` on 131's requirements. Rule 1 says otherwise for a riding P2, as site 3's "Why this shape" argues for the capture record. So after #555 and this ballot merge I keep the token and add rides-prose to its Trigger line naming site 3 item 4 and this ballot. That is one owner re-rule (rule 9), not a token change. I withdraw the `path:` wording.
+
+- **(5) What R5 missed under (a).** → site 3 item 2, § 7
+  - **Lina's Kiro question has a partial answer already.** Spec 131's outline L232 says OWNERS lands "via a new source in `source.ts`/`schema.ts` rendered through `adapters/cc.ts` and `adapters/kiro.ts`", and lands "no later than the signature deletion, in the same unit". So 131's outline plans a Kiro rendering of OWNERS. Whether that reaches `allowedPaths` is still Lina's to verify. Site 3 item 2 can cite L232 as the starting point. (verified: the outline line; the `allowedPaths` effect unverified)
+  - **Check, not a finding**: the census and § 5 step 4 hold. `diff-guard.ts` L62–L72's closure roots and files do not include `.kiro/hooks/RELEASE-FLOW.md`, so no lock refresh is needed, and zero seat acts is right for this application. (verified)
+  - **Nothing else flipped.** The four ledgers stay, errata to them still land in 123's directory, `owed-set.sh` is unaffected, and site 3 item 5 carries the second glob root.
+
+- **My surviving counter-argument to the ruled shape.** The interim's cost is now bounded only by Peter's answer at each fallback, and that fallback is a person's read, not a printed one. With (2) applied, nothing makes the question painful enough to answer, because a held record-only PR blocks nothing. That is the right trade for a release, and it means the bound is Peter's attention, not mechanics. → § 7
+
+#### [ADA R5]
+
+- **The walk-SHA switch meets "never straddle" better than S, but the text has to say which `main at:` it means.** The walk comes before the delegate row, and so before every write; S does not. But 16.1.0's walk record pastes **five** `main at:` lines (L32 `652074c6b`, L77 `1932151de`, L524 `b224dc3d6`, L618 `56fdf50ca`, L805 `a03b92f02`; verified at `origin/main`). If the switch merged between two of those re-pastes, "the walk record's `main at:` SHA" could give two answers. Suggested wording: *"fixed for each release by the first `main at:` SHA its walk record pastes (item 3a)"*, in site 1a, in the switch's After, and in the fallback's "whose `main at:` SHA descends". → § 4 site 1a
+- **As delegate, I could start from this text alone, once that word is in.** The interim path is written in full. The directory is decidable from git (`git merge-base --is-ancestor <switch merge> <first main at:>`, with the switch PR named in `.kiro/issues/2026-10-29-release-records-home-switch.md`). Site 1b's row carries the resolved output path, and the file check stays. No grant is needed in the interim. → § 4 sites 1a, 1b
+
+#### [THURGOOD R6]
+
+*Incorporation of STACY R5 and ADA R5, at R5 `ef0f7a06c` on base `6f23bc6fe`, 2026-10-29. Both entries are spliced above byte for byte. Neither changes a ruling.*
+
+- **"The first `main at:` SHA its walk record pastes"** (Ada R5): this wording is now in site 1a, in the switch's After and in the fallback. 16.1.0's walk record pastes five. → § 4 site 1a
+- **One switch PR** (Stacy R5, gap 1): the switch PR is now defined as the PR that applies the switch text. The access PR is that PR or an ancestor of it. The home test reads only the law text at the first `main at:` SHA: `grep -cF '**The interim home**'` prints 1 for interim and 0 for final. Site 3 item 3's "or the first PR after it" is gone. → § 4 sites 1a and 3
+- **The fallback recurs** (Stacy R5, gap 2): it fires at the second walk and at every later one until the switch. → § 4 site 1a
+- **The fallback moved out of the walk record's PR** (Stacy R5, the law conflict): that PR lands before the release branch, and item 3a's E3 block is "never" written as `**Open for Peter**:` lines. The question now sits in the capture record's record-only re-rule PR at that release, which holds only itself. The walk rows the record as `carried`, with the hold named; phase 1 reports the question; the release proceeds at the interim home.
+  - **One consequence I added**: if that PR is still held at S, the re-rule has not merged, so the record lapses at that S under rule 11 and the lapse is recorded. That is the one mechanical trace of an unanswered question, and it touches nothing in the release.
+
+  → § 4 sites 1a and 3, § 6, § 7
+- **Rule 11's re-rule** (Stacy R5): each release's re-rule is now a Trigger-line diff with a dated reason, in the read-through-prose pattern, not "a dated line". The Lapse text says that, with a re-rule at every release, the fallback is the only route to Peter. → § 4 site 3
+- **Site 2** (Stacy R5): the item text she would sign is recorded:
+  - `record-committed` keeps the existing text, without its final period;
+  - the RELEASE clause becomes its own obligation item;
+  - a `removals` entry carries the clause, with `cites: subtraction-1`.
+
+  The site rides whichever lands first, the switch PR or her #555 class fix, because its After is true in both phases. If a SYMPTOM event comes first, the class fix goes as its own ballot with site 2 composed in. #555's token stays `release:next:phase-1`. → § 4 site 2, site 3 item 4
+- **The Kiro question** cites Spec 131's outline L232 as its starting point, still unverified. → site 3 item 2
+- **§ 7** takes Stacy's surviving counter: the interim is bounded by Peter's attention, a person's bound, not a printed one. → § 7
