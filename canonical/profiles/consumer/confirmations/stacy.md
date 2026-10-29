@@ -56,9 +56,20 @@ date: 2026-09-27
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 confirmer: stacy
-canonicalHash: sha256:7b2664513beb395592f793b497590e8a031039c286cf5c72d8c072336e1f5fe7
+canonicalHash: sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae
 items: trigger-lens, trigger-release, trigger-symptom, trigger-closeout, trigger-midpoint, trigger-arming, trigger-gate, trigger-education, trigger-straggler, trigger-liveness, trigger-burst, finding-routing, merge-path-status
-date: 2026-10-27
+date: 2026-10-29
+
+**Re-confirmed 2026-10-29 (Req 11.6.5d).**
+- **What changed**: one row, RELEASE (canonical L400). Ballot `.kiro/docs/ballots/2026-10-26-release-flow-batch-16-1.md` (RATIFIED, Peter, 2026-10-26/27; Status read at `origin/main` `0bfc45621`) site 12 replaces the phase-1 floor-read lead-in ("the walk record … exists, its greps re-run at its `main at:` SHA, and every row carries a disposition;") with a pointer: "What phase 1 reads, and at which SHA, is RELEASE-FLOW step 6's Phase 1 bullet, not restated here *(amended 2026-10-29 by …, site 12; prior text at `08b9c7a8e`)*. Your record's lines:". It is composed with #536's site-2b sentence, which stays at its anchor (Peter: "Allow the Composition"; `9b43dfc33`). Thurgood applied it at `13bd1d57d` and re-quoted `trigger-release` at `70fe68a8d` (authoring; neither moves this canonicalHash).
+- **Byte-identity, checked**: I took the resolved site-12 After from the ballot (§ "Resolved after-texts"), substituted `<application date>` → `2026-10-29`, inserted the site-2b sentence before "Phase 2 reads", and found the result once in the charter. The charter's diff against `origin/main` is three changed lines (L400, L432, L463: sites 12, 13 and 11), each matching its resolved text. `trigger-release` equals the canonical row byte for byte (1,805 characters) and occurs once in the unit.
+- **What did not change**: the operative set, still 13 items; the row stays one `member` item. The other 12 items are untouched and verbatim, one occurrence each. The canonicalHash moves from `sha256:7b2664513beb395592f793b497590e8a031039c286cf5c72d8c072336e1f5fe7` to the value above. `operative-set-freshness` printed it at `4428ec6e7`, and I recomputed it independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts` (body lines 141–160). The two agree and equal the overlay pin.
+- **Consumer rendering**: unchanged. The RELEASE row's range removal ("Phase 1 also carries the `release-falsity-floor` read … A read, never a gate.", `subtraction-3`) keeps both end strings and now spans the pointer too. The pointer names RELEASE-FLOW, a DesignerPunk process a consumer does not run. The other removals resolve as before.
+- **Read before this act**: the canonical unit, `canonical/agents/stacy.md` L395–L414, read through a tool call (`sed -n`) at `4428ec6e7` before this commit (Peter's link-7 ruling; my 2026-10-29 line).
+
+**Ruling: CONFIRMED at 13 items.**
+
+**Re-confirmed 2026-10-27 (prior record, superseded)**: canonicalHash `sha256:7b2664513beb395592f793b497590e8a031039c286cf5c72d8c072336e1f5fe7`, 13 items, as below.
 
 **Re-confirmed 2026-10-27 (Req 11.6.5d).**
 - **What changed**: two rows, four edits, from ballot `.kiro/docs/ballots/2026-10-26-governance-examples-guard-adoption.md` § 3 (RATIFIED, Peter, 2026-10-26, F-1 answered (a); Status line read at this branch's base `bad7222ef`). **ARMING**, site 1: 1a adds `scripts/governance-examples/**` to the instrument-path list; 1b adds `scripts/governance-examples/__tests__/*.test.ts` to the deletion read, with its RATIFIED-at-`<m>` referent; 1c, under F-1 (a), adds the fourth read, on `scripts/governance-examples/pending.json`. **RELEASE**, site 2b (my text, verbatim): "Phase 1 also carries the governance-examples read (the counting block; ballot 2026-10-26-governance-examples-guard § 2.4)." Thurgood applied them at `6a29412fe` (authoring) and re-quoted `trigger-arming` and `trigger-release` at `c1fd0e06e` (authoring; neither commit moves this canonicalHash).
