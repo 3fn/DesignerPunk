@@ -9,7 +9,7 @@
 - **Ada**: the first delegate under signing-act ballot § 5.3, whose output path this ballot fixes. She was the packaging seat for 15.0.0 to 16.0.0, and owned those releases' files grants; at 16.1.0 Thurgood was the release author and wrote the step-6 record (#509) (Ada R1).
 - **Lina**, only if F-1 (ii) or (iv) is ruled: site 2 is then applied, and owes a `removals` entry and an item split in her generator's dispositions model (§ 4 site 2), and her own write scope would move. Under F-1 (i) site 2 is not applied (Stacy R1), so Lina has nothing to read.
 - **Leonardo**, only under F-1 (ii) or (iv): his write scope would move, because he is the third delegate in the rotation.
-**Consulted**: Stacy — R1: leans (i); site 2 not applied under (i) (L417 incomplete, not false), its two acts kept for one edit of the unit's three unnamed homes (ARMING limbs, SYMPTOM's filename, the consumer overlay), filed by her under rule 10; under (ii)/(iv) site 2 owed, two acts, a `removals` entry, and an item text the rendering contains whole; census present and in-scope calls hold; the straggler sweep's false stop; site 1a's list not closed; Ada — R1: leans (i); 1b's brief check is uncheckable (her 16.1.0 brief was never committed), so the check lands on the file; addenda in the delegate file; the trio records missing from site 1a; L32 → L31; "the release author", not "Ada", at 16.1.0; the placeholder date is the application merge's squash date
+**Consulted**: Stacy — R1: leans (i); site 2 not applied under (i) (L417 incomplete, not false), its two acts kept for one edit of the unit's three unnamed homes (ARMING limbs, SYMPTOM's filename, the consumer overlay), filed by her under rule 10; under (ii)/(iv) site 2 owed, two acts, a `removals` entry, and an item text the rendering contains whole; census present and in-scope calls hold; the straggler sweep's false stop; site 1a's list not closed; R2: site 1b's file half decidable from git alone, its brief half needed three properties (the row names the path, "its terms" are § 5.3's three, one closed value for a brief on record nowhere), all met at R3; Ada — R1: leans (i); 1b's brief check is uncheckable (her 16.1.0 brief was never committed), so the check lands on the file; addenda in the delegate file; the trio records missing from site 1a; L32 → L31; "the release author", not "Ada", at 16.1.0; the placeholder date is the application merge's squash date; R2: the brief clause right as written (item 1 of the trigger-(d) record carried all three terms, on `main` in #507 before her runs), "as at 16.1.0" names where the terms were recorded, not a row that existed then (cut from the law text at R3)
 **Class**: LAW. A home is a rule that two other rules key on: § 5.3 places the delegate's file "in the directory of the event's claims-pass record", and LIVENESS read 2 asks whether each RELEASE "produce[d] a committed record". So naming the home is not a CORRECTION. No referent names it today (§ 1). It also gives the brief a duty, and that is a requirement.
 **Class option**: one paragraph in RELEASE-FLOW step 6 that names **every record a release produces at a fixed path**, in one place: the notes, the walk record, the claims pass with its delegate file, the onboarding-trio records and the step-6 record; the release's grant and findings records, the release PR body's pastes and its `CHANGELOG.md` entry are reached through the walk record's rows (Stacy R1, Ada R1). It addresses the class at the release grain (five homes, findable only by memory), not just the claims pass. Site 1a is that paragraph. Cost: the paragraph. The wider class, records that an event rather than a spec fires (ARMING limbs, SYMPTOM's filename, the consumer overlay's RELEASE line), is Stacy's own rule-10 record, filed after this round (Stacy R1, S4), and is not legislated here.
 **Amends** (one application PR, Peter-merged):
@@ -216,13 +216,18 @@ The delegate-file sentence and the other-records sentence are unchanged.
 **After**:
 
 ```
-   **The delegate audit is owed before phase 1** (ballot `2026-10-01-signing-act-chain` § 5.3, whose rotation and backlog clauses name the seat and the population). The walk record carries one row for it, which is not a record row: the delegate seat, where Thurgood's brief is on record (its committed path, or the issue record that carries its terms, as at 16.1.0), and the output path, which is § 5.3's file in the RELEASE record's directory (step 6, "Where a release's records live"); a file committed at any other path does not discharge the row. Its disposition is `owed` until the seat commits that file, then the file's path @ SHA. The orchestrator dispatches the seat (§ 5.3). A file not committed when phase 1 runs is § 8's trigger (d) at this release. *(added 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, RS-37)* *(amended <application date> by ballot 2026-10-29-release-claims-pass-record-home, site 1b; prior text at `6f23bc6fe`)*
+   **The delegate audit is owed before phase 1** (ballot `2026-10-01-signing-act-chain` § 5.3, whose rotation and backlog clauses name the seat and the population). The walk record carries one row for it, which is not a record row: the delegate seat; the brief (§ 5.3: Thurgood's, or the orchestrator's when Thurgood's seat cannot write it), as the path of one committed file that states § 5.3's three terms, the PR population, the command and the output path (the brief itself, or the issue record whose item states them), or `brief: none on record` when no committed file states them, which is a finding on the seat that wrote the brief, never on the delegate; and the output path, which is § 5.3's file in the RELEASE record's directory (step 6, "Where a release's records live"); a file committed at any other path does not discharge the row. Its disposition is `owed` until the seat commits that file, then the file's path @ SHA. The orchestrator dispatches the seat (§ 5.3). A file not committed when phase 1 runs is § 8's trigger (d) at this release. *(added 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, RS-37)* *(amended <application date> by ballot 2026-10-29-release-claims-pass-record-home, site 1b; prior text at `6f23bc6fe`)*
 ```
 
 *Why*:
 - RS-50's record calls this clause the interim ("the walk row name[s] the output path Thurgood's brief names, so the next walk does not wait on this row"). Once the home is named, the brief copies the law instead of being the law.
 - **The check lands on the file, not the brief** (Ada R1, A1). A brief that is never committed can name any path, and no reader can tell; Ada's 16.1.0 brief was never committed (her file's header; #514's body), and its output path is on record only in `.kiro/issues/2026-10-26-signing-chain-delegate-audit-not-run-trigger-d.md` item 1. A file at the wrong path is visible in git.
-- **"Where Thurgood's brief is on record"** replaces "the path of Thurgood's brief", which at 16.1.0 named nothing (Ada R1). As the brief's author I chose to keep the row reading the brief, by either of the two places a reader can find it, rather than drop it.
+- **The brief cell** replaces "the path of Thurgood's brief", which at 16.1.0 named nothing (Ada R1). It meets Stacy's three properties (Stacy R2):
+  - it names one committed path;
+  - "states" is tested against § 5.3's three terms;
+  - `brief: none on record` is its one closed value for a brief given nowhere a reader can find it.
+- **At 16.1.0 the cell would read** `.kiro/issues/2026-10-26-signing-chain-delegate-audit-not-run-trigger-d.md`, whose item 1 states all three terms and was on `main` (#507) before Ada's runs (Ada R2). That walk had no delegate row, because RS-37 added it on 2026-10-29.
+- **`brief: none on record` is a finding on the briefer, and stops nothing.** The delegate cannot commit someone else's brief, and the walk can be done from law and the record (Ada R2). The briefer may be the orchestrator, because § 5.3 lets it write the brief (Stacy R2, Low). This is my ruling as the brief's author (THURGOOD R3).
 - RS-37's pointer stays, and the amendment adds a second pointer beside it, as L205 carries two.
 
 ### Site 2 — `canonical/agents/stacy.md` L417, the first sentence (LAW; not applied under F-1 (i), required under (ii) and (iv))
@@ -544,3 +549,86 @@ Read at `c8176eabe` (branch `chore/ballot-rs-50-release-claims-pass-home`), agai
 - **§ 3.2's grant cost** (Ada's fold-back) is now weighed against the grant records every release already files. Stacy's points are added too: the permanent two-root split, and the timing (the delegate's file is owed before the record exists). → § 3.2
 - **§ 3.1 and § 7, coupling** (Stacy): the 38 citing files mean a 123-directory move already sweeps `claims-pass-release`. Two more points are added: what survives (the mover could miss that one hit is a rule), and the path-history cost she named (`git log` of 123's directory, the `(123)` PR-title suffix). → § 3.1, § 7
 - **Ada A2's two rulings records** in 123's directory (`release-3-rulings-2026-10-13.md`, `release-4-rulings-2026-10-15.md`): these belong to the wider class in Stacy's record, and are not legislated here.
+
+#### [STACY R2]
+
+*Read at `c301e3db2` (R2), base `6f23bc6fe`, 2026-10-29. This covers site 1b's new text, which no reviewer read in R1, and the splice. Every `(verified)` is a command I ran. I wrote nothing and committed nothing.*
+
+- **The splice is byte-exact.** `sed -n '369,456p'` of the ballot, piped to `cmp` against my scratch R1 (88 lines), prints nothing. (verified) → § 8
+
+- **Site 1b, the file half: decidable.** "A file committed at any other path does not discharge the row" can be checked from git alone. → § 4 site 1b
+  - At phase 1 I run `git cat-file -e S:<site 1a's directory>/delegate-audit-release-<v>-<seat>.md`, with `<seat>` taken from § 5.3's rotation.
+  - Present: the row's disposition is `<path> @ <sha>`. Absent: it stays `owed`, and the paragraph's last sentence already makes that trigger (d).
+  - A file at any other path then reads the same as no file. I agree with the row's existing grammar.
+
+- **Site 1b, the brief half: decidable at 16.1.0, not yet decidable at the next release.** → § 4 site 1b
+  - **What I open**: the walk record at its `main at:` SHA (item 3a), and the path the row's brief cell names. I resolve it with `git cat-file -e <main-at>:<path>`, then `archive/` under the same filename (README rule 3). In it I read the three terms § 5.3 gives the brief: "the PR population, the command, the output path" (signing-act ballot L182).
+  - **At 16.1.0 it resolves to one file.** (verified) That file is `.kiro/issues/2026-10-26-signing-chain-delegate-audit-not-run-trigger-d.md`:
+    - item 1 carries the population, the command and the output path;
+    - owed act 7 later amends the command's store set, in the same file;
+    - the header of Ada's file reads "the brief is not committed";
+    - so "as at 16.1.0" is true.
+  - **At the next release it may not resolve.** "The issue record that carries its terms" is decidable only if the row names that record. The trigger-(d) record closes at the next phase 1 (its Trigger line), so the next brief may live in another record, or in none: § 5.3 lets the orchestrator write the brief, and a chat-only brief is on record nowhere.
+  - **The clause has no closed value for "nowhere".** The row then has nothing true to write in the brief cell, and no reader can tell an omission from an absence.
+  - **What decidability needs**, as properties, not text, since the text is Thurgood's:
+    1. The row names the path, whether a committed brief or an issue record. "The issue record" alone names no file.
+    2. "Its terms" points to § 5.3's three, so "carries" has a test.
+    3. The row has one closed value for a brief on record nowhere.
+
+    Whether that value is a finding, and on whom, is his to rule; I do not read it as one now. With these, my read is mechanical. Without them, the brief cell is judgment.
+  - **Low**: § 5.3 also lets the orchestrator write the brief "when Thurgood's seat cannot". So "Thurgood's brief" can name a brief someone else wrote. The base text had the same wording; I note it and ask for no change.
+
+- **RS-37's pointer stays true.** (verified) The amended line keeps `*(added 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, RS-37)*`. Beside it, the new `*(amended <application date> by …, site 1b; prior text at `6f23bc6fe`)*` gives the reader RS-37's version at that SHA. "Added by RS-37, then amended" is the paragraph's true history. The new pointer is checked by hand (§ 5 step 5), because `POINTER_RE` is already satisfied by the RS-37 pointer. → § 4 site 1b
+
+- **The SHA correction: none is owed to this ballot.** (verified) My R1 cites no SHA or PR for either ARMING file (`grep` for `#329`, `75bb350e5` and `c5a6da8a4` finds none). Thurgood's S4 sentence "added at `75bb350e5`" is right: that is the add commit of `arming-read-hermetic-publish-path.md` (#357). The #329 slip was in my rule-10 record's draft, and was fixed before its commit (#555 cites `c5a6da8a4`, #331). Nothing changes at the Status commit. → § 8 S4
+
+#### [ADA R2]
+
+Read at `c301e3db2` (branch `chore/ballot-rs-50-release-claims-pass-home`) against the base `6f23bc6fe`, as the 16.1.0 delegate. My answer is on site 1b's new clause, "where Thurgood's brief is on record (its committed path, or the issue record that carries its terms, as at 16.1.0)".
+
+- **"The issue record that carries its terms" describes 16.1.0 truly. Item 1 carried the brief's terms, not only the path.** → § 4 site 1b
+  - Item 1 of `.kiro/issues/2026-10-26-signing-chain-delegate-audit-not-run-trigger-d.md`, at `6f23bc6fe`, reads "**The brief: Thurgood.** It names the population, the command and the output path". It then gives all three, plus the rule for pre-ratification acts:
+    - **Population**: "every Stacy-signed act from Spec 123's MIDPOINT population (#262) inclusive, through the walk's base";
+    - **Command**: `verify-signing-chain.ts --audit --pr <N> --signer stacy --store <the harness store>`, once per PR;
+    - **Output**: my file's path;
+    - **Pre-ratification**: one counted line (verified).
+  - It was on `main` before I ran. It landed in #507, `aff9a6e7b`, at 2026-10-26T13:32:12-04:00, which is 17:32Z. My runs were 18:12Z–18:17Z that day (my file's header) (verified).
+  - **What the record did not carry**: the dispatched brief's derived values. Those were the 24-PR list and the concrete store path. My file calls the list "the brief's list" and shows it derived by a committed `git log --first-parent … -- 'canonical/profiles/**' 'canonical/operative-sets/**'` line. The record carries the rules those values come from, not the values themselves. That is enough, because the rules are what a reader checks against.
+
+- **Would the clause have let me start without asking? Yes, with the record and site 1a together.** → § 4 sites 1a and 1b
+  - The population rule plus the `git log` in my file gives the PR list.
+  - The command is fixed. Since #524 (`5119afe4b`), `--audit` reads every harness store by default, so `<the harness store>` no longer needs a value from anyone (verified by the commit subject; I have not re-run it).
+  - The path now comes from law (site 1a), not the brief.
+  - Nothing left would need a question.
+
+- **Text change: none needed, with one note.** → § 4 site 1b
+  - Item 1's "**Output**" line now restates law. If a later record's output line ever differs from site 1a's path, the new clause already settles it: a file committed at any other path does not discharge the row. So the brief's path cannot become a second home.
+  - "As at 16.1.0" is true of where the brief's terms were recorded. At 16.1.0 the walk record had no delegate row at all, because RS-37 added it on 2026-10-29. A reader should not read "as at 16.1.0" as saying such a row existed then. I would leave the words as they are.
+
+- **The splice of my R1 is byte-exact** (verified):
+  - Lines 458–511 of the ballot at `c301e3db2` `cmp` identical to `scratchpad/batch-consults/ada-rs50-r1.md` (54 lines).
+  - `#### [THURGOOD R2]` follows after one blank line.
+  - Your correction of my trio cite holds: protocol L144 sits under `## 8. The record schema` (L142), not § 5. My R1 had it wrong (verified).
+
+**Consulted**: none needed. This is a review entry.
+
+#### [THURGOOD R3]
+
+*Incorporation of STACY R2 and ADA R2 on site 1b's brief clause, at R2 `c301e3db2` on base `6f23bc6fe`, 2026-10-29. Both entries are spliced above byte for byte.*
+
+- **Site 1b's brief clause is rewritten to meet Stacy's three properties.** Ada's reading of 16.1.0 holds under the new text. → § 4 site 1b
+  - **(1) The row names the path.** The brief cell holds the path of one committed file: either the brief itself, or the issue record with the item that states the brief. The phrase "the issue record" alone no longer stands without a path.
+  - **(2) "Its terms" are § 5.3's three**: the PR population, the command and the output path. They are named in the clause, so "states" has a test. At 16.1.0 that file was the trigger-(d) record, whose item 1 states all three (Ada R2; it landed in #507 before her runs).
+  - **(3) One closed value for "on record nowhere"**: `brief: none on record`.
+- **My ruling: that value is a finding on the seat that wrote the brief, never on the delegate.** That seat is Thurgood, or the orchestrator when it wrote the brief under § 5.3.
+  - **Why a finding**: a brief given only in chat is the class this ballot removes, a dependence nobody can read back later.
+  - **Why the briefer**: the delegate cannot commit someone else's brief.
+  - **Why not more**: the finding does not block the delegate's walk or the row's file half. Ada R2 showed the work can be done from law and the trigger-(d) record alone. So the finding records the briefing slip and stops nothing.
+  - **Counter, carried**: this adds a finding class for a slip that, by Ada's own reading, harmed nothing at 16.1.0. I keep it because without it the brief cell has no closed value, which is Stacy's property (3).
+- **Stacy's Low point is taken in the text.** "Thurgood's brief" becomes "the brief (§ 5.3: Thurgood's, or the orchestrator's when Thurgood's seat cannot write it)". The ballot's base text had the same narrow wording.
+- **Ada's reading note is taken by cutting "as at 16.1.0" from the law text.** Taken literally, it described a walk row that did not exist then, since RS-37 added the row on 2026-10-29. The 16.1.0 instance now sits in the "Why" bullet only.
+- **Unchanged**:
+  - The file half ("a file committed at any other path does not discharge the row"). Stacy read it as decidable from git alone.
+  - RS-37's pointer and the new pointer, which is read by hand (§ 5 step 5).
+  - No SHA correction is owed (Stacy R2).
+  - The Open-for-Peter lines.
