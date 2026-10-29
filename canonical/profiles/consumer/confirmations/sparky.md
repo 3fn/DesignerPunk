@@ -50,9 +50,16 @@ I judged the unit true against the code, not against its own wording: `src/gener
 ## `#product-tokens`
 
 confirmer: sparky
-canonicalHash: sha256:fbaea5ecb2b1acc271141fc708fd4e121f1a6dcae81ba14a2047b4762c5f0825
+canonicalHash: sha256:510059a555d5fe7e13a5515b0bdf61209304ddc8db7383842d380182ac2eaa38
 items: product-tokens-1, product-tokens-2, product-tokens-3, product-tokens-4, product-tokens-5
-date: 2026-09-29
+date: 2026-10-27
+
+**Re-confirmed 2026-10-27 (Req 11.6.5d): the system-token review and token planning ballot, item 2 (site 8a).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:fbaea5ecb2b1acc271141fc708fd4e121f1a6dcae81ba14a2047b4762c5f0825`, 5 items). The consumer row is `retained`, so there is no re-sign (§ 7).
+- **What changed**: ballot `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493), site 8a, was applied at `eb91cd5b1` (Thurgood). `canonical/agents/sparky.md` L322 no longer lets me author a token "when you discover values Leonardo didn't anticipate". It now reads: author a product token when the screen spec names it; raise, at spec review and before building, any need the spec's `tokens:` blocks do not name; surface a value met during the build to Leonardo, never fill it silently; the routed product-token authoring section says what the code uses until the outcome and when the token may be written. In the same commit the profile author re-authored `product-tokens-5`. I checked by script that L322 equals § 14's site 8a block on `main` at `bad7222ef` byte for byte (`cmp`, no difference).
+- **What I read, in this session, through tool results**: `canonical/agents/sparky.md` L316–L322 (the whole unit); the unit as `partition` returns it (body lines 41–48); the whole `#product-tokens` record in `canonical/operative-sets/sparky.yaml`; the rendered unit in `canonical/_consumer-output/_canonical/agents/sparky.md` (L183–L189), which with the cc and kiro pieces is byte-identical to the canonical unit (checked by script, as a retained unit should be); this row (`retained`); ballot § 14 site 8a and § 7's row for this unit. I also read both pointer targets: `### Step 1: Review the Specification` is in the charter, and Web-Authoring-Standards § "Product Token Authoring (Sparky)", "The Rule" (as site 6 applied it), says what the code uses until the outcome (the nearest system token, or the value left out, marked `/* token-gap: <need> */`) and that the token is written only once the screen spec names it.
+- **The hash**: I recomputed it with `hashText` over `partition(splitFrontmatter(src).body).units` (unit `#product-tokens`): `sha256:510059a555d5fe7e13a5515b0bdf61209304ddc8db7383842d380182ac2eaa38`. It equals the value the profile author's sweep printed. A retained unit has no overlay pin.
+- **Items re-read against the unit**: all 5 item texts are verbatim substrings of the unit as it now stands (checked by script). `product-tokens-5` is operative, and more so than before: I can act against it by writing a product token the spec does not name, by building past an unnamed need found at spec review, or by filling a build-time gap silently. It stays one obligation for one line; the procedure it points to is routed, not restated here. `product-tokens-1` to `-4` are unchanged, and Thurgood's 5c ruling below (on `product-tokens-3`) still stands.
+- **Ruling: CONFIRMED at 5 items, not corrected.**
 
 **Ruling: 4 items (drafted 5; removed `product-tokens-3`).** "Ref tokens emit `var()` references to system tokens" describes the generator's output. No Sparky-side implementation can violate it; the Sparky obligation next to it (author `ref:` when a system token is in tolerance) lives in the ambient Product-Token-Governance, not in this unit. This is a narrowing, made as a reviewed diff. `product-tokens-1` keeps its bundled output-path fact because the load-order obligation is in the same sentence.
 
@@ -61,9 +68,16 @@ date: 2026-09-29
 ## `#out-of-scope`
 
 confirmer: sparky
-canonicalHash: sha256:2a194f0ea5b813a6ea71d33ec46613e0fc1f672688ded1ace3c7eccf808cbbe2
+canonicalHash: sha256:bf74a286be1191112b87d64478b37bbb0f4db4115663cacd3bed09de61cbd7ee
 items: out-1, out-2, out-3, out-4, out-5, out-6, out-7
-date: 2026-09-29
+date: 2026-10-27
+
+**Re-confirmed 2026-10-27 (Req 11.6.5d): the system-token review and token planning ballot, item 2 (site 8).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:2a194f0ea5b813a6ea71d33ec46613e0fc1f672688ded1ace3c7eccf808cbbe2`, 7 items).
+- **What changed**: ballot `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493), site 8, was applied at `eb91cd5b1` (Thurgood). `canonical/agents/sparky.md` L329 now scopes the escalation to *system* tokens and adds: *"Product tokens are in scope: § "Product Tokens" above says when you author one"*. In the same commit the profile author re-quoted `out-4` and re-pinned the overlay unit. I checked by script that L329 equals § 14's site 8 block on `main` at `bad7222ef` byte for byte (`cmp`, no difference).
+- **What I read, in this session, through tool results**: `canonical/agents/sparky.md` L318–L332 (the tail of `### Product Tokens`, whose heading its pointer names, and the whole unit); the unit as `partition` returns it (body lines 49–58); the whole `#out-of-scope` record in `canonical/operative-sets/sparky.yaml`; the overlay unit in `sparky.overlay.md`; ballot § 14 site 8 and § 7's row for this unit.
+- **The hash**: I recomputed it with `hashText` over `partition(splitFrontmatter(src).body).units` (unit `#out-of-scope`): `sha256:bf74a286be1191112b87d64478b37bbb0f4db4115663cacd3bed09de61cbd7ee`. It equals the overlay pin and the value the profile author's sweep printed.
+- **Items re-read against the unit**: all 7 item texts are verbatim substrings of the unit as it now stands (checked by script). The added sentence is operative: I can act against it by escalating a product token to Ada as if it were system work, or by authoring a system token myself. `out-4` carries it with the escalation rule, as one member for one line; when I author a product token is said by the retained `#product-tokens` unit and its route to Web-Authoring-Standards § "Product Token Authoring (Sparky)". No other line of the unit changed.
+- **Ruling: CONFIRMED at 7 items, not corrected.** The 2026-09-29 ruling below stands.
 
 **Ruling: CONFIRMED at 7 items, as drafted.** Each is a boundary a consumer implementation can cross.
 

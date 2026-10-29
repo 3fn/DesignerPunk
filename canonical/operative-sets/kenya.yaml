@@ -102,7 +102,7 @@ units:
         text: "**Ground truth for these token values is LIVE, not a file** — never read the built `dist/*.ios.swift` snapshots (see the Ground truth section); query the application MCP for the resolved value, formula, per-platform (Swift) name, and the per-theme set for theme-varying tokens"
     confirmation: canonical/profiles/consumer/confirmations/kenya.md#ios-theming-spec-094
   "#product-tokens-spec-108109":
-    canonicalHash: sha256:7529881a62c6b578199af8ac739710989cd227b36857fa501034c29695b00f4e
+    canonicalHash: sha256:04694ae4a06f766e8decce0175806fbe667061fe59eb032b403c167b158f2c00
     items:
       - id: product-tokens-1
         kind: obligation
@@ -126,11 +126,11 @@ units:
         text: "Query available tokens via the Product MCP's `get_product_tokens` for the iOS platform (see your routing section)"
       - id: product-tokens-6
         kind: obligation
-        label: "Author new tokens in product/tokens/{category}.yaml when you"
-        text: "Author new tokens in `product/tokens/{category}.yaml` when you discover values Leonardo didn't anticipate — follow Product-Token-Governance (your ambient law), and the routed product-token naming section"
+        label: "Author a product token in product/tokens/{category}.yaml whe"
+        text: "Author a product token in `product/tokens/{category}.yaml` when the screen spec names it. A value the spec did not anticipate is surfaced to Leonardo and never filled silently or with a hard-coded value (Product-Token-Governance § \"Authoring Workflow\", routed, says when it may be written). Follow Product-Token-Governance (your ambient law), and the routed product-token authoring + naming sections"
     confirmation: canonical/profiles/consumer/confirmations/kenya.md#product-tokens-spec-108109
   "#out-of-scope":
-    canonicalHash: sha256:79a201ad2dcfa69d1aeaa343024cc011e73790b162c90aac612534e35468d4b9
+    canonicalHash: sha256:5eb940fb724e8ac91f67575d6ac30c45713e66d0caa7d6de4a7554043948aa85
     items:
       - id: out-1
         kind: member
@@ -146,8 +146,8 @@ units:
         text: "**Component selection and screen specification** — that's Leonardo's job (you implement his specs)"
       - id: out-4
         kind: member
-        label: "Token creation or modification — escalate through Leonardo t"
-        text: "**Token creation or modification** — escalate through Leonardo to Thurgood (who triages to Ada)"
+        label: "System token creation or modification (primitive, semantic o"
+        text: "**System token creation or modification** (primitive, semantic or component) — escalate through Leonardo to Thurgood (who triages to Ada). A product token is not system work: § \"Product Tokens (Spec 108/109)\" above says when you author one"
       - id: out-5
         kind: member
         label: "Component creation or modification — escalate through Leonar"

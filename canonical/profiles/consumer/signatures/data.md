@@ -39,6 +39,17 @@ date: 2026-10-13
 ## `#out-of-scope`
 
 signer: data
+disposition: re-pointed
+canonicalHash: sha256:900fcd94184dbc4519095d1257911adb9e595af4cd10b65a01b1373e1b5b7b54
+renderedHash: sha256:ffc23b7cfe2bdcca4c58cbd087a41d67bd3e83aeabf42f434c2ce44aa8ad0bab
+date: 2026-10-27
+
+**Re-signed 2026-10-27 (system-token review and token planning ballot, item 2, site 8): ASSENT, `surviving` 7 of 7 (`out-1` to `out-7`).** A new act, read fresh against the new rendering; nothing is carried from the 2026-09-29 signature below (canonicalHash `sha256:d7695f214a8af5a8be83c50e90c9a403bb22261cfb8ee4d15d85cfcb5d0d3d3c`, renderedHash `sha256:e7b6eb783d2779b2304ebfc629d2a49793aab962f956efb8c4aac95c2d0a8999`).
+- **The ballot**: `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493). Site 8 was applied at `eb91cd5b1`, with the profile author's re-quoted `out-4` and the re-pinned overlay unit. The rendering was regenerated at `5addae6b2`, and I re-confirmed the set at 7 at `31c6c75d5`.
+- **What I read, in this session, through tool results**: the unit as `readConsumerSpans` returns it from the committed rendering, one piece each in `canonical/_consumer-output/_canonical/agents/data.md` (L213–L221; the applied line at L218), `cc/.claude/agents/data.md` (applied line at L90) and `kiro/.kiro/agents/data-prompt.md` (applied line at L60). By script, the three pieces are byte-identical and equal the overlay's `## @unit #out-of-scope` text. I also read this row. The rendered `out-4` line reads: *"**System token creation or modification** (primitive, semantic or component) — escalate through Leonardo to Thurgood (who triages to Ada). Deciding a product token the screen spec does not name is not yours either: § "Product Tokens (Spec 108/109)" above says what you do with one"*. Its pointer resolves in every rendering: `### Product Tokens (Spec 108/109)` is a retained unit, present above `### Out of Scope` in all three pieces' files (L204, L76 and L46), it renders byte-equal to the canonical unit, and it carries the applied site 8a line (L211, L83, L53). The route it relies on, `routes.docs[product-token-authoring]` (site 8b, `retained`), renders as *"WHEN a value you need has no system token and the screen spec does not name it (a need the spec missed) THEN consult product-token-governance § "Authoring Workflow""* in the cc and kiro prompts.
+- **Credited**: `out-1` to `out-6` survive verbatim in all three pieces (checked by script), `out-4` with its new sentence. `out-7` (*"… — that's Peter's job"*) renders *"… — that's your human lead's job"*, as before: product decisions stay outside my seat and with the consumer's human lead. Credited by entailment.
+- **The row's `removals`** (`Peter`, `subtraction-2`) is unchanged and still the only removal; the new sentence contains no `Peter` (checked: the rendered unit contains none), so nothing new is subtracted.
+- **Hashes.** `canonicalHash` moves `d7695f21...` to `900fcd94...` (`hashText` of the unit from `partition(body).units`, equal to the overlay pin and to the sweep's value). `renderedHash` moves `e7b6eb78...` to `ffc23b7c...` (`renderedHashOf` over the committed rendering, `rowSpanSource('canonical/agents/data.md', 'body', '#out-of-scope')`), equal to the profile author's value.
 
 **Assent — 7 of 7.** `out-7` is re-keyed to "that's your human lead's job". Six are verbatim.
 

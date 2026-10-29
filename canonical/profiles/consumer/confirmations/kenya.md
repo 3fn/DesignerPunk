@@ -51,9 +51,16 @@ date: 2026-09-29
 ## `#product-tokens-spec-108109`
 
 confirmer: kenya
-canonicalHash: sha256:7529881a62c6b578199af8ac739710989cd227b36857fa501034c29695b00f4e
+canonicalHash: sha256:04694ae4a06f766e8decce0175806fbe667061fe59eb032b403c167b158f2c00
 items: product-tokens-1, product-tokens-2, product-tokens-3, product-tokens-4, product-tokens-5, product-tokens-6
-date: 2026-09-29
+date: 2026-10-27
+
+**Re-confirmed 2026-10-27 (Req 11.6.5d): the system-token review and token planning ballot, item 2 (site 8a).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:7529881a62c6b578199af8ac739710989cd227b36857fa501034c29695b00f4e`, 6 items). The unit is retained, so there is no re-sign (ballot § 7).
+- **What changed**: ballot `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493), site 8a, was applied at `eb91cd5b1` (Thurgood). `canonical/agents/kenya.md` L298 (L294 before site 8b's insert at `8e6818685`) replaces *"Author new tokens … when you discover values Leonardo didn't anticipate"* with: a product token is authored when the screen spec names it; a value the spec did not anticipate is surfaced to Leonardo and never filled silently or with a hard-coded value; Product-Token-Governance § "Authoring Workflow" (routed) says when it may be written. It is my R1 text. In the same commit the profile author re-quoted `product-tokens-6`. I checked by script that L298 equals § 14's site 8a block for `kenya.md` on `main` at `bad7222ef` byte for byte (`cmp`, no difference).
+- **What I read, in this session, through tool results**: `canonical/agents/kenya.md` L290–L299 (the whole unit) and L87–L94 (`routes.docs[product-token-naming]` and the site 8b leaf `product-token-authoring`, byte-equal to § 14's site 8b block); the unit as `partition` returns it (body lines 41–49); the whole `#product-tokens-spec-108109` record in `canonical/operative-sets/kenya.yaml`; the row (`retained`) in `kenya.dispositions.yaml`; ballot § 14 site 8a for `kenya.md` and § 7's row for this unit. The pointer resolves: `governance/Product-Token-Governance.md` has `## Authoring Workflow` (L56), and it carries the K-i sentence once (as does `governance/Web-Authoring-Standards.md`, Lina's site). The routed "authoring + naming sections" are my two `routes.docs` leaves `product-token-authoring` (§ "Authoring Workflow") and `product-token-naming` (§ "Naming Conventions", L119). The rendered line is byte-equal in all three consumer files (`_canonical` L198, `cc` L81, `kiro` L52).
+- **The hash**: I recomputed it with `hashText` over `partition(splitFrontmatter(src).body).units` (unit `#product-tokens-spec-108109`): `sha256:04694ae4a06f766e8decce0175806fbe667061fe59eb032b403c167b158f2c00`. It equals the value the profile author's sweep printed. The unit is retained and carries no overlay pin.
+- **Items re-read against the unit**: all 6 item texts are verbatim substrings of the unit as it now stands (checked by script), and each of the unit's 6 lines is one item. `product-tokens-6` is operative: I can act against it by writing a product token the screen spec does not name, by filling an unanticipated value silently or with a hard-coded value, or by not surfacing it to Leonardo. No other line of the unit changed.
+- **Ruling: CONFIRMED at 6 items, not corrected.** The 2026-09-29 rulings below stand.
 
 **Ruling: CORRECTED, 6 → 3 items.** Removed `product-tokens-1` (the output path), `product-tokens-2` (the shape of the static-token enum) and `product-tokens-4` (how the generator writes ref tokens). All three describe generated artifacts or repo layout, and none directs an act. Kept `product-tokens-3`: its *"access via `theme.product{Category}{Name}`"* is a consumption directive. Kept `-5` (query route) and `-6` (authoring + governance).
 
@@ -62,9 +69,16 @@ date: 2026-09-29
 ## `#out-of-scope`
 
 confirmer: kenya
-canonicalHash: sha256:79a201ad2dcfa69d1aeaa343024cc011e73790b162c90aac612534e35468d4b9
+canonicalHash: sha256:5eb940fb724e8ac91f67575d6ac30c45713e66d0caa7d6de4a7554043948aa85
 items: out-1, out-2, out-3, out-4, out-5, out-6, out-7
-date: 2026-09-29
+date: 2026-10-27
+
+**Re-confirmed 2026-10-27 (Req 11.6.5d): the system-token review and token planning ballot, item 2 (site 8).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:79a201ad2dcfa69d1aeaa343024cc011e73790b162c90aac612534e35468d4b9`, 7 items).
+- **What changed**: ballot `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493), site 8, was applied at `eb91cd5b1` (Thurgood). `canonical/agents/kenya.md` L305 (L301 before site 8b's insert at `8e6818685`) now scopes the escalation to *system* tokens (primitive, semantic or component) and adds: *"A product token is not system work: § "Product Tokens (Spec 108/109)" above says when you author one"*. It is my R1 text. In the same commit the profile author re-quoted `out-4` and re-pinned the overlay unit. I checked by script that L305 equals § 14's site 8 block for `kenya.md` on `main` at `bad7222ef` byte for byte (`cmp`, no difference).
+- **What I read, in this session, through tool results**: `canonical/agents/kenya.md` L290–L310 (the whole `### Product Tokens (Spec 108/109)` unit, whose heading at L291 the new pointer names, and the whole `### Out of Scope` unit); the unit as `partition` returns it (body lines 50–59); the whole `#out-of-scope` record in `canonical/operative-sets/kenya.yaml`; the overlay unit in `kenya.overlay.md`; ballot § 14 site 8 for `kenya.md` and § 7's row for this unit.
+- **The hash**: I recomputed it with `hashText` over `partition(splitFrontmatter(src).body).units` (unit `#out-of-scope`): `sha256:5eb940fb724e8ac91f67575d6ac30c45713e66d0caa7d6de4a7554043948aa85`. It equals the overlay pin and the value the profile author's sweep printed.
+- **Items re-read against the unit**: all 7 item texts are verbatim substrings of the unit as it now stands (checked by script). The added sentence is operative: I can act against it by escalating a product token to Ada as if it were system work, or by creating or modifying a system token myself. `out-4` carries it with the escalation rule, as one member for one line. When I author a product token is said by the retained `#product-tokens-spec-108109` unit (`product-tokens-6`) and its route to Product-Token-Governance § "Authoring Workflow" (`routes.docs[product-token-authoring]`, site 8b). No other line of the unit changed.
+- **Ruling: CONFIRMED at 7 items, not corrected.** The 2026-09-29 ruling below stands.
 
 **Ruling: CONFIRMED at 7 items, as drafted.** These are boundary members. Taking any listed decision, or skipping the named escalation path (`out-4`, `out-5`), violates them.
 

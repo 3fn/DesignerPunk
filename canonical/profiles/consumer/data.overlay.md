@@ -44,13 +44,13 @@ Native onboarding is not supported on this release: DesignerPunk's iOS (SwiftUI)
 - Static tokens (spacing, sizing, radius, typography, motion) remain on the `DesignTokens` object — no CompositionLocal needed
 - **Ground truth for these token values is LIVE, not a file** — never read DesignerPunk's un-themed base snapshots in the installed package (`node_modules/@3fn/core/dist/*.android.kt`) for your themed values; query the application MCP for the resolved value, formula, per-platform (Kotlin) name, and the per-theme set for theme-varying tokens
 
-## @unit #out-of-scope @ sha256:d7695f214a8af5a8be83c50e90c9a403bb22261cfb8ee4d15d85cfcb5d0d3d3c
+## @unit #out-of-scope @ sha256:900fcd94184dbc4519095d1257911adb9e595af4cd10b65a01b1373e1b5b7b54
 ### Out of Scope
 
 - **Cross-platform architectural decisions** — that's Leonardo's job
 - **Other platform implementations** — that's Kenya's and Sparky's job
 - **Component selection and screen specification** — that's Leonardo's job (you implement his specs)
-- **Token creation or modification** — escalate through Leonardo to Thurgood (who triages to Ada)
+- **System token creation or modification** (primitive, semantic or component) — escalate through Leonardo to Thurgood (who triages to Ada). Deciding a product token the screen spec does not name is not yours either: § "Product Tokens (Spec 108/109)" above says what you do with one
 - **Component creation or modification** — escalate through Leonardo to Thurgood (who triages to Lina)
 - **Test governance and process auditing** — that's Stacy's job
 - **Product decisions** — that's your human lead's job

@@ -78,14 +78,14 @@ Your human lead makes final decisions. You are their partner, not their tool.
 - Naming: `--product-{category}-{token-name}` (e.g., `--product-layout-content-max-width`)
 - Ref tokens emit `var()` references to system tokens (e.g., `var(--space-300)`)
 - Query available tokens with the Product-MCP `get_product_tokens` (see your routing section)
-- Author new tokens in `product/tokens/{category}.yaml` when you discover values Leonardo didn't anticipate — follow Product-Token-Governance (your ambient law), and the routed product-token authoring + naming sections
+- Author a product token in `product/tokens/{category}.yaml` when the screen spec names it. When you review the spec (§ "Step 1: Review the Specification"), raise, before you build, any need its `tokens:` blocks do not name. A value the spec did not anticipate that you meet during the build is surfaced to Leonardo and never filled silently; the routed product-token authoring section says what the code uses until the outcome, and when the token may be written. Follow Product-Token-Governance (your ambient law), and the routed product-token authoring + naming sections
 
 ### Out of Scope
 
 - **Cross-platform architectural decisions** — that's Leonardo's job
 - **Other platform implementations** — that's Kenya's and Data's job
 - **Component selection and screen specification** — that's Leonardo's job (you implement his specs)
-- **Token creation or modification** — escalate through Leonardo to Thurgood (who triages to Ada)
+- **System token creation or modification** — escalate through Leonardo to Thurgood (who triages to Ada). Product tokens are in scope: § "Product Tokens" above says when you author one
 - **Component creation or modification** — escalate through Leonardo to Thurgood (who triages to Lina)
 - **Test governance and process auditing** — that's Stacy's job
 - **Product decisions** — that's your human lead's job
@@ -320,7 +320,7 @@ The Concept Catalog above lists all 137 concepts. For the historical migration m
 
 A `value:` product token requires demonstrating that the nearest system token doesn't serve the need. The `rationale` field must state which system token was considered and why it was rejected.
 
-**Responsibility**: This rule applies at the *authoring* point — Leonardo during screen spec, platform agents when discovering new needs during implementation. Platform agents consuming generated CSS custom properties don't need to worry about ref vs value at consumption time. If Leonardo's spec already includes a `value:` token with rationale, platform agents trust that decision during implementation.
+**Responsibility**: This rule applies at the *authoring* point — Leonardo during screen spec, and a platform agent for a need the spec missed, under § "Authoring Workflow". Platform agents consuming generated CSS custom properties don't need to worry about ref vs value at consumption time. If Leonardo's spec already includes a `value:` token with rationale, platform agents trust that decision during implementation. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
 
 ### The Workflow
 
@@ -437,11 +437,11 @@ When writing screen CSS, check in this order:
 2. **Primitive system token** → Use when no semantic exists. (e.g., `--space-300`, `--color-cyan-500`)
 3. **Product token** → Product-specific value not covered by system tokens. (e.g., `--product-layout-content-max-width`)
 
-There is no step 4. If no system token exists, create a product token.
+There is no step 4. If no system token exists, the value is a product token, never a hard-coded value: the one the screen spec names, or, for a need the spec did not name, one you surface to Leonardo and never add silently (§ "Product Token Authoring (Sparky)" below says when it may be written). *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
 
 **Classification heuristic**: If the token name describes purpose or context (`inset`, `grouped`, `action`, `feedback`, `tap-area`), it's semantic. If it describes scale position (`space-200`, `gray-300`, `radius-100`), it's primitive.
 
-**Note**: This priority chain is Sparky's decision tree for screen CSS: the one order in Token Governance § "Token Selection Matrix", with the component step removed because screens have none. Lina follows that order whole, including a component's own token. Component tokens are not part of Sparky's workflow.
+**Note**: This priority chain is Sparky's decision tree for screen CSS: the one order in Token Governance § "Token Selection Matrix", with the component step removed because screens have none. Lina follows that order whole, including a component's own token. Component tokens are not part of Sparky's workflow. *(Amended 2026-10-25 by ballot 2026-10-25-token-selection-order-one-rule, item 3; prior text at `1eced6cd5`.)*
 
 ### 4. Focus Patterns
 

@@ -1677,6 +1677,64 @@ Second choice: (A″) over (A′), because it carries the item to the event that
 
 *Signed: Ada, 2026-10-27.*
 
+### [THURGOOD] § 12 step 2 — the application's register check, and the resumption (2026-10-27)
+
+*Application base `bad7222ef`, branch `chore/system-token-review-and-token-planning`. Thurgood, steward and the guard's owner (instrument); the conflict is stated in the measurement file.*
+
+- **Before-texts**: `git diff --quiet a95d6bf3d bad7222ef -- <the step's 13 paths>` exits 1. Its only file is `governance/classification-map.md`: rows `issues-obligation-lapse` and `release-falsity-floor`, and the new `### governance-examples` row at L1223 (#519), all after L1156. No before-text of this ballot moved. Site 2c's `rule:` at L242 is byte-identical at both SHAs.
+- **Register grep**: one hit, the `### governance-examples` row and its `checks:` line (armed; census mode `npx tsx scripts/governance-examples/check.ts --census`). The step stops the application on it.
+- **Measurement**: § 14's texts for sites 1, 2, 3, 4, 5, 6 and 6a were applied by script to a scratch clone at `bad7222ef`, then run through `check.ts --census`, `--hits` and the plain run, and the registered test. The census digest is byte-identical (`6c5b98ef…fb18ba4573`). The 69 hits are the same except for one line shift. The test passes 45/45. Session record: `batch-consults/thurgood-493-step2-hits.md` (scratchpad); the clone is deleted.
+- **Ruling**: the census reader's, below, gives the hit the `not in scope` line as proposed, with nothing disputed. The application carries no marker, no pending entry and no baseline change, and does not touch `pending.json`'s `"line": 157` (outside the grant). The PR body carries the census line and the guard's report line and exit code run at the PR's own base, and names the `line` drift in one line.
+- **Resumption**: the application resumes from step 2 with Thurgood's authoring commits (§ 12 step 4).
+
+#### [STACY census-reader, 2026-10-27]
+
+*Census reader's ruling under § 12 step 2, read-only. The application base is `bad7222ef`. I reproduced Thurgood's measurement independently, without reading his clone:*
+- *Base tree: `git archive bad7222ef` into a scratch directory, with a scratch `git init` index (not the project repo), `node_modules` and `dist/` symlinked from the main checkout.*
+- *Edits: § 14's blocks for sites 1, 2, 3, 4, 5, 6 and 6a applied by script at the cited lines. Those four files are unchanged from `a95d6bf3d` to `bad7222ef` (`git diff --stat` is empty). Each block was asserted verbatim in its file; 4 files changed, 13 insertions, 11 deletions.*
+- *Runs: `check.ts --census`, `--hits`, the plain run and the registered test, before and after.*
+- *The scratch tree was restored afterwards.*
+
+*Thurgood owns the instrument, and he disclosed that first. I wrote no repo file.*
+
+**The hit**: one. Step 2's register grep at `bad7222ef` prints the `### governance-examples` row (#519, `armed`, with `census: "npx tsx scripts/governance-examples/check.ts --census"`) and its `checks:` line. Its scope (`governance/*.md` except the register, and the eight shipped steering docs) loads every one of sites 1, 2, 3, 4, 5, 6 and 6a. So the item is presumptively in scope by condition 1, and one line is owed.
+
+**Ruling for that hit: a line, in the `not in scope` form, with Thurgood's text as proposed:**
+
+> `**Census**: not in scope — governance-examples (scripts/governance-examples/check.ts; census mode --census) — the sites change the guard's inputs, not its predicates, pending list or marker grammar; with § 14 applied at bad7222ef the census output is byte-identical to the base (sha256 6c5b98ef…fb18ba4573), no candidate, declared path, shape or import line is added or removed in any edited doc, and the registered test passes 45/45`
+
+**Why this form**:
+- **Not the in-scope form.** That form's census compares the committed census run with a scratch diff that touches only the instrument's code. This item changes no instrument code, so the in-scope delta is zero by construction.
+- **Not `exempt`.** None of the three grounds holds: the instrument exists, its row has a `census` field, and its effect is not spread across tools that no single check composes.
+- **What makes the line true.** Its "why no verdict can change" rests on that, plus a measurement on these exact bytes. A doc edit can in principle move this guard's verdict, so the measurement is the substance here.
+
+**What I reproduced**:
+- **Census digest**: `6c5b98efdd10b5e30f6d3efecb60f220cb21aa715be8a719fe8e32b18fba4573`, byte-identical before and after.
+- **`--hits`**: 69 lines both sides. The only difference is `governance/Product-Token-Governance.md:157 → :159` for `space.inset.comfortable #0`, the same string and occurrence.
+- **Plain run**: the report line is identical, `1958 candidates; … 69 pending`, and it exits 0.
+- **Registered test**: 45 / 45 pass on the applied bytes.
+
+**Two claims I checked beyond Thurgood's counts**, because identical per-doc counts would not rule out one candidate added and another removed:
+- **(a) No candidates on either side of the diff.** The guard's own `candidatePattern` over the guard's name set, run on the raw text of every removed line and every added line of the diff, finds **zero candidates on either side**. Raw text is a superset of the guard's regions, so no token-name candidate was added or removed.
+- **(b) No fence or marker lines.** The diff adds and removes no fence line and no `<!-- example: -->` marker (`grep` over the 32 changed lines: 0). So no declared path, shape or import block moved.
+
+**Disputed**: no. I agree with the steward's line and its facts, so nothing goes to Peter.
+
+**What the application must carry for the lane**:
+- **No markers.** None of step 2's named spans (`tokenSource`, `designerpunk.config.ts`, `product/tokens/`, `promotionCandidate`, `token-gap:`) is a candidate.
+- **No pending entries, and no baseline change.**
+- **Two things in the PR body**:
+  - this `**Census**:` line;
+  - the guard's plain-run report line and its exit code, run at the application PR's own base. The measurement above holds at `bad7222ef` only, and the required lane re-runs the guard there anyway (README § "Conventions", "Re-runs").
+
+**The pending entry's `"line": 157`: the application PR must not touch it.**
+- It is not in this ballot's grant (§ 7's grant paths name no `scripts/governance-examples/` file), so an edit would be an out-of-list edit, which is a claims-pass finding.
+- It is an instrument file. The field changes no verdict, because the guard keys on doc, half, string and occurrence.
+- The entry is homed in Ada's record `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`. The PR that fixes that hit removes the whole entry (guard ballot § 2.4: "the fixing PR removes its own entry"), and that ends the drift.
+- Until then the stale `line` is informational only. The application PR body names it in one line, so the next reader of `pending.json` is not misled by two lines.
+
+**Standards implications**: none for this ruling.
+
 ---
 
 ## 14. Resolved after-texts (2026-10-27, at ratification)

@@ -8,6 +8,8 @@ aliases: RTL, internationalization, i18n, bidi, right-to-left, text direction
 
 # Web Authoring Standards
 
+> **Audience framing**: this describes **DesignerPunk's own process**, not yours. **Worked example**: the amendment notes and their ballot paths, and the agent roles the document names (Lina, Sparky, Leonardo), are DesignerPunk's. **Transferable**: the CSS authoring rules (logical properties, the token priority chain, accessibility media queries, focus patterns), product-token authoring on web, and the naming schema.
+
 **Date**: 2026-06-01
 **Last Reviewed**: 2026-06-01
 **Purpose**: Shared CSS quality rules for all web platform work (components and product screens)
@@ -99,11 +101,11 @@ When writing screen CSS, check in this order:
 2. **Primitive system token** → Use when no semantic exists. (e.g., `--space-300`, `--color-cyan-500`)
 3. **Product token** → Product-specific value not covered by system tokens. (e.g., `--product-layout-content-max-width`)
 
-There is no step 4. If no system token exists, create a product token.
+There is no step 4. If no system token exists, the value is a product token, never a hard-coded value: the one the screen spec names, or, for a need the spec did not name, one you surface to Leonardo and never add silently (§ "Product Token Authoring (Sparky)" below says when it may be written). *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
 
 **Classification heuristic**: If the token name describes purpose or context (`inset`, `grouped`, `action`, `feedback`, `tap-area`), it's semantic. If it describes scale position (`space-200`, `gray-300`, `radius-100`), it's primitive.
 
-**Note**: This priority chain is Sparky's decision tree for screen CSS: the one order in Token Governance § "Token Selection Matrix", with the component step removed because screens have none. Lina follows that order whole, including a component's own token. Component tokens are not part of Sparky's workflow.
+**Note**: This priority chain is Sparky's decision tree for screen CSS: the one order in Token Governance § "Token Selection Matrix", with the component step removed because screens have none. Lina follows that order whole, including a component's own token. Component tokens are not part of Sparky's workflow. *(Amended 2026-10-25 by ballot 2026-10-25-token-selection-order-one-rule, item 3; prior text at `1eced6cd5`.)*
 
 ### 4. Focus Patterns
 
@@ -236,7 +238,7 @@ When implementing screens, every value that isn't covered by a system token beco
 
 ### The Rule
 
-If you need a spacing, color, typography, motion, radius, border, shadow, z-index, or grid value and no system token (semantic or primitive) covers it — create a product token immediately.
+If you need a spacing, color, typography, motion, radius, border, shadow, z-index, or grid value and no system token (semantic or primitive) covers it, the value is a product token. If the screen spec names it, use it, or author it as the spec names it. If the spec does not, it is a need the spec missed: surface it to Leonardo as a Tier 1 clarification (Product-Handoff-Protocol § "Tier 1: Quick Clarifications"), with the need, the system tokens you checked (semantic first), and a proposed name with its `ref:` or `value:` and rationale. Until the outcome, the code uses the nearest system token (semantic first), marked with a `token-gap: <need>` comment, or leaves the value out where no system token is near, with the same marker where the value would go; the product token is written only once the screen spec names it. On web the comment is `/* token-gap: <need> */`. Surface every gap from one build pass in one message. Remove the marker when the outcome is applied. A unit does not merge while its screen sources carry a `token-gap:` marker. The outcome goes in your Implementation Report under "Decisions Made During Implementation". The gap is never filled with a hard-coded value (a literal `var()` fallback or `calc()` operand included), or with a value under a node's `props:` in the screen spec. Product-Token-Governance § "Authoring Workflow" is the rule for every platform; this is its web form. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
 
 ### Naming Schema
 
@@ -280,7 +282,7 @@ gapSectionSpacing:
 2. Query existing product tokens: `get_product_tokens({ category: "{category}" })`
 3. **Token exists with same value** → Reuse it
 4. **Token exists with similar name but different value** → Flag in Implementation Report (potential inconsistency)
-5. **Nothing exists** → Create it following the naming schema
+5. **Nothing exists** → If the screen spec names it, create it following the naming schema. If it does not, it is a need the spec missed: follow § "The Rule" above before you create it. *(Amended 2026-10-27 by ballot 2026-10-26-system-token-review-and-token-planning, item 2; prior text at `a95d6bf3d`.)*
 
 ### Canonical Categories
 
@@ -383,7 +385,7 @@ gap: 24px; /* "I'll tokenize this later" — no you won't, session memory is los
 - **Product-Token-Governance.md** — Full product token authoring governance
 - **platform-implementation-guidelines.md** — Cross-platform implementation patterns
 - **Component-Development-Standards.md** — Component-specific development workflow
-- **Token-Governance.md** § "Token Selection Matrix" — The token selection order (Core Goals points to it)
+- **Token-Governance.md** § "Token Selection Matrix" — The token selection order (Core Goals points to it) *(Amended 2026-10-25 by ballot 2026-10-25-token-selection-order-one-rule, item 3; prior text at `1eced6cd5`.)*
 
 ---
 

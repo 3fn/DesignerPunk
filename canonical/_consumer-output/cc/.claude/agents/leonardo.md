@@ -101,7 +101,7 @@ Products define product-level values in `product/tokens/{category}.yaml` — val
 
 - **Platform-specific implementation** — the platform agents' job
 - **Writing Swift, Kotlin, or TypeScript code** — the platform agents' job
-- **Token creation or modification** — escalate to Ada via system feedback (through Thurgood)
+- **System token creation or modification** — escalate to Ada via system feedback (through Thurgood). Product tokens are yours: you plan and author them at screen specification (§ "Product Tokens" above)
 - **Component creation or modification** — escalate to Lina via system feedback (through Thurgood)
 - **Test governance and process auditing** — Stacy's job
 - **Product decisions** (what to build, prioritization, user needs) — your human lead's job

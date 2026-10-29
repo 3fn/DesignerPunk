@@ -51,9 +51,16 @@ date: 2026-09-29
 ## `#product-tokens-spec-108109`
 
 confirmer: data
-canonicalHash: sha256:ff4aac618c5f0fdba25def08eb62d0ba2089e70c5afde72ea95f28371bd8e89e
+canonicalHash: sha256:10bcc691b24d63a64c4f80707d9f60c6407f435903083ae3e8212945afa9f631
 items: product-tokens-1, product-tokens-2, product-tokens-3, product-tokens-4, product-tokens-5, product-tokens-6
-date: 2026-09-29
+date: 2026-10-27
+
+**Re-confirmed 2026-10-27 (Req 11.6.5d): the system-token review and token planning ballot, item 2 (site 8a).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:ff4aac618c5f0fdba25def08eb62d0ba2089e70c5afde72ea95f28371bd8e89e`, 6 items). The unit is retained, so there is no re-sign (ballot § 7).
+- **What changed**: ballot `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493), site 8a, was applied at `eb91cd5b1` (Thurgood). `canonical/agents/data.md` L301 (L297 before site 8b's insert at `8e6818685`) replaces *"Author new tokens … when you discover values Leonardo didn't anticipate"* with: a product token is authored when the screen spec names it; a value the spec did not anticipate is a need the spec missed, surfaced to Leonardo and never filled silently or with a hard-coded value; Product-Token-Governance § "Authoring Workflow" (routed) says when it may be written and what the code holds until the outcome; a safe-area, system-bar or IME inset is the platform's runtime value (`WindowInsets`), never a token, and only spacing added to it can be a need. It is my R1 text. In the same commit the profile author re-quoted `product-tokens-6`. I checked by script that L301 equals § 14's site 8a block for `data.md` on `main` at `bad7222ef` byte for byte.
+- **What I read, in this session, through tool results**: `canonical/agents/data.md` L294–L301 (the whole unit) and L85–L93 (`routes.docs[product-token-naming]` and the site 8b leaf `product-token-authoring`, byte-equal to § 14's site 8b block, inserted once, after `product-token-naming`); the unit as `partition` returns it (body lines 42–50); the whole `#product-tokens-spec-108109` record in `canonical/operative-sets/data.yaml`; the row (`retained`) and the new `routes.docs[product-token-authoring]` row (`retained`) in `data.dispositions.yaml`; ballot § 14 sites 8a and 8b for `data.md` and § 7's rows for this unit and the route. The pointers resolve: `governance/Product-Token-Governance.md` has `## Authoring Workflow` (L56) and `## Naming Conventions` (L119), carries § 14's site 3 block whole, and carries the K-i sentence once, as does `governance/Web-Authoring-Standards.md` (Lina's site); K-h is once in each and K-ii in neither. The routed "authoring and naming sections" are my two `routes.docs` leaves `product-token-authoring` (§ "Authoring Workflow") and `product-token-naming` (§ "Naming Conventions"). The rendered unit is byte-equal to the canonical unit in all three consumer files (applied line at `_canonical` L211, `cc` L83, `kiro` L53).
+- **The hash**: I recomputed it with `hashText` over `partition(splitFrontmatter(src).body).units` (unit `#product-tokens-spec-108109`): `sha256:10bcc691b24d63a64c4f80707d9f60c6407f435903083ae3e8212945afa9f631`. It equals the value the profile author's sweep printed. The unit is retained and carries no overlay pin.
+- **Items re-read against the unit**: all 6 item texts are verbatim substrings of the unit as it now stands, and each of the unit's 6 lines is one item (checked by script). `product-tokens-6` is operative: I can act against it by writing a product token the screen spec does not name, by filling an unanticipated value silently or with a hard-coded value, by not surfacing it to Leonardo, or by tokenizing a `WindowInsets` value. No other line of the unit changed.
+- **Ruling: CONFIRMED at 6 items, not corrected.** The 2026-09-29 rulings below stand.
 
 **Ruling: 6 → 3 items.** Removed `product-tokens-1` (the generated file path and package, a repo-specific location fact), `product-tokens-2` (the generated shape of static tokens) and `product-tokens-4` (how generated ref tokens are written). All three describe generator output that I never author and cannot violate. Kept `product-tokens-3` ("must be read inside composition scope"), `product-tokens-5` (query route) and `product-tokens-6` (authoring location and governance).
 
@@ -62,9 +69,16 @@ date: 2026-09-29
 ## `#out-of-scope`
 
 confirmer: data
-canonicalHash: sha256:d7695f214a8af5a8be83c50e90c9a403bb22261cfb8ee4d15d85cfcb5d0d3d3c
+canonicalHash: sha256:900fcd94184dbc4519095d1257911adb9e595af4cd10b65a01b1373e1b5b7b54
 items: out-1, out-2, out-3, out-4, out-5, out-6, out-7
-date: 2026-09-29
+date: 2026-10-27
+
+**Re-confirmed 2026-10-27 (Req 11.6.5d): the system-token review and token planning ballot, item 2 (site 8).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:d7695f214a8af5a8be83c50e90c9a403bb22261cfb8ee4d15d85cfcb5d0d3d3c`, 7 items).
+- **What changed**: ballot `.kiro/docs/ballots/2026-10-26-system-token-review-and-token-planning.md` (RATIFIED, Peter, 2026-10-27, #493), site 8, was applied at `eb91cd5b1` (Thurgood). `canonical/agents/data.md` L308 (L304 before site 8b's insert at `8e6818685`) now scopes the escalation to *system* tokens (primitive, semantic or component) and adds: *"Deciding a product token the screen spec does not name is not yours either: § "Product Tokens (Spec 108/109)" above says what you do with one"*. It is my R1 text. In the same commit the profile author re-quoted `out-4` and re-pinned the overlay unit. I checked by script that L308 equals § 14's site 8 block for `data.md` on `main` at `bad7222ef` byte for byte.
+- **What I read, in this session, through tool results**: `canonical/agents/data.md` L294–L317 (the whole `### Product Tokens (Spec 108/109)` unit, whose heading at L294 the new pointer names, and the whole `### Out of Scope` unit); the unit as `partition` returns it (body lines 51–60); the whole `#out-of-scope` record in `canonical/operative-sets/data.yaml`; the overlay unit in `data.overlay.md`; ballot § 14 site 8 for `data.md` and § 7's row for this unit.
+- **The hash**: I recomputed it with `hashText` over `partition(splitFrontmatter(src).body).units` (unit `#out-of-scope`): `sha256:900fcd94184dbc4519095d1257911adb9e595af4cd10b65a01b1373e1b5b7b54`. It equals the overlay pin and the value the profile author's sweep printed.
+- **Items re-read against the unit**: all 7 item texts are verbatim substrings of the unit as it now stands, and each of the unit's 7 lines is one item (checked by script). The added sentence is operative: I can act against it by deciding myself a product token the screen spec does not name, or by escalating a product token need to Ada as if it were system work. `out-4` carries it with the escalation rule, as one member for one line. What I do with such a need is said by the retained `#product-tokens-spec-108109` unit (`product-tokens-6`) and its route to Product-Token-Governance § "Authoring Workflow" (`routes.docs[product-token-authoring]`, site 8b). No other line of the unit changed.
+- **Ruling: CONFIRMED at 7 items, not corrected.** The 2026-09-29 ruling below stands.
 
 **Ruling: CONFIRMED at 7 items, as drafted.** These are boundary obligations: deciding any of them myself violates the list.
 

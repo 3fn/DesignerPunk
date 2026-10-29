@@ -20,7 +20,7 @@ This design system is built on DesignerPunk — a True Native cross-platform des
 - Token System: `rosetta-system-architecture`
 - Mathematical Foundation: `rosetta-system-principles`
 
-## @unit #development-practices @ sha256:fcf0a61a2bd10969d9ccf666ed58ec66dfe36f658abcf4516ec2c6fce4e952f4
+## @unit #development-practices @ sha256:32062538bc2af63fb4f40fbcd0f063e08cc01a097e467f1b76e423117bae4da1
 ## Development Practices
 
 **Task Completion:**
@@ -39,7 +39,7 @@ This design system is built on DesignerPunk — a True Native cross-platform des
 - **Semantic tokens**: Use freely (verify semantic correctness)
 - **Primitive tokens**: Requires prior context (spec docs) or human acknowledgment
 - **Component tokens**: Use freely inside the component they belong to, for the property they were made for; any other use requires explicit human approval
-- **Creating ANY token**: Always requires human review — no autonomous token creation
+- **Creating ANY system token** (primitive, semantic or component): Always requires human review — no autonomous token creation (what a system token is: Token Governance § "Token Creation Governance"). A product token is planned instead: its need is identified at screen specification and discussed before implementation, and a need the spec missed is surfaced, never filled silently (Product-Token-Governance § "Authoring Workflow").
 
 **Token selection**: the one order is Token Governance § "Token Selection Matrix"; query it before you choose a token: `get_section({ path: "token-governance", heading: "Token Selection Matrix" })`.
 
