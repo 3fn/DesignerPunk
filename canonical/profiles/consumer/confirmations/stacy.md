@@ -56,9 +56,20 @@ date: 2026-09-27
 ## `#the-trigger-set-the-114-superset-table-names-never-numbers`
 
 confirmer: stacy
-canonicalHash: sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae
+canonicalHash: sha256:ffc489a33dd65f3da04df8d79ac6d72ec09cd2d4b427ffd09eb434be15f496ce
 items: trigger-lens, trigger-release, trigger-symptom, trigger-closeout, trigger-midpoint, trigger-arming, trigger-gate, trigger-education, trigger-straggler, trigger-liveness, trigger-burst, finding-routing, merge-path-status
 date: 2026-10-29
+
+**Re-confirmed 2026-10-29, second time (Req 11.6.5d).**
+- **What changed**: one row, RELEASE (canonical L400). Ballot `.kiro/docs/ballots/2026-10-29-dated-pointer-paths-and-edit-kind-check.md` (RATIFIED, Peter, 2026-10-29; Status read at `origin/main` `f535dc942`) § 3 site 2 removes the row's pointer, with the one space before it: `*(amended 2026-10-29 by ballot 2026-10-26-release-flow-batch-16-1, site 12; prior text at `08b9c7a8e`)*`. The sentence now ends "…is RELEASE-FLOW step 6's Phase 1 bullet, not restated here." Charters carry no dated pointer (the ballot's site 1, "Where the pointer is owed"); the history lives in the ballot, the PR's `**Edit kind**:` line, git and these sheets. Thurgood applied it at `fe6ab7470` and re-quoted `trigger-release` there (authoring; it does not move this canonicalHash).
+- **Byte-identity, checked**: the charter's diff from `f535dc942` to `7b66cbc25` is three changed lines (L400, L432, L465). At L400 the old line minus the pointer string equals the new line, byte for byte. `trigger-release` equals the canonical row byte for byte (1,701 characters) and occurs once in the unit.
+- **What did not change**: the operative set, still 13 items; the row stays one `member` item. All 13 items are verbatim, one occurrence each. The canonicalHash moves from `sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae` to the value above, recomputed independently with `partition(splitFrontmatter(...).body)` and `regrounding/hash.ts`; it equals the chain's freshness value and the overlay pin.
+- **Consumer rendering**: unchanged (renderedHash `sha256:06dac47155245fbe852af23fa84f35bba0a952826efbf07c9d602b2e622501b5`, three pieces). The RELEASE row's range removal already spanned the pointer.
+- **Read before this act**: the canonical unit, `canonical/agents/stacy.md` L395–L414, read through a tool call (`sed -n`) at `7b66cbc25` before this commit.
+
+**Ruling: CONFIRMED at 13 items.**
+
+**Re-confirmed 2026-10-29, first time (prior record, superseded)**: canonicalHash `sha256:f7c24db5ef47bb5cb6dd2fd3c02de63de689396142d8d61d60f58968d88c5eae`, 13 items, as below.
 
 **Re-confirmed 2026-10-29 (Req 11.6.5d).**
 - **What changed**: one row, RELEASE (canonical L400). Ballot `.kiro/docs/ballots/2026-10-26-release-flow-batch-16-1.md` (RATIFIED, Peter, 2026-10-26/27; Status read at `origin/main` `0bfc45621`) site 12 replaces the phase-1 floor-read lead-in ("the walk record … exists, its greps re-run at its `main at:` SHA, and every row carries a disposition;") with a pointer: "What phase 1 reads, and at which SHA, is RELEASE-FLOW step 6's Phase 1 bullet, not restated here *(amended 2026-10-29 by …, site 12; prior text at `08b9c7a8e`)*. Your record's lines:". It is composed with #536's site-2b sentence, which stays at its anchor (Peter: "Allow the Composition"; `9b43dfc33`). Thurgood applied it at `13bd1d57d` and re-quoted `trigger-release` at `70fe68a8d` (authoring; neither moves this canonicalHash).
