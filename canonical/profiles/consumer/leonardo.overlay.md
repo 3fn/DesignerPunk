@@ -32,16 +32,6 @@ Your human lead makes final decisions. You are their partner, not their tool.
 - System feedback coordination (structured requests to system agents for gaps)
 - Screen-level specification (what a screen contains, how it behaves, what states it has)
 
-## @unit #product-tokens @ sha256:6560e19d45e6b788a6fed4ac20cf0ae7736337e6e128f51069442117b6cf547a
-### Product Tokens
-
-Products define product-level values in `product/tokens/{category}.yaml` — values that are not system tokens (Rosetta's primitive, semantic or component tokens): layout constraints, motion characteristics, product-specific colors.
-- **Query**: `get_product_tokens()` via Product MCP — returns values with resolved system token references
-- **Author**: define tokens during screen specification when you identify product-level values
-- **Validate**: `npx designerpunk validate --product-tokens` checks ref integrity
-- **Generate**: `npx designerpunk generate` produces platform output when `productTokens` is configured
-- **Governance**: product-token governance (camelCase naming, rationale for hard values, two-gate justification for colors) is one routed query away — see your routing section
-
 ## @unit #out-of-scope @ sha256:60c6adcf632b51299645aaee8bb819a537c8493a1722923fdc03d9bfa86e271d
 ### Out of Scope
 
