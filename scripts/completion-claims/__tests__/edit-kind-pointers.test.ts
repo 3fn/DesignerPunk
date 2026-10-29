@@ -8,6 +8,8 @@
  * Exercises: scripts/completion-claims/edit-kind-pointers.ts
  */
 
+import * as fs from 'fs';
+import * as path from 'path';
 import {
   Adapter,
   AddedLine,
@@ -182,10 +184,10 @@ describe('edit-kind-pointers — grammar, unlisted paths and the report', () => 
     expect(run(1, fake)).toEqual([
       'governance/a.md\tLAW\tok',
       'governance/b.md\tEXECUTION\tlisted',
-      'edit-kind-pointers: 2 declared — ok 1, pointer-missing 0, pointer-on-exempt 0, listed 1, unlisted-path 0; unparsed 0',
+      'edit-kind-pointers: 2 declared — ok 1, pointer-missing 0, pointer-on-exempt 0, listed 1, unlisted-path 0; none 0; unparsed 0',
     ]);
-    expect(formatReport({ results: [], unparsed: [] })).toEqual([
-      'edit-kind-pointers: 0 declared — ok 0, pointer-missing 0, pointer-on-exempt 0, listed 0, unlisted-path 0; unparsed 0',
+    expect(formatReport({ results: [], unparsed: [], none: 0 })).toEqual([
+      'edit-kind-pointers: 0 declared — ok 0, pointer-missing 0, pointer-on-exempt 0, listed 0, unlisted-path 0; none 0; unparsed 0',
     ]);
   });
 
@@ -193,5 +195,102 @@ describe('edit-kind-pointers — grammar, unlisted paths and the report', () => 
     let out = '';
     expect(main(['--pr', 'abc'], undefined, (s) => (out += s))).toBe(0);
     expect(out).toBe('edit-kind-pointers: unavailable (usage: --pr <n>) — continue\n');
+  });
+});
+
+/**
+ * The real forms in use on main (orchestrator smoke, 2026-10-29): the declaration lines from
+ * the #541, #546 and #547 PR bodies, verbatim but for abridged authorities, over #541's real
+ * diffs at 52f874275 (edit-kind-pointers-real/).
+ */
+describe('edit-kind-pointers — the real declaration forms (#541, #546, #547)', () => {
+  const REAL = path.join(__dirname, 'edit-kind-pointers-real');
+  const diffOf = (name: string) => fs.readFileSync(path.join(REAL, name), 'utf8');
+  const PR541 = [
+    '**Edit kind**: .kiro/docs/ballots/2026-10-26-release-flow-batch-16-1.md — EXECUTION (…)',
+    '**Edit kind**: .kiro/hooks/RELEASE-FLOW.md L32–L36, L42–L45, L114–L115, L157, L205–L206 — LAW (…)',
+    '**Edit kind**: .kiro/hooks/RELEASE-FLOW.md L207 — CORRECTION (… § 11 [STACY site-12 read, 2026-10-29]; truth: …)',
+    '**Edit kind**: governance/release-management-system.md L40 — LAW (same ballot, site 7)',
+    '**Edit kind**: governance/classification-map.md L891, L900, L1223, L1227 — EXECUTION (same ballot, E2 and E4)',
+    '**Edit kind**: canonical/agents/stacy.md L400, L432, L463–L465 — LAW (same ballot, sites 11–13)',
+  ].join('\n');
+  const adapter541: Adapter = {
+    prView: () => ({ body: PR541, baseRefOid: 'b', headRefOid: 'h', mergeCommit: { oid: '52f874275' } }),
+    range: () => ({ from: '52f874275^1', to: '52f874275' }),
+    diff: (_f, _t, p) =>
+      ({
+        'canonical/agents/stacy.md': diffOf('541-stacy.md.diff'),
+        '.kiro/hooks/RELEASE-FLOW.md': diffOf('541-RELEASE-FLOW.md.diff'),
+        'governance/release-management-system.md': diffOf('541-release-management-system.md.diff'),
+        'governance/classification-map.md': diffOf('541-classification-map.md.diff'),
+      })[p] ?? '',
+  };
+
+  test('a comma-separated list of ranges and single lines parses to one declaration each', () => {
+    const p = parseEditKindLines(PR541);
+    expect(p.unparsed).toEqual([]);
+    expect(p.declarations.filter((d) => d.path === '.kiro/hooks/RELEASE-FLOW.md').map((d) => [d.kind, d.range])).toEqual([
+      ['LAW', { a: 32, b: 36 }],
+      ['LAW', { a: 42, b: 45 }],
+      ['LAW', { a: 114, b: 115 }],
+      ['LAW', { a: 157, b: 157 }],
+      ['LAW', { a: 205, b: 206 }],
+      ['CORRECTION', { a: 207, b: 207 }],
+    ]);
+  });
+
+  test("#541 over its real diff: stacy.md's three LAW ranges → pointer-on-exempt ×3; every bound range judged; unparsed 0", () => {
+    expect(run(541, adapter541)).toEqual([
+      '.kiro/docs/ballots/2026-10-26-release-flow-batch-16-1.md\tEXECUTION\tlisted',
+      '.kiro/hooks/RELEASE-FLOW.md L32–36\tLAW\tok',
+      '.kiro/hooks/RELEASE-FLOW.md L42–45\tLAW\tok',
+      '.kiro/hooks/RELEASE-FLOW.md L114–115\tLAW\tok',
+      '.kiro/hooks/RELEASE-FLOW.md L157\tLAW\tok',
+      '.kiro/hooks/RELEASE-FLOW.md L205–206\tLAW\tok',
+      '.kiro/hooks/RELEASE-FLOW.md L207\tCORRECTION\tok',
+      'governance/release-management-system.md L40\tLAW\tok',
+      'governance/classification-map.md L891\tEXECUTION\tlisted',
+      'governance/classification-map.md L900\tEXECUTION\tlisted',
+      'governance/classification-map.md L1223\tEXECUTION\tlisted',
+      'governance/classification-map.md L1227\tEXECUTION\tlisted',
+      'canonical/agents/stacy.md L400\tLAW\tpointer-on-exempt',
+      'canonical/agents/stacy.md L432\tLAW\tpointer-on-exempt',
+      'canonical/agents/stacy.md L463–465\tLAW\tpointer-on-exempt',
+      'edit-kind-pointers: 15 declared — ok 7, pointer-missing 0, pointer-on-exempt 3, listed 5, unlisted-path 0; none 0; unparsed 0',
+    ]);
+  });
+
+  test('a single line with a parenthetical tag (#546 `L329 (prose)`) parses and is judged on that line', () => {
+    const body = [
+      '**Edit kind**: governance/DesignerPunk-Integration-Guide.md L697 — CORRECTION (…; truth: governance/Token-Governance.md § "Token Creation Governance" L171',
+      '**Edit kind**: canonical/agents/leonardo.md L329 (prose) — CORRECTION (…)',
+      '**Edit kind**: canonical/agents/ada.md L28 (frontmatter) — LAW (…)',
+    ].join('\n');
+    const p = parseEditKindLines(body);
+    expect(p.unparsed).toEqual([]);
+    expect(p.declarations.map((d) => [d.path, d.range, d.kind])).toEqual([
+      ['governance/DesignerPunk-Integration-Guide.md', { a: 697, b: 697 }, 'CORRECTION'],
+      ['canonical/agents/leonardo.md', { a: 329, b: 329 }, 'CORRECTION'],
+      ['canonical/agents/ada.md', { a: 28, b: 28 }, 'LAW'],
+    ]);
+    const lines = new Map<string, AddedLine[]>([
+      ['governance/DesignerPunk-Integration-Guide.md', [{ line: 697, text: 'x *(Corrected 2026-10-29: y; record `r`; prior text at `s`.)*' }]],
+      ['canonical/agents/leonardo.md', [{ line: 329, text: 'the corrected clause, no pointer' }]],
+    ]);
+    expect(evaluate(body, lines).results.map((r) => r.verdict)).toEqual(['ok', 'ok', 'ok']);
+  });
+
+  test('`none owed` and `none` are recognised none lines: counted, never declared, never unparsed (#547)', () => {
+    const body = [
+      '**Edit kind**: none owed on this PR — no governance path is touched',
+      '- **Edit kind**: none',
+    ].join('\n');
+    const ev = evaluate(body, new Map());
+    expect(ev.results).toEqual([]);
+    expect(ev.unparsed).toEqual([]);
+    expect(ev.none).toBe(2);
+    expect(formatReport(ev)).toEqual([
+      'edit-kind-pointers: 0 declared — ok 0, pointer-missing 0, pointer-on-exempt 0, listed 0, unlisted-path 0; none 2; unparsed 0',
+    ]);
   });
 });

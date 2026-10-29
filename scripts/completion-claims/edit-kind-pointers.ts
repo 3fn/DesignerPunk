@@ -19,10 +19,17 @@
  *            open:   merge-base(<baseRefOid>, <headRefOid>) .. <headRefOid>.
  *          Both endpoints must be in the local repository (git fetch first).
  *
- * Decides, per `**Edit kind**:` line (Task-Completion-Protocol § "Branch and PR Conventions"):
- *   LAW or CORRECTION — the declared file's ADDED lines, limited to L<a>–<b> when the line
- *     gives a range (en dash or hyphen; new-file line numbers, the file as it stands at the
- *     merge commit):
+ * Grammar of a line (Task-Completion-Protocol § "Branch and PR Conventions", and the forms in
+ * use on main): `**Edit kind**: <path>[ <lines>][ (<tag>)] — <KIND> (…)`. <lines> is one
+ * `L<a>–<b>` (en dash or hyphen; the second `L` optional) or one `L<n>`, or a comma-separated
+ * list of them; <tag> is a parenthetical such as `(prose)` or `(frontmatter)`. A list yields
+ * one declaration per range or line. `**Edit kind**: none …` (for example "none owed on this
+ * PR") is a `none` line: counted on the count line, never declared. A line with the marker
+ * that fits neither form is `unparsed`: counted, never judged.
+ *
+ * Decides, per declaration:
+ *   LAW or CORRECTION — the declared file's ADDED lines, limited to the declared range or line
+ *     when there is one (new-file line numbers, the file as it stands at the merge commit):
  *       bound path (governance/**, .kiro/steering/**, .kiro/hooks/RELEASE-FLOW.md):
  *         ok when at least one added line matches POINTER_RE, else pointer-missing;
  *         governance/classification-map.md instead needs an added HISTORY_RE line;
@@ -31,8 +38,8 @@
  *       any other path: unlisted-path (a declared file the rule does not reach; not a finding).
  *   EXECUTION — listed: counted, never ok, never read as checked.
  *
- * Output:  one line per declared file or range, `<path>[ L<a>–<b>]\t<KIND>\t<verdict>`, then
- *          one count line. On any failure, exactly one line,
+ * Output:  one line per declared file, range or line, `<path>[ L<a>–<b>| L<n>]\t<KIND>\t<verdict>`,
+ *          then one count line (the five verdicts, then `none` and `unparsed`). On any failure, exactly one line,
  *            edit-kind-pointers: unavailable (<reason>) — continue
  *          and no count line. The reason is a fixed phrase per stage; it never echoes the
  *          failing command's stderr, so no credential or token text can reach it.
@@ -79,28 +86,51 @@ export interface Parsed {
   declarations: Declaration[];
   /** `**Edit kind**:` lines whose grammar did not parse (counted, never judged). */
   unparsed: string[];
+  /** `**Edit kind**: none …` lines (counted on the count line, never declared). */
+  none: number;
 }
 
-const MARKER_RE = /^\s*(?:[-*]\s+)?`?\*\*Edit kind\*\*:/;
-const LINE_RE =
-  /^\s*(?:[-*]\s+)?`?\*\*Edit kind\*\*:\s+`?([^\s`]+)`?(?:\s+L(\d+)\s*[–-]\s*(\d+))?\s+[—–]\s+(LAW|CORRECTION|EXECUTION)\b/;
+const PREFIX = String.raw`^\s*(?:[-*]\s+)?` + '`?' + String.raw`\*\*Edit kind\*\*:`;
+const MARKER_RE = new RegExp(PREFIX);
+const NONE_RE = new RegExp(PREFIX + String.raw`\s+none\b`, 'i');
+const ONE = String.raw`L\d+(?:\s*[–-]\s*L?\d+)?`;
+const LINE_RE = new RegExp(
+  PREFIX +
+    String.raw`\s+` + '`?' + '([^\\s`]+)' + '`?' +
+    String.raw`((?:\s+` + ONE + String.raw`)(?:\s*,\s*` + ONE + String.raw`)*)?` +
+    String.raw`(?:\s+\([^)]*\))?\s+[—–]\s+(LAW|CORRECTION|EXECUTION)\b`
+);
+const ONE_RE = new RegExp(String.raw`L(\d+)(?:\s*[–-]\s*L?(\d+))?`, 'g');
 
-/** Every `**Edit kind**:` line in a PR body. */
+/** Every `**Edit kind**:` line in a PR body. A list of ranges yields one declaration each. */
 export function parseEditKindLines(body: string): Parsed {
   const declarations: Declaration[] = [];
   const unparsed: string[] = [];
+  let none = 0;
   for (const raw of body.split(/\r?\n/)) {
     if (!MARKER_RE.test(raw)) continue;
+    if (NONE_RE.test(raw)) {
+      none += 1;
+      continue;
+    }
     const m = LINE_RE.exec(raw);
     if (!m) {
       unparsed.push(raw.trim());
       continue;
     }
-    const d: Declaration = { path: m[1], kind: m[4] as Kind };
-    if (m[2] !== undefined && m[3] !== undefined) d.range = { a: Number(m[2]), b: Number(m[3]) };
-    declarations.push(d);
+    const path = m[1];
+    const kind = m[3] as Kind;
+    if (m[2] === undefined) {
+      declarations.push({ path, kind });
+      continue;
+    }
+    for (const r of m[2].matchAll(ONE_RE)) {
+      const a = Number(r[1]);
+      const b = r[2] !== undefined ? Number(r[2]) : a;
+      declarations.push({ path, kind, range: { a: Math.min(a, b), b: Math.max(a, b) } });
+    }
   }
-  return { declarations, unparsed };
+  return { declarations, unparsed, none };
 }
 
 export interface AddedLine {
@@ -155,24 +185,30 @@ export interface Result {
 export interface Evaluation {
   results: Result[];
   unparsed: string[];
+  none: number;
 }
 
 /** The pure decision: body text and each declared file's added lines. */
 export function evaluate(body: string, addedByPath: ReadonlyMap<string, readonly AddedLine[]>): Evaluation {
-  const { declarations, unparsed } = parseEditKindLines(body);
+  const { declarations, unparsed, none } = parseEditKindLines(body);
   return {
     results: declarations.map((d) => ({ declaration: d, verdict: judge(d, addedByPath.get(d.path) ?? []) })),
     unparsed,
+    none,
   };
 }
 
 export function formatReport(ev: Evaluation): string[] {
   const lines = ev.results.map(({ declaration: d, verdict }) => {
-    const where = d.range ? `${d.path} L${d.range.a}–${d.range.b}` : d.path;
+    const where = !d.range
+      ? d.path
+      : d.range.a === d.range.b
+        ? `${d.path} L${d.range.a}`
+        : `${d.path} L${d.range.a}–${d.range.b}`;
     return `${where}\t${d.kind}\t${verdict}`;
   });
   const counts = VERDICTS.map((v) => `${v} ${ev.results.filter((r) => r.verdict === v).length}`).join(', ');
-  lines.push(`edit-kind-pointers: ${ev.results.length} declared — ${counts}; unparsed ${ev.unparsed.length}`);
+  lines.push(`edit-kind-pointers: ${ev.results.length} declared — ${counts}; none ${ev.none}; unparsed ${ev.unparsed.length}`);
   return lines;
 }
 
