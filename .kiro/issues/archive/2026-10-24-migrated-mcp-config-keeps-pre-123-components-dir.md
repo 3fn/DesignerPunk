@@ -38,3 +38,27 @@ On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of
 - **Trigger**: unchanged, `release:next:phase-1`; it becomes `merge:#<N>` when the fixing PR opens, in that diff. Thurgood is consulted on the fix (§ 2.1 (j)).
 
 *Signed: Ada, 2026-10-25.*
+
+## Outcome (2026-10-30, Ada, owner)
+
+**Fixed on branch `fix/sync-mcp-config-stale-components-dir`, cut from `origin/main` `d34fc7786`, in the commit that adds this section.** It is option 3 as ruled: the check always reports, and the repair runs only under a flag. Thurgood's consult was read before the code (seven items; relayed by the orchestrator, scratch, not committed). The PR is not open as I write this, so its number is not recorded here. If the PR does not merge, this section and the archive move do not land either.
+- **The check**: `src/cli/sync/McpConfigCheck.ts`, a sibling module.
+  - `SteeringDirCheck.ts` is not renamed or moved (item 1). Its three test blocks pass with no edits to their assertions.
+  - It reads `designerpunk-*` entries that the manifest never recorded. KeyGrain leaves those entries alone, and KeyGrain's recorded entries are skipped.
+  - It reports two things:
+    - `COMPONENTS_DIR` / `COMPONENT_DIR` when the value names `src/components/core`, or names a directory that does not exist (resolved against the project root) and is not the template's value;
+    - an `autoApprove` list that approves a tool the server does not provide, or lacks a read-only tool the package approves.
+  - The `sync` report counts each finding as pending, so the closing line is never the all-clear beside one.
+- **One candidate list** (item 2): `src/cli/sync/mcpConfigCandidates.ts`, shared with the steering check. It now includes `.mcp.json`, which the steering check never scanned before (a test covers it). Whether a pre-123 `.mcp.json` can exist is still UNVERIFIED; test01 was Kiro.
+- **Recommendations come from the package only** (item 3): the component root from the MCP template, and the approvals from `dist/mcp/tool-manifest.json`.
+  - If the template is unreadable, there is no recommendation and no repair.
+  - If the tool manifest is unreadable, the approval half is not checked.
+- **`--repair-mcp-config`** rewrites only the keys the findings name. It keeps every approval of a tool the server still provides, drops the dead ones, and adds the missing read-only ones.
+- **KeyGrain's rule** (item 4): the repaired entry **stays unrecorded**. The manifest is not written by the repair (tested). The entry stays the consumer's; later syncs check it again but never manage it. To hand an entry to sync, delete it and run `attach --target=<t>`. The module header and the result line both say so.
+- **Tests** (item 5, a–e): `src/cli/__tests__/McpConfigCheck.test.ts`, 13 tests.
+  - (a) is run twice: once through `--migrate-legacy` plus `--migrate-components` with the real package (src/components/core/ already gone; attach leaves the pre-123 entries; "Still to do" names them), and once as report-only.
+  - Taking the detection out turns 9 of the 13 red.
+- **Not told to consumers in docs** (item 6). The flag appears only in `sync`'s own warning line, as `--repair-npmrc` and `--repair-tsconfig` do. So the Integration Guide and `INSTALL.md` are not edited. `npm run test:consumer` was run anyway: 56 passed, 1 skipped.
+- **Routed, not fixed here** (item 7): `governance/component-mcp-query-guide.md` L337 still says the component catalog defaults to `src/components/core` via `COMPONENT_DIR`. For a consumer, the default is `<bornRoot>/src/components` (`mcpDataRoots.ts` L177), and `COMPONENTS_DIR` is read first. That guide is not mine; the orchestrator routes it to the guide's owner.
+
+Closed under rule 5 and archived in the same PR. *Signed: Ada, 2026-10-30.*
