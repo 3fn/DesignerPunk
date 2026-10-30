@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-30
 **Drafted by**: Thurgood (ballots steward), who drafts the file. **Leonardo authors the measure's text** (`leonardo-fc-sites.md`), and it is carried verbatim. The one substitution: his `<ballot id>` placeholder is filled with this ballot's id. Drafter's clock: 2026-10-30T17:36:03Z (`date -u`).
-**Status**: **DRAFT** (R2)
+**Status**: **RATIFIED (Peter, 2026-10-30)**, chat, relayed by the orchestrator: R8 item 9, received before 2026-10-30T17:23:42Z (the orchestrator's clock; the R8 message, with items 4 and 6), verbatim as relayed: *"Ratify"*, for the later ballots as filed. This ballot was filed as recommended: F-C.1 as Leonardo confirmed it at his R3, F-C.2 and F-C.3. The citation for R8 is `R8@<its PR squash>`, filled after the release seat's record PR merges. **F-1 was ruled by the seats, not by Peter**: (α), settled under his delegation (`DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`), with Ada, Leonardo, Stacy and Thurgood concurring (§ 3, "Ruled: F-1").
 **Authority**: Peter's pick of #568's F-C, R8 item 4, chat, relayed, received before 2026-10-30T17:23:42Z (the orchestrator's clock), verbatim as relayed: *Re: 4, "Ratify as recommended", plus F-C: "(ii)" Leonardo's own small ballot*. The record is `R8@<its PR squash>`, beside `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`, and the citation is filled after the release seat's record PR merges. Ratified in #568 (`434945ac7` on its branch), § 6, "Ruled: F-C".
 **Timing**: fix-now. The application merges no later than 16.3.0's S.
 **Base**: `d34fc7786` (`origin/main` when this was cut). Every Before block below was cut from `governance/DesignerPunk-Integration-Guide.md` at that SHA and checked by script (byte-exact).
@@ -185,7 +185,7 @@ L823 ("Ignores everything else") and L825 are unchanged, and both stay true.
 
 ## 5. Recommendation, counter-argument (fold-back applied), residual
 
-**Recommendation**: ratify F-C.1 (as revised at R2), F-C.2 and F-C.3, with F-1 ruled (α).
+**Ruled** (R8 item 9): F-C.1 as Leonardo confirmed it, F-C.2 and F-C.3; F-1 (α), ruled by the seats under DLG.
 
 **Counter-arguments, run against it, and what they changed**:
 - **(1) "Put the key only in `ui-tree.<platform>:`" (Kenya's wording).** Leonardo's evidence, the MCP's concatenation, makes that add a second node. So the key goes on the node wherever it lives, with no schema change.
