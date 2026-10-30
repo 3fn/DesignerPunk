@@ -4,7 +4,7 @@
 **Filed by**: Lina, under rule 10, from Stacy's release 16.1.0 RELEASE claims pass, phase 2, observation O-48 (`.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "Phase 2"), routed to Lina by the orchestrator.
 **Owner**: Lina. The check's code (`application-mcp-server/src/validation/AccessibilityChecker.ts`, its test) and the component schema it reads are both in Lina's write scope; no other seat's surface is touched by the fix.
 **Class**: P2 obligation (record) · defect *(set 2026-10-26, Lina, rule 12. The checker's value set and its tests contradict the schema they validate. No reader is misled and nothing served is false: the message echoes the input, as Stacy said. Not P3, because a claims pass routed it as an obligation and the fix is a change to a check plus its tests, not a literal. Stacy may read it otherwise (rule 12).)*
-**Trigger**: `release:next:phase-1` — the event that owes the close is the PR that aligns the checker's set to the schema (the fix shape below), owed by the release after 16.1.0. The owner re-rules this line to `merge:#<N>` when that PR opens, with a dated reason (rule 11). If the E8 (b) PR (`.kiro/issues/2026-10-20-web-element-api-and-form-participation.md`) lands first and re-reads this rule, it closes this record in the same PR.
+**Trigger**: `path:.kiro/specs/128-*/requirements.md` — the event is the G-4 charter's own (`.kiro/issues/2026-10-30-g4-web-element-public-contract-charter.md`): when Spec 128's requirements file is created, G-4's design outline is opened and names this record, and the record then carries G-4's spec answer (rule 11). It still closes in its owning component PR, inside G-4. *(Re-ruled 2026-10-30, Lina, owner, rules 9 and 11. Authority: Peter's one-off delegation, `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` § "Delegation" (`DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`), applied in the collective round's sheet E (G-4: own spec, chartered now, at 128's requirements trigger). The owner's recommendation is `esc-lina.md`, block 14 (G-4), with the cross-read confirming it. Peter's "Re: 5, Gate" is being recorded as R8 in the same record. The superseded line is quoted verbatim in the closing note of 2026-10-30 below.)*
 
 ---
 
@@ -37,3 +37,8 @@ Stacy's O-48: one `validate_assembly` call on a `Container-Base` with `semantic:
 No code. The fix, its tests and the choice between A and B are the later PR's; the owner is Lina (`application-mcp-server/**` and `src/components/**` are both in her scope). An `index.ts` tool-description change, if any, is hers as well.
 
 **Consulted**: Stacy — O-48 as routed in phase 2 (`claims-pass-release-16.1.0.md` § "Phase 2")
+
+
+*(2026-10-30, Lina, owner, rules 9 and 11: carried by the G-4 charter, `.kiro/issues/2026-10-30-g4-web-element-public-contract-charter.md` § 5. The Trigger is re-ruled to the charter's own event. The superseded Trigger line, verbatim:)*
+
+> **Trigger**: `release:next:phase-1` — the event that owes the close is the PR that aligns the checker's set to the schema (the fix shape below), owed by the release after 16.1.0. The owner re-rules this line to `merge:#<N>` when that PR opens, with a dated reason (rule 11). If the E8 (b) PR (`.kiro/issues/2026-10-20-web-element-api-and-form-participation.md`) lands first and re-reads this rule, it closes this record in the same PR.
