@@ -11,7 +11,7 @@
 - **Kenya**: it is her upstream fix, and the per-node form departs from her "existing branch" wording.
 - **Lina**: her F-A read on #568.
 - **Ada**: owner of `scripts/audience-banner/**` (her standing `writeScope`, `canonical/agents/ada.md` L262) and of its predicate's versions, for site B.
-**Consulted**: Leonardo — the author; he found the banner collision and will not reword the pointer to avoid it; R1: F-C.1 corrected to `in-plan` with a node address (his name form, not taken at R2), (α) as the guide's author, a P3 record on whether pointers belong in packed consumer docs; Kenya — R1: the per-node form is better than her branch wording; `parts` never for the three that never part; departing from a stated `follows` is asked before building; the mapping (a node with no entry is `component only`); `names the idiom` stays judgment; Stacy — R1: her departures read, not phase 1, runs the check, and it needs a fixed node address (the MCP's positional path); census lines hold; register L508 and `:498-503` stragglers; (α)'s strip anchored on the L31 forms, re-measured at Ada's PR base; Ada — R1: she takes (α), predicate v2, as her own PR before this application, under her version rule, re-measured 22/22 at base and 23/22 with F-C; strip case-insensitive; a drift test against `POINTER_RE`; ballot citations stay counted; a fourth known limit; Lina — <pending R3>
+**Consulted**: Leonardo — the author; he found the banner collision and will not reword the pointer to avoid it; R1: F-C.1 corrected to `in-plan` with a node address (his name form, not taken at R2), (α) as the guide's author, a P3 record on whether pointers belong in packed consumer docs; Kenya — R1: the per-node form is better than her branch wording; `parts` never for the three that never part; departing from a stated `follows` is asked before building; the mapping (a node with no entry is `component only`); `names the idiom` stays judgment; Stacy — R1: her departures read, not phase 1, runs the check, and it needs a fixed node address (the MCP's positional path); census lines hold; register L508 and `:498-503` stragglers; (α)'s strip anchored on the L31 forms, re-measured at Ada's PR base; Ada — R1: she takes (α), predicate v2, as her own PR before this application, under her version rule, re-measured 22/22 at base and 23/22 with F-C; strip case-insensitive; a drift test against `POINTER_RE`; ballot citations stay counted; a fourth known limit; Lina — R1: F-C.1 lacked `component only` and the `follows:` override (both folded at R2) and the README-marked component departure (folded at R3); supports (α); the key's backward incentive
 **Class**: LAW. It adds a spec-author convention to a served, packed `governance/` doc. Site B is LAW too (the banner convention), in either branch of F-1.
 **Class option**: site B's (α) is the class fix for RS-51: a dated amendment pointer stops matching banner predicate v1 by itself. Every future LAW edit to an unbannered served doc then stops forcing a banner. The cost is one predicate version bump, Ada's, with a re-measured count, and no doc changes status today (§ 3 site B).
 **Amends** (one application PR, Peter-merged):
@@ -49,7 +49,7 @@
 
 ## 2. Edit sites — the Integration Guide (Leonardo's text)
 
-### Site F-C.1 — § "Writing Screen Specs", a new paragraph after the `tokens:` convention (LAW; Leonardo's text as revised at R2, for his confirmation at R3)
+### Site F-C.1 — § "Writing Screen Specs", a new paragraph after the `tokens:` convention (LAW; Leonardo's text as revised at R2 and R3, for his confirmation)
 
 **Anchor** (L785–L786 at `d34fc7786`, verbatim). The paragraph and one blank line go between L786 and L787:
 
@@ -61,7 +61,7 @@ Use canonical Rosetta token names as-is (dot-notation for semantic tokens like `
 **Inserted**:
 
 ```
-**`idiom:` convention**: When a node's look or behavior on a platform is a choice between that platform's idiom and a departure from it, the node states the choice in an `idiom:` map keyed by platform: `follows: <the idiom>`, or `parts: <the idiom>` with `reason: <the user need or brand reason>` (the design philosophy's Native-Behavior Rule). `parts` never applies to accessibility semantics, interaction the platform owns or system surfaces, which that rule says never part. Write it on the node wherever the node lives, in `shared` or in a platform branch; a platform branch is appended to `shared`, so restating a shared node there adds a second node. Name only real choices; a node with no `idiom:` entry for a platform makes no claim about it. A choice the key names was shown by the plan, so it is decided while planning, and departing from a stated `follows` is a change to the plan, asked before it is built. A departure found during the build that the key does not name goes in its `**Departures**:` line's `in-plan:` field (Cross-Platform vs Platform-Specific Decision Framework, Q4): `component only: <the node's address>` if the spec has the node but no entry for that platform, and `not in plan (<the screen spec's path>)` if the spec has no such node. A node's address is `<the screen spec's path> <the node's path>`, the node's path written as the Product MCP writes it: `ui-tree.<branch>[<i>]` (or `ui-tree[<i>]` when the tree has no branches), then `.children[<j>]` for each level below, counting from 0; for example `product/experience-map/pages/settings.yaml ui-tree.shared[0].children[2]`. It is read at the base of the PR that cites it, because positions move when nodes are added. The key is not indexed; `get_screen_spec` returns it as written. *(added <application date> by ballot 2026-10-30-screen-spec-idiom-per-node, site F-C.1)*
+**`idiom:` convention**: When a node's look or behavior on a platform is a choice between that platform's idiom and a departure from it, the node states the choice in an `idiom:` map keyed by platform: `follows: <the idiom>`, or `parts: <the idiom>` with `reason: <the user need or brand reason>` (the design philosophy's Native-Behavior Rule). `parts` never applies to accessibility semantics, interaction the platform owns or system surfaces, which that rule says never part. Write it on the node wherever the node lives, in `shared` or in a platform branch; a platform branch is appended to `shared`, so restating a shared node there adds a second node. Name only real choices; a node with no `idiom:` entry for a platform makes no claim about it. A choice the key names was shown by the plan, so it is decided while planning, and departing from a stated `follows` is a change to the plan, asked before it is built. A departure found during the build that the key does not name goes in its `**Departures**:` line's `in-plan:` field (Cross-Platform vs Platform-Specific Decision Framework, Q4): `component only: <the node's address>` if the spec has the node but no entry for that platform, and `not in plan (<the screen spec's path>)` if the spec has no such node. A departure the component's README already marks (`**Departure**:`) is the component's: the node does not restate it. A node's address is `<the screen spec's path> <the node's path>`, the node's path written as the Product MCP writes it: `ui-tree.<branch>[<i>]` (or `ui-tree[<i>]` when the tree has no branches), then `.children[<j>]` for each level below, counting from 0; for example `product/experience-map/pages/settings.yaml ui-tree.shared[0].children[2]`. It is read at the base of the PR that cites it, because positions move when nodes are added. The key is not indexed; `get_screen_spec` returns it as written. *(added <application date> by ballot 2026-10-30-screen-spec-idiom-per-node, site F-C.1)*
 
 ```
 
@@ -194,6 +194,7 @@ L823 ("Ignores everything else") and L825 are unchanged, and both stay true.
 
 **What survives**:
 - **The key is opt-in and self-reported** (Leonardo, Stacy). An author who does not think of an idiom writes no entry, so a conflict that author missed lands as `component only: <address>` and proceeds with a notice. The notice now points at the exact node where the plan was silent (Kenya). Until a Product MCP check reads it (the (iii) path), "no entry" cannot be told apart from "considered, no choice". Stacy's departures read can catch only a line that contradicts a `follows` entry.
+- **The key's incentive runs backward** (Lina): writing `follows:` binds the build, because any later departure must be asked, while omitting the key leaves the build free to proceed with a `component only` notice. An author who wants room will omit it. Leonardo's Cross-Platform Review read of every `**Departures**:` line is the only control until the (iii) check.
 - **"Names the idiom" is judgment** (Kenya): free-text idiom strings mean a match between the line and the entry is a sampled read, not a decidable one, short of a closed vocabulary.
 - **A pointer's ballot path does not resolve in a consumer install** (Leonardo; the 16.1.0 trio's R1-17 shows consumer agents echoing governance strings). (α) does not frame it, and (β) would not have removed it.
 - **Under (α), a consumer reading a pointer meets a DesignerPunk ballot path with no framing.** The pointer's own form ("added <date> by ballot …") is the framing.
@@ -378,3 +379,59 @@ Questions for R1:
 - **The stragglers** (Stacy): register L508 (`never-hand-edit-122-generated`, cites `:238/:983`) and `no-hardcoded-color`'s `:498-503` are stale register line-cites into served docs. They are listed in § 4 step 8's sweep. The class goes to the RS queue, re-pointed by section as #568 site 3 did.
 - **Stacy's read**: the `in-plan` ↔ `idiom` check is her departures read (#568 site 4), not phase 1. In this repo there is no `product/`, so it has no input today. Her surviving counter is carried in § 5.
 - **Leonardo's P3 record** (should pointers ship in packed consumer docs at all?) **is not a duplicate of RS-51**. RS-51 is about a lane missing a test, and its banner class is about which docs owe a banner. His question is whether a path the consumer cannot resolve should ship at all. He files it under rule 10.
+
+#### [LINA R1]
+
+*Read-only, 2026-10-30, at `9ef33117d` (wt-fc): the ballot whole, against #568's site 1a as ratified (`git show 434945ac7:.kiro/docs/ballots/2026-10-30-departure-timing-plan-vs-build.md`). @-mention scan: Li-1 is answered below.*
+
+- **Li-1, the parts that match F-A as ratified.**
+  - "A departure the key names was shown by the plan, so it is decided while planning" is #568's "A conflict the plan already showed is a planning-stage conflict" applied to the key. That holds.
+  - The node-wherever-it-lives rule, and "no entry makes no claim", sit cleanly beside #568's boundary. That includes Kenya's clause that a platform agent's review of an approved spec before it builds counts as planning.
+  
+  → § 2 site F-C.1
+
+- **Li-1, three mismatches with #568, beyond the field name Leonardo is already fixing.**
+  - **(a) The `component only` value is missing.** F-C.1 sends every build-time departure the key does not name to `not in plan`. Under #568, a departure on a node that is in the spec but has no `idiom:` entry is `in-plan: component only: <path> uiTree.<node>`. `not in plan (<the plan artifact searched>)` is only for a node the spec does not have. As written, F-C.1 would record a spec'd node as unplanned.
+  - **(b) Departing from a stated `follows:` is not covered.** A node whose `idiom:` says `ios: { follows: … }` showed the choice in the plan, and the approved plan chose the idiom. A build that departs there overrides an approved decision. By #568's "already showed" sentence that is a planning-stage conflict, so ask. F-C.1 only covers "a departure the key names". A reader can file a `follows:` override under "the key does not name", and so proceed with a notice. That is the one path in the text that lets a build silently overrule an approved spec.
+  - **(c) A component-level departure is not mentioned.** #568 says "A departure the component's README already records is the component's, and a screen that uses it does not file it again." F-C.1 should say that the node does not restate it, or authors will write `parts:` for a component's own departure.
+  - **Proposed replacement** for F-C.1's sentence beginning "A departure the key names …", in Leonardo's voice, for him to adjust:
+  
+    > "A departure on a platform the node's `idiom:` names was shown by the plan, whether the key names it as `parts:` or the build departs from a stated `follows:`, so it is decided while planning: ask before building. A departure found during the build on a node the spec has but whose `idiom:` does not name that platform is `in-plan: component only: <path> uiTree.<node>`; on a node the spec does not have, `in-plan: not in plan (<the screen spec searched>)` (Cross-Platform vs Platform-Specific Decision Framework, Q4). A departure the component's README already marks (`**Departure**:`) is the component's: the node does not restate it."
+  
+  → § 2 site F-C.1; § 1 "It composes with #568"
+
+- **Li-1, my surfaces: the served-prop sweep and component READMEs owe nothing new.**
+  - The sweep checks an element's served prop names against its accessors, which is component API. A screen spec's per-node `idiom:` does not enter it.
+  - READMEs keep #568's item-5 `**Departure**:` mark. With (c) folded in, the key and the README mark never record the same departure twice: the README holds the component's, the spec holds the screen's.
+  
+  → § 1
+
+- **Site B: I support (α).** It is RS-51's class fix, and I have met that class twice today:
+  - In F1 (`fix/android-spacing-float-dp-guidelines`), my CORRECTION pointer worded around "ballot".
+  - In the property-half sites, I had to draft two banners (sites 1e and 2e in `lina-property-half-sites.md`) only because the sites' pointers contain "ballot".
+  
+  Under (α), both banner sites drop. The property-half ballot should then be sequenced after Ada's v2, or carry its banners until v2 lands.
+  
+  → § 3; § 4 step 2
+
+- **Surviving counter-argument (new, beyond Leonardo's opt-in residual).** With (b) folded in, the key's incentive runs backward. Writing `follows:` binds the build: any later departure must be asked. Writing nothing leaves the build free to proceed with a `component only` notice. An author who wants room will omit the key, so the opt-in key may be written mostly where it costs nothing.
+  - Leonardo's Cross-Platform Review read of every `**Departures**:` line is the only control until a Product MCP check (the (iii) path) can compare specs against builds.
+  - I would still fold (b) in. A key that does not bind the build would mean an approved `follows:` can be overridden by notice.
+  
+  → § 5
+
+#### [THURGOOD R3]
+
+*Incorporation of LINA R1, at R2 `0af0884f1` on base `d34fc7786`, 2026-10-30. Her entry is spliced above byte for byte.*
+
+- **Li-1 (a) and (b) are already in F-C.1 as revised at R2.** They are the same points as Kenya's mapping and her clause (b):
+  - a node with no entry gives `component only: <address>`;
+  - departing from a stated `follows` is a plan change, asked before it is built.
+  
+  So I did not take Lina's replacement sentence whole. Its address is written `<path> uiTree.<node>`, and R2 resolved the address to the Product MCP's positional form, which her sentence would undo. Her meaning on (a) and (b) is unchanged by that.
+- **Li-1 (c) is taken, in her words**: "A departure the component's README already marks (`**Departure**:`) is the component's: the node does not restate it." It goes in after the `in-plan:` mapping, so the key and the README mark never record the same departure twice. → § 2 F-C.1
+- **Lina supports (α).** Her property-half ballot is sequenced on Ada's v2, with its banners conditional on merge order (that ballot's own text).
+- **Her surviving counter goes into § 5.** With (b) folded in, writing `follows:` binds the build, and omitting the key leaves it free, so the key's incentive runs backward.
+- **Still owed before the Status commit**:
+  - Leonardo's confirmation of F-C.1 as revised at R2 and R3: the positional address over his name form, Kenya's clauses, and Lina's (c).
+  - Peter's words and clock for R8 item 9, verbatim from the committed R8 record. That record is not on `main` at this round.
