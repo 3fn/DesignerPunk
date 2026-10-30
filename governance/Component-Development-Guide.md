@@ -51,7 +51,7 @@ description: Guide for building components with appropriate token usage, True Na
 
 **WHEN implementing cross-platform components THEN read:**
 1. ✅ **Component Structure Pattern** (True Native Architecture)
-2. ✅ **Component Token Files** (platform-agnostic token references)
+2. ✅ **Component Token Files** (a component's own tokens, when it has any) *(corrected 2026-10-30: was "platform-agnostic token references"; .kiro/issues/archive/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md; prior text at d34fc7786)*
 3. ✅ **Cross-Platform Token Consumption** (how tokens work per platform)
 4. ✅ **Icon System Integration** (if component uses icons)
 5. ✅ **Platform-Specific Nuances** (iOS/Android/Web differences)
@@ -567,37 +567,34 @@ get_document_full({ path: "contract-system-reference" })
 
 ## Component Token Files
 
-### Purpose of tokens.ts
+### What a component token file is
 
-The `tokens.ts` file at component root defines **which tokens** the component uses, not **how** they're implemented per platform.
+A component token file declares the component's **own tokens**: new tokens, each referencing a primitive token (or conforming to that family's values) with a stated reason, registered through `defineComponentTokens()` so the build pipeline can emit them per platform. A component has one only when Token Selection reached Step 4 and the decision was a component token (§ "After the Decision: Component Tokens for Variants"). Most components have none and read system tokens directly in their platform files. *(corrected 2026-10-30: the section said a component token file lists which system tokens a component uses, with an example file no component has; .kiro/issues/archive/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md; prior text at d34fc7786)*
 
-**This file is platform-agnostic** - it references semantic or primitive token names that will be generated into platform-specific values by the build system.
+It does **not** list which system tokens the component consumes. That list is the component schema's (`<Component>.schema.yaml`, which lists the component's own reads), and the consumption itself is in each platform file (§ "Cross-Platform Token Consumption").
 
-**Example**:
+**Name**: `<name>.tokens.ts` or `tokens.ts` in the component's directory; the token loader takes both names as token files.
+
+**Example** (`src/components/core/Button-Icon/buttonIcon.tokens.ts`, abridged):
 ```typescript
-// ButtonCTA/tokens.ts
-// Platform-agnostic token references
-export const buttonCTATokens = {
-  // Sizing - references semantic tokens
-  paddingX: 'space.inset.100',
-  paddingY: 'space.inset.050',
-  minWidth: 'space400',
-  
-  // Colors - references semantic tokens
-  background: 'color.action.primary',
-  text: 'color.text.default',
-  
-  // Typography - references semantic token
-  typography: 'typography.buttonMd',
-  
-  // Border - references primitive token
-  borderRadius: 'radius100'
-};
+export const ButtonIconInsetTokens = defineComponentTokens({
+  component: 'ButtonIcon',
+  family: 'spacing',
+  tokens: {
+    'inset.large': {
+      reference: spacingTokens.space150,
+      reasoning: 'Large button variant requires 12px padding (1.5× base) for comfortable touch target and visual balance with larger icon sizes',
+    },
+    // 'inset.medium' → space125, 'inset.small' → space100
+  },
+});
 ```
+
+Use one `defineComponentTokens()` call per token family (Button-Icon's size tokens are a second call, with `family: 'sizing'`), and export each result on its own. Never spread or merge two results: their metadata rides on a non-enumerable brand that a spread drops (`src/build/tokens/defineComponentTokens.ts`). The build emits each token per platform: on web as a CSS custom property (`--buttonicon-inset-large`).
 
 ### Platform-Specific Token Usage
 
-Each platform implementation uses **generated platform-specific tokens** from the build system:
+Each platform implementation uses **generated platform-specific tokens** from the build system. Button-CTA, the example below, has no component token file: its platform files read system tokens directly.
 
 **Web**: CSS custom properties
 ```typescript
@@ -659,7 +656,7 @@ Button(
 }
 ```
 
-**Key Point**: The build system generates platform-specific token values (CSS custom properties, Swift constants, Kotlin constants) from the semantic token references in `tokens.ts`.
+**Key Point**: The build system generates platform-specific token values (CSS custom properties, Swift constants, Kotlin constants) from the token definitions: system tokens from Rosetta's token files, and a component's own tokens from its `defineComponentTokens()` calls.
 
 ### What If Platform Requirements Don't Fit in Token Files?
 
@@ -686,7 +683,7 @@ Platform implementations handle platform-specific requirements that are **not** 
 }
 ```
 
-**These nuances are handled by platform implementations**, not defined in the component tokens file. The component tokens file only defines which design system tokens the component uses.
+**These nuances are handled by platform implementations**, not defined in a component token file, which declares only the component's own tokens.
 
 ---
 
@@ -1684,17 +1681,23 @@ export const buttonWidthMin = space400;
 
 ### ❌ Platform-Specific Values in tokens.ts
 ```typescript
-// DON'T: Put platform-specific values in tokens.ts
+// DON'T: Put platform-specific values in a component token file
 export const buttonTokens = {
   paddingX: '8px',  // Platform-specific CSS value
   paddingY: 4       // Hard-coded number
 };
 
-// DO: Reference semantic or primitive tokens
-export const buttonTokens = {
-  paddingX: 'space.inset.100',  // Token reference
-  paddingY: 'space.inset.050'    // Token reference
-};
+// DO: Declare the component's own tokens, each referencing a primitive with a reason
+export const ButtonIconInsetTokens = defineComponentTokens({
+  component: 'ButtonIcon',
+  family: 'spacing',
+  tokens: {
+    'inset.small': {
+      reference: spacingTokens.space100,
+      reasoning: 'Small button variant uses 8px padding (1× base) for minimal footprint in dense UI layouts while meeting minimum touch target requirements',
+    },
+  },
+});
 ```
 
 ### ❌ Using `style` Attribute for Variants
