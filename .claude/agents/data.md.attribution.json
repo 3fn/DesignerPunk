@@ -484,7 +484,7 @@
     {
       "lines": [
         309,
-        430
+        432
       ],
       "mode": "embed",
       "op": "resolve",
@@ -492,8 +492,8 @@
     },
     {
       "lines": [
-        431,
-        483
+        433,
+        485
       ],
       "mode": "embed",
       "op": "resolve",
@@ -501,43 +501,27 @@
     },
     {
       "lines": [
-        484,
-        489
+        486,
+        491
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:ambient.groundTruthManifest"
     },
     {
       "lines": [
-        490,
-        493
+        492,
+        495
       ],
       "op": "render",
       "source": "WORKFLOW_RULES"
     },
     {
       "lines": [
-        494,
-        495
-      ],
-      "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes"
-    },
-    {
-      "lines": [
         496,
-        496
-      ],
-      "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.docs[token-doc-map]"
-    },
-    {
-      "lines": [
-        497,
         497
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.docs[product-token-naming]"
+      "source": "canonical/agents/data.md#frontmatter:routes"
     },
     {
       "lines": [
@@ -545,7 +529,7 @@
         498
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.docs[product-token-authoring]"
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[token-doc-map]"
     },
     {
       "lines": [
@@ -553,7 +537,7 @@
         499
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.docs[completion-doc-guidance]"
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[product-token-naming]"
     },
     {
       "lines": [
@@ -561,7 +545,7 @@
         500
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.docs[contract-concept-names]"
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[product-token-authoring]"
     },
     {
       "lines": [
@@ -569,7 +553,7 @@
         501
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.docs[stemma-principles]"
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[completion-doc-guidance]"
     },
     {
       "lines": [
@@ -577,7 +561,7 @@
         502
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.docs[test-dev-standards]"
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[contract-concept-names]"
     },
     {
       "lines": [
@@ -585,7 +569,7 @@
         503
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.docs[bcv-guidance]"
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[stemma-principles]"
     },
     {
       "lines": [
@@ -593,7 +577,7 @@
         504
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.docs[token-lookup-beyond]"
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[test-dev-standards]"
     },
     {
       "lines": [
@@ -601,7 +585,7 @@
         505
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.docs[dev-workflow-detail]"
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[bcv-guidance]"
     },
     {
       "lines": [
@@ -609,7 +593,7 @@
         506
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.docs[file-organization]"
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[token-lookup-beyond]"
     },
     {
       "lines": [
@@ -617,7 +601,7 @@
         507
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.docs[android-implementation-patterns]"
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[dev-workflow-detail]"
     },
     {
       "lines": [
@@ -625,7 +609,7 @@
         508
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.agents[leonardo]"
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[file-organization]"
     },
     {
       "lines": [
@@ -633,7 +617,7 @@
         509
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.cues[0]"
+      "source": "canonical/agents/data.md#frontmatter:routes.docs[android-implementation-patterns]"
     },
     {
       "lines": [
@@ -641,7 +625,7 @@
         510
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.cues[1]"
+      "source": "canonical/agents/data.md#frontmatter:routes.agents[leonardo]"
     },
     {
       "lines": [
@@ -649,7 +633,7 @@
         511
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.cues[2]"
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[0]"
     },
     {
       "lines": [
@@ -657,7 +641,7 @@
         512
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.cues[3]"
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[1]"
     },
     {
       "lines": [
@@ -665,7 +649,7 @@
         513
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.cues[4]"
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[2]"
     },
     {
       "lines": [
@@ -673,7 +657,7 @@
         514
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.cues[5]"
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[3]"
     },
     {
       "lines": [
@@ -681,7 +665,7 @@
         515
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.cues[6]"
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[4]"
     },
     {
       "lines": [
@@ -689,7 +673,7 @@
         516
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.cues[7]"
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[5]"
     },
     {
       "lines": [
@@ -697,7 +681,7 @@
         517
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.cues[8]"
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[6]"
     },
     {
       "lines": [
@@ -705,7 +689,7 @@
         518
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes.cues[9]"
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[7]"
     },
     {
       "lines": [
@@ -713,31 +697,31 @@
         519
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:routes"
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[8]"
     },
     {
       "lines": [
         520,
+        520
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:routes.cues[9]"
+    },
+    {
+      "lines": [
+        521,
         521
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:commands"
+      "source": "canonical/agents/data.md#frontmatter:routes"
     },
     {
       "lines": [
         522,
-        522
-      ],
-      "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:commands[platform-tokens]"
-    },
-    {
-      "lines": [
-        523,
         523
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:commands[functional-suite]"
+      "source": "canonical/agents/data.md#frontmatter:commands"
     },
     {
       "lines": [
@@ -745,7 +729,7 @@
         524
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:commands[audit-tokens]"
+      "source": "canonical/agents/data.md#frontmatter:commands[platform-tokens]"
     },
     {
       "lines": [
@@ -753,7 +737,7 @@
         525
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:commands[android-build-test]"
+      "source": "canonical/agents/data.md#frontmatter:commands[functional-suite]"
     },
     {
       "lines": [
@@ -761,7 +745,7 @@
         526
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:commands[product-screen-commands]"
+      "source": "canonical/agents/data.md#frontmatter:commands[audit-tokens]"
     },
     {
       "lines": [
@@ -769,7 +753,7 @@
         527
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
+      "source": "canonical/agents/data.md#frontmatter:commands[android-build-test]"
     },
     {
       "lines": [
@@ -777,7 +761,7 @@
         528
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#complete-task-tooling"
+      "source": "canonical/agents/data.md#frontmatter:commands[product-screen-commands]"
     },
     {
       "lines": [
@@ -785,47 +769,47 @@
         529
       ],
       "op": "render",
-      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+      "source": "canonical/shared/shared-catalog.yaml#certainty-calibration-cue"
     },
     {
       "lines": [
         530,
+        530
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#complete-task-tooling"
+    },
+    {
+      "lines": [
+        531,
         531
+      ],
+      "op": "render",
+      "source": "canonical/shared/shared-catalog.yaml#find-docs-discovery"
+    },
+    {
+      "lines": [
+        532,
+        533
       ],
       "op": "render",
       "source": "canonical/shared/shared-catalog.yaml#record-first-ratification"
     },
     {
       "lines": [
-        532,
-        532
+        534,
+        534
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:commands"
     },
     {
       "lines": [
-        533,
-        534
-      ],
-      "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:knowledgeBases"
-    },
-    {
-      "lines": [
         535,
-        535
-      ],
-      "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:knowledgeBases[android-components]"
-    },
-    {
-      "lines": [
-        536,
         536
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:knowledgeBases[android-tests]"
+      "source": "canonical/agents/data.md#frontmatter:knowledgeBases"
     },
     {
       "lines": [
@@ -833,36 +817,52 @@
         537
       ],
       "op": "render",
-      "source": "canonical/agents/data.md#frontmatter:knowledgeBases"
+      "source": "canonical/agents/data.md#frontmatter:knowledgeBases[android-components]"
     },
     {
       "lines": [
         538,
-        541
+        538
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:knowledgeBases[android-tests]"
+    },
+    {
+      "lines": [
+        539,
+        539
+      ],
+      "op": "render",
+      "source": "canonical/agents/data.md#frontmatter:knowledgeBases"
+    },
+    {
+      "lines": [
+        540,
+        543
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:writeScope"
     },
     {
       "lines": [
-        542,
-        545
+        544,
+        547
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:preflight"
     },
     {
       "lines": [
-        546,
-        546
+        548,
+        548
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:preflight[git status --porcelain]"
     },
     {
       "lines": [
-        547,
-        547
+        549,
+        549
       ],
       "op": "render",
       "source": "canonical/agents/data.md#frontmatter:preflight"

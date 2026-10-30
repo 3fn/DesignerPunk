@@ -349,37 +349,39 @@ Modifier.padding(DesignTokens.space_200)
 Arrangement.spacedBy(DesignTokens.space_300)
 ```
 
-**Why**: `DesignTokens` spacing values are `Float` primitives. Compose layout functions (`padding()`, `size()`, `spacedBy()`) accept `Dp` and perform implicit `Float → Dp` conversion. Adding `.dp` creates the pattern `200.dp` in source code, which triggers token compliance test failures (the test pattern `/[1-9]\d*\.dp\b/` matches literal `.dp` usage).
+**Why**: The Android generator emits spacing, radius, tapArea, borderWidth and elevation (layering) tokens as `Dp` values (`val space_200 = 16.dp`), so they pass straight to Compose layout functions (`padding()`, `size()`, `spacedBy()`), which take `Dp`. `.dp` is an extension on `Int`, `Float` and `Double`, not on `Dp`: `DesignTokens.space_200.dp` does not compile. Kotlin and Compose convert nothing implicitly. fontSize tokens are also emitted as `Dp` today; their Android type is an open decision, and the component lines that read them are pinned in `AndroidDpTokenReads.test.ts`. *(corrected 2026-10-30: the Android token types and the conversion claims in L744–L774, read against `src/providers/AndroidFormatGenerator.ts` `getKotlinType` and `formatKotlinValue`; .kiro/issues/archive/2026-10-26-android-guidelines-spacing-float-dp-claim.md; prior text at d34fc7786)*
 
 **When `.dp` IS Required**:
-Only when assigning to an explicitly-typed `Dp` variable where implicit conversion doesn't occur:
+On a token the generator emits as `Float`, when a `Dp` is wanted. Sizing is one (`const val size_500: Float = 40f`), as are lineHeight, density and letterSpacing. Convert at the read:
 
 ```kotlin
-val dimension: Dp = DesignTokens.space_200.dp  // Explicit type requires .dp
+Modifier.size(DesignTokens.size_500.dp)     // sizing is Float: .dp converts it
+val dimension: Dp = DesignTokens.space_200  // spacing is already Dp: no .dp
 ```
+
+The family-to-type table is `getKotlinType` in `src/providers/AndroidFormatGenerator.ts`. `AndroidDpTokenReads.test.ts` and `AndroidSizingDpReads.test.ts` (`src/components/__tests__/`) check component reads against the generator's actual output. The token compliance test is a separate check: it flags hard-coded literals such as `16.dp` (pattern `/(?<!\w)[1-9]\d*\.dp\b/`), not token reads.
 
 **Pattern for Enums Returning Dp**:
 ```kotlin
 enum class SizeVariant {
     SMALL, MEDIUM, LARGE;
     
-    // Return Float from token (no .dp)
-    val value: Float
+    // Spacing tokens are already Dp: return them as Dp (no .dp)
+    val dp: Dp
         get() = when (this) {
             SMALL -> DesignTokens.space_150
             MEDIUM -> DesignTokens.space_200
             LARGE -> DesignTokens.space_300
         }
-    
-    // Separate Dp property for call sites needing explicit Dp
-    val dp: Dp get() = value.dp
 }
 
 // Usage
-Modifier.size(SizeVariant.MEDIUM.dp)  // .dp on enum property, not token
+Modifier.size(SizeVariant.MEDIUM.dp)  // the enum's Dp property; no .dp on a token
 ```
 
-**Why Android-Specific**: iOS uses `CGFloat` (no unit suffix), Web uses CSS custom properties (units baked in). Only Android has the `.dp` extension that creates this pattern.
+For an enum over sizing tokens (`Float`), return the `Float` and convert once: `val dp: Dp get() = value.dp`.
+
+**Why Android-Specific**: iOS uses `CGFloat` (no unit suffix), Web uses CSS custom properties (units baked in). Only Android splits its tokens between `Dp` and `Float`, so only an Android call site has to know which family it reads.
 
 ---
 
