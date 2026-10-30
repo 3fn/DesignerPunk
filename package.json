@@ -199,7 +199,7 @@
     "check:122:sweep-8-demotion": "tsx tools/agent-generator/sweeps/sweep-8-demotion.ts",
     "prepack": "npm run build",
     "verify:token-index-clean": "git diff --quiet token-index/ || (echo '✖ token-index/ is stale relative to the committed state. Regenerate and commit it on the RELEASE BRANCH (it traverses the PR gate with the version bump) before publishing. See .kiro/hooks/RELEASE-FLOW.md.' && exit 1)",
-    "prepublishOnly": "node -e \"console.error('\\n✖ Folder publish refused. @3fn/core is published ONLY as one tarball built in a fresh clone at the tag: npx tsx scripts/release-publish.ts <version> (dry run: --dry-run <S>). See .kiro/hooks/RELEASE-FLOW.md step 5 and ballot 2026-10-03-hermetic-publish-path.\\n'); process.exit(1)\"",
+    "prepublishOnly": "node -e \"console.error('\\n✖ Folder publish refused. @3fn/core is published ONLY as one tarball built in a fresh clone at the tag, by scripts/release-publish.ts: 5.1 dry run, npx tsx scripts/release-publish.ts --dry-run <S>; 5.3 GitHub Packages, npx tsx scripts/release-publish.ts <version> --expect-sha <S>; 5.4 public npm, npx tsx scripts/release-publish.ts --npmjs <record>. See .kiro/hooks/RELEASE-FLOW.md step 5 and ballot 2026-10-03-hermetic-publish-path.\\n'); process.exit(1)\"",
     "postpublish": "git diff --quiet token-index/ || echo '⚠️  token-index/ changed during publish — commit it via a PR (main is branch-protected; never push it directly). See .kiro/hooks/RELEASE-FLOW.md.'",
     "release:publish": "tsx scripts/release-publish.ts"
   },
