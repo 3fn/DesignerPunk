@@ -1,0 +1,4 @@
+=== Network-error branch: PATH-shimmed curl (no HTTP status; curl exits 6) -> exit 10, the could-not-reach message (recorded 2026-10-30; .kiro/issues/2026-10-27-publish-rail-bites-miss-two-branches.md) ===
+curl: (6) Could not resolve host: registry.npmjs.org (fake-curl-network-error shim)
+FAIL[version]: could not reach https://registry.npmjs.org for @3fn/core@99.99.99-fake (network error) — do not announce this release
+exit code: 10

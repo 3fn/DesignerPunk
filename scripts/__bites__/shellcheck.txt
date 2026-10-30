@@ -12,3 +12,9 @@ exit=0
 
 --- scripts/__bites__/fake-curl-empty-tarball/curl ---
 exit=0
+
+--- scripts/__bites__/fake-curl-version-mismatch/curl ---
+exit=0
+
+--- scripts/__bites__/fake-curl-network-error/curl ---
+exit=0

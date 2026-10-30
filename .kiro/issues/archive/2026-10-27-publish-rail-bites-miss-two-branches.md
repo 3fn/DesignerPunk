@@ -39,3 +39,15 @@ One bite PR in Ada's scope, Thurgood consulted on the row's `census` text if it 
 Both branches are a few lines of plain shell, read by the shipping PR's reviewers, and no release has reached either. A bite for each adds two fixtures to keep current. *What survives*: the row's `census` field rests the guard's verdicts on its recorded bites, and two of its verdicts have none. That is the gap between the claim and the evidence this record exists to close, however small the branches are.
 
 *Signed: Ada, 2026-10-27.*
+
+## Outcome (2026-10-30, Ada, owner)
+
+**Fixed on branch `fix/publish-rail-bites-two-branches`, cut from `origin/main` `d34fc7786`, in the commit that adds this section.** The PR is not open as I write this, so its number is not recorded here. If the PR does not merge, this section and the archive move do not land either.
+- **The mismatch bite**: `scripts/__bites__/bite-5-version-mismatch-shim-exit10.txt`, recorded through `scripts/__bites__/fake-curl-version-mismatch/curl`. That curl answers HTTP 200 with body version `99.99.98-fake` for `VERSION=99.99.99-fake`. The rail exits 10 with the mismatch message (`verify-publish-rail.sh` L94–L97).
+- **The network-error bite**: `scripts/__bites__/bite-6-network-error-shim-exit10.txt`, recorded through `scripts/__bites__/fake-curl-network-error/curl`, which exits 6 with no HTTP status. The rail exits 10 with the could-not-reach message (L80–L81).
+- **`bite-2` keeps its file name.** Its header now says that it bites the HTTP-status branch and where the other two branches are bitten. Its recorded output was not re-run and is unchanged.
+- **`shellcheck.txt`** is re-recorded with the two new shims (official binary 0.10.0; every file exits 0).
+- **Not changed**: the script itself, and register row `publish-rail-guard`, including its `census` field, so Thurgood's consult on the census text is not owed. His row's `checks` sentence names "THREE RECORDED BITES". With this PR there are five bites, plus the exit-12 self-test record. Before this PR the sentence already left out the exit-13 and exit-12 records. Whether to re-word it is his call as register steward; this PR does not touch it.
+- **No test reads `scripts/__bites__/`** (`git grep -l __bites__` over the test files finds only the agent generator's own, separate `__fixtures__/semantics-guard/__bites__/`). These records are evidence, not test inputs.
+
+Closed under rule 5 and archived in the same PR. *Signed: Ada, 2026-10-30.*

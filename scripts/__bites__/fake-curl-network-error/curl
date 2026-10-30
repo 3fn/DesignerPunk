@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Fake `curl` for the network-error branch (exit 10, "could not reach"):
+# curl fails before any HTTP status exists, as it does when the host cannot
+# be resolved (curl's exit 6). Prints nothing on stdout, a curl-style error
+# on stderr, and exits non-zero. PATH-shim only; never touches the network,
+# never installs.
+echo 'curl: (6) Could not resolve host: registry.npmjs.org (fake-curl-network-error shim)' >&2
+exit 6
