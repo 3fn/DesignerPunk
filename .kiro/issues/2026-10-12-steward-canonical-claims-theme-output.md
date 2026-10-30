@@ -41,3 +41,7 @@ The wording is the seats' own; they may keep it until Spec 129 or correct it now
 Fired at `1524a96aae8abee702865c9e9bae3adfbd6954fa` (#472, the next authoring touch of `canonical/agents/kenya.md` and `canonical/agents/data.md`). No commit that is an ancestor of it closed this record (rule 5's dated outcome line, or the archive move) or re-ruled it (a Trigger change): #472 was the fix PR for two of the four sites, but this record was not on its branch. First Lapse (distinct SHAs named: 1). It is a lapse by rule 11's letter and the work is also only partly done; it is not the done-but-unclosed shape (see `2026-10-25-issues-owned-fired-ignores-outcome-lines.md`, third case). The Trigger is re-ruled above; the next Lapse is at a later release's S and takes this P2 `(record)` record to Peter with spec, drop, or fix-now.
 
 *Signed: Thurgood, 2026-10-25.*
+
+## Lapse (2026-10-29)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.

@@ -15,3 +15,7 @@ The census rule (`governance/classification-map.md` Entry Schema L109–L110): "
 ## Close
 
 Rule 5's dated outcome line, naming the PR, and the archive move, in that PR. The commit-held scope's field stays owed under the other record.
+
+## Outcome (2026-10-29, Thurgood, owner)
+
+Fixed by #534 (`937915411`, 2026-10-27): both census fields written verbatim from ballot § 4 E8, and `hermetic-publish-path` split by scope (the live-state scope `none`; the commit-held scope's field owed). The commit-held field was written by #557 (`ee9ae4725`). #534 should have closed this record with this line and did not; that is my miss, found at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`). Closed under rule 5, before S, and archived in that walk's PR.
