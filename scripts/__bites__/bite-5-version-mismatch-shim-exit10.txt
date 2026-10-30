@@ -1,0 +1,3 @@
+=== Version-mismatch branch: PATH-shimmed curl (200, body version 99.99.98-fake, VERSION=99.99.99-fake) -> exit 10, the mismatch message (recorded 2026-10-30; .kiro/issues/2026-10-27-publish-rail-bites-miss-two-branches.md) ===
+FAIL[version]: https://registry.npmjs.org returned version '99.99.98-fake' for @3fn/core@99.99.99-fake (mismatch) — do not announce this release
+exit code: 10
