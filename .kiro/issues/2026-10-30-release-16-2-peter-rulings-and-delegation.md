@@ -61,6 +61,39 @@ All five quotes are Peter's, in chat, relayed by the orchestrator. The clock is 
 - **The delegation**: § "Delegation" below.
 - **Flag**: his "Honest thoughts?" invites pushback. The collective's honest answer (collective round 1, the law question) is the scope in § "Delegation", put back to him with the one-word list. Until he answers that list, the scope below is the collective's reading, and the parts it excludes stay his.
 
+### R8 — the one-word list (before 2026-10-30T17:23:42Z)
+
+*(Appended 2026-10-30, Thurgood, owner, rule 9. Peter, chat, relayed by the orchestrator, verbatim. His answers follow the numbered list at the end of the collective's disposition sheet r2.1. Each reading below states which item it answers and what it rules; where the reading is the orchestrator's or mine, it is flagged.)*
+
+> "Re: 1, 16.2.0 / Re: 2, Yes / Re: 3, Wait and capture (possibly as an inbound) / Re: 4, "Ratify as recommended", plus F-C: "(ii)" Leonardo's own small ballot / Re: 5, Gate / Re: 6, Ratify / Re: 7, B / Re: 8, your launch time / Re: 9, Ratify"
+
+Item 10 (drops) was "none proposed", so nothing was asked and nothing was answered.
+
+1. **The bump: 16.2.0, RATIFIED** (RELEASE-FLOW § "Deriving the delta" item 3). The CHANGELOG's "Changed" line names `token-index/`'s `platforms` shape and the lag in `TokenIndexer.ts`'s declared type.
+2. **The authority line: Yes.** It names the files and authors as the sheet worded them:
+   - **Thurgood** authors `canonical/agents/kenya.md` L182 and L206 in Kenya's words, plus `.claude/agents/kenya.md`, `.kiro/agents/kenya-prompt.md` and `canonical/generated.lock`. Kenya re-signs the two frontmatter members, `commands[platform-tokens]` and `commands[product-screen-commands]`.
+   - **Lina** authors `governance/platform-implementation-guidelines.md` L744–L774 (F1), and `governance/Component-Development-Guide.md` § "Component Token Files" with its two adjacent sites (F3).
+
+   It authorizes authorship, one-off, for these files only. Each merge is still Peter's. It moves no standing write scope.
+3. **H's class: wait for Spec 131, and capture it, possibly as an inbound.** The class is an owner with no standing write over the CORRECTIONs of the docs or charters it owns, four instances in a week. The owed act is mine: a 131 inbound naming the class and its four instances. *Reading (mine)*: "possibly" leaves the form open; an inbound is the form the record names.
+4. **#568: "Ratify as recommended", plus F-C (ii), Leonardo's own small ballot.**
+   - *Reading (orchestrator's and mine, flagged)*: "as recommended" is the sheet r2.1's recommendation. That is F-A as the pair with Leonardo's clause folded in ("for work whose kind has a plan (a spec, a product screen), a missing plan is itself planning, so ask"), and F-B (a) at zero extra acts if composed in one edit.
+   - The fold is not yet in #568's text, and Lina's, Ada's, Stacy's and Kenya's read of the clause is owed. The ratification covers #568's text at the commit that applies the fold, if those reads raise no change. A changed text goes back to him.
+   - **F-C (ii)**: Leonardo authors the small ballot on Integration Guide § "Writing Screen Specs", fix-now by 16.3.0's S, as a key in the existing `ui-tree.<platform>:` branch.
+     - *Reading (mine)*: his "(ii)" is the decision, not an authority line for Leonardo's `governance/` edit. That ballot's own ratification will authorize its application.
+5. **The G-4 gate: Gate.** "128's React (web) binding design is not approved before G-4's design merges." It sits inside the ruled order 129 → 131 → 128 → 130 and does not reorder it. 128's outline and its React Native half are not gated.
+6. **The prop-mapping ballot, property half: Ratify.**
+   - The text is Sparky's R3b sentence, verbatim (sheet r2.1, row E): "On web, the served schema states how the element takes each non-callback prop: as a JS property of the served name, or, where none exists, as its kebab-case attribute only, marked attribute-only. The served name is never changed to match the element, and the element is not renamed. Every attribute-only prop is a listed G-4 finding."
+   - *Reading (mine, flagged)*: this is a ratification given before the ballot file exists. It binds that sentence only. If Lina's R1 on the schema-field cost changes the sentence, the change goes back to him. The Status line of the ballot, when filed, cites `R8@<sha>` item 6.
+7. **sync-migration: B.** `.kiro/issues/2026-10-24-sync-migration-unlisted-copy-floor.md`: Lina's option B, the migration says `modified` only when every version that could have made the copy was retrieved.
+8. **The trio: "your launch time".**
+   - *Reading (the orchestrator's, flagged)*: run the trio in full before S. The operator (Leonardo) schedules it, and Peter launches the sessions when it is scheduled (Decision 1, 2026-10-14). Its absence at S is a finding, not something that holds the tag; he did not say "Hold".
+   - Its precondition is the grant record `.kiro/issues/2026-10-30-release-16-2-trio-grant.md`, filed in this record's PR.
+9. **The later ballots: Ratify.** These are steward-verb's drop (`2026-10-24-steward-verb-carve-out-drop-limb-unapplied.md`), b-ci (`.kiro/docs/ballots/2026-10-24-ballot-audit-fix-now-law.md`, DRAFT at #460), decision-framework 1a (#568, item 4 above) and F3 if it needs a ballot.
+   - *Reading (mine, flagged)*: each is ratified in the text the collective recommends when it is filed, with no fork left open in it.
+   - #460 has open forks (F-1 to F-4) and Stacy's R1 owed. Its forks go to him as forks; this "Ratify" does not pick them.
+   - A text that changes after his word, or a fork found at review, goes back to him.
+
 ## Delegation
 
 **The words**: R7's second sentence, above.
@@ -94,7 +127,7 @@ What survives: seven seats can agree on a convenient deferral, and only his read
 
 ## How to cite
 
-- **The delegation**: `DLG@<sha>`, where `<sha>` is this record's PR's squash SHA on `main`. The rulings: `R0@<sha>`, `R5@<sha>`, `R6c@<sha>`, `R7@<sha>`, with the same SHA. The first seat to cite the record after its merge fills in the SHA; this record does not.
+- **The delegation**: `DLG@<sha>`, where `<sha>` is this record's PR's squash SHA on `main`. The rulings: `R0@<sha>`, `R5@<sha>`, `R6c@<sha>`, `R7@<sha>`, with the same SHA. R8 was appended in a later PR and is cited `R8@<that PR's squash>`. The first seat to cite the record after its merge fills in the SHA; this record does not.
 - **Citing it before this record is on `main` is a finding**, and so is citing the chat message instead. Stacy verifies each citation with `git merge-base --is-ancestor <sha> <the citing commit>`.
 - **The re-rule form, in Stacy's words (collective round 1)**:
   - a Trigger-line diff that is an ancestor of S and was committed after 16.1.0's S;
@@ -116,3 +149,5 @@ These are pending at its writing and are appended here, dated, or filed as a sec
 - **The bump, the G-4 gate sentence, sync-migration's pick, #568's ratification with its F-C pick, H's class question, and each later ballot**: the one-word list at the end of the collective's disposition sheet.
 
 *Signed: Thurgood, 2026-10-30.*
+
+*(2026-10-30, Thurgood: both bullets above were answered by R8, items 1–9. Nothing listed here is still pending. Cite R8 as `R8@<sha>`, the squash of the PR that added it.)*
