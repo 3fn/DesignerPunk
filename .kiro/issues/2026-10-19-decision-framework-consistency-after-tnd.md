@@ -34,3 +34,7 @@ The `path:` trigger fired because #459 edited the framework doc. **The edit did 
 Why the close was missed: #459 was merged from the other session as a pointer correction, and its author did not read this record's file-level Trigger against the diff; Lina, the resolver, was not in seat to see the fire.
 
 Disposition: the ask stands (the three items are the post-ratification consistency findings Lina raised herself). A P2 `(record)` first lapse does not escalate (rule 11: the second lapse does). The Trigger above is re-ruled to `release:next:phase-1`. The fix is a `governance/**` edit by Lina, Peter-merged. A second lapse at the next release's S escalates to Peter with spec, drop or fix-now.
+
+## Lapse (2026-10-29)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.

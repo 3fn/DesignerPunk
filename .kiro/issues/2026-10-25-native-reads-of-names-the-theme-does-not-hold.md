@@ -18,3 +18,7 @@
 Point each site at a key the index holds (the owner's pick after Ada's read on the two names), and correct the Container-Base README lines. No declaration to add: the schema pass found nothing to declare for either.
 
 *Signed: Lina, 2026-10-25.*
+
+## Lapse (2026-10-29)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.

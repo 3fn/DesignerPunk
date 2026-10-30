@@ -34,3 +34,7 @@ Item 3 is a question to Peter, never answered: does B-CI owe a `ci-provenance-li
 ## Closing
 
 Closes when Peter has ruled all three items (ratified, modified or rejected) and any ratified edit has been applied, by rule 5's dated outcome line in the applying PR.
+
+## Lapse (2026-10-29)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.

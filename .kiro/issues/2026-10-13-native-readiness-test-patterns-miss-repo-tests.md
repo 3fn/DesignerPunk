@@ -25,3 +25,7 @@ This is a P2 `(guard)`, so under rule 11 the first lapse goes to Peter with exac
 - **fix-now**: the pattern extension plus `packageReadiness.generated.ts` regeneration lands in a PR no later than the next release's S. Lina's recommendation (a two-line pattern change, one design decision: does a `.ios.test.ts` Jest file count as a native test; Stacy reads parity). Surviving counter-argument: counting a TS-side parity test as native "tests" could raise readiness past what the Swift/Kotlin has been exercised on (readiness is an overstatement risk the record's "understates, never overstates" class note currently excludes).
 
 The Trigger line above is re-ruled to the fix-now shape (`release:next:phase-1`, a git-visible event no later than the next release's S) so the record is not left on an unfireable token; Peter's pick may re-rule it again.
+
+## Lapse (2026-10-29)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.

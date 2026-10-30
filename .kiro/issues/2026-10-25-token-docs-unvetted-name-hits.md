@@ -101,3 +101,7 @@ The same commit fixes `governance/Rosetta-System-Architecture.md` L481. It adds 
 - **Fallback**: the next release's phase 1. If the ballot is undrafted when phase 1 runs, the record lapses at that phase 1 under rule 11, and the walk reports it. Until the amendment is ratified, the register row is the truth about what is armed and the ballot's § 8.8 bytes are a known difference from it, named in the row's history line of 2026-10-26.
 
 *Signed: Thurgood, 2026-10-26.*
+
+## Lapse (2026-10-29)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.
