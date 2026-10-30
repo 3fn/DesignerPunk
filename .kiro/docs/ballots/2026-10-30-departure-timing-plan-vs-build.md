@@ -131,9 +131,17 @@ The example questions at L180–L182 are unchanged. They are planning-stage ques
 
 ### Site 1c — the framework, the token-mapping list's lead, L251 (LAW)
 
-**Before** (L251 at `2c00cea49`): ``**Pause and ask Peter when:**``
+**Before** (L251 at `2c00cea49`, verbatim):
 
-**After**: ``**Pause and ask a human when:** *(amended <application date> by ballot 2026-10-30-departure-timing-plan-vs-build, site 1c; prior text at `2c00cea49`)*``
+```
+**Pause and ask Peter when:**
+```
+
+**After**:
+
+```
+**Pause and ask a human when:** *(amended <application date> by ballot 2026-10-30-departure-timing-plan-vs-build, site 1c; prior text at `2c00cea49`)*
+```
 
 Only "Peter" changes. The list's three bullets are Lina's to resolve in her CORRECTION PR (the record's item 1, the token-mapping half).
 
