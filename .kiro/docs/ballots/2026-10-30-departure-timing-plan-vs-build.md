@@ -2,11 +2,13 @@
 
 **Date**: 2026-10-30
 **Drafted by**: Thurgood (ballots steward; owner of the record this closes, `.kiro/issues/2026-10-19-decision-framework-consistency-after-tnd.md`). Lina wrote the framework text; I adapted it at R1 and R2, and the changes are listed under each site. Leonardo wrote site 2's text (his R1). Drafter's clock: 2026-10-30T15:16:25Z (`date -u`).
-**Status**: **DRAFT** (R2)
+**Status**: **RATIFIED (Peter, 2026-10-30)**, chat, relayed by the orchestrator: R8 item 4, received before 2026-10-30T17:23:42Z (the orchestrator's clock), verbatim as relayed: *Re: 4, "Ratify as recommended", plus F-C: "(ii)" Leonardo's own small ballot*. It ratifies the recommendation the collective round put to him under his delegation (`DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`; sheet r2.1, row D): F-A, the pair with Leonardo's clause folded in; F-B (a); and F-C (ii). The orchestrator's § 6 reading is recorded as ruled. The citation for R8 is `R8@<its PR squash>`, filled after the release seat's record PR merges.
 **Peter's words** (chat, relayed by the orchestrator):
 - **The rule**, received before 2026-10-30T15:05:25Z (the orchestrator's clock), verbatim: *"if it's caught in a planning stage, pause and ask a human. If it's discovered mid-development, record, proceed, and notify after."*
 - **The confirmation**, received before 2026-10-30T15:15:17Z, verbatim: *"Confirm and review, please"*. He confirmed the measure in the form the orchestrator presented, with its converged definitions and its two recommendations.
-- **The orchestrator's reading is flagged for overturn** (§ 6). Three forks survive the R1 round, and § 6 puts each to him as an `**Open for Peter**:` line.
+- **R6** (the rule, above) and **R6c** (the confirmation, above) are the delegation record's names for these two (`R5@d34fc77868f649d3c67bd1b1da47bc6f2a805920`, same SHA as DLG).
+- **R8 item 4**, the ratification, received before 2026-10-30T17:23:42Z: see the Status line.
+- **The orchestrator's reading** (§ 6) is recorded as ruled, not asked.
 **Base**: `2c00cea49` (`origin/main` when this was cut). Every Before block below was cut from that SHA by `git show 2c00cea49:<path> | sed -n <L>p`, and is byte-exact (Lina, Stacy and Ada checked at R1).
 **Required reviewer**: **Stacy**. Item 1 is her finding class, the `**Departures**:` line is hers to read (F-B), and she is the census reader.
 **Reviewers**:
@@ -329,6 +331,7 @@ The referents are L322's lead line ("native idiom or departure") and L25 and L28
    - a line in Spec 131's unowned-paths inbound naming `design-language/design-philosophy.yaml`;
    - a CHANGELOG line at the next release (both files ship), owned by the release author;
    - Leonardo's Product MCP lessons record, which he files.
+   - **F-C (ii)**: Leonardo's own small ballot on the Integration Guide § "Writing Screen Specs", fix-now by 16.3.0's S, in the existing `ui-tree.<platform>:` branch with no schema change. Its application needs Peter's line naming Leonardo and the file: he holds no `governance/` scope, and an issue grant cannot cover `governance/**`.
 7. **Straggler sweep**, case-sensitive: `git grep -n -F` over `governance canonical/agents canonical/profiles/consumer .kiro/steering design-language` for:
    - `ask Peter`;
    - `Animation is critical to brand expression`;
@@ -368,9 +371,9 @@ Lina's items ride this application (Lina R1), so the record closes at its merge 
 
 If Lina's text for 1f or 1g is not settled before ratification, those two sites move to her own PR, and that PR follows this application's merge (Stacy S4). It needs site 1e's banner, and it cites the applied text.
 
-## 6. The orchestrator's reading, and the forks for Peter
+## 6. The orchestrator's reading, and the forks — ruled
 
-**The reading, flagged for overturn.** Peter confirmed the measure (*"Confirm and review, please"*) in the form presented to him. It is applied here as § 2, refined at R1:
+**The reading, recorded as ruled.** Peter confirmed the measure (*"Confirm and review, please"*) in the form presented to him. It is applied here as § 2, refined at R1:
 - the boundary is the plan's approval, with this repo's instance and the product instance;
 - notify is the fixed line;
 - the field is `in-plan`, with three values;
@@ -379,19 +382,25 @@ If Lina's text for 1f or 1g is not settled before ratification, those two sites 
 - the all-token carve-out;
 - no brand-critical exception.
 
-Each part is overturnable at the Status commit or the application PR.
+Peter ratified it as recommended (R8 item 4). The application PR's body repeats it.
 
-**Open for Peter**: F-A — work with no plan artifact, or with a plan never approved. Recommended (Lina, Leonardo, the orchestrator; Thurgood concurs): in-repo work that executes no plan artifact (a `fix/` or `chore/` PR) is in development from its start, so its departures proceed with a `**Departures**:` line that Peter reads at his merge; and work whose plan exists but has no recorded approval (a consumer's screen spec with no lead's dated go) is still in planning, so a departure is asked first. The alternative (Stacy S2a): treat the no-plan PR itself as the plan, so a departure found in it is asked in that PR before merge. Pick the recommended pair, the alternative, or another.
+**Ruled**: F-A — the pair plus Leonardo's clause (R8 item 4, *"Ratify as recommended"*; sheet r2.1 row D). In-repo work that executes no plan artifact (a `fix/` or `chore/` PR) is in development from its start. A plan with no recorded approval is still in planning. For work whose kind has a plan (a spec, a product screen), a missing plan is itself planning, so ask. Stacy's alternative (the no-plan PR as the plan) is not taken. Lina's, Ada's, Stacy's and Kenya's reads of the folded clause are owed at the application PR (THURGOOD R4).
 
-**Open for Peter**: F-B — what checks the `**Departures**:` notice. (a), recommended (Stacy's form; the orchestrator; Thurgood concurs): a fixed README mark for a component departure (site 1h) plus a named read in Stacy's counting block. Her text lands in the composed edit of her claims-pass-record unit (RS-50 site 2 with her #555 class fix), at zero extra acts if composed in one edit; until then a missing line is counted only by a sampled read. (b): the notice is self-attested, with no read and no mark; site 1h is struck. Pick (a) or (b).
+*The question as it was put, kept as the record*: F-A — work with no plan artifact, or with a plan never approved. Recommended (Lina, Leonardo, the orchestrator; Thurgood concurs): in-repo work that executes no plan artifact (a `fix/` or `chore/` PR) is in development from its start, so its departures proceed with a `**Departures**:` line that Peter reads at his merge; and work whose plan exists but has no recorded approval (a consumer's screen spec with no lead's dated go) is still in planning, so a departure is asked first. The alternative (Stacy S2a): treat the no-plan PR itself as the plan, so a departure found in it is asked in that PR before merge. Pick the recommended pair, the alternative, or another.
+
+**Ruled**: F-B — (a) (R8 item 4; sheet r2.1 row D, unanimous): site 1h's README mark, plus Stacy's departures read (site 4), pre-declared and applied as EXECUTION by the edit of her claims-pass-record unit, at zero extra acts if composed in one edit with RS-50 site 2 and her #555 class fix. (b) is not taken.
+
+*The question as it was put, kept as the record*: F-B — what checks the `**Departures**:` notice. (a), recommended (Stacy's form; the orchestrator; Thurgood concurs): a fixed README mark for a component departure (site 1h) plus a named read in Stacy's counting block. Her text lands in the composed edit of her claims-pass-record unit (RS-50 site 2 with her #555 class fix), at zero extra acts if composed in one edit; until then a missing line is counted only by a sampled read. (b): the notice is self-attested, with no read and no mark; site 1h is struck. Pick (a) or (b).
 
 *Note under F-B (updated at R4)*: "at zero extra acts" holds only if site 4 is composed in one edit of Stacy's unit with RS-50 site 2 and #555's class fix. Otherwise it costs two more acts, unless Spec 131 has removed them (STACY R2).
 
-**Open for Peter**: F-C — the upstream fix Kenya names, screen specs naming the platform idiom per node (beside `tokens:`), so that most conflicts become planning-stage by construction and a thin spec stops earning `not in plan`. Where it goes: (i) this ballot; (ii) a separate small ballot on Leonardo's Integration Guide § "Writing Screen Specs", recommended (the orchestrator; Thurgood concurs: it changes what a screen spec must contain, which is Leonardo's to author, and it would widen this ballot past its record); or (iii) Spec 131. Pick (i), (ii) or (iii).
+**Ruled**: F-C — (ii) (R8 item 4, *"(ii)" Leonardo's own small ballot*): a separate small ballot, authored by Leonardo, adding to the Integration Guide's § "Writing Screen Specs" that each UI-tree node with a platform-idiom choice states it (follow, or part with a reason). It is fix-now by 16.3.0's S, in the existing `ui-tree.<platform>:` branch, with no schema change (Kenya). Leonardo holds no `governance/` write scope, so his ballot's application needs Peter's line naming him and the file (§ 4 step 6). (i) and (iii) are not taken.
+
+*The question as it was put, kept as the record*: F-C — the upstream fix Kenya names, screen specs naming the platform idiom per node (beside `tokens:`), so that most conflicts become planning-stage by construction and a thin spec stops earning `not in plan`. Where it goes: (i) this ballot; (ii) a separate small ballot on Leonardo's Integration Guide § "Writing Screen Specs", recommended (the orchestrator; Thurgood concurs: it changes what a screen spec must contain, which is Leonardo's to author, and it would widen this ballot past its record); or (iii) Spec 131. Pick (i), (ii) or (iii).
 
 ## 7. Recommendation, counter-argument (fold-back applied), residual
 
-**Recommendation**: ratify sites 1a–1g and 2–3, with F-A as recommended, F-B (a) (site 1h), and F-C (ii).
+**Ruled** (R8 item 4): sites 1a–1h and 2–3 are applied by this ballot's application. Site 4 is applied by the edit of Stacy's unit. F-A is the pair plus Leonardo's clause, F-B is (a), and F-C is (ii).
 
 **Counter-arguments, run against it, and what they changed**:
 - **(1) "The unit branch is decidable."** It is, here. But the doc ships, so the boundary became the plan's approval, with a product instance and a no-approval default.
