@@ -352,6 +352,11 @@ The referents are L322's lead line ("native idiom or departure") and L25 and L28
 
      Ranges are read at the merge commit. `design-language/` is not a governance path, so it takes no Edit-kind line.
    - Also: the grant below, the `**Consulted**:` line, the census lines re-run at the PR's base, and the orchestrator's reading (§ 6) repeated for Peter to overturn.
+   - *Application note (2026-10-30, Thurgood, from Stacy's R1 on ballot 2026-10-30-web-prop-property-or-attribute-only, which records her miss here)*: the census re-run in the PR body adds two lines:
+     - `**Census**: not in scope — 122-canonical-vs-truth` — Leonardo's charter asserts on this framework's § "Decision Framework" (`canonical/agents/leonardo.md` L22–L30), and no site touches L34–L93;
+     - `**Census**: not in scope — 122-sweep-1-refs` — it resolves that section and the charters' routes into this doc by verbatim heading, and no site adds, removes or renames a routed heading.
+
+     The ratified sites are unchanged.
 
 **Grant (activated by this ratification)**: Peter's ratification grants Thurgood, until the application PR merges:
 - `governance/cross-platform-vs-platform-specific-decision-framework.md` (sites 1a–1h, byte for byte);
