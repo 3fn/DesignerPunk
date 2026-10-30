@@ -4,22 +4,6 @@
     {
       "doc": "governance/Component-Development-Guide.md",
       "half": "declared-path",
-      "string": "ButtonCTA/tokens.ts",
-      "occurrence": 0,
-      "line": 577,
-      "home": ".kiro/issues/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md"
-    },
-    {
-      "doc": "governance/Component-Development-Guide.md",
-      "half": "shape",
-      "string": "ButtonCTA/tokens.ts",
-      "occurrence": 0,
-      "line": 577,
-      "home": ".kiro/issues/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md"
-    },
-    {
-      "doc": "governance/Component-Development-Guide.md",
-      "half": "declared-path",
       "string": "tokens.ts",
       "occurrence": 0,
       "line": 998,
