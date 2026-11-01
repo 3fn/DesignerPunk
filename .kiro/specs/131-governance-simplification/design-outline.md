@@ -314,6 +314,23 @@ Requirements, design and tasks (the gates hold); restating the synthesis; the re
 8. `.kiro/hooks/RELEASE-FLOW.md` § 5a, L66–L78 (the owed-set record's item L1; mine).
 9. `canonical/agents/thurgood.md` L543 and L545, my own charter (the owed-set record's item L3).
 
+**Instance count, 2026-11-01** *(Thurgood; Peter's R11 line 5, "Yes, wait stands", `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` § "R11")*. These are the cases where an owner or the steward needed a one-off authority line from Peter to author a CORRECTION of a doc or charter it owns or maintains, because no seat holds standing write there:
+- **2026-10-25**: #472, Kenya's and Data's theming bullets, on Peter's direct words (the precedent).
+- **2026-10-29**: #563, the root `package.json` `prepublishOnly` message. An unowned path, granted to Ada (`.kiro/issues/archive/2026-10-29-root-package-json-prepublishonly-grant.md`; also in `inbound-from-2026-10-29-unowned-paths.md` (a)).
+- **2026-10-30, R8 item 2**: `canonical/agents/kenya.md` L182/L206 (Thurgood); `governance/platform-implementation-guidelines.md` L744–L774 (F1, Lina, #577); `governance/Component-Development-Guide.md` § "Component Token Files" (F3, Lina, #578).
+- **2026-11-01, R11 line 1**: `canonical/profiles/consumer/kenya.overlay.md` L145/L157 (Thurgood).
+- **R11 line 2**: `canonical/agents/stacy.md` L445/L449 and `stacy.overlay.md` L112/L116 (Thurgood).
+- **R11 line 3**: `governance/platform-implementation-guidelines.md` L730 (Lina).
+- **R11 line 4**: `governance/Component-Development-Guide.md` L490, L997–L1001, L1059–L1074, L1810 (Lina, #578).
+- **R11 line 10**: `governance/Test-Development-Standards.md` L1556–L1964 (widened from L1902 by line 10's sub-item) and `.kiro/steering/Civitas-System-Overview.md` L39 (Thurgood).
+- **R11 line 11**: the 18 governance docs of Ada's token-name sweep, #595, and Ada's two lines in `governance/a-vision-of-the-future.md` (Peter's voice, no charter owner).
+- **R11 line 8**: `design-language/design-philosophy.yaml` L53 (Leonardo, on #568's application branch).
+- **R11 line 13**: `.kiro/hooks/RELEASE-FLOW.md` § 5a L66, L71, L72, L74, L76 and L78's first sentence, and `canonical/agents/thurgood.md` L543/L545 (Thurgood; F2's L1 and L3).
+
+Line 12 is a record state, not an authorship line.
+
+That is **12 instances in eight days: 12 ruled, 0 pending**. R8 item 2 counts as two, one per author. Every item on this section's list above now has a line. *(Updated 2026-11-01, Thurgood, after R11 line 13. Superseded, kept verbatim: "- **Pending**: line 13 (L1/L3; it is listed when ruled). Line 12 is a record state, not an authorship line. /  / That is 12 instances in eight days: 11 ruled, 1 pending. R8 item 2 counts as two, one per author. Two more on this section's list above have no line yet: `.kiro/hooks/RELEASE-FLOW.md` § 5a and `canonical/agents/thurgood.md` L543/L545, both F2's non-floor surfaces." Line 10's bullet read L1556–L1902 before its sub-item.)* *(Updated 2026-11-01, Thurgood, after R11 lines 8, 10 and 11. Superseded, kept verbatim: "- **Pending when this line was written**: /   - line 8: `design-language/design-philosophy.yaml` L53; /   - line 10: `governance/Test-Development-Standards.md` L1556–L1902 and `.kiro/steering/Civitas-System-Overview.md` L39 (Thurgood); /   - line 11: the 18 governance docs of Ada's token-name sweep, #595. /  / That is 10 instances in eight days: 7 ruled, 3 pending.")* Each instance cost Peter one line.
+
 This is the evidence for row 15 (OWNERS) and for § 4 (d), which exempts CORRECTION edits from the freeze. An exemption helps only if someone can author the CORRECTION. The list is written here rather than in a separate inbound, because R8's "possibly" leaves the form open. The collective's lean, to wait for this spec unless a fifth instance arrived first, was put to Peter when the count was four, and his answer was to wait. The count is now nine. Whether that reopens his answer is his call; this line does not reopen it.
 
 **Inputs from this release's walk** (the requirements round reads them):

@@ -2,38 +2,6 @@
   "header": "adopted: bdbe72a32 2026-10-26; entries: 69 (token-name 56, declared-path 9, shape 2, import 2)",
   "entries": [
     {
-      "doc": "governance/Component-Development-Guide.md",
-      "half": "declared-path",
-      "string": "ButtonCTA/tokens.ts",
-      "occurrence": 0,
-      "line": 577,
-      "home": ".kiro/issues/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md"
-    },
-    {
-      "doc": "governance/Component-Development-Guide.md",
-      "half": "shape",
-      "string": "ButtonCTA/tokens.ts",
-      "occurrence": 0,
-      "line": 577,
-      "home": ".kiro/issues/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md"
-    },
-    {
-      "doc": "governance/Component-Development-Guide.md",
-      "half": "declared-path",
-      "string": "tokens.ts",
-      "occurrence": 0,
-      "line": 998,
-      "home": ".kiro/issues/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md"
-    },
-    {
-      "doc": "governance/Component-Development-Guide.md",
-      "half": "shape",
-      "string": "tokens.ts",
-      "occurrence": 0,
-      "line": 998,
-      "home": ".kiro/issues/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md"
-    },
-    {
       "doc": "governance/Test-Development-Standards.md",
       "half": "declared-path",
       "string": "src/components/core/Input-Text-Search/platforms/web/InputTextSearch.web.ts",
