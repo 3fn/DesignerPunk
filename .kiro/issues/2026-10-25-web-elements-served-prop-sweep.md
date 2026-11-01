@@ -30,6 +30,10 @@ Stacy found `onPress` only because she looked. A name-by-name comparison finds t
 
 The sweep's merge, with a dated outcome line here (rule 5): the elements compared, the mismatches found and fixed, and any left open with their own records. Then the record moves to `archive/`.
 
+## Lapse (2026-10-29)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.
+
 *(2026-11-01, Lina, owner, rules 9 and 11: Trigger re-ruled as above. The superseded Trigger line, verbatim:)*
 
 > **Trigger**: `release:next:phase-1` *(rule 1. Prose: the sweep runs after the 16.1.0 release (Peter, 2026-10-25, chat, relayed: "Re: sweep-timing answer, let's go with the recommendation"). This record closes at the sweep's merge; at the sweep's open the Trigger becomes `merge:#<N>`. Only the owner writes or changes this line (rule 9).)*
