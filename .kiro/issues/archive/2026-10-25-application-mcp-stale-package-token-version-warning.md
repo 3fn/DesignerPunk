@@ -34,3 +34,18 @@ The warning compares tags with the installed version, so it cannot tell whether 
 *(2026-10-25, Lina, owner: this record rode #471, which MERGED as `83cfae189`; the record is on `main`. The fix it describes was not in that PR and is still owed. Trigger unchanged: `release:next:phase-1`; I change it to `merge:#<N>` when the fix PR opens.)*
 
 *(2026-10-27, Ada, rule 9, a pointer line with Lina's consent; it changes neither the Trigger nor the Class.)* **Rider for this record's fixing PR**: the sentence `For a theme-varying token, read the dark value from themeResolutions.dark (its modeValue; null for a composite override, whose parts are in primitiveReferences); resolvedValue is the base (light) resolution.` added to `get_token_details`' description in `application-mcp-server/src/index.ts`, with the tool-registry hash re-based in the same diff. Its merge closes `.kiro/issues/2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md` (Peter, 2026-10-27, on #533: "schedule in … where most optimally resolved"). **The rider does not hold this record's close**: this record still closes at its own fixing PR under its `release:next:phase-1`, whether or not the rider rides. *Signed: Ada, 2026-10-27.*
+
+## Outcome (2026-11-01)
+
+*(Lina, owner, rule 5.)* **Fixed** on branch `fix/application-mcp-stale-component-token-warning`, cut from `ca6e36f0e`. Disposition: fix-now by 16.3.0's S, sheet r2.1 under `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`.
+
+- **The comparand is content, not version strings**, per Ada's read of 2026-10-30, which replaces § "The fix" item 1's version-tag check and so removes its surviving counter, the noise on every patch upgrade.
+  - `TokenIndexer.packageComponentTokenDrift` compares each package-tagged (`source`) component-token entry with the same key in `<packageRoot>/token-index/components.yaml`. It compares the four fields `generate` merges: `component`, `definedBy`, `primitiveReferences` and `platforms`. It ignores `consumers` and `source`.
+  - An absent shipped entry, or any field that differs, is one warning line naming up to five entries and the tagged versions. A warning makes `get_component_health` read `degraded`, through the existing warnings path.
+  - A missing or unparseable shipped index gives "Cannot check …" and never throws.
+  - The comparison is skipped when the consumer index is the package's own directory, and when no entry is tagged, as in DesignerPunk's own checkout.
+- **The path**: `index.ts` passes `path.join(packageRoot, 'token-index')` as `packageTokenIndexDir`. It is threaded through `IndexComponentsOptions` to full indexes and token reindexes.
+- **Types** (§ "The fix" item 2): `TokenIndexEntry` gains `definedBy?` and `source?`.
+- **Scope, as § "The fix" item 4 says**: the warning does not find a package component token the consumer index lacks. That stays `sync`'s job, and the line never says the index is current.
+- **Tests**: `TokenIndexer.packageDrift.test.ts`, 8 cases: content-equal silent; differing field; absent entry; `consumers`/`source` ignored; untagged silent; damaged install; two versions and a capped list; and the indexer path, including the same-directory skip. `MultiRootIndexing.test.ts` pins the new fourth argument. application-mcp-server: 38 suites, 536 tests.
+- **Ada's rider rides**: her sentence, verbatim, is added to `get_token_details`' description. Its merge is the close event of `.kiro/issues/2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md`, Ada's record, so its outcome line is hers to write.
