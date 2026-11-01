@@ -487,7 +487,7 @@ src/components/
 
 - **README.md**: Component documentation, usage guidelines, token consumption
 - **types.ts**: Shared TypeScript interfaces and types
-- **tokens.ts**: Component-level token references (platform-agnostic)
+- **`<name>.tokens.ts` or `tokens.ts`**: the component's own tokens, declared with `defineComponentTokens()`, only if it has any (§ "Component Token Files") *(corrected 2026-11-01: was "Component-level token references"; .kiro/issues/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md; prior text at 465af3544)*
 - **__tests__/**: Component tests (unit, integration, accessibility)
 - **examples/**: Usage examples demonstrating component variants
 - **platforms/**: Platform-specific implementations following True Native Architecture
@@ -991,11 +991,7 @@ Before implementing icons in a component, verify:
 
 ### How Token Generation Works
 
-**1. Component defines token references** (platform-agnostic):
-```typescript
-// tokens.ts
-paddingX: 'space.inset.100'
-```
+**1. Tokens are defined once, platform-agnostic**: system tokens in Rosetta's token files (`space.inset.100` is a semantic spacing token), and a component's own tokens, if it has any, in its component token file (§ "Component Token Files"). The component's schema lists the tokens its code reads. *(corrected 2026-11-01: step 1 said the component defines token references in `tokens.ts`; .kiro/issues/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md; prior text at 465af3544)*
 
 **2. Build system generates platform-specific values**:
 
@@ -1055,19 +1051,21 @@ theme.color_action_primary
 
 ### Token Reference Format
 
-**In component tokens.ts**, use dot notation for semantic tokens:
-```typescript
-'space.inset.100'         // Semantic spacing token
-'color.action.primary'    // Semantic color token
-'typography.buttonMd'     // Semantic typography token
+**In a component's schema** (`<Component>.schema.yaml`, its `tokens:` lists), name semantic tokens in dot notation: *(corrected 2026-11-01: the names were said to go in a component's `tokens.ts`; .kiro/issues/2026-10-25-cdg-component-token-files-teaches-a-reference-map.md; prior text at 465af3544)*
+```yaml
+- space.inset.100         # Semantic spacing token
+- color.action.primary    # Semantic color token
+- typography.buttonMd     # Semantic typography token
 ```
 
-**Or direct primitive token names**:
-```typescript
-'space100'                // Primitive spacing token
-'cyan300'                 // Primitive color token
-'fontSize100'             // Primitive font size token
+**Or primitive token names**, where Token Selection reached a primitive:
+```yaml
+- space100                # Primitive spacing token
+- cyan300                 # Primitive color token
+- fontSize100             # Primitive font size token
 ```
+
+**In a component token file**, a token references the primitive's object, not a name: `reference: spacingTokens.space150` (§ "Component Token Files").
 
 **Build system resolves these references** to platform-specific generated values.
 
@@ -1810,7 +1808,7 @@ Before implementing a component, verify:
 - [ ] Used semantic tokens for all styling (color, typography, spacing)
 - [ ] Created component-level tokens only when variants needed
 - [ ] Component tokens reference semantic or primitive tokens (no hard-coded values)
-- [ ] Component tokens.ts is platform-agnostic (token references, not values)
+- [ ] A component token file, if the component has one, declares its tokens with `defineComponentTokens()`, each referencing a primitive with a reason (no platform values)
 - [ ] Platform implementations use generated platform-specific tokens
 - [ ] Platform implementations handle platform-specific nuances
 - [ ] Followed True Native Architecture (separate files per platform)
