@@ -32,11 +32,11 @@
 
   - `.kiro/issues/2026-10-21-component-indexer-contracts-cache-shadowing.md` (Lina; P3 improvement): "`ComponentIndexer` keys `contractsCache` by declared name, not provenance — a same-named component in a higher-ranked root replaces core contracts silently; correct for a fork, wrong for a Spec 128 story-3 adopter"
   - `.kiro/issues/2026-10-21-figma-token-translator-flat-tolerance.md` (Ada; P2 obligation (guard)): "`TokenTranslator.matchDimension` applies one flat tolerance (`spacing ? 2 : 1`) to every non-color family — vacuous for `opacity`, latent for `lineHeight`, and the `letterSpacing` index is empty"
-  - `.kiro/issues/2026-10-30-g4-web-element-public-contract-charter.md` (Lina; P2 obligation (record)). **The gate, not a scope item**: G-4 is its own spec, and Peter's R8 item 5 ("Gate") rules that "128's React (web) binding design is not approved before G-4's design merges". This row records the gate in 128's outline; G-4's charter holds its own intake. *(named until now only in an inbound)*
+  - `.kiro/issues/2026-10-30-g4-web-element-public-contract-charter.md` (Lina; P2 obligation (record)). **The gate, not a scope item**: G-4 is its own spec, and Peter's R8 item 5 ("Gate") rules that "128's React (web) binding design is not approved before G-4's design merges". 128's outline and its React Native half are not gated (the charter's own scope sentence). This row records the gate in 128's outline; G-4's charter holds its own intake. *(named until now only in an inbound)*
 
 **Only non-due records take this routing line** (Stacy's phase-1 state 2a). A record due at 16.2.0's S that is newly routed by a line cannot use it. It needs a state-4 re-rule under the delegation (r2.1), a close, or it lapses at S under rule 11.
 
-**Not here, by design**: `2026-10-20-web-element-api-and-form-participation.md` and `2026-10-26-form-needs-submit-action-fires-on-refused-semantic.md`. Their Triggers point at this spec's requirements, but they are G-4's (R8 items 4 and 5; walk record § "Decided under Peter's 2026-10-30 delegation"), and G-4's charter holds them.
+**Not here, by design**: `2026-10-20-web-element-api-and-form-participation.md` and `2026-10-26-form-needs-submit-action-fires-on-refused-semantic.md`. Their Triggers point at this spec's requirements, but they are G-4's (DLG sheet r2.1 row E and R8 item 5; walk record § "Decided under Peter's 2026-10-30 delegation"), and G-4's charter holds them.
 
 ## Dependencies
 
