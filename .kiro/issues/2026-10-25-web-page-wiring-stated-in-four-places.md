@@ -37,3 +37,5 @@ The four places a reader learns page wiring, and what each leaves out:
 - That consumer-Lina read the markup out of `node_modules` rather than a served doc. With no route to the browser guide she had none to read; item 2 is the fix, and I file nothing more until a run shows it with the route in place.
 
 *Signed: Lina, 2026-10-25.*
+
+**Routed**: Spec 131 § "2026-11-01 (scope intake, second batch, record only: it names records and settles no design)", the outline row added in the same PR as this line *(2026-11-01, Thurgood, steward, rule 9; under Peter's fork D, R11 line 16, "Route them", `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10, batch routing)*. The Trigger is unchanged. Under fork B (R11 line 14, route in place) its owner re-rules it to `path:.kiro/specs/131-governance-simplification/requirements.md` after this batch merges. This record is not due at 16.2.0's S.

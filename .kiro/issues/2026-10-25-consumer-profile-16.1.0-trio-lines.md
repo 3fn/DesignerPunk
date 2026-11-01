@@ -18,3 +18,5 @@
 | 3 | from Lina's record (R1-18, R2-13) | Consumer-Sparky linked only the package's component-token stylesheet, as his #378 line and INSTALL say, so the founder's own `ComponentTokens.web.css` never loads. | Sparky's overlay line (`canonical/profiles/consumer/sparky.overlay.md` L27) restates page wiring and leaves that file out. | Once Lina's browser-guide paragraph merges, his line keeps its "in place of DesignerPunk's base" clause and adds a pointer to `browser-distribution-guide` for the order, rather than a fourth copy of the rule. Sparky writes his own line's text. |
 
 *Signed: Thurgood, 2026-10-25.*
+
+**Routed**: Spec 131 § "2026-11-01 (scope intake, second batch, record only: it names records and settles no design)", the outline row added in the same PR as this line *(2026-11-01, Thurgood, steward, rule 9; under Peter's fork D, R11 line 16, "Route them", `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10, batch routing)*. The Trigger is unchanged. Under fork B (R11 line 14, route in place) its owner re-rules it to `path:.kiro/specs/131-governance-simplification/requirements.md` after this batch merges. This record is not due at 16.2.0's S.
