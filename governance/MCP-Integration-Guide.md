@@ -191,7 +191,7 @@ console.log('Token groups:', groups);
 
 ## Querying Tokens by Path
 
-DTCG tokens are organized in a nested object structure. To access a specific token, split the path and traverse:
+DTCG tokens are organized in a nested object structure, except semantic colors, whose keys are flat under `semanticColor` (`color.feedback.success.text` is one key). To access a nested token, split the path and traverse: *(corrected 2026-11-01: the semantic-color exception added; `src/generators/DTCGFormatGenerator.ts` L561; prior text at `e9677db1f`)*
 
 ```typescript
 import type { DTCGToken, DTCGTokenFile } from '../generators/types/DTCGTypes';
@@ -232,8 +232,10 @@ const space200 = getToken(dtcgTokens, 'space.space200');
 console.log(space200?.$value);       // → "16px"
 console.log(space200?.$type);        // → "dimension"
 
-// Semantic color token (alias)
-const successText = getToken(dtcgTokens, 'semanticColor.color.feedback.success.text');
+// Semantic color token (alias). Its key is flat under semanticColor,
+// so getToken's split on '.' cannot reach it: read the key directly.
+const semanticColor = dtcgTokens.semanticColor as Record<string, DTCGToken>;
+const successText = semanticColor['color.feedback.success.text'];
 console.log(successText?.$value);    // → "{color.green500}"
 
 // Shadow composite token
@@ -247,6 +249,7 @@ console.log(bodyMd?.$value);
 // → { fontFamily: "{fontFamily.fontFamilyBody}", fontSize: "{fontSize.fontSize100}", ... }
 ```
 *(corrected 2026-11-01: the success-text alias is the generated DTCG value, `{color.green500}` (the token index maps `color.feedback.success.text` to `green500`); `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
+*(corrected 2026-11-01: semantic color keys are flat under `semanticColor` (`src/generators/DTCGFormatGenerator.ts` L561 writes `group[key]`), so `getToken`'s split on `.` returned `undefined` for this example; it now reads the key directly; prior text at `e9677db1f`)*
 
 ### Querying a Group
 
@@ -466,11 +469,13 @@ function resolveAlias(value: unknown, dtcgTokens: DTCGTokenFile): unknown {
 ```
 
 ```typescript
-// Resolve a semantic color alias
-const token = getToken(dtcgTokens, 'semanticColor.color.feedback.success.text');
+// Resolve a semantic color alias (its key is flat: read it directly, as above)
+const semanticColor = dtcgTokens.semanticColor as Record<string, DTCGToken>;
+const token = semanticColor['color.feedback.success.text'];
 const resolved = resolveAlias(token?.$value, dtcgTokens);
-console.log(resolved); // → "#00c853" (the actual color value, sRGB hex converted from OKLCH source)
+console.log(resolved); // → "#008548" (green500's value, sRGB hex converted from its OKLCH source)
 ```
+*(corrected 2026-11-01: semantic color keys are flat under `semanticColor` (`src/generators/DTCGFormatGenerator.ts` L561 writes `group[key]`), so `getToken`'s split on `.` returned `undefined` for this example; it now reads the key directly, and the resolved value is green500's generated `#008548`, not `#00c853`; prior text at `e9677db1f`)*
 
 ### Resolving Composite Token Aliases
 
