@@ -72,3 +72,5 @@ Under rule 9. Peter's words: *"Re: 533, Let's schedule in as part of one of the 
 - **Surviving counter-argument (Lina's)**: Peter asked for one schedule, and his ruling now has two vehicles. Item 2 rides Spec 129's requirements, which may slip. The fallback in the Trigger (her own small PR once the stale-version fix merges) limits how long this can wait, but if neither PR opens, the record sits `manual` and unfired, and is archived stale after two walks (rule 5).
 
 *Signed: Ada, 2026-10-27.*
+
+**Routed**: Spec 131 § "2026-11-01 (scope intake, second batch, record only: it names records and settles no design)", the outline row added in the same PR as this line *(2026-11-01, Thurgood, steward, rule 9; under Peter's fork D, R11 line 16, "Route them", `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10, batch routing)*. The Trigger is unchanged. Under fork B (R11 line 14, route in place) its owner re-rules it to `path:.kiro/specs/131-governance-simplification/requirements.md` after this batch merges. This record is not due at 16.2.0's S.

@@ -221,6 +221,7 @@ Outputs feed each charter rewrite (P7), the OWNERS file and Agent-Directory's ro
 - **Peter's open PRs and 16.1.0**: execution waits; 16.1.0 ships under current rules.
 - **Spec 123 amendments**: removing rows 1–2 amends Req 11.5 and VALVE-1 (F19); Peter ratifies.
 - **Removal gate (P5)**: consumer `sync`/`derive` must not break when signatures are absent.
+- **The 28 P3 improvement records routed here by Peter's fork D** (R11 line 16; § 13's 2026-11-01 second batch) are read in the requirements round, to "inform the spec, be combined or inform other proposals". They do not gate 16.2.0's S, and no 131 unit waits on them.
 
 ---
 
@@ -321,3 +322,51 @@ This is the evidence for row 15 (OWNERS) and for § 4 (d), which exempts CORRECT
 - `inbound-from-2026-10-30-release-flow-as-run.md` (#566, open at this writing): ten lessons from running the release flow at 16.2.0's phase-1 walk.
 
 **What happens next.** This amendment merges before 16.2.0's S. Each owner then re-rules the records in the table, in a commit that is an ancestor of S, citing `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`. The token is the owner's to choose; `path:.kiro/specs/131-governance-simplification/requirements.md` is the form Ada uses for Spec 129. Records whose Trigger already names that path (the three marked so in the table) are not re-ruled. Each takes a `**Routed**:` line naming this section, and its Trigger stays as it is. The home-switch record is due, so its re-rule is its own (#588). **The rule-11 record is the other exception.** Its deadline is 16.3.0's S, and this spec is paused, so a `path:` on its requirements would not fire in time. Its token is `release:next:phase-1`, with the deadline in prose.
+
+### 2026-11-01 (scope intake, second batch, record only: it names records and settles no design) — Thurgood
+
+**Authority**: Peter's fork D, chat, received before 2026-11-01T15:52:38Z, verbatim: "Route them. We'll evaluate them as part of that effort — perhaps they can better inform the spec, be combined or inform other proposals, etc." It is recorded as R11 line 16 in `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` (on #605, cited by SHA once merged). The form is fork B's, route in place (R11 line 14). Also cited: `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10 (`R10@ee5ea2b80`).
+
+**The list, generated, and its count**: 28 records, P3 with a `manual` Trigger, excluding grants and charters. The command is the one at `1e2f82b44`, re-run at `origin/main` `465af3544` with the same output (sha1 `97595272aaa6c87c341b888ba2c0abd12d5b4426`, 28 lines):
+
+```bash
+S=465af3544
+comm -12 <(git grep -l '^\*\*Class\*\*: P3' $S -- ':(glob).kiro/issues/*.md' | sed "s/^$S://" | sort) \
+         <(git grep -l '^\*\*Trigger\*\*: `manual`' $S -- ':(glob).kiro/issues/*.md' | sed "s/^$S://" | sort) \
+| while read f; do git show $S:$f | grep -m1 '^\*\*Class\*\*' | grep -qE '·[[:space:]]*(grant|charter)' || echo $f; done
+```
+
+**What this batch asks of the requirements round**, in Peter's words: evaluate each record "as part of that effort — perhaps they can better inform the spec, be combined or inform other proposals". Nothing below is a requirement, a verdict, or a drop. Each record keeps its owner. The scope line is each record's own title, quoted.
+
+| Record (`.kiro/issues/`) | Owner | Scope, quoted from the record's title |
+|---|---|---|
+| `2026-06-10-post-v12-rgba-pipeline-cleanup.md` | Ada | "Post-v12 Cleanup: Remove Legacy RGBA Color Pipeline" |
+| `2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md` | Ada | "Application MCP `get_token_details` `resolvedValue` Does Not Apply Per-Mode Semantic Overrides" |
+| `2026-06-24-oklch-shadow-color-family-not-migrated.md` | Ada | "Shadow Color Family Was Never Migrated to OKLCH" |
+| `2026-06-26-token-index-ordering-readdirsync-portability.md` | Ada | "Token-Index Ordering Ties to `readdirSync`/Filesystem Order (Portability)" |
+| `2026-07-19-application-mcp-search-tokens-partial-match-signal.md` | Ada | "Application MCP `search_tokens` Returns Partial-Name Matches With No Match-Quality Signal" |
+| `2026-09-19-accuracy-pass-residuals.md` | Thurgood (each item keeps its named owner) | "Accuracy-pass second-order residuals (small items, named owners)" |
+| `2026-09-26-committed-token-index-stale.md` | Ada | "committed `token-index/semantics.yaml` is stale against `generate` (since #202)" |
+| `2026-09-27-borderColor-alias-deprecate-native.md` | Lina, Kenya, Data | "deprecate Container-Base's native `borderColor = "color.border.default"` alias" |
+| `2026-09-28-complete-task-no-ci-warning-wording.md` | Thurgood | "`complete-task.sh --no-ci` says "known-red" for every use, including docs-only follow-ups" |
+| `2026-10-01-plan-blast-radius-and-carry-tracking.md` | Thurgood | "two standing fixes from Spec 123 Task 16 — (a) the tasks-round sweep for what a plan's changes will touch; (b) a completion-doc carry must name its tracked home" |
+| `2026-10-03-ios-theme-environment-key-missing-backslash.md` | Lina (Kenya verifies) | "nine shipped iOS files read the theme environment key without the key-path backslash, so defining the theme surface alone would not make the tree type-check" |
+| `2026-10-13-component-gaps-from-settings-ledger.md` | Lina (per-item co-owners) | "Component gaps and tool lessons from the Settings-screen ledger" |
+| `2026-10-13-discovery-study-stage1-followups.md` | per row: Lina, Thurgood, Leonardo, Ada | "Discovery study Stage 1 — routed follow-ups (hand-fixes + discoveries) — ROUTING RECORD" |
+| `2026-10-24-component-token-usage-forks.md` | Lina (Ada consulted, and owner of the generator items) | "Component Token-Usage Forks Carried Out of the Drift-Pass Findings Record" |
+| `2026-10-25-avatar-agent-svg-hardcoded-border-width.md` | Lina | "Avatar-Base Web Hard-Codes the Agent SVG's Border Width and Corner Ratio" |
+| `2026-10-25-cli-per-command-help-and-one-parser.md` | Lina | "The CLI's subcommands run when asked for help, and drop flags they do not know" |
+| `2026-10-25-consumer-guard-commit-policy-install-etimedout.md` | Lina | "Consumer Guard's fresh-clone test times out on `npm install` of the packed tarball" |
+| `2026-10-25-consumer-install-audit-low-advisories.md` | Ada | "Owed act: a consumer's `npm install @3fn/core` prints "3 low severity vulnerabilities", all in DesignerPunk's own declared dependencies" |
+| `2026-10-25-consumer-profile-16.1.0-trio-lines.md` | Thurgood | "Consumer profile: three lines the 16.1.0 trio showed are missing (orchestrator law in a seat's answer; the palette caveat in every seat that gives colour advice; Sparky's page-wiring line)" |
+| `2026-10-25-cursor-rules-legacy-steering-paths.md` | Thurgood | "`.cursor/rules/*.mdc` address the docs MCP by legacy `.kiro/steering/` paths; two of them resolve to nothing" |
+| `2026-10-25-install-doc-16.1.0-trio-gaps.md` | Thurgood | "INSTALL leaves three things from the 16.1.0 trio unsaid: how much `init` writes, what the install's audit line means, and the founder's own component-token file" |
+| `2026-10-25-mcp-bundled-packages-manifest.md` | Ada | "The MCP Bundles Ship Without a Manifest of the Libraries Inlined Into Them" |
+| `2026-10-25-product-mcp-screen-token-refs-unchecked.md` | Thurgood | "Product MCP: a screen spec's token references are indexed without being checked, so a token that does not exist passes silently" |
+| `2026-10-25-real-browser-test-lane-for-form-participation.md` | Thurgood | "Is a real-browser test lane chartered? jsdom cannot prove form submission (E7)" |
+| `2026-10-25-src-build-encodes-old-token-selection-order.md` | Ada | "`src/build` comments, a selection type and error text state the old token order ("semantic → primitive → component"), which the Token Selection Matrix no longer says" |
+| `2026-10-25-web-page-wiring-stated-in-four-places.md` | Lina | "Which token stylesheets and which module path a web page loads is stated in four places, and each is incomplete in its own way" |
+| `2026-10-27-census-corpus-outside-git-question.md` | Stacy, Thurgood | "Does a census corpus outside git count (for example the immutable npmjs version documents of published versions)?" |
+| `2026-10-29-charter-date-tags-ship-to-consumers.md` | Thurgood | "Charters carry short provenance tags (a date, a name, no SHA) that ship into consumers' copies; the dated-pointer rule does not reach them" |
+
+**Routing**: each record gains a `**Routed**:` line in this PR (Stacy's state 2a), Trigger unchanged. Its owner then re-rules the Trigger, in place, to `path:.kiro/specs/131-governance-simplification/requirements.md`, citing DLG, R10 and R11 line 16. That re-rule is a separate record-only commit, after this batch merges (the walk record's sequencing: "A `spec` row is re-ruled only after the outline amendment naming it merges"). After the re-rule the record is in state 2. Until then it is in state 2a. None of the 28 is due at 16.2.0's S, so neither step holds S. Routing moves no record out of the root, so the root count does not change (criterion 4: resolution, not relocation).
