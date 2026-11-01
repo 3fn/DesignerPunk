@@ -325,7 +325,7 @@ This is the evidence for row 15 (OWNERS) and for § 4 (d), which exempts CORRECT
 
 ### 2026-11-01 (scope intake, second batch, record only: it names records and settles no design) — Thurgood
 
-**Authority**: Peter's fork D, chat, received before 2026-11-01T15:52:38Z, verbatim: "Route them. We'll evaluate them as part of that effort — perhaps they can better inform the spec, be combined or inform other proposals, etc." It is recorded as R11 line 16 in `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` (on #605, cited by SHA once merged). The form is fork B's, route in place (R11 line 14). Also cited: `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10 (`R10@ee5ea2b80`).
+**Authority**: Peter's fork D, chat, received before 2026-11-01T15:52:38Z, verbatim: "Route them. We'll evaluate them as part of that effort — perhaps they can better inform the spec, be combined or inform other proposals, etc." It is recorded as R11 line 16 in `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` (in #605's follow-up on `chore/record-r11-lines-14-17`; cited by SHA once merged). The form is fork B's, route in place (R11 line 14). Also cited: `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10 (`R10@ee5ea2b80`).
 
 **The list, generated, and its count**: 28 records, P3 with a `manual` Trigger, excluding grants and charters. The command is the one at `1e2f82b44`, re-run at `origin/main` `465af3544` with the same output (sha1 `97595272aaa6c87c341b888ba2c0abd12d5b4426`, 28 lines):
 
