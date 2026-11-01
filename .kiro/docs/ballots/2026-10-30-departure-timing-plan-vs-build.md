@@ -425,6 +425,8 @@ Peter ratified it as recommended (R8 item 4). The application PR's body repeats 
 
 **Open for Peter**: #568's site 1a, L138/L139 corrected after the R4 reads (Ada's overlap, Lina's and Kenya's wording): the plan kind is read from the merged `tasks.md` row the work executes, or the PR's `Spec:` field — ratify the corrected text? The superseded and corrected sentences are in § 3, "Site 1a, corrected after the R4 reads", and the four reads and THURGOOD R5 are in § 8. *(Asked 2026-11-01, Thurgood.)*
 
+*Surviving counter, beside the line* (Lina's Final, with Ada): `Spec: none` and "no row executed" are both author-asserted, so an author can still choose development and skip the ask. This is narrowed, not closed: a claims pass reads both against the diff, and every departure still carries its `**Departures**:` line to Peter's merge.
+
 **Ruled**: F-B — (a) (R8 item 4; sheet r2.1 row D, unanimous): site 1h's README mark, plus Stacy's departures read (site 4), pre-declared and applied as EXECUTION by the edit of her claims-pass-record unit, at zero extra acts if composed in one edit with RS-50 site 2 and her #555 class fix. (b) is not taken.
 
 *The question as it was put, kept as the record*: F-B — what checks the `**Departures**:` notice. (a), recommended (Stacy's form; the orchestrator; Thurgood concurs): a fixed README mark for a component departure (site 1h) plus a named read in Stacy's counting block. Her text lands in the composed edit of her claims-pass-record unit (RS-50 site 2 with her #555 class fix), at zero extra acts if composed in one edit; until then a missing line is counted only by a sampled read. (b): the notice is self-attested, with no read and no mark; site 1h is struck. Pick (a) or (b).
