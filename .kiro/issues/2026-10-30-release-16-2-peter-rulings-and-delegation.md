@@ -248,6 +248,15 @@ Cite R10 as `R10@<the squash of the PR that added it>`.
   - #568's ratification (R8 items 4 and 9) extends to the corrected text: L138's last sentence and L139 as quoted, and "through the product's architect" at L138 and L181.
   - The application carries the corrected text.
 
+**Line 10 — the TDS and Civitas-overview CORRECTIONs**, before 2026-11-01T15:18:36Z.
+- *Put to him* (Thurgood's drafted line): "Re: 10, Yes: Thurgood authors, as CORRECTIONs, (a) `governance/Test-Development-Standards.md` L1556–L1902, the workflow examples, so each declared test file and schema shape exists or is marked hypothetical (Lina consulted on L1884); and (b) `.kiro/steering/Civitas-System-Overview.md` L39, which drops 'built in Spec 081: 14 tools' for 'built in Spec 081 and extended by specs 096 and 097', with no count. The merges stay mine." Options presented: yes to both; yes to (b) only; no (both ride 16.3.0 on their re-rules).
+- *Thurgood's read, received before the answer*: (a) is six sites, about 20 lines and about 1 h, off the critical path. (b) moves consumer unit `#what-civitas-contains` (item `what-civitas-con-8`), so Stacy owes a re-confirm and a re-sign. His lean was yes to both. Stacy's and Lina's reads were still pending at receipt.
+- *His word*: "Yes to both"
+- *What it rules*: Thurgood authors both, one-off, for these lines only. The merges stay Peter's. No standing write scope moves.
+  - (a) is the six sites of `governance/Test-Development-Standards.md`: four `generic` markers (EXECUTION under ballot `2026-10-26-governance-examples-guard` § 2.3) and the L1902 and L1884 CORRECTIONs, with Lina consulted on L1884.
+  - (b) is the L39 CORRECTION of `.kiro/steering/Civitas-System-Overview.md`.
+  - *Recorded after the answer*: Stacy's read arrived after it as a cost dissent; the ruling stands. Both PRs are F-gating, because both files ship. (a) is in `governance/`; (b) ships as an identity doc, though its consumer rendering never carried the count.
+
 *Further lines are appended as ruled.*
 
 Cite R11 as `R11@<the squash of the PR that added it>`, with the line number, e.g. `R11@<sha> line 2`.
