@@ -192,3 +192,5 @@ Any edit to Process-Spec-Planning, the Completion Documentation Guide, the TCP, 
 - **Not archived** (ballot § 6, the closing paragraph's first exception).
 
 - 2026-10-19 (Thurgood): trigger fired at #413 (`3b84122c9`, the sitting's ratification); read as re-ruled by the ratification it carried, which named this record's fix vehicle, so no lapse under rule 11; token re-keyed to A2's own event, the first sweep miss (Trigger line above), since A1 was applied in PR `chore/ballot-sitting-2-application`. *(The coordinator's reading, recorded as such; reversible if Peter reads it otherwise.)*
+
+**Routed**: Spec 131 § "2026-11-01 (scope intake, second batch, record only: it names records and settles no design)", the outline row added in the same PR as this line *(2026-11-01, Thurgood, steward, rule 9; under Peter's fork D, R11 line 16, "Route them", `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10, batch routing)*. The Trigger is unchanged. Under fork B (R11 line 14, route in place) its owner re-rules it to `path:.kiro/specs/131-governance-simplification/requirements.md` after this batch merges. This record is not due at 16.2.0's S.

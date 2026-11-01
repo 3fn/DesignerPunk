@@ -206,11 +206,33 @@ withdrawn: 2026-10-23 — signature withdrawn under the clause-5 grant (Peter, 2
 ## `#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script`
 
 signer: stacy
-date: 2026-10-23
+date: 2026-11-01
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script` (re-pointed; ROUTED)
-canonicalHash: sha256:fcf52f052773d8f801d52ae79152e04e167d892cb2d568b549429486b1da75bf
-renderedHash: sha256:7441cad815e15f2200eee8a5548a63c1bc342301d9e8ad26485e144093394204
+canonicalHash: sha256:60defc99dcb57b3530f420338068017de5a09aae53d0ebc225aab6398482693b
+renderedHash: sha256:561ff7f35e9d6e3f1de336061b5e9abcf234141f53ea9cc423549ccf25104c13
 verdict: assent — surviving 13/13
+
+**Re-signed 2026-11-01** (prior signature: assent 13/13, 2026-10-23, against `sha256:fcf52f052773d8f801d52ae79152e04e167d892cb2d568b549429486b1da75bf` / renderedHash `sha256:7441cad815e15f2200eee8a5548a63c1bc342301d9e8ad26485e144093394204`). It was stale because the F2 CORRECTION moved the canonical unit (L445, L449) and the consumer overlay (L112, L116). Thurgood authored it on Peter's "Yes" of 2026-11-01 (relayed; the PR body cites its committed record); I re-confirmed the unit at `930d45b03`.
+- **Read before this act**: the three consumer renderings of the unit at `930d45b03`, which has the same render as `7ad3ada78` (`git diff --quiet 7ad3ada78 HEAD -- canonical/_consumer-output` is empty). I read them through tool calls before this commit: `canonical/_consumer-output/_canonical/agents/stacy.md` L333–L356, `cc/.claude/agents/stacy.md` L207–L230 and `kiro/.kiro/agents/stacy-prompt.md` L173–L196. The three spans are byte-identical.
+- **Judged against**: those renderings and the operative set at 13 items.
+  - The rendered overlay L112 states the closing-commit `touch-only`, the candidate anchor (the closing commit, or the newest post-adoption `completion/task-*` add) and the closure-undecidable sentence in full, "since adoption", in my words.
+  - The rendered overlay L116 states "read checkboxes, and a checkbox is an assertion" and the corrected wrong-exclusion shape.
+  - Both describe `scripts/owed-set.sh` as the consumer runs it (`--specs-dir`, the adoption day) and are true against the script at `1eced6cd5`. That is the same reading as my re-confirm.
+- **Removals re-judged against the moved body**: the row's three removals stand unchanged. Each still occurs once in the canonical unit and in none of the renderings (checked by script):
+  - `.kiro/docs/ballots/2026-09-19-completion-claims-integrity.md` (subtraction-2: the consumer's adoption day replaces this repository's ratification record);
+  - `.kiro/hooks/RELEASE-FLOW.md` (subtraction-1);
+  - `./scripts/owed-set.sh` (subtraction-1: the consumer calls `bash node_modules/@3fn/core/scripts/owed-set.sh --specs-dir specs`).
+  - The CORRECTION added no repository-only text to the unit that the consumer rendering would have to drop.
+- **Hashes**:
+  - canonicalHash `sha256:60defc99dcb57b3530f420338068017de5a09aae53d0ebc225aab6398482693b`, recomputed independently (`hashText` over `partition(splitFrontmatter(...).body).units`). It equals the overlay pin and my confirmation.
+  - renderedHash `sha256:561ff7f35e9d6e3f1de336061b5e9abcf234141f53ea9cc423549ccf25104c13`, recomputed with `readConsumerSpans` / `renderedHashOf` over the committed `canonical/_consumer-output/` (three pieces), via a scratchpad script outside the repo.
+- **Every item survives, each read in the rendering**:
+  - `owed-set-row-classes` and `owed-set-heuristics` are in their corrected consumer form (above).
+  - The other eleven are as at the prior signature: the predicate's three conditions; "counted by class"; the consumer's call; the count line with "Read the row-sum identity first"; "candidates, not verdicts" (still the closest call, entailed rather than stated, as before); `owed-set: unavailable (<why>) — continue`; "call this same script in each"; the three unit classes; `git log --first-parent` and `git show <merge>:<path>`.
+  - Surviving count: 13 of 13.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-10-23)**: assent 13/13, against `sha256:fcf52f052773d8f801d52ae79152e04e167d892cb2d568b549429486b1da75bf`, as below.
 
 **First signature on this key, re-given in full.** The unit's heading was renamed from `#the-owed-set-pipeline-your-command-catalogs-owed-set-entry-documented-commands-deliberately-not-a-committed-script` (the heading said "documented commands, deliberately not a committed script" over a body that runs the committed script `scripts/owed-set.sh`; `.kiro/issues/2026-10-22-stacy-owed-set-heading-false-after-439.md`). The old key's signature was withdrawn at its own commit under the clause-5 grant (Peter, 2026-10-23, § 2a of that record), the old row was deleted unsigned (authoring), and this row was added unsigned. I do not carry the 13/13 assent across the rename: I judge it again, below, against the rendering as it stands.
 - **The rendering is unchanged by the rename**, which I checked rather than assumed: `renderedHashOf` over the committed `canonical/_consumer-output/` for this row's span (`_canonical/agents/stacy.md` L333–356, source now the renamed key) is `sha256:7441cad815e15f2200eee8a5548a63c1bc342301d9e8ad26485e144093394204`, equal to the old row's last `renderedHash`. The canonical hash moved (`sha256:c33de65d…` to `sha256:fcf52f05…`) because it covers the heading line, which is the key. The overlay pin was re-pointed by Thurgood and equals the new canonical hash (`sha256:fcf52f05…`).
