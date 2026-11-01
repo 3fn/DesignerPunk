@@ -261,6 +261,14 @@ Cite R10 as `R10@<the squash of the PR that added it>`.
     - Peter's "Yes to both" covers both, and the ruling stands.
   - *Both PRs are F-gating*, because both files ship. The TDS examples are in `governance/`. The Civitas overview ships as an identity doc, though its consumer rendering never carried the count.
 
+**Line 11 — Ada's authorship of the 18 governance docs in #595**, before 2026-11-01T15:21:15Z.
+- *Put to him*: "(A) one line naming Ada as author of the 18 `governance/` files listed in #595's body, CORRECTIONs and markers, one-off, merge Peter's (Ada's ask; Thurgood's read agrees); (B) his word that the walk record's "Ada · sweep PR" row under the delegation suffices (Ada's alternative; weak — the delegation excludes write scope); hold for 131. Also: `governance/a-vision-of-the-future.md` is his own voice (Thurgood's read; no charter owner) — Ada's two corrections stay or he makes them himself."
+- *His word*: "(A), and the vision file stays Ada's"
+- *What it rules*:
+  - Ada authors the 18 `governance/` files named in #595's body, CORRECTIONs and markers, one-off; each merge stays his.
+  - `governance/a-vision-of-the-future.md` is written in his voice and has no charter owner. Ada's two corrections to it stay hers, by his word.
+  - No standing write scope moves.
+
 *Further lines are appended as ruled.*
 
 Cite R11 as `R11@<the squash of the PR that added it>`, with the line number, e.g. `R11@<sha> line 2`.
