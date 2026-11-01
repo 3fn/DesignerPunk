@@ -236,11 +236,24 @@ All four survive re-grounded: "validate the metadata before the doc merges", "yo
 ## `#the-charter-cut-ratified-verbatim`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-01
 row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#the-charter-cut-ratified-verbatim` (re-pointed; ROUTED)
-canonicalHash: sha256:359a3c7d4a4fbe610444f54e02b424faf53339f44b8fffd81015a82007a91611
-renderedHash: sha256:9bd202da8b460899bad8f6dfdd3dfb92a5bace7809a792debcd6edff5fce52e1
+canonicalHash: sha256:b2009ee690f7b50f8ed359195e081380997fd5c2e47c149c0fae5555cf32f4e5
+renderedHash: sha256:472c08c40f795c9cd83611c1e2894a6b01642f6586c24dbb70d90295c218cb1b
 verdict: assent — surviving 2/4; not surviving: `you-retain`, `steward-verb-carve-out`
+
+**Re-signed 2026-11-01** (prior signature: assent — surviving 2/4; not surviving: `you-retain`, `steward-verb-carve-out`, 2026-09-29, against canonical `sha256:359a3c7d4a4fbe610444f54e02b424faf53339f44b8fffd81015a82007a91611` and rendered `sha256:9bd202da8b460899bad8f6dfdd3dfb92a5bace7809a792debcd6edff5fce52e1`). *(This re-does `d25430e2e`, whose read claim was false. Erratum: `.kiro/issues/2026-11-01-stacy-c1-acts-read-claim-false.md`; re-cut under R11 line 18.)* It was stale because the steward-verb drop (Thurgood `c9fb5300d`; R5 fork 2, R8 item 9) moved the canonical unit and its rendering. I re-confirmed the unit at 4 items at `df49f02c1`.
+- **The rendering moved; read whole via `cat -n`** at `5bfca2e63`, before this commit: `canonical/_consumer-output/_canonical/agents/thurgood.md` L338–L345, `canonical/_consumer-output/cc/.claude/agents/thurgood.md` L247–L254 and `canonical/_consumer-output/kiro/.kiro/agents/thurgood-prompt.md` L221–L228. The overlay's Thurgood half of the cut drops ", and the verification of claims whose evidence requires the steward toolset"; both cuts render verbatim, and "steward toolset" occurs in none of them (checked by script).
+- **Hashes**:
+  - canonicalHash `sha256:b2009ee690f7b50f8ed359195e081380997fd5c2e47c149c0fae5555cf32f4e5`, recomputed independently; it equals the overlay pin and my confirmation.
+  - renderedHash `sha256:472c08c40f795c9cd83611c1e2894a6b01642f6586c24dbb70d90295c218cb1b`, recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` over the committed `canonical/_consumer-output/` (three pieces).
+- **Removals re-judged against the moved body**:
+  - The instrument clause and `STRAGGLER` stand unchanged.
+  - **The third removal was re-quoted on my judgment, and Thurgood authored it** (`1e7deb778`, re-made from `e93dc675f` for the re-cut; a signing commit may not change removals, chain link 2). It had quoted the old carve-out paragraph, which is no longer in the unit. It now quotes the paragraph that replaced it: "**The steward-verb carve-out is dropped, not carried**: … Every claim's verification decision is Stacy's; **ambiguity resolves to Stacy**." Both ends occur once in the unit.
+  - It stays a removal, citing `subtraction-3` as before. The paragraph records how DesignerPunk's own two seats split the steward verbs over DesignerPunk's own corpus. A consumer's Thurgood never held those verbs over its corpus, so there is nothing for a consumer reader to have dropped. The overlay never carried the carve-out, and the rendering does not carry the drop either (0 occurrences).
+- **Verdict unchanged**: assent, surviving 2/4 (`cut-thurgood`, `cut-stacy`). `you-retain` is not entailed as a whole (STRAGGLER and the register row are repository-bound). `steward-verb-carve-out`, which now states the drop, does not survive, for the reason above.
+
+**Prior signature record (superseded, 2026-09-29)**: assent — surviving 2/4; not surviving: `you-retain`, `steward-verb-carve-out`, against `sha256:359a3c7d4a4fbe610444f54e02b424faf53339f44b8fffd81015a82007a91611`, as below.
 
 Both cuts survive verbatim. `you-retain` is not entailed as a whole: the rendered list drops STRAGGLER and the register row, which are repo-bound. The steward-verb carve-out names the docs-MCP steward verbs over DesignerPunk's own corpus, which a consumer does not steward.
 
