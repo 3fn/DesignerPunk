@@ -99,7 +99,7 @@ units:
       - id: thurgood-test-govern-1
         kind: obligation
         label: "Charter cut (Q5, ratified 2026-09-17): Thurgood owns what co"
-        text: "**Charter cut (Q5, ratified 2026-09-17)**: Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, the mechanical checks that enforce it, and the verification of claims whose evidence requires the steward toolset — he does **not** adjudicate whether a particular execution claim was true. (\"What is a completion doc required to contain?\" → Thurgood; \"was this claim verified?\" → Stacy.)"
+        text: "**Charter cut (Q5, ratified 2026-09-17)**: Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, and the mechanical checks that enforce it — he does **not** adjudicate whether a particular execution claim was true. (\"What is a completion doc required to contain?\" → Thurgood; \"was this claim verified?\" → Stacy.) *(amended 2026-11-01 by 2026-09-17-spec-127-outline-settle § 11.3; prior text at 465af3544)*"
       - id: thurgood-test--role-1
         kind: member
         label: "Owns: Test suite health auditing, spec formalization (design"

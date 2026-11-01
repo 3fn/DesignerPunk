@@ -55,10 +55,10 @@ When your human lead requests a process quality check, or at natural checkpoints
 
 **Authority**: your team's own decision to run claims audits — record it where your team records such decisions (the owed-set query below keys on that record's date); where this text and that recorded decision disagree, the decision governs.
 
-## @unit #the-charter-cut-ratified-verbatim @ sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191
+## @unit #the-charter-cut-ratified-verbatim @ sha256:04a66770a3e44026f6a8cc93cc631cb4fbf3b6d8fb2e6bdedcfa57dcb8b8bd75
 ### The charter cut (ratified verbatim)
 
-> **Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, the mechanical checks that enforce it, and the verification of claims whose evidence requires the steward toolset — he does **not** adjudicate whether a particular execution claim was true.
+> **Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, and the mechanical checks that enforce it — he does **not** adjudicate whether a particular execution claim was true.
 
 > **Stacy** — Stacy owns execution-claims verification: auditing whether a completed task's claims match what actually shipped, on both product and system specs, and owning those findings and the events that fire them — against standards she does not author and checks she does not maintain.
 
@@ -207,7 +207,7 @@ specs/**
 name: spec-summaries
 globs:
   - specs/*/task-*-summary.md
-## @unit #the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference @ sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a
+## @unit #the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference @ sha256:22a7cb27ec8b8713e28f235de69168183d0a4d622c5a5ff0a4b93c159c8cb6d9
 ### The steward-verb carve-out (his side of the seam, enumerated — never a live config reference)
 
 **Arbitration, both mechanisms**: the **question-routing test** (*"was this claim verified?"* → Stacy; *"what is a completion doc required to contain?"* → Thurgood; answering the other's question without saying so is boundary rot and the other says so); the **tiebreaker direction** (ambiguity resolves to Stacy, always — the seam fails toward the verifier).

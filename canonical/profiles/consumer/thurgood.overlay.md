@@ -137,10 +137,10 @@ Ground truth for this stewardship is COMPUTED at audit time by your repo's own c
 
 **Authority**: your team's own decision to run claims audits, recorded where your team records such decisions; where this text and that recorded decision disagree, the decision governs.
 
-## @unit #the-charter-cut-ratified-verbatim @ sha256:359a3c7d4a4fbe610444f54e02b424faf53339f44b8fffd81015a82007a91611
+## @unit #the-charter-cut-ratified-verbatim @ sha256:b2009ee690f7b50f8ed359195e081380997fd5c2e47c149c0fae5555cf32f4e5
 ### The charter cut (ratified verbatim)
 
-> **Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, the mechanical checks that enforce it, and the verification of claims whose evidence requires the steward toolset — he does **not** adjudicate whether a particular execution claim was true.
+> **Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, and the mechanical checks that enforce it — he does **not** adjudicate whether a particular execution claim was true.
 
 > **Stacy** — Stacy owns execution-claims verification: auditing whether a completed task's claims match what actually shipped, on both product and system specs, and owning those findings and the events that fire them — against standards she does not author and checks she does not maintain.
 

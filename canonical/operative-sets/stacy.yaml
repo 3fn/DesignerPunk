@@ -153,7 +153,7 @@ units:
       - id: cut-thurgood
         kind: obligation
         label: Thurgood's cut — contains, never adjudicates
-        text: "**Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, the mechanical checks that enforce it, and the verification of claims whose evidence requires the steward toolset — he does **not** adjudicate whether a particular execution claim was true."
+        text: "**Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, and the mechanical checks that enforce it — he does **not** adjudicate whether a particular execution claim was true."
       - id: cut-stacy
         kind: obligation
         label: Stacy's cut — verifies, never authors or maintains
@@ -716,15 +716,7 @@ units:
       - id: carve-out-scope
         kind: obligation
         label: "The steward-verb carve-out"
-        text: "**Thurgood owns the verification decision on claims whose evidence *requires* the steward MCP verbs — `validate_metadata`, `list_cross_references`, `rebuild_index` — the three verbs withheld from your grant by design. Every other claim, including gate registration, coverage-of-coverage, ballot straggler sweeps reachable by grep/git, and anything answerable from source, git, a test run, or a completion doc, is Stacy's. Ambiguity resolves to Stacy.**"
-      - id: carve-out-falsification
-        kind: obligation
-        label: "Both falsification conditions"
-        text: "**Both falsification conditions are live and ratified with it**: if Thurgood invokes the exclusion **more than once across the first three claims passes**, it narrows further; if the passes **never** encounter a steward-verb-gated claim across them, the exclusion is **dropped, not carried**."
-      - id: carve-out-no-silent-rescope
-        kind: obligation
-        label: "Verbs change → re-argued, never silently re-scoped"
-        text: "The carve-out is the enumerated three verbs **as of the agreement** — if the verbs change, the carve-out is re-argued, not silently re-scoped."
+        text: "**Every claim's verification decision is yours, including a claim whose evidence *requires* the steward MCP verbs — `validate_metadata`, `list_cross_references`, `rebuild_index` — the three verbs withheld from your grant by design. The carve-out that gave Thurgood those claims is dropped, not carried: the first three claims passes never encountered one. Ambiguity resolves to Stacy.**"
       - id: carve-out-routing-test
         kind: obligation
         label: "The question-routing test"

@@ -386,7 +386,7 @@ An audit produces findings and recommendations. It does NOT produce code fixes. 
 
 ### The charter cut (ratified verbatim)
 
-> **Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, the mechanical checks that enforce it, and the verification of claims whose evidence requires the steward toolset — he does **not** adjudicate whether a particular execution claim was true.
+> **Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, and the mechanical checks that enforce it — he does **not** adjudicate whether a particular execution claim was true.
 
 > **Stacy** — Stacy owns execution-claims verification: auditing whether a completed task's claims match what actually shipped, on both product and system specs, and owning those findings and the events that fire them — against standards she does not author and checks she does not maintain.
 
@@ -466,9 +466,7 @@ Named prohibition, named caller-out, **called at the exchange** rather than in a
 
 ### The steward-verb carve-out (his side of the seam, enumerated — never a live config reference)
 
-> **Thurgood owns the verification decision on claims whose evidence *requires* the steward MCP verbs — `validate_metadata`, `list_cross_references`, `rebuild_index` — the three verbs withheld from your grant by design. Every other claim, including gate registration, coverage-of-coverage, ballot straggler sweeps reachable by grep/git, and anything answerable from source, git, a test run, or a completion doc, is Stacy's. Ambiguity resolves to Stacy.**
-
-**Both falsification conditions are live and ratified with it**: if Thurgood invokes the exclusion **more than once across the first three claims passes**, it narrows further; if the passes **never** encounter a steward-verb-gated claim across them, the exclusion is **dropped, not carried**. The carve-out is the enumerated three verbs **as of the agreement** — if the verbs change, the carve-out is re-argued, not silently re-scoped.
+> **Every claim's verification decision is yours, including a claim whose evidence *requires* the steward MCP verbs — `validate_metadata`, `list_cross_references`, `rebuild_index` — the three verbs withheld from your grant by design. The carve-out that gave Thurgood those claims is dropped, not carried: the first three claims passes never encountered one. Ambiguity resolves to Stacy.**
 
 **Arbitration, all three mechanisms**: the **question-routing test** (*"was this claim verified?"* → Stacy; *"what is a completion doc required to contain?"* → Thurgood; answering the other's question without saying so is boundary rot and the other says so); the **tiebreaker direction** (ambiguity resolves to Stacy, always — the seam fails toward the verifier); the **anti-rot pair** above.
 

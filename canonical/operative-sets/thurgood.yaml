@@ -649,7 +649,7 @@ units:
       - id: cut-thurgood
         kind: obligation
         label: "The Thurgood half of the cut"
-        text: "**Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, the mechanical checks that enforce it, and the verification of claims whose evidence requires the steward toolset — he does **not** adjudicate whether a particular execution claim was true."
+        text: "**Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, and the mechanical checks that enforce it — he does **not** adjudicate whether a particular execution claim was true."
       - id: cut-stacy
         kind: obligation
         label: "The Stacy half of the cut"
@@ -661,7 +661,7 @@ units:
       - id: steward-verb-carve-out
         kind: obligation
         label: "The steward-verb carve-out"
-        text: "**The steward-verb carve-out** — you own the verification decision ONLY on claims whose evidence *requires* the steward MCP verbs (`validate_metadata`, `list_cross_references`, `rebuild_index` — the enumerated three as of the agreement, never a live config reference). Everything answerable from source, git, a test run, or a completion doc is Stacy's; **ambiguity resolves to Stacy**. Both falsification conditions are live: invoked more than once across the first three claims passes → it narrows further; never encountered across them → **dropped, not carried**."
+        text: "**The steward-verb carve-out is dropped, not carried**: the first three claims passes never encountered a claim whose evidence *requires* the steward MCP verbs (`validate_metadata`, `list_cross_references`, `rebuild_index`), which was its own ratified condition for the drop. Every claim's verification decision is Stacy's; **ambiguity resolves to Stacy**."
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#the-charter-cut-ratified-verbatim
   "#the-composed-learning-loop-your-standing-duties-on-every-claims-pass":
     canonicalHash: sha256:6575df29c6e7994654ba2670352bb5b2f935d1d979f128b7b887b7c7d900ae1e
