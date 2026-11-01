@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Fake `curl` for the version-mismatch branch (exit 10, "mismatch"): the
+# registry GET succeeds (HTTP 200) and carries an npmjs tarball URL, but the
+# body's `version` is not the VERSION asked for — simulates a registry that
+# answers for a different version than requested. PATH-shim only; never
+# touches the network, never installs.
+echo '{"version":"99.99.98-fake","dist":{"tarball":"https://registry.npmjs.org/@3fn/core/-/core-99.99.98-fake.tgz"}}'
+printf '\n200'

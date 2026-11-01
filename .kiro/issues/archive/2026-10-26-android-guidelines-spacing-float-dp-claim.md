@@ -73,3 +73,18 @@ The component code that reads tokens at the wrong type is `2026-10-24-android-co
 > "Okay, waive the Android type issue and capture it in 129; resolve the radius names issue now, please"
 
 Waived for 16.1.0: the L744 claim and the examples that inherit it (L746–L774) ship as they are in this release. Vehicle: Spec 129. The Android section of `governance/platform-implementation-guidelines.md` is regenerated from the final type table, so the fix reads `getKotlinType` at 129's fixing commit rather than a family list restated from memory (this record's "Not in this record" paragraph already names fontSize as Ada's 129 question). Ada is adding the 129 inbound line. This record stays open at the root with the re-ruled Trigger above; it is closed by the 129 PR that lands the Android type table, with rule 5's dated outcome line.
+
+## Outcome (2026-10-30)
+
+*(Lina, owner, rule 5.)* **Fixed by CORRECTION** on branch `fix/android-spacing-float-dp-guidelines`, cut from `d34fc7786`. This supersedes the Spec 129 vehicle named in the waiver above. **Authority**: Peter, in chat, relayed by the orchestrator, received before 2026-10-30T17:23:42Z: "Re: 2, Yes". That answers the authority line, which names Lina as author of `governance/platform-implementation-guidelines.md` L744–L774. It is recorded as R8 in `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md`; the merge SHA of R8 is cited in this PR's body.
+
+- **What changed** (L744–L774 at `d34fc7786`; L744–L776 after):
+  - L744 now states the emitted types: spacing, radius, tapArea, borderWidth and layering are `Dp`; `.dp` on a `Dp` does not compile; nothing converts implicitly.
+  - fontSize is named as `Dp` today, with its type left open, per this record's "Not in this record" paragraph.
+  - § "When `.dp` IS Required" now covers the `Float` families (sizing, lineHeight, density, letterSpacing) and names `getKotlinType` as the table.
+  - The compliance-pattern claim is corrected: it flags literals, not token reads.
+  - The enum example returns `Dp` tokens bare, and notes the `Float` case.
+  - L774's last sentence now gives the real reason the pattern is Android-specific.
+- **Truth referent**: `src/providers/AndroidFormatGenerator.ts` `getKotlinType` (L151–L173) and `formatKotlinValue` (L199ff) at `d34fc7786`. Cross-checked against the emitted fixture `tests/onboarding-trio/fixtures/born-cc/design-tokens/DesignTokens.android.kt` (`val space_200 = 16.dp`, L377; `const val size_500: Float = 40f`, L347), against `src/components/__tests__/TokenCompliance.test.ts` L620, and against `AndroidSizingDpReads.test.ts`.
+- **Not verified**: no Kotlin build. This repo has no Android toolchain.
+- **Found while correcting, outside the authority line**: L730's headline, "Never append `.dp` when passing `DesignTokens` values to Compose functions", is over-broad. A sizing read needs `.dp` (`DesignTokens.size_500.dp`). The corrected L744 and L746 now scope the rule inside the section, but the headline alone still misleads. The orchestrator asks Peter to widen the authority line to L730 before this PR opens. If he does not, the finding is filed in this PR as its own record (rule 10).

@@ -3,7 +3,8 @@
 **Date**: 2026-10-24
 **Status**: ACTIVE — owed. The four passes carry no outcome line.
 **Owner**: Thurgood (the duty is mine: `canonical/agents/thurgood.md` § "The composed learning loop", items 1–2)
-**Trigger**: `release:next:phase-1` — the release walk reads it: four outcome lines written (one per pass), each after a full read of its pass, or a dated re-rule. The next RELEASE claims pass owes its own line at its merge as well.
+**Trigger**: `release:16.3.0:phase-1` — the event that owes the close is 16.3.0's S: four outcome lines written (one per pass, 123 MIDPOINT and RELEASE 15.0.0, 15.1.0 and 16.0.0), each after a full read of its pass.
+*Trigger re-ruled 2026-11-01 (Thurgood, owner, rules 9 and 11). The disposition, quoted from the walk record's table: "fix-now by 16.3.0 | Thurgood · four outcome lines | re-rule". Authority: `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920` (`.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` § "Delegation"), the owner's recommendation and the collective's cross-read, carried in the 16.2.0 walk record's § "Decided under Peter's 2026-10-30 delegation" (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`). The R7/R8 rows are an exception to R9 item 1's "not a re-rule in place" under Peter's R10 (before 2026-11-01T13:42:54Z), which is cited by SHA once its PR merges. The token names 16.3.0 because a `release:next:phase-1` set during 16.2.0 resolves to 16.2.0 (Stacy's phase-1 check). Superseded Trigger, kept verbatim: "`release:next:phase-1` — the release walk reads it: four outcome lines written (one per pass), each after a full read of its pass, or a dated re-rule. The next RELEASE claims pass owes its own line at its merge as well."*
 **Class**: P2 obligation (record) · owed-act *(set 2026-10-24, Thurgood, rule 12. The passes' findings were routed by Stacy; what is missing is the standards-side outcome record, so the loop's output is unrecorded, not wrong.)*
 **Source**:
 - The duty: "Read EVERY claims-pass in full … Record a one-line outcome on every pass — `adopted` / `declined-with-reason` / `none`. A decline carries its reason in the line."
@@ -20,3 +21,7 @@ For each of the four passes: read it in full (not only its `Standards implicatio
 ## Closing
 
 Closes when the four lines are on `main`, by rule 5's dated outcome line in the PR that adds the last of them.
+
+## Lapse (2026-10-29)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.

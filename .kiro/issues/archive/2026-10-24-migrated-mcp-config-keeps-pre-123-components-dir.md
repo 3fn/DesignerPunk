@@ -39,6 +39,10 @@ On Peter, 2026-10-25, in chat, relayed verbatim by the orchestrator: "Fix all of
 
 *Signed: Ada, 2026-10-25.*
 
+## Lapse (2026-10-29)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.
+
 ## Outcome (2026-10-30, Ada, owner)
 
 **Fixed on branch `fix/sync-mcp-config-stale-components-dir`, cut from `origin/main` `d34fc7786`, in the commit that adds this section.** It is option 3 as ruled: the check always reports, and the repair runs only under a flag. Thurgood's consult was read before the code (seven items; relayed by the orchestrator, scratch, not committed). The PR is not open as I write this, so its number is not recorded here. If the PR does not merge, this section and the archive move do not land either.
