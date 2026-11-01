@@ -97,3 +97,5 @@ The native components that want a circle do not read the token: `BadgeCountBase.
 - **Thurgood**: form ok; nothing to change.
 
 *Signed: Ada, 2026-10-24.*
+
+**Routed**: Spec 129 § "2026-11-01 (scope intake, second batch, record only: it names records and settles no design)", the outline row added in the same PR as this line *(2026-11-01, Thurgood, steward, rule 9; under DLG `d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10 fork 2 (a), batch routing)*. The Trigger is unchanged. Whether it is re-ruled in place to the spec follows Peter's answer to fork B (in place or archived); until then this record's own Trigger, which already names this spec's requirements, is its firing. This record is not due at 16.2.0's S.

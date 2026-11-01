@@ -87,3 +87,5 @@ Carried here from plan item 4 of `2026-10-26-cdg-web-icon-typescript-example-fal
 - **Fix**: the component PR that closes this record, on the theme surface Spec 129 emits (`2026-06-28-spec-094-platform-theme-emission-unwired.md`). This record's Trigger, Class and Closing are unchanged; the item is closed when that PR fixes it or Spec 129 takes it in with a reason recorded here.
 
 *Signed: Lina, 2026-10-26.*
+
+**Routed**: Spec 129 § "2026-11-01 (scope intake, second batch, record only: it names records and settles no design)", the outline row added in the same PR as this line *(2026-11-01, Thurgood, steward, rule 9; under DLG `d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10 fork 2 (a), batch routing)*. The Trigger is unchanged. Whether it is re-ruled in place to the spec follows Peter's answer to fork B (in place or archived); until then this record's own Trigger, which already names this spec's requirements, is its firing. This record is not due at 16.2.0's S.
