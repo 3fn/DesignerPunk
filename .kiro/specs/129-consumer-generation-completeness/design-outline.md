@@ -67,6 +67,8 @@ Related, by path only:
   - `.kiro/issues/2026-10-26-token-index-platform-name-readers.md` (Ada; P1 consumer-blocking): "Readers of `token-index/` that assume one string per platform: the index now gives a composite several names, `null` where a platform has none, and `theme.` names the `themeVarying` flag does not predict" *(named until now only in an inbound)*
 
 - **Two of these may be one finding.** `2026-10-24-ios-token-declarations-not-public.md` and `2026-10-26-ios-designtokens-members-not-public.md` both count 105 non-`public` members of the iOS token file. Whether they are duplicates, and which closes, is Ada's call as owner of both.
+**Only non-due records take this routing line** (Stacy's phase-1 state 2a). A record due at 16.2.0's S that is newly routed by a line cannot use it. It needs a state-4 re-rule under the delegation (r2.1), a close, or it lapses at S under rule 11.
+
 - **Inbound**: none added. The lines above quote each record's scope, and each record states what it asks. An inbound would restate them. If Ada wants one for the native group, it is hers to write.
 
 ---
