@@ -187,6 +187,34 @@ Cite R9 as `R9@<the squash of the PR that added it>`.
 
 Cite R10 as `R10@<the squash of the PR that added it>`.
 
+### R11 — Peter's 2026-11-01 authority lines (one at a time, chat, relayed by the orchestrator)
+
+*(Appended 2026-11-01, Thurgood, owner, rule 9. Each line was put to Peter alone and answered alone. Below are the text put to him, verbatim from the orchestrator's receipt log, and his word, verbatim, each with its clock bound (the orchestrator's `date -u` at receipt). Each line authorizes the named authorship, one-off, for the files named. Each merge stays his. No line moves standing write scope. Further lines are appended as ruled.)*
+
+**Line 1 — Kenya's overlay pins**, before 2026-11-01T14:47:54Z.
+- *Put to him*: "add `canonical/profiles/consumer/kenya.overlay.md` L145 and L157 to the item-2 authority line, Thurgood as author (bump the two checksum pins), so Kenya can re-sign her two entries and the steward-canonical record closes before S; alternative named: route to 131."
+- *His word*: "Yes"
+- *What it rules*: R8 item 2's line, which named Thurgood for `canonical/agents/kenya.md` L182/L206, the two renderings and the lock, now also covers `kenya.overlay.md` L145 and L157.
+
+**Line 2 — Stacy's F2 sentences**, before 2026-11-01T14:51:23Z.
+- *Put to him*: "Thurgood authors, as a CORRECTION (his R5 fork-3 word "CORRECTION"), the two sentences on the owed set after a closing commit in `canonical/agents/stacy.md` L445 and L449 and their consumer copies in `canonical/profiles/consumer/stacy.overlay.md` L112 and L116; Stacy re-confirms and re-signs (two acts); a CHANGELOG line; floor-class, release-blocking, F-gating. Alternative named: none available (routing would ship a false consumer-facing charter sentence)."
+- *His word*: "Yes"
+- *What it rules*: Thurgood authors those four lines as a CORRECTION. The truth referent is `scripts/owed-set.sh`. Stacy makes the two acts. The release notes carry a CHANGELOG line.
+
+**Line 3 — F1 widened to L730**, before 2026-11-01T14:52:23Z.
+- *Put to him*: "Lina corrects `governance/platform-implementation-guidelines.md` L730 (the same class of wrong Android spacing-type claim as the L744–L776 fix in #577), one-paragraph CORRECTION under the same record, F-gating. Alternative named: leave it and disclose by record path in the notes."
+- *His word*: "Yes"
+- *What it rules*: Lina authors the L730 CORRECTION under the F1 record (`2026-10-26-android-guidelines-spacing-float-dp-claim.md`).
+
+**Line 4 — F3 widened to four CDG sites**, before 2026-11-01T14:55:48Z.
+- *Put to him*: "Lina adds `governance/Component-Development-Guide.md` L490, L997–L1001, L1059–L1074 and L1810 to #578 as the same CORRECTION under the same record (F3, floor-class, F-gating); Thurgood's two retired line-998 pending entries then match. Alternative named: merge #578 with only the named section fixed and disclose the four sites."
+- *His word*: "Re: line 4, yes"
+- *What it rules*: Lina authors those four sites in #578, under the F3 record (`2026-10-25-cdg-component-token-files-teaches-a-reference-map.md`). Thurgood's removal of the two line-998 `pending.json` entries rides the same PR (`361b4f344`).
+
+*Further lines are appended as ruled.*
+
+Cite R11 as `R11@<the squash of the PR that added it>`, with the line number, e.g. `R11@<sha> line 2`.
+
 ## Delegation
 
 **The words**: R7's second sentence, above.
