@@ -37,3 +37,17 @@ Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S
 *(2026-11-01, Lina, owner, rules 9 and 11: Trigger re-ruled as above. The superseded Trigger line, verbatim:)*
 
 > **Trigger**: `release:next:phase-1` *(rule 1. Prose: the sweep runs after the 16.1.0 release (Peter, 2026-10-25, chat, relayed: "Re: sweep-timing answer, let's go with the recommendation"). This record closes at the sweep's merge; at the sweep's open the Trigger becomes `merge:#<N>`. Only the owner writes or changes this line (rule 9).)*
+
+## Outcome (2026-11-01)
+
+*(Lina, owner, rule 5.)* **The sweep ran** in the application PR of ballot `2026-10-30-web-prop-property-or-attribute-only`, on branch `chore/apply-web-prop-property-or-attribute`, together with its markers and its guard, as the ballot's § 4 requires.
+- **Elements compared**: all 34 web elements, each schema's own `properties` (303 props: 263 non-callback, 38 callbacks and 2 `children`), against an upgraded jsdom instance (`prop in`) and its `observedAttributes`.
+- **Found**:
+  - 140 props are JS properties of the served name;
+  - 100 are attribute-only and now marked `web: attribute-only`;
+  - 23 reach the element neither way and are now marked `web: unmapped`. Of these, 14 have no web form, 8 are Nav-Header content props taken as named-slot content, and 1 is used by another platform only (Container-Base `ignoresSafeArea`, iOS).
+  - Each of the 123 is appended to the G-4 charter's § 4 list with its kind.
+- **Fixed at the element**: Nav-Header-App now observes `appearance`, `show-separator` and `test-id`, which it had read only at connection.
+- **Served names were not changed**, per the ballot's rule. **Served callbacks** (38) are listed for G-4 and not changed; the `onPress` property #482 added to Button-CTA stays, and its event mapping is G-4's.
+- **The guard**: `src/components/__tests__/WebPropAccess.guard.test.ts` holds every mark, and every absence of a mark, true.
+- **Left open, with their own records**: the event and callback half (`2026-10-25-web-prop-mapping-rule-gap.md` → G-4), and the element properties the marks list (G-4).

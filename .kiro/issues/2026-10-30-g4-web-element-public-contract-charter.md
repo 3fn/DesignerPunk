@@ -53,6 +53,34 @@ Under the property-half sentence, every served non-callback prop that a web elem
   - 1 accessor: Input-Text-Base, Input-Text-Email, Input-Text-Password, Input-Text-PhoneNumber.
 - Leonardo's objection, verified by Sparky (R3b): `InputTextBase.web.ts` observes `helper-text` and reads it through `getAttribute`, with no `helperText` property, although `types.ts` L37 declares `helperText`.
 
+### § 4, the sweep's first marks (2026-11-01, Lina, owner, rule 9)
+
+The property-half ballot's application (`2026-10-30-web-prop-property-or-attribute-only`, branch `chore/apply-web-prop-property-or-attribute`) marks every served non-callback prop that the web element does not take as a JS property of the served name. `children` is excluded as slot content.
+
+- **How the classes were read**: each schema's own `properties`, against an upgraded instance of the element (`prop in` instance) and its `observedAttributes`, in jsdom. The guard `src/components/__tests__/WebPropAccess.guard.test.ts` holds the marks true.
+- **Counts**: 123 marks in 11 schemas, out of 263 served non-callback props:
+  - 100 `attribute-only`;
+  - 14 `unmapped — no web form`;
+  - 8 `unmapped — no web form (taken as named-slot content)`;
+  - 1 `unmapped — another platform only`.
+- **Callbacks**: 38 served callbacks (and 2 `children` props) are listed by name in the schemas and are not changed. Their event mapping is G-4's.
+- **The slot-content kind**: the 8 Nav-Header content props reach the web element as light-DOM content in a named `<slot>`, not as a property or attribute. A React 19 wrapper passing them as props would set a property or attribute, which the element does not read. So they are `unmapped` under the ratified marker. Their web form, named slots, is G-4's to design, beside `children`.
+- **Fixed rather than marked**: Nav-Header-App read `appearance`, `show-separator` and `test-id` once, at connection, without observing them. It now observes all three and forwards changes to its inner `nav-header`, and the three are `attribute-only`.
+
+| Component | `attribute-only` (an element property to add) | `unmapped` (kind) |
+|---|---|---|
+| Container-Base | `accessibilityLabel`, `background`, `border`, `borderColor`, `borderRadius`, `hoverable`, `layering`, `opacity`, `padding`, `paddingBlockEnd`, `paddingBlockStart`, `paddingHorizontal`, `paddingInlineEnd`, `paddingInlineStart`, `paddingVertical`, `semantic`, `shadow` | `ignoresSafeArea` (another platform only) |
+| Container-Card-Base | `accessibilityLabel`, `background`, `border`, `borderColor`, `borderRadius`, `interactive`, `padding`, `paddingBlockEnd`, `paddingBlockStart`, `paddingHorizontal`, `paddingInlineEnd`, `paddingInlineStart`, `paddingVertical`, `semantic`, `shadow` | `testID` (no web form) |
+| Input-Text-Base | `autocomplete`, `errorMessage`, `helperText`, `isSuccess`, `label`, `maxLength`, `placeholder`, `readOnly`, `required`, `showInfoIcon`, `type`, `value` | `testID` (no web form) |
+| Input-Text-Email | `errorMessage`, `helperText`, `invalidEmailMessage`, `isSuccess`, `label`, `maxLength`, `placeholder`, `readOnly`, `required`, `showInfoIcon` | `autocomplete` (no web form), `testID` (no web form), `type` (no web form) |
+| Input-Text-Password | `errorMessage`, `helperText`, `invalidPasswordMessage`, `isNewPassword`, `isSuccess`, `label`, `maxLength`, `minLength`, `placeholder`, `readOnly`, `requireLowercase`, `requireNumber`, `requireSpecialChar`, `requireUppercase`, `required`, `showInfoIcon`, `showPassword`, `showToggle` | `autocomplete` (no web form), `testID` (no web form), `type` (no web form) |
+| Input-Text-PhoneNumber | `autoFormat`, `errorMessage`, `helperText`, `invalidPhoneMessage`, `isSuccess`, `label`, `maxLength`, `placeholder`, `readOnly`, `required`, `showInfoIcon` | `autocomplete` (no web form), `showCountrySelector` (no web form), `testID` (no web form), `type` (no web form) |
+| Nav-Header-App | `appearance`, `showSeparator`, `testID` | `centerContent` (no web form (taken as named-slot content)), `leadingContent` (no web form (taken as named-slot content)), `trailingContent` (no web form (taken as named-slot content)) |
+| Nav-Header-Base | `appearance`, `showSeparator`, `testID` | `leadingSlot` (no web form (taken as named-slot content)), `titleSlot` (no web form (taken as named-slot content)), `trailingSlot` (no web form (taken as named-slot content)) |
+| Nav-Header-Page | `appearance`, `scrollBehavior`, `showSeparator`, `testID`, `titleAlignment` | `closeAction` (no web form), `leadingAction` (no web form (taken as named-slot content)), `scrollContainerRef` (no web form), `trailingActions` (no web form (taken as named-slot content)) |
+| Progress-Bar-Base | `accessibilityLabel`, `mode`, `size`, `testID`, `value` | — |
+| Progress-Indicator-Node-Base | `sizing` | — |
+
 ## 5. The records this charter carries
 
 Each is re-ruled to this charter's Trigger in the same commit that files it, with a dated reason.

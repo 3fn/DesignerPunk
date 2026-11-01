@@ -85,7 +85,7 @@ export const tools = [
   {
     name: 'get_component_full',
     annotations: { readOnlyHint: true },
-    description: 'Get complete assembled metadata including all contracts, composition rules, and token relationships. Readiness is per platform; `scaffold` means an implementation exists and no test file matched the platform\'s test pattern, so read `reviewed` and `hasImplementation` beside it.',
+    description: 'Get complete assembled metadata including all contracts, composition rules, and token relationships. Readiness is per platform; `scaffold` means an implementation exists and no test file matched the platform\'s test pattern, so read `reviewed` and `hasImplementation` beside it. On web, a property with `web: attribute-only` is taken only as its kebab-case attribute, and one with `web: unmapped` does not reach the element; a property with no `web` key is a JS property of the same name.',
     inputSchema: {
       type: 'object' as const,
       properties: { name: { type: 'string', description: 'Component name' } },

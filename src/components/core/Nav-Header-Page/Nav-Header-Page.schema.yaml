@@ -58,6 +58,7 @@ properties:
       when centered title approaches leading/trailing regions.
 
   leadingAction:
+    web: unmapped
     type: LeadingAction
     required: false
     description: |
@@ -66,6 +67,7 @@ properties:
       Back button accessibility label defaults to "Back" with optional override.
 
   trailingActions:
+    web: unmapped
     type: "TrailingAction[]"
     required: false
     description: |
@@ -74,6 +76,7 @@ properties:
       Optional badge count (renders only when > 0).
 
   closeAction:
+    web: unmapped
     type: CloseAction
     required: false
     description: |
@@ -82,6 +85,7 @@ properties:
       Semantically distinct from trailing actions (dismissal vs operation).
 
   titleAlignment:
+    web: attribute-only
     type: "'center' | 'leading'"
     required: false
     default: "Platform convention (iOS: center, Android/Web: leading)"
@@ -90,6 +94,7 @@ properties:
       Override to achieve unified cross-platform identity.
 
   scrollBehavior:
+    web: attribute-only
     type: "'fixed' | 'collapsible'"
     required: false
     default: "'fixed'"
@@ -99,6 +104,7 @@ properties:
       protected when hidden. Reduced motion: degrades to fixed.
 
   scrollContainerRef:
+    web: unmapped
     type: "React.RefObject<HTMLElement>"
     required: false
     description: |
@@ -106,18 +112,21 @@ properties:
       Defaults to window scroll when omitted.
 
   appearance:
+    web: attribute-only
     type: "'opaque' | 'translucent'"
     required: false
     default: "'opaque'"
     description: Inherited from Nav-Header-Base.
 
   showSeparator:
+    web: attribute-only
     type: boolean
     required: false
     default: "true"
     description: Inherited from Nav-Header-Base.
 
   testID:
+    web: attribute-only
     type: string
     required: false
     description: |
