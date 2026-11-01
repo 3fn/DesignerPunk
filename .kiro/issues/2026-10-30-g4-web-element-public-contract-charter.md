@@ -61,7 +61,7 @@ The property-half ballot's application (`2026-10-30-web-prop-property-or-attribu
 - **Counts**: 123 marks in 11 schemas, out of 263 served non-callback props:
   - 100 `attribute-only`;
   - 14 `unmapped — no web form`;
-  - 8 `unmapped — no web form (taken as named-slot content)`;
+  - 8 `unmapped — named-slot content`;
   - 1 `unmapped — another platform only`.
 - **Callbacks**: 38 served callbacks (and 2 `children` props) are listed by name in the schemas and are not changed. Their event mapping is G-4's.
 - **The slot-content kind**: the 8 Nav-Header content props reach the web element as light-DOM content in a named `<slot>`, not as a property or attribute. A React 19 wrapper passing them as props would set a property or attribute, which the element does not read. So they are `unmapped` under the ratified marker. Their web form, named slots, is G-4's to design, beside `children`.
@@ -75,9 +75,9 @@ The property-half ballot's application (`2026-10-30-web-prop-property-or-attribu
 | Input-Text-Email | `errorMessage`, `helperText`, `invalidEmailMessage`, `isSuccess`, `label`, `maxLength`, `placeholder`, `readOnly`, `required`, `showInfoIcon` | `autocomplete` (no web form), `testID` (no web form), `type` (no web form) |
 | Input-Text-Password | `errorMessage`, `helperText`, `invalidPasswordMessage`, `isNewPassword`, `isSuccess`, `label`, `maxLength`, `minLength`, `placeholder`, `readOnly`, `requireLowercase`, `requireNumber`, `requireSpecialChar`, `requireUppercase`, `required`, `showInfoIcon`, `showPassword`, `showToggle` | `autocomplete` (no web form), `testID` (no web form), `type` (no web form) |
 | Input-Text-PhoneNumber | `autoFormat`, `errorMessage`, `helperText`, `invalidPhoneMessage`, `isSuccess`, `label`, `maxLength`, `placeholder`, `readOnly`, `required`, `showInfoIcon` | `autocomplete` (no web form), `showCountrySelector` (no web form), `testID` (no web form), `type` (no web form) |
-| Nav-Header-App | `appearance`, `showSeparator`, `testID` | `centerContent` (no web form (taken as named-slot content)), `leadingContent` (no web form (taken as named-slot content)), `trailingContent` (no web form (taken as named-slot content)) |
-| Nav-Header-Base | `appearance`, `showSeparator`, `testID` | `leadingSlot` (no web form (taken as named-slot content)), `titleSlot` (no web form (taken as named-slot content)), `trailingSlot` (no web form (taken as named-slot content)) |
-| Nav-Header-Page | `appearance`, `scrollBehavior`, `showSeparator`, `testID`, `titleAlignment` | `closeAction` (no web form), `leadingAction` (no web form (taken as named-slot content)), `scrollContainerRef` (no web form), `trailingActions` (no web form (taken as named-slot content)) |
+| Nav-Header-App | `appearance`, `showSeparator`, `testID` | `centerContent` (named-slot content), `leadingContent` (named-slot content), `trailingContent` (named-slot content) |
+| Nav-Header-Base | `appearance`, `showSeparator`, `testID` | `leadingSlot` (named-slot content), `titleSlot` (named-slot content), `trailingSlot` (named-slot content) |
+| Nav-Header-Page | `appearance`, `scrollBehavior`, `showSeparator`, `testID`, `titleAlignment` | `closeAction` (no web form), `leadingAction` (named-slot content), `scrollContainerRef` (no web form), `trailingActions` (named-slot content) |
 | Progress-Bar-Base | `accessibilityLabel`, `mode`, `size`, `testID`, `value` | — |
 | Progress-Indicator-Node-Base | `sizing` | — |
 
