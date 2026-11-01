@@ -420,6 +420,18 @@ signer: kenya
 - It is right for a consumer: "cannot be extracted in this repo" is about the design-system source; in a consumer repo the commands are in the app's own build setup, and the re-pointed text sends the role there. It agrees with the `#what-you-dont-own` destination ("read it from the app's build setup before you run anything").
 - The function survives: the role is told these commands are not a DesignerPunk-supplied set and where to find them. The dropped "theming Swift materializes there" clause is carried by `commands[platform-tokens]` (`npx designerpunk generate`, which I signed) and `#ios-theming-spec-094`.
 
+**Re-sign 2026-11-01 (record `.kiro/issues/2026-10-12-steward-canonical-claims-theme-output.md`, fork 4), after Thurgood's authoring commit `b46697ef3` and overlay pin bump `e6c7bce8d`: ASSENT to `re-pointed`, `surviving: []`.** This is a new act, and it closes no divergent.
+- **Stale list and hashes.** At head `e6c7bce8d`, `verify-signing-chain --ci --base origin/main` listed this row as stale. `canonicalHash` moves `5d9cb4dc…` → `c808d72a…`. I recomputed it myself: `hashEntry` over `entryTree(frontmatter)` of `canonical/agents/kenya.md`. `renderedHash` is unchanged (`63ec6ab5…`), because `canonical/_consumer-output/` has no diff against `origin/main`.
+- **What I read, in this session.**
+  - The canonical member at L206 now reads *"product-screen build/test/run commands are per-product and cannot be extracted in this repo — they live in the consumer iOS app."* The false parenthetical *"(theming Swift materializes there via `npx designerpunk generate`)"* is deleted, which is my fork-4 wording.
+  - The consumer rendering is unchanged: cc `kenya.md` L381 and kiro `kenya-prompt.md` L298 read *"product-screen build/test/run commands are per-product — read them from this iOS app's own build setup."*
+  - The overlay `@entry` pin is now `c808d72a…`.
+- **Why it holds.** The re-point's reasoning in my first signature above stands: the commands are the app's own, and the rendering sends the role there. The canonical text now makes no theme claim.
+- **Erratum.** My 2026-10-23 entry above says *"The dropped 'theming Swift materializes there' clause is carried by `commands[platform-tokens]` (`npx designerpunk generate`, which I signed) and `#ios-theming-spec-094`."* That was wrong.
+  - The clause was false: `generate` writes no theme surface (`src/generators/TokenFileGenerator.ts` L1044, no caller outside `__tests__`).
+  - Neither surface carried it. `#ios-theming-spec-094` says the opposite, and the platform-tokens rendering makes no theme claim.
+  - The consumer dropping the clause was correct. After this correction no canonical line says it. This entry supersedes that sentence.
+
 ## `#frontmatter:knowledgeBases[ios-components]`
 
 signer: kenya
