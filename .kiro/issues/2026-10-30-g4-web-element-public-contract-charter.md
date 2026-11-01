@@ -86,7 +86,7 @@ The property-half ballot's application (`2026-10-30-web-prop-property-or-attribu
 Each is re-ruled to this charter's Trigger in the same commit that files it, with a dated reason.
 1. **`2026-10-20-web-element-api-and-form-participation.md`**: E2–E5 and E8 (b). This is Peter's G-4 ruling of 2026-10-25, "Re: 6. Spec".
 2. **`2026-10-26-form-needs-submit-action-fires-on-refused-semantic.md`**: the fork between aligning the checker (A) and widening the schema (B). B decides a form-container design that E8 (b) owns. The class fix (`AccessibilityChecker` reads enums from the served schema) rides that work.
-3. **`2026-10-25-web-prop-mapping-rule-gap.md`, its event and callback half.** Its property half closes at the property-half ballot's application (collective sheet E), which is due before 16.2.0's S. That record's Trigger is re-ruled at that application, not here. The event half moves to this charter then.
+3. **`2026-10-25-web-prop-mapping-rule-gap.md`, its event and callback half.** Its property half closes at the property-half ballot's application (collective sheet E), which is due before 16.2.0's S. That record's Trigger is re-ruled at that application, not here. The event half moves to this charter then. *(2026-11-01, Lina, owner, rule 9: **carried.** The property half closed in that application (#608), and the record's Trigger now names this charter's event for the event and callback half.)*
 
 ## 6. What closes this charter
 
