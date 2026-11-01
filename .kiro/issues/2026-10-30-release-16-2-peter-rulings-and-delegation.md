@@ -283,6 +283,15 @@ Cite R10 as `R10@<the squash of the PR that added it>`.
   - E2–E7, 128's wrapper-sequencing rule and the blend deprecation's next-major removal take their start condition from it.
   - It is a record, not law.
 
+**Line 13 — F2's L1 and L3: `.kiro/hooks/RELEASE-FLOW.md` § 5a and Thurgood's charter** (the owed-set record `2026-10-25-owed-set-law-text-after-closing-commit-anchor.md`, items L1 and L3), before 2026-11-01T15:34:54Z.
+- *Put to him* (Thurgood's drafted line): "Thurgood authors, as a CORRECTION (your 2026-10-30 fork-3 word, R5), the sentences that describe `scripts/owed-set.sh` in two places: `.kiro/hooks/RELEASE-FLOW.md` § 5a, L66 (how the ratification boundary is read), L71 (`touch-only`), L72 (`candidate`), L74 (the heuristics sentence) and L76 (the unit-class anchors); `canonical/agents/thurgood.md` L543 and L545, in the LIVENESS paragraph on the owed-set query. The change: they say what the script has done since #473. A commit counts from its committer's or its UTC day on or after the ratification date. `touch-only` and the anchor come from the spec's closing commit. A spec with no closing commit reads `closure undecidable`. Stacy re-confirms and re-signs Thurgood's charter unit (two acts). L78, the 'one judgment point' paragraph, and the 2026-09-19 ballot's § 7.5 counting block stay asked." Fork inside (Thurgood's): add L78's first sentence ("the anchor printed is the most recent first-parent commit touching the spec", now false) as a CORRECTION, or leave L78 whole for its own round. Options: yes incl. L78's first sentence (Thurgood's lean); yes, L78 whole; no (16.3.0).
+- *His word*: "Yes, including L78's first sentence"
+- *What it rules*:
+  - Thurgood authors, one-off, as a CORRECTION under R5 fork 3, the sentences describing `scripts/owed-set.sh` at `.kiro/hooks/RELEASE-FLOW.md` § 5a L66, L71, L72, L74, L76 and L78's first sentence, and at `canonical/agents/thurgood.md` L543 and L545.
+  - Stacy's two acts on Thurgood's charter unit are owed: she re-confirms it and re-signs it.
+  - L78's "one judgment point" paragraph after its first sentence, and the 2026-09-19 ballot's § 7.5 counting block, stay asked. This line does not reach them.
+  - Not F-gating. `.kiro/hooks/RELEASE-FLOW.md` is not packed. Thurgood's consumer charter (`canonical/_consumer-output/_canonical/agents/thurgood.md`) renders LIVENESS items 1 and 2 only; L543 and L545 do not render to it (checked at origin/main, 2026-11-01).
+
 *Further lines are appended as ruled.*
 
 Cite R11 as `R11@<the squash of the PR that added it>`, with the line number, e.g. `R11@<sha> line 2`.
