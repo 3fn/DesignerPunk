@@ -327,7 +327,7 @@ Requirements, design and tasks (the gates hold); restating the synthesis; the re
   - line 10: `governance/Test-Development-Standards.md` L1556–L1902 and `.kiro/steering/Civitas-System-Overview.md` L39 (Thurgood);
   - line 11: the 18 governance docs of Ada's token-name sweep, #595.
 
-That is **10 instances in eight days** (7 ruled, 3 pending), plus the four this section's list above already names that have no line yet (RELEASE-FLOW § 5a; `canonical/agents/thurgood.md` L543/L545; and the TDS and Civitas pair, which is line 10). Each instance cost Peter one line.
+That is **10 instances in eight days**: 7 ruled, 3 pending. Two more on this section's list above have no line yet: `.kiro/hooks/RELEASE-FLOW.md` § 5a and `canonical/agents/thurgood.md` L543/L545, both F2's non-floor surfaces. Each instance cost Peter one line.
 
 This is the evidence for row 15 (OWNERS) and for § 4 (d), which exempts CORRECTION edits from the freeze. An exemption helps only if someone can author the CORRECTION. The list is written here rather than in a separate inbound, because R8's "possibly" leaves the form open. The collective's lean, to wait for this spec unless a fifth instance arrived first, was put to Peter when the count was four, and his answer was to wait. The count is now nine. Whether that reopens his answer is his call; this line does not reopen it.
 
