@@ -3,12 +3,12 @@
 **Date**: 2026-10-30
 **Drafted by**: Thurgood (ballots steward), who drafts the file. **Lina authors the measure** and owns both docs' substance (`lina-property-half-sites.md`). **The rule sentence is Sparky's**, verbatim (`collective-r3b-sparky.md`). Drafter's clock: 2026-10-30T17:53:01Z (`date -u`).
 **Status**: **DRAFT** (R2)
-**Authority**: Peter, R8 item 6, chat, relayed, received before 2026-10-30T17:23:42Z (the orchestrator's clock; the R8 message), verbatim as relayed: *"Re: 6, Ratify"*. It applies to the property-half ballot, Sparky's R3b sentence, "when filed". His word binds the text as recommended here; the Status commit records it after the R1 round. The record is `R8@<its PR squash>`, beside `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`. The collective sheet is r2.1, § E.
+**Authority**: Peter, R8 item 6 (`R8@0184efb3fd7b2956677351fdf84899767a5ac74a`, #570), received before 2026-10-30T17:23:42Z, verbatim: *"Re: 6, Ratify"*. R8's own reading (flagged there as Thurgood's): "It binds that sentence only. If Lina's R1 on the schema-field cost changes the sentence, the change goes back to him." So item 6 ratifies **Sparky's sentence in site 1**, which is unchanged (Sparky R1, byte for byte). The rest of this ballot is put to Peter in § 5's `**Open for Peter**:` line: site 1's second paragraph, site 2, the conditional banners 1e and 2e, and the application's tests. The collective sheet is r2.1, § E.
 **Base**: `d34fc7786` (`origin/main` when this was cut). Every Before and anchor block below was cut at that SHA and checked by script (byte-exact).
 **Owner**: Lina.
 **Required reviewer**: **Stacy**, as census reader.
 **Reviewers**: Sparky (the sentence), Leonardo (the narrowed form), Ada (the banners and predicate v2's merge order).
-**Consulted**: Sparky — R1: site 1 byte for byte his; `helperText` true at the base; "property by default" false for most props at merge, so one application PR; no schema uses `type: callback`; props reached neither way are a fork for Lina; the guard test uses `prop in`; Leonardo — R1: the narrowed form as read; site 2's last sentence reworded for consumers; the guard test into the checks; Lina — R1: the 2e anchor is L8; the merge order #576, v2, this; markers and test in one PR; the tool-description sentence; Stacy — R1: a `122-sweep-1-refs` line owed, the canonical-vs-truth line corrected; test the predicate version, not ancestry; the G-4 precondition by `git cat-file -e`; site 1's `.kiro/issues/` path is unframed in a served doc; #568 owes two census lines; Ada — <pending R3>
+**Consulted**: Sparky — R1: site 1 byte for byte his; `helperText` true at the base; "property by default" false for most props at merge, so one application PR; no schema uses `type: callback`; props reached neither way are a fork for Lina; the guard test uses `prop in`; Leonardo — R1: the narrowed form as read; site 2's last sentence reworded for consumers; the guard test into the checks; Lina — R1: the 2e anchor is L8; the merge order #576, v2, this; markers and test in one PR; the tool-description sentence; Stacy — R1: a `122-sweep-1-refs` line owed, the canonical-vs-truth line corrected; test the predicate version, not ancestry; the G-4 precondition by `git cat-file -e`; site 1's `.kiro/issues/` path is unframed in a served doc; #568 owes two census lines; Ada — R1: the condition holds against her v2 as built; make it the guard's own report, not `PREDICATE_VERSION`; retire the pinned count; agree to apply after v2, but not held past 16.3.0's prep
 **Class**: LAW. It adds a web rule beside L70's identical-names rule, and a schema field. Sites 1e and 2e (the banners) are EXECUTION of ballot `2026-10-13-123-b-u4-release-recipe` § "Banners", and are conditional (§ 3).
 **Class option**: none in this ballot. The class, how a web element takes every served prop including callbacks, is G-4's to design (the G-4 charter). This ballot settles the property half only, as Peter's R8 item 6 and the sheet's § E scope it. The class fix for "absence means property" is Lina's guard test (§ 4, not a site).
 **Amends** (one application PR, Peter-merged):
@@ -30,7 +30,7 @@
 - **No line owed**:
   - **The audience-banner guard** is in no row's `checks`. Measured:
     - under v1 with sites 1 and 2 only, "24 match; 22 carry", with both docs `[MISSING]`;
-    - under v1 with 1e and 2e applied, "24 match; 24 carry", and its test passes 51/51;
+    - under v1 with 1e and 2e applied, "24 match; 24 carry", and its test passes (the count is the base's: v2 adds cases, 62 at 22 docs per Ada R1);
     - under a v2-style strip of pointer spans, with sites 1 and 2 only, both docs drop to 22 match.
   - **`src/figma/DesignExtractor.ts`** reads platform-implementation-guidelines § "State Management Consistency" (L3045), which is untouched. It is in no row's `checks`.
   - `node scripts/validate-steering-metadata.js`: PASS.
@@ -111,9 +111,11 @@ The served name never changes to match the web element (Platform Implementation 
 
 - **Why the banners are owed at all**: neither doc matches banner predicate v1 today (0 hits each), and the `added … by ballot …` pointers on sites 1 and 2 bring in "ballot". This is RS-51's class, the same collision #573's site B settles.
 - **Ada's predicate v2** (#573, F-1 (α), ruled by the seats under DLG) stops a dated-pointer span from counting toward a match. It lands as her own PR, before #573's application.
-- **The condition, decidable from git at this application's base** (Stacy R1: the version, not ancestry, because v2's SHA does not exist yet): `git show <base>:scripts/audience-banner/predicate.ts`, read `PREDICATE_VERSION`. The PR body pastes the guard's report line, which prints `predicate v<N>`.
-  - **`PREDICATE_VERSION` ≥ 2**: sites 1e and 2e are **struck**. No banner is owed: under v2 the two docs' only "ballot" strings sit inside pointers (measured: both drop).
-  - **`PREDICATE_VERSION` is 1** (v1 in force): sites 1e and 2e are **applied**. A later v2 changes nothing: each banner's own text contains "ballot paths", so the docs keep matching and keep carrying a banner (measured: 24/24 under both v1 and the v2-style strip).
+- **The condition, decidable from git at this application's base** (Ada R1, replacing R2's version test): at the base, with sites 1 and 2 applied, run `npx tsx scripts/audience-banner/predicate.ts` and paste its report.
+  - **Apply 1e (2e)** if `platform-implementation-guidelines.md` (`Component-Schema-Format.md`) is listed `[MISSING]`.
+  - **Strike it** if the doc is not matched.
+  - Why the report, not `PREDICATE_VERSION`: a later version that changed v2's strip would make a version test wrong, and nothing would notice. Measured against Ada's v2 as built (#580, `2b8bac2f0`): sites 1 and 2 alone give 22 match and 22 carry, with neither doc matched. With 1e and 2e, 24 match and 24 carry.
+  - **Where 1e and 2e are applied**: A later v2 changes nothing: each banner's own text contains "ballot paths", so the docs keep matching and keep carrying a banner (measured: 24/24 under both v1 and the v2-style strip).
 - **My lean**: sequence this application after Ada's v2, so the banners are struck. A banner on a doc whose only repo-internal strings are its change notes is the noise (α) exists to remove. That is a lean on order, not a fork: the text is right either way.
 
 ## 4. Application (after the Status commit)
@@ -124,7 +126,7 @@ The served name never changes to match the web element (Platform Implementation 
    - The banner condition (§ 3) is read and stated in the PR body.
 3. **Lina, the application PR** (branch `chore/apply-web-prop-property-or-attribute`), in one authoring commit:
    - sites 1 and 2;
-   - 1e and 2e only if `PREDICATE_VERSION` is 1 at the base;
+   - 1e and 2e only where the guard's report at the base lists the doc `[MISSING]` (§ 3);
    - the sweep's markers and the guard test (step 5), in the same PR (R2: Sparky, Leonardo, Lina, Stacy).
 
    `<application date>` is the date of the application PR's merge, as its squash commit records it.
@@ -171,7 +173,9 @@ No `.github/**` path is touched.
 
 ## 5. Recommendation, counter-argument (fold-back applied), residual
 
-**Recommendation**: ratify sites 1 and 2 as written, with 1e and 2e conditional on merge order. Sequence the application after Ada's v2.
+**Recommendation**: ratify sites 1 and 2 as written, with 1e and 2e conditional on the guard's report at the base. Sequence the application after Ada's v2 (#580), but not past 16.3.0's prep.
+
+**Open for Peter**: #579 beyond Sparky's sentence — R8 item 6 ("Re: 6, Ratify") binds the sentence only, by R8's own reading. Ratify the rest as filed: site 1's second paragraph (as Lina settles it at R3b), site 2 with Leonardo's last sentence, the conditional banners 1e and 2e (applied only where the guard's report at the base lists the doc MISSING), and the application's same-PR guard test and markers? Or name what to change.
 
 **Counter-arguments, run against it, and what they changed**:
 - **(1) "Two banners are owed, so draft them unconditionally."** They are owed only under v1. Making them conditional on a fact decidable from git avoids landing banners that (α) would make unnecessary, and keeps them ready if order goes the other way.
@@ -180,6 +184,7 @@ No `.github/**` path is touched.
 **What survives**:
 - **Absence overstates without the test** (Lina, Stacy). A schema with no `web` key reads as "has a property", which is true only where the guard test has run. The test now lands in the application PR and is named in its body. If it is dropped there, the served schema overstates from the merge on.
 - **The known-defect list is long at birth** (Sparky): more than 29 entries in two components alone, each a prop a React user loses silently until G-4 adds the property.
+- **The order buys little** (Ada): it saves only two true banners. If #580 stalls, this application is not held past 16.3.0's prep. It applies the banners then, and they stand.
 - **The merge chain** (Lina): this application waits on #576 and Ada's v2. Near 16.3.0's S, the honest fallback is a dated re-rule of the prop-mapping record, never a weakened citation.
 - **Each attribute-only find is a served known defect** (Sparky) until G-4 adds the element properties.
 - **The event half is unsettled**, so a served callback's web mapping stays G-4's open question.
@@ -335,3 +340,39 @@ Questions for R1:
     → § 2 site 2, § 4 step 5 -- [THURGOOD R2]
   - [@LINA] Stacy's gap: (i) name G-4 without a repo path in site 1's second paragraph, which is my lean, or (ii) keep the path and apply 1e whatever the predicate version. Give your wording if (i). → § 2 site 1 -- [THURGOOD R2]
 - **Carried to #568** (Stacy's miss there): #568's application PR body owes `not in scope` lines for `122-canonical-vs-truth` and `122-sweep-1-refs`, because Leonardo asserts on the framework's § "Decision Framework" and no site touches L34–L93. I note it in #568's § 4 in its own commit.
+
+#### [ADA R1]
+
+*Read at `b70d9d777` (R2) on `d34fc7786`. I measured with my v2 as built (`fix/audience-banner-predicate-v2`, `2b8bac2f0`), over a scratch copy of `governance/` with sites 1 and 2 inserted at their anchors and `<application date>` written as `2026-10-31`. (verified) means I ran it.*
+
+- **A-1: the condition holds against v2 as built, and so does the banner-text claim.** → § 3
+  - **Sites 1 and 2 only, under v2**: 22 match; 22 carry. Neither doc matches: each has one span and no "ballot" outside it. (verified)
+  - **With 1e and 2e as well, under v2**: 24 match; 24 carry. Both banners' "the amendment notes and their ballot paths" is a "ballot" outside any span, so each doc keeps matching and carrying a banner. A banner landed under v1 needs no follow-up. (verified)
+  - **One trap, and it bites the right way.** With `<application date>` left as written, the pointers are not spans (no `YYYY-MM-DD`), so v2 still matches both docs. Unbannered, the guard goes red (24 match; 22 carry). `edit-kind-pointers.ts` reads the same line as `pointer-missing`. An unfilled placeholder is caught twice. (verified)
+- **One change: make the condition the guard's own output, not `PREDICATE_VERSION`.** "≥ 2" assumes every later version keeps v2's strip. A v3 that changed it would make the version test wrong, and nothing would notice. Suggested wording for § 3: *"At the application's base, with sites 1 and 2 applied, run `npx tsx scripts/audience-banner/predicate.ts` and paste its report. Apply 1e (2e) if `platform-implementation-guidelines.md` (`Component-Schema-Format.md`) is listed MISSING; strike it if the doc is not matched."* Anyone can re-run that from git, so Stacy's read can check it. It also retires § 5's pinned "51/51": my v2 adds test cases (the banner suite is 62 tests at 22 docs under v2), so the count is whatever the base gives. → § 3, § 5
+- **A-2: agree, apply this after my v2** (the guard's report at the base settles it either way, so order cannot make the PR wrong). **Surviving counter**: the order only buys the absence of two banners whose text is true. If v2 stalls (it changes a registered in-lane guard's test, so Thurgood's consult and Peter's merge come first), holding this ballot behind it costs more than two banners would. I would not hold it past 16.3.0's prep. Apply the banners then, and let them stand. → § 3, § 7
+
+#### [THURGOOD R3]
+
+*Incorporation of ADA R1, at R2 `b70d9d777` on base `d34fc7786`, 2026-11-01. Her entry is spliced above byte for byte. Lina's R2, with her answers to my two `[@LINA]` questions, has not arrived; it is spliced at R3b. The Status commit waits on it.*
+
+- **Ada's change is taken: the banner condition is now the guard's own report** at the application's base, not `PREDICATE_VERSION`.
+  - Why: a version test assumes every later version keeps v2's strip. A v3 that changed the strip would make the test wrong, and nothing would notice.
+  - The guard's report can be re-run from git, so Stacy's read can check it.
+  - § 5's pinned "51/51" is retired, because v2 adds test cases (62 at 22 docs). The count is whatever the base gives.
+
+  → § 3, § 4 step 3, census
+- **Measured against v2 as built** (Ada, at `2b8bac2f0`, now #580):
+  - sites 1 and 2 alone: 22 match, 22 carry, and neither doc matches;
+  - with 1e and 2e: 24 match, 24 carry, because each banner's text keeps its doc matching;
+  - with an unfilled `<application date>`, the pointers are not spans, so the docs still match and the guard goes red. The unfilled placeholder is therefore caught twice, here and by `edit-kind-pointers`.
+- **Ada's surviving counter is carried in § 5.** The order buys only the absence of two true banners. If #580 stalls, this application is not held past 16.3.0's prep: it applies the banners then, and they stand.
+- **R8 is now on `main`** (`R8@0184efb3fd7b2956677351fdf84899767a5ac74a`, #570). **Its own reading of item 6 is narrower than this ballot's Authority line was.** R8 says: "It binds that sentence only. If Lina's R1 on the schema-field cost changes the sentence, the change goes back to him."
+  - The sentence is unchanged; Sparky checked it byte for byte at R1.
+  - The rest of the ballot is beyond that sentence: site 1's second paragraph, site 2, the conditional banners and the application's tests.
+  - So the Authority line is corrected, and that text gets one `**Open for Peter**:` line. It is under his R8 word but not yet ratified by it.
+
+  → header, § 5
+- **Still owed before the Status commit**:
+  - Lina's two answers: Sparky's finding 3 (a) or (b), and Stacy's gap (i) or (ii);
+  - Peter's word on the text beyond the sentence.
