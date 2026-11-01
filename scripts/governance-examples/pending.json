@@ -146,46 +146,6 @@
       "home": ".kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md"
     },
     {
-      "doc": "governance/Test-Development-Standards.md",
-      "half": "declared-path",
-      "string": "src/components/core/Input-Text-Search/platforms/web/InputTextSearch.web.ts",
-      "occurrence": 0,
-      "line": 1556,
-      "home": ".kiro/issues/2026-10-26-tds-workflow-examples-declare-files-that-do-not-exist.md"
-    },
-    {
-      "doc": "governance/Test-Development-Standards.md",
-      "half": "declared-path",
-      "string": "src/components/core/Input-Text-Search/__tests__/InputTextSearch.test.ts",
-      "occurrence": 0,
-      "line": 1583,
-      "home": ".kiro/issues/2026-10-26-tds-workflow-examples-declare-files-that-do-not-exist.md"
-    },
-    {
-      "doc": "governance/Test-Development-Standards.md",
-      "half": "declared-path",
-      "string": "src/components/core/Input-Text-Search/__tests__/InputTextSearch.integration.test.ts",
-      "occurrence": 0,
-      "line": 1620,
-      "home": ".kiro/issues/2026-10-26-tds-workflow-examples-declare-files-that-do-not-exist.md"
-    },
-    {
-      "doc": "governance/Test-Development-Standards.md",
-      "half": "declared-path",
-      "string": "src/components/core/Input-Text-Search/__tests__/InputTextSearch.property.test.ts",
-      "occurrence": 0,
-      "line": 1659,
-      "home": ".kiro/issues/2026-10-26-tds-workflow-examples-declare-files-that-do-not-exist.md"
-    },
-    {
-      "doc": "governance/Test-Development-Standards.md",
-      "half": "declared-path",
-      "string": "src/__tests__/stemma-system/input-text-email-contracts.test.ts",
-      "occurrence": 0,
-      "line": 1902,
-      "home": ".kiro/issues/2026-10-26-tds-workflow-examples-declare-files-that-do-not-exist.md"
-    },
-    {
       "doc": "governance/Token-Family-Blend.md",
       "half": "import",
       "string": "@3fn/core/ThemeAwareBlendUtilities",
