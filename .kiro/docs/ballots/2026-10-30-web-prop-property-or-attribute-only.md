@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-30
 **Drafted by**: Thurgood (ballots steward), who drafts the file. **Lina authors the measure** and owns both docs' substance (`lina-property-half-sites.md`). **The rule sentence is Sparky's**, verbatim (`collective-r3b-sparky.md`). Drafter's clock: 2026-10-30T17:53:01Z (`date -u`).
-**Status**: **DRAFT** (R2)
+**Status**: **RATIFIED IN PART (Peter, 2026-10-30)**: Sparky's sentence in site 1, by R8 item 6 (`R8@0184efb3fd7b2956677351fdf84899767a5ac74a`, #570), received before 2026-10-30T17:23:42Z, verbatim *"Re: 6, Ratify"*. R8's own reading is that it "binds that sentence only", and the sentence is unchanged (Sparky R1, byte for byte). **The rest of the ballot is not yet ratified**: site 1's second paragraph, site 2 with `unmapped`, site 2c, the conditional banners and the application's tests. It waits on § 5's `**Open for Peter**:` line, and the application does not open before his answer is on record.
 **Authority**: Peter, R8 item 6 (`R8@0184efb3fd7b2956677351fdf84899767a5ac74a`, #570), received before 2026-10-30T17:23:42Z, verbatim: *"Re: 6, Ratify"*. R8's own reading (flagged there as Thurgood's): "It binds that sentence only. If Lina's R1 on the schema-field cost changes the sentence, the change goes back to him." So item 6 ratifies **Sparky's sentence in site 1**, which is unchanged (Sparky R1, byte for byte). The rest of this ballot is put to Peter in § 5's `**Open for Peter**:` line: site 1's second paragraph, site 2, the conditional banners 1e and 2e, and the application's tests. The collective sheet is r2.1, § E.
 **Base**: `d34fc7786` (`origin/main` when this was cut). Every Before and anchor block below was cut at that SHA and checked by script (byte-exact).
 **Owner**: Lina.
