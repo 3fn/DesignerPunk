@@ -80,3 +80,5 @@ The brief's statement holds on re-verification (REASONING on 128's design, which
 - Open the readiness scan's closed `'web' | 'ios' | 'android'` union (`:854-858`) to registry-provided keys — 129 item (v)'s `PLATFORM_KEYS` (Ada's seed; nowhere in source today). Readiness rows for `react` / `react-native` cannot exist before that, which is why 128's step 2 precedes step 4.
 
 **No fix is authorized by this record.**
+
+**Routed**: Spec 128 § "Scope intake, 2026-11-01 (record only: it names records and settles no design)", the outline row added in the same PR as this line *(2026-11-01, Thurgood, steward, rule 9; under DLG `d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10 fork 2 (a), batch routing)*. The Trigger is unchanged. Whether it is re-ruled in place to the spec follows Peter's answer to fork B (in place or archived); until then this record's own Trigger, which already names this spec's requirements, is its firing. This record is not due at 16.2.0's S.
