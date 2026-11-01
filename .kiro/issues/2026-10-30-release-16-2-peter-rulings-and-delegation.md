@@ -108,11 +108,44 @@ Item 10 (drops) was "none proposed", so nothing was asked and nothing was answer
 
 He was answering this offer: *"I can turn criteria 1 and 3 into a short brief for the 16.2.0 release work, so it carries them as its definition of done."*
 
-**What it ruled.**
-- *By his words*: the offer, which names **criteria 1 and 3** (P0/P1 fixed or disclosed; no new ballots).
-- *By the brief* (that orchestrator's text, written after his "Yes, please"): four criteria.
-- *Reading (mine, flagged; corrected 2026-11-01 on Stacy's read)*: nothing on record shows he read criteria 2 and 4 as worded. The clauses "re-ruling … is not a state" and "archiving a … routed record counts" are put back to him as forks, with the collective's next package. Until he answers, criteria 1 and 3 are his ruling; criteria 2 and 4 are the brief's, and the release works to them as the stricter reading.
-- *Superseded, kept verbatim*: "**What it ruled**, as the brief states it (the brief is that orchestrator's text; his \"Yes, please\" adopts it):".
+**What Peter read before his "Yes, please"** *(corrected 2026-11-01, Thurgood, on the Spec 131 session orchestrator's account, relayed by this release's orchestrator)*. "Criteria 1 and 3" in the offer are items 1 and 3 of that orchestrator's message to Peter. He read the message before answering: it was shown to him by the Spec 131 session's orchestrator after 2026-10-30T18:30:39Z (that orchestrator's last `date -u` before the turn) and before 2026-10-30T18:52:50Z (its receipt of his "Yes, please").
+
+Item 1, verbatim:
+
+> "**Define "clean" before you start, or 16.2.0 never stabilises.** So far, cleanup has generated more records than it closed: root records went from 103 to 143 while issues were being worked. Each small issue processed through the current machinery tends to produce a lapse, a re-rule, a standards item or a grant. Concrete exit criteria would stop that:
+> - P0 and P1 product defects are fixed, or disclosed in the release notes;
+> - every root record is fixed, closed, or routed to a named spec. Routing is one line per record, or one batch record per destination spec like #575, not a re-rule in place;
+> - no new ballots during 16.2.0 unless the release needs them;
+> - **root records go down across 16.2.0, not up.** That's the measure that the cleanup is cleaning."
+
+Item 3, verbatim:
+
+> "**Capture the baseline as numbers when 16.2.0 ships.** It's one generated snapshot record, not a new mechanism: root record count and words; ballot count; always-loaded words; walk rows; grant records per release; product share of commits; oldest P0/P1 age; open forks per spec. That's the "before" for 131's success metrics..."
+
+Item 2 was not in the offer (native facts stop at web and the package).
+
+The offer, verbatim: "If you'd like, I can turn criteria 1 and 3 into a short brief for the 16.2.0 release work, so it carries them as its definition of done." Answer: "Yes, please".
+
+**What his words cover**:
+- the four bullets of item 1 as shown, including "not a re-rule in place" and "root records go down across 16.2.0, not up";
+- the snapshot of item 3.
+
+**What they do not cover**, the brief's additions:
+- "re-triggering to the next release is not a state";
+- the release-blocking exception;
+- "archiving a routed record counts";
+- "standards implications go to the RS queue";
+- any reading of "named spec" (for example, whether it covers 125-B).
+
+These are the brief's, and they go to Peter as the collective's forks where they matter.
+
+*Superseded, kept verbatim (my 2026-11-01 reading, now corrected: it misread "criteria 1 and 3" as the brief's criteria 1 and 3):*
+
+> **What it ruled.**
+> - *By his words*: the offer, which names **criteria 1 and 3** (P0/P1 fixed or disclosed; no new ballots).
+> - *By the brief* (that orchestrator's text, written after his "Yes, please"): four criteria.
+> - *Reading (mine, flagged; corrected 2026-11-01 on Stacy's read)*: nothing on record shows he read criteria 2 and 4 as worded. The clauses "re-ruling … is not a state" and "archiving a … routed record counts" are put back to him as forks, with the collective's next package. Until he answers, criteria 1 and 3 are his ruling; criteria 2 and 4 are the brief's, and the release works to them as the stricter reading.
+> - *Superseded, kept verbatim*: "**What it ruled**, as the brief states it (the brief is that orchestrator's text; his \"Yes, please\" adopts it):".
 
 The brief's text:
 - **16.2.0's definition of done, four exit criteria:**
