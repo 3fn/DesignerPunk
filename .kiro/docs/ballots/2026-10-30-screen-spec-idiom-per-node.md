@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-30
 **Drafted by**: Thurgood (ballots steward), who drafts the file. **Leonardo authors the measure's text** (`leonardo-fc-sites.md`), and it is carried verbatim. The one substitution: his `<ballot id>` placeholder is filled with this ballot's id. Drafter's clock: 2026-10-30T17:36:03Z (`date -u`).
-**Status**: **RATIFIED (Peter, 2026-11-01)**, chat, relayed by the orchestrator, received 2026-11-01 after 15:01:50Z (the orchestrator's rulings log; the exact `date -u` bound is filled with the R11 citation), verbatim: *"Ratify as filed"*. It is cited `R11@<#605 squash> line 6` (placeholder until #605 merges).
+**Status**: **RATIFIED (Peter, 2026-11-01)**, chat, relayed by the orchestrator, received before 2026-11-01T15:05:00Z (R11 line 6's heading), verbatim: *"Ratify as filed"*. It is cited `R11@5f22a8819532a1603b21ae8cde4753b7851597e8 line 6` (#605).
 - **The question put to him**: ratify F-C.1–F-C.3 as filed, with the key on the node wherever it lives. That departs from R8 item 4's "a key in the existing `ui-tree.<platform>:` branch", on Leonardo's duplicate-node evidence. The alternatives named were to send it back for the branch form, or to hold it for Spec 131. He took the first.
 - **History**: the RATIFIED line of `3a71871f9` was withdrawn at `583062563`, because R8 item 9 does not name this ballot (the orchestrator's misreading, recorded as theirs in #573's body). This line rests on R11, not on R8.
 - **F-1 (α)** stands as ruled by the seats under `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`. Ada's predicate v2 merged as #580 (`716ded6a1`).
@@ -191,7 +191,7 @@ L823 ("Ignores everything else") and L825 are unchanged, and both stay true.
 
 **Recommendation**: ratify F-C.1 as Leonardo confirmed it at his R3, F-C.2 and F-C.3; F-1 (α) stands as ruled by the seats under DLG.
 
-**Ruled** (Peter, 2026-11-01, `R11@<#605 squash> line 6`, *"Ratify as filed"*): F-C.1–F-C.3 as filed, with the key on the node wherever it lives. F-1 (α) stands as ruled by the seats under DLG.
+**Ruled** (Peter, 2026-11-01, `R11@5f22a8819532a1603b21ae8cde4753b7851597e8 line 6`, *"Ratify as filed"*): F-C.1–F-C.3 as filed, with the key on the node wherever it lives. F-1 (α) stands as ruled by the seats under DLG.
 
 *The question as it was put, kept as the record*: #573 as filed — R8 item 4's "(ii)" chose this ballot, and its own ratification is owed (R8's reading). The text departs from item 4's "a key in the existing `ui-tree.<platform>:` branch": the key sits on the node wherever it lives, because the Product MCP appends a platform branch after `shared`, so restating a shared node there adds a second node (Leonardo's evidence; Kenya withdrew her branch wording). Ratify F-C.1–F-C.3 as filed, or name what to change. *(Asked 2026-11-01, Thurgood, at the R8 fill.)*
 
