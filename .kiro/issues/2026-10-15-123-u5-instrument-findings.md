@@ -221,7 +221,7 @@ This is the read this record's Trigger owes ("the release-6 walk reads every row
   - nothing names a normal terminal or the native installer;
   - `TOKEN_INDEX_DIR` is not mentioned.
 
-  Their trigger, "the next INSTALL touch", has not fired. They stay carried. Rule 2 would bring an omission into the blocking test only if a sentence turned false, and none did.
+  Their trigger, "the next INSTALL touch", has not fired. They stay carried. An omission enters RELEASE-FLOW 3a's blocking test only if a sentence turns false, and none did.
 - **Lina's CLI rows, 6** (R3-3's in-terminal residual, R2-4, R1-1 / R1-2 (code), J-3 / K-5 (code), R1-5 (code), FR-2): their home is `.kiro/issues/2026-10-25-cli-per-command-help-and-one-parser.md`, which is at the root (Lina's owner line of 2026-10-25). Carried there.
 - **R2-8 / R3-12** (Lina, V-GEN): carried, unchanged.
 - **C-6** (Lina's home, `.kiro/issues/2026-10-13-src-path-convention-for-served-governance-docs.md`, at the root): carried.
