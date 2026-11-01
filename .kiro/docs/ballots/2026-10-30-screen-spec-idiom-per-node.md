@@ -2,7 +2,11 @@
 
 **Date**: 2026-10-30
 **Drafted by**: Thurgood (ballots steward), who drafts the file. **Leonardo authors the measure's text** (`leonardo-fc-sites.md`), and it is carried verbatim. The one substitution: his `<ballot id>` placeholder is filled with this ballot's id. Drafter's clock: 2026-10-30T17:36:03Z (`date -u`).
-**Status**: **RATIFIED (Peter, 2026-10-30)**, chat, relayed by the orchestrator: R8 item 9, received before 2026-10-30T17:23:42Z (the orchestrator's clock; the R8 message, with items 4 and 6), verbatim as relayed: *"Ratify"*, for the later ballots as filed. This ballot was filed as recommended: F-C.1 as Leonardo confirmed it at his R3, F-C.2 and F-C.3. The citation for R8 is `R8@<its PR squash>`, filled after the release seat's record PR merges. **F-1 was ruled by the seats, not by Peter**: (α), settled under his delegation (`DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`), with Ada, Leonardo, Stacy and Thurgood concurring (§ 3, "Ruled: F-1").
+**Status**: **DRAFT — ratification owed** *(corrected 2026-11-01, Thurgood; the RATIFIED line of `3a71871f9` is withdrawn)*. R8 is now on `main` (`R8@0184efb3fd7b2956677351fdf84899767a5ac74a`, #570), and it does not support the earlier Status:
+- **Item 9** ("Re: 9, Ratify") names four ballots: steward-verb's drop, b-ci, decision-framework 1a (#568) and F3. This one is not among them.
+- **Item 4's F-C (ii)** picks the option. R8's reading says "his \"(ii)\" is the decision, not an authority line for Leonardo's `governance/` edit. That ballot's own ratification will authorize its application."
+- **The text departs from item 4's wording.** Item 4 says "as a key in the existing `ui-tree.<platform>:` branch"; this ballot puts the key on the node wherever it lives (Leonardo's evidence, Kenya's withdrawal, § 1). By R8's rule, "a text that changes after his word … goes back to him".
+- **What stands**: F-1 (α) was ruled by the seats under `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`. Ratifying the text is Peter's act, and is asked in § 5's Open-for-Peter line.
 **Authority**: Peter's pick of #568's F-C, R8 item 4, chat, relayed, received before 2026-10-30T17:23:42Z (the orchestrator's clock), verbatim as relayed: *Re: 4, "Ratify as recommended", plus F-C: "(ii)" Leonardo's own small ballot*. The record is `R8@<its PR squash>`, beside `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`, and the citation is filled after the release seat's record PR merges. Ratified in #568 (`434945ac7` on its branch), § 6, "Ruled: F-C".
 **Timing**: fix-now. The application merges no later than 16.3.0's S.
 **Base**: `d34fc7786` (`origin/main` when this was cut). Every Before block below was cut from `governance/DesignerPunk-Integration-Guide.md` at that SHA and checked by script (byte-exact).
@@ -185,7 +189,9 @@ L823 ("Ignores everything else") and L825 are unchanged, and both stay true.
 
 ## 5. Recommendation, counter-argument (fold-back applied), residual
 
-**Ruled** (R8 item 9): F-C.1 as Leonardo confirmed it, F-C.2 and F-C.3; F-1 (α), ruled by the seats under DLG.
+**Recommendation**: ratify F-C.1 as Leonardo confirmed it at his R3, F-C.2 and F-C.3; F-1 (α) stands as ruled by the seats under DLG.
+
+**Open for Peter**: #573 as filed — R8 item 4's "(ii)" chose this ballot, and its own ratification is owed (R8's reading). The text departs from item 4's "a key in the existing `ui-tree.<platform>:` branch": the key sits on the node wherever it lives, because the Product MCP appends a platform branch after `shared`, so restating a shared node there adds a second node (Leonardo's evidence; Kenya withdrew her branch wording). Ratify F-C.1–F-C.3 as filed, or name what to change. *(Asked 2026-11-01, Thurgood, at the R8 fill.)*
 
 **Counter-arguments, run against it, and what they changed**:
 - **(1) "Put the key only in `ui-tree.<platform>:`" (Kenya's wording).** Leonardo's evidence, the MCP's concatenation, makes that add a second node. So the key goes on the node wherever it lives, with no schema change.
