@@ -114,3 +114,5 @@ The same commit fixes `governance/Rosetta-System-Architecture.md` L481. It adds 
 - **Not mine to fix, routed earlier**: `platform-implementation-guidelines.md` L145, L156, L310, L321 (for Lina; § "Corrections and the vetted list", item 2).
 
 Closed under rule 5. The record stays at the root through this PR, because #585 re-rules its Trigger line and #565 appends to it. It is archived at the next walk.
+
+2026-11-01 (Thurgood, #595 read; recorded here by Ada, owner, rule 9): `governance/MCP-Integration-Guide.md` taught a nested `getToken` lookup for semantic colours, which the generator stores flat (`src/generators/DTCGFormatGenerator.ts` L561). It was corrected at `4980c169c` on this PR, outside the sweep's predicate.
