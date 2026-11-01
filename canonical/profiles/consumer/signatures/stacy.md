@@ -717,11 +717,26 @@ verdict: assent — surviving 4/4
 ## `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-01
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference` (re-pointed)
-canonicalHash: sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a
+canonicalHash: sha256:22a7cb27ec8b8713e28f235de69168183d0a4d622c5a5ff0a4b93c159c8cb6d9
 renderedHash: sha256:f960597172711b89e2548d4dbf51a86ebb87d2dabad202c4ca9b49e0418ca42d
-verdict: assent — surviving 2/5; not surviving: `carve-out-scope`, `carve-out-falsification`, `carve-out-no-silent-rescope`
+verdict: assent — surviving 2/3; not surviving: `carve-out-scope`
+
+**Re-signed 2026-11-01** (prior signature: assent — surviving 2/5; not surviving: `carve-out-scope`, `carve-out-falsification`, `carve-out-no-silent-rescope`, 2026-09-29, against canonical `sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a` and rendered `sha256:f960597172711b89e2548d4dbf51a86ebb87d2dabad202c4ca9b49e0418ca42d`; the rendered hash did not move). *(This re-does `8448cdca9`, whose read claim was false. Erratum: `.kiro/issues/2026-11-01-stacy-c1-acts-read-claim-false.md`; re-cut under R11 line 18.)* It was stale because the steward-verb drop (Thurgood `c9fb5300d`; R5 fork 2, R8 item 9) rewrote the unit's blockquote and deleted its falsification paragraph. I re-confirmed the unit at 3 items, corrected from 5, at `bdc0d9aaa`.
+- **The rendering did not move, and I checked rather than assumed**: renderedHash `sha256:f960597172711b89e2548d4dbf51a86ebb87d2dabad202c4ca9b49e0418ca42d`, recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` over the committed `canonical/_consumer-output/` (three pieces), equals the prior value.
+  - I read the three renderings whole via `cat -n` at `ea9bd7f94`, before this commit: `canonical/_consumer-output/_canonical/agents/stacy.md` L365–L368, `canonical/_consumer-output/cc/.claude/agents/stacy.md` L239–L242 and `canonical/_consumer-output/kiro/.kiro/agents/stacy-prompt.md` L205–L208.
+  - The overlay renders the heading and the Arbitration paragraph only ("both mechanisms": the routing test and the tiebreak). It never carried the blockquote or the falsification paragraph.
+- **canonicalHash** `sha256:22a7cb27ec8b8713e28f235de69168183d0a4d622c5a5ff0a4b93c159c8cb6d9`, recomputed independently; it equals the overlay pin and my confirmation.
+- **Removals re-judged against the moved body.** These are my judgment. Thurgood authored the field at `1e7deb778` (re-made from `e93dc675f` for the re-cut), because a signing commit may not change removals (chain link 2):
+  - **Removal 1 is re-quoted** to the new blockquote's ends: "> **Every claim's verification decision is yours, … Ambiguity resolves to Stacy.**" Both ends occur once in the unit and in none of the renderings. It stays a removal (`subtraction-3`): the blockquote describes the split of DesignerPunk's own steward verbs, which a consumer's two seats never had.
+  - **Removal 2 is dropped**: it quoted the falsification paragraph, which is no longer in the unit, so there is nothing left to remove.
+  - **Removal 3**, "the **anti-rot pair** above", stands unchanged.
+- **Verdict**: assent, surviving 2/3 (`carve-out-routing-test`, `carve-out-tiebreak`, each verbatim in the rendered Arbitration paragraph). `carve-out-scope`, now the new blockquote, does not survive, for removal 1's reason. The two items that left the set (`carve-out-falsification`, `carve-out-no-silent-rescope`) leave the count with them: 2/5 becomes 2/3.
+- **Noted, not changed here (labels are authoring)**: the heading, rendered for the consumer too, still reads "his side of the seam, enumerated". It now heads only the arbitration rules, and the canonical body says there is no such side. That is in my re-confirm note at `bdc0d9aaa`, for Peter's ruling on a rename.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-09-29)**: assent — surviving 2/5; not surviving: `carve-out-scope`, `carve-out-falsification`, `carve-out-no-silent-rescope`, against `sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a`, as below.
 
 **Re-signed 2026-09-29, in the re-sign run** (prior signature: refuse). **Refusal resolved, by a changed disposition** (no-consumer-counterpart → re-pointed). The routing test and the tiebreak now survive verbatim. The verb enumeration, its falsification conditions and the re-scope clause are repo-bound, and they are dropped. Non-blocking, for Thurgood: the unit's heading still reads "The steward-verb carve-out (… enumerated …)" over content that no longer enumerates anything.
 
