@@ -334,9 +334,24 @@ date: 2026-09-29
 ## `#the-charter-cut-ratified-verbatim`
 
 confirmer: stacy
-canonicalHash: sha256:359a3c7d4a4fbe610444f54e02b424faf53339f44b8fffd81015a82007a91611
+canonicalHash: sha256:b2009ee690f7b50f8ed359195e081380997fd5c2e47c149c0fae5555cf32f4e5
 items: cut-thurgood, cut-stacy, you-retain, steward-verb-carve-out
-date: 2026-09-29
+date: 2026-11-01
+
+**Re-confirmed 2026-11-01 (Req 11.6.5d): the steward-verb carve-out dropped.** *(This re-does `f13341af9`, whose read claim was false. Erratum: `.kiro/issues/2026-11-01-stacy-c1-acts-read-claim-false.md`; re-cut under R11 line 18.)*
+- **What changed**: two paragraphs of the unit (`canonical/agents/thurgood.md` L566–L575), authored by Thurgood at `c9fb5300d` as the settle ballot's pre-declared outcome (R5 fork 2, R8 item 9; the condition met by my 2026-10-25 recount).
+  - The Thurgood half of the cut loses ", and the verification of claims whose evidence requires the steward toolset".
+  - The carve-out paragraph becomes "**The steward-verb carve-out is dropped, not carried**: … Every claim's verification decision is Stacy's; **ambiguity resolves to Stacy**."
+  - "You retain" never listed the carve-out, and it is unchanged.
+- **The set is unchanged: 4 items.**
+  - `cut-thurgood` and `steward-verb-carve-out` were re-quoted. Each of the 4 is a verbatim, unique substring of the corrected unit (1 occurrence each, checked by script at `8e84d59a0`).
+  - `steward-verb-carve-out` stays operative: it now states the drop, the obligation that every verification decision is Stacy's, and the tiebreaker. Its label, "The steward-verb carve-out", is authoring and is not re-judged here.
+- **The hash**: the canonicalHash moves from `sha256:359a3c7d4a4fbe610444f54e02b424faf53339f44b8fffd81015a82007a91611` to the value above. I recomputed it independently (`hashText` over `partition(splitFrontmatter(...).body).units`, via a scratchpad script outside the repo), and it equals the overlay pin.
+- **Read before this act**: the unit, read whole via `cat -n canonical/agents/thurgood.md` L566–L575 (the heading through the drop paragraph, the 10 lines the hash covers), at `8e84d59a0`, before this commit. Items were checked by script.
+
+**Ruling: CONFIRMED at 4 items.**
+
+**Re-confirmed 2026-09-29 (prior record, superseded)**: canonicalHash `sha256:359a3c7d4a4fbe610444f54e02b424faf53339f44b8fffd81015a82007a91611`, 4 items, as below.
 
 **Ruling: CONFIRMED at 4, as drafted.**
 

@@ -644,7 +644,7 @@ units:
         text: "the co-signed documents in `.kiro/specs/127-completion-claims-integrity/pre-spec/` govern where this text and they disagree."
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#the-q5-boundary-execution-claims-verification-is-stacys:preamble
   "#the-charter-cut-ratified-verbatim":
-    canonicalHash: sha256:359a3c7d4a4fbe610444f54e02b424faf53339f44b8fffd81015a82007a91611
+    canonicalHash: sha256:b2009ee690f7b50f8ed359195e081380997fd5c2e47c149c0fae5555cf32f4e5
     items:
       - id: cut-thurgood
         kind: obligation
