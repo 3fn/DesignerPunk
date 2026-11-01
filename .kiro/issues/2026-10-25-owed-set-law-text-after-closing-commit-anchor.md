@@ -142,7 +142,7 @@ Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S
 
 ## Partial outcome (2026-11-01, Thurgood, owner, rule 9): item L4 closed by this record's F2 PR
 
-- **Closed: item L4** (Stacy's charter and consumer overlay). The PR on branch `fix/stacy-charter-owed-set-after-closing-commit` corrects `canonical/agents/stacy.md` L445 and L449 and `canonical/profiles/consumer/stacy.overlay.md` L112 and L116 as a CORRECTION, on Peter's line of 2026-11-01 (chat, relayed by the orchestrator, received before 2026-11-01T14:51:23Z: "Yes"; cited from R11 in `2026-10-30-release-16-2-peter-rulings-and-delegation.md` once that record's PR is on `main`).
+- **Closed: item L4** (Stacy's charter and consumer overlay). The PR on branch `fix/stacy-charter-owed-set-after-closing-commit` corrects `canonical/agents/stacy.md` L445 and L449 and `canonical/profiles/consumer/stacy.overlay.md` L112 and L116 as a CORRECTION, on Peter's line of 2026-11-01 (chat, relayed by the orchestrator, received before 2026-11-01T14:51:23Z: "Yes"; `R11@5f22a8819532a1603b21ae8cde4753b7851597e8` line 2, in `2026-10-30-release-16-2-peter-rulings-and-delegation.md` § "R11").
   - The text is Stacy's 2026-10-25 draft above, with my fixes (i) and (ii) against `scripts/owed-set.sh` at `1eced6cd5`. Fix (iii), the closure-undecidable clause, is her own sentence: she refused my version at `cfc6ed983`, and her replacement was applied verbatim.
   - Her acts: re-confirm `930d45b03`, re-sign `36dc6b39a`. The signing chain passes.
   - **This is the floor-class surface RL-22 waived for 16.1.0.** The shipped consumer charter (`dist/consumer-canonical/agents/stacy.md` L343 and L347) now describes the closing-commit anchor. Its release note is the release author's.
