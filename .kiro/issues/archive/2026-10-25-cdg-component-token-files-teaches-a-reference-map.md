@@ -89,3 +89,19 @@ The orchestrator asks Peter to widen the authority line to these four sites. The
 **A guard dependency.** The governance-examples guard's two pending entries for `ButtonCTA/tokens.ts` (L577) go stale with this correction, and the guard fails until they are removed from `scripts/governance-examples/pending.json` (Thurgood's instrument). Fixing step 1 at L997–L1001 retires the other two entries homed here (`tokens.ts`, L998).
 
 *Signed: Lina, 2026-10-30.*
+
+## Outcome (2026-11-01)
+
+*(Lina, owner, rule 5.)* **Fixed by CORRECTION** on branch `fix/cdg-component-token-files-section`, #578. **Every site of the reference-map teaching in the guide is corrected.** The truth referents are `src/components/core/Button-Icon/buttonIcon.tokens.ts`, `src/build/tokens/defineComponentTokens.ts`, the loader's `isTokenFileName` (`src/cli/loadComponentTokens.ts`), and the schemas' `tokens:` lists (`Button-CTA.schema.yaml`). Line numbers are at the branch head `361b4f344`:
+
+1. **§ "Component Token Files"** (L568–L689): "What a component token file is", taken from the real Button-Icon file; consumption is the schema's job and the platform files'. Commit `c5cf351b9`. Authority: Peter's "Re: 2, Yes" (R8 item 2).
+2. **L54**, the reading-list line. Commit `c5cf351b9`, same authority.
+3. **§ "❌ Platform-Specific Values in tokens.ts"** (L1680–L1700): the DO block declares with `defineComponentTokens()`. Commit `c5cf351b9`, same authority.
+4. **L490**, the Directory Purpose line. Commit `93444d6f7`.
+5. **L994**, § "Cross-Platform Token Consumption" step 1 (this record's second instance). The `// tokens.ts` string map is removed. Commit `93444d6f7`.
+6. **L1054–L1068**, § "Token Reference Format": dot-notation names belong in the schema's `tokens:` lists, and a component token file references the primitive's object. Commit `93444d6f7`.
+7. **L1811**, the checklist line. Commit `93444d6f7`.
+
+- **Authority for items 4–7**: Peter's line 4, chat, received before the `date -u` bound in the orchestrator's rulings log (2026-11-01): "Re: line 4, yes".
+- **The guard**: the four governance-examples pending entries homed here are deleted by Thurgood, as the guard required once the strings left the doc. The L577 `ButtonCTA/tokens.ts` declared-path and shape entries went in `6f27b718f`; the L998 `tokens.ts` declared-path and shape entries went in `361b4f344`. The guard exits 0 with 65 pending.
+- **Not here**: the two ownership-tree lines in `rosetta-system-principles.md` (Ada's) and `stemma-system-principles.md`, which use the bare `tokens.ts` name. The Fix shape named them "to be read in the same PR, not decided here". Their `Component Token Files (tokens.ts)` labels name a file both loaders accept, so they misdescribe nothing.
