@@ -69,3 +69,5 @@ Under rule 9. Peter's words: *"Re: 533, Let's schedule in as part of one of the 
 - **Not chosen**: Specs 128–131. None names the Application MCP's token tools as scope at `bad7222ef` (`ada-533-vehicle.md`). The health-check walk reads this `manual` record as the backstop.
 
 *Signed: Ada, 2026-10-27.*
+
+**Routed**: Spec 131 § "2026-11-01 (scope intake, second batch, record only: it names records and settles no design)", the outline row added in the same PR as this line *(2026-11-01, Thurgood, steward, rule 9; under Peter's fork D, R11 line 16, "Route them", `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10, batch routing)*. The Trigger is unchanged. Under fork B (R11 line 14, route in place) its owner re-rules it to `path:.kiro/specs/131-governance-simplification/requirements.md` after this batch merges. This record is not due at 16.2.0's S.

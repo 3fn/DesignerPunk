@@ -187,6 +187,161 @@ Cite R9 as `R9@<the squash of the PR that added it>`.
 
 Cite R10 as `R10@<the squash of the PR that added it>`.
 
+### R11 — Peter's 2026-11-01 authority lines (one at a time, chat, relayed by the orchestrator)
+
+*(Appended 2026-11-01, Thurgood, owner, rule 9. Each line was put to Peter alone and answered alone. Below are the text put to him, verbatim from the orchestrator's receipt log, and his word, verbatim, each with its clock bound (the orchestrator's `date -u` at receipt). Each line authorizes the named authorship, one-off, for the files named. Each merge stays his. No line moves standing write scope. Further lines are appended as ruled.)*
+
+**Line 1 — Kenya's overlay pins**, before 2026-11-01T14:47:54Z.
+- *Put to him*: "add `canonical/profiles/consumer/kenya.overlay.md` L145 and L157 to the item-2 authority line, Thurgood as author (bump the two checksum pins), so Kenya can re-sign her two entries and the steward-canonical record closes before S; alternative named: route to 131."
+- *His word*: "Yes"
+- *What it rules*: R8 item 2's line, which named Thurgood for `canonical/agents/kenya.md` L182/L206, the two renderings and the lock, now also covers `kenya.overlay.md` L145 and L157.
+
+**Line 2 — Stacy's F2 sentences**, before 2026-11-01T14:51:23Z.
+- *Put to him*: "Thurgood authors, as a CORRECTION (his R5 fork-3 word "CORRECTION"), the two sentences on the owed set after a closing commit in `canonical/agents/stacy.md` L445 and L449 and their consumer copies in `canonical/profiles/consumer/stacy.overlay.md` L112 and L116; Stacy re-confirms and re-signs (two acts); a CHANGELOG line; floor-class, release-blocking, F-gating. Alternative named: none available (routing would ship a false consumer-facing charter sentence)."
+- *His word*: "Yes"
+- *What it rules*: Thurgood authors those four lines as a CORRECTION. The truth referent is `scripts/owed-set.sh`. Stacy makes the two acts. The release notes carry a CHANGELOG line.
+
+**Line 3 — F1 widened to L730**, before 2026-11-01T14:52:23Z.
+- *Put to him*: "Lina corrects `governance/platform-implementation-guidelines.md` L730 (the same class of wrong Android spacing-type claim as the L744–L776 fix in #577), one-paragraph CORRECTION under the same record, F-gating. Alternative named: leave it and disclose by record path in the notes."
+- *His word*: "Yes"
+- *What it rules*: Lina authors the L730 CORRECTION under the F1 record (`2026-10-26-android-guidelines-spacing-float-dp-claim.md`).
+
+**Line 4 — F3 widened to four CDG sites**, before 2026-11-01T14:55:48Z.
+- *Put to him*: "Lina adds `governance/Component-Development-Guide.md` L490, L997–L1001, L1059–L1074 and L1810 to #578 as the same CORRECTION under the same record (F3, floor-class, F-gating); Thurgood's two retired line-998 pending entries then match. Alternative named: merge #578 with only the named section fixed and disclose the four sites."
+- *His word*: "Re: line 4, yes"
+- *What it rules*: Lina authors those four sites in #578, under the F3 record (`2026-10-25-cdg-component-token-files-teaches-a-reference-map.md`). Thurgood's removal of the two line-998 `pending.json` entries rides the same PR (`361b4f344`).
+
+**Line 5 — the owned-doc and charter CORRECTION authorship class, "ballot now" or "wait"**, before 2026-11-01T15:01:50Z.
+- *Put to him*: "his 2026-10-30 "Wait and capture (possibly as an inbound)" carried the collective's condition "unless a fifth instance arrives"; the condition fired (about eleven instances incl. today's lines). Options: wait stands (answer lines 8/10/11 as lines; the instance count goes onto 131's OWNERS row as evidence) vs an interim small ballot now (barred by criterion 3 unless the release needs it; it does not)."
+- *His word*: "Yes, wait stands"
+- *What it rules*: no interim ballot during 16.2.0. The class (an owner has no standing write over the CORRECTIONs of the docs or charters it owns) stays routed to Spec 131's OWNERS row (map row 15). Lines 8, 10 and 11 are answered as per-instance lines. The instance count goes onto the OWNERS row's evidence: Spec 131's outline § 13, capture line 2.
+
+**Line 6 — ratify #573, the screen-spec idiom ballot (F-C.1 to F-C.3), as filed**, before 2026-11-01T15:05:00Z.
+- *Put to him*: "ratify `.kiro/docs/ballots/2026-10-30-screen-spec-idiom-per-node.md` as filed — each UI-tree node with a platform-idiom choice states it (follow, or part with a reason) in Integration Guide § "Writing Screen Specs"; the key sits on the node wherever it lives (departs from his R8 item-4 wording "a key in the existing ui-tree.<platform>: branch" because restating a shared node in a platform branch creates a second node — Leonardo's evidence, Kenya withdrew); Leonardo authors the application; F-gating. Alternatives named: send back for the branch form; hold for 131."
+- *His word*: "Ratify as filed"
+- *What it rules*:
+  - The ballot `2026-10-30-screen-spec-idiom-per-node.md` (#573) is ratified as filed, F-C.1 to F-C.3, so its Status becomes RATIFIED under the record-first protocol.
+  - The key sits on the node wherever it lives. That supersedes R8 item 4's "a key in the existing `ui-tree.<platform>:` branch" wording for this ballot.
+  - Leonardo authors the application, which is F-gating.
+- *Criterion 3* (no new ballots during 16.2.0 unless the release needs one): the ballot was filed 2026-10-30, before R9's brief existed, and is one of the three in flight that R9's re-plan let stand.
+
+**Line 7 — ratify the rest of #579 beyond Sparky's sentence**, before 2026-11-01T15:06:17Z.
+- *Put to him*: "ratify as filed `.kiro/docs/ballots/2026-10-30-web-prop-property-or-attribute-only.md` beyond Sparky's sentence (R8 item 6): site 1's second paragraph (Lina's G-4 wording, no repo path); site 2 with the third marker value `web: unmapped` (props reaching the element as neither property nor attribute; `children` as slot content) and Leonardo's last sentence; site 2c (Component Schema Format L154/L163 `type: callback` → signature-string form); the conditional banners (guard's own report at the application base); same-PR tests. Alternatives named: send back `unmapped` for a hand-kept exclusion list; hold for G-4/128."
+- *His word*: "Ratify as filed"
+- *What it rules*:
+  - With R8 item 6 (Sparky's sentence), #579 is now ratified in full, so its Status becomes RATIFIED under the record-first protocol.
+  - Lina authors the application, which is F-gating.
+- *Criterion 3*: the ballot was filed 2026-10-30, before R9's brief, and is in flight under R9's re-plan, as #573 is.
+
+**Line 8 — `design-language/design-philosophy.yaml` L53**, before 2026-11-01T15:12:30Z.
+- *Put to him* (Thurgood's draft line): "Yes: Leonardo authors `design-language/design-philosophy.yaml` L53, the Native-Behavior Rule's constraint, replacing that line with ballot 2026-10-30-departure-timing-plan-vs-build § 3 site 2's After byte for byte, as one commit on `chore/apply-ballot-departure-timing` before it merges. One-off, this file and line only; it moves no standing write scope." Alternatives named: its own PR after the application merges; leave the site out (framework and served philosophy would disagree until 131).
+- *His word*: "Yes, on the application branch"
+- *What it rules*:
+  - Leonardo has one-off authorship of that file and line.
+  - It is one commit, on the application branch of ballot `2026-10-30-departure-timing-plan-vs-build` (#568), before that PR merges. The application PR carries it.
+  - The new text is § 3 site 2's After, byte for byte. No standing write scope moves.
+
+**Line 9 — #568's corrected site-1a text (L138/L139) after the R4 reads**, before 2026-11-01T15:13:29Z.
+- *Put to him*: "ratify the corrected site-1a text — L138 last sentence "A spec task (work done for a spec: it executes a row of that spec's merged `tasks.md`, or its PR names the spec in `Spec:`, whatever its branch) or a product screen is plan-kind work; with no approved plan it is still in planning, so ask." and L139 "Work of any other kind (in this repo, a PR whose `Spec:` is `none`, such as an issue-driven `fix/` or `chore/` PR, whatever surface it touches) is in development from its start.", plus "through the screen's architect" → "through the product's architect" at L138 and L181 (Lina's Final, with Ada's anchor and Kenya's note). Alternatives named: decline (ratified text applies unchanged, correction reverted); another round."
+- *His word*: "Ratify the corrected text"
+- *What it rules*:
+  - #568's ratification (R8 items 4 and 9) extends to the corrected text: L138's last sentence and L139 as quoted, and "through the product's architect" at L138 and L181.
+  - The application carries the corrected text.
+
+**Line 10 — the TDS and Civitas-overview CORRECTIONs**, before 2026-11-01T15:18:36Z.
+- *Put to him* (Thurgood's drafted line): "Re: 10, Yes: Thurgood authors, as CORRECTIONs, (a) `governance/Test-Development-Standards.md` L1556–L1902, the workflow examples, so each declared test file and schema shape exists or is marked hypothetical (Lina consulted on L1884); and (b) `.kiro/steering/Civitas-System-Overview.md` L39, which drops 'built in Spec 081: 14 tools' for 'built in Spec 081 and extended by specs 096 and 097', with no count. The merges stay mine." Options presented: yes to both; yes to (b) only; no (both ride 16.3.0 on their re-rules).
+- *Thurgood's read, received before the answer*: (a) is six sites, about 20 lines and about 1 h, off the critical path. (b) moves consumer unit `#what-civitas-contains` (item `what-civitas-con-8`), so Stacy owes a re-confirm and a re-sign. His lean was yes to both. Stacy's and Lina's reads were still pending at receipt.
+- *His word*: "Yes to both"
+- *What it rules*: Thurgood authors both, one-off, for these lines only. The merges stay Peter's. No standing write scope moves.
+  - (a) is the six sites of `governance/Test-Development-Standards.md`: four `generic` markers (EXECUTION under ballot `2026-10-26-governance-examples-guard` § 2.3) and the L1902 and L1884 CORRECTIONs, with Lina consulted on L1884.
+  - (b) is the L39 CORRECTION of `.kiro/steering/Civitas-System-Overview.md`.
+  - *Recorded after the answer*: Stacy's read arrived after it.
+    - On the TDS examples: now. They owe no signing acts of hers, the text is false in a served doc, and the fix cuts guard-pending entries.
+    - On Civitas-System-Overview L39: at 16.3.0. No consumer reads the false count, the renderedHash does not move, and it costs her two acts. Her dissent on cost is on L39 only.
+    - Peter's "Yes to both" covers both, and the ruling stands.
+  - *Both PRs are F-gating*, because both files ship. The TDS examples are in `governance/`. The Civitas overview ships as an identity doc, though its consumer rendering never carried the count.
+- *Sub-item, 2026-11-01: the TDS range widened to L1964*, before 2026-11-01T15:33:01Z.
+  - *Put to him*: "#609's L1884 correction left Example 4's phase 3 (L1952–L1954, L1962–L1964) listing the old made-up contract names, contradicting the corrected block; outside line 10's L1556–L1902. Options (Thurgood's): widen line 10 to L1964 (one more commit on #609, same record, three lines; his lean) or a 16.3.0 record."
+  - *His word*: "Let's widen line 10 to L1964"
+  - *What it rules*: line 10 (a)'s range is now `governance/Test-Development-Standards.md` L1556–L1964. That brings in Example 4's Phase 3 (L1952–L1954 and L1962–L1964 at the base), corrected to Input-Text-Email's real contract names in #609.
+- *Sub-item, 2026-11-01: (b)'s sentence re-authored after Stacy's refusal*, before 2026-11-01T15:38:35Z.
+  - *Why it went back to him*: the wording he approved under line 10 named Spec 096, and that was false. Spec 096 never touched the Product MCP (Stacy's refusal of the first draft, with her tool-count history from `product-mcp-server/src/index.ts`).
+  - *Put to him*: "the first wording he approved ("extended by specs 096 and 097") was false — 096 never touched the Product MCP (Stacy's refusal; tool count in `product-mcp-server/src/index.ts`: 081 → 7, 097 → 12, 107 → 13, 108 → 14). Re-authored sentence: "Product MCP: serves product-specific context from a consumer's `product/` directory (built in Spec 081 and extended by specs 097, 107 and 108; shipped in the package as `dist/mcp/product-mcp.js`). This repository has no `product/` directory, so here it serves an empty product set." with the dated pointer saying the old "14 tools" was false as history and the count is volatile."
+  - *His word*: "Confirm"
+  - *What it rules*: (b)'s L39 is the sentence as re-authored at `b03d0c43a3fbc0bb953d59bd324c44f20c1c3629` (#612), quoted in full:
+    > - Product MCP: serves product-specific context from a consumer's `product/` directory (built in Spec 081 and extended by specs 097, 107 and 108; shipped in the package as `dist/mcp/product-mcp.js`). This repository has no `product/` directory, so here it serves an empty product set. *(corrected 2026-11-01: "built in Spec 081: 14 tools" was false as history, since Spec 081 built 7 and specs 097, 107 and 108 took it to 14, and the count is volatile; .kiro/issues/2026-10-27-civitas-overview-product-mcp-provenance-false.md; prior text at 465af3544)*
+  - Stacy still owes her two acts on `#what-civitas-contains`: she re-confirms it and re-signs it.
+
+**Line 11 — Ada's authorship of the 18 governance docs in #595**, before 2026-11-01T15:21:15Z.
+- *Put to him*: "(A) one line naming Ada as author of the 18 `governance/` files listed in #595's body, CORRECTIONs and markers, one-off, merge Peter's (Ada's ask; Thurgood's read agrees); (B) his word that the walk record's "Ada · sweep PR" row under the delegation suffices (Ada's alternative; weak — the delegation excludes write scope); hold for 131. Also: `governance/a-vision-of-the-future.md` is his own voice (Thurgood's read; no charter owner) — Ada's two corrections stay or he makes them himself."
+- *His word*: "(A), and the vision file stays Ada's"
+- *What it rules*:
+  - Ada authors the 18 `governance/` files named in #595's body, CORRECTIONs and markers, one-off; each merge stays his.
+  - `governance/a-vision-of-the-future.md` is written in his voice and has no charter owner. Ada's two corrections to it stay hers, by his word.
+  - No standing write scope moves.
+
+**Line 12 — the 17.0.0 charter** (Peter's own record `2026-10-20-17-0-0-release-charter.md`), before 2026-11-01T15:29:54Z.
+- *His words first*, verbatim, with one typo corrected and labelled ("at 17" read as "a 17"): "I don't really plan releases that way... I focus more on what direction we take and versioning is a consequence. I would imagine adding react and react native would warrant a 17 release. Honest thoughts?"
+- *Put to him in reply* (the orchestrator's honest read): adding React/RN is additive (a minor on its own); what warrants a major is the web element public-contract cleanup (G-4 items E2–E7) that React binding needs, and 128's own inbound says generated React wrappers do not ship before that cleanup. "Proposed charter in his words: 17.0.0 is the major where the web element's public contract is cleaned up (G-4) and React and React Native bind to it (128); breaking changes ship together there; no date; sequencing 129 → 131 → 128 → 130 unchanged; caveat "unless 128's design shows the binding needs no breaking change". A record, not law (criterion 3 untouched). Alternative named: "standing exception" (name no number before 128's design)."
+- *His word*: "Charter it in those words"
+- *What it rules*:
+  - The 17.0.0 charter record is `.kiro/issues/2026-11-01-17-0-0-release-charter.md`, filed by Thurgood for Peter. Its Trigger is 128's `design.md`.
+  - The 2026-10-20 record closes by pointing at it.
+  - E2–E7, 128's wrapper-sequencing rule and the blend deprecation's next-major removal take their start condition from it.
+  - It is a record, not law.
+
+**Line 13 — F2's L1 and L3: `.kiro/hooks/RELEASE-FLOW.md` § 5a and Thurgood's charter** (the owed-set record `2026-10-25-owed-set-law-text-after-closing-commit-anchor.md`, items L1 and L3), before 2026-11-01T15:34:54Z.
+- *Put to him* (Thurgood's drafted line): "Thurgood authors, as a CORRECTION (your 2026-10-30 fork-3 word, R5), the sentences that describe `scripts/owed-set.sh` in two places: `.kiro/hooks/RELEASE-FLOW.md` § 5a, L66 (how the ratification boundary is read), L71 (`touch-only`), L72 (`candidate`), L74 (the heuristics sentence) and L76 (the unit-class anchors); `canonical/agents/thurgood.md` L543 and L545, in the LIVENESS paragraph on the owed-set query. The change: they say what the script has done since #473. A commit counts from its committer's or its UTC day on or after the ratification date. `touch-only` and the anchor come from the spec's closing commit. A spec with no closing commit reads `closure undecidable`. Stacy re-confirms and re-signs Thurgood's charter unit (two acts). L78, the 'one judgment point' paragraph, and the 2026-09-19 ballot's § 7.5 counting block stay asked." Fork inside (Thurgood's): add L78's first sentence ("the anchor printed is the most recent first-parent commit touching the spec", now false) as a CORRECTION, or leave L78 whole for its own round. Options: yes incl. L78's first sentence (Thurgood's lean); yes, L78 whole; no (16.3.0).
+- *His word*: "Yes, including L78's first sentence"
+- *What it rules*:
+  - Thurgood authors, one-off, as a CORRECTION under R5 fork 3, the sentences describing `scripts/owed-set.sh` at `.kiro/hooks/RELEASE-FLOW.md` § 5a L66, L71, L72, L74, L76 and L78's first sentence, and at `canonical/agents/thurgood.md` L543 and L545.
+  - Stacy's two acts on Thurgood's charter unit are owed: she re-confirms it and re-signs it.
+  - L78's "one judgment point" paragraph after its first sentence, and the 2026-09-19 ballot's § 7.5 counting block, stay asked. This line does not reach them.
+  - Not F-gating. `.kiro/hooks/RELEASE-FLOW.md` is not packed. Thurgood's consumer charter (`canonical/_consumer-output/_canonical/agents/thurgood.md`) renders LIVENESS items 1 and 2 only; L543 and L545 do not render to it (checked at origin/main, 2026-11-01).
+
+**Line 14 — fork B, the routing form**, before 2026-11-01T15:40:52Z.
+- *Put to him*: "his R9 item-1 bullet ("routed to a named spec. Routing is one line per record, or one batch record per destination spec like #575, not a re-rule in place") read two ways. (i) Route in place (Stacy's form, the collective's recommendation after Thurgood folded): the outline row is the routing; the record stays at the root with its Trigger on the spec's requirements path (the git signal that fires when the spec's requirements land and lapses back to him if they leave the record out); keeps all four delegation guards; root at S ≈ 133. (ii) Archive on route (Thurgood's withdrawn proposal): the record moves to archive with a "routed to Spec N" line; ≈ 88 at S; fires nothing; contradicts README rule 11 and the 129/131 outlines' "owners re-rule" text. Already landed under (i): the 13 intake-batch records (trigger already the spec path), Leonardo's form-A record (#583), the six 131-routed re-rules (#599, #600)."
+- *The two options' sources*: (i) is Stacy's form (her phase-1 states 2 and 2a), the collective's recommendation after Thurgood folded his own proposal into it (sheet r3). (ii) is Thurgood's first r3 proposal, withdrawn. The bullet both read is R9 item 1, quoted in the walk record's § "The release's definition of done".
+- *His word*: "Route in place"
+- *What it rules*:
+  - (i) is the routing form for 16.2.0. A routed record stays at the root. Its owner re-rules its Trigger to the spec's `requirements.md` path, citing DLG, R10 and this line.
+  - Routing makes no archive move. Criterion 4's count falls by resolution, not by relocation.
+  - Stacy's state 2a records become state 2 when their owners re-rule them. Leonardo's #583 record is the one instance, and it may now re-rule its Trigger to Spec 131's path.
+
+**Line 15 — fork C, a "standing" exception class**, before 2026-11-01T15:45:48Z.
+- *Put to him*: "a second walk-record exception class, "standing", beside "release-blocking", for records whose job is to be open: Stacy's two ARMING homes (path: detectors), the trio obligation (Spec 123 Req 23.7), the priorities record (Peter's spec order; Thurgood's addition). The RS queue is routed to 131 in place and never archived (no class needed); the 17.0.0 charter is a charter routed to itself (no class needed). A record joins the list only by Peter's word. Options: yes with the four (Stacy's and Thurgood's lean); no class, route them to 131 (detectors stop firing from the root); no class, re-rule each release. Walk-record class, not law; 131 decides whether it becomes standing practice."
+- *The options' sources*: the class and the two ARMING homes are Stacy's (her phase-1 state 3, named exceptions). The priorities record is Thurgood's addition. The trio obligation's standing reason is Spec 123 Req 23.7, one run per release.
+- *His word*: "Yes, name the class with the four"
+- *What it rules*:
+  - The 16.2.0 walk record names a second exception class, **standing**, beside release-blocking, for records whose job is to stay open. It has four members: `2026-10-20-in-lane-registry-arming-reads.md` and `2026-10-25-arming-read-class-option-fork.md` (Stacy's ARMING homes), `2026-10-15-123-onboarding-trio-recurring.md` (the trio obligation) and `2026-10-18-spec-priorities-by-outcome.md` (his spec order).
+  - The RS queue (`2026-10-26-release-16-1-standards-implications.md`) is not in the class. It is routed to 131 in place and never archived. The 17.0.0 charter is not in it either. It is a charter routed to itself.
+  - **A record joins the standing list only by Peter's word.** No seat adds one.
+  - It is a walk-record class, not law. Spec 131 decides whether it becomes standing practice.
+
+**Line 16 — fork D, the 28 manual-trigger P3 improvement records**, before 2026-11-01T15:52:38Z.
+- *Put to him*: "the default direction for Thurgood's command-generated list (28 rows at a stated SHA, digest in r3; excludes grants, the priorities record, path: P3s): drop (Stacy's lean; closed by his word; archive "dropped, R12"); not-now (Thurgood's framing; rule 5's stale archive with the two-walk condition waived as a stated waiver); route them all to 131; leave at the root counted (status quo under R10 fork 2 (a)). Recommended: drop as default with strike per row."
+- *The options' sources*: drop was Stacy's lean. Not-now was Thurgood's framing. The list is Thurgood's, generated by command at `1e2f82b44` (28 rows, digest `97595272aaa6…`, sheet r3). It excludes grants, the priorities record and the P3s that already carry a `path:` Trigger.
+- *His word*: "Route them. We'll evaluate them as part of that effort — perhaps they can better inform the spec, be combined or inform other proposals, etc."
+- *What it rules*:
+  - The 28 records are routed to Spec 131, in place (fork B's form, line 14). None is dropped, and none is archived for routing.
+  - One § 13 intake batch in 131's design outline names each record by filename, with its scope sentence quoted from the record. Each row carries his words as the task: evaluate in 131's requirements round, to "better inform the spec, be combined or inform other proposals".
+  - Each owner re-rules their record's Trigger to `path:.kiro/specs/131-governance-simplification/requirements.md`, citing DLG, R10 and this line.
+  - The R12 row-by-row PR is not needed. The evaluation happens in 131's rounds.
+  - For criterion 4, the 28 move from "left in place, not due" to "routed in place". The root count does not change.
+
+**Line 17 — fork E, "a named spec" covers existing specs**, before 2026-11-01T15:53:59Z.
+- *Put to him*: "his R9 bullet lists "128, 129, 130, 131, or a new spec"; read closed, a record waiting on an existing spec's unfinished work (Stacy's `2026-10-15-123-125b-u3-re-attestation.md` → 125-B U3; 115 Phase B; the contrast adjudication queue) has no legal state. Options: yes, any spec whose outline or tasks name the record (Stacy's ask; Thurgood agrees; the trigger on that spec's path keeps the oracle); no, the list is closed."
+- *The options' sources*: "yes" was Stacy's ask, and Thurgood agreed. "No, the list is closed" is the literal reading of R9 item 1's list.
+- *His word*: "Yes, any spec that names the record"
+- *What it rules*:
+  - Criterion 2's "named spec" covers any existing spec whose outline or tasks name the record, not only 128, 129, 130, 131 or a new spec. Such a record routes in place (line 14), with its Trigger on that spec's path, which keeps the git signal.
+  - The three cases put to him are Stacy's `2026-10-15-123-125b-u3-re-attestation.md` (125-B U3), 115 Phase B's record and the contrast adjudication queue. Each routes once its spec's outline or tasks name it. The naming is checked per record.
+  - *Reading, not his word*: his "Yes" answers the option as put, "any spec whose outline or tasks name the record". A spec that names the record only in an inbound owes an outline or tasks row first, as the 129 and 128 batches did.
+
+*Further lines are appended as ruled.*
+
+Cite R11 as `R11@<the squash of the PR that added it>`, with the line number, e.g. `R11@<sha> line 2`. *(Added 2026-11-01, Thurgood, owner.)* Lines 1–13, with line 10's first sub-item, merged in #605 at `5f22a8819532a1603b21ae8cde4753b7851597e8`: cite them as `R11@5f22a8819532a1603b21ae8cde4753b7851597e8 line <N>`. Line 10's second sub-item and lines 14–17 were committed after #605 merged and arrive in the follow-up PR. Cite them by that PR's squash.
+
 ## Delegation
 
 **The words**: R7's second sentence, above.
