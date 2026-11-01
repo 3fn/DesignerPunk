@@ -34,3 +34,13 @@ The `path:` trigger fired because #459 edited the framework doc. **The edit did 
 Why the close was missed: #459 was merged from the other session as a pointer correction, and its author did not read this record's file-level Trigger against the diff; Lina, the resolver, was not in seat to see the fire.
 
 Disposition: the ask stands (the three items are the post-ratification consistency findings Lina raised herself). A P2 `(record)` first lapse does not escalate (rule 11: the second lapse does). The Trigger above is re-ruled to `release:next:phase-1`. The fix is a `governance/**` edit by Lina, Peter-merged. A second lapse at the next release's S escalates to Peter with spec, drop or fix-now.
+
+## Outcome (2026-11-01, Thurgood, owner, rule 5)
+
+Resolved by the application of ballot `2026-10-30-departure-timing-plan-vs-build` (RATIFIED, Peter, 2026-10-30; `R8@0184efb3fd7b2956677351fdf84899767a5ac74a` item 4, and item 9 also names it). The application PR is `chore/apply-ballot-departure-timing`, and its merge is the closing event.
+- **Item 1, the motion list** (L172–L178): resolved by sites 1a (Q4's "No") and 1b (the motion pause list).
+- **Item 1, the token-mapping list** (L249–L254): kept as intentional, on Lina's ruling (that ballot's `[LINA R1]`). Its lead now reads "a human" (site 1c).
+- **Item 2, the Overview's framing** (L21): resolved by site 1f, in Lina's words.
+- **Item 3, Required Documentation items 3 and 4** (L328–L329): resolved by site 1g, with item 5, the departure mark, as site 1h (F-B (a)).
+
+Moved to `archive/` in the same PR.

@@ -8,6 +8,8 @@ description: Strategic guidance on when to use cross-platform patterns vs platfo
 
 # Cross-Platform vs Platform-Specific Decision Framework
 
+> **Audience framing**: this describes **DesignerPunk's own process and components**, not yours. **Worked example**: the amendment notes and their ballot paths, the plan artifacts named (DesignerPunk's specs, tasks and screen specs, and the merge that approves them), the `**Departures**:` PR-body line, and the components and platform examples are DesignerPunk's. **Transferable**: the four decision criteria, the rule that a departure found while planning is asked of a human and one found during development is recorded, built and named before the work is accepted, the motion and token-mapping patterns, and the README documentation requirements.
+
 **Date**: 2025-12-19
 **Last Reviewed**: 2026-10-19
 **Purpose**: Strategic guidance on when to use cross-platform patterns vs platform-specific idioms
@@ -18,7 +20,7 @@ description: Strategic guidance on when to use cross-platform patterns vs platfo
 
 ## Overview
 
-DesignerPunk's True Native Architecture creates a fundamental tension: we want cross-platform consistency through design tokens while respecting platform-appropriate UX through native idioms. This framework helps you make informed decisions about when to prioritize each approach.
+DesignerPunk's True Native Architecture fixes how components are built and leaves how they look and feel open: implementation and accessibility semantics are always native (the Key Principle, below), and design may follow a platform's idiom or depart from it, carried by tokens. This framework helps you make and record each design choice, and says when a departure is asked before it is built and when it is recorded and named.
 
 **Key Principle**: True Native Development does not mean True Native Design. Three axes, two of them fixed:
 - **Implementation is always native.** Build-time platform separation and the platform's own rendering and accessibility stack are not a choice.
@@ -132,7 +134,12 @@ Accessibility semantics stay native whatever is chosen for design.
 - **Yes**: Use platform idiom with token-based values
   - Example: iOS spring animation with motion token duration
   
-- **No**: Record the departure
+- **No**: Record the departure. When it was found decides who makes the call (the Native-Behavior Rule, `design-language/design-philosophy.yaml`): *(amended 2026-11-01 by ballot 2026-10-30-departure-timing-plan-vs-build, site 1a; prior text at `2c00cea49`)*
+  - **Found while planning**, that is, while the plan the work executes is written or reviewed (a spec's outline, requirements, design or tasks, or a product screen spec; a platform agent's review of an approved screen spec before it builds counts): pause and ask a human (for product work, through the screen's architect, who takes it to the product's human lead) before the plan is approved. A plan with no recorded approval is still in planning. For work whose kind has a plan (a spec, a product screen), a missing plan is itself planning, so ask.
+  - **Found during development**, that is, after that plan is approved and work has started: in DesignerPunk's own repo, after the merge of the plan artifact the work executes; for product work, after the human lead's dated go in the screen spec's review (Product-Token-Governance § "Authoring Workflow"), once the platform's `status` leaves `not-started`. Other work that executes no plan artifact (in this repo, a `fix/` or `chore/` PR) is in development from its start. Record the departure with its reason (for a component, in its README, marked as Documentation Requirements item 5 says; for product-screen work, in the Implementation Report's "Decisions Made During Implementation", with the screen spec amended to name it), proceed, and name it before the work is accepted, one line per departure, in the PR body or, where the work has no PR, under that report heading: `**Departures**: <Component-Name>, <web|ios|android> — <what departs, and why> — <path § "heading" of the record> — in-plan: <path § "heading" naming the component and the idiom | component only: path § "heading" | not in plan (<the plan artifact searched>)>`. A screen spec's section may be written as `<path> uiTree.<node>`.
+  - A conflict the plan already showed is a planning-stage conflict, wherever it was first noticed. A departure the component's README already records is the component's, and a screen that uses it does not file it again.
+  - A choice that also breaks a design rule (the design philosophy's Break-Glass Rule) is not a departure: it waits for explicit authorization whenever it is found.
+  - A token the work needs is not a departure: it follows Token Governance § "Token Creation Governance" and, for product work, Product-Token-Governance § "Authoring Workflow", whenever it is found.
   - Example: Platform color scheme conflicts with brand colors
 
 ---
@@ -171,11 +178,11 @@ Is this animation cross-platform?
 
 ### When to Pause and Ask
 
-**Pause and ask Peter when:**
-- Unclear whether platform animation should use tokens or native values
-- Motion token doesn't exist for the needed animation
-- Platform idiom conflicts with design system consistency
-- Animation is critical to brand expression
+**Pause and ask a human (for product work, through the screen's architect) when:** *(amended 2026-11-01 by ballot 2026-10-30-departure-timing-plan-vs-build, site 1b; prior text at `2c00cea49`)*
+- The four Decision Criteria leave it open whether platform animation should use tokens or native values
+- Motion token doesn't exist for the needed animation (a token stop whenever it is found: Token Governance § "Token Creation Governance" and, for product work, Product-Token-Governance § "Authoring Workflow")
+
+Using an existing native value instead of the motion token the plan or the component names is a departure: Q4's "No" case, and the rule there says when to ask. Needing a value that neither a token nor the platform supplies is the token stop above.
 
 **Example questions:**
 - "iOS spring animation provides better UX but doesn't use motion tokens. Should I use the spring or token-based animation?"
@@ -248,7 +255,7 @@ Button(
 
 ### When to Pause and Ask
 
-**Pause and ask Peter when:**
+**Pause and ask a human when:** *(amended 2026-11-01 by ballot 2026-10-30-departure-timing-plan-vs-build, site 1c; prior text at `2c00cea49`)*
 - Token mapping pattern doesn't exist for your use case
 - Platform idiom requires values that don't map to tokens
 - Unclear how to maintain token equivalence across platforms
@@ -325,8 +332,9 @@ Button(
 
 1. **Rationale**: Why each visual and behavioral choice (native idiom or departure) was made
 2. **Platform differences**: What differs between platforms and why
-3. **Token usage**: Which tokens still used despite platform idioms
-4. **Accessibility**: How platform idiom affects accessibility
+3. **Token usage**: Which tokens each choice uses, whether it follows the platform's idiom or departs from it
+4. **Accessibility**: How each choice keeps accessibility semantics platform-correct; a departure in design never changes role, state, name, activation, focus or announcements
+5. **Departure mark**: An entry that departs from its platform's idiom begins `**Departure**:` after the platform name, as in `**iOS**: **Departure**: …`; an entry that follows the idiom carries no mark. The work that adds a marked entry names it in a `**Departures**:` line when it is handed off (Decision Criteria, Q4). *(added 2026-11-01 by ballot 2026-10-30-departure-timing-plan-vs-build, site 1h)*
 
 ### Example Documentation
 
@@ -361,4 +369,4 @@ Button(
 
 ---
 
-*This framework provides strategic guidance for balancing cross-platform consistency with platform-appropriate UX. When in doubt, pause and ask Peter for guidance.*
+*This framework provides strategic guidance for balancing cross-platform consistency with platform-appropriate UX. When in doubt, pause and ask a human for guidance.* *(amended 2026-11-01 by ballot 2026-10-30-departure-timing-plan-vs-build, site 1d; prior text at `2c00cea49`)*
