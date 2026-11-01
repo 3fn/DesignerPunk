@@ -1553,6 +1553,7 @@ const schemaResult = validatePropertyAndAccessibility(
 
 During development, IDE linting provides immediate feedback:
 
+<!-- example: generic -->
 ```typescript
 // src/components/core/Input-Text-Search/platforms/web/InputTextSearch.web.ts
 
@@ -1580,6 +1581,7 @@ export class InputTextSearch extends InputTextBase {
 
 After implementation, write unit tests for specific behavior:
 
+<!-- example: generic -->
 ```typescript
 // src/components/core/Input-Text-Search/__tests__/InputTextSearch.test.ts
 
@@ -1617,6 +1619,7 @@ describe('Input-Text-Search', () => {
 
 Test integration with other components:
 
+<!-- example: generic -->
 ```typescript
 // src/components/core/Input-Text-Search/__tests__/InputTextSearch.integration.test.ts
 
@@ -1656,6 +1659,7 @@ describe('Input-Text-Search Integration', () => {
 
 Validate properties that should hold for all inputs:
 
+<!-- example: generic -->
 ```typescript
 // src/components/core/Input-Text-Search/__tests__/InputTextSearch.property.test.ts
 
@@ -1882,25 +1886,28 @@ npm test -- src/__tests__/stemma-system/cross-platform-consistency.test.ts
 #### Phase 1: Define Behavioral Contracts
 
 ```yaml
-# Input-Text-Email.schema.yaml
-behavioral_contracts:
-  - name: email_validation
-    description: Validates email format on blur
+# src/components/core/Input-Text-Email/contracts.yaml (excerpt)
+# *(corrected 2026-11-01: the block named the schema file with a `behavioral_contracts:` key and unprefixed names; contracts live in contracts.yaml under {category}_{concept} names (contract-system-reference § "Canonical Format"); .kiro/issues/2026-10-26-tds-workflow-examples-declare-files-that-do-not-exist.md; prior text at 465af3544)*
+contracts:
+  validation_email_format:
+    category: validation
+    description: Validates email against RFC 5322 pattern
     platforms: [web, ios, android]
-    
-  - name: email_autocomplete
-    description: Provides email autocomplete suggestions
+
+  interaction_email_autocomplete:
+    category: interaction
+    description: Enables browser/platform email autofill
     platforms: [web, ios, android]
-    
-  - name: keyboard_type
-    description: Shows email-optimized keyboard
-    platforms: [ios, android]
+
+excludes:
+  state_disabled:
+    category: state
 ```
 
 #### Phase 2: Write Cross-Platform Contract Tests
 
 ```typescript
-// src/__tests__/stemma-system/input-text-email-contracts.test.ts
+// Illustration: a cross-platform contract test for Input-Text-Email. This repo's contract tests live in src/__tests__/stemma-system/ (for example behavioral-contract-validation.test.ts); no file holds the test below. *(corrected 2026-11-01: the comment named a test file that does not exist; .kiro/issues/2026-10-26-tds-workflow-examples-declare-files-that-do-not-exist.md; prior text at 465af3544)*
 
 describe('Input-Text-Email Cross-Platform Contracts', () => {
   const platforms = ['web', 'ios', 'android'];
