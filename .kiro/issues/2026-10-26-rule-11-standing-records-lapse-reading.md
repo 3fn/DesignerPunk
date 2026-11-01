@@ -2,7 +2,8 @@
 
 **Date**: 2026-10-26
 **Owner**: Thurgood (owner of `.kiro/issues/README.md`). **Filed by**: Thurgood, under README rule 10, in the PR of ballot `.kiro/docs/ballots/2026-10-26-issues-multi-path-trigger-token.md`, whose § 5 residual 2 names this question and carries it here on Stacy's conditions (consult 2026-10-26, relayed by the orchestrator).
-**Trigger**: `release:next:phase-1` — the ballot that answers the question below merges, or Peter rules it unneeded, before the next release's RELEASE phase 1; at that walk this record is closed by a dated outcome line naming the PR or the ruling, or carried with the question still open (rule 1: a P2 that would ride a later change takes this token).
+**Trigger**: `path:.kiro/specs/131-governance-simplification/requirements.md` — the event that owes the close is Spec 131's requirements: the first commit that adds them takes this record in, or leaves it out with a reason (`governance/Process-Spec-Planning.md` § "Before Formalizing: Records That Name the Spec"). If they leave it out without a reason, it lapses and returns to Peter (rule 11). Map row 13. Lina's deadline, carried here in the Trigger prose (Stacy's condition): 131's README rule 11 is ratified by 16.3.0's S, or the working reading B2 goes to its own ballot then.
+*Trigger re-ruled 2026-11-01 (Thurgood, owner, rules 9 and 11). Spec 131's outline names this record in § 13 ("Scope intake, 2026-10-30", added at `7d610b425`, #575), so the spec answer is carried out (rule 11), and this re-rule descends from that naming commit. The disposition, quoted from the 16.2.0 walk record's delegation table: "spec 131 | Thurgood · 131 amendment | re-rule after the amendment". Authority: `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`; `R10@ee5ea2b80e58c26a6dea7e6dfd538d006193f755` (fork 1 (a): this row is an R7/R8 disposition, a valid state with its Trigger and second-lapse guard); R5 fork 1's spec answer, as for 129. The spec's `path:` token is the answer's own firing, with no 16.3.0 date (the rulings record's guard-scope line). Superseded Trigger, kept verbatim: "`release:next:phase-1` — the ballot that answers the question below merges, or Peter rules it unneeded, before the next release's RELEASE phase 1; at that walk this record is closed by a dated outcome line naming the PR or the ruling, or carried with the question still open (rule 1: a P2 that would ride a later change takes this token)."*
 **Class**: P2 obligation (record) · owed-act *(set 2026-10-26, Thurgood, owner, rule 12. The rule's form is wrong for one shape of record: it reads a standing record's every firing as a lapse. The failure runs in the safe direction, an escalation Peter can rule on and not a hidden miss, so no reader is misled into missing anything: `(record)`, not `(guard)`. Not P3: two live records have this shape, and one of them is a P2 `(guard)` that escalates at its first lapse.)*
 
 ---
@@ -28,3 +29,18 @@ The rule's intent for such a record is plainly different: a firing owes a read, 
 A later ballot, not in the cap of `2026-10-26-issues-multi-path-trigger-token`: one rule-11 sentence for standing records. The shape named there: "a firing owes a read, not a close; it lapses when a release's S arrives with an unread firing". Whether "standing" is read from the record's Status line or from its kind, and how an unread firing is decided from git (for example, a read whose `read through <sha>` is not an ancestor of the firing commit), are the ballot's to settle. LAW; Peter ratifies, record-first; Stacy required reviewer.
 
 *Signed: Thurgood, 2026-10-26.*
+
+## The working reading for 16.2.0, and two consequences (2026-11-01, Thurgood, owner)
+
+**B2, Stacy's corrected wording, used for 16.2.0** (collective sheet r2.1; carried in Spec 131's outline § 13 by #575):
+
+> "lapses unless a commit after the token's previous firing (or, at its first, after the commit that set it), and an ancestor of the event's commit, closed it or changed its Trigger line with a dated reason and authority; the commit that set the token is not itself a re-rule"
+
+It is a working reading, not law. Its standing form is this record's question, routed to Spec 131, row 13. **The deadline (Lina's)**: 131's README rule 11 is ratified by 16.3.0's S, or this reading goes to its own ballot then.
+
+**Consequence 1, the token form (Stacy's phase-1 check).** A `release:next:phase-1` token set during release N resolves to N, so a deferral to N+1 written that way lapses at N's S. Its later date would live only in prose. Re-rules made during 16.2.0 that defer to 16.3.0 therefore use `release:16.3.0:phase-1`.
+
+**Consequence 2, spec rows (Ada's read).** A row answered "spec" follows rule 11's spec clause, not a release deadline. Once the spec's outline names it, its Trigger is the spec's `path:` (for example `path:.kiro/specs/129-consumer-generation-completeness/requirements.md`), and that token is the spec answer's own firing. It carries no 16.3.0 date. The delegation's guard "firing no later than 16.3.0's S" binds the fix-now re-rules only; the rulings record says so, in its PR on `chore/record-r10-reach-and-r7r8-rows`.
+
+*Signed: Thurgood, 2026-11-01.*
+

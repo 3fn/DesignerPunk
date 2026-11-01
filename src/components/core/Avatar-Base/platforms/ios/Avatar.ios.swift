@@ -83,7 +83,7 @@ enum AvatarTokens {
     /// @see src/components/core/Avatar-Base/avatar.tokens.ts for component token mapping
     
     /// Border color for xxl size avatars
-    /// References: color.contrast.onSurface
+    /// References: color.contrast.onDark → white100
     /// @see Requirements: 7.4 - Border color for xxl size
     static let borderColorXxl: Color = .white
     
@@ -528,8 +528,8 @@ public struct Avatar: View {
      * Background color based on avatar type.
      * 
      * Uses semantic color tokens for avatar backgrounds:
-     * - Human: color.avatar.human → orange300
-     * - Agent: color.avatar.agent → teal200 (brighter than teal300)
+     * - Human: color.identity.human → orange300
+     * - Agent: color.identity.agent → teal200 (brighter than teal300)
      * 
      * @see Requirements: 4.1, 4.2 - Background colors per type
      */
@@ -544,8 +544,8 @@ public struct Avatar: View {
      * Icon color based on avatar type.
      * 
      * Uses semantic color tokens for icon contrast:
-     * - Human: color.avatar.contrast.onHuman → white100
-     * - Agent: color.avatar.contrast.onAgent → white100
+     * - Human: color.contrast.onDark → white100
+     * - Agent: color.contrast.onDark → white100
      * 
      * Note: Both currently white, separate tokens for future flexibility.
      * The IconBase component accepts color parameter for tinting.
@@ -563,8 +563,8 @@ public struct Avatar: View {
     /// @see Requirements: 6.1, 6.2
     private var iconColorTokenReference: String {
         switch type {
-        case .human: return "color.avatar.contrast.onHuman"
-        case .agent: return "color.avatar.contrast.onAgent"
+        case .human: return "color.contrast.onDark"
+        case .agent: return "color.contrast.onDark"
         }
     }
     
@@ -572,15 +572,15 @@ public struct Avatar: View {
      * Border color based on avatar size.
      * 
      * Uses semantic color tokens with appropriate opacity:
-     * - xs through xl: color.avatar.border → gray100 with opacity.heavy (48%)
-     * - xxl: color.contrast.onSurface (white) with full opacity
+     * - xs through xl: color.structure.border → gray100 with opacity.heavy (48%)
+     * - xxl: color.contrast.onDark (white100) with full opacity
      * 
      * @see Requirements: 7.2, 7.4 - Border color per size
      */
     private var borderColor: Color {
         switch size {
         case .xxl:
-            return theme.colorStructureBorderXxl
+            return theme.colorContrastOnDark
         default:
             return theme.colorStructureBorder.opacity(AvatarTokens.opacityHeavy)
         }

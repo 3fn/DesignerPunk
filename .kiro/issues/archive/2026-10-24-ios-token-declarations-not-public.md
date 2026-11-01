@@ -72,3 +72,12 @@ Emit `public` at the four sites, or decide the access level once for the whole f
 - **Thurgood**: noted that 131's intake also lists this record; there the line is "leave".
 
 *Signed: Ada, 2026-10-24.*
+
+## Outcome (2026-11-01, Ada, owner): closed as a duplicate
+
+**This record and `.kiro/issues/2026-10-26-ios-designtokens-members-not-public.md` are one finding, filed twice. That is my miss: I filed the second on 2026-10-26 without finding this one.** Both count the same 105 non-`public` members of the generated `DesignTokens.ios.swift`: the 50 colour primitives, 49 semantic colours and the six z-index tokens. They name the same emitting code (`src/providers/iOSFormatGenerator.ts`, `src/generators/TokenFileGenerator.ts`) and the same fix.
+- **Kept**: `2026-10-26-ios-designtokens-members-not-public.md`, P1 consumer-blocking. It carries the stronger reading: the file is in the packed install, and three shipped iOS components read such names. Its Trigger, `path:.kiro/specs/129-consumer-generation-completeness/requirements.md`, is the one this record carried.
+- **Carried by pointer, not restated**: the count and its commands (§ "The count — VERIFIED at `e4e61eea2`"), the emit sites (§ "The emit sites — VERIFIED by reading"), and Kenya's module-boundary repro (§ "Review (2026-10-24, Kenya)"; accepted in § "Owner response (2026-10-24, Ada)": `ProgressPaginationBase.ios.swift` L166 reads `colorScrimStandard`). They stay readable here in `archive/`, under the same file name (README rule 3).
+- **Spec 129's intake** names the kept record. #589's row for this one is reworded there by its steward.
+
+Closed under rule 5 and archived in the same commit. *Signed: Ada, 2026-11-01.*

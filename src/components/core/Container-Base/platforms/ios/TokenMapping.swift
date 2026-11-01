@@ -202,7 +202,7 @@ func resolveColorToken(_ tokenName: String?) -> Color {
         return colorInfo
     case "color.border":
         return colorBorder
-    case "color.border.default":
+    case "color.structure.border":
         return colorBorder
     case "color.structure.border.subtle":
         return colorBorderSubtle
@@ -454,7 +454,6 @@ private let colorWarning: Color = Color.orange
 private let colorInfo: Color = Color.blue
 private let colorBorder: Color = Color.gray.opacity(0.3)
 private let colorBorderSubtle: Color = Color.gray.opacity(0.15)  // color.structure.border.subtle
-private let colorBorderEmphasis: Color = Color.gray.opacity(0.5)  // color.border.emphasis
 
 // Opacity tokens (semantic)
 private let opacitySubtle: Double = 0.88   // opacity088 (88%)
