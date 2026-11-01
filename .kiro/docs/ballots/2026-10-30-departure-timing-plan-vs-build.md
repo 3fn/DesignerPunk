@@ -132,6 +132,36 @@
 - **Under F-B (b)**: the notice is self-attested, and no read checks it.
 - **Either way**, Leonardo reads every `**Departures**:` line on a product unit in Cross-Platform Review before its PR is reported. That is his checklist's "intentional and documented" row, and needs no law.
 
+### Site 1a, corrected after the R4 reads (pending Peter's word, § 6)
+
+The reads on the staged application (`a73ee5b49`) changed site 1a's two plan-kind sentences and one route phrase, which also appears in site 1b (THURGOOD R5). The corrected text, Lina's Final, is staged and not pushed. The ratified text above stays the law until Peter rules. Line numbers are at `a73ee5b49`.
+
+**L138, the planning bullet's last sentence.** Superseded (ratified):
+
+```
+For work whose kind has a plan (a spec, a product screen), a missing plan is itself planning, so ask.
+```
+
+Corrected (Lina's Final; Ada's anchor, widened):
+
+```
+A spec task (work done for a spec: it executes a row of that spec's merged `tasks.md`, or its PR names the spec in `Spec:`, whatever its branch) or a product screen is plan-kind work; with no approved plan it is still in planning, so ask.
+```
+
+**L139, the development bullet's "Other work" sentence.** Superseded (ratified):
+
+```
+Other work that executes no plan artifact (in this repo, a `fix/` or `chore/` PR) is in development from its start.
+```
+
+Corrected (Ada's text, as Lina's Final takes it):
+
+```
+Work of any other kind (in this repo, a PR whose `Spec:` is `none`, such as an issue-driven `fix/` or `chore/` PR, whatever surface it touches) is in development from its start.
+```
+
+**L138 and L181, the route** (Kenya, accepted by Lina). Superseded: `through the screen's architect`. Corrected: `through the product's architect`. There are exactly two occurrences.
+
 ### Site 1b — the framework, the motion pause list, L172–L178 (LAW)
 
 **Before** (L172–L178 at `2c00cea49`, verbatim):
@@ -392,6 +422,8 @@ Peter ratified it as recommended (R8 item 4). The application PR's body repeats 
 **Ruled**: F-A — the pair plus Leonardo's clause (R8 item 4, *"Ratify as recommended"*; sheet r2.1 row D). In-repo work that executes no plan artifact (a `fix/` or `chore/` PR) is in development from its start. A plan with no recorded approval is still in planning. For work whose kind has a plan (a spec, a product screen), a missing plan is itself planning, so ask. Stacy's alternative (the no-plan PR as the plan) is not taken. Lina's, Ada's, Stacy's and Kenya's reads of the folded clause are owed at the application PR (THURGOOD R4).
 
 *The question as it was put, kept as the record*: F-A — work with no plan artifact, or with a plan never approved. Recommended (Lina, Leonardo, the orchestrator; Thurgood concurs): in-repo work that executes no plan artifact (a `fix/` or `chore/` PR) is in development from its start, so its departures proceed with a `**Departures**:` line that Peter reads at his merge; and work whose plan exists but has no recorded approval (a consumer's screen spec with no lead's dated go) is still in planning, so a departure is asked first. The alternative (Stacy S2a): treat the no-plan PR itself as the plan, so a departure found in it is asked in that PR before merge. Pick the recommended pair, the alternative, or another.
+
+**Open for Peter**: #568's site 1a, L138/L139 corrected after the R4 reads (Ada's overlap, Lina's and Kenya's wording): the plan kind is read from the merged `tasks.md` row the work executes, or the PR's `Spec:` field — ratify the corrected text? The superseded and corrected sentences are in § 3, "Site 1a, corrected after the R4 reads", and the four reads and THURGOOD R5 are in § 8. *(Asked 2026-11-01, Thurgood.)*
 
 **Ruled**: F-B — (a) (R8 item 4; sheet r2.1 row D, unanimous): site 1h's README mark, plus Stacy's departures read (site 4), pre-declared and applied as EXECUTION by the edit of her claims-pass-record unit, at zero extra acts if composed in one edit with RS-50 site 2 and her #555 class fix. (b) is not taken.
 
@@ -747,3 +779,99 @@ DesignerPunk's True Native Architecture fixes how components are built and leave
   - [@ADA] Is the clause decidable from the kind of work, as you read decidability for the pair? → § 3 site 1a -- [THURGOOD R4]
   - [@STACY] Can your departures read (site 4) tell, from the PR body, a screen built with no screen spec (planning: asked, not a `**Departures**:` line) from a `fix/` PR (development: a line)? → § 3 sites 1a, 4 -- [THURGOOD R4]
   - [@KENYA] For a consumer screen with no screen spec, does "ask" route through the architect as site 1a says, and can you decide the kind from the work you are given? → § 3 site 1a -- [THURGOOD R4]
+
+#### [LINA R4]
+
+*Read-only, 2026-11-01, at `a73ee5b49` (wt-dep-apply): the framework at L137–L142, L181–L185, L258, L337 and L372.*
+
+- **Yes. Limb 1 stands as I meant it, and no correction commit is needed.**
+  - The planning bullet's clause reaches only "work whose kind has a plan", and it names those plans: a spec, a product screen.
+  - The development bullet then names the rest explicitly: "Other work that executes no plan artifact (in this repo, a `fix/` or `chore/` PR) is in development from its start".
+  - So a `fix/` or `chore/` PR is never "a missing plan". It records the departure, proceeds, and names it in a `**Departures**:` line. That is limb 1.
+- **The edge I checked**: a `fix/` PR that touches an ecosystem component, whose lifecycle normally runs through a spec. The development bullet's explicit `fix/` example settles it as development. A `fix/` branch that carries a spec's task does execute that spec's plan, so it is spec work, which is the right reading.
+- **What survives** is the residual already in my R1: every departure in no-plan work proceeds with a notice and is never asked first. The clause makes that boundary decidable. It does not make it safer.
+
+**Second paragraph (2026-11-01, after Ada's and Kenya's R4 and Thurgood's reconciliation): (a), Thurgood's reconciled wording, with one precision amendment. This reverses my "Yes" above.**
+
+Ada is right that the planning bullet tests by kind and the development bullet by instance, and that "whose kind has a plan" is an open list. An issue-driven `fix/` PR on Spec 129's surface reads both ways, and my edge case was the same overlap seen from the other side.
+
+Thurgood's test, the PR body's `Spec:` field rather than the branch name, keeps my edge and Ada's decidability.
+
+**The amendment**: Task-Completion-Protocol § "Branch and PR Conventions" requires `Spec:` on **every** PR, not only spec-task PRs, and non-spec PRs write `Spec: none (…)` (for example #549). So "names its `Spec:`" against "names no `Spec:`" is ambiguous: a `fix/` PR's body does carry a `Spec:` line. The test should read the field's value.
+
+**Exact After text.** Lines are at `a73ee5b49`: the planning bullet is **L138** and the development bullet is **L139**; Ada's and Kenya's L139/L140 are one line off. Only these sentences are replaced:
+- **L138, the planning bullet's last sentence**: *"A spec task (a PR whose `Spec:` field names a spec, not `none`, whatever its branch) or a product screen is plan-kind work; with no approved plan it is still in planning, so ask."*
+- **L139, the development bullet's "Other work" sentence**: *"Work of any other kind (in this repo, a PR whose `Spec:` field reads `none`, such as an issue-driven `fix/` or `chore/` PR, whatever surface it touches) is in development from its start."*
+- **Kenya's change, accepted**: "through the screen's architect" → "through the product's architect", at L138 and L181 (2 occurrences, verified by `grep -n`).
+
+**Surviving counter**: `Spec: none` is author-written, so an author can still choose development and skip the ask. This is the same loophole as Ada's branch prefix, narrowed because the field is a claim a claims pass reads against the diff, and every departure still carries its `**Departures**:` line to Peter's merge.
+
+**Peter**: these are text changes to ratified law, so they go to Peter as one `**Open for Peter**:` line on #568 (R8's reading) before the correction commit. (b) would need nothing from him, but it would leave a sentence that two owners read differently; I do not take it.
+
+**Final (2026-11-01, Lina, owner): I take Ada's L138 anchor, with one widening; her L139 as written; and Kenya's change.** She is right that the ask has to be decidable before a PR exists, and a merged `tasks.md` row is in git from the start.
+
+Widening: spec work done before its `tasks.md` merges, which names the spec in `Spec:`, would fall between her two sentences. It would execute no merged row, and its `Spec:` would not be `none`. So L138 takes either anchor. Such work is then plan-kind with no approved plan, so it asks.
+
+Lines are at `a73ee5b49`. Only these sentences are replaced; the rest of both bullets is unchanged.
+
+- **L138, the planning bullet's last sentence**: *"A spec task (work done for a spec: it executes a row of that spec's merged `tasks.md`, or its PR names the spec in `Spec:`, whatever its branch) or a product screen is plan-kind work; with no approved plan it is still in planning, so ask."*
+- **L139, the development bullet's "Other work" sentence**: *"Work of any other kind (in this repo, a PR whose `Spec:` is `none`, such as an issue-driven `fix/` or `chore/` PR, whatever surface it touches) is in development from its start."*
+- **L138 and L181**: "through the screen's architect" → "through the product's architect" (2 occurrences).
+
+**Surviving counter**: `Spec: none` and "no row executed" are both author-asserted, so an author can still choose development and skip the ask. This is narrowed, not closed, by the claims pass reading both against the diff, and by the `**Departures**:` line at Peter's merge. It goes to Peter as one `**Open for Peter**:` line on #568 before the correction commit.
+
+#### [KENYA R4] application read (read-only, 2026-11-01, `wt-dep-apply` `a73ee5b49`, framework L137–L142 and L181–L185)
+- **Yes: "ask" routes through Leonardo, and I can tell the kind of work from what I'm given.**
+  - A consumer screen is a kind of work that has a plan, "a product screen", L139.
+  - So when `get_screen_spec` returns nothing, L139's "a missing plan is itself planning, so ask" applies. I have nothing that would count as approval, so I can't be in development: I ask Leonardo, who asks the product's human lead.
+  - L181's motion lead uses the same route, so the two places agree.
+  - The edge case also resolves. A fix to a shipped consumer screen executes that screen's spec if one exists (development, L140). If none exists, it is planning again (L139). L140's `fix/`/`chore/` exception is limited to "in this repo", so it does not reach consumer screens.
+- **One wording note, not blocking.** "The screen's architect" (L139, L181) assumes the screen has a named architect. A screen with no spec has none. I would still route to Leonardo by charter.
+  - If Lina wants the text to settle it itself: "through the screen's architect" → "through the product's architect" in both places.
+  - Otherwise leave it as is; nothing goes wrong in practice.
+
+#### [ADA R4]
+
+*Read at `a73ee5b49` (staged, unpushed), `governance/cross-platform-vs-platform-specific-decision-framework.md` L137–L142 and L181–L185. Read-only.*
+
+- **No, not quite. It decides for the kinds it names, but two of its tests overlap.** The planning bullet (L139) decides by *kind*: "For work whose kind has a plan (a spec, a product screen), a missing plan is itself planning, so ask." The development bullet (L140) decides by *instance*: "Other work that executes no plan artifact (in this repo, a `fix/` or `chore/` PR) is in development from its start." Take a `fix/` PR on a spec's surface, for example a defect in Spec 129's generator fixed issue-driven. Its kind (spec) says it is planning, so ask. Its instance (a `fix/` PR, no plan artifact) says it is development, so record and proceed. The parentheses also read as examples, not a closed list, so "whose kind has a plan" stays open for any kind they do not name. → § 3 site 1a
+- **The change: one test, the repo's own branch convention** (Task-Completion-Protocol § "Branch and PR Conventions": `task/<spec>-…` for spec tasks, `fix/` or `chore/` for non-spec work).
+  - L139's last sentence becomes: *"A spec task (a `task/` branch, whose PR names its `Spec:`) or a product screen is plan-kind work; with no approved plan it is still in planning, so ask."*
+  - L140's sentence becomes: *"Work of any other kind (in this repo, a `fix/` or `chore/` PR, whatever surface it touches) is in development from its start."*
+  - That closes the list at two plan kinds, and the kind is read from the branch name and the PR body, both visible in git.
+- **L181–L185 need no change.** "the motion token the plan or the component names" covers plan-less work through the component, and the token stop holds "whenever it is found".
+- **Surviving counter**: keying the kind to the branch prefix lets an author choose `fix/` to skip the ask. The checks against that already exist: `fix/` PRs are Peter-merged, and the PR body's `**Departures**:` line names every departure either way.
+- **[ADA R4, on Thurgood's `Spec:` wording, 2026-11-01] No, not as written, for two reasons; one change fixes both.**
+  - **(1) Every PR names a `Spec:` field, so "names its `Spec:`" picks out nothing.** Non-spec PRs carry `**Spec**: none (…)`: 8 of the last 30 squash bodies on `origin/main` do (verified).
+  - **(2) The test reads the wrong moment.** The PR body is on GitHub, not in git, and it does not exist yet when a departure is found before the PR opens, which is exactly when the ask is owed.
+  - **The fix**: key the test to the merged `tasks.md` row the work executes. That is in git from the work's start, and the `Spec:` line later records it. L139: *"A spec task (work that executes a row of a merged `tasks.md`, whose PR names that spec in `Spec:`, whatever its branch) or a product screen is plan-kind work; with no approved plan it is still in planning, so ask."* L140: *"Work of any other kind (in this repo, a PR whose `Spec:` is `none`, such as an issue-driven `fix/` or `chore/` PR, whatever surface it touches) is in development from its start."*
+  - With that, the list is closed at two kinds, the test can be read in git before a PR exists, Lina's edge holds, and my counter (choosing `fix/` to skip the ask) dissolves, as Thurgood says.
+
+#### [STACY R4] — #568's application: does site 4 tell a no-spec screen from a `fix/` PR? (read-only, 2026-11-01; framework at `wt-dep-apply` `a73ee5b49`, ballot at `63c1fffde`)
+
+- **No, but site 4 needs no change.** The premise is what's wrong. Site 4 never reads the PR body to decide which case it is in. Its population is set by the diff: "every PR … whose diff adds a README entry marked `**Departure**:`" (ballot L302).
+  - **A screen built with no screen spec** never enters that population. Product departures are recorded in the Implementation Report, not a README (framework L139). So site 4 cannot see that case on either reading. In this repo the case is empty, because there is no `product/` directory.
+  - **A `fix/` PR** that adds a mark owes a line under L139 and L337, and site 4 decides it.
+- **The premise "planning: asked, so no `**Departures**:` line" contradicts L337.** That line is stage-free: "The work that adds a marked entry names it in a `**Departures**:` line when it is handed off". So a component departure that was asked at planning and approved still owes the line once its README entry is marked. The `in-plan:` field (L139) is what records that it was in the plan. L138, the planning bullet, says nothing about the line, so the gap is a silence, not a contradiction. Site 4 follows L337, which is correct as written.
+- **No wording change now.** A sentence in L138 would change ratified site-1a text, and that goes back to Peter (rulings record R8 item 4: "A changed text goes back to him"). If a clarification is wanted, it belongs in the RS queue for Spec 131 under criterion 3, not in this application. A possible clarification: "once approved it is named like any departure, `in-plan:` citing where the plan shows it".
+- **Composition: I accept it** in one edit of my unit `#the-claims-pass-record-claims-passmd-the-template`, together with RS-50 site 2 and my #555 class fix, at zero extra acts. One condition: the composed edit merges by 16.3.0's S. Otherwise I apply site 4 alone and pay the two acts (re-confirm and re-sign). A ratified read that nothing applies is the steward-verb shape again. Until the edit lands, a missing line is counted only by a sampled read (ballot L131), and that fraction is counted. Under criterion 2 this obligation needs a record with that deadline. It is my record to file in the vehicle's PR, not here (read-only).
+
+*Signed: Stacy, 2026-11-01.*
+
+#### [THURGOOD R5]
+
+*The application reads (THURGOOD R4's owed reads), at the staged application `a73ee5b49`, 2026-11-01. The four files are spliced above byte for byte, as they stood at Lina's "Final".*
+
+- **Ada**: the two plan-kind sentences overlap. L138 decides by kind ("work whose kind has a plan"), and L139 by the PR ("other work … a `fix/` or `chore/` PR"). They disagree on a `fix/` PR that touches a spec's surface.
+  - She first proposed keying the kind to the branch prefix.
+  - When the `Spec:`-field reading that Lina and I had both reached was put to her, she answered no, for two reasons:
+    - every PR carries a `Spec:` field, so "names its `Spec:`" separates nothing;
+    - the PR body does not exist when a departure turns up before the PR opens.
+  - Her fix anchors the kind to the merged `tasks.md` row the work executes, which is in git from the start. The `Spec:` value records it later.
+- **Lina's Final** (owner): Ada's L138 anchor with one widening, Ada's L139 as written, and Kenya's change.
+  - The widening: spec work done before its `tasks.md` merges, which names the spec in `Spec:`, would fall between Ada's two sentences. So L138 takes either anchor, and such work, being plan-kind with no approved plan, asks.
+  - The staged application carries Lina's Final verbatim. My own `Spec:`-field wording, which was an interim correction commit on that branch, is superseded there.
+- **Kenya**: yes, plus a non-blocking wording note, which Lina accepts: "through the screen's architect" → "through the product's architect", at L138 and L181.
+- **Stacy**: no text change. Site 4 reads the diff's `**Departure**:` marks, not the PR body, and L337 owes the line at any stage. Her composition condition: the composed edit merges by 16.3.0's S, or she applies site 4 alone and pays the two acts.
+- **This changes ratified site-1a text**, so by R8's reading it goes back to Peter: § 6's `**Open for Peter**:` line, and § 3's "Site 1a, corrected after the R4 reads", which keeps the superseded text verbatim. If Peter declines, the correction commits on the staged branch are reverted before that branch is pushed.
+- **Surviving counter** (Lina, Ada): `Spec: none` and "no row executed" are both author-asserted, so an author can still choose development and skip the ask. Two things narrow that without closing it: a claims pass reads both against the diff, and every departure still carries its `**Departures**:` line to Peter's merge.
