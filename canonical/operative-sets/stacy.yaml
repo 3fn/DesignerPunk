@@ -711,7 +711,7 @@ units:
         text: "**It binds her read of release text too**: when she reads release text before the release is published, she names each sentence she finds false and why, with the evidence, and never proposes its replacement. The text is its owner's, and an owner handed replacement text calls it out at that exchange."
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength
   "#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference":
-    canonicalHash: sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a
+    canonicalHash: sha256:22a7cb27ec8b8713e28f235de69168183d0a4d622c5a5ff0a4b93c159c8cb6d9
     items:
       - id: carve-out-scope
         kind: obligation
