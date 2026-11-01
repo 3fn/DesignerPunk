@@ -65,7 +65,7 @@
 ```
 **Web: how an element takes a served prop.** On web, the served schema states how the element takes each non-callback prop: as a JS property of the served name, or, where none exists, as its kebab-case attribute only, marked attribute-only. The served name is never changed to match the element, and the element is not renamed. Every attribute-only prop is a listed G-4 finding. *(added <application date> by ballot 2026-10-30-web-prop-property-or-attribute-only, site 1)*
 
-The marker is the property's `web: attribute-only` field (Component Schema Format § "Property Definitions"). The list of attribute-only props lives in the G-4 charter, `.kiro/issues/2026-10-30-g4-web-element-public-contract-charter.md` § 4. How a served callback maps to an element event is not settled here; it is G-4's to design.
+The marker is the property's `web` field: `attribute-only` or `unmapped` (Component Schema Format § "Property Definitions"). G-4 is DesignerPunk's web-element contract work. It keeps the list of attribute-only and unmapped props, and it decides how a served callback maps to an element event, which is not settled here.
 ```
 
 **Why here**: L70's rule ("All platforms MUST use identical property names") is the one Sparky's second sentence keeps. Its web consequence belongs beside it.
@@ -79,7 +79,7 @@ The marker is the property's `web: attribute-only` field (Component Schema Forma
 ````
 ### Web Access (`web`)
 
-A non-callback property that the web element takes **only as an attribute** carries `web: attribute-only`. Its attribute is the property name's kebab-case form (`helperText` → `helper-text`). A property with no `web` key is one the web element exposes as a JS property of the same name. A callback carries no `web` key: how a callback maps to an element event is not yet settled. *(added <application date> by ballot 2026-10-30-web-prop-property-or-attribute-only, site 2)*
+A non-callback property that the web element takes **only as an attribute** carries `web: attribute-only`. Its attribute is the property name's kebab-case form (`helperText` → `helper-text`). A non-callback property the web element takes neither as a JS property nor as an attribute carries `web: unmapped`: on web, its value does not reach the element (a property only another platform uses, for example). `children` is the element's slot content on web, not a property, and carries no `web` key. A property with no `web` key is one the web element exposes as a JS property of the same name. A callback carries no `web` key: how a callback maps to an element event is not yet settled. *(added <application date> by ballot 2026-10-30-web-prop-property-or-attribute-only, site 2)*
 
 ```yaml
 properties:
@@ -90,8 +90,36 @@ properties:
     web: attribute-only
 ```
 
-The served name never changes to match the web element (Platform Implementation Guidelines § "2. Property Name Consistency"). A `web: attribute-only` property is a known gap: a later release may add the JS property, which does not change the attribute.
+The served name never changes to match the web element (Platform Implementation Guidelines § "2. Property Name Consistency"). A `web: attribute-only` property is a known gap: a later release may add the JS property, which does not change the attribute. `web: unmapped` says only that the value does not reach the web element; whether it should is a later release's decision.
 ````
+
+### Site 2c — `governance/Component-Schema-Format.md` L154 and L163, the callback form (EXECUTION of this ballot; Lina R2; truth: `src/components/core/Button-CTA/Button-CTA.schema.yaml` L93–L94, `onPress: type: "() => void"`)
+
+No schema uses `type: callback`; callbacks are signature strings (Sparky R1, finding 2). L154 is in § "Property Definitions"'s example and L163 in § "Property Types".
+
+**Before** (L154 at `d34fc7786`, verbatim):
+
+```
+    type: callback
+```
+
+**After**:
+
+```
+    type: "() => void"
+```
+
+**Before** (L163 at `d34fc7786`, verbatim):
+
+```
+string | number | boolean | object | array | callback
+```
+
+**After**:
+
+```
+string | number | boolean | object | array | "<signature>"   # a callback is its signature string, e.g. "(value: string) => void"
+```
 
 ### Sites 1e and 2e — the audience banners (EXECUTION of ballot `2026-10-13-123-b-u4-release-recipe` § "Banners"; conditional, § 3)
 
@@ -122,10 +150,10 @@ The served name never changes to match the web element (Platform Implementation 
 
 1. **The Status commit** (record-first): `**Status**: **RATIFIED (Peter, <date>)**`, with R8 item 6 quoted and its clock bound.
 2. **Preconditions**:
-   - `.kiro/issues/2026-10-30-g4-web-element-public-contract-charter.md`, which site 1 cites, is on `main`: `git cat-file -e <base>:<that path>`, falling back to `archive/` under the same filename (README rule 3). At this ballot's base it exists only on a branch (#576). The merge order is #576, then Ada's v2, then this (Lina R1).
+   - `.kiro/issues/2026-10-30-g4-web-element-public-contract-charter.md`, which the sweep appends to, is on `main`: `git cat-file -e <base>:<that path>`, falling back to `archive/` under the same filename (README rule 3). #576 merged at 2026-10-30T18:18:23Z. Site 1 no longer cites it by path (Lina R2, Stacy's gap (i)). The order is #576, then Ada's v2 (#580), then this.
    - The banner condition (§ 3) is read and stated in the PR body.
 3. **Lina, the application PR** (branch `chore/apply-web-prop-property-or-attribute`), in one authoring commit:
-   - sites 1 and 2;
+   - sites 1, 2 and 2c;
    - 1e and 2e only where the guard's report at the base lists the doc `[MISSING]` (§ 3);
    - the sweep's markers and the guard test (step 5), in the same PR (R2: Sparky, Leonardo, Lina, Stacy).
 
@@ -133,14 +161,15 @@ The served name never changes to match the web element (Platform Implementation 
 4. **Lock**: the lock's inputClosure hash moves, because `governance/` is in the closure. The refresh is Thurgood's, done by a full-run-green `check:122:diff-guard` and then read no-op-green, because `canonical/generated.lock` is outside Lina's write scope. If a generated output changes, the application stops and reports.
 5. **Not sites, in Lina's standing scope (`application-mcp-server/**`, `src/components/**`), EXECUTION, in the application PR itself**:
    - **`application-mcp-server/src/models/index.ts`**: `PropertyDefinition` gains `web?: 'attribute-only'`. Properties already pass to `get_component_full` raw (`ComponentIndexer.ts` L768), so no indexer change is needed.
-   - **A schema-check test** in the Application MCP's indexer tests: `web` takes only `attribute-only`, and never appears on a callback. A callback is detected by a `=>` signature in its `type` or an `on[A-Z]…` name, because no schema uses `type: callback`; only Component Schema Format L154 and L163 teach it (Sparky R1, finding 2). That doc-versus-schema gap is a record for Lina. Root `npm test` does not run this suite, so the PR runs `application-mcp-server`'s own.
+   - **A schema-check test** in the Application MCP's indexer tests: `web` takes only `attribute-only` or `unmapped` (Lina R2), and never appears on a callback. A callback is detected by a `=>` signature in its `type` or an `on[A-Z]…` name (Sparky R1, finding 2), which is what Component Schema Format teaches after site 2c. Root `npm test` does not run this suite, so the PR runs `application-mcp-server`'s own.
    - **One sentence in `get_component_full`'s tool description** naming the `web` property field (Lina R1 (b)). It re-bases the tool-registry hash.
    - **The guard test for "absence means property"** (Lina's class fix), under `src/components/__tests__/`. It reads each schema and an upgraded instance of each web element (`document.createElement(tag)` after `define`), and asserts two things:
      - every served non-callback prop without `web` satisfies `prop in` the instance, which is React's own check, so inherited `HTMLElement` properties count (Sparky R1);
-     - every `web: attribute-only` prop is in `observedAttributes`, in kebab-case.
+     - every `web: attribute-only` prop is in `observedAttributes`, in kebab-case;
+     - every prop that is neither `in` the instance nor observed carries `web: unmapped` (Lina R2, (b)), so no exclusion list is kept.
 
-     Callbacks are detected as above. Props that reach the element neither way are Lina's fork at R3 (Sparky finding 3). Without the test, a missing key overstates.
-   - **The sweep** (`.kiro/issues/2026-10-25-web-elements-served-prop-sweep.md` § "Method"), steps 3 and 4 as Lina's file states them. Each attribute-only find is appended to the G-4 charter's § 4 list. Served callbacks are listed, not changed.
+     Callbacks are detected as above. `children` is excluded structurally, as slot content. Without the test, all three states overstate.
+   - **The sweep** (`.kiro/issues/2026-10-25-web-elements-served-prop-sweep.md` § "Method"), steps 3 and 4 as Lina's file states them. It adds a third classification, `unmapped`, at about an hour more (Lina R2). Each attribute-only and unmapped find is appended to the G-4 charter's § 4 list **with its kind** (no web form, or another platform only). Served callbacks are listed, not changed.
    - **The records**:
      - `.kiro/issues/2026-10-25-web-prop-mapping-rule-gap.md`: its property half closes (rule 5 line), and its Trigger is re-ruled to the G-4 charter's event for the event half, citing R8 and DLG.
      - The G-4 charter's § 5 item 3 then reads as carried.
@@ -157,6 +186,7 @@ The served name never changes to match the web element (Platform Implementation 
 7. **The PR body carries**:
    - `**Edit kind**: governance/platform-implementation-guidelines.md L<site 1> — LAW (.kiro/docs/ballots/2026-10-30-web-prop-property-or-attribute-only.md)`;
    - `**Edit kind**: governance/Component-Schema-Format.md L<site 2> — LAW (…)`;
+   - `**Edit kind**: governance/Component-Schema-Format.md L<154>, L<163> — EXECUTION (.kiro/docs/ballots/2026-10-30-web-prop-property-or-attribute-only.md § 2 site 2c)`;
    - where 1e and 2e apply, `**Edit kind**: <doc> L<banner> — EXECUTION (.kiro/docs/ballots/2026-10-13-123-b-u4-release-recipe.md § "Banners")`;
    - the grant;
    - the `**Consulted**:` line;
@@ -166,7 +196,7 @@ The served name never changes to match the web element (Platform Implementation 
    - a CHANGELOG line at the next release (both docs ship), by the release author.
 
 **Grant (activated by this ratification)**: Peter's ratification is the line (the #568 and #573 precedent), until the application PR merges. It grants:
-- **Lina**: `governance/platform-implementation-guidelines.md` and `governance/Component-Schema-Format.md` (sites 1, 2, 1e and 2e, byte for byte).
+- **Lina**: `governance/platform-implementation-guidelines.md` and `governance/Component-Schema-Format.md` (sites 1, 2, 2c, 1e and 2e, byte for byte).
 - **Thurgood**: `canonical/generated.lock`, the refresh only.
 
 No `.github/**` path is touched.
@@ -175,13 +205,14 @@ No `.github/**` path is touched.
 
 **Recommendation**: ratify sites 1 and 2 as written, with 1e and 2e conditional on the guard's report at the base. Sequence the application after Ada's v2 (#580), but not past 16.3.0's prep.
 
-**Open for Peter**: #579 beyond Sparky's sentence — R8 item 6 ("Re: 6, Ratify") binds the sentence only, by R8's own reading. Ratify the rest as filed: site 1's second paragraph (as Lina settles it at R3b), site 2 with Leonardo's last sentence, the conditional banners 1e and 2e (applied only where the guard's report at the base lists the doc MISSING), and the application's same-PR guard test and markers? Or name what to change.
+**Open for Peter**: #579 beyond Sparky's sentence — R8 item 6 ("Re: 6, Ratify") binds the sentence only, by R8's own reading. Ratify the rest as filed? That is: site 1's second paragraph (Lina's wording, G-4 named without a repo path); site 2 with its third marker value `web: unmapped` (Lina R2, (b)) and Leonardo's last sentence; site 2c, the Component Schema Format callback correction; the conditional banners 1e and 2e (applied only where the guard's report at the base lists the doc MISSING); and the application's same-PR guard test and markers. Or name what to change.
 
 **Counter-arguments, run against it, and what they changed**:
 - **(1) "Two banners are owed, so draft them unconditionally."** They are owed only under v1. Making them conditional on a fact decidable from git avoids landing banners that (α) would make unnecessary, and keeps them ready if order goes the other way.
 - **(2) "A key on every prop (`property | attribute-only`) is more explicit."** Lina leans to the marker plus a guard test. The test makes absence verified rather than assumed. That costs about half a day, against an edit to every schema's every prop.
 
 **What survives**:
+- **Each `unmapped` mark must say its kind** (Lina R2): for a prop meant only for iOS, `unmapped` on web is correct, not a defect. G-4's list records which kind each mark is, or it overstates the defect count.
 - **Absence overstates without the test** (Lina, Stacy). A schema with no `web` key reads as "has a property", which is true only where the guard test has run. The test now lands in the application PR and is named in its body. If it is dropped there, the served schema overstates from the merge on.
 - **The known-defect list is long at birth** (Sparky): more than 29 entries in two components alone, each a prop a React user loses silently until G-4 adds the property.
 - **The order buys little** (Ada): it saves only two true banners. If #580 stalls, this application is not held past 16.3.0's prep. It applies the banners then, and they stand.
@@ -376,3 +407,61 @@ Questions for R1:
 - **Still owed before the Status commit**:
   - Lina's two answers: Sparky's finding 3 (a) or (b), and Stacy's gap (i) or (ii);
   - Peter's word on the text beyond the sentence.
+
+#### [LINA R2]
+
+*Read-only, 2026-11-01, at `b70d9d777` (wt-wp): `[THURGOOD R2]` whole, the two `[@LINA]` lines (L331, L336), Sparky's R1 findings 1–3, Stacy's R1 gap, Ada's R1 (`ada-wp-r1.md`), and the real callback form in `git show d34fc7786:src/components/core/Button-CTA/Button-CTA.schema.yaml` (L93–L94: `onPress: type: "() => void"`). @-mention scan: both answered below.*
+
+- **[@LINA] Sparky's finding 3: I pick (b), a third marker value, `web: unmapped`, and `children` is named as slot content.** → § 2 site 2, § 4 step 5
+  - **Why not (a)**:
+    - Site 2 says "a property with no `web` key is one the web element exposes as a JS property". Under (a), `testID` and `ignoresSafeArea` carry no key, so the served schema would state that falsely about them. The reader would have to know a list the schema does not carry.
+    - The guard test would also need a hand-kept exclusion list, which is the weaker form we declined elsewhere (the banner guard's `KNOWN_UNDER_INCLUSIONS`).
+    - Under (b), every served non-callback prop states its web form, and the guard is fully mechanical with no list. A prop that is not `in` the upgraded element and is not observed must be `unmapped`.
+  - **What it does not change**: Sparky's site 1 sentence stays byte for byte. It names the two ways a prop reaches the element, and `unmapped` states the case where it reaches neither way. That is the gap finding 3 found in the sentence, and it is said in site 2's text, not by rewording his.
+  - **Narrowed by Sparky's own `prop in` fold**: `className` is not a "neither" case. `'className' in el` is true for every `HTMLElement`, so it passes as a property. `children` is slot content (the element's child nodes) and gets a structural exclusion stated in site 2, the same treatment callbacks get. That leaves real cases: `testID` (no web form) and iOS-only props such as `ignoresSafeArea`.
+  - **Site 2 text to add**, after the `web: attribute-only` sentence:
+    - *"A non-callback property the web element takes neither as a JS property nor as an attribute carries `web: unmapped`: on web, its value does not reach the element (a property only another platform uses, for example). `children` is the element's slot content on web, not a property, and carries no `web` key."*
+    - And, after Leonardo's sentence: *"`web: unmapped` says only that the value does not reach the web element; whether it should is a later release's decision."*
+    - The yaml example stays `helperText`.
+  - **Cost on my sweep**: one more classification in the same pass. Each "neither" prop is marked `unmapped`. That is about 29 or more marks at birth in two components (Sparky), plus whatever the other web elements carry. It is about an hour on top of the sweep. Each `unmapped` mark is also appended to the G-4 charter's § 4 list, with its kind (no web form, or another platform only), because G-4 designs whether it should reach the element.
+  - **The schema-check test** gains the value set: `web` ∈ {`attribute-only`, `unmapped`}, never on a callback, detected by a `=>` signature or an `on[A-Z]` name (Sparky finding 2).
+  - **Surviving counter**: a third value extends the field beyond the two ways Sparky's sentence names, and `unmapped` props are served known gaps as well. For a prop meant only for iOS, `unmapped` on web is correct, not a defect, so the G-4 list must say which kind each mark is, or it overstates the defect count.
+
+- **Sparky finding 2 rides this ballot instead of becoming a new record.** Component Schema Format teaches `type: callback` (L153–L156 example, L163 type list), and no schema uses it: callbacks are signature strings (`"() => void"`). That is false teaching in the same doc site 2 edits. I propose **site 2c, CORRECTION**, in the grant:
+  - L154 `type: callback` → `type: "() => void"`.
+  - L163 `string | number | boolean | object | array | callback` → `string | number | boolean | object | array | "<signature>"   # a callback is its signature string, e.g. "(value: string) => void"`.
+  - Truth: `Button-CTA.schema.yaml` L93–L94.
+  
+  This adds no new record under the 16.2.0 definition of done, and the guard's callback predicate then matches what the doc teaches. → § 2 (new site 2c), grant
+
+- **[@LINA] Stacy's gap: I pick (i), G-4 named without a repo path.** A served doc should not carry a path a consumer's install cannot resolve, and Kiro-Data reads the file live. That is the property in Stacy's gap, fixed at its source and not framed by a banner. This retracts my R1 preference for citing the charter by path: the path served in-repo readers, but the doc's readers are mostly consumers. "G-4" is already in Sparky's sentence (paragraph 1), so paragraph 2 explains the term rather than adding it. → § 2 site 1
+  - **Wording**, replacing site 1's second paragraph whole:
+    - *"The marker is the property's `web` field: `attribute-only` or `unmapped` (Component Schema Format § "Property Definitions"). G-4 is DesignerPunk's web-element contract work. It keeps the list of attribute-only and unmapped props, and it decides how a served callback maps to an element event, which is not settled here."*
+  - **The precondition** (#576 on `main`) is still useful for the sweep's appends, but it no longer gates site 1's text. #576 merged at 2026-10-30T18:18:23Z, so it holds either way.
+
+- **Ada's R1 (the condition as the guard's own report at the base): agreed, and it does not change my (i).** (i) removes the path whichever way the condition strikes or applies 1e. Her wording should replace the version test in § 3. → § 3
+
+- **Surviving counter for the ballot as a whole**: the field is now a three-state served claim (no key, `attribute-only`, `unmapped`), and it is true only where the guard test has run at the PR's base. The one-PR fold (Sparky finding 1) carries that. If the guard test is cut, all three states overstate. → § 5
+
+#### [THURGOOD R3b]
+
+*Incorporation of LINA R2, at R3 `2cd0e91d5` on base `d34fc7786`, 2026-11-01. Her entry is spliced above byte for byte. This round settles both of her questions.*
+
+- **Sparky's finding 3: (b), a third marker value, `web: unmapped`** (Lina).
+  - Site 2 gains her two sentences. A non-callback prop the element takes neither way carries `web: unmapped`; `children` is slot content and carries no key. And "`web: unmapped` says only that the value does not reach the web element; whether it should is a later release's decision."
+  - Sparky's site 1 sentence is unchanged, byte for byte.
+  - The guard test becomes fully mechanical, with no exclusion list: a prop that is not `in` the upgraded element and not observed must be `unmapped`. `className` passes as a property (`'className' in el` is true), and `children` is excluded structurally.
+  - The schema-check test's value set is {`attribute-only`, `unmapped`}.
+  - The sweep marks each `unmapped` prop and appends it to G-4's list **with its kind** (no web form, or another platform only), so the list does not overstate defects. That is Lina's counter, now carried in § 5.
+
+  → § 2 site 2, § 4 step 5
+- **Stacy's gap: (i)** (Lina; she retracts her R1 preference for citing by path). Site 1's second paragraph is replaced whole with her wording, which explains G-4 without a repo path. The charter precondition no longer gates site 1's text; it stays for the sweep's appends, and #576 merged at 2026-10-30T18:18:23Z. → § 2 site 1, § 4 step 2
+- **Site 2c is inside this ballot.** Its text is named here, so it is EXECUTION, not a separate CORRECTION PR. It is the same document and the same subsection as site 2, under the same grant.
+  - Component Schema Format L154 and L163 teach `type: callback`, which no schema uses; callbacks are signature strings (`Button-CTA.schema.yaml` L93–L94). Lina's two replacements are taken as she wrote them.
+  - Why in-ballot and not a separate PR: under the 16.2.0 definition of done, a separate PR would need its own observation record. Here, finding 2 is fixed at its source in the doc that site 2 already edits, and the tests' callback predicate (a `=>` signature or an `on[A-Z]` name) then matches what the doc teaches.
+  - Lina owes no record for finding 2.
+
+  → § 2 site 2c, grant
+- **Ada's condition stands** (Lina agrees, and it does not change her (i)).
+- **Re-measured with every site applied** (1, 2, 2c, 1e and 2e): the governance-examples census digest is unchanged (`6c5b98ef…`), the guard exits 0, and citations pass. Site 1 no longer adds a `.kiro/` path to a served doc.
+- **The Status commit follows, and R8 is read as written.** Item 6 binds Sparky's sentence only (R8's own reading). The Status is therefore "ratified in part": the sentence by R8 item 6. The rest is § 5's `**Open for Peter**:` line, now also naming `unmapped` and site 2c.
