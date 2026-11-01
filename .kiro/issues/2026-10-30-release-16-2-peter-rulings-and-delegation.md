@@ -225,6 +225,14 @@ Cite R10 as `R10@<the squash of the PR that added it>`.
   - Leonardo authors the application, which is F-gating.
 - *Criterion 3* (no new ballots during 16.2.0 unless the release needs one): the ballot was filed 2026-10-30, before R9's brief existed, and is one of the three in flight that R9's re-plan let stand.
 
+**Line 7 — ratify the rest of #579 beyond Sparky's sentence**, before 2026-11-01T15:06:17Z.
+- *Put to him*: "ratify as filed `.kiro/docs/ballots/2026-10-30-web-prop-property-or-attribute-only.md` beyond Sparky's sentence (R8 item 6): site 1's second paragraph (Lina's G-4 wording, no repo path); site 2 with the third marker value `web: unmapped` (props reaching the element as neither property nor attribute; `children` as slot content) and Leonardo's last sentence; site 2c (Component Schema Format L154/L163 `type: callback` → signature-string form); the conditional banners (guard's own report at the application base); same-PR tests. Alternatives named: send back `unmapped` for a hand-kept exclusion list; hold for G-4/128."
+- *His word*: "Ratify as filed"
+- *What it rules*:
+  - With R8 item 6 (Sparky's sentence), #579 is now ratified in full, so its Status becomes RATIFIED under the record-first protocol.
+  - Lina authors the application, which is F-gating.
+- *Criterion 3*: the ballot was filed 2026-10-30, before R9's brief, and is in flight under R9's re-plan, as #573 is.
+
 *Further lines are appended as ruled.*
 
 Cite R11 as `R11@<the squash of the PR that added it>`, with the line number, e.g. `R11@<sha> line 2`.
