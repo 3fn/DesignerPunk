@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-30
 **Owner**: Leonardo (the grantee: the trio's operator and the owner of `tests/onboarding-trio/protocol.md`). **Filed by**: Thurgood, the 16.2.0 release author, under README rule 10, on Leonardo's stated precondition (collective round 1: "a grant record naming `tests/onboarding-trio/{protocol.md,prompts/16.2.0/**,records/16.2.0/**}`. Thurgood files it, and it must be merged before the trio PR (rule 10)"). Rule 9 governs every later edit.
-**Trigger**: `manual` — the event that owes the close is the merge of the trio PR, which is written only after this record's activating merge; re-ruled to `merge:#<N>` at its open. The grant expires at that merge (README rule 8: "until that PR merges"), and the trio PR closes this record with rule 5's outcome line and the archive move.
+**Trigger**: `merge:#582` — the trio PR, whose merge closes this record and ends the grant (README rule 8). *(Re-ruled 2026-11-01, Leonardo, grantee and owner, rule 9, at the trio PR's open, as this record's own Trigger line says. Was: `manual` — the event that owes the close is the merge of the trio PR, which is written only after this record's activating merge; re-ruled to `merge:#<N>` at its open. The grant expires at that merge (README rule 8: "until that PR merges"), and the trio PR closes this record with rule 5's outcome line and the archive move.)*
 **Class**: P3 improvement · grant *(set 2026-10-30, Thurgood, filer, rule 12, on the precedent of the 16.1.0 release grants: `.kiro/issues/archive/2026-10-26-release-16-1-notes-grant.md`. The owed act it serves is carried in `2026-10-15-123-onboarding-trio-recurring.md`, a P2; this record only carries the grant. The owner may re-class it.)*
 **Source**:
 - **The owed act**: `.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md`, Trigger `release:next:phase-1`, "release 6's prep: the release after 16.1.0 runs the trio before its S, against its own preview candidate, as § 5.0 says".
@@ -35,5 +35,9 @@
 ## Close
 
 The trio PR adds rule 5's dated outcome line here, naming its merge, and moves this file to `archive/` in the same PR. A grant still open at its fixing PR's merge is a walk finding (rule 11).
+
+## Outcome
+
+- 2026-11-01 (Leonardo, grantee and owner, rule 5): **closed at the merge of #582**, the trio PR, which carries this line and the move to `archive/` (rule 5: a grant archives at its fixing PR's merge). The grant stays active on the branch until that merge, when it expires (rule 8). The merge's squash SHA is read from `main` after it; this line cannot name it from inside the PR. The PR's `git diff --name-only` is checked against the path list above at the activating merge (`git show 0184efb3fd7b2956677351fdf84899767a5ac74a:.kiro/issues/2026-10-30-release-16-2-trio-grant.md`) before it leaves draft.
 
 *Signed: Thurgood, 2026-10-30, as filer.*
