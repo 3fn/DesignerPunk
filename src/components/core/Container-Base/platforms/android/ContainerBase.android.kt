@@ -176,7 +176,7 @@ import androidx.compose.runtime.setValue
  * @param background Background color token name (default: null)
  * @param shadow Shadow token name (default: null)
  * @param border Border width (default: ContainerBaseBorderValue.None)
- * @param borderColor Border color token name (default: null, uses color.border.default)
+ * @param borderColor Border color token name (default: null, uses color.structure.border)
  * @param borderRadius Border radius (default: ContainerBaseBorderRadiusValue.None)
  * @param opacity Opacity token name (default: null)
  * @param layering Layering value for elevation (default: null)
@@ -258,7 +258,7 @@ fun ContainerBase(
         layoutDirection = layoutDirection
     )
     
-    // Resolve border color (defaults to color.border.default when null)
+    // Resolve border color (defaults to color.structure.border when null)
     // @see Requirements 2.1-2.3 - Border color
     val resolvedBorderColor = resolveContainerBaseBorderColor(borderColor, theme)
     
@@ -546,7 +546,7 @@ fun resolveContainerBaseColorToken(tokenName: String, theme: DesignerPunkTheme):
  * Resolve border color from token name
  * 
  * Returns the color for the border based on the borderColor prop.
- * If borderColor is null, defaults to color.border.default.
+ * If borderColor is null, defaults to color.structure.border.
  * 
  * @param borderColor Optional border color token name
  * @returns Compose Color for the border
@@ -555,16 +555,15 @@ fun resolveContainerBaseColorToken(tokenName: String, theme: DesignerPunkTheme):
  */
 fun resolveContainerBaseBorderColor(borderColor: String?, theme: DesignerPunkTheme): Color {
     if (borderColor.isNullOrEmpty()) {
-        // Default to color.border.default when not specified
+        // Default to color.structure.border when not specified
         return theme.color_structure_border
     }
     
     // Resolve the border color token
     return when (borderColor) {
-        "color.border.default" -> theme.color_structure_border
+        "color.structure.border" -> theme.color_structure_border
         "color.structure.border.subtle" -> theme.color_structure_border_subtle
-        "color.border.emphasis" -> theme.color_border_emphasis
-        else -> colorBorder  // Fall back to default border color for unknown tokens
+        else -> theme.color_structure_border  // Fall back to default border color for unknown tokens
     }
 }
 

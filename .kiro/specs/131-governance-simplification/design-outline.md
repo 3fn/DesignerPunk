@@ -273,3 +273,68 @@ Outputs feed each charter rewrite (P7), the OWNERS file and Agent-Directory's ro
 ## 12. Left out on purpose
 
 Requirements, design and tasks (the gates hold); restating the synthesis; the release work; the values ballot's content (its own file); the product-tier wiring (§ 2).
+
+---
+
+## 13. Scope intake, 2026-10-30 (record only: it names records and inputs, and settles nothing) — Thurgood
+
+**Authority**: Peter's delegation, `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920` (`.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` § "Delegation"), under which the collective's disposition sheet r2.1 (session scratch, not committed) routed the records below here, in rows A1 and A3. The form is the one Peter's fork-1 ruling set for Spec 129, `R5@d34fc77868f649d3c67bd1b1da47bc6f2a805920`: a record-only amendment naming records in an outline counts as rule 11's spec answer. R5 fork 2 and R8 item 3 (below) are Peter's own words on the two capture lines. R8 is cited `R8@0184efb3fd7b2956677351fdf84899767a5ac74a` (#570's squash).
+
+**Nothing changes in this outline's status or order.** It stays paused at the edge of requirements (Status line), and it comes after Spec 129 (Peter, 2026-10-24: "129 → 131 → 128 → 130"). Nothing below is a requirement, a verdict on a map row, or a ruling. Each record keeps its own owner; the requirements round decides where it lands.
+
+**Records routed here** (row numbers are § 3b's map):
+
+| Record (`.kiro/issues/`) | Owner | Map row | Note |
+|---|---|---|---|
+| `2026-09-28-full-survival-assent-signal-instrument.md` | Thurgood | 1 | A report-mode instrument that counts the per-row assents row 1 proposes to drop (per-row assent, **D**). If the drop holds, the instrument has nothing left to count. |
+| `2026-10-25-issues-owned-fired-ignores-outcome-lines.md` | Thurgood | 13 | |
+| `2026-10-26-issues-owned-register-row-checks.md` | Thurgood | 8, 13 | |
+| `2026-10-26-signing-chain-audit-false-verdicts.md` | Thurgood | 2 | |
+| `2026-10-26-signing-chain-delegate-audit-not-run-trigger-d.md` | Thurgood | 20 | **Peter-sample half only.** The delegate half closes at 16.2.0's phase 1 if Lina's delegate file shows k = N. |
+| `2026-10-26-rule-11-standing-records-lapse-reading.md` | Thurgood | 13 | Below. |
+| `2026-10-24-token-promotion-three-routes-never-run.md` | Ada | 15 | Ada's offer, conditional on my concurrence (given); Stacy added it to this list. It is LAW in a served doc plus charter sender lines that row 15 rewrites, so it falls under § 4 (d)'s freeze. Stacy's phase-1 re-read of its present-tense served sentence stands. |
+| `2026-10-24-native-theme-emission-owner-stated-two-ways.md` | Thurgood | — (the requirements round assigns it) | Which spec emits native theme types: Token-Governance and Spec 129's charter say 129, while § 8 here says it is open. Its Trigger is already `path:` on this spec's `requirements.md`. Until now no outline named it. |
+| `2026-10-24-token-creation-review-no-pr-signal.md` | Ada | — (the requirements round assigns it) | "Creating any token requires human review", but in practice the review is Peter's merge, and nothing marks a PR as adding or removing tokens. Its Trigger is already `path:` on this spec's `requirements.md`. Until now no outline named it. |
+| `2026-10-29-governance-paths-four-lists.md` | Thurgood | — (the requirements round assigns it) | Four lists give different answers to "which paths are governance paths"; the requirements round settles one list and one home. Its Trigger is already `path:` on this spec's `requirements.md`. Until now it was named only in an inbound. |
+| `2026-10-30-product-mcp-screen-spec-no-approval-state.md` | Leonardo | — (the requirements round assigns it) | "A screen spec has no field that records the human lead's approval, so the departure-timing boundary for product work cannot be read from the spec". Routed here by its `**Routed**:` line (#583, Leonardo's form A; Trigger unchanged, awaiting fork B). Added 2026-11-01: until now it was named only in Leonardo's inbound. |
+| `2026-10-29-release-records-home-switch.md` | Thurgood | 15 | The capture record for RS-50's switch PR (OWNERS). It is due at 16.2.0, so it takes no `**Routed**:` line. Its re-rule to `release:16.3.0:phase-1` under DLG is in #588, open at this writing. It is named here as this spec's input. |
+
+**The rule-11 record carries the working reading B2 for 16.2.0**, in Stacy's corrected wording: "lapses unless a commit after the token's previous firing (or, at its first, after the commit that set it), and an ancestor of the event's commit, closed it or changed its Trigger line with a dated reason and authority; the commit that set the token is not itself a re-rule". **Its deadline** (Lina's, which every seat confirmed): README rule 11 as this spec rewrites it is ratified by 16.3.0's S, or B2 goes to its own ballot then. On Stacy's condition, that deadline is written into the record's Trigger prose in the same PR that re-rules it.
+
+**Capture line 1: the steward-verb carve-out.** Peter, R5 fork 2: "Fix now, but be sure to capture it for 131 if you think it warrants further exploration there, too". `2026-10-24-steward-verb-carve-out-drop-limb-unapplied.md` is fixed before S as EXECUTION of the settle ballot's pre-declared drop (R5 item 2; R8 item 9); routed here only if not on main at S. It is captured here for two reasons. First, the Q5 cut it amends is charter text that row 15 reshapes. Second, its shape (a ratified falsification limb that fired and that nothing applied) is evidence for § 5's "sunsets with falsifiers".
+
+**Capture line 2: CORRECTIONs that no one has standing to author.** Peter, R8 item 3: "Wait and capture (possibly as an inbound)". Here is the class. An owner has no standing write over CORRECTIONs to the docs or charter prose it owns: the path is governance law (Task-Completion-Protocol § "The Merge Rule" lists `governance/**`, `.kiro/steering/**` and agent prompts), an issue grant can never cover one (README rule 8), and so each fix needs a line from Peter naming the files and authors. The sheet counted four instances this week. Nine are counted at this writing (the list is mine, read from the records):
+1. #472 (merged 2026-10-25): Kenya's and Data's charter theming bullets. Kenya and Data own them; I authored them on Peter's direct words, not under any standing scope.
+2. `canonical/agents/kenya.md` L182 and L206 (`2026-10-12-steward-canonical-claims-theme-output.md`): in Kenya's words, authored by me (R8 item 2).
+3. `governance/platform-implementation-guidelines.md` L744–L774 (F1, Lina; R8 item 2).
+4. `governance/Component-Development-Guide.md` § "Component Token Files" and its two adjacent sites (F3, Lina; R8 item 2).
+5. Stacy's F2 sentences: `canonical/agents/stacy.md` L445 and L449, and `canonical/profiles/consumer/stacy.overlay.md` L112 and L116 (`2026-10-25-owed-set-law-text-after-closing-commit-anchor.md` item L4; R5 fork 3, "CORRECTION").
+6. `governance/Test-Development-Standards.md`, the workflow examples at L1556–L1902 (`2026-10-26-tds-workflow-examples-declare-files-that-do-not-exist.md`; mine).
+7. `.kiro/steering/Civitas-System-Overview.md` L39 (`2026-10-27-civitas-overview-product-mcp-provenance-false.md`; mine). That record's Trigger prose names a vehicle, "opens with its own grant", that rule 8 forbids for this path.
+8. `.kiro/hooks/RELEASE-FLOW.md` § 5a, L66–L78 (the owed-set record's item L1; mine).
+9. `canonical/agents/thurgood.md` L543 and L545, my own charter (the owed-set record's item L3).
+
+**Instance count, 2026-11-01** *(Thurgood; Peter's R11 line 5, "Yes, wait stands", `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` § "R11")*. These are the cases where an owner or the steward needed a one-off authority line from Peter to author a CORRECTION of a doc or charter it owns or maintains, because no seat holds standing write there:
+- **2026-10-25**: #472, Kenya's and Data's theming bullets, on Peter's direct words (the precedent).
+- **2026-10-29**: #563, the root `package.json` `prepublishOnly` message. An unowned path, granted to Ada (`.kiro/issues/archive/2026-10-29-root-package-json-prepublishonly-grant.md`; also in `inbound-from-2026-10-29-unowned-paths.md` (a)).
+- **2026-10-30, R8 item 2**: `canonical/agents/kenya.md` L182/L206 (Thurgood); `governance/platform-implementation-guidelines.md` L744–L774 (F1, Lina, #577); `governance/Component-Development-Guide.md` § "Component Token Files" (F3, Lina, #578).
+- **2026-11-01, R11 line 1**: `canonical/profiles/consumer/kenya.overlay.md` L145/L157 (Thurgood).
+- **R11 line 2**: `canonical/agents/stacy.md` L445/L449 and `stacy.overlay.md` L112/L116 (Thurgood).
+- **R11 line 3**: `governance/platform-implementation-guidelines.md` L730 (Lina).
+- **R11 line 4**: `governance/Component-Development-Guide.md` L490, L997–L1001, L1059–L1074, L1810 (Lina, #578).
+- **R11 line 10**: `governance/Test-Development-Standards.md` L1556–L1964 (widened from L1902 by line 10's sub-item) and `.kiro/steering/Civitas-System-Overview.md` L39 (Thurgood).
+- **R11 line 11**: the 18 governance docs of Ada's token-name sweep, #595, and Ada's two lines in `governance/a-vision-of-the-future.md` (Peter's voice, no charter owner).
+- **R11 line 8**: `design-language/design-philosophy.yaml` L53 (Leonardo, on #568's application branch).
+- **R11 line 13**: `.kiro/hooks/RELEASE-FLOW.md` § 5a L66, L71, L72, L74, L76 and L78's first sentence, and `canonical/agents/thurgood.md` L543/L545 (Thurgood; F2's L1 and L3).
+
+Line 12 is a record state, not an authorship line.
+
+That is **12 instances in eight days: 12 ruled, 0 pending**. R8 item 2 counts as two, one per author. Every item on this section's list above now has a line. *(Updated 2026-11-01, Thurgood, after R11 line 13. Superseded, kept verbatim: "- **Pending**: line 13 (L1/L3; it is listed when ruled). Line 12 is a record state, not an authorship line. /  / That is 12 instances in eight days: 11 ruled, 1 pending. R8 item 2 counts as two, one per author. Two more on this section's list above have no line yet: `.kiro/hooks/RELEASE-FLOW.md` § 5a and `canonical/agents/thurgood.md` L543/L545, both F2's non-floor surfaces." Line 10's bullet read L1556–L1902 before its sub-item.)* *(Updated 2026-11-01, Thurgood, after R11 lines 8, 10 and 11. Superseded, kept verbatim: "- **Pending when this line was written**: /   - line 8: `design-language/design-philosophy.yaml` L53; /   - line 10: `governance/Test-Development-Standards.md` L1556–L1902 and `.kiro/steering/Civitas-System-Overview.md` L39 (Thurgood); /   - line 11: the 18 governance docs of Ada's token-name sweep, #595. /  / That is 10 instances in eight days: 7 ruled, 3 pending.")* Each instance cost Peter one line.
+
+This is the evidence for row 15 (OWNERS) and for § 4 (d), which exempts CORRECTION edits from the freeze. An exemption helps only if someone can author the CORRECTION. The list is written here rather than in a separate inbound, because R8's "possibly" leaves the form open. The collective's lean, to wait for this spec unless a fifth instance arrived first, was put to Peter when the count was four, and his answer was to wait. The count is now nine. Whether that reopens his answer is his call; this line does not reopen it.
+
+**Inputs from this release's walk** (the requirements round reads them):
+- `inbound-from-2026-10-29-unowned-paths.md` (#563, merged): paths governance reaches but no seat holds.
+- `inbound-from-2026-10-30-release-flow-as-run.md` (#566, open at this writing): ten lessons from running the release flow at 16.2.0's phase-1 walk.
+
+**What happens next.** This amendment merges before 16.2.0's S. Each owner then re-rules the records in the table, in a commit that is an ancestor of S, citing `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`. The token is the owner's to choose; `path:.kiro/specs/131-governance-simplification/requirements.md` is the form Ada uses for Spec 129. Records whose Trigger already names that path (the three marked so in the table) are not re-ruled. Each takes a `**Routed**:` line naming this section, and its Trigger stays as it is. The home-switch record is due, so its re-rule is its own (#588). **The rule-11 record is the other exception.** Its deadline is 16.3.0's S, and this spec is paused, so a `path:` on its requirements would not fire in time. Its token is `release:next:phase-1`, with the deadline in prose.
