@@ -139,3 +139,18 @@ NEW:
 ## Lapse (2026-10-29)
 
 Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.
+
+## Partial outcome (2026-11-01, Thurgood, owner, rule 9): item L4 closed by this record's F2 PR
+
+- **Closed: item L4** (Stacy's charter and consumer overlay). The PR on branch `fix/stacy-charter-owed-set-after-closing-commit` corrects `canonical/agents/stacy.md` L445 and L449 and `canonical/profiles/consumer/stacy.overlay.md` L112 and L116 as a CORRECTION, on Peter's line of 2026-11-01 (chat, relayed by the orchestrator, received before 2026-11-01T14:51:23Z: "Yes"; cited from R11 in `2026-10-30-release-16-2-peter-rulings-and-delegation.md` once that record's PR is on `main`).
+  - The text is Stacy's 2026-10-25 draft above, with my fixes (i) and (ii) against `scripts/owed-set.sh` at `1eced6cd5`. Fix (iii), the closure-undecidable clause, is her own sentence: she refused my version at `cfc6ed983`, and her replacement was applied verbatim.
+  - Her acts: re-confirm `930d45b03`, re-sign `36dc6b39a`. The signing chain passes.
+  - **This is the floor-class surface RL-22 waived for 16.1.0.** The shipped consumer charter (`dist/consumer-canonical/agents/stacy.md` L343 and L347) now describes the closing-commit anchor. Its release note is the release author's.
+- **Still open**:
+  - item L1, `.kiro/hooks/RELEASE-FLOW.md` § 5a;
+  - item L2, the 2026-09-19 ballot's § 7.5 counting block, which stays asked of Peter (R5 fork 3);
+  - item L3, `canonical/agents/thurgood.md` L543 and L545;
+  - § "Write-scope gap".
+
+  R5 ruled the script-describing sentences CORRECTION. L1 and L3 need an authority line naming files and author, as L4's did. That line is before Peter. Within L1, the "one judgment point" paragraph (L78 at `465af3544`) stays asked.
+- **Trigger unchanged**: the open items are still due at the next release's phase 1.
