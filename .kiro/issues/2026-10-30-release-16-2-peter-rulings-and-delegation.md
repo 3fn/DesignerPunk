@@ -108,7 +108,13 @@ Item 10 (drops) was "none proposed", so nothing was asked and nothing was answer
 
 He was answering this offer: *"I can turn criteria 1 and 3 into a short brief for the 16.2.0 release work, so it carries them as its definition of done."*
 
-**What it ruled**, as the brief states it (the brief is that orchestrator's text; his "Yes, please" adopts it):
+**What it ruled.**
+- *By his words*: the offer, which names **criteria 1 and 3** (P0/P1 fixed or disclosed; no new ballots).
+- *By the brief* (that orchestrator's text, written after his "Yes, please"): four criteria.
+- *Reading (mine, flagged; corrected 2026-11-01 on Stacy's read)*: nothing on record shows he read criteria 2 and 4 as worded. The clauses "re-ruling … is not a state" and "archiving a … routed record counts" are put back to him as forks, with the collective's next package. Until he answers, criteria 1 and 3 are his ruling; criteria 2 and 4 are the brief's, and the release works to them as the stricter reading.
+- *Superseded, kept verbatim*: "**What it ruled**, as the brief states it (the brief is that orchestrator's text; his \"Yes, please\" adopts it):".
+
+The brief's text:
 - **16.2.0's definition of done, four exit criteria:**
   1. P0 and P1 product defects are fixed, or disclosed in the notes by record path.
   2. Every root `.kiro/issues/` record is fixed, closed, or routed to a named spec. Re-ruling in place or re-triggering to the next release is not a state, except for named release-blocking records.
@@ -121,7 +127,7 @@ He was answering this offer: *"I can turn criteria 1 and 3 into a short brief fo
 **Where R9 meets earlier rulings**: it is later than R8. Where they meet, R9 is his later word.
 - The delegation's "fix-now by 16.3.0's S" vehicle (§ "Delegation"; the walk record's delegation table) is superseded for every record that is not release-blocking. Each is fixed before S, or routed.
 - R5 item 2, steward-verb "Fix now", and R8 item 9's "Ratify" do not conflict with R9. "Now" means before S.
-- *Reading (mine, flagged)*: R9 adds no new mechanism. The routing form (a routed record archived with a dated outcome line naming the spec's intake) is the collective's working assumption, put back to Peter with the sheet r3.
+- *Reading (mine, flagged)*: R9 adds no new mechanism. The routing form is put back to Peter as a fork: in place, the default the collective now proposes (Stacy), or archived. *(Corrected 2026-11-01. Superseded, kept verbatim: "The routing form (a routed record archived with a dated outcome line naming the spec's intake) is the collective's working assumption, put back to Peter with the sheet r3.")*
 
 Cite R9 as `R9@<the squash of the PR that added it>`.
 
