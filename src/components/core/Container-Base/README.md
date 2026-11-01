@@ -220,7 +220,7 @@ ContainerBase(
 | `background` | `ColorTokenName` | `undefined` | Background color using semantic color tokens |
 | `shadow` | `ShadowTokenName` | `undefined` | Shadow using semantic shadow tokens |
 | `border` | `BorderValue` | `undefined` | Border width using border tokens |
-| `borderColor` | `ColorTokenName` | `color.border.default` | Border color using semantic color tokens |
+| `borderColor` | `ColorTokenName` | `color.structure.border` | Border color using semantic color tokens |
 | `borderRadius` | `BorderRadiusValue` | `undefined` | Border radius using radius tokens |
 | `opacity` | `OpacityTokenName` | `undefined` | Opacity using semantic opacity tokens |
 | `layering` | `LayeringValue` | `undefined` | Stacking order (z-index on web/iOS, elevation on Android) |
@@ -311,13 +311,14 @@ The `borderColor` prop controls the color of the border independently from the b
 | Scenario | Behavior |
 |----------|----------|
 | `borderColor` specified | Uses the provided color token |
-| `borderColor` undefined | Defaults to `color.border.default` |
+| `borderColor` undefined | Defaults to `color.structure.border` |
 | `border="none"` | `borderColor` has no visible effect |
 
 **Common border color tokens:**
-- `color.border.default` — Standard border color
+- `color.structure.border` — Standard border color
 - `color.structure.border.subtle` — Subtle/muted border color
-- `color.border.emphasis` — Emphasized border color
+
+For emphasis, raise the width with `border="emphasis"`; there is no separate emphasis border color token.
 
 **Example:**
 ```html
@@ -332,7 +333,7 @@ The `borderColor` prop controls the color of the border independently from the b
 </container-base>
 
 <!-- Emphasized border -->
-<container-base border="emphasis" border-color="color.border.emphasis">
+<container-base border="emphasis">
   Content with emphasized border
 </container-base>
 ```

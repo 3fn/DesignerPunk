@@ -4,7 +4,7 @@
 **Filed by**: Ada, lead owner of the record it came out of, under README rule 10, in the PR that closes `archive/2026-10-23-served-docs-teach-non-key-token-names.md`. Rule 9 applies to every later edit.
 **Owner**: Ada (token docs). Lina is co-owner of item B (her component READMEs).
 **Class**: P2 obligation (record) · defect *(set 2026-10-25, Ada, rule 12. The named-site fix (#471, #472) closed the sites with a scan and a grep proof. These docs were outside every scan, and the hits are raw: a hit is a string that looks like a token name, and most of them may be prop names, file names, platform identifiers or hypothetical examples. A reader may be misled where one is a wrong key, so the record is wrong in places; nothing here is a guard claim, and the P0 reading is not made until a hit is vetted as a key the index lacks. Only Peter downgrades a P0. Stacy may press the P0 reading.)*
-**Trigger**: `release:next:phase-1` — closes at the sweep PR's merge; `merge:#<N>` at its open.
+**Trigger**: `release:16.3.0:phase-1` — closes at the sweep PR's merge (the vetted list in § "Corrections and the vetted list (2026-10-26, Ada)": 56 failures in 15 docs); `merge:#<N>` when that PR opens. The deadline is 16.3.0's RELEASE phase 1. I aim to land the sweep before 16.2.0's S, and this line holds if it does not. If the release after 16.2.0 is ratified under another version, I re-token this line to it at that bump. *(Re-ruled 2026-11-01, Ada, owner, rules 1, 9 and 11, with a dated reason: the disposition, from the collective's sheet r2.1 (Ada's row), is "Fix-now by 16.3.0's S: token-docs (the vetted 56-failure sweep)", and the walk record's delegation table carries the row "fix-now by 16.3.0 | Ada · sweep PR | re-rule | DLG". Authority: Peter's one-off delegation, `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`, as answered in `R8@0184efb3fd7b2956677351fdf84899767a5ac74a` (both in `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md`).)* *(was, verbatim: `release:next:phase-1` — closes at the sweep PR's merge; `merge:#<N>` at its open.)*
 **Source**: Lina's 2026-10-25 line in `archive/2026-10-23-served-docs-teach-non-key-token-names.md` ("Seen, not touched, for the owners", "Lina's part fixed"), and her "Not done here" line for item B.
 
 ---
@@ -101,6 +101,10 @@ The same commit fixes `governance/Rosetta-System-Architecture.md` L481. It adds 
 - **Fallback**: the next release's phase 1. If the ballot is undrafted when phase 1 runs, the record lapses at that phase 1 under rule 11, and the walk reports it. Until the amendment is ratified, the register row is the truth about what is armed and the ballot's § 8.8 bytes are a known difference from it, named in the row's history line of 2026-10-26.
 
 *Signed: Thurgood, 2026-10-26.*
+
+## Lapse (2026-10-29)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.
 
 ## Outcome (2026-11-01, Ada, owner)
 

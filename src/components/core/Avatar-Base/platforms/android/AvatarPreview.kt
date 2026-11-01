@@ -749,7 +749,7 @@ private fun CrossPlatformConsistencySection() {
                     Avatar(type = AvatarType.Human, size = AvatarSize.Md)
                     Column {
                         Text(
-                            text = "color.avatar.human.background",
+                            text = "color.identity.human",
                             style = MaterialTheme.typography.labelSmall,
                             fontFamily = FontFamily.Monospace
                         )
@@ -768,7 +768,7 @@ private fun CrossPlatformConsistencySection() {
                     Avatar(type = AvatarType.Agent, size = AvatarSize.Md)
                     Column {
                         Text(
-                            text = "color.avatar.agent.background",
+                            text = "color.identity.agent",
                             style = MaterialTheme.typography.labelSmall,
                             fontFamily = FontFamily.Monospace
                         )
@@ -873,12 +873,12 @@ private fun BorderStylesSection() {
                 fontFamily = FontFamily.Monospace
             )
             Text(
-                text = "xs-xl color: color.avatar.default.border + opacity.heavy",
+                text = "xs-xl color: color.structure.border + opacity.heavy",
                 style = MaterialTheme.typography.labelSmall,
                 fontFamily = FontFamily.Monospace
             )
             Text(
-                text = "xxl color: color.contrast.onSurface (full opacity)",
+                text = "xxl color: color.contrast.onDark (full opacity)",
                 style = MaterialTheme.typography.labelSmall,
                 fontFamily = FontFamily.Monospace
             )
