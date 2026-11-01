@@ -213,7 +213,7 @@ Read against the 16.1.0 trio records (`tests/onboarding-trio/records/16.1.0/`), 
 
 This is the read this record's Trigger owes ("the release-6 walk reads every row still open here"). Read at `origin/main` `ca6e36f0e` against each row's cell, its home record, and `docs/consumer/INSTALL.md`.
 
-**Result: no carried row changed state since the 2026-10-25 steward line.** The counts stand: fixed 35 · closed by record 4 · waived 2 · carried 21.
+**Result: no carried row changed state since the 2026-10-25 steward line, except one row whose fix the 2026-10-25 count missed** (R1-3 / R2-7 / K-4, below). *Superseded, kept verbatim: "The counts stand: fixed 35 · closed by record 4 · waived 2 · carried 21."*
 
 - **V-DOC, 8 rows** (R2-6 / R3-9, R3-8, R1-4, R1-5 (doc), J-5, FR-9, FR-11, FR-7 / FR-12): `docs/consumer/INSTALL.md` is unchanged since `ecf281dbd` (2026-10-15, #375). Each row is still an omission, not a false statement where the reader meets it:
   - L42 and L61 say "Restart your agent session" without saying how, per harness;
@@ -226,7 +226,10 @@ This is the read this record's Trigger owes ("the release-6 walk reads every row
 - **R2-8 / R3-12** (Lina, V-GEN): carried, unchanged.
 - **C-6** (Lina's home, `.kiro/issues/2026-10-13-src-path-convention-for-served-governance-docs.md`, at the root): carried.
 - **R1-8, FR-13, FR-14, R1-9** (Lina, V-OWN; R1-9 also in `.kiro/issues/2026-10-13-component-gaps-from-settings-ledger.md`, at the root): carried.
-- **R1-3 / R2-7 / K-4: finding, the home is gone.** Its home, `.kiro/issues/2026-10-02-docs-mcp-logs-dir-cwd-relative.md`, is in `archive/` while its Status still reads ACTIVE. The carried row has no live home. Routed to the release walk's owner-decides list. The fix owner is to be named at the docs MCP's next edit (mine: `mcp-server/src/**` is in my standing scope).
+- **R1-3 / R2-7 / K-4: FIXED, not homeless.** *(Corrected 2026-11-01, Thurgood: my first reading above misread the archived home's Status line.)* The home, `.kiro/issues/archive/2026-10-02-docs-mcp-logs-dir-cwd-relative.md`, carries the outcome line "2026-10-18 — FIXED and CLOSED, PR `fix/docs-mcp-item-14-and-logs-dir`". The fix is on `main`: `mcp-server/src/utils/logs-dir.ts` reads `DESIGNERPUNK_DOCS_MCP_LOGS`, else uses a temp dir, and `mcp-server/src/index.ts` L103 no longer uses `mcp-server/logs`. The squash is `64d0a7a1f` (2026-10-18). Only that record's `**Status**:` line still reads ACTIVE. It is archived, and its outcome line governs. **Counts after this correction**: fixed 36 · closed by record 4 · waived 2 · carried 20. *Superseded, kept verbatim:*
+
+  > - **R1-3 / R2-7 / K-4: finding, the home is gone.** Its home, `.kiro/issues/2026-10-02-docs-mcp-logs-dir-cwd-relative.md`, is in `archive/` while its Status still reads ACTIVE. The carried row has no live home. Routed to the release walk's owner-decides list. The fix owner is to be named at the docs MCP's next edit (mine: `mcp-server/src/**` is in my standing scope).
+
 - **Stale cell text, no state change**: the table cells for C-3 / BD-2 and C-4 still read "Carried". This record's own Class line says C-3 and C-4 were fixed by #412, and C-4's home is archived FIXED. The same holds for R1-14 / J-6, whose home `2026-10-15-123-cannot-tell-cells.md` is archived with its outcomes, and for PQ-1 and PQ-2, fixed at `a486dbbb5` (the steward line of 2026-10-25). The cells are history; the counts line governs.
 
 *Signed: Thurgood, 2026-11-01.*
