@@ -11,6 +11,9 @@
  * @see .kiro/specs/043-container-card-base for directional padding requirements
  */
 
+import * as fs from 'fs';
+import * as path from 'path';
+
 import {
   paddingTokenMap,
   borderTokenMap,
@@ -551,8 +554,8 @@ describe('Container-Base Component', () => {
     });
 
     describe('Border Color Support', () => {
-      it('should document borderColor defaults to color.border.default', () => {
-        // When borderColor is nil, iOS uses colorBorder (color.border.default)
+      it('should document borderColor defaults to color.structure.border', () => {
+        // When borderColor is nil, iOS uses colorBorder (color.structure.border)
         expect(BORDER_COLOR_TOKEN).toBe('color.structure.border');
       });
 
@@ -562,10 +565,10 @@ describe('Container-Base Component', () => {
         expect(true).toBe(true); // Documentation test
       });
 
-      it('should document borderColor supports emphasis variant', () => {
-        // iOS resolveContainerBaseBorderColor supports "color.border.emphasis"
-        // Maps to colorBorderEmphasis in TokenMapping.swift
-        expect(true).toBe(true); // Documentation test
+      it('maps the served border color name and no emphasis border color (emphasis is the border width; schema borderColor)', () => {
+        const src = fs.readFileSync(path.join(__dirname, '../platforms/ios/TokenMapping.swift'), 'utf8');
+        expect(src).toContain('case "color.structure.border":');
+        expect(src).not.toMatch(/color\.border\.(default|emphasis)|colorBorderEmphasis/);
       });
 
       it('should document borderColor has no effect when border is none', () => {
@@ -662,8 +665,8 @@ describe('Container-Base Component', () => {
     });
 
     describe('Border Color Support', () => {
-      it('should document borderColor defaults to color.border.default', () => {
-        // When borderColor is null, Android uses colorBorder (color.border.default)
+      it('should document borderColor defaults to color.structure.border', () => {
+        // When borderColor is null, Android uses theme.color_structure_border (color.structure.border)
         expect(BORDER_COLOR_TOKEN).toBe('color.structure.border');
       });
 
@@ -673,10 +676,12 @@ describe('Container-Base Component', () => {
         expect(true).toBe(true); // Documentation test
       });
 
-      it('should document borderColor supports emphasis variant', () => {
-        // Android resolveContainerBaseBorderColor supports "color.border.emphasis"
-        // Maps to colorBorderEmphasis in TokenMapping.kt
-        expect(true).toBe(true); // Documentation test
+      it('maps the served border color name and no emphasis border color (emphasis is the border width; schema borderColor)', () => {
+        for (const file of ['../platforms/android/TokenMapping.kt', '../platforms/android/ContainerBase.android.kt']) {
+          const src = fs.readFileSync(path.join(__dirname, file), 'utf8');
+          expect(`${file}: ${src.includes('"color.structure.border" -> theme.color_structure_border')}`).toBe(`${file}: true`);
+          expect(src).not.toMatch(/color\.border\.(default|emphasis)|color_border_emphasis|else -> colorBorder\b/);
+        }
       });
 
       it('should document borderColor has no effect when border is none', () => {

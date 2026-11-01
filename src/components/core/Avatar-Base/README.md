@@ -122,18 +122,17 @@ Avatar(type = AvatarType.Human, size = AvatarSize.Md, testID = "user-avatar")
 
 | Token | Usage |
 |-------|-------|
-| `color.avatar.human` | Human avatar background |
-| `color.avatar.agent` | Agent avatar background |
-| `color.avatar.contrast.onHuman` | Icon color on human background |
-| `color.avatar.contrast.onAgent` | Icon color on agent background |
-| `color.avatar.border` | Border color |
+| `color.identity.human` | Human avatar background |
+| `color.identity.agent` | Agent avatar background |
+| `color.contrast.onDark` | Icon color on human and agent backgrounds |
+| `color.structure.border` | Border color (xs–xl); `color.contrast.onDark` for xxl |
 
 ### Border Tokens
 
 | Size | Width Token | Color | Opacity |
 |------|-------------|-------|---------|
-| xs-xl | `borderDefault` | `color.avatar.border` | `opacity.heavy` |
-| xxl | `borderEmphasis` | `color.contrast.onSurface` | 100% |
+| xs-xl | `borderDefault` | `color.structure.border` | `opacity.heavy` |
+| xxl | `borderEmphasis` | `color.contrast.onDark` | 100% |
 
 ## Wrapper-Delegated Interaction Pattern
 

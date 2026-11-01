@@ -521,7 +521,7 @@ struct AvatarPreview_Previews: PreviewProvider {
                     HStack(spacing: 12) {
                         Avatar(type: .human, size: .md)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("color.avatar.human.background")
+                            Text("color.identity.human")
                                 .font(.caption)
                                 .fontDesign(.monospaced)
                             Text("→ color.identity.human → orange300")
@@ -533,7 +533,7 @@ struct AvatarPreview_Previews: PreviewProvider {
                     HStack(spacing: 12) {
                         Avatar(type: .agent, size: .md)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("color.avatar.agent.background")
+                            Text("color.identity.agent")
                                 .font(.caption)
                                 .fontDesign(.monospaced)
                             Text("→ color.identity.agent → teal200")
@@ -608,10 +608,10 @@ struct AvatarPreview_Previews: PreviewProvider {
                     Text("xxl: borderEmphasis → borderWidth200 (2px)")
                         .font(.caption)
                         .fontDesign(.monospaced)
-                    Text("xs-xl color: color.avatar.border + opacity.heavy")
+                    Text("xs-xl color: color.structure.border + opacity.heavy")
                         .font(.caption)
                         .fontDesign(.monospaced)
-                    Text("xxl color: color.contrast.onSurface (full opacity)")
+                    Text("xxl color: color.contrast.onDark (full opacity)")
                         .font(.caption)
                         .fontDesign(.monospaced)
                 }
