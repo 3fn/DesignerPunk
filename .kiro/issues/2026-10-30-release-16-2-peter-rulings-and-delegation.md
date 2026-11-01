@@ -241,6 +241,13 @@ Cite R10 as `R10@<the squash of the PR that added it>`.
   - It is one commit, on the application branch of ballot `2026-10-30-departure-timing-plan-vs-build` (#568), before that PR merges. The application PR carries it.
   - The new text is § 3 site 2's After, byte for byte. No standing write scope moves.
 
+**Line 9 — #568's corrected site-1a text (L138/L139) after the R4 reads**, before 2026-11-01T15:13:29Z.
+- *Put to him*: "ratify the corrected site-1a text — L138 last sentence "A spec task (work done for a spec: it executes a row of that spec's merged `tasks.md`, or its PR names the spec in `Spec:`, whatever its branch) or a product screen is plan-kind work; with no approved plan it is still in planning, so ask." and L139 "Work of any other kind (in this repo, a PR whose `Spec:` is `none`, such as an issue-driven `fix/` or `chore/` PR, whatever surface it touches) is in development from its start.", plus "through the screen's architect" → "through the product's architect" at L138 and L181 (Lina's Final, with Ada's anchor and Kenya's note). Alternatives named: decline (ratified text applies unchanged, correction reverted); another round."
+- *His word*: "Ratify the corrected text"
+- *What it rules*:
+  - #568's ratification (R8 items 4 and 9) extends to the corrected text: L138's last sentence and L139 as quoted, and "through the product's architect" at L138 and L181.
+  - The application carries the corrected text.
+
 *Further lines are appended as ruled.*
 
 Cite R11 as `R11@<the squash of the PR that added it>`, with the line number, e.g. `R11@<sha> line 2`.
