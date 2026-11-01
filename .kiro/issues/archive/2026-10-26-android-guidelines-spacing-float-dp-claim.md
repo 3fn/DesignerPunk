@@ -94,3 +94,13 @@ Waived for 16.1.0: the L744 claim and the examples that inherit it (L746–L774)
 Moved back to the root by `git mv` from `archive/`. The 2026-10-30 outcome's "Found while correcting" item (L730's headline) is now authorized and owed in this PR. *(The superseded Trigger line, verbatim:)*
 
 > **Trigger**: `release:next:phase-1` *(re-ruled 2026-10-26 by Lina, rule 1 and rule 9, on Peter's waiver below: this record is waived for 16.1.0 and its vehicle is Spec 129, which regenerates the Android section of the guideline from the final type table. It closes at the 129 PR that lands the Android type table. The token stays `release:next:phase-1` until a 129 PR exists, then becomes `merge:#<N>` of that PR.)*
+
+## Outcome (2026-11-01, L730)
+
+*(Lina, owner, rule 5.)* **Fixed by CORRECTION** on branch `fix/android-l730-headline`, cut from `465af3544`.
+- L730's headline now limits "never append `.dp`" to the families the generator emits as `Dp` (spacing, radius, tapArea, borderWidth, layering). It also says a `Float` token, sizing among them, takes `.dp` at the read, and points to "When `.dp` IS Required" (L746).
+- Truth: `src/providers/AndroidFormatGenerator.ts` `getKotlinType` at `465af3544` (the same referent as #577).
+- Authority: Peter's line 3, "Yes".
+- Regenerated: Data's CC agent and its consumer cc rendering, which embed § "Android Implementation Patterns".
+
+With #577's L744–L776, the section's every type claim now matches the generator. Nothing found at L730 is left open. No Kotlin build was run (no toolchain).
