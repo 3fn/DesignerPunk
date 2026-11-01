@@ -477,6 +477,16 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **Vehicle**: Ada's E7b PR (P1 part 2), or a follow-up of hers.
 - **Consult**: Ada (owner); Stacy (census reader).
 
+## RS-64 — the two charters disagree on what class (c)'s anchor is (appended 2026-11-01)
+
+- **Source**: Stacy, carried by Thurgood, 2026-11-01. Filed under README rule 10. Low; not a falsity.
+- **The two texts**: R11 line 13's CORRECTION of `canonical/agents/thurgood.md` (L545, `b55ba11be` on `fix/owed-set-law-text-release-flow-and-thurgood-charter`) reads class (c) as "no units block, >1 PR" and gives one anchor for every class: the spec's closing commit. Stacy's charter keeps class (c)'s own anchor, "the anchor is the PR carrying the last parent completion doc": `canonical/agents/stacy.md` L455 (item `owed-set-class-c` in `canonical/operative-sets/stacy.yaml`) and `canonical/profiles/consumer/stacy.overlay.md` L122.
+- **The gap**: the two seats' law texts on one script disagree. Either both keep "the PR carrying the last parent completion doc" as the definition of class (c), with the closing commit as what the script prints, or both drop it.
+- **Disposition (proposed)**: a CORRECTION at the next F2-style correction of these sentences, truth `scripts/owed-set.sh`. Stacy's lines are governance law, so her edit needs a line from Peter, as R11 line 2 was.
+- **Surviving counter**: the script prints the closing commit for every class, so "the PR carrying the last parent completion doc" only says what (c) means. A reader of either charter gets the right row. The cost is one more authority line and her two acts, for agreement in wording only.
+- **Vehicle**: the next correction of the owed-set sentences, or Spec 131's owed-set work if that comes first.
+- **Consult**: Stacy (raised it; owner of her lines); Thurgood (owner of his).
+
 ## Finding (appended 2026-10-26): two publish rows have no `census` field
 
 - **Source**: Stacy's R1 on the batch ballot, S-5 ("Finding, never a gate"): neither `hermetic-publish-path` nor `publish-rail-guard` carries a `census` field (`governance/classification-map.md` L878–L915 at `61581c641`). The census rule's in-scope form runs the row's census mode, and the exempt form's ground (2) needs `census: none — <why>`; with neither, an in-scope item on either instrument has no lawful census line (ballot `2026-10-19-instrument-census-at-draft` § 2, F-3 (A): the owner builds the census mode before the first in-scope item on that instrument leaves DRAFT).
