@@ -51,11 +51,22 @@ Re-pointing "Peter" → "your human lead" carries the same obligation.
 ## `#the-charter-cut-ratified-verbatim`
 
 signer: stacy
-date: 2026-09-29
+date: 2026-11-01
 row: `canonical/profiles/consumer/stacy.dispositions.yaml` · body · `#the-charter-cut-ratified-verbatim` (re-pointed; ROUTED)
-canonicalHash: sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191
-renderedHash: sha256:12116dca8e4e4fd69ffa64f9276c97aa497813f4461a0bcd3afa1ab4203e9355
+canonicalHash: sha256:04a66770a3e44026f6a8cc93cc631cb4fbf3b6d8fb2e6bdedcfa57dcb8b8bd75
+renderedHash: sha256:22dd93f8b7271551ca153faa0084a531a2b1e1a9a725025c72c48550d9525a71
 verdict: assent — surviving 2/2
+
+**Re-signed 2026-11-01** (prior signature: assent — surviving 2/2, 2026-09-29, against canonical `sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191` and rendered `sha256:12116dca8e4e4fd69ffa64f9276c97aa497813f4461a0bcd3afa1ab4203e9355`). *(This re-does `e2b923f5c`, whose read claim was false. Erratum: `.kiro/issues/2026-11-01-stacy-c1-acts-read-claim-false.md`; re-cut under R11 line 18.)* It was stale because the Thurgood half of the cut lost its steward-toolset clause, in the canonical unit and in the overlay (Thurgood `c9fb5300d`; R5 fork 2, R8 item 9). I re-confirmed the unit at 2 items at `214d1e967`.
+- **The rendering moved; read whole via `cat -n`** at `8df87cf4d`, before this commit: `canonical/_consumer-output/_canonical/agents/stacy.md` L293–L300, `canonical/_consumer-output/cc/.claude/agents/stacy.md` L167–L174 and `canonical/_consumer-output/kiro/.kiro/agents/stacy-prompt.md` L133–L140. Both cuts render verbatim, the Thurgood half now ending "…, and the mechanical checks that enforce it — he does **not** adjudicate whether a particular execution claim was true"; "steward toolset" occurs in none of them (checked by script).
+- **Hashes**:
+  - canonicalHash `sha256:04a66770a3e44026f6a8cc93cc631cb4fbf3b6d8fb2e6bdedcfa57dcb8b8bd75`, recomputed independently; it equals the overlay pin and my confirmation.
+  - renderedHash `sha256:22dd93f8b7271551ca153faa0084a531a2b1e1a9a725025c72c48550d9525a71`, recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` (three pieces).
+- **Removals re-judged**: the one removal, the "one level up" audit commands, stands unchanged. It still occurs in the unit and in none of the renderings.
+- **Verdict unchanged**: assent, surviving 2/2.
+- **C1 collapse**: I signed this assent on my own charter's row, so it falls in Peter's sample.
+
+**Prior signature record (superseded, 2026-09-29)**: assent — surviving 2/2, against `sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191`, as below.
 
 Both cuts survive verbatim.
 
