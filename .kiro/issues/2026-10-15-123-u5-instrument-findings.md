@@ -207,3 +207,26 @@ Read against the 16.1.0 trio records (`tests/onboarding-trio/records/16.1.0/`), 
 - **Release 4's Kiro product-query row (Task 28.3; cannot-tell row 4 handed this read to me): what may now be claimed.** On 2026-10-25 I read the row myself, read-only (`sqlite3 "file:…/kiro-cli/data.sqlite3?mode=ro"`, table `conversations_v2`, key `/private/tmp/dp-trio/trio-3-pm/repo`, conversation `53ef2605…`, created 2026-10-15T03:12:43Z, `context_manager.current_profile: "leonardo"`). Its stored results read `get_product_overview` → `"name": "Lendly"`, and `find_screens {"context":"home"}` → `[{"name": "example-home", …}]`. The stored arguments are misaligned, as R3-7 says, so I matched each result to its call by `tool_use_id`. **What this supports**: on Kiro at release 4, the Product MCP served the scaffold's product name and the starter screen to consumer-Leonardo, n=1. That is the server side of 28.3's two limbs. **What it does not support**: "28.3's bar met on Kiro". (1) The row comes from `trio-3-pm`'s frozen probe, not from 28.3's prompt (`validation/prompts/product-query-leonardo.md`), so it is not 28.3's instrument. (2) Limb (b) also needs the answer to name the screen, and the answer names `example-home` 0 times, because that prompt never asked for it. Limb (a)'s answer half holds ("Lendly" twice). (3) That repo's `product/overview.yaml` is gone, so the name cannot be matched against the file the way 28.3 matched "Order Status". **So Task 28.3's completion claims stay exactly as written**: its bar was Claude Code by design and was met, n=1. No claim about Kiro is added there. **The evidence is not committed and not in the raw-evidence pack.** It sits only in Peter's own kiro-cli profile, which kiro-cli may prune. Exporting it is Leonardo's protocol fix (R2-15 covers future runs, not this row), and whether to keep rows in that profile at all is Peter's call.
 
 *Signed: Thurgood, 2026-10-25.*
+
+### Walk read — release 16.2.0 (2026-11-01, Thurgood, record owner; rules 9 and 11)
+
+This is the read this record's Trigger owes ("the release-6 walk reads every row still open here"). Read at `origin/main` `ca6e36f0e` against each row's cell, its home record, and `docs/consumer/INSTALL.md`.
+
+**Result: no carried row changed state since the 2026-10-25 steward line.** The counts stand: fixed 35 · closed by record 4 · waived 2 · carried 21.
+
+- **V-DOC, 8 rows** (R2-6 / R3-9, R3-8, R1-4, R1-5 (doc), J-5, FR-9, FR-11, FR-7 / FR-12): `docs/consumer/INSTALL.md` is unchanged since `ecf281dbd` (2026-10-15, #375). Each row is still an omission, not a false statement where the reader meets it:
+  - L42 and L61 say "Restart your agent session" without saying how, per harness;
+  - "MCP server", "harness" and the token tiers are used and never defined;
+  - nothing names a normal terminal or the native installer;
+  - `TOKEN_INDEX_DIR` is not mentioned.
+
+  Their trigger, "the next INSTALL touch", has not fired. They stay carried. Rule 2 would bring an omission into the blocking test only if a sentence turned false, and none did.
+- **Lina's CLI rows, 6** (R3-3's in-terminal residual, R2-4, R1-1 / R1-2 (code), J-3 / K-5 (code), R1-5 (code), FR-2): their home is `.kiro/issues/2026-10-25-cli-per-command-help-and-one-parser.md`, which is at the root (Lina's owner line of 2026-10-25). Carried there.
+- **R2-8 / R3-12** (Lina, V-GEN): carried, unchanged.
+- **C-6** (Lina's home, `.kiro/issues/2026-10-13-src-path-convention-for-served-governance-docs.md`, at the root): carried.
+- **R1-8, FR-13, FR-14, R1-9** (Lina, V-OWN; R1-9 also in `.kiro/issues/2026-10-13-component-gaps-from-settings-ledger.md`, at the root): carried.
+- **R1-3 / R2-7 / K-4: finding, the home is gone.** Its home, `.kiro/issues/2026-10-02-docs-mcp-logs-dir-cwd-relative.md`, is in `archive/` while its Status still reads ACTIVE. The carried row has no live home. Routed to the release walk's owner-decides list. The fix owner is to be named at the docs MCP's next edit (mine: `mcp-server/src/**` is in my standing scope).
+- **Stale cell text, no state change**: the table cells for C-3 / BD-2 and C-4 still read "Carried". This record's own Class line says C-3 and C-4 were fixed by #412, and C-4's home is archived FIXED. The same holds for R1-14 / J-6, whose home `2026-10-15-123-cannot-tell-cells.md` is archived with its outcomes, and for PQ-1 and PQ-2, fixed at `a486dbbb5` (the steward line of 2026-10-25). The cells are history; the counts line governs.
+
+*Signed: Thurgood, 2026-11-01.*
+
