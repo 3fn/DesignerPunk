@@ -30,7 +30,7 @@
 
 *Signed: Thurgood, 2026-10-26.*
 
-**Outcome (2026-11-01, Thurgood)**: fixed #<N> — `governance/Test-Development-Standards.md`, under Peter's R11 line 10 ("Yes to both").
+**Outcome (2026-11-01, Thurgood)**: fixed #609 — `governance/Test-Development-Standards.md`, under Peter's R11 line 10 ("Yes to both").
 - **Four `<!-- example: generic -->` markers** on Example 1's hypothetical `Input-Text-Search` files (L1556, L1583, L1620, L1659). These are EXECUTION under ballot `2026-10-26-governance-examples-guard` § 2.3, each a conversion of a pending entry.
 - **L1902**: a CORRECTION. The comment no longer names a test file that does not exist; it says the test is an illustration and where the repo's contract tests live.
 - **L1884**: a CORRECTION, in Lina's read. The block now shows `src/components/core/Input-Text-Email/contracts.yaml`'s real contracts (`validation_email_format`, `interaction_email_autocomplete`, `excludes: state_disabled`) in the canonical format.
