@@ -487,6 +487,20 @@ Three vehicles carry everything that is law: **the RELEASE-FLOW batch ballot** (
 - **Vehicle**: the next correction of the owed-set sentences, or Spec 131's owed-set work if that comes first.
 - **Consult**: Stacy (raised it; owner of her lines); Thurgood (owner of his).
 
+## RS-65 — one committed lock makes every generator-input PR conflict with every other, so they merge one at a time (appended 2026-11-01)
+
+- **Source**: the orchestrator's observation at #578's merge (`6c3ab7d12`), carried by Thurgood, 2026-11-01. Filed under README rule 10.
+- **The instrument**: `canonical/generated.lock`, two hashes (`inputClosure`, `outputs`) that `tools/agent-generator/diff-guard.ts` compares and rewrites on a full run (`writeLock`, L298). The input closure covers every generator input root, `governance/` included.
+- **The gap**: every PR that touches an input root has to carry a lock refresh, and all of them edit the same two lines. When one merges, every other open one conflicts. Each owner merges `main` back in, takes main's lock, re-runs diff-guard and commits the refresh, and then the PRs merge one at a time. After #578, 11 open PRs (#595, #596, #603, #604, #606, #607, #608, #609, #610, #613, #614) needed that, and Peter merged them in a set order. The lock records no fact a PR's author decides, so a conflict on it is cost with no review value.
+- **Disposition (proposed)**: an instrument change, owned by me (diff-guard is in my write scope; Lina is consulted on the generator's shared core). Three class options, to choose between at drafting:
+  - (a) CI recomputes the lock at merge, or verifies it rather than requiring it committed;
+  - (b) one lock per input root, so only PRs on the same root conflict;
+  - (c) drop `inputClosure` from the committed file, and have diff-guard compute it at check time, keeping `outputs`.
+  Whether any of these touches law (Spec 122's design of the lock) is checked at drafting. If it does, it is LAW.
+- **Surviving counter**: the lock exists so that a stale generated output fails loudly in the PR that caused it. Each option moves that check later, to merge or to check time, or narrows it, to per root. The serial merge is also a free re-check: every PR is re-verified against the latest main before it lands.
+- **Vehicle**: Spec 131 (the governance-cost class), or a standalone instrument PR if 131's requirements round does not take it.
+- **Consult**: Lina (generator shared core); Stacy (signing chain, which reads the lock's neighbours).
+
 ## Finding (appended 2026-10-26): two publish rows have no `census` field
 
 - **Source**: Stacy's R1 on the batch ballot, S-5 ("Finding, never a gate"): neither `hermetic-publish-path` nor `publish-rail-guard` carries a `census` field (`governance/classification-map.md` L878–L915 at `61581c641`). The census rule's in-scope form runs the row's census mode, and the exempt form's ground (2) needs `census: none — <why>`; with neither, an in-scope item on either instrument has no lawful census line (ballot `2026-10-19-instrument-census-at-draft` § 2, F-3 (A): the owner builds the census mode before the first in-scope item on that instrument leaves DRAFT).
