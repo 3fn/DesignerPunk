@@ -47,7 +47,7 @@ units:
       - id: what-civitas-con-8
         kind: obligation
         label: "Product MCP: serves product-specific context from a consumer"
-        text: "Product MCP: serves product-specific context from a consumer's `product/` directory (built in Spec 081: 14 tools, shipped in the package as `dist/mcp/product-mcp.js`; see also specs 096, 097). This repository has no `product/` directory, so here it serves an empty product set."
+        text: "Product MCP: serves product-specific context from a consumer's `product/` directory (built in Spec 081 and extended by specs 096 and 097; shipped in the package as `dist/mcp/product-mcp.js`). This repository has no `product/` directory, so here it serves an empty product set. *(corrected 2026-11-01: \"built in Spec 081: 14 tools\" was false as history, since Spec 081 built 7, and the count is volatile; .kiro/issues/2026-10-27-civitas-overview-product-mcp-provenance-false.md; prior text at 465af3544)*"
       - id: what-civitas-con-9
         kind: obligation
         label: "3 system agents (Ada/Rosetta, Lina/Stemma, Thurgood/Civitas)"

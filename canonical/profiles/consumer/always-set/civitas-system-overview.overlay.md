@@ -9,7 +9,7 @@ Civitas is architecturally different from its siblings. Rosetta has a unified ar
 
 ---
 
-## @unit #what-civitas-contains @ sha256:8bd2b48ef0fb20b950c7c1dd0466f7a4c96154da800d5787bc142536fab4533f
+## @unit #what-civitas-contains @ sha256:26dec9564146b125fa59e735a6f16bb8729ecd63fcc89ea03a94fe5a68e73688
 ## What Civitas Contains
 
 **Identity documentation** (always loaded):
