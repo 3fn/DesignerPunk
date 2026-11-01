@@ -216,6 +216,15 @@ Cite R10 as `R10@<the squash of the PR that added it>`.
 - *His word*: "Yes, wait stands"
 - *What it rules*: no interim ballot during 16.2.0. The class (an owner has no standing write over the CORRECTIONs of the docs or charters it owns) stays routed to Spec 131's OWNERS row (map row 15). Lines 8, 10 and 11 are answered as per-instance lines. The instance count goes onto the OWNERS row's evidence: Spec 131's outline § 13, capture line 2.
 
+**Line 6 — ratify #573, the screen-spec idiom ballot (F-C.1 to F-C.3), as filed**, before 2026-11-01T15:05:00Z.
+- *Put to him*: "ratify `.kiro/docs/ballots/2026-10-30-screen-spec-idiom-per-node.md` as filed — each UI-tree node with a platform-idiom choice states it (follow, or part with a reason) in Integration Guide § "Writing Screen Specs"; the key sits on the node wherever it lives (departs from his R8 item-4 wording "a key in the existing ui-tree.<platform>: branch" because restating a shared node in a platform branch creates a second node — Leonardo's evidence, Kenya withdrew); Leonardo authors the application; F-gating. Alternatives named: send back for the branch form; hold for 131."
+- *His word*: "Ratify as filed"
+- *What it rules*:
+  - The ballot `2026-10-30-screen-spec-idiom-per-node.md` (#573) is ratified as filed, F-C.1 to F-C.3, so its Status becomes RATIFIED under the record-first protocol.
+  - The key sits on the node wherever it lives. That supersedes R8 item 4's "a key in the existing `ui-tree.<platform>:` branch" wording for this ballot.
+  - Leonardo authors the application, which is F-gating.
+- *Criterion 3* (no new ballots during 16.2.0 unless the release needs one): the ballot was filed 2026-10-30, before R9's brief existed, and is one of the three in flight that R9's re-plan let stand.
+
 *Further lines are appended as ruled.*
 
 Cite R11 as `R11@<the squash of the PR that added it>`, with the line number, e.g. `R11@<sha> line 2`.
