@@ -211,6 +211,11 @@ Cite R10 as `R10@<the squash of the PR that added it>`.
 - *His word*: "Re: line 4, yes"
 - *What it rules*: Lina authors those four sites in #578, under the F3 record (`2026-10-25-cdg-component-token-files-teaches-a-reference-map.md`). Thurgood's removal of the two line-998 `pending.json` entries rides the same PR (`361b4f344`).
 
+**Line 5 — the owned-doc and charter CORRECTION authorship class, "ballot now" or "wait"**, before 2026-11-01T15:01:50Z.
+- *Put to him*: "his 2026-10-30 "Wait and capture (possibly as an inbound)" carried the collective's condition "unless a fifth instance arrives"; the condition fired (about eleven instances incl. today's lines). Options: wait stands (answer lines 8/10/11 as lines; the instance count goes onto 131's OWNERS row as evidence) vs an interim small ballot now (barred by criterion 3 unless the release needs it; it does not)."
+- *His word*: "Yes, wait stands"
+- *What it rules*: no interim ballot during 16.2.0. The class (an owner has no standing write over the CORRECTIONs of the docs or charters it owns) stays routed to Spec 131's OWNERS row (map row 15). Lines 8, 10 and 11 are answered as per-instance lines. The instance count goes onto the OWNERS row's evidence: Spec 131's outline § 13, capture line 2.
+
 *Further lines are appended as ruled.*
 
 Cite R11 as `R11@<the squash of the PR that added it>`, with the line number, e.g. `R11@<sha> line 2`.

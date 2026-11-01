@@ -314,6 +314,21 @@ Requirements, design and tasks (the gates hold); restating the synthesis; the re
 8. `.kiro/hooks/RELEASE-FLOW.md` § 5a, L66–L78 (the owed-set record's item L1; mine).
 9. `canonical/agents/thurgood.md` L543 and L545, my own charter (the owed-set record's item L3).
 
+**Instance count, 2026-11-01** *(Thurgood; Peter's R11 line 5, "Yes, wait stands", `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` § "R11")*. These are the cases where an owner or the steward needed a one-off authority line from Peter to author a CORRECTION of a doc or charter it owns or maintains, because no seat holds standing write there:
+- **2026-10-25**: #472, Kenya's and Data's theming bullets, on Peter's direct words (the precedent).
+- **2026-10-29**: #563, the root `package.json` `prepublishOnly` message. An unowned path, granted to Ada (`.kiro/issues/archive/2026-10-29-root-package-json-prepublishonly-grant.md`; also in `inbound-from-2026-10-29-unowned-paths.md` (a)).
+- **2026-10-30, R8 item 2**: `canonical/agents/kenya.md` L182/L206 (Thurgood); `governance/platform-implementation-guidelines.md` L744–L774 (F1, Lina, #577); `governance/Component-Development-Guide.md` § "Component Token Files" (F3, Lina, #578).
+- **2026-11-01, R11 line 1**: `canonical/profiles/consumer/kenya.overlay.md` L145/L157 (Thurgood).
+- **R11 line 2**: `canonical/agents/stacy.md` L445/L449 and `stacy.overlay.md` L112/L116 (Thurgood).
+- **R11 line 3**: `governance/platform-implementation-guidelines.md` L730 (Lina).
+- **R11 line 4**: `governance/Component-Development-Guide.md` L490, L997–L1001, L1059–L1074, L1810 (Lina, #578).
+- **Pending when this line was written**:
+  - line 8: `design-language/design-philosophy.yaml` L53;
+  - line 10: `governance/Test-Development-Standards.md` L1556–L1902 and `.kiro/steering/Civitas-System-Overview.md` L39 (Thurgood);
+  - line 11: the 18 governance docs of Ada's token-name sweep, #595.
+
+That is **10 instances in eight days** (7 ruled, 3 pending), plus the four this section's list above already names that have no line yet (RELEASE-FLOW § 5a; `canonical/agents/thurgood.md` L543/L545; and the TDS and Civitas pair, which is line 10). Each instance cost Peter one line.
+
 This is the evidence for row 15 (OWNERS) and for § 4 (d), which exempts CORRECTION edits from the freeze. An exemption helps only if someone can author the CORRECTION. The list is written here rather than in a separate inbound, because R8's "possibly" leaves the form open. The collective's lean, to wait for this spec unless a fifth instance arrived first, was put to Peter when the count was four, and his answer was to wait. The count is now nine. Whether that reopens his answer is his call; this line does not reopen it.
 
 **Inputs from this release's walk** (the requirements round reads them):
