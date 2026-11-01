@@ -209,7 +209,7 @@ Cite R10 as `R10@<the squash of the PR that added it>`.
 - **Write scope**: "a seat's write scope moves only by a `canonical/agents/**` edit" (each charter's standing write scope). A chat line can name one-off authors and files, on the 2026-10-25 precedent, but cannot move standing scope.
 
 **The risk, stated** (collective round 1): the collective is one model in seven seats ("different knowledge, not different judgment", Spec 131's outline § 5), and a deferral decided under this line is agent-on-agent attestation. The guards:
-- each deferral carries a git-visible Trigger, firing no later than 16.3.0's S;
+- each deferral carries a git-visible Trigger, firing no later than 16.3.0's S; *(Scope, stated 2026-11-01, Thurgood, owner, on Ada's read: this guard binds deferrals by re-rule to a release, the fix-now rows. A row answered "spec" follows rule 11's spec clause instead, which Peter's R5 fork 1 ruled counts for 129's outline: the outline names the record, and its Trigger becomes the spec's `path:` (for example `path:.kiro/specs/129-consumer-generation-completeness/requirements.md`). That token is the spec answer's own firing. It has no 16.3.0 date, and its guard is rule 11's: if that spec's requirements leave the record out without a reason, it lapses and returns to Peter. So a spec row meets this bullet by its `path:` token, not by a 16.3.0 deadline.)*
 - a second lapse returns the record to Peter;
 - nothing floor-class or false in served text is deferred under it;
 - the walk record lists every row decided under it, for his read at the release PR.
