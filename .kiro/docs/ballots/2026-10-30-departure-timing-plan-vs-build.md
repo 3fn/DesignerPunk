@@ -132,9 +132,9 @@
 - **Under F-B (b)**: the notice is self-attested, and no read checks it.
 - **Either way**, Leonardo reads every `**Departures**:` line on a product unit in Cross-Platform Review before its PR is reported. That is his checklist's "intentional and documented" row, and needs no law.
 
-### Site 1a, corrected after the R4 reads (pending Peter's word, § 6)
+### Site 1a, corrected after the R4 reads (ratified, Peter, 2026-11-01, R11 line 9; § 6)
 
-The reads on the staged application (`a73ee5b49`) changed site 1a's two plan-kind sentences and one route phrase, which also appears in site 1b (THURGOOD R5). The corrected text, Lina's Final, is staged and not pushed. The ratified text above stays the law until Peter rules. Line numbers are at `a73ee5b49`.
+The reads on the staged application (`a73ee5b49`) changed site 1a's two plan-kind sentences and one route phrase, which also appears in site 1b (THURGOOD R5). The corrected text, Lina's Final, is staged and not pushed. Peter ratified the corrected text (R11 line 9), so it supersedes the site 1a sentences above. Line numbers are at `a73ee5b49`.
 
 **L138, the planning bullet's last sentence.** Superseded (ratified):
 
@@ -423,7 +423,9 @@ Peter ratified it as recommended (R8 item 4). The application PR's body repeats 
 
 *The question as it was put, kept as the record*: F-A — work with no plan artifact, or with a plan never approved. Recommended (Lina, Leonardo, the orchestrator; Thurgood concurs): in-repo work that executes no plan artifact (a `fix/` or `chore/` PR) is in development from its start, so its departures proceed with a `**Departures**:` line that Peter reads at his merge; and work whose plan exists but has no recorded approval (a consumer's screen spec with no lead's dated go) is still in planning, so a departure is asked first. The alternative (Stacy S2a): treat the no-plan PR itself as the plan, so a departure found in it is asked in that PR before merge. Pick the recommended pair, the alternative, or another.
 
-**Open for Peter**: #568's site 1a, L138/L139 corrected after the R4 reads (Ada's overlap, Lina's and Kenya's wording): the plan kind is read from the merged `tasks.md` row the work executes, or the PR's `Spec:` field — ratify the corrected text? The superseded and corrected sentences are in § 3, "Site 1a, corrected after the R4 reads", and the four reads and THURGOOD R5 are in § 8. *(Asked 2026-11-01, Thurgood.)*
+**Ruled** (Peter, 2026-11-01, chat, relayed by the orchestrator, received after 15:12:30Z, before the stamp in the orchestrator's rulings log, line 9's heading; `R11@<#605 squash> line 9`, placeholder until #605 merges), verbatim: *"Ratify the corrected text"*. This ratifies site 1a's corrected L138/L139 (Lina's Final, with Ada's anchor) and Kenya's "through the product's architect" at L138 and L181. The alternatives named were to decline, or to run another round. The corrected text in § 3, "Site 1a, corrected after the R4 reads", is now the law the application applies, and the superseded text is kept there as the record.
+
+*The question as it was put, kept as the record*: #568's site 1a, L138/L139 corrected after the R4 reads (Ada's overlap, Lina's and Kenya's wording): the plan kind is read from the merged `tasks.md` row the work executes, or the PR's `Spec:` field — ratify the corrected text? The superseded and corrected sentences are in § 3, "Site 1a, corrected after the R4 reads", and the four reads and THURGOOD R5 are in § 8. *(Asked 2026-11-01, Thurgood.)*
 
 *Surviving counter, beside the line* (Lina's Final, with Ada): `Spec: none` and "no row executed" are both author-asserted, so an author can still choose development and skip the ask. This is narrowed, not closed: a claims pass reads both against the diff, and every departure still carries its `**Departures**:` line to Peter's merge.
 
