@@ -156,11 +156,29 @@ Re-pointing "Peter" → "your human lead" carries the same obligation.
 ## `#trigger-types`
 
 signer: stacy
-date: 2026-10-22
+date: 2026-11-01
 row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#trigger-types` (re-pointed; ROUTED)
-canonicalHash: sha256:032199e154a7922469a7310d32e68bec6979556093fd8650420434b2a074b036
+canonicalHash: sha256:ec4843cd80bff21a728843a5dbd9357c5de00c83038082160ed4d283caf9d171
 renderedHash: sha256:da5352d42da3a81edb6708dfbbcf6d045da4e019d331e7a473c98729ce7e5f67
 verdict: assent — surviving 11/27; not surviving: `instruments-named`, `event-post-doc`, `liveness-release-complete`, `liveness-charter-walk`, `liveness-grant-activations`, `liveness-grant-activations-query`, `owed-set-roles`, `owed-set-predicate`, `owed-set-row-classes`, `owed-set-candidates-not-verdicts`, `owed-set-count-line`, `owed-set-unavailable`, `owed-set-unit-classes`, `owed-set-anchor-proxy`, `owed-set-wrong-result`, `register-read`
+
+**Re-signed 2026-11-01** (prior signature: assent — surviving 11/27; not surviving: `instruments-named`, `event-post-doc`, `liveness-release-complete`, `liveness-charter-walk`, `liveness-grant-activations`, `liveness-grant-activations-query`, `owed-set-roles`, `owed-set-predicate`, `owed-set-row-classes`, `owed-set-candidates-not-verdicts`, `owed-set-count-line`, `owed-set-unavailable`, `owed-set-unit-classes`, `owed-set-anchor-proxy`, `owed-set-wrong-result`, `register-read`, 2026-10-22, against canonical `sha256:032199e154a7922469a7310d32e68bec6979556093fd8650420434b2a074b036` and rendered `sha256:da5352d42da3a81edb6708dfbbcf6d045da4e019d331e7a473c98729ce7e5f67`; the rendered hash did not move). *(This re-does `c88281a13`, whose read claim was false. Erratum: `.kiro/issues/2026-11-01-stacy-c1-acts-read-claim-false.md`; re-cut under R11 line 18.)*
+- **Why it was stale**: the canonical unit moved. Thurgood's CORRECTION of L543 and L545 (`f88c5e868`; Peter's line 13, R11) made the owed-set paragraphs describe `scripts/owed-set.sh` as it behaves since #473. I re-confirmed the unit at 27 items at `01cbca54d`.
+- **Read before this act**: the three consumer renderings, read whole via `cat -n`, at `01cbca54d`, before this commit:
+  - `canonical/_consumer-output/_canonical/agents/thurgood.md` L304–L324;
+  - `canonical/_consumer-output/cc/.claude/agents/thurgood.md` L213–L233;
+  - `canonical/_consumer-output/kiro/.kiro/agents/thurgood-prompt.md` L187–L207.
+  - The three read identically.
+- **Judged against**: those renderings and the operative set at 27 items.
+  - The consumer unit is the instruments line, the three event triggers, the cadence items (health check, return edge, LIVENESS with two reads), and Discovery.
+  - LIVENESS read 1 runs "Stacy's owed-set query" and reads its output. It carries none of the steward paragraph's day clock, class rules or anchor, so the correction changes nothing a consumer reads.
+- **Hashes**:
+  - renderedHash `sha256:da5352d42da3a81edb6708dfbbcf6d045da4e019d331e7a473c98729ce7e5f67`, recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` (three pieces); it equals the prior value, and `git diff --quiet origin/main HEAD -- canonical/_consumer-output` is empty.
+  - canonicalHash `sha256:ec4843cd80bff21a728843a5dbd9357c5de00c83038082160ed4d283caf9d171`, recomputed independently; it equals the overlay pin and my confirmation.
+- **Removals re-judged against the moved body**: the row's 7 removals stand, and none sits in, or is narrowed by, the corrected paragraphs. The three verbatim ones still occur in the unit and in none of the renderings: the RELEASE-record sentence, the instrument list, and `.kiro/docs/civitas-health-checks/`.
+- **Verdict unchanged**: assent, surviving 11 of 27. The three re-quoted owed-set items were among the non-surviving before, as steward-only owed-set detail, and they still are.
+
+**Prior signature record (superseded, 2026-10-22)**: assent — surviving 11/27; not surviving: `instruments-named`, `event-post-doc`, `liveness-release-complete`, `liveness-charter-walk`, `liveness-grant-activations`, `liveness-grant-activations-query`, `owed-set-roles`, `owed-set-predicate`, `owed-set-row-classes`, `owed-set-candidates-not-verdicts`, `owed-set-count-line`, `owed-set-unavailable`, `owed-set-unit-classes`, `owed-set-anchor-proxy`, `owed-set-wrong-result`, `register-read`, against `sha256:032199e154a7922469a7310d32e68bec6979556093fd8650420434b2a074b036`, as below.
 
 **Re-signed 2026-10-22** (prior signature: assent 11/23, 2026-10-21, against canonical `sha256:c0eae177…` and rendered `sha256:da5352d4…`). Stale because the canonical unit changed: its owed-set paragraph now describes the committed script (LIVENESS read 1 names `bash scripts/owed-set.sh`; the pasted pipeline, the exclusion-classes paragraph and the ladder paragraph are replaced by the script contract; Thurgood, `1b51c1f87`, record `b7c32ae44`), and I re-confirmed the set at 27 items (`3c8c43a55`). The rendering did not change: renderedHash recomputed at this revision from a fresh temp-tree rendering of the worktree at `060894526` (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/tools-stacy/fresh-rendered-hash.ts`), equal to the committed rendering's value and to the prior signature's.
 - **Judged against**: the rendered unit at this revision and the operative set re-confirmed at 27 items.
