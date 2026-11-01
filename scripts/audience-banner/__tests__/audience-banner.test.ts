@@ -20,7 +20,14 @@
  *
  * The synthetic bite (a temp corpus: a matching doc without a banner is red, with one is
  * green) runs from 23.1 and is independent of the real corpus. Non-vacuity lives here, not in a
- * CI step: the matched set must be non-empty and must equal what `grep -lE` returns.
+ * CI step: the matched set must be non-empty and must equal what the predicate's printed command
+ * returns (v2: the `perl -0777` strip-then-match form; v1 was `grep -lE`).
+ *
+ * PREDICATE v2 (2026-10-30; ballot 2026-10-30-screen-spec-idiom-per-node, F-1 (α)): dated-pointer
+ * spans are taken out before the match. The drift test reads `POINTER_RE` from
+ * `scripts/completion-claims/edit-kind-pointers.ts` as TEXT (no import across the two tools) and
+ * asserts every span v2 strips begins with a match of it, so the two tools' idea of a pointer
+ * cannot part without a red test here.
  */
 
 import { execFileSync } from 'child_process';
@@ -31,7 +38,9 @@ import {
   BANNER_LABEL,
   BANNER_SUBJECTS,
   KNOWN_UNDER_INCLUSIONS,
+  POINTER_SPAN_SOURCE,
   PREDICATE_ERE,
+  PREDICATE_PERL_ARGS,
   PREDICATE_STRINGS,
   PREDICATE_VERSION,
   SCAN_SCOPE,
@@ -43,7 +52,9 @@ import {
   listGovernanceDocs,
   matchedDocs,
   matchesPredicate,
+  pointerSpans,
   renderBanner,
+  stripPointerSpans,
 } from '../predicate';
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..');
@@ -74,7 +85,8 @@ describe('the membership predicate (Ada\'s text, byte-exact)', () => {
     expect(PREDICATE_STRINGS).toEqual(['complete-task\\.sh', 'Peter merges', 'RATIFIED', 'ballot']);
     expect(PREDICATE_ERE).toBe('complete-task\\.sh|Peter merges|RATIFIED|ballot');
     expect(SCAN_SCOPE).toBe('governance/*.md');
-    expect(PREDICATE_VERSION).toBe(1);
+    expect(PREDICATE_VERSION).toBe(2);
+    expect(POINTER_SPAN_SOURCE).toBe('[*]\\((?:added|amended|moved|corrected) \\d{4}-\\d{2}-\\d{2}.*?\\)[*]');
   });
 
   it.each([
@@ -92,9 +104,18 @@ describe('the membership predicate (Ada\'s text, byte-exact)', () => {
     expect(matchesPredicate('')).toBe(false);
   });
 
-  it('reproduces `grep -lE` over governance/*.md exactly, and is non-vacuous', () => {
+  it('reproduces its printed `perl -0777` command over governance/*.md exactly, and is non-vacuous', () => {
     const docs = listGovernanceDocs(REPO_ROOT);
     expect(docs.length).toBeGreaterThan(0);
+    const out = execFileSync('perl', [...PREDICATE_PERL_ARGS, ...docs], { cwd: REPO_ROOT, encoding: 'utf8' });
+    const perlSet = out.split('\n').filter(Boolean).sort();
+    const mine = matchedDocs(REPO_ROOT);
+    expect(mine).toEqual(perlSet);
+    expect(mine.length).toBeGreaterThan(0);
+  });
+
+  it('matches a subset of v1 (`grep -lE` on the four strings): taking spans out only removes matches', () => {
+    const docs = listGovernanceDocs(REPO_ROOT);
     let out = '';
     try {
       out = execFileSync('grep', ['-lE', PREDICATE_ERE, ...docs], { cwd: REPO_ROOT, encoding: 'utf8' });
@@ -102,10 +123,44 @@ describe('the membership predicate (Ada\'s text, byte-exact)', () => {
       // grep exits 1 on "no file matched"; anything else is a real failure
       if ((e as { status?: number }).status !== 1) throw e;
     }
-    const grepSet = out.split('\n').filter(Boolean).sort();
-    const mine = matchedDocs(REPO_ROOT);
-    expect(mine).toEqual(grepSet);
-    expect(mine.length).toBeGreaterThan(0);
+    const v1 = new Set(out.split('\n').filter(Boolean));
+    expect(matchedDocs(REPO_ROOT).filter((d) => !v1.has(d))).toEqual([]);
+  });
+
+  it('prints in its header exactly the command the test runs (header and code cannot part)', () => {
+    const source = fs.readFileSync(path.join(__dirname, '..', 'predicate.ts'), 'utf8');
+    const printed = source.match(/^ \*     (perl .*)$/m);
+    expect(printed).not.toBeNull();
+    const built = `perl ${PREDICATE_PERL_ARGS[0]} ${PREDICATE_PERL_ARGS[1]} '${PREDICATE_PERL_ARGS[2]}' ${SCAN_SCOPE}`;
+    expect(printed![1]).toBe(built);
+  });
+
+  it('does not count a dated-pointer span, in any case of its verb (v2)', () => {
+    expect(matchesPredicate('text *(added 2026-10-30 by ballot 2026-10-30-x, site F-C.1)* text')).toBe(false);
+    expect(matchesPredicate('*(Amended 2026-10-25 by ballot 2026-10-25-x, item 1; prior text at `1eced6cd5`)*')).toBe(false);
+    expect(matchesPredicate('*(moved 2026-10-25 from Core Goals by ballot 2026-10-25-x, item 1; prior home `a.md` L1–2 at `1eced6cd5`.)*')).toBe(false);
+    expect(matchesPredicate('*(corrected 2026-10-29: the date; .kiro/issues/x.md; prior text at `abc`)*')).toBe(false);
+  });
+
+  it('still counts a ballot citation, which is not a pointer (README L31)', () => {
+    expect(matchesPredicate('a rule *(ballot 2026-10-17-standing-write-scope-six-roots)* here')).toBe(true);
+    expect(matchesPredicate('*(Ballot 2026-10-18-governance-edit-kinds.)*')).toBe(false); // the case of "ballot" is v1's: a capitalised Ballot never matched
+    expect(matchesPredicate('as ratified by ballot 2026-10-18-x')).toBe(true);
+  });
+
+  it('a span ends at the first )* on its line, so the body after it still counts', () => {
+    expect(matchesPredicate('*(added 2026-10-30 by ballot x, site 1)* then Peter merges it')).toBe(true);
+    expect(stripPointerSpans('a *(added 2026-10-30 by ballot x)* b *(ballot y)*')).toBe('a  b *(ballot y)*');
+  });
+
+  it('a pointer whose )* is on a later line is not a span, and its words count (one-line spans)', () => {
+    expect(pointerSpans('*(added 2026-10-30 by\nballot x, site 1)*')).toEqual([]);
+    expect(matchesPredicate('*(added 2026-10-30 by\nballot x, site 1)*')).toBe(true);
+  });
+
+  it('the fourth limit, as declared: free text inside a span is not read', () => {
+    // a corrected pointer's <what> is free text; authority written there is hidden from v2
+    expect(matchesPredicate('*(corrected 2026-10-29: Peter merges this now; .kiro/issues/x.md; prior text at `abc`)*')).toBe(false);
   });
 
   it('matches none of governance/Token-Family-*.md (Ada A5: 0 of the Token-Family docs)', () => {
@@ -117,6 +172,38 @@ describe('the membership predicate (Ada\'s text, byte-exact)', () => {
   it('scans only regular .md files directly under governance/ (the scope the glob names)', () => {
     const docs = listGovernanceDocs(REPO_ROOT);
     expect(docs.every((d) => /^governance\/[^/]+\.md$/.test(d))).toBe(true);
+  });
+});
+
+describe('drift: every span v2 strips is a pointer to edit-kind-pointers.ts (POINTER_RE, read as text)', () => {
+  const ekp = fs.readFileSync(path.join(REPO_ROOT, 'scripts', 'completion-claims', 'edit-kind-pointers.ts'), 'utf8');
+  const literal = ekp.match(/^export const POINTER_RE = \/(.+)\/([a-z]*);$/m);
+
+  it('finds POINTER_RE as a regex literal in edit-kind-pointers.ts', () => {
+    expect(literal).not.toBeNull();
+  });
+
+  const startsWithPointer = (span: string): boolean => {
+    const re = new RegExp(literal![1], literal![2]);
+    const m = re.exec(span);
+    return m !== null && m.index === 0;
+  };
+
+  it('every span in the real corpus begins with a POINTER_RE match, and the corpus has spans', () => {
+    const spans = listGovernanceDocs(REPO_ROOT).flatMap((rel) => pointerSpans(read(rel)));
+    expect(spans.length).toBeGreaterThan(0);
+    expect(spans.filter((s) => !startsWithPointer(s))).toEqual([]);
+  });
+
+  it.each([
+    ['*(added 2026-10-30 by ballot x, site 1)*'],
+    ['*(Amended 2026-10-25 by ballot x, item 1; prior text at `abc`)*'],
+    ['*(moved 2026-10-25 from Core Goals by ballot x, item 1; prior home `a.md` L1–2 at `abc`.)*'],
+    ['*(Corrected 2026-10-29: what; .kiro/issues/x.md; prior text at `abc`)*'],
+  ])('the four verbs, in either case: %s', (text) => {
+    const spans = pointerSpans(text);
+    expect(spans).toEqual([text]);
+    expect(startsWithPointer(spans[0])).toBe(true);
   });
 });
 
@@ -133,6 +220,7 @@ describe('the under-inclusion limit is declared in the convention\'s own text (R
     expect(source).toContain('NONE of them');
     expect(source).toContain('THE GUARD\'S CLAIM IS SCOPED TO THE PREDICATE');
     expect(source).toContain('a stewardship cadence');
+    expect(source).toContain('A FOURTH LIMIT, v2\'s own: text INSIDE a dated-pointer span is not read');
   });
 
   it('names the known under-inclusions in its header, and each really is unmatched', () => {
@@ -271,7 +359,7 @@ describe('the real corpus: predicate-match ⇒ banner-present', () => {
 
   it('reports the scoped line "N match; N carry" and never claims the corpus is bannered', () => {
     const report = formatReport(audit);
-    expect(report[0]).toMatch(/^audience-banner guard — predicate v1 coverage over governance\/\*\.md \(\d+ scanned\): \d+ match; \d+ carry$/);
+    expect(report[0]).toMatch(/^audience-banner guard — predicate v2 coverage over governance\/\*\.md \(\d+ scanned\): \d+ match; \d+ carry$/);
     expect(report.join('\n')).not.toMatch(/corpus is bannered|corpus is covered/i);
     expect(report.length).toBe(1 + audit.matched.length);
     expect(audit.matched.length).toBeGreaterThan(0);

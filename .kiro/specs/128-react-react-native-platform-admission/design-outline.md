@@ -24,6 +24,20 @@
 2. `docs/roadmap/2026-10-03-react-react-native-platform-admission-roadmap-update.md` — strategy altitude, where this arc sits relative to Spec 123.
 3. `.kiro/issues/2026-10-03-react-react-native-platform-admission-charter.md` — owner and named trigger.
 
+## Scope intake, 2026-11-01 (record only: it names records and settles no design) — Thurgood
+
+**Authority**: Peter's delegation, `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`, and his R10 fork 2 (a), "the rest are batch-routed where cheap" (`.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` § "R10"; its PR is open, and it is cited by SHA once merged). R5 fork 1 ("Re: 1, Yes. Be mindful of any inbound…") makes a record-only amendment naming records count.
+
+**What these share**: each record's own Trigger names this spec's requirements (`path:.kiro/specs/128-react-react-native-platform-admission/requirements.md`, or the G-4 charter's `path:.kiro/specs/128-*/requirements.md`), and this outline named none of them; one was named only in an inbound. **No Trigger changes.** The requirements round takes each in or leaves it out with a reason. Each line quotes the record's own title:
+
+  - `.kiro/issues/2026-10-21-component-indexer-contracts-cache-shadowing.md` (Lina; P3 improvement): "`ComponentIndexer` keys `contractsCache` by declared name, not provenance — a same-named component in a higher-ranked root replaces core contracts silently; correct for a fork, wrong for a Spec 128 story-3 adopter"
+  - `.kiro/issues/2026-10-21-figma-token-translator-flat-tolerance.md` (Ada; P2 obligation (guard)): "`TokenTranslator.matchDimension` applies one flat tolerance (`spacing ? 2 : 1`) to every non-color family — vacuous for `opacity`, latent for `lineHeight`, and the `letterSpacing` index is empty"
+  - `.kiro/issues/2026-10-30-g4-web-element-public-contract-charter.md` (Lina; P2 obligation (record)). **The gate, not a scope item**: G-4 is its own spec, and Peter's R8 item 5 ("Gate") rules that "128's React (web) binding design is not approved before G-4's design merges". 128's outline and its React Native half are not gated (the charter's own scope sentence). This row records the gate in 128's outline; G-4's charter holds its own intake. *(named until now only in an inbound)*
+
+**Only non-due records take this routing line** (Stacy's phase-1 state 2a). A record due at 16.2.0's S that is newly routed by a line cannot use it. It needs a state-4 re-rule under the delegation (r2.1), a close, or it lapses at S under rule 11.
+
+**Not here, by design**: `2026-10-20-web-element-api-and-form-participation.md` and `2026-10-26-form-needs-submit-action-fires-on-refused-semantic.md`. Their Triggers point at this spec's requirements, but they are G-4's (DLG sheet r2.1 row E and R8 item 5; walk record § "Decided under Peter's 2026-10-30 delegation"), and G-4's charter holds them.
+
 ## Dependencies
 
 - v15.0.0 tag; parity required-flip (gate).

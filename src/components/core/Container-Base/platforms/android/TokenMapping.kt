@@ -204,7 +204,7 @@ fun mapBorderToWidth(border: BorderValue): Dp {
  * Resolve border color from token name
  * 
  * Returns the color for the border based on the borderColor prop.
- * If borderColor is null, defaults to color.border.default.
+ * If borderColor is null, defaults to color.structure.border.
  * 
  * @param borderColor Optional border color token name
  * @return Compose Color for the border
@@ -213,22 +213,20 @@ fun mapBorderToWidth(border: BorderValue): Dp {
  * ```kotlin
  * resolveBorderColor("color.structure.border.subtle") // Returns colorBorderSubtle
  * resolveBorderColor(null) // Returns colorBorder (default)
- * resolveBorderColor("color.border.emphasis") // Returns colorBorderEmphasis
  * ```
  * 
  * @see Requirements 2.1, 2.2, 2.3 - Border color
  */
 fun resolveBorderColor(borderColor: String?, theme: DesignerPunkTheme): Color {
     if (borderColor.isNullOrEmpty()) {
-        // Default to color.border.default when not specified
+        // Default to color.structure.border when not specified
         return theme.color_structure_border
     }
     
     // Resolve the border color token
     return when (borderColor) {
-        "color.border.default" -> theme.color_structure_border
+        "color.structure.border" -> theme.color_structure_border
         "color.structure.border.subtle" -> theme.color_structure_border_subtle
-        "color.border.emphasis" -> theme.color_border_emphasis
         else -> theme.color_structure_border  // Fall back to default border color for unknown tokens
     }
 }
@@ -340,9 +338,8 @@ fun resolveColorToken(tokenName: String?, theme: DesignerPunkTheme): Color {
         
         // Border tokens (semantic)
         "color.border" -> theme.color_structure_border
-        "color.border.default" -> theme.color_structure_border
+        "color.structure.border" -> theme.color_structure_border
         "color.structure.border.subtle" -> theme.color_structure_border_subtle
-        "color.border.emphasis" -> theme.color_border_emphasis
         
         else -> theme.color_structure_canvas  // Default to canvas (white100)
     }

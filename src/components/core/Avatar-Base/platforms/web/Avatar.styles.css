@@ -242,7 +242,7 @@
  * The background-color is set to transparent in the shape variant section to prevent
  * a square background from showing behind the hexagon shape.
  * 
- * @see Requirements: 4.2 - Agent type uses color.avatar.agent token (applied via SVG fill)
+ * @see Requirements: 4.2 - Agent type uses color.identity.agent token (applied via SVG fill)
  */
 /* .avatar--agent background handled by SVG fill - see .avatar__hexagon-bg */
 
@@ -257,11 +257,11 @@
  * 
  * Size Range xs-xl:
  * - Border width: borderDefault (1px)
- * - Border color: color.avatar.border with opacity.heavy (48%)
+ * - Border color: color.structure.border with opacity.heavy (48%)
  * 
  * Size xxl:
  * - Border width: borderEmphasis (2px)
- * - Border color: color.contrast.onSurface with full opacity
+ * - Border color: color.contrast.onDark with full opacity
  * 
  * Note: Border opacity is applied using color-mix() to blend the border color
  * with transparent, achieving the opacity effect without affecting the entire element.
