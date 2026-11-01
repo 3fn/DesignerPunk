@@ -164,6 +164,29 @@ The brief's text:
 
 Cite R9 as `R9@<the squash of the PR that added it>`.
 
+### R10 — the two forks the Spec 131 session put to him: the R7/R8 rows count, and the reach (before 2026-11-01T13:42:54Z)
+
+*(Appended 2026-11-01, Thurgood, owner, rule 9. Peter answered the "Project state assessment" session's orchestrator (the Spec 131 thread), not this release's. This release's orchestrator relayed the words and the text put to him. Both are quoted here, because he answered by adopting a recommendation rather than restating it.)*
+
+**His words**, in chat, received before 2026-11-01T13:42:54Z (that orchestrator's `date -u` at receipt), verbatim:
+
+> "Proceed as you recommend"
+
+**The text put to him immediately before**, verbatim, the deciding parts:
+
+> Fork 1 — "do the R7/R8 rows count? (a) Yes, as an explicit exception to 'not a re-rule in place': rows you disposed of under R7/R8, with their trigger and second-lapse guard, count as a valid state for 16.2.0. … (b) No, the bullet stands as written: those rows must be fixed, closed or routed to a spec before 16.2.0 is clean."
+>
+> Fork 2 — "how far does it reach? (a) The 44 due rows each reach a state, the rest are batch-routed where cheap, and the record count is the measure. (b) All 141 root records reach a state."
+>
+> Recommendation: "(a) on both. Please answer fork 1 in terms of the bullet, for example 'R7/R8 rows are an exception to "not a re-rule in place",' so the records carry one reading, not two."
+
+**What it ruled.** *Reading (that orchestrator's, adopted here; flagged)*: his words adopt the recommendation, "(a) on both". He did not use the suggested exception wording himself.
+- **Fork 1 (a).** The rows disposed of under R7 and R8 are an exception to R9 item 1's "not a re-rule in place". With their Trigger and second-lapse guard, each counts as a valid state for 16.2.0. "R7/R8" in that session's terms means the dispositions ruled under DLG and R8 in this record, the collective's sheet r2.1, which the walk record's § "Decided under Peter's 2026-10-30 delegation" carries. Their re-rules go ahead in Stacy's form, before S, citing `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`, `R5@d34fc778…` or `R8@0184efb3fd7b2956677351fdf84899767a5ac74a` as each row names.
+- **Fork 2 (a).** The 44 due rows each reach a state. The other root records are batch-routed where cheap, and the root count is the measure (R9 item 1's last bullet).
+- **What it does not rule**: the routing form (in place or archived), the standing class, the P3 list, and "named spec". Those stay the collective's open questions to him.
+
+Cite R10 as `R10@<the squash of the PR that added it>`.
+
 ## Delegation
 
 **The words**: R7's second sentence, above.
@@ -186,7 +209,7 @@ Cite R9 as `R9@<the squash of the PR that added it>`.
 - **Write scope**: "a seat's write scope moves only by a `canonical/agents/**` edit" (each charter's standing write scope). A chat line can name one-off authors and files, on the 2026-10-25 precedent, but cannot move standing scope.
 
 **The risk, stated** (collective round 1): the collective is one model in seven seats ("different knowledge, not different judgment", Spec 131's outline § 5), and a deferral decided under this line is agent-on-agent attestation. The guards:
-- each deferral carries a git-visible Trigger, firing no later than 16.3.0's S;
+- each deferral carries a git-visible Trigger, firing no later than 16.3.0's S; *(Scope, stated 2026-11-01, Thurgood, owner, on Ada's read: this guard binds deferrals by re-rule to a release, the fix-now rows. A row answered "spec" follows rule 11's spec clause instead, which Peter's R5 fork 1 ruled counts for 129's outline: the outline names the record, and its Trigger becomes the spec's `path:` (for example `path:.kiro/specs/129-consumer-generation-completeness/requirements.md`). That token is the spec answer's own firing. It has no 16.3.0 date, and its guard is rule 11's: if that spec's requirements leave the record out without a reason, it lapses and returns to Peter. So a spec row meets this bullet by its `path:` token, not by a 16.3.0 deadline.)*
 - a second lapse returns the record to Peter;
 - nothing floor-class or false in served text is deferred under it;
 - the walk record lists every row decided under it, for his read at the release PR.

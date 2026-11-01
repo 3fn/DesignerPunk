@@ -72,13 +72,13 @@ export const tools = [
   {
     name: 'get_component_catalog',
     annotations: { readOnlyHint: true },
-    description: 'Get lightweight catalog of all components with name, type, family, purpose, and readiness. ~50 tokens per component.',
+    description: 'Get lightweight catalog of all components with name, type, family, purpose, and readiness. ~50 tokens per component. Readiness is per platform; `scaffold` means an implementation exists and no test file matched the platform\'s test pattern, so read `reviewed` and `hasImplementation` beside it.',
     inputSchema: { type: 'object' as const, properties: {} },
   },
   {
     name: 'get_component_summary',
     annotations: { readOnlyHint: true },
-    description: 'Get component summary: identity, contract categories, token count, annotations. ~200 tokens.',
+    description: 'Get component summary: identity, contract categories, token count, annotations. ~200 tokens. Readiness is per platform; `scaffold` means an implementation exists and no test file matched the platform\'s test pattern, so read `reviewed` and `hasImplementation` beside it.',
     inputSchema: {
       type: 'object' as const,
       properties: { name: { type: 'string', description: 'Component name (e.g., "Badge-Count-Base")' } },
@@ -88,7 +88,7 @@ export const tools = [
   {
     name: 'get_component_full',
     annotations: { readOnlyHint: true },
-    description: 'Get complete assembled metadata including all contracts, composition rules, and token relationships.',
+    description: 'Get complete assembled metadata including all contracts, composition rules, and token relationships. Readiness is per platform; `scaffold` means an implementation exists and no test file matched the platform\'s test pattern, so read `reviewed` and `hasImplementation` beside it.',
     inputSchema: {
       type: 'object' as const,
       properties: { name: { type: 'string', description: 'Component name' } },

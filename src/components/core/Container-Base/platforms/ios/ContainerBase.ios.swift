@@ -139,7 +139,7 @@ struct ContainerBase<Content: View>: View {
     /// Border width value
     let border: ContainerBaseBorderValue
     
-    /// Border color token name (defaults to color.border.default when nil)
+    /// Border color token name (defaults to color.structure.border when nil)
     let borderColor: Color?
     
     /// Border radius value
@@ -190,7 +190,7 @@ struct ContainerBase<Content: View>: View {
      * @param background Background color token name (default: nil)
      * @param shadow Shadow token name (default: nil)
      * @param border Border width (default: .none)
-     * @param borderColor Border color token name (default: nil, uses color.border.default)
+     * @param borderColor Border color token name (default: nil, uses color.structure.border)
      * @param borderRadius Border radius (default: .none)
      * @param opacity Opacity token name (default: nil)
      * @param layering Layering value for z-index (default: nil)
@@ -345,7 +345,7 @@ struct ContainerBase<Content: View>: View {
      * Border overlay view
      * 
      * Creates border overlay using border width and border color.
-     * Uses borderColor prop if provided, otherwise defaults to color.border.default.
+     * Uses borderColor prop if provided, otherwise defaults to color.structure.border.
      * Returns nil for .none border.
      * 
      * @see Requirements 2.1, 2.2, 2.3 - Border color
