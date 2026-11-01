@@ -35,6 +35,10 @@ The warning compares tags with the installed version, so it cannot tell whether 
 
 *(2026-10-27, Ada, rule 9, a pointer line with Lina's consent; it changes neither the Trigger nor the Class.)* **Rider for this record's fixing PR**: the sentence `For a theme-varying token, read the dark value from themeResolutions.dark (its modeValue; null for a composite override, whose parts are in primitiveReferences); resolvedValue is the base (light) resolution.` added to `get_token_details`' description in `application-mcp-server/src/index.ts`, with the tool-registry hash re-based in the same diff. Its merge closes `.kiro/issues/2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md` (Peter, 2026-10-27, on #533: "schedule in … where most optimally resolved"). **The rider does not hold this record's close**: this record still closes at its own fixing PR under its `release:next:phase-1`, whether or not the rider rides. *Signed: Ada, 2026-10-27.*
 
+## Lapse (2026-10-29)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.
+
 ## Outcome (2026-11-01)
 
 *(Lina, owner, rule 5.)* **Fixed** on branch `fix/application-mcp-stale-component-token-warning`, cut from `ca6e36f0e`. Disposition: fix-now by 16.3.0's S, sheet r2.1 under `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`.
