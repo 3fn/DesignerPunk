@@ -4,7 +4,7 @@
 **Drafted by**: Thurgood (ballots steward), who drafts the file. **Lina authors the measure** and owns both docs' substance (`lina-property-half-sites.md`). **The rule sentence is Sparky's**, verbatim (`collective-r3b-sparky.md`). Drafter's clock: 2026-10-30T17:53:01Z (`date -u`).
 **Status**: **RATIFIED (Peter, 2026-11-01)**, in full, chat, relayed by the orchestrator:
 - **Sparky's sentence in site 1** by R8 item 6 (`R8@0184efb3fd7b2956677351fdf84899767a5ac74a`, #570), received before 2026-10-30T17:23:42Z, verbatim *"Re: 6, Ratify"*. R8's own reading is that it "binds that sentence only", and the sentence is unchanged (Sparky R1, byte for byte).
-- **The rest** by R11 line 7 (`R11@<#605 squash> line 7`, placeholder until #605 merges), received 2026-11-01 before 15:06Z (the orchestrator's rulings log, line 7's heading, which gives the exact stamp), verbatim *"Ratify as filed"*.
+- **The rest** by R11 line 7 (`R11@5f22a8819532a1603b21ae8cde4753b7851597e8 line 7`, #605), received before 2026-11-01T15:06:17Z (R11 line 7's heading), verbatim *"Ratify as filed"*.
   - What was put to him: site 1's second paragraph (Lina's G-4 wording, no repo path); site 2 with `web: unmapped` and Leonardo's last sentence; site 2c; the conditional banners 1e and 2e; and the same-PR guard test and markers.
   - The alternatives named were to send `unmapped` back for a hand-kept exclusion list, or to hold it for G-4 and Spec 128. He took the first.
 **Authority**: R8 item 6 for Sparky's sentence, and R11 line 7 for the rest (the Status line above, which quotes both, with their bounds). The collective sheet is r2.1, § E.
@@ -209,7 +209,7 @@ No `.github/**` path is touched.
 
 **Recommendation**: ratify sites 1 and 2 as written, with 1e and 2e conditional on the guard's report at the base. Sequence the application after Ada's v2 (#580), but not past 16.3.0's prep.
 
-**Ruled** (Peter, 2026-11-01, `R11@<#605 squash> line 7`, *"Ratify as filed"*): #579 beyond Sparky's sentence, as filed. That covers site 1's second paragraph, site 2 with `web: unmapped` and Leonardo's last sentence, site 2c, the conditional banners 1e and 2e, and the same-PR guard test and markers.
+**Ruled** (Peter, 2026-11-01, `R11@5f22a8819532a1603b21ae8cde4753b7851597e8 line 7`, *"Ratify as filed"*): #579 beyond Sparky's sentence, as filed. That covers site 1's second paragraph, site 2 with `web: unmapped` and Leonardo's last sentence, site 2c, the conditional banners 1e and 2e, and the same-PR guard test and markers.
 
 *The question as it was put, kept as the record*: #579 beyond Sparky's sentence — R8 item 6 ("Re: 6, Ratify") binds the sentence only, by R8's own reading. Ratify the rest as filed? That is: site 1's second paragraph (Lina's wording, G-4 named without a repo path); site 2 with its third marker value `web: unmapped` (Lina R2, (b)) and Leonardo's last sentence; site 2c, the Component Schema Format callback correction; the conditional banners 1e and 2e (applied only where the guard's report at the base lists the doc MISSING); and the application's same-PR guard test and markers. Or name what to change.
 
