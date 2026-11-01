@@ -255,7 +255,11 @@ Cite R10 as `R10@<the squash of the PR that added it>`.
 - *What it rules*: Thurgood authors both, one-off, for these lines only. The merges stay Peter's. No standing write scope moves.
   - (a) is the six sites of `governance/Test-Development-Standards.md`: four `generic` markers (EXECUTION under ballot `2026-10-26-governance-examples-guard` § 2.3) and the L1902 and L1884 CORRECTIONs, with Lina consulted on L1884.
   - (b) is the L39 CORRECTION of `.kiro/steering/Civitas-System-Overview.md`.
-  - *Recorded after the answer*: Stacy's read arrived after it as a cost dissent; the ruling stands. Both PRs are F-gating, because both files ship. (a) is in `governance/`; (b) ships as an identity doc, though its consumer rendering never carried the count.
+  - *Recorded after the answer*: Stacy's read arrived after it.
+    - On the TDS examples: now. They owe no signing acts of hers, the text is false in a served doc, and the fix cuts guard-pending entries.
+    - On Civitas-System-Overview L39: at 16.3.0. No consumer reads the false count, the renderedHash does not move, and it costs her two acts. Her dissent on cost is on L39 only.
+    - Peter's "Yes to both" covers both, and the ruling stands.
+  - *Both PRs are F-gating*, because both files ship. The TDS examples are in `governance/`. The Civitas overview ships as an identity doc, though its consumer rendering never carried the count.
 
 *Further lines are appended as ruled.*
 
