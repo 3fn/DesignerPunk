@@ -35,6 +35,6 @@
 - **L1902**: a CORRECTION. The comment no longer names a test file that does not exist; it says the test is an illustration and where the repo's contract tests live.
 - **L1884**: a CORRECTION, in Lina's read. The block now shows `src/components/core/Input-Text-Email/contracts.yaml`'s real contracts (`validation_email_format`, `interaction_email_autocomplete`, `excludes: state_disabled`) in the canonical format.
 - The five pending entries homed here are deleted. The guard exits 0 with 64 pending.
-- **Not done here**: Example 4's Phase 3 (L1952–L1954 and L1962–L1964) still lists the old contract names. They are outside R11 line 10's L1556–L1902 range; see the PR body.
+- **Example 4's Phase 3** (L1952–L1954 and L1962–L1964 at the base): a CORRECTION to the real contract names, matching L1884, under Peter's widening of line 10 to L1964 ("Let's widen line 10 to L1964"). *(Updated 2026-11-01. Superseded, kept verbatim: "Not done here: Example 4's Phase 3 (L1952–L1954 and L1962–L1964) still lists the old contract names. They are outside R11 line 10's L1556–L1902 range; see the PR body.")*
 
 Archived in the same PR (rule 5).

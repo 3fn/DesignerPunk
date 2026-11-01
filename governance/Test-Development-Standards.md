@@ -1955,10 +1955,10 @@ import { ContractTestReporter } from '../stemma-system/contract-test-reporter';
 const reporter = new ContractTestReporter();
 
 // Run contract validation
+// *(corrected 2026-11-01: the contract names are Input-Text-Email's real ones in contracts.yaml, matching Phase 1; keyboard_type was never a contract, and state_disabled is excluded; .kiro/issues/2026-10-26-tds-workflow-examples-declare-files-that-do-not-exist.md; prior text at 465af3544)*
 const results = reporter.validateContracts('Input-Text-Email', [
-  'email_validation',
-  'email_autocomplete',
-  'keyboard_type'
+  'validation_email_format',
+  'interaction_email_autocomplete'
 ]);
 
 // Generate report
@@ -1966,9 +1966,9 @@ console.log(reporter.generateReport());
 // Output:
 // Input-Text-Email Contract Validation
 // =====================================
-// ✅ email_validation: PASS (web, ios, android)
-// ✅ email_autocomplete: PASS (web, ios, android)
-// ✅ keyboard_type: PASS (ios, android) - N/A for web
+// ✅ validation_email_format: PASS (web, ios, android)
+// ✅ interaction_email_autocomplete: PASS (web, ios, android)
+// ⊘ state_disabled: excluded (contracts.yaml `excludes`)
 ```
 
 ---
