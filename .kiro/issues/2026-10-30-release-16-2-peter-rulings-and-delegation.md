@@ -233,6 +233,14 @@ Cite R10 as `R10@<the squash of the PR that added it>`.
   - Lina authors the application, which is F-gating.
 - *Criterion 3*: the ballot was filed 2026-10-30, before R9's brief, and is in flight under R9's re-plan, as #573 is.
 
+**Line 8 — `design-language/design-philosophy.yaml` L53**, before 2026-11-01T15:12:30Z.
+- *Put to him* (Thurgood's draft line): "Yes: Leonardo authors `design-language/design-philosophy.yaml` L53, the Native-Behavior Rule's constraint, replacing that line with ballot 2026-10-30-departure-timing-plan-vs-build § 3 site 2's After byte for byte, as one commit on `chore/apply-ballot-departure-timing` before it merges. One-off, this file and line only; it moves no standing write scope." Alternatives named: its own PR after the application merges; leave the site out (framework and served philosophy would disagree until 131).
+- *His word*: "Yes, on the application branch"
+- *What it rules*:
+  - Leonardo has one-off authorship of that file and line.
+  - It is one commit, on the application branch of ballot `2026-10-30-departure-timing-plan-vs-build` (#568), before that PR merges. The application PR carries it.
+  - The new text is § 3 site 2's After, byte for byte. No standing write scope moves.
+
 *Further lines are appended as ruled.*
 
 Cite R11 as `R11@<the squash of the PR that added it>`, with the line number, e.g. `R11@<sha> line 2`.
