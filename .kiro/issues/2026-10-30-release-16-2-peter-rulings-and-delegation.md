@@ -94,6 +94,37 @@ Item 10 (drops) was "none proposed", so nothing was asked and nothing was answer
    - #460 has open forks (F-1 to F-4) and Stacy's R1 owed. Its forks go to him as forks; this "Ratify" does not pick them.
    - A text that changes after his word, or a fork found at review, goes back to him.
 
+### R9 — the release's definition of done (before 2026-10-30T18:52:50Z)
+
+*(Appended 2026-11-01, Thurgood, owner, rule 9. Peter's words reached the "Project state assessment" session's orchestrator, in the Spec 131 thread, not this release's orchestrator. They are quoted as that thread's brief carries them, `16-2-definition-of-done-brief.md`, a session file, not committed. This section is their committed form.)*
+
+**His aim**, his words, dated 2026-10-30 in the brief. The brief records no separate receipt time for it:
+
+> "1. get through these last PRs and obnoxiously many-small issues to get to a stable, clean 16.2.0; and defer as many as optimal to either planned or new future specs. 2. Update 128, 129, 130, and 131 with the changes from the latest releases while still aiming to achieve those goals of thinning the governance volume under the conditions we outlined, removing layers, etc. I felt it was important to have as clean, functional project state as possible going into that more formally so that we were making decisions based on facts rather than claims."
+
+**The ruling**, received before 2026-10-30T18:52:50Z (that orchestrator's `date -u` at receipt):
+
+> "Yes, please"
+
+He was answering this offer: *"I can turn criteria 1 and 3 into a short brief for the 16.2.0 release work, so it carries them as its definition of done."*
+
+**What it ruled**, as the brief states it (the brief is that orchestrator's text; his "Yes, please" adopts it):
+- **16.2.0's definition of done, four exit criteria:**
+  1. P0 and P1 product defects are fixed, or disclosed in the notes by record path.
+  2. Every root `.kiro/issues/` record is fixed, closed, or routed to a named spec. Re-ruling in place or re-triggering to the next release is not a state, except for named release-blocking records.
+  3. No new ballots during 16.2.0 unless the release needs one, saying why in one line; standards implications go to the RS queue for Spec 131.
+  4. The root count at S is below the count at the walk's start, with both stated in the walk record.
+- **Native stays a claim**: "reference source, not compile-verified" (#453's form).
+- **One generated baseline record at S**: `.kiro/specs/131-governance-simplification/evidence/<date>-baseline-16.2.0.md`, with its figures at `38f4ece47` beside them.
+- The brief states its own limits: "The four criteria are Peter's definition of done for this release, recorded as his ruling. They are not standing law." Whether any of it becomes standing practice is Spec 131's question.
+
+**Where R9 meets earlier rulings**: it is later than R8. Where they meet, R9 is his later word.
+- The delegation's "fix-now by 16.3.0's S" vehicle (§ "Delegation"; the walk record's delegation table) is superseded for every record that is not release-blocking. Each is fixed before S, or routed.
+- R5 item 2, steward-verb "Fix now", and R8 item 9's "Ratify" do not conflict with R9. "Now" means before S.
+- *Reading (mine, flagged)*: R9 adds no new mechanism. The routing form (a routed record archived with a dated outcome line naming the spec's intake) is the collective's working assumption, put back to Peter with the sheet r3.
+
+Cite R9 as `R9@<the squash of the PR that added it>`.
+
 ## Delegation
 
 **The words**: R7's second sentence, above.
