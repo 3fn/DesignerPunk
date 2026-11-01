@@ -260,6 +260,10 @@ Cite R10 as `R10@<the squash of the PR that added it>`.
     - On Civitas-System-Overview L39: at 16.3.0. No consumer reads the false count, the renderedHash does not move, and it costs her two acts. Her dissent on cost is on L39 only.
     - Peter's "Yes to both" covers both, and the ruling stands.
   - *Both PRs are F-gating*, because both files ship. The TDS examples are in `governance/`. The Civitas overview ships as an identity doc, though its consumer rendering never carried the count.
+- *Sub-item, 2026-11-01: the TDS range widened to L1964*, before 2026-11-01T15:33:01Z.
+  - *Put to him*: "#609's L1884 correction left Example 4's phase 3 (L1952–L1954, L1962–L1964) listing the old made-up contract names, contradicting the corrected block; outside line 10's L1556–L1902. Options (Thurgood's): widen line 10 to L1964 (one more commit on #609, same record, three lines; his lean) or a 16.3.0 record."
+  - *His word*: "Let's widen line 10 to L1964"
+  - *What it rules*: line 10 (a)'s range is now `governance/Test-Development-Standards.md` L1556–L1964. That brings in Example 4's Phase 3 (L1952–L1954 and L1962–L1964 at the base), corrected to Input-Text-Email's real contract names in #609.
 
 **Line 11 — Ada's authorship of the 18 governance docs in #595**, before 2026-11-01T15:21:15Z.
 - *Put to him*: "(A) one line naming Ada as author of the 18 `governance/` files listed in #595's body, CORRECTIONs and markers, one-off, merge Peter's (Ada's ask; Thurgood's read agrees); (B) his word that the walk record's "Ada · sweep PR" row under the delegation suffices (Ada's alternative; weak — the delegation excludes write scope); hold for 131. Also: `governance/a-vision-of-the-future.md` is his own voice (Thurgood's read; no charter owner) — Ada's two corrections stay or he makes them himself."
