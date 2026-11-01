@@ -26,6 +26,10 @@ This is a P2 `(guard)`, so under rule 11 the first lapse goes to Peter with exac
 
 The Trigger line above is re-ruled to the fix-now shape (`release:next:phase-1`, a git-visible event no later than the next release's S) so the record is not left on an unfireable token; Peter's pick may re-rule it again.
 
+## Lapse (2026-10-29)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.
+
 *(2026-11-01, Lina, owner, rules 9 and 11: Trigger re-ruled as above. The superseded Trigger line, verbatim:)*
 
 > **Trigger**: `release:next:phase-1` — the pattern extension (the fix shape below) merges, or the next release's walk reads it as fixed, waived in writing, or blocking. Spec 129's native onboarding is the latest the consumer-facing claim can wait. *(Re-ruled 2026-10-25, Lina, owner, rule 11, after the lapse below: the old `path:` token named a file, not the event; any edit to `ComponentIndexer.ts` fires it, and #471's edit was unrelated. A P2 that would ride another change takes the release token, ballot 2026-10-22-trigger-names-the-event-not-the-vehicle. Was: `path:application-mcp-server/src/indexer/ComponentIndexer.ts` — Lina's next Application-MCP session, where the patterns are extended; and before any consumer-facing claim that native readiness is meaningful (Spec 129's native onboarding at the latest).)*

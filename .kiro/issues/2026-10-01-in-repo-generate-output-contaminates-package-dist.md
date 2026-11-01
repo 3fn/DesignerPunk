@@ -350,3 +350,7 @@ These add to rows (a)–(f) above.
 **Trigger re-rule: yes** (header line above). The honest cost: a `path:` token on a file Spec 129 will edit would fire this record again at each unrelated edit, and a P2 guard's first lapse goes to Peter (rule 11), so the token made unrelated edits produce an escalation for a condition that had not occurred. What `release:next:phase-1` costs instead: at the release-5 phase-1 firing this record closes (build (g)) or lapses to Peter. That is a real deadline on a deferred guard, and I accept it; the surviving counter-argument is that a release deadline is as much a vehicle guess as the path token was. Peter may prefer a different event; the fork is `drop` of row (g) as adequately covered by the proxy, versus the deadline.
 
 *Signed: Ada, 2026-10-23.*
+
+## Lapse (2026-10-29)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.
