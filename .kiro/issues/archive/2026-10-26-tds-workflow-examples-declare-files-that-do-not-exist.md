@@ -29,3 +29,12 @@
 - **Surviving counter-argument**: four `generic` markers raise the K count by four on hypotheticals. A rewrite to `<Component>` placeholders would read as plainly generic with no marker. It costs more prose churn in a worked example that reads better with a concrete name. The marker is the cheaper honest option.
 
 *Signed: Thurgood, 2026-10-26.*
+
+**Outcome (2026-11-01, Thurgood)**: fixed #<N> — `governance/Test-Development-Standards.md`, under Peter's R11 line 10 ("Yes to both").
+- **Four `<!-- example: generic -->` markers** on Example 1's hypothetical `Input-Text-Search` files (L1556, L1583, L1620, L1659). These are EXECUTION under ballot `2026-10-26-governance-examples-guard` § 2.3, each a conversion of a pending entry.
+- **L1902**: a CORRECTION. The comment no longer names a test file that does not exist; it says the test is an illustration and where the repo's contract tests live.
+- **L1884**: a CORRECTION, in Lina's read. The block now shows `src/components/core/Input-Text-Email/contracts.yaml`'s real contracts (`validation_email_format`, `interaction_email_autocomplete`, `excludes: state_disabled`) in the canonical format.
+- The five pending entries homed here are deleted. The guard exits 0 with 64 pending.
+- **Not done here**: Example 4's Phase 3 (L1952–L1954 and L1962–L1964) still lists the old contract names. They are outside R11 line 10's L1556–L1902 range; see the PR body.
+
+Archived in the same PR (rule 5).
