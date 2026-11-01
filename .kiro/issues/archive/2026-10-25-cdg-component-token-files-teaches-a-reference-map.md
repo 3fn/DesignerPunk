@@ -61,3 +61,47 @@ What stays open here is unchanged: the § "Component Token Files" rewrite and th
 *(CORRECTION 2026-10-26, Lina, rule 9, append-only; the text above stays as written.)* L15 (§ "What is wrong", item 1) says "All seven call `defineComponentTokens()` and export the branded result." That claim is false. **Six of the seven call it.** `Badge-Count-Notification/tokens.ts` has no call: its two matches for the string are comments (L14 and L38), and it exports a plain colour-reference map, `BadgeNotificationColorTokens`. My grep of the seven files matched the comments and I read the matches as calls. Truth: `git grep -n 'defineComponentTokens(' src/components/core/*/tokens.ts src/components/core/*/*.tokens.ts` at `bdbe72a32` matches in six files (`avatar.tokens.ts`, `Badge-Label-Base/tokens.ts`, `buttonIcon.tokens.ts`, `Button-VerticalList-Item.tokens.ts`, `checkbox-sizing.tokens.ts`, `radio-sizing.tokens.ts`); the seventh file's matches are comment lines. Nothing else in the record changes: the section is still wrong about what a component token file is, and the six real files are the pattern. The seventh file is filed in `.kiro/issues/2026-10-26-badge-count-notification-tokens-file-misnamed.md` (it matches the loader's `isTokenFileName` by name and draws the harvest-zero warning). One effect on this record's own text: the "two are `tokens.ts`" count in the same item is still right by name (`Badge-Label-Base`, `Badge-Count-Notification`), but only one of the two is a token file by content.
 
 *Signed: Lina, 2026-10-26.*
+
+## Progress (2026-10-30, Lina, owner, rule 9): the authorized sites are corrected; five same-class sites remain outside the authority line
+
+**What changed.** Applied as CORRECTION on branch `fix/cdg-component-token-files-section`, cut from `d34fc7786`. The truth referents are `src/components/core/Button-Icon/buttonIcon.tokens.ts` L55–L72 and `src/build/tokens/defineComponentTokens.ts`, with the loader's name rule in `src/cli/loadComponentTokens.ts` `isTokenFileName`.
+
+**Authority.** Peter, chat, relayed by the orchestrator, before 2026-10-30T17:23:42Z: "Re: 2, Yes". It answers the authority line naming Lina as author of § "Component Token Files" plus its two adjacent sites, recorded as R8 in `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md`. The two adjacent sites, as named in the escalation package the line was drawn from, are the reading-list line at L54 and § "❌ Platform-Specific Values in tokens.ts".
+
+- **§ "Component Token Files"** (L568–L690 at `d34fc7786`):
+  - "Purpose of tokens.ts" is rewritten as "What a component token file is": a file that declares the component's own tokens with `defineComponentTokens()`, present only when Step 4 ended in a component token. It does not list consumption; that is the schema's job.
+  - The example is the real Button-Icon file.
+  - The Key Point and the closing line of "Don't Fit" now say what the file declares.
+  - The Button-CTA platform examples stay, labelled as a component with no token file.
+- **L54**: "(platform-agnostic token references)" now reads "(a component's own tokens, when it has any)".
+- **§ "❌ Platform-Specific Values in tokens.ts"**: the DO block now shows a `defineComponentTokens()` declaration instead of a string map.
+- **Not changed**: the two ownership-tree lines in `rosetta-system-principles.md` (Ada's) and `stemma-system-principles.md`. They are not in the authority line.
+
+**Still false, same class, outside the authority line** (lines at `d34fc7786`):
+- L490, `**tokens.ts**: Component-level token references (platform-agnostic)`.
+- § "Cross-Platform Token Consumption" step 1, L997–L1001: "Component defines token references" over a `// tokens.ts` string. This is the second instance in this record's 2026-10-26 append.
+- § "Token Reference Format", L1059–L1074: "In component tokens.ts, use dot notation". Dot-notation names belong in the schema's `tokens:` lists; a component token file references the primitive's object.
+- L1810, checklist "Component tokens.ts is platform-agnostic (token references, not values)".
+- (L474's tree comment, "Component-level tokens (if needed)", is true and stays.)
+
+The orchestrator asks Peter to widen the authority line to these four sites. Their After text is drafted (`lina-f3-widened-sites.md`, session scratch). **This record stays open until they land**, in this PR if the line is widened, or else re-ruled with a dated reason.
+
+**A guard dependency.** The governance-examples guard's two pending entries for `ButtonCTA/tokens.ts` (L577) go stale with this correction, and the guard fails until they are removed from `scripts/governance-examples/pending.json` (Thurgood's instrument). Fixing step 1 at L997–L1001 retires the other two entries homed here (`tokens.ts`, L998).
+
+*Signed: Lina, 2026-10-30.*
+
+## Outcome (2026-11-01)
+
+*(Lina, owner, rule 5.)* **Fixed by CORRECTION** on branch `fix/cdg-component-token-files-section`, #578. **Every site of the reference-map teaching in the guide is corrected.** The truth referents are `src/components/core/Button-Icon/buttonIcon.tokens.ts`, `src/build/tokens/defineComponentTokens.ts`, the loader's `isTokenFileName` (`src/cli/loadComponentTokens.ts`), and the schemas' `tokens:` lists (`Button-CTA.schema.yaml`). Line numbers are at the branch head `361b4f344`:
+
+1. **§ "Component Token Files"** (L568–L689): "What a component token file is", taken from the real Button-Icon file; consumption is the schema's job and the platform files'. Commit `c5cf351b9`. Authority: Peter's "Re: 2, Yes" (R8 item 2).
+2. **L54**, the reading-list line. Commit `c5cf351b9`, same authority.
+3. **§ "❌ Platform-Specific Values in tokens.ts"** (L1680–L1700): the DO block declares with `defineComponentTokens()`. Commit `c5cf351b9`, same authority.
+4. **L490**, the Directory Purpose line. Commit `93444d6f7`.
+5. **L994**, § "Cross-Platform Token Consumption" step 1 (this record's second instance). The `// tokens.ts` string map is removed. Commit `93444d6f7`.
+6. **L1054–L1068**, § "Token Reference Format": dot-notation names belong in the schema's `tokens:` lists, and a component token file references the primitive's object. Commit `93444d6f7`.
+7. **L1811**, the checklist line. Commit `93444d6f7`.
+
+- **Authority for items 4–7**: Peter's line 4, chat, received before the `date -u` bound in the orchestrator's rulings log (2026-11-01): "Re: line 4, yes".
+- **The guard**: the four governance-examples pending entries homed here are deleted by Thurgood, as the guard required once the strings left the doc. The L577 `ButtonCTA/tokens.ts` declared-path and shape entries went in `6f27b718f`; the L998 `tokens.ts` declared-path and shape entries went in `361b4f344`. The guard exits 0 with 65 pending.
+- **Not here**: the two ownership-tree lines in `rosetta-system-principles.md` (Ada's) and `stemma-system-principles.md`, which use the bare `tokens.ts` name. The Fix shape named them "to be read in the same PR, not decided here". Their `Component Token Files (tokens.ts)` labels name a file both loaders accept, so they misdescribe nothing.
