@@ -288,7 +288,7 @@ error_state_validation_checklist:
     
   outcome_validation:
     - [ ] Error message text is displayed
-    - [ ] Error styling uses color.error tokens
+    - [ ] Error styling uses color.feedback.error.* tokens
     - [ ] Error icon uses correct icon
     - [ ] Error state is visually distinct from success
     
@@ -303,6 +303,7 @@ error_state_validation_checklist:
     - [ ] iOS: VoiceOver announces error
     - [ ] Android: TalkBack announces error
 ```
+*(corrected 2026-11-01: the error-styling item names the `color.feedback.error.*` tokens the token index holds; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 ### Disabled State Exclusion Guard Validation
 

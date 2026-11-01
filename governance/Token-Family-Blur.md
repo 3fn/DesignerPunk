@@ -108,7 +108,7 @@ Surface blur is used for translucent surface treatments — frosted glass backgr
 ## History
 
 This family was created in Spec 089 by unifying two previously separate families:
-- **Shadow blur** (base 4, quality-based naming): `shadowBlurHard`=4, `shadowBlurModerate`=12, `shadowBlurSoft`=20, `shadowBlurDepth200`=16, `shadowBlurDepth300`=24
-- **Glow blur** (base 8, numeric naming): `glowBlur100`=8, `glowBlur200`=16, `glowBlur300`=24, `glowBlur400`=32, `glowBlur500`=40
+- **Shadow blur** (base 4, quality-based naming): `shadowBlurHard`=4, `shadowBlurModerate`=12, `shadowBlurSoft`=20, `shadowBlurDepth200`<!-- example: generic -->=16, `shadowBlurDepth300`<!-- example: generic -->=24
+- **Glow blur** (base 8, numeric naming): `glowBlur100`<!-- example: generic -->=8, `glowBlur200`<!-- example: generic -->=16, `glowBlur300`<!-- example: generic -->=24, `glowBlur400`<!-- example: generic -->=32, `glowBlur500`<!-- example: generic -->=40
 
 The unification was motivated by Spec 088 (Nav-Header-Base) needing a third blur context (surface blur). Rather than adding a third disconnected family, all blur values were consolidated into a single base-16 scale. Zero visual change — all existing shadow and glow effects resolve to identical numeric values.

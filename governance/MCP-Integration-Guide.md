@@ -234,7 +234,7 @@ console.log(space200?.$type);        // → "dimension"
 
 // Semantic color token (alias)
 const successText = getToken(dtcgTokens, 'semanticColor.color.feedback.success.text');
-console.log(successText?.$value);    // → "{color.green400}"
+console.log(successText?.$value);    // → "{color.green500}"
 
 // Shadow composite token
 const containerShadow = getToken(dtcgTokens, 'shadow.container');
@@ -246,6 +246,7 @@ const bodyMd = getToken(dtcgTokens, 'typography.bodyMd');
 console.log(bodyMd?.$value);
 // → { fontFamily: "{fontFamily.fontFamilyBody}", fontSize: "{fontSize.fontSize100}", ... }
 ```
+*(corrected 2026-11-01: the success-text alias is the generated DTCG value, `{color.green500}` (the token index maps `color.feedback.success.text` to `green500`); `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 ### Querying a Group
 

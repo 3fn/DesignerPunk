@@ -101,3 +101,16 @@ The same commit fixes `governance/Rosetta-System-Architecture.md` L481. It adds 
 - **Fallback**: the next release's phase 1. If the ballot is undrafted when phase 1 runs, the record lapses at that phase 1 under rule 11, and the walk reports it. Until the amendment is ratified, the register row is the truth about what is armed and the ballot's § 8.8 bytes are a known difference from it, named in the row's history line of 2026-10-26.
 
 *Signed: Thurgood, 2026-10-26.*
+
+## Outcome (2026-11-01, Ada, owner)
+
+**Item A is fixed on branch `fix/token-docs-name-sweep`, cut from `origin/main` `ca6e36f0e`, in the commit that adds this section.** The PR is not open as I write this, so its number is not recorded here. If the PR does not merge, this section does not land either.
+- **The 60 pending entries homed here are removed** from `scripts/governance-examples/pending.json`: 56 token-name, 2 declared-path, 2 import. The guard then reads 9 pending, none homed here, exit 0. Each string is fixed or marked:
+  - **Corrections** (CORRECTION; truth `token-index/`, `package.json` `exports`, the generated `dist/` outputs, or the scripts that exist), each with a dated `corrected` pointer: `Token-Semantic-Structure.md`, `Token-Resolution-Patterns.md`, `Rosetta-System-Architecture.md`, `Transformer-Development-Guide.md`, `Token-Family-Layering.md`, `Token-Family-Blend.md`, `Product-Token-Governance.md`, `MCP-Relationship-Model.md`, `Test-Behavioral-Contract-Validation.md`.
+  - **Markers** (`<!-- example: generic -->`; EXECUTION, ballot 2026-10-26-governance-examples-guard § 2.3), each a conversion of a pending entry: `Token-Family-Blur.md` (7), `Token-Family-Spacing.md` (3), `Token-Family-Shadow.md` (1), `Token-Governance.md` (2 fences, 3 strings), `DTCG-Integration-Guide.md` (3), `Layout-Specification-Vocabulary.md` (1), `Component-Family-Container.md` (2), and the hypothetical resolver sketch in `Token-Resolution-Patterns.md` (1 fence).
+- **Outside the predicate, fixed by hand**: `a-vision-of-the-future.md` L213 and L418 (the prose names), `Token-Semantic-Structure.md`'s dot-notation pattern line, `Token-Resolution-Patterns.md`'s `DesignTokens.color.primary` (the sketch now reads web custom properties and is labelled hypothetical), `MCP-Integration-Guide.md`'s success-text alias (`{color.green500}`, the generated DTCG value), and `Token-Family-Layering.md`'s second `zIndexTokens` use.
+- **Also corrected while there**: in `Token-Resolution-Patterns.md`, the section's premise. The flexible types are generated (`scripts/generate-token-types.ts` → `src/types/generated/TokenTypes.ts`) and Container-Base uses them. In `Rosetta-System-Architecture.md`'s layer diagram, the component-token location and examples (`src/components/core/<Component>/*.tokens.ts`; `buttonicon.inset.*`, `avatar.size.*`).
+- **Item B** (Lina's 24 component README lines) is not in this PR. It stays hers, as § "What is owed" says.
+- **Not mine to fix, routed earlier**: `platform-implementation-guidelines.md` L145, L156, L310, L321 (for Lina; § "Corrections and the vetted list", item 2).
+
+Closed under rule 5. The record stays at the root through this PR, because #585 re-rules its Trigger line and #565 appends to it. It is archived at the next walk.
