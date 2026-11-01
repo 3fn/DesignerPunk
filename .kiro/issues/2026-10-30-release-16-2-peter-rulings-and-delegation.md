@@ -338,9 +338,51 @@ Cite R10 as `R10@<the squash of the PR that added it>`.
   - The three cases put to him are Stacy's `2026-10-15-123-125b-u3-re-attestation.md` (125-B U3), 115 Phase B's record and the contrast adjudication queue. Each routes once its spec's outline or tasks name it. The naming is checked per record.
   - *Reading, not his word*: his "Yes" answers the option as put, "any spec whose outline or tasks name the record". A spec that names the record only in an inbound owes an outline or tasks row first, as the 129 and 128 batches did.
 
+**Line 18 — the link-7 fork: Stacy's fourteen C1 acts of 2026-11-01**, before 2026-11-01T23:44:53Z.
+- *Put to him*:
+  - **The finding**: Thurgood's link-7 audit (`verify-signing-chain --audit`, link 7: the act's transcript must contain the row's rendered line) over Stacy's 14 C1 acts of 2026-11-01. 6 are anchored and 8 FAIL: `930d45b03`, `36dc6b39a` (#606, merged); `85202d152` (#612); `5bd649934`, `c88281a13` (#614); `2b21a6f6e`, `4b6fbbb66`, `8448cdca9` (#619). Kenya's 2 acts are both anchored.
+  - **Stacy's own read**: she read no unit whole. In all 14 commit messages and sheet entries, the sentence "read through a tool call(s) … before this commit" is false.
+  - **The options**:
+    - (a) Accept the acts as script-checked, plus Stacy's erratum, and seats print whole from now on. Stacy's lean.
+    - (c) Treat the 14 as unread. Thurgood's strict option, rejected by both seats.
+    - (d) Re-cut the three unmerged PRs (#612, #614, #619): Stacy redoes the 12 acts after printing each unit whole, and the branches are force-pushed, under Thurgood's conditions (i)–(iii) below. #606's two acts take (a) plus the erratum. Thurgood's lean, under those conditions.
+  - **The surviving counter (Thurgood)**: a one-off exception is the precedent the rule exists to prevent, and (d) still anchors only one line per act.
+  - **The class fix put with it**: seat practice; a link-7 instrument that checks changed lines or the whole unit; and § 3 narrowed to Spec 131.
+  - **The line offered**: "One-off exception to § 4.6 for the branches of #612, #614 and #619: Stacy redoes her acts after reading each unit whole; the orchestrator force-pushes the re-cut branches; the superseded acts stay in J by her erratum."
+- *His word*: "(d) with the exception, as worded"
+- *What it rules*:
+  - **(d), and the offered line verbatim, is his ruling text.** It is a one-off exception to § 4.6 of ballot `2026-10-01-signing-act-chain` (the merge-only rule: "Never rebased, amended, cherry-picked, `merge --squash`-ed, or re-committed from a seat's diff"). It covers only the branches of #612, #614 and #619. It moves no rule, and § 4.6 binds every other branch unchanged.
+  - **The twelve superseded acts**, and the commit each branch is reset to (the last commit before Stacy's first act):
+
+    | PR | Branch | Head at the ruling | Superseded acts | Reset target |
+    |---|---|---|---|---|
+    | #612 | `fix/civitas-overview-product-mcp-provenance` | `b54d3ed6d` | `85d8c225c` re-confirm; `85202d152` re-sign | `b03d0c43a` |
+    | #614 | `fix/owed-set-law-text-release-flow-and-thurgood-charter` | `8ee75fec7` | `5bd649934` re-confirm; `c88281a13` re-sign | `b55ba11be` |
+    | #619 | `fix/steward-verb-carve-out-drop` | `d7ded0c4b` | `2b21a6f6e`, `f13341af9`, `5c6c3a83b`, `edf621c29` re-confirms; `4b6fbbb66`, `e2b923f5c`, `d25430e2e`, `8448cdca9` re-signs | `c9fb5300d` |
+
+  - **#606's two acts** (`930d45b03`, `36dc6b39a`, on `main`) are not re-cut. They take (a): they stand as script-checked, and Stacy's erratum names them.
+  - **Conditions (Thurgood's (i)–(iii), carried as the line's effect)**:
+    - (i) **This line is on `main` before any force-push.** The exception exists as a committed record, not a chat line, when it is used.
+    - (ii) **Stacy's erratum** is one record of hers in `.kiro/issues/`. It names all 14 acts: the 12 superseded SHAs above and #606's two. For each it says what she actually read, and that the "read through a tool call" sentence was false. **The delegate row D keeps the 12 superseded SHAs in J**, so the re-cut removes nothing from the population.
+    - (iii) **Each re-done act's sheet section says what was read.** The transcript shows each unit, or span, printed whole (`cat -n` of the full range; no `cut`, no `/dev/null`). `verify-signing-chain --audit` anchors each re-done act before the push.
+  - **Order**:
+    1. This line merges.
+    2. Each branch is reset to its target, and every non-Stacy commit after the target is re-made by its author.
+    3. Stacy redoes her acts and files the erratum.
+    4. `--audit` anchors.
+    5. The orchestrator force-pushes.
+  - **What "re-cut" re-makes besides Stacy's acts** *(reading, Thurgood's, as author; not his word)*. A reset discards every commit after the target, and the exception's "re-cut branches" covers re-making them. They are re-made as fresh commits by their authors, never cherry-picked:
+    - **#619**: Thurgood's removals commit `e93dc675f` (the two dispositions rows' `removals` re-quoted; the author's field, link 2) sat between Stacy's acts. On the reset branch Thurgood re-makes it first, with the same content, and Stacy then makes all eight acts on top of it.
+    - **Every branch**: the lock-refresh, record and merge-main commits (`ff3161157` and `b54d3ed6d` on #612; `9d13a7063` and `8ee75fec7` on #614; `3f2174bc3` and `d7ded0c4b` on #619). They are re-made at each PR's lock turn. Where they cite Stacy's SHAs, they cite the new ones.
+  - **What it does not decide**:
+    - the link-7 instrument gap (it checks one line; it should check the changed lines or the whole unit);
+    - § 3's question ("does a hash count as a read?"), narrowed to 131.
+
+    Both are Thurgood's to carry: an RS row, and a 131 intake line.
+
 *Further lines are appended as ruled.*
 
-Cite R11 as `R11@<the squash of the PR that added it>`, with the line number, e.g. `R11@<sha> line 2`. *(Added 2026-11-01, Thurgood, owner.)* Lines 1–13, with line 10's first sub-item, merged in #605 at `5f22a8819532a1603b21ae8cde4753b7851597e8`: cite them as `R11@5f22a8819532a1603b21ae8cde4753b7851597e8 line <N>`. Line 10's second sub-item and lines 14–17 were committed after #605 merged and arrive in the follow-up PR. Cite them by that PR's squash.
+Cite R11 as `R11@<the squash of the PR that added it>`, with the line number, e.g. `R11@<sha> line 2`. *(Added 2026-11-01, Thurgood, owner.)* Lines 1–13, with line 10's first sub-item, merged in #605 at `5f22a8819532a1603b21ae8cde4753b7851597e8`: cite them as `R11@5f22a8819532a1603b21ae8cde4753b7851597e8 line <N>`. Line 10's second sub-item and lines 14–17 merged in #615 at `25bd478ddb4aca1c77da9eada750f601374fc62a`: cite them as `R11@25bd478ddb4aca1c77da9eada750f601374fc62a line <N>`. Line 18 arrives in a later PR. Cite it by that PR's squash.
 
 ## Delegation
 
