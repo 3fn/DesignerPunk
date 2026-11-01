@@ -2,11 +2,10 @@
 
 **Date**: 2026-10-30
 **Drafted by**: Thurgood (ballots steward), who drafts the file. **Leonardo authors the measure's text** (`leonardo-fc-sites.md`), and it is carried verbatim. The one substitution: his `<ballot id>` placeholder is filled with this ballot's id. Drafter's clock: 2026-10-30T17:36:03Z (`date -u`).
-**Status**: **DRAFT — ratification owed** *(corrected 2026-11-01, Thurgood; the RATIFIED line of `3a71871f9` is withdrawn)*. R8 is now on `main` (`R8@0184efb3fd7b2956677351fdf84899767a5ac74a`, #570), and it does not support the earlier Status:
-- **Item 9** ("Re: 9, Ratify") names four ballots: steward-verb's drop, b-ci, decision-framework 1a (#568) and F3. This one is not among them.
-- **Item 4's F-C (ii)** picks the option. R8's reading says "his \"(ii)\" is the decision, not an authority line for Leonardo's `governance/` edit. That ballot's own ratification will authorize its application."
-- **The text departs from item 4's wording.** Item 4 says "as a key in the existing `ui-tree.<platform>:` branch"; this ballot puts the key on the node wherever it lives (Leonardo's evidence, Kenya's withdrawal, § 1). By R8's rule, "a text that changes after his word … goes back to him".
-- **What stands**: F-1 (α) was ruled by the seats under `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`. Ratifying the text is Peter's act, and is asked in § 5's Open-for-Peter line.
+**Status**: **RATIFIED (Peter, 2026-11-01)**, chat, relayed by the orchestrator, received 2026-11-01 after 15:01:50Z (the orchestrator's rulings log; the exact `date -u` bound is filled with the R11 citation), verbatim: *"Ratify as filed"*. It is cited `R11@<#605 squash> line 6` (placeholder until #605 merges).
+- **The question put to him**: ratify F-C.1–F-C.3 as filed, with the key on the node wherever it lives. That departs from R8 item 4's "a key in the existing `ui-tree.<platform>:` branch", on Leonardo's duplicate-node evidence. The alternatives named were to send it back for the branch form, or to hold it for Spec 131. He took the first.
+- **History**: the RATIFIED line of `3a71871f9` was withdrawn at `583062563`, because R8 item 9 does not name this ballot (the orchestrator's misreading, recorded as theirs in #573's body). This line rests on R11, not on R8.
+- **F-1 (α)** stands as ruled by the seats under `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`. Ada's predicate v2 merged as #580 (`716ded6a1`).
 **Authority**: Peter's pick of #568's F-C, R8 item 4, chat, relayed, received before 2026-10-30T17:23:42Z (the orchestrator's clock), verbatim as relayed: *Re: 4, "Ratify as recommended", plus F-C: "(ii)" Leonardo's own small ballot*. The record is `R8@<its PR squash>`, beside `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`, and the citation is filled after the release seat's record PR merges. Ratified in #568 (`434945ac7` on its branch), § 6, "Ruled: F-C".
 **Timing**: fix-now. The application merges no later than 16.3.0's S.
 **Base**: `d34fc7786` (`origin/main` when this was cut). Every Before block below was cut from `governance/DesignerPunk-Integration-Guide.md` at that SHA and checked by script (byte-exact).
@@ -153,7 +152,8 @@ L823 ("Ignores everything else") and L825 are unchanged, and both stay true.
    - **the count**: the guard's measured line at its own base. It is not written in advance, because whether #568's application (with its banner) merges first changes it (Stacy R1);
    - **the consult**: Thurgood, on the changed pins of the registered in-lane guard (`.github/in-lane-guards.json` names the test).
 
-   It merges before step 3.
+   It merges before step 3. **Done**: #580 merged (`716ded6a1`), so v2 is on `main`.
+   - **The banner check at the application base** (Ada's form, as in #579): with F-C.1–F-C.3 applied, run `npx tsx scripts/audience-banner/predicate.ts` and paste its report. The guide must read as not matched, because its only "ballot" strings sit inside the two pointers, so no banner is owed. If the report lists the guide `[MISSING]`, the application stops and reports: that would be (β)'s case, which this ballot did not ratify.
 3. **Leonardo, the application PR** (branch `chore/apply-screen-spec-idiom`), in one authoring commit: F-C.1–F-C.3, as written (and under (β), the banner on the guide and Ada's template commit before it). `<application date>` is the date of the application PR's merge, as its squash commit records it.
 4. **Lock**: `governance/` is in the generator's input closure, so the lock's inputClosure hash moves. The refresh is done by a full-run-green `check:122:diff-guard`, then read no-op-green. The refresh is Thurgood's (named in the grant), because `canonical/generated.lock` is outside Leonardo's write scope. If a generated output changes, the application stops and reports.
 5. **Checks**, each pasted in the PR body with its result:
@@ -191,7 +191,9 @@ L823 ("Ignores everything else") and L825 are unchanged, and both stay true.
 
 **Recommendation**: ratify F-C.1 as Leonardo confirmed it at his R3, F-C.2 and F-C.3; F-1 (α) stands as ruled by the seats under DLG.
 
-**Open for Peter**: #573 as filed — R8 item 4's "(ii)" chose this ballot, and its own ratification is owed (R8's reading). The text departs from item 4's "a key in the existing `ui-tree.<platform>:` branch": the key sits on the node wherever it lives, because the Product MCP appends a platform branch after `shared`, so restating a shared node there adds a second node (Leonardo's evidence; Kenya withdrew her branch wording). Ratify F-C.1–F-C.3 as filed, or name what to change. *(Asked 2026-11-01, Thurgood, at the R8 fill.)*
+**Ruled** (Peter, 2026-11-01, `R11@<#605 squash> line 6`, *"Ratify as filed"*): F-C.1–F-C.3 as filed, with the key on the node wherever it lives. F-1 (α) stands as ruled by the seats under DLG.
+
+*The question as it was put, kept as the record*: #573 as filed — R8 item 4's "(ii)" chose this ballot, and its own ratification is owed (R8's reading). The text departs from item 4's "a key in the existing `ui-tree.<platform>:` branch": the key sits on the node wherever it lives, because the Product MCP appends a platform branch after `shared`, so restating a shared node there adds a second node (Leonardo's evidence; Kenya withdrew her branch wording). Ratify F-C.1–F-C.3 as filed, or name what to change. *(Asked 2026-11-01, Thurgood, at the R8 fill.)*
 
 **Counter-arguments, run against it, and what they changed**:
 - **(1) "Put the key only in `ui-tree.<platform>:`" (Kenya's wording).** Leonardo's evidence, the MCP's concatenation, makes that add a second node. So the key goes on the node wherever it lives, with no schema change.
