@@ -269,6 +269,16 @@ Cite R10 as `R10@<the squash of the PR that added it>`.
   - `governance/a-vision-of-the-future.md` is written in his voice and has no charter owner. Ada's two corrections to it stay hers, by his word.
   - No standing write scope moves.
 
+**Line 12 — the 17.0.0 charter** (Peter's own record `2026-10-20-17-0-0-release-charter.md`), before 2026-11-01T15:29:54Z.
+- *His words first*, verbatim, with one typo corrected and labelled ("at 17" read as "a 17"): "I don't really plan releases that way... I focus more on what direction we take and versioning is a consequence. I would imagine adding react and react native would warrant a 17 release. Honest thoughts?"
+- *Put to him in reply* (the orchestrator's honest read): adding React/RN is additive (a minor on its own); what warrants a major is the web element public-contract cleanup (G-4 items E2–E7) that React binding needs, and 128's own inbound says generated React wrappers do not ship before that cleanup. "Proposed charter in his words: 17.0.0 is the major where the web element's public contract is cleaned up (G-4) and React and React Native bind to it (128); breaking changes ship together there; no date; sequencing 129 → 131 → 128 → 130 unchanged; caveat "unless 128's design shows the binding needs no breaking change". A record, not law (criterion 3 untouched). Alternative named: "standing exception" (name no number before 128's design)."
+- *His word*: "Charter it in those words"
+- *What it rules*:
+  - The 17.0.0 charter record is `.kiro/issues/2026-11-01-17-0-0-release-charter.md`, filed by Thurgood for Peter. Its Trigger is 128's `design.md`.
+  - The 2026-10-20 record closes by pointing at it.
+  - E2–E7, 128's wrapper-sequencing rule and the blend deprecation's next-major removal take their start condition from it.
+  - It is a record, not law.
+
 *Further lines are appended as ruled.*
 
 Cite R11 as `R11@<the squash of the PR that added it>`, with the line number, e.g. `R11@<sha> line 2`.
