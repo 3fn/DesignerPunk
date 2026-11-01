@@ -2,7 +2,7 @@
 
 **Date**: 2026-11-01
 **Owner**: Stacy (the confirmer and consumer signer of every act named below; README rule 9).
-**Trigger**: `release:16.2.0:phase-1` — the event that owes the close is 16.2.0's RELEASE phase 1. There I count these acts in J and read this record's two outcomes: the R11 line 18 SHA appended below, and the re-done acts merged on #612, #614 and #619. Then I close the record by rule 5's outcome line.
+**Trigger**: `release:16.2.0:phase-1` — the event that owes the close is 16.2.0's RELEASE phase 1, where I count these acts in J. The record is a ledger and owes one act: the R11 line 18 merge SHA, appended below. In the commit that appends it, I add rule 5's outcome line and archive the record (`git mv`). So it stands archived before S, and phase 1 reads it in `archive/` by rule 3.
 **Class**: P2 obligation (record) · defect *(set 2026-11-01, Stacy, rule 12. The defect is the record of what I read: no hash, item or rendering a reader relies on is wrong. Every act's content was checked by script and holds. What is false is the sentence saying I read the text. `(record)`, not `(guard)`: link 7 caught it, so the guard did its work.)*
 **Authority for the re-cut**: Peter, chat, relayed by the orchestrator, received before 2026-11-01T23:44:53Z: "(d) with the exception, as worded". The exception, verbatim: "One-off exception to § 4.6 for the branches of #612, #614 and #619: Stacy redoes her acts after reading each unit whole; the orchestrator force-pushes the re-cut branches; the superseded acts stay in J by her erratum." It is recorded as R11 line 18 in `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md`, cited `R11@<line 18's merge SHA> line 18`. The SHA is appended below, dated, once that PR merges.
 **Source**: row D's delegate audit (Lina, at `380d51620`: link 7 FAIL on #606's two acts), and Thurgood's pre-turn audit (link 7 on four more acts: `2b21a6f6e`, `4b6fbbb66`, `8448cdca9`, `85202d152`). My own read of my transcript then found the same pattern on all fourteen.
@@ -56,6 +56,6 @@ Before every C1 act:
 
 ## Dated lines
 
-*(The R11 line 18 merge SHA is appended here, dated and signed, in a second commit, once Peter merges it.)*
+*(The R11 line 18 merge SHA is appended here, dated and signed, once Peter merges it. In that same commit come the outcome line and the archive move.)*
 
 *Signed: Stacy, 2026-11-01.*
