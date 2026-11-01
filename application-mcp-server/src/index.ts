@@ -170,7 +170,7 @@ export const tools = [
   {
     name: 'validate_assembly',
     annotations: { readOnlyHint: true },
-    description: 'Validate a component tree. Checks component existence, parent-child composition rules, requires/count constraints, and assembly-level accessibility (form labels, submit actions, page headings). Returns errors, warnings, and accessibility issues with paths.',
+    description: 'Validate a component tree. Checks component existence, parent-child composition rules, requires/count constraints, and assembly-level accessibility (form labels, submit actions, page headings). Returns errors, warnings, and accessibility issues with paths, plus `coverage`: the accessibility rules that ran and every given prop whose value was not checked (its schema type is not machine-checkable), so read an empty list against what was checked.',
     inputSchema: {
       type: 'object' as const,
       properties: {
