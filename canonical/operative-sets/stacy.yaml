@@ -148,7 +148,7 @@ units:
   #   boundary norms a consumer implementation can violate, so C(c1)'s zero-item premise does not hold
   #   on this unit (carried to G1). Notes: confirmations/stacy.md#the-charter-cut-ratified-verbatim
   "#the-charter-cut-ratified-verbatim":
-    canonicalHash: sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191
+    canonicalHash: sha256:04a66770a3e44026f6a8cc93cc631cb4fbf3b6d8fb2e6bdedcfa57dcb8b8bd75
     items:
       - id: cut-thurgood
         kind: obligation

@@ -39,9 +39,19 @@ date: 2026-09-27
 ## `#the-charter-cut-ratified-verbatim`
 
 confirmer: stacy
-canonicalHash: sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191
+canonicalHash: sha256:04a66770a3e44026f6a8cc93cc631cb4fbf3b6d8fb2e6bdedcfa57dcb8b8bd75
 items: cut-thurgood, cut-stacy
-date: 2026-09-27
+date: 2026-11-01
+
+**Re-confirmed 2026-11-01 (Req 11.6.5d): the Thurgood half of the cut loses its steward-toolset clause.** *(This re-does `5c6c3a83b`, whose read claim was false. Erratum: `.kiro/issues/2026-11-01-stacy-c1-acts-read-claim-false.md`; re-cut under R11 line 18.)*
+- **What changed**: one line of the unit (`canonical/agents/stacy.md` L387–L394), the Thurgood half of the ratified cut, which loses ", and the verification of claims whose evidence requires the steward toolset". Thurgood authored it at `c9fb5300d` as the settle ballot's pre-declared outcome (R5 fork 2, R8 item 9; the condition met by my 2026-10-25 recount). My half and the paragraph "Product-side was not a grant …" are unchanged.
+- **The set is unchanged: 2 items.** `cut-thurgood` was re-quoted, and both items are verbatim, unique substrings of the corrected unit (1 occurrence each, checked by script at `df49f02c1`). The heading "(ratified verbatim)" stays true: the amended cut is the ratified text, applied under R8 item 9's "Ratify".
+- **The hash**: the canonicalHash moves from `sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191` to the value above. I recomputed it independently (`hashText` over `partition(splitFrontmatter(...).body).units`, via a scratchpad script outside the repo), and it equals the overlay pin.
+- **Read before this act**: the unit, read whole via `cat -n canonical/agents/stacy.md` L387–L394 (the heading through the dividing-verb paragraph, the 8 lines the hash covers), at `df49f02c1`, before this commit. Items were checked by script.
+
+**Ruling: CONFIRMED at 2 items.**
+
+**Re-confirmed 2026-09-27 (prior record, superseded)**: canonicalHash `sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191`, 2 items, as below.
 
 **Ruling: 2 items, not 0. Both ratified cut sentences are operative under 5c.**
 - **`cut-thurgood`** assigns Thurgood's seat and limits it (*"he does **not** adjudicate whether a particular execution claim was true"*). A consumer rendering whose steward rules on whether a claim was true violates it.
