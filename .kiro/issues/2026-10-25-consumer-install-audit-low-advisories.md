@@ -41,3 +41,5 @@ The fixing PR merges, and `npm audit` in an empty project with that release's ta
 Has a PR moved `diff` and `tsx`? If not, does a fresh install of the latest release still print advisories from our tree? Under rule 5, a `manual` P3 still unfired at two consecutive walks is archived stale.
 
 *Signed: Ada, 2026-10-25.*
+
+**Routed**: Spec 131 § "2026-11-01 (scope intake, second batch, record only: it names records and settles no design)", the outline row added in the same PR as this line *(2026-11-01, Thurgood, steward, rule 9; under Peter's fork D, R11 line 16, "Route them", `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10, batch routing)*. The Trigger is unchanged. Under fork B (R11 line 14, route in place) its owner re-rules it to `path:.kiro/specs/131-governance-simplification/requirements.md` after this batch merges. This record is not due at 16.2.0's S.

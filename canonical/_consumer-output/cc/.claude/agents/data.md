@@ -336,7 +336,7 @@ android_patterns:
 
 #### Android Token Usage: The `.dp` Pattern
 
-**CRITICAL RULE**: Never append `.dp` when passing `DesignTokens` values to Compose functions.
+**CRITICAL RULE**: Never append `.dp` to a `DesignTokens` value the generator emits as `Dp` (spacing, radius, tapArea, borderWidth, layering) when passing it to Compose functions. A `Float` token (sizing among them) takes `.dp` at the read; see "When `.dp` IS Required" below. *(corrected 2026-11-01: the rule read as covering every `DesignTokens` value; .kiro/issues/archive/2026-10-26-android-guidelines-spacing-float-dp-claim.md; prior text at 465af3544)*
 
 ❌ **WRONG**:
 ```kotlin
