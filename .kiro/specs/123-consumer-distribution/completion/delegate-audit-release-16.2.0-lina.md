@@ -1,0 +1,160 @@
+# Delegate audit, Stacy-signed acts: RELEASE 16.2.0 (Lina)
+
+**Event**: RELEASE 16.2.0 (S not yet cut). This file is written at the tree below and is appended for any signing PR that merges before S.
+**Delegate**: Lina (the rotation after Ada, the 16.1.0 delegate; signing-act chain ballot `.kiro/docs/ballots/2026-10-01-signing-act-chain.md` § 5.3)
+**Brief**: Thurgood, `.kiro/issues/2026-10-29-release-16.2.0-walk.md` § "Delegate audit brief (§ 5.3's three terms)", on `main` at `13e1637e7` (#565). The release author's correction, relayed by the orchestrator on 2026-11-01: the population ends at S, the release PR's squash. Run now against `main` as it stands, and append any signing PRs that merge before S.
+**Date**: 2026-11-01. The six runs were in sequence, 14:46:59Z–14:48:11Z (each output file's write time, `date -u -r`); one re-run of #536 at 14:48:45Z (below).
+**Tree SHA**: `465af3544b6ef76d01b7ee05ab35b5d0c626e938` (`origin/main` when run), a detached worktree.
+**Command** (once per PR; default base, the merge-base of `origin/main` and `refs/pull/<N>/head`, each ref fetched over the network):
+
+```
+npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --audit --pr <N> --signer stacy --store <dir> …
+```
+
+**Stores**: the run was made from a scratchpad worktree, from which the instrument cannot derive the default store set, so the default set was passed explicitly. That is 17 `--store` directories: `/Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2` and its 16 siblings `/Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-*`. Each run's header line lists them.
+**k**: 23, the § 5.3 population's Stacy-signed acts to which this file gives a verdict line, over the six PRs. **N is Stacy's to count** from signature history (brief item 1); this file does not state it.
+
+The delegate reports. It does not rule (charter, "Delegate signing audit"). Every per-act line below is the instrument's, verbatim.
+
+---
+
+## Population and its derivation
+
+The first-parent squashes in `38f4ece47..465af3544` (S of 16.1.0, through this tree) touching `canonical/profiles/**` or `canonical/operative-sets/**`:
+
+```
+git log --reverse --first-parent --format='%h %s' 38f4ece47..465af3544 -- 'canonical/profiles/**' 'canonical/operative-sets/**'
+```
+
+This returns 6 commits, all PR squashes: #530 (`123ad65cd`), #536 (`639ef70f6`), #535 (`0577bb24c`), #541 (`52f874275`), #546 (`24a527c91`), #549 (`6f23bc6fe`). That is the brief's list; no PR merged since the walk's base touches those paths. **Pre-ratification acts: 0** (no act carries `preRatification` in the instrument's JSON).
+
+## Totals (the 6 PRs)
+
+- **All**: 23 act(s) — anchored 22 · unanchored 0 · record absent 1 · FAIL 0 · anomaly 0
+- **FAIL / anomaly**: none.
+- **Exit 2 (could not run)**: none. Every run exited 0.
+
+**The one `record absent`** is #536's, printed by the instrument as:
+
+```
+record absent 7 — canonical/profiles/consumer/thurgood.dispositions.yaml#frontmatter:writeScope[scripts/governance-examples/**] — stacy — 4f9ed1fe — the row renders nothing — there is no rendered line to find — spawnDepth 1, model opus
+```
+
+Following the brief ("if a PR's acts read `record absent`, name each `--store` passed"), #536 was re-run at 14:48:45Z with the 6 scratchpad stores added, 23 in all. These are every `/Users/3fn/.claude/projects/*scratchpad*` directory:
+- `-private-tmp-claude-501--Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2-70d04294-ac75-4fba-8284-bcc4fcb7251b-scratchpad-wave1b-contr…`
+- `…-70d04294-…-scratchpad-wave1b-prune…`
+- `…-77f64270-cb44-4258-b4f2-22e64fc7a1d1-scratchpad`
+- `…-77f64270-…-scratchpad-wave2b-contr…`
+- `…-77f64270-…-scratchpad-wave2b-prune…`
+- `…-bc43eba2-6548-45f7-8173-2ede511d746c-scratchpad-probe-ref-co…`
+
+The re-run's header lists their full paths. It printed the same line and the same counts (5 acts: anchored 4 · record absent 1). The verdict stands as the instrument gives it.
+
+## Per-PR tallies
+
+| PR | exit | acts | anchored | unanchored | record absent | FAIL | anomaly |
+|---|---|---|---|---|---|---|---|
+| #530 | 0 | 4 | 4 | 0 | 0 | 0 | 0 |
+| #536 | 0 | 5 | 4 | 0 | 1 | 0 | 0 |
+| #535 | 0 | 2 | 2 | 0 | 0 | 0 | 0 |
+| #541 | 0 | 6 | 6 | 0 | 0 | 0 | 0 |
+| #546 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| #549 | 0 | 6 | 6 | 0 | 0 | 0 | 0 |
+
+---
+
+## Per-PR output
+
+Each block is the instrument's text output verbatim: the header line, the filter line, the per-act lines and the counts line. The machine-readable JSON that follows each run is omitted.
+
+### PR #530 (exit 0)
+
+```
+verify-signing-chain --audit — consistency, not identity — PR #530 (refs/pull/530/head = 08498dff); stores (17): /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-128-inbound-user-stories-0b746d, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ada-lifecycle-and-swift-records-9342f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-compassionate-kirch-7d6f44, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-eager-shamir-429bab, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-dewdney-0ecc8f, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-lederberg-4ca84b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-festive-goldberg-8db53b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-infallible-agnesi-2edb89, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-modest-cartwright-3de183, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-musing-shamir-a061f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-recursing-kowalevski-95eb91, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-serene-feistel-0cefc8, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-sync-r2-r4-r6-ae5e84, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-tender-feistel-38b382, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-wonderful-galileo-9b6154
+filter --signer stacy: 4 of 4 act(s) selected; 0 withheld
+anchored — canonical/operative-sets/civitas-system-overview.yaml#what-civitas-contains — stacy — 22fde5e0 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+anchored — canonical/operative-sets/designerpunk-systems-overview.yaml#high-level-designerpunk-three-system-architecture — stacy — 6379843a — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+anchored — canonical/operative-sets/designerpunk-systems-overview.yaml#civitas-system-governance-infrastructure — stacy — f4466db5 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+anchored — canonical/profiles/consumer/always-set/civitas-system-overview.dispositions.yaml#what-civitas-contains — stacy — 94b1abd1 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+counts (beside the per-act lines, never in place of them; no total is green): 4 act(s) — anchored 4 · unanchored 0 · record absent 0 · FAIL 0 · anomaly 0
+```
+
+### PR #536 (exit 0)
+
+```
+verify-signing-chain --audit — consistency, not identity — PR #536 (refs/pull/536/head = accd3d2f); stores (17): /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-128-inbound-user-stories-0b746d, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ada-lifecycle-and-swift-records-9342f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-compassionate-kirch-7d6f44, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-eager-shamir-429bab, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-dewdney-0ecc8f, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-lederberg-4ca84b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-festive-goldberg-8db53b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-infallible-agnesi-2edb89, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-modest-cartwright-3de183, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-musing-shamir-a061f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-recursing-kowalevski-95eb91, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-serene-feistel-0cefc8, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-sync-r2-r4-r6-ae5e84, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-tender-feistel-38b382, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-wonderful-galileo-9b6154
+filter --signer stacy: 5 of 5 act(s) selected; 0 withheld
+anchored — canonical/operative-sets/stacy.yaml#the-trigger-set-the-114-superset-table-names-never-numbers — stacy — d069e7db — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+anchored — canonical/operative-sets/stacy.yaml#the-claims-pass-record-claims-passmd-the-template — stacy — 82faa95b — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+anchored — canonical/profiles/consumer/stacy.dispositions.yaml#the-trigger-set-the-114-superset-table-names-never-numbers — stacy — c39cb18f — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+anchored — canonical/profiles/consumer/stacy.dispositions.yaml#the-claims-pass-record-claims-passmd-the-template — stacy — 6afc2c05 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+record absent 7 — canonical/profiles/consumer/thurgood.dispositions.yaml#frontmatter:writeScope[scripts/governance-examples/**] — stacy — 4f9ed1fe — the row renders nothing — there is no rendered line to find — spawnDepth 1, model opus
+counts (beside the per-act lines, never in place of them; no total is green): 5 act(s) — anchored 4 · unanchored 0 · record absent 1 · FAIL 0 · anomaly 0
+```
+
+### PR #535 (exit 0)
+
+```
+verify-signing-chain --audit — consistency, not identity — PR #535 (refs/pull/535/head = 83dd224f); stores (17): /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-128-inbound-user-stories-0b746d, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ada-lifecycle-and-swift-records-9342f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-compassionate-kirch-7d6f44, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-eager-shamir-429bab, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-dewdney-0ecc8f, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-lederberg-4ca84b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-festive-goldberg-8db53b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-infallible-agnesi-2edb89, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-modest-cartwright-3de183, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-musing-shamir-a061f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-recursing-kowalevski-95eb91, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-serene-feistel-0cefc8, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-sync-r2-r4-r6-ae5e84, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-tender-feistel-38b382, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-wonderful-galileo-9b6154
+filter --signer stacy: 2 of 13 act(s) selected; 11 withheld
+anchored — canonical/operative-sets/core-goals.yaml#development-practices — stacy — 75da4aef — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-aa4507ac4d3e6114e.jsonl — spawnDepth 1, model opus
+anchored — canonical/profiles/consumer/always-set/core-goals.dispositions.yaml#development-practices — stacy — 6bce97a5 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-aa4507ac4d3e6114e.jsonl — spawnDepth 1, model opus
+counts (beside the per-act lines, never in place of them; no total is green): 2 act(s) — anchored 2 · unanchored 0 · record absent 0 · FAIL 0 · anomaly 0
+```
+
+### PR #541 (exit 0)
+
+```
+verify-signing-chain --audit — consistency, not identity — PR #541 (refs/pull/541/head = 59eed929); stores (17): /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-128-inbound-user-stories-0b746d, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ada-lifecycle-and-swift-records-9342f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-compassionate-kirch-7d6f44, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-eager-shamir-429bab, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-dewdney-0ecc8f, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-lederberg-4ca84b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-festive-goldberg-8db53b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-infallible-agnesi-2edb89, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-modest-cartwright-3de183, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-musing-shamir-a061f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-recursing-kowalevski-95eb91, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-serene-feistel-0cefc8, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-sync-r2-r4-r6-ae5e84, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-tender-feistel-38b382, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-wonderful-galileo-9b6154
+filter --signer stacy: 6 of 6 act(s) selected; 0 withheld
+anchored — canonical/operative-sets/stacy.yaml#the-trigger-set-the-114-superset-table-names-never-numbers — stacy — 5f325e89 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+anchored — canonical/profiles/consumer/stacy.dispositions.yaml#the-trigger-set-the-114-superset-table-names-never-numbers — stacy — 03909092 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+anchored — canonical/operative-sets/stacy.yaml#the-claims-pass-record-claims-passmd-the-template — stacy — 94eb99d6 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+anchored — canonical/profiles/consumer/stacy.dispositions.yaml#the-claims-pass-record-claims-passmd-the-template — stacy — 10ddd38b — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+anchored — canonical/operative-sets/stacy.yaml#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength — stacy — ad1f5b95 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+anchored — canonical/profiles/consumer/stacy.dispositions.yaml#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength — stacy — 417746d1 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+counts (beside the per-act lines, never in place of them; no total is green): 6 act(s) — anchored 6 · unanchored 0 · record absent 0 · FAIL 0 · anomaly 0
+```
+
+### PR #546 (exit 0)
+
+```
+verify-signing-chain --audit — consistency, not identity — PR #546 (refs/pull/546/head = 75b7971f); stores (17): /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-128-inbound-user-stories-0b746d, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ada-lifecycle-and-swift-records-9342f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-compassionate-kirch-7d6f44, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-eager-shamir-429bab, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-dewdney-0ecc8f, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-lederberg-4ca84b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-festive-goldberg-8db53b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-infallible-agnesi-2edb89, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-modest-cartwright-3de183, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-musing-shamir-a061f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-recursing-kowalevski-95eb91, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-serene-feistel-0cefc8, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-sync-r2-r4-r6-ae5e84, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-tender-feistel-38b382, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-wonderful-galileo-9b6154
+filter --signer stacy: 0 of 1 act(s) selected; 1 withheld
+counts (beside the per-act lines, never in place of them; no total is green): 0 act(s) — anchored 0 · unanchored 0 · record absent 0 · FAIL 0 · anomaly 0
+```
+
+### PR #549 (exit 0)
+
+```
+verify-signing-chain --audit — consistency, not identity — PR #549 (refs/pull/549/head = c891247f); stores (17): /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-128-inbound-user-stories-0b746d, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ada-lifecycle-and-swift-records-9342f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-compassionate-kirch-7d6f44, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-eager-shamir-429bab, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-dewdney-0ecc8f, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-lederberg-4ca84b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-festive-goldberg-8db53b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-infallible-agnesi-2edb89, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-modest-cartwright-3de183, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-musing-shamir-a061f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-recursing-kowalevski-95eb91, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-serene-feistel-0cefc8, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-sync-r2-r4-r6-ae5e84, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-tender-feistel-38b382, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-wonderful-galileo-9b6154
+filter --signer stacy: 6 of 6 act(s) selected; 0 withheld
+anchored — canonical/operative-sets/stacy.yaml#the-trigger-set-the-114-superset-table-names-never-numbers — stacy — a9f14479 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a40e3b6d89f151528.jsonl — spawnDepth 1, model opus
+anchored — canonical/operative-sets/stacy.yaml#the-claims-pass-record-claims-passmd-the-template — stacy — 59309e83 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a40e3b6d89f151528.jsonl — spawnDepth 1, model opus
+anchored — canonical/operative-sets/stacy.yaml#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength — stacy — b2a21530 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a40e3b6d89f151528.jsonl — spawnDepth 1, model opus
+anchored — canonical/profiles/consumer/stacy.dispositions.yaml#the-trigger-set-the-114-superset-table-names-never-numbers — stacy — 95b74041 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a40e3b6d89f151528.jsonl — spawnDepth 1, model opus
+anchored — canonical/profiles/consumer/stacy.dispositions.yaml#the-claims-pass-record-claims-passmd-the-template — stacy — 727b3f39 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a40e3b6d89f151528.jsonl — spawnDepth 1, model opus
+anchored — canonical/profiles/consumer/stacy.dispositions.yaml#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength — stacy — 17cf39ea — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a40e3b6d89f151528.jsonl — spawnDepth 1, model opus
+counts (beside the per-act lines, never in place of them; no total is green): 6 act(s) — anchored 6 · unanchored 0 · record absent 0 · FAIL 0 · anomaly 0
+```
+
+### PR #536, re-run with the scratchpad stores added (exit 0)
+
+```
+verify-signing-chain --audit — consistency, not identity — PR #536 (refs/pull/536/head = accd3d2f); stores (23): /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-128-inbound-user-stories-0b746d, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ada-lifecycle-and-swift-records-9342f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-ballot-audit-fix-now-221ab6, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-compassionate-kirch-7d6f44, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-eager-shamir-429bab, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-dewdney-0ecc8f, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-elated-lederberg-4ca84b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-festive-goldberg-8db53b, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-infallible-agnesi-2edb89, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-modest-cartwright-3de183, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-musing-shamir-a061f4, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-recursing-kowalevski-95eb91, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-serene-feistel-0cefc8, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-sync-r2-r4-r6-ae5e84, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-tender-feistel-38b382, /Users/3fn/.claude/projects/-Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2--claude-worktrees-wonderful-galileo-9b6154, /Users/3fn/.claude/projects/-private-tmp-claude-501--Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2-70d04294-ac75-4fba-8284-bcc4fcb7251b-scratchpad-wave1b-control, /Users/3fn/.claude/projects/-private-tmp-claude-501--Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2-70d04294-ac75-4fba-8284-bcc4fcb7251b-scratchpad-wave1b-pruned, /Users/3fn/.claude/projects/-private-tmp-claude-501--Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2-77f64270-cb44-4258-b4f2-22e64fc7a1d1-scratchpad, /Users/3fn/.claude/projects/-private-tmp-claude-501--Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2-77f64270-cb44-4258-b4f2-22e64fc7a1d1-scratchpad-wave2b-control, /Users/3fn/.claude/projects/-private-tmp-claude-501--Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2-77f64270-cb44-4258-b4f2-22e64fc7a1d1-scratchpad-wave2b-pruned, /Users/3fn/.claude/projects/-private-tmp-claude-501--Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2-bc43eba2-6548-45f7-8173-2ede511d746c-scratchpad-probe-ref-corpus
+filter --signer stacy: 5 of 5 act(s) selected; 0 withheld
+anchored — canonical/operative-sets/stacy.yaml#the-trigger-set-the-114-superset-table-names-never-numbers — stacy — d069e7db — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+anchored — canonical/operative-sets/stacy.yaml#the-claims-pass-record-claims-passmd-the-template — stacy — 82faa95b — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+anchored — canonical/profiles/consumer/stacy.dispositions.yaml#the-trigger-set-the-114-superset-table-names-never-numbers — stacy — c39cb18f — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+anchored — canonical/profiles/consumer/stacy.dispositions.yaml#the-claims-pass-record-claims-passmd-the-template — stacy — 6afc2c05 — transcript -Users-3fn-Documents-Work-Projects-Kiro-DesignerPunk-v2/f6f839ac-be52-4d43-8a18-bf7959977f92/subagents/agent-a6af5c7798911624a.jsonl — spawnDepth 1, model opus
+record absent 7 — canonical/profiles/consumer/thurgood.dispositions.yaml#frontmatter:writeScope[scripts/governance-examples/**] — stacy — 4f9ed1fe — the row renders nothing — there is no rendered line to find — spawnDepth 1, model opus
+counts (beside the per-act lines, never in place of them; no total is green): 5 act(s) — anchored 4 · unanchored 0 · record absent 1 · FAIL 0 · anomaly 0
+```
+
+---
+
+## Appended before S
+
+*(Any signing PR that merges between this tree and S is appended here, run the same way, with its tree SHA.)*
+
+- none yet, at `465af3544`.
