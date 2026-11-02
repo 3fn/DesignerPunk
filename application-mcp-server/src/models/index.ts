@@ -351,6 +351,19 @@ export interface AssemblyValidationResult {
   errors: AssemblyIssue[];
   warnings: AssemblyIssue[];
   accessibility: AccessibilityIssue[];
+  /**
+   * What this validation checked, so an empty `accessibility` (or `errors`) list is read against
+   * it (.kiro/issues/2026-10-25-validate-assembly-empty-result-overstates-coverage.md, V1).
+   */
+  coverage: AssemblyCoverage;
+}
+
+/** The checks one `validate_assembly` run performed, and the given values it could not check. */
+export interface AssemblyCoverage {
+  /** The assembly-level accessibility rules that ran, by rule id. A rule not listed was not checked. */
+  accessibilityRules: string[];
+  /** Props given in the tree whose value was not checked, because the schema type is not machine-checkable. */
+  notChecked: Array<{ path: string; component: string; prop: string; type: string }>;
 }
 
 // ---------------------------------------------------------------------------
