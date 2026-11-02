@@ -44,7 +44,7 @@ See the CHANGELOG's "Upgrading from 16.1.0" (five steps). **From 16.0.0 or earli
   - `token-index/primitives.yaml` (40 changed lines), `semantics.yaml` (453) and `README.md` (14) carry #517's `platforms` shape and the per-entry `platformNotes` (0 such lines at 16.1.0; 4, 13 and 1 now). `token-index/components.yaml` is unchanged.
   - No root token file in `dist/` changed.
   - `dist/browser/designerpunk.{esm,umd}.js` differ by #608's Nav-Header-App `observedAttributes` (`appearance`, `show-separator`, `test-id`) and by Avatar-Base's corrected token names in comments (#592), as well as the build stamp. The `.min.js` files carry the same change minified.
-  - `dist/types/generated/TokenTypes.*`, `dist/mcp/tool-manifest.json` and the other build-timestamp files differ in their stamps, and `tool-manifest.json` also by the regenerated tool descriptions (#591, #596, #608, #613).
+  - `dist/types/generated/TokenTypes.*`, `dist/mcp/tool-manifest.json` and the other build-timestamp files differ in their stamps alone (`tool-manifest.json`: `generatedAt` only, compared as sorted JSON). The tool descriptions changed by #591, #596, #608 and #613 are in the MCP bundles (`dist/mcp/application-mcp.js`), not in the manifest.
 
 ## 📦 Dependency disclosure (ballot `2026-10-03-hermetic-publish-path` § 7)
 
