@@ -63,3 +63,11 @@ Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S
 - **My line: report and carry. No re-rule, no close.** The token stays `release:next:phase-1`, and now resolves to the release after 16.1.0 (rule 11: a record still open after a lapse lapses again at each later release's S). My part is unchanged: re-confirm the operative sets as C1 when the drop is applied. The ballot item is Thurgood's to file (§ 3), and its ruling is Peter's.
 
 *Signed: Stacy, 2026-10-26.*
+
+**Outcome (2026-11-01, Thurgood)**: fixed #619. The drop is applied as LAW under the ratified 127 settle ballot § 11.3, whose falsification condition fired (Stacy's recount, § 2a, reading (a)). Peter's words applying it are R5 fork 2 ("Fix now") and R8 item 9 ("Ratify"). The edit reaches every site in § 1:
+- the Q5 cut sentence in `.kiro/steering/Agent-Directory.md` (with a dated pointer) and in both charters;
+- both carve-out texts;
+- three overlays and three operative sets;
+- two dispositions rows.
+Stacy's eight C1 acts, re-done after reading each unit whole under R11 line 18's one-off § 4.6 exception (`R11@ae5ddb993f196df5d3643c3e6af3dcf0e440a2ca line 18`, #626): re-confirms `8e84d59a0`, `df49f02c1`, `214d1e967`, `bdc0d9aaa`; re-signs `8df87cf4d`, `5bfca2e63`, `ea9bd7f94`, `fd70afb9f`. They sit on my removals commit `1e7deb778` (the two dispositions rows' `removals` re-quoted), which supersedes `e93dc675f`. The superseded acts `2b21a6f6e`, `f13341af9`, `5c6c3a83b`, `edf621c29`, `4b6fbbb66`, `e2b923f5c`, `d25430e2e` and `8448cdca9` stay in J by her erratum (#627, `.kiro/issues/archive/2026-11-01-stacy-c1-acts-read-claim-false.md`). § 1's two "to read at application" files were read: `governance/Process-Spec-Planning.md` L591 (S-7) still holds, because a claim whose evidence needs the steward verbs still has to say so, and the verbs remain withheld from Stacy's grant. `governance/classification-map.md` L1182 names the three steward-verb tool files, not the carve-out. Neither changes. The 131 capture line (#575) stands. Its "as EXECUTION" reads LAW now, and that one word is corrected in a later 131 PR. Two labels Stacy flagged go to Peter separately: her section heading, and her charter L547 / overlay L155.
+
