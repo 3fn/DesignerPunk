@@ -17,6 +17,12 @@ export interface PropertyDefinition {
   default?: unknown;
   required?: boolean;
   values?: string[];
+  /**
+   * How the web element takes this prop, when it is not a JS property of the same name
+   * (Component Schema Format § "Web Access (`web`)"; ballot 2026-10-30-web-prop-property-or-attribute-only).
+   * Absent: a JS property of the served name. Never set on a callback.
+   */
+  web?: 'attribute-only' | 'unmapped';
 }
 
 // ---------------------------------------------------------------------------

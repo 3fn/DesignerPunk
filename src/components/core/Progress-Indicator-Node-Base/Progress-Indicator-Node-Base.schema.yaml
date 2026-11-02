@@ -62,6 +62,7 @@ properties:
     default: undefined
     description: Test identifier for automated testing.
   sizing:
+    web: attribute-only
     type: "'scale'"
     required: false
     default: undefined
