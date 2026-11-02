@@ -12,6 +12,7 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 
+import * as path from 'path';
 import { ComponentIndexer, mutableComponentRoots } from './indexer/ComponentIndexer';
 import { ComponentQueryEngine } from './query/QueryEngine';
 import { AssemblyValidator } from './validation/AssemblyValidator';
@@ -54,6 +55,8 @@ interface DataPaths {
    * derivation from the package root (single-root callers).
    */
   projectRoot?: string;
+  /** The installed package's `token-index/`, for the package-component-token comparison. */
+  packageTokenIndexDir?: string;
   patternsDir?: string;
   templatesDir?: string;
   guidanceDir?: string;
@@ -170,7 +173,7 @@ export const tools = [
   {
     name: 'validate_assembly',
     annotations: { readOnlyHint: true },
-    description: 'Validate a component tree. Checks component existence, parent-child composition rules, requires/count constraints, and assembly-level accessibility (form labels, submit actions, page headings). Returns errors, warnings, and accessibility issues with paths.',
+    description: 'Validate a component tree. Checks component existence, parent-child composition rules, requires/count constraints, and assembly-level accessibility (form labels, submit actions, page headings). Returns errors, warnings, and accessibility issues with paths, plus `coverage`: the accessibility rules that ran and every given prop whose value was not checked (its schema type is not machine-checkable), so read an empty list against what was checked.',
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -212,7 +215,7 @@ export const tools = [
   {
     name: 'get_token_details',
     annotations: { readOnlyHint: true },
-    description: 'Get full details for a token: value, family, tier, platform names, formula, theme-varying status, consumers.',
+    description: 'Get full details for a token: value, family, tier, platform names, formula, theme-varying status, consumers. For a theme-varying token, read the dark value from themeResolutions.dark (its modeValue; null for a composite override, whose parts are in primitiveReferences); resolvedValue is the base (light) resolution.',
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -409,6 +412,7 @@ class ComponentMCPServer {
         projectRoot: this.paths.projectRoot,
         rootSources: this.paths.componentRootSources,
         envVarName: this.paths.componentsEnvVar,
+        packageTokenIndexDir: this.paths.packageTokenIndexDir,
       },
     );
   }
@@ -843,6 +847,7 @@ if (require.main === module) {
       guidanceDir: guidance.path,
       registryPath: registry.path,
       tokenIndexDir: tokenIndex.ok ? tokenIndex.path : undefined,
+      packageTokenIndexDir: path.join(packageRoot, 'token-index'),
       designLanguagePath: designLanguage.path,
     };
   } catch {

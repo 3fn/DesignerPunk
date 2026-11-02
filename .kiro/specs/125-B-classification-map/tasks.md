@@ -317,3 +317,4 @@
   **Gate**: U2 merged (Exp 3 evidence) + Peter's scheduling; CODEOWNERS/branch-protection settings are Peter's platform actions
   - CODEOWNERS mapping; PR-approval-as-ratification for gated surfaces (layer 1 stays for ungated); authority-row entry `proposed → armed`; Exp-3-informed diff-gates designed then
   - _Requirements: 13.1–13.4_
+  - **Carried obligation at U3's merge (named 2026-11-01, Thurgood; record only, it settles no design)**: `.kiro/issues/2026-10-15-123-125b-u3-re-attestation.md` — the one-time re-attestation of Spec 123's interim C1 records once per-seat authoring identity exists (Stacy re-attests; Thurgood enumerates and runs `verify-signing-chain`). Named here under Peter's fork E, "Yes, any spec that names the record" (`.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` R11 line 17), so the record can route in place to this file.

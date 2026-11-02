@@ -38,3 +38,18 @@ The warning compares tags with the installed version, so it cannot tell whether 
 ## Lapse (2026-10-29)
 
 Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.
+
+## Outcome (2026-11-01)
+
+*(Lina, owner, rule 5.)* **Fixed** on branch `fix/application-mcp-stale-component-token-warning`, cut from `ca6e36f0e`. Disposition: fix-now by 16.3.0's S, sheet r2.1 under `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920`.
+
+- **The comparand is content, not version strings**, per Ada's read of 2026-10-30, which replaces § "The fix" item 1's version-tag check and so removes its surviving counter, the noise on every patch upgrade.
+  - `TokenIndexer.packageComponentTokenDrift` compares each package-tagged (`source`) component-token entry with the same key in `<packageRoot>/token-index/components.yaml`. It compares the four fields `generate` merges: `component`, `definedBy`, `primitiveReferences` and `platforms`. It ignores `consumers` and `source`.
+  - An absent shipped entry, or any field that differs, is one warning line naming up to five entries and the tagged versions. A warning makes `get_component_health` read `degraded`, through the existing warnings path.
+  - A missing or unparseable shipped index gives "Cannot check …" and never throws.
+  - The comparison is skipped when the consumer index is the package's own directory, and when no entry is tagged, as in DesignerPunk's own checkout.
+- **The path**: `index.ts` passes `path.join(packageRoot, 'token-index')` as `packageTokenIndexDir`. It is threaded through `IndexComponentsOptions` to full indexes and token reindexes.
+- **Types** (§ "The fix" item 2): `TokenIndexEntry` gains `definedBy?` and `source?`.
+- **Scope, as § "The fix" item 4 says**: the warning does not find a package component token the consumer index lacks. That stays `sync`'s job, and the line never says the index is current.
+- **Tests**: `TokenIndexer.packageDrift.test.ts`, 8 cases: content-equal silent; differing field; absent entry; `consumers`/`source` ignored; untagged silent; damaged install; two versions and a capped list; and the indexer path, including the same-directory skip. `MultiRootIndexing.test.ts` pins the new fourth argument. application-mcp-server: 38 suites, 536 tests.
+- **Ada's rider rides**: her sentence, verbatim, is added to `get_token_details`' description. Its merge is the close event of `.kiro/issues/2026-06-24-mcp-semantic-resolvedvalue-ignores-mode-overrides.md`, Ada's record, so its outcome line is hers to write.
