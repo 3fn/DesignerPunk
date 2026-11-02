@@ -39,3 +39,13 @@ Disposition: the ask stands (the three items are the post-ratification consisten
 ## Lapse (2026-10-29)
 
 Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.
+
+## Outcome (2026-11-01, Thurgood, owner, rule 5)
+
+Resolved by the application of ballot `2026-10-30-departure-timing-plan-vs-build` (RATIFIED, Peter, 2026-10-30; `R8@0184efb3fd7b2956677351fdf84899767a5ac74a` item 4, and item 9 also names it). The application PR is `chore/apply-ballot-departure-timing`, and its merge is the closing event.
+- **Item 1, the motion list** (L172–L178): resolved by sites 1a (Q4's "No") and 1b (the motion pause list).
+- **Item 1, the token-mapping list** (L249–L254): kept as intentional, on Lina's ruling (that ballot's `[LINA R1]`). Its lead now reads "a human" (site 1c).
+- **Item 2, the Overview's framing** (L21): resolved by site 1f, in Lina's words.
+- **Item 3, Required Documentation items 3 and 4** (L328–L329): resolved by site 1g, with item 5, the departure mark, as site 1h (F-B (a)).
+
+Moved to `archive/` in the same PR.

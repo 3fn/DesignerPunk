@@ -57,11 +57,13 @@ properties:
     description: Unique identifier for the input element
   
   label:
+    web: attribute-only
     type: string
     required: true
     description: Label text (floats between placeholder and floated positions)
   
   value:
+    web: attribute-only
     type: string
     required: true
     description: Current input value
@@ -82,44 +84,52 @@ properties:
     description: Callback when input loses focus
   
   helperText:
+    web: attribute-only
     type: string
     required: false
     description: Helper text displayed below input (persistent)
   
   errorMessage:
+    web: attribute-only
     type: string
     required: false
     description: Error message displayed below helper text (conditional)
   
   isSuccess:
+    web: attribute-only
     type: boolean
     required: false
     default: false
     description: Success state indicator (shows success icon)
   
   showInfoIcon:
+    web: attribute-only
     type: boolean
     required: false
     default: false
     description: Info icon support (shows info icon, triggers helper text)
   
   type:
+    web: attribute-only
     type: "'text' | 'email' | 'password' | 'tel' | 'url'"
     required: false
     default: "'text'"
     description: Input type
   
   autocomplete:
+    web: attribute-only
     type: string
     required: false
     description: Autocomplete attribute for browser autofill
   
   placeholder:
+    web: attribute-only
     type: string
     required: false
     description: Placeholder text (only shown when label is floated and input is empty)
   
   readOnly:
+    web: attribute-only
     type: boolean
     required: false
     default: false
@@ -130,17 +140,20 @@ properties:
       renders it as selectable static text inside the field chrome.
   
   required:
+    web: attribute-only
     type: boolean
     required: false
     default: false
     description: Required field indicator
   
   maxLength:
+    web: attribute-only
     type: number
     required: false
     description: Maximum length for input value
   
   testID:
+    web: unmapped
     type: string
     required: false
     description: Test ID for automated testing

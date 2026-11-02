@@ -5,7 +5,7 @@
 **Discovered during**: normalizing 97 non-resolving `tokens:` declarations in 21 core schemas (`.kiro/issues/2026-06-25-component-schema-token-name-drift.md`)
 **Owners**: Lina (items 1, 2 and 6); Ada, consulted on token meaning (items 1, 2) and owner of the generator side of item 6 option (ii)
 **Class**: P3 improvement · defect
-**Trigger**: `manual` — the event is each fork's ruling (item 1: Peter or the design owner; item 2: Lina's answer, Stacy read as parity; item 6: Peter, Ada consulted) and the PR that carries it; the first read is the next health-check walk after 2026-10-24. *(Rule 1: a P3 that would ride takes `manual`, naming its own fixing PR as the event. Filed 2026-10-24; the split was planned in the 2026-10-23 re-class line of the source record.)*
+**Trigger**: `path:.kiro/specs/131-governance-simplification/requirements.md` — the event is Spec 131's requirements file being created: the record is routed to Spec 131 in place (this record's `**Routed**:` line, the outline's § "2026-11-01 (scope intake, second batch …)"), and 131's requirements round takes it in or leaves it out with a reason. The fix events in the body stay as written. *(Re-ruled 2026-11-01, Lina, owner, rules 9 and 11. Disposition: routed to Spec 131 in place, Peter's fork D: "Route them. We'll evaluate them as part of that effort — perhaps they can better inform the spec, be combined or inform other proposals, etc." (chat, received before 2026-11-01T15:52:38Z), with fork B "Route in place" and fork E "any spec that names the record". Authority: `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920` (`.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` § "Delegation"), R10 fork 2 (a), `R10@ee5ea2b80e58c26a6dea7e6dfd538d006193f755`, and `R11@25bd478ddb4aca1c77da9eada750f601374fc62a` line 16. The superseded line is quoted verbatim at the end of this record.)*
 
 ---
 
@@ -31,3 +31,9 @@ None of these is a defect that blocks a build. Each is a fork: what the code rea
 - Why a separate record: the source record's Trigger is `merge:#<N>` for the interim Android fix, and a record that still holds open forks at that merge lapses under rule 11. A P1 class and a git-visible trigger also misstate three forks.
 
 *Signed: Lina, 2026-10-24.*
+
+**Routed**: Spec 131 § "2026-11-01 (scope intake, second batch, record only: it names records and settles no design)", the outline row added in the same PR as this line *(2026-11-01, Thurgood, steward, rule 9; under Peter's fork D, R11 line 16, "Route them", `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10, batch routing)*. The Trigger is unchanged. Under fork B (R11 line 14, route in place) its owner re-rules it to `path:.kiro/specs/131-governance-simplification/requirements.md` after this batch merges. This record is not due at 16.2.0's S.
+
+*(2026-11-01, Lina, owner, rules 9 and 11: Trigger re-ruled as above, routed to Spec 131. The superseded Trigger line, verbatim:)*
+
+> **Trigger**: `manual` — the event is each fork's ruling (item 1: Peter or the design owner; item 2: Lina's answer, Stacy read as parity; item 6: Peter, Ada consulted) and the PR that carries it; the first read is the next health-check walk after 2026-10-24. *(Rule 1: a P3 that would ride takes `manual`, naming its own fixing PR as the event. Filed 2026-10-24; the split was planned in the 2026-10-23 re-class line of the source record.)*

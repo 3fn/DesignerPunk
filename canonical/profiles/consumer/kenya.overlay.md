@@ -142,7 +142,7 @@ class: ios-build-test
 runContext: consumer-repo
 gap: "iOS build & UI test run from this product app's ios/ dir: `xcodebuild build`, `xcodebuild test`, `xcrun simctl`."
 cue: "you reach for an iOS build, unit-test, or simulator/UI run (xcodebuild / simctl)"
-## @entry commands[product-screen-commands] @ sha256:5d9cb4dcb9cfa0454fb0a1cee215e4633da539b3474d447b3428a3c3000cb1a1
+## @entry commands[product-screen-commands] @ sha256:c808d72a2b8245cf628ae72dbed719e659bb08b687bef839ddf7af14050ea81e
 class: product-screen-commands
 runContext: per-product
 authoredPerProduct: true
@@ -154,7 +154,7 @@ globs:
   - "node_modules/@3fn/core/src/components/core/*/platforms/ios/**"
 ## @entry writeScope[.kiro/specs/**] @ sha256:76dd995bd46d11ee5ec9766b1f42ecc7ef522b514bdab8deb009d3c916fc26b3
 specs/**
-## @entry commands[platform-tokens] @ sha256:bd33ad01f96b8e52831e10abdd7b33556a39d8ee99f9cccbd789170539199f67
+## @entry commands[platform-tokens] @ sha256:5af175a1382bb2c8a1ae48571e10071486b5f6404e739702094a12b86d8ffa79
 name: platform-tokens
 cmd: npx designerpunk generate
 runContext: consumer-repo

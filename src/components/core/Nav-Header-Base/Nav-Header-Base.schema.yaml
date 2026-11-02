@@ -49,6 +49,7 @@ behaviors:
 
 properties:
   leadingSlot:
+    web: unmapped
     type: "React.ReactNode"
     required: false
     description: |
@@ -56,12 +57,14 @@ properties:
       semantic variants — not set directly by product agents.
 
   titleSlot:
+    web: unmapped
     type: "React.ReactNode"
     required: false
     description: |
       Content for the title region. Populated by semantic variants.
 
   trailingSlot:
+    web: unmapped
     type: "React.ReactNode"
     required: false
     description: |
@@ -69,6 +72,7 @@ properties:
       semantic variants.
 
   appearance:
+    web: attribute-only
     type: "'opaque' | 'translucent'"
     required: false
     default: "'opaque'"
@@ -78,6 +82,7 @@ properties:
       materials, Android: solid background fallback).
 
   showSeparator:
+    web: attribute-only
     type: boolean
     required: false
     default: "true"
@@ -86,6 +91,7 @@ properties:
       color.structure.border.subtle and borderWidth100.
 
   testID:
+    web: attribute-only
     type: string
     required: false
     description: |

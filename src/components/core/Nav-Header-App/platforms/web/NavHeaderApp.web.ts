@@ -16,11 +16,30 @@ export class NavHeaderApp extends HTMLElement {
     this._shadowRoot = this.attachShadow({ mode: 'open' });
   }
 
-  connectedCallback(): void {
-    const header = document.createElement('nav-header') as HTMLElement;
+  /**
+   * The served attributes this wrapper forwards to its inner nav-header. Observed, so a change
+   * after connection reaches the header too (the schema serves appearance, showSeparator and
+   * testID as attribute-only on web: ballot 2026-10-30-web-prop-property-or-attribute-only).
+   */
+  static get observedAttributes(): string[] {
+    return ['appearance', 'show-separator', 'test-id'];
+  }
+
+  attributeChangedCallback(): void {
+    const header = this._shadowRoot.querySelector('nav-header') as HTMLElement | null;
+    if (header) this.forwardAttributes(header);
+  }
+
+  private forwardAttributes(header: HTMLElement): void {
     header.setAttribute('appearance', this.getAttribute('appearance') || 'opaque');
     header.setAttribute('show-separator', this.getAttribute('show-separator') ?? 'true');
     if (this.getAttribute('test-id')) header.setAttribute('test-id', this.getAttribute('test-id')!);
+    else header.removeAttribute('test-id');
+  }
+
+  connectedCallback(): void {
+    const header = document.createElement('nav-header') as HTMLElement;
+    this.forwardAttributes(header);
 
     header.innerHTML = `
       <slot name="leading" slot="leading"></slot>

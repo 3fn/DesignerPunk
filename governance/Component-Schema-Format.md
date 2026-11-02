@@ -151,7 +151,7 @@ properties:
     default: false
     description: Whether component is disabled
   onPress:
-    type: callback
+    type: "() => void"
     required: false
     description: Called when component is pressed
 ```
@@ -160,13 +160,28 @@ properties:
 
 ```yaml
 # Primitive types
-string | number | boolean | object | array | callback
+string | number | boolean | object | array | "<signature>"   # a callback is its signature string, e.g. "(value: string) => void"
 
 # Enum type (restricted values)
 type: enum
 validation:
   enum: [value1, value2, value3]
 ```
+
+### Web Access (`web`)
+
+A non-callback property that the web element takes **only as an attribute** carries `web: attribute-only`. Its attribute is the property name's kebab-case form (`helperText` → `helper-text`). A non-callback property the web element takes neither as a JS property nor as an attribute carries `web: unmapped`: on web, its value does not reach the element (a property only another platform uses, for example). `children` is the element's slot content on web, not a property, and carries no `web` key. A property with no `web` key is one the web element exposes as a JS property of the same name. A callback carries no `web` key: how a callback maps to an element event is not yet settled. *(added 2026-11-02 by ballot 2026-10-30-web-prop-property-or-attribute-only, site 2)*
+
+```yaml
+properties:
+  helperText:
+    type: string
+    required: false
+    description: Helper text displayed below the field
+    web: attribute-only
+```
+
+The served name never changes to match the web element (Platform Implementation Guidelines § "2. Property Name Consistency"). A `web: attribute-only` property is a known gap: a later release may add the JS property, which does not change the attribute. `web: unmapped` says only that the value does not reach the web element; whether it should is a later release's decision.
 
 ---
 

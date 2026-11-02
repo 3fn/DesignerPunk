@@ -74,15 +74,15 @@ Color tokens use **OKLCH** (perceptually uniform color space) with a channel-pri
 │   CHANNEL PRIMITIVES (Source of Truth)                                       │
 │   └── src/tokens/color/channels/                                            │
 │       ├── hues.ts: one hue per family (e.g., pinkHue = 10.0)               │
-│       ├── lightness/: 5 steps per family (e.g., pinkL300 = 0.65)           │
-│       └── chroma/: 5 steps per family (e.g., pinkC300 = 0.242)            │
+│       ├── lightness/: 5 steps per family (e.g., pinkLightness300 = 0.65)   │
+│       └── chroma/: 5 steps per family (e.g., pinkChroma300 = 0.242)       │
 │                                                                              │
 │                              │                                               │
 │                              ▼                                               │
 │                                                                              │
 │   COMPOSITION (Static, at module load)                                       │
 │   └── src/tokens/color/primitives/                                          │
-│       └── pink300 = oklch(pinkL300, pinkC300, pinkHue)                     │
+│       └── pink300 = oklch(pinkLightness300, pinkChroma300, pinkHue)        │
 │                                                                              │
 │                              │                                               │
 │                              ▼                                               │
@@ -106,6 +106,7 @@ Color tokens use **OKLCH** (perceptually uniform color space) with a channel-pri
 │                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
+*(corrected 2026-11-01: the channel names are the ones the token index carries (`pinkLightness300`, `pinkChroma300`; the source composes them from `pinkLightness[300]` and `pinkChroma[300]`); `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 ### Platform Output Formats
 
@@ -217,15 +218,16 @@ Tokens are defined in TypeScript files with mathematical relationships and metad
 │   Layer 2: SEMANTIC TOKENS                                                   │
 │   ├── Purpose-driven compositions referencing primitives                    │
 │   ├── Location: src/tokens/semantic/*.ts                                    │
-│   └── Examples: space.inset.*, color.primary, bodyMd                        │
+│   └── Examples: space.inset.*, color.action.primary, typography.bodyMd      │
 │                                                                              │
 │   Layer 3: COMPONENT TOKENS                                                  │
 │   ├── Component-specific values referencing primitives                      │
-│   ├── Location: src/components/*/tokens.ts                                  │
-│   └── Examples: buttonIcon.inset.*, textInput.padding.*                     │
+│   ├── Location: src/components/core/<Component>/*.tokens.ts                 │
+│   └── Examples: buttonicon.inset.*, avatar.size.*                           │
 │                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
+*(corrected 2026-11-01: the semantic and component examples are keys the token index holds, and component token files sit at `src/components/core/<Component>/*.tokens.ts`; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 **Entry Points**:
 - Primitive tokens: `src/tokens/` directory
