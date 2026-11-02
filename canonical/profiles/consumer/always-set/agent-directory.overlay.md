@@ -17,7 +17,7 @@
 
 ---
 
-## @unit #thurgood-test-governance-spec-standards-civitas-steward @ sha256:99951e0293f59b5326e3e09be329d46fac3e14d8cc8b0c64fd3d797e0beba169
+## @unit #thurgood-test-governance-spec-standards-civitas-steward @ sha256:d90b650ba35fa2ad3c2e707e595a6a7d9134aaa9480d813af59c707b26e58399
 ### Thurgood — Test Governance, Spec Standards & Civitas Steward
 
 Test suite health, coverage analysis, test infrastructure standards, audit methodology, spec creation guidelines, accessibility test coverage auditing, and **Civitas governance infrastructure stewardship**.
@@ -26,7 +26,7 @@ Test suite health, coverage analysis, test infrastructure standards, audit metho
 
 **When to involve**: Spec creation, test suite audits, coverage gap analysis, spec feedback coordination, governance questions, completion documentation standards, **steering doc health issues, MCP accuracy concerns, cross-surface content inconsistencies, governance tooling questions**.
 
-**Charter cut**: Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, the mechanical checks that enforce it, and the verification of claims whose evidence requires the steward toolset — he does **not** adjudicate whether a particular execution claim was true. ("What is a completion doc required to contain?" → Thurgood; "was this claim verified?" → Stacy.)
+**Charter cut**: Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, and the mechanical checks that enforce it — he does **not** adjudicate whether a particular execution claim was true. ("What is a completion doc required to contain?" → Thurgood; "was this claim verified?" → Stacy.)
 
 **Key boundary**: Thurgood audits but does not write domain-specific tests. He flags gaps for Ada (token tests) or Lina (component tests).
 

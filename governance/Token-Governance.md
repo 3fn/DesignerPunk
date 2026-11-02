@@ -381,6 +381,7 @@ When writing specs, be explicit about token decisions:
 2. Check primitives → `space125` (10px) exists
 3. Spec is silent on specific token → Checkpoint required
 
+<!-- example: generic -->
 ```
 AI: "Tooltip needs 10px padding. Semantic tokens don't have this value.
 space125 (10px) primitive exists. Spec says 'small padding' but doesn't specify.
@@ -434,6 +435,7 @@ Awaiting your decision."
 1. Recognize pattern → Same value needed in multiple places
 2. Checkpoint with human → This might warrant promotion
 
+<!-- example: generic -->
 ```
 AI: "I notice 14px spacing is now needed in three components:
 - ComponentA (existing component token)

@@ -23,3 +23,9 @@
 ## Why it is not a Spec 128 question
 
 A major release's charter decides what breaking changes ship together and when. Spec 128 is one consumer of that decision among several. Peter's carry ruling (2026-10-20) kept this slot out of 128 so that it sits where the walk reads it.
+
+## Lapse (2026-10-29)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.
+
+**Outcome (2026-11-01, Thurgood)**: closed — Peter chartered 17.0.0 in his words (R11 line 12: "Charter it in those words", before 2026-11-01T15:29:54Z). The charter record is `.kiro/issues/2026-11-01-17-0-0-release-charter.md`. The three records that hung here (E2–E7, 128's wrapper-sequencing rule, the blend deprecation's next-major removal) now take their start condition from it. Closed by the steward under rule 5 and archived in the same PR.

@@ -135,3 +135,36 @@ NEW:
 - **The release notes now say so**: L57, under #499, merged as the new S `ff3e7dad7`.
 - **The fix still rides this record's follow-on PR**, the one #473 named. Whether that follow-on is EXECUTION under fork (A) or a LAW round is still Peter's question, asked on #473 and unanswered.
 - **Trigger unchanged**: `release:next:phase-1`, which now resolves to the release after 16.1.0, and `merge:#<N>` at the follow-on PR's open. The waiver covers 16.1.0 only. If the follow-on has not merged by the next release's S, that release's walk reads the record again as floor-class.
+
+## Lapse (2026-10-29)
+
+Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S). No ancestor of S closed or re-ruled this record: it is in Stacy's recount, `.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.1.0.md` § "What lapses at S, recounted from commits that are ancestors of S", and no heading named this SHA. Appended by the walker at release 16.2.0's walk (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`; rule 11: whoever observes a lapse appends). It records the lapse and decides nothing else; the owner's disposition stands. Signed Thurgood (steward, rule 11), 2026-10-29.
+
+## Partial outcome (2026-11-01, Thurgood, owner, rule 9): item L4 closed by this record's F2 PR
+
+- **Closed: item L4** (Stacy's charter and consumer overlay). The PR on branch `fix/stacy-charter-owed-set-after-closing-commit` corrects `canonical/agents/stacy.md` L445 and L449 and `canonical/profiles/consumer/stacy.overlay.md` L112 and L116 as a CORRECTION, on Peter's line of 2026-11-01 (chat, relayed by the orchestrator, received before 2026-11-01T14:51:23Z: "Yes"; `R11@5f22a8819532a1603b21ae8cde4753b7851597e8` line 2, in `2026-10-30-release-16-2-peter-rulings-and-delegation.md` § "R11").
+  - The text is Stacy's 2026-10-25 draft above, with my fixes (i) and (ii) against `scripts/owed-set.sh` at `1eced6cd5`. Fix (iii), the closure-undecidable clause, is her own sentence: she refused my version at `cfc6ed983`, and her replacement was applied verbatim.
+  - Her acts: re-confirm `930d45b03`, re-sign `36dc6b39a`. The signing chain passes.
+  - **This is the floor-class surface RL-22 waived for 16.1.0.** The shipped consumer charter (`dist/consumer-canonical/agents/stacy.md` L343 and L347) now describes the closing-commit anchor. Its release note is the release author's.
+- **Still open**:
+  - item L1, `.kiro/hooks/RELEASE-FLOW.md` § 5a;
+  - item L2, the 2026-09-19 ballot's § 7.5 counting block, which stays asked of Peter (R5 fork 3);
+  - item L3, `canonical/agents/thurgood.md` L543 and L545;
+  - § "Write-scope gap".
+
+  R5 ruled the script-describing sentences CORRECTION. L1 and L3 need an authority line naming files and author, as L4's did. That line is before Peter. Within L1, the "one judgment point" paragraph (L78 at `465af3544`) stays asked.
+- **Trigger unchanged**: the open items are still due at the next release's phase 1.
+
+## Partial outcome (2026-11-01, Thurgood, owner, rule 9): items L1 and L3 closed by the PR on `fix/owed-set-law-text-release-flow-and-thurgood-charter`
+
+- **Closed: item L1**, `.kiro/hooks/RELEASE-FLOW.md` § 5a L66, L71, L72, L74, L76, and L78's first sentence. **Closed: item L3**, `canonical/agents/thurgood.md` L543 and L545.
+  - Both are CORRECTIONs, on Peter's line 13 of 2026-11-01 (chat, relayed by the orchestrator, received after 15:33:01Z: "Yes, including L78's first sentence"; `R11@5f22a8819532a1603b21ae8cde4753b7851597e8` line 13, in `2026-10-30-release-16-2-peter-rulings-and-delegation.md` § "R11").
+  - The texts are this record's L1 and L3 drafts, read against `scripts/owed-set.sh` at `1eced6cd5`. The closure-undecidable clause follows the sentence Stacy wrote for item L4.
+  - RELEASE-FLOW carries three dated `corrected` pointers. The charter carries none.
+  - Stacy, the charter unit's confirmer and consumer signer, re-confirmed at `01cbca54d` and re-signed at `cffb6f989`, after reading the unit whole, under R11 line 18's one-off § 4.6 exception (`R11@ae5ddb993f196df5d3643c3e6af3dcf0e440a2ca line 18`, #626). The superseded `5bd649934` and `c88281a13` stay in J by her erratum (#627, `.kiro/issues/archive/2026-11-01-stacy-c1-acts-read-claim-false.md`). The signing chain passes. The consumer rendering did not move, so the pack is unchanged.
+- **Still open**:
+  - item L2, the 2026-09-19 ballot's § 7.5 counting block;
+  - L78's "one judgment point" paragraph beyond its first sentence. Both stay asked of Peter (R5 fork 3; line 13).
+  - § "Write-scope gap" (a `canonical/agents/**` edit).
+  - A consistency question Stacy raised at her first, superseded re-confirm: my charter no longer gives class (c) its own anchor, and hers still does. The two should agree. It goes to the RS queue, and it needs Peter's line when it is fixed.
+- **Trigger unchanged**: the open items are still due at the next release's phase 1.

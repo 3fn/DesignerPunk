@@ -7,21 +7,43 @@
  * repo-internal authority opens with an AUDIENCE-FRAMING BANNER: a blockquote that tells a
  * consumer's agent whether it is reading DesignerPunk's worked example or transferable
  * guidance (Req 20.2, 20.7, 20.8). This module is the whole convention:
- *   - {@link matchesPredicate}: WHICH docs need one (the membership predicate, Ada's text);
+ *   - {@link matchesPredicate}: WHICH docs need one (the membership predicate, Ada's text, v2);
  *   - {@link renderBanner} / {@link hasBanner}: WHAT a banner is (one template, one symbol,
  *     read by both the 23.2 authoring and the guard);
  *   - {@link auditBanners}: the PRESENCE GUARD, `predicate-match ⇒ banner-present` (Req 20.5).
  * The predicate is the artifact and the set is merely its output (Req 20.3); the number of docs
  * a run reports is illustrative, never a constant of the convention.
  *
- * PREDICATE VERSION 1 (versioned with the banner convention, Req 20.3). Ada's text, byte-exact
- * (feedback/requirements.md R2 B5; requirements.md Req 20.3):
+ * PREDICATE VERSION 2 (versioned with the banner convention, Req 20.3). Ada's text, 2026-10-30,
+ * for ballot 2026-10-30-screen-spec-idiom-per-node, F-1 (α). The same four strings over the same
+ * scope, read after every dated-pointer span is taken out of the text:
+ *
+ *     perl -0777 -ne 'my $t = $_; $t =~ s/[*]\((?:added|amended|moved|corrected) \d{4}-\d{2}-\d{2}.*?\)[*]//gi; print "$ARGV\n" if $t =~ /complete-task\.sh|Peter merges|RATIFIED|ballot/' governance/*.md
+ *
+ * A DATED-POINTER SPAN is the history line `.kiro/docs/ballots/README.md` § "Conventions"
+ * ("Where the pointer is owed", L31) requires on a law edit: `*(` then one of the four verbs
+ * (added, amended, moved, corrected, in any case), a space and a `YYYY-MM-DD` date, up to the first
+ * `)*` on the same line. Why v2: a pointer is history about the text, not repo-internal authority
+ * over its reader. Under v1, the pointer that a LAW edit to a served, unbannered doc must carry
+ * ("… by ballot <name> …") forced a banner on that doc by itself, the doc's own audience aside
+ * (RS-51's class; the first instance is the Integration Guide under that ballot). A ballot
+ * CITATION, `*(ballot <name>)*` or a ballot named in a sentence, is NOT a pointer (L31: "names a
+ * source and is not a pointer") and still counts: it says which ballot a rule in the body rests on.
+ *
+ * Re-measured at v2's adoption (this commit's base, `origin/main` `d34fc7786`): 22 of 84
+ * `governance/*.md` docs under v1, and the same 22 under v2; 0 of 15 `governance/Token-Family-*.md`
+ * docs under both. No doc changed status at adoption. Six docs carried pointer spans then, and each
+ * still matched on its other text.
+ *
+ * PREDICATE VERSION 1 (adopted at Spec 123 Task 23; Ada's text, feedback/requirements.md R2 B5;
+ * requirements.md Req 20.3), kept here as the version v2 replaces:
  *
  *     grep -lE "complete-task\.sh|Peter merges|RATIFIED|ballot" governance/*.md
  *
  * It reproduced 18 of 83 `governance/*.md` docs and 0 of 15 `governance/Token-Family-*.md`
- * docs at its adoption. Change any of the four strings, or the scan scope, and the version bumps.
- * Extending the predicate is a version bump under this rule, decided by Ada with a re-measured count.
+ * docs at its adoption. Change any of the four strings, the scan scope, or what is taken out of
+ * the text before the match, and the version bumps. Extending the predicate is a version bump
+ * under this rule, decided by Ada with a re-measured count.
  *
  * ============================================================================
  * UNDER-INCLUSION LIMIT (Req 20.3 — declared HERE, in the convention's own text, on the pattern
@@ -34,6 +56,11 @@
  * COMPONENTS. Such a doc ships UNBANNERED, which is the status quo. That is the safe direction
  * for a presence guard: a missed doc stays as it was; an unbannered doc is never certified as
  * bannered.
+ *
+ * A FOURTH LIMIT, v2's own: text INSIDE a dated-pointer span is not read. A pointer's tail is free
+ * text (a `corrected` pointer's `<what>` most of all), so "Peter merges" or "RATIFIED" written
+ * inside a pointer is hidden from v2. The span ends at the first `)*` on its line, so it cannot
+ * swallow the body after it. The ratified pointer form cannot be narrowed to close this.
  *
  * KNOWN UNDER-INCLUSIONS (Req 20.7's reason; Lina A7, feedback/design-outline.md): the docs
  * named in {@link KNOWN_UNDER_INCLUSIONS} read, in a consumer install, as claims about the
@@ -65,7 +92,7 @@ import * as path from 'path';
 // The predicate (Ada's text, byte-exact)
 // ============================================================================
 
-export const PREDICATE_VERSION = 1;
+export const PREDICATE_VERSION = 2;
 
 /** The scan scope, as the predicate's own glob. */
 export const SCAN_SCOPE = 'governance/*.md';
@@ -78,15 +105,45 @@ export const PREDICATE_STRINGS: readonly string[] = [
   'ballot',
 ];
 
-/** `grep -E`'s pattern, exactly as Req 20.3 prints it. */
+/** The four strings as one `-E` / Perl alternation, exactly as Req 20.3 prints it. */
 export const PREDICATE_ERE = PREDICATE_STRINGS.join('|');
 
 const PREDICATE_RE = new RegExp(PREDICATE_ERE);
 
-/** True iff the doc's text contains any of the four strings (grep -l semantics: any line). */
-export function matchesPredicate(text: string): boolean {
-  return PREDICATE_RE.test(text);
+/**
+ * A dated-pointer span (v2): `*(`, a verb, a space, a `YYYY-MM-DD` date, then the shortest run of
+ * characters on the same line up to `)*`. Case-insensitive, like `edit-kind-pointers.ts`'s
+ * `POINTER_RE`, because the corpus holds `*(Amended …` and `*(Corrected …` forms. `.` does not
+ * cross a newline, so a span never runs past its line. The asterisks are written `[*]`, not
+ * escaped, so the printed command in the header can sit inside this comment unchanged.
+ */
+export const POINTER_SPAN_SOURCE = '[*]\\((?:added|amended|moved|corrected) \\d{4}-\\d{2}-\\d{2}.*?\\)[*]';
+
+/** Every dated-pointer span in the text, in order (exported for the drift test). */
+export function pointerSpans(text: string): string[] {
+  return text.match(new RegExp(POINTER_SPAN_SOURCE, 'gi')) ?? [];
 }
+
+/** The text with every dated-pointer span taken out. */
+export function stripPointerSpans(text: string): string {
+  return text.replace(new RegExp(POINTER_SPAN_SOURCE, 'gi'), '');
+}
+
+/** True iff the text, its dated-pointer spans taken out, contains any of the four strings. */
+export function matchesPredicate(text: string): boolean {
+  return PREDICATE_RE.test(stripPointerSpans(text));
+}
+
+/**
+ * The predicate as Req 20.3's runnable command: the argument vector of `perl` (the printed form
+ * in the header is the same command). The test runs it over the scan scope and asserts it returns
+ * exactly {@link matchedDocs}.
+ */
+export const PREDICATE_PERL_ARGS: readonly string[] = [
+  '-0777',
+  '-ne',
+  `my $t = $_; $t =~ s/${POINTER_SPAN_SOURCE}//gi; print "$ARGV\\n" if $t =~ /${PREDICATE_ERE}/`,
+];
 
 /**
  * Docs known to read as repo-internal claims while matching NONE of the four strings (see the

@@ -20,12 +20,12 @@
           "name": "get_color_strategy"
         },
         {
-          "description": "Get lightweight catalog of all components with name, type, family, purpose, and readiness. ~50 tokens per component.",
+          "description": "Get lightweight catalog of all components with name, type, family, purpose, and readiness. ~50 tokens per component. Readiness is per platform; `scaffold` means an implementation exists and no test file matched the platform's test pattern, so read `reviewed` and `hasImplementation` beside it.",
           "inputSchemaHash": "sha256:c7d7da0da68b070d575ff8db14d83e0318a01cd0d7266dc061714999fb0e9a7b",
           "name": "get_component_catalog"
         },
         {
-          "description": "Get complete assembled metadata including all contracts, composition rules, and token relationships.",
+          "description": "Get complete assembled metadata including all contracts, composition rules, and token relationships. Readiness is per platform; `scaffold` means an implementation exists and no test file matched the platform's test pattern, so read `reviewed` and `hasImplementation` beside it. On web, a property with `web: attribute-only` is taken only as its kebab-case attribute, and one with `web: unmapped` does not reach the element; a property with no `web` key is a JS property of the same name.",
           "inputSchemaHash": "sha256:76f5ae4fb23979ea2b7e484f43340962966b2c698838e0c684e7fa42c22ffac0",
           "name": "get_component_full"
         },
@@ -35,7 +35,7 @@
           "name": "get_component_health"
         },
         {
-          "description": "Get component summary: identity, contract categories, token count, annotations. ~200 tokens.",
+          "description": "Get component summary: identity, contract categories, token count, annotations. ~200 tokens. Readiness is per platform; `scaffold` means an implementation exists and no test file matched the platform's test pattern, so read `reviewed` and `hasImplementation` beside it.",
           "inputSchemaHash": "sha256:e70c7002a6daf668c1b99db1ccadf3f4cee8c41c3ef8b7f4e2f19055231b6f59",
           "name": "get_component_summary"
         },
@@ -75,7 +75,7 @@
           "name": "get_token_consumers"
         },
         {
-          "description": "Get full details for a token: value, family, tier, platform names, formula, theme-varying status, consumers.",
+          "description": "Get full details for a token: value, family, tier, platform names, formula, theme-varying status, consumers. For a theme-varying token, read the dark value from themeResolutions.dark (its modeValue; null for a composite override, whose parts are in primitiveReferences); resolvedValue is the base (light) resolution.",
           "inputSchemaHash": "sha256:3f62c5ed4ea631bdf9d6f2a57e5f8c9fe63d78e97ac8828b6ce946af9c5fd476",
           "name": "get_token_details"
         },
@@ -105,7 +105,7 @@
           "name": "search_tokens"
         },
         {
-          "description": "Validate a component tree. Checks component existence, parent-child composition rules, requires/count constraints, and assembly-level accessibility (form labels, submit actions, page headings). Returns errors, warnings, and accessibility issues with paths.",
+          "description": "Validate a component tree. Checks component existence, parent-child composition rules, requires/count constraints, and assembly-level accessibility (form labels, submit actions, page headings). Returns errors, warnings, and accessibility issues with paths, plus `coverage`: the accessibility rules that ran and every given prop whose value was not checked (its schema type is not machine-checkable), so read an empty list against what was checked.",
           "inputSchemaHash": "sha256:e531446e76a814981cda5eee246688346d05ecfeb417d535599f49cd04e3e4b8",
           "name": "validate_assembly"
         }

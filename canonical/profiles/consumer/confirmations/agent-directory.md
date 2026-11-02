@@ -87,9 +87,22 @@ date: 2026-09-29
 ## `#thurgood-test-governance-spec-standards-civitas-steward`
 
 confirmer: stacy
-canonicalHash: sha256:99951e0293f59b5326e3e09be329d46fac3e14d8cc8b0c64fd3d797e0beba169
+canonicalHash: sha256:d90b650ba35fa2ad3c2e707e595a6a7d9134aaa9480d813af59c707b26e58399
 items: thurgood-test-govern-1, thurgood-test--role-1, thurgood-test--role-2, thurgood-test--role-3
-date: 2026-10-20
+date: 2026-11-01
+
+**Re-confirmed 2026-11-01 (Req 11.6.5d): the steward-verb carve-out dropped from the Q5 cut.** *(This re-does `2b21a6f6e`, whose read claim was false. Erratum: `.kiro/issues/2026-11-01-stacy-c1-acts-read-claim-false.md`; re-cut under R11 line 18.)*
+- **What changed**: one line of the unit, Thurgood's "Charter cut" line (L78). It loses ", and the verification of claims whose evidence requires the steward toolset" and gains the dated pointer "(amended 2026-11-01 by 2026-09-17-spec-127-outline-settle § 11.3; prior text at 465af3544)".
+  - Thurgood authored it (`c9fb5300d`) as the settle ballot's pre-declared outcome ("never encountered across them → dropped, not carried").
+  - Authority: Peter's R5 fork 2 "Fix now" and R8 item 9 "Ratify", committed in `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` (R8 at `0184efb3f`).
+  - The limb's condition is met by my recount of 2026-10-25 (`.kiro/issues/2026-10-24-steward-verb-carve-out-drop-limb-unapplied.md` § 2a: reading (a), 0 steward-verb-gated claims across the first three passes).
+- **The set is unchanged: 4 items.** `thurgood-test-govern-1` was re-quoted with the pointer. Each of the 4 is a verbatim, unique substring of the corrected unit: 1 occurrence each, checked by script at `c9fb5300d`.
+- **The hash**: the canonicalHash moves from `sha256:99951e0293f59b5326e3e09be329d46fac3e14d8cc8b0c64fd3d797e0beba169` to the value above. I recomputed it independently (`hashText` over `partition(splitFrontmatter(...).body).units`, via a scratchpad script outside the repo), and it equals the overlay pin.
+- **Read before this act**: the unit, read whole via `cat -n .kiro/steering/Agent-Directory.md` L70–L83 (the heading through the closing rule, the 14 lines the hash covers), at `1e7deb778`, before this commit. Items were checked by script.
+
+**Ruling: CONFIRMED at 4 items.**
+
+**Re-confirmed 2026-10-20 (prior record, superseded)**: canonicalHash `sha256:99951e0293f59b5326e3e09be329d46fac3e14d8cc8b0c64fd3d797e0beba169`, 4 items, as below.
 
 **Re-confirmed 2026-10-20 (Req 11.6.5d).**
 - **What changed**: Thurgood's **Owns** line, one phrase in its CI-regime clause. Ballot `.kiro/docs/ballots/2026-10-20-in-lane-guard-registry-additive-entries.md` (P1b; RATIFIED, Peter, 2026-10-20) site 3: "`lane-timing.yml` test-script steps with floors; ballot 2026-09-27-ci-regime-standing-scope" becomes "`lane-timing.yml` test-script steps with floors, and added entries in `.github/in-lane-guards.json`; ballot 2026-09-27-ci-regime-standing-scope, amended 2026-10-20". Thurgood applied it as profile author (`ae68f130b`) in the steering doc and as `thurgood-test--role-1`'s text; that is his authoring, not this act.

@@ -98,6 +98,8 @@ export function parseSchemaYaml(filePath: string): ParseResult<ParsedSchema> {
       default: val.default,
       required: val.required === true,
       values: Array.isArray(val.values) ? val.values.map(String) : undefined,
+      // Served only when it is one of the two values Component Schema Format § "Web Access" defines.
+      ...(val.web === 'attribute-only' || val.web === 'unmapped' ? { web: val.web } : {}),
     };
   }
 

@@ -196,7 +196,7 @@ space700 = space100 × 7    = 56px
 space800 = space100 × 8    = 64px
 ```
 
-The scale ends at `space800` (64). There is no `space900` or `space1000` — component dimensions
+The scale ends at `space800` (64). There is no `space900`<!-- example: generic --> or `space1000`<!-- example: generic --> — component dimensions
 beyond 64 come from the Sizing family (`size900`, `size1000`, `size1600`), not from spacing.
 
 ### Doubling Pattern
@@ -485,7 +485,7 @@ Grid margin tokens define container margins at page edges for different breakpoi
 | `gridMarginMd` | space400 | 32px | md | Comfortable container margins for desktop layouts |
 | `gridMarginLg` | space500 | 40px | lg | Generous container margins for large desktop layouts |
 
-**Note**: `gridMarginSm` currently references `space300` (24px). The design specification calls for `space350` (28px), but this token doesn't exist in the primitive spacing scale yet.
+**Note**: `gridMarginSm` currently references `space300` (24px). The design specification calls for `space350`<!-- example: generic --> (28px), but this token doesn't exist in the primitive spacing scale yet.
 
 ### Native Platform Grid Tokens
 

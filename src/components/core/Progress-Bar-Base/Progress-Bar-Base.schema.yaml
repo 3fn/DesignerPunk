@@ -41,12 +41,14 @@ behaviors:
 
 properties:
   mode:
+    web: attribute-only
     type: "'determinate' | 'indeterminate'"
     required: false
     default: "'determinate'"
     description: Determinate shows specific progress. Indeterminate shows activity.
 
   value:
+    web: attribute-only
     type: number
     required: false
     description: |
@@ -54,11 +56,13 @@ properties:
       Runtime error if outside range. Not accepted in indeterminate mode.
 
   accessibilityLabel:
+    web: attribute-only
     type: string
     required: true
     description: Describes what the bar represents (e.g., "Profile completion").
 
   size:
+    web: attribute-only
     type: "'sm' | 'md' | 'lg'"
     required: false
     default: "'md'"
@@ -66,6 +70,7 @@ properties:
       Size variant. sm=4px (size050), md=8px (size100), lg=12px (size150).
 
   testID:
+    web: attribute-only
     type: string
     required: false
 
