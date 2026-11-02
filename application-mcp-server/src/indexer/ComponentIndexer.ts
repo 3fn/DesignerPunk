@@ -69,6 +69,12 @@ export interface IndexComponentsOptions {
   rootSources?: string[];
   /** The variable that named the `env` root (`COMPONENTS_DIR` or `COMPONENT_DIR`). Default `COMPONENTS_DIR`. */
   envVarName?: string;
+  /**
+   * The installed package's `token-index/` (`<packageRoot>/token-index`). Threaded to the token
+   * indexer, which compares package-tagged component tokens with it. OMITTED → no comparison.
+   * (.kiro/issues/2026-10-25-application-mcp-stale-package-token-version-warning.md.)
+   */
+  packageTokenIndexDir?: string;
 }
 
 /**
@@ -220,6 +226,8 @@ export class ComponentIndexer {
   private bornRoot: string | undefined;
   /** `options.tierDir` from the last full index (Spec 123 Task 1.5) — threaded to the theme readers. */
   private explicitTierDir: string | undefined;
+  /** `options.packageTokenIndexDir` from the last full index — threaded to token reindexes. */
+  private packageTokenIndexDir: string | undefined;
   /** The pass-1 root set, precedence order (consumer first, package last). */
   private componentRoots: string[] = [];
   /** Declared component name → the precedence winner's source (Spec 123 C3: precedence keys on the DECLARED name). */
@@ -271,6 +279,7 @@ export class ComponentIndexer {
     const projectRoot = options.projectRoot ? path.resolve(options.projectRoot) : legacyProjectRoot;
     this.bornRoot = projectRoot;
     this.explicitTierDir = options.tierDir;
+    this.packageTokenIndexDir = options.packageTokenIndexDir;
 
     // ComponentIndexer.dataDirs: the MUTABLE component roots (the package root in a consumer
     // install is exempt as immutable) plus the other data dirs.
@@ -364,7 +373,7 @@ export class ComponentIndexer {
     // the token indexer reads the SAME theme override files the mode classifier does
     // (issue 2026-09-12 — get_token_details reporting light values as dark).
     if (tokenIndexDir) {
-      await this.tokenIndexer.indexTokens(tokenIndexDir, projectRoot, options.tierDir);
+      await this.tokenIndexer.indexTokens(tokenIndexDir, projectRoot, options.tierDir, options.packageTokenIndexDir);
     }
 
     this.lastIndexTime = new Date().toISOString();
@@ -470,7 +479,7 @@ export class ComponentIndexer {
    * snapshot from the last full index.
    */
   async reindexTokens(tokenIndexDir: string): Promise<void> {
-    await this.tokenIndexer.indexTokens(tokenIndexDir, this.bornRoot, this.explicitTierDir);
+    await this.tokenIndexer.indexTokens(tokenIndexDir, this.bornRoot, this.explicitTierDir, this.packageTokenIndexDir);
     this.lastIndexTime = new Date().toISOString();
     this.lastIndexTimeMs = this.computeMaxMtime();
   }

@@ -75,7 +75,7 @@
           "name": "get_token_consumers"
         },
         {
-          "description": "Get full details for a token: value, family, tier, platform names, formula, theme-varying status, consumers.",
+          "description": "Get full details for a token: value, family, tier, platform names, formula, theme-varying status, consumers. For a theme-varying token, read the dark value from themeResolutions.dark (its modeValue; null for a composite override, whose parts are in primitiveReferences); resolvedValue is the base (light) resolution.",
           "inputSchemaHash": "sha256:3f62c5ed4ea631bdf9d6f2a57e5f8c9fe63d78e97ac8828b6ce946af9c5fd476",
           "name": "get_token_details"
         },
