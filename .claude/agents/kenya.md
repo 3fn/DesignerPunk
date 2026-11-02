@@ -380,12 +380,12 @@ Your token ground truth is served LIVE by MCP — never a build snapshot. Do NOT
 
 ## Commands
 
-- regenerate the platform token output (iOS/Android/web) from token source — note the ROOT Swift output has no Spec-094 theming surface; theming Swift materializes consumer-side: `npm run generate:platform-tokens`
+- regenerate the platform token output (iOS/Android/web) from token source. Note that the Swift output has no Spec-094 theme surface (no theme protocol, per-theme structs or environment key), in this repo or in a consumer's `generate` output; see § iOS Theming (Spec 094): `npm run generate:platform-tokens`
 - run the Swift-theme-types Jest suite (a jest name-pattern selecting src/generators/__tests__/SwiftThemeTypes.test.ts — the in-repo test of the Swift theme-type generator, the closest in-repo signal for iOS theming correctness; Jest, never vitest/--run): `npm test -- SwiftThemeTypes`
 - the full build including validate (type-check + validation + browser + MCP): `npm run build`
 - audit component token usage / compliance across the token pipeline: `npm run audit:tokens`
 - no in-repo iOS build or test is possible — this repo has no .xcodeproj / Package.swift / Xcode workspace (see standingFacts). Real iOS build & UI test run from the product app's ios/ dir: `xcodebuild build`, `xcodebuild test`, `xcrun simctl` — all consumer-repo. — you reach for an iOS build, unit-test, or simulator/UI run (xcodebuild / simctl) (run from the consumer product repo, not this repo)
-- product-screen build/test/run commands are per-product and cannot be extracted in this repo — they live in the consumer iOS app (theming Swift materializes there via `npx designerpunk generate`). — you need product-screen build/test/run commands (authored per product)
+- product-screen build/test/run commands are per-product and cannot be extracted in this repo — they live in the consumer iOS app. — you need product-screen build/test/run commands (authored per product)
 - WHEN discovery returns matchConfidence partial or none (find_docs; keyworded find_components) THEN apply the certainty-calibration rule (AI-Collaboration-Principles) before acting
 - run ./.kiro/hooks/complete-task.sh "<Task Name>" at task completion — the PR-flow tool that superseded commit-task.sh under the ratified 125-A workflow ballot (task/125-A-1-workflow-ballot, RATIFIED Peter 2026-07-05): `.kiro/hooks/complete-task.sh`
 - use find_docs (concept mode or list mode) to discover docs by concept/keyword or enumerate the full catalog — the current discovery entry point; get_documentation_map is removed and SHALL NOT be emitted (mcp__designerpunk-docs__find_docs)

@@ -29,6 +29,65 @@ export interface TokenIndexEntry {
   themeVarying?: boolean;
   platforms: { web: string; ios: string; android: string };
   consumers?: string[];
+  /** The component that defines a component token (merged package entries and the repo's own). */
+  definedBy?: string;
+  /** Set on a component token merged from the installed package by `generate` (#470). */
+  source?: { package: string; version: string };
+}
+
+/**
+ * The fields `generate` copies from the installed package's component-token entry into the
+ * consumer's index (src/generators/generateTokenIndex.ts, the merged-entries loop). `consumers`
+ * is recomputed over the consumer's universe and `source` is the tag itself, so neither is compared.
+ */
+export const MERGED_COMPONENT_TOKEN_FIELDS = ['component', 'definedBy', 'primitiveReferences', 'platforms'] as const;
+
+/**
+ * Compare the consumer index's package-tagged component tokens with the installed package's own
+ * `token-index/components.yaml`. Returns one warning line, or none. An entry differs when the
+ * package's index has no entry of that key, or any merged field's value differs. A version string
+ * that differs while the content is equal is not a difference (Ada's read, 2026-10-30; record
+ * .kiro/issues/2026-10-25-application-mcp-stale-package-token-version-warning.md).
+ *
+ * It does NOT find a package entry the consumer index lacks (a component token added in the
+ * installed package): that needs the component-root universe, which is `sync`'s job. So the line
+ * names only the entries that differ and never says the index is current.
+ */
+export function packageComponentTokenDrift(
+  consumerEntries: Iterable<TokenIndexEntry>,
+  packageTokenIndexDir: string
+): string | null {
+  const tagged = Array.from(consumerEntries).filter((e) => e.source && typeof e.source === 'object');
+  if (tagged.length === 0) return null;
+  const file = path.join(packageTokenIndexDir, 'components.yaml');
+  let shipped: Record<string, Record<string, unknown>>;
+  try {
+    if (!fs.existsSync(file)) {
+      return `Cannot check this index's package component tokens: the installed package has no ${file}.`;
+    }
+    const data = yaml.load(fs.readFileSync(file, 'utf-8')) as { tokens?: Record<string, Record<string, unknown>> };
+    shipped = data?.tokens ?? {};
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return `Cannot check this index's package component tokens: ${file} did not parse (${msg}).`;
+  }
+  const differing = tagged
+    .filter((e) => {
+      const theirs = shipped[e.name];
+      if (!theirs) return true;
+      return MERGED_COMPONENT_TOKEN_FIELDS.some(
+        (f) => JSON.stringify((e as unknown as Record<string, unknown>)[f] ?? null) !== JSON.stringify(theirs[f] ?? null)
+      );
+    })
+    .map((e) => e.name)
+    .sort();
+  if (differing.length === 0) return null;
+  const versions = Array.from(new Set(tagged.map((e) => e.source!.version))).sort().join(', ');
+  const shown = differing.slice(0, 5).join(', ') + (differing.length > 5 ? `, and ${differing.length - 5} more` : '');
+  return (
+    `token-index/components.yaml: ${differing.length} component token entr${differing.length === 1 ? 'y differs' : 'ies differ'} ` +
+    `from the installed package's (tagged from @3fn/core ${versions}): ${shown}. Run \`npx designerpunk generate\`.`
+  );
 }
 
 /**
@@ -172,8 +231,11 @@ export class TokenIndexer {
    * @param explicitTierDir The caller's own resolved tier (e.g. `DesignSystemRoot.tierDir`),
    *                      used when `meta.json` is absent (a pre-1.5 index) — second
    *                      precedence, per `resolveThemeTierRoot`.
+   * @param packageTokenIndexDir The installed package's `token-index/` (`<packageRoot>/token-index`).
+   *                      When given, package-tagged component tokens are compared with it
+   *                      ({@link packageComponentTokenDrift}); a difference is a health warning.
    */
-  async indexTokens(tokenIndexDir: string, projectRoot?: string, explicitTierDir?: string): Promise<void> {
+  async indexTokens(tokenIndexDir: string, projectRoot?: string, explicitTierDir?: string, packageTokenIndexDir?: string): Promise<void> {
     this.primitives.clear();
     this.semantics.clear();
     this.componentTokens.clear();
@@ -193,6 +255,13 @@ export class TokenIndexer {
     this.loadTier(path.join(tokenIndexDir, 'primitives.yaml'), 'primitive', this.primitives);
     this.loadTier(path.join(tokenIndexDir, 'semantics.yaml'), 'semantic', this.semantics);
     this.loadTier(path.join(tokenIndexDir, 'components.yaml'), 'component', this.componentTokens);
+
+    // The installed package's own index, when the caller knows where it is. Read only when this
+    // index carries package-tagged component tokens (none do in DesignerPunk's own checkout).
+    if (packageTokenIndexDir && path.resolve(packageTokenIndexDir) !== path.resolve(tokenIndexDir)) {
+      const drift = packageComponentTokenDrift(this.componentTokens.values(), packageTokenIndexDir);
+      if (drift) this.warnings.push(drift);
+    }
 
     this.resolver = new TokenRefResolver(tokenIndexDir);
     this.resolver.load();
