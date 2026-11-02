@@ -114,7 +114,7 @@ Listed in emission order (`src/generators/DTCGFormatGenerator.ts`):
 | `zIndex` | number | Z-index layering values |
 | `elevation` | number | Elevation levels |
 | `shadow` | shadow | Shadow compositions |
-| `glow` | dimension / number | Glow primitives (partial) — `glow.blur.*` and `glow.opacity.*` subgroups only; composed glows are not yet implemented |
+| `glow` | dimension / number | Glow primitives (partial) — `glow.blur.*`<!-- example: generic --> and `glow.opacity.*`<!-- example: generic --> subgroups only; composed glows are not yet implemented |
 | `typography` | typography | Typography compositions |
 | `motion` | transition | Motion compositions |
 
@@ -195,7 +195,7 @@ Canonical definition: `src/generators/types/DTCGTypes.ts` § `DesignerPunkExtens
 }
 ```
 
-**Partial support** (glow token — emitted under the `glow.blur` subgroup):
+**Partial support** (glow token — emitted under the `glow.blur`<!-- example: generic --> subgroup):
 ```json
 {
   "blur050": {
