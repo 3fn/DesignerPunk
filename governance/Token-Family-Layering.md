@@ -74,16 +74,15 @@ Z-Index tokens provide stacking order values for web and iOS platforms. They use
 
 **Standard Modal with Shadow**:
 ```typescript
-// React/TypeScript
-import { zIndexTokens } from '@3fn/core';
-
+// React/TypeScript: the web output is CSS custom properties
 <Modal style={{
-  zIndex: zIndexTokens['zIndex.modal'].value,      // 400
+  zIndex: 'var(--z-index-modal)',                  // 400
   boxShadow: 'var(--shadow-modal)'                 // Visual depth
 }}>
   <ModalContent />
 </Modal>
 ```
+*(corrected 2026-11-01: the web examples read `var(--z-index-modal)`; no `@3fn/core` entry exports `zIndexTokens`, which is defined only in `src/tokens/semantic/ZIndexTokens.ts`; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 **CSS Custom Properties**:
 ```css
@@ -110,7 +109,7 @@ import { zIndexTokens } from '@3fn/core';
 <Header style={{
   position: 'sticky',
   top: 0,
-  zIndex: zIndexTokens['zIndex.navigation'].value  // 200, no shadow
+  zIndex: 'var(--z-index-navigation)'  // 200, no shadow
 }}>
   <Navigation />
 </Header>
@@ -270,9 +269,9 @@ export const shadowTokens = {
     primitiveReferences: {
       offsetX: 'shadowOffsetX.000',
       offsetY: 'shadowOffsetY.200',
-      blur: 'shadowBlurDepth200',
+      blur: 'blur100',
       opacity: 'shadowOpacityDepth200',
-      color: 'color.shadow.default'
+      color: 'shadowBlack100'
     },
     platforms: {
       web: { /* CSS box-shadow format */ },
@@ -287,6 +286,7 @@ export const shadowTokens = {
   }
 };
 ```
+*(corrected 2026-11-01: `shadow.modal`'s blur and color references are its source's (`blur100`, `shadowBlack100`); the names it had, shadowBlurDepth200 and color.shadow.default, are not keys; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 ---
 

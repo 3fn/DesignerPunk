@@ -244,9 +244,9 @@ date: 2026-09-29
 
 signer: kenya
 disposition: re-pointed
-canonicalHash: sha256:bd33ad01f96b8e52831e10abdd7b33556a39d8ee99f9cccbd789170539199f67
+canonicalHash: sha256:5af175a1382bb2c8a1ae48571e10071486b5f6404e739702094a12b86d8ffa79
 renderedHash: sha256:eaed5dad0116f1571c1ed2fd4da6a10c81e5afa85214f1cabe2321fb5e84d34f
-date: 2026-10-12
+date: 2026-11-01
 
 **Final re-sign 2026-09-29, after Thurgood's suffix fix `7e5af8be` and regen `8ea88c2f`: ASSENT to the re-point, `surviving: []`. My refusal is RESOLVED.**
 - **The rendering now reads** *"regenerate your platform token output — including your theme Swift and product tokens — from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)"*.
@@ -259,6 +259,16 @@ date: 2026-10-12
 - **What I read, in this session.** The cue as rendered: cc `kenya.md` L376 and kiro `kenya-prompt.md` L293, *"regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)"*, and the `_canonical` frontmatter L100 (`cue: regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts``).
 - **Why it holds.** The cue no longer says generate produces theme Swift (the clause *"including your theme Swift"* was removed, not reworded). What remains is true: `npx designerpunk generate` writes the platform token files and, when `productTokens` is configured, the product tokens (`src/cli/generateProductTokens.ts`). The command, `runContext` and source are unchanged and still re-point `npm run generate:platform-tokens` (subtraction-1). Ada's fact-check of the cue is reported as TRUE in the brief; I rely on my own read of the source, not on that report.
 - **Erratum.** My 2026-09-29 entry above says the re-point *"regenerates theme Swift and product tokens from the consumer's own config. That is where the theming surface materializes."* The second sentence was wrong: nothing emits a theme surface in a consumer today (`TokenFileGenerator.ts` L1028, no production caller). This entry supersedes it.
+
+**Re-sign 2026-11-01 (record `.kiro/issues/2026-10-12-steward-canonical-claims-theme-output.md`, fork 4), after Thurgood's authoring commit `b46697ef3` and overlay pin bump `e6c7bce8d`: ASSENT to the re-point, `surviving: []`.** This is a new act, and it closes no divergent.
+- **Stale list and hashes.** At head `e6c7bce8d`, `verify-signing-chain --ci --base origin/main` listed this row as stale. `canonicalHash` moves `bd33ad01…` → `5af175a1…`. I recomputed it myself: `hashEntry` over `entryTree(frontmatter)` of `canonical/agents/kenya.md`. `renderedHash` is unchanged (`eaed5dad…`), because `canonical/_consumer-output/` has no diff against `origin/main`.
+- **What I read, in this session.**
+  - The canonical member at L182 now ends *"Note that the Swift output has no Spec-094 theme surface (no theme protocol, per-theme structs or environment key), in this repo or in a consumer's `generate` output; see § iOS Theming (Spec 094)"*. That is my fork-4 wording, verbatim.
+  - The consumer rendering is unchanged: cc `kenya.md` L379 and kiro `kenya-prompt.md` L296 read *"regenerate your platform token output and product tokens from your token source and `designerpunk.config.ts`: `npx designerpunk generate` (run from your product repo)"*.
+  - The overlay `@entry` pin is now `5af175a1…`.
+- **Why it holds.**
+  - The canonical cue's old clause *"theming Swift materializes consumer-side"* was false. `generateThemeOverrideBlocks` (`src/generators/TokenFileGenerator.ts` L1044) has no caller outside `__tests__`, and `generate` prints "registered, not applied yet" (`src/cli/shared/errorCatalog.ts` L557–L558). The corrected cue says only what is true.
+  - The re-point is unchanged: `npm run generate:platform-tokens` → `npx designerpunk generate` (subtraction-1). The rendering makes no theme claim, so it still agrees with `#ios-theming-spec-094`.
 
 ## `#frontmatter:commands[swift-theme-types-tests]`
 
@@ -409,6 +419,18 @@ signer: kenya
 - Canonical says product-screen commands "are per-product and cannot be extracted in this repo — they live in the consumer iOS app (theming Swift materializes there via `npx designerpunk generate`)". The consumer value says they are per-product and to "read them from this iOS app's own build setup". `runContext: per-product`, `authoredPerProduct: true` and the cue are unchanged.
 - It is right for a consumer: "cannot be extracted in this repo" is about the design-system source; in a consumer repo the commands are in the app's own build setup, and the re-pointed text sends the role there. It agrees with the `#what-you-dont-own` destination ("read it from the app's build setup before you run anything").
 - The function survives: the role is told these commands are not a DesignerPunk-supplied set and where to find them. The dropped "theming Swift materializes there" clause is carried by `commands[platform-tokens]` (`npx designerpunk generate`, which I signed) and `#ios-theming-spec-094`.
+
+**Re-sign 2026-11-01 (record `.kiro/issues/2026-10-12-steward-canonical-claims-theme-output.md`, fork 4), after Thurgood's authoring commit `b46697ef3` and overlay pin bump `e6c7bce8d`: ASSENT to `re-pointed`, `surviving: []`.** This is a new act, and it closes no divergent.
+- **Stale list and hashes.** At head `e6c7bce8d`, `verify-signing-chain --ci --base origin/main` listed this row as stale. `canonicalHash` moves `5d9cb4dc…` → `c808d72a…`. I recomputed it myself: `hashEntry` over `entryTree(frontmatter)` of `canonical/agents/kenya.md`. `renderedHash` is unchanged (`63ec6ab5…`), because `canonical/_consumer-output/` has no diff against `origin/main`.
+- **What I read, in this session.**
+  - The canonical member at L206 now reads *"product-screen build/test/run commands are per-product and cannot be extracted in this repo — they live in the consumer iOS app."* The false parenthetical *"(theming Swift materializes there via `npx designerpunk generate`)"* is deleted, which is my fork-4 wording.
+  - The consumer rendering is unchanged: cc `kenya.md` L381 and kiro `kenya-prompt.md` L298 read *"product-screen build/test/run commands are per-product — read them from this iOS app's own build setup."*
+  - The overlay `@entry` pin is now `c808d72a…`.
+- **Why it holds.** The re-point's reasoning in my first signature above stands: the commands are the app's own, and the rendering sends the role there. The canonical text now makes no theme claim.
+- **Erratum.** My 2026-10-23 entry above says *"The dropped 'theming Swift materializes there' clause is carried by `commands[platform-tokens]` (`npx designerpunk generate`, which I signed) and `#ios-theming-spec-094`."* That was wrong.
+  - The clause was false: `generate` writes no theme surface (`src/generators/TokenFileGenerator.ts` L1044, no caller outside `__tests__`).
+  - Neither surface carried it. `#ios-theming-spec-094` says the opposite, and the platform-tokens rendering makes no theme claim.
+  - The consumer dropping the clause was correct. After this correction no canonical line says it. This entry supersedes that sentence.
 
 ## `#frontmatter:knowledgeBases[ios-components]`
 

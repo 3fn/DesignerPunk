@@ -7,11 +7,33 @@
 ## `#what-civitas-contains`
 
 signer: stacy
-date: 2026-10-27
+date: 2026-11-01
 row: `canonical/profiles/consumer/always-set/civitas-system-overview.dispositions.yaml` · body · `#what-civitas-contains` (re-pointed; ROUTED)
-canonicalHash: sha256:8bd2b48ef0fb20b950c7c1dd0466f7a4c96154da800d5787bc142536fab4533f
+canonicalHash: sha256:28ae923aeac90cc6bdd4589345103fd9c1f94821ac72cd573cb4c220e05ed72c
 renderedHash: sha256:3a0e750c68d74e1ea89c9a4be34382b395c5699b1f6306c1837c610bc67d2309
 verdict: assent — surviving 7/10; not surviving: `what-civitas-con-2`, `what-civitas-con-4`, `what-civitas-con-5`
+
+**Re-signed 2026-11-01: the Product MCP's provenance (L39)** (prior signature: assent — surviving 7/10; not surviving: `what-civitas-con-2`, `what-civitas-con-4`, `what-civitas-con-5`, 2026-10-27, against `sha256:8bd2b48ef0fb20b950c7c1dd0466f7a4c96154da800d5787bc142536fab4533f`; the rendered hash did not move). *(This re-does `85202d152`, whose read claim was false. Erratum: `.kiro/issues/2026-11-01-stacy-c1-acts-read-claim-false.md`; re-cut under R11 line 18.)*
+- **Why it was stale**: the canonical unit moved. The L39 CORRECTION (`7b31baed8`, re-authored at `b03d0c43a`; Peter's line 10 and his "Confirm", R11) replaced "built in Spec 081: 14 tools … see also specs 096, 097" with "built in Spec 081 and extended by specs 097, 107 and 108", checked against git in my re-confirm `e9db59590`. Thurgood re-quoted `what-civitas-con-8` and moved the overlay pin only.
+- **Read before this act**: the three consumer renderings, read whole via `cat -n`, at `e9db59590`, before this commit:
+  - `canonical/_consumer-output/_canonical/always-set/civitas-system-overview.md` L23–L44;
+  - `canonical/_consumer-output/cc/.claude/identity/designerpunk-civitas-system-overview.md` L23–L44;
+  - `canonical/_consumer-output/kiro/.kiro/steering/designerpunk-civitas-system-overview.md` L28–L49.
+  - The three read identically: identity documentation, the three MCP servers, the agent tiers and spec infrastructure.
+- **Judged against**: those renderings and the operative set at 10 items. The rendered Product MCP line reads "Product MCP: serves this product's screens, product tokens and context". It carries no spec number, count or package path, so the correction changes nothing a consumer reads. It removes a false sentence that only this repository's agents read.
+- **Hashes**:
+  - renderedHash `sha256:3a0e750c68d74e1ea89c9a4be34382b395c5699b1f6306c1837c610bc67d2309`, recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` over the committed `canonical/_consumer-output/` (three pieces); it equals the prior value.
+  - canonicalHash `sha256:28ae923aeac90cc6bdd4589345103fd9c1f94821ac72cd573cb4c220e05ed72c`, recomputed independently; it equals the overlay pin and my confirmation.
+- **Survival, re-read in the rendering**:
+  - `con-3`: the always-loaded identity members.
+  - `con-6` to `con-8`: the three servers' roles, from the installed package.
+  - `con-9` and `con-10`: the system and product tiers.
+  - `con-17`: as judged below.
+  - `con-2`, `con-4` and `con-5` (steering Layers 0, 2 and 3, DesignerPunk's own corpus layering) are not in the rendering.
+  - The removal (`subtraction-3`, DesignerPunk's own corpus inventory) is unchanged.
+- **Verdict**: assent, surviving 7 of 10, as before.
+
+**Prior signature record (superseded, 2026-10-27)**: assent — surviving 7/10; not surviving: `what-civitas-con-2`, `what-civitas-con-4`, `what-civitas-con-5`, against `sha256:8bd2b48ef0fb20b950c7c1dd0466f7a4c96154da800d5787bc142536fab4533f`, as below.
 
 **Re-signed 2026-10-27: the count pointers (O-23, scope (b))** (prior signature: assent 7/10, 2026-10-24, against `sha256:77dc3cb69a10ba754447dfc278d64cead1ff80013763931a9235e8fd574f8a26`; the rendered hash did not move).
 - **Why it was stale**: the canonical unit moved. The O-23 steering CORRECTION turned five figures into pointers: steering docs and the Docs MCP and Application MCP counts (`506da09b0`), hooks and shell scripts, and knowledge bases (`b3b447d57`). Thurgood re-authored `what-civitas-con-6` and `-7` and moved the overlay pin only (`b3b447d57`, under the #526 grant and its 2026-10-27 owner line); the overlay text is unchanged. My C1 re-confirmation at 10 items is `22fde5e0e`.

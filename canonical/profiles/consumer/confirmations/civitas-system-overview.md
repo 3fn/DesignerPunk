@@ -46,9 +46,23 @@ date: 2026-09-29
 ## `#what-civitas-contains`
 
 confirmer: stacy
-canonicalHash: sha256:8bd2b48ef0fb20b950c7c1dd0466f7a4c96154da800d5787bc142536fab4533f
+canonicalHash: sha256:28ae923aeac90cc6bdd4589345103fd9c1f94821ac72cd573cb4c220e05ed72c
 items: what-civitas-con-2, what-civitas-con-3, what-civitas-con-4, what-civitas-con-5, what-civitas-con-6, what-civitas-con-7, what-civitas-con-8, what-civitas-con-9, what-civitas-con-10, what-civitas-con-17
-date: 2026-10-27
+date: 2026-11-01
+
+**Re-confirmed 2026-11-01 (Req 11.6.5d): the Product MCP's provenance (L39).** *(This re-does `85d8c225c`, whose read claim was false. Erratum: `.kiro/issues/2026-11-01-stacy-c1-acts-read-claim-false.md`; re-cut under R11 line 18.)*
+- **What changed**: one line of the unit, the Product MCP line (L39). It said "built in Spec 081: 14 tools, shipped in the package as `dist/mcp/product-mcp.js`; see also specs 096, 097". It now says "built in Spec 081 and extended by specs 097, 107 and 108; shipped in the package as `dist/mcp/product-mcp.js`", plus a dated pointer to `.kiro/issues/2026-10-27-civitas-overview-product-mcp-provenance-false.md`.
+  - Thurgood authored it (`7b31baed8`, re-authored at `b03d0c43a`) on Peter's line 10, "Yes to both", and his "Confirm" of the re-authored sentence (2026-11-01, R11).
+  - Thurgood re-quoted item `what-civitas-con-8` and moved the overlay pin.
+- **The first wording was refused** (2026-11-01, at `7b31baed8`): it said "extended by specs 096 and 097". Spec 096 is the Application MCP's Token Data Index (its requirements L1, L12 and L20), and no 096 commit touches `product-mcp-server/`.
+- **The new text, checked against git**: the tool count in `product-mcp-server/src/index.ts` is 7 through Spec 081 (`3a8ab1385`…`80f212987`), 12 at `d7ff42ed1` (Spec 097), 13 at `640462b7a` (Spec 107, `get_brand_context`) and 14 at `3fb19b25a` (Spec 108, `get_product_tokens`). "Built in Spec 081 and extended by specs 097, 107 and 108" is true, and so is the pointer's "Spec 081 built 7 and specs 097, 107 and 108 took it to 14". No count remains in the line, which clears the "Known false clause" noted at the 2026-10-27 confirmation below.
+- **The set is unchanged: 10 items.** Each is a verbatim, unique substring of the corrected unit: 1 occurrence each, 10 of 10, checked by script at `b03d0c43a`. Only `what-civitas-con-8`'s text changed.
+- **The hash**: the canonicalHash moves from `sha256:8bd2b48ef0fb20b950c7c1dd0466f7a4c96154da800d5787bc142536fab4533f` to the value above. I recomputed it independently (`hashText` over `partition(splitFrontmatter(...).body).units`, via a scratchpad script outside the repo), and it equals the overlay pin.
+- **Read before this act**: the unit, read whole via `cat -n .kiro/steering/Civitas-System-Overview.md` L28–L60 (the heading through the closing rule, the 33 lines the hash covers), at `b03d0c43a`, before this commit.
+
+**Ruling: CONFIRMED at 10 items.**
+
+**Re-confirmed 2026-10-27 (prior record, superseded)**: canonicalHash `sha256:8bd2b48ef0fb20b950c7c1dd0466f7a4c96154da800d5787bc142536fab4533f`, 10 items, as below.
 
 **Re-confirmed 2026-10-27 (Req 11.6.5d): the count pointers (O-23, scope (b)).**
 - **What changed**: five figures in the unit became pointers to how each count is read. Steering CORRECTION on branch `fix/overview-section-counts` (`506da09b0` for L30, L37 and L38; `b3b447d57` for L46 and L50). Peter ruled scope (b) on 2026-10-27, before 02:25:42Z, relayed by the orchestrator: "Cool. Let's go with my answers plus (b) for O-23". My O23-C1 read agreed with (b) beforehand.
