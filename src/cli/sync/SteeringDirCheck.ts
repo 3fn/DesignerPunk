@@ -19,17 +19,15 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as readline from 'readline';
 import { resolvePackageRoot } from '../shared/resolvePackageRoot';
+import { MCP_CONFIG_CANDIDATES } from './mcpConfigCandidates';
 
 /** The post-119-A served corpus directory the docs MCP should index. */
 export const EXPECTED_STEERING_DIR_SEGMENT = 'governance';
 /** The pre-119-A location — a value still pointing here is stale. */
 const STALE_STEERING_DIR_SEGMENT = '.kiro/steering';
 
-/** Known consumer MCP-config locations, relative to project root. */
-const MCP_CONFIG_CANDIDATES = [
-  '.cursor/mcp.json',
-  '.kiro/settings/mcp.json',
-];
+// The MCP-config files scanned: `./mcpConfigCandidates` (shared with `./McpConfigCheck`). `.mcp.json`
+// (Claude Code's) joined the list on 2026-10-30; before that this check never read it.
 
 export interface StaleSteeringDirFinding {
   /** Project-relative path of the config file. */
