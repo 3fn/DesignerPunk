@@ -60,6 +60,7 @@ behaviors:
 properties:
   # Padding props (curated subset)
   padding:
+    web: attribute-only
     type: "'none' | '100' | '150' | '200'"
     required: false
     default: "'150'"
@@ -77,6 +78,7 @@ properties:
       3. Uniform padding (this prop)
   
   paddingVertical:
+    web: attribute-only
     type: "'none' | '050' | '100' | '150' | '200'"
     required: false
     default: undefined
@@ -90,6 +92,7 @@ properties:
       - 200: 16px (space.inset.200)
   
   paddingHorizontal:
+    web: attribute-only
     type: "'none' | '100' | '150' | '200'"
     required: false
     default: undefined
@@ -101,6 +104,7 @@ properties:
       - 200: 16px (space.inset.200)
   
   paddingBlockStart:
+    web: attribute-only
     type: "'none' | '050' | '100' | '150' | '200'"
     required: false
     default: undefined
@@ -110,6 +114,7 @@ properties:
       Highest priority - overrides both paddingVertical and uniform padding.
   
   paddingBlockEnd:
+    web: attribute-only
     type: "'none' | '050' | '100' | '150' | '200'"
     required: false
     default: undefined
@@ -119,6 +124,7 @@ properties:
       Highest priority - overrides both paddingVertical and uniform padding.
   
   paddingInlineStart:
+    web: attribute-only
     type: "'none' | '100' | '150' | '200'"
     required: false
     default: undefined
@@ -127,6 +133,7 @@ properties:
       Highest priority - overrides both paddingHorizontal and uniform padding.
   
   paddingInlineEnd:
+    web: attribute-only
     type: "'none' | '100' | '150' | '200'"
     required: false
     default: undefined
@@ -136,6 +143,7 @@ properties:
   
   # Visual styling props (curated subset)
   background:
+    web: attribute-only
     type: "'surface.primary' | 'surface.secondary' | 'surface.tertiary'"
     required: false
     default: "'surface.primary'"
@@ -146,6 +154,7 @@ properties:
       - surface.tertiary: Tertiary surface color
   
   shadow:
+    web: attribute-only
     type: "'none' | 'container'"
     required: false
     default: "'container'"
@@ -155,6 +164,7 @@ properties:
       - container: Container shadow [DEFAULT]
   
   border:
+    web: attribute-only
     type: "'none' | 'default'"
     required: false
     default: "'none'"
@@ -164,6 +174,7 @@ properties:
       - default: 1px border using borderColor
   
   borderColor:
+    web: attribute-only
     type: "'border.default' | 'border.subtle'"
     required: false
     default: "'border.default'"
@@ -174,6 +185,7 @@ properties:
       Only visible when border is 'default'.
   
   borderRadius:
+    web: attribute-only
     type: "'normal' | 'loose'"
     required: false
     default: "'normal'"
@@ -184,6 +196,7 @@ properties:
   
   # Semantic HTML (web only)
   semantic:
+    web: attribute-only
     type: "'div' | 'section' | 'article'"
     required: false
     default: "'div'"
@@ -196,6 +209,7 @@ properties:
   
   # Accessibility
   accessibilityLabel:
+    web: attribute-only
     type: string
     required: false
     default: undefined
@@ -207,6 +221,7 @@ properties:
   
   # Card-specific interactivity
   interactive:
+    web: attribute-only
     type: boolean
     required: false
     default: false
@@ -248,6 +263,7 @@ properties:
       - Android: Composable content lambda
   
   testID:
+    web: unmapped
     type: string
     required: false
     default: undefined

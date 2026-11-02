@@ -265,9 +265,28 @@ date: 2026-09-29
 ## `#trigger-types`
 
 confirmer: stacy
-canonicalHash: sha256:032199e154a7922469a7310d32e68bec6979556093fd8650420434b2a074b036
+canonicalHash: sha256:ec4843cd80bff21a728843a5dbd9357c5de00c83038082160ed4d283caf9d171
 items: instruments-named, instruments-computed, event-post-spec, event-post-doc, event-post-prompt, cadence-health-check, return-edge, liveness-records-not-verdicts, liveness-owed-set, liveness-records, liveness-release-complete, liveness-charter-walk, liveness-grant-activations, liveness-grant-activations-query, owed-set-roles, owed-set-predicate, owed-set-row-classes, owed-set-candidates-not-verdicts, owed-set-count-line, owed-set-unavailable, owed-set-unit-classes, owed-set-anchor-proxy, owed-set-wrong-result, register-read, discovery-spec, discovery-feedback, discovery-audit
-date: 2026-10-22
+date: 2026-11-01
+
+**Re-confirmed 2026-11-01 (Req 11.6.5d): the owed-set paragraphs describe the script since #473.** *(This re-does `5bd649934`, whose read claim was false. Erratum: `.kiro/issues/2026-11-01-stacy-c1-acts-read-claim-false.md`; re-cut under R11 line 18.)*
+- **What changed**: two paragraphs of the unit, L543 and L545.
+  - Thurgood authored them at `f88c5e868` as a CORRECTION, on Peter's line 13, "Yes, including L78's first sentence" (2026-11-01, R11). Record: `.kiro/issues/2026-10-25-owed-set-law-text-after-closing-commit-anchor.md`, items L1 and L3.
+  - L543: the 00:00 pin becomes the union day clock, and `touch-only` reads the closing commit.
+  - L545: class (c) loses its own anchor clause. The anchor-proxy sentence becomes the closing-commit sentence, with the belt anchor and the closure-undecidable rule.
+- **Ruled against `scripts/owed-set.sh` at `1eced6cd5`** (file lines): all three re-quotes and the relabel are faithful.
+  - The union clock: header L32–L36; `is_post` / `post_lines`, L161–L162.
+  - `touch-only` by the closing commit, the belt and its anchor: header L48–L66; code L224–L229, L250–L262.
+  - Class (c) without its own anchor: the units block is read for the label only (header L57–L62), and (c) is counted at L269.
+  - The undecidable rule: L238–L245.
+  - The relabel of `owed-set-anchor-proxy`, "The anchor is a proxy" to "The anchor is the closing commit", is faithful. The id is unchanged.
+- **The set is unchanged: 27 items, the same ids in the same order.** `owed-set-row-classes`, `owed-set-unit-classes` and `owed-set-anchor-proxy` were re-quoted (`6575ace5a`). Each of the 27 is a verbatim, unique substring of the corrected unit: 1 occurrence each, 27 of 27, checked by script at `b55ba11be`.
+- **The hash**: the canonicalHash moves from `sha256:032199e154a7922469a7310d32e68bec6979556093fd8650420434b2a074b036` to the value above. I recomputed it independently (`hashText` over `partition(splitFrontmatter(...).body).units`, via a scratchpad script outside the repo), and it equals the overlay pin.
+- **Read before this act**: the unit, read whole via `cat -n canonical/agents/thurgood.md` L511–L552 (the heading through the last Discovery line, the 42 lines the hash covers), at `b55ba11be`, before this commit. The script was cross-read at the cited lines in an earlier read of the day, not re-printed whole for this act.
+
+**Ruling: CONFIRMED at 27 items.**
+
+**Re-confirmed 2026-10-22 (prior record, superseded)**: canonicalHash `sha256:032199e154a7922469a7310d32e68bec6979556093fd8650420434b2a074b036`, 27 items, as below.
 
 **Re-confirmed 2026-10-22 (Req 11.6.5d).**
 - **What changed**: the owed-set paragraph. LIVENESS read 1 now says "run `bash scripts/owed-set.sh` (the owed-set query below)", and the pasted pipeline, the exclusion-classes paragraph and the ladder paragraph are replaced by a prose contract of the committed script (`a4bf25429`; Peter's "Yes.", 2026-10-21): who specifies, authors and runs it, the predicate, the row classes, candidates never verdicts, the count line, the `unavailable` line, the unit classes, the anchor as a proxy, and "a wrong result is fixed in the script with a falsification case". The text is Thurgood's (canonical commit `1b51c1f87`; record `b7c32ae44`). The canonicalHash moves from `sha256:c0eae17781843d50c34fec00c2c31a7772924a04ce3e9c017f1efa2cbc1205fd` to the value above, as `operative-set-freshness` printed it and as I recomputed it independently from `partition(splitFrontmatter(...).body)` with `regrounding/hash.ts` (the two agree). I confirm his set; I do not edit his text.

@@ -82,8 +82,8 @@ References to primitive tokens that this semantic token uses. This is the MOST I
 **Single-Reference Pattern** (colors, spacing, borders):
 - Object with single key `value` pointing to one primitive token
 - Used when semantic token represents a single primitive value
-- See `color.primary` and `color.error` tokens in `src/tokens/semantic/ColorTokens.ts` for examples
-- See `spacing.grouped.normal` token in `src/tokens/semantic/SpacingTokens.ts` for spacing examples
+- See `color.action.primary` and `color.feedback.error.text` tokens in `src/tokens/semantic/ColorTokens.ts` for examples
+- See `space.grouped.normal` token in `src/tokens/semantic/SpacingTokens.ts` for spacing examples *(corrected 2026-11-01: example token names now name keys the token index holds; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 **Multi-Reference Pattern** (typography, shadows):
 - Object with multiple keys, each pointing to a different primitive token
@@ -147,9 +147,9 @@ Contextual meaning or usage description that explains WHEN and WHERE to use this
 - Avoid vague descriptions that don't guide decision-making
 
 **Real-World Examples**:
-- See `color.primary` and `color.error` tokens in `src/tokens/semantic/ColorTokens.ts` for context descriptions
+- See `color.action.primary` and `color.feedback.error.text` tokens in `src/tokens/semantic/ColorTokens.ts` for context descriptions
 - See `typography.bodyMd` and `typography.h1` tokens in `src/tokens/semantic/TypographyTokens.ts` for context descriptions
-- See `spacing.grouped.normal` token in `src/tokens/semantic/SpacingTokens.ts` for context descriptions
+- See `space.grouped.normal` token in `src/tokens/semantic/SpacingTokens.ts` for context descriptions *(corrected 2026-11-01: example token names now name keys the token index holds; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 **Pattern**: Context field typically starts with the token's purpose followed by specific use cases in parentheses
 
@@ -168,7 +168,7 @@ Detailed description of semantic meaning and appropriate usage that explains WHA
 - Include actual values in parentheses for clarity (16px, 1.5 line height, etc.)
 
 **Real-World Examples**:
-- See `color.primary` and `color.error` tokens in `src/tokens/semantic/ColorTokens.ts` for description patterns
+- See `color.action.primary` and `color.feedback.error.text` tokens in `src/tokens/semantic/ColorTokens.ts` for description patterns *(corrected 2026-11-01: example token names now name keys the token index holds; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 - See `typography.bodyMd` and `typography.h1` tokens in `src/tokens/semantic/TypographyTokens.ts` for descriptions with all properties
 - See `shadow.container` and `shadow.modal` tokens in `src/tokens/semantic/ShadowTokens.ts` for descriptions with quality indicators
 
@@ -229,8 +229,8 @@ Tokens that reference a single primitive token. Used for colors, spacing, border
 - Used for straightforward semantic mappings (primary color, normal spacing, default border)
 
 **Real-World Examples**:
-- **Color tokens**: See `color.primary` token in `src/tokens/semantic/ColorTokens.ts` (references `cyan300`)
-- **Spacing tokens**: See `spacing.grouped.normal` token in `src/tokens/semantic/SpacingTokens.ts` (references `space100`)
+- **Color tokens**: See `color.action.primary` token in `src/tokens/semantic/ColorTokens.ts` (references `cyan300`)
+- **Spacing tokens**: See `space.grouped.normal` token in `src/tokens/semantic/SpacingTokens.ts` (references `space100`) *(corrected 2026-11-01: example token names now name keys the token index holds; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 - **Border tokens**: See `src/tokens/semantic/BorderWidthTokens.ts` for border width tokens with single-reference pattern
 
 **Pattern Recognition**: If the semantic token represents a single value (one color, one spacing value, one border width), use single-reference pattern with `{ value: 'primitiveName' }`
@@ -622,7 +622,7 @@ Rather than showing code examples that may drift out of sync, this section point
 
 ### Example 1: Simple Color Token
 
-**Location**: See `color.error` token in `src/tokens/semantic/ColorTokens.ts`
+**Location**: See `color.feedback.error.text` token in `src/tokens/semantic/ColorTokens.ts` *(corrected 2026-11-01: example token names now name keys the token index holds; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 **Pattern Demonstrated**:
 - Single-reference pattern with `{ value: 'primitiveName' }`
@@ -634,7 +634,7 @@ Rather than showing code examples that may drift out of sync, this section point
 
 ### Example 2: Spacing Token
 
-**Location**: See `spacing.related.normal` token in `src/tokens/semantic/SpacingTokens.ts`
+**Location**: See `space.related.normal` token in `src/tokens/semantic/SpacingTokens.ts` *(corrected 2026-11-01: example token names now name keys the token index holds; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 **Pattern Demonstrated**:
 - Single-reference pattern for spacing values
@@ -688,7 +688,7 @@ Token names should describe purpose and context, not implementation details or p
 
 **Principle**: Names should answer "what is this for?" not "what primitive does this use?"
 
-**Pattern**: Use dot notation with semantic segments (color.primary, typography.bodyMd, spacing.grouped.normal)
+**Pattern**: Use dot notation with semantic segments (color.action.primary, typography.bodyMd, space.grouped.normal) *(corrected 2026-11-01: example token names now name keys the token index holds; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 ### 3. Provide Actionable Context
 

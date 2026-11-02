@@ -210,9 +210,29 @@ date: 2026-10-22
 ## `#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script`
 
 confirmer: stacy
-canonicalHash: sha256:fcf52f052773d8f801d52ae79152e04e167d892cb2d568b549429486b1da75bf
+canonicalHash: sha256:60defc99dcb57b3530f420338068017de5a09aae53d0ebc225aab6398482693b
 items: owed-set-predicate, owed-set-emits-exclusions, owed-set-run, owed-set-row-classes, owed-set-count-line, owed-set-candidate-not-verdict, owed-set-heuristics, owed-set-unavailable, owed-set-one-code-path, owed-set-class-a, owed-set-class-b, owed-set-class-c, owed-set-git-history
-date: 2026-10-23
+date: 2026-11-01
+
+**Re-confirmed 2026-11-01 (Req 11.6.5d), after the F2 CORRECTION.**
+- **What changed**: two paragraphs of the unit, L445 and L449, which describe `scripts/owed-set.sh` (unchanged from `1eced6cd5` through `origin/main`). The CORRECTION was authored by Thurgood at `a62898620` and `db386ae22`, on Peter's "Yes" of 2026-11-01 (relayed; its committed record is Thurgood's to land, and the PR body cites it). It uses my 2026-10-25 draft (`.kiro/issues/2026-10-25-owed-set-law-text-after-closing-commit-anchor.md` item L4) with three fact fixes, and my own closure-undecidable sentence after I refused at `cfc6ed983`.
+  - `touch-only` is now defined by the closing commit, not by a path set.
+  - The candidate anchor is the closing commit, or the newest post-ratification `completion/task-*` add when that add keeps a pre-ratification closing a candidate.
+  - Where no closing commit can be found, the path rule is stated in full, with the undecidable candidate's anchor.
+  - L449's "a path set is a proxy" becomes "read checkboxes, and a checkbox is an assertion".
+- **Ruled against the script** (`git show 1eced6cd5:scripts/owed-set.sh`; file line numbers):
+  - (i) the belt counts post-adoption adds only (L253, `--diff-filter=A … | post_lines`): **correct**.
+  - (ii) the belt row's anchor is the newest such add (L253, `head -1` of a newest-first log; L259–L262): **correct**.
+  - (iii) the undecidable rows: touch-only only if no post-adoption change to `tasks.md` or `completion/` (L238–L243), and otherwise a candidate anchored on the last first-parent touch of the spec directory (L245), with `closure undecidable` in both reasons: **correct as now worded**.
+  - My refusal note of 2026-11-01 gave these as L111, L119 and L101–L113. Those were line numbers in an excerpt, not in the file; the file lines are the ones above.
+- **The operative set is unchanged: 13 items, the same ids in the same order.** `owed-set-row-classes` and `owed-set-heuristics` were re-quoted by Thurgood (`ea29ad0ea`, `e732282cb`), and the heuristics label changed with its sentence. Each of the 13 is a verbatim, unique substring of the corrected unit: 1 occurrence each, 13 of 13, checked by script against the unit text at `7ad3ada78`.
+- **The canonicalHash moves** from `sha256:fcf52f052773d8f801d52ae79152e04e167d892cb2d568b549429486b1da75bf` to the value above. I recomputed it independently (`hashText` over the unit from `partition(splitFrontmatter(...).body).units`, via a scratchpad script outside the repo), and it equals the overlay pin at `e732282cb`.
+- **Accepted, not refused**: "with no unticked parent" in the closing-commit definition is a little looser than the script, where any column-0 `- [<not x>]` ends the run. A `[-]` in the current state is covered by the undecidable sentence. A `[-]` only in an older state shortens the run unstated; that is rare and costs a look, not an owe.
+- **Read before this act**: the unit, `canonical/agents/stacy.md` L436–L467, and `scripts/owed-set.sh` L41–L85 and L180–L275 at `1eced6cd5`, read through tool calls before this commit.
+
+**Ruling: CONFIRMED at 13 items.**
+
+**Re-confirmed 2026-10-23 (prior record, superseded)**: canonicalHash `sha256:fcf52f052773d8f801d52ae79152e04e167d892cb2d568b549429486b1da75bf`, 13 items, as below.
 
 **Re-confirmed 2026-10-23 under the renamed key (Req 11.6.5d; errata (f)).**
 - **What changed**: one line, the unit's heading, which is the unit's key. It read "The owed-set pipeline (your command catalog's owed-set entry — documented commands, deliberately not a committed script)", which said the opposite of the body since #439 made the query the committed script `scripts/owed-set.sh`. It now reads "The owed-set query (your command catalog's owed-set entry — the committed script)". The text is mine (`.kiro/issues/2026-10-22-stacy-owed-set-heading-false-after-439.md`, § 2 step 1); Thurgood applied it byte for byte at `6a00748ac` (errata (f)) and moved the operative-set key and confirmation fragment at `d06620cdb`. The body under the heading is byte-identical to the one I confirmed on 2026-10-22 (`git diff 6a00748ac^ 6a00748ac -- canonical/agents/stacy.md` is the heading line alone).

@@ -46,6 +46,7 @@ properties:
     description: Unique identifier for the input element
   
   label:
+    web: attribute-only
     type: string
     required: true
     description: Label text (floats between placeholder and floated positions)
@@ -71,33 +72,39 @@ properties:
     description: Callback when input loses focus
   
   helperText:
+    web: attribute-only
     type: string
     required: false
     description: Helper text displayed below input (persistent)
   
   errorMessage:
+    web: attribute-only
     type: string
     required: false
     description: Error message from props (takes precedence over validation error)
   
   isSuccess:
+    web: attribute-only
     type: boolean
     required: false
     default: false
     description: Success state indicator (shows success icon)
   
   showInfoIcon:
+    web: attribute-only
     type: boolean
     required: false
     default: false
     description: Info icon support (shows info icon, triggers helper text)
   
   placeholder:
+    web: attribute-only
     type: string
     required: false
     description: Placeholder text (only shown when label is floated and input is empty)
   
   readOnly:
+    web: attribute-only
     type: boolean
     required: false
     default: false
@@ -108,17 +115,20 @@ properties:
       renders it as selectable static text inside the field chrome.
   
   required:
+    web: attribute-only
     type: boolean
     required: false
     default: false
     description: Required field indicator
   
   maxLength:
+    web: attribute-only
     type: number
     required: false
     description: Maximum length for input value
   
   testID:
+    web: unmapped
     type: string
     required: false
     description: Test ID for automated testing
@@ -130,6 +140,7 @@ properties:
   
   # Fixed properties for email input
   type:
+    web: unmapped
     type: "'email'"
     required: false
     default: "'email'"
@@ -137,6 +148,7 @@ properties:
     description: Input type is fixed to 'email' for this semantic component
   
   autocomplete:
+    web: unmapped
     type: "'email'"
     required: false
     default: "'email'"
@@ -150,6 +162,7 @@ properties:
     description: Custom email validation function (overrides default RFC 5322 pattern)
   
   invalidEmailMessage:
+    web: attribute-only
     type: string
     required: false
     default: "'Please enter a valid email address'"

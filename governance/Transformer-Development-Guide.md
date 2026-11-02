@@ -315,16 +315,17 @@ Variables and styles use different separators because Figma's UI treats them dif
 ```
 space/100          ← primitive: "space100" → strip prefix, keep number
 color/purple/300   ← primitive: "purple300" → split name + number
-color/primary      ← semantic: "color.primary" → dots become slashes
+color/action/primary ← semantic: "color.action.primary" → dots become slashes
 ```
 
 **Styles** use `.` for flat display in the style picker:
 ```
 shadow.container
-shadow.elevation200
+shadow.modal
 typography.bodySm
-typography.heading200
+typography.h2
 ```
+*(corrected 2026-11-01: the example names are ones the generated Figma output carries (`color/action/primary`, `shadow.modal`, `typography.h2`); `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 The naming logic lives in two methods:
 

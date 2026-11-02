@@ -94,12 +94,12 @@ type LayeringValue = 'base' | 'raised' | 'overlay';
 - ❌ Requires runtime validation or build-time checks
 - ❌ Less self-documenting
 
-**Examples in DesignerPunk**:
+**Examples in DesignerPunk**: the three flexible types are generated from the semantic token files by `scripts/generate-token-types.ts` (`npm run generate:types`) into `src/types/generated/TokenTypes.ts`, and Container-Base's `background`, `shadow` and `opacity` props use them (`src/components/core/Container-Base/types.ts`). *(corrected 2026-11-01: the flexible types are generated, not plain strings; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 ```typescript
-// Flexible token types (currently using string)
-type ColorTokenName = string;  // Should be generated: 'color.primary' | 'color.secondary' | ...
-type ShadowTokenName = string;  // Should be generated: 'shadow.dusk' | 'shadow.sunrise' | ...
-type OpacityTokenName = string; // Should be generated: 'opacity.subtle' | 'opacity.medium' | ...
+// src/types/generated/TokenTypes.ts (generated; excerpt)
+export type ColorTokenName = 'color.action.primary' | 'color.action.secondary' | /* … every color token */;
+export type ShadowTokenName = 'shadow.dusk' | 'shadow.sunrise' | /* … every shadow token */;
+export type OpacityTokenName = 'opacity.subtle' | 'opacity.medium' | 'opacity.heavy' | 'opacity.ghost';
 ```
 
 ---
@@ -116,38 +116,19 @@ type BorderRadiusValue = 'none' | 'small' | 'normal' | 'large';
 type LayeringValue = 'base' | 'raised' | 'overlay';
 ```
 
-**Flexible token types** (needs improvement):
+**Flexible token types** (generated):
 ```typescript
-// Container component
-background?: string;  // ❌ No validation, any string accepted
-shadow?: string;      // ❌ No validation, any string accepted
-opacity?: string;     // ❌ No validation, any string accepted
+// Container-Base (src/components/core/Container-Base/types.ts)
+import type { ColorTokenName, ShadowTokenName, OpacityTokenName } from '../../../types/generated/TokenTypes';
+
+background?: ColorTokenName;  // ✅ Type-safe, autocomplete works
+shadow?: ShadowTokenName;     // ✅ Type-safe, autocomplete works
+opacity?: OpacityTokenName;   // ✅ Type-safe, autocomplete works
 ```
 
-### Desired State (Future Enhancement)
+### What Is Still Future
 
-**Auto-generated types for flexible tokens**:
-```typescript
-// Generated from token system
-type ColorTokenName = 
-  | 'color.primary'
-  | 'color.secondary'
-  | 'color.success'
-  | 'color.error'
-  // ... all color tokens
-
-type ShadowTokenName =
-  | 'shadow.dusk'
-  | 'shadow.sunrise'
-  | 'shadow.afternoon'
-  // ... all shadow tokens
-
-// Component uses generated types
-interface ContainerProps {
-  background?: ColorTokenName;  // ✅ Type-safe, autocomplete works
-  shadow?: ShadowTokenName;     // ✅ Type-safe, autocomplete works
-}
-```
+Generated types catch a wrong name at compile time, in TypeScript only. A web element's attribute and a native call site still accept any string, and the resolution functions below are not built. *(corrected 2026-11-01: the generated types are built and Container-Base uses them; the "desired state" block named tokens the index does not hold; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 **Why this is better**:
 - Compile-time validation catches typos
@@ -159,9 +140,9 @@ interface ContainerProps {
 
 ## Validation Strategies
 
-### Type Generation (Recommended for Future)
+### Type Generation (Built)
 
-**Auto-generate TypeScript types from token system**:
+**TypeScript types generated from the token system**:
 
 **Benefits**:
 - Provides autocomplete and compile-time validation
@@ -169,21 +150,18 @@ interface ContainerProps {
 - No manual maintenance required
 - Works with existing TypeScript tooling
 
-**Implementation approach** (out of scope for current spec):
+**How it is built**: `scripts/generate-token-types.ts` reads the semantic color, shadow and opacity token files and writes `src/types/generated/TokenTypes.ts`: the three unions, their union `SemanticTokenName`, and the guards `isColorTokenName`, `isShadowTokenName` and `isOpacityTokenName`. *(corrected 2026-11-01: the type generator exists; the section called it future and named an output path that does not exist; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 ```typescript
-// scripts/generate-token-types.ts
-// Reads token system, generates TypeScript types
-
-// Generated output: src/tokens/generated-types.ts
-export type ColorTokenName = 
-  | 'color.primary'
-  | 'color.secondary'
-  // ... all color tokens from token system
+// src/types/generated/TokenTypes.ts (generated; excerpt)
+export type ColorTokenName =
+  | 'color.action.primary'
+  | 'color.action.secondary'
+  // ... every color token from the semantic token file
 ```
 
 **Usage in components**:
 ```typescript
-import { ColorTokenName } from '@/tokens/generated-types';
+import type { ColorTokenName } from '../../../types/generated/TokenTypes';
 
 interface ContainerProps {
   background?: ColorTokenName;  // Type-safe!
@@ -200,27 +178,29 @@ interface ContainerProps {
 - Centralizes token resolution logic
 - Can log warnings for debugging
 
-**Implementation approach** (out of scope for current spec):
+**Implementation approach** (not built; a sketch. Neither the script nor its output exists):
+<!-- example: generic -->
 ```typescript
-// scripts/generate-token-resolvers.ts
-// Reads token system, generates resolution functions
+// scripts/generate-token-resolvers.ts (hypothetical)
+// Reads token system, generates resolution functions (web: CSS custom properties)
 
-// Generated output: src/tokens/generated-resolvers.ts
+// Generated output: src/tokens/generated-resolvers.ts (hypothetical)
 export function resolveColorToken(name: ColorTokenName): string {
   const tokens: Record<string, string> = {
-    'color.primary': DesignTokens.color.primary,
-    'color.secondary': DesignTokens.color.secondary,
+    'color.action.primary': 'var(--color-action-primary)',
+    'color.action.secondary': 'var(--color-action-secondary)',
     // ... all color tokens
   };
   
   if (!tokens[name]) {
     console.warn(`Invalid color token: ${name}`);
-    return DesignTokens.color.primary; // fallback
+    return 'var(--color-action-primary)'; // fallback
   }
   
   return tokens[name];
 }
 ```
+*(corrected 2026-11-01: the sketch is labelled hypothetical, and its token names and values are ones the index holds; `DesignTokens.color.primary` named no generated member; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 **Usage in components**:
 ```typescript
@@ -233,7 +213,7 @@ const backgroundColor = resolveColorToken(this.background);
 // ✅ Logs warning for debugging
 ```
 
-### Build-Time Validation (Recommended for Future)
+### Build-Time Validation (Built in Part)
 
 **Fail build if components reference non-existent tokens**:
 
@@ -243,27 +223,10 @@ const backgroundColor = resolveColorToken(this.background);
 - Works with CI/CD pipelines
 - No runtime performance cost
 
-**Implementation approach** (out of scope for current spec):
-```typescript
-// scripts/validate-token-references.ts
-// Scans component files for token references
-// Validates against token system
-// Fails build if invalid references found
-
-// Example validation
-const componentTokens = extractTokenReferences('src/components/');
-const validTokens = loadTokenSystem();
-
-const invalidTokens = componentTokens.filter(
-  token => !validTokens.includes(token)
-);
-
-if (invalidTokens.length > 0) {
-  console.error('Invalid token references found:');
-  invalidTokens.forEach(token => console.error(`  - ${token}`));
-  process.exit(1);
-}
-```
+**What is built**:
+- **Component schemas**: `src/generators/__tests__/schemaTokenRefs.test.ts` fails when a component schema's `tokens:` value is not an exact key of the committed token index.
+- **Served governance docs**: `scripts/governance-examples/check.ts`, run by its test in `npm run test:scripts`, fails when an example's token name does not resolve against the index, unless its pending list names it.
+- **Not built**: a scan of component platform code (`.web.ts`, `.ios.swift`, `.android.kt`) for token references. The script this section sketched, `scripts/validate-token-references.ts`, does not exist. *(corrected 2026-11-01: two of the checks this section sketched exist, and the script it named does not; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 ---
 

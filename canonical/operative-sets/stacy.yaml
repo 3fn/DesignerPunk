@@ -221,7 +221,7 @@ units:
   #   confirmer ruling read as operative inside stages 1a and 1b is the script's now (contract item 1), exercised by
   #   scripts/__tests__/owed-set.test.ts. 8 ids retired: the resolve command, stages 1a-4, three-copies, staged-mechanization.
   "#the-owed-set-query-your-command-catalogs-owed-set-entry-the-committed-script":
-    canonicalHash: sha256:fcf52f052773d8f801d52ae79152e04e167d892cb2d568b549429486b1da75bf
+    canonicalHash: sha256:60defc99dcb57b3530f420338068017de5a09aae53d0ebc225aab6398482693b
     items:
       - id: owed-set-predicate
         kind: obligation
@@ -238,7 +238,7 @@ units:
       - id: owed-set-row-classes
         kind: member
         label: "One class per spec"
-        text: "Each spec has exactly one class: `closed` (`completion/claims-pass.md` exists); `stub` (no `tasks.md`, a charter-only spec; the reason names the files); `open` (at least one unticked parent; the reason reads `N of M parents unticked`); `touch-only` (no first-parent commit since ratification changed `tasks.md` or `completion/**`, so the touch was feedback, an inbound or a post-closure edit; the reason is the last touching commit); otherwise `candidate` (the reason keeps the unit class `a|b|c` and the anchor `<sha> <date>`)."
+        text: "Each spec has exactly one class: `closed` (`completion/claims-pass.md` exists); `stub` (no `tasks.md`, a charter-only spec; the reason names the files); `open` (at least one unticked parent; the reason reads `N of M parents unticked`); `touch-only` (the spec's closing commit, the oldest commit in the newest unbroken run of first-parent `tasks.md` states with no unticked parent, predates ratification, and no file under `completion/task-*` was added after ratification; the reason names the closing commit and the last touching commit); otherwise `candidate` (the reason keeps the unit class `a|b|c` and the anchor `<sha> <date>`: the closing commit or, where a `completion/task-*` file added after ratification keeps a pre-ratification closing a candidate, the newest such commit). Where no closing commit can be found (no checkbox parents, or a parent marked neither `[ ]` nor `[x]`), the path rule decides, and the reason says `closure undecidable`: the row is `touch-only` if no first-parent commit since ratification changed `tasks.md` or `completion/**`, and otherwise a `candidate` anchored on the spec's last first-parent touch."
       - id: owed-set-count-line
         kind: obligation
         label: "The count line and the row-sum identity"
@@ -249,8 +249,8 @@ units:
         text: "**Only a `candidate` row can be owed, and a candidate is not a verdict**: a spec owes a closeout pass only once its final declared unit has merged, and the script reads git and `tasks.md`, not the merge. Confirm the unit's merge (`git log --first-parent -- .kiro/specs/<spec>/`) before you open a pass on a candidate."
       - id: owed-set-heuristics
         kind: obligation
-        label: "open and touch-only are heuristics"
-        text: "**`open` and `touch-only` are heuristics over assertions and paths, not merge facts**: a ticked box is a claim, and a path set is a proxy. The reason column says what was assumed, so read it. Before you call the set empty, spot-read any `open` or `touch-only` row whose spec could have merged its final unit (a stale unticked box; a closeout merge that changed neither `tasks.md` nor `completion/**`), because a wrong exclusion hides an owe and a wrong candidate only costs a look."
+        label: "open and touch-only read checkboxes"
+        text: "**`open` and `touch-only` read checkboxes, and a checkbox is an assertion, not a merge fact**: a ticked box is a claim. The reason column says what was assumed, so read it. Before you call the set empty, spot-read any `open` or `touch-only` row whose spec could have merged its final unit (a stale unticked box; a spec ticked before ratification whose final work merged after it, with no `completion/task-*` file added), because a wrong exclusion hides an owe and a wrong candidate only costs a look."
       - id: owed-set-unavailable
         kind: obligation
         label: "Unavailable is never empty"

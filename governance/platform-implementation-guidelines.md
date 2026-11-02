@@ -77,6 +77,10 @@ All platforms MUST use identical property names for component APIs.
 | Same default values | `disabled: false` | Predictable defaults |
 | Same required status | `label: required` | Consistent validation |
 
+**Web: how an element takes a served prop.** On web, the served schema states how the element takes each non-callback prop: as a JS property of the served name, or, where none exists, as its kebab-case attribute only, marked attribute-only. The served name is never changed to match the element, and the element is not renamed. Every attribute-only prop is a listed G-4 finding. *(added 2026-11-02 by ballot 2026-10-30-web-prop-property-or-attribute-only, site 1)*
+
+The marker is the property's `web` field: `attribute-only` or `unmapped` (Component Schema Format § "Property Definitions"). G-4 is DesignerPunk's web-element contract work. It keeps the list of attribute-only and unmapped props, and it decides how a served callback maps to an element event, which is not settled here.
+
 **Cross-Platform Property Example**:
 ```typescript
 // Web (TypeScript)
@@ -727,7 +731,7 @@ android_patterns:
 
 #### Android Token Usage: The `.dp` Pattern
 
-**CRITICAL RULE**: Never append `.dp` when passing `DesignTokens` values to Compose functions.
+**CRITICAL RULE**: Never append `.dp` to a `DesignTokens` value the generator emits as `Dp` (spacing, radius, tapArea, borderWidth, layering) when passing it to Compose functions. A `Float` token (sizing among them) takes `.dp` at the read; see "When `.dp` IS Required" below. *(corrected 2026-11-01: the rule read as covering every `DesignTokens` value; .kiro/issues/archive/2026-10-26-android-guidelines-spacing-float-dp-claim.md; prior text at 465af3544)*
 
 ❌ **WRONG**:
 ```kotlin

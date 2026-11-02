@@ -90,8 +90,9 @@ import {
   getBlendUtilities, 
   createBlendUtilities,
   BlendTokenValues 
-} from '@3fn/core/ThemeAwareBlendUtilities';
+} from '@3fn/core/blend';
 ```
+*(corrected 2026-11-01: the import names the package's `./blend` entry (`exports["./blend"]` → `dist/blend/index.d.ts`); the `exports` map lists no ThemeAwareBlendUtilities subpath; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 **Available Functions**:
 

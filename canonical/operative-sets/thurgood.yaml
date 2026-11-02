@@ -504,7 +504,7 @@ units:
         text: "**Unowned** (involves infrastructure-level doc): Thurgood resolves directly. If domain expertise is needed, Thurgood flags → closest domain agent resolves."
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#resolution-path-for-flagged-inconsistencies
   "#trigger-types":
-    canonicalHash: sha256:032199e154a7922469a7310d32e68bec6979556093fd8650420434b2a074b036
+    canonicalHash: sha256:ec4843cd80bff21a728843a5dbd9357c5de00c83038082160ed4d283caf9d171
     items:
       - id: instruments-named
         kind: member
@@ -573,7 +573,7 @@ units:
       - id: owed-set-row-classes
         kind: member
         label: "One class per spec"
-        text: "It reads that date from the ballot's `Ratified-machine:` line, pins the boundary to 00:00 on that day (CLOSEOUT pilot F-1: a bare date drops that day's earlier merges), and prints one row per spec a first-parent commit since then touched, `<class>\\t<spec>\\t<reason>`, one class per spec in this order: `closed` (`completion/claims-pass.md` exists); `stub` (no `tasks.md`; the reason names the files); `open` (an unticked parent, `- [ ]` at column 0 — a checkbox is an assertion, not a merge fact, and the reason says so); `touch-only` (no post-ratification first-parent commit changed `tasks.md` or `completion/**`; the reason names the last touching commit); `candidate` (the reason gives the unit class and the anchor)."
+        text: "It reads that date from the ballot's `Ratified-machine:` line, counts a commit as post-ratification when its committer's recorded day or its UTC day is on or after that date (it reads the whole first-parent line, with no `git log --since`), and prints one row per spec a post-ratification first-parent commit touched, `<class>\\t<spec>\\t<reason>`, one class per spec in this order: `closed` (`completion/claims-pass.md` exists); `stub` (no `tasks.md`; the reason names the files); `open` (an unticked parent, `- [ ]` at column 0 — a checkbox is an assertion, not a merge fact, and the reason says so); `touch-only` (the spec's closing commit predates ratification and no `completion/task-*` file was added after ratification; the reason names the closing commit and the last touching commit); `candidate` (the reason gives the unit class and the anchor)."
       - id: owed-set-candidates-not-verdicts
         kind: obligation
         label: "Candidates, never verdicts"
@@ -589,11 +589,11 @@ units:
       - id: owed-set-unit-classes
         kind: member
         label: "The unit classes"
-        text: "**The unit classes** (on `candidate` rows): **(a)** declared units in any recognized form (canonical `## Declared Merge Units` heading → legacy bold-prose `**Merge units (…** declaration → a \"merge unit\" heading), anchoring on the final declared unit; **(b)** no units block, single PR — that PR is the spec's only unit; **(c)** no units block, >1 PR — the PR carrying the last parent completion doc."
+        text: "**The unit classes** (on `candidate` rows): **(a)** declared units in any recognized form (canonical `## Declared Merge Units` heading → legacy bold-prose `**Merge units (…** declaration → a \"merge unit\" heading), anchoring on the final declared unit; **(b)** no units block, single PR — that PR is the spec's only unit; **(c)** no units block, >1 PR."
       - id: owed-set-anchor-proxy
         kind: obligation
-        label: "The anchor is a proxy"
-        text: "The anchor printed is the last first-parent commit touching the spec, a proxy for that merge; where the two differ, the definition governs."
+        label: "The anchor is the closing commit"
+        text: "The anchor printed is the spec's closing commit (the oldest commit in the newest unbroken run of first-parent `tasks.md` states with no unticked parent, the final unit's merge) or, where a `completion/task-*` file added after ratification keeps a pre-ratification closing a candidate, the newest such commit. Where no closing commit can be found (no checkbox parents, or a parent marked neither `[ ]` nor `[x]`), the path rule decides, and the reason says `closure undecidable`: the row is `touch-only` if no post-ratification first-parent commit changed `tasks.md` or `completion/**`, and otherwise a `candidate` anchored on the spec's last first-parent touch."
       - id: owed-set-wrong-result
         kind: obligation
         label: "A wrong result is fixed in the script"

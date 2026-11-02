@@ -209,8 +209,8 @@ Error: "Violates baseline grid alignment"
 5. Primitive→Semantic Architecture
 // Other systems: flat token structure
 // DesignerPunk: hierarchical with enforced references
-primitive: blue500 = "#3B82F6"
-semantic: color.primary = blue500  // Must reference primitive
+primitive: cyan300 = oklch(...)
+semantic: color.action.primary = cyan300  // Must reference primitive *(corrected 2026-11-01: the example names a primitive and a semantic token the index holds (`cyan300`, `color.action.primary`); `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 Industry Position
 DesignerPunk is positioned as:
 
@@ -414,8 +414,8 @@ AI-Human Collaboration Requirements
 You're right that current AI struggles with ambiguity. A system where:
 
 space100 = 8 always means the same mathematical relationship
-typography.body always references the same primitive composition
-color.primary always follows the same semantic hierarchy
+typography.bodyMd always references the same primitive composition
+color.action.primary always follows the same semantic hierarchy *(corrected 2026-11-01: the examples are keys the token index holds; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 ...creates the unambiguous vocabulary needed for reliable AI collaboration.
 
 Why This Changes Everything
