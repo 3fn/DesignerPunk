@@ -1,0 +1,49 @@
+# Release 16.2.0
+
+**Date**: the tag's date (written at step 6)
+**Previous**: 16.1.0
+**Bump**: minor
+
+> **Authorship note (recorded, not buried)**: these notes are HAND-AUTHORED from the merged delta, `v16.1.0..7db066e4f`. **The release base is `c21d40a2e`**, which is the trio freeze **F**, `7db066e4f3be08fe6954ff8b00557f71cddc86ad` (#619's squash, 2026-11-02T13:18:06Z), plus three record-only PRs: #630, #632 (this release's files grant) and #631. `git diff --name-only 7db066e4f c21d40a2e` names two files, `.kiro/specs/123-consumer-distribution/completion/delegate-audit-release-16.2.0-lina.md` and `.kiro/issues/2026-11-02-release-16-2-files-grant.md`; neither is packed. So the trio's candidate holds every shipped change in this release, apart from this PR's own version, CHANGELOG and README lines. No release tool was involved. This is the sixth planned entry in the plan's numbering.
+>
+> **The delta, derived** (RELEASE-FLOW § "Deriving the delta", step 1):
+> - `git log --first-parent v16.1.0..7db066e4f --oneline`: **125** squash commits (#493, #497, #506–#629, with numbers not in it merged into the 16.1.0 tag or never merged).
+> - The same log scoped to the shipped surface (`package.json` `files[]` read literally, plus the build inputs of `dist/`: `src/`, `canonical/` → `dist/consumer-canonical/**`, `tools/agent-generator/` → `dist/generator/**`): **36** commits — #513, #517, #519, #527, #530, #534, #535, #536, #539, #541, #542, #544, #546, #549, #550, #557, #560, #564, #577, #578, #581, #591, #592, #595, #596, #603, #604, #606, #607, #608, #609, #610, #612, #613, #614, #619. Of these, #604 and #614 change a charter's source but no consumer rendering (`canonical/_consumer-output/**` unchanged), and the register rows (#527, #534, #542, #557, #560) are packed text that no consumer reads as behaviour.
+> - **No `files[]` entry was added or removed since 16.1.0.**
+>
+> **Classification** (step 2): **🔴 0 breaking · 🟡 minor: #517 (`token-index/` `platforms` shape), #535 and #544 (system-token review, product-token planning), #581 (`sync --repair-mcp-config`), #608 (served `web` field; Nav-Header-App attributes), #613 (`validate_assembly` `coverage`), #619 (the charter cut) · 🔵 consumer-visible fixes and corrections: #513, #530, #539, #546, #550, #577, #578, #591, #592, #595, #596, #603, #606, #607, #609, #610, #564 · 🔵 internal: the rest** (see "Internal" below).
+>
+> **Ratified bump**: 16.2.0, minor. Peter, R8 item 1, "Re: 1, 16.2.0", cited `R8@0184efb3fd7b2956677351fdf84899767a5ac74a` (`.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md`). **Why minor, and the counter-argument that survives**: nothing a 16.1.0 install relies on was removed (file set: 0 removed, 7 added, against the published 16.1.0 tarball), and no token value changed. But #517 widens the type of a field in a shipped data file: `platforms.<platform>` was always one string, and a reader outside the package that takes it as one string now breaks (#517's own body says so). On the strict semver reading that is breaking. Peter ruled minor with the change disclosed under "Changed".
+>
+> **The token lines**: **no token value changed.** `token-index/` changed shape (#517), and `npm run build` on the release branch leaves it clean (`verify:token-index-clean`).
+
+**Scope of this release, plainly**: this release is for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is still not supported: the iOS (SwiftUI) and Android (Jetpack Compose) components and the generated native token files are reference source, not compile-verified, and twelve known native and generator defects are listed by record path in the CHANGELOG's "Known limitations".
+
+## What changed
+
+The CHANGELOG's `## [16.2.0]` entry is the consumer-facing list: Added (4), Changed (9), Fixed (2 groups), Known limitations (6, the first naming 12 tracked defects by record path) and Upgrading from 16.1.0 (5 steps). It is not repeated here.
+
+## Upgrading from 16.1.0
+
+See the CHANGELOG's "Upgrading from 16.1.0" (five steps). **From 16.0.0 or earlier**: follow the 16.1.0 notes first (`docs/releases/release-16.1.0.md`) and install 16.2.0 at their step 1.
+
+## 🧪 Onboarding evidence
+
+**[Filled from the trio records PR #582 before this PR merges, in Leonardo's eight-line shape: (1) the candidate line below; (2) one line per run (run id, harness, stop value, budget used, `path-steps-walked`); (3) the prior-findings tally per record, by `fixed-and-observed` / `fixed-not-observed` / `still-present`, with how many `still-present` were `not reached`; (4) the new findings, with their count and the records they went to; (5) native charter deltas unprobed: the kenya and data consumer charters changed, and no probe exercises them; (6) the Kiro conformance pair, not in this trio, owed in `.kiro/issues/2026-10-25-kiro-conformance-pair-requeue.md`; (7) the instrument's limit (Req 23.10): agents role-play not knowing, so the trio measures instruction clarity and path completeness, and a green trio is not "a stranger succeeded"; (8) not a release gate: findings route to their owners.]** Candidate: F `7db066e4f`, pack sha1 `badf04cfc5ba5f58fb6ae894d6dcdffc4c0776ab` (sha256 `a6a33ff19b64ebced321e7e2a224acedfa7f0fff186166161243a8907e3b399f`), 1701 files, 6626251 bytes, pack-assert 105/105, `publish path: 16 (floor 16)`, pack version 16.1.0 (the bump is on this branch); dry run from the main checkout at `d2f579bef` (F + #630), 2026-11-02T13:19:41Z–13:20:15Z.
+
+## 📦 Packed output against the previous public artifact (RELEASE-FLOW step 2)
+
+- **The previous release's tarball**: `npm pack @3fn/core@16.1.0 --registry=https://registry.npmjs.org --@3fn:registry=https://registry.npmjs.org`, sha1 `cc42f4f9897677ee53b3f75d18ef52535a346c6a`, 1694 files, 6590393 bytes. It equals the 16.1.0 step-6 record's 5.3 sha1 (`docs/releases/16.1.0/publish-verification.txt` L30).
+- **The file set**, against the F candidate: `LC_ALL=C comm -3` → **0 removed, 7 added**:
+  - `dist/cli/sync/McpConfigCheck.{js,d.ts}` and `dist/cli/sync/mcpConfigCandidates.{js,d.ts}` (#581);
+  - three test files under `application-mcp-server/src/**/__tests__/` (`SchemaWebAccess.test.ts`, `TokenIndexer.packageDrift.test.ts`, `AssemblyCoverage.test.ts`; #608, #596, #613). `files[]` packs `application-mcp-server/src/`, `mcp-server/src/` and `src/tokens/**` whole, so their test files ship: under `application-mcp-server/src/`, 37 at 16.1.0 and 40 now; across the package, 117 `*.test.ts` files at 16.1.0 and 120 now. Nothing a consumer installs runs them.
+- *Leonardo's compare against the 16.1.0 candidate at its own F (`de63033b9`, 1692 files) reads 9 added. The two extra, `dist/validators/ColorReferenceEmissionValidator.{js,d.ts}`, shipped in the published 16.1.0 (#489 merged after that F), so against the public artifact they are not new.*
+- **This release's tarball at the release branch's pushed head**: [the dry run, `npx tsx scripts/release-publish.ts --dry-run <head>` from the main checkout, pasted here once this branch is pushed]. Only `package.json`, `CHANGELOG.md` and `README.md` of this PR's paths are packed, so the file set is F's.
+
+## 📦 Dependency disclosure (ballot `2026-10-03-hermetic-publish-path` § 7)
+
+**No embedded dependency version changed against 16.1.0's public artifact.** `git diff --stat v16.1.0 7db066e4f -- '*package-lock.json' '*package.json'` changes only the root `package.json`'s `prepublishOnly` string (#564); no lockfile changed. The 5.1 dry run at S confirms the bundles' contents.
+
+## 🔵 Internal (provenance, not consumer surface)
+
+The remaining PRs changed nothing a consumer installs or runs: the 16.1.0 RELEASE claims-pass and step-6 records; the 16.2.0 walk, rulings, delegation and delegate-audit records; Spec 129 and 131 outline amendments and intake batches; the ballots ratified or applied this cycle; register rows; `scripts/` and `tools/agent-generator/` instruments and fixtures; the RS queue; record re-rules and closes.
