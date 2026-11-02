@@ -116,6 +116,7 @@ export function checkPropValues(
   tokens: TokenLookup,
   errors: AssemblyIssue[],
   warnings: AssemblyIssue[],
+  notChecked: Array<{ path: string; component: string; prop: string; type: string }> = [],
 ): void {
   const defs = resolveProperties(meta, getComponent);
   const given = props ?? {};
@@ -155,7 +156,12 @@ export function checkPropValues(
     }
 
     const checkable = parseCheckableType(def);
-    if (!checkable) continue;
+    if (!checkable) {
+      // Not machine-checkable (IconBaseName, LeadingAction, a signature…): the value is accepted
+      // unchecked, and the result says so (coverage.notChecked, V1).
+      notChecked.push({ path, component: meta.name, prop: name, type: def.type });
+      continue;
+    }
     if (!valueMatches(value, checkable)) {
       errors.push({
         path,

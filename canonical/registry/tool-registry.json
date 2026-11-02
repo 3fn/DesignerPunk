@@ -75,7 +75,7 @@
           "name": "get_token_consumers"
         },
         {
-          "description": "Get full details for a token: value, family, tier, platform names, formula, theme-varying status, consumers.",
+          "description": "Get full details for a token: value, family, tier, platform names, formula, theme-varying status, consumers. For a theme-varying token, read the dark value from themeResolutions.dark (its modeValue; null for a composite override, whose parts are in primitiveReferences); resolvedValue is the base (light) resolution.",
           "inputSchemaHash": "sha256:3f62c5ed4ea631bdf9d6f2a57e5f8c9fe63d78e97ac8828b6ce946af9c5fd476",
           "name": "get_token_details"
         },
@@ -105,7 +105,7 @@
           "name": "search_tokens"
         },
         {
-          "description": "Validate a component tree. Checks component existence, parent-child composition rules, requires/count constraints, and assembly-level accessibility (form labels, submit actions, page headings). Returns errors, warnings, and accessibility issues with paths.",
+          "description": "Validate a component tree. Checks component existence, parent-child composition rules, requires/count constraints, and assembly-level accessibility (form labels, submit actions, page headings). Returns errors, warnings, and accessibility issues with paths, plus `coverage`: the accessibility rules that ran and every given prop whose value was not checked (its schema type is not machine-checkable), so read an empty list against what was checked.",
           "inputSchemaHash": "sha256:e531446e76a814981cda5eee246688346d05ecfeb417d535599f49cd04e3e4b8",
           "name": "validate_assembly"
         }

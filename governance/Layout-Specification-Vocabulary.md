@@ -75,7 +75,7 @@ Density tokens are included for completeness. They affect content within regions
 | `gridGutterNative` | space250 | 20px | iOS/Android |
 | `gridMarginNative` | space300 | 24px | iOS/Android |
 
-**Known gap**: `gridMarginSm` resolves to 24px. Design spec calls for 28px (`space350`), but that token doesn't exist in the primitive spacing scale. Templates and specs use the current 24px value.
+**Known gap**: `gridMarginSm` resolves to 24px. Design spec calls for 28px (`space350`<!-- example: generic -->), but that token doesn't exist in the primitive spacing scale. Templates and specs use the current 24px value.
 
 ### What's NOT a Token
 

@@ -308,7 +308,7 @@ Container-Card-Base intentionally restricts the Container-Base API to provide:
 | `background` | ✅ Subset | `'surface.primary' \| 'surface.secondary' \| 'surface.tertiary'` | `'surface.primary'` |
 | `shadow` | ✅ Subset | `'none' \| 'container'` | `'container'` |
 | `border` | ✅ Subset | `'none' \| 'default'` | `'none'` |
-| `borderColor` | ✅ Subset | `'border.default' \| 'border.subtle'` | `'border.default'` |
+| `borderColor` | ✅ Subset | `'border.default' \| 'border.subtle'`<!-- example: generic --> | `'border.default'` |
 | `borderRadius` | ✅ Subset | `'normal' \| 'loose'` | `'normal'` |
 | `semantic` | ✅ Subset | `'div' \| 'section' \| 'article'` | `'div'` |
 | `accessibilityLabel` | ✅ Pass-through | `string` | - |
@@ -319,7 +319,7 @@ Container-Card-Base intentionally restricts the Container-Base API to provide:
 
 **Note**: Vertical padding includes `'050'` for fine-tuning typography rhythm. Horizontal padding excludes `'050'` as it's rarely needed for horizontal spacing.
 
-**Note**: The `background` and `borderColor` values above are Card shorthand, not token names. They resolve to `color.structure.surface.primary`, `color.structure.surface.secondary` and `color.structure.surface.tertiary`, and to `color.structure.border` (`'border.default'`) and `color.structure.border.subtle` (`'border.subtle'`). `border.default` as a token key is the 1px border width.
+**Note**: The `background` and `borderColor` values above are Card shorthand, not token names. They resolve to `color.structure.surface.primary`, `color.structure.surface.secondary` and `color.structure.surface.tertiary`, and to `color.structure.border` (`'border.default'`) and `color.structure.border.subtle` (`'border.subtle'`<!-- example: generic -->). `border.default` as a token key is the 1px border width.
 
 #### Card-Specific Properties
 

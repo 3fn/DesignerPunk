@@ -179,7 +179,7 @@ commands:
     cmd: "npm run generate:platform-tokens"
     runContext: this-repo
     source: package.json
-    cue: "regenerate the platform token output (iOS/Android/web) from token source — note the ROOT Swift output has no Spec-094 theming surface; theming Swift materializes consumer-side"
+    cue: "regenerate the platform token output (iOS/Android/web) from token source. Note that the Swift output has no Spec-094 theme surface (no theme protocol, per-theme structs or environment key), in this repo or in a consumer's `generate` output; see § iOS Theming (Spec 094)"
   - name: swift-theme-types-tests
     cmd: "npm test -- SwiftThemeTypes"
     runContext: this-repo
@@ -203,7 +203,7 @@ commands:
   - class: product-screen-commands
     runContext: per-product
     authoredPerProduct: true
-    gap: "product-screen build/test/run commands are per-product and cannot be extracted in this repo — they live in the consumer iOS app (theming Swift materializes there via `npx designerpunk generate`)."
+    gap: "product-screen build/test/run commands are per-product and cannot be extracted in this repo — they live in the consumer iOS app."
     cue: "you need product-screen build/test/run commands"
 skills: []                               # zero iOS skills exist (Android has them, iOS does not — AXA §3.6). sweep 2 registers 0 declared / 0 emitted as a PASS (Req 8 AC1), NOT a coverage hole.
 knowledgeBases:                          # drives the per-agent /knowledge fallback note (Req 11 AC1)

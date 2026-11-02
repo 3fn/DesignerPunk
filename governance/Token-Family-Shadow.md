@@ -121,7 +121,7 @@ Shadow colors are based on art theory: shadows are rarely pure black but tinted 
 
 #### No Semantic Shadow Color Layer
 
-There is **no** `color.shadow.*` semantic tier. Shadow tokens reference the primitive shadow colors
+There is **no** `color.shadow.*`<!-- example: generic --> semantic tier. Shadow tokens reference the primitive shadow colors
 directly (`shadow.container` → `shadowBlack100`), matching how typography tokens compose primitives
 without an intermediate semantic layer. The rationale is recorded in `src/tokens/semantic/ColorTokens.ts`
 § "ARCHITECTURAL DECISION: Shadow Color Semantic Layer Removed".
