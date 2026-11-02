@@ -784,6 +784,8 @@ template: card-grid                   # Optional — references product/template
 
 Use canonical Rosetta token names as-is (dot-notation for semantic tokens like `color.action.primary`, flat names for primitives like `space100` or `bodyMd`). The indexer stores token names exactly as written — no normalization.
 
+**`idiom:` convention**: When a node's look or behavior on a platform is a choice between that platform's idiom and a departure from it, the node states the choice in an `idiom:` map keyed by platform: `follows: <the idiom>`, or `parts: <the idiom>` with `reason: <the user need or brand reason>` (the design philosophy's Native-Behavior Rule). `parts` never applies to accessibility semantics, interaction the platform owns or system surfaces, which that rule says never part. Write it on the node wherever the node lives, in `shared` or in a platform branch; a platform branch is appended to `shared`, so restating a shared node there adds a second node. Name only real choices; a node with no `idiom:` entry for a platform makes no claim about it. A departure the component's README already marks (`**Departure**:`) is the component's: the node does not restate it. A choice the key names was shown by the plan, so it is decided while planning, and departing from a stated `follows` or `parts` is a change to the plan, asked before it is built. A departure found during the build that the key does not name goes in its `**Departures**:` line's `in-plan:` field (Cross-Platform vs Platform-Specific Decision Framework, Q4): `component only: <the node's address>` if the spec has the node but no entry for that platform, and `not in plan (<the screen spec's path>)` if the spec has no such node. A node's address is `<the screen spec's path> <the node's path>`, the node's path written as the Product MCP writes it: `ui-tree.<branch>[<i>]` (or `ui-tree[<i>]` when the tree has no branches), then `.children[<j>]` for each level below, counting from 0; followed by the node's component in parentheses, for example `product/experience-map/pages/settings.yaml ui-tree.shared[0].children[2] (Button-CTA)`; a citation whose position, read at that base, holds a different component is stale. It is read at the base of the PR that cites it, because positions move when nodes are added. The key is not indexed; `get_screen_spec` returns it as written. *(added 2026-11-01 by ballot 2026-10-30-screen-spec-idiom-per-node, site F-C.1)*
+
 **`_componentGaps`**: When you query a screen spec via `get_screen_spec`, the response includes a `_componentGaps` array listing any component references that don't match the ecosystem catalog (`component-meta.yaml`) or product one-off components. Each gap includes the component name, issue type (`not-found`), and UI tree path. This catches typos, outdated names, and references to components that haven't been built yet.
 
 ### UI Tree Convention (Draft)
@@ -809,6 +811,9 @@ This convention defines the expected structure of `ui-tree` in screen spec YAML 
   repeat: "for-each item in data.items"  # Optional. List rendering. NOT indexed.
   content:                        # Optional. Text the screen shows that no component carries (a heading, body copy). NOT indexed.
     heading: "Section Title"
+  idiom:                          # Optional. A platform-idiom choice, per platform. NOT indexed; returned as written.
+    ios: { follows: "<the platform idiom>" }
+    android: { parts: "<the platform idiom>", reason: "<the user need or brand reason>" }
 ```
 
 | Field | Type | Required | Indexed By |
@@ -819,6 +824,7 @@ This convention defines the expected structure of `ui-tree` in screen spec YAML 
 | `children` | array of nodes | No | Traversed recursively |
 | `repeat` | string | No | Not indexed |
 | `content` | object (string values) | No | Not indexed |
+| `idiom` | object (platform keys; each `{ follows }` or `{ parts, reason }`) | No | Not indexed; returned as written by `get_screen_spec` *(added 2026-11-01 by ballot 2026-10-30-screen-spec-idiom-per-node, site F-C.3)* |
 
 **What the indexer does per node**: reads `component` → adds to reverse index + checks gap detector. Reads `tokens` → adds each value to token reverse index. Recurses into `children`. Ignores everything else.
 
