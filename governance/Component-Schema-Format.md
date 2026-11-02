@@ -170,7 +170,7 @@ validation:
 
 ### Web Access (`web`)
 
-A non-callback property that the web element takes **only as an attribute** carries `web: attribute-only`. Its attribute is the property name's kebab-case form (`helperText` → `helper-text`). A non-callback property the web element takes neither as a JS property nor as an attribute carries `web: unmapped`: on web, its value does not reach the element (a property only another platform uses, for example). `children` is the element's slot content on web, not a property, and carries no `web` key. A property with no `web` key is one the web element exposes as a JS property of the same name. A callback carries no `web` key: how a callback maps to an element event is not yet settled. *(added 2026-11-01 by ballot 2026-10-30-web-prop-property-or-attribute-only, site 2)*
+A non-callback property that the web element takes **only as an attribute** carries `web: attribute-only`. Its attribute is the property name's kebab-case form (`helperText` → `helper-text`). A non-callback property the web element takes neither as a JS property nor as an attribute carries `web: unmapped`: on web, its value does not reach the element (a property only another platform uses, for example). `children` is the element's slot content on web, not a property, and carries no `web` key. A property with no `web` key is one the web element exposes as a JS property of the same name. A callback carries no `web` key: how a callback maps to an element event is not yet settled. *(added 2026-11-02 by ballot 2026-10-30-web-prop-property-or-attribute-only, site 2)*
 
 ```yaml
 properties:
