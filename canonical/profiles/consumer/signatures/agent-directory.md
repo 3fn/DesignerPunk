@@ -18,11 +18,23 @@ All nine survive. The trigger surfaces are re-grounded to "your team's governanc
 ## `#thurgood-test-governance-spec-standards-civitas-steward`
 
 signer: stacy
-date: 2026-10-20
+date: 2026-11-01
 row: `canonical/profiles/consumer/always-set/agent-directory.dispositions.yaml` · body · `#thurgood-test-governance-spec-standards-civitas-steward` (re-pointed; ROUTED)
-canonicalHash: sha256:99951e0293f59b5326e3e09be329d46fac3e14d8cc8b0c64fd3d797e0beba169
-renderedHash: sha256:701eb853779969dce6ed0f6a72ce375a3e0f91b06d71e5dd6ab9188317e88e9a
+canonicalHash: sha256:d90b650ba35fa2ad3c2e707e595a6a7d9134aaa9480d813af59c707b26e58399
+renderedHash: sha256:34ad033f3fe6cd10fb16d3e417c11407a17a25b280d3c766db4c2957f04ebb06
 verdict: assent — surviving 3/4; not surviving: `thurgood-test--role-1`
+
+**Re-signed 2026-11-01** (prior signature: assent — surviving 3/4; not surviving: `thurgood-test--role-1`, 2026-10-20, against canonical `sha256:99951e0293f59b5326e3e09be329d46fac3e14d8cc8b0c64fd3d797e0beba169` and rendered `sha256:701eb853779969dce6ed0f6a72ce375a3e0f91b06d71e5dd6ab9188317e88e9a`). *(This re-does `4b6fbbb66`, whose read claim was false. Erratum: `.kiro/issues/2026-11-01-stacy-c1-acts-read-claim-false.md`; re-cut under R11 line 18.)* It was stale because the canonical cut line lost its steward-toolset clause. That is the steward-verb drop, Thurgood `c9fb5300d`, under R5 fork 2 and R8 item 9; I re-confirmed the unit at 4 items at `8e84d59a0`.
+- **The rendering moved; read whole via `cat -n`** at `bdc0d9aaa`, before this commit: `canonical/_consumer-output/_canonical/always-set/agent-directory.md` L65–L78, `canonical/_consumer-output/cc/.claude/identity/designerpunk-agent-directory.md` L65–L78 and `canonical/_consumer-output/kiro/.kiro/steering/designerpunk-agent-directory.md` L70–L83. The overlay's "Charter cut" line drops the same clause.
+  - Each now reads "…, and the mechanical checks that enforce it — he does **not** adjudicate whether a particular execution claim was true".
+  - "steward toolset" occurs in none of them (checked by script).
+- **Hashes**:
+  - canonicalHash `sha256:d90b650ba35fa2ad3c2e707e595a6a7d9134aaa9480d813af59c707b26e58399`, recomputed independently; it equals the overlay pin and my confirmation.
+  - renderedHash `sha256:34ad033f3fe6cd10fb16d3e417c11407a17a25b280d3c766db4c2957f04ebb06`, recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` over the committed `canonical/_consumer-output/` (three pieces).
+- **Removals re-judged against the moved body**: the three stand unchanged (the instrument clause, the CI-regime standing scope and "(Q5, ratified 2026-09-17)"). Each still occurs in the unit and in none of the renderings. The drop added no repository-only text to the unit.
+- **Verdict unchanged**: assent, surviving 3/4. `thurgood-test-govern-1` survives as the narrower cut, verbatim apart from the consumer's dropped label. `thurgood-test--role-1` still does not survive.
+
+**Prior signature record (superseded, 2026-10-20)**: assent — surviving 3/4; not surviving: `thurgood-test--role-1`, against `sha256:99951e0293f59b5326e3e09be329d46fac3e14d8cc8b0c64fd3d797e0beba169`, as below.
 
 **Re-signed 2026-10-20** (prior signature: assent 3/4, 2026-09-29, against `sha256:3f53109f6af5f444299a6f76e65007a510b10470fc034e1554980b530c69fafb`). Stale because the canonical **Owns** line changed: ballot `2026-10-20-in-lane-guard-registry-additive-entries` (P1b; RATIFIED, Peter, 2026-10-20) site 3 added "and added entries in `.github/in-lane-guards.json`" and "amended 2026-10-20" to its CI-regime clause. Thurgood applied it at `ae68f130b`; I re-confirmed the set at 4 items (`8674be2e5`); he pinned the overlay and regenerated (`ebc83c6b5`). The rendering did not change: renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/tools-stacy/fresh-rendered-hash.ts`), equal to the committed rendering's value and to the prior signature's.
 - **Judged against**: the rendered unit at this revision and the operative set at 4 items.

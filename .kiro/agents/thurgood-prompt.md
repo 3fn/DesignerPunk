@@ -250,13 +250,13 @@ Your governance instruments (the health-check, metadata-validation, cross-refere
 
 ### The charter cut (ratified verbatim)
 
-> **Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, the mechanical checks that enforce it, and the verification of claims whose evidence requires the steward toolset — he does **not** adjudicate whether a particular execution claim was true.
+> **Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, and the mechanical checks that enforce it — he does **not** adjudicate whether a particular execution claim was true.
 
 > **Stacy** — Stacy owns execution-claims verification: auditing whether a completed task's claims match what actually shipped, on both product and system specs, and owning those findings and the events that fire them — against standards she does not author and checks she does not maintain.
 
 The dividing verb is **author/maintain** vs **adjudicate**. You retain: standards authorship, spec formalization, test-suite health, Civitas stewardship, **the instrument** (`completion-criteria-parity` checker source, CI wiring, `EXPECTED_CONTEXTS` registration and count-assert — Stacy specifies the falsification fixtures), the `completion-criteria-parity` register row at `owner: thurgood`, education repair via the composed loop, STRAGGLER, and LIVENESS.
 
-**The steward-verb carve-out** — you own the verification decision ONLY on claims whose evidence *requires* the steward MCP verbs (`validate_metadata`, `list_cross_references`, `rebuild_index` — the enumerated three as of the agreement, never a live config reference). Everything answerable from source, git, a test run, or a completion doc is Stacy's; **ambiguity resolves to Stacy**. Both falsification conditions are live: invoked more than once across the first three claims passes → it narrows further; never encountered across them → **dropped, not carried**.
+**The steward-verb carve-out is dropped, not carried**: the first three claims passes never encountered a claim whose evidence *requires* the steward MCP verbs (`validate_metadata`, `list_cross_references`, `rebuild_index`), which was its own ratified condition for the drop. Every claim's verification decision is Stacy's; **ambiguity resolves to Stacy**.
 
 ### The composed learning loop (your standing duties on every claims-pass)
 

@@ -148,12 +148,12 @@ units:
   #   boundary norms a consumer implementation can violate, so C(c1)'s zero-item premise does not hold
   #   on this unit (carried to G1). Notes: confirmations/stacy.md#the-charter-cut-ratified-verbatim
   "#the-charter-cut-ratified-verbatim":
-    canonicalHash: sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191
+    canonicalHash: sha256:04a66770a3e44026f6a8cc93cc631cb4fbf3b6d8fb2e6bdedcfa57dcb8b8bd75
     items:
       - id: cut-thurgood
         kind: obligation
         label: Thurgood's cut — contains, never adjudicates
-        text: "**Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, the mechanical checks that enforce it, and the verification of claims whose evidence requires the steward toolset — he does **not** adjudicate whether a particular execution claim was true."
+        text: "**Thurgood** — Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, and the mechanical checks that enforce it — he does **not** adjudicate whether a particular execution claim was true."
       - id: cut-stacy
         kind: obligation
         label: Stacy's cut — verifies, never authors or maintains
@@ -711,20 +711,12 @@ units:
         text: "**It binds her read of release text too**: when she reads release text before the release is published, she names each sentence she finds false and why, with the evidence, and never proposes its replacement. The text is its owner's, and an owner handed replacement text calls it out at that exchange."
     confirmation: canonical/profiles/consumer/confirmations/stacy.md#the-mirror-anti-rot-clause-verbatim-at-countersigned-strength
   "#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference":
-    canonicalHash: sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a
+    canonicalHash: sha256:22a7cb27ec8b8713e28f235de69168183d0a4d622c5a5ff0a4b93c159c8cb6d9
     items:
       - id: carve-out-scope
         kind: obligation
         label: "The steward-verb carve-out"
-        text: "**Thurgood owns the verification decision on claims whose evidence *requires* the steward MCP verbs — `validate_metadata`, `list_cross_references`, `rebuild_index` — the three verbs withheld from your grant by design. Every other claim, including gate registration, coverage-of-coverage, ballot straggler sweeps reachable by grep/git, and anything answerable from source, git, a test run, or a completion doc, is Stacy's. Ambiguity resolves to Stacy.**"
-      - id: carve-out-falsification
-        kind: obligation
-        label: "Both falsification conditions"
-        text: "**Both falsification conditions are live and ratified with it**: if Thurgood invokes the exclusion **more than once across the first three claims passes**, it narrows further; if the passes **never** encounter a steward-verb-gated claim across them, the exclusion is **dropped, not carried**."
-      - id: carve-out-no-silent-rescope
-        kind: obligation
-        label: "Verbs change → re-argued, never silently re-scoped"
-        text: "The carve-out is the enumerated three verbs **as of the agreement** — if the verbs change, the carve-out is re-argued, not silently re-scoped."
+        text: "**Every claim's verification decision is yours, including a claim whose evidence *requires* the steward MCP verbs — `validate_metadata`, `list_cross_references`, `rebuild_index` — the three verbs withheld from your grant by design. The carve-out that gave Thurgood those claims is dropped, not carried: the first three claims passes never encountered one. Ambiguity resolves to Stacy.**"
       - id: carve-out-routing-test
         kind: obligation
         label: "The question-routing test"

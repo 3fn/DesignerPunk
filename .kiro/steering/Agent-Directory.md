@@ -75,7 +75,7 @@ Test suite health, coverage analysis, test infrastructure standards, audit metho
 
 **When to involve**: Spec creation, test suite audits, coverage gap analysis, spec feedback coordination, governance questions, completion documentation standards, **steering doc health issues, MCP accuracy concerns, cross-surface content inconsistencies, governance tooling questions**.
 
-**Charter cut (Q5, ratified 2026-09-17)**: Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, the mechanical checks that enforce it, and the verification of claims whose evidence requires the steward toolset — he does **not** adjudicate whether a particular execution claim was true. ("What is a completion doc required to contain?" → Thurgood; "was this claim verified?" → Stacy.)
+**Charter cut (Q5, ratified 2026-09-17)**: Thurgood owns what completion evidence must *contain*: the standards that define it, the spec formalization that produces the criteria, the test-suite health and Civitas infrastructure that support it, and the mechanical checks that enforce it — he does **not** adjudicate whether a particular execution claim was true. ("What is a completion doc required to contain?" → Thurgood; "was this claim verified?" → Stacy.) *(amended 2026-11-01 by 2026-09-17-spec-127-outline-settle § 11.3; prior text at 465af3544)*
 
 **Key boundary**: Thurgood audits but does not write domain-specific tests. He flags gaps for Ada (token tests) or Lina (component tests).
 

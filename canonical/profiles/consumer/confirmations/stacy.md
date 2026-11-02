@@ -39,9 +39,19 @@ date: 2026-09-27
 ## `#the-charter-cut-ratified-verbatim`
 
 confirmer: stacy
-canonicalHash: sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191
+canonicalHash: sha256:04a66770a3e44026f6a8cc93cc631cb4fbf3b6d8fb2e6bdedcfa57dcb8b8bd75
 items: cut-thurgood, cut-stacy
-date: 2026-09-27
+date: 2026-11-01
+
+**Re-confirmed 2026-11-01 (Req 11.6.5d): the Thurgood half of the cut loses its steward-toolset clause.** *(This re-does `5c6c3a83b`, whose read claim was false. Erratum: `.kiro/issues/2026-11-01-stacy-c1-acts-read-claim-false.md`; re-cut under R11 line 18.)*
+- **What changed**: one line of the unit (`canonical/agents/stacy.md` L387–L394), the Thurgood half of the ratified cut, which loses ", and the verification of claims whose evidence requires the steward toolset". Thurgood authored it at `c9fb5300d` as the settle ballot's pre-declared outcome (R5 fork 2, R8 item 9; the condition met by my 2026-10-25 recount). My half and the paragraph "Product-side was not a grant …" are unchanged.
+- **The set is unchanged: 2 items.** `cut-thurgood` was re-quoted, and both items are verbatim, unique substrings of the corrected unit (1 occurrence each, checked by script at `df49f02c1`). The heading "(ratified verbatim)" stays true: the amended cut is the ratified text, applied under R8 item 9's "Ratify".
+- **The hash**: the canonicalHash moves from `sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191` to the value above. I recomputed it independently (`hashText` over `partition(splitFrontmatter(...).body).units`, via a scratchpad script outside the repo), and it equals the overlay pin.
+- **Read before this act**: the unit, read whole via `cat -n canonical/agents/stacy.md` L387–L394 (the heading through the dividing-verb paragraph, the 8 lines the hash covers), at `df49f02c1`, before this commit. Items were checked by script.
+
+**Ruling: CONFIRMED at 2 items.**
+
+**Re-confirmed 2026-09-27 (prior record, superseded)**: canonicalHash `sha256:faf006560fb7d64d617114bc38e435003c2d75fcc7d07100aeb367ce7e55b191`, 2 items, as below.
 
 **Ruling: 2 items, not 0. Both ratified cut sentences are operative under 5c.**
 - **`cut-thurgood`** assigns Thurgood's seat and limits it (*"he does **not** adjudicate whether a particular execution claim was true"*). A consumer rendering whose steward rules on whether a claim was true violates it.
@@ -476,9 +486,29 @@ date: 2026-10-29
 ## `#the-steward-verb-carve-out-his-side-of-the-seam-enumerated-never-a-live-config-reference`
 
 confirmer: stacy
-canonicalHash: sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a
-items: carve-out-scope, carve-out-falsification, carve-out-no-silent-rescope, carve-out-routing-test, carve-out-tiebreak
-date: 2026-09-29
+canonicalHash: sha256:22a7cb27ec8b8713e28f235de69168183d0a4d622c5a5ff0a4b93c159c8cb6d9
+items: carve-out-scope, carve-out-routing-test, carve-out-tiebreak
+date: 2026-11-01
+
+**Re-confirmed 2026-11-01 (Req 11.6.5d): the carve-out dropped, not carried. CORRECTED 5 → 3.** *(This re-does `edf621c29`, whose read claim was false. Erratum: `.kiro/issues/2026-11-01-stacy-c1-acts-read-claim-false.md`; re-cut under R11 line 18.)*
+- **What changed**: the unit's blockquote and the paragraph after it (`canonical/agents/stacy.md` L467–L472). Thurgood authored the change at `c9fb5300d` as the settle ballot's pre-declared outcome (R5 fork 2 "Fix now", R8 item 9 "Ratify"). He offered me the words, and I keep them as written.
+  - The blockquote now reads "Every claim's verification decision is yours, including a claim whose evidence *requires* the steward MCP verbs … The carve-out that gave Thurgood those claims is dropped, not carried: the first three claims passes never encountered one. Ambiguity resolves to Stacy."
+  - The "Both falsification conditions …" paragraph is deleted. "Arbitration, all three mechanisms" is unchanged.
+- **The claim the new text makes is mine to vouch for, and it holds.** "The first three claims passes never encountered one" rests on my recount (`.kiro/issues/2026-10-24-steward-verb-carve-out-drop-limb-unapplied.md` § 2a, 2026-10-25): 127 MIDPOINT and 127 CLOSEOUT counted zero invocations and zero steward-verb-gated claims, and 123 MIDPOINT's population, Tasks 1–18, has 0 such claims (reading (a)).
+- **The set: 3 items, corrected from 5.**
+  - `carve-out-scope` was re-quoted to the new blockquote. `carve-out-routing-test` and `carve-out-tiebreak` are unchanged.
+  - `carve-out-falsification` comes out: its paragraph is deleted, and the condition it stated has fired and is now applied.
+  - `carve-out-no-silent-rescope` comes out: with no carve-out, there is nothing to re-scope.
+  - Removing both is correct; I would not keep either. Each of the 3 is a verbatim, unique substring of the corrected unit (1 occurrence each, checked by script at `214d1e967`).
+- **Not an item, and noted (labels are authoring, 5c)**: the heading still reads "The steward-verb carve-out (his side of the seam, enumerated — never a live config reference)". The body now says Thurgood has no side of this seam. That is the label-against-body class of my owed-set heading (`.kiro/issues/2026-10-22-stacy-owed-set-heading-false-after-439.md`).
+  - Renaming it re-keys the unit, and it would be a text change after Peter's "Ratify", so it is his to rule. I leave the heading unchanged here.
+  - The same goes for the Collaboration Model line (L547; consumer overlay L155), "the dividing verb, the carve-out, and both anti-rot clauses live there", which still names the carve-out as living in the claims-audit section.
+- **The hash**: the canonicalHash moves from `sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a` to the value above. I recomputed it independently (`hashText` over `partition(splitFrontmatter(...).body).units`, via a scratchpad script outside the repo), and it equals the overlay pin.
+- **Read before this act**: the unit, read whole via `cat -n canonical/agents/stacy.md` L467–L472 (the heading, the blockquote and the Arbitration paragraph, the 6 lines the hash covers), at `214d1e967`, before this commit. Items were checked by script.
+
+**Ruling: CONFIRMED at 3 items (corrected 5 → 3).**
+
+**Re-confirmed 2026-09-29 (prior record, superseded)**: canonicalHash `sha256:5ee037e6fcbfad1bfb0b13161645ec5942657afd355a34ed6a9cc65d8fa3577a`, 5 items, as below.
 
 **Ruling: CORRECTED 4 → 5.** Added `carve-out-no-silent-rescope`: if the verbs change, the carve-out is re-argued, not silently re-scoped. Silent re-scoping violates it. "The anti-rot pair above" points to the mirror unit and is not a separate item.
 
