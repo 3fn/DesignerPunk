@@ -18,6 +18,13 @@ import { AssemblyNode, AccessibilityIssue } from '../models';
 
 const FORM_SEMANTICS = ['form', 'fieldset'];
 
+/**
+ * Every rule this checker can emit, by id. `validate_assembly` reports this list as
+ * `coverage.accessibilityRules`, so a rule that is not here is a check that did not run.
+ * Adding a rule means adding its id here (AccessibilityChecker.test.ts holds the two in step).
+ */
+export const ACCESSIBILITY_RULES = ['form-needs-accessible-name', 'form-needs-submit-action', 'page-needs-accessible-name'] as const;
+
 export class AccessibilityChecker {
   check(assembly: AssemblyNode): AccessibilityIssue[] {
     const issues: AccessibilityIssue[] = [];

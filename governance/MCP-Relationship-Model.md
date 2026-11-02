@@ -222,7 +222,7 @@ For cross-MCP references to work, each MCP must maintain stable identifiers:
 
 | MCP | Stable Identifiers |
 |-----|-------------------|
-| Docs MCP | Token names (e.g., `space150`, `color.primary`) |
+| Docs MCP | Token names (e.g., `space150`, `color.action.primary`) *(corrected 2026-11-01: the example is a key the token index holds; `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)* |
 | Application MCP | Component names (e.g., `Button-CTA`), pattern names (e.g., `simple-form`), context values (e.g., `login-forms`) |
 | Product MCP | Product token names (e.g., `contentMaxWidth` in `layout` category), screen names, domain object names |
 

@@ -11,9 +11,9 @@
 
 import { ComponentIndexer } from '../indexer/ComponentIndexer';
 import { checkComposition, validateRequires } from '../indexer/CompositionChecker';
-import { AccessibilityChecker } from './AccessibilityChecker';
+import { AccessibilityChecker, ACCESSIBILITY_RULES } from './AccessibilityChecker';
 import { checkPropValues } from './PropValueChecker';
-import { AssemblyNode, AssemblyValidationResult, AssemblyIssue } from '../models';
+import { AssemblyNode, AssemblyValidationResult, AssemblyIssue, AssemblyCoverage } from '../models';
 
 export class AssemblyValidator {
   private accessibilityChecker = new AccessibilityChecker();
@@ -23,17 +23,25 @@ export class AssemblyValidator {
   validate(assembly: AssemblyNode): AssemblyValidationResult {
     const errors: AssemblyIssue[] = [];
     const warnings: AssemblyIssue[] = [];
-    this.walk(assembly, 'root', errors, warnings);
+    const notChecked: AssemblyCoverage['notChecked'] = [];
+    this.walk(assembly, 'root', errors, warnings, notChecked);
     const accessibility = this.accessibilityChecker.check(assembly);
     return {
       valid: errors.length === 0 && !accessibility.some(a => a.severity === 'error'),
       errors,
       warnings,
       accessibility,
+      coverage: { accessibilityRules: [...ACCESSIBILITY_RULES], notChecked },
     };
   }
 
-  private walk(node: AssemblyNode, path: string, errors: AssemblyIssue[], warnings: AssemblyIssue[]): void {
+  private walk(
+    node: AssemblyNode,
+    path: string,
+    errors: AssemblyIssue[],
+    warnings: AssemblyIssue[],
+    notChecked: AssemblyCoverage['notChecked'],
+  ): void {
     const meta = this.indexer.getComponent(node.component);
     if (!meta) {
       errors.push({ path, component: node.component, message: `Component "${node.component}" not found in catalog` });
@@ -49,6 +57,7 @@ export class AssemblyValidator {
       this.indexer.getTokenIndexer(),
       errors,
       warnings,
+      notChecked,
     );
 
     const children = node.children ?? [];
@@ -84,7 +93,7 @@ export class AssemblyValidator {
 
     // Recurse
     for (let i = 0; i < children.length; i++) {
-      this.walk(children[i], `${path}.children[${i}]`, errors, warnings);
+      this.walk(children[i], `${path}.children[${i}]`, errors, warnings, notChecked);
     }
   }
 }

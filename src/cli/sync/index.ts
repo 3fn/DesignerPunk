@@ -114,6 +114,8 @@ import {
 } from './Reporter';
 import { applyKeys } from './Applier';
 import { reportAndMaybeFixStaleSteeringDir, detectStaleSteeringDir } from './SteeringDirCheck';
+import { applyMcpConfigRepair, detectStaleMcpConfig, isRepairable, staleMcpConfigLines } from './McpConfigCheck';
+import type { McpConfigFinding, McpConfigRepair } from './McpConfigCheck';
 import {
   migrationTrigger,
   hasLegacyCopies,
@@ -172,6 +174,11 @@ export interface SyncOptions {
   repairNpmrc?: boolean;
   /** `--repair-tsconfig`: remove tsconfig.test.json's raw-src re-pins (Req 5.2). */
   repairTsconfig?: boolean;
+  /**
+   * `--repair-mcp-config`: rewrite the out-of-date settings of pre-123 MCP-config entries the manifest
+   * never recorded (`COMPONENTS_DIR` / `COMPONENT_DIR`, `autoApprove`), and nothing else (`./McpConfigCheck`).
+   */
+  repairMcpConfig?: boolean;
   /** Test seam — the config-module loader for the name contract's output directory (Task 6). */
   configLoader?: ConfigModuleLoader;
   /**
@@ -256,6 +263,10 @@ export interface SyncOutcome {
    * report only: `sync` never runs `generate`. `stale` is counted as still to do.
    */
   tokenIndex?: IndexedPackageTokensAssessment;
+  /** Pre-123 MCP-config settings found out of date (`./McpConfigCheck`), before any repair. */
+  mcpConfig?: McpConfigFinding[];
+  /** What `--repair-mcp-config` rewrote. Absent when the flag did not run. */
+  mcpConfigRepair?: McpConfigRepair;
 }
 
 /** Parse `sync`'s CLI flags (everything after `sync`). */
@@ -273,6 +284,7 @@ export function parseSyncArgs(argv: string[]): Omit<SyncOptions, 'projectRoot'> 
     else if (a === '--migrate-components') opts.migrateComponents = true;
     else if (a === '--repair-npmrc') opts.repairNpmrc = true;
     else if (a === '--repair-tsconfig') opts.repairTsconfig = true;
+    else if (a === '--repair-mcp-config') opts.repairMcpConfig = true;
     else if (a === '--migrate-legacy') opts.migrateLegacy = true;
     else if (a === '--target' && argv[i + 1]) (opts.targets ??= []).push(argv[++i]);
     else if (a.startsWith('--target=')) (opts.targets ??= []).push(a.slice('--target='.length));
@@ -635,7 +647,12 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
     (persistManifest && manifest.installedVersion !== pkg.version) ||
     (persistManifest && installedContract !== undefined && manifest.contractHash !== installedContract.hash);
   for (const k of keyResults) if (k.invalid) notChecked.push(`checking ${k.surface.file} (not valid JSON, see above)`);
-  const pending = [...notChecked, ...pendingOffers(projectRoot, outcome, offers)];
+  // Pre-123 MCP-config entries the manifest never recorded (KeyGrain leaves them alone): read from disk on
+  // every call, so the same closure gives the BEFORE list and the AFTER list.
+  const recordedKeyIds = () => new Set(Object.keys(entries).filter((id) => entries[id].grain === 'key'));
+  const mcpConfigNow = () => detectStaleMcpConfig(projectRoot, pkg.root, recordedKeyIds());
+  outcome.mcpConfig = mcpConfigNow();
+  const pending = [...notChecked, ...pendingOffers(projectRoot, outcome, offers, mcpConfigNow)];
   if (manifestChanges) pending.unshift(relocateLegacy ? `converting ${LEGACY_MANIFEST_PATH} to ${MANIFEST_FILE}` : `updating ${MANIFEST_FILE}`);
   const restore = new Set(options.restore ?? []);
   const overwrite = new Set(options.overwrite ?? []);
@@ -666,12 +683,14 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
     (Boolean(options.migrateLegacy) && outcome.legacyCopies !== undefined) ||
     (Boolean(options.migrateComponents) && outcome.migration !== undefined) ||
     (Boolean(options.repairNpmrc) && offers.some((o) => o.kind === 'npmrc')) ||
-    (Boolean(options.repairTsconfig) && offers.some((o) => o.kind === 'tsconfig'));
+    (Boolean(options.repairTsconfig) && offers.some((o) => o.kind === 'tsconfig')) ||
+    (Boolean(options.repairMcpConfig) && outcome.mcpConfig.some(isRepairable));
   const applying = !options.dryRun && (flagged || ((Boolean(options.apply) || isTTY) && (workCount > 0 || manifestChanges)));
   const report = buildReport({ dryRun: Boolean(options.dryRun), applying, manifestLines, files, keys: keyResults, sections, pending });
   displayReport(report);
   outcome.report = report;
   await reportAndMaybeFixStaleSteeringDir(projectRoot, { dryRun: Boolean(options.dryRun) || !isTTY });
+  for (const l of staleMcpConfigLines(outcome.mcpConfig)) console.log(l);
 
   // 8. Decide.
   if (options.dryRun) return { ...outcome, stopped: 'dry-run' };
@@ -682,7 +701,7 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
   const printResult = (managed: { applied: number; unapplied: string[] }): boolean => {
     const done = resultDone(outcome, managed.applied, relocateLegacy);
     if (done.length === 0) return false;
-    const still = [...notChecked, ...pendingOffers(projectRoot, outcome, offers), ...managed.unapplied];
+    const still = [...notChecked, ...pendingOffers(projectRoot, outcome, offers, mcpConfigNow), ...managed.unapplied];
     for (const l of resultLines(done, still)) console.log(l);
     return still.length === 0;
   };
@@ -696,6 +715,16 @@ async function runSyncMain(options: SyncOptions): Promise<SyncOutcome> {
     outcome.trace.push('repair-applied:tsconfig');
     outcome.applied.push('tsconfig.test.json');
     console.log('  ✓ tsconfig.test.json: removed the raw-src @3fn/core paths entries');
+  }
+  if (options.repairMcpConfig && outcome.mcpConfig.some(isRepairable)) {
+    // The explicit flag IS the authorization; it rewrites only the settings the findings name.
+    const repair = applyMcpConfigRepair(projectRoot, outcome.mcpConfig);
+    outcome.mcpConfigRepair = repair;
+    if (repair.settings.length > 0) {
+      outcome.trace.push('repair-applied:mcp-config');
+      outcome.applied.push(...repair.files);
+      console.log(`  ✓ MCP config: rewrote ${repair.settings.length} setting${repair.settings.length === 1 ? '' : 's'} (${repair.settings.join(', ')})`);
+    }
   }
   if (options.migrateComponents && outcome.migration) {
     // The explicit flag IS the per-run authorization (nothing is removed without it).
@@ -805,7 +834,12 @@ const SYNC_COMPLETE_ALL_CLEAR = `✅ Sync complete. ${ALL_CLEAR_MESSAGE.replace(
  * and from this run's outcome, so the same function gives the BEFORE list (the report's closing line) and the
  * AFTER list (the result block's "Still to do").
  */
-function pendingOffers(projectRoot: string, outcome: SyncOutcome, offers: RepairOffer[]): string[] {
+function pendingOffers(
+  projectRoot: string,
+  outcome: SyncOutcome,
+  offers: RepairOffer[],
+  mcpConfigNow: () => McpConfigFinding[] = () => [],
+): string[] {
   const out: string[] = [];
   const legacy = outcome.legacyCopies;
   if (legacy && !outcome.legacyRemoval) {
@@ -827,6 +861,14 @@ function pendingOffers(projectRoot: string, outcome: SyncOutcome, offers: Repair
     if (o.kind === 'tsconfig' && !outcome.applied.includes('tsconfig.test.json')) out.push('the tsconfig.test.json repair');
   }
   if (detectStaleSteeringDir(projectRoot).length > 0) out.push('MCP_STEERING_DIR (see its warning)');
+  const mcp = mcpConfigNow();
+  if (mcp.length > 0) {
+    out.push(
+      mcp.some(isRepairable)
+        ? `${mcp.length} pre-123 MCP-config setting${mcp.length === 1 ? '' : 's'} out of date (--repair-mcp-config)`
+        : `${mcp.length} pre-123 MCP-config setting${mcp.length === 1 ? '' : 's'} out of date (see its warning)`,
+    );
+  }
   if (outcome.tokenIndex?.state === 'stale') out.push('running npx designerpunk generate (your token-index/ is behind the installed package)');
   return out;
 }
@@ -854,6 +896,10 @@ function resultDone(outcome: SyncOutcome, managedApplied: number, relocateLegacy
   const out: string[] = [];
   if (outcome.applied.includes('.npmrc')) out.push('.npmrc: removed the @3fn → GitHub Packages mapping line');
   if (outcome.applied.includes('tsconfig.test.json')) out.push('tsconfig.test.json: removed the raw-src @3fn/core paths entries');
+  const mr = outcome.mcpConfigRepair;
+  if (mr && mr.settings.length > 0) {
+    out.push(`MCP config: rewrote ${mr.settings.length} pre-123 setting${mr.settings.length === 1 ? '' : 's'} (${mr.settings.join(', ')}); the entries stay yours, not managed by sync`);
+  }
   const r = outcome.relocation;
   if (r && (r.removed.length > 0 || r.relocated.length > 0)) {
     out.push(`component copies: removed ${r.removed.length} unmodified, relocated ${r.relocated.length} to src/components/<Name>/`);

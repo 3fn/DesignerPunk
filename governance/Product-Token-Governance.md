@@ -158,7 +158,7 @@ contentIndent:
   description: Left indent for section content
 ```
 
-**Preference**: Use semantic refs over primitive refs when a semantic token exists for the concept (concept-first principle). `ref: space.inset.comfortable` is better than `ref: space300` if the semantic captures your intent.
+**Preference**: Use semantic refs over primitive refs when a semantic token exists for the concept (concept-first principle). `ref: space.inset.300` is better than `ref: space300` if the semantic captures your intent. *(corrected 2026-11-01: the semantic example is a key the token index holds (`space.inset.300`, which references `space300`); `.kiro/issues/2026-10-25-token-docs-unvetted-name-hits.md`; prior text at `ca6e36f0e`)*
 
 ### Hard Value Tokens (`value`)
 
