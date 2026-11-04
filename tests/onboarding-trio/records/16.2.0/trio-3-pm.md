@@ -112,7 +112,7 @@ Peter, every session, from a macOS Terminal window (Window A): preflight-002700,
 ### budget:
 | Session | Budget | Multiple | Enforcement | Turns used | Result |
 |---|---|---|---|---|---|
-| birth | 40 | 8× founder `path-steps` 5 (floor 15) | observed, not enforced | **16** | ended on its own, exit 0 (one `operator-unblock`, F10) |
+| birth | 40 | 8× founder `path-steps` 5 (floor 15) | observed, not enforced | **16** | ended on its own, exit 0 (one `operator-unblock`: two empty Returns, one per prompt, F10) |
 | probe-leonardo | 30 | probe guard | observed, not enforced | **14** | ended on its own, exit 0 |
 
 **Counting rule** (§ 13): entries in the stored `history`.
@@ -231,11 +231,11 @@ Persona (c)'s **new** findings in this release. Re-observations are in F25. IDs 
 
 **R3-1 re-observed, the run's main result** (its line is in F25, not a new ID): bare `init` **hung inside kiro-cli 2.12.1's shell tool for 685 s**, the release-4 failure that #372 was meant to close.
 - The guard is `!process.stdin.isTTY` (`src/cli/init.ts` L184 at F). Kiro's shell tool runs commands with a terminal attached, so the guard passed, `init` printed the notice and "Product name:", and it waited on an answer no agent can give.
-- It took an operator-unblock (F10) to end. Claude Code's Bash tool has no terminal, so `trio-1-backend`'s `init --help` refused at once.
+- It took one operator-unblock (two empty Returns, one per prompt; F10) to end. Claude Code's Bash tool has no terminal, so `trio-1-backend`'s `init --help` refused at once.
 - **Route**: Lina (CLI). It is the same site as item C4 of `.kiro/issues/2026-10-25-cli-per-command-help-and-one-parser.md`. The question is whether `init` should also refuse when it is run under a known agent harness, or time out with the flags named.
 - The record that holds R3-1's fix (`.kiro/issues/2026-10-15-123-u5-instrument-findings.md`) should hear that the fix does not hold under Kiro's shell tool.
 
-**Forced negative, written**: the persona's path completed after one operator-unblock, and the probe produced a validated, plain-words screen spec. The findings are about one CLI guard (re-observed), the spec's token names and consumer-Leonardo's charter conduct. None stops the path.
+**Forced negative, written**: the persona's path completed after one operator-unblock (two empty Returns, one per prompt), and the probe produced a validated, plain-words screen spec. The findings are about one CLI guard (re-observed), the spec's token names and consumer-Leonardo's charter conduct. None stops the path.
 
 ### 15B.3:
 - **`init` asked for "your product's name"; did the persona keep birth and pipeline apart?** Yes. She ran `init` (twice: bare, then with flags) and `generate` once after it, and named `generate` as the step "which builds the actual token output from my token source".
