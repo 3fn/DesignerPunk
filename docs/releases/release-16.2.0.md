@@ -21,7 +21,7 @@
 
 ## What changed
 
-The CHANGELOG's `## [16.2.0]` entry is the consumer-facing list: Added (4), Changed (9), Fixed (2 groups), Known limitations (6, the first naming 12 tracked defects by record path) and Upgrading from 16.1.0 (5 steps). It is not repeated here.
+The CHANGELOG's `## [16.2.0]` entry is the consumer-facing list: Added (4), Changed (9), Fixed (2 groups), Known limitations (7, the first naming 12 tracked defects by record path) and Upgrading from 16.1.0 (5 steps). It is not repeated here.
 
 ## Upgrading from 16.1.0
 
