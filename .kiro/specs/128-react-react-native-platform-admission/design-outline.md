@@ -3,7 +3,7 @@
 **Date**: 2026-10-03
 **Spec**: 128 — Platform Admission, React and React Native
 **Author**: Thurgood (to formalize); this STUB opened by the orchestrator at Peter's direction, 2026-10-03
-**Status**: **STUB — do not formalize until the v15.0.0 tag is cut AND the completion-criteria-parity required-flip has merged** (ballot 70f8fe54). Per Process-Spec-Planning § "Phase 0" a STUB captures scope, dependencies, and cross-references only; architecture decisions live in the inbound as *recorded positions*, not rulings.
+**Status**: **STUB.** The gate this stub set on 2026-10-03 was met that day, and the identity sitting was carried into this spec unruled on 2026-10-20. The gate's single home is the charter record's Trigger, `.kiro/issues/2026-10-03-react-react-native-platform-admission-charter.md` L8. Per Process-Spec-Planning § "Phase 0" a STUB captures scope, dependencies, and cross-references only; architecture decisions live in the inbounds as *recorded positions*, not rulings.
 
 ---
 
@@ -20,9 +20,12 @@
 
 ## Inputs (read first, in this order)
 
-1. `inbound-from-react-rn-sitting-2026-10-02.md` — the sitting record: direction, verified facts, converged classification, proposals and dispositions, recommended sequence, component expression, records that change, **open forks (§ 8)**, questions (§ 10), consult ledger.
-2. `docs/roadmap/2026-10-03-react-react-native-platform-admission-roadmap-update.md` — strategy altitude, where this arc sits relative to Spec 123.
-3. `.kiro/issues/2026-10-03-react-react-native-platform-admission-charter.md` — owner and named trigger.
+1. `inbound-from-peter-user-stories-2026-10-21.md`
+2. `inbound-from-identity-sitting-2026-10-20.md`
+3. `inbound-from-react-rn-sitting-2026-10-02.md`
+4. `inbound-from-lina-g4-web-element-gate-2026-10-30.md`
+5. `docs/roadmap/2026-10-03-react-react-native-platform-admission-roadmap-update.md`
+6. `.kiro/issues/2026-10-03-react-react-native-platform-admission-charter.md`
 
 ## Scope intake, 2026-11-01 (record only: it names records and settles no design) — Thurgood
 
@@ -40,13 +43,12 @@
 
 ## Dependencies
 
-- v15.0.0 tag; parity required-flip (gate).
+- **No switch or toggle binding until Input-Switch-Base merges.** Lina's words: "128's binding list includes no switch or toggle until Input-Switch-Base merges" (`inbound-from-identity-sitting-2026-10-20.md` L812; also L513, Spec 130's P-8 (c) stated from 128's side). This line retires when Input-Switch-Base merges.
 - `.kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md` (Ada) — absorbed as a step.
 - `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md` (Kenya/Data) — prerequisite before any platform is called "reference".
 - Specs 118, 123, 125 one-package assumptions; Spec 123 Model B ruling (2026-09-26); Spec 070 Working Class commitment.
 
 ## Formalization pre-steps
 
-- Peter's rulings on the inbound's § 8 forks, or an explicit decision to carry them into the outline round as open items.
-- The identity ballot (Core Goals platform list, admission rule, tiers) precedes the outline settle — a Layer 1 change is a ballot, not an outline decision.
+- See `inbound-from-identity-sitting-2026-10-20.md` § "6. Rulings (Peter) — OPEN" and `inbound-from-peter-user-stories-2026-10-21.md` § "6. Open for Peter — recorded, NOT ruled".
 - Stakeholders for R1: Ada, Lina, Thurgood, Leonardo (owning seats); Sparky, Kenya, Data (platform seats); Stacy (claims-pass verifiability LENS at the tasks round).
