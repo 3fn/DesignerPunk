@@ -2,7 +2,7 @@
 
 **Date**: 2026-11-04
 **Drafted by**: Thurgood (Civitas steward; release author; owner of `.kiro/issues/2026-10-18-spec-priorities-by-outcome.md` and of `.kiro/specs/131-governance-simplification/evidence/baseline-snapshot.sh`), at Peter's direction.
-**Status**: **DRAFT, at R4.** The five R1 entries are spliced into § 9, [THURGOOD R2] records how each was folded in, [THURGOOD R3] records how Peter's answers to F-1 to F-4 (§ 6, received 2026-11-04T06:03:25Z) were folded in, and [THURGOOD R4] records how his answers to Additions A and B, to the cleanup list and to the PR shape (§ 6, received 2026-11-04T13:23:25Z) were folded in. Every fork is decided. Peter has not said "ratified", so the ballot is not ratified: Status changes only when he ratifies it (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"). Nothing below is applied.
+**Status**: **RATIFIED (Peter, 2026-11-04)** — "Re: 644, ratified", received 2026-11-04T13:32:16Z (`date -u` at receipt in the orchestrator session; relayed by the orchestrator to the holder). He ratified the ballot at head `b8b6aa3934422d926eecf5de2e7e1f6ff776e99b` (R4), after reading the PR's Open-for-Peter line ("Do you ratify this ballot as it now stands? …") and the orchestrator's summary of R4. **Record-first**: this commit is the record, made before any edit site is applied (`.kiro/docs/ballots/README.md` § "The Ratification Protocol", step 1). The five R1 entries are spliced into § 9, [THURGOOD R2] records how each was folded in, [THURGOOD R3] records how Peter's answers to F-1 to F-4 (§ 6, received 2026-11-04T06:03:25Z) were folded in, and [THURGOOD R4] records how his answers to Additions A and B, to the cleanup list and to the PR shape (§ 6, received 2026-11-04T13:23:25Z) were folded in. Every fork was decided before he ratified. Nothing below is applied.
 **Authority for drafting** (Peter, in chat, relayed by the orchestrator; receipt bounds are the orchestrator's `date -u`):
 - He was asked about "Decision 5", the class option for "rounds don't open". The text he read: "At each release, the existing baseline adds one row per spec that's waiting: how many releases since its outline last moved. You'd get one line per spec: open it, park it with a reason, or close it." Received before 2026-11-04T03:31:22Z, verbatim: *"Re: Decision 5, for."*
 - Then he was given three definitions of "waiting spec": (a) ranked in the priorities record; (b) named by a record's Trigger; (c) any outline without requirements, about 23 specs, "mostly dead placeholders". He asked: *"Re: waiting spec, with (c), wouldn't that mean we'd review those specs and decide if they should be closed/archived?"* The orchestrator answered yes. It counted 24 such specs and said:
@@ -603,7 +603,9 @@ Folding Peter's answers to Additions A and B, the cleanup list and the PR shape 
 
 ## 10. Application ledger
 
-*(Empty until ratification.)*
+*(No edit site is applied yet.)*
+
+- **2026-11-04, ratification record** (Peter, "Re: 644, ratified", received 2026-11-04T13:32:16Z; head ratified `b8b6aa3934422d926eecf5de2e7e1f6ff776e99b`): Status changed to RATIFIED by the holder, record-first. The application PR (§ 4) waits for this ballot PR's merge and Peter's go.
 
 ---
 
