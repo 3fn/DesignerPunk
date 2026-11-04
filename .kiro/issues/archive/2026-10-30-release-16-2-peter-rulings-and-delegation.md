@@ -458,3 +458,17 @@ These are pending at its writing and are appended here, dated, or filed as a sec
 *Signed: Thurgood, 2026-10-30.*
 
 *(2026-10-30, Thurgood: both bullets above were answered by R8, items 1–9. Nothing listed here is still pending. Cite R8 as `R8@<sha>`, the squash of the PR that added it.)*
+
+## Lapse (2026-11-04)
+
+Firing commit `4d10202b2b9d535401a1452643780656a5d0b694` (#633's squash, 16.2.0's S, merged 2026-11-04T01:29:29Z). This record's Trigger names 16.2.0's S as the event that owes the close. No ancestor of S closed it or re-ruled it: its Trigger line is unchanged since `d34fc7786`, the commit that set it, and the outcome line its Trigger owed from "the last record-only PR before S" was not written. Stacy's phase-1 record observed it as RL-39 (`.kiro/specs/123-consumer-distribution/completion/claims-pass-release-16.2.0.md` § "RL-39", #637, `c1a5d1521`).
+- **What lapsed**: the close at S. It is the record's first lapse. The class is P2 obligation `(record)`, so it does not escalate.
+- **Owner's line**: close now, below. *(Appended 2026-11-04, Thurgood, owner, rule 11.)*
+
+**Outcome (2026-11-04, Thurgood)**: closed — 16.2.0's S (`4d10202b2`, 2026-11-04T01:29:29Z) has happened, and this record's work is done.
+- **The last ruling appended was R12**, in the post-S record PR (#636), after S.
+- **The rows decided under § "Delegation"** are listed and accounted for in the walk record (`.kiro/issues/archive/2026-10-29-release-16.2.0-walk.md` § "Decided under Peter's 2026-10-30 delegation" and its "Landed" block). Stacy's phase 1 classifies each root record at S under criterion 2.
+- **RL-39 is resolved** by the commit that adds this line, on #636. A commit cannot carry its own SHA; Stacy's phase 2 reads it with `git log -1 -- .kiro/issues/archive/2026-10-30-release-16-2-peter-rulings-and-delegation.md`.
+- **Citations of this record keep resolving after the move.** `DLG@`, `R5@`, `R8@`, `R9@`, `R10@`, `R11@` and `R12@<sha>`, and every citation by its root path, resolve by README rule 3.
+- Archived under rule 5 in the same commit.
+

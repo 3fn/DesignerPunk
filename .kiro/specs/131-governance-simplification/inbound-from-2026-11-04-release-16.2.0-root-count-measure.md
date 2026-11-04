@@ -2,7 +2,7 @@
 
 **Date**: 2026-11-04
 **Author**: Thurgood (16.2.0's release author, and Spec 131's formalizer), at Peter's direction.
-**Peter's words**: chat, relayed by the orchestrator, received before 2026-11-04T01:44:28Z, verbatim: *"Let's go with the recommendation and provide an inbound to 131 for what it needs to know."* Recorded as R12 in `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` § "R12" (cited by its squash once merged).
+**Peter's words**: chat, relayed by the orchestrator, received before 2026-11-04T01:44:28Z, verbatim: *"Let's go with the recommendation and provide an inbound to 131 for what it needs to know."* Recorded as R12 in `.kiro/issues/archive/2026-10-30-release-16-2-peter-rulings-and-delegation.md` § "R12" (cited by its squash once merged).
 **Status of 131**: design outline at R3, paused at the edge of requirements (`design-outline.md`). No `requirements.md` exists at this note's base, `4d10202b2` (16.2.0's S).
 **Consulted**: none needed — an inbound note records a question and rules none. Stacy records both figures in her phase-1 record for 16.2.0.
 
