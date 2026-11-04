@@ -1,3 +1,5 @@
+> **Superseded by `inbound-from-ada-2026-11-04.md`** (Ada, 2026-11-04). Kept as history; the newer file is the current statement of these inputs.
+
 # Inbound to Spec 129 from Ada: the Android generator's type contract and syntax defects (class fixes, named, owned)
 
 **Date**: 2026-10-24
