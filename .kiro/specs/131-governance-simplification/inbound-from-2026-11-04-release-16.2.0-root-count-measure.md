@@ -27,8 +27,8 @@ Root records are `.kiro/issues/*.md` with the README excluded, counted with `git
 
 ## 3. Where the two readings come from
 
-- **Peter's words (R9, item 1)**: "**root records go down across 16.2.0, not up.** That's the measure that the cleanup is cleaning." That is in the rulings record, L115–L119; § "What his words cover" names that bullet at L130. "Across 16.2.0" does not name a window.
-- **The brief's narrowing**: the 16.2.0 release brief turned his bullet into criterion 4, "The root count at S is below the count at the walk's start, with both stated in the walk record" (rulings record L155, in the brief's text, L150–L157). The window became the walk start to S. The rulings record's own reading (L138–L148) says his words covered the offer as shown, not the brief's wording of it. That is why the window was put to him at S.
+- **Peter's words (R9, item 1)**: "**root records go down across 16.2.0, not up.** That's the measure that the cleanup is cleaning." That is in the rulings record, L115–L119. "Across 16.2.0" does not name a window.
+- **The brief's narrowing**: the 16.2.0 release brief turned his bullet into criterion 4, "The root count at S is below the count at the walk's start, with both stated in the walk record" (rulings record L155, in the brief's text, L150–L157). The window became the walk start to S. The rulings record's § "What his words cover" (L129–L140) separates his bullet, as shown to him, from the brief's additions. That is why the window was put to him at S.
 - **What the two readings disagree about**: the records filed between 16.1.0's S and the walk start. In that span, 25 root records were added and 4 archived, a net +21 (`comm` of the two `git ls-tree` lists). The cleanup reading leaves them out. The release-to-release reading counts them.
 
 ## 4. The input
