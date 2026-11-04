@@ -67,3 +67,8 @@
 - [@KENYA] [@DATA] Do § 4's "compile evidence only" lines and Q5's two options match your 2026-10-20 evaluation entry? Is any harness cost or reach misstated? → design-outline.md § 4, § 5.1 -- [THURGOOD R1]
 - [@ADA] Is each row's "Proposed under" a fair reading of your inbound § 3 table, and is Q14 framed as you meant it? → design-outline.md § 3, § 5.1 -- [THURGOOD R1]
 - [@LINA] Does each row's "129's part" say what your inbound asks, and do Q12 and Q13 carry your options without loss? → design-outline.md § 3, § 5.3 -- [THURGOOD R1]
+
+#### [STACY R1]
+- **Typecheck** (Q5, § 5.1): a CLOSEOUT claim I can check without the author, provided the typecheck runs as a CI context on the unit PR, so the claim cites a run I read, not a report. If it runs only on a seat's machine, the claim is trust-the-reported-result and my row reads `not re-verified — toolchain unavailable`. Narrower reach: it supports "type-checks", not "themed target" or linking → § 4 (what the harness proves).
+- **Host build** (Q5, § 5.1): decidable only if the build is a CI context. Run on a seat's machine, as the "acceptance proof at CLOSEOUT" variant suggests, it is a claim I cannot verify, and that row cannot roll into a ✅. Either option needs the requirements to name where the run is recorded (CI context, not prose).
+- **Elsewhere** → § 3 row 23 and § 4: rows 1–22 take "the harness" as their acceptance, but the harness is "build, fold or drop at the tasks round" and its toolchain pin (Compose `ripple`, § 4) is undecided. A criterion that names an instrument must resolve at the review base or name a subtask that builds it earlier in plan order (LENS question 6); the requirements round should not leave that to the tasks round.
