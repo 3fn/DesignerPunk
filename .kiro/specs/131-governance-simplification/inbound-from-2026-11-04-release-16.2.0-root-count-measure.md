@@ -23,7 +23,7 @@ Root records are `.kiro/issues/*.md` with the README excluded, counted with `git
 | 16.2.0's S | `4d10202b2` | 130 |
 
 - **The cleanup reading**, walk start to S: 140 → 130. **Met.** This is how criterion 4 was read for 16.2.0, by Peter's R12.
-- **The release-to-release reading**, S to S: 119 → 130, **+11. Unmet.** It is stated beside the first in the walk record (`.kiro/issues/2026-10-29-release-16.2.0-walk.md` § "At S") and in Stacy's phase-1 record.
+- **The release-to-release reading**, S to S: 119 → 130, **+11. Unmet.** It is stated beside the first in the walk record (`.kiro/issues/archive/2026-10-29-release-16.2.0-walk.md` § "At S") and in Stacy's phase-1 record.
 
 ## 3. Where the two readings come from
 

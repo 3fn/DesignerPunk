@@ -152,6 +152,6 @@ All four sha1s (npmjs dist.shasum, npmjs fetched bytes, GitHub Packages dist.sha
 
 ## Post-merge obligations recorded here (for Stacy's phase 2)
 - Phase 2 (Stacy) triggers at the step-6 record PR's merge; it reads this file.
-- The walk record (`.kiro/issues/2026-10-29-release-16.2.0-walk.md`) is not archived in this PR. It archives after Stacy's phase-1 record (#637) merges, under rule 5. The merge order is #637, then #636.
+- The walk record is closed and archived in this PR (rule 5), after Stacy's phase-1 record merged (#637, `c1a5d1521`, 2026-11-04T02:09:12Z). It is now `.kiro/issues/archive/2026-10-29-release-16.2.0-walk.md`.
 - GitHub release: step 7, last: gh release create v16.2.0 --notes-file docs/releases/release-16.2.0.md
 - The 16.2.0 files grant (docs/releases/16.2.0/**) expires at the step-6 record PR's merge; it is closed and archived in that PR (rule 5).
