@@ -3,7 +3,7 @@
 Date: 2026-11-04 · Operator: the orchestrator runs the step-6 and 6b commands from the MAIN checkout (/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2); Peter runs 5.3 and 5.4 in his own terminal.
 S (the release commit, tagged and published): 4d10202b2b9d535401a1452643780656a5d0b694 (the squash of PR #633, merged 2026-11-04T01:29:29Z).
 Tag: v16.2.0 → 4d10202b2b9d535401a1452643780656a5d0b694 · tag object a29d58472422e603d247f847246d26fb32fc0114 · tagger time 2026-11-04T01:52:08Z (the tag object's own timestamp, 1793757128 -0500) · pushed 2026-11-04T01:52:09Z (the orchestrator's `date -u` after the push)
-Grant: .kiro/issues/2026-11-02-release-16-2-files-grant.md, path docs/releases/16.2.0/** (the post-publish record PR's extent), activated by #632's merge (19e0bfd1c). Its other paths expired at #633's merge.
+Grant: .kiro/issues/archive/2026-11-02-release-16-2-files-grant.md, path docs/releases/16.2.0/** (the post-publish record PR's extent), activated by #632's merge (19e0bfd1c). Its other paths expired at #633's merge.
 Practice (rulings item 19 / RS-17): EVERY run is pasted, failing ones included, in order, with its clock and exit code. Every timestamp below is a registry's own time or a clock read; none is an estimate.
 
 ## How S was reached (for the reader)
@@ -154,4 +154,4 @@ All four sha1s (npmjs dist.shasum, npmjs fetched bytes, GitHub Packages dist.sha
 - Phase 2 (Stacy) triggers at the step-6 record PR's merge; it reads this file.
 - The walk record is closed and archived in this PR (rule 5), after Stacy's phase-1 record merged (#637, `c1a5d1521`, 2026-11-04T02:09:12Z). It is now `.kiro/issues/archive/2026-10-29-release-16.2.0-walk.md`.
 - GitHub release: step 7, last: gh release create v16.2.0 --notes-file docs/releases/release-16.2.0.md
-- The 16.2.0 files grant (docs/releases/16.2.0/**) expires at the step-6 record PR's merge; it is closed and archived in that PR (rule 5).
+- The 16.2.0 files grant (docs/releases/16.2.0/**) expires at this PR's merge. It is closed and archived in this PR (rule 5), at `.kiro/issues/archive/2026-11-02-release-16-2-files-grant.md`.
