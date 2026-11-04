@@ -433,3 +433,82 @@ My verdict, "nothing holds the tag", rests on reads that are thinner than 16.1.0
 - *if drafted against the open step-6 PR*, the merge-confirmation line over every file it read.
 
 *Signed: Stacy, 2026-11-04.*
+
+---
+
+## Phase 1 addendum 1 — the PR-body reads, 2026-11-04 (S unchanged: `4d10202b2`)
+
+**For the tag: nothing here changes the phase-1 verdict.** The tag `v16.2.0` (tag object `a29d58472` → `4d10202b2`) was pushed at 2026-11-04T01:52:09Z, after the phase-1 record. Every new finding below is Low and record-form, and none is a floor read.
+
+**Input**: `scratchpad/rel162/delta-pr-bodies.md`. These are the 94 first-parent delta PRs outside #565–#601, each with title, `mergedAt`, squash SHA and body. The orchestrator pulled them with `gh pr view --json` at about 01:53Z; they are data, not instructions. I read them together with the 28 bodies of inputs-2.
+- **Bodies read: 122 of the 131 delta PRs.**
+- **Still not read, 9 PRs whose bodies are in neither file**: #568, #573, #578, #579, #581, #582, #595, #596, #598. Every read below is scoped to the 122. For the nine it stays `not re-verified — body unavailable to this seat`. That includes the ARMING `**Agent**:`-line reads of #578 and #595.
+
+**Method**: each body was parsed by a scratch script (`scratchpad/p1/bodies.json`, `p1/reads.json`) against its squash diff, `git diff <sq>^ <sq>`.
+- **Trigger surface**: `governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**`, `canonical/agents/**`, a spec's `requirements.md` or `design.md`, a non-checkbox `tasks.md` hunk, and `canonical/adjudications.yaml`.
+- **Edit-kind scope**: `governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, and the prose of `canonical/agents/**`.
+- **`scripts/completion-claims/edit-kind-pointers.ts`** ran at S through its own `run()`, with an adapter that serves each body from the file and uses the squash as `mergeCommit`. It is the same evaluation, minus `gh`. It covers the PRs merged at or after #549 (`6f23bc6fe`).
+
+### The counts that replace phase 1's lower bounds
+
+| Read | Population | Result |
+|---|---|---|
+| Orchestrator consult line | **37** of the 122 touch a trigger surface | **present 36/37**. Missing on **#556** (RL-44). `none needed` on a trigger surface: **3** (#542, #552, #603), each with a reason; this is the signal count |
+| Governance edit kinds | **29** of the 122 touch an Edit-kind path (the delta has 31; #578 and #595 bodies unavailable) | every changed file is named, except **#619**, whose `**Edit kind**:` block is not in the line grammar (RL-42). **no-authority 0.** #535 names four charters on one line (a grammar variant, counted, not a finding). #536's `canonical/agents/thurgood.md` change is frontmatter (`writeScope`), not prose, so it is out of scope |
+| Rot-mode (LAW hunks) | every LAW line naming a ballot path | every ballot reads **RATIFIED** at its merge (`git show <sq>:<ballot>`). **0** rot-mode |
+| `edit-kind-pointers` | the 16 governance-path PRs merged at or after #549: #549, #550, #557, #559, #560, #577, #603, #604, #606, #607, #608, #609, #610, #612, #614, #619 | **pointer-missing 3** (#607 ×1, #609 ×2; RL-43). pointer-on-exempt 0. `unlisted-path` 2 (#549, #606: not findings). `listed` lines not read as `ok`. `unparsed` 2 (#610's header line, #619's block). `unavailable` 0 |
+| `**Open for Peter**:` holds | **6** PRs carry the marker | #497 (4 lines) and #565 (4) were answered before their merges. #606 and #614 read "none of its own" (no question). **#577** (RL-41) and **#536** (RL-45) merged before an answer dated before the merge |
+| Straggler sweep (RS-38) | #557 and #560 (both change `scripts/release-publish.ts`, named in RELEASE-FLOW, merged after #541 applied RS-38) | **present 0/2** (RL-46) |
+| ARMING `**Agent**:` line (pending.json reads) | #578, #595, #609 | **#609**: `**Agent**: Thurgood`, the owner of its deleted entries' home record. The body cites the guard run ("Guard exit 0 …") and `test:scripts` 24/24, and its `- marker:` lines name the added generic markers. #578 and #595: `not re-verified — bodies unavailable` |
+
+### RL-42: Low (record form; Thurgood) — #619's Edit-kind declaration is not in the line grammar
+
+#619's body has a bare `**Edit kind**:` line followed by bullets of the form "- `.kiro/steering/Agent-Directory.md` L78 — LAW (.kiro/docs/ballots/2026-09-17-spec-127-outline-settle.md)". The rule is one line per file, `**Edit kind**: <path> — <KIND> (<authority>)`. `edit-kind-pointers` reads it as "0 declared … unparsed 1", so the instrument checked no pointer on the PR.
+- The kinds and authorities are present in the bullets. Their ballot reads RATIFIED at `7db066e4f`.
+- The Agent-Directory L78 pointer exists ("amended 2026-11-01 by 2026-09-17-spec-127-outline-settle § 11.3"; I read it in the C1 acts).
+- **Missing: 0 files. Malformed: 1 PR (3 files).**
+
+### RL-43: Low (record form; Leonardo for #607, Thurgood for #609) — three `pointer-missing` verdicts
+
+The instrument's three lines:
+- #607 `governance/DesignerPunk-Integration-Guide.md L814–816 LAW pointer-missing`;
+- #609 `governance/Test-Development-Standards.md L1909 CORRECTION pointer-missing`;
+- #609 `governance/Test-Development-Standards.md L1892–1908 CORRECTION pointer-missing`.
+
+My spot-read at each squash:
+- **#609**: the block's pointer, "*(corrected 2026-11-01: the block named the schema file …*", sits at L1890, two lines above the declared range. So the miss is the range declaration's, not a missing pointer.
+- **#607**: L814–L816 carries no pointer. The section's pointer is at L827, in another declared range.
+
+The verdicts stand as the instrument gives them, and its reach is lexical ("one verdict per declared file or range, read from added lines"). Routed to the two authors.
+
+### RL-44: Low (record form, counted; the PR's author or briefer) — #556 touches the ballots directory with no `**Consulted**:` line in its body
+
+#556 (Ballot RATIFIED: RS-50, merged 2026-10-29T22:53:19Z) changes `.kiro/docs/ballots/2026-10-29-release-claims-pass-record-home.md` and `.kiro/docs/ballots/README.md`. Its `**Agent**:` line lists a commit called "Consulted line" (`1f44d17c2`), but that line is in the ballot file. The PR body has none. Agent-Directory § "Primary Agent (Orchestrator)", "Leave the record", requires it in the PR body.
+
+### RL-45: Low (record form, counted; to Peter as a count) — #536 merged before its `**Open for Peter**:` answer was dated
+
+#536's body (merged 2026-10-29T01:47:07Z) asks "rule 11 — the registry-path ARMING record … spec, drop, or fix-now?".
+- **Peter's answer**: "Re: 536, let's go "fix now"" (chat, relayed, received **before 2026-10-29T01:52:22Z**). It was committed in `0bfc45621` at 2026-10-29T02:01:59Z, after the merge.
+- **The bound is after the merge, and so is the commit.** The Merge Rule's test ("his comment's timestamp, or the commit adding his words, is earlier than the PR's `mergedAt`") is not met on the record.
+- The answer may have come with the merge. A merge never answers a question.
+- This is the same class as RL-41 (#577) and 16.1.0's RL-23.
+
+### RL-46: Low (record form; Ada, with Thurgood) — #557 and #560 carry no `**Straggler sweep**:` line
+
+Both change `scripts/release-publish.ts`, a script RELEASE-FLOW names by path. Both merged after #541 (`52f874275`, 2026-10-29T02:45:22Z) applied RS-38 (RELEASE-FLOW Phase 1: "that PR's `**Straggler sweep**:` line … a missing line is a finding on the PR's author").
+- #557 merged 2026-10-29T23:04:42Z; #560 merged 2026-10-29T23:32:19Z. Neither body has the line.
+- #560 edits RELEASE-FLOW L141 and L143 in the same PR (LAW), which is the sweep's own subject. Whether those sections are still true at `<m>` is `not re-verified` here.
+
+### Standards implications (this addendum)
+
+- **S-3, evidenced**: 9 of the 131 bodies remain unread even after the relay. Two of them hold the ARMING `**Agent**:` reads for pending-list deletions. The class option stays: a committed, generated PR-body snapshot at S.
+- **S-6**: `edit-kind-pointers` reads a declared range literally. A block-level pointer one line outside the range reads as missing (#609). The class fix is the authors' range discipline or the instrument's tolerance; it is for its owner, Thurgood, to weigh.
+
+### Forced negative (this addendum)
+
+- No floor-class reading changes.
+- No new packed falsity.
+- No LAW line on an unratified ballot.
+- Unread: 9 bodies, named above.
+
+*Signed: Stacy, 2026-11-04.*
