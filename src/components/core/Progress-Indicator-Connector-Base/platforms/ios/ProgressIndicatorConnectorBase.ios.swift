@@ -75,7 +75,7 @@ private let connectorThickness: CGFloat = DesignTokens.borderWidth100  // 1pt
  * @see Requirements: 1.6-1.7, 12.10-12.12
  */
 public struct ProgressIndicatorConnectorBase: View {
-    @Environment(.dpTheme) private var theme
+    @Environment(\.dpTheme) private var theme
 
 
     // MARK: - Properties

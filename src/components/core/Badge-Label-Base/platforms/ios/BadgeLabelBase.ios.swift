@@ -208,7 +208,7 @@ public enum BadgeLabelBaseDefaults {
  * @see Requirements: 1.1-1.10, 4.1, 4.2, 4.4, 4.5, 4.6, 4.8, 5.2
  */
 public struct BadgeLabelBase: View {
-    @Environment(.dpTheme) private var theme
+    @Environment(\.dpTheme) private var theme
 
     
     // MARK: - Properties

@@ -289,7 +289,7 @@ public struct Avatar: View {
     /// Tracks hover state for interactive avatars
     @State private var isHovered: Bool = false
 
-    @Environment(.dpTheme) private var theme
+    @Environment(\.dpTheme) private var theme
     
     /// Tracks whether image failed to load (for fallback to icon)
     @State private var imageLoadFailed: Bool = false

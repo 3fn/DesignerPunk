@@ -223,7 +223,7 @@ public struct BadgeCountNotification: View {
     /// Previous count for tracking changes (used for announcements)
     @State private var previousCount: Int?
 
-    @Environment(.dpTheme) private var theme
+    @Environment(\.dpTheme) private var theme
     
     // MARK: - Initialization
     

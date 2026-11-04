@@ -47,7 +47,7 @@ private let labelFontWeight: Font.Weight = .medium  // fontWeight500
  * @see Requirements: 1.8-1.10
  */
 public struct ProgressIndicatorLabelBase: View {
-    @Environment(.dpTheme) private var theme
+    @Environment(\.dpTheme) private var theme
 
 
     // MARK: - Properties

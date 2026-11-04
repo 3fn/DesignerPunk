@@ -126,7 +126,7 @@ private enum ProgressNodeColors {
  * @see Requirements: 1.1-1.5, 12.1-12.16
  */
 public struct ProgressIndicatorNodeBase: View {
-    @Environment(.dpTheme) private var theme
+    @Environment(\.dpTheme) private var theme
 
 
     // MARK: - Properties
