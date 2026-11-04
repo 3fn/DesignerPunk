@@ -1,0 +1,71 @@
+# Release 16.2.0 — publish verification (RELEASE-FLOW step 6: 6a rail guard + 6b two-registry record)
+
+Date: 2026-11-04 (skeleton; step 6 fills it) · Operator: the orchestrator runs the step-6 and 6b commands from the MAIN checkout (/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2); Peter runs 5.3 and 5.4 in his own terminal.
+S (the release commit; tagged and published once 5.2–5.4 run): 4d10202b2b9d535401a1452643780656a5d0b694 (the squash of PR #633, merged 2026-11-04T01:29:29Z).
+Tag: [5.2 — filled after Stacy's phase-1 verdict: v16.2.0 → <S> · tag object · tagger time (the tag object's own timestamp) · pushed]
+Grant: .kiro/issues/2026-11-02-release-16-2-files-grant.md, path docs/releases/16.2.0/** (the post-publish record PR's extent), activated by #632's merge (19e0bfd1c). Its other paths expired at #633's merge.
+Practice (rulings item 19 / RS-17): EVERY run is pasted, failing ones included, in order, with its clock and exit code. Every timestamp below is a registry's own time or a clock read; none is an estimate.
+
+## How S was reached (for the reader)
+
+S = 4d10202b2 (#633, the release PR). No release fix followed it at this writing. If one does, this section lists each S in order, as the 16.1.0 record does.
+Phase 1 (Stacy): [her RELEASE phase-1 record for 16.2.0, path @ SHA — filled when it merges]
+
+## Comparands (6b)
+
+### 5.3 release-publish-record.json (verbatim)
+[5.3 — filled after Peter's 5.3 run: the record's full contents (mode, commit, sha1, fileCount, bytes, pack-assert passed/total, publishedTo, createdAt), from the path 5.3 prints]
+
+### 5.1 dry run at S (before the tag), tally — orchestrator, main checkout, 2026-11-04T01:30:28Z–01:30:58Z, exit 0 (A3)
+$ npx tsx scripts/release-publish.ts --dry-run 4d10202b2b9d535401a1452643780656a5d0b694
+release-publish: dry-run of @3fn/core@16.2.0 at 4d10202b2b9d535401a1452643780656a5d0b694 (fresh clone of https://github.com/3fn/DesignerPunk.git)
+[… npm ci, check:drift, closure compare, npm pack with prepack build, verify:token-index-clean, pack-assert; the npm notice file-list lines and the 105 assertion lines elided; full log kept outside the repo …]
+105/105 assertions passed.
+
+tarball:    /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-Fvw3Fi/out/3fn-core-16.2.0.tgz
+sha1:       29bd97c7f9b41517815b9fa1cf3cf9884908e715
+files:      1701   bytes: 6630698   pack-assert: 105/105   publish path: 16 (floor 16)
+record:     /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-Fvw3Fi/out/release-publish-record.json
+
+DRY RUN — nothing was published, and this tarball is never published: 5.3 builds the release tarball again at the tag, and 5.4 publishes only that one.
+EXIT=0
+
+### 5.1 file-set compare against the previous public artifact (RELEASE-FLOW step 2, "At each S") — Thurgood, 2026-11-04T01:35:50Z
+$ shasum <5.1 tarball> <public 16.1.0 tarball, npm pack @3fn/core@16.1.0 from registry.npmjs.org>
+29bd97c7f9b41517815b9fa1cf3cf9884908e715  /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-release-Fvw3Fi/out/3fn-core-16.2.0.tgz
+cc42f4f9897677ee53b3f75d18ef52535a346c6a  …/scratchpad/pub-16.1.0/3fn-core-16.1.0.tgz   (equals the 16.1.0 record's 5.3 sha1)
+$ LC_ALL=C comm -3 <(tar -tzf <16.1.0> | LC_ALL=C sort) <(tar -tzf <5.1> | LC_ALL=C sort)   (column 1 removed, column 2 added)
+	package/application-mcp-server/src/indexer/__tests__/SchemaWebAccess.test.ts
+	package/application-mcp-server/src/indexer/__tests__/TokenIndexer.packageDrift.test.ts
+	package/application-mcp-server/src/validation/__tests__/AssemblyCoverage.test.ts
+	package/dist/cli/sync/McpConfigCheck.d.ts
+	package/dist/cli/sync/McpConfigCheck.js
+	package/dist/cli/sync/mcpConfigCandidates.d.ts
+	package/dist/cli/sync/mcpConfigCandidates.js
+0 removed, 7 added; 1694 → 1701 files. The same seven as the release notes' § "Packed output" (#581's four dist/cli/sync files; three application-mcp-server test files).
+
+### 5.3 publish to GitHub Packages — Peter, his terminal, from the MAIN checkout
+[5.3 — filled from Peter's paste: the command (`npx tsx scripts/release-publish.ts 16.2.0 --expect-sha 4d10202b2b9d535401a1452643780656a5d0b694`), its full output and exit code, its clock lines. 5.3's sha1 is expected to differ from 5.1's by design (it rebuilds in a fresh clone at the tag).]
+
+### 5.4 public npm — Peter's terminal (web 2FA)
+[5.4 — filled from Peter's paste: `npx tsx scripts/release-publish.ts --npmjs <the record path 5.3 printed>`, its output and exit code, its clock lines.]
+
+## 6a — the rail guard (full output, exit code) — every run
+[6a — filled by the orchestrator's runs of `VERSION=16.2.0 ./scripts/verify-publish-rail.sh` from the main checkout, each with its clock and exit code; on a failure, the packument's time["16.2.0"] read before any re-run.]
+
+## 6b — the two-registry reads (full capture, verbatim, in order)
+[6b — filled by the flow's commands from the MAIN checkout: the npmjs packument and the GitHub Packages metadata (registry named twice), npm pack from each registry, and the 5.3 record comparand.]
+
+### Per registry
+[for each of registry.npmjs.org and npm.pkg.github.com: version present · registry publish time time["16.2.0"] · file count · dist.shasum · fetched-bytes sha1]
+
+### Comparand table (all four must equal the 5.3 record's sha1)
+[npmjs dist.shasum · npmjs fetched bytes · GitHub Packages dist.shasum · GitHub Packages fetched bytes, each against the 5.3 record]
+
+## Verdict
+[filled after 6b]
+
+## Post-merge obligations recorded here (for Stacy's phase 2)
+- Phase 2 (Stacy) triggers at the step-6 record PR's merge; it reads this file.
+- GitHub release: step 7, last: gh release create v16.2.0 --notes-file docs/releases/release-16.2.0.md
+- The 16.2.0 files grant (docs/releases/16.2.0/**) expires at the step-6 record PR's merge; it is closed and archived in that PR (rule 5).
