@@ -62,7 +62,7 @@ Record: `.kiro/issues/2026-10-13-native-readiness-test-patterns-miss-repo-tests.
 - `*Tests.swift` / `*Test.kt`: 2 components, Button-VerticalList-Item and Button-VerticalList-Set, one of each. These already match.
 - `derivePlatformReadiness` patterns: `ComponentIndexer.ts` L919–920, unchanged.
 
-So extending the patterns moves **2 of 34**, not 32. Most native implementations have no test of any form, and `hasTests: false` is mostly true. **Ada's 2026-10-30 inbound, open question 1, still states the old premise** ("Served readiness reads `scaffold` for most components because the pattern matches only…"). Her replacing inbound is the place to carry the correction. I flag it; the line is hers.
+So extending the patterns moves **2 of 34**, not 32. Most native implementations have no test of any form, and `hasTests: false` is mostly true. **Ada's 2026-10-30 inbound, open question 1, states the old premise** ("Served readiness reads `scaffold` for most components because the pattern matches only…"). Her 2026-11-04 inbound supersedes it and hands this question to me (its item c), so this section is the correction. It also answers her item c: the dated CORRECTION line landed in the record on 2026-11-01, and the wording fix is done (#591).
 
 **Options for the requirements round** (listed, not picked):
 
