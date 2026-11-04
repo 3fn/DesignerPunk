@@ -155,7 +155,6 @@ What the package ships for iOS, and why it does not add up to a target yet:
 - Product tokens that reference a theme-varying token are emitted into `ProductTokens.ios.swift` as an extension on `<YourName>Theme`; nothing defines or generates that type.
 - `node_modules/@3fn/core/dist/ComponentTokens.ios.swift` is DesignerPunk's **component token tier**. Some of the shipped components read it (`ButtonIcon.ios.swift`, for one), and it refers to `SizingTokens`, `SpacingTokens` and `BorderWidthTokens`, which no shipped file defines.
 - Native token output omits the **14 theme-varying semantic colours**, among them `colorActionPrimary` and `colorStructureCanvas`.
-- Nine of the shipped components also spell the theme read as `@Environment(.dpTheme)`, without the key-path backslash.
 
 This was checked by reading the source, and the parse failure was reproduced with the Swift compiler's parse step. No iOS build was run. Platform requirements, for reference: **iOS 17.0+** (SwiftUI, UIKit). iOS onboarding is a planned follow-up (Spec 129).
 
