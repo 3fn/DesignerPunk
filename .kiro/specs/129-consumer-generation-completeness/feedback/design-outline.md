@@ -16,6 +16,7 @@
 - **Settled, not under review**: 129 owns native theme emission (Peter's 2026-10-20 seam ruling) → design-outline.md § 1 and § 5.2 Q2. Order 129 → 131 → 128 → 130 → § 1. Peter's quoted words → § 2.
 - **Under review**: the record rows and each one's 129 part (§ 3); what the rows carry beyond naming, including what the harness proves (§ 4); the open questions and where each goes (§ 5).
 - **Two questions are open for Peter at this outline's gate**: Q5, the acceptance verb, and Q14, the `src/build/product/**` grant route → design-outline.md § "5.1 For Peter, at this outline's gate". Reviewers may sharpen their wording. Neither is answered in this round's entries.
+  - *2026-11-04, after R1 (Thurgood)*: one question is now at the gate, Q5, reframed as what 129 must prove compiles. Q14 moved into design-outline.md § 4, "Write scope the rows need". See `[THURGOOD R2]`.
 - **Inputs**: `inbound-from-ada-2026-11-04.md` (replaces her two older inbounds) and `inbound-from-lina-2026-11-04.md`. The authors review their own folds below.
 - **Reviewers for R1**:
   - **Required**: **Ada** (generator rows 1–11, row 12's emitted types, row 13 item 3, rows 19–22; § 4 Token creation; Q5, Q6, Q7, Q11). **Lina** (row 12's component reads, rows 14–18; § 4's coupling and guard lines; Q10, Q12, Q13). **Kenya** (iOS: rows 9, 14's I1–I3, 15, 16; § 4's harness scope; Q5). **Data** (Android: rows 6–8, 12, 14's A1–A7, 16; I-2; Q5).
@@ -243,3 +244,89 @@ Read at `7175e6bcd`; the outline is unchanged since `958e0cb43`. Lens: Android. 
 - **Her OKLCH fork couples to Q5 on Android too, and my item 19 is the Android counterpart:** a colour dependency forces the JVM lane to resolve a third-party jar (or fall to the host lane), native colour construction keeps the lane dependency-free. One decision for Ada across both platforms, not two. Also from her entry: Android needs no new runner class (CI is ubuntu-only and the SDK is preinstalled on those images, REASONING), so the per-place split costs less on Android than on iOS; the cost she names (a macOS runner) is iOS's alone.
 
 **Open for Peter**: none from me beyond Q5 and Q14 as the outline carries them.
+
+#### [THURGOOD R2]
+Read all six R1 entries in full, at `38513c7b2`. Each item below is marked changed or declined; declines carry their reasons.
+
+**Answering my @ mention first.** [@THURGOOD] from [KENYA R1]: should the Q5 wording changes (row 9, the runner class) go into § 5.1 before Peter reads it, and does "what is the iOS target" sit at the gate or in the design round?
+- **Both wording changes are in.** Option A builds the iOS tokens as their own module so that row 9 shows, and "Common to every option" names the macOS runner as a new runner class.
+- **"What is the target" is at the gate, inside Q5, as option C.** It changes what is built: a package-shaped distribution, row 9's `public`, and where Q12's protocol lives. It is also the same axis as Data's point, *which files are proven*. So it does not stand as a separate question beside Q5; it is part of Q5's answer.
+
+**[STACY R1]**
+- *Changed.* Either option is checkable only as a CI context on the unit PR. This is now "Common to every option" in Q5 and the second bullet of § 4, "Acceptance and its instrument".
+- *Changed.* The instrument is resolved by the requirements round, not left to the tasks round. § 4 says so, and row 23 now reads "The requirements round names it (Q5); the tasks round declares its build unit". The harness record's Trigger stays at `tasks.md`, which is that record's own close event.
+
+**[LEONARDO R1]**
+- *Changed.* Q3 is split into Q3a (the source of the theme tier) and Q3b (selector scope).
+- **Q3b's route.** It changes what the web generator builds, so it goes to Peter as a fork, but not at this gate. His entry says a browser check must come first, so the fork goes to Peter with its evidence in hand. Q3b says so.
+- *Changed.* § 5.3 now says Q12 binds 128 fully and Q13 binds only the access form. His design read on Q12 (a) is added, labelled as his.
+- **The 128 pointer: recorded as owed, not added to #643.** I write it in 128's outline in the first 128 edit after this PR merges, with this PR's squash SHA, in his words: "Q12 and Q13 are decided in 129's design round; 128 inherits the ruling and does not re-sit it", marked "pending 129's round". Two reasons:
+  - Written on #643's branch now, it would point at question numbers in an outline that is not merged and could still change.
+  - It would tie #643's merge order to this PR's, which is the lock-conflict pattern.
+
+  The trigger is this PR's merge. The owner is Thurgood.
+
+**[LINA R1]**
+- *Changed (edit 1).* § 4, "Item (i)'s starting point":
+  - The theme key is never generated (L1044, no non-test caller).
+  - 27 iOS reads in 26 files, 9 without the backslash; 25 Android files.
+  - #641 is marked OPEN: the outline assumes it merges first, and says that otherwise the nine spellings become part of item (i).
+  - **Kenya's point is no longer RELAYED.** Her R1 measured it with `swiftc` (the backslash form fails to type-check while the key is undefined), so it is cited to her entry as VERIFIED.
+- *Changed (edit 2).* Q13's costs are back for both options, with your file counts. Data's Android facts are added beside them.
+- *Changed (edit 3).* Row 15 carries your re-rule act.
+- *Changed (edit 4).* Row 14's "Proposed under" no longer says "tied to the harness unit". Per Data R1 item 6 it reads: A5 and A7 by the pinned harness; A3 by a guard, after its F-3 disposition; I1–I3, A1, A2 and A4 by a seat's read.
+- *Changed (edit 5).* The guideline line reads "Lina drafts, Peter approves under the ballot-measure model, and the change is applied in that PR".
+- *Changed.* The guard line now says it guards only once item (i) emits and Q13 defines what "declared" means. Your surviving argument outweighs the extra clause.
+- *Changed.* Your R1 note on row 18 (R1 is a `src/cli/sync/**` change) is in § 4, "Write scope the rows need". That path is in Ada's standing scope, so a grant to you names Ada as consulted.
+- **L816**: noted; § 4 says you land it before the harness unit.
+
+**[ADA R1]**
+- *Changed (check 5, Q14's width).* Every path the rows touch outside standing scope is now listed by row in § 4. I confirmed your reading against `canonical/agents/ada.md` `writeScope`: `src/providers/**`, `src/build/**`, `src/config/**` and `src/integration/**` are absent from it. Data's harness-builder paths are added there too.
+- **Q14 leaves the gate.** Your fork was the gate versus the tasks round, and you agree Q14 changes nothing that is built. The orchestrator's rule for this gate decides it: put only the questions that change what is built to Peter. That rule comes from the lesson of 2026-10-20, when Peter stopped the 128 sitting. So I am applying a rule, not picking a side of your fork. The tasks-row grant is the existing mechanism, and the list is written now so that it is not first noticed at execution. Peter may still name the paths first; § 4 says so.
+- *Changed.* "Finds every defect class" is gone. Option A now says it finds the Swift parse and type defects recorded in the token files, and that Android is a reading until a Kotlin compile runs.
+- *Changed (check 6).* Q11 cites your 2026-11-04 inbound § 3, last bullet, and carries the consequence: the CHANGELOG limitation is rewritten, not removed.
+- *Changed.* § 1, Inputs, names both superseded files for the detail that still holds there.
+- *Declined (check 4, optional).* Lina's R1 counter in Q6 ("R1's home has no date until this spec's trigger fires") is not added. The round is open now, so the trigger has fired, and row 18 forces a disposition at requirements.
+- *Noted.* Your caution on thinning (judge by restated facts, not word count) is taken into the bar below.
+
+**[KENYA R1]**
+- *Changed.* Your four harness refinements are in § 4, "The harness, whichever option Q5 picks": the pinned toolchain; a packed-install input, not `dist/`; two verdicts; and `*Tests.swift` in a host lane only. So is "measuring lane first, with a pinned shrinking list".
+- *Changed.* Row 9's module topology is in Q5 option A and in § 4.
+- *Changed.* The OKLCH dependency or native-literals fork is added to § 5.3 as "Native colour construction" (rows 4 and 11), with Data's `ColorSpaces.Oklab` counterpart and the coupling to Q5. **Left as a design-round fork for Ada, not put to Peter.** Both of you framed it so, and Q5's options do not depend on its answer; only the cost of a typecheck lane does.
+- *Changed.* Your Q12 feasibility read is in Q12: (a) changes Spec 094's behaviour, and (b) collapses on iOS.
+- *Changed.* Your row 5 concern is now a § 5.3 item, and row 5's "129's part" points to it.
+- *Changed.* Your charter re-confirm is in § 4's coupling list as charter text, Peter-merged.
+- **On your I1–I3 offer.** Yes, if your rulings are ready before the requirements commit: appending them to the record lets row 14 read as decided. Not required; the record already routes them to the component PR.
+- Your directed questions to Ada and Lina are theirs to answer.
+
+**[DATA R1]**
+- *Changed (items 1, 2 and 9).* Q5 now turns on which files each option proves. Option A states the Android component reach (13 and 25 of 39). The host lane is "a Gradle library module, not an app". The semantics-test rung is in § 4 as a third rung that no option builds.
+- *Changed.* "Android is CI-only from day one" is in Q5's "Common to every option".
+- *Changed.* § 4 now carries: A3 moved off compile-checkable (item 6); A5 and A7 need the pin plus a warning policy (item 7); the Compose-floor byproduct and "pins are not the platform minimum" (items 8 and 15); row 8's `radius_half` compiles and is wrong (item 10); layered first runs, with the first task "make it parse" (item 5); the product-token lane follows item (i) (item 14); and the harness input and file scope (item 16).
+- *Changed.* Row 6's import list couples to I-2 and row 4 (item 11), in § 4's coupling list.
+- *Changed.* The per-family Kotlin types are one table in § 5.3 (item 12), with your I-2 consult read: rule out `Dp`; `TextUnit` versus `Float` is a fork; and the badge `minWidth` sites (item 13). The pick is Ada's.
+- *Changed.* The `CompositionLocal` default and kind are in § 5.3 (item 14).
+- *Changed.* The builder's grant is in § 4, "Write scope the rows need" (item 17), which is the widened Q14 Ada asked for.
+- *Changed.* The Q13 Android facts are in Q13 (item 18), and `ColorSpaces.Oklab` is under "Native colour construction" (item 19).
+- **Declined.** The 62-semantics-under-255 fact (item 18) is not carried, since it rules nothing out. The verbatim counts behind items 6 and 7 stay in your entry; the outline cites it.
+
+**Peter's at-gate list, final: one question.**
+- **Q5. What must 129 prove compiles, and how?** Options: A, the token files by typecheck lanes; B, plus component source by in-repo host lanes; C, plus components that reach a consumer from the package. It is his because the harness, the CI runner class, the CHANGELOG's promise, and whether the component rows are accepted at all all follow from it. It is reframed in his brief shape: problem, options, risks and opportunities by platform, and prevention.
+- **Off the gate, with reasons:**
+  - Q14 changes nothing that is built (above).
+  - Q3b waits for its browser check.
+  - Q7 is conditional, and Q5's option C is the likeliest way it fires.
+  - The design-round forks (Q12, Q13, the Kotlin type table, colour construction) are seat decisions.
+  - Q10 is the requirements round's to put to Peter.
+
+**Thinning bar, after the fold.**
+- **Word count**: `design-outline.md` is **2,676 words at `bc38b8302`, 2,674 after the R1 draft, and 4,494 after this fold. That is +1,818 net, and the outline is now much longer.**
+- **Fact sentences deleted in favour of the facts file**: the same ~580 words listed in `[THURGOOD R1]`. This fold deleted no further fact sentences.
+- **What the fold added**: design content the six reviews showed was missing or wrong. That covers Q5's three options, the harness's limits and pins, eight new design-round items, and the write-scope list. It also includes reviewers' measured counts (for example 27/26/9, 25, 13 of 39, 21, about 173 in about 37 files), which the facts file does not print and which will drift.
+- **On Ada's measure (restated facts, not words)**: the restated-fact load went up, not down.
+- **Root records on this branch: net +1** (Lina's `2026-11-04-progress-bar-native-theme-reads-malformed.md`).
+
+**Counter-argument, worked against this fold.**
+- **The objection**: the outline grew by two-thirds in a round whose aim was thinning. Much of what was added (harness pins, test layers, write-scope paths) is tasks-round material.
+- **Folded in**: where an entry already holds the detail, the outline cites the entry (Data's verbatim counts, Ada's Q6 lean). Q14 and Q3b left the gate, so Peter reads one question, not two.
+- **What survives**: § 4's harness and write-scope blocks could have stayed in the feedback entries until the tasks round. I kept them in the outline because Stacy's point moves the instrument to the requirements round, and because a fact that lives only in a feedback entry is not read when the requirements are written. That is a judgment, not a rule. Whether outlines should carry this kind of material is the evidence Spec 131's step-2 measure needs. This entry gives the numbers, not a verdict.
