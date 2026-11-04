@@ -1,6 +1,6 @@
 # The persona trio — run protocol
 
-**Spec**: 123-consumer-distribution · **Task**: 25 (U5) · **Operator and author**: Leonardo · **Launcher**: Peter (ruling 2026-10-14: every harness session is launched by Peter from a macOS Terminal window, not from a shell inside the Claude app) · **Written**: 2026-10-14 · **Revised for release 5 (16.1.0)**: §§ 2, 5.0, 5.1, 8, 9, 11, 12, 13 and 15.3, under the write grant in `.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md` (Peter, 2026-10-25: "T is (A)")
+**Spec**: 123-consumer-distribution · **Task**: 25 (U5) · **Operator and author**: Leonardo · **Launcher**: Peter (ruling 2026-10-14: every harness session is launched by Peter from a macOS Terminal window, not from a shell inside the Claude app) · **Written**: 2026-10-14 · **Revised for release 5 (16.1.0)**: §§ 2, 5.0, 5.1, 8, 9, 11, 12, 13 and 15.3, under the write grant in `.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md` (Peter, 2026-10-25: "T is (A)") · **Revised for release 6 (16.2.0)**: §§ 5.0, 8 (F25) and 9, and the `REL` line of each § 11 run block, under the write grant in `.kiro/issues/2026-10-30-release-16-2-trio-grant.md` (#570, `0184efb3fd7b2956677351fdf84899767a5ac74a`) (the collective's disposition under Peter's delegation, `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` @ `d34fc7786`; Peter, 2026-10-30: "Re: 8, your launch time", R8@`0184efb3fd7b2956677351fdf84899767a5ac74a`)
 **Traces**: Reqs 22, 23, 24.2/24.2a, 25.1, 25.5, 15B.3 · design C30, C8 · tasks.md § "UNIT 5" run discipline
 **Instruments block**: `.kiro/specs/123-consumer-distribution/completion/task-25-instruments.md`
 
@@ -63,8 +63,8 @@ Every harness session in a run ends with exactly one stop event from this list, 
 
 ### 5.0 Where the runs sit in the release
 
-- **Before S, so before the tag.** S is the release PR's squash commit, the commit that is tagged and published (RELEASE-FLOW § "The sequence" step 5). The trio runs against a **preview candidate** packed from `main` at the **content-freeze commit F** (§ 5.1). Its records PR merges **before the release PR**, so every record is an ancestor of S. Ruled for 16.1.0 by Peter, 2026-10-25: "T is (A)", a pre-S trio on a preview candidate (`.kiro/issues/2026-10-25-release-16.1.0-walk.md`, line T). This is the position RELEASE-FLOW "Deriving the delta" item 6 points to.
-- **F is named by an event for 16.1.0, not a date.** Ruled by Peter, 2026-10-25, in chat, relayed: "Re: S window, as soon as we wrap up the remaining issues that should go into 16.1.0, we should release it". F is the merge commit of the **last 16.1.0 fix PR**, named at that merge (on 2026-10-25 the remaining two were the row-4 shape revert on #479 and Lina's E5 + size125 branch). The candidate pack is built from F immediately, the four runs follow at Peter's next sitting, this PR's records merge, then the release PR. **There is no calendar date for 16.1.0.** If a date is ever set, the fallback is the "F no later than <date>" form: F is named by that date at the latest, from the `main` commit then current. The ruling is carried in `.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md` (owner line, 2026-10-25, "RULED — the S window is event-anchored").
+- **Before S, so before the tag.** S is the release PR's squash commit, the commit that is tagged and published (RELEASE-FLOW § "The sequence" step 5). The trio runs against a **preview candidate** packed from `main` at the **content-freeze commit F** (§ 5.1). Its records PR merges **before the release PR**, so every record is an ancestor of S. Ruled for 16.1.0 by Peter, 2026-10-25: "T is (A)", a pre-S trio on a preview candidate (`.kiro/issues/2026-10-25-release-16.1.0-walk.md`, line T). This is the position RELEASE-FLOW "Deriving the delta" item 6 points to. **Release 6 (16.2.0) runs in the same position**: run in full before S, the collective's disposition under Peter's delegation (`.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` @ `d34fc7786`); Peter's launch is his word ("Re: 8, your launch time", R8@`0184efb3fd7b2956677351fdf84899767a5ac74a`). The run's absence at S is a finding, not a tag holder, unless Peter says "Hold".
+- **F is named by an event for 16.1.0, not a date.** Ruled by Peter, 2026-10-25, in chat, relayed: "Re: S window, as soon as we wrap up the remaining issues that should go into 16.1.0, we should release it". F is the merge commit of the **last 16.1.0 fix PR**, named at that merge (on 2026-10-25 the remaining two were the row-4 shape revert on #479 and Lina's E5 + size125 branch). The candidate pack is built from F immediately, the four runs follow at Peter's next sitting, this PR's records merge, then the release PR. **There is no calendar date for 16.1.0.** If a date is ever set, the fallback is the "F no later than <date>" form: F is named by that date at the latest, from the `main` commit then current. The ruling is carried in `.kiro/issues/2026-10-15-123-onboarding-trio-recurring.md` (owner line, 2026-10-25, "RULED — the S window is event-anchored"). **For 16.2.0, F is named the same way**: the merge commit of the last fix PR the release carries before S, named at that merge; there is no calendar date.
 - **Why not after the tag**: a record still open at a firing event lapses there unless a commit that is an ancestor of the event closed or re-ruled it (`.kiro/issues/README.md` rule 11). A record written after the tag is not an ancestor of S, so a post-tag run cannot discharge the release's obligation in time.
 - **F** is the `main` commit the release author names as the content freeze: after the last shipped-surface change the release carries, before the release branch. **F must also be a commit at which `token-index/` and `floor-closure.json` are current against the build**: the dry run (§ 5.1) refuses on either when stale, and the release branch's own refresh (RELEASE-FLOW step 2) is not there yet. If it refuses, the refresh lands on `main` first as a small release-author PR and F moves to that merge. The release author knows this before naming F. A merge after F that touches a `package.json` `files[]` path makes the candidate stale. Each record states `git diff --stat <F> <records-PR base> -- <the files[] roots>` (empty, or the paths), and the release PR body repeats the line against its own base.
 - **What the candidate lacks, stated in every record (F3)**: the release PR's own diff — the version bump (the candidate's `package.json` still reads the previous release's version), the CHANGELOG retitle (the candidate's CHANGELOG still reads `## [Unreleased]`), the release notes, and any `token-index/` refresh the release branch commits. A green on the candidate is weaker evidence than a run on the published tarball. The pre-S position is chosen so the record exists in time, not because the preview is the artifact.
@@ -181,7 +181,7 @@ Each run produces `tests/onboarding-trio/records/<release>/<run-id>.md` from rel
 | F22 | `15B.3:` | run 3 only, and present as `not applicable — run 3 only` in runs 1 and 2: did the persona keep `init` (birth, once) and `generate` (the pipeline, every token change) apart? `held`, `did not hold`, or `cannot-tell`, with the evidence quoted |
 | F23 | `dd9:` | run 3 only (`not applicable — run 3 only` otherwise): the notice as printed, quoted; whether she recovered via the notice (`attach --target=kiro` or equivalent), quoted; and the sentence that one run cannot establish which harness is the majority |
 | F24 | `persona-close:` | the persona's closing note from the birth session, verbatim |
-| F25 | `prior-findings:` | one line per prior finding (`governance/release-management-system.md` § "The Release Recipe" step 6): every finding the previous release's three trio records recorded and did not disposition `fixed-and-observed`, written `- disposition: <id> — <fixed-and-observed\|fixed-not-observed\|still-present> — <basis>`. The basis names the fix (its PR) or that none has merged, and either what in this run observed the site or `not reached in this run — <why>`. A finding no fix has reached reads `still-present`, and its basis says `observed` or `not reached in this run`, so a carried finding the run never met is not read as a re-observation. Release 5's prior set is release 4's 36 trio findings (R1-1–R1-14, R2-1–R2-10, R3-1–R3-12) |
+| F25 | `prior-findings:` | one line per prior finding (`governance/release-management-system.md` § "The Release Recipe" step 6): every finding the previous release's three trio records recorded and did not disposition `fixed-and-observed`, written `- disposition: <id> — <fixed-and-observed\|fixed-not-observed\|still-present> — <basis>`. The basis names the fix (its PR) or that none has merged, and either what in this run observed the site or `not reached in this run — <why>`. A finding no fix has reached reads `still-present`, and its basis says `observed` or `not reached in this run`, so a carried finding the run never met is not read as a re-observation. Release 5's prior set is release 4's 36 trio findings (R1-1–R1-14, R2-1–R2-10, R3-1–R3-12). Release 6's is release 5's: 52 per record, the 31 of release 4's findings that not all three 16.1.0 records dispositioned `fixed-and-observed` and the 21 new (R1-15–R1-21, R2-11–R2-17, R3-13–R3-19), listed in `prompts/16.2.0/prior-findings.md` with the dated reading (Thurgood, 2026-10-30) it rests on |
 | F26 | `carried-cells:` | Kiro runs: one line per row of `.kiro/issues/2026-10-15-123-cannot-tell-cells.md` that names this run-id (rows 1–3: `trio-2-designer`; row 4: `trio-3-pm`; row 1's re-observation is any Kiro founder-cold cell), with the re-observation, or `cannot-tell — <the same reason>` and what was tried (§ 12). CC runs: `not applicable — no carried cell names a cc run` |
 
 ### 8.3 The cold-observation cell (shared with Task 26.4 and Task 28)
@@ -213,10 +213,10 @@ The host facts are separate lines, under `host-toolchain`, recorded as facts wit
 
 The check establishes that every field is present with a well-formed value. It does not judge observations (S-T-A3). Stacy's RELEASE pass, phase 1, over the release's delta reads the operator logs' content and the `subject: leonardo` findings *(re-pointed 2026-10-25 from Spec 123's CLOSEOUT, which has run and does not fire for a recurring run; `.kiro/issues/2026-10-25-consumer-screen-spec-complete-unbound.md` row 2)*.
 
-Run from the repo root at the records' commit; paste the output into the records PR body (release 4: the Task 25 completion doc). Set `REL` to the release; the disposition count is 36 per record for release 5 (F25):
+Run from the repo root at the records' commit; paste the output into the records PR body (release 4: the Task 25 completion doc). Set `REL` to the release; the disposition count is 36 per record for release 5 and 52 for release 6 (F25; `prompts/16.2.0/prior-findings.md`):
 
 ```sh
-REL=16.1.0
+REL=16.2.0
 for f in tests/onboarding-trio/records/$REL/trio-*.md; do
   echo "== $f"
   for label in 'run-id:' 'frozen-prompt:' 'candidate:' 'fixture:' 'target:' 'source-access:' 'harness-user-state:' 'host-toolchain (ios):' 'host-toolchain (android):' 'session-launched-by:' 'operator-log:' 'budget:' 'stop:' 'wall-clock:' 'path-steps-walked:' 'first-MCP-load:' 'cold-observation:' 'c8c-observations:' 'probe:' 'sample:' 'discovery:' 'findings:' '15B.3:' 'dd9:' 'persona-close:' 'prior-findings:' 'carried-cells:'; do
@@ -266,7 +266,7 @@ FIX=a-ts-service
 COMMIT=FILL_IN_PROMPT_COMMIT
 F=FILL_IN_FREEZE_COMMIT
 SHA=FILL_IN_CANDIDATE_SHA1
-REL=16.1.0
+REL=16.2.0
 DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
 STORE="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/$REL"
 TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
@@ -429,7 +429,7 @@ FIX=b-static-site
 COMMIT=FILL_IN_PROMPT_COMMIT
 F=FILL_IN_FREEZE_COMMIT
 SHA=FILL_IN_CANDIDATE_SHA1
-REL=16.1.0
+REL=16.2.0
 DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
 STORE="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/$REL"
 TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
@@ -609,7 +609,7 @@ FIX=c-near-empty
 COMMIT=FILL_IN_PROMPT_COMMIT
 F=FILL_IN_FREEZE_COMMIT
 SHA=FILL_IN_CANDIDATE_SHA1
-REL=16.1.0
+REL=16.2.0
 DP="/Users/3fn/Documents/Work Projects/Kiro/DesignerPunk-v2"
 STORE="/Users/3fn/Documents/Work Projects/Kiro/u5-pack/$REL"
 TGZ="$(ls "$STORE"/3fn-core-*.tgz)"
