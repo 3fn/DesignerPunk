@@ -64,7 +64,7 @@ private func derivePaginationNodeState(index: Int, currentItem: Int) -> Progress
  * @see Requirements: 2.1-2.12, 10.1-10.2, 11.1-11.6
  */
 public struct ProgressPaginationBase: View {
-    @Environment(.dpTheme) private var theme
+    @Environment(\.dpTheme) private var theme
 
 
     // MARK: - Properties

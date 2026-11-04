@@ -44,7 +44,7 @@ struct ProgressBarBase: View {
     @State private var pulseOpacity: Double = PULSE_OPACITY_MIN
     @State private var lastAnnouncedMilestone: Int = -1
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(.dpTheme) private var theme
+    @Environment(\.dpTheme) private var theme
 
     var body: some View {
         GeometryReader { geometry in

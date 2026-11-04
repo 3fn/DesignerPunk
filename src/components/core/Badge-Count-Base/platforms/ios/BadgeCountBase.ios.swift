@@ -181,7 +181,7 @@ public enum BadgeCountBaseDefaults {
  * @see Requirements: 2.1-2.13, 4.3, 4.4, 5.2
  */
 public struct BadgeCountBase: View {
-    @Environment(.dpTheme) private var theme
+    @Environment(\.dpTheme) private var theme
 
     
     // MARK: - Properties
