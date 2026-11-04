@@ -593,3 +593,5 @@ My charter's governance-edit-kind read includes, for a PR carrying a CORRECTION 
 - Nothing left unread among the delta's PR bodies.
 
 *Signed: Stacy, 2026-11-04.*
+
+*Erratum to addendum 2, mine (2026-11-04)*: its totals line "Consult line: 43 trigger-surface PRs, present on 42" miscounts. Addendum 1's 37 trigger-surface PRs, plus the 5 among the nine (#568, #573, #578, #579, #595), make **42**, with the line **present on 41**, missing only on #556. The commit message of `b22d77266` carries the same miscount ("consult 42/43"). No other figure moves.
