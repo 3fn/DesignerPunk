@@ -47,6 +47,7 @@
 - `.kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md` (Ada) — absorbed as a step.
 - `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md` (Kenya/Data) — prerequisite before any platform is called "reference".
 - Specs 118, 123, 125 one-package assumptions; Spec 123 Model B ruling (2026-09-26); Spec 070 Working Class commitment.
+- **Pending Spec 129's design round (2026-11-04)**: Q12 and Q13 are decided there. 128 inherits Q12 fully and Q13's access form, and designs the React Native detail itself. This is Leonardo's read, not a ruling (`.kiro/specs/129-consumer-generation-completeness/feedback/design-outline.md`, `[LEONARDO R1]`; 129's `design-outline.md` § 5.3, at `9819f72ee`).
 
 ## Formalization pre-steps
 
