@@ -2,7 +2,7 @@
 
 **Date**: 2026-11-04
 **Drafted by**: Thurgood (Civitas steward; release author; owner of `.kiro/issues/2026-10-18-spec-priorities-by-outcome.md` and of `.kiro/specs/131-governance-simplification/evidence/baseline-snapshot.sh`), at Peter's direction.
-**Status**: **DRAFT, at R2.** The five R1 entries are spliced into § 9, and [THURGOOD R2] there records how each was folded in. Not ratified. Nothing below is applied.
+**Status**: **DRAFT, at R3.** The five R1 entries are spliced into § 9, [THURGOOD R2] records how each was folded in, and [THURGOOD R3] records how Peter's answers to F-1 to F-4 (§ 6, received 2026-11-04T06:03:25Z) were folded in. Additions A and B are still open for him. Not ratified. Nothing below is applied.
 **Authority for drafting** (Peter, in chat, relayed by the orchestrator; receipt bounds are the orchestrator's `date -u`):
 - He was asked about "Decision 5", the class option for "rounds don't open". The text he read: "At each release, the existing baseline adds one row per spec that's waiting: how many releases since its outline last moved. You'd get one line per spec: open it, park it with a reason, or close it." Received before 2026-11-04T03:31:22Z, verbatim: *"Re: Decision 5, for."*
 - Then he was given three definitions of "waiting spec": (a) ranked in the priorities record; (b) named by a record's Trigger; (c) any outline without requirements, about 23 specs, "mostly dead placeholders". He asked: *"Re: waiting spec, with (c), wouldn't that mean we'd review those specs and decide if they should be closed/archived?"* The orchestrator answered yes. It counted 24 such specs and said:
@@ -19,7 +19,7 @@
 
 **Amends**:
 - `.kiro/hooks/RELEASE-FLOW.md` item 3a: one new paragraph (§ 3 site 1). **LAW**.
-- `.kiro/issues/2026-10-18-spec-priorities-by-outcome.md` § 7's header: one sentence, **only under F-1 (a)** (§ 3 site 2). **LAW**, because that header carries ballot E3's text.
+- ~~`.kiro/issues/2026-10-18-spec-priorities-by-outcome.md` § 7's header~~: **not applied** (F-1 (b), Peter, 2026-11-04; § 3 site 2). § 7's header stays ballot E3's text.
 - `.kiro/specs/131-governance-simplification/evidence/baseline-snapshot.sh`: one appended block (§ 3 site 3, Appendix A). **EXECUTION** of site 1. It is not a governance path, so it owes no edit-kind line.
 - `.kiro/specs/131-governance-simplification/evidence/2026-11-04-baseline-16.2.0.md`: one generator-pin line (§ 3 site 4). **EXECUTION**.
 - `.kiro/specs/131-governance-simplification/evidence/README.md`: the `baseline-snapshot.sh` entry made true (§ 3 site 5). **EXECUTION**.
@@ -28,12 +28,12 @@
 - Site 1 edits `.kiro/hooks/RELEASE-FLOW.md`. Two register rows cite that file as the law their instruments implement (condition 2): `publish-rail-guard` (steps 6 and 6b) and `hermetic-publish-path` (steps 5.1–5.4). So site 1 is presumptively in scope of both:
   - `**Census**: not in scope — publish-rail guard (scripts/verify-publish-rail.sh) — the edit adds a 3a walk paragraph; the rail reads one version from the live registry and loads no RELEASE-FLOW text, so no verdict can change`
   - `**Census**: not in scope — hermetic publish path, both scopes (scripts/release-publish.ts) — the script names RELEASE-FLOW steps only in comments and messages; the edit touches no step it decides, so no verdict or surface can change`
-- No registered check loads sites 2–5:
+- No registered check loads sites 3–5 (site 2 is not applied):
   - `.kiro/issues/` and `.kiro/specs/` are not citing roots of `check-section-citations` (`governance/`, `.kiro/steering/`, `canonical/`), and they are not in `122-diff-guard`'s input closure (`tools/agent-generator/diff-guard.ts` L62–71).
   - `baseline-snapshot.sh` is named in no register row's `checks`.
   - The only rows that cite the issues README or the walk as law, `issues-obligation-lapse` and `release-falsity-floor`, have `checks: []`.
 
-**Cap**: one RELEASE-FLOW paragraph; at most one sentence of one record's header; one script block of 25 lines; one pin line; one README entry. **Retroactivity**: none. Every existing figure the baseline script prints is unchanged at the same arguments; the block only appends (Appendix A).
+**Cap**: one RELEASE-FLOW paragraph; one script block of 25 lines; one pin line; one README entry. **Retroactivity**: none. Every existing figure the baseline script prints is unchanged at the same arguments; the block only appends (Appendix A).
 
 ---
 
@@ -100,19 +100,11 @@ Its figure is **the number of releases cut after the outline last moved and befo
 
 *(R2: the event now comes before the reason in the park form, so it can always be read from the start of the line (Stacy 2.3). The paste's place relative to phase 1 is stated (Stacy 1.3 (i), (ii)). The definition's one home is stated (Stacy 1.2). The `closed` clause is new (Stacy 1.3 (ii)). "Git-visible, never `manual`" is Addition B. The `open` threshold of 2 is Addition A.)*
 
-**Under F-1 (a) only**, the park bullet gains: "and the spec gets a row in the priorities record's 'Peter-gated deferrals' list, which this item already reprints."
+The park bullet is as above, with no priorities-record row: a park lives in the outline line alone (F-1 (b), Peter, 2026-11-04).
 
-### Site 2, under F-1 (a) only: `.kiro/issues/2026-10-18-spec-priorities-by-outcome.md` § 7 header (LAW)
+### Site 2: NOT APPLIED (F-1 (b), Peter, 2026-11-04): `.kiro/issues/2026-10-18-spec-priorities-by-outcome.md` § 7 header
 
-**Before** (L91 at `ee31decd3`, the italic header's last sentence):
-
-> A row survives rule 5's stale archive, citing the archived path.)*
-
-**After**:
-
-> A row survives rule 5's stale archive, citing the archived path. A waiting spec that Peter parks (RELEASE-FLOW item 3a, "Waiting specs, at S") is a row too: it cites its directory `.kiro/specs/<dir>/`, with his reason and the re-ask event, and it leaves the list when the event fires or he rules again (ballot 2026-11-04-waiting-spec-row, site 2).)*
-
-Under F-1 (b) this site is not applied, and § 7's header stays E3's text.
+*Why it is not applied, for the trail:* F-1 (a) would have made a park an outline line plus a row in the priorities record's § 7, which needed this one-sentence amendment of ballot E3's header. Peter took (b), the outline line alone, so § 7's header stays E3's text and nothing is edited. No Before/After text is carried: there is no edit.
 
 ### Site 3: `baseline-snapshot.sh`, the "Waiting specs at S" block (EXECUTION)
 
@@ -144,28 +136,28 @@ In `.kiro/specs/131-governance-simplification/evidence/README.md`, the `baseline
 
 ## 4. Application (after the Status commit)
 
-1. The Status commit records the ratification and Peter's answers to F-1 and F-2, record-first.
-2. One PR applies sites 1, 3, 4 and 5, plus site 2 under F-1 (a).
-   - The body carries the `**Edit kind**:` lines (RELEASE-FLOW LAW; under F-1 (a) the priorities record is not a governance path and owes none) and the census lines above, re-run at application.
+1. The Status commit records the ratification, record-first. Peter's answers to F-1 to F-4 are already on record in § 6, and the Status commit cites that block.
+2. One PR, the application PR, applies sites 1, 3, 4 and 5 (site 2 is not applied) and carries the first pass's outcome lines (item 3).
+   - The body carries the `**Edit kind**:` lines (RELEASE-FLOW LAW; sites 3 to 5 are not governance paths and owe none) and the census lines above, re-run at application.
    - It also carries a `**Straggler sweep**:` line for `baseline-snapshot.sh` (ballots README, "Straggler sweep on an instrument PR"), because RELEASE-FLOW names that script at the PR's merge.
    - Verification:
      - `bash -n` on the script;
      - the 16.2.0 and 16.1.0 runs, compared with the committed record: the table must be byte-identical, followed by the new block and then the footer;
      - the block at 16.2.0's S (`4d10202b2`) must print 128 as 0 and 051 as 49, which shows the tag at S is left out (R2 test: it does);
      - the block at the application's base, compared row for row with Appendix B, with any difference since `ee31decd3` listed.
-3. First pass, per F-2:
-   - **Under (a)**: the triage of Appendix B goes to Peter as one batch, with the owners' reads folded in. One PR then writes the outcome lines he gives. That PR is Thurgood's, under `.kiro/specs/**`, and each owner is consulted on their rows.
+3. First pass, at ratification (F-2 (a), Peter, 2026-11-04):
+   - The triage of Appendix B goes to Peter as one batch, with the owners' reads folded in. The application PR then writes the outcome lines he gives, in the outlines under `.kiro/specs/**`; each owner is consulted on their rows. (§ 8's "outcome PR" is this PR.)
      - It carries each `closed` row's E2 paste (site 1).
      - It carries the follow-on records § 8 names, under `.kiro/issues/README.md` rule 10.
-     - It carries 116's Q5 record if F-4 says file it.
-   - **Under (b)**: nothing runs until 16.3.0's walk at S.
+     - It carries 116's Q5 record (F-4 (a)): owner Ada, Sparky consulted, Trigger `path:.kiro/specs/129-consumer-generation-completeness/requirements.md`, in the wording of [SPARKY R1] in § 9.
+   - Nothing waits for 16.3.0's walk; its paste is the first run of site 1's text on a table the first pass has already cleared.
 
 ## 5. Recommendation, counter-argument (fold-back applied), residual
 
-**I recommend** sites 1 and 3–5, with F-1 (b) and F-2 (a), on these grounds:
+**I recommend** sites 1 and 3–5, with F-1 (b) and F-2 (a) (both now Peter's, § 6), on these grounds:
 - Peter has ruled the substance.
 - (c) needs no list to be kept current, unlike (a) ranked.
-- The first pass, after the owners' R1 reads, proposes closing 20 of the 24 directories, parking 3 and opening 1. Every row now has an owner's read or Thurgood's confirmation of his own, and every park has a git-visible re-ask event. Two rows carry a fork for Peter: 128's re-ask token (F-3) and 116's Q5 (F-4) (Appendix B's tally).
+- The first pass, after the owners' R1 reads, proposes closing 20 of the 24 directories, parking 3 and opening 1. Every row now has an owner's read or Thurgood's confirmation of his own, and every park has a git-visible re-ask event. Two rows carried a fork for Peter, 128's re-ask token (F-3) and 116's Q5 (F-4); both are answered (§ 6).
 - After that, the table is a short list of real waiting specs.
 
 **Counter-argument 1: this adds a standing release step while Spec 131, whose purpose is removing layers, is paused.**
@@ -188,7 +180,7 @@ In `.kiro/specs/131-governance-simplification/evidence/README.md`, the `baseline
 
 **Counter-argument 5: the first pass is about 24 decisions for Peter.**
 - Fold-back: Appendix B pre-sorts them with evidence, and the owners confirm their rows before he sees them, so he can answer "all as recommended" with exceptions.
-- **What survives**: two rows come to him as real questions (F-3 and F-4). Thurgood's own 14 rows rest on his confirmation alone, except the six that Stacy sampled (rows 3, 5, 13, 14, 22 and 23).
+- **What survives**: two rows came to him as real questions (F-3 and F-4), and he has answered both. Thurgood's own 14 rows rest on his confirmation alone, except the six that Stacy sampled (rows 3, 5, 13, 14, 22 and 23).
 
 **Counter-argument 6: closing by an outline line leaves the directories in place.**
 - `.kiro/specs/` stays as large as it is, and an agent listing it still sees dead specs.
@@ -196,25 +188,38 @@ In `.kiro/specs/131-governance-simplification/evidence/README.md`, the `baseline
 
 ## 6. Forks for Peter
 
-- **F-1: where a park lives.**
-  - **(a)** As in the text he read before: a park is the outline line **plus** a row in the priorities record's § 7, which RELEASE-FLOW 3a already reprints. That needs site 2, which amends ballot E3's header.
-  - **(b)** The outline line alone. The table itself reprints the park line at every S.
-  - **My lean is (b)**: one home, read by the script, no E3 amendment, one site fewer.
-  - Against (b): § 7 is the one place Peter already reads for "answered, not now", and under (b) parked specs appear there no longer. Parked records do, parked specs do not.
-- **F-2: when the first pass runs.**
-  - **(a)** At ratification: the triage batch goes to Peter now, while the evidence in Appendix B is fresh.
-  - **(b)** At 16.3.0's S, as the walk's first paste.
-  - **My lean is (a)**: the triage is already prepared, it takes 20 rows off 16.3.0's walk, and it was his question that led here.
-  - Against (a): it tests the rows outside the release rhythm the RELEASE-FLOW line is written for. The first real run of site 1's text is still 16.3.0. And its outcome lines reset every remaining figure to 0 before 16.3.0, so 16.3.0's paste can be compared with Appendix B for membership only, not figures (Stacy R1 item 4).
-- **F-3: 128's re-ask token** (row 16).
-  - **(a)** `path:.kiro/specs/131-governance-simplification/requirements.md`: 128 is re-asked when 131 starts formalizing. This was my R1 candidate.
-  - **(b)** `path:.kiro/specs/131-governance-simplification/tasks.md`: 128 is re-asked when 131's formalization is done. This is Leonardo's lean.
-  - I have no lean. "After 131" reads both ways.
-  - Against (b): 128's inbounds have waited since 2026-10-21, and under (b) its round opens only after both 129's and 131's formalization. Leonardo reads that as the ruled order, not a defect.
-- **F-4: 116's Q5, the drift report** (row 12).
-  - **(a)** File a P3 record, as the closing PR's companion. Sparky proposed the wording (§ 9): owner Ada, Sparky consulted, Trigger `path:.kiro/specs/129-consumer-generation-completeness/requirements.md`.
-  - **(b)** Drop Q5 with a reason in the closing line. Under Model B the incident's cause is gone, and Q5 is now a convenience.
-  - **This call is Peter's and Ada's.** Sparky leans (a), because it costs one short file. I have no lean.
+### Peter's answers to F-1 to F-4 (recorded by the holder)
+
+**His words, verbatim** (received 2026-11-04T06:03:25Z, `date -u` at receipt in the orchestrator session; relayed by the orchestrator to the holder): "Go with the leans; F-3 tasks.md, F-4 file it."
+
+**What he had read** (the orchestrator's message, quoted here so the mapping can be checked; this text is the orchestrator's, not his): F-1 offered (a) outline plus priorities list or (b) outline only, "Thurgood leans (b)"; F-2 offered (a) at ratification or (b) at 16.3.0's S, "Thurgood leans (a)"; F-3 offered requirements.md started (Thurgood) or tasks.md finished (Leonardo); F-4 offered "File a small record for it, aimed at 129's requirements" or "drop it with a reason"; Additions A and B "for you to confirm (Thurgood's, not your words)"; and "Or tell me to go with the leans, which covers F-1 and F-2 only, since F-3 and F-4 have no recommendation."
+
+**The holder's reading of his words against that text** (a mapping, not his words):
+- **F-1 (b)**: the outline line alone. Site 2 is not applied.
+- **F-2 (a)**: the first pass runs at ratification.
+- **F-3 (b)**: row 16 (128) re-ask is `path:.kiro/specs/131-governance-simplification/tasks.md`.
+- **F-4 (a)**: file Sparky's P3 record, as the closing PR's companion, which § 4 item 3 makes the application PR. **Ada owns that record** and may re-rule it under `.kiro/issues/README.md` rule 9; Peter made the call, and the record's owner keeps the right to re-rule it.
+
+**Additions A and B are NOT answered.** "Go with the leans" covered F-1 and F-2 only, as the message he read said, and F-3 and F-4 were answered by name. Neither Addition has a lean, and neither is covered by any of his words above. They remain open for him, and the ballot is not ratifiable until he answers them.
+
+### The four forks, as decided
+
+- **F-1: where a park lives. DECIDED (b), the outline line alone.**
+  - The options were (a) the outline line plus a row in the priorities record's § 7 (which needed site 2, an amendment of ballot E3's header), and (b) the outline line alone, with the table reprinting the park line at every S.
+  - (b) was my lean: one home, read by the script, no E3 amendment, one site fewer.
+  - What survives: § 7 is the one place Peter already reads for "answered, not now", and parked specs no longer appear there. Parked records do; parked specs do not.
+- **F-2: when the first pass runs. DECIDED (a), at ratification.**
+  - The options were (a) at ratification and (b) at 16.3.0's S. (a) was my lean: the triage is already prepared, it takes 20 rows off 16.3.0's walk, and it was his question that led here.
+  - What survives: it tests the rows outside the release rhythm the RELEASE-FLOW line is written for, so the first real run of site 1's text is still 16.3.0. The first pass's outcome lines reset every remaining figure to 0 before 16.3.0, so 16.3.0's paste can be compared with Appendix B for membership only, not figures (Stacy R1 item 4).
+- **F-3: 128's re-ask token (row 16). DECIDED (b), `path:.kiro/specs/131-governance-simplification/tasks.md`.**
+  - 128 is re-asked when 131's formalization is done. This was Leonardo's lean; my R1 candidate was `…/requirements.md`.
+  - What survives: 128's inbounds have waited since 2026-10-21, and its round opens only after both 129's and 131's formalization. Leonardo reads that as the ruled order, not a defect.
+- **F-4: 116's Q5, the drift report (row 12). DECIDED (a), file Sparky's P3 record.**
+  - Owner Ada, Sparky consulted, Trigger `path:.kiro/specs/129-consumer-generation-completeness/requirements.md`, in the wording of [SPARKY R1] in § 9. It is filed in the application PR (§ 4 item 3). Q5's drop reason is not written.
+  - What survives (Sparky's own point): a record with a spec trigger can idle past 129, so the safety net may stay unbuilt; the mitigation is the trigger plus the health-check walk.
+
+### Still open for Peter
+
 - **Addition A, for Peter's confirmation; not his words**: an `open` row is re-asked once its figure reaches 2.
   - Without a threshold, an opened spec that never formalizes drops out of the ask forever, which is 129's history.
   - It makes the ask set computable from the paste.
@@ -539,6 +544,18 @@ Incorporation notes, item by item. The five entries above are unchanged. Woven m
 - **SPARKY R1**: row 12 becomes closed on his question-by-question read. Q5 becomes fork F-4: file his P3 record or drop Q5 with a reason, which is Peter's and Ada's call. His unverified items, the CLI not run and the `sync.*` tests not read, are carried in his entry. Row 12 rests on reading the source.
 - **Not taken**: none of the five entries asked for something I declined.
 
+#### [THURGOOD R3]
+
+Folding Peter's answers to F-1 to F-4 (verbatim in § 6, received 2026-11-04T06:03:25Z). The entries above, including [THURGOOD R2], are unchanged.
+
+- **F-1 (b), the outline line alone**: site 2 is not applied. Its heading now says so with one trail line and carries no Before/After text; the header's "Amends" bullet is struck; the Census line reads "sites 3–5"; the Cap drops the header sentence; site 1's "Under F-1 (a) only" note became one line saying a park lives in the outline line alone; § 4 items 1–2 and the Edit-kind note no longer carry a conditional. → header L20–25, Census, Cap, § 3 sites 1 and 2, § 4, § 5, § 6.
+- **F-2 (a), at ratification**: § 4 item 3 states the first pass runs at ratification and drops the "under (b)" branch. → § 4.
+- **F-3 (b), `tasks.md`**: Appendix B row 16 carries `path:.kiro/specs/131-governance-simplification/tasks.md`; the open choice is gone from the row and from § 6. → Appendix B row 16, § 6.
+- **F-4 (a), file it**: Appendix B row 12 names the filing in the application PR (owner Ada, Sparky consulted, Trigger `path:.kiro/specs/129-consumer-generation-completeness/requirements.md`, [SPARKY R1] wording) and the "or writes Q5's drop reason" branch is dropped. § 6 notes that Ada owns the record and may re-rule it under README rule 9. → Appendix B row 12, § 4 item 3, § 6.
+- **Moot statements in § 9, left as written**: the [STACY R1] and other R1 lines that treat F-1 to F-4 as open (for example "Under F-2 (a), the outcome line would quote his words…") are now answered; they are not edited.
+- **A choice the folding forced**: F-2 (a) says the application PR carries the outcome lines, so § 4 now makes the application PR one PR for sites 1, 3, 4, 5 and the first pass. That couples the law sites' merge to Peter's answers to the triage batch. R2's text had them as two PRs (sites first, then an outcome PR). § 8's "outcome PR" is read as this PR. If Peter wants them split, § 4 item 2 and 3 change back; I did not decide that for him.
+- **Still open for Peter**: Additions A and B. "Go with the leans" did not cover them. The ballot is not ratifiable until he answers.
+
 ## 10. Application ledger
 
 *(Empty until ratification.)*
@@ -598,11 +615,11 @@ Tested standalone (with `S` and `SS` set as the script sets them), R2: at `ee31d
 | 9 | `102-consumer-onboarding-completion` | `48ed1e648` (33) | Ada | Parent 1 was completed (`f37bc28de`) and the version bump landed (`2943f54f6`). Then 102's work shipped in **v11.2.0** (`9f954cf68`, via Spec 103). **11.1.0 was never published or tagged**: there is no `v11.1.0`, and parent 2's publish steps never ran. `docs/releases/RELEASE-NOTES-11.1.0.md` is stale (§ 8). Trigger: 0. **R1 read**: Ada changes the reason, from superseded to abandoned. | **closed — abandoned in part: parent 1 carried out and shipped in v11.2.0 (`9f954cf68`); parent 2 (publish 11.1.0) was never run, the 11.1.0 version was skipped, and its fresh-repo verification of the five gaps was not done under this spec.** |
 | 10 | `113-onboarding-cli-workflows` | `e63ab7000` (2) | Leonardo | Its own Status (2026-10-20): DORMANT. Its philosophy was absorbed by Spec 123 (§ 3.6; `src/cli/templates/starter-specs/`). Its mechanism, a `configure` verb and a designer-facing intake, was not built. **The outline's "nearest living home", the Integration Guide designer-friendly rewrite charter, is closed** (2026-10-25, now `.kiro/issues/archive/2026-10-03-integration-guide-designer-friendly-rewrite-charter.md`). The rewrite shipped as the guide's `## Walkthroughs` layer (L262). Trigger: 0. **R1 read**: Leonardo confirms closed, with the residual in the line; park is the wrong shape. | **closed — superseded in part by Spec 123 § 3.6; the designer-friendly rewrite shipped as the Integration Guide's `## Walkthroughs`; residual: a state-aware re-runnable `configure` verb, not built and with no home — re-file as a fresh outline if wanted.** |
 | 11 | `115-post-oklch-stabilization-cleanup` | `71120a5d9` (14) | Ada | Phases B and C have `Status: Complete` completion docs. Phase A's first item, deleting `src/tokens/ColorTokens.ts`, was deferred (`completion/phase-a-completion.md` § 3: "File cannot be deleted yet"), and the file still exists. It is carried by `.kiro/issues/2026-09-12-spec-115-phase-b-colortokens-deletion.md`, folded into the colour-track spec (priorities record § 3.4). That record borrows the label "Phase B". Trigger: 0. **R1 read**: Ada confirms closed, and corrects the closing line. | **closed — phases A–C carried out except Phase A's deletion of `src/tokens/ColorTokens.ts`, deferred in `completion/phase-a-completion.md` § 3 and carried by `.kiro/issues/2026-09-12-spec-115-phase-b-colortokens-deletion.md` (Trigger `manual`, folded into the colour-track spec, priorities record § 3.4).** |
-| 12 | `116-sync-customization-safety` | `22848e4b7` (8) | Thurgood (formalization), Sparky (tooling), Ada (source model) | Sparky reads each open question against `src/cli/sync/`:<br>- Q1 answered: off a terminal, `sync` reports and writes nothing unless `--apply` is passed.<br>- Q2 answered by removal: `--force` and `--accept-all` are retired, and `--overwrite` and `--restore` are per path.<br>- Q3 superseded: Model B, 123 Req 5.8, `sync` never writes `src/tokens`, which Ada confirms.<br>- Q4 superseded: a first encounter is a conflict, judged against shipped content.<br>- Q6 answered: Integration Guide L1084 and L1100–1103.<br>- **Q5, a drift report, is still open**, and no live spec or record owns it.<br>Leonardo's product-side read agrees. Trigger: 0. **R1 read**: Sparky (close with a Q5 record), Ada (her source-model half closes on 123 Req 5.8), Leonardo (leaning closed), and Thurgood confirms (own act). | **closed — superseded by Spec 123's sync work (Requirement 5, Model B; retired flags; `--apply` / `--overwrite` / `--restore`; shipped-content comparison); Q5 (drift report) is not built.** The closing PR either files Sparky's P3 record or writes Q5's drop reason into the line: **F-4**. |
+| 12 | `116-sync-customization-safety` | `22848e4b7` (8) | Thurgood (formalization), Sparky (tooling), Ada (source model) | Sparky reads each open question against `src/cli/sync/`:<br>- Q1 answered: off a terminal, `sync` reports and writes nothing unless `--apply` is passed.<br>- Q2 answered by removal: `--force` and `--accept-all` are retired, and `--overwrite` and `--restore` are per path.<br>- Q3 superseded: Model B, 123 Req 5.8, `sync` never writes `src/tokens`, which Ada confirms.<br>- Q4 superseded: a first encounter is a conflict, judged against shipped content.<br>- Q6 answered: Integration Guide L1084 and L1100–1103.<br>- **Q5, a drift report, is still open**, and no live spec or record owns it.<br>Leonardo's product-side read agrees. Trigger: 0. **R1 read**: Sparky (close with a Q5 record), Ada (her source-model half closes on 123 Req 5.8), Leonardo (leaning closed), and Thurgood confirms (own act). | **closed — superseded by Spec 123's sync work (Requirement 5, Model B; retired flags; `--apply` / `--overwrite` / `--restore`; shipped-content comparison); Q5 (drift report) is not built.** The application PR files Sparky's P3 record for Q5 (owner Ada, Sparky consulted, Trigger `path:.kiro/specs/129-consumer-generation-completeness/requirements.md`, wording in [SPARKY R1], § 9), as Peter ruled (F-4 (a), § 6); the closing line names that record. |
 | 13 | `119-agent-experience-architecture` | `9bd47d494` (7) | Thurgood | Umbrella. The outline's own "Pillar mapping" (L28–31) names **three** pillars: `119-A-steering-relocation-serving-contract` (12 of 12 parents), `119-B-capability-routing-measurement` (10 of 10) and **Spec 122** (generation and enforcement; 18 of 18). All three are carried out. Trigger: 0. **R1 read**: Stacy added 122, and Thurgood confirms (own act). With the outline naming exactly three, no pillar is unowned. | **closed — superseded by `119-A`, `119-B` and `122-agent-generator`, its three named pillars.** |
 | 14 | `125-mechanical-enforcement-strategy` | `2ab00b59d` (7) | Thurgood | Its own Status: "PHASE 0 + PHASE 1a COMPLETE (2026-07-10)" via 125-A, and "125-B (the classification map + later phases)". Its Phase 3, consumer-side reach, is "Spec 123 territory" (L99, L144). `125-A` (8 of 9 parents) and `125-B` (4 of 6) hold requirements, and 123 holds its own. Trigger: 0. **R1 read**: Stacy added Phase 3, and Thurgood confirms (own act). | **closed — superseded by `125-A-pr-gate-mechanical-arming` and `125-B-classification-map` (its phases 0–2) and by Spec 123 (its Phase 3, which the outline assigns there).** |
 | 15 | `126-avatar-decorative-warn` | `7745d3ab8` (7) | Lina | Its own Status: "O2 RATIFIED … IMPLEMENTED (Lina, Task 1, 2026-07-15)". `Avatar.web.ts` L723 carries the ratified condition, and the tests carry the decorative cases. Trigger: 0. **R1 read**: Lina confirms. | **closed — carried out (Task 1, 2026-07-15, #81).** |
-| 16 | `128-react-react-native-platform-admission` | `87c302774` (1) | Thurgood (formalizer), Leonardo | Peter's order 129 → 131 → 128 → 130 is **UNVERIFIED (chat only, 2026-10-24)** in the priorities record's walk log. The gate for its round is the charter's Trigger (`.kiro/issues/2026-10-03-react-react-native-platform-admission-charter.md` L8). #643 (open) refreshes its stale Status. Trigger: 7. **R1 read**: Leonardo confirms park, and names a different token. | **park — re-ask: `path:.kiro/specs/131-governance-simplification/requirements.md` or `…/tasks.md` (F-3); sequenced after 129 and 131 (Peter, 2026-10-24, chat, as the priorities record carries it, UNVERIFIED).** |
+| 16 | `128-react-react-native-platform-admission` | `87c302774` (1) | Thurgood (formalizer), Leonardo | Peter's order 129 → 131 → 128 → 130 is **UNVERIFIED (chat only, 2026-10-24)** in the priorities record's walk log. The gate for its round is the charter's Trigger (`.kiro/issues/2026-10-03-react-react-native-platform-admission-charter.md` L8). #643 (open) refreshes its stale Status. Trigger: 7. **R1 read**: Leonardo confirms park, and names this token; Thurgood's R1 candidate was `…/requirements.md`, and Peter chose Leonardo's (§ 6). | **park — re-ask: `path:.kiro/specs/131-governance-simplification/tasks.md` (F-3 (b), Peter, 2026-11-04); sequenced after 129 and 131 (Peter, 2026-10-24, chat, as the priorities record carries it, UNVERIFIED).** |
 | 17 | `129-consumer-generation-completeness` | `618bcaf5b` (1) | Thurgood (formalizer), Ada | **Peter's go, on record** at `.kiro/specs/129-consumer-generation-completeness/feedback/design-outline.md` § "[PETER] Go for the outline round (2026-11-04; recorded by Thurgood)", on branch `task/129-outline-r1` (head `f85d54fcc`; its PR is still to come). His words there, verbatim, received before 2026-11-04T03:19:41Z: "Proceed as the team recommends". The entry also carries the text he answered: "1. Open 129's review round … (a) Your go, with the step-2 update written as the round's first draft". Trigger: 21, 11 of them P1. **R1 read**: Stacy (the premise was not yet committed; it is once that branch merges), and Thurgood confirms (own act). | **open — the outcome line quotes his words and cites that entry, and is written only once the entry is on `main`.** |
 | 18 | `130-input-switch-base` | `83f40c856` (2) | Thurgood (formalizer), Lina (component) | Peter's "Not now" on 130's R1 (2026-11-04, the priorities record's § 6.2 closing line, #642). § 3.3 pulls it forward for 128's first binding, or for a second screen that needs a switch. Trigger: 0. **R1 read**: Lina confirms park, with the event below. The second event is not git-visible, so it is carried in prose, and Lina watches it as G1's owner. | **park — re-ask: `path:.kiro/specs/128-react-react-native-platform-admission/design.md`; "Not now" (Peter, 2026-11-04); a second screen needing a switch also pulls it forward (§ 3.3, prose; Lina watches it as G1's owner).** |
 | 19 | `131-governance-simplification` | `57128af48` (1) | Thurgood | Its own Status: "R3 — planning, paused at the edge of requirements". Peter's order puts it after 129 (**UNVERIFIED, chat only, 2026-10-24**, as the priorities record carries it). Trigger: 38. **R1 read**: Thurgood confirms (own act), and replaces R1's prose event with a git-visible one: 129's outline round closes when 129's requirements are written. | **park — re-ask: `path:.kiro/specs/129-consumer-generation-completeness/requirements.md`; paused at requirements and sequenced after 129 (Peter, 2026-10-24, chat, as carried, UNVERIFIED).** |
@@ -612,4 +629,4 @@ Tested standalone (with `S` and `SS` set as the script sets them), R2: at `ee31d
 | 23 | `XXX-stemma-catalog-readiness-audit` | `c6a9eeddb` (44) | Thurgood (audit), Lina (Stemma) | Its `design-outline.md` is byte-identical to `062-stemma-catalog-readiness-audit/design-outline.md` (empty `git diff`; same last commit). 062 has requirements, design and tasks, 3 of 3 parents. `.kiro/docs/agentic-ui-strategy.md` L241 and L285 cite this directory, so it stays where it is (§ 8 names the repoint). Trigger: 0. **R1 read**: Lina confirms, Stacy checked it true, and Thurgood confirms (own act). | **closed — duplicate of `.kiro/specs/062-stemma-catalog-readiness-audit/`.** |
 | 24 | `XXX-task-based-conditional-loading` | `6d672b423` (58) | Thurgood | Its own Status: "Future Enhancement (Parked)". It asks for an `inclusion: taskMatch` option, and no such option exists. Agents now load guidance through the generated `WHEN … THEN consult` routing rows of Spec 122 (`canonical/agents/*.md`'s routing, rendered into each agent's file). Trigger: 0. **R1 read**: Thurgood confirms (own act). The need it names, loading guidance by task rather than always, is what those rows do. | **closed — superseded by Spec 122's per-agent routing rows.** |
 
-**Tally after R1**: closed 20 (rows 1–15, 20–24); park 3 (rows 16, 18 and 19, each with a git-visible re-ask event); open 1 (row 17). No row is left without an owner's read or Thurgood's confirmation of his own. Two rows carry forks for Peter: row 16's token (F-3) and row 12's Q5 (F-4). Row 17's outcome line waits on `task/129-outline-r1` reaching `main`.
+**Tally after R1**: closed 20 (rows 1–15, 20–24); park 3 (rows 16, 18 and 19, each with a git-visible re-ask event); open 1 (row 17). No row is left without an owner's read or Thurgood's confirmation of his own. Peter has answered the two rows that carried forks: row 16's token (F-3 (b)) and row 12's Q5 (F-4 (a)); § 6. Row 17's outcome line waits on `task/129-outline-r1` reaching `main`.
