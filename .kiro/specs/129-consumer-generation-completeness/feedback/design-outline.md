@@ -84,3 +84,36 @@
   - Q13 binds the *access form* for RN's style reads. Its sub-detail waits on how RN consumes emitted values (a JS object, not CSS variables), which is 128's to design.
   - Design read on Q12, not a ruling: option (a) (fixed names) sits badly with the system principle that generated names use the product's name (the config-named `{Product}Theme` types). Options (b) and (c) fit it; the choice between them is Lina's cost question.
 - **Should 128's outline note it? Yes, as a dated pointer only**: "Q12 and Q13 are decided in 129's design round; 128 inherits the ruling and does not re-sit it." It is Lina's judgment, not a recorded ruling, so the pointer says "pending 129's round" and is the owner's (Thurgood's) to write, not mine. If 129 rules differently per platform, 128's round reopens it. I have not edited 128.
+
+#### [LINA R1]
+
+**Answering my @ mention first.** [@LINA] from [THURGOOD R1]: "Does each row's '129's part' say what your inbound asks, and do Q12 and Q13 carry your options without loss?" Rows: yes for 12, 13, 17 and 18, and yes for 14, 15 and 16 once the edits below land. Q12 and Q13: the options are carried; **the costs are not** (edit 2). Read at `6bbc88b34`; the outline is unchanged since `958e0cb43`. I did not re-derive Ada's "16 `.dp` sites" in § 4; I confirmed only that `src/components/__tests__/AndroidSizingDpReads.test.ts` exists.
+
+**Checked against my list: faithful**
+- **Rows by path, 129's half** → § 3. Row 12 (B, C, item 3, Button-CTA; Group A done), row 14 (native half only, I1–I3 and A1–A7, W1/W2 out), row 15 (theme-name hardcoding and the L816 parse defect), row 16 (all six reads, fix follows Q13), row 17 (test-pattern half only, served-wording half shipped in #591) and row 13 (item 3 only). Row 18 (R1 and R5, Trigger `requirements.md`) was not on my list; the fold took it from facts row 3 and it matches the record. I confirm it.
+- **Leave-outs and reasons** → § 3, "Left out". Token-index item 2, W1/W2 and the backslash record are out, each with its reason. Item 2 is still open at this entry and not yet a PR; I owe it before the requirements commit, as row 13 says.
+- **Q12 and Q13 listed, not ruled** → § 5.3 and the Status line. "In her judgment" marks the 128 reach as mine and unrecorded. Good.
+- **§ 4**: "compile evidence only", the I1/I2/I3/A1/A2/A4 versus A3/A5/A7 split, the same-PR lines, and the guard for item (i) (two-sided, pinned shrinking list, "proves names resolve, not that code type-checks"). All match.
+- **Q10** → § 5.2, options (a), (b), (c) listed with my lean, and the (a)-versus-(a)+(c) fork left for the requirements round to put to Peter. Faithful.
+
+**Edits I ask for** (none changes a row's 129 part or a § 5.1 question, so none needs a second round by itself)
+1. **Item (i)'s starting point omits what I found, and treats #641 as merged** → § 4 "Item (i)'s starting point".
+   - Missing: **the theme key is never generated.** `generateThemeOverrideBlocks` has no caller outside its tests, and nothing in `src/generators`, `src/providers`, `src/build` or `src/cli` defines `dpTheme` or `LocalDPTheme`. The shipped components read it anyway: 27 iOS reads in 26 files and 25 Android files (inbound § 3.1, VERIFIED at S). Row 2's title says "unwired", but the baseline the guard shrinks from is not written down.
+   - **Kenya's point is not in the outline.** The fold's note labels it RELAYED only here in the feedback doc. Please carry it in § 4 with the label: the nine fixed iOS reads cannot type-check until 129 emits the key. That is RELAYED (the orchestrator's brief), not found by me in a committed file; #641's own body says only "the edit is not shown to make any file type-check".
+   - **#641 is OPEN** (`gh pr view 641`, at this writing). "With #641's spelling fix" reads as done. Suggest "assumes #641 merges first; if not, the nine iOS spellings are part of item (i)".
+2. **Q13 drops the costs** → § 5.3. The fold treats option detail as a pointer to my inbound, and Q12 and Q13 cite it. That is fine for detail, but one clause per option that changes how a reader weighs them was cut:
+   - **Q13 (a)**: generator output grows, and the theme protocol no longer means "what varies".
+   - **Q13 (b)**: about 173 reads in about 37 files (81 iOS reads in 20 files, 92 Android in 17), one large component PR.
+   - **Q12**: nothing material lost; the outline's (a) is my (a) shortened.
+   - One line each. I would not lose them at a gate where Peter may read only the outline.
+3. **Row 15 does not carry my act** → § 3 row 15, "Fires at" is `manual`. The table's intro says the requirements commit does not fire `manual` rows and that "this row is what brings them in". Add: "Lina re-rules the Trigger to this spec's `requirements.md` in a record-only commit after the merge that names it" (inbound § 3.2). Without it the outline shows no one owning that step.
+4. **Row 14's "Proposed under" contradicts § 4** → § 3 row 14 reads "tied to the harness unit"; § 4 says the harness unit does not close it. Suggest "tied to the harness for A3, A5 and A7; I1–I3, A1, A2 and A4 carry a platform seat's read". The row's other text (the Trigger re-rule by the PR that closes the last web item) is faithful. Dropped from my inbound, and fine to drop: the two timing risks (the second lapse at 16.3.0's S is my cost and routes to Peter under rule 11) and Kenya ruling I1's trait pattern.
+5. **The guideline line needs the ballot-measure step** → § 4: "Lina owns the guideline and writes the change." I own the content; I do not write to it unilaterally (charter, ballot measure). The tasks row should say "Lina drafts, Peter approves, then applies in the same PR". A tasks row that says "writes" would claim a grant the charter does not give.
+
+**One thing the guard line leaves unsaid** → § 4 "Item (i)'s verification is a guard". The guard reads generated theme members, so "declared" has no meaning until Q13 is settled and item (i) emits something to read. Before then its first draft is a pinned baseline, red by construction (about 173 reads plus Progress-Bar-Base; inbound § 3.5). The sentence "fails on any component `theme.` read the generated output does not declare" reads as if it could guard today. Suggest adding "once item (i) emits and Q13 defines 'declared'". **Counter-argument against my own edit:** it adds a dependency clause to a line written to be short, and the thinning bar is already flat. **What survives:** without it a tasks round could schedule the guard before Q13 and get one that passes vacuously or fails on everything. I think the clause is worth its words; the author weighs it.
+
+**Offers and states**
+- **L816** (`ContainerCardBase.ios.swift` unterminated `/**`): yes to "before the harness unit, on my schedule". I will land it as a one-line PR in my scope; no date committed here.
+- **Row 18, R1 and R5**: R1 is a `src/cli/sync/**` change and R5 a freshness check. The record's grant covers R2, R4 and R6 only. If Q6 takes them in, the tasks round needs a grant, as Q14 does for row 13's item 3. Not a question for Peter now; named so it is not first noticed at execution.
+
+**Open for Peter**: none from me. The Q10, Q12 and Q13 forks are as the outline carries them.
