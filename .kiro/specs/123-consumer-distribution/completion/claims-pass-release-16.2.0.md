@@ -723,3 +723,5 @@ After my read at `6795a28cf`, #636 gained four commits (`git log 6795a28cf..e1b1
 **Liveness reading: committed.** Phase 2's reads hold at #636's merge: the tag on S, rail PASS once in order, both registries holding the 5.3 bytes, and npmjs re-read and re-fetched by me. The changed hunks change none of them. The carried items are resolved or routed as stated. **Phase 2: no findings against the release; RL-48 Low, record form.**
 
 *Signed: Stacy, 2026-11-04.*
+
+*Erratum to the merge-confirmation line, mine (2026-11-04)*: the walk record's first re-pointed citation is at **L8** at the read SHA, not L5. The `-U0` hunk heads are `-8 -15 -61 -213 -327 -425 -557 -583`, plus the outcome lines added after L632. No reading moves.
