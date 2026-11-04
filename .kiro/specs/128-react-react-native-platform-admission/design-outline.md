@@ -3,7 +3,7 @@
 **Date**: 2026-10-03
 **Spec**: 128 — Platform Admission, React and React Native
 **Author**: Thurgood (to formalize); this STUB opened by the orchestrator at Peter's direction, 2026-10-03
-**Status**: **STUB.** The gate this stub set on 2026-10-03 was met that day, and the identity sitting was carried into this spec unruled on 2026-10-20. The gate's single home is the charter record's Trigger, `.kiro/issues/2026-10-03-react-react-native-platform-admission-charter.md` L8. Per Process-Spec-Planning § "Phase 0" a STUB captures scope, dependencies, and cross-references only; architecture decisions live in the inbounds as *recorded positions*, not rulings.
+**Status**: **STUB.** This stub's 2026-10-03 start gate (the v15.0.0 tag plus the parity required-flip) was met that day and is superseded. The identity sitting was carried into this spec unruled on 2026-10-20. The gate that governs the outline round is the charter record's Trigger, `.kiro/issues/2026-10-03-react-react-native-platform-admission-charter.md` L8, and formalization waits for that Trigger. Per Process-Spec-Planning § "Phase 0" a STUB captures scope, dependencies, and cross-references only; architecture decisions live in the inbounds as *recorded positions*, not rulings.
 
 ---
 
@@ -43,12 +43,12 @@
 
 ## Dependencies
 
-- **No switch or toggle binding until Input-Switch-Base merges.** Lina's words: "128's binding list includes no switch or toggle until Input-Switch-Base merges" (`inbound-from-identity-sitting-2026-10-20.md` L812; also L513, Spec 130's P-8 (c) stated from 128's side). This line retires when Input-Switch-Base merges.
+- **No switch or toggle binding until Input-Switch-Base merges.** Lina's words: "128's binding list includes no switch or toggle until Input-Switch-Base merges" (`inbound-from-identity-sitting-2026-10-20.md` § 7, [LINA R1] (f), L812; also § 4 item 3, L513, Spec 130's P-8 (c) stated from 128's side). This line retires when Input-Switch-Base merges.
 - `.kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md` (Ada) — absorbed as a step.
 - `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md` (Kenya/Data) — prerequisite before any platform is called "reference".
 - Specs 118, 123, 125 one-package assumptions; Spec 123 Model B ruling (2026-09-26); Spec 070 Working Class commitment.
 
 ## Formalization pre-steps
 
-- See `inbound-from-identity-sitting-2026-10-20.md` § "6. Rulings (Peter) — OPEN" and `inbound-from-peter-user-stories-2026-10-21.md` § "6. Open for Peter — recorded, NOT ruled".
+- See `inbound-from-identity-sitting-2026-10-20.md` § 6 and `inbound-from-peter-user-stories-2026-10-21.md` § 6.
 - Stakeholders for R1: Ada, Lina, Thurgood, Leonardo (owning seats); Sparky, Kenya, Data (platform seats); Stacy (claims-pass verifiability LENS at the tasks round).
