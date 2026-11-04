@@ -71,3 +71,13 @@ Under rule 9. Peter's words: *"Re: 533, Let's schedule in as part of one of the 
 *Signed: Ada, 2026-10-27.*
 
 **Routed**: Spec 131 § "2026-11-01 (scope intake, second batch, record only: it names records and settles no design)", the outline row added in the same PR as this line *(2026-11-01, Thurgood, steward, rule 9; under Peter's fork D, R11 line 16, "Route them", `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10, batch routing)*. The Trigger is unchanged. Under fork B (R11 line 14, route in place) its owner re-rules it to `path:.kiro/specs/131-governance-simplification/requirements.md` after this batch merges. This record is not due at 16.2.0's S.
+
+## Outcome (2026-11-04)
+
+*(Ada, owner, rule 5.)* **Closed by #596** (`b3dbabdb1b90f89243101b22e297a20c96ed387e`, merged 2026-11-01, an ancestor of `main`), the close event this record's Trigger names ("closes at the merge of the Lina PR its superseded line names") and its `## Scheduled (2026-10-27)` section set: the first Lina PR to edit `application-mcp-server/src/indexer/TokenIndexer.ts` after 2026-10-27, carrying the `get_token_details` description sentence.
+
+- **Checked in #596's diff**: `application-mcp-server/src/index.ts` and `canonical/registry/tool-registry.json` both carry the `## Scheduled` sentence verbatim in `get_token_details`' description: "For a theme-varying token, read the dark value from themeResolutions.dark (its modeValue; null for a composite override, whose parts are in primitiveReferences); resolvedValue is the base (light) resolution." The sentence is also in `index.ts` on `main` at `e0d32ec02`. The same diff edits `TokenIndexer.ts` (`packageComponentTokenDrift`), so the vehicle condition holds.
+- **What the close does not do**: it changes no payload. The top-level `resolvedValue.dark` still repeats the base by design, and options (a) (a `semantics.yaml` schema extension) and any top-level change were not taken. The description now points an agent at `themeResolutions.dark`, which is the reader's trap the Class line named. The re-class condition there (an agent observed reading `resolvedValue.dark` without `themeResolutions`) has not been seen. A fuller fix, if wanted, is a new record.
+- **The Spec 131 routing**: the Trigger's `path:` re-ruling to Spec 131 (2026-11-01) is moot at this close; the Routed line stays as history. Whether Spec 131's design-outline § 13 row for it needs a dated line is Thurgood's to say.
+
+*Signed: Ada, 2026-11-04.*
