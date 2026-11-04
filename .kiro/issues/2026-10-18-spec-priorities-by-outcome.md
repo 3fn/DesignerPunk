@@ -84,6 +84,7 @@ These are lines, not edits. Each record's owner appends to their own record (rul
 
 1. **If A and B conflict for a burst, which outcome ranks first: truthfulness (A) or reach (B)?** He was asked, and chose the class option without ranking them. The order above resolves the current case without that ranking, because 128's sitting runs in parallel and 128's implementation needs 129's output anyway. A future conflict would need the ranking.
 2. **Does Spec 130's R1 run now, alongside 128's fork sitting?** This record permits it (§ 3.3) and does not schedule it.
+   - **Closed 2026-11-04 (Thurgood): "Not now".** Peter, in chat, received before 2026-11-04T03:19:41Z (the orchestrator's `date -u` at receipt), verbatim: "Proceed as the team recommends". He was answering the options message that followed the facts-generator consult of 2026-11-04. The text he read on this item: "130: leave it parked and don't refresh it, since a refresh now would have to be redone. Your open question 'Does 130's R1 run now?' closes with 'Not now'." Spec 130 stays parked and its outline is not refreshed. § 3.3 is unchanged: 130 is still pulled forward just in time, by the two events it names.
 
 ## 7. Peter-gated deferrals
 
