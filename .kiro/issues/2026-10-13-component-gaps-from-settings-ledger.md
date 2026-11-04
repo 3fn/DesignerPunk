@@ -5,7 +5,7 @@
 **Class**: P3 improvement · owed-act *(set 2026-10-20, Lina, rule 12. Accepted. The record routes component gaps and tool lessons that have interim specs; no shipped statement is false. G6, T2 and T3 are done (G6 in #352, 16.0.0); the rest wait on their own named triggers below.)*
 **Trigger**: `path:.kiro/specs/131-governance-simplification/requirements.md` — the event is Spec 131's requirements file being created: the record is routed to Spec 131 in place (this record's `**Routed**:` line, the outline's § "2026-11-01 (scope intake, second batch …)"), and 131's requirements round takes it in or leaves it out with a reason. The fix events in the body stay as written. *(Re-ruled 2026-11-01, Lina, owner, rules 9 and 11. Disposition: routed to Spec 131 in place, Peter's fork D: "Route them. We'll evaluate them as part of that effort — perhaps they can better inform the spec, be combined or inform other proposals, etc." (chat, received before 2026-11-01T15:52:38Z), with fork B "Route in place" and fork E "any spec that names the record". Authority: `DLG@d34fc77868f649d3c67bd1b1da47bc6f2a805920` (`.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` § "Delegation"), R10 fork 2 (a), `R10@ee5ea2b80e58c26a6dea7e6dfd538d006193f755`, and `R11@25bd478ddb4aca1c77da9eada750f601374fc62a` line 16. The superseded line is quoted verbatim at the end of this record.)*
 **Closes when**: every item below has either executed (fix merged) or moved into a spec or its own record. The outcome is recorded here, dated, and then this file is `git mv`'d to `archive/`.
-**Source**: `.kiro/issues/2026-10-12-leonardo-settings-call-ledger.md`. Its § "Component gaps surfaced" routes G1–G5 and two tool lessons "to Lina after Peter's go"; Lina's D-row column adds G6 and one more tool lesson.
+**Source**: `.kiro/issues/archive/2026-10-12-leonardo-settings-call-ledger.md` *(path corrected 2026-11-04, Lina, owner, rule 9: the ledger moved to `archive/`, and rule 3 resolves the unprefixed path there; was `.kiro/issues/2026-10-12-leonardo-settings-call-ledger.md`)*. Its § "Component gaps surfaced" routes G1–G5 and two tool lessons "to Lina after Peter's go"; Lina's D-row column adds G6 and one more tool lesson.
 **Ruling**: Peter, 2026-10-13: D2 = NO-GO (no Stage 2 for components); "route the gaps to Lina".
 **Scope of this record**: dispositions only. No implementation, spec authoring, token creation or component creation rides this PR.
 
@@ -161,6 +161,8 @@ The scratch consumer's `product/experience-map/pages/settings/settings.yaml` (le
 **G6 → T3 → G1 → G4 → G3 + G2 (together) → T1 → G5 → T2 (rides the next touch).** T4 rides the next fresh components set (its own trigger).
 
 First pick, **G6**: a production-ready component fails its own accessibility contract today, and it is the smallest fix with no token or spec dependency.
+
+**2026-11-04 (Lina, owner, rule 9)**: **G1 is now "just in time"** under the spec-priorities record § 3.3 (`.kiro/issues/2026-10-18-spec-priorities-by-outcome.md`: Spec 130, Input-Switch-Base, outcome C, just in time; ruled order 129 → 131 → 128 → 130), and §4 of that record re-orders G4, G3 + G2, T1 and G5 to follow 130. The order in the first paragraph above is the one as first written and stays as written for history; read G1 as just in time, and G4, G3 + G2, T1 and G5 after it. The Trigger is unchanged. Authority: Peter, chat, received before 2026-11-04T03:19:41Z, "Proceed as the team recommends", on the facts-generator consult's options message that listed this line among Lina's owed lines.
 
 ---
 

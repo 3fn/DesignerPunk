@@ -26,6 +26,8 @@ G-4 designs the contract:
 
 **Not G-4**: the property half of the mapping rule, which is ballotted now as Sparky's R3b sentence (collective sheet E). G-4 inherits that sentence and its attribute-only findings list (§ 4) as input.
 
+*(2026-11-04, Lina, owner, rule 9. Spec 130's Input-Switch-Base is a planned web element, and its event, its `onChange` callback and its form participation are the design G-4 covers (§ 1 items 1 and 3). The Trigger is unchanged. Authority: Peter, chat, received before 2026-11-04T03:19:41Z, "Proceed as the team recommends", on the facts-generator consult's options message that listed this line among Lina's owed lines.)*
+
 ## 2. The gate
 
 > **128's React (web) binding design is not approved before G-4's design merges.**
