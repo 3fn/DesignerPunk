@@ -2,7 +2,7 @@
 
 **Date**: 2026-11-04
 **Drafted by**: Thurgood (Civitas steward; release author; owner of `.kiro/issues/2026-10-18-spec-priorities-by-outcome.md` and of `.kiro/specs/131-governance-simplification/evidence/baseline-snapshot.sh`), at Peter's direction.
-**Status**: **DRAFT**. Not ratified. Nothing below is applied.
+**Status**: **DRAFT, at R2.** The five R1 entries are spliced into § 9, and [THURGOOD R2] there records how each was folded in. Not ratified. Nothing below is applied.
 **Authority for drafting** (Peter, in chat, relayed by the orchestrator; receipt bounds are the orchestrator's `date -u`):
 - He was asked about "Decision 5", the class option for "rounds don't open". The text he read: "At each release, the existing baseline adds one row per spec that's waiting: how many releases since its outline last moved. You'd get one line per spec: open it, park it with a reason, or close it." Received before 2026-11-04T03:31:22Z, verbatim: *"Re: Decision 5, for."*
 - Then he was given three definitions of "waiting spec": (a) ranked in the priorities record; (b) named by a record's Trigger; (c) any outline without requirements, about 23 specs, "mostly dead placeholders". He asked: *"Re: waiting spec, with (c), wouldn't that mean we'd review those specs and decide if they should be closed/archived?"* The orchestrator answered yes. It counted 24 such specs and said:
@@ -14,7 +14,7 @@
   - Received before 2026-11-04T03:54:30Z, verbatim: *"Yes, have Thurgood write the ballot with (c)"*.
 - His two answers rule the substance: definition (c), and a row per release. This ballot writes the lines that carry it. **Ratification is of the written lines**, not a second ruling on the substance.
 **Required reviewer**: **Stacy**. RELEASE-FLOW phase 1 reads the walk record that the new row lands in. She is also the census reader.
-**Consulted (owed, run by the orchestrator after this draft is pushed)**: the triage rows' owners (§ 6 roster). Each confirms or amends the recommendation on their rows. Reviewers' entries come back as scratch files, and the holder splices them (§ 9).
+**Consulted**: Stacy (required, R1); Ada, Lina, Leonardo and Sparky (row owners, R1). Their entries are in § 9, spliced byte for byte by the holder. Thurgood's confirmation of his own rows is his own act, recorded in [THURGOOD R2], not a second seat's read.
 **Class**: LAW. A new duty at every release is a requirement that nothing imposed before (`.kiro/docs/ballots/README.md` § "When a governance edit needs a ballot — three kinds").
 
 **Amends**:
@@ -33,7 +33,7 @@
   - `baseline-snapshot.sh` is named in no register row's `checks`.
   - The only rows that cite the issues README or the walk as law, `issues-obligation-lapse` and `release-falsity-floor`, have `checks: []`.
 
-**Cap**: one RELEASE-FLOW paragraph; at most one sentence of one record's header; one script block of 30 lines; one pin line; one README entry. **Retroactivity**: none. Every existing figure the baseline script prints is unchanged at the same arguments; the block only appends (Appendix A).
+**Cap**: one RELEASE-FLOW paragraph; at most one sentence of one record's header; one script block of 25 lines; one pin line; one README entry. **Retroactivity**: none. Every existing figure the baseline script prints is unchanged at the same arguments; the block only appends (Appendix A).
 
 ---
 
@@ -50,18 +50,26 @@ Two spec outlines sat for weeks with nothing on them telling anyone they were wa
 **A waiting spec** is a directory directly under `.kiro/specs/` that:
 - holds `design-outline.md`;
 - holds no `requirements.md`;
-- has an outline whose last line in the outcome form below is not `closed`.
+- has an outline whose last outcome line (the form below, at column 0) is not `closed`.
 
-Its figure is **the number of releases since its outline last moved**: the `v*` tags that contain S and do not contain the outline's last-touching commit.
+Its figure is **the number of releases cut after the outline last moved and before S**. In git's terms, these are the `v*` tags reachable from S but not from the outline's last-touching commit `c`, leaving out any tag at S itself: `git tag --list 'v[0-9]*' --merged S --no-merged c --no-contains S`. *(R2, Stacy 2.1 and 2.2: R1 counted a tag at S, so a paste made before step 5.2's tag and a re-run after it differed by 1 on every row. R1's prose also said "contain S", which is the reverse set.)* Because a tag at S is never counted, the paste reads the same whether it is written before or after the release's own tag.
 
 - **Directories without an outline are not waiting specs** and are not listed. That covers formal specs without an outline, and directories that hold only inbounds or feedback. A spec that starts with inbounds alone is invisible to the row until its outline exists (residual, § 7).
 - **Every directory is its own spec.** `125-mechanical-enforcement-strategy` and `125-A-pr-gate-mechanical-arming` are two entries. The umbrella is listed on its own facts, and the sub-specs are not listed while they hold `requirements.md`. `054` and `054a`–`054d`, and `119` and `119-A`/`119-B`, are read the same way. Unnumbered `XXX-*` directories count like any other.
 - **Any outline edit resets the figure**, including a pointer fix or the outcome line itself. #643 (a pointer-only refresh of 128's outline) resets 128 to 0 at its merge without opening any round. After a park, the figure therefore reads "releases since it was parked". This is a residual, not a feature (§ 7).
+- **An outcome line is not a refresh.** Writing one changes no other line of the outline. Parking 130 is therefore consistent with Peter's "don't refresh it" (Lina R1, row 18).
 
 **At each release's S** the walk record pastes the table. Peter answers each row he is asked about with one of three outcomes. Each outcome is written as one dated line in the outline:
 - **open**: the spec's outline round opens.
 - **park**: with a reason and a re-ask event. The row is reprinted at each S and not re-asked until the event fires.
-- **closed**: with a reason, or "superseded by <path>". The directory stays where it is, so no link breaks: Process-Development-Workflow L221 cites a file inside `087-…/`. The spec leaves the table.
+- **closed**: with a reason, or "superseded by <path>".
+  - The directory stays where it is, so no link breaks. Process-Development-Workflow L221 cites a file inside `087-…/`, and `.kiro/docs/agentic-ui-strategy.md` L241 and L285 cite `XXX-stemma-catalog-readiness-audit/`.
+  - The spec leaves the table.
+  - A record routed in place to a closed spec would never fire. So the PR that writes a `closed` line pastes E2's grep for the spec (Process-Spec-Planning § "Before Formalizing: Records That Name the Spec"), and every hit whose Trigger names the spec's path is re-ruled by its owner in that same PR (Stacy R1 1.3 (ii)).
+
+**Two lines go beyond the text Peter read**, which was "open it, park it with a reason, or close it". Both are named in § 6 for his confirmation. They are Thurgood's additions, not his words:
+- **Addition A**: an `open` row is re-asked once its figure reaches 2.
+- **Addition B**: a park must carry a re-ask event, and that event is a git-visible token, never `manual`.
 
 ## 3. Edit sites (after ratification, one PR, Peter-merged)
 
@@ -73,18 +81,24 @@ Its figure is **the number of releases since its outline last moved**: the `v*` 
 
 **After**: that paragraph, then a blank line, then this new paragraph, indented like its neighbours:
 
-> **Waiting specs, at S.** The walk record's "At S" section pastes the "Waiting specs at S" table that `.kiro/specs/131-governance-simplification/evidence/baseline-snapshot.sh` prints when run at S with the release's four arguments. A **waiting spec** is a directory directly under `.kiro/specs/` that holds `design-outline.md` and no `requirements.md`, and whose outline's last outcome line is not `closed`. Each directory is its own spec. Its figure is the number of releases since its outline last moved, so any outline edit restarts it. The paste is facts only. It holds no merge, and no row of it is an `**Open for Peter**:` line.
+> **Waiting specs, at S.** The walk record's "At S" section pastes the "Waiting specs at S" table that `.kiro/specs/131-governance-simplification/evidence/baseline-snapshot.sh` prints when run at S with the release's four arguments.
+> - **A waiting spec** is a directory directly under `.kiro/specs/` that holds `design-outline.md` and no `requirements.md`, and whose outline's last outcome line is not `closed`. Each directory is its own spec.
+> - **Its figure** is the number of `v*` tags reachable from S but not from the outline's last-touching commit, leaving out a tag at S itself. So the paste reads the same before and after step 5.2's tag, and any outline edit restarts the figure.
+> - **This paragraph is the definition's one home.** The script's block implements it and does not restate it. A change to the definition here changes the block in the same PR.
+> - **The paste is facts only.** It holds no merge, and no row of it is an `**Open for Peter**:` line. Its rows are not walk rows: neither the falsity floor's "rows" (M7) nor phase 1's disposition read covers them, and phase 1 does not read or re-run the paste. The monthly health-check walk reads that each release's walk record carries it.
 >
 > The release's orchestrator puts the rows to Peter in one batch, outside the walk record's PR. Two kinds of row are reprinted, not re-asked:
 > - a row whose last outcome is `open` and whose figure is below 2;
 > - a row whose last outcome is `park` and whose re-ask event has not fired.
 >
-> Peter answers each row with one of three outcomes. The spec's formalizer (Thurgood, unless the outline names another) writes the answer into the outline as one line, dated, with his words and their receipt bound:
+> Peter answers each row with one of three outcomes. The spec's formalizer (Thurgood, unless the outline names another) writes the answer into the outline as one line at column 0, dated, with his words and their receipt bound. An outcome line changes no other line of the outline.
 > - `**Spec outcome (YYYY-MM-DD, <seat>)**: open — <his words>`. The outline round opens.
-> - `**Spec outcome (YYYY-MM-DD, <seat>)**: park — <reason>; re-ask: <event> — <his words>`. The event is one token of `.kiro/issues/README.md` rule 1's grammar. The walk author reads whether it has fired.
-> - `**Spec outcome (YYYY-MM-DD, <seat>)**: closed — <reason, or "superseded by <path>"> — <his words>`. The directory is not moved.
+> - `**Spec outcome (YYYY-MM-DD, <seat>)**: park — re-ask: <event>; <reason> — <his words>`. The event is one git-visible token of `.kiro/issues/README.md` rule 1's grammar (`tag:`, `merge:#`, `path:` or `release:`), never `manual`. The walk author reads whether it has fired.
+> - `**Spec outcome (YYYY-MM-DD, <seat>)**: closed — <reason, or "superseded by <path>"> — <his words>`. The directory is not moved. The PR that writes this line pastes E2's grep for the spec (Process-Spec-Planning § "Before Formalizing: Records That Name the Spec"), and each hit whose Trigger names the spec's path is re-ruled by its owner in that PR.
 >
 > *(added <application date> by ballot 2026-11-04-waiting-spec-row, site 1)*
+
+*(R2: the event now comes before the reason in the park form, so it can always be read from the start of the line (Stacy 2.3). The paste's place relative to phase 1 is stated (Stacy 1.3 (i), (ii)). The definition's one home is stated (Stacy 1.2). The `closed` clause is new (Stacy 1.3 (ii)). "Git-visible, never `manual`" is Addition B. The `open` threshold of 2 is Addition A.)*
 
 **Under F-1 (a) only**, the park bullet gains: "and the spec gets a row in the priorities record's 'Peter-gated deferrals' list, which this item already reprints."
 
@@ -105,6 +119,9 @@ Under F-1 (b) this site is not applied, and § 7's header stays E3's text.
 Insert Appendix A's block, verbatim, after the line `row "Native verification" "$nvt" "git grep -lE 'xcodebuild|swift build|swiftc|gradle|kotlinc' $SS -- .github/workflows/"` and before the closing `echo` and footer.
 - The block adds no figure to the table, and it changes none of the table's rows.
 - The script's header comment gains one sentence: "Since ballot 2026-11-04-waiting-spec-row, its 'Waiting specs at S' block is the table RELEASE-FLOW item 3a pastes at each S; the table above it remains Spec 131's evidence."
+- **The block does not truncate.** It prints each outcome line whole, with `|` escaped, so no reason can push a re-ask event out of sight. Its abbreviations are `--short=9`, like the script's other rows. *(R2, Stacy 2.3: R1's `cut -c1-160` depended on the locale, and `%h` grows with the repository.)*
+- **The pairing runs both ways now.** A change to the definition in site 1 changes the block in the same PR (site 1's own sentence). A PR that changes only the script carries the `**Straggler sweep**:` line that RELEASE-FLOW's naming of the script brings with it.
+- **Not taken**: a register row for the script. That would make it a registered instrument, owing a census at every definition change, and the table gates nothing (Stacy 1.2 offered both shapes).
 - **Why this script, and not `spec-facts.sh`**:
   - `spec-facts.sh` reads one spec over one window at round open. Its README says it is "never a release duty", and making it one would undo the split between round facts and release facts that the facts-generator consult made.
   - `baseline-snapshot.sh` already takes a release's arguments (prev-S, S, walk start, version), and appending a block changes no figure it prints.
@@ -115,7 +132,9 @@ Insert Appendix A's block, verbatim, after the line `row "Native verification" "
 
 In `.kiro/specs/131-governance-simplification/evidence/2026-11-04-baseline-16.2.0.md`, append one bullet to "**How it was made**", after the 16.1.0 bullet:
 
-> - **Generator pin** *(added <application date>, Thurgood, ballot 2026-11-04-waiting-spec-row site 4)*: both runs were made with `baseline-snapshot.sh` @ `347d5a1bd`, the script's only commit before that ballot added its "Waiting specs at S" block. Re-run them byte for byte with `git show 347d5a1bd:.kiro/specs/131-governance-simplification/evidence/baseline-snapshot.sh | bash -s -- <the args above>`. The newer script prints the same table and then the block.
+> - **Generator pin** *(added <application date>, Thurgood, ballot 2026-11-04-waiting-spec-row site 4)*: both runs were made with `baseline-snapshot.sh` @ `347d5a1bd`, the script's only commit before that ballot added its "Waiting specs at S" block. Re-run them byte for byte with `git show 347d5a1bd:.kiro/specs/131-governance-simplification/evidence/baseline-snapshot.sh | bash -s -- <the args above>`. The newer script prints the same table, then the block, then the footer, so a byte comparison should expect the footer to move below the block.
+
+At application, re-check that `347d5a1bd` is still the script's only commit before the application PR (Stacy 2.6).
 
 ### Site 5: the evidence README entry (EXECUTION)
 
@@ -131,10 +150,14 @@ In `.kiro/specs/131-governance-simplification/evidence/README.md`, the `baseline
    - It also carries a `**Straggler sweep**:` line for `baseline-snapshot.sh` (ballots README, "Straggler sweep on an instrument PR"), because RELEASE-FLOW names that script at the PR's merge.
    - Verification:
      - `bash -n` on the script;
-     - the 16.2.0 and 16.1.0 runs, compared with the committed record: the table must be byte-identical, followed by the new block;
+     - the 16.2.0 and 16.1.0 runs, compared with the committed record: the table must be byte-identical, followed by the new block and then the footer;
+     - the block at 16.2.0's S (`4d10202b2`) must print 128 as 0 and 051 as 49, which shows the tag at S is left out (R2 test: it does);
      - the block at the application's base, compared row for row with Appendix B, with any difference since `ee31decd3` listed.
 3. First pass, per F-2:
-   - **Under (a)**: the triage of Appendix B goes to Peter as one batch, with the owners' confirmations folded in. One PR then writes the outcome lines he gives. That PR is Thurgood's, under `.kiro/specs/**`, and each owner is consulted on their rows.
+   - **Under (a)**: the triage of Appendix B goes to Peter as one batch, with the owners' reads folded in. One PR then writes the outcome lines he gives. That PR is Thurgood's, under `.kiro/specs/**`, and each owner is consulted on their rows.
+     - It carries each `closed` row's E2 paste (site 1).
+     - It carries the follow-on records § 8 names, under `.kiro/issues/README.md` rule 10.
+     - It carries 116's Q5 record if F-4 says file it.
    - **Under (b)**: nothing runs until 16.3.0's walk at S.
 
 ## 5. Recommendation, counter-argument (fold-back applied), residual
@@ -142,12 +165,12 @@ In `.kiro/specs/131-governance-simplification/evidence/README.md`, the `baseline
 **I recommend** sites 1 and 3–5, with F-1 (b) and F-2 (a), on these grounds:
 - Peter has ruled the substance.
 - (c) needs no list to be kept current, unlike (a) ranked.
-- The first pass proposes closing 17 of the 24 directories and parking 5. Eight rows need their owner's call before Peter sees them (Appendix B's tally).
+- The first pass, after the owners' R1 reads, proposes closing 20 of the 24 directories, parking 3 and opening 1. Every row now has an owner's read or Thurgood's confirmation of his own, and every park has a git-visible re-ask event. Two rows carry a fork for Peter: 128's re-ask token (F-3) and 116's Q5 (F-4) (Appendix B's tally).
 - After that, the table is a short list of real waiting specs.
 
 **Counter-argument 1: this adds a standing release step while Spec 131, whose purpose is removing layers, is paused.**
 - Fold-back: it uses the existing walk record and the existing outline file. It creates no new record type and no new script file, and it holds no merge.
-- If Peter and the owners take the first pass as proposed, it takes 17 directories out of anyone's attention.
+- If Peter takes the first pass as proposed, it takes 20 directories out of anyone's attention.
 - **What survives**: every release still gains one paste and one batch line for Peter, and 131 may later want it gone.
 
 **Counter-argument 2: the figure resets on any outline edit.**
@@ -155,15 +178,17 @@ In `.kiro/specs/131-governance-simplification/evidence/README.md`, the `baseline
 - **What survives**: a pointer edit can make a stale spec look fresh. #643 does exactly that to 128.
 
 **Counter-argument 3: the drift does not stop at outlines.**
-- `054a` (17 parents open), `054b` (32 open), `054d` (10), `107` (3), `125-B` (2) and `065` (1) hold requirements and unticked parents, and (c) cannot see them.
-- **What survives**: specs stalled after requirements are outside this rule. Whether to widen it is 131's question.
+- Specs that hold requirements and have unticked parents are invisible to (c). Stacy's rough parse at `ee31decd3` (R1 item 3) finds about 38 directories with `requirements.md` and at least one unticked parent-shaped line, `125-A` (8 of 9) among them. Many are probably stale boxes. I have not computed the full set; the examples here are a sample.
+- In 054a–054d, the only unticked **parent** is 054d's Task 7, "Expand node extraction to capture full design properties". The rest are unticked criteria and test bullets: Ada counts 58 across the three, and Stacy finds 054a at 7 of 7 parents and 054b at 6 of 6. *(R2: R1's "054a 17, 054b 32, 054d 10 parents open" counted checklist lines, not parents.)*
+- `107` leaves parents 4, 5 and 6 unticked although their completion docs exist (Leonardo R1, row 7). Leonardo will check them as the skill's owner.
+- **What survives**: specs stalled after requirements are outside this rule, and there are more of them than R1 said. Whether to widen the rule is 131's question.
 
 **Counter-argument 4: a release step depends on a script inside a spec's evidence directory.**
 - **What survives**: a reader of RELEASE-FLOW lands in `.kiro/specs/131-…/evidence/`. Moving the script to `scripts/` needs a write-scope grant, and that is 131's call.
 
 **Counter-argument 5: the first pass is about 24 decisions for Peter.**
 - Fold-back: Appendix B pre-sorts them with evidence, and the owners confirm their rows before he sees them, so he can answer "all as recommended" with exceptions.
-- **What survives**: the rows marked "owner to confirm" (§ 6) may still come to him as real questions.
+- **What survives**: two rows come to him as real questions (F-3 and F-4). Thurgood's own 14 rows rest on his confirmation alone, except the six that Stacy sampled (rows 3, 5, 13, 14, 22 and 23).
 
 **Counter-argument 6: closing by an outline line leaves the directories in place.**
 - `.kiro/specs/` stays as large as it is, and an agent listing it still sees dead specs.
@@ -179,17 +204,32 @@ In `.kiro/specs/131-governance-simplification/evidence/README.md`, the `baseline
 - **F-2: when the first pass runs.**
   - **(a)** At ratification: the triage batch goes to Peter now, while the evidence in Appendix B is fresh.
   - **(b)** At 16.3.0's S, as the walk's first paste.
-  - **My lean is (a)**: the triage is already prepared, it takes about 17 rows off 16.3.0's walk, and it was his question that led here.
-  - Against (a): it tests the rows outside the release rhythm the RELEASE-FLOW line is written for. The first real run of site 1's text is still 16.3.0.
-- **Not a fork, my choice and open to review**: the `open` row is re-asked once its figure reaches 2. Without a threshold an opened spec that never formalizes drops out of the ask forever, which is 129's history.
+  - **My lean is (a)**: the triage is already prepared, it takes 20 rows off 16.3.0's walk, and it was his question that led here.
+  - Against (a): it tests the rows outside the release rhythm the RELEASE-FLOW line is written for. The first real run of site 1's text is still 16.3.0. And its outcome lines reset every remaining figure to 0 before 16.3.0, so 16.3.0's paste can be compared with Appendix B for membership only, not figures (Stacy R1 item 4).
+- **F-3: 128's re-ask token** (row 16).
+  - **(a)** `path:.kiro/specs/131-governance-simplification/requirements.md`: 128 is re-asked when 131 starts formalizing. This was my R1 candidate.
+  - **(b)** `path:.kiro/specs/131-governance-simplification/tasks.md`: 128 is re-asked when 131's formalization is done. This is Leonardo's lean.
+  - I have no lean. "After 131" reads both ways.
+  - Against (b): 128's inbounds have waited since 2026-10-21, and under (b) its round opens only after both 129's and 131's formalization. Leonardo reads that as the ruled order, not a defect.
+- **F-4: 116's Q5, the drift report** (row 12).
+  - **(a)** File a P3 record, as the closing PR's companion. Sparky proposed the wording (§ 9): owner Ada, Sparky consulted, Trigger `path:.kiro/specs/129-consumer-generation-completeness/requirements.md`.
+  - **(b)** Drop Q5 with a reason in the closing line. Under Model B the incident's cause is gone, and Q5 is now a convenience.
+  - **This call is Peter's and Ada's.** Sparky leans (a), because it costs one short file. I have no lean.
+- **Addition A, for Peter's confirmation; not his words**: an `open` row is re-asked once its figure reaches 2.
+  - Without a threshold, an opened spec that never formalizes drops out of the ask forever, which is 129's history.
+  - It makes the ask set computable from the paste.
+- **Addition B, for Peter's confirmation; not his words**: a park carries a re-ask event, and that event is one git-visible token, never `manual`.
+  - With `manual`, a park is reprinted and never re-asked, which is the same drop-out Addition A exists to prevent (Stacy R1 item 4).
+  - Every park in Appendix B now meets it.
+  - The cost: a park whose real event is not git-visible must name the nearest git-visible event instead. Lina does this for 130, carrying the second event in prose.
 
-**Triage owner roster** (Appendix B, from each outline's own lines where it names an owner, otherwise by domain per Agent-Directory):
+**Triage owner roster** (Appendix B, from each outline's own lines where it names an owner, otherwise by domain per Agent-Directory). Every row has been read by its owner, or confirmed by Thurgood on his own:
 
 | Owner | Rows |
 |---|---|
 | Ada | 051, 054, 059 (with Lina), 101, 102, 115, `XXX-android-semantic-token-regeneration`, and the 116 source model |
 | Lina | 059 (with Ada), 126, 130 (component), `XXX-stemma-catalog-readiness-audit` (with Thurgood) |
-| Leonardo | 100, 113, 128 (adopter front door) |
+| Leonardo | 100, 113, 128 (adopter front door), and 116 (a product-side read) |
 | Sparky | 116 (tooling) |
 | Thurgood | 057, 060, 087, 116 (formalization), 119, 125, 128, 129, 130, 131 (formalizer), `XXX-agent-interoperability-protocol`, `XXX-release-system-operations`, `XXX-stemma-catalog-readiness-audit`, `XXX-task-based-conditional-loading` |
 
@@ -200,12 +240,20 @@ Kenya and Data are named on no row.
 - A spec that starts with inbounds and no outline is invisible to the row.
 - The figure resets on any outline edit (§ 2).
 - Specs stalled after requirements are not seen (counter-argument 3).
-- The row reads tags that exist at run time. A deleted tag would change the figure.
+- The row reads tags that exist at run time. A re-run needs the tags fetched. A stray local `v*` tag, or a deleted tag, changes the figure.
+- Dead placeholders with no outline are invisible: `056-xcode-mcp-integration` holds only `research.md`, and `120-modal-component` holds only `placeholder.md` (Stacy R1 item 3).
+- Nothing records that a batch was put to Peter; only his answers are committed. So "asked and unanswered" cannot be told apart from "not asked". The cost is bounded: such a row is asked again at the next S.
+- An outcome line not at column 0 (inside a blockquote or a bullet) reads as no outcome, so its row is re-asked. That fails toward asking (Stacy 2.4).
+- Once a spec closes, the table shows no work that has no directory. 115's residual, for example, lives only in its record and the priorities record's rank 4 (Ada R1, row 11).
 
-## 8. Standards notes (no edit in this ballot)
+## 8. Standards notes and follow-ons (no edit in this ballot)
 
-- `src/components/core/Badge-Count-Notification/tokens.ts` L26 cites `.kiro/specs/059-component-color-token-architecture`, which does not exist. The directory is `059-component-color-token-investigation`. This is a broken pointer in Lina's file, noticed during the triage. It goes to her as a message.
-- `101` and `102` each carry an unticked parent next to completion docs for the same parent (Appendix B). That is a tasks.md state the closed line will freeze. Ada, their agent, decides whether a dated note is owed.
+- **The broken `059` pointer**: `src/components/core/Badge-Count-Notification/tokens.ts` L26 cites `.kiro/specs/059-component-color-token-architecture`, which does not exist. **Lina fixes it** in the rename PR of her record `.kiro/issues/2026-10-26-badge-count-notification-tokens-file-misnamed.md` (Trigger `release:16.3.0:phase-1`), and she adds a line to that record naming the fix (Lina R1).
+- **`101`'s unticked boxes are bookkeeping.** `completion/task-1-completion.md` says all of parent 1's criteria are met. Ada does not tick the boxes after the fact, and the closing line says so (Ada R1, row 8).
+- **`102`'s parent 2 was abandoned.** 11.1.0 was never published or tagged, and 102's work shipped in v11.2.0 (`9f954cf68`). `docs/releases/RELEASE-NOTES-11.1.0.md` is still on `main` and describes a release that never shipped; its body is 101's 11.0.0 summary. That file is the release surface. **Thurgood files a record for it, under rule 10, in the outcome PR**, and does not delete it in this ballot (Ada R1, row 9).
+- **`115`'s header pointer**: Ada re-points `src/tokens/ColorTokens.ts`'s header from "Spec 115 Phase B" to `.kiro/issues/2026-09-12-spec-115-phase-b-colortokens-deletion.md`, in her own small PR, and adds a note on the label collision to that record (Ada R1, row 11).
+- **The XXX-stemma pointers**: `.kiro/docs/agentic-ui-strategy.md` L241 and L285 cite `XXX-stemma-catalog-readiness-audit/`. The directory stays, so the links resolve and no repoint is needed for the close. If a repoint to `062-stemma-catalog-readiness-audit/` is wanted, the doc names no owner; its last edit was #301 (`efa78aa01`, Thurgood's AG-UI arc). **Thurgood files that as one line under rule 10 in the outcome PR**, naming the editing seat there, since `.kiro/docs/` is outside his standing write scope (Lina R1, row 23).
+- **128's outline**: its stale gate Status and the missing no-switch-binding line (Leonardo R1, row 16; Lina R1, row 18) are both fixed by open PR #643, which this ballot does not depend on.
 
 ## 9. Review round record
 
@@ -440,6 +488,57 @@ Read at `ceea9dad9`, Appendix B, rows 7, 10, 16 and 12. Evidence re-checked agai
 
 **Counter-argument I ran against "close", and what survives.** Folded in: first I considered "park, trigger 129", but a parked spec keeps a stale design outline whose Q1-Q4 a later reader would take as open; closing plus a narrow record is cleaner. What survives, and it is a fork rather than something I can absorb: (a) a record needs an owner to act on its trigger, and records with a spec trigger have idled before, so Q5 could sit unbuilt past 129; the cost is that the safety net the incident was about stays missing, and the mitigation is the trigger plus the health-check walk. (b) I have not checked whether Peter still wants Q5 at all. Under Model B the original incident's cause is gone, so Q5 is now a convenience, and "drop it with a reason" is as defensible as "record it". Whether to file the record or drop Q5 is Peter's and Ada's call. I lean to filing it only because it costs one short file. (c) Not verified: I did not run `sync` against a non-TTY fixture, and I did not read the `sync.*` test files for coverage of the `--apply` / conflict-skip behavior. If anyone wants "answered" to rest on a test and not on source, that read is still owed.
 
+#### [THURGOOD R2]
+
+Incorporation notes, item by item. The five entries above are unchanged. Woven means the text now carries the change; it is not appended.
+
+- **STACY R1 2.1 (High), the tag at S**: woven. The figure now leaves out a tag at S (`--no-contains S`), so a paste made before step 5.2's tag and one made after it are byte-identical. Tested at `4d10202b2`: 128 reads 0 and 051 reads 49. At `ee31decd3`, where no tag points at S, nothing changes. → § 2, site 1, Appendix A, § 4 item 2.
+- **STACY R1 2.2 (Medium), the reversed formula**: woven. § 2 now gives the reachability set and the exact command. The block's comment no longer restates the definition, and points at site 1 instead. → § 2, Appendix A.
+- **STACY R1 2.3 (Low), `cut -c` and `%h`**: woven, by removing the truncation. Outcome lines print whole, with `|` escaped, and abbreviations use `--short=9`. The park form now puts the re-ask event first, so the walk author reads it at the start of the line. → site 1, site 3, Appendix A.
+- **STACY R1 2.4 (Low), column 0**: site 1 says column 0, and § 7 names the fail-toward-asking residual.
+- **STACY R1 1.2 (Medium), two homes**: woven, in the smallest form. Site 1 is the definition's one home. The block implements it without restating it, and a change to site 1's definition changes the block in the same PR. A script-only change already owes the straggler sweep. I did not take a register row: it would make the script a registered instrument for a table that gates nothing. → site 1, site 3.
+- **STACY R1 1.3 (i), phase-1 population**: site 1 now says the paste is not in phase 1's population. Phase 1 neither reads nor re-runs it, and the monthly walk reads that the paste is present. Once 2.1 is fixed, the paste's timing relative to the tag no longer matters.
+- **STACY R1 1.3 (ii), walk rows and routed records**: woven. The paste's rows are not walk rows for M7 or for the disposition read. A `closed` line's PR pastes E2's grep, and every hit whose Trigger names the spec's path is re-ruled by its owner in that PR. Appendix B's closed rows all read Trigger 0. → § 2, site 1.
+- **STACY R1 2.5 and 2.6**: § 7 adds the fetched-tags condition and the "asked and unanswered" residual. Site 4 says the footer moves below the block, and that "only commit" is re-checked at application.
+- **STACY R1 item 3, Appendix B**:
+  - Row 3's chain now runs Spec 065 Task 5 (`9547d2ff4`), then Q6.
+  - Counter-argument 3 corrected: only 054d Task 7 is an unticked parent, and the list is a sample of about 38.
+  - Row 13 adds Spec 122, and row 14 adds Spec 123's Phase 3.
+  - Rows 16 and 19 carry the UNVERIFIED label.
+  - Row 17 now cites Peter's go entry and the text he answered, `task/129-outline-r1` @ `f85d54fcc`. Its outcome line is written only once that entry is on `main`.
+  - § 7 adds `056` and `120`.
+- **STACY R1, twelve owner calls, not eight, and four parks without an event**: resolved.
+  - Every row now has its owner's R1 read, or my confirmation of my own rows as my act.
+  - 059 and `XXX-agent-interoperability-protocol` became closed.
+  - The three remaining parks each name a git-visible token: 130 Lina's, 131 mine, and 128 one of two (F-3).
+- **STACY R1, my own rows**: recorded as my own act in each row's "R1 read". § 5 counter-argument 5 says which six of my 14 rows she sampled.
+- **STACY R1 item 4, lines beyond what Peter read**: the `open` threshold is now Addition A, and the git-visible re-ask event is Addition B. Both are named in § 2 and § 6 for his confirmation, as Thurgood's additions and not his words. Addition B also closes her `manual` drop-out point.
+- **STACY R1 item 5, the Consulted line**: the header and the PR body now name all five.
+- **ADA R1**:
+  - Rows 1, 2, 8 and 21 confirmed. Row 21's line names the residual that stays with 129.
+  - Row 4 changed to closed, which Lina confirms.
+  - Row 9 now reads "abandoned in part", her line verbatim in substance; `RELEASE-NOTES-11.1.0.md` goes to § 8 as a record I file.
+  - Row 11's closing line is hers.
+  - Row 12's source-model half closes on 123 Req 5.8.
+  - Counter-argument 3's counts corrected.
+  - Her `ColorTokens.ts` header follow-up is in § 8.
+- **LINA R1**:
+  - Rows 4 and 15 confirmed as closed.
+  - Row 18's park takes her `path:` token, with the second event in prose. Her point that a park is not a refresh is woven into § 2 and site 1.
+  - Row 23 confirmed. The directory stays, and § 8 names who files the repoint.
+  - The `tokens.ts` L26 fix rides her rename PR.
+  - Her no-switch-binding gap: #643 (open) adds that line to 128's outline. That PR is mine, so the gap is closed there.
+- **LEONARDO R1**:
+  - Row 7 confirmed.
+  - Row 10's line carries the residual. The wrong "nearest living home" pointer is corrected to the closed charter and the shipped `## Walkthroughs`.
+  - Row 16: park confirmed, and his token becomes fork F-3, against mine.
+  - The stale 128 Status is #643's.
+  - Row 12: his read is recorded.
+  - His row 10 alternative, a `manual` park to keep the `configure` idea visible, is not offered. Addition B excludes `manual`, and he does not need it kept. If Peter wants it kept, he can say so on row 10.
+  - 107's boxes are his follow-up.
+- **SPARKY R1**: row 12 becomes closed on his question-by-question read. Q5 becomes fork F-4: file his P3 record or drop Q5 with a reason, which is Peter's and Ada's call. His unverified items, the CLI not run and the `sync.*` tests not read, are carried in his entry. Row 12 rests on reading the source.
+- **Not taken**: none of the five entries asked for something I declined.
+
 ## 10. Application ledger
 
 *(Empty until ratification.)*
@@ -450,17 +549,15 @@ Read at `ceea9dad9`, Appendix B, rows 7, 10, 16 and 12. Evidence re-checked agai
 
 ```bash
 
-# 11. Waiting specs at S (ballot 2026-11-04-waiting-spec-row, site 3). A waiting spec is a directory
-#     directly under .kiro/specs/ (each directory is its own spec: 125-mechanical-enforcement-strategy
-#     and 125-A-pr-gate-mechanical-arming are two) that holds design-outline.md and no requirements.md,
-#     and whose outline's last `**Spec outcome (YYYY-MM-DD, <seat>)**: <kind>` line is not `closed`.
-#     "Releases since" counts the v* tags that contain S and not the outline's last-touching commit, so
-#     any outline edit, an outcome line included, resets it. A directory with no design-outline.md is
-#     not listed.
+# 11. Waiting specs at S (ballot 2026-11-04-waiting-spec-row, site 3). The definition is RELEASE-FLOW
+#     item 3a, "Waiting specs, at S": this block implements it and does not restate it. A change to
+#     that paragraph's definition changes this block in the same PR, and a change here is read there.
+#     The figure excludes a tag at S itself (--no-contains), so a run before step 5.2's tag and a
+#     re-run after it print the same figures.
 echo
 echo "### Waiting specs at S \`$SS\`"
 echo
-echo "Command: \`\` for each dir in git ls-tree -d --name-only $SS .kiro/specs/: <dir>/design-outline.md present, <dir>/requirements.md absent, last '**Spec outcome (YYYY-MM-DD, <seat>)**: <kind>' line not 'closed'; c = git log -1 --format=%h $SS -- <dir>/design-outline.md; git tag --list 'v[0-9]*' --merged $SS --no-merged c | wc -l \`\`"
+echo "Command: \`\` for each dir in git ls-tree -d --name-only $SS .kiro/specs/: <dir>/design-outline.md present, <dir>/requirements.md absent, last column-0 '**Spec outcome (YYYY-MM-DD, <seat>)**: <kind>' line not 'closed'; c = git log -1 --format=%H $SS -- <dir>/design-outline.md; git tag --list 'v[0-9]*' --merged $SS --no-merged c --no-contains $SS | wc -l \`\`"
 echo
 echo "| Spec directory | Outline last moved | Releases since | Last outcome line |"
 echo "|---|---|---|---|"
@@ -470,49 +567,49 @@ for d in $(git ls-tree -d --name-only "$S" .kiro/specs/); do
   git cat-file -e "$S:$d/requirements.md" 2>/dev/null && continue
   oc=$(git show "$S:$d/design-outline.md" | grep -E '^\*\*Spec outcome \([0-9]{4}-[0-9]{2}-[0-9]{2}, [A-Za-z]+\)\*\*: (open|park|closed)' | tail -1)
   case "$oc" in *'**: closed'*) continue;; esac
-  c=$(git log -1 --format=%h "$S" -- "$d/design-outline.md")
-  n=$(git tag --list 'v[0-9]*' --merged "$S" --no-merged "$c" | wc -l | tr -d ' ')
+  c=$(git log -1 --format=%H "$S" -- "$d/design-outline.md")
+  n=$(git tag --list 'v[0-9]*' --merged "$S" --no-merged "$c" --no-contains "$S" | wc -l | tr -d ' ')
   wn=$((wn+1))
-  printf '| `%s` | `%s` (%s) | %s | %s |\n' "${d##*/}" "$c" "$(git log -1 --format=%cs "$c")" "$n" "$(printf %s "${oc:-none}" | cut -c1-160 | sed 's/|/\\|/g')"
+  printf '| `%s` | `%s` (%s) | %s | %s |\n' "${d##*/}" "$(git rev-parse --short=9 "$c")" "$(git log -1 --format=%cs "$c")" "$n" "$(printf %s "${oc:-none}" | sed 's/|/\\|/g')"
 done
 if [ "$wn" = 0 ]; then echo "| (none) | | | |"; fi
 ```
 
-Tested standalone at `ee31decd3` (with `S` and `SS` set as the script sets them): exit 0, no stderr, 24 rows, the same 24 as Appendix B.
+Tested standalone (with `S` and `SS` set as the script sets them), R2: at `ee31decd3` exit 0, no stderr, 24 rows, the same 24 directories and figures as Appendix B; at `4d10202b2` (16.2.0's S, tagged `v16.2.0`) 128 reads 0 and 051 reads 49, so the tag at S is left out.
 
-## Appendix B: the first-pass triage at `ee31decd3` (first-pass recommendations, Thurgood; each owner confirms or amends)
+## Appendix B: the first-pass triage at `ee31decd3` (R2: Thurgood's first pass, with the owners' R1 reads folded in)
 
 **Sources and limits**:
-- "Last moved" and "releases since" are the block's own output at `ee31decd3`.
-- "Trigger" counts the root records whose Trigger token names the directory's path (`spec-facts.sh <id> 4d10202b2 ee31decd3`, row 3). 0 means none.
+- "Last moved" and "releases since" are the block's own output at `ee31decd3`. No tag points at `ee31decd3`, so R2's tag-at-S exclusion changes no figure here.
+- "Trigger" counts the root records whose Trigger token names the directory's path (`spec-facts.sh <id> 4d10202b2 ee31decd3`, row 3). 0 means none, so no `closed` row strands a record. The application PR re-runs E2's grep for each closed row (site 1).
 - Every other fact cites its path and, where it matters, a SHA.
-- **"Owner to confirm"** marks a row where the evidence does not settle the call. Nothing in it is a guess offered as a fact.
+- "R1 read" names the owner whose entry in § 9 confirms or amends the row. Thurgood's own rows say "Thurgood confirms (own act)".
 
-| # | Spec directory | Last moved (releases since) | Owner | Evidence | First-pass recommendation |
+| # | Spec directory | Last moved (releases since) | Owner | Evidence | Recommendation after R1 |
 |---|---|---|---|---|---|
-| 1 | `051-semantic-token-naming-restructure` | `08b442113` (50) | Ada (token naming) | `052-semantic-token-naming-implementation/requirements.md` L6–7, L13: "implements the semantic color token naming restructure defined in Spec 051", with this outline as its "Design Authority". 052's tasks.md: 9 of 9 parents ticked. Trigger: 0. | **closed — superseded by `.kiro/specs/052-semantic-token-naming-implementation/`**, which carried it out. The outline stays as 052's cited design authority. |
-| 2 | `054-figma-console-mcp-integration` | `ab54303c5` (45) | Ada (DTCG and Figma export) | The outline splits itself into 054a and 054b. The directories `054a-figma-token-push`, `054b-figma-design-extract`, `054c-figma-token-push-fixes` and `054d-hierarchical-design-extraction` exist. 054a's requirements L6 cite this outline as "shared architectural context". Trigger: 0. | **closed — superseded by 054a–054d**. Their unticked parents (054a 17, 054b 32, 054d 10) are outside this rule (§ 5, counter-argument 3). |
-| 3 | `057-release-analysis-tag-filtering` | `f5e02869d` (48) | Thurgood (release tooling) | It fixes `release:analyze --since`. Ballot `2026-08-12-q6-release-manager-retirement.md` (RATIFIED) item 1 killed `src/tools/release/` and the release-analysis workflow. `package.json` at `ee31decd3` has no `release:analyze`. Trigger: 0. | **closed — superseded by ballot 2026-08-12-q6-release-manager-retirement**: the tool it fixes was retired. |
-| 4 | `059-component-color-token-investigation` | `c6d6d4be8` (48) | Ada (token API), Lina (component tokens) | The outline: `defineComponentTokens()` takes numeric values only, found in Spec 046 Task 8.2. `src/build/tokens/defineComponentTokens.ts` at `ee31decd3` has no line matching `color` (case-insensitive grep), so the gap may stand. `Badge-Count-Notification/tokens.ts` L26 cites this spec under a wrong path (§ 8). Trigger: 0. | **Owner to confirm.** Candidate: **park — the component colour-token question belongs with the colour-track spec (priorities record § 3.4); re-ask: that spec's directory being created**. Or **closed** if a later spec settled it. |
-| 5 | `060-custom-agent-system` | `1d1fa19fa` (46) | Thurgood (agent system) | Three sub-specs in the directory carried it out (`ada-agent/` 4, `lina-agent/` 5 and `thurgood-agent/` 5 parents ticked; summaries under `docs/specs/060-custom-agent-system/`). The agents are now generated from `canonical/agents/**` by Spec 122 (`122-agent-generator`, 18 of 18 parents), and Spec 070 (`070-agent-architecture`, 6 of 6) is also carried out. Trigger: 0. | **closed — carried out in its sub-specs, and superseded by `.kiro/specs/070-agent-architecture/` and `.kiro/specs/122-agent-generator/`**. |
-| 6 | `087-agent-knowledge-base-strategy` | `41935ba1a` (36) | Thurgood (Civitas knowledge bases) | 8 charters in `canonical/agents/*.md` carry `knowledgeBases:` entries at `ee31decd3`. `governance/Process-Development-Workflow.md` L221 cites this directory's `knowledge-base-configuration-guide.md`. Trigger: 0. | **Owner to confirm** whether the strategy landed whole. Candidate: **closed — carried out in the charters' `knowledgeBases:` entries**. The directory stays, because L221 cites a file in it. |
-| 7 | `100-design-critique-integration` | `640462b7a` (23) | Leonardo (design critique, Impeccable) | The outline's own banner: "DEPRECATED (2026-05-16): This spec is subsumed by Spec 107". `107-design-language-context` has requirements, design and tasks. Trigger: 0. | **closed — superseded by `.kiro/specs/107-design-language-context/`** (its own banner). |
-| 8 | `101-package-publish-readiness` | `f5ff6188e` (34) | Ada (the tasks' `**Agent**:` lines) | tasks.md: parent 2 "Publish 11.0.0 and Verify" is ticked; parent 1 is unticked, but `completion/task-1-completion.md` exists. Tag `v11.0.0` exists. Trigger: 0. | **closed — carried out (v11.0.0 published)**. The unticked parent goes to Ada (§ 8). |
-| 9 | `102-consumer-onboarding-completion` | `48ed1e648` (33) | Ada (the tasks' `**Agent**:` lines) | tasks.md: parent 1 is ticked; parent 2 "Publish 11.1.0 and Verify" is unticked. **No `v11.1.0` tag exists** (`v11.0.0` is followed by `v11.2.0`). The repository is at `v16.2.0`. Trigger: 0. | **Owner to confirm** what became of 11.1.0. Candidate: **closed — superseded by the later releases and by Spec 123's onboarding work**. |
-| 10 | `113-onboarding-cli-workflows` | `e63ab7000` (2) | Leonardo (adopter front door); the outline's Agent line is "TBD" | Its own Status (2026-10-20): DORMANT. "Its philosophy was absorbed by Spec 123 … (§ 3.6; shipped at `src/cli/templates/starter-specs/`)". "Its mechanism was not built: there is no `configure` verb". Trigger: 0. | **Owner to confirm** closed or park. Candidate: **closed — superseded in part by Spec 123 § 3.6**. Its unbuilt `configure` mechanism is then an idea with no home, and if Leonardo wants it kept, the row is a **park** instead. |
-| 11 | `115-post-oklch-stabilization-cleanup` | `71120a5d9` (14) | Ada (Phase A; the outline's Agent line) | `completion/phase-a-completion.md`, `phase-b-completion.md` (Status: Complete) and `phase-c-completion.md` (Status: Complete) exist. The open residual, the colorTokens deletion, is its own record, `.kiro/issues/2026-09-12-spec-115-phase-b-colortokens-deletion.md`, folded into the colour-track spec (priorities record § 3.4). Trigger: 0. | **closed — phases A–C carried out; the residual is carried by `.kiro/issues/2026-09-12-spec-115-phase-b-colortokens-deletion.md`**. |
-| 12 | `116-sync-customization-safety` | `22848e4b7` (8) | Thurgood (formalization), Sparky (tooling), Ada (source model) (the outline's Agent line) | The test01 sync incident of 2026-06-12, diagnosis settled and design questions open (its own reading note). Spec 117's outline and requirements cite it. Trigger: 0. I have **not** verified whether later sync work (Spec 123's sync and migration) answered its open design questions. | **Owner to confirm.** No first-pass recommendation: the evidence above does not settle open, park or closed. |
-| 13 | `119-agent-experience-architecture` | `9bd47d494` (7) | Thurgood (the outline's Author line) | Umbrella. `119-A-steering-relocation-serving-contract` (12 of 12 parents) and `119-B-capability-routing-measurement` (10 of 10) carried out its two named halves. Trigger: 0. | **Owner to confirm** that no AXA pillar beyond 119-A and 119-B is still unowned. Candidate: **closed — superseded by 119-A and 119-B**. |
-| 14 | `125-mechanical-enforcement-strategy` | `2ab00b59d` (7) | Thurgood (the outline's Author line) | Its own Status: "PHASE 0 + PHASE 1a COMPLETE (2026-07-10)" via 125-A, and "125-B (the classification map + later phases)". `125-A` (8 of 9 parents) and `125-B` (4 of 6) hold requirements. Trigger: 0. | **closed — superseded by `125-A-pr-gate-mechanical-arming` and `125-B-classification-map`**, which carry its phases (its own Status). |
-| 15 | `126-avatar-decorative-warn` | `7745d3ab8` (7) | Lina | Its own Status: "O2 RATIFIED … IMPLEMENTED (Lina, Task 1, 2026-07-15)". `completion/task-1-completion.md`: "the design outline IS the implementation spec". Trigger: 0. | **closed — carried out (Task 1, 2026-07-15)**. |
-| 16 | `128-react-react-native-platform-admission` | `87c302774` (1) | Thurgood (formalizer), Leonardo | Peter's order is 129 → 131 → 128 → 130 (priorities record walk log, 2026-10-24). The gate for its round is the charter's Trigger (`.kiro/issues/2026-10-03-react-react-native-platform-admission-charter.md` L8). Trigger: 7. | **park — sequenced after 129 and 131 (Peter, 2026-10-24); re-ask: owner to name the event**. Candidate: 131's requirements being created. |
-| 17 | `129-consumer-generation-completeness` | `618bcaf5b` (1) | Thurgood (formalizer), Ada | Peter's "Proceed as the team recommends" (received before 2026-11-04T03:19:41Z) covers "129: go", with the step-2 update as the first draft of its outline round. Trigger: 21, 11 of them P1. | **open** (already ruled; the outcome line records it). |
-| 18 | `130-input-switch-base` | `83f40c856` (2) | Thurgood (formalizer), Lina (component) | Peter's "Not now" on 130's R1 (2026-11-04, the priorities record's § 6.2 closing line, after #642). § 3.3 pulls it forward for 128's first binding or a second screen that needs a switch. Trigger: 0. | **park — "Not now" (Peter, 2026-11-04); re-ask: owner to name the event**. Candidate: 128's `design.md` being created, which is 128's first binding design. |
-| 19 | `131-governance-simplification` | `57128af48` (1) | Thurgood (the outline's Author line) | Its own Status: "R3 — planning, paused at the edge of requirements". Peter's order puts it after 129. Trigger: 38. | **park — paused at requirements and sequenced after 129 (Peter, 2026-10-24); re-ask: owner to name the event**. Candidate: 129's outline round closing. |
-| 20 | `XXX-agent-interoperability-protocol` | `da20a0133` (41) | Thurgood (agent coordination) | Its own Status: "exploratory, pending review". It names 060, 067 and 070. Trigger: 0. No later spec found that takes it up. | **park — an idea with no home; re-ask: owner to name the event**. |
-| 21 | `XXX-android-semantic-token-regeneration` | `377975425` (54) | Ada (native token output) | It names `final-verification/DesignTokens.android.kt`, and no such path exists at `ee31decd3`. The test it cites, `src/__tests__/integration/SemanticTokenGeneration.test.ts`, still asserts `space_grouped_normal`. Native output completeness is Spec 129's scope. Trigger: 0. | **Owner to confirm** that today's Android output carries the semantic tokens. Candidate: **closed — the stale file it names is gone, and native completeness is Spec 129's**. |
-| 22 | `XXX-release-system-operations` | `28b03e5a7` (52) | Thurgood (release system) | It audits the TypeScript release system. `065-release-system-rebuild` holds requirements, design and tasks (4 of 5 parents), and ballot `2026-08-12-q6-release-manager-retirement` killed `src/tools/release/`. Trigger: 0. | **closed — superseded by `.kiro/specs/065-release-system-rebuild/` and ballot 2026-08-12-q6-release-manager-retirement**. |
-| 23 | `XXX-stemma-catalog-readiness-audit` | `c6a9eeddb` (44) | Thurgood (audit), Lina (Stemma) | Its `design-outline.md` is **byte-identical** to `062-stemma-catalog-readiness-audit/design-outline.md` (empty `git diff` at `ee31decd3`), and both last moved in the same commit. 062 has requirements, design and tasks, 3 of 3 parents. Trigger: 0. | **closed — duplicate of `.kiro/specs/062-stemma-catalog-readiness-audit/`**. |
-| 24 | `XXX-task-based-conditional-loading` | `6d672b423` (58) | Thurgood (steering loading) | Its own Status: "Future Enhancement (Parked)". It asks for an `inclusion: taskMatch` option. No such option exists. Agents now load guidance through the generated `WHEN … THEN consult` routing rows of Spec 122. Trigger: 0. | **Owner to confirm** whether 122's routing rows meet its need. Candidate: **closed — superseded by Spec 122's routing**. Otherwise a **park**. |
+| 1 | `051-semantic-token-naming-restructure` | `08b442113` (50) | Ada | `052-semantic-token-naming-implementation/requirements.md` L6–7 and L13: "implements the semantic color token naming restructure defined in Spec 051", with this outline as its "Design Authority". 052's tasks.md: 9 of 9 parents ticked. Trigger: 0. **R1 read**: Ada confirms. | **closed — superseded by `.kiro/specs/052-semantic-token-naming-implementation/`**, which carried it out. The outline stays as 052's cited design authority. |
+| 2 | `054-figma-console-mcp-integration` | `ab54303c5` (45) | Ada | The outline splits itself into 054a and 054b. The directories `054a-figma-token-push`, `054b-figma-design-extract`, `054c-figma-token-push-fixes` and `054d-hierarchical-design-extraction` exist, and the code shipped (`src/figma/`; `figma:push` and `figma:extract`). 054a's requirements L6 cite this outline as "shared architectural context". Of 054a–054d's parents, only 054d Task 7 is unticked; R1's "17 / 32 / 10" counted checklist lines. Trigger: 0. **R1 read**: Ada confirms, and corrects the counts. | **closed — superseded by 054a–054d.** |
+| 3 | `057-release-analysis-tag-filtering` | `f5e02869d` (48) | Thurgood | It fixes `release:analyze --since` in `src/release-analysis/`. **That code was removed by Spec 065 Task 5, `9547d2ff4` (2026-02-28)**. 065's replacement, `src/tools/release/`, was then killed by ballot `2026-08-12-q6-release-manager-retirement` item 1. `package.json` at `ee31decd3` has no `release:analyze`. Trigger: 0. **R1 read**: Stacy corrected the chain (R1's "superseded by Q6" skipped 065), and Thurgood confirms (own act). | **closed — superseded by Spec 065 Task 5 (`9547d2ff4`), which removed the code it fixes; Q6 then retired 065's replacement.** |
+| 4 | `059-component-color-token-investigation` | `c6d6d4be8` (48) | Ada (token API), Lina (component tokens) | `governance/Token-Governance.md` L160 and L556 (Lina adds L580) already state it as law: `defineComponentTokens` takes numeric families only, "there is no color family", and a component's colours reference semantic tokens directly. That is the outline's own recommendation, and its Next Steps say to close it as "Not Needed" if no use case emerges. None has in 48 releases. Trigger: 0. **R1 read**: Ada and Lina both change it from park to closed. | **closed — answered by `governance/Token-Governance.md` L160 and L556.** A component that someday needs a colour no semantic token can express is a new need and a new spec (Lina). |
+| 5 | `060-custom-agent-system` | `1d1fa19fa` (46) | Thurgood | Three sub-specs in the directory carried it out (`ada-agent/` 4, `lina-agent/` 5 and `thurgood-agent/` 5 parents ticked; summaries under `docs/specs/060-custom-agent-system/`). The agents are now generated from `canonical/agents/**` by Spec 122 (`122-agent-generator`, 18 of 18), and Spec 070 (`070-agent-architecture`, 6 of 6) is also carried out. Trigger: 0. **R1 read**: Stacy's sample checked it true, and Thurgood confirms (own act). | **closed — carried out in its sub-specs, and superseded by `.kiro/specs/070-agent-architecture/` and `.kiro/specs/122-agent-generator/`.** |
+| 6 | `087-agent-knowledge-base-strategy` | `41935ba1a` (36) | Thurgood | 8 charters in `canonical/agents/*.md` carry `knowledgeBases:` entries at `ee31decd3`. `governance/Process-Development-Workflow.md` L221 cites this directory's `knowledge-base-configuration-guide.md`. Trigger: 0. **R1 read**: Thurgood confirms (own act), with a limit: he has checked that the per-agent KB configuration landed in the charters, not each item of the outline's Kiro `/knowledge` CLI plan. | **closed — carried out in the charters' `knowledgeBases:` entries.** The directory stays, because L221 cites a file in it. |
+| 7 | `100-design-critique-integration` | `640462b7a` (23) | Leonardo | The outline's own banner: "DEPRECATED (2026-05-16): This spec is subsumed by Spec 107". The capability exists: the Impeccable skill's `critique` command. Trigger: 0. **R1 read**: Leonardo confirms. | **closed — superseded by `.kiro/specs/107-design-language-context/`** (its own banner). |
+| 8 | `101-package-publish-readiness` | `f5ff6188e` (34) | Ada | tasks.md: parent 2 "Publish 11.0.0 and Verify" is ticked; parent 1 is unticked, but `completion/task-1-completion.md` says "All 7 Parent 1 Success Criteria are met". Tag `v11.0.0` exists. Trigger: 0. **R1 read**: Ada confirms; the unticked boxes are bookkeeping only. | **closed — carried out (v11.0.0 published). The unticked boxes in tasks.md are not pending work; `completion/task-1-completion.md` is the record.** |
+| 9 | `102-consumer-onboarding-completion` | `48ed1e648` (33) | Ada | Parent 1 was completed (`f37bc28de`) and the version bump landed (`2943f54f6`). Then 102's work shipped in **v11.2.0** (`9f954cf68`, via Spec 103). **11.1.0 was never published or tagged**: there is no `v11.1.0`, and parent 2's publish steps never ran. `docs/releases/RELEASE-NOTES-11.1.0.md` is stale (§ 8). Trigger: 0. **R1 read**: Ada changes the reason, from superseded to abandoned. | **closed — abandoned in part: parent 1 carried out and shipped in v11.2.0 (`9f954cf68`); parent 2 (publish 11.1.0) was never run, the 11.1.0 version was skipped, and its fresh-repo verification of the five gaps was not done under this spec.** |
+| 10 | `113-onboarding-cli-workflows` | `e63ab7000` (2) | Leonardo | Its own Status (2026-10-20): DORMANT. Its philosophy was absorbed by Spec 123 (§ 3.6; `src/cli/templates/starter-specs/`). Its mechanism, a `configure` verb and a designer-facing intake, was not built. **The outline's "nearest living home", the Integration Guide designer-friendly rewrite charter, is closed** (2026-10-25, now `.kiro/issues/archive/2026-10-03-integration-guide-designer-friendly-rewrite-charter.md`). The rewrite shipped as the guide's `## Walkthroughs` layer (L262). Trigger: 0. **R1 read**: Leonardo confirms closed, with the residual in the line; park is the wrong shape. | **closed — superseded in part by Spec 123 § 3.6; the designer-friendly rewrite shipped as the Integration Guide's `## Walkthroughs`; residual: a state-aware re-runnable `configure` verb, not built and with no home — re-file as a fresh outline if wanted.** |
+| 11 | `115-post-oklch-stabilization-cleanup` | `71120a5d9` (14) | Ada | Phases B and C have `Status: Complete` completion docs. Phase A's first item, deleting `src/tokens/ColorTokens.ts`, was deferred (`completion/phase-a-completion.md` § 3: "File cannot be deleted yet"), and the file still exists. It is carried by `.kiro/issues/2026-09-12-spec-115-phase-b-colortokens-deletion.md`, folded into the colour-track spec (priorities record § 3.4). That record borrows the label "Phase B". Trigger: 0. **R1 read**: Ada confirms closed, and corrects the closing line. | **closed — phases A–C carried out except Phase A's deletion of `src/tokens/ColorTokens.ts`, deferred in `completion/phase-a-completion.md` § 3 and carried by `.kiro/issues/2026-09-12-spec-115-phase-b-colortokens-deletion.md` (Trigger `manual`, folded into the colour-track spec, priorities record § 3.4).** |
+| 12 | `116-sync-customization-safety` | `22848e4b7` (8) | Thurgood (formalization), Sparky (tooling), Ada (source model) | Sparky reads each open question against `src/cli/sync/`:<br>- Q1 answered: off a terminal, `sync` reports and writes nothing unless `--apply` is passed.<br>- Q2 answered by removal: `--force` and `--accept-all` are retired, and `--overwrite` and `--restore` are per path.<br>- Q3 superseded: Model B, 123 Req 5.8, `sync` never writes `src/tokens`, which Ada confirms.<br>- Q4 superseded: a first encounter is a conflict, judged against shipped content.<br>- Q6 answered: Integration Guide L1084 and L1100–1103.<br>- **Q5, a drift report, is still open**, and no live spec or record owns it.<br>Leonardo's product-side read agrees. Trigger: 0. **R1 read**: Sparky (close with a Q5 record), Ada (her source-model half closes on 123 Req 5.8), Leonardo (leaning closed), and Thurgood confirms (own act). | **closed — superseded by Spec 123's sync work (Requirement 5, Model B; retired flags; `--apply` / `--overwrite` / `--restore`; shipped-content comparison); Q5 (drift report) is not built.** The closing PR either files Sparky's P3 record or writes Q5's drop reason into the line: **F-4**. |
+| 13 | `119-agent-experience-architecture` | `9bd47d494` (7) | Thurgood | Umbrella. The outline's own "Pillar mapping" (L28–31) names **three** pillars: `119-A-steering-relocation-serving-contract` (12 of 12 parents), `119-B-capability-routing-measurement` (10 of 10) and **Spec 122** (generation and enforcement; 18 of 18). All three are carried out. Trigger: 0. **R1 read**: Stacy added 122, and Thurgood confirms (own act). With the outline naming exactly three, no pillar is unowned. | **closed — superseded by `119-A`, `119-B` and `122-agent-generator`, its three named pillars.** |
+| 14 | `125-mechanical-enforcement-strategy` | `2ab00b59d` (7) | Thurgood | Its own Status: "PHASE 0 + PHASE 1a COMPLETE (2026-07-10)" via 125-A, and "125-B (the classification map + later phases)". Its Phase 3, consumer-side reach, is "Spec 123 territory" (L99, L144). `125-A` (8 of 9 parents) and `125-B` (4 of 6) hold requirements, and 123 holds its own. Trigger: 0. **R1 read**: Stacy added Phase 3, and Thurgood confirms (own act). | **closed — superseded by `125-A-pr-gate-mechanical-arming` and `125-B-classification-map` (its phases 0–2) and by Spec 123 (its Phase 3, which the outline assigns there).** |
+| 15 | `126-avatar-decorative-warn` | `7745d3ab8` (7) | Lina | Its own Status: "O2 RATIFIED … IMPLEMENTED (Lina, Task 1, 2026-07-15)". `Avatar.web.ts` L723 carries the ratified condition, and the tests carry the decorative cases. Trigger: 0. **R1 read**: Lina confirms. | **closed — carried out (Task 1, 2026-07-15, #81).** |
+| 16 | `128-react-react-native-platform-admission` | `87c302774` (1) | Thurgood (formalizer), Leonardo | Peter's order 129 → 131 → 128 → 130 is **UNVERIFIED (chat only, 2026-10-24)** in the priorities record's walk log. The gate for its round is the charter's Trigger (`.kiro/issues/2026-10-03-react-react-native-platform-admission-charter.md` L8). #643 (open) refreshes its stale Status. Trigger: 7. **R1 read**: Leonardo confirms park, and names a different token. | **park — re-ask: `path:.kiro/specs/131-governance-simplification/requirements.md` or `…/tasks.md` (F-3); sequenced after 129 and 131 (Peter, 2026-10-24, chat, as the priorities record carries it, UNVERIFIED).** |
+| 17 | `129-consumer-generation-completeness` | `618bcaf5b` (1) | Thurgood (formalizer), Ada | **Peter's go, on record** at `.kiro/specs/129-consumer-generation-completeness/feedback/design-outline.md` § "[PETER] Go for the outline round (2026-11-04; recorded by Thurgood)", on branch `task/129-outline-r1` (head `f85d54fcc`; its PR is still to come). His words there, verbatim, received before 2026-11-04T03:19:41Z: "Proceed as the team recommends". The entry also carries the text he answered: "1. Open 129's review round … (a) Your go, with the step-2 update written as the round's first draft". Trigger: 21, 11 of them P1. **R1 read**: Stacy (the premise was not yet committed; it is once that branch merges), and Thurgood confirms (own act). | **open — the outcome line quotes his words and cites that entry, and is written only once the entry is on `main`.** |
+| 18 | `130-input-switch-base` | `83f40c856` (2) | Thurgood (formalizer), Lina (component) | Peter's "Not now" on 130's R1 (2026-11-04, the priorities record's § 6.2 closing line, #642). § 3.3 pulls it forward for 128's first binding, or for a second screen that needs a switch. Trigger: 0. **R1 read**: Lina confirms park, with the event below. The second event is not git-visible, so it is carried in prose, and Lina watches it as G1's owner. | **park — re-ask: `path:.kiro/specs/128-react-react-native-platform-admission/design.md`; "Not now" (Peter, 2026-11-04); a second screen needing a switch also pulls it forward (§ 3.3, prose; Lina watches it as G1's owner).** |
+| 19 | `131-governance-simplification` | `57128af48` (1) | Thurgood | Its own Status: "R3 — planning, paused at the edge of requirements". Peter's order puts it after 129 (**UNVERIFIED, chat only, 2026-10-24**, as the priorities record carries it). Trigger: 38. **R1 read**: Thurgood confirms (own act), and replaces R1's prose event with a git-visible one: 129's outline round closes when 129's requirements are written. | **park — re-ask: `path:.kiro/specs/129-consumer-generation-completeness/requirements.md`; paused at requirements and sequenced after 129 (Peter, 2026-10-24, chat, as carried, UNVERIFIED).** |
+| 20 | `XXX-agent-interoperability-protocol` | `da20a0133` (41) | Thurgood | Its own Status: "exploratory, pending review". It names 060, 067 and 070. No later spec takes it up, and no git-visible event would re-ask it. Trigger: 0. **R1 read**: Thurgood changes it from park to closed (own act). Under Addition B, a park needs a git-visible event, and an honest one does not exist. This follows Leonardo's shape for 113. | **closed — an exploratory idea with no home and no event; re-file as a fresh outline if wanted.** |
+| 21 | `XXX-android-semantic-token-regeneration` | `377975425` (54) | Ada | It names `final-verification/DesignTokens.android.kt`; no such path exists, and output now goes to the git-ignored `dist/`. Ada ran `src/__tests__/integration/SemanticTokenGeneration.test.ts` at `ee31decd3` (19 of 19, including `space_grouped_normal`), and the 2026-10-03 Android build carries the semantic tokens. Trigger: 0. **R1 read**: Ada confirms, with the residual named. | **closed — the stale file it names is gone and the generator emits the semantic tokens; theme-varying semantic colours on Android and iOS remain Spec 129's.** |
+| 22 | `XXX-release-system-operations` | `28b03e5a7` (52) | Thurgood | It audits the TypeScript release system. `065-release-system-rebuild` holds requirements, design and tasks (4 of 5 parents) and deleted `src/release/` (`9547d2ff4`). Ballot `2026-08-12-q6-release-manager-retirement` then killed `src/tools/release/`. Trigger: 0. **R1 read**: Stacy checked it true, and Thurgood confirms (own act). | **closed — superseded by `.kiro/specs/065-release-system-rebuild/` and ballot 2026-08-12-q6-release-manager-retirement.** |
+| 23 | `XXX-stemma-catalog-readiness-audit` | `c6a9eeddb` (44) | Thurgood (audit), Lina (Stemma) | Its `design-outline.md` is byte-identical to `062-stemma-catalog-readiness-audit/design-outline.md` (empty `git diff`; same last commit). 062 has requirements, design and tasks, 3 of 3 parents. `.kiro/docs/agentic-ui-strategy.md` L241 and L285 cite this directory, so it stays where it is (§ 8 names the repoint). Trigger: 0. **R1 read**: Lina confirms, Stacy checked it true, and Thurgood confirms (own act). | **closed — duplicate of `.kiro/specs/062-stemma-catalog-readiness-audit/`.** |
+| 24 | `XXX-task-based-conditional-loading` | `6d672b423` (58) | Thurgood | Its own Status: "Future Enhancement (Parked)". It asks for an `inclusion: taskMatch` option, and no such option exists. Agents now load guidance through the generated `WHEN … THEN consult` routing rows of Spec 122 (`canonical/agents/*.md`'s routing, rendered into each agent's file). Trigger: 0. **R1 read**: Thurgood confirms (own act). The need it names, loading guidance by task rather than always, is what those rows do. | **closed — superseded by Spec 122's per-agent routing rows.** |
 
-**First-pass tally** (with "owner to confirm" rows counted under their candidate): closed 17 (rows 1–3, 5–11, 13–15, 21–24); park 5 (rows 4, 16, 18, 19, 20); open 1 (row 17); no recommendation 1 (row 12). Eight rows need their owner's call before Peter sees them: rows 4, 6, 9, 10, 13, 21 and 24, before their candidate holds, and row 12, which has no candidate.
+**Tally after R1**: closed 20 (rows 1–15, 20–24); park 3 (rows 16, 18 and 19, each with a git-visible re-ask event); open 1 (row 17). No row is left without an owner's read or Thurgood's confirmation of his own. Two rows carry forks for Peter: row 16's token (F-3) and row 12's Q5 (F-4). Row 17's outcome line waits on `task/129-outline-r1` reaching `main`.
