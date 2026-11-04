@@ -29,7 +29,7 @@ See the CHANGELOG's "Upgrading from 16.1.0" (five steps). **From 16.0.0 or earli
 
 ## 🧪 Onboarding evidence
 
-1. **Candidate**: F `7db066e4f`, pack sha1 `badf04cfc5ba5f58fb6ae894d6dcdffc4c0776ab` (sha256 `a6a33ff19b64ebced321e7e2a224acedfa7f0fff186166161243a8907e3b399f`), 1701 files, 6626251 bytes, pack-assert 105/105, `publish path: 16 (floor 16)`, pack version 16.1.0 (the bump is on this branch). The dry run ran from the main checkout at `d2f579bef` (F + #630), 2026-11-02T13:19:41Z–13:20:15Z. The records are in `tests/onboarding-trio/records/16.2.0/` (#582).
+1. **Candidate**: F `7db066e4f`, pack sha1 `badf04cfc5ba5f58fb6ae894d6dcdffc4c0776ab` (sha256 `a6a33ff19b64ebced321e7e2a224acedfa7f0fff186166161243a8907e3b399f`), 1701 files, 6626251 bytes, pack-assert 105/105, `publish path: 16 (floor 16)`, pack version 16.1.0 (the bump is on this branch). The dry run ran from the main checkout at `d2f579bef` (F + #630), 2026-11-02T13:19:41Z–13:20:15Z. The records are in `tests/onboarding-trio/records/16.2.0/` (#582, squash `a184c5126`).
 2. **The three runs**: every session `completed`, each against the candidate, launched by Peter, and none ending on quota. In each, the founder path's steps 1–4 were done in the session; step 5 (restart) is not reachable inside a session, so the persona named it and the launcher performed it.
    - `trio-1-backend` (Claude Code 2.1.310 at preflight, 2.1.317 from birth on): birth 19 of 40 turns; probes Ada and Lina; committed on a branch.
    - `trio-2-designer` (Kiro 2.12.1): birth 49 of 40 turns, over its guard and unenforced (R2-19); probe Sparky.
