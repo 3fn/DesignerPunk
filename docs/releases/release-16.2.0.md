@@ -29,7 +29,27 @@ See the CHANGELOG's "Upgrading from 16.1.0" (five steps). **From 16.0.0 or earli
 
 ## 🧪 Onboarding evidence
 
-**[Filled from the trio records PR #582 before this PR merges, in Leonardo's eight-line shape: (1) the candidate line below; (2) one line per run (run id, harness, stop value, budget used, `path-steps-walked`); (3) the prior-findings tally per record, by `fixed-and-observed` / `fixed-not-observed` / `still-present`, with how many `still-present` were `not reached`; (4) the new findings, with their count and the records they went to; (5) native charter deltas unprobed: the kenya and data consumer charters changed, and no probe exercises them; (6) the Kiro conformance pair, not in this trio, owed in `.kiro/issues/2026-10-25-kiro-conformance-pair-requeue.md`; (7) the instrument's limit (Req 23.10): agents role-play not knowing, so the trio measures instruction clarity and path completeness, and a green trio is not "a stranger succeeded"; (8) not a release gate: findings route to their owners.]** Candidate: F `7db066e4f`, pack sha1 `badf04cfc5ba5f58fb6ae894d6dcdffc4c0776ab` (sha256 `a6a33ff19b64ebced321e7e2a224acedfa7f0fff186166161243a8907e3b399f`), 1701 files, 6626251 bytes, pack-assert 105/105, `publish path: 16 (floor 16)`, pack version 16.1.0 (the bump is on this branch); dry run from the main checkout at `d2f579bef` (F + #630), 2026-11-02T13:19:41Z–13:20:15Z.
+1. **Candidate**: F `7db066e4f`, pack sha1 `badf04cfc5ba5f58fb6ae894d6dcdffc4c0776ab` (sha256 `a6a33ff19b64ebced321e7e2a224acedfa7f0fff186166161243a8907e3b399f`), 1701 files, 6626251 bytes, pack-assert 105/105, `publish path: 16 (floor 16)`, pack version 16.1.0 (the bump is on this branch). The dry run ran from the main checkout at `d2f579bef` (F + #630), 2026-11-02T13:19:41Z–13:20:15Z. The records are in `tests/onboarding-trio/records/16.2.0/` (#582).
+2. **The three runs**: every session `completed`, each against the candidate, launched by Peter, and none ending on quota. In each, the founder path's steps 1–4 were done in the session; step 5 (restart) is not reachable inside a session, so the persona named it and the launcher performed it.
+   - `trio-1-backend` (Claude Code 2.1.310 at preflight, 2.1.317 from birth on): birth 19 of 40 turns; probes Ada and Lina; committed on a branch.
+   - `trio-2-designer` (Kiro 2.12.1): birth 49 of 40 turns, over its guard and unenforced (R2-19); probe Sparky.
+   - `trio-3-pm` (Kiro 2.12.1): bare `init` exercised for the first time since release 4. It waited 685 s on a prompt inside Kiro's shell tool, and took one operator-unblock (two empty Returns, one per prompt) to end; the persona then passed the flags and went on. Probe Leonardo.
+3. **Prior findings** (52 per record, release 5's set on the stricter reading). The tallies are fixed-and-observed / fixed-not-observed / still-present:
+   - `trio-1-backend`: 6 / 14 / 32;
+   - `trio-2-designer`: 11 / 8 / 33;
+   - `trio-3-pm`: 9 / 10 / 33.
+
+   Fixes observed in at least one run include: `get_token_consumers` answering (R1-7), consumer-Sparky linking the founder's own tokens (R2-2), Button-CTA's form note reaching the probe (R2-12), the protocol's Kiro remedies (R2-15–R2-17), and R3-18's quota half (no Kiro session ended on quota; its over-guard half is still present in `trio-2-designer`). **R3-1 is re-observed failing on Kiro**: `init`'s off-terminal guard does not hold under Kiro's shell tool, which runs commands with a terminal attached. It holds on Claude Code, whose Bash tool has none.
+4. **New findings** (routes proposed in the records; none gates the release):
+   - R1-22: a moderate advisory (`minimatch`) in `@3fn/core`'s own dependency tree. The operator's audits after runs 1 and 2 place it there, and run 3's install printed the same counts as run 2. `package.json`'s dependencies are unchanged since 16.1.0, so the advisory feed changed, not the package. Ada.
+   - R1-23: the package README puts the install steps after about 125 lines. Thurgood.
+   - R2-18: consumer-Sparky advises opening a no-build page from `file://` via the UMD bundle, where INSTALL says to serve it over local HTTP. Sparky to verify.
+   - R2-19: Kiro's turn guard means something different from Claude Code's. Leonardo (the protocol).
+   - R3-20 (`subject: leonardo`): 5 of the 14 token names in consumer-Leonardo's screen spec do not resolve, and no token query was made. Stacy's RELEASE cross-read.
+5. **Native charter deltas unprobed**: the kenya and data consumer charters change in 16.2.0, and no probe in the trio exercises them. Kenya and Data are unexercised, with no supported native consumption path.
+6. **Not in this trio**: the Kiro conformance pair (consumer-Thurgood and consumer-Stacy on Kiro). It is owed in `.kiro/issues/2026-10-25-kiro-conformance-pair-requeue.md`.
+7. **The instrument's limit** (Req 23.10): the personas are agents role-playing ignorance. The trio measures instruction clarity and path completeness on a preview candidate, not the published tarball. A green trio is not "a stranger succeeded".
+8. **Not a release gate** (recipe step 6): findings route to their owners, and nothing here holds the tag.
 
 ## 📦 Packed output against the previous public artifact (RELEASE-FLOW step 2)
 
@@ -48,7 +68,7 @@ See the CHANGELOG's "Upgrading from 16.1.0" (five steps). **From 16.0.0 or earli
 
 ## 📦 Dependency disclosure (ballot `2026-10-03-hermetic-publish-path` § 7)
 
-**No embedded dependency version changed against 16.1.0's public artifact.** `git diff --stat v16.1.0 7db066e4f -- '*package-lock.json' '*package.json'` changes only the root `package.json`'s `prepublishOnly` string (#564); no lockfile changed. The 5.1 dry run at S confirms the bundles' contents.
+**No embedded dependency version changed against 16.1.0's public artifact.** `git diff --stat v16.1.0 7db066e4f -- '*package-lock.json' '*package.json'` changes only the root `package.json`'s `prepublishOnly` string (#564); no lockfile changed. The 5.1 dry run at S confirms the bundles' contents. The install's audit line nevertheless now reports a moderate `minimatch` advisory in `@3fn/core`'s own dependency tree (trio finding R1-22, routed to Ada): the declared range is unchanged since 16.1.0, and the advisory is new in the feed.
 
 ## 🔵 Internal (provenance, not consumer surface)
 
