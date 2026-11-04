@@ -1,3 +1,5 @@
+> **Superseded by `inbound-from-ada-2026-11-04.md`** (Ada, 2026-11-04). Kept as history; the newer file is the current statement of these inputs.
+
 # Inbound to Spec 129 from Ada: three records routed to this spec at release 16.2.0's walk (theme emission, the package-read token parts, base-config freshness)
 
 **Date**: 2026-10-30
