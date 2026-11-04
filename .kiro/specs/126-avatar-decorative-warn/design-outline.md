@@ -86,3 +86,5 @@ Let `alt` be the raw attribute/prop value (`null` = absent, `''` = explicitly em
 - The false-positive matrix is provably dead: the **six** new warn-behavior tests (§5) pass; the interim spy removed with **zero** console.warn blocks reappearing in the Avatar suites (recount over a captured full run).
 - **Concrete non-regression signal (Thurgood R1, replacing the unmeasurable "no assertion weakened")**: the existing `'should warn when src is provided without alt'` test (accessibility.test.ts ~252, already human-typed) survives O2 **unchanged**.
 - Full `npm test` green; `contracts.yaml` + schema edge-semantics notes landed in the same change (§5 item 3).
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — carried out (Task 1, 2026-07-15, #81) — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 15, Lina's read in § 9

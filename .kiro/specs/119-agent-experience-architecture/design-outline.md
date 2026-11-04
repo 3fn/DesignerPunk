@@ -65,3 +65,5 @@ It was **moved, not deleted** (also fully retained in git history). The move end
 - The **case-study / measurement** material and the **119-B routing** material remain *deferred* (119-B); the archive preserves their design notes until 119-B is worked.
 
 > **Structural follow-up (EXECUTED 2026-08-02):** the spec folder was renamed from its pre-reframe name to `119-agent-experience-architecture` to reflect AXA. Originally deferred to avoid path churn mid-draft; executed as a single atomic rename + repo-wide cross-reference sweep at 119-B closeout, before Spec 123 opened — see `.kiro/issues/2026-07-19-spec-119-folder-rename.md`.
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — superseded by `119-A-steering-relocation-serving-contract`, `119-B-capability-routing-measurement` and `122-agent-generator`, its three named pillars — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 13, Stacy's addition and Thurgood's own confirmation's read in § 9

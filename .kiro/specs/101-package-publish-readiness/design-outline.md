@@ -164,3 +164,5 @@ The spec is complete when all of the following are true:
 7. `dist/` rebuilds cleanly with zero `@designerpunk/*` references (sourcemaps excluded).
 8. Prevention tooling exists (`prepublishOnly` script + CI workflow) and triggers a failure if the package name drifts between `package.json` and active steering docs/source/dist.
 9. Completion documentation captures the first-consumer learnings and the governance fix, suitable for reference when the next consumer validation surfaces similar drift.
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — carried out (v11.0.0 published); the unticked boxes in tasks.md are not pending work, and `completion/task-1-completion.md` is the record — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 8, Ada's read in § 9

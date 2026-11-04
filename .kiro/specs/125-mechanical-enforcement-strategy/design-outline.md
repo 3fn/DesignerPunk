@@ -224,3 +224,5 @@ This is a sharper failure mode than §2's "authored-but-unarmed": a lane can be 
 - `inbound-from-wordpress-thesis.md` — sequencing (Phase 0/1 before 122), kill-switch, autonomy dial
 - `.kiro/docs/ballots/README.md` — the record-first ratification protocol (layer 1, in force)
 - `docs/roadmap/2026-07-04-wordpress-thesis-strategy.md` + `2026-07-04-full-project-audit.md` — strategy + audit context
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — superseded by `125-A-pr-gate-mechanical-arming` and `125-B-classification-map` (its phases 0–2) and by Spec 123 (its Phase 3, which the outline assigns there) — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 14, Stacy's addition and Thurgood's own confirmation's read in § 9

@@ -231,3 +231,5 @@ find .kiro/release-triggers -type f -name "*.json" | xargs rm -f
 ---
 
 *This design outline captures findings from investigating context overflow caused by release system state accumulation. The broader scope addresses the root cause: an under-documented, partially-disabled release system that needs operational clarity.*
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — superseded by `.kiro/specs/065-release-system-rebuild/` and ballot 2026-08-12-q6-release-manager-retirement — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 22, Stacy's check and Thurgood's own confirmation's read in § 9

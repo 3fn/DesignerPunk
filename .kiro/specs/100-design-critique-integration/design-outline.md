@@ -230,3 +230,5 @@ Three critique points in the workflow:
 3. Is the "token system overrides Impeccable" model the right reconciliation approach?
 4. Does this affect the `@designerpunk/core` package.json (new dependency)?
 5. Who owns this capability? Leonardo (product architecture)? Lina (component quality)? A shared concern?
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — superseded by `.kiro/specs/107-design-language-context/` (its own banner) — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 7, Leonardo's read in § 9

@@ -90,3 +90,5 @@ Three-phase cleanup after v12 stabilizes in production:
 - **Leonardo** — Phase B (Impeccable skill owner)
 - **Sparky** — Phase B (JavaScript detector implementation)
 - **Thurgood** — Phase C (documentation governance)
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — phases A–C carried out except Phase A's deletion of `src/tokens/ColorTokens.ts`, deferred in `completion/phase-a-completion.md` § 3 and carried by `.kiro/issues/2026-09-12-spec-115-phase-b-colortokens-deletion.md` (Trigger `manual`, folded into the colour-track spec, priorities record § 3.4) — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 11, Ada's read in § 9

@@ -53,3 +53,5 @@
 
 - See `inbound-from-identity-sitting-2026-10-20.md` § 6 and `inbound-from-peter-user-stories-2026-10-21.md` § 6.
 - Stakeholders for R1: Ada, Lina, Thurgood, Leonardo (owning seats); Sparky, Kenya, Data (platform seats); Stacy (claims-pass verifiability LENS at the tasks round).
+
+**Spec outcome (2026-11-04, Thurgood)**: park — re-ask: `path:.kiro/specs/131-governance-simplification/tasks.md`; sequenced after 129 and 131 (Peter, 2026-10-24, chat, as the priorities record carries it, UNVERIFIED) — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; the token is F-3 (b), Peter, "F-3 tasks.md", 2026-11-04T06:03:25Z; ballot 2026-11-04-waiting-spec-row, Appendix B row 16, Leonardo's read in § 9

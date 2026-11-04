@@ -245,3 +245,5 @@ Only one question changes what is built at this gate.
   - An `error(...)` default compiles, then crashes wherever no provider exists. That includes the `@Preview` functions in 21 component files (Data R1 item 14).
   - The choice is between a default to a light-theme instance and an error.
 - **Row 11's tokens**: which colour primitives the OKLCH migration creates or changes (§ 4, Token creation).
+
+**Spec outcome (2026-11-04, Thurgood)**: open — the outline round opened on Peter's go, "Proceed as the team recommends" (received before 2026-11-04T03:19:41Z), recorded in `.kiro/specs/129-consumer-generation-completeness/feedback/design-outline.md` § "[PETER] Go for the outline round (2026-11-04; recorded by Thurgood)" (on `main` since #645, `9819f72ee`); R1 draft, six reviews and R1 folded — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 17, Thurgood's confirmation (own act)

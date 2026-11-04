@@ -90,3 +90,5 @@ The semantic token approach may be sufficient for all foreseeable use cases. Thi
 ---
 
 **Next Steps**: Monitor for use cases where semantic tokens are insufficient. If none emerge, close this spec as "Not Needed."
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — answered by `governance/Token-Governance.md` L160 and L556; a component that someday needs a colour no semantic token can express is a new need and a new spec — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 4, Ada's and Lina's's read in § 9

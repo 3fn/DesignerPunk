@@ -606,6 +606,7 @@ Folding Peter's answers to Additions A and B, the cleanup list and the PR shape 
 *(No edit site is applied yet.)*
 
 - **2026-11-04, ratification record** (Peter, "Re: 644, ratified", received 2026-11-04T13:32:16Z; head ratified `b8b6aa3934422d926eecf5de2e7e1f6ff776e99b`): Status changed to RATIFIED by the holder, record-first. The application PR (§ 4) waits for this ballot PR's merge and Peter's go.
+- **2026-11-04, application** (Peter's go, "647 and 648 are merged, go", received 2026-11-04T13:39:07Z; the application PR, branch `chore/apply-waiting-spec-row`): sites 1, 3, 4 and 5 applied as written (site 2 not applied, F-1 (b)); Appendix A's block inserted verbatim; the first pass's 24 outcome lines written in the outlines (20 closed, 3 park, 1 open); the three follow-on records filed under README rule 10 (Q5's drift report, `RELEASE-NOTES-11.1.0.md`, the `XXX-stemma` repoint); this ballot's index entry added to `.kiro/docs/ballots/README.md`. The PR body carries the verification, the census re-run and the application-time differences from Appendix B.
 
 ---
 

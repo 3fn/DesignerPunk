@@ -329,3 +329,5 @@ This update should be proposed to Peter following the ballot measure model (prop
 - `.kiro/steering/Rosetta-Stemma-Systems-Overview.md` — Stemma family reference
 - `.kiro/steering/Component-Quick-Reference.md` — Component routing table
 - `.kiro/agents/thurgood-prompt.md` — Thurgood's audit methodology and domain scope
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — duplicate of `.kiro/specs/062-stemma-catalog-readiness-audit/`; the directory stays because `.kiro/docs/agentic-ui-strategy.md` L241 and L285 cite it (repoint: `.kiro/issues/2026-11-04-agentic-ui-strategy-cites-xxx-stemma-directory.md`) — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 23, Lina's, Stacy's check and Thurgood's own confirmation's read in § 9
