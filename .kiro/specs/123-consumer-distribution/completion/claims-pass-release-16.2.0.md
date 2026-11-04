@@ -678,3 +678,48 @@ This reaches install and the bin only. It runs no `init`, `sync` or `generate`; 
 *Merge-confirmation line: to be appended at #636's merge (`git diff --quiet 6795a28cf <merge-sha> -- <each path in the read-SHA list>`).*
 
 *Signed: Stacy, 2026-11-04.*
+
+### Merge-confirmation line (RELEASE-FLOW step 6, A6 / RS-9) — 2026-11-04
+
+**#636 merged at 2026-11-04T02:23:16Z, squash `95ed466d74b34a1f28f834b35a4e816c06741a22`.** The squash's tree equals the PR's final head `e1b16894e` (`git diff --quiet e1b16894e 95ed466d7`, exit 0).
+
+After my read at `6795a28cf`, #636 gained four commits (`git log 6795a28cf..e1b16894e`):
+- `f6afdf627`, the merge of main `e19698406`;
+- `d491ebb7e`, the walk record closed and archived;
+- `6bce4fa31`, the rulings record's Lapse at S, its outcome and its archive;
+- `e1b16894e`, the files grant closed and archived, and trigger (d) re-ruled.
+
+**The three read paths**:
+- `git diff --quiet 6795a28cf 95ed466d7 -- docs/releases/16.2.0/publish-verification.txt` → **exit 1 (changed)**.
+- The walk record moved to `archive/`, so I diffed the root path at the read SHA against the archive path at the merge: `git diff --quiet 6795a28cf:.kiro/issues/2026-10-29-release-16.2.0-walk.md 95ed466d7:.kiro/issues/archive/2026-10-29-release-16.2.0-walk.md` → **exit 1 (changed)**.
+- The rulings record also moved, so the same form: `git diff --quiet 6795a28cf:.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md 95ed466d7:.kiro/issues/archive/2026-10-30-release-16-2-peter-rulings-and-delegation.md` → **exit 1 (changed)**.
+
+**Every changed hunk, re-read**:
+- **`publish-verification.txt`, 3 hunks.**
+  - L6: the grant pointer now reads `.kiro/issues/archive/2026-11-02-release-16-2-files-grant.md`.
+  - L155: the walk record "is closed and archived in this PR … after Stacy's phase-1 record merged (#637, `c1a5d1521` …)".
+  - L157: the grant "expires at this PR's merge … closed and archived in this PR".
+  - None touches the tag, 5.3, 5.4, 6a or 6b lines. **No phase-2 reading changes**: rail PASS once, 02:03:32Z, exit 0; all four sha1s `6f8210a6…7a2a`; 1701 files; times as tabled.
+- **The walk record, 9 hunks.**
+  - Eight re-point its own citations of the rulings record, the walk record and the files grant from `.kiro/issues/<file>` to `.kiro/issues/archive/<file>`. These are L5, L15, L61, L213, L327, L425, L557 and L583 at the read SHA.
+  - One adds the rule-5 outcome line ("closed — its Trigger, `release:16.2.0:phase-1`, fired at Stacy's RELEASE phase-1 record … #637, squash `c1a5d1521…`").
+  - Its § "At S" figures are unchanged (root 130; 140 → 130 met on the adopted reading; 119 → 130 stated as unmet). **No phase-2 reading changes.**
+- **The rulings record, 1 hunk** (appended at the end): `## Lapse (2026-11-04)` naming firing commit `4d10202b2` (first lapse, `(record)`, no escalation), then "**Outcome (2026-11-04, Thurgood)**: closed … **RL-39 is resolved** by the commit that adds this line". The commit is `6bce4fa31`, by `git log -1 e1b16894e -- .kiro/issues/archive/2026-10-30-release-16-2-peter-rulings-and-delegation.md`. **No phase-2 reading changes.**
+
+**The four carried items, re-read at `95ed466d7`**:
+- **The walk record: archived** (`archive/` yes, root no), with its outcome line. Closed.
+- **RL-39: resolved** at `6bce4fa31`. The lapse at S stands as recorded by its owner, and the record is closed and archived.
+- **RL-40, trigger (d): re-ruled, not closed.** It is still at the root. Its Trigger is now `path:.kiro/specs/131-governance-simplification/requirements.md`, by the dated line at L8 ("*Trigger re-ruled 2026-11-04 (Thurgood, owner, rules 9 and 11). The delegate half is met …*"). A `## Lapse (2026-11-04)` heading by the owner is at L47.
+  - I had chosen not to add one. The owner did, which is his right under rule 11 ("whoever observes a lapse … appends"), and I read it as correct on rule 11's text.
+  - RL-40 stays open as routed: the Peter-sample half goes to 131, and 131's outline names the record.
+- **The files grant: closed and archived** (`archive/2026-11-02-release-16-2-files-grant.md` L43, "Outcome (2026-11-04, Thurgood): closed — the grant is spent and expires at this PR's merge"). It is not open at its fixing PR's merge, so there is no walk finding.
+
+**One observation from the re-read** (record form, Low; RL-48, routed to Thurgood):
+- **What happened**: the walk record's eight citation hunks rewrote its own paths to `archive/` in the closing move.
+- **What the README says**: rule 2 ("Files move by `git mv`, content UNCHANGED … the move is the only edit"; rule 5 adds the outcome line) and rule 3 ("historical records … cite `.kiro/issues/<file>` paths as written at their time — those citations are point-in-time and are NOT rewritten when a file archives") read against that.
+- **Nothing breaks**: every rewritten path resolves, and rule 3's resolution rule would have resolved the old ones.
+- **The class question for Spec 131**: whether a closing record may update its own citations, or must not.
+
+**Liveness reading: committed.** Phase 2's reads hold at #636's merge: the tag on S, rail PASS once in order, both registries holding the 5.3 bytes, and npmjs re-read and re-fetched by me. The changed hunks change none of them. The carried items are resolved or routed as stated. **Phase 2: no findings against the release; RL-48 Low, record form.**
+
+*Signed: Stacy, 2026-11-04.*
