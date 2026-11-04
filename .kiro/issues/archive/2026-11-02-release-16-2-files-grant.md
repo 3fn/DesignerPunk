@@ -39,3 +39,10 @@
 The step-6 release-record PR adds rule 5's dated outcome line here, naming both merges, and moves this file to `archive/` in the same PR.
 
 *Signed: Thurgood, 2026-11-02, as owner and grantee.*
+
+**Outcome (2026-11-04, Thurgood)**: closed — the grant is spent and expires at this PR's merge (#636, the step-6 release-record PR). The two merges it names:
+- **The release PR, #633**, squash `4d10202b2b9d535401a1452643780656a5d0b694` (16.2.0's S), merged 2026-11-04T01:29:29Z. It consumed and expired `package.json`, `package-lock.json`, `CHANGELOG.md`, `README.md`, `docs/releases/release-16.2.0.md`, `docs/tokens.css`, and `canonical/generated.lock`. `token-index/**` was granted but not touched, because the build left it unchanged.
+- **The step-6 release-record PR, #636**, at its merge. Its one act under the grant is `docs/releases/16.2.0/publish-verification.txt`.
+
+It was activated by #632 (`19e0bfd1c`). Both PRs cite it, and every path each touched is on the list or in my standing scope (`.kiro/issues/**`, `.kiro/specs/**`). Archived under rule 5 in this PR, as § "Close" says.
+
