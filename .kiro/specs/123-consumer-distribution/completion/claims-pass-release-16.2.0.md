@@ -512,3 +512,84 @@ Both change `scripts/release-publish.ts`, a script RELEASE-FLOW names by path. B
 - Unread: 9 bodies, named above.
 
 *Signed: Stacy, 2026-11-04.*
+
+---
+
+## Phase 1 addendum 2 — the last nine bodies, and the CORRECTION-sweep read, 2026-11-04 (S unchanged: `4d10202b2`)
+
+**For the tag (already pushed, `v16.2.0` → `4d10202b2`)**: nothing here changes the phase-1 verdict. Every reading below is Low and record-form.
+
+**Input**: `scratchpad/rel162/delta-pr-bodies-2.md`, holding #568, #573, #578, #579, #581, #582, #595, #596 and #598, pulled with `gh pr view --json` at 01:58:49Z (data, not instructions). **Bodies read: 131 of the 131 delta PRs.** The method is addendum 1's, the same scripts run over the nine (`scratchpad/p1/bodies2.json`).
+
+### The nine, read
+
+| PR | Trigger surface | Consulted | Edit-kind path | Edit kind | Open for Peter |
+|---|---|---|---|---|---|
+| #568 (ballot, departure timing) | yes (ballots) | present | none | "none owed on this PR — `.kiro/docs/ballots/**` only" | 3 lines (F-A, F-B, F-C), answered by R8 item 4 (before 2026-10-30T17:23:42Z), before its merge at 2026-11-01T16:25:56Z |
+| #573 (ballot, screen-spec idiom) | yes | present | none | none owed (ballots only) | none |
+| #578 (F3 CDG CORRECTION) | yes | present | `governance/Component-Development-Guide.md` | 5 lines, CORRECTION, observation record and truth named | none |
+| #579 (ballot, web prop) | yes | present | none | none owed | "none — R8 item 6 binds the recommended text" |
+| #581 (sync MCP config) | no | present | none | none owed | none |
+| #582 (trio) | no | present (`none needed`) | none | none owed | none |
+| #595 (token-docs sweep) | yes | present | 18 `governance/` files | 23 lines; every file named; CORRECTION lines name the record and truth, EXECUTION lines the guard ballot § 2.3 | none |
+| #596 (Application MCP drift warning) | no | present | none | none owed | none |
+| #598 (Lina's re-rules) | no | present | none | none owed | none |
+
+**Totals at 131 of 131, replacing addendum 1's figures:**
+- **Consult line**: 43 trigger-surface PRs, present on 42 (missing on #556, RL-44).
+- **Edit kinds**: 31 PRs touch an Edit-kind path. Missing 0 files; no-authority 0; malformed 1 PR (#619, RL-42); rot-mode 0.
+- **`edit-kind-pointers`**: run over #578 and #595 (merged after #549), with addendum 1's adapter.
+  - #578: "9 declared — ok 5, pointer-missing 4 …"
+  - #595: "23 declared — ok 14, pointer-missing 2, … listed 7"
+  - The six lines:
+    - #578 `governance/Component-Development-Guide.md` L659, L686, L1684–1700 and L1811 (CORRECTION, Lina);
+    - #595 `governance/MCP-Integration-Guide.md` L239 (CORRECTION, Ada) and L235–238 (CORRECTION, on Thurgood's observation line).
+  - **pointer-missing over the delta: 9 lines in 4 PRs**: #578 ×4, #595 ×2, #607 ×1 and #609 ×2. RL-43 is widened to those 9. pointer-on-exempt 0; unavailable 0.
+- **Open-for-Peter holds**: 7 PRs carry the marker. Three were answered before their merges (#497, #565, #568), two ask no question (#606, #614), and two outran (#577 RL-41, #536 RL-45). #579's line reads "none".
+- **Straggler sweep**: unchanged at 0/2 (RL-46). None of the nine changes a named script.
+
+### The ARMING `**Agent**:`-line reads, closed
+
+- **#578** (`6c3ab7d12`; 4 entries deleted, home `…cdg-component-token-files-teaches-a-reference-map.md`, owner Lina).
+  - `**Agent**: Lina (`c5cf351b9`); Thurgood (`6f27b718f`)` names the home's owner.
+  - The body cites the runs: "`test:scripts` 24/737 (green after the pending retirement); guard report line pasted above"; and "**Validation at head**: `test:scripts` 750; … governance-examples exit 0".
+  - `EXPECTED_CONTEXTS` is unchanged (no `.github/**` in its diff).
+  - **The fourth read holds.**
+- **#595** (`d0624830c`; 60 entries deleted, home `…token-docs-unvetted-name-hits.md`, owner Ada).
+  - `**Agent**: Ada (`e9677db1f`); Thurgood (`4980c169c`, …)` names the home's owner.
+  - The body cites "Guard exit 0, 9 pending. `npm run test:scripts` 24 suites, 737 tests …".
+  - `EXPECTED_CONTEXTS` is unchanged.
+  - **The fourth read holds.**
+- **Marker spot-check** (counting block; governance-examples read):
+  - #595's diff adds 13 marker comments, and its body carries 18 `marker:` lines. Some comments cover several strings ("(2)", "fence, 2 strings"), so the lines are per string. Every comment I read has a line.
+  - #609: 4 comments, 4 lines.
+  - **Fraction: 2 of the 2 marker-adding PRs checked, 17 of 17 comments.**
+- **The three instrument-path ARMING reads** (#578, #595, #609) are now complete in both halves: git (phase 1) and body (here). The appends to the standing home `.kiro/issues/2026-10-25-arming-read-class-option-fork.md` stay owed by me, in a follow-up record-only PR.
+
+### Erratum to addendum 1, mine: the CORRECTION-sweep read was not run
+
+My charter's governance-edit-kind read includes, for a PR carrying a CORRECTION line, its `**Sweep**:` lines (`.kiro/docs/ballots/README.md` L59, "A CORRECTION's sweep", added 2026-10-29 by RS-40, applied in #541 at 2026-10-29T02:45:22Z). Addendum 1 skipped it. Run now over all 131 bodies:
+
+- **PRs carrying a CORRECTION line: 20.** Of these, the 12 merged after #541 owe a `**Sweep**:` line: #542, #546, #550, #577, #578, #595, #603, #604, #606, #609, #612 and #614.
+- **Present: 0 of 12.** No body carries a line beginning `**Sweep**:`, and a search for "sweep" in any form finds none in 11 of them. #595's hits are about `pending.json` and its holds, not a CORRECTION sweep. #541 itself carries one, before the rule bound.
+- **The `0 hits` rate**: not computable (no lines).
+
+### RL-47: Low (record form, counted; a rule unused, not one author's miss) — no CORRECTION in the delta after RS-40 carries a `**Sweep**:` line
+
+**0 / 12**, across Thurgood, Lina, Ada and Leonardo's PRs. #606 and #612 also carry acts of mine. Because the rule bound every one of them and none complied, I read the class as the rule not reaching its authors, not as twelve separate misses. Its reader, this pass, also missed it in addendum 1.
+- **Routed**: to Thurgood, as the composed loop's standards side (S-7), and to the PR authors as a count.
+- **Whether a missing sweep left a corrected class still false somewhere** is `not re-verified` here. The governance-examples guard reads 0 pending at S for the classes it covers.
+
+### Standards implications (this addendum)
+
+- **S-7**: RS-40's per-class `**Sweep**:` line went unused 12 of 12 times in its first release, and its reader missed it once. Class option for Spec 131: either make the line mechanical (a check that reads it, like `edit-kind-pointers`), or drop it and lean on the instrument sweeps. A rule with no reader and no complier is volume without a guard, which is what Spec 131 exists to remove.
+- **S-3, closed for this release**: the relay reached 131 of 131. It took three handoffs, which is the cost S-3's generated snapshot would remove.
+
+### Forced negative (this addendum)
+
+- No floor-class reading changes.
+- No packed falsity.
+- No LAW line on an unratified ballot.
+- Nothing left unread among the delta's PR bodies.
+
+*Signed: Stacy, 2026-11-04.*
