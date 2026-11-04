@@ -595,3 +595,133 @@ My charter's governance-edit-kind read includes, for a PR carrying a CORRECTION 
 *Signed: Stacy, 2026-11-04.*
 
 *Erratum to addendum 2, mine (2026-11-04)*: its totals line "Consult line: 43 trigger-surface PRs, present on 42" miscounts. Addendum 1's 37 trigger-surface PRs, plus the 5 among the nine (#568, #573, #578, #579, #595), make **42**, with the line **present on 41**, missing only on #556. The commit message of `b22d77266` carries the same miscount ("consult 42/43"). No other figure moves.
+
+---
+
+## Phase 2 — 2026-11-04 (drafted against the open step-6 PR #636)
+
+**Liveness reading: `read, not committed`.** It becomes a committed reading only with the merge-confirmation line at #636's merge, below.
+
+**Trigger**: the merge of the step-6 release-record PR, #636 (`records/16.2.0-post-S`). It is drafted against that PR while open, as RELEASE-FLOW step 6 allows. Every file this phase read was read at **`6795a28cfbce9eb2a34de00378cef7a39b7d0184`** (`origin/records/16.2.0-post-S`, fetched 2026-11-04T02:12Z), by `git show 6795a28cf:<path>`, never from a worktree.
+
+**The read-SHA list** (every path this phase read from #636, for the merge-confirmation line):
+- `docs/releases/16.2.0/publish-verification.txt` @ `6795a28cf`
+- `.kiro/issues/2026-10-29-release-16.2.0-walk.md` @ `6795a28cf` (its § "At S (2026-11-04)")
+- `.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md` @ `6795a28cf` (its § "R12")
+
+#636's other two files (the 131 baseline evidence and the 131 root-count inbound) were **not read** by this phase.
+
+### The tag
+
+`v16.2.0` is an annotated tag:
+- object `a29d58472422e603d247f847246d26fb32fc0114` → commit `4d10202b2b9d535401a1452643780656a5d0b694`, which is **S**, unmoved since phase 1;
+- tagger Peter Michaels Allen, `1793757128 -0500`, which is 2026-11-04T01:52:08Z (`git cat-file tag v16.2.0`, converted);
+- it equals the `.txt`'s L5 ("tagger time 2026-11-04T01:52:08Z … pushed 2026-11-04T01:52:09Z").
+
+### 6a — the rail
+
+- **Rail run 1, 2026-11-04T02:03:32Z, main checkout: "PASS: @3fn/core@16.2.0 visible on npmjs; tarball host verified", `exit=0`** (`.txt` L77–L80). It was the first and only run: the "every run is pasted" practice (L7) lists no other.
+- **It ran after the registry recorded the version.** The rail is ordered after npmjs `time["16.2.0"]` exists (RELEASE-FLOW step 6). L74 has it null at 02:01:08Z, valued 2026-11-04T02:02:58.632Z, and first seen by the orchestrator's poll at 02:03:25Z. The rail followed at 02:03:32Z.
+- **Cross-check**: this agrees with the orchestrator's independent facts (rail PASS exit 0 at 02:03:32Z, first and only).
+
+### 6b — the two-registry record, against the publish script's recorded sha1
+
+- **The comparand**: the 5.3 record, pasted verbatim at L18–L35, has `sha1` `6f8210a604e7b72d293e60a74a6a292b9eda7a2a`, `fileCount` 1701, `bytes` 6630699, `checks` 105/105, `publishedTo` `https://npm.pkg.github.com`, `createdAt` 2026-11-04T01:59:00.114Z, `commit` S.
+  - It is **byte-equal as JSON** to the file the orchestrator kept, `scratchpad/rel162/release-publish-record-5.3.json` (parsed and compared: equal).
+- **The capture**: the `.txt`'s 6b run section (L84–L125) **equals the raw runner output**, `scratchpad/rel162/step6-output.txt` (`diff` empty after shortening the scratchpad path prefix the `.txt` elides as `…/scratchpad`).
+
+| Registry | `time["16.2.0"]` | file count | `dist.shasum` | fetched-bytes sha1 | equals 5.3 sha1 |
+|---|---|---|---|---|---|
+| registry.npmjs.org | 2026-11-04T02:02:58.632Z (L94) | 1701 (`dist.fileCount`, L96; 1701 in the fetched tarball, L113) | `6f8210a6…7a2a` (L95) | `6f8210a6…7a2a` (L111) | **yes** |
+| npm.pkg.github.com | 2026-11-04T01:59:02Z (L102) | 1701 in the fetched tarball (L123) | `6f8210a6…7a2a` (L102) | `6f8210a6…7a2a` (L121) | **yes** |
+
+- **Thurgood's local re-read** (L127–L132): all three files are 6630699 bytes and 1701 files, and `cmp` reports them identical.
+- **The five-row comparand table** (L140–L148) reads "yes" in every row, and "No mismatch: no release incident".
+- **Against the published bytes, my own read** (not in #636). At 2026-11-04T02:12:06Z, `registry.npmjs.org/@3fn%2fcore` gives `dist-tags.latest` `16.2.0`, `time["16.2.0"]` `2026-11-04T02:02:58.632Z`, `dist.shasum` `6f8210a604e7b72d293e60a74a6a292b9eda7a2a` and `dist.fileCount` 1701. At 02:12:34Z, `npm pack @3fn/core@16.2.0 --registry https://registry.npmjs.org` in a fresh scratch directory (`scratchpad/p2/pack`) gives a tarball with:
+  - sha1 `6f8210a604e7b72d293e60a74a6a292b9eda7a2a`;
+  - 6630699 bytes;
+  - 1701 entries (`tar -tzf | wc -l`);
+  - `package/package.json` version `16.2.0`.
+  - **This equals the 5.3 record**, and so the `.txt`.
+- **GitHub Packages was not read by me** (`not re-verified — this seat holds no GitHub Packages credentials`). Its two cells rest on the orchestrator's capture, which equals the raw output above.
+- **5.1 against 5.3** (L69): 5.1's `29bd97c7…` (6630698 bytes) differs from 5.3's `6f8210a6…` (6630699) by design. 5.3 rebuilds in a fresh clone at the tag, and only 5.3's tarball is published. Phase 1 read 5.1. Phase 2 reads 5.3, and both registries hold 5.3's bytes.
+- **5.3's first attempt** (L67): refused at the `npm whoami` preflight, with nothing built or published (RS-31's two-login check working as designed). One later run published.
+
+### The cold-install smoke
+
+Not in #636's record. **Run by this pass**, 2026-11-04T02:12:43Z–02:12:46Z, in a fresh scratch directory (`scratchpad/p2/smoke`):
+- `npm init -y && npm install @3fn/core@16.2.0 --registry https://registry.npmjs.org` → exit 0, "added 123 packages";
+- `require('@3fn/core/package.json').version` → `16.2.0`;
+- `node_modules/.bin/designerpunk` present;
+- `npx --no-install designerpunk --help` → exit 0, "DesignerPunk Pipeline CLI".
+
+This reaches install and the bin only. It runs no `init`, `sync` or `generate`; the trio is the onboarding evidence (phase 1).
+
+### Carried items, read at `6795a28cf`
+
+- **The walk record**: § "At S (2026-11-04)" is appended. It states both criterion-4 figures, as phase 1 does (140 → 130 met on the adopted reading; 119 → 130 stated as unmet), under R12. **Its archive move is not in #636 at the read SHA.** The `.txt`'s L155 says it archives after #637 merges, and the orchestrator says Thurgood is adding it. Re-read at the merge-confirmation line.
+- **The rulings record**: § "R12" is appended, carrying Peter's criterion-4 words ("Let's go with the recommendation and provide an inbound to 131 …", received before 2026-11-04T01:44:28Z). **Its rule-5 outcome line (RL-39) is not in #636 at the read SHA.** Re-read at the confirmation line.
+- **Trigger (d)'s close (RL-40)**: not in #636 at the read SHA (`2026-10-26-signing-chain-delegate-audit-not-run-trigger-d.md` is unchanged in #636's diff).
+- **The files grant**: the `.txt`'s L157 says it "is closed and archived in that PR". **Not in #636 at the read SHA.** Re-read at the confirmation line; an open grant at its fixing PR's merge is a walk finding (README rule 11).
+- **Step 7**, the GitHub release: owed after this phase, never before (RELEASE-FLOW step 7). At this writing no release exists that I read (not checked by `gh`; no credentials).
+
+### Findings (phase 2)
+
+**None.** Every comparand equals the 5.3 record. The rail passed once, in order after the registry's own time. The tag is on S. The four open carried items above are owed by #636's final head and are re-read at its merge, not findings yet.
+
+### Forced negative (phase 2)
+
+- **No sha1 mismatch, no file-count mismatch, no out-of-order rail run.**
+- **Not read by me**: GitHub Packages (credentials) and the two 131 files in #636.
+- **Not yet read**: #636's final head. The liveness reading stays `read, not committed` until the confirmation line.
+
+*Merge-confirmation line: to be appended at #636's merge (`git diff --quiet 6795a28cf <merge-sha> -- <each path in the read-SHA list>`).*
+
+*Signed: Stacy, 2026-11-04.*
+
+### Merge-confirmation line (RELEASE-FLOW step 6, A6 / RS-9) — 2026-11-04
+
+**#636 merged at 2026-11-04T02:23:16Z, squash `95ed466d74b34a1f28f834b35a4e816c06741a22`.** The squash's tree equals the PR's final head `e1b16894e` (`git diff --quiet e1b16894e 95ed466d7`, exit 0).
+
+After my read at `6795a28cf`, #636 gained four commits (`git log 6795a28cf..e1b16894e`):
+- `f6afdf627`, the merge of main `e19698406`;
+- `d491ebb7e`, the walk record closed and archived;
+- `6bce4fa31`, the rulings record's Lapse at S, its outcome and its archive;
+- `e1b16894e`, the files grant closed and archived, and trigger (d) re-ruled.
+
+**The three read paths**:
+- `git diff --quiet 6795a28cf 95ed466d7 -- docs/releases/16.2.0/publish-verification.txt` → **exit 1 (changed)**.
+- The walk record moved to `archive/`, so I diffed the root path at the read SHA against the archive path at the merge: `git diff --quiet 6795a28cf:.kiro/issues/2026-10-29-release-16.2.0-walk.md 95ed466d7:.kiro/issues/archive/2026-10-29-release-16.2.0-walk.md` → **exit 1 (changed)**.
+- The rulings record also moved, so the same form: `git diff --quiet 6795a28cf:.kiro/issues/2026-10-30-release-16-2-peter-rulings-and-delegation.md 95ed466d7:.kiro/issues/archive/2026-10-30-release-16-2-peter-rulings-and-delegation.md` → **exit 1 (changed)**.
+
+**Every changed hunk, re-read**:
+- **`publish-verification.txt`, 3 hunks.**
+  - L6: the grant pointer now reads `.kiro/issues/archive/2026-11-02-release-16-2-files-grant.md`.
+  - L155: the walk record "is closed and archived in this PR … after Stacy's phase-1 record merged (#637, `c1a5d1521` …)".
+  - L157: the grant "expires at this PR's merge … closed and archived in this PR".
+  - None touches the tag, 5.3, 5.4, 6a or 6b lines. **No phase-2 reading changes**: rail PASS once, 02:03:32Z, exit 0; all four sha1s `6f8210a6…7a2a`; 1701 files; times as tabled.
+- **The walk record, 9 hunks.**
+  - Eight re-point its own citations of the rulings record, the walk record and the files grant from `.kiro/issues/<file>` to `.kiro/issues/archive/<file>`. These are L5, L15, L61, L213, L327, L425, L557 and L583 at the read SHA.
+  - One adds the rule-5 outcome line ("closed — its Trigger, `release:16.2.0:phase-1`, fired at Stacy's RELEASE phase-1 record … #637, squash `c1a5d1521…`").
+  - Its § "At S" figures are unchanged (root 130; 140 → 130 met on the adopted reading; 119 → 130 stated as unmet). **No phase-2 reading changes.**
+- **The rulings record, 1 hunk** (appended at the end): `## Lapse (2026-11-04)` naming firing commit `4d10202b2` (first lapse, `(record)`, no escalation), then "**Outcome (2026-11-04, Thurgood)**: closed … **RL-39 is resolved** by the commit that adds this line". The commit is `6bce4fa31`, by `git log -1 e1b16894e -- .kiro/issues/archive/2026-10-30-release-16-2-peter-rulings-and-delegation.md`. **No phase-2 reading changes.**
+
+**The four carried items, re-read at `95ed466d7`**:
+- **The walk record: archived** (`archive/` yes, root no), with its outcome line. Closed.
+- **RL-39: resolved** at `6bce4fa31`. The lapse at S stands as recorded by its owner, and the record is closed and archived.
+- **RL-40, trigger (d): re-ruled, not closed.** It is still at the root. Its Trigger is now `path:.kiro/specs/131-governance-simplification/requirements.md`, by the dated line at L8 ("*Trigger re-ruled 2026-11-04 (Thurgood, owner, rules 9 and 11). The delegate half is met …*"). A `## Lapse (2026-11-04)` heading by the owner is at L47.
+  - I had chosen not to add one. The owner did, which is his right under rule 11 ("whoever observes a lapse … appends"), and I read it as correct on rule 11's text.
+  - RL-40 stays open as routed: the Peter-sample half goes to 131, and 131's outline names the record.
+- **The files grant: closed and archived** (`archive/2026-11-02-release-16-2-files-grant.md` L43, "Outcome (2026-11-04, Thurgood): closed — the grant is spent and expires at this PR's merge"). It is not open at its fixing PR's merge, so there is no walk finding.
+
+**One observation from the re-read** (record form, Low; RL-48, routed to Thurgood):
+- **What happened**: the walk record's eight citation hunks rewrote its own paths to `archive/` in the closing move.
+- **What the README says**: rule 2 ("Files move by `git mv`, content UNCHANGED … the move is the only edit"; rule 5 adds the outcome line) and rule 3 ("historical records … cite `.kiro/issues/<file>` paths as written at their time — those citations are point-in-time and are NOT rewritten when a file archives") read against that.
+- **Nothing breaks**: every rewritten path resolves, and rule 3's resolution rule would have resolved the old ones.
+- **The class question for Spec 131**: whether a closing record may update its own citations, or must not.
+
+**Liveness reading: committed.** Phase 2's reads hold at #636's merge: the tag on S, rail PASS once in order, both registries holding the 5.3 bytes, and npmjs re-read and re-fetched by me. The changed hunks change none of them. The carried items are resolved or routed as stated. **Phase 2: no findings against the release; RL-48 Low, record form.**
+
+*Signed: Stacy, 2026-11-04.*
+
+*Erratum to the merge-confirmation line, mine (2026-11-04)*: the walk record's first re-pointed citation is at **L8** at the read SHA, not L5. The `-U0` hunk heads are `-8 -15 -61 -213 -327 -425 -557 -583`, plus the outcome lines added after L632. No reading moves.
