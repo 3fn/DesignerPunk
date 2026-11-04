@@ -384,6 +384,23 @@ Cite R10 as `R10@<the squash of the PR that added it>`.
 
 Cite R11 as `R11@<the squash of the PR that added it>`, with the line number, e.g. `R11@<sha> line 2`. *(Added 2026-11-01, Thurgood, owner.)* Lines 1–13, with line 10's first sub-item, merged in #605 at `5f22a8819532a1603b21ae8cde4753b7851597e8`: cite them as `R11@5f22a8819532a1603b21ae8cde4753b7851597e8 line <N>`. Line 10's second sub-item and lines 14–17 merged in #615 at `25bd478ddb4aca1c77da9eada750f601374fc62a`: cite them as `R11@25bd478ddb4aca1c77da9eada750f601374fc62a line <N>`. Line 18 arrives in a later PR. Cite it by that PR's squash.
 
+### R12 — criterion 4's reading at S, and an inbound to Spec 131 (before 2026-11-04T01:44:28Z)
+
+*(Appended 2026-11-04, Thurgood, owner, rule 9, after S `4d10202b2`. The name R12 was used earlier only for a proposed P3-list PR, which fork D made unnecessary (R11 line 16). No ruling carried that name.)*
+
+- *Put to him*: the at-S baseline puts two readings of criterion 4 side by side.
+  - **The cleanup reading**, which the brief uses (L155: "The root count at S is below the count at the walk's start"): 140 at the walk's start (`2c00cea49`) → 130 at S (`4d10202b2`). Met.
+  - **The release-to-release reading** of his R9 words (L119: "root records go down across 16.2.0, not up"): 119 at 16.1.0's S (`38f4ece47`) → 130 at 16.2.0's S. +11, so unmet.
+  - The recommendation: read criterion 4 as the cleanup measure, which is met; state the release-to-release figure beside it as unmet; do not hold the tag. The class option: Spec 131 defines the measure (its window and what counts) before the next release starts, so that a done-criterion is never read two ways at its end.
+- *His word*, chat, relayed by the orchestrator, received before 2026-11-04T01:44:28Z (the orchestrator's `date -u` at receipt): "Let's go with the recommendation and provide an inbound to 131 for what it needs to know."
+- *What it rules*:
+  - Criterion 4 is read as the cleanup measure: 140 → 130, met. The release-to-release figure, 119 → 130 (+11), is stated beside it as unmet, in the walk record and in Stacy's phase-1 record.
+  - Nothing holds the tag on criterion 4.
+  - An inbound to Spec 131 is owed and is filed: `.kiro/specs/131-governance-simplification/inbound-from-2026-11-04-release-16.2.0-root-count-measure.md`. It asks 131 to define the measure before the next release starts.
+- *Consulted*: Thurgood raised it from the baseline figures (`.kiro/specs/131-governance-simplification/evidence/2026-11-04-baseline-16.2.0.md`); Stacy records both figures in phase 1.
+
+Cite R12 as `R12@<the squash of the PR that added it>`.
+
 ## Delegation
 
 **The words**: R7's second sentence, above.
