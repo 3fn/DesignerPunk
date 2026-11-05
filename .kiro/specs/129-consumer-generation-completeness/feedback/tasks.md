@@ -1074,3 +1074,27 @@ Received 2026-11-05T23:42:17Z (`date -u` at receipt; orchestrator relay), verbat
   - Kenya's condition is condition 5. An iOS context is offered only after both Android contexts are promoted, and only once three cold runs record their macOS queue time in the computed stability record. If any of those runs' queue time plus its duration exceeds the 10-minute ceiling, the queue time is poor, and that context becomes a promote-at-closeout offer instead.
 - **"Poor" is my reading, for Kenya to confirm at U1.** It reuses 125-A Req 6.3's ceiling rather than a new number, so Peter's ruling sets no threshold of mine. If Kenya wants a different bound, it changes before U1 merges, with a dated line.
 - **#678 now asks Peter nothing.** Its `**Open for Peter**:` line is replaced by one that cites this answer.
+
+#### [KENYA D6 R2] — the "poor" bound for the iOS offer
+
+[KENYA D6 R2] 2026-11-05T23:45Z: **I confirm the bound**: queue time plus job duration at most 10 minutes on each of the three runs. If any of the three runs is over, that context becomes a promote-at-closeout offer.
+
+I ask for two clarifications to condition 5, so the bound measures what I meant:
+
+1. **Measure the iOS job alone.** Count the time from the iOS context's job being created to that job finishing. Do not count `harness-generate`'s time. It runs on ubuntu, it is shared with Android, and it is already measured there.
+2. **Define a "cold" run for iOS.** The iOS jobs have no dependency cache: `swiftc` resolves no package. So the "cache-restore step reports a miss" test in condition 3 never applies to them, and as written an iOS context could never collect three cold runs.
+   - **Wording I propose**: "for an iOS context, every run counts as cold; the three are the first three runs recorded at the current Xcode pin".
+   - Those three runs also supply the queue times that condition 5 reads.
+
+#### [THURGOOD D6 R2]
+
+Both of Kenya's clarifications are folded into tasks.md § "Decision 6". Condition 3 says what "cold" means for an iOS context: every run, and the three are the first three runs at the current Xcode pin. Condition 5 measures the iOS job alone, from creation to finish, and leaves out `harness-generate`. Both clarify the condition Peter ruled; neither is a new choice. The 10-minute bound is confirmed.
+
+#### [THURGOOD R2, dated addendum 2026-11-05] The preconditions and the distribution charter
+
+- **The distribution charter's Trigger, surfaced as open in `[THURGOOD R2]`, is settled.** Stacy ruled Data's form. Kenya accepted it and withdrew her `release:next:phase-1` form for the period before 129 closes. Data re-ruled the Trigger to `path:.kiro/specs/129-consumer-generation-completeness/completion/claims-pass.md`, switching to `release:next:phase-1` at 129's close, in #684 (`19c1dea43`, on `main`). It did not reach Peter. → tasks.md § "Unit preconditions", whose row now carries a dated line.
+- **All three merge preconditions are on `main`**:
+  - #681 (`3b644b6c6`): the harness charter, re-ruled to `task-5-completion.md` by Kenya, with Data agreeing.
+  - #682 (`05ba771f2`): Ada's 15 re-rules.
+  - #683 (`657078b52`): Lina's 4 re-rules, her C6 re-rule to `manual`, and the Spec 123 Req 1.5 pointer.
+  - #680 (`000e27d91`) was already merged. → tasks.md § "Merge preconditions", dated notes.
