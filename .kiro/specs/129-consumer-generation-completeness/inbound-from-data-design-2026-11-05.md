@@ -269,6 +269,18 @@ Today's table is `getKotlinType` in `src/providers/AndroidFormatGenerator.ts` L1
 
 **Does any 129 decision depend on the emulator probe? No.** The probe decides 132's render lane and runner class. Nothing in 129 runs an app.
 
+**Ruled (2026-11-05, Peter; recorded by Data).** Peter answered decision 5 on #666. His words, verbatim, received 2026-11-05T05:54:32Z (`date -u` at receipt; orchestrator relay): "Re: 5, 26". He had read the three options above (API 23, 24, 26), my lean ("API 26, with the rule 'the higher of your number and Compose's floor'"), and what survives (it drops Android 6 and 7; Compose keeps raising its floor).
+
+So:
+- **The Android minimum is API 26 (Android 8.0).**
+- **The rule:** the effective `minSdk` is the higher of 26 and the pinned Compose floor (23 today), so it is 26 for now.
+- **What this moves in 129:**
+  - § 1.5's `minSdk` harness pin becomes 26;
+  - `InputCheckboxLegal.android.kt` L242's `java.time` call needs no guard (Lina);
+  - `ConfigHelpers`' default (24) and validation floor (21) come into line (Ada's call, design or tasks).
+- **Not decided by this answer:** the toolchain range numbers. They come from Spec 132's D4 builds at both ends, as above.
+- **Owed in the design PR:** Core Goals' "Android: Not yet constrained" line (`.kiro/steering/core-goals.md`, § "Platform Minimum Versions") is updated to say API 26 and cite this ruling. It is a steering edit, so Peter merges it. I have not edited it.
+
 ---
 
 ## 7. Interface to other owners
