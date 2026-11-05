@@ -367,7 +367,7 @@ Use your platform's references. Don't assume patterns from sibling platforms app
 - Haptic feedback via HapticFeedbackType where specified
 - TalkBack accessibility via Compose Semantics
 - Animation via Compose Animatable and animateXAsState
-- Android minimum version per Core Goals (not yet constrained)
+- Android minimum version per Core Goals
 
 ### Android Skills (Official Google Patterns)
 
