@@ -82,3 +82,11 @@ The access-control pass in the iOS shape above is sized by this list of 20 main 
 `VerticalListButtonItem`, `NavSegmentedChoiceBase`, `NavTabBarBase`.
 
 Android has no twin of this list: all 34 main component composables are public (`data-plan-r2.md`, VERIFIED by grep). Signed Kenya, 2026-11-05.
+
+**Superseded line (appended 2026-11-05, Data, record-only).**
+- L30's parenthetical "Core Goals: Android is unconstrained today" is superseded by ballot `.kiro/docs/ballots/2026-11-05-core-goals-android-minimum.md` (RATIFIED, Peter, 2026-11-05, #673, F-1 (iii)). Core Goals now reads `- Android: API 26 (Android 8.0)+`, applied in #676.
+- L30's "a `minSdk` decision" is therefore made: the minimum is API 26 (Peter, "Re: 5, 26", 2026-11-05T05:54:32Z). The shape still needs the rest of that list.
+- L30 stays as written: it is the record of the 2026-09-26 shape.
+- The same holds for the harness charter's dated 2026-10-20 evaluation entry (`.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md` L180): its "Core Goals says 'Android: Not yet constrained'" and its provisional host `minSdk = 24` are a ledger, kept inline. The harness pin is now 26 (Spec 129 `design.md` § 0 and § 2).
+
+Signed Data, 2026-11-05.
