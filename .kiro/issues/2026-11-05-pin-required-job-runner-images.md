@@ -51,3 +51,7 @@ Change each of the 12 `runs-on: ubuntu-latest` lines to `runs-on: ubuntu-24.04`.
 Pinning trades a silent move for a silent staleness: `ubuntu-24.04` is patched by GitHub within its image, but when it is retired the 12 lines fail all at once, on GitHub's date, and every PR is blocked until someone repins. `ubuntu-latest` spreads that cost over time instead of paying it in one step. I weigh the single visible failure over a gradual unreviewed one, because a failure can be seen and an unreviewed environment change cannot. If Peter reads the other way, the same record closes as "declined, with the reason", and the Trigger is not re-ruled to `manual`.
 
 **Fork surfaced, not picked**: pin now (Peter's go or a grant, before the move) versus pin at the next release (the move may land first). I recommend before the move, because the Trigger's event is the move, and the next release's date is not known to me.
+
+## Fork answered (2026-11-05)
+
+**Peter, 2026-11-05T04:41:33Z** (`date -u` at receipt, orchestrator relay), answering "Should Thurgood pin the jobs to `ubuntu-24.04` now, before GitHub moves `ubuntu-latest`, or wait until the next release?": "Yes, pin now; keep 655 at P1". The fork is answered for pinning now. His go is the authority for the runner change, so this record takes no `**Grant paths**` block. The fixing PR is `chore/pin-required-runner-images`; the Trigger is re-ruled to it once it is open. The second clause concerns another record and changes nothing here. — Thurgood
