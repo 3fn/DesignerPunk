@@ -87,6 +87,14 @@ function assertResult<T = Record<string, unknown>>(raw: unknown): T {
  *   change; the key-set guard fires because it is doing its job.
  *   @see .kiro/issues/2026-09-12-mcp-token-details-dark-value-stale.md
  *   @see TokenIndexer.ts § ThemeResolutions (contract + null semantics)
+ * 2026-11-05 — ADDED the CONDITIONAL key `platformNotes` (TOKEN_CONDITIONAL_PLATFORM_NOTES_KEY
+ *   below), on the primitive and semantic branches. Why: the token index's `platforms.<platform>`
+ *   is now one name, a list of names (a composite written as several definitions), or `null`
+ *   (no name on that platform), and an entry with a `null` carries the reason in `platformNotes`
+ *   (token-index/README.md § "Platform names"). `get_token_details` passes the entry through, so it
+ *   serves both. The exact sets above stay the shape of an entry with no `null`; an entry with one
+ *   adds exactly `platformNotes`. Asserted in "platform names — list, null and platformNotes".
+ *   @see .kiro/issues/2026-10-26-token-index-platform-name-readers.md (item 2)
  */
 const TOKEN_PRIMITIVE_EXACT_KEYS = new Set([
   // TokenIndexEntry — identity + value
@@ -127,6 +135,12 @@ const TOKEN_SEMANTIC_EXACT_KEYS = new Set([
   'themeResolutions',
   // NOTE: `value` is intentionally absent — P2 / Req 2.4
 ]);
+
+/**
+ * CONDITIONAL key on the primitive and semantic branches (2026-11-05, see RE-BASELINE LOG): present
+ * when, and only when, at least one of the entry's platform names is `null`.
+ */
+const TOKEN_CONDITIONAL_PLATFORM_NOTES_KEY = 'platformNotes';
 
 /**
  * EXACT KEY SET for `get_token_details` — component-token branch.
@@ -259,6 +273,14 @@ function buildPinnedTokenFixtures(dir: string): void {
         formula: 'systematic teal',
         platforms: { web: '--prim-color-teal', ios: 'primColorTeal', android: 'prim_color_teal' },
       },
+      // NULL on every platform, reason in platformNotes (the live shadow-colour primitives' shape)
+      'prim.color.unemitted': {
+        family: 'color',
+        value: { light: { base: 'rgba(0,0,0,1)', wcag: 'rgba(0,0,0,1)' }, dark: { base: 'rgba(0,0,0,1)', wcag: 'rgba(0,0,0,1)' } },
+        formula: 'not emitted',
+        platforms: { web: null, ios: null, android: null },
+        platformNotes: { web: 'Not emitted on web', ios: 'Not emitted on iOS', android: 'Not emitted on Android' },
+      },
     },
   };
 
@@ -292,6 +314,27 @@ function buildPinnedTokenFixtures(dir: string): void {
         // no primitiveReferences key — resolver sees null → returns { value: name, depth: 'partial' }
         themeVarying: false,
         platforms: { web: '--sem-noref', ios: 'semNoref', android: 'sem_noref' },
+        consumers: [],
+      },
+      // NULL on one platform, reason in platformNotes (the live zIndex.* shape on Android)
+      'sem.layer.nav': {
+        category: 'layering',
+        primitiveReferences: null,
+        themeVarying: false,
+        platforms: { web: '--sem-layer-nav', ios: 'semLayerNav', android: null },
+        platformNotes: { android: 'Use elevation tokens instead' },
+        consumers: [],
+      },
+      // LISTS: a composite written as several definitions (the live semantic motion shape)
+      'sem.motion.float': {
+        category: 'motion',
+        primitiveReferences: { duration: 'prim.space.100', easing: 'prim.space.100' },
+        themeVarying: false,
+        platforms: {
+          web: ['--sem-motion-float-duration', '--sem-motion-float-easing'],
+          ios: ['SemMotionFloat.duration', 'SemMotionFloat.easing'],
+          android: ['SemMotionFloat.duration', 'SemMotionFloat.easing'],
+        },
         consumers: [],
       },
     },
@@ -578,6 +621,65 @@ describe('get_token_details — tool-boundary contract', () => {
 
     it('P2: no `value` key', () => {
       expect('value' in result).toBe(false);
+    });
+  });
+
+  // -------------------------------------------------------------------------
+  // Platform names — list, null and platformNotes (2026-11-05 re-baseline)
+  // token-index/README.md § "Platform names"; record 2026-10-26-token-index-platform-name-readers.md item 2
+  // -------------------------------------------------------------------------
+  describe('platform names — list, null and platformNotes', () => {
+    const keyDiff = (result: Record<string, unknown>, expected: Set<string>) => {
+      const actual = new Set(Object.keys(result));
+      return {
+        unexpected: [...actual].filter(k => !expected.has(k)),
+        missing: [...expected].filter(k => !actual.has(k)),
+      };
+    };
+
+    it('a primitive with no name on any platform serves `null` names and its platformNotes', async () => {
+      const result = assertResult(await pinnedServer.callTool('get_token_details', { name: 'prim.color.unemitted' }));
+      expect(result.platforms).toEqual({ web: null, ios: null, android: null });
+      expect(result.platformNotes).toEqual({ web: 'Not emitted on web', ios: 'Not emitted on iOS', android: 'Not emitted on Android' });
+      const { unexpected, missing } = keyDiff(result, new Set([...TOKEN_PRIMITIVE_EXACT_KEYS, TOKEN_CONDITIONAL_PLATFORM_NOTES_KEY]));
+      expect(unexpected).toEqual([]);
+      expect(missing).toEqual([]);
+    });
+
+    it('a semantic with no name on one platform serves that `null` and adds exactly platformNotes', async () => {
+      const result = assertResult(await pinnedServer.callTool('get_token_details', { name: 'sem.layer.nav' }));
+      expect(result.platforms).toEqual({ web: '--sem-layer-nav', ios: 'semLayerNav', android: null });
+      expect(result.platformNotes).toEqual({ android: 'Use elevation tokens instead' });
+      const { unexpected, missing } = keyDiff(result, new Set([...TOKEN_SEMANTIC_EXACT_KEYS, TOKEN_CONDITIONAL_PLATFORM_NOTES_KEY]));
+      expect(unexpected).toEqual([]);
+      expect(missing).toEqual([]);
+    });
+
+    it('a composite serves its names as lists, and carries no platformNotes', async () => {
+      const result = assertResult(await pinnedServer.callTool('get_token_details', { name: 'sem.motion.float' }));
+      const platforms = result.platforms as Record<string, unknown>;
+      expect(platforms.web).toEqual(['--sem-motion-float-duration', '--sem-motion-float-easing']);
+      expect(platforms.ios).toEqual(['SemMotionFloat.duration', 'SemMotionFloat.easing']);
+      expect(platforms.android).toEqual(['SemMotionFloat.duration', 'SemMotionFloat.easing']);
+      const { unexpected, missing } = keyDiff(result, TOKEN_SEMANTIC_EXACT_KEYS);
+      expect(unexpected).toEqual([]);
+      expect(missing).toEqual([]);
+    });
+
+    it('an entry whose names are all strings carries no platformNotes', async () => {
+      for (const name of ['prim.space.100', 'sem.space.inset', 'comp.btn.inset']) {
+        const result = assertResult(await pinnedServer.callTool('get_token_details', { name }));
+        expect(TOKEN_CONDITIONAL_PLATFORM_NOTES_KEY in result).toBe(false);
+      }
+    });
+
+    it('live corpus: platformNotes appears exactly where a platform name is `null`', async () => {
+      for (const name of ['shadowBlack100', 'zIndex.container', 'space100', 'color.structure.canvas']) {
+        const result = assertResult(await liveServer.callTool('get_token_details', { name }));
+        const platforms = result.platforms as Record<string, unknown>;
+        const hasNull = Object.values(platforms).some(v => v === null);
+        expect({ name, hasNotes: TOKEN_CONDITIONAL_PLATFORM_NOTES_KEY in result }).toEqual({ name, hasNotes: hasNull });
+      }
     });
   });
 

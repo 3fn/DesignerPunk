@@ -14,6 +14,14 @@ import { TokenRefResolver } from './TokenRefResolver';
 import { parseSemanticOverrides, OverrideRefs } from './SemanticOverrideReader';
 import { resolveThemeTierRoot } from './resolveThemeTierRoot';
 
+/**
+ * What one platform's generated output defines for a token (`token-index/README.md` § "Platform
+ * names"): one name; several names, for a composite the generator writes as several definitions
+ * (a web typography or shadow token, a semantic motion token); or `null`, when that platform's
+ * output carries no name for it, with the reason in the entry's `platformNotes`.
+ */
+export type PlatformTokenName = string | string[] | null;
+
 export interface TokenIndexEntry {
   name: string;
   tier: 'primitive' | 'semantic' | 'component';
@@ -27,7 +35,9 @@ export interface TokenIndexEntry {
   formula?: string;
   primitiveReferences?: Record<string, string>;
   themeVarying?: boolean;
-  platforms: { web: string; ios: string; android: string };
+  platforms: { web: PlatformTokenName; ios: PlatformTokenName; android: PlatformTokenName };
+  /** Why a platform's name is `null`, keyed by platform; present only on entries that have one. */
+  platformNotes?: Partial<Record<'web' | 'ios' | 'android', string>>;
   consumers?: string[];
   /** The component that defines a component token (merged package entries and the repo's own). */
   definedBy?: string;
