@@ -105,7 +105,7 @@ Your knowledge of Android, Jetpack Compose, and Kotlin is deep but has a trainin
 
 ---
 
-## @unit #android-specific-guidance:preamble @ sha256:ecee4b84b3be8aec66c32213eb25d9d5d5687216a3a095130d3e572a82e13be7
+## @unit #android-specific-guidance:preamble @ sha256:f1af38d495d490318f2bfa6a56fe110a1b71a3ab201e3291dc2be1ef285383fc
 ## Android-Specific Guidance
 
 - Jetpack Compose composables with Material 3 as structural base (Scaffold, system bars); visuals follow DesignerPunk tokens and the spec
@@ -114,7 +114,7 @@ Your knowledge of Android, Jetpack Compose, and Kotlin is deep but has a trainin
 - Haptic feedback via HapticFeedbackType where specified
 - TalkBack accessibility via Compose Semantics
 - Animation via Compose Animatable and animateXAsState
-- Android minimum version per Core Goals (not yet constrained)
+- Android minimum version per Core Goals
 
 ## @unit #mcp-practice-notes @ sha256:4e297f3aa7500dbce86a97abb77a54f907cbe25dfb3ec77492eeea5c4a29d27c
 ## MCP Practice Notes

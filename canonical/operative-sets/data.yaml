@@ -549,9 +549,9 @@ units:
         label: "Animation via Compose Animatable and animateXAsState"
         text: "Animation via Compose Animatable and animateXAsState"
       - id: native-7
-        kind: member
-        label: "Android minimum version per Core Goals (not yet constrained)"
-        text: "Android minimum version per Core Goals (not yet constrained)"
+        kind: obligation
+        label: "Android minimum version per Core Goals"
+        text: "Android minimum version per Core Goals"
     confirmation: canonical/profiles/consumer/confirmations/data.md#android-specific-guidance:preamble
   "#android-skills-official-google-patterns":
     canonicalHash: sha256:fc2f269aa9ccf842e7ed3da61969c7d554fa4780ff895361f05752b7d2e0a7ed

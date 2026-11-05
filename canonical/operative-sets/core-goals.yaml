@@ -41,9 +41,9 @@ units:
         label: "iOS: 17.0+"
         text: "iOS: 17.0+"
       - id: platform-android
-        kind: member
-        label: "Android: not yet constrained"
-        text: "Android: Not yet constrained"
+        kind: obligation
+        label: "Android: API 26 (Android 8.0)+"
+        text: "Android: API 26 (Android 8.0)+"
       - id: platform-web
         kind: member
         label: "Web: not yet constrained"
