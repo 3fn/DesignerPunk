@@ -256,9 +256,18 @@ date: 2026-09-29
 ## `#android-specific-guidance:preamble`
 
 confirmer: data
-canonicalHash: sha256:ecee4b84b3be8aec66c32213eb25d9d5d5687216a3a095130d3e572a82e13be7
+canonicalHash: sha256:f1af38d495d490318f2bfa6a56fe110a1b71a3ab201e3291dc2be1ef285383fc
 items: native-1, native-2, native-3, native-4, native-5, native-6, native-7
-date: 2026-10-19
+date: 2026-11-05
+
+**Re-confirmed 2026-11-05: the Core Goals Android-minimum ballot, item 1 (site 2).** A new act, read fresh. The 2026-10-19 record below is superseded (canonicalHash `sha256:ecee4b84b3be8aec66c32213eb25d9d5d5687216a3a095130d3e572a82e13be7`, 7 items) and stays as a ledger.
+- **What changed**: ballot `.kiro/docs/ballots/2026-11-05-core-goals-android-minimum.md` (RATIFIED, Peter, 2026-11-05, #673, F-1 (iii)). At `539beadd7` the profile author applied site 2 byte for byte from my final text: L461 of `canonical/agents/data.md` now reads `- Android minimum version per Core Goals`, which equals the ballot's § 9 site-2 block. He also re-quoted `native-7` (label and text `Android minimum version per Core Goals`, `kind: obligation`). No other line of the unit changed.
+- **What I read, in this session, through tool results**: the whole unit `#android-specific-guidance:preamble` as `partition(splitFrontmatter(...).body)` returns it from `canonical/agents/data.md` (the heading and all seven bullets, `Jetpack Compose composables with Material 3 as structural base …` through `Android minimum version per Core Goals`); the unit record in `canonical/operative-sets/data.yaml` (7 items, kinds, labels, texts); the overlay's unit pin (`data.overlay.md` L108); and the ballot's § 9.
+- **The hash**: the canonicalHash moves from `sha256:ecee4b84b3be8aec66c32213eb25d9d5d5687216a3a095130d3e572a82e13be7` to the value above. I recomputed it myself with `hashText` over that unit's text. It equals the overlay pin re-grounded at `539beadd7`, and the value in the PR body.
+- **Items re-read against the unit**: all 7 item texts are verbatim substrings of the unit as it now stands (checked by script, 7 of 7).
+- **Re-ruled, the kind**: `native-7` is `obligation`. The line now points at a minimum an agent can act against: an Android agent that sets, accepts or recommends a `minSdk` below the minimum Core Goals states contradicts it. This is the kind I proposed in the ballot's review (`[DATA R1]` § 2). `native-1` to `native-6` stay `member`.
+- **The 2026-10-19 reason stands**: `native-7` binds the minimum version to Core Goals rather than a choice of my own. The number lives in Core Goals alone, so a later change of the minimum re-confirms Core Goals' unit, not this one.
+- **Ruling: CONFIRMED at 7, not corrected.** The set is unchanged (the same 7 ids). One item's text and kind are re-authored, as ruled.
 
 **Ruling: CONFIRMED at 7 items, as drafted.** Each bullet fixes the Compose mechanism used for its concern. `native-7` binds the minimum version to Core Goals rather than a choice of my own. Re-confirmed after ballot `2026-10-18-true-native-development-is-not-true-native-design` (§ 6.8). The item set is unchanged. `native-1` now carries the line I gave in my consult: Material 3 is the structural base (Scaffold, system bars), and visuals follow DesignerPunk tokens and the spec.
 
