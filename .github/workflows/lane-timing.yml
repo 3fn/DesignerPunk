@@ -52,7 +52,7 @@ jobs:
     # input), so a dispatch run reported under the required name today — the distinct
     # name closes that so a branch-head dispatch run can never satisfy or shadow the gate.
     name: ${{ github.event_name == 'workflow_dispatch' && 'lane-typecheck (unit-branch)' || 'lane-typecheck' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - name: Checkout
@@ -105,7 +105,7 @@ jobs:
   lane-build-validate:
     # Ballot B-CI a2 (see lane-typecheck above for rationale).
     name: ${{ github.event_name == 'workflow_dispatch' && 'lane-build-validate (unit-branch)' || 'lane-build-validate' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - name: Checkout
@@ -153,7 +153,7 @@ jobs:
   lane-functional-root:
     # Ballot B-CI a2 (see lane-typecheck above for rationale).
     name: ${{ github.event_name == 'workflow_dispatch' && 'lane-functional-root (unit-branch)' || 'lane-functional-root' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - name: Checkout
@@ -297,7 +297,7 @@ jobs:
   lane-mcp-server-suite:
     # Ballot B-CI a2 (see lane-typecheck above for rationale).
     name: ${{ github.event_name == 'workflow_dispatch' && 'lane-mcp-server-suite (unit-branch)' || 'lane-mcp-server-suite' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     defaults:
       run:
@@ -350,7 +350,7 @@ jobs:
   lane-application-mcp-server-suite:
     # Ballot B-CI a2 (see lane-typecheck above for rationale).
     name: ${{ github.event_name == 'workflow_dispatch' && 'lane-application-mcp-server-suite (unit-branch)' || 'lane-application-mcp-server-suite' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     defaults:
       run:

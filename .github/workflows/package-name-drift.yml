@@ -23,7 +23,7 @@ jobs:
     # a dispatch run reported under the required name today — the distinct name closes
     # that so a branch-head dispatch run can never satisfy or shadow the gate.
     name: ${{ github.event_name == 'workflow_dispatch' && 'Check package name drift (unit-branch)' || 'Check package name drift' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - name: Checkout

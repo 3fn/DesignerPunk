@@ -31,7 +31,7 @@ on:
 jobs:
   completion-criteria-parity:
     name: completion-criteria-parity
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # Pure-fs markdown scan plus per-file git authorship lookups; npm ci dominates.
     timeout-minutes: 10
 
