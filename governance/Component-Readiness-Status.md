@@ -544,7 +544,7 @@ get_section({
 
 | Component Family | Shared Need/Purpose | Status | MCP Document Path |
 |------------------|---------------------|--------|-------------------|
-| Buttons | User interaction and actions | 🟢 | `.kiro/steering/Component-Family-Button.md` |
+| Buttons | User interaction and actions | 🟡 | `.kiro/steering/Component-Family-Button.md` |
 | Form Inputs | Data collection and validation | 🟡 | `.kiro/steering/Component-Family-Form-Inputs.md` |
 | Containers | Layout and content organization | 🟡 | `.kiro/steering/Component-Family-Container.md` |
 | Icons | Visual communication | 🟡 | `.kiro/steering/Component-Family-Icon.md` |
@@ -559,7 +559,7 @@ get_section({
 | Loading | Progress indication | 🔴 | `.kiro/steering/Component-Family-Loading.md` |
 ```
 
-> **🟡 in this table = "shipping, web production-ready, iOS/Android scaffold"** — the family has usable web implementations but has not reached the strict all-platform 🟢 bar. Per-component per-platform detail is in the Individual Component Status table below. Buttons is 🟢 only because it contains all-platform-production components (Button-VerticalList-Item/Set); its CTA/Icon members are themselves web-ready/mobile-scaffold. 🔴 families are genuine placeholders (no components ship).
+> **🟡 in this table = "shipping, web production-ready, iOS/Android scaffold"** — the family has usable web implementations but has not reached the strict all-platform 🟢 bar. Per-component per-platform detail is in the Individual Component Status table below. Buttons is 🟡 because none of its components is production-ready on every platform: Button-VerticalList-Item/Set are web-ready with iOS and Android `development` (their native source does not compile), and its CTA/Icon members are web-ready/mobile-scaffold. 🔴 families are genuine placeholders (no components ship).
 
 ---
 
@@ -569,8 +569,10 @@ This section lists all implemented components with their readiness status and im
 
 **Per-platform status convention**: readiness is tracked per platform (web / iOS / Android). The **Status** column carries a single roll-up indicator; the **Platform Readiness** column shows the honest per-platform breakdown so no component's mobile immaturity is hidden behind a green light.
 
-- 🟢 **Production Ready** — production-ready across ALL declared platforms (web, iOS, Android), per the strict definition above. Currently only Button-VerticalList-Item and Button-VerticalList-Set meet this bar.
-- 🟡 **Web-ready, mobile-scaffold** — web is production-ready (implemented, tested, documented) but iOS and Android are scaffold (structure present, not test-covered). Safe to consume on web; treat mobile as not-yet-ready.
+- 🟢 **Production Ready** — production-ready across ALL declared platforms (web, iOS, Android), per the strict definition above. Currently no component meets this bar.
+- 🟡 **Web-ready, mobile-scaffold** — web is production-ready (implemented, tested, documented) but iOS and Android are scaffold (structure present, not test-covered). Safe to consume on web; treat mobile as not-yet-ready. Button-VerticalList-Item and Button-VerticalList-Set are in this row, with iOS and Android `development` (the native source does not compile) in place of scaffold.
+
+> *(corrected 2026-11-05: Button-VerticalList-Item and -Set are no longer shown production-ready on iOS and Android, and the Buttons family and the all-platform line follow; PR #660 and `.kiro/issues/2026-10-13-native-readiness-test-patterns-miss-repo-tests.md`; prior text at a2e89c651)*
 - 🟡 **Scaffold (all platforms)** — structure present on all platforms but none production-ready; intentional for permissive/internal primitives (noted inline).
 
 | Component | Family | Status | Platform Readiness (web / iOS / Android) | Implementation Path |
@@ -581,8 +583,8 @@ This section lists all implemented components with their readiness status and im
 | Badge-Label-Base | Badge | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Badge-Label-Base/` |
 | Button-CTA | Button | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Button-CTA/` |
 | Button-Icon | Button | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Button-Icon/` |
-| Button-VerticalList-Item | Button | 🟢 | 🟢 / 🟢 / 🟢 | `src/components/core/Button-VerticalList-Item/` |
-| Button-VerticalList-Set | Button | 🟢 | 🟢 / 🟢 / 🟢 | `src/components/core/Button-VerticalList-Set/` |
+| Button-VerticalList-Item | Button | 🟡 | 🟢 / development / development | `src/components/core/Button-VerticalList-Item/` |
+| Button-VerticalList-Set | Button | 🟡 | 🟢 / development / development | `src/components/core/Button-VerticalList-Set/` |
 | Chip-Base | Chip | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Chip-Base/` |
 | Chip-Filter | Chip | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Chip-Filter/` |
 | Chip-Input | Chip | 🟡 | 🟢 / scaffold / scaffold | `src/components/core/Chip-Input/` |

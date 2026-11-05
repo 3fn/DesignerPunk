@@ -35,7 +35,7 @@ All 13 component families have MCP-queryable documentation. Production families 
 
 | Component Family | Shared Need/Purpose | MCP Document Path | Status |
 |------------------|---------------------|-------------------|--------|
-| Buttons | User interaction and actions | `.kiro/steering/Component-Family-Button.md` | 🟢 Production |
+| Buttons | User interaction and actions | `.kiro/steering/Component-Family-Button.md` | 🟡 Beta |
 | Chips | Filtering, selection, and input management | `.kiro/steering/Component-Family-Chip.md` | 🟢 Production |
 | Form Inputs | Data collection and validation | `.kiro/steering/Component-Family-Form-Inputs.md` | 🟢 Production |
 | Checkboxes | Binary selection and legal consent | `.kiro/steering/Component-Family-Form-Inputs.md` | 🟢 Production |
@@ -53,7 +53,9 @@ All 13 component families have MCP-queryable documentation. Production families 
 
 **Status Legend**: 🟢 Production Ready | 🟡 Beta | 🔴 Placeholder | ⚠️ Deprecated
 
-**Family Count**: 9 Production Ready, 1 Beta, 4 Placeholder (structural definitions for future development)
+**Family Count**: 8 Production Ready, 2 Beta, 4 Placeholder (structural definitions for future development)
+
+> *(corrected 2026-11-05: the Buttons family is 🟡 Beta, not 🟢 Production, because Button-VerticalList-Item and -Set are served as `development` on iOS and Android and no other Buttons member is all-platform production-ready; the family count follows; PR #660 and `.kiro/issues/2026-10-13-native-readiness-test-patterns-miss-repo-tests.md`; prior text at a2e89c651)*
 
 ### Type Primitives
 
