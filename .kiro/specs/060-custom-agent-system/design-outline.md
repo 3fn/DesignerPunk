@@ -442,3 +442,5 @@ Validation scenarios include (at minimum):
 ---
 
 *This design outline captures the collaborative discussion between Peter and the AI agent on 2026-02-13. It is intended as a starting point for formal spec development, not a final design.*
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — carried out in its sub-specs, and superseded by `.kiro/specs/070-agent-architecture/` and `.kiro/specs/122-agent-generator/` — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 5, Stacy's sample and Thurgood's own confirmation's read in § 9

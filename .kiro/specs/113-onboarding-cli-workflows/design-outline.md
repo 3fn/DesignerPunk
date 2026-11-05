@@ -174,3 +174,5 @@ Both produce specs, not direct output. Both teach the process by using it.
 4. **How does `configure` know current state?** Reads config files? Checks for existing customization specs? Both?
 
 5. **The GUI version of this wizard.** When we layer GUI, this becomes a visual setup flow — color pickers, font previews, spacing visualizers. The CLI is the logic; the GUI adds the sensory experience designers expect.
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — superseded in part by Spec 123 § 3.6; the designer-friendly rewrite shipped as the Integration Guide's `## Walkthroughs`; residual: a state-aware re-runnable `configure` verb, not built; its idea now lives in the inbound `.kiro/specs/128-react-react-native-platform-admission/inbound-from-leonardo-2026-11-04-configure-intake.md`, a consideration for 128's approach and not direction — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR" (items 3 and 4 of 2026-11-04T13:23:25Z, and the correction of 2026-11-04T13:26:53Z); ballot 2026-11-04-waiting-spec-row, Appendix B row 10, Leonardo's read in § 9

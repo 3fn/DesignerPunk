@@ -142,3 +142,5 @@ Recommendation deferred to research phase — need to understand whether `/knowl
 1. Research: Test `/knowledge` with one agent (suggest Sparky — web has the most test files) to answer open questions
 2. Agent feedback on proposed knowledge base scoping
 3. Formalize into requirements if research validates the approach
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — carried out in the charters' `knowledgeBases:` entries; the directory stays, because `governance/Process-Development-Workflow.md` L221 cites a file in it — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 6, Thurgood's own confirmation (he checked the per-agent KB configuration landed, not each item of the outline's Kiro `/knowledge` CLI plan)'s read in § 9

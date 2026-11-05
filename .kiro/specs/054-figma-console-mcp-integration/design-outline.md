@@ -2324,3 +2324,5 @@ All open questions have been resolved as of February 18, 2026. Decisions are doc
 
 **Organization**: spec-guide
 **Scope**: 054-figma-console-mcp-integration
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — superseded by 054a–054d (`054a-figma-token-push`, `054b-figma-design-extract`, `054c-figma-token-push-fixes`, `054d-hierarchical-design-extraction`) — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 2, Ada's read in § 9

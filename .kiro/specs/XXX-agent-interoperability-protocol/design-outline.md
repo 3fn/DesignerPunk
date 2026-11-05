@@ -267,3 +267,5 @@ Per our process-first principle: prove the manual process before automating.
 - Spec 060: Custom Agent System — agent persona definitions
 - Spec 067: Application MCP — MCP tool architecture
 - Spec 070: Agent Architecture — three-node knowledge network model
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — an exploratory idea with no live spec and no git-visible event; its idea now lives in the inbound `.kiro/specs/131-governance-simplification/inbound-from-thurgood-2026-11-04-agent-interoperability-protocol.md`, a consideration for 131's approach and not direction — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR" (items 2 and 4 of 2026-11-04T13:23:25Z, and the correction of 2026-11-04T13:26:53Z); ballot 2026-11-04-waiting-spec-row, Appendix B row 20, Thurgood's confirmation (own act)

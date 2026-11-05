@@ -76,3 +76,5 @@ This causes AI agents and developers to encounter undefined token references whe
 ## Notes
 
 This is a placeholder spec. When prioritized, convert to full requirements.md, design.md, and tasks.md following Spec Planning Standards.
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — the stale file it names is gone and the generator emits the semantic tokens; theme-varying semantic colours on Android and iOS remain Spec 129's — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 21, Ada's read in § 9

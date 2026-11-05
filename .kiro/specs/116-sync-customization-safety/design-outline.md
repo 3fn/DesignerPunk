@@ -127,3 +127,5 @@ Independent of the tooling fix, this incident surfaces reusable spec-quality red
 ## Success Definition (provisional — to firm up in requirements)
 
 A consumer can upgrade `@3fn/core` in any environment (TTY, CI, agent terminal) and apply package updates **without silently destroying customizations or promotions** — with conflicts surfaced, not overwritten by default; with a destructive reset available only as a deliberate, clearly-labeled opt-in; and with visibility into what changed.
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — superseded by Spec 123's sync work (Requirement 5, Model B; retired flags; `--apply` / `--overwrite` / `--restore`; shipped-content comparison); Q5 (drift report) is not built, and its record is `.kiro/issues/2026-11-04-consumers-get-no-report-of-what-an-upgrade-changed-in-generated-tokens.md` (owner Ada, Sparky consulted; Peter's F-4 (a), 2026-11-04T06:03:25Z) — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 12, Sparky's, Ada's, Leonardo's and Thurgood's's read in § 9

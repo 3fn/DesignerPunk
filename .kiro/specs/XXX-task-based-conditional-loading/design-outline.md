@@ -130,3 +130,5 @@ Consider prioritizing this spec when:
 ---
 
 *This outline captures a future enhancement opportunity. Full requirements, design, and tasks to be developed if/when this spec is prioritized.*
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — superseded by Spec 122's per-agent routing rows — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 24, Thurgood's own confirmation's read in § 9

@@ -11,7 +11,7 @@ Records and tools that measure the governance layer for Spec 131. The records ar
 
   - It reads git objects only (no checkout, no network) and prints markdown: every figure with the command that produced it.
   - Figures marked "heuristic" print their definition beside them.
-  - It is in no CI lane and no rule names it. The record is pasted at S, with the same figures at the previous S (`38f4ece47` for 16.2.0) beside it.
+  - It is in no CI lane. **One rule names part of its output**: RELEASE-FLOW item 3a pastes its "Waiting specs at S" block at every release's S (ballot 2026-11-04-waiting-spec-row). The rest of its output is Spec 131's evidence and no rule names it. The 16.2.0 record was pasted at S, with the same figures at the previous S (`38f4ece47` for 16.2.0) beside it, and it is pinned to `347d5a1bd`.
 - **`spec-facts.sh`**: lists, for one spec and one window, where a reader should look before the spec's round. It was built for Spec 131's step 2, on Peter's "Proceed as the team recommends" (chat, received before 2026-11-04T03:19:41Z), answering the options message that followed the facts-generator consult of 2026-11-04. Usage, from any checkout:
 
   ```bash

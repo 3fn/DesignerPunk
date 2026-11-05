@@ -238,3 +238,5 @@ After fix, running `npm run release:analyze -- --since v6.0.0` should output:
 
 **Organization**: spec-guide
 **Scope**: 057-release-analysis-tag-filtering
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — superseded by Spec 065 Task 5 (`9547d2ff4`), which removed the code it fixes; ballot 2026-08-12-q6-release-manager-retirement then retired 065's replacement — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 3, Stacy's correction and Thurgood's own confirmation's read in § 9

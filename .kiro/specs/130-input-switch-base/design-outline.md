@@ -266,3 +266,5 @@ Options with costs; leans are the proposer's and are marked. Forks P-1 through P
 3. Peter's rulings on P-1 through P-13, or an explicit direction to carry any of them into the requirements round as open items.
 4. Incorporation woven into this outline (not appended), and Peter's approval of the outline.
 5. Then requirements.md, EARS-pattern, with § 10's documentation requirements, under the sequential formalization gate (Spec Feedback Protocol § "Sequential Formalization Gate").
+
+**Spec outcome (2026-11-04, Thurgood)**: park — re-ask: `path:.kiro/specs/128-react-react-native-platform-admission/design.md`; "Not now" on 130's R1 (Peter, 2026-11-04, the priorities record's § 6.2); a second screen needing a switch also pulls it forward (§ 3.3, prose; Lina watches it as G1's owner) — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 18, Lina's read in § 9

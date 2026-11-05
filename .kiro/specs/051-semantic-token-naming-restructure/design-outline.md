@@ -899,3 +899,5 @@ For detailed audit findings including component dependency maps and file impact 
 
 **Organization**: spec-guide
 **Scope**: 051-semantic-token-naming-restructure
+
+**Spec outcome (2026-11-04, Thurgood)**: closed — superseded by `.kiro/specs/052-semantic-token-naming-implementation/`, which carried it out; the outline stays as 052's cited design authority — Peter, 2026-11-04T13:23:25Z, "A yes, B yes, approve the list, one PR"; ballot 2026-11-04-waiting-spec-row, Appendix B row 1, Ada's read in § 9
