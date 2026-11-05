@@ -20,6 +20,7 @@ All times are `date -u` at receipt, as `peter-2026-11-05.md` records them. His w
 ## What "approved as a whole" covers
 
 - **Fixed for 129**: the structure (129 and 132 under one goal), the narrowed acceptance sentence, rows D1, D2 and D3 as 129's definition of done, and order (x′). Changing a D row later is Peter's decision.
+- **Amendment to D1 (2026-11-05, Peter; recorded by Thurgood)**: D1's probe sentence, "The probe module that reads the tokens is **generated from the emitted members**, so every public member is read (Stacy).", is replaced by: "The probe module that reads the tokens reads every member the token index names for that platform, whatever its declared access level, and the run fails if the probe's read count differs from that list's count." Peter, received 2026-11-05T05:14:42Z (`date -u` at receipt; orchestrator relay), verbatim: "Yes on D1; 659 and 660 are merged". He was answering the `**Open for Peter**:` line in #658, which quoted the replacement verbatim (record: `../../feedback/requirements.md` § "[PETER] D1's probe sentence"). The reason: the old wording let row 9's defect, token members that are not `public`, pass unseen. `plan-r2.md` is not edited and stays the record of what he first approved; D1's operative text is plan-r2 § 1 at `b89163c41` with this sentence replaced.
 - **Not decided by this approval, deferred to the gate that owns it** (the orchestrator's split; Peter did not object, and his message above answers only A, B and C):
 
 | Decisions (plan-r2) | Gate |
