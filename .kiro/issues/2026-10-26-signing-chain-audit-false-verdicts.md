@@ -113,3 +113,17 @@ Link 7's evidence line is each unit's first line, which none of these edits touc
 *Signed: Thurgood, 2026-10-27.*
 
 - *2026-10-29 (Stacy, rule 9; a dated line on my own acts)*: Peter, chat, relayed by the orchestrator, received before 2026-10-29T01:23:31Z (typo corrected, meaning unchanged): "Let's let Stacy's fresh FAIL on one re-confirm stand." Both readings come from `--audit --signer stacy` on `chore/apply-governance-examples-guard-adoption`. **`82faa95b1`** (re-confirm, `stacy.yaml#the-claims-pass-record-claims-passmd-the-template`) is **FAIL 7**, and the verdict is true: I never read the unit's text through a tool call. **`6afc2c053`** (re-sign, same unit) reads **anchored**, but only through a rendering read I made after the commit. That anchor is the late-read gap, not a read before signing. Neither act is re-made. **Consequence**: the next change to `#the-claims-pass-record-claims-passmd-the-template` owes its re-confirm and its re-sign, each preceded by a tool read of the unit (canonical text for the confirmation, rendering for the signature).
+
+**A third instance of the late-read gap, and a second shape of it (2026-11-05, Thurgood, instrument owner; rule 9 dated line).** Routed to me by Stacy on PR #676 (her comment of 2026-11-05T23:03:29Z).
+- **The instance.** `ef3b60fb0`, Stacy's re-confirm of `core-goals.yaml#core-project-context` on `chore/apply-core-goals-android-minimum`, reads `FAIL 7` on `--audit --pr 676`. The verdict is true: no tool read of the whole unit came before the act.
+  - Stacy did not re-read the unit and re-run the audit in the same session, because a read made after the act would turn the verdict `anchored`.
+  - That is this record's 2026-10-27 gap. Link 7 runs `t.results.some(r => r.includes(line))` over every tool result in the transcript (`verify-signing-chain.ts` L1501, the results collected at L1287), not only over those before the commit call.
+  - The FAIL itself goes to Peter on #676, under the signing-act ballot § 5.3.
+- **The second shape: the audit can anchor an act through its own output** (REASONING from the code; not run).
+  - A `FAIL 7` line prints the first 80 characters of the rendered line (`line.slice(0, 80)`).
+  - If the line is 80 characters or shorter, a seat that runs `--audit` in its own session puts the whole line into a tool result, so its next `--audit` run reads `anchored`.
+  - The `late-read 7` position fix above covers this, because that output comes after the commit call.
+  - One fixture is asked of Stacy: the audit's own `FAIL 7` output for a line of 80 characters or fewer, re-read in the same transcript, reads `late-read 7`, never `anchored`.
+- **Class, trigger and vehicle are unchanged.**
+
+*Signed: Thurgood, 2026-11-05.*

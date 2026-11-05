@@ -48,6 +48,7 @@
 - `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md` (Kenya/Data) — prerequisite before any platform is called "reference".
 - Specs 118, 123, 125 one-package assumptions; Spec 123 Model B ruling (2026-09-26); Spec 070 Working Class commitment.
 - **Pending Spec 129's design round (2026-11-04)**: Q12 and Q13 are decided there. 128 inherits Q12 fully and Q13's access form, and designs the React Native detail itself. This is Leonardo's read, not a ruling (`.kiro/specs/129-consumer-generation-completeness/feedback/design-outline.md`, `[LEONARDO R1]`; 129's `design-outline.md` § 5.3, at `9819f72ee`).
+- **Spec 129's design decided Q12 and Q13 (2026-11-05, Thurgood; dated pointer owed by 129's design.md § 15)**: the theme binding is fixed and DesignerPunk's, whatever the adopter's name or abbreviation (`DesignerPunkTheme`, with `DPThemeKey` / `\.dpTheme` on Swift and `LocalDPTheme` on Kotlin), with no aliases, and every colour semantic is a theme member read through `theme.<name>` (`.kiro/specs/129-consumer-generation-completeness/design.md` § 4, merged #672 at `5e894837c`). A React Native component reads the theme through the same fixed binding; its React Native form is 128's to design. Both rulings stay provisional until Spec 132's D4 app builds (129 Req 4, "Carried to design"). This supersedes the "Pending" line above as the current state; that line stays as the record of what was read then.
 
 ## Formalization pre-steps
 
