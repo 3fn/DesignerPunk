@@ -37,7 +37,7 @@ All 13 families are listed. 🟡/🟢 families ship; 🔴 families are genuine p
 | Family | Primitive Base | Status | Shipped / Planned Variants |
 |--------|----------------|--------|----------------------------|
 | Form Inputs | Input-Text-Base | 🟡 | Checkbox (Base, Legal), Radio (Base, Set), Text (Email, Password, PhoneNumber) |
-| Buttons | Button-CTA | 🟢 | CTA, Icon, VerticalList-Item, VerticalList-Set |
+| Buttons | Button-CTA | 🟡 | CTA, Icon, VerticalList-Item, VerticalList-Set |
 | Containers | Container-Base | 🟡 | Card (shipped); Panel, Hero (planned) |
 | Icons | Icon-Base | 🟡 | Base shipped; Status, Action, Navigation (planned) |
 | Avatars | Avatar-Base | 🟡 | Base shipped; User, Group, Entity (planned) |
@@ -130,10 +130,12 @@ Button-VerticalList-Item (Primitive) → Button-VerticalList-Set (Pattern) — v
 |-----------|------|--------|-------------|
 | Button-CTA | Standalone | 🟡 | Call-to-action button with variant prop (web 🟢; iOS/Android scaffold) |
 | Button-Icon | Primitive | 🟡 | Compact icon-only button (web 🟢; iOS/Android scaffold) |
-| Button-VerticalList-Item | Primitive | 🟢 | Single action item in a vertical list menu (production-ready all platforms) |
-| Button-VerticalList-Set | Pattern | 🟢 | Groups VerticalList-Item into a mode-driven action menu (production-ready all platforms) |
+| Button-VerticalList-Item | Primitive | 🟡 | Single action item in a vertical list menu (web 🟢; iOS/Android development — native source does not compile) |
+| Button-VerticalList-Set | Pattern | 🟡 | Groups VerticalList-Item into a mode-driven action menu (web 🟢; iOS/Android development — native source does not compile) |
 
-**Family status note**: the Buttons family is marked 🟢 in the summary table because it contains all-platform-production components (VerticalList-Item/Set). Its CTA and Icon members are themselves web-ready/mobile-scaffold (🟡).
+**Family status note**: the Buttons family is marked 🟡 in the summary table because none of its components is production-ready on every platform: VerticalList-Item/Set are web-ready with iOS and Android `development` (their native source does not compile), and its CTA and Icon members are web-ready/mobile-scaffold.
+
+> *(corrected 2026-11-05: Button-VerticalList-Item and -Set and the Buttons family are no longer shown production-ready on every platform; PR #660 and `.kiro/issues/2026-10-13-native-readiness-test-patterns-miss-repo-tests.md`; prior text at a2e89c651)*
 
 ### Naming Convention Note
 
