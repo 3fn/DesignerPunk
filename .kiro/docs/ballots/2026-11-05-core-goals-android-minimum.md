@@ -2,7 +2,7 @@
 
 **Date**: 2026-11-05
 **Drafted by**: Thurgood (Civitas steward; owner of `.kiro/steering/core-goals.md` and profile author of its operative set), at Peter's direction. Peter, chat, relayed by the orchestrator, received 2026-11-05T13:43:14Z (`date -u` at receipt), verbatim: *"(a), and start the 131 ledger"*. "(a)" answers the orchestrator's question "Is it (a), the one-item ballot?" for the Core Goals Android line. *Unverified here: the relay is chat only, and I did not see the question as Peter read it.* The ruling it carries out is Peter's decision 5, "Re: 5, 26", received 2026-11-05T05:54:32Z (Spec 129 `design.md` § 0; Data's design inbound § 6, "Ruled").
-**Status**: DRAFT. Not applied, not ratified. R1 is recorded (Stacy, Data; § 11) and incorporated at [THURGOOD R2]; the forks of § 7 are Peter's. This file is the record the Status line will be flipped in, record-first (`.kiro/docs/ballots/README.md` § "The Ratification Protocol"), before any edit site is applied.
+**Status**: **RATIFIED (Peter, 2026-11-05)**: F-1 **(iii)**, drop the Compose-floor clause, so site 1's after-text is the (iii) line; F-2 **accept**, the Android line is an obligation and a promise to adopters. Peter, chat, relayed by the orchestrator, received 2026-11-05T22:31:45Z (`date -u` at receipt), verbatim: *"ratified, F-1 (iii), F-2 accept; 672 and 674 merged"*. What he read: the PR's three `**Open for Peter**:` lines at the ballot's head `defcba783` (ratification; F-1 with (iii) recommended by Stacy, Data and me; F-2, the consumer promise) and the orchestrator's summary of them; the ballot as ratified is the file at `defcba783`. Reviewed in R1 (Stacy, Data; § 11) and incorporated at [THURGOOD R2]. This Status commit fills the ratification date in every amendment pointer and appends § 9, the resolved after-texts. No edit site is applied yet: the application is one Peter-merged PR, in § 8's order, after this ballot's PR merges. *Unverified here: the relay is chat only.*
 **Owner**: Thurgood (item 1, Core Goals; sites 2 and 3 are his as profile author, with the seats' text where stated).
 **Required reviewer**: **Stacy**. She is the C1 confirmer and signer of Core Goals' `#core-project-context` (`canonical/operative-sets/core-goals.yaml` L9–10), the census reader, and the reader of the governance-edit-kind lines. Her design-review entry on Spec 129's `design.md` (`[STACY R1]` § 3, 2026-11-05) gave the application path this ballot follows and two wording points it answers (§ 2, § 5).
 **Reviewers**: **Data** (the Android fact; site 2 is his charter line and his signed unit). **Peter** ratifies (Core Goals is identity law).
@@ -47,13 +47,13 @@ Three more places say the same thing (swept below, § 6): Data's charter L461, t
 **After**, one line, same line number, **by Peter's answer to F-1 (§ 7)**. The `<ratification date>` is filled by the Status commit, in every place it appears (the pointer here, and the removal in site 3d).
 
 *F-1 (iii), drop the Compose-floor clause (both reviewers' lean, and now mine):*
-> - Android: API 26 (Android 8.0)+ *(Amended <ratification date> by ballot 2026-11-05-core-goals-android-minimum, item 1; prior text at `10ec4af5b`.)*
+> - Android: API 26 (Android 8.0)+ *(Amended 2026-11-05 by ballot 2026-11-05-core-goals-android-minimum, item 1; prior text at `10ec4af5b`.)*
 
 *F-1 (i), the libraries the shipped Android module depends on (Data's wording fix):*
-> - Android: API 26 (Android 8.0)+ — the effective minimum is the higher of 26 and the highest `minSdk` declared by the libraries that DesignerPunk's shipped Android module depends on *(Amended <ratification date> by ballot 2026-11-05-core-goals-android-minimum, item 1; prior text at `10ec4af5b`.)*
+> - Android: API 26 (Android 8.0)+ — the effective minimum is the higher of 26 and the highest `minSdk` declared by the libraries that DesignerPunk's shipped Android module depends on *(Amended 2026-11-05 by ballot 2026-11-05-core-goals-android-minimum, item 1; prior text at `10ec4af5b`.)*
 
 *F-1 (ii), the libraries the compile harness depends on (the same wording fix):*
-> - Android: API 26 (Android 8.0)+ — the effective minimum is the higher of 26 and the highest `minSdk` declared by the libraries that DesignerPunk's Android compile harness depends on *(Amended <ratification date> by ballot 2026-11-05-core-goals-android-minimum, item 1; prior text at `10ec4af5b`.)*
+> - Android: API 26 (Android 8.0)+ — the effective minimum is the higher of 26 and the highest `minSdk` declared by the libraries that DesignerPunk's Android compile harness depends on *(Amended 2026-11-05 by ballot 2026-11-05-core-goals-android-minimum, item 1; prior text at `10ec4af5b`.)*
 
 The first half of every form, "- Android: API 26 (Android 8.0)+", is Peter's ruling. The clause in (i) and (ii) departs from Spec 129 `design.md` § 15 as revised at design R2 (`task/129-design` `c8c2e4fd5`: "the minimum SDK required by the Compose version that DesignerPunk's shipped Android module pins") in one respect, Data's `[DATA R1]` § 1 (a): Compose is a set of artifacts with different floors, and libraries outside Compose (Coil, a colour library) can raise the floor too, so "the Compose version's minimum SDK" names one number where there are several. Every form is one line, so the citations in the register that name `core-goals.md` line numbers (`core-goals.md:55-59`, `:50/:53`) do not move.
 
@@ -108,7 +108,7 @@ Sites 2 and 3 name no instrument code change; the same four readings apply to th
 | Unit | What moves | Acts |
 |---|---|---|
 | Core Goals `#core-project-context` (`canonical/operative-sets/core-goals.yaml`; owner Thurgood, confirmer Stacy) | the unit's bytes (site 1) | Thurgood re-quotes `platform-android` (id kept; `kind: obligation`, **ruled** by Stacy, § 2 point 2; label `Android: API 26 (Android 8.0)+` under F-1 (iii), or `Android: API 26 (Android 8.0)+, or a library floor if higher` under (i) and (ii); `text` = the new line without the pointer, a verbatim substring of the unit). Stacy re-confirms (C16) in `canonical/profiles/consumer/confirmations/core-goals.md` § `#core-project-context`: she moves `canonicalHash`, appends a dated record above the 2026-09-29 one, and gives the split reason (§ 2 point 2). The 2026-09-29 record stays inline |
-| Core Goals consumer row `#core-project-context` (`canonical/profiles/consumer/always-set/core-goals.dispositions.yaml` L8) and its overlay unit (`always-set/core-goals.overlay.md`, header pin and L15) | rendered bytes | Thurgood re-renders the overlay line and re-grounds the pin. **The amendment pointer is subtracted from the consumer rendering**: the row gains a removal `{"text": " *(Amended <ratification date> by ballot 2026-11-05-core-goals-android-minimum, item 1; prior text at `10ec4af5b`.)*", "cites": "subtraction-2"}` (leading space included), on the precedent of the row's `#development-practices` removals; a ballot path and a DesignerPunk SHA mean nothing in a consumer repo. The row's two existing removals quote text outside the hunk and stand. Stacy re-signs (C1) in `canonical/profiles/consumer/signatures/core-goals.md` § `#core-project-context` |
+| Core Goals consumer row `#core-project-context` (`canonical/profiles/consumer/always-set/core-goals.dispositions.yaml` L8) and its overlay unit (`always-set/core-goals.overlay.md`, header pin and L15) | rendered bytes | Thurgood re-renders the overlay line and re-grounds the pin. **The amendment pointer is subtracted from the consumer rendering**: the row gains a removal `{"text": " *(Amended 2026-11-05 by ballot 2026-11-05-core-goals-android-minimum, item 1; prior text at `10ec4af5b`.)*", "cites": "subtraction-2"}` (leading space included), on the precedent of the row's `#development-practices` removals; a ballot path and a DesignerPunk SHA mean nothing in a consumer repo. The row's two existing removals quote text outside the hunk and stand. Stacy re-signs (C1) in `canonical/profiles/consumer/signatures/core-goals.md` § `#core-project-context` |
 | Data `#android-specific-guidance:preamble` (`canonical/operative-sets/data.yaml` L524–555; confirmer Data; consumer row `canonical/profiles/consumer/data.dispositions.yaml` L31, signer Data; overlay `canonical/profiles/consumer/data.overlay.md` L108 and L117) | the unit's bytes (site 2) | Thurgood applies L461 **byte for byte** from Data's text in § 3 (a seat's own charter line is applied by the profile author, since the seat's authoring commit would stale the unit it then confirms), re-quotes `native-7` (label and text "Android minimum version per Core Goals", `kind: obligation`, § 3), and re-renders the overlay line and pin. The row's one removal ("the stale `dist/*.kt` snapshots") quotes text outside the hunk and stands. Data re-confirms (C16) in `confirmations/data.md` § `#android-specific-guidance:preamble` and re-signs (C1) in `signatures/data.md` |
 
 Everything else that carries the text is generated: `.claude/agents/data.md` L241, `.kiro/agents/data-prompt.md` L211, `canonical/_consumer-output/**` (the always-set copy of Core Goals and the `cc` and `kiro` outputs of both lines), and `canonical/generated.lock`. They change by regeneration, not by hand.
@@ -178,7 +178,24 @@ With the item an `obligation` (Stacy's ruling), the consumer copy of Core Goals 
 
 ## 9. Resolved after-texts
 
-*(Appended by the Status commit.)*
+*(Appended by the Status commit, 2026-11-05, under Peter's answers F-1 (iii) and F-2 accept. Nothing here is new text: each block is a resolution of a block above. The application diff is compared with this section byte for byte.)*
+
+**Site 1**: `.kiro/steering/core-goals.md` L29, F-1 (iii):
+> - Android: API 26 (Android 8.0)+ *(Amended 2026-11-05 by ballot 2026-11-05-core-goals-android-minimum, item 1; prior text at `10ec4af5b`.)*
+
+**Site 2**: `canonical/agents/data.md` L461 (Data's final text):
+> - Android minimum version per Core Goals
+
+**Site 3a**: `canonical/operative-sets/core-goals.yaml`, item `platform-android`: `kind: obligation`; label `Android: API 26 (Android 8.0)+`; text `Android: API 26 (Android 8.0)+` (the line without the pointer, a verbatim substring of the unit). `platform-web` is unchanged.
+
+**Site 3b**: `canonical/operative-sets/data.yaml`, item `native-7`: `kind: obligation`; label `Android minimum version per Core Goals`; text `Android minimum version per Core Goals`.
+
+**Site 3c**: the overlay lines. `canonical/profiles/consumer/always-set/core-goals.overlay.md` L15 reads `- Android: API 26 (Android 8.0)+` (the pointer subtracted by 3d). `canonical/profiles/consumer/data.overlay.md` L117 reads `- Android minimum version per Core Goals`. Both unit pins are re-grounded to the recomputed unit hashes.
+
+**Site 3d**: `canonical/profiles/consumer/always-set/core-goals.dispositions.yaml`, the `#core-project-context` row gains a removal:
+`{"text": " *(Amended 2026-11-05 by ballot 2026-11-05-core-goals-android-minimum, item 1; prior text at `10ec4af5b`.)*", "cites": "subtraction-2"}` (leading space included). The row's two existing removals stand.
+
+**Kinds** (§ 2 point 2, § 3): `platform-android` `obligation` (Stacy's ruling); `native-7` `obligation` (Data's re-rule); `platform-web` stays `member`.
 
 ## 10. Counter-argument (fold-back applied first), cost and what survives
 
