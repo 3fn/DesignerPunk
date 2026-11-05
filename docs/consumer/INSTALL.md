@@ -156,7 +156,7 @@ What the package ships for iOS, and why it does not add up to a target yet:
 - `node_modules/@3fn/core/dist/ComponentTokens.ios.swift` is DesignerPunk's **component token tier**. Some of the shipped components read it (`ButtonIcon.ios.swift`, for one), and it refers to `SizingTokens`, `SpacingTokens` and `BorderWidthTokens`, which no shipped file defines.
 - Native token output omits the **14 theme-varying semantic colours**, among them `colorActionPrimary` and `colorStructureCanvas`.
 
-This was checked by reading the source, and the parse failure was reproduced with the Swift compiler's parse step. No iOS build was run. Platform requirements, for reference: **iOS 17.0+** (SwiftUI, UIKit). iOS onboarding is a planned follow-up (Spec 129).
+This was checked by reading the source, and the parse failure was reproduced with the Swift compiler's parse step. No iOS build was run. Platform requirements, for reference: **iOS 17.0+** (SwiftUI, UIKit). Where native support stands is in the Native status note at the end of "Platforms".
 
 ### Android
 
@@ -168,7 +168,20 @@ What the package ships for Android, and why it does not add up to a target yet:
 - Native token output omits the same **14 theme-varying semantic colours**, among them `color_action_primary` and `color_structure_canvas`. Only `_wcag` variants of some of them are emitted.
 - Product tokens that reference a theme-varying token are emitted as a read of `Local<your abbreviation>Theme`, which nothing defines.
 
-Platform requirements, for reference: the generated Kotlin calls `Oklch(…).toComposeColor()`, which needs the colormath library (github.com/ajalt/colormath), and the file imports nothing, so you add the dependency and the imports yourself. The Compose BOM must be compatible with the component implementations. Android onboarding is a planned follow-up (Spec 129).
+Platform requirements, for reference: the generated Kotlin calls `Oklch(…).toComposeColor()`, which needs the colormath library (github.com/ajalt/colormath), and the file imports nothing, so you add the dependency and the imports yourself. The Compose BOM must be compatible with the component implementations. Where native support stands is in the Native status note at the end of "Platforms".
+
+**Native status (iOS and Android).** Native onboarding is not supported yet. Don't start an iOS or Android product on this release. Web is the platform you can build on today.
+
+What is true now:
+- The native token files `generate` writes do not compile yet.
+- DesignerPunk's own SwiftUI and Jetpack Compose component source does not compile yet either.
+- Nothing in DesignerPunk's own checks builds Swift or Kotlin yet.
+
+What is planned, in two parts:
+- **Spec 129 (consumer-generation completeness)** is the first part. It makes the token files `generate` writes, and DesignerPunk's component source built against them, compile on iOS and Android in DesignerPunk's own checks. That is a compile check, not an app: it does not link an app or run tests, and it does not make the components something you can build a product from.
+- **Spec 132** is the second part. It is the work that brings DesignerPunk's iOS and Android components into your own app, as a dependency, and shows that they build and render there. Support for building a native product starts with that work, not before.
+
+This guide will say so here when native support exists. No date is promised for either part.
 
 ## 5. When sync reports a missing token
 
