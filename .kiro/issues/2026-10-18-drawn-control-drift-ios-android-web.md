@@ -207,3 +207,13 @@ Firing commit `38f4ece47` (#505, the squash tagged `v16.1.0`: release 16.1.0's S
 *(2026-11-01, Lina, owner, rules 9 and 11: Trigger re-ruled as above. The superseded Trigger line, verbatim:)*
 
 > **Trigger**: `release:next:phase-1` — per component, the event that owes the close stays: the next PR that changes that component's rendering or contracts (item arms below). Not a path: the items span several components, each with its own fix PR. *(Token set 2026-10-20, Lina; the original two arms follow unchanged. Re-ruled 2026-10-21, Lina, from `manual` under F-3 (a′) of ballot 2026-10-20-manual-records-routed-readers, ratified Peter 2026-10-20: a P1 consumer-blocking record may not carry `manual`, because a `manual` record never lapses and this one reaches end users of a consumer's product. No git-visible token expresses "the next PR that changes that component's rendering or contracts" — it is a per-component event with no single PR number or path glob — so the floor is `release:next:phase-1`, where the next release walk reads the record. The event is kept in prose as the start condition.)*
+
+## The native half in Spec 129's requirements (2026-11-05, Lina, owner, rule 9)
+
+Spec 129's requirements (#658 at `0a2534311`, Requirement 8) split this record's native half. The Trigger line above is unchanged; this section records the split and corrects the Trigger's planned re-rule target.
+
+- **Spec 129's**: A5, A7 and A6's ripple part (`rememberRipple` → `ripple(...)` at Button-Icon L245, Input-Checkbox-Base L471 and Input-Radio-Base L424). These are accepted by `harness-android-components` under a Compose pin of 1.7 or later, where `rememberRipple` is an error (Requirement 8.2). The dead import in `VerticalListButtonItem.android.kt` gives no diagnostic, so a text guard accepts its removal (8.2).
+- **Spec 132's (D5, D6)**: A3, I1, I2, I3, A1, A2, A4 and A6's non-ripple parts (Requirement 8.4). No agent can hear VoiceOver or TalkBack, and 129 runs no tests, so nothing in 129 can accept them. A3 follows them because its F-3 trigger is a change to the checkbox's rendering or contracts, and 132's per-platform contract validation is that change. A 129 component PR may carry their code, claimed only as "compiles".
+- **The planned re-rule target is corrected.** The PR that closes the last web item re-rules the native half to `path:.kiro/specs/129-consumer-generation-completeness/completion/claims-pass.md`, per E2 (Process-Spec-Planning § "Before Formalizing: Records That Name the Spec"), not to `requirements.md` as the Trigger line says. At 129's claims pass, the 129 items close and the 132 items are re-ruled to Spec 132's path once its directory exists.
+
+*Signed: Lina, 2026-11-05.*
