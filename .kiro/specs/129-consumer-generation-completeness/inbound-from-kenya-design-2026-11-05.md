@@ -263,6 +263,11 @@ Each takes under a second (VERIFIED: 0.35 s for a module emit plus object code o
   - Cost: a CI change, a new workflow under `.github/workflows/`, which needs a grant and your go. Plus one free standard macOS run.
 - **Neither is needed for 129.** I recommend the CI probe at 132's outline: it measures the runner the lane would use, and leaves this Mac unchanged.
 
+**Peter's answer (2026-11-05, recorded by Kenya).** Verbatim, received 2026-11-05T13:05:54Z (`date -u` at receipt; orchestrator relay): "yes, 4 (a), 7 (a)". The "4 (a)" is this decision. He had read: "Decision 4: (a), keep 17.0, with the floor decided at 132's outline?", together with the synthesis of `[KENYA D4]` and `[LEONARDO D4]`.
+- **What it settles**: iOS 17.0 stays Core Goals' minimum, and it is Requirement 2.9's deployment target for 129.
+- **What it leaves open, and when it closes**: the floor is decided again at Spec 132's outline, **before any native support claim ships** (Leonardo's deadline). Option (c), raising the minimum to 18, is a live candidate there.
+- **The wording rule until something runs on iOS 17**: shipped text says "built for iOS 17.0, not run on 17".
+
 ---
 
 ## 6. Out of this inbound
