@@ -133,14 +133,14 @@ export const PACKAGE_READINESS: Record<string, PlatformReadiness> = {
       "hasTests": true
     },
     "ios": {
-      "status": "production-ready",
-      "reviewed": true,
+      "status": "development",
+      "reviewed": false,
       "hasImplementation": true,
       "hasTests": true
     },
     "android": {
-      "status": "production-ready",
-      "reviewed": true,
+      "status": "development",
+      "reviewed": false,
       "hasImplementation": true,
       "hasTests": true
     }
@@ -153,14 +153,14 @@ export const PACKAGE_READINESS: Record<string, PlatformReadiness> = {
       "hasTests": true
     },
     "ios": {
-      "status": "production-ready",
-      "reviewed": true,
+      "status": "development",
+      "reviewed": false,
       "hasImplementation": true,
       "hasTests": true
     },
     "android": {
-      "status": "production-ready",
-      "reviewed": true,
+      "status": "development",
+      "reviewed": false,
       "hasImplementation": true,
       "hasTests": true
     }
