@@ -238,6 +238,21 @@ The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consu
 
 **Re-sign (2026-10-19): ASSENT — 7 of 7.** The unit moved when ballot `2026-10-18-true-native-development-is-not-true-native-design` § 6.8 was applied (`dccd3fc61`). Judged against the overlay rendering at `sha256:ecee4b84…`. `native-1` renders verbatim as my new line: "Jetpack Compose composables with Material 3 as structural base (Scaffold, system bars); visuals follow DesignerPunk tokens and the spec". A consumer's Data reads Material 3 as structure, and the look comes from the spec, as the ballot intends. `native-2` keeps the 2026-09-29 re-point, and the removal of "the stale `dist/*.kt` snapshots" (subtraction-1) still applies. The Task 16.3 dependency I accepted then is closed: `package.json` `files` now negates `dist/android/**`, so the subdirectory copy no longer ships. `native-3` to `native-7` are verbatim.
 
+**Re-signed 2026-11-05 (Core Goals Android-minimum ballot, item 1, site 2): ASSENT, `surviving` 7 of 7 (`native-1` to `native-7`).** A new act, read fresh against the new rendering. Nothing is carried from the 2026-10-19 signature above.
+- **The ballot**: `.kiro/docs/ballots/2026-11-05-core-goals-android-minimum.md` (RATIFIED, Peter, 2026-11-05, #673, F-1 (iii)).
+  - The profile author applied site 2 (L461) and re-quoted `native-7` at `539beadd7`.
+  - The rendering was regenerated at `b46d3f693`.
+  - I re-confirmed the set at 7 at `ff9d1423e`.
+- **What I read, in this session, through tool results**: the unit as rendered in all three consumer copies (`_canonical/agents/data.md`, `cc/.claude/agents/data.md`, `kiro/.kiro/agents/data-prompt.md`, `## Android-Specific Guidance`, committed at `b46d3f693`). They are identical, and I read them through `readConsumerSpans`. The last bullet reads `- Android minimum version per Core Goals` and ends there. No copy contains "not yet constrained".
+- **The removal**: the row's one removal ("the stale `dist/*.kt` snapshots", `subtraction-1`) is unchanged; the row equals `origin/main`'s before this act (checked by script). The rendering shows it subtracted, and `native-2` keeps the 2026-09-29 re-point ("never DesignerPunk's un-themed base snapshots at `node_modules/@3fn/core/dist/*.android.kt`").
+- **Credited**:
+  - `native-1` and `native-3` to `native-7` appear verbatim in each of the three rendered copies (checked by script).
+  - `native-2` is entailed under the re-keying, as ruled on 2026-09-29.
+  - `native-7` now points a consumer's Android agent at the minimum Core Goals states. Re-ruled `obligation` at `ff9d1423e`: setting or accepting a `minSdk` below it contradicts it.
+- **Hashes.**
+  - `canonicalHash` moves from `ecee4b84...` to `f1af38d4...`: `hashText` of the unit from `partition(body).units`, equal to the overlay pin and to my confirmation.
+  - `renderedHash` moves from `fb059093...` to `105c5501...`: `renderedHashOf` over the committed rendering, `rowSpanSource('canonical/agents/data.md', 'body', '#android-specific-guidance:preamble')`.
+
 ## `#frontmatter:writeScope[.kiro/issues/**]`
 
 signer: data
