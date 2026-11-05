@@ -18,7 +18,7 @@
   - What is left on the component side is about a dozen reads.
 - **Item (vi).** The adopter's own theme files are the source, never the package's. That is Model B applied as Peter ruled it.
 - **Spec 123 Requirement 1.5.** My signed decision is in § 6, ready for `design.md`.
-- **One item is Peter's: whether our component tokens also go into adopters' web output.** I lean "not now" (§ 5).
+- **Whether our component tokens also go into adopters' web output is a team decision, not Peter's**, because the option chosen breaks no supported web adopter (§ 5). Decision, pending Ada: native only now. Retiring the package CSS waits for 17.0.0 with Spec 128.
 - **For Spec 132**, I draft the shape of two ballots and one record (§ 7): which native types are public, how contracts state per-platform checks, and the `rendering:` field.
 
 ---
@@ -151,9 +151,11 @@ How it is checked: Req 9.2's override-map case shows an edited value in the outp
 
 ---
 
-## 5. Whether item (ii) harvests into the adopter's web output: **Peter's** (Ada, Lina; Sparky consulted)
+## 5. Whether item (ii) harvests into the adopter's web output (Lina with Ada; Sparky consulted)
 
-This decides what supported web adopters import, so it is a promise to them. I do not decide it.
+**Whose call.** The rule on record is that this reaches Peter only if an option would break a supported web adopter (`[THURGOOD R2]` on requirements; what Peter read on 2026-11-05: "It comes to you only if it would break a web adopter"). The decision below breaks no one, so it is the team's. Option C would break web adopters, so if C is ever proposed, it goes to Peter then, at 17.0.0.
+
+**Decision (joint, pending Ada): option A.**
 
 - **The problem.** On iOS and Android, our component tokens must reach the adopter's own generated output, or our components cannot compile (Req 5.1). On web they already arrive another way: adopters import `@3fn/core/component-tokens.css`, where every reference binds late to the adopter's primitives (`--avatar-size-xs: var(--size-300)`, VERIFIED in the built `dist/ComponentTokens.web.css`). The Integration Guide tells them to "keep importing it on every path" (L144). The question is whether 129 also writes our component tokens into the adopter's own web CSS.
 - **Option A: native only; web keeps the package CSS.**
@@ -165,11 +167,11 @@ This decides what supported web adopters import, so it is a promise to them. I d
 - **Option C: switch web to the adopter's output, and retire the package CSS.**
   - Opportunity: one source on every platform, in line with Model B.
   - Risk: every web adopter changes an import, so it is a breaking change for 17.0.0, which is tied to 128's package split.
-- **My lean: A now, C considered at 17.0.0 with 128.**
+- **Decided: A now. C is a consideration for 17.0.0, with 128's package split, and goes to Peter if proposed.**
 - **What survives under A**:
   - "Same group name, theirs wins" holds on native by construction, and on web only by import order. INSTALL must say which order.
   - D2 stays iOS and Android only (Req 1.3 already).
-- **Evidence Peter needs first**: none for A. For B, Sparky's browser check that duplicate custom-property definitions in two imported files resolve by order with no warning. It costs nothing to download, and it is Sparky's.
+- **Evidence**: none is needed for A. B would first need Sparky's browser check that duplicate custom-property definitions in two imported files resolve by order with no warning. It costs no download, and it is Sparky's.
 
 ---
 
@@ -184,7 +186,7 @@ For `design.md`, verbatim; Thurgood places it.
 > - Each reference is emitted by name, so it binds to the consumer's primitives.
 > - Where a consumer's group and ours share an emitted group name, the consumer's wins, and the replacement is reported.
 > - A file that registers no tokens is reported, not passed silently.
-> - Web follows Peter's ruling on § 5 of the 2026-11-05 design inbound.
+> - Web is not harvested in 129: it keeps `@3fn/core/component-tokens.css`, which binds late to the consumer's primitives (§ 5 of the 2026-11-05 design inbound, the team's decision).
 >
 > **It follows D2**, as approved by Peter on 2026-11-05 ("C yes", `evidence/2026-11-05-native-plan/plan-r2.md` § 1).
 >
@@ -247,7 +249,7 @@ The pointer line at `.kiro/specs/123-consumer-distribution/requirements.md` § R
 ## 8. Questions and consults
 
 - [@ADA] §§ 1, 2 and 4: your agreement or your counter, item by item. These three are joint, and none is final without you. -- [LINA design inbound]
-- [@SPARKY] § 5 option B: if Peter asks for B, will you run the duplicate-definition browser check? -- [LINA design inbound]
+- [@SPARKY] § 5: do you see any web-adopter effect of option A that breaks a supported consumer? If so, the item goes to Peter after all. -- [LINA design inbound]
 - [@LEONARDO] § 7.3: does `kind: platform | drawn` with a reason carry what D5 needs, or does a per-control split (look versus behaviour, per the ballot's F-2) need two fields? -- [LINA design inbound]
 
 *Signed: Lina, 2026-11-05.*
