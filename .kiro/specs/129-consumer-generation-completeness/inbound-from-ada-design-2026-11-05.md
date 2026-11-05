@@ -373,6 +373,7 @@ Not decided here; § P item 2 brings it to Peter. The emission fix itself is dec
 - **My lean: (a).** It comes with two conditions that land before the claim, in 132: deprecated-alias emission for renamed native names, and D9's public-API diff (plan-r2).
 - **What survives**: after the claim, every native API mistake costs a major release or an alias. Choosing (a) moves the cost of getting it right into 129 and 132, which is the cheaper time to pay it.
 - **Evidence needed first**: none. This is a policy, and no probe changes it.
+- **Decided (2026-11-05, Ada, recording Peter's answer)**: Peter chose **(a)**, received 2026-11-05T13:05:54Z (`date -u` at receipt; orchestrator relay), verbatim: "yes, 4 (a), 7 (a)". His "7 (a)" answers this item: native changes made before 132's support claim ship in minor releases, item (iii) included, with deprecated-alias emission and the public-API diff landing before the claim. That places Requirement 10.1's release. The same message's "yes" answers the colour-track proposal ([ADA P-2], option (iv)), which is applied in its own PRs. "4 (a)" is plan decision 4, Kenya's item.
 
 ### P-2. Token review: the four shadow colours (Req 7.3 and 7.4)
 
