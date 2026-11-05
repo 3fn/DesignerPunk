@@ -359,3 +359,91 @@ describe('scripts/issues-owned.sh', () => {
     });
   });
 });
+
+/**
+ * Owner-line attribution (README rule 9): the seats named in the Owner/Owners header, not every
+ * seat the line's prose mentions. Found when a `**Consulted**: Data` written on the Owner line
+ * listed the record under Data. Each fixture record is `manual`, so a seat's read lists it or does
+ * not. Own throwaway repository: the seats here include Kenya and Data.
+ */
+describe('scripts/issues-owned.sh — the owner names on an Owner line', () => {
+  let base: string;
+  let clone: string;
+
+  const owners = (file: string): string[] =>
+    ['Ada', 'Data', 'Kenya', 'Lina', 'Stacy', 'Thurgood'].filter((seat) => lineFor(run(clone, [seat]), `${file}.md`) !== undefined);
+
+  beforeAll(() => {
+    base = fs.mkdtempSync(path.join(os.tmpdir(), 'issues-owned-owner-'));
+    const origin = path.join(base, 'origin.git');
+    const seed = path.join(base, 'seed');
+    clone = path.join(base, 'clone');
+    git(base, 'init', '-q', '--bare', '-b', 'main', origin);
+    git(base, 'clone', '-q', origin, seed);
+    git(seed, 'checkout', '-q', '-b', 'main');
+    for (const a of ['ada', 'data', 'kenya', 'lina', 'stacy', 'thurgood']) write(seed, `canonical/agents/${a}.md`, `# ${a}\n`);
+    write(seed, '.kiro/issues/README.md', '# README\n');
+
+    const rec = (file: string, ownerLine: string): void =>
+      write(seed, `.kiro/issues/${file}.md`, record(ownerLine, '`manual` — owner-line fixture'));
+    rec('consulted-same-line', "**Owner**: Thurgood (the instrument's workflows). **Consulted**: Data (the 26.04 move, Q5 R2 and R3).");
+    rec('consulted-no-sentence-end', '**Owner**: Thurgood **Consulted**: Data');
+    rec('aside-names-seats', '**Owner**: Lina (the component; Ada consulted on the token, Data verifies Android)');
+    rec('second-sentence', '**Owner**: Thurgood. Stacy is an interested party and Ada is consulted.');
+    rec('other-bold-keys', '**Owner**: Lina (the file). **Verifiers**: Kenya (iOS), Data (Android). **Filed by**: Stacy.');
+    rec(
+      'distribution-charter',
+      '**Owners**: **Kenya (iOS) and Data (Android) — design the distribution shape.** **Lina — owns the component content** (the shape touches her write scope). **Ada — owns the theme-conformance generator change** (a generator-side decision).',
+    );
+    rec('two-owners-with-asides', '**Owners**: Stacy (owner of a register row) and Thurgood (steward of the convention). Rule 9 applies to every later edit.');
+    rec('owners-semicolon-list', '**Owners**: Lina (items 1, 2 and 6); Ada, consulted on token meaning (items 1, 2)');
+    rec('rows-below', '**Owner**: rows below (Lina, Thurgood, Ada). **Walk**: Thurgood.');
+    rec('owner-after-other-fields', "**Date**: 2026-10-13 · **Ruled**: Peter, 2026-10-13 · **Owner**: **Lina** (the sentence's home; the consult spans Lina, Ada, Thurgood)");
+    rec('owner-not-a-seat', '**Owner**: **Peter**. **Filed by**: Thurgood, under rule 10.');
+    commit(seed, 'records');
+    git(seed, 'push', '-q', 'origin', 'main');
+    git(base, 'clone', '-q', origin, clone);
+  });
+
+  afterAll(() => {
+    fs.rmSync(base, { recursive: true, force: true });
+  });
+
+  it('a **Consulted**: on the Owner line does not make the consulted seat an owner', () => {
+    expect(owners('consulted-same-line')).toEqual(['Thurgood']);
+    expect(owners('consulted-no-sentence-end')).toEqual(['Thurgood']);
+  });
+
+  it('a seat named in a parenthesised aside is not an owner', () => {
+    expect(owners('aside-names-seats')).toEqual(['Lina']);
+  });
+
+  it('a seat named in a later sentence is not an owner', () => {
+    expect(owners('second-sentence')).toEqual(['Thurgood']);
+  });
+
+  it('the next bold key ends the list (Verifiers, Filed by)', () => {
+    expect(owners('other-bold-keys')).toEqual(['Lina']);
+  });
+
+  it('a line written as bold segments is one list: the four-seat distribution charter keeps all four', () => {
+    expect(owners('distribution-charter')).toEqual(['Ada', 'Data', 'Kenya', 'Lina']);
+  });
+
+  it('a multi-owner prose line names every seat on the list', () => {
+    expect(owners('two-owners-with-asides')).toEqual(['Stacy', 'Thurgood']);
+    expect(owners('owners-semicolon-list')).toEqual(['Ada', 'Lina']);
+  });
+
+  it('when the list names no seat outside parentheses, the parenthesised names are the list', () => {
+    expect(owners('rows-below')).toEqual(['Ada', 'Lina', 'Thurgood']);
+  });
+
+  it('an Owner token after other header fields reads only what follows it', () => {
+    expect(owners('owner-after-other-fields')).toEqual(['Lina']);
+  });
+
+  it('an owner who is not a seat lists under no seat (the filer is not the owner)', () => {
+    expect(owners('owner-not-a-seat')).toEqual([]);
+  });
+});
