@@ -395,6 +395,7 @@ Not decided here; § P item 2 brings it to Peter. The emission fix itself is dec
 - **My lean: (1).** The channel question (2) goes to the colour-track spec with blend, where shadow and interaction colours are designed together. That means the channel half returns to the blend record's intake, which I noted on 2026-11-05 had left it. I will correct that note in the PR that applies your choice.
 - **What survives**: the shadow family stays structurally different (OKLCH literals, not channels) until the colour-track spec.
 - **Evidence needed first**: none beyond the values above. Rendering is unchanged, because the values equal today's `rgba`.
+- **Decided (2026-11-05, Ada, recording Peter's answer)**: Peter chose **(1)**, received 2026-11-05T05:54:32Z (orchestrator relay), verbatim: "Re: P-2, (1); but we need to address the surviving issue about the larger migration". The surviving issue he read: "the larger migration waits for a spec that has no folder yet". My proposal for it goes to the orchestrator separately, and its outcome lands in its own PR. The four OKLCH values above are the design's values for Requirement 7.4, and the design records why channel tokens are not created in 129: they belong with blend in the colour-track spec.
 
 ### P-3. Not his, in my reading, but he asked to hear about it: our component tokens in adopters' web output
 
