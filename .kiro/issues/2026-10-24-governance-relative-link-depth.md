@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-24
 **Status**: ACTIVE
-**Owner**: Thurgood (the class option, the template corrections, the two side findings). Co-sweepers for their own files: Ada (Rosetta/token docs), Lina (Stemma/component docs).
+**Owners**: Thurgood (the class option, the template corrections, the two side findings); co-sweepers for their own files: Ada (Rosetta/token docs), Lina (Stemma/component docs). *(Owner line before 2026-11-05, rewritten for the owners sweep: **Owner**: Thurgood (the class option, the template corrections, the two side findings). Co-sweepers for their own files: Ada (Rosetta/token docs), Lina (Stemma/component docs).)*
 **Trigger**: `manual` — the event that owes the close is Peter's dated ruling on the § 6 fork, appended to this record; the § 7 side findings are disposed (fixed or filed) in the same append. Re-ruled to `merge:#<N>` by the owner if a fixing PR for the chosen option opens first (rule 1).
 **Class**: P3 improvement · charter *(set 2026-10-24, Thurgood; the CORRECTIONS in § 3 and § 4 ship in the PR that files this record, so what stays open is a decision and two side findings, none of which misleads a reader today beyond what § 3 already fixed)*
 **Filed by**: Thurgood, under rule 10, in the PR that carries the corrections (branch `fix/governance-link-depth-sweep`). The observation is Ada's (item 4 audit, 2026-10-24, § 5 of her read, which is in session notes and nowhere committed); this record is its committed form.

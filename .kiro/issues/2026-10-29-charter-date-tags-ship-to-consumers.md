@@ -1,7 +1,7 @@
 # Charters carry short provenance tags (a date, a name, no SHA) that ship into consumers' copies; the dated-pointer rule does not reach them
 
 **Date**: 2026-10-29
-**Owner**: Thurgood (the consumer overlay author, and the filer). Each line's consumer disposition is its charter owner's call: Ada, Data, Kenya, Leonardo, Lina, Sparky, Stacy, Thurgood. Rule 9 applies to every later edit.
+**Owners**: Thurgood (the consumer overlay author, and the filer); and, each for its own charter line's consumer disposition, Ada, Data, Kenya, Leonardo, Lina, Sparky, Stacy. Rule 9 *(Owner line before 2026-11-05, rewritten for the owners sweep: **Owner**: Thurgood (the consumer overlay author, and the filer). Each line's consumer disposition is its charter owner's call: Ada, Data, Kenya, Leonardo, Lina, Sparky, Stacy, Thurgood. Rule 9)* applies to every later edit.
 **Filed by**: Thurgood, under README rule 10, in the DRAFT of ballot `.kiro/docs/ballots/2026-10-29-dated-pointer-paths-and-edit-kind-check.md` (§ 2.4), which leaves these tags outside its rule.
 **Class**: P3 improvement · defect *(set 2026-10-29, Thurgood, rule 12. No reader is misled into a wrong act. A consumer reads DesignerPunk-internal dates and names that mean nothing in their repo.)*
 **Trigger**: `path:.kiro/specs/131-governance-simplification/requirements.md` — the event that owes the close is Spec 131's requirements: the first commit that adds them takes this record in, or leaves it out with a reason (`governance/Process-Spec-Planning.md` § "Before Formalizing: Records That Name the Spec"). If they leave it out without a reason, it lapses and returns to Peter (rule 11).
