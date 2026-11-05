@@ -3,6 +3,7 @@
 **Date**: 2026-11-05
 **Spec**: 129 - Consumer-Generation Completeness
 **Status**: Design Phase — **R2**: the seven R1 reviews and the four owners' R2 cross-read are folded in (`feedback/design.md`, `[THURGOOD R2]`). Every R1 open item is decided by its owner, except the few in § 16, each of which has an owner and the round that closes it. Tasks start after this file merges (Spec-Feedback-Protocol § "Sequential Formalization Gate").
+**Amended in the tasks round (2026-11-05)**: § 10's fallback for older configs is replaced by the registration-keyed built-in bridge (Ada and Lina, the Q3a co-owners), with a dated line in place.
 **Author**: Thurgood (assembler; owner of the comparator, § 3). Every other call here belongs to its owner and is cited to where the owner made it. **The owner rule**: where an item is a named owner's call, that owner's latest position (R2 where they wrote one) is the decision; other seats' accepts and residuals are recorded beside it.
 **Go**: Peter, received 2026-11-05T05:38:16Z (orchestrator relay), verbatim: "658 and 664 are merged; go for design".
 **Dependencies**: as `requirements.md` header; plus Spec 133 (colour-track, placeholder outline, #669), which receives the shadow channel half (§ 8).
@@ -395,28 +396,41 @@ The quoted "§ 5" is L § 5. **Owed**: the dated pointer line at `.kiro/specs/12
 
 **Owners**: Lina and Ada (Q3a); Ada (the pipeline, the fallback, the six groups). **Source**: L § 4; A §§ D-6, D-11; ADA R1 O-13, ADA R2; LINA R1 O-13; LEONARDO R1 point 6; SPARKY R1 § 3. **Satisfies**: Req 9.2, 9.3, 9.4, 9.5; Req 9's "Carried to design".
 
-**The source** (Lina, Ada; confirmed in R1): `generate` builds the theme registry from the consumer's config `themes`, which import their copied `src/tokens/themes/**`. The static imports in `generateTokenFiles.ts` L19–21 are removed. No package override is read, built-in themes included.
+**The source** (Lina, Ada; confirmed in R1; amended at the tasks round, below): `generate` builds the theme registry from the consumer's config `themes`, which import their copied `src/tokens/themes/**`. The static imports in `generateTokenFiles.ts` L19–21 are removed. **Registration decides**: no package override is read for a theme the config registers. An unregistered built-in map keeps the package's built-in until the next major (the bridge, below).
 - **Exception, by definition: package mode** (no `tokenSource`, `tokenSourceMode: 'package'`). Every primitive and semantic comes from the package, and so do its built-in themes. Model B does not apply to an adopter who copied nothing (ADA R1).
 
 **Ada's additions** (Lina agrees, LINA R1):
 - `ConfigTheme` gains an optional `{ light, dark }` form, which is additive.
 - `init` writes the WCAG entry with both maps.
 
-**The fallback for older configs (ADA R1 O-13, generalising A § D-6; Leonardo's missing-`themes` case)**:
-- **The rule, in local mode**: a built-in theme name (`dark`, `wcag`, and WCAG's dark map) that the config does not register, but whose `SemanticOverrides.ts` exists in the consumer's copied `themes/`, is applied from **their copy**. `generate` prints the config line to add.
-  - This covers a config with no `themes` key at all. `ConfigLoader` turns an absent key into `[]`, and reading config alone would then drop dark mode on web.
-- **When the file is missing** (ADA R2, answering Lina and Sparky): `generate` prints that the theme or mode is not emitted, and why, naming the missing file. It never falls through silently.
-- **Acceptance**: `Consumer Guard` cases for (a) a config with no `themes` key, (b) the old shape without a WCAG dark map, and (c) package mode. Each asserts web output **by value**: the `:root[data-theme="wcag"]` block and the base `light-dark()` values are byte-identical to the output generated before 129 for the same fixture (SPARKY R1 § 3).
-  - Without the fallback, every WCAG override where light and dark differ collapses to its light value: a silent contrast regression on a supported path.
-- Retire the fallback at a major.
-- Leonardo asked how long `init` has written `themes: [dark, wcag]`. Ada has not counted old-shape adopters (test01 is a candidate, ADA R1). The fallback covers them either way.
+**The built-in theme bridge, keyed on registration** *(Amended 2026-11-05, tasks round, by the Q3a co-owners, Ada and Lina, whose call it is; not Peter's, since no supported adopter's output changes. It replaces the R2 "fallback for older configs", which applied an unregistered copy. Prior text at `5e894837c`. Positions: `[ADA Q3a]`, `[LINA Q3a]` with its dated `[LINA Q3a R2]` line, and `[ADA Q3a R2]`, spliced in `feedback/tasks.md` § "Q3a addendum".)*
+
+> In local mode, each built-in theme map (`dark`, `wcag` light, `wcag` dark) that the config registers is read from the adopter's file, and a missing file fails `generate`. Each map the config does not register is read, as before 129, from the installed package's built-in file, with a warning on every run naming the config line that would make it the adopter's own, until the next major release (planned 17.0.0), after which an unregistered built-in is not applied and `generate` says so. Package mode keeps the package's built-ins. A registered map whose values differ from the package's prints, on its first run after U9, how many values now differ.
+
+*(Ada's sentence, `[ADA Q3a R2]`, verbatim.)*
+- **Why registration, not file presence** (Lina's test01 reading, MEASURED, read-only, `@3fn/core` 12.0.5): test01 has copies of all three built-in maps but registers only `wcag` light. Its unregistered `dark` copy lacks four text overrides the package carries. Applying the unregistered copy, as the R2 fallback did, would have shipped dark text at its light value on dark surfaces. A bridge keyed on "no copy" would not have fired at all. An unregistered file is not a declared intent, so it does not change output.
+- **The WCAG dark map** follows the same key (Ada's narrowing, accepted by Lina in `[LINA Q3a R2]`): unregistered means the package's built-in, with the warning. On test01 both readings give the same output, because its `dark-wcag` copy matches the package's (MEASURED).
+- **Loading**: the bridge reads `node_modules/@3fn/core/src/tokens/themes/<dir>/SemanticOverrides.ts` at run time through `scopedTsRequire`, never by a static import, so § 10's value-import guard stays green (`[ADA Q3a]`).
+- **The warning** (every run, per unregistered map; `[ADA Q3a R2]`): `generate: theme '<name>' (<mode>) is not registered in designerpunk.config.ts, so DesignerPunk's built-in overrides from @3fn/core <version> were applied, as before 129. To use your own, register it: <the config line>. From the next major release, an unregistered built-in theme is not applied.`
+- **Opt-out**: register the theme with empty overrides (`{ name: 'wcag', mode: 'both', overrides: { light: {}, dark: {} } }`); no new config field.
+- **Print, not fail** (Ada, #682 body; unchanged by the bridge): a registered map whose file is missing fails, because the config's import fails. An unregistered map is bridged with the warning. After the major, it is not applied, `generate` says so, and for a WCAG dark map adds that dark values fall back to light where they differ. `generate` never fails on an unregistered map.
+- **The registered-map change is not a break under Req 10.4** (Ada and Lina agree). test01's registered `wcag` light changes `color.action.primary` from `teal300` to `pink300`. That is the adopter's own declared value arriving, as the shipped message "registered, not applied yet" announced, and under Model B those tokens are theirs. The release notes name it (Req 10.4), and the first-run count makes it visible. **Residual**: an adopter who registered long ago and forgot their edits sees a change with no code change of their own. The count is the mitigation. It does not reach Peter.
+- **Retirement**: the next major (the 17.0.0 charter: "Breaking changes ship together there").
+- **Unmeasured**: how many adopters beyond test01 have unregistered built-ins. A scratch `init` from a 15.x-born packed install would show whether that `init` registers `dark`.
+- **Acceptance** (Task 14, replacing the R2 cases):
+  - **Jest**: the resolver, for three maps × {registered, unregistered, registered-but-missing} × {local, package mode}.
+  - **`Consumer Guard` (a)**: a test01-shaped fixture, with copies present and differing and only `wcag` light registered. The `dark` and WCAG-dark output is byte-identical to the pre-129 golden; `wcag` light equals the fixture's file, and the first-run count prints; the warning prints for `dark` and WCAG dark on two consecutive runs.
+  - **(b)**: a fresh-`init` config that registers all three. No warning prints, and Req 9.5's removal case runs here.
+  - **(c)**: the opt-out. No WCAG difference, and no warning.
+  - **(d)**: package mode. No warning, and the built-ins apply.
+- Leonardo asked how long `init` has written `themes: [dark, wcag]`. That is the unmeasured count above.
 
 **Effects**:
 - **On item (i)**: one native instance per (config theme, mode). The theme's members do not change with which themes are registered (§ 4).
 - **On web**: a registered custom theme emits as `:root[data-theme="<name>"]`, which matches `<html>` only, so the "page-wide" caveat stays until Q3b (Sparky). The `generate` message "registered, not applied yet" (`errorCatalog.ts` L557) and the web agent doc change in that PR.
 
 **Override fixes no longer reach adopters (Model B)** (LEONARDO R1 point 6 (b); L § 4's residual):
-- **The release** that ships this change says plainly that "dark and WCAG values now come from your copy" (Req 10.4 and 15, release text).
+- **The release** that ships this change says plainly that dark and WCAG values now come from your copy for each theme your config registers, and from DesignerPunk's built-in, with a warning, for each it does not, until the next major (Req 10.4 and 15, release text; the bridge above, amended 2026-11-05).
 - **Leonardo also asks** that `sync` report when the package's shipped override maps differ from the adopter's copy, so that an accessibility fix is never silently missed (Core Goals: accessibility-first). That report overlaps the record left out of 129 at requirements (disposition #13, `2026-11-04-consumers-get-no-report-of-what-an-upgrade-changed-in-generated-tokens.md`, re-read at CLOSEOUT).
   - Taking it into 129 needs a requirement criterion. Ada decides in the tasks round whether 129 takes the override-map half, or it stays with that record (§ 16).
 
@@ -515,7 +529,7 @@ Each behaviour is its owner's, with its instrument in the cited requirement or s
   - a definition file registering no tokens is reported (Req 5.1);
   - a renamed or deleted referenced token is reported, and `sync` reports one that an upgrade introduces (Req 5.4);
   - a theme file that does not load fails, naming the file;
-  - a built-in theme applied from the adopter's copy prints the config line to add, and one not emitted prints why (§ 10);
+  - an unregistered built-in theme map is applied from the package's built-in with a warning on every run naming the config line to add, a registered map whose file is missing fails, and a registered map that differs from the package's prints its count on the first run after U9 (§ 10, amended 2026-11-05);
   - an unknown platform or out-of-root path under `platforms:` fails (Req 12.3);
   - a reserved-package `.kt` file warns (§ 9).
 - **`init`**: a `generate` failure finishes the birth, leads with the re-run command, and exits non-zero (Req 11.4).
@@ -579,7 +593,7 @@ A register: each row points to its section. "Decided" is the owner's latest posi
 | 18 | Web not harvested (option A); the cascade sentence; `var()` reach | Lina, Ada; Sparky | decided (team) | § 9 |
 | 19 | Reserved Kotlin packages: warn, never fail, in 129 | Ada, Data | decided | § 9 |
 | 20 | Spec 123 Req 1.5 | Lina | signed | § 9 |
-| 21 | Q3a source, package-mode exception, older-config fallback | Lina, Ada | decided | § 10 |
+| 21 | Q3a source, package-mode exception, the registration-keyed built-in bridge (amended 2026-11-05) | Lina, Ada | decided | § 10 |
 | 22 | Six groups from one loaded token set | Ada | decided | § 10 |
 | 23 | Q6: content | Ada | decided | § 11 |
 | 24 | Row 21 grid rule and Lina's `offGridReason`; row 1 grammar | Ada; Lina | decided | § 12 |

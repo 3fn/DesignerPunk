@@ -2,8 +2,8 @@
 
 **Date**: 2026-11-05
 **Spec**: 129 - Consumer-Generation Completeness
-**Status**: Tasks Phase — **R2**, the seven R1 reviews folded in (`feedback/tasks.md`, `[THURGOOD R2]`). Execution starts after this file merges (Spec-Feedback-Protocol § "Sequential Formalization Gate").
-**Amended in this round**: `requirements.md` Requirement 10.1, with a dated line in place (Ada R1).
+**Status**: Tasks Phase — **R2**, the seven R1 reviews folded in (`feedback/tasks.md`, `[THURGOOD R2]`), plus the Q3a addendum (`[THURGOOD Q3a]`). Execution starts after this file merges (Spec-Feedback-Protocol § "Sequential Formalization Gate").
+**Amended in this round**: `requirements.md` Requirements 10.1 (Ada R1) and 9.5 (Lina, the Q3a bridge), and `design.md` § 10 (the registration-keyed built-in bridge, Ada and Lina), each with a dated line in place.
 **Author**: Thurgood (formalizer). Each parent names its PRIMARY; that seat's call governs its parent's how, within `requirements.md` and `design.md`.
 **Go**: Peter, received 2026-11-05T22:48:15Z (`date -u` at receipt; orchestrator relay), verbatim: "673 and 675 are merged; go for tasks". What he read: "Your go for 129's tasks round. That's where the work is cut into units, and the compile check is built first."
 **Dependencies**: as `requirements.md` header and `design.md` header. Spec 132 (planned, no directory) receives what 129 does not close; its deliverables, and its measured-cost record, are not tasks here.
@@ -38,18 +38,21 @@ The compile harness is built first (U1), because every native "compiles" in 129 
 - **Pins**: one file, `harness/pins.yaml`, with `consumer`, `ios` and `android` sections. Req 3.5 (a) compares parsed values, so a comment or whitespace edit changes no pin.
 - **Protected set**: `harness/protected-set.txt`, one record file name per line, sorted: the 129 intake records of `requirements.md` § "Record dispositions" plus rows 1, 3, 4, 15 and 22.
 - **Job names**: `harness-generate` (confirmed), then the four contexts of the requirements' Conventions. Each job also has a `(unit-branch)` name on `workflow_dispatch`, as every workflow in this repo does.
-- **Run policy (Req 2.10)**: `on: pull_request` with no `paths:` filter, plus `workflow_dispatch`. All four contexts run on every PR, a docs-only or records-only 129 unit PR included, so Req 2.10 never rests on a filter (Stacy design R1 § 2 item 5). The cost is a macOS run on every PR while the lanes measure; decision 6 (below) is where that is Peter's.
+- **Run policy (Req 2.10)**: `on: pull_request` with no `paths:` filter, plus `workflow_dispatch`. All four contexts run on every PR, a docs-only or records-only 129 unit PR included, so Req 2.10 never rests on a filter (Stacy design R1 § 2 item 5). The cost is a macOS run on every PR while the lanes measure; Peter accepted it with decision 6 (below).
 - **The Xcode pin (K-7)**: the newest stable Xcode 26 minor on the `macos-26` image at the unit's cut, with the readme's image version recorded. At this round's read (`actions/runner-images` `images/macos/macos-26-arm64-Readme.md`, image `20261026.0455.2`, `curl` 2026-11-05) that is Xcode 26.6 (`17F113`); Xcode 27 is only a public preview. No runner label beyond `macos-26` is needed, so Kenya's fork does not reach Peter (K-7, "When it becomes Peter's"; Kenya R1 confirms).
 
-### Decision 6 — runner classes and the promotion criterion (Peter's; the PR body's `**Open for Peter**:` line)
+### Decision 6 — runner classes and the promotion criterion (**ruled**, Peter)
+
+**Peter's answer**, received 2026-11-05T23:42:17Z (`date -u` at receipt; orchestrator relay), verbatim: "6 (a) with Kenya's condition; #676 (a) with the four fixes". The "#676" half is outside 129. **"6 (a)"**: the standard runners `macos-26` (Xcode per K-7) and `ubuntu-24.04` are approved now, and so is the promotion rule below. **"Kenya's condition"** is the softening in `[KENYA D6]`, which he read: the iOS checks are offered only after the Android ones, and only once three cold runs have measured the macOS queue time; if that queue time is poor, the iOS checks fall to promote-at-closeout. It is written as condition 5 below. The three seats consulted all picked (a): `[KENYA D6]`, `[DATA D6]` and `[STACY D6]`, spliced in `feedback/tasks.md` § "Decision 6 consult".
 
 The criterion the requirements ask this round to write (Req 2.12). A harness context is **offered to Peter for promotion** when all of these hold, each read from `evidence/harness-stability.md`:
 1. its floor (Req 3.4) and toolchain match (Req 3.11) are in place, and their falsification cases pass in `lane-functional-root`;
 2. **10 consecutive pull-request runs** with no break. In order of run, a verdict change between two runs must come with a different head SHA; a run whose attempts end with different conclusions is a break; a `cancelled` or `timed_out` conclusion, or a job that failed before the comparator ran, is a break; a break restarts the count;
 3. three cold-cache runs, each under the 10-minute ceiling (125-A Req 6.3), a run counting as cold when its cache-restore step reports a miss;
-4. for an iOS context, the pinned Xcode is still on the `macos-26` image at the offer, by the readme read then.
+4. for an iOS context, the pinned Xcode is still on the `macos-26` image at the offer, by the readme read then;
+5. **for an iOS context (Kenya's condition, ruled)**: both Android contexts are already promoted, and three cold runs of that iOS context record their macOS queue time (job created to job started, from the checks API) in the stability record. If any of those three runs' queue time plus its duration exceeds the 10-minute ceiling of condition 3, the queue time is poor. That iOS context is then not offered during 129 and becomes a promote-at-closeout offer. The reading of "poor" as that ceiling is Thurgood's, reusing 125-A Req 6.3's number; Kenya confirms it at U1.
 
-**The stability record is computed, not kept** (Stacy R1 § 3): `evidence/harness-stability.md` is the committed output of `scripts/harness/stability.ts` over the checks API (run id, head SHA, attempt, conclusion, cache-restore result and duration, per context), re-run before each offer. **Order**: the Android contexts first (the `ubuntu-24.04` class the gate already depends on), then the iOS contexts. **What each promotion is**: Peter's act per context, in one recorded change: `EXPECTED_CONTEXTS` +1 in `tools/agent-generator/verify-gate-registration.sh` (an issue-row grant naming that act, or Peter), the branch-protection setting (Peter), and `REQUIRED_WORKFLOWS` +1 in `.kiro/hooks/complete-task.sh` at the first promotion (Thurgood). Each fires Stacy's ARMING read. **Runner classes** proposed: `macos-26` and `ubuntu-24.04`, standard hosted runners, pinned by version in `runs-on`, never `-latest`; no billed larger runner.
+**The stability record is computed, not kept** (Stacy R1 § 3): `evidence/harness-stability.md` is the committed output of `scripts/harness/stability.ts` over the checks API (run id, head SHA, attempt, conclusion, cache-restore result and duration, per context), re-run before each offer. **Order**: the Android contexts first (the `ubuntu-24.04` class the gate already depends on), then the iOS contexts. **What each promotion is**: Peter's act per context, in one recorded change: `EXPECTED_CONTEXTS` +1 in `tools/agent-generator/verify-gate-registration.sh` (an issue-row grant naming that act, or Peter), the branch-protection setting (Peter), and `REQUIRED_WORKFLOWS` +1 in `.kiro/hooks/complete-task.sh` at the first promotion (Thurgood). Each fires Stacy's ARMING read. **Runner classes**, approved by Peter's "6 (a)": `macos-26` and `ubuntu-24.04`, standard hosted runners, pinned by version in `runs-on`, never `-latest`; no billed larger runner.
 
 ---
 
@@ -833,17 +836,24 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 - [ ] 14. The six groups and the theme registry from the consumer's copy (U9)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Sparky (Sonnet) — his charter line and the Q3b browser check · Lina (Sonnet) — regeneration and the lock · Thurgood (Sonnet) — the profile author's acts
-  **Traces**: Req 2.10, 9.2, 9.3, 9.4, 9.5, 15.1 (the served sentences); rows 19, 20 (row (g)) · design § 10
+  **Traces**: Req 2.10, 9.2, 9.3, 9.4, 9.5 (as amended), 10.4, 15.1 (the served sentences); rows 19, 20 (row (g)) · design § 10 (as amended 2026-11-05)
 
   **Success Criteria:**
   - For each of the six groups `docs/consumer/INSTALL.md` L77 names at `45f5262ee`, a `Consumer Guard` case edits it in the copied source, runs `generate`, and finds the edited value in the output, on web in the generated CSS.
-  - With the package's own copies of the six groups removed from the installed `node_modules`, `generate` succeeds with byte-identical output, accepted by a `Consumer Guard` case.
-  - `generate` builds the theme registry from the config's `themes`, the static imports at `generateTokenFiles.ts` L19–21 are removed, and in package mode the package's built-in themes still apply.
+  - With the package's own copies of the six groups removed from the installed `node_modules`, `generate` succeeds with byte-identical output for a fresh-`init` config that registers every built-in theme map, accepted by `Consumer Guard` case (b) (Req 9.5 as amended).
+  - `generate` builds the theme registry from the config's `themes`, and the static imports at `generateTokenFiles.ts` L19–21 are removed.
+  - A Jest test of the theme-source resolver covers the `dark`, `wcag` light and `wcag` dark maps, each registered, unregistered and registered-but-missing, in local and in package mode: registered reads the adopter's file, registered-but-missing fails `generate` naming the file, unregistered reads the package's built-in at run time through `scopedTsRequire`, and package mode reads the package's built-ins.
   - `ConfigTheme` accepts an optional `{ light, dark }` form, and `init` writes the WCAG entry with both maps.
-  - `Consumer Guard` cases for a config with no `themes` key, for the old shape without a WCAG dark map, and for package mode each assert that the `:root[data-theme="wcag"]` block and the base `light-dark()` values are byte-identical to the pre-129 output for the same fixture, committed at `tests/fixtures/pre-129-theme-css/` from `main` before this unit's first change.
-  - When a built-in theme's override file is missing from the consumer's copy, `generate` names the file and says the theme or mode is not emitted on native and that on web its dark values fall back to light, and a web assertion finds no `light-dark(` for the keys that differ.
+  - `Consumer Guard` case (a), a test01-shaped fixture with copies of all three built-in maps that differ from the package's and only `wcag` light registered, finds the `dark` and WCAG-dark web output byte-identical to the pre-129 golden committed at `tests/fixtures/pre-129-theme-css/` from `main` before this unit's first change.
+  - In case (a), the `wcag` light output equals the fixture's own file, and the first run prints how many of its values differ from DesignerPunk's built-in.
+  - In case (a), the bridge warning of design § 10 prints for `dark` and for WCAG dark, word for word, on each of two consecutive `generate` runs.
+  - `Consumer Guard` case (b), a fresh-`init` config that registers all three maps, prints no bridge warning.
+  - `Consumer Guard` case (c), `wcag` registered with empty overrides, shows no WCAG difference from the base and prints no warning.
+  - `Consumer Guard` case (d), package mode, prints no warning and applies the package's built-ins.
+  - `generate` never fails on an unregistered built-in map (Ada's "print, not fail", #682), and this parent's summary doc carries release-note text naming the bridge, its retirement at the next major, and that a registered built-in map now applies the adopter's own values (Req 10.4).
   - A registered custom theme emits as `:root[data-theme="<name>"]`, and the `generate` message "registered, not applied yet" (`errorCatalog.ts` L557) changes in this diff.
   - The web agent's line on registered themes (`canonical/agents/sparky.md` L313 at `d7f87174c`) states, in Sparky's words, that a registered theme emits as `:root[data-theme="<name>"]`, which matches `<html>` only, and that a theme on any other element still matches nothing.
+  - INSTALL L77's exception for the override maps is reworded, not removed (Req 9.3, 15): they still come from the package for each built-in theme the config does not register, until the next major.
   - The served sentences that say a registered theme is "not applied yet" or does not produce a `[data-theme]` block (`governance/Rosetta-System-Architecture.md` L566, `governance/Token-Quick-Reference.md` L114, and the Integration Guide L158 and L546 at `d7f87174c`, with INSTALL re-derived) state what is emitted, each in its owner's words, in this diff.
   - `npx tsx tools/agent-generator/diff-guard.ts` is green on the branch, `canonical/generated.lock` is the one a green run wrote, no authoring commit moves a `canonicalHash`, and `verify-signing-chain.ts --audit --pr <n>` is green after Sparky's confirmation and signature.
   - Sparky's browser check for Q3b is committed at `evidence/q3b-browser-check.md`, naming the browser and its version, as a finding that goes to Peter as the Q3b fork.
@@ -893,7 +903,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [ ] 14.1 One loaded token set from the consumer's barrel; the value-import guard; the removal case
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 9.2, 9.5_
-  - [ ] 14.2 The theme registry from config (`src/themes/ThemeRegistry.ts`); the fallback and its web message; package mode; the `{ light, dark }` form; the golden capture
+  - [ ] 14.2 The theme registry from config (`src/themes/ThemeRegistry.ts`); the registration-keyed bridge, its warning and first-run count; package mode; the `{ light, dark }` form; the golden capture; cases (a)–(d)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 9.2, 9.3_
   - [ ] 14.3 Row (g)'s freshness test; the 133 outline correction; the one-copy rule

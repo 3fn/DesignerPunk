@@ -815,3 +815,262 @@ Incorporation of the seven R1 entries above, spliced byte for byte from the seat
 - (ii) the four Kenya and Data ambient manifests, Task 16 — `added` (only if the generator rewrites them; Lina and Thurgood confirm at execution).
 
 **Round count**: no R2 review round is planned. Nothing above moves a unit boundary a seat relies on; the U11 dependency change is Kenya's own ask. One question is open for Ada (`wcag` fail or print), plus the charter Trigger for Kenya, Data and Stacy. Peter's one question is still decision 6, on the PR's `**Open for Peter**:` line.
+
+---
+
+## Q3a addendum (2026-11-05): the built-in theme bridge
+
+Ada and Lina, the Q3a co-owners, amend design.md § 10. Their position files follow verbatim, in the order written; `[LINA Q3a R2]` is the dated line at the end of Lina's file.
+
+#### [ADA Q3a] — the built-in theme bridge
+
+**In plain words.**
+- Today every adopter gets DesignerPunk's built-in dark and WCAG overrides, whatever their config says.
+- After 129's U9, an adopter whose token copy lacks those files would lose them. That is a break for a supported web adopter, in a minor release.
+- The bridge applies DesignerPunk's built-in file in that one case only, warns on every run, and is removed at the next major. Everywhere else, Q3a stands as ruled: no package override is read.
+
+**The rule.** It applies per built-in theme map: `dark`, `wcag` (light) and `wcag`'s dark map (`dark-wcag`). In local mode, the first case that matches wins:
+
+| # | Case | What `generate` does |
+|---|---|---|
+| 1 | The config registers it | Uses the config's import (the adopter's file). If that file is missing, the import fails and `generate` fails, naming the file. This is unchanged (design, "Error Handling") |
+| 2 | Not registered, and the consumer's copy exists at `<tokenSource>/themes/<dir>/SemanticOverrides.ts` | Applies their copy and prints the config line to add. This is design § 10's fallback, unchanged |
+| 3 | **Not registered, and no copy** | **The bridge**: applies the package's built-in file, as before 129, and prints the warning below on every run |
+| — | Package mode (no `tokenSource`) | The package's built-in themes, no warning. This is design § 10's package-mode rule, unchanged |
+
+- **How an adopter opts out**: register the theme with empty overrides (`{ name: 'wcag', mode: 'both', overrides: { light: {}, dark: {} } }`). That puts them in case 1, and the theme's values then equal the base. No new config field is needed.
+- **How it loads the file**: through the package's runtime path, `node_modules/@3fn/core/src/tokens/themes/<dir>/SemanticOverrides.ts`, read by `scopedTsRequire`, never by a static import. So D-11's value-import guard stays green.
+  - If that package file is also absent (Req 9.5's removal fixture), case 3 drops to the post-retirement message below.
+  - Req 9.5's fixture is a consumer born today, with its own copies, so it is case 1 or 2, and the bridge does not fire there.
+
+**The warning text** (exact; `<…>` are filled in):
+
+```
+generate: theme '<name>' (<mode>) — <tokenSource>/themes/<dir>/SemanticOverrides.ts not found and not registered in designerpunk.config.ts. Applied DesignerPunk's built-in overrides from @3fn/core <version>, as before 129. This fallback is removed in the next major release. To keep these values as your own, copy node_modules/@3fn/core/src/tokens/themes/<dir>/SemanticOverrides.ts into <tokenSource>/themes/<dir>/ and register it; to drop the theme, register '<name>' with empty overrides.
+```
+
+**Retirement: the next major release, planned as 17.0.0** (the 17.0.0 charter: "Breaking changes ship together there").
+- At that release case 3 stops applying anything. It prints `generate: theme '<name>' (<mode>) — not emitted: <path> not found and not registered`, plus, for a WCAG dark map, "dark values fall back to light where they differ" (Stacy, feedback L742).
+- **It never fails.** This is my "print, not fail" answer (#682): before the major the bridge applies and warns, and after it `generate` prints and emits nothing for that map.
+
+**The tests that accept it** (Task 14):
+- **Jest**, in `lane-functional-root`: the source-resolution function returns the right source for cases 1, 2 and 3 and for package mode, for each of the three maps. That is twelve cases, and case 1 includes a missing file failing.
+- **`Consumer Guard`**, with packed installs:
+  - **(a) Case 3**: a local-mode consumer with no `themes/wcag/` or `themes/dark-wcag/` files and a config that registers neither.
+    - The web `:root[data-theme="wcag"]` block and the dark values are byte-identical to the pre-129 golden that Task 14 commits from `main` before the change (Stacy's point).
+    - Stdout holds the warning, once per bridged map, on each of two consecutive `generate` runs.
+  - **(b) Case 2**: the copy is present and unregistered, with one value edited. The edited value appears, the "add to config" line prints, and no bridge warning prints.
+  - **(c) Opt-out**: `wcag` is registered with empty overrides. There are no WCAG differences in the output, and no warning.
+  - **(d) Package mode**: no warning, and the built-ins apply.
+
+**What it changes in 129's text** (Thurgood folds these, if Lina agrees):
+- **Design § 10**: add case 3 and its retirement. The sentence "No package override is read, built-in themes included" gains "except case 3's bridge, until the next major".
+- **Task 14**:
+  - The criterion "When a built-in theme's override file is missing from the consumer's copy, `generate` prints that the theme or mode is not emitted and names the file" becomes: "**When a built-in theme map is neither registered nor copied, `generate` applies the package's built-in file and prints the bridge warning, accepted by `Consumer Guard` case (a)**."
+  - Add cases (b), (c) and (d), and the Jest line.
+- **Req 10.4**: nothing goes to Peter, because no supported adopter's output changes. The release notes name the bridge and its retirement.
+
+**Counter-argument, folded back.**
+- **The objection**: the bridge keeps item (vi)'s leak for these repos. An `npm update` can change their WCAG values without their knowledge, which is the Model B breach Q3a was meant to end.
+- **Folded in**:
+  - It fires only where the adopter has no file of their own, so nothing of theirs is overridden.
+  - The warning names the package version on every run.
+  - It ends at a known release.
+- **The residual**: until the major, those repos' WCAG and dark values follow the package, as they do today. The size of that group is unmeasured. test01, on `@3fn/core` 12.0.5, is one candidate (REASONING). A packed-install check of a 15.x-born repo would count it.
+
+#### [LINA Q3a] — the built-in override bridge (with Ada; amends Q3a as we ruled it)
+
+Labels: **MEASURED** = read today (test01 read-only, nothing modified; `origin/main` for the repo); **REASONING** = inference.
+
+**Position.** Ada is right that Q3a as ruled breaks supported web adopters. I accept a bridge, but **keyed on registration, not on whether files exist**, because test01 shows Ada's narrower case misses the common shape.
+- A theme the config **registers** comes from the consumer's own file. That is Model B, and Req 9.2.
+- A built-in theme (`dark`, `wcag`, `dark-wcag`) that the config **does not register** keeps today's source: the installed package's built-in file. `generate` prints a warning on every run, naming the config line that would make it the adopter's own.
+- The package fallback retires at 17.0.0, when "no package override is read" becomes total.
+- **No supported adopter's output changes from the bridge**, so Req 10.4 does not send it to Peter. It is Ada's and my call, as co-owners of Q3a.
+
+**The measured data point: test01** (`@3fn/core` 12.0.5, read-only):
+- **It has copied override files** for all three built-ins: `src/tokens/themes/{dark,wcag,dark-wcag}/SemanticOverrides.ts`.
+- **Its config registers only one** (`designerpunk.config.ts` L10–12): `{ name: 'wcag', mode: 'light', overrides: wcagSemanticOverrides }`. No `dark` entry and no WCAG dark map.
+- **Today `generate` ignores both config and copies**:
+  - It statically imports DesignerPunk's three built-in maps (`src/generators/generateTokenFiles.ts` L17–22 at `origin/main`).
+  - It says so to the adopter: "registered, not applied yet: a theme you register does not change your generated output; dark mode and the wcag theme apply DesignerPunk's built-in overrides" (`src/cli/shared/errorCatalog.ts` L558–559).
+- **The copies differ from the package** (MEASURED by `cmp` and an entry diff):
+  - `dark` and `wcag` differ, and `dark-wcag` is identical.
+  - test01's `dark` copy lacks four entries the package's carries: `color.text.default` → `white100`, `color.text.muted` → `white300`, `color.text.subtle` → `white500`, `color.feedback.success.text` → `green300`.
+  - test01's `wcag` copy sets `color.action.primary` → `pink300`, where the package's has `teal300`. REASONING: probably an adopter edit that today is silently ignored.
+
+**What each rule does to test01:**
+- **Q3a as ruled (config only)**: dark mode loses every override. Dark text reverts to its light value on dark surfaces, a severe contrast regression. → Peter, under Req 10.4.
+- **Ada's bridge (package built-in only when no copied file exists)**: test01 has copies, so the bridge does not apply.
+  - Its dark mode then comes from the unregistered copy, which lacks the four text entries: the same regression.
+  - Or the unregistered dark is dropped entirely.
+- **Registration-keyed bridge (mine)**:
+  - `dark` and `dark-wcag` are unregistered, so they stay the package's built-ins: unchanged, with a warning.
+  - `wcag` light is registered, so it becomes test01's own file: `color.action.primary` → `pink300`.
+
+**What survives** (the residual):
+- **A registered theme's values change at U9** for an adopter whose copy differs from the package: test01's `wcag` light, above.
+  - I read that as **not a break**. It is the change the shipped message announced ("registered, not applied yet"), and an adopter registered the file to have it applied.
+  - `generate` should print, on the first run after U9, "`wcag (light)` now applies your file; N values differ from DesignerPunk's built-in". Then the change is visible, not silent.
+  - If Ada or the orchestrator reads it as a break, that narrower case goes to Peter under Req 10.4, with test01 as the evidence. The bridge question does not.
+- **Req 9.5 needs a scoping amendment** (Thurgood). Its "remove the package's copies → byte-identical output" holds only for a config that registers every built-in theme. A fresh `init` config does, because Ada's design writes the WCAG entry with both maps. Under the bridge, an old-shape config reads the package's file by design until 17.0.0.
+- **INSTALL L77's override-map exception** stays partly true until 17.0.0, for unregistered built-ins. Req 9.3 and Req 15 reword it rather than remove it.
+- **The class is unmeasured beyond test01.** A 15.x-born packed install would show whether `init`'s config registers `dark` (Ada's design says `init` writes `dark` and `wcag`). That costs one scratch `init`, with no download beyond the packed tarball.
+
+**Interface.** [@ADA] Does the registration key replace your "no copied files" condition in Task 14's criteria? Your old-shape `dark-wcag` fallback then becomes this rule's WCAG-dark case: when `wcag` is registered without a dark map, the consumer's own `dark-wcag` file if present, else the package's built-in, with the warning. -- [LINA Q3a]
+
+*(2026-11-05, [LINA Q3a R2]: I accept Ada's narrowing. An unregistered WCAG dark map comes from the package's built-in, with the warning, like every other unregistered map. One key, registration, for all three maps is the same reasoning that made me reject the copy fallback for `dark`. On test01 the output is identical either way, because its `dark-wcag` copy matches the package (MEASURED). The final rule is Ada's sentence in `[ADA Q3a R2]`, for Thurgood to fold into #678. Signed: Lina.)*
+
+#### [ADA Q3a R2]
+
+**Yes: Lina's registration key replaces my condition, and it replaces my design § 10 copy fallback too.**
+- Her test01 reading is decisive. test01 has copies of all three built-in maps, registers only `wcag` light, and its unregistered `dark` copy lacks four text overrides.
+- My case 2 (apply an unregistered copy) would have shipped dark text in its light value on dark surfaces. My case 3 (bridge only when no copy exists) would not have fired at all.
+- An unregistered file is not a declared intent, so it should not change output. Registration is the declaration.
+
+**One narrowing of her text, which I ask her to accept: no copy fallback for the WCAG dark map either.**
+- Her last line keeps one: when `wcag` is registered without a dark map, use the consumer's `dark-wcag` file if present, else the package's.
+- I would key that map on registration like the others. Unregistered means the package's built-in, with the warning.
+- **Why**: it is the same risk class as `dark`, since an unregistered copy may differ from the package. With one key, every map follows one rule.
+- **The fact that would settle it if she prefers her line**: whether any adopter's unregistered `dark-wcag` copy differs from the package's. On test01 it is identical (Lina, MEASURED), so both rules give test01 the same output. Nothing else is measured.
+
+**Is the `wcag` light change a break under Req 10.4? No. I agree with Lina.**
+- test01 registered `wcag` with its own file, and `generate` told it "registered, not applied yet". So `color.action.primary` → `pink300` is the adopter's own declared value arriving, as the shipped message announced. Under Model B those tokens are theirs.
+- Req 10.4 still requires naming it in the release notes.
+- Her first-run line makes it visible: "`wcag (light)` now applies your file; N values differ from DesignerPunk's built-in".
+- **The residual**: an adopter who registered long ago and forgot their edits sees a change with no code change of their own. The first-run count is the mitigation. It does not reach Peter.
+
+**What the rule changes**
+- **"Print, not fail"**: unchanged.
+  - A registered map whose file is missing fails, because the config's import fails.
+  - An unregistered map is bridged with the warning.
+  - After the major, an unregistered map is not applied, and `generate` says so. It never fails.
+- **Warning text** (every run, per unregistered map): `generate: theme '<name>' (<mode>) is not registered in designerpunk.config.ts, so DesignerPunk's built-in overrides from @3fn/core <version> were applied, as before 129. To use your own, register it: <the config line>. From the next major release, an unregistered built-in theme is not applied.`
+- **Tests** (Task 14), replacing my R1 cases:
+  - **Jest**: the resolver, three maps × {registered, unregistered, registered-but-missing} × local and package mode.
+  - **`Consumer Guard` (a)**, a test01-shaped fixture: copies present and differing, only `wcag` light registered.
+    - The `dark` and WCAG-dark output is byte-identical to the pre-129 golden.
+    - `wcag` light equals the fixture's file, and the first-run count prints.
+    - The warning prints for `dark` and for WCAG dark, on two consecutive runs.
+  - **(b)** A fresh-`init` config that registers all three: no warning. Req 9.5's removal case runs here.
+  - **(c)** Opt-out by registering with empty overrides.
+  - **(d)** Package mode.
+- **Req 9.5**: Lina's scoping amendment (its removal case holds for a config that registers every built-in) and her rewording of INSTALL L77 (Req 9.3, 15). I agree with both.
+
+**The final rule, in one sentence, for Thurgood to fold** (design § 10, Task 14, Req 9.5):
+
+> In local mode, each built-in theme map (`dark`, `wcag` light, `wcag` dark) that the config registers is read from the adopter's file, and a missing file fails `generate`. Each map the config does not register is read, as before 129, from the installed package's built-in file, with a warning on every run naming the config line that would make it the adopter's own, until the next major release (planned 17.0.0), after which an unregistered built-in is not applied and `generate` says so. Package mode keeps the package's built-ins. A registered map whose values differ from the package's prints, on its first run after U9, how many values now differ.
+
+#### [THURGOOD Q3a]
+
+Folded into #678 on the rebase onto `000e27d91` (#680 merged). The three files above are spliced byte for byte (`cmp` clean). They carry four positions: `[ADA Q3a]`, `[LINA Q3a]` with its dated `[LINA Q3a R2]` acceptance line at its end, and `[ADA Q3a R2]`. The rule is Ada's and Lina's call as the Q3a co-owners. It is not Peter's, because no supported adopter's output changes.
+
+- **design.md § 10, amended with a dated line** (prior text at `5e894837c`). The R2 "fallback for older configs", which applied an unregistered copy, is replaced by the registration-keyed built-in bridge, using Ada's final sentence verbatim. The amendment carries the test01 reasoning, the WCAG-dark narrowing (Lina accepts), the loading path, the warning text, the opt-out, "print, not fail", the not-a-break reading with its residual, the retirement at the next major, and the acceptance cases. The § 10 release-text bullet, the Error Handling bullet and Design Decisions row 21 are updated to match, and the header carries the amendment line.
+- **requirements.md Req 9.5, amended** (Lina's scoping, Ada agreeing; prior text at `d7f87174c`). The removal case holds for a config that registers every built-in map, as a fresh `init` config does. Changed reach: an old-shape config is outside it until the next major.
+- **tasks.md Task 14**:
+  - Ada's resolver Jest matrix replaces the old cases: three maps × registered, unregistered and registered-but-missing, × local and package mode.
+  - `Consumer Guard` cases (a) to (d) replace the old cases. (a) is test01-shaped: byte-identical to the pre-129 golden for `dark` and WCAG dark, the `wcag` light change and its first-run count, and the warning on two consecutive runs. (b) is fresh `init`, with no warning and Req 9.5's removal case. (c) is the opt-out. (d) is package mode.
+  - "Never fails on an unregistered map" (Ada, #682).
+  - Release-note text naming the bridge, its retirement and the registered-map change (Req 10.4).
+  - INSTALL L77's exception is reworded, not removed (Lina; Req 9.3, 15).
+- **The `wcag` fail-or-print question to Ada** (`[THURGOOD R2]`) is closed: print, not fail (#682 body). A registered map whose file is missing still fails, because the config's own import fails.
+- **The test01 `wcag` light change** (`color.action.primary` `teal300` → `pink300`) is **not a break under Req 10.4**, as Ada and Lina both read it. It does not reach Peter. The release notes name it.
+- **What survives, unmeasured**: how many adopters beyond test01 have unregistered built-ins. A scratch `init` from a 15.x-born packed install would count it. That is not a 129 criterion.
+
+---
+
+## Decision 6 consult (2026-11-05) and Peter's answer
+
+The orchestrator asked Kenya, Data and Stacy for their pick on #678's `**Open for Peter**:` line, because Peter asked "Re: three signing acts and Decision 6, have relevant agents weighed in?". Their entries follow verbatim. Each file also carries the same consult's part B, on #676's signing results, which is outside 129.
+
+#### [KENYA D6] — Decision 6, from the iOS lanes
+
+**Pick: (a).**
+- **The runners**: standard `macos-26` (Xcode 26.6 under K-7) and `ubuntu-24.04`, approved now.
+- **The promotion rule**, with Android first.
+- **Each iOS promotion stays Peter's own act.**
+
+**Why**:
+- My pins assume these runners. Both are free standard runners on a public repository (READ, GitHub's billing docs, 2026-11-04).
+- The rule's fourth condition is the one iOS needs: the pinned Xcode must still be on the image at the offer. The image replaces patch versions (READ, runner-images README).
+- 129 is when the generated Swift changes most. A check that can only measure, and never gate, lets a regression merge over a red run until Stacy's closeout read.
+
+**The strongest case for (b) or (c), which I did not pick.** Once an iOS check is required, every PR in the repo waits on a Mac runner, web-only and governance-only PRs included. A required check depends on two things this gate has never depended on before:
+- GitHub's macOS queue. Its wait times are UNVERIFIED for this repo.
+- GitHub's Xcode image calendar. Xcode 27 is in preview now, so a change of image is coming.
+
+Meanwhile the iOS lists change in almost every 129 unit. That is the argument for leaving the iOS checks advisory until 129 closes.
+
+**What survives my pick.** When the image drops or replaces the pinned Xcode, the iOS check turns red with no code change. Every merge is blocked until a pin PR lands.
+- That PR is one change, because Req 3.5 (a) admits the moved entries when a pin changes.
+- But it still has to land before anything else can merge.
+- **To soften it**: the iOS offer comes only after the Android ones, and only once three cold runs give a measured macOS queue time. If that queue time is poor, my answer moves to (b) for the iOS checks only.
+
+#### [DATA D6]
+
+**Pick: (a)**, with the Android checks first. They run on `ubuntu-24.04`, the runner class the required gate already depends on (#657 pinned it), so promoting them adds no new failure domain. The Gradle step measured seconds on my machine (not on CI). Promotion protects the Android files during the units that change them most (U3, U4, U6), and the 10-run and cold-cache conditions are what keep a flaky lane out. Before I would want a required iOS check, its 10 runs should show the Mac queue is not the cause of a break.
+
+**The strongest case for (b)** is churn, not runners. Through 129, every generator PR moves entries on the lists, including PRs whose authors never touch Kotlin. Under (a), once `harness-android-tokens` is required, a web- or iOS-focused generator change cannot merge without editing an Android list correctly. The comparator prints the replacement entries, but the author still has to read them right. Under (b) that cost waits until the lists are near zero.
+
+**Residual under (a)**: the 10-run rule measures whether the runner is stable, not whether the lists are. Promoting a context in mid-129 makes every later generator PR pay the list-edit cost. That cost buys the protection, but it is real, and it falls on seats outside Android.
+
+#### [DATA PREV]
+
+**What happened to me on #676** (anomaly 4 on both acts) was a commit-form error. I ran `git commit -q … && git push | tail -1; git log -1`:
+- `-q` dropped the `[branch sha]` line;
+- a push stood between the commit and `git log`, so the audit could not see the commit had succeeded.
+
+Against the three proposed fixes:
+- **(2), the proven form in a committed brief template, would have prevented it**, but only if my brief used the template. The brief I worked from said "push after each; report each with `git log -1`", not the `&&` form.
+- **(1), a verifier mode that prints the unit and its hash, would not have changed my result.** I had already read the whole unit with my own script. It would standardise the read, and it addresses Stacy's link-7 case.
+- **(3), the queued `late-read 7` fix, is not my case.**
+
+**What is missing is structure rather than instruction**: a committed wrapper, for example `scripts/seat-commit.sh <message-file>`. It would:
+- run `git commit -F … && git log -1 --format='%H %s'` itself;
+- push only after that;
+- refuse `-q`;
+- then run `verify-signing-chain --audit --branch` on the new commit in the same session, so the seat sees a link-4 or link-7 problem before it reports.
+
+A template can still be paraphrased by a brief writer; a script cannot. Whether link 4 should also accept a `git log -1` in a following, separate call whose subject matches, with no other commit in between, is Thurgood's call on the oracle, and I would not widen it without his reading.
+
+#### [STACY D6] — Decision 6 (#678's Open-for-Peter line)
+
+**Pick: (a).** Approve the standard runners and the promotion rule now. Each promotion stays Peter's act, and each one fires my ARMING read.
+- **Why, from my seat: under (b) and (c), the only thing that keeps a regression out of `main` during 129 is my audit after the merge.** My charter says a claims pass must never be the guard on the merge path.
+- **What a regression looks like here:** an entry added outside the comparator's exceptions, merged over a red non-required check. The next PR's base already holds it, so nothing stops it again. I would find it at MIDPOINT or CLOSEOUT, weeks after the merge.
+- **Promotion turns the comparator's own rules into the gate.** The rule as written in tasks.md § "Decision 6" is checkable:
+  - computed stability record;
+  - verdict changes tied to a new head SHA;
+  - re-run attempts and `cancelled`/`timed_out` counted as breaks;
+  - cold runs identified by a cache miss.
+
+**The strongest case for (b).**
+- **A required check whose list is not empty blocks merges on the comparator's own edge cases.** Exception (c) for errors uncovered by a fix is new, and an unforeseen case would stop a correct unit PR.
+- **It also puts a Mac queue on every merge during 129, the period of heaviest churn.**
+- **Meanwhile (b) loses nothing that matters**, because a red merge is already a finding on the author.
+
+**The residual.**
+- **Under (a)**, the gate goes red with no code change when GitHub retires the pinned image, and a required green still reads "matches the list", not "compiles". The summary line's remaining count mitigates the second; nothing mitigates the first except an owner bumping the pin.
+- **Under (b) and (c)**, post-acceptance discovery is the guard. That is the larger residual, which is why I pick (a).
+
+#### [STACY PREV] — prevention for what happened to my #676 confirm act (forward-looking only)
+
+**What happened:** my confirm act read lines 27–31 of the unit, not the whole unit. I computed the hash with my own script, which printed the hash but not the unit text. Link 7 caught it.
+
+1. **A verifier mode that prints the whole unit and its hash in one tool result: yes, this would have prevented it.** It replaces my hash-only script with one that puts the full unit in front of the confirmer, and puts its evidence line in a tool result. It is necessary but not sufficient, because printing is not reading. Pair it with a confirm-record template whose "What I read" line says "the whole unit, from the print-mode output at <sha>", not line ranges. My record honestly said "L27–31", and that line was the tell. A template asking for "the whole unit" would have made me stop.
+2. **The commit form: would not have changed my result.** Both my commits used `-q` and still recorded, and the re-sign anchored. It prevents a different failure (`anomaly` or `record absent`), which Data's case may need.
+3. **The `late-read 7` fix: would not have prevented it either.** It prevents a false cure: re-reading the unit after the act and re-running the audit to turn the FAIL into "anchored". I avoided that by choice. The fix takes seat discipline out of that.
+
+**Missing: the brief should not hand the confirmer the target hash before the read.** The #676 brief listed "move `canonicalHash` to `b7713a75…`" alongside "recompute it yourself". That invites a hash-first act. The brief template should order the steps: print the unit, read it, recompute, and only then compare with the author's value.
+
+#### [PETER] Decision 6
+
+Received 2026-11-05T23:42:17Z (`date -u` at receipt; orchestrator relay), verbatim: "6 (a) with Kenya's condition; #676 (a) with the four fixes". The "#676" half is outside 129. What he read for "Kenya's condition": `[KENYA D6]` above, its last bullet.
+
+#### [THURGOOD D6]
+
+- **Folded into tasks.md § "Decision 6", as ruled.**
+  - The standard runners `macos-26` (Xcode per K-7) and `ubuntu-24.04` are approved, and so is the promotion rule.
+  - Kenya's condition is condition 5. An iOS context is offered only after both Android contexts are promoted, and only once three cold runs record their macOS queue time in the computed stability record. If any of those runs' queue time plus its duration exceeds the 10-minute ceiling, the queue time is poor, and that context becomes a promote-at-closeout offer instead.
+- **"Poor" is my reading, for Kenya to confirm at U1.** It reuses 125-A Req 6.3's ceiling rather than a new number, so Peter's ruling sets no threshold of mine. If Kenya wants a different bound, it changes before U1 merges, with a dated line.
+- **#678 now asks Peter nothing.** Its `**Open for Peter**:` line is replaced by one that cites this answer.
