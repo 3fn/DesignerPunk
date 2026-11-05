@@ -44,10 +44,13 @@
 
 ## Acceptance
 
-> **A stranger's `init` → `generate` yields a compiling, themed target on all three platforms with nothing copied from `node_modules`.**
+> **A stranger's `init` → `generate` yields their own token output, the component tier included, that compiles and is themed on all three platforms, with nothing copied from `node_modules`. DesignerPunk's native component source compiles against it in place from a packed install, except for pinned errors, each tagged to an open record and none tagged to a 129 row.**
 
 - Proven on a packed install, never in-repo (Spec 123 Req 3.1's rule).
 - "Compiling" is established by a platform build, not by inspection. The platform build-verification harness charter (`2026-09-17-platform-build-verification-harness-candidate.md`, Kenya/Data) is the likely instrument, and the tasks round checks that it exists.
+- On web, "compiles" means the existing consumer guard (native plan `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-05-native-plan/plan-r2.md` § 7 item 2).
+
+**Narrowed 2026-11-05 (Ada, charter owner; Peter's words received 2026-11-05T04:07:43Z)**: the acceptance sentence above replaces the one this record carried since 2026-10-02, which read: "A stranger's `init` → `generate` yields a compiling, themed target on all three platforms with nothing copied from `node_modules`." That sentence moves word for word into Spec 132's acceptance. Until 132's outline exists, its home is `.kiro/issues/2026-09-26-native-component-distribution.md`. Peter, verbatim: "A yes, B (a), C yes; (x′) as defined". B (a) is the narrowing to this wording, which he had read verbatim at plan-r2 § 7 item 2 (Ada's wording, corrected by Stacy in PLAN R1).
 
 ## Consequence recorded now
 
