@@ -26,7 +26,7 @@ DesignerPunk is a True Native cross-platform design system with mathematical fou
 
 **Platform Minimum Versions:**
 - iOS: 17.0+
-- Android: Not yet constrained
+- Android: API 26 (Android 8.0)+ *(Amended 2026-11-05 by ballot 2026-11-05-core-goals-android-minimum, item 1; prior text at `10ec4af5b`.)*
 - Web: Not yet constrained
 
 **For detailed architectural guidance, see:**

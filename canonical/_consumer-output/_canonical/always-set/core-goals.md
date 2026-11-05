@@ -21,7 +21,7 @@ This design system is built on DesignerPunk — a True Native cross-platform des
 
 **Platform Minimum Versions:**
 - iOS: 17.0+
-- Android: Not yet constrained
+- Android: API 26 (Android 8.0)+
 - Web: Not yet constrained
 
 **For detailed architectural guidance, see (docs MCP):**

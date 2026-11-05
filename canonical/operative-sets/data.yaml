@@ -522,7 +522,7 @@ units:
         text: "Use your platform's references. Don't assume patterns from sibling platforms apply to yours."
     confirmation: canonical/profiles/consumer/confirmations/data.md#platform-reference-pointers
   "#android-specific-guidance:preamble":
-    canonicalHash: sha256:ecee4b84b3be8aec66c32213eb25d9d5d5687216a3a095130d3e572a82e13be7
+    canonicalHash: sha256:f1af38d495d490318f2bfa6a56fe110a1b71a3ab201e3291dc2be1ef285383fc
     items:
       - id: native-1
         kind: member
@@ -549,9 +549,9 @@ units:
         label: "Animation via Compose Animatable and animateXAsState"
         text: "Animation via Compose Animatable and animateXAsState"
       - id: native-7
-        kind: member
-        label: "Android minimum version per Core Goals (not yet constrained)"
-        text: "Android minimum version per Core Goals (not yet constrained)"
+        kind: obligation
+        label: "Android minimum version per Core Goals"
+        text: "Android minimum version per Core Goals"
     confirmation: canonical/profiles/consumer/confirmations/data.md#android-specific-guidance:preamble
   "#android-skills-official-google-patterns":
     canonicalHash: sha256:fc2f269aa9ccf842e7ed3da61969c7d554fa4780ff895361f05752b7d2e0a7ed

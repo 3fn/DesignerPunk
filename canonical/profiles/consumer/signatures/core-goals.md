@@ -15,6 +15,20 @@ verdict: assent — surviving 8/8
 
 All eight survive; the orientation line is re-grounded ("built on DesignerPunk … carries its principles"), and the further-reading pointers move to docs-MCP ids, which are not items.
 
+**Re-signed 2026-11-05 (Core Goals Android-minimum ballot, item 1, site 1): ASSENT, `surviving` 8 of 8 (`principle-1` to `principle-6`, `platform-android`, `platform-web`).** A new act, read fresh against the new rendering; nothing is carried from the 2026-09-29 signature above.
+- **The ballot**: `.kiro/docs/ballots/2026-11-05-core-goals-android-minimum.md` (RATIFIED, Peter, 2026-11-05, #673, F-1 (iii)).
+  - Site 1 was applied at `179dee853`.
+  - The profile author's commit `539beadd7` carries the re-quoted `platform-android`, the row's third removal (the new amendment parenthetical, `subtraction-2`) and the re-grounded overlay unit.
+  - The rendering was regenerated at `b46d3f693`.
+  - I re-confirmed the set at 8 at `ef3b60fb0`.
+- **What I read, in this session, through tool results**: the unit as rendered in all three consumer copies (`_canonical/always-set/core-goals.md`, `cc/.claude/identity/designerpunk-core-goals.md`, `kiro/.kiro/steering/designerpunk-core-goals.md`, `## Core Project Context`, committed at `b46d3f693`). They are identical, and I read them through `readConsumerSpans`. L24 of the `_canonical` copy reads `- Android: API 26 (Android 8.0)+` and ends there: the amendment parenthetical is subtracted. No copy contains `Amended 2026-11-05`.
+- **The removal**: the row differs from `origin/main` by exactly one added removal (checked by script, everything else identical). Its `text`, leading space included, equals the end of the canonical L29 byte for byte, and the rendering shows it subtracted. The removals array is authoring, and I did not touch it.
+- **Credited**: all 8 item texts appear verbatim in each of the three rendered copies (checked by script). `platform-android` now states a minimum an agent can act against (re-ruled `obligation` at `ef3b60fb0`). `platform-web` is unchanged.
+- **Hashes.**
+  - `canonicalHash` moves from `809e8be5...` to `b7713a75...`: `hashText` of the unit from `partition(body).units`, equal to the overlay pin and to my confirmation.
+  - `renderedHash` moves from `565e95a1...` to `02f213cc...`: `renderedHashOf` over the committed rendering, `rowSpanSource('.kiro/steering/core-goals.md', 'body', '#core-project-context')`.
+- **Not mine, flagged**: the consumer exposure the ballot names in § 10. An adopter's agent will now read "Android: API 26 (Android 8.0)+" as a minimum and push back on an adopter `minSdk` below 26. Peter accepted it as the ballot's F-2 ("F-2 accept", in his ratification), so it is not a refusal condition.
+
 ## `#development-practices`
 
 signer: stacy

@@ -37,9 +37,18 @@ date: 2026-10-17
 ## `#core-project-context`
 
 confirmer: stacy
-canonicalHash: sha256:809e8be5a1088c68b6641c0fc1af3419698ced6ecd18007501a1c8df309e7491
+canonicalHash: sha256:b7713a75c7bfc484497364b8caf439b82846812d30c39474c44cf2c2aabedf7c
 items: principle-1, principle-2, principle-3, principle-4, principle-5, principle-6, platform-android, platform-web
-date: 2026-09-29
+date: 2026-11-05
+
+**Re-confirmed 2026-11-05 (Req 11.6.5d): the Core Goals Android-minimum ballot, item 1 (site 1).** A new act, read fresh. The 2026-09-29 record below is superseded (canonicalHash `sha256:809e8be5a1088c68b6641c0fc1af3419698ced6ecd18007501a1c8df309e7491`, 8 items) and stays as a ledger.
+- **What changed**: ballot `.kiro/docs/ballots/2026-11-05-core-goals-android-minimum.md` (RATIFIED, Peter, 2026-11-05, #673, F-1 (iii)). Site 1 was applied at `179dee853` (Thurgood). L29 now reads `- Android: API 26 (Android 8.0)+`, followed by its amendment parenthetical. I checked it equals § 9's site-1 block byte for byte. At `539beadd7` the profile author re-quoted `platform-android` (`kind: obligation`; label and text `Android: API 26 (Android 8.0)+`), as I ruled in the ballot's review (`[STACY R1]` § 2). No other line of the unit changed. L28 (`iOS: 17.0+`) and L30 (`Web: Not yet constrained`) are as before.
+- **What I read, in this session, through tool results**: `.kiro/steering/core-goals.md` L27–31; the `#core-project-context` unit record in `canonical/operative-sets/core-goals.yaml` (the 8 items, kinds, labels, texts); the overlay's unit pin (`always-set/core-goals.overlay.md` L1); and the ballot's § 9.
+- **The hash**: the canonicalHash moves from `sha256:809e8be5a1088c68b6641c0fc1af3419698ced6ecd18007501a1c8df309e7491` to the value above. I recomputed it myself with `hashText` over `partition(splitFrontmatter(...).body).units` (unit `#core-project-context`). It equals the overlay pin re-grounded at `539beadd7`, and the value in the PR body.
+- **Items re-read against the unit**: all 8 item texts are verbatim substrings of the unit as it now stands (checked by script). `platform-android`'s text is the applied line without its parenthetical, which is history, not an item.
+- **Re-ruled, the kind**: `platform-android` is `obligation`, like `principle-6`. A minimum is something an agent can act against: an agent that sets, accepts or recommends an Android minimum below API 26 contradicts it. Under F-1 (iii) the line states only 26. The higher-of rule with Compose's floor lives with the toolchain, not here, so the item names no second floor.
+- **The 2026-09-29 reason, split**: "'Not yet constrained' is a platform fact a consumer's agents build against: an agent that imposes a minimum version contradicts it" now holds for `platform-web` only, which stays `member`. It no longer holds for `platform-android`.
+- **Ruling: CONFIRMED at 8, not corrected.** The set is unchanged (same 8 ids). One item's text and kind are re-authored as ruled. The 2026-09-29 not-operative list (the orientation line and the further-reading list) stands.
 
 **Ruling: CORRECTED 6 → 8.** Added `platform-android` and `platform-web`. "Not yet constrained" is a platform fact a consumer's agents build against: an agent that imposes a minimum version contradicts it. **Not operative**: the one-line orientation, and the "For detailed architectural guidance, see:" list (further reading).
 
