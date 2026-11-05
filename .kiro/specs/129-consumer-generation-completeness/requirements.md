@@ -4,6 +4,7 @@
 **Spec**: 129 - Consumer-Generation Completeness
 **Status**: Requirements Phase — **R2**, the seven R1 entries folded in (`feedback/requirements.md`, `[THURGOOD R2]`). D1's probe sentence is amended by Peter's answer of 2026-11-05T05:14:42Z (Requirement 2.7). Design starts after this file merges (Spec-Feedback-Protocol § "Sequential Formalization Gate").
 **Amended in the design round (2026-11-05)**: Requirements 2.6, 3.8 and 4.2, each with a dated line in place (`design.md` § 15).
+**Amended in the tasks round (2026-11-05)**: Requirement 10.1, with a dated line in place (Ada R1); Requirement 2's "Records" line corrected (Kenya and Data R1).
 **Author**: Thurgood (formalizer). Owners: Ada (pipeline, generators, validators), Lina (component tier). Harness designers: Kenya (iOS), Data (Android). Peter decides at each gate.
 **Go**: Peter, received 2026-11-05T04:34:05Z, verbatim: "652, 653 and 654 are merged; go for requirements".
 **Dependencies**: Spec 094 (the theme emission code that item (i) wires); Spec 123 (its Requirement 1.5 is reopened here, and its Requirement 3.1 rule that proof runs on a packed install applies); Spec 132 (planned, no directory yet: it receives what 129 does not close, `evidence/2026-11-05-native-plan/plan-r2.md` § 2); Specs 128 and 130 inherit item (i) and the harness (design-outline.md § 1, "Relation to other specs").
@@ -66,7 +67,7 @@ The principle and scope items (i)–(vi) are the charter's, `.kiro/issues/2026-1
 
 **User Story**: As a claims verifier, I want every iOS and Android "compiles" in 129 to rest on a CI run at a merge SHA, so that no native row is accepted on a reading.
 
-**Records**: row 23, `2026-09-17-platform-build-verification-harness-candidate.md` (its Trigger stays at `tasks.md`; Kenya and Data re-rule it to `completion/claims-pass.md` at the commit that first adds `tasks.md`, Kenya R1).
+**Records**: row 23, `2026-09-17-platform-build-verification-harness-candidate.md` (its Trigger stays at `tasks.md`; Kenya and Data re-rule it to `completion/claims-pass.md` at the commit that first adds `tasks.md`, Kenya R1). *(Corrected 2026-11-05, tasks round, Kenya and Data R1: the target is `completion/task-5-completion.md`, the harness parent's completion doc, re-ruled in their own record-only PR that merges before `tasks.md`; tasks.md § "Merge preconditions" item 2.)*
 
 **Instrument**: the four harness contexts and `harness-generate`; the comparator's falsification test (Requirement 3.10); one recorded fault run (criterion 11).
 
@@ -280,7 +281,7 @@ The principle and scope items (i)–(vi) are the charter's, `.kiro/issues/2026-1
 
 #### Acceptance Criteria
 
-1. WHEN items (i) and (ii) have shipped THEN the package SHALL stop shipping `dist/DesignTokens.ios.swift`, `dist/DesignTokens.android.kt`, `dist/ComponentTokens.ios.swift` and `dist/ComponentTokens.android.kt`, in the release Peter's decision 7 places (Open items, Design), AND `pack-assert` SHALL assert they are absent. `dist/ComponentTokens.web.css` and the web CSS exports keep shipping, because shipped web components read them (plan-r2 WP1; Ada R1, who edits charter item (iii) to match).
+1. WHEN items (i) and (ii) are on `main` THEN the package SHALL stop shipping `dist/DesignTokens.ios.swift`, `dist/DesignTokens.android.kt`, `dist/ComponentTokens.ios.swift` and `dist/ComponentTokens.android.kt`, in the release Peter's decision 7 places, which carries (i) and (ii) or follows a release that does, AND `pack-assert` SHALL assert they are absent. *(Amended 2026-11-05, tasks round, Ada R1; prior text at `d7f87174c`: "WHEN items (i) and (ii) have shipped THEN … in the release Peter's decision 7 places (Open items, Design)". "Shipped" read as "published in an earlier release" would make 129 wait on a release between U8 and U12, which protects no supported consumer under Peter's 7 (a); the intent is that the replacement never arrives after the removal. **Changed reach**: the retirement may ship in the same release as items (i) and (ii).)* `dist/ComponentTokens.web.css` and the web CSS exports keep shipping, because shipped web components read them (plan-r2 WP1; Ada R1, who edits charter item (iii) to match).
 2. The release that retires them SHALL announce the retirement in its notes. 15.0.0 announced no deprecation (charter, item (iii)).
 3. The package's native resource folders SHALL hold only resources, asserted by `pack-assert` (plan-r2 § 2, WP1). Its instance, `2026-11-05-icon-base-android-drawable-readme-breaks-resource-merge.md` (Lina), SHALL close no later than the harness's first Android run, which it otherwise fails before any Kotlin compiles (Data R1).
 4. Each 129 change that may break a consumer SHALL be named in its release's notes: item (iii), I-1, I-2, and, if the design round takes it, item (ii)'s change to the consumer's web output. IF the design round finds that one breaks a supported consumer THEN it SHALL go to Peter with the 17.0.0 charter quoted (Q7; `.kiro/issues/2026-11-01-17-0-0-release-charter.md`, "Breaking changes ship together there").

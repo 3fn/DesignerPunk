@@ -2,50 +2,54 @@
 
 **Date**: 2026-11-05
 **Spec**: 129 - Consumer-Generation Completeness
-**Status**: Tasks Phase — **R1**, for review (`feedback/tasks.md`). Execution starts after this file merges (Spec-Feedback-Protocol § "Sequential Formalization Gate").
+**Status**: Tasks Phase — **R2**, the seven R1 reviews folded in (`feedback/tasks.md`, `[THURGOOD R2]`). Execution starts after this file merges (Spec-Feedback-Protocol § "Sequential Formalization Gate").
+**Amended in this round**: `requirements.md` Requirement 10.1, with a dated line in place (Ada R1).
 **Author**: Thurgood (formalizer). Each parent names its PRIMARY; that seat's call governs its parent's how, within `requirements.md` and `design.md`.
 **Go**: Peter, received 2026-11-05T22:48:15Z (`date -u` at receipt; orchestrator relay), verbatim: "673 and 675 are merged; go for tasks". What he read: "Your go for 129's tasks round. That's where the work is cut into units, and the compile check is built first."
 **Dependencies**: as `requirements.md` header and `design.md` header. Spec 132 (planned, no directory) receives what 129 does not close; its deliverables, and its measured-cost record, are not tasks here.
-**Facts**: `evidence/facts-at-d7f87174c.md`, the unedited stdout of `bash .kiro/specs/131-governance-simplification/evidence/spec-facts.sh 129 4d10202b2 d7f87174cc3af9593c8c1ab3831fbdfdd254e5f5`. Its row 3 names one record whose Trigger is this file (`2026-09-17-platform-build-verification-harness-candidate.md`); § "Merge preconditions" carries it.
+**Facts**: `evidence/facts-at-d7f87174c.md`, the unedited stdout of `bash .kiro/specs/131-governance-simplification/evidence/spec-facts.sh 129 4d10202b2 d7f87174cc3af9593c8c1ab3831fbdfdd254e5f5`. Its row 3 names one record whose Trigger is this file (`2026-09-17-platform-build-verification-harness-candidate.md`); § "Merge preconditions" carries it. `main` has not moved since.
 **Criteria mode**: per-parent
 
 ---
 
 ## Implementation Plan
 
-The compile harness is built first (U1), because every native "compiles" in 129 is accepted by it, and today's error counts hide each other until the first token fixes land (plan-r2 § 2). The comparator's falsification test is then registered as a named in-lane guard (U2). Generation follows in the order the seats measured: colours, shadows and the standalone native fixes (U3); the native type table with its same-PR component couplings (U4), after which the component repair is sized honestly; the validators, which depend on nothing else (U5); theme emission (U6) and the component theme reads (U7); the component-tier harvest (U8); the consumer's own source (U9); `init` and per-platform paths (U10); the charter and overlay text item (i) owes (U11); and the closeout (U12), which retires the native root files and reads the acceptance at the final head.
+The compile harness is built first (U1), because every native "compiles" in 129 is accepted by it, and today's error counts hide each other until the first token fixes land (plan-r2 § 2). The comparator's falsification suites are then registered as named in-lane guards (U2). Generation follows in the order the seats measured: colours, shadows and the standalone native fixes (U3); the native type table with its same-PR component couplings (U4), after which the component repair is sized honestly; the validators, which depend on nothing else (U5); theme emission (U6) and the component theme reads (U7); the component-tier harvest (U8); the consumer's own source (U9); `init` and per-platform paths (U10); the charter and overlay text item (i) owes (U11); and the closeout (U12), which retires the native root files and reads the acceptance at the final head.
 
 ### Conventions for every parent
 
-- **Instruments (M1, not M4).** The instruments parser PR has not merged at `d7f87174c` (`.kiro/issues/2026-09-29-instruments-parser-and-resolver.md` is at the issues root, and `scripts/completion-claims/` has no `INSTRUMENTS_RE`), so `P` does not exist and **no parent here carries an `**Instruments:**` block** (Process-Spec-Planning § "The Instruments block (M4)"). Each parent's PRIMARY writes `completion/task-<N>-instruments.md` before the first subtask, in M1's execution-time form (Start Up Tasks item 8); any `MISSING` row stops the subtasks that depend on it.
+- **Instruments (M1, not M4).** The instruments parser has not merged at `d7f87174c`, so `P` does not exist and **no parent here carries an `**Instruments:**` block** (Process-Spec-Planning § "The Instruments block (M4)"). The parser record is re-ruled to the next spec's tasks round by #680. Each parent's PRIMARY writes `completion/task-<N>-instruments.md` before the first subtask, in M1's execution-time form (Start Up Tasks item 8); any `MISSING` row stops the subtasks that depend on it.
 - **Completion docs.** Each parent's doc reproduces every Success Criteria bullet verbatim with Status and Evidence, carries the forced-negative line, the `**Instruments**:` header line and the `**Delegated-tier**:` line (Completion Documentation Guide). Every subtask gets its three-element doc (S-4).
-- **Citing a harness context** (Req 2.13): the PR, the run URL at the head the unit merged, the comparator's summary line as printed, and the SHAs of the list file and `harness/pins.yaml` at that head.
+- **A unit closes the records it fires** (Stacy R1 § 2.A.1). A record re-ruled to `path:…/completion/task-<N>-completion.md` fires when that doc reaches `main`, at its unit's merge. So that unit's PR, or an owner's PR merged before it, carries each such record's rule 5 outcome line or a re-ruled Trigger with a dated reason, in the owner's act (README rules 9 and 11). Each gating parent carries this as a criterion.
+- **Every unit records its harness runs** (Req 2.10, 2.13; Stacy R1 § 1). Each gating parent's completion doc cites, for each of the four contexts, the PR, the run URL at the head the unit merged, the comparator's summary line pasted, and the SHAs of the list file and `harness/pins.yaml` at that head. Run logs expire, so the summary line is pasted, not linked.
 - **A fix and its list edit land in the same diff** (Req 3.3). Before PR-open, a unit author dispatches the harness against the unit branch, because the harness is not in `complete-task.sh`'s `REQUIRED_WORKFLOWS` while it measures: `gh workflow run native-harness.yml --ref <branch>`.
 - **A row a harness context accepts** has an entry tagged to its record on that context's list before the PR that fixes it, or its parent names the interim instrument (Req 2.14).
 - **Token documentation** changes in the same PR as a token it describes (Req 15.4).
-- **Limitation sentences** that a merged unit makes false are rewritten in one Integration Guide PR before each release's S, with INSTALL re-derived (Req 15's batching rule, moved here from R1 Requirement 15.3; Thurgood derives).
+- **Limitation sentences** that a merged unit makes false are rewritten in one Integration Guide PR before each release's S, with INSTALL re-derived (Req 15's batching rule, moved here from R1 Requirement 15.3; Thurgood derives). INSTALL L84–L85 ("no theme surface yet") ride the first such PR after U6 (Kenya R1).
 - **Sub-suites.** `npm test` does not run `test:consumer`, `test:scripts`, the `mcp-server` or the `application-mcp-server` suites. A parent whose artifacts those suites read runs them before completion and says so.
 - **Edit kind and consult lines.** A PR touching `governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**` or `canonical/agents/**` carries one `**Edit kind**:` line per file, and is Peter-merged under the standing carve-out. A unit PR touching a trigger surface carries `**Consulted**:`.
+- **Signed charter text** (Tasks 14 and 16). The authoring commit never moves a `canonicalHash`. The profile author (Thurgood) re-quotes the operative-set items, re-grounds the overlay pins and writes the dispositions; the owner seat's confirmation and the signers' signatures are their own acts after the authoring commits, need no grant (ballot `2026-10-01-signing-act-chain`), and are checked by `verify-signing-chain.ts --audit --pr <n>`. Each signing commit runs as `git commit … && git log -1 --format='%H %s'`.
 - **A D1, D2 or D3 row** changes only with Peter's dated words on the record first (Req 1.9).
 
 ### The list file format, the pin file and the run policy (decided here, Thurgood: Req 3's "the tasks round's")
 
 - **Lists**: `harness/expected/<context>.tsv`, one per harness context. One entry per line, sorted by key, then tag. Tab-separated fields: the key (`<root>:<path> | <message>`, design § 1 K-2 and § 2), the count, the tag (a root record's file name, optionally `#<item label>`), and an optional `retagged=<YYYY-MM-DD>,<owner>,<from-record>` field. A `#` comment line is allowed only above the first entry. One line per entry keeps two PRs from conflicting unless they edit the same key (Thurgood R3 fold-back).
+- **The `gen:` path rule** (Kenya R1, with Data's condition): a `gen:` key's path is relative to that platform's generated output folder, not to the consumer root, and each lane reads that folder from the consumer's config (`platforms.<platform>.output`, else `output`), never from a hard-coded path. Moving a platform's folder through `platforms:` then re-keys nothing.
 - **Pins**: one file, `harness/pins.yaml`, with `consumer`, `ios` and `android` sections. Req 3.5 (a) compares parsed values, so a comment or whitespace edit changes no pin.
 - **Protected set**: `harness/protected-set.txt`, one record file name per line, sorted: the 129 intake records of `requirements.md` § "Record dispositions" plus rows 1, 3, 4, 15 and 22.
 - **Job names**: `harness-generate` (confirmed), then the four contexts of the requirements' Conventions. Each job also has a `(unit-branch)` name on `workflow_dispatch`, as every workflow in this repo does.
 - **Run policy (Req 2.10)**: `on: pull_request` with no `paths:` filter, plus `workflow_dispatch`. All four contexts run on every PR, a docs-only or records-only 129 unit PR included, so Req 2.10 never rests on a filter (Stacy design R1 § 2 item 5). The cost is a macOS run on every PR while the lanes measure; decision 6 (below) is where that is Peter's.
-- **The Xcode pin (K-7, read at this round)**: `runner-images` `images/macos/macos-26-arm64-Readme.md`, image `20261026.0455.2`, read 2026-11-05 by `curl`: Xcode 26.6 (build `17F113`, `/Applications/Xcode_26.6.app`) is the default and newest stable on `macos-26`; Xcode 27 is announced only as a public preview. So the pin is Xcode 26.6 on `macos-26`, no runner label beyond `macos-26` is needed, and Kenya's fork does not reach Peter (K-7, "When it becomes Peter's"). Task 3 re-reads the readme at the unit's cut.
+- **The Xcode pin (K-7)**: the newest stable Xcode 26 minor on the `macos-26` image at the unit's cut, with the readme's image version recorded. At this round's read (`actions/runner-images` `images/macos/macos-26-arm64-Readme.md`, image `20261026.0455.2`, `curl` 2026-11-05) that is Xcode 26.6 (`17F113`); Xcode 27 is only a public preview. No runner label beyond `macos-26` is needed, so Kenya's fork does not reach Peter (K-7, "When it becomes Peter's"; Kenya R1 confirms).
 
 ### Decision 6 — runner classes and the promotion criterion (Peter's; the PR body's `**Open for Peter**:` line)
 
-The criterion the requirements ask this round to write (Req 2.12). A harness context is **offered to Peter for promotion** when all of these hold, each shown in `evidence/harness-stability.md` (Thurgood keeps it from U1's merge):
+The criterion the requirements ask this round to write (Req 2.12). A harness context is **offered to Peter for promotion** when all of these hold, each read from `evidence/harness-stability.md`:
 1. its floor (Req 3.4) and toolchain match (Req 3.11) are in place, and their falsification cases pass in `lane-functional-root`;
-2. **10 consecutive PR runs** whose verdict changed only with a repo change: no red from the runner, the queue or the image (a re-run that turns green counts as a break and restarts the count);
-3. three cold-cache runs, each under the 10-minute ceiling (125-A Req 6.3);
-4. for an iOS context, the pinned Xcode is still on the `macos-26` image at the offer.
+2. **10 consecutive pull-request runs** with no break. In order of run, a verdict change between two runs must come with a different head SHA; a run whose attempts end with different conclusions is a break; a `cancelled` or `timed_out` conclusion, or a job that failed before the comparator ran, is a break; a break restarts the count;
+3. three cold-cache runs, each under the 10-minute ceiling (125-A Req 6.3), a run counting as cold when its cache-restore step reports a miss;
+4. for an iOS context, the pinned Xcode is still on the `macos-26` image at the offer, by the readme read then.
 
-**Order**: the Android contexts first (the `ubuntu-24.04` class the gate already depends on), then the iOS contexts. **What each promotion is**: Peter's act per context, in one recorded change: `EXPECTED_CONTEXTS` +1 in `tools/agent-generator/verify-gate-registration.sh` (an issue-row grant naming that act, or Peter), the branch-protection setting (Peter), and `REQUIRED_WORKFLOWS` +1 in `.kiro/hooks/complete-task.sh` at the first promotion (Thurgood). Each fires Stacy's ARMING read. **Runner classes** proposed: `macos-26` and `ubuntu-24.04`, standard hosted runners, pinned by version in `runs-on`, never `-latest`; no billed larger runner.
+**The stability record is computed, not kept** (Stacy R1 § 3): `evidence/harness-stability.md` is the committed output of `scripts/harness/stability.ts` over the checks API (run id, head SHA, attempt, conclusion, cache-restore result and duration, per context), re-run before each offer. **Order**: the Android contexts first (the `ubuntu-24.04` class the gate already depends on), then the iOS contexts. **What each promotion is**: Peter's act per context, in one recorded change: `EXPECTED_CONTEXTS` +1 in `tools/agent-generator/verify-gate-registration.sh` (an issue-row grant naming that act, or Peter), the branch-protection setting (Peter), and `REQUIRED_WORKFLOWS` +1 in `.kiro/hooks/complete-task.sh` at the first promotion (Thurgood). Each fires Stacy's ARMING read. **Runner classes** proposed: `macos-26` and `ubuntu-24.04`, standard hosted runners, pinned by version in `runs-on`, never `-latest`; no billed larger runner.
 
 ---
 
@@ -66,30 +70,40 @@ The criterion the requirements ask this round to write (Req 2.12). A harness con
 | **U11 — Charter and overlay text for item (i)** | Task 16 | Task 16 | — |
 | **U12 — Closeout: retire the native root files; acceptance at the final head** | Tasks 17–18 | Task 18 | — |
 
-**Order and dependencies.** U1 → U2 → U3 → U4 → U6 → U7 → U8 → U9 → U11 → U12. U5 and U10 depend only on U2 and may run beside the chain at Peter's direction; each still branches from `main` after the unit it follows merges, and lock-carrying PRs merge one at a time. Why this order: U3's colour converter is what U4's import lists and U6's theme members emit through (design §§ 5, 6; Req 6.5's coupling); U4's type table is what `ComponentTokens` and the theme compile against; U7 follows U6 (design § 13); U8 needs U4's `ComponentTokens` form; U9's theme registry feeds U6's instances (design § 10); U11 lands before the S of the release that first carries U6 (Req 4.9); U12 is last.
+**Order and dependencies.** The chain: U1 → U2 → U3 → U4 → U6 → U7 → U8 → U9 → U12. Beside it, at Peter's direction: U5 and U10 depend only on U2, and **U11 depends only on U6** (Kenya R1: it must merge before the S of the first release carrying U6, which a chain position after U9 could not guarantee). Each unit still branches from `main` after the unit it follows merges, and lock-carrying PRs merge one at a time. Why this order: U3's colour converter is what U4's import lists and U6's theme members emit through (design §§ 5, 6; Req 6.5's coupling); U4's type table is what `ComponentTokens` and the theme compile against; U7 follows U6 (design § 13); U8 needs U4's `ComponentTokens` form; U9's theme registry feeds U6's instances (design § 10); U12 is last. If U9 changes something U11's text states, U9's PR carries the one-line charter correction.
 
-**The midpoint carrier**: U6. It is the sixth of twelve units, and its merge is the first point at which D1's probe can read a theme (design § 4). The MIDPOINT record's path is `completion/claims-pass-midpoint.md`, never `completion/claims-pass.md`.
+**The midpoint carrier**: U6 (Stacy R1 confirms). It is the sixth of twelve units, and its merge is the first point at which D1's probe reads a theme (design § 4). MIDPOINT fires once, at U6's merge, scoped to the parents merged by then (U5, U10 or U11 included if they merged first). The record's path is `completion/claims-pass-midpoint.md`, never `completion/claims-pass.md`.
 
-**Sizes** (each the named seat's estimate, in sessions; "unsized" where no seat gave one):
+### Sizes (the seats' R1 estimates, in sessions)
 
-| Unit | Estimate | Source |
+Each figure is the named seat's own (`feedback/tasks.md`, R1 entries), or the plan-r2 § 8 figure where no seat re-estimated. Confidence: H high, M medium, L low.
+
+| Parent | Estimate | Seat (confidence) |
 |---|---|---|
-| U1 | 3–4 (iOS about 1, Android about 1, driver about 1, comparator 0.5–1), plus `pack-assert`'s resource rule 0.25 | plan-r2 § 8 (Lina's sum; Kenya, Data, Ada, Thurgood); Ada |
-| U2 | about 0.5 (markers), plus minutes (registration) | plan-r2 § 8 (Ada) |
-| U3 | unsized | plan-r2 § 8, "WP1, the other rows: unsized" |
-| U4 | unsized; about 70 Android read sites on Lina's side | Ada design inbound § D-1 residual |
-| U5 | row 1 about 2; rows 21 and 22 unsized | Ada design inbound § D-9 |
-| U6 | unsized | — |
-| U7 | about 0.5, plus the couplings carried in U4, U6 and U8 | Lina design inbound § 2 |
-| U8 | 2.5–3 (the ruling is made) | plan-r2 § 8 (Ada) |
-| U9 | 3–4 (DTCG about 1.5) | Ada design inbound § D-11 |
-| U10 | about 0.5 for Q4's INSTALL change; Req 12 unsized | plan-r2 § 5 (Ada) |
-| U11 | unsized | — |
-| U12 | unsized | — |
+| 1 | 1.25 | Ada (M) |
+| 2 | 1–1.5 (comparator and suites 0.5–1; Swift parser 0.25; Kotlin parser 0.25) | Thurgood (plan-r2, M); Kenya (H); Data (M–H) |
+| 3 | 1 | Kenya (M) |
+| 4 | 1 | Data (M) |
+| 5 | 0.75–1 (iOS steps 0.25; Android steps 0.25; wiring, baselines, fault run and the stability script 0.25–0.5) | Kenya (M); Data (M); Thurgood (L) |
+| 6 | about 0.1 | Thurgood (H) |
+| 7 | 0.5 | Ada (plan-r2, M) |
+| 8 | 2.75–3.25 (Ada's 2.5–3, with Sparky's 8.4 at 0.5 against her 0.25) | Ada (M); Sparky (M) |
+| 9 | 3–4 (Ada's 3–3.5, with Lina's share at 1–1.5 plus 0.25 against Ada's 1) | Ada (M–L); Lina (M–L) |
+| 10 | about 3 | Ada (M) |
+| 11 | 3.5–3.75 (Ada's 3.5, with Lina's share at 0.25–0.5) | Ada (M–L); Lina (M–L) |
+| 12 | about 1 | Lina (M–L) |
+| 13 | 4–5.5 (Ada's 4; Lina's 1.5 share may overlap it) | Ada (M–L); Lina (M–L) |
+| 14 | 4.5–5.5 (Ada's 4–5; Sparky's line 0.25; the Q3b browser check 0.25) | Ada (M–L); Sparky (H) |
+| 15 | about 2 (Leonardo reads Req 12 at about 1, inside Ada's figure) | Ada (M); Leonardo (L) |
+| 16 | about 0.75, plus the regeneration and the profile author's acts, unsized | Kenya (M); Data (M) |
+| 17 | 0.5 | Ada (H) |
+| 18 | about 0.1, plus Thurgood's final-head reads, unsized | Kenya (H); Data (H) |
+
+**Total of the sized parts: about 31–36 sessions**, mostly medium-to-low confidence. Ada's parents are about 24–27 of it. **Unsized**: the U5–U9 harness re-keying and list edits beyond each author's figure; the U10 layout change's list check (Kenya, Data); Task 16's regeneration (Lina) and profile-author acts (Thurgood); Task 18's reads (Thurgood); the preconditions (Lina's L816 and README PRs, the owners' record-only PRs). The total is a floor, not a schedule; the component repair Lina files after U1 is sized after U4 and is not in it.
 
 ### Delegated-tier plan (one PRIMARY per parent, the referent of its `**Delegated-tier**:` line)
 
-Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-write-scope-grant`: a PRIMARY and each tiered secondary may write exactly the parent's listed Primary Artifacts, on the unit's branch, until the unit merges, once Peter merges this file. **Tier rule**: Sonnet implements settled design (all of 129's calls are made in `design.md`); Opus where a named signal says residual judgment remains. Consulted seats carry no tier and get no grant. Attestations (signatures, confirm acts, Stacy's records) are outside every line.
+Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-write-scope-grant`: a PRIMARY and each tiered secondary may write exactly the parent's listed Primary Artifacts, on the unit's branch, until the unit merges, once Peter merges this file. **Tier rule**: Sonnet implements settled design (all of 129's calls are made in `design.md`, and O-8 closes in this round); Opus where a named signal says residual judgment remains. Consulted seats carry no tier and get no grant. Attestations (signatures, confirm acts, Stacy's records) are outside every line.
 
 | Parent | PRIMARY (tier) | Secondaries (tier) | Consulted |
 |---|---|---|---|
@@ -101,23 +115,24 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | 6 | Thurgood (Sonnet) | — | Stacy |
 | 7 | Thurgood (Sonnet) | — | Ada |
 | 8 | Ada (Sonnet) | Sparky (Sonnet) — the `var()` and blue-tinted shadow `Consumer Guard` cases | Kenya, Data |
-| 9 | Ada (Sonnet) | Lina (Sonnet) — the coupled Android component reads and the guideline type statements | Data, Kenya |
+| 9 | Ada (Sonnet) | Lina (Sonnet) — the coupled Android and iOS component reads and the guideline type statements | Data, Kenya |
 | 10 | Ada (Sonnet) | Lina (Sonnet) — the two component tokens files row 21's ruling disposes | — |
-| 11 | Ada (Sonnet) | Lina (Sonnet) — Req 4.5's coupled reads | Kenya, Data |
+| 11 | Ada (Sonnet) | Lina (Sonnet) — Req 4.5's coupled reads and the two `DesignTokens` re-points | Kenya, Data |
 | 12 | Lina (Sonnet) | — | Kenya, Data |
-| 13 | Ada (Sonnet) | Lina (Sonnet) — the hand-written enums, row 18 R1 under `src/cli/sync/**`, the Spec 123 pointer line, the Integration Guide cascade sentence | Data, Sparky; Ada is consulted on Lina's `src/cli/sync/**` edit |
-| 14 | Ada (Sonnet) | Sparky (Sonnet) — his charter's registered-theme line; Lina (Sonnet) — the regeneration and the lock | Lina (Q3a), Kenya, Data |
+| 13 | Ada (Sonnet) | Lina (Sonnet) — the hand-written enums, row 18 R1 under `src/cli/sync/**`, the Integration Guide cascade sentence | Data, Sparky; Ada is consulted on Lina's `src/cli/sync/**` edit |
+| 14 | Ada (Sonnet) | Sparky (Sonnet) — his charter's registered-theme line and the Q3b browser check; Lina (Sonnet) — the regeneration and the lock; Thurgood (Sonnet) — the profile author's acts | Lina (Q3a), Kenya, Data |
 | 15 | Ada (Sonnet) | Thurgood (Sonnet) — the INSTALL derivation and `install-doc.test.ts` | Leonardo, Kenya, Data |
-| 16 | Kenya (Sonnet) | Data (Sonnet) — his charter and overlay; Lina (Sonnet) — the regeneration and the lock | Stacy (confirmer) |
+| 16 | Kenya (Sonnet) | Data (Sonnet) — his charter and overlay text; Lina (Sonnet) — the regeneration and the lock; Thurgood (Sonnet) — the profile author's acts | Stacy (confirmer) |
 | 17 | Ada (Sonnet) | — | Thurgood (release text) |
-| 18 | Thurgood (Sonnet) | Kenya (Sonnet), Data (Sonnet) — the "Native status" passage | Stacy, Ada |
+| 18 | Thurgood (Sonnet) | Kenya (Sonnet), Data (Sonnet) — the "Native status" passage | Stacy, Ada, Leonardo |
 
 ---
 
-## Merge preconditions (before this file merges)
+## Merge preconditions (before this file merges), in merge order
 
-1. **The harness charter's Trigger** (`.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md`, Kenya and Data) is `path:` this file, so it fires at this file's merge. Under README rule 11 a re-rule must be an ancestor of the firing commit, so Kenya and Data re-rule it in their own record-only PR that merges first, to `path:.kiro/specs/129-consumer-generation-completeness/completion/task-5-completion.md` (the harness parent), or close it with the build decision this file records (requirements.md Req 2, "Records").
-2. **The second re-rule of the intake records** (requirements.md § "Record dispositions", Stacy's requirements-round point). After this file's last tasks round fixes the numbering, each owner re-rules their records from `completion/claims-pass.md` to the carrying parent's completion doc, in their own record-only PR that merges before this file. The table:
+1. **#680** (Thurgood): the instruments-parser record re-ruled to the next spec's tasks round, and the dated pointer in Spec 128's outline. #678's merge is the event its old `manual` line named, so #680 merges first.
+2. **The harness charter** (`.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md`, Kenya and Data) is `path:` this file, so it fires at this file's merge. Kenya and Data re-rule it, in one record-only PR with the other's agreement line, to `path:.kiro/specs/129-consumer-generation-completeness/completion/task-5-completion.md`. Both R1 entries agree on that target, and on re-rule rather than close (the obligation is a harness that exists). Task 5 then closes or re-rules it at U1's merge.
+3. **The second re-rule of the intake records** (requirements.md § "Record dispositions"). After this file's last round fixes the numbering, each owner re-rules their records from `completion/claims-pass.md` to the carrying parent's completion doc: Ada in one record-only PR (15 records), Lina in one (4 records, plus her C6 re-rule below). Stacy R1 notes the binding deadline is before U3 merges; the owners make them before this file anyway, so a renumbering is caught. Each carrying unit then closes or re-rules them (Conventions).
 
 | Record | Owner | Carried by | New Trigger path (under `completion/`) |
 |---|---|---|---|
@@ -133,7 +148,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | `2026-10-24-shadow-color-primitives-emitted-on-no-platform.md` (row 10) | Ada | Task 8 | `task-8-completion.md` |
 | `2026-10-24-android-component-unit-type-mismatches.md` (row 12) | Lina | Tasks 9, 11 | `task-11-completion.md` (the last) |
 | `2026-10-26-token-index-platform-name-readers.md` (row 13, item 3) | Ada | Task 11 | `task-11-completion.md` |
-| `2026-09-26-native-component-theme-hardcoding.md` (row 15) | Lina | Task 12 | `task-12-completion.md` |
+| `2026-09-26-native-component-theme-hardcoding.md` (row 15) | Lina | Tasks 11, 12 | `task-12-completion.md` (its final state check) |
 | `2026-11-04-progress-bar-native-theme-reads-malformed.md` (row 16) | Lina | Task 12 | `task-12-completion.md` |
 | `2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md` (row 18, R1 and R5) | Lina | Task 13 | `task-13-completion.md` |
 | `2026-10-15-123-palette-read-from-package.md` (row 19) | Ada | Task 14 | `task-14-completion.md` |
@@ -141,23 +156,22 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | `2026-10-24-component-token-custom-values-unvalidated.md` (row 21) | Ada | Task 10 | `task-10-completion.md` |
 | `2026-10-03-semantic-override-map-type-not-exported.md` (row 22) | Ada | Task 10 | `task-10-completion.md` |
 
-   **Stay on `completion/claims-pass.md`, by design**: the charter `2026-10-02-consumer-generation-completeness-spec.md` (Ada; CLOSEOUT reads the spec); `2026-06-24-oklch-shadow-color-family-not-migrated.md` (row 11; its owed act at the claims pass is the re-rule to Spec 133, design § 8); `2026-11-04-consumers-get-no-report-of-what-an-upgrade-changed-in-generated-tokens.md` (left out; re-read at CLOSEOUT).
+   **Stay on `completion/claims-pass.md`, by design** (Ada and Stacy R1 confirm): the charter `2026-10-02-consumer-generation-completeness-spec.md` (CLOSEOUT reads the spec); `2026-06-24-oklch-shadow-color-family-not-migrated.md` (row 11; its owed act at the claims pass is the re-rule to Spec 133, design § 8); `2026-11-04-consumers-get-no-report-of-what-an-upgrade-changed-in-generated-tokens.md` (left out; re-read at CLOSEOUT).
 
 ## Unit preconditions and the records 129's paths fire
 
 | When | Record or act | Owner | What is owed |
 |---|---|---|---|
-| **Before U1's PR opens** | `ContainerCardBase.ios.swift` L816 parse defect (row 15's half, Req 4.7) | Lina | her own PR, merged; else it is carried as a tagged entry (Req 4.7 allows it) |
-| **Before U1 merges** | `.kiro/issues/2026-11-05-icon-base-android-drawable-readme-breaks-resource-merge.md`, Trigger `path:harness/**` | Lina | the README move merged and the record closed (rule 5), or re-ruled, in an ancestor of U1's merge; otherwise U1's first Android run fails before any Kotlin compiles (Req 10.3) |
-| **Before U1 merges** | `.kiro/issues/2026-09-26-native-component-distribution.md`, Trigger `path:harness/**` | Kenya, Data | the firing acts the charter names, or the narrowing to `path:harness/pins.yaml` Stacy preferred, in an ancestor of U1's merge |
-| **The first unit PR that edits `tests/consumer-integration.test.ts`** (U5 at the earliest) | `2026-10-13-consumer-guard-c6-sync-dry-run-hits-npm-registry.md`, Trigger `path:tests/consumer-integration.test.ts` | Lina | the hermetic C6 fix in that PR, or a re-rule in an ancestor |
-| **U5 (row 21 edits `src/build/tokens/defineComponentTokens.ts`)** | `2026-09-27-progress-token-harvest-may-not-cross-dual-instance-boundary.md`, Trigger `path:src/build/tokens/defineComponentTokens.ts` | Ada | the trace or a re-rule, in or before that PR |
-| **Any unit PR that edits `src/cli/staleness.ts`** (Task 13's R5 may) | `2026-10-12-generate-staleness-decided-by-file-times.md` | Ada | the fix or a re-rule, in or before that PR |
-| **Any unit PR that edits `src/components/core/Input-Text-Base/platforms/ios/**`** | `ios-readonly-focusable-prototype.md` | Kenya | the prototype run or a re-defer, at that PR |
-| **After U1 merges** | the component-repair record (Req 1.5) | Lina | filed from U1's committed baseline run; sized at the first run after U4 merges |
+| **Before U1's PR opens** | `ContainerCardBase.ios.swift` L816 parse defect (row 15's half, Req 4.7) | Lina | her one-line PR, with a dated line on the theme-hardcoding record for that half; else it is carried as a tagged entry (Req 4.7 allows it) |
+| **Before Task 4's first dispatched Android run** (Data R1) | `.kiro/issues/2026-11-05-icon-base-android-drawable-readme-breaks-resource-merge.md`, Trigger `path:harness/**` | Lina | the README moved out of `res/` and the record closed (rule 5 outcome line, then the archive move), merged to `main`, and `main` merged into the U1 branch before that run; otherwise every Android run on the branch ends `pre-compile` and no Android baseline can be committed |
+| **Before U1 merges** | `.kiro/issues/2026-09-26-native-component-distribution.md`, Trigger `path:harness/**` | Kenya, Data (co-owners) | a re-rule in an ancestor of U1's merge. **Not settled; the two positions:** Kenya, `release:next:phase-1` (the token their PLAN R2 answer to Stacy named for a P2 that rides Spec 132), until 132's outline merges. Data, `path:.kiro/specs/129-consumer-generation-completeness/completion/claims-pass.md`, keeping the record's three firing obligations, because under (x′) the obligation to open 132's outline starts at 129's CLOSEOUT and `release:next` would lapse at every S through 129. Both reject narrowing to `harness/pins.yaml` (U1 creates it). Stacy rules whether Data's form is a vehicle under README rule 1; the two co-owners pick between them; it reaches Peter only if they do not agree |
+| **Before #678 merges, in Lina's record-only PR** | `2026-10-13-consumer-guard-c6-sync-dry-run-hits-npm-registry.md`, Trigger `path:tests/consumer-integration.test.ts` | Lina | **Lina's call, as owner (rule 9):** re-rule to `manual`, naming its own fixing PR (a P3 riding another change, rule 1), because the fix is a test-file change outside her standing scope. Sparky R1 is right that the old token fires at **U3**, not U5 (Task 8 is the first parent listing that file), so the re-rule must merge before U3 at the latest |
+| **U5 (row 21 edits `src/build/tokens/defineComponentTokens.ts`)** | `2026-09-27-progress-token-harvest-may-not-cross-dual-instance-boundary.md` | Ada | the trace or a re-rule, in U5's PR (Ada R1 confirms) |
+| **U8 (Task 13 edits `src/cli/staleness.ts`)** | `2026-10-12-generate-staleness-decided-by-file-times.md` | Ada | closed by R5's content check in U8's PR (Ada R1) |
+| **Before U7 merges, if its diff touches `src/components/core/Input-Text-Base/platforms/ios/**`** | `ios-readonly-focusable-prototype.md` | Kenya | a record-only re-defer merged first (Kenya R1); Lina tells Kenya at U7's PR-open whether `InputTextBase.ios.swift` is in the diff |
+| **After U1 merges** | the component-repair record (Req 1.5) | Lina | filed from U1's committed baseline lists; sized at the first run after U4 merges. Kenya's reading of `InputTextBase.ios.swift` L185 (a ratio added to points) goes in it |
 | **After U1 merges** | `.github/in-lane-guards.json` entries (Req 3.10) | Thurgood | U2, Task 6 |
 | **At U6's merge** | MIDPOINT claims pass | Stacy | `completion/claims-pass-midpoint.md` |
-| **Before the S of the release carrying U6** | Req 4.9's charter and overlay text | Kenya, Data | U11 |
 | **Before the S of the release carrying U9** | the Token-Governance § "Theme Registry (Spec 094)" ballot edit (Req 15.6) | Thurgood (holder), Ada (text) | a ballot, ratified and applied; Task 18 reads that it happened |
 | **At U12's merge** | `2026-10-23-signing-act-shape-review.md` (Trigger `manual`: 129's final unit merge) | Thurgood | the review it names |
 | **At U12's merge** | CLOSEOUT claims pass | Stacy | `completion/claims-pass.md` |
@@ -171,15 +185,14 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 - [ ] 1. The packed-install consumer driver (U1)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet)
-  **Traces**: Req 1.8, 2.1, 2.2, 2.3, 4.8, 10.3 · design Architecture, § 3 ("Wiring")
+  **Traces**: Req 1.8, 2.1, 2.2, 2.3, 10.3 · design Architecture, § 3 ("Wiring")
 
   **Success Criteria:**
   - `scripts/harness/consumer.ts` runs `npm pack`, installs the tarball into a scratch directory, runs `init` and `generate`, and writes the consumer root as one directory a CI job can upload, reading nothing from the repository's own `dist/`.
   - The scratch consumer's config abbreviation is not `DP`, and `harness/pins.yaml` § `consumer` names it.
   - The harness input includes the product-token fixture at `harness/fixtures/product-tokens/`, holding one token that `ref`s a WCAG-only colour and one that `ref`s a composite token.
-  - Until item (i) emits, each product-token fixture entry on a token list is tagged to row 2's record (theme getters) or row 13's record (composite and WCAG-only references), by cause.
   - The driver exits non-zero, naming the step, when `npm pack`, the install, `init` or `generate` fails.
-  - `scripts/pack-assert.ts` fails on any packed file under `platforms/android/res/` whose path is not `res/<type>[-<qualifiers>]/<name>.<ext>` with an Android resource type and an allowed extension, and passes at this unit's head.
+  - `scripts/pack-assert.ts` fails on any packed file under `platforms/android/res/` whose path is not `res/<type>[-<qualifiers>]/<name>.<ext>` with an Android resource type and an allowed extension, shown by a case in `scripts/__tests__/pack-assert.test.ts` with a `README.md` under `res/drawable/` red once, and passes at this unit's head.
 
   **Primary Artifacts:**
   - `scripts/harness/consumer.ts`
@@ -187,6 +200,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `harness/fixtures/product-tokens/**`
   - `harness/pins.yaml` (the `consumer` section)
   - `scripts/pack-assert.ts`
+  - `scripts/__tests__/pack-assert.test.ts`
 
   **Completion Documentation:**
   - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-1-completion.md`
@@ -196,12 +210,12 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   - [ ] 1.1 Driver: pack, install, `init`, `generate`, artifact layout
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
-    - Abbreviation from `harness/pins.yaml` § `consumer`; a Jest test of the step-failure messages
+    - Abbreviation from `harness/pins.yaml` § `consumer`; each platform's output folder passed to its lane from the config (§ "The `gen:` path rule"); a Jest test of the step-failure messages
     - _Requirements: 1.8, 2.1, 2.2_
   - [ ] 1.2 Product-token fixture
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
-    - _Requirements: 2.3, 4.8_
-  - [ ] 1.3 `pack-assert`'s native resource rule
+    - _Requirements: 2.3_
+  - [ ] 1.3 `pack-assert`'s native resource rule and its red case
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - Lina's README move is a precondition (§ "Unit preconditions")
     - _Requirements: 10.3_
@@ -222,11 +236,11 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - The same test makes it fail once for each of: a toolchain version that differs from the pin; a compile that exits non-zero with no parsed error (`pre-compile`); a compile that exits zero with parsed errors (`parser`); a merge base whose list or pin file cannot be read (`base unreadable`).
   - The same test shows that a run with no merge base checks everything except additions and prints `additions not checked: no merge base`.
   - The same test shows that, in a component context, a `gen:` key the component compile reports and the baseline compile does not is kept and counted as `cross-tier`, and that a missing baseline result fails the context.
-  - `scripts/harness/__tests__/parse-swift.test.ts` shows that a Swift diagnostic printed twice (location and caret) is counted once, and that a missing-return fixture yields one `missing return` key.
-  - `scripts/harness/__tests__/parse-kotlin.test.ts` shows that a multi-line Kotlin diagnostic keeps its continuation lines joined by ` ⏎ `.
-  - Both parser tests show that a key holds a root-relative POSIX path, no line or column, and its quoted identifiers.
+  - `scripts/harness/__tests__/parse-swift.test.ts` shows that an `llvm`-style single diagnostic line yields one key, that a Swift diagnostic printed twice (location and caret) is counted once, and that a missing-return fixture yields one `missing return` key.
+  - `scripts/harness/__tests__/parse-kotlin.test.ts` shows that a multi-line Kotlin diagnostic keeps its continuation lines joined by ` ⏎ `, that a `w:` line yields no key, and that a diagnostic ends at the next `e: `, `w: ` or Gradle line (`> `, `FAILURE`, `* `, `BUILD`).
+  - Both parser tests show that a key holds a root-relative POSIX path, a `gen:` path relative to its platform's output folder, no line or column, and its quoted identifiers, on fixtures whose header names the toolchain they were recorded under.
   - A grep of `scripts/harness/compare.ts`, `scripts/harness/parse-swift.ts` and `scripts/harness/parse-kotlin.ts` for `GITHUB_TOKEN`, `GH_TOKEN`, `gh pr` and `pull_request` returns no line.
-  - `harness/README.md` states the list, pin and protected-set formats of § "The list file format, the pin file and the run policy", and the comparator parses exactly that format.
+  - `harness/README.md` states the list, pin, protected-set and `gen:` path formats of § "The list file format, the pin file and the run policy", and the comparator parses exactly that format.
   - `npm run test:scripts` passes with the three new suites, and the `lane-functional-root` run on the U1 PR shows them selected.
 
   **Primary Artifacts:**
@@ -246,14 +260,16 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 2 Complete: The comparator and its falsification test (129)"` on the U1 branch (no PR); STOP.
 
-  - [ ] 2.1 Formats: lists, pins, protected set; `harness/README.md`
+  - [ ] 2.1 Formats: lists, pins, protected set, the `gen:` path rule; `harness/README.md`
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - _Requirements: 3.2, 3.7_
   - [ ] 2.2 Swift parser (`<root>:<path> | <message>`, K-2, O-17)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Kenya (Sonnet)
+    - Fixtures recorded under Xcode 27.2 and labelled so
     - _Requirements: 3.2_
   - [ ] 2.3 Kotlin parser (D § 1.2)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
+    - Fixture cut from the 2026-11-04 K2 logs, scratch paths rewritten to `pkg:` and `gen:`, source named in the completion doc
     - _Requirements: 3.2_
   - [ ] 2.4 Comparator verdict rules and summary line
     **Type**: Implementation · **Validation**: Tier 3 - Comprehensive · **Agent**: Thurgood (Opus)
@@ -271,18 +287,21 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Success Criteria:**
   - On iOS, Stage T compiles the generated iOS files with `swiftc -emit-module -c -wmo -parse-as-library -module-name DPHarnessTokens -swift-version 6 -diagnostic-style llvm` for `arm64-apple-ios17.0-simulator`, and prints the invocation and its file list.
-  - On iOS, Stage P compiles the probe generated from the consumer's `token-index/` with plain `import`, prints `probe: read <n> of <m> index names`, and fails when `n ≠ m`; while Stage T writes no module it prints `probe: blocked (token module not built)`.
-  - On iOS, the probe reads every colour semantic the index names `theme.<name>` through each theme instance and through `\.dpTheme`, once item (i) emits them.
-  - On iOS, Stage C compiles every non-test packaged `.swift` file and the generated files as module `DesignerPunk` at `-swift-version 5`, leaving out the package's `dist/ComponentTokens.*`, in the pinned order (package files, then generated files, each sorted by path).
+  - On iOS, Stage P compiles the probe generated from the consumer's `token-index/` with plain `import`, prints `probe: read <n> of <m> index names` and fails when `n ≠ m`, shown at U1 by the planted fixture's `2 of 2` and by `probe-swift.test.ts` asserting that the generated probe's read count equals the index's iOS names; while Stage T writes no module it prints `probe: blocked (token module not built)`.
+  - On iOS, `scripts/harness/__tests__/probe-swift.test.ts` asserts that the probe generator emits one theme read per `theme.`-named colour semantic per registered theme instance, and one read through `\.dpTheme`, from the index and the consumer config, with no harness change needed when item (i) emits.
+  - On iOS, Stage C compiles every non-test packaged `.swift` file and the generated files as module `DesignerPunk` at `-swift-version 5`, leaving out the package's `dist/ComponentTokens.*`, in the pinned order (package files, then generated files, each sorted by path), with one copy of each native file name.
   - On iOS, the T5 baseline compiles the generated files alone at `-swift-version 5` in the same job as Stage C, for the cross-tier rule.
   - On iOS, each stage runs its self-test first: the missing-return fixture gives exactly one `missing return` error, and at Stage P a planted `internal` member gives one entry and a read count of 2 of 2.
   - On iOS, each context reads Xcode's version, build and app path, the SDK and Swift, sets `DEVELOPER_DIR`, and fails on any field that differs from `harness/pins.yaml` § `ios`.
-  - `harness/pins.yaml` § `ios` pins Xcode 26.6 (`17F113`), the SDK, the Swift language modes, and the compile flags, names the runner label `macos-26`, states that its pins are harness pins and not minimums, and sets the deployment target 17.0, equal to Core Goals' iOS minimum.
+  - `harness/pins.yaml` § `ios` pins the newest stable Xcode 26 minor on the `macos-26` image at the unit's cut, with the readme's image version recorded (26.6, `17F113`, at the tasks round's read), the SDK, the Swift language modes and the compile flags, names the runner label `macos-26`, states that its pins are harness pins and not minimums, and sets the deployment target 17.0, equal to Core Goals' iOS minimum.
   - On iOS, each context computes its floor at run time from the packed tarball's file list plus the generated files, per tier, and prints the count it gave the compiler.
 
   **Primary Artifacts:**
   - `harness/ios/**`
   - `harness/pins.yaml` (the `ios` section)
+  - `scripts/harness/probe-swift.ts`
+  - `scripts/harness/__tests__/probe-swift.test.ts`
+  - `scripts/harness/__tests__/fixtures/swift/**`
 
   **Completion Documentation:**
   - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-3-completion.md`
@@ -308,8 +327,11 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   **Success Criteria:**
   - On Android, `harness/android/` is one Gradle build with the `:tokens`, `:probe` and `:dp` modules, each `com.android.library` with the Compose compiler plugin applied.
   - On Android, each context runs one invocation, `gradle --continue :tokens:compileDebugKotlin :probe:compileDebugKotlin :dp:compileDebugKotlin`, and prints it with its sorted file list, package files first.
-  - On Android, `:dp` compiles every non-test packaged `.kt` file and the generated Kotlin with Icon-Base's `res/` as its resources, leaving out the package's `dist/ComponentTokens.*`.
+  - On Android, `:dp` compiles every non-test packaged `.kt` file and the generated Kotlin with Icon-Base's `res/` as its resources, leaving out the package's `dist/ComponentTokens.*`, with one copy of each native file name.
   - On Android, `:probe` reads every member the index names for Android from inside `@Composable` functions, prints `probe: read <n> of <m>`, fails when `n ≠ m`, and a planted `internal` member in a fixture yields an entry.
+  - On Android, while `:tokens` fails, `:probe` prints `probe: blocked (:tokens not compiled)` and its count is not compared.
+  - On Android, the probe generator reads its names from the index and its instance names from the consumer config, so that it reads every `theme.`-named colour semantic through `LocalDPTheme.current` and through each `<Name>Themes` member, and every product-token fixture member, inside `@Composable`, once item (i) emits them, with no `harness/android/**` change.
+  - On Android, the lanes read the generated Kotlin's location from the consumer's config (`platforms.android.output`, else `output`), never from a hard-coded path.
   - On Android, `harness-android-components` fails when `:tokens:compileDebugKotlin` has no task outcome in its own run.
   - `harness/pins.yaml` § `android` pins the JDK, Gradle, AGP, Kotlin, the Compose BOM (1.7 or later for `material-ripple`), `compileSdk`, `minSdk` 26, Coil, `material-icons-extended` and, while the generated Kotlin calls it, the colour library, names the runner label `ubuntu-24.04`, and states that its pins are harness pins and not minimums.
   - On Android, each context reads `java.version`, the Gradle version, the Kotlin compiler version and the resolved AGP and BOM versions, and fails on any difference from `harness/pins.yaml`.
@@ -327,15 +349,16 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   - [ ] 4.1 The Gradle build, three modules, explicit file list, floor
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
+    - The first dispatched Android run waits for Lina's README move on the branch
     - _Requirements: 2.4, 2.6, 3.4_
-  - [ ] 4.2 The probe generator, the planted-member fixture, pins and toolchain match
+  - [ ] 4.2 The data-driven probe generator, the blocked state, the planted-member fixture, pins and toolchain match
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
     - _Requirements: 2.7, 2.8, 2.9, 3.11_
 
 - [ ] 5. Workflow wiring, baselines and the fault run (U1)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Thurgood (Sonnet) · Kenya (Sonnet) — iOS job steps · Data (Sonnet) — Android job steps
-  **Traces**: Req 1.4 (its list rule), 2.5, 2.10, 2.11, 2.12, 2.14, 3.5 (b) · design § 3 ("Wiring")
+  **Traces**: Req 1.4 (its list rule), 2.5, 2.10, 2.11, 2.12, 2.13, 2.14, 3.5 (b), 4.8 · design § 3 ("Wiring")
 
   **Success Criteria:**
   - `.github/workflows/native-harness.yml` defines `harness-generate` and the four contexts `harness-ios-tokens`, `harness-ios-components`, `harness-android-tokens` and `harness-android-components`, each its own job and check, triggered `on: pull_request` with no `paths:` filter and on `workflow_dispatch`.
@@ -343,10 +366,13 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `harness-generate` runs `scripts/harness/consumer.ts` once and uploads its output as one artifact, and each compile context downloads it.
   - One dispatched run with a forced `harness-generate` failure shows each of the four contexts failing, not skipping, and its run URL is in this parent's completion doc.
   - The four baseline lists `harness/expected/harness-ios-tokens.tsv`, `harness-ios-components.tsv`, `harness-android-tokens.tsv` and `harness-android-components.tsv` are committed from the first full run, admitted under exception (b), with every entry tagged to a root record whose Trigger can fire.
-  - All four contexts ran on the U1 PR and concluded success at its head, each printing its summary line, and the completion doc cites each per Req 2.13.
-  - Every 129 row a harness context accepts has an entry tagged to its record on a baseline list, or this parent's completion doc names its interim instrument (row 12's groups B and C, masked behind row 6; row 9, `tokenIndexPlatformNames.test.ts`; row 2's probe half).
+  - On the token lists, each entry located in a product-token fixture file is tagged to row 2's record (theme getters) or row 13's record (composite and WCAG-only references), by cause.
+  - Every 129 row a harness context accepts has an entry tagged to its record on a baseline list, or this parent's completion doc names its interim instrument: row 12's groups B and C (masked behind row 6), `AndroidDpTokenReads.test.ts`; row 9, Task 8's tightened `tokenIndexPlatformNames.test.ts`, shown red on the pre-fix output in Task 8's completion doc; row 2's probe half, Task 11's probe result.
   - `tools/agent-generator/verify-gate-registration.sh` reports its count unchanged at the U1 head, and no harness context is in `EXPECTED_CONTEXTS` or in `complete-task.sh`'s `REQUIRED_WORKFLOWS`.
-  - `evidence/harness-stability.md` exists with one row per context for the U1 PR's run, in the form § "Decision 6" reads.
+  - `evidence/harness-stability.md` is the committed output of `scripts/harness/stability.ts` over the checks API for U1's runs, with run id, head SHA, attempt, conclusion, cache-restore result and duration per context, and the script applies the break rules of § "Decision 6".
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - `2026-09-17-platform-build-verification-harness-candidate.md`, whose Trigger names `task-5-completion.md`, carries at U1's merge Kenya's and Data's rule 5 outcome line or a re-ruled Trigger with a dated reason.
+  - `2026-11-05-icon-base-android-drawable-readme-breaks-resource-merge.md` and `2026-09-26-native-component-distribution.md`, whose Triggers are `path:harness/**`, were closed or re-ruled by their owners in a PR merged before U1.
 
   **Primary Artifacts:**
   - `.github/workflows/native-harness.yml`
@@ -354,6 +380,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `harness/expected/harness-ios-components.tsv`
   - `harness/expected/harness-android-tokens.tsv`
   - `harness/expected/harness-android-components.tsv`
+  - `scripts/harness/stability.ts`
   - `.kiro/specs/129-consumer-generation-completeness/evidence/harness-stability.md`
 
   **Grant limits** (`.github/**`): this row's grant over `.github/workflows/native-harness.yml` carries the acts README rule 8 and ballot `2026-09-27-ci-regime-standing-scope` M2 clause 5 exclude, and admits none: no new required context, no change to `EXPECTED_CONTEXTS`'s count, no removing or weakening a step, floor or execution assertion. It creates one new non-required workflow file and touches no other `.github/**` path.
@@ -369,11 +396,11 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     - _Requirements: 2.5, 2.10, 2.11, 2.12_
   - [ ] 5.2 The first full run; baseline lists with tags; the protected set filled
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
-    - Lina files the component-repair record from this run after U1 merges (§ "Unit preconditions")
-    - _Requirements: 1.4, 2.14, 3.5_
-  - [ ] 5.3 The forced-failure dispatch; the stability record opened
+    - Lina files the component-repair record from these lists after U1 merges (§ "Unit preconditions")
+    - _Requirements: 1.4, 2.14, 3.5, 4.8_
+  - [ ] 5.3 The forced-failure dispatch; the stability script and its first record
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
-    - _Requirements: 2.11_
+    - _Requirements: 2.11, 2.12_
 
 ### UNIT 2 — The comparator guard and the limitation markers
 
@@ -403,12 +430,13 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 - [ ] 7. Limitation markers in the Integration Guide's install region (U2)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Thurgood (Sonnet)
-  **Traces**: Req 15.2 · plan-r2 § 5
+  **Traces**: Req 2.10, 15.2 · plan-r2 § 5
 
   **Success Criteria:**
-  - Each limitation sentence in `governance/DesignerPunk-Integration-Guide.md`'s install region that a 129 row fixes carries `<!-- limitation: .kiro/issues/<file>.md -->` naming that row's record, and the completion doc lists every marked sentence with its record.
+  - Each limitation sentence in `governance/DesignerPunk-Integration-Guide.md`'s install region that a 129 row fixes carries `<!-- limitation: .kiro/issues/<file>.md -->` naming that row's record, and the completion doc lists every marked sentence with its record (which sentences a row fixes is a reading).
   - `scripts/__tests__/install-doc.test.ts` fails when a marked record is under `archive/` or missing while its sentence remains, shown by a fixture case red once.
   - `docs/consumer/INSTALL.md` is re-derived by `scripts/derive-install-doc.ts` and `install-doc.test.ts` passes.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
 
   **Primary Artifacts:**
   - `governance/DesignerPunk-Integration-Guide.md`
@@ -432,10 +460,11 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 - [ ] 8. Native colours, shadows, section comments and `public` members (U3)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Sparky (Sonnet) — the web `Consumer Guard` cases
-  **Traces**: Req 1.6, 6.2, 6.10, 7.1–7.4, 15.4; rows 4 (items 2 and 4), 7, 9, 10, 11 · design §§ 5 (shadow composite), 6, 8, 9 (`var()` reach)
+  **Traces**: Req 1.6, 2.10, 6.2, 6.10, 7.1–7.4, 15.4; rows 4 (items 2 and 4), 7, 9, 10, 11 · design §§ 5 (shadow composite), 6, 8, 9 (`var()` reach)
 
   **Success Criteria:**
   - On iOS, every generated colour is `Color(.displayP3, red:, green:, blue:, opacity:)` with values computed at generation, and no generated file calls `Color.oklch` or imports ChromaKit.
+  - On iOS, the generated token file imports SwiftUI.
   - On Android, every generated colour is `Color(red, green, blue, alpha, ColorSpaces.DisplayP3)` with values computed at generation, and no generated file calls colormath.
   - A Jest test asserts that each emitted native colour inside Display P3 converts back to its OKLCH source with ΔE₀₀ ≤ 0.1, channels to 4 decimal places.
   - A Jest test asserts that colours outside Display P3 are mapped by CSS Color 4 § 13.2 gamut mapping with ΔE_OK 0.02, against a committed fixture whose header names its source (a reference implementation and version, or the specification's worked examples).
@@ -446,12 +475,15 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `shadowBlack100`, `shadowBlue100`, `shadowOrange100` and `shadowGray100` are defined in OKLCH with the values of design § 8, and a Jest test asserts each converts back to its earlier `rgba` within § 6's tolerance.
   - Every shadow composite's colour primitive is emitted on web, on iOS and on Android, and each native shadow composite is a generated `ShadowToken`, not a `Typography` constructor.
   - `KNOWN_UNEMITTED_SHADOW_COLORS` and the warning `generate` prints for it are removed, and `ColorReferenceEmissionValidator.test.ts` passes with a case that no colour primitive a composite references goes unemitted.
-  - A `Consumer Guard` case asserts, on the packed install's generated web CSS and the package's `component-tokens.css`, that every custom property a `var()` references is defined in the generated web CSS or on a pinned allowlist.
+  - A `Consumer Guard` case asserts, on the packed install's generated web CSS and the package's `component-tokens.css`, that every custom property a `var()` references is defined in the generated web CSS or on a pinned allowlist kept as a constant at the head of that test, whose count the test asserts.
   - A `Consumer Guard` case asserts that one blue-tinted shadow composite on web uses its colour token's custom property.
   - The generated Kotlin's section comments are comment syntax, accepted by `harness-android-tokens` with row 7's entries removed in this diff.
-  - Every member of the generated iOS token types is `public`, and `src/generators/__tests__/tokenIndexPlatformNames.test.ts` requires every index iOS name to resolve to a `public` member of a `public` enclosing type.
-  - The shadow token family's documentation changes in this PR to the OKLCH definitions.
-  - The token contexts' lists show the entries tagged to rows 4 (item 2), 7, 9 (where Stage T builds) and 10 removed in this diff, and every addition this diff makes prints under exception (a) or (c) with a tag.
+  - Every member of the generated iOS token types is `public`, and `src/generators/__tests__/tokenIndexPlatformNames.test.ts` requires every index iOS name to resolve to a `public` member of a `public` enclosing type, shown in the completion doc failing on the pre-fix output (the red string) and then passing.
+  - `governance/Token-Family-Shadow.md` describes the four shadow primitives in OKLCH in this diff.
+  - `governance/Rosetta-System-Architecture.md`'s native colour description (L100–L152 and L376 at `d7f87174c`) states the Display P3 constructors in this diff.
+  - The token contexts' lists show the entries tagged to rows 4 (item 2), 7, 9 (where Stage T builds) and 10 removed in this diff, Android colour entries tagged to row 6 remain until U4, and every addition this diff makes prints under exception (a) or (c) with a tag.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - Every root record whose Trigger names `task-8-completion.md` carries, at U3's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U3's PR or in a PR merged before it.
 
   **Primary Artifacts:**
   - `src/generators/TokenFileGenerator.ts`
@@ -466,6 +498,8 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `src/validators/__tests__/ColorReferenceEmissionValidator.test.ts`
   - `src/generators/__tests__/**`
   - `tests/consumer-integration.test.ts`
+  - `governance/Token-Family-Shadow.md`
+  - `governance/Rosetta-System-Architecture.md`
   - `harness/expected/harness-ios-tokens.tsv`
   - `harness/expected/harness-android-tokens.tsv`
   - `harness/expected/harness-ios-components.tsv`
@@ -476,34 +510,34 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-8-completion.md`
   - Summary: `docs/specs/129-consumer-generation-completeness/task-8-summary.md`
 
-  **Post-Completion:** mark complete; `complete-task.sh "Task 8 Complete: Native colours, shadows and the standalone native fixes (129)"` opens U3's PR; report the URL; STOP.
+  **Post-Completion:** mark complete; `complete-task.sh "Task 8 Complete: Native colours, shadows and the standalone native fixes (129)"` opens U3's PR (Peter-merged: `governance/**`; `**Edit kind**:` EXECUTION, design §§ 6 and 8, per file); report the URL; STOP.
 
-  - [ ] 8.1 The P3 converter and gamut mapping; both native constructors; the WCAG path
+  - [ ] 8.1 The P3 converter and gamut mapping; both native constructors; `import SwiftUI`; the WCAG path
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 6.10_
-  - [ ] 8.2 Shadow primitives in OKLCH; every composite's colour emitted; `ShadowToken`; the warning removed; family doc
+  - [ ] 8.2 Shadow primitives in OKLCH; every composite's colour emitted; `ShadowToken`; the warning removed; the family doc and the architecture doc
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 15.4_
-  - [ ] 8.3 Section comments (row 7); `public` members and the tightened text guard (row 9)
+  - [ ] 8.3 Section comments (row 7); `public` members and the tightened text guard, red then green (row 9)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - The text guard retires in the PR where Stage P first prints a full read count
     - _Requirements: 6.2_
-  - [ ] 8.4 `Consumer Guard`: the `var()` check and the blue-tinted composite
+  - [ ] 8.4 `Consumer Guard`: the `var()` check with its pinned allowlist, and the blue-tinted composite
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Sparky (Sonnet)
-    - No browser; reach includes `component-tokens.css` (design § 9)
+    - No browser; reach includes `component-tokens.css` (design § 9); follows 8.2
     - _Requirements: 1.6, 7.1_
 
 ### UNIT 4 — The native type table
 
 - [ ] 9. The native type table, import lists and font family, with their component couplings (U4)
 
-  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Lina (Sonnet) — the coupled Android reads and the guideline type statements
-  **Traces**: Req 5.9, 6.3, 6.4, 6.5, 6.7, 6.8, 6.9; rows 3, 4 (item 1), 5, 6, 8, 12 (groups B, C, item 3's typography); I-1, I-2 · design §§ 5, 7, 12a (`ConfigHelpers`)
+  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Lina (Sonnet) — the coupled Android and iOS reads and the guideline type statements
+  **Traces**: Req 2.10, 5.9, 6.3, 6.4, 6.5, 6.7, 6.8, 6.9; rows 3, 4 (item 1), 5, 6, 8, 12 (groups B, C, item 3's non-colour constants); I-1, I-2 · design §§ 5, 7, 12a (`ConfigHelpers`)
 
   **Success Criteria:**
-  - On Android, the generated families emit the types of design § 5's table (Data's R2 rows, with any variant Ada and Data confirm in this round recorded in the completion doc), and one Jest test per table row asserts its emitted form.
+  - On Android, the generated families emit the types of design § 5's table as merged at `5e894837c` (Data's R2 rows; O-8 closed at this tasks round), and one Jest test per table row asserts its emitted form.
   - On iOS, the generated families emit the types of design § 5's table, `TypographyToken` carries a computed `tracking: CGFloat` in points, and a Jest test asserts each row and the field.
-  - On Android, a Jest test on the generator output asserts that `radius_half` emits `CornerSize(percent = 50)` (or the confirmed variant).
+  - On Android, a Jest test on the generator output asserts that `radius_half` emits `CornerSize(percent = 50)`.
   - On iOS, `radiusHalf` emits `Circle()`, accepted by `harness-ios-tokens`.
   - On iOS, a font family emits as a `String?`, the first stack entry unquoted, and `nil` when that entry is a generic keyword, asserted by a Jest test.
   - On Android, a font family emits by design § 5's row, with the quotes gone, asserted by a Jest test.
@@ -511,12 +545,16 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - The import list of `ComponentTokens.android.kt` is computed from the types it emits, every import line precedes the first declaration, and a Jest test asserts both.
   - `ComponentTokens` refers to `DesignTokens.<name>` on iOS and on Android, and row 3's platform references compile, accepted by the token contexts.
   - On Android, sizing tokens emit as `Dp` (I-1), and Lina's removal of the 16 `.dp` sites lands in this diff, guarded by `src/components/__tests__/AndroidSizingDpReads.test.ts`.
-  - On Android, `fontSize` emits as `TextUnit` (I-2), and row 12's groups B and C and item 3's typography constants in `InputTextBase.android.kt` change in this diff.
+  - On Android, `fontSize` emits as `TextUnit` (I-2), and row 12's groups B and C and item 3's typography and remaining non-colour constants in `InputTextBase.android.kt` change in this diff.
+  - At this head, no entry on `harness-android-components` is tagged to row 12 for groups B, C or item 3's non-colour constants, and entries this diff newly reveals print under exception (c) tagged to row 12 or to Lina's component-repair record.
+  - On iOS, `NavSegmentedChoiceBase.ios.swift`'s `fontWeight` read compiles against `Font.Weight` in this diff, with its entry removed from `harness-ios-components`.
   - `src/components/__tests__/AndroidDpTokenReads.test.ts` knows every shape I-2 emits, `TextUnit` included.
-  - The per-family Android type statements in `governance/platform-implementation-guidelines.md` match the generator in this diff, drafted by Lina and approved by Peter under the ballot-measure model.
+  - The per-family Android type statements in `governance/platform-implementation-guidelines.md` match the generator in this diff, drafted by Lina, and the U4 PR body carries `**Edit kind**: governance/platform-implementation-guidelines.md — EXECUTION (requirements.md Req 6.9)`.
   - `ConfigHelpers.ts` and `BuildOrchestrator.ts` default Android `minSdkVersion` to 26 with validation floors 26, naming Core Goals in the message, and default iOS `minimumDeploymentTarget` to `'17.0'`.
   - `harness-ios-tokens` and `harness-android-tokens` show the entries tagged to rows 3, 4 (item 1), 5, 6 and 8 removed in this diff, and every addition this diff makes prints under exception (c) with a tag.
   - Ada's release-note draft for I-1 and I-2 is in this parent's summary doc.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - Every root record whose Trigger names `task-9-completion.md` carries, at U4's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U4's PR or in a PR merged before it.
 
   **Primary Artifacts:**
   - `src/providers/AndroidFormatGenerator.ts`
@@ -529,6 +567,8 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `src/build/workflow/ConfigHelpers.ts`
   - `src/build/BuildOrchestrator.ts`
   - `src/components/core/*/platforms/android/**`
+  - `src/components/core/Nav-SegmentedChoice-Base/platforms/ios/NavSegmentedChoiceBase.ios.swift`
+  - `src/components/core/*/platforms/ios/**` (only where design § 5's iOS column changes a read)
   - `src/components/__tests__/AndroidSizingDpReads.test.ts`
   - `src/components/__tests__/AndroidDpTokenReads.test.ts`
   - `governance/platform-implementation-guidelines.md`
@@ -543,17 +583,13 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 9 Complete: The native type table (129)"` opens U4's PR (Peter-merged: `governance/**`; `**Edit kind**:` EXECUTION, Req 6.9); report the URL; STOP. After merge, the next harness run is the component repair's sizing event (Lina).
 
-  - [ ] 9.1 Confirm design § 16's O-8 variants (Ada, Data) and record the final table
-    **Type**: Architecture · **Validation**: Tier 3 - Comprehensive · **Agent**: Ada (Opus)
-    - The one decide step in this parent: a variant changes a coupled read count
-    - _Requirements: 6.4, 6.8_
-  - [ ] 9.2 Generator: types per family, composites, font family, import lists, `ComponentTokens` references
+  - [ ] 9.1 Generator: types per family, composites, font family, import lists, `ComponentTokens` references
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 5.9, 6.3, 6.4, 6.5_
-  - [ ] 9.3 Coupled component reads (I-1, I-2, `fontWeight`, the composite's 9 reads); the two guards
+  - [ ] 9.2 Coupled component reads (I-1, I-2, `fontWeight` on both platforms, the composite's 9 reads, item 3's remaining constants); the two guards
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 6.7, 6.8_
-  - [ ] 9.4 Guideline type statements (Lina drafts; Peter approves); `ConfigHelpers` floors
+  - [ ] 9.3 Guideline type statements (Lina drafts); `ConfigHelpers` floors
     **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet), Ada (Sonnet)
     - _Requirements: 6.9_
 
@@ -562,7 +598,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 - [ ] 10. The relationship validator, component-token custom values and the override types (U5)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Lina (Sonnet) — the two component tokens files
-  **Traces**: Req 13.1–13.3; rows 1, 21, 22 · design §§ 12, 12a (13.3)
+  **Traces**: Req 2.10, 13.1–13.3; rows 1, 21, 22 · design §§ 12, 12a (13.3)
 
   **Success Criteria:**
   - The `Consumer Guard` case `validate passes` (skipped at `tests/consumer-integration.test.ts` L354 at `c22c17a78`) is re-enabled and passes.
@@ -571,6 +607,8 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - A DesignerPunk component token that does not conform fails the repository's lane, shown by a Jest case red once.
   - Badge-Label-Base and Button-VerticalList-Item conform at this head, and Button-VerticalList-Item's `offGridReason` is Lina's text in design § 12.
   - A consumer `.ts` file importing `SemanticOverrideMap` and `SemanticOverride` from `@3fn/core/config` type-checks under `tsc --noEmit` in `Consumer Guard`.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - Every root record whose Trigger names `task-10-completion.md` carries, at U5's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U5's PR or in a PR merged before it.
 
   **Primary Artifacts:**
   - `src/validators/**`
@@ -579,7 +617,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `src/config/index.ts`
   - `src/tokens/**`
   - `src/components/core/Badge-Label-Base/tokens.ts`
-  - `src/components/core/Button-VerticalList-Item/tokens.ts`
+  - `src/components/core/Button-VerticalList-Item/Button-VerticalList-Item.tokens.ts`
   - `tests/consumer-integration.test.ts`
 
   **Completion Documentation:**
@@ -600,10 +638,10 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 6 — Native theme emission (generator)
 
-- [ ] 11. Native theme emission, with Req 4.5's coupled reads (U6)
+- [ ] 11. Native theme emission, with Req 4.5's coupled reads and the two re-points (U6)
 
-  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Lina (Sonnet) — Req 4.5's coupled reads
-  **Traces**: Req 1.7, 4.1, 4.2, 4.3, 4.5, 4.8, 5.6; rows 2, 4 (item 3), 12 (item 3's colours, Button-CTA), 13 (item 3) · design § 4
+  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Lina (Sonnet) — Req 4.5's coupled reads and the two re-points
+  **Traces**: Req 1.7, 2.7, 2.10, 4.1, 4.2, 4.3, 4.5, 4.7, 4.8, 4.10, 5.6; rows 2, 4 (item 3), 12 (item 3's colours, Button-CTA), 13 (item 3), 15 (theme name) · design § 4
 
   **Success Criteria:**
   - On iOS, `generate` emits `public protocol DesignerPunkTheme: Sendable`, `DPThemeKey`, `EnvironmentValues.dpTheme`, the `<Name>Themes` holder, one conforming `Equatable` struct per registered theme and mode, the implicit members and `View.<name>Theme()`, and a generator test asserts the `: Sendable` clause.
@@ -615,13 +653,17 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - A Jest test on output generated from the repository's real token definitions finds zero `Color.Unspecified`, `Color.clear` and `unresolved` in the emitted themes, per platform, and fails on one.
   - The theme block emits no `import` line, and each generated file has one import list at its head.
   - `SwiftThemeTypes.test.ts` and `KotlinThemeTypes.test.ts` are re-baselined against the component reads as #592 (`c176d2798`) left them, and the U6 PR body names the re-baseline.
-  - On iOS, the probe constructs each theme instance and reads every theme colour under the name the components read, accepted by `harness-ios-tokens`.
-  - On Android, the probe constructs each theme instance and reads every theme colour under the name the components read, accepted by `harness-android-tokens`.
+  - On iOS, at U6's head, the probe constructs each theme instance and reads every `theme.`-named colour semantic through each instance and through `\.dpTheme`, accepted by `harness-ios-tokens` with its read count printed.
+  - On Android, at U6's head, the probe reads every `theme.`-named colour semantic through `LocalDPTheme.current` and each `<Name>Themes` member, accepted by `harness-android-tokens` with its read count printed.
   - Row 12's item 3 colours in `InputTextBase.android.kt` and Button-CTA's bare reads bind to `theme.` in this diff.
+  - The two `DesignTokens.<semantic colour>` reads (`AvatarPreview.kt` and `ProgressPaginationBase.ios.swift`) are re-pointed to `theme.` in this diff.
+  - The component contexts' lists show the entries tagged to row 2 and to row 15's theme-name defect removed in this diff, on iOS and on Android.
   - `validateProductTokens` refuses a composite `ref` with a message naming the token, accepted by a Jest test.
   - A WCAG-only colour `ref` in a product token emits the theme path by its `theme.` prefix, and the harness fixture's entry for it is removed from the token lists in this diff.
-  - The scaffolded dark-override file's header and its list match the index's colour semantics, or a record naming the gap is at the issues root before this PR opens.
+  - The scaffolded dark-override file's header and its list match the index's colour semantics in this diff.
   - The token contexts' lists show the entries tagged to row 2 and row 13 (item 3) removed in this diff, and every addition prints under exception (c) with a tag.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - Every root record whose Trigger names `task-11-completion.md` carries, at U6's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U6's PR or in a PR merged before it.
 
   **Primary Artifacts:**
   - `src/generators/**`
@@ -634,6 +676,8 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `application-mcp-server/src/**/__tests__/**` (only where a suite reading the real `token-index/` asserts the old platform names)
   - `src/components/core/Input-Text-Base/platforms/android/InputTextBase.android.kt`
   - `src/components/core/Button-CTA/platforms/**`
+  - `src/components/core/Avatar-Base/platforms/android/AvatarPreview.kt`
+  - `src/components/core/Progress-Pagination-Base/platforms/ios/ProgressPaginationBase.ios.swift`
   - `harness/expected/harness-ios-tokens.tsv`
   - `harness/expected/harness-android-tokens.tsv`
   - `harness/expected/harness-ios-components.tsv`
@@ -645,7 +689,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 11 Complete: Native theme emission (129)"` opens U6's PR; report the URL; STOP. U6's merge fires the MIDPOINT pass.
 
-  - [ ] 11.1 The scaffolded dark-override file: fix it, or file the record (design § 16)
+  - [ ] 11.1 The scaffolded dark-override file fixed (design § 16; Ada R1 (d))
     **Type**: Setup · **Validation**: Tier 1 - Minimal · **Agent**: Ada (Sonnet)
     - _Requirements: 4.2_
   - [ ] 11.2 Fixed binding, holders, instances, providers, the local; resolved values through § 6's converter
@@ -657,29 +701,31 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [ ] 11.4 Re-baseline the 094 fixtures; the real-definition tests
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 1.7, 4.3_
-  - [ ] 11.5 Row 12 item 3 colours and Button-CTA bare reads
+  - [ ] 11.5 Row 12 item 3 colours, Button-CTA bare reads, the two re-points; the row 2 and row 15 list removals
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
-    - _Requirements: 4.5_
+    - _Requirements: 4.5, 4.7, 4.10_
 
 ### UNIT 7 — Component theme reads and repairs
 
 - [ ] 12. Component theme reads, the theme-read guard, Progress-Bar and ripple (U7)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Lina (Sonnet)
-  **Traces**: Req 4.4, 4.6, 4.7, 4.10, 8.2, 8.4; rows 14 (A5, A6's ripple part, A7), 15, 16 · design § 13
+  **Traces**: Req 2.10, 4.4, 4.6, 4.7, 4.10, 8.2, 8.4; rows 14 (A5, A6's ripple part, A7), 15, 16 · design § 13
 
   **Success Criteria:**
-  - A two-sided Jest guard in `src/components/__tests__/` fails on any component `theme.` read the generated Swift or Kotlin does not declare, and on any `DesignTokens.<semantic colour>` read, with a pinned list that only shrinks.
-  - The 2 `DesignTokens.<semantic colour>` reads are re-pointed to `theme.`, and the guard's pinned list holds neither.
+  - A two-sided Jest guard in `src/components/__tests__/` fails on any component `theme.` read the generated Swift or Kotlin does not declare, and on any `DesignTokens.<semantic colour>` read, with a pinned list that only shrinks and holds neither of the two re-pointed reads.
+  - The guard carries `@category temporary`, retiring when `harness-ios-components` and `harness-android-components` are both required.
   - On iOS, row 16's reads in Progress-Bar drop the malformed prefix, accepted by `harness-ios-components` with their entries removed in this diff.
   - On Android, row 16's reads in Progress-Bar drop the malformed prefix, accepted by `harness-android-components` with their entries removed in this diff.
-  - Row 15's theme-name defect is accepted by `harness-ios-components` under the non-`DP` consumer, with its entries removed in this diff.
-  - Row 15's theme-name defect is accepted by `harness-android-components` under the non-`DP` consumer, with its entries removed in this diff.
+  - At this head, no entry on `harness-ios-components` is tagged to row 15.
+  - At this head, no entry on `harness-android-components` is tagged to row 15.
   - Every component colour read resolves under Q13 (a), accepted by `harness-ios-components` with no entry tagged to row 2 at this head.
   - Every component colour read resolves under Q13 (a), accepted by `harness-android-components` with no entry tagged to row 2 at this head.
   - `rememberRipple` is replaced by `ripple(...)` at Button-Icon, Input-Checkbox-Base and Input-Radio-Base, accepted by `harness-android-components` with the three entries tagged to row 14's A5, A6 and A7 removed in this diff.
   - A text guard in `lane-functional-root` fails on a `rememberRipple` import in `VerticalListButtonItem.android.kt`, and the import is removed.
   - Row 14's record says that A3, I1–I3, A1, A2, A4 and A6's non-ripple parts move to Spec 132, dated and signed by Lina.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - Every root record whose Trigger names `task-12-completion.md` carries, at U7's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U7's PR or in a PR merged before it.
 
   **Primary Artifacts:**
   - `src/components/core/*/platforms/ios/**`
@@ -698,10 +744,10 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [ ] 12.1 The two-sided theme-read guard
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 4.4_
-  - [ ] 12.2 Row 16, the 2 re-points, row 15's theme name
+  - [ ] 12.2 Row 16; the row 15 and row 2 state checks
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 4.6, 4.7, 4.10_
-  - [ ] 12.3 Ripple, the dead-import guard, row 14's record line
+  - [ ] 12.3 Ripple, the dead-import guard, row 14's outcome lines for A5 and A7
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 8.2, 8.4_
 
@@ -709,8 +755,8 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 - [ ] 13. Ship and harvest DesignerPunk's component tokens; precedence; the name contract (U8)
 
-  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Lina (Sonnet) — enums, row 18 R1, the Spec 123 pointer, the cascade sentence
-  **Traces**: Req 1.3, 5.1–5.5, 5.7, 5.8, 5.10, 5.11; rows 18 (R1, R5) · design §§ 9, 11
+  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Lina (Sonnet) — enums, row 18 R1, the cascade sentence
+  **Traces**: Req 1.3, 2.10, 5.1–5.5, 5.7, 5.8, 5.10, 5.11; rows 18 (R1, R5) · design §§ 9, 11
 
   **Success Criteria:**
   - The package ships DesignerPunk's six harvestable component token definition files, and `pack-assert` asserts each is present.
@@ -725,30 +771,31 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `scripts/harness/d2-check.ts` runs in `harness-generate` and concludes success at this unit's head on iOS: every component token in `token-index/components.yaml` appears in the generated output and no other does.
   - `scripts/harness/d2-check.ts` runs in `harness-generate` and concludes success at this unit's head on Android, by the same set equality.
   - The D2 check's completeness half shows the DesignerPunk entries in the merged index equal the component tokens defined in the shipped definition files, and a Jest case that drops one token from both fails.
-  - The hand-written `AvatarTokens` and `BadgeLabelBaseTokens` enums are removed from `Avatar.ios.swift` and `BadgeLabelBase.ios.swift` in this diff, and the Android `AvatarTokens` / `GeneratedAvatarTokens` collision is resolved in this diff.
+  - The hand-written `AvatarTokens` and `BadgeLabelBaseTokens` enums are removed from `Avatar.ios.swift` and `BadgeLabelBase.ios.swift` in this diff, the same diff that turns on the third source, and the Android `AvatarTokens` / `GeneratedAvatarTokens` collision is resolved in it.
   - `generate` warns, naming the file, on a `.kt` file in `com.designerpunk.tokens` or `com.designerpunk.components.*` outside the skipped trees of design § 9, and a Jest test accepts the warning text.
   - When a consumer's group replaces ours and a shipped component reads a key their group lacks, `sync` reports the key and the component, accepted by a `Consumer Guard` case.
   - `sync`'s pre-123 migration reports a copied single-family component-token file by path and offers the record's fix, accepted by a Jest test.
-  - When the generated output is not byte-identical to a fresh regeneration into a temporary directory (outside the header's timestamp), the name-contract run says so, accepted by a `Consumer Guard` case whose inputs change after the last `generate`.
+  - When the generated output is not byte-identical to a fresh regeneration into a temporary directory (outside the header's timestamp), the name-contract run says so, accepted by a `Consumer Guard` case whose inputs change after the last `generate`, and `src/cli/staleness.ts` no longer decides freshness by file times.
   - `.kiro/specs/123-consumer-distribution/requirements.md` § Requirement 1.5 carries a dated pointer line to `design.md` § 9's signed decision.
   - The Integration Guide says, in Lina's text with Sparky, to import the consumer's own `ComponentTokens.web.css` after the package's `component-tokens.css`, that on web "yours wins" is per token by order, and that bundler code-splitting can reorder CSS chunks.
   - The token and component contexts at this head show every addition this diff makes printed under exception (c) with a tag.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - Every root record whose Trigger names `task-13-completion.md` carries, at U8's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U8's PR or in a PR merged before it.
 
   **Primary Artifacts:**
   - `package.json` (`files[]`)
   - `scripts/pack-assert.ts`
-  - `src/cli/loadComponentTokens.ts`
-  - `src/cli/sync/**`
-  - `src/cli/shared/errorCatalog.ts`
+  - `scripts/build-name-contract.ts`
+  - `src/cli/**`
   - `src/generators/**`
   - `src/build/tokens/**`
   - `scripts/harness/d2-check.ts`
   - `scripts/harness/__tests__/d2-check.test.ts`
   - `.github/workflows/native-harness.yml` (one step added to `harness-generate`)
   - `tests/consumer-integration.test.ts`
+  - `application-mcp-server/src/**/__tests__/**` (only where a suite reading the real `token-index/components.yaml` asserts the per-token merge)
   - `src/components/core/Avatar-Base/platforms/**`
   - `src/components/core/Badge-Label-Base/platforms/**`
-  - `.kiro/specs/123-consumer-distribution/requirements.md`
   - `governance/DesignerPunk-Integration-Guide.md`
   - `docs/consumer/INSTALL.md` (derived)
   - `harness/expected/harness-ios-tokens.tsv`
@@ -766,8 +813,9 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   - [ ] 13.1 Ship the six files; harvest as the third source; per-group precedence and reports
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
+    - `src/cli/shared/packageComponentTokens.ts` (the per-group merge) and `src/cli/shared/componentSources.ts` (the union rule)
     - _Requirements: 5.1, 5.2, 5.3_
-  - [ ] 13.2 The name contract over the component tier; the reserved-package warning; R5 freshness (content)
+  - [ ] 13.2 The name contract over the component tier; the reserved-package warning; R5 freshness (content, `src/cli/staleness.ts`)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 5.4, 5.8_
   - [ ] 13.3 The D2 check and its completeness half; its step in `harness-generate`
@@ -776,7 +824,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [ ] 13.4 The hand-written enums; row 18 R1 (`src/cli/sync/**`, Ada consulted); the missing-key report
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 5.1, 5.7, 5.11_
-  - [ ] 13.5 The Spec 123 Req 1.5 pointer line; the Integration Guide cascade sentence
+  - [ ] 13.5 The Integration Guide cascade sentence; confirm the Spec 123 pointer line (Lina lands it in her own PR before U8)
     **Type**: Documentation · **Validation**: Tier 1 - Minimal · **Agent**: Lina (Sonnet)
     - _Requirements: 5.5_
 
@@ -784,23 +832,27 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 - [ ] 14. The six groups and the theme registry from the consumer's copy (U9)
 
-  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Sparky (Sonnet) — his charter line · Lina (Sonnet) — regeneration and the lock
-  **Traces**: Req 9.2, 9.3, 9.4, 9.5, 15.1 (the served sentences); rows 19, 20 (row (g)) · design § 10
+  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Sparky (Sonnet) — his charter line and the Q3b browser check · Lina (Sonnet) — regeneration and the lock · Thurgood (Sonnet) — the profile author's acts
+  **Traces**: Req 2.10, 9.2, 9.3, 9.4, 9.5, 15.1 (the served sentences); rows 19, 20 (row (g)) · design § 10
 
   **Success Criteria:**
   - For each of the six groups `docs/consumer/INSTALL.md` L77 names at `45f5262ee`, a `Consumer Guard` case edits it in the copied source, runs `generate`, and finds the edited value in the output, on web in the generated CSS.
   - With the package's own copies of the six groups removed from the installed `node_modules`, `generate` succeeds with byte-identical output, accepted by a `Consumer Guard` case.
   - `generate` builds the theme registry from the config's `themes`, the static imports at `generateTokenFiles.ts` L19–21 are removed, and in package mode the package's built-in themes still apply.
   - `ConfigTheme` accepts an optional `{ light, dark }` form, and `init` writes the WCAG entry with both maps.
-  - `Consumer Guard` cases for a config with no `themes` key, for the old shape without a WCAG dark map, and for package mode each assert that the `:root[data-theme="wcag"]` block and the base `light-dark()` values are byte-identical to the pre-129 output for the same fixture.
-  - When a built-in theme's override file is missing from the consumer's copy, `generate` prints that the theme or mode is not emitted and names the file.
+  - `Consumer Guard` cases for a config with no `themes` key, for the old shape without a WCAG dark map, and for package mode each assert that the `:root[data-theme="wcag"]` block and the base `light-dark()` values are byte-identical to the pre-129 output for the same fixture, committed at `tests/fixtures/pre-129-theme-css/` from `main` before this unit's first change.
+  - When a built-in theme's override file is missing from the consumer's copy, `generate` names the file and says the theme or mode is not emitted on native and that on web its dark values fall back to light, and a web assertion finds no `light-dark(` for the keys that differ.
   - A registered custom theme emits as `:root[data-theme="<name>"]`, and the `generate` message "registered, not applied yet" (`errorCatalog.ts` L557) changes in this diff.
-  - The web agent's line on registered themes (`canonical/agents/sparky.md` L313 at `d7f87174c`) states what web now emits, in Sparky's words, regenerated with `diff-guard.ts` green and its signature redone.
-  - The served sentences that say a registered theme is "not applied yet" (`governance/Rosetta-System-Architecture.md` L566, `governance/Token-Quick-Reference.md` L114 and the Integration Guide L546 at `d7f87174c`) state what is emitted, each in its owner's words, in this diff.
+  - The web agent's line on registered themes (`canonical/agents/sparky.md` L313 at `d7f87174c`) states, in Sparky's words, that a registered theme emits as `:root[data-theme="<name>"]`, which matches `<html>` only, and that a theme on any other element still matches nothing.
+  - The served sentences that say a registered theme is "not applied yet" or does not produce a `[data-theme]` block (`governance/Rosetta-System-Architecture.md` L566, `governance/Token-Quick-Reference.md` L114, and the Integration Guide L158 and L546 at `d7f87174c`, with INSTALL re-derived) state what is emitted, each in its owner's words, in this diff.
+  - `npx tsx tools/agent-generator/diff-guard.ts` is green on the branch, `canonical/generated.lock` is the one a green run wrote, no authoring commit moves a `canonicalHash`, and `verify-signing-chain.ts --audit --pr <n>` is green after Sparky's confirmation and signature.
+  - Sparky's browser check for Q3b is committed at `evidence/q3b-browser-check.md`, naming the browser and its version, as a finding that goes to Peter as the Q3b fork.
   - A Jest guard fails on a new value import from `src/tokens` under `src/generators`, `src/providers`, `src/resolvers` and `src/blend`.
   - A Jest test fails when the repository's root token files differ from a fresh generation from the base config.
   - The completion doc states which `ColorTokens.ts` importers this parent removed and which remain, and `.kiro/specs/133-color-track/design-outline.md` § 4 is corrected to match in this diff.
-  - Kenya and Data confirm, in this parent's completion doc, the harness input when the consumer owns `src/tokens/platforms/{ios,android}/**`, and the harness compiles the consumer's copy of `MotionTokens` if they so confirm.
+  - The harness compiles one copy of each native file name: the consumer's copy of `src/tokens/platforms/{ios,android}/**` once this unit reads the consumer's source, and Kenya and Data confirm that rule in this parent's completion doc.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - Every root record whose Trigger names `task-14-completion.md` carries, at U9's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U9's PR or in a PR merged before it.
 
   **Primary Artifacts:**
   - `src/generators/generateTokenFiles.ts`
@@ -808,15 +860,22 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `src/providers/**`
   - `src/resolvers/**`
   - `src/blend/**`
+  - `src/themes/**`
   - `src/config/**`
   - `src/cli/**`
   - `src/tokens/**`
   - `tests/consumer-integration.test.ts`
+  - `tests/fixtures/pre-129-theme-css/**`
   - `.kiro/specs/133-color-track/design-outline.md`
+  - `.kiro/specs/129-consumer-generation-completeness/evidence/q3b-browser-check.md`
   - `scripts/harness/consumer.ts`
-  - `harness/ios/**` (only if Kenya and Data confirm the input change)
-  - `harness/android/**` (only if Kenya and Data confirm the input change)
+  - `harness/ios/**` (only for the one-copy rule)
+  - `harness/android/**` (only for the one-copy rule)
   - `canonical/agents/sparky.md`
+  - `canonical/operative-sets/sparky.yaml`
+  - `canonical/profiles/consumer/sparky.overlay.md`
+  - `canonical/profiles/consumer/sparky.dispositions.yaml`
+  - `canonical/_consumer-output/**` (regenerated, never hand-edited)
   - `canonical/generated.lock`
   - `.claude/agents/**` (regenerated, never hand-edited)
   - `.kiro/agents/**` (regenerated, never hand-edited)
@@ -829,27 +888,30 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-14-completion.md`
   - Summary: `docs/specs/129-consumer-generation-completeness/task-14-summary.md`
 
-  **Post-Completion:** mark complete; `complete-task.sh "Task 14 Complete: generate reads the consumer's own source (129)"` opens U9's PR (Peter-merged: `governance/**` and charter text; `**Edit kind**:` per file); report the URL; STOP.
+  **Post-Completion:** mark complete; `complete-task.sh "Task 14 Complete: generate reads the consumer's own source (129)"` opens U9's PR (Peter-merged: `governance/**` and charter text; `**Edit kind**:` EXECUTION per file, Ada R1); report the URL; STOP.
 
   - [ ] 14.1 One loaded token set from the consumer's barrel; the value-import guard; the removal case
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 9.2, 9.5_
-  - [ ] 14.2 The theme registry from config; the fallback; package mode; the `{ light, dark }` form
+  - [ ] 14.2 The theme registry from config (`src/themes/ThemeRegistry.ts`); the fallback and its web message; package mode; the `{ light, dark }` form; the golden capture
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 9.2, 9.3_
-  - [ ] 14.3 Row (g)'s freshness test; the 133 outline correction; the harness input confirmation
+  - [ ] 14.3 Row (g)'s freshness test; the 133 outline correction; the one-copy rule
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 9.4_
-  - [ ] 14.4 The shipped and served sentences on registered themes; the web agent line; regeneration and signature
-    **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet), Sparky (Sonnet), Lina (Sonnet)
+  - [ ] 14.4 The served sentences on registered themes; the web agent line; regeneration, profile-author acts, then Sparky's confirmation and signature
+    **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet), Sparky (Sonnet), Lina (Sonnet), Thurgood (Sonnet)
     - _Requirements: 15.1_
+  - [ ] 14.5 The Q3b browser check
+    **Type**: Setup · **Validation**: Tier 1 - Minimal · **Agent**: Sparky (Sonnet)
+    - _Requirements: 9 (Q3b, carried to design)_
 
 ### UNIT 10 — `init` runs `generate`; per-platform output paths
 
 - [ ] 15. `init` runs `generate`, and `platforms:` writes each platform where its build reads it (U10)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Thurgood (Sonnet) — INSTALL derivation and `install-doc.test.ts`
-  **Traces**: Req 11.1–11.4, 12.1–12.4 · design §§ 12a, 14
+  **Traces**: Req 2.10, 11.1–11.4, 12.1–12.4 · design §§ 12a, 14
 
   **Success Criteria:**
   - After `init` alone, a `Consumer Guard` case finds the token output and `token-index/`, and a `generate` run straight after writes byte-identical output.
@@ -858,9 +920,11 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - INSTALL's founder path has the four steps of design § 14 in Leonardo's text, its `path-steps` front matter reads `founder: 4`, and `install-doc.test.ts` passes, all in this diff.
   - `init`'s closing message names the output folder and `generate`'s role in design § 14's words.
   - The config accepts `platforms:` with keys from `PLATFORM_KEYS = ['web', 'ios', 'android']` in `src/config/`, and the CLI validation imports the constant.
-  - A `Consumer Guard` case with a `platforms:` config finds each named platform's files at its path and every other platform, web included, at `output`.
+  - A `Consumer Guard` case with a `platforms:` config in Spec 132's D4 layout (`ios/<dir>`, `android/<dir>`, beside a root `package.json`) finds each named platform's files at its path and every other platform, web included, at `output`.
   - An unknown platform key, or a path resolving outside the project root, fails `generate` with a message naming it, accepted by Jest tests.
   - A folder `platforms:` names holds only that platform's files, and `pack-assert` fails when a generated native file name equals a packaged native source file name.
+  - The harness consumer uses the same D4 layout through `harness/pins.yaml` § `consumer`, and the four lists' `gen:` keys are unchanged in this diff (the `gen:` path rule).
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
 
   **Primary Artifacts:**
   - `src/cli/init.ts`
@@ -873,6 +937,8 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `docs/consumer/INSTALL.md`
   - `scripts/derive-install-doc.ts`
   - `scripts/__tests__/install-doc.test.ts`
+  - `scripts/harness/consumer.ts`
+  - `harness/pins.yaml` (the `consumer` section)
 
   **Completion Documentation:**
   - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-15-completion.md`
@@ -887,32 +953,44 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - Leonardo consulted on the step text
     - _Requirements: 11.3_
-  - [ ] 15.3 `platforms:`, `PLATFORM_KEYS`, validation, the file-name check
+  - [ ] 15.3 `platforms:`, `PLATFORM_KEYS`, validation, the file-name check; the harness consumer's D4 layout
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
+    - Kenya and Data consulted on the layout; no lane changes
     - _Requirements: 12.1, 12.2, 12.3, 12.4_
 
 ### UNIT 11 — Charter and overlay text for item (i)
 
 - [ ] 16. Kenya's and Data's theming text, and the consumer overlays, say what is emitted (U11)
 
-  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Kenya (Sonnet) · Data (Sonnet) — his charter and overlay · Lina (Sonnet) — regeneration and the lock
-  **Traces**: Req 4.9
+  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Kenya (Sonnet) · Data (Sonnet) — his charter and overlay text · Lina (Sonnet) — regeneration and the lock · Thurgood (Sonnet) — the profile author's acts
+  **Traces**: Req 2.10, 4.9
 
   **Success Criteria:**
-  - `canonical/agents/kenya.md`'s theming section states what item (i) emits on iOS (design § 4's names), and Kenya re-confirms it.
-  - `canonical/agents/data.md`'s theming section states what item (i) emits on Android (design § 4's names), and Data re-confirms it.
-  - `canonical/profiles/consumer/kenya.overlay.md` and `data.overlay.md` no longer carry their "no theme surface today" lines, and each states what is emitted.
+  - `canonical/agents/kenya.md`'s theming section states what item (i) emits on iOS: the fixed contract (`protocol DesignerPunkTheme: Sendable`, `DPThemeKey`, `\.dpTheme`), the consumer-named `<Name>Themes` holder and instances, the `.<name>Theme()` provider, every colour semantic read through the theme, and product tokens extending `DesignerPunkTheme`.
+  - `canonical/agents/data.md`'s theming section states what item (i) emits on Android: `DesignerPunkTheme`, `LocalDPTheme` and its static default, the `<Name>Themes` holder, the `<Name>Theme(darkTheme = …)` provider, and every colour semantic read through the theme.
+  - `canonical/profiles/consumer/kenya.overlay.md` and `data.overlay.md`, and `canonical/operative-sets/kenya.yaml` and `data.yaml`, no longer carry their "no theme surface today" text, and each states what is emitted.
   - `npx tsx tools/agent-generator/diff-guard.ts` is green on the branch, and `canonical/generated.lock` is the one a green run wrote.
-  - The consumer-profile signatures for the changed units are redone by their signers, and `npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --audit --pr <n>` is green, with no authoring commit moving a `canonicalHash`.
-  - The U11 PR merges before the S of the release that first carries U6.
+  - Kenya's and Data's re-confirmations are dated lines in `canonical/profiles/consumer/signatures/kenya.md` and `data.md`, the changed units are re-signed, and `npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --audit --pr <n>` is green, with no authoring commit moving a `canonicalHash`.
+  - At U11's merge, `git tag --contains <U6's merge commit>` prints no release tag.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
 
   **Primary Artifacts:**
   - `canonical/agents/kenya.md`
   - `canonical/agents/data.md`
   - `canonical/profiles/consumer/kenya.overlay.md`
   - `canonical/profiles/consumer/data.overlay.md`
+  - `canonical/profiles/consumer/kenya.dispositions.yaml`
+  - `canonical/profiles/consumer/data.dispositions.yaml`
+  - `canonical/operative-sets/kenya.yaml`
+  - `canonical/operative-sets/data.yaml`
+  - `canonical/manifests/kenya.cc.ambient-manifest.json` (only if the generator rewrites it)
+  - `canonical/manifests/kenya.kiro.ambient-manifest.json` (only if the generator rewrites it)
+  - `canonical/manifests/data.cc.ambient-manifest.json` (only if the generator rewrites it)
+  - `canonical/manifests/data.kiro.ambient-manifest.json` (only if the generator rewrites it)
+  - `canonical/_consumer-output/**` (regenerated, never hand-edited)
   - `canonical/generated.lock`
-  - `.claude/agents/**` and `.kiro/agents/**` (regenerated, never hand-edited)
+  - `.claude/agents/**` (regenerated, never hand-edited)
+  - `.kiro/agents/**` (regenerated, never hand-edited)
 
   **Completion Documentation:**
   - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-16-completion.md`
@@ -923,7 +1001,10 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [ ] 16.1 Charter and overlay text
     **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Kenya (Sonnet), Data (Sonnet)
     - _Requirements: 4.9_
-  - [ ] 16.2 Regenerate, lock, signatures
+  - [ ] 16.2 Operative-set re-quotes, overlay pins, dispositions
+    **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
+    - _Requirements: 4.9_
+  - [ ] 16.3 Regenerate and lock; then the owners' confirmations and signatures
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - Signatures are the signers' attestations, outside every delegated-tier line
     - _Requirements: 4.9_
@@ -933,14 +1014,14 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 - [ ] 17. Retire the native root files and announce it (U12)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet)
-  **Traces**: Req 10.1, 10.2, 10.4 · design § 0 (7 (a))
+  **Traces**: Req 10.1 (as amended), 10.2, 10.4 · design § 0 (7 (a))
 
   **Success Criteria:**
   - The package stops shipping `dist/DesignTokens.ios.swift`, `dist/DesignTokens.android.kt`, `dist/ComponentTokens.ios.swift` and `dist/ComponentTokens.android.kt`, and `pack-assert` asserts each is absent.
   - `dist/ComponentTokens.web.css` and the web CSS exports still ship, and `pack-assert` asserts each is present.
-  - This change lands in a minor release after a release that carries U6 and U8 (Peter's 7 (a)), and the completion doc names both releases.
-  - The release that retires them announces the retirement in its notes, and those notes name item (iii), I-1 and I-2 as changes that may break a consumer.
-  - Charter item (iii) in `.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` matches this parent, edited by Ada.
+  - U6's and U8's merge commits are ancestors of U12's merge, by `git merge-base --is-ancestor`.
+  - The `CHANGELOG.md` `[Unreleased]` entry announces the retirement, says the consumer's own `generate` now emits what the snapshot carried, and names item (iii), I-1 and I-2 as changes that may break a consumer.
+  - Charter item (iii) in `.kiro/issues/2026-10-02-consumer-generation-completeness-spec.md` cites Peter's 7 (a) in place of "at the next MAJOR", edited by Ada.
 
   **Primary Artifacts:**
   - `package.json` (`files[]`)
@@ -953,16 +1034,16 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-17-completion.md`
   - Summary: `docs/specs/129-consumer-generation-completeness/task-17-summary.md`
 
-  **Post-Completion:** mark complete; `complete-task.sh "Task 17 Complete: Retire the native root files (129)"` commits on the U12 branch (no PR: U12's PR opens at Task 18); STOP.
+  **Post-Completion:** mark complete; `complete-task.sh "Task 17 Complete: Retire the native root files (129)"` commits on the U12 branch (no PR: U12's PR opens at Task 18); STOP. The release that carries U12 is read at Stacy's RELEASE pass.
 
-  - [ ] 17.1 `files[]`, `pack-assert`, the build script; release-note text
+  - [ ] 17.1 `files[]`, `pack-assert`, the build script; the CHANGELOG entry; the charter sentence
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 10.1, 10.2, 10.4_
 
 - [ ] 18. Acceptance at the final head, and the shipped wording (U12)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Thurgood (Sonnet) · Kenya (Sonnet), Data (Sonnet) — the "Native status" passage
-  **Traces**: Req 1.1–1.7, 2.10, 14.1, 14.3, 15.1, 15.5, 15.6, 9.3
+  **Traces**: Req 1.1–1.7, 2.10, 9.3, 14.1, 14.3, 15.1, 15.5, 15.6
 
   **Success Criteria:**
   - The quotation in `requirements.md`'s Introduction is byte-identical to the charter's acceptance sentence at `b841db957`.
@@ -974,13 +1055,15 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - At U12's head, `harness-android-components` concludes success, and every entry on its list is tagged to an open root record whose Trigger can fire, none to row 12, row 14's A5, A6 (ripple) or A7, row 15 or row 16 (D3, Android).
   - Lina's component-repair record is at the issues root, its Trigger can fire, and the remaining component entries are tagged to it.
   - At U12's head, `Consumer Guard` concludes success, including the `var()` check of Task 8.
-  - All four harness contexts ran on every 129 unit PR, each cited by run URL in this parent's completion doc.
-  - A grep of the CHANGELOG, INSTALL, the Integration Guide, the READMEs, the consumer overlays, the served corpus and `generate`'s messages at each release S in 129's range finds no claim that a tier "compiles" while its list held entries, and each release that carried the harness says "compile except N pinned errors, listed at <path>; no app linked, no tests run" with N its count at S.
-  - Where item (i) shipped in a release before Task 14's U9, that release's CHANGELOG limitation was rewritten to say what still came from the package (Req 9.3), or the completion doc states it did not arise.
-  - The Integration Guide's "Native status" passage states 129's reach as Requirement 1 accepts it, in Kenya's and Data's words, as a CORRECTION edit, with "compiled for an iOS 17.0 deployment target; not run on any device or simulator".
+  - Each of the twelve units' gating parents' completion docs carries the four contexts' run URLs and pasted summary lines at that unit's merged head, and the checks API shows no 129 unit PR without all four runs.
+  - A grep of the CHANGELOG, INSTALL, the Integration Guide, the READMEs, the consumer overlays, the served corpus and `generate`'s messages at each release S in 129's range finds no claim that a tier "compiles" while its list held entries, and each release that carried the harness says "compile except N pinned errors, listed at <path>; no app linked, no tests run" with N its count at S (the grep decides "compiles"; other wording is Stacy's RELEASE reading).
+  - At U12's head, no shipped text names a `dist/` file Task 17 removes (the Integration Guide's L167, L170, L180 and L181 at `d7f87174c` included), with INSTALL re-derived.
+  - Where item (i) shipped in a release before U9, that release's CHANGELOG limitation was rewritten to say what still came from the package (Req 9.3), or the completion doc states it did not arise.
+  - The Integration Guide's "Native status" passage states 129's reach as Requirement 1 accepts it, in Kenya's and Data's words, as a CORRECTION edit, with "compiled for an iOS 17.0 deployment target; not run on any device or simulator" and "compiled for Android API 26 (`minSdk`); not run on any device or emulator".
   - `governance/Token-Governance.md` § "Theme Registry (Spec 094)" matches items (i) and (vi) as shipped, through a ratified ballot applied before the S of the release that carried U9.
   - `derivePlatformReadiness`'s native test patterns in `application-mcp-server/src/indexer/ComponentIndexer.ts` are unchanged over 129's range, by `git log` over that range on the file.
   - No 129 shipped text claims runtime theme switching on iOS or Android.
+  - Every root record whose Trigger names `task-18-completion.md` carries, at U12's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U12's PR or in a PR merged before it.
 
   **Primary Artifacts:**
   - `governance/DesignerPunk-Integration-Guide.md`
@@ -993,13 +1076,13 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Unit 12: Closeout (129)"` opens U12's PR (Peter-merged: `governance/**`); report the URL; STOP. U12's merge fires CLOSEOUT and the signing-act shape review.
 
-  - [ ] 18.1 Read the final head: D1, D2, D3, web, every unit PR's runs
+  - [ ] 18.1 Read the final head: D1, D2, D3, web; sum every unit's run records
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 2.10_
-  - [ ] 18.2 The release-text grep over 129's range; the Req 9.3 read; the readiness-pattern read
+  - [ ] 18.2 The release-text grep over 129's range; the retired-file sentences; the Req 9.3 read; the readiness-pattern read
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - _Requirements: 1.7, 9.3, 14.1, 15.1_
-  - [ ] 18.3 The "Native status" passage
+  - [ ] 18.3 The "Native status" passage, iOS and Android
     **Type**: Documentation · **Validation**: Tier 1 - Minimal · **Agent**: Kenya (Sonnet), Data (Sonnet)
     - _Requirements: 15.5_
   - [ ] 18.4 Confirm the Token-Governance ballot was ratified and applied in time
@@ -1013,17 +1096,17 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | Requirement | Parents |
 |---|---|
 | 1 | 18 (1.1–1.7); 8 (1.6's check); 13 (1.3's check); 1 (1.8); 1.9 is a standing rule (Conventions) |
-| 2 | 1 (2.1–2.3); 3, 4 (2.4, 2.6–2.9); 2 (2.6's cross-tier rule); 5 (2.5, 2.10–2.12, 2.14); 18 (2.10 over every unit PR); 2.13 is a standing rule (Conventions) |
+| 2 | 1 (2.1–2.3); 3, 4 (2.4, 2.6–2.9); 2 (2.6's cross-tier rule); 5 (2.5, 2.11, 2.12, 2.14); every gating parent (2.10, 2.13); 11 (2.7's theme reads); 18 (2.10 summed) |
 | 3 | 2 (3.1–3.11); 3, 4 (3.4, 3.11 per platform); 6 (3.10's registration) |
-| 4 | 11 (4.1–4.3, 4.5, 4.8); 12 (4.4, 4.6, 4.7, 4.10); 16 (4.9); 4.7's L816 half is a unit precondition |
+| 4 | 11 (4.1–4.3, 4.5, 4.7's theme name, 4.10's re-points); 5 (4.8's tagging); 12 (4.4, 4.6, 4.7 and 4.10 state checks); 16 (4.9); 4.7's L816 half is a unit precondition |
 | 5 | 13 (5.1–5.5, 5.7, 5.8, 5.10, 5.11); 11 (5.6); 9 (5.9) |
 | 6 | 8 (6.2, 6.10); 9 (6.3–6.5, 6.7–6.9) |
 | 7 | 8 |
 | 8 | 12 (8.2, 8.4) |
-| 9 | 14 (9.2–9.5); 18 (9.3's read) |
-| 10 | 1 (10.3); 17 (10.1, 10.2, 10.4) |
+| 9 | 14 (9.2–9.5; Q3b's browser check); 18 (9.3's read) |
+| 10 | 1 (10.3); 17 (10.1 as amended, 10.2, 10.4) |
 | 11 | 15 |
 | 12 | 15 |
 | 13 | 10 |
 | 14 | 18 (14.1, 14.3) |
-| 15 | 7 (15.2); 8 (15.4 for the shadow family); 18 (15.1, 15.5, 15.6); 15.4 is also a standing rule (Conventions) |
+| 15 | 7 (15.2); 8 (15.4 for the shadow family); 14 (15.1's served sentences); 18 (15.1, 15.5, 15.6); 15.4 is also a standing rule (Conventions) |
