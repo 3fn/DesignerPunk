@@ -48,7 +48,7 @@ on:
 jobs:
   setup:
     name: 122-setup
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     outputs:
       noop: ${{ steps.probe.outputs.noop }}
@@ -108,7 +108,7 @@ jobs:
     # can never satisfy or shadow any of the nine required "122-*" contexts.
     name: ${{ github.event_name == 'workflow_dispatch' && format('{0} (unit-branch)', matrix.context) || matrix.context }}
     needs: setup
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     strategy:
       fail-fast: false
