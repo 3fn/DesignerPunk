@@ -2,7 +2,7 @@
 
 **Date**: 2026-11-05
 **Spec**: 129 - Consumer-Generation Completeness
-**Status**: Requirements Phase — **R2**, the seven R1 entries folded in (`feedback/requirements.md`, `[THURGOOD R2]`). One D-row wording change is pending Peter's answer (Requirement 2.7). Design starts after this file merges (Spec-Feedback-Protocol § "Sequential Formalization Gate").
+**Status**: Requirements Phase — **R2**, the seven R1 entries folded in (`feedback/requirements.md`, `[THURGOOD R2]`). D1's probe sentence is amended by Peter's answer of 2026-11-05T05:14:42Z (Requirement 2.7). Design starts after this file merges (Spec-Feedback-Protocol § "Sequential Formalization Gate").
 **Author**: Thurgood (formalizer). Owners: Ada (pipeline, generators, validators), Lina (component tier). Harness designers: Kenya (iOS), Data (Android). Peter decides at each gate.
 **Go**: Peter, received 2026-11-05T04:34:05Z, verbatim: "652, 653 and 654 are merged; go for requirements".
 **Dependencies**: Spec 094 (the theme emission code that item (i) wires); Spec 123 (its Requirement 1.5 is reopened here, and its Requirement 3.1 rule that proof runs on a packed install applies); Spec 132 (planned, no directory yet: it receives what 129 does not close, `evidence/2026-11-05-native-plan/plan-r2.md` § 2); Specs 128 and 130 inherit item (i) and the harness (design-outline.md § 1, "Relation to other specs").
@@ -77,7 +77,7 @@ The principle and scope items (i)–(vi) are the charter's, `.kiro/issues/2026-1
 4. The harness SHALL compile, on iOS and on Android, the generated token files and every non-test `.swift` or `.kt` file in the packed tarball, with the package's Android resources (Icon-Base `res/`) on the Android build. The components SHALL compile against the **consumer's** generated `ComponentTokens`, and the package's own `dist/ComponentTokens.*` SHALL be left out of the set (plan-r2 D3; Kenya R1). The generated files are the token tier; the hand-written shipped native files (`ThemeAwareBlendUtilities.*`, `MotionTokens.*`) are compiled in the component tier (Data R1, gap 1). The harness SHALL run no tests: `*Tests.swift` and `*Test.kt` are neither compiled nor run.
 5. The harness SHALL report four verdicts as four CI contexts (the Conventions above), each able to be made a required check on its own (Thurgood R4 § 2 item 1).
 6. **iOS**: a verdict SHALL come from a compile that emits object code, not a typecheck alone (Kenya R2; re-verified under Swift 6.4.2 in Kenya R1). For the component verdict, the generated tokens and the packaged components SHALL compile as one module. For the token verdict, a separate probe module SHALL read the generated members by plain `import`, never `@testable`. **Android** (Data R1): the token and component verdicts SHALL come from one compile in which the packaged component sources and the generated token files are one module, with the Compose compiler plugin applied; a second module SHALL read the emitted theme and product tokens from inside `@Composable` functions. **Both**: each context's list SHALL hold only diagnostics located in its own tier's files (Kenya R1), and each context SHALL print the exact compiler invocation it ran.
-7. *(Pending Peter's answer on D1's wording; see the note below.)* The probe SHALL read every member the token index names for that platform, nested types included, whatever its declared access level. It SHALL print its read count beside the index's count and fail when they differ, AND a planted non-`public` member in a fixture SHALL produce an entry (Stacy R1; Ada R1; Kenya R1). It SHALL read the emitted theme under the names the components read (Requirement 4.2).
+7. *(To D1 as Peter amended it on 2026-11-05; see the note below.)* The probe SHALL read every member the token index names for that platform, nested types included, whatever its declared access level. It SHALL print its read count beside the index's count and fail when they differ, AND a planted non-`public` member in a fixture SHALL produce an entry (Stacy R1; Ada R1; Kenya R1). It SHALL read the emitted theme under the names the components read (Requirement 4.2).
 8. A committed pin file SHALL pin, and each context SHALL print: Xcode, the SDK, the Swift language mode and the iOS compile flags (object emission, whole-module, library parsing); Kotlin, the Compose BOM, AGP, the JDK, Gradle, `compileSdk`, `minSdk`, and each third-party library the component source imports, with its version (Coil, `material-icons-extended`, and any colour library) (Kenya R1; Data R1, gaps 2 and 3). The runner label lives in the workflow's `runs-on`, by version, never `-latest`, and the pin file names the same label. Compose SHALL be 1.7 or later, so that `rememberRipple` is an error; the baseline list holding entries tagged to row 14's A5, A6 and A7 is the check that the pin did this (Data R1).
 9. The pin file SHALL state that its pins are harness pins, not platform minimums, except the iOS deployment target, which SHALL equal Core Goals' iOS minimum (Kenya R1). The minimums are Peter's (Open items, Design). No 129 green SHALL be read as "runs on the minimum": a Kotlin compile checks no API level (Data R1).
 10. WHEN a 129 unit PR carries a row the harness accepts THEN all four harness contexts SHALL run on that PR (Stacy R2 § 2e). Whether they also run on every other PR is the tasks round's.
@@ -86,7 +86,7 @@ The principle and scope items (i)–(vi) are the charter's, `.kiro/issues/2026-1
 13. WHEN a parent's completion doc cites a harness context as evidence THEN it SHALL cite the PR, the run URL at the head the unit merged, the comparator's summary line as printed, and the SHAs of the list file and the pin file at that head (Stacy R3 § 1; property 5).
 14. Each row a harness context accepts SHALL have at least one entry tagged to it on that context's list at some commit before the PR that fixes the row, OR the requirement carrying the row SHALL name a different instrument for it until it does (Stacy R3, condition 2, as Stacy R1 restates its intent). Rows masked at the first run (row 12's groups B and C, behind row 6) and rows whose module cannot build yet (row 9, row 2's probe half) are covered this way (Lina R1; Kenya R1).
 
-**The D1 wording, pending Peter.** D1's oracle text at `b89163c41` reads "generated from the emitted members, so every public member is read". Read that way, a probe that reads only `public` members meets it, and row 9 (members that are not `public`) passes unseen. Criterion 7 is written to the proposed replacement in the PR's `**Open for Peter**:` line. If Peter says no, criterion 7 reverts to D1's approved text and row 9 rests on Requirement 6.2's text guard alone.
+**D1's probe sentence, amended by Peter (2026-11-05).** D1's oracle text at `b89163c41` read "generated from the emitted members, so every public member is read". Read that way, a probe that reads only `public` members meets it, and row 9 (members that are not `public`) passes unseen. Under Requirement 1.9, Peter approved the replacement. His words, received 2026-11-05T05:14:42Z (`date -u` at receipt; orchestrator relay), verbatim: "Yes on D1; 659 and 660 are merged". The approved sentence, which D1 now carries: "The probe module that reads the tokens reads every member the token index names for that platform, whatever its declared access level, and the run fails if the probe's read count differs from that list's count." The record is `feedback/requirements.md` § "[PETER] D1's probe sentence" and the amendment line in `evidence/2026-11-05-native-plan/README.md`; `plan-r2.md` stays unchanged as the record of what he first approved. Criterion 7 is written to the amended D1.
 
 ---
 
@@ -356,7 +356,7 @@ The principle and scope items (i)–(vi) are the charter's, `.kiro/issues/2026-1
 
 1. 129 SHALL leave `derivePlatformReadiness`'s native test patterns unchanged (option (a)), for the reason Lina gives: a TS-side Jest file tests the TS side, not the Swift or Kotlin (her inbound § 2).
 2. Option (c), the harness's per-component result as a readiness input, SHALL be carried by Spec 132's D7 (plan-r2 § 1, D7: "132 (129's Q10 (c))"). 129 SHALL NOT change the served readiness contract. Lina confirmed this reading in her R1, so the fork does not go to Peter.
-3. The served native status of Button-VerticalList-Item and Button-VerticalList-Set, served today as `production-ready` though their native source does not compile, SHALL be corrected through their schemas' `readiness.{ios,android}.reviewed` flags, in Lina's own PR before her close of row 17's record (Lina R1).
+3. The served native status of Button-VerticalList-Item and Button-VerticalList-Set, served today as `production-ready` though their native source does not compile, SHALL be corrected through their schemas' `readiness.{ios,android}.reviewed` flags, in Lina's own PR before her close of row 17's record (Lina R1); landed as #660 (`a2e89c651`).
 
 ---
 
@@ -397,14 +397,14 @@ These 17 root records carry a Trigger glob on this file (facts row 3, 10 of them
 | 6 | `2026-10-26-ios-designtokens-members-not-public.md` | Ada | intake | Req 2.7, 6.2 | re-rule, as #1 |
 | 7 | `2026-10-24-shadow-color-primitives-emitted-on-no-platform.md` | Ada | intake | Req 7 | re-rule, as #1 |
 | 8 | `2026-06-24-oklch-shadow-color-family-not-migrated.md` | Ada | intake | Req 7.4 | re-rule, as #1; Ada sets its Class after the fold (Req 7.4 now takes the migration) |
-| 9 | `2026-10-26-token-index-platform-name-readers.md` | Ada (item 3); Lina (item 2) | intake, item 3 | Req 5.6 | Ada re-rules, as #1. Item 2 lands first as Lina's own PR (her R1) |
+| 9 | `2026-10-26-token-index-platform-name-readers.md` | Ada (item 3); Lina (item 2) | intake, item 3 | Req 5.6 | Ada re-rules, as #1. Item 2 landed first as Lina's own PR, #659 (`0057d1f94`) |
 | 10 | `2026-10-24-component-token-custom-values-unvalidated.md` | Ada | intake | Req 13.2 | re-rule, as #1 |
 | 11 | `2026-10-15-123-palette-read-from-package.md` | Ada | intake | Req 9.2, 9.3, 9.5 | re-rule, as #1 |
 | 12 | `2026-10-01-in-repo-generate-output-contaminates-package-dist.md` | Ada | intake, row (g) only | Req 9.4 | re-rule, as #1. Row (h) stays fix-now by 16.3.0's S under its own record |
 | 13 | `2026-11-04-consumers-get-no-report-of-what-an-upgrade-changed-in-generated-tokens.md` | Ada | **leave out; re-rule to CLOSEOUT** | none | re-rule to `completion/claims-pass.md`, marked "not intake: left out of 129 at requirements; re-read at CLOSEOUT, with row 19 and item (ii) shipped" (Ada R1) |
 | 14 | `2026-10-24-android-component-unit-type-mismatches.md` | Lina | intake | Req 4.5, 6.7, 6.8 | re-rule, as #1 |
 | 15 | `2026-11-04-progress-bar-native-theme-reads-malformed.md` | Lina | intake | Req 4.6 | re-rule, as #1 |
-| 16 | `2026-10-13-native-readiness-test-patterns-miss-repo-tests.md` | Lina | **close** (option (a)) | Req 14 | rule 5's dated outcome line, naming Req 14 and D7 as (c)'s successor, correcting the "never overstates" premise and citing her readiness-flag PR (Req 14.3), which merges first |
+| 16 | `2026-10-13-native-readiness-test-patterns-miss-repo-tests.md` | Lina | **close** (option (a)) | Req 14 | rule 5's dated outcome line, naming Req 14 and D7 as (c)'s successor, correcting the "never overstates" premise and citing her readiness-flag PR (Req 14.3), #660 |
 | 17 | `2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md` | Lina | intake, R1 and R5 | Req 5.7, 5.8 | re-rule, as #1 |
 
 **Counts**: carried 15 (intake), re-ruled out of 129 1 (#13), closed 1 (#16), none 0.
@@ -417,7 +417,7 @@ These 17 root records carry a Trigger glob on this file (facts row 3, 10 of them
 
 Named so they are not decided silently.
 
-**For Peter now**: D1's wording (Requirement 2.7; the PR's `**Open for Peter**:` line).
+**For Peter now**: nothing. D1's wording was answered on 2026-11-05 (Requirement 2.7).
 
 **Design round**:
 - **Peter's, at design** (`evidence/2026-11-05-native-plan/README.md`): plan decision 4, the iOS minimum (it sets Requirement 2.9's deployment target); decision 5, the Android minimum and its toolchain range; decision 7, when native becomes a semver promise (it places Requirement 10.1).
