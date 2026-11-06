@@ -1098,3 +1098,137 @@ Both of Kenya's clarifications are folded into tasks.md § "Decision 6". Conditi
   - #682 (`05ba771f2`): Ada's 15 re-rules.
   - #683 (`657078b52`): Lina's 4 re-rules, her C6 re-rule to `manual`, and the Spec 123 Req 1.5 pointer.
   - #680 (`000e27d91`) was already merged. → tasks.md § "Merge preconditions", dated notes.
+
+---
+
+## Tasks amendment 1 (2026-11-06): Stacy's verifiability read of the merged tasks
+
+Peter, 2026-11-06T00:07:00Z (orchestrator relay), verbatim: "Have Stacy check the tasks first". Her read of `tasks.md` at `8d8ba1425` follows, verbatim.
+
+#### [STACY TASKS R2] — verifiability read of the merged tasks (Peter: "Have Stacy check the tasks first")
+
+**What I read**: `tasks.md` at `8d8ba1425` (#678, merged), diffed against R1 at `90dccd1d8`, and the `requirements.md` and `design.md` amendments in the same diff. I checked against `origin/main` `db5a1ab3f`:
+- the current Trigger of every record the plan keys, by `git show`;
+- every Primary Artifact path, 123 of them: each either exists or is a declared new `harness/**` or `scripts/harness/**` path. `scopedTsRequire` is at `src/config/scopedTsRequire.ts`, and `scripts/__tests__/pack-assert.test.ts` exists.
+
+The read is feedback, not a gate.
+
+**Verdict in plain words: U1 can start, but fix two High wording points before the first parent closes.**
+- Most R1 gaps are fixed, and fixed in checkable form:
+  - the record-lapse Convention, with a criterion on every gating parent;
+  - the Task 10 path;
+  - the missing paths in Tasks 8, 14 and 16;
+  - the iOS probe test;
+  - the variants frozen at `5e894837c`;
+  - the release timing reworded as ancestry;
+  - the computed stability record.
+- **All 19 re-rules and both `harness/**` records are on `main` as the table says.** The one exception is the Icon-Base README record, which is still open: Lina's precondition (below).
+- **Two new problems would mislead U1's completion docs**: High-1 and High-2.
+- **One problem could let three records lapse**: High-3.
+- **The rest is Medium or Low.**
+
+---
+
+## High
+
+**High-1. "The run URL at the head the unit merged" cannot be met as written. Every unit, including U1.**
+- **Where**: the Conventions ("Every unit records its harness runs"); every gating parent's criterion "carries each one's run URL at the head the unit merged with its summary line pasted"; Task 18 ("at that unit's merged head").
+- **Why it cannot be met**: the completion doc is committed before the PR's last push. Any commit that adds the citation is itself a new head, with new runs. So the doc can never cite runs at the head that merged.
+- **What happens if left**: an author either cites an earlier head and marks it ✅, which is a false ✅ against the criterion's own words, or loops trying to catch up.
+- **The fault is mine.** The phrase comes from my R3 condition and my R1 § 1, which the plan adopted.
+- **A checkable form**:
+  - the doc cites the runs at head **H**, the last head whose diff to the merged head **M** (`git diff --name-only H M`) touches only `completion/**`, `docs/specs/**` and the PR's records;
+  - Task 18 and my passes read the four contexts' conclusions at **M** from the checks API.
+- **The fix**: Thurgood, as owner of the criteria text, rewords the Conventions line and the twelve criteria to that form. The H-to-M diff is a non-model check.
+
+**High-2. Task 4's Android probe criterion cannot be decided at U1. The iOS twin was fixed; this one was not.**
+- **The criterion**: "On Android, the probe generator … reads every `theme.`-named colour semantic through `LocalDPTheme.current` and through each `<Name>Themes` member … once item (i) emits them, with no `harness/android/**` change."
+- **Why it cannot be decided**: at U1 nothing emits a theme, and no test shows the generator producing those reads.
+- **The contrast with iOS**: Task 3 gained `probe-swift.test.ts`, which shows the reads from a fixture index. Task 4 has no counterpart. Its evidence would be a reading of the generator code, the R1 gap carried forward on one platform.
+- **The fix**: Data, with Thurgood for the artifact paths, picks one of two forms:
+  - a generator test in a lane, for example `scripts/harness/probe-kotlin.ts` with a test over a fixture index carrying `theme.` names, mirroring iOS, added to Task 4's Primary Artifacts; or
+  - this criterion moves to Task 11, which already carries the Android probe-at-U6 read.
+
+**High-3. Records keyed to a `path:` glob fire at the first unit PR whose diff touches the glob, and the preconditions name a fixed unit instead.** Three records could lapse.
+- **`2026-09-27-progress-token-harvest-may-not-cross-dual-instance-boundary.md`** (P2 guard, `path:src/build/tokens/defineComponentTokens.ts`). The preconditions say "U5". But Task 13 (U8) lists `src/build/tokens/**`, and U5 is off the chain ("at Peter's direction"). If U8 touches the file before U5, it fires at U8.
+- **`2026-10-12-generate-staleness-decided-by-file-times.md`** (P2 guard, `path:src/cli/staleness.ts`). The preconditions say "U8". But Tasks 14 and 15 list `src/cli/**`, and U10 is off the chain.
+- **`ios-readonly-focusable-prototype.md`** (P3, `path:src/components/core/Input-Text-Base/platforms/ios/**`). The preconditions say "before U7". But Task 9 (U4) lists `src/components/core/*/platforms/ios/**` "where design § 5's iOS column changes a read", and an iOS `fontWeight` or `TypographyToken` read in Input-Text-Base would touch it at U4.
+- **The fix, which is the class fix**: one Conventions line from Thurgood. Before PR-open, a unit lists every root record whose `path:` glob the diff touches, from the issues root's Trigger tokens against `git diff --name-only <base>…HEAD`, and carries that record's owed act in the PR or in an owner PR merged first. Then the precondition rows read "the first 129 unit PR whose diff touches …". Each record's owner (Ada, Ada, Kenya) acts at that PR.
+
+---
+
+## Medium
+
+1. **Decision 6, conditions 3 and 5: computable, but not from the checks API alone.**
+   - **Condition 3 (Android).** "Its cache-restore step reports a miss" lives in the step's log. The check-runs API returns step names, conclusions and times, not outputs, and logs expire. *Fix (Data, Thurgood)*: the Android job writes the result as a check annotation (`::notice title=cache::miss`). The annotations endpoint is permanent, and `stability.ts` reads it.
+   - **Condition 5 (iOS queue time).** "From the job's creation to its finish" needs the Actions jobs API (`created_at`, `started_at`, `completed_at`); a check run has no creation time.
+     - For a job with `needs: harness-generate`, whether `created_at` is the run's start or the moment its dependency finishes is UNVERIFIED. If it is the run's start, "excluding `harness-generate`" is not met.
+     - *Fix (Thurgood)*: `stability.ts` measures from `max(created_at, harness-generate.completed_at)` to `completed_at`, and the record states its source endpoints. Task 5's criterion "over the checks API" then reads "over the checks and Actions APIs".
+   - **The iOS clarification** ("every run counts as cold; the first three at the current Xcode pin") can be computed from run times against the history of `harness/pins.yaml`.
+2. **The Swift parser's fixtures are recorded under Xcode 27.2 (subtask 2.2), but the lane pins 26.6.** The `parser` and `pre-compile` cases catch a total failure, not a partial misparse such as a note keyed as an error. *Fix (Kenya)*: add a fixture cut from U1's first CI log under the pin before U1 merges, labelled with that toolchain.
+3. **Task 16 names the wrong file for the re-confirmations.** It says the re-confirmations are "dated lines in `canonical/profiles/consumer/signatures/kenya.md` and `data.md`". A re-confirmation (C16) is a `canonicalHash` move in `canonical/operative-sets/<seat>.yaml` plus a record in `canonical/profiles/consumer/confirmations/<seat>.md`. The signature (C1) is the dispositions row and `signatures/<seat>.md`. This is the #676 shape. *Fix (Thurgood, with Kenya and Data)*: name both acts and their files. As written, U11 would audit the wrong objects.
+4. **Task 9's guideline criterion contradicts the requirement it cites.**
+   - The criterion has the U4 PR carry `**Edit kind**: governance/platform-implementation-guidelines.md — EXECUTION (requirements.md Req 6.9)`.
+   - Req 6.9 itself says "Lina drafts, Peter approves under the ballot-measure model". The criterion therefore cites as EXECUTION authority a clause that requires a ballot.
+   - Either Req 6.9 is amended, which is a requirements change and still Peter-merged under the carve-out, or the edit keeps its ballot. Which kind the edit is belongs to Thurgood and Lina; my edit-kind read will test the line against Req 6.9 as it stands at U4's merge.
+5. **Task 14's Q3b check may hold U9's merge.** The criterion "as a finding that goes to Peter as the Q3b fork" puts a question to Peter inside U9. Under the merge-hold rule, a PR whose body asks Peter something waits for his dated answer. *Fix (Thurgood, Sparky)*: put Q3b to Peter, with the committed browser check, before U9's PR opens, or file it as its own record with a trigger. Otherwise U9's schedule is tied to his reply.
+6. **The Q3a bridge criteria (Task 14) are mostly checkable.** The resolver matrix, cases (a) to (d), the warning word for word on two consecutive runs, "never fails on an unregistered map", and the release-note text in the summary doc are all decidable. Two need a definite referent:
+   - **The golden** at `tests/fixtures/pre-129-theme-css/`. It is captured "from `main` before this unit's first change", so it is not pre-129: U3 changes web shadow output. Its header should name the source SHA and the command, so it can be reproduced byte for byte at that SHA. Otherwise "byte-identical to the golden" rests on an unverifiable capture.
+   - **Case (c)**, "no WCAG difference from the base", needs its base named.
+
+   *(Fix: Ada.)* It is Medium only because of the golden.
+
+## Low
+
+1. **The new harness tests are not registered as in-lane guards.** `probe-swift.test.ts`, `consumer.test.ts`, `d2-check.test.ts` and any `stability.ts` test run in `lane-functional-root`, but Task 6 registers only the three comparator and parser suites. A deselected probe test would pass silently. *Owner: Thurgood, with Task 6's P1b scope.*
+2. **Task 5's stability record "for U1's runs"** can only cover runs up to its own commit, the same regress as High-1 at small scale. State it as runs up to the record's commit. *Owner: Thurgood.*
+3. **The Q3a golden's name** says "pre-129" for a pre-U9 capture. Renaming it avoids a misreading. *Owner: Ada.*
+
+---
+
+## Preconditions still open before U1 (status, not findings)
+
+- **Lina, the Icon-Base README move and closing its P1 record** (`path:harness/**`).
+  - At `db5a1ab3f`, `src/components/core/Icon-Base/platforms/android/res/drawable/README.md` is still present and the record is still at the root.
+  - It must merge before Task 4's first dispatched Android run.
+  - If it has not landed when U1 merges, that is a P1 first lapse.
+  - Tasks 1–3 can start without it.
+- **Lina, the L816 fix.** `ContainerCardBase.ios.swift` around L815 still opens a `/**` that never closes. It is due before U1's PR opens; otherwise it is carried as a tagged entry, which Req 4.7 allows.
+
+## Checked and sound
+
+- **The rule-11 Convention, with a close-or-re-rule criterion on Tasks 5, 8–14 and 18.** It covers every record keyed to a completion doc. The owners are PRIMARY or secondary on each carrying parent: Lina on 11 (row 12), 12 and 13; Kenya and Data on 5.
+- **The distribution charter is re-ruled to 129's claims pass (#684). The harness charter is re-ruled to `task-5-completion.md` (#681).**
+- **Task 17's ancestry check and its `[Unreleased]` CHANGELOG entry** replace the future-release criterion.
+- **Task 11's row-15 and row-2 list removals**, and Task 12's per-platform "no entry tagged to row 15".
+- **The requirement amendments.** Req 10.1's "on `main`", Req 9.5's scope and Req 2's "Records" correction are each dated, with their prior text cited.
+
+#### [THURGOOD R3] — tasks amendment 1
+
+Folds `[STACY TASKS R2]` above, which is spliced byte for byte from her file (`cmp` clean). Peter asked for that read before execution: "Have Stacy check the tasks first" (2026-11-06T00:07:00Z, orchestrator relay). This is one amendment PR, `task/129-tasks-amend-1`, cut from `origin/main` `0ee2357ea`. Each changed line carries a dated amendment note with its prior text at `8d8ba1425`.
+
+**High:**
+- **High-1, folded.** The run-citation rule is now: cite at head **H**, the last head whose `git diff --name-only H M` to the merged head **M** touches only `completion/**`, `docs/specs/**` and the PR's records. The four conclusions at M are read from the checks API. This changes the Conventions line, all eleven gating-parent run criteria (Tasks 5, 7–16) and Task 18's sum. **Requirement 2.13 and the requirements' "Accepted at a unit PR" convention carried the same impossible wording, so both are amended too**, with dated lines; Req 2.13 states its changed reach. The fault Stacy names as hers was adopted into the criteria by me, so it is mine too.
+- **High-2, folded in the default form, pending Data.** Task 4's Android probe criterion is now decided at U1 by `scripts/harness/__tests__/probe-kotlin.test.ts` over a fixture index and config. This mirrors iOS's `probe-swift.test.ts`. `scripts/harness/probe-kotlin.ts`, its test and its Kotlin fixtures are added to Task 4's Primary Artifacts. The other form, moving the criterion to Task 11, is not taken. **[@DATA] Do you take the generator test (this text), or the move to Task 11? Either is your call; the test needs your generator to live at `scripts/harness/probe-kotlin.ts` instead of under `harness/android/`.** → tasks.md Task 4 -- [THURGOOD R3]
+- **High-3, folded as the class fix.** There is a new Conventions line: before PR-open, a unit lists every root record whose `path:` glob its diff touches, and carries each one's owed act, by its owner, in the PR or an owner PR merged first; the PR body names the list. The three at-risk records are named there and in their precondition rows, which now read "the first 129 unit PR whose diff touches …": the progress-token-harvest record (Ada), the generate-staleness record (Ada) and `ios-readonly-focusable-prototype.md` (Kenya).
+
+**Medium:**
+1. **Decision 6's data sources.**
+   - Condition 3: Android cold is read from a check annotation, `::notice title=cache::<hit|miss>`, written after the cache-restore step, because step logs expire.
+   - Condition 5: the iOS queue time and duration come from the Actions jobs API, from `max(created_at, harness-generate.completed_at)` to `completed_at`. Whether `created_at` under `needs:` is the run's start is UNVERIFIED, and the `max` holds either way.
+   - The stability record names its endpoints. Task 5 gains the annotation step criterion and `scripts/harness/__tests__/stability.test.ts`.
+   - These clarify how Peter's ruled condition is measured. They change nothing he ruled.
+2. **The Swift fixture under the pin**: Task 2.2 gains one fixture cut from U1's first CI log under the pinned Xcode, before U1 merges. That subtask is Kenya's.
+3. **Task 16's re-confirmations and signatures**: the criterion now names both acts and their files. The re-confirmation (C16) is the `canonicalHash` move in `canonical/operative-sets/<seat>.yaml` plus its record in `confirmations/<seat>.md`. The signature (C1) is the dispositions row plus `signatures/<seat>.md`. Neither needs a grant, and both are listed paths' neighbours that the audit reads.
+4. **Task 9 and Req 6.9.** Stacy is right: R2's "EXECUTION (Req 6.9)" cited a clause that itself requires the ballot-measure model. **The Android guideline edit needs Peter's approval under the ballot-measure model at U4.** The criterion now requires a ballot record (`.kiro/docs/ballots/*-129-u4-android-type-statements.md`), held by Thurgood with Lina's text, reading RATIFIED (Peter) at U4's merge. The U4 PR body carries `— LAW (<that ballot path>)`. Thurgood is added to Task 9 as the ballot holder.
+5. **Task 14's Q3b check is moved earlier.** Before U9's PR opens, Sparky's browser check is committed, and the Q3b fork is filed as its own root record (Ada, with Leonardo on intent) with a Trigger. U9's PR then asks Peter nothing about it, and U9's merge does not wait on his answer.
+6. **The Q3a golden.** It is renamed `tests/fixtures/pre-u9-theme-css/` (Low-3). Its header names its source SHA (the U9 branch's base on `main`) and the capture command, so it can be reproduced byte for byte. Case (c)'s base is named: each `:root[data-theme="wcag"]` value equals the same run's base `:root` value. Both are Ada's surface, folded with Stacy's named fix; Ada can correct the wording at execution.
+
+**Low:**
+1. **More registrations.** Task 6 now registers `probe-swift`, `probe-kotlin`, `consumer` and `stability` beside the comparator and parser suites. `d2-check.test.ts` cannot be registered in U8, because that PR also edits the workflow and the P1b read needs `.github/**` to be exactly the registry. So it is registered in its own P1b PR, as a Task 18 criterion.
+2. **The stability record** now states that it covers runs up to its own commit.
+3. **The golden's rename**: covered by Medium-6.
+
+**Preconditions still open, as Stacy lists them**: Lina's Icon-Base README move (before Task 4's first dispatched Android run) and her L816 fix (before U1's PR opens). Both are status, not amendments.
+
+**Nothing here is Peter's.** Medium-4 names an approval he gives at U4, under the ballot-measure model Req 6.9 already requires. It is not a question in this PR.

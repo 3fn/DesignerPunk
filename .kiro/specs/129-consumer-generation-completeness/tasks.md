@@ -2,7 +2,7 @@
 
 **Date**: 2026-11-05
 **Spec**: 129 - Consumer-Generation Completeness
-**Status**: Tasks Phase — **R2**, the seven R1 reviews folded in (`feedback/tasks.md`, `[THURGOOD R2]`), plus the Q3a addendum (`[THURGOOD Q3a]`). Execution starts after this file merges (Spec-Feedback-Protocol § "Sequential Formalization Gate").
+**Status**: Merged at R2 (#678, `8d8ba1425`), with the seven R1 reviews, the Q3a addendum and Peter's Decision 6 answer folded in. **Amendment 1** (2026-11-06) folds Stacy's verifiability read of the merged file, `[STACY TASKS R2]`, requested by Peter ("Have Stacy check the tasks first", 2026-11-06T00:07:00Z), with `[THURGOOD R3]` notes (`feedback/tasks.md`). Execution starts after this file merges (Spec-Feedback-Protocol § "Sequential Formalization Gate").
 **Amended in this round**: `requirements.md` Requirements 10.1 (Ada R1) and 9.5 (Lina, the Q3a bridge), and `design.md` § 10 (the registration-keyed built-in bridge, Ada and Lina), each with a dated line in place.
 **Author**: Thurgood (formalizer). Each parent names its PRIMARY; that seat's call governs its parent's how, within `requirements.md` and `design.md`.
 **Go**: Peter, received 2026-11-05T22:48:15Z (`date -u` at receipt; orchestrator relay), verbatim: "673 and 675 are merged; go for tasks". What he read: "Your go for 129's tasks round. That's where the work is cut into units, and the compile check is built first."
@@ -21,7 +21,8 @@ The compile harness is built first (U1), because every native "compiles" in 129 
 - **Instruments (M1, not M4).** The instruments parser has not merged at `d7f87174c`, so `P` does not exist and **no parent here carries an `**Instruments:**` block** (Process-Spec-Planning § "The Instruments block (M4)"). The parser record is re-ruled to the next spec's tasks round by #680. Each parent's PRIMARY writes `completion/task-<N>-instruments.md` before the first subtask, in M1's execution-time form (Start Up Tasks item 8); any `MISSING` row stops the subtasks that depend on it.
 - **Completion docs.** Each parent's doc reproduces every Success Criteria bullet verbatim with Status and Evidence, carries the forced-negative line, the `**Instruments**:` header line and the `**Delegated-tier**:` line (Completion Documentation Guide). Every subtask gets its three-element doc (S-4).
 - **A unit closes the records it fires** (Stacy R1 § 2.A.1). A record re-ruled to `path:…/completion/task-<N>-completion.md` fires when that doc reaches `main`, at its unit's merge. So that unit's PR, or an owner's PR merged before it, carries each such record's rule 5 outcome line or a re-ruled Trigger with a dated reason, in the owner's act (README rules 9 and 11). Each gating parent carries this as a criterion.
-- **Every unit records its harness runs** (Req 2.10, 2.13; Stacy R1 § 1). Each gating parent's completion doc cites, for each of the four contexts, the PR, the run URL at the head the unit merged, the comparator's summary line pasted, and the SHAs of the list file and `harness/pins.yaml` at that head. Run logs expire, so the summary line is pasted, not linked.
+- **A unit carries the records its diff fires** (`[STACY TASKS R2]` High-3). Before PR-open, the unit's author lists every root record whose `path:` Trigger glob the diff touches: the issues root's Trigger tokens, matched against `git diff --name-only <base>...HEAD`. The PR, or an owner's PR merged before it, carries each one's owed act: rule 5's outcome line or a re-ruled Trigger, by the record's owner. The PR body names the list, or says it is empty. Three records are at risk because units off the chain may reach their paths first: `2026-09-27-progress-token-harvest-may-not-cross-dual-instance-boundary.md` (Ada), `2026-10-12-generate-staleness-decided-by-file-times.md` (Ada) and `ios-readonly-focusable-prototype.md` (Kenya). *(Amended 2026-11-06, tasks amendment 1, `[STACY TASKS R2]` High-3; prior text at `8d8ba1425`.)*
+- **Every unit records its harness runs** (Req 2.10, 2.13; Stacy R1 § 1). A completion doc is committed before the PR's last push, so it cannot cite runs at the head that merges. Each gating parent's completion doc therefore cites, for each of the four contexts, the PR, the run URL at **head H**, the comparator's summary line pasted, and the SHAs of the list file and `harness/pins.yaml` at H. **H** is the last head whose diff to the merged head **M** (`git diff --name-only H M`) touches only `completion/**`, `docs/specs/**` and the records the PR carries. Task 18 and Stacy's passes read the four contexts' conclusions at **M** from the checks API. Run logs expire, so the summary line is pasted, not linked. *(Amended 2026-11-06, tasks amendment 1, `[STACY TASKS R2]` High-1; prior text at `8d8ba1425`.)*
 - **A fix and its list edit land in the same diff** (Req 3.3). Before PR-open, a unit author dispatches the harness against the unit branch, because the harness is not in `complete-task.sh`'s `REQUIRED_WORKFLOWS` while it measures: `gh workflow run native-harness.yml --ref <branch>`.
 - **A row a harness context accepts** has an entry tagged to its record on that context's list before the PR that fixes it, or its parent names the interim instrument (Req 2.14).
 - **Token documentation** changes in the same PR as a token it describes (Req 15.4).
@@ -48,11 +49,11 @@ The compile harness is built first (U1), because every native "compiles" in 129 
 The criterion the requirements ask this round to write (Req 2.12). A harness context is **offered to Peter for promotion** when all of these hold, each read from `evidence/harness-stability.md`:
 1. its floor (Req 3.4) and toolchain match (Req 3.11) are in place, and their falsification cases pass in `lane-functional-root`;
 2. **10 consecutive pull-request runs** with no break. In order of run, a verdict change between two runs must come with a different head SHA; a run whose attempts end with different conclusions is a break; a `cancelled` or `timed_out` conclusion, or a job that failed before the comparator ran, is a break; a break restarts the count;
-3. three cold-cache runs, each under the 10-minute ceiling (125-A Req 6.3). For an Android context, a run counts as cold when its cache-restore step reports a miss. For an iOS context, which has no dependency cache because `swiftc` resolves no package, every run counts as cold, and the three are the first three runs recorded at the current Xcode pin *(clarified 2026-11-05, `[KENYA D6 R2]`)*;
+3. three cold-cache runs, each under the 10-minute ceiling (125-A Req 6.3). For an Android context, a run counts as cold when its job's check annotation reads `cache: miss`. The Android job writes `::notice title=cache::<hit|miss>` after its cache-restore step, because step logs expire and the annotations endpoint does not (amended 2026-11-06, `[STACY TASKS R2]` Medium-1). For an iOS context, which has no dependency cache because `swiftc` resolves no package, every run counts as cold, and the three are the first three runs recorded at the current Xcode pin *(clarified 2026-11-05, `[KENYA D6 R2]`)*;
 4. for an iOS context, the pinned Xcode is still on the `macos-26` image at the offer, by the readme read then;
-5. **for an iOS context (Kenya's condition, ruled)**: both Android contexts are already promoted, and condition 3's three runs of that iOS context record their macOS queue time and duration in the stability record. Both are measured for that iOS job alone, from the job's creation to its finish, from the checks API, excluding `harness-generate` (an ubuntu job shared with Android and measured there). If any of those three runs' queue time plus its duration exceeds 10 minutes, the queue time is poor. That iOS context is then not offered during 129 and becomes a promote-at-closeout offer. *(The 10-minute bound reuses 125-A Req 6.3's ceiling. Kenya confirmed it, and both clarifications are hers, 2026-11-05, `[KENYA D6 R2]`; they clarify the ruled condition and open no new choice.)*
+5. **for an iOS context (Kenya's condition, ruled)**: both Android contexts are already promoted, and condition 3's three runs of that iOS context record their macOS queue time and duration in the stability record. Both are measured for that iOS job alone, excluding `harness-generate` (an ubuntu job shared with Android and measured there), from the Actions jobs API: from `max(created_at, harness-generate.completed_at)` to `completed_at`. Whether `created_at` for a job under `needs:` is the run's start or its dependency's finish is UNVERIFIED, and the `max` holds either way (amended 2026-11-06, `[STACY TASKS R2]` Medium-1). If any of those three runs' queue time plus its duration exceeds 10 minutes, the queue time is poor. That iOS context is then not offered during 129 and becomes a promote-at-closeout offer. *(The 10-minute bound reuses 125-A Req 6.3's ceiling. Kenya confirmed it, and both clarifications are hers, 2026-11-05, `[KENYA D6 R2]`; they clarify the ruled condition and open no new choice.)*
 
-**The stability record is computed, not kept** (Stacy R1 § 3): `evidence/harness-stability.md` is the committed output of `scripts/harness/stability.ts` over the checks API (run id, head SHA, attempt, conclusion, cache-restore result and duration, per context), re-run before each offer. **Order**: the Android contexts first (the `ubuntu-24.04` class the gate already depends on), then the iOS contexts. **What each promotion is**: Peter's act per context, in one recorded change: `EXPECTED_CONTEXTS` +1 in `tools/agent-generator/verify-gate-registration.sh` (an issue-row grant naming that act, or Peter), the branch-protection setting (Peter), and `REQUIRED_WORKFLOWS` +1 in `.kiro/hooks/complete-task.sh` at the first promotion (Thurgood). Each fires Stacy's ARMING read. **Runner classes**, approved by Peter's "6 (a)": `macos-26` and `ubuntu-24.04`, standard hosted runners, pinned by version in `runs-on`, never `-latest`; no billed larger runner.
+**The stability record is computed, not kept** (Stacy R1 § 3): `evidence/harness-stability.md` is the committed output of `scripts/harness/stability.ts` over the checks API, the check-run annotations endpoint and the Actions jobs API (run id, head SHA, attempt, conclusion, the `cache` annotation, `created_at`, `started_at`, `completed_at` and duration, per context). It covers runs up to its own commit, names its source endpoints, and is re-run before each offer. **Order**: the Android contexts first (the `ubuntu-24.04` class the gate already depends on), then the iOS contexts. **What each promotion is**: Peter's act per context, in one recorded change: `EXPECTED_CONTEXTS` +1 in `tools/agent-generator/verify-gate-registration.sh` (an issue-row grant naming that act, or Peter), the branch-protection setting (Peter), and `REQUIRED_WORKFLOWS` +1 in `.kiro/hooks/complete-task.sh` at the first promotion (Thurgood). Each fires Stacy's ARMING read. **Runner classes**, approved by Peter's "6 (a)": `macos-26` and `ubuntu-24.04`, standard hosted runners, pinned by version in `runs-on`, never `-latest`; no billed larger runner.
 
 ---
 
@@ -118,7 +119,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | 6 | Thurgood (Sonnet) | — | Stacy |
 | 7 | Thurgood (Sonnet) | — | Ada |
 | 8 | Ada (Sonnet) | Sparky (Sonnet) — the `var()` and blue-tinted shadow `Consumer Guard` cases | Kenya, Data |
-| 9 | Ada (Sonnet) | Lina (Sonnet) — the coupled Android and iOS component reads and the guideline type statements | Data, Kenya |
+| 9 | Ada (Sonnet) | Lina (Sonnet) — the coupled Android and iOS component reads and the guideline type statements; Thurgood (Sonnet) — holds the Req 6.9 ballot record | Data, Kenya |
 | 10 | Ada (Sonnet) | Lina (Sonnet) — the two component tokens files row 21's ruling disposes | — |
 | 11 | Ada (Sonnet) | Lina (Sonnet) — Req 4.5's coupled reads and the two `DesignTokens` re-points | Kenya, Data |
 | 12 | Lina (Sonnet) | — | Kenya, Data |
@@ -169,9 +170,9 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | **Before Task 4's first dispatched Android run** (Data R1) | `.kiro/issues/2026-11-05-icon-base-android-drawable-readme-breaks-resource-merge.md`, Trigger `path:harness/**` | Lina | the README moved out of `res/` and the record closed (rule 5 outcome line, then the archive move), merged to `main`, and `main` merged into the U1 branch before that run; otherwise every Android run on the branch ends `pre-compile` and no Android baseline can be committed |
 | **Before U1 merges** | `.kiro/issues/2026-09-26-native-component-distribution.md`, Trigger `path:harness/**` at `d7f87174c` | Kenya, Data (co-owners) | **Settled, done** *(dated 2026-11-05, Thurgood)*: Stacy ruled Data's form, Kenya accepted it, and Data re-ruled the Trigger to `path:.kiro/specs/129-consumer-generation-completeness/completion/claims-pass.md`, switching to `release:next:phase-1` at 129's close, in #684 (`19c1dea43`), merged before U1. The R2 positions (Kenya: `release:next:phase-1`; Data: 129's claims pass) are kept in `feedback/tasks.md` `[THURGOOD R2]` |
 | **Before #678 merges, in Lina's record-only PR** | `2026-10-13-consumer-guard-c6-sync-dry-run-hits-npm-registry.md`, Trigger `path:tests/consumer-integration.test.ts` | Lina | **Lina's call, as owner (rule 9):** re-rule to `manual`, naming its own fixing PR (a P3 riding another change, rule 1), because the fix is a test-file change outside her standing scope. Sparky R1 is right that the old token fires at **U3**, not U5 (Task 8 is the first parent listing that file), so the re-rule must merge before U3 at the latest |
-| **U5 (row 21 edits `src/build/tokens/defineComponentTokens.ts`)** | `2026-09-27-progress-token-harvest-may-not-cross-dual-instance-boundary.md` | Ada | the trace or a re-rule, in U5's PR (Ada R1 confirms) |
-| **U8 (Task 13 edits `src/cli/staleness.ts`)** | `2026-10-12-generate-staleness-decided-by-file-times.md` | Ada | closed by R5's content check in U8's PR (Ada R1) |
-| **Before U7 merges, if its diff touches `src/components/core/Input-Text-Base/platforms/ios/**`** | `ios-readonly-focusable-prototype.md` | Kenya | a record-only re-defer merged first (Kenya R1); Lina tells Kenya at U7's PR-open whether `InputTextBase.ios.swift` is in the diff |
+| **The first 129 unit PR whose diff touches `src/build/tokens/defineComponentTokens.ts`** (U5 by row 21, or U8 through `src/build/tokens/**` if U8 merges first) | `2026-09-27-progress-token-harvest-may-not-cross-dual-instance-boundary.md` | Ada | the trace or a re-rule, in that PR or an owner PR merged before it (Ada R1 confirms; amended 2026-11-06, `[STACY TASKS R2]` High-3) |
+| **The first 129 unit PR whose diff touches `src/cli/staleness.ts`** (U8 by R5, or U9 or U10 through `src/cli/**`) | `2026-10-12-generate-staleness-decided-by-file-times.md` | Ada | closed by R5's content check in U8's PR, or re-ruled in an earlier PR that touches the file (Ada R1; amended 2026-11-06, `[STACY TASKS R2]` High-3) |
+| **The first 129 unit PR whose diff touches `src/components/core/Input-Text-Base/platforms/ios/**`** (U4 through its iOS reads, or U7) | `ios-readonly-focusable-prototype.md` | Kenya | a record-only re-defer merged before that PR (Kenya R1); its author tells Kenya at PR-open (amended 2026-11-06, `[STACY TASKS R2]` High-3) |
 | **After U1 merges** | the component-repair record (Req 1.5) | Lina | filed from U1's committed baseline lists; sized at the first run after U4 merges. Kenya's reading of `InputTextBase.ios.swift` L185 (a ratio added to points) goes in it |
 | **After U1 merges** | `.github/in-lane-guards.json` entries (Req 3.10) | Thurgood | U2, Task 6 |
 | **At U6's merge** | MIDPOINT claims pass | Stacy | `completion/claims-pass-midpoint.md` |
@@ -268,7 +269,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     - _Requirements: 3.2, 3.7_
   - [ ] 2.2 Swift parser (`<root>:<path> | <message>`, K-2, O-17)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Kenya (Sonnet)
-    - Fixtures recorded under Xcode 27.2 and labelled so
+    - Fixtures recorded under Xcode 27.2 and labelled so; plus one fixture cut from U1's first CI log under the pinned Xcode, labelled with that toolchain, before U1 merges (`[STACY TASKS R2]` Medium-2)
     - _Requirements: 3.2_
   - [ ] 2.3 Kotlin parser (D § 1.2)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
@@ -333,7 +334,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - On Android, `:dp` compiles every non-test packaged `.kt` file and the generated Kotlin with Icon-Base's `res/` as its resources, leaving out the package's `dist/ComponentTokens.*`, with one copy of each native file name.
   - On Android, `:probe` reads every member the index names for Android from inside `@Composable` functions, prints `probe: read <n> of <m>`, fails when `n ≠ m`, and a planted `internal` member in a fixture yields an entry.
   - On Android, while `:tokens` fails, `:probe` prints `probe: blocked (:tokens not compiled)` and its count is not compared.
-  - On Android, the probe generator reads its names from the index and its instance names from the consumer config, so that it reads every `theme.`-named colour semantic through `LocalDPTheme.current` and through each `<Name>Themes` member, and every product-token fixture member, inside `@Composable`, once item (i) emits them, with no `harness/android/**` change.
+  - On Android, `scripts/harness/__tests__/probe-kotlin.test.ts` asserts, over a fixture index carrying `theme.` names and a fixture consumer config, that `scripts/harness/probe-kotlin.ts` emits one read per `theme.`-named colour semantic through `LocalDPTheme.current` and one through each `<Name>Themes` member, plus one read per product-token fixture member, all inside `@Composable`, from the index and the config alone, with no `harness/android/**` change needed when item (i) emits.
   - On Android, the lanes read the generated Kotlin's location from the consumer's config (`platforms.android.output`, else `output`), never from a hard-coded path.
   - On Android, `harness-android-components` fails when `:tokens:compileDebugKotlin` has no task outcome in its own run.
   - `harness/pins.yaml` § `android` pins the JDK, Gradle, AGP, Kotlin, the Compose BOM (1.7 or later for `material-ripple`), `compileSdk`, `minSdk` 26, Coil, `material-icons-extended` and, while the generated Kotlin calls it, the colour library, names the runner label `ubuntu-24.04`, and states that its pins are harness pins and not minimums.
@@ -343,6 +344,9 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   **Primary Artifacts:**
   - `harness/android/**`
   - `harness/pins.yaml` (the `android` section)
+  - `scripts/harness/probe-kotlin.ts`
+  - `scripts/harness/__tests__/probe-kotlin.test.ts`
+  - `scripts/harness/__tests__/fixtures/kotlin/**`
 
   **Completion Documentation:**
   - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-4-completion.md`
@@ -354,7 +358,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
     - The first dispatched Android run waits for Lina's README move on the branch
     - _Requirements: 2.4, 2.6, 3.4_
-  - [ ] 4.2 The data-driven probe generator, the blocked state, the planted-member fixture, pins and toolchain match
+  - [ ] 4.2 The data-driven probe generator (`scripts/harness/probe-kotlin.ts`) and its fixture test, the blocked state, the planted-member fixture, pins and toolchain match
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
     - _Requirements: 2.7, 2.8, 2.9, 3.11_
 
@@ -372,8 +376,10 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - On the token lists, each entry located in a product-token fixture file is tagged to row 2's record (theme getters) or row 13's record (composite and WCAG-only references), by cause.
   - Every 129 row a harness context accepts has an entry tagged to its record on a baseline list, or this parent's completion doc names its interim instrument: row 12's groups B and C (masked behind row 6), `AndroidDpTokenReads.test.ts`; row 9, Task 8's tightened `tokenIndexPlatformNames.test.ts`, shown red on the pre-fix output in Task 8's completion doc; row 2's probe half, Task 11's probe result.
   - `tools/agent-generator/verify-gate-registration.sh` reports its count unchanged at the U1 head, and no harness context is in `EXPECTED_CONTEXTS` or in `complete-task.sh`'s `REQUIRED_WORKFLOWS`.
-  - `evidence/harness-stability.md` is the committed output of `scripts/harness/stability.ts` over the checks API for U1's runs, with run id, head SHA, attempt, conclusion, cache-restore result and duration per context, and the script applies the break rules of § "Decision 6".
-  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - `evidence/harness-stability.md` is the committed output of `scripts/harness/stability.ts` over the checks, check-run annotations and Actions jobs APIs, for U1's runs up to the record's own commit, naming its source endpoints, with the fields of § "Decision 6" per context, and the script applies the break rules of § "Decision 6".
+  - The Android jobs write `::notice title=cache::<hit|miss>` after their cache-restore step.
+  - `scripts/harness/__tests__/stability.test.ts` shows, over recorded API fixtures, each break rule of § "Decision 6" condition 2 firing once, and the iOS queue time taken from `max(created_at, harness-generate.completed_at)`.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
   - `2026-09-17-platform-build-verification-harness-candidate.md`, whose Trigger names `task-5-completion.md`, carries at U1's merge Kenya's and Data's rule 5 outcome line or a re-ruled Trigger with a dated reason.
   - `2026-11-05-icon-base-android-drawable-readme-breaks-resource-merge.md` and `2026-09-26-native-component-distribution.md`, whose Triggers are `path:harness/**`, were closed or re-ruled by their owners in a PR merged before U1.
 
@@ -384,6 +390,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `harness/expected/harness-android-tokens.tsv`
   - `harness/expected/harness-android-components.tsv`
   - `scripts/harness/stability.ts`
+  - `scripts/harness/__tests__/stability.test.ts`
   - `.kiro/specs/129-consumer-generation-completeness/evidence/harness-stability.md`
 
   **Grant limits** (`.github/**`): this row's grant over `.github/workflows/native-harness.yml` carries the acts README rule 8 and ballot `2026-09-27-ci-regime-standing-scope` M2 clause 5 exclude, and admits none: no new required context, no change to `EXPECTED_CONTEXTS`'s count, no removing or weakening a step, floor or execution assertion. It creates one new non-required workflow file and touches no other `.github/**` path.
@@ -413,7 +420,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   **Traces**: Req 3.10 (registration)
 
   **Success Criteria:**
-  - `.github/in-lane-guards.json` gains one entry each for `scripts/harness/__tests__/compare.test.ts`, `parse-swift.test.ts` and `parse-kotlin.test.ts`, with `config` `scripts/jest.config.js`, `context` `lane-functional-root`, and `record` naming this task's completion doc.
+  - `.github/in-lane-guards.json` gains one entry each for `scripts/harness/__tests__/compare.test.ts`, `parse-swift.test.ts`, `parse-kotlin.test.ts`, `probe-swift.test.ts`, `probe-kotlin.test.ts`, `consumer.test.ts` and `stability.test.ts`, with `config` `scripts/jest.config.js`, `context` `lane-functional-root`, and `record` naming this task's completion doc.
   - The additivity predicate of ballot `2026-10-20-in-lane-guard-registry-additive-entries` § 2 prints `true` against the PR's merge base, and the check prints `N registered in-lane guards; N selected` with N the entry count, green on the U2 PR.
   - The U2 PR's `.github/**` changes are exactly `.github/in-lane-guards.json`.
 
@@ -439,7 +446,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - Each limitation sentence in `governance/DesignerPunk-Integration-Guide.md`'s install region that a 129 row fixes carries `<!-- limitation: .kiro/issues/<file>.md -->` naming that row's record, and the completion doc lists every marked sentence with its record (which sentences a row fixes is a reading).
   - `scripts/__tests__/install-doc.test.ts` fails when a marked record is under `archive/` or missing while its sentence remains, shown by a fixture case red once.
   - `docs/consumer/INSTALL.md` is re-derived by `scripts/derive-install-doc.ts` and `install-doc.test.ts` passes.
-  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
 
   **Primary Artifacts:**
   - `governance/DesignerPunk-Integration-Guide.md`
@@ -485,7 +492,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `governance/Token-Family-Shadow.md` describes the four shadow primitives in OKLCH in this diff.
   - `governance/Rosetta-System-Architecture.md`'s native colour description (L100–L152 and L376 at `d7f87174c`) states the Display P3 constructors in this diff.
   - The token contexts' lists show the entries tagged to rows 4 (item 2), 7, 9 (where Stage T builds) and 10 removed in this diff, Android colour entries tagged to row 6 remain until U4, and every addition this diff makes prints under exception (a) or (c) with a tag.
-  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
   - Every root record whose Trigger names `task-8-completion.md` carries, at U3's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U3's PR or in a PR merged before it.
 
   **Primary Artifacts:**
@@ -534,7 +541,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 - [ ] 9. The native type table, import lists and font family, with their component couplings (U4)
 
-  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Lina (Sonnet) — the coupled Android and iOS reads and the guideline type statements
+  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Lina (Sonnet) — the coupled Android and iOS reads and the guideline type statements · Thurgood (Sonnet) — the Req 6.9 ballot record
   **Traces**: Req 2.10, 5.9, 6.3, 6.4, 6.5, 6.7, 6.8, 6.9; rows 3, 4 (item 1), 5, 6, 8, 12 (groups B, C, item 3's non-colour constants); I-1, I-2 · design §§ 5, 7, 12a (`ConfigHelpers`)
 
   **Success Criteria:**
@@ -552,11 +559,11 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - At this head, no entry on `harness-android-components` is tagged to row 12 for groups B, C or item 3's non-colour constants, and entries this diff newly reveals print under exception (c) tagged to row 12 or to Lina's component-repair record.
   - On iOS, `NavSegmentedChoiceBase.ios.swift`'s `fontWeight` read compiles against `Font.Weight` in this diff, with its entry removed from `harness-ios-components`.
   - `src/components/__tests__/AndroidDpTokenReads.test.ts` knows every shape I-2 emits, `TextUnit` included.
-  - The per-family Android type statements in `governance/platform-implementation-guidelines.md` match the generator in this diff, drafted by Lina, and the U4 PR body carries `**Edit kind**: governance/platform-implementation-guidelines.md — EXECUTION (requirements.md Req 6.9)`.
+  - The per-family Android type statements in `governance/platform-implementation-guidelines.md` match the generator in this diff, drafted by Lina and approved by Peter under the ballot-measure model (Req 6.9): a ballot record `.kiro/docs/ballots/*-129-u4-android-type-statements.md` whose Status reads RATIFIED (Peter) at U4's merge, and the U4 PR body carries `**Edit kind**: governance/platform-implementation-guidelines.md — LAW (<that ballot path>)` *(Amended 2026-11-06, tasks amendment 1, `[STACY TASKS R2]` Medium-4; prior text at `8d8ba1425`.)*
   - `ConfigHelpers.ts` and `BuildOrchestrator.ts` default Android `minSdkVersion` to 26 with validation floors 26, naming Core Goals in the message, and default iOS `minimumDeploymentTarget` to `'17.0'`.
   - `harness-ios-tokens` and `harness-android-tokens` show the entries tagged to rows 3, 4 (item 1), 5, 6 and 8 removed in this diff, and every addition this diff makes prints under exception (c) with a tag.
   - Ada's release-note draft for I-1 and I-2 is in this parent's summary doc.
-  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
   - Every root record whose Trigger names `task-9-completion.md` carries, at U4's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U4's PR or in a PR merged before it.
 
   **Primary Artifacts:**
@@ -575,6 +582,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `src/components/__tests__/AndroidSizingDpReads.test.ts`
   - `src/components/__tests__/AndroidDpTokenReads.test.ts`
   - `governance/platform-implementation-guidelines.md`
+  - `.kiro/docs/ballots/*-129-u4-android-type-statements.md` (Thurgood, as ballot holder; Lina's text)
   - `harness/expected/harness-ios-tokens.tsv`
   - `harness/expected/harness-android-tokens.tsv`
   - `harness/expected/harness-ios-components.tsv`
@@ -592,7 +600,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [ ] 9.2 Coupled component reads (I-1, I-2, `fontWeight` on both platforms, the composite's 9 reads, item 3's remaining constants); the two guards
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 6.7, 6.8_
-  - [ ] 9.3 Guideline type statements (Lina drafts); `ConfigHelpers` floors
+  - [ ] 9.3 Guideline type statements (Lina drafts; the ballot record held by Thurgood, Peter ratifies at U4's merge); `ConfigHelpers` floors
     **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet), Ada (Sonnet)
     - _Requirements: 6.9_
 
@@ -610,7 +618,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - A DesignerPunk component token that does not conform fails the repository's lane, shown by a Jest case red once.
   - Badge-Label-Base and Button-VerticalList-Item conform at this head, and Button-VerticalList-Item's `offGridReason` is Lina's text in design § 12.
   - A consumer `.ts` file importing `SemanticOverrideMap` and `SemanticOverride` from `@3fn/core/config` type-checks under `tsc --noEmit` in `Consumer Guard`.
-  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
   - Every root record whose Trigger names `task-10-completion.md` carries, at U5's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U5's PR or in a PR merged before it.
 
   **Primary Artifacts:**
@@ -665,7 +673,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - A WCAG-only colour `ref` in a product token emits the theme path by its `theme.` prefix, and the harness fixture's entry for it is removed from the token lists in this diff.
   - The scaffolded dark-override file's header and its list match the index's colour semantics in this diff.
   - The token contexts' lists show the entries tagged to row 2 and row 13 (item 3) removed in this diff, and every addition prints under exception (c) with a tag.
-  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
   - Every root record whose Trigger names `task-11-completion.md` carries, at U6's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U6's PR or in a PR merged before it.
 
   **Primary Artifacts:**
@@ -727,7 +735,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `rememberRipple` is replaced by `ripple(...)` at Button-Icon, Input-Checkbox-Base and Input-Radio-Base, accepted by `harness-android-components` with the three entries tagged to row 14's A5, A6 and A7 removed in this diff.
   - A text guard in `lane-functional-root` fails on a `rememberRipple` import in `VerticalListButtonItem.android.kt`, and the import is removed.
   - Row 14's record says that A3, I1–I3, A1, A2, A4 and A6's non-ripple parts move to Spec 132, dated and signed by Lina.
-  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
   - Every root record whose Trigger names `task-12-completion.md` carries, at U7's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U7's PR or in a PR merged before it.
 
   **Primary Artifacts:**
@@ -782,7 +790,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `.kiro/specs/123-consumer-distribution/requirements.md` § Requirement 1.5 carries a dated pointer line to `design.md` § 9's signed decision.
   - The Integration Guide says, in Lina's text with Sparky, to import the consumer's own `ComponentTokens.web.css` after the package's `component-tokens.css`, that on web "yours wins" is per token by order, and that bundler code-splitting can reorder CSS chunks.
   - The token and component contexts at this head show every addition this diff makes printed under exception (c) with a tag.
-  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
   - Every root record whose Trigger names `task-13-completion.md` carries, at U8's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U8's PR or in a PR merged before it.
 
   **Primary Artifacts:**
@@ -844,11 +852,11 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `generate` builds the theme registry from the config's `themes`, and the static imports at `generateTokenFiles.ts` L19–21 are removed.
   - A Jest test of the theme-source resolver covers the `dark`, `wcag` light and `wcag` dark maps, each registered, unregistered and registered-but-missing, in local and in package mode: registered reads the adopter's file, registered-but-missing fails `generate` naming the file, unregistered reads the package's built-in at run time through `scopedTsRequire`, and package mode reads the package's built-ins.
   - `ConfigTheme` accepts an optional `{ light, dark }` form, and `init` writes the WCAG entry with both maps.
-  - `Consumer Guard` case (a), a test01-shaped fixture with copies of all three built-in maps that differ from the package's and only `wcag` light registered, finds the `dark` and WCAG-dark web output byte-identical to the pre-129 golden committed at `tests/fixtures/pre-129-theme-css/` from `main` before this unit's first change.
+  - `Consumer Guard` case (a), a test01-shaped fixture with copies of all three built-in maps that differ from the package's and only `wcag` light registered, finds the `dark` and WCAG-dark web output byte-identical to the pre-U9 golden at `tests/fixtures/pre-u9-theme-css/`, whose header names its source SHA (the U9 branch's base on `main`) and the exact command that captured it, so it can be reproduced byte for byte at that SHA (amended 2026-11-06, `[STACY TASKS R2]` Medium-6, Low-3).
   - In case (a), the `wcag` light output equals the fixture's own file, and the first run prints how many of its values differ from DesignerPunk's built-in.
   - In case (a), the bridge warning of design § 10 prints for `dark` and for WCAG dark, word for word, on each of two consecutive `generate` runs.
   - `Consumer Guard` case (b), a fresh-`init` config that registers all three maps, prints no bridge warning.
-  - `Consumer Guard` case (c), `wcag` registered with empty overrides, shows no WCAG difference from the base and prints no warning.
+  - `Consumer Guard` case (c), `wcag` registered with empty overrides, shows each `:root[data-theme="wcag"]` value equal to the same run's base `:root` value, and prints no warning.
   - `Consumer Guard` case (d), package mode, prints no warning and applies the package's built-ins.
   - `generate` never fails on an unregistered built-in map (Ada's "print, not fail", #682), and this parent's summary doc carries release-note text naming the bridge, its retirement at the next major, and that a registered built-in map now applies the adopter's own values (Req 10.4).
   - A registered custom theme emits as `:root[data-theme="<name>"]`, and the `generate` message "registered, not applied yet" (`errorCatalog.ts` L557) changes in this diff.
@@ -856,12 +864,12 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - INSTALL L77's exception for the override maps is reworded, not removed (Req 9.3, 15): they still come from the package for each built-in theme the config does not register, until the next major.
   - The served sentences that say a registered theme is "not applied yet" or does not produce a `[data-theme]` block (`governance/Rosetta-System-Architecture.md` L566, `governance/Token-Quick-Reference.md` L114, and the Integration Guide L158 and L546 at `d7f87174c`, with INSTALL re-derived) state what is emitted, each in its owner's words, in this diff.
   - `npx tsx tools/agent-generator/diff-guard.ts` is green on the branch, `canonical/generated.lock` is the one a green run wrote, no authoring commit moves a `canonicalHash`, and `verify-signing-chain.ts --audit --pr <n>` is green after Sparky's confirmation and signature.
-  - Sparky's browser check for Q3b is committed at `evidence/q3b-browser-check.md`, naming the browser and its version, as a finding that goes to Peter as the Q3b fork.
+  - Before U9's PR opens, Sparky's browser check for Q3b is committed at `evidence/q3b-browser-check.md`, naming the browser and its version, and the Q3b fork is filed as its own root record (Ada, with Leonardo on intent) with a Trigger, so U9's PR body asks Peter nothing about it *(Amended 2026-11-06, tasks amendment 1, `[STACY TASKS R2]` Medium-5; prior text at `8d8ba1425`.)*
   - A Jest guard fails on a new value import from `src/tokens` under `src/generators`, `src/providers`, `src/resolvers` and `src/blend`.
   - A Jest test fails when the repository's root token files differ from a fresh generation from the base config.
   - The completion doc states which `ColorTokens.ts` importers this parent removed and which remain, and `.kiro/specs/133-color-track/design-outline.md` § 4 is corrected to match in this diff.
   - The harness compiles one copy of each native file name: the consumer's copy of `src/tokens/platforms/{ios,android}/**` once this unit reads the consumer's source, and Kenya and Data confirm that rule in this parent's completion doc.
-  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
   - Every root record whose Trigger names `task-14-completion.md` carries, at U9's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U9's PR or in a PR merged before it.
 
   **Primary Artifacts:**
@@ -875,9 +883,10 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `src/cli/**`
   - `src/tokens/**`
   - `tests/consumer-integration.test.ts`
-  - `tests/fixtures/pre-129-theme-css/**`
+  - `tests/fixtures/pre-u9-theme-css/**`
   - `.kiro/specs/133-color-track/design-outline.md`
   - `.kiro/specs/129-consumer-generation-completeness/evidence/q3b-browser-check.md`
+  - `.kiro/issues/*-q3b-web-data-theme-selector-scope.md` (the Q3b record; Ada's, filed before U9's PR opens)
   - `scripts/harness/consumer.ts`
   - `harness/ios/**` (only for the one-copy rule)
   - `harness/android/**` (only for the one-copy rule)
@@ -912,7 +921,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [ ] 14.4 The served sentences on registered themes; the web agent line; regeneration, profile-author acts, then Sparky's confirmation and signature
     **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet), Sparky (Sonnet), Lina (Sonnet), Thurgood (Sonnet)
     - _Requirements: 15.1_
-  - [ ] 14.5 The Q3b browser check
+  - [ ] 14.5 The Q3b browser check and the Q3b record, before U9's PR opens
     **Type**: Setup · **Validation**: Tier 1 - Minimal · **Agent**: Sparky (Sonnet)
     - _Requirements: 9 (Q3b, carried to design)_
 
@@ -934,7 +943,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - An unknown platform key, or a path resolving outside the project root, fails `generate` with a message naming it, accepted by Jest tests.
   - A folder `platforms:` names holds only that platform's files, and `pack-assert` fails when a generated native file name equals a packaged native source file name.
   - The harness consumer uses the same D4 layout through `harness/pins.yaml` § `consumer`, and the four lists' `gen:` keys are unchanged in this diff (the `gen:` path rule).
-  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
 
   **Primary Artifacts:**
   - `src/cli/init.ts`
@@ -980,9 +989,9 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `canonical/agents/data.md`'s theming section states what item (i) emits on Android: `DesignerPunkTheme`, `LocalDPTheme` and its static default, the `<Name>Themes` holder, the `<Name>Theme(darkTheme = …)` provider, and every colour semantic read through the theme.
   - `canonical/profiles/consumer/kenya.overlay.md` and `data.overlay.md`, and `canonical/operative-sets/kenya.yaml` and `data.yaml`, no longer carry their "no theme surface today" text, and each states what is emitted.
   - `npx tsx tools/agent-generator/diff-guard.ts` is green on the branch, and `canonical/generated.lock` is the one a green run wrote.
-  - Kenya's and Data's re-confirmations are dated lines in `canonical/profiles/consumer/signatures/kenya.md` and `data.md`, the changed units are re-signed, and `npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --audit --pr <n>` is green, with no authoring commit moving a `canonicalHash`.
+  - Kenya's and Data's re-confirmations (C16) are each a `canonicalHash` move in `canonical/operative-sets/<seat>.yaml` with its record in `canonical/profiles/consumer/confirmations/<seat>.md`; their signatures (C1) are each the dispositions row and `canonical/profiles/consumer/signatures/<seat>.md`; and `npx tsx tools/agent-generator/regrounding/verify-signing-chain.ts --audit --pr <n>` is green, with no authoring commit moving a `canonicalHash` *(Amended 2026-11-06, tasks amendment 1, `[STACY TASKS R2]` Medium-3; prior text at `8d8ba1425`.)*
   - At U11's merge, `git tag --contains <U6's merge commit>` prints no release tag.
-  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL at the head the unit merged with its summary line pasted.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
 
   **Primary Artifacts:**
   - `canonical/agents/kenya.md`
@@ -1065,7 +1074,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - At U12's head, `harness-android-components` concludes success, and every entry on its list is tagged to an open root record whose Trigger can fire, none to row 12, row 14's A5, A6 (ripple) or A7, row 15 or row 16 (D3, Android).
   - Lina's component-repair record is at the issues root, its Trigger can fire, and the remaining component entries are tagged to it.
   - At U12's head, `Consumer Guard` concludes success, including the `var()` check of Task 8.
-  - Each of the twelve units' gating parents' completion docs carries the four contexts' run URLs and pasted summary lines at that unit's merged head, and the checks API shows no 129 unit PR without all four runs.
+  - Each of the twelve units' gating parents' completion docs carries the four contexts' run URLs and pasted summary lines at that unit's head H (Conventions), and the checks API shows all four contexts' conclusions at each unit's merged head M, with no 129 unit PR missing one.
   - A grep of the CHANGELOG, INSTALL, the Integration Guide, the READMEs, the consumer overlays, the served corpus and `generate`'s messages at each release S in 129's range finds no claim that a tier "compiles" while its list held entries, and each release that carried the harness says "compile except N pinned errors, listed at <path>; no app linked, no tests run" with N its count at S (the grep decides "compiles"; other wording is Stacy's RELEASE reading).
   - At U12's head, no shipped text names a `dist/` file Task 17 removes (the Integration Guide's L167, L170, L180 and L181 at `d7f87174c` included), with INSTALL re-derived.
   - Where item (i) shipped in a release before U9, that release's CHANGELOG limitation was rewritten to say what still came from the package (Req 9.3), or the completion doc states it did not arise.
@@ -1073,12 +1082,14 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `governance/Token-Governance.md` § "Theme Registry (Spec 094)" matches items (i) and (vi) as shipped, through a ratified ballot applied before the S of the release that carried U9.
   - `derivePlatformReadiness`'s native test patterns in `application-mcp-server/src/indexer/ComponentIndexer.ts` are unchanged over 129's range, by `git log` over that range on the file.
   - No 129 shipped text claims runtime theme switching on iOS or Android.
+  - `.github/in-lane-guards.json` gains an entry for `scripts/harness/__tests__/d2-check.test.ts`, in a PR whose `.github/**` changes are exactly that file, with the additivity predicate `true` and the check's `N registered; N selected` line green (`[STACY TASKS R2]` Low-1).
   - Every root record whose Trigger names `task-18-completion.md` carries, at U12's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U12's PR or in a PR merged before it.
 
   **Primary Artifacts:**
   - `governance/DesignerPunk-Integration-Guide.md`
   - `docs/consumer/INSTALL.md` (derived)
   - `.kiro/specs/129-consumer-generation-completeness/evidence/harness-stability.md`
+  - `.github/in-lane-guards.json` (Thurgood's standing P1b scope)
 
   **Completion Documentation:**
   - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-18-completion.md`
