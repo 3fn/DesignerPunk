@@ -101,6 +101,39 @@ if [ -z "$SEAT" ]; then
   unavailable "unknown seat '$SEAT_ARG'; seats at $REF: ${known% }"
 fi
 
+# --- the owner names on an Owner line ---
+# README rule 9: the seats named in a record's **Owner**:/**Owners**: header are its owners. The
+# line carries prose after the list, so the read stops where the list does. In order: (1) cut at
+# the Owner token; (2) drop `code` spans, `*(italic notes)*` and (parenthesised asides): a seat
+# named in an aside is described there, not listed; (3) cut at the next bold key (`**Consulted**:`,
+# `**Filed by**:`, `**Verifier**:` ...); (4) cut at the first sentence end that is not inside a
+# bold span, and not before a bold role segment (`. **Ada — owns ...**`): a line written as bold
+# segments, `**Kenya ... shape.** **Lina — owns ...**. **Ada — owns ...**`, is one list.
+# If what is left names no seat at all (`**Owner**: rows below (Lina, Thurgood, ...)`), the
+# parenthesised names are the list: the same cuts, asides kept. Prints the remaining text; the
+# caller matches the seat in it. Seat names are the canonical charters' (SEATS, read above).
+owner_names() {
+  printf '%s\n' "$1" | SEAT_WORDS="$SEATS" perl -e '
+    my $t = <STDIN>; chomp $t;
+    my $re = join("|", map { ucfirst } split(/\s+/, $ENV{SEAT_WORDS}));
+    $t =~ s/^.*?\*\*Owners?\*\*://;
+    $t =~ s/`[^`]*`//g;
+    sub cut {
+      my ($x, $strip) = @_;
+      if ($strip) { 1 while $x =~ s/\*?\([^()]*\)\*?//g; }
+      $x =~ s/\*\*[^*]{1,60}\*\*:.*$//;
+      $x =~ s{(\*\*.*?\*\*)}{ my $b = $1; $b =~ s/\./\x01/g; $b }ge;
+      $x =~ s/\.(?=\s*\*\*[^*]*\s\xE2\x80\x94\s)/\x01/g;
+      $x =~ s/\.(\s.*|)$//;
+      $x =~ s/\x01/./g;
+      return $x;
+    }
+    my $r = cut($t, 1);
+    $r = cut($t, 0) unless $re ne "" && $r =~ /\b(?:$re)\b/;
+    print "$r\n";
+  '
+}
+
 # --- the records ---
 FILES=$(git ls-tree --name-only "$REF" -- .kiro/issues/ 2>/dev/null | grep -E '^\.kiro/issues/[^/]+\.md$' | grep -v '^\.kiro/issues/README\.md$')
 n=0
@@ -112,7 +145,7 @@ for f in $FILES; do
   body=$(git show "$REF:$f" 2>/dev/null) || unavailable "cannot read $f at $REF"
   own=$(printf '%s\n' "$body" | head -15 | grep -m1 -E '\*\*Owners?\*\*:')
   if [ -z "$own" ]; then u=$((u + 1)); continue; fi
-  printf '%s' "$own" | sed -E 's/^.*\*\*Owners?\*\*://' | grep -qw -- "$SEAT" || continue
+  owner_names "$own" | grep -qw -- "$SEAT" || continue
   t=$(printf '%s\n' "$body" | grep -m1 '^\*\*Trigger\*\*: ')
   # shellcheck disable=SC2016 # the backticks are literal: the token is backticked in the record
   tok=$(printf '%s' "$t" | sed -nE 's/^\*\*Trigger\*\*: `([^`]*)`.*/\1/p')
