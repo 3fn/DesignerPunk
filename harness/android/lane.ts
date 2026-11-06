@@ -21,7 +21,7 @@
  * Tiers and floors (Req 3.4, computed at run time, never stored):
  *   gen  compiled = the `.kt` files on disk under the generated output folder;
  *        floor    = the `.kt` files `generate` reported in the manifest.
- *   pkg  compiled = the non-test `.kt` files on disk under the installed package, minus `dist/ComponentTokens.*`;
+ *   pkg  compiled = the non-test `.kt` files on disk under the installed package, minus the package's root token files (`dist/ComponentTokens.*`, `dist/DesignTokens.*`);
  *        floor    = the same rule over the packed tarball's file list (`harness-tarball-files.txt`).
  *   So a file the install lost, or a generated file that was not written, leaves compiled below the floor.
  *   The compiled counts in the run files are the counts Gradle printed (`harness-sources:`), the number it gave
@@ -83,12 +83,17 @@ export function isTestKotlin(relative: string): boolean {
   return /Tests?\.kt$/.test(base) || segments.slice(0, -1).some((s) => s === 'test' || s === 'androidTest' || s === '__tests__');
 }
 
-/** The package's own tokens file is replaced by the consumer's generated one (Req 2.4, plan-r2 D3). */
+/**
+ * The package's own root token files are replaced by the consumer's generated ones. Req 2.4 and the Task 4 criterion name
+ * `dist/ComponentTokens.*`; the first real run (2026-11-06) showed the tarball also ships `dist/DesignTokens.android.kt`, which
+ * would be a second `DesignTokens.android.kt` beside the generated one, so both root files are left out ("one copy of each
+ * native file name"). `ROOT_TOKEN_FILES` in scripts/pack-assert.ts lists them.
+ */
 export function isExcludedPackageFile(relative: string): boolean {
-  return /^dist\/ComponentTokens\./.test(relative);
+  return /^dist\/(ComponentTokens|DesignTokens)\./.test(relative);
 }
 
-/** The non-test packaged `.kt` files among `paths` (POSIX, relative to the package root), minus `dist/ComponentTokens.*`, sorted by code point. */
+/** The non-test packaged `.kt` files among `paths` (POSIX, relative to the package root), minus the package's root token files (`dist/ComponentTokens.*`, `dist/DesignTokens.*`), sorted by code point. */
 export function packagedKotlin(paths: readonly string[]): string[] {
   return paths
     .filter((p) => p.endsWith('.kt') && !isTestKotlin(p) && !isExcludedPackageFile(p))
