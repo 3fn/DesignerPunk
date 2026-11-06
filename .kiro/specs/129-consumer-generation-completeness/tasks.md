@@ -224,7 +224,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     - Lina's README move is a precondition (§ "Unit preconditions")
     - _Requirements: 10.3_
 
-- [ ] 2. The comparator and its falsification test (U1)
+- [x] 2. The comparator and its falsification test (U1)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Thurgood (Opus) · Kenya (Sonnet) — Swift parser · Data (Sonnet) — Kotlin parser
   **Traces**: Req 2.6 (the cross-tier rule), 3.1–3.11 · design §§ 1 (K-2), 2 (capture and key), 3
