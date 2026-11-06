@@ -275,11 +275,11 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
     - Fixture cut from the 2026-11-04 K2 logs, scratch paths rewritten to `pkg:` and `gen:`, source named in the completion doc
     - _Requirements: 3.2_
-  - [ ] 2.4 Comparator verdict rules and summary line
+  - [x] 2.4 Comparator verdict rules and summary line
     **Type**: Implementation · **Validation**: Tier 3 - Comprehensive · **Agent**: Thurgood (Opus)
     - Req 3.3–3.9, 3.11; design § 3 rules 1–5
     - _Requirements: 2.6, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.11_
-  - [ ] 2.5 Falsification suite
+  - [x] 2.5 Falsification suite
     **Type**: Implementation · **Validation**: Tier 3 - Comprehensive · **Agent**: Thurgood (Opus)
     - Each case red once, then green; the exact red string recorded in the completion doc
     - _Requirements: 3.10_
