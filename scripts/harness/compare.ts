@@ -1186,12 +1186,25 @@ export interface MainDeps {
   out?: (line: string) => void;
 }
 
-function loadParser<T>(module: string, name: string): T {
-  // Loaded at run time, so this module type-checks before the parser files exist on a branch.
+// The parsers are required when a run file is read, not imported at load. Both parser modules
+// import values from this one, and `parse-kotlin.ts` reads `KOTLIN_COMPILE_TASKS` at load, so a
+// static import here is a load-time cycle: with `compare.ts` loaded first, `parse-kotlin.ts`
+// sees this module's exports still empty and throws `TypeError: Cannot convert undefined or
+// null to object` (tried at Task 2's integration). The `typeof import(…)` annotations keep tsc
+// checking each parser's export against `ParseSwift` and `ParseKotlin`, which is what a static
+// import would have bought.
+function loadSwiftParser(): ParseSwift {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const m = require(module) as Record<string, unknown>;
-  if (typeof m[name] !== 'function') throw new Error(`${module} does not export ${name}`);
-  return m[name] as T;
+  const m: typeof import('./parse-swift') = require('./parse-swift');
+  const parse: ParseSwift = m.parseSwift;
+  return parse;
+}
+
+function loadKotlinParser(): ParseKotlin {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const m: typeof import('./parse-kotlin') = require('./parse-kotlin');
+  const parse: ParseKotlin = m.parseKotlin;
+  return parse;
 }
 
 /** Reads a run file and its logs, and runs the parsers. Throws on a malformed run file. */
@@ -1205,7 +1218,7 @@ export function readRunFile(runPath: string, context: ContextName, deps: MainDep
   const platform = CONTEXT_SPECS[context].platform;
   if (platform === 'ios') {
     if (!Array.isArray(run.swift)) throw new Error('an iOS run file needs a swift array');
-    const parse = deps.parseSwift ?? loadParser<ParseSwift>('./parse-swift', 'parseSwift');
+    const parse = deps.parseSwift ?? loadSwiftParser();
     const compiles = run.swift.map((s): CompileResult => {
       if (s.blocked) return notRun(s.compile);
       if (typeof s.log !== 'string' || typeof s.exitCode !== 'number') throw new Error(`${s.compile}: a stage needs log and exitCode, or blocked: true`);
@@ -1216,7 +1229,7 @@ export function readRunFile(runPath: string, context: ContextName, deps: MainDep
   if (!run.gradle || typeof run.gradle.log !== 'string' || typeof run.gradle.exitCode !== 'number') {
     throw new Error('an Android run file needs gradle.log and gradle.exitCode');
   }
-  const parse = deps.parseKotlin ?? loadParser<ParseKotlin>('./parse-kotlin', 'parseKotlin');
+  const parse = deps.parseKotlin ?? loadKotlinParser();
   const k = parse({ log: logText(run.gradle.log), exitCode: run.gradle.exitCode, roots: run.roots });
   return { compiles: k.compiles, unattributed: k.unattributed, logComplete: k.logComplete, files: run.files, toolchain: run.toolchain };
 }
