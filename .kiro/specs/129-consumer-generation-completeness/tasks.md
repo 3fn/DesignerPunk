@@ -271,7 +271,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Kenya (Sonnet)
     - Fixtures recorded under Xcode 27.2 and labelled so; plus one fixture cut from U1's first CI log under the pinned Xcode, labelled with that toolchain, before U1 merges (`[STACY TASKS R2]` Medium-2)
     - _Requirements: 3.2_
-  - [ ] 2.3 Kotlin parser (D § 1.2)
+  - [x] 2.3 Kotlin parser (D § 1.2)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
     - Fixture cut from the 2026-11-04 K2 logs, scratch paths rewritten to `pkg:` and `gen:`, source named in the completion doc
     - _Requirements: 3.2_

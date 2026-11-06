@@ -1,0 +1,219 @@
+#harness-fixture toolchain: Temurin OpenJDK 17.0.21+9 (macOS arm64), Gradle 9.8.2, AGP 9.5.0, Kotlin 2.4.21 (Compose compiler plugin 2.4.21), Compose BOM 2026.09.00, compileSdk 36, minSdk 24
+#harness-fixture source: run-android-combined-cold.log, Data's 2026-11-04 K2 round (backup .claude/scratch-backup/q5-data-work/run-android-combined-cold.log), CUT: of the log's 743 e: blocks, the blocks for 12 files are kept whole and in order (ComponentTokens, ThemeAwareBlendUtilities, ContainerBase, ContainerCardBase, ChipFilter, ChipInput, ChipBase, Avatar, VisualStateStyles, NavHeaderPage, BadgeCountBase, IconBase); the rest are removed; every other line is as recorded. Rewritten: Gradle module :combined -> :dp; the K2 flat source folders (host/tokens/src/main/kotlin, host/components/src/main/kotlin) -> the gen root for DesignTokens.android.kt and ComponentTokens.android.kt, and -> the package's own paths under the pkg root for every other file, taken from the in-place paths of run-adopter.log (same round); remaining scratch paths -> /work/harness. The failure block's first-error text still names Avatar's AvatarTokens, which this cut keeps. In that build :combined was the only module, so :tokens and :probe have no lines.
+#harness-fixture exit: 1
+#harness-fixture roots: gen=/work/consumer/dist/tokens pkg=/work/consumer/node_modules/@3fn/core probe=/work/probe/src/main/kotlin
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.8.2/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :dp:preBuild UP-TO-DATE
+> Task :dp:preDebugBuild UP-TO-DATE
+> Task :dp:generateDebugResources
+> Task :dp:packageDebugResources
+> Task :dp:processDebugNavigationResources
+> Task :dp:parseDebugLocalResources
+> Task :dp:generateDebugRFile
+
+> Task :dp:compileDebugKotlin
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:53:32 Unresolved reference 'AvatarTokens'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:85:26 Unresolved reference 'GeneratedAvatarTokens'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:92:27 Unresolved reference 'GeneratedAvatarTokens'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:377:29 Unresolved reference 'theme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:378:29 Unresolved reference 'theme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:383:29 Unresolved reference 'theme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:384:29 Unresolved reference 'theme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:389:27 Unresolved reference 'theme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:390:30 Unresolved reference 'borderColor'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:390:42 Cannot infer type for type parameter 'K'. Specify it explicitly.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:390:42 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:390:42 This declaration needs opt-in. Its usage must be marked with '@kotlin.ExperimentalStdlibApi' or '@OptIn(kotlin.ExperimentalStdlibApi::class)'
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Badge-Count-Base/platforms/android/BadgeCountBase.android.kt:232:17 Unresolved reference 'LocalDPTheme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Badge-Count-Base/platforms/android/BadgeCountBase.android.kt:280:42 Unresolved reference 'backgroundColor'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Badge-Count-Base/platforms/android/BadgeCountBase.android.kt:314:42 Unresolved reference 'textColor'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Chip-Base/platforms/android/ChipBase.android.kt:186:17 Unresolved reference 'LocalDPTheme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt:60:32 Unresolved reference 'color_feedback_select_background_rest'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt:61:32 Unresolved reference 'color_feedback_select_text_rest'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt:208:17 Unresolved reference 'LocalDPTheme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt:218:57 Cannot infer type for type parameter 'K'. Specify it explicitly.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt:218:57 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt:218:57 This declaration needs opt-in. Its usage must be marked with '@kotlin.ExperimentalStdlibApi' or '@OptIn(kotlin.ExperimentalStdlibApi::class)'
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt:279:17 Argument type mismatch: actual type is 'Any', but 'Color' was expected.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Chip-Input/platforms/android/ChipInput.android.kt:180:17 Unresolved reference 'LocalDPTheme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:224:17 Unresolved reference 'LocalDPTheme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:452:43 None of the following candidates is applicable:
+
+val spaceInset050: Dp:
+  Cannot access 'val spaceInset050: Dp': it is private in file.
+
+val spaceInset050: Dp:
+  Cannot access 'val spaceInset050: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:453:43 None of the following candidates is applicable:
+
+val spaceInset100: Dp:
+  Cannot access 'val spaceInset100: Dp': it is private in file.
+
+val spaceInset100: Dp:
+  Cannot access 'val spaceInset100: Dp': it is private in file.
+
+val spaceInset100: Dp:
+  Cannot access 'val spaceInset100: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:454:43 None of the following candidates is applicable:
+
+val spaceInset150: Dp:
+  Cannot access 'val spaceInset150: Dp': it is private in file.
+
+val spaceInset150: Dp:
+  Cannot access 'val spaceInset150: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:455:43 None of the following candidates is applicable:
+
+val spaceInset200: Dp:
+  Cannot access 'val spaceInset200: Dp': it is private in file.
+
+val spaceInset200: Dp:
+  Cannot access 'val spaceInset200: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:456:43 Cannot access 'val spaceInset300: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:457:43 Cannot access 'val spaceInset400: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:541:62 Unresolved reference 'DesignerPunkTheme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:556:66 Unresolved reference 'DesignerPunkTheme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:559:22 Unresolved reference 'color_structure_border'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:564:43 Unresolved reference 'color_structure_border'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:565:50 Unresolved reference 'color_structure_border_subtle'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:566:23 Unresolved reference 'color_structure_border'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:574:45 None of the following candidates is applicable:
+
+val borderDefault: Dp:
+  Cannot access 'val borderDefault: Dp': it is private in file.
+
+val borderDefault: Dp:
+  Cannot access 'val borderDefault: Dp': it is private in file.
+
+val borderDefault: Dp:
+  Cannot access 'val borderDefault: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:575:46 Cannot access 'val borderEmphasis: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:576:43 Cannot access 'val borderHeavy: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:584:68 Cannot access 'val radius050: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:585:69 None of the following candidates is applicable:
+
+val radius100: Dp:
+  Cannot access 'val radius100: Dp': it is private in file.
+
+val radius100: Dp:
+  Cannot access 'val radius100: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:586:68 None of the following candidates is applicable:
+
+val radius200: Dp:
+  Cannot access 'val radius200: Dp': it is private in file.
+
+val radius200: Dp:
+  Cannot access 'val radius200: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:593:49 Cannot access 'val elevationContainer: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:594:50 Cannot access 'val elevationNavigation: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:595:48 Cannot access 'val elevationDropdown: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:596:45 Cannot access 'val elevationModal: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:597:45 Cannot access 'val elevationToast: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:598:47 Cannot access 'val elevationTooltip: Dp': it is private in file.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:605:12 Unresolved reference 'shadowElevation'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:625:49 Unresolved reference 'DesignTokens'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:626:50 Unresolved reference 'DesignTokens'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:627:49 Unresolved reference 'DesignTokens'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:641:36 Unresolved reference 'space025'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:647:35 Unresolved reference 'borderWidth200'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:653:44 Unresolved reference 'DesignTokens'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:289:17 Unresolved reference 'LocalDPTheme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:385:39 Overload resolution ambiguity between candidates:
+val accessibilityFocusWidth: Dp
+val accessibilityFocusWidth: Dp
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:386:34 Overload resolution ambiguity between candidates:
+val accessibilityFocusOffset: Dp
+val accessibilityFocusOffset: Dp
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:388:33 Overload resolution ambiguity between candidates:
+val accessibilityFocusColor: Color
+val accessibilityFocusColor: Color
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:407:10 Unresolved reference 'clip' on receiver of type 'Modifier'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:596:42 Unresolved reference 'theme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:597:44 Unresolved reference 'theme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:598:43 Unresolved reference 'theme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:642:42 Unresolved reference 'theme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:643:41 Unresolved reference 'theme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:715:13 Conflicting declarations:
+val accessibilityFocusOffset: Dp
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:721:13 Conflicting declarations:
+val accessibilityFocusWidth: Dp
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:728:13 Conflicting declarations:
+val accessibilityFocusColor: Color
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:89:26 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:90:25 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:91:23 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:92:25 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:93:28 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:96:20 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:97:16 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:98:19 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:99:20 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:102:21 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:103:20 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:104:19 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:107:23 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:108:19 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:109:19 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:110:23 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:115:13 Unresolved reference 'R'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:174:36 Unresolved reference 'CompositionLocalProvider'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:177:48 @Composable invocations can only happen from the context of a @Composable function
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt:50:20 Unresolved reference 'DesignTokens'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt:51:26 Unresolved reference 'DesignTokens'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt:53:29 Unresolved reference 'DesignTokens'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt:71:17 Unresolved reference 'LocalDPTheme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt:106:28 Unresolved reference 'DesignTokens'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt:107:30 Unresolved reference 'DesignTokens'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt:132:9 No parameter with name 'modifier' found.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:49:18 Unresolved reference 'Companion'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:55:18 Unresolved reference 'Companion'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:62:18 Unresolved reference 'Companion'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:69:18 Unresolved reference 'Companion'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:76:18 Unresolved reference 'Companion'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:83:18 Unresolved reference 'Companion'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:90:18 Unresolved reference 'Companion'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:97:18 Unresolved reference 'Companion'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:586:1 Syntax error: Unclosed comment.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:15:30 Unresolved reference 'BorderWidthTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:17:22 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:19:22 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:21:22 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:23:29 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:25:29 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:27:29 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:29:21 Unresolved reference 'SpacingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:31:21 Unresolved reference 'SpacingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:33:21 Unresolved reference 'SpacingTokens'.
+e: file:///work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:97:17 Unresolved reference 'darkerBlend' on receiver of type 'Color'.
+e: file:///work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:116:17 Unresolved reference 'darkerBlend' on receiver of type 'Color'.
+e: file:///work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:130:17 Unresolved reference 'lighterBlend' on receiver of type 'Color'.
+e: file:///work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:149:17 Unresolved reference 'saturate' on receiver of type 'Color'.
+e: file:///work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:169:17 Unresolved reference 'desaturate' on receiver of type 'Color'.
+e: file:///work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:188:17 Unresolved reference 'lighterBlend' on receiver of type 'Color'.
+e: file:///work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:306:22 Unresolved reference 'darkerBlend' on receiver of type 'Color'.
+e: file:///work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:316:22 Unresolved reference 'lighterBlend' on receiver of type 'Color'.
+e: file:///work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:326:22 Unresolved reference 'saturate' on receiver of type 'Color'.
+e: file:///work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:336:22 Unresolved reference 'desaturate' on receiver of type 'Color'.
+
+> Task :dp:compileDebugKotlin FAILED
+
+[Incubating] Problems report is available at: file:///work/harness/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':dp:compileDebugKotlin' (registered by plugin 'com.android.internal.library').
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Kotlin compiler: UNRESOLVED_IMPORT
+       Kotlin compiler error
+         Unresolved reference 'AvatarTokens'.
+         Location: /work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:53
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 16s
+6 actionable tasks: 6 executed
