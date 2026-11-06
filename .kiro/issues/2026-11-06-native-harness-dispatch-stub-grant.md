@@ -64,6 +64,6 @@ The fixing PR deletes no line on a CI path, because it creates a file, so this r
 ## Criterion (decidable without consulting the author)
 
 - `git diff --name-only <base>..<fixing-PR head>` is exactly `.github/workflows/native-harness.yml`.
-- In that file, `on:` has the single key `workflow_dispatch`.
+- In that file, the top-level `on:` mapping has exactly one key, `workflow_dispatch`. Read it by eye or with a YAML 1.2 parser: a YAML 1.1 parser reads a bare `on` key as boolean `true` (`[STACY TASKS R3]`).
 - `git grep -n -E 'pull_request|push:|schedule' -- .github/workflows/native-harness.yml` at the fixing PR's head returns no line.
 - `tools/agent-generator/verify-gate-registration.sh` reports its count unchanged at the fixing PR's head.
