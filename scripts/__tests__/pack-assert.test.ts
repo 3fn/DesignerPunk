@@ -17,12 +17,17 @@ import * as os from 'os';
 import * as path from 'path';
 import { execFileSync } from 'child_process';
 import {
+  androidResourcePathProblem,
+  ANDROID_RES_TYPES,
+  assertPackListing,
   bundleModuleRoots,
   extractTarball,
   findLeftovers,
   findMachinePaths,
   machinePathNeedles,
   MIN_MCP_BUNDLES,
+  nativeResourceFindings,
+  NATIVE_RESOURCES_LABEL,
   NESTED_ROOTS_HINT,
   parseArgs,
   PRODUCER_OUTPUTS,
@@ -451,6 +456,101 @@ describe('extractTarball / tarballListing — the listing is read from the tarba
     } finally {
       fs.rmSync(work, { recursive: true, force: true });
     }
+  });
+});
+
+// ─── Section 11: the packed Android resource folders hold only resources (Spec 129 Task 1.3) ────
+
+describe('nativeResourceFindings — a packed file under platforms/android/res/ must be a resource (Req 10.3)', () => {
+  const RES = 'src/components/core/Icon-Base/platforms/android/res';
+  const drawables = ['alert_circle', 'arrow_down', 'x'].map((n) => `${RES}/drawable/${n}.xml`);
+  const failed = (paths: string[]): string[] => nativeResourceFindings(paths).filter((f) => !f.ok).map((f) => f.label);
+
+  it('is green on the package\'s 50-drawable shape (xml files directly under res/drawable/)', () => {
+    expect(failed(drawables)).toEqual([]);
+  });
+
+  it('BITES once on a README.md under res/drawable/ (the Icon-Base defect the harness found): exactly the file and the summary', () => {
+    const red = failed([...drawables, `${RES}/drawable/README.md`]);
+    expect(red).toEqual([
+      `${NATIVE_RESOURCES_LABEL} ${RES}/drawable/README.md is a valid Android resource file`,
+      `${NATIVE_RESOURCES_LABEL} every packed file under platforms/android/res/ is res/<type>[-<qualifiers>]/<name>.<ext> with an allowed extension`,
+    ]);
+    const detail = nativeResourceFindings([`${RES}/drawable/README.md`]).find((f) => f.label.includes('README.md'))?.detail;
+    expect(detail).toMatch(/file name `README` must use only lowercase letters, digits and underscores/);
+  });
+
+  it('BITES on a lowercase non-resource file too: the extension is what is wrong', () => {
+    const f = nativeResourceFindings([`${RES}/drawable/readme.md`]).find((x) => !x.ok && x.label.includes('readme.md'));
+    expect(f?.detail).toMatch(/`\.md` is not an allowed extension in `drawable`/);
+  });
+
+  it('BITES on a file directly under res/, on a nested folder, and on a folder that is not a resource type', () => {
+    expect(androidResourcePathProblem(`${RES}/README.md`)).toMatch(/exactly one folder directly under res\//);
+    expect(androidResourcePathProblem(`${RES}/drawable/sub/x.xml`)).toMatch(/exactly one folder directly under res\//);
+    expect(androidResourcePathProblem(`${RES}/docs/x.xml`)).toMatch(/`docs` is not an Android resource type folder/);
+    expect(androidResourcePathProblem(`${RES}/Drawable/x.xml`)).toMatch(/not an Android resource type folder/);
+  });
+
+  it('BITES on a bad name: capitals, a hyphen, no extension, a dotfile', () => {
+    expect(androidResourcePathProblem(`${RES}/drawable/AlertCircle.xml`)).toMatch(/lowercase letters, digits and underscores/);
+    expect(androidResourcePathProblem(`${RES}/drawable/alert-circle.xml`)).toMatch(/lowercase letters, digits and underscores/);
+    expect(androidResourcePathProblem(`${RES}/drawable/alert_circle`)).toMatch(/no <name>\.<ext> form/);
+    expect(androidResourcePathProblem(`${RES}/drawable/.gitkeep`)).toMatch(/no <name>\.<ext> form/);
+  });
+
+  it('passes what Android\'s merger accepts: qualifiers, nine-patch, fonts, raw, values', () => {
+    for (const ok of [
+      `${RES}/drawable-night/x.xml`,
+      `${RES}/drawable-night-v24/x.xml`,
+      `${RES}/drawable-xxhdpi/logo.png`,
+      `${RES}/drawable/bubble.9.png`,
+      `${RES}/mipmap-anydpi-v26/ic_launcher.xml`,
+      `${RES}/font/figtree_regular.ttf`,
+      `${RES}/raw/data_2.json`,
+      `${RES}/values-b+sr+Latn/strings.xml`,
+      `${RES}/values/strings.xml`,
+    ]) {
+      expect([ok, androidResourcePathProblem(ok)]).toEqual([ok, undefined]);
+    }
+  });
+
+  it('BITES on an extension the type does not take: .png in values, .xml-only types given .png, .svg in drawable', () => {
+    expect(androidResourcePathProblem(`${RES}/values/x.png`)).toMatch(/not an allowed extension in `values`/);
+    expect(androidResourcePathProblem(`${RES}/layout/x.png`)).toMatch(/not an allowed extension in `layout`/);
+    expect(androidResourcePathProblem(`${RES}/drawable/x.svg`)).toMatch(/not an allowed extension in `drawable`/);
+  });
+
+  it('ignores paths that are not under platforms/android/res/ (an iOS folder, a sibling README, the android folder itself)', () => {
+    for (const p of [
+      'src/components/core/Icon-Base/platforms/android/README.md',
+      'src/components/core/Icon-Base/platforms/android/Icon.android.kt',
+      'src/components/core/Icon-Base/platforms/ios/res/README.md',
+      'docs/res/README.md',
+    ]) {
+      expect([p, androidResourcePathProblem(p)]).toEqual([p, undefined]);
+    }
+  });
+
+  it('is not vacuous: a listing with no file under platforms/android/res/ fails the inspected-count finding', () => {
+    expect(failed(['src/a.ts'])).toEqual([`${NATIVE_RESOURCES_LABEL} files under platforms/android/res/ found to inspect (the rule is not vacuous)`]);
+  });
+
+  it('every resource type the rule names has a folder rule, and none is an empty extension list', () => {
+    expect(Object.keys(ANDROID_RES_TYPES).sort()).toEqual(['anim', 'animator', 'color', 'drawable', 'font', 'interpolator', 'layout', 'menu', 'mipmap', 'navigation', 'raw', 'transition', 'values', 'xml']);
+    for (const exts of Object.values(ANDROID_RES_TYPES)) expect(exts === '*' || exts.length > 0).toBe(true);
+  });
+
+  it('section 11 is wired into assertPackListing: the README shows as a failed `native resources:` finding, and the other sections\' labels are unchanged', () => {
+    const paths = [...drawables, `${RES}/drawable/README.md`];
+    const all = assertPackListing({ root: PROJECT_ROOT, paths, read: () => undefined });
+    const native = all.filter((f) => f.label.startsWith(NATIVE_RESOURCES_LABEL));
+    expect(native.filter((f) => !f.ok).map((f) => f.label)).toEqual([
+      `${NATIVE_RESOURCES_LABEL} ${RES}/drawable/README.md is a valid Android resource file`,
+      `${NATIVE_RESOURCES_LABEL} every packed file under platforms/android/res/ is res/<type>[-<qualifiers>]/<name>.<ext> with an allowed extension`,
+    ]);
+    // section 11 adds findings of its own label and does not count as a publish-path finding
+    expect(native.every((f) => !f.label.startsWith(PUBLISH_PATH_LABEL))).toBe(true);
   });
 });
 

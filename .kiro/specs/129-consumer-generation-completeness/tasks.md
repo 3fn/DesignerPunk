@@ -186,7 +186,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 1 — The compile harness
 
-- [ ] 1. The packed-install consumer driver (U1)
+- [x] 1. The packed-install consumer driver (U1)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet)
   **Traces**: Req 1.8, 2.1, 2.2, 2.3, 10.3 · design Architecture, § 3 ("Wiring")
@@ -212,14 +212,14 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete (`taskStatus`); `./.kiro/hooks/complete-task.sh "Task 1 Complete: The packed-install consumer driver (129)"` commits the docs on the U1 branch (no PR: U1's PR opens at Task 5); STOP.
 
-  - [ ] 1.1 Driver: pack, install, `init`, `generate`, artifact layout
+  - [x] 1.1 Driver: pack, install, `init`, `generate`, artifact layout
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - Abbreviation from `harness/pins.yaml` § `consumer`; each platform's output folder passed to its lane from the config (§ "The `gen:` path rule"); a Jest test of the step-failure messages
     - _Requirements: 1.8, 2.1, 2.2_
-  - [ ] 1.2 Product-token fixture
+  - [x] 1.2 Product-token fixture
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 2.3_
-  - [ ] 1.3 `pack-assert`'s native resource rule and its red case
+  - [x] 1.3 `pack-assert`'s native resource rule and its red case
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - Lina's README move is a precondition (§ "Unit preconditions")
     - _Requirements: 10.3_
