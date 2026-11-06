@@ -1232,3 +1232,8 @@ Folds `[STACY TASKS R2]` above, which is spliced byte for byte from her file (`c
 **Preconditions still open, as Stacy lists them**: Lina's Icon-Base README move (before Task 4's first dispatched Android run) and her L816 fix (before U1's PR opens). Both are status, not amendments.
 
 **Nothing here is Peter's.** Medium-4 names an approval he gives at U4, under the ballot-measure model Req 6.9 already requires. It is not a question in this PR.
+
+[DATA HIGH-2] 2026-11-05 — **Accept the test as written** (read at `task/129-tasks-amend-1` `24206df5e`); do not move the criterion to Task 11.
+- **What I read**: Task 4's new criterion (`probe-kotlin.test.ts` over a fixture index carrying `theme.` names and a fixture consumer config) is decidable at U1 in `lane-functional-root`, mirroring iOS's `probe-swift.test.ts`. The reworded 4.2 and the three added artifacts (`scripts/harness/probe-kotlin.ts`, `scripts/harness/__tests__/probe-kotlin.test.ts`, `scripts/harness/__tests__/fixtures/kotlin/**`) are right.
+- **Why not Task 11**: moving it would leave U1 without evidence, and would make U6 depend on a generator nobody had tested.
+- **One note, no change asked**: Task 2's `scripts/harness/__tests__/fixtures/**` already covers `fixtures/kotlin/**`. Both are U1 grants, so the overlap is harmless.
