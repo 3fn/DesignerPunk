@@ -244,10 +244,20 @@ describe('parseKotlin: warnings and where a diagnostic ends', () => {
     ['FAILURE', 'FAILURE: Build failed with an exception.'],
     ['a "* " line', '* What went wrong:'],
     ['BUILD', 'BUILD FAILED in 6s'],
+    ['an i: line', "i: file:///r/gen/A.kt:2:2 An info message"],
+    ['a v: line', 'v: a verbose message'],
     ['[Incubating]', '[Incubating] Problems report is available at: file:///work/harness/build/reports/problems/problems-report.html'],
   ])('ends a diagnostic at %s', (_label, terminator) => {
     const r = run(log(TOKENS_TASK, 'e: file:///r/gen/A.kt:1:1 Msg:', 'continued', '', terminator, 'text after the terminator'));
     expect(obj(compileOf(r, 'tokens').diagnostics)).toEqual({ 'gen:A.kt | Msg: ⏎ continued': 1 });
+  });
+
+  it('yields no key for an i: or v: line, and none for its continuation lines', () => {
+    const r = run(log(TOKENS_TASK, 'i: file:///r/gen/A.kt:3:5 An info message', 'info continuation', 'v: verbose', 'verbose continuation'));
+    const c = compileOf(r, 'tokens');
+    expect(c.diagnostics.size).toBe(0);
+    expect(c.unrooted).toEqual([]);
+    expect(r.unattributed).toEqual([]);
   });
 
   it('does not treat a continuation line that merely starts with a Gradle word as a Gradle line', () => {
@@ -362,9 +372,44 @@ describe('parseKotlin: the key', () => {
 // Task criterion: rows that cannot make a key are never dropped
 // ---------------------------------------------------------------------------------------------
 
+describe('parseKotlin: an e: line with no location (a driver error)', () => {
+  const driverLines = ['e: Compilation failed: no source files', 'e: ', 'e: java.lang.OutOfMemoryError: Java heap space', 'e: file://not-a-location'];
+
+  it.each(driverLines)('is neither a key nor unrooted nor unattributed: %j', (line) => {
+    for (const text of [log(TOKENS_TASK, line), log(line), log(TOKENS_TASK, line, 'a continuation line', DP_TASK, line)]) {
+      const r = run(text);
+      expect(r.compiles.every((c) => c.diagnostics.size === 0 && c.unrooted.length === 0)).toBe(true);
+      expect(r.unattributed).toEqual([]);
+    }
+  });
+
+  it('leaves the keyed errors beside it intact, and ends the diagnostic before it (the cost: it goes unseen)', () => {
+    const r = run(
+      log(
+        TOKENS_TASK,
+        'e: file:///r/gen/A.kt:1:1 First:',
+        'continued',
+        'e: Compilation failed',
+        'the driver error\'s own continuation line',
+        'e: file:///r/gen/B.kt:2:2 Second',
+      ),
+    );
+    const c = compileOf(r, 'tokens');
+    expect(obj(c.diagnostics)).toEqual({ 'gen:A.kt | First: \u23CE continued': 1, 'gen:B.kt | Second': 1 });
+    expect(c.unrooted).toEqual([]);
+    expect(r.unattributed).toEqual([]);
+  });
+
+  it('leaves a failed compile with no diagnostics, which the comparator reads as pre-compile', () => {
+    const r = run(log(DP_TASK, 'e: Compilation failed', '> Task :dp:compileDebugKotlin FAILED', 'BUILD FAILED in 1s'));
+    expect(compileOf(r, 'dp').outcome).toBe('failed');
+    expect(compileOf(r, 'dp').diagnostics.size).toBe(0);
+    expect(compileOf(r, 'dp').unrooted).toEqual([]);
+  });
+});
+
 describe('parseKotlin: unrooted', () => {
   const cases: Array<[string, string]> = [
-    ['no location at all', 'e: Compilation failed: no source files'],
     ['a relative path', 'e: file://src/Foo.kt:1:2 Boom.'],
     ['a path under no root', 'e: file:///elsewhere/Foo.kt:1:2 Boom.'],
     ['a path that is a root itself', 'e: file:///r/gen:1:2 Boom.'],

@@ -27,8 +27,11 @@
  *     BUILD FAILED in 6s
  *
  * Rules, in one place:
- *   1. A diagnostic starts at a line beginning `e: `. It runs to the next `e: ` or `w: ` line or the
- *      next Gradle line (`> `, `FAILURE`, `* `, `BUILD`, `[Incubating]`). `w: ` lines are never keyed.
+ *   1. A diagnostic starts at a line beginning `e: file://`. It runs to the next `e: `, `w: `, `i: ` or
+ *      `v: ` line or the next Gradle line (`> `, `FAILURE`, `* `, `BUILD`, `[Incubating]`). `w: `, `i: `
+ *      and `v: ` lines are never keyed. An `e: ` line with no `file://` location is neither a key nor
+ *      `unrooted` nor `unattributed` (README § "Keys"); the comparator reads a compile that failed
+ *      with no diagnostics as `pre-compile`.
  *   2. Attribution is by the task header the diagnostic was printed under, never by its path
  *      (`:tokens` and `:dp` report the same generated paths). The header in force is the latest
  *      `> Task <path>` line with no outcome suffix; a Gradle line of any other kind, or a task line
@@ -44,7 +47,7 @@
  *      `<line>:<col> `, with continuation lines joined by ` ⏎ ` (a blank line is dropped), and each run
  *      of whitespace collapsed to one space. No line or column is in the key.
  *   4. A diagnostic that cannot make a valid key goes to the owning compile's `unrooted`, as printed:
- *      no `file://<path>:<line>:<col>` location at all (a general `e: ` line), a path that is not
+ *      a path that is not
  *      absolute or is under no root, a path with ` | `, a tab or a `.` or `..` segment, an undecodable
  *      percent sequence, or an empty message. Never dropped.
  *   5. A compile's outcome follows its `> Task <path>` lines: `failed` when one ends ` FAILED`; else
@@ -93,7 +96,13 @@ function isGradleLine(line: string): boolean {
 
 /** A line that ends a diagnostic's continuation lines. */
 function endsDiagnostic(line: string): boolean {
-  return line.startsWith('e: ') || line.startsWith('w: ') || isGradleLine(line);
+  return (
+    line.startsWith('e: ') ||
+    line.startsWith('w: ') ||
+    line.startsWith('i: ') ||
+    line.startsWith('v: ') ||
+    isGradleLine(line)
+  );
 }
 
 function collapse(text: string): string {
@@ -190,17 +199,17 @@ export function parseKotlin(input: KotlinParseInput): KotlinParseResult {
     const continuation = lines.slice(i + 1, end);
     i = end;
 
+    // An `e: ` line with no `file://<path>:<line>:<col>` location (a driver error) is neither a key
+    // nor unrooted, and it is not attributed either (ruled 2026-11-06; README § "Keys"): the
+    // comparator fails a compile that is `failed` with no diagnostics as `pre-compile`.
+    const location = DIAGNOSTIC_LOCATION.exec(line);
+    if (location === null) continue;
+
     if (current === null) {
       unattributed.push(line);
       continue;
     }
     const slot = acc.get(current)!;
-
-    const location = DIAGNOSTIC_LOCATION.exec(line);
-    if (location === null) {
-      slot.unrooted.push(line);
-      continue;
-    }
 
     let absolutePath: string;
     try {
