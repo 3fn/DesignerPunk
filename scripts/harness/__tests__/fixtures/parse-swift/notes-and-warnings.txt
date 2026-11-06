@@ -1,0 +1,10 @@
+#harness-fixture toolchain: Xcode 27.2 (27B52), Apple Swift 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1), iphonesimulator27.2 SDK
+#harness-fixture source: recorded locally 2026-11-06 with `xcrun swiftc -c -wmo -target arm64-apple-ios17.0-simulator -swift-version 6 -parse-as-library -diagnostic-style llvm` on a scratch file; scratch absolute paths rewritten to the roots below; a note line follows the error
+#harness-fixture exit: 1
+#harness-fixture roots: gen=/harness/gen pkg=/harness/consumer/node_modules/@3fn/core probe=/harness/probe
+/harness/gen/Notes.swift:3:24: error: invalid redeclaration of 'f()'
+    public static func f() {}
+                       ^
+/harness/gen/Notes.swift:2:24: note: 'f()' previously declared here
+    public static func f() {}
+                       ^

@@ -1,0 +1,7 @@
+#harness-fixture toolchain: Xcode 27.2 (27B52), Apple Swift 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1), iphonesimulator27.2 SDK
+#harness-fixture source: recorded locally 2026-11-06 with `xcrun swiftc -c -wmo -target arm64-apple-ios17.0-simulator -swift-version 6 -parse-as-library -diagnostic-style llvm` on a scratch file; scratch absolute paths rewritten to the roots below
+#harness-fixture exit: 1
+#harness-fixture roots: gen=/harness/gen pkg=/harness/consumer/node_modules/@3fn/core probe=/harness/probe
+/harness/gen/Single.swift:2:31: error: cannot find 'undefinedThing' in scope
+    public static let worse = undefinedThing
+                              ^~~~~~~~~~~~~~
