@@ -264,7 +264,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 2 Complete: The comparator and its falsification test (129)"` on the U1 branch (no PR); STOP.
 
-  - [ ] 2.1 Formats: lists, pins, protected set, the `gen:` path rule; `harness/README.md`
+  - [x] 2.1 Formats: lists, pins, protected set, the `gen:` path rule; `harness/README.md`
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - _Requirements: 3.2, 3.7_
   - [ ] 2.2 Swift parser (`<root>:<path> | <message>`, K-2, O-17)
