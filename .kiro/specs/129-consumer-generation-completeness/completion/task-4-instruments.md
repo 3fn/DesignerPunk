@@ -40,4 +40,4 @@ C1 one Gradle build, three `com.android.library` modules with the Compose plugin
 
 ## Found later
 
-(none yet)
+- **unlisted** (2026-11-06, found while writing 4.2): `harness-consumer.json`'s `themes` (`{ name, mode }[]`, in config order), added by Ada at `38d1d8ac0` (`scripts/harness/consumer.ts`, Task 1) and merged into this seat branch. `probe-kotlin.ts` needs the registered themes to name the `<Name>Themes` members, and reads them from there, not from the consumer's config. It was not on my block because it did not exist when I wrote it. State: exists (`scripts/harness/consumer.ts` @ `38d1d8ac0`); the fit is that an absent key reads as none.
