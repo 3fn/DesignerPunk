@@ -1,0 +1,26 @@
+# native-harness.yml -- DISPATCH-ONLY STUB.
+#
+# This file exists on main only so that GitHub will dispatch the workflow by name
+# against a unit branch (GitHub triggers a dispatch only for a workflow whose file is
+# on the default branch). Record: .kiro/issues/2026-11-06-native-harness-dispatch-stub-grant.md
+# (grant, Thurgood). The owner of the real file is Spec 129 Task 5
+# (.kiro/specs/129-consumer-generation-completeness/tasks.md); U1's PR replaces this file.
+#
+# It has one trigger, a manual dispatch, so it runs on no PR and adds no check to any PR.
+# It is not a required context and is in neither EXPECTED_CONTEXTS nor REQUIRED_WORKFLOWS.
+
+name: native-harness
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-harness-stub:
+    name: native-harness stub (unit-branch)
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Say what this is
+        run: echo "This is the native-harness dispatch stub on main. Spec 129 U1's PR replaces this file; a run of this job means the dispatch used main's copy, not the unit branch's."
