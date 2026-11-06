@@ -19,6 +19,13 @@ Peter read these options in the orchestrator's message just before the ruling. T
 - **D yes.** Decision 6 condition 3's Android clause counts only pull-request runs, as Peter ruled for iOS at 14:04:52Z. On both platforms, a cold run counts only if it reached the comparator: it carries the `harness-verdict` annotation, written on a FAIL verdict too. This is new law, so it needs a dated amendment and a `stability.test.ts` case.
 - **"merges done".** At 23:31:58Z, GitHub showed PRs #700, #701 and #702 as OPEN, not merged, and `main` was still at `233e04bf1`. The orchestrator reported this back to Peter. The stub precondition is not met until #700 shows merged.
 
+## Follow-up ruling, received 2026-11-06T23:37:03Z (`date -u`)
+
+> fall back to base; merges done now
+
+- **fall back to base.** A theme registered in only one mode, selected through the enum, shows the base instance for the other scheme. This is Ada's and Leonardo's position, and the orchestrator's lean. Kenya and Data held the other position. Peter had been told the cost: a dark-only custom theme shows base light on a light device.
+- **merges done now.** GitHub records the merges as PR #700 at 2026-11-06T23:35:17Z (`88298fbf7`), #701 at 23:35:31Z (`0e1d6dc58`), and #702 at 23:35:46Z (`baaefe176`). The stub precondition is met.
+
 ## Correction recorded with this ruling
 
 In the options message, the orchestrator first claimed that a stock `wcag` (mode `light`) adopter gets plain base dark from `wcagDark`. That claim was wrong. Ada showed from the source that dark-wcag is composed as `dark` + `wcag` + `dark-wcag` (`src/generators/generateTokenFiles.ts` L195), and the orchestrator checked that line. The orchestrator corrected it before Peter ruled.
