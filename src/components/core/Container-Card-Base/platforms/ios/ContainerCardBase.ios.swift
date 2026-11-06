@@ -813,8 +813,7 @@ func mapCardShadowToProperties(_ shadow: CardShadow) -> CardShadowProperties {
 
 // MARK: - View Extension
 
-/**
- * Conditional view modifier extension
+// Conditional view modifier extension:
 // View.if extension defined in Container-Base — not duplicated here
 
 // MARK: - Token Constants

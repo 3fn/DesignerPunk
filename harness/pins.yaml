@@ -1,0 +1,21 @@
+# Spec 129 compile-harness pin file (tasks.md § "The list file format, the pin file and the run policy").
+#
+# One file, three sections: `consumer`, `ios`, `android`. This task (Task 1) writes `consumer`
+# only. Kenya (Task 3) adds `ios` and Data (Task 4) adds `android` as top-level sections below
+# this one, in the same shape: plain scalars under a section key, no anchors or merges.
+#
+# These are HARNESS pins, not platform minimums (Req 2.9). The comparator compares PARSED values
+# (Req 3.5 (a)), so a comment or whitespace edit here changes no pin.
+
+# The scratch consumer `scripts/harness/consumer.ts` builds from a packed install.
+consumer:
+  # `init --name`. Any value is fine; it is the generated type-name stem (`<name>Theme`).
+  name: HarnessConsumer
+  # `init --abbreviation`. SHALL NOT be `DP`, so a generator that hard-codes DesignerPunk's own
+  # abbreviation shows in the output (Req 2.2; plan-r2 D1; row 15). consumer.ts and its test
+  # both refuse `DP` (any case).
+  abbreviation: HX
+  # The product-token fixture (Req 2.3), repository path -> the folder it is copied to inside the
+  # consumer root, which the driver writes into the consumer's config as `productTokens`.
+  productTokensFixture: harness/fixtures/product-tokens
+  productTokens: product/tokens
