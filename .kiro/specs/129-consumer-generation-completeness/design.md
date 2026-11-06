@@ -101,7 +101,7 @@ flowchart LR
   - `:tokens`: the generated Kotlin only;
   - `:probe`: generated from the index, depending on `:tokens`, every read inside `@Composable`;
   - `:dp`: the generated Kotlin plus every non-test packaged `.kt`, with Icon-Base `res/`.
-- **One invocation per context** (DATA R2, answering Stacy): `gradle --continue :tokens:compileDebugKotlin :probe:compileDebugKotlin :dp:compileDebugKotlin`. So `harness-android-components` has `:tokens`' diagnostics from its own run. If `:tokens:compileDebugKotlin` did not execute (no task outcome), the component context fails. A `:tokens` compile that fails with diagnostics is a result, not a missing one.
+- **One invocation per context** (DATA R2, answering Stacy): `./gradlew --continue :tokens:compileDebugKotlin :probe:compileDebugKotlin :dp:compileDebugKotlin`, through the Gradle wrapper committed under `harness/android/` *(amended 2026-11-06, tasks amendment 2, Data's wrapper under Peter's Decision 1, "1 A", received 2026-11-06T14:04:52Z; prior text at `8d8ba1425`: `gradle --continue …`)*. So `harness-android-components` has `:tokens`' diagnostics from its own run. If `:tokens:compileDebugKotlin` did not execute (no task outcome), the component context fails. A `:tokens` compile that fails with diagnostics is a result, not a missing one.
 - **Pinned file order (O-15)**: the explicit file list is passed sorted, package files first, and printed with the invocation.
 - **Capture and key**: as D § 1.2. The key is `<root>:<relative path> | <message>`, with continuation lines joined by ` ⏎ `.
 - **Floor**: as D § 1.4.

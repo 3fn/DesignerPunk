@@ -1237,3 +1237,39 @@ Folds `[STACY TASKS R2]` above, which is spliced byte for byte from her file (`c
 - **What I read**: Task 4's new criterion (`probe-kotlin.test.ts` over a fixture index carrying `theme.` names and a fixture consumer config) is decidable at U1 in `lane-functional-root`, mirroring iOS's `probe-swift.test.ts`. The reworded 4.2 and the three added artifacts (`scripts/harness/probe-kotlin.ts`, `scripts/harness/__tests__/probe-kotlin.test.ts`, `scripts/harness/__tests__/fixtures/kotlin/**`) are right.
 - **Why not Task 11**: moving it would leave U1 without evidence, and would make U6 depend on a generator nobody had tested.
 - **One note, no change asked**: Task 2's `scripts/harness/__tests__/fixtures/**` already covers `fixtures/kotlin/**`. Both are U1 grants, so the overlap is harmless.
+
+---
+
+## Tasks amendment 2 (2026-11-06): the dispatch limit, and Peter's Decisions 1 and 2
+
+Peter, `date -u` at receipt 2026-11-06T14:04:52Z (orchestrator relay), verbatim: "1 A, 2 yes, 3 stand, 4 (b), 5 no rewrite; let's also proceed with the class option". Decision 1 is how U1 gets its harness runs (A: a dispatch-only stub on `main` first, a probe dispatch, and fallback to D if the probe fails). Decision 2 is Decision 6 condition 3: count only pull-request runs toward the iOS "first three runs". Decisions 3 to 5 and the class option are outside `tasks.md`; they are recorded in the 131 ledger's L-9 and in two `.kiro/issues/` records.
+
+### Context for Reviewers
+- The limit: GitHub triggers `workflow_dispatch` only for a workflow whose file is on the default branch → `.kiro/docs/ballots/2026-09-27-b-ci-unit-branch-ci-feedback.md` L197. U1 creates `native-harness.yml`, so the Conventions' dispatch line, Req 2.11's dispatched fault run and Task 5's "first full run" could not happen before U1 merged.
+- Option A keeps Req 2.11 and design § 3 rule 3 as written, so this amendment touches neither. The one design edit is Data's wrapper (design § 2, `gradle` → `./gradlew`).
+- The grant for the stub is an issue-row grant → `.kiro/issues/2026-11-06-native-harness-dispatch-stub-grant.md`, which rides this PR. Rule 10 says a grant list is never authored only inside the diff it bounds, so the stub itself follows this PR's merge in its own PR.
+- Not in this amendment: design L130's "can never read green", which overstates the location-less rule in `harness/README.md` (Stacy's point). It is a fork between narrowing the text and keying location-less lines, it is already routed to Stacy's failure-case review alongside Data's dissent, and it needs Peter's words.
+
+#### [THURGOOD R4] — tasks amendment 2
+- **Conventions, the dispatch line**: states the limit, the stub and the probe. Amended note cites Decision 1. → tasks.md § "Conventions for every parent"
+- **New definition, "The first full run (U1)"**: the first run of `native-harness.yml` against the unit branch after Tasks 3 and 4 join it, in which every compile of all four contexts reaches the comparator with an outcome, not the forced-failure run. Under A it is dispatched, so it has no merge base (design § 3 rule 3); exception (b) is checked on the PR. → tasks.md § "The list file format, the pin file and the run policy"
+- **Decision 6 condition 3**: "the first three **pull-request** runs recorded at the current Xcode pin; a dispatched run does not count toward them", citing Decision 2. → tasks.md § "Decision 6"
+- **Unit preconditions, new first row**: the stub (its diff, its single trigger), the probe (pass = the run's jobs are the branch file's, not the stub's), and the fallback to D (its edits merge in a further amendment before U1's PR opens). → tasks.md § "Unit preconditions and the records 129's paths fire"
+- **2.2's bullet**: the Xcode 26.6 fixture is cut from the first full run's iOS log, and Task 5 now carries it as a criterion. → tasks.md Task 2, 2.2
+- **Task 4, Data's wrapper**: the invocation is `./gradlew --continue …` from `harness/android/`; a new criterion that `gradle-wrapper.properties` names the pinned Gradle version in `distributionUrl` and sets `distributionSha256Sum`. → tasks.md Task 4
+- **Task 5, five new criteria and two changed lines**:
+  - the probe dispatch recorded (run URL and job names, or its error and the fallback amendment);
+  - Stacy's A-(iii): the fault is forced by a `workflow_dispatch` input that only a step of `harness-generate` reads. At head H no `if:` reads `github.event_name`, so failing-not-skipping holds on `pull_request`, and the workflow and `consumer.ts` are unchanged between the fault run's head F and H (the staleness check). An input, rather than a fault commit and its revert, leaves nothing to revert and keeps the staleness check to two paths;
+  - Kenya's fixture: one fixture under `fixtures/parse-swift/` from the first full run's iOS log, header naming the pinned Xcode and the run URL, read by `parse-swift.test.ts`. This closes Stacy's point that no criterion covered it;
+  - the Android jobs validate the committed wrapper (Gradle's wrapper-validation action) before the first `./gradlew`;
+  - `stability.test.ts` also shows a dispatched run counted toward neither condition 2 nor condition 3;
+  - the grant-limits line: U1 turns the stub on `main` into the real workflow, instead of creating a new file (prior text quoted in the amended note);
+  - 5.1 gains a line: it starts after the stub is on `main`, and its first commit is what the probe dispatches.
+  → tasks.md Task 5
+- **Design § 2 ("One invocation per context")**: `./gradlew --continue …` through the committed wrapper, with an amended note. → design.md § 2
+- **Data's reproduction proposal is not folded.** The baselines stay "committed from the first full run" for all four contexts, and a local Android build is a rehearsal its author records. One rule covers both platforms, and no non-reproduction outcome needs deciding, which meets Stacy's iOS objection (no local Xcode 26.6 exists). Under A the first full run comes before PR-open anyway. If Data still holds his form after reading this, it goes to Peter. → tasks.md Task 5
+- **Instruments row 21 (Task 2, C16's PR-run half) is not changed.** It is discharged by amending Task 2's completion doc in place once the U1 PR's `lane-functional-root` run exists, which the H convention allows.
+- [@STACY] LENS read of this amendment, please: are the new Task 5 criteria decidable as written, in particular the A-(iii) criterion (the input, the `github.event_name` grep at H and the F..H diff) and the probe's pass condition? → tasks.md Task 5 -- [THURGOOD R4]
+- [@STACY] The stub's grant: I read rule 10 ("a grant list is never authored only inside the diff it bounds") as requiring the grant record to merge first, here in this PR, with the stub in its own PR afterwards. This PR's body carries the `**ARMING**:` line. Do you agree, or can the stub ride this PR? → `.kiro/issues/2026-11-06-native-harness-dispatch-stub-grant.md` -- [THURGOOD R4]
+- [@KENYA] Your rows: condition 3's pull-request-only wording, 2.2's bullet, and Task 5's fixture criterion. Do they say what you proposed and what you can deliver? → tasks.md § "Decision 6", Task 2 2.2, Task 5 -- [THURGOOD R4]
+- [@DATA] Your rows: Task 4's `./gradlew` invocation, the `gradle-wrapper.properties` criterion, Task 5's wrapper-validation criterion and design § 2's line. Do you agree with them as written? And do you accept declining the local-baseline reproduction form, as above? → tasks.md Tasks 4 and 5; design.md § 2 -- [THURGOOD R4]
