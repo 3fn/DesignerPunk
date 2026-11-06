@@ -313,7 +313,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 3 Complete: The iOS lanes (129)"` on the U1 branch (no PR); STOP.
 
-  - [ ] 3.1 Re-read the `macos-26` image readme at the cut; set the pins
+  - [x] 3.1 Re-read the `macos-26` image readme at the cut; set the pins
     **Type**: Setup · **Validation**: Tier 1 - Minimal · **Agent**: Kenya (Sonnet)
     - _Requirements: 2.8, 2.9_
   - [ ] 3.2 Stages T, P, C and T5; the probe generator; file order and floor
