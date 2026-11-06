@@ -191,7 +191,7 @@ export function assertPackListing(listing: PackListing): Finding[] {
   check(androidComponentKt.length - androidComponentTest.length === 39,
     'Android component .kt PRESENT (incl. *Preview.kt, excl. *Test.kt) = 39', `measured ${androidComponentKt.length - androidComponentTest.length}`);
   check(androidComponentTest.length === 0, 'Android *Test.kt ABSENT = 0', `measured ${androidComponentTest.length}`);
-  check(androidRes.length === 51, 'Android res/** PRESENT = 51 (50 drawable XML + README.md)', `measured ${androidRes.length}`);
+  check(androidRes.length === 50, 'Android res/** PRESENT = 50 (drawable XML; README moved out of res/, #695)', `measured ${androidRes.length}`);
   check(androidBlend.length === 1, 'Android src/blend/*.android.kt PRESENT = 1', `measured ${androidBlend.length}`);
   check(androidTokenPlatform.length === 2, 'Android src/tokens/platforms/android/** PRESENT = 2', `measured ${androidTokenPlatform.length}`);
   // CORRECTED at verification (task-3-4-completion.md addendum): the SETTLED
