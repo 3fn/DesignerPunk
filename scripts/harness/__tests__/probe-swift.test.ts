@@ -39,6 +39,7 @@ import {
   judgePlanted,
   parseIosPins,
   parseToolchain,
+  probeConfigFromManifest,
   runLane,
   selectFiles,
   shellLine,
@@ -480,7 +481,6 @@ function fakeRunner(scenario: Scenario, app: string, consumerRoot: string): Fake
     calls.push([command, ...args]);
     if (command === 'xcodebuild') return ok('Xcode 26.6\nBuild version 17F113\n');
     if (command === 'xcode-select') return ok(`${app}/Contents/Developer\n`);
-    if (command === 'node') return ok(JSON.stringify({ name: 'Fake', themes: [{ name: 'dark', mode: 'dark' }] }));
     if (command !== 'xcrun') throw new Error(`unexpected command ${command}`);
     if (args.includes('--show-sdk-version')) return ok('26.5\n');
     if (args.includes('--show-sdk-build-version')) return ok('23F77\n');
@@ -550,7 +550,7 @@ interface Rig {
   pins: IosPins;
 }
 
-function rig(opts: { appExists?: boolean; pinSwift?: string } = {}): Rig {
+function rig(opts: { appExists?: boolean; pinSwift?: string; themes?: Array<{ name: string; mode: string }> } = {}): Rig {
   const tmp = fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()), 'lane-test-'));
   const app = path.join(tmp, 'Xcode_26.6.app');
   if (opts.appExists !== false) fs.mkdirSync(path.join(app, 'Contents', 'Developer'), { recursive: true });
@@ -582,7 +582,6 @@ function rig(opts: { appExists?: boolean; pinSwift?: string } = {}): Rig {
     'src/components/core/Alpha/platforms/android/Alpha.kt',
   ];
   for (const t of tarball) write(`node_modules/@3fn/core/${t}`, '// x\n');
-  write('node_modules/@3fn/core/dist/config/ConfigLoader.js', '// stub\n');
   write('harness-tarball-files.txt', tarball.join('\n') + '\n');
   for (const g of ['ComponentTokens.ios.swift', 'DesignTokens.ios.swift', 'product/ProductTokens.ios.swift']) write(`dist/tokens/${g}`, '// g\n');
   for (const f of ['primitives', 'semantics', 'components']) {
@@ -600,6 +599,7 @@ function rig(opts: { appExists?: boolean; pinSwift?: string } = {}): Rig {
       productTokens: 'product/tokens',
       platformOutputs: { web: 'dist/tokens', ios: 'dist/tokens', android: 'dist/tokens' },
       generated: { ios: ['ComponentTokens.ios.swift', 'DesignTokens.ios.swift', 'product/ProductTokens.ios.swift'], android: [] },
+      themes: opts.themes ?? [{ name: 'dark', mode: 'dark' }],
     }),
   );
   return { tmp, consumer, out: path.join(tmp, 'out'), pinsPath, app, pins: parseIosPins(fs.readFileSync(pinsPath, 'utf8')) };
@@ -707,6 +707,39 @@ describe('lane: harness-ios-components against a fake swiftc', () => {
     lane(r, 'harness-ios-components', { tokensBuild: false, honestCompiler: true });
     const run = JSON.parse(fs.readFileSync(path.join(r.out, 'run.json'), 'utf8'));
     expect(run.files.pkg).toEqual({ compiled: 2, floor: 3 });
+  });
+});
+
+describe('lane: the themes come from harness-consumer.json, not from loading the consumer\'s config', () => {
+  it('reads name and themes from the manifest, in config order', () => {
+    expect(probeConfigFromManifest({ name: 'Acme', themes: [{ name: 'dark', mode: 'dark' }, { name: 'wcag', mode: 'light' }] })).toEqual({
+      name: 'Acme',
+      themes: [{ name: 'dark', mode: 'dark' }, { name: 'wcag', mode: 'light' }],
+    });
+  });
+
+  it('a manifest with no themes key reads as none', () => {
+    expect(probeConfigFromManifest({ name: 'Acme' })).toEqual({ name: 'Acme', themes: [] });
+  });
+
+  it('a theme without a string name and mode is a setup fault', () => {
+    expect(() => probeConfigFromManifest({ name: 'Acme', themes: [{ name: 'x' } as unknown as { name: string; mode: string }] })).toThrow(/themes\[0\]/);
+  });
+
+  it('the probe reads one theme read per colour per instance the manifest\'s themes give', () => {
+    const r = rig({ themes: [{ name: 'dark', mode: 'dark' }, { name: 'wcag', mode: 'light' }] });
+    const { lines } = lane(r, 'harness-ios-tokens', { tokensBuild: false, honestCompiler: true });
+    // 3 theme colours x 4 instances (baseLight, baseDark, darkDark, wcagLight) = 12; plain 6; key 1
+    expect(lines.some((l) => /probe: read 19 of 19 index names \(.*theme 3\u00d74, key 1\)/.test(l))).toBe(true);
+    const probe = fs.readFileSync(path.join(r.out, 'probe', 'Probe.swift'), 'utf8');
+    expect(probe).toContain('_ = FakeThemes.wcagLight.colorCanvas');
+  });
+
+  it('runs no `node` process and sets no NODE_PATH: the config is never loaded', () => {
+    const r = rig();
+    const { fake } = lane(r, 'harness-ios-tokens', { tokensBuild: false, honestCompiler: true });
+    expect(fake.calls.some((c) => c[0] === 'node')).toBe(false);
+    expect(fs.readFileSync(path.join(REPO, 'harness', 'ios', 'lane.ts'), 'utf8')).not.toMatch(/NODE_PATH|loadProbeConfig/);
   });
 });
 

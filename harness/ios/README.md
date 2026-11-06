@@ -20,7 +20,7 @@ npx tsx scripts/harness/compare.ts --context harness-ios-components --run <dir>/
 - `--pins <file>` defaults to `harness/pins.yaml`.
 - The lane exits **1** for what the comparator cannot see: a toolchain mismatch (`FAIL toolchain`, or `FAIL toolchain missing` when the pinned Xcode folder is absent), a failed self-test (`FAIL self-test`), a setup fault (`FAIL setup`), and a probe whose read count differs from the index's (`FAIL probe`; `run.json` is still written, so the comparator can run beside it). Compile errors are data: they give exit 0, and the comparator decides.
 - Make the comparator step run even when the lane step exits 1 on a probe count, and let the lane's own exit status fail the job as well.
-- The lane needs the repository's `node_modules` (it runs under `tsx`, and reads the consumer's config through the installed loader with `NODE_PATH` set to it).
+- The lane reads the consumer only through the files `consumer.ts` wrote (`harness-consumer.json`, including its `name` and `themes`, `harness-tarball-files.txt`, `token-index/`, the generated folder, the installed package). It does not load the consumer's config. It runs under the repository's `tsx`.
 
 ## What it writes into `<dir>`
 

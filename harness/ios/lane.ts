@@ -44,7 +44,7 @@ import { spawnSync } from 'child_process';
 import * as yaml from 'js-yaml';
 import { codePointCompare, type CompileResult, type RunFile, type SwiftCompileId } from '../../scripts/harness/compare';
 import { parseSwift } from '../../scripts/harness/parse-swift';
-import { formatReadCount, generateProbe, loadIndex, type ProbeConfig, type ProbeOutput } from '../../scripts/harness/probe-swift';
+import { formatReadCount, generateProbe, loadIndex, type ConfigTheme, type ProbeConfig, type ProbeOutput } from '../../scripts/harness/probe-swift';
 
 const HERE = __dirname;
 const REPO = path.resolve(HERE, '..', '..');
@@ -392,7 +392,7 @@ export function readToolchain(run: Runner, env: NodeJS.ProcessEnv): Record<strin
 }
 
 /** What a consumer root holds that the lane reads (the part of `harness-consumer.json` it needs). */
-interface Manifest {
+export interface Manifest {
   name: string;
   abbreviation: string;
   packageRoot: string;
@@ -400,6 +400,8 @@ interface Manifest {
   tokenIndex: string;
   platformOutputs: { ios: string };
   generated: { ios: string[] };
+  /** The registered themes (`name`, `mode`), in config order. Absent in a manifest written before Task 1 added it: none. */
+  themes?: Array<{ name: string; mode: string }>;
 }
 
 function readManifest(root: string): Manifest {
@@ -420,24 +422,20 @@ function readManifest(root: string): Manifest {
 }
 
 /**
- * The consumer's registered themes and `name`, read from its resolved config by the INSTALLED package's own
- * loader, the way `consumer.ts` reads the platform outputs. Nothing is hard-coded.
+ * What the probe reads of the consumer's config: its `name` and the registered themes, both from the manifest
+ * `scripts/harness/consumer.ts` wrote (`name`, and `themes` in config order). The lane never loads the consumer's
+ * config itself, so it reads the consumer as an adopter's install would. A manifest with no `themes` key reads as
+ * none; a theme without a string `name` and `mode` is a setup fault. An unknown `mode` is refused by
+ * `themeInstances` when the probe is generated.
  */
-export function loadProbeConfig(run: Runner, consumerRoot: string, packageRoot: string, env: NodeJS.ProcessEnv): ProbeConfig {
-  const loader = path.join(packageRoot, 'dist', 'config', 'ConfigLoader.js');
-  const script =
-    'const { loadConfig } = require(process.argv[1]);' +
-    'loadConfig(process.cwd()).then((c) => { process.stdout.write(JSON.stringify({ name: c.name, themes: (c.themes || []).map((t) => ({ name: t.name, mode: t.mode })) })); })' +
-    '.catch((e) => { console.error((e && e.stack) || String(e)); process.exit(1); });';
-  // `consumer.ts` prunes the consumer's `node_modules` to the packed package alone, so the package's own dependencies
-  // (`tsx`, `js-yaml`) are not beside it any more. The repository's `node_modules` is on the runner (the lane itself
-  // runs under its `tsx`), and `NODE_PATH` lets the INSTALLED loader find them there. The loader and the config read
-  // are still the consumer's own.
-  const r = run('node', ['-e', script, loader], { ...env, NODE_PATH: path.join(REPO, 'node_modules') }, consumerRoot);
-  if (r.error || r.status !== 0) {
-    throw new LaneError('setup', `cannot read the consumer's config through ${loader}: ${r.error ? r.error.message : (r.stderr || '').trim().slice(0, 300)}`);
-  }
-  return JSON.parse(r.stdout) as ProbeConfig;
+export function probeConfigFromManifest(manifest: Pick<Manifest, 'name' | 'themes'>): ProbeConfig {
+  const themes = (manifest.themes ?? []).map((t, i) => {
+    if (!t || typeof t.name !== 'string' || typeof t.mode !== 'string') {
+      throw new LaneError('setup', `harness-consumer.json themes[${i}] needs a string name and mode`);
+    }
+    return { name: t.name, mode: t.mode as ConfigTheme['mode'] };
+  });
+  return { name: manifest.name, themes };
 }
 
 // ─── One stage ───────────────────────────────────────────────────────────────────────────────────
@@ -627,7 +625,7 @@ export function runLane(o: LaneOptions): LaneOutcome {
       // Stage P: the probe is generated either way, so its read count is checked even while it is blocked.
       selfTestPlanted(ctx);
       const index = loadIndex(path.join(root, manifest.tokenIndex));
-      const config = loadProbeConfig(run, root, pkgRoot, env);
+      const config = probeConfigFromManifest(manifest);
       const probe = generateProbe(index, config, { tokenModule: pins.compile.tokens.module });
       fs.mkdirSync(probeDir, { recursive: true });
       fs.writeFileSync(path.join(probeDir, 'Probe.swift'), probe.source);
