@@ -1,0 +1,31 @@
+tokens:
+  color.action.primary:
+    category: color
+    platforms:
+      web: '--color-action-primary'
+      ios: theme.colorActionPrimary
+      android: theme.color_action_primary
+  color.feedback.error.text:
+    category: color
+    platforms:
+      web: '--color-feedback-error-text'
+      ios: theme.colorFeedbackErrorText
+      android: theme.color_feedback_error_text
+  color.canvas:
+    category: color
+    platforms:
+      web: '--color-canvas'
+      ios: theme.colorCanvas
+      android: theme.color_canvas
+  motion.floatLabel:
+    category: motion
+    platforms:
+      web: ['--motion-float-label-duration', '--motion-float-label-easing']
+      ios: ['MotionFloatLabel.duration', 'MotionFloatLabel.easing']
+      android: ['MotionFloatLabel.duration', 'MotionFloatLabel.easing']
+  typography.bodyMd:
+    category: typography
+    platforms:
+      web: ['--typography-body-md-font-size']
+      ios: typographyBodyMd
+      android: typography_body_md

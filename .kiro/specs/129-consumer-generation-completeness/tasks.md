@@ -316,10 +316,10 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [x] 3.1 Re-read the `macos-26` image readme at the cut; set the pins
     **Type**: Setup · **Validation**: Tier 1 - Minimal · **Agent**: Kenya (Sonnet)
     - _Requirements: 2.8, 2.9_
-  - [ ] 3.2 Stages T, P, C and T5; the probe generator; file order and floor
+  - [x] 3.2 Stages T, P, C and T5; the probe generator; file order and floor
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Kenya (Sonnet)
     - _Requirements: 2.4, 2.6, 2.7, 3.4_
-  - [ ] 3.3 Self-tests (K-4) and the toolchain match (K-6)
+  - [x] 3.3 Self-tests (K-4) and the toolchain match (K-6)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Kenya (Sonnet)
     - _Requirements: 3.11, 6.2_
 

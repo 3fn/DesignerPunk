@@ -33,3 +33,6 @@
 **Note on row 7**: it is `exists` as a design statement and unbuilt as an emitter. If the instance names the emitter chooses differ from the probe's derivation, the first probe run that gets past Stage T shows it as `probe:` entries (the read count would still be n = m). That is a finding for Ada and Task 11, not a Task 3 blocker.
 
 ## Found later
+
+- **unlisted** (found in 3.2, 2026-11-06): the consumer's registered themes, which the probe needs (C3). Row 5's instrument, `harness-consumer.json`, does not carry them, and the consumer's `node_modules` is pruned to the packed package, so the package's own config loader cannot load the config beside it. Handled in 3.2 by running the installed loader with `NODE_PATH` at the repository's `node_modules`. The owed fix is a `themes` field in the manifest, which is `scripts/harness/consumer.ts` (Task 1, Ada), outside Task 3's write scope; reported to the caller.
+- **misfit** (found in 3.2, 2026-11-06): row 7 said the instance names would come from design § 4 by one derivation function. Design § 4 and Req 4.1 give the set only by example ("base light and dark, WCAG light and dark"), and `init`'s scaffolded config registers `dark` (mode dark) and `wcag` (mode light), which the example does not match. The derivation is mine, in `themeInstances` (`probe-swift.ts`), recorded in `task-3-2-completion.md` § 3 item 3.

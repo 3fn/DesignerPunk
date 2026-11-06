@@ -1,0 +1,7 @@
+tokens:
+  progress.connector.thickness:
+    component: Progress
+    platforms:
+      web: '--progress-connector-thickness'
+      ios: ProgressTokens.connectorThickness
+      android: ProgressTokens.connectorThickness
