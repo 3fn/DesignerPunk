@@ -110,6 +110,12 @@ export interface ConsumerManifest {
   platformOutputs: Record<Platform, string>;
   /** Generated native files per platform: paths relative to that platform's output folder, sorted. */
   generated: { ios: string[]; android: string[] };
+  /**
+   * The themes the consumer's config registers, as the installed loader resolved them (`name` and `mode` only, in
+   * config order; the overrides are not copied). Additive to schema 1: a lane reads it instead of reloading the
+   * consumer's config with the repository's own `node_modules`.
+   */
+  themes: { name: string; mode: string }[];
 }
 
 export interface DriverOptions {
@@ -294,6 +300,20 @@ export interface ResolvedConfigLike {
   configDir?: string;
   /** Present once Task 15 adds per-platform output: `platforms.<platform>.output`, resolved to an absolute path. */
   platforms?: Partial<Record<Platform, { output?: string }>>;
+  /** The registered themes; only `name` and `mode` are read. `loadConfig` always resolves an array (`[]` when none). */
+  themes?: { name: string; mode: string }[];
+}
+
+/** The manifest's `themes`: `name` and `mode` of each registered theme, in config order. An absent field reads as none. */
+export function manifestThemes(config: ResolvedConfigLike): { name: string; mode: string }[] {
+  if (config.themes === undefined) return [];
+  if (!Array.isArray(config.themes)) throw new HarnessStepError('package', 'the consumer\'s resolved config has `themes` that is not an array');
+  return config.themes.map((t, i) => {
+    if (!t || typeof t.name !== 'string' || typeof t.mode !== 'string') {
+      throw new HarnessStepError('package', `the consumer's resolved config has themes[${i}] without a string name and mode`);
+    }
+    return { name: t.name, mode: t.mode };
+  });
 }
 
 /** Each platform's output folder, relative to the consumer root: `platforms.<platform>.output`, else `output`. */
@@ -417,6 +437,7 @@ export function runDriver(options: DriverOptions): ConsumerManifest {
     }
     if (typeof resolved.outputDir !== 'string') throw new HarnessStepError('package', 'the consumer\'s resolved config has no outputDir');
     const platformOutputs = platformOutputFolders(resolved, out);
+    const themes = manifestThemes(resolved);
     const generated = {
       ios: listFiles(path.join(out, platformOutputs.ios), '.swift'),
       android: listFiles(path.join(out, platformOutputs.android), '.kt'),
@@ -446,6 +467,7 @@ export function runDriver(options: DriverOptions): ConsumerManifest {
       productTokens: pins.productTokens,
       platformOutputs,
       generated,
+      themes,
     };
     fs.writeFileSync(path.join(out, MANIFEST_FILE), `${JSON.stringify(manifest, null, 2)}\n`);
     log(`[package] wrote ${MANIFEST_FILE}: ${generated.ios.length} Swift and ${generated.android.length} Kotlin generated file(s); tarball ${tarballFiles.length} file(s)`);

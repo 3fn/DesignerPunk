@@ -242,6 +242,32 @@ describe('runDriver — pack, install, init, generate, one consumer root', () =>
     expect(fs.readdirSync(path.join(outDir, 'node_modules', '@3fn'))).toEqual(['core']);
   });
 
+  it('records the registered themes in the manifest: name and mode only, in config order (additive to schema 1)', () => {
+    const { run: inner } = fakeRunner();
+    const run: Runner = (command, args, opts) =>
+      command === process.execPath && args[0] === '-e'
+        ? {
+            status: 0,
+            stdout: JSON.stringify({
+              outputDir: path.join(opts.cwd, 'dist', 'tokens'),
+              themes: [
+                { name: 'brand-dark', mode: 'dark', overrides: { 'color.action.primary': { light: 'a', dark: 'b' } } },
+                { name: 'brand-light', mode: 'light', overrides: {} },
+              ],
+            }),
+            stderr: '',
+          }
+        : inner(command, args, opts);
+    const manifest = runDriver(options(run));
+    expect(manifest.schema).toBe(1);
+    expect(manifest.themes).toEqual([{ name: 'brand-dark', mode: 'dark' }, { name: 'brand-light', mode: 'light' }]);
+    const onDisk = JSON.parse(fs.readFileSync(path.join(outDir, 'harness-consumer.json'), 'utf8')) as ConsumerManifest;
+    expect(onDisk.themes).toEqual([{ name: 'brand-dark', mode: 'dark' }, { name: 'brand-light', mode: 'light' }]);
+    expect(Object.keys(onDisk.themes[0]).sort()).toEqual(['mode', 'name']);
+    // a config that registers none (the loader resolves `[]`; the older fake omits the key) reads as an empty list
+    expect(runDriver(options(fakeRunner().run, { out: path.join(sandbox, 'out', 'consumer2') })).themes).toEqual([]);
+  });
+
   it('copies the fixture in and points the consumer config at it', () => {
     runDriver(options(fakeRunner().run));
     expect(fs.existsSync(path.join(outDir, 'product', 'tokens', 'harness.yaml'))).toBe(true);
