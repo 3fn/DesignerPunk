@@ -1,13 +1,18 @@
-# native-harness.yml -- DISPATCH-ONLY STUB.
+# native-harness.yml -- the native compile harness (Spec 129, Task 5).
 #
-# This file exists on main only so that GitHub will dispatch the workflow by name
-# against a unit branch (GitHub triggers a dispatch only for a workflow whose file is
-# on the default branch). Record: .kiro/issues/2026-11-06-native-harness-dispatch-stub-grant.md
-# (grant, Thurgood). The owner of the real file is Spec 129 Task 5
-# (.kiro/specs/129-consumer-generation-completeness/tasks.md); U1's PR replaces this file.
+# This is the unit branch's own copy of the file. It replaces the dispatch-only stub that
+# Spec 129's stub PR put on main (record: .kiro/issues/2026-11-06-native-harness-dispatch-stub-grant.md).
+# Design: .kiro/specs/129-consumer-generation-completeness/design.md § 3 "Wiring"; criteria:
+# tasks.md Task 5.
 #
-# It has one trigger, a manual dispatch, so it runs on no PR and adds no check to any PR.
-# It is not a required context and is in neither EXPECTED_CONTEXTS nor REQUIRED_WORKFLOWS.
+# FIRST COPY (5.1's first commit). It defines `harness-generate` only: the job every compile
+# context downloads its input from. The four compile contexts (harness-ios-tokens,
+# harness-ios-components, harness-android-tokens, harness-android-components) are added when
+# Tasks 3 and 4 are joined to this branch. Until then this file triggers on workflow_dispatch
+# alone; the PR trigger (no path filter, design § 3) joins with the contexts.
+#
+# Not a required context. It is in neither EXPECTED_CONTEXTS nor complete-task.sh's
+# REQUIRED_WORKFLOWS while it measures (tasks.md Task 5, criterion 11).
 
 name: native-harness
 
@@ -18,9 +23,36 @@ permissions:
   contents: read
 
 jobs:
-  native-harness-stub:
-    name: native-harness stub (unit-branch)
+  harness-generate:
+    # This name expression is a job name, not a step condition. On a dispatch it reads "(unit-branch)", the same
+    # convention lane-timing.yml uses, so a branch-head dispatch run never shadows a gate name.
+    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-generate (unit-branch)' || 'harness-generate' }}
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
-      - name: Say what this is
-        run: echo "This is the native-harness dispatch stub on main. Spec 129 U1's PR replaces this file; a run of this job means the dispatch used main's copy, not the unit branch's."
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Runs scripts/harness/consumer.ts once: npm pack, install the tarball into a scratch
+      # consumer outside the repository, init, generate. The consumer root is the one
+      # directory the compile contexts download (Req 2.1; tasks.md Task 1).
+      - name: Build the scratch consumer (scripts/harness/consumer.ts)
+        run: npx tsx scripts/harness/consumer.ts --out "${RUNNER_TEMP}/harness-consumer"
+
+      - name: Upload the consumer root
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-consumer
+          path: ${{ runner.temp }}/harness-consumer
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 7
