@@ -534,6 +534,7 @@ describe('parseKotlin: fixtures recorded under Gradle 9.8.2 / Kotlin 2.4.21', ()
     expect(logs.sort()).toEqual([
       'dp-failed-cut.txt',
       'no-task-headers.txt',
+      'planted-internal-run.txt',
       'synthetic-interleaved.txt',
       'synthetic-unattributed.txt',
       'tokens-failed.txt',
@@ -558,7 +559,7 @@ describe('parseKotlin: fixtures recorded under Gradle 9.8.2 / Kotlin 2.4.21', ()
     for (const name of ['synthetic-interleaved.txt', 'synthetic-unattributed.txt']) {
       expect(readFixture(name).headers.get('toolchain')).toMatch(/SYNTHETIC/);
     }
-    for (const name of ['tokens-failed.txt', 'dp-failed-cut.txt', 'no-task-headers.txt']) {
+    for (const name of ['tokens-failed.txt', 'dp-failed-cut.txt', 'no-task-headers.txt', 'planted-internal-run.txt']) {
       expect(readFixture(name).headers.get('toolchain')).not.toMatch(/SYNTHETIC/);
     }
   });
@@ -706,6 +707,56 @@ describe('parseKotlin: synthetic fixtures', () => {
     it('reads the outcomes from the task lines', () => {
       expect(r.compiles.map((c) => c.outcome)).toEqual(['failed', 'not-run', 'succeeded']);
     });
+  });
+
+  describe('planted-internal-run.txt (lane.ts --selftest, 2026-11-06: Gradle prints the FAILED line before the task\'s output)', () => {
+    const r = runFixture('planted-internal-run.txt');
+
+    it('attributes the planted-member error to :probe, with nothing unattributed', () => {
+      expect(r.unattributed).toEqual([]);
+      expect(obj(compileOf(r, 'probe').diagnostics)).toEqual({
+        "probe:ProbeTokens.kt | Cannot access 'val space_planted: Dp': it is internal in 'com.designerpunk.tokens.DesignTokens'.": 1,
+      });
+      expect(compileOf(r, 'probe').unrooted).toEqual([]);
+    });
+
+    it('leaves :tokens and :dp without diagnostics, and reads the outcomes: tokens succeeded, probe failed, dp not run', () => {
+      expect(compileOf(r, 'tokens').diagnostics.size).toBe(0);
+      expect(compileOf(r, 'dp').diagnostics.size).toBe(0);
+      expect(r.compiles.map((c) => c.outcome)).toEqual(['succeeded', 'failed', 'not-run']);
+      expect(r.logComplete).toBe(true);
+    });
+  });
+});
+
+describe('parseKotlin: a FAILED line before the task\'s output', () => {
+  const line = 'e: file:///r/probe/P.kt:1:1 Boom.';
+
+  it('keeps a FAILED line that is the first to name its task in force, until the next Gradle line', () => {
+    const r = run(log('> Task :probe:compileDebugKotlin FAILED', 'probe: read 2 of 2', line, '', '[Incubating] Problems report', line));
+    expect(obj(compileOf(r, 'probe').diagnostics)).toEqual({ 'probe:P.kt | Boom.': 1 });
+    expect(r.unattributed).toEqual([line]);
+    expect(compileOf(r, 'probe').outcome).toBe('failed');
+  });
+
+  it('ends at a FAILED line when the task already printed a header (header, output, FAILED: the 2026-11-04 order)', () => {
+    const r = run(log('> Task :probe:compileDebugKotlin', line, '> Task :probe:compileDebugKotlin FAILED', line));
+    expect(obj(compileOf(r, 'probe').diagnostics)).toEqual({ 'probe:P.kt | Boom.': 1 });
+    expect(r.unattributed).toEqual([line]);
+  });
+
+  it('does not move a diagnostic to a task a later header names', () => {
+    const r = run(log('> Task :probe:compileDebugKotlin FAILED', line, DP_TASK, 'e: file:///r/pkg/B.kt:1:1 In dp.'));
+    expect(obj(compileOf(r, 'probe').diagnostics)).toEqual({ 'probe:P.kt | Boom.': 1 });
+    expect(obj(compileOf(r, 'dp').diagnostics)).toEqual({ 'pkg:B.kt | In dp.': 1 });
+    expect(r.unattributed).toEqual([]);
+  });
+
+  it('does not open output for the first mention of a task that is not a compile, or for a suffix other than FAILED', () => {
+    const a = run(log('> Task :other:compileDebugKotlin FAILED', line));
+    expect(a.unattributed).toEqual([line]);
+    const b = run(log('> Task :probe:compileDebugKotlin UP-TO-DATE', line));
+    expect(b.unattributed).toEqual([line]);
   });
 });
 
