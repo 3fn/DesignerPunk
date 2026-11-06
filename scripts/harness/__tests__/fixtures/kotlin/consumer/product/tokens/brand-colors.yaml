@@ -1,0 +1,6 @@
+# Probe-kotlin fixture (Spec 129 Task 4.2): a hyphenated file name gives ProductBrandColors. No `platforms`
+# means every platform.
+tokens:
+  spaceUnit:
+    value: 4
+    unitType: logical

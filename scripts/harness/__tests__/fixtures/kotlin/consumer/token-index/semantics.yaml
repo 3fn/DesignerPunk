@@ -1,0 +1,49 @@
+# Probe-kotlin fixture (Spec 129 Task 4.2): a cut of the shapes token-index/semantics.yaml has.
+# Two `theme.` names on category: color entries (one themeVarying, one WCAG-only), a plain colour name,
+# a list (semantic motion), and null.
+tokens:
+  color.action.primary:
+    category: color
+    primitiveReferences:
+      value: cyan300
+    themeVarying: false
+    platforms:
+      web: '--color-action-primary'
+      ios: theme.colorActionPrimary
+      android: theme.color_action_primary
+  color.text.default:
+    category: color
+    primitiveReferences:
+      value: gray500
+    themeVarying: true
+    platforms:
+      web: '--color-text-default'
+      ios: theme.colorTextDefault
+      android: theme.color_text_default
+  color.feedback.success.background:
+    category: color
+    primitiveReferences:
+      value: green100
+    themeVarying: false
+    platforms:
+      web: '--color-feedback-success-background'
+      ios: colorFeedbackSuccessBackground
+      android: color_feedback_success_background
+  motion.floatLabel:
+    category: interaction
+    platforms:
+      web:
+        - '--motion-float-label-duration'
+        - '--motion-float-label-easing'
+      ios:
+        - MotionFloatLabel.duration
+        - MotionFloatLabel.easing
+      android:
+        - MotionFloatLabel.duration
+        - MotionFloatLabel.easing
+  zIndex.container:
+    category: layering
+    platforms:
+      web: '--z-index-container'
+      ios: zIndexContainer
+      android: null

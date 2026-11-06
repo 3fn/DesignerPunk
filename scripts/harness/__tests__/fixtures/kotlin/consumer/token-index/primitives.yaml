@@ -1,0 +1,23 @@
+# Probe-kotlin fixture (Spec 129 Task 4.2): a cut of the shapes token-index/primitives.yaml has.
+# Android names: a plain name, a nested name (Type.member), and null.
+tokens:
+  space100:
+    family: spacing
+    value: 8
+    platforms:
+      web: '--space-100'
+      ios: space100
+      android: space_100
+  duration150:
+    family: duration
+    value: 150
+    platforms:
+      web: '--duration-150'
+      ios: Duration.duration150
+      android: Duration.Duration150
+  shadowBlack100:
+    family: shadow
+    platforms:
+      web: '--shadow-black-100'
+      ios: null
+      android: null
