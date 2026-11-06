@@ -39,3 +39,9 @@ Ada's reading: packaging defects found only by reading the package are a class, 
 ## Close
 
 Closes (rule 5) when the README is out of every shipped Android `res/` directory (option 1 or 2) and a pack lists no non-resource file there, with the outcome line dated in the fixing PR. If Ada's `pack-assert` rule lands, it lands under her own record or Spec 129's tasks, and this record cites it.
+
+---
+
+## Outcome (2026-11-06, Lina; rule 5)
+
+Closed by option 1, in the PR on branch `fix/129-u1-preconditions-lina` (Spec 129's U1 precondition). `src/components/core/Icon-Base/platforms/android/res/drawable/README.md` moved to `src/components/core/Icon-Base/platforms/android/README.md`, with its stale `Location` line, its 15-icon tree and its "all 15 icon files" checklist item rewritten (the directory holds 50). Measured at the fixing commit with `npm pack --dry-run --json --ignore-scripts` (local, nothing downloaded; `--ignore-scripts` skips the `prepack` build, which does not feed the `src/**` `files` globs this record concerns): before the move the pack listed one non-`.xml` file under a `res/` directory (the README); after it, the pack lists 50 files under `res/`, all `.xml`, no non-resource file under any shipped `res/`, and no `.md` under `Icon-Base/platforms/android/` (the `*.kt` glob does not match it). The class fix, `pack-assert`'s native resource rule and its red case, lands in Spec 129's Task 1.3 (Ada), which this record cites and does not decide. Archived in the same PR.

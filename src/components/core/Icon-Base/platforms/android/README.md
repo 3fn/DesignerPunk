@@ -2,7 +2,7 @@
 
 **Date**: November 18, 2025
 **Purpose**: Android VectorDrawable resources for Icon component
-**Location**: `src/components/core/Icon/platforms/android/res/drawable/`
+**Location**: `src/components/core/Icon-Base/platforms/android/README.md` (documents `res/drawable/` beside it; kept outside `res/` because Android's resource merger rejects non-resource files inside a resource directory, and `package.json` `files` ships everything under `res/`)
 
 ---
 
@@ -12,22 +12,11 @@ This directory contains VectorDrawable XML files for the Icon System. All icons 
 
 ```
 res/drawable/
-├── arrow_down.xml
-├── arrow_left.xml
-├── arrow_right.xml
-├── arrow_up.xml
-├── calendar.xml
-├── check.xml
-├── chevron_right.xml
-├── circle.xml
-├── heart.xml
-├── mail.xml
-├── minus.xml
-├── plus.xml
-├── settings.xml
-├── user.xml
-└── x.xml
+├── <icon_name>.xml   (one VectorDrawable per icon; 50 at the time of writing)
+└── ...
 ```
+
+The directory holds resource files only (`.xml`). List it with `ls res/drawable/` for the current set; this README does not enumerate it.
 
 ---
 
@@ -239,7 +228,7 @@ When adding new icons to the system:
 
 Before considering the drawable structure complete:
 
-- [ ] All 15 icon files present in `res/drawable/`
+- [ ] Every icon in `IconName` (`types.ts`) has a file in `res/drawable/`
 - [ ] All files use snake_case naming convention
 - [ ] All files have .xml extension
 - [ ] All files are valid VectorDrawable XML
