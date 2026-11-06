@@ -1,0 +1,27 @@
+#harness-fixture toolchain: Temurin OpenJDK 17.0.21+9 (macOS arm64), Gradle 9.8.2, AGP 9.5.0, Kotlin 2.4.21 (Compose compiler plugin 2.4.21), Compose BOM 2026.09.00, compileSdk 36, minSdk 26
+#harness-fixture source: layout-collide2.log, Data's 2026-11-04 K2 round (backup .claude/scratch-backup/q5-data-work/layout-collide2.log), whole log: an adopter-layout probe (acme-android, :designerpunk module whose projectDir is the package's android/ folder) with a planted Ours.kt that redeclares ProgressTokens. The recording holds no '> Task' lines (the capture was filtered or run quiet; which, was not recorded). Rewritten: scratch path .../layout/node_modules/at3fn-core/ -> the pkg root; Gradle module :designerpunk -> :dp. The file name Ours.kt and its folder android/src/main/kotlin/dp/ belong to that experiment, not to the package.
+#harness-fixture exit: 1
+#harness-fixture roots: gen=/work/consumer/dist/tokens pkg=/work/consumer/node_modules/@3fn/core probe=/work/probe/src/main/kotlin
+e: file:///work/consumer/node_modules/@3fn/core/android/src/main/kotlin/dp/Ours.kt:9:8 Redeclaration:
+object ProgressTokens : Any
+e: file:///work/consumer/node_modules/@3fn/core/android/src/main/kotlin/dp/Ours.kt:11:8 Redeclaration:
+object ProgressTokens : Any
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':dp:compileDebugKotlin' (registered by plugin 'com.android.internal.library').
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Kotlin compiler: CLASSIFIER_REDECLARATION
+       Kotlin compiler error
+         Redeclaration:
+         object ProgressTokens : Any
+         Location: /work/consumer/node_modules/@3fn/core/android/src/main/kotlin/dp/Ours.kt:9
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 5s

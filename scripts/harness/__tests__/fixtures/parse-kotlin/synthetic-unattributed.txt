@@ -1,0 +1,22 @@
+#harness-fixture toolchain: none (SYNTHETIC, hand-built; no toolchain ran). The line shapes are copied from logs recorded under Temurin OpenJDK 17.0.21+9, Gradle 9.8.2, AGP 9.5.0, Kotlin 2.4.21
+#harness-fixture source: hand-built by Data, 2026-11-06, for subtask 2.3: every way an 'e:' line can be printed under no single one of the three compile tasks, and one that is. (1) before any task header; (2) under a task that is not one of the three; (3) under a Kotlin compile of a module the harness does not run; (4) after a Gradle line that ended the header in force; (5) after a task line that reports an outcome; and, as the control, one properly attributed to :dp.
+#harness-fixture exit: 1
+#harness-fixture roots: gen=/work/consumer/dist/tokens pkg=/work/consumer/node_modules/@3fn/core probe=/work/probe/src/main/kotlin
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:1:1 Printed before any task header.
+
+> Task :tokens:preBuild UP-TO-DATE
+> Task :dp:compileDebugJavaWithJavac
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:2:1 Printed under a task that is not a Kotlin compile.
+> Task :other:compileDebugKotlin
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:3:1 Printed under a module the harness does not run.
+
+> Task :dp:compileDebugKotlin
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:53:32 Unresolved reference 'AvatarTokens'.
+[Incubating] Problems report is available at: file:///work/harness/build/reports/problems/problems-report.html
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:4:1 Printed after a Gradle line, with no header again.
+> Task :tokens:compileDebugKotlin FAILED
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:5:1 Printed after a task line that reports an outcome.
+
+FAILURE: Build failed with an exception.
+
+BUILD FAILED in 4s

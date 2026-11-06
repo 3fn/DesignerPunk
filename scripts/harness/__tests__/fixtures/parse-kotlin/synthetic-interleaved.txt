@@ -1,0 +1,36 @@
+#harness-fixture toolchain: none (SYNTHETIC, hand-built; no toolchain ran). The line shapes are copied from logs recorded under Temurin OpenJDK 17.0.21+9, Gradle 9.8.2, AGP 9.5.0, Kotlin 2.4.21
+#harness-fixture source: hand-built by Data, 2026-11-06, for subtask 2.3 (Thurgood's risk 6): ONE Gradle run with :tokens and :dp compiling at the same time, so that each task's output reaches the console in chunks, each chunk under a repeated '> Task' header. No recorded log has this shape: whether Gradle 9.8.2 repeats the header exactly so is UNVERIFIED (reasoning from Gradle's grouped plain-console output). :probe never ran (it needs :tokens). One 'w:' line is inside a chunk.
+#harness-fixture exit: 1
+#harness-fixture roots: gen=/work/consumer/dist/tokens pkg=/work/consumer/node_modules/@3fn/core probe=/work/probe/src/main/kotlin
+> Task :tokens:preBuild UP-TO-DATE
+> Task :dp:preBuild UP-TO-DATE
+
+> Task :tokens:compileDebugKotlin
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:70:20 Unresolved reference 'Oklch'.
+
+> Task :dp:compileDebugKotlin
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:70:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:53:32 Unresolved reference 'AvatarTokens'.
+
+> Task :tokens:compileDebugKotlin
+w: file:///work/consumer/dist/tokens/DesignTokens.android.kt:9:1 Parameter 'unused' is never used
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:71:20 Unresolved reference 'Oklch'.
+
+> Task :dp:compileDebugKotlin
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:452:43 None of the following candidates is applicable:
+
+val spaceInset050: Dp:
+  Cannot access 'val spaceInset050: Dp': it is private in file.
+
+> Task :tokens:compileDebugKotlin
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:70:20 Unresolved reference 'Oklch'.
+
+> Task :dp:compileDebugKotlin
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:71:20 Unresolved reference 'Oklch'.
+
+> Task :tokens:compileDebugKotlin FAILED
+> Task :dp:compileDebugKotlin FAILED
+
+FAILURE: Build failed with 2 exceptions.
+
+BUILD FAILED in 9s

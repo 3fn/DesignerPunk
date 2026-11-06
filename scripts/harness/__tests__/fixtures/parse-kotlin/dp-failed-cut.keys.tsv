@@ -1,0 +1,69 @@
+gen:ComponentTokens.android.kt | Unresolved reference 'BorderWidthTokens'.	1
+gen:ComponentTokens.android.kt | Unresolved reference 'SizingTokens'.	6
+gen:ComponentTokens.android.kt | Unresolved reference 'SpacingTokens'.	3
+pkg:src/blend/ThemeAwareBlendUtilities.android.kt | Unresolved reference 'darkerBlend' on receiver of type 'Color'.	3
+pkg:src/blend/ThemeAwareBlendUtilities.android.kt | Unresolved reference 'desaturate' on receiver of type 'Color'.	2
+pkg:src/blend/ThemeAwareBlendUtilities.android.kt | Unresolved reference 'lighterBlend' on receiver of type 'Color'.	3
+pkg:src/blend/ThemeAwareBlendUtilities.android.kt | Unresolved reference 'saturate' on receiver of type 'Color'.	2
+pkg:src/components/core/Avatar-Base/platforms/android/Avatar.android.kt | Cannot infer type for type parameter 'K'. Specify it explicitly.	1
+pkg:src/components/core/Avatar-Base/platforms/android/Avatar.android.kt | Cannot infer type for type parameter 'V'. Specify it explicitly.	1
+pkg:src/components/core/Avatar-Base/platforms/android/Avatar.android.kt | This declaration needs opt-in. Its usage must be marked with '@kotlin.ExperimentalStdlibApi' or '@OptIn(kotlin.ExperimentalStdlibApi::class)'	1
+pkg:src/components/core/Avatar-Base/platforms/android/Avatar.android.kt | Unresolved reference 'AvatarTokens'.	1
+pkg:src/components/core/Avatar-Base/platforms/android/Avatar.android.kt | Unresolved reference 'GeneratedAvatarTokens'.	2
+pkg:src/components/core/Avatar-Base/platforms/android/Avatar.android.kt | Unresolved reference 'borderColor'.	1
+pkg:src/components/core/Avatar-Base/platforms/android/Avatar.android.kt | Unresolved reference 'theme'.	5
+pkg:src/components/core/Badge-Count-Base/platforms/android/BadgeCountBase.android.kt | Unresolved reference 'LocalDPTheme'.	1
+pkg:src/components/core/Badge-Count-Base/platforms/android/BadgeCountBase.android.kt | Unresolved reference 'backgroundColor'.	1
+pkg:src/components/core/Badge-Count-Base/platforms/android/BadgeCountBase.android.kt | Unresolved reference 'textColor'.	1
+pkg:src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt | Syntax error: Unclosed comment.	1
+pkg:src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt | Unresolved reference 'Companion'.	8
+pkg:src/components/core/Chip-Base/platforms/android/ChipBase.android.kt | Unresolved reference 'LocalDPTheme'.	1
+pkg:src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt | Argument type mismatch: actual type is 'Any', but 'Color' was expected.	1
+pkg:src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt | Cannot infer type for type parameter 'K'. Specify it explicitly.	1
+pkg:src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt | Cannot infer type for type parameter 'V'. Specify it explicitly.	1
+pkg:src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt | This declaration needs opt-in. Its usage must be marked with '@kotlin.ExperimentalStdlibApi' or '@OptIn(kotlin.ExperimentalStdlibApi::class)'	1
+pkg:src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt | Unresolved reference 'LocalDPTheme'.	1
+pkg:src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt | Unresolved reference 'color_feedback_select_background_rest'.	1
+pkg:src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt | Unresolved reference 'color_feedback_select_text_rest'.	1
+pkg:src/components/core/Chip-Input/platforms/android/ChipInput.android.kt | Unresolved reference 'LocalDPTheme'.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Cannot access 'val borderEmphasis: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Cannot access 'val borderHeavy: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Cannot access 'val elevationContainer: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Cannot access 'val elevationDropdown: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Cannot access 'val elevationModal: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Cannot access 'val elevationNavigation: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Cannot access 'val elevationToast: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Cannot access 'val elevationTooltip: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Cannot access 'val radius050: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Cannot access 'val spaceInset300: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Cannot access 'val spaceInset400: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | None of the following candidates is applicable: ⏎ val borderDefault: Dp: ⏎ Cannot access 'val borderDefault: Dp': it is private in file. ⏎ val borderDefault: Dp: ⏎ Cannot access 'val borderDefault: Dp': it is private in file. ⏎ val borderDefault: Dp: ⏎ Cannot access 'val borderDefault: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | None of the following candidates is applicable: ⏎ val radius100: Dp: ⏎ Cannot access 'val radius100: Dp': it is private in file. ⏎ val radius100: Dp: ⏎ Cannot access 'val radius100: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | None of the following candidates is applicable: ⏎ val radius200: Dp: ⏎ Cannot access 'val radius200: Dp': it is private in file. ⏎ val radius200: Dp: ⏎ Cannot access 'val radius200: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | None of the following candidates is applicable: ⏎ val spaceInset050: Dp: ⏎ Cannot access 'val spaceInset050: Dp': it is private in file. ⏎ val spaceInset050: Dp: ⏎ Cannot access 'val spaceInset050: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | None of the following candidates is applicable: ⏎ val spaceInset100: Dp: ⏎ Cannot access 'val spaceInset100: Dp': it is private in file. ⏎ val spaceInset100: Dp: ⏎ Cannot access 'val spaceInset100: Dp': it is private in file. ⏎ val spaceInset100: Dp: ⏎ Cannot access 'val spaceInset100: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | None of the following candidates is applicable: ⏎ val spaceInset150: Dp: ⏎ Cannot access 'val spaceInset150: Dp': it is private in file. ⏎ val spaceInset150: Dp: ⏎ Cannot access 'val spaceInset150: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | None of the following candidates is applicable: ⏎ val spaceInset200: Dp: ⏎ Cannot access 'val spaceInset200: Dp': it is private in file. ⏎ val spaceInset200: Dp: ⏎ Cannot access 'val spaceInset200: Dp': it is private in file.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Unresolved reference 'DesignTokens'.	4
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Unresolved reference 'DesignerPunkTheme'.	2
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Unresolved reference 'LocalDPTheme'.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Unresolved reference 'borderWidth200'.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Unresolved reference 'color_structure_border'.	3
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Unresolved reference 'color_structure_border_subtle'.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Unresolved reference 'shadowElevation'.	1
+pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Unresolved reference 'space025'.	1
+pkg:src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt | Conflicting declarations: ⏎ val accessibilityFocusColor: Color	1
+pkg:src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt | Conflicting declarations: ⏎ val accessibilityFocusOffset: Dp	1
+pkg:src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt | Conflicting declarations: ⏎ val accessibilityFocusWidth: Dp	1
+pkg:src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt | Overload resolution ambiguity between candidates: ⏎ val accessibilityFocusColor: Color ⏎ val accessibilityFocusColor: Color	1
+pkg:src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt | Overload resolution ambiguity between candidates: ⏎ val accessibilityFocusOffset: Dp ⏎ val accessibilityFocusOffset: Dp	1
+pkg:src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt | Overload resolution ambiguity between candidates: ⏎ val accessibilityFocusWidth: Dp ⏎ val accessibilityFocusWidth: Dp	1
+pkg:src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt | Unresolved reference 'LocalDPTheme'.	1
+pkg:src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt | Unresolved reference 'clip' on receiver of type 'Modifier'.	1
+pkg:src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt | Unresolved reference 'theme'.	5
+pkg:src/components/core/Icon-Base/platforms/android/IconBase.android.kt | @Composable invocations can only happen from the context of a @Composable function	1
+pkg:src/components/core/Icon-Base/platforms/android/IconBase.android.kt | Unresolved reference 'CompositionLocalProvider'.	1
+pkg:src/components/core/Icon-Base/platforms/android/IconBase.android.kt | Unresolved reference 'R'.	17
+pkg:src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt | No parameter with name 'modifier' found.	1
+pkg:src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt | Unresolved reference 'DesignTokens'.	5
+pkg:src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt | Unresolved reference 'LocalDPTheme'.	1
