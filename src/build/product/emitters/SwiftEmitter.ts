@@ -7,17 +7,23 @@
 import type { ResolvedCategory, ResolvedToken, GeneratorConfig } from '../ProductTokenGenerator';
 import { getCoreVersion } from '../../../generators/coreVersion';
 
+/** A ref to a colour semantic the index names `theme.<name>` on iOS is read through a theme instance. */
+function isThemeRead(t: ResolvedToken): boolean {
+  return typeof t.resolvedPlatformPath?.ios === 'string' && t.resolvedPlatformPath.ios.startsWith('theme.');
+}
+
 export function emitSwift(categories: ResolvedCategory[], config: GeneratorConfig): string {
   const lines: string[] = [];
-  const themeName = `${config.configName}Theme`;
+  // The theme protocol is DesignerPunk's fixed binding, whatever the consumer's name (Spec 129 design § 4).
+  const themeName = 'DesignerPunkTheme';
 
   const iosTokens = categories.map(c => ({
     ...c,
     tokens: c.tokens.filter(t => t.platforms.includes('ios')),
   })).filter(c => c.tokens.length > 0);
 
-  const hasStatic = iosTokens.some(c => c.tokens.some(t => !t.themeVarying));
-  const hasThemeVarying = iosTokens.some(c => c.tokens.some(t => t.themeVarying));
+  const hasStatic = iosTokens.some(c => c.tokens.some(t => !isThemeRead(t)));
+  const hasThemeVarying = iosTokens.some(c => c.tokens.some(t => isThemeRead(t)));
 
   // Imports
   if (hasStatic) lines.push('import UIKit');
@@ -29,7 +35,7 @@ export function emitSwift(categories: ResolvedCategory[], config: GeneratorConfi
 
   // Static tokens (enums)
   for (const category of iosTokens) {
-    const staticTokens = category.tokens.filter(t => !t.themeVarying);
+    const staticTokens = category.tokens.filter(t => !isThemeRead(t));
     if (staticTokens.length === 0) continue;
 
     const enumName = `Product${toPascalCase(category.name)}`;
@@ -44,11 +50,11 @@ export function emitSwift(categories: ResolvedCategory[], config: GeneratorConfi
 
   // Theme-varying tokens (protocol extension)
   const themeTokens = iosTokens.flatMap(c =>
-    c.tokens.filter(t => t.themeVarying).map(t => ({ ...t, category: c.name }))
+    c.tokens.filter(t => isThemeRead(t)).map(t => ({ ...t, category: c.name }))
   );
 
   if (themeTokens.length > 0) {
-    lines.push(`// Theme-varying product tokens — access via @Environment(\\.${config.configAbbreviation.toLowerCase()}Theme)`);
+    lines.push(`// Theme-varying product tokens — access via @Environment(\\.dpTheme)`);
     lines.push(`public extension ${themeName} {`);
     for (const token of themeTokens) {
       const propName = `product${toPascalCase(token.category)}${capitalize(token.name)}`;

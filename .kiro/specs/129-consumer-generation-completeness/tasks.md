@@ -813,7 +813,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 6 — Native theme emission (generator)
 
-- [ ] 11. Native theme emission, with Req 4.5's coupled reads and the two re-points (U6)
+- [x] 11. Native theme emission, with Req 4.5's coupled reads and the two re-points (U6)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Lina (Sonnet) — Req 4.5's coupled reads and the two re-points
   **Traces**: Req 1.7, 2.3 (as amended), 2.7, 2.10, 4.1 (as amended), 4.2, 4.3, 4.5, 4.7, 4.8, 4.10, 5.6 (as amended); rows 2, 4 (item 3), 12 (item 3's colours, Button-CTA), 13 (item 3), 15 (theme name) · design § 4
@@ -900,19 +900,19 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 11 Complete: Native theme emission (129)"` opens U6's PR (Peter-merged: `governance/**`; `**Edit kind**:` EXECUTION per file; amendment 6); report the URL; STOP. U6's merge fires the MIDPOINT pass.
 
-  - [ ] 11.1 The scaffolded dark-override file fixed (design § 16; Ada R1 (d))
+  - [x] 11.1 The scaffolded dark-override file fixed (design § 16; Ada R1 (d))
     **Type**: Setup · **Validation**: Tier 1 - Minimal · **Agent**: Ada (Sonnet)
     - _Requirements: 4.2_
-  - [ ] 11.2 Fixed binding, holders, instances, providers, the local; resolved values through § 6's converter; the theme-instance rule, the family and both providers' family parameter, the exact-set tests on configs S and C, the default-name case and the comparison test (amended 2026-11-06, tasks amendment 3)
+  - [x] 11.2 Fixed binding, holders, instances, providers, the local; resolved values through § 6's converter; the theme-instance rule, the family and both providers' family parameter, the exact-set tests on configs S and C, the default-name case and the comparison test (amended 2026-11-06, tasks amendment 3)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 4.1, 4.2_
-  - [ ] 11.3 Index names and README; product-token emitters (`extension DesignerPunkTheme`, `LocalDPTheme`); the composite refusal, the fixture change and what `generate` does on a refusal (amended 2026-11-06, tasks amendment 3)
+  - [x] 11.3 Index names and README; product-token emitters (`extension DesignerPunkTheme`, `LocalDPTheme`); the composite refusal, the fixture change and what `generate` does on a refusal (amended 2026-11-06, tasks amendment 3)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 2.3, 4.8, 5.6_
-  - [ ] 11.4 Re-baseline the 094 fixtures; the real-definition tests
+  - [x] 11.4 Re-baseline the 094 fixtures; the real-definition tests
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 1.7, 4.3_
-  - [ ] 11.5 Row 12 item 3 colours, Button-CTA bare reads, the two re-points; the `LocalDPTheme` import in the 25 Android component files (amended 2026-11-06, review fold); the row 2 and row 15 list removals
+  - [x] 11.5 Row 12 item 3 colours, Button-CTA bare reads, the two re-points; the `LocalDPTheme` import in the 25 Android component files (amended 2026-11-06, review fold); the row 2 and row 15 list removals
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 4.5, 4.7, 4.10_
 

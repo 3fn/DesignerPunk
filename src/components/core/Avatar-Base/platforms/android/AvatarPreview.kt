@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 // consumption pattern for non-theme-varying tokens — see Rosetta System Architecture §
 // "Module-Resolution Contract").
 import com.designerpunk.tokens.DesignTokens
+import com.designerpunk.tokens.LocalDPTheme
 
 // MARK: - Main Preview
 
@@ -235,6 +236,7 @@ private fun AllTypeSizeCombinationsSection() {
  */
 @Composable
 private fun ImageExamplesSection() {
+    val theme = LocalDPTheme.current
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
             text = "2. Image Examples (Human Only)",
@@ -323,7 +325,7 @@ private fun ImageExamplesSection() {
                         // color.feedback.warning.text (→ orange400; no dark-mode override,
                         // see src/tokens/themes/dark/SemanticOverrides.ts) — was a hardcoded
                         // hex literal duplicating this token's value (2026-09-13 audit finding).
-                        color = DesignTokens.color_feedback_warning_text
+                        color = theme.color_feedback_warning_text
                     )
                 }
                 

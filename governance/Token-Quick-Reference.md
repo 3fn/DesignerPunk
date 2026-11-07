@@ -131,8 +131,8 @@ What each platform emits today:
 | Platform | Theme mechanism | Static tokens | Theme-varying tokens |
 |----------|----------------|---------------|---------------------|
 | Web | Mode: `light-dark()` values with `color-scheme: light dark` on `:root`. Theme: one block, `:root[data-theme="wcag"]`, which matches only `<html>`, so the theme applies page-wide | CSS custom properties on `:root` | On `:root` (mode-varying values as `light-dark()`); WCAG overrides under `:root[data-theme="wcag"]` |
-| iOS | None emitted yet. Designed: `@Environment` with a `{Name}Theme` protocol | `DesignTokens` static lets | Left out of `DesignTokens`; WCAG overrides as `_wcag` static lets. Designed, not emitted yet: a struct per theme conforming to the protocol |
-| Android | None emitted yet. Designed: `CompositionLocal` with a `{Name}Theme` data class | `DesignTokens` object constants | Left out of `DesignTokens`; WCAG overrides as `_wcag` constants (`_wcag_light` and `_wcag_dark` where the modes differ). Designed, not emitted yet: an instance per theme in a `{Name}Themes` object |
+| iOS | `@Environment(\.dpTheme)` with the `DesignerPunkTheme` protocol; the `<name>Theme(_ family:)` modifier selects `base` or `wcag` by scheme | `DesignTokens` static lets | Every colour semantic is a theme member, none a `DesignTokens` member; four instances in `<Name>Themes` (`baseLight`, `baseDark`, `wcagLight`, `wcagDark`). The `_wcag` static lets are gone: read `<Name>Themes.wcagLight.<prop>` |
+| Android | `LocalDPTheme` (a `staticCompositionLocalOf`) with the `DesignerPunkTheme` data class; `<Name>Theme(family, darkTheme) { }` selects `Base` or `Wcag` | `DesignTokens` object constants | Every colour semantic is a theme member, none a `DesignTokens` member; four instances in `<Name>Themes` (`BaseLight`, `BaseDark`, `WcagLight`, `WcagDark`). The `_wcag`, `_wcag_light` and `_wcag_dark` constants are gone: read `<Name>Themes.WcagLight.<prop>` |
 
 A theme registered in `designerpunk.config.ts` adds nothing to any row yet, and there is no dark `data-theme` block. Whether a subtree can be themed on web is not decided yet (Spec 129).
 

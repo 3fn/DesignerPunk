@@ -40,6 +40,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.designerpunk.tokens.LocalDPTheme
 
 private const val INDETERMINATE_STATIC_FILL = 0.33f
 private const val PULSE_OPACITY_MIN = 0.3f

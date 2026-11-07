@@ -18,7 +18,13 @@ Each entry's `platforms` block gives, for `web`, `ios` and `android`, what that 
 - **several names** (a list), for a composite the generator writes as several definitions: on web a typography token is one custom property per property (`--typography-body-md-font-size`, `-line-height`, …), a shadow is its composite `--shadow-container` and one property per part, and a semantic motion token is `--motion-float-label-duration` and `-easing`; on iOS and Android a semantic motion token is the members of its type (`MotionFloatLabel.duration`, `MotionFloatLabel.easing`);
 - **`null`**, when that platform's output carries no name for the token, with the reason in the entry's `platformNotes` (e.g. `elevation.*` is Android-only: "Use z-index + shadow tokens instead").
 
-iOS and Android names are members of `DesignTokens` (nested ones as `Type.member`, e.g. `Duration.duration150`). A `theme.` name (`theme.colorActionPrimary`) is a token the native generators leave out of `DesignTokens` for the theme types; those types are not emitted yet (Spec 129). The `theme.` prefix follows the set the native generators use, which includes the WCAG overrides; the `themeVarying` flag is narrower, base light/dark only (Spec 117), so the two can differ.
+**The root rule** (Spec 129 design § 4, Q13). A name is read from one of three roots:
+
+- a `theme.` name (`theme.colorActionPrimary`) is read through a theme instance: `\.dpTheme` on iOS, `LocalDPTheme.current` on Android, or a member of the `<Name>Themes` holder. **Every `category: color` semantic is named `theme.<name>` on iOS and Android**, and none is a `DesignTokens` member;
+- every other primitive and semantic name is relative to `DesignTokens` (nested members as `Type.member`, e.g. `Duration.duration150`);
+- `components.yaml` names are top-level types (`AvatarTokens.sizeXs`).
+
+A native theme member is exactly a `category: color` semantic with a `theme.` platform name. The `themeVarying` flag keeps its documented meaning, base light/dark only (Spec 117), so a colour that only a WCAG map overrides is `themeVarying: false` and still has a `theme.` name.
 
 `src/generators/__tests__/tokenIndexPlatformNames.test.ts` checks every name against freshly generated output.
 

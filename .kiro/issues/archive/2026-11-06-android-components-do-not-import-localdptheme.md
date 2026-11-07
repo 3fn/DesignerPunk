@@ -25,3 +25,5 @@ Spec 129 tasks amendment 3, review fold, `[THURGOOD R7]` fork 3, option (i): the
 ## Close
 
 U6's PR adds this record's rule 5 outcome line naming the merge, and archives it.
+
+*(2026-11-07, Lina, owner, rule 5: closed and archived in U6's PR. The 25 non-test Android component files that read `LocalDPTheme.current` import `com.designerpunk.tokens.LocalDPTheme` (Task 11.5, `24f66dbaa`); the 57 stale Android entries left the list, and run 42403410288 at `e61c0ee2a` passes all four contexts. The two `DesignerPunkTheme` imports that `ContainerBase.android.kt` and `TokenMapping.kt` lack are a different name, tagged to `2026-09-26-native-component-theme-hardcoding.md` for U7.)*

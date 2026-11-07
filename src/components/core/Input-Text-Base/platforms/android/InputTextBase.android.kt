@@ -70,6 +70,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import android.provider.Settings
 import com.designerpunk.tokens.DesignTokens
+import com.designerpunk.tokens.LocalDPTheme
 import com.designerpunk.tokens.focusBlend
 
 /**
@@ -136,6 +137,8 @@ fun InputTextBase(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     trailingContent: (@Composable () -> Unit)? = null
 ) {
+    val theme = LocalDPTheme.current
+
     // State
     var isFocused by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -197,10 +200,10 @@ fun InputTextBase(
     
     val labelColor by animateColorAsState(
         targetValue = when {
-            hasError -> colorFeedbackErrorText
-            isSuccess -> colorFeedbackSuccessText
-            isFocused -> colorActionPrimary.focusBlend()
-            else -> colorTextMuted
+            hasError -> theme.color_feedback_error_text
+            isSuccess -> theme.color_feedback_success_text
+            isFocused -> theme.color_action_primary.focusBlend()
+            else -> theme.color_text_muted
         },
         animationSpec = animationSpec,
         label = "labelColor"
@@ -208,10 +211,10 @@ fun InputTextBase(
     
     val borderColor by animateColorAsState(
         targetValue = when {
-            hasError -> colorFeedbackErrorText
-            isSuccess -> colorFeedbackSuccessText
-            isFocused -> colorActionPrimary.focusBlend()
-            else -> colorBorder
+            hasError -> theme.color_feedback_error_text
+            isSuccess -> theme.color_feedback_success_text
+            isFocused -> theme.color_action_primary.focusBlend()
+            else -> theme.color_structure_border
         },
         animationSpec = animationSpec,
         label = "borderColor"
@@ -282,7 +285,7 @@ fun InputTextBase(
                         }
                     }
                     .background(
-                        color = colorBackground,
+                        color = theme.color_structure_canvas,
                         shape = RoundedCornerShape(radius150)
                     )
                     .border(
@@ -308,7 +311,7 @@ fun InputTextBase(
                     lineHeight = typographyInputLineHeight,
                     fontWeight = typographyInputFontWeight,
                     letterSpacing = typographyInputLetterSpacing,
-                    color = colorTextDefault
+                    color = theme.color_text_default
                 ),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = getKeyboardType(type),
@@ -322,7 +325,7 @@ fun InputTextBase(
                 } else {
                     VisualTransformation.None
                 },
-                cursorBrush = SolidColor(colorActionPrimary),
+                cursorBrush = SolidColor(theme.color_action_primary),
                 decorationBox = { innerTextField ->
                     Box(
                         modifier = Modifier.fillMaxWidth(),
@@ -333,7 +336,7 @@ fun InputTextBase(
                                 text = placeholder,
                                 style = TextStyle(
                                     fontSize = typographyInputFontSize,
-                                    color = colorTextMuted.copy(alpha = 0.5f)
+                                    color = theme.color_text_muted.copy(alpha = 0.5f)
                                 )
                             )
                         }
@@ -372,17 +375,17 @@ fun InputTextBase(
                     showErrorIcon -> IconBase(
                         name = "x",
                         size = iconSize100,
-                        color = colorFeedbackErrorText
+                        color = theme.color_feedback_error_text
                     )
                     showSuccessIcon -> IconBase(
                         name = "check",
                         size = iconSize100,
-                        color = colorFeedbackSuccessText
+                        color = theme.color_feedback_success_text
                     )
                     showInfoIconVisible -> IconBase(
                         name = "info",
                         size = iconSize100,
-                        color = colorTextMuted
+                        color = theme.color_text_muted
                     )
                 }
             }
@@ -401,7 +404,7 @@ fun InputTextBase(
                     lineHeight = typographyCaptionLineHeight,
                     fontWeight = typographyCaptionFontWeight,
                     letterSpacing = typographyCaptionLetterSpacing,
-                    color = colorTextMuted
+                    color = theme.color_text_muted
                 ),
                 modifier = Modifier.padding(start = spaceInset100)
             )
@@ -417,7 +420,7 @@ fun InputTextBase(
                     lineHeight = typographyCaptionLineHeight,
                     fontWeight = typographyCaptionFontWeight,
                     letterSpacing = typographyCaptionLetterSpacing,
-                    color = colorFeedbackErrorText
+                    color = theme.color_feedback_error_text
                 ),
                 modifier = Modifier.padding(start = spaceInset100)
             )
@@ -439,8 +442,8 @@ private fun getKeyboardType(type: InputType): KeyboardType {
 }
 
 // MARK: - Design Token Constants
-// These constants bind to the generated DesignTokens. The colour constants below are still
-// bodyless: they wait on the theme surface (Spec 129 U6/U7).
+// These constants bind to the generated DesignTokens. Theme-varying colours are read from
+// `theme` (LocalDPTheme.current) in the composable.
 
 // Typography tokens - labelMd (typography.labelMd)
 private val typographyLabelMdFontSize: TextUnit = DesignTokens.typography_label_md.fontSize
@@ -466,14 +469,7 @@ private val typographyCaptionLineHeight: TextUnit = DesignTokens.typography_capt
 private val typographyCaptionFontWeight: FontWeight? = DesignTokens.typography_caption.fontWeight
 private val typographyCaptionLetterSpacing: TextUnit = DesignTokens.typography_caption.letterSpacing // em
 
-// Color tokens (semantic)
-private val colorTextMuted: Color // Generated from color.text.muted
-private val colorTextDefault: Color // Generated from color.text.default
-private val colorActionPrimary: Color // Generated from color.action.primary
-private val colorFeedbackErrorText: Color // Generated from color.feedback.error.text
-private val colorFeedbackSuccessText: Color // Generated from color.feedback.success.text
-private val colorBorder: Color // Generated from color.border
-private val colorBackground: Color // Generated from color.background
+// Colour tokens: read from the theme (LocalDPTheme.current) inside the composable.
 
 // Spacing tokens (semantic) - Dp type
 private val spaceInset100: Dp = DesignTokens.space_inset_100
@@ -495,4 +491,4 @@ private val iconSize100: Dp = DesignTokens.icon_size_100 // 24dp
 private val tapAreaRecommended: Dp = DesignTokens.tap_area_recommended // 48dp minimum
 private val accessibilityFocusWidth: Dp = DesignTokens.accessibility_focus_width
 private val accessibilityFocusOffset: Dp = DesignTokens.accessibility_focus_offset
-private val accessibilityFocusColor: Color // Generated from accessibility.focus.color
+private val accessibilityFocusColor: Color = DesignTokens.accessibility_focus_color // not theme-varying

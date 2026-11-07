@@ -95,8 +95,8 @@ After birth, your repo holds two different kinds of thing.
 
 What `generate` writes, into the `output` directory set in `designerpunk.config.ts`:
 - `DesignTokens.web.css` — CSS custom properties
-- `DesignTokens.ios.swift` — Swift constants (no theme surface yet; see § Platforms › iOS) <!-- limitation: .kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md -->
-- `DesignTokens.android.kt` — Kotlin constants (no theme surface yet; see § Platforms › Android) <!-- limitation: .kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md -->
+- `DesignTokens.ios.swift` — Swift constants and the theme surface (see § Platforms › iOS)
+- `DesignTokens.android.kt` — Kotlin constants and the theme surface (see § Platforms › Android)
 - `ComponentTokens.web.css` / `.ios.swift` / `.android.kt` — component tokens
 - `DesignTokens.dtcg.json` — DTCG standard format
 - `DesignTokens.figma.json` — Figma Variables format
@@ -161,28 +161,28 @@ The full import list is under Available Imports, in the reference part of the In
 
 ### iOS
 
-**Native onboarding is not supported.** The shipped SwiftUI components are reference source, not a build input: they read a theme surface (`@Environment(\.dpTheme)`, `any DesignerPunkTheme`) under names fixed to DesignerPunk's own configuration, which no shipped file defines and your `npx designerpunk generate` does not emit; and the package has no Swift package manifest. <!-- limitation: .kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md -->
+**Native onboarding is not supported.** The shipped SwiftUI components are reference source, not a build input: they read a theme surface (`@Environment(\.dpTheme)`, `any DesignerPunkTheme`) under names fixed to DesignerPunk's own binding, which your `npx designerpunk generate` now writes into `DesignTokens.ios.swift`; and the package has no Swift package manifest.
 
 What the package ships for iOS, and why it does not add up to a target yet:
 - `node_modules/@3fn/core/dist/DesignTokens.ios.swift` is DesignerPunk's **un-themed base snapshot**, generated from DesignerPunk's own configuration, not yours.
-- `DesignTokens.ios.swift` also calls a `Color.oklch(...)` initializer (and a bare `oklch(...)`) that no shipped file defines and the package does not declare as a dependency. DesignerPunk's generator names ChromaKit for it. <!-- limitation: .kiro/issues/2026-10-03-native-generator-findings-for-spec-129-intake.md -->
-- Product tokens that reference a theme-varying token are emitted into `ProductTokens.ios.swift` as an extension on `<YourName>Theme`; nothing defines or generates that type. <!-- limitation: .kiro/issues/2026-10-03-native-generator-findings-for-spec-129-intake.md -->
+- `DesignTokens.ios.swift` writes every colour as a `Color(.displayP3, …)` constant with its channels computed at generation, so it needs no colour library.
+- A product token that references a colour semantic is emitted into `ProductTokens.ios.swift` as an extension on `DesignerPunkTheme`, which `DesignTokens.ios.swift` defines. A product token that references a composite (typography, shadow or motion) is refused by `generate`, which names the token.
 - `node_modules/@3fn/core/dist/ComponentTokens.ios.swift` is DesignerPunk's **component token tier**. Some of the shipped components read it (`ButtonIcon.ios.swift`, for one), and it refers to `DesignTokens` members, which `DesignTokens.ios.swift` defines.
-- Native token output omits the **14 theme-varying semantic colours**, among them `colorActionPrimary` and `colorStructureCanvas`. <!-- limitation: .kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md -->
+- Every colour semantic is a member of the generated theme (`colorActionPrimary` and `colorStructureCanvas` among them) and none is a `DesignTokens` member: read it through `\.dpTheme` or a `<YourName>Themes` instance. The theme has four instances today, base and WCAG in light and dark; a theme you register in `designerpunk.config.ts` adds none yet.
 
 This was checked by reading the source. No iOS build was run. Platform requirements, for reference: **iOS 17.0+** (SwiftUI, UIKit). Where native support stands is in the Native status note at the end of "Platforms".
 
 ### Android
 
-Android: reference source, not a build input. The Compose components under `src/components/core/*/platforms/android/` read their theme from `LocalDPTheme`, which nothing in this package defines and `generate` does not emit today, and there is no Gradle module. <!-- limitation: .kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md --> Native onboarding is not supported. This was checked by reading the source; no Android build has been run.
+Android: reference source, not a build input. The Compose components under `src/components/core/*/platforms/android/` read their theme from `LocalDPTheme`, which `generate` writes into `DesignTokens.android.kt`, and there is no Gradle module. Native onboarding is not supported. This was checked by reading the source; no Android build has been run.
 
 What the package ships for Android, and why it does not add up to a target yet:
 - `node_modules/@3fn/core/dist/DesignTokens.android.kt` is DesignerPunk's **un-themed base snapshot**, generated from DesignerPunk's own configuration, not yours.
 - `node_modules/@3fn/core/dist/ComponentTokens.android.kt` is DesignerPunk's **component token tier**. Three of the shipped components (Avatar, Badge-Label-Base and Button-Icon) read it.
-- Native token output omits the same **14 theme-varying semantic colours**, among them `color_action_primary` and `color_structure_canvas`. Only `_wcag` variants of some of them are emitted. <!-- limitation: .kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md -->
-- Product tokens that reference a theme-varying token are emitted as a read of `Local<your abbreviation>Theme`, which nothing defines. <!-- limitation: .kiro/issues/2026-10-03-native-generator-findings-for-spec-129-intake.md -->
+- Every colour semantic is a member of the generated `DesignerPunkTheme` data class (`color_action_primary` and `color_structure_canvas` among them) and none is a `DesignTokens` member: read it through `LocalDPTheme.current` or a `<YourName>Themes` instance. The WCAG colours are the `WcagLight` and `WcagDark` instances; a theme you register adds none yet.
+- A product token that references a colour semantic is emitted as a read of `LocalDPTheme`, which `DesignTokens.android.kt` defines. A product token that references a composite is refused by `generate`, which names the token.
 
-Platform requirements, for reference: the generated Kotlin calls `Oklch(…).toComposeColor()`, which needs the colormath library (github.com/ajalt/colormath), so you add that dependency yourself. <!-- limitation: .kiro/issues/2026-10-03-native-generator-findings-for-spec-129-intake.md --> The generated Kotlin files carry the Compose imports they use (`androidx.compose.ui`, `.text`, `.foundation` and `.animation`), so the Compose libraries are the dependency to add. The Compose BOM must be compatible with the component implementations. Where native support stands is in the Native status note at the end of "Platforms".
+Platform requirements, for reference: the generated Kotlin writes every colour as a `Color(…, ColorSpaces.DisplayP3)` constant with its channels computed at generation, so it needs no colour library. The generated Kotlin files carry the Compose imports they use (`androidx.compose.ui`, `.text`, `.foundation` and `.animation`), so the Compose libraries are the dependency to add. The Compose BOM must be compatible with the component implementations. Where native support stands is in the Native status note at the end of "Platforms".
 
 **Native status (iOS and Android).** Native onboarding is not supported yet. Don't start an iOS or Android product on this release. Web is the platform you can build on today.
 

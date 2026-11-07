@@ -21,8 +21,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-success-background'
-      ios: colorFeedbackSuccessBackground
-      android: color_feedback_success_background
+      ios: theme.colorFeedbackSuccessBackground
+      android: theme.color_feedback_success_background
     consumers:
       - Container-Base
   color.feedback.success.border:
@@ -32,8 +32,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-success-border'
-      ios: colorFeedbackSuccessBorder
-      android: color_feedback_success_border
+      ios: theme.colorFeedbackSuccessBorder
+      android: theme.color_feedback_success_border
     consumers:
       - Container-Base
   color.feedback.error.text:
@@ -43,8 +43,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-error-text'
-      ios: colorFeedbackErrorText
-      android: color_feedback_error_text
+      ios: theme.colorFeedbackErrorText
+      android: theme.color_feedback_error_text
     consumers:
       - Button-VerticalList-Item
       - Button-VerticalList-Set
@@ -64,8 +64,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-error-background'
-      ios: colorFeedbackErrorBackground
-      android: color_feedback_error_background
+      ios: theme.colorFeedbackErrorBackground
+      android: theme.color_feedback_error_background
     consumers:
       - Button-VerticalList-Item
       - Container-Base
@@ -76,8 +76,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-error-border'
-      ios: colorFeedbackErrorBorder
-      android: color_feedback_error_border
+      ios: theme.colorFeedbackErrorBorder
+      android: theme.color_feedback_error_border
     consumers:
       - Container-Base
       - Input-Checkbox-Base
@@ -89,8 +89,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-warning-text'
-      ios: colorFeedbackWarningText
-      android: color_feedback_warning_text
+      ios: theme.colorFeedbackWarningText
+      android: theme.color_feedback_warning_text
     consumers:
       - Container-Base
   color.feedback.warning.background:
@@ -100,8 +100,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-warning-background'
-      ios: colorFeedbackWarningBackground
-      android: color_feedback_warning_background
+      ios: theme.colorFeedbackWarningBackground
+      android: theme.color_feedback_warning_background
     consumers:
       - Container-Base
   color.feedback.warning.border:
@@ -111,8 +111,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-warning-border'
-      ios: colorFeedbackWarningBorder
-      android: color_feedback_warning_border
+      ios: theme.colorFeedbackWarningBorder
+      android: theme.color_feedback_warning_border
     consumers:
       - Container-Base
   color.feedback.info.text:
@@ -155,8 +155,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-select-text-rest'
-      ios: colorFeedbackSelectTextRest
-      android: color_feedback_select_text_rest
+      ios: theme.colorFeedbackSelectTextRest
+      android: theme.color_feedback_select_text_rest
     consumers:
       - Button-VerticalList-Item
       - Chip-Filter
@@ -167,8 +167,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-select-text-default'
-      ios: colorFeedbackSelectTextDefault
-      android: color_feedback_select_text_default
+      ios: theme.colorFeedbackSelectTextDefault
+      android: theme.color_feedback_select_text_default
     consumers:
       - Button-VerticalList-Item
   color.feedback.select.background.rest:
@@ -178,8 +178,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-select-background-rest'
-      ios: colorFeedbackSelectBackgroundRest
-      android: color_feedback_select_background_rest
+      ios: theme.colorFeedbackSelectBackgroundRest
+      android: theme.color_feedback_select_background_rest
     consumers:
       - Button-VerticalList-Item
       - Chip-Filter
@@ -192,8 +192,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-select-background-default'
-      ios: colorFeedbackSelectBackgroundDefault
-      android: color_feedback_select_background_default
+      ios: theme.colorFeedbackSelectBackgroundDefault
+      android: theme.color_feedback_select_background_default
     consumers:
       - Button-VerticalList-Item
   color.feedback.select.border.rest:
@@ -203,8 +203,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-select-border-rest'
-      ios: colorFeedbackSelectBorderRest
-      android: color_feedback_select_border_rest
+      ios: theme.colorFeedbackSelectBorderRest
+      android: theme.color_feedback_select_border_rest
     consumers:
       - Chip-Filter
       - Input-Checkbox-Base
@@ -216,8 +216,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-select-border-default'
-      ios: colorFeedbackSelectBorderDefault
-      android: color_feedback_select_border_default
+      ios: theme.colorFeedbackSelectBorderDefault
+      android: theme.color_feedback_select_border_default
     consumers:
       - Input-Checkbox-Base
       - Input-Radio-Base
@@ -228,8 +228,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-notification-background'
-      ios: colorFeedbackNotificationBackground
-      android: color_feedback_notification_background
+      ios: theme.colorFeedbackNotificationBackground
+      android: theme.color_feedback_notification_background
     consumers:
       - Badge-Count-Notification
   color.feedback.notification.text:
@@ -239,8 +239,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-feedback-notification-text'
-      ios: colorFeedbackNotificationText
-      android: color_feedback_notification_text
+      ios: theme.colorFeedbackNotificationText
+      android: theme.color_feedback_notification_text
     consumers:
       - Badge-Count-Notification
   color.identity.human:
@@ -250,8 +250,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-identity-human'
-      ios: colorIdentityHuman
-      android: color_identity_human
+      ios: theme.colorIdentityHuman
+      android: theme.color_identity_human
     consumers:
       - Avatar-Base
   color.identity.agent:
@@ -261,8 +261,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-identity-agent'
-      ios: colorIdentityAgent
-      android: color_identity_agent
+      ios: theme.colorIdentityAgent
+      android: theme.color_identity_agent
     consumers:
       - Avatar-Base
   color.action.primary:
@@ -292,8 +292,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-action-secondary'
-      ios: colorActionSecondary
-      android: color_action_secondary
+      ios: theme.colorActionSecondary
+      android: theme.color_action_secondary
     consumers:
       - Container-Base
   color.action.navigation:
@@ -317,8 +317,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-attention'
-      ios: colorAttention
-      android: color_attention
+      ios: theme.colorAttention
+      android: theme.color_attention
     consumers: []
   color.highlight:
     category: color
@@ -327,8 +327,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-highlight'
-      ios: colorHighlight
-      android: color_highlight
+      ios: theme.colorHighlight
+      android: theme.color_highlight
     consumers: []
   color.tech:
     category: color
@@ -337,8 +337,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-tech'
-      ios: colorTech
-      android: color_tech
+      ios: theme.colorTech
+      android: theme.color_tech
     consumers: []
   color.data:
     category: color
@@ -347,8 +347,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-data'
-      ios: colorData
-      android: color_data
+      ios: theme.colorData
+      android: theme.color_data
     consumers: []
   color.text.default:
     category: color
@@ -412,8 +412,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-contrast-on-light'
-      ios: colorContrastOnLight
-      android: color_contrast_on_light
+      ios: theme.colorContrastOnLight
+      android: theme.color_contrast_on_light
     consumers:
       - Container-Base
       - Input-Checkbox-Base
@@ -424,8 +424,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-contrast-on-dark'
-      ios: colorContrastOnDark
-      android: color_contrast_on_dark
+      ios: theme.colorContrastOnDark
+      android: theme.color_contrast_on_dark
     consumers:
       - Avatar-Base
       - Button-CTA
@@ -471,8 +471,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-structure-surface'
-      ios: colorStructureSurface
-      android: color_structure_surface
+      ios: theme.colorStructureSurface
+      android: theme.color_structure_surface
     consumers:
       - Badge-Count-Base
       - Badge-Label-Base
@@ -489,8 +489,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-structure-surface-primary'
-      ios: colorStructureSurfacePrimary
-      android: color_structure_surface_primary
+      ios: theme.colorStructureSurfacePrimary
+      android: theme.color_structure_surface_primary
     consumers:
       - Container-Base
       - Container-Card-Base
@@ -501,8 +501,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-structure-surface-secondary'
-      ios: colorStructureSurfaceSecondary
-      android: color_structure_surface_secondary
+      ios: theme.colorStructureSurfaceSecondary
+      android: theme.color_structure_surface_secondary
     consumers:
       - Container-Base
       - Container-Card-Base
@@ -513,8 +513,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-structure-surface-tertiary'
-      ios: colorStructureSurfaceTertiary
-      android: color_structure_surface_tertiary
+      ios: theme.colorStructureSurfaceTertiary
+      android: theme.color_structure_surface_tertiary
     consumers:
       - Container-Base
       - Container-Card-Base
@@ -525,8 +525,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-structure-border'
-      ios: colorStructureBorder
-      android: color_structure_border
+      ios: theme.colorStructureBorder
+      android: theme.color_structure_border
     consumers:
       - Avatar-Base
       - Chip-Base
@@ -573,8 +573,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-icon-default'
-      ios: colorIconDefault
-      android: color_icon_default
+      ios: theme.colorIconDefault
+      android: theme.color_icon_default
     consumers:
       - Badge-Label-Base
       - Container-Base
@@ -596,8 +596,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-print-default'
-      ios: colorPrintDefault
-      android: color_print_default
+      ios: theme.colorPrintDefault
+      android: theme.color_print_default
     consumers:
       - Button-CTA
       - Button-Icon
@@ -615,8 +615,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--glow-neon-purple'
-      ios: glowNeonPurple
-      android: glow_neon_purple
+      ios: theme.glowNeonPurple
+      android: theme.glow_neon_purple
     consumers: []
   glow.neonCyan:
     category: color
@@ -625,8 +625,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--glow-neon-cyan'
-      ios: glowNeonCyan
-      android: glow_neon_cyan
+      ios: theme.glowNeonCyan
+      android: theme.glow_neon_cyan
     consumers: []
   glow.neonYellow:
     category: color
@@ -635,8 +635,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--glow-neon-yellow'
-      ios: glowNeonYellow
-      android: glow_neon_yellow
+      ios: theme.glowNeonYellow
+      android: theme.glow_neon_yellow
     consumers: []
   glow.neonGreen:
     category: color
@@ -645,8 +645,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--glow-neon-green'
-      ios: glowNeonGreen
-      android: glow_neon_green
+      ios: theme.glowNeonGreen
+      android: theme.glow_neon_green
     consumers: []
   glow.neonPink:
     category: color
@@ -655,8 +655,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--glow-neon-pink'
-      ios: glowNeonPink
-      android: glow_neon_pink
+      ios: theme.glowNeonPink
+      android: theme.glow_neon_pink
     consumers: []
   color.progress.current.background:
     category: color
@@ -665,8 +665,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-progress-current-background'
-      ios: colorProgressCurrentBackground
-      android: color_progress_current_background
+      ios: theme.colorProgressCurrentBackground
+      android: theme.color_progress_current_background
     consumers:
       - Progress-Bar-Base
       - Progress-Indicator-Node-Base
@@ -677,8 +677,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-progress-current-text'
-      ios: colorProgressCurrentText
-      android: color_progress_current_text
+      ios: theme.colorProgressCurrentText
+      android: theme.color_progress_current_text
     consumers:
       - Progress-Indicator-Node-Base
   color.progress.pending.background:
@@ -688,8 +688,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-progress-pending-background'
-      ios: colorProgressPendingBackground
-      android: color_progress_pending_background
+      ios: theme.colorProgressPendingBackground
+      android: theme.color_progress_pending_background
     consumers:
       - Progress-Bar-Base
       - Progress-Indicator-Node-Base
@@ -700,8 +700,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-progress-pending-text'
-      ios: colorProgressPendingText
-      android: color_progress_pending_text
+      ios: theme.colorProgressPendingText
+      android: theme.color_progress_pending_text
     consumers:
       - Progress-Indicator-Node-Base
   color.progress.pending.connector:
@@ -711,8 +711,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-progress-pending-connector'
-      ios: colorProgressPendingConnector
-      android: color_progress_pending_connector
+      ios: theme.colorProgressPendingConnector
+      android: theme.color_progress_pending_connector
     consumers:
       - Progress-Indicator-Connector-Base
   color.progress.completed.background:
@@ -722,8 +722,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-progress-completed-background'
-      ios: colorProgressCompletedBackground
-      android: color_progress_completed_background
+      ios: theme.colorProgressCompletedBackground
+      android: theme.color_progress_completed_background
     consumers:
       - Progress-Bar-Base
       - Progress-Indicator-Node-Base
@@ -734,8 +734,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-progress-completed-text'
-      ios: colorProgressCompletedText
-      android: color_progress_completed_text
+      ios: theme.colorProgressCompletedText
+      android: theme.color_progress_completed_text
     consumers:
       - Progress-Indicator-Node-Base
   color.progress.completed.connector:
@@ -745,8 +745,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-progress-completed-connector'
-      ios: colorProgressCompletedConnector
-      android: color_progress_completed_connector
+      ios: theme.colorProgressCompletedConnector
+      android: theme.color_progress_completed_connector
     consumers:
       - Progress-Indicator-Connector-Base
   color.progress.error.background:
@@ -756,8 +756,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-progress-error-background'
-      ios: colorProgressErrorBackground
-      android: color_progress_error_background
+      ios: theme.colorProgressErrorBackground
+      android: theme.color_progress_error_background
     consumers:
       - Progress-Indicator-Node-Base
   color.progress.error.text:
@@ -767,8 +767,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-progress-error-text'
-      ios: colorProgressErrorText
-      android: color_progress_error_text
+      ios: theme.colorProgressErrorText
+      android: theme.color_progress_error_text
     consumers:
       - Progress-Indicator-Node-Base
   color.scrim.standard:
@@ -778,8 +778,8 @@ tokens:
     themeVarying: false
     platforms:
       web: '--color-scrim-standard'
-      ios: colorScrimStandard
-      android: color_scrim_standard
+      ios: theme.colorScrimStandard
+      android: theme.color_scrim_standard
     consumers:
       - Progress-Pagination-Base
   typography.bodySm:
