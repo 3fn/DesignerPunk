@@ -1,0 +1,91 @@
+{
+  "_comment": "synthetic, API-shaped: an infra run with cache: miss, beside one cold PASS run",
+  "runs": [
+    {
+      "id": 1301,
+      "head_sha": "d000000000000000000000000000000000000000",
+      "event": "pull_request",
+      "run_attempt": 1,
+      "conclusion": "failure",
+      "status": "completed",
+      "created_at": "2026-11-07T10:00:00Z",
+      "head_branch": "refs/pull/1/merge"
+    },
+    {
+      "id": 1302,
+      "head_sha": "e000000000000000000000000000000000000000",
+      "event": "pull_request",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "status": "completed",
+      "created_at": "2026-11-07T10:16:40Z",
+      "head_branch": "refs/pull/1/merge"
+    }
+  ],
+  "jobsByRun": {
+    "1301": [
+      {
+        "id": 950004,
+        "run_id": 1301,
+        "run_attempt": 1,
+        "name": "harness-android-tokens",
+        "head_sha": "d000000000000000000000000000000000000000",
+        "conclusion": "failure",
+        "created_at": "2026-11-07T10:00:00Z",
+        "started_at": "2026-11-07T10:00:30Z",
+        "completed_at": "2026-11-07T10:02:00Z"
+      }
+    ],
+    "1302": [
+      {
+        "id": 950005,
+        "run_id": 1302,
+        "run_attempt": 1,
+        "name": "harness-android-tokens",
+        "head_sha": "e000000000000000000000000000000000000000",
+        "conclusion": "success",
+        "created_at": "2026-11-07T10:16:40Z",
+        "started_at": "2026-11-07T10:17:10Z",
+        "completed_at": "2026-11-07T10:22:10Z"
+      }
+    ]
+  },
+  "checkRunsBySha": {
+    "d000000000000000000000000000000000000000": [
+      {
+        "id": 950004,
+        "name": "harness-android-tokens",
+        "conclusion": "failure"
+      }
+    ],
+    "e000000000000000000000000000000000000000": [
+      {
+        "id": 950005,
+        "name": "harness-android-tokens",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "annotationsByJob": {
+    "950004": [
+      {
+        "title": "harness-infra",
+        "message": "repo.maven.apache.org 403 resolve"
+      },
+      {
+        "title": "cache",
+        "message": "miss"
+      }
+    ],
+    "950005": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-android-tokens PASS"
+      },
+      {
+        "title": "cache",
+        "message": "miss"
+      }
+    ]
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "_comment": "synthetic, API-shaped: an infra run between two PASS runs at different heads",
+  "runs": [
+    {
+      "id": 1201,
+      "head_sha": "a000000000000000000000000000000000000000",
+      "event": "pull_request",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "status": "completed",
+      "created_at": "2026-11-07T10:00:00Z",
+      "head_branch": "refs/pull/1/merge"
+    },
+    {
+      "id": 1202,
+      "head_sha": "b000000000000000000000000000000000000000",
+      "event": "pull_request",
+      "run_attempt": 1,
+      "conclusion": "failure",
+      "status": "completed",
+      "created_at": "2026-11-07T10:16:40Z",
+      "head_branch": "refs/pull/1/merge"
+    },
+    {
+      "id": 1203,
+      "head_sha": "c000000000000000000000000000000000000000",
+      "event": "pull_request",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "status": "completed",
+      "created_at": "2026-11-07T10:33:20Z",
+      "head_branch": "refs/pull/1/merge"
+    }
+  ],
+  "jobsByRun": {
+    "1201": [
+      {
+        "id": 950001,
+        "run_id": 1201,
+        "run_attempt": 1,
+        "name": "harness-android-tokens",
+        "head_sha": "a000000000000000000000000000000000000000",
+        "conclusion": "success",
+        "created_at": "2026-11-07T10:00:00Z",
+        "started_at": "2026-11-07T10:00:30Z",
+        "completed_at": "2026-11-07T10:05:30Z"
+      }
+    ],
+    "1202": [
+      {
+        "id": 950002,
+        "run_id": 1202,
+        "run_attempt": 1,
+        "name": "harness-android-tokens",
+        "head_sha": "b000000000000000000000000000000000000000",
+        "conclusion": "failure",
+        "created_at": "2026-11-07T10:16:40Z",
+        "started_at": "2026-11-07T10:17:10Z",
+        "completed_at": "2026-11-07T10:18:40Z"
+      }
+    ],
+    "1203": [
+      {
+        "id": 950003,
+        "run_id": 1203,
+        "run_attempt": 1,
+        "name": "harness-android-tokens",
+        "head_sha": "c000000000000000000000000000000000000000",
+        "conclusion": "success",
+        "created_at": "2026-11-07T10:33:20Z",
+        "started_at": "2026-11-07T10:33:50Z",
+        "completed_at": "2026-11-07T10:38:50Z"
+      }
+    ]
+  },
+  "checkRunsBySha": {
+    "a000000000000000000000000000000000000000": [
+      {
+        "id": 950001,
+        "name": "harness-android-tokens",
+        "conclusion": "success"
+      }
+    ],
+    "b000000000000000000000000000000000000000": [
+      {
+        "id": 950002,
+        "name": "harness-android-tokens",
+        "conclusion": "failure"
+      }
+    ],
+    "c000000000000000000000000000000000000000": [
+      {
+        "id": 950003,
+        "name": "harness-android-tokens",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "annotationsByJob": {
+    "950001": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-android-tokens PASS"
+      },
+      {
+        "title": "cache",
+        "message": "hit"
+      }
+    ],
+    "950002": [
+      {
+        "title": "harness-infra",
+        "message": "repo.maven.apache.org 403 resolve"
+      },
+      {
+        "title": "cache",
+        "message": "hit"
+      }
+    ],
+    "950003": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-android-tokens PASS"
+      },
+      {
+        "title": "cache",
+        "message": "hit"
+      }
+    ]
+  }
+}

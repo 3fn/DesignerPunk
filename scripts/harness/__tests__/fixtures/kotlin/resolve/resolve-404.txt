@@ -1,0 +1,20 @@
+#harness-fixture source: SYNTHETIC, hand-built by Data 2026-11-07 in the shape of the recorded 403 log (resolve-403-cut.txt): a 404 from Maven Central: the coordinate is not there
+#harness-fixture expect: ordinary
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+A problem occurred configuring root project 'dp-harness-android'.
+> Could not resolve all artifacts for configuration 'classpath'.
+   > Could not resolve org.example:gone:1.0.
+     Required by:
+         buildscript of root project 'dp-harness-android'
+      > Could not resolve org.example:gone:1.0.
+         > Could not get resource 'https://repo.maven.apache.org/maven2/org/example/gone/1.0/gone-1.0.pom'.
+            > Could not GET 'https://repo.maven.apache.org/maven2/org/example/gone/1.0/gone-1.0.pom'.
+               > Received status code 404 from server: Not Found
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 9s

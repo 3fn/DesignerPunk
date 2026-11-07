@@ -1,0 +1,16 @@
+#harness-fixture source: SYNTHETIC, hand-built by Data 2026-11-07 in the shape of the recorded 403 log (resolve-403-cut.txt): a pinned version that does not exist: Gradle names no status, only "Could not find"
+#harness-fixture expect: ordinary
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':resolveAll'.
+> Could not resolve all files for configuration ':dp:debugCompileClasspath'.
+   > Could not find io.coil-kt:coil-compose:9.9.9.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/io/coil-kt/coil-compose/9.9.9/coil-compose-9.9.9.pom
+       - https://repo.maven.apache.org/maven2/io/coil-kt/coil-compose/9.9.9/coil-compose-9.9.9.pom
+     Required by:
+         project :dp
+
+BUILD FAILED in 6s

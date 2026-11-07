@@ -1,0 +1,205 @@
+{
+  "_comment": "Recorded from the GitHub REST API (fields trimmed): native-harness.yml run 42379456009 on #711, a pull_request run. Attempt 1 ran every job; attempt 2 re-ran only harness-android-components and lists the other jobs again as carried-over copies (new ids, no annotations, the original started_at).",
+  "runs": [
+    {
+      "id": 42379456009,
+      "head_sha": "df293bda64be3d01aff563aa2516af612d75959c",
+      "event": "pull_request",
+      "run_attempt": 2,
+      "conclusion": "success",
+      "status": "completed",
+      "created_at": "2026-11-07T13:59:31Z",
+      "head_branch": "task/129-8-native-colours-shadows"
+    }
+  ],
+  "jobsByRun": {
+    "42379456009": [
+      {
+        "id": 128423807693,
+        "run_id": 42379456009,
+        "run_attempt": 1,
+        "name": "harness-generate",
+        "head_sha": "df293bda64be3d01aff563aa2516af612d75959c",
+        "conclusion": "success",
+        "created_at": "2026-11-07T13:59:32Z",
+        "started_at": "2026-11-07T13:59:34Z",
+        "completed_at": "2026-11-07T14:00:34Z"
+      },
+      {
+        "id": 128424053018,
+        "run_id": 42379456009,
+        "run_attempt": 1,
+        "name": "harness-ios-tokens",
+        "head_sha": "df293bda64be3d01aff563aa2516af612d75959c",
+        "conclusion": "success",
+        "created_at": "2026-11-07T14:00:34Z",
+        "started_at": "2026-11-07T14:00:35Z",
+        "completed_at": "2026-11-07T14:01:51Z"
+      },
+      {
+        "id": 128424053024,
+        "run_id": 42379456009,
+        "run_attempt": 1,
+        "name": "harness-android-tokens",
+        "head_sha": "df293bda64be3d01aff563aa2516af612d75959c",
+        "conclusion": "success",
+        "created_at": "2026-11-07T14:00:34Z",
+        "started_at": "2026-11-07T14:00:35Z",
+        "completed_at": "2026-11-07T14:02:36Z"
+      },
+      {
+        "id": 128424053182,
+        "run_id": 42379456009,
+        "run_attempt": 1,
+        "name": "harness-ios-components",
+        "head_sha": "df293bda64be3d01aff563aa2516af612d75959c",
+        "conclusion": "success",
+        "created_at": "2026-11-07T14:00:34Z",
+        "started_at": "2026-11-07T14:00:36Z",
+        "completed_at": "2026-11-07T14:01:57Z"
+      },
+      {
+        "id": 128424053186,
+        "run_id": 42379456009,
+        "run_attempt": 1,
+        "name": "harness-android-components",
+        "head_sha": "df293bda64be3d01aff563aa2516af612d75959c",
+        "conclusion": "failure",
+        "created_at": "2026-11-07T14:00:34Z",
+        "started_at": "2026-11-07T14:00:36Z",
+        "completed_at": "2026-11-07T14:01:49Z"
+      },
+      {
+        "id": 128425379200,
+        "run_id": 42379456009,
+        "run_attempt": 2,
+        "name": "harness-android-components",
+        "head_sha": "df293bda64be3d01aff563aa2516af612d75959c",
+        "conclusion": "success",
+        "created_at": "2026-11-07T14:06:02Z",
+        "started_at": "2026-11-07T14:06:04Z",
+        "completed_at": "2026-11-07T14:08:44Z"
+      },
+      {
+        "id": 128425380081,
+        "run_id": 42379456009,
+        "run_attempt": 2,
+        "name": "harness-android-tokens",
+        "head_sha": "df293bda64be3d01aff563aa2516af612d75959c",
+        "conclusion": "success",
+        "created_at": "2026-11-07T14:06:02Z",
+        "started_at": "2026-11-07T14:00:35Z",
+        "completed_at": "2026-11-07T14:02:36Z"
+      },
+      {
+        "id": 128425380580,
+        "run_id": 42379456009,
+        "run_attempt": 2,
+        "name": "harness-generate",
+        "head_sha": "df293bda64be3d01aff563aa2516af612d75959c",
+        "conclusion": "success",
+        "created_at": "2026-11-07T14:06:02Z",
+        "started_at": "2026-11-07T13:59:34Z",
+        "completed_at": "2026-11-07T14:00:34Z"
+      },
+      {
+        "id": 128425381037,
+        "run_id": 42379456009,
+        "run_attempt": 2,
+        "name": "harness-ios-tokens",
+        "head_sha": "df293bda64be3d01aff563aa2516af612d75959c",
+        "conclusion": "success",
+        "created_at": "2026-11-07T14:06:02Z",
+        "started_at": "2026-11-07T14:00:35Z",
+        "completed_at": "2026-11-07T14:01:51Z"
+      },
+      {
+        "id": 128425407706,
+        "run_id": 42379456009,
+        "run_attempt": 2,
+        "name": "harness-ios-components",
+        "head_sha": "df293bda64be3d01aff563aa2516af612d75959c",
+        "conclusion": "success",
+        "created_at": "2026-11-07T14:06:09Z",
+        "started_at": "2026-11-07T14:00:36Z",
+        "completed_at": "2026-11-07T14:01:57Z"
+      }
+    ]
+  },
+  "checkRunsBySha": {
+    "df293bda64be3d01aff563aa2516af612d75959c": [
+      {
+        "id": 128425407706,
+        "name": "harness-ios-components",
+        "conclusion": "success"
+      },
+      {
+        "id": 128425381037,
+        "name": "harness-ios-tokens",
+        "conclusion": "success"
+      },
+      {
+        "id": 128425380580,
+        "name": "harness-generate",
+        "conclusion": "success"
+      },
+      {
+        "id": 128425380081,
+        "name": "harness-android-tokens",
+        "conclusion": "success"
+      },
+      {
+        "id": 128425379200,
+        "name": "harness-android-components",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "annotationsByJob": {
+    "128424053018": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-ios-tokens PASS"
+      }
+    ],
+    "128424053024": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-android-tokens PASS"
+      },
+      {
+        "title": "cache",
+        "message": "miss"
+      }
+    ],
+    "128424053182": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-ios-components PASS"
+      }
+    ],
+    "128424053186": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-android-components FAIL (pre-compile, baseline missing, toolchain, floor, stale)"
+      },
+      {
+        "title": "cache",
+        "message": "miss"
+      }
+    ],
+    "128425379200": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-android-components PASS"
+      },
+      {
+        "title": "cache",
+        "message": "hit"
+      }
+    ],
+    "128425380081": [],
+    "128425381037": [],
+    "128425407706": []
+  }
+}

@@ -427,13 +427,166 @@ export function blockedLine(run: GradleRun, roots: Plan['roots']): string | null
   return parsed.compiles[0].outcome === 'succeeded' ? null : 'probe: blocked (:tokens not compiled)';
 }
 
+// ─── The resolve step (Task 19.1; design § 3, "Verdicts name their side") ──────────────────────────
+
+/**
+ * One Gradle call before any compile: the root project's `resolveAll` task resolves the `debugCompileClasspath` of
+ * `:tokens`, `:probe` and `:dp` (and the Kotlin compiler's own classpath), and configuring the build resolves its plugins.
+ * `RESOLVED_MARKER` is written only when that call succeeds. The cache is saved only when the marker exists, so a
+ * registry fault (a 403 from Maven Central, say) cannot save a partial cache under the new key.
+ */
+export const RESOLVE_ARGS: readonly string[] = ['resolveAll'];
+export const RESOLVED_MARKER = 'resolved.ok';
+export const INFRA_FILE = 'infra.json';
+export const RESOLVE_LOG = 'resolve.txt';
+
+/** Hosts whose faults are the environment's: Maven Central, Google Maven, the Gradle plugin portal, `services.gradle.org`. */
+export const REGISTRY_HOSTS: readonly string[] = [
+  'repo.maven.apache.org',
+  'repo1.maven.org',
+  'plugins.gradle.org',
+  'services.gradle.org',
+  'dl.google.com',
+  'maven.google.com',
+];
+
+export type ResolveStepName = 'wrapper' | 'plugins' | 'dependencies';
+export interface InfraFault {
+  host: string;
+  /** An HTTP status, or `network` / `unknown-host` for a transport failure. */
+  status: number | string;
+  step: ResolveStepName;
+}
+export type ResolveClass = ({ kind: 'infra' } & InfraFault) | { kind: 'ordinary'; detail: string };
+
+const infraStatus = (n: number): boolean => n === 403 || n === 429 || (n >= 500 && n <= 599);
+const hostOf = (url: string): string => {
+  try {
+    return new URL(url).hostname;
+  } catch {
+    return '';
+  }
+};
+
+const UNKNOWN_HOST = /UnknownHostException|Name or service not known|Temporary failure in name resolution|nodename nor servname provided|Unknown host/i;
+const NETWORK_FAULT =
+  /Connection refused|Connection reset|Connect timed out|connect timed out|Read timed out|Remote host terminated the handshake|Software caused connection abort|Premature end of|Broken pipe|No route to host|Network is unreachable|SSLHandshakeException/;
+/** What a missing or mismatched coordinate looks like: a real defect, never the environment's. */
+const ORDINARY_SIGNAL = /Could not find\s|No matching (?:variant|configuration|capability)|Cannot find a (?:version|variant)|Received status code (?:400|401|404|410)\b|Server returned HTTP response code: (?:400|401|404|410)\b/;
+
+function resolveDetail(lines: readonly string[]): string {
+  const at = lines.findIndex((l) => l.startsWith('* What went wrong:'));
+  const body = (at < 0 ? lines : lines.slice(at + 1)).map((l) => l.trim()).filter((l) => l !== '');
+  return (body.slice(0, 3).join(' ') || 'the resolve step failed with no message').slice(0, 300);
+}
+
+/**
+ * Classifies a failed resolve step from Gradle's log. A fault is the environment's (`infra`) when it is a 403, a 429
+ * or a 5xx status, or a transport failure (connection refused or reset, timeout, unknown host), from a registry host.
+ * Everything else is `ordinary`: a 404, a "Could not find" coordinate, a version mismatch, a status from a host that
+ * is not a registry, or a log with no fault in it. Any ordinary signal wins over an infra one, so a real defect cannot
+ * hide behind a registry fault in the same log.
+ */
+export function classifyResolveFailure(log: string): ResolveClass {
+  const lines = log.split(/\r?\n/);
+  if (lines.some((l) => ORDINARY_SIGNAL.test(l))) return { kind: 'ordinary', detail: resolveDetail(lines) };
+  const phase: ResolveStepName = /A problem occurred configuring|buildscript of|Plugin \[id/.test(log) ? 'plugins' : 'dependencies';
+  let lastUrl = '';
+  let lastUrlAt = -100;
+  const faults: Array<{ host: string; status: number | string }> = [];
+  lines.forEach((line, i) => {
+    const u = /Could not (?:GET|HEAD|PUT|get resource)\s+'(https?:\/\/[^']+)'/.exec(line);
+    if (u) {
+      lastUrl = u[1];
+      lastUrlAt = i;
+    }
+    const downloading = /^Downloading (https?:\/\/\S+)/.exec(line);
+    if (downloading) {
+      lastUrl = downloading[1];
+      lastUrlAt = i;
+    }
+    const near = i - lastUrlAt <= 8 ? hostOf(lastUrl) : '';
+    const wrapper = /Server returned HTTP response code: (\d{3}) for URL: (https?:\/\/\S+)/.exec(line);
+    if (wrapper) faults.push({ host: hostOf(wrapper[2]), status: Number(wrapper[1]) });
+    const status = /Received status code (\d{3})/.exec(line);
+    if (status) faults.push({ host: near, status: Number(status[1]) });
+    if (!wrapper && !status) {
+      const unknown = UNKNOWN_HOST.test(line);
+      if (unknown || NETWORK_FAULT.test(line)) {
+        const named = /(?:UnknownHostException:|Connect to|host)\s+\[?([A-Za-z0-9.-]+\.[A-Za-z]{2,})/.exec(line);
+        faults.push({ host: near || (named ? named[1] : ''), status: unknown ? 'unknown-host' : 'network' });
+      }
+    }
+  });
+  const infra = faults.find((f) => REGISTRY_HOSTS.includes(f.host) && (typeof f.status === 'string' || infraStatus(f.status)));
+  // The wrapper's own download is the fault when the host is services.gradle.org; otherwise the phase that failed.
+  if (infra) return { kind: 'infra', host: infra.host, status: infra.status, step: infra.host === 'services.gradle.org' ? 'wrapper' : phase };
+  return { kind: 'ordinary', detail: resolveDetail(lines) };
+}
+
+export type GradleRunner = (androidDir: string, laneDir: string, args?: readonly string[]) => GradleRun;
+
+/**
+ * Runs the resolve step through `gradle`, keeps its log, and writes the result under `work`: `resolved.ok` on
+ * success, `infra.json` (`{ host, status, step }`) on an infra fault, neither on an ordinary failure. Stale copies of
+ * both are removed first.
+ */
+export function resolveStep(work: string, run: GradleRun): { kind: 'ok' } | ResolveClass {
+  fs.rmSync(path.join(work, RESOLVED_MARKER), { force: true });
+  fs.rmSync(path.join(work, INFRA_FILE), { force: true });
+  fs.writeFileSync(path.join(work, RESOLVE_LOG), run.log);
+  if (run.exitCode === 0) {
+    fs.writeFileSync(path.join(work, RESOLVED_MARKER), '');
+    return { kind: 'ok' };
+  }
+  const cls = classifyResolveFailure(run.log);
+  if (cls.kind === 'infra') fs.writeFileSync(path.join(work, INFRA_FILE), `${JSON.stringify({ host: cls.host, status: cls.status, step: cls.step }, null, 2)}\n`);
+  return cls;
+}
+
+/** The run files of an ordinary resolve failure: a failing `resolve` check, no compile, so the comparator fails as `check`. */
+export function resolveFailureRunFiles(plan: Plan, run: GradleRun, detail: string): Record<(typeof CONTEXTS)[number], RunFile> {
+  const base = { roots: plan.roots, gradle: { log: RESOLVE_LOG, exitCode: run.exitCode }, toolchain: {}, checks: [{ name: 'resolve', ok: false, detail }] };
+  return {
+    'harness-android-tokens': { ...base, files: { gen: { compiled: 0, floor: plan.floors.gen } } },
+    'harness-android-components': { ...base, files: { gen: { compiled: 0, floor: plan.floors.gen }, pkg: { compiled: 0, floor: plan.floors.pkg } } },
+  };
+}
+
+/**
+ * Everything the lane does between `prepare` and the compile. Returns whether to compile, and the exit status when not:
+ * an infra fault writes `infra.json`, no run file, and exits 1 (so the job writes no `harness-verdict`); an ordinary
+ * failure writes the run files with the failing `resolve` check and no compile, and exits 0 (the comparator then fails).
+ */
+export function resolveAndReport(
+  context: { work: string; plan: Plan; androidDir: string },
+  gradle: GradleRunner,
+  log: (line: string) => void,
+): { proceed: true } | { proceed: false; code: number } {
+  const run = gradle(context.androidDir, context.plan.laneDir, RESOLVE_ARGS);
+  const result = resolveStep(context.work, run);
+  if (result.kind === 'ok') {
+    log(`harness-android: resolve step ok; wrote ${RESOLVED_MARKER}`);
+    return { proceed: true };
+  }
+  if (result.kind === 'infra') {
+    log(`harness-infra: ${result.host} ${result.status} ${result.step}`);
+    return { proceed: false, code: 1 };
+  }
+  const files = resolveFailureRunFiles(context.plan, run, result.detail);
+  for (const c of CONTEXTS) fs.writeFileSync(path.join(context.work, `run-${c}.json`), `${JSON.stringify(files[c], null, 2)}\n`);
+  log(`FAIL resolve: ${result.detail}`);
+  log(`harness-android: resolve step failed (ordinary); wrote run-<context>.json with a failing resolve check, no compile`);
+  return { proceed: false, code: 0 };
+}
+
 // ─── The planted-internal self-test (Req 2.7) ────────────────────────────────────────────────────
 
 /**
  * Compiles the planted-internal fixture's `DesignTokens` as `:tokens` and a probe generated from the fixture's index
  * as `:probe`. A member the generator left `internal` must give exactly one `probe:` entry, and the read count 2 of 2.
  */
-export function selftest(repoRoot: string, work: string, log: (line: string) => void): boolean {
+export function selftest(repoRoot: string, work: string, log: (line: string) => void, infraOut: string = work): boolean {
   const fixture = path.join(repoRoot, PLANTED_FIXTURE);
   const laneDir = path.resolve(work, 'selftest-lane');
   fs.rmSync(laneDir, { recursive: true, force: true });
@@ -453,7 +606,22 @@ export function selftest(repoRoot: string, work: string, log: (line: string) => 
   write('dp.gen.sources', []);
   write('dp.res', [path.join(laneDir, 'empty-res')]);
 
-  const run = runGradle(path.join(repoRoot, 'harness', 'android'), laneDir, SELFTEST_GRADLE_ARGS);
+  const androidDir = path.join(repoRoot, 'harness', 'android');
+  // The same resolve step as the lane's, first: a registry fault is the environment's, so it writes infra.json (to
+  // `infraOut`, the folder the job's annotation step reads) and not a failing self-test.
+  const resolveRun = runGradle(androidDir, laneDir, RESOLVE_ARGS);
+  fs.writeFileSync(path.join(work, 'selftest-resolve.txt'), resolveRun.log);
+  if (resolveRun.exitCode !== 0) {
+    const cls = classifyResolveFailure(resolveRun.log);
+    if (cls.kind === 'infra') {
+      fs.mkdirSync(infraOut, { recursive: true });
+      fs.writeFileSync(path.join(infraOut, INFRA_FILE), `${JSON.stringify({ host: cls.host, status: cls.status, step: cls.step }, null, 2)}\n`);
+      log(`harness-infra: ${cls.host} ${cls.status} ${cls.step}`);
+    }
+    log(`selftest: FAIL (the resolve step failed: ${cls.kind === 'infra' ? `${cls.host} ${cls.status}` : cls.detail})`);
+    return false;
+  }
+  const run = runGradle(androidDir, laneDir, SELFTEST_GRADLE_ARGS);
   fs.writeFileSync(path.join(work, 'selftest-gradle.txt'), run.log);
   const roots = { gen: fixture, pkg: path.join(work, 'no-package'), probe: path.join(laneDir, 'src') };
   const parsed = parseKotlin({ log: run.log, exitCode: run.exitCode, roots });
@@ -480,22 +648,25 @@ export function main(argv: readonly string[], log: (line: string) => void = cons
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     if (arg === '--prepare-only' || arg === '--selftest') flags.add(arg);
-    else if (arg === '--consumer' || arg === '--work' || arg === '--pins') {
+    else if (arg === '--consumer' || arg === '--work' || arg === '--pins' || arg === '--infra-out') {
       const value = argv[++i];
       if (value === undefined) { log(`lane: ${arg} needs a value`); return 2; }
       values.set(arg, value);
     } else { log(`lane: unknown argument ${arg}`); return 2; }
   }
   const work = values.get('--work');
-  if (!work) { log('lane: usage: --consumer <root> --work <dir> [--prepare-only] [--pins <file>] | --selftest --work <dir>'); return 2; }
+  if (!work) { log('lane: usage: --consumer <root> --work <dir> [--prepare-only] [--pins <file>] | --selftest --work <dir> [--infra-out <dir>]'); return 2; }
   fs.mkdirSync(work, { recursive: true });
   try {
-    if (flags.has('--selftest')) return selftest(repoRoot, work, log) ? 0 : 1;
+    if (flags.has('--selftest')) return selftest(repoRoot, work, log, values.get('--infra-out') ?? work) ? 0 : 1;
     const consumer = values.get('--consumer');
     if (!consumer) { log('lane: --consumer is required'); return 2; }
     const plan = prepare({ repoRoot, consumer, work, pinsFile: values.get('--pins') ?? path.join(repoRoot, 'harness', 'pins.yaml'), log });
     if (flags.has('--prepare-only')) { log('harness-android: prepared; not run (--prepare-only)'); return 0; }
-    const run = runGradle(path.join(repoRoot, 'harness', 'android'), plan.laneDir);
+    const androidDir = path.join(repoRoot, 'harness', 'android');
+    const resolved = resolveAndReport({ work, plan, androidDir }, runGradle, log);
+    if (!resolved.proceed) return resolved.code;
+    const run = runGradle(androidDir, plan.laneDir);
     fs.writeFileSync(path.join(work, LOG_FILE), run.log);
     const blocked = blockedLine(run, plan.roots);
     if (blocked) log(blocked);

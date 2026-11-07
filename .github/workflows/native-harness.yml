@@ -302,20 +302,27 @@ jobs:
           if [ "$EVENT_NAME" = "pull_request" ]; then BASE="--base HEAD^1"; else BASE="--no-base"; fi
           npx tsx scripts/harness/compare.ts --context "$CONTEXT" --run harness-out/run-harness-android-tokens.json $BASE 2>&1 | tee harness-out/compare.txt
 
+      # Verdicts name their side. The comparator ran: harness-verdict, read only from compare.txt. The lane
+      # found an environment fault in its resolve step (harness-out/infra.json) and no comparator ran:
+      # harness-infra, with the host, the status and the step. The two branches are exclusive.
       - name: Verdict annotation
         if: always()
         run: |
           if [ -f harness-out/compare.txt ]; then
             line=$(grep '^harness-verdict:' harness-out/compare.txt | tail -n 1 || true)
             if [ -n "$line" ]; then echo "::notice title=harness-verdict::$line"; fi
+          elif [ -f harness-out/infra.json ] || [ -f harness-out/selftest/infra.json ]; then
+            f=harness-out/infra.json; [ -f "$f" ] || f=harness-out/selftest/infra.json
+            node -e 'const j = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8")); console.log("::notice title=harness-infra::" + j.host + " " + j.status + " " + j.step);' "$f"
           fi
 
       # actions/cache saves only when the job succeeds, and these contexts fail while the generator's output
       # does not compile, so a restore-and-save pair would read `miss` on every run. This step saves after a
-      # failed job too, whenever Gradle ran (harness-out/gradle.txt exists) and the key was not restored.
-      # `hit` therefore means: an earlier run, passing or failing, saved this key after Gradle ran.
+      # failed job too, but only when the lane's resolve step succeeded (harness-out/resolved.ok exists) and
+      # the key was not restored: a build that never resolved its dependencies saves nothing.
+      # `hit` therefore means: an earlier run, passing or failing, resolved this key's dependencies and saved it.
       - name: Save the Gradle cache
-        if: ${{ always() && steps.gradle-cache.outputs.cache-hit != 'true' && hashFiles('harness-out/gradle.txt') != '' }}
+        if: ${{ always() && steps.gradle-cache.outputs.cache-hit != 'true' && hashFiles('harness-out/resolved.ok') != '' }}
         uses: actions/cache/save@v4
         with:
           path: |
@@ -406,20 +413,27 @@ jobs:
           if [ "$EVENT_NAME" = "pull_request" ]; then BASE="--base HEAD^1"; else BASE="--no-base"; fi
           npx tsx scripts/harness/compare.ts --context "$CONTEXT" --run harness-out/run-harness-android-components.json $BASE 2>&1 | tee harness-out/compare.txt
 
+      # Verdicts name their side. The comparator ran: harness-verdict, read only from compare.txt. The lane
+      # found an environment fault in its resolve step (harness-out/infra.json) and no comparator ran:
+      # harness-infra, with the host, the status and the step. The two branches are exclusive.
       - name: Verdict annotation
         if: always()
         run: |
           if [ -f harness-out/compare.txt ]; then
             line=$(grep '^harness-verdict:' harness-out/compare.txt | tail -n 1 || true)
             if [ -n "$line" ]; then echo "::notice title=harness-verdict::$line"; fi
+          elif [ -f harness-out/infra.json ] || [ -f harness-out/selftest/infra.json ]; then
+            f=harness-out/infra.json; [ -f "$f" ] || f=harness-out/selftest/infra.json
+            node -e 'const j = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8")); console.log("::notice title=harness-infra::" + j.host + " " + j.status + " " + j.step);' "$f"
           fi
 
       # actions/cache saves only when the job succeeds, and these contexts fail while the generator's output
       # does not compile, so a restore-and-save pair would read `miss` on every run. This step saves after a
-      # failed job too, whenever Gradle ran (harness-out/gradle.txt exists) and the key was not restored.
-      # `hit` therefore means: an earlier run, passing or failing, saved this key after Gradle ran.
+      # failed job too, but only when the lane's resolve step succeeded (harness-out/resolved.ok exists) and
+      # the key was not restored: a build that never resolved its dependencies saves nothing.
+      # `hit` therefore means: an earlier run, passing or failing, resolved this key's dependencies and saved it.
       - name: Save the Gradle cache
-        if: ${{ always() && steps.gradle-cache.outputs.cache-hit != 'true' && hashFiles('harness-out/gradle.txt') != '' }}
+        if: ${{ always() && steps.gradle-cache.outputs.cache-hit != 'true' && hashFiles('harness-out/resolved.ok') != '' }}
         uses: actions/cache/save@v4
         with:
           path: |
