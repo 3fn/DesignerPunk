@@ -10,7 +10,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { RawInput, analyze, carriedOver, contextOf, normalize, parseInfra, parseVerdict, render } from '../stability';
+import { ApiJob, ApiRun, RawInput, analyze, carriedOver, contextOf, normalize, parseInfra, parseVerdict, render } from '../stability';
 
 const load = (name: string): RawInput =>
   JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'stability', name), 'utf8')) as RawInput;
@@ -304,5 +304,59 @@ describe('a partial re-run (run 42379456009, recorded): the verdict is read from
     const dropped = copies.filter((j) => carriedOver(j, jobs)).map((j) => j.name).sort();
     expect(dropped).toEqual(['harness-android-tokens', 'harness-generate', 'harness-ios-components', 'harness-ios-tokens']);
     expect(copies.find((j) => j.name === 'harness-android-components' && carriedOver(j, jobs))).toBeUndefined();
+  });
+});
+
+describe('a run that is not yet completed (MP-1; Peter, README rule 10, 2026-11-07T20:21:05Z)', () => {
+  const AT = 'harness-android-tokens';
+  const META = { repo: 'owner/repo', workflow: 'native-harness.yml', generatedAt: '2026-11-07T12:00:00Z' };
+  type Mutable = {
+    runs: ApiRun[];
+    jobsByRun: Record<number, ApiJob[]>;
+    checkRunsBySha: Record<string, { id: number; name: string; conclusion: string | null }[]>;
+    annotationsByJob: Record<number, { title: string | null; message: string }[]>;
+  };
+  const copy = (name: string): Mutable => JSON.parse(JSON.stringify(load(name))) as Mutable;
+  // break-no-verdict: 301 PASS, 302 died before the comparator (a break), 303 PASS. Make 303 unfinished.
+  const unfinished = (raw: Mutable, runId: number, status: string): Mutable => {
+    const run = raw.runs.find((r) => r.id === runId)!;
+    run.status = status;
+    run.conclusion = null;
+    for (const j of raw.jobsByRun[runId]) {
+      j.conclusion = null;
+      j.completed_at = null;
+      raw.annotationsByJob[j.id] = [];
+      for (const crs of Object.values(raw.checkRunsBySha)) for (const cr of crs) if (cr.id === j.id) cr.conclusion = null;
+    }
+    return raw;
+  };
+
+  it.each(['in_progress', 'queued'])('a %s run is skipped: not a break, not counted', (status) => {
+    const c = ctx(unfinished(copy('break-no-verdict.json'), 303, status) as unknown as RawInput, AT);
+    expect(c.skippedRuns).toEqual([{ runId: 303, status, headSha: 'b300000000000000000000000000000000000000', event: 'pull_request' }]);
+    expect(c.runs.map((r) => r.runId)).toEqual([301, 302]);
+    expect(c.runs.find((r) => r.runId === 302)?.breaks).toEqual(['no harness-verdict annotation (failed before the comparator)']);
+    expect(c.streak).toBe(0); // 302 breaks; the unfinished 303 neither extends nor restarts the count
+  });
+  it('an unfinished run after a clean streak leaves the streak where it was', () => {
+    const raw = copy('streak.json');
+    const lastId = [...raw.runs].reverse().find((r) => raw.jobsByRun[r.id].some((j) => j.name === AT))!.id;
+    const before = ctx(raw as unknown as RawInput, AT).streak;
+    unfinished(raw, lastId, 'in_progress');
+    const c = ctx(raw as unknown as RawInput, AT);
+    expect(c.skippedRuns.map((r) => r.runId)).toEqual([lastId]);
+    expect(c.streak).toBe(before - 1); // the run is no longer counted, and it is not a break
+  });
+  it('a record with no status field (older fixtures) is read as finished', () => {
+    const raw = copy('break-no-verdict.json');
+    for (const r of raw.runs) delete (r as { status?: string }).status;
+    const c = ctx(raw as unknown as RawInput, AT);
+    expect(c.skippedRuns).toEqual([]);
+    expect(c.runs).toHaveLength(3);
+  });
+  it('the rendered record lists skipped runs, with id and status, in a section of its own', () => {
+    const text = render(analyze(normalize(unfinished(copy('break-no-verdict.json'), 303, 'in_progress') as unknown as RawInput)), META);
+    expect(text).toContain('**Skipped runs**');
+    expect(text).toMatch(/\| 303 \| `b30000000` \| pull_request \| in_progress \|/);
   });
 });

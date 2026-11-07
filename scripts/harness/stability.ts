@@ -28,6 +28,10 @@
  * consecutive infra runs of one context at one head SHA are a finding. An infra run whose attempts end with
  * different conclusions is still a break.
  *
+ * A run whose status is not `completed` (queued, in progress) is not a break and not a counted run: it
+ * has not finished, so it has no verdict to be missing. It is skipped and listed, with its id and status, in
+ * a section of its own (MP-1; Peter's direction under README rule 10, 2026-11-07T20:21:05Z).
+ *
  * A dispatched run counts toward neither condition 2 nor condition 3 (Peter's Decision 2, "2 yes",
  * and tasks amendment 3 "D yes"); it is listed with the reason.
  *
@@ -132,6 +136,8 @@ export interface JobRecord {
   startedAt: string | null;
   completedAt: string | null;
   durationSeconds: number | null;
+  /** The run's status (`completed`, `in_progress`, `queued`); null when the API record carries none. */
+  runStatus: string | null;
   /** `PASS` or `FAIL` from the `harness-verdict` annotation; null when the annotation is absent. */
   verdict: 'PASS' | 'FAIL' | null;
   /** From the `harness-infra` annotation (`<host> <status> <step>`); null when absent. */
@@ -208,6 +214,7 @@ export function normalize(raw: RawInput): JobRecord[] {
         attempt: job.run_attempt,
         event: runById.get(job.run_id)?.event ?? run.event,
         headSha: job.head_sha,
+        runStatus: runById.get(job.run_id)?.status ?? run.status ?? null,
         conclusion: check ? check.conclusion : job.conclusion,
         jobConclusion: job.conclusion,
         createdAt: job.created_at,
@@ -257,6 +264,8 @@ export interface ContextAnalysis {
   context: Context;
   platform: Platform;
   runs: RunSummary[];
+  /** Runs whose status is not `completed`: skipped, neither a break nor counted. */
+  skippedRuns: { runId: number; status: string; headSha: string; event: string }[];
   pullRequestRuns: number;
   dispatchedRuns: number;
   /** Every infra run of the context, in run order, with its host, status and step. */
@@ -295,9 +304,14 @@ export function analyze(records: readonly JobRecord[], opts: AnalyzeOptions = {}
     const byRun = new Map<number, JobRecord[]>();
     for (const r of mine) byRun.set(r.runId, [...(byRun.get(r.runId) ?? []), r]);
     const runs: RunSummary[] = [];
+    const skippedRuns: ContextAnalysis['skippedRuns'] = [];
     for (const [runId, attempts] of byRun) {
       attempts.sort((a, b) => a.attempt - b.attempt);
       const last = attempts[attempts.length - 1];
+      if (last.runStatus !== null && last.runStatus !== 'completed') {
+        skippedRuns.push({ runId, status: last.runStatus, headSha: last.headSha, event: last.event });
+        continue;
+      }
       runs.push({
         runId,
         event: last.event,
@@ -312,6 +326,7 @@ export function analyze(records: readonly JobRecord[], opts: AnalyzeOptions = {}
       });
     }
     runs.sort(orderRuns);
+    skippedRuns.sort((a, b) => a.runId - b.runId);
 
     // Infra runs: listed per context, and two or more in a row at one head are a finding.
     const infraRuns = runs.filter((r) => r.infraRun);
@@ -373,6 +388,7 @@ export function analyze(records: readonly JobRecord[], opts: AnalyzeOptions = {}
       context,
       platform,
       runs,
+      skippedRuns,
       infraRuns,
       infraRate: runs.length === 0 ? 0 : infraRuns.length / runs.length,
       findings,
@@ -419,7 +435,7 @@ export function render(analysis: Analysis, meta: RenderMeta): string {
   lines.push('- `commits/<head sha>/check-runs`: the checks API, each context\'s check-run conclusion;');
   lines.push('- `check-runs/<job id>/annotations`: the `harness-verdict` and `cache` annotations, which outlast the logs.');
   lines.push('');
-  lines.push('**Rules applied** (conditions of § "Decision 6"). A dispatched run counts toward neither condition 2 nor condition 3. A run counts toward condition 3 only if its context reached the comparator (it carries `harness-verdict`). A run carrying `harness-infra` (an environment fault found before any comparison) is neither a break nor counted for condition 2 and is never a cold run; two or more consecutive infra runs at one head are printed as a finding. Duration is `completed_at - started_at`; the ceiling is ' + CEILING_SECONDS / 60 + ' minutes. For an iOS context, queue time is `started_at - max(created_at, harness-generate.completed_at)`.');
+  lines.push('**Rules applied** (conditions of § "Decision 6"). A dispatched run counts toward neither condition 2 nor condition 3. A run counts toward condition 3 only if its context reached the comparator (it carries `harness-verdict`). A run carrying `harness-infra` (an environment fault found before any comparison) is neither a break nor counted for condition 2 and is never a cold run; two or more consecutive infra runs at one head are printed as a finding. A run whose status is not `completed` is skipped: neither a break nor counted, and listed in a skipped-runs table per context. Duration is `completed_at - started_at`; the ceiling is ' + CEILING_SECONDS / 60 + ' minutes. For an iOS context, queue time is `started_at - max(created_at, harness-generate.completed_at)`.');
   lines.push('');
   for (const c of analysis.contexts) {
     lines.push(`## ${c.context}`);
@@ -436,6 +452,14 @@ export function render(analysis: Analysis, meta: RenderMeta): string {
       lines.push(`- **Condition 5** (queue time + duration of those runs against 10 minutes): ${c.queuePoor === null ? 'not yet measurable (fewer than three counted runs)' : c.queuePoor ? 'POOR: ' + c.overCeiling.length + ' run(s) over the ceiling' : 'within the ceiling'}.`);
     }
     lines.push('');
+    if (c.skippedRuns.length > 0) {
+      lines.push('**Skipped runs** (status not `completed`; neither a break nor counted for any condition):');
+      lines.push('');
+      lines.push('| run id | head SHA | event | status |');
+      lines.push('|---|---|---|---|');
+      for (const r of c.skippedRuns) lines.push(`| ${r.runId} | \`${r.headSha.slice(0, 9)}\` | ${r.event} | ${r.status} |`);
+      lines.push('');
+    }
     if (c.runs.length === 0) {
       lines.push('_No runs recorded._');
       lines.push('');
@@ -501,7 +525,7 @@ export function readXcodePins(shas: readonly string[], repoDir: string): Record<
   return out;
 }
 
-const USAGE = 'usage: stability.ts --repo <owner/name> [--workflow native-harness.yml] [--branch <ref>] [--xcode-pin <version>] [--out <file>]';
+const USAGE = 'usage: stability.ts --repo <owner/name> [--workflow native-harness.yml] [--branch <ref>] [--xcode-pin <version>] [--note <text>] [--out <file>]';
 
 export async function main(argv: readonly string[]): Promise<number> {
   const opts = new Map<string, string>();
@@ -522,7 +546,7 @@ export async function main(argv: readonly string[]): Promise<number> {
   const raw = await fetchRaw(repo, workflow, token, opts.get('branch'));
   raw.xcodePinBySha = readXcodePins([...new Set(raw.runs.map((r) => r.head_sha))], process.cwd());
   const analysis = analyze(normalize(raw), { currentXcodePin: opts.get('xcode-pin') ?? null });
-  const text = render(analysis, { repo, workflow, generatedAt: new Date().toISOString().replace(/\.\d+Z$/, 'Z') });
+  const text = render(analysis, { repo, workflow, generatedAt: new Date().toISOString().replace(/\.\d+Z$/, 'Z'), note: opts.get('note') });
   const out = opts.get('out');
   if (out) fs.writeFileSync(out, text);
   else process.stdout.write(text);
