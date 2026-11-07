@@ -1,0 +1,140 @@
+#harness-fixture toolchain: Temurin OpenJDK 17.0.21 (ubuntu-24.04 runner image), Gradle 9.8.2, AGP 9.5.0, Kotlin 2.4.21 (Compose compiler plugin 2.4.21), Compose BOM 2026.09.00, compileSdk 36, minSdk 26
+#harness-fixture source: the Gradle log of the first CI shakedown, native-harness.yml run 42323861901, job harness-android-components (artifact harness-out-harness-android-components, gradle.txt), 2026-11-07: a COLD run (the wrapper downloads Gradle, no self-test warmed the daemon). Cut: lines 1-60, 335-352, 636-642 and 1166-1216 of 1216 kept, every other line dropped. Rewritten: the runner's consumer folder -> /work/consumer, its checkout -> /work/repo. Nothing else changed. Order of interest: `> Task :tokens:compileDebugKotlin` and `> Task :dp:compileDebugKotlin` headers print, then `> Task :tokens:compileDebugKotlin FAILED` prints and the 291 `e:` lines of :tokens FOLLOW it (its header was already mentioned), then a second `> Task :dp:compileDebugKotlin` header and dp's own `e:` lines.
+#harness-fixture exit: 1
+#harness-fixture roots: gen=/work/consumer/dist/tokens pkg=/work/consumer/node_modules/@3fn/core probe=/work/probe/src
+Fetching distribution.
+Downloading https://services.gradle.org/distributions/gradle-9.8.2-bin.zip
+..............10%..............20%...............30%..............40%...............50%..............60%...............70%..............80%...............90%..............100%
+
+Welcome to Gradle 9.8.2!
+
+Here are the highlights of this release:
+ - Java 27 support
+ - Maven mirror settings reuse
+ - Linked problem locations in build output
+
+For more details see https://docs.gradle.org/9.8.2/release-notes.html
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+
+> Configure project :dp
+w: file:///work/repo/harness/android/dp/build.gradle.kts:45:17: 'fun srcDir(srcDir: Any): Any' is deprecated. Use `directories` mutable set instead.
+
+> Task :tokens:preBuild UP-TO-DATE
+> Task :tokens:preDebugBuild UP-TO-DATE
+> Task :tokens:generateDebugResources
+> Task :tokens:packageDebugResources
+> Task :tokens:processDebugNavigationResources
+> Task :probe:preBuild UP-TO-DATE
+> Task :probe:preDebugBuild UP-TO-DATE
+> Task :probe:generateDebugResources
+> Task :probe:packageDebugResources
+> Task :probe:processDebugNavigationResources
+> Task :dp:preBuild UP-TO-DATE
+> Task :dp:preDebugBuild UP-TO-DATE
+> Task :tokens:javaPreCompileDebug
+> Task :tokens:parseDebugLocalResources
+> Task :probe:parseDebugLocalResources
+> Task :dp:generateDebugResources
+> Task :probe:generateDebugRFile
+> Task :tokens:generateDebugRFile
+> Task :dp:packageDebugResources
+
+> Task :tokens:compileDebugKotlin
+harness-sources: :tokens gen=3
+harness-toolchain: java.version=17.0.21
+harness-toolchain: gradle.version=9.8.2
+harness-toolchain: kotlin.version=2.4.21
+harness-toolchain: agp.version=9.5.0
+harness-toolchain: compose.bom.version=2026.09.00
+
+> Task :dp:processDebugNavigationResources
+> Task :dp:parseDebugLocalResources
+> Task :dp:generateDebugRFile
+
+> Task :dp:compileDebugKotlin
+harness-sources: :dp gen=3 pkg=41
+
+> Task :tokens:compileDebugKotlin FAILED
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:15:30 Unresolved reference 'BorderWidthTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:17:22 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:19:22 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:21:22 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:23:29 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:25:29 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:687:61 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:688:41 Unresolved reference 'oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:688:48 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:688:50 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:689:54 Unresolved reference 'oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:689:64 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:689:70 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:690:53 Unresolved reference 'oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:690:63 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:690:69 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/product/ProductTokens.android.kt:9:41 Unresolved reference 'theme'.
+
+> Task :dp:compileDebugKotlin
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:15:30 Unresolved reference 'BorderWidthTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:17:22 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:19:22 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:21:22 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:23:29 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:690:63 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:690:69 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/product/ProductTokens.android.kt:9:41 Unresolved reference 'theme'.
+e: file:///work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:97:17 Unresolved reference 'darkerBlend' on receiver of type 'Color'.
+e: file:///work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:116:17 Unresolved reference 'darkerBlend' on receiver of type 'Color'.
+e: file:///work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:130:17 Unresolved reference 'lighterBlend' on receiver of type 'Color'.
+e: file:///work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:149:17 Unresolved reference 'saturate' on receiver of type 'Color'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Progress-Stepper-Base/platforms/android/ProgressStepperBase.android.kt:138:13 Unresolved reference 'BuildConfig'.
+e: file:///work/consumer/node_modules/@3fn/core/src/components/core/Progress-Stepper-Detailed/platforms/android/ProgressStepperDetailed.android.kt:180:13 Unresolved reference 'BuildConfig'.
+
+> Task :dp:compileDebugKotlin FAILED
+
+[Incubating] Problems report is available at: file:///work/repo/harness/android/build/reports/problems/problems-report.html
+
+FAILURE: Build completed with 2 failures.
+
+1: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':tokens:compileDebugKotlin' (registered by plugin 'com.android.internal.library').
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Kotlin compiler: UNRESOLVED_REFERENCE
+       Kotlin compiler error
+         Unresolved reference 'BorderWidthTokens'.
+         Location: /work/consumer/dist/tokens/ComponentTokens.android.kt:15
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+2: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':dp:compileDebugKotlin' (registered by plugin 'com.android.internal.library').
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Kotlin compiler: UNRESOLVED_REFERENCE
+       Kotlin compiler error
+         Unresolved reference 'BorderWidthTokens'.
+         Location: /work/consumer/dist/tokens/ComponentTokens.android.kt:15
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.8.2/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 1m 26s
+18 actionable tasks: 18 executed

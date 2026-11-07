@@ -532,6 +532,7 @@ describe('parseKotlin: fixtures recorded under Gradle 9.8.2 / Kotlin 2.4.21', ()
   it('every fixture log names the toolchain it was recorded under, and has its source, exit and roots', () => {
     const logs = fs.readdirSync(FIXTURES).filter((n) => n.endsWith('.txt'));
     expect(logs.sort()).toEqual([
+      'ci-cold-run-cut.txt',
       'dp-failed-cut.txt',
       'no-task-headers.txt',
       'planted-internal-run.txt',
@@ -559,7 +560,7 @@ describe('parseKotlin: fixtures recorded under Gradle 9.8.2 / Kotlin 2.4.21', ()
     for (const name of ['synthetic-interleaved.txt', 'synthetic-unattributed.txt']) {
       expect(readFixture(name).headers.get('toolchain')).toMatch(/SYNTHETIC/);
     }
-    for (const name of ['tokens-failed.txt', 'dp-failed-cut.txt', 'no-task-headers.txt', 'planted-internal-run.txt']) {
+    for (const name of ['tokens-failed.txt', 'dp-failed-cut.txt', 'no-task-headers.txt', 'planted-internal-run.txt', 'ci-cold-run-cut.txt']) {
       expect(readFixture(name).headers.get('toolchain')).not.toMatch(/SYNTHETIC/);
     }
   });
@@ -739,10 +740,25 @@ describe('parseKotlin: a FAILED line before the task\'s output', () => {
     expect(compileOf(r, 'probe').outcome).toBe('failed');
   });
 
-  it('ends at a FAILED line when the task already printed a header (header, output, FAILED: the 2026-11-04 order)', () => {
-    const r = run(log('> Task :probe:compileDebugKotlin', line, '> Task :probe:compileDebugKotlin FAILED', line));
+  it('keeps the output after a FAILED line with its task even when the task printed a header before (the cold CI order)', () => {
+    const r = run(log('> Task :probe:compileDebugKotlin', DP_TASK, '> Task :probe:compileDebugKotlin FAILED', line, '', DP_TASK, 'e: file:///r/pkg/B.kt:1:1 In dp.'));
     expect(obj(compileOf(r, 'probe').diagnostics)).toEqual({ 'probe:P.kt | Boom.': 1 });
-    expect(r.unattributed).toEqual([line]);
+    expect(obj(compileOf(r, 'dp').diagnostics)).toEqual({ 'pkg:B.kt | In dp.': 1 });
+    expect(r.unattributed).toEqual([]);
+  });
+
+  it('still reads the 2026-11-04 order alike: header, output, FAILED, nothing after', () => {
+    const r = run(log('> Task :probe:compileDebugKotlin', line, '> Task :probe:compileDebugKotlin FAILED', '', DP_TASK, 'e: file:///r/pkg/B.kt:1:1 In dp.'));
+    expect(obj(compileOf(r, 'probe').diagnostics)).toEqual({ 'probe:P.kt | Boom.': 1 });
+    expect(obj(compileOf(r, 'dp').diagnostics)).toEqual({ 'pkg:B.kt | In dp.': 1 });
+    expect(r.unattributed).toEqual([]);
+  });
+
+  it('ends at a Gradle line after the FAILED line, and at any other suffix', () => {
+    const a = run(log('> Task :probe:compileDebugKotlin FAILED', '', 'FAILURE: Build failed with an exception.', line));
+    expect(a.unattributed).toEqual([line]);
+    const b = run(log('> Task :probe:compileDebugKotlin FAILED', '> Task :probe:preBuild UP-TO-DATE', line));
+    expect(b.unattributed).toEqual([line]);
   });
 
   it('does not move a diagnostic to a task a later header names', () => {
@@ -757,6 +773,31 @@ describe('parseKotlin: a FAILED line before the task\'s output', () => {
     expect(a.unattributed).toEqual([line]);
     const b = run(log('> Task :probe:compileDebugKotlin UP-TO-DATE', line));
     expect(b.unattributed).toEqual([line]);
+  });
+});
+
+describe('parseKotlin: ci-cold-run-cut.txt (the first CI run, a cold one: :tokens\' FAILED line and its e: lines come after :dp\'s header)', () => {
+  const r = runFixture('ci-cold-run-cut.txt');
+
+  it('attributes :tokens\' lines that follow its second-mentioned FAILED line to :tokens, and :dp\'s to :dp, with nothing unattributed', () => {
+    expect(r.unattributed).toEqual([]);
+    const total = (c: CompileResult): number => [...c.diagnostics.values()].reduce((a, b) => a + b, 0);
+    // Counted by an independent pass over the fixture (a separate Python state machine): 17 e: lines under :tokens, 14 under :dp.
+    expect(total(compileOf(r, 'tokens'))).toBe(17);
+    expect(total(compileOf(r, 'dp'))).toBe(14);
+    expect(compileOf(r, 'probe').diagnostics.size).toBe(0);
+  });
+
+  it('keys the generated-file lines gen: under :tokens and the package-file lines pkg: under :dp, and reads both as failed', () => {
+    const tokens = [...compileOf(r, 'tokens').diagnostics.keys()];
+    expect(tokens.every((k) => k.startsWith('gen:'))).toBe(true);
+    expect(tokens).toContain("gen:ComponentTokens.android.kt | Unresolved reference 'BorderWidthTokens'.");
+    const dp = [...compileOf(r, 'dp').diagnostics.keys()];
+    expect(dp.some((k) => k.startsWith('pkg:src/blend/ThemeAwareBlendUtilities.android.kt'))).toBe(true);
+    expect(r.compiles.map((c) => c.outcome)).toEqual(['failed', 'not-run', 'failed']);
+    expect(compileOf(r, 'tokens').unrooted).toEqual([]);
+    expect(compileOf(r, 'dp').unrooted).toEqual([]);
+    expect(r.logComplete).toBe(true);
   });
 });
 
