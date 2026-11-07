@@ -408,11 +408,13 @@ public func calculatePaddingBlock(borderWidth: CGFloat) -> CGFloat {
  * Convenience function that determines padding based on the visual state's
  * border width requirement.
  * 
- * - Parameter visualState: The current visual state
+ * - Parameters:
+ *   - visualState: The current visual state
+ *   - theme: The theme the view reads from the environment
  * - Returns: The appropriate block padding value
  */
-public func calculatePaddingBlock(for visualState: VisualState) -> CGFloat {
-    let styles = getStylesForState(visualState)
+public func calculatePaddingBlock(for visualState: VisualState, theme: any DesignerPunkTheme) -> CGFloat {
+    let styles = getStylesForState(visualState, theme: theme)
     return calculatePaddingBlock(borderWidth: styles.borderWidth)
 }
 
@@ -425,10 +427,11 @@ public func calculatePaddingBlock(for visualState: VisualState) -> CGFloat {
  * - Parameters:
  *   - visualState: The current visual state
  *   - error: Whether error styling is applied
+ *   - theme: The theme the view reads from the environment
  * - Returns: The appropriate block padding value
  */
-public func calculatePaddingBlock(for visualState: VisualState, error: Bool) -> CGFloat {
-    let styles = computeStyles(visualState: visualState, error: error)
+public func calculatePaddingBlock(for visualState: VisualState, error: Bool, theme: any DesignerPunkTheme) -> CGFloat {
+    let styles = computeStyles(visualState: visualState, error: error, theme: theme)
     return calculatePaddingBlock(borderWidth: styles.borderWidth)
 }
 

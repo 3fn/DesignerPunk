@@ -58,8 +58,6 @@ import androidx.compose.ui.unit.sp
 import com.designerpunk.tokens.DesignTokens
 import com.designerpunk.tokens.LocalDPTheme
 import com.designerpunk.tokens.pressedBlend
-import com.designerpunk.tokens.color_feedback_select_background_rest
-import com.designerpunk.tokens.color_feedback_select_text_rest
 
 // MARK: - Chip-Filter Tokens
 

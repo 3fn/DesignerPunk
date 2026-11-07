@@ -32,7 +32,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -46,6 +46,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.designerpunk.tokens.DesignTokens
+import com.designerpunk.tokens.DesignerPunkTheme
 import com.designerpunk.tokens.LocalDPTheme
 
 // MARK: - Enums
@@ -191,13 +192,13 @@ fun ButtonIcon(
     val minTouchTarget = DesignTokens.tap_area_recommended  // 48dp
     
     // Get colors based on variant
-    val backgroundColor = getBackgroundColor(variant)
-    val iconColor = getIconColor(variant)
+    val backgroundColor = getBackgroundColor(variant, theme)
+    val iconColor = getIconColor(variant, theme)
     val borderWidth = getBorderWidth(variant)
-    val borderColor = getBorderColor(variant)
+    val borderColor = getBorderColor(variant, theme)
     
     // Get ripple color based on variant
-    val rippleColor = getRippleColor(variant)
+    val rippleColor = getRippleColor(variant, theme)
     
     // Remember interaction source for ripple effect
     val interactionSource = remember { MutableInteractionSource() }
@@ -243,7 +244,7 @@ fun ButtonIcon(
                 // @see Requirement 8.5
                 .clickable(
                     interactionSource = interactionSource,
-                    indication = rememberRipple(
+                    indication = ripple(
                         bounded = true,
                         color = rippleColor
                     ),
@@ -271,7 +272,7 @@ fun ButtonIcon(
  * - SECONDARY/TERTIARY: transparent
  * @see Requirements 2.1, 2.2, 2.3
  */
-private fun getBackgroundColor(variant: ButtonIconVariant): Color {
+private fun getBackgroundColor(variant: ButtonIconVariant, theme: DesignerPunkTheme): Color {
     return when (variant) {
         ButtonIconVariant.PRIMARY -> theme.color_action_primary
         ButtonIconVariant.SECONDARY, ButtonIconVariant.TERTIARY -> Color.Transparent
@@ -284,7 +285,7 @@ private fun getBackgroundColor(variant: ButtonIconVariant): Color {
  * - SECONDARY/TERTIARY: color.action.primary
  * @see Requirements 2.1, 2.2, 2.3
  */
-private fun getIconColor(variant: ButtonIconVariant): Color {
+private fun getIconColor(variant: ButtonIconVariant, theme: DesignerPunkTheme): Color {
     return when (variant) {
         ButtonIconVariant.PRIMARY -> theme.color_contrast_on_dark
         ButtonIconVariant.SECONDARY, ButtonIconVariant.TERTIARY -> theme.color_action_primary
@@ -310,7 +311,7 @@ private fun getBorderWidth(variant: ButtonIconVariant): Dp {
  * - PRIMARY/TERTIARY: transparent
  * @see Requirements 2.2
  */
-private fun getBorderColor(variant: ButtonIconVariant): Color {
+private fun getBorderColor(variant: ButtonIconVariant, theme: DesignerPunkTheme): Color {
     return when (variant) {
         ButtonIconVariant.SECONDARY -> theme.color_action_primary
         ButtonIconVariant.PRIMARY, ButtonIconVariant.TERTIARY -> Color.Transparent
@@ -323,7 +324,7 @@ private fun getBorderColor(variant: ButtonIconVariant): Color {
  * - SECONDARY/TERTIARY: primary color ripple on transparent background (color.action.primary)
  * @see Requirement 8.5
  */
-private fun getRippleColor(variant: ButtonIconVariant): Color {
+private fun getRippleColor(variant: ButtonIconVariant, theme: DesignerPunkTheme): Color {
     return when (variant) {
         ButtonIconVariant.PRIMARY -> theme.color_contrast_on_dark
         ButtonIconVariant.SECONDARY, ButtonIconVariant.TERTIARY -> theme.color_action_primary

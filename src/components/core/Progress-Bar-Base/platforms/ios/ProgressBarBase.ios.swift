@@ -51,7 +51,7 @@ struct ProgressBarBase: View {
             ZStack(alignment: .leading) {
                 // Track
                 Capsule()
-                    .fill(ProgressBarTokens.theme.colorProgressPendingBackground)
+                    .fill(theme.colorProgressPendingBackground)
 
                 // Fill
                 Capsule()
@@ -73,8 +73,8 @@ struct ProgressBarBase: View {
 
     private var fillColor: Color {
         switch mode {
-        case .determinate: return ProgressBarTokens.theme.colorProgressCompletedBackground
-        case .indeterminate: return ProgressBarTokens.intheme.colorProgressCompletedBackground
+        case .determinate: return theme.colorProgressCompletedBackground
+        case .indeterminate: return theme.colorProgressCompletedBackground
         }
     }
 

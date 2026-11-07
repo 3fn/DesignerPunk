@@ -918,7 +918,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 7 — Component theme reads and repairs
 
-- [ ] 12. Component theme reads, the theme-read guard, Progress-Bar and ripple (U7)
+- [x] 12. Component theme reads, the theme-read guard, Progress-Bar and ripple (U7)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Lina (Sonnet)
   **Traces**: Req 2.10, 4.4, 4.6, 4.7, 4.10, 8.2, 8.4; rows 14 (A5, A6's ripple part, A7), 15, 16 · design § 13
@@ -952,13 +952,13 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 12 Complete: Component theme reads and repairs (129)"` opens U7's PR; report the URL; STOP.
 
-  - [ ] 12.1 The two-sided theme-read guard
+  - [x] 12.1 The two-sided theme-read guard
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 4.4_
-  - [ ] 12.2 Row 16; the row 15 and row 2 state checks
+  - [x] 12.2 Row 16; the row 15 and row 2 state checks
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 4.6, 4.7, 4.10_
-  - [ ] 12.3 Ripple, the dead-import guard, row 14's outcome lines for A5 and A7
+  - [x] 12.3 Ripple, the dead-import guard, row 14's outcome lines for A5 and A7
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 8.2, 8.4_
 

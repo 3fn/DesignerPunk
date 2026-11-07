@@ -13,12 +13,8 @@ pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | type 'D
 pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | type 'DesignTokens' has no member 'scale100'	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift | cannot convert return expression of type 'Animation.Type' to return type 'Animation'	2	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift | cannot find 'VerticalListItemTokens' in scope	2	2026-10-02-consumer-generation-completeness-spec.md
-pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift | missing argument for parameter 'theme' in call	2	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSet.ios.swift | argument 'onMultiSelectionChange' must precede argument 'minSelections'	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSetPreview.swift | argument 'onMultiSelectionChange' must precede argument 'minSelections'	1	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Chip-Base/platforms/ios/ChipBase.ios.swift | cannot find 'theme' in scope	4	2026-09-26-native-component-theme-hardcoding.md	retagged=2026-11-07,Ada,2026-06-28-spec-094-platform-theme-emission-unwired.md
-pkg:src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift | cannot find 'theme' in scope	7	2026-09-26-native-component-theme-hardcoding.md	retagged=2026-11-07,Ada,2026-06-28-spec-094-platform-theme-emission-unwired.md
-pkg:src/components/core/Chip-Input/platforms/ios/ChipInput.ios.swift | cannot find 'theme' in scope	4	2026-09-26-native-component-theme-hardcoding.md	retagged=2026-11-07,Ada,2026-06-28-spec-094-platform-theme-emission-unwired.md
 pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'borderEmphasis' is inaccessible due to 'private' protection level	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'borderHeavy' is inaccessible due to 'private' protection level	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'radius050' is inaccessible due to 'private' protection level	1	2026-11-07-native-component-repair-from-first-harness-run.md
@@ -47,7 +43,6 @@ pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | invali
 pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | invalid redeclaration of 'spaceInset150'	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | invalid redeclaration of 'spaceInset200'	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Container-Card-Base/platforms/ios/ContainerCardBase.ios.swift | argument 'accessibilityLabel' must precede argument 'interactive'	1	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Container-Card-Base/platforms/ios/ContainerCardBase.ios.swift | cannot find 'theme' in scope	5	2026-09-26-native-component-theme-hardcoding.md	retagged=2026-11-07,Ada,2026-06-28-spec-094-platform-theme-emission-unwired.md
 pkg:src/components/core/Container-Card-Base/platforms/ios/ContainerCardBase.ios.swift | invalid redeclaration of 'motionFocusTransition'	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Input-Checkbox-Base/platforms/ios/InputCheckboxBase.ios.swift | type 'DesignTokens' has no member 'scale096'	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Input-Radio-Base/platforms/ios/InputRadioBase.ios.swift | type 'DesignTokens' has no member 'scale096'	1	2026-11-07-native-component-repair-from-first-harness-run.md
@@ -59,7 +54,3 @@ pkg:src/components/core/Nav-SegmentedChoice-Base/platforms/ios/NavSegmentedChoic
 pkg:src/components/core/Nav-SegmentedChoice-Base/platforms/ios/NavSegmentedChoiceBase.ios.swift | extra argument 'minHeight' in call	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Nav-TabBar-Base/platforms/ios/NavTabBarBase.ios.swift | 'onMoveCommand(perform:)' is unavailable in iOS	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Nav-TabBar-Base/platforms/ios/NavTabBarBase.ios.swift | extra argument 'width' in call	1	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Progress-Bar-Base/platforms/ios/ProgressBarBase.ios.swift | type 'ProgressBarTokens' has no member 'intheme'	1	2026-11-04-progress-bar-native-theme-reads-malformed.md
-pkg:src/components/core/Progress-Bar-Base/platforms/ios/ProgressBarBase.ios.swift | type 'ProgressBarTokens' has no member 'theme'	2	2026-11-04-progress-bar-native-theme-reads-malformed.md
-pkg:src/components/core/Progress-Indicator-Connector-Base/platforms/ios/ProgressIndicatorConnectorBase.ios.swift | cannot find 'theme' in scope	2	2026-09-26-native-component-theme-hardcoding.md	retagged=2026-11-07,Ada,2026-06-28-spec-094-platform-theme-emission-unwired.md
-pkg:src/components/core/Progress-Indicator-Node-Base/platforms/ios/ProgressIndicatorNodeBase.ios.swift | cannot find 'theme' in scope	8	2026-09-26-native-component-theme-hardcoding.md	retagged=2026-11-07,Ada,2026-06-28-spec-094-platform-theme-emission-unwired.md

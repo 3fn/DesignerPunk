@@ -47,7 +47,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.ripple
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -74,6 +74,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.designerpunk.tokens.BlendTokenValues
 import com.designerpunk.tokens.DesignTokens
+import com.designerpunk.tokens.DesignerPunkTheme
 import com.designerpunk.tokens.LocalDPTheme
 
 // MARK: - Enums
@@ -269,7 +270,8 @@ private object RadioTokens {
 private fun RadioCircle(
     selected: Boolean,
     size: RadioSize,
-    hasError: Boolean
+    hasError: Boolean,
+    theme: DesignerPunkTheme
 ) {
     // Animated border color for smooth state transitions
     // @see Requirement 1.6 - State transition animation using motion.selectionTransition
@@ -423,7 +425,7 @@ fun InputRadioBase(
                     onClick = { onSelectedChange(value) },
                     interactionSource = interactionSource,
                     // @see Requirement 7.3 - Material ripple effect using blend.pressedDarker (12%)
-                    indication = rememberRipple(
+                    indication = ripple(
                         bounded = true,
                         color = theme.color_feedback_select_border_rest.copy(
                             alpha = BlendTokenValues.pressedDarker
@@ -442,7 +444,8 @@ fun InputRadioBase(
             RadioCircle(
                 selected = isSelected,
                 size = size,
-                hasError = hasError
+                hasError = hasError,
+                theme = theme
             )
 
             // Label text
@@ -517,6 +520,7 @@ fun InputRadioBase(
 @Preview(showBackground = true, name = "InputRadioBase Component")
 @Composable
 fun InputRadioBasePreview() {
+    val theme = LocalDPTheme.current
     Column(
         modifier = Modifier.padding(DesignTokens.space_200),
         verticalArrangement = Arrangement.spacedBy(DesignTokens.space_300)

@@ -257,7 +257,7 @@ public struct VerticalListButtonItem: View {
     /// - 11pt padding for 1pt border (rest, notSelected, checked, unchecked)
     /// - 10pt padding for 2pt border (selected, or error in Select mode)
     private var paddingBlock: CGFloat {
-        return calculatePaddingBlock(for: visualState, error: error)
+        return calculatePaddingBlock(for: visualState, error: error, theme: theme)
     }
     
     /// Animation timing for state transitions

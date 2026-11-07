@@ -212,7 +212,7 @@ public struct ChipFilter: View {
         Button(action: handlePress) {
             chipContent
         }
-        .buttonStyle(ChipFilterButtonStyle(isPressed: $isPressed, selected: selected))
+        .buttonStyle(ChipFilterButtonStyle(isPressed: $isPressed, selected: selected, theme: theme))
         .frame(minHeight: ChipFilterTokens.tapArea)
         .accessibilityIdentifier(testID ?? "")
         .accessibilityLabel(label)
@@ -308,6 +308,9 @@ struct ChipFilterButtonStyle: ButtonStyle {
     
     /// Current selected state
     let selected: Bool
+    
+    /// The theme, read from the environment by the view and passed in: a style has no environment of its own
+    let theme: any DesignerPunkTheme
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label

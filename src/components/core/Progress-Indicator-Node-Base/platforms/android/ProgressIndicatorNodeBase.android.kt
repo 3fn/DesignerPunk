@@ -44,6 +44,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.designerpunk.tokens.DesignTokens
+import com.designerpunk.tokens.DesignerPunkTheme
 import com.designerpunk.tokens.LocalDPTheme
 import com.designerpunk.tokens.motionDurationFast
 import com.designerpunk.tokens.motionDurationNormal
@@ -122,7 +123,7 @@ enum class ProgressNodeContent {
  * 
  * @see Requirements 12.13-12.16 - Color application per state
  */
-private fun nodeBackgroundColor(state: ProgressNodeState): Color {
+private fun nodeBackgroundColor(state: ProgressNodeState, theme: DesignerPunkTheme): Color {
     return when (state) {
         ProgressNodeState.INCOMPLETE -> theme.color_progress_pending_background
         ProgressNodeState.CURRENT    -> theme.color_progress_current_background
@@ -134,7 +135,7 @@ private fun nodeBackgroundColor(state: ProgressNodeState): Color {
 /**
  * Get foreground (text/icon) color for a given node state.
  */
-private fun nodeForegroundColor(state: ProgressNodeState): Color {
+private fun nodeForegroundColor(state: ProgressNodeState, theme: DesignerPunkTheme): Color {
     return when (state) {
         ProgressNodeState.INCOMPLETE -> theme.color_progress_pending_text
         ProgressNodeState.CURRENT    -> theme.color_progress_current_text
@@ -200,14 +201,14 @@ fun ProgressIndicatorNodeBase(
     val effectiveContent = if (size == ProgressNodeSize.SM) ProgressNodeContent.NONE else content
 
     val bgColor by animateColorAsState(
-        targetValue = nodeBackgroundColor(state),
+        targetValue = nodeBackgroundColor(state, theme),
         animationSpec = if (reduceMotion) snap() else tween(
             durationMillis = motionDurationNormal,
             easing = motionEasingStandard
         ),
         label = "node-bg-color"
     )
-    val fgColor = nodeForegroundColor(state)
+    val fgColor = nodeForegroundColor(state, theme)
 
     val nodeModifier = modifier
         .then(if (testTag != null) Modifier.testTag(testTag) else Modifier)

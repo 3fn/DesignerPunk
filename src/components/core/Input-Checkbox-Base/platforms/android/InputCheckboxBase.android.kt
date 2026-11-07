@@ -43,7 +43,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.ripple
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -70,6 +70,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.designerpunk.tokens.BlendTokenValues
 import com.designerpunk.tokens.DesignTokens
+import com.designerpunk.tokens.DesignerPunkTheme
 import com.designerpunk.tokens.LocalDPTheme
 import com.designerpunk.tokens.pressedBlend
 
@@ -470,7 +471,7 @@ fun InputCheckboxBase(
                     onClick = { onCheckedChange(!checked) },
                     interactionSource = interactionSource,
                     // @see Requirement 7.3 - Material ripple effect using blend.pressedDarker
-                    indication = rememberRipple(
+                    indication = ripple(
                         bounded = true,
                         color = theme.color_feedback_select_border_rest.copy(
                             alpha = BlendTokenValues.pressedDarker
@@ -497,7 +498,8 @@ fun InputCheckboxBase(
                 indeterminate = indeterminate,
                 size = size,
                 backgroundColor = backgroundColor,
-                borderColor = borderColor
+                borderColor = borderColor,
+                theme = theme
             )
             
             // Label text
@@ -573,6 +575,7 @@ fun InputCheckboxBase(
  * @param size Checkbox size variant
  * @param backgroundColor Animated background color
  * @param borderColor Animated border color
+ * @param theme The theme the caller read once; this function has none in scope
  */
 @Composable
 private fun CheckboxBox(
@@ -580,7 +583,8 @@ private fun CheckboxBox(
     indeterminate: Boolean,
     size: CheckboxSize,
     backgroundColor: Color,
-    borderColor: Color
+    borderColor: Color,
+    theme: DesignerPunkTheme
 ) {
     Box(
         modifier = Modifier

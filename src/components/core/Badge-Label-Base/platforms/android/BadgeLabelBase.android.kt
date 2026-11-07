@@ -247,7 +247,7 @@ fun BadgeLabelBase(
             }
         )
         .clip(RoundedCornerShape(BadgeLabelBaseTokens.cornerRadius))
-        .background(BadgeLabelBaseTokens.backgroundColor)
+        .background(theme.color_structure_surface)
         .padding(
             horizontal = sizeConfig.paddingHorizontal,
             vertical = sizeConfig.paddingVertical
@@ -266,7 +266,7 @@ fun BadgeLabelBase(
             IconBase(
                 name = icon,
                 size = sizeConfig.iconSize,
-                color = BadgeLabelBaseTokens.iconColor
+                color = theme.color_icon_default
                 // Icon is decorative (contentDescription = null in IconBase)
             )
         }
@@ -280,7 +280,7 @@ fun BadgeLabelBase(
                 lineHeight = sizeConfig.fontSize * sizeConfig.lineHeight,
                 fontWeight = FontWeight.Medium
             ),
-            color = BadgeLabelBaseTokens.textColor,
+            color = theme.color_text_default,
             maxLines = 1,
             overflow = if (truncate) TextOverflow.Ellipsis else TextOverflow.Clip,
             modifier = if (truncate) {

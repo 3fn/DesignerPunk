@@ -36,6 +36,7 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.designerpunk.tokens.DesignTokens
+import com.designerpunk.tokens.DesignerPunkTheme
 import com.designerpunk.tokens.LocalDPTheme
 
 // MARK: - Connector State Enum
@@ -60,7 +61,7 @@ enum class ProgressConnectorState {
  * 
  * @see Requirements 12.10-12.11 - Color application per state
  */
-private fun connectorColor(state: ProgressConnectorState): Color {
+private fun connectorColor(state: ProgressConnectorState, theme: DesignerPunkTheme): Color {
     return when (state) {
         ProgressConnectorState.ACTIVE   -> theme.color_progress_completed_connector
         ProgressConnectorState.INACTIVE -> theme.color_progress_pending_connector
@@ -97,7 +98,7 @@ fun ProgressIndicatorConnectorBase(
     modifier: Modifier = Modifier
 ) {
     val theme = LocalDPTheme.current
-    val color = connectorColor(state)
+    val color = connectorColor(state, theme)
 
     val connectorModifier = modifier
         .then(if (testTag != null) Modifier.testTag(testTag) else Modifier)

@@ -372,7 +372,7 @@ fun BadgeCountNotification(
             }
         )
         .clip(CircleShape) // radiusHalf equivalent - creates circular/pill shape
-        .background(BadgeCountNotificationTokens.backgroundColor)
+        .background(theme.color_feedback_notification_background)
         .padding(
             horizontal = sizeConfig.paddingHorizontal,
             vertical = sizeConfig.paddingVertical
@@ -406,7 +406,7 @@ fun BadgeCountNotification(
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
             ),
-            color = BadgeCountNotificationTokens.textColor,
+            color = theme.color_feedback_notification_text,
             maxLines = 1
         )
     }

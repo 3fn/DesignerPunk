@@ -50,6 +50,7 @@ import com.designerpunk.components.core.IconBase
 // Import DesignTokens for semantic color token references
 // @see Rosetta System Architecture - Token Consumption Rule
 import com.designerpunk.tokens.DesignTokens
+import com.designerpunk.tokens.LocalDPTheme
 import com.designerpunk.tokens.AvatarTokens as GeneratedAvatarTokens
 // Import Coil AsyncImage for image loading
 // @see Requirements: 5.1, 5.2, 5.3, 5.5, 5.6 - Image support
@@ -353,6 +354,9 @@ fun Avatar(
     testID: String? = null,
     modifier: Modifier = Modifier
 ) {
+    // The theme, read once; the colours below are theme members (Spec 129 Q13 (a))
+    val theme = LocalDPTheme.current
+
     // Track hover state for interactive avatars
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
@@ -387,7 +391,7 @@ fun Avatar(
     // Determine border color based on size
     val borderColor = when (size) {
         AvatarSize.Xxl -> theme.color_contrast_on_dark
-        else -> AvatarTokens.borderColor.copy(alpha = AvatarTokens.opacityHeavy)
+        else -> theme.color_structure_border.copy(alpha = AvatarTokens.opacityHeavy)
     }
     
     // Determine current border width (changes on hover for interactive avatars)

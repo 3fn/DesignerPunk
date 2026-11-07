@@ -452,7 +452,7 @@ struct ContainerCardBase<Content: View>: View {
     // Resolve then pass: Card shorthand → Base token name string
     
     private var resolvedBackground: Color? {
-        mapCardBackgroundToColor(background)
+        mapCardBackgroundToColor(background, theme: theme)
     }
     
     private var resolvedShadow: ContainerBaseShadowProperties? {
@@ -480,9 +480,9 @@ struct ContainerCardBase<Content: View>: View {
     /// Interaction overlay color — applied on top of Base's background for hover/press
     private var interactionOverlayColor: Color {
         if interactive && isPressed {
-            return mapCardBackgroundToColor(background).pressedBlend()
+            return mapCardBackgroundToColor(background, theme: theme).pressedBlend()
         } else if interactive && isHovered {
-            return mapCardBackgroundToColor(background).hoverBlend()
+            return mapCardBackgroundToColor(background, theme: theme).hoverBlend()
         }
         return Color.clear
     }
@@ -727,11 +727,12 @@ func calculateCardPadding(
  * Map CardBackground to Color
  * 
  * @param background Card background value
+ * @param theme The theme the view reads from the environment (a free function has none of its own)
  * @returns SwiftUI Color for the background
  * 
  * @see Requirements 3.8, 4.2
  */
-func mapCardBackgroundToColor(_ background: CardBackground) -> Color {
+func mapCardBackgroundToColor(_ background: CardBackground, theme: any DesignerPunkTheme) -> Color {
     switch background {
     case .surfacePrimary:
         return theme.colorStructureSurfacePrimary /* color.surface.primary */
@@ -776,11 +777,12 @@ func mapCardBorderToLineWidth(_ border: CardBorder) -> CGFloat {
  * Map CardBorderColor to Color
  * 
  * @param borderColor Card border color value
+ * @param theme The theme the view reads from the environment (a free function has none of its own)
  * @returns SwiftUI Color for the border
  * 
  * @see Requirements 3.11
  */
-func mapCardBorderColorToColor(_ borderColor: CardBorderColor) -> Color {
+func mapCardBorderColorToColor(_ borderColor: CardBorderColor, theme: any DesignerPunkTheme) -> Color {
     switch borderColor {
     case .borderDefault:
         return theme.colorStructureBorder /* color.border.default */

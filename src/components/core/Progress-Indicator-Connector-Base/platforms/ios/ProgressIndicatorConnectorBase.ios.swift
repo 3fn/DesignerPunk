@@ -39,7 +39,7 @@ public enum ProgressConnectorState: String, CaseIterable {
  * @see Requirements 12.10-12.11 - Color application per state
  */
 private enum ProgressConnectorColors {
-    static func color(for state: ProgressConnectorState) -> Color {
+    static func color(for state: ProgressConnectorState, theme: any DesignerPunkTheme) -> Color {
         switch state {
         case .active:   return theme.colorProgressCompletedConnector
         case .inactive: return theme.colorProgressPendingConnector
@@ -97,7 +97,7 @@ public struct ProgressIndicatorConnectorBase: View {
 
     public var body: some View {
         Rectangle()
-            .fill(ProgressConnectorColors.color(for: state))
+            .fill(ProgressConnectorColors.color(for: state, theme: theme))
             .frame(height: connectorThickness)
             .frame(maxWidth: .infinity)
             .accessibilityHidden(true)

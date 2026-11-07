@@ -201,7 +201,7 @@ public struct ChipBase: View {
         Button(action: handlePress) {
             chipContent
         }
-        .buttonStyle(ChipButtonStyle(isPressed: $isPressed))
+        .buttonStyle(ChipButtonStyle(isPressed: $isPressed, theme: theme))
         .frame(minHeight: ChipTokens.tapArea)
         .accessibilityIdentifier(testID ?? "")
         .accessibilityLabel(label)
@@ -272,6 +272,9 @@ struct ChipButtonStyle: ButtonStyle {
     
     /// Binding to track pressed state
     @Binding var isPressed: Bool
+    
+    /// The theme, read from the environment by the view and passed in: a style has no environment of its own
+    let theme: any DesignerPunkTheme
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
