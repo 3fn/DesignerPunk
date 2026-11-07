@@ -1,0 +1,11 @@
+#harness-fixture source: RECORDED, with the fault induced. `./gradlew resolveAll` on an empty GRADLE_USER_HOME with JAVA_TOOL_OPTIONS=-Dhttps.proxyHost=nonexistent.invalid -Dhttps.proxyPort=3128, 2026-11-07 (Data, Temurin 17.0.21, wrapper 9.8.2): the wrapper's download of the Gradle distribution fails with an unknown host. In a real DNS outage the exception names the registry host; here it names the proxy, so the classifier attributes the fault to the host of the `Downloading` line. First 8 lines kept; nothing rewritten.
+#harness-fixture expect: infra services.gradle.org unknown-host wrapper
+
+Fetching distribution.
+Downloading https://services.gradle.org/distributions/gradle-9.8.2-bin.zip
+
+Attempt 1/1 failed. Reason: nonexistent.invalid
+Exception in thread "main" java.net.UnknownHostException: nonexistent.invalid
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:572)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at java.base/sun.net.NetworkClient.doConnect(NetworkClient.java:178)

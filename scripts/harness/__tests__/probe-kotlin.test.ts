@@ -21,14 +21,23 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import {
+  INFRA_FILE,
+  RESOLVED_MARKER,
+  RESOLVE_ARGS,
+  RESOLVE_LOG,
   buildChecks,
   buildRunFiles,
   assertOneCopyPerName,
+  classifyResolveFailure,
+  resolveAndReport,
+  resolveFailureRunFiles,
+  resolveStep,
   duplicateBaseNames,
   isTestKotlin,
   packagedKotlin,
   parseToolchain,
   type GradleRun,
+  type GradleRunner,
   type Plan,
 } from '../../../harness/android/lane';
 import {
@@ -611,5 +620,175 @@ describe('probe-kotlin: the readers and the command line', () => {
     } finally {
       fs.rmSync(out, { recursive: true, force: true });
     }
+  });
+});
+
+// ─── Task 19.1: the resolve step, the marker and the infra classifier ────────────────────────────
+
+describe('probe-kotlin: the resolve step (Task 19.1)', () => {
+  const RESOLVE = path.join(FIXTURES, 'resolve');
+  /** A fixture's log (its `#harness-fixture` lines stripped) and the expectation its header states. */
+  const fixture = (name: string): { log: string; expect: string } => {
+    const text = fs.readFileSync(path.join(RESOLVE, name), 'utf8').split('\n');
+    const expectLine = text.find((l) => l.startsWith('#harness-fixture expect: ')) ?? '';
+    return { log: text.filter((l) => !l.startsWith('#harness-fixture ')).join('\n'), expect: expectLine.slice('#harness-fixture expect: '.length) };
+  };
+  const shape = (c: ReturnType<typeof classifyResolveFailure>): string => (c.kind === 'infra' ? `infra ${c.host} ${c.status} ${c.step}` : 'ordinary');
+
+  describe('classifyResolveFailure', () => {
+    it('classifies the log cut from run 42379456009 (job 128424053186) as infra, with its host and status', () => {
+      const { log, expect: want } = fixture('resolve-403-cut.txt');
+      expect(fs.readFileSync(path.join(RESOLVE, 'resolve-403-cut.txt'), 'utf8')).toMatch(/run 42379456009.*job 128424053186/);
+      expect(classifyResolveFailure(log)).toEqual({ kind: 'infra', host: 'repo.maven.apache.org', status: 403, step: 'plugins' });
+      expect(shape(classifyResolveFailure(log))).toBe(want);
+    });
+
+    it.each([
+      ['resolve-429.txt', 'a 429 from the plugin portal'],
+      ['resolve-503.txt', 'a 503 from Google Maven'],
+      ['resolve-unknown-host.txt', 'an unknown host while the wrapper downloads the distribution'],
+    ])('classifies %s as infra (%s)', (name) => {
+      const { log, expect: want } = fixture(name);
+      expect(shape(classifyResolveFailure(log))).toBe(want);
+    });
+
+    it('names the registry host for a transport failure, and the phase that failed', () => {
+      expect(classifyResolveFailure(fixture('resolve-429.txt').log)).toEqual({ kind: 'infra', host: 'plugins.gradle.org', status: 429, step: 'plugins' });
+      expect(classifyResolveFailure(fixture('resolve-503.txt').log)).toEqual({ kind: 'infra', host: 'dl.google.com', status: 503, step: 'dependencies' });
+      expect(classifyResolveFailure(fixture('resolve-unknown-host.txt').log)).toEqual({ kind: 'infra', host: 'services.gradle.org', status: 'unknown-host', step: 'wrapper' });
+    });
+
+    it.each([
+      ['resolve-404.txt', 'a 404 from Maven Central'],
+      ['resolve-could-not-find.txt', 'a "Could not find" coordinate'],
+    ])('classifies %s as ordinary (%s)', (name) => {
+      const c = classifyResolveFailure(fixture(name).log);
+      expect(c.kind).toBe('ordinary');
+      expect(shape(c)).toBe(fixture(name).expect);
+      if (c.kind === 'ordinary') expect(c.detail.length).toBeGreaterThan(0);
+    });
+
+    it('lets any ordinary signal win over an infra fault in the same log, so a real defect cannot hide behind a 403', () => {
+      const mixed = `${fixture('resolve-403-cut.txt').log}\n> Could not find org.example:missing:1.0.\n`;
+      expect(classifyResolveFailure(mixed).kind).toBe('ordinary');
+      const noVariant = `${fixture('resolve-503.txt').log}\n   > No matching variant of org.example:lib:1.0 was found.\n`;
+      expect(classifyResolveFailure(noVariant).kind).toBe('ordinary');
+    });
+
+    it('treats a 403 from a host that is not a registry as ordinary, and a log with no fault in it as ordinary', () => {
+      const other = fixture('resolve-429.txt').log.replace(/plugins\.gradle\.org/g, 'artifacts.example.com');
+      expect(classifyResolveFailure(other).kind).toBe('ordinary');
+      expect(classifyResolveFailure('FAILURE: Build failed with an exception.\n\n* What went wrong:\nA problem occurred.\n').kind).toBe('ordinary');
+      expect(classifyResolveFailure('').kind).toBe('ordinary');
+    });
+
+    it('reads a connection refused or timeout from a registry as infra, and from anything else as ordinary', () => {
+      const refused = [
+        '* What went wrong:', 'Execution failed for task \':resolveAll\'.', "   > Could not resolve a:b:1.",
+        "      > Could not GET 'https://repo1.maven.org/maven2/a/b/1/b-1.pom'.", '         > Connect to repo1.maven.org:443 [repo1.maven.org/1.2.3.4] failed: Connection refused',
+      ].join('\n');
+      expect(classifyResolveFailure(refused)).toEqual({ kind: 'infra', host: 'repo1.maven.org', status: 'network', step: 'dependencies' });
+      expect(classifyResolveFailure(refused.replace(/repo1\.maven\.org/g, 'corp.example.com')).kind).toBe('ordinary');
+      expect(classifyResolveFailure(refused.replace('Connection refused', 'Read timed out')).kind).toBe('infra');
+    });
+  });
+
+  describe('resolveStep and the marker', () => {
+    const tmp = (): string => fs.mkdtempSync(path.join(os.tmpdir(), 'resolve-step-'));
+    const ok: GradleRun = { log: 'BUILD SUCCESSFUL in 4s\n', exitCode: 0 };
+
+    it('writes resolved.ok after a successful (fake) resolve, and no infra.json', () => {
+      const work = tmp();
+      try {
+        expect(resolveStep(work, ok)).toEqual({ kind: 'ok' });
+        expect(fs.existsSync(path.join(work, RESOLVED_MARKER))).toBe(true);
+        expect(fs.existsSync(path.join(work, INFRA_FILE))).toBe(false);
+        expect(fs.readFileSync(path.join(work, RESOLVE_LOG), 'utf8')).toBe(ok.log);
+      } finally {
+        fs.rmSync(work, { recursive: true, force: true });
+      }
+    });
+
+    it('leaves resolved.ok absent after a failed resolve, and removes a stale one', () => {
+      const work = tmp();
+      try {
+        fs.writeFileSync(path.join(work, RESOLVED_MARKER), '');
+        fs.writeFileSync(path.join(work, INFRA_FILE), '{}');
+        const failed: GradleRun = { log: fixture('resolve-403-cut.txt').log, exitCode: 1 };
+        expect(resolveStep(work, failed).kind).toBe('infra');
+        expect(fs.existsSync(path.join(work, RESOLVED_MARKER))).toBe(false);
+        expect(JSON.parse(fs.readFileSync(path.join(work, INFRA_FILE), 'utf8'))).toEqual({ host: 'repo.maven.apache.org', status: 403, step: 'plugins' });
+        expect(resolveStep(work, { log: fixture('resolve-404.txt').log, exitCode: 1 }).kind).toBe('ordinary');
+        expect(fs.existsSync(path.join(work, RESOLVED_MARKER))).toBe(false);
+        expect(fs.existsSync(path.join(work, INFRA_FILE))).toBe(false);
+      } finally {
+        fs.rmSync(work, { recursive: true, force: true });
+      }
+    });
+  });
+
+  describe('resolveAndReport: what the lane does between prepare and the compile', () => {
+    const stub = (): Plan => ({
+      laneDir: '/w/lane', genAbsolute: [], pkgAbsolute: [], floors: { gen: 3, pkg: 41 },
+      roots: { gen: '/w/gen', pkg: '/w/pkg', probe: '/w/probe' }, probeReads: { indexNames: 0, totalReads: 0 },
+      probeGroups: generateProbe(fixtureInput()).groups, config: probeConfigFromManifest(manifest(CONSUMER)), generatedText: '',
+    });
+    const run = (log: string, exitCode: number, seen: string[][] = []): GradleRunner => (_dir, _lane, args) => {
+      seen.push([...(args ?? [])]);
+      return { log, exitCode };
+    };
+    const withWork = (fn: (work: string) => void): void => {
+      const work = fs.mkdtempSync(path.join(os.tmpdir(), 'resolve-report-'));
+      try {
+        fn(work);
+      } finally {
+        fs.rmSync(work, { recursive: true, force: true });
+      }
+    };
+
+    it('on success runs only the resolve task, writes the marker, and goes on to compile', () => {
+      withWork((work) => {
+        const seen: string[][] = [];
+        const lines: string[] = [];
+        expect(resolveAndReport({ work, plan: stub(), androidDir: '/a' }, run('ok', 0, seen), (l) => lines.push(l))).toEqual({ proceed: true });
+        expect(seen).toEqual([[...RESOLVE_ARGS]]);
+        expect(fs.existsSync(path.join(work, RESOLVED_MARKER))).toBe(true);
+      });
+    });
+
+    it('on an infra fault writes infra.json, writes no run file, and exits non-zero (so no harness-verdict is written)', () => {
+      withWork((work) => {
+        const lines: string[] = [];
+        const r = resolveAndReport({ work, plan: stub(), androidDir: '/a' }, run(fixture('resolve-403-cut.txt').log, 1), (l) => lines.push(l));
+        expect(r).toEqual({ proceed: false, code: 1 });
+        expect(JSON.parse(fs.readFileSync(path.join(work, INFRA_FILE), 'utf8'))).toEqual({ host: 'repo.maven.apache.org', status: 403, step: 'plugins' });
+        expect(fs.readdirSync(work).filter((n) => n.startsWith('run-'))).toEqual([]);
+        expect(fs.existsSync(path.join(work, RESOLVED_MARKER))).toBe(false);
+        expect(lines).toContain('harness-infra: repo.maven.apache.org 403 plugins');
+      });
+    });
+
+    it('on an ordinary failure writes both run files with a failing resolve check and no compile, and exits 0', () => {
+      withWork((work) => {
+        const r = resolveAndReport({ work, plan: stub(), androidDir: '/a' }, run(fixture('resolve-could-not-find.txt').log, 1), () => undefined);
+        expect(r).toEqual({ proceed: false, code: 0 });
+        expect(fs.existsSync(path.join(work, INFRA_FILE))).toBe(false);
+        expect(fs.existsSync(path.join(work, RESOLVED_MARKER))).toBe(false);
+        for (const context of ['harness-android-tokens', 'harness-android-components']) {
+          const file = JSON.parse(fs.readFileSync(path.join(work, `run-${context}.json`), 'utf8'));
+          expect(file.checks).toHaveLength(1);
+          expect(file.checks[0]).toMatchObject({ name: 'resolve', ok: false });
+          expect(file.checks[0].detail).toMatch(/Could not find/);
+          expect(file.gradle).toEqual({ log: RESOLVE_LOG, exitCode: 1 });
+          expect(file.files.gen.compiled).toBe(0);
+        }
+      });
+    });
+
+    it('resolveFailureRunFiles gives the component context both tiers at zero compiled', () => {
+      const files = resolveFailureRunFiles(stub(), { log: '', exitCode: 1 }, 'x');
+      expect(files['harness-android-components'].files).toEqual({ gen: { compiled: 0, floor: 3 }, pkg: { compiled: 0, floor: 41 } });
+      expect(files['harness-android-tokens'].files).toEqual({ gen: { compiled: 0, floor: 3 } });
+    });
   });
 });

@@ -1,0 +1,20 @@
+#harness-fixture source: SYNTHETIC, hand-built by Data 2026-11-07 in the shape of the recorded 403 log (resolve-403-cut.txt): a 429 from the plugin portal while configuring
+#harness-fixture expect: infra plugins.gradle.org 429 plugins
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+A problem occurred configuring root project 'dp-harness-android'.
+> Could not resolve all artifacts for configuration 'classpath'.
+   > Could not resolve org.jetbrains.kotlin:kotlin-stdlib:2.4.10.
+     Required by:
+         buildscript of root project 'dp-harness-android'
+      > Could not resolve org.jetbrains.kotlin:kotlin-stdlib:2.4.10.
+         > Could not get resource 'https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-stdlib/2.4.10/kotlin-stdlib-2.4.10.pom'.
+            > Could not GET 'https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-stdlib/2.4.10/kotlin-stdlib-2.4.10.pom'.
+               > Received status code 429 from server: Too Many Requests
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 9s
