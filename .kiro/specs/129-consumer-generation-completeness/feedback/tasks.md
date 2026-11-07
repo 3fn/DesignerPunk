@@ -3057,3 +3057,36 @@ Peter, `date -u` at receipt 2026-11-07T14:12:30Z (orchestrator relay), verbatim:
 - [@DATA] Is your resolve step a Gradle task (which puts `harness/android/**` build files in the row) or a `lane.ts` invocation only? And your size for 19.1? → tasks.md Task 19 -- [THURGOOD R14]
 - [@STACY] LENS read of Task 19 and the condition 2/3 text, including the "not re-run" rule and the honest reach above. → tasks.md § "Decision 6", Task 19 -- [THURGOOD R14]
 - [@KENYA] Confirm the iOS criterion's cited cases (L1036, L1084–1098 at `d19eb3958`) are the right evidence. → tasks.md Task 19 -- [THURGOOD R14]
+
+## Tasks amendment 8 (2026-11-07): the promotion lifecycle
+
+Peter, `date -u` at receipt 2026-11-07T15:36:39Z (orchestrator relay), verbatim: "a with both additions and short amendment; 714 merged; go for U4" (`evidence/2026-11-07-peter-ruling-promotion-android-tokens.md`, which paraphrases the brief he read).
+
+#### [THURGOOD R15] — tasks amendment 8
+- **Short, as ruled**: one new block in § "Decision 6", "The promotion lifecycle". It has six steps: the offer, the grant, the change, ARMING, after promotion and demotion. The old "What each promotion is" sentence now points to it. Conditions 2 to 5 are unchanged. Design § 3 needs nothing; "Verdicts name their side" already defines `harness-infra`. → tasks.md § "Decision 6"
+- **After promotion** (Peter's first addition): an infra run fails the job and blocks the PR, and is never neutral or skipped; its remedy is a re-run. Neither the re-run's differing attempts nor a condition 2 break triggers demotion, because condition 2 tests for promotion and is not kept afterwards. This differs from condition 2's pre-promotion rule ("an infra run is not re-run"), and the difference is deliberate: before promotion a re-run would inflate the streak, and after it a re-run unblocks a PR.
+- **Demotion criterion**:
+  - **Triggers**: (a) a false green named by a record with its evidence (a key at the same head and pins, or a falsification case failing at that head); (b) repeated non-code failures from the stability record. (b) is three consecutive infra runs at one head, or infra on more than 10% of the last 20 PR runs, or two attempts-differ runs with no infra in the last 20.
+  - **Readers**: Thurgood, at the monthly check and at each release's S; Stacy, at RELEASE.
+  - **The act**: Peter's, as a weakening, under an issue-row grant naming it.
+- **My lens on it (Stacy's form)**:
+  - (b) is decidable from annotations and the jobs API, which outlast the logs.
+  - (a) is decidable only from its record, which must name a run id, a head and a key or a failing case. That is the honest reach: no instrument finds a false green by itself.
+  - The thresholds are guesses until a real outage. They trigger an offer to Peter, not a demotion, which limits the cost of a bad guess.
+- **Condition 1** (Peter's second addition): the toolchain case is per platform, because each platform pins different fields. The floor case is shared, because the comparator reads `files` the same way on both. iOS is met at `e37bdce07` (the `xcode.version` case; the `gen` floor cases). Android is owed, and the promotion grant's PR adds the case.
+- **Where the `harness-android-tokens` grant PR belongs**: a non-spec `chore/` PR under an issue-row grant record, not a task. Promotion is a per-context act that Decision 6 now defines once, not a unit deliverable.
+  - The count change needs an issue-row grant in any case, since it is never in standing scope.
+  - The record's paths:
+    - `tools/agent-generator/verify-gate-registration.sh`;
+    - `.kiro/hooks/complete-task.sh` (my scope, but named for the act);
+    - `scripts/harness/__tests__/compare.test.ts` and its fixtures, for the Android toolchain case, since the U1 task-row grant has ended;
+    - the stability record re-run under `.kiro/specs/**`, which is in my scope.
+  - The grant record merges first, in its own PR or with this amendment, then the chore PR. Stacy's ARMING read fires at the chore PR's merge.
+
+#### [THURGOOD R16] — tasks amendment 8, Stacy's read folded
+
+Stacy read amendment 8 at `2bdb47685` and judged it "ready with fixes"; her read was relayed by the orchestrator, and its text is not spliced here. Under the mirror clause the wording below is mine.
+1. **Step 4's gate check now names its instrument.** `verify-gate-registration.sh` runs in no workflow, which Stacy verified. A credentialed session runs it after Peter's branch-protection act and pastes its `PASS: all <N+1> required contexts present, count-asserted (N=<N+1> …)` line into the grant record; that line is the ARMED evidence. → tasks.md § "Decision 6", step 4
+2. **Demotion (b) now uses only what `stability.ts` prints.** Its two-consecutive-infra-runs-at-one-head finding is the one threshold, matching condition 2's finding. The other two signals are its printed infra rate above 10%, and two attempts-differ runs since the promotion's merge with no infra on either attempt. The last-20 window is dropped, since the script prints none. **Surviving counter-argument**: a rate over the record's whole run list is diluted by the runs before promotion, so it reacts slowly. Building a window would fix that, at the cost of `stability.ts` work that no unit owns today. → step 6 (b)
+3. **The recurring reads now have a home.** New charter record `.kiro/issues/2026-11-07-promoted-harness-contexts-demotion-read.md`, owners Thurgood and Stacy, P2 (guard) charter, Trigger `manual`. It closes when no harness context stays required, or when its owners' ballot writes the read into a standing home. Until then the monthly walk reads it. The plan line cites it. → step 6, "Who reads it"
+4. **Demotion (a)'s record pastes the missed diagnostic line,** or the failing case's output, verbatim, because run logs expire. → step 6 (a)
