@@ -100,12 +100,8 @@ val LocalRadioSetSize = compositionLocalOf<RadioSize?> { null }
  * They reference the core DesignTokens where possible.
  */
 private object RadioSetTokens {
-    /** Error text color
-     * References: color.feedback.error.text
-     * @see Requirement 9.8 - Error message display
-     */
-    val errorTextColor: Color
-        get() = theme.color_feedback_error_text
+    // Error text color: color.feedback.error.text (Requirement 9.8), read as
+    // `theme.color_feedback_error_text` in the composable, which holds the theme.
 
     /** Error text font size
      * References: fontSize050 (12sp)
@@ -227,7 +223,7 @@ fun InputRadioSet(
                     fontSize = RadioSetTokens.errorFontSize,
                     fontWeight = FontWeight.Normal
                 ),
-                color = RadioSetTokens.errorTextColor,
+                color = theme.color_feedback_error_text,
                 modifier = Modifier.semantics {
                     // @see Requirement 9.9 - liveRegion for TalkBack announcement
                     liveRegion = LiveRegionMode.Polite

@@ -13,7 +13,6 @@ pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | type 'D
 pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | type 'DesignTokens' has no member 'scale100'	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift | cannot convert return expression of type 'Animation.Type' to return type 'Animation'	2	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift | cannot find 'VerticalListItemTokens' in scope	2	2026-10-02-consumer-generation-completeness-spec.md
-pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift | missing argument for parameter 'theme' in call	2	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSet.ios.swift | argument 'onMultiSelectionChange' must precede argument 'minSelections'	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSetPreview.swift | argument 'onMultiSelectionChange' must precede argument 'minSelections'	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'borderEmphasis' is inaccessible due to 'private' protection level	1	2026-11-07-native-component-repair-from-first-harness-run.md

@@ -12,16 +12,7 @@ pkg:src/components/core/Avatar-Base/platforms/android/Avatar.android.kt | Cannot
 pkg:src/components/core/Avatar-Base/platforms/android/Avatar.android.kt | This declaration needs opt-in. Its usage must be marked with '@kotlin.ExperimentalStdlibApi' or '@OptIn(kotlin.ExperimentalStdlibApi::class)'	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Avatar-Base/platforms/android/Avatar.android.kt | Unresolved reference 'AvatarTokens'.	1	2026-10-02-consumer-generation-completeness-spec.md
 pkg:src/components/core/Avatar-Base/platforms/android/Avatar.android.kt | Unresolved reference 'GeneratedAvatarTokens'.	2	2026-10-02-consumer-generation-completeness-spec.md
-pkg:src/components/core/Avatar-Base/platforms/android/Avatar.android.kt | Unresolved reference 'borderColor'.	1	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Avatar-Base/platforms/android/Avatar.android.kt | Unresolved reference 'theme'.	5	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Badge-Count-Base/platforms/android/BadgeCountBase.android.kt | Unresolved reference 'backgroundColor'.	1	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Badge-Count-Base/platforms/android/BadgeCountBase.android.kt | Unresolved reference 'textColor'.	1	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Badge-Count-Notification/platforms/android/BadgeCountNotification.android.kt | Unresolved reference 'backgroundColor'.	1	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Badge-Count-Notification/platforms/android/BadgeCountNotification.android.kt | Unresolved reference 'textColor'.	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Badge-Label-Base/platforms/android/BadgeLabelBase.android.kt | Type checking has run into a recursive problem. Easiest workaround: specify the types of your declarations explicitly.	2	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Badge-Label-Base/platforms/android/BadgeLabelBase.android.kt | Unresolved reference 'backgroundColor'.	1	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Badge-Label-Base/platforms/android/BadgeLabelBase.android.kt | Unresolved reference 'iconColor'.	1	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Badge-Label-Base/platforms/android/BadgeLabelBase.android.kt | Unresolved reference 'textColor'.	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt | Unresolved reference 'ButtonIconTokens'.	3	2026-10-02-consumer-generation-completeness-spec.md
 pkg:src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt | Argument type mismatch: actual type is 'Modifier', but 'Color' was expected.	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt | Cannot infer type for type parameter 'T'. Specify it explicitly.	1	2026-11-07-native-component-repair-from-first-harness-run.md
@@ -42,8 +33,6 @@ pkg:src/components/core/Button-VerticalList-Item/platforms/android/VisualStateSt
 pkg:src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt | Unresolved reference 'Companion'.	8	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt | Unresolved reference 'CheckmarkTransition'.	5	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt | Unresolved reference 'VisualState'.	7	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt | Unresolved reference 'color_feedback_select_background_rest'.	1	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt | Unresolved reference 'color_feedback_select_text_rest'.	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Cannot access 'val borderEmphasis: Dp': it is private in file.	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Cannot access 'val borderHeavy: Dp': it is private in file.	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Container-Base/platforms/android/ContainerBase.android.kt | Cannot access 'val elevationContainer: Dp': it is private in file.	1	2026-11-07-native-component-repair-from-first-harness-run.md
@@ -86,13 +75,11 @@ pkg:src/components/core/Icon-Base/platforms/android/IconBase.android.kt | Unreso
 pkg:src/components/core/Input-Checkbox-Base/platforms/android/InputCheckboxBase.android.kt | Unresolved reference 'LocalContext'.	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Input-Checkbox-Base/platforms/android/InputCheckboxBase.android.kt | Unresolved reference 'Settings'.	2	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Input-Checkbox-Base/platforms/android/InputCheckboxBase.android.kt | Unresolved reference 'snap'.	2	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Input-Checkbox-Legal/platforms/android/InputCheckboxLegal.android.kt | Unresolved reference 'theme'.	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt | Property must be initialized or be abstract.	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt | Unresolved reference 'LocalContext'.	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt | Unresolved reference 'Settings'.	2	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt | Unresolved reference 'reduceMotion'.	3	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt | Unresolved reference 'snap'.	3	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Input-Radio-Set/platforms/android/InputRadioSet.android.kt | Unresolved reference 'theme'.	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Input-Text-Base/platforms/android/InputTextBase.android.kt | Argument type mismatch: actual type is 'AnimationSpec<Float>', but 'AnimationSpec<Dp>' was expected.	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Input-Text-Base/platforms/android/InputTextBase.android.kt | Conflicting declarations: ⏎ val accessibilityFocusColor: Color	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Input-Text-Base/platforms/android/InputTextBase.android.kt | Conflicting declarations: ⏎ val accessibilityFocusOffset: Dp	1	2026-11-07-native-component-repair-from-first-harness-run.md

@@ -96,11 +96,8 @@ data class ConsentChangeData(
  * @see Requirement 9.8-9.9 - Required indicator
  */
 private object LegalCheckboxTokens {
-    /** Required indicator text color
-     * References: color.text.muted
-     */
-    val requiredIndicatorColor: Color
-        get() = theme.color_text_muted
+    // Required indicator text color: color.text.muted, read as `theme.color_text_muted`
+    // in the composable (a theme member is read from the theme the composable holds).
     
     /** Required indicator font size
      * References: fontSize050 (12sp)
@@ -272,7 +269,7 @@ fun InputCheckboxLegal(
                     fontSize = LegalCheckboxTokens.requiredFontSize,
                     fontWeight = FontWeight.Medium
                 ),
-                color = LegalCheckboxTokens.requiredIndicatorColor,
+                color = theme.color_text_muted,
                 modifier = Modifier
                     .clearAndSetSemantics {
                         contentDescription = "Required field"
