@@ -5,7 +5,7 @@
 **Author**: Thurgood (spec formalization), briefed by the orchestrator
 **Status**: **PLACEHOLDER.** No round has run. This file holds no requirements, no design and no scope decision. Nothing here is built, scaffolded or created. It is not the outline that the native plan's § 6 item 8 describes (seeded from the charter, the measured list, the probes and 129's rulings, at Peter's go). That outline replaces this file when its round runs. Until then this file gives Spec 132 a directory, a row at each release's S, and a path that records can name.
 **Owners (by domain)**: Kenya (iOS: packaging, the D4 app, the render lane) and Data (Android: the same), the goal record's owners; Lina (component content, the public-API pass, the contract tests, the access-level and contract-validation ballots); Ada (`generate`, which owns our module's manifest, and the deprecated aliases; the plan puts the generator paths in 132's write scope, with Ada as one of its owners); Leonardo (the fixture app's content, the adopter journey, the walkthrough); Thurgood (formalization, the D6 checker); Stacy (the claims passes, the CLOSEOUT read).
-**Naming**: **proposed, Peter's call.** The plan of record calls it "Spec 132" and gives no directory name. 133's outline and the priorities record call it "the native adopter spec", so the directory is `132-native-adopter`. Every record that names a 132 path uses `132-*`, so a different name moves no Trigger, as long as it is chosen before `requirements.md` exists.
+**Naming**: **Peter's call; two options.** The plan of record calls it "Spec 132" and gives no directory name. (1) `132-native-adopter`, from 133's outline and the priorities record, which call it "the native adopter spec"; this directory uses it until Peter chooses. (2) `132-native-components-in-app`, Leonardo's preference (seat read, 2026-11-07), after the goal's "in the app as described". Every record that names a 132 path uses `132-*`, so a different name moves no Trigger, as long as it is chosen before `requirements.md` exists.
 **Pointer-shaped on purpose**: facts that go stale (error counts, view counts, what 129 has shipped, sizes) are not copied here. They come from their records, and from `spec-facts.sh` at the round's opening (§ 5).
 
 ---
@@ -13,6 +13,10 @@
 ## 1. Why this file exists now
 
 - **Peter, received 2026-11-07T17:46Z** (chat, relayed by the orchestrator; UNVERIFIED here: the relay is chat only), verbatim: "Let's capture 132 with what we have so far. I don't want to risk losing it."
+- **The goal, in Peter's words** (verbatim, received 2026-11-05T03:09:41Z, as the goal record quotes them; the typo is kept as received and reads "will successfully render", meaning unchanged):
+  - "Re: 2, I was envisioning (a)". Option (a) was components as a **package dependency** (plan-r2 § 1, "The goal, in Peter's words"; what "dependency" means there).
+  - "they can use our existing ones and use DesignerPunk to build more as they require."
+  - "That the components are functional, and will successful render, in the app as described."
 - **What "what we have" is**: Spec 132 was approved as part of the native plan, as the second of two specs under one goal. The approval's record is `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-05-native-plan/` (`README.md` § "What Peter decided, and when"; his words in `peter-2026-11-05.md`). Until now 132 existed only in references.
 - **What the folder does**: under ballot `2026-11-04-waiting-spec-row` § 2, a directory with a `design-outline.md`, no `requirements.md` and no `closed` outcome line is a waiting spec. It is listed at each release's S, and Peter answers its row open, park (with a git-visible re-ask event) or closed. **No outcome line is written now.** The priorities record says 132's outline round "opens on Peter's go" (its walk line of 2026-11-05). This file is not that go.
 
@@ -22,11 +26,13 @@ Everything below is in `.kiro/specs/129-consumer-generation-completeness/evidenc
 
 | What | Where |
 |---|---|
-| The goal, in Peter's words | `.kiro/issues/2026-09-26-native-component-distribution.md` § "Goal (Peter, 2026-11-05)". That record is the goal's home until 132's outline round settles (§ 4 below). |
+| The goal, in Peter's words | `.kiro/issues/2026-09-26-native-component-distribution.md` § "Goal (Peter, 2026-11-05)". That record is the goal's home until 132's outline round settles (§ 4.2 below). |
 | **132's acceptance sentence**: Peter's original sentence, moved word for word from 129 under "B (a)" | the same section, "Spec 132's acceptance sentence" |
 | The definition of done, D1–D10. D1–D3 are 129's ("C yes"); **D4–D10 are 132's** | plan-r2 § 1, "The definition of done", with the D1 probe-sentence amendment in `README.md` |
+| **What "as described" does not mean**: that system controls look the same on iOS 17 and iOS 26; a component that follows platform convention gets the system's look, and one that departs is drawn by us and checked by D5 | plan-r2 § 1, "What 'as described' does not mean"; ballot `2026-10-18-true-native-development-is-not-true-native-design` |
+| **The `rendering:` prerequisite**: each component records its choice per platform in a `rendering:` field, before 132's render lanes. No component has one today | the same paragraph of plan-r2 § 1 (Lina; Leonardo PLAN R2) |
 | The six work packages, and the line between the specs: "129 owns what `generate` emits and what the package ships; 132 owns what is written into, or runs in, an adopter's app" | plan-r2 § 2 |
-| **How 132 is cut**: one vertical slice, then one unit per family. **The first family**: Chip-Base, Chip-Filter and Chip-Input, plus Icon-Base, one adopter-authored component (D10) and that family's code samples (D8). "The tasks round still picks." | plan-r2 § 2, "How 132 is cut" |
+| **How 132 is cut**: one vertical slice, then one unit per family. **The first family**: Chip-Base, Chip-Filter and Chip-Input, plus Icon-Base, one adopter-authored component (D10) and that family's code samples (D8). "The tasks round still picks." **The adopter component**: its criteria are D10's; the pick is the team's at the tasks round, not Peter's. D10 includes one deliberate same-name case, which proves the naming rule | plan-r2 § 2, "How 132 is cut"; § 1, D10; § 3, the design conflict |
 | **Order (x′)**: 129 → 132's first family → Peter re-places the remaining families against 131 using that family's measured cost → 131 → 128 → 130 | plan-r2 § 7 item 3; Peter, "Let's go (x′)", 2026-11-05T04:06:22Z; the priorities record's 2026-11-05 walk line |
 | What the outline round is seeded from, and what happens at its merge | plan-r2 § 6 item 8 |
 | The spec structure (B2) and the design conflict over where adopter components and their tokens live | plan-r2 § 3 |
@@ -42,6 +48,8 @@ Everything below is in `.kiro/specs/129-consumer-generation-completeness/evidenc
 | **The iOS minimum, asked again**: "iOS 17.0 stays … the floor is asked again at Spec 132's outline, before any native support claim" | Peter's "4 (a)", received 2026-11-05T13:05:54Z; Spec 129 `design.md` § 0 |
 | The Android toolchain range numbers | Spec 129 `design.md` § 0, decision 5's row: "The range numbers stay with Spec 132's D4" |
 | **Native as a semver promise** (already ruled, carried): native changes made before 132's support claim ship in minor releases; deprecated-alias emission and D9's public-API diff land before the claim | Peter's "7 (a)", same receipt; Spec 129 `design.md` § 0 |
+| **Android** (Data, seat read 2026-11-07): the API-26 floor test belongs in 132's own module, because a Kotlin compile checks no API level; the range numbers wait for the D4 app's builds; the render probe (an emulator on `ubuntu-24.04` versus Robolectric) is still unrecorded | ballot `2026-11-05-core-goals-android-minimum` F-1 (iii) (the floor rule "becomes a test in Spec 132's module"); Spec 129 `design.md` § 0; plan-r2 § 2, "Probes" |
+| **iOS** (Kenya, seat read 2026-11-07): an iOS 17 runtime probe for the outline, as a one-off `macos-15` CI run, which needs Peter's go and a workflow grant; until then the standing wording is "built for iOS 17.0, not run on 17" | plan-r2 § 7 decision 4; Spec 129 `design.md` § 0, "The wording rule that follows 4 (a)" |
 | Q12 and Q13, and the type table, are provisional until 132's D4 app builds | Spec 129 `requirements.md` § "Open items for design and tasks"; `design.md` § 4 |
 | The team's, not Peter's: tool choices, the comparator and the D6 checker, the module and naming design, the INSTALL pointer's form | plan-r2 § 7, the closing list |
 
@@ -65,15 +73,13 @@ Each owner keeps their own record. This PR edits none of them, except where § 4
 
 ### 4.1 The record this file fires
 
-`.kiro/issues/2026-11-06-theme-family-persisted-form-for-132-d5.md` has the Trigger `path:.kiro/specs/132-*/design-outline.md`, so creating this file fires it. Its own text says what the touch owes: "At that touch the owners name this record in the outline and re-rule the Trigger to the D5 decision, or close it." This section names it. **The re-rule is Kenya's and Data's act**, in this PR, before it merges (README rules 9 and 11). The proposed line below is a draft for them to confirm, amend or replace. It is not written as theirs:
+`.kiro/issues/2026-11-06-theme-family-persisted-form-for-132-d5.md` has the Trigger `path:.kiro/specs/132-*/design-outline.md`, so creating this file fires it. Its own text says what the touch owes: "At that touch the owners name this record in the outline and re-rule the Trigger to the D5 decision, or close it." This section names it. **The re-rule is Kenya's and Data's act** (README rules 9 and 11), and lands in this PR before it merges. They confirmed this line at their seat read of this file (2026-11-07, `chore/132-placeholder` @ `d06c907ad`; Kenya set the glob, so a rename moves nothing; Data agreed D5 is designed in `design.md`):
 
-> **Trigger**: `path:.kiro/specs/132-native-adopter/design.md` — the D5 decision: 132's design round, where runtime switching and persistence are designed. *(Re-ruled 2026-11-07, Kenya and Data, rule 9. **Reason**: the event this record named, 132's design outline being created, fired on a placeholder (`.kiro/specs/132-native-adopter/design-outline.md`, Peter, received 2026-11-07T17:46Z: "Let's capture 132 with what we have so far. I don't want to risk losing it."). That placeholder decides nothing, and D5 is designed in 132's design round. Prior Trigger: `path:.kiro/specs/132-*/design-outline.md`.)*
+> **Trigger**: `path:.kiro/specs/132-*/design.md` — the D5 decision: 132's design round, where runtime switching and persistence are designed. *(Re-ruled 2026-11-07, Kenya and Data, rule 9. **Reason**: the event this record named, 132's design outline being created, fired on a placeholder (`.kiro/specs/132-native-adopter/design-outline.md`; Peter, received 2026-11-07T17:46Z: "Let's capture 132 with what we have so far. I don't want to risk losing it."). That placeholder decides nothing, and D5 is designed in 132's design round. Prior Trigger: `path:.kiro/specs/132-*/design-outline.md`.)*
 
-If the directory name changes before `requirements.md` exists (§ Naming), the token's directory changes with it.
+### 4.2 The goal record's wording, which this placeholder meets literally
 
-### 4.2 One sentence that the placeholder makes ambiguous
-
-The goal record says it is the goal's home "until Spec 132's design outline exists" (its Status line and § "Goal (Peter, 2026-11-05)"). A placeholder outline now exists, but plan-r2 § 6 item 8 closes the record into 132 only at the merge of the seeded outline. **This file reads the record as still the goal's home.** Whether its two sentences need a dated rewording is for Kenya and Data, its owners, to say; this PR does not edit it.
+The goal record's owners are Kenya and Data (the distribution shape; they wrote its goal-home sentences on 2026-11-05), with Lina and Ada as content and generator owners. Four of its sentences tie its close to "Spec 132's design outline": the Status line and § "Goal (Peter, 2026-11-05)" ("until Spec 132's design outline exists"), and the Trigger's "What firing obliges" ((2) "until Spec 132's design outline merges and names this record"; "At 132's outline merge this charter closes into the spec under rule 5"). This placeholder exists, merges and names the record, so it meets that wording literally, although plan-r2 § 6 item 8 closes the record only at the seeded outline's merge. **This file reads the record as still the goal's home.** The owners' reword lands in this PR; the drafted line is routed to them by the orchestrator and is not written here as theirs.
 
 ## 5. At the round's opening
 
