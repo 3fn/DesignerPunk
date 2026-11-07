@@ -1,0 +1,19 @@
+#harness-fixture source: SYNTHETIC, hand-built by Data 2026-11-07 in the shape of the recorded 403 log (resolve-403-cut.txt): a 503 from Google Maven while resolving a module's compile classpath
+#harness-fixture expect: infra dl.google.com 503 dependencies
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':resolveAll'.
+> Could not resolve all files for configuration ':tokens:debugCompileClasspath'.
+   > Could not resolve androidx.compose.runtime:runtime:1.9.0.
+     Required by:
+         project :tokens
+      > Could not resolve androidx.compose.runtime:runtime:1.9.0.
+         > Could not get resource 'https://dl.google.com/dl/android/maven2/androidx/compose/runtime/runtime/1.9.0/runtime-1.9.0.module'.
+            > Could not GET 'https://dl.google.com/dl/android/maven2/androidx/compose/runtime/runtime/1.9.0/runtime-1.9.0.module'.
+               > Received status code 503 from server: Service Unavailable
+
+BUILD FAILED in 14s
