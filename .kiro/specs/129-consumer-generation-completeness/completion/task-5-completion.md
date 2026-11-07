@@ -51,7 +51,7 @@ Primary Artifacts: all shipped as declared
 
 ## Evidence Kenya's Task 3 row 11 asks to be pasted here
 
-The first full run's iOS log (run {R}42324880305, job `harness-ios-tokens (unit-branch)`), the harness consumer's figures, printed while the probe is blocked:
+The first full run's iOS log (run https://github.com/3fn/DesignerPunk/actions/runs/42324880305, job `harness-ios-tokens (unit-branch)`), the harness consumer's figures, printed while the probe is blocked:
 
 ```
 probe: blocked (token module not built)
