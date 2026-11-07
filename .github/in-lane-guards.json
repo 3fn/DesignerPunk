@@ -306,6 +306,12 @@
       "config": "scripts/jest.config.js",
       "context": "lane-functional-root",
       "record": ".kiro/specs/129-consumer-generation-completeness/completion/task-19-completion.md (Spec 129 Task 19, the harness workflow's save condition, infra annotation and verdict source; Req 2.11, 2.12)"
+    },
+    {
+      "file": "scripts/completion-claims/__tests__/merge-hold.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/docs/ballots/2026-11-07-merge-hold-and-law-ratified-checks.md § 2 item 3 (Stacy's falsification fixtures 1 to 17 for the merge-hold and law-ratified checks)"
     }
   ]
 }
