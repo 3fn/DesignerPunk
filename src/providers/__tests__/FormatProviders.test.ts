@@ -354,6 +354,7 @@ describe('Format Provider Services', () => {
         const result = generator.generateFile(tokens);
 
         expect(result).toContain('DesignerPunk Design System');
+        expect(result).toContain('import SwiftUI');
         expect(result).toContain('import UIKit');
         expect(result).toContain('public struct DesignTokens {');
         expect(result).toContain('space100');
@@ -376,6 +377,7 @@ describe('Format Provider Services', () => {
 
       test('should validate Swift syntax correctly', () => {
         const validContent = `
+import SwiftUI
 import UIKit
 
 public struct DesignTokens {
@@ -387,6 +389,21 @@ public struct DesignTokens {
 
         expect(result.valid).toBe(true);
         expect(result.errors).toBeUndefined();
+      });
+
+      test('should detect missing SwiftUI import', () => {
+        const invalidContent = `
+import UIKit
+
+public struct DesignTokens {
+    public static let space100: CGFloat = 8
+}
+        `.trim();
+
+        const result = generator.validateSyntax(invalidContent);
+
+        expect(result.valid).toBe(false);
+        expect(result.errors).toContain('Missing SwiftUI import');
       });
 
       test('should detect missing UIKit import', () => {

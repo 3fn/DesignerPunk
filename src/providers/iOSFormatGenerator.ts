@@ -5,6 +5,7 @@ import { getPlatformTokenName } from '../naming/PlatformNamingRules';
 import { getColorToken } from '../tokens/ColorTokens';
 import { getOpacityToken } from '../tokens/OpacityTokens';
 import { generatedByLine, getCoreVersion } from '../generators/coreVersion';
+import { formatSwiftDisplayP3, parseOklchText } from '../generators/oklch/NativeColorUtils';
 
 /**
  * iOS-specific format generator
@@ -72,10 +73,40 @@ export class iOSFormatGenerator extends BaseFormatProvider {
       '/// Platform: iOS (Swift Constants)',
       '///',
       '',
+      'import SwiftUI',
       'import UIKit',
+      '',
+      ...this.generateShadowTokenType(),
       '',
       'public struct DesignTokens {'
     ].join('\n');
+  }
+
+  /**
+   * The type every shadow composite is built with: `ShadowToken`, generated into the token file
+   * (Spec 129 design § 5). A composite is read as `DesignTokens.shadowContainer.blur`, so the type
+   * name is not part of any component's reading. `Sendable` so a `static let` of it compiles in
+   * Swift 6 language mode.
+   */
+  private generateShadowTokenType(): string[] {
+    return [
+      '/// A shadow composite: offset, blur, opacity and the colour primitive it names.',
+      'public struct ShadowToken: Sendable {',
+      '    public let offsetX: CGFloat',
+      '    public let offsetY: CGFloat',
+      '    public let blur: CGFloat',
+      '    public let opacity: CGFloat',
+      '    public let color: Color',
+      '',
+      '    public init(offsetX: CGFloat, offsetY: CGFloat, blur: CGFloat, opacity: CGFloat, color: Color) {',
+      '        self.offsetX = offsetX',
+      '        self.offsetY = offsetY',
+      '        self.blur = blur',
+      '        self.opacity = opacity',
+      '        self.color = color',
+      '    }',
+      '}'
+    ];
   }
 
   generateFooter(): string {
@@ -88,6 +119,10 @@ export class iOSFormatGenerator extends BaseFormatProvider {
     // Basic Swift validation
     if (!content.includes('public struct DesignTokens')) {
       errors.push('Missing DesignTokens struct declaration');
+    }
+
+    if (!content.includes('import SwiftUI')) {
+      errors.push('Missing SwiftUI import');
     }
 
     if (!content.includes('import UIKit')) {
@@ -266,7 +301,7 @@ export class iOSFormatGenerator extends BaseFormatProvider {
 
   /**
    * Format a single-reference semantic token
-   * Generates: static let colorPrimary = purple300
+   * Generates: public static let colorPrimary = purple300
    * For baked-in RGBA values: static let colorStructureBorderSubtle: UIColor = UIColor(red: 0.72, green: 0.71, blue: 0.78, alpha: 0.48)
    * For opacity composition: static let colorStructureBorderSubtle: UIColor = UIColor(red: 0.72, green: 0.71, blue: 0.78, alpha: 0.48)
    */
@@ -307,13 +342,12 @@ export class iOSFormatGenerator extends BaseFormatProvider {
       return wcagComment ? `    ${wcagComment}\n${tokenLine}` : tokenLine;
     }
     if (typeof primitiveRef === 'string' && primitiveRef.startsWith('oklch(')) {
-      // OKLCH value — output via ChromaKit
-      const match = primitiveRef.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*([\d.]+))?\)/);
-      if (match) {
-        const [, l, c, h, alpha] = match;
+      // OKLCH value — written as a Display P3 constructor with channels computed here
+      const oklch = parseOklchText(primitiveRef);
+      if (oklch) {
         const wcagComment = this.getWCAGComment(semantic);
-        const colorExpr = alpha ? `Color.oklch(${l}, ${c}, ${h}, opacity: ${alpha})` : `Color.oklch(${l}, ${c}, ${h})`;
-        const tokenLine = `    static let ${semanticName} = ${colorExpr}`;
+        const colorExpr = formatSwiftDisplayP3(oklch.l, oklch.c, oklch.h, oklch.alpha);
+        const tokenLine = `    public static let ${semanticName} = ${colorExpr}`;
         return wcagComment ? `    ${wcagComment}\n${tokenLine}` : tokenLine;
       }
     }
@@ -437,7 +471,9 @@ export class iOSFormatGenerator extends BaseFormatProvider {
     const semanticName = this.getTokenName(semantic.name, semantic.category);
     
     // Use correct type wrapper based on token family
-    const typeWrapper = semantic.name.startsWith('motion.') ? 'Motion' : 'Typography';
+    const typeWrapper = semantic.name.startsWith('motion.') ? 'Motion'
+      : semantic.category === 'shadow' ? 'ShadowToken'
+      : 'Typography';
 
     // Generate struct initialization format
     const parameters = refs.map(([key, primitiveRef]) => {
@@ -586,14 +622,15 @@ export class iOSFormatGenerator extends BaseFormatProvider {
     return lines;
   }
 
-  // --- OKLCH Output Methods (Spec 112) ---
+  // --- OKLCH Output Methods (Spec 112; native constructors Spec 129) ---
 
   /**
-   * Format a resolved OKLCH color as a ChromaKit Color constant.
-   * Output: `static let pink300 = Color.oklch(0.65, 0.242, 10.0)`
+   * Format a resolved OKLCH color as a SwiftUI Display P3 constant. The channels are computed at
+   * generation, so the file needs no colour library (Spec 129 design § 6).
+   * Output: `public static let pink300 = Color(.displayP3, red: 0.9175, green: 0.2003, blue: 0.1386, opacity: 1)`
    */
   formatOklchColor(name: string, l: number, c: number, h: number): string {
     const swiftName = this.getTokenName(name, 'color');
-    return `    static let ${swiftName} = Color.oklch(${l}, ${c}, ${h})`;
+    return `    public static let ${swiftName} = ${formatSwiftDisplayP3(l, c, h)}`;
   }
 }

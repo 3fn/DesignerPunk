@@ -29,12 +29,13 @@ const readPrimitives = () => fs.readFileSync(PRIMITIVES, 'utf-8');
 const readSemantics = () => fs.readFileSync(SEMANTICS, 'utf-8');
 
 describe('Invariants — P3 no-rgba scoped to OKLCH-migrated primitives', () => {
-  it('passes on the committed primitives.yaml (only the shadow family carries rgba)', () => {
+  it('passes on the committed primitives.yaml (no color primitive carries rgba; the shadow family is OKLCH since Spec 129 Task 8.2)', () => {
     expect(assertNoLegacyColorFormat(readPrimitives())).toEqual([]);
   });
 
-  it('confirms the rgba-bearing color primitives are EXACTLY the shadow family', () => {
-    expect(rgbaColorPrimitives(readPrimitives()).sort()).toEqual([...SHADOW_COLOR_PRIMITIVES].sort());
+  it('confirms no color primitive carries rgba, and the allowlist is empty', () => {
+    expect(SHADOW_COLOR_PRIMITIVES).toEqual([]);
+    expect(rgbaColorPrimitives(readPrimitives())).toEqual([]);
   });
 
   it('catches a non-shadow OKLCH-migrated primitive that regressed to legacy rgba', () => {
@@ -54,7 +55,7 @@ describe('Invariants — P3 no-rgba scoped to OKLCH-migrated primitives', () => 
     expect(violations[0].locator).toBe('gray100');
   });
 
-  it('does NOT flag the shadow family for carrying rgba (the ratified scope)', () => {
+  it('flags a shadow primitive that regressed to rgba (the shadow family is OKLCH since Spec 129 Task 8.2)', () => {
     const yaml = [
       'tokens:',
       '  shadowBlack100:',
@@ -63,21 +64,21 @@ describe('Invariants — P3 no-rgba scoped to OKLCH-migrated primitives', () => 
       '      light:',
       '        base: rgba(0, 0, 0, 1)',
     ].join('\n');
-    expect(assertNoLegacyColorFormat(yaml)).toEqual([]);
+    const violations = assertNoLegacyColorFormat(yaml);
+    expect(violations).toHaveLength(1);
+    expect(violations[0].locator).toBe('shadowBlack100');
   });
 
-  it('surfaces (does not silently pass) a shadow primitive that gained oklch — allowlist must be revisited', () => {
+  it('passes a shadow primitive that carries oklch', () => {
     const yaml = [
       'tokens:',
       '  shadowBlack100:',
       '    family: color',
       '    value:',
       '      light:',
-      '        base: oklch(0 0 0)', // shadow migration landed → allowlist should shrink
+      '        base: oklch(0 0 0)',
     ].join('\n');
-    const violations = assertNoLegacyColorFormat(yaml);
-    expect(violations).toHaveLength(1);
-    expect(violations[0].locator).toBe('shadowBlack100');
+    expect(assertNoLegacyColorFormat(yaml)).toEqual([]);
   });
 
   it('ignores non-color families even if (hypothetically) they contained an rgba-like string', () => {

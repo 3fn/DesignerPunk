@@ -4,7 +4,7 @@
  * Checks every colour reference a semantic token carries, after resolution, against the
  * colour primitives the platform generators emit. `generate` validates semantic references
  * against the token source's primitives, but it emits colour primitives from the palette of
- * the installed @3fn/core (`allComposedColors`; INSTALL § 4), so the two lists can differ: a
+ * the installed @3fn/core (`allEmittedColors`: the composed palette and the shadow colours; INSTALL § 4), so the two lists can differ: a
  * colour primitive added to a consumer's copy passes the reference check and is then written
  * out as a reference to a name no platform file defines (`var(--brand-300)` with no
  * `--brand-300`; an unresolved `brand300` in Swift and Kotlin), with exit 0.
@@ -21,21 +21,6 @@ import type { SemanticToken } from '../types/SemanticToken';
 /** The token shape `generate` resolves and emits. */
 type ResolvedSemantic = Omit<SemanticToken, 'primitiveTokens'>;
 
-/**
- * Colour primitives that are referenced by DesignerPunk's own shadow tokens and emitted on no
- * platform: a known defect, recorded in
- * `.kiro/issues/2026-10-24-shadow-color-primitives-emitted-on-no-platform.md` (P1, Ada) and
- * fixed there, not here. References to these names are reported as a warning so `generate`
- * keeps working; every other unemitted colour reference stops it. Remove a name from this list
- * when the generators emit it (ColorReferenceEmissionValidator.test.ts fails until you do).
- */
-export const KNOWN_UNEMITTED_SHADOW_COLORS: ReadonlySet<string> = new Set([
-  'shadowBlack100',
-  'shadowBlue100',
-  'shadowOrange100',
-  'shadowGray100',
-]);
-
 /** One colour reference to a primitive the generators do not emit. */
 export interface UnemittedColorReference {
   /** Semantic token name, e.g. `color.action.primary`. */
@@ -46,8 +31,6 @@ export interface UnemittedColorReference {
   primitive: string;
   /** Whether the token source declares the primitive (as a colour primitive). */
   declaredInSource: boolean;
-  /** Whether the primitive is on {@link KNOWN_UNEMITTED_SHADOW_COLORS}. */
-  knownDefect: boolean;
 }
 
 /** A primitive as the check needs it: its name and category. */
@@ -110,7 +93,6 @@ export function findUnemittedColorReferences(
           key,
           primitive: ref,
           declaredInSource: sourcePrimitive !== undefined,
-          knownDefect: KNOWN_UNEMITTED_SHADOW_COLORS.has(ref),
         });
       }
     }
@@ -141,16 +123,5 @@ export function unemittedColorReferenceMessage(f: UnemittedColorReference): stri
     `Semantic token '${f.token}' references '${f.primitive}', which is neither in your token ` +
     `source's primitives nor in the colour palette generate emits. If '${f.primitive}' is a ` +
     `colour you added (in ColorTokens.ts or under color/primitives/): ${why}. ${remedy}`
-  );
-}
-
-/** The one-line warning for references to {@link KNOWN_UNEMITTED_SHADOW_COLORS}. */
-export function knownShadowColorWarning(findings: ReadonlyArray<UnemittedColorReference>): string {
-  const tokens = new Set(findings.map(f => f.token));
-  const names = [...new Set(findings.map(f => f.primitive))].sort();
-  return (
-    `${tokens.size} shadow token(s) reference shadow colour primitive(s) that no platform file ` +
-    `defines (${names.join(', ')}). This is a known DesignerPunk defect, not a problem in your ` +
-    `token source; generate continues.`
   );
 }

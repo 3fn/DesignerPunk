@@ -10,7 +10,6 @@ compile-sdk = "36"
 min-sdk = "26"
 coil = "2.7.0"
 material-icons-extended = "1.7.8"
-colormath = "3.7.1"
 
 [libraries]
 # Versionless: the Compose BOM supplies them. material-ripple must resolve to 1.7 or later, where
@@ -29,8 +28,6 @@ compose-material-ripple = { module = "androidx.compose.material:material-ripple"
 material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icons-extended" }
 # The components import `coil.compose` (Coil 2's package; Coil 3 is `coil3`).
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-# Only while the generated Kotlin calls Oklch(...).toComposeColor(); drops out when native colour values land (row 4).
-colormath = { module = "com.github.ajalt.colormath:colormath-ext-jetpack-compose", version.ref = "colormath" }
 
 [bundles]
 compose = [

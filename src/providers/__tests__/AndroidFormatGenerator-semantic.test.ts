@@ -380,6 +380,31 @@ describe('AndroidFormatGenerator - Single-Reference Token Generation', () => {
         expect(result).toContain('//');
         expect(result).toContain('============================================');
       });
+
+      test.each(['primitive', 'semantic'] as const)(
+        'every non-blank line of the %s section comment is Kotlin comment syntax (Spec 129 row 7)',
+        section => {
+          const lines = generator.generateSectionComment(section).split('\n').filter(l => l.trim() !== '');
+          expect(lines.length).toBeGreaterThanOrEqual(4);
+          for (const line of lines) {
+            expect(line.trim()).toMatch(/^\/\//);
+          }
+        },
+      );
+
+      test('the whole generated object body has no bare text line (Spec 129 row 7)', () => {
+        const body = [
+          generator.generateHeader(),
+          generator.generateSectionComment('primitive'),
+          generator.generateSectionComment('semantic'),
+          generator.generateFooter(),
+        ].join('\n');
+        const bare = body.split('\n').filter(l => {
+          const t = l.trim();
+          return t !== '' && !/^(\/\/|\/\*|\*|package |object |data class |val |const val |\)|\}|$)/.test(t);
+        });
+        expect(bare).toEqual([]);
+      });
     });
   });
 

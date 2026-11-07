@@ -37,7 +37,6 @@ dependencies {
     implementation(project(":tokens"))
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
-    implementation(libs.colormath)
 }
 
 val probeFiles = laneFiles("probe.sources")

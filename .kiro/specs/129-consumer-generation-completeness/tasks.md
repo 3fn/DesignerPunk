@@ -528,7 +528,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 3 — Native colours, shadows and the standalone native fixes
 
-- [ ] 8. Native colours, shadows, section comments and `public` members (U3)
+- [x] 8. Native colours, shadows, section comments and `public` members (U3)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Sparky (Sonnet) — the web `Consumer Guard` cases · Data (Sonnet) — the colour library's removal from the Android harness build, on a seat branch Ada joins (added 2026-11-07, tasks amendment 6, on Data's finding as the files' author, `[THURGOOD R13]`; it rides Peter's "do the amendment", received 2026-11-07T05:10:45Z)
   **Traces**: Req 1.6, 2.10, 6.2, 6.10, 7.1–7.4, 15.4; rows 4 (items 2 and 4), 7, 9, 10, 11 · design §§ 5 (shadow composite), 6, 8, 9 (`var()` reach)
@@ -587,21 +587,21 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 8 Complete: Native colours, shadows and the standalone native fixes (129)"` opens U3's PR (Peter-merged: `governance/**`; `**Edit kind**:` EXECUTION, design §§ 6 and 8, per file); report the URL; STOP.
 
-  - [ ] 8.1 The P3 converter and gamut mapping; both native constructors; `import SwiftUI`; the WCAG path
+  - [x] 8.1 The P3 converter and gamut mapping; both native constructors; `import SwiftUI`; the WCAG path
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 6.10_
-  - [ ] 8.2 Shadow primitives in OKLCH; every composite's colour emitted; `ShadowToken`; the warning removed; the family doc and the architecture doc
+  - [x] 8.2 Shadow primitives in OKLCH; every composite's colour emitted; `ShadowToken`; the warning removed; the family doc and the architecture doc
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 15.4_
-  - [ ] 8.3 Section comments (row 7); `public` members and the tightened text guard, red then green (row 9)
+  - [x] 8.3 Section comments (row 7); `public` members and the tightened text guard, red then green (row 9)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - The text guard retires in the PR where Stage P first prints a full read count
     - _Requirements: 6.2_
-  - [ ] 8.4 `Consumer Guard`: the `var()` check with its pinned allowlist, and the blue-tinted composite
+  - [x] 8.4 `Consumer Guard`: the `var()` check with its pinned allowlist, and the blue-tinted composite
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Sparky (Sonnet)
     - No browser; reach includes `component-tokens.css` (design § 9); follows 8.2
     - _Requirements: 1.6, 7.1_
-  - [ ] 8.5 Remove the colour library from the Android harness build *(added 2026-11-07, tasks amendment 6)*
+  - [x] 8.5 Remove the colour library from the Android harness build *(added 2026-11-07, tasks amendment 6)*
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
     - On a seat branch that Ada joins into the U3 branch, after 8.1 removes the generated Kotlin's colormath calls: `libs.versions.toml` L13 and L33, `dp/build.gradle.kts` L55, `probe/build.gradle.kts` L40, `tokens/build.gradle.kts` L42–43 (at `55276795e`)
     - _Requirements: 3.5, 6.10_

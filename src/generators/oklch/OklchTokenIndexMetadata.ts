@@ -9,10 +9,12 @@
 
 import type { Oklch } from '../../color/OklchConverter';
 import type { ComposedColor } from '../../tokens/color/primitives/chromatic';
+import type { ShadowColor } from '../../tokens/color/primitives/shadow';
 
 export interface OklchTokenMetadata {
   oklch: Oklch;
-  channels: {
+  /** Absent for the shadow colours, which have no channel tokens (Spec 129 design § 8). */
+  channels?: {
     hue: string;
     lightness: string;
     chroma: string;
@@ -22,9 +24,10 @@ export interface OklchTokenMetadata {
 /**
  * Generate OKLCH metadata for a composed color token's token-index entry.
  */
-export function getOklchMetadata(color: ComposedColor): OklchTokenMetadata {
-  return {
-    oklch: color.resolved,
-    channels: color.channels,
-  };
+export function getOklchMetadata(color: ComposedColor): OklchTokenMetadata & Required<Pick<OklchTokenMetadata, 'channels'>>;
+export function getOklchMetadata(color: ComposedColor | ShadowColor): OklchTokenMetadata;
+export function getOklchMetadata(color: ComposedColor | ShadowColor): OklchTokenMetadata {
+  const metadata: OklchTokenMetadata = { oklch: color.resolved };
+  if ('channels' in color && color.channels) metadata.channels = color.channels;
+  return metadata;
 }

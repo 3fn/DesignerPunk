@@ -110,7 +110,7 @@ export function relativeTierDir(indexDir: string, tierDir: string | undefined): 
 /** Build the mode-nested OKLCH value + sibling channel metadata for a color primitive. */
 function buildOklchEntry(modes: PrimitiveOklchModes): {
   value: { light: { base: string; wcag: string }; dark: { base: string; wcag: string } };
-  oklch: Record<'light' | 'dark', { l: number; c: number; h: number; channels: { hue: string; lightness: string; chroma: string } }>;
+  oklch: Record<'light' | 'dark', { l: number; c: number; h: number; channels?: { hue: string; lightness: string; chroma: string } }>;
 } {
   // Match dist's exact OKLCH string format (WebFormatGenerator.formatOklchColor):
   // `oklch(${l} ${c} ${h})`. No primitive-tier WCAG mechanism exists, so wcag === base.
@@ -123,8 +123,8 @@ function buildOklchEntry(modes: PrimitiveOklchModes): {
       dark: { base: darkStr, wcag: darkStr },
     },
     oklch: {
-      light: { l: modes.light.oklch.l, c: modes.light.oklch.c, h: modes.light.oklch.h, channels: modes.light.channels },
-      dark: { l: modes.dark.oklch.l, c: modes.dark.oklch.c, h: modes.dark.oklch.h, channels: modes.dark.channels },
+      light: { l: modes.light.oklch.l, c: modes.light.oklch.c, h: modes.light.oklch.h, ...(modes.light.channels ? { channels: modes.light.channels } : {}) },
+      dark: { l: modes.dark.oklch.l, c: modes.dark.oklch.c, h: modes.dark.oklch.h, ...(modes.dark.channels ? { channels: modes.dark.channels } : {}) },
     },
   };
 }
