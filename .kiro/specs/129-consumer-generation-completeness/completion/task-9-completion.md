@@ -7,7 +7,7 @@
 **Agent**: Ada (Sonnet), PRIMARY, with Lina (9.2, 9.3 statements) and Thurgood (ballot record, agent-layer regeneration) · **Status**: Complete on the unit branch `task/129-9-native-type-table`; accepted at U4's merge, not before.
 **Delegated-tier**: plan held
 **CI-provenance**: PR gate #719 @ d21ed6e504d7470ad6c5e54f0db6f25b80d9dcd4 — https://github.com/3fn/DesignerPunk/actions/runs/42392857681 (all 26 checks passed). #719 merged at `d21ed6e50` (`30e2f727b`, 2026-11-07T16:52:22Z) with no separate head-H follow-up, so H = M.
-**Instruments**: 13 listed — exists 11 · built-here 3 · missing 2 · unlisted 1 — .kiro/specs/129-consumer-generation-completeness/completion/task-9-instruments.md
+**Instruments**: 13 listed — exists 8 · built-here 3 · missing 2 · unlisted 1 — .kiro/specs/129-consumer-generation-completeness/completion/task-9-instruments.md
 *(Corrected 2026-11-07, `completion/claims-pass-midpoint.md` MP-8: the line's counts were "exists 11", which summed to 16 against 13 rows; the block's rows at completion are exists 8 · built-here 3 · missing 2, and the parenthetical was removed for the guide's regex. The line records the block at completion. Rows 10 and 13 are resolved in their rows afterwards.)*
 
 ---
