@@ -1,7 +1,7 @@
 # Ballot Measure: standing owners for the native compile harness's producers after Spec 129 (the per-role split)
 
 **Date**: 2026-11-07 (drafted 2026-11-07T23:28:53Z, `date -u`)
-**Drafted by**: Data (Android platform engineer; author of `harness/android/**`, `probe-kotlin.ts` and `parse-kotlin.ts` under Spec 129 Task 4), holding the pen at Peter's direction (§ 1). **Kenya writes the iOS clause** (§ 3 item 2, § 4 sites 3–4), and that text is a placeholder in this draft.
+**Drafted by**: Data (Android platform engineer; author of `harness/android/**`, `probe-kotlin.ts` and `parse-kotlin.ts` under Spec 129 Task 4), holding the pen at Peter's direction (§ 1). **Kenya writes the iOS clause** (§ 3 item 2, § 4 sites 3, 4 and 9 (b)), written in her seat at 2026-11-07T23:39:02Z.
 **Status**: **DRAFT** — not ratified. No edit site below is applied. A merge of this file's PR ratifies nothing; only Peter's dated words in this Status line do.
 **Owner**: Data (items 1 and 3's `android:` half), Kenya (item 2 and 3's `ios:` half), Thurgood (item 4), Ada (item 5 and 3's `consumer:` part). Each seat owns the text of its own charter's edit site.
 **Required reviewer**: **Stacy** — mandate: attack the width. She keeps the ARMING read that items 3–5 feed (site 10 is her row), and she is the census reader.
@@ -97,17 +97,56 @@ Each item states its paths, its limits and what it excludes. **"Active"** is def
 
 ### Item 2 — the iOS lane (Kenya)
 
-> **[PLACEHOLDER — Kenya writes this clause.]** <!-- KENYA-IOS-CLAUSE -->
->
-> The author proposes nothing here beyond the paths Kenya named at `[KENYA R2]` item 6, for her to confirm or replace: `harness/ios/**`, `scripts/harness/probe-swift.ts`, `scripts/harness/parse-swift.ts`, `scripts/harness/__tests__/probe-swift.test.ts`, `scripts/harness/__tests__/parse-swift.test.ts`, `scripts/harness/__tests__/fixtures/swift/**`, `scripts/harness/__tests__/fixtures/parse-swift/**`, and `harness/pins.yaml`'s `ios:` section under item 3.
->
-> **What the clause needs to settle**, from the consult record:
-> - **The iOS fields a standing move may change** (item 3, P2). `[KENYA R3]`: only `ios.image` and `ios.toolchain`; `ios.runner` must match the workflow's `runs-on`, so it needs that file's grant; `ios.deploymentTarget` is Core Goals' minimum.
-> - **How P3 reads a `toolchain missing` red**, where the red run records no observed toolchain values. Proposed for Kenya to replace: the head's `ios.toolchain` values equal what `harness/ios/lane.ts --read-toolchain` prints at the new `xcode.app` in the PR head's run.
-> - **The reserved-word re-measure** at a new Swift pin (K-F2, `[KENYA R3]`), and whether a pin-move PR may touch `harness/ios/**` to carry it.
-> - **The limits and the Excluded list**, mirroring item 1.
-> - **Kenya's records**, which are hers and outside this ballot: the iOS lane writes no `harness-infra` on `toolchain missing` (`[KENYA R2]` item 7), and the lane refuses a manifest without themes when the fixture registers themes (`[KENYA R3]`). Both consult Thurgood under D-1.
-> - **Her In Scope bullet** (site 4) and **Agent-Directory line** (site 9 (b)).
+*Written by Kenya, 2026-11-07T23:39:02Z (`date -u`). Kenya is widening her own charter, so the conflict-of-interest disclosure above applies to this item unchanged. Each element beyond Peter's ruled words is marked **[Kenya's addition — Peter rules]**.*
+
+**Paths, by name:**
+
+| Path | Why |
+|---|---|
+| `harness/ios/**` | The lane (`lane.ts`: the toolchain read, the stages and the self-tests), the self-test sources (`selftest/**`) and `harness/ios/README.md`. Kenya wrote all of it under Task 3 |
+| `scripts/harness/probe-swift.ts` | The Swift probe the lane runs (`harness/ios/lane.ts` L61) |
+| `scripts/harness/parse-swift.ts` | The Swift diagnostic parser behind the comparator's interface (`compare.ts` L5–6, "`parse-swift.ts` is Kenya's, 2.2") |
+| `scripts/harness/__tests__/probe-swift.test.ts` | Tests `probe-swift.ts` and `harness/ios/lane.ts` (its L10, L64) |
+| `scripts/harness/__tests__/parse-swift.test.ts` | Tests `parse-swift.ts` |
+| `scripts/harness/__tests__/fixtures/swift/**` | Read by `probe-swift.test.ts` (L69) |
+| `scripts/harness/__tests__/fixtures/parse-swift/**` | Read by `parse-swift.test.ts` (L18) |
+| `harness/pins.yaml`, the `ios:` section only | Under item 3's conditions only, read for iOS below |
+
+**Limits** (Thurgood's clause, as item 1 states it):
+- **Owning the lane never authorizes changing what it decides.** The verdict rules (design § 3), the toolchain, self-test and Xcode-pin rules (design K-4, K-6 and K-7), the infra and run rules (`tasks.md` § "Decision 6" and § "The list file format, the pin file and the run policy", or the records that re-home them after 129), and the parser contract (`compare.ts` part 1) come text first. A change to what they say is a change to that text, made by its owner.
+- **The self-test sources decide what the self-test must catch** **[Kenya's addition — Peter rules]**. `harness/ios/selftest/**` (the missing return and the planted token module) is what K-4 says the compiler must reject. A change that makes the self-test catch less is a change to K-4's text, not a defect fix.
+- **A defect fix is Kenya's**: code that disagrees with the text it implements. It ships with a falsification case, in the test that exercises the file, red at `B`.
+- **The annotation interface stays as ratified.** A change to a job's annotation step, or a new annotation title, consults Thurgood (ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` item 1, "Consults on `stability.ts`"). The iOS jobs write no `harness-infra` today, so writing one would be a new use of that title and would consult him. This ballot adds nothing to that duty. The annotation steps are in `native-harness.yml`, which is outside this scope (item 6).
+
+**How item 3's P1–P6 read for `ios:`, and P7.** Where a bullet says "as written", item 3's text applies unchanged.
+- **P1, as written.** On iOS both of P1's first two forms occur. A toolchain field that differs from the pin does not stop the lane (`harness/ios/lane.ts` L652–663), so the comparator fails it as `harness-verdict: <context> FAIL (toolchain)`. A missing pinned Xcode folder stops the lane before it reads anything, as `FAIL toolchain missing:` with no verdict (L656, printed at L766). The iOS lane writes no `harness-infra`, so P1's third form never applies on iOS.
+- **P2.** The deleted keys are `ios.image` and `ios.toolchain`. That keeps `ios.runner`, `ios.statement`, `ios.deploymentTarget` and `ios.compile` unchanged by construction:
+  - `runner` must equal the workflow's `runs-on` (Req 2.8), so a label move also needs that file's grant;
+  - `deploymentTarget` equals Core Goals' iOS minimum (Req 2.9);
+  - `compile` holds the compile flags every stage reads (`harness/ios/lane.ts` L11).
+- **P3, for a `toolchain`-class red: as written.** Each moved field takes the value that `R`'s comparator line reports, `ios.toolchain.<field> observed "<v>"` (`compare.ts` L747).
+- **P3, for a `toolchain missing` red** **[Kenya's addition — Peter rules, with F-2]**. `R` observed nothing, so the head takes its values from two reads, and neither one is a choice:
+  - **(i) The Xcode is K-7's pick, re-read.** `ios.toolchain."xcode.app"`, `"xcode.version"` and `"xcode.build"` at `m` name the newest stable Xcode 26 minor in the Xcode table of `actions/runner-images` `images/macos/macos-26-arm64-Readme.md`, read at a commit of that repository. That readme's image version equals `ios.image.version` at `m`. The PR body cites the readme's commit URL and pastes the table rows.
+  - **(ii) Every other toolchain field** at `m` equals what the head run's lane log prints for it, `harness-ios: toolchain <field> = "<v>"` (`harness/ios/lane.ts` L658), in each iOS context of P5's run.
+  - **Not a repair:** if the readme has no stable Xcode 26 minor, because only Xcode 27 or later remains, the move changes the runner line too, and it goes by grant or spec row.
+- **P4, as written, and `harness/ios/selftest` unchanged** **[Kenya's addition — Peter rules]**. The git command gains the path `harness/ios/selftest`.
+- **P5, as written**, for every iOS context. Both use the macOS queue, so `R` and the head run each wait for a `macos-26` runner. That costs time and changes no condition.
+- **P6, as written.**
+- **P7 — the reserved-word re-check (iOS only)** **[Kenya's addition — Peter rules]**. When `ios.toolchain."swift.version"` differs between `B` and `m`, the PR body carries a `**Reserved-word re-check**:` line with one of two things. Design § 4 (L233) re-checks the list "when `harness/pins.yaml` § `ios` moves to a new Swift", and nothing fires that today (K-F2).
+  - **(a)** The re-check's output at the new Swift: each listed word fails as a plain `case` and compiles in backticks, no contextual keyword fails as a plain `case`, and `xcrun swiftc --version` from the same machine is pasted.
+  - **(b)** The path of a record at `m`, owner Kenya, that carries the re-check.
+  - **Why (b) may stand in for (a):**
+    - The risk is one-sided. A word that is reserved at the old Swift and not at the new one still compiles in backticks, so a stale list cannot turn the head red.
+    - No CI makes the measurement today, and a repair should not wait for one.
+  - **A re-check that disagrees with the list** is a change to design § 4 first. Then `native-rules.ts` changes, by its holder (Thurgood, with Kenya's review under the charter-scope ballot), and never in the pin-move PR.
+- **A pin-move PR may also change item 2's paths**, except `harness/ios/selftest/**` and the fixtures (P4), under the limits above. One case needs this: a new Xcode whose version output `parseToolchain` cannot read (L282–306), where the pin and the lane fix must land together for P5 to be green. The falsification case then sits in the test file, red at `B`.
+
+**Excluded**: everything item 6 lists; `harness/android/**` and the Android files (item 1); `compare.ts` (item 4); `consumer.ts` (item 5); `stability.ts`, `native-rules.ts` and their tests (Thurgood's, by the charter-scope ballot, which Kenya reviews); the `android:` and `consumer:` sections of `harness/pins.yaml`; and every other file under `scripts/harness/` that the table does not name.
+
+**Kenya's records**, outside this ballot. Each is filed under `.kiro/issues/**` with owner Kenya, in its own PR. None is a ballot edit:
+- **(a)** The iOS lane writes no `harness-infra` on `toolchain missing`, so the demotion read counts a retired Xcode as a code failure (`[KENYA R2]` item 7). It consults Thurgood under D-1.
+- **(b)** The lane refuses a manifest without `themes` when the fixture registers themes (`[KENYA R3]`). It consults Thurgood under D-1.
+- **(c)** K-F2: the list was measured at Swift 6.4.2, not at the pinned 6.3.3. The record also names a lane self-test that would turn P7 (a) into a CI read.
 
 ### Item 3 — `harness/pins.yaml`, option (b), and the owner of `consumer:`
 
@@ -127,7 +166,7 @@ Each item states its paths, its limits and what it excludes. **"Active"** is def
   Read with `gh run view <R> --json event,headBranch,headSha,jobs`, the jobs' annotations and `gh run view <R> --log`.
 - **P2 — only the image and toolchain fields change.** Load `harness/pins.yaml` at `B` and at `m` with the repository's `js-yaml`. Delete these keys from both, and the two must be deep-equal:
   - Android: `android.imageVersion` and `android.toolchain`;
-  - iOS: as item 2 states (proposed: `ios.image` and `ios.toolchain`).
+  - iOS: `ios.image` and `ios.toolchain` (item 2).
   So `runner`, `deploymentTarget`, `minSdk`, `compileSdk`, `libraries`, the `consumer:` section and the other platform's section are unchanged by construction.
 - **P3 — each moved toolchain field takes the value the red run observed** **[author's addition — Peter rules, F-2]**. For each `<platform>.toolchain.<field>` whose value differs between `B` and `m`, `R`'s comparator output for that platform's context carries the line `<platform>.toolchain.<field> observed "<v>", pinned "<old>"` (`compare.ts` L747), and the value at `m` is `<v>`. A `harness-infra` red therefore moves no toolchain field. For a `toolchain missing` red, item 2 states the reading.
 - **P4 — the decided files are unchanged.** `git diff --quiet B <m> -- harness/expected harness/protected-set.txt harness/fixtures scripts/harness/__tests__/fixtures` exits 0. The deployment target and `minSdk` are covered by P2.
@@ -235,11 +274,28 @@ Line numbers are at `f28a1fefd` unless stated. Each site is re-read at applicati
 
 ### Edit site 3 — `canonical/agents/kenya.md`, frontmatter `writeScope` (Kenya's text)
 
-> **[PLACEHOLDER — Kenya confirms or replaces.]** The author's proposal, mirroring site 1, after L243 (`  - ".kiro/issues/**"`): a two-line comment naming this ballot's items 2 and 3, active from the later of U12's merge and the first iOS promotion's merge, then `harness/ios/**`, `scripts/harness/probe-swift.ts`, `scripts/harness/parse-swift.ts`, `scripts/harness/__tests__/probe-swift.test.ts`, `scripts/harness/__tests__/parse-swift.test.ts`, `scripts/harness/__tests__/fixtures/swift/**`, `scripts/harness/__tests__/fixtures/parse-swift/**` and `harness/pins.yaml`.
+**After L243** (`  - ".kiro/issues/**"`, followed by `kiro:` at L244), insert:
 
-### Edit site 4 — `canonical/agents/kenya.md` § "In Scope", a new bullet after L281
+```yaml
+  # ballot 2026-11-07-native-lane-ownership items 2 and 3 (RATIFIED Peter <date>), active from the later of Spec 129 U12's merge and the first iOS promotion's merge:
+  # the native harness's iOS lane; in pins.yaml the ios: section only, under P1–P7 — the In Scope bullet carries the limits
+  - "harness/ios/**"
+  - "scripts/harness/probe-swift.ts"
+  - "scripts/harness/parse-swift.ts"
+  - "scripts/harness/__tests__/probe-swift.test.ts"
+  - "scripts/harness/__tests__/parse-swift.test.ts"
+  - "scripts/harness/__tests__/fixtures/swift/**"
+  - "scripts/harness/__tests__/fixtures/parse-swift/**"
+  - "harness/pins.yaml"
+```
 
-> **[PLACEHOLDER — Kenya writes this bullet.]** Before: L281 is `- Advising Leonardo on iOS-specific constraints and opportunities`; no harness bullet.
+**Before**, for the record: L238–243 are `writeScope:`, `.kiro/specs/**`, `docs/specs/**`, the six-roots comment (two lines) and `.kiro/issues/**`. Nothing is removed.
+
+### Edit site 4 — `canonical/agents/kenya.md` § "In Scope", a new bullet after L281 (Kenya's text)
+
+- **Before**: L281 is `- Advising Leonardo on iOS-specific constraints and opportunities`; no harness bullet.
+- **After**, a new last bullet:
+  > `- **The native compile harness's iOS lane (ballot 2026-11-07-native-lane-ownership items 2 and 3; active from the later of Spec 129 U12's merge and the first iOS promotion's merge)**: you own `harness/ios/**`, `scripts/harness/probe-swift.ts` and `scripts/harness/parse-swift.ts`, with `probe-swift.test.ts`, `parse-swift.test.ts`, `fixtures/swift/**` and `fixtures/parse-swift/**`, because a promoted iOS context is a required check and a break from outside the repository (the runner image retiring or rebuilding the pinned Xcode) lands on it with no PR author at fault. Owning the lane never authorizes changing what it decides: the verdict rules, the toolchain, self-test and Xcode-pin rules (K-4, K-6, K-7), the infra and run rules, and the parser contract follow their spec text first, and a change that makes `harness/ios/selftest/**` catch less is a change to K-4; a fix where the code disagrees with that text is yours, with a falsification case red at the merge base. A change to an annotation step or title, including a first `harness-infra` on iOS, consults Thurgood. In `harness/pins.yaml` you hold the `ios:` section only, and only for a move that passes that ballot's P1–P7: the red it repairs, on a dispatch at the merge base, is a `toolchain` verdict or `toolchain missing`; only `image` and `toolchain` change, each moved field to the value the red run observed or, for a missing Xcode, to K-7's pick from the runner-images readme at a cited commit and the head run's printed toolchain; `harness/expected/**`, `harness/protected-set.txt`, `harness/ios/selftest/**` and every fixture are unchanged; every iOS context is green at the PR head, with both runs' verdict lines pasted; Thurgood's review is cited on the `**Consulted**:` line; and a new Swift version carries the reserved-word re-check or a record of it. Any other move goes by grant or spec row. Not yours: `harness/expected/**`, `harness/protected-set.txt`, `harness/fixtures/**`, `harness/README.md`, the rest of `harness/pins.yaml`, `compare.ts` (Thurgood's; you review it), `consumer.ts` (Ada's; you review its manifest and layout changes), `stability.ts` and `native-rules.ts` (Thurgood's; you review `native-rules.ts` changes outside Kotlin-named declarations), and `native-harness.yml` with `native-harness-workflow.test.ts` (an issue-row grant per fix). Before activation, your write over these paths is Spec 129's task-row grants or an issue-row grant.`
 
 ### Edit site 5 — `canonical/agents/ada.md`, frontmatter `writeScope`
 
@@ -284,7 +340,9 @@ If that line is not present at application (the charter-scope application PR has
 - **(a) Data, L122.**
   - **Before**: `**Owns**: Android product screen implementation using DesignerPunk Compose components and Kotlin token constants.`
   - **After**: `**Owns**: Android product screen implementation using DesignerPunk Compose components and Kotlin token constants; **the native compile harness's Android lane** (`harness/android/**`, `probe-kotlin.ts`, `parse-kotlin.ts`, and repair moves in `harness/pins.yaml`'s `android:` section; ballot 2026-11-07-native-lane-ownership, from Spec 129 U12's merge). *(amended <date> by ballot 2026-11-07-native-lane-ownership § 4 site 9; prior text at <SHA>)*`
-- **(b) Kenya, L114.** **[PLACEHOLDER — Kenya writes the after-text.]** Before: `**Owns**: iOS product screen implementation using DesignerPunk SwiftUI components and Swift token constants.`
+- **(b) Kenya, L114.**
+  - **Before**: `**Owns**: iOS product screen implementation using DesignerPunk SwiftUI components and Swift token constants.`
+  - **After**: `**Owns**: iOS product screen implementation using DesignerPunk SwiftUI components and Swift token constants; **the native compile harness's iOS lane** (`harness/ios/**`, `probe-swift.ts`, `parse-swift.ts`, and repair moves in `harness/pins.yaml`'s `ios:` section; ballot 2026-11-07-native-lane-ownership, from the later of Spec 129 U12's merge and the first iOS promotion's merge). *(amended <date> by ballot 2026-11-07-native-lane-ownership § 4 site 9; prior text at <SHA>)*`
 - **(c) Ada, L58.**
   - **Before**: `**Owns**: Primitive and semantic token creation, formula validation, cross-platform generation pipeline, Rosetta architecture, token governance enforcement.`
   - **After**: `**Owns**: Primitive and semantic token creation, formula validation, cross-platform generation pipeline, Rosetta architecture, token governance enforcement, **the native compile harness's consumer driver (`scripts/harness/consumer.ts`; ballot 2026-11-07-native-lane-ownership, from Spec 129 U12's merge)**. *(amended <date> by ballot 2026-11-07-native-lane-ownership § 4 site 9; prior text at <SHA>)*`
@@ -313,7 +371,7 @@ A ballot is a ledger: these lines are appended, and nothing in it is rewritten.
 ### Edit site 13 — records
 
 - `.kiro/docs/ballots/README.md` § "Ballots on record": one entry, at ratification.
-- Not closed or opened here: Kenya's two records (item 2); a record for `d2-check.ts`'s owner (§ 8), if Peter wants one; Data's JDK record (§ 8).
+- Not closed or opened here: Kenya's three records (item 2); a record for `d2-check.ts`'s owner (§ 8), if Peter wants one; Data's JDK record (§ 8).
 
 ---
 
