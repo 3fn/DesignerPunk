@@ -30,4 +30,7 @@ Named before code:
 
 ## Found later
 
-(none yet)
+- **unlisted** (2026-11-07, 11.4): `src/build/platforms/iOSMotionTokenFormatter.ts` (`PiecewiseLinearEasing` is `Hashable`; row 4's last two iOS entries). State: exists. Token generation under Ada's charter. Not on my expected list.
+- **unlisted** (2026-11-07, 11.3): `src/cli/generateProductTokens.ts` (the product step throws on a composite ref) and `scripts/harness/__tests__/consumer.test.ts` (its two fixture cases changed with the fixture). Both exist; the first is `src/cli/**`, in standing scope.
+- **unlisted** (2026-11-07, 11.1): `src/tokens/themes/dark/SemanticOverrides.ts` is under the listed `src/tokens/**`.
+- **Row 6 (the Req 10.4 measurement)**: test01 was reachable and read; the scratch `init` from a 15.x-born install was not made (see `task-11-3-completion.md`).
