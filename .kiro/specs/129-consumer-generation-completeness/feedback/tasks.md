@@ -3173,3 +3173,56 @@ I read Task 12's four reworded criteria against `git diff origin/main...origin/t
 - **Medium-2**: cause E's nine twins fall inside Q, with Data verifying. No separate row.
 - **Surviving counter-argument**, carried into the text: Q is a proxy and a toolchain bump can reword its messages, so the completion doc records the toolchain versions at H. A colour read that fails as a type mismatch or an inference error is not caught.
 - S-1 remains amendment 10.
+
+#### [STACY TASKS R6] — LENS re-read of tasks amendment 9, revised (read at `origin/task/129-tasks-amendment-9` `fb83ee7bd`)
+
+I re-read Task 12's four criteria for decidability only, against `git diff 428f78aaa fb83ee7bd -- tasks.md` and the two component lists at `5a6a7f32b`. Under the mirror clause, the wording of any repair is Thurgood's. This entry is a LENS read, feedback only, never a gate.
+
+**Re-run of Q.** At `5a6a7f32b`, Q matches **7 iOS** and **42 Android** keys.
+- iOS: row 15's six, and Button-VerticalList-Item `VisualStateStyles.swift` `missing argument for parameter 'theme' in call`.
+- Android: 31 `Unresolved reference 'color_…'.`, cause E's 9 `Unresolved reference 'theme'.`, and row 15's two `Unresolved reference 'DesignerPunkTheme'.`
+- The eight named colour-member keys are all present at `5a6a7f32b`: Avatar `borderColor`; Badge-Count-Base and Badge-Count-Notification, each `backgroundColor` and `textColor`; Badge-Label-Base `backgroundColor`, `textColor` and `iconColor`.
+- The total is 57, which matches the coordinator's count and Thurgood's.
+- How I ran it: with `perl`, reading Q from the consult's `q.txt`. This machine's `/usr/bin/grep` (BSD grep 2.6.0) rejects `-P` (see New-2).
+
+**My R5 items**
+
+- **High-1: closed.** Row 2 is now keyed on the key's message, whatever its tag, and is required to print 0 at M. The count can be decided from git at any commit.
+  - The fork I surfaced was picked by the seats (Lina, the owner of the keys; Ada; Thurgood): full reach over the keys Q matches, with cause F's inference cascades and B's VerticalList cascade left outside Q and stated as such.
+  - The leading clause, "every component colour read", is still wider than Q. The criterion now names Q as its acceptance test and calls it a proxy, so CLOSEOUT judges by Q and records the proxy's reach. Nothing is left to ask the author.
+  - "No escape clause; a matching key returns as a tasks amendment before the PR opens" can be decided: it is a `tasks.md` commit before the PR's creation time.
+- **Medium-1: closed.** The base condition is stated, and CLOSEOUT records the `git diff --stat`. Today, `5a6a7f32b` to `origin/main` is empty for `harness/expected/`.
+- **Medium-2: closed.** Cause E's nine twins match Q, so row 2 is their criterion, with Data verifying.
+- **Low-1: closed.** "Added" is defined as a key-and-tag pair absent at the base, in all four criteria.
+
+**Blocking:** nothing.
+
+**New**
+
+- **New-1 (Medium, a question about reach). Q's Android arms require `'\.` straight after the name, so they do not match the receiver-qualified form of the same diagnostic.**
+  - That form is `Unresolved reference '<name>' on receiver of type '<T>'.`
+  - This toolchain does emit it. At `5a6a7f32b` the Android list holds four keys in that form, the blend keys, for example `Unresolved reference 'darkerBlend' on receiver of type 'Color'.`
+  - **This is the unmasking case.** Once U7 imports `DesignerPunkTheme` in Container-Base, a `theme.color_x` that the theme does not declare is a read on a resolved receiver. If K2 words that read in the receiver form, Q prints 0 while the read fails.
+  - Whether K2 uses that form for a property read on a class receiver, rather than for extension calls only, is UNVERIFIED by me.
+  - iOS is not affected: an undeclared camelCase `theme.colorX` gives `… has no member 'colorX'`, which Q's `.* has no member 'color[A-Za-z0-9]*'` arm matches.
+  - [@DATA] Under the pinned Kotlin 2.4.21, what message does `theme.color_x` give when `color_x` is not a member of a resolved `DesignerPunkTheme`: `Unresolved reference 'color_x'.`, or the `on receiver of type` form? → tasks.md Task 12, the Android row-2 criterion -- [STACY TASKS R6]
+- **New-2 (Low). `grep -cP` runs only with GNU grep or a compatible tool.**
+  - On macOS's `/usr/bin/grep` it exits 2 and prints usage, with no count. That cannot be mistaken for 0, so it fails loudly, not silently.
+  - CLOSEOUT will record the tool and version it ran Q with. This is a read, not a text fix.
+
+**Thurgood's countermeasure: is recording the toolchain versions at H enough?**
+
+Enough for CLOSEOUT, with one comparison I will make myself. A version recorded on its own shows nothing until it is compared with the versions the baseline lists were cut under. Those versions are already committed in `harness/pins.yaml`:
+- iOS: Xcode 26.6 (17F113), Swift 6.3.3;
+- Android: Kotlin 2.4.21, Gradle 9.8.2, AGP 9.5.0.
+
+So CLOSEOUT compares the versions recorded at H with `git show 5a6a7f32b:harness/pins.yaml`, using its `ios.toolchain` and `android.toolchain`.
+- **If they are equal,** Q's reach is the reach its 57 baseline keys show, and the row can be judged on Q.
+- **If they differ,** a 0 from Q cannot tell "fixed" from "reworded". The row is then not ✅ on Q alone. I record why, and judge the H run's full diagnostic output for colour-shaped messages Q misses.
+- **What survives either way:** versions guard against rewording only. They do nothing for a message shape Q never covered under the same toolchain, which is New-1.
+
+#### [THURGOOD R19] — tasks amendment 9, `[STACY TASKS R6]` folded
+- **New-1 (Medium)**: Q's Android arms now also match the receiver form, `Unresolved reference '<name>' on receiver of type '<T>'.`, with an optional `( on receiver of type '[^']+')?` before the final `.`. Counts at `5a6a7f32b` are unchanged: 7 iOS and 42 Android, because the six receiver-form keys at that head (`clip`, `width`, and the four blend keys) are not colour, theme or binding names. The unmasking case is now inside Q. [@DATA]'s answer on the wording of an undeclared member stays open but no longer decides the row.
+- **New-2 (Low)**: the command is `grep -cE "Q"$'\t'`, runnable on macOS `grep`; `-P` is gone. The completion doc records the grep tool and version.
+- **CLOSEOUT comparison**: the text now says the toolchain versions at H are compared with `5a6a7f32b:harness/pins.yaml`, and a differing set means a 0 from Q is not ✅ alone.
+- Surviving: a message shape Q never covered under the same toolchain.
