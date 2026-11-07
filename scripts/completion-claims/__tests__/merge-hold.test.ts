@@ -305,4 +305,32 @@ describe('the run record (A2) and the command line', () => {
     expect(seen).toContain(`file:RUN-HEAD:${REC}`);
     expect(seen.join()).not.toContain('LIVE');
   });
+
+  it('liveAdapter.checkedOut takes the base from the fetched base ref over the payload base.sha', () => {
+    const { execFileSync } = require('child_process');
+    const os = require('os');
+    const fs = require('fs');
+    const path = require('path');
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'mh-'));
+    const g = (...a: string[]) => execFileSync('git', ['-C', dir, '-c', 'user.name=t', '-c', 'user.email=t@t', ...a], { encoding: 'utf8' }).trim();
+    g('init', '-q', '-b', 'main');
+    g('commit', '-q', '--allow-empty', '-m', 'a');
+    g('commit', '-q', '--allow-empty', '-m', 'b');
+    const tip = g('rev-parse', 'HEAD');
+    g('update-ref', 'refs/remotes/origin/main', tip);
+    const cwd = process.cwd();
+    const saved = { r: process.env.BASE_REF, s: process.env.BASE_SHA };
+    try {
+      process.chdir(dir);
+      process.env.BASE_REF = 'main';
+      process.env.BASE_SHA = 'stale-payload-sha';
+      expect(liveAdapter.checkedOut()).toEqual({ headSha: tip, baseSha: tip });
+      process.env.BASE_REF = 'absent';
+      expect(liveAdapter.checkedOut().baseSha).toBe('stale-payload-sha');
+    } finally {
+      process.chdir(cwd);
+      if (saved.r === undefined) delete process.env.BASE_REF; else process.env.BASE_REF = saved.r;
+      if (saved.s === undefined) delete process.env.BASE_SHA; else process.env.BASE_SHA = saved.s;
+    }
+  });
 });

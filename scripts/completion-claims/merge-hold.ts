@@ -21,8 +21,8 @@
  * Usage:   npx tsx scripts/completion-claims/merge-hold.ts --job merge-hold|law-ratified --pr <n>
  * Reads:   `gh pr view <n> --json body,headRefOid,baseRefOid,url` (the body through the API, never the event
  *          payload: a re-run replays the original payload), `git show <head>:<path>`, `git diff --name-status`.
- *          The head judged is `git rev-parse HEAD` (what the run checked out) and the base is env BASE_SHA (the
- *          event's pull_request.base.sha); the live head and base are used only if those are absent.
+ *          The head judged is `git rev-parse HEAD` (what the run checked out) and the base is the fetched
+ *          origin/$BASE_REF (event base.sha in BASE_SHA as fallback); live values are used only if those are absent.
  *          Exits 1 on a red verdict, 0 on green, 2 on a usage or read failure.
  * Record:  each run prints one `::notice title=merge-hold-read::` annotation carrying the body's sha256 and the
  *          marker and answer lines it parsed, verbatim (past about 60 KB: the hash and a line count, the full
@@ -336,7 +336,7 @@ export interface PrView {
 
 export interface Adapter {
   prView(n: number): PrView;
-  /** The commits the run checked out and was handed: head = `git rev-parse HEAD`, base = the event's base.sha (env BASE_SHA); null where unknown. */
+  /** The commits the run checked out and was handed: head = `git rev-parse HEAD`, base = the fetched origin/$BASE_REF, else env BASE_SHA; null where unknown. */
   checkedOut(): { headSha: string | null; baseSha: string | null };
   fileAt(sha: string, path: string): string | null;
   changedFiles(base: string, head: string): ChangedFile[];
@@ -359,7 +359,17 @@ export const liveAdapter: Adapter = {
     } catch {
       headSha = null;
     }
-    return { headSha, baseSha: process.env.BASE_SHA || null };
+    // The base is the fetched base branch (env BASE_REF), always in a fetch-depth-0 checkout and never older than a
+    // main merge already in the head; the payload's base.sha (env BASE_SHA) is the fallback.
+    let baseSha: string | null = null;
+    if (process.env.BASE_REF) {
+      try {
+        baseSha = sh('git', ['rev-parse', '--verify', `refs/remotes/origin/${process.env.BASE_REF}^{commit}`]).trim() || null;
+      } catch {
+        baseSha = null;
+      }
+    }
+    return { headSha, baseSha: baseSha ?? (process.env.BASE_SHA || null) };
   },
   fileAt(sha, path) {
     try {
