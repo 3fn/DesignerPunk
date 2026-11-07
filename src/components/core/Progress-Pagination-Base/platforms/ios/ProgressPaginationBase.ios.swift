@@ -163,7 +163,7 @@ public struct ProgressPaginationBase: View {
             }
         }
         .frame(width: viewportWidth)
-        .background(DesignTokens.colorScrimStandard)
+        .background(theme.colorScrimStandard)
         .clipShape(Capsule())
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(effectiveAccessibilityLabel)

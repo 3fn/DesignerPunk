@@ -42,6 +42,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.designerpunk.tokens.DesignTokens
+import com.designerpunk.tokens.DesignerPunkTheme
+import com.designerpunk.tokens.LocalDPTheme
 // Import theme-aware blend utilities (Color extension functions from ThemeAwareBlendUtilities.android.kt)
 // These provide semantic blend methods: hoverBlend(), pressedBlend(), iconBlend()
 // @see Requirements: 11.1, 11.2, 11.3 - Theme-aware utilities
@@ -152,7 +154,7 @@ fun ButtonCTA(
     val sizeConfig = getButtonCTASizeConfig(size)
     
     // Get style-based configuration with blend utilities
-    val styleConfig = getButtonCTAStyleConfig(style, isPressed)
+    val styleConfig = getButtonCTAStyleConfig(style, isPressed, theme)
     
     // Use Surface with clickable modifier (no ripple indication for cross-platform consistency)
     Surface(
@@ -351,51 +353,52 @@ private data class ButtonCTAStyleConfig(
  * 
  * @param style Button visual style
  * @param isPressed Whether button is currently pressed
+ * @param theme The theme the colours resolve from (LocalDPTheme.current)
  * @return Style configuration object with blend-calculated colors
  */
-private fun getButtonCTAStyleConfig(style: ButtonCTAStyle, isPressed: Boolean): ButtonCTAStyleConfig {
+private fun getButtonCTAStyleConfig(style: ButtonCTAStyle, isPressed: Boolean, theme: DesignerPunkTheme): ButtonCTAStyleConfig {
     // Import semantic color tokens from generated constants
     
     // Calculate state-based background colors using theme-aware blend utilities
     // @see Requirements: 7.1, 7.2, 7.3, 11.1, 11.2, 11.3
     val primaryBgColor = when {
         // @see Requirements: 7.2 - Pressed uses darkerBlend(color.action.primary, blend.pressedDarker)
-        isPressed -> colorActionPrimary.pressedBlend()
-        else -> colorActionPrimary
+        isPressed -> theme.color_action_primary.pressedBlend()
+        else -> theme.color_action_primary
     }
     
     val secondaryBgColor = when {
         // @see Requirements: 7.2 - Pressed uses darkerBlend for secondary background
-        isPressed -> colorBackground.pressedBlend()
-        else -> colorBackground
+        isPressed -> theme.color_structure_canvas.pressedBlend()
+        else -> theme.color_structure_canvas
     }
     
     // Calculate icon colors with optical balance using theme-aware blend utility
     // iconBlend() applies lighterBlend with blend.iconLighter (8%) for optical weight compensation
     // @see Requirements: 7.4, 11.1, 11.2, 11.3
-    val primaryIconColor = colorContrastOnDark.iconBlend()
-    val secondaryIconColor = colorActionPrimary.iconBlend()
+    val primaryIconColor = theme.color_contrast_on_dark.iconBlend()
+    val secondaryIconColor = theme.color_action_primary.iconBlend()
     
     return when (style) {
         ButtonCTAStyle.PRIMARY -> ButtonCTAStyleConfig(
             backgroundColor = primaryBgColor,        // Requirement 2.1, 7.2, 7.3: color.action.primary with blend states
-            textColor = colorContrastOnDark,      // Requirement 2.1: color.contrast.onDark
+            textColor = theme.color_contrast_on_dark,      // Requirement 2.1: color.contrast.onDark
             iconColor = primaryIconColor,            // Requirement 9.1, 7.4: color.contrast.onDark with optical balance
-            borderWidth = 0,
+            borderWidth = 0.dp,
             borderColor = Color.Transparent
         )
         ButtonCTAStyle.SECONDARY -> ButtonCTAStyleConfig(
             backgroundColor = secondaryBgColor,      // Requirement 2.2, 7.2: color.structure.canvas with blend states
-            textColor = colorActionPrimary,                // Requirement 2.2: color.action.primary
+            textColor = theme.color_action_primary,                // Requirement 2.2: color.action.primary
             iconColor = secondaryIconColor,          // Requirement 9.2, 7.4: color.action.primary with optical balance
             borderWidth = DesignTokens.border_default,
-            borderColor = colorActionPrimary               // Requirement 2.2: color.action.primary
+            borderColor = theme.color_action_primary               // Requirement 2.2: color.action.primary
         )
         ButtonCTAStyle.TERTIARY -> ButtonCTAStyleConfig(
             backgroundColor = Color.Transparent,     // Requirement 2.3: transparent
-            textColor = colorActionPrimary,                // Requirement 2.3: color.action.primary
+            textColor = theme.color_action_primary,                // Requirement 2.3: color.action.primary
             iconColor = secondaryIconColor,          // Requirement 9.2, 7.4: color.action.primary with optical balance
-            borderWidth = 0,
+            borderWidth = 0.dp,
             borderColor = Color.Transparent
         )
     }
