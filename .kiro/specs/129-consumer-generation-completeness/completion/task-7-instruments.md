@@ -1,0 +1,26 @@
+# Task 7 — Instruments block
+
+**Written**: 2026-11-07T04:25Z (`date -u`), before subtask 7.1 · **PRIMARY**: Thurgood (Sonnet), on the unit branch `task/129-comparator-guard-markers`, cut from `main` @ `74d7566f5` (U1, #707)
+
+**Form**: M1's execution-time block (Start Up Tasks item 8), as Task 6's. **Sha convention**: `git log -1 --format=%h -- <path>` at `74d7566f5`.
+**Criteria order**: Task 7's four criteria in `tasks.md` order (C1 each fixed limitation sentence marked, and the completion doc lists them · C2 `install-doc.test.ts` fails on an archived or missing record while its sentence remains · C3 `INSTALL.md` re-derived, `install-doc.test.ts` passes · C4 all four harness contexts ran on the U2 PR, cited at head H).
+
+| # | Criterion (short ref) | Instrument | State | Fit (one line, `exists` rows) | Dependent subtasks |
+|---|---|---|---|---|---|
+| 1 | C1, C3 the install region | `governance/DesignerPunk-Integration-Guide.md` between `<!-- designerpunk:install-region:begin -->` and its end marker | exists (`governance/DesignerPunk-Integration-Guide.md` @ `45f5262ee`) | the region holds the limitation sentences; `scripts/derive-install-doc.ts` derives `INSTALL.md` from it | 7.1 |
+| 2 | C1 which sentences a 129 row fixes | `tasks.md` (the 129 row table and traceability) and the records the rows name under `.kiro/issues/` | exists (`.kiro/specs/129-consumer-generation-completeness/tasks.md` @ `74d7566f5`) | names each row's record; "which sentences a row fixes is a reading" (criterion C1) | 7.1 |
+| 3 | C1 Ada's reading of which sentences her rows fix | a consult with Ada (`tasks.md` 7.1: "Ada consulted on which sentences each of her rows fixes") | MISSING → Ada: the consult on `marker-candidates.md` (candidate list prepared by the PRIMARY and routed by the orchestrator); a sentence under a row owned by another seat goes to that owner. Route: the orchestrator sends the list; 7.1 starts on the answers | 7.1 (the marking itself); the prep list does not wait |
+| 4 | C2 the test that fails on an archived or missing record | `scripts/__tests__/install-doc.test.ts` | exists (`scripts/__tests__/install-doc.test.ts` @ `722ea5bb0`) | reads the guide's region and `INSTALL.md` and fails when they differ; it has no marker check today | 7.1 |
+| 5 | C2 the marker check and its fixture case | a marker reader in `install-doc.test.ts` (or the module it imports), and a fixture case that is red once | built here (7.1) | — | 7.1 |
+| 6 | C3 the deriver | `scripts/derive-install-doc.ts` | exists (`scripts/derive-install-doc.ts` @ `cdb8296fa`) | `npx tsx scripts/derive-install-doc.ts` writes `docs/consumer/INSTALL.md` from the region. Whether it must strip or pass through `<!-- limitation: … -->` comments is read at 7.1 and recorded as a found-later entry if it needs a change | 7.1 |
+| 7 | C3 the derived file | `docs/consumer/INSTALL.md` | exists (`docs/consumer/INSTALL.md` @ `45f5262ee`) | the file `install-doc.test.ts` compares | 7.1 |
+| 8 | C4 the four harness contexts on a pull request | `.github/workflows/native-harness.yml` | exists as a workflow (`.github/workflows/native-harness.yml` @ `74d7566f5`); the runs do not exist: the U2 PR opens at Task 7's completion | `on: pull_request` with no `paths:` filter, so every unit PR runs `harness-ios-tokens`, `harness-ios-components`, `harness-android-tokens`, `harness-android-components`. The criterion is read at head H of the PR (tasks.md Conventions), so the evidence is "pending PR run" until then; not a MISSING instrument | 7.1 for the diff; the criterion is read at the PR |
+| 9 | C4 the comparator's summary line, pasted | `scripts/harness/compare.ts` summary line; the `harness-verdict` check annotation | exists (`scripts/harness/compare.ts` @ `74d7566f5`) | the context writes the verdict annotation on PASS and FAIL alike; the doc pastes the line, since run logs expire | — (read at the PR) |
+
+**Counts**: listed **9** — exists **7** (rows 1, 2, 4, 6, 7, 8, 9) · built-here **1** (row 5) · missing **1** (row 3). N = E + B + M = 7 + 1 + 1 = 9.
+
+**Row 3 stops 7.1's marking, not the prep.** 7.1 does not start until Ada's answers (and the other owners' on their rows) are on a record the orchestrator can cite.
+
+## Found later
+
+(none at the time of writing)
