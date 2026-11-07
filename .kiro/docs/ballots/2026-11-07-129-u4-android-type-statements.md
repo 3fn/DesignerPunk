@@ -2,7 +2,9 @@
 
 **Date**: 2026-11-07
 **Drafted by**: Lina (the text, § 3), as the guideline's owner; Thurgood holds the ballot record (Spec 129 Task 9, Req 6.9), at the sitting the U4 unit's merge opens.
-**Status**: **DRAFT** — awaiting Peter's ratification. It SHALL read `**RATIFIED (Peter, <date>)**`, with his dated words, before U4's PR merges (Task 9's criterion; Task-Completion-Protocol § "Branch and PR Conventions", the merge-hold rule). Only Peter's dated words make it so: no agent writes RATIFIED on his behalf.
+**Status**: **RATIFIED (Peter, 2026-11-07T17:00:13Z)**. Peter's words, verbatim: "yes, ratify; and scope the check". He was answering the orchestrator's question: "Do you ratify Lina's Android type statements as law?" The question was asked after #719 merged. The orchestrator recorded his answer, with the time from `date -u` on receipt.
+
+*(Recorded 2026-11-07, by the orchestrator. **This ratification came after U4's merge.** #719 merged at 2026-11-07T16:52:22Z (`30e2f727b`), while this Status still read DRAFT, so for 7 minutes 51 seconds the measure was on `main` unratified. The merge did not answer the question, and this record does not treat it as an answer. Task 9's criterion, "Status reads RATIFIED (Peter) at U4's merge", was therefore not met at the merge. That is a finding for the CLOSEOUT claims pass. The prior Status read DRAFT, "awaiting Peter's ratification", at `30e2f727b`.)*
 **Owner**: Thurgood (ballot record); Lina (the text and the guideline).
 **Required reviewers**: **Ada** (the generator's owner: § 4 lists the checks against her branch); **Data** (the Android platform fact).
 **Class**: LAW. The statements say how Android code must read tokens (no `.dp` on a `Dp`, no `.sp` on a `TextUnit`); they change what the guideline requires of component authors. The PR body's `**Edit kind**:` line is `governance/platform-implementation-guidelines.md — LAW (.kiro/docs/ballots/2026-11-07-129-u4-android-type-statements.md)`.
