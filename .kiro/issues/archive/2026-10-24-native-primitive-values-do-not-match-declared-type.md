@@ -99,3 +99,5 @@ The native components that want a circle do not read the token: `BadgeCountBase.
 *Signed: Ada, 2026-10-24.*
 
 **Routed**: Spec 129 § "2026-11-01 (scope intake, second batch, record only: it names records and settles no design)", the outline row added in the same PR as this line *(2026-11-01, Thurgood, steward, rule 9; under DLG `d34fc77868f649d3c67bd1b1da47bc6f2a805920` and R10 fork 2 (a), batch routing)*. The Trigger is unchanged. Whether it is re-ruled in place to the spec follows Peter's answer to fork B (in place or archived); until then this record's own Trigger, which already names this spec's requirements, is its firing. This record is not due at 16.2.0's S.
+
+**Outcome (2026-11-07, Ada, owner, rule 5)**: Row 8: font weights are Font.Weight on iOS and FontWeight on Android, and radiusHalf is Circle() and CornerSize(percent = 50) (9.1, a8967663e); the two iOS entries left the list. A Jest case asserts radius_half. Fixed in Spec 129 Task 9 (U4), `completion/task-9-completion.md`. Closed and archived in the unit PR.

@@ -113,7 +113,7 @@ describe('BuildOrchestrator', () => {
         platforms: ['ios'],
         ios: {
           swiftVersion: '5.9',
-          minimumDeploymentTarget: '15.0',
+          minimumDeploymentTarget: '17.0',
           dependencies: [],
         },
       };
@@ -143,7 +143,7 @@ describe('BuildOrchestrator', () => {
         platforms: ['android'],
         android: {
           kotlinVersion: '1.9.0',
-          minSdkVersion: 24,
+          minSdkVersion: 26,
           targetSdkVersion: 34,
           dependencies: [],
         },

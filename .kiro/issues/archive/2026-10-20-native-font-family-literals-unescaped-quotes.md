@@ -119,3 +119,5 @@ Related, same incident: `2026-10-20-kotlin-output-no-import-block.md` (Data; the
 ## Review of the 2026-10-24 correction (2026-10-24, Kenya) — trust, but verify
 - Checked: `swiftc -typecheck` on `dist/DesignTokens.ios.swift` (Swift 6.2) → 197 distinct errors; the parse-step lines in my charter row 6 (17 distinct on lines 133,135,137,139,684-690).
 - Finding: agree. The correction restates my report correctly (34 raw = 17 distinct; 8 on the four font-family lines, 9 on the seven WCAG lines 684-690). Nothing of mine is missing from it. The record's own `sort -u` at `50f89e6f9` listing only four lines is Ada's open UNVERIFIED; I cannot explain it either (I measured on the later tree).
+
+**Outcome (2026-11-07, Ada, owner, rule 5)**: Row 5: font families emit as String? on iOS (first entry unquoted, nil for a generic or system keyword) and as FontFamily on Android (9.1, a8967663e); the font-family entries left both token lists. Fixed in Spec 129 Task 9 (U4), `completion/task-9-completion.md`. Closed and archived in the unit PR.

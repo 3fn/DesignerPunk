@@ -613,8 +613,8 @@ export class BuildOrchestrator implements IBuildOrchestrator {
       errors.push('Android build requires kotlinVersion to be specified');
     }
 
-    if (typeof options.minSdkVersion !== 'number' || options.minSdkVersion < 21) {
-      errors.push('Android build requires minSdkVersion >= 21');
+    if (typeof options.minSdkVersion !== 'number' || options.minSdkVersion < 26) {
+      errors.push('Android build requires minSdkVersion >= 26 (the Android minimum in Core Goals, API 26)');
     }
 
     if (typeof options.targetSdkVersion !== 'number') {

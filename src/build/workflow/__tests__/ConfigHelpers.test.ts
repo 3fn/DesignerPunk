@@ -263,7 +263,7 @@ describe('ConfigHelpers', () => {
 
       expect(result.valid).toBe(false);
       expect(result.errors).toContain('android.kotlinVersion: Kotlin version must be specified');
-      expect(result.errors).toContain('android.minSdkVersion: Minimum SDK version must be >= 21');
+      expect(result.errors).toContain('android.minSdkVersion: Minimum SDK version must be >= 26 (the Android minimum in Core Goals, API 26)');
     });
 
     it('should validate Android SDK version relationship', () => {
@@ -448,7 +448,7 @@ describe('ConfigHelpers', () => {
         outputDir: './dist',
         ios: {
           swiftVersion: '5.9',
-          minimumDeploymentTarget: '15.0',
+          minimumDeploymentTarget: '17.0',
           dependencies: [],
         },
       };
@@ -458,7 +458,7 @@ describe('ConfigHelpers', () => {
       expect(result.success).toBe(true);
       expect(result.config.ios).toEqual({
         swiftVersion: '5.9',
-        minimumDeploymentTarget: '15.0',
+        minimumDeploymentTarget: '17.0',
         dependencies: [],
       });
     });
