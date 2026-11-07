@@ -1,0 +1,51 @@
+# The versions the harness compiles with. harness/pins.yaml § android pins the same values; the toolchain match
+# (Req 3.11) compares what Gradle RESOLVED with the pin file, so a difference between this file and the pins fails
+# the context. These are harness pins, not platform minimums (Req 2.9).
+
+[versions]
+agp = "9.5.0"
+kotlin = "2.4.21"
+compose-bom = "2026.09.00"
+compile-sdk = "36"
+min-sdk = "26"
+coil = "2.7.0"
+material-icons-extended = "1.7.8"
+colormath = "3.7.1"
+
+[libraries]
+# Versionless: the Compose BOM supplies them. material-ripple must resolve to 1.7 or later, where
+# rememberRipple is DeprecationLevel.ERROR (Req 2.8); BOM 2026.09.00 maps it to 1.12.1.
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
+compose-runtime = { module = "androidx.compose.runtime:runtime" }
+compose-ui = { module = "androidx.compose.ui:ui" }
+compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+compose-ui-text = { module = "androidx.compose.ui:ui-text" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+compose-foundation = { module = "androidx.compose.foundation:foundation" }
+compose-animation = { module = "androidx.compose.animation:animation" }
+compose-material3 = { module = "androidx.compose.material3:material3" }
+compose-material-ripple = { module = "androidx.compose.material:material-ripple" }
+# Pinned on its own, outside the BOM.
+material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icons-extended" }
+# The components import `coil.compose` (Coil 2's package; Coil 3 is `coil3`).
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+# Only while the generated Kotlin calls Oklch(...).toComposeColor(); drops out when native colour values land (row 4).
+colormath = { module = "com.github.ajalt.colormath:colormath-ext-jetpack-compose", version.ref = "colormath" }
+
+[bundles]
+compose = [
+    "compose-runtime",
+    "compose-ui",
+    "compose-ui-graphics",
+    "compose-ui-text",
+    "compose-ui-tooling-preview",
+    "compose-foundation",
+    "compose-animation",
+    "compose-material3",
+    "compose-material-ripple",
+]
+
+[plugins]
+android-library = { id = "com.android.library", version.ref = "agp" }
+# The Compose compiler plugin's version is the Kotlin version.
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

@@ -1,26 +1,438 @@
-# native-harness.yml -- DISPATCH-ONLY STUB.
+# native-harness.yml -- the native compile harness (Spec 129, Task 5).
 #
-# This file exists on main only so that GitHub will dispatch the workflow by name
-# against a unit branch (GitHub triggers a dispatch only for a workflow whose file is
-# on the default branch). Record: .kiro/issues/2026-11-06-native-harness-dispatch-stub-grant.md
-# (grant, Thurgood). The owner of the real file is Spec 129 Task 5
-# (.kiro/specs/129-consumer-generation-completeness/tasks.md); U1's PR replaces this file.
+# This is the unit branch's own copy of the file. It replaces the dispatch-only stub that
+# Spec 129's stub PR put on main (record: .kiro/issues/2026-11-06-native-harness-dispatch-stub-grant.md).
+# Design: .kiro/specs/129-consumer-generation-completeness/design.md § 3 "Wiring"; criteria:
+# tasks.md Task 5.
 #
-# It has one trigger, a manual dispatch, so it runs on no PR and adds no check to any PR.
-# It is not a required context and is in neither EXPECTED_CONTEXTS nor REQUIRED_WORKFLOWS.
+# Jobs: `harness-generate` builds the scratch consumer once and uploads it as one artifact; the four
+# compile contexts (harness-ios-tokens, harness-ios-components, harness-android-tokens,
+# harness-android-components) each download it, run their lane (harness/ios/lane.ts or
+# harness/android/lane.ts), then run the comparator (scripts/harness/compare.ts) on the run file the
+# lane wrote. Each context fails, never skips, when harness-generate failed or its artifact is absent.
+#
+# Triggers: `pull_request` with no `paths:` filter (every unit PR runs all four contexts, Req 2.10), and
+# `workflow_dispatch`. A dispatched run has no merge base, so its comparator runs `--no-base`.
+#
+# The verdict annotation: after the comparator, a step with `if: always()` reads the comparator's output
+# file and writes `::notice title=harness-verdict::<verdict line>` for a PASS and a FAIL alike, and writes
+# nothing when the comparator wrote no output (a job that failed before comparing). The comparator step
+# runs whenever the lane wrote its run file, even when the lane step exited non-zero.
+#
+# No `if:` in this file reads github.event_name, github.event.*, head_ref, base_ref, ref or ref_name, and
+# only one reads inputs.*: the forced-failure step of harness-generate (dispatch input
+# force_generate_failure, Req 2.11's evidence run). So a context fails rather than skips on every trigger.
+# Job `name:` expressions are not `if:` and read github.event_name for the "(unit-branch)" dispatch suffix.
+#
+# Not a required context. It is in neither EXPECTED_CONTEXTS nor complete-task.sh's
+# REQUIRED_WORKFLOWS while it measures (tasks.md Task 5, criterion 11).
 
 name: native-harness
 
 on:
+  pull_request:
   workflow_dispatch:
+    inputs:
+      force_generate_failure:
+        description: "Fail harness-generate on purpose, to show each compile context fails rather than skips (Req 2.11). Read by one step of harness-generate only."
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
 jobs:
-  native-harness-stub:
-    name: native-harness stub (unit-branch)
+  harness-generate:
+    # This name expression is a job name, not a step condition. On a dispatch it reads "(unit-branch)", the same
+    # convention lane-timing.yml uses, so a branch-head dispatch run never shadows a gate name.
+    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-generate (unit-branch)' || 'harness-generate' }}
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
-      - name: Say what this is
-        run: echo "This is the native-harness dispatch stub on main. Spec 129 U1's PR replaces this file; a run of this job means the dispatch used main's copy, not the unit branch's."
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      # The one step in this file whose `if:` reads a dispatch input (tasks.md Task 5). On a pull_request the
+      # input is empty, so the step never runs there; every other `if:` here is event-blind.
+      - name: Forced failure (dispatch input force_generate_failure)
+        if: ${{ inputs.force_generate_failure }}
+        run: |
+          echo "::error::harness-generate failed on purpose: workflow_dispatch input force_generate_failure is true"
+          exit 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Runs scripts/harness/consumer.ts once: npm pack, install the tarball into a scratch
+      # consumer outside the repository, init, generate. The consumer root is the one
+      # directory the compile contexts download (Req 2.1; tasks.md Task 1).
+      - name: Build the scratch consumer (scripts/harness/consumer.ts)
+        run: npx tsx scripts/harness/consumer.ts --out "${RUNNER_TEMP}/harness-consumer"
+
+      - name: Upload the consumer root
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-consumer
+          path: ${{ runner.temp }}/harness-consumer
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 7
+
+  # ---------------------------------------------------------------------------------------------
+  # iOS
+  # ---------------------------------------------------------------------------------------------
+
+  harness-ios-tokens:
+    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-ios-tokens (unit-branch)' || 'harness-ios-tokens' }}
+    needs: harness-generate
+    if: ${{ !cancelled() }}
+    runs-on: macos-26
+    timeout-minutes: 30
+    env:
+      CONTEXT: harness-ios-tokens
+      EVENT_NAME: ${{ github.event_name }}
+    steps:
+      - name: Require harness-generate
+        env:
+          GENERATE_RESULT: ${{ needs.harness-generate.result }}
+        run: |
+          if [ "$GENERATE_RESULT" != "success" ]; then
+            echo "::error::harness-generate result is '$GENERATE_RESULT'; this context fails rather than skips"
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Download the consumer root
+        uses: actions/download-artifact@v4
+        with:
+          name: harness-consumer
+          path: ${{ runner.temp }}/harness-consumer
+
+      - name: Lane (harness/ios/lane.ts)
+        run: npx tsx harness/ios/lane.ts "$CONTEXT" --consumer "${RUNNER_TEMP}/harness-consumer" --out "${GITHUB_WORKSPACE}/harness-out"
+
+      - name: Comparator (scripts/harness/compare.ts)
+        if: ${{ !cancelled() && hashFiles('harness-out/run.json') != '' }}
+        run: |
+          set -o pipefail
+          if [ "$EVENT_NAME" = "pull_request" ]; then BASE="--base HEAD^1"; else BASE="--no-base"; fi
+          npx tsx scripts/harness/compare.ts --context "$CONTEXT" --run harness-out/run.json $BASE 2>&1 | tee harness-out/compare.txt
+
+      - name: Verdict annotation
+        if: always()
+        run: |
+          if [ -f harness-out/compare.txt ]; then
+            line=$(grep '^harness-verdict:' harness-out/compare.txt | tail -n 1 || true)
+            if [ -n "$line" ]; then echo "::notice title=harness-verdict::$line"; fi
+          fi
+
+      - name: Upload the lane output (logs, run file, comparator output)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-out-harness-ios-tokens
+          path: harness-out
+          if-no-files-found: ignore
+          include-hidden-files: true
+          retention-days: 7
+
+  harness-ios-components:
+    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-ios-components (unit-branch)' || 'harness-ios-components' }}
+    needs: harness-generate
+    if: ${{ !cancelled() }}
+    runs-on: macos-26
+    timeout-minutes: 30
+    env:
+      CONTEXT: harness-ios-components
+      EVENT_NAME: ${{ github.event_name }}
+    steps:
+      - name: Require harness-generate
+        env:
+          GENERATE_RESULT: ${{ needs.harness-generate.result }}
+        run: |
+          if [ "$GENERATE_RESULT" != "success" ]; then
+            echo "::error::harness-generate result is '$GENERATE_RESULT'; this context fails rather than skips"
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Download the consumer root
+        uses: actions/download-artifact@v4
+        with:
+          name: harness-consumer
+          path: ${{ runner.temp }}/harness-consumer
+
+      - name: Lane (harness/ios/lane.ts)
+        run: npx tsx harness/ios/lane.ts "$CONTEXT" --consumer "${RUNNER_TEMP}/harness-consumer" --out "${GITHUB_WORKSPACE}/harness-out"
+
+      - name: Comparator (scripts/harness/compare.ts)
+        if: ${{ !cancelled() && hashFiles('harness-out/run.json') != '' }}
+        run: |
+          set -o pipefail
+          if [ "$EVENT_NAME" = "pull_request" ]; then BASE="--base HEAD^1"; else BASE="--no-base"; fi
+          npx tsx scripts/harness/compare.ts --context "$CONTEXT" --run harness-out/run.json $BASE 2>&1 | tee harness-out/compare.txt
+
+      - name: Verdict annotation
+        if: always()
+        run: |
+          if [ -f harness-out/compare.txt ]; then
+            line=$(grep '^harness-verdict:' harness-out/compare.txt | tail -n 1 || true)
+            if [ -n "$line" ]; then echo "::notice title=harness-verdict::$line"; fi
+          fi
+
+  # ---------------------------------------------------------------------------------------------
+  # Android
+  # ---------------------------------------------------------------------------------------------
+
+      - name: Upload the lane output (logs, run file, comparator output)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-out-harness-ios-components
+          path: harness-out
+          if-no-files-found: ignore
+          include-hidden-files: true
+          retention-days: 7
+
+  harness-android-tokens:
+    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-android-tokens (unit-branch)' || 'harness-android-tokens' }}
+    needs: harness-generate
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CONTEXT: harness-android-tokens
+      EVENT_NAME: ${{ github.event_name }}
+    steps:
+      - name: Require harness-generate
+        env:
+          GENERATE_RESULT: ${{ needs.harness-generate.result }}
+        run: |
+          if [ "$GENERATE_RESULT" != "success" ]; then
+            echo "::error::harness-generate result is '$GENERATE_RESULT'; this context fails rather than skips"
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Select JDK 17 (the image default, JAVA_HOME_17_X64)
+        run: |
+          echo "JAVA_HOME=${JAVA_HOME_17_X64}" >> "$GITHUB_ENV"
+          echo "${JAVA_HOME_17_X64}/bin" >> "$GITHUB_PATH"
+
+      - name: Download the consumer root
+        uses: actions/download-artifact@v4
+        with:
+          name: harness-consumer
+          path: ${{ runner.temp }}/harness-consumer
+
+      - name: Validate the Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v4
+
+      - name: Restore the Gradle cache
+        id: gradle-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: harness-gradle-${{ runner.os }}-${{ hashFiles('harness/android/gradle/libs.versions.toml', 'harness/android/gradle/wrapper/gradle-wrapper.properties', 'harness/pins.yaml') }}
+
+      - name: Cache state
+        env:
+          CACHE_HIT: ${{ steps.gradle-cache.outputs.cache-hit }}
+        run: |
+          if [ "$CACHE_HIT" = "true" ]; then state=hit; else state=miss; fi
+          echo "::notice title=cache::$state"
+
+      - name: Lane self-test (harness/android/lane.ts --selftest)
+        run: npx tsx harness/android/lane.ts --selftest --work "${GITHUB_WORKSPACE}/harness-out/selftest"
+
+      - name: Lane (harness/android/lane.ts)
+        run: npx tsx harness/android/lane.ts --consumer "${RUNNER_TEMP}/harness-consumer" --work "${GITHUB_WORKSPACE}/harness-out"
+
+      - name: Comparator (scripts/harness/compare.ts)
+        if: ${{ !cancelled() && hashFiles('harness-out/run-harness-android-tokens.json') != '' }}
+        run: |
+          set -o pipefail
+          if [ "$EVENT_NAME" = "pull_request" ]; then BASE="--base HEAD^1"; else BASE="--no-base"; fi
+          npx tsx scripts/harness/compare.ts --context "$CONTEXT" --run harness-out/run-harness-android-tokens.json $BASE 2>&1 | tee harness-out/compare.txt
+
+      - name: Verdict annotation
+        if: always()
+        run: |
+          if [ -f harness-out/compare.txt ]; then
+            line=$(grep '^harness-verdict:' harness-out/compare.txt | tail -n 1 || true)
+            if [ -n "$line" ]; then echo "::notice title=harness-verdict::$line"; fi
+          fi
+
+      # actions/cache saves only when the job succeeds, and these contexts fail while the generator's output
+      # does not compile, so a restore-and-save pair would read `miss` on every run. This step saves after a
+      # failed job too, whenever Gradle ran (harness-out/gradle.txt exists) and the key was not restored.
+      # `hit` therefore means: an earlier run, passing or failing, saved this key after Gradle ran.
+      - name: Save the Gradle cache
+        if: ${{ always() && steps.gradle-cache.outputs.cache-hit != 'true' && hashFiles('harness-out/gradle.txt') != '' }}
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: harness-gradle-${{ runner.os }}-${{ hashFiles('harness/android/gradle/libs.versions.toml', 'harness/android/gradle/wrapper/gradle-wrapper.properties', 'harness/pins.yaml') }}
+
+      - name: Upload the lane output (logs, run file, comparator output)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-out-harness-android-tokens
+          path: harness-out
+          if-no-files-found: ignore
+          include-hidden-files: true
+          retention-days: 7
+
+  harness-android-components:
+    name: ${{ github.event_name == 'workflow_dispatch' && 'harness-android-components (unit-branch)' || 'harness-android-components' }}
+    needs: harness-generate
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CONTEXT: harness-android-components
+      EVENT_NAME: ${{ github.event_name }}
+    steps:
+      - name: Require harness-generate
+        env:
+          GENERATE_RESULT: ${{ needs.harness-generate.result }}
+        run: |
+          if [ "$GENERATE_RESULT" != "success" ]; then
+            echo "::error::harness-generate result is '$GENERATE_RESULT'; this context fails rather than skips"
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Select JDK 17 (the image default, JAVA_HOME_17_X64)
+        run: |
+          echo "JAVA_HOME=${JAVA_HOME_17_X64}" >> "$GITHUB_ENV"
+          echo "${JAVA_HOME_17_X64}/bin" >> "$GITHUB_PATH"
+
+      - name: Download the consumer root
+        uses: actions/download-artifact@v4
+        with:
+          name: harness-consumer
+          path: ${{ runner.temp }}/harness-consumer
+
+      - name: Validate the Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v4
+
+      - name: Restore the Gradle cache
+        id: gradle-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: harness-gradle-${{ runner.os }}-${{ hashFiles('harness/android/gradle/libs.versions.toml', 'harness/android/gradle/wrapper/gradle-wrapper.properties', 'harness/pins.yaml') }}
+
+      - name: Cache state
+        env:
+          CACHE_HIT: ${{ steps.gradle-cache.outputs.cache-hit }}
+        run: |
+          if [ "$CACHE_HIT" = "true" ]; then state=hit; else state=miss; fi
+          echo "::notice title=cache::$state"
+
+      - name: Lane (harness/android/lane.ts)
+        run: npx tsx harness/android/lane.ts --consumer "${RUNNER_TEMP}/harness-consumer" --work "${GITHUB_WORKSPACE}/harness-out"
+
+      - name: Comparator (scripts/harness/compare.ts)
+        if: ${{ !cancelled() && hashFiles('harness-out/run-harness-android-components.json') != '' }}
+        run: |
+          set -o pipefail
+          if [ "$EVENT_NAME" = "pull_request" ]; then BASE="--base HEAD^1"; else BASE="--no-base"; fi
+          npx tsx scripts/harness/compare.ts --context "$CONTEXT" --run harness-out/run-harness-android-components.json $BASE 2>&1 | tee harness-out/compare.txt
+
+      - name: Verdict annotation
+        if: always()
+        run: |
+          if [ -f harness-out/compare.txt ]; then
+            line=$(grep '^harness-verdict:' harness-out/compare.txt | tail -n 1 || true)
+            if [ -n "$line" ]; then echo "::notice title=harness-verdict::$line"; fi
+          fi
+
+      # actions/cache saves only when the job succeeds, and these contexts fail while the generator's output
+      # does not compile, so a restore-and-save pair would read `miss` on every run. This step saves after a
+      # failed job too, whenever Gradle ran (harness-out/gradle.txt exists) and the key was not restored.
+      # `hit` therefore means: an earlier run, passing or failing, saved this key after Gradle ran.
+      - name: Save the Gradle cache
+        if: ${{ always() && steps.gradle-cache.outputs.cache-hit != 'true' && hashFiles('harness-out/gradle.txt') != '' }}
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: harness-gradle-${{ runner.os }}-${{ hashFiles('harness/android/gradle/libs.versions.toml', 'harness/android/gradle/wrapper/gradle-wrapper.properties', 'harness/pins.yaml') }}
+
+      - name: Upload the lane output (logs, run file, comparator output)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-out-harness-android-components
+          path: harness-out
+          if-no-files-found: ignore
+          include-hidden-files: true
+          retention-days: 7

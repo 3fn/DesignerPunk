@@ -191,7 +191,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 1 — The compile harness
 
-- [ ] 1. The packed-install consumer driver (U1)
+- [x] 1. The packed-install consumer driver (U1)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet)
   **Traces**: Req 1.8, 2.1, 2.2, 2.3, 10.3 · design Architecture, § 3 ("Wiring")
@@ -217,19 +217,19 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete (`taskStatus`); `./.kiro/hooks/complete-task.sh "Task 1 Complete: The packed-install consumer driver (129)"` commits the docs on the U1 branch (no PR: U1's PR opens at Task 5); STOP.
 
-  - [ ] 1.1 Driver: pack, install, `init`, `generate`, artifact layout
+  - [x] 1.1 Driver: pack, install, `init`, `generate`, artifact layout
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - Abbreviation from `harness/pins.yaml` § `consumer`; each platform's output folder passed to its lane from the config (§ "The `gen:` path rule"); a Jest test of the step-failure messages
     - _Requirements: 1.8, 2.1, 2.2_
-  - [ ] 1.2 Product-token fixture
+  - [x] 1.2 Product-token fixture
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 2.3_
-  - [ ] 1.3 `pack-assert`'s native resource rule and its red case
+  - [x] 1.3 `pack-assert`'s native resource rule and its red case
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - Lina's README move is a precondition (§ "Unit preconditions")
     - _Requirements: 10.3_
 
-- [ ] 2. The comparator and its falsification test (U1)
+- [x] 2. The comparator and its falsification test (U1)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Thurgood (Opus) · Kenya (Sonnet) — Swift parser · Data (Sonnet) — Kotlin parser
   **Traces**: Req 2.6 (the cross-tier rule), 3.1–3.11 · design §§ 1 (K-2), 2 (capture and key), 3
@@ -269,27 +269,27 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 2 Complete: The comparator and its falsification test (129)"` on the U1 branch (no PR); STOP.
 
-  - [ ] 2.1 Formats: lists, pins, protected set, the `gen:` path rule; `harness/README.md`
+  - [x] 2.1 Formats: lists, pins, protected set, the `gen:` path rule; `harness/README.md`
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - _Requirements: 3.2, 3.7_
-  - [ ] 2.2 Swift parser (`<root>:<path> | <message>`, K-2, O-17)
+  - [x] 2.2 Swift parser (`<root>:<path> | <message>`, K-2, O-17)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Kenya (Sonnet)
     - Fixtures recorded under Xcode 27.2 and labelled so; plus one fixture cut from the first full run's iOS log (§ "The first full run (U1)") under the pinned Xcode, labelled with that toolchain and run, before U1 merges (`[STACY TASKS R2]` Medium-2; Task 5 carries it as a criterion, amended 2026-11-06, tasks amendment 2; prior text at `33380114c`)
     - _Requirements: 3.2_
-  - [ ] 2.3 Kotlin parser (D § 1.2)
+  - [x] 2.3 Kotlin parser (D § 1.2)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
     - Fixture cut from the 2026-11-04 K2 logs, scratch paths rewritten to `pkg:` and `gen:`, source named in the completion doc
     - _Requirements: 3.2_
-  - [ ] 2.4 Comparator verdict rules and summary line
+  - [x] 2.4 Comparator verdict rules and summary line
     **Type**: Implementation · **Validation**: Tier 3 - Comprehensive · **Agent**: Thurgood (Opus)
     - Req 3.3–3.9, 3.11; design § 3 rules 1–5
     - _Requirements: 2.6, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.11_
-  - [ ] 2.5 Falsification suite
+  - [x] 2.5 Falsification suite
     **Type**: Implementation · **Validation**: Tier 3 - Comprehensive · **Agent**: Thurgood (Opus)
     - Each case red once, then green; the exact red string recorded in the completion doc
     - _Requirements: 3.10_
 
-- [ ] 3. The iOS lanes (U1)
+- [x] 3. The iOS lanes (U1)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Kenya (Sonnet)
   **Traces**: Req 2.4, 2.6, 2.7, 2.8, 2.9, 3.4, 3.11, 4.1, 4.8, 6.2 · design § 1 (K-1 to K-7); § 4 ("Product-token names and access", "The shared harness module"; amendment 3)
@@ -331,16 +331,16 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete, after 3.4, which starts only once Task 5's 5.4 has put the shared module on the unit branch; 3.1–3.3 may tick before 5.4. When Kenya's seat branch joins the unit, its ticks on 3.1–3.3 sit next to this amendment's 3.4 hunk: take this amendment's text and re-apply the three ticks (`[KENYA R4]` item 10). `complete-task.sh "Task 3 Complete: The iOS lanes (129)"` on the U1 branch (no PR); STOP. *(Amended 2026-11-06, tasks amendment 3 and its review fold.)*
 
-  - [ ] 3.1 Re-read the `macos-26` image readme at the cut; set the pins
+  - [x] 3.1 Re-read the `macos-26` image readme at the cut; set the pins
     **Type**: Setup · **Validation**: Tier 1 - Minimal · **Agent**: Kenya (Sonnet)
     - _Requirements: 2.8, 2.9_
-  - [ ] 3.2 Stages T, P, C and T5; the probe generator; file order and floor
+  - [x] 3.2 Stages T, P, C and T5; the probe generator; file order and floor
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Kenya (Sonnet)
     - _Requirements: 2.4, 2.6, 2.7, 3.4_
-  - [ ] 3.3 Self-tests (K-4) and the toolchain match (K-6)
+  - [x] 3.3 Self-tests (K-4) and the toolchain match (K-6)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Kenya (Sonnet)
     - _Requirements: 3.11, 6.2_
-  - [ ] 3.4 The probe imports the shared module *(added 2026-11-06, tasks amendment 3, under Peter's "4 combine", received 2026-11-06T22:38:12Z, and "B Thurgood", received 2026-11-06T23:31:58Z)*
+  - [x] 3.4 The probe imports the shared module *(added 2026-11-06, tasks amendment 3, under Peter's "4 combine", received 2026-11-06T22:38:12Z, and "B Thurgood", received 2026-11-06T23:31:58Z)*
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Kenya (Sonnet)
     - Starts after Task 5's 5.4 has put `scripts/harness/native-rules.ts` and its test on the unit branch
     - Removes `themeInstances` and `themeHolder` from `probe-swift.ts`; the instance names change as the module states them
@@ -350,7 +350,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     - Appends the shared module, the per-run check, the product and provider reads and the `checks` route to `task-3-instruments.md` under `## Found later` as `unlisted` (Start Up Tasks item 8; `[STACY TASKS R4]` Low-1)
     - _Requirements: 2.7, 4.2_
 
-- [ ] 4. The Android lanes (U1)
+- [x] 4. The Android lanes (U1)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Data (Sonnet)
   **Traces**: Req 2.4 (as amended), 2.6, 2.7, 2.8, 2.9, 3.4, 3.11, 4.1, 4.8 · design § 2; D §§ 1.1–1.5; § 4 ("The shared harness module"; amendment 3)
@@ -384,14 +384,14 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete, after 4.3, which starts only once Task 5's 5.4 has put the shared module on the unit branch; 4.1 and 4.2 may tick before 5.4, and the same tick-conflict note as Task 3's applies when Data's seat branch joins (`[DATA R4]`); `complete-task.sh "Task 4 Complete: The Android lanes (129)"` on the U1 branch (no PR); STOP. *(Amended 2026-11-06, tasks amendment 3.)*
 
-  - [ ] 4.1 The Gradle build, three modules, explicit file list, floor
+  - [x] 4.1 The Gradle build, three modules, explicit file list, floor
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
     - The first dispatched Android run waits for Lina's README move on the branch
     - _Requirements: 2.4, 2.6, 3.4_
-  - [ ] 4.2 The data-driven probe generator (`scripts/harness/probe-kotlin.ts`) and its fixture test, the blocked state, the planted-member fixture, pins and toolchain match
+  - [x] 4.2 The data-driven probe generator (`scripts/harness/probe-kotlin.ts`) and its fixture test, the blocked state, the planted-member fixture, pins and toolchain match
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
     - _Requirements: 2.7, 2.8, 2.9, 3.11_
-  - [ ] 4.3 The probe imports the shared module *(added 2026-11-06, tasks amendment 3, under Peter's "4 combine", received 2026-11-06T22:38:12Z, and "B Thurgood", received 2026-11-06T23:31:58Z)*
+  - [x] 4.3 The probe imports the shared module *(added 2026-11-06, tasks amendment 3, under Peter's "4 combine", received 2026-11-06T22:38:12Z, and "B Thurgood", received 2026-11-06T23:31:58Z)*
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
     - Starts after Task 5's 5.4 has put `scripts/harness/native-rules.ts` and its test on the unit branch
     - Replaces and deletes `themeMemberNames` and `productObjectName` in `probe-kotlin.ts`; takes the binding constants and the product files' `gen:` keys from the module
@@ -401,7 +401,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     - Appends the shared module, the per-run check, the product and provider reads and the `checks` route to `task-4-instruments.md` under `## Found later` as `unlisted` (Start Up Tasks item 8; `[STACY TASKS R4]` Low-1)
     - _Requirements: 2.7, 4.2_
 
-- [ ] 5. Workflow wiring, baselines and the fault run (U1)
+- [x] 5. Workflow wiring, baselines and the fault run (U1)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Thurgood (Sonnet) · Kenya (Sonnet) — iOS job steps · Data (Sonnet) — Android job steps
   **Traces**: Req 1.4 (its list rule), 2.5, 2.7 (the shared module), 2.10, 2.11, 2.12, 2.13, 2.14, 3.5 (b), 4.1 (the shared module), 4.8 · design § 3 ("Wiring"); § 4 ("The shared harness module"; amendment 3)
@@ -453,20 +453,20 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Unit 1: The compile harness (129)"` opens U1's PR (body: Spec, Task 1–5, Agent, the completion docs, validation, `**Consulted**:`); report the URL; STOP.
 
-  - [ ] 5.1 The workflow: jobs, labels, triggers, artifact hand-off
+  - [x] 5.1 The workflow: jobs, labels, triggers, artifact hand-off
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet), Kenya (Sonnet), Data (Sonnet)
     - Starts after the stub is on `main`: the first commit gives the unit branch its own copy of the file, and the probe dispatch runs against it before any later harness run is cited (§ "Unit preconditions"; amended 2026-11-06, tasks amendment 2)
     - _Requirements: 2.5, 2.10, 2.11, 2.12_
-  - [ ] 5.2 The first full run; baseline lists with tags; the protected set filled
+  - [x] 5.2 The first full run; baseline lists with tags; the protected set filled
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - Lina files the component-repair record from this run before the component lists commit, and entries no other root record carries are tagged to it (§ "Unit preconditions"; amended 2026-11-07)
     - *(Tasks amendment 5, under Peter's "a; blend entries fine", received 2026-11-07T02:04:38Z (`evidence/2026-11-07-peter-ruling-component-repair-record-timing.md`): "a". Prior text at `34ea1bf48`, here and in § "Unit preconditions": the record was filed "after U1 merges" from U1's committed lists, which left 54 iOS and 185 Android entries of the first full run with no root record to tag, against this parent's baseline criterion. Lina's lines, spliced byte for byte, `[LINA R4]`.)*
     - The eight entries on `src/blend/ThemeAwareBlendUtilities.*` tag to `.kiro/issues/2026-06-24-blend-system-architecture-and-oklch-alignment.md` (Ada's; Trigger `path:.kiro/specs/133-color-track/requirements.md`). They outlast 129's closeout, as the component-repair record's go on to Spec 132 *(tasks amendment 5, under Peter's "a; blend entries fine", received 2026-11-07T02:04:38Z (`evidence/2026-11-07-peter-ruling-component-repair-record-timing.md`): "blend entries fine")*
     - _Requirements: 1.4, 2.14, 3.5, 4.8_
-  - [ ] 5.3 The forced-failure dispatch; the stability script and its first record
+  - [x] 5.3 The forced-failure dispatch; the stability script and its first record
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - _Requirements: 2.11, 2.12_
-  - [ ] 5.4 The shared harness module, `scripts/harness/native-rules.ts`, and its test; the run file's `checks` and the comparator's `check` class *(added 2026-11-06, tasks amendment 3, under Peter's "B Thurgood", received 2026-11-06T23:31:58Z; the `check` class added in the review fold, placed here on `[KENYA R4 addendum]` item 4)*
+  - [x] 5.4 The shared harness module, `scripts/harness/native-rules.ts`, and its test; the run file's `checks` and the comparator's `check` class *(added 2026-11-06, tasks amendment 3, under Peter's "B Thurgood", received 2026-11-06T23:31:58Z; the `check` class added in the review fold, placed here on `[KENYA R4 addendum]` item 4)*
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - Done first among the subtasks still open: it lands on the unit branch before 3.4 and 4.3 start, because both import it, and so before Tasks 3 and 4 complete and before 5.2's first full run
     - Written from design § 4's text, not from the generator or the probes. Ada is consulted on every rule; Kenya reviews the Swift rules and Data the Kotlin ones, each recorded in this subtask's completion doc

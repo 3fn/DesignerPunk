@@ -1,0 +1,30 @@
+gen:ComponentTokens.android.kt | Unresolved reference 'BorderWidthTokens'.	1
+gen:ComponentTokens.android.kt | Unresolved reference 'SizingTokens'.	6
+gen:ComponentTokens.android.kt | Unresolved reference 'SpacingTokens'.	3
+gen:DesignTokens.android.kt | 'transform' overrides nothing.	1
+gen:DesignTokens.android.kt | Cannot extend an object.	1
+gen:DesignTokens.android.kt | Cannot infer type for type parameter 'K'. Specify it explicitly.	1
+gen:DesignTokens.android.kt | Cannot infer type for type parameter 'V'. Specify it explicitly.	1
+gen:DesignTokens.android.kt | Const 'val' initializer must be a constant value.	4
+gen:DesignTokens.android.kt | Literals must be surrounded by whitespace.	4
+gen:DesignTokens.android.kt | Syntax error: Expecting ','.	18
+gen:DesignTokens.android.kt | Syntax error: Expecting member declaration.	7
+gen:DesignTokens.android.kt | Syntax error: Property getter or setter expected.	4
+gen:DesignTokens.android.kt | This declaration needs opt-in. Its usage must be marked with '@kotlin.ExperimentalStdlibApi' or '@OptIn(kotlin.ExperimentalStdlibApi::class)'	1
+gen:DesignTokens.android.kt | Unresolved reference 'Commit' on receiver of type 'String'.	1
+gen:DesignTokens.android.kt | Unresolved reference 'CubicBezierEasing'.	3
+gen:DesignTokens.android.kt | Unresolved reference 'Mono'.	1
+gen:DesignTokens.android.kt | Unresolved reference 'Oklch'.	99
+gen:DesignTokens.android.kt | Unresolved reference 'Segoe' on receiver of type 'String'.	3
+gen:DesignTokens.android.kt | Unresolved reference 'Typography'.	39
+gen:DesignTokens.android.kt | Unresolved reference 'UI'.	3
+gen:DesignTokens.android.kt | Unresolved reference 'dp'.	65
+gen:DesignTokens.android.kt | Unresolved reference 'oklch'.	9
+gen:DesignTokens.android.kt | Unresolved reference 'shadow_black_100'.	12
+gen:DesignTokens.android.kt | Unresolved reference 'shadow_blue_100'.	3
+gen:ThemeAwareBlendUtilities.android.kt | Unresolved reference 'darkerBlend' on receiver of type 'Color'.	3
+gen:ThemeAwareBlendUtilities.android.kt | Unresolved reference 'desaturate' on receiver of type 'Color'.	2
+gen:ThemeAwareBlendUtilities.android.kt | Unresolved reference 'foundation'.	1
+gen:ThemeAwareBlendUtilities.android.kt | Unresolved reference 'isSystemInDarkTheme'.	1
+gen:ThemeAwareBlendUtilities.android.kt | Unresolved reference 'lighterBlend' on receiver of type 'Color'.	3
+gen:ThemeAwareBlendUtilities.android.kt | Unresolved reference 'saturate' on receiver of type 'Color'.	2

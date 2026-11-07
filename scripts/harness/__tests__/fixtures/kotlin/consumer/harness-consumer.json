@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "name": "HarnessConsumer",
+  "abbreviation": "HX",
+  "packageRoot": "node_modules/@3fn/core",
+  "tokenIndex": "token-index",
+  "productTokens": "product/tokens",
+  "themes": [
+    { "name": "dark", "mode": "dark" },
+    { "name": "wcag", "mode": "both" }
+  ]
+}

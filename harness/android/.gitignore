@@ -1,0 +1,9 @@
+# Gradle and AGP outputs of the Android compile lane (Spec 129 Task 4).
+# The wrapper jar is committed: it is what `distributionSha256Sum` and Gradle's wrapper-validation action check.
+.gradle/
+build/
+*/build/
+local.properties
+.kotlin/
+# Per-run lane files that lane.ts writes under --work; keep them out of the tree if --work points here.
+/lane/

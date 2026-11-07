@@ -1,0 +1,30 @@
+# Spec 129 compile-harness fixture (tasks.md Task 1.2; requirements.md Req 2.3).
+#
+# `scripts/harness/consumer.ts` copies this folder into the scratch consumer as its
+# `productTokens` source, so `generate` writes `ProductTokens.{web.css,ios.swift,android.kt}`
+# from it and the harness compiles them with the rest of the generated output.
+#
+# Exactly two tokens, one `ref` each, and neither is a value another file could supply:
+#   - `actionPrimaryRef`   refs `color.action.primary`, one of the five WCAG-only colours
+#                          (index `themeVarying: false`, but a `theme.` name on iOS and Android).
+#   - `bodyTypographyRef`  refs `typography.bodyMd`, a composite (the index gives it a list of
+#                          names on web, not one string).
+#
+# Both refs are the cases `.kiro/issues/2026-10-26-token-index-platform-name-readers.md`
+# item 3 says the product-token generator emits non-compiling Swift and Kotlin for. The
+# harness's first run is expected to list their entries (Req 2.14: tagged to that record, or to
+# the theme-getter record, by cause). Do not "fix" this file to make a lane green: the
+# fix is in the generator, and the list edit that retires the entry rides that PR (Req 3.3).
+category: harness
+description: Compile-harness fixture refs to a WCAG-only colour and to a composite token
+
+tokens:
+  actionPrimaryRef:
+    ref: color.action.primary
+    description: A ref to a WCAG-only colour semantic (a theme. name on iOS and Android, themeVarying false in the index)
+    platforms: [web, ios, android]
+
+  bodyTypographyRef:
+    ref: typography.bodyMd
+    description: A ref to a composite token (the index names it with a list on web and several definitions on native)
+    platforms: [web, ios, android]

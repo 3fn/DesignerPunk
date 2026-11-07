@@ -1,0 +1,7 @@
+{
+  "name": "Fixture",
+  "themes": [
+    { "name": "dark", "mode": "dark" },
+    { "name": "wcag", "mode": "light" }
+  ]
+}

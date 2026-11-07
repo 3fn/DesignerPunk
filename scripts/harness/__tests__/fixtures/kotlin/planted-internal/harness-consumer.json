@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "name": "PlantedConsumer",
+  "abbreviation": "PL",
+  "packageRoot": "node_modules/@3fn/core",
+  "tokenIndex": "token-index",
+  "productTokens": "product/tokens",
+  "themes": []
+}

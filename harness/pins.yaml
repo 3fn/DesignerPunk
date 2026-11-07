@@ -1,0 +1,124 @@
+# Spec 129 compile-harness pin file (tasks.md § "The list file format, the pin file and the run policy").
+#
+# One file, three sections: `consumer`, `ios`, `android`. This task (Task 1) writes `consumer`
+# only. Kenya (Task 3) adds `ios` and Data (Task 4) adds `android` as top-level sections below
+# this one, in the same shape: plain scalars under a section key, no anchors or merges.
+#
+# These are HARNESS pins, not platform minimums (Req 2.9). The comparator compares PARSED values
+# (Req 3.5 (a)), so a comment or whitespace edit here changes no pin.
+
+# The scratch consumer `scripts/harness/consumer.ts` builds from a packed install.
+consumer:
+  # `init --name`. Any value is fine; it is the generated type-name stem (`<name>Theme`).
+  name: HarnessConsumer
+  # `init --abbreviation`. SHALL NOT be `DP`, so a generator that hard-codes DesignerPunk's own
+  # abbreviation shows in the output (Req 2.2; plan-r2 D1; row 15). consumer.ts and its test
+  # both refuse `DP` (any case).
+  abbreviation: HX
+  # The product-token fixture (Req 2.3), repository path -> the folder it is copied to inside the
+  # consumer root, which the driver writes into the consumer's config as `productTokens`.
+  productTokensFixture: harness/fixtures/product-tokens
+  productTokens: product/tokens
+
+# The iOS lanes (Task 3; `harness/ios/lane.ts`). Kenya owns this section.
+#
+# HARNESS PINS, NOT PLATFORM MINIMUMS (Req 2.9). They name the toolchain the compile evidence is
+# cut under, so one run is comparable to the next. A green here says nothing about the oldest Xcode
+# or iOS an adopter may use. The one exception is `deploymentTarget`, which equals Core Goals' iOS
+# minimum (17.0): it is the compile target, so "uses nothing newer than 17.0" is compile evidence.
+# "Built for iOS 17.0, not run on 17" is the wording rule until something runs on iOS 17
+# (Peter, 2026-11-05T13:05:54Z, "yes, 4 (a), 7 (a)").
+#
+# The Xcode pin is the newest stable Xcode 26 minor on the `macos-26` image at the unit's cut (K-7):
+# the U1 branch was cut 2026-11-06, so this section was set from the readme read that day, not from the
+# tasks round's 2026-11-05 read. The image was the same on both days. Xcode 27 is a public preview
+# (runner-images issue 14404) and is not on a standard `macos-26` label.
+ios:
+  # The runner label, the same one `runs-on` names in the workflow (Req 2.8). The comparator does not read it.
+  runner: macos-26
+  # Where the Xcode pin came from. The comparator does not read it.
+  image:
+    version: "20261026.0455.2"
+    os: "macOS 26.6.2 (25G83)"
+    readme: "actions/runner-images images/macos/macos-26-arm64-Readme.md"
+    readAt: "2026-11-06T14:20:08Z"
+    cut: "2026-11-06"
+  statement: "These pins are harness pins, not platform minimums; no green is read as 'runs on the minimum'. The deployment target is the one pin that equals Core Goals' iOS minimum."
+  # The compile target. Equals Core Goals' iOS minimum (Req 2.9).
+  deploymentTarget: "17.0"
+  # What each context reads from the running toolchain and compares, as quoted strings, with these
+  # exact field names (Req 3.11; K-6). `xcode.app` is the app folder: the lane sets DEVELOPER_DIR to
+  # `<xcode.app>/Contents/Developer`, and a missing folder fails the context as `toolchain missing`.
+  toolchain:
+    xcode.version: "26.6"
+    xcode.build: "17F113"
+    xcode.app: "/Applications/Xcode_26.6.app"
+    # From the readme's "Installed SDKs" table (iphonesimulator26.5 is installed for Xcode 26.5 and 26.6).
+    sdk.version: "26.5"
+    # MEASURED, not read from the runner-images readme (which states neither): the first `macos-26` run,
+    # https://github.com/3fn/DesignerPunk/actions/runs/42323861901 at unit head 9754b985c,
+    # run.json `toolchain` in the artifacts harness-out-harness-ios-tokens and harness-out-harness-ios-components
+    # (both gave these same values), and the comparator's four `toolchain` lines naming them.
+    # They replace four placeholders that failed closed (completion/task-3-instruments.md, row 11).
+    sdk.build: "23F81a"
+    swift.driver: "1.148.6"
+    swift.version: "6.3.3"
+    swift.build: "swiftlang-6.3.3.1.3"
+  # How the lane builds each `swiftc` invocation (Req 2.6, 2.8). The lane reads these and hard-codes no flag.
+  compile:
+    sdkName: iphonesimulator
+    arch: arm64
+    objectEmission: "-c"
+    wholeModule: "-wmo"
+    libraryParsing: "-parse-as-library"
+    diagnosticStyle: "llvm"
+    # Stage T: the generated files as a module, at the strictest mode an adopter's own code may use.
+    tokens:
+      module: DPHarnessTokens
+      swiftVersion: "6"
+    # Stage P: the probe, a separate module that imports Stage T's module by plain `import`.
+    probe:
+      module: DPHarnessProbe
+      swiftVersion: "6"
+    # Stage C and the T5 baseline: the shipped components at the mode they were written for.
+    components:
+      module: DesignerPunk
+      swiftVersion: "5"
+
+# The Android lane (Spec 129 Task 4; harness/android/**). Read by harness/android/lane.ts and by the comparator.
+# Every value here is a HARNESS pin, not a platform minimum (Req 2.9): a Kotlin compile checks no API level, so no
+# 129 green reads "runs on API 26". The Core Goals minimum is minSdk below, kept equal to it.
+# "Compiled" means the versions Data compiled together on 2026-11-04 (inbound-from-data-design-2026-11-05.md § 1.5,
+# VERIFIED there), and re-read as existing on 2026-11-06 (POM HEAD requests). None has run on CI yet.
+android:
+  # The workflow's `runs-on`, by version, never `-latest`. Image read 2026-11-06: 20261101.360.1 (Ubuntu 24.04.5),
+  # JAVA_HOME_17_X64 = 17.0.21+9 (the image default), Gradle 9.8.2 preinstalled, Android platforms up to 37.
+  runner: ubuntu-24.04
+  imageVersion: "20261101.360.1"
+  note: "These are harness pins, not platform minimums. A Kotlin compile checks no API level (Req 2.9)."
+  # The toolchain match (Req 3.11): the lane reports these five fields and the comparator fails on any difference.
+  # Each value is a quoted string. They are what Gradle RESOLVED and printed, not what a file asked for:
+  #   java.version          System.getProperty("java.version") of the JDK that ran Gradle (17.0.21 is Temurin 17.0.21+9)
+  #   gradle.version        the Gradle the wrapper runs (harness/android/gradle/wrapper/gradle-wrapper.properties names it)
+  #   kotlin.version        kotlin-compiler-embeddable on the Kotlin Gradle plugin's own classpath, not the image's kotlinc
+  #   agp.version           the Android Gradle plugin that built the modules
+  #   compose.bom.version   the androidx.compose:compose-bom component in :tokens' resolved compile classpath
+  toolchain:
+    java.version: "17.0.21"
+    gradle.version: "9.8.2"
+    kotlin.version: "2.4.21"
+    agp.version: "9.5.0"
+    compose.bom.version: "2026.09.00"
+  # Pinned in harness/android/gradle/libs.versions.toml with the same values; a difference shows as a toolchain
+  # failure for the five above, and in the next lines only to a reader.
+  compileSdk: 36
+  # Equal to Core Goals' Android minimum (API 26, amended 2026-11-05, ballot 2026-11-05-core-goals-android-minimum).
+  minSdk: 26
+  # The Compose BOM must be 1.7 or later for material-ripple, where rememberRipple is DeprecationLevel.ERROR:
+  # 2026.09.00 maps material-ripple to 1.12.1. The baseline holding entries for Button-Icon, Input-Checkbox-Base and
+  # Input-Radio-Base is the check that the pin did this (Req 2.8).
+  libraries:
+    coil-compose: "2.7.0"
+    material-icons-extended: "1.7.8"
+    # Only while the generated Kotlin calls Oklch(...).toComposeColor(); the PR that drops the call removes this pin (Req 3.5 (a)).
+    colormath-ext-jetpack-compose: "3.7.1"

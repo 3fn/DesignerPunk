@@ -1,0 +1,20 @@
+# Probe-generator fixture (Task 3.2): a small token index. The iOS names are what the probe reads.
+tokens:
+  space100:
+    family: spacing
+    platforms:
+      web: '--space-100'
+      ios: space100
+      android: space_100
+  duration150:
+    family: duration
+    platforms:
+      web: '--duration-150'
+      ios: Duration.duration150
+      android: duration_150
+  elevation200:
+    family: elevation
+    platforms:
+      web: '--elevation-200'
+      ios: null
+      android: elevation_200

@@ -209,6 +209,9 @@ export function assertPackListing(listing: PackListing): Finding[] {
   // --- 10. The hermetic publish path (2026-10-03) ---
   for (const f of publishPathFindings(listing)) findings.push(f);
 
+  // --- 11. The packed Android resource folders hold only resources (Spec 129 Task 1.3; Req 10.3) ---
+  for (const f of nativeResourceFindings(listing.paths)) findings.push(f);
+
   return findings;
 }
 
@@ -693,6 +696,91 @@ export function publishPathFindings(listing: PackListing): Finding[] {
   add(machine.length === 0, `publish path: no machine path in any packed text file (${needles.join(' | ')})`,
     machine.length ? `${machine.length}: ${machine.slice(0, 10).join(', ')}${machine.length > 10 ? ', …' : ''}` : '');
 
+  return out;
+}
+
+// ─── Section 11: the packed Android resource folders hold only resources ─────────────────────────
+
+/** Every finding of section 11 starts with this. It is NOT `PUBLISH_PATH_LABEL`, so `PUBLISH_PATH_FLOOR` is unchanged. */
+export const NATIVE_RESOURCES_LABEL = 'native resources:';
+
+/**
+ * The extensions an Android resource file may have in each resource type's folder (the types Android's resource merger
+ * reads from `res/<type>[-<qualifiers>]/`). `'*'` means the folder holds opaque files (`raw`), so any extension passes and
+ * only the name and the folder shape are checked.
+ */
+export const ANDROID_RES_TYPES: Readonly<Record<string, readonly string[] | '*'>> = {
+  anim: ['xml'],
+  animator: ['xml'],
+  color: ['xml'],
+  drawable: ['xml', 'png', 'webp', 'jpg', 'jpeg', 'gif'],
+  font: ['ttf', 'otf', 'ttc', 'xml'],
+  interpolator: ['xml'],
+  layout: ['xml'],
+  menu: ['xml'],
+  mipmap: ['xml', 'png', 'webp', 'jpg', 'jpeg', 'gif'],
+  navigation: ['xml'],
+  raw: '*',
+  transition: ['xml'],
+  values: ['xml'],
+  xml: ['xml'],
+};
+
+/** A packed path inside an Android `res/` folder: `<anything>/platforms/android/res/<rest>`. */
+const ANDROID_RES_SCOPE = /(?:^|\/)platforms\/android\/res\/(.+)$/;
+
+/**
+ * Why `packedPath` is not a valid Android resource file, or `undefined` when it is valid or is not under
+ * `platforms/android/res/`. The valid shape is `res/<type>[-<qualifiers>]/<name>.<ext>`: exactly one folder between
+ * `res/` and the file (the merger reads no deeper), a known resource type with optional `-qualifier` parts, a
+ * file name of lowercase letters, digits and underscores (`.9` allowed before `.png`), and an extension that type allows.
+ */
+export function androidResourcePathProblem(packedPath: string): string | undefined {
+  const scope = ANDROID_RES_SCOPE.exec(packedPath);
+  if (!scope) return undefined;
+  const parts = scope[1].split('/');
+  if (parts.length !== 2) {
+    return 'not res/<type>[-<qualifiers>]/<name>.<ext>: a resource sits in exactly one folder directly under res/';
+  }
+  const [folder, file] = parts;
+  const typeMatch = /^([a-z]+)((?:-[A-Za-z0-9+]+)*)$/.exec(folder);
+  const allowed = typeMatch ? ANDROID_RES_TYPES[typeMatch[1]] : undefined;
+  if (!typeMatch || !allowed) {
+    return `\`${folder}\` is not an Android resource type folder (${Object.keys(ANDROID_RES_TYPES).join(', ')}, with optional -qualifiers)`;
+  }
+  const dot = file.lastIndexOf('.');
+  if (dot <= 0 || dot === file.length - 1) return `\`${file}\` has no <name>.<ext> form`;
+  const ext = file.slice(dot + 1);
+  let name = file.slice(0, dot);
+  if (ext.toLowerCase() === 'png' && name.endsWith('.9')) name = name.slice(0, -2);
+  if (!/^[a-z0-9_]+$/.test(name)) {
+    return `file name \`${name}\` must use only lowercase letters, digits and underscores`;
+  }
+  if (allowed !== '*' && !allowed.includes(ext.toLowerCase())) {
+    return `\`.${ext}\` is not an allowed extension in \`${typeMatch[1]}\` (${allowed.join(', ')})`;
+  }
+  return undefined;
+}
+
+/**
+ * Section 11's findings for a packed path list: one red per packed file under `platforms/android/res/` that is not a
+ * valid Android resource, and one non-vacuity finding (some resource file was inspected). The package's resource folder
+ * is read by an adopter's Android resource merge, which fails the build on a stray file (the README the harness found
+ * in `Icon-Base/platforms/android/res/drawable/`; Req 10.3). Exported for the unit tests.
+ */
+export function nativeResourceFindings(paths: string[]): Finding[] {
+  const out: Finding[] = [];
+  const inspected = paths.filter((p) => ANDROID_RES_SCOPE.test(p));
+  out.push({ ok: inspected.length > 0, label: `${NATIVE_RESOURCES_LABEL} files under platforms/android/res/ found to inspect (the rule is not vacuous)`, detail: `${inspected.length} packed` });
+  let bad = 0;
+  for (const p of inspected) {
+    const problem = androidResourcePathProblem(p);
+    if (problem) {
+      bad += 1;
+      out.push({ ok: false, label: `${NATIVE_RESOURCES_LABEL} ${p} is a valid Android resource file`, detail: problem });
+    }
+  }
+  out.push({ ok: bad === 0, label: `${NATIVE_RESOURCES_LABEL} every packed file under platforms/android/res/ is res/<type>[-<qualifiers>]/<name>.<ext> with an allowed extension`, detail: `${inspected.length} checked, ${bad} not` });
   return out;
 }
 

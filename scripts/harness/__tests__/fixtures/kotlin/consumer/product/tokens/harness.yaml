@@ -1,0 +1,14 @@
+# Probe-kotlin fixture (Spec 129 Task 4.2): a cut of harness/fixtures/product-tokens/harness.yaml, plus a
+# web-only token the probe must not read. The category is the FILE NAME (harness), as the generator makes it.
+category: ignored-by-the-generator
+tokens:
+  actionPrimaryRef:
+    ref: color.action.primary
+    platforms: [web, ios, android]
+  bodyTypographyRef:
+    ref: typography.bodyMd
+    platforms: [web, ios, android]
+  webOnly:
+    value: 4
+    unitType: logical
+    platforms: [web]

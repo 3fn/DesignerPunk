@@ -1,0 +1,137 @@
+{
+  "_comment": "Recorded from the GitHub REST API (fields trimmed to those stability.ts reads): native-harness.yml run 42331622121, a workflow_dispatch run on the Spec 129 unit branch.",
+  "runs": [
+    {
+      "id": 42331622121,
+      "head_sha": "b006213172fcc026cc093c758de506164a2d2bbd",
+      "event": "workflow_dispatch",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "status": "completed",
+      "created_at": "2026-11-07T02:56:14Z",
+      "head_branch": "task/129-compile-harness"
+    }
+  ],
+  "jobsByRun": {
+    "42331622121": [
+      {
+        "id": 128279223586,
+        "run_id": 42331622121,
+        "run_attempt": 1,
+        "name": "harness-generate (unit-branch)",
+        "head_sha": "b006213172fcc026cc093c758de506164a2d2bbd",
+        "conclusion": "success",
+        "created_at": "2026-11-07T02:56:15Z",
+        "started_at": "2026-11-07T02:56:17Z",
+        "completed_at": "2026-11-07T02:57:24Z"
+      },
+      {
+        "id": 128279493762,
+        "run_id": 42331622121,
+        "run_attempt": 1,
+        "name": "harness-ios-components (unit-branch)",
+        "head_sha": "b006213172fcc026cc093c758de506164a2d2bbd",
+        "conclusion": "success",
+        "created_at": "2026-11-07T02:57:24Z",
+        "started_at": "2026-11-07T02:57:27Z",
+        "completed_at": "2026-11-07T02:58:45Z"
+      },
+      {
+        "id": 128279493783,
+        "run_id": 42331622121,
+        "run_attempt": 1,
+        "name": "harness-android-components (unit-branch)",
+        "head_sha": "b006213172fcc026cc093c758de506164a2d2bbd",
+        "conclusion": "success",
+        "created_at": "2026-11-07T02:57:24Z",
+        "started_at": "2026-11-07T02:57:27Z",
+        "completed_at": "2026-11-07T02:58:57Z"
+      },
+      {
+        "id": 128279493786,
+        "run_id": 42331622121,
+        "run_attempt": 1,
+        "name": "harness-android-tokens (unit-branch)",
+        "head_sha": "b006213172fcc026cc093c758de506164a2d2bbd",
+        "conclusion": "success",
+        "created_at": "2026-11-07T02:57:24Z",
+        "started_at": "2026-11-07T02:57:26Z",
+        "completed_at": "2026-11-07T02:59:02Z"
+      },
+      {
+        "id": 128279493820,
+        "run_id": 42331622121,
+        "run_attempt": 1,
+        "name": "harness-ios-tokens (unit-branch)",
+        "head_sha": "b006213172fcc026cc093c758de506164a2d2bbd",
+        "conclusion": "success",
+        "created_at": "2026-11-07T02:57:24Z",
+        "started_at": "2026-11-07T02:57:27Z",
+        "completed_at": "2026-11-07T02:58:28Z"
+      }
+    ]
+  },
+  "checkRunsBySha": {
+    "b006213172fcc026cc093c758de506164a2d2bbd": [
+      {
+        "id": 128279493820,
+        "name": "harness-ios-tokens (unit-branch)",
+        "conclusion": "success"
+      },
+      {
+        "id": 128279493786,
+        "name": "harness-android-tokens (unit-branch)",
+        "conclusion": "success"
+      },
+      {
+        "id": 128279493783,
+        "name": "harness-android-components (unit-branch)",
+        "conclusion": "success"
+      },
+      {
+        "id": 128279493762,
+        "name": "harness-ios-components (unit-branch)",
+        "conclusion": "success"
+      },
+      {
+        "id": 128279223586,
+        "name": "harness-generate (unit-branch)",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "annotationsByJob": {
+    "128279493762": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-ios-components PASS"
+      }
+    ],
+    "128279493783": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-android-components PASS"
+      },
+      {
+        "title": "cache",
+        "message": "hit"
+      }
+    ],
+    "128279493786": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-android-tokens PASS"
+      },
+      {
+        "title": "cache",
+        "message": "hit"
+      }
+    ],
+    "128279493820": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-ios-tokens PASS"
+      }
+    ]
+  }
+}

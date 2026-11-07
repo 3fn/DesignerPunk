@@ -1,0 +1,22 @@
+# Probe fixture (Task 3.4): the category is the FILE NAME (brand-colors, written BrandColors), not the `category:` field below.
+category: not-this-one
+tokens:
+  accent:
+    ref: color.action.primary
+    platforms: [web, ios, android]
+  tint:
+    ref: typography.bodyMd
+  radiusRound:
+    value: 9999
+  webOnly:
+    value: 1
+    platforms: [web]
+  iosOnly:
+    value: 2
+    platforms: [ios]
+  androidOnly:
+    value: 3
+    platforms: [android]
+  nowhere:
+    value: 4
+    platforms: []

@@ -1,0 +1,348 @@
+#harness-fixture toolchain: Temurin OpenJDK 17.0.21+9 (macOS arm64), Gradle 9.8.2, AGP 9.5.0, Kotlin 2.4.21 (Compose compiler plugin 2.4.21), Compose BOM 2026.09.00, compileSdk 36, minSdk 24
+#harness-fixture source: run-components.log, Data's 2026-11-04 K2 round (scratchpad q5-round/data-work/; backup .claude/scratch-backup/q5-data-work/run-components.log), whole log. Rewritten: scratch path .../host/tokens/src/main/kotlin/ -> the gen root; remaining scratch paths (the problems-report URL, the Location lines) -> /work/harness; Gradle module :components -> :dp (the task names of design 2). Nothing else changed. :tokens failed; :dp's compile never ran (Gradle stopped at the failed :tokens compile); no :probe module existed in that build.
+#harness-fixture exit: 1
+#harness-fixture roots: gen=/work/consumer/dist/tokens pkg=/work/consumer/node_modules/@3fn/core probe=/work/probe/src/main/kotlin
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.8.2/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :dp:preBuild UP-TO-DATE
+> Task :dp:preDebugBuild UP-TO-DATE
+> Task :dp:generateDebugResources
+> Task :dp:packageDebugResources
+> Task :dp:processDebugNavigationResources
+> Task :tokens:preBuild UP-TO-DATE
+> Task :tokens:preDebugBuild UP-TO-DATE
+> Task :tokens:generateDebugResources UP-TO-DATE
+> Task :tokens:packageDebugResources UP-TO-DATE
+> Task :tokens:processDebugNavigationResources UP-TO-DATE
+> Task :tokens:parseDebugLocalResources UP-TO-DATE
+> Task :tokens:generateDebugRFile UP-TO-DATE
+> Task :dp:parseDebugLocalResources
+> Task :tokens:javaPreCompileDebug
+> Task :dp:generateDebugRFile
+
+> Task :tokens:compileDebugKotlin
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:15:30 Unresolved reference 'BorderWidthTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:17:22 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:19:22 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:21:22 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:23:29 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:25:29 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:27:29 Unresolved reference 'SizingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:29:21 Unresolved reference 'SpacingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:31:21 Unresolved reference 'SpacingTokens'.
+e: file:///work/consumer/dist/tokens/ComponentTokens.android.kt:33:21 Unresolved reference 'SpacingTokens'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:13:5 Syntax error: Expecting member declaration.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:13:18 Syntax error: Expecting member declaration.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:51:30 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:53:30 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:55:30 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:57:30 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:70:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:71:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:72:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:73:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:74:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:75:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:76:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:77:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:78:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:79:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:80:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:81:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:82:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:83:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:84:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:85:21 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:86:21 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:87:21 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:88:21 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:89:21 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:90:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:91:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:92:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:93:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:94:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:95:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:96:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:97:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:98:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:99:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:100:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:101:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:102:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:103:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:104:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:105:21 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:106:21 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:107:21 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:108:21 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:109:21 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:110:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:111:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:112:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:113:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:114:20 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:115:21 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:116:21 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:117:21 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:118:21 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:119:21 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:133:44 Const 'val' initializer must be a constant value.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:133:81 Unresolved reference 'Segoe' on receiver of type 'String'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:133:81 Literals must be surrounded by whitespace.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:133:87 Unresolved reference 'UI'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:133:89 Syntax error: Property getter or setter expected.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:135:42 Const 'val' initializer must be a constant value.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:135:44 Unresolved reference 'Commit' on receiver of type 'String'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:135:44 Literals must be surrounded by whitespace.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:135:51 Unresolved reference 'Mono'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:135:55 Syntax error: Property getter or setter expected.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:137:45 Const 'val' initializer must be a constant value.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:137:92 Unresolved reference 'Segoe' on receiver of type 'String'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:137:92 Literals must be surrounded by whitespace.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:137:98 Unresolved reference 'UI'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:137:100 Syntax error: Property getter or setter expected.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:139:42 Const 'val' initializer must be a constant value.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:139:88 Unresolved reference 'Segoe' on receiver of type 'String'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:139:88 Literals must be surrounded by whitespace.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:139:94 Unresolved reference 'UI'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:139:96 Syntax error: Property getter or setter expected.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:143:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:145:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:147:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:149:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:151:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:153:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:155:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:157:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:159:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:161:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:163:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:263:24 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:265:24 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:267:24 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:269:24 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:271:24 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:273:25 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:275:25 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:277:25 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:279:25 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:281:25 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:283:25 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:285:27 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:287:26 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:363:23 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:365:23 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:367:23 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:369:23 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:371:23 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:373:24 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:375:24 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:377:24 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:379:24 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:381:24 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:383:24 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:385:24 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:387:24 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:389:24 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:391:24 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:395:31 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:397:35 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:399:35 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:401:32 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:405:5 Syntax error: Expecting member declaration.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:405:9 Syntax error: Expecting member declaration.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:405:15 Syntax error: Expecting member declaration.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:405:19 Syntax error: Expecting member declaration.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:405:22 Syntax error: Expecting member declaration.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:408:45 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:409:41 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:410:37 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:411:43 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:412:39 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:413:39 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:414:45 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:415:41 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:416:43 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:417:46 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:418:49 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:419:52 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:420:45 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:421:48 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:422:50 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:423:44 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:424:32 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:425:32 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:426:34 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:427:27 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:428:27 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:429:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:430:22 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:431:35 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:432:34 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:433:35 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:434:43 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:435:45 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:436:44 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:437:34 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:438:30 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:439:31 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:440:28 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:441:26 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:442:28 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:443:27 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:444:26 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:445:45 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:446:39 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:447:45 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:448:39 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:449:44 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:450:47 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:451:41 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:452:46 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:453:43 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:454:37 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:455:32 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:455:69 Cannot infer type for type parameter 'K'. Specify it explicitly.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:455:69 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:455:69 This declaration needs opt-in. Its usage must be marked with '@kotlin.ExperimentalStdlibApi' or '@OptIn(kotlin.ExperimentalStdlibApi::class)'
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:456:30 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:457:30 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:458:30 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:459:26 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:460:26 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:461:26 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:462:26 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:463:26 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:464:26 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:465:30 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:466:28 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:467:30 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:468:32 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:469:32 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:470:32 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:471:28 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:472:31 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:473:31 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:474:31 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:475:37 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:476:31 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:477:30 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:478:30 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:479:30 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:480:23 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:480:152 Unresolved reference 'shadow_black_100'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:481:28 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:481:161 Unresolved reference 'shadow_black_100'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:482:29 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:482:158 Unresolved reference 'shadow_black_100'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:483:27 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:483:160 Unresolved reference 'shadow_black_100'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:484:24 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:484:158 Unresolved reference 'shadow_black_100'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:485:24 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:485:158 Unresolved reference 'shadow_black_100'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:486:26 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:486:160 Unresolved reference 'shadow_black_100'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:487:22 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:487:151 Unresolved reference 'shadow_blue_100'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:488:24 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:488:153 Unresolved reference 'shadow_black_100'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:489:39 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:489:168 Unresolved reference 'shadow_black_100'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:490:26 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:490:161 Unresolved reference 'shadow_blue_100'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:491:26 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:491:161 Unresolved reference 'shadow_black_100'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:492:23 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:492:156 Unresolved reference 'shadow_black_100'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:493:23 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:493:156 Unresolved reference 'shadow_black_100'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:494:25 Unresolved reference 'Typography'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:494:158 Unresolved reference 'shadow_blue_100'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:518:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:519:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:520:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:521:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:522:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:523:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:524:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:525:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:526:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:527:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:528:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:534:37 Unresolved reference 'Oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:588:80 Cannot extend an object.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:589:9 'transform' overrides nothing.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:603:30 Unresolved reference 'CubicBezierEasing'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:605:32 Unresolved reference 'CubicBezierEasing'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:607:32 Unresolved reference 'CubicBezierEasing'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:673:28 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:674:33 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:675:34 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:676:32 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:677:30 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:678:30 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:679:32 Unresolved reference 'dp'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:682:41 Unresolved reference 'oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:682:50 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:682:56 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:683:47 Unresolved reference 'oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:683:57 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:683:63 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:684:43 Unresolved reference 'oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:684:52 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:684:58 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:685:37 Unresolved reference 'oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:685:47 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:685:52 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:686:46 Unresolved reference 'oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:686:56 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:686:62 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:687:45 Unresolved reference 'oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:687:55 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:687:61 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:688:41 Unresolved reference 'oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:688:48 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:688:50 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:689:54 Unresolved reference 'oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:689:64 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:689:70 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:690:53 Unresolved reference 'oklch'.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:690:63 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/DesignTokens.android.kt:690:69 Syntax error: Expecting ','.
+e: file:///work/consumer/dist/tokens/ThemeAwareBlendUtilities.android.kt:13:25 Unresolved reference 'foundation'.
+e: file:///work/consumer/dist/tokens/ThemeAwareBlendUtilities.android.kt:97:17 Unresolved reference 'darkerBlend' on receiver of type 'Color'.
+e: file:///work/consumer/dist/tokens/ThemeAwareBlendUtilities.android.kt:116:17 Unresolved reference 'darkerBlend' on receiver of type 'Color'.
+e: file:///work/consumer/dist/tokens/ThemeAwareBlendUtilities.android.kt:130:17 Unresolved reference 'lighterBlend' on receiver of type 'Color'.
+e: file:///work/consumer/dist/tokens/ThemeAwareBlendUtilities.android.kt:149:17 Unresolved reference 'saturate' on receiver of type 'Color'.
+e: file:///work/consumer/dist/tokens/ThemeAwareBlendUtilities.android.kt:169:17 Unresolved reference 'desaturate' on receiver of type 'Color'.
+e: file:///work/consumer/dist/tokens/ThemeAwareBlendUtilities.android.kt:188:17 Unresolved reference 'lighterBlend' on receiver of type 'Color'.
+e: file:///work/consumer/dist/tokens/ThemeAwareBlendUtilities.android.kt:214:23 Unresolved reference 'isSystemInDarkTheme'.
+e: file:///work/consumer/dist/tokens/ThemeAwareBlendUtilities.android.kt:306:22 Unresolved reference 'darkerBlend' on receiver of type 'Color'.
+e: file:///work/consumer/dist/tokens/ThemeAwareBlendUtilities.android.kt:316:22 Unresolved reference 'lighterBlend' on receiver of type 'Color'.
+e: file:///work/consumer/dist/tokens/ThemeAwareBlendUtilities.android.kt:326:22 Unresolved reference 'saturate' on receiver of type 'Color'.
+e: file:///work/consumer/dist/tokens/ThemeAwareBlendUtilities.android.kt:336:22 Unresolved reference 'desaturate' on receiver of type 'Color'.
+
+> Task :tokens:compileDebugKotlin FAILED
+
+[Incubating] Problems report is available at: file:///work/harness/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':tokens:compileDebugKotlin' (registered by plugin 'com.android.internal.library').
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Kotlin compiler: UNRESOLVED_REFERENCE
+       Kotlin compiler error
+         Unresolved reference 'BorderWidthTokens'.
+         Location: /work/consumer/dist/tokens/ComponentTokens.android.kt:15
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 6s
+12 actionable tasks: 7 executed, 5 up-to-date

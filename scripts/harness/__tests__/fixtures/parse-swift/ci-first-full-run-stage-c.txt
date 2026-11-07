@@ -1,0 +1,457 @@
+#harness-fixture toolchain: Xcode 26.6 (17F113), Apple Swift 6.3.3 (swiftlang-6.3.3.1.3), iphonesimulator26.5 SDK 23F81a (macos-26 runner image 20261026.0455.2)
+#harness-fixture source: harness-ios-components, Stage C (swiftc -c -wmo -parse-as-library -module-name DesignerPunk -swift-version 5 -diagnostic-style llvm, target arm64-apple-ios17.0-simulator), the first full run of native-harness.yml, https://github.com/3fn/DesignerPunk/actions/runs/42324880305 at unit head cc2e71a51 (artifact harness-out-harness-ios-components, logs/C.txt, lines 1-453 of 1482, cut before the next error line so no diagnostic is split); the runner's consumer folder rewritten to /work/consumer and its probe folder to /work/probe
+#harness-fixture exit: 1
+#harness-fixture roots: gen=/work/consumer/dist/tokens pkg=/work/consumer/node_modules/@3fn/core probe=/work/probe
+/work/consumer/dist/tokens/DesignTokens.ios.swift:133:87: error: consecutive declarations on a line must be separated by ';'
+    public static let fontFamilySystem: String = "-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif"
+                                                                                      ^
+                                                                                      ;
+/work/consumer/dist/tokens/DesignTokens.ios.swift:133:87: error: expected declaration
+    public static let fontFamilySystem: String = "-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif"
+                                                                                      ^
+/work/consumer/dist/tokens/DesignTokens.ios.swift:9:15: note: in declaration of 'DesignTokens'
+public struct DesignTokens {
+              ^
+/work/consumer/dist/tokens/DesignTokens.ios.swift:135:50: error: consecutive declarations on a line must be separated by ';'
+    public static let fontFamilyMono: String = ""Commit Mono", "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace"
+                                                 ^
+                                                 ;
+/work/consumer/dist/tokens/DesignTokens.ios.swift:135:50: error: expected declaration
+    public static let fontFamilyMono: String = ""Commit Mono", "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace"
+                                                 ^
+/work/consumer/dist/tokens/DesignTokens.ios.swift:9:15: note: in declaration of 'DesignTokens'
+public struct DesignTokens {
+              ^
+/work/consumer/dist/tokens/DesignTokens.ios.swift:137:98: error: consecutive declarations on a line must be separated by ';'
+    public static let fontFamilyDisplay: String = "Rajdhani, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif"
+                                                                                                 ^
+                                                                                                 ;
+/work/consumer/dist/tokens/DesignTokens.ios.swift:137:98: error: expected declaration
+    public static let fontFamilyDisplay: String = "Rajdhani, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif"
+                                                                                                 ^
+/work/consumer/dist/tokens/DesignTokens.ios.swift:9:15: note: in declaration of 'DesignTokens'
+public struct DesignTokens {
+              ^
+/work/consumer/dist/tokens/DesignTokens.ios.swift:139:94: error: consecutive declarations on a line must be separated by ';'
+    public static let fontFamilyBody: String = "Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif"
+                                                                                             ^
+                                                                                             ;
+/work/consumer/dist/tokens/DesignTokens.ios.swift:139:94: error: expected declaration
+    public static let fontFamilyBody: String = "Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif"
+                                                                                             ^
+/work/consumer/dist/tokens/DesignTokens.ios.swift:9:15: note: in declaration of 'DesignTokens'
+public struct DesignTokens {
+              ^
+/work/consumer/dist/tokens/DesignTokens.ios.swift:684:71: error: expected ',' separator
+    public static let colorFeedbackInfoText_wcag: UIColor = oklch(0.4 0.183 310)
+                                                                      ^
+                                                                     ,
+/work/consumer/dist/tokens/DesignTokens.ios.swift:685:78: error: expected ',' separator
+    public static let colorFeedbackInfoBackground_wcag: UIColor = oklch(0.93 0.046 310)
+                                                                             ^
+                                                                            ,
+/work/consumer/dist/tokens/DesignTokens.ios.swift:686:73: error: expected ',' separator
+    public static let colorFeedbackInfoBorder_wcag: UIColor = oklch(0.4 0.183 310)
+                                                                        ^
+                                                                       ,
+/work/consumer/dist/tokens/DesignTokens.ios.swift:687:69: error: expected ',' separator
+    public static let colorActionPrimary_wcag: UIColor = oklch(0.52 0.08 209)
+                                                                    ^
+                                                                   ,
+/work/consumer/dist/tokens/DesignTokens.ios.swift:688:115: error: expected ',' separator
+    public static let colorActionNavigation_wcag: UIColor = UIColor { $0.userInterfaceStyle == .dark ? oklch(0.92 0.035 209) : oklch(0.28 0.045 209) }
+                                                                                                                  ^
+                                                                                                                 ,
+/work/consumer/dist/tokens/DesignTokens.ios.swift:688:139: error: expected ',' separator
+    public static let colorActionNavigation_wcag: UIColor = UIColor { $0.userInterfaceStyle == .dark ? oklch(0.92 0.035 209) : oklch(0.28 0.045 209) }
+                                                                                                                                          ^
+                                                                                                                                         ,
+/work/consumer/dist/tokens/DesignTokens.ios.swift:689:69: error: expected ',' separator
+    public static let colorContrastOnAction_wcag: UIColor = oklch(1 0 260)
+                                                                    ^
+                                                                   ,
+/work/consumer/dist/tokens/DesignTokens.ios.swift:690:122: error: expected ',' separator
+    public static let colorBackgroundPrimarySubtle_wcag: UIColor = UIColor { $0.userInterfaceStyle == .dark ? oklch(0.28 0.045 209) : oklch(0.92 0.035 209) }
+                                                                                                                         ^
+                                                                                                                        ,
+/work/consumer/dist/tokens/DesignTokens.ios.swift:690:146: error: expected ',' separator
+    public static let colorBackgroundPrimarySubtle_wcag: UIColor = UIColor { $0.userInterfaceStyle == .dark ? oklch(0.28 0.045 209) : oklch(0.92 0.035 209) }
+                                                                                                                                                 ^
+                                                                                                                                                ,
+/work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.ios.swift:114:21: error: value of type 'Color' has no member 'darkerBlend'
+        return self.darkerBlend(BlendTokenValues.hoverDarker)
+               ~~~~ ^~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.ios.swift:131:21: error: value of type 'Color' has no member 'darkerBlend'
+        return self.darkerBlend(BlendTokenValues.pressedDarker)
+               ~~~~ ^~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.ios.swift:143:21: error: value of type 'Color' has no member 'lighterBlend'
+        return self.lighterBlend(BlendTokenValues.pressedLighter)
+               ~~~~ ^~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.ios.swift:160:21: error: value of type 'Color' has no member 'saturate'
+        return self.saturate(BlendTokenValues.focusSaturate)
+               ~~~~ ^~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.ios.swift:178:21: error: value of type 'Color' has no member 'desaturate'
+        return self.desaturate(BlendTokenValues.disabledDesaturate)
+               ~~~~ ^~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.ios.swift:195:21: error: value of type 'Color' has no member 'lighterBlend'
+        return self.lighterBlend(BlendTokenValues.iconLighter)
+               ~~~~ ^~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.ios.swift:299:22: error: value of type 'Color' has no member 'darkerBlend'
+        return color.darkerBlend(amount)
+               ~~~~~ ^~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.ios.swift:308:22: error: value of type 'Color' has no member 'lighterBlend'
+        return color.lighterBlend(amount)
+               ~~~~~ ^~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.ios.swift:317:22: error: value of type 'Color' has no member 'saturate'
+        return color.saturate(amount)
+               ~~~~~ ^~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.ios.swift:326:22: error: value of type 'Color' has no member 'desaturate'
+        return color.desaturate(amount)
+               ~~~~~ ^~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/ios/Avatar.ios.swift:292:6: error: no exact matches in call to initializer 
+    @Environment(\.dpTheme) private var theme
+     ^
+SwiftUI.Environment.init:3:10: note: candidate expects value of type 'Value.Type' for parameter #1 (got 'KeyPath<Root, Value>')
+  public init(_ objectType: Value.Type) where Value : AnyObject, Value : Observable}
+         ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/ios/Avatar.ios.swift:292:6: note: found candidate with type '(T.Type) -> Environment<T?>'
+    @Environment(\.dpTheme) private var theme
+     ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/ios/Avatar.ios.swift:292:18: error: cannot infer key path type from context; consider explicitly specifying a root type
+    @Environment(\.dpTheme) private var theme
+                 ^
+                  <#Root#>
+/work/consumer/node_modules/@3fn/core/src/components/core/Badge-Count-Base/platforms/ios/BadgeCountBase.ios.swift:184:6: error: no exact matches in call to initializer 
+    @Environment(\.dpTheme) private var theme
+     ^
+SwiftUI.Environment.init:3:10: note: candidate expects value of type 'Value.Type' for parameter #1 (got 'KeyPath<Root, Value>')
+  public init(_ objectType: Value.Type) where Value : AnyObject, Value : Observable}
+         ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Badge-Count-Base/platforms/ios/BadgeCountBase.ios.swift:184:6: note: found candidate with type '(T.Type) -> Environment<T?>'
+    @Environment(\.dpTheme) private var theme
+     ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Badge-Count-Base/platforms/ios/BadgeCountBase.ios.swift:184:18: error: cannot infer key path type from context; consider explicitly specifying a root type
+    @Environment(\.dpTheme) private var theme
+                 ^
+                  <#Root#>
+/work/consumer/node_modules/@3fn/core/src/components/core/Badge-Count-Notification/platforms/ios/BadgeCountNotification.ios.swift:226:6: error: no exact matches in call to initializer 
+    @Environment(\.dpTheme) private var theme
+     ^
+SwiftUI.Environment.init:3:10: note: candidate expects value of type 'Value.Type' for parameter #1 (got 'KeyPath<Root, Value>')
+  public init(_ objectType: Value.Type) where Value : AnyObject, Value : Observable}
+         ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Badge-Count-Notification/platforms/ios/BadgeCountNotification.ios.swift:226:6: note: found candidate with type '(T.Type) -> Environment<T?>'
+    @Environment(\.dpTheme) private var theme
+     ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Badge-Count-Notification/platforms/ios/BadgeCountNotification.ios.swift:226:18: error: cannot infer key path type from context; consider explicitly specifying a root type
+    @Environment(\.dpTheme) private var theme
+                 ^
+                  <#Root#>
+/work/consumer/node_modules/@3fn/core/src/components/core/Badge-Count-Notification/platforms/ios/BadgeCountNotification.ios.swift:335:18: warning: 'onChange(of:perform:)' was deprecated in iOS 17.0: Use `onChange` with a two or zero parameter action closure instead. [#DeprecatedDeclaration]
+                .onChange(of: count) { newCount in
+                 ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Badge-Label-Base/platforms/ios/BadgeLabelBase.ios.swift:211:6: error: no exact matches in call to initializer 
+    @Environment(\.dpTheme) private var theme
+     ^
+SwiftUI.Environment.init:3:10: note: candidate expects value of type 'Value.Type' for parameter #1 (got 'KeyPath<Root, Value>')
+  public init(_ objectType: Value.Type) where Value : AnyObject, Value : Observable}
+         ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Badge-Label-Base/platforms/ios/BadgeLabelBase.ios.swift:211:6: note: found candidate with type '(T.Type) -> Environment<T?>'
+    @Environment(\.dpTheme) private var theme
+     ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Badge-Label-Base/platforms/ios/BadgeLabelBase.ios.swift:211:18: error: cannot infer key path type from context; consider explicitly specifying a root type
+    @Environment(\.dpTheme) private var theme
+                 ^
+                  <#Root#>
+/work/consumer/node_modules/@3fn/core/src/components/core/Badge-Label-Base/platforms/ios/BadgeLabelBase.ios.swift:404:70: error: argument 'size' must precede argument 'icon'
+                    BadgeLabelBase(label: "Approved", icon: "check", size: .sm)
+                                                      ~~~~~~~~~~~~~~~^~~~~~~~~
+                                                      size: .sm,   
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-CTA/platforms/ios/ButtonCTA.ios.swift:134:6: error: no exact matches in call to initializer 
+    @Environment(\.dpTheme) private var theme
+     ^
+SwiftUI.Environment.init:3:10: note: candidate expects value of type 'Value.Type' for parameter #1 (got 'KeyPath<Root, Value>')
+  public init(_ objectType: Value.Type) where Value : AnyObject, Value : Observable}
+         ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-CTA/platforms/ios/ButtonCTA.ios.swift:134:6: note: found candidate with type '(T.Type) -> Environment<T?>'
+    @Environment(\.dpTheme) private var theme
+     ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-CTA/platforms/ios/ButtonCTA.ios.swift:134:18: error: cannot infer key path type from context; consider explicitly specifying a root type
+    @Environment(\.dpTheme) private var theme
+                 ^
+                  <#Root#>
+/work/consumer/dist/tokens/DesignTokens.ios.swift:474:43: error: cannot find 'Typography' in scope
+    public static let typographyLabelMd = Typography(fontSize: fontSize100, lineHeight: lineHeight100, fontFamily: fontFamilyBody, fontWeight: fontWeight500, letterSpacing: letterSpacing100)
+                                          ^~~~~~~~~~
+/work/consumer/dist/tokens/DesignTokens.ios.swift:476:43: error: cannot find 'Typography' in scope
+    public static let typographyLabelLg = Typography(fontSize: fontSize125, lineHeight: lineHeight125, fontFamily: fontFamilyBody, fontWeight: fontWeight500, letterSpacing: letterSpacing100)
+                                          ^~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift:179:6: error: no exact matches in call to initializer 
+    @Environment(\.dpTheme) private var theme
+     ^
+SwiftUI.Environment.init:3:10: note: candidate expects value of type 'Value.Type' for parameter #1 (got 'KeyPath<Root, Value>')
+  public init(_ objectType: Value.Type) where Value : AnyObject, Value : Observable}
+         ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift:179:6: note: found candidate with type '(T.Type) -> Environment<T?>'
+    @Environment(\.dpTheme) private var theme
+     ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift:179:18: error: cannot infer key path type from context; consider explicitly specifying a root type
+    @Environment(\.dpTheme) private var theme
+                 ^
+                  <#Root#>
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift:76:20: error: cannot find 'ButtonIconTokens' in scope
+            return ButtonIconTokens.insetSmall   // 8pt (references space100)
+                   ^~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift:78:20: error: cannot find 'ButtonIconTokens' in scope
+            return ButtonIconTokens.insetMedium  // 10pt (references space125)
+                   ^~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift:80:20: error: cannot find 'ButtonIconTokens' in scope
+            return ButtonIconTokens.insetLarge   // 12pt (references space150)
+                   ^~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift:270:47: error: type 'DesignTokens' has no member 'scale096'
+        .scaleEffect(isPressed ? DesignTokens.scale096 : DesignTokens.scale100)
+                                 ~~~~~~~~~~~~ ^~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift:270:71: error: type 'DesignTokens' has no member 'scale100'
+        .scaleEffect(isPressed ? DesignTokens.scale096 : DesignTokens.scale100)
+                                                         ~~~~~~~~~~~~ ^~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift:224:6: error: no exact matches in call to initializer 
+    @Environment(\.dpTheme) private var theme
+     ^
+SwiftUI.Environment.init:3:10: note: candidate expects value of type 'Value.Type' for parameter #1 (got 'KeyPath<Root, Value>')
+  public init(_ objectType: Value.Type) where Value : AnyObject, Value : Observable}
+         ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift:224:6: note: found candidate with type '(T.Type) -> Environment<T?>'
+    @Environment(\.dpTheme) private var theme
+     ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift:224:18: error: cannot infer key path type from context; consider explicitly specifying a root type
+    @Environment(\.dpTheme) private var theme
+                 ^
+                  <#Root#>
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift:363:16: error: cannot find type 'DesignerPunkTheme' in scope
+    theme: any DesignerPunkTheme
+               ^~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift:267:16: error: cannot convert return expression of type 'Animation.Type' to return type 'Animation'
+        return Animation
+               ^~~~~~~~~
+/work/consumer/dist/tokens/DesignTokens.ios.swift:606:44: error: cannot find 'Animation' in scope
+        public static let easingStandard = Animation.timingCurve(0.4, 0.0, 0.2, 1)
+                                           ^~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift:275:16: error: cannot convert return expression of type 'Animation.Type' to return type 'Animation'
+        return Animation
+               ^~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift:325:10: warning: 'onChange(of:perform:)' was deprecated in iOS 17.0: Use `onChange` with a two or zero parameter action closure instead. [#DeprecatedDeclaration]
+        .onChange(of: isFocused) { newValue in
+         ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift:330:10: warning: 'onChange(of:perform:)' was deprecated in iOS 17.0: Use `onChange` with a two or zero parameter action closure instead. [#DeprecatedDeclaration]
+        .onChange(of: styles.checkmarkVisible) { newValue in
+         ^
+/work/consumer/dist/tokens/DesignTokens.ios.swift:469:44: error: cannot find 'Typography' in scope
+    public static let typographyButtonMd = Typography(fontSize: fontSize100, lineHeight: lineHeight100, fontFamily: fontFamilyBody, fontWeight: fontWeight500, letterSpacing: letterSpacing100)
+                                           ^~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift:166:40: error: cannot find type 'DesignerPunkTheme' in scope
+    public static func rest(theme: any DesignerPunkTheme) -> VisualStateStyles {
+                                       ^~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift:180:44: error: cannot find type 'DesignerPunkTheme' in scope
+    public static func selected(theme: any DesignerPunkTheme) -> VisualStateStyles {
+                                           ^~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift:194:47: error: cannot find type 'DesignerPunkTheme' in scope
+    public static func notSelected(theme: any DesignerPunkTheme) -> VisualStateStyles {
+                                              ^~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift:208:43: error: cannot find type 'DesignerPunkTheme' in scope
+    public static func checked(theme: any DesignerPunkTheme) -> VisualStateStyles {
+                                          ^~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift:222:45: error: cannot find type 'DesignerPunkTheme' in scope
+    public static func unchecked(theme: any DesignerPunkTheme) -> VisualStateStyles {
+                                            ^~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift:238:75: error: cannot find type 'DesignerPunkTheme' in scope
+    public static func errorSelectMode(checkmarkVisible: Bool, theme: any DesignerPunkTheme) -> VisualStateStyles {
+                                                                          ^~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift:251:87: error: cannot find type 'DesignerPunkTheme' in scope
+    public static func errorMultiSelectMode(baseStyles: VisualStateStyles, theme: any DesignerPunkTheme) -> VisualStateStyles {
+                                                                                      ^~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift:274:39: error: cannot find type 'DesignerPunkTheme' in scope
+public func visualStateMap(theme: any DesignerPunkTheme) -> [VisualState: VisualStateStyles] {
+                                      ^~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift:295:70: error: cannot find type 'DesignerPunkTheme' in scope
+public func getStylesForState(_ visualState: VisualState, theme: any DesignerPunkTheme) -> VisualStateStyles {
+                                                                     ^~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift:329:16: error: cannot find type 'DesignerPunkTheme' in scope
+    theme: any DesignerPunkTheme
+               ^~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift:296:54: error: cannot convert return expression of type 'T?' to return type 'VisualStateStyles'
+    return visualStateMap(theme: theme)[visualState] ?? .rest(theme: theme)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift:296:58: error: cannot infer contextual base in reference to member 'rest'
+    return visualStateMap(theme: theme)[visualState] ?? .rest(theme: theme)
+                                                        ~^~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift:401:11: error: cannot find 'VerticalListItemTokens' in scope
+        ? VerticalListItemTokens.paddingBlockSelected 
+          ^~~~~~~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift:402:11: error: cannot find 'VerticalListItemTokens' in scope
+        : VerticalListItemTokens.paddingBlockRest
+          ^~~~~~~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSet.ios.swift:341:6: error: no exact matches in call to initializer 
+    @Environment(\.dpTheme) private var theme
+     ^
+SwiftUI.Environment.init:3:10: note: candidate expects value of type 'Value.Type' for parameter #1 (got 'KeyPath<Root, Value>')
+  public init(_ objectType: Value.Type) where Value : AnyObject, Value : Observable}
+         ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSet.ios.swift:341:6: note: found candidate with type '(T.Type) -> Environment<T?>'
+    @Environment(\.dpTheme) private var theme
+     ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSet.ios.swift:341:18: error: cannot infer key path type from context; consider explicitly specifying a root type
+    @Environment(\.dpTheme) private var theme
+                 ^
+                  <#Root#>
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSet.ios.swift:417:10: warning: 'onChange(of:perform:)' was deprecated in iOS 17.0: Use `onChange` with a two or zero parameter action closure instead. [#DeprecatedDeclaration]
+        .onChange(of: error) { newValue in
+         ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSet.ios.swift:1069:21: error: argument 'onMultiSelectionChange' must precede argument 'minSelections'
+                    onMultiSelectionChange: { indices in print("Selections changed to \(indices)") },
+~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSetPreview.swift:378:21: error: argument 'onMultiSelectionChange' must precede argument 'minSelections'
+                    onMultiSelectionChange: { indices in
+~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Base/platforms/ios/ChipBase.ios.swift:161:6: error: no exact matches in call to initializer 
+    @Environment(\.dpTheme) private var theme
+     ^
+SwiftUI.Environment.init:3:10: note: candidate expects value of type 'Value.Type' for parameter #1 (got 'KeyPath<Root, Value>')
+  public init(_ objectType: Value.Type) where Value : AnyObject, Value : Observable}
+         ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Base/platforms/ios/ChipBase.ios.swift:161:6: note: found candidate with type '(T.Type) -> Environment<T?>'
+    @Environment(\.dpTheme) private var theme
+     ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Base/platforms/ios/ChipBase.ios.swift:161:18: error: cannot infer key path type from context; consider explicitly specifying a root type
+    @Environment(\.dpTheme) private var theme
+                 ^
+                  <#Root#>
+/work/consumer/dist/tokens/DesignTokens.ios.swift:610:46: error: cannot find 'Animation' in scope
+        public static let easingAccelerate = Animation.timingCurve(0.4, 0.0, 1, 1)
+                                             ^~~~~~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Base/platforms/ios/ChipBase.ios.swift:304:20: error: cannot find 'theme' in scope
+            return theme.colorStructureSurface.pressedBlend()
+                   ^~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Base/platforms/ios/ChipBase.ios.swift:306:16: error: cannot find 'theme' in scope
+        return theme.colorStructureSurface
+               ^~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Base/platforms/ios/ChipBase.ios.swift:319:20: error: cannot find 'theme' in scope
+            return theme.colorActionPrimary
+                   ^~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Base/platforms/ios/ChipBase.ios.swift:321:16: error: cannot find 'theme' in scope
+        return theme.colorStructureBorder
+               ^~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift:165:6: error: no exact matches in call to initializer 
+    @Environment(\.dpTheme) private var theme
+     ^
+SwiftUI.Environment.init:3:10: note: candidate expects value of type 'Value.Type' for parameter #1 (got 'KeyPath<Root, Value>')
+  public init(_ objectType: Value.Type) where Value : AnyObject, Value : Observable}
+         ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift:165:6: note: found candidate with type '(T.Type) -> Environment<T?>'
+    @Environment(\.dpTheme) private var theme
+     ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift:165:18: error: cannot infer key path type from context; consider explicitly specifying a root type
+    @Environment(\.dpTheme) private var theme
+                 ^
+                  <#Root#>
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift:344:24: error: cannot find 'theme' in scope
+                return theme.colorFeedbackSelectBackgroundRest.opacity(0.9)
+                       ^~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift:346:20: error: cannot find 'theme' in scope
+            return theme.colorFeedbackSelectBackgroundRest
+                   ^~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift:350:24: error: cannot find 'theme' in scope
+                return theme.colorStructureSurface.pressedBlend()
+                       ^~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift:352:20: error: cannot find 'theme' in scope
+            return theme.colorStructureSurface
+                   ^~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift:367:20: error: cannot find 'theme' in scope
+            return theme.colorFeedbackSelectTextRest
+                   ^~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift:369:20: error: cannot find 'theme' in scope
+            return theme.colorActionPrimary
+                   ^~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift:371:16: error: cannot find 'theme' in scope
+        return theme.colorStructureBorder
+               ^~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Input/platforms/ios/ChipInput.ios.swift:154:6: error: no exact matches in call to initializer 
+    @Environment(\.dpTheme) private var theme
+     ^
+SwiftUI.Environment.init:3:10: note: candidate expects value of type 'Value.Type' for parameter #1 (got 'KeyPath<Root, Value>')
+  public init(_ objectType: Value.Type) where Value : AnyObject, Value : Observable}
+         ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Input/platforms/ios/ChipInput.ios.swift:154:6: note: found candidate with type '(T.Type) -> Environment<T?>'
+    @Environment(\.dpTheme) private var theme
+     ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Input/platforms/ios/ChipInput.ios.swift:154:18: error: cannot infer key path type from context; consider explicitly specifying a root type
+    @Environment(\.dpTheme) private var theme
+                 ^
+                  <#Root#>
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Input/platforms/ios/ChipInput.ios.swift:308:20: error: cannot find 'theme' in scope
+            return theme.colorStructureSurface.pressedBlend()
+                   ^~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Input/platforms/ios/ChipInput.ios.swift:310:16: error: cannot find 'theme' in scope
+        return theme.colorStructureSurface
+               ^~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Input/platforms/ios/ChipInput.ios.swift:323:20: error: cannot find 'theme' in scope
+            return theme.colorActionPrimary
+                   ^~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Chip-Input/platforms/ios/ChipInput.ios.swift:325:16: error: cannot find 'theme' in scope
+        return theme.colorStructureBorder
+               ^~~~~
+/work/consumer/dist/tokens/DesignTokens.ios.swift:534:42: error: cannot find 'Color' in scope
+    static let accessibilityFocusColor = Color.oklch(0.76, 0.148, 202.5)
+                                         ^~~~~
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift:259:35: error: ambiguous use of 'motionFocusTransition'
+                    withAnimation(motionFocusTransition) {
+                                  ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/ios/ContainerCardBase.ios.swift:843:5: note: found this candidate 
+let motionFocusTransition: Animation = DesignTokens.MotionFocusTransition.easing
+    ^
+/work/consumer/node_modules/@3fn/core/src/tokens/platforms/ios/MotionTokens.swift:163:12: note: found this candidate 
+public let motionFocusTransition = motionEasingStandard.speed(1.0 / motionDurationFast)
+           ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift:381:32: error: ambiguous use of 'motionFocusTransition'
+                    .animation(motionFocusTransition, value: isFocused)
+                               ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/ios/ContainerCardBase.ios.swift:843:5: note: found this candidate 
+let motionFocusTransition: Animation = DesignTokens.MotionFocusTransition.easing
+    ^
+/work/consumer/node_modules/@3fn/core/src/tokens/platforms/ios/MotionTokens.swift:163:12: note: found this candidate 
+public let motionFocusTransition = motionEasingStandard.speed(1.0 / motionDurationFast)
+           ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift:545:40: error: 'spaceInset300' is inaccessible due to 'private' protection level
+    case .p300: return EdgeInsets(top: spaceInset300, leading: spaceInset300, bottom: spaceInset300, trailing: spaceInset300) /* space.inset.300 */
+                                       ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/TokenMapping.swift:421:13: note: 'spaceInset300' declared here
+private let spaceInset300: CGFloat = 24  // 3 × base
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift:545:64: error: 'spaceInset300' is inaccessible due to 'private' protection level
+    case .p300: return EdgeInsets(top: spaceInset300, leading: spaceInset300, bottom: spaceInset300, trailing: spaceInset300) /* space.inset.300 */
+                                                               ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/TokenMapping.swift:421:13: note: 'spaceInset300' declared here
+private let spaceInset300: CGFloat = 24  // 3 × base
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift:545:87: error: 'spaceInset300' is inaccessible due to 'private' protection level
+    case .p300: return EdgeInsets(top: spaceInset300, leading: spaceInset300, bottom: spaceInset300, trailing: spaceInset300) /* space.inset.300 */
+                                                                                      ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/TokenMapping.swift:421:13: note: 'spaceInset300' declared here
+private let spaceInset300: CGFloat = 24  // 3 × base
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift:545:112: error: 'spaceInset300' is inaccessible due to 'private' protection level
+    case .p300: return EdgeInsets(top: spaceInset300, leading: spaceInset300, bottom: spaceInset300, trailing: spaceInset300) /* space.inset.300 */
+                                                                                                               ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/TokenMapping.swift:421:13: note: 'spaceInset300' declared here
+private let spaceInset300: CGFloat = 24  // 3 × base
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift:546:40: error: 'spaceInset400' is inaccessible due to 'private' protection level
+    case .p400: return EdgeInsets(top: spaceInset400, leading: spaceInset400, bottom: spaceInset400, trailing: spaceInset400) /* space.inset.400 */
+                                       ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/TokenMapping.swift:422:13: note: 'spaceInset400' declared here
+private let spaceInset400: CGFloat = 32  // 4 × base
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift:546:64: error: 'spaceInset400' is inaccessible due to 'private' protection level
+    case .p400: return EdgeInsets(top: spaceInset400, leading: spaceInset400, bottom: spaceInset400, trailing: spaceInset400) /* space.inset.400 */
+                                                               ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/TokenMapping.swift:422:13: note: 'spaceInset400' declared here
+private let spaceInset400: CGFloat = 32  // 4 × base
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift:546:87: error: 'spaceInset400' is inaccessible due to 'private' protection level
+    case .p400: return EdgeInsets(top: spaceInset400, leading: spaceInset400, bottom: spaceInset400, trailing: spaceInset400) /* space.inset.400 */
+                                                                                      ^
+/work/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/ios/TokenMapping.swift:422:13: note: 'spaceInset400' declared here
+private let spaceInset400: CGFloat = 32  // 4 × base

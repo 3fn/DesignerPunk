@@ -1,0 +1,13 @@
+tokens:
+  planted.public:
+    family: planted
+    platforms:
+      web: '--planted-public'
+      ios: plantedPublic
+      android: planted_public
+  planted.internal:
+    family: planted
+    platforms:
+      web: '--planted-internal'
+      ios: plantedInternal
+      android: planted_internal
