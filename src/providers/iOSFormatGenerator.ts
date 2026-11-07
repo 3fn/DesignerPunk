@@ -301,7 +301,7 @@ export class iOSFormatGenerator extends BaseFormatProvider {
 
   /**
    * Format a single-reference semantic token
-   * Generates: static let colorPrimary = purple300
+   * Generates: public static let colorPrimary = purple300
    * For baked-in RGBA values: static let colorStructureBorderSubtle: UIColor = UIColor(red: 0.72, green: 0.71, blue: 0.78, alpha: 0.48)
    * For opacity composition: static let colorStructureBorderSubtle: UIColor = UIColor(red: 0.72, green: 0.71, blue: 0.78, alpha: 0.48)
    */
@@ -347,7 +347,7 @@ export class iOSFormatGenerator extends BaseFormatProvider {
       if (oklch) {
         const wcagComment = this.getWCAGComment(semantic);
         const colorExpr = formatSwiftDisplayP3(oklch.l, oklch.c, oklch.h, oklch.alpha);
-        const tokenLine = `    static let ${semanticName} = ${colorExpr}`;
+        const tokenLine = `    public static let ${semanticName} = ${colorExpr}`;
         return wcagComment ? `    ${wcagComment}\n${tokenLine}` : tokenLine;
       }
     }
@@ -627,10 +627,10 @@ export class iOSFormatGenerator extends BaseFormatProvider {
   /**
    * Format a resolved OKLCH color as a SwiftUI Display P3 constant. The channels are computed at
    * generation, so the file needs no colour library (Spec 129 design § 6).
-   * Output: `static let pink300 = Color(.displayP3, red: 0.9175, green: 0.2003, blue: 0.1386, opacity: 1)`
+   * Output: `public static let pink300 = Color(.displayP3, red: 0.9175, green: 0.2003, blue: 0.1386, opacity: 1)`
    */
   formatOklchColor(name: string, l: number, c: number, h: number): string {
     const swiftName = this.getTokenName(name, 'color');
-    return `    static let ${swiftName} = ${formatSwiftDisplayP3(l, c, h)}`;
+    return `    public static let ${swiftName} = ${formatSwiftDisplayP3(l, c, h)}`;
   }
 }

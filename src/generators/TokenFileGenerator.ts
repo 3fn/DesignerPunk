@@ -1551,12 +1551,12 @@ export class TokenFileGenerator {
           lines.push(`  --${kebabName}: ${token.value};`);
         } else {
           // iOS: Swift constant format with scaled value
-          // static let zIndexModal: CGFloat = 4
+          // public static let zIndexModal: CGFloat = 4
           const suffix = token.name.replace('zIndex.', '');
           const camelSuffix = suffix.charAt(0).toUpperCase() + suffix.slice(1);
           const camelName = 'zIndex' + camelSuffix;
           const scaledValue = token.value / 100; // Scale down from 100-600 to 1-6
-          lines.push(`    static let ${camelName}: CGFloat = ${scaledValue}`);
+          lines.push(`    public static let ${camelName}: CGFloat = ${scaledValue}`);
         }
       }
     } else if (platform === 'android') {

@@ -557,10 +557,13 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
       : 'SEMANTIC TOKENS\n    Use these for UI development';
     
     if (this.outputFormat === 'kotlin') {
+      // Every line of the title carries its own `//`. A title with a line break prefixed once left
+      // its second line as bare text in the object body, which does not parse (Spec 129 row 7).
+      const titleLines = sectionTitle.split('\n').map(line => `    // ${line.trim()}`);
       return [
         '',
         '    // ============================================',
-        `    // ${sectionTitle}`,
+        ...titleLines,
         '    // ============================================',
         ''
       ].join('\n');

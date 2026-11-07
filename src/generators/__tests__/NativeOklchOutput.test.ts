@@ -36,6 +36,11 @@ describe('Native colour output (Spec 129 design § 6)', () => {
       expect(result).toContain('pink300');
     });
 
+    it('writes the member public, so another module can read it (Spec 129 row 9)', () => {
+      const result = gen.formatOklchColor('pink300', 0.65, 0.242, 10);
+      expect(result).toMatch(/^\s+public static let pink300 = /);
+    });
+
     it('writes white and black as exact channels', () => {
       expect(gen.formatOklchColor('white100', 1, 0, 0)).toContain('red: 1, green: 1, blue: 1, opacity: 1');
       expect(gen.formatOklchColor('black100', 0, 0, 0)).toContain('red: 0, green: 0, blue: 0, opacity: 1');
