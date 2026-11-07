@@ -5,6 +5,7 @@ import { getPlatformTokenName } from '../naming/PlatformNamingRules';
 import { getColorToken } from '../tokens/ColorTokens';
 import { getOpacityToken } from '../tokens/OpacityTokens';
 import { generatedByLine, getCoreVersion } from '../generators/coreVersion';
+import { formatKotlinDisplayP3, parseOklchText } from '../generators/oklch/NativeColorUtils';
 
 /**
  * Android-specific format generator
@@ -340,12 +341,11 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
     
     // Check if the primitive reference is a baked-in RGBA or OKLCH value
     if (typeof primitiveRef === 'string' && primitiveRef.startsWith('oklch(')) {
-      const match = primitiveRef.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*([\d.]+))?\)/);
-      if (match) {
-        const [, l, c, h, alpha] = match;
+      // OKLCH value — written as a Display P3 constructor with channels computed here
+      const oklch = parseOklchText(primitiveRef);
+      if (oklch) {
         const wcagComment = this.getWCAGComment(semantic);
-        let colorExpr = `Oklch(${l}f, ${c}f, ${h}f).toComposeColor()`;
-        if (alpha) colorExpr += `.copy(alpha = ${alpha}f)`;
+        const colorExpr = formatKotlinDisplayP3(oklch.l, oklch.c, oklch.h, oklch.alpha);
         const tokenLine = `    val ${semanticName} = ${colorExpr}`;
         return wcagComment ? `    ${wcagComment}\n${tokenLine}` : tokenLine;
       }
@@ -736,14 +736,15 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
     return lines;
   }
 
-  // --- OKLCH Output Methods (Spec 112) ---
+  // --- OKLCH Output Methods (Spec 112; native constructors Spec 129) ---
 
   /**
-   * Format a resolved OKLCH color as a colormath Oklch constant.
-   * Output: `val pink300 = Oklch(0.65f, 0.242f, 8.2f).toComposeColor()`
+   * Format a resolved OKLCH color as a Compose Display P3 constant. The channels are computed at
+   * generation, so the file needs no colour library (Spec 129 design § 6).
+   * Output: `val pink300 = Color(0.9175f, 0.2003f, 0.1386f, 1f, ColorSpaces.DisplayP3)`
    */
   formatOklchColor(name: string, l: number, c: number, h: number): string {
     const kotlinName = this.getTokenName(name, 'color');
-    return `    val ${kotlinName} = Oklch(${l}f, ${c}f, ${h}f).toComposeColor()`;
+    return `    val ${kotlinName} = ${formatKotlinDisplayP3(l, c, h)}`;
   }
 }

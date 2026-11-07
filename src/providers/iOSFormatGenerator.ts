@@ -5,6 +5,7 @@ import { getPlatformTokenName } from '../naming/PlatformNamingRules';
 import { getColorToken } from '../tokens/ColorTokens';
 import { getOpacityToken } from '../tokens/OpacityTokens';
 import { generatedByLine, getCoreVersion } from '../generators/coreVersion';
+import { formatSwiftDisplayP3, parseOklchText } from '../generators/oklch/NativeColorUtils';
 
 /**
  * iOS-specific format generator
@@ -72,6 +73,7 @@ export class iOSFormatGenerator extends BaseFormatProvider {
       '/// Platform: iOS (Swift Constants)',
       '///',
       '',
+      'import SwiftUI',
       'import UIKit',
       '',
       'public struct DesignTokens {'
@@ -88,6 +90,10 @@ export class iOSFormatGenerator extends BaseFormatProvider {
     // Basic Swift validation
     if (!content.includes('public struct DesignTokens')) {
       errors.push('Missing DesignTokens struct declaration');
+    }
+
+    if (!content.includes('import SwiftUI')) {
+      errors.push('Missing SwiftUI import');
     }
 
     if (!content.includes('import UIKit')) {
@@ -307,12 +313,11 @@ export class iOSFormatGenerator extends BaseFormatProvider {
       return wcagComment ? `    ${wcagComment}\n${tokenLine}` : tokenLine;
     }
     if (typeof primitiveRef === 'string' && primitiveRef.startsWith('oklch(')) {
-      // OKLCH value — output via ChromaKit
-      const match = primitiveRef.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*([\d.]+))?\)/);
-      if (match) {
-        const [, l, c, h, alpha] = match;
+      // OKLCH value — written as a Display P3 constructor with channels computed here
+      const oklch = parseOklchText(primitiveRef);
+      if (oklch) {
         const wcagComment = this.getWCAGComment(semantic);
-        const colorExpr = alpha ? `Color.oklch(${l}, ${c}, ${h}, opacity: ${alpha})` : `Color.oklch(${l}, ${c}, ${h})`;
+        const colorExpr = formatSwiftDisplayP3(oklch.l, oklch.c, oklch.h, oklch.alpha);
         const tokenLine = `    static let ${semanticName} = ${colorExpr}`;
         return wcagComment ? `    ${wcagComment}\n${tokenLine}` : tokenLine;
       }
@@ -586,14 +591,15 @@ export class iOSFormatGenerator extends BaseFormatProvider {
     return lines;
   }
 
-  // --- OKLCH Output Methods (Spec 112) ---
+  // --- OKLCH Output Methods (Spec 112; native constructors Spec 129) ---
 
   /**
-   * Format a resolved OKLCH color as a ChromaKit Color constant.
-   * Output: `static let pink300 = Color.oklch(0.65, 0.242, 10.0)`
+   * Format a resolved OKLCH color as a SwiftUI Display P3 constant. The channels are computed at
+   * generation, so the file needs no colour library (Spec 129 design § 6).
+   * Output: `static let pink300 = Color(.displayP3, red: 0.9175, green: 0.2003, blue: 0.1386, opacity: 1)`
    */
   formatOklchColor(name: string, l: number, c: number, h: number): string {
     const swiftName = this.getTokenName(name, 'color');
-    return `    static let ${swiftName} = Color.oklch(${l}, ${c}, ${h})`;
+    return `    static let ${swiftName} = ${formatSwiftDisplayP3(l, c, h)}`;
   }
 }

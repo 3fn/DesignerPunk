@@ -3,7 +3,11 @@
  *
  * Conversion pipeline: OKLCH → OKLab → linear sRGB → sRGB → hex
  * WCAG: OKLCH → linear sRGB → relative luminance → contrast ratio
- * Gamut mapping: CSS Color Level 4 §13.2 algorithm
+ * Gamut mapping: CSS Color Level 4 §13.2 algorithm, for sRGB and Display P3
+ *
+ * Display P3 (Spec 129 Task 8.1): OKLCH → OKLab → XYZ D65 → linear Display P3 → gamma-encoded P3
+ * channels. The native token files carry these channels as computed constants, so no generated
+ * file depends on a colour library at run time.
  *
  * References:
  * - OKLab/OKLCH: https://bottosson.github.io/posts/oklab/
@@ -225,60 +229,180 @@ function ciede2000(L1: number, a1: number, b1: number, L2: number, a2: number, b
   return dE;
 }
 
-/**
- * CSS Color Level 4 §13.2 gamut mapping.
- *
- * Binary search on chroma in OKLCH. Converges when either:
- * - The color is in sRGB gamut, OR
- * - ΔE₀₀ between current and clipped < 0.02 (JND threshold)
- */
-export function clampToGamut(l: number, c: number, h: number): Oklch {
-  if (isInSrgbGamut(l, c, h)) return { l, c, h };
+// --- Display P3 (Spec 129 Task 8.1) ---
 
-  // Edge cases
+/** A target gamut for {@link clampToGamut} and {@link oklchToGamutRgb}. */
+export type TargetGamut = 'srgb' | 'display-p3';
+
+/** Gamma-encoded RGB channels in a target gamut, each in 0–1 once mapped. */
+export interface GamutRgb {
+  r: number;
+  g: number;
+  b: number;
+}
+
+// CSS Color Level 4 sample-code matrices (https://www.w3.org/TR/css-color-4/#color-conversion-code).
+// Row-major. OKLab → LMS (cube-root space), LMS → XYZ D65, XYZ D65 ↔ linear Display P3.
+const OKLAB_TO_LMS = [
+  [0.99999999845051981432, 0.39633779217376785678, 0.21580375806075880339],
+  [1.0000000088817607767, -0.1055613423236563494, -0.063854174771705903402],
+  [1.0000000546724109177, -0.089484182094965759684, -1.2914855378640917399],
+];
+const LMS_TO_XYZ = [
+  [1.2268798758459243, -0.5578149944602171, 0.2813910456659647],
+  [-0.0405757452148008, 1.1122868032803170, -0.0717110580655164],
+  [-0.0763729366746601, -0.4214933324022432, 1.5869240198367816],
+];
+const XYZ_TO_LINEAR_P3 = [
+  [2.493496911941425, -0.9313836179191239, -0.40271078445071684],
+  [-0.8294889695615747, 1.7626640603183463, 0.023624685841943577],
+  [0.03584583024378447, -0.07617238926804182, 0.9568845240076872],
+];
+const LINEAR_P3_TO_XYZ = [
+  [0.4865709486482162, 0.26566769316909306, 0.1982172852343625],
+  [0.2289745640697488, 0.6917385218365064, 0.079286914093745],
+  [0.0, 0.04511338185890264, 1.043944368900976],
+];
+const XYZ_TO_LMS = [
+  [0.8190224379967030, 0.3619062600528904, -0.1288737815209879],
+  [0.0329836539323885, 0.9292868615863434, 0.0361446663506424],
+  [0.0481771893596242, 0.2642395317527308, 0.6335478284694309],
+];
+const LMS_TO_OKLAB = [
+  [0.2104542683093140, 0.7936177747023054, -0.0040720430116193],
+  [1.9779985324311684, -2.4285922420485799, 0.4505937096174110],
+  [0.0259040424655478, 0.7827717124575296, -0.8086757549230774],
+];
+
+type Vec3 = [number, number, number];
+type Mat3 = number[][];
+
+function mul(m: Mat3, v: Vec3): Vec3 {
+  return [
+    m[0][0] * v[0] + m[0][1] * v[1] + m[0][2] * v[2],
+    m[1][0] * v[0] + m[1][1] * v[1] + m[1][2] * v[2],
+    m[2][0] * v[0] + m[2][1] * v[1] + m[2][2] * v[2],
+  ];
+}
+
+function oklabToLinearP3(L: number, a: number, b: number): Vec3 {
+  const lms = mul(OKLAB_TO_LMS, [L, a, b]).map(x => x * x * x) as Vec3;
+  return mul(XYZ_TO_LINEAR_P3, mul(LMS_TO_XYZ, lms));
+}
+
+function linearP3ToOklab(r: number, g: number, b: number): Vec3 {
+  const lms = mul(XYZ_TO_LMS, mul(LINEAR_P3_TO_XYZ, [r, g, b])).map(x => Math.cbrt(x)) as Vec3;
+  return mul(LMS_TO_OKLAB, lms);
+}
+
+/** Linear (not gamma-encoded) channels of an OKLCH colour in the target gamut; may leave 0–1. */
+function oklchToLinear(l: number, c: number, h: number, gamut: TargetGamut): Vec3 {
+  const [L, a, b] = oklchToOklab(l, c, h);
+  return gamut === 'display-p3' ? oklabToLinearP3(L, a, b) : oklabToLinearSrgb(L, a, b);
+}
+
+function linearToOklch(rgb: Vec3, gamut: TargetGamut): Oklch {
+  const [L, a, b] = gamut === 'display-p3'
+    ? linearP3ToOklab(rgb[0], rgb[1], rgb[2])
+    : linearSrgbToOklab(rgb[0], rgb[1], rgb[2]);
+  const c = Math.sqrt(a * a + b * b);
+  const h = ((Math.atan2(b, a) * 180) / Math.PI + 360) % 360;
+  return { l: L, c, h: c < 0.0001 ? 0 : h };
+}
+
+const GAMUT_EPSILON = 0.000075;
+
+/** The sRGB transfer function, extended to negative input by symmetry (CSS Color 4 § 10.1). */
+function encodeSigned(v: number): number {
+  return v < 0 ? -linearToSrgb(-v) : linearToSrgb(v);
+}
+
+/**
+ * Whether an OKLCH colour lies inside the target gamut: every gamma-encoded channel in 0–1, to
+ * within 0.000075 (the destination colour space's own coordinates, as §13.2 reads "in gamut").
+ */
+export function isInGamut(l: number, c: number, h: number, gamut: TargetGamut = 'srgb'): boolean {
+  const [r, g, b] = oklchToLinear(l, c, h, gamut);
+  return [r, g, b].every(v => {
+    const e = encodeSigned(v);
+    return e >= -GAMUT_EPSILON && e <= 1 + GAMUT_EPSILON;
+  });
+}
+
+const clamp01 = (v: number): number => Math.max(0, Math.min(1, v));
+
+/** Euclidean distance in OKLab: ΔE_OK, the metric of CSS Color Level 4 §13.2. */
+export function deltaEOK(color1: Oklch, color2: Oklch): number {
+  const [L1, a1, b1] = oklchToOklab(color1.l, color1.c, color1.h);
+  const [L2, a2, b2] = oklchToOklab(color2.l, color2.c, color2.h);
+  return Math.sqrt((L1 - L2) ** 2 + (a1 - a2) ** 2 + (b1 - b2) ** 2);
+}
+
+/** Clip linear channels to 0–1 (the "clip" step of §13.2), returned as OKLCH. */
+function clipToGamut(l: number, c: number, h: number, gamut: TargetGamut): Oklch {
+  const lin = oklchToLinear(l, c, h, gamut);
+  return linearToOklch([clamp01(lin[0]), clamp01(lin[1]), clamp01(lin[2])], gamut);
+}
+
+/**
+ * CSS Color Level 4 §13.2 gamut mapping, targeting `gamut`.
+ *
+ * Binary search on chroma in OKLCH at constant lightness and hue. The candidate at each step is
+ * accepted when its hard-clipped version is within ΔE_OK 0.02 (the JND) of the candidate itself.
+ * Returns the clipped colour as OKLCH, so it is always inside the gamut.
+ */
+export function clampToGamut(l: number, c: number, h: number, gamut: TargetGamut = 'srgb'): Oklch {
+  if (isInGamut(l, c, h, gamut)) return { l, c, h };
+
+  // Edge cases: beyond white or black in lightness
   if (l >= 1) return { l: 1, c: 0, h };
   if (l <= 0) return { l: 0, c: 0, h };
 
-  let lo = 0;
-  let hi = c;
-  let current: Oklch = { l, c, h };
-
   const JND = 0.02;
   const EPSILON = 0.0001;
+
+  let lo = 0;
+  let hi = c;
+  let loInGamut = true;
+  let current: Oklch = { l, c, h };
+  let clipped = clipToGamut(l, c, h, gamut);
+  let dE = deltaEOK(clipped, current);
+  if (dE < JND) return clipped;
 
   while (hi - lo > EPSILON) {
     const mid = (lo + hi) / 2;
     current = { l, c: mid, h };
 
-    if (isInSrgbGamut(l, mid, h)) {
+    if (loInGamut && isInGamut(l, mid, h, gamut)) {
+      lo = mid;
+      continue;
+    }
+
+    clipped = clipToGamut(l, mid, h, gamut);
+    dE = deltaEOK(clipped, current);
+    if (dE < JND) {
+      if (JND - dE < EPSILON) return clipped;
+      loInGamut = false;
       lo = mid;
     } else {
-      // Clip to gamut and check if perceptually close enough
-      const clipped = clipToSrgb(l, mid, h);
-      const dE = deltaE00(current, clipped);
-      if (dE - JND < EPSILON) {
-        // Close enough — accept the clipped version
-        return clipped;
-      }
       hi = mid;
     }
   }
 
-  return { l, c: lo, h };
+  return clipped;
 }
 
-/** Hard-clip OKLCH to sRGB by clamping linear RGB channels. */
-function clipToSrgb(l: number, c: number, h: number): Oklch {
-  const [L, a, b] = oklchToOklab(l, c, h);
-  const [lr, lg, lb] = oklabToLinearSrgb(L, a, b);
+/**
+ * OKLCH → gamma-encoded RGB channels in the target gamut, gamut-mapped by {@link clampToGamut}'s
+ * rule and clipped to 0–1. Unrounded: the caller rounds for output.
+ */
+export function oklchToGamutRgb(l: number, c: number, h: number, gamut: TargetGamut): GamutRgb {
+  const mapped = clampToGamut(l, c, h, gamut);
+  const [r, g, b] = oklchToLinear(mapped.l, mapped.c, mapped.h, gamut);
+  return { r: linearToSrgb(clamp01(r)), g: linearToSrgb(clamp01(g)), b: linearToSrgb(clamp01(b)) };
+}
 
-  const clampedR = Math.max(0, Math.min(1, lr));
-  const clampedG = Math.max(0, Math.min(1, lg));
-  const clampedB = Math.max(0, Math.min(1, lb));
-
-  const [cL, ca, cb] = linearSrgbToOklab(clampedR, clampedG, clampedB);
-  const cc = Math.sqrt(ca * ca + cb * cb);
-  const ch = ((Math.atan2(cb, ca) * 180) / Math.PI + 360) % 360;
-
-  return { l: cL, c: cc, h: cc < 0.0001 ? 0 : ch };
+/** Gamma-encoded Display P3 channels (0–1) back to OKLCH, for round-trip checks. */
+export function fromDisplayP3(r: number, g: number, b: number): Oklch {
+  return linearToOklch([srgbToLinear(r), srgbToLinear(g), srgbToLinear(b)], 'display-p3');
 }

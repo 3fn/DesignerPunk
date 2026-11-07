@@ -31,6 +31,7 @@ import {
 import { whiteLightness, grayLightness, blackLightness } from '../tokens/color/channels/lightness/neutral';
 import { whiteChroma, grayChroma, blackChroma } from '../tokens/color/channels/chroma/neutral';
 import { generatedByLine, getCoreVersion } from './coreVersion';
+import { formatSwiftDisplayP3, formatKotlinDisplayP3, parseOklchText } from './oklch/NativeColorUtils';
 
 /**
  * How the generic semantic pass emits a token, by the shape of its `primitiveReferences`:
@@ -968,17 +969,23 @@ export class TokenFileGenerator {
 
     if (overrides.length === 0) return lines;
 
-    // Helper: rgba string → iOS UIColor
-    const toIOS = (rgba: string) => {
-      const m = rgba.match(/rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)/);
-      if (!m) return rgba;
-      return `UIColor(red: ${(+m[1]/255).toFixed(2)}, green: ${(+m[2]/255).toFixed(2)}, blue: ${(+m[3]/255).toFixed(2)}, alpha: ${(+m[4]).toFixed(2)})`;
+    // Helper: resolved colour string → SwiftUI Color. An `oklch(…)` literal becomes a Display P3
+    // constructor with channels computed here (Spec 129 design § 6, the same converter as the
+    // primitives); an `rgba(…)` literal becomes an sRGB constructor.
+    const toIOS = (value: string) => {
+      const oklch = parseOklchText(value);
+      if (oklch) return formatSwiftDisplayP3(oklch.l, oklch.c, oklch.h, oklch.alpha);
+      const m = value.match(/rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)/);
+      if (!m) return value;
+      return `Color(.sRGB, red: ${(+m[1]/255).toFixed(2)}, green: ${(+m[2]/255).toFixed(2)}, blue: ${(+m[3]/255).toFixed(2)}, opacity: ${(+m[4]).toFixed(2)})`;
     };
 
-    // Helper: rgba string → Android Color.argb
-    const toAndroid = (rgba: string) => {
-      const m = rgba.match(/rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)/);
-      if (!m) return rgba;
+    // Helper: resolved colour string → Compose Color
+    const toAndroid = (value: string) => {
+      const oklch = parseOklchText(value);
+      if (oklch) return formatKotlinDisplayP3(oklch.l, oklch.c, oklch.h, oklch.alpha);
+      const m = value.match(/rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)/);
+      if (!m) return value;
       return `Color.argb(${Math.round(+m[4] * 255)}, ${m[1]}, ${m[2]}, ${m[3]})`;
     };
 
@@ -1004,9 +1011,9 @@ export class TokenFileGenerator {
         for (const o of overrides) {
           const name = this.iosGenerator.getTokenName(o.token.name, o.token.category);
           if (o.lwVal !== o.dwVal) {
-            lines.push(`    public static let ${name}_wcag: UIColor = UIColor { $0.userInterfaceStyle == .dark ? ${toIOS(o.dwVal)} : ${toIOS(o.lwVal)} }`);
+            lines.push(`    public static let ${name}_wcag: Color = Color(UIColor { $0.userInterfaceStyle == .dark ? UIColor(${toIOS(o.dwVal)}) : UIColor(${toIOS(o.lwVal)}) })`);
           } else {
-            lines.push(`    public static let ${name}_wcag: UIColor = ${toIOS(o.lwVal)}`);
+            lines.push(`    public static let ${name}_wcag: Color = ${toIOS(o.lwVal)}`);
           }
         }
         break;

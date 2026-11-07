@@ -120,5 +120,6 @@ android:
   libraries:
     coil-compose: "2.7.0"
     material-icons-extended: "1.7.8"
-    # Only while the generated Kotlin calls Oklch(...).toComposeColor(); the PR that drops the call removes this pin (Req 3.5 (a)).
-    colormath-ext-jetpack-compose: "3.7.1"
+    # colormath-ext-jetpack-compose 3.7.1 was pinned here while the generated Kotlin called Oklch(...).toComposeColor().
+    # Spec 129 Task 8.1 emits Color(r, g, b, a, ColorSpaces.DisplayP3) with channels computed at generation, so the
+    # generated Kotlin imports no colour library and the pin is removed (Req 3.5 (a)).
