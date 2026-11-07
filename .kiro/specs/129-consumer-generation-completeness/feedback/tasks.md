@@ -1375,3 +1375,689 @@ Read at `origin/task/129-tasks-amendment-2` `4be319bcc`, through `git show`, wit
 - **Kenya, the optional tightening, folded.** The fixture criterion now reads "reads it and asserts the keys it yields against a committed `.keys.tsv` beside it". Her other two rows are unchanged. → tasks.md Task 5
 - **Data's note on the Kotlin and Gradle versions, folded.** Task 4's toolchain criterion now says which versions it means: the Gradle version is the one the wrapper runs, and the Kotlin compiler version is the Kotlin Gradle plugin's, not the image's `kotlinc`. This is the reading he will implement, written into the text so it can be decided without asking him. His note on pinning the validation action by major version needs no text: the criterion names no version. → tasks.md Task 4
 - **Data, reproduction decline: confirmed by him.** It does not go to Peter.
+
+
+## Tasks amendment 3 (2026-11-06): Peter's theme rulings, the shared harness module, the composite fixture, cold-run counting
+
+Peter's words, `date -u` at receipt (orchestrator relay), verbatim:
+- 2026-11-06T22:38:12Z: "4 combine, 5 U9, 6 (b), 7 yes; downloads approved" (`evidence/2026-11-06-peter-rulings-theme-and-downloads.md`, on `main` via #702).
+- 2026-11-06T23:31:58Z: "A enum, B Thurgood, C confirmed, D yes; merges done" (`evidence/2026-11-06-peter-rulings-round-3.md`).
+- 2026-11-06T23:37:03Z: "fall back to base; merges done now" (the same record, § "Follow-up ruling").
+
+What each word answered is the orchestrator's paraphrase in those two records; only the quoted lines are Peter's. "Downloads approved" and "merges done" are outside these three files.
+
+### Context for Reviewers
+- The rule text is Ada's, spliced from her scratch input, `[ADA R2]` below, byte for byte except where a later seat's item corrects it. Each departure carries a dated note in place and is listed in `[THURGOOD R6]`.
+- The seats' inputs are spliced below as `[ADA R2]`, `[LINA R2]`, `[KENYA R3]`, `[DATA R3]` and `[SPARKY R2]`, each byte for byte inside a fence, so a departure can be checked against what the seat wrote. Sparky's is the orchestrator's transcription of his hand-back.
+- The round-3 positions themselves are not committed; the two rulings records name who held what.
+- **Settled, not under review**: Peter's choices themselves (enum, not a pair; Thurgood owns the module; the composite leaves the fixture; pull-request runs and a reached comparator count; a theme of one mode falls back to base). Under review: whether this text carries them faithfully, and the forks in `[THURGOOD R6]`.
+- **The probe result for Task 5's record** (not written here; it belongs in Task 5's completion doc): run https://github.com/3fn/DesignerPunk/actions/runs/42313523264, `head_sha` `b6235fc0c`, job `harness-generate (unit-branch)`, conclusion success. The run used the unit branch's copy, so fallback D is not needed. Nothing in this amendment contradicts it.
+
+#### [THURGOOD R6] — tasks amendment 3
+
+**What changed, by file and section**
+- `requirements.md`:
+  - **Req 2.3**: the fixture holds a composite `ref` until U6 and none after it. → requirements.md § Requirement 2
+  - **Req 2.4**: the package's root token files, `dist/ComponentTokens.*` and `dist/DesignTokens.*`, are left out (Data). → requirements.md § Requirement 2
+  - **Req 4.1**: the instances are the theme-instance rule's, and the provider takes a family choice defaulting to base. → requirements.md § Requirement 4
+  - **Req 5.6**: what `generate` does with a refused composite is decided in Task 11, measured under Req 10.4. → requirements.md § Requirement 5
+  - Header line.
+- `design.md`:
+  - **§ 0**: three rows, one per ruling message.
+  - **§ 2**: Data's seven lane facts, after "Pins".
+  - **§ 4**: block 1b (holder sentence); the implicit-members bullet (`.pbDark` → `.pbBaseDark`, Kenya's name rule); block 2 (the theme family and both providers, replacing the two provider bullets); block 3 (the single-mode rule, with Sparky's web changes); block 1a (the theme-instance rule), after that list; blocks 4 and 5 (product-token names and access; the shared harness module), after "Interfaces".
+  - **§ 10**: block 1c ("Effects" on item (i)); a new bullet on where a WCAG adopter first meets the built-in `dark-wcag` map (Kenya's surviving point).
+  - **Testing Strategy, the Design Decisions register (rows 28–32), § 16 (four rows)**, header line.
+- `tasks.md`:
+  - **Header**; **Decision 6 condition 3** ("D yes"); **Sizes** (the new subtasks unsized).
+  - **Task 3**: Kenya's product-token criterion, her module-import criterion, the iOS per-run instance check, subtask 3.4, Traces, Post-Completion.
+  - **Task 4**: Data's `:dp` exclusion, the blocked line, the probe-import criterion, the Android per-run instance check, the floor's exclusion, subtask 4.3, Traces, Post-Completion.
+  - **Task 5**: Stacy's baseline criterion; the `harness-verdict` criterion (PASS and FAIL alike); the `stability.test.ts` case; the module and its test as criteria and Primary Artifacts; the `src/` import grep; subtask 5.4; Traces.
+  - **Task 6**: `native-rules.test.ts` joins the guard list; 6.1's stale "three" corrected.
+  - **Task 11**: Lina's L2 replacements and L1's nine criteria; the default-name case; Kenya's iOS family criterion; Data's Android family criterion; the comparison test; the per-run check at U6; the `src/` grep; the composite fixture and the refusal's effect on `generate`; Primary Artifacts (`harness/fixtures/product-tokens/**`, the comparison test); 11.2 and 11.3; Traces.
+  - **Task 14**: custom themes reach native output; the WCAG dark composition from config; each refusal measured, then shipped or warned; the web single-mode form; subtask 14.6; Traces.
+  - **Task 16**: the two charter criteria name the family and the new provider form.
+  - **Traceability**: Req 2, 4 and 5 rows.
+
+**Departures from a seat's written text** (each also marked in place)
+1. Ada block 1a, item 4: Kenya's implicit-member name rule added (`static var <abbr><Pascal instance>`, `.pbBaseDark`). Ada's text named none, and the design's `.pbDark` example named no instance. → `[KENYA R3]` item 6.1
+2. Ada block 1a, item 5 (h), and block 2's Swift bullet: `allCases` added to `self` and `init`, with Kenya's compile results as the reason; `self` stays refused as UNVERIFIED. Ada's "Backticks cannot make those usable after a dot" was true of `init` only. → `[KENYA R3]` item 6.2
+3. Ada block 1a, "What checks the rule": refusals tested in Task 14, not Task 11. → `[LINA R2]` note 1
+4. Ada block 2, the raw-value paragraph: Kenya's ruling (no `String` raw value in 129) replaces "It is Kenya's call, and it is not taken here … until Kenya decides". → `[KENYA R3]` items 4 and 6.3
+5. Ada block 2, Android provider: "it collides with nothing" qualified for the default config name, UNVERIFIED, with Task 11 to compile it once. → `[DATA R3]` item 6.2
+6. Ada block 3: the placeholder record path replaced by the committed record, as Ada asked; Sparky's (a)–(d) applied; his residual added to the costs. → `[SPARKY R2]`
+7. Ada block 3 and block 1a: the scratch labels "block 2" and the direction "(below)" changed to the design's own headings and "(above)", because block 3 sits above block 1a in Ada's own placement. Editorial.
+8. Ada block 4: the harness's `gen:product/…` key form, and the Kotlin-keyword product key, added. → `[DATA R3]` items 6.3 and 6.4
+9. Ada block 5: the module also holds the fixed binding names and the product `gen:` keys (Data's § 2 bullet); its subtask is numbered 5.4 with its order; and the "check one copy against the other" sentence now names where that happens (my ruling, below). → `[DATA R3]` item 3; `[LINA R2]` note 2
+10. Kenya's Task 3 product criterion: "After Task 11 … it reads `482 of 482`" narrowed to "the `product` field reads `1`", because at U6 the theme and semantic counts change too.
+11. Kenya's 3.4: "Task 5's first subtask" → "Task 5's 5.4"; a dated heading note; and a line that 3.4 builds the iOS half of the per-run check (my placement).
+12. Kenya's Task 11 iOS family criterion: the config is S and C, not "a config registering `wcag` and a custom theme of one mode" through `generate`, which emits no custom theme before U9; and her last sub-bullet (members equal the module's) moved to the comparison test, because `SwiftThemeTypes.test.ts` is under `src/`.
+13. Data's Task 4 probe-import criterion: written for his option (b), "the task that adds the module replaces and deletes them". Under "B Thurgood" the module lands first (5.4), so his own 4.3 replaces the stand-ins: his option (a), with the module in Task 5. His "Primary Artifacts" line (probe-kotlin.ts edited by the module's task) is dropped, because that task no longer edits it.
+14. Data's Task 11 Android criterion: "(configs S and C, above)" added, so "each case" names its configs.
+15. Data's Decision 6 condition 3 text: applied as additions, keeping the existing dated notes in place rather than replacing the sentences, so the clarification history survives.
+16. Data's and Kenya's `harness-verdict` texts merged into one criterion.
+
+**My rulings, as the module's owner and the formalizer**
+- **The emitter-against-module comparison has a home.** The ban is one-directional: nothing under `src/` imports `scripts/harness/`, and the generator never imports the module. A test under `scripts/harness/__tests__/` may import both; `scripts/__tests__/install-doc.test.ts`, `starter-specs.test.ts` and `sync.type-contract.test.ts` already import `src/`. So Task 11 gains `scripts/harness/__tests__/native-rules-emitter.test.ts`, in its Primary Artifacts, run on configs S and C and the default name, with me consulted. Ada's literal-list tests stay in `src/generators/__tests__/`, a third, example-grain copy. Lina's other option, "the per-run check is the comparison", covers only the harness consumer's config (S), never config C before U9, so it is not enough alone. Its counter-argument, that Ada now writes both the emitter and the test comparing it to my copy, survives: the comparison is mechanical, and the two copies still have two authors. → design.md § 4, "The shared harness module"; tasks.md Task 11
+- **The per-run instance check (ruling 4's third safeguard) is built in U1 and read at U6.** Kenya's 3.4 and Data's 4.3 add it (about 20 lines a platform, as Ada sized it), printing `theme instances: not checked` until the generated code declares a `<Name>Themes` holder. Task 11's criterion reads both lines at U6. Built in U1, it needs no harness write scope in U6; the risk is a format the U1 check misreads at U6, which would need a harness edit in U6's PR that Task 11's row does not grant. → tasks.md Tasks 3, 4, 11
+- **Requirements change now, not in Task 11's PR.** Written with "until U6 … from U6", Req 2.3 is true at every head, and U6's PR carries no `requirements.md` hunk, a trigger surface that would otherwise reach Peter's merge with no review round. Req 5.6 states the open choice as a decision Task 11 makes and Req 10.4 measures, so nothing is pre-decided.
+- **"Req 2.8" in the round-3 record.** Req 2.8 is the pin file and says nothing about composites. I read it as Req 4.8, which tags composite entries before item (i) emits. That stays true as written (the composite is in the fixture until U6), so 4.8 is not amended. If the orchestrator meant another requirement, say so.
+- **Kenya's `wcag` stock-config point, after the correction.** Her "`dark: wcagDark` silently gives base dark" is disproved by `generateTokenFiles.ts` L195, as the round-3 record notes. What survives: an adopter who registers `wcag` light only sees the package's built-in `dark-wcag` map through `.<name>Theme(.wcag)` in the dark scheme, and only the bridge warning says so. Added as one § 10 bullet, outside Ada's block.
+- **Data's and Kenya's sequencing points** are resolved by the order Peter's "B Thurgood" implies: 5.4 lands first, then 3.4 and 4.3, then Tasks 3 and 4 complete, then 5.2's first full run.
+
+**Forks I could not settle, and whose call each is**
+1. **Kenya's optional provider read** (`_ = EmptyView().<name>Theme(.<case>)` per case, +3 reads at U6): not folded, because it is not in the ruling and has no Android counterpart. Kenya's call as the iOS lane's owner, with Data on whether Android matches; not Peter's unless they disagree.
+2. **The read counts differ by platform.** iOS counts theme-instance and product reads in `n` and `m` (481 = 213 + 178 + 33 + 56 + 1); Android counts index names only (design § 2, Data). Both lines say "index names". A consistency flag for Kenya and Data, filed in design § 16; I do not judge which is right.
+3. **Duplicate file names.** iOS drops a packaged file whose name a generated file has (its `selectFiles`); Android now fails naming both paths. Req 2.4 holds either way. Kenya and Data say whether the platforms should match.
+4. **Kotlin-keyword product keys**: Ada's call (design § 16).
+5. **The default-name pair** `DesignerPunkTheme(…)` / `data class DesignerPunkTheme`: Task 11 compiles it once; a rename, if needed, is Ada's and Data's.
+6. **Refuse or skip a composite**: Ada's, in Task 11, under Req 10.4; Peter's only if it breaks a supported consumer.
+7. **The per-run check's placement** (U1 build, U6 read): Ada, Kenya and Data confirm or move it.
+8. **Stacy's Task 5 baseline criterion** reached me by relay; no committed text of hers carries it. Stacy confirms the wording.
+9. **The iOS `gen:product/…` key path**: Data verified Android; Kenya confirms iOS.
+
+**Who should review what**
+- [@ADA] Blocks 1a–5 as spliced, departures 1–9 above; Req 4.1 and 5.6 as amended; Task 11 (the comparison test in your row, the default-name case, the composite decision); Task 14's four new criteria and 14.6; § 16's Kotlin-keyword row. → design.md § 4, § 10; tasks.md Tasks 11, 14 -- [THURGOOD R6]
+- [@KENYA] Task 3 (your three criteria, the per-run check, 3.4, departures 10–12); the implicit-member rule and (h) as spliced; Task 11's iOS family criterion; Task 16's iOS line; forks 1–3 and 9. → tasks.md Tasks 3, 11, 16; design.md § 4 -- [THURGOOD R6]
+- [@DATA] Task 4 (your criteria, departure 13, 4.3); design § 2 as spliced; the default-name text in § 4; Decision 6 condition 3; Task 11's Android family criterion; Task 16's Android line; forks 1–3 and 5. → tasks.md Tasks 4, 11, 16, Decision 6; design.md §§ 2, 4 -- [THURGOOD R6]
+- [@LINA] Task 11's L1 and L2 as spliced, and my ruling on your note 2. → tasks.md Task 11; design.md § 4, "The shared harness module" -- [THURGOOD R6]
+- [@SPARKY] The web half of the single-mode rule as applied, and Task 14's web criterion and 14.6. → design.md § 4, "The single-mode rule"; tasks.md Task 14 -- [THURGOOD R6]
+- [@STACY] LENS read: the new criteria in Tasks 3, 4, 5, 11 and 14, the Decision 6 condition 3 text, and fork 8. → tasks.md -- [THURGOOD R6]
+- [@LEONARDO] Your four conditions in design § 4, "Product-token names and access". → design.md § 4 -- [THURGOOD R6]
+
+#### [ADA R2] — tasks amendment 3 input: Ada's rule text for the splice (design § 4 and § 10, blocks 1a–5)
+
+Spliced byte for byte from the seat's scratch input (`ada-rule-text.md`), inside the fence so its headings do not join this file's outline.
+
+~~~~markdown
+# Spec 129 tasks/design amendment 3: Ada's rule text for the splice
+
+Author: Ada (Rosetta, owner of the emitter). Scratch only. Thurgood splices each block byte for byte. Each block's text starts after its `---8<---` line and ends before the next `--->8---` line. The headings and anchor notes outside those markers are not design text.
+
+Verified against source at `233e04bf1` (`git diff --quiet 233e04bf1 HEAD -- src/` is clean on the amend3 branch at `cbd444c88`). Peter's words are quoted from:
+- `evidence/2026-11-06-peter-rulings-theme-and-downloads.md` (branch `chore/129-rulings-2026-11-06`, PR #702): "4 combine, 5 U9, 6 (b), 7 yes; downloads approved", received 2026-11-06T22:38:12Z;
+- `evidence/2026-11-06-peter-rulings-round-3.md` (amend3, `cbd444c88`): "A enum, B Thurgood, C confirmed, D yes; merges done", received 2026-11-06T23:31:58Z;
+- the orchestrator's relay of 2026-11-06T23:37:03Z: "fall back to base". **That ruling has no committed record yet.** Block 3 cites it as `evidence/2026-11-06-peter-rulings-single-mode.md`, a placeholder path. Before the splice, the orchestrator commits the record and Thurgood puts its real path into block 3.
+
+---
+
+## Block 1a: the theme-instance rule
+
+**Goes in**: design § 4, as a new paragraph group headed **The theme-instance rule**. It goes right after the bullet list under "**The adopter's product name** goes on the instances and on the provider:", which ends with the "**Android provider …**" bullet and its sub-bullet. It goes before "**Q13, the access form for static colours: …**". (Block 2 replaces the two provider bullets in that list; block 1a follows the list as block 2 leaves it.)
+
+---8<---
+**The theme-instance rule** *(Amended 2026-11-06, tasks amendment 3, under Peter's ruling 4, "4 combine", and ruling 5, "5 U9", received 2026-11-06T22:38:12Z (`evidence/2026-11-06-peter-rulings-theme-and-downloads.md`). The rule is Ada's, as the emitter's owner. Kenya, Data, Lina and Leonardo were consulted in cross-read round 3. Prior text at `233e04bf1`: the instances were given only by example, "base light and dark, WCAG light and dark".)* The generator emits these theme instances and no others, and both probes read exactly these.
+
+1. **Four fixed instances, always.**
+   - The four are `baseLight`, `baseDark`, `wcagLight` and `wcagDark` (Kotlin `BaseLight`, `BaseDark`, `WcagLight`, `WcagDark`).
+   - They are emitted whatever the config registers, in local mode and in package mode.
+   - In local mode, each override map they apply comes from where § 10's registration-keyed bridge says:
+     - the adopter's file, for a map the config registers;
+     - the package's built-in file, with the bridge warning, for a map it does not.
+   - No config can remove one of the four through 129. The set is re-ruled at 17.0.0, when an unregistered built-in is no longer applied (§ 10, "Retirement").
+2. **Three reserved names, each with its mode semantics.**
+   - **`base`** is the theme with no overrides. It is never registered. `baseLight` and `baseDark` are the base light and dark contexts.
+   - **`dark`** is not a theme. It is the base theme's dark map, because dark is a mode (Spec 080).
+     - It registers with mode `dark` only.
+     - It adds no instance. Its overrides form `baseDark`, and they are also the first layer of `wcagDark`.
+   - **`wcag`** registers with mode `light`, `dark` or `both`, or in § 10's `{ light, dark }` form.
+     - It adds no instance.
+     - Its light map forms `wcagLight`. Its dark map, the `dark-wcag` map, is the top layer of `wcagDark`.
+   - **The WCAG dark composition.** `wcagDark` is the base dark context with three maps applied in order, the later map winning:
+     1. `dark`;
+     2. `wcag` light;
+     3. `wcag` dark (`dark-wcag`).
+
+     This is `src/generators/generateTokenFiles.ts` L195 at `233e04bf1`: `'dark-wcag': { ...darkSemanticOverrides, ...wcagSemanticOverrides, ...darkWcagSemanticOverrides }`.
+     - Task 14 keeps this composition when the maps come from the config. Each layer is read from where the bridge says, and the order does not change.
+     - So take a config that registers `wcag` in mode `light` only, as `init` writes it today. Its `wcagDark` is not plain base dark:
+       - its own WCAG light overrides sit over the dark map;
+       - the package's built-in `dark-wcag` map sits on top, and the bridge warning names it.
+3. **Every other registered theme adds one instance per mode it covers.**
+   - Mode `light` adds `<t>Light`, mode `dark` adds `<t>Dark`, and mode `both` or the `{ light, dark }` form adds both.
+   - Its light instance is the base light context with its light map applied.
+   - Its dark instance is the base dark context, which already carries the `dark` map, with its own dark map applied. The 094 emitter falls back to the same contexts (`src/generators/TokenFileGenerator.ts` L1223–1235 at `233e04bf1`).
+   - No instance is emitted for a mode the theme does not cover. What its family shows in that scheme is the single-mode rule (below).
+   - **When these first appear.** A registered custom theme first reaches native output at U9, when `generate` first builds the registry from the config's `themes` (§ 10). Until then, the config's themes print "registered, not applied yet", and U6 emits the four fixed instances only.
+4. **Names.** An instance name is the theme name's words followed by the mode suffix.
+   - **The words** are the theme name split at every `-` and `_`.
+     - Swift writes them lower-camel: `high-contrast` gives `highContrastLight`.
+     - Kotlin writes them Pascal: `high-contrast` gives `HighContrastLight`.
+     - Only the first letter of each word changes case, and every other letter stays as written. So `highContrast` is one word, and gives `highContrastLight` and `HighContrastLight`.
+   - **The suffix** `Light` or `Dark` is always written, for a theme of one mode too.
+     - Today's emitter writes a single-mode theme with no suffix: Swift `<Name><T>` (`TokenFileGenerator.ts` L1245) and Kotlin `<T>` (L1389), with the name only capitalised (L1216, L1371). Task 11 changes both.
+     - Why the suffix is always written:
+       - an instance name is then never a bare word that could be a language keyword;
+       - it never equals a reserved name;
+       - it does not change when the theme later gains its other mode.
+   - **Every name derived from an instance uses this name**: the holder member, the backing Swift struct (`<Name>` + the Pascal instance name + `Theme`, for example `<Name>HighContrastLightTheme`) and the iOS implicit members (Kenya's idiom, one per instance).
+5. **Refusals.** `generate` refuses the config, and names the config entry, when any of these holds:
+   - (a) A theme name:
+     - is empty;
+     - contains a character other than an ASCII letter, a digit, `-` or `_`;
+     - has an empty word, from a leading, trailing or doubled `-` or `_`;
+     - or has a first word that begins with a digit.
+
+     So every derived name is an identifier on both platforms.
+   - (b) A theme is named `base`.
+   - (c) `dark` is registered with a mode other than `dark`, or in the `{ light, dark }` form.
+   - (d) A name matches `base`, `dark` or `wcag` when letter case and separators are ignored, but is not spelled exactly that way (for example `WCAG`, `Dark`, `Base`). Such an entry either collides with a fixed instance or misses the reserved meaning its author most likely intended.
+   - (e) Two themes give the same Pascal words when letter case is ignored (for example `high-contrast`, `high_contrast` and `highContrast`). The message names both entries.
+   - (f) A name is registered twice. `ThemeRegistry.register` already throws "Theme '<name>' is already registered" (`src/themes/ThemeRegistry.ts` L47–48), and the config first reaches that check at U9.
+   - (g) A theme's mode is not `light`, `dark` or `both`.
+   - (h) A theme's Swift family case would be `self` or `init`. Backticks cannot make those usable after a dot (block 2's theme family).
+
+   **Where the refusals land** (Peter's ruling 5, "5 U9"):
+   - Every refusal above is a `generate` refusal of a consumer's config. Each lands in U9 (Task 14), the unit where a config theme first reaches output. Before U9, nothing refuses a config theme, because a config theme reaches no output.
+   - Each refusal is measured first, under Req 10.4. Task 14 runs each refusal against the configs it can read: test01, a scratch `init` from a 15.x-born packed install, and the repository's fixtures. Then:
+     - either no supported consumer is affected, and the refusal ships in U9's release;
+     - or the refusal ships at 17.0.0. Until then, `generate` prints the refusal's message as a warning and emits no native instance or family case for that theme. That is what the theme had before 129, so no adopter loses output it had.
+   - The shared harness module applies the same checks to the harness's own consumer config from Task 5. That is a check on our fixture, not a refusal of a consumer, so Req 10.4 does not apply to it.
+
+**What checks the rule** (Peter's ruling 4, "4 combine"):
+- the shared harness module holds the rule for both probes (below);
+- Task 11's exact-set emitter tests assert that the emitted instance set equals this rule's, for each case in items 1–4 and each refusal in item 5;
+- each harness run checks the instances the generated code declares against the probe's declared instances.
+--->8---
+
+---
+
+## Block 1b: the holder sentence in § 4
+
+**Goes in**: design § 4, the "**Holder**" sub-bullet under "**The adopter's product name** goes on the instances and on the provider:". It replaces that sub-bullet's sentence "There is one member per registered theme and mode (Req 4.1)." Nothing else in the sub-bullet changes.
+
+---8<---
+There is one member per instance of the theme-instance rule below (Req 4.1). *(Amended 2026-11-06, tasks amendment 3; prior text at `233e04bf1`: "There is one member per registered theme and mode (Req 4.1).")*
+--->8---
+
+---
+
+## Block 1c: § 10's "Effects" line on item (i)
+
+**Goes in**: design § 10, "**Effects**:", first bullet. It replaces the whole bullet that begins "**On item (i)**: one native instance per (config theme, mode)."
+
+---8<---
+- **On item (i)**: the native instances are those of § 4's theme-instance rule. They are the four fixed instances, and from U9 one more per mode that each non-reserved registered theme covers. The theme's members do not change with which themes are registered (§ 4). *(Amended 2026-11-06, tasks amendment 3, by Ada, whose line it was. "One native instance per (config theme, mode)" made the `dark` entry an instance of its own, duplicating base dark, and it gave a config that registers `wcag` light only no `wcagDark`. Prior text at `233e04bf1`.)*
+--->8---
+
+---
+
+## Block 2: the 6(b) theme family and the two providers
+
+**Goes in**: design § 4, under "**The adopter's product name** goes on the instances and on the provider:". It replaces two whole bullets:
+- the "**iOS provider (Kenya's call, KENYA R2)**" bullet;
+- the "**Android provider (Data's call, DATA R2)**" bullet, with its sub-bullet "ADA R2 and LINA R2 had followed Data's R1 deferral …".
+
+The four bullets below take their place, in this order.
+
+---8<---
+- **The theme family (6(b))** *(Amended 2026-11-06, tasks amendment 3, under Peter's ruling 6, "6 (b)", received 2026-11-06T22:38:12Z (`evidence/2026-11-06-peter-rulings-theme-and-downloads.md`), and his "A enum", received 2026-11-06T23:31:58Z (`evidence/2026-11-06-peter-rulings-round-3.md`). The shape is Kenya's on iOS and Data's on Android. Prior text at `233e04bf1`: the providers took no theme choice, `View.<name>Theme()` and `<Name>Theme(darkTheme = isSystemInDarkTheme()) { content }`.)*
+  - `generate` writes one family type per consumer, `<Name>ThemeFamily`.
+  - **Its cases**: `base`, `wcag`, then one case per other registered theme, in config order.
+    - There is no `dark` case. Dark is a mode, and the provider takes it from the system scheme.
+    - A case name is the theme's words with no mode suffix (the theme-instance rule, item 4): Swift lower-camel (`.highContrast`), Kotlin Pascal (`HighContrast`).
+    - Until U9 the family has exactly `base` and `wcag` (the theme-instance rule, item 3).
+  - **Swift**: `public enum <Name>ThemeFamily: Sendable, Hashable, CaseIterable`.
+    - A public enum is not implicitly `Sendable` outside its module, so the clause is written out.
+    - A case that is a Swift reserved word is declared in backticks (`` case `default` ``) and is used as `.default`. `self` and `init` are refused (the theme-instance rule, item 5 (h)).
+  - **Kotlin**: `enum class <Name>ThemeFamily { Base, Wcag, … }` in `package com.designerpunk.tokens`. A Pascal entry cannot collide with a Kotlin keyword.
+  - **The default is `base`** on both platforms.
+  - **`CaseIterable` stays.** It was checked against Leonardo's picker point (LEONARDO, cross-read round 3): the family is a closed set, and an app must be able to list it.
+    - `allCases` lets an adopter fill a `Picker` or a settings list without restating the theme names. That is the closed set Leonardo asked the enum to give.
+    - On Kotlin nothing is added, because every `enum class` has `entries`.
+    - **Its cost**: the order of `allCases` can be observed. It is config order, so adding a theme appends a case, which is additive.
+    - **Not in 129**: a `String` raw value, which `@AppStorage` needs to store a case directly. It would make each theme name a stored value, a persistence contract adopters' saved data then depends on. Adding it later is additive. It is Kenya's call, and it is not taken here. On Kotlin an entry's `name` already serves this purpose, so the two platforms differ here until Kenya decides.
+- **iOS provider** (Kenya's shape): `public extension View { func <name>Theme(_ family: <Name>ThemeFamily = .base) -> some View }`, where `<name>` is the lower-camel form of `<Name>`.
+  - It keeps `@Environment(\.colorScheme)`. A generated `ViewModifier` reads the scheme and sets `\.dpTheme` to the family's instance for that scheme.
+  - `.<name>Theme()` still means base, so a call written to the earlier text is unchanged.
+  - A WCAG adopter writes `.<name>Theme(.wcag)` and keeps automatic light/dark switching. That is what ruling 6 asked for.
+  - It is verified to compile. Switching at run time is Spec 132's D5.
+- **Android provider** (Data's shape): `@Composable fun <Name>Theme(family: <Name>ThemeFamily = <Name>ThemeFamily.Base, darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit)`.
+  - It provides `LocalDPTheme` with the family's instance for `darkTheme`.
+  - `<Name>Theme { … }` still means base.
+  - A WCAG adopter writes `<Name>Theme(family = <Name>ThemeFamily.Wcag) { … }`, or `family = Wcag` with the entry imported.
+  - `darkTheme` stays, so a caller can force a mode.
+  - `LocalDPTheme`'s default stays `<Name>Themes.BaseLight` (O-6, below).
+  - With no aliases, it collides with nothing.
+- **Selection**: inside the generated provider, a `switch` on Swift and a `when` on Kotlin. It is not a public function, so 6(b) adds no API beyond the family type and the parameter.
+
+  | Family | Light scheme | Dark scheme |
+  |---|---|---|
+  | `base` | `baseLight` | `baseDark` |
+  | `wcag` | `wcagLight` | `wcagDark` |
+  | a registered theme of mode `both` | `<t>Light` | `<t>Dark` |
+  | a registered theme of one mode | the single-mode rule, below | the single-mode rule, below |
+
+  - `wcag` always has both instances (the theme-instance rule, item 1), whatever mode its config entry declares, so the single-mode rule never applies to it.
+  - **Why the enum** (Peter's "A enum"): it follows Leonardo's dissent and the orchestrator's lean. Ada, Kenya and Data had leaned to a light/dark pair of instances.
+    - The WCAG case is one argument.
+    - A swapped light/dark pair cannot be written.
+    - The closed set drives a picker.
+  - **Residual**:
+    - At 132's support claim, every theme name in the config becomes a public case name. Renaming or removing a theme then breaks the source of any code that names its case.
+    - The family has to say what a single-mode theme shows in its other scheme, which a pair of instances never had to say.
+--->8---
+
+---
+
+## Block 3: the single-mode rule
+
+**Goes in**: design § 4, right after block 2's "**Selection**" bullet, its table and its sub-bullets. It is the referent of the table's last row.
+
+---8<---
+- **The single-mode rule: a theme of one mode falls back to base** *(Amended 2026-11-06, tasks amendment 3, under Peter's ruling, "fall back to base", received 2026-11-06T23:37:03Z (`evidence/2026-11-06-peter-rulings-single-mode.md`). This was Ada's and Leonardo's position. Kenya and Data held that such a theme always shows its one mode, with `wcag` and `dark` exempt. Prior text at `233e04bf1`: none; the providers took no family.)*
+  - A theme's `mode` says in which scheme its overrides apply. In the other scheme, its family shows that scheme's base instance:
+    - a theme of mode `light` shows `<t>Light` in the light scheme and `baseDark` in the dark scheme;
+    - a theme of mode `dark` shows `baseLight` in the light scheme and `<t>Dark` in the dark scheme.
+  - No instance is emitted for the uncovered mode (the theme-instance rule, item 3).
+  - An adopter who wants one look in both schemes registers the theme in mode `both`, with the same map for each mode.
+  - `wcag` is not touched by this rule (block 2, "Selection").
+  - **Web follows the same meaning** at U9, when a registered custom theme first emits as `:root[data-theme="<name>"]` (§ 10, "Effects").
+    - The 094 web emitter does not follow it yet. It has no caller (`generateThemeOverrideBlocks`, `TokenFileGenerator.ts` L1044). It writes a theme of mode `light` as static light values (L1120–1122). It writes a theme of mode `dark` as static dark values under `color-scheme: dark` (L1109–1111, L1117–1119), which forces the page dark.
+    - Task 14 changes that emitter. A theme of one mode emits `light-dark()` with base in its uncovered mode: `light-dark(<its value>, <base dark value>)` for mode `light`, and `light-dark(<base light value>, <its value>)` for mode `dark`, with no `color-scheme` line.
+    - Sparky confirms the web half in Task 14.
+  - **What it costs adopters**:
+    - A light-only custom theme shows base dark in the dark scheme, so its brand colours are absent at night.
+    - A dark-only custom theme shows base light in the light scheme.
+    - In both cases nothing tells the adopter. Only a run or a screenshot shows it.
+    - An adopter who wanted the theme's one mode in every scheme must register it in mode `both`, or force the scheme with `.preferredColorScheme` on iOS or `darkTheme` on Android.
+--->8---
+
+---
+
+## Block 4: product-token names and access
+
+**Goes in**: design § 4, as a new paragraph group headed **Product-token names and access**. It goes after the "**Interfaces**:" bullet list, which ends "… is Thurgood's, owed after this file merges (§ 15).", and before block 5. Block 5 closes § 4, right before "### 5. The native type table".
+
+---8<---
+**Product-token names and access** *(Amended 2026-11-06, tasks amendment 3, under Peter's ruling 7, "7 yes", received 2026-11-06T22:38:12Z (`evidence/2026-11-06-peter-rulings-theme-and-downloads.md`): the iOS probe reads product tokens, as Android's does. Ada gave the rules from the generator source as the owner of product-token generation. Leonardo's conditions, given after the ruling, are carried in. Line numbers are at `233e04bf1`. Prior text at `233e04bf1`: none.)*
+
+**What `generate` reads.**
+- It reads every `*.yaml` file directly in the config's `productTokens` folder, with no subfolders (`src/build/product/ProductTokenGenerator.ts` L78). That folder is resolved against the config's folder (`src/config/ConfigLoader.ts` L141; `src/cli/generateProductTokens.ts` L30).
+- It writes `<output>/product/ProductTokens.ios.swift` and `ProductTokens.android.kt` (`generateProductTokens.ts` L27, L57–58).
+- A file that does not parse, or that has no `tokens` key, contributes no category (`ProductTokenGenerator.ts` L118–124).
+
+**The names.**
+- **Category** = the file name without `.yaml` (L126).
+  - The YAML's own `category:` field is not read.
+  - In type names, the category is written in PascalCase split at `-` only (`SwiftEmitter.ts` L90–92, `KotlinEmitter.ts` L82–84). Each segment's first letter is uppercased and the rest is kept as written, so `brand-colors` gives `BrandColors` and `brand_colors` gives `Brand_colors`.
+  - This splits differently from the theme-instance rule, which splits at `-` and `_`. The difference is the generator's behaviour at `233e04bf1`, and 129 does not change it.
+- **Keys** are written as the YAML has them, in file order (`ProductTokenGenerator.ts` L130; `SwiftEmitter.ts` L39; `KotlinEmitter.ts` L52, L68–78).
+- **Platforms filter.**
+  - A token's `platforms` list decides which files it is emitted to. An absent list means all three (`ProductTokenGenerator.ts` L58, L131).
+  - Each native emitter keeps only the tokens whose list names its platform (`SwiftEmitter.ts` L14–17, `KotlinEmitter.ts` L14–17).
+  - An explicit empty list emits the token nowhere.
+  - A category left with no tokens for a platform emits nothing on that platform.
+- **Swift.**
+  - A static token is `Product<Cat>.<key>`, a `public static let` in `public enum Product<Cat>` (L35–39).
+  - A theme member is `product<Cat><Key>`, a `var … : Color { self.<member> }` on the theme protocol's extension (L52–56):
+    - `<Key>` is the key with only its first letter uppercased (L94–95);
+    - `<member>` is the index's iOS name for the referenced token, with `theme.` removed (L55).
+- **Kotlin.**
+  - Every token of a category is a member of `object Product<Cat>`, in `package com.designerpunk.product.tokens` (L24, L47–48), named by its key alone.
+  - A static token is a `val` (L66–78).
+  - A theme member is `val <key>: Color` with a `@Composable @ReadOnlyComposable get()` that reads `<local>.current.<member>` (L50–53), where `<member>` is the index's Android name with `theme.` removed.
+
+**The access rule from U6 (the `theme.` rule).**
+- A product token is a theme member on a platform exactly when it has a `ref` and the index entry it resolves to has a `theme.` name on that platform (Req 5.6; this section's "probe's theme list and name roots", O-5). Otherwise it is static:
+  - `DesignTokens.<name>` for a `ref`;
+  - a literal for a value.
+- The theme member is written on the fixed binding:
+  - Swift: `public extension DesignerPunkTheme`;
+  - Kotlin: `LocalDPTheme` (this section's "Interfaces").
+- A probe reads it as follows:
+  - **Swift**: once through an `any DesignerPunkTheme` value taken from `\.dpTheme`. The member is the protocol extension's, so it is the same on every instance.
+  - **Kotlin**: as `Product<Cat>.<key>` inside `@Composable`.
+  - **Static tokens**: as `Product<Cat>.<key>`, on both platforms.
+- **Before U6 the generator does something else.**
+  - It picks theme or static by the index's base-scoped `themeVarying` flag (`ProductTokenGenerator.ts` L139). That flag misses the five WCAG-only colours.
+  - It extends `<Name>Theme` on Swift (`SwiftEmitter.ts` L12, L52).
+  - It reads `Local<ABBR>Theme` on Kotlin (`KotlinEmitter.ts` L12).
+  - A `ref` the index cannot resolve is still emitted, with a fallback value, and `generate` warns (`ProductTokenGenerator.ts` L140–142; `generateProductTokens.ts` L62–66).
+
+**The shared harness module encodes the rule from U6, not the generator's behaviour before U6.**
+- Before U6, each place where the generated code differs from the module is a tagged entry on the token lists, not a change to the module.
+  - It is tagged to row 2's record for the theme getters, or to row 13's record for the composite and WCAG-only references, by cause (Req 4.8).
+  - The entries are removed in U6's diff (Task 11).
+- The composite token leaves the harness fixture in Task 11, under Peter's ruling "C confirmed" (`evidence/2026-11-06-peter-rulings-round-3.md`), so the module carries no composite rule and the probe applies no filter.
+
+**Leonardo's conditions** (given after ruling 7; conditions of his no-objection):
+1. The probe reads product tokens only from the configured `productTokens` folder, through `harness-consumer.json`. It never reads the product MCP or a screen specification.
+2. The probe reads the names the generator writes, as stated above. It never names a product token in a form of its own or a form taken from documentation.
+3. Until item (i) emits, the probe's product-token entries are tagged, as stated above.
+4. The harness fixture (`harness/fixtures/product-tokens/**`) is a test input chosen to exercise the generator. It is never precedent for product tokens. Product tokens are governed by Product-Token-Governance, and no document cites the fixture as an example of practice.
+--->8---
+
+---
+
+## Block 5: the shared harness module
+
+**Goes in**: design § 4, as its last line, after block 4 and right before "### 5. The native type table".
+
+---8<---
+**The shared harness module** *(Amended 2026-11-06, tasks amendment 3, under Peter's "B Thurgood", received 2026-11-06T23:31:58Z (`evidence/2026-11-06-peter-rulings-round-3.md`); prior text at `233e04bf1`: none.)*
+- `scripts/harness/native-rules.ts` holds the theme-instance rule, the theme family's cases and the product-token names and access rule above, as pure functions, with their test.
+- It is an independent copy of these rules, written from this design text. Thurgood owns and authors it, as a Task 5 subtask done first.
+- `probe-swift.ts` and `probe-kotlin.ts` import it and keep no local copy.
+- The generator never imports it, and nothing under `src/` imports `scripts/harness/`. That separation is what lets Task 11's exact-set tests check one copy against the other.
+- Ada is consulted on every rule change. Kenya and Data each review their own platform's rules.
+--->8---
+~~~~
+
+#### [LINA R2] — tasks amendment 3 input: Lina's Task 11 exact-set criteria (L1, L2) and her notes
+
+Spliced byte for byte from the seat's scratch input (`lina-items.md`), inside the fence so its headings do not join this file's outline.
+
+~~~~markdown
+# Spec 129 tasks amendment 3: Lina's Task 11 exact-set criteria
+
+Author: Lina (Stemma, consulted seat). Scratch only; no repo edit. For Thurgood to splice byte for byte. Each block's text starts after its `---8<---` line and ends before the next `--->8---` line. Text outside the markers is not criterion text.
+
+Read against: `origin/main` after #702 (`baaefe176`); `refs/remotes/origin/task/129-tasks-amendment-3` (round-3 rulings record, Task 11 as it stands there); Ada's `ada-rule-text.md` blocks 1a, 2, 3 and 5. Rulings applied: "4 combine" (exact-set tests in Task 11), "A enum" (`<Name>ThemeFamily`), "fall back to base" (single-mode rule).
+
+Verified premises:
+- `init` writes `{ name: 'dark', mode: 'dark' }` and `{ name: 'wcag', mode: 'light' }` (`src/cli/init.ts` L764–765 on `origin/main`). That is config S below.
+- No component, preview, component README or example names a theme instance, the holder, a provider or a family. Every component reads `\.dpTheme` (26 iOS files) or `LocalDPTheme.current` (25 Android files), and the 11 `VisualStateStyles.swift` sites take `any DesignerPunkTheme`. So these criteria hold the components constructible under every instance through the shared type and the default. No component file changes because of them.
+
+---
+
+## Block L1: Task 11 success criteria, the exact-set emitter tests
+
+**Goes in**: `tasks.md`, Task 11 "**Success Criteria:**", right after the bullet that begins "`SwiftThemeTypes.test.ts` and `KotlinThemeTypes.test.ts` are re-baselined …". The two configs are defined once in the first bullet, and the bullets after it use their letters.
+
+---8<---
+- The exact-set emitter tests (design § 4, "The theme-instance rule", "What checks the rule") are in `SwiftThemeTypes.test.ts` and `KotlinThemeTypes.test.ts`. Each expected list is written out as a literal in the test, not computed. They run on two configs:
+  - **Config S**, the themes `init` writes: `dark` in mode `dark`, then `wcag` in mode `light`.
+  - **Config C**: `wcag` in mode `both`, then `high-contrast` in mode `both`, `brand` in mode `light` and `default` in mode `dark`. `dark` is not registered.
+
+  Config C's custom themes reach the emitter at U9 (design § 4, item 3), so in Task 11 its tests pass the themes straight to the emitter, not through `generate`.
+- **Config S, instance set.** On iOS, the holder's members are exactly `baseLight`, `baseDark`, `wcagLight` and `wcagDark`, in that order. On Android they are exactly `BaseLight`, `BaseDark`, `WcagLight` and `WcagDark`. The test fails on an extra member, a missing member or a member in the wrong order. It names `darkDark`, `Dark` and an unsuffixed `Wcag` as members that must not appear.
+- **Config C, instance set and names.** On iOS, the holder's members are exactly `baseLight`, `baseDark`, `wcagLight`, `wcagDark`, `highContrastLight`, `highContrastDark`, `brandLight` and `defaultDark`, in that order. On Android they are the Pascal forms: `BaseLight`, `BaseDark`, `WcagLight`, `WcagDark`, `HighContrastLight`, `HighContrastDark`, `BrandLight` and `DefaultDark`. No `brandDark`, `defaultLight`, `darkDark` or unsuffixed `Brand` or `Default` is emitted.
+- **At U6, a config's custom themes reach no native output.** `generate` is run on config C at U6's head. On each platform it emits the four fixed instances and the family cases `base` and `wcag` only, and it prints "registered, not applied yet" for `high-contrast`, `brand` and `default`.
+- **Shared type, both configs.** Every iOS holder member is declared `any DesignerPunkTheme`. Each one is backed by a `public struct <Name><Pascal instance name>Theme: DesignerPunkTheme, Equatable` (for example `<Name>HighContrastLightTheme`), and has one implicit member (Kenya's idiom). Every Android holder member is a `DesignerPunkTheme` value. The test asserts each declaration form on every member of each config's list, so `.environment(\.dpTheme, …)`, `LocalDPTheme provides …` and the 11 `any DesignerPunkTheme` sites in `VisualStateStyles.swift` accept every instance.
+- **Every member, resolved, with the same-mode fallback (config C, fixture maps).** Every instance declares every member of the theme, with a resolved value. Where a theme's map does not override a member, the instance takes the value of the base instance of the same mode: `brandLight` takes `baseLight`'s, and `defaultDark` takes `baseDark`'s, which carries the `dark` map. `wcagDark` is the base dark context with `dark`, then `wcag` light, then `wcag` dark applied, the later map winning. The test asserts this on a fixture member that each of the three maps overrides, and on one that only `dark` and `wcag` light override.
+- **The family type.** On iOS, `public enum <Name>ThemeFamily: Sendable, Hashable, CaseIterable` has exactly these cases, in this order:
+  - config S: `base` and `wcag`;
+  - config C: `base`, `wcag`, `highContrast`, `brand` and `` `default` ``. The last is declared in backticks.
+
+  On Android, `enum class <Name>ThemeFamily` has exactly `Base` and `Wcag` for config S, and `Base`, `Wcag`, `HighContrast`, `Brand` and `Default` for config C. No family has a `dark` case.
+- **Selection and the single-mode fallback (both configs).** The generated provider maps each family case and scheme to the instance in design § 4's "Selection" table and its single-mode rule ("fall back to base"). On iOS this is `View.<name>Theme(_ family: <Name>ThemeFamily = .base)`. On Android it is `<Name>Theme(family = <Name>ThemeFamily.Base, darkTheme = isSystemInDarkTheme()) { content }`. The test asserts every pair:
+  - config C: `base` and `wcag` give their light and dark instances; `highContrast` gives `highContrastLight` and `highContrastDark`; `brand` gives `brandLight` and `baseDark`; `default` gives `baseLight` and `defaultDark`;
+  - config S: `wcag` in the dark scheme gives `wcagDark`, not `baseDark`, although its config entry is mode `light`.
+- **Defaults (both configs).** On iOS, `DPThemeKey.defaultValue` is the base light instance, and `.<name>Theme()` with no argument selects `base`. On Android, `LocalDPTheme` is `staticCompositionLocalOf { <Name>Themes.BaseLight }`, and `<Name>Theme { … }` with no `family` argument selects `Base`. That keeps the 31 component previews in 20 files rendering without a provider.
+--->8---
+
+---
+
+## Block L2: existing Task 11 criteria that now contradict the rulings
+
+**Goes in**: `tasks.md`, Task 11 "**Success Criteria:**". Each replaces the whole existing bullet named in its heading. My wording; Ada owns the emitter, so she may reword. If she does, the block L1 cross-references must still resolve.
+
+**Replaces** the bullet that begins "On iOS, `generate` emits `public protocol DesignerPunkTheme: Sendable` …":
+
+---8<---
+- On iOS, `generate` emits `public protocol DesignerPunkTheme: Sendable`, `DPThemeKey`, `EnvironmentValues.dpTheme`, the `<Name>Themes` holder with one member per instance of design § 4's theme-instance rule, one conforming `Equatable` struct per instance, the implicit members, `<Name>ThemeFamily` and `View.<name>Theme(_ family: <Name>ThemeFamily = .base)`, and a generator test asserts the `: Sendable` clause on the protocol and on the family.
+--->8---
+
+**Replaces** the bullet that begins "On Android, `generate` emits `data class DesignerPunkTheme` …":
+
+---8<---
+- On Android, `generate` emits `data class DesignerPunkTheme`, `LocalDPTheme = staticCompositionLocalOf { <Name>Themes.BaseLight }`, the `<Name>Themes` holder with one member per instance of design § 4's theme-instance rule, `enum class <Name>ThemeFamily` and `<Name>Theme(family: <Name>ThemeFamily = <Name>ThemeFamily.Base, darkTheme: Boolean = isSystemInDarkTheme(), content)`, in `package com.designerpunk.tokens`.
+--->8---
+
+---
+
+## Notes for the orchestrator, outside the splice (my seat's reads; not criterion text)
+
+1. **Ada's block 1a, "What checks the rule", second bullet, cannot be met in Task 11 as written.** It says Task 11's exact-set tests cover "each refusal in item 5". But under ruling 5 ("5 U9") the refusals land in Task 14, and before U9 nothing refuses a config theme (block 1a, item 5). I'd amend that bullet to read "items 1–4 in Task 11, and each refusal of item 5 in Task 14", and give Task 14 a matching criterion. That is Ada's text to change, and the refusal tests are hers to name.
+2. **Block 5's "check one copy against the other" needs a home.** Block 5 says nothing under `src/` imports `scripts/harness/`, and the emitter tests live in `src/generators/__tests__/`. So the L1 tests check the emitter against literal lists, not against `native-rules.ts`. A test that runs both the emitter and the module on configs S and C and compares them would have to live under `scripts/harness/__tests__/`. That folder is Thurgood's and is not in Task 11's Primary Artifacts. As written, the comparison is made by the per-run generated-code check (ruling 4's third safeguard), and the literal lists are a third, example-grain copy. The fork, stated not picked: add that test under Thurgood's Task 5 subtask, or say in block 5 that the per-run check is the comparison. Thurgood's and Ada's call.
+3. **No component-tier change follows from these rulings.** Task 12's two-sided theme-read guard checks component `theme.` reads against the protocol's members, and the instance rule and the family do not change those. No component README or example shows a provider. When Spec 132 documents adopter theming, the family call (`.<name>Theme(.wcag)` / `family = …Wcag`) is the example to use, never an instance or `.environment(\.dpTheme, …)`.
+4. **Picking `default` in config C is deliberate.** It is the one name that exercises the Swift backtick case (block 2). A reader may confuse it with the family's default, `base`. If Ada prefers a clearer name, any Swift reserved word other than `self` or `init` serves.
+5. **The single-mode cost, from the component side.** Under "fall back to base", a component under `brand` in the dark scheme renders with base dark colours. That is correct by the ruling, but no harness or Jest test sees it visually. It reaches the adopter only through 132's D5 run, as design § 4's O-6 residual already says for a forgotten provider. Nothing to add in 129. I name it so it is not mistaken for a component defect at 132.
+~~~~
+
+#### [KENYA R3] — tasks amendment 3 input: Kenya's items (Task 3, the iOS family, D, and her reads of Ada's text)
+
+Spliced byte for byte from the seat's scratch input (`kenya-items.md`), inside the fence so its headings do not join this file's outline.
+
+~~~~markdown
+# Tasks/design amendment 3: Kenya's items
+
+Author: Kenya. Scratch only; no repo edits. Text between `---8<---` and `--->8---` is finished text for Thurgood to splice. Everything outside the markers is a note to Thurgood. I read Ada's `ada-rule-text.md` (blocks 1a to 5) first; item 6 lists what I found wrong in it.
+
+Labels: **VERIFIED** = I ran it on this Mac (Xcode 27.2, Swift 6.4.2, target `arm64-apple-ios17.0-simulator`); **READ** = read in a file; **UNVERIFIED** = reasoning.
+
+---
+
+## 1. Task 3: the product-token criterion (481 becomes 483)
+
+**Goes in**: `tasks.md` Task 3, Success Criteria, as a new bullet after the bullet that begins "On iOS, `scripts/harness/__tests__/probe-swift.test.ts` asserts that the probe generator emits one theme read per ...". Peter's ruling 7, "7 yes" (2026-11-06T22:38:12Z).
+
+---8<---
+- On iOS, Stage P also reads the consumer's product tokens, as Android's `:probe` does *(added 2026-11-06, tasks amendment 3, under Peter's ruling 7, "7 yes", received 2026-11-06T22:38:12Z)*.
+  - **Source.** The probe reads every `*.yaml` file directly in the consumer's `productTokens` folder, with no subfolders, found through `harness-consumer.json`. It never reads the generated file, the product MCP or a screen specification.
+  - **Names and access.** The names and the static/theme rule are those of design § 4, "Product-token names and access" (the rule from U6), as `scripts/harness/native-rules.ts` states them. The probe keeps no copy of them.
+  - **Reads.** For each token whose `platforms` list is absent or names ios:
+    - a static token is read as `_ = Product<Cat>.<key>`;
+    - a theme member is read once, not once per instance, as `_ = EnvironmentValues().dpTheme.product<Cat><Key>`.
+  - **The count.** `m` and `n` both include these reads. The printed breakdown gains the field `product <p>`: `probe: read <n> of <m> index names (primitives <a>, semantics <b>, components <c>, product <p>, theme <d>×<k>, key <e>)`.
+  - **The harness consumer.** With the fixture as committed at `38d1d8ac0` (one composite `ref`, one `ref` to a WCAG-only colour), the line reads `probe: read 483 of 483 index names (primitives 213, semantics 178, components 33, product 2, theme 14×4, key 1)`. It was `481 of 481` without the product reads. After Task 11 removes the composite token from the fixture it reads `482 of 482`, with `product 1`.
+  - **Before item (i) emits**, each product-token entry that differs from the rule is a tagged entry on the token list (Req 4.8): to row 2's record for a theme getter, to row 13's record for a composite or WCAG-only reference, by cause. They are removed in U6's diff (Task 11). The probe is not changed for them.
+  - **Test.** `probe-swift.test.ts` asserts, over a fixture product folder with one file per case: a static token; a theme member (read once for any number of instances); a `platforms` list absent, naming ios, and not naming ios (no read); the category taken from the file name and not from the YAML's `category:` field; a hyphenated file name; a file in a subfolder (not read); a file with no `tokens` key (contributes none); and that `n` equals `m`.
+--->8---
+
+Note for Thurgood: the 483 figure assumes both fixture tokens are read: `actionPrimaryRef` as a theme member (it refs `color.action.primary`, whose iOS name is `theme.colorActionPrimary`) and `bodyTypographyRef` as a static (it refs the composite `typography.bodyMd`, whose iOS name is `typographyBodyMd`). I computed 481 + 2 = 483 from the local run (primitives 213, semantics 178, components 33, theme 14×4 = 56, key 1 = 481). It is the arithmetic of the criterion text, not yet a run.
+
+---
+
+## 2. Task 3: the probe imports `scripts/harness/native-rules.ts`
+
+**Goes in**: `tasks.md` Task 3, Success Criteria, as a new bullet, and a new subtask 3.4 in the subtask list. Peter's ruling 4, "4 combine", and "B Thurgood" (2026-11-06T23:31:58Z).
+
+---8<---
+- On iOS, `scripts/harness/probe-swift.ts` takes the theme-instance rule, the theme family's cases and the product-token names and access rule from `scripts/harness/native-rules.ts` (Task 5), and keeps no copy of any of them *(added 2026-11-06, tasks amendment 3, under Peter's ruling 4, "4 combine", and "B Thurgood", received 2026-11-06T23:31:58Z)*. `probe-swift.test.ts` asserts that `probe-swift.ts` defines none of `themeInstances`, `themeHolder` or a product-token naming function, that it imports the module, and that its theme reads equal the module's instances over the fixture config, once for each case in design § 4's theme-instance rule, items 1 to 4.
+
+  - [ ] 3.4 The probe imports the shared module
+    **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Kenya (Sonnet)
+    - Starts after Task 5's first subtask has put `scripts/harness/native-rules.ts` and its test on the unit branch
+    - Removes `themeInstances` and `themeHolder` from `probe-swift.ts`; the instance names change as the module states them
+    - Adds the product-token reads (the criterion above)
+    - _Requirements: 2.7, 4.2_
+--->8---
+
+Note for Thurgood: sequencing. Task 3's other work is done, and 3.4 cannot start until your module is on the branch. Task 3's parent therefore stays unticked until 3.4, and the parent's Post-Completion line waits on Task 5's module subtask. Task 3's Primary Artifacts need no change: `probe-swift.ts` and its test are already listed. The instruments block for Task 3 gets a new row for the module (MISSING until your subtask).
+
+---
+
+## 3. Notes for Thurgood, carried over from my Task 3 report
+
+1. **Lane tests live in `probe-swift.test.ts`.** `scripts/jest.config.js` has `rootDir: scripts/`, so a test under `harness/ios/` is not selected by `lane-functional-root`. The lane's helpers and a fake-`swiftc` run of both contexts are tested there. If the module test lives beside it in `scripts/harness/__tests__/`, it runs in the same lane.
+2. **A `FAIL self-test` writes no run file.** The same holds for `FAIL toolchain`, `toolchain missing` and `FAIL setup`. The comparator then has nothing to read, so the job fails at the lane step. Task 5's workflow must let the lane step fail the job, and must not make the comparator step depend on `run.json` after such a failure. A `FAIL probe` (read count) does write `run.json`, so the comparator step can run beside it (`harness/ios/README.md`).
+3. **`DesignerPunkTheme: Sendable`.** The Swift 6 token module needs the theme protocol to be `Sendable` for the one static the probe holds, and for `any DesignerPunkTheme` stored in the provider's modifier. Task 11's test asserts the `: Sendable` clause (design § 4, O-1). VERIFIED: an `any` existential of a `Sendable`-refining protocol is `Sendable` under Swift 6.
+4. **Task 11 rewrites the dormant Swift emitter, and five things disagree with it** (from my R2 theme-emission read, `inbound-from-kenya-design-2026-11-05.md` § 2 and Ada's O-7): (a) `public protocol {Name}Theme` and `defaultValue: any {Name}Theme` are not `Sendable`; (b) the colour values are written through `rgbaToSwiftUIColor` at two decimals, not through the base colour path; (c) `import` lines are written mid-file; (d) a single-mode theme is written with no `Light`/`Dark` suffix; (e) the names use the capitalised config `name` and the abbreviation, not the fixed binding `DesignerPunkTheme`, `DPThemeKey`, `\.dpTheme`. I have not re-read the emitter for this note; the list is from the design text and the 094 lines Ada cites. UNVERIFIED as a count of five.
+5. **`SwiftEmitter.ts` L52 drift.** Ada's block 4 says the product-token Swift emitter extends `<Name>Theme` (`SwiftEmitter.ts` L12, L52). After Q12 (a) the binding is `DesignerPunkTheme`, so the product-token emitter and the theme emitter must change in the same PR, or the product file will extend a type that no longer exists. The product-token Jest expectation changes with it. Not mine to fix; it belongs in Task 11's same-PR list.
+
+---
+
+## 4. The iOS enum shape, as Task 11's criterion states it (and my ruling on `@AppStorage`)
+
+**My ruling (Ada: "that is Kenya's call").** No `String` raw value in 129. Reasons:
+- A raw value makes each theme name a stored value. Adopters' saved settings would then depend on the name, and renaming a theme in the config would silently reset a user's saved choice. That is a persistence contract, and 129 ships no run-time evidence for any of it.
+- Adding `String` later is additive: `init?(rawValue:)` and `rawValue` appear, and no existing call changes.
+- The loss is `@AppStorage` convenience. An adopter stores their own string or index and maps it. The family stays `Hashable`, so it works as a `Picker` tag and as `@State`.
+- **Counter-argument, run before presenting:** `@AppStorage` is the first thing a theme-choice setting wants, and not shipping it pushes every adopter to write the same mapping. What survives: that is a convenience cost with a clean later fix. The thing I cannot undo later is the raw values themselves, because shipped raw values are stored by adopters' apps. So the irreversible direction is the one that ships.
+- The Kotlin side differs: an `enum class` entry's `name` already serves. The two platforms differ here until Data and I agree to add a raw value later, if ever. That difference is deliberate, not drift.
+
+**Goes in**: `tasks.md` Task 11, Success Criteria, as a new bullet. Peter's "A enum" (2026-11-06T23:31:58Z) and "6 (b)".
+
+---8<---
+- On iOS, `generate` writes the theme family and the provider of design § 4 ("The theme family (6(b))" and "iOS provider") *(added 2026-11-06, tasks amendment 3, under Peter's ruling 6, "6 (b)", received 2026-11-06T22:38:12Z, and "A enum", received 2026-11-06T23:31:58Z)*, and a Jest test in `SwiftThemeTypes.test.ts`, over output generated from the repository's real token definitions and a config registering `wcag` and a custom theme of one mode, asserts:
+  - the declaration `public enum <Name>ThemeFamily: Sendable, Hashable, CaseIterable`, with no raw type;
+  - the cases are exactly `base`, `wcag`, then one per other registered theme in config order, with no `dark` case, and a case that is a Swift reserved word is declared in backticks;
+  - the provider `public extension View { func <name>Theme(_ family: <Name>ThemeFamily = .base) -> some View }`, whose generated modifier reads `@Environment(\.colorScheme)` and sets `\.dpTheme`;
+  - the modifier selects the instance by an exhaustive `switch` over the family with no `default:` branch, so that a family case without a mapping fails to compile, and the mapping equals design § 4's table, including the single-mode rule;
+  - no `String` raw value and no `RawRepresentable` conformance;
+  - the emitted instance members and the family's cases equal `scripts/harness/native-rules.ts`'s for each case in design § 4's theme-instance rule, items 1 to 4.
+--->8---
+
+Optional, for Peter's pick, not required by his ruling: the iOS probe could also read the provider, so the harness proves each run that the family and modifier compile. It would read `_ = EmptyView().<name>Theme()` and one `_ = EmptyView().<name>Theme(.<case>)` per family case, counting toward `m` (base and wcag at U6: +3, so 483 would read 486, then 485 after the composite leaves). It is derived from the module's family rule, so it needs no new input. I recommend it: it is the only per-run check that the provider compiles on the pinned Xcode. It is not in item 1's figures.
+
+---
+
+## 5. D, the iOS side
+
+The text already in `tasks.md` (Task 5: "Each of the four contexts writes `::notice title=harness-verdict::<the comparator's verdict line>` once the comparator has run") is right. Two things the amendment should state for iOS.
+
+---8<---
+- The iOS jobs write the `harness-verdict` annotation whether the comparator's verdict is PASS or FAIL, in a step that runs after the comparator on every outcome (`if: always()`), so that a job the comparator failed carries the annotation and a job that failed before the comparator ran (a lane `FAIL toolchain`, `toolchain missing`, `self-test` or `setup`, or a runner or image failure) carries none *(added 2026-11-06, tasks amendment 3, under Peter's "D yes", received 2026-11-06T23:31:58Z)*. A run counts toward condition 3's three cold runs only if its iOS job carries the annotation. The same rule applies to the Android jobs.
+--->8---
+
+Why this fits iOS: iOS has no dependency cache, so every run is cold (Decision 6, condition 3). The failure modes before the comparator are the lane's own (toolchain, self-test, setup) and the runner's (image, queue, provisioning). There is no simulator step, because the lane compiles and runs nothing. A run that died early reports a short duration that would understate the macOS queue-plus-run time condition 5 measures, so it must not count. It is still a break under condition 2 (no annotation). A comparator FAIL (for example a new unlisted key) is a full run of the compile and counts.
+
+---
+
+## 6. What is wrong or unsafe in Ada's text (iOS side)
+
+1. **Block 1a, item 4, "the iOS implicit members (Kenya's idiom, one per instance)".** The rule names no member name. Design § 4's example `.environment(\.dpTheme, .pbDark)` becomes meaningless: `dark` is no longer an instance. State the rule: `static var <abbr-lower><PascalInstance>`, for example `.pbBaseDark`, `.pbWcagLight`, `.pbHighContrastLight`, on `extension DesignerPunkTheme where Self == <Name><PascalInstance>Theme`. Without it the module and the emitter will each invent one. The probe does not read these members, so this affects Task 11's tests only.
+2. **Block 1a, item 5 (h), the claim that `self` and `init` "cannot be used after a dot".** I compiled a `Sendable, Hashable, CaseIterable` enum with cases `` `default` ``, `` `self` ``, `` `init` ``, `` `Type` `` and `allCases` under Xcode 27.2. VERIFIED: `.init` fails to use (`'F' cannot be constructed because it has no accessible initializers`); `.default`, `.Type` and `.self` compiled, but I did not check what `.self` resolved to, so treat `self` as UNVERIFIED. VERIFIED: a case named `allCases` declares without a diagnostic beside `CaseIterable`, but which `allCases` `F.allCases` then names is not something I would leave to the compiler. Refuse `allCases` as well, by the same reason as `init`: add it to (h). Keep `self` in (h) until someone shows what `.self` means.
+3. **Block 2, the `@AppStorage` paragraph ("It is Kenya's call, and it is not taken here").** Ruled in item 4 above: no raw value in 129. Replace that paragraph's last three sentences with: "A `String` raw value is not in 129: it would make each theme name a stored value, a persistence contract adopters' saved data depends on. Adding it later is additive. (Kenya's call, 2026-11-06.) On Kotlin an entry's `name` already serves."
+4. **Block 4, "A theme member ... read once through an `any DesignerPunkTheme` value".** Correct, and different from my earlier sizing answer, which assumed a read per instance. A protocol-extension property is the same on every instance, so one read per token. The criterion in item 1 follows Ada.
+5. **Block 4, "Before U6 the generator ... extends `<Name>Theme` on Swift (`SwiftEmitter.ts` L12, L52)".** Accurate, and a same-PR coupling Task 11 must list (item 3 note 5 above).
+6. **Block 5, "a Task 5 subtask done first".** It is outside Task 3's order. Item 2's note covers it.
+7. **Block 1a, item 2, the stock-config trap.** A config that registers `wcag` in mode `light` only gives a `wcagDark` carrying the package's built-in `dark-wcag` map and a bridge warning. The adopter's `.<name>Theme(.wcag)` then shows overrides they did not write in dark mode. The text names the warning. It does not say the provider is where the adopter first sees it, and nothing in the family tells them. I would add one line to the amendment saying so; it is a docs and `init` matter (design § 10) and not mine to fix.
+
+Nothing else in blocks 1 to 5 contradicts the iOS lane or the Swift shape. The refusals, the table, the single-mode rule (fall back to base) and the `Sendable, Hashable, CaseIterable` clause are consistent with what I compiled.
+~~~~
+
+#### [DATA R3] — tasks amendment 3 input: Data's items (Task 4, design § 2, the Android family, D, and his reads of Ada's text)
+
+Spliced byte for byte from the seat's scratch input (`data-items.md`), inside the fence so its headings do not join this file's outline.
+
+~~~~markdown
+# Spec 129 tasks/design amendment 3: Data's items
+
+Author: Data (Android). Scratch only; no repo file was edited. Each block says where it goes. Text between `---8<---` and `--->8---` is for Thurgood to splice; the rest is not design text. Facts are from the first real lane runs of 2026-11-06 (seat branch `task/129-compile-harness-t4` @ `5fd5edaca`; fix branch `task/129-compile-harness-t2-kotlin-fix` @ `4e716dae2`).
+
+---
+
+## Item 1: Task 4, the package files left out of `:dp`
+
+**Goes in**: `tasks.md` Task 4, success criterion 3 (the `:dp` bullet); and `requirements.md` Req 2.4, the clause "the package's own `dist/ComponentTokens.*` SHALL be left out".
+
+Evidence: the first real run (2026-11-06) stopped in `lane.ts` because the tarball also ships `dist/DesignTokens.android.kt`, a second `DesignTokens.android.kt` beside the generated one. `ROOT_TOKEN_FILES` in `scripts/pack-assert.ts` lists both Android root files.
+
+---8<---
+Task 4, criterion 3:
+- On Android, `:dp` compiles every non-test packaged `.kt` file and the generated Kotlin with Icon-Base's `res/` as its resources, leaving out the package's root token files, `dist/ComponentTokens.*` and `dist/DesignTokens.*`, with one copy of each native file name: the lane fails, naming both paths, when two files of the set share a base name. *(Amended 2026-11-06, tasks amendment 3; prior text at `233e04bf1`: "leaving out the package's `dist/ComponentTokens.*`". The tarball also ships `dist/DesignTokens.android.kt`, which the first real run showed would be a second `DesignTokens.android.kt` beside the generated one.)*
+
+Req 2.4, the clause:
+- … and the package's own root token files, `dist/ComponentTokens.*` and `dist/DesignTokens.*`, SHALL be left out. *(Amended 2026-11-06, tasks amendment 3; prior text: "the package's own `dist/ComponentTokens.*` SHALL be left out".)*
+
+Task 4, the floor criterion (last bullet) adds: the `pkg` floor applies the same exclusion to the packed tarball's file list.
+--->8---
+
+---
+
+## Item 2: Task 4, the probe imports the shared module
+
+**Goes in**: `tasks.md` Task 4, criterion 6 (the `probe-kotlin.test.ts` bullet), and Task 4's Primary Artifacts.
+
+**An ordering fact Thurgood must settle.** Block 5 of Ada's text has Thurgood author `scripts/harness/native-rules.ts` as a Task 5 subtask "done first". Task 4 precedes Task 5, and `probe-kotlin.ts` is Task 4's artifact, so Task 4 cannot import a module that does not exist until Task 5. Two ways out: (a) author the module before Task 4 completes (a new first subtask of Task 4, or of Task 2), or (b) keep Task 4 as it stands and let the module's task replace the probe's local rule and delete it, with `probe-kotlin.ts` named in that task's Primary Artifacts. I wrote the text for (b), because Task 4 is otherwise ready to be joined; (a) needs only "Task 5" changed to the earlier task.
+
+---8<---
+Task 4, criterion 6 (replacing "…from the index and the config alone, with no `harness/android/**` change needed when item (i) emits"):
+- On Android, `scripts/harness/__tests__/probe-kotlin.test.ts` asserts, over a fixture index carrying `theme.` names and a fixture manifest, that `scripts/harness/probe-kotlin.ts` emits one read per `theme.`-named colour semantic through `LocalDPTheme.current` and one through each theme instance that `scripts/harness/native-rules.ts` gives for the manifest's themes, plus one read per product-token fixture member that the same module names, all inside `@Composable`, with no `harness/android/**` change needed when item (i) emits. `probe-kotlin.ts` imports `native-rules.ts` and keeps no local copy of the theme-instance rule or the product-token naming rule. *(Amended 2026-11-06, tasks amendment 3, under Peter's "4 combine" and "B Thurgood"; prior text at `233e04bf1`: the criterion named "each `<Name>Themes` member" with no module. Until `native-rules.ts` exists, `themeMemberNames` and `productObjectName` in `probe-kotlin.ts` are the declared stand-ins, and the task that adds the module replaces and deletes them.)*
+
+Task 4, Primary Artifacts, or the module task's: `scripts/harness/probe-kotlin.ts` is edited by the task that adds `scripts/harness/native-rules.ts`.
+--->8---
+
+---
+
+## Item 3: Data's deviations, as design § 2 text
+
+**Goes in**: `design.md` § 2 "The Android harness", as new bullets after "**Pins**".
+
+Each is true of the code on `task/129-compile-harness-t4`. Where a line is a deviation from the Task 4 criterion's wording, the criterion's wording is amended in Task 4's list in the same splice (stated per bullet).
+
+---8<---
+- **The blocked line is the lane's.** *(Amended 2026-11-06, tasks amendment 3; prior text: Task 4's criterion had `:probe` print `probe: blocked (:tokens not compiled)`.)* Gradle skips `:probe:compileDebugKotlin` when `:tokens:compileDebugKotlin` fails, so no code of `:probe` runs. `lane.ts` prints `probe: blocked (:tokens not compiled)` after the run when `:tokens` did not succeed (by `parseKotlin`) and the log holds no `probe: read` line. The comparator's own note, `probe: blocked (android.tokens failed); its count is not compared`, is unchanged. Task 4's criterion reads "…while `:tokens` fails, the Android lane prints `probe: blocked (:tokens not compiled)` and `:probe`'s count is not compared".
+- **What the read count counts.** The line `probe: read <n> of <m> index names (<k> reads in total)` is printed by `:probe`'s `compileDebugKotlin` `doFirst`, and fails the task when `n ≠ m`.
+  - `m` is the number of distinct Android names the index gave, counted by `probe-kotlin.ts` from the index and written to `probe-expected.txt`. A list gives one name per element, `null` gives none, and a `theme.` name counts once.
+  - `n` is the number of `// @index` markers in the sources `:probe` was given.
+  - So `n` says what the probe was given to read. A generator that dropped a name shows as `n < m`. Whether a read compiles is the compiler's verdict, which the comparator reads as `probe:` keys. The count is printed only when `:probe` compiles; while `:tokens` fails, the blocked line stands in for it.
+  - Theme-instance reads and product-token reads are not index names, so they are outside `n` and `m`.
+- **The counts a context prints are Gradle's.** Each compile task prints, in its `doFirst`, `harness-sources: :tokens gen=<n>` or `harness-sources: :dp gen=<n> pkg=<n>`, the number of explicit files it was given. `lane.ts` takes the run file's `compiled` counts from those lines, not from the list it wrote, and the floors from the manifest (`gen`) and the packed tarball's file list (`pkg`). A task that never starts prints nothing, and its compiled count reads 0.
+- **The toolchain report.** `:tokens:compileDebugKotlin`'s `doFirst` prints `harness-toolchain: <field>=<value>` for `java.version`, `gradle.version`, `kotlin.version` (the `kotlin-compiler-embeddable` on the Kotlin Gradle plugin's own classpath), `agp.version` and `compose.bom.version` (the resolved BOM component of `debugCompileClasspath`), and `lane.ts` writes them into the run file's `toolchain`.
+- **`:dp`'s namespace is `com.designerpunk.components.core`.** `IconBase.android.kt` refers to `R.drawable.*` unqualified, in its own package, so the module's AGP namespace must equal that package for `R` to resolve. `:tokens` and `:probe` use `dpharness.tokens` and `dpharness.probe`, outside the reserved `com.designerpunk.*` packages.
+- **The binding constants are shared.** `LocalDPTheme`, `com.designerpunk.tokens` and `com.designerpunk.product.tokens` are DesignerPunk's fixed names (§ 4, Q12). The Android probe takes them from `scripts/harness/native-rules.ts` (§ 4, "The shared harness module"), as the iOS probe takes the Swift ones. Neither probe derives them from the consumer's abbreviation.
+- **Gradle's order.** `gradle.properties` supplies the plain console and no parallel execution, so the printed invocation is exactly `./gradlew --continue :tokens:compileDebugKotlin :probe:compileDebugKotlin :dp:compileDebugKotlin`. Gradle can print a failing task's `FAILED` line before that task's output; `parse-kotlin.ts` reads a `FAILED` line that is the first to name its task as that task's output (`fixtures/parse-kotlin/planted-internal-run.txt`).
+--->8---
+
+Also for Thurgood, `harness/README.md` § "The parser interface": the line that an `e:` after a suffixed task line is `unattributed` now holds only after a task has printed a header. This is in the fix branch's note (`completion/task-2-3-attribution-fix-note.md`, § 4 item 1).
+
+---
+
+## Item 4: Task 11, the Android family and provider, as a criterion
+
+**Goes in**: `tasks.md` Task 11, as a success criterion after the one for the Kotlin theme types. It states Ada's block 2 and block 3 for Android and names the tests.
+
+---8<---
+- On Android, the generated Kotlin declares, in `package com.designerpunk.tokens`, `enum class <Name>ThemeFamily` with the entries `Base`, `Wcag`, then one entry per other registered theme in config order, each the theme's words in Pascal case with no mode suffix (until U9 exactly `Base` and `Wcag`), and `@Composable fun <Name>Theme(family: <Name>ThemeFamily = <Name>ThemeFamily.Base, darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit)`, which provides `LocalDPTheme` with the instance that a `when (family)` selects by design § 4's Selection table. A theme of one mode shows `Base`'s instance for the scheme it does not cover (the single-mode rule), and `Wcag` always has both instances. `<Name>Theme { … }` still means `Base`. The generated `LocalDPTheme` stays a `staticCompositionLocalOf` defaulting to `<Name>Themes.BaseLight`. `KotlinThemeTypes.test.ts`, run on output generated from the repository's real token definitions, pins all of: the family's exact entry set for each case of the theme-instance rule, items 1–4; the provider's exact signature and defaults; that every `when` branch names a member of `<Name>Themes` that the same output declares, and every member is named by some branch; that every `import` line precedes the first declaration; and that the output holds no `Color.Unspecified` and no `unresolved`. `harness-android-tokens` compiles the family and the provider in `:tokens`, and the probe's declared instances equal the generated `<Name>Themes` members in each run (Peter's ruling 4, third safeguard). *(Amended 2026-11-06, tasks amendment 3, under Peter's "6 (b)", "A enum" and the single-mode ruling "fall back to base"; prior text: the provider took no family.)*
+--->8---
+
+Not claimed: that the provider switches at run time, which is Spec 132's D5. Nothing in 129 renders it.
+
+---
+
+## Item 5: Decision 6, condition 3, the Android clause, and the `harness-verdict` annotation
+
+**Goes in**: `tasks.md` § "Decision 6", condition 3; and Task 5's `harness-verdict` criterion. Peter's "D yes".
+
+---8<---
+Condition 3 (replacing its sentences on what counts as a cold run, after the `cache: miss` sentence):
+3. three cold-cache runs, each under the 10-minute ceiling (125-A Req 6.3). For an Android context, a run counts as cold when its job's check annotation reads `cache: miss` AND the run is a pull-request run, so a dispatched run does not count; the Android job writes `::notice title=cache::<hit|miss>` after its cache-restore step, because step logs expire and the annotations endpoint does not. For an iOS context, which has no dependency cache because `swiftc` resolves no package, every run counts as cold, and the three are the first three pull-request runs at the current Xcode pin; a dispatched run does not count toward them. **For both platforms, a run counts only if its context reached the comparator**, that is, only if the context's check annotations carry `harness-verdict`; a run that died before comparing (a failed network fetch, a runner fault) does not count toward the three. *(Amended 2026-11-06, tasks amendment 3, under Peter's "D yes"; prior text: the Android clause read `cache: miss` alone; the iOS clause counted pull-request runs from tasks amendment 2.)*
+
+Task 5, the `harness-verdict` criterion:
+- Each of the four contexts writes `::notice title=harness-verdict::<the comparator's verdict line>` once the comparator has run, **whether the verdict line reads PASS or FAIL**, so that the annotation is absent only for a job that failed before the comparator ran. The comparator's step exits 1 on FAIL, so the annotation is written by that step itself before it exits, or by the next step with `if: always()` reading the verdict from a file the comparator wrote; the stability script reads this annotation to tell a job that failed before the comparator ran (no annotation) from one the comparator failed. *(Amended 2026-11-06, tasks amendment 3; prior text: "once the comparator has run".)*
+--->8---
+
+---
+
+## Item 6: Anything wrong in Ada's Kotlin text
+
+I read all five blocks. The Kotlin in them is consistent with what the lane ran, with these exceptions. None is a compile fact: the generator text is unrun, so each is labelled.
+
+1. **Block 5 and the order of tasks** (above, item 2). `native-rules.ts` "as a Task 5 subtask done first" cannot be imported by Task 4. This is the one I would stop on.
+2. **Default config name.** `ConfigLoader` defaults `name` to `DesignerPunk`. Block 2's provider is then `DesignerPunkTheme(family, darkTheme, content)`, the same name as Q12's `DesignerPunkTheme` data class (62 properties). I expect Kotlin accepts a function and a class constructor of one name with different parameters, and that a call site `DesignerPunkTheme { … }` resolves to the function, but I have not compiled it. UNVERIFIED. The probe's fixed-name read of `DesignerPunkThemes` is unaffected. Task 11's exact-set test should include a case with the default name.
+3. **Product keys that are Kotlin keywords.** Block 4 says a Kotlin product token "is named by its key alone". A key such as `in`, `is` or `object` makes `val in = …`, which does not compile, and the text has no refusal or backtick rule for it, though block 2 has one for Swift family cases. Today's emitter has none either, so it is not a regression; the probe would read it as `Product<Cat>.in` and give a `probe:` entry. Ada's call whether 129 handles it.
+4. **Block 4, product path.** "writes `<output>/product/ProductTokens.android.kt`": the Android lane lists `.kt` files recursively under the platform output folder, so `gen:product/ProductTokens.android.kt` is the key path. It works, and the key form for the product file should be stated once in the module: `gen:product/ProductTokens.android.kt`, not `gen:ProductTokens.android.kt`.
+5. **Block 1a, item 1.** "No config can remove one of the four" is right for the Kotlin holder. The Kotlin family's `Wcag` entry is likewise fixed. Both are consistent.
+
+Nothing else in the Kotlin blocks disagrees with Data's shape.
+~~~~
+
+#### [SPARKY R2] — tasks amendment 3 input: Sparky's consult on the web form of the single-mode rule (the orchestrator's transcription of his hand-back)
+
+Spliced byte for byte from the seat's scratch input (`sparky-consult.md`), inside the fence so its headings do not join this file's outline.
+
+~~~~markdown
+# Sparky consult on Ada's block 3 (web form of the single-mode fallback), 2026-11-06
+
+The orchestrator transcribed Sparky's hand-back unchanged.
+
+**Sparky**: confirm with changes
+
+1. **Ada's description is right.** `generateWebThemeBlock` (`src/generators/TokenFileGenerator.ts` L1074) handles a dark-only theme by writing `color-scheme: dark` (L1109–1111) and static dark values (L1117–1119). A light-only theme gets static light values (L1120–1122). The emitter is unwired: the only callers of `generateThemeOverrideBlocks` (L1044) are tests. Line numbers are at HEAD `4732654d6`, and `src/` is unchanged since `233e04bf1`.
+
+2. **Yes, `light-dark()` with base in the uncovered mode is the right form.** Base `:root` already writes `color-scheme: light dark` (L1681) and `light-dark()` (L905), and the stock wcag block does the same (L994). So this adds no new browser floor (Baseline 2024). Dropping the `color-scheme` line is correct, because the inherited `light dark` then applies. These custom properties are unregistered, so `light-dark()` resolves where a component uses it, inside its shadow root, against the inherited `color-scheme`. No component under `src/components` sets `color-scheme`. `light-dark()` accepts colours only, and the block already filters to COLOR (L1090).
+
+   Changes I'd make:
+   - (a) State that the uncovered half comes from `baseLight`/`baseDark`. L1095 currently skips a token unless the theme supplies both maps.
+   - (b) Keep the existing rule that a token whose two values are equal is written as a plain value.
+   - (c) `CSSThemeScoping.test.ts` L27–44 pins today's dark-only output, so Task 14 rewrites it.
+   - (d) Replace "Sparky confirms in Task 14" with a citation of this consult.
+
+3. **No adopter sees a change today, so this is not a Req 10.4 case.** A custom `data-theme` matches nothing today. At U9 this is the theme's first output, which only adds; Task 14's release notes should say what it means.
+
+**What survives:** "uncovered mode" means the scheme of each element, not of the device. Any subtree an adopter sets to `color-scheme: light` shows base light there. That is consistent with how base tokens behave, but it is not the same as the native providers, which follow the system scheme. Dark-only adopters also lose the forced-dark page.
+~~~~
