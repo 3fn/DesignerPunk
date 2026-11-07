@@ -3090,3 +3090,139 @@ Stacy read amendment 8 at `2bdb47685` and judged it "ready with fixes"; her read
 2. **Demotion (b) now uses only what `stability.ts` prints.** Its two-consecutive-infra-runs-at-one-head finding is the one threshold, matching condition 2's finding. The other two signals are its printed infra rate above 10%, and two attempts-differ runs since the promotion's merge with no infra on either attempt. The last-20 window is dropped, since the script prints none. **Surviving counter-argument**: a rate over the record's whole run list is diluted by the runs before promotion, so it reacts slowly. Building a window would fix that, at the cost of `stability.ts` work that no unit owns today. → step 6 (b)
 3. **The recurring reads now have a home.** New charter record `.kiro/issues/2026-11-07-promoted-harness-contexts-demotion-read.md`, owners Thurgood and Stacy, P2 (guard) charter, Trigger `manual`. It closes when no harness context stays required, or when its owners' ballot writes the read into a standing home. Until then the monthly walk reads it. The plan line cites it. → step 6, "Who reads it"
 4. **Demotion (a)'s record pastes the missed diagnostic line,** or the failing case's output, verbatim, because run logs expire. → step 6 (a)
+
+#### [THURGOOD R17] — tasks amendment 9 (the row-15 loophole)
+Peter, `date -u` at receipt 2026-11-07T20:21:05Z (orchestrator relay), verbatim: "Re: 1, Let's close the loophole" (`evidence/2026-11-07-peter-rulings-post-midpoint.md`).
+- **Task 12's two row-15 criteria** now read as Lina's wording (ii): the row-15 entries present at U6's merge are removed in this diff; no entry is added carrying row 15's tag or a `retagged=` from it; a retag is ⚠️. This matches the row-16 and ripple criteria. Prior text at `3610718aa`.
+- **Row 2's two criteria** take the addition-and-retag half only. The component lists hold no row-2 entry at `3610718aa`, so there is nothing to remove and "removed in this diff" would be false. The loophole would still open on an entry U7 unmasks and tags elsewhere in place of row 2. The cross-read settlement (Lina's (ii) for rows 15 and 2) holds in that form.
+- Nothing else changed. S-1 is amendment 10. The criterion count is unchanged.
+
+#### [STACY TASKS R5] — LENS read of tasks amendment 9 (read at `origin/task/129-tasks-amendment-9` `428f78aaa`)
+
+I read Task 12's four reworded criteria against `git diff origin/main...origin/task/129-tasks-amendment-9`, and the two component lists at U6's merge `5a6a7f32b`. The lists have not changed since then: `git diff --stat 5a6a7f32b origin/main -- harness/expected/` is empty, and so is the same diff against the branch. Each item names a defect and the state of the lists that shows it. Under the mirror clause, the wording of any repair is Thurgood's. This entry is a LENS read, feedback only, never a gate.
+
+**Question 1: can each criterion be decided at U7's merge without asking the author?**
+
+- **Row 15, iOS and Android: yes.** The set "present at U6's merge" is fixed, and it can be computed from git:
+  `git show 5a6a7f32b:harness/expected/harness-<ios|android>-components.tsv | awk -F'\t' '$3 ~ /^2026-09-26-native-component-theme-hardcoding\.md(#|$)/'`
+  - That gives **6 iOS** entries: Chip-Base, Chip-Filter, Chip-Input, Container-Card-Base, Progress-Indicator-Connector-Base and Progress-Indicator-Node-Base, each `cannot find 'theme' in scope`.
+  - It gives **2 Android** entries: Container-Base `ContainerBase.android.kt` and `TokenMapping.kt`, each `Unresolved reference 'DesignerPunkTheme'.`
+  - All eight carry `retagged=2026-11-07,Ada,2026-06-28-spec-094-platform-theme-emission-unwired.md`. This matches the count in Thurgood's archived record (six and two).
+  - Each of the three clauses can be read from git:
+    - removed: the eight keys are absent at M;
+    - added: no line at M carries row 15's record as its tag, or a `retagged=` naming it, unless that line was already at the base;
+    - retag: one of the eight keys is present at M under another tag.
+  - Row 15's record is in `harness/protected-set.txt` at `5a6a7f32b`. So `compare.ts` already fails a retag away from it unless the entry carries the field and the diff appends a line to the record. A retag therefore always leaves a field naming row 15's record, and the "added" clause catches it. For this record, "a retag is ⚠️" restates the "added" clause. That is harmless.
+- **Row 2, iOS and Android: the tag halves can be decided, but the leading clause cannot (High-1).**
+  - No entry in either list carries row 2's record as its tag at `5a6a7f32b` (the same `awk` on field 3 finds 0). Thurgood R17's statement is correct.
+  - Row 2's record does appear at `5a6a7f32b`, in the `retagged=` field of the eight row-15 entries. The criterion reads tags, so that field does not count against it.
+
+**High-1. Row 2's two criteria already pass their acceptance clause at U6's merge, while component colour reads demonstrably do not resolve.**
+- At `5a6a7f32b`, `harness-android-components.tsv` holds two groups of entries, all tagged to `2026-11-07-native-component-repair-from-first-harness-run.md`, the component-repair record:
+  - **31** `Unresolved reference 'color_…'` entries, in Container-Base `TokenMapping.kt` and `ContainerBase.android.kt`, and in Chip-Filter;
+  - **9** `Unresolved reference 'theme'.` entries, cause E of that record, across nine files and 33 diagnostics.
+- They have carried that tag at every commit of the list, from U1 (`74d7566f5`) to U6 (31 at each).
+- That record is not in the protected set.
+- Its § E reads: "They are Q13 colour reads that Task 12 (U7) may take".
+- So "no entry tagged to row 2 at this head" is true before U7 does anything. That clause cannot falsify "every component colour read resolves under Q13 (a)", because the list's author chooses the tag and the compiler does not.
+- At CLOSEOUT the two clauses give opposite verdicts: ✅ by the tag clause, ❌ by the leading clause. Deciding which one governs means asking the author. That is the failure Question 1 asks about.
+- **The class of remedy, not its wording:** a decidable referent here is the entry's key (its path and message), which the compiler writes, read at `5a6a7f32b` and at M. It is not the tag.
+- **A fork, surfaced, not picked** (Peter's or the author's):
+  - **(a)** The leading clause keeps its full reach. Then U7 owes the colour reads of the component-repair record's causes E and F, together with the colour parts of A and C. Its § F expects some of these to clear only at U8 (item (ii)).
+  - **(b)** The claim narrows to a population U7 owns, named in the criterion, and the rest is carried with a recorded trigger.
+- iOS has no colour-shaped entry outside row 15's six. Its one theme-shaped entry is `missing argument for parameter 'theme' in call`, in Button-VerticalList-Item `VisualStateStyles.swift`, tagged to the component-repair record. So on iOS, High-1 reduces to Thurgood's unmasking case below.
+→ tasks.md Task 12, both row-2 criteria
+
+**Question 2: does Thurgood's residual on row 2 need closing here?**
+
+**Yes.** It is larger than stated: it covers entries that already sit under another tag (High-1), not only an entry U7 unmasks.
+- **CLOSEOUT's `retagged=` and tag read does not cover it.**
+  - The `retagged=` field is written only when a key moves away from a protected record. An unmasked entry has a new key, so it has no from-record. No field is written, and `compare.ts` has nothing to refuse.
+  - A tag read shows that an entry was tagged to record X. It cannot show which defect the entry is. To call that tag wrong, the pass would have to re-decide the routing, which is Lina's call. That would be the pass re-deciding the routing, not checking a claim.
+- **Timing.** Amendment 10 lands between U7 and U8, after U7's work. A criterion changed after the work it judges is a moved goalpost. So if the residual is closed, amendment 9 closes it.
+- **The orchestrator's candidate.** Under the mirror clause I do not rewrite it. I read it for decidability only.
+  - "Every entry added in this diff" can be decided: keys at M that are absent at the base.
+  - "Tagged to a root record whose Trigger can fire" can be decided only as far as the Trigger form is mechanical. A `manual` Trigger cannot be read as able to fire. The component-repair record's Trigger is `path:…/completion/claims-pass.md`, which can fire, so an entry tagged there passes this clause whether its tag is honest or a dodge.
+  - "With a one-line cause": its presence can be decided, its truth cannot.
+  - **Net:** the clause can be decided, but it does not close the hole. The likely destination for a dodge is the component-repair record, which is also the honest destination. The clause turns the retag into a cause line that I would then have to judge, which brings back High-1's need to ask the author.
+
+**Question 3: what else would stop CLOSEOUT from judging these rows?**
+
+- **Medium-1. The base condition.** "Present at U6's merge" and "removed in this diff" name the same set only while the lists at U7's merge base equal those at `5a6a7f32b`.
+  - That is true today.
+  - CLOSEOUT will check `git diff --stat 5a6a7f32b <U7 merge base> -- harness/expected/harness-*-components.tsv` and record the result.
+  - This is a read, not a text fix. If the diff is not empty, the two phrases diverge, and I report that.
+- **Medium-2. The Android twins of the iOS scope defect have no criterion.**
+  - The rulings record (`evidence/2026-11-07-peter-rulings-post-midpoint.md`) records, as agreed among the seats, that "U7 also repairs the Android twins of the iOS scope defect in the components it opens", with Data verifying.
+  - Those twins are cause E's nine `Unresolved reference 'theme'.` entries. They are tagged to the component-repair record, not to row 15.
+  - Row 15's Android set is only the two Container-Base entries. So row 15 on Android goes ✅ once two entries are removed, while the twins stay listed.
+  - CLOSEOUT can audit the twin repair only as an ordinary claim in the doc, not against a criterion.
+  - Whether it needs a row is the author's call. I note only that it has none. It is the same set of entries as High-1's fork (b).
+  → tasks.md Task 12
+- **Low-1. "Added" is ambiguous between a line and a key.**
+  - Suppose a row-15 entry stays with a changed count. Its line is rewritten, still carrying the `retagged=` field that names row 2's record.
+  - By line, that is "added carrying a `retagged=` from" row 2. By key and tag, it is not.
+  - On row 15 it is ⚠️ either way, because the entry was not removed. On row 2 the verdict depends on the reading.
+  - I will read "added" as a key and tag absent at the base, unless the text says otherwise.
+  - For row 2, "a retag is ⚠️" has no case it can reach: no entry carries row 2's tag at the base, so none can be retagged away from it.
+
+#### [THURGOOD R18] — tasks amendment 9, revised after the LENS and the fork consult
+- **Row 2 (both platforms), `[STACY TASKS R5]` High-1**: option (b), keyed by message and not tag. The criterion at M: pattern Q finds 0 keys (it finds 7 iOS and 42 Android at `5a6a7f32b`, verified), the eight Android colour-member keys Ada named are absent, and an added key matching Q fails whatever its tag. Q is Lina's union pattern, with the regex and command in the text. A matching key U7 cannot clear gets no escape clause and returns as an amendment before the PR opens. What stays on the component-repair record is every key outside Q.
+- **My R17 row-2 treatment is superseded.** The addition-and-retag half I wrote there could not fail, because the lists held no row-2 tag, which Stacy showed. My Req 4.10 fork fell with its premise: Ada showed U8 cannot emit colour, and Lina confirmed it.
+- **Row 15**: kept. Low-1 adopted ("added" = a key-and-tag pair absent at the base). Medium-1 adopted (the base-equals-`5a6a7f32b` assumption, and CLOSEOUT records the diff).
+- **Medium-2**: cause E's nine twins fall inside Q, with Data verifying. No separate row.
+- **Surviving counter-argument**, carried into the text: Q is a proxy and a toolchain bump can reword its messages, so the completion doc records the toolchain versions at H. A colour read that fails as a type mismatch or an inference error is not caught.
+- S-1 remains amendment 10.
+
+#### [STACY TASKS R6] — LENS re-read of tasks amendment 9, revised (read at `origin/task/129-tasks-amendment-9` `fb83ee7bd`)
+
+I re-read Task 12's four criteria for decidability only, against `git diff 428f78aaa fb83ee7bd -- tasks.md` and the two component lists at `5a6a7f32b`. Under the mirror clause, the wording of any repair is Thurgood's. This entry is a LENS read, feedback only, never a gate.
+
+**Re-run of Q.** At `5a6a7f32b`, Q matches **7 iOS** and **42 Android** keys.
+- iOS: row 15's six, and Button-VerticalList-Item `VisualStateStyles.swift` `missing argument for parameter 'theme' in call`.
+- Android: 31 `Unresolved reference 'color_…'.`, cause E's 9 `Unresolved reference 'theme'.`, and row 15's two `Unresolved reference 'DesignerPunkTheme'.`
+- The eight named colour-member keys are all present at `5a6a7f32b`: Avatar `borderColor`; Badge-Count-Base and Badge-Count-Notification, each `backgroundColor` and `textColor`; Badge-Label-Base `backgroundColor`, `textColor` and `iconColor`.
+- The total is 57, which matches the coordinator's count and Thurgood's.
+- How I ran it: with `perl`, reading Q from the consult's `q.txt`. This machine's `/usr/bin/grep` (BSD grep 2.6.0) rejects `-P` (see New-2).
+
+**My R5 items**
+
+- **High-1: closed.** Row 2 is now keyed on the key's message, whatever its tag, and is required to print 0 at M. The count can be decided from git at any commit.
+  - The fork I surfaced was picked by the seats (Lina, the owner of the keys; Ada; Thurgood): full reach over the keys Q matches, with cause F's inference cascades and B's VerticalList cascade left outside Q and stated as such.
+  - The leading clause, "every component colour read", is still wider than Q. The criterion now names Q as its acceptance test and calls it a proxy, so CLOSEOUT judges by Q and records the proxy's reach. Nothing is left to ask the author.
+  - "No escape clause; a matching key returns as a tasks amendment before the PR opens" can be decided: it is a `tasks.md` commit before the PR's creation time.
+- **Medium-1: closed.** The base condition is stated, and CLOSEOUT records the `git diff --stat`. Today, `5a6a7f32b` to `origin/main` is empty for `harness/expected/`.
+- **Medium-2: closed.** Cause E's nine twins match Q, so row 2 is their criterion, with Data verifying.
+- **Low-1: closed.** "Added" is defined as a key-and-tag pair absent at the base, in all four criteria.
+
+**Blocking:** nothing.
+
+**New**
+
+- **New-1 (Medium, a question about reach). Q's Android arms require `'\.` straight after the name, so they do not match the receiver-qualified form of the same diagnostic.**
+  - That form is `Unresolved reference '<name>' on receiver of type '<T>'.`
+  - This toolchain does emit it. At `5a6a7f32b` the Android list holds four keys in that form, the blend keys, for example `Unresolved reference 'darkerBlend' on receiver of type 'Color'.`
+  - **This is the unmasking case.** Once U7 imports `DesignerPunkTheme` in Container-Base, a `theme.color_x` that the theme does not declare is a read on a resolved receiver. If K2 words that read in the receiver form, Q prints 0 while the read fails.
+  - Whether K2 uses that form for a property read on a class receiver, rather than for extension calls only, is UNVERIFIED by me.
+  - iOS is not affected: an undeclared camelCase `theme.colorX` gives `… has no member 'colorX'`, which Q's `.* has no member 'color[A-Za-z0-9]*'` arm matches.
+  - [@DATA] Under the pinned Kotlin 2.4.21, what message does `theme.color_x` give when `color_x` is not a member of a resolved `DesignerPunkTheme`: `Unresolved reference 'color_x'.`, or the `on receiver of type` form? → tasks.md Task 12, the Android row-2 criterion -- [STACY TASKS R6]
+- **New-2 (Low). `grep -cP` runs only with GNU grep or a compatible tool.**
+  - On macOS's `/usr/bin/grep` it exits 2 and prints usage, with no count. That cannot be mistaken for 0, so it fails loudly, not silently.
+  - CLOSEOUT will record the tool and version it ran Q with. This is a read, not a text fix.
+
+**Thurgood's countermeasure: is recording the toolchain versions at H enough?**
+
+Enough for CLOSEOUT, with one comparison I will make myself. A version recorded on its own shows nothing until it is compared with the versions the baseline lists were cut under. Those versions are already committed in `harness/pins.yaml`:
+- iOS: Xcode 26.6 (17F113), Swift 6.3.3;
+- Android: Kotlin 2.4.21, Gradle 9.8.2, AGP 9.5.0.
+
+So CLOSEOUT compares the versions recorded at H with `git show 5a6a7f32b:harness/pins.yaml`, using its `ios.toolchain` and `android.toolchain`.
+- **If they are equal,** Q's reach is the reach its 57 baseline keys show, and the row can be judged on Q.
+- **If they differ,** a 0 from Q cannot tell "fixed" from "reworded". The row is then not ✅ on Q alone. I record why, and judge the H run's full diagnostic output for colour-shaped messages Q misses.
+- **What survives either way:** versions guard against rewording only. They do nothing for a message shape Q never covered under the same toolchain, which is New-1.
+
+#### [THURGOOD R19] — tasks amendment 9, `[STACY TASKS R6]` folded
+- **New-1 (Medium)**: Q's Android arms now also match the receiver form, `Unresolved reference '<name>' on receiver of type '<T>'.`, with an optional `( on receiver of type '[^']+')?` before the final `.`. Counts at `5a6a7f32b` are unchanged: 7 iOS and 42 Android, because the six receiver-form keys at that head (`clip`, `width`, and the four blend keys) are not colour, theme or binding names. The unmasking case is now inside Q. [@DATA]'s answer on the wording of an undeclared member stays open but no longer decides the row.
+- **New-2 (Low)**: the command is `grep -cE "Q"$'\t'`, runnable on macOS `grep`; `-P` is gone. The completion doc records the grep tool and version.
+- **CLOSEOUT comparison**: the text now says the toolchain versions at H are compared with `5a6a7f32b:harness/pins.yaml`, and a differing set means a 0 from Q is not ✅ alone.
+- Surviving: a message shape Q never covered under the same toolchain.
