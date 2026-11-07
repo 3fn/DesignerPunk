@@ -9,7 +9,6 @@ gen:DesignTokens.android.kt | 'transform' overrides nothing.	1	2026-10-20-kotlin
 gen:DesignTokens.android.kt | Cannot extend an object.	1	2026-10-20-kotlin-output-no-import-block.md
 gen:DesignTokens.android.kt | Const 'val' initializer must be a constant value.	4	2026-10-20-native-font-family-literals-unescaped-quotes.md
 gen:DesignTokens.android.kt | Literals must be surrounded by whitespace.	4	2026-10-20-native-font-family-literals-unescaped-quotes.md
-gen:DesignTokens.android.kt | Syntax error: Expecting member declaration.	7	2026-10-24-kotlin-output-section-comment-bare-text.md
 gen:DesignTokens.android.kt | Syntax error: Property getter or setter expected.	4	2026-10-20-native-font-family-literals-unescaped-quotes.md
 gen:DesignTokens.android.kt | Unresolved reference 'Color'.	112	2026-10-20-kotlin-output-no-import-block.md
 gen:DesignTokens.android.kt | Unresolved reference 'ColorSpaces'.	112	2026-10-20-kotlin-output-no-import-block.md
