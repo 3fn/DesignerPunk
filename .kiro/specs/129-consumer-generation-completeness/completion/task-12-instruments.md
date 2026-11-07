@@ -31,4 +31,6 @@ Named before code:
 
 ## Found later
 
-(none yet)
+- **unlisted** (2026-11-07, 12.2; criteria C5–C8): amendment 9's message-keyed row 2 pattern `Q` (`crossread-lina.md` § 1) is an instrument the block never named; the criterion that uses it is not yet written. State: not yet an artifact (the coordinator drafts it). Route: the completion doc cites it once amendment 9 has merged.
+- **unlisted** (2026-11-07, 12.2; C3–C8): `docs/tokens.css`, rewritten by a test run in the worktree and committed in `dfdc47760`, restored in the next checkpoint. It is not a Task 12 artifact.
+- **misfit** (2026-11-07, 12.3; C9): the block's row 3 said dispatched runs would catch a wrong `ripple` import, and they did (run 42411441442, `Unresolved reference 'ripple'` for `androidx.compose.material.ripple.ripple`); the fault was my import choice, not the instrument. Fixed to `androidx.compose.material3.ripple`.
