@@ -35,14 +35,14 @@
 #                          per-task branch here would silently split the unit
 #                          across branches. On main, be already on the unit
 #                          branch or pass --branch explicitly. After pushing,
-#                          it DISPATCHES the six required workflows against the
+#                          it DISPATCHES the seven required workflows against the
 #                          unit branch (`gh workflow run … --ref`) and prints a
 #                          ready-to-paste `**CI-provenance**: branch-head
 #                          dispatch @ <sha> — <urls>` line (ballot B-CI § 4).
 #   Subtask mode (--subtask): commit on the task branch and push it. NO PR opens
 #                          until unit completion; subtasks never open PRs. At
 #                          a judgment-based checkpoint this mode ALSO dispatches
-#                          the six required workflows against the unit branch
+#                          the seven required workflows against the unit branch
 #                          and prints the ready-to-paste provenance line — pass
 #                          --no-ci for a checkpoint you know is red (its use is
 #                          on the honour system; nothing records it).
@@ -60,7 +60,7 @@
 # Omit it for a single-parent unit; the PR body falls back to a fixed note.
 #
 # --dry-run-ci: a standalone diagnostic mode (no MESSAGE required, no git/gh
-# mutation). Prints the six `gh workflow run` dispatch commands it would issue
+# mutation). Prints the seven `gh workflow run` dispatch commands it would issue
 # and demonstrates the zero-runs detector against a stubbed zero-run result
 # (its non-zero return, without terminating this invocation) — see ballot B-CI
 # § 6 step 3. Ignores every other flag.
@@ -106,11 +106,13 @@ die()  { echo "" >&2; echo "❌ $1" >&2; shift; for line in "$@"; do echo "   $l
 
 # ---------------------------------------------------------------------------
 # Ballot B-CI — the required-workflows list (multi-homed copy set, S-6).
-# This array is count-asserted (six) against the six workflow files that
-# together produce 18 of tools/agent-generator/verify-gate-registration.sh's
-# 19 required contexts. If that script's workflow set ever changes, this array
+# This array is count-asserted (seven) against the seven workflow files that
+# together produce 19 of tools/agent-generator/verify-gate-registration.sh's
+# 20 required contexts (native-harness.yml, added at the first harness promotion,
+# produces one of them, harness-android-tokens; Spec 129 tasks.md Decision 6,
+# "The promotion lifecycle", grant .kiro/issues/2026-11-07-promote-harness-android-tokens-grant.md). If that script's workflow set ever changes, this array
 # moves with it in the SAME recorded change (C9 discipline extended to CI
-# dispatch — ballot B-CI § 5 grant item 2(a)). The 19th context,
+# dispatch — ballot B-CI § 5 grant item 2(a)). The 20th context,
 # completion-criteria-parity (required since 2026-10-03), comes from a seventh
 # file, completion-criteria-parity.yml, which has no workflow_dispatch and is
 # not in this array: its exclusion was decided while it was not required
@@ -126,11 +128,12 @@ REQUIRED_WORKFLOWS=(
   "agent-generator.yml"
   "package-name-drift.yml"
   "lane-timing.yml"
+  "native-harness.yml"
 )
-if [[ ${#REQUIRED_WORKFLOWS[@]} -ne 6 ]]; then
-  echo "❌ Internal error: REQUIRED_WORKFLOWS must have exactly 6 entries (it is a" >&2
-  echo "   multi-homed copy set with the 6 workflow files producing 18 of" >&2
-  echo "   verify-gate-registration.sh's 19 required contexts) — found ${#REQUIRED_WORKFLOWS[@]}." >&2
+if [[ ${#REQUIRED_WORKFLOWS[@]} -ne 7 ]]; then
+  echo "❌ Internal error: REQUIRED_WORKFLOWS must have exactly 7 entries (it is a" >&2
+  echo "   multi-homed copy set with the 7 workflow files producing 19 of" >&2
+  echo "   verify-gate-registration.sh's 20 required contexts) — found ${#REQUIRED_WORKFLOWS[@]}." >&2
   exit 1
 fi
 
@@ -269,7 +272,7 @@ demo_check_ci_started_zero() {
 }
 
 # run_dry_run_ci_demo — the --dry-run-ci standalone action (ballot B-CI § 6
-# step 3). No git or gh mutation. Prints the six dispatch commands it would
+# step 3). No git or gh mutation. Prints the seven dispatch commands it would
 # issue and demonstrates the zero-runs detector against a stubbed zero-run
 # result, without terminating this invocation.
 run_dry_run_ci_demo() {
@@ -328,7 +331,7 @@ per ballot B-CI):
     but is NOT that unit's final/gating parent — its completion+summary docs
     land on the branch; it is done-on-branch and accepted when the UNIT's PR
     (opened later, in parent mode, by the gating parent) merges. After pushing,
-    DISPATCHES the six required workflows against the unit branch and prints a
+    DISPATCHES the seven required workflows against the unit branch and prints a
     ready-to-paste `**CI-provenance**: branch-head dispatch @ <sha> — <urls>`
     line (ballot B-CI § 4) — pass --no-ci to skip.
     e.g. ./.kiro/hooks/complete-task.sh --unit-member "Task 1 Complete: Substrate setup (123)"
@@ -381,7 +384,7 @@ OPTIONS:
                          use is on the honour system; nothing records it
                          (ballot B-CI § 2.1).
   --dry-run-ci           Standalone diagnostic mode: no MESSAGE, no git/gh
-                         mutation. Prints the six `gh workflow run` dispatch
+                         mutation. Prints the seven `gh workflow run` dispatch
                          commands it would issue and demonstrates the
                          zero-runs detector against a stubbed zero-run result
                          (ballot B-CI § 6 step 3). Ignores every other flag.

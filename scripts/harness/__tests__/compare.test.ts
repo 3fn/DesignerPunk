@@ -505,6 +505,29 @@ describe('the toolchain match (Req 3.11)', () => {
       'FAIL toolchain: the lane reported sdk.build "23A1", which harness/pins.yaml does not pin',
     ]);
   });
+  describe('Android (condition 1 of the promotion lifecycle: a field of the context\'s own platform)', () => {
+    const ANDROID_TOOLCHAIN = { 'java.version': '17.0.21' };
+    const androidTokens = (toolchain: Record<string, string>): ContextResults => ({
+      compiles: [result('android.tokens', 'succeeded'), result('android.probe', 'succeeded')],
+      logComplete: true,
+      files: { gen: { compiled: 3, floor: 3 } },
+      toolchain,
+      checks: [],
+    });
+    it('passes when the Android toolchain matches its pin', () => {
+      expect(red(run(buildRepo(), androidTokens(ANDROID_TOOLCHAIN), 'harness-android-tokens'))).toEqual([]);
+    });
+    it('fails on an android toolchain field that differs from its pin', () => {
+      expect(red(run(buildRepo(), androidTokens({ 'java.version': '17.0.22' }), 'harness-android-tokens'))).toEqual([
+        'FAIL toolchain: android.toolchain.java.version observed "17.0.22", pinned "17.0.21"',
+      ]);
+    });
+    it('does not read the iOS pins: an iOS field on an Android context is reported as unpinned', () => {
+      expect(red(run(buildRepo(), androidTokens({ ...ANDROID_TOOLCHAIN, 'xcode.version': '26.6' }), 'harness-android-tokens'))).toEqual([
+        'FAIL toolchain: the lane reported xcode.version "26.6", which harness/pins.yaml does not pin',
+      ]);
+    });
+  });
   it('fails on an unquoted toolchain value', () => {
     const head = { 'harness/pins.yaml': PINS.replace('"6.2"', '6.2') };
     expect(red(run(buildRepo({ head }), iosTokens()))).toEqual(['FAIL format: harness/pins.yaml: "ios.toolchain.swift.version" is not a quoted string']);
