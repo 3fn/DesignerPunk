@@ -336,7 +336,7 @@ android_patterns:
 
 #### Android Token Usage: The `.dp` Pattern
 
-**CRITICAL RULE**: Never append `.dp` to a `DesignTokens` value the generator emits as `Dp` (spacing, radius, tapArea, borderWidth, layering, sizing), and never append `.sp` or `.dp` to a `fontSize` (`TextUnit`) when passing it to Compose functions. Each family below has one Kotlin type; read it at that type, and convert only where this section says so.
+**CRITICAL RULE**: Never append `.dp` to a `DesignTokens` value the generator emits as `Dp` (spacing, radius, tapArea, borderWidth, layering, sizing), and never append `.sp` or `.dp` to a `fontSize` (`TextUnit`) when passing it to Compose functions. Each family below has one Kotlin type; read it at that type, and convert only where this section says so. *(amended 2026-11-07 by 2026-11-07-129-u4-android-type-statements § 2; prior text at e37bdce07, which carries the 2026-11-01 correction pointer and the "Why Android-Specific" 2026-10-30 correction pointer)*
 
 **The per-family Android types** (`getKotlinType` and the composite formatters in `src/providers/AndroidFormatGenerator.ts`; `NativeTypeTable.test.ts` asserts one row each):
 
