@@ -95,11 +95,24 @@ verdict: assent — surviving 3/4; not surviving: `branch-cleanup-4`
 ## `#branch-and-pr-conventions`
 
 signer: stacy
-date: 2026-10-18
+date: 2026-11-07
 row: `canonical/profiles/consumer/always-set/task-completion-protocol.dispositions.yaml` · body · `#branch-and-pr-conventions` (re-pointed; ROUTED)
-canonicalHash: sha256:4e0f6aca925ae3b32e9dfda4c2972002344de66fafdeefb0c4f05c7ad860583d
+canonicalHash: sha256:7ba8cde7de8bd19af7748439c50b669e71b596438b6e6b611a8ad1abeb56837a
 renderedHash: sha256:f6fb65fb4a49594b6e94cabd362728162544d4f01421d9549a6fda088702adaf
-verdict: assent — surviving 6/8; not surviving: `branch-and-pr-conven-6`, `branch-and-pr-conven-8`
+verdict: assent — surviving 6/10; not surviving: `branch-and-pr-conven-6`, `branch-and-pr-conven-8`, `branch-and-pr-conven-9`, `branch-and-pr-conven-10`
+
+**Re-signed 2026-11-07** (prior signature: assent, 2026-10-18, against `sha256:4e0f6aca…`). It was stale because the canonical unit changed under ballot `2026-11-07-merge-hold-and-law-ratified-checks` (RATIFIED, #722): item 1's grammar (`-9`), item 2's `law-ratified` sentence (`-10`) and F-2's path phrase in `-8`. These were applied by Thurgood on #725, and I re-confirmed them at 10 items (`94e3468d0`). The overlay text is unchanged; only its pin was re-grounded. The row gains one removal.
+- **Judged against**: the consumer rendering of the unit, printed in full first (`canonical/_consumer-output/_canonical/always-set/task-completion-protocol.md` § "Branch and PR Conventions"), and the operative set at 10 items.
+- **renderedHash**: I computed it from a fresh rendering through the guard's own path: `generateAll(root)` → `writeOutputs(<temp dir>)` → `readConsumerSpans(<temp dir>)` → `renderedHashOf(rowSpanSource(...))`, over three pieces (the `_canonical` always-set copy, the CC identity doc and the Kiro steering doc). It equals the committed rendering's value and the prior signature's, because the overlay text did not move. Nothing was written under the worktree's tracked tree. One build step rewrote the tracked `docs/tokens.css`, and that change was discarded before any act.
+- **The new removal and its cite are right**: "the merge-hold check's marker-and-answer grammar (the `**Peter answered**:` line, its normalisation and its ballot pointer)", citing `subtraction-2`.
+  - The text names Peter and describes this repository's merge-hold check. Both are authority claims naming a person or this repo's gate, and the deny-list hit is "Peter".
+  - A consumer has no merge-hold check to answer to. A re-pointed `**<name> answered**:` grammar would be an obligation backed by no instrument.
+- **The Edit kind bullet stays removed whole** (`subtraction-5`, unchanged). Item 2's `law-ratified` sentence and the F-2 phrase sit inside it, so neither reaches the consumer.
+- **Rendering check**: a grep of `canonical/_consumer-output/` for `answered**`, `law-ratified`, `frontmatter included` and `normalis` finds nothing. The consumer bullet for `-7` is byte-identical to the 2026-10-18 rendering.
+- **Credits**:
+  - `-1` to `-5` and `-7` survive, unchanged from 2026-10-18.
+  - `-6` and `-8` are not credited, for the reasons below.
+  - `-9` and `-10` are not credited: both are removed, as above.
 
 **Re-signed 2026-10-18** (prior signature: assent, 2026-09-29, against `sha256:920fbf9e…`). Stale because the canonical unit gained two bullets: ballot `2026-10-18-obligation-drain-and-release-falsity-floor` M8 (the question-holds-the-merge rule, item `-7`) and ballot `2026-10-18-governance-edit-kinds` § 3a (the `**Edit kind**:` line, item `-8`), applied by Thurgood at `e084dbfd8` and re-confirmed by me at 8 items (`fd9b29d87`). The rendering changed too: the overlay (re-pinned and given my consumer M8 bullet byte for byte, Thurgood `e09d2842e`) adds one bullet.
 - **Judged against**: the fresh rendering of the unit at this revision (three pieces: the `_canonical` always-set copy, the CC identity doc and the Kiro steering doc), and the operative set at 8 items.
