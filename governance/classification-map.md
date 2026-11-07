@@ -1301,3 +1301,47 @@ education:
 history:
   - { date: 2026-10-29, change: "entry created by ballot 2026-10-29-dated-pointer-paths-and-edit-kind-check (EXECUTION, § 3 site 5), check_state none: an audit tool read by Stacy, never a gate", by: thurgood }
 ```
+
+### merge-hold-answer-cited
+
+```yaml
+rule: "each **Open for Peter**: line in a PR body has a **Peter answered**: line after it whose quoted words are in its cited source"
+boundary_call:
+  class: functional
+  rationale: "Presence, order and citation of an answer line, and the normalised quote found in the cited file or comment on the PR, are decidable from the PR body and git; who gave the answer is not (agents act through Peter's credential), and a question with no marker is invisible to the check"
+verification:
+  disposition: warn
+  owner: thurgood
+  check_state: armed
+  armed_at: tool-time
+  checks: ["merge-hold"]
+  # The advisory job `merge-hold` in .github/workflows/merge-hold.yml (scripts/completion-claims/merge-hold.ts --job merge-hold).
+  #   It is NOT a required context and is not in EXPECTED_CONTEXTS: armed_at tool-time keeps it out of the count. Promotion
+  #   to required follows five clean runs that parsed at least one marker (ballot item 5 step 4, F-1 = 5), by its own
+  #   grant-and-count record; the hand reads owed are listed in .kiro/issues/2026-11-07-merge-hold-promotion-reads.md.
+education:
+  disposition: "LAW HOME: .kiro/steering/Task-Completion-Protocol.md § 'Branch and PR Conventions' (the marker and its answer, as the merge-hold check reads them); LAW RECORD: ballot 2026-11-07-merge-hold-and-law-ratified-checks"
+history:
+  - { date: 2026-11-07, change: "entry created by ballot 2026-11-07-merge-hold-and-law-ratified-checks (EXECUTION, item 4), armed advisory at the build PR's merge (armed_at tool-time: a non-required job). Promotion to required: ballot item 5 step 4, after five clean runs that parsed a marker", by: thurgood }
+```
+
+### law-ratified-at-head
+
+```yaml
+rule: "each **Edit kind**: LAW line's ballot reads RATIFIED at the PR head, and each governance-path file the diff changes has an edit-kind line"
+boundary_call:
+  class: functional
+  rationale: "A cited ballot's first Status line, and the presence of a line naming each changed governance file, are decidable from the PR body and git; whether a line's kind is the right kind (a LAW edit declared as EXECUTION) is not, and stays Stacy's sample read; presence is file-grain"
+verification:
+  disposition: barrier
+  owner: thurgood
+  check_state: proposed
+  checks: ["law-ratified"]
+  # The job `law-ratified` in .github/workflows/merge-hold.yml (scripts/completion-claims/merge-hold.ts --job law-ratified).
+  #   Armed by ballot item 5: the grant .kiro/issues/2026-11-07-merge-hold-checks-build-grant.md, a throwaway PR that shows it red,
+  #   Peter's branch-protection change and EXPECTED_COUNT 20 -> 21. Until then proposed.
+education:
+  disposition: "LAW HOME: .kiro/steering/Task-Completion-Protocol.md § 'Branch and PR Conventions' (the Edit kind line, and the law-ratified check that reads it); LAW RECORD: ballot 2026-11-07-merge-hold-and-law-ratified-checks"
+history:
+  - { date: 2026-11-07, change: "entry created by ballot 2026-11-07-merge-hold-and-law-ratified-checks (EXECUTION, item 4), check_state proposed until the promotion of item 5 (grant, red-once throwaway PR, Peter's branch-protection change, count 20 -> 21)", by: thurgood }
+```
