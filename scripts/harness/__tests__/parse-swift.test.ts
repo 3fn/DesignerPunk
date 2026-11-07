@@ -11,6 +11,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import * as yaml from 'js-yaml';
 import { parseKey, type Roots, type SwiftCompileId } from '../compare';
 import { parseSwift } from '../parse-swift';
 
@@ -80,9 +81,9 @@ describe('parse-swift fixtures', () => {
     }
   });
 
-  it('records the local fixtures under Xcode 27.2', () => {
+  it('records the local fixtures under Xcode 27.2, and the CI fixtures (named ci-*) under the pinned Xcode', () => {
     for (const name of FIXTURE_NAMES) {
-      expect(loadFixture(name).headers.get('toolchain')).toMatch(/^Xcode 27\.2 /);
+      expect(loadFixture(name).headers.get('toolchain')).toMatch(name.startsWith('ci-') ? /^Xcode 26\.6 \(17F113\), / : /^Xcode 27\.2 /);
     }
   });
 
@@ -345,5 +346,52 @@ describe('parse-swift: purity', () => {
     expect(source).not.toMatch(/\brequire\(/);
     expect(source).not.toMatch(/\bprocess\./);
     expect(source).not.toMatch(/child_process|\bfetch\(|readFileSync|node:/);
+  });
+});
+
+describe('parse-swift: ci-first-full-run-stage-c.txt (a cut of the first full run\'s iOS log under the pinned Xcode)', () => {
+  const NAME = 'ci-first-full-run-stage-c';
+  const f = loadFixture(NAME);
+  const r = parseFixture(NAME, 'ios.C');
+  const expected = new Map(
+    fs
+      .readFileSync(path.join(FIXTURE_DIR, `${NAME}.keys.tsv`), 'utf8')
+      .split('\n')
+      .filter((l) => l !== '')
+      .map((l): [string, number] => [l.slice(0, l.lastIndexOf('\t')), Number(l.slice(l.lastIndexOf('\t') + 1))]),
+  );
+  const pins = (yaml.load(fs.readFileSync(path.join(__dirname, '..', '..', '..', 'harness', 'pins.yaml'), 'utf8')) as { ios: { toolchain: Record<string, string> } }).ios.toolchain;
+
+  it('its header names the pinned Xcode, Swift and SDK build, and the run that produced it', () => {
+    const tc = f.headers.get('toolchain') ?? '';
+    expect(tc).toContain(`Xcode ${pins['xcode.version']} (${pins['xcode.build']})`);
+    expect(tc).toContain(`Apple Swift ${pins['swift.version']} (${pins['swift.build']})`);
+    expect(tc).toContain(`SDK ${pins['sdk.build']}`);
+    expect(f.headers.get('source')).toContain('https://github.com/3fn/DesignerPunk/actions/runs/42324880305');
+  });
+
+  it('is sanitised: no home folder, no runner path', () => {
+    const raw = fs.readFileSync(path.join(FIXTURE_DIR, `${NAME}.txt`), 'utf8');
+    expect(raw).not.toContain('/Users/');
+    expect(raw).not.toMatch(/runner\/work/);
+  });
+
+  it('yields exactly the keys and counts of the committed .keys.tsv, which a separate pass over the log produced', () => {
+    expect(entries(r.diagnostics).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))).toEqual([...expected.entries()].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
+    expect(r.outcome).toBe('failed');
+    expect(r.unrooted).toEqual([]);
+  });
+
+  it('reaches both roots a component context reads: the generated file\'s parse errors and the package files\' errors', () => {
+    const keys = [...r.diagnostics.keys()];
+    expect(keys.some((k) => k.startsWith('gen:DesignTokens.ios.swift | '))).toBe(true);
+    expect(keys.some((k) => k.startsWith('pkg:src/components/core/'))).toBe(true);
+    expect(keys.every((k) => parseKey(k) !== null)).toBe(true);
+  });
+
+  it('counts a repeated diagnostic at one location once, and the sum is the number of distinct located errors', () => {
+    const total = [...r.diagnostics.values()].reduce((n, c) => n + c, 0);
+    const distinct = new Set(f.log.split('\n').filter((l) => /^\/.+?:\d+:\d+: error: /.test(l))).size;
+    expect(total).toBe(distinct);
   });
 });
