@@ -3027,3 +3027,30 @@ Peter, `date -u` at receipt 2026-11-07T05:10:45Z (orchestrator relay), verbatim:
   - a criterion: `git grep -n -i colormath -- harness/android/` prints nothing at H, and both Android contexts still match their lists.
 - **No new ruling.** This rides Peter's "do the amendment" (2026-11-07T05:10:45Z), with Data as the consulted owner.
 - **Ordering.** This now changes Task 8's criteria, so amendment 6 (#709) must merge before U3's PR opens, and U3's branch merges `main` after it. That reverses `[THURGOOD R12]`'s "need not merge before U3".
+
+## Tasks amendment 7 (2026-11-07): `harness-infra`, and U3a
+
+Peter, `date -u` at receipt 2026-11-07T14:12:30Z (orchestrator relay), verbatim: "Let's adopt the fix with class option if you think it'll be effective". The record, `evidence/2026-11-07-peter-ruling-harness-infra-verdict.md`, quotes the decision brief he read and records the effectiveness judgment as the orchestrator's, not his.
+
+#### [THURGOOD R14] — tasks amendment 7
+- **Design § 3, "Verdicts name their side"**: the class rule in one line. Every run writes `harness-verdict` (our code) or `harness-infra` (the environment, with host, status and step), never both. Also: what is infra and what stays a verdict, the resolve marker, the iOS reading, and the surviving counter-argument. → design.md § 3
+- **Decision 6**:
+  - Condition 2: an infra run is skipped, neither a break nor counted; a job with neither annotation is still a break; two or more consecutive infra runs at one head are a finding; an infra run is not re-run, because its attempts would then differ.
+  - Condition 3: an infra run is never cold.
+  - A note for the first stability record after this: #711's re-run, the orchestrator's act, is a condition 2 break at a streak of 0.
+  → tasks.md § "Decision 6"
+- **The carrier: a standalone unit, U3a (Task 19)**, beside the chain after U2, merging before U4's PR opens.
+  - **Why not U4 / Task 9**: U4's own PR runs would then be counted under the old rule until its last push. Task 9 is already Ada's largest generator unit, and the fix has nothing to do with it.
+  - **Why not U3**: #711 is open, and its scope is set.
+  - **Cost**: one more small PR. Because U3 and U3a both touch `harness/android/**`, whichever merges second merges `main` first. Data writes both.
+  → tasks.md § "Declared Merge Units", "Order and dependencies", Task 19
+- **Owners and tiers**: Thurgood (Sonnet), PRIMARY, owns the workflow's save condition and annotation, a new workflow test, `stability.ts` and its test, the record and the guard entry. Data (Sonnet) owns the lane's resolve step, marker and classifier. `compare.ts` needs no class: an ordinary resolve failure travels as a `checks` entry and fails as `check`. Consulted: Stacy, Kenya.
+- **The bad cache**: a "now" row in § "Unit preconditions". Delete the `refs/pull/711/merge` entry before #711's next push, with outputs pasted in Task 19's doc. It is PR-scoped, and its key includes `pins.yaml`, which U3 changes, so no other ref restores it. Until it is deleted, a #711 run that restores it reads `cache: hit` and counts toward no cold run.
+- **My verifiability lens on Task 19's criteria** (Stacy's form):
+  - every criterion names its instrument: `probe-kotlin.test.ts` cases, including a fixture cut from the failing job's own log; `native-harness-workflow.test.ts`, red once against the base, then green; `stability.test.ts` cases; pasted command outputs; the existing iOS cases cited at a SHA.
+  - **Honest reach**: no criterion forces a live infra run. Task 5's A-(iii) rule allows only one input-read step, in `harness-generate`, so an infra fault cannot be forced on a dispatch. The annotation path is shown by the static workflow test and the lane's unit tests, and the first real infra run is the live evidence when it comes. I do not count that as met in advance.
+  - **#699's class**: every evidence event is at or before H of U3a's own PR. The stability re-run is committed at H, and the cache deletion is an act before the doc.
+- **Grant**: Task 19's row grants `.github/workflows/native-harness.yml` for the two Android jobs' save condition and annotation only, with the deleted lines quoted. This file's merge activates the grant, so the amendment PR's body carries `**ARMING**: at this merge and at the fixing PR's merge`.
+- [@DATA] Is your resolve step a Gradle task (which puts `harness/android/**` build files in the row) or a `lane.ts` invocation only? And your size for 19.1? → tasks.md Task 19 -- [THURGOOD R14]
+- [@STACY] LENS read of Task 19 and the condition 2/3 text, including the "not re-run" rule and the honest reach above. → tasks.md § "Decision 6", Task 19 -- [THURGOOD R14]
+- [@KENYA] Confirm the iOS criterion's cited cases (L1036, L1084–1098 at `d19eb3958`) are the right evidence. → tasks.md Task 19 -- [THURGOOD R14]
