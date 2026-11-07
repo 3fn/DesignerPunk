@@ -1,0 +1,120 @@
+# Baseline list for harness-ios-components: the failures this context is expected to report (harness/README.md § "The expected-failure lists").
+# Committed from the first full run of Spec 129 U1: native-harness.yml run 42324880305 (workflow_dispatch) at cc2e71a51,
+# context harness-ios-components, observed keys from `compare.ts --emit-observed`. Admitted under Req 3.5 exception (b): the list is absent at the merge base.
+# Each entry is <key> TAB <count> TAB <tag>; a tag names the root record whose Trigger has not fired and whose fix removes the entry.
+# Tags follow the routing table of 2026-11-07-native-component-repair-from-first-harness-run.md.
+pkg:src/blend/ThemeAwareBlendUtilities.ios.swift | value of type 'Color' has no member 'darkerBlend'	3	2026-06-24-blend-system-architecture-and-oklch-alignment.md
+pkg:src/blend/ThemeAwareBlendUtilities.ios.swift | value of type 'Color' has no member 'desaturate'	2	2026-06-24-blend-system-architecture-and-oklch-alignment.md
+pkg:src/blend/ThemeAwareBlendUtilities.ios.swift | value of type 'Color' has no member 'lighterBlend'	3	2026-06-24-blend-system-architecture-and-oklch-alignment.md
+pkg:src/blend/ThemeAwareBlendUtilities.ios.swift | value of type 'Color' has no member 'saturate'	2	2026-06-24-blend-system-architecture-and-oklch-alignment.md
+pkg:src/components/core/Avatar-Base/platforms/ios/Avatar.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Avatar-Base/platforms/ios/Avatar.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Badge-Count-Base/platforms/ios/BadgeCountBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Badge-Count-Base/platforms/ios/BadgeCountBase.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Badge-Count-Notification/platforms/ios/BadgeCountNotification.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Badge-Count-Notification/platforms/ios/BadgeCountNotification.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Badge-Label-Base/platforms/ios/BadgeLabelBase.ios.swift | argument 'size' must precede argument 'icon'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Badge-Label-Base/platforms/ios/BadgeLabelBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Badge-Label-Base/platforms/ios/BadgeLabelBase.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Button-CTA/platforms/ios/ButtonCTA.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Button-CTA/platforms/ios/ButtonCTA.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | cannot find 'ButtonIconTokens' in scope	3	2026-10-02-consumer-generation-completeness-spec.md
+pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | type 'DesignTokens' has no member 'scale096'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | type 'DesignTokens' has no member 'scale100'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift | cannot convert return expression of type 'Animation.Type' to return type 'Animation'	2	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift | cannot convert return expression of type 'T?' to return type 'VisualStateStyles'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift | cannot find 'VerticalListItemTokens' in scope	2	2026-10-02-consumer-generation-completeness-spec.md
+pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift | cannot find type 'DesignerPunkTheme' in scope	11	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift | cannot infer contextual base in reference to member 'rest'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSet.ios.swift | argument 'onMultiSelectionChange' must precede argument 'minSelections'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSet.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSet.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSetPreview.swift | argument 'onMultiSelectionChange' must precede argument 'minSelections'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Chip-Base/platforms/ios/ChipBase.ios.swift | cannot find 'theme' in scope	4	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Chip-Base/platforms/ios/ChipBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Chip-Base/platforms/ios/ChipBase.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift | cannot find 'theme' in scope	7	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Chip-Input/platforms/ios/ChipInput.ios.swift | cannot find 'theme' in scope	4	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Chip-Input/platforms/ios/ChipInput.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Chip-Input/platforms/ios/ChipInput.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'borderEmphasis' is inaccessible due to 'private' protection level	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'borderHeavy' is inaccessible due to 'private' protection level	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'radius050' is inaccessible due to 'private' protection level	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'spaceInset300' is inaccessible due to 'private' protection level	5	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'spaceInset400' is inaccessible due to 'private' protection level	5	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'zIndexContainer' is inaccessible due to 'private' protection level	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'zIndexDropdown' is inaccessible due to 'private' protection level	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'zIndexModal' is inaccessible due to 'private' protection level	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'zIndexNavigation' is inaccessible due to 'private' protection level	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'zIndexToast' is inaccessible due to 'private' protection level	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'zIndexTooltip' is inaccessible due to 'private' protection level	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | ambiguous use of 'motionFocusTransition'	2	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | cannot find type 'BorderRadiusValue' in scope	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | cannot find type 'BorderValue' in scope	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | cannot find type 'LayeringValue' in scope	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | cannot find type 'PaddingValue' in scope	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | invalid redeclaration of 'borderDefault'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | invalid redeclaration of 'radius100'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | invalid redeclaration of 'radius200'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | invalid redeclaration of 'shadowContainerColor'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | invalid redeclaration of 'shadowContainerRadius'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | invalid redeclaration of 'shadowContainerX'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | invalid redeclaration of 'shadowContainerY'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | invalid redeclaration of 'spaceInset050'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | invalid redeclaration of 'spaceInset100'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | invalid redeclaration of 'spaceInset150'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Base/platforms/ios/TokenMapping.swift | invalid redeclaration of 'spaceInset200'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Card-Base/platforms/ios/ContainerCardBase.ios.swift | argument 'accessibilityLabel' must precede argument 'interactive'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Card-Base/platforms/ios/ContainerCardBase.ios.swift | cannot find 'theme' in scope	5	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Container-Card-Base/platforms/ios/ContainerCardBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Container-Card-Base/platforms/ios/ContainerCardBase.ios.swift | invalid redeclaration of 'motionFocusTransition'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Container-Card-Base/platforms/ios/ContainerCardBase.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Input-Checkbox-Base/platforms/ios/InputCheckboxBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Input-Checkbox-Base/platforms/ios/InputCheckboxBase.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Input-Checkbox-Base/platforms/ios/InputCheckboxBase.ios.swift | type 'DesignTokens' has no member 'scale096'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Input-Checkbox-Legal/platforms/ios/InputCheckboxLegal.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Input-Checkbox-Legal/platforms/ios/InputCheckboxLegal.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Input-Radio-Base/platforms/ios/InputRadioBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Input-Radio-Base/platforms/ios/InputRadioBase.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Input-Radio-Base/platforms/ios/InputRadioBase.ios.swift | type 'DesignTokens' has no member 'scale096'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Input-Radio-Set/platforms/ios/InputRadioSet.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Input-Radio-Set/platforms/ios/InputRadioSet.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Input-Text-Base/platforms/ios/InputTextBase.ios.swift | cannot find 'spaceGroupedMinimal' in scope	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Input-Text-Base/platforms/ios/InputTextBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	2	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Input-Text-Base/platforms/ios/InputTextBase.ios.swift | no exact matches in call to initializer	2	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Nav-Header-App/platforms/ios/NavHeaderApp.ios.swift | generic parameter 'Leading' could not be inferred	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Nav-Header-App/platforms/ios/NavHeaderApp.ios.swift | generic parameter 'Title' could not be inferred	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Nav-Header-App/platforms/ios/NavHeaderApp.ios.swift | generic parameter 'Trailing' could not be inferred	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Nav-Header-Base/platforms/ios/NavHeaderBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Nav-Header-Base/platforms/ios/NavHeaderBase.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Nav-Header-Page/platforms/ios/NavHeaderPage.ios.swift | cannot find type 'IconBaseName' in scope	2	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Nav-Header-Page/platforms/ios/NavHeaderPage.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Nav-Header-Page/platforms/ios/NavHeaderPage.ios.swift | generic parameter 'Leading' could not be inferred	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Nav-Header-Page/platforms/ios/NavHeaderPage.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Nav-Header-Page/platforms/ios/NavHeaderPage.ios.swift | type 'String' has no member 'chevronLeft'	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Nav-SegmentedChoice-Base/platforms/ios/NavSegmentedChoiceBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Nav-SegmentedChoice-Base/platforms/ios/NavSegmentedChoiceBase.ios.swift | extra argument 'minHeight' in call	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Nav-SegmentedChoice-Base/platforms/ios/NavSegmentedChoiceBase.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Nav-TabBar-Base/platforms/ios/NavTabBarBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Nav-TabBar-Base/platforms/ios/NavTabBarBase.ios.swift | extra argument 'width' in call	1	2026-11-07-native-component-repair-from-first-harness-run.md
+pkg:src/components/core/Nav-TabBar-Base/platforms/ios/NavTabBarBase.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Progress-Bar-Base/platforms/ios/ProgressBarBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Progress-Bar-Base/platforms/ios/ProgressBarBase.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Progress-Bar-Base/platforms/ios/ProgressBarBase.ios.swift | type 'ProgressBarTokens' has no member 'intheme'	1	2026-11-04-progress-bar-native-theme-reads-malformed.md
+pkg:src/components/core/Progress-Bar-Base/platforms/ios/ProgressBarBase.ios.swift | type 'ProgressBarTokens' has no member 'theme'	2	2026-11-04-progress-bar-native-theme-reads-malformed.md
+pkg:src/components/core/Progress-Indicator-Connector-Base/platforms/ios/ProgressIndicatorConnectorBase.ios.swift | cannot find 'theme' in scope	2	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Progress-Indicator-Connector-Base/platforms/ios/ProgressIndicatorConnectorBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Progress-Indicator-Connector-Base/platforms/ios/ProgressIndicatorConnectorBase.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Progress-Indicator-Label-Base/platforms/ios/ProgressIndicatorLabelBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Progress-Indicator-Label-Base/platforms/ios/ProgressIndicatorLabelBase.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Progress-Indicator-Node-Base/platforms/ios/ProgressIndicatorNodeBase.ios.swift | cannot find 'theme' in scope	8	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Progress-Indicator-Node-Base/platforms/ios/ProgressIndicatorNodeBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Progress-Indicator-Node-Base/platforms/ios/ProgressIndicatorNodeBase.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Progress-Pagination-Base/platforms/ios/ProgressPaginationBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
+pkg:src/components/core/Progress-Pagination-Base/platforms/ios/ProgressPaginationBase.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
