@@ -13,7 +13,16 @@
  *   1. a front-matter block carrying the guide's `path-steps` map (front matter
  *      must open the file to be front matter);
  *   2. a fixed header that cites its source by repo-relative path;
- *   3. the region, verbatim, without its markers.
+ *   3. the region, verbatim, without its two region markers and without its
+ *      limitation markers.
+ *
+ * Limitation markers (Spec 129 Task 7, Req 15.2): a sentence in the region that
+ * a Spec 129 row fixes carries ` <!-- limitation: .kiro/issues/<file>.md -->`
+ * right after it, naming the record whose archival makes the sentence false. A
+ * marker is maintenance metadata that points at a path a consumer cannot open,
+ * so the derivation strips it (the space before it too), and
+ * `checkLimitationMarkers` fails a marked record that is under `archive/` or
+ * missing while its sentence remains.
  *
  * Run: `npx tsx scripts/derive-install-doc.ts` (no package.json script line).
  */
@@ -38,6 +47,51 @@ export function extractRegion(guide: string): string {
   return lines.slice(begins[0] + 1, ends[0]).join('\n').trim();
 }
 
+/** A well-formed limitation marker, with the one space that precedes it. Group 1 is the record's repo-relative path. */
+const LIMITATION_MARKER = / <!-- limitation: (\.kiro\/issues\/[^\s/]+\.md) -->/g;
+/** Anything that opens a limitation marker, well-formed or not (the leak test). */
+export const LIMITATION_OPENER = '<!-- limitation:';
+
+/** The region with every well-formed limitation marker (and the space before it) removed. */
+export function stripLimitationMarkers(region: string): string {
+  return region.replace(LIMITATION_MARKER, '');
+}
+
+/** The records the region's limitation markers name, in order, with the 1-based line (within the region) of each. */
+export function limitationMarkers(region: string): { record: string; line: number }[] {
+  return region.split('\n').flatMap((text, i) => Array.from(text.matchAll(LIMITATION_MARKER), (m) => ({ record: m[1], line: i + 1 })));
+}
+
+/**
+ * Problems with the guide's limitation markers, as messages; an empty list is a pass. `root` holds
+ * `.kiro/issues/` (the repository root, or a fixture tree). A marked record must be at the issues
+ * root: one under `archive/` or absent means its sentence is false (or its marker is wrong) and the
+ * sentence still stands. A marker that is not well-formed, or sits outside the install region, is a
+ * problem too, so that none reaches a reader.
+ */
+export function checkLimitationMarkers(guide: string, root: string): string[] {
+  const problems: string[] = [];
+  const region = extractRegion(guide);
+  const wellFormed = limitationMarkers(region);
+  const openers = region.split(LIMITATION_OPENER).length - 1;
+  if (openers !== wellFormed.length) {
+    problems.push(`${openers - wellFormed.length} limitation marker(s) in the install region are not of the form " <!-- limitation: .kiro/issues/<file>.md -->"`);
+  }
+  const outside = guide.split(LIMITATION_OPENER).length - 1 - openers;
+  if (outside > 0) problems.push(`${outside} limitation marker(s) sit outside the install region, where they have no effect`);
+  for (const { record, line } of wellFormed) {
+    const atRoot = path.join(root, record);
+    const archived = path.join(root, path.dirname(record), 'archive', path.basename(record));
+    if (fs.existsSync(atRoot)) continue;
+    problems.push(
+      fs.existsSync(archived)
+        ? `region line ${line}: ${record} is under archive/ and its sentence remains`
+        : `region line ${line}: ${record} is missing and its sentence remains`,
+    );
+  }
+  return problems;
+}
+
 /** The guide's front-matter `path-steps:` line, verbatim. */
 export function pathStepsLine(guide: string): string {
   const lines = guide.split('\n');
@@ -59,7 +113,7 @@ export function deriveInstallDoc(guide: string): string {
     '',
     `> This file is generated from the install region of \`${GUIDE_REL}\`. Do not edit it: edit the region there, then run \`npx tsx scripts/derive-install-doc.ts\`. A test fails if the two differ.`,
     '',
-    extractRegion(guide),
+    stripLimitationMarkers(extractRegion(guide)),
     '',
   ].join('\n');
 }

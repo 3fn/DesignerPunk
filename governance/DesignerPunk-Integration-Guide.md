@@ -20,7 +20,7 @@ path-steps: { founder: 5, joining: 5, joining-cross-harness: 6, reference-no-ini
 
 <!-- designerpunk:install-region:begin -->
 
-This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a custom theme you register in `designerpunk.config.ts` does not change your generated output yet; light and dark mode work.
+This release is ready for building web products, with the agent layer for Claude Code and Kiro. Native onboarding is not supported yet: the iOS (SwiftUI) and Android (Jetpack Compose) components ship as reference source, not a build input, so don't start a native product on this release. On web, a custom theme you register in `designerpunk.config.ts` does not change your generated output yet; light and dark mode work. <!-- limitation: .kiro/issues/2026-10-15-123-palette-read-from-package.md -->
 
 ## Prerequisites
 
@@ -88,15 +88,15 @@ Use this posture when you want a design system of your own. These are the five s
 
 After birth, your repo holds two different kinds of thing.
 
-- **Your language: the tokens.** `init` copied them into your repo, and they are yours. DesignerPunk never adds to them. But part of your copy is not read yet. `generate` takes the following from the installed package, so editing them in your copy does not change your output yet: the colour palette; the dark and WCAG override maps; the opacity values that colours with transparency are built from; the motion tokens (duration, easing and scale) and the layering tokens; the font-size and line-height values that icon sizes are calculated from (your own font-size and line-height tokens are still read from your copy); and the whole DTCG/Figma export. Spacing and the other non-colour primitives, and your semantic references, are read from your copy.
+- **Your language: the tokens.** `init` copied them into your repo, and they are yours. DesignerPunk never adds to them. But part of your copy is not read yet. `generate` takes the following from the installed package, so editing them in your copy does not change your output yet: the colour palette; the dark and WCAG override maps; the opacity values that colours with transparency are built from; the motion tokens (duration, easing and scale) and the layering tokens; the font-size and line-height values that icon sizes are calculated from (your own font-size and line-height tokens are still read from your copy); and the whole DTCG/Figma export. <!-- limitation: .kiro/issues/2026-10-15-123-palette-read-from-package.md --> Spacing and the other non-colour primitives, and your semantic references, are read from your copy.
 - **Our updating surface: the components.** You use them by name, and they improve when you update the package.
 
-**`generate` is the pipeline — run on every token change.** Run it whenever you change your own tokens. `init` was the birth event; it does not run again, however often you run `generate`. `validate` validates token definitions against the active source. One of its four checks, mathematical relationships, currently fails even on unmodified token source, so `validate` exits non-zero; that is a known defect in the checker, not in your tokens. Its other three checks are still worth reading after you edit token source files.
+**`generate` is the pipeline — run on every token change.** Run it whenever you change your own tokens. `init` was the birth event; it does not run again, however often you run `generate`. `validate` validates token definitions against the active source. One of its four checks, mathematical relationships, currently fails even on unmodified token source, so `validate` exits non-zero; that is a known defect in the checker, not in your tokens. <!-- limitation: .kiro/issues/2026-06-24-mathematical-relationship-parser-validation-gaps.md --> Its other three checks are still worth reading after you edit token source files.
 
 What `generate` writes, into the `output` directory set in `designerpunk.config.ts`:
 - `DesignTokens.web.css` — CSS custom properties
-- `DesignTokens.ios.swift` — Swift constants (no theme surface yet; see § Platforms › iOS)
-- `DesignTokens.android.kt` — Kotlin constants (no theme surface yet; see § Platforms › Android)
+- `DesignTokens.ios.swift` — Swift constants (no theme surface yet; see § Platforms › iOS) <!-- limitation: .kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md -->
+- `DesignTokens.android.kt` — Kotlin constants (no theme surface yet; see § Platforms › Android) <!-- limitation: .kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md -->
 - `ComponentTokens.web.css` / `.ios.swift` / `.android.kt` — component tokens
 - `DesignTokens.dtcg.json` — DTCG standard format
 - `DesignTokens.figma.json` — Figma Variables format
@@ -108,7 +108,7 @@ What `generate` writes, into the `output` directory set in `designerpunk.config.
 - **`npx designerpunk sync`** comes after it: it reports package updates against the installed package — reports, never writes silently. It prints its report before changing anything, and changes DesignerPunk's MCP configuration and generated agent files only on your go.
 - **`npx designerpunk generate`** comes after you change your own tokens.
 
-**The asymmetry is intended.** After an update, a component may look different while your colours do not, because the components are ours to improve and the tokens are yours to change. The exceptions above still apply: the colour palette, the dark and WCAG override maps, the opacity in composed colours, the motion and layering tokens, the font-size and line-height values behind icon sizes, and the DTCG/Figma export all come from the installed package, so the next `generate` after an update can change them. If an updated component needs a token your set does not have, `sync` tells you (section 5).
+**The asymmetry is intended.** After an update, a component may look different while your colours do not, because the components are ours to improve and the tokens are yours to change. The exceptions above still apply: the colour palette, the dark and WCAG override maps, the opacity in composed colours, the motion and layering tokens, the font-size and line-height values behind icon sizes, and the DTCG/Figma export all come from the installed package, so the next `generate` after an update can change them. <!-- limitation: .kiro/issues/2026-10-15-123-palette-read-from-package.md --> If an updated component needs a token your set does not have, `sync` tells you (section 5).
 
 Commit your lockfile, so that a teammate installs the version you built against.
 
@@ -155,34 +155,34 @@ import { BlendCalculator } from '@3fn/core/blend';
     <!-- DesignerPunk components on the page use the WCAG theme's values -->
   </html>
   ```
-- **A theme you register in `designerpunk.config.ts` does not yet produce a `[data-theme="<name>"]` block in any generated CSS.** A custom `data-theme` value resolves against nothing yet.
+- **A theme you register in `designerpunk.config.ts` does not yet produce a `[data-theme="<name>"]` block in any generated CSS.** A custom `data-theme` value resolves against nothing yet. <!-- limitation: .kiro/issues/2026-10-15-123-palette-read-from-package.md -->
 
 The full import list is under Available Imports, in the reference part of the Integration Guide (`governance/DesignerPunk-Integration-Guide.md` in the `@3fn/core` package; your agent reads it as `designerpunk-integration-guide`).
 
 ### iOS
 
-**Native onboarding is not supported.** The shipped SwiftUI components are reference source, not a build input: they read a theme surface (`@Environment(\.dpTheme)`, `any DesignerPunkTheme`) under names fixed to DesignerPunk's own configuration, which no shipped file defines and your `npx designerpunk generate` does not emit; the package has no Swift package manifest; and `ContainerCardBase.ios.swift` does not parse.
+**Native onboarding is not supported.** The shipped SwiftUI components are reference source, not a build input: they read a theme surface (`@Environment(\.dpTheme)`, `any DesignerPunkTheme`) under names fixed to DesignerPunk's own configuration, which no shipped file defines and your `npx designerpunk generate` does not emit; and the package has no Swift package manifest. <!-- limitation: .kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md -->
 
 What the package ships for iOS, and why it does not add up to a target yet:
 - `node_modules/@3fn/core/dist/DesignTokens.ios.swift` is DesignerPunk's **un-themed base snapshot**, generated from DesignerPunk's own configuration, not yours.
-- `DesignTokens.ios.swift` also calls a `Color.oklch(...)` initializer (and a bare `oklch(...)`) that no shipped file defines and the package does not declare as a dependency. DesignerPunk's generator names ChromaKit for it.
-- Product tokens that reference a theme-varying token are emitted into `ProductTokens.ios.swift` as an extension on `<YourName>Theme`; nothing defines or generates that type.
-- `node_modules/@3fn/core/dist/ComponentTokens.ios.swift` is DesignerPunk's **component token tier**. Some of the shipped components read it (`ButtonIcon.ios.swift`, for one), and it refers to `SizingTokens`, `SpacingTokens` and `BorderWidthTokens`, which no shipped file defines.
-- Native token output omits the **14 theme-varying semantic colours**, among them `colorActionPrimary` and `colorStructureCanvas`.
+- `DesignTokens.ios.swift` also calls a `Color.oklch(...)` initializer (and a bare `oklch(...)`) that no shipped file defines and the package does not declare as a dependency. DesignerPunk's generator names ChromaKit for it. <!-- limitation: .kiro/issues/2026-10-03-native-generator-findings-for-spec-129-intake.md -->
+- Product tokens that reference a theme-varying token are emitted into `ProductTokens.ios.swift` as an extension on `<YourName>Theme`; nothing defines or generates that type. <!-- limitation: .kiro/issues/2026-10-03-native-generator-findings-for-spec-129-intake.md -->
+- `node_modules/@3fn/core/dist/ComponentTokens.ios.swift` is DesignerPunk's **component token tier**. Some of the shipped components read it (`ButtonIcon.ios.swift`, for one), and it refers to `SizingTokens`, `SpacingTokens` and `BorderWidthTokens`, which no shipped file defines. <!-- limitation: .kiro/issues/2026-08-13-component-token-platform-references-noncompiling.md -->
+- Native token output omits the **14 theme-varying semantic colours**, among them `colorActionPrimary` and `colorStructureCanvas`. <!-- limitation: .kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md -->
 
-This was checked by reading the source, and the parse failure was reproduced with the Swift compiler's parse step. No iOS build was run. Platform requirements, for reference: **iOS 17.0+** (SwiftUI, UIKit). Where native support stands is in the Native status note at the end of "Platforms".
+This was checked by reading the source. No iOS build was run. Platform requirements, for reference: **iOS 17.0+** (SwiftUI, UIKit). Where native support stands is in the Native status note at the end of "Platforms".
 
 ### Android
 
-Android: reference source, not a build input. The Compose components under `src/components/core/*/platforms/android/` read their theme from `LocalDPTheme`, which nothing in this package defines and `generate` does not emit today, and there is no Gradle module. Native onboarding is not supported. This was checked by reading the source; no Android build has been run.
+Android: reference source, not a build input. The Compose components under `src/components/core/*/platforms/android/` read their theme from `LocalDPTheme`, which nothing in this package defines and `generate` does not emit today, and there is no Gradle module. <!-- limitation: .kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md --> Native onboarding is not supported. This was checked by reading the source; no Android build has been run.
 
 What the package ships for Android, and why it does not add up to a target yet:
 - `node_modules/@3fn/core/dist/DesignTokens.android.kt` is DesignerPunk's **un-themed base snapshot**, generated from DesignerPunk's own configuration, not yours.
 - `node_modules/@3fn/core/dist/ComponentTokens.android.kt` is DesignerPunk's **component token tier**. Three of the shipped components (Avatar, Badge-Label-Base and Button-Icon) read it.
-- Native token output omits the same **14 theme-varying semantic colours**, among them `color_action_primary` and `color_structure_canvas`. Only `_wcag` variants of some of them are emitted.
-- Product tokens that reference a theme-varying token are emitted as a read of `Local<your abbreviation>Theme`, which nothing defines.
+- Native token output omits the same **14 theme-varying semantic colours**, among them `color_action_primary` and `color_structure_canvas`. Only `_wcag` variants of some of them are emitted. <!-- limitation: .kiro/issues/2026-06-28-spec-094-platform-theme-emission-unwired.md -->
+- Product tokens that reference a theme-varying token are emitted as a read of `Local<your abbreviation>Theme`, which nothing defines. <!-- limitation: .kiro/issues/2026-10-03-native-generator-findings-for-spec-129-intake.md -->
 
-Platform requirements, for reference: the generated Kotlin calls `Oklch(…).toComposeColor()`, which needs the colormath library (github.com/ajalt/colormath), and the file imports nothing, so you add the dependency and the imports yourself. The Compose BOM must be compatible with the component implementations. Where native support stands is in the Native status note at the end of "Platforms".
+Platform requirements, for reference: the generated Kotlin calls `Oklch(…).toComposeColor()`, which needs the colormath library (github.com/ajalt/colormath), so you add that dependency yourself. <!-- limitation: .kiro/issues/2026-10-03-native-generator-findings-for-spec-129-intake.md --> The generated file imports nothing, so you add the imports yourself. <!-- limitation: .kiro/issues/2026-10-20-kotlin-output-no-import-block.md --> The Compose BOM must be compatible with the component implementations. Where native support stands is in the Native status note at the end of "Platforms".
 
 **Native status (iOS and Android).** Native onboarding is not supported yet. Don't start an iOS or Android product on this release. Web is the platform you can build on today.
 
