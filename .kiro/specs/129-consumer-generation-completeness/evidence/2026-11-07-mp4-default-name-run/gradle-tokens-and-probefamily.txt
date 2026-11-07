@@ -31,7 +31,7 @@ probe: instances read 0 of 248
 probe: product read 0 of 1
 probe: provider read 5 of 5
 
-[Incubating] Problems report is available at: file:///Users/3fn/Documents/Work%20Projects/Kiro/DesignerPunk-v2/.claude/worktrees/mp4/harness/android/build/reports/problems/problems-report.html
+[Incubating] Problems report is available at: file://<repo>/.claude/worktrees/mp4/harness/android/build/reports/problems/problems-report.html
 
 Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
 

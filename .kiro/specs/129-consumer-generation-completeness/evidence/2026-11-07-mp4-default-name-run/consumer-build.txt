@@ -1,6 +1,6 @@
-harness-consumer: [pack] npm pack --pack-destination /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-harness-consumer-RUnXyK   (cwd <repo>/.claude/worktrees/mp4)
-harness-consumer: [pack] tar -tzf /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-harness-consumer-RUnXyK/3fn-core-16.2.0.tgz   (cwd /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-harness-consumer-RUnXyK)
-harness-consumer: [install] npm install /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-harness-consumer-RUnXyK/3fn-core-16.2.0.tgz --no-audit --no-fund --offline   (cwd <scratch>/mp4/consumer)
+harness-consumer: [pack] npm pack --pack-destination <tmp>/dp-harness-consumer-RUnXyK   (cwd <repo>/.claude/worktrees/mp4)
+harness-consumer: [pack] tar -tzf <tmp>/dp-harness-consumer-RUnXyK/3fn-core-16.2.0.tgz   (cwd <tmp>/dp-harness-consumer-RUnXyK)
+harness-consumer: [install] npm install <tmp>/dp-harness-consumer-RUnXyK/3fn-core-16.2.0.tgz --no-audit --no-fund --offline   (cwd <scratch>/mp4/consumer)
 harness-consumer: [init] /usr/local/bin/node <scratch>/mp4/consumer/node_modules/@3fn/core/bin/designerpunk.js init --name DesignerPunk --abbreviation HX   (cwd <scratch>/mp4/consumer)
 harness-consumer: [configure] copied 1 fixture file(s) to product/tokens/ and set productTokens in designerpunk.config.ts
 harness-consumer: [generate] /usr/local/bin/node <scratch>/mp4/consumer/node_modules/@3fn/core/bin/designerpunk.js generate   (cwd <scratch>/mp4/consumer)

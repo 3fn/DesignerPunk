@@ -23,7 +23,7 @@ Two corrections to my earlier account:
 | File | What it is |
 |---|---|
 | `gradle-tokens-and-probefamily.txt` | the full Gradle log of this run (1,731 bytes), untrimmed |
-| `consumer-build.txt`, `generate-name-unset.txt`, `lane-prepare.txt` | the consumer build, the `generate` run after `name` was removed, and the lane's prepare log (paths shortened to `<scratch>` and `<repo>`) |
+| `consumer-build.txt`, `generate-name-unset.txt`, `lane-prepare.txt` | the consumer build, the `generate` run after `name` was removed, and the lane's prepare log (paths shortened to `<scratch>`, `<repo>` and `<tmp>`; the `consumer-build.txt` files also had their `/var/folders/…` temp directory shortened to `<tmp>`, so their committed bytes differ from the raw logs) |
 | `consumer.designerpunk.config.ts` | the consumer's config used for the run: no `name` |
 | `consumer.designerpunk.config.spelled-out-reference.ts` | the same config before the line was removed |
 | `harness-consumer.json` | the consumer's manifest |
@@ -35,7 +35,8 @@ Two corrections to my earlier account:
 
 | Artifact | sha256 |
 |---|---|
-| `gradle-tokens-and-probefamily.txt` (this run) | `1ed979cfcaa61f542acb6ea52e6bc946d70b1000ed3f95b8c182e9fb8154ded4` |
+| `gradle-tokens-and-probefamily.txt` (this run, as committed; differs from the raw log by one path only, the `[Incubating] Problems report` line, where `file:///Users/…/DesignerPunk-v2` became `file://<repo>`) | `e70c84caec000a6abaa19644433c5d8ded25180bee94c06761641745fcafc80b` |
+| `gradle.txt`, this run's raw log (not committed) | `1ed979cfcaa61f542acb6ea52e6bc946d70b1000ed3f95b8c182e9fb8154ded4` |
 | `ProbeFamily.kt` | `a19d0eaad59c0a673f86714e92aac1fb44498a6167789b6e825398f46876d0cf` |
 | generated `DesignTokens.android.kt`, this run (name unset) | `cc8b60a03473dd78c7b4a6126fdedfd45f2b623d557b851879c730e6a71f9d4d` |
 | generated `DesignTokens.android.kt`, original run (name spelled out) | `cc8b60a03473dd78c7b4a6126fdedfd45f2b623d557b851879c730e6a71f9d4d` |
