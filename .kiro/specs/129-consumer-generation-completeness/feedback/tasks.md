@@ -3051,6 +3051,9 @@ Peter, `date -u` at receipt 2026-11-07T14:12:30Z (orchestrator relay), verbatim:
   - **Honest reach**: no criterion forces a live infra run. Task 5's A-(iii) rule allows only one input-read step, in `harness-generate`, so an infra fault cannot be forced on a dispatch. The annotation path is shown by the static workflow test and the lane's unit tests, and the first real infra run is the live evidence when it comes. I do not count that as met in advance.
   - **#699's class**: every evidence event is at or before H of U3a's own PR. The stability re-run is committed at H, and the cache deletion is an act before the doc.
 - **Grant**: Task 19's row grants `.github/workflows/native-harness.yml` for the two Android jobs' save condition and annotation only, with the deleted lines quoted. This file's merge activates the grant, so the amendment PR's body carries `**ARMING**: at this merge and at the fixing PR's merge`.
+- **Corrected after U3 merged** (#711, `de307e1d7`, 2026-11-07T14:16:40Z):
+  - **The bad cache is inert.** A `refs/pull/711/merge` cache is readable only by #711's runs, and there will be no more of them. The precondition row now owes no deletion, and Task 19's deletion criterion is dropped. Deleting it would prove nothing a reader needs.
+  - **The carrier**: U3a branches from `main` after U3's merge. The second-merger rule with U3 is gone.
 - [@DATA] Is your resolve step a Gradle task (which puts `harness/android/**` build files in the row) or a `lane.ts` invocation only? And your size for 19.1? → tasks.md Task 19 -- [THURGOOD R14]
 - [@STACY] LENS read of Task 19 and the condition 2/3 text, including the "not re-run" rule and the honest reach above. → tasks.md § "Decision 6", Task 19 -- [THURGOOD R14]
 - [@KENYA] Confirm the iOS criterion's cited cases (L1036, L1084–1098 at `d19eb3958`) are the right evidence. → tasks.md Task 19 -- [THURGOOD R14]
