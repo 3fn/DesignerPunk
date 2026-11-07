@@ -22,7 +22,7 @@ The Android half of every native "compiles" in Spec 129 is accepted by this lane
 
 ## Impact
 
-- ✅ Tasks 5 and the later units get an Android lane that runs on CI (dispatched runs 42331622121 and 42332252550) and whose `checks` go through the comparator.
+- ✅ Tasks 5 and the later units get an Android lane that runs on CI (dispatched run 42333520571 at `44e2f7f54`) and whose `checks` go through the comparator.
 - ⚠️ No pull-request run exists yet; U1's PR opens at Task 5's completion, and the four contexts' summary lines at head H are Task 5's to record.
 - ⚠️ The probe's reads of the family, provider, instances and product members were compiled only on a hand-written generated tree; the generator's own output meets them at U6.
 
