@@ -1,0 +1,8 @@
+# Probe-kotlin fixture (Spec 129 Task 4.2): components.yaml names are top-level types.
+tokens:
+  progress.connector.thickness:
+    component: Progress
+    platforms:
+      web: '--progress-connector-thickness'
+      ios: ProgressTokens.connectorThickness
+      android: ProgressTokens.connectorThickness

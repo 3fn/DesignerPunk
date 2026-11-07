@@ -84,3 +84,41 @@ ios:
     components:
       module: DesignerPunk
       swiftVersion: "5"
+
+# The Android lane (Spec 129 Task 4; harness/android/**). Read by harness/android/lane.ts and by the comparator.
+# Every value here is a HARNESS pin, not a platform minimum (Req 2.9): a Kotlin compile checks no API level, so no
+# 129 green reads "runs on API 26". The Core Goals minimum is minSdk below, kept equal to it.
+# "Compiled" means the versions Data compiled together on 2026-11-04 (inbound-from-data-design-2026-11-05.md § 1.5,
+# VERIFIED there), and re-read as existing on 2026-11-06 (POM HEAD requests). None has run on CI yet.
+android:
+  # The workflow's `runs-on`, by version, never `-latest`. Image read 2026-11-06: 20261101.360.1 (Ubuntu 24.04.5),
+  # JAVA_HOME_17_X64 = 17.0.21+9 (the image default), Gradle 9.8.2 preinstalled, Android platforms up to 37.
+  runner: ubuntu-24.04
+  imageVersion: "20261101.360.1"
+  note: "These are harness pins, not platform minimums. A Kotlin compile checks no API level (Req 2.9)."
+  # The toolchain match (Req 3.11): the lane reports these five fields and the comparator fails on any difference.
+  # Each value is a quoted string. They are what Gradle RESOLVED and printed, not what a file asked for:
+  #   java.version          System.getProperty("java.version") of the JDK that ran Gradle (17.0.21 is Temurin 17.0.21+9)
+  #   gradle.version        the Gradle the wrapper runs (harness/android/gradle/wrapper/gradle-wrapper.properties names it)
+  #   kotlin.version        kotlin-compiler-embeddable on the Kotlin Gradle plugin's own classpath, not the image's kotlinc
+  #   agp.version           the Android Gradle plugin that built the modules
+  #   compose.bom.version   the androidx.compose:compose-bom component in :tokens' resolved compile classpath
+  toolchain:
+    java.version: "17.0.21"
+    gradle.version: "9.8.2"
+    kotlin.version: "2.4.21"
+    agp.version: "9.5.0"
+    compose.bom.version: "2026.09.00"
+  # Pinned in harness/android/gradle/libs.versions.toml with the same values; a difference shows as a toolchain
+  # failure for the five above, and in the next lines only to a reader.
+  compileSdk: 36
+  # Equal to Core Goals' Android minimum (API 26, amended 2026-11-05, ballot 2026-11-05-core-goals-android-minimum).
+  minSdk: 26
+  # The Compose BOM must be 1.7 or later for material-ripple, where rememberRipple is DeprecationLevel.ERROR:
+  # 2026.09.00 maps material-ripple to 1.12.1. The baseline holding entries for Button-Icon, Input-Checkbox-Base and
+  # Input-Radio-Base is the check that the pin did this (Req 2.8).
+  libraries:
+    coil-compose: "2.7.0"
+    material-icons-extended: "1.7.8"
+    # Only while the generated Kotlin calls Oklch(...).toComposeColor(); the PR that drops the call removes this pin (Req 3.5 (a)).
+    colormath-ext-jetpack-compose: "3.7.1"

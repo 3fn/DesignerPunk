@@ -1,0 +1,16 @@
+# Probe-kotlin fixture (Spec 129 Task 4.2): the two names of planted-internal/DesignTokens.android.kt.
+tokens:
+  spacePublic:
+    family: spacing
+    value: 8
+    platforms:
+      web: '--space-public'
+      ios: spacePublic
+      android: space_public
+  spacePlanted:
+    family: spacing
+    value: 16
+    platforms:
+      web: '--space-planted'
+      ios: spacePlanted
+      android: space_planted
