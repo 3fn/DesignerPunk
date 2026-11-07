@@ -42,3 +42,15 @@ The build PR creates a file and deletes no line on a CI path, so it carries no `
 ## Counter-argument and what survives
 
 Making `law-ratified` required early is safe because it is decidable from git (ballot § 7); the ballot's residuals stand: forgeable by an agent holding Peter's credential, kind evasion is not decidable from git, and the presence limb is file-grain.
+
+---
+
+## Outcome (rule 5), 2026-11-07
+
+**`law-ratified` promoted and ARMED.** The promotion PR merged as #728 (`4a8486389`) at 2026-11-07T19:00:43Z, after the build PR #727 and the throwaway PR #726's red run (42400738704). Peter then made his branch-protection change. At 2026-11-07T19:02:37Z the orchestrator session, a credentialed session, verified through the API that `main` requires 21 contexts, including `law-ratified` and `harness-android-tokens`, with `main` the only rule.
+
+The orchestrator then ran `bash tools/agent-generator/verify-gate-registration.sh` on `main` at `4a8486389`, after Peter's act. Its last line (the ARMED evidence of the lifecycle's step 4), pasted as relayed by the orchestrator:
+
+`PASS: all 21 required contexts present, count-asserted (N=21 recorded in this script)`
+
+The grant expired at #728's merge. `merge-hold` stays advisory until five clean runs that parsed a marker; its promotion has its own record (`.kiro/issues/2026-11-07-merge-hold-promotion-reads.md` lists the reads owed). This PR records the line and, under rule 5, archives this record; it arms Stacy's ARMING read.
