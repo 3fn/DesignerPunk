@@ -918,7 +918,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 7 — Component theme reads and repairs
 
-- [ ] 12. Component theme reads, the theme-read guard, Progress-Bar and ripple (U7)
+- [x] 12. Component theme reads, the theme-read guard, Progress-Bar and ripple (U7)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Lina (Sonnet)
   **Traces**: Req 2.10, 4.4, 4.6, 4.7, 4.10, 8.2, 8.4; rows 14 (A5, A6's ripple part, A7), 15, 16 · design § 13
