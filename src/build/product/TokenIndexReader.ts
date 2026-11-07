@@ -14,9 +14,19 @@ import * as yaml from 'js-yaml';
 export interface IndexEntry {
   platforms: { web: string; ios: string; android: string };
   themeVarying: boolean;
+  /** A composite (typography, shadow, motion): the index names it with a list or several definitions, not one value. */
+  composite: boolean;
   family?: string;
   category?: string;
   component?: string;
+}
+
+/** The semantic categories whose tokens are composites; the index names one with a list on at least one platform. */
+const COMPOSITE_CATEGORIES = new Set(['typography', 'shadow', 'motion']);
+
+function isCompositeEntry(entry: { category?: string; platforms?: Record<string, unknown> }): boolean {
+  if (entry.category !== undefined && COMPOSITE_CATEGORIES.has(entry.category)) return true;
+  return Object.values(entry.platforms ?? {}).some(v => Array.isArray(v));
 }
 
 export class TokenIndexReader {
@@ -35,6 +45,7 @@ export class TokenIndexReader {
       this.entries.set(key, {
         platforms: entry.platforms || {},
         themeVarying: false,
+        composite: false,
         family: entry.family,
       });
     });
@@ -43,6 +54,7 @@ export class TokenIndexReader {
       this.entries.set(key, {
         platforms: entry.platforms || {},
         themeVarying: entry.themeVarying || false,
+        composite: isCompositeEntry(entry),
         category: entry.category,
       });
     });
@@ -51,6 +63,7 @@ export class TokenIndexReader {
       this.entries.set(key, {
         platforms: entry.platforms || {},
         themeVarying: false,
+        composite: false,
         component: entry.component,
       });
     });

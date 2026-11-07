@@ -44,7 +44,13 @@ export async function runValidateProductTokens(): Promise<void> {
     }
   }
 
+  for (const c of result.compositeRefs) console.log(`   → ${c.message}`);
+
   console.log('');
+  if (result.compositeRefs.length > 0) {
+    console.log(`${result.compositeRefs.length} composite reference${result.compositeRefs.length > 1 ? 's' : ''} refused.`);
+    process.exit(1);
+  }
   if (result.brokenRefs.length === 0) {
     console.log('✨ All product token references valid');
     process.exit(0);

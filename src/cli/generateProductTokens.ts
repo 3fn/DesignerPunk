@@ -38,6 +38,12 @@ export function generateProductTokens(config: ResolvedConfig): void {
 
   if (result.categoryCount === 0) return;
 
+  // A composite ref is refused, not skipped (Spec 129 Req 5.6; decided in Task 11 under Req 10.4:
+  // no supported consumer's product tokens holds one). Nothing is written for the product tokens.
+  if (result.compositeRefs.length > 0) {
+    throw new Error(result.compositeRefs.map(c => c.message).join('\n'));
+  }
+
   // Ensure output directory exists
   fs.mkdirSync(outputDir, { recursive: true });
 

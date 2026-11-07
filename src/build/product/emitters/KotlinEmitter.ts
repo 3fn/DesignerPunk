@@ -7,19 +7,25 @@
 import type { ResolvedCategory, ResolvedToken, GeneratorConfig } from '../ProductTokenGenerator';
 import { getCoreVersion } from '../../../generators/coreVersion';
 
+/** A ref to a colour semantic the index names `theme.<name>` on Android is read through the theme local. */
+function isThemeRead(t: ResolvedToken): boolean {
+  return typeof t.resolvedPlatformPath?.android === 'string' && t.resolvedPlatformPath.android.startsWith('theme.');
+}
+
 export function emitKotlin(categories: ResolvedCategory[], config: GeneratorConfig): string {
   const lines: string[] = [];
-  const localTheme = `Local${config.configAbbreviation}Theme`;
+  // The local is DesignerPunk's fixed binding, whatever the consumer's abbreviation (Spec 129 design § 4).
+  const localTheme = 'LocalDPTheme';
 
   const androidTokens = categories.map(c => ({
     ...c,
     tokens: c.tokens.filter(t => t.platforms.includes('android')),
   })).filter(c => c.tokens.length > 0);
 
-  const hasLogical = androidTokens.some(c => c.tokens.some(t => !t.themeVarying && t.unitType === 'logical'));
-  const hasColor = androidTokens.some(c => c.tokens.some(t => !t.themeVarying && t.unitType === 'color'));
-  const hasThemeVarying = androidTokens.some(c => c.tokens.some(t => t.themeVarying));
-  const hasRefs = androidTokens.some(c => c.tokens.some(t => t.ref && !t.themeVarying));
+  const hasLogical = androidTokens.some(c => c.tokens.some(t => !isThemeRead(t) && t.unitType === 'logical'));
+  const hasColor = androidTokens.some(c => c.tokens.some(t => !isThemeRead(t) && t.unitType === 'color'));
+  const hasThemeVarying = androidTokens.some(c => c.tokens.some(t => isThemeRead(t)));
+  const hasRefs = androidTokens.some(c => c.tokens.some(t => t.ref && !isThemeRead(t)));
 
   lines.push('package com.designerpunk.product.tokens');
   lines.push('');
@@ -47,7 +53,7 @@ export function emitKotlin(categories: ResolvedCategory[], config: GeneratorConf
     const objectName = `Product${toPascalCase(category.name)}`;
     lines.push(`object ${objectName} {`);
     for (const token of category.tokens) {
-      if (token.themeVarying) {
+      if (isThemeRead(token)) {
         const prop = token.resolvedPlatformPath?.android?.replace('theme.', '') || 'unknown';
         lines.push(`    val ${token.name}: Color`);
         lines.push(`        @Composable @ReadOnlyComposable get() = ${localTheme}.current.${prop}`);

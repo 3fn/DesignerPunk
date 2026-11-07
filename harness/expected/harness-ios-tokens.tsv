@@ -4,5 +4,3 @@
 # Each entry is <key> TAB <count> TAB <tag>; a tag names the root record whose Trigger has not fired and whose fix removes the entry.
 gen:DesignTokens.ios.swift | type 'DesignTokens.PiecewiseLinearEasing' does not conform to protocol 'Equatable'	1	2026-10-03-native-generator-findings-for-spec-129-intake.md
 gen:DesignTokens.ios.swift | type 'DesignTokens.PiecewiseLinearEasing' does not conform to protocol 'Hashable'	1	2026-10-03-native-generator-findings-for-spec-129-intake.md
-gen:product/ProductTokens.ios.swift | cannot convert value of type 'TypographyToken' to specified type 'CGFloat'	1	2026-10-26-token-index-platform-name-readers.md
-gen:product/ProductTokens.ios.swift | type 'DesignTokens' has no member 'theme'	1	2026-10-26-token-index-platform-name-readers.md

@@ -476,9 +476,9 @@ describe('the product-token fixture at harness/fixtures/product-tokens/', () => 
     return merged;
   };
 
-  it('holds exactly two tokens, both refs', () => {
+  it('holds exactly one token, a ref (the composite ref was removed at U6: Spec 129 Task 11)', () => {
     const tokens = fixtureTokens();
-    expect(Object.keys(tokens)).toHaveLength(2);
+    expect(Object.keys(tokens)).toHaveLength(1);
     for (const t of Object.values(tokens)) expect(typeof t.ref).toBe('string');
   });
 
@@ -495,9 +495,9 @@ describe('the product-token fixture at harness/fixtures/product-tokens/', () => 
     expect(refs.filter(isWcagOnlyColor)).toHaveLength(1);
   });
 
-  it('one token refs a composite token that exists in the shipped index', () => {
+  it('no token refs a composite: `generate` refuses one, naming it, so the fixture cannot hold one', () => {
     const refs = Object.values(fixtureTokens()).map((t) => t.ref as string);
-    expect(refs.filter(isComposite)).toHaveLength(1);
+    expect(refs.filter(isComposite)).toHaveLength(0);
   });
 
   it('the oracle bites: a plain colour and a plain spacing token are neither', () => {

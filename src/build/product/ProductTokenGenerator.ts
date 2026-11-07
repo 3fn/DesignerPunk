@@ -35,9 +35,18 @@ export interface BrokenRef {
   file: string;
 }
 
+/** A product token whose `ref` names a composite (typography, shadow, motion): refused, with the token named. */
+export interface CompositeRef {
+  token: string;
+  ref: string;
+  file: string;
+  message: string;
+}
+
 export interface ValidationResult {
   categories: { file: string; tokenCount: number; valid: boolean }[];
   brokenRefs: BrokenRef[];
+  compositeRefs: CompositeRef[];
 }
 
 export interface GeneratorConfig {
@@ -52,6 +61,7 @@ export interface GenerationResult {
   tokenCount: number;
   categoryCount: number;
   brokenRefs: BrokenRef[];
+  compositeRefs: CompositeRef[];
   categories: ResolvedCategory[];
 }
 
@@ -70,9 +80,10 @@ export class ProductTokenGenerator {
     this.reader.load();
     const categories: ResolvedCategory[] = [];
     const brokenRefs: BrokenRef[] = [];
+    const compositeRefs: CompositeRef[] = [];
 
     if (!fs.existsSync(this.config.productTokensDir)) {
-      return { tokenCount: 0, categoryCount: 0, brokenRefs: [], categories: [] };
+      return { tokenCount: 0, categoryCount: 0, brokenRefs: [], compositeRefs: [], categories: [] };
     }
 
     const files = fs.readdirSync(this.config.productTokensDir).filter(f => f.endsWith('.yaml'));
@@ -81,16 +92,17 @@ export class ProductTokenGenerator {
       if (result) {
         categories.push(result.category);
         brokenRefs.push(...result.brokenRefs);
+        compositeRefs.push(...result.compositeRefs);
       }
     }
 
     const tokenCount = categories.reduce((sum, c) => sum + c.tokens.length, 0);
-    return { tokenCount, categoryCount: categories.length, brokenRefs, categories };
+    return { tokenCount, categoryCount: categories.length, brokenRefs, compositeRefs, categories };
   }
 
   validate(): ValidationResult {
     this.reader.load();
-    const results: ValidationResult = { categories: [], brokenRefs: [] };
+    const results: ValidationResult = { categories: [], brokenRefs: [], compositeRefs: [] };
 
     if (!fs.existsSync(this.config.productTokensDir)) return results;
 
@@ -102,9 +114,10 @@ export class ProductTokenGenerator {
         results.categories.push({
           file,
           tokenCount: result.category.tokens.length,
-          valid: fileBrokenRefs.length === 0,
+          valid: fileBrokenRefs.length === 0 && result.compositeRefs.length === 0,
         });
         results.brokenRefs.push(...fileBrokenRefs);
+        results.compositeRefs.push(...result.compositeRefs);
       } else {
         results.categories.push({ file, tokenCount: 0, valid: true });
       }
@@ -113,7 +126,7 @@ export class ProductTokenGenerator {
     return results;
   }
 
-  private parseCategory(filePath: string, filename: string): { category: ResolvedCategory; brokenRefs: BrokenRef[] } | null {
+  private parseCategory(filePath: string, filename: string): { category: ResolvedCategory; brokenRefs: BrokenRef[]; compositeRefs: CompositeRef[] } | null {
     let data: any;
     try {
       data = yaml.load(fs.readFileSync(filePath, 'utf-8'));
@@ -126,6 +139,7 @@ export class ProductTokenGenerator {
     const categoryName = filename.replace('.yaml', '');
     const tokens: ResolvedToken[] = [];
     const brokenRefs: BrokenRef[] = [];
+    const compositeRefs: CompositeRef[] = [];
 
     for (const [name, entry] of Object.entries(data.tokens as Record<string, any>)) {
       const platforms: string[] = entry.platforms || ALL_PLATFORMS;
@@ -134,7 +148,16 @@ export class ProductTokenGenerator {
 
       if (entry.ref) {
         const indexEntry = this.reader.lookup(entry.ref);
-        if (indexEntry) {
+        if (indexEntry?.composite) {
+          // A composite has no single value to read on any platform: refused, naming the token.
+          compositeRefs.push({
+            token: name,
+            ref: entry.ref,
+            file: filename,
+            message: `Product token '${name}' (${filename}) refs '${entry.ref}', a composite token (typography, shadow or motion). ` +
+              `A product token can ref a single-value token; give '${name}' the composite's members as separate tokens instead.`,
+          });
+        } else if (indexEntry) {
           resolvedPlatformPath = indexEntry.platforms;
           themeVarying = indexEntry.themeVarying;
         } else {
@@ -157,6 +180,7 @@ export class ProductTokenGenerator {
     return {
       category: { name: categoryName, description: data.description || '', tokens },
       brokenRefs,
+      compositeRefs,
     };
   }
 }
