@@ -2,7 +2,7 @@
 
 Computed by `scripts/harness/stability.ts`; never edited by hand (tasks.md § "Decision 6"). Re-run it before each promotion offer.
 
-**Generated**: 2026-11-07T14:40:48Z · **Repository**: `3fn/DesignerPunk` · **Workflow**: `native-harness.yml`
+**Generated**: 2026-11-07T15:04:37Z · **Repository**: `3fn/DesignerPunk` · **Workflow**: `native-harness.yml`
 
 **Source endpoints** (all under `repos/3fn/DesignerPunk`; a job id is its check run id):
 - `actions/workflows/native-harness.yml/runs`: the runs (id, head SHA, event, attempt, conclusion);
@@ -14,10 +14,10 @@ Computed by `scripts/harness/stability.ts`; never edited by hand (tasks.md § "D
 
 ## harness-android-tokens
 
-- Runs recorded: 28 (12 pull-request, 16 dispatched).
-- Infra runs (`harness-infra`): 0 of 28 recorded, infra rate 0.0%.
-- **Condition 2** (10 consecutive pull-request runs, no break): current streak 2 of 10 — not met.
-- **Condition 3** (three cold-cache runs under 10 minutes; pull-request runs with `cache: miss` that reached the comparator): 5 counted — met.
+- Runs recorded: 31 (14 pull-request, 17 dispatched).
+- Infra runs (`harness-infra`): 0 of 31 recorded, infra rate 0.0%.
+- **Condition 2** (10 consecutive pull-request runs, no break): current streak 14 of 10 — met.
+- **Condition 3** (three cold-cache runs under 10 minutes; pull-request runs with `cache: miss` that reached the comparator): 7 counted — met.
 
 | run id | head SHA | event | attempt | conclusion | verdict | cache | created_at | started_at | completed_at | duration | queue | counts | break |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -45,17 +45,20 @@ Computed by `scripts/harness/stability.ts`; never edited by hand (tasks.md § "D
 | 42344794521 | `66bb7ee6c` | workflow_dispatch | 1 | success | PASS | miss | 2026-11-07T05:57:17Z | 2026-11-07T05:57:19Z | 2026-11-07T05:59:37Z | 138s | n/a | no (dispatched) | - |
 | 42378844589 | `e1e5c3886` | workflow_dispatch | 1 | success | PASS | miss | 2026-11-07T13:52:18Z | 2026-11-07T13:52:20Z | 2026-11-07T13:54:43Z | 143s | n/a | no (dispatched) | - |
 | 42378872101 | `78dcd0f39` | pull_request | 1 | success | PASS | miss | 2026-11-07T13:52:42Z | 2026-11-07T13:52:44Z | 2026-11-07T13:54:44Z | 120s | n/a | cond 2, cond 3 | - |
-| 42379456009 | `df293bda6` | pull_request | 2 | success | - | - | 2026-11-07T14:06:02Z | 2026-11-07T14:00:35Z | 2026-11-07T14:02:36Z | 121s | n/a | cond 2 | no harness-verdict annotation (failed before the comparator) |
+| 42379456009 | `df293bda6` | pull_request | 1 | success | PASS | miss | 2026-11-07T14:00:34Z | 2026-11-07T14:00:35Z | 2026-11-07T14:02:36Z | 121s | n/a | cond 2, cond 3 | - |
 | 42380304363 | `5c2d27d75` | pull_request | 1 | success | PASS | hit | 2026-11-07T14:11:33Z | 2026-11-07T14:11:35Z | 2026-11-07T14:13:53Z | 138s | n/a | cond 2 | - |
 | 42381118398 | `fd3f8648d` | pull_request | 1 | success | PASS | miss | 2026-11-07T14:21:14Z | 2026-11-07T14:21:16Z | 2026-11-07T14:23:36Z | 140s | n/a | cond 2, cond 3 | - |
 | 42382373507 | `1ab44ee75` | workflow_dispatch | 1 | success | PASS | miss | 2026-11-07T14:37:07Z | 2026-11-07T14:37:10Z | 2026-11-07T14:39:21Z | 131s | n/a | no (dispatched) | - |
+| 42382785811 | `58e1a9770` | workflow_dispatch | 1 | success | PASS | hit | 2026-11-07T14:43:04Z | 2026-11-07T14:43:05Z | 2026-11-07T14:44:20Z | 75s | n/a | no (dispatched) | - |
+| 42383642198 | `1e1dd5360` | pull_request | 1 | success | PASS | miss | 2026-11-07T14:54:01Z | 2026-11-07T14:54:03Z | 2026-11-07T14:56:19Z | 136s | n/a | cond 2, cond 3 | - |
+| 42383947129 | `17bb37828` | pull_request | 1 | success | PASS | hit | 2026-11-07T14:58:02Z | 2026-11-07T14:58:04Z | 2026-11-07T14:59:08Z | 64s | n/a | cond 2 | - |
 
 ## harness-android-components
 
-- Runs recorded: 28 (12 pull-request, 16 dispatched).
-- Infra runs (`harness-infra`): 0 of 28 recorded, infra rate 0.0%.
-- **Condition 2** (10 consecutive pull-request runs, no break): current streak 2 of 10 — not met.
-- **Condition 3** (three cold-cache runs under 10 minutes; pull-request runs with `cache: miss` that reached the comparator): 5 counted — met.
+- Runs recorded: 31 (14 pull-request, 17 dispatched).
+- Infra runs (`harness-infra`): 0 of 31 recorded, infra rate 0.0%.
+- **Condition 2** (10 consecutive pull-request runs, no break): current streak 4 of 10 — not met.
+- **Condition 3** (three cold-cache runs under 10 minutes; pull-request runs with `cache: miss` that reached the comparator): 6 counted — met.
 
 | run id | head SHA | event | attempt | conclusion | verdict | cache | created_at | started_at | completed_at | duration | queue | counts | break |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -87,12 +90,15 @@ Computed by `scripts/harness/stability.ts`; never edited by hand (tasks.md § "D
 | 42380304363 | `5c2d27d75` | pull_request | 1 | success | PASS | hit | 2026-11-07T14:11:33Z | 2026-11-07T14:11:35Z | 2026-11-07T14:13:48Z | 133s | n/a | cond 2 | - |
 | 42381118398 | `fd3f8648d` | pull_request | 1 | success | PASS | miss | 2026-11-07T14:21:14Z | 2026-11-07T14:21:16Z | 2026-11-07T14:23:04Z | 108s | n/a | cond 2, cond 3 | - |
 | 42382373507 | `1ab44ee75` | workflow_dispatch | 1 | success | PASS | miss | 2026-11-07T14:37:07Z | 2026-11-07T14:37:09Z | 2026-11-07T14:39:32Z | 143s | n/a | no (dispatched) | - |
+| 42382785811 | `58e1a9770` | workflow_dispatch | 1 | success | PASS | hit | 2026-11-07T14:43:04Z | 2026-11-07T14:43:06Z | 2026-11-07T14:44:48Z | 102s | n/a | no (dispatched) | - |
+| 42383642198 | `1e1dd5360` | pull_request | 1 | success | PASS | miss | 2026-11-07T14:54:01Z | 2026-11-07T14:54:03Z | 2026-11-07T14:56:00Z | 117s | n/a | cond 2, cond 3 | - |
+| 42383947129 | `17bb37828` | pull_request | 1 | success | PASS | hit | 2026-11-07T14:58:02Z | 2026-11-07T14:58:04Z | 2026-11-07T14:59:29Z | 85s | n/a | cond 2 | - |
 
 ## harness-ios-tokens
 
-- Runs recorded: 28 (12 pull-request, 16 dispatched).
-- Infra runs (`harness-infra`): 0 of 28 recorded, infra rate 0.0%.
-- **Condition 2** (10 consecutive pull-request runs, no break): current streak 2 of 10 — not met.
+- Runs recorded: 31 (14 pull-request, 17 dispatched).
+- Infra runs (`harness-infra`): 0 of 31 recorded, infra rate 0.0%.
+- **Condition 2** (10 consecutive pull-request runs, no break): current streak 14 of 10 — met.
 - **Condition 3** (the first three pull-request runs at the current Xcode pin that reached the comparator, each under 10 minutes): 3 counted — met.
 - **Condition 5** (queue time + duration of those runs against 10 minutes): within the ceiling.
 
@@ -122,16 +128,19 @@ Computed by `scripts/harness/stability.ts`; never edited by hand (tasks.md § "D
 | 42344794521 | `66bb7ee6c` | workflow_dispatch | 1 | success | PASS | - | 2026-11-07T05:57:17Z | 2026-11-07T05:57:20Z | 2026-11-07T05:59:01Z | 101s | 3s | no (dispatched) | - |
 | 42378844589 | `e1e5c3886` | workflow_dispatch | 1 | success | PASS | - | 2026-11-07T13:52:18Z | 2026-11-07T13:52:20Z | 2026-11-07T13:53:29Z | 69s | 2s | no (dispatched) | - |
 | 42378872101 | `78dcd0f39` | pull_request | 1 | success | PASS | - | 2026-11-07T13:52:42Z | 2026-11-07T13:52:45Z | 2026-11-07T13:54:07Z | 82s | 3s | cond 2 | - |
-| 42379456009 | `df293bda6` | pull_request | 2 | success | - | - | 2026-11-07T14:06:02Z | 2026-11-07T14:00:35Z | 2026-11-07T14:01:51Z | 76s | -327s | cond 2 | no harness-verdict annotation (failed before the comparator) |
+| 42379456009 | `df293bda6` | pull_request | 1 | success | PASS | - | 2026-11-07T14:00:34Z | 2026-11-07T14:00:35Z | 2026-11-07T14:01:51Z | 76s | 1s | cond 2 | - |
 | 42380304363 | `5c2d27d75` | pull_request | 1 | success | PASS | - | 2026-11-07T14:11:33Z | 2026-11-07T14:11:35Z | 2026-11-07T14:12:31Z | 56s | 2s | cond 2 | - |
 | 42381118398 | `fd3f8648d` | pull_request | 1 | success | PASS | - | 2026-11-07T14:21:14Z | 2026-11-07T14:21:17Z | 2026-11-07T14:22:22Z | 65s | 3s | cond 2 | - |
 | 42382373507 | `1ab44ee75` | workflow_dispatch | 1 | success | PASS | - | 2026-11-07T14:37:07Z | 2026-11-07T14:37:10Z | 2026-11-07T14:38:28Z | 78s | 3s | no (dispatched) | - |
+| 42382785811 | `58e1a9770` | workflow_dispatch | 1 | success | PASS | - | 2026-11-07T14:43:04Z | 2026-11-07T14:43:06Z | 2026-11-07T14:44:12Z | 66s | 2s | no (dispatched) | - |
+| 42383642198 | `1e1dd5360` | pull_request | 1 | success | PASS | - | 2026-11-07T14:54:01Z | 2026-11-07T14:54:03Z | 2026-11-07T14:55:21Z | 78s | 2s | cond 2 | - |
+| 42383947129 | `17bb37828` | pull_request | 1 | success | PASS | - | 2026-11-07T14:58:02Z | 2026-11-07T14:58:05Z | 2026-11-07T14:59:05Z | 60s | 3s | cond 2 | - |
 
 ## harness-ios-components
 
-- Runs recorded: 28 (12 pull-request, 16 dispatched).
-- Infra runs (`harness-infra`): 0 of 28 recorded, infra rate 0.0%.
-- **Condition 2** (10 consecutive pull-request runs, no break): current streak 2 of 10 — not met.
+- Runs recorded: 31 (14 pull-request, 17 dispatched).
+- Infra runs (`harness-infra`): 0 of 31 recorded, infra rate 0.0%.
+- **Condition 2** (10 consecutive pull-request runs, no break): current streak 14 of 10 — met.
 - **Condition 3** (the first three pull-request runs at the current Xcode pin that reached the comparator, each under 10 minutes): 3 counted — met.
 - **Condition 5** (queue time + duration of those runs against 10 minutes): within the ceiling.
 
@@ -161,8 +170,11 @@ Computed by `scripts/harness/stability.ts`; never edited by hand (tasks.md § "D
 | 42344794521 | `66bb7ee6c` | workflow_dispatch | 1 | success | PASS | - | 2026-11-07T05:57:17Z | 2026-11-07T05:57:19Z | 2026-11-07T05:58:58Z | 99s | 2s | no (dispatched) | - |
 | 42378844589 | `e1e5c3886` | workflow_dispatch | 1 | success | PASS | - | 2026-11-07T13:52:18Z | 2026-11-07T13:52:20Z | 2026-11-07T13:53:54Z | 94s | 2s | no (dispatched) | - |
 | 42378872101 | `78dcd0f39` | pull_request | 1 | success | PASS | - | 2026-11-07T13:52:42Z | 2026-11-07T13:52:45Z | 2026-11-07T13:54:07Z | 82s | 3s | cond 2 | - |
-| 42379456009 | `df293bda6` | pull_request | 2 | success | - | - | 2026-11-07T14:06:09Z | 2026-11-07T14:00:36Z | 2026-11-07T14:01:57Z | 81s | -333s | cond 2 | no harness-verdict annotation (failed before the comparator) |
+| 42379456009 | `df293bda6` | pull_request | 1 | success | PASS | - | 2026-11-07T14:00:34Z | 2026-11-07T14:00:36Z | 2026-11-07T14:01:57Z | 81s | 2s | cond 2 | - |
 | 42380304363 | `5c2d27d75` | pull_request | 1 | success | PASS | - | 2026-11-07T14:11:33Z | 2026-11-07T14:11:35Z | 2026-11-07T14:12:40Z | 65s | 2s | cond 2 | - |
 | 42381118398 | `fd3f8648d` | pull_request | 1 | success | PASS | - | 2026-11-07T14:21:14Z | 2026-11-07T14:21:16Z | 2026-11-07T14:23:00Z | 104s | 2s | cond 2 | - |
 | 42382373507 | `1ab44ee75` | workflow_dispatch | 1 | success | PASS | - | 2026-11-07T14:37:07Z | 2026-11-07T14:37:10Z | 2026-11-07T14:39:07Z | 117s | 3s | no (dispatched) | - |
+| 42382785811 | `58e1a9770` | workflow_dispatch | 1 | success | PASS | - | 2026-11-07T14:43:04Z | 2026-11-07T14:43:07Z | 2026-11-07T14:44:31Z | 84s | 3s | no (dispatched) | - |
+| 42383642198 | `1e1dd5360` | pull_request | 1 | success | PASS | - | 2026-11-07T14:54:01Z | 2026-11-07T14:54:04Z | 2026-11-07T14:55:38Z | 94s | 3s | cond 2 | - |
+| 42383947129 | `17bb37828` | pull_request | 1 | success | PASS | - | 2026-11-07T14:58:02Z | 2026-11-07T14:58:04Z | 2026-11-07T14:59:57Z | 113s | 2s | cond 2 | - |
 
