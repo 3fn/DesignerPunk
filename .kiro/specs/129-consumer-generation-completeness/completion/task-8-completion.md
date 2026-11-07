@@ -7,7 +7,8 @@
 **Agent**: Ada (Sonnet), PRIMARY, with Sparky (8.4) and Data (8.5) · **Status**: Complete on the unit branch `task/129-8-native-colours-shadows`; accepted at U3's merge, not before.
 **Delegated-tier**: plan held
 **CI-provenance**: PR gate #711 @ df293bda64be3d01aff563aa2516af612d75959c — https://github.com/3fn/DesignerPunk/actions/runs/42379456009 (head H; this commit touches only `completion/**` and `docs/specs/**`). `harness-android-components` is read from attempt 2: attempt 1 failed before compiling (Maven Central returned 403 to the runner on a cold-cache resolution) and Thurgood has the cache-save defect it exposed.
-**Instruments**: 18 listed — exists 16 · built-here 2 · missing 0 (row 18 resolved at head H) · unlisted 8 — .kiro/specs/129-consumer-generation-completeness/completion/task-8-instruments.md
+**Instruments**: 18 listed — exists 16 · built-here 2 · missing 0 · unlisted 8 — .kiro/specs/129-consumer-generation-completeness/completion/task-8-instruments.md
+*(Grammar corrected 2026-11-07, `completion/claims-pass-midpoint.md` MP-8: the parenthetical "row 18 resolved at head H" was removed so the line matches the guide's regex. The counts are the block's state at head H, with row 18 resolved to exists in its row.)*
 
 ---
 
