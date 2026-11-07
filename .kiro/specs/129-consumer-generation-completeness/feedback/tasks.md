@@ -2452,3 +2452,285 @@ All seven seats returned "ready with fixes"; none blocking. Entries above are sp
 - Ada confirms the per-case doc comment in Task 11 (Leonardo's ask was to her; I wrote it as a criterion).
 - Kenya confirms the D5 item; Data confirms the Gradle `doFirst` no longer fails on a count (fork 1 moves that to `checks`).
 - Nothing here needs Peter: no ruled condition changed beyond the fork 2 wording, which applies "D yes" rather than extending it.
+
+
+## Tasks amendment 4 (2026-11-06): the § 4 gaps subtask 5.4 found
+
+No ruling by Peter is asked or cited. These are owner answers inside ground he ruled at 2026-11-06T22:38:12Z ("4 combine", `evidence/2026-11-06-peter-rulings-theme-and-downloads.md`) and 23:31:58Z ("B Thurgood", `evidence/2026-11-06-peter-rulings-round-3.md`): the § 4 rule text is Ada's, as the emitter's owner, and Kenya's measurements govern the Swift facts.
+
+### Context for Reviewers
+- Writing `scripts/harness/native-rules.ts` (5.4) found places where design § 4 was silent. Ada's consult answers them (`[ADA 5.4 CONSULT]` below). Gaps 1–3 change § 4 text and are in this amendment. Gaps 4–6 are the module's alone and change no design text.
+- No criterion changes: Task 11's family criterion already backticks a reserved-word case, and Task 14 measures and tests each of (a)–(h).
+- The inputs are spliced below in fences, byte for byte.
+
+#### [THURGOOD R8] — tasks amendment 4
+- **Gap 1, the Swift reserved words**: Ada's block 1 replaces the backtick sub-bullet in "The theme family (6(b))". `await` stays off the list on Kenya's compile, which Ada accepted. → design.md § 4
+- **Gap 2, every entry carries `mode`**: Ada's blocks 2a (the `wcag` bullet), 2b (item 3's coverage) and 2c (refusal (g): the pair form with a mode other than `both`). → design.md § 4, "The theme-instance rule"
+- **Gap 3, refusal (e)**: Ada's block 3, the cased comparison, so `a-b` and `ab` collide. → design.md § 4, item 5
+- **Refusal (h)**: Kenya's block, replacing its reasons; the refusals are unchanged. → design.md § 4, item 5
+- **Departures from Ada's text, all in block 1** (marked in place):
+  1. "The reserved words are exactly these" → "The reserved words a family case can be are exactly these" (Kenya's wording point: `Any`, `self`, `Self` and `init` are reserved too).
+  2. "`self`, `init` and `allCases` are refused, not backticked" gains "each declares, and each is refused for what a use of it then names". Ada's preface repeated Kenya's withdrawn claim that `init` fails in backticks; Kenya's re-run shows a backticked `init` declares and its backticked uses compile, and `allCases` declares but every use is `ambiguous use of 'allCases'`. The preface is not design text; the spliced sentence now matches Kenya's (h).
+  3. The citation `u1-54/kenya-review.md`, a scratch path, → this section's `[KENYA 5.4 REVIEW]`, which I splice so the cited measurement is committed.
+- Blocks 2a, 2b, 2c and 3 are byte for byte.
+- [@ADA] Confirm block 1 as edited (departures 1 and 2). → design.md § 4, "The theme family (6(b))" -- [THURGOOD R8]
+- [@KENYA] Confirm your (h) as spliced, and block 1's reason sentence. → design.md § 4 -- [THURGOOD R8]
+
+#### [ADA 5.4 CONSULT] — tasks amendment 4 input: Ada's 5.4 consult: the gap answers and the 1–3 / 4–6 split
+
+Spliced byte for byte from `ada-consult.md`, inside the fence so its headings do not join this file's outline.
+
+~~~~markdown
+## Ada's consult on the rules (5.4)
+
+**Read**: `scripts/harness/native-rules.ts` and `scripts/harness/__tests__/native-rules.test.ts` at `task/129-compile-harness` @ `36829b639`, against design.md § 4 as amendment 3 left it. The generator facts below were read at the same head. This was a read-only consult: I made no edits or commits.
+
+### 1. Does each rule say what § 4 says?
+
+**No mismatches with the design text.** Each exported rule matches its § 4 sentence:
+
+- **The instance set and names** (`instances`, `instanceName`, `swiftBackingStruct`, `swiftImplicitMember`):
+  - the four fixed instances come first, then each other theme in config order, light before dark;
+  - the words split at `-` and `_`, and only each word's first letter changes case;
+  - the mode suffix is always written;
+  - the struct is `<Name><Pascal instance>Theme`, and the implicit member is `<abbr lower><Pascal instance>`.
+- **The family and selection** (`familyCases`, `selectInstance`):
+  - the cases are `base`, `wcag`, then the other themes, with no `dark` case;
+  - `wcag` always selects both of its instances;
+  - a theme of one mode falls back to that scheme's base instance;
+  - an unknown case returns null.
+- **The refusals** (`checkThemeConfig`): (a)–(h) each test what their clause says. Skipping (d), (e) and (h) for an entry that fails (a) is not in the text, but it changes nothing a consumer sees.
+- **The product tokens**:
+  - the category is the file name, and in type names it is Pascal split at `-` only;
+  - keys are written as the YAML has them;
+  - an absent `platforms` means all three platforms, and `[]` means none;
+  - the access rule follows a single `theme.` name;
+  - the Swift theme member is `product<Cat><Key>`, read once through `\.dpTheme`;
+  - on Kotlin, every product token is `Product<Cat>.<key>`, and a theme member is read inside `@Composable`.
+- **`BINDING`, `PRODUCT_GEN_PATH` and the `gen:` keys** match § 4, "The shared harness module" and "The harness's keys for them".
+
+**Where the module and the generator differ.** The design does not cover these. All three involve malformed input, and gaps 4 and 5 below settle them:
+
+- A dotfile named `.yaml`: the generator reads it as category `""` (`src/build/product/ProductTokenGenerator.ts` L78), and the module does not. No fixture holds one, so no change is needed.
+- A `tokens:` key holding a list: the generator emits members named `0`, `1`, … (`Object.entries` on an array, L130).
+- A `platforms:` value given as a string: the generator matches substrings (`entry.platforms || ALL_PLATFORMS`, L131, then `.includes`), and it throws on a mapping.
+
+### 2. The six DESIGN-GAPs
+
+Gaps 1–3 are rules the generator must follow too, so they need design text, in one small amendment. Gaps 4–6 only concern how the module reads a malformed fixture, so they need no design text.
+
+1. **The Swift reserved words — design text.**
+   - Keep Thurgood's list, add `await`, and continue to leave contextual keywords out. `await` is an expression keyword in The Swift Programming Language, "Keywords and Punctuation".
+   - `Any` and `Self` can never arise, because the Swift case lower-cases its first letter. They are harmless in the list.
+   - The design should state the list once in § 4, under "The theme family (6(b))", as the words the generator backticks. Kenya confirms it at the pinned Swift.
+   - A word missing from the list fails to compile in the exact-set test (config C), so a drift is loud.
+2. **The `{ light, dark }` form and `mode` — design text.**
+   - Every entry carries `mode`. `ConfigTheme.mode` is required (`src/config/defineConfig.ts` L31), and § 10's opt-out example writes the pair form with `mode: 'both'`.
+   - Amend (g) to: "A theme's mode is not `light`, `dark` or `both`, or the theme is in the `{ light, dark }` form with a mode other than `both`."
+   - The module then reads `mode` on every entry. `coveredModes` reads `mode` alone, and `pair` serves only (c) and the new clause of (g).
+3. **What (e) compares — design text. Keep the module's rule.**
+   - `a-b` and `ab` give `aBLight` and `abLight` on Swift, and `ABLight` and `AbLight` on Kotlin. These are legal and distinct, but they differ only in case: an adopter, an agent or a case-insensitive search confuses them.
+   - Reword (e) to: "Two themes give Pascal names that are equal when letter case is ignored (for example `high-contrast`, `high_contrast` and `highContrast`; and `a-b` and `ab`)."
+   - What survives: it refuses a config that would compile. Req 10.4 measures it like the other refusals.
+4. **Category order and a non-mapping `tokens` — harness only.**
+   - The module sorts categories by file name in code-point order, rather than taking the caller's order, so its answer does not depend on how the lane lists the folder.
+   - A `tokens` that is `null` gives no category, as now.
+   - A `tokens` that is a list throws, naming the file. The generator would emit members that cannot compile (L130), so this is a fixture error, not a case to read.
+   - The generator's own order is the unsorted `readdirSync` (L78), so its output can differ by filesystem. That is a determinism finding against my generator. I file a record for it, outside this amendment.
+5. **A `platforms` value that is not a list — harness only.**
+   - `null` reads as absent, as the generator's `||` does.
+   - Any other value that is not a list throws, naming the token. No single reading matches the generator: it substring-matches a string and throws on a mapping.
+   - Refusing a `platforms` value that is not a list at the source belongs with the record on keyword keys that I file before U6.
+6. **A composite whose native name list holds a `theme.` name — harness only. The module is right.**
+   - A list is never a theme member.
+   - Before U6, the fixture's composite is emitted as a static member with a broken initializer, which is the module's answer.
+   - From U6, Req 2.3 takes composites out of the fixture and Req 5.6 refuses them, so the generator never classifies one.
+   - No design text is needed.
+
+Ada (Rosetta), consulted on the rules under design § 4, "The shared harness module".
+~~~~
+
+#### [KENYA 5.4 REVIEW] — tasks amendment 4 input: Kenya's 5.4 review, cited by Ada's block 1
+
+Spliced byte for byte from `kenya-review.md`, inside the fence so its headings do not join this file's outline.
+
+~~~~markdown
+#### [KENYA 5.4 review] — the Swift-facing rules of `scripts/harness/native-rules.ts` at `36829b639`
+
+Read-only review; no repo edits. I read `scripts/harness/native-rules.ts` (533 lines) and skimmed its test's Swift cases (instance names, `swiftBackingStruct`, `swiftImplicitMember`, `swiftCaseDeclaration`). Labels: VERIFIED = I ran it (Xcode 27.2, Swift 6.4.2, target `arm64-apple-ios17.0-simulator`); READ = read in the file; UNVERIFIED = reasoning.
+
+**Verdict: ok, with two additions I need for 3.4 (A and B below) and one hole to close (C).** Nothing in the Swift rules emits a name my 3.4 probe must not read.
+
+**Per export**
+
+| Export | Emits | Matches what 3.4 reads? |
+|---|---|---|
+| `lowerCamelName` | first word's first letter lower, each later word's upper, rest as written: `['high','contrast']` gives `highContrast`; `['ab','CD']` gives `abCD` | Yes (READ; the test pins `abCDLight`). |
+| `instanceName(…, 'ios')`, `instanceNames`, `holderName` | `baseLight, baseDark, wcagLight, wcagDark` then each other theme's light then dark; `<Name>Themes` | Yes. These replace my `themeInstances` and `themeHolder`. Mine gave `darkDark`; this does not. |
+| `swiftBackingStruct` | `<Name>` + Pascal + `Light/Dark` + `Theme`: `ProbeHighContrastLightTheme` | Yes. The probe does not read it; Task 11's `Self ==` extension and the exact-set test do. |
+| `swiftImplicitMember` | abbreviation lower-cased + Pascal + suffix: `pbBaseDark`, `pbHighContrastLight` | Yes, the form I ruled. Not read by the probe. |
+| `swiftCaseDeclaration` / `SWIFT_RESERVED_WORDS` | backticks when the case is on the list | **Right for Swift 6; see below.** |
+| `swiftProductEnum`, `swiftStaticRead` | `Product<Cat>` and `Product<Cat>.<key>`, category split at `-` only | Yes: `ProductHarness.bodyTypographyRef`. |
+| `swiftThemeMemberName` | `product<Cat><Key>`, key's first letter upper-cased only | Yes: `productHarnessActionPrimaryRef`. The probe composes `_ = EnvironmentValues().<BINDING.swift.environmentMember>.<name>`. |
+| `productReads` / `productAccess` (iOS half) | one read per token whose `platforms` is absent or names ios; theme member only when `ref` resolves to a single string beginning `theme.`, else static; an unresolvable `ref` is static; a list-valued name (composite or motion) is static | Yes. `typography.bodyMd` has the single iOS name `typographyBodyMd` in the committed index (READ), so the fixture's composite is static and `color.action.primary` (`theme.colorActionPrimary`) is a theme member: two reads, one of each. |
+| `BINDING.swift` | `DesignerPunkTheme`, `DPThemeKey`, `dpTheme`, `\.dpTheme` | Yes. |
+
+**Gap 1: the keyword list (the question asked).** The list is correct for Swift 6.4.2, and contextual keywords need no backticks.
+- VERIFIED: for each word on `SWIFT_RESERVED_WORDS` I compiled `public enum F: Sendable, Hashable, CaseIterable { case base, <word> }` with a `switch` on `.<word>` and a `let a: F = .<word>`. Plain, every one fails; in backticks, every one compiles, except `init`, which fails both ways and is refused by (h). `self` compiles in backticks (what `.self` names is still UNVERIFIED, so it stays refused).
+- VERIFIED: none of these fails plain, so none belongs in the list: `await any some async actor get set open final lazy optional required weak unowned mutating nonmutating override indirect convenience dynamic left right none precedence willSet didSet prefix postfix infix nonisolated isolated consume copy borrowing consuming each macro package sending then discard borrow nonsending unsafe unchecked dependsOn associativity higherThan lowerThan assignment`. In particular `await` is not needed.
+- `Type` and `Protocol` fail plain (and pass in backticks) but cannot occur: `lowerCamelName` lower-cases the first letter, so a theme `Type` gives `type`.
+- Use sites need no backticks: `.default` compiled plain beside the backticked declaration (VERIFIED).
+- No change; keep the list as it is, and add a comment saying it was checked against Swift 6.4.2 on 2026-11-06 by Kenya.
+
+**`allCases` under `CaseIterable` (the question asked).** VERIFIED now: a case named `allCases` fails the same enum shape both plain and in backticks. My earlier note said it declared without a diagnostic; that was one file shape and I should not have trusted it. So (h)'s refusal of `allCases` is right, and `checkThemeConfig` already refuses it through `lowerCamelName` (READ). I tested `hashValue` and `hash` (instance members, not statics): they declare and use fine, so nothing more is needed. The enum has no raw type, so `rawValue` cannot collide.
+
+**What 3.4 needs that the exports do not give** (all small, all Swift-side; the first two are additions to the module)
+- **A. Names the probe and the per-run check compose:**
+  - `swiftFamilyType(productName)` gives `<Name>ThemeFamily`.
+  - `swiftProviderFunction(productName)` gives `<name>Theme`, where `<name>` is the lower-camel form of `<Name>`. This is the first letter lower-cased, as the design reads: `DesignerPunk` gives `designerPunk`, so `designerPunkTheme`.
+  - Without them the provider read (`_ = EmptyView().<name>Theme(.<case>)`) would restate a rule, which 3.4 is meant not to do.
+- **B. A Swift identifier predicate for product keys**, `isSwiftIdentifier(s)`, and `productReads` skipping or reporting a key that fails it. Today `swiftStaticRead('brand', 'primary-color')` gives `ProductBrand.primary-color`, which is not an expression; the probe would then have a syntax error, and a syntax error in `Probe.swift` kills Stage P for every token, not one entry. The design says keys are "as the YAML has them". Whether the generator accepts such a key is Ada's, and design § 16 holds the Kotlin-keyword key as her call. Proposed: the module returns the read with `valid: false` and the probe turns that into a failing check naming the token, never into text it compiles. Ada confirms.
+- **C. (Not an export) The `{ light, dark }` form is invisible to the lane.** `harness-consumer.json` carries `name` and `mode` per theme; the `ThemeEntry.pair` flag has no source in it. Until Task 14 writes registration forms into the manifest, the probe maps each manifest theme to `{ name, mode }` and `instances` sees no pair. That is right for U1 to U8 (the harness consumer registers `dark` and `wcag` only, and both are reserved). It becomes wrong when Task 14 adds a pair-form fixture. Not a 3.4 blocker; Task 14 owns the manifest field. I will leave a comment at the mapping.
+
+**Not in the module, by design, and staying in `probe-swift.ts`:** the index-name roots (`DesignTokens.` for primitives and semantics, top-level for components, `theme.` read through an instance). Block 5 lists the theme-instance rule, the family cases and the product names and access as the module's contents; the roots are the probe's own input rule and Task 3's criterion does not move them.
+
+**Cross-checks I ran against the module's own examples**
+- `instanceNames(CONFIG_C, 'ios')` from the test (READ) is `baseLight, baseDark, wcagLight, wcagDark, highContrastLight, highContrastDark, brandLight, defaultDark`. Every one declares and is used as `.<name>` in Swift without backticks (VERIFIED for `defaultDark`, which is not a keyword).
+- `familyCases(CONFIG_C, 'ios')` is `base, wcag, highContrast, brand, default`; `default` is declared in backticks and used as `.default` (VERIFIED), and a `switch` over it needs `case .default:` and no `default:` branch, which Task 11 already requires.
+
+[@THURGOOD] A and B are small additions to the module and its test before 3.4 starts; C is a comment. I do not start 3.4 until you say A and B are in. -- [KENYA 5.4 review]
+~~~~
+
+#### [ADA R4] — tasks amendment 4 input: Ada's text for the splice: blocks 1, 2a–2c and 3
+
+Spliced byte for byte from `ada-text.md`, inside the fence so its headings do not join this file's outline.
+
+~~~~markdown
+# Spec 129 tasks/design amendment 4: Ada's text for the splice
+
+Author: Ada (Rosetta), the emitter's owner. Scratch only.
+- Thurgood splices each block byte for byte. A block's text starts after its `---8<---` line and ends before the next `--->8---` line.
+- Anchors are line numbers in `design.md` at `e0b770438` (#703).
+- The source is Ada's 5.4 consult (`u1-54/ada-consult.md`, gaps 1–3) and Kenya's 5.4 review (`u1-54/kenya-review.md`, gap 1).
+
+**Settled before writing: the `await` conflict.**
+- My consult said to add `await`, on the strength of the Swift book's keyword table. I have no compile evidence for that.
+- Kenya compiled every listed word, and the contextual keywords, on Swift 6.4.2. `await` declares and is used plainly, so it stays off the list. Her measurement governs.
+- Kenya's `init` exception holds:
+  - `init` fails both plain and in backticks, so no backtick rule can make it usable. (h) refuses it.
+  - `self` compiles in backticks, but stays refused, because what `.self` names is unverified.
+  - `Type` and `Protocol` would need backticks, but cannot arise: a Swift case's first letter is always lower-case.
+
+---
+
+## Block 1: the Swift reserved-word list
+
+**Goes in**: design § 4, "The theme family (6(b))", the **Swift** bullet. It replaces the sub-bullet at L217, which begins "A case that is a Swift reserved word is declared in backticks".
+
+---8<---
+    - A case that is a Swift reserved word is declared in backticks (`` case `default` ``) and is used as `.default`. The reserved words are exactly these: `associatedtype`, `class`, `deinit`, `enum`, `extension`, `fileprivate`, `func`, `import`, `inout`, `internal`, `let`, `operator`, `private`, `precedencegroup`, `protocol`, `public`, `rethrows`, `static`, `struct`, `subscript`, `typealias`, `var`, `break`, `case`, `catch`, `continue`, `default`, `defer`, `do`, `else`, `fallthrough`, `for`, `guard`, `if`, `in`, `repeat`, `return`, `throw`, `switch`, `where`, `while`, `as`, `false`, `is`, `nil`, `super`, `throws`, `true` and `try`. Kenya verified on Swift 6.4.2 (Xcode 27.2, 2026-11-06) that each one fails as a plain case and compiles in backticks, and that no contextual keyword fails as a plain case (`await`, `any`, `some`, `async`, `actor`, `get`, `set`, `open` and the rest she lists). So no contextual keyword is backticked. `self`, `init` and `allCases` are refused, not backticked (the theme-instance rule, item 5 (h)). `Any`, `Self`, `Type` and `Protocol` never arise, because a Swift case begins with a lower-case letter. The list is re-checked when `harness/pins.yaml` § `ios` moves to a new Swift. *(Amended 2026-11-06, tasks amendment 4, from Ada's 5.4 consult gap 1 as settled by Kenya's measurement, `u1-54/kenya-review.md`; prior text at `e0b770438`: "A case that is a Swift reserved word is declared in backticks (`` case `default` ``) and is used as `.default`. `self`, `init` and `allCases` are refused (the theme-instance rule, item 5 (h)).", which named no list.)*
+--->8---
+
+**What changes with it**:
+- **Tasks.md**: none. Task 11's family criterion already says "a case that is a Swift reserved word is declared in backticks", and config C's `default` is on the list.
+- **Module**: `SWIFT_RESERVED_WORDS` in `scripts/harness/native-rules.ts` is unchanged except for a comment citing this line and Kenya's check. It keeps `init`, `self`, `Self` and `Any` as harmless extras, because (h) and the lower-case first letter stop them first.
+- **Generator**: Task 11's emitter uses the same list. The comparison test (`native-rules-emitter.test.ts`) compares family cases as declared, backticks included, on config C.
+
+---
+
+## Block 2a: every theme entry carries `mode`
+
+**Goes in**: design § 4, "The theme-instance rule", item 2, the **`wcag`** bullet. It replaces the line at L290, "**`wcag`** registers with mode `light`, `dark` or `both`, or in § 10's `{ light, dark }` form."
+
+---8<---
+   - **`wcag`** registers with mode `light`, `dark` or `both`, or in § 10's `{ light, dark }` form with mode `both`. Every theme entry carries `mode`, in either form (`ConfigTheme.mode` is required, `src/config/defineConfig.ts` L31; § 10's opt-out example writes the pair form with `mode: 'both'`). *(Amended 2026-11-06, tasks amendment 4, Ada's 5.4 consult gap 2; prior text at `e0b770438`: "registers with mode `light`, `dark` or `both`, or in § 10's `{ light, dark }` form.", which left the pair form's `mode` unstated.)*
+--->8---
+
+## Block 2b: item 3's coverage sentence
+
+**Goes in**: design § 4, "The theme-instance rule", item 3. It replaces the first sub-bullet at L304, "Mode `light` adds `<t>Light`, mode `dark` adds `<t>Dark`, and mode `both` or the `{ light, dark }` form adds both."
+
+---8<---
+   - Mode `light` adds `<t>Light`, mode `dark` adds `<t>Dark`, and mode `both` adds both. The `{ light, dark }` form always carries mode `both` (item 5 (g)), so the instances follow `mode` alone. *(Amended 2026-11-06, tasks amendment 4, Ada's 5.4 consult gap 2; prior text at `e0b770438`: "… and mode `both` or the `{ light, dark }` form adds both.")*
+--->8---
+
+## Block 2c: refusal (g)
+
+**Goes in**: design § 4, "The theme-instance rule", item 5. It replaces (g) at L335.
+
+---8<---
+   - (g) A theme's mode is not `light`, `dark` or `both`, or the theme is in the `{ light, dark }` form with a mode other than `both`. The second half names both: the form gives two maps, and the mode says one. *(Amended 2026-11-06, tasks amendment 4, Ada's 5.4 consult gap 2; prior text at `e0b770438`: "(g) A theme's mode is not `light`, `dark` or `both`.")*
+--->8---
+
+**What changes with blocks 2a–2c**:
+- **Tasks.md**: none.
+  - Task 14's refusals criterion covers "each of (a)–(h)" and gives a Jest test per refusal, so the new clause of (g) is measured under Req 10.4 and tested there with no new wording.
+  - Task 14's existing criterion "`ConfigTheme` accepts an optional `{ light, dark }` form" is unchanged. The form's `mode: 'both'` is now (g)'s to enforce.
+- **Module** (Thurgood's):
+  - `coveredModes` reads `mode` alone.
+  - `checkThemeConfig` (g) reads `mode` on every entry, and adds the pair-with-a-mode-other-than-`both` clause.
+  - `pair` is then read only by (c) and by (g)'s new clause.
+  - `native-rules.test.ts`:
+    - "the { light, dark } form adds both" gives its entry `mode: 'both'`;
+    - "a theme in the { light, dark } form selects like mode both" does the same;
+    - (g) gains a case: the pair form with `mode: 'light'` is refused.
+- **Manifest**: Kenya's point C stands. `harness-consumer.json` carries no registration form until Task 14 adds one, and Task 14 owns that field.
+
+---
+
+## Block 3: refusal (e), the broader comparison
+
+**Goes in**: design § 4, "The theme-instance rule", item 5. It replaces (e) at L333.
+
+---8<---
+   - (e) Two themes give Pascal names that are equal when letter case is ignored: for example `high-contrast`, `high_contrast` and `highContrast`, which all give `HighContrast`; and `a-b` and `ab`, which give `AB` and `Ab`. The message names both entries. The second kind compiles: `aBLight` and `abLight` are distinct Swift names. It is refused because two names that differ only in letter case are easily confused, by an adopter, by an agent and by a search that ignores case. *(Amended 2026-11-06, tasks amendment 4, Ada's 5.4 consult gap 3; prior text at `e0b770438`: "(e) Two themes give the same Pascal words when letter case is ignored (for example `high-contrast`, `high_contrast` and `highContrast`). The message names both entries.", which could be read as comparing word by word, so that `a-b` and `ab` pass.)*
+--->8---
+
+**What changes with it**:
+- **Tasks.md**: none. Task 14 measures (e) with the other refusals. A supported consumer that trips it gets the warning fallback design § 4 lists for (e): the later entry emits nothing until 17.0.0.
+- **Module**: unchanged. Its lower-cased Pascal comparison is this rule. `native-rules.test.ts` gains one case, `a-b` and `ab`, naming both entries.
+- **Residual**: (e) now refuses a config that compiles. Req 10.4's measurement is the guard.
+
+---
+
+## Not in this amendment: one correction Kenya owns
+
+The reason (h) gives for `allCases` is now false, by Kenya's own re-measurement (`u1-54/kenya-review.md`): a case named `allCases` fails both plain and in backticks; it does not "declare beside `CaseIterable` with no diagnostic". The refusal stands. Only its reason changes, and the sentence is Kenya's, so she words the correction.
+~~~~
+
+#### [KENYA R5] — tasks amendment 4 input: Kenya's text for refusal (h), with her two corrections
+
+Spliced byte for byte from `kenya-text.md`, inside the fence so its headings do not join this file's outline.
+
+~~~~markdown
+# Amendment 4: Kenya's text for refusal (h)
+
+Author: Kenya. Scratch only. The block between the `---8<---` and `--->8---` lines is for Thurgood to splice byte for byte.
+All measurements: Xcode 27.2, Swift 6.4.2, target `arm64-apple-ios17.0-simulator`, 2026-11-06, `public enum F: Sendable, Hashable, CaseIterable { … }`, typechecked with `-swift-version 6`.
+
+## Two corrections to what I said before (mine, not Ada's)
+
+1. **`allCases`.** My R3 note said it "declares with no diagnostic". That is true of the declaration alone and still true. What I had not separated is the use: any use of `<Name>ThemeFamily.allCases` fails with `ambiguous use of 'allCases'`, plain or in backticks. So the reason for the refusal is not "which member it names is left to the compiler" (the old wording, which understates it) but that the family's `CaseIterable` closed set, which 6(b) exists to give, cannot be used at all. Ada's point that the stated reason is wrong holds.
+2. **`init`.** My 5.4 review, and Ada's block 1 note built on it, say `init` "fails both plain and in backticks". My loop wrote the use site plain even in the backtick run, so that was a fault in my test. Re-run with backticks at both places: `` case `init` `` declares, and `` .`init` `` in a `switch` and as a value compile. What fails is the plain `.init`, which names the initializer (`'F' cannot be constructed because it has no accessible initializers`). So `init` is not unusable; it is usable only if every call site writes backticks. The refusal stands, for that reason. `self` is the same shape: `` .`self` `` and ``F.`self` `` compile; plain `F.self` is the metatype; what a plain `.self` names with a contextual type is still UNVERIFIED.
+
+## Check of Ada's block 1 (the reserved-word list)
+
+- Every word in her list fails as a plain case and compiles in backticks (VERIFIED, 2026-11-06, `case`, `switch` on `.<word>` and a value `.<word>`; the use sites need no backticks).
+- No contextual keyword fails plain: `await any some async actor get set open final lazy optional required weak unowned mutating nonmutating override indirect convenience dynamic left right none precedence willSet didSet prefix postfix infix nonisolated isolated consume copy borrowing consuming each macro package sending then discard borrow nonsending unsafe unchecked dependsOn associativity higherThan lowerThan assignment`. So `await` stays off the list.
+- One wording point: "The reserved words are exactly these" is true only of the words a family case can be. `Any`, `self`, `Self` and `init` are reserved too (VERIFIED), and are absent from her list because the lower-case first letter stops `Any` and `Self` (they become `any`, `self`) and (h) refuses `self` and `init`. Suggested edit to her sentence: "The reserved words a family case can be are exactly these:". Her "What changes with it" already says the module keeps the four as harmless extras.
+- Her last clause, "that each one fails as a plain case and compiles in backticks", is right for her list.
+
+## Block: refusal (h)
+
+**Goes in**: design § 4, "The theme-instance rule", item 5. It replaces (h) at L336 (line numbers at `e0b770438`).
+
+---8<---
+   - (h) A theme's Swift family case would be `self`, `init` or `allCases` ("The theme family (6(b))", above). All three can be declared; each is refused for what a use of it then names (VERIFIED by Kenya on Swift 6.4.2, Xcode 27.2, 2026-11-06):
+     - `init`: `` case `init` `` declares and `` .`init` `` works, but the plain `.init` names the initializer (`cannot be constructed because it has no accessible initializers`). Every call site, in an adopter's code too, would need backticks.
+     - `self`: `` case `self` `` declares, and `` .`self` `` and ``<Name>ThemeFamily.`self` `` work, but the plain `<Name>ThemeFamily.self` is the metatype. What a plain `.self` names with a contextual type is UNVERIFIED, so the case stays refused until someone shows it.
+     - `allCases`: `case allCases` declares beside `CaseIterable` with no diagnostic, but any use of `<Name>ThemeFamily.allCases` is an error (`ambiguous use of 'allCases'`), plain or in backticks. The family's closed set is what "A enum" asked for (above), and this name would make it unusable.
+     *(Amended 2026-11-06, tasks amendment 4, `[KENYA R5]`; prior text at `e0b770438`: "… `self`, `init` or `allCases` … `.init` cannot be used after a dot (VERIFIED by Kenya, Xcode 27.2). `` `self` `` declares and `.self` compiles, but what `.self` names is UNVERIFIED, so it stays refused until someone shows it. A case named `allCases` declares beside `CaseIterable` with no diagnostic, and which member `<Name>ThemeFamily.allCases` then names is not left to the compiler …", whose `init` sentence was too strong and whose `allCases` sentence named no failure. The refusals themselves are unchanged.)*
+--->8---
+
+**What changes with it**: tasks.md none (Task 14's refusals criterion already covers (h) with a Jest test per refusal). Module: `checkThemeConfig` (h) is unchanged; only its message text may quote the three reasons above.
+~~~~
