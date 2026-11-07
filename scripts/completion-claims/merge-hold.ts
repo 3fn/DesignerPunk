@@ -21,6 +21,8 @@
  * Usage:   npx tsx scripts/completion-claims/merge-hold.ts --job merge-hold|law-ratified --pr <n>
  * Reads:   `gh pr view <n> --json body,headRefOid,baseRefOid,url` (the body through the API, never the event
  *          payload: a re-run replays the original payload), `git show <head>:<path>`, `git diff --name-status`.
+ *          The head judged is `git rev-parse HEAD` (what the run checked out) and the base is env BASE_SHA (the
+ *          event's pull_request.base.sha); the live head and base are used only if those are absent.
  *          Exits 1 on a red verdict, 0 on green, 2 on a usage or read failure.
  * Record:  each run prints one `::notice title=merge-hold-read::` annotation carrying the body's sha256 and the
  *          marker and answer lines it parsed, verbatim (past about 60 KB: the hash and a line count, the full
@@ -334,6 +336,8 @@ export interface PrView {
 
 export interface Adapter {
   prView(n: number): PrView;
+  /** The commits the run checked out and was handed: head = `git rev-parse HEAD`, base = the event's base.sha (env BASE_SHA); null where unknown. */
+  checkedOut(): { headSha: string | null; baseSha: string | null };
   fileAt(sha: string, path: string): string | null;
   changedFiles(base: string, head: string): ChangedFile[];
   commentBody(repo: string, kind: 'issuecomment' | 'pullrequestreview' | 'discussion', id: number, pr: number): string | null;
@@ -347,6 +351,15 @@ export const liveAdapter: Adapter = {
     const j = JSON.parse(sh('gh', ['pr', 'view', String(n), '--json', 'body,headRefOid,baseRefOid,url'])) as { body: string; headRefOid: string; baseRefOid: string; url: string };
     const m = /github\.com\/([\w.-]+\/[\w.-]+)\/pull\/(\d+)/.exec(j.url);
     return { body: j.body ?? '', headSha: j.headRefOid, baseSha: j.baseRefOid, repo: m ? m[1] : '', number: n };
+  },
+  checkedOut() {
+    let headSha: string | null = null;
+    try {
+      headSha = sh('git', ['rev-parse', 'HEAD']).trim() || null;
+    } catch {
+      headSha = null;
+    }
+    return { headSha, baseSha: process.env.BASE_SHA || null };
   },
   fileAt(sha, path) {
     try {
@@ -401,6 +414,10 @@ export function main(argv: readonly string[], adapter: Adapter = liveAdapter, wr
     write(`${job}: unavailable (the PR cannot be read) — continue\n`);
     return 2;
   }
+  // Judge the commit the run checked out, not the PR's live head: a push between the checkout and this read
+  // would otherwise name a commit the checkout lacks. Only the body stays live (a re-run replays the payload).
+  const co = adapter.checkedOut();
+  view = { ...view, headSha: co.headSha ?? view.headSha, baseSha: co.baseSha ?? view.baseSha };
   const rec = readRecord(view.body);
   write(`::notice title=merge-hold-read::${escapeAnnotation(rec.message)}\n`);
   if (rec.summary !== null && process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${rec.summary}\n`);

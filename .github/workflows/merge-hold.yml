@@ -14,7 +14,8 @@
 # Peter's GitHub credential. A green result is not evidence that Peter spoke.
 #
 # The body is read through the API (`gh pr view`), never from the event payload, because a re-run replays the
-# payload of its original event. `edited` fires when an author edits the body to add an answer; a commit that
+# payload of its original event. The head and base judged are the checked-out HEAD and the event's base.sha, never the
+# live ones, so a push or a main advance after the checkout cannot name a commit the checkout lacks. `edited` fires when an author edits the body to add an answer; a commit that
 # adds the cited file fires `synchronize`. No `if:` appears in this file.
 
 name: merge-hold
@@ -52,6 +53,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: npx tsx scripts/completion-claims/merge-hold.ts --job merge-hold --pr "$PR_NUMBER"
 
   law-ratified:
@@ -77,4 +79,5 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: npx tsx scripts/completion-claims/merge-hold.ts --job law-ratified --pr "$PR_NUMBER"

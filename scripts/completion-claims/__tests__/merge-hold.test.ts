@@ -258,6 +258,7 @@ describe('the run record (A2) and the command line', () => {
   const adapter = (view: Partial<PrView>, files: Record<string, string>, changed: ChangedFile[]): Adapter => ({
     prView: () => ({ body: '', headSha: 'h', baseSha: 'b', repo: '3fn/DesignerPunk', number: 725, ...view }),
     fileAt: (_s, p) => (p in files ? files[p] : null),
+    checkedOut: () => ({ headSha: null, baseSha: null }),
     changedFiles: () => changed,
     commentBody: () => null,
   });
@@ -286,5 +287,22 @@ describe('the run record (A2) and the command line', () => {
     const r = run(['--job', 'merge-hold', '--pr', '1'], bad);
     expect(r.code).toBe(2);
     expect(r.out).toBe('merge-hold: unavailable (the PR cannot be read) — continue\n');
+  });
+
+  it('judges the checked-out head and the event base, never the live ones', () => {
+    const seen: string[] = [];
+    const a: Adapter = {
+      ...adapter({ body: '', headSha: 'LIVE-HEAD', baseSha: 'LIVE-BASE' }, {}, []),
+      checkedOut: () => ({ headSha: 'RUN-HEAD', baseSha: 'RUN-BASE' }),
+      fileAt: (s, p) => { seen.push(`file:${s}:${p}`); return null; },
+      changedFiles: (b, h) => { seen.push(`diff:${b}..${h}`); return []; },
+    };
+    run(['--job', 'law-ratified', '--pr', '730'], a);
+    expect(seen).toContain('diff:RUN-BASE..RUN-HEAD');
+    expect(seen.join()).not.toContain('LIVE');
+    const m = run(['--job', 'merge-hold', '--pr', '730'], { ...a, prView: () => ({ body: [marker(), answer(WORDS, REC)].join('\n'), headSha: 'LIVE-HEAD', baseSha: 'LIVE-BASE', repo: 'r/r', number: 730 }) });
+    expect(m.code).toBe(1);
+    expect(seen).toContain(`file:RUN-HEAD:${REC}`);
+    expect(seen.join()).not.toContain('LIVE');
   });
 });
