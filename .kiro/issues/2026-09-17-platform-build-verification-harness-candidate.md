@@ -247,3 +247,21 @@ U1's merge puts `completion/task-5-completion.md` on `main`, which fires this re
 - **My § 2(b)**, a local `swiftc` spot-check recipe an owner runs on request, is superseded for iOS by the lane. I do not retire § 2(a) here: the Method-line honesty it asks for stays true of any claim these contexts do not cover.
 
 — Kenya, 2026-11-07
+
+## Outcome (2026-11-07, Data, Android) — rule 5 outcome line, written in U1's PR (#707)
+
+U1's merge puts `completion/task-5-completion.md` on `main`, which fires this record's Trigger; this is the Android owner's rule 5 line for it, below Kenya's. The archive move is the steward's after both (rules 5 and 9).
+
+- **What this record owed** (its Trigger line): an instrument that exists, a CI run that compiles the Swift and Kotlin we generate. **Android: delivered.** `.github/workflows/native-harness.yml` runs `harness-android-tokens` and `harness-android-components` on `ubuntu-24.04`, through `harness/android/lane.ts` and the committed Gradle wrapper (checked by Gradle's wrapper-validation action before the first `./gradlew`):
+  - one build with three modules, `:tokens` (the generated Kotlin), `:probe` (a probe generated from the consumer's token index, theme instances, product tokens, family and provider, which reads each name from a module of its own so a member left `internal` is visible) and `:dp` (the generated Kotlin and every non-test packaged `.kt`, with Icon-Base's resources);
+  - the pins in `harness/pins.yaml` § `android` (JDK 17.0.21, Gradle 9.8.2, Kotlin 2.4.21, AGP 9.5.0, Compose BOM 2026.09.00), which each context reads back from what Gradle resolved.
+- **§ 2(c)'s question** ("is an Android SDK / `gradle` toolchain reachable on any machine we work from at all?"): yes. The `ubuntu-24.04` runner image carries the JDK, Gradle and Android SDK (read 2026-11-06, image `20261101.360.1`), and a local toolchain was installed in session scratch on 2026-11-06 with Peter's approval (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-06-peter-rulings-theme-and-downloads.md`). The Android spot-check recipe it asked about is superseded by the lane.
+- **Evidence**: the dispatched run https://github.com/3fn/DesignerPunk/actions/runs/42333520571 at `44e2f7f54`, where both Android contexts concluded PASS with `cache: hit`; `.kiro/specs/129-consumer-generation-completeness/completion/task-4-completion.md` (14 criteria, each with its Evidence cell); PR #707.
+- **What it is not**, stated so this line is not read as more than it is:
+  - It is **not a required check.** The contexts are non-required measuring lanes (Spec 129 Req 2.12); promoting one is Peter's act on the criterion in `tasks.md` § "Decision 6".
+  - A PASS means **the failures match the committed lists** (`harness/expected/harness-android-tokens.tsv`, 25 entries, and `harness-android-components.tsv`, 213), not that the code compiles. `:tokens` still fails on the generator's output (291 diagnostics).
+  - The probe has **not yet compiled against the real token module**, because `:tokens` does not build, so the probe is blocked in every CI run so far (`probe: blocked (:tokens not compiled)`). Its compile path is shown by the planted-member self-test on the real compiler, and on a hand-written generated tree that compiles.
+  - Nothing runs on an emulator or a device, and a Kotlin compile checks no API level (Req 2.9): no green here reads "runs on API 26".
+- **My § 2(a)** stays in force: the Method-line honesty it asks for remains true of any claim these contexts do not cover. I do not retire it here.
+
+— Data, 2026-11-07
