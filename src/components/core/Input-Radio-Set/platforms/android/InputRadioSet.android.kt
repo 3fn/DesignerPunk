@@ -51,6 +51,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.designerpunk.tokens.DesignTokens
 
@@ -108,7 +109,7 @@ private object RadioSetTokens {
     /** Error text font size
      * References: fontSize050 (12sp)
      */
-    val errorFontSize: Float = DesignTokens.font_size_050
+    val errorFontSize: TextUnit = DesignTokens.font_size_050
 
     /** Spacing between error message and radio group content
      * References: space.grouped.normal (8dp)
@@ -222,7 +223,7 @@ fun InputRadioSet(
             Text(
                 text = errorMessage,
                 style = TextStyle(
-                    fontSize = RadioSetTokens.errorFontSize.sp,
+                    fontSize = RadioSetTokens.errorFontSize,
                     fontWeight = FontWeight.Normal
                 ),
                 color = RadioSetTokens.errorTextColor,

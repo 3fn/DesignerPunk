@@ -46,6 +46,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.designerpunk.tokens.DesignTokens
 
@@ -129,7 +130,7 @@ private object BadgeLabelBaseTokens {
  * @see Requirements: 4.1, 4.4, 4.5, 4.6 - Token mappings per size
  */
 private data class BadgeLabelBaseSizeConfig(
-    val fontSize: Float,
+    val fontSize: TextUnit,
     val lineHeight: Float,
     val paddingVertical: Dp,
     val paddingHorizontal: Dp,
@@ -274,8 +275,8 @@ fun BadgeLabelBase(
         Text(
             text = label,
             style = TextStyle(
-                fontSize = sizeConfig.fontSize.sp,
-                lineHeight = (sizeConfig.fontSize * sizeConfig.lineHeight).sp,
+                fontSize = sizeConfig.fontSize,
+                lineHeight = sizeConfig.fontSize * sizeConfig.lineHeight,
                 fontWeight = FontWeight.Medium
             ),
             color = BadgeLabelBaseTokens.textColor,

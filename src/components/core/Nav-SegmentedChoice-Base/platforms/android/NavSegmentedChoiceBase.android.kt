@@ -62,6 +62,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.designerpunk.tokens.DesignTokens
 import kotlinx.coroutines.launch
@@ -105,7 +106,7 @@ enum class NavSegmentedChoiceSize {
         CONDENSED -> DesignTokens.space_150
     }
 
-    val fontSize: Float get() = when (this) {
+    val fontSize: TextUnit get() = when (this) {
         STANDARD -> DesignTokens.font_size_125
         CONDENSED -> DesignTokens.font_size_100
     }
@@ -278,9 +279,7 @@ fun NavSegmentedChoiceBase(
             // Indicator layer (contract: visual_shadow)
             val shadowToken = NavSegmentedChoiceTokens.indicatorShadow
             val currentShadowAlpha = shadowAlpha.value
-            val segmentHeightDp = with(density) {
-                ((size.fontSize * size.lineHeight) + (size.blockPadding * 2)).toDp()
-            }
+            val segmentHeightDp = (size.fontSize.value * size.lineHeight).dp + size.blockPadding * 2
 
             Box(
                 modifier = Modifier
@@ -362,8 +361,8 @@ fun NavSegmentedChoiceBase(
                             is SegmentOption.Text -> Text(
                                 text = segment.label,
                                 color = theme.color_action_navigation,
-                                fontSize = size.fontSize.sp,
-                                lineHeight = (size.fontSize * size.lineHeight).sp,
+                                fontSize = size.fontSize,
+                                lineHeight = size.fontSize * size.lineHeight,
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier.padding(

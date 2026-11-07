@@ -65,9 +65,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import android.provider.Settings
+import com.designerpunk.tokens.DesignTokens
 import com.designerpunk.tokens.focusBlend
 
 /**
@@ -178,14 +180,14 @@ fun InputTextBase(
     
     // Animated values
     val labelFontSize by animateFloatAsState(
-        targetValue = if (isLabelFloated) typographyLabelMdFloatFontSize else typographyLabelMdFontSize,
+        targetValue = if (isLabelFloated) typographyLabelMdFloatFontSize.value else typographyLabelMdFontSize.value,
         animationSpec = animationSpec,
         label = "labelFontSize"
     )
     
     val labelOffsetY by animateDpAsState(
         targetValue = if (isLabelFloated) {
-            -(typographyLabelMdLineHeight + spaceGroupedTight)
+            -((typographyLabelMdFontSize.value * typographyLabelMdLineHeight.value).dp + spaceGroupedTight)
         } else {
             0.dp
         },
@@ -302,10 +304,10 @@ fun InputTextBase(
                     )
                     .padding(spaceInset100),
                 textStyle = LocalTextStyle.current.copy(
-                    fontSize = typographyInputFontSize.sp,
-                    lineHeight = typographyInputLineHeight.sp,
-                    fontWeight = FontWeight(typographyInputFontWeight),
-                    letterSpacing = typographyInputLetterSpacing.sp,
+                    fontSize = typographyInputFontSize,
+                    lineHeight = typographyInputLineHeight,
+                    fontWeight = typographyInputFontWeight,
+                    letterSpacing = typographyInputLetterSpacing,
                     color = colorTextDefault
                 ),
                 keyboardOptions = KeyboardOptions(
@@ -330,7 +332,7 @@ fun InputTextBase(
                             Text(
                                 text = placeholder,
                                 style = TextStyle(
-                                    fontSize = typographyInputFontSize.sp,
+                                    fontSize = typographyInputFontSize,
                                     color = colorTextMuted.copy(alpha = 0.5f)
                                 )
                             )
@@ -345,9 +347,9 @@ fun InputTextBase(
                     text = label + if (required) " *" else "",
                     style = TextStyle(
                         fontSize = labelFontSize.sp,
-                        lineHeight = if (isLabelFloated) typographyLabelMdFloatLineHeight.sp else typographyLabelMdLineHeight.sp,
-                        fontWeight = FontWeight(typographyLabelMdFontWeight),
-                        letterSpacing = typographyLabelMdLetterSpacing.sp,
+                        lineHeight = if (isLabelFloated) typographyLabelMdFloatLineHeight else typographyLabelMdLineHeight,
+                        fontWeight = typographyLabelMdFontWeight,
+                        letterSpacing = typographyLabelMdLetterSpacing,
                         color = labelColor
                     ),
                     modifier = Modifier
@@ -395,10 +397,10 @@ fun InputTextBase(
             Text(
                 text = helperText,
                 style = TextStyle(
-                    fontSize = typographyCaptionFontSize.sp,
-                    lineHeight = typographyCaptionLineHeight.sp,
-                    fontWeight = FontWeight(typographyCaptionFontWeight),
-                    letterSpacing = typographyCaptionLetterSpacing.sp,
+                    fontSize = typographyCaptionFontSize,
+                    lineHeight = typographyCaptionLineHeight,
+                    fontWeight = typographyCaptionFontWeight,
+                    letterSpacing = typographyCaptionLetterSpacing,
                     color = colorTextMuted
                 ),
                 modifier = Modifier.padding(start = spaceInset100)
@@ -411,10 +413,10 @@ fun InputTextBase(
             Text(
                 text = errorMessage,
                 style = TextStyle(
-                    fontSize = typographyCaptionFontSize.sp,
-                    lineHeight = typographyCaptionLineHeight.sp,
-                    fontWeight = FontWeight(typographyCaptionFontWeight),
-                    letterSpacing = typographyCaptionLetterSpacing.sp,
+                    fontSize = typographyCaptionFontSize,
+                    lineHeight = typographyCaptionLineHeight,
+                    fontWeight = typographyCaptionFontWeight,
+                    letterSpacing = typographyCaptionLetterSpacing,
                     color = colorFeedbackErrorText
                 ),
                 modifier = Modifier.padding(start = spaceInset100)
@@ -437,31 +439,32 @@ private fun getKeyboardType(type: InputType): KeyboardType {
 }
 
 // MARK: - Design Token Constants
-// These constants reference semantic tokens that will be generated by the build system.
+// These constants bind to the generated DesignTokens. The colour constants below are still
+// bodyless: they wait on the theme surface (Spec 129 U6/U7).
 
 // Typography tokens - labelMd (typography.labelMd)
-private const val typographyLabelMdFontSize: Float // Generated from typography.labelMd.fontSize
-private val typographyLabelMdLineHeight: Dp // Generated from typography.labelMd.lineHeight
-private const val typographyLabelMdFontWeight: Int // Generated from typography.labelMd.fontWeight
-private const val typographyLabelMdLetterSpacing: Float // Generated from typography.labelMd.letterSpacing
+private val typographyLabelMdFontSize: TextUnit = DesignTokens.typography_label_md.fontSize
+private val typographyLabelMdLineHeight: TextUnit = DesignTokens.typography_label_md.lineHeight // em ratio
+private val typographyLabelMdFontWeight: FontWeight? = DesignTokens.typography_label_md.fontWeight
+private val typographyLabelMdLetterSpacing: TextUnit = DesignTokens.typography_label_md.letterSpacing // em
 
 // Typography tokens - labelMdFloat (typography.labelMdFloat)
-private const val typographyLabelMdFloatFontSize: Float // Generated from typography.labelMdFloat.fontSize
-private const val typographyLabelMdFloatLineHeight: Float // Generated from typography.labelMdFloat.lineHeight
-private const val typographyLabelMdFloatFontWeight: Int // Generated from typography.labelMdFloat.fontWeight
-private const val typographyLabelMdFloatLetterSpacing: Float // Generated from typography.labelMdFloat.letterSpacing
+private val typographyLabelMdFloatFontSize: TextUnit = DesignTokens.typography_label_md_float.fontSize
+private val typographyLabelMdFloatLineHeight: TextUnit = DesignTokens.typography_label_md_float.lineHeight // em ratio
+private val typographyLabelMdFloatFontWeight: FontWeight? = DesignTokens.typography_label_md_float.fontWeight
+private val typographyLabelMdFloatLetterSpacing: TextUnit = DesignTokens.typography_label_md_float.letterSpacing // em
 
 // Typography tokens - input (typography.input)
-private const val typographyInputFontSize: Float // Generated from typography.input.fontSize
-private const val typographyInputLineHeight: Float // Generated from typography.input.lineHeight
-private const val typographyInputFontWeight: Int // Generated from typography.input.fontWeight
-private const val typographyInputLetterSpacing: Float // Generated from typography.input.letterSpacing
+private val typographyInputFontSize: TextUnit = DesignTokens.typography_input.fontSize
+private val typographyInputLineHeight: TextUnit = DesignTokens.typography_input.lineHeight // em ratio
+private val typographyInputFontWeight: FontWeight? = DesignTokens.typography_input.fontWeight
+private val typographyInputLetterSpacing: TextUnit = DesignTokens.typography_input.letterSpacing // em
 
 // Typography tokens - caption (typography.caption)
-private const val typographyCaptionFontSize: Float // Generated from typography.caption.fontSize
-private const val typographyCaptionLineHeight: Float // Generated from typography.caption.lineHeight
-private const val typographyCaptionFontWeight: Int // Generated from typography.caption.fontWeight
-private const val typographyCaptionLetterSpacing: Float // Generated from typography.caption.letterSpacing
+private val typographyCaptionFontSize: TextUnit = DesignTokens.typography_caption.fontSize
+private val typographyCaptionLineHeight: TextUnit = DesignTokens.typography_caption.lineHeight // em ratio
+private val typographyCaptionFontWeight: FontWeight? = DesignTokens.typography_caption.fontWeight
+private val typographyCaptionLetterSpacing: TextUnit = DesignTokens.typography_caption.letterSpacing // em
 
 // Color tokens (semantic)
 private val colorTextMuted: Color // Generated from color.text.muted
@@ -473,23 +476,23 @@ private val colorBorder: Color // Generated from color.border
 private val colorBackground: Color // Generated from color.background
 
 // Spacing tokens (semantic) - Dp type
-private val spaceInset100: Dp // Generated from space.inset.100
-private val spaceGroupedTight: Dp // Generated from space.grouped.tight
-private val spaceGroupedMinimal: Dp // Generated from space.grouped.minimal
+private val spaceInset100: Dp = DesignTokens.space_inset_100
+private val spaceGroupedTight: Dp = DesignTokens.space_grouped_tight
+private val spaceGroupedMinimal: Dp = DesignTokens.space_grouped_minimal
 
 // Motion tokens - motion.floatLabel (duration250 + easingStandard)
-private const val motionFloatLabelDuration: Int // Generated from motion.floatLabel.duration (250ms)
+private val motionFloatLabelDuration: Int = DesignTokens.MotionFloatLabel.duration // 250ms
 private val easingStandard = CubicBezierEasing(0.4f, 0.0f, 0.2f, 1.0f) // Material Design standard curve
 
 // Border tokens - Dp type
-private val borderDefault: Dp // Generated from border.default
-private val radius150: Dp // Generated from radius.150
+private val borderDefault: Dp = DesignTokens.border_default
+private val radius150: Dp = DesignTokens.radius_150
 
 // Icon tokens - Dp type
-private val iconSize100: Dp // Generated from icon.size100 (24dp)
+private val iconSize100: Dp = DesignTokens.icon_size_100 // 24dp
 
 // Accessibility tokens - Dp type
-private val tapAreaRecommended: Dp // Generated from accessibility.tapArea.recommended (48dp minimum)
-private val accessibilityFocusWidth: Dp // Generated from accessibility.focus.width
-private val accessibilityFocusOffset: Dp // Generated from accessibility.focus.offset
+private val tapAreaRecommended: Dp = DesignTokens.tap_area_recommended // 48dp minimum
+private val accessibilityFocusWidth: Dp = DesignTokens.accessibility_focus_width
+private val accessibilityFocusOffset: Dp = DesignTokens.accessibility_focus_offset
 private val accessibilityFocusColor: Color // Generated from accessibility.focus.color

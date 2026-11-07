@@ -86,7 +86,7 @@ fun ProgressBarBase(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(barHeight.dp)
+            .height(barHeight)
             .clip(capsule)
             .background(ProgressBarTokenstheme.color_progress_pending_background)
             .then(if (testID != null) Modifier.testTag(testID) else Modifier)

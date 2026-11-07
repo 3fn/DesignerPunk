@@ -255,8 +255,8 @@ fun ChipInput(
             Text(
                 text = label,
                 style = TextStyle(
-                    fontSize = DesignTokens.font_size_075.sp,  // typography.buttonSm
-                    lineHeight = (DesignTokens.font_size_075 * DesignTokens.line_height_075).sp,
+                    fontSize = DesignTokens.font_size_075,  // typography.buttonSm
+                    lineHeight = DesignTokens.font_size_075 * DesignTokens.line_height_075,
                     fontWeight = FontWeight.Medium
                 ),
                 color = theme.color_text_default

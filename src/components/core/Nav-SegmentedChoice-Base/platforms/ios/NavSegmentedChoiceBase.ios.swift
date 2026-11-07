@@ -31,7 +31,7 @@ enum NavSegmentedChoiceTokens {
 
     // Segments (contract: visual_state_colors, layout_flexible_length)
     static let segmentRadius: CGFloat = DesignTokens.radiusSmall
-    static let fontWeight: UIFont.Weight = DesignTokens.fontWeight700
+    static let fontWeight: Font.Weight = DesignTokens.fontWeight700
     static let minSegmentWidth: CGFloat = DesignTokens.tapAreaMinimum
 }
 

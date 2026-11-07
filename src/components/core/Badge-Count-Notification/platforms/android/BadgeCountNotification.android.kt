@@ -65,6 +65,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.designerpunk.tokens.DesignTokens
 import kotlin.math.abs
@@ -161,7 +162,7 @@ object BadgeCountNotificationDefaults {
  * @see Requirements: 4.3, 4.4 - Token mappings per size
  */
 private data class BadgeCountNotificationSizeConfig(
-    val fontSize: Float,
+    val fontSize: TextUnit,
     val lineHeight: Float,
     val paddingVertical: Dp,
     val paddingHorizontal: Dp,
@@ -185,7 +186,7 @@ private fun getSizeConfig(size: BadgeCountNotificationSize): BadgeCountNotificat
             paddingVertical = DesignTokens.space_000,        // 0dp - space.inset.none
             paddingHorizontal = DesignTokens.space_050,      // 4dp - space.inset.050
             // Min-width = line-height for circular shape (~20dp)
-            minWidth = (DesignTokens.font_size_050 * DesignTokens.line_height_050).dp,
+            minWidth = (DesignTokens.font_size_050.value * DesignTokens.line_height_050).dp,
             typographyTokenReference = "typography.labelXs"
         )
         BadgeCountNotificationSize.MD -> BadgeCountNotificationSizeConfig(
@@ -194,7 +195,7 @@ private fun getSizeConfig(size: BadgeCountNotificationSize): BadgeCountNotificat
             paddingVertical = DesignTokens.space_000,        // 0dp - space.inset.none
             paddingHorizontal = DesignTokens.space_050,      // 4dp - space.inset.050
             // Min-width = line-height for circular shape (~20dp)
-            minWidth = (DesignTokens.font_size_075 * DesignTokens.line_height_075).dp,
+            minWidth = (DesignTokens.font_size_075.value * DesignTokens.line_height_075).dp,
             typographyTokenReference = "typography.labelSm"
         )
         BadgeCountNotificationSize.LG -> BadgeCountNotificationSizeConfig(
@@ -203,7 +204,7 @@ private fun getSizeConfig(size: BadgeCountNotificationSize): BadgeCountNotificat
             paddingVertical = DesignTokens.space_050,        // 4dp - space.inset.050
             paddingHorizontal = DesignTokens.space_100,      // 8dp - space.inset.100
             // Min-width = line-height for circular shape (24dp)
-            minWidth = (DesignTokens.font_size_100 * DesignTokens.line_height_100).dp,
+            minWidth = (DesignTokens.font_size_100.value * DesignTokens.line_height_100).dp,
             typographyTokenReference = "typography.labelMd"
         )
     }
@@ -399,8 +400,8 @@ fun BadgeCountNotification(
         Text(
             text = displayText,
             style = TextStyle(
-                fontSize = sizeConfig.fontSize.sp,
-                lineHeight = (sizeConfig.fontSize * sizeConfig.lineHeight).sp,
+                fontSize = sizeConfig.fontSize,
+                lineHeight = sizeConfig.fontSize * sizeConfig.lineHeight,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
             ),

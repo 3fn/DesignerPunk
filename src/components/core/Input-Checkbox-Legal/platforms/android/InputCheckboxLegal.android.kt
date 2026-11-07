@@ -52,6 +52,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.designerpunk.tokens.DesignTokens
 import java.time.Instant
@@ -103,7 +104,7 @@ private object LegalCheckboxTokens {
     /** Required indicator font size
      * References: fontSize050 (12sp)
      */
-    val requiredFontSize: Float = DesignTokens.font_size_050
+    val requiredFontSize: TextUnit = DesignTokens.font_size_050
     
     /** Minimal spacing between required indicator and checkbox
      * References: space.grouped.minimal (2dp)
@@ -267,7 +268,7 @@ fun InputCheckboxLegal(
             Text(
                 text = "Required",
                 style = TextStyle(
-                    fontSize = LegalCheckboxTokens.requiredFontSize.sp,
+                    fontSize = LegalCheckboxTokens.requiredFontSize,
                     fontWeight = FontWeight.Medium
                 ),
                 color = LegalCheckboxTokens.requiredIndicatorColor,

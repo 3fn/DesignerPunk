@@ -14,20 +14,21 @@
  * (`val minTapWidth = DesignTokens.tap_area_minimum`); `.dp` on such a member
  * is the same defect.
  *
- * Two rules, each read from the generator's ACTUAL output and two-sided:
+ * Two rules, each read from the generator's ACTUAL output and two-sided
+ * (fontSize is `TextUnit` since Spec 129 Task 9; groups B and C are fixed and
+ * the pin below is empty):
  *
  *   1. Dp families (borderWidth, spacing, tapArea, radius). Emitted as Dp
  *      (today): no direct read and no derived-member use is followed by `.dp`.
  *      Emitted as Float: every direct read and member use must be followed by
  *      `.dp` (the rule flips).
- *   2. fontSize. Emitted as Dp (today): `.sp`/`.dp` after a `font_size_*`
- *      read is wrong, but 12 such lines in 5 files are KNOWN-OPEN, pinned
- *      below to the file and count: they wait on Spec 129's fontSize type
- *      decision (record `2026-10-24-android-component-unit-type-mismatches.md`
- *      groups B and C). The pin is two-sided: fixing one, or adding one,
- *      fails until the pin is updated. Emitted as Float: `.sp` and `.dp` after
- *      `font_size_*` are valid and the pin must be emptied. Any other shape
- *      fails until this guard is taught it.
+ *   2. fontSize. Emitted as TextUnit (today, `16.sp`): `.sp`/`.dp` after a
+ *      bare `font_size_*` read is wrong (`.value` first is the sanctioned way
+ *      to a number), and no `*FontSize` declaration may be typed `Float`
+ *      (a TextUnit cannot initialise it). Emitted as Dp: `.sp`/`.dp` after a
+ *      `font_size_*` read is wrong, and the pinned set below is exact.
+ *      Emitted as Float: `.sp` and `.dp` after `font_size_*` are valid and the
+ *      pin must be empty. Any other shape fails until this guard is taught it.
  *
  * What it does NOT prove: that any Android file compiles. It is a text check
  * for one defect class (a unit-extension on the wrong generated type). It
@@ -51,21 +52,16 @@ import { fontSizeTokens } from '../../tokens/FontSizeTokens';
 
 const COMPONENTS_ROOT = path.resolve(__dirname, '..');
 
-/** Known-open fontSize `.sp`/`.dp` lines (group B), pinned by file. Retire with the fontSize decision. */
-const PINNED_FONT_SIZE_UNIT_LINES: Record<string, number> = {
-  'core/Badge-Count-Base/platforms/android/BadgeCountBase.android.kt': 3,
-  'core/Badge-Count-Notification/platforms/android/BadgeCountNotification.android.kt': 3,
-  'core/Chip-Base/platforms/android/ChipBase.android.kt': 2,
-  'core/Chip-Filter/platforms/android/ChipFilter.android.kt': 2,
-  'core/Chip-Input/platforms/android/ChipInput.android.kt': 2,
-};
+/** Known-open fontSize `.sp`/`.dp` lines, pinned by file; used only if fontSize is emitted as Dp. Empty: groups B and C are fixed. */
+const PINNED_FONT_SIZE_UNIT_LINES: Record<string, number> = {};
 
-type Shape = 'Dp' | 'Float' | 'other';
+type Shape = 'Dp' | 'Float' | 'TextUnit' | 'other';
 
 function emittedShape(token: Parameters<AndroidFormatGenerator['formatToken']>[0]): { shape: Shape; emitted: string } {
   const emitted = new AndroidFormatGenerator('kotlin').formatToken(token).trim();
   if (/^val \w+ = -?[\d.]+\.dp$/.test(emitted)) return { shape: 'Dp', emitted };
   if (/^const val \w+: Float = /.test(emitted)) return { shape: 'Float', emitted };
+  if (/^val \w+ = -?[\d.]+\.sp$/.test(emitted)) return { shape: 'TextUnit', emitted };
   return { shape: 'other', emitted };
 }
 
@@ -139,9 +135,18 @@ export function dpFamilyReads(source: string): DpRead[] {
 export function fontSizeUnitLines(source: string): Array<{ line: number; text: string }> {
   const out: Array<{ line: number; text: string }> = [];
   source.split('\n').forEach((raw, i) => {
-    if (/DesignTokens\.font_size_\d+\b[^,\n]*?\.(sp|dp)\b/.test(codeOf(raw))) {
+    if (/DesignTokens\.font_size_\d+\b(?!\.value)[^,\n]*?\.(sp|dp)\b/.test(codeOf(raw))) {
       out.push({ line: i + 1, text: raw.trim() });
     }
+  });
+  return out;
+}
+
+/** Declarations that type a fontSize as Float or Float? (a `TextUnit` cannot initialise them). */
+export function floatFontSizeDeclarations(source: string): Array<{ line: number; text: string }> {
+  const out: Array<{ line: number; text: string }> = [];
+  source.split('\n').forEach((raw, i) => {
+    if (/\bval\s+\w*[fF]ontSize\w*\s*:\s*Float\??/.test(codeOf(raw))) out.push({ line: i + 1, text: raw.trim() });
   });
   return out;
 }
@@ -173,7 +178,7 @@ describe('Android Dp-typed token reads agree with the generated type', () => {
       }
     }
     if (FONT_SIZE_PROBE.shape === 'other') {
-      throw new Error(`AndroidFormatGenerator emitted an unrecognised fontSize shape:\n  ${FONT_SIZE_PROBE.emitted}\nTeach this guard the new shape (e.g. TextUnit) before trusting it.`);
+      throw new Error(`AndroidFormatGenerator emitted an unrecognised fontSize shape:\n  ${FONT_SIZE_PROBE.emitted}\nTeach this guard the new shape before trusting it.`);
     }
   });
 
@@ -216,13 +221,23 @@ describe('Android Dp-typed token reads agree with the generated type', () => {
     }
   });
 
-  it('fontSize reads: known-open .sp/.dp lines are exactly the pinned set while fontSize is Dp', () => {
+  it('fontSize reads: no .sp/.dp after a bare read and no Float fontSize declaration (TextUnit); the pinned set is exact if Dp', () => {
     const actual: Record<string, number> = {};
     for (const file of files) {
       const n = fontSizeUnitLines(fs.readFileSync(file, 'utf-8')).length;
       if (n > 0) actual[rel(file)] = n;
     }
-    if (FONT_SIZE_PROBE.shape === 'Dp') {
+    if (FONT_SIZE_PROBE.shape === 'TextUnit') {
+      // TextUnit.sp / TextUnit.dp do not compile, and a Float-typed fontSize cannot take a TextUnit.
+      expect(actual).toEqual({});
+      const floats: string[] = [];
+      for (const file of files) {
+        for (const d of floatFontSizeDeclarations(fs.readFileSync(file, 'utf-8'))) {
+          floats.push(`${rel(file)}:${d.line} declares a fontSize as Float, but the generator emits TextUnit\n    ${d.text}`);
+        }
+      }
+      expect(floats).toEqual([]);
+    } else if (FONT_SIZE_PROBE.shape === 'Dp') {
       // Dp.sp / Dp.dp do not compile; these are the pinned, known-open sites (groups B and C wait on Spec 129).
       expect(actual).toEqual(PINNED_FONT_SIZE_UNIT_LINES);
     } else {
@@ -264,6 +279,21 @@ describe('detector self-test (fixtures)', () => {
       [7, 'T.b', true],
       [8, 'T.a', false],
     ]);
+  });
+
+  it('finds Float-typed fontSize declarations, and not TextUnit ones', () => {
+    const src = [
+      '    val labelFontSize: Float',
+      '    val fontSize: Float?',
+      '    val fontSize: TextUnit,',
+      '    // val fontSize: Float',
+    ].join('\n');
+    expect(floatFontSizeDeclarations(src).map((l) => l.line)).toEqual([1, 2]);
+  });
+
+  it('does not flag .value on a TextUnit fontSize, which is how a number is taken from it', () => {
+    const src = '    minWidth = (DesignTokens.font_size_050.value * DesignTokens.line_height_050).dp,';
+    expect(fontSizeUnitLines(src)).toEqual([]);
   });
 
   it('finds .sp/.dp after a fontSize read', () => {

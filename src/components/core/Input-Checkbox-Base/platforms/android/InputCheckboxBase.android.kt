@@ -66,6 +66,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.designerpunk.tokens.BlendTokenValues
 import com.designerpunk.tokens.DesignTokens
@@ -137,7 +138,7 @@ enum class CheckboxSize {
     /** Typography font size for label
      * @see Requirement 2.4-2.6 - Label typography
      */
-    val labelFontSize: Float
+    val labelFontSize: TextUnit
         get() = when (this) {
             Small -> DesignTokens.font_size_075   // 14sp (labelSm)
             Medium -> DesignTokens.font_size_100  // 16sp (labelMd)
@@ -187,7 +188,7 @@ enum class LabelTypography {
     /** Font size for this typography option
      * Returns null for Inherit (use size variant's default)
      */
-    val fontSize: Float?
+    val fontSize: TextUnit?
         get() = when (this) {
             Inherit -> null
             Small -> DesignTokens.font_size_075   // 14sp (labelSm)
@@ -293,7 +294,7 @@ private object CheckboxTokens {
     /** Helper/error text font size
      * References: fontSize050 (12sp)
      */
-    val helperFontSize: Float = DesignTokens.font_size_050
+    val helperFontSize: TextUnit = DesignTokens.font_size_050
 }
 
 // MARK: - InputCheckboxBase Composable
@@ -504,7 +505,7 @@ fun InputCheckboxBase(
             Text(
                 text = label,
                 style = TextStyle(
-                    fontSize = effectiveLabelFontSize.sp,
+                    fontSize = effectiveLabelFontSize,
                     fontWeight = FontWeight.Medium
                 ),
                 color = theme.color_text_default
@@ -527,7 +528,7 @@ fun InputCheckboxBase(
                     Text(
                         text = helperText,
                         style = TextStyle(
-                            fontSize = CheckboxTokens.helperFontSize.sp,
+                            fontSize = CheckboxTokens.helperFontSize,
                             fontWeight = FontWeight.Normal
                         ),
                         color = theme.color_text_muted,
@@ -545,7 +546,7 @@ fun InputCheckboxBase(
                     Text(
                         text = errorMessage,
                         style = TextStyle(
-                            fontSize = CheckboxTokens.helperFontSize.sp,
+                            fontSize = CheckboxTokens.helperFontSize,
                             fontWeight = FontWeight.Normal
                         ),
                         color = theme.color_feedback_error_text,
