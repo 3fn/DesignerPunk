@@ -117,7 +117,7 @@ units:
       - id: scope-12
         kind: member
         label: "CI regime — standing test-lane scope (ballot 2026-09-27-ci-r"
-        text: "**CI regime — standing test-lane scope (ballot 2026-09-27-ci-regime-standing-scope § 2)**: in `.github/workflows/lane-timing.yml` only, a step that runs an existing `package.json` test script inside an existing required job, plus its own did-it-really-run floor (fails on zero; same selection as the step). Nothing else — no env/cache/runner/`if:`/`continue-on-error` change, no removed line (`git diff --numstat` deletions 0). **Never**: a new required context, a change to `EXPECTED_CONTEXTS`'s count, branch protection or repo settings (Peter's). In `.github/in-lane-guards.json` only (P1b, ballot 2026-10-20-in-lane-guard-registry-additive-entries): **add** an entry, never change or remove one, never change `version` or another key (that is weakening a floor: an issue-row grant naming the act, or Peter's); the PR shows the additivity predicate `true` against its merge base, the step green with `N registered; N selected` (N the entry count), and per added entry the assertion its record rests on. Every other CI path goes through an issue-row grant (§ 3). ARMING audits each such PR at its merge."
+        text: "**CI regime — standing test-lane scope (ballot 2026-09-27-ci-regime-standing-scope § 2)**: in `.github/workflows/lane-timing.yml` only, a step that runs an existing `package.json` test script inside an existing required job, plus its own did-it-really-run floor (fails on zero; same selection as the step). Nothing else — no env/cache/runner/`if:`/`continue-on-error` change, no removed line (`git diff --numstat` deletions 0). **Never**: a new required context, a change to `EXPECTED_CONTEXTS`'s count, branch protection or repo settings (Peter's). In `.github/in-lane-guards.json` only (P1b, ballot 2026-10-20-in-lane-guard-registry-additive-entries): **add** an entry, never change or remove one, never change `version` or another key (that is weakening a floor: an issue-row grant naming the act, or Peter's); the PR shows the additivity predicate `true` against its merge base, the step green with `N registered; N selected` (N the entry count), and per added entry the assertion its record rests on. In `.github/workflows/merge-hold.yml` only (P1c, ballot 2026-11-07-thurgood-charter-scope-harness-and-merge-hold § 3 item 2): a fix that passes that ballot's bound B1–B5 — `.github/**` changes exactly that file; deleted lines are comments or blank, and quoted in the PR body's `**Deleted lines**:` block; added lines are comments, blanks, `env:` keys and `${{ github.* }}` entries the script reads by name; parsed with the repository's `js-yaml`, the file is unchanged outside its `env` maps, and those maps only grow — and whose PR body carries the bound's query output and names what each added entry changes (B6). Anything else in that file goes through an issue-row grant or is Peter's. Every other CI path goes through an issue-row grant (§ 3). ARMING audits each such PR at its merge."
       - id: scope-13
         kind: member
         label: "Standing write scope and its test rule"
@@ -154,6 +154,54 @@ units:
         kind: obligation
         label: "Scope moves only by a canonical edit"
         text: "**and a seat's write scope moves only by a `canonical/agents/**` edit**, Peter-merged with every affected seat consulted; owning the generator's checkers never authorizes a change to any seat's write scope"
+      - id: scope-22
+        kind: member
+        label: "Compile-harness instruments: the six files"
+        text: "**Compile-harness instruments (ballot 2026-11-07-thurgood-charter-scope-harness-and-merge-hold § 3 item 1)**: you own `scripts/harness/stability.ts` and `scripts/harness/native-rules.ts` (Peter, \"B Thurgood\"), with `stability.test.ts`, `fixtures/stability/**`, `native-rules.test.ts` and `native-rules-emitter.test.ts`, because the demotion read of each promoted harness context (`.kiro/issues/2026-11-07-promoted-harness-contexts-demotion-read.md`) runs `stability.ts` at every monthly health check and every release's S, and outlives Spec 129"
+      - id: scope-23
+        kind: obligation
+        label: "Owning them never changes a rule they state"
+        text: "Owning them never authorizes changing a rule they state: `native-rules.ts` follows design § 4 (or the spec text that supersedes it) first, and `stability.ts` follows `tasks.md` § \"Decision 6\" (or the record that re-homes it) first"
+      - id: scope-24
+        kind: obligation
+        label: "A defect fix carries a falsification case"
+        text: "a fix where the code disagrees with that text is yours, with a falsification case red before it"
+      - id: scope-25
+        kind: obligation
+        label: "An unexplained red: read against the design text"
+        text: "When the emitter comparison or the per-run instance check goes red with no intended change, you and Ada each read it against the design text; the copy that disagrees with the text is fixed, and a silent text is a `DESIGN-GAP:` answered in the design first"
+      - id: scope-26
+        kind: obligation
+        label: "A mirror repair cites its design sentence"
+        text: "A repair to `native-rules.ts` after such a red cites the design sentence each changed rule restores"
+      - id: scope-27
+        kind: obligation
+        label: "The mirror author is never the emitter author"
+        text: "is written by you or by a grant holder who did not write the emitter change in that unit, and no grant over `native-rules.ts` goes to the seat holding `src/generators/**` in that unit"
+      - id: scope-28
+        kind: obligation
+        label: "Ada consulted on native-rules changes"
+        text: "Every change to `native-rules.ts` outside its comments, a defect fix included, and every change to `native-rules-emitter.test.ts`, consults Ada, who reads it against the design text, never against the emitter's output"
+      - id: scope-29
+        kind: obligation
+        label: "Kenya and Data review native-rules changes"
+        text: "Kenya and Data each review every such change to `native-rules.ts` unless every changed hunk lies inside a declaration or `BINDING` key named for the other platform (`swift*`, `isSwift*`, `SWIFT_*`, `BINDING.swift` / `kotlin*`, `KOTLIN_*`, `BINDING.kotlin`)"
+      - id: scope-30
+        kind: obligation
+        label: "The annotation interface consults"
+        text: "The annotation titles a harness job writes (`harness-verdict`, `harness-infra`, `cache`, and any later title) and their formats are the interface to `stability.ts`: a change to how it reads them consults each affected producer's owner (Data for Android, Kenya for iOS), and a producer change consults you"
+      - id: scope-31
+        kind: obligation
+        label: "Kenya consulted on the iOS reads"
+        text: "Kenya is consulted on any change to how `stability.ts` computes iOS queue time, reads the Xcode pin, or applies condition 3's iOS rule or condition 5"
+      - id: scope-32
+        kind: obligation
+        label: "Each consult or review is a Consulted line"
+        text: "Each owed consult or review is a `**Consulted**:` line in the PR body, citing the review entry where a review is owed; a seat's review entry in the same unit satisfies it"
+      - id: scope-33
+        kind: obligation
+        label: "The rest of the harness is not yours"
+        text: "The rest of `scripts/harness/**` and `harness/**` is not yours"
     confirmation: canonical/profiles/consumer/confirmations/thurgood.md#in-scope
   "#out-of-scope":
     canonicalHash: sha256:f443e3ebcf11ad1c2d778ad8a39887d3e38e38da196ef25bc0e3e4943ad7583b
