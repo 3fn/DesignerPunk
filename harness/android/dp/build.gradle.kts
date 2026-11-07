@@ -52,7 +52,6 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.material.icons.extended)
     implementation(libs.coil.compose)
-    implementation(libs.colormath)
 }
 
 tasks.withType<KotlinCompile>().matching { it.name == "compileDebugKotlin" }.configureEach {
