@@ -476,7 +476,7 @@ enum ShadowTokens {
 }
 ```
 
-The block above is the usage pattern, not the generated file. The generated `DesignTokens.ios.swift` defines `public struct ShadowToken: Sendable` with `offsetX`, `offsetY`, `blur` and `opacity` (`CGFloat`) and `color` (`Color`), and each of the 15 composites as a member of `DesignTokens`: `public static let shadowFab = ShadowToken(offsetX: shadowOffsetX300, offsetY: shadowOffsetY400, blur: blur025, opacity: shadowOpacityHard, color: shadowBlue100)`. Its colour primitives are `Color(.displayP3, red:, green:, blue:, opacity:)` constants with channels computed at generation, so the file needs no colour library.
+The block above is the usage pattern, not the generated file. The generated `DesignTokens.ios.swift` defines `public struct ShadowToken: Sendable` with `offsetX`, `offsetY`, `blur` and `opacity` (`CGFloat`) and `color` (`Color`), and each of the 15 composites as a member of `DesignTokens`: `public static let shadowFab = ShadowToken(offsetX: …, offsetY: …, blur: …, opacity: …, color: shadowBlue100)`. Its colour primitives are `Color(.displayP3, red:, green:, blue:, opacity:)` constants with channels computed at generation, so the file needs no colour library.
 
 #### iOS Platform Notes
 
