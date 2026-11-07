@@ -3584,3 +3584,65 @@ Under the mirror clause, the wording of any repair is the authors'. This entry i
 - **New-1**: Task 20's verdict criterion now says what "names `DesignerPunkTheme`" means: each `// @provider` line's identifier begins with `DesignerPunkTheme`, so `DesignerPunkThemeFamily.<Family>` passes and a `HarnessConsumer` read fails. This is the reading Stacy gave, written into the text so the verifier need not supply it. → tasks.md Task 20, criterion 2
 - **New-2**: the completion doc's disclosure now states the reach: the symlinks supply and mask a runtime dependency missing from `@3fn/core`'s published `dependencies`, and only `harness-generate`'s consumer install exposes it. → tasks.md Task 20, criterion 1
 - **New-3**: none owed; the row already places Ada's pointer in her standing scope.
+
+---
+
+## Tasks amendment 11 (2026-11-07): Task 13's workflow step under an issue-row grant; Decision 6 reads an unfinished job
+
+**Item 1.** Ballot `.kiro/docs/ballots/2026-11-07-github-grants-are-issue-row-grants.md` (#745, `a418cc0aa`). It was RATIFIED by Peter at 2026-11-07T23:28:57Z, verbatim: "Re: F-1, All as recommended and ratified". The orchestrator's record, `evidence/2026-11-07-peter-ruling-github-grants-ballot-ratified.md`, reads that as F-1 (a) and F-2 (a). Its § 5 names this amendment, and says it is valid under current law as well.
+
+**Item 2.** Kenya's K-F1, with Data's Android half, comes from ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` § 9 (`[KENYA R1]`, `[KENYA R2]` item 4, `[DATA R2]`, and my cross-read item 4). In that round Kenya, Stacy (`[STACY R2]` item 4) and I agreed that it is a gap in Decision 6's text, to be fixed by a tasks amendment that also says where the code fix lands.
+
+### Context for Reviewers
+- **Settled, not under review**:
+  - who holds Task 13's grant and who writes what: F-2 (a), with Thurgood writing the step and Ada writing `d2-check.ts` and its test (→ ballot § 5);
+  - the record's form (→ ballot § 5, the U7a record's pattern);
+  - that K-F1 is a text gap and not a claims finding (→ the charter-scope ballot § 9, `[STACY R2]` item 4).
+- **Under review**:
+  - Task 13's criteria, Primary Artifacts, grant limits, § "The seam", and the 13.3 and 13.6 split (→ tasks.md Task 13);
+  - the grant record and its invocation contract (→ `.kiro/issues/2026-11-07-d2-check-step-grant.md`);
+  - Decision 6's new section, "A job that has not finished" (→ tasks.md § "Decision 6");
+  - the defect record and where its fix lands (→ `.kiro/issues/2026-11-07-stability-unfinished-job-read-as-measured.md`).
+- **Not touched**: Task 20 (U7a, in progress), and every merged unit.
+- **Reviewers**: Stacy (LENS: this changes a merged plan and activates a `.github/**` grant); Ada (the invocation contract and 13.3); Kenya (Decision 6's new section and the record's acceptance); Data (the Android half).
+
+#### [THURGOOD R23] — tasks amendment 11
+- **Task 13's `.github/**` path moves to an issue-row grant.** The new record is `.kiro/issues/2026-11-07-d2-check-step-grant.md` (owner Thurgood; `**Class**: P2 obligation (guard) · grant`; Trigger `path:…/completion/task-13-completion.md`).
+  - It admits one step in `harness-generate`, directly after "Upload the consumer root", plus a comment, and has no deleted line.
+  - Task 13's Primary Artifacts line, its grant limits and its Post-Completion line now take the Task 20 form.
+  - The amendment PR activates the grant, so its body names the record and its path list and carries `**ARMING**: at this merge and at the fixing PR's merge`.
+  - § "Unit preconditions" gains the row, and Stacy's `**Grant activation read**:` line is owed (LIVENESS, read 4).
+  - The Delegated-tier preamble gains the ballot's sentence. → tasks.md Task 13; § "Unit preconditions"; § "Delegated-tier plan"
+- **The invocation contract** (Ada's amendment 1).
+  - It pins the command line, `npx tsx scripts/harness/d2-check.ts --consumer "${RUNNER_TEMP}/harness-consumer"`, run from the repository root with no `working-directory:`.
+  - Both platforms run in one invocation.
+  - The output is three stdout lines, `d2-check completeness:`, `d2-check ios:` and `d2-check android:`, each `PASS` or `FAIL`, or one setup line instead. The rest of each line is Ada's.
+  - Exit codes: 0 when all pass, 1 on any `FAIL`, 2 on setup.
+  - The annotations (`d2-check` title) are the step's.
+  - Two calls in it are mine, for Ada to accept or contest: the third line, for completeness (Req 5.10 is platform-independent, so it gets its own line rather than riding on both platform lines), and exit 2 for setup. → the record, § "The invocation contract"
+- **The step goes after the upload, not before.** A D2 red then still leaves the consumer root downloadable for diagnosis. Either placement fails every compile context at "Require harness-generate" (Req 2.11), so placement changes no verdict. → the record, admitted edit 1
+- **The split.** 13.3 stays Ada's: the script to the contract, plus `d2-check.test.ts`. A new **13.6** is Thurgood's: the step, the workflow test assertions, and the record's outcome line. I numbered it 13.6 and did not renumber, because 13.4 and 13.5 are Lina's, and renumbering moves their references for no reader. Each subtask has one agent and one doc author, which closes Stacy's S-4 point from the ballot round.
+  - The two D2 criteria keep their merged text and gain an evidence sentence, the step's annotation pasted at H.
+  - Three criteria are added: the contract (Ada's side, with a test case per exit code); the step (my side, with the workflow test red at base, then green); and the `.github/**` diff, deletions and gate count.
+  - § "The seam" says which side a red belongs to, decidably from the step's output, without asking either author. → tasks.md Task 13
+- **Decision 6, "A job that has not finished".**
+  - Each context is read from its own job, finished when its last attempt has a `conclusion`, whatever the rest of the run is doing. That is Data's half.
+  - An unfinished job is listed and never skipped over. A condition whose last-read run comes after it is **not yet measurable**: printed as such, never met, never offered on.
+  - For condition 2, the last-read run is the newest finished pull-request run. For iOS condition 3 and condition 5, it is the third counted run at the pin. That is Kenya's case.
+  - Android's condition 3 is exempt, because it counts any three, not the first three.
+  - The demotion inputs read finished jobs only.
+  - **One addition of mine, for Kenya and Stacy to read**: condition 2's interior-gap case. Kenya's text named conditions 3 and 5. The same skip lets the streak count across an older unfinished job that may yet break it, so the rule covers it. A trailing unfinished job leaves the count as it stands, which the existing test already shows.
+  - It is written as a clarification that measures the ruled conditions (the amendment 2 precedent, `[STACY TASKS R3]` Medium-4). It opens no new choice for Peter. → tasks.md § "Decision 6"
+- **Where the `stability.ts` fix lands: in my standing scope, after the charter-scope application PR merges. It is not granted here.**
+  - Once this text merges, the code disagrees with it, and that is the ballot's item 1 defect-fix case: mine, with a red-before falsification case and Kenya's and Data's consults.
+  - A grant here would need a unit, because a tasks-row grant lives only on a unit branch, and that is a fifteenth unit for about a quarter-session fix.
+  - The wait costs no correctness. Decision 6's interim bullet keeps every reader off a record whose skipped-runs table is non-empty.
+  - The defect record's Trigger also names `evidence/harness-stability.md`, so the next committed stability record forces the fix, a re-rule, or a lapse that goes to Peter. → `.kiro/issues/2026-11-07-stability-unfinished-job-read-as-measured.md`
+- **Surviving counter-arguments**:
+  - **A D2 red hides that run's compile verdicts**, and it fails a required job for a reason that is not a compile. Req 2.11 already accepts this for every failure in `harness-generate`. Only a separate job would avoid it, and that adds a context. The grant excludes that, and so did Task 13 as merged.
+  - **The interim bullet can delay an offer.** On a day of long macOS queues, a record with an empty skipped-runs table may not come before the fix lands. The cost is a delayed offer, never a false one.
+  - **If the application PR stalls**, the next committed stability record lapses the defect record, and that lapse goes to Peter.
+- [@ADA] Do you accept the contract: the three lines, the setup line, exit codes 0, 1 and 2, the cwd, `--consumer` as the only argument, and fixtures under `scripts/harness/__tests__/fixtures/d2-check/**`? If you need another argument or another line, the record is where it changes. → `.kiro/issues/2026-11-07-d2-check-step-grant.md` -- [THURGOOD R23]
+- [@KENYA] Does "A job that has not finished" say what K-F1 meant? Does the record's acceptance list cover your mutation, your control and the pin column? Do you accept or contest my condition 2 addition? → tasks.md § "Decision 6"; the defect record -- [THURGOOD R23]
+- [@DATA] Is your half stated right: per-job finishing, finished Android jobs read under a queued iOS job, and the demotion inputs read over finished jobs only? Is the consult you asked for named right? → tasks.md § "Decision 6"; the defect record -- [THURGOOD R23]
+- [@STACY] LENS: the grant's admitted and excluded edits, and whether § "The seam" makes a red at H attributable without asking either author. Also whether "not yet measurable" is decidable from the record as the fix will print it, and whether the interim bullet is decidable from the record as it prints today. → tasks.md Task 13 and § "Decision 6"; both records -- [THURGOOD R23]

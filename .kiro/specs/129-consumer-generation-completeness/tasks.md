@@ -3,6 +3,7 @@
 **Date**: 2026-11-05
 **Spec**: 129 - Consumer-Generation Completeness
 **Status**: Merged at R2 (#678, `8d8ba1425`), with the seven R1 reviews, the Q3a addendum and Peter's Decision 6 answer folded in. **Amendment 1** (2026-11-06) folds Stacy's verifiability read of the merged file, `[STACY TASKS R2]`, requested by Peter ("Have Stacy check the tasks first", 2026-11-06T00:07:00Z), with `[THURGOOD R3]` notes (`feedback/tasks.md`). Execution starts after this file merges (Spec-Feedback-Protocol § "Sequential Formalization Gate").
+**Amendment 11** (2026-11-07) makes two changes. First, Task 13 (U8)'s `native-harness.yml` step moves from the tasks row to an issue-row grant (`.kiro/issues/2026-11-07-d2-check-step-grant.md`), under ballot `2026-11-07-github-grants-are-issue-row-grants` § 5 (RATIFIED, Peter, 2026-11-07T23:28:57Z, "Re: F-1, All as recommended and ratified", read as F-1 (a) and F-2 (a); `evidence/2026-11-07-peter-ruling-github-grants-ballot-ratified.md`). Thurgood holds the grant and writes the step; Ada writes `d2-check.ts` to the record's invocation contract. Second, § "Decision 6" says how a job that has not finished is read: never as a pass (Kenya's K-F1, with Data's Android half, `.kiro/issues/2026-11-07-stability-unfinished-job-read-as-measured.md`) (`feedback/tasks.md` `[THURGOOD R23]`).
 **Amendment 10** (2026-11-07) adds U7a, Task 20: one step in the required `harness-android-tokens` job that runs a second `generate` with no `name` and compiles `:tokens` with `ProbeFamily.kt`, floor 0, keeping `HarnessConsumer` beside it, under an issue-row grant (`.kiro/issues/2026-11-07-default-name-compile-grant.md`). It lands between U7 and U8, under Peter's "Re: 4, Let's go with Ada's recommendation, but Ada should see weigh in on the amendment with Data and Thurgood", received 2026-11-07T20:21:05Z (`evidence/2026-11-07-peter-rulings-post-midpoint.md`; "should see weigh in" read as "should weigh in") (`feedback/tasks.md` `[THURGOOD R20]`).
 **Amendment 8** (2026-11-07) writes the promotion lifecycle once in § "Decision 6", covering the offer, the grant, the change, ARMING, after promotion and demotion, and makes condition 1's toolchain case per platform, under Peter's "a with both additions and short amendment", received 2026-11-07T15:36:39Z (`evidence/2026-11-07-peter-ruling-promotion-android-tokens.md`) (`feedback/tasks.md` `[THURGOOD R15]`).
 **Amendment 7** (2026-11-07) adds `harness-infra` (design § 3; Decision 6 conditions 2 and 3) and U3a, Task 19, which builds it before U4's PR opens, under Peter's "Let's adopt the fix with class option if you think it'll be effective", received 2026-11-07T14:12:30Z (`evidence/2026-11-07-peter-ruling-harness-infra-verdict.md`, which records the orchestrator's judgment that it is effective) (`feedback/tasks.md` `[THURGOOD R14]`).
@@ -59,6 +60,16 @@ The criterion the requirements ask this round to write (Req 2.12). A harness con
 3. three cold-cache runs, each under the 10-minute ceiling (125-A Req 6.3). For an Android context, a run counts as cold when its job's check annotation reads `cache: miss` **and the run is a pull-request run**; a dispatched run does not count toward them. The Android job writes `::notice title=cache::<hit|miss>` after its cache-restore step, because step logs expire and the annotations endpoint does not (amended 2026-11-06, `[STACY TASKS R2]` Medium-1). For an iOS context, which has no dependency cache because `swiftc` resolves no package, every run counts as cold, and the three are the first three **pull-request** runs recorded at the current Xcode pin; a dispatched run does not count toward them *(clarified 2026-11-05, `[KENYA D6 R2]`; amended 2026-11-06, tasks amendment 2, Peter's Decision 2, "2 yes", received 2026-11-06T14:04:52Z, on Kenya's proposal to count only pull-request runs; prior text at `33380114c`)*. **On both platforms, a run counts only if its context reached the comparator**: its check annotations carry `harness-verdict`, which the context writes on a PASS verdict and on a FAIL verdict alike (Task 5). A run that died before comparing (a failed network fetch, a lane self-test failure, a toolchain that is missing or cannot be set up, a setup failure, a runner fault) does not count toward the three. Nor does a run carrying `harness-infra`, even with `cache: miss` *(amended 2026-11-07, tasks amendment 7, under Peter's "Let's adopt the fix with class option if you think it'll be effective", received 2026-11-07T14:12:30Z (`evidence/2026-11-07-peter-ruling-harness-infra-verdict.md`, which records the orchestrator's judgment that it is effective))*. A toolchain pin mismatch is not among them: the comparator reports it as `toolchain`, so that run reaches the comparator and counts like any FAIL (design § 3; `[THURGOOD R7]` fork 2, on `[DATA R4]` item 2; prior text at `d3dd101b9`: "a lane self-test, toolchain or setup failure") *(amended 2026-11-06, tasks amendment 3, under Peter's "D yes", received 2026-11-06T23:31:58Z (`evidence/2026-11-06-peter-rulings-round-3.md`), on Data's two proposals, `[DATA R3]` item 5: the Android clause counts only pull-request runs, as Decision 2 ruled for iOS at 14:04:52Z, and on both platforms only a run that reached the comparator counts. Prior text at `233e04bf1`: the Android clause read `cache: miss` alone, and neither clause named the comparator)*;
 4. for an iOS context, the pinned Xcode is still on the `macos-26` image at the offer, by the readme read then;
 5. **for an iOS context (Kenya's condition, ruled)**: both Android contexts are already promoted, and condition 3's three runs of that iOS context record their macOS queue time and duration in the stability record. Both are measured for that iOS job alone, excluding `harness-generate` (an ubuntu job shared with Android and measured there), from the Actions jobs API: from `max(created_at, harness-generate.completed_at)` to `completed_at`. Whether `created_at` for a job under `needs:` is the run's start or its dependency's finish is UNVERIFIED, and the `max` holds either way (amended 2026-11-06, `[STACY TASKS R2]` Medium-1). If any of those three runs' queue time plus its duration exceeds 10 minutes, the queue time is poor. That iOS context is then not offered during 129 and becomes a promote-at-closeout offer. *(The 10-minute bound reuses 125-A Req 6.3's ceiling. Kenya confirmed it, and both clarifications are hers, 2026-11-05, `[KENYA D6 R2]`; they clarify the ruled condition and open no new choice.)*
+
+**A job that has not finished** *(clarified 2026-11-07, tasks amendment 11, on Kenya's K-F1 with Data's Android half; it measures conditions 2 to 5 and the demotion inputs and changes nothing in them; record `.kiro/issues/2026-11-07-stability-unfinished-job-read-as-measured.md`)*. The conditions did not say how to read a run that is still queued or in progress, so `stability.ts` chose in code (#735): it skips the whole workflow run. Kenya showed that on an iOS context this reads a POOR queue as within the ceiling, and Data showed that it hides finished Android jobs. The reading is now:
+- **Each context is read from its own job.** A context's job in a run has finished when the jobs API gives that job's last attempt a `conclusion`. The status of the rest of the workflow run does not matter, so a finished Android job is read even while that run's iOS job is still queued.
+- **An unfinished job is not a break and not a counted run**, and the stability record lists it by run id, head SHA, status and, for an iOS context, its Xcode pin from `harness/pins.yaml` at its head SHA.
+- **It is never skipped over.** When a context's unfinished job comes, in run order, before the last run a condition reads, that condition is **not yet measurable** for that context. The record prints it as not yet measurable and names the run. It is not met and not within the ceiling, and no offer is made on it. The condition is read again after the job finishes.
+  - **Condition 2**: the last run it reads is the context's newest finished pull-request run. An unfinished job after that run leaves the count as it stands.
+  - **Condition 3 on iOS**: the last run it reads is the third counted run at the current Xcode pin. So an unfinished pull-request job at that pin, with a lower run id than that third run, leaves conditions 3 and 5 not yet measurable. Skipping it would move "the first three" on to later runs, and the run most likely to be unfinished is the one that waited longest for a macOS runner.
+  - **Condition 3 on Android** counts any three cold runs, not the first three, so an unfinished job does not make it unmeasurable. It reads met only on three finished runs.
+- **The demotion inputs** (the promotion lifecycle, step 6 (b)), meaning the infra list, the infra rate, the infra finding and the attempts-differ runs, are read over finished jobs only. An unfinished job enters them when it finishes.
+- **Until `stability.ts` reads this way** (the record above names the fix and where it lands), no record is read for a context whose skipped-runs table lists a run: not for an offer and not for a demotion read. The record is re-run after that run completes. The unfixed script lists a whole workflow run there whenever any of its jobs is unfinished, so an empty table is the only state in which its output is the reading above.
 
 **Read with the first stability record after amendment 7**: #711 (U3) run 42379456009 failed its `harness-android-*` job 128424053186 on registry 403s. The orchestrator then re-ran that failed job, so the run's attempts end FAIL then PASS. Under condition 2 that is a break, and the record reports it as one. Its first attempt predates `harness-infra`, so it carries no infra annotation and is not reclassified after the fact. On `harness-android-components` the pull-request-run streak was 9 before it (runs 42334777875 to 42378872101), so the break reset a streak of 9 to 0 and the count restarts at 4; the other three contexts carry no break from that run. The act was the orchestrator's. *(Corrected 2026-11-07: the orchestrator's claim that the streak was 0 was false; truth: `evidence/harness-stability.md` at `cba101c76`; prior text at `c73f41ede`.)* Task 19's record states this *(added 2026-11-07, tasks amendment 7; the act was the orchestrator's, recorded at its request)*.
 
@@ -127,7 +138,7 @@ Each figure is the named seat's own (`feedback/tasks.md`, R1 entries), or the pl
 | 10 | about 3 | Ada (M) |
 | 11 | 3.5–3.75 (Ada's 3.5, with Lina's share at 0.25–0.5) | Ada (M–L); Lina (M–L) |
 | 12 | about 1 | Lina (M–L) |
-| 13 | 4–5.5 (Ada's 4; Lina's 1.5 share may overlap it) | Ada (M–L); Lina (M–L) |
+| 13 | 4–5.5 (Ada's 4; Lina's 1.5 share may overlap it; Thurgood's step and workflow test about 0.1, amendment 11) | Ada (M–L); Lina (M–L); Thurgood (M) |
 | 14 | 4.5–5.5 (Ada's 4–5; Sparky's line 0.25; the Q3b browser check 0.25) | Ada (M–L); Sparky (H) |
 | 15 | about 2 (Leonardo reads Req 12 at about 1, inside Ada's figure) | Ada (M); Leonardo (L) |
 | 16 | about 0.75, plus the regeneration and the profile author's acts, unsized | Kenya (M); Data (M) |
@@ -140,7 +151,7 @@ Each figure is the named seat's own (`feedback/tasks.md`, R1 entries), or the pl
 
 ### Delegated-tier plan (one PRIMARY per parent, the referent of its `**Delegated-tier**:` line)
 
-Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-write-scope-grant`: a PRIMARY and each tiered secondary may write exactly the parent's listed Primary Artifacts, on the unit's branch, until the unit merges, once Peter merges this file. **Tier rule**: Sonnet implements settled design (all of 129's calls are made in `design.md`, and O-8 closes in this round); Opus where a named signal says residual judgment remains. Consulted seats carry no tier and get no grant. Attestations (signatures, confirm acts, Stacy's records) are outside every line.
+Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-write-scope-grant`: a PRIMARY and each tiered secondary may write exactly the parent's listed Primary Artifacts, on the unit's branch, until the unit merges, once Peter merges this file. **Tier rule**: Sonnet implements settled design (all of 129's calls are made in `design.md`, and O-8 closes in this round); Opus where a named signal says residual judgment remains. Consulted seats carry no tier and get no grant. Attestations (signatures, confirm acts, Stacy's records) are outside every line. A listed `.github/**` path is granted only by the issue-row grant or standing scope its line names, with the one seat that may write it (ballot `2026-11-07-github-grants-are-issue-row-grants`; added 2026-11-07, tasks amendment 11).
 
 | Parent | PRIMARY (tier) | Secondaries (tier) | Consulted |
 |---|---|---|---|
@@ -156,7 +167,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | 10 | Ada (Sonnet) | Lina (Sonnet) — the two component tokens files row 21's ruling disposes | — |
 | 11 | Ada (Sonnet) | Lina (Sonnet) — Req 4.5's coupled reads and the two `DesignTokens` re-points | Kenya, Data |
 | 12 | Lina (Sonnet) | — | Kenya, Data |
-| 13 | Ada (Sonnet) | Lina (Sonnet) — the hand-written enums, row 18 R1 under `src/cli/sync/**`, the Integration Guide cascade sentence | Data, Sparky; Ada is consulted on Lina's `src/cli/sync/**` edit |
+| 13 | Ada (Sonnet) | Lina (Sonnet) — the hand-written enums, row 18 R1 under `src/cli/sync/**`, the Integration Guide cascade sentence; Thurgood (Sonnet) — the `harness-generate` step under the issue-row grant, the workflow test and the grant record (amendment 11) | Data, Sparky; Ada is consulted on Lina's `src/cli/sync/**` edit; Stacy (ARMING) |
 | 14 | Ada (Sonnet) | Sparky (Sonnet) — his charter's registered-theme line, the Q3b browser check and the review of the web single-mode form (14.6); Lina (Sonnet) — the regeneration and the lock; Thurgood (Sonnet) — the profile author's acts | Lina (Q3a), Kenya, Data |
 | 15 | Ada (Sonnet) | Thurgood (Sonnet) — the INSTALL derivation and `install-doc.test.ts` | Leonardo, Kenya, Data |
 | 16 | Kenya (Sonnet) | Data (Sonnet) — his charter and overlay text; Lina (Sonnet) — the regeneration and the lock; Thurgood (Sonnet) — the profile author's acts | Stacy (confirmer) |
@@ -215,6 +226,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | **Before U6's PR opens** (added 2026-11-06, tasks amendment 3 review fold, `[ADA R3]` fork 1) | a record that a product-token key which is a keyword on iOS or Android emits a member that does not compile | Ada | filed at the issues root, naming both platforms, with a fix at the source (the product MCP's indexer and `validateProductTokens`); 129 adds no emitter rule |
 | **At U6's merge** | MIDPOINT claims pass | Stacy | `completion/claims-pass-midpoint.md` |
 | **At tasks amendment 10's merge, and at U7a's** (added 2026-11-07, tasks amendment 10) | `.kiro/issues/2026-11-07-default-name-compile-grant.md` (`**Grant paths**: .github/workflows/native-harness.yml`), activated by the merge of amendment 10's PR | Thurgood (grant); Stacy (ARMING) | The amendment PR's body names the record and its path list and carries `**ARMING**: at this merge and at the fixing PR's merge`. Stacy's ARMING read fires at both merges, and her `**Grant activation read**:` line is owed for the record (LIVENESS, read 4). The record closes at U7a's merge with its rule 5 outcome line (Task 20) |
+| **At tasks amendment 11's merge, and at U8's** (added 2026-11-07, tasks amendment 11) | `.kiro/issues/2026-11-07-d2-check-step-grant.md` (`**Grant paths**: .github/workflows/native-harness.yml`), activated by the merge of amendment 11's PR | Thurgood (grant); Stacy (ARMING) | The amendment PR's body names the record and its path list and carries `**ARMING**: at this merge and at the fixing PR's merge`. Stacy's ARMING read fires at both merges, and her `**Grant activation read**:` line is owed for the record (LIVENESS, read 4). The record closes at U8's merge with its rule 5 outcome line (Task 13) |
 | **Before the S of the release carrying U9** | the Token-Governance § "Theme Registry (Spec 094)" ballot edit (Req 15.6) | Thurgood (holder), Ada (text) | a ballot, ratified and applied; Task 18 reads that it happened |
 | **At U12's merge** | `2026-10-23-signing-act-shape-review.md` (Trigger `manual`: 129's final unit merge) | Thurgood | the review it names |
 | **At U12's merge** | CLOSEOUT claims pass | Stacy | `completion/claims-pass.md` |
@@ -1032,8 +1044,8 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 - [ ] 13. Ship and harvest DesignerPunk's component tokens; precedence; the name contract (U8)
 
-  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Lina (Sonnet) — enums, row 18 R1, the cascade sentence
-  **Traces**: Req 1.3, 2.10, 5.1–5.5, 5.7, 5.8, 5.10, 5.11; rows 18 (R1, R5) · design §§ 9, 11
+  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Lina (Sonnet) — enums, row 18 R1, the cascade sentence · Thurgood (Sonnet) — the `harness-generate` step under the issue-row grant, the workflow test and the grant record (amendment 11)
+  **Traces**: Req 1.3, 2.10, 5.1–5.5, 5.7, 5.8, 5.10, 5.11; rows 18 (R1, R5) · design §§ 9, 11 · ballot `2026-11-07-github-grants-are-issue-row-grants` § 5, F-2 (a) (amendment 11)
 
   **Success Criteria:**
   - The package ships DesignerPunk's six harvestable component token definition files, and `pack-assert` asserts each is present.
@@ -1045,8 +1057,11 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - A package group whose component directory loses the union is not emitted, and `generate` prints `component tokens: <Group> — not emitted (DesignerPunk's <Component> is replaced by yours)`.
   - Two consumer files declaring one group fail `generate` with a message naming both, accepted by a Jest test.
   - A packed-install `Consumer Guard` case that deletes a referenced primitive gets a report from `generate`, and an upgrade that introduces such a reference gets one from `sync`, on every platform's output.
-  - `scripts/harness/d2-check.ts` runs in `harness-generate` and concludes success at this unit's head on iOS: every component token in `token-index/components.yaml` appears in the generated output and no other does.
-  - `scripts/harness/d2-check.ts` runs in `harness-generate` and concludes success at this unit's head on Android, by the same set equality.
+  - `scripts/harness/d2-check.ts` runs in `harness-generate` and concludes success at this unit's head on iOS: every component token in `token-index/components.yaml` appears in the generated output and no other does. The evidence is the step's `d2-check` annotation at head H reading `d2-check ios: PASS`, which the completion doc pastes with the run URL and the head SHA *(amended 2026-11-07, tasks amendment 11: the evidence sentence added)*.
+  - `scripts/harness/d2-check.ts` runs in `harness-generate` and concludes success at this unit's head on Android, by the same set equality. The evidence is the annotation reading `d2-check android: PASS` at H, pasted the same way *(amended 2026-11-07, tasks amendment 11)*.
+  - `scripts/harness/d2-check.ts` keeps the invocation contract in `.kiro/issues/2026-11-07-d2-check-step-grant.md`. Run by the record's command line from the repository root, it prints the record's lines and exits with the record's codes. `scripts/harness/__tests__/d2-check.test.ts` runs it by that command line, from the repository root, against fixture consumer roots. It shows exit 0 with three `PASS` lines; exit 1 once each with a `FAIL` line for completeness, for iOS and for Android; and exit 2 with the setup line for a consumer root that does not exist *(added 2026-11-07, tasks amendment 11)*.
+  - In `.github/workflows/native-harness.yml`, `harness-generate` gains exactly one step, placed directly after "Upload the consumer root" as the job's last step. It runs the record's command line and has no `working-directory:`, `if:` or `continue-on-error` key. It writes `::notice title=d2-check::<line>` for each `PASS` line and `::error title=d2-check::<line>` for each `FAIL` line and for the setup line. When the script printed none of the record's lines, it writes `::error title=d2-check::no d2-check line`. It fails when the script exits non-zero, or when any of the three verdict lines is missing or reads `FAIL`. No other job gains a step that runs `d2-check.ts`. `scripts/harness/__tests__/native-harness-workflow.test.ts` asserts all of this, and its earlier assertions still hold. The completion doc records the test red once against the workflow at this unit's base, then green *(added 2026-11-07, tasks amendment 11)*.
+  - U8's `.github/**` changes are exactly `.github/workflows/native-harness.yml`, within the grant's admitted edits (`.kiro/issues/2026-11-07-d2-check-step-grant.md`). `git diff --numstat <base> M -- .github/workflows/native-harness.yml` shows 0 deleted lines. `tools/agent-generator/verify-gate-registration.sh` reports its count unchanged. U8's PR body cites its path list (README rule 8) *(added 2026-11-07, tasks amendment 11)*.
   - The D2 check's completeness half shows the DesignerPunk entries in the merged index equal the component tokens defined in the shipped definition files, and a Jest case that drops one token from both fails.
   - The hand-written `AvatarTokens` and `BadgeLabelBaseTokens` enums are removed from `Avatar.ios.swift` and `BadgeLabelBase.ios.swift` in this diff, the same diff that turns on the third source, and the Android `AvatarTokens` / `GeneratedAvatarTokens` collision is resolved in it.
   - `generate` warns, naming the file, on a `.kt` file in `com.designerpunk.tokens` or `com.designerpunk.components.*` outside the skipped trees of design § 9, and a Jest test accepts the warning text.
@@ -1057,7 +1072,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - The Integration Guide says, in Lina's text with Sparky, to import the consumer's own `ComponentTokens.web.css` after the package's `component-tokens.css`, that on web "yours wins" is per token by order, and that bundler code-splitting can reorder CSS chunks.
   - The token and component contexts at this head show every addition this diff makes printed under exception (c) with a tag.
   - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
-  - Every root record whose Trigger names `task-13-completion.md` carries, at U8's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U8's PR or in a PR merged before it.
+  - Every root record whose Trigger names `task-13-completion.md` carries, at U8's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U8's PR or in a PR merged before it. `2026-11-07-d2-check-step-grant.md` is one of them *(amended 2026-11-07, tasks amendment 11)*.
 
   **Primary Artifacts:**
   - `package.json` (`files[]`)
@@ -1066,9 +1081,11 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `src/cli/**`
   - `src/generators/**`
   - `src/build/tokens/**`
-  - `scripts/harness/d2-check.ts`
-  - `scripts/harness/__tests__/d2-check.test.ts`
-  - `.github/workflows/native-harness.yml` (one step added to `harness-generate`)
+  - `scripts/harness/d2-check.ts` (Ada)
+  - `scripts/harness/__tests__/d2-check.test.ts` and its fixture consumer roots under `scripts/harness/__tests__/fixtures/d2-check/**` (Ada)
+  - `.github/workflows/native-harness.yml` (Thurgood). Its write scope is the issue-row grant in `.kiro/issues/2026-11-07-d2-check-step-grant.md`, whose admitted edits bound it; this row adds no scope over it *(amended 2026-11-07, tasks amendment 11; prior text at `a418cc0aa`: "`.github/workflows/native-harness.yml` (one step added to `harness-generate`)")*
+  - `scripts/harness/__tests__/native-harness-workflow.test.ts` (Thurgood)
+  - `.kiro/issues/2026-11-07-d2-check-step-grant.md` (Thurgood, standing scope; its outcome line)
   - `tests/consumer-integration.test.ts`
   - `application-mcp-server/src/**/__tests__/**` (only where a suite reading the real `token-index/components.yaml` asserts the per-token merge)
   - `src/components/core/Avatar-Base/platforms/**`
@@ -1080,13 +1097,15 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `harness/expected/harness-ios-components.tsv`
   - `harness/expected/harness-android-components.tsv`
 
-  **Grant limits** (`.github/**`): as Task 5's, admitting none. The one added step runs `scripts/harness/d2-check.ts`; nothing else in the workflow changes. Thurgood is consulted on the step.
+  **Grant limits** (`.github/**`): this row grants nothing over `.github/**`. The issue-row grant in `.kiro/issues/2026-11-07-d2-check-step-grant.md` admits, in `harness-generate` only, the one new step and a comment above it, as the record words them. It admits nothing else: no new job or required context; no change to `EXPECTED_CONTEXTS` or `EXPECTED_COUNT`; no edit to any other job, or to any existing step, `env:`, cache key, runner, permission or trigger; no deleted line. Amendment 11's PR activates the grant, so its body names the record and its path list and carries the `**ARMING**:` line (§ "Unit preconditions") *(amended 2026-11-07, tasks amendment 11; prior text at `a418cc0aa`: "as Task 5's, admitting none. The one added step runs `scripts/harness/d2-check.ts`; nothing else in the workflow changes. Thurgood is consulted on the step.")*.
+
+  **The seam** *(added 2026-11-07, tasks amendment 11, F-2 (a))*: the step (13.6, Thurgood) and the script (13.3, Ada) meet only at the record's invocation contract, and each subtask's completion doc is written by its one agent. If a D2 criterion is red at H, its side is read from the step's output. A `d2-check` line reading `FAIL`, or the setup line, is the script's verdict, read in 13.3. A step that ran a command line other than the record's is 13.6's. A step whose output holds none of the record's lines is 13.3's when the script, run by the record's command line in that job, printed none, and 13.6's otherwise. A contract that has to change is changed in the record first, in a PR merged before either side changes, with Ada's dated agreement line.
 
   **Completion Documentation:**
   - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-13-completion.md`
   - Summary: `docs/specs/129-consumer-generation-completeness/task-13-summary.md`
 
-  **Post-Completion:** mark complete; `complete-task.sh "Task 13 Complete: The component tier reaches generate (129)"` opens U8's PR (Peter-merged: `governance/**`; `**Edit kind**:` EXECUTION, Req 15 and design § 9); report the URL; STOP.
+  **Post-Completion:** mark complete; `complete-task.sh "Task 13 Complete: The component tier reaches generate (129)"` opens U8's PR (Peter-merged: `governance/**` and `.github/**`; `**Edit kind**:` EXECUTION, Req 15 and design § 9; Stacy's ARMING read at its merge, amendment 11); report the URL; STOP.
 
   - [ ] 13.1 Ship the six files; harvest as the third source; per-group precedence and reports
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
@@ -1095,8 +1114,9 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [ ] 13.2 The name contract over the component tier; the reserved-package warning; R5 freshness (content, `src/cli/staleness.ts`)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 5.4, 5.8_
-  - [ ] 13.3 The D2 check and its completeness half; its step in `harness-generate`
+  - [ ] 13.3 The D2 check and its completeness half, to the grant record's invocation contract, with `d2-check.test.ts`
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
+    - The step that runs it is 13.6's *(amended 2026-11-07, tasks amendment 11; prior title: "The D2 check and its completeness half; its step in `harness-generate`")*
     - _Requirements: 1.3, 5.10_
   - [ ] 13.4 The hand-written enums; row 18 R1 (`src/cli/sync/**`, Ada consulted); the missing-key report
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
@@ -1104,6 +1124,10 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [ ] 13.5 The Integration Guide cascade sentence; confirm the Spec 123 pointer line (Lina lands it in her own PR before U8)
     **Type**: Documentation · **Validation**: Tier 1 - Minimal · **Agent**: Lina (Sonnet)
     - _Requirements: 5.5_
+  - [ ] 13.6 The `harness-generate` step and the workflow test; the grant record's outcome line *(added 2026-11-07, tasks amendment 11)*
+    **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
+    - After 13.3's script runs by the record's command line; no deleted line in the workflow; the grant is `.kiro/issues/2026-11-07-d2-check-step-grant.md`
+    - _Requirements: 1.3, 2.11_
 
 ### UNIT 9 — `generate` reads the consumer's own source
 
@@ -1396,7 +1420,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | Requirement | Parents |
 |---|---|
 | 1 | 18 (1.1–1.7); 8 (1.6's check); 13 (1.3's check); 1 (1.8); 1.9 is a standing rule (Conventions) |
-| 2 | 19 (2.11 and 2.12's infra class, amendment 7); 20 (2.2 kept and 2.7's provider read under the default name, amendment 10); 1 (2.1–2.3); 11 (2.3 as amended: the fixture's composite leaves); 3, 4 (2.4, 2.6–2.9); 2 (2.6's cross-tier rule); 5 (2.5, 2.11, 2.12, 2.14); every gating parent (2.10, 2.13); 11 (2.7's theme reads); 18 (2.10 summed) |
+| 2 | 19 (2.11 and 2.12's infra class, amendment 7); 13 (2.11: a D2 failure in `harness-generate` fails every compile context, amendment 11); § "Decision 6" (2.12: an unfinished job is never read as a pass, amendment 11); 20 (2.2 kept and 2.7's provider read under the default name, amendment 10); 1 (2.1–2.3); 11 (2.3 as amended: the fixture's composite leaves); 3, 4 (2.4, 2.6–2.9); 2 (2.6's cross-tier rule); 5 (2.5, 2.11, 2.12, 2.14); every gating parent (2.10, 2.13); 11 (2.7's theme reads); 18 (2.10 summed) |
 | 3 | 2 (3.1–3.11); 3, 4 (3.4, 3.11 per platform); 6 (3.10's registration) |
 | 4 | 11 (4.1–4.3, 4.5, 4.7's theme name, 4.10's re-points); 20 (4.1's Android provider under the default name, in CI, amendment 10); 14 (4.1's custom-theme instances, from U9); 5 (4.8's tagging; the shared harness module); 12 (4.4, 4.6, 4.7 and 4.10 state checks); 16 (4.9); 4.7's L816 half is a unit precondition |
 | 5 | 13 (5.1–5.5, 5.7, 5.8, 5.10, 5.11); 11 (5.6, as amended); 9 (5.9) |
