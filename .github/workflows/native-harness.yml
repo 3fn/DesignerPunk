@@ -261,7 +261,7 @@ jobs:
 
       - name: Restore the Gradle cache
         id: gradle-cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
             ~/.gradle/caches
@@ -295,6 +295,19 @@ jobs:
             line=$(grep '^harness-verdict:' harness-out/compare.txt | tail -n 1 || true)
             if [ -n "$line" ]; then echo "::notice title=harness-verdict::$line"; fi
           fi
+
+      # actions/cache saves only when the job succeeds, and these contexts fail while the generator's output
+      # does not compile, so a restore-and-save pair would read `miss` on every run. This step saves after a
+      # failed job too, whenever Gradle ran (harness-out/gradle.txt exists) and the key was not restored.
+      # `hit` therefore means: an earlier run, passing or failing, saved this key after Gradle ran.
+      - name: Save the Gradle cache
+        if: ${{ always() && steps.gradle-cache.outputs.cache-hit != 'true' && hashFiles('harness-out/gradle.txt') != '' }}
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: harness-gradle-${{ runner.os }}-${{ hashFiles('harness/android/gradle/libs.versions.toml', 'harness/android/gradle/wrapper/gradle-wrapper.properties', 'harness/pins.yaml') }}
 
       - name: Upload the lane output (logs, run file, comparator output)
         if: always()
@@ -355,7 +368,7 @@ jobs:
 
       - name: Restore the Gradle cache
         id: gradle-cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
             ~/.gradle/caches
@@ -386,6 +399,19 @@ jobs:
             line=$(grep '^harness-verdict:' harness-out/compare.txt | tail -n 1 || true)
             if [ -n "$line" ]; then echo "::notice title=harness-verdict::$line"; fi
           fi
+
+      # actions/cache saves only when the job succeeds, and these contexts fail while the generator's output
+      # does not compile, so a restore-and-save pair would read `miss` on every run. This step saves after a
+      # failed job too, whenever Gradle ran (harness-out/gradle.txt exists) and the key was not restored.
+      # `hit` therefore means: an earlier run, passing or failing, saved this key after Gradle ran.
+      - name: Save the Gradle cache
+        if: ${{ always() && steps.gradle-cache.outputs.cache-hit != 'true' && hashFiles('harness-out/gradle.txt') != '' }}
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: harness-gradle-${{ runner.os }}-${{ hashFiles('harness/android/gradle/libs.versions.toml', 'harness/android/gradle/wrapper/gradle-wrapper.properties', 'harness/pins.yaml') }}
 
       - name: Upload the lane output (logs, run file, comparator output)
         if: always()
