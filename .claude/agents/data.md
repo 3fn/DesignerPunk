@@ -344,16 +344,20 @@ android_patterns:
 | spacing, radius, tapArea, borderWidth, layering, sizing | `Dp` | `val space_200 = 16.dp` | straight into `padding()`, `size()`, `spacedBy()`; no `.dp` |
 | fontSize | `TextUnit` (sp) | `val font_size_100 = 16.sp` | straight into `fontSize =`; no `.sp`; `.value` for the number |
 | letterSpacing | `TextUnit` (em) | `val letter_spacing_100 = (0).em` | straight into `letterSpacing =` |
-| lineHeight | `Float` (ratio) | `const val line_height_100: Float = 1.5f` | `fontSize * lineHeight` gives a `TextUnit`; `.em` or `.value` as the position needs |
-| density, opacity, breakpoint, blur, other numbers | `Float` | `const val opacity_008: Float = 0.08f` | as a `Float`; `.dp` only where a `Dp` is wanted |
+| lineHeight | `Float` (ratio) | `const val line_height_100: Float = 1.5f` | `lineHeight.em` for a relative `TextUnit`; `fontSize * lineHeight` for an absolute one (sp); `.value` for the `Float`. The two `TextUnit` forms differ: the composite's `lineHeight` is the `.em` form |
+| density, opacity, breakpoint, blur, other numbers, except motion (below) | `Float` | `const val opacity_008: Float = 0.08f` | as a `Float`; `.dp` only where a `Dp` is wanted |
+| duration (motion) | `Int` (ms), in `DesignTokens.Duration` | `val Duration150 = 150` | straight into `tween(durationMillis = ...)` |
+| easing (motion) | Compose `Easing`, in `DesignTokens.Easing` | `val EasingStandard = CubicBezierEasing(0.4f, 0.0f, 0.2f, 1.0f)` | straight into `tween(easing = ...)` |
+| scale (motion) | `Float`, in `DesignTokens.Scale` | `val Scale096 = 0.96f` | as a `Float` |
+| semantic motion | an `object` per token | `DesignTokens.MotionButtonPress` | `.duration` (`Int`) and `.easing` (`Easing`) |
 | fontWeight | `FontWeight` | `val font_weight_500 = FontWeight(500)` | straight into `fontWeight =` |
 | fontFamily | `FontFamily` | `val font_family_body = FontFamily.SansSerif` | straight into `fontFamily =`; the brand name is in the trailing comment, not loaded |
-| radius in percent (`radius_half`) | `CornerSize` | `CornerSize(percent = 50)` | into `RoundedCornerShape(...)` |
+| radius in percent (`radius_half`) | `CornerSize`, not a `Dp` | `CornerSize(percent = 50)` | pass it to a shape such as `RoundedCornerShape(...)`, not to a `Dp` parameter; `.dp` does not apply |
 | color | Compose `Color` | Display P3 | per the colour section |
-| typography composite | `TextStyle` | `typography_label_md` | whole into `style =` or a `TextStyle` parameter; its `fontSize`, `fontWeight`, `lineHeight` (an `.em` `TextUnit`) and `letterSpacing` read straight into `Text(...)` |
+| typography composite | `TextStyle` | `typography_label_md` | whole into `style =` or a `TextStyle` parameter; its `fontSize`, `fontWeight`, `lineHeight` (an `.em` `TextUnit`) and `letterSpacing` read straight into `Text(...)`; `fontWeight` and `fontFamily` are nullable (`FontWeight?`, `FontFamily?`), so they fit `Text`'s nullable parameters but not a parameter typed `FontWeight` |
 | shadow composite | `ShadowToken` | `shadow_container` | generated; `offsetX`, `offsetY`, `blur` and `opacity` are `Float`, `color` is a Compose `Color` |
 
-Non-constant types (`Dp`, `TextUnit`, `FontWeight`, `FontFamily`) are emitted as `val`, not `const val`, because Kotlin has no compile-time constant of those types.
+Non-constant types, including `Dp`, `TextUnit`, `FontWeight`, `FontFamily`, `CornerSize`, `TextStyle`, `ShadowToken` and `Color`, are emitted as `val`, not `const val`, because Kotlin has no compile-time constant of those types.
 
 ❌ **WRONG**:
 ```kotlin
@@ -370,7 +374,7 @@ Text(fontSize = DesignTokens.font_size_075,
      lineHeight = DesignTokens.font_size_075 * DesignTokens.line_height_075)
 ```
 
-**Where a number is wanted** (a minimum width from type size, an animated size): take it with `.value` and convert once: `(DesignTokens.font_size_050.value * DesignTokens.line_height_050).dp`, or `animateFloatAsState(targetValue = token.value)` and `.sp` at the read. A component-local property that holds a font size is typed `TextUnit`, not `Float`.
+**Where a number is wanted** (a minimum width from type size, an animated size): take it with `.value` and convert once: `(DesignTokens.font_size_050.value * DesignTokens.line_height_050).dp`, or `animateFloatAsState(targetValue = token.value)` and `.sp` at the read. A result in `dp` ignores the user's font scale: use `.value ... .dp` only where a size that does not scale is intended (the badge minimum is one; whether it should scale is for Lina and Leonardo, Spec 132). A component-local property that holds a font size is typed `TextUnit`, not `Float`.
 
 **When `.dp` IS Required**: on a `Float` (or `Int`) where a `Dp` is wanted. `lineHeight * fontSize.value` is one. Convert at the read.
 
