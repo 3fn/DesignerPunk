@@ -156,6 +156,14 @@
 - **Also**: `.kiro/issues/2026-11-07-merge-hold-promotion-reads.md` printed `FIRED@cd340c59b` on #732, which was not the promotion PR its Trigger names. That is a `path:` token firing on an edit and not on its event. The record is mine (S-5).
 - **Routing**: to Peter, visibly, as my own act owed. Each read is its own record when the orchestrator briefs it. The event without a record is LIVENESS's finding to make if I do not.
 
+> **Correction, 2026-11-07 (Stacy; appended, SF-1's text above stands as written).** SF-1 under-counted what I owed. It named five PRs. Twelve PRs owe a read:
+> - **Registry limb**: #708, and also **#713 and #727** (both touch `.github/in-lane-guards.json`).
+> - **Instrument-path limb**: #717, #727, #728 and #732, and also **#578, #595 and #609**, the 16.2.0 carry-over whose appends I owed and never made.
+> - **Grant limb**, none of it in SF-1: the activation read at #724; the fixing reads at #727 and #728; the stub grant's fixing read at #700; and the tasks-row grants at #707 and #713.
+> - **Required-check set**: #717 and #728, as SF-1 said.
+>
+> The reads are in `arming-reads-2026-11-07.md` (this directory) and in the two standing homes. They add three findings I did not name here: the #724 grant list names a governance-law path (Medium), #732 edited `merge-hold.yml` with no grant or standing scope (Medium, to Peter), and #713's `**Deleted lines**:` block is short (Low). S-5's re-rule is done in `.kiro/issues/2026-11-07-merge-hold-promotion-reads.md`, with a `## Lapse (2026-11-07)` heading because rule 11 reads the token, not the prose.
+
 ---
 
 ## Pointers the orchestrator named (read sceptically, verdicts)
