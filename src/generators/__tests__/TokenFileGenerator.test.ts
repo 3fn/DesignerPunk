@@ -755,7 +755,8 @@ describe('TokenFileGenerator', () => {
       expect(iosResult!.content).toContain('import UIKit');
       expect(iosResult!.content).toContain('public enum ButtonIconTokens');
       expect(iosResult!.content).toContain('insetLarge');
-      expect(iosResult!.content).toContain('SpacingTokens.space150');
+      expect(iosResult!.content).toContain('DesignTokens.space150');
+      expect(iosResult!.content).not.toContain('SpacingTokens');
       expect(iosResult!.tokenCount).toBe(1);
     });
 
@@ -780,7 +781,8 @@ describe('TokenFileGenerator', () => {
       expect(androidResult!.content).toContain('package com.designerpunk.tokens');
       expect(androidResult!.content).toContain('object ButtonIconTokens');
       expect(androidResult!.content).toContain('insetLarge');
-      expect(androidResult!.content).toContain('SpacingTokens.space150');
+      expect(androidResult!.content).toContain('DesignTokens.space_150');
+      expect(androidResult!.content).not.toContain('SpacingTokens');
       expect(androidResult!.tokenCount).toBe(1);
     });
 
@@ -836,12 +838,12 @@ describe('TokenFileGenerator', () => {
 
       // iOS should use constant reference
       const iosResult = results.find(r => r.platform === 'ios');
-      expect(iosResult!.content).toContain('SpacingTokens.space150');
+      expect(iosResult!.content).toContain('DesignTokens.space150');
       expect(iosResult!.content).not.toMatch(/insetLarge.*=\s*12$/m);
 
       // Android should use constant reference
       const androidResult = results.find(r => r.platform === 'android');
-      expect(androidResult!.content).toContain('SpacingTokens.space150');
+      expect(androidResult!.content).toContain('DesignTokens.space_150');
       expect(androidResult!.content).not.toMatch(/insetLarge\s*=\s*12$/m);
     });
 

@@ -433,7 +433,7 @@ export class ConfigHelpers {
         default: 'undefined',
         required: false,
         examples: [
-          "ios: { swiftVersion: '5.9', minimumDeploymentTarget: '15.0', dependencies: [] }",
+          "ios: { swiftVersion: '5.9', minimumDeploymentTarget: '17.0', dependencies: [] }",
         ],
       },
       {
@@ -443,7 +443,7 @@ export class ConfigHelpers {
         default: 'undefined',
         required: false,
         examples: [
-          "android: { kotlinVersion: '1.9.0', minSdkVersion: 24, targetSdkVersion: 34, dependencies: [] }",
+          "android: { kotlinVersion: '1.9.0', minSdkVersion: 26, targetSdkVersion: 34, dependencies: [] }",
         ],
       },
       {
@@ -575,12 +575,12 @@ export class ConfigHelpers {
       },
       ios: {
         swiftVersion: '5.9',
-        minimumDeploymentTarget: '15.0',
+        minimumDeploymentTarget: '17.0',
         dependencies: [],
       },
       android: {
         kotlinVersion: '1.9.0',
-        minSdkVersion: 24,
+        minSdkVersion: 26,
         targetSdkVersion: 34,
         dependencies: [],
       },
@@ -611,7 +611,7 @@ export class ConfigHelpers {
       },
       ios: {
         swiftVersion: '5.9',
-        minimumDeploymentTarget: '15.0',
+        minimumDeploymentTarget: '17.0',
         dependencies: [],
       },
     };
@@ -636,7 +636,7 @@ export class ConfigHelpers {
       },
       android: {
         kotlinVersion: '1.9.0',
-        minSdkVersion: 24,
+        minSdkVersion: 26,
         targetSdkVersion: 34,
         dependencies: [],
       },
@@ -687,12 +687,12 @@ export class ConfigHelpers {
       },
       ios: {
         swiftVersion: '5.9',
-        minimumDeploymentTarget: '15.0',
+        minimumDeploymentTarget: '17.0',
         dependencies: [],
       },
       android: {
         kotlinVersion: '1.9.0',
-        minSdkVersion: 24,
+        minSdkVersion: 26,
         targetSdkVersion: 34,
         dependencies: [],
       },
@@ -718,12 +718,12 @@ export class ConfigHelpers {
       },
       ios: {
         swiftVersion: '5.9',
-        minimumDeploymentTarget: '15.0',
+        minimumDeploymentTarget: '17.0',
         dependencies: [],
       },
       android: {
         kotlinVersion: '1.9.0',
-        minSdkVersion: 24,
+        minSdkVersion: 26,
         targetSdkVersion: 34,
         dependencies: [],
       },
@@ -788,8 +788,8 @@ export class ConfigHelpers {
 
     if (typeof options.minSdkVersion !== 'number') {
       errors.push('minSdkVersion: Minimum SDK version must be a number');
-    } else if (options.minSdkVersion < 21) {
-      errors.push('minSdkVersion: Minimum SDK version must be >= 21');
+    } else if (options.minSdkVersion < 26) {
+      errors.push('minSdkVersion: Minimum SDK version must be >= 26 (the Android minimum in Core Goals, API 26)');
     }
 
     if (typeof options.targetSdkVersion !== 'number') {

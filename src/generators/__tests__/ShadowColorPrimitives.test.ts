@@ -134,8 +134,8 @@ describe('every shadow composite, on every platform', () => {
     expect(android).toMatch(/val shadow_blue_100 = Color\(.*ColorSpaces\.DisplayP3\)/);
   });
 
-  it('the typography composites are untouched by the shadow type (still Typography until the type table lands)', () => {
-    expect(ios.match(/= Typography\(/g)).toHaveLength(24);
-    expect(android.match(/= Typography\(/g)).toHaveLength(24);
+  it('the typography composites are not built with the shadow type', () => {
+    expect(ios.match(/= TypographyToken\(/g)).toHaveLength(24);
+    expect(android.match(/= TextStyle\(/g)).toHaveLength(24);
   });
 });

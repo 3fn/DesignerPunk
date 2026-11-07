@@ -32,6 +32,7 @@ import { whiteLightness, grayLightness, blackLightness } from '../tokens/color/c
 import { whiteChroma, grayChroma, blackChroma } from '../tokens/color/channels/chroma/neutral';
 import { generatedByLine, getCoreVersion } from './coreVersion';
 import { formatSwiftDisplayP3, formatKotlinDisplayP3, parseOklchText } from './oklch/NativeColorUtils';
+import { withKotlinImports } from './native/KotlinImports';
 
 /**
  * How the generic semantic pass emits a token, by the shape of its `primitiveReferences`:
@@ -518,7 +519,7 @@ export class TokenFileGenerator {
       lines.push('');
     }
 
-    const content = lines.join('\n');
+    const content = withKotlinImports(lines.join('\n'));
     const validation = this.validateAndroidComponentTokenSyntax(content);
 
     return {
@@ -605,10 +606,9 @@ export class TokenFileGenerator {
    */
   private formatiOSComponentTokenValue(token: RegisteredComponentToken): string {
     if (token.primitiveReference) {
-      // Convert primitive reference to Swift constant reference
-      // e.g., 'space150' -> 'SpacingTokens.space150'
-      const familyClass = this.getFamilyClassName(token.family);
-      return `${familyClass}.${token.primitiveReference}`;
+      // A primitive is a flat member of DesignTokens (design § 5, "Unchanged from A § D-1"):
+      // 'space150' -> 'DesignTokens.space150'. No family type exists to hold it.
+      return `DesignTokens.${this.iosGenerator.getTokenName(token.primitiveReference, token.family)}`;
     }
     // Return raw value for non-reference tokens
     return String(token.value);
@@ -636,41 +636,23 @@ export class TokenFileGenerator {
    */
   private formatAndroidComponentTokenValue(token: RegisteredComponentToken): string {
     if (token.primitiveReference) {
-      // Convert primitive reference to Kotlin constant reference
-      // e.g., 'space150' -> 'SpacingTokens.space150'
-      const familyClass = this.getFamilyClassName(token.family);
-      return `${familyClass}.${token.primitiveReference}`;
+      // A primitive is a flat member of DesignTokens: 'space150' -> 'DesignTokens.space_150'.
+      return `DesignTokens.${this.androidGenerator.getTokenName(token.primitiveReference, token.family)}`;
     }
     // Dimensional families need .dp suffix to match primitive token output (Task 1.4).
     // 'sizing' is dimensional (component width/height) and belongs here: without it, a
     // value-path sizing token emits a bare Int, which fails to compile against consumers
     // that type the member as Dp (e.g. Avatar.android.kt's
     // `val iconSizeXs: Dp = GeneratedAvatarTokens.iconSizeXs`).
-    const dimensionalFamilies = ['spacing', 'sizing', 'radius', 'tapArea', 'fontSize', 'borderWidth'];
+    const dimensionalFamilies = ['spacing', 'sizing', 'radius', 'tapArea', 'borderWidth'];
     if (dimensionalFamilies.includes(token.family)) {
       return `${token.value}.dp`;
     }
+    // fontSize is a TextUnit, in sp (I-2), as the primitive is.
+    if (token.family === 'fontSize') {
+      return `${token.value}.sp`;
+    }
     return String(token.value);
-  }
-
-  /**
-   * Get the class name for a token family
-   * Used for generating primitive token references
-   */
-  private getFamilyClassName(family: string): string {
-    const familyClassMap: Record<string, string> = {
-      'spacing': 'SpacingTokens',
-      'sizing': 'SizingTokens',
-      'radius': 'RadiusTokens',
-      'fontSize': 'FontSizeTokens',
-      'color': 'ColorTokens',
-      'tapArea': 'TapAreaTokens',
-      'borderWidth': 'BorderWidthTokens',
-      'lineHeight': 'LineHeightTokens',
-      'fontWeight': 'FontWeightTokens',
-      'fontFamily': 'FontFamilyTokens'
-    };
-    return familyClassMap[family] || `${family.charAt(0).toUpperCase() + family.slice(1)}Tokens`;
   }
 
   /**
@@ -1769,7 +1751,8 @@ export class TokenFileGenerator {
       lines.push(generator.generateFooter());
     }
 
-    const content = lines.join('\n');
+    const joined = lines.join('\n');
+    const content = platform === 'android' ? withKotlinImports(joined) : joined;
     const validation = generator.validateSyntax(content);
 
     return {

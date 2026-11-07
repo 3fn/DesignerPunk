@@ -94,3 +94,5 @@ Four `.dp` uses, no imports — the same gap at smaller scale, on top of the dan
 - A compile smoke check of generated Kotlin is the only guard that would catch the next missing symbol; the harness charter is its home.
 
 **No fix is authorized by this record.**
+
+**Outcome (2026-11-07, Ada, owner, rule 5)**: Row 6: the Kotlin import lists of DesignTokens.android.kt and ComponentTokens.android.kt are computed from the text and precede the first declaration (9.1, a8967663e; src/generators/native/KotlinImports.ts); the Easing class is qualified. Every row-6 entry left the Android token list. Integration Guide L185's second sentence is rewritten in this PR. Fixed in Spec 129 Task 9 (U4), `completion/task-9-completion.md`. Closed and archived in the unit PR.

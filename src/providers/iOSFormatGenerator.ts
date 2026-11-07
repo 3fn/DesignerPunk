@@ -6,6 +6,7 @@ import { getColorToken } from '../tokens/ColorTokens';
 import { getOpacityToken } from '../tokens/OpacityTokens';
 import { generatedByLine, getCoreVersion } from '../generators/coreVersion';
 import { formatSwiftDisplayP3, parseOklchText } from '../generators/oklch/NativeColorUtils';
+import { iosFontFamilyName, swiftStringLiteral } from '../generators/native/FontFamilyStack';
 
 /**
  * iOS-specific format generator
@@ -58,6 +59,11 @@ export class iOSFormatGenerator extends BaseFormatProvider {
       throw new Error(`Token ${token.name} has no iOS platform value`);
     }
     
+    // A percent radius (radiusHalf) is a shape on iOS, not a length: `Circle()` (design § 5).
+    if (platformValue.unit === 'shape' && platformValue.value === 'Circle') {
+      return `    public static let ${tokenName} = Circle()`;
+    }
+
     const swiftType = this.getSwiftType(token.category, platformValue.unit);
     return this.formatSwiftConstant(tokenName, platformValue.value, platformValue.unit, swiftType);
   }
@@ -77,6 +83,8 @@ export class iOSFormatGenerator extends BaseFormatProvider {
       'import UIKit',
       '',
       ...this.generateShadowTokenType(),
+      '',
+      ...this.generateTypographyTokenType(),
       '',
       'public struct DesignTokens {'
     ].join('\n');
@@ -104,6 +112,36 @@ export class iOSFormatGenerator extends BaseFormatProvider {
       '        self.blur = blur',
       '        self.opacity = opacity',
       '        self.color = color',
+      '    }',
+      '}'
+    ];
+  }
+
+  /**
+   * The type every typography composite is built with: `TypographyToken`, generated into the token
+   * file (Spec 129 design § 5). `tracking` is `letterSpacing × fontSize`, in points, because
+   * SwiftUI's `.tracking` takes points while `letterSpacing` is an em ratio. SwiftUI's `Font` has
+   * no line height, so `lineHeight` stays a ratio the component applies.
+   */
+  private generateTypographyTokenType(): string[] {
+    return [
+      '/// A typography composite: size, line-height ratio, family, weight and letter spacing (em ratio).',
+      'public struct TypographyToken: Sendable {',
+      '    public let fontSize: CGFloat',
+      '    public let lineHeight: CGFloat',
+      '    public let fontFamily: String?',
+      '    public let fontWeight: Font.Weight',
+      '    public let letterSpacing: CGFloat',
+      '',
+      '    /// `letterSpacing` in points, for `.tracking(_:)`.',
+      '    public var tracking: CGFloat { letterSpacing * fontSize }',
+      '',
+      '    public init(fontSize: CGFloat, lineHeight: CGFloat, fontFamily: String?, fontWeight: Font.Weight, letterSpacing: CGFloat) {',
+      '        self.fontSize = fontSize',
+      '        self.lineHeight = lineHeight',
+      '        self.fontFamily = fontFamily',
+      '        self.fontWeight = fontWeight',
+      '        self.letterSpacing = letterSpacing',
       '    }',
       '}'
     ];
@@ -175,9 +213,9 @@ export class iOSFormatGenerator extends BaseFormatProvider {
       case 'density':
         return 'CGFloat';
       case 'fontFamily':
-        return 'String';
+        return 'String?';
       case 'fontWeight':
-        return 'UIFont.Weight';
+        return 'Font.Weight';
       case 'letterSpacing':
         return 'CGFloat';
       case 'color':
@@ -192,6 +230,14 @@ export class iOSFormatGenerator extends BaseFormatProvider {
   }
 
   private formatSwiftValue(value: number | string | object, unit: string, swiftType: string): string {
+    if (swiftType === 'Font.Weight') {
+      return this.formatFontWeight(value as string | number);
+    }
+    if (swiftType === 'String?') {
+      // The first stack entry, unquoted; nil for a generic or system keyword (design §§ 5, 7).
+      const name = iosFontFamilyName(String(value));
+      return name === null ? 'nil' : swiftStringLiteral(name);
+    }
     if (typeof value === 'object') {
       // For color tokens with mode/theme structure, generate UIColor
       return this.formatUIColor(value);
@@ -201,9 +247,6 @@ export class iOSFormatGenerator extends BaseFormatProvider {
       // Check if it's an RGBA string - convert to UIColor format
       if (value.startsWith('rgba(')) {
         return this.rgbaStringToUIColor(value);
-      }
-      if (swiftType === 'UIFont.Weight') {
-        return this.formatFontWeight(value);
       }
       return `"${value}"`;
     }
@@ -473,7 +516,7 @@ export class iOSFormatGenerator extends BaseFormatProvider {
     // Use correct type wrapper based on token family
     const typeWrapper = semantic.name.startsWith('motion.') ? 'Motion'
       : semantic.category === 'shadow' ? 'ShadowToken'
-      : 'Typography';
+      : 'TypographyToken';
 
     // Generate struct initialization format
     const parameters = refs.map(([key, primitiveRef]) => {

@@ -278,35 +278,35 @@ private fun getButtonCTASizeConfig(size: ButtonCTASize): ButtonCTASizeConfig {
     // AndroidSizingDpReads.test.ts fails until they are.
     return when (size) {
         ButtonCTASize.SMALL -> ButtonCTASizeConfig(
-            height = DesignTokens.size_500.dp,
+            height = DesignTokens.size_500,
             touchTargetHeight = DesignTokens.tap_area_minimum,
             typography = DesignTokens.typography_button_md,
             horizontalPadding = DesignTokens.space_inset_200,
             verticalPadding = DesignTokens.space_inset_100,
             borderRadius = DesignTokens.radius_100,
-            minWidth = DesignTokens.size_700.dp,
+            minWidth = DesignTokens.size_700,
             iconSize = DesignTokens.icon_size_100,
             iconTextSpacing = DesignTokens.space_grouped_tight
         )
         ButtonCTASize.MEDIUM -> ButtonCTASizeConfig(
-            height = DesignTokens.size_600.dp,
+            height = DesignTokens.size_600,
             touchTargetHeight = DesignTokens.tap_area_recommended,
             typography = DesignTokens.typography_button_md,
             horizontalPadding = DesignTokens.space_inset_300,
             verticalPadding = DesignTokens.space_inset_150,
             borderRadius = DesignTokens.radius_150,
-            minWidth = DesignTokens.size_900.dp,
+            minWidth = DesignTokens.size_900,
             iconSize = DesignTokens.icon_size_100,
             iconTextSpacing = DesignTokens.space_grouped_normal
         )
         ButtonCTASize.LARGE -> ButtonCTASizeConfig(
-            height = DesignTokens.size_700.dp,
-            touchTargetHeight = DesignTokens.size_700.dp,
+            height = DesignTokens.size_700,
+            touchTargetHeight = DesignTokens.size_700,
             typography = DesignTokens.typography_button_lg,
             horizontalPadding = DesignTokens.space_inset_400,
             verticalPadding = DesignTokens.space_inset_150,
             borderRadius = DesignTokens.radius_200,
-            minWidth = DesignTokens.size_1000.dp,
+            minWidth = DesignTokens.size_1000,
             iconSize = DesignTokens.icon_size_125,
             iconTextSpacing = DesignTokens.space_grouped_normal
         )

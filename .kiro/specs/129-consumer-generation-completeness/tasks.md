@@ -699,7 +699,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 4 — The native type table
 
-- [ ] 9. The native type table, import lists and font family, with their component couplings (U4)
+- [x] 9. The native type table, import lists and font family, with their component couplings (U4)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Lina (Sonnet) — the coupled Android and iOS reads and the guideline type statements · Thurgood (Sonnet) — the Req 6.9 ballot record
   **Traces**: Req 2.10, 5.9, 6.3, 6.4, 6.5, 6.7, 6.8, 6.9; rows 3, 4 (item 1), 5, 6, 8, 12 (groups B, C, item 3's non-colour constants); I-1, I-2 · design §§ 5, 7, 12a (`ConfigHelpers`)
@@ -756,13 +756,13 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 9 Complete: The native type table (129)"` opens U4's PR (Peter-merged: `governance/**`; `**Edit kind**:` EXECUTION, Req 6.9); report the URL; STOP. After merge, the next harness run is the component repair's sizing event (Lina).
 
-  - [ ] 9.1 Generator: types per family, composites, font family, import lists, `ComponentTokens` references
+  - [x] 9.1 Generator: types per family, composites, font family, import lists, `ComponentTokens` references
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
     - _Requirements: 5.9, 6.3, 6.4, 6.5_
-  - [ ] 9.2 Coupled component reads (I-1, I-2, `fontWeight` on both platforms, the composite's 9 reads, item 3's remaining constants); the two guards
+  - [x] 9.2 Coupled component reads (I-1, I-2, `fontWeight` on both platforms, the composite's 9 reads, item 3's remaining constants); the two guards
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 6.7, 6.8_
-  - [ ] 9.3 Guideline type statements (Lina drafts; the ballot record held by Thurgood, Peter ratifies at U4's merge); `ConfigHelpers` floors
+  - [x] 9.3 Guideline type statements (Lina drafts; the ballot record held by Thurgood, Peter ratifies at U4's merge); `ConfigHelpers` floors
     **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet), Ada (Sonnet)
     - _Requirements: 6.9_
 

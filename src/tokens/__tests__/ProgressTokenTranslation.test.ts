@@ -93,27 +93,27 @@ describe('Progress Token Cross-Platform Translation', () => {
   describe('iOS Swift output includes progress current size tokens', () => {
     it('should reference size200 for sm current size', () => {
       expect(iosContent).toContain('nodeSizeSmCurrent');
-      expect(iosContent).toMatch(/nodeSizeSmCurrent.*SizingTokens.size200/);
+      expect(iosContent).toMatch(/nodeSizeSmCurrent.*DesignTokens.size200/);
     });
 
     it('should reference size250 for md current size', () => {
       expect(iosContent).toContain('nodeSizeMdCurrent');
-      expect(iosContent).toMatch(/nodeSizeMdCurrent.*SizingTokens.size250/);
+      expect(iosContent).toMatch(/nodeSizeMdCurrent.*DesignTokens.size250/);
     });
 
     it('should reference size300 for lg current size', () => {
       expect(iosContent).toContain('nodeSizeLgCurrent');
-      expect(iosContent).toMatch(/nodeSizeLgCurrent.*SizingTokens.size300/);
+      expect(iosContent).toMatch(/nodeSizeLgCurrent.*DesignTokens.size300/);
     });
 
     it('should use CGFloat type for dimensional tokens', () => {
       expect(iosContent).toMatch(/nodeSizeSmCurrent:\s*CGFloat/);
     });
 
-    it('should reference SizingTokens for base size tokens', () => {
-      expect(iosContent).toContain('SizingTokens.size150');
-      expect(iosContent).toContain('SizingTokens.size200');
-      expect(iosContent).toContain('SizingTokens.size250');
+    it('should reference DesignTokens for base size tokens', () => {
+      expect(iosContent).toContain('DesignTokens.size150');
+      expect(iosContent).toContain('DesignTokens.size200');
+      expect(iosContent).toContain('DesignTokens.size250');
     });
   });
 
@@ -124,23 +124,23 @@ describe('Progress Token Cross-Platform Translation', () => {
   describe('Android Kotlin output includes progress current size tokens', () => {
     it('should reference size200 for sm current size', () => {
       expect(androidContent).toContain('nodeSizeSmCurrent');
-      expect(androidContent).toMatch(/nodeSizeSmCurrent\s*=\s*SizingTokens.size200/);
+      expect(androidContent).toMatch(/nodeSizeSmCurrent\s*=\s*DesignTokens.size_200/);
     });
 
     it('should reference size250 for md current size', () => {
       expect(androidContent).toContain('nodeSizeMdCurrent');
-      expect(androidContent).toMatch(/nodeSizeMdCurrent\s*=\s*SizingTokens.size250/);
+      expect(androidContent).toMatch(/nodeSizeMdCurrent\s*=\s*DesignTokens.size_250/);
     });
 
     it('should reference size300 for lg current size', () => {
       expect(androidContent).toContain('nodeSizeLgCurrent');
-      expect(androidContent).toMatch(/nodeSizeLgCurrent\s*=\s*SizingTokens.size300/);
+      expect(androidContent).toMatch(/nodeSizeLgCurrent\s*=\s*DesignTokens.size_300/);
     });
 
-    it('should reference SizingTokens for base size tokens', () => {
-      expect(androidContent).toContain('SizingTokens.size150');
-      expect(androidContent).toContain('SizingTokens.size200');
-      expect(androidContent).toContain('SizingTokens.size250');
+    it('should reference DesignTokens for base size tokens', () => {
+      expect(androidContent).toContain('DesignTokens.size_150');
+      expect(androidContent).toContain('DesignTokens.size_200');
+      expect(androidContent).toContain('DesignTokens.size_250');
     });
   });
 
@@ -151,9 +151,9 @@ describe('Progress Token Cross-Platform Translation', () => {
   describe('Cross-platform value consistency', () => {
     it('should reference same sizing primitives for current sizes across all platforms', () => {
       const currentSizes = [
-        { cssRef: 'size-200', swiftRef: 'SizingTokens.size200', kotlinRef: 'SizingTokens.size200', cssName: 'sm-current', camelName: 'nodeSizeSmCurrent' },
-        { cssRef: 'size-250', swiftRef: 'SizingTokens.size250', kotlinRef: 'SizingTokens.size250', cssName: 'md-current', camelName: 'nodeSizeMdCurrent' },
-        { cssRef: 'size-300', swiftRef: 'SizingTokens.size300', kotlinRef: 'SizingTokens.size300', cssName: 'lg-current', camelName: 'nodeSizeLgCurrent' },
+        { cssRef: 'size-200', swiftRef: 'DesignTokens.size200', kotlinRef: 'DesignTokens.size_200', cssName: 'sm-current', camelName: 'nodeSizeSmCurrent' },
+        { cssRef: 'size-250', swiftRef: 'DesignTokens.size250', kotlinRef: 'DesignTokens.size_250', cssName: 'md-current', camelName: 'nodeSizeMdCurrent' },
+        { cssRef: 'size-300', swiftRef: 'DesignTokens.size300', kotlinRef: 'DesignTokens.size_300', cssName: 'lg-current', camelName: 'nodeSizeLgCurrent' },
       ];
 
       for (const { cssRef, swiftRef, kotlinRef, cssName, camelName } of currentSizes) {

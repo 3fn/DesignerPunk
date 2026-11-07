@@ -287,7 +287,7 @@ describe('Format Provider Services', () => {
         expect(result).toContain('= 16');
       });
 
-      test('should format fontWeight token with UIFont.Weight type', () => {
+      test('should format fontWeight token with Font.Weight type', () => {
         const token = createMockPrimitiveToken({
           name: 'fontWeightBold',
           category: TokenCategory.FONT_WEIGHT,
@@ -302,11 +302,12 @@ describe('Format Provider Services', () => {
         const result = generator.formatToken(token);
 
         expect(result).toContain('fontWeightBold');
-        expect(result).toContain('UIFont.Weight');
+        expect(result).toContain('Font.Weight');
+        expect(result).not.toContain('UIFont.Weight');
         expect(result).toContain('.bold');
       });
 
-      test('should format fontFamily token as String', () => {
+      test('should format fontFamily token as String? (first entry, unquoted)', () => {
         const token = createMockPrimitiveToken({
           name: 'fontFamilyBody',
           category: TokenCategory.FONT_FAMILY,
@@ -321,8 +322,9 @@ describe('Format Provider Services', () => {
         const result = generator.formatToken(token);
 
         expect(result).toContain('fontFamilyBody');
-        expect(result).toContain('String');
-        expect(result).toContain('"Inter, sans-serif"');
+        expect(result).toContain('String?');
+        expect(result).toContain('= "Inter"');
+        expect(result).not.toContain('sans-serif');
       });
 
       test('should format borderWidth tokens with CGFloat type and pt units', () => {
@@ -473,7 +475,7 @@ struct DesignTokens {
         expect(result).toContain('= 8.dp');
       });
 
-      test('should format fontSize token with Float type', () => {
+      test('should format fontSize token as TextUnit (sp)', () => {
         const token = createMockPrimitiveToken({
           name: 'fontSize100',
           category: TokenCategory.FONT_SIZE,
@@ -488,11 +490,11 @@ struct DesignTokens {
         const result = generator.formatToken(token);
 
         expect(result).toContain('font_size_100');
-        expect(result).toContain('.dp');
-        expect(result).toContain('= 16.dp');
+        expect(result).toContain('= 16.sp');
+        expect(result).not.toContain('.dp');
       });
 
-      test('should format fontWeight token as Int', () => {
+      test('should format fontWeight token as FontWeight', () => {
         const token = createMockPrimitiveToken({
           name: 'fontWeightBold',
           category: TokenCategory.FONT_WEIGHT,
@@ -507,8 +509,8 @@ struct DesignTokens {
         const result = generator.formatToken(token);
 
         expect(result).toContain('font_weight_bold');
-        expect(result).toContain('Int');
-        expect(result).toContain('= 700');
+        expect(result).toContain('= FontWeight(700)');
+        expect(result).not.toContain('const val');
       });
 
       test('should format borderWidth tokens with Float type and dp units', () => {

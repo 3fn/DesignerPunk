@@ -364,10 +364,10 @@ fun NavTabBarBase(
             // Dot indicator — positioned absolutely
             Box(
                 modifier = Modifier
-                    .offset { IntOffset(dotOffsetPx.value.toInt() - with(density) { (NavTabBarTokens.dotSize / 2).dp.toPx() }.toInt(), 0) }
+                    .offset { IntOffset(dotOffsetPx.value.toInt() - with(density) { (NavTabBarTokens.dotSize / 2).toPx() }.toInt(), 0) }
                     .align(Alignment.BottomStart)
                     .padding(bottom = NavTabBarTokens.activePaddingBottom)
-                    .size(NavTabBarTokens.dotSize.dp)
+                    .size(NavTabBarTokens.dotSize)
                     .background(theme.color_action_navigation, CircleShape)
             )
         }

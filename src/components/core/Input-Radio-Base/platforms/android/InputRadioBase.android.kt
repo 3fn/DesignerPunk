@@ -70,6 +70,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.designerpunk.tokens.BlendTokenValues
 import com.designerpunk.tokens.DesignTokens
@@ -132,7 +133,7 @@ enum class RadioSize {
     /** Typography font size for label
      * @see Requirement 2.4-2.6 - Label typography
      */
-    val labelFontSize: Float
+    val labelFontSize: TextUnit
         get() = when (this) {
             Small -> DesignTokens.font_size_075   // 14sp (labelSm)
             Medium -> DesignTokens.font_size_100  // 16sp (labelMd)
@@ -245,7 +246,7 @@ private object RadioTokens {
     /** Helper/error text font size
      * References: fontSize050 (12sp)
      */
-    val helperFontSize: Float = DesignTokens.font_size_050
+    val helperFontSize: TextUnit = DesignTokens.font_size_050
 }
 
 // MARK: - RadioCircle Composable
@@ -448,7 +449,7 @@ fun InputRadioBase(
             Text(
                 text = label,
                 style = TextStyle(
-                    fontSize = size.labelFontSize.sp,
+                    fontSize = size.labelFontSize,
                     fontWeight = FontWeight.Medium
                 ),
                 color = theme.color_text_default
@@ -470,7 +471,7 @@ fun InputRadioBase(
                     Text(
                         text = helperText,
                         style = TextStyle(
-                            fontSize = RadioTokens.helperFontSize.sp,
+                            fontSize = RadioTokens.helperFontSize,
                             fontWeight = FontWeight.Normal
                         ),
                         color = theme.color_text_muted,
@@ -486,7 +487,7 @@ fun InputRadioBase(
                     Text(
                         text = errorMessage,
                         style = TextStyle(
-                            fontSize = RadioTokens.helperFontSize.sp,
+                            fontSize = RadioTokens.helperFontSize,
                             fontWeight = FontWeight.Normal
                         ),
                         color = theme.color_feedback_error_text,
@@ -665,7 +666,7 @@ fun InputRadioBasePreview() {
             )
             Text(
                 text = "Selected: $selectedPlan",
-                style = TextStyle(fontSize = RadioTokens.helperFontSize.sp),
+                style = TextStyle(fontSize = RadioTokens.helperFontSize),
                 color = theme.color_text_muted
             )
         }
