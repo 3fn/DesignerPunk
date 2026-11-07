@@ -75,8 +75,10 @@ export class AndroidMotionTokenFormatter {
     lines.push('    ');
 
     if (hasLinear) {
+      // Qualified: the nested `object Easing` below shadows the Compose interface inside DesignTokens,
+      // and a class cannot extend an object (Spec 129 row 6).
       lines.push('    /** Piecewise linear easing via lookup table interpolation */');
-      lines.push('    class PiecewiseLinearEasing(private val stops: List<Pair<Float, Float>>) : Easing {');
+      lines.push('    class PiecewiseLinearEasing(private val stops: List<Pair<Float, Float>>) : androidx.compose.animation.core.Easing {');
       lines.push('        override fun transform(fraction: Float): Float {');
       lines.push('            if (fraction <= 0f) return 0f');
       lines.push('            if (fraction >= 1f) return 1f');

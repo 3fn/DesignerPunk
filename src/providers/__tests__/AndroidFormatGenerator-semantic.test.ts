@@ -261,11 +261,11 @@ describe('AndroidFormatGenerator - Single-Reference Token Generation', () => {
         // Verify Kotlin data class initialization syntax
         expect(result).toContain('val');
         expect(result).toMatch(/typography_body_md/);
-        expect(result).toContain('Typography(');
+        expect(result).toContain('TextStyle(');
         
         // Verify all primitive references are included (with snake_case naming)
         expect(result).toMatch(/fontSize = font_size_100/);
-        expect(result).toMatch(/lineHeight = line_height_100/);
+        expect(result).toMatch(/lineHeight = line_height_100\.em/);
         expect(result).toMatch(/fontFamily = font_family_body/);
         expect(result).toMatch(/fontWeight = font_weight_400/);
         expect(result).toMatch(/letterSpacing = letter_spacing_100/);

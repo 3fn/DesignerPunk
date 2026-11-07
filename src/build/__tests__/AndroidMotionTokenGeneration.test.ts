@@ -91,7 +91,7 @@ describe('AndroidMotionTokenFormatter - Motion Token Generation', () => {
       const result = builder.generateEasingTokens(easingTokens);
 
       // Should generate the class
-      expect(result).toContain('class PiecewiseLinearEasing(private val stops: List<Pair<Float, Float>>) : Easing');
+      expect(result).toContain('class PiecewiseLinearEasing(private val stops: List<Pair<Float, Float>>) : androidx.compose.animation.core.Easing');
       // Should generate the constant
       expect(result).toContain('val EasingGlideDecelerate = PiecewiseLinearEasing(listOf(');
       // Should use Kotlin Pair syntax

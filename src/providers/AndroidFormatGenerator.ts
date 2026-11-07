@@ -6,6 +6,7 @@ import { getColorToken } from '../tokens/ColorTokens';
 import { getOpacityToken } from '../tokens/OpacityTokens';
 import { generatedByLine, getCoreVersion } from '../generators/coreVersion';
 import { formatKotlinDisplayP3, parseOklchText } from '../generators/oklch/NativeColorUtils';
+import { androidFontFamilyMember, parseFontStack } from '../generators/native/FontFamilyStack';
 
 /**
  * Android-specific format generator
@@ -156,9 +157,18 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
   }
 
   private formatKotlinConstant(name: string, value: number | string | object, unit: string, category: string): string {
+    // A percent radius is a Compose CornerSize, not a length (design § 5; radius_half).
+    if (category === 'radius' && unit === 'percent') {
+      return `    val ${name} = CornerSize(percent = ${value})`;
+    }
     const kotlinType = this.getKotlinType(category, unit);
     const formattedValue = this.formatKotlinValue(value, unit, kotlinType);
-    if (kotlinType === 'Dp') {
+    if (kotlinType === 'FontFamily' && typeof value === 'string') {
+      // The brand font cannot be loaded by name on Android; the stack stays readable beside the member.
+      return `    val ${name} = ${formattedValue} // ${parseFontStack(value).join(', ')}`;
+    }
+    // Dp, TextUnit, FontWeight and FontFamily are not compile-time constants: val, not const val.
+    if (['Dp', 'TextUnit', 'FontWeight', 'FontFamily'].includes(kotlinType)) {
       return `    val ${name} = ${formattedValue}`;
     }
     return `    const val ${name}: ${kotlinType} = ${formattedValue}`;
@@ -175,17 +185,19 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
       case 'spacing':
       case 'radius':
       case 'tapArea':
-      case 'fontSize':
       case 'borderWidth':
+      case 'sizing':
         return 'Dp';
+      case 'fontSize':
+      case 'letterSpacing':
+        return 'TextUnit'; // fontSize in sp; letterSpacing in em
       case 'lineHeight':
       case 'density':
-      case 'letterSpacing':
         return 'Float';
       case 'fontFamily':
-        return 'String';
+        return 'FontFamily';
       case 'fontWeight':
-        return 'Int';
+        return 'FontWeight';
       case 'color':
         return 'Int'; // Color as ARGB integer
       case 'layering':
@@ -229,12 +241,22 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
       if (value.startsWith('rgba(')) {
         return this.rgbaStringToColorArgb(value);
       }
+      if (kotlinType === 'FontFamily') {
+        return `FontFamily.${androidFontFamilyMember(value)}`;
+      }
       return `"${value}"`;
     }
 
     // Numeric values
     if (kotlinType === 'Dp') {
       return `${value}.dp`;
+    }
+    if (kotlinType === 'TextUnit') {
+      // letterSpacing is an em ratio and fontSize is sp; the unit says which.
+      return unit === 'em' ? `(${value}).em` : `${value}.sp`;
+    }
+    if (kotlinType === 'FontWeight') {
+      return `FontWeight(${value})`;
     }
     if (kotlinType === 'Float') {
       return `${value}f`;
@@ -529,10 +551,12 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
       // Generate the composite's data class initialization format
       const parameters = refs.map(([key, primitiveRef]) => {
         const primitiveRefName = this.getTokenName(primitiveRef, semantic.category);
-        return `${key} = ${primitiveRefName}`;
+        // TextStyle takes a TextUnit line height; the primitive is a ratio, so `.em` (design § 5).
+        const argument = semantic.category !== 'shadow' && key === 'lineHeight' ? `${primitiveRefName}.em` : primitiveRefName;
+        return `${key} = ${argument}`;
       }).join(', ');
       
-      const typeWrapper = semantic.category === 'shadow' ? 'ShadowToken' : 'Typography';
+      const typeWrapper = semantic.category === 'shadow' ? 'ShadowToken' : 'TextStyle';
       return `    val ${semanticName} = ${typeWrapper}(${parameters})`;
     } else {
       // XML doesn't support object literals, so we'll generate individual properties

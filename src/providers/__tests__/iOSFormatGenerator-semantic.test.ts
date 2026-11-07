@@ -169,7 +169,7 @@ describe('iOSFormatGenerator - Single-Reference Token Generation', () => {
       // Verify Swift struct initialization syntax
       expect(result).toContain('public static let');
       expect(result).toContain('typographyBodyMd');
-      expect(result).toContain('Typography(');
+      expect(result).toContain('TypographyToken(');
       
       // Verify all primitive references are included
       expect(result).toContain('fontSize: fontSize100');
