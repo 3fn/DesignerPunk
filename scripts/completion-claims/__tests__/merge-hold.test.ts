@@ -23,6 +23,7 @@ import {
   judgeLawRatified,
   judgeMergeHold,
   main,
+  liveAdapter,
   normalizeQuote,
   parseBody,
   parsedLines,
