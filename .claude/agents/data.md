@@ -335,38 +335,53 @@ android_patterns:
 
 #### Android Token Usage: The `.dp` Pattern
 
-**CRITICAL RULE**: Never append `.dp` to a `DesignTokens` value the generator emits as `Dp` (spacing, radius, tapArea, borderWidth, layering) when passing it to Compose functions. A `Float` token (sizing among them) takes `.dp` at the read; see "When `.dp` IS Required" below. *(corrected 2026-11-01: the rule read as covering every `DesignTokens` value; .kiro/issues/archive/2026-10-26-android-guidelines-spacing-float-dp-claim.md; prior text at 465af3544)*
+**CRITICAL RULE**: Never append `.dp` to a `DesignTokens` value the generator emits as `Dp` (spacing, radius, tapArea, borderWidth, layering, sizing), and never append `.sp` or `.dp` to a `fontSize` (`TextUnit`) when passing it to Compose functions. Each family below has one Kotlin type; read it at that type, and convert only where this section says so.
+
+**The per-family Android types** (`getKotlinType` and the composite formatters in `src/providers/AndroidFormatGenerator.ts`; `NativeTypeTable.test.ts` asserts one row each):
+
+| Family | Kotlin type | Example | Read it as |
+|---|---|---|---|
+| spacing, radius, tapArea, borderWidth, layering, sizing | `Dp` | `val space_200 = 16.dp` | straight into `padding()`, `size()`, `spacedBy()`; no `.dp` |
+| fontSize | `TextUnit` (sp) | `val font_size_100 = 16.sp` | straight into `fontSize =`; no `.sp`; `.value` for the number |
+| letterSpacing | `TextUnit` (em) | `val letter_spacing_100 = (0).em` | straight into `letterSpacing =` |
+| lineHeight | `Float` (ratio) | `const val line_height_100: Float = 1.5f` | `fontSize * lineHeight` gives a `TextUnit`; `.em` or `.value` as the position needs |
+| density, opacity, breakpoint, blur, other numbers | `Float` | `const val opacity_008: Float = 0.08f` | as a `Float`; `.dp` only where a `Dp` is wanted |
+| fontWeight | `FontWeight` | `val font_weight_500 = FontWeight(500)` | straight into `fontWeight =` |
+| fontFamily | `FontFamily` | `val font_family_body = FontFamily.SansSerif` | straight into `fontFamily =`; the brand name is in the trailing comment, not loaded |
+| radius in percent (`radius_half`) | `CornerSize` | `CornerSize(percent = 50)` | into `RoundedCornerShape(...)` |
+| color | Compose `Color` | Display P3 | per the colour section |
+| typography composite | `TextStyle` | `typography_label_md` | whole into `style =` or a `TextStyle` parameter; its `fontSize`, `fontWeight`, `lineHeight` (an `.em` `TextUnit`) and `letterSpacing` read straight into `Text(...)` |
+| shadow composite | `ShadowToken` | `shadow_container` | generated; `offsetX`, `offsetY`, `blur` and `opacity` are `Float`, `color` is a Compose `Color` |
+
+Non-constant types (`Dp`, `TextUnit`, `FontWeight`, `FontFamily`) are emitted as `val`, not `const val`, because Kotlin has no compile-time constant of those types.
 
 ❌ **WRONG**:
 ```kotlin
-Modifier.padding(DesignTokens.space_200.dp)
-Arrangement.spacedBy(DesignTokens.space_300.dp)
+Modifier.padding(DesignTokens.space_200.dp)         // Dp has no .dp
+Modifier.size(DesignTokens.size_500.dp)             // sizing is Dp now
+Text(fontSize = DesignTokens.font_size_075.sp)      // TextUnit has no .sp
 ```
 
 ✅ **CORRECT**:
 ```kotlin
 Modifier.padding(DesignTokens.space_200)
-Arrangement.spacedBy(DesignTokens.space_300)
+Modifier.size(DesignTokens.size_500)
+Text(fontSize = DesignTokens.font_size_075,
+     lineHeight = DesignTokens.font_size_075 * DesignTokens.line_height_075)
 ```
 
-**Why**: The Android generator emits spacing, radius, tapArea, borderWidth and elevation (layering) tokens as `Dp` values (`val space_200 = 16.dp`), so they pass straight to Compose layout functions (`padding()`, `size()`, `spacedBy()`), which take `Dp`. `.dp` is an extension on `Int`, `Float` and `Double`, not on `Dp`: `DesignTokens.space_200.dp` does not compile. Kotlin and Compose convert nothing implicitly. fontSize tokens are also emitted as `Dp` today; their Android type is an open decision, and the component lines that read them are pinned in `AndroidDpTokenReads.test.ts`. *(corrected 2026-10-30: the Android token types and the conversion claims in L744–L774, read against `src/providers/AndroidFormatGenerator.ts` `getKotlinType` and `formatKotlinValue`; .kiro/issues/archive/2026-10-26-android-guidelines-spacing-float-dp-claim.md; prior text at d34fc7786)*
+**Where a number is wanted** (a minimum width from type size, an animated size): take it with `.value` and convert once: `(DesignTokens.font_size_050.value * DesignTokens.line_height_050).dp`, or `animateFloatAsState(targetValue = token.value)` and `.sp` at the read. A component-local property that holds a font size is typed `TextUnit`, not `Float`.
 
-**When `.dp` IS Required**:
-On a token the generator emits as `Float`, when a `Dp` is wanted. Sizing is one (`const val size_500: Float = 40f`), as are lineHeight, density and letterSpacing. Convert at the read:
+**When `.dp` IS Required**: on a `Float` (or `Int`) where a `Dp` is wanted. `lineHeight * fontSize.value` is one. Convert at the read.
 
-```kotlin
-Modifier.size(DesignTokens.size_500.dp)     // sizing is Float: .dp converts it
-val dimension: Dp = DesignTokens.space_200  // spacing is already Dp: no .dp
-```
-
-The family-to-type table is `getKotlinType` in `src/providers/AndroidFormatGenerator.ts`. `AndroidDpTokenReads.test.ts` and `AndroidSizingDpReads.test.ts` (`src/components/__tests__/`) check component reads against the generator's actual output. The token compliance test is a separate check: it flags hard-coded literals such as `16.dp` (pattern `/(?<!\w)[1-9]\d*\.dp\b/`), not token reads.
+`AndroidDpTokenReads.test.ts` and `AndroidSizingDpReads.test.ts` (`src/components/__tests__/`) check component reads against the generator's actual output and flip if the emitted type changes. The token compliance test is a separate check: it flags hard-coded literals such as `16.dp` (pattern `/(?<!\w)[1-9]\d*\.dp\b/`), not token reads.
 
 **Pattern for Enums Returning Dp**:
 ```kotlin
 enum class SizeVariant {
     SMALL, MEDIUM, LARGE;
-    
-    // Spacing tokens are already Dp: return them as Dp (no .dp)
+
+    // Spacing and sizing tokens are already Dp: return them as Dp (no .dp)
     val dp: Dp
         get() = when (this) {
             SMALL -> DesignTokens.space_150
@@ -375,13 +390,12 @@ enum class SizeVariant {
         }
 }
 
-// Usage
 Modifier.size(SizeVariant.MEDIUM.dp)  // the enum's Dp property; no .dp on a token
 ```
 
-For an enum over sizing tokens (`Float`), return the `Float` and convert once: `val dp: Dp get() = value.dp`.
+For an enum over font sizes, return `TextUnit`.
 
-**Why Android-Specific**: iOS uses `CGFloat` (no unit suffix), Web uses CSS custom properties (units baked in). Only Android splits its tokens between `Dp` and `Float`, so only an Android call site has to know which family it reads.
+**Why Android-Specific**: iOS uses `CGFloat` (no unit suffix), Web uses CSS custom properties (units baked in). Android has four distinct unit types (`Dp`, `TextUnit`, `Float`, `FontWeight`), so an Android call site has to know which family it reads.
 
 ---
 
