@@ -952,7 +952,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 12 Complete: Component theme reads and repairs (129)"` opens U7's PR; report the URL; STOP.
 
-  - [ ] 12.1 The two-sided theme-read guard
+  - [x] 12.1 The two-sided theme-read guard
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 4.4_
   - [ ] 12.2 Row 16; the row 15 and row 2 state checks
