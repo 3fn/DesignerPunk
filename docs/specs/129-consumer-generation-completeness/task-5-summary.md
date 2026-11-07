@@ -23,4 +23,5 @@ Every native "compiles" in Spec 129 is accepted by these four contexts. A green 
 ## Impact
 
 - ✅ Tasks 6 and 7 (U2) can register the falsification suites as named in-lane guards.
-- ⚠️ The PR's own runs at head H, the harness-candidate record's outcome line (Kenya and Data) and Stacy's reading of the row-11 and row-15 coverage remain; they are listed in the completion doc.
+- ✅ The PR's own runs at head H (`901d72002`) show all four contexts PASS, with the baselines admitted under exception (b); the harness-candidate record carries Kenya's and Data's outcome lines.
+- ⚠️ Row 15's theme-name defect is masked behind row 2 until U6 and no instrument observes it at U1; `2026-11-07-row-15-theme-name-defect-has-no-observing-instrument-at-u1.md` owes the instrument before Task 12's check.
