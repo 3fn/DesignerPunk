@@ -1,0 +1,215 @@
+{
+  "_comment": "synthetic, API-shaped: iOS queue time: the job is created at the run start, so the queue starts at max(created_at, harness-generate.completed_at)",
+  "runs": [
+    {
+      "id": 801,
+      "head_sha": "g100000000000000000000000000000000000000",
+      "event": "pull_request",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "status": "completed",
+      "created_at": "2026-11-07T10:00:00Z",
+      "head_branch": "refs/pull/1/merge"
+    },
+    {
+      "id": 802,
+      "head_sha": "g200000000000000000000000000000000000000",
+      "event": "pull_request",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "status": "completed",
+      "created_at": "2026-11-07T10:16:40Z",
+      "head_branch": "refs/pull/1/merge"
+    },
+    {
+      "id": 803,
+      "head_sha": "g300000000000000000000000000000000000000",
+      "event": "pull_request",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "status": "completed",
+      "created_at": "2026-11-07T10:33:20Z",
+      "head_branch": "refs/pull/1/merge"
+    },
+    {
+      "id": 804,
+      "head_sha": "g400000000000000000000000000000000000000",
+      "event": "pull_request",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "status": "completed",
+      "created_at": "2026-11-07T10:50:00Z",
+      "head_branch": "refs/pull/1/merge"
+    }
+  ],
+  "jobsByRun": {
+    "801": [
+      {
+        "id": 900040,
+        "run_id": 801,
+        "run_attempt": 1,
+        "name": "harness-generate",
+        "head_sha": "g100000000000000000000000000000000000000",
+        "conclusion": "success",
+        "created_at": "2026-11-07T10:00:00Z",
+        "started_at": "2026-11-07T10:00:05Z",
+        "completed_at": "2026-11-07T10:05:00Z"
+      },
+      {
+        "id": 900041,
+        "run_id": 801,
+        "run_attempt": 1,
+        "name": "harness-ios-tokens",
+        "head_sha": "g100000000000000000000000000000000000000",
+        "conclusion": "success",
+        "created_at": "2026-11-07T10:00:10Z",
+        "started_at": "2026-11-07T10:09:30Z",
+        "completed_at": "2026-11-07T10:15:10Z"
+      }
+    ],
+    "802": [
+      {
+        "id": 900042,
+        "run_id": 802,
+        "run_attempt": 1,
+        "name": "harness-generate",
+        "head_sha": "g200000000000000000000000000000000000000",
+        "conclusion": "success",
+        "created_at": "2026-11-07T10:16:40Z",
+        "started_at": "2026-11-07T10:16:45Z",
+        "completed_at": "2026-11-07T10:22:30Z"
+      },
+      {
+        "id": 900043,
+        "run_id": 802,
+        "run_attempt": 1,
+        "name": "harness-ios-tokens",
+        "head_sha": "g200000000000000000000000000000000000000",
+        "conclusion": "success",
+        "created_at": "2026-11-07T10:23:20Z",
+        "started_at": "2026-11-07T10:24:20Z",
+        "completed_at": "2026-11-07T10:27:40Z"
+      }
+    ],
+    "803": [
+      {
+        "id": 900044,
+        "run_id": 803,
+        "run_attempt": 1,
+        "name": "harness-generate",
+        "head_sha": "g300000000000000000000000000000000000000",
+        "conclusion": "success",
+        "created_at": "2026-11-07T10:33:20Z",
+        "started_at": "2026-11-07T10:33:25Z",
+        "completed_at": "2026-11-07T10:38:20Z"
+      },
+      {
+        "id": 900045,
+        "run_id": 803,
+        "run_attempt": 1,
+        "name": "harness-ios-tokens",
+        "head_sha": "g300000000000000000000000000000000000000",
+        "conclusion": "success",
+        "created_at": "2026-11-07T10:33:30Z",
+        "started_at": "2026-11-07T10:39:20Z",
+        "completed_at": "2026-11-07T10:42:40Z"
+      }
+    ],
+    "804": [
+      {
+        "id": 900046,
+        "run_id": 804,
+        "run_attempt": 1,
+        "name": "harness-generate",
+        "head_sha": "g400000000000000000000000000000000000000",
+        "conclusion": "success",
+        "created_at": "2026-11-07T10:50:00Z",
+        "started_at": "2026-11-07T10:50:05Z",
+        "completed_at": "2026-11-07T10:55:00Z"
+      },
+      {
+        "id": 900047,
+        "run_id": 804,
+        "run_attempt": 1,
+        "name": "harness-ios-tokens",
+        "head_sha": "g400000000000000000000000000000000000000",
+        "conclusion": "success",
+        "created_at": "2026-11-07T10:50:10Z",
+        "started_at": "2026-11-07T10:56:00Z",
+        "completed_at": "2026-11-07T10:59:20Z"
+      }
+    ]
+  },
+  "checkRunsBySha": {
+    "g100000000000000000000000000000000000000": [
+      {
+        "id": 900041,
+        "name": "harness-ios-tokens",
+        "conclusion": "success"
+      }
+    ],
+    "g200000000000000000000000000000000000000": [
+      {
+        "id": 900043,
+        "name": "harness-ios-tokens",
+        "conclusion": "success"
+      }
+    ],
+    "g300000000000000000000000000000000000000": [
+      {
+        "id": 900045,
+        "name": "harness-ios-tokens",
+        "conclusion": "success"
+      }
+    ],
+    "g400000000000000000000000000000000000000": [
+      {
+        "id": 900047,
+        "name": "harness-ios-tokens",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "annotationsByJob": {
+    "900041": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-ios-tokens PASS"
+      },
+      {
+        "title": "cache",
+        "message": "hit"
+      }
+    ],
+    "900043": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-ios-tokens PASS"
+      },
+      {
+        "title": "cache",
+        "message": "hit"
+      }
+    ],
+    "900045": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-ios-tokens PASS"
+      },
+      {
+        "title": "cache",
+        "message": "hit"
+      }
+    ],
+    "900047": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-ios-tokens PASS"
+      },
+      {
+        "title": "cache",
+        "message": "hit"
+      }
+    ]
+  }
+}

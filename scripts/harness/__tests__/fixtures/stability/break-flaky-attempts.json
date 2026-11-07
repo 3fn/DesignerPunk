@@ -1,0 +1,157 @@
+{
+  "_comment": "synthetic, API-shaped: a run whose attempts ended with different conclusions is a break",
+  "runs": [
+    {
+      "id": 401,
+      "head_sha": "c100000000000000000000000000000000000000",
+      "event": "pull_request",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "status": "completed",
+      "created_at": "2026-11-07T10:00:00Z",
+      "head_branch": "refs/pull/1/merge"
+    },
+    {
+      "id": 402,
+      "head_sha": "c200000000000000000000000000000000000000",
+      "event": "pull_request",
+      "run_attempt": 2,
+      "conclusion": "success",
+      "status": "completed",
+      "created_at": "2026-11-07T10:16:40Z",
+      "head_branch": "refs/pull/1/merge"
+    },
+    {
+      "id": 403,
+      "head_sha": "c300000000000000000000000000000000000000",
+      "event": "pull_request",
+      "run_attempt": 1,
+      "conclusion": "success",
+      "status": "completed",
+      "created_at": "2026-11-07T10:33:20Z",
+      "head_branch": "refs/pull/1/merge"
+    }
+  ],
+  "jobsByRun": {
+    "401": [
+      {
+        "id": 900008,
+        "run_id": 401,
+        "run_attempt": 1,
+        "name": "harness-android-tokens",
+        "head_sha": "c100000000000000000000000000000000000000",
+        "conclusion": "success",
+        "created_at": "2026-11-07T10:00:00Z",
+        "started_at": "2026-11-07T10:00:30Z",
+        "completed_at": "2026-11-07T10:05:30Z"
+      }
+    ],
+    "402": [
+      {
+        "id": 900009,
+        "run_id": 402,
+        "run_attempt": 1,
+        "name": "harness-android-tokens",
+        "head_sha": "c200000000000000000000000000000000000000",
+        "conclusion": "failure",
+        "created_at": "2026-11-07T10:16:40Z",
+        "started_at": "2026-11-07T10:17:10Z",
+        "completed_at": "2026-11-07T10:22:10Z"
+      },
+      {
+        "id": 900010,
+        "run_id": 402,
+        "run_attempt": 2,
+        "name": "harness-android-tokens",
+        "head_sha": "c200000000000000000000000000000000000000",
+        "conclusion": "success",
+        "created_at": "2026-11-07T10:16:40Z",
+        "started_at": "2026-11-07T10:17:10Z",
+        "completed_at": "2026-11-07T10:22:10Z"
+      }
+    ],
+    "403": [
+      {
+        "id": 900011,
+        "run_id": 403,
+        "run_attempt": 1,
+        "name": "harness-android-tokens",
+        "head_sha": "c300000000000000000000000000000000000000",
+        "conclusion": "success",
+        "created_at": "2026-11-07T10:33:20Z",
+        "started_at": "2026-11-07T10:33:50Z",
+        "completed_at": "2026-11-07T10:38:50Z"
+      }
+    ]
+  },
+  "checkRunsBySha": {
+    "c100000000000000000000000000000000000000": [
+      {
+        "id": 900008,
+        "name": "harness-android-tokens",
+        "conclusion": "success"
+      }
+    ],
+    "c200000000000000000000000000000000000000": [
+      {
+        "id": 900009,
+        "name": "harness-android-tokens",
+        "conclusion": "failure"
+      },
+      {
+        "id": 900010,
+        "name": "harness-android-tokens",
+        "conclusion": "success"
+      }
+    ],
+    "c300000000000000000000000000000000000000": [
+      {
+        "id": 900011,
+        "name": "harness-android-tokens",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "annotationsByJob": {
+    "900008": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-android-tokens PASS"
+      },
+      {
+        "title": "cache",
+        "message": "hit"
+      }
+    ],
+    "900009": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-android-tokens FAIL (new)"
+      },
+      {
+        "title": "cache",
+        "message": "hit"
+      }
+    ],
+    "900010": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-android-tokens PASS"
+      },
+      {
+        "title": "cache",
+        "message": "hit"
+      }
+    ],
+    "900011": [
+      {
+        "title": "harness-verdict",
+        "message": "harness-verdict: harness-android-tokens PASS"
+      },
+      {
+        "title": "cache",
+        "message": "hit"
+      }
+    ]
+  }
+}

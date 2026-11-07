@@ -3,6 +3,7 @@
 **Date**: 2026-11-05
 **Spec**: 129 - Consumer-Generation Completeness
 **Status**: Merged at R2 (#678, `8d8ba1425`), with the seven R1 reviews, the Q3a addendum and Peter's Decision 6 answer folded in. **Amendment 1** (2026-11-06) folds Stacy's verifiability read of the merged file, `[STACY TASKS R2]`, requested by Peter ("Have Stacy check the tasks first", 2026-11-06T00:07:00Z), with `[THURGOOD R3]` notes (`feedback/tasks.md`). Execution starts after this file merges (Spec-Feedback-Protocol § "Sequential Formalization Gate").
+**Amendment 5** (2026-11-07) moves the component-repair record's filing to before U1's component lists commit, and records that the blend entries outlast 129, under Peter's "a; blend entries fine", received 2026-11-07T02:04:38Z (`evidence/2026-11-07-peter-ruling-component-repair-record-timing.md`) (`feedback/tasks.md` `[THURGOOD R11]`).
 **Amendment 3** (2026-11-06) carries Peter's theme rulings of 2026-11-06T22:38:12Z (`evidence/2026-11-06-peter-rulings-theme-and-downloads.md`), 23:31:58Z and 23:37:03Z (`evidence/2026-11-06-peter-rulings-round-3.md`) into Tasks 3, 4, 5, 6, 11, 14 and 16 and Decision 6 condition 3, with `requirements.md` Req 2.3, 2.4, 4.1 and 5.6 and `design.md` §§ 0, 2, 4 and 10 amended in place (`feedback/tasks.md` § "Tasks amendment 3", `[THURGOOD R6]`).
 **Amended in this round**: `requirements.md` Requirements 10.1 (Ada R1) and 9.5 (Lina, the Q3a bridge), and `design.md` § 10 (the registration-keyed built-in bridge, Ada and Lina), each with a dated line in place.
 **Author**: Thurgood (formalizer). Each parent names its PRIMARY; that seat's call governs its parent's how, within `requirements.md` and `design.md`.
@@ -176,7 +177,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | **The first 129 unit PR whose diff touches `src/build/tokens/defineComponentTokens.ts`** (U5 by row 21, or U8 through `src/build/tokens/**` if U8 merges first) | `2026-09-27-progress-token-harvest-may-not-cross-dual-instance-boundary.md` | Ada | the trace or a re-rule, in that PR or an owner PR merged before it (Ada R1 confirms; amended 2026-11-06, `[STACY TASKS R2]` High-3) |
 | **The first 129 unit PR whose diff touches `src/cli/staleness.ts`** (U8 by R5, or U9 or U10 through `src/cli/**`) | `2026-10-12-generate-staleness-decided-by-file-times.md` | Ada | closed by R5's content check in U8's PR, or re-ruled in an earlier PR that touches the file (Ada R1; amended 2026-11-06, `[STACY TASKS R2]` High-3) |
 | **The first 129 unit PR whose diff touches `src/components/core/Input-Text-Base/platforms/ios/**`** (U4 through its iOS reads, or U7) | `ios-readonly-focusable-prototype.md` | Kenya | a record-only re-defer merged before that PR (Kenya R1); its author tells Kenya at PR-open (amended 2026-11-06, `[STACY TASKS R2]` High-3) |
-| **After U1 merges** | the component-repair record (Req 1.5) | Lina | filed from U1's committed baseline lists; sized at the first run after U4 merges. Kenya's reading of `InputTextBase.ios.swift` L185 (a ratio added to points) goes in it |
+| **Before U1's component lists commit** (amended 2026-11-07) | the component-repair record (Req 1.5) | Lina | filed from the first full run (42324880305 at `cc2e71a51`), grouped by cause with counts, in a record-only PR merged into U1 first; sized at the first run after U4 merges. Kenya's `InputTextBase.ios.swift` L185 reading goes in it |
 | **After U1 merges** | `.github/in-lane-guards.json` entries (Req 3.10) | Thurgood | U2, Task 6 |
 | **Before U6's PR opens** (added 2026-11-06, tasks amendment 3 review fold, `[ADA R3]` fork 1) | a record that a product-token key which is a keyword on iOS or Android emits a member that does not compile | Ada | filed at the issues root, naming both platforms, with a fix at the source (the product MCP's indexer and `validateProductTokens`); 129 adds no emitter rule |
 | **At U6's merge** | MIDPOINT claims pass | Stacy | `completion/claims-pass-midpoint.md` |
@@ -458,7 +459,9 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     - _Requirements: 2.5, 2.10, 2.11, 2.12_
   - [ ] 5.2 The first full run; baseline lists with tags; the protected set filled
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
-    - Lina files the component-repair record from these lists after U1 merges (§ "Unit preconditions")
+    - Lina files the component-repair record from this run before the component lists commit, and entries no other root record carries are tagged to it (§ "Unit preconditions"; amended 2026-11-07)
+    - *(Tasks amendment 5, under Peter's "a; blend entries fine", received 2026-11-07T02:04:38Z (`evidence/2026-11-07-peter-ruling-component-repair-record-timing.md`): "a". Prior text at `34ea1bf48`, here and in § "Unit preconditions": the record was filed "after U1 merges" from U1's committed lists, which left 54 iOS and 185 Android entries of the first full run with no root record to tag, against this parent's baseline criterion. Lina's lines, spliced byte for byte, `[LINA R4]`.)*
+    - The eight entries on `src/blend/ThemeAwareBlendUtilities.*` tag to `.kiro/issues/2026-06-24-blend-system-architecture-and-oklch-alignment.md` (Ada's; Trigger `path:.kiro/specs/133-color-track/requirements.md`). They outlast 129's closeout, as the component-repair record's go on to Spec 132 *(tasks amendment 5, under Peter's "a; blend entries fine", received 2026-11-07T02:04:38Z (`evidence/2026-11-07-peter-ruling-component-repair-record-timing.md`): "blend entries fine")*
     - _Requirements: 1.4, 2.14, 3.5, 4.8_
   - [ ] 5.3 The forced-failure dispatch; the stability script and its first record
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
@@ -1201,6 +1204,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   - [ ] 18.1 Read the final head: D1, D2, D3, web; sum every unit's run records
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
+    - Entries still tagged at the final head to the component-repair record or to the blend record (`2026-06-24-blend-system-architecture-and-oklch-alignment.md`, Trigger Spec 133's requirements) are expected, not findings: both records' Triggers can fire after 129 (tasks amendment 5, under Peter's "a; blend entries fine", received 2026-11-07T02:04:38Z (`evidence/2026-11-07-peter-ruling-component-repair-record-timing.md`))
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 2.10_
   - [ ] 18.2 The release-text grep over 129's range; the retired-file sentences; the Req 9.3 read; the readiness-pattern read
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)

@@ -1,0 +1,23 @@
+# Baseline list for harness-ios-tokens: the failures this context is expected to report (harness/README.md § "The expected-failure lists").
+# Committed from the first full run of Spec 129 U1: native-harness.yml run 42324880305 (workflow_dispatch) at cc2e71a51,
+# context harness-ios-tokens, observed keys from `compare.ts --emit-observed`. Admitted under Req 3.5 exception (b): the list is absent at the merge base.
+# Each entry is <key> TAB <count> TAB <tag>; a tag names the root record whose Trigger has not fired and whose fix removes the entry.
+gen:ComponentTokens.ios.swift | cannot find 'BorderWidthTokens' in scope	1	2026-08-13-component-token-platform-references-noncompiling.md
+gen:ComponentTokens.ios.swift | cannot find 'SizingTokens' in scope	6	2026-08-13-component-token-platform-references-noncompiling.md
+gen:ComponentTokens.ios.swift | cannot find 'SpacingTokens' in scope	3	2026-08-13-component-token-platform-references-noncompiling.md
+gen:DesignTokens.ios.swift | cannot convert value of type 'Int' to specified type 'UIFont.Weight'	9	2026-10-24-native-primitive-values-do-not-match-declared-type.md
+gen:DesignTokens.ios.swift | cannot convert value of type 'String' to specified type 'CGFloat'	1	2026-10-24-native-primitive-values-do-not-match-declared-type.md
+gen:DesignTokens.ios.swift | cannot find 'Animation' in scope	4	2026-10-03-native-generator-findings-for-spec-129-intake.md
+gen:DesignTokens.ios.swift | cannot find 'Color' in scope	99	2026-10-03-native-generator-findings-for-spec-129-intake.md
+gen:DesignTokens.ios.swift | cannot find 'Typography' in scope	39	2026-10-03-native-generator-findings-for-spec-129-intake.md
+gen:DesignTokens.ios.swift | cannot find 'oklch' in scope	9	2026-10-03-native-generator-findings-for-spec-129-intake.md
+gen:DesignTokens.ios.swift | cannot find 'shadowBlack100' in scope	12	2026-10-24-shadow-color-primitives-emitted-on-no-platform.md
+gen:DesignTokens.ios.swift | cannot find 'shadowBlue100' in scope	3	2026-10-24-shadow-color-primitives-emitted-on-no-platform.md
+gen:DesignTokens.ios.swift | cannot find type 'AnimationContext' in scope	1	2026-10-03-native-generator-findings-for-spec-129-intake.md
+gen:DesignTokens.ios.swift | cannot find type 'CustomAnimation' in scope	1	2026-10-03-native-generator-findings-for-spec-129-intake.md
+gen:DesignTokens.ios.swift | cannot find type 'VectorArithmetic' in scope	1	2026-10-03-native-generator-findings-for-spec-129-intake.md
+gen:DesignTokens.ios.swift | consecutive declarations on a line must be separated by ';'	4	2026-10-20-native-font-family-literals-unescaped-quotes.md
+gen:DesignTokens.ios.swift | expected ',' separator	9	2026-10-20-native-font-family-literals-unescaped-quotes.md
+gen:DesignTokens.ios.swift | expected declaration	4	2026-10-20-native-font-family-literals-unescaped-quotes.md
+gen:DesignTokens.ios.swift | value of type 'V' has no member 'scaled'	1	2026-10-03-native-generator-findings-for-spec-129-intake.md
+gen:product/ProductTokens.ios.swift | type 'DesignTokens' has no member 'theme'	1	2026-10-26-token-index-platform-name-readers.md

@@ -1,0 +1,29 @@
+# Baseline list for harness-android-tokens: the failures this context is expected to report (harness/README.md § "The expected-failure lists").
+# Committed from the first full run of Spec 129 U1: native-harness.yml run 42324880305 (workflow_dispatch) at cc2e71a51,
+# context harness-android-tokens, observed keys from `compare.ts --emit-observed`. Admitted under Req 3.5 exception (b): the list is absent at the merge base.
+# Each entry is <key> TAB <count> TAB <tag>; a tag names the root record whose Trigger has not fired and whose fix removes the entry.
+gen:ComponentTokens.android.kt | Unresolved reference 'BorderWidthTokens'.	1	2026-08-13-component-token-platform-references-noncompiling.md
+gen:ComponentTokens.android.kt | Unresolved reference 'SizingTokens'.	6	2026-08-13-component-token-platform-references-noncompiling.md
+gen:ComponentTokens.android.kt | Unresolved reference 'SpacingTokens'.	3	2026-08-13-component-token-platform-references-noncompiling.md
+gen:DesignTokens.android.kt | 'transform' overrides nothing.	1	2026-10-20-kotlin-output-no-import-block.md
+gen:DesignTokens.android.kt | Cannot extend an object.	1	2026-10-20-kotlin-output-no-import-block.md
+gen:DesignTokens.android.kt | Cannot infer type for type parameter 'K'. Specify it explicitly.	1	2026-10-20-kotlin-output-no-import-block.md
+gen:DesignTokens.android.kt | Cannot infer type for type parameter 'V'. Specify it explicitly.	1	2026-10-20-kotlin-output-no-import-block.md
+gen:DesignTokens.android.kt | Const 'val' initializer must be a constant value.	4	2026-10-20-native-font-family-literals-unescaped-quotes.md
+gen:DesignTokens.android.kt | Literals must be surrounded by whitespace.	4	2026-10-20-native-font-family-literals-unescaped-quotes.md
+gen:DesignTokens.android.kt | Syntax error: Expecting ','.	18	2026-10-03-native-generator-findings-for-spec-129-intake.md
+gen:DesignTokens.android.kt | Syntax error: Expecting member declaration.	7	2026-10-24-kotlin-output-section-comment-bare-text.md
+gen:DesignTokens.android.kt | Syntax error: Property getter or setter expected.	4	2026-10-20-native-font-family-literals-unescaped-quotes.md
+gen:DesignTokens.android.kt | This declaration needs opt-in. Its usage must be marked with '@kotlin.ExperimentalStdlibApi' or '@OptIn(kotlin.ExperimentalStdlibApi::class)'	1	2026-10-20-kotlin-output-no-import-block.md
+gen:DesignTokens.android.kt | Unresolved reference 'Commit' on receiver of type 'String'.	1	2026-10-20-native-font-family-literals-unescaped-quotes.md
+gen:DesignTokens.android.kt | Unresolved reference 'CubicBezierEasing'.	3	2026-10-20-kotlin-output-no-import-block.md
+gen:DesignTokens.android.kt | Unresolved reference 'Mono'.	1	2026-10-20-native-font-family-literals-unescaped-quotes.md
+gen:DesignTokens.android.kt | Unresolved reference 'Oklch'.	99	2026-10-03-native-generator-findings-for-spec-129-intake.md
+gen:DesignTokens.android.kt | Unresolved reference 'Segoe' on receiver of type 'String'.	3	2026-10-20-native-font-family-literals-unescaped-quotes.md
+gen:DesignTokens.android.kt | Unresolved reference 'Typography'.	39	2026-10-03-native-generator-findings-for-spec-129-intake.md
+gen:DesignTokens.android.kt | Unresolved reference 'UI'.	3	2026-10-20-native-font-family-literals-unescaped-quotes.md
+gen:DesignTokens.android.kt | Unresolved reference 'dp'.	65	2026-10-20-kotlin-output-no-import-block.md
+gen:DesignTokens.android.kt | Unresolved reference 'oklch'.	9	2026-10-03-native-generator-findings-for-spec-129-intake.md
+gen:DesignTokens.android.kt | Unresolved reference 'shadow_black_100'.	12	2026-10-24-shadow-color-primitives-emitted-on-no-platform.md
+gen:DesignTokens.android.kt | Unresolved reference 'shadow_blue_100'.	3	2026-10-24-shadow-color-primitives-emitted-on-no-platform.md
+gen:product/ProductTokens.android.kt | Unresolved reference 'theme'.	1	2026-10-26-token-index-platform-name-readers.md
