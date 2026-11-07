@@ -1,0 +1,49 @@
+gen:DesignTokens.ios.swift | cannot find 'Animation' in scope	2
+gen:DesignTokens.ios.swift | cannot find 'Color' in scope	1
+gen:DesignTokens.ios.swift | cannot find 'Typography' in scope	3
+gen:DesignTokens.ios.swift | consecutive declarations on a line must be separated by ';'	4
+gen:DesignTokens.ios.swift | expected ',' separator	9
+gen:DesignTokens.ios.swift | expected declaration	4
+pkg:src/blend/ThemeAwareBlendUtilities.ios.swift | value of type 'Color' has no member 'darkerBlend'	3
+pkg:src/blend/ThemeAwareBlendUtilities.ios.swift | value of type 'Color' has no member 'desaturate'	2
+pkg:src/blend/ThemeAwareBlendUtilities.ios.swift | value of type 'Color' has no member 'lighterBlend'	3
+pkg:src/blend/ThemeAwareBlendUtilities.ios.swift | value of type 'Color' has no member 'saturate'	2
+pkg:src/components/core/Avatar-Base/platforms/ios/Avatar.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1
+pkg:src/components/core/Avatar-Base/platforms/ios/Avatar.ios.swift | no exact matches in call to initializer	1
+pkg:src/components/core/Badge-Count-Base/platforms/ios/BadgeCountBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1
+pkg:src/components/core/Badge-Count-Base/platforms/ios/BadgeCountBase.ios.swift | no exact matches in call to initializer	1
+pkg:src/components/core/Badge-Count-Notification/platforms/ios/BadgeCountNotification.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1
+pkg:src/components/core/Badge-Count-Notification/platforms/ios/BadgeCountNotification.ios.swift | no exact matches in call to initializer	1
+pkg:src/components/core/Badge-Label-Base/platforms/ios/BadgeLabelBase.ios.swift | argument 'size' must precede argument 'icon'	1
+pkg:src/components/core/Badge-Label-Base/platforms/ios/BadgeLabelBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1
+pkg:src/components/core/Badge-Label-Base/platforms/ios/BadgeLabelBase.ios.swift | no exact matches in call to initializer	1
+pkg:src/components/core/Button-CTA/platforms/ios/ButtonCTA.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1
+pkg:src/components/core/Button-CTA/platforms/ios/ButtonCTA.ios.swift | no exact matches in call to initializer	1
+pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | cannot find 'ButtonIconTokens' in scope	3
+pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1
+pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | no exact matches in call to initializer	1
+pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | type 'DesignTokens' has no member 'scale096'	1
+pkg:src/components/core/Button-Icon/platforms/ios/ButtonIcon.ios.swift | type 'DesignTokens' has no member 'scale100'	1
+pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift | cannot convert return expression of type 'Animation.Type' to return type 'Animation'	2
+pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1
+pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VerticalListButtonItem.ios.swift | no exact matches in call to initializer	1
+pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift | cannot convert return expression of type 'T?' to return type 'VisualStateStyles'	1
+pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift | cannot find 'VerticalListItemTokens' in scope	2
+pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift | cannot find type 'DesignerPunkTheme' in scope	11
+pkg:src/components/core/Button-VerticalList-Item/platforms/ios/VisualStateStyles.swift | cannot infer contextual base in reference to member 'rest'	1
+pkg:src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSet.ios.swift | argument 'onMultiSelectionChange' must precede argument 'minSelections'	1
+pkg:src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSet.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1
+pkg:src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSet.ios.swift | no exact matches in call to initializer	1
+pkg:src/components/core/Button-VerticalList-Set/platforms/ios/ButtonVerticalListSetPreview.swift | argument 'onMultiSelectionChange' must precede argument 'minSelections'	1
+pkg:src/components/core/Chip-Base/platforms/ios/ChipBase.ios.swift | cannot find 'theme' in scope	4
+pkg:src/components/core/Chip-Base/platforms/ios/ChipBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1
+pkg:src/components/core/Chip-Base/platforms/ios/ChipBase.ios.swift | no exact matches in call to initializer	1
+pkg:src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift | cannot find 'theme' in scope	7
+pkg:src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1
+pkg:src/components/core/Chip-Filter/platforms/ios/ChipFilter.ios.swift | no exact matches in call to initializer	1
+pkg:src/components/core/Chip-Input/platforms/ios/ChipInput.ios.swift | cannot find 'theme' in scope	4
+pkg:src/components/core/Chip-Input/platforms/ios/ChipInput.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1
+pkg:src/components/core/Chip-Input/platforms/ios/ChipInput.ios.swift | no exact matches in call to initializer	1
+pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'spaceInset300' is inaccessible due to 'private' protection level	4
+pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | 'spaceInset400' is inaccessible due to 'private' protection level	3
+pkg:src/components/core/Container-Base/platforms/ios/ContainerBase.ios.swift | ambiguous use of 'motionFocusTransition'	2
