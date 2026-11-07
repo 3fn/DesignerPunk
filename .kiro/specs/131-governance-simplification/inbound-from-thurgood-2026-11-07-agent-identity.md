@@ -6,7 +6,8 @@
 - 2026-11-07T17:36:23Z: *"Let's defer it, but I want to capture it. This feels governance related, but I could be wrong. Would it be something to address for spec 131?"* The orchestrator answered yes.
 - 2026-11-07T17:41:21Z: *"Let's update 131 or provide an inbound, but consult with relevant agents to sure-up the proposal."*
 **Status of 131**: design outline merged, paused at the edge of requirements. Its park re-asks at `path:.kiro/specs/132-*/completion/first-family-measured-cost.md`, and Spec 132 has no directory yet, so this inbound may wait a long time. § 4 says what would make it urgent sooner.
-**Consulted**: pending. The seats in § 7 are consulted by the orchestrator before this inbound's PR opens; their reads are added here.
+**Consulted**: Stacy — rule 10 owes an issues-root record (filed: `.kiro/issues/2026-11-07-agents-act-through-peters-credential.md`); § 4 rows 1 and 3 corrected; Ada — the release flow's token needs, verified on `origin/main` (§ 6); Lina — nothing she owns reads the PR author, the commit email or `3fn`, and the committer question is open (§ 6 item 5). Their reads were relayed by the orchestrator on 2026-11-07 and are folded here; other § 7 seats were not consulted.
+**Record**: `.kiro/issues/2026-11-07-agents-act-through-peters-credential.md` (owner Thurgood, verifier Stacy, Trigger `path:` on this spec's `requirements.md`).
 
 This is **a consideration, not direction** (Peter's standing rule for inbounds, 2026-11-04T13:23:25Z, as `inbound-governance-cost-ledger.md` § 1 quotes it). It rules nothing.
 
@@ -38,9 +39,10 @@ That was a lapse of memory, not a forgery. Peter's Decision 1 (17:33:23Z, "Re: D
 
 | Event | Why it matters | How it would be noticed today | Gap |
 |---|---|---|---|
-| **A forged or unverifiable answer**: an answer, a RATIFIED Status or a PR comment in Peter's name that he did not give, or whose source cannot be traced to him | The failure the law claims to prevent has happened | Stacy's claims pass reads that a cited answer exists. Peter would notice only when shown the words. Decision 1's merge-hold job confirms presence, not author | Nothing detects it mechanically. The detector is Peter reading what was recorded in his name |
-| **Agents move to isolated or cloud sessions** (for example, Claude Code on the web, or a hosted CI agent) | Each new runtime needs a credential. If it gets Peter's token, the exposure spreads beyond this machine | It would be Peter's setup decision, so he would see it. `complete-task.sh`'s credential preflight fails loud where no token is present | No record requires that the credential question be asked at that moment |
-| **A fourth party gets write access**: a second human, or an agent running under a separate account | `3fn` stops being "Peter or an agent he runs". The record-first protocol's assumption about who can commit changes | `gh api repos/3fn/DesignerPunk/collaborators` would list a second login. **Nothing reads it today** | A one-line collaborator count in the monthly health check would notice it. That changes what the health check is, so it needs Peter's word; it is proposed here, not done |
+| **A forged answer**: an answer, a RATIFIED Status or a PR comment in Peter's name that he did not give | The failure the law claims to prevent has happened | **Peter only**, when he reads what was recorded in his name. Decision 1's merge-hold job confirms presence, not author | Nothing detects it mechanically |
+| **An answer that cannot be traced to Peter**: cited words with no relay record, no `date -u` receipt or no source he can confirm | The record can neither be confirmed nor refuted | **Stacy counts these at each claims pass** (the governance-edit-kind and answer reads) | The count is a sample read, after the merge |
+| **Agents move to isolated or cloud sessions** (for example, Claude Code on the web, or a hosted CI agent) | Each new runtime needs a credential. If it gets Peter's token, the exposure spreads beyond this machine | **Peter only**: it is his setup decision. `complete-task.sh`'s credential preflight fails loud where no token is present | No record requires that the credential question be asked at that moment |
+| **A fourth party gets write access**: a second human, or an agent running under a separate account | `3fn` stops being "Peter or an agent he runs". The record-first protocol's assumption about who can commit changes | `gh api repos/3fn/DesignerPunk/collaborators` would list a second login. **Nothing reads it today.** *Recalled, UNVERIFIED*: that call may not list an installed GitHub App or a deploy key with write access; those would need their own reads (deploy keys through `gh api repos/3fn/DesignerPunk/keys`; installed Apps on the repo's Settings page) | A health-check line reading collaborators, Apps and deploy keys would notice it. **That changes what the health check is, so it needs Peter's word** (my charter: owning `governance-check.sh` does not let me change what the check is). It is proposed here, not done |
 
 Any one of these is a reason to take this inbound out of the 131 queue and route it to Peter as its own item.
 
@@ -75,7 +77,13 @@ Both give agents an identity that is not `3fn`. In both, branch protection then 
 2. Peter's credential is removed from agent reach: none in `.env`, the keychain's GitHub entry removed or replaced, and no `3fn` `gh` login (true today; it must stay true).
 3. Branch protection requires Peter's approval (Peter's act, in Settings).
 4. `verify-gate-registration.sh` needs read access to branch protection: either the agent identity has it, or Peter runs the script.
-5. **Signing chain**: no change found. `tools/agent-generator/regrounding/verify-signing-chain.ts` keys on commit trailers and committer time, not on the GitHub login. Local git authorship (`Peter Michaels Allen`) is a separate setting; whether it moves is a fork for 131.
+5. **Signing chain**: no change found. `tools/agent-generator/regrounding/verify-signing-chain.ts` keys on commit trailers and committer time, not on the GitHub login. Lina confirms that nothing she owns reads the PR author, the commit email or `3fn`, and that no workflow reads `github.actor` or `pull_request.user`; records keep their meaning through the `Agent:` trailer. **Her open question**: whether the bot is also the git **committer**. The signing chain reads committer time, so a change of committer must keep that time meaningful. Local git authorship (`Peter Michaels Allen`) is a separate setting; whether author or committer moves is a fork for 131.
+6. **The release flow** (Ada, verified on `origin/main`):
+   - `gh workflow run`, `gh pr view` and `gh release create` work under contents, pull requests and actions write.
+   - `complete-task.sh` L240 reads `check-runs`, and `scripts/harness/stability.ts` reads check-run annotations, so the agent identity also needs **checks read**.
+   - **Publishing to GitHub Packages** (`scripts/release-publish.ts` L196 `ghPublishArgs`, L368 `npm whoami --registry=…`) needs `packages:write`, and possibly a classic PAT (*recalled*). So RELEASE-FLOW step 5.3 stays Peter's act, like 5.4.
+   - **The tag (5.2) stays Peter's.** That is either kept as a rule, or enforced by tag protection (a Settings act, Peter's).
+   - **npmjs (5.4)** is Peter's 2FA, with no GitHub token involved.
 
 **Cost**: about one agent session, plus Peter's setup. **PROJECTED**.
 
@@ -89,8 +97,8 @@ Both give agents an identity that is not `3fn`. In both, branch protection then 
 - **Peter**: creates the identity, changes Settings, removes his credential from agent reach, and approves PRs. His merge habit gains an approval step.
 - **Thurgood**: `complete-task.sh` (token source; minting step if an App), `verify-gate-registration.sh` (read access), the monthly health check (proposed collaborator and credential lines), and Decision 1's two jobs (upgraded to check `3fn` acts).
 - **Stacy**: her claims-pass reads of authorship and answers, and her ARMING reads that run `verify-gate-registration.sh`. Her merge-hold audit could read a `3fn` review instead of a cited line.
-- **Lina**: owner of the generator's shared core. She confirms that nothing in the signing chain or `122-diff-guard` keys on the GitHub login. I found none.
-- **Ada**: `scripts/harness/stability.ts` reads a token. `.kiro/hooks/RELEASE-FLOW.md` calls `gh` (6 lines carry `gh `), and Peter publishes. She confirms that nothing in the release path needs `3fn`.
+- **Lina**: owner of the generator's shared core. Nothing she owns reads the GitHub login (§ 6 item 5); the committer question is hers to check.
+- **Ada**: `scripts/harness/stability.ts` reads a token and needs checks read. In the release flow, steps 5.2 (tag), 5.3 (GitHub Packages) and 5.4 (npmjs) stay Peter's acts (§ 6 item 6).
 - **Data, Kenya, Sparky, Leonardo**: they open PRs through `complete-task.sh`, so the PR author changes for them. The unit-branch dispatches `complete-task.sh` fires (`gh workflow run`) need actions write on the new identity. No other change to their workflow.
 
 ## 8. What 131 is asked to weigh
