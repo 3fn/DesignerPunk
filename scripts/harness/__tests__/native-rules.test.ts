@@ -710,7 +710,7 @@ describe('the holder\'s declaration lines (Task 11\'s pin; the per-run check par
   });
   it('Swift: the enum line, and each member as public static let <instance>: any DesignerPunkTheme =', () => {
     expect(swiftHolderOpenLine('Probe')).toBe('public enum ProbeThemes {');
-    expect(swiftHolderMemberLine('baseLight')).toBe('public static let baseLight: any DesignerPunkTheme =');
-    expect(swiftHolderMemberLine('defaultDark')).toBe('public static let defaultDark: any DesignerPunkTheme =');
+    expect(swiftHolderMemberLine('baseLight')).toBe('    public static let baseLight: any DesignerPunkTheme =');
+    expect(swiftHolderMemberLine('defaultDark')).toBe('    public static let defaultDark: any DesignerPunkTheme =');
   });
 });
