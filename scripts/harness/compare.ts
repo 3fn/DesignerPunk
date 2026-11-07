@@ -531,6 +531,20 @@ export interface ContextResults {
   files: Partial<Record<Tier, { compiled: number; floor: number }>>;
   /** The toolchain the lane read, as field → value (Req 3.11). */
   toolchain: Readonly<Record<string, string>>;
+  /**
+   * The run file's `checks` (design § 3, "The probe's count lines and the run file's `checks`"):
+   * the lane's gating results, one per count line and per-run check. Each `ok: false` fails the
+   * context as class `check`, named in the verdict line. Absent (the run file had no `checks`
+   * array) also fails it as class `check`; an empty array does not.
+   */
+  checks?: readonly RunCheck[];
+}
+
+/** One gating result a lane wrote into its run file (`harness/README.md` § "The comparator's command line"). */
+export interface RunCheck {
+  name: string;
+  ok: boolean;
+  detail: string;
 }
 
 /** The head, as read. A null text is a file absent at the head. */
@@ -583,11 +597,14 @@ export type FailureClass =
   | 'addition'
   | 'tag'
   | 'retag'
-  | 'protected-set';
+  | 'protected-set'
+  | 'check';
 
 export interface Failure {
   cls: FailureClass;
   detail: string;
+  /** Class `check` only: the check's name, or `no checks array`; the verdict line lists it. */
+  name?: string;
 }
 
 export interface Report {
@@ -614,6 +631,9 @@ export interface Report {
     crossTier: number;
   };
 }
+
+/** The name a missing `checks` array fails under (the verdict line lists it). */
+export const NO_CHECKS_NAME = 'no checks array';
 
 const notRun = (compile: CompileId): CompileResult => ({ compile, outcome: 'not-run', diagnostics: new Map(), unrooted: [] });
 
@@ -701,6 +721,15 @@ export function evaluate(input: EvalInput): Report {
       } else {
         add(k, n);
       }
+    }
+  }
+
+  // --- the lane's own gating results: the run file's checks (design § 3) ---
+  if (results.checks === undefined) {
+    failures.push({ cls: 'check', name: NO_CHECKS_NAME, detail: 'the run file has no checks array' });
+  } else {
+    for (const c of results.checks) {
+      if (!c.ok) failures.push({ cls: 'check', name: c.name, detail: c.detail === '' ? c.name : `${c.name}: ${c.detail}` });
     }
   }
 
@@ -864,7 +893,11 @@ export function evaluate(input: EvalInput): Report {
   let summary = parts.join(' · ');
   if (base.kind === 'none') summary += ' · additions not checked: no merge base (nor retags or protected-set removals)';
   if (remaining > 0) summary += ' · a pass means the failures match the list, not that it compiles';
-  const classes = [...new Set(failures.map((f) => f.cls))];
+  const classes = [...new Set(failures.map((f) => f.cls))].map((cls) => {
+    if (cls !== 'check') return cls;
+    const names = [...new Set(failures.filter((f) => f.cls === 'check').map((f) => f.name as string))];
+    return `check: ${names.join('; ')}`;
+  });
   const verdict = `harness-verdict: ${context} ${failed ? `FAIL (${classes.join(', ')})` : 'PASS'}`;
   return {
     context,
@@ -1178,6 +1211,8 @@ export interface RunFile {
   gradle?: { log: string; exitCode: number };
   files: Partial<Record<Tier, { compiled: number; floor: number }>>;
   toolchain: Record<string, string>;
+  /** The lane's gating results; a run file without this array fails the context as class `check`. */
+  checks?: RunCheck[];
 }
 
 export interface MainDeps {
@@ -1207,6 +1242,20 @@ function loadKotlinParser(): ParseKotlin {
   return parse;
 }
 
+/**
+ * The run file's `checks`: undefined when the field is absent or not an array (the context then
+ * fails as class `check`); throws on an entry that is not `{ name: string, ok: boolean, detail: string }`.
+ */
+function readChecks(raw: unknown): RunCheck[] | undefined {
+  if (!Array.isArray(raw)) return undefined;
+  return raw.map((c, i): RunCheck => {
+    if (typeof c !== 'object' || c === null || typeof c.name !== 'string' || c.name === '' || typeof c.ok !== 'boolean' || typeof c.detail !== 'string') {
+      throw new Error(`checks[${i}] needs a non-empty string name, a boolean ok and a string detail`);
+    }
+    return { name: c.name, ok: c.ok, detail: c.detail };
+  });
+}
+
 /** Reads a run file and its logs, and runs the parsers. Throws on a malformed run file. */
 export function readRunFile(runPath: string, context: ContextName, deps: MainDeps): ContextResults {
   const dir = path.dirname(runPath);
@@ -1215,6 +1264,7 @@ export function readRunFile(runPath: string, context: ContextName, deps: MainDep
   if (!run || typeof run !== 'object' || !run.roots || !run.files || !run.toolchain) {
     throw new Error('the run file needs roots, files and toolchain');
   }
+  const checks = readChecks(run.checks);
   const platform = CONTEXT_SPECS[context].platform;
   if (platform === 'ios') {
     if (!Array.isArray(run.swift)) throw new Error('an iOS run file needs a swift array');
@@ -1224,14 +1274,14 @@ export function readRunFile(runPath: string, context: ContextName, deps: MainDep
       if (typeof s.log !== 'string' || typeof s.exitCode !== 'number') throw new Error(`${s.compile}: a stage needs log and exitCode, or blocked: true`);
       return parse({ compile: s.compile, log: logText(s.log), exitCode: s.exitCode, roots: run.roots });
     });
-    return { compiles, files: run.files, toolchain: run.toolchain };
+    return { compiles, files: run.files, toolchain: run.toolchain, checks };
   }
   if (!run.gradle || typeof run.gradle.log !== 'string' || typeof run.gradle.exitCode !== 'number') {
     throw new Error('an Android run file needs gradle.log and gradle.exitCode');
   }
   const parse = deps.parseKotlin ?? loadKotlinParser();
   const k = parse({ log: logText(run.gradle.log), exitCode: run.gradle.exitCode, roots: run.roots });
-  return { compiles: k.compiles, unattributed: k.unattributed, logComplete: k.logComplete, files: run.files, toolchain: run.toolchain };
+  return { compiles: k.compiles, unattributed: k.unattributed, logComplete: k.logComplete, files: run.files, toolchain: run.toolchain, checks };
 }
 
 const USAGE =

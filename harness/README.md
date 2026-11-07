@@ -48,7 +48,7 @@ Every expected-failure entry, and every diagnostic a parser reports, is keyed by
 - **Kotlin** (D § 1.2; Task 2's criteria): a diagnostic starts at a line beginning `e: file://<path>:<line>:<col> `. It runs to the next `e: ` or `w: ` line, the next `i: ` or `v: ` line, or the next Gradle line (`> `, `FAILURE`, `* `, `BUILD`, and the `[Incubating]` of D § 1.2). `w:`, `i:` and `v:` lines are not keyed. The `file://` URI is percent-decoded to a path.
   - `i:` and `v:` *(added 2026-11-06, Data's observation 4)*: they are not printed at Gradle's default level, but if one appeared it would otherwise be joined to the diagnostic above it.
   - Blank lines inside a diagnostic are dropped, and repeated lines are kept as printed *(Data's rule; ruled 2026-11-06, his observation 6)*.
-  - A task header (`> Task :<module>:compileDebugKotlin`) ends at the next Gradle line or the next task line with a suffix (` FAILED`, ` UP-TO-DATE`, …). An `e:` line after that, before another compile-task header, is `unattributed` *(Data's rule; ruled 2026-11-06, his observation 3)*.
+  - A task header (`> Task :<module>:compileDebugKotlin`) ends at the next Gradle line or the next task line with a suffix (` FAILED`, ` UP-TO-DATE`, …). An `e:` line after that, before another compile-task header, is `unattributed` *(Data's rule; ruled 2026-11-06, his observation 3)*. **One exception** *(Data, found in Task 4's first real run; `4e716dae2`)*: a ` FAILED` line that is the FIRST line to name its compile task does not end the output. Gradle printed that line before the task's own output, so the `e:` lines after it, up to the next Gradle line or `> Task` line, belong to that task. A task that already printed a header ends at its ` FAILED` line, as above. **Residual**: the rule keys on "first mention", not on the shape of the next line, so an unsuffixed header followed by a later `FAILED` line before the output is not covered (no recorded log shows it); and an `e:` line after a first-mention `FAILED` line that belongs to another task would be read under the failing one. The lane runs `--no-parallel`, which keeps two tasks from printing together.
 
 **`unrooted`**: an error diagnostic the parser recognises but cannot make a valid key from. That covers a path that is not absolute, is under no root, or holds ` | `; a message that is empty or begins with whitespace; and a line with text before the path (`note: /x.swift:1:1: error: …`) *(ruled 2026-11-06, Kenya's observation 3)*.
 
@@ -209,6 +209,7 @@ Each failure prints one line, `FAIL <class>: <detail>`. The classes, in the orde
 | `pre-compile` | a compile the context reads is `failed` with no parsed diagnostic (design § 3 rule 1); a compile it reads is `not-run`, except a blocked probe; the Gradle log has no closing `BUILD` line |
 | `parser` | a compile is `succeeded` with parsed diagnostics (rule 1); any `unrooted` or `unattributed` line |
 | `baseline missing` | the cross-tier baseline (`ios.T5`, or `android.tokens` in the component context) is `not-run` (rule 5) |
+| `check` | the run file's `checks` array is missing, or holds an entry with `ok: false` (below, "`checks`") |
 | `toolchain` | a reported toolchain field differs from `<platform>.toolchain` in the pins, or either side has a field the other lacks (Req 3.11) |
 | `floor` | for a tier the context counts (`gen` for token contexts; `gen` and `pkg` for component contexts): 0 files reached the compiler, the floor is 0, or fewer files than the floor reached it (Req 3.4) |
 | `format` | the list, the pin file or the protected set at the head is missing or not well formed |
@@ -298,7 +299,11 @@ npx tsx scripts/harness/compare.ts --context <context> --run <run.json> (--base 
     { "compile": "ios.P", "blocked": true }
   ],
   "files": { "gen": { "compiled": 4, "floor": 4 } },
-  "toolchain": { "xcode.version": "26.6", "xcode.build": "17F113" }
+  "toolchain": { "xcode.version": "26.6", "xcode.build": "17F113" },
+  "checks": [
+    { "name": "probe: read", "ok": true, "detail": "2 of 2 index names" },
+    { "name": "theme instances", "ok": true, "detail": "not checked" }
+  ]
 }
 ```
 
@@ -306,6 +311,11 @@ npx tsx scripts/harness/compare.ts --context <context> --run <run.json> (--base 
 - **Android**: instead of `swift`, `"gradle": { "log": "gradle.txt", "exitCode": 1 }`, the one invocation's console output. Each Android context passes the same invocation's log.
 - **`files`**: per tier, the files the lane gave the compiler and the floor it computed at run time from the packed tarball's file list and the generated files (Req 3.4). Token contexts give `gen`; component contexts give `gen` and `pkg`.
 - **`toolchain`**: the fields the lane read, with the names `<platform>.toolchain` pins.
+- **`checks`** *(design § 3, "The probe's count lines and the run file's `checks`")*: an array of `{ "name": string, "ok": boolean, "detail": string }`, the lane's gating results other than the compiles: each probe count line (`probe: read <n> of <m> index names`, `probe: instances read …`, `probe: product read …`, `probe: provider read …`, and on iOS `probe: key read …`) and the per-run `theme instances:` check.
+  - The lane exits 0 for these. The comparator fails the context as class `check` for each entry with `ok: false`, and names it in the verdict line: `harness-verdict: <context> FAIL (check: <name>[; <name>…], …)`. The verdict line is what the `harness-verdict` annotation records, so the failing check outlives the logs.
+  - **A run file with no `checks` array fails the context** as class `check` (verdict `FAIL (check: no checks array)`). An **empty array does not fail**: an Android token context while `:tokens` fails writes `[]`, because its count lines appear only when `:probe` compiles. A blocked probe on iOS writes its count lines `ok: true` with detail `blocked`; a per-run instance check that finds neither holder nor `DesignerPunkTheme` writes `ok: true` with detail `not checked`.
+  - An entry that is not `{ name: non-empty string, ok: boolean, detail: string }` is an input error. A `checks` value that is not an array reads as missing.
+  - The field is required from Tasks 3.4 and 4.3 on, which add it to the lanes. Until a lane writes it, that lane's run fails as class `check`; the first full run (tasks.md § "The first full run (U1)") is after both have joined the unit, so every context's run file carries it.
 - The comparator runs the parsers on the logs. The parsers are loaded from `./parse-swift` and `./parse-kotlin`.
 
 ---
