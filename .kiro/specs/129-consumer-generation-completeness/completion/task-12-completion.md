@@ -58,3 +58,30 @@ Primary Artifacts: all shipped as declared
 - **Radio-Set and Checkbox-Legal getters**: the `errorTextColor` and `requiredIndicatorColor` getters in the private token objects were removed (they read a `theme` they did not hold); the composable reads `theme.` directly. Data to confirm the Compose build at H.
 - **Q is a proxy** for a colour read: a read that fails under another message passes it. CLOSEOUT records the toolchain versions at H and compares them with `git show 5a6a7f32b:harness/pins.yaml`.
 - **Merge** of `origin/main` into the unit branch (`0561746c4`) had no conflict.
+
+
+## Post-merge notes (2026-11-07, Lina; dated notes below the rows above, which are not rewritten)
+
+**Why this section exists.** #739 merged at 2026-11-07T21:23:47Z with head `f257dc09e`, so H = M. The head-H follow-up (the PR's run URLs, the provenance line, Instruments row 11) did not land before the merge: the orchestrator did not hold the merge for it. That miss is the orchestrator's; the follow-up is written here, after the merge, in a PR of its own. It changes no code.
+
+**Note on the row "All four harness contexts ran on this unit's PR …" (2026-11-07).** Status read ⚠️ at the PR's open; it is **met post-merge**, because the four contexts ran on the PR at H and passed, and their evidence is now cited. `native-harness` run https://github.com/3fn/DesignerPunk/actions/runs/42414978519, head `f257dc09e14033ea9e40e657e546f3e96bf64fc9`, read by Lina from the jobs' logs:
+- `harness-ios-tokens`: harness-summary: harness-ios-tokens · expected=23 · observed=23 · new=0 · stale=0 · count-changed=0 · additions=(a) 0, (b) 0, (c) 0 · retags=0 · files=gen 3/3 (compiled/floor) · remaining=6 entries · a pass means the failures match the list, not that it compiles
+- `harness-android-tokens`: harness-summary: harness-android-tokens · expected=23 · observed=23 · new=0 · stale=0 · count-changed=0 · additions=(a) 0, (b) 0, (c) 0 · retags=0 · files=gen 3/3 (compiled/floor) · remaining=6 entries · a pass means the failures match the list, not that it compiles
+- `harness-ios-components`: harness-summary: harness-ios-components · expected=71 · observed=71 · new=0 · stale=0 · count-changed=0 · additions=(a) 0, (b) 0, (c) 0 · retags=0 · files=gen 3/3, pkg 41/41 (compiled/floor) · remaining=51 entries · cross-tier=0 · a pass means the failures match the list, not that it compiles
+- `harness-android-components`: harness-summary: harness-android-components · expected=207 · observed=207 · new=0 · stale=0 · count-changed=0 · additions=(a) 0, (b) 0, (c) 0 · retags=0 · files=gen 3/3, pkg 41/41 (compiled/floor) · remaining=96 entries · cross-tier=0 · a pass means the failures match the list, not that it compiles
+
+**Note on the CI-provenance line (2026-11-07).** The line above cites the branch-head dispatch at `a42163d02`. The PR gate at H = `f257dc09e` passed 28 of 28 checks (mergeState CLEAN); its runs include native-harness https://github.com/3fn/DesignerPunk/actions/runs/42414978519, Lane Timing https://github.com/3fn/DesignerPunk/actions/runs/42414978664 (holds `lane-functional-root`), Completion Criteria Parity https://github.com/3fn/DesignerPunk/actions/runs/42414978650 and merge-hold https://github.com/3fn/DesignerPunk/actions/runs/42414978723. The doc's own commit was not on the gate, because the gate ran at H and this note is a later commit. Form, per the guide: `**CI-provenance**: PR gate #739 @ f257dc09e14033ea9e40e657e546f3e96bf64fc9 (merge ref) — https://github.com/3fn/DesignerPunk/pull/739/checks`.
+
+**Instruments row 11** is resolved in place in `task-12-instruments.md` (appended; the `MISSING` text stays).
+
+**Verifier reads at H (pasted verbatim).**
+
+Kenya (iOS):
+
+> 2026-11-07T21:30Z — Kenya (iOS), row 15 verifier, PR #739 at H f257dc09e, native-harness run 42414978519 (success; harness-ios-components PASS, Xcode 26.6 pin matched, expected=71 observed=71 new=0 stale=0). (1) Stage C log (artifact harness-out-harness-ios-components/logs/C.txt, 71 errors): zero "cannot find 'theme' in scope"; no diagnostics for ChipBase, ChipFilter, ChipInput, ProgressIndicatorConnectorBase, ProgressIndicatorNodeBase. (2) ContainerCardBase has 2 residual errors, neither theme-shaped (ContainerCardBase.ios.swift:845 invalid redeclaration of 'motionFocusTransition'; :880 argument 'accessibilityLabel' must precede 'interactive'); no new theme-shaped diagnostic in any of the six. (3) Fix shape confirmed via git diff main..f257dc09e: Chip x3 take `let theme: any DesignerPunkTheme` on the ButtonStyle, passed from the view; ContainerCardBase mapCardBackgroundToColor/mapCardBorderColorToColor take `theme:` param; ProgressConnectorColors.color(for:theme:) and ProgressNodeColors.backgroundColor/foregroundColor(for:theme:) take it as a parameter. Theme passed as parameter, as claimed. (4) Local typecheck NOT run: local toolchain is Xcode 27.2 (iOS SDK 27.2), not the 26.6 pin, and the package set has 71 other pre-existing errors, so a local result would not be comparable; the CI Stage C at the pin is the evidence.
+
+Data (Android):
+
+> 2026-11-07 Data: U7 Android repairs at H f257dc09e VERIFIED (run 42414978519, harness-android-components PASS 207/207). gradle.txt: 0 'theme' / DesignerPunkTheme / 'color_' diagnostics; receiver-form leftovers are only Color blend ext (ThemeAwareBlendUtilities), Modifier.clip (Container-Card-Base:409), Modifier.width (Nav-TabBar-Base:281): not theme/color_. Radio-Set and Checkbox-Legal: 0 diagnostics; removed getters errorTextColor/requiredIndicatorColor have no readers at H; each composable holds 'val theme = LocalDPTheme.current' and reads theme.color_* directly. Twin files use theme: DesignerPunkTheme as parameter. Caveat: gradle exit 1, 230 e: lines remain (expected list).
+
+**Check of Kenya's residuals (Lina, 2026-11-07).** ContainerCardBase's two non-theme errors, `invalid redeclaration of 'motionFocusTransition'` and `argument 'accessibilityLabel' must precede argument 'interactive'`, are both entries on `harness/expected/harness-ios-components.tsv` at M (L46 and L45), tagged to `2026-11-07-native-component-repair-from-first-harness-run.md`. Neither matches Q.
