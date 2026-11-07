@@ -350,7 +350,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     - Appends the shared module, the per-run check, the product and provider reads and the `checks` route to `task-3-instruments.md` under `## Found later` as `unlisted` (Start Up Tasks item 8; `[STACY TASKS R4]` Low-1)
     - _Requirements: 2.7, 4.2_
 
-- [ ] 4. The Android lanes (U1)
+- [x] 4. The Android lanes (U1)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Data (Sonnet)
   **Traces**: Req 2.4 (as amended), 2.6, 2.7, 2.8, 2.9, 3.4, 3.11, 4.1, 4.8 · design § 2; D §§ 1.1–1.5; § 4 ("The shared harness module"; amendment 3)
@@ -384,14 +384,14 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete, after 4.3, which starts only once Task 5's 5.4 has put the shared module on the unit branch; 4.1 and 4.2 may tick before 5.4, and the same tick-conflict note as Task 3's applies when Data's seat branch joins (`[DATA R4]`); `complete-task.sh "Task 4 Complete: The Android lanes (129)"` on the U1 branch (no PR); STOP. *(Amended 2026-11-06, tasks amendment 3.)*
 
-  - [ ] 4.1 The Gradle build, three modules, explicit file list, floor
+  - [x] 4.1 The Gradle build, three modules, explicit file list, floor
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
     - The first dispatched Android run waits for Lina's README move on the branch
     - _Requirements: 2.4, 2.6, 3.4_
-  - [ ] 4.2 The data-driven probe generator (`scripts/harness/probe-kotlin.ts`) and its fixture test, the blocked state, the planted-member fixture, pins and toolchain match
+  - [x] 4.2 The data-driven probe generator (`scripts/harness/probe-kotlin.ts`) and its fixture test, the blocked state, the planted-member fixture, pins and toolchain match
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
     - _Requirements: 2.7, 2.8, 2.9, 3.11_
-  - [ ] 4.3 The probe imports the shared module *(added 2026-11-06, tasks amendment 3, under Peter's "4 combine", received 2026-11-06T22:38:12Z, and "B Thurgood", received 2026-11-06T23:31:58Z)*
+  - [x] 4.3 The probe imports the shared module *(added 2026-11-06, tasks amendment 3, under Peter's "4 combine", received 2026-11-06T22:38:12Z, and "B Thurgood", received 2026-11-06T23:31:58Z)*
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
     - Starts after Task 5's 5.4 has put `scripts/harness/native-rules.ts` and its test on the unit branch
     - Replaces and deletes `themeMemberNames` and `productObjectName` in `probe-kotlin.ts`; takes the binding constants and the product files' `gen:` keys from the module
