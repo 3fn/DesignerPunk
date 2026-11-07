@@ -624,10 +624,11 @@ export function providerReads(themes: readonly ThemeEntry[], platform: NativePla
  * DESIGN-GAP: Task 11 pins the Kotlin member's indentation (four spaces) but not the Swift
  * member's, nor the open lines' text. These are the forms design § 4 writes ("Kotlin `object
  * <Name>Themes { val BaseLight; … }`", "Swift `public enum <Name>Themes { public static let
- * baseLight, …: any DesignerPunkTheme }`"); the Swift member line is given without
- * indentation and without what follows `=`, which the generator and Ada settle.
+ * baseLight, …: any DesignerPunkTheme }`"). The Swift member line is indented four spaces and
+ * stops at `=`, as Task 11's holder pin writes it (tasks amendment 4, Kenya's pin): the check parses
+ * the name and ignores the right-hand side, which Task 11's declaration-form test pins.
  */
 export const kotlinHolderOpenLine = (productName: string): string => `object ${holderName(productName)} {`;
 export const kotlinHolderMemberLine = (instance: string): string => `    val ${instance} = ${BINDING.kotlin.themeClass}(`;
 export const swiftHolderOpenLine = (productName: string): string => `public enum ${holderName(productName)} {`;
-export const swiftHolderMemberLine = (instance: string): string => `public static let ${instance}: any ${BINDING.swift.themeProtocol} =`;
+export const swiftHolderMemberLine = (instance: string): string => `    public static let ${instance}: any ${BINDING.swift.themeProtocol} =`;
