@@ -1,7 +1,7 @@
 /**
  * Dark Theme — Semantic Color Overrides
  *
- * Complete theme file listing all 61 semantic color tokens.
+ * Complete theme file listing all 62 semantic color tokens (every `category: color` semantic in the token index).
  * Populated entries have dark mode overrides (Level 2 — primitive name changes).
  * Commented-out entries fall back to base (Level 1 — primitive handles mode).
  *
