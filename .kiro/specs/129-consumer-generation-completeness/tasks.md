@@ -289,7 +289,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     - Each case red once, then green; the exact red string recorded in the completion doc
     - _Requirements: 3.10_
 
-- [ ] 3. The iOS lanes (U1)
+- [x] 3. The iOS lanes (U1)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Kenya (Sonnet)
   **Traces**: Req 2.4, 2.6, 2.7, 2.8, 2.9, 3.4, 3.11, 4.1, 4.8, 6.2 · design § 1 (K-1 to K-7); § 4 ("Product-token names and access", "The shared harness module"; amendment 3)
@@ -340,7 +340,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [x] 3.3 Self-tests (K-4) and the toolchain match (K-6)
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Kenya (Sonnet)
     - _Requirements: 3.11, 6.2_
-  - [ ] 3.4 The probe imports the shared module *(added 2026-11-06, tasks amendment 3, under Peter's "4 combine", received 2026-11-06T22:38:12Z, and "B Thurgood", received 2026-11-06T23:31:58Z)*
+  - [x] 3.4 The probe imports the shared module *(added 2026-11-06, tasks amendment 3, under Peter's "4 combine", received 2026-11-06T22:38:12Z, and "B Thurgood", received 2026-11-06T23:31:58Z)*
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Kenya (Sonnet)
     - Starts after Task 5's 5.4 has put `scripts/harness/native-rules.ts` and its test on the unit branch
     - Removes `themeInstances` and `themeHolder` from `probe-swift.ts`; the instance names change as the module states them
