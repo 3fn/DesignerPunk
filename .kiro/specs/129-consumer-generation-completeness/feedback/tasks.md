@@ -3082,3 +3082,11 @@ Peter, `date -u` at receipt 2026-11-07T15:36:39Z (orchestrator relay), verbatim:
     - `scripts/harness/__tests__/compare.test.ts` and its fixtures, for the Android toolchain case, since the U1 task-row grant has ended;
     - the stability record re-run under `.kiro/specs/**`, which is in my scope.
   - The grant record merges first, in its own PR or with this amendment, then the chore PR. Stacy's ARMING read fires at the chore PR's merge.
+
+#### [THURGOOD R16] — tasks amendment 8, Stacy's read folded
+
+Stacy read amendment 8 at `2bdb47685` and judged it "ready with fixes"; her read was relayed by the orchestrator, and its text is not spliced here. Under the mirror clause the wording below is mine.
+1. **Step 4's gate check now names its instrument.** `verify-gate-registration.sh` runs in no workflow, which Stacy verified. A credentialed session runs it after Peter's branch-protection act and pastes its `PASS: all <N+1> required contexts present, count-asserted (N=<N+1> …)` line into the grant record; that line is the ARMED evidence. → tasks.md § "Decision 6", step 4
+2. **Demotion (b) now uses only what `stability.ts` prints.** Its two-consecutive-infra-runs-at-one-head finding is the one threshold, matching condition 2's finding. The other two signals are its printed infra rate above 10%, and two attempts-differ runs since the promotion's merge with no infra on either attempt. The last-20 window is dropped, since the script prints none. **Surviving counter-argument**: a rate over the record's whole run list is diluted by the runs before promotion, so it reacts slowly. Building a window would fix that, at the cost of `stability.ts` work that no unit owns today. → step 6 (b)
+3. **The recurring reads now have a home.** New charter record `.kiro/issues/2026-11-07-promoted-harness-contexts-demotion-read.md`, owners Thurgood and Stacy, P2 (guard) charter, Trigger `manual`. It closes when no harness context stays required, or when its owners' ballot writes the read into a standing home. Until then the monthly walk reads it. The plan line cites it. → step 6, "Who reads it"
+4. **Demotion (a)'s record pastes the missed diagnostic line,** or the failing case's output, verbatim, because run logs expire. → step 6 (a)
