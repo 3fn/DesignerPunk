@@ -32,4 +32,5 @@ Named before code (last unit's finding):
 
 ## Found later
 
-(none yet)
+- **unlisted** (2026-11-07, 9.1): `src/build/platforms/AndroidMotionTokenFormatter.ts` and `src/build/__tests__/AndroidMotionTokenGeneration.test.ts` (qualified `Easing`; see `task-9-1-completion.md` § 3). State: exists. Not on my expected list: found by reading why "Cannot extend an object" survived the import work.
+- Expected files that did **not** need touching: `token-index/*.yaml` (the index's platform names did not change) and `src/__tests__/package-drift-validation.test.ts`.
