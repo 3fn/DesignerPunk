@@ -36,3 +36,21 @@ Peter had just read the orchestrator's decision brief, "after the MIDPOINT claim
   - **The class option:** standing write scope for Thurgood over `scripts/harness/stability.ts`, `scripts/harness/native-rules.ts` and their tests, through `canonical/agents/thurgood.md`.
   - Orchestrator's note: a charter edit is a LAW edit, so it needs a ratified ballot, and the affected seats are consulted first. Read as: draft the ballot, consult, and bring it to Peter for ratification before 129's CLOSEOUT (U12).
 - **"Re: 4, Let's go with Ada's recommendation, but Ada should see weigh in on the amendment with Data and Thurgood."** S-1, a default-name compile in the harness that keeps `HarnessConsumer` alongside it, goes in **its own tasks amendment** landing between U7 and U8, not in U8. Ada weighs in on it with Data and Thurgood. Thurgood authors it, after the loophole amendment, since both edit `tasks.md`.
+
+## Follow-up, received 2026-11-07T20:24:04Z (`date -u`, at receipt)
+
+> Re: 2, Let's go with your suggestion
+> Re: bottleneck plan, approved
+
+(Sent twice; the first send was interrupted, and its "approed" is a typo for "approved".)
+
+- **Re: 2.** The guard-record fix (`complete-task.sh`) is built during U7, with the record's named build consult (Stacy and Lina), and **merged after U7's PR opens**.
+- **Re: bottleneck plan.** Thurgood's queue runs in this order:
+  1. amendment 9 (loophole);
+  2. the `stability.ts` fix;
+  3. the documentation-fix PR (b′);
+  4. amendment 10 (S-1);
+  5. the guard fix;
+  6. the charter-scope ballot, last, before U12.
+
+  Items run as separate seats wherever their files don't overlap.
