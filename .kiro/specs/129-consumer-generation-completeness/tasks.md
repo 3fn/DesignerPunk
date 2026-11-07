@@ -122,7 +122,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | 5 | Thurgood (Sonnet) | Kenya (Sonnet) — the iOS jobs' steps; Data (Sonnet) — the Android jobs' steps | Ada, Lina |
 | 6 | Thurgood (Sonnet) | — | Stacy |
 | 7 | Thurgood (Sonnet) | — | Ada |
-| 8 | Ada (Sonnet) | Sparky (Sonnet) — the `var()` and blue-tinted shadow `Consumer Guard` cases | Kenya, Data |
+| 8 | Ada (Sonnet) | Sparky (Sonnet) — the `var()` and blue-tinted shadow `Consumer Guard` cases; Data (Sonnet) — the colour library's removal from `harness/android/**` (amendment 6) | Kenya, Data |
 | 9 | Ada (Sonnet) | Lina (Sonnet) — the coupled Android and iOS component reads and the guideline type statements; Thurgood (Sonnet) — holds the Req 6.9 ballot record | Data, Kenya |
 | 10 | Ada (Sonnet) | Lina (Sonnet) — the two component tokens files row 21's ruling disposes | — |
 | 11 | Ada (Sonnet) | Lina (Sonnet) — Req 4.5's coupled reads and the two `DesignTokens` re-points | Kenya, Data |
@@ -530,7 +530,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 - [ ] 8. Native colours, shadows, section comments and `public` members (U3)
 
-  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Sparky (Sonnet) — the web `Consumer Guard` cases
+  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Sparky (Sonnet) — the web `Consumer Guard` cases · Data (Sonnet) — the colour library's removal from the Android harness build, on a seat branch Ada joins (added 2026-11-07, tasks amendment 6, on Data's finding as the files' author, `[THURGOOD R13]`; it rides Peter's "do the amendment", received 2026-11-07T05:10:45Z)
   **Traces**: Req 1.6, 2.10, 6.2, 6.10, 7.1–7.4, 15.4; rows 4 (items 2 and 4), 7, 9, 10, 11 · design §§ 5 (shadow composite), 6, 8, 9 (`var()` reach)
 
   **Success Criteria:**
@@ -554,6 +554,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `governance/Rosetta-System-Architecture.md`'s native colour description (L100–L152 and L376 at `d7f87174c`) states the Display P3 constructors in this diff.
   - The token contexts' lists show the entries tagged to rows 4 (item 2), 7, 9 (where Stage T builds) and 10 removed in this diff, Android colour entries tagged to row 6 remain until U4, and every addition this diff makes prints under exception (a) or (c) with a tag.
   - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
+  - No file under `harness/android/**` names the colour library: `git grep -n -i colormath -- harness/android/` prints nothing at head H, and `harness-android-tokens` and `harness-android-components` at H still match their lists *(added 2026-11-07, tasks amendment 6, on Data's finding: a declared but unused library would mask any import the generated Kotlin still needs, and would leave the build out of step with `harness/pins.yaml`, whose pin this unit removes)*.
   - Every root record whose Trigger names `task-8-completion.md` carries, at U3's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U3's PR or in a PR merged before it.
 
   **Primary Artifacts:**
@@ -576,6 +577,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `harness/expected/harness-ios-components.tsv`
   - `harness/expected/harness-android-components.tsv`
   - `harness/pins.yaml` (the colour library pin's removal, Req 3.5 (a))
+  - `harness/android/gradle/libs.versions.toml`, `harness/android/dp/build.gradle.kts`, `harness/android/probe/build.gradle.kts` and `harness/android/tokens/build.gradle.kts`, only to remove the colour library's declaration, written by Data (added by amendment 6)
 
   **Completion Documentation:**
   - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-8-completion.md`
@@ -599,6 +601,10 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Sparky (Sonnet)
     - No browser; reach includes `component-tokens.css` (design § 9); follows 8.2
     - _Requirements: 1.6, 7.1_
+  - [ ] 8.5 Remove the colour library from the Android harness build *(added 2026-11-07, tasks amendment 6)*
+    **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
+    - On a seat branch that Ada joins into the U3 branch, after 8.1 removes the generated Kotlin's colormath calls: `libs.versions.toml` L13 and L33, `dp/build.gradle.kts` L55, `probe/build.gradle.kts` L40, `tokens/build.gradle.kts` L42–43 (at `55276795e`)
+    - _Requirements: 3.5, 6.10_
 
 ### UNIT 4 — The native type table
 

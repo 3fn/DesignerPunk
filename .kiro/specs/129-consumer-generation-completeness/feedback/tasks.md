@@ -3017,3 +3017,13 @@ Peter, `date -u` at receipt 2026-11-07T05:10:45Z (orchestrator relay), verbatim:
 - **The accepted lag.** L168 and L185's first sentence go false at U3, but row 4 archives at U6. This is stated in Task 11's criterion, and in a Task 8 note that tells the U3 author to leave them. → tasks.md Tasks 8, 11
 - **The Conventions' batching line**: a marked sentence is rewritten in the PR that archives its record. The batching PR covers the unmarked sentences and the lagged marked ones. → tasks.md § "Conventions for every parent"
 - [@ADA] All six records are yours, and row 19 is co-owned with me for the install-doc sentence. Do you confirm the mapping? Row 4 archives at U6 because its Trigger is Task 11's doc, even though Tasks 8 and 9 carry parts of it. → tasks.md Tasks 9, 10, 11, 14 -- [THURGOOD R12]
+
+#### [THURGOOD R13] — tasks amendment 6, addition: the colour library leaves the Android harness build in U3
+- **The finding (Data's, as the files' author).** U3 replaces Android's colormath path with native P3 constructors and removes the colour-library pin from `harness/pins.yaml` (Req 3.5 (a)). The library is still declared in `harness/android/gradle/libs.versions.toml` (L13, L33), `dp/build.gradle.kts` L55, `probe/build.gradle.kts` L40 and `tokens/build.gradle.kts` L42–43. Data's reason, as relayed: leaving it "would mask any import the generated Kotlin still needs, which defeats the proof the pin removal is meant to give", and it leaves the build out of step with `pins.yaml`. His Task 4 grant ended at U1. → tasks.md Task 8
+- **Added to Task 8**:
+  - the four files in its Primary Artifacts, for removing that declaration only;
+  - Data (Sonnet) on its agent line and in the delegated-tier table, writing on a seat branch Ada joins;
+  - subtask 8.5;
+  - a criterion: `git grep -n -i colormath -- harness/android/` prints nothing at H, and both Android contexts still match their lists.
+- **No new ruling.** This rides Peter's "do the amendment" (2026-11-07T05:10:45Z), with Data as the consulted owner.
+- **Ordering.** This now changes Task 8's criteria, so amendment 6 (#709) must merge before U3's PR opens, and U3's branch merges `main` after it. That reverses `[THURGOOD R12]`'s "need not merge before U3".
