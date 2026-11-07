@@ -270,7 +270,7 @@ units:
         text: "**Tooling follow-up (optional)**: `complete-task.sh` may auto-prune the local unit branch once it detects the merge — a convenience, not a hard requirement; the manual `git branch -d` step is not blocked on it."
     confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#branch-cleanup
   "#branch-and-pr-conventions":
-    canonicalHash: sha256:4e0f6aca925ae3b32e9dfda4c2972002344de66fafdeefb0c4f05c7ad860583d
+    canonicalHash: sha256:7ba8cde7de8bd19af7748439c50b669e71b596438b6e6b611a8ad1abeb56837a
     items:
       - id: branch-and-pr-conven-1
         kind: obligation
@@ -303,7 +303,15 @@ units:
       - id: branch-and-pr-conven-8
         kind: obligation
         label: "Edit kind (ballot 2026-10-18-governance-edit-kinds): a PR wh"
-        text: "**Edit kind** (ballot 2026-10-18-governance-edit-kinds): a PR whose diff touches a governance path (`governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, the prose of `canonical/agents/**`) carries one line per changed file — `**Edit kind**: <path> — LAW (<ballot path>)`, `— EXECUTION (<clause>)` or `— CORRECTION (<observation record>; truth: <referent>)`. Where one file's lines are of different kinds, it carries one line per part instead, with `<path> L<a>–<b>`: the line range in the file as it stands at the merge commit. The lines are read from the PR body (`gh pr view <n> --json body`), never from the squash message."
+        text: "**Edit kind** (ballot 2026-10-18-governance-edit-kinds): a PR whose diff touches a governance path (`governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, every file under `canonical/agents/**`, frontmatter included) carries one line per changed file — `**Edit kind**: <path> — LAW (<ballot path>)`, `— EXECUTION (<clause>)` or `— CORRECTION (<observation record>; truth: <referent>)`. Where one file's lines are of different kinds, it carries one line per part instead, with `<path> L<a>–<b>`: the line range in the file as it stands at the merge commit. The lines are read from the PR body (`gh pr view <n> --json body`), never from the squash message."
+      - id: branch-and-pr-conven-9
+        kind: obligation
+        label: "The marker and its answer, as the merge-hold check reads the"
+        text: "**The marker and its answer, as the merge-hold check reads them.** A marker line begins, at column 0 and outside a fenced code block, with `**Open for Peter**:`. A pointer to a question asked elsewhere carries the marker too: `**Open for Peter**: see <where>`. Each marker is answered by a line beginning `**Peter answered**:` that comes after it and before the next marker: `**Peter answered**: <time, ISO 8601 UTC> — \"<his words, verbatim>\" — <a path committed at the PR head, or the URL of his comment on this PR>`. The cited file or comment contains the quoted words, compared after normalising both sides: a leading `>` blockquote marker is dropped from each line, `*` and `_` emphasis markers are removed, curly quotation marks become straight ones, and every run of whitespace, line breaks included, becomes one space. The comparison is otherwise exact and case-sensitive. Where the words are \"not now — merge\" or an equivalent, the line also names the record the question is filed in. The check confirms that the answer is present and cited, never who gave it."
+      - id: branch-and-pr-conven-10
+        kind: obligation
+        label: "A required check, law-ratified, reads these lines at the PR "
+        text: "A required check, `law-ratified`, reads these lines at the PR head. Each LAW line's cited ballot exists at the head, and its first `**Status**:` line reads RATIFIED. Each file the diff changes on a governance path has a line."
     confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#branch-and-pr-conventions
   "#the-merge-rule":
     canonicalHash: sha256:d9fdd24e86b6c31126977969bbe4d47e0df9b05bc4c3a2bf6274d8cfd801e34e
