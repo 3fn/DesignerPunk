@@ -103,9 +103,26 @@ date: 2026-09-29
 ## `#branch-and-pr-conventions`
 
 confirmer: stacy
-canonicalHash: sha256:4e0f6aca925ae3b32e9dfda4c2972002344de66fafdeefb0c4f05c7ad860583d
-items: branch-and-pr-conven-1, branch-and-pr-conven-2, branch-and-pr-conven-3, branch-and-pr-conven-4, branch-and-pr-conven-5, branch-and-pr-conven-6, branch-and-pr-conven-7, branch-and-pr-conven-8
-date: 2026-10-18
+canonicalHash: sha256:7ba8cde7de8bd19af7748439c50b669e71b596438b6e6b611a8ad1abeb56837a
+items: branch-and-pr-conven-1, branch-and-pr-conven-2, branch-and-pr-conven-3, branch-and-pr-conven-4, branch-and-pr-conven-5, branch-and-pr-conven-6, branch-and-pr-conven-7, branch-and-pr-conven-8, branch-and-pr-conven-9, branch-and-pr-conven-10
+date: 2026-11-07
+
+**Re-confirmed 2026-11-07 (Req 11.6.5d).** The whole unit, read at `37db5e158`.
+- **What changed**: ballot `.kiro/docs/ballots/2026-11-07-merge-hold-and-law-ratified-checks.md` (RATIFIED, Peter, 2026-11-07T17:59:15Z; #722). There are three changes, each with its dated pointer, and nothing else in the unit moved:
+  - item 1's grammar, appended to the merge-hold bullet;
+  - item 2's `law-ratified` sentence, appended to the Edit kind bullet;
+  - F-2 (a) in the Edit kind bullet's path list: "the prose of `canonical/agents/**`" becomes "every file under `canonical/agents/**`, frontmatter included". This is the ballot Status's "F-2: (a) every file under `canonical/agents/**`, frontmatter included, needs an edit-kind line".
+  - The doc edit and the item texts are Thurgood's authoring, not this act.
+- **Texts, verified**: the ballot's item 1 and item 2 After sentences, with `<ratification date>` read as `2026-11-07`, occur in the unit byte for byte.
+  - All ten item texts are verbatim substrings of the unit: `-9` is 1068 characters, `-10` is 225, and `-8` is re-quoted at 668 with the F-2 phrase.
+  - The only unit text that no item covers is the heading, the list markers and the three dated pointers.
+- **Item grain**: I accept the split into `-9` and `-10`, although `-9` sits inside `-7`'s bullet and `-10` inside `-8`'s.
+  - Each is an act a consumer's agents could perform or omit on its own: writing a `**Peter answered**:` line in the checked form, and meeting a required check. A rendering can keep `-7` or `-8` and remove these, which is what the consumer row does.
+  - So the credit depends on the split. That differs from the 2026-10-18 reading of `-7`'s clauses, where no rendering separated them.
+  - All ten stay `obligation`.
+- **The hash**: the canonicalHash moves from `sha256:4e0f6aca925ae3b32e9dfda4c2972002344de66fafdeefb0c4f05c7ad860583d` to the value above. I recomputed it myself with `hashText` over `partition(splitFrontmatter(...).body).units` before comparing. It then matched `operative-set-freshness` and the overlay pin.
+
+**Ruling: CONFIRMED at 10 items.**
 
 **Re-confirmed 2026-10-18 (Req 11.6.5d).**
 - **What changed**: two bullets, appended after the `Unit:` bullet. `branch-and-pr-conven-7` is ballot `.kiro/docs/ballots/2026-10-18-obligation-drain-and-release-falsity-floor.md` M8 ("A question to Peter holds the merge", with the two readings Peter ruled 2026-10-18: a pointer counts, and "Not now — merge" is an answer whose question is filed under rule 10). `branch-and-pr-conven-8` is ballot `.kiro/docs/ballots/2026-10-18-governance-edit-kinds.md` § 3a (the `**Edit kind**:` line, over F-B1 (b)'s path set). Both ballots RATIFIED, Peter, 2026-10-18; the doc edit and both item texts are Thurgood's authoring (`e084dbfd8`), not this act.
