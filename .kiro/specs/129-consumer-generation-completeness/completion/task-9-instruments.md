@@ -16,10 +16,10 @@
 | 7 | C10 | `src/components/__tests__/AndroidSizingDpReads.test.ts` | exists (@ `36ba2a55f`) | guards the 16 `.dp` sites; Lina's removal lands in her seat branch | 9.2 |
 | 8 | C11, C14 | `src/components/__tests__/AndroidDpTokenReads.test.ts` | exists (@ `36ba2a55f`) | must learn `TextUnit`; Lina's | 9.2 |
 | 9 | C16 | `ConfigHelpers.ts` (@ `28ce7d35c`), `BuildOrchestrator.ts` (@ `06e43a7e8`) and their tests | exists | floors and defaults are Ada's in 9.3 | 9.3 |
-| 10 | C15 | `.kiro/docs/ballots/*-129-u4-android-type-statements.md` | MISSING → Thurgood (holder), Lina (text): not started. Stops C15 only, not 9.1 | — | 9.3 |
+| 10 | C15 | `.kiro/docs/ballots/*-129-u4-android-type-statements.md` | MISSING → Thurgood (holder), Lina (text): not started. Stops C15 only, not 9.1 | — | 9.3 *(resolved 2026-11-07, `completion/claims-pass-midpoint.md` MP-8, appended: the ballot `2026-11-07-129-u4-android-type-statements` was RATIFIED at 17:00:13Z, after #719 merged at 16:52:22Z. Not present at the merge; C15 stays ⚠️ in `task-9-completion.md`.)* |
 | 11 | C20 | `scripts/derive-install-doc.ts`, `scripts/__tests__/install-doc.test.ts` | exists (@ `55276795e`) | the PR rewrites Guide L170 and L185's second sentence and re-derives INSTALL | parent close |
 | 12 | C21 | records naming `task-9-completion.md`: `2026-08-13-component-token-platform-references-noncompiling.md` (row 3), `2026-10-20-native-font-family-literals-unescaped-quotes.md` (row 5), `2026-10-20-kotlin-output-no-import-block.md` (row 6), `2026-10-24-native-primitive-values-do-not-match-declared-type.md` (row 8) | exists | all Ada's; rule 5 outcome lines and archive at the parent close | parent close |
-| 13 | C19 the PR's four contexts | the unit PR | MISSING → Ada at the parent close; stops no subtask | — | parent close |
+| 13 | C19 the PR's four contexts | the unit PR | MISSING → Ada at the parent close; stops no subtask | — | parent close *(resolved 2026-11-07, `completion/claims-pass-midpoint.md` MP-8, appended: #719's four contexts ran at H = M `d21ed6e50` in https://github.com/3fn/DesignerPunk/actions/runs/42392857681 (`native-harness`, success) → exists.)* |
 
 ## Files I expect to touch outside Task 9's Primary Artifacts
 

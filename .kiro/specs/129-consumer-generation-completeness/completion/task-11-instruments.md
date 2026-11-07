@@ -16,7 +16,7 @@
 | 7 | the Guide sentences rows 2 and 4 make false | `scripts/derive-install-doc.ts`, `scripts/__tests__/install-doc.test.ts` | exist (@ `55276795e`) | 6 sentences for row 2, 4 for row 4 | parent close |
 | 8 | the `LocalDPTheme` import in 25 Android files, rows 12/13/15 list removals, the two re-points | Lina's 11.5; the component lists | exist | | 11.5 |
 | 9 | records naming `task-11-completion.md` | `2026-06-28-spec-094-platform-theme-emission-unwired.md` (row 2), `2026-10-03-native-generator-findings-for-spec-129-intake.md` (row 4), `2026-10-24-android-component-unit-type-mismatches.md` (row 12), `2026-10-26-token-index-platform-name-readers.md` (row 13), `2026-11-06-android-components-do-not-import-localdptheme.md`, `2026-11-07-row-15-theme-name-defect-has-no-observing-instrument-at-u1.md` | exist | six records name the completion doc; each owes a rule 5 outcome line or a re-rule. Owners differ (Lina owns rows 12 and the import record); I write mine and ask each other owner | parent close |
-| 10 | the PR's four contexts | the unit PR | MISSING → Ada at the parent close; stops no subtask | | parent close |
+| 10 | the PR's four contexts | the unit PR | MISSING → Ada at the parent close; stops no subtask | | parent close *(resolved 2026-11-07, `completion/claims-pass-midpoint.md` MP-8, appended: #730's four contexts ran at head H `739f8e833` in https://github.com/3fn/DesignerPunk/actions/runs/42405431176 (`native-harness`, success), with the lane contexts in https://github.com/3fn/DesignerPunk/actions/runs/42405431075 (`lane-timing.yml`, success) → exists.)* |
 
 ## Files I expect to touch outside Task 11's Primary Artifacts
 
