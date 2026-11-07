@@ -140,3 +140,4 @@ description: Essential pre-task checklist — date verification, governance heal
    If the command fails, note it and continue.
 
    *Revisit (Peter, 2026-10-20): the first health-check walk after this item lands reports its run count, false-`FIRED` count and any startup complaint. One false `FIRED` line or one blocked session start re-opens this item for re-ruling.*
+
