@@ -3,6 +3,7 @@
 **Date**: 2026-11-05
 **Spec**: 129 - Consumer-Generation Completeness
 **Status**: Merged at R2 (#678, `8d8ba1425`), with the seven R1 reviews, the Q3a addendum and Peter's Decision 6 answer folded in. **Amendment 1** (2026-11-06) folds Stacy's verifiability read of the merged file, `[STACY TASKS R2]`, requested by Peter ("Have Stacy check the tasks first", 2026-11-06T00:07:00Z), with `[THURGOOD R3]` notes (`feedback/tasks.md`). Execution starts after this file merges (Spec-Feedback-Protocol § "Sequential Formalization Gate").
+**Amendment 10** (2026-11-07) adds U7a, Task 20: one step in the required `harness-android-tokens` job that runs a second `generate` with no `name` and compiles `:tokens` with `ProbeFamily.kt`, floor 0, keeping `HarnessConsumer` beside it, under an issue-row grant (`.kiro/issues/2026-11-07-default-name-compile-grant.md`). It lands between U7 and U8, under Peter's "Re: 4, Let's go with Ada's recommendation, but Ada should see weigh in on the amendment with Data and Thurgood", received 2026-11-07T20:21:05Z (`evidence/2026-11-07-peter-rulings-post-midpoint.md`; "should see weigh in" read as "should weigh in") (`feedback/tasks.md` `[THURGOOD R20]`).
 **Amendment 8** (2026-11-07) writes the promotion lifecycle once in § "Decision 6", covering the offer, the grant, the change, ARMING, after promotion and demotion, and makes condition 1's toolchain case per platform, under Peter's "a with both additions and short amendment", received 2026-11-07T15:36:39Z (`evidence/2026-11-07-peter-ruling-promotion-android-tokens.md`) (`feedback/tasks.md` `[THURGOOD R15]`).
 **Amendment 7** (2026-11-07) adds `harness-infra` (design § 3; Decision 6 conditions 2 and 3) and U3a, Task 19, which builds it before U4's PR opens, under Peter's "Let's adopt the fix with class option if you think it'll be effective", received 2026-11-07T14:12:30Z (`evidence/2026-11-07-peter-ruling-harness-infra-verdict.md`, which records the orchestrator's judgment that it is effective) (`feedback/tasks.md` `[THURGOOD R14]`).
 **Amendment 6** (2026-11-07) gives Tasks 9, 10, 11 and 14 the rewrite of each Integration Guide sentence marked with a record their PR archives, under Peter's "708 is merged; do the amendment, then go for U3", received 2026-11-07T05:10:45Z (`evidence/2026-11-07-peter-ruling-marker-rewrite-criteria.md`) (`feedback/tasks.md` `[THURGOOD R12]`).
@@ -97,13 +98,14 @@ The criterion the requirements ask this round to write (Req 2.12). A harness con
 | **U5 — Validators and config types** | Task 10 | Task 10 | — |
 | **U6 — Native theme emission (generator)** | Task 11 | Task 11 | **U6 (this unit's merge carries the midpoint claims pass)** |
 | **U7 — Component theme reads and repairs** | Task 12 | Task 12 | — |
+| **U7a — The default name compiles in CI** (added 2026-11-07, tasks amendment 10) | Task 20 | Task 20 | — |
 | **U8 — The component tier reaches `generate`** | Task 13 | Task 13 | — |
 | **U9 — `generate` reads the consumer's own source** | Task 14 | Task 14 | — |
 | **U10 — `init` runs `generate`; per-platform output paths** | Task 15 | Task 15 | — |
 | **U11 — Charter and overlay text for item (i)** | Task 16 | Task 16 | — |
 | **U12 — Closeout: retire the native root files; acceptance at the final head** | Tasks 17–18 | Task 18 | — |
 
-**Order and dependencies.** The chain: U1 → U2 → U3 → U4 → U6 → U7 → U8 → U9 → U12. **U3a** (Task 19, amendment 7) sits between U3 and U4. U3 merged as #711 (`de307e1d7`), so U3a branches from `main` after it, and its PR merges before U4's PR opens, so U4's runs are counted under the infra rule *(corrected 2026-11-07, tasks amendment 7, after U3 merged as #711, `de307e1d7`, at 2026-11-07T14:16:40Z)*. Beside it, at Peter's direction: U5 and U10 depend only on U2, and **U11 depends only on U6** (Kenya R1: it must merge before the S of the first release carrying U6, which a chain position after U9 could not guarantee). Each unit still branches from `main` after the unit it follows merges, and lock-carrying PRs merge one at a time. Why this order: U3's colour converter is what U4's import lists and U6's theme members emit through (design §§ 5, 6; Req 6.5's coupling); U4's type table is what `ComponentTokens` and the theme compile against; U7 follows U6 (design § 13); U8 needs U4's `ComponentTokens` form; U9's theme registry feeds U6's instances (design § 10); U12 is last. If U9 changes something U11's text states, U9's PR carries the one-line charter correction.
+**Order and dependencies.** The chain: U1 → U2 → U3 → U4 → U6 → U7 → U8 → U9 → U12. **U3a** (Task 19, amendment 7) sits between U3 and U4. U3 merged as #711 (`de307e1d7`), so U3a branches from `main` after it, and its PR merges before U4's PR opens, so U4's runs are counted under the infra rule *(corrected 2026-11-07, tasks amendment 7, after U3 merged as #711, `de307e1d7`, at 2026-11-07T14:16:40Z)*. **U7a** (Task 20, amendment 10) sits between U7 and U8: it branches from `main` after U7 merges, so it stays out of U7's H→M window, and U8's branch is cut from `main` after U7a merges, so U8's runs carry the default-name step over the `DesignerPunk*` names U8 adds to `com.designerpunk.tokens` *(added 2026-11-07, tasks amendment 10)*. Beside it, at Peter's direction: U5 and U10 depend only on U2, and **U11 depends only on U6** (Kenya R1: it must merge before the S of the first release carrying U6, which a chain position after U9 could not guarantee). Each unit still branches from `main` after the unit it follows merges, and lock-carrying PRs merge one at a time. Why this order: U3's colour converter is what U4's import lists and U6's theme members emit through (design §§ 5, 6; Req 6.5's coupling); U4's type table is what `ComponentTokens` and the theme compile against; U7 follows U6 (design § 13); U8 needs U4's `ComponentTokens` form; U9's theme registry feeds U6's instances (design § 10); U12 is last. If U9 changes something U11's text states, U9's PR carries the one-line charter correction.
 
 **The midpoint carrier**: U6 (Stacy R1 confirms). It is the sixth of twelve units, and its merge is the first point at which D1's probe reads a theme (design § 4). MIDPOINT fires once, at U6's merge, scoped to the parents merged by then (U5, U10 or U11 included if they merged first). The record's path is `completion/claims-pass-midpoint.md`, never `completion/claims-pass.md`.
 
@@ -132,6 +134,7 @@ Each figure is the named seat's own (`feedback/tasks.md`, R1 entries), or the pl
 | 17 | 0.5 | Ada (H) |
 | 18 | about 0.1, plus Thurgood's final-head reads, unsized | Kenya (H); Data (H) |
 | 19 | about 0.5 (Data's resolve step and classifier 0.25; the workflow, the test and `stability.ts` 0.25) | Thurgood (M); Data's figure owed in the next round |
+| 20 | about 0.5 (Data's lane option, verdict function and tests, his consult's "about half a day" read as 0.5; the workflow step and its test about 0.1, Thurgood) | Data (M; he confirms the figure and the per-PR minutes in his review entry); Thurgood (M) |
 
 **Total of the sized parts: about 31–36 sessions**, mostly medium-to-low confidence. Ada's parents are about 24–27 of it. **Unsized**: the shared harness module (5.4) and the two probe-import subtasks (3.4, 4.3), added by amendment 3; the U5–U9 harness re-keying and list edits beyond each author's figure; the U10 layout change's list check (Kenya, Data); Task 16's regeneration (Lina) and profile-author acts (Thurgood); Task 18's reads (Thurgood); the preconditions (Lina's L816 and README PRs, the owners' record-only PRs). The total is a floor, not a schedule; the component repair Lina files after U1 is sized after U4 and is not in it.
 
@@ -160,6 +163,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | 17 | Ada (Sonnet) | — | Thurgood (release text) |
 | 18 | Thurgood (Sonnet) | Kenya (Sonnet), Data (Sonnet) — the "Native status" passage | Stacy, Ada, Leonardo |
 | 19 | Thurgood (Sonnet) | Data (Sonnet) — the Android lane's resolve step, marker and infra classifier | Stacy (the verdict classes), Kenya (the iOS compliance criterion) |
+| 20 | Data (Sonnet) | Thurgood (Sonnet) — the workflow step under the issue-row grant, the workflow test and the grant record | Ada (the name contract), Stacy (ARMING) |
 
 ---
 
@@ -210,6 +214,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | **None owed** (added 2026-11-07, tasks amendment 7) | the PR-scoped Gradle cache that run 42379456009 saved on `refs/pull/711/merge` after a resolve that never completed | — | **Inert; no deletion owed.** A `refs/pull/<n>/merge` cache is readable only by that PR's runs, and #711 merged, so it will run no more. Nothing can restore the entry, and it ages out unaccessed. Any #711 run that restored it before the merge read `cache: hit`, counts toward no cold run, and is listed as such in the stability record *(corrected 2026-11-07, tasks amendment 7, after U3 merged as #711, `de307e1d7`, at 2026-11-07T14:16:40Z)* |
 | **Before U6's PR opens** (added 2026-11-06, tasks amendment 3 review fold, `[ADA R3]` fork 1) | a record that a product-token key which is a keyword on iOS or Android emits a member that does not compile | Ada | filed at the issues root, naming both platforms, with a fix at the source (the product MCP's indexer and `validateProductTokens`); 129 adds no emitter rule |
 | **At U6's merge** | MIDPOINT claims pass | Stacy | `completion/claims-pass-midpoint.md` |
+| **At tasks amendment 10's merge, and at U7a's** (added 2026-11-07, tasks amendment 10) | `.kiro/issues/2026-11-07-default-name-compile-grant.md` (`**Grant paths**: .github/workflows/native-harness.yml`), activated by the merge of amendment 10's PR | Thurgood (grant); Stacy (ARMING) | The amendment PR's body names the record and its path list and carries `**ARMING**: at this merge and at the fixing PR's merge`. Stacy's ARMING read fires at both merges, and her `**Grant activation read**:` line is owed for the record (LIVENESS, read 4). The record closes at U7a's merge with its rule 5 outcome line (Task 20) |
 | **Before the S of the release carrying U9** | the Token-Governance § "Theme Registry (Spec 094)" ballot edit (Req 15.6) | Thurgood (holder), Ada (text) | a ballot, ratified and applied; Task 18 reads that it happened |
 | **At U12's merge** | `2026-10-23-signing-act-shape-review.md` (Trigger `manual`: 129's final unit merge) | Thurgood | the review it names |
 | **At U12's merge** | CLOSEOUT claims pass | Stacy | `completion/claims-pass.md` |
@@ -962,6 +967,52 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 8.2, 8.4_
 
+### UNIT 7a — The default name compiles in CI (added 2026-11-07, tasks amendment 10)
+
+- [ ] 20. A default-name compile in `harness-android-tokens`, beside `HarnessConsumer` (U7a)
+
+  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Data (Sonnet) · Thurgood (Sonnet) — the workflow step under the issue-row grant, the workflow test and the grant record
+  **Traces**: Req 2.2, 2.7, 2.10, 2.13, 4.1 · design § 2 ("The default-name step"), § 4 ("Android provider") · MIDPOINT S-1 and MP-4 (`completion/claims-pass-midpoint.md`) · ruling: Peter's "Re: 4, Let's go with Ada's recommendation, but Ada should see weigh in on the amendment with Data and Thurgood", received 2026-11-07T20:21:05Z (`evidence/2026-11-07-peter-rulings-post-midpoint.md`)
+
+  **Success Criteria:**
+  - `harness/android/lane.ts` gains one option, named by Data, that takes the downloaded consumer root and works in a copy of it under the runner's temporary directory, outside the workspace, so the upload step does not carry a second consumer. It removes the `name` property from the copy's `designerpunk.config.ts`, keeps every other property, `abbreviation` included, as `harness/pins.yaml` § `consumer` sets it (Req 2.2), runs the copy's installed `generate`, and compiles `:tokens` with the regenerated Kotlin and `:probe` given only `ProbeFamily.kt`, in one Gradle invocation. In the workspace it writes only its logs and its verdict, under `harness-out/default-name/`.
+  - The option's verdict is an exported pure function over the Gradle log and the copy's config. It prints one line beginning `default-name:` that gives the diagnostic count, the `w:` warning count, `:tokens`' `gen=` count and the provider read count, and it passes only when all of these hold: 0 diagnostics as `scripts/harness/parse-kotlin.ts` keys them (it keys `e:` lines and never `w:` lines, so a warning is counted and printed, and does not fail the step); `:tokens:compileDebugKotlin` and `:probe:compileDebugKotlin` each ran; `gen=` equals the number of `.kt` files the second `generate` wrote, and is at least 1; the probe was given exactly `ProbeFamily.kt`; `provider read <k> of <m>` has `k = m` and `m ≥ 1`; and the copy's config declares no `name`. Otherwise the option exits non-zero.
+  - `scripts/harness/__tests__/probe-kotlin.test.ts` shows the verdict passing on Data's committed log `evidence/2026-11-07-mp4-default-name-run/gradle-tokens-and-probefamily.txt`, cited at its commit. It shows the verdict failing, once each, on: one planted `e:` line; no `:tokens:compileDebugKotlin` outcome; `gen=0`; a probe given a file besides `ProbeFamily.kt`; `provider read 0 of 0`; `provider read 4 of 5`; and a config copy that still declares `name`. It shows a planted `w:` line alone passing, with the warning counted. It also shows, on a fixture config holding `name` and `abbreviation`, that the copy loses `name` and keeps `abbreviation` and every other line.
+  - In `.github/workflows/native-harness.yml`, `harness-android-tokens` gains exactly one step that runs the option. The step sits after the "Comparator (scripts/harness/compare.ts)" step and before the "Upload the lane output" step, has no `if:` key and no `continue-on-error` key, and writes `::notice title=default-name::<line>` on a pass and `::error title=default-name::<line>` on a fail. No other job gains a step that runs the option. `scripts/harness/__tests__/native-harness-workflow.test.ts` asserts all of this, and Task 19's assertions in it still hold. The completion doc records the test red once against the workflow at this unit's base, then green.
+  - The step reads and writes no path that the existing steps' `if:` conditions and annotations read: `harness-out/compare.txt`, `harness-out/infra.json`, `harness-out/resolved.ok` and `harness-out/run-harness-android-tokens.json`. `native-harness-workflow.test.ts` asserts it from the step's `run:` text and the option's output directory.
+  - `HarnessConsumer` is kept: `git show M:harness/pins.yaml` reads `consumer.name: HarnessConsumer` and `consumer.abbreviation: HX`, as at this unit's base.
+  - U7a's `.github/**` changes are exactly `.github/workflows/native-harness.yml`, within the grant's admitted edits (`.kiro/issues/2026-11-07-default-name-compile-grant.md`). `git diff --numstat <base> M -- .github/workflows/native-harness.yml` shows 0 deleted lines. `tools/agent-generator/verify-gate-registration.sh` reports its count unchanged. `.github/in-lane-guards.json` is unchanged, because every test this unit adds is in a file already registered there.
+  - At head H, the step's annotation on `harness-android-tokens` reads a pass, with 0 diagnostics and `provider read <m> of <m>`, `m ≥ 1`. The completion doc pastes the line with the run URL and the head SHA.
+  - The completion doc records, for `harness-android-tokens` at H, read from the Actions jobs API: the new step's duration (`steps[].started_at` to `completed_at`), the job's duration, and the job's duration in the newest pull-request run at this unit's base. If the step takes more than 2 minutes, or the job at H takes more than 10 minutes (125-A Req 6.3's ceiling), the PR body carries an `**Open for Peter**:` line giving the measured figures, and the PR is not merged until his answer is on the record.
+  - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
+  - Every root record whose Trigger names `task-20-completion.md` carries, at U7a's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U7a's PR or in a PR merged before it. `2026-11-07-default-name-compile-grant.md` is one of them.
+
+  **Primary Artifacts:**
+  - `harness/android/lane.ts` (Data)
+  - `harness/android/**` build files, only if the second compile needs one (Data)
+  - `scripts/harness/probe-kotlin.ts`, only if `ProbeFamily.kt`'s emission needs the default name as an input (Data)
+  - `scripts/harness/__tests__/probe-kotlin.test.ts` and `scripts/harness/__tests__/fixtures/kotlin/**` (Data)
+  - `.github/workflows/native-harness.yml` (Thurgood). Its write scope is the issue-row grant in `.kiro/issues/2026-11-07-default-name-compile-grant.md`, whose admitted edits bound it; this row adds no scope over it.
+  - `scripts/harness/__tests__/native-harness-workflow.test.ts` (Thurgood)
+  - `.kiro/issues/2026-11-07-default-name-compile-grant.md` (Thurgood, standing scope; its outcome line)
+
+  **Grant limits** (`.github/**`): the issue-row grant admits, in `harness-android-tokens` only, the one new step and a comment above it, as the record words them. It admits nothing else: no new job or required context; no change to `EXPECTED_CONTEXTS` or `EXPECTED_COUNT`; no edit to any existing step, `env:`, cache key, runner, permission or trigger; no deleted line; no change to an iOS job. Amendment 10's PR activates the grant, so its body names the record and its path list and carries the `**ARMING**:` line (§ "Unit preconditions").
+
+  **Completion Documentation:**
+  - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-20-completion.md`
+  - Summary: `docs/specs/129-consumer-generation-completeness/task-20-summary.md`
+
+  **Post-Completion:** mark complete; `complete-task.sh "Task 20 Complete: The default name compiles in CI (129)"` opens U7a's PR (Peter-merged: `.github/**`; Stacy's ARMING read at its merge); report the URL; STOP.
+
+  - [ ] 20.1 The default-name option, its verdict function and their tests
+    **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
+    - On the unit branch, cut from `main` after U7 merges
+    - _Requirements: 2.2, 2.7, 4.1_
+  - [ ] 20.2 The workflow step and the workflow test; the grant record's outcome line
+    **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
+    - After 20.1's option exists; no deleted line in the workflow
+    - _Requirements: 2.10, 2.13_
+
 ### UNIT 8 — The component tier reaches `generate`
 
 - [ ] 13. Ship and harvest DesignerPunk's component tokens; precedence; the name contract (U8)
@@ -1330,9 +1381,9 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | Requirement | Parents |
 |---|---|
 | 1 | 18 (1.1–1.7); 8 (1.6's check); 13 (1.3's check); 1 (1.8); 1.9 is a standing rule (Conventions) |
-| 2 | 19 (2.11 and 2.12's infra class, amendment 7); 1 (2.1–2.3); 11 (2.3 as amended: the fixture's composite leaves); 3, 4 (2.4, 2.6–2.9); 2 (2.6's cross-tier rule); 5 (2.5, 2.11, 2.12, 2.14); every gating parent (2.10, 2.13); 11 (2.7's theme reads); 18 (2.10 summed) |
+| 2 | 19 (2.11 and 2.12's infra class, amendment 7); 20 (2.2 kept and 2.7's provider read under the default name, amendment 10); 1 (2.1–2.3); 11 (2.3 as amended: the fixture's composite leaves); 3, 4 (2.4, 2.6–2.9); 2 (2.6's cross-tier rule); 5 (2.5, 2.11, 2.12, 2.14); every gating parent (2.10, 2.13); 11 (2.7's theme reads); 18 (2.10 summed) |
 | 3 | 2 (3.1–3.11); 3, 4 (3.4, 3.11 per platform); 6 (3.10's registration) |
-| 4 | 11 (4.1–4.3, 4.5, 4.7's theme name, 4.10's re-points); 14 (4.1's custom-theme instances, from U9); 5 (4.8's tagging; the shared harness module); 12 (4.4, 4.6, 4.7 and 4.10 state checks); 16 (4.9); 4.7's L816 half is a unit precondition |
+| 4 | 11 (4.1–4.3, 4.5, 4.7's theme name, 4.10's re-points); 20 (4.1's Android provider under the default name, in CI, amendment 10); 14 (4.1's custom-theme instances, from U9); 5 (4.8's tagging; the shared harness module); 12 (4.4, 4.6, 4.7 and 4.10 state checks); 16 (4.9); 4.7's L816 half is a unit precondition |
 | 5 | 13 (5.1–5.5, 5.7, 5.8, 5.10, 5.11); 11 (5.6, as amended); 9 (5.9) |
 | 6 | 8 (6.2, 6.10); 9 (6.3–6.5, 6.7–6.9) |
 | 7 | 8 |
