@@ -10,7 +10,7 @@
 
 ## The act
 
-Add **one step** to the `harness-android-tokens` job of `.github/workflows/native-harness.yml`. The step runs `harness/android/lane.ts`'s default-name option (Task 20): a second `generate` in a copy of the downloaded consumer with no `name` set, then a compile of `:tokens` and of `:probe` given only `ProbeFamily.kt`, with a floor of 0 diagnostics. `HarnessConsumer` stays the harness consumer's name. The step is an addition, never a replacement.
+Add **one step** to the `harness-android-tokens` job of `.github/workflows/native-harness.yml`. The step runs `harness/android/lane.ts --default-name` (Task 20): a second `generate` in a copy of the downloaded consumer with the top-level `name` removed, then a compile of `:tokens` and of `:probe` given only `ProbeFamily.kt`. It passes only when both compiles succeed with 0 keyed, `unrooted` and `unattributed` diagnostics, and the resolved name is `DesignerPunk`. `HarnessConsumer` stays the harness consumer's name. The step is an addition, never a replacement.
 
 `harness-android-tokens` is a required check (#717, `6572a601e`). The step adds a way for that required job to fail. It adds no context and changes no count.
 
@@ -27,7 +27,7 @@ Per `.kiro/issues/README.md` rule 8:
 - It confers no ratification authority and is additive to Thurgood's charter scope.
 
 **Admitted edits** (nothing else):
-1. In the `harness-android-tokens` job only, one new step, placed after the "Comparator (scripts/harness/compare.ts)" step and before the "Upload the lane output" step. It runs the default-name option and writes one `default-name` annotation (`::notice` on a pass, `::error` on a fail). It carries no `if:` key and no `continue-on-error` key.
+1. In the `harness-android-tokens` job only, one new step, placed directly before the "Upload the lane output" step, after "Save the Gradle cache". It runs the default-name option and writes one `default-name` annotation (`::notice` on a pass, `::error` on a fail). It carries no `if:` key and no `continue-on-error` key.
 2. A comment above that step.
 
 **Excluded acts** (none is admitted here): no new job and no new required context; no change to `EXPECTED_CONTEXTS` or `EXPECTED_COUNT`; no edit to any other job, or to any existing step, `env:`, cache key, runner, permission or trigger; no deleted line (the fixing PR's `git diff --numstat` deletions for the file are 0, so no `**Deleted lines**:` block is owed); no removing or weakening of a step, floor or execution assertion; no change to any iOS job.
@@ -36,4 +36,4 @@ Per `.kiro/issues/README.md` rule 8:
 
 ## Counter-argument and what survives
 
-The step raises the false-red surface of a required job, to guard a regression nobody has proposed. Data's local run at `3610718aa` already compiled the default name (`evidence/2026-11-07-mp4-default-name-run/`). What survives: that run is self-attested, and U8 adds `DesignerPunk*`-shaped names to `com.designerpunk.tokens`, so only a CI context makes the default name's evidence independent. A flake in the step counts toward the demotion read's attempts-differ signal (`tasks.md` § "Decision 6", step 6 (b)), the same as any flake in the job.
+The step raises the false-red surface of a required job, to guard a regression nobody has proposed. Data's local run at `3610718aa` already compiled the default name (`evidence/2026-11-07-mp4-default-name-run/`). What survives: that run is self-attested, so only a CI context makes the default name's evidence independent before any release that carries U6, and U8 and later units change what `:tokens` holds, which the step then compiles under the default name. *(Corrected 2026-11-07 in the review fold, `[ADA TASKS R5]` fix 1: the earlier text said U8 adds `DesignerPunk*`-shaped names; U8 adds `<Component>Tokens` names, which cannot clash with the default name.)* A flake in the step counts toward the demotion read's attempts-differ signal (`tasks.md` § "Decision 6", step 6 (b)), the same as any flake in the job, and an environment fault in the copy or the second `generate` carries no `harness-infra` (the compile runs `--offline`, so a registry is never reached).

@@ -3257,3 +3257,265 @@ Peter, `date -u` at receipt 2026-11-07T20:21:05Z (orchestrator relay), verbatim:
 - [@DATA] Does `ProbeFamily.kt`'s emission need the default name passed in, or does `probe-kotlin.ts` take it from the regenerated output? The row lists `probe-kotlin.ts` only if it is needed. → tasks.md Task 20, Primary Artifacts -- [THURGOOD R20]
 - [@ADA] Is `provider read <m> of <m>` over `ProbeFamily.kt` the right floor for the name contract, as its owner sees it? And do you want a dated pointer below C19's row in `completion/task-11-completion.md` to this unit's H run once it exists? That doc is yours, so I have not put it in the row. → tasks.md Task 20 -- [THURGOOD R20]
 - [@STACY] If the orchestrator asks for a LENS read: the grant's admitted and excluded edits, and the cost criterion's hold. → `.kiro/issues/2026-11-07-default-name-compile-grant.md`; tasks.md Task 20 -- [THURGOOD R20]
+
+#### [ADA TASKS R5] — tasks amendment 10 review (read at `origin/task/129-tasks-amendment-10` `673113dd8`)
+
+**Verdict: ready with fixes.** No item blocks. Fixes 1–4 are text edits in Task 20, the order paragraph and the grant record.
+
+**Answers to `[THURGOOD R20]`'s questions to me:**
+- **Is `provider read <m> of <m>` the right floor for the name contract? Yes, with one tightening (fix 2).**
+  - Under the default name, the class and the provider share only the call-position namespace. In Kotlin a function is never a type, so a type-position `DesignerPunkTheme` cannot resolve to the provider.
+  - Both sides of that namespace are compiled by the step:
+    - the constructor side by `:tokens` itself. `ThemeEmitter.ts` L264 emits `val BaseLight = DesignerPunkTheme(<member> = …)` inside `object <Name>Themes`.
+    - the provider side by `ProbeFamily.kt`: `DesignerPunkTheme { }` and the `family =` calls.
+  - So I am not asking for a type-position read. Adding one would also change the settled shape.
+- **The C19 pointer: yes, I want it.**
+  - `completion/task-11-completion.md` L106 still says #734 is "not yet merged" and calls the run a per-file read. Data's MP-4 README corrects both: #734 merged as `c09b9be27`, and the run was a module compile.
+  - I will add one dated pointer below that note, covering both corrections and U7a's H run URL. I will make it in U7a's PR after H, which the H definition admits (`completion/**`), under my standing scope.
+  - So that the out-of-list check and the claims pass see it as planned, please add to Task 20's Primary Artifacts: "`completion/task-11-completion.md`, one dated pointer below C19's note (Ada, standing scope; after H)". This is not a seat. It is one line in my own doc.
+
+**Placement and size (my recommendation, as Peter ruled it): they match.**
+- U7a is its own unit, between U7 and U8, and outside U7's H→M window. → tasks.md § "Declared Merge Units"; "Order and dependencies"
+- It is seated Data PRIMARY and Thurgood secondary, with me consulted. → tasks.md § "Delegated-tier plan"
+- It is sized at about 0.5 sessions. That is a small unit, as I recommended, and the figure is Data's to confirm. → tasks.md § "Sizes"
+
+**Emitter and U8 scope: nothing in the row touches either.**
+- Task 20's Primary Artifacts list no `src/generators/**`, no `src/config/**`, no `scripts/build-name-contract.ts` and no `harness/expected/*.tsv`. → tasks.md Task 20, Primary Artifacts
+- Fix 3 states what follows when the generated output is at fault. Fix 4 states the one standing effect the step has on U8.
+
+**Fixes:**
+1. **The order rationale is wrong, and the error is mine.** My cross-read's residual spoke of "the new `DesignerPunk*` names in `com.designerpunk.tokens`". The draft repeats it in two places: the order paragraph and the grant record's counter-argument. It is false.
+   - U8 adds `<Component>Tokens` objects (`TokenFileGenerator.ts` L503: `` `${component}Tokens` ``). It does not add names built from the config name.
+   - Every such name ends in `Tokens`, and the names the default name produces end in `Theme`, `Themes` or `ThemeFamily`. So nothing U8 emits can clash with them.
+   - The ordering still stands, on true grounds:
+     - it keeps U7a out of U7's window;
+     - it gives CI evidence for the default name before any release that carries U6;
+     - U8 changes what `:tokens` holds (`src/generators/**`, the harvested component tier), so U8's runs compile that content under the default name too.
+   - Please reword both places to say that. → tasks.md § "Order and dependencies"; `.kiro/issues/2026-11-07-default-name-compile-grant.md` § "Counter-argument and what survives"
+2. **Tighten the provider-read floor.** `k = m` with `m ≥ 1` passes on the bare `DesignerPunkTheme { }` default alone. That form exercises no named-argument overload resolution against the constructor, so it is the weakest read.
+   - The verdict already takes the copy's config. So it can require `m` to equal the count that `native-rules.ts`'s `providerReads(<copy config>.themes, 'android')` gives (5 for the pinned consumer's two families, as MP-4 printed), with at least one `family =` call among the reads.
+   - Add one falsification case: a run whose only provider read is the default fails. → tasks.md Task 20, criteria 2 and 3
+3. **Where the probe gets the name (name contract; my ruling, the mechanism is Data's).** `probe-kotlin.ts` builds the provider name from `input.config.name` (L322–323). The lane takes that input from the manifest, and in the copy the manifest still says `HarnessConsumer`. MP-4 did not meet this problem, because its pins copy set `name: DesignerPunk`.
+   - Whatever Data builds, I rule two sources out:
+     - **The manifest.** The step would go red for the wrong reason.
+     - **The regenerated output.** A generator that ignored the default and emitted a fixed name would make the probe follow it, and the step would pass without ever compiling the shared name. That is the very regression the step exists to catch.
+   - Two sources are acceptable:
+     - the name the copy's installed `loadConfig` resolves;
+     - a harness constant.
+   - Either way, the `default-name:` line prints the name the probe was given, and the verdict passes only if it is `DesignerPunk`.
+   - Add that condition to criterion 2, and a falsification case for a name other than `DesignerPunk`. This also answers whether `probe-kotlin.ts` needs editing: it does not, if the lane passes the name in. → tasks.md Task 20, criteria 2 and 3; Primary Artifacts
+4. **State the standing effect on later units.** Today every expected entry in `harness-android-tokens.tsv` is keyed in `probe:ProbeTokens.kt`, so `:tokens` compiles clean. The new step has no expected list. From U7a on, any `e:` line in `:tokens` therefore turns this required job red, whatever the list holds.
+   - As the emitter's owner, I accept that: generated Kotlin that does not compile in the consumer's own module is never a defect to tag.
+   - But U8 (mine), U9 and later units should read it in the plan, not discover it. Under U8's exception-(c) criterion they could otherwise expect to tag a `:tokens` addition.
+   - Add a sentence to Task 20 or to design § 2's dated line: "From U7a, `:tokens` holds a floor of 0 `e:` lines under the default name; no expected-list entry can admit one there."
+   - Add one more: "If the step is red because of the generated output, Task 20 stops, and the fix is the emitter's (Ada), by a consult and an amendment; this row admits no `src/generators/**` or `src/config/**` edit." → tasks.md Task 20; design.md § 2, "The default-name step"
+
+**Noted outside my seat:** criterion 2 calls the verdict "a pure function over the Gradle log and the copy's config". Two of its conditions, though, need more input than that:
+- `gen=` equal to the number of `.kt` files written needs that file count;
+- "given exactly `ProbeFamily.kt`" needs `probe.sources.used`.
+
+MP-4's evidence holds both: three files under the checksums table, and `probe.sources.used`. So the pass case on the committed log is buildable once the inputs are named. This is Data's to word. → tasks.md Task 20, criterion 2
+
+**Thurgood's `w:` call:** I accept it on the name contract's side. An overload or name ambiguity is reported as an `e:` line, never a `w:` line, so not keying warnings loses nothing the step exists to catch.
+
+**Counter-argument, worked against my fixes:**
+- Fixes 2–4 add conditions to a step whose settled shape is small, and each condition is one more way for a required job to go red.
+- What I folded in:
+  - fix 2 asks only for a count the verdict can already compute from its own input;
+  - fix 3 adds no new red at H when the name source is right;
+  - fix 4 adds no check, only text.
+- **What survives:** fix 4 makes the default-name step, not the expected list, the authority over `:tokens` for the rest of the spec. If U9's custom-theme instances, or a toolchain bump, produce a real `:tokens` error that Peter would rather tag than fix in-unit, the only path is a grant amendment to the required job. That is a slower path than a list entry, and I have chosen it on the emitter's behalf.
+- My cross-read's residual also stands, now with a weaker gain behind it (fix 1): U8 waits on U7a.
+
+#### [DATA R5] — tasks amendment 10 at `673113dd8`: Task 20 (U7a), the lane option, its verdict and the cost
+
+Read at `origin/task/129-tasks-amendment-10` @ `673113dd8` against `origin/main` @ `ee9996840`, 2026-11-07T21:30:36Z. The four settled points (a separate unit, `HarnessConsumer` kept, Android only, no rename) are not reopened here. **Verdict: blocking.** There are two blocking items, 1 and 2. Each is fixed by a sentence or two in Task 20's criteria, and design § 2 needs the matching dated line. The rest are fixes I would fold in the same pass.
+
+**Answers to `[THURGOOD R20]`'s questions for me**
+
+- **Call 1, the `w:` reading: accepted.** A `w:` line is counted and printed, and it does not fail the step. A toolchain bump changes Kotlin's warnings, and a function sharing a name with a class gets no warning, so failing on `w:` lines would add false reds without guarding the default name any better. Item 2 below narrows the other half of the call: "0 diagnostics as `parse-kotlin.ts` keys them" is not enough on its own. → tasks.md Task 20
+- **Call 2, the copy outside the workspace: accepted, with one addition.** Besides the logs and the verdict, the option also writes the copy's lane lists (`probe.sources`, `tokens.sources`), the emitted `ProbeFamily.kt`, and the resolved config as JSON under `harness-out/default-name/`. That is a few KB in total. A red step can then be diagnosed from the uploaded artifact alone, which is the same set of files MP-4's evidence needed (`probe.sources.used`, `ProbeFamily.kt`). The wording also needs one change. Gradle writes its build output into `harness/android/**/build` in the workspace, as the main lane already does, so "in the workspace it writes only its logs and its verdict" is not literally true. It should say "under `harness-out/` it writes only `harness-out/default-name/`". → tasks.md Task 20, first criterion
+- **20.1's size: 0.5 sessions, confirmed**, including items 1–4 below. The added falsification cases are variants of one committed log.
+- **Per-PR minutes on the ubuntu job: about 10–20 seconds for the step, and under 30 seconds at worst.** My cross-read gave "under a minute, unmeasured"; this estimate is narrower and rests on measured jobs. Basis: six `harness-android-tokens` pull-request jobs today (runs 42411654528, 42412466493, 42412704593, 42413223222, 42413809659 and 42414978519, read from the jobs API) took 89–150 s in total. In each, the "Lane" step took 15–21 s, and that step does more Gradle work than this one. It makes a `resolveAll` call, then compiles `:tokens`, the full probe and `:dp`. The new step compiles `:tokens` plus one probe file, with no resolve and no `:dp`. It runs on the Gradle daemon the self-test already started, so its cost is the same on a cache hit and a miss. The non-Gradle part is small. Locally, copying the 30 MB pruned consumer took 0.8 s and `generate` took 0.4 s. I allow 2–4 s for both on the runner. The job then goes from about 1.5–2.5 minutes to about 1.7–2.9 minutes, well inside the 2-minute step hold and the 10-minute job hold. Surviving counter-argument: this is an estimate drawn from neighbouring steps, not a run of the step itself, and the criterion rightly measures the real figure at H. → tasks.md § "Sizes"; Task 20, the cost criterion
+- **Does `ProbeFamily.kt` need the default name passed in? Yes, as an input. `probe-kotlin.ts` needs no change.** `generateProbe` already takes `config.name` and builds the provider and family names from it (`kotlinProviderFunction`, `familyTypeName`). The option passes in the name that the copy's installed `loadConfig` resolves. That is the same call `consumer.ts` makes (`READ_CONFIG_SCRIPT`), so the probe reads the name that `generate` used and never guesses it. It must not take the name from the manifest, which says `HarnessConsumer`. It must not take it from the regenerated Kotlin either: that would be circular, and it would pass under any default name. The `probe-kotlin.ts` Primary Artifact can be dropped, or left in place as "only if"; that is Thurgood's call. `harness/android/**` needs no build-file change. The self-test's pattern is enough: the option writes empty `dp.pkg.sources` and `dp.gen.sources` and an empty `dp.res` folder, because Gradle configures `:dp` even when no `:dp` task is requested, and `dp/build.gradle.kts` reads those lists while it configures. → tasks.md Task 20, Primary Artifacts
+
+**Items**
+
+1. **(Blocking) As written, the copy's `generate` cannot run in CI.** `harness-generate` runs `consumer.ts` without `--keep-node-modules`, so the uploaded consumer's `node_modules` holds only `@3fn/core`. `@3fn/core` has runtime dependencies (`js-yaml`, `tsx`, and others). I ran the installed `generate` in a copy of my MP-4 pruned consumer, and it stops with `Error: Cannot find module 'js-yaml'` (`generateTokenIndex.js`). My MP-4 run used an unpruned consumer, which is why it did not hit this. Fix: the option supplies the package's dependencies from the job's own `npm ci` install. In the copy, it symlinks each entry of the workspace's `node_modules` except `@3fn`. I tested this route, and a `NODE_PATH` route as well. With `name` removed, both produced a `DesignTokens.android.kt` byte-identical to MP-4's (`cc8b60a0…9d4d`), and `ComponentTokens` and `ProductTokens` matched too. I would build the symlinks, because `NODE_PATH` serves only CommonJS `require`. The criterion should name where the dependencies come from. The difference this introduces goes in the completion doc: the dependency versions come from the repository's lockfile, not from the consumer's own install. The generator under test is still the packed `dist`. Not chosen: `--keep-node-modules` in `harness-generate`, because the grant excludes edits to other jobs and the upload would grow by about 45 MB. → tasks.md Task 20, first criterion
+2. **(Blocking) The verdict can pass a compile that failed.** The criterion requires "0 diagnostics as `parse-kotlin.ts` keys them" and that each compile "ran". `parse-kotlin.ts` keys only `e:` lines that have a `file://` location under a root (rules 1 and 4). An `e:` line with no location, such as a compiler crash or an out-of-memory error, is not keyed at all. An `e:` line whose path is under no root goes to `unrooted`, not to the keys. A `FAILED` task also counts as having run. The probe's count lines print in `doFirst`, before the compile, so `provider read 5 of 5` appears on a failing compile as well. A wrong root passed to the parser would therefore read as green. Fix: the pass conditions become: each of `:tokens:compileDebugKotlin` and `:probe:compileDebugKotlin` has outcome `succeeded`; Gradle's exit status is 0 and the log is complete (`BUILD SUCCESSFUL`); and keyed diagnostics, `unrooted` and `unattributed` are all 0. The same correction applies to design § 2, "The default-name step" ("Its floor is 0 diagnostics, as `parse-kotlin.ts` keys them"). → tasks.md Task 20, second criterion
+3. **The verdict's inputs are not all in the Gradle log.** "The probe was given exactly `ProbeFamily.kt`" cannot be read from the log, because `:probe` prints no source list. "`gen=` equals the number of `.kt` files the second `generate` wrote" needs that number from somewhere. Fix: the pure function takes the Gradle log, Gradle's exit status, the parser roots for the copy, the probe source list, the count of `.kt` files in the copy's Android output folder, and the resolved config. Before regenerating, the option empties that output folder (the config's `output`), so that the files on disk are exactly the ones this `generate` wrote. Otherwise a stale file from `HarnessConsumer` could survive and be compiled. → tasks.md Task 20, first and second criteria
+4. **Check the resolved name and abbreviation, not only the config text.** "The copy's config declares no `name`" shows that the line was removed. It does not show that the default name took effect, or that the default is still `DesignerPunk`. If `ConfigLoader`'s default ever changed, the step would compile a name with no clash and stay green, and it would no longer test S-1. Fix: keep the text check, which must find no top-level `name` property. The removal has to match exactly one top-level line; the themes' own `name:` entries stay. Also require that the resolved config reads `name: DesignerPunk` and `abbreviation: HX`. The constant `DesignerPunk` lives in `lane.ts` with a comment citing `ConfigLoader.ts` `DEFAULTS`, so a change of default turns the step red and names both values. The abbreviation half is Req 2.2. If the edit to the copy also lost `abbreviation`, the default `DP` would hide a hard-coded `DP`. The transform fixture should be the config `init` actually writes, `evidence/2026-11-07-mp4-default-name-run/consumer.designerpunk.config.spelled-out-reference.ts`, because its theme entries carry `name:`. → tasks.md Task 20, second and third criteria
+5. **Falsification cases to add.** The listed cases are the right ones, and none should be dropped. These are missing, each a fail:
+   - (a) `:tokens` `FAILED`, exit 1, with only an unlocated `e:` line;
+   - (b) one `e:` line whose path is under no root;
+   - (c) no `:probe:compileDebugKotlin` outcome, which is the probe being skipped because `:tokens` failed;
+   - (d) no `provider read` line at all;
+   - (e) `gen=2` against 3 written;
+   - (f) a log with no `BUILD` closing line;
+   - (g) a resolved name of `HarnessConsumer`;
+   - (h) a resolved abbreviation of `DP`.
+
+   The pass on the committed MP-4 log stays as written. Its other inputs are set to match that run: 3 files written, a probe list of `[ProbeFamily.kt]`, and a resolved `DesignerPunk`/`HX`. Cite the log at `c09b9be27`. → tasks.md Task 20, third criterion
+6. **The option's name and the line it always prints.** I name it `--default-name`: `npx tsx harness/android/lane.ts --default-name --consumer "${RUNNER_TEMP}/harness-consumer" --work "${GITHUB_WORKSPACE}/harness-out/default-name"`. The copy goes in `mkdtemp` under `RUNNER_TEMP`, falling back to `os.tmpdir()`. The option prints exactly one `default-name:` line on every exit, including a setup failure, as `default-name: FAIL setup (<step>: <detail>)`. The step then always has a line to annotate. For 20.2: if no line is printed, the step writes `::error title=default-name::no default-name line` and fails. → tasks.md Task 20, first and fourth criteria
+7. **Its Gradle call runs with `--offline`.** The job's resolve step has already succeeded by the time this step runs, so every dependency is in `~/.gradle`. Under `--offline`, anything this compile needs that the resolve did not fetch fails as an ordinary, deterministic error. Without it, a registry fault here would read as an `::error title=default-name::` red, against design § 3, "Verdicts name their side". The arguments are `SELFTEST_GRADLE_ARGS` plus `--offline`. This is my choice inside `lane.ts`, and the workflow is unaffected. → tasks.md Task 20, first criterion
+8. **Placement needs one more word.** Between "Comparator" and "Upload the lane output" there are two steps today, "Verdict annotation" and "Save the Gradle cache", both `if: always()`. "After the Comparator, before Upload" therefore leaves three positions open. I would place the step directly before Upload, after "Save the Gradle cache". The saved cache then holds exactly what it holds today, with nothing the second compile added. With no `if:`, the step still runs only when every earlier step passed. The same wording goes in the grant record's admitted edit 1. → tasks.md Task 20, fourth criterion; `.kiro/issues/2026-11-07-default-name-compile-grant.md` § "Grant"
+9. **An observation for Thurgood, not in my seat.** If this step fails while the comparator passed, the job's conclusion is `failure` and its `harness-verdict` annotation reads `PASS`. `stability.ts` reads the verdict from that annotation and the conclusion from the check run. The record's verdict column will therefore show `PASS` for a red job, and a single default-name red at a head shows up only through attempts-differ. `[THURGOOD R20]` says the same about the demotion read. What I am adding is that the record's display will look contradictory. Whether `stability.ts` should also read the `default-name` annotation is Thurgood's and Stacy's call. → tasks.md § "Decision 6"
+
+**Counter-argument, worked against my own items.** Items 2 through 5 make the verdict stricter, and a stricter verdict on a required job means more ways for it to go red. Folded in: every added condition is one the MP-4 run already meets, and the main lane already demands each of them of its own compiles (a `succeeded` outcome, a complete log, no `unrooted`). None of them is a new kind of strictness. **What survives**: item 1's symlinks make the copy's `generate` depend on the repository's dependency tree, not the consumer's. A future `@3fn/core` dependency that is missing from the repository's lockfile would make the step fail, even though a real consumer would install that dependency and work. It would fail loudly, as a setup failure, not as a false green. It is still a red that a consumer would never see. I see no fork here for Peter.
+
+**Tested here, nothing committed**: I ran `generate` in two throwaway copies of `scratchpad/mp4/consumer-pruned` with `name` removed: once bare (it failed, item 1), once with `NODE_PATH`, and once with symlinked dependencies (both reproduced MP-4's checksums). The copies are deleted. Their logs are in `scratchpad/amend10-probe/`. The MP-4 toolchain and trace were not touched.
+
+#### [STACY TASKS R7] — LENS read of tasks amendment 10 (read at `origin/task/129-tasks-amendment-10` `673113dd8`)
+
+I read Task 20, the grant record and design §§ 2 and 4 against `git diff origin/main...origin/task/129-tasks-amendment-10`. I also read `.github/workflows/native-harness.yml`, `scripts/harness/parse-kotlin.ts`, `harness/android/{lane.ts,tokens/build.gradle.kts,probe/build.gradle.kts}` and Data's `evidence/2026-11-07-mp4-default-name-run/` on `main`. Since the branch was cut, `main` has moved to `c71fb2452` (U7, #739). That merge touches none of those files, and the branch still merges cleanly over it (`git merge-tree`). Under the mirror clause, the wording of any repair is Thurgood's and Data's. I name each defect and the referent that would make it decidable, not the text. This entry is a LENS read, feedback only, never a gate.
+
+**Answer to `[@STACY]` (THURGOOD R20).** Question 2 below covers the grant's admitted and excluded edits. Question 3 covers the cost criterion's hold.
+
+**Question 1: can each U7a criterion be decided at its merge without asking the author?**
+
+These criteria can be decided as written:
+- the `HarnessConsumer` row (`git show M:harness/pins.yaml`);
+- the `.github/**` row (`--numstat`, `verify-gate-registration.sh`, and `.github/in-lane-guards.json` unchanged). `probe-kotlin.test.ts` and `native-harness-workflow.test.ts` are both already registered, at L281 and L305;
+- the workflow-test row (red at the base can be reproduced from `git show <base>:.github/workflows/native-harness.yml`);
+- the H-annotation row (the annotations endpoint outlasts the logs);
+- the four-contexts row and the root-records row.
+
+The verdict rows are where I would have to ask.
+
+**High-1. "Each ran" lets the verdict pass a compile that failed.**
+- `parse-kotlin.ts` gives each compile one of three outcomes: `failed`, `succeeded` or `not-run` (its rule 5). It does not key an `e:` line that has no `file://` location, such as a driver or daemon error.
+- So `:probe:compileDebugKotlin FAILED` with only an unlocated `e:` line reads as 0 diagnostics, and the task did run.
+- `provider read <k> of <m>` is no evidence that the compile worked. `probe/build.gradle.kts` prints it in `doFirst`, before compiling, by counting `// @provider ` markers in the source text. The planted-internal fixture shows the line printed after a `FAILED` header.
+- `gen=` is printed the same way, in `:tokens`' `doFirst`.
+- So every listed condition can hold on a build that ends `BUILD FAILED`, and nothing in the criterion makes the option exit non-zero then.
+- The lane already reads this strictly: `lane.ts` L381 and L631 test `outcome !== 'succeeded'`. The verdict row does not say which reading it means, and the falsification list has no case that tells them apart.
+- **Decidable referent:** the outcome `parse-kotlin.ts` already returns (`succeeded`, which it also gives to `UP-TO-DATE` and `FROM-CACHE`), with `logComplete` and the closing `BUILD` line. One falsification case: a `FAILED` compile with no located `e:` line.
+
+→ tasks.md § "UNIT 7a", Task 20, the verdict criterion and the `probe-kotlin.test.ts` criterion
+
+**High-2. No condition in the verdict depends on the name, so it passes when `HarnessConsumer`'s output is what compiled.**
+- Suppose the option is wired to compile the first `generate`'s Kotlin and a `ProbeFamily.kt` emitted from the downloaded manifest. Both name `HarnessConsumerTheme`.
+- Then every condition still holds:
+  - 0 diagnostics;
+  - both tasks ran;
+  - `gen=3` equals the 3 `.kt` files the second `generate` wrote (it writes the same three files);
+  - the probe got a file named `ProbeFamily.kt`;
+  - `provider read 5 of 5`;
+  - the copy's config has no `name`.
+- In that case the default name was never compiled.
+- The pasted H line (the H-annotation row) shows no fact that only the default name produces. So it cannot carry the property the unit exists for: the counter-argument in the grant record and in `[THURGOOD R20]` says only a CI context makes the default name's evidence independent.
+- At merge I could still check C1 by reading `lane.ts`. That is a judgment about code, made once. The evidence from each run, which is what guards U8 onward, would not show it.
+- **Decidable referent:** a fact the run itself prints that only a default-name generation yields. For example:
+  - the provider reads in the `ProbeFamily.kt` it compiled name `DesignerPunkTheme`; or
+  - the `:tokens` sources are the copy's files, by path.
+- Add one falsification case on a log, or a source list, named for `HarnessConsumer`.
+- This is also the fit side of Thurgood's second `[@DATA]` question. Whether `probe-kotlin.ts` takes the name as an input is Data's to answer. What the verdict reads to show the answer is what makes it checkable.
+
+→ tasks.md § "UNIT 7a", Task 20, the verdict criterion and the H-annotation criterion
+
+**Medium-1. The verdict criterion contradicts its own inputs.**
+- It calls the verdict "an exported pure function over the Gradle log and the copy's config".
+- Two of its conditions need inputs that are in neither:
+  - the number of `.kt` files the second `generate` wrote (the lane's `tokens.sources` list, or the generate output);
+  - the probe being given exactly `ProbeFamily.kt` (the lane's `probe.sources`). Data's run records it in `probe.sources.used`, not in the Gradle log.
+- A function with four inputs is ❌ if the clause is read literally and ✅ if it is read for intent. I would have to ask which.
+- **Decidable referent:** name the inputs. The fix for High-2 may add one.
+
+→ tasks.md Task 20, the verdict criterion
+
+**Medium-2. "The copy's config declares no `name`" does not say top level.**
+- The real harness consumer config holds nested `name:` keys: `themes: [{ name: 'dark', … }, { name: 'wcag', … }]` (`consumer.designerpunk.config.spelled-out-reference.ts`).
+- A removal that strips every `name:` deletes the theme names. A check that greps for `name:` fails on every run.
+- The `probe-kotlin.test.ts` criterion's fixture is required to hold only `name` and `abbreviation`, so neither direction is tested.
+- **Decidable referent:** the top-level property, and a fixture that carries theme entries with `name`.
+
+→ tasks.md Task 20, the option criterion, the verdict criterion and the `probe-kotlin.test.ts` criterion
+
+**Medium-3 and Medium-4** are under Question 3.
+
+**Medium-5 (the amendment did not cause it, but adds to it). Task 18 still reads "Each of the twelve units' gating parents' completion docs".**
+- With U3a and U7a there are fourteen declared units.
+- The clause after it, "no 129 unit PR missing one", covers the checks-API half only.
+- At CLOSEOUT I would have to ask whether Tasks 19 and 20's docs are in that population.
+
+→ tasks.md Task 18
+
+**Low-1. The path-isolation criterion's list misses a path.**
+- The list reads as exhaustive ("the paths that the existing steps' `if:` conditions and annotations read: …").
+- It omits `harness-out/selftest/infra.json`, which the Verdict annotation step reads (`native-harness.yml` L314–L315, `harness-android-tokens`).
+- No collision follows, because the option writes only under `harness-out/default-name/`. As a statement, though, the list is false.
+
+→ tasks.md Task 20, the path-isolation criterion
+
+**Low-2. "The `w:` warning count" does not say what it counts.** I will read it as lines beginning `w: `. Gradle's own "Deprecated Gradle features" notice is not one of them.
+
+**Low-3. The option's Gradle invocation is never printed.** Req 2.6 says each context "SHALL print that order with the exact compiler invocation it ran". Task 20 traces Req 2.7 and not 2.6, and no criterion requires the option to print its invocation or its file order. I note the gap and leave whether it matters to Data and Thurgood.
+
+**Question 2: is the grant record well formed for my ARMING read?**
+
+Yes. I can make both reads from git and the PR bodies.
+- **Activation read (at amendment 10's merge).**
+  - `**Grant paths**:` is followed by its list, up to a blank line. That is the block LIVENESS read 4's query keys on, and it names one `.github/` path.
+  - The PR that activates the grant is the PR that adds the record, so my `**Grant activation read**: .kiro/issues/2026-11-07-default-name-compile-grant.md @ <amendment 10's squash SHA, 9 characters>` is the line that query looks for. I will commit it in a `completion/arming-reads-<date>.md` record, as #736 did.
+  - No governance-law path is listed.
+  - M1's excluded acts are carried, and none is named as admitted. So there is no admitted act for me to read, and no `**Deleted lines**:` block.
+  - The two admitted edits are bounded by job, by position and by keys (`if:`, `continue-on-error`).
+  - Owner, Class (`P2 obligation (guard) · grant`), and a Trigger with exactly one backticked `path:` token are all present (README rules 1 and 12).
+  - The grant list is authored outside the diff it bounds (rule 10).
+- **Fixing-PR read (at U7a's merge).** The record says no line is deleted. So any deleted line in `native-harness.yml` is an act outside the grant, not a missing quote. The read is `--numstat` deletions = 0, with the paths a subset of `[native-harness.yml]` as listed at the activating merge.
+- **Reads I will make at the merges** (not text fixes):
+  - amendment 10's PR body names the record and the path list, and carries `**ARMING**: at this merge and at the fixing PR's merge` (no PR is open yet);
+  - U7a's PR body cites its path list. README rule 8 requires this, and Task 20's Post-Completion does not repeat it;
+  - the grant is archived at U7a's merge (rule 5). I read the root-records criterion at M with rule 3's resolution, so the move does not empty that criterion's population.
+- **One note on position.** "After the Comparator step and before the Upload step" admits three slots in `harness-android-tokens`: before Verdict annotation (L308), before Save the Gradle cache (L324), and after it. I can decide any of them. Nothing in the job depends on which slot is used: both steps after it have `if: always()`, and the new step has no `if:`, so it is skipped after any earlier failure.
+
+**Question 3: can the cost thresholds be decided?**
+
+The comparisons can be decided: "more than 2 minutes" for the step and "more than 10" for the job, at the API's one-second resolution. So can the hold. It is the `**Open for Peter**:` marker, answered by a `**Peter answered**:` line, which the merge-hold check reads. Two of the referents cannot be decided yet:
+
+- **Medium-3. Which run, and which attempt, at H?**
+  - H can carry several runs: a re-run attempt, a `synchronize` and a `reopened` event, or a dispatch.
+  - A cold run and a warm run differ by about a minute (below).
+  - "The job at H" lets the author pick.
+  - **Decidable referent:** the pull-request run and attempt whose summary line the four-contexts row pastes, or every attempt at H. Record its `cache` annotation beside it.
+- **Medium-4. "The newest pull-request run at this unit's base" has nothing to match.**
+  - `native-harness.yml` triggers only on `pull_request` and `workflow_dispatch` (L32–L34).
+  - The base is a commit on `main`, and no pull-request run has a `main` commit as its head SHA.
+  - The row puts no threshold on this figure, so it is the weaker of the two items. Still, I would have to ask which run it means.
+- **Low-4. "The job's duration" is not defined.**
+  - The jobs API gives `created_at`, `started_at` and `completed_at`.
+  - `stability.ts` defines duration as `completed_at − started_at`.
+  - 125-A Req 6.3 measures something else: wall-clock time from the push to all required checks complete, cold, "~10 minutes". The 10 is borrowed from it, as Decision 6 already does.
+  - Naming `stability.ts`'s definition makes the threshold decidable.
+- **Measured headroom** (so Peter can see how close the hold is):
+  - `evidence/harness-stability.md` at `3422fc026` lists, for `harness-android-tokens`, 40 `cache: miss` runs at 107–169 s and 45 `cache: hit` runs at 63–138 s.
+  - The seven pull-request runs completed on 2026-11-07 between 42405937743 and 42414978519 ran for 88–150 s each. In those runs, their Lane step (all three Gradle compiles, warm) took 17–21 s (jobs API, read this session).
+  - The 10-minute branch is about four times the slowest recorded job. The 2-minute branch is the live one, and only through the copy and the second `generate`. That part is unmeasured.
+
+**Thurgood's observation: does ARMING fire at U8's merge?**
+- Not under my trigger table. Task 13's edit to `native-harness.yml` travels a tasks-row grant, and that is none of ARMING's events: no barrier arms, the required-check set does not change, it is not a P1 PR, there is no issue-row grant, and `native-harness.yml` and `scripts/harness/**` are not on the instrument path list.
+- It would fire only if U8's diff touched `.github/in-lane-guards.json`. Task 13 adds `d2-check.test.ts` but does not list that file.
+- I read U8's `.github/**` edit at CLOSEOUT, against Task 13's Grant limits ("as Task 5's, admitting none"), and RELEASE is the backstop.
+- **Fork for Thurgood and Peter, not picked here.** Amendment 10 routes U7a through an issue-row grant because the step "changes a required job". Task 13's step in `harness-generate` changes required jobs the same way: "Require harness-generate" fails `harness-android-tokens` on any `harness-generate` result other than `success`. So the plan now carries two equivalent edits by different routes, and only one of them gets a read at merge. The choices:
+  - **(a)** Leave it. The CLOSEOUT and RELEASE reads cover U8.
+  - **(b)** Re-route Task 13's workflow edit through an issue-row grant, so ARMING fires at its merge.
+  - **(c)** A class change for Thurgood's seat: whether a tasks-row grant over a required job's workflow should fire ARMING. I read the trigger set; I do not widen it.
+
+**Blocking:** High-1 and High-2. Both are cheap to fold, and they should be folded before amendment 10 merges. A criterion changed after U7a starts would be a moved goalpost.
+
+**Surviving, after the folds:** the unit's only live red is still shown by unit cases, not by a run, as Thurgood states. A run that fails in the copy or the second `generate` for an environment reason (a fetch, or the disk) carries no `harness-infra`, so it counts as a code failure and toward the demotion read's attempts-differ signal.
+
+#### [THURGOOD R21] — tasks amendment 10, the review round folded (`[ADA TASKS R5]`, `[DATA R5]`, `[STACY TASKS R7]`)
+No settled item moved: U7a stays its own unit, `HarnessConsumer` is kept, the step is Android only, and the provider is not renamed.
+- **The floor passed a failed compile** (Stacy High-1, Data item 2). The verdict now needs both compiles `succeeded` as `parse-kotlin.ts` returns it, Gradle exit 0, a log ending `BUILD SUCCESSFUL`, and 0 keyed, `unrooted` and `unattributed` diagnostics. `provider read` and `gen=` print in `doFirst`, so they no longer stand as evidence of a compile. Data's cases (a)–(f) are added. → tasks.md Task 20, criteria 2 and 3; design.md § 2
+- **Nothing tied the verdict to the name** (Stacy High-2, Ada fix 3, Data's answer). The probe is given the name the copy's `loadConfig` resolves, never the manifest's and never one read from the output. The verdict passes only if that name and the resolved config's name are `DesignerPunk`, the abbreviation is `HX`, and every provider read in the compiled `ProbeFamily.kt` names `DesignerPunkTheme`. `DesignerPunk` is a `lane.ts` constant citing `ConfigLoader.ts`'s defaults. Cases added: a log and source named for `HarnessConsumer`, a resolved `HarnessConsumer`, and a resolved `DP`. The H annotation names the name. → criteria 2, 3 and the H-annotation criterion
+- **The provider floor** (Ada fix 2): `m` equals `providerReads(<resolved config>.themes, 'android')`'s count, with a `family =` call among the reads. Case added: the default read alone fails. → criteria 2 and 3
+- **The pruned consumer** (Data item 1): the option symlinks the workspace's `node_modules` entries, except `@3fn`, into the copy, Data's tested route, which reproduced MP-4's checksums. The completion doc discloses that the dependency versions come from the repository's lockfile. Also folded from Data: the option empties the Android output folder before regenerating (item 3), runs `--offline` (item 7), is named `--default-name` and always prints one line (item 6), and its `harness-out/` extent is worded as he gave it. The `harness/android/**` and `probe-kotlin.ts` artifacts are dropped, since neither changes. → criterion 1; Primary Artifacts
+- **The false rationale** (Ada fix 1): U8 emits `<Component>Tokens` names, not `DesignerPunk*`. It is corrected with a dated line in the order paragraph and the grant record's counter-argument. `[THURGOOD R20]` above keeps the error as written, as history. → tasks.md "Order and dependencies"; the grant record
+- **The standing effect** (Ada fix 4): stated in Task 20 and in design § 2, in Ada's words. → tasks.md Task 20, "Standing effect"
+- **Cost referents** (Stacy Medium-3, Medium-4, Low-4). The run and attempt are the ones whose summary line the four-contexts criterion pastes, with its `cache` annotation. The duration is `stability.ts`'s `completed_at − started_at`. The comparison run is the newest `harness-android-tokens` pull-request run of another PR that completed before U7a's PR opened, named by run id. Data's 10–20 s estimate (under 30 s at worst) is in § "Sizes". → the cost criterion
+- **Folded too**: Stacy Medium-1 (the verdict's inputs are named); Medium-2 (the top-level `name`, and the spelled-out reference config as the fixture); Medium-5 (Task 18's population is the fourteen declared units, dated); Low-1 (`harness-out/selftest/infra.json` added); Low-2 (`w:` counts lines beginning `w: `); Low-3 (the option prints its invocation and file order, and Req 2.6 is traced); Data item 8 (the step sits directly before the upload step, in the criterion and the grant's admitted edit 1). Ada's C19 pointer is a Primary Artifact, in her standing scope, after H.
+- **Not folded, with reasons**:
+  - Data item 9 (`stability.ts` will show `PASS` for a job the step made red): no change in 129. After promotion, the record is read only for demotion (b), and its signals (infra findings, infra rate, attempts-differ) read conclusions and attempts, not the verdict column. The step's own `::error` annotation outlasts the logs.
+  - Stacy's fork on Task 13's route, (a) leave it, (b) re-route its `harness-generate` step through an issue-row grant, (c) a class rule for tasks-row grants over a required job's workflow: **not picked here; it is Peter's.** It does not touch amendment 10, and it has to be ruled before U8's branch is cut. My lean is (b), for the reason I gave for U7a. Working the counter-argument against it: (a) costs nothing, and CLOSEOUT and RELEASE still read U8's edit. What survives is that under (a) only one of two equivalent edits to required jobs gets a read at its merge.
+- **Surviving counter-argument**: the stricter verdict is more ways for a required job to go red. Each condition is one MP-4's run meets and one the main lane already demands of its own compiles. The step's only live red is still shown by unit cases, not by a run.
