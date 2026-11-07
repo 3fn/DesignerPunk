@@ -25,6 +25,10 @@
 # § "completion-criteria-parity", 2026-10-03 history line, gate-bite throwaway PR #290). Counted 18 → 19
 # in this same recorded change; RED by design until Peter's branch-protection act adds the context.
 #
+# PROMOTED 2026-11-07: "law-ratified" (ballot 2026-11-07-merge-hold-and-law-ratified-checks item 5; grant
+# .kiro/issues/2026-11-07-merge-hold-checks-build-grant.md). Counted 20 → 21 in this same recorded change;
+# RED by design until Peter's branch-protection act adds the context.
+#
 # PROMOTED 2026-11-07: "harness-android-tokens" (Spec 129 tasks.md Decision 6, "The promotion lifecycle"; grant
 # .kiro/issues/2026-11-07-promote-harness-android-tokens-grant.md). Counted 19 → 20 in this same recorded change;
 # RED by design until Peter's branch-protection act adds the context.
@@ -89,8 +93,9 @@ EXPECTED_CONTEXTS=(
   "Section Citation Guard"   # armed 2026-08-12 (Peter's flip; register § section-citation-resolution)
   "completion-criteria-parity"   # armed 2026-10-03 (Spec 127; register § completion-criteria-parity; gate-bite runs cited there)
   "harness-android-tokens"   # promoted 2026-11-07 (Spec 129 tasks.md Decision 6, "The promotion lifecycle"; grant .kiro/issues/2026-11-07-promote-harness-android-tokens-grant.md; Peter adds it to branch protection)
+  "law-ratified"   # promoted 2026-11-07 (job of .github/workflows/merge-hold.yml; ballot 2026-11-07-merge-hold-and-law-ratified-checks item 5; grant .kiro/issues/2026-11-07-merge-hold-checks-build-grant.md; Peter adds it to branch protection)
 )
-EXPECTED_COUNT=20
+EXPECTED_COUNT=21
 
 # ── Query ────────────────────────────────────────────────────────────────────
 ACTUAL_JSON="$(curl -sfL \
