@@ -87,9 +87,19 @@ date: 2026-09-29
 ## `#thurgood-test-governance-spec-standards-civitas-steward`
 
 confirmer: stacy
-canonicalHash: sha256:d90b650ba35fa2ad3c2e707e595a6a7d9134aaa9480d813af59c707b26e58399
+canonicalHash: sha256:f4c12c98bf64fbc344b80c8d27f5e10a82bf16d67001a9beae4d5d994b47d8e6
 items: thurgood-test-govern-1, thurgood-test--role-1, thurgood-test--role-2, thurgood-test--role-3
-date: 2026-11-01
+date: 2026-11-07
+
+**Re-confirmed 2026-11-07 (Req 11.6.5d): the charter-scope ballot, site 4.**
+- **What changed**: one line of the unit, Thurgood's **Owns** line (L74). Ballot `.kiro/docs/ballots/2026-11-07-thurgood-charter-scope-harness-and-merge-hold.md` (RATIFIED, Peter, 2026-11-07T22:30:08Z; Status read on `main` at `f28a1fefd`) § 4 site 4. Its CI-regime clause gains "and bounded fixes to `merge-hold.yml`" and "and 2026-11-07"; a new clause follows it, "**the compile harness's stability script and rules module (`scripts/harness/stability.ts`, `native-rules.ts`)**"; and the line ends with the dated pointer "*(amended 2026-11-07 by ballot 2026-11-07-thurgood-charter-scope-harness-and-merge-hold § 4 site 4; prior text at f28a1fefd)*". Thurgood authored it at `a064ea06c`. I checked it against the ballot by script. The site-4 before-fragment occurs once in the line at `f28a1fefd`. The old line, with that fragment replaced by the after-fragment, equals the new line, reading `<date>` as 2026-11-07 and `<SHA>` as `f28a1fefd`. No other line of the file changed.
+- **The set is unchanged: 4 items.** `thurgood-test--role-1` was re-quoted as the whole line, pointer included (the 2026-11-01 precedent for `thurgood-test-govern-1`). It still names what the seat owns, so it stays a `member`. Each of the 4 is a verbatim substring of the unit with one occurrence, checked by script.
+- **The hash**: the canonicalHash moves from `sha256:d90b650ba35fa2ad3c2e707e595a6a7d9134aaa9480d813af59c707b26e58399` to the value above. I recomputed it with `hashText` over `partition(splitFrontmatter(...).body).units`, from a scratchpad script outside the repo. It equals what `operative-set-freshness` printed. The item's re-quote and the overlay pin are in my authoring commit `f5e6a10a2`, which moves no canonicalHash.
+- **Read before this act**: the unit whole, `cat -n .kiro/steering/Agent-Directory.md` L70–L83, at `e0df47b3f`, through a tool call.
+
+**Ruling: CONFIRMED at 4 items.**
+
+**Re-confirmed 2026-11-01 (prior record, superseded)**: canonicalHash `sha256:d90b650ba35fa2ad3c2e707e595a6a7d9134aaa9480d813af59c707b26e58399`, 4 items, as below.
 
 **Re-confirmed 2026-11-01 (Req 11.6.5d): the steward-verb carve-out dropped from the Q5 cut.** *(This re-does `2b21a6f6e`, whose read claim was false. Erratum: `.kiro/issues/2026-11-01-stacy-c1-acts-read-claim-false.md`; re-cut under R11 line 18.)*
 - **What changed**: one line of the unit, Thurgood's "Charter cut" line (L78). It loses ", and the verification of claims whose evidence requires the steward toolset" and gains the dated pointer "(amended 2026-11-01 by 2026-09-17-spec-127-outline-settle § 11.3; prior text at 465af3544)".

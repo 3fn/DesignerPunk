@@ -22,9 +22,40 @@ date: 2026-09-29
 ## `#in-scope`
 
 confirmer: stacy
-canonicalHash: sha256:7beb0570510b6af92be4cf368831f0ea152bbfdf9c1a6867bcd92c1fb792de39
-items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10, civitas-1, civitas-2, civitas-3, civitas-4, civitas-5, civitas-6, civitas-7, civitas-8, civitas-9, scope-12, scope-13, scope-14, scope-15, scope-16, scope-17, scope-18, scope-19, scope-20, scope-21
-date: 2026-10-20
+canonicalHash: sha256:8dde99e82eec7cab9a729a7a0ead62d92b01131add3e1cb4c056b1332b0e2d55
+items: scope-1, scope-2, scope-3, scope-4, scope-5, scope-6, scope-7, scope-8, scope-9, scope-10, civitas-1, civitas-2, civitas-3, civitas-4, civitas-5, civitas-6, civitas-7, civitas-8, civitas-9, scope-12, scope-13, scope-14, scope-15, scope-16, scope-17, scope-18, scope-19, scope-20, scope-21, scope-22, scope-23, scope-24, scope-25, scope-26, scope-27, scope-28, scope-29, scope-30, scope-31, scope-32, scope-33
+date: 2026-11-07
+
+**Re-confirmed 2026-11-07 (Req 11.6.5d): the charter-scope ballot, sites 2 and 3.**
+- **What changed**: two bullets. Ballot `.kiro/docs/ballots/2026-11-07-thurgood-charter-scope-harness-and-merge-hold.md` (RATIFIED, Peter, 2026-11-07T22:30:08Z; Status read on `main` at `f28a1fefd`). Thurgood applied both at `a064ea06c` as profile author. I checked both by script: each after-text in § 4 equals the charter, byte for byte.
+  - **Site 2, the CI-regime bullet (L372)**: the P1c sentence ("In `.github/workflows/merge-hold.yml` only (P1c, …): a fix that passes that ballot's bound B1–B5 … and names what each added entry changes (B6). Anything else in that file goes through an issue-row grant or is Peter's.") is inserted before "Every other CI path goes through an issue-row grant (§ 3)". The old line with the site-2 before-fragment replaced by the after-fragment equals the new line.
+  - **Site 3, a new bullet (L374)**, "**Compile-harness instruments …**", after the six-roots bullet: item 1's grant over six files, its limits and its consults, with F-4 (a)'s review.
+- **`scope-12`, re-quoted**: the whole CI-regime bullet as it stands now, without its "- " marker, as before. P1c is a bounded grant over one more CI file inside the same standing test-lane scope, so it extends that item rather than adding one, the shape of the P1b re-confirmation (2026-10-20).
+- **Twelve new items for the site-3 bullet**, which I drafted as confirmer (C16: the confirmer establishes each item's complete text) in the authoring commit `f5e6a10a2`. Unlike the 2026-10-17 re-confirmation, the profile author drafted none, so authoring and confirming collapse on me for these twelve. Thurgood should read them when he joins this branch.
+  - **One member**: `scope-22`, the grant. It runs from the bullet's label through "and outlives Spec 129".
+  - **Eleven obligations**. Each can be broken on a PR that leaves the grant untouched, so each is its own item:
+    - `scope-23`: text first, code second;
+    - `scope-24`: a defect fix carries a falsification case that was red before it;
+    - `scope-25`: an unexplained red is read against the design text, and a silent text is a `DESIGN-GAP:`;
+    - `scope-26`: a mirror repair cites the design sentence it restores;
+    - `scope-27`: the mirror's author is never the emitter's author, and no grant goes to the seat holding `src/generators/**`;
+    - `scope-28`: Ada is consulted;
+    - `scope-29`: Kenya and Data review, with the platform-named hunk exception;
+    - `scope-30`: the annotation-interface consults;
+    - `scope-31`: Kenya on the iOS reads;
+    - `scope-32`: the `**Consulted**:` record;
+    - `scope-33`: the rest of `scripts/harness/**` and `harness/**` is not the seat's.
+  - **Splits I checked**:
+    - `scope-26` and `scope-27` fall inside one sentence, but a repair can cite its design sentence and still come from the emitter's author, and the reverse.
+    - `scope-23` and `scope-24` share a sentence, but a fix can respect the text and still ship with no falsification case.
+- **The set**: 41 items, the 29 prior items with ids unchanged plus `scope-22` to `scope-33`. Each is a verbatim substring of the unit with one occurrence, checked by script.
+- **The hash**: the canonicalHash moves from `sha256:7beb0570510b6af92be4cf368831f0ea152bbfdf9c1a6867bcd92c1fb792de39` to the value above. I recomputed it independently, as above, and it equals `operative-set-freshness`'s value. The items, the overlay pin and the removals are in my authoring commit `f5e6a10a2`, which moves no canonicalHash.
+- **Consumer rendering**: both bullets are removed for consumers. Site 3's bullet is a new removal citing `subtraction-1`, repo-internal tooling, the same ground as the six-roots bullet: neither the compile harness nor its demotion read ships to a consumer. The ballot named the cite as mine to choose. `subtraction-2`'s text is rewritten to site 2's line. The overlay's text does not change.
+- **Read before this act**: the unit whole, `cat -n canonical/agents/thurgood.md` L348–L375, at `e0df47b3f`, through a tool call.
+
+**Ruling: CONFIRMED at 41 items.**
+
+**Re-confirmed 2026-10-20 (prior record, superseded)**: canonicalHash `sha256:7beb0570510b6af92be4cf368831f0ea152bbfdf9c1a6867bcd92c1fb792de39`, 29 items, as below.
 
 **Re-confirmed 2026-10-20 (Req 11.6.5d).**
 - **What changed**: one sentence inside the CI-regime bullet, which is `scope-12`. Ballot `.kiro/docs/ballots/2026-10-20-in-lane-guard-registry-additive-entries.md` (P1b; RATIFIED, Peter, 2026-10-20, "All as recommended") adds `.github/in-lane-guards.json` to the standing scope: an entry may be **added**, never changed or removed, `version` and every other key untouched (that is weakening a floor, so it needs an issue-row grant naming the act, or Peter); the PR shows the additivity predicate `true` against its merge base, the step green with `N registered; N selected`, and per added entry the assertion its record rests on. Thurgood applied it as profile author (`ae68f130b`): the sentence in the charter bullet and as `scope-12`'s text, plus the `writeScope` glob `.github/in-lane-guards.json` in the frontmatter (a frontmatter row, not an operative item). That is his authoring, not this act.
