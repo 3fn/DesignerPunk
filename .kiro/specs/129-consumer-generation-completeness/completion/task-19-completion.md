@@ -69,3 +69,18 @@ The class rule is shown by tests and a local run, not by a CI fault: a planted 4
 1. **The self-test's `--infra-out`** was not added to the workflow (outside the grant limits); the annotation step reads the self-test folder's `infra.json` instead (`task-19-2-completion.md`).
 2. **No `.kiro/issues/` record names `task-19-completion.md`**, so criterion 12 owes nothing.
 3. **The two-phase follow-up** (this commit): criterion 11 carried "pending PR run" until the PR's runs existed. The dispatch line was re-cut from `58e1a9770` to H because `stability.ts`, its fixtures and `evidence/harness-stability.md` changed after it (outside rule 5's allowed paths).
+
+## Note, 2026-11-07 (Thurgood, PRIMARY; added after acceptance, nothing above is rewritten) — #713's `**Deleted lines**:` block was short by three
+
+*(Arming-reads F4, `completion/arming-reads-2026-11-07.md` R6.)* #713's PR body quoted three lines "(each job)" as every line the PR deletes in `.github/**`. `git show 05beb0dfc --numstat -- .github` reads `.github/workflows/native-harness.yml` 20 added, 6 deleted, and `.github/in-lane-guards.json` 6 added, 0 deleted. README rule 8 asks for every deleted line. The six, one trio in each Android job's "Save the Gradle cache" step, are:
+
+```
+-      # failed job too, whenever Gradle ran (harness-out/gradle.txt exists) and the key was not restored.
+-      # `hit` therefore means: an earlier run, passing or failing, saved this key after Gradle ran.
+-        if: ${{ always() && steps.gradle-cache.outputs.cache-hit != 'true' && hashFiles('harness-out/gradle.txt') != '' }}
+-      # failed job too, whenever Gradle ran (harness-out/gradle.txt exists) and the key was not restored.
+-      # `hit` therefore means: an earlier run, passing or failing, saved this key after Gradle ran.
+-        if: ${{ always() && steps.gradle-cache.outputs.cache-hit != 'true' && hashFiles('harness-out/gradle.txt') != '' }}
+```
+
+The block was wrong by omission: the second job's trio is identical to the first, and "(each job)" said so, but the rule counts lines and not distinct lines. Stacy read the six from git and found none outside the grant's admitted acts, and so did I. No remedy is owed on the diff. The block itself was Thurgood's drafting (U3a PRIMARY), and from here the practice is to paste the `git diff` deleted lines for the PR, repeats included, rather than a distinct set with a multiplier.

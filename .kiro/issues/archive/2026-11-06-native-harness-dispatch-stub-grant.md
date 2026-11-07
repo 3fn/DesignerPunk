@@ -67,3 +67,11 @@ The fixing PR deletes no line on a CI path, because it creates a file, so this r
 - In that file, the top-level `on:` mapping has exactly one key, `workflow_dispatch`. Read it by eye or with a YAML 1.2 parser: a YAML 1.1 parser reads a bare `on` key as boolean `true` (`[STACY TASKS R3]`).
 - `git grep -n -E 'pull_request|push:|schedule' -- .github/workflows/native-harness.yml` at the fixing PR's head returns no line.
 - `tools/agent-generator/verify-gate-registration.sh` reports its count unchanged at the fixing PR's head.
+
+---
+
+## Outcome (2026-11-07)
+
+**Closed (rule 5).** The stub merged at `88298fbf7` (#700). The probe dispatch passed: run https://github.com/3fn/DesignerPunk/actions/runs/42313523264, `head_sha` `b6235fc0cac274824c4290bb1ce3b15f15b52344`, one job `harness-generate (unit-branch)`, which is the branch file's name and not the stub's `native-harness stub (unit-branch)`. `task-5-completion.md` records both. The fallback amendment was not needed. The grant expired at #700's merge, and `74d7566f5` (#707) replaced the stub with the real file.
+
+**Late close, a walk finding** (`claims-pass-midpoint.md` MP-3): this record's Trigger fired at U1's merge (`74d7566f5`) and it stayed open until this date, past its fixing PR's merge (rule 5: a grant archives at its fixing PR's merge). It is a grant, so rule 11 gives it no `## Lapse` heading (it excludes grants). Closed and archived by Thurgood in the post-MIDPOINT documentation-fix PR.

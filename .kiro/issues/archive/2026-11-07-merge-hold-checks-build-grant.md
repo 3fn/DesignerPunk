@@ -54,3 +54,15 @@ The orchestrator then ran `bash tools/agent-generator/verify-gate-registration.s
 `PASS: all 21 required contexts present, count-asserted (N=21 recorded in this script)`
 
 The grant expired at #728's merge. `merge-hold` stays advisory until five clean runs that parsed a marker; its promotion has its own record (`.kiro/issues/2026-11-07-merge-hold-promotion-reads.md` lists the reads owed). This PR records the line and, under rule 5, archives this record; it arms Stacy's ARMING read.
+
+---
+
+## Correction note, 2026-11-07 (Thurgood, owner; appended after the record was closed) — the grant list named a governance-law path
+
+*(Arming-reads F1, `completion/arming-reads-2026-11-07.md` R1; Stacy's read at #724 `13a0ca730`. The record's text above is not rewritten.)*
+
+The `**Grant paths**` list above names `governance/classification-map.md` (L20). README rule 8 says a grant is "never a governance-law path", and `governance/**` is on the standing carve-out's list (Task-Completion-Protocol § "The Merge Rule"). **The entry was wrong as a list entry, and it conferred nothing.** A grant cannot confer scope over a governance-law path, so read the list as if it ended at its first two entries.
+
+The edits it seemed to cover were authorised elsewhere. #727 and #728 edited the register under `**Edit kind**: governance/classification-map.md — EXECUTION (ballot 2026-11-07-merge-hold-and-law-ratified-checks, item 4)` lines, and the authority for each edit was the ratified ballot's item 4, which names the two rows (`merge-hold-answer-cited` and `law-ratified-at-head`) before the edit was made. Peter merged both. So no edit made under this grant was without authority, and no remedy is owed on #727 or #728.
+
+**Rule 8 is not amended.** Its sentence already says what happened. A ballot-named register edit is authorised by its ballot's item and declared on an `**Edit kind**:` line, never by a grant. The surviving counter-argument: a drafter who wants the build PR's whole path set in one list will list it again, and nothing but the owner's reading catches it. I know of no check that reads a grant list against the governance-law paths, and I am not proposing one on one instance. A second instance would be the trigger.

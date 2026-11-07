@@ -1,0 +1,29 @@
+{
+  "roots": {
+    "gen": "<scratch>/consumer-dn/dist/tokens",
+    "pkg": "<scratch>/consumer-dn/node_modules/@3fn/core",
+    "probe": "<scratch>/lane-dn/lane/src"
+  },
+  "gradle": {
+    "log": "gradle.txt",
+    "exitCode": 1
+  },
+  "toolchain": {
+    "java.version": "17.0.21",
+    "gradle.version": "9.8.2",
+    "kotlin.version": "2.4.21",
+    "agp.version": "9.5.0",
+    "compose.bom.version": "2026.09.00"
+  },
+  "files": {
+    "gen": {
+      "compiled": 3,
+      "floor": 3
+    },
+    "pkg": {
+      "compiled": 41,
+      "floor": 41
+    }
+  },
+  "checks": []
+}

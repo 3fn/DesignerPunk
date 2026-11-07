@@ -34,6 +34,8 @@
 
 Unmet or partially met criteria: Criterion 16, its second half only ("the `lane-functional-root` run on the U1 PR shows them selected"): no U1 PR exists until Task 5 opens it; follow-up: `.kiro/specs/129-consumer-generation-completeness/completion/task-2-instruments.md` row 21, discharged by amending this row in place with that run's URL and its printed suite list before U1 merges.
 
+**Note, 2026-11-07 (added after the row; the row is not rewritten) — criterion 16's second half was discharged late** *(claims-pass-midpoint.md MP-8, MP-9)*. This doc promised to amend the row in place with the U1 PR's `lane-functional-root` run before U1 merged, and it did not. The fact holds: run https://github.com/3fn/DesignerPunk/actions/runs/42336915968 (`Lane Timing`, job 128295786098 `lane-functional-root`, success) ran on U1's PR #707 at its merged head `c16d4a79dadeff5d8ca40f9e7fc1681b98a8bf54`, and its log prints `PASS scripts/harness/__tests__/parse-kotlin.test.ts`, `PASS scripts/harness/__tests__/parse-swift.test.ts` and `PASS scripts/harness/__tests__/compare.test.ts`, so the three suites were selected (read by Thurgood 2026-11-07). Row 21 of `task-2-instruments.md` carries the matching appended resolution. The row's ⚠️ stands as written at the time.
+
 ## Additional verification
 
 Primary Artifacts: all shipped as declared

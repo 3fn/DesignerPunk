@@ -1,0 +1,57 @@
+📦 DesignerPunk (HX)
+   Tokens: src/tokens  (local)
+   Output: dist/tokens
+   Themes: dark (dark), wcag (light) — registered, not applied yet: a theme you register does not change your generated output; dark mode and the wcag theme apply DesignerPunk's built-in overrides to your tokens
+
+⚠️  your personal note (.designerpunk/personal-note.local.md) is still the unfilled template, so your agents set it aside. Your answers go under the headings, outside the guidance block. Fill it in yourself, or ask your agent to walk you through it: who you are, what you and your organization value, and how you like to work together. Rather not keep one? Replace it with a line of your own and this message stops. (It stays on your machine.)
+
+🚀 Starting token file generation...
+
+🔍 Validating semantic token references...
+
+✅ Semantic token validation passed
+
+✅ Semantic override validation passed
+
+📁 Created output directory: <scratch>/mp4/consumer/dist/tokens
+
+📝 Writing token files...
+
+✅ WEB: DesignTokens.web.css
+   Tokens: 217
+   Path: <scratch>/mp4/consumer/dist/tokens/DesignTokens.web.css
+
+✅ IOS: DesignTokens.ios.swift
+   Tokens: 217
+   Path: <scratch>/mp4/consumer/dist/tokens/DesignTokens.ios.swift
+
+✅ ANDROID: DesignTokens.android.kt
+   Tokens: 217
+   Path: <scratch>/mp4/consumer/dist/tokens/DesignTokens.android.kt
+
+🔍 Validating cross-platform consistency...
+
+✅ All platforms are mathematically consistent!
+
+📊 Generation Summary:
+   Total platforms: 3
+   Successful: 3
+   Failed: 0
+   Total tokens per platform: 217
+   Component tokens: 10 (3 platforms)
+✅ DTCG output written to <scratch>/mp4/consumer/dist/tokens/DesignTokens.dtcg.json — Generated 217 primitive tokens, 193 semantic tokens
+   DTCG: DesignTokens.dtcg.json
+   Figma: DesignTokens.figma.json
+
+✨ Token file generation complete!
+📊 Generating token index...
+
+✅ Token index generated at <scratch>/mp4/consumer/token-index
+   Primitives: 217
+   Semantics: 193
+   Component tokens: 33 (23 of them DesignerPunk's, from @3fn/core 16.2.0)
+
+✅ System tokens generated
+🏷️  Product tokens: 1 tokens, 1 categories
+   Output: dist/tokens/product/
+✅ Product tokens generated

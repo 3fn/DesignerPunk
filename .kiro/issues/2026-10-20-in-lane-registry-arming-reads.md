@@ -3,7 +3,8 @@
 **Date**: 2026-10-20
 **Status**: ACTIVE (standing — one read per registry PR, appended below; this record does not close while the registry exists)
 **Owner**: **Stacy** — the reads are hers (her ARMING row's registry-path limb, ballot `2026-10-20-in-lane-guard-registry-additive-entries`, P1b, as recommended in her first read below). **Filed by**: Thurgood (Civitas steward, issues-convention owner), at the coordinator's direction, 2026-10-20 (README rule 10: a record filed for another owner names its filer; rule 9 governs every later edit, so the body is Stacy's from here).
-**Trigger**: `path:.github/in-lane-guards.json` — every PR that changes the registry fires her read at its merge; the path, not the PR's claim, keys it (her residual 3). Read through `3a41f0023` (2026-10-29). *(Written by the filer, 2026-10-20; Stacy may re-rule it, rule 9.)*
+**Trigger**: `path:.github/in-lane-guards.json` — every PR that changes the registry fires her read at its merge; the path, not the PR's claim, keys it (her residual 3). Read through `3610718aa` (2026-11-07). *(Written by the filer, 2026-10-20; Stacy may re-rule it, rule 9.)*
+*Trigger re-ruled 2026-11-07 (Stacy, owner, rules 9 and 11): read-through only, `3a41f0023` → `3610718aa`; the token is unchanged. `git log --first-parent 3a41f0023..3610718aa -- .github/in-lane-guards.json` lists three commits, #708 (`55276795e`), #713 (`05beb0dfc`) and #727 (`16d44a500`), and each read is appended below. Superseded, kept verbatim: "Read through `3a41f0023` (2026-10-29)."*
 *Trigger re-ruled 2026-10-29 (Stacy, owner, rules 9 and 11): the token is unchanged; the line gains the read-through prose, so `<tc>` moves past the firing read below (#519, `f9b99f750`), the same re-arm as `.kiro/issues/2026-10-25-arming-read-class-option-fork.md`. Authority: my ownership of the record (rule 9) and the read appended below. Superseded line, kept verbatim: "keys it (her residual 3). *(Written by the filer, 2026-10-20; Stacy may re-rule it, rule 9.)*"*
 **Class**: P2 obligation (guard) · owed-act *(set 2026-10-20 by the filer, Thurgood, rule 12; Stacy, as owner, may re-class. A registry removal or modification is detected only by this read, after acceptance — the floor step has no memory of N (her residual 3) — so a missed read leaves a guard weaker than its claim.)*
 *Confirmed 2026-10-20, Stacy (owner), rule 12: Class stands as set, and the `path:` Trigger stands as written. The registry is the guard; a removal or a changed `file`/`config` leaves the floor step green, because it counts what the registry says, so my read is the only detector and the guard is weaker than its claim exactly when a read is missed. (guard), not (record). owed-act, not charter: each firing owes one dated read, appended below, and the record stays open only because the registry does.*
@@ -129,3 +130,32 @@ Firing commit `f9b99f750` (#519, merged 2026-10-27T11:52:31Z), the first commit 
 **Window**: `076e947da..3a41f0023` (`origin/main` at my fetch, 2026-10-29T01:24Z). #519 is its only registry commit. The Trigger line above now reads through `3a41f0023`.
 
 *Signed: Stacy, 2026-10-29.*
+
+## ARMING reads, registry-path limb — #708, #713, #727 (2026-11-07, Stacy)
+
+**Scope**: every first-parent commit in `3a41f0023..3610718aa` that touches `.github/in-lane-guards.json`: #708 (`55276795e`), #713 (`05beb0dfc`), #727 (`16d44a500`). The log is exactly those three. They were owed since 2026-11-07 and not read; `claims-pass-midpoint.md` SF-1 named only #708, and its correction is dated 2026-11-07. Each is read at its merge `<m>` against `<m>^`. The PR bodies and the CI facts were read by me with `gh` from a credentialed session, the CI facts from the checks API (the `lane-functional-root` job log for the `N; N` line).
+
+| Read | #708 `55276795e` (Thurgood, U2) | #713 `05beb0dfc` (Thurgood, U3a) | #727 `16d44a500` (Thurgood, merge-hold) |
+|---|---|---|---|
+| 1. `.github/**` changes exactly the registry | **Yes**: `.github/in-lane-guards.json` only | **No, by a second file**: also `.github/workflows/native-harness.yml`, under Task 19's tasks-row grant; the body says so. Read in `arming-reads-2026-11-07.md` R6 | **No, by a second file**: also `.github/workflows/merge-hold.yml`, under the grant of #724. Read in `arming-reads-2026-11-07.md` R1 and R2 |
+| 2. Additivity predicate, old side `<m>^` | **`true`**; 42 → 50 entries | **`true`**; 50 → 51 | **`true`**; 51 → 52 |
+| 3. `N registered in-lane guards; N selected`, N = entries at `<m>`, step green | `50 registered in-lane guards; 50 selected`; N = 50 ✓; step `success`; job `lane-functional-root` 128304803899, run 42339822588, head `97067e0dc` (from the PR's CI run) | `51 registered …; 51 selected`; N = 51 ✓; step `success`; job 128441330735, run 42385313822, head `b99105b0d` | `52 registered …; 52 selected`; N = 52 ✓; step `success`; job 128494568710, run 42402979992, head `3b8819d24` |
+| 4. Each added entry's `config` is run by an unconditional step of the job whose `name:` resolves to its `context`; its `record` resolves and names the guard | **8 of 8.** `scripts/jest.config.js` is run by "Run scripts/** test suite (npm run test:scripts)" (`package.json` `test:scripts` = `jest --config scripts/jest.config.js`) in job `lane-functional-root`; no `if:` or `continue-on-error` on the step; the job's `name:` is `${{ github.event_name == 'workflow_dispatch' && 'lane-functional-root (unit-branch)' || 'lane-functional-root' }}`, which is `lane-functional-root` on `pull_request`. `record` `task-6-completion.md` resolves at `<m>` and names each of the eight files | **1 of 1**, the same step and job. `record` `task-19-completion.md` resolves at `<m>` and names `native-harness-workflow.test.ts` | **1 of 1**, the same step and job. `record` is the ballot `2026-11-07-merge-hold-and-law-ratified-checks.md` § 2 item 3; it resolves at `<m>` and names the test (§ 2 item 3, "Its test is `scripts/completion-claims/__tests__/merge-hold.test.ts` …") |
+| 5. The assertion the claim rests on, named, or name-only | See below | `native-harness-workflow.test.ts` › 'saves when harness-out/resolved.ok exists, not when gradle.txt does' (L48): bites the changed condition. The same file asserts the annotation branches and that the verdict step reads only `compare.txt`. **Bites.** | `merge-hold.test.ts` › 'F5: an answer whose quote is not in the cited file is red' (L82) and the other 16 named fixtures F1 to F17 (31 cases at the merge). **Bites.** |
+
+**Read 5 for #708's eight entries** (the assertion names are in `task-6-completion.md` § "Per added entry", and each resolves in the file at `<m>`; I read the files):
+- `compare` — 'fails on an observed key not on the list' (L206): the two-sided half of the comparator. **Bites.**
+- `parse-swift` — 'every key any fixture yields satisfies parseKey' (L90). **Bites** the parser's output over recorded compiler fixtures.
+- `parse-kotlin` — 'never throws on log content' (L119). **Thin**: it bites a crash, not a wrong parse. The file has 63 other cases, and the entry does not guard in name only. I note it for the adder.
+- `probe-swift` — 'reads each index name under its root …' (L89). **Bites.**
+- `probe-kotlin` — 'counts the names the index gives for Android …' (L89). **Bites.**
+- `consumer` — 'stops at the failing step: a later command never runs' (L194). **Bites.**
+- `stability` — 'maps a job name, with or without the dispatch suffix, to its context' (L25). **Bites** the mapping; a small slice of a 26-case file.
+- `native-rules` — 'are DesignerPunk\'s, whatever the consumer names itself' (L66). **Bites.**
+No `.skip`, `.todo`, `.only` or `xit` in any of the eight files at `<m>` (grep count 0 each).
+
+**Results**: the predicate is `true` on all three and no existing entry is touched, so there is no unadmitted weakening. Read 1 is false literally for #713 and #727 because each PR also edited a workflow; neither was a P1b-only PR, each was read under its own grant (the grant reads are in `.kiro/specs/129-consumer-generation-completeness/completion/arming-reads-2026-11-07.md`, R1/R2 and R6). Today's run at `3610718aa`: `52 registered in-lane guards; 52 selected`.
+
+**Standards implications**: none beyond the one in `arming-reads-2026-11-07.md` (the tasks-row grants).
+
+*Signed: Stacy, 2026-11-07.*

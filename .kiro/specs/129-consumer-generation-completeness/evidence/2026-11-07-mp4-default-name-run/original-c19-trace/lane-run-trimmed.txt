@@ -1,0 +1,10 @@
+harness-android: invocation: (cd harness/android && HARNESS_LANE_DIR=<scratch>/lane-dn/lane ./gradlew --continue :tokens:compileDebugKotlin :probe:compileDebugKotlin :dp:compileDebugKotlin)
+harness-android: gen files given to the compiler: 3 (floor 3); pkg files: 41 (floor 41); probe files: 5 (index 443, instances 248, product 1, provider 5)
+harness-android: :dp file order (package files first, then generated files, each sorted by path):
+harness-android: resolve step ok; wrote resolved.ok
+ok   probe: read index names: 443 of 443
+ok   probe: instances read: 248 of 248
+ok   probe: product read: 1 of 1
+ok   probe: provider read: 5 of 5
+ok   theme instances: 4 of 4 as the shared module gives (BaseLight, BaseDark, WcagLight, WcagDark)
+harness-android: gradle exit 1; wrote gradle.txt and run-<context>.json under <scratch>/lane-dn
