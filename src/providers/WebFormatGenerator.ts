@@ -409,30 +409,42 @@ export class WebFormatGenerator extends BaseFormatProvider {
 
   /**
    * Format a composite shadow token for CSS box-shadow usage
-   * Generates: --shadow-container: <offset-x> <offset-y> <blur> rgba(0, 0, 0, <opacity>);
-   * 
+   * Generates: --shadow-container: <offset-x> <offset-y> <blur> <colour at the token's opacity>;
+   *
+   * The colour is the token's own colour primitive, by its custom property
+   * (`--shadow-black-100`, `--shadow-blue-100`), mixed to the opacity token's value:
+   * `color-mix(in oklab, var(--shadow-blue-100) calc(var(--shadow-fab-opacity) * 100%), transparent)`.
+   * It is never a literal: the three blue-tinted shadows rendered black while the composite
+   * hard-coded `rgba(0, 0, 0, …)` (Spec 129 Requirement 7.1).
+   *
    * This allows components to use: box-shadow: var(--shadow-container)
    * instead of manually composing individual shadow properties.
-   * 
+   *
    * @param semantic - Shadow semantic token
    * @param cssSemanticName - CSS custom property name (e.g., '--shadow-container')
    * @returns CSS custom property string with composite box-shadow value
    */
   private formatCompositeShadowToken(semantic: SemanticToken, cssSemanticName: string): string {
     // Build composite shadow value using var() references to individual properties
-    // Format: offset-x offset-y blur rgba(0, 0, 0, opacity)
+    // Format: offset-x offset-y blur <colour at opacity>
     // Using var() references allows the composite to stay in sync with individual properties
     const offsetX = `var(${cssSemanticName}-offset-x)`;
     const offsetY = `var(${cssSemanticName}-offset-y)`;
     const blur = `var(${cssSemanticName}-blur)`;
     const opacity = `var(${cssSemanticName}-opacity)`;
-    
-    // Use rgba with opacity variable for the shadow color
-    // Note: CSS doesn't allow var() inside rgba() directly, so we use a calc-based approach
-    // or rely on the browser's ability to handle this in modern CSS
-    // For maximum compatibility, we compose the shadow using individual var() references
-    const compositeValue = `${offsetX} ${offsetY} ${blur} rgba(0, 0, 0, ${opacity})`;
-    
+
+    // The colour primitive's custom property, named the way the colour primitives are emitted.
+    const colorRef = semantic.primitiveReferences?.color;
+    if (typeof colorRef !== 'string') {
+      throw new Error(`Shadow token ${semantic.name} has no color reference`);
+    }
+    const cssColorName = this.getTokenName(colorRef, 'color');
+    const cssColor = cssColorName.startsWith('--') ? cssColorName : `--${cssColorName}`;
+
+    // color-mix scales the colour's alpha to the opacity token; `transparent` is the other side.
+    const shadowColor = `color-mix(in oklab, var(${cssColor}) calc(${opacity} * 100%), transparent)`;
+    const compositeValue = `${offsetX} ${offsetY} ${blur} ${shadowColor}`;
+
     return `  ${cssSemanticName}: ${compositeValue};`;
   }
 

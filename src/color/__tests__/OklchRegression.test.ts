@@ -38,6 +38,9 @@ const PRE_MIGRATION_RGB: Record<string, string> = {
   white100: '#ffffff', white200: '#f5f5fa', white300: '#e8e8f0', white400: '#c5c5d5', white500: '#9999ab',
   gray100: '#b2bcc4', gray200: '#5e707c', gray300: '#26323a', gray400: '#182228', gray500: '#10161a',
   black100: '#3a3a45', black200: '#22222a', black300: '#0a0a0f', black400: '#06060a', black500: '#000000',
+  // Shadow family (rgba in ColorTokens.ts until Spec 129 Task 8.2 re-expressed it in OKLCH, same colours):
+  // rgba(0, 0, 0), rgba(20, 25, 40), rgba(25, 20, 15), rgba(15, 20, 30)
+  shadowBlack100: '#000000', shadowBlue100: '#141928', shadowOrange100: '#19140f', shadowGray100: '#0f141e',
 };
 
 /**
@@ -136,7 +139,7 @@ describe('OKLCH Migration Regression (Spec 112 R11 AC4)', () => {
     }
   });
 
-  it('all 50 composed colors have a pre-migration reference', () => {
+  it('all 54 composed colors (50 palette + 4 shadow) have a pre-migration reference', () => {
     const composed = Array.from(composedColorMap.keys());
     const missing = composed.filter(name => !PRE_MIGRATION_RGB[name]);
     // All composed colors should have a reference (green100 and yellow100 are kept similar)

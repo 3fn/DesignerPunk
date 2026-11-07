@@ -76,8 +76,37 @@ export class iOSFormatGenerator extends BaseFormatProvider {
       'import SwiftUI',
       'import UIKit',
       '',
+      ...this.generateShadowTokenType(),
+      '',
       'public struct DesignTokens {'
     ].join('\n');
+  }
+
+  /**
+   * The type every shadow composite is built with: `ShadowToken`, generated into the token file
+   * (Spec 129 design § 5). A composite is read as `DesignTokens.shadowContainer.blur`, so the type
+   * name is not part of any component's reading. `Sendable` so a `static let` of it compiles in
+   * Swift 6 language mode.
+   */
+  private generateShadowTokenType(): string[] {
+    return [
+      '/// A shadow composite: offset, blur, opacity and the colour primitive it names.',
+      'public struct ShadowToken: Sendable {',
+      '    public let offsetX: CGFloat',
+      '    public let offsetY: CGFloat',
+      '    public let blur: CGFloat',
+      '    public let opacity: CGFloat',
+      '    public let color: Color',
+      '',
+      '    public init(offsetX: CGFloat, offsetY: CGFloat, blur: CGFloat, opacity: CGFloat, color: Color) {',
+      '        self.offsetX = offsetX',
+      '        self.offsetY = offsetY',
+      '        self.blur = blur',
+      '        self.opacity = opacity',
+      '        self.color = color',
+      '    }',
+      '}'
+    ];
   }
 
   generateFooter(): string {
@@ -442,7 +471,9 @@ export class iOSFormatGenerator extends BaseFormatProvider {
     const semanticName = this.getTokenName(semantic.name, semantic.category);
     
     // Use correct type wrapper based on token family
-    const typeWrapper = semantic.name.startsWith('motion.') ? 'Motion' : 'Typography';
+    const typeWrapper = semantic.name.startsWith('motion.') ? 'Motion'
+      : semantic.category === 'shadow' ? 'ShadowToken'
+      : 'Typography';
 
     // Generate struct initialization format
     const parameters = refs.map(([key, primitiveRef]) => {

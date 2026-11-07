@@ -18,7 +18,7 @@ import { getAllPrimitiveTokens, durationTokens, easingTokens, scaleTokens } from
 import { getAllSemanticTokens, getAllZIndexTokens, getAllElevationTokens, motionTokens } from '../tokens/semantic';
 import { BlendUtilityGenerator, BlendUtilityGenerationOptions } from './BlendUtilityGenerator';
 import { ComponentTokenRegistry, RegisteredComponentToken } from '../registries/ComponentTokenRegistry';
-import { allComposedColors } from '../tokens/color';
+import { allEmittedColors } from '../tokens/color';
 import { colorHues, neutralHue } from '../tokens/color/channels/hues';
 import {
   pinkLightness, orangeLightness, yellowLightness, greenLightness,
@@ -2059,8 +2059,8 @@ export class TokenFileGenerator {
    * emitters below iterate this list and nothing else, so it is also the set a semantic colour
    * reference must name to resolve in the output (ColorReferenceEmissionValidator).
    */
-  private static emittedColors(): ReadonlyArray<typeof allComposedColors[number]> {
-    return allComposedColors;
+  private static emittedColors(): ReadonlyArray<typeof allEmittedColors[number]> {
+    return allEmittedColors;
   }
 
   /** Names of the colour primitives every platform file defines (see {@link emittedColors}). */

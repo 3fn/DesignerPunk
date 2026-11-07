@@ -49,6 +49,25 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
     }
   }
 
+  /**
+   * The type every shadow composite is built with: `ShadowToken`, generated into the token file
+   * (Spec 129 design § 5). Fields are the types of the primitives they take today; the type table
+   * (row 6) retypes them in a later unit. The colour field is written with its full name: the
+   * package-drift guard reads `val <name>: Color` as a theme data class member, and this is not one.
+   */
+  private generateShadowTokenType(): string[] {
+    return [
+      '/** A shadow composite: offset, blur, opacity and the colour primitive it names. */',
+      'data class ShadowToken(',
+      '    val offsetX: Float,',
+      '    val offsetY: Float,',
+      '    val blur: Float,',
+      '    val opacity: Float,',
+      '    val color: androidx.compose.ui.graphics.Color',
+      ')'
+    ];
+  }
+
   generateHeader(metadata?: FileMetadata): string {
     // No wall-clock time: same input, same bytes (2026-10-03-generate-output-not-deterministic).
     const version = metadata?.version || getCoreVersion();
@@ -62,6 +81,8 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
         ' */',
         '',
         'package com.designerpunk.tokens',
+        '',
+        ...this.generateShadowTokenType(),
         '',
         'object DesignTokens {'
       ].join('\n');
@@ -505,13 +526,14 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
     const semanticName = this.getTokenName(semantic.name, semantic.category);
     
     if (this.outputFormat === 'kotlin') {
-      // Generate Typography data class initialization format
+      // Generate the composite's data class initialization format
       const parameters = refs.map(([key, primitiveRef]) => {
         const primitiveRefName = this.getTokenName(primitiveRef, semantic.category);
         return `${key} = ${primitiveRefName}`;
       }).join(', ');
       
-      return `    val ${semanticName} = Typography(${parameters})`;
+      const typeWrapper = semantic.category === 'shadow' ? 'ShadowToken' : 'Typography';
+      return `    val ${semanticName} = ${typeWrapper}(${parameters})`;
     } else {
       // XML doesn't support object literals, so we'll generate individual properties
       // This is a limitation of XML resources
