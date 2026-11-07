@@ -969,7 +969,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 7a — The default name compiles in CI (added 2026-11-07, tasks amendment 10)
 
-- [ ] 20. A default-name compile in `harness-android-tokens`, beside `HarnessConsumer` (U7a)
+- [x] 20. A default-name compile in `harness-android-tokens`, beside `HarnessConsumer` (U7a)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Data (Sonnet) · Thurgood (Sonnet) — the workflow step under the issue-row grant, the workflow test and the grant record
   **Traces**: Req 2.2, 2.6, 2.7, 2.10, 2.13, 4.1 · design § 2 ("The default-name step"), § 4 ("Android provider") · MIDPOINT S-1 and MP-4 (`completion/claims-pass-midpoint.md`) · ruling: Peter's "Re: 4, Let's go with Ada's recommendation, but Ada should see weigh in on the amendment with Data and Thurgood", received 2026-11-07T20:21:05Z (`evidence/2026-11-07-peter-rulings-post-midpoint.md`)
@@ -1019,11 +1019,11 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 20 Complete: The default name compiles in CI (129)"` opens U7a's PR (Peter-merged: `.github/**`; Stacy's ARMING read at its merge); report the URL; STOP.
 
-  - [ ] 20.1 The default-name option, its verdict function and their tests
+  - [x] 20.1 The default-name option, its verdict function and their tests
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
     - On the unit branch, cut from `main` after U7 merges
     - _Requirements: 2.2, 2.6, 2.7, 4.1_
-  - [ ] 20.2 The workflow step and the workflow test; the grant record's outcome line
+  - [x] 20.2 The workflow step and the workflow test; the grant record's outcome line
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - After 20.1's option exists; no deleted line in the workflow
     - _Requirements: 2.10, 2.13_
