@@ -2782,3 +2782,24 @@ Ada confirmed block 1 at `eb9938368` with no correction. Kenya's Swift holder-pi
     - **Data (4.3)**: while `:tokens` fails, write the count checks from the probe sources the lane wrote (marker counts against `probe-expected.txt` and the other groups' expected counts), with detail `blocked`, instead of `checks: []`. The per-run instance check is written as well (R9 item 2). A token context's `checks` is then never empty. When `:probe` compiles, the `doFirst` line governs, as before.
     - **Thurgood (§ 3)**: the text now says this. The R7 "ok: true with detail blocked" for iOS and the R9 "holds only the per-run instance check" for Android are superseded, with dated notes in place.
 - **The module's Swift member line**: yes, the module should match the pin. `swiftHolderMemberLine` now returns the member four spaces in, as `kotlinHolderMemberLine` already did, and its test changed with it: unit branch `0e9e1fabe` (native-rules.test.ts 109 of 109). Kenya's `probe-swift.test.ts` trims the start before comparing, so it is unaffected; her lane should build its expected line from the function as returned. → `scripts/harness/native-rules.ts`
+
+## Tasks amendment 5 (2026-11-07): when the component-repair record is filed
+
+Peter, `date -u` at receipt 2026-11-07T02:04:38Z (orchestrator relay), verbatim: "a; blend entries fine" (`evidence/2026-11-07-peter-ruling-component-repair-record-timing.md`). What each word answered is the orchestrator's paraphrase in that record.
+
+#### [LINA R4] — consult on the component-repair record's timing (verbatim from her report, as relayed by the orchestrator)
+
+> **1. File the record now.** Yes, in a record-only PR to `main`, merged into U1 before the component lists commit. Sizing still waits for the first run after U4. Delaying the lists would break U1's baseline. Surviving counter-argument: rows 4 and 6 still hide errors, so about 215 entries tag to an unsized catch-all. The tag says little until U4 sizes it.
+> **2. One record** (Req 1.5 says one), with sections by cause. Splitting now would fix a taxonomy that U4's unmasked run will reshape. Residual: one Trigger covers everything.
+> **3. Trigger:** `path:.kiro/specs/129-consumer-generation-completeness/completion/claims-pass.md`. CLOSEOUT re-rules it to Spec 132, as with the L165 precedent; 132 has no folder yet.
+
+#### [THURGOOD R11] — tasks amendment 5
+- **§ "Unit preconditions", the component-repair row**: Lina's line, byte for byte. When: "Before U1's component lists commit". Source: the first full run, 42324880305 at `cc2e71a51`. → tasks.md § "Unit preconditions and the records 129's paths fire"
+- **5.2's note**: Lina's line, byte for byte, plus a dated note quoting the prior text. → tasks.md Task 5, 5.2
+- **"blend entries fine"**: a 5.2 line says the eight `src/blend/ThemeAwareBlendUtilities.*` entries tag to Ada's blend record. That record's Trigger is Spec 133's requirements, so the entries outlast 129's closeout. A matching line in 18.1 says such entries at the final head are expected, not findings. → tasks.md Tasks 5, 18
+- **Checked, no change needed**:
+  - **Req 1.5**: "one record that Lina files from the harness's first committed run … at the issues root before 129's CLOSEOUT". The first full run is the run the lists commit from, so filing from it before they commit meets the text. One record with sections by cause is still one record.
+  - **Task 18's criterion**: "Lina's component-repair record is at the issues root, its Trigger can fire, and the remaining component entries are tagged to it". Still true. The blend entries are not component entries; they are Ada's `src/blend/` source, compiled in the component tier.
+  - **No other "after U1 merges" text names this record.** The other row with that When, the in-lane guards, is unaffected.
+- **Stamp**: the coordinator asked for `[THURGOOD R9]`, but that stamp is taken (amendment 4), so this entry is `[THURGOOD R11]`.
+- **The record's Trigger is Lina's call.** She proposes `path:…/completion/claims-pass.md`, re-ruled to Spec 132 at CLOSEOUT. That is a valid token, with the L165 precedent. It is set in her record-only PR, not here.
