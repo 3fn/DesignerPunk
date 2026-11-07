@@ -300,6 +300,12 @@
       "config": "scripts/jest.config.js",
       "context": "lane-functional-root",
       "record": ".kiro/specs/129-consumer-generation-completeness/completion/task-6-completion.md (Spec 129 Task 6, the shared native naming rules the probes and lanes take; Req 3.10)"
+    },
+    {
+      "file": "scripts/harness/__tests__/native-harness-workflow.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/specs/129-consumer-generation-completeness/completion/task-19-completion.md (Spec 129 Task 19, the harness workflow's save condition, infra annotation and verdict source; Req 2.11, 2.12)"
     }
   ]
 }
