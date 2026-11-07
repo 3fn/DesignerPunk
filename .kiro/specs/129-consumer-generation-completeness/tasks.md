@@ -474,7 +474,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 2 — The comparator guard and the limitation markers
 
-- [ ] 6. Register the harness falsification suites as named in-lane guards (U2)
+- [x] 6. Register the harness falsification suites as named in-lane guards (U2)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Thurgood (Sonnet)
   **Traces**: Req 3.10 (registration)
@@ -493,11 +493,11 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 6 Complete: Register the harness falsification suites (129)"` on the U2 branch (no PR); STOP. The U2 merge fires Stacy's ARMING read of this file.
 
-  - [ ] 6.1 Add the eight entries; record the predicate output and the check's line *(amended 2026-11-06, tasks amendment 3; prior text: "the three entries", stale since the list grew to seven)*
+  - [x] 6.1 Add the eight entries; record the predicate output and the check's line *(amended 2026-11-06, tasks amendment 3; prior text: "the three entries", stale since the list grew to seven)*
     **Type**: Setup · **Validation**: Tier 1 - Minimal · **Agent**: Thurgood (Sonnet)
     - _Requirements: 3.10_
 
-- [ ] 7. Limitation markers in the Integration Guide's install region (U2)
+- [x] 7. Limitation markers in the Integration Guide's install region (U2)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Thurgood (Sonnet)
   **Traces**: Req 2.10, 15.2 · plan-r2 § 5
@@ -520,7 +520,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Unit 2: The comparator guard and the limitation markers (129)"` opens U2's PR (Peter-merged: `governance/**`; `**Edit kind**:` EXECUTION, Req 15.2); report the URL; STOP.
 
-  - [ ] 7.1 Mark the sentences; teach the test; re-derive INSTALL
+  - [x] 7.1 Mark the sentences; teach the test; re-derive INSTALL
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - Ada consulted on which sentences each of her rows fixes
     - _Requirements: 15.2_

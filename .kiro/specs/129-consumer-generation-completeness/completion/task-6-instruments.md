@@ -1,0 +1,26 @@
+# Task 6 — Instruments block
+
+**Written**: 2026-11-07T04:20Z (`date -u`), before subtask 6.1 · **PRIMARY**: Thurgood (Sonnet), on the unit branch `task/129-comparator-guard-markers`, cut from `main` @ `74d7566f5` (U1, #707)
+
+**Form**: M1's execution-time block (Start Up Tasks item 8). `tasks.md` § "Conventions for every parent": no parent in 129 carries a plan-time `**Instruments:**` block.
+**Sha convention**: each `exists` row names the commit that last touched `<path>`, found with `git log -1 --format=%h -- <path>` in this worktree at `74d7566f5`.
+**Criteria order**: Task 6's three criteria in `tasks.md` order (C1 the eight entries · C2 the predicate and the check's line · C3 `.github/**` is exactly the registry).
+
+| # | Criterion (short ref) | Instrument | State | Fit (one line, `exists` rows) | Dependent subtasks |
+|---|---|---|---|---|---|
+| 1 | C1 the eight suites the entries name | `scripts/harness/__tests__/{compare,parse-swift,parse-kotlin,probe-swift,probe-kotlin,consumer,stability,native-rules}.test.ts` | exists (`scripts/harness/__tests__/compare.test.ts` @ `74d7566f5`; the other seven last touched at the same commit) | all eight are on `main`. Run locally: `npx jest --config scripts/jest.config.js --listTests` lists all 8 under `scripts/harness/__tests__/`, and `npx jest --config scripts/jest.config.js scripts/harness/__tests__` → 8 suites passed, 566 tests passed | 6.1 |
+| 2 | C1 the config the entries name | `scripts/jest.config.js` | exists (`scripts/jest.config.js` @ `7447a31be`) | `roots: ['<rootDir>']`, `testMatch: ['**/__tests__/**/*.test.ts']`: selects `scripts/harness/__tests__/*.test.ts` with no change to the config | 6.1 |
+| 3 | C1 the context the entries name | `lane-functional-root` in `EXPECTED_CONTEXTS`, and the job that runs the config | exists (`tools/agent-generator/verify-gate-registration.sh` @ `8bd4bb505`; `.github/workflows/lane-timing.yml` @ `c22c17a78`; `package.json` @ `4d10202b2`) | `EXPECTED_CONTEXTS` carries `lane-functional-root` (L69); that job's unconditional step "Run scripts/** test suite (npm run test:scripts)" runs `package.json` `test:scripts` = `jest --config scripts/jest.config.js` (L162), so the eight suites run in the required lane on a pull_request event | 6.1 |
+| 4 | C1 the registry's shape and its precedent entries | `.github/in-lane-guards.json` | exists (`.github/in-lane-guards.json` @ `f9b99f750`) | `version` 1; 42 entries (`jq '.guards\|length'`); each `{file, config, context, record}`; two existing entries already use `config` `scripts/jest.config.js` and `context` `lane-functional-root` (the audience-banner guard and the registry's own test) | 6.1 |
+| 5 | C1 the `record` each entry names | `.kiro/specs/129-consumer-generation-completeness/completion/task-6-completion.md` | built here (Task 6's completion doc, written after 6.1 on this branch and before the unit PR; 6.1's entries name its path) | — | 6.1 |
+| 6 | C2 the additivity predicate | ballot `2026-10-20-in-lane-guard-registry-additive-entries` § 2 (P1b), the `jq -n --slurpfile` expression | exists (`.kiro/docs/ballots/2026-10-20-in-lane-guard-registry-additive-entries.md` @ `076e947da`; `jq-1.7.1-apple` on this machine) | the expression reads the parsed registry at `<base>` and at the head: same `version`, same keys, no removed or modified entry, strictly more entries, every entry exactly `config, context, file, record`. `<base>` is `git merge-base refs/remotes/origin/main HEAD` = `74d7566f5` | 6.1 |
+| 7 | C2 the check and its line | `scripts/ci/check-in-lane-guards.ts`, run by lane-timing.yml's "Named-guard selection floor" step | exists (`scripts/ci/check-in-lane-guards.ts` @ `e856dc530`; `.github/workflows/lane-timing.yml` @ `c22c17a78`) | prints `N registered in-lane guards; M selected` from the real `npx jest --config <config> --listTests`; exits 1 unless every entry is selected, so a green step means N = M. Runs locally as `npx tsx scripts/ci/check-in-lane-guards.ts` | 6.1 |
+| 8 | C2 "green on the U2 PR" | the U2 pull request's `lane-functional-root` run | exists as a workflow (`.github/workflows/lane-timing.yml` @ `c22c17a78`); the run itself does not exist: the U2 PR opens at Task 7's completion | the check's step is unconditional on a pull_request event. **The criterion's PR half is Status "pending PR run"** in the completion doc until that run exists; it is not a MISSING instrument | 6.1 (local half); the PR half is read at Task 7's PR |
+| 9 | C2 the assertion each added entry's record rests on | one `it(…)` per suite, named in the completion doc | exists (the eight suites, row 1) | the ballot's § 2 evidence requires "the assertion (the `it(…)` name) in the file that the record's claim rests on", per added entry; the doc names one for each | 6.1 |
+| 10 | C3 `.github/**` changes are exactly the registry | `git diff --name-only refs/remotes/origin/main...HEAD -- .github` | none — inspection of a `git diff` name list; the command and its output are pasted in the completion doc. At Task 6 the branch's diff has one `.github` path; the criterion is read finally at the PR | 6.1 |
+
+**Counts**: listed **9** — exists **8** (rows 1, 2, 3, 4, 6, 7, 8, 9) · built-here **1** (row 5) · missing **0**. N = E + B + M = 8 + 1 + 0 = 9. Row 10 is a `none` row and is not counted.
+
+## Found later
+
+(none at the time of writing)

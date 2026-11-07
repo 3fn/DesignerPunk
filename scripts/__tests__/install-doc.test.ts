@@ -30,7 +30,18 @@ import * as path from 'path';
 import { LIFECYCLE_VERBS, ATTACH_OBJECT, attachUsage } from '../../src/cli/shared/vocabulary';
 import { cloneHatchMessage, personalNoteNamingMessage, initBornRepoMessage } from '../../src/cli/shared/errorCatalog';
 import { missingTokenMessage } from '../../src/cli/sync/NameContract';
-import { deriveInstallDoc, extractRegion, REGION_BEGIN, REGION_END, INSTALL_REL } from '../derive-install-doc';
+import * as os from 'os';
+import {
+  deriveInstallDoc,
+  extractRegion,
+  REGION_BEGIN,
+  REGION_END,
+  INSTALL_REL,
+  LIMITATION_OPENER,
+  stripLimitationMarkers,
+  limitationMarkers,
+  checkLimitationMarkers,
+} from '../derive-install-doc';
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
 const read = (rel: string): string => fs.readFileSync(path.join(REPO_ROOT, rel), 'utf8');
@@ -166,7 +177,8 @@ export function pathSteps(fm: string[]): Record<string, number> {
  */
 export const USING_INTERIM_DELIMITER = false;
 export function region(guide: string): string {
-  return extractRegion(guide);
+  // The region as a reader of INSTALL.md sees it: limitation markers (Spec 129 Req 15.2) are maintenance metadata and are stripped.
+  return stripLimitationMarkers(extractRegion(guide));
 }
 
 /** Everything in the guide that is not the region (front matter and metadata excluded). */
@@ -778,7 +790,101 @@ describe('the marked region and its committed derivation (C9, C10 — 19.4)', ()
 
   it('the derived file carries the region verbatim and the guide’s path-steps line', () => {
     const install = read(INSTALL_REL);
-    expect(install).toContain(extractRegion(GUIDE));
+    expect(install).toContain(stripLimitationMarkers(extractRegion(GUIDE)));
     expect(frontMatter(install).find((l) => l.startsWith('path-steps:'))).toBe(frontMatter(GUIDE).find((l) => l.startsWith('path-steps:')));
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Limitation markers (Spec 129 Task 7.1, Req 15.2)
+// ---------------------------------------------------------------------------
+
+describe('limitation markers: a marked record that is archived or missing while its sentence remains fails (Spec 129 Req 15.2)', () => {
+  /** A fixture issues tree: one record at the root, one under archive/, one name that exists nowhere. */
+  let root: string;
+  beforeAll(() => {
+    root = fs.mkdtempSync(path.join(os.tmpdir(), 'install-doc-markers-'));
+    fs.mkdirSync(path.join(root, '.kiro', 'issues', 'archive'), { recursive: true });
+    fs.writeFileSync(path.join(root, '.kiro', 'issues', 'live-record.md'), '# live\n');
+    fs.writeFileSync(path.join(root, '.kiro', 'issues', 'archive', 'closed-record.md'), '# closed\n');
+  });
+  afterAll(() => {
+    fs.rmSync(root, { recursive: true, force: true });
+  });
+
+  /** A minimal guide: front matter, then a region holding one sentence followed by `after`, then text outside the region. */
+  const guideWith = (after: string, outside = ''): string =>
+    ['---', 'path-steps: { founder: 5 }', '---', '', REGION_BEGIN, '', `A limitation sentence.${after}`, '', REGION_END, '', outside].join('\n');
+  const marker = (rel: string): string => ` <!-- limitation: ${rel} -->`;
+
+  it('passes when the marked record is at the issues root', () => {
+    expect(checkLimitationMarkers(guideWith(marker('.kiro/issues/live-record.md')), root)).toEqual([]);
+  });
+
+  it('FAILS when the marked record is under archive/ and its sentence remains', () => {
+    const problems = checkLimitationMarkers(guideWith(marker('.kiro/issues/closed-record.md')), root);
+    expect(problems).toHaveLength(1);
+    expect(problems[0]).toContain('.kiro/issues/closed-record.md is under archive/');
+  });
+
+  it('FAILS when the marked record is missing and its sentence remains', () => {
+    const problems = checkLimitationMarkers(guideWith(marker('.kiro/issues/never-filed.md')), root);
+    expect(problems).toHaveLength(1);
+    expect(problems[0]).toContain('.kiro/issues/never-filed.md is missing');
+  });
+
+  it('passes when the sentence was rewritten and its marker removed, whatever became of the record', () => {
+    expect(checkLimitationMarkers(guideWith(''), root)).toEqual([]);
+  });
+
+  it('FAILS on a marker that is not of the form " <!-- limitation: .kiro/issues/<file>.md -->"', () => {
+    for (const bad of [
+      '<!-- limitation: .kiro/issues/live-record.md -->', // no space before it
+      ' <!-- limitation: live-record.md -->', // not a repo-relative issues path
+      ' <!-- limitation: .kiro/issues/archive/closed-record.md -->', // names the archive directly
+      ' <!-- limitation:  .kiro/issues/live-record.md -->', // two spaces
+    ]) {
+      const problems = checkLimitationMarkers(guideWith(bad), root);
+      expect(problems.some((p) => p.includes('not of the form'))).toBe(true);
+    }
+  });
+
+  it('FAILS on a marker outside the install region', () => {
+    const problems = checkLimitationMarkers(guideWith('', marker('.kiro/issues/live-record.md')), root);
+    expect(problems.some((p) => p.includes('outside the install region'))).toBe(true);
+  });
+
+  it('reads each marker with the line of its sentence, within the region', () => {
+    const region = extractRegion(guideWith(marker('.kiro/issues/live-record.md')));
+    expect(limitationMarkers(region)).toEqual([{ record: '.kiro/issues/live-record.md', line: 1 }]);
+  });
+
+  it('the guide in this repository has no marked record that is archived or missing while its sentence remains', () => {
+    expect(checkLimitationMarkers(GUIDE, REPO_ROOT)).toEqual([]);
+  });
+});
+
+describe('limitation markers never reach a reader of INSTALL.md (Spec 129 Req 15.2; Ada U2 R1 Q2)', () => {
+  const marked = (after: string): string =>
+    ['---', 'path-steps: { founder: 5 }', '---', '', REGION_BEGIN, '', `One sentence.${after} Next sentence.`, '', REGION_END, ''].join('\n');
+
+  it('strips a marker and the space before it, leaving the sentences', () => {
+    expect(stripLimitationMarkers('A. <!-- limitation: .kiro/issues/x.md --> B.')).toBe('A. B.');
+    expect(stripLimitationMarkers('- a bullet <!-- limitation: .kiro/issues/x.md -->\n- next')).toBe('- a bullet\n- next');
+  });
+
+  it('derives the same text from a marked guide as from the unmarked one (bite for the strip)', () => {
+    const withMarker = marked(' <!-- limitation: .kiro/issues/x.md -->');
+    expect(withMarker).toContain(LIMITATION_OPENER);
+    expect(deriveInstallDoc(withMarker)).toBe(deriveInstallDoc(marked('')));
+    expect(deriveInstallDoc(withMarker)).not.toContain(LIMITATION_OPENER);
+  });
+
+  it(`${INSTALL_REL} carries no limitation marker`, () => {
+    expect(read(INSTALL_REL)).not.toContain(LIMITATION_OPENER);
+  });
+
+  it('the guide’s own region derives to text with no limitation marker', () => {
+    expect(deriveInstallDoc(GUIDE)).not.toContain(LIMITATION_OPENER);
   });
 });

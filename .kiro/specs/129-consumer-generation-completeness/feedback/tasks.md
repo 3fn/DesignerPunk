@@ -2803,3 +2803,198 @@ Peter, `date -u` at receipt 2026-11-07T02:04:38Z (orchestrator relay), verbatim:
   - **No other "after U1 merges" text names this record.** The other row with that When, the in-lane guards, is unaffected.
 - **Stamp**: the coordinator asked for `[THURGOOD R9]`, but that stamp is taken (amendment 4), so this entry is `[THURGOOD R11]`.
 - **The record's Trigger is Lina's call.** She proposes `path:…/completion/claims-pass.md`, re-ruled to Spec 132 at CLOSEOUT. That is a valid token, with the L165 precedent. It is set in her record-only PR, not here.
+
+---
+
+## Unit 2, Task 7.1 (2026-11-07): which install-region sentences a 129 row fixes
+
+The candidate list is `evidence/2026-11-07-u2-marker-candidates.md` (Thurgood, written at `7aed9c5aa`, before any owner answered). The four owners' answers follow, each spliced byte for byte from the owner's entry as the orchestrator relayed it. Thurgood's disposition of all four is the last entry, `[THURGOOD U2 R2]`. They resolve `completion/task-7-instruments.md` row 3.
+
+#### [ADA U2 R1] — Task 7.1 consult: which of my rows fix which install-region sentences
+
+Read-only. I read `marker-candidates.md` (Thurgood, at `7aed9c5aa`) against `.kiro/specs/129-consumer-generation-completeness/tasks.md` on `origin/main`: Task 7, the record table and each fixing task's criteria. I also read the Trigger lines of the row 2 and row 19 records. Units are named by the task that archives each record:
+
+| Row | Archived at |
+|---|---|
+| 1 | Task 10, U5 |
+| 2 | Task 11, U6 |
+| 3 | Task 9, U4 |
+| 4 | Task 11, U6 (its last task) |
+| 6 | Task 9, U4 |
+| 19 | Task 14, U9 |
+
+**1. My 16 sentences**
+
+| # | Ruling | Row | Reason |
+|---|---|---|---|
+| A1 | **Move** | **19** | Item (vi) makes this sentence false. A registered custom theme first reaches web output at U9 (Task 14, design § 10 "Effects"). Row 2's record treats web separately ("web statics were *not* removed, treat web separately") and archives at U6, three units early. Row 19's record (`2026-10-15-123-palette-read-from-package.md`) covers what `generate` takes from the package rather than the consumer's copy, and it archives at U9. |
+| A2 | Confirm | 19 | All six groups move in Task 14 (U9). As Thurgood says, put the marker after the list sentence. |
+| A3 | Confirm | 1 | Task 10 (U5). |
+| A4 | Confirm | 2 | U6 emits the iOS theme surface. |
+| A5 | Confirm | 2 | As A4, for Android. |
+| A6 | Confirm | 19 | The same six groups as A2, at U9. |
+| A7 | **Move** | **19** | The web `[data-theme]` block for a registered theme first emits at U9 (Task 14), the same reasoning as A1. |
+| A8 | Confirm | **2 only** | See Q1. |
+| A9 | Confirm, with a lag note | 4 | Task 8 (U3) removes `Color.oklch` ("no generated file calls `Color.oklch`"). That is row 4's item 1, but row 4 archives only at U6, so the marker fires three units after the sentence goes false. No row closer in time names this defect. The batching rule (rewrite before each release's S) catches the gap, and the marker is the backstop. |
+| A10 | Confirm | 4 | Row 4's item 3 names this defect exactly. Row 2 also lands at U6, so one marker serves both. |
+| A11 | Confirm | 3 | Task 9 (U4): "`ComponentTokens` refers to `DesignTokens.<name>` … row 3's platform references compile". |
+| A12 | Confirm | 2 | U6, with every colour semantic in the theme (Q13 (a)). |
+| A13 | Confirm | **2 only** | See Q1. |
+| A14 | Confirm | **2 only**; drop row 4 | Both clauses describe the omission that U6 removes. Row 4's item 2 is the WCAG override text in `oklch(…)`, a different defect. |
+| A15 | Confirm | 4 | The Android twin of A10. One marker, for the same reason. |
+| A16 | **Split** | **4 and 6** | The two halves go false at different units. See Q3. |
+
+**2. Q1: a sentence that more than one row touches**
+
+- **The rule I'd write, in place of "the row that closes last":** a marker names the record whose archival is the event that makes the sentence false.
+  - When one row's closure alone makes the whole sentence false, name that row, even if another row also touches the sentence.
+  - When the sentence goes false only after all its rows have landed, name the last of them.
+  - When its parts go false at different units, split the sentence (Q3).
+  - "The last to close" is right only in the second case. In the first case it leaves a false sentence unmarked between the two units, and that is the window the test exists for.
+- **A8 and A13: row 2, not row 15.**
+  - What these sentences claim is that no shipped file defines the surface and `generate` does not emit it. That is false at U6, when Task 11 emits `DesignerPunkTheme`, `\.dpTheme` and `LocalDPTheme`.
+  - Under Q12 (a), "names fixed to DesignerPunk's own configuration" stops being a defect at U6: the fixed binding is the design.
+  - Task 11 also removes the entries tagged to row 15's theme-name defect "in this diff".
+  - Row 15's U7 work is the components' other theme reads, which these sentences do not claim.
+  - **[@LINA]** please confirm that nothing in A8 or A13 is row 15's beyond the theme-name half that Task 11 removes. If something is, it is a part that goes false at U7, and the sentence splits.
+- **A10 and A15:** rows 2 and 4 both land at U6, so one marker each, naming row 4, the record that names the defect.
+- **A14:** row 2 only (above).
+- **A16:** split (Q3).
+- **Several markers per sentence, with the test failing only when all are archived:** I don't prefer it. It is the weaker test, for the reason Thurgood gives. The rule above makes it unnecessary.
+
+**3. Q2: strip the markers in the derive step**
+
+- Strip them. A marker is maintenance metadata: it points to `.kiro/issues/…`, which a consumer cannot open.
+- What a consumer needs is the sentence itself, and the release notes for what changed.
+- `install-doc.test.ts` should compare against the stripped text. It should also assert that no `<!-- limitation:` survives in `docs/consumer/INSTALL.md`, so a marker cannot leak if the strip regresses.
+
+**4. Q3: Thurgood's reading rule, refined**
+
+- A sentence that a row's named defect discloses is marked.
+- It is marked as a whole when all its parts go false in the same unit: A2 (all six groups at U9) and A14 (both clauses at U6).
+- It is split, one marker per part, when its parts go false at different units. Only A16 is split:
+  - "the generated Kotlin calls `Oklch(…).toComposeColor()`, which needs the colormath library (github.com/ajalt/colormath)", plus the dependency half of "so you add the dependency": **row 4**. It goes false at U3 (Task 8: "no generated file calls colormath"), and the record archives at U6, with the A9 lag.
+  - "and the file imports nothing", plus the imports half of "add … the imports yourself": **row 6**. It goes false at U4 (Task 9: the computed `DesignTokens.android.kt` import list).
+  - The split's wording is the guide's editor's (Thurgood's) to choose. These are the two parts and their rows.
+
+**Not mine:**
+- B1 is Kenya's and Data's.
+- The already-false `ContainerCardBase.ios.swift` clause at L164 is Lina's rewrite.
+
+Ada (Rosetta), consulted on rows 1, 2, 3, 4, 6 and 19 for Task 7.1. This entry closes `task-7-instruments.md` row 3 for my rows, once it is on a record.
+
+#### [LINA U2 R1]
+
+Read at `origin/main` @ `74d7566f5` (#707): the guide, the row 2 and row 15 records, and `ContainerCardBase.ios.swift`. Read-only. Each item is marked VERIFIED or UNVERIFIED.
+
+**1. A8 and A13: row 15 closes after row 2, but the sentences go false at row 2. Both markers should name row 2.**
+- **Close order.** VERIFIED from the two Trigger lines on `main`:
+  - row 2 (`2026-06-28-spec-094-platform-theme-emission-unwired.md`) fires on `task-11-completion.md`, so it closes at U6;
+  - row 15 (`2026-09-26-native-component-theme-hardcoding.md`) fires on `task-12-completion.md`, so it closes at U7;
+  - U7 follows U6.
+- **Each sentence does not stay true until row 15 closes.** It goes false at U6.
+  - Under Q12 option (a), U6 emits the fixed binding: `DesignerPunkTheme`, `DPThemeKey`, `\.dpTheme` and `LocalDPTheme` (design § 4; Task 11's first two criteria). VERIFIED.
+  - A8's "which no shipped file defines and your `npx designerpunk generate` does not emit" is then false.
+  - A13's "which nothing in this package defines and `generate` does not emit today" is then false too. U6 also adds the 25 `LocalDPTheme` imports (Task 11.5; `2026-11-06-android-components-do-not-import-localdptheme.md`).
+  - Row 15's own Trigger note says so: "Task 11 (U6) emits the fixed binding names that resolve the theme-name half". Row 15 stays open to U7 only for its final check, that no component entry is tagged to it. That check does not keep either sentence true. VERIFIED.
+  - A row 15 marker would let a false sentence stand from U6's merge to U7's, and ship if a release S falls between them. → tasks.md § "7. … the limitation markers"
+- **The rule I'd put in Q1's place.** One marker per sentence, naming the record whose close makes the sentence false. That is usually the last row to land, but not here. For A8 and A13 it is row 2. Row 15 takes no marker.
+  - **Surviving counter-argument**: the reader has to judge, per sentence, which row makes it false. "The last row to close" is mechanical; this rule is not. The test only catches a marker pointing at a record that closes too early, never at one that closes too late.
+  - **What the A8 rewrite at U6 must say.** "names fixed to DesignerPunk's own configuration" becomes the contract: the binding names are DesignerPunk's whatever the adopter's config says (design § 4, Q12). It must not be dropped as if it had been a defect. That rewrite is Ada's, in U6's PR, with me consulted.
+
+**2. "`ContainerCardBase.ios.swift` does not parse" is a rewrite, not a marker.**
+- VERIFIED:
+  - #695 (`4732654d6`) made the dangling `/**` at L816 a `//` comment;
+  - `xcrun swiftc -parse` on the file at `origin/main` exits 0;
+  - 16.2.0 shipped before #695, so the guide in the published 16.2.0 package is still true for that package.
+
+  The rewrite lands on `main`, before the next release's S.
+- The guide's iOS paragraph, its first sentence, replaces the whole of guide L164:
+
+  > **Native onboarding is not supported.** The shipped SwiftUI components are reference source, not a build input: they read a theme surface (`@Environment(\.dpTheme)`, `any DesignerPunkTheme`) under names fixed to DesignerPunk's own configuration, which no shipped file defines and your `npx designerpunk generate` does not emit; and the package has no Swift package manifest.
+
+- The provenance sentence at L173 carries the same fact, "and the parse failure was reproduced with the Swift compiler's parse step". It goes in the same edit:
+
+  > This was checked by reading the source. No iOS build was run.
+
+  Whether "No iOS build was run" survives U1's harness is Kenya's and Data's, in Task 18's Native status edit. I only remove the parse clause.
+- Edit kind for Task 7's PR line: `governance/DesignerPunk-Integration-Guide.md L164, L173 — CORRECTION (.kiro/issues/2026-09-26-native-component-theme-hardcoding.md; truth: ContainerCardBase.ios.swift at origin/main, swiftc -parse exit 0)`. Line numbers are as they stand at the merge commit. → tasks.md § "7. … the limitation markers"
+
+**3. My rows add no sentence the list misses, but one sentence needs a reading.**
+- VERIFIED by reading L162–L198: rows 12, 14 and 16, and the `LocalDPTheme` import record, are named by no sentence in the install region. Row 15 appears only in A8, A13 and the parse clause above.
+- **Not a marker, but a claim reading for Task 18.** L196, "Spec 129 … makes the token files `generate` writes, and DesignerPunk's component source built against them, compile on iOS and Android in DesignerPunk's own checks", may not be true at 129's close.
+  - Req 1.4 accepts the component contexts with entries still on their lists, tagged to open records.
+  - The component-repair record (#706, open) carries 48 iOS and 168 Android entries at run 42324880305, unsized, with a Trigger on 129's CLOSEOUT and a planned re-rule to Spec 132.
+  - If entries remain at U12, the guide should say the component source compiles "with the remaining errors listed against open records", or name the share.
+
+  That is Kenya's and Data's CORRECTION edit under Req 15.5 and Stacy's reading at RELEASE. I flag it here because the record is mine. UNVERIFIED: how many entries remain at U12.
+
+- [@THURGOOD] Will you put the "names the record whose close makes the sentence false" rule in Q1's place, and move A8's and A13's markers to row 2? → tasks.md § "7. … the limitation markers" -- [LINA U2 R1]
+- [@ADA] A8 and A13 then name your row 2. The U6 rewrite of A8 keeps "names fixed to DesignerPunk's own configuration" as the stated contract (Q12). Do you agree? → design.md § 4 "Q12" -- [LINA U2 R1]
+
+#### [KENYA U2 R1] — Task 7.1, Q4: sentence B1 (guide L192)
+
+Read at `origin/main` `74d7566f5` (U1 merged, #707). Labels: VERIFIED = I ran or opened it; READ = read in a file.
+
+**B1 is false on main today, for iOS. Take no marker; it is a Task 18 rewrite.**
+- **The sentence**: "Nothing in DesignerPunk's own checks builds Swift or Kotlin yet." (`governance/DesignerPunk-Integration-Guide.md` L192, READ at `74d7566f5`).
+- **Why it is false** (VERIFIED): `native-harness.yml` runs `harness-ios-tokens` and `harness-ios-components` on `macos-26` under Xcode 26.6 on every pull request, with no `paths:` filter. Both ran on U1's own PR and on the dispatches at its head (https://github.com/3fn/DesignerPunk/actions/runs/42335480697, workflow_dispatch at `901d72002`, both iOS contexts PASS, with `swiftc` emitting object code for the generated Swift and for the packaged SwiftUI).
+- **Why a marker would be wrong, not just unneeded**: row 23's record names `completion/task-5-completion.md` as its Trigger, which U1's merge fired. My rule 5 outcome line is in the record (commit `5fe238cd8`), Data writes his, and the steward archives it after both. Req 15.2's test fails when a marked record is under `archive/` while its sentence remains, so a marker naming it would turn red at the archive move. The record's obligation was the instrument, and the instrument exists; nothing is left on it for a marker to wait on.
+
+**The sentence is true in one respect and misleading in another, which is why it is a rewrite and not a deletion.** The harness exists, but it is not a required check (Decision 6 sets how it gets promoted, and that is Peter's act), and it passes while the files above it still do not compile, because it compares failures with committed lists. The two bullets before B1 ("The native token files `generate` writes do not compile yet", "DesignerPunk's own SwiftUI and Jetpack Compose component source does not compile yet either") stay true and stay.
+
+**Replacement wording for the bullet** (one sentence for both platforms; [@DATA] confirms the Kotlin half, which is his to check):
+
+> - DesignerPunk's own pull-request checks now compile the Swift and Kotlin that `generate` writes, and DesignerPunk's component source against it (the `native-harness` workflow). The check lists the failures it expects, so it passes while the files above still do not compile, and it is not yet a required check.
+
+Notes on the wording:
+- "pull-request checks", not "own checks": the sentence is about CI, and "checks" alone reads as the required gate.
+- It claims a compile, not that the code compiles. The next sentence in the guide ("What is planned") says Spec 129 makes it compile, and stays.
+- iOS facts it rests on: Xcode 26.6, target iOS 17.0, compile only (no link, no simulator run). The guide's "That is a compile check, not an app" in the planned paragraph already says the last part.
+
+**Two things I did not decide here**
+- Whether this edit rides Task 18's guide PR (Req 15.5 gives the "Native status" passage to Kenya and Data as a CORRECTION edit) or the next Integration Guide PR before a release's S. Thurgood's call; I hold no edit rights on `governance/**`.
+- L173 and L177 ("No iOS build was run"; "no Android build has been run") are provenance statements that the same harness now contradicts for the generated files; they are listed in your "Read and NOT proposed" section as Task 18 rewrites, and I agree they belong there.
+
+#### [DATA U2 R1]
+
+**Q4, sentence B1** ("Nothing in DesignerPunk's own checks builds Swift or Kotlin yet.", guide L192, row 23): **already false on main for Android. A Task 18 rewrite, no marker.** Read at `main` @ `74d7566f5` (U1, #707).
+
+- **Why false.** `.github/workflows/native-harness.yml` runs `harness-android-tokens` and `harness-android-components` on `ubuntu-24.04` on every pull request. They run Gradle's `compileDebugKotlin` over the generated Kotlin (`:tokens`) and over it plus the packaged Kotlin components (`:dp`). The PR's own run, https://github.com/3fn/DesignerPunk/actions/runs/42335435837 (event `pull_request`, head `901d72002`), shows both Android contexts concluded success. "Nothing builds Kotlin" no longer holds, and I would not keep it until row 23 closes: row 23 asked for the instrument, and the instrument exists.
+- **What stays true, so the rewrite must not swing the other way.** The contexts are non-required measuring lanes (Req 2.12). A PASS means the failures match the committed lists, not that the Kotlin compiles; the generated token files still fail `:tokens` (291 diagnostics), and the component source fails `:dp`. So the two bullets above B1 ("The native token files `generate` writes do not compile yet", "DesignerPunk's own SwiftUI and Jetpack Compose component source does not compile yet either") are still true, and they are not B1. Nothing runs on an emulator or a device.
+- **Suggested shape for the Task 18 sentence** (Kenya and Data's CORRECTION edit, Req 15.5): that DesignerPunk's own checks now compile the generated Swift and Kotlin and the packaged components on every pull request, as non-required lanes whose result today is a list of known failures rather than a clean compile. The exact wording is Task 18's.
+- **Marker.** None, so the sentence is not a Task 7 limitation sentence. If the owners of row 23 prefer to keep it listed until the record is archived, the marker would name `.kiro/issues/2026-09-17-platform-build-verification-harness-candidate.md`; I would not ask for that, because the record is going to be archived at U1's merge under rules 5 and 9 with Kenya's and my outcome lines, and a marker on a sentence that is false would make the guide state a limitation that no longer exists.
+
+#### [THURGOOD U2 R2] — disposition of the four owners' entries, and what 7.1 marked
+
+**Q1: adopted, after running my counter-argument against it.** The rule: a marker names the record whose archival makes the sentence false, one marker per sentence, and a sentence whose parts go false in different units is split (Ada's Q3). It replaces my "name the last row to close". My proposal fails on A8 and A13 for the reason Ada and Lina give: both sentences are false at U6, when Task 11 emits the fixed binding, and a row 15 marker would leave a false sentence standing from U6 to U7.
+- **What I tried against it.**
+  1. *It needs a reading per sentence; "last to close" was mechanical.* Folded in: each reading is written in the Task 7 completion doc as marker, record, the unit at which the sentence goes false, and the task criterion that says so. Ada and Lina checked these against the tasks.
+  2. *The test is one-sided.* It fires when a record is archived while its sentence stands. It never fires when a sentence goes false before its record is archived. No choice of record closes that window when no earlier record names the defect (A9, A16's colormath half). Not folded in, and no rule can do it.
+  3. *A wrong reading costs unequally.* Too early: the test fires at the archival, loudly, and the fix is to re-point the marker. Too late: nothing fires. So where a reading is close, the marker goes on the earlier record. Folded in as the tie-break.
+  4. *A bigger consequence than the choice of rule:* the test forces each sentence's rewrite no later than its record's archival. Archival is in the unit's PR (Conventions, "A unit closes the records it fires"), so the PRs of U4, U5, U6 and U9 (Tasks 9, 10, 11 and 14) each carry a Guide rewrite and an INSTALL re-derive, and each is Peter-merged for touching `governance/**`. The Conventions' batching rule says "before each release's S", a deadline the test now pulls forward to unit grain. That is what Req 15.2 wrote. It is not in those parents' criteria, so their authors meet it as a red check. I have not amended `tasks.md` for it.
+- **What survives:** 2 and 4. Neither is a reason to keep my rule; both are Ada's and the coordinator's to know. Several markers per sentence, with the test failing only when all are archived, is the weaker test, and nobody wants it.
+
+**What 7.1 marked (17 markers on 16 sentences), by record.**
+
+| Record (row) | Markers | Sentences (guide lines at `7aed9c5aa`) | Goes false at |
+|---|---|---|---|
+| `2026-06-24-mathematical-relationship-parser-validation-gaps.md` (1) | 1 | A3 (L94) | U5, Task 10 |
+| `2026-06-28-spec-094-platform-theme-emission-unwired.md` (2) | 6 | A4 (L98), A5 (L99), A8 (L164), A12 (L171), A13 (L177), A14 (L182) | U6, Task 11 |
+| `2026-08-13-component-token-platform-references-noncompiling.md` (3) | 1 | A11 (L170) | U4, Task 9 |
+| `2026-10-03-native-generator-findings-for-spec-129-intake.md` (4) | 4 | A9 (L168), A10 (L169), A15 (L183), A16's colormath half (L185) | A9 and A16's half at U3, Task 8; A10 and A15 at U6 |
+| `2026-10-20-kotlin-output-no-import-block.md` (6) | 1 | A16's imports half (L185) | U4, Task 9 |
+| `2026-10-15-123-palette-read-from-package.md` (19) | 4 | A1 (L23), A2 (L91), A6 (L111), A7 (L158) | U9, Task 14 |
+
+- Ada's moves taken as ruled: A1 and A7 to row 19, A8, A13 and A14 to row 2 alone. A16 is split into two sentences, one marker each: "…which needs the colormath library (github.com/ajalt/colormath), so you add that dependency yourself." (row 4) and "The generated file imports nothing, so you add the imports yourself." (row 6). The split keeps the meaning; Ada left its wording to me.
+- Row 23 has no marker (B1): see below.
+
+**A9 and A16's colormath half: the window U3 to U6 is accepted, with its reason.** Both go false at U3 (Task 8 removes every `Color.oklch` and colormath call) and row 4 archives at U6. No earlier record names this defect, so there is no better marker. Closing the window means a Task 8 criterion that rewrites the sentence in U3's PR, which is a tasks amendment and a round; I do not propose one. Reasons to accept: the stale sentence understates what works, so it misleads no one into a build that fails (Req 15.1 polices overclaims, not stale limitations); the Conventions' batching rule and Stacy's RELEASE read cover any release S that falls in the window; and the marker is the backstop at U6. The two sentences are recorded in the completion doc as lag entries, so my pass at each release's S reads them against the merged units. The alternative, the Task 8 criterion, costs one amendment round and puts a `governance/**` edit in U3, which Ada owns. If Peter wants no window, that is the option.
+
+**L195 (Lina's "L196").** "Spec 129 … makes the token files `generate` writes, and DesignerPunk's component source built against them, compile …" may overclaim at 129's close, because Req 1.4 accepts component lists with entries still on them. It is already owned: Req 15.5 names this line ("the passage's Spec 129 line at … L195"), Task 18.3 rewrites the Native status passage with Kenya's and Data's words, and Req 15.1's grep at each release's S catches "compiles". So I file no record: it would restate Task 18.3. The residual is timing: a release S before U12 carries the line as it stands, and that is Task 17's grep and Stacy's RELEASE read. Not a marker, because no single row makes it false.
+
+**Lina's rewrite** of L164 and L173 is spliced as she wrote it (L164 drops the parse clause; L173 reads "This was checked by reading the source. No iOS build was run."). Edit kind: CORRECTION, citing her record and `swiftc -parse` exit 0. Her [@ADA] question, that the U6 rewrite of A8 keeps "names fixed to DesignerPunk's own configuration" as the stated contract, is Ada's to answer at U6 and is still open on this record.
+
+**B1 (L192): no marker, a Task 18 rewrite.** Kenya and Data agree it is already false. Their replacement wording is on this record in `[KENYA U2 R1]` and `[DATA U2 R1]`; Task 18.3 takes it from here. On Kenya's question where it rides: Task 18's PR, as Req 15.5 says, unless a release S falls before U12, when the batching PR carries it. L173 and L177's "No … build was run" are the same Task 18 edit.
+
+**Q2** as Ada ruled: the derive step strips the markers, and `install-doc.test.ts` compares the stripped text and asserts none reaches `INSTALL.md`.

@@ -147,7 +147,7 @@ The full import list is under Available Imports, in the reference part of the In
 
 ### iOS
 
-**Native onboarding is not supported.** The shipped SwiftUI components are reference source, not a build input: they read a theme surface (`@Environment(\.dpTheme)`, `any DesignerPunkTheme`) under names fixed to DesignerPunk's own configuration, which no shipped file defines and your `npx designerpunk generate` does not emit; the package has no Swift package manifest; and `ContainerCardBase.ios.swift` does not parse.
+**Native onboarding is not supported.** The shipped SwiftUI components are reference source, not a build input: they read a theme surface (`@Environment(\.dpTheme)`, `any DesignerPunkTheme`) under names fixed to DesignerPunk's own configuration, which no shipped file defines and your `npx designerpunk generate` does not emit; and the package has no Swift package manifest.
 
 What the package ships for iOS, and why it does not add up to a target yet:
 - `node_modules/@3fn/core/dist/DesignTokens.ios.swift` is DesignerPunk's **un-themed base snapshot**, generated from DesignerPunk's own configuration, not yours.
@@ -156,7 +156,7 @@ What the package ships for iOS, and why it does not add up to a target yet:
 - `node_modules/@3fn/core/dist/ComponentTokens.ios.swift` is DesignerPunk's **component token tier**. Some of the shipped components read it (`ButtonIcon.ios.swift`, for one), and it refers to `SizingTokens`, `SpacingTokens` and `BorderWidthTokens`, which no shipped file defines.
 - Native token output omits the **14 theme-varying semantic colours**, among them `colorActionPrimary` and `colorStructureCanvas`.
 
-This was checked by reading the source, and the parse failure was reproduced with the Swift compiler's parse step. No iOS build was run. Platform requirements, for reference: **iOS 17.0+** (SwiftUI, UIKit). Where native support stands is in the Native status note at the end of "Platforms".
+This was checked by reading the source. No iOS build was run. Platform requirements, for reference: **iOS 17.0+** (SwiftUI, UIKit). Where native support stands is in the Native status note at the end of "Platforms".
 
 ### Android
 
@@ -168,7 +168,7 @@ What the package ships for Android, and why it does not add up to a target yet:
 - Native token output omits the same **14 theme-varying semantic colours**, among them `color_action_primary` and `color_structure_canvas`. Only `_wcag` variants of some of them are emitted.
 - Product tokens that reference a theme-varying token are emitted as a read of `Local<your abbreviation>Theme`, which nothing defines.
 
-Platform requirements, for reference: the generated Kotlin calls `Oklch(…).toComposeColor()`, which needs the colormath library (github.com/ajalt/colormath), and the file imports nothing, so you add the dependency and the imports yourself. The Compose BOM must be compatible with the component implementations. Where native support stands is in the Native status note at the end of "Platforms".
+Platform requirements, for reference: the generated Kotlin calls `Oklch(…).toComposeColor()`, which needs the colormath library (github.com/ajalt/colormath), so you add that dependency yourself. The generated file imports nothing, so you add the imports yourself. The Compose BOM must be compatible with the component implementations. Where native support stands is in the Native status note at the end of "Platforms".
 
 **Native status (iOS and Android).** Native onboarding is not supported yet. Don't start an iOS or Android product on this release. Web is the platform you can build on today.
 
