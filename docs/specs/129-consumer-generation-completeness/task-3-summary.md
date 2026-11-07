@@ -27,7 +27,6 @@ Every native "compiles" in Spec 129 is accepted by these lanes. A token that the
 - ✅ Task 5's workflow calls one script per iOS context, and the baselines are cut from its output.
 - ✅ Item (i)'s emitter (Task 11) will be read by the probe with no harness change: the instances and the family come from the shared module.
 - ⚠️ The probe has not yet compiled against the real token module, because Stage T still fails on the generated tokens (208 errors on the baseline list). The first real compile arrives as those entries are fixed.
-- ⚠️ One criterion waits for Task 5's completion doc to paste the first full run's iOS log (see the completion doc's forced-negative line).
 
 ---
 
