@@ -3,6 +3,7 @@
 **Date**: 2026-11-05
 **Spec**: 129 - Consumer-Generation Completeness
 **Status**: Merged at R2 (#678, `8d8ba1425`), with the seven R1 reviews, the Q3a addendum and Peter's Decision 6 answer folded in. **Amendment 1** (2026-11-06) folds Stacy's verifiability read of the merged file, `[STACY TASKS R2]`, requested by Peter ("Have Stacy check the tasks first", 2026-11-06T00:07:00Z), with `[THURGOOD R3]` notes (`feedback/tasks.md`). Execution starts after this file merges (Spec-Feedback-Protocol § "Sequential Formalization Gate").
+**Amendment 6** (2026-11-07) gives Tasks 9, 10, 11 and 14 the rewrite of each Integration Guide sentence marked with a record their PR archives, under Peter's "708 is merged; do the amendment, then go for U3", received 2026-11-07T05:10:45Z (`evidence/2026-11-07-peter-ruling-marker-rewrite-criteria.md`) (`feedback/tasks.md` `[THURGOOD R12]`).
 **Amendment 5** (2026-11-07) moves the component-repair record's filing to before U1's component lists commit, and records that the blend entries outlast 129, under Peter's "a; blend entries fine", received 2026-11-07T02:04:38Z (`evidence/2026-11-07-peter-ruling-component-repair-record-timing.md`) (`feedback/tasks.md` `[THURGOOD R11]`).
 **Amendment 3** (2026-11-06) carries Peter's theme rulings of 2026-11-06T22:38:12Z (`evidence/2026-11-06-peter-rulings-theme-and-downloads.md`), 23:31:58Z and 23:37:03Z (`evidence/2026-11-06-peter-rulings-round-3.md`) into Tasks 3, 4, 5, 6, 11, 14 and 16 and Decision 6 condition 3, with `requirements.md` Req 2.3, 2.4, 4.1 and 5.6 and `design.md` §§ 0, 2, 4 and 10 amended in place (`feedback/tasks.md` § "Tasks amendment 3", `[THURGOOD R6]`).
 **Amended in this round**: `requirements.md` Requirements 10.1 (Ada R1) and 9.5 (Lina, the Q3a bridge), and `design.md` § 10 (the registration-keyed built-in bridge, Ada and Lina), each with a dated line in place.
@@ -28,7 +29,7 @@ The compile harness is built first (U1), because every native "compiles" in 129 
 - **A fix and its list edit land in the same diff** (Req 3.3). Before PR-open, a unit author dispatches the harness against the unit branch, because the harness is not in `complete-task.sh`'s `REQUIRED_WORKFLOWS` while it measures: `gh workflow run native-harness.yml --ref <branch>`. GitHub triggers `workflow_dispatch` only for a workflow whose file is on the default branch (ballot `2026-09-27-b-ci-unit-branch-ci-feedback` L197), and U1 creates `native-harness.yml`. So a dispatch-only stub of that file merges to `main` before U1 dispatches anything, and the first dispatch against the unit branch is a probe that shows the run used the branch's copy of the file (§ "Unit preconditions"). *(Amended 2026-11-06, tasks amendment 2, Peter's Decision 1, "1 A", received 2026-11-06T14:04:52Z; prior text at `33380114c`.)*
 - **A row a harness context accepts** has an entry tagged to its record on that context's list before the PR that fixes it, or its parent names the interim instrument (Req 2.14).
 - **Token documentation** changes in the same PR as a token it describes (Req 15.4).
-- **Limitation sentences** that a merged unit makes false are rewritten in one Integration Guide PR before each release's S, with INSTALL re-derived (Req 15's batching rule, moved here from R1 Requirement 15.3; Thurgood derives). INSTALL L84–L85 ("no theme surface yet") ride the first such PR after U6 (Kenya R1).
+- **Limitation sentences** that a merged unit makes false are rewritten in one Integration Guide PR before each release's S, with INSTALL re-derived (Req 15's batching rule, moved here from R1 Requirement 15.3; Thurgood derives). INSTALL L84–L85 ("no theme surface yet") ride the first such PR after U6 (Kenya R1). **A marked sentence** (U2's `<!-- limitation: … -->` markers) is rewritten instead in the PR that archives its record, because `install-doc.test.ts` fails that PR otherwise; Tasks 9, 10, 11 and 14 carry it as a criterion. The batching PR covers the unmarked sentences and the lagged marked ones (Task 8's note) *(amended 2026-11-07, tasks amendment 6, under Peter's "708 is merged; do the amendment, then go for U3", received 2026-11-07T05:10:45Z (`evidence/2026-11-07-peter-ruling-marker-rewrite-criteria.md`))*.
 - **Sub-suites.** `npm test` does not run `test:consumer`, `test:scripts`, the `mcp-server` or the `application-mcp-server` suites. A parent whose artifacts those suites read runs them before completion and says so.
 - **Edit kind and consult lines.** A PR touching `governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**` or `canonical/agents/**` carries one `**Edit kind**:` line per file, and is Peter-merged under the standing carve-out. A unit PR touching a trigger surface carries `**Consulted**:`.
 - **Signed charter text** (Tasks 14 and 16). The authoring commit never moves a `canonicalHash`. The profile author (Thurgood) re-quotes the operative-set items, re-grounds the overlay pins and writes the dispositions; the owner seat's confirmation and the signers' signatures are their own acts after the authoring commits, need no grant (ballot `2026-10-01-signing-act-chain`), and are checked by `verify-signing-chain.ts --audit --pr <n>`. Each signing commit runs as `git commit … && git log -1 --format='%H %s'`.
@@ -121,7 +122,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 | 5 | Thurgood (Sonnet) | Kenya (Sonnet) — the iOS jobs' steps; Data (Sonnet) — the Android jobs' steps | Ada, Lina |
 | 6 | Thurgood (Sonnet) | — | Stacy |
 | 7 | Thurgood (Sonnet) | — | Ada |
-| 8 | Ada (Sonnet) | Sparky (Sonnet) — the `var()` and blue-tinted shadow `Consumer Guard` cases | Kenya, Data |
+| 8 | Ada (Sonnet) | Sparky (Sonnet) — the `var()` and blue-tinted shadow `Consumer Guard` cases; Data (Sonnet) — the colour library's removal from `harness/android/**` (amendment 6) | Kenya, Data |
 | 9 | Ada (Sonnet) | Lina (Sonnet) — the coupled Android and iOS component reads and the guideline type statements; Thurgood (Sonnet) — holds the Req 6.9 ballot record | Data, Kenya |
 | 10 | Ada (Sonnet) | Lina (Sonnet) — the two component tokens files row 21's ruling disposes | — |
 | 11 | Ada (Sonnet) | Lina (Sonnet) — Req 4.5's coupled reads and the two `DesignTokens` re-points | Kenya, Data |
@@ -529,7 +530,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 - [ ] 8. Native colours, shadows, section comments and `public` members (U3)
 
-  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Sparky (Sonnet) — the web `Consumer Guard` cases
+  **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Ada (Sonnet) · Sparky (Sonnet) — the web `Consumer Guard` cases · Data (Sonnet) — the colour library's removal from the Android harness build, on a seat branch Ada joins (added 2026-11-07, tasks amendment 6, on Data's finding as the files' author, `[THURGOOD R13]`; it rides Peter's "do the amendment", received 2026-11-07T05:10:45Z)
   **Traces**: Req 1.6, 2.10, 6.2, 6.10, 7.1–7.4, 15.4; rows 4 (items 2 and 4), 7, 9, 10, 11 · design §§ 5 (shadow composite), 6, 8, 9 (`var()` reach)
 
   **Success Criteria:**
@@ -553,6 +554,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `governance/Rosetta-System-Architecture.md`'s native colour description (L100–L152 and L376 at `d7f87174c`) states the Display P3 constructors in this diff.
   - The token contexts' lists show the entries tagged to rows 4 (item 2), 7, 9 (where Stage T builds) and 10 removed in this diff, Android colour entries tagged to row 6 remain until U4, and every addition this diff makes prints under exception (a) or (c) with a tag.
   - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
+  - No file under `harness/android/**` names the colour library: `git grep -n -i colormath -- harness/android/` prints nothing at head H, and `harness-android-tokens` and `harness-android-components` at H still match their lists *(added 2026-11-07, tasks amendment 6, on Data's finding: a declared but unused library would mask any import the generated Kotlin still needs, and would leave the build out of step with `harness/pins.yaml`, whose pin this unit removes)*.
   - Every root record whose Trigger names `task-8-completion.md` carries, at U3's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U3's PR or in a PR merged before it.
 
   **Primary Artifacts:**
@@ -575,10 +577,13 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `harness/expected/harness-ios-components.tsv`
   - `harness/expected/harness-android-components.tsv`
   - `harness/pins.yaml` (the colour library pin's removal, Req 3.5 (a))
+  - `harness/android/gradle/libs.versions.toml`, `harness/android/dp/build.gradle.kts`, `harness/android/probe/build.gradle.kts` and `harness/android/tokens/build.gradle.kts`, only to remove the colour library's declaration, written by Data (added by amendment 6)
 
   **Completion Documentation:**
   - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-8-completion.md`
   - Summary: `docs/specs/129-consumer-generation-completeness/task-8-summary.md`
+
+  **Not this unit's to rewrite** (amendment 6, under Peter's "708 is merged; do the amendment, then go for U3", received 2026-11-07T05:10:45Z (`evidence/2026-11-07-peter-ruling-marker-rewrite-criteria.md`)): U3 makes two marked Integration Guide sentences false, L168 (the `Color.oklch` initializer) and L185's first sentence (the colormath dependency). Their record, row 4, archives at U6, and U6's PR rewrites them (Task 11). The lag was accepted at U2. U3 archives no marked record, so `install-doc.test.ts` stays green here and no Guide edit is owed for them.
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 8 Complete: Native colours, shadows and the standalone native fixes (129)"` opens U3's PR (Peter-merged: `governance/**`; `**Edit kind**:` EXECUTION, design §§ 6 and 8, per file); report the URL; STOP.
 
@@ -596,6 +601,10 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Sparky (Sonnet)
     - No browser; reach includes `component-tokens.css` (design § 9); follows 8.2
     - _Requirements: 1.6, 7.1_
+  - [ ] 8.5 Remove the colour library from the Android harness build *(added 2026-11-07, tasks amendment 6)*
+    **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
+    - On a seat branch that Ada joins into the U3 branch, after 8.1 removes the generated Kotlin's colormath calls: `libs.versions.toml` L13 and L33, `dp/build.gradle.kts` L55, `probe/build.gradle.kts` L40, `tokens/build.gradle.kts` L42–43 (at `55276795e`)
+    - _Requirements: 3.5, 6.10_
 
 ### UNIT 4 — The native type table
 
@@ -624,6 +633,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `harness-ios-tokens` and `harness-android-tokens` show the entries tagged to rows 3, 4 (item 1), 5, 6 and 8 removed in this diff, and every addition this diff makes prints under exception (c) with a tag.
   - Ada's release-note draft for I-1 and I-2 is in this parent's summary doc.
   - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
+  - **The limitation sentences this unit's archives make false** *(added 2026-11-07, tasks amendment 6, under Peter's "708 is merged; do the amendment, then go for U3", received 2026-11-07T05:10:45Z (`evidence/2026-11-07-peter-ruling-marker-rewrite-criteria.md`))*. For each record whose limitation marker sits in `governance/DesignerPunk-Integration-Guide.md`'s install region and which this unit's PR archives (row 3, `2026-08-13-component-token-platform-references-noncompiling.md`: L170; row 6, `2026-10-20-kotlin-output-no-import-block.md`: L185's second sentence; lines at `55276795e`, as `completion/task-7-completion.md` lists them), the PR rewrites or deletes that sentence and its marker, in the sentence owner's words (Ada for generator and token sentences; Kenya for iOS and Data for Android where the sentence is theirs, as Task 7's consults set). It re-derives `docs/consumer/INSTALL.md` with `scripts/derive-install-doc.ts`, and `scripts/__tests__/install-doc.test.ts` passes at head H. A record this unit re-rules instead of archiving keeps its sentence and marker. The PR is Peter-merged (`governance/**`) and carries one `**Edit kind**:` line per file, EXECUTION (Req 15.2's marker rule).
   - Every root record whose Trigger names `task-9-completion.md` carries, at U4's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U4's PR or in a PR merged before it.
 
   **Primary Artifacts:**
@@ -642,6 +652,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `src/components/__tests__/AndroidSizingDpReads.test.ts`
   - `src/components/__tests__/AndroidDpTokenReads.test.ts`
   - `governance/platform-implementation-guidelines.md`
+  - `governance/DesignerPunk-Integration-Guide.md` and `docs/consumer/INSTALL.md` (derived), only for the sentences marked with rows 3 and 6 (added by amendment 6)
   - `.kiro/docs/ballots/*-129-u4-android-type-statements.md` (Thurgood, as ballot holder; Lina's text)
   - `harness/expected/harness-ios-tokens.tsv`
   - `harness/expected/harness-android-tokens.tsv`
@@ -679,6 +690,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - Badge-Label-Base and Button-VerticalList-Item conform at this head, and Button-VerticalList-Item's `offGridReason` is Lina's text in design § 12.
   - A consumer `.ts` file importing `SemanticOverrideMap` and `SemanticOverride` from `@3fn/core/config` type-checks under `tsc --noEmit` in `Consumer Guard`.
   - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
+  - **The limitation sentences this unit's archives make false** *(added 2026-11-07, tasks amendment 6, under Peter's "708 is merged; do the amendment, then go for U3", received 2026-11-07T05:10:45Z (`evidence/2026-11-07-peter-ruling-marker-rewrite-criteria.md`))*. For each record whose limitation marker sits in `governance/DesignerPunk-Integration-Guide.md`'s install region and which this unit's PR archives (row 1, `2026-06-24-mathematical-relationship-parser-validation-gaps.md`: L94; lines at `55276795e`, as `completion/task-7-completion.md` lists them), the PR rewrites or deletes that sentence and its marker, in the sentence owner's words (Ada for generator and token sentences; Kenya for iOS and Data for Android where the sentence is theirs, as Task 7's consults set). It re-derives `docs/consumer/INSTALL.md` with `scripts/derive-install-doc.ts`, and `scripts/__tests__/install-doc.test.ts` passes at head H. A record this unit re-rules instead of archiving keeps its sentence and marker. The PR is Peter-merged (`governance/**`) and carries one `**Edit kind**:` line per file, EXECUTION (Req 15.2's marker rule).
   - Every root record whose Trigger names `task-10-completion.md` carries, at U5's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U5's PR or in a PR merged before it.
 
   **Primary Artifacts:**
@@ -690,12 +702,13 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `src/components/core/Badge-Label-Base/tokens.ts`
   - `src/components/core/Button-VerticalList-Item/Button-VerticalList-Item.tokens.ts`
   - `tests/consumer-integration.test.ts`
+  - `governance/DesignerPunk-Integration-Guide.md` and `docs/consumer/INSTALL.md` (derived), only for the sentence marked with row 1 (added by amendment 6)
 
   **Completion Documentation:**
   - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-10-completion.md`
   - Summary: `docs/specs/129-consumer-generation-completeness/task-10-summary.md`
 
-  **Post-Completion:** mark complete; `complete-task.sh "Task 10 Complete: Validators and config types (129)"` opens U5's PR; report the URL; STOP.
+  **Post-Completion:** mark complete; `complete-task.sh "Task 10 Complete: Validators and config types (129)"` opens U5's PR (Peter-merged: `governance/**`, if row 1 archives here; `**Edit kind**:` EXECUTION per file; amendment 6); report the URL; STOP.
 
   - [ ] 10.1 Row 1: family classification, `=` and `≈`, the `blur000` correction
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Ada (Sonnet)
@@ -765,6 +778,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - The scaffolded dark-override file's header and its list match the index's colour semantics in this diff.
   - The token contexts' lists show the entries tagged to row 2 and row 13 (item 3) removed in this diff, and every addition prints under exception (c) with a tag.
   - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
+  - **The limitation sentences this unit's archives make false** *(added 2026-11-07, tasks amendment 6, under Peter's "708 is merged; do the amendment, then go for U3", received 2026-11-07T05:10:45Z (`evidence/2026-11-07-peter-ruling-marker-rewrite-criteria.md`))*. For each record whose limitation marker sits in `governance/DesignerPunk-Integration-Guide.md`'s install region and which this unit's PR archives (row 2, `2026-06-28-spec-094-platform-theme-emission-unwired.md`: L98, L99, L164, L171, L177 and L182; row 4, `2026-10-03-native-generator-findings-for-spec-129-intake.md`: L168, L169, L183 and L185's first sentence; lines at `55276795e`, as `completion/task-7-completion.md` lists them), the PR rewrites or deletes that sentence and its marker, in the sentence owner's words (Ada for generator and token sentences; Kenya for iOS and Data for Android where the sentence is theirs, as Task 7's consults set). It re-derives `docs/consumer/INSTALL.md` with `scripts/derive-install-doc.ts`, and `scripts/__tests__/install-doc.test.ts` passes at head H. A record this unit re-rules instead of archiving keeps its sentence and marker. The PR is Peter-merged (`governance/**`) and carries one `**Edit kind**:` line per file, EXECUTION (Req 15.2's marker rule). **The accepted lag**: L168 and L185's first sentence (the `Color.oklch` initializer and the colormath dependency) go false at U3, when Task 8 lands the native colour construction, but row 4 archives here, so they stay in the Guide from U3's merge to U6's. That window was accepted in U2 (`completion/task-7-completion.md`, "Lag entries"; `feedback/tasks.md` `[THURGOOD U2 R2]`), and the Conventions' batching rule and Stacy's RELEASE read cover it at any release S between. This PR rewrites them.
   - Every root record whose Trigger names `task-11-completion.md` carries, at U6's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U6's PR or in a PR merged before it.
 
   **Primary Artifacts:**
@@ -787,12 +801,13 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - `harness/fixtures/product-tokens/**` (added by amendment 3, under Peter's "C confirmed"; Task 1, which created it, is done)
   - `src/components/core/*/platforms/android/**`, only for the `import com.designerpunk.tokens.LocalDPTheme` line, written by Lina in 11.5 (added in amendment 3's review fold)
   - `scripts/harness/__tests__/native-rules-emitter.test.ts` (added by amendment 3)
+  - `governance/DesignerPunk-Integration-Guide.md` and `docs/consumer/INSTALL.md` (derived), only for the sentences marked with rows 2 and 4 (added by amendment 6)
 
   **Completion Documentation:**
   - Detailed: `.kiro/specs/129-consumer-generation-completeness/completion/task-11-completion.md`
   - Summary: `docs/specs/129-consumer-generation-completeness/task-11-summary.md`
 
-  **Post-Completion:** mark complete; `complete-task.sh "Task 11 Complete: Native theme emission (129)"` opens U6's PR; report the URL; STOP. U6's merge fires the MIDPOINT pass.
+  **Post-Completion:** mark complete; `complete-task.sh "Task 11 Complete: Native theme emission (129)"` opens U6's PR (Peter-merged: `governance/**`; `**Edit kind**:` EXECUTION per file; amendment 6); report the URL; STOP. U6's merge fires the MIDPOINT pass.
 
   - [ ] 11.1 The scaffolded dark-override file fixed (design § 16; Ada R1 (d))
     **Type**: Setup · **Validation**: Tier 1 - Minimal · **Agent**: Ada (Sonnet)
@@ -969,6 +984,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - The completion doc states which `ColorTokens.ts` importers this parent removed and which remain, and `.kiro/specs/133-color-track/design-outline.md` § 4 is corrected to match in this diff.
   - The harness compiles one copy of each native file name: the consumer's copy of `src/tokens/platforms/{ios,android}/**` once this unit reads the consumer's source, and Kenya and Data confirm that rule in this parent's completion doc.
   - All four harness contexts ran on this unit's PR, and this parent's completion doc carries each one's run URL and pasted summary line at head H, the last head whose `git diff --name-only H M` to the merged head M touches only `completion/**`, `docs/specs/**` and the PR's records (Conventions).
+  - **The limitation sentences this unit's archives make false** *(added 2026-11-07, tasks amendment 6, under Peter's "708 is merged; do the amendment, then go for U3", received 2026-11-07T05:10:45Z (`evidence/2026-11-07-peter-ruling-marker-rewrite-criteria.md`))*. For each record whose limitation marker sits in `governance/DesignerPunk-Integration-Guide.md`'s install region and which this unit's PR archives (row 19, `2026-10-15-123-palette-read-from-package.md`: L23, L91, L111 and L158; this overlaps the served-sentence and INSTALL L77 criteria above, which this criterion does not replace; lines at `55276795e`, as `completion/task-7-completion.md` lists them), the PR rewrites or deletes that sentence and its marker, in the sentence owner's words (Ada for generator and token sentences; Kenya for iOS and Data for Android where the sentence is theirs, as Task 7's consults set). It re-derives `docs/consumer/INSTALL.md` with `scripts/derive-install-doc.ts`, and `scripts/__tests__/install-doc.test.ts` passes at head H. A record this unit re-rules instead of archiving keeps its sentence and marker. The PR is Peter-merged (`governance/**`) and carries one `**Edit kind**:` line per file, EXECUTION (Req 15.2's marker rule).
   - Every root record whose Trigger names `task-14-completion.md` carries, at U9's merge, its owner's rule 5 outcome line or a re-ruled Trigger with a dated reason, made in U9's PR or in a PR merged before it.
 
   **Primary Artifacts:**
