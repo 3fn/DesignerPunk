@@ -112,12 +112,14 @@ Shadow colors are based on art theory: shadows are rarely pure black but tinted 
 
 #### Primitive Shadow Colors
 
-| Token | Value | Description | Art Theory |
-|-------|-------|-------------|------------|
-| `shadowBlack100` | rgb(0, 0, 0) | Pure black | Neutral lighting (noon) |
-| `shadowBlue100` | rgb(20, 25, 40) | Blue-gray tint | Warm light creates cool shadows (sunrise/sunset) |
-| `shadowOrange100` | rgb(25, 20, 15) | Warm tint | Cool light creates warm shadows |
-| `shadowGray100` | rgb(15, 20, 30) | Blue-gray tint | Ambient/overcast lighting |
+| Token | Value (OKLCH) | Description | Art Theory |
+|-------|---------------|-------------|------------|
+| `shadowBlack100` | `oklch(0 0 0)` | Pure black | Neutral lighting (noon) |
+| `shadowBlue100` | `oklch(0.2161 0.0306 269.6)` | Blue-gray tint | Warm light creates cool shadows (sunrise/sunset) |
+| `shadowOrange100` | `oklch(0.1956 0.0127 67)` | Warm tint | Cool light creates warm shadows |
+| `shadowGray100` | `oklch(0.1912 0.0219 263.8)` | Blue-gray tint | Ambient/overcast lighting |
+
+The four are defined in OKLCH like the other colour families (`src/tokens/color/primitives/shadow.ts`), to the same colours they had as `rgba` (`rgb(0, 0, 0)`, `rgb(20, 25, 40)`, `rgb(25, 20, 15)` and `rgb(15, 20, 30)`): each value's sRGB hex is the hex of the earlier `rgba`, and a Jest test asserts it. Spec 129 Task 8.2 made the change; it created no token and changed no name. They are emitted on web (`--shadow-black-100`), iOS (`shadowBlack100`) and Android (`shadow_black_100`), so the 15 shadow composites that name `shadowBlack100` or `shadowBlue100` resolve on all three.
 
 #### No Semantic Shadow Color Layer
 
@@ -126,9 +128,10 @@ directly (`shadow.container` → `shadowBlack100`), matching how typography toke
 without an intermediate semantic layer. The rationale is recorded in `src/tokens/semantic/ColorTokens.ts`
 § "ARCHITECTURAL DECISION: Shadow Color Semantic Layer Removed".
 
-**Note**: Shadow colors are mode-agnostic (always dark) regardless of light/dark theme. They are also
-the four primitives that still resolve from the legacy `src/tokens/ColorTokens.ts` RGBA source rather
-than from the OKLCH channel model.
+**Note**: Shadow colors are mode-agnostic (always dark) regardless of light/dark theme. They have no
+channel tokens (no hue, lightness or chroma primitives of their own): the shadow family's channel
+structure belongs with blend in the colour-track spec (Spec 133), and until then a shadow colour
+is one OKLCH value. The legacy `rgba` definitions remain in `src/tokens/ColorTokens.ts`, the source the earlier-value test reads.
 
 ---
 
@@ -356,7 +359,7 @@ Shadow tokens translate to CSS `box-shadow` format.
     var(--shadow-container-offset-x) 
     var(--shadow-container-offset-y) 
     var(--shadow-container-blur) 
-    oklch(0 0 0 / var(--shadow-container-opacity));
+    color-mix(in oklab, var(--shadow-container-color) calc(var(--shadow-container-opacity) * 100%), transparent);
 }
 ```
 
@@ -365,37 +368,35 @@ Shadow tokens translate to CSS `box-shadow` format.
 ```css
 :root {
   /* shadow.container */
-  --shadow-container: 0px 4px 12px oklch(0 0 0 / 0.3);
-  --shadow-container-offset-x: 0px;
-  --shadow-container-offset-y: 4px;
-  --shadow-container-blur: 12px;
-  --shadow-container-opacity: 0.3;
-  --shadow-container-color: oklch(0 0 0);
-  
-  /* shadow.modal */
-  --shadow-modal: 0px 8px 16px oklch(0 0 0 / 0.35);
-  --shadow-modal-offset-x: 0px;
-  --shadow-modal-offset-y: 8px;
-  --shadow-modal-blur: 16px;
-  --shadow-modal-opacity: 0.35;
-  --shadow-modal-color: oklch(0 0 0);
-  
-  /* shadow.fab */
-  --shadow-fab: 12px 16px 4px oklch(0.18 0.02 260 / 0.4);
-  --shadow-fab-offset-x: 12px;
-  --shadow-fab-offset-y: 16px;
-  --shadow-fab-blur: 4px;
-  --shadow-fab-opacity: 0.4;
-  --shadow-fab-color: oklch(0.18 0.02 260);
+  --shadow-black-100: oklch(0 0 0);
+  --shadow-blue-100: oklch(0.2161 0.0306 269.6);
+
+  /* shadow.container */
+  --shadow-container-offset-x: var(--shadow-offset-x-000);
+  --shadow-container-offset-y: var(--shadow-offset-y-100);
+  --shadow-container-blur: var(--blur-075);
+  --shadow-container-opacity: var(--shadow-opacity-moderate);
+  --shadow-container-color: var(--shadow-black-100);
+  --shadow-container: var(--shadow-container-offset-x) var(--shadow-container-offset-y) var(--shadow-container-blur) color-mix(in oklab, var(--shadow-black-100) calc(var(--shadow-container-opacity) * 100%), transparent);
+
+  /* shadow.fab: its colour is shadowBlue100, so the composite reads --shadow-blue-100 */
+  --shadow-fab-offset-x: var(--shadow-offset-x-300);
+  --shadow-fab-offset-y: var(--shadow-offset-y-400);
+  --shadow-fab-blur: var(--blur-025);
+  --shadow-fab-opacity: var(--shadow-opacity-hard);
+  --shadow-fab-color: var(--shadow-blue-100);
+  --shadow-fab: var(--shadow-fab-offset-x) var(--shadow-fab-offset-y) var(--shadow-fab-blur) color-mix(in oklab, var(--shadow-blue-100) calc(var(--shadow-fab-opacity) * 100%), transparent);
 }
 ```
+
+The composite takes its colour from the colour token's custom property, never from a literal: before Spec 129 Task 8.2 it was `rgba(0, 0, 0, …)` for every shadow, so the three blue-tinted shadows (`shadow.fab`, `shadow.sunrise`, `shadow.sunset`) rendered black.
 
 #### Web Platform Notes
 
 - **Full Support**: Web supports all shadow properties (offsetX, offsetY, blur, opacity, color)
 - **Spread Property**: Omitted for cross-platform consistency (iOS/Android don't support spread)
 - **Performance**: Use CSS custom properties for efficient shadow updates
-- **Browser Support**: Modern browsers support `box-shadow` with OKLCH colors (Chrome 111+, Safari 15.4+, Firefox 113+)
+- **Browser Support**: Modern browsers support `box-shadow` with OKLCH colors (Chrome 111+, Safari 15.4+, Firefox 113+). The composite also uses `color-mix()` (Chrome 111+, Safari 16.2+, Firefox 113+)
 
 ### iOS (Swift)
 
@@ -454,7 +455,7 @@ enum ShadowTokens {
     offset: CGSize(width: 0, height: 4),
     radius: 6,  // blur / 2 for iOS
     opacity: 0.3,
-    color: Color.oklch(0.0, 0.0, 0.0)
+    color: Color(.displayP3, red: 0, green: 0, blue: 0, opacity: 1)
   )
   
   /// Modal shadow with no horizontal offset, 8px vertical offset, 16px blur, slightly darker opacity
@@ -462,7 +463,7 @@ enum ShadowTokens {
     offset: CGSize(width: 0, height: 8),
     radius: 8,  // blur / 2 for iOS
     opacity: 0.35,
-    color: Color.oklch(0.0, 0.0, 0.0)
+    color: Color(.displayP3, red: 0, green: 0, blue: 0, opacity: 1)
   )
   
   /// Dramatic shadow with 12px right offset, 16px down offset, 4px blur, darker opacity, warm (blue-gray) tint
@@ -470,10 +471,12 @@ enum ShadowTokens {
     offset: CGSize(width: 12, height: 16),
     radius: 2,  // blur / 2 for iOS
     opacity: 0.4,
-    color: Color.oklch(0.18, 0.02, 260.0)
+    color: Color(.displayP3, red: 0.0822, green: 0.0974, blue: 0.1522, opacity: 1)
   )
 }
 ```
+
+The block above is the usage pattern, not the generated file. The generated `DesignTokens.ios.swift` defines `public struct ShadowToken: Sendable` with `offsetX`, `offsetY`, `blur` and `opacity` (`CGFloat`) and `color` (`Color`), and each of the 15 composites as a member of `DesignTokens`: `public static let shadowFab = ShadowToken(offsetX: shadowOffsetX300, offsetY: shadowOffsetY400, blur: blur025, opacity: shadowOpacityHard, color: shadowBlue100)`. Its colour primitives are `Color(.displayP3, red:, green:, blue:, opacity:)` constants with channels computed at generation, so the file needs no colour library.
 
 #### iOS Platform Notes
 
@@ -615,6 +618,8 @@ fun androidx.compose.ui.Modifier.shadow(shadow: ShadowToken): androidx.compose.u
     return this.shadow(elevation = shadow.elevation)
 }
 ```
+
+The block above shows the elevation approximation a component derives from a shadow; it is not the generated file. The generated `DesignTokens.android.kt` defines `data class ShadowToken(val offsetX: Float, val offsetY: Float, val blur: Float, val opacity: Float, val color: Color)` and each of the 15 composites as a member of `DesignTokens` (`val shadow_fab = ShadowToken(offsetX = …, color = shadow_blue_100)`). Its colour primitives are `Color(r, g, b, a, ColorSpaces.DisplayP3)` constants with channels computed at generation, so the file needs no colour library. The type table (Spec 129 row 6) retypes the numeric fields.
 
 #### Android Platform Limitations
 

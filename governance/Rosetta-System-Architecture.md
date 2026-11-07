@@ -99,8 +99,9 @@ Color tokens use **OKLCH** (perceptually uniform color space) with a channel-pri
 │   PLATFORM GENERATION                                                        │
 │   └── src/generators/*FormatGenerator.ts                                    │
 │       ├── Web: oklch(L C H) + channel custom properties                     │
-│       ├── iOS: Color.oklch(L, C, H) via ChromaKit                          │
-│       ├── Android: Oklch(L, C, H).toComposeColor() via colormath           │
+│       ├── iOS: Color(.displayP3, red:, green:, blue:, opacity:)            │
+│       ├── Android: Color(r, g, b, a, ColorSpaces.DisplayP3)                │
+│       │   (iOS and Android: channels computed at generation, no library)   │
 │       ├── DTCG/Figma: OKLCH → sRGB hex conversion                          │
 │       └── Token-index: mode-aware OKLCH (light + dark resolved values + channels) │
 │                                                                              │
@@ -114,13 +115,13 @@ Each platform generator transforms OKLCH channel values to native color formats:
 
 | Platform | Source | Output Format | Example |
 |----------|--------|---------------|---------|
-| **Web** | `oklch(0.60, 0.316, 307)` | CSS `oklch()` + channel vars | `--purple-300: oklch(0.60 0.316 307);` |
-| **iOS** | `oklch(0.60, 0.316, 307)` | `Color.oklch()` via ChromaKit | `Color.oklch(0.60, 0.316, 307.0)` |
-| **Android** | `oklch(0.60, 0.316, 307)` | `Oklch().toComposeColor()` | `Oklch(0.60f, 0.316f, 307.0f).toComposeColor()` |
-| **DTCG/Figma** | `oklch(0.60, 0.316, 307)` | sRGB hex (converted) | `#b026ff` |
+| **Web** | `oklch(0.6 0.286 310)` | CSS `oklch()` + channel vars | `--purple-300: oklch(0.6 0.286 310);` |
+| **iOS** | `oklch(0.6 0.286 310)` | `Color(.displayP3, …)`, channels computed at generation | `Color(.displayP3, red: 0.6464, green: 0.1914, blue: 0.9476, opacity: 1)` |
+| **Android** | `oklch(0.6 0.286 310)` | `Color(r, g, b, a, ColorSpaces.DisplayP3)`, channels computed at generation | `Color(0.6464f, 0.1914f, 0.9476f, 1f, ColorSpaces.DisplayP3)` |
+| **DTCG/Figma** | `oklch(0.6 0.286 310)` | sRGB hex (converted) | `#b322fb` |
 | **Token-index** | `oklch(...)` mode-resolved | mode-aware OKLCH + channels per entry | `{ light, dark, hue, lightness, chroma }` |
 
-*Exception: the shadow family remains rgba in the token-index — it was never migrated to OKLCH (Spec 112). All other color families carry OKLCH channels.*
+*The shadow family (`shadowBlack100`, `shadowBlue100`, `shadowOrange100`, `shadowGray100`) is defined in OKLCH like the other families, to the same colours as its earlier `rgba` values (Spec 129 Task 8.2). It has no channel tokens: its token-index entries carry the OKLCH value but no `channels`, and the channel structure belongs to the colour-track spec (Spec 133). Every other color family carries OKLCH channels.*
 
 ### Conversion Rules
 
@@ -130,12 +131,17 @@ Each platform generator transforms OKLCH channel values to native color formats:
 - Alpha variant: `oklch(L C H / A)` where A is 0.0-1.0
 
 **iOS (Swift)**:
-- OKLCH values output via ChromaKit extension
-- Format: `Color.oklch(L, C, H)` or `Color.oklch(L, C, H, opacity: A)`
+- OKLCH values are converted at generation to Display P3 channels (to 4 decimal places); the generated file needs no colour library, and imports SwiftUI
+- Format: `Color(.displayP3, red: R, green: G, blue: B, opacity: A)`; `opacity` is always written (1 when opaque)
 
 **Android (Kotlin)**:
-- OKLCH values output via colormath library
-- Format: `Oklch(L, C, H).toComposeColor()` or with `.copy(alpha = A)`
+- OKLCH values are converted at generation to Display P3 channels (to 4 decimal places); the generated file needs no colour library
+- Format: `Color(R, G, B, A, ColorSpaces.DisplayP3)`; `A` is always written
+
+**Gamut mapping (both native platforms)**:
+- A colour outside Display P3 is mapped into it by CSS Color Level 4 § 13.2 (binary search on chroma at constant lightness and hue, accepted within ΔE_OK 0.02), so every channel is in 0–1. Compose's `Color` constructor throws at run time for a channel outside 0–1
+- A colour inside Display P3 converts back to its OKLCH source with ΔE₀₀ ≤ 0.1, channels to 4 decimal places. Both are asserted in `src/generators/__tests__/NativeDisplayP3Colors.test.ts`, the second against a committed fixture whose header names its source
+- `clampToGamut` in `src/color/OklchConverter.ts` takes the target gamut (`'srgb'` by default, or `'display-p3'`) and measures with ΔE_OK
 
 ### Baked-In Alpha Values
 
@@ -148,8 +154,8 @@ Some semantic tokens have baked-in alpha values for specific use cases:
 
 **Platform Output**:
 - **Web**: `--color-structure-border-subtle: oklch(0.78 0.02 280 / 0.48);`
-- **iOS**: `Color.oklch(0.78, 0.02, 280.0, opacity: 0.48)`
-- **Android**: `Oklch(0.78f, 0.02f, 280.0f).toComposeColor().copy(alpha = 0.48f)`
+- **iOS**: `Color(.displayP3, red: 0.7088, green: 0.7145, blue: 0.7652, opacity: 0.48)`
+- **Android**: `Color(0.7088f, 0.7145f, 0.7652f, 0.48f, ColorSpaces.DisplayP3)`
 
 ### Entry Points
 
@@ -373,16 +379,16 @@ Mode-resolved tokens are transformed into platform-specific formats. Generators 
 │   Platform Format Generators                                                 │
 │   ├── WebFormatGenerator: CSS custom properties (OKLCH format)              │
 │   │   └── Mode-aware: light-dark(lightVal, darkVal) when values differ     │
-│   ├── iOSFormatGenerator: Swift constants (Color.oklch via ChromaKit)       │
+│   ├── iOSFormatGenerator: Swift constants (Color(.displayP3, …))            │
 │   │   └── Mode-aware: UIColor { traitCollection } when values differ       │
-│   ├── AndroidFormatGenerator: Kotlin constants (Oklch().toComposeColor())   │
+│   ├── AndroidFormatGenerator: Kotlin constants (Color(…, DisplayP3))        │
 │   │   └── Mode-aware: name_light + name_dark when values differ            │
 │   └── Location: src/providers/*FormatGenerator.ts                           │
 │                                                                              │
 │   Color Format Conversion                                                    │
 │   ├── formatOklchValue(): Format OKLCH channels to platform string          │
-│   ├── oklchToSwiftColor(): Convert to iOS Color.oklch format                │
-│   ├── oklchToComposeColor(): Convert to Android Oklch().toComposeColor()    │
+│   ├── oklchToNativeChannels(): OKLCH → Display P3 channels (gamut-mapped)   │
+│   ├── formatSwiftDisplayP3() / formatKotlinDisplayP3(): native constructors │
 │   └── formatColorValue(): Handle mode-aware color objects                   │
 │                                                                              │
 │   Token-Index Generator                                                      │
