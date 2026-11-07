@@ -230,3 +230,20 @@ Also surfaced, not edited by me: `2026-08-13-component-token-platform-references
 ## Review of Ada's 2026-10-24 filing line (2026-10-24, Kenya) — trust, but verify
 - Checked: the five filed destinations against my iOS row 6 kinds; re-ran `swiftc -typecheck` at `e4e61eea2` → 197 distinct, kinds 15 / 9 / 1 / 39 reproduce.
 - Finding: agree, nothing I reported is missing or mis-attributed. One correction to my own entry: row 6's shadow-colour line says "the CSS and Kotlin outputs carry it (`shadow-black-100` 12, `shadow_black_100` 12)". Those are reference counts, not definitions; Ada's new record corrects that and is right. My Trigger and Class lines stand.
+
+## Outcome (2026-11-07, Kenya, iOS) — rule 5 outcome line, written in U1's PR (#707)
+
+U1's merge puts `completion/task-5-completion.md` on `main`, which fires this record's Trigger; this is the iOS owner's rule 5 line for it. Data, co-owner, writes his line below mine; the archive move is the steward's after both (rules 5 and 9).
+
+- **What this record owed** (its Trigger line): an instrument that exists, a CI run that compiles the Swift and Kotlin we generate. **iOS: delivered.** `.github/workflows/native-harness.yml` runs `harness-ios-tokens` and `harness-ios-components` on `macos-26` under the Xcode 26.6 (17F113) that `harness/pins.yaml` § `ios` pins, through `harness/ios/lane.ts`:
+  - the generated Swift as one module (Swift 6, object code emitted), then a probe generated from the consumer's token index, theme instances and product tokens, which reads each name from outside the module by plain `import`;
+  - the packaged SwiftUI and the generated Swift as one module (Swift 5).
+- **Evidence**: the dispatched run https://github.com/3fn/DesignerPunk/actions/runs/42333520571 at `44e2f7f54`, where both iOS contexts concluded PASS; `.kiro/specs/129-consumer-generation-completeness/completion/task-3-completion.md` (22 criteria, each with its Evidence cell); PR #707.
+- **What it is not**, stated so this line is not read as more than it is:
+  - It is **not a required check.** The contexts are non-required measuring lanes (Spec 129 Req 2.12); promoting one is Peter's act on the criterion in `tasks.md` § "Decision 6".
+  - A PASS means **the failures match the committed lists** (`harness/expected/harness-ios-tokens.tsv`, 19 entries, and `harness-ios-components.tsv`, 115), not that the code compiles. The generated tokens still do not compile.
+  - The probe has **not yet compiled against the real token module**, because the token module does not build; its compile path is shown by the planted self-test on the real compiler.
+  - Nothing runs on a simulator or a device.
+- **My § 2(b)**, a local `swiftc` spot-check recipe an owner runs on request, is superseded for iOS by the lane. I do not retire § 2(a) here: the Method-line honesty it asks for stays true of any claim these contexts do not cover.
+
+— Kenya, 2026-11-07
