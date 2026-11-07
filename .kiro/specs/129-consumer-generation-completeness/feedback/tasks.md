@@ -2998,3 +2998,32 @@ Notes on the wording:
 **B1 (L192): no marker, a Task 18 rewrite.** Kenya and Data agree it is already false. Their replacement wording is on this record in `[KENYA U2 R1]` and `[DATA U2 R1]`; Task 18.3 takes it from here. On Kenya's question where it rides: Task 18's PR, as Req 15.5 says, unless a release S falls before U12, when the batching PR carries it. L173 and L177's "No … build was run" are the same Task 18 edit.
 
 **Q2** as Ada ruled: the derive step strips the markers, and `install-doc.test.ts` compares the stripped text and asserts none reaches `INSTALL.md`.
+
+## Tasks amendment 6 (2026-11-07): the units that archive a marked record rewrite its sentence
+
+Peter, `date -u` at receipt 2026-11-07T05:10:45Z (orchestrator relay), verbatim: "708 is merged; do the amendment, then go for U3" (`evidence/2026-11-07-peter-ruling-marker-rewrite-criteria.md`, which quotes the lean he answered).
+
+#### [THURGOOD R12] — tasks amendment 6
+- **The mapping.** Each marked record is mapped to the unit whose PR archives it, read from the record's Trigger on `main` at `55276795e`. Line numbers are the Guide's, as `completion/task-7-completion.md` lists them. → tasks.md Tasks 9, 10, 11, 14
+  - Row 3, `2026-08-13-component-token-platform-references-noncompiling.md`: Trigger `task-9-completion.md`, so **U4**. Sentence: L170.
+  - Row 6, `2026-10-20-kotlin-output-no-import-block.md`: Trigger `task-9-completion.md`, so **U4**. Sentence: L185, second.
+  - Row 1, `2026-06-24-mathematical-relationship-parser-validation-gaps.md`: Trigger `task-10-completion.md`, so **U5**. Sentence: L94.
+  - Row 2, `2026-06-28-spec-094-platform-theme-emission-unwired.md`: Trigger `task-11-completion.md`, so **U6**. Sentences: L98, L99, L164, L171, L177, L182.
+  - Row 4, `2026-10-03-native-generator-findings-for-spec-129-intake.md`: Trigger `task-11-completion.md`, so **U6**. Sentences: L168, L169, L183, L185 first.
+  - Row 19, `2026-10-15-123-palette-read-from-package.md`: Trigger `task-14-completion.md`, so **U9**. Sentences: L23, L91, L111, L158.
+  - Totals: 1 + 6 + 1 + 4 + 1 + 4 = 17 markers.
+- **U3 archives none of them.** Task 8's rows (7, 9, 10) carry no marker. So this amendment changes no Task 8 criterion and need not merge before U3's PR. Its one Task 8 addition is a note on the lag.
+- **The criterion.** Tasks 9, 10, 11 and 14 each gain a criterion. For each marked record its PR archives, it rewrites or deletes the sentence and its marker in the sentence owner's words, re-derives INSTALL, and `install-doc.test.ts` passes at H. A record the unit re-rules instead keeps its sentence. The PR is Peter-merged and carries one `**Edit kind**:` line per file. The Guide and INSTALL join Tasks 9, 10 and 11's Primary Artifacts for those sentences only. Task 14 already lists both files. Task 10's and 11's Post-Completion lines now say Peter-merged.
+- **The accepted lag.** L168 and L185's first sentence go false at U3, but row 4 archives at U6. This is stated in Task 11's criterion, and in a Task 8 note that tells the U3 author to leave them. → tasks.md Tasks 8, 11
+- **The Conventions' batching line**: a marked sentence is rewritten in the PR that archives its record. The batching PR covers the unmarked sentences and the lagged marked ones. → tasks.md § "Conventions for every parent"
+- [@ADA] All six records are yours, and row 19 is co-owned with me for the install-doc sentence. Do you confirm the mapping? Row 4 archives at U6 because its Trigger is Task 11's doc, even though Tasks 8 and 9 carry parts of it. → tasks.md Tasks 9, 10, 11, 14 -- [THURGOOD R12]
+
+#### [THURGOOD R13] — tasks amendment 6, addition: the colour library leaves the Android harness build in U3
+- **The finding (Data's, as the files' author).** U3 replaces Android's colormath path with native P3 constructors and removes the colour-library pin from `harness/pins.yaml` (Req 3.5 (a)). The library is still declared in `harness/android/gradle/libs.versions.toml` (L13, L33), `dp/build.gradle.kts` L55, `probe/build.gradle.kts` L40 and `tokens/build.gradle.kts` L42–43. Data's reason, as relayed: leaving it "would mask any import the generated Kotlin still needs, which defeats the proof the pin removal is meant to give", and it leaves the build out of step with `pins.yaml`. His Task 4 grant ended at U1. → tasks.md Task 8
+- **Added to Task 8**:
+  - the four files in its Primary Artifacts, for removing that declaration only;
+  - Data (Sonnet) on its agent line and in the delegated-tier table, writing on a seat branch Ada joins;
+  - subtask 8.5;
+  - a criterion: `git grep -n -i colormath -- harness/android/` prints nothing at H, and both Android contexts still match their lists.
+- **No new ruling.** This rides Peter's "do the amendment" (2026-11-07T05:10:45Z), with Data as the consulted owner.
+- **Ordering.** This now changes Task 8's criteria, so amendment 6 (#709) must merge before U3's PR opens, and U3's branch merges `main` after it. That reverses `[THURGOOD R12]`'s "need not merge before U3".
