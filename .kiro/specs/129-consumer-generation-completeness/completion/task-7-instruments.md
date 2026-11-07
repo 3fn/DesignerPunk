@@ -25,4 +25,5 @@
 
 ## Found later
 
-(none at the time of writing)
+- **misfit** (2026-11-07, 7.1): row 4, `scripts/__tests__/install-doc.test.ts`. The fit clause said the test "reads the guide's region and `INSTALL.md` and fails when they differ; it has no marker check today". It also holds cases that read `region(GUIDE)` as the reader-facing text, and the scope-sentence case (`is the region's first paragraph …`) failed once a marker followed that paragraph. Route: the test's `region()` helper now strips markers; recorded in `task-7-1-completion.md` § 3.
+- **misfit** (2026-11-07, 7.1): row 6, `scripts/derive-install-doc.ts`. The fit clause left open whether the deriver must strip the comments; it copied the region verbatim, so every marker would have shipped in `INSTALL.md`. Route: `stripLimitationMarkers`, used by `deriveInstallDoc` (Ada's Q2 ruling, `[ADA U2 R1]`).
