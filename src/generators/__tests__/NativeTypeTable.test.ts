@@ -117,6 +117,27 @@ describe('iOS type table (design §§ 5, 7)', () => {
   });
 });
 
+describe('Motion rows (the "other numbers" are not all Float)', () => {
+  it('Android: duration is an Int in milliseconds, easing a Compose Easing, scale a Float', () => {
+    expect(line(android, 'Duration150')).toBe('val Duration150 = 150');
+    expect(line(android, 'EasingStandard')).toBe('val EasingStandard = CubicBezierEasing(0.4f, 0.0f, 0.2f, 1.0f)');
+    expect(line(android, 'EasingGlideDecelerate')).toMatch(/^val EasingGlideDecelerate = PiecewiseLinearEasing\(listOf\(/);
+    expect(android).toMatch(/class PiecewiseLinearEasing\(private val stops: List<Pair<Float, Float>>\) : androidx\.compose\.animation\.core\.Easing \{/);
+    expect(line(android, 'Scale100')).toBe('val Scale100 = 1.0f');
+  });
+
+  it('Android: a semantic motion token composes a duration and an easing', () => {
+    const block = android.slice(android.indexOf('object MotionFloatLabel'));
+    expect(block).toMatch(/object MotionFloatLabel \{\s+val duration = Duration\.Duration250\s+val easing = Easing\.EasingStandard/);
+  });
+
+  it('iOS: duration is a TimeInterval in seconds, easing a SwiftUI Animation', () => {
+    expect(line(ios, 'duration150')).toBe('public static let duration150: TimeInterval = 0.15');
+    expect(line(ios, 'easingGlideDecelerate')).toMatch(/^public static let easingGlideDecelerate = Animation\(PiecewiseLinearEasing\(stops: /);
+    expect(ios).toMatch(/public struct MotionFloatLabel \{\s+public static let duration = Duration\.duration250\s+public static let easing = Easing\.easingStandard/);
+  });
+});
+
 describe('font family stacks', () => {
   it('parses quoted entries with their commas and spaces', () => {
     expect(parseFontStack('"Commit Mono", "SF Mono", Monaco, monospace')).toEqual(['Commit Mono', 'SF Mono', 'Monaco', 'monospace']);
