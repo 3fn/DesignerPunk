@@ -172,7 +172,7 @@ const iosTokens = (diags: Record<string, number> = { [K1]: 2 }, extra: Partial<C
 });
 
 const run = (repo: Repo, results: ContextResults, context: ContextName = 'harness-ios-tokens', base: string | null = repo.base): Report =>
-  compareRepo({ repo: repo.dir, base, context, results });
+  compareRepo({ repo: repo.dir, base, context, results: { checks: [], ...results } });
 
 const red = (r: Report): string[] => r.failures.map(formatFailure);
 
@@ -556,7 +556,7 @@ describe('the merge base (design § 3 rules 2 and 3)', () => {
     const shallow = fs.mkdtempSync(path.join(os.tmpdir(), 'harness-compare-shallow-'));
     dirs.push(shallow);
     git(shallow, ['clone', '-q', '--depth', '2', `file://${repo.dir}`, '.']);
-    const r = compareRepo({ repo: shallow, base: repo.base, context: 'harness-ios-tokens', results: iosTokens() });
+    const r = compareRepo({ repo: shallow, base: repo.base, context: 'harness-ios-tokens', results: { checks: [], ...iosTokens() } });
     expect(red(r)).toEqual([
       'FAIL history unreadable: the clone is shallow, so the Trigger history the tag rules read is incomplete; check out with full history (fetch-depth: 0)',
     ]);
@@ -738,7 +738,7 @@ describe('the command line', () => {
     fs.writeFileSync(p, JSON.stringify(run));
     return p;
   };
-  const RUN = { roots: ROOTS, swift: [{ compile: 'ios.T', log: 'T.log', exitCode: 1 }, { compile: 'ios.P', blocked: true }], files: { gen: { compiled: 3, floor: 3 } }, toolchain: IOS_TOOLCHAIN };
+  const RUN = { roots: ROOTS, swift: [{ compile: 'ios.T', log: 'T.log', exitCode: 1 }, { compile: 'ios.P', blocked: true }], files: { gen: { compiled: 3, floor: 3 } }, toolchain: IOS_TOOLCHAIN, checks: [] };
 
   it('prints the failures, notes, summary and verdict, and exits 0 on PASS', () => {
     const repo = buildRepo();
@@ -773,5 +773,106 @@ describe('the command line', () => {
     const lines: string[] = [];
     expect(main(['--context', 'harness-ios-tokens', '--run', 'x.json'], { out: (l) => lines.push(l) })).toBe(1);
     expect(lines[0]).toMatch(/^FAIL input: give --run, and exactly one of --base and --no-base/);
+  });
+});
+
+// ------------------------------------------------------------------------------------------
+// The run file's `checks` and the `check` class (design § 3, "The probe's count lines and the
+// run file's `checks`"; tasks.md Task 5.4)
+// ------------------------------------------------------------------------------------------
+
+describe('the run file\'s checks (class check)', () => {
+  const withChecks = (checks: ContextResults['checks'], extra: Partial<ContextResults> = {}): ContextResults => ({ ...iosTokens(undefined, extra), checks });
+
+  it('fails the context for an ok:false check, naming it in the failure and the verdict line', () => {
+    const r = run(buildRepo(), withChecks([{ name: 'probe: read', ok: false, detail: '3 of 4 index names' }]));
+    expect(red(r)).toEqual(['FAIL check: probe: read: 3 of 4 index names']);
+    expect(r.verdict).toBe('harness-verdict: harness-ios-tokens FAIL (check: probe: read)');
+    expect(r.pass).toBe(false);
+  });
+  it('fails once per ok:false check and lists each name once in the verdict line', () => {
+    const r = run(
+      buildRepo(),
+      withChecks([
+        { name: 'probe: read', ok: false, detail: '3 of 4' },
+        { name: 'probe: product read', ok: true, detail: '2 of 2' },
+        { name: 'theme instances', ok: false, detail: 'extra member darkDark' },
+      ]),
+    );
+    expect(red(r)).toEqual(['FAIL check: probe: read: 3 of 4', 'FAIL check: theme instances: extra member darkDark']);
+    expect(r.verdict).toBe('harness-verdict: harness-ios-tokens FAIL (check: probe: read; theme instances)');
+  });
+  it('keeps the check class beside another class in the verdict line', () => {
+    const r = run(buildRepo(), withChecks([{ name: 'theme instances', ok: false, detail: 'x' }], { toolchain: { ...IOS_TOOLCHAIN, 'swift.version': '6.3' } }));
+    expect(r.verdict).toBe('harness-verdict: harness-ios-tokens FAIL (check: theme instances, toolchain)');
+  });
+  it('fails a run file with no checks array', () => {
+    const r = run(buildRepo(), withChecks(undefined));
+    expect(red(r)).toEqual(['FAIL check: the run file has no checks array']);
+    expect(r.verdict).toBe('harness-verdict: harness-ios-tokens FAIL (check: no checks array)');
+  });
+  it('passes when every check is ok:true, a blocked check and a not checked one included', () => {
+    const r = run(
+      buildRepo(),
+      withChecks([
+        { name: 'probe: read', ok: true, detail: '2 of 2' },
+        { name: 'probe: product read', ok: true, detail: 'blocked' },
+        { name: 'theme instances', ok: true, detail: 'not checked' },
+      ]),
+    );
+    expect(red(r)).toEqual([]);
+    expect(r.verdict).toBe('harness-verdict: harness-ios-tokens PASS');
+  });
+  it('passes an empty checks array (an Android token context while :tokens fails)', () => {
+    const r = run(buildRepo(), withChecks([]));
+    expect(red(r)).toEqual([]);
+    expect(r.verdict).toBe('harness-verdict: harness-ios-tokens PASS');
+  });
+});
+
+describe('the command line and the run file\'s checks', () => {
+  const ROOTS = { gen: '/c/dist/tokens', pkg: '/c/node_modules/@3fn/core', probe: '/c/probe' };
+  const stubSwift = (input: SwiftParseInput): CompileResult =>
+    result(input.compile, input.exitCode === 0 ? 'succeeded' : 'failed', input.log.includes('cannot find') ? { [K1]: 2 } : {});
+  const base = { roots: ROOTS, swift: [{ compile: 'ios.T', log: 'T.log', exitCode: 1 }, { compile: 'ios.P', blocked: true }], files: { gen: { compiled: 3, floor: 3 } }, toolchain: IOS_TOOLCHAIN };
+  const exec = (runObj: object): { status: number; lines: string[] } => {
+    const repo = buildRepo();
+    const work = fs.mkdtempSync(path.join(os.tmpdir(), 'harness-compare-checks-'));
+    dirs.push(work);
+    fs.writeFileSync(path.join(work, 'T.log'), "…: error: cannot find 'X' in scope\n");
+    const p = path.join(work, 'run.json');
+    fs.writeFileSync(p, JSON.stringify(runObj));
+    const lines: string[] = [];
+    const status = main(['--context', 'harness-ios-tokens', '--run', p, '--base', repo.base, '--repo', repo.dir], { parseSwift: stubSwift, out: (l) => lines.push(l) });
+    return { status, lines };
+  };
+
+  it('fails a run file with no checks array', () => {
+    const { status, lines } = exec(base);
+    expect(status).toBe(1);
+    expect(lines).toContain('FAIL check: the run file has no checks array');
+    expect(lines[lines.length - 1]).toBe('harness-verdict: harness-ios-tokens FAIL (check: no checks array)');
+  });
+  it('fails a run file whose checks is not an array', () => {
+    const { status, lines } = exec({ ...base, checks: { name: 'x' } });
+    expect(status).toBe(1);
+    expect(lines[lines.length - 1]).toBe('harness-verdict: harness-ios-tokens FAIL (check: no checks array)');
+  });
+  it('fails an ok:false check read from the run file', () => {
+    const { status, lines } = exec({ ...base, checks: [{ name: 'probe: read', ok: false, detail: '1 of 2' }] });
+    expect(status).toBe(1);
+    expect(lines).toContain('FAIL check: probe: read: 1 of 2');
+    expect(lines[lines.length - 1]).toBe('harness-verdict: harness-ios-tokens FAIL (check: probe: read)');
+  });
+  it('passes an empty checks array', () => {
+    const { status, lines } = exec({ ...base, checks: [] });
+    expect(status).toBe(0);
+    expect(lines[lines.length - 1]).toBe('harness-verdict: harness-ios-tokens PASS');
+  });
+  it('treats a malformed check entry as an input error', () => {
+    const { status, lines } = exec({ ...base, checks: [{ name: 'x', ok: 'yes', detail: '' }] });
+    expect(status).toBe(1);
+    expect(lines).toContain('FAIL input: checks[0] needs a non-empty string name, a boolean ok and a string detail');
+    expect(lines[lines.length - 1]).toBe('harness-verdict: harness-ios-tokens FAIL (input)');
   });
 });

@@ -209,6 +209,7 @@ Each failure prints one line, `FAIL <class>: <detail>`. The classes, in the orde
 | `pre-compile` | a compile the context reads is `failed` with no parsed diagnostic (design § 3 rule 1); a compile it reads is `not-run`, except a blocked probe; the Gradle log has no closing `BUILD` line |
 | `parser` | a compile is `succeeded` with parsed diagnostics (rule 1); any `unrooted` or `unattributed` line |
 | `baseline missing` | the cross-tier baseline (`ios.T5`, or `android.tokens` in the component context) is `not-run` (rule 5) |
+| `check` | the run file's `checks` array is missing, or holds an entry with `ok: false` (below, "`checks`") |
 | `toolchain` | a reported toolchain field differs from `<platform>.toolchain` in the pins, or either side has a field the other lacks (Req 3.11) |
 | `floor` | for a tier the context counts (`gen` for token contexts; `gen` and `pkg` for component contexts): 0 files reached the compiler, the floor is 0, or fewer files than the floor reached it (Req 3.4) |
 | `format` | the list, the pin file or the protected set at the head is missing or not well formed |
@@ -298,7 +299,11 @@ npx tsx scripts/harness/compare.ts --context <context> --run <run.json> (--base 
     { "compile": "ios.P", "blocked": true }
   ],
   "files": { "gen": { "compiled": 4, "floor": 4 } },
-  "toolchain": { "xcode.version": "26.6", "xcode.build": "17F113" }
+  "toolchain": { "xcode.version": "26.6", "xcode.build": "17F113" },
+  "checks": [
+    { "name": "probe: read", "ok": true, "detail": "2 of 2 index names" },
+    { "name": "theme instances", "ok": true, "detail": "not checked" }
+  ]
 }
 ```
 
@@ -306,6 +311,11 @@ npx tsx scripts/harness/compare.ts --context <context> --run <run.json> (--base 
 - **Android**: instead of `swift`, `"gradle": { "log": "gradle.txt", "exitCode": 1 }`, the one invocation's console output. Each Android context passes the same invocation's log.
 - **`files`**: per tier, the files the lane gave the compiler and the floor it computed at run time from the packed tarball's file list and the generated files (Req 3.4). Token contexts give `gen`; component contexts give `gen` and `pkg`.
 - **`toolchain`**: the fields the lane read, with the names `<platform>.toolchain` pins.
+- **`checks`** *(design § 3, "The probe's count lines and the run file's `checks`")*: an array of `{ "name": string, "ok": boolean, "detail": string }`, the lane's gating results other than the compiles: each probe count line (`probe: read <n> of <m> index names`, `probe: instances read …`, `probe: product read …`, `probe: provider read …`, and on iOS `probe: key read …`) and the per-run `theme instances:` check.
+  - The lane exits 0 for these. The comparator fails the context as class `check` for each entry with `ok: false`, and names it in the verdict line: `harness-verdict: <context> FAIL (check: <name>[; <name>…], …)`. The verdict line is what the `harness-verdict` annotation records, so the failing check outlives the logs.
+  - **A run file with no `checks` array fails the context** as class `check` (verdict `FAIL (check: no checks array)`). An **empty array does not fail**: an Android token context while `:tokens` fails writes `[]`, because its count lines appear only when `:probe` compiles. A blocked probe on iOS writes its count lines `ok: true` with detail `blocked`; a per-run instance check that finds neither holder nor `DesignerPunkTheme` writes `ok: true` with detail `not checked`.
+  - An entry that is not `{ name: non-empty string, ok: boolean, detail: string }` is an input error. A `checks` value that is not an array reads as missing.
+  - The field is required from Tasks 3.4 and 4.3 on, which add it to the lanes. Until a lane writes it, that lane's run fails as class `check`; the first full run (tasks.md § "The first full run (U1)") is after both have joined the unit, so every context's run file carries it.
 - The comparator runs the parsers on the logs. The parsers are loaded from `./parse-swift` and `./parse-kotlin`.
 
 ---
