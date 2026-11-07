@@ -573,7 +573,9 @@ describe('lane: the per-run instance check (design § 3: fails closed)', () => {
 
   it('uses the module\'s open line and the member form Task 11 pins (four spaces, public static let, any DesignerPunkTheme)', () => {
     expect(swiftHolderOpenLine('Fake')).toBe('public enum FakeThemes {');
-    expect('    ' + swiftHolderMemberLine('baseLight').trimStart() + ' X()').toBe('    public static let baseLight: any DesignerPunkTheme = X()');
+    // the module's line carries the four-space indent since 0e9e1fabe, so it is the pinned form as it stands
+    expect(swiftHolderMemberLine('baseLight') + ' X()').toBe('    public static let baseLight: any DesignerPunkTheme = X()');
+    expect(checkThemeInstances([['public protocol DesignerPunkTheme: Sendable {}', swiftHolderOpenLine('Fake'), swiftHolderMemberLine('baseLight') + ' X()', '}'].join('\n')], 'Fake', [])).toMatchObject({ ok: false, detail: expect.stringContaining('missing baseDark, wcagLight, wcagDark') });
   });
 
   it('a config with a custom theme expects its instances too', () => {
