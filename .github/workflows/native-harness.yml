@@ -131,6 +131,16 @@ jobs:
             if [ -n "$line" ]; then echo "::notice title=harness-verdict::$line"; fi
           fi
 
+      - name: Upload the lane output (logs, run file, comparator output)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-out-harness-ios-tokens
+          path: harness-out
+          if-no-files-found: ignore
+          include-hidden-files: true
+          retention-days: 7
+
   harness-ios-components:
     name: ${{ github.event_name == 'workflow_dispatch' && 'harness-ios-components (unit-branch)' || 'harness-ios-components' }}
     needs: harness-generate
@@ -191,6 +201,16 @@ jobs:
   # ---------------------------------------------------------------------------------------------
   # Android
   # ---------------------------------------------------------------------------------------------
+
+      - name: Upload the lane output (logs, run file, comparator output)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-out-harness-ios-components
+          path: harness-out
+          if-no-files-found: ignore
+          include-hidden-files: true
+          retention-days: 7
 
   harness-android-tokens:
     name: ${{ github.event_name == 'workflow_dispatch' && 'harness-android-tokens (unit-branch)' || 'harness-android-tokens' }}
@@ -276,6 +296,16 @@ jobs:
             if [ -n "$line" ]; then echo "::notice title=harness-verdict::$line"; fi
           fi
 
+      - name: Upload the lane output (logs, run file, comparator output)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-out-harness-android-tokens
+          path: harness-out
+          if-no-files-found: ignore
+          include-hidden-files: true
+          retention-days: 7
+
   harness-android-components:
     name: ${{ github.event_name == 'workflow_dispatch' && 'harness-android-components (unit-branch)' || 'harness-android-components' }}
     needs: harness-generate
@@ -356,3 +386,13 @@ jobs:
             line=$(grep '^harness-verdict:' harness-out/compare.txt | tail -n 1 || true)
             if [ -n "$line" ]; then echo "::notice title=harness-verdict::$line"; fi
           fi
+
+      - name: Upload the lane output (logs, run file, comparator output)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-out-harness-android-components
+          path: harness-out
+          if-no-files-found: ignore
+          include-hidden-files: true
+          retention-days: 7
