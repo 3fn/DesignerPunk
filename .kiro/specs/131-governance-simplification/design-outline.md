@@ -398,12 +398,8 @@ comm -12 <(git grep -l '^\*\*Class\*\*: P3' $S -- ':(glob).kiro/issues/*.md' | s
 - `2026-10-03-ios-theme-environment-key-missing-backslash.md` closes by fix, not through this spec: the fix is #641 (merged 2026-11-04); the record is archived.
 - *(2026-11-05, Thurgood)* `2026-06-10-post-v12-rgba-pipeline-cleanup.md` has also left this spec's routing. Ada re-ruled its Trigger to `path:.kiro/specs/133-color-track/requirements.md` in #671 (`10ec4af5b`), fixing a split routing: fork D sent it here, while Peter's 2026-10-20 ranking lists it as the colour-track spec's intake. Authority: Peter, received 2026-11-05T13:05:54Z, verbatim: "yes, 4 (a), 7 (a)", whose "yes" answers "Colour-track: yes to (iv)?". Its row in the table above stays as the record of what was routed.
 
-### 2026-11-07 (scope intake, one record, record only: it names a record and settles no design) — Thurgood
+### 2026-11-07 (scope intake, one inbound, record only: it names an input and settles no design) — Thurgood
 
-**Authority**: Peter, verbatim, recorded with `date -u` at receipt 2026-11-07T17:36:23Z (orchestrator relay; **UNVERIFIED** beyond the relay): "Let's defer it, but I want to capture it. This feels governance related, but I could be wrong. Would it be something to address for spec 131?" The orchestrator answered yes.
+**Authority**: Peter, verbatim, recorded with `date -u` at receipt (orchestrator relay; **UNVERIFIED** beyond the relay): 2026-11-07T17:36:23Z, "Let's defer it, but I want to capture it. This feels governance related, but I could be wrong. Would it be something to address for spec 131?"; and 2026-11-07T17:41:21Z, "Let's update 131 or provide an inbound, but consult with relevant agents to sure-up the proposal."
 
-| Record (`.kiro/issues/`) | Owner | Scope, quoted from the record's title |
-|---|---|---|
-| `2026-11-07-agents-act-through-peters-credential.md` | Thurgood (Stacy verifies) | "agents act through Peter's credential, so no check can verify that words are his" |
-
-Its Trigger is already `path:` on this spec's `requirements.md`, so it takes no re-rule. The incident behind it is ledger L-10 (`inbound-governance-cost-ledger.md`). Nothing here is a requirement or a ruling. The requirements round takes the record in, or rules it out with a reason.
+**Input**: `inbound-from-thurgood-2026-11-07-agent-identity.md`, "agents act through Peter's credential, so no check can verify that words are his". Its § 4 names the events that would make it urgent before this spec resumes. The incident behind it is ledger L-10 (`inbound-governance-cost-ledger.md`). Nothing here is a requirement or a ruling. The requirements round takes the inbound in, or rules it out with a reason.
