@@ -4,9 +4,9 @@
 **Spec**: 129 - Consumer-Generation Completeness
 **Task**: 6. Register the harness falsification suites as named in-lane guards (U2) · subtask 6.1
 **Type**: Parent · **Validation**: Tier 3 - Comprehensive
-**Agent**: Thurgood (Sonnet), PRIMARY · **Status**: Complete on the unit branch `task/129-comparator-guard-markers`; accepted at U2's merge, not before. One row below is ⚠️: criterion 2's last clause, which needs the U2 PR's run.
+**Agent**: Thurgood (Sonnet), PRIMARY · **Status**: Complete on the unit branch `task/129-comparator-guard-markers`; accepted at U2's merge, not before.
 **Delegated-tier**: plan held
-**CI-provenance**: local
+**CI-provenance**: PR gate #708 @ 96be4806e289b409bf1bbee8f0ae1767551a0be3 (merge ref) — https://github.com/3fn/DesignerPunk/pull/708/checks?sha=96be4806e289b409bf1bbee8f0ae1767551a0be3
 **Instruments**: 9 listed — exists 8 · built-here 1 · missing 0 · unlisted 0 — .kiro/specs/129-consumer-generation-completeness/completion/task-6-instruments.md
 
 ---
@@ -16,10 +16,10 @@
 | Criterion (verbatim) | Status | Evidence |
 |---|---|---|
 | `.github/in-lane-guards.json` gains one entry each for `scripts/harness/__tests__/compare.test.ts`, `parse-swift.test.ts`, `parse-kotlin.test.ts`, `probe-swift.test.ts`, `probe-kotlin.test.ts`, `consumer.test.ts`, `stability.test.ts` and `native-rules.test.ts` (added by amendment 3), with `config` `scripts/jest.config.js`, `context` `lane-functional-root`, and `record` naming this task's completion doc. | ✅ | `.github/in-lane-guards.json` @ `086d50f61`: the eight entries are the last eight of `guards` (L255 on), each `config` `scripts/jest.config.js`, `context` `lane-functional-root`, `record` naming `.kiro/specs/129-consumer-generation-completeness/completion/task-6-completion.md`. Command: `jq '[.guards[]\|select(.config=="scripts/jest.config.js" and .context=="lane-functional-root" and (.file\|startswith("scripts/harness/__tests__/")) and (.record\|contains("task-6-completion.md")))]\|length' .github/in-lane-guards.json` → `8`. Decision record: `.kiro/specs/129-consumer-generation-completeness/completion/task-6-1-completion.md` |
-| The additivity predicate of ballot `2026-10-20-in-lane-guard-registry-additive-entries` § 2 prints `true` against the PR's merge base, and the check prints `N registered in-lane guards; N selected` with N the entry count, green on the U2 PR. | ⚠️ | Status: pending PR run. Done locally: the predicate, old side the merge base `74d7566f5fd7cb700436ee0fbbf12cf3f050dc57` (`git merge-base refs/remotes/origin/main HEAD`), printed `true`; `npx tsx scripts/ci/check-in-lane-guards.ts` → `50 registered in-lane guards; 50 selected`, exit 0 (50 = `jq '.guards\|length'`). Not done: "green on the U2 PR", because the U2 PR opens at Task 7's completion and its `lane-functional-root` run is the evidence. Follow-up: `.kiro/specs/129-consumer-generation-completeness/tasks.md` Task 7, whose completion doc reads that run |
+| The additivity predicate of ballot `2026-10-20-in-lane-guard-registry-additive-entries` § 2 prints `true` against the PR's merge base, and the check prints `N registered in-lane guards; N selected` with N the entry count, green on the U2 PR. | ✅ | The predicate, old side the merge base `74d7566f5fd7cb700436ee0fbbf12cf3f050dc57` (`git merge-base refs/remotes/origin/main HEAD`), printed `true`. The check printed `50 registered in-lane guards; 50 selected` locally (50 = `jq '.guards\|length'`) and in U2's PR #708, `lane-functional-root` job, step "Named-guard selection floor — registered in-lane guards selected (.github/in-lane-guards.json)", green: https://github.com/3fn/DesignerPunk/actions/runs/42339305022/job/128303214959 at head `96be4806e289b409bf1bbee8f0ae1767551a0be3` (the commit that adds this row touches only `completion/**`). *(Earlier text of this cell, at `7aed9c5aa`: Status ⚠️, "pending PR run", because the PR did not exist yet.)* |
 | The U2 PR's `.github/**` changes are exactly `.github/in-lane-guards.json`. | ✅ | `git diff --name-only refs/remotes/origin/main...HEAD -- .github` → `.github/in-lane-guards.json` (one path); `git diff --numstat refs/remotes/origin/main...HEAD -- .github` → `48 0 .github/in-lane-guards.json`. Read on the branch at `086d50f61`; Task 7's completion doc re-reads it at the PR |
 
-Unmet or partially met criteria: Criterion 2's clause "green on the U2 PR" — pending the U2 PR's run; follow-up `.kiro/specs/129-consumer-generation-completeness/tasks.md` Task 7 (the PR opens there)
+Unmet or partially met criteria: None
 
 ## The predicate and the check, as run
 
@@ -58,7 +58,7 @@ Primary Artifacts: all shipped as declared
 - `npm test` (the parent tier, full functional suite) → 417 suites passed, 9881 tests passed, exit 0. Local; `npm run build` and `mcp-server` `npm ci && npm run build` ran first in the fresh worktree.
 - `npm run test:scripts` → 32 suites passed, 1337 tests passed. Run because `npm test` does not run the `scripts/**` suites, and these are the suites the entries register (tasks.md § Conventions "Sub-suites").
 - `npx jest --config scripts/jest.config.js scripts/__tests__/in-lane-guards.test.ts` → 19 passed (the registry check's own suite).
-- Every run result above is local (see the `**CI-provenance**:` line).
+- The run results above are local, except criterion 2's PR line, which is U2's PR #708 run named on the `**CI-provenance**:` line.
 - Not run: `test:consumer`, `mcp-server` and `application-mcp-server` suites; no artifact of this parent is read by them.
 
 ## Records this parent's diff fires
