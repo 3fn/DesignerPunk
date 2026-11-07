@@ -106,8 +106,10 @@ describe('WCAG Theme Override Infrastructure (Spec 080 Phase 2)', () => {
     it('should generate WCAG override lines from theme files', () => {
       const result = generator.generateiOSTokens(wcagOptions());
       expect(result.valid).toBe(true);
-      expect(result.content).toContain('WCAG Theme Semantic Overrides');
-      expect(result.content).toContain('_wcag');
+      // Native: the WCAG overrides are the wcag theme instances, not `_wcag` members (Spec 129 design § 4).
+      expect(result.content).toContain('public struct DesignerPunkWcagLightTheme: DesignerPunkTheme, Equatable');
+      expect(result.content).toContain('public struct DesignerPunkWcagDarkTheme: DesignerPunkTheme, Equatable');
+      expect(result.content).not.toContain('_wcag');
     });
   });
 
@@ -115,8 +117,9 @@ describe('WCAG Theme Override Infrastructure (Spec 080 Phase 2)', () => {
     it('should generate WCAG override lines from theme files', () => {
       const result = generator.generateAndroidTokens(wcagOptions());
       expect(result.valid).toBe(true);
-      expect(result.content).toContain('WCAG Theme Semantic Overrides');
-      expect(result.content).toContain('_wcag');
+      expect(result.content).toContain('val WcagLight = DesignerPunkTheme(');
+      expect(result.content).toContain('val WcagDark = DesignerPunkTheme(');
+      expect(result.content).not.toContain('_wcag');
     });
   });
 });

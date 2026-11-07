@@ -18,6 +18,10 @@ const SYMBOLS: ReadonlyArray<{ uses: RegExp; import: string }> = [
   { uses: /\bTextStyle\(/, import: 'androidx.compose.ui.text.TextStyle' },
   { uses: /\bCornerSize\(/, import: 'androidx.compose.foundation.shape.CornerSize' },
   { uses: /\bCubicBezierEasing\(/, import: 'androidx.compose.animation.core.CubicBezierEasing' },
+  { uses: /\bstaticCompositionLocalOf\b/, import: 'androidx.compose.runtime.staticCompositionLocalOf' },
+  { uses: /\bCompositionLocalProvider\(/, import: 'androidx.compose.runtime.CompositionLocalProvider' },
+  { uses: /@Composable\b/, import: 'androidx.compose.runtime.Composable' },
+  { uses: /\bisSystemInDarkTheme\(/, import: 'androidx.compose.foundation.isSystemInDarkTheme' },
 ];
 
 /** The text with block, doc and line comments removed, so a word in a comment imports nothing. */

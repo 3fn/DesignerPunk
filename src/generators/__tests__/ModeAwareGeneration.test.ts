@@ -84,46 +84,56 @@ describe('Mode-Aware Generation (Spec 080)', () => {
     });
   });
 
+  // Native: a colour semantic is a member of every theme instance (Spec 129 design § 4), so a
+  // mode-differentiated token has different values in the base light and base dark instances,
+  // and a mode-invariant one the same value in both.
+  const memberLine = (content: string, open: string, member: string): string => {
+    const start = content.indexOf(open);
+    expect(start).toBeGreaterThan(-1);
+    const end = content.indexOf('\n}', start);
+    const block = content.slice(start, end);
+    const line = block.split('\n').find(l => l.includes(member));
+    expect(line).toBeDefined();
+    return line!.trim();
+  };
+
   describe('iOS platform', () => {
-    it('should output dynamic UIColor for mode-differentiated tokens', () => {
-      const result = generator.generateiOSTokens({
-        semanticTokens: lightTokens,
-        darkSemanticTokens: darkTokens,
-      });
-      expect(result.content).toContain('userInterfaceStyle == .dark');
-      expect(result.content).toContain('UIColor(red: 0.70, green: 0.74, blue: 0.77, alpha: 1.00)');
-      expect(result.content).toContain('UIColor(red: 0.15, green: 0.20, blue: 0.23, alpha: 1.00)');
+    const gen = () => generator.generateiOSTokens({ semanticTokens: lightTokens, darkSemanticTokens: darkTokens }).content;
+
+    it('gives a mode-differentiated token different values in the light and dark instances', () => {
+      const content = gen();
+      const light = memberLine(content, 'public struct DesignerPunkBaseLightTheme', 'colorTextDefault');
+      const dark = memberLine(content, 'public struct DesignerPunkBaseDarkTheme', 'colorTextDefault');
+      expect(light).toMatch(/public let colorTextDefault: Color = Color\(\.displayP3, /);
+      expect(dark).not.toBe(light);
     });
 
-    it('should output single UIColor for mode-invariant tokens', () => {
-      const result = generator.generateiOSTokens({
-        semanticTokens: lightTokens,
-        darkSemanticTokens: darkTokens,
-      });
-      expect(result.content).toMatch(/colorPrintDefault.*UIColor\(red: 0\.00.*alpha: 1\.00\)/);
-      // Should NOT have dynamic UIColor for invariant token
-      expect(result.content).not.toMatch(/colorPrintDefault.*userInterfaceStyle/);
+    it('gives a mode-invariant token the same value in both instances', () => {
+      const content = gen();
+      const light = memberLine(content, 'public struct DesignerPunkBaseLightTheme', 'colorPrintDefault');
+      const dark = memberLine(content, 'public struct DesignerPunkBaseDarkTheme', 'colorPrintDefault');
+      expect(dark).toBe(light);
+      expect(content).not.toMatch(/userInterfaceStyle/);
     });
   });
 
   describe('Android platform', () => {
-    it('should output light/dark suffixed values for mode-differentiated tokens', () => {
-      const result = generator.generateAndroidTokens({
-        semanticTokens: lightTokens,
-        darkSemanticTokens: darkTokens,
-      });
-      expect(result.content).toContain('color_text_default_light');
-      expect(result.content).toContain('color_text_default_dark');
+    const gen = () => generator.generateAndroidTokens({ semanticTokens: lightTokens, darkSemanticTokens: darkTokens }).content;
+
+    it('gives a mode-differentiated token different values in BaseLight and BaseDark', () => {
+      const content = gen();
+      const light = memberLine(content, 'val BaseLight = DesignerPunkTheme(', 'color_text_default');
+      const dark = memberLine(content, 'val BaseDark = DesignerPunkTheme(', 'color_text_default');
+      expect(light).toMatch(/color_text_default = Color\(.*ColorSpaces\.DisplayP3\)/);
+      expect(dark).not.toBe(light);
     });
 
-    it('should output single value for mode-invariant tokens', () => {
-      const result = generator.generateAndroidTokens({
-        semanticTokens: lightTokens,
-        darkSemanticTokens: darkTokens,
-      });
-      expect(result.content).toMatch(/val color_print_default = Color\.argb/);
-      expect(result.content).not.toContain('color_print_default_light');
-      expect(result.content).not.toContain('color_print_default_dark');
+    it('gives a mode-invariant token the same value in both and emits no _light or _dark member', () => {
+      const content = gen();
+      const light = memberLine(content, 'val BaseLight = DesignerPunkTheme(', 'color_print_default');
+      const dark = memberLine(content, 'val BaseDark = DesignerPunkTheme(', 'color_print_default');
+      expect(dark.replace(/,$/, '')).toBe(light.replace(/,$/, ''));
+      expect(content).not.toContain('color_print_default_light');
     });
   });
 

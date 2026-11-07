@@ -271,7 +271,9 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
     wcagSemanticTokens: resolvedLightWcag,
     darkWcagSemanticTokens: resolvedDarkWcag,
     wcagOverrideKeys,
-    themeVaryingTokens
+    themeVaryingTokens,
+    productName: config.name,
+    abbreviation: config.abbreviation
   });
 
   // Write files to disk
@@ -374,7 +376,8 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
     themeVaryingTokens: baseThemeVaryingTokens,
     // The registry-wide set the native generators were given above, for the index's iOS and
     // Android columns only (their `theme.` names). Not merged into the base set.
-    nativeThemeVaryingTokens: new Set(themeVaryingTokens),
+    // Every colour semantic is a native theme member (design § 4, Q13).
+    nativeThemeVaryingTokens: new Set(resolvedLight.filter(t => t.category === 'color').map(t => t.name)),
     primitiveOklch,
   };
 }

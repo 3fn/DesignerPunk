@@ -1,122 +1,189 @@
 /**
  * @category evergreen
- * @purpose Verify Swift theme type generation for registered themes (Spec 094)
+ * @purpose Verify Swift theme emission (Spec 129 Task 11; design § 4): the exact instance set,
+ *          names, family, provider, selection, defaults and resolved values, on output generated
+ *          from the repository's real token definitions. Re-baselined from Spec 094's fixtures.
  */
 
-import { TokenFileGenerator, ThemeOverrideSet } from '../TokenFileGenerator';
-import { SemanticCategory } from '../../types/SemanticToken';
+import { TokenFileGenerator, type ThemeOverrideSet } from '../TokenFileGenerator';
+import { realThemeContexts } from './helpers/realThemeContexts';
 
-describe('Swift Theme Type Generation (Spec 094)', () => {
-  let generator: TokenFileGenerator;
+const generator = new TokenFileGenerator();
+const contexts = realThemeContexts();
 
-  beforeEach(() => {
-    generator = new TokenFileGenerator();
-  });
-
-  function makeToken(name: string, value: string) {
-    return {
-      name,
-      category: SemanticCategory.COLOR,
-      context: 'test',
-      description: 'test',
-      primitiveReferences: { value },
-    };
-  }
-
-  const baseLight = [
-    makeToken('color.action.primary', 'rgba(0, 240, 255, 1)'),
-    makeToken('color.structure.canvas', 'rgba(255, 255, 255, 1)'),
-  ];
-  const baseDark = [
-    makeToken('color.action.primary', 'rgba(0, 240, 255, 1)'),
-    makeToken('color.structure.canvas', 'rgba(24, 34, 40, 1)'),
-  ];
-
-  const darkTheme: ThemeOverrideSet = {
-    name: 'marketing',
-    mode: 'dark',
-    lightTokens: baseLight,
-    darkTokens: [
-      makeToken('color.action.primary', 'rgba(0, 200, 220, 1)'),
-      makeToken('color.structure.canvas', 'rgba(10, 12, 16, 1)'),
-    ],
-    overrideKeys: new Set(['color.action.primary', 'color.structure.canvas']),
+/** A theme made of real resolved tokens with one member changed, so a fallback is observable. */
+function theme(name: string, mode: 'light' | 'dark' | 'both', overrideName: string): ThemeOverrideSet {
+  const change = (tokens: typeof contexts.semanticTokens, lightness: string) =>
+    tokens.map(t => (t.name === overrideName ? { ...t, primitiveReferences: { value: `oklch(${lightness} 0.1 200)` } } : t));
+  return {
+    name,
+    mode,
+    lightTokens: change(contexts.semanticTokens, '0.31'),
+    darkTokens: change(contexts.darkSemanticTokens, '0.62'),
+    overrideKeys: new Set([overrideName]),
   };
+}
 
-  test('generates protocol with theme-varying properties', () => {
-    const lines = generator.generateThemeOverrideBlocks('ios', baseLight, baseDark, [darkTheme], 'WrKingClass', 'WKC');
-    const output = lines.join('\n');
+const MEMBER = 'color.action.primary';
+const configS = (name = 'WrKingClass', abbreviation = 'WKC') => ({
+  ...contexts,
+  productName: name,
+  abbreviation,
+  // Config S: dark (mode dark) and wcag (mode light) add no instance of their own.
+  themeOverrides: [] as ThemeOverrideSet[],
+});
+const configC = () => ({
+  ...contexts,
+  productName: 'PB',
+  abbreviation: 'PB',
+  // wcag is built in; the others are config C's custom themes (passed straight to the emitter at U6).
+  themeOverrides: [theme('high-contrast', 'both', MEMBER), theme('brand', 'light', MEMBER), theme('default', 'dark', MEMBER)],
+});
 
-    expect(output).toContain('public protocol WrKingClassTheme {');
-    expect(output).toContain('var colorActionPrimary: Color { get }');
-    expect(output).toContain('var colorStructureCanvas: Color { get }');
+const swift = (o: ReturnType<typeof configS>) => generator.generateNativeThemes('ios', o).join('\n');
+const holderMembers = (out: string): string[] => {
+  const start = out.indexOf('\npublic enum ');
+  const open = out.indexOf('Themes {', start);
+  const block = out.slice(open, out.indexOf('\n}', open));
+  return [...block.matchAll(/^    public static let (\w+): any DesignerPunkTheme = \w+\(\)$/gm)].map(m => m[1]);
+};
+
+describe('config S: the four fixed instances', () => {
+  const out = swift(configS());
+
+  it('the holder\'s members are exactly baseLight, baseDark, wcagLight, wcagDark, in that order', () => {
+    expect(holderMembers(out)).toEqual(['baseLight', 'baseDark', 'wcagLight', 'wcagDark']);
+    for (const bad of ['darkDark', 'darkLight', 'public static let dark:', 'public static let wcag:']) {
+      expect(out).not.toContain(bad);
+    }
   });
 
-  test('generates base light and dark structs', () => {
-    const lines = generator.generateThemeOverrideBlocks('ios', baseLight, baseDark, [darkTheme], 'WrKingClass', 'WKC');
-    const output = lines.join('\n');
-
-    expect(output).toContain('public struct WrKingClassBaseLight: WrKingClassTheme {');
-    expect(output).toContain('public struct WrKingClassBaseDark: WrKingClassTheme {');
+  it('declares the fixed binding, whatever the consumer\'s name or abbreviation', () => {
+    expect(out).toMatch(/^public protocol DesignerPunkTheme: Sendable \{$/m);
+    expect(out).toMatch(/^public struct DPThemeKey: EnvironmentKey \{$/m);
+    expect(out).toContain('var dpTheme: any DesignerPunkTheme {');
+    expect(out).toMatch(/^public enum WrKingClassThemes \{$/m);
   });
 
-  test('generates dark-only theme as single struct', () => {
-    const lines = generator.generateThemeOverrideBlocks('ios', baseLight, baseDark, [darkTheme], 'WrKingClass', 'WKC');
-    const output = lines.join('\n');
-
-    expect(output).toContain('public struct WrKingClassMarketing: WrKingClassTheme {');
-    // Should NOT have light/dark variants for a dark-only theme
-    expect(output).not.toContain('WrKingClassMarketingLight');
-    expect(output).not.toContain('WrKingClassMarketingDark');
+  it('emits no alias: no typealias, no second key, no Local<ABBR>Theme', () => {
+    expect(out).not.toContain('typealias');
+    expect(out).not.toMatch(/WKCThemeKey|LocalWKCTheme/);
+    expect(out).not.toMatch(/public protocol WrKingClassTheme\b/);
   });
 
-  test('generates both-mode theme as light + dark structs', () => {
-    const bothTheme: ThemeOverrideSet = {
-      name: 'wcag',
-      mode: 'both',
-      lightTokens: [
-        makeToken('color.action.primary', 'rgba(26, 83, 92, 1)'),
-        makeToken('color.structure.canvas', 'rgba(255, 255, 255, 1)'),
-      ],
-      darkTokens: [
-        makeToken('color.action.primary', 'rgba(0, 240, 255, 1)'),
-        makeToken('color.structure.canvas', 'rgba(24, 34, 40, 1)'),
-      ],
-      overrideKeys: new Set(['color.action.primary']),
-    };
-
-    const lines = generator.generateThemeOverrideBlocks('ios', baseLight, baseDark, [bothTheme], 'Test', 'T');
-    const output = lines.join('\n');
-
-    expect(output).toContain('public struct TestWcagLight: TestTheme {');
-    expect(output).toContain('public struct TestWcagDark: TestTheme {');
+  it('declares each backing struct as `public struct <Name><Pascal>Theme: DesignerPunkTheme, Equatable` with an implicit member', () => {
+    for (const p of ['BaseLight', 'BaseDark', 'WcagLight', 'WcagDark']) {
+      expect(out).toContain(`public struct WrKingClass${p}Theme: DesignerPunkTheme, Equatable {`);
+      expect(out).toContain(`static var wkc${p}: WrKingClass${p}Theme { WrKingClass${p}Theme() }`);
+      expect(out).toContain(`public extension DesignerPunkTheme where Self == WrKingClass${p}Theme {`);
+    }
   });
 
-  test('generates EnvironmentKey with correct naming', () => {
-    const lines = generator.generateThemeOverrideBlocks('ios', baseLight, baseDark, [darkTheme], 'WrKingClass', 'WKC');
-    const output = lines.join('\n');
-
-    expect(output).toContain('public struct WKCThemeKey: EnvironmentKey {');
-    expect(output).toContain('defaultValue: any WrKingClassTheme = WrKingClassBaseLight()');
-    expect(output).toContain('var wkcTheme: any WrKingClassTheme {');
-    expect(output).toContain('get { self[WKCThemeKey.self] }');
+  it('declares each holder member on its own line, four spaces in, as the per-run instance check parses it', () => {
+    expect(out).toContain('    public static let baseLight: any DesignerPunkTheme = WrKingClassBaseLightTheme()');
+    expect(out).toContain('    public static let wcagDark: any DesignerPunkTheme = WrKingClassWcagDarkTheme()');
+    expect(out.split('\n').filter(l => l.startsWith('\t')).length).toBe(0);
   });
 
-  test('uses SwiftUI Color type, not UIColor', () => {
-    const lines = generator.generateThemeOverrideBlocks('ios', baseLight, baseDark, [darkTheme], 'Test', 'T');
-    const output = lines.join('\n');
-
-    expect(output).toContain('import SwiftUI');
-    expect(output).toContain(': Color { get }');
-    expect(output).toContain('Color(red:');
-    expect(output).not.toContain('UIColor');
+  it('carries the `: Sendable` clause on the protocol and on the family', () => {
+    expect(out).toMatch(/public protocol DesignerPunkTheme: Sendable \{/);
+    expect(out).toMatch(/public enum WrKingClassThemeFamily: Sendable, Hashable, CaseIterable \{/);
+    expect(out).not.toMatch(/ThemeFamily: String/);
   });
 
-  test('uses correct rgba to Color conversion', () => {
-    const lines = generator.generateThemeOverrideBlocks('ios', baseLight, baseDark, [darkTheme], 'Test', 'T');
-    const output = lines.join('\n');
+  it('the family has exactly base and wcag, each with a generated doc comment, and no dark case', () => {
+    const cases = [...out.matchAll(/^    case (\S+)$/gm)].map(m => m[1]);
+    expect(cases).toEqual(['base', 'wcag']);
+    expect(out).toContain('/// light: baseLight · dark: baseDark');
+    expect(out).toContain('/// light: wcagLight · dark: wcagDark');
+  });
 
-    // rgba(0, 240, 255, 1) → Color(red: 0.00, green: 0.94, blue: 1.00, opacity: 1.00)
-    expect(output).toContain('Color(red: 0.00, green: 0.94, blue: 1.00, opacity: 1.00)');
+  it('the provider is `<name>Theme(_ family:)`, defaults to base, selects by an exhaustive switch with no default branch', () => {
+    expect(out).toContain('func wrKingClassTheme(_ family: WrKingClassThemeFamily = .base) -> some View {');
+    expect(out).toContain('@Environment(\\.colorScheme)');
+    expect(out).toContain('content.environment(\\.dpTheme, theme)');
+    const sw = out.slice(out.indexOf('switch family {'));
+    expect(sw.slice(0, sw.indexOf('\n        }'))).not.toContain('default:');
+    expect(out).toContain('case .base: return dark ? WrKingClassThemes.baseDark : WrKingClassThemes.baseLight');
+    expect(out).toContain('case .wcag: return dark ? WrKingClassThemes.wcagDark : WrKingClassThemes.wcagLight');
+  });
+
+  it('DPThemeKey.defaultValue is the base light instance', () => {
+    expect(out).toContain('public static let defaultValue: any DesignerPunkTheme = WrKingClassBaseLightTheme()');
+  });
+
+  it('with no name the default `DesignerPunk` applies', () => {
+    const d = swift({ ...configS(), productName: undefined, abbreviation: undefined } as never);
+    expect(d).toContain('public enum DesignerPunkThemes {');
+    expect(d).toContain('public struct DesignerPunkBaseLightTheme: DesignerPunkTheme, Equatable {');
+    expect(d).toContain('public enum DesignerPunkThemeFamily: Sendable, Hashable, CaseIterable {');
+    expect(d).toContain('func designerPunkTheme(_ family: DesignerPunkThemeFamily = .base) -> some View {');
+  });
+});
+
+describe('config C: custom themes passed to the emitter', () => {
+  const out = swift(configC());
+
+  it('the holder\'s members are exactly the eight, in order; no brandDark, defaultLight or unsuffixed names', () => {
+    expect(holderMembers(out)).toEqual([
+      'baseLight', 'baseDark', 'wcagLight', 'wcagDark', 'highContrastLight', 'highContrastDark', 'brandLight', 'defaultDark',
+    ]);
+    for (const bad of ['brandDark', 'defaultLight', 'darkDark']) expect(out).not.toContain(`let ${bad}:`);
+    expect(out).not.toMatch(/public static let (brand|default|wcag):/);
+  });
+
+  it('the family has base, wcag, highContrast, brand and `default` (backticked), in order', () => {
+    const cases = [...out.matchAll(/^    case (\S+)$/gm)].map(m => m[1]);
+    expect(cases).toEqual(['base', 'wcag', 'highContrast', 'brand', '`default`']);
+  });
+
+  it('selection: brand shows brandLight / baseDark, default shows baseLight / defaultDark, highContrast both its own', () => {
+    expect(out).toContain('case .highContrast: return dark ? PBThemes.highContrastDark : PBThemes.highContrastLight');
+    expect(out).toContain('case .brand: return dark ? PBThemes.baseDark : PBThemes.brandLight');
+    expect(out).toContain('case .`default`: return dark ? PBThemes.defaultDark : PBThemes.baseLight');
+  });
+
+  it('the family cases carry a doc comment naming each scheme and the base fallback for a single-mode theme', () => {
+    expect(out).toContain('/// light: brandLight · dark: baseDark (no dark overrides; falls back to base)');
+    expect(out).toContain('/// light: baseLight · dark: defaultDark (no light overrides; falls back to base)');
+  });
+
+  it('every instance declares every member with a resolved value; an unoverridden member takes the same-mode base', () => {
+    const block = (s: string) => out.slice(out.indexOf(`public struct PB${s}Theme`), out.indexOf('}', out.indexOf(`public struct PB${s}Theme`)));
+    const line = (s: string) => block(s).split('\n').find(l => l.includes('colorActionPrimary'))!;
+    // brand (light) overrides the member; its dark half is base.
+    expect(line('BrandLight')).toContain('Color(.displayP3');
+    expect(line('BrandLight')).not.toBe(line('BaseLight'));
+    // default (dark) overrides it in dark; the light half is base.
+    expect(line('DefaultDark')).not.toBe(line('BaseDark'));
+    // a member neither overrides is the same as base in the same mode.
+    const other = (s: string) => block(s).split('\n').find(l => l.includes('colorStructureCanvas'))!;
+    expect(other('BrandLight')).toBe(other('BaseLight'));
+    expect(other('DefaultDark')).toBe(other('BaseDark'));
+  });
+});
+
+describe('resolved values on the real definitions', () => {
+  const out = swift(configS());
+
+  it('finds zero Color.Unspecified, Color.clear and `unresolved`', () => {
+    expect(out).not.toMatch(/Color\.Unspecified|Color\.clear|unresolved/);
+  });
+
+  it('every member is a Display P3 constructor (no sRGB two-decimal values)', () => {
+    const lets = out.split('\n').filter(l => /^    public let \w+: Color = /.test(l));
+    const colours = contexts.semanticTokens.filter(t => t.category === 'color').length;
+    expect(colours).toBeGreaterThan(50);
+    expect(lets.length).toBe(colours * 4);
+    expect(lets.every(l => /Color\(\.displayP3, red: [\d.]+, green: [\d.]+, blue: [\d.]+, opacity: [\d.]+\)$/.test(l))).toBe(true);
+  });
+
+  it('the theme block emits no import line', () => {
+    expect(out).not.toMatch(/^import /m);
+  });
+
+  it('the wcag instances differ from base for a member the wcag maps override', () => {
+    const member = (s: string) => out.split('\n').filter(l => l.includes('public let colorActionPrimary')).map(l => l.trim());
+    expect(new Set(member('x')).size).toBeGreaterThan(1);
   });
 });
