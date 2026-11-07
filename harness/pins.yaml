@@ -20,6 +20,71 @@ consumer:
   productTokensFixture: harness/fixtures/product-tokens
   productTokens: product/tokens
 
+# The iOS lanes (Task 3; `harness/ios/lane.ts`). Kenya owns this section.
+#
+# HARNESS PINS, NOT PLATFORM MINIMUMS (Req 2.9). They name the toolchain the compile evidence is
+# cut under, so one run is comparable to the next. A green here says nothing about the oldest Xcode
+# or iOS an adopter may use. The one exception is `deploymentTarget`, which equals Core Goals' iOS
+# minimum (17.0): it is the compile target, so "uses nothing newer than 17.0" is compile evidence.
+# "Built for iOS 17.0, not run on 17" is the wording rule until something runs on iOS 17
+# (Peter, 2026-11-05T13:05:54Z, "yes, 4 (a), 7 (a)").
+#
+# The Xcode pin is the newest stable Xcode 26 minor on the `macos-26` image at the unit's cut (K-7):
+# the U1 branch was cut 2026-11-06, so this section was set from the readme read that day, not from the
+# tasks round's 2026-11-05 read. The image was the same on both days. Xcode 27 is a public preview
+# (runner-images issue 14404) and is not on a standard `macos-26` label.
+ios:
+  # The runner label, the same one `runs-on` names in the workflow (Req 2.8). The comparator does not read it.
+  runner: macos-26
+  # Where the Xcode pin came from. The comparator does not read it.
+  image:
+    version: "20261026.0455.2"
+    os: "macOS 26.6.2 (25G83)"
+    readme: "actions/runner-images images/macos/macos-26-arm64-Readme.md"
+    readAt: "2026-11-06T14:20:08Z"
+    cut: "2026-11-06"
+  statement: "These pins are harness pins, not platform minimums; no green is read as 'runs on the minimum'. The deployment target is the one pin that equals Core Goals' iOS minimum."
+  # The compile target. Equals Core Goals' iOS minimum (Req 2.9).
+  deploymentTarget: "17.0"
+  # What each context reads from the running toolchain and compares, as quoted strings, with these
+  # exact field names (Req 3.11; K-6). `xcode.app` is the app folder: the lane sets DEVELOPER_DIR to
+  # `<xcode.app>/Contents/Developer`, and a missing folder fails the context as `toolchain missing`.
+  toolchain:
+    xcode.version: "26.6"
+    xcode.build: "17F113"
+    xcode.app: "/Applications/Xcode_26.6.app"
+    # From the readme's "Installed SDKs" table (iphonesimulator26.5 is installed for Xcode 26.5 and 26.6).
+    sdk.version: "26.5"
+    # NOT YET MEASURED. The runner-images readme does not state the SDK build number or the Swift
+    # version of Xcode 26.6, and no Xcode 26.x is installed on the author's machine. These four hold
+    # a value that cannot match, so the toolchain match FAILS CLOSED on the first `macos-26` run and
+    # names the observed values. `npx tsx harness/ios/lane.ts --read-toolchain` prints them as pin
+    # lines; the first run's read replaces these four and nothing else. (completion/task-3-instruments.md, row 11)
+    sdk.build: "UNMEASURED: set from the first macos-26 read"
+    swift.driver: "UNMEASURED: set from the first macos-26 read"
+    swift.version: "UNMEASURED: set from the first macos-26 read"
+    swift.build: "UNMEASURED: set from the first macos-26 read"
+  # How the lane builds each `swiftc` invocation (Req 2.6, 2.8). The lane reads these and hard-codes no flag.
+  compile:
+    sdkName: iphonesimulator
+    arch: arm64
+    objectEmission: "-c"
+    wholeModule: "-wmo"
+    libraryParsing: "-parse-as-library"
+    diagnosticStyle: "llvm"
+    # Stage T: the generated files as a module, at the strictest mode an adopter's own code may use.
+    tokens:
+      module: DPHarnessTokens
+      swiftVersion: "6"
+    # Stage P: the probe, a separate module that imports Stage T's module by plain `import`.
+    probe:
+      module: DPHarnessProbe
+      swiftVersion: "6"
+    # Stage C and the T5 baseline: the shipped components at the mode they were written for.
+    components:
+      module: DesignerPunk
+      swiftVersion: "5"
+
 # The Android lane (Spec 129 Task 4; harness/android/**). Read by harness/android/lane.ts and by the comparator.
 # Every value here is a HARNESS pin, not a platform minimum (Req 2.9): a Kotlin compile checks no API level, so no
 # 129 green reads "runs on API 26". The Core Goals minimum is minSdk below, kept equal to it.
