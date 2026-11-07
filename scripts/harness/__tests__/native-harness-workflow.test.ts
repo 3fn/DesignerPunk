@@ -71,7 +71,10 @@ describe.each(ANDROID)('%s: only a resolved build saves the cache', (job) => {
       const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'harness-annot-'));
       try {
         fs.mkdirSync(path.join(dir, 'harness-out'));
-        for (const [name, text] of Object.entries(files)) fs.writeFileSync(path.join(dir, 'harness-out', name), text);
+        for (const [name, text] of Object.entries(files)) {
+          fs.mkdirSync(path.dirname(path.join(dir, 'harness-out', name)), { recursive: true });
+          fs.writeFileSync(path.join(dir, 'harness-out', name), text);
+        }
         return execFileSync('bash', ['-e', '-c', stepNamed(job, 'Verdict annotation').run ?? ''], { cwd: dir, encoding: 'utf8' });
       } finally {
         fs.rmSync(dir, { recursive: true, force: true });
@@ -85,6 +88,9 @@ describe.each(ANDROID)('%s: only a resolved build saves the cache', (job) => {
     });
     it('writes only the infra notice, with host, status and step, when there is infra.json and no compare.txt', () => {
       expect(run({ 'infra.json': INFRA })).toBe('::notice title=harness-infra::repo.maven.apache.org 403 resolve\n');
+    });
+    it('also reads the self-test folder\'s infra.json (the lane --selftest default), when it is the only one', () => {
+      expect(run({ 'selftest/infra.json': INFRA })).toBe('::notice title=harness-infra::repo.maven.apache.org 403 resolve\n');
     });
     it('writes only the verdict when both files exist', () => {
       const out = run({ 'compare.txt': COMPARE, 'infra.json': INFRA });

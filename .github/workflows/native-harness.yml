@@ -311,8 +311,9 @@ jobs:
           if [ -f harness-out/compare.txt ]; then
             line=$(grep '^harness-verdict:' harness-out/compare.txt | tail -n 1 || true)
             if [ -n "$line" ]; then echo "::notice title=harness-verdict::$line"; fi
-          elif [ -f harness-out/infra.json ]; then
-            node -e 'const j = JSON.parse(require("fs").readFileSync("harness-out/infra.json", "utf8")); console.log("::notice title=harness-infra::" + j.host + " " + j.status + " " + j.step);'
+          elif [ -f harness-out/infra.json ] || [ -f harness-out/selftest/infra.json ]; then
+            f=harness-out/infra.json; [ -f "$f" ] || f=harness-out/selftest/infra.json
+            node -e 'const j = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8")); console.log("::notice title=harness-infra::" + j.host + " " + j.status + " " + j.step);' "$f"
           fi
 
       # actions/cache saves only when the job succeeds, and these contexts fail while the generator's output
@@ -421,8 +422,9 @@ jobs:
           if [ -f harness-out/compare.txt ]; then
             line=$(grep '^harness-verdict:' harness-out/compare.txt | tail -n 1 || true)
             if [ -n "$line" ]; then echo "::notice title=harness-verdict::$line"; fi
-          elif [ -f harness-out/infra.json ]; then
-            node -e 'const j = JSON.parse(require("fs").readFileSync("harness-out/infra.json", "utf8")); console.log("::notice title=harness-infra::" + j.host + " " + j.status + " " + j.step);'
+          elif [ -f harness-out/infra.json ] || [ -f harness-out/selftest/infra.json ]; then
+            f=harness-out/infra.json; [ -f "$f" ] || f=harness-out/selftest/infra.json
+            node -e 'const j = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8")); console.log("::notice title=harness-infra::" + j.host + " " + j.status + " " + j.step);' "$f"
           fi
 
       # actions/cache saves only when the job succeeds, and these contexts fail while the generator's output
