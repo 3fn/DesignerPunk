@@ -161,7 +161,7 @@ The full import list is under Available Imports, in the reference part of the In
 
 ### iOS
 
-**Native onboarding is not supported.** The shipped SwiftUI components are reference source, not a build input: they read a theme surface (`@Environment(\.dpTheme)`, `any DesignerPunkTheme`) under names fixed to DesignerPunk's own binding, which your `npx designerpunk generate` now writes into `DesignTokens.ios.swift`; and the package has no Swift package manifest.
+**Native onboarding is not supported.** The shipped SwiftUI components are reference source, not a build input: they read a theme surface (`@Environment(\.dpTheme)`, `any DesignerPunkTheme`) under names fixed to DesignerPunk's own binding, which your `npx designerpunk generate` now writes into `DesignTokens.ios.swift`; and the package has no Swift package manifest. *(corrected 2026-11-07: the claim that `ContainerCardBase.ios.swift` does not parse was removed; .kiro/issues/2026-09-26-native-component-theme-hardcoding.md; prior text at 74d7566f5)*
 
 What the package ships for iOS, and why it does not add up to a target yet:
 - `node_modules/@3fn/core/dist/DesignTokens.ios.swift` is DesignerPunk's **un-themed base snapshot**, generated from DesignerPunk's own configuration, not yours.
@@ -170,7 +170,7 @@ What the package ships for iOS, and why it does not add up to a target yet:
 - `node_modules/@3fn/core/dist/ComponentTokens.ios.swift` is DesignerPunk's **component token tier**. Some of the shipped components read it (`ButtonIcon.ios.swift`, for one), and it refers to `DesignTokens` members, which `DesignTokens.ios.swift` defines.
 - Every colour semantic is a member of the generated theme (`colorActionPrimary` and `colorStructureCanvas` among them) and none is a `DesignTokens` member: read it through `\.dpTheme` or a `<YourName>Themes` instance. The theme has four instances today, base and WCAG in light and dark; a theme you register in `designerpunk.config.ts` adds none yet.
 
-This was checked by reading the source. No iOS build was run. Platform requirements, for reference: **iOS 17.0+** (SwiftUI, UIKit). Where native support stands is in the Native status note at the end of "Platforms".
+This was checked by reading the source. No iOS build was run. Platform requirements, for reference: **iOS 17.0+** (SwiftUI, UIKit). Where native support stands is in the Native status note at the end of "Platforms". *(corrected 2026-11-07: the clause "and the parse failure was reproduced with the Swift compiler's parse step" was removed; .kiro/issues/2026-09-26-native-component-theme-hardcoding.md; prior text at 74d7566f5)*
 
 ### Android
 
