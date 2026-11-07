@@ -84,6 +84,14 @@
 # preflighted token (gh's credential helper) — the OS keychain is explicitly
 # bypassed so the credential that was verified is the credential that pushes.
 #
+# Untracked-paths guard (issue 2026-11-06-complete-task-stages-untracked-paths-outside-parent,
+# Peter 2026-11-06 "4 (b)" / 2026-11-07 "Re: 2, Fix"): before staging, every new (untracked,
+# unignored, or staged-new) path must lie in the allowed set computed by
+# scripts/completion-claims/untracked-guard.ts — the parent's Primary Artifacts in tasks.md, the
+# spec's reviewed docs, the summary doc, --completion-doc paths — or be named by
+# `--add <path> --reason "<why>"` (exact path, written as an `Added-outside-list:` commit trailer
+# and into the PR body). Refusal is non-zero, before any git change. Tracked edits are staged as before.
+#
 # This script NEVER pushes to main, in any mode or failure path:
 #   - it refuses to run on main unless it can create a task branch first,
 #   - it re-asserts current branch != main immediately before commit and push,
@@ -383,6 +391,15 @@ OPTIONS:
                          modes only) — for a checkpoint you know is red. Its
                          use is on the honour system; nothing records it
                          (ballot B-CI § 2.1).
+  --task N               The parent task number (e.g. 12 or 12.2), for the untracked-paths
+                         guard, when it cannot be read from MESSAGE ("Task N…") or the
+                         branch name (task/<spec>-<N>-<slug>).
+  --add PATH             Admit one new untracked path that lies outside the parent's allowed
+                         set (exact path, no globs; repeatable). Requires --reason directly
+                         after it. Written as an `Added-outside-list: PATH — REASON` commit
+                         trailer and into the PR body; the author answers for it like any
+                         out-of-list edit (a claims-pass finding unless a grant covers it).
+  --reason TEXT          Why the preceding --add path is added.
   --dry-run-ci           Standalone diagnostic mode: no MESSAGE, no git/gh
                          mutation. Prints the seven `gh workflow run` dispatch
                          commands it would issue and demonstrates the
@@ -391,6 +408,9 @@ OPTIONS:
   -h, --help             Show this help.
 
 BEHAVIOR NOTES:
+  - Untracked-paths guard: refuses (non-zero, before staging) any new path outside the
+    parent's Primary Artifacts and the spec's reviewed docs unless passed with
+    --add/--reason. Non-spec branches (fix/, chore/) are strict: every new path needs --add.
   - Never pushes to main, in any mode or failure path. Running on main without a
     determinable task branch name refuses before touching git.
   - Credentials: uses $GH_TOKEN / $GITHUB_TOKEN from the environment, else reads
@@ -430,6 +450,8 @@ RUN_VALIDATE=false
 RUN_PARITY=true
 NO_CI_FLAG=false
 DRY_RUN_CI_MODE=false
+TASK_OPT=""
+ADD_ARGS=()   # guard argv fragments: --add PATH --reason TEXT (validated by the guard)
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -445,6 +467,9 @@ while [[ $# -gt 0 ]]; do
     --validate-metadata) RUN_VALIDATE=true; shift ;;
     --skip-parity)       RUN_PARITY=false; shift ;;
     --no-ci)             NO_CI_FLAG=true; shift ;;
+    --task)              TASK_OPT="${2:-}"; shift 2 ;;
+    --add)               ADD_ARGS+=(--add "${2:-}"); shift 2 ;;
+    --reason)            ADD_ARGS+=(--reason "${2:-}"); shift 2 ;;
     --dry-run-ci)        DRY_RUN_CI_MODE=true; shift ;;
     -h|--help)           show_usage; exit 0 ;;
     -*)                  die "Unknown option: $1" "Use --help for usage." ;;
@@ -655,11 +680,45 @@ fi
 
 assert_not_main "stage/commit"
 
+# The untracked-paths guard: nothing is staged until every new path is in the allowed set or
+# named by --add. Runs before `git add -A`, so that call only ever sees allowed new paths.
+# CT_GUARD_TSX (tests): ONE executable path overriding `npx tsx`; CT_GUARD_SCRIPT overrides the guard path.
+if [[ -n "${CT_GUARD_TSX:-}" ]]; then GUARD_RUNNER=("$CT_GUARD_TSX"); else GUARD_RUNNER=(npx tsx); fi
+GUARD_SCRIPT="${CT_GUARD_SCRIPT:-scripts/completion-claims/untracked-guard.ts}"
+[[ -f "$GUARD_SCRIPT" ]] || die "The untracked-paths guard ($GUARD_SCRIPT) is missing — refusing to stage without it." \
+  "Nothing was staged, committed, or pushed. Restore the file (it ships with this tool)."
+GUARD_ENTRIES="$( {
+  git -c core.quotepath=off ls-files --others --exclude-standard | sed $'s/^/U\t/'
+  git -c core.quotepath=off diff --cached --name-only --diff-filter=A | sed $'s/^/U\t/'
+  git -c core.quotepath=off ls-files --deleted | sed $'s/^/D\t/'
+  git -c core.quotepath=off diff --cached --name-only --diff-filter=D | sed $'s/^/D\t/'
+} )"
+GUARD_CMD=( "${GUARD_RUNNER[@]}" "$GUARD_SCRIPT" --repo-root "$REPO_ROOT" --message "$MESSAGE" --branch "$TASK_BRANCH" --mode "$MODE" )
+[[ -n "$SPEC_DIR_OPT" ]] && GUARD_CMD+=(--spec-dir "$SPEC_DIR_OPT")
+[[ -n "$TASK_OPT" ]] && GUARD_CMD+=(--task "$TASK_OPT")
+for d in ${COMPLETION_DOCS[@]+"${COMPLETION_DOCS[@]}"}; do GUARD_CMD+=(--completion-doc "$d"); done
+GUARD_CMD+=( ${ADD_ARGS[@]+"${ADD_ARGS[@]}"} )
+GUARD_OUT=""
+if ! GUARD_OUT="$(printf '%s\n' "$GUARD_ENTRIES" | "${GUARD_CMD[@]}")"; then
+  exit 1
+fi
+ADDED_TRAILERS=""
+while IFS=$'\t' read -r _kind a_path a_reason; do
+  [[ "$_kind" == "ADDED" ]] || continue
+  warn "--add $a_path (outside allowed set): $a_reason"
+  ADDED_TRAILERS+="Added-outside-list: $a_path — $a_reason"$'\n'
+done <<< "$GUARD_OUT"
+ADDED_TRAILERS="${ADDED_TRAILERS%$'\n'}"
+
 if ! git diff --quiet || ! git diff --cached --quiet || [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
   say "Staging all changes..."
   git add -A
   say "Committing: $MESSAGE"
-  git commit -m "$MESSAGE"
+  if [[ -n "$ADDED_TRAILERS" ]]; then
+    git commit -m "$MESSAGE" -m "$ADDED_TRAILERS"
+  else
+    git commit -m "$MESSAGE"
+  fi
 else
   if [[ -z "$(git log --oneline "origin/$PROTECTED_BRANCH..HEAD" 2>/dev/null)" ]]; then
     die "Nothing to do: working tree is clean and '$TASK_BRANCH' has no commits ahead of origin/$PROTECTED_BRANCH."
@@ -767,6 +826,10 @@ TASK_FIELD="(see title)"
 UNIT_FIELD="$UNIT_OPT"
 [[ -n "$UNIT_FIELD" ]] || UNIT_FIELD="(single-parent unit — see Task)"
 
+# Every Added-outside-list trailer on the branch (earlier checkpoints included), for the reviewer.
+ADDED_OUTSIDE="$(git log --format=%B "origin/$PROTECTED_BRANCH..HEAD" 2>/dev/null | grep -E '^Added-outside-list: ' | sed -E 's/^Added-outside-list: //' | paste -sd ';' - | sed 's/;/; /g' || true)"
+[[ -n "$ADDED_OUTSIDE" ]] || ADDED_OUTSIDE="none"
+
 PR_BODY="**Spec**: $SPEC_DIR
 **Task**: $TASK_FIELD
 **Unit**: $UNIT_FIELD
@@ -774,6 +837,7 @@ PR_BODY="**Spec**: $SPEC_DIR
 **Completion docs**:
 $(printf -- '- %s\n' "${COMPLETION_DOCS[@]}")
 **Validation**: $VALIDATION_NOTE
+**Added outside list**: $ADDED_OUTSIDE
 
 ---
 Squash-merge only — the PR title becomes the \`$PROTECTED_BRANCH\` commit subject. The task is complete at MERGE (ballot 125-A, Item 1d)."
