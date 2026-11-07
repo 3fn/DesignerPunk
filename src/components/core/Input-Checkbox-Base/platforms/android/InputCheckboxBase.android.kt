@@ -43,7 +43,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material.ripple.ripple
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -471,7 +471,7 @@ fun InputCheckboxBase(
                     onClick = { onCheckedChange(!checked) },
                     interactionSource = interactionSource,
                     // @see Requirement 7.3 - Material ripple effect using blend.pressedDarker
-                    indication = rememberRipple(
+                    indication = ripple(
                         bounded = true,
                         color = theme.color_feedback_select_border_rest.copy(
                             alpha = BlendTokenValues.pressedDarker

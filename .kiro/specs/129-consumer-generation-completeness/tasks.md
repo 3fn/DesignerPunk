@@ -955,10 +955,10 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [x] 12.1 The two-sided theme-read guard
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 4.4_
-  - [ ] 12.2 Row 16; the row 15 and row 2 state checks
+  - [x] 12.2 Row 16; the row 15 and row 2 state checks
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 4.6, 4.7, 4.10_
-  - [ ] 12.3 Ripple, the dead-import guard, row 14's outcome lines for A5 and A7
+  - [x] 12.3 Ripple, the dead-import guard, row 14's outcome lines for A5 and A7
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Lina (Sonnet)
     - _Requirements: 8.2, 8.4_
 

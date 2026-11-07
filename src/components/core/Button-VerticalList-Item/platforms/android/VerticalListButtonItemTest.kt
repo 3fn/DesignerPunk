@@ -480,7 +480,7 @@ class VerticalListButtonItemTest {
             )
         }
         
-        // Perform click - ripple effect is applied via rememberRipple()
+        // Perform click - ripple effect is applied via ripple()
         composeTestRule.onNodeWithTag("ripple-button").performClick()
         
         // Verify click was registered (ripple visual verification requires screenshot testing)

@@ -217,3 +217,12 @@ Spec 129's requirements (#658 at `0a2534311`, Requirement 8) split this record's
 - **The planned re-rule target is corrected.** The PR that closes the last web item re-rules the native half to `path:.kiro/specs/129-consumer-generation-completeness/completion/claims-pass.md`, per E2 (Process-Spec-Planning § "Before Formalizing: Records That Name the Spec"), not to `requirements.md` as the Trigger line says. At 129's claims pass, the 129 items close and the 132 items are re-ruled to Spec 132's path once its directory exists.
 
 *Signed: Lina, 2026-11-05.*
+
+## Spec 129's items fixed in U7 (2026-11-07, Lina, owner, rule 9)
+
+On branch `task/129-12-component-theme-reads` (Spec 129 Task 12, U7; the PR number is in `completion/task-12-completion.md`):
+
+- **A5, A7 and A6's ripple part**: `rememberRipple(...)` becomes `ripple(...)` at `ButtonIcon.android.kt`, `InputCheckboxBase.android.kt` and `InputRadioBase.android.kt`, and each import becomes `androidx.compose.material.ripple.ripple`. The three list entries tagged here (`harness-android-components.tsv`) are removed in the same diff, and `harness-android-components` accepts them at the unit's head H (the run is in the completion doc). The dead `rememberRipple` import in `VerticalListButtonItem.android.kt` is removed, and `AndroidRememberRipple.guard.test.ts` fails on one in any Android component source. Data verifies on this record.
+- **Moved to Spec 132 (D5, D6)**: A3, I1, I2, I3, A1, A2, A4 and A6's non-ripple parts (Requirement 8.4). Nothing in 129 accepts them. They stay open here, and the Trigger line is unchanged until the claims pass re-rules the native half.
+
+*Signed: Lina, 2026-11-07.*
