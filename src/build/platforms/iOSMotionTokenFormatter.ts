@@ -84,6 +84,15 @@ export class iOSMotionTokenFormatter {
       lines.push('            let progress = seg.progress + (next.progress - seg.progress) * frac');
       lines.push('            return value.scaled(by: progress)');
       lines.push('        }');
+      lines.push('        // CustomAnimation is Hashable, and a tuple array is not: compare and hash the numbers (Spec 129 row 4).');
+      lines.push('        static func == (lhs: PiecewiseLinearEasing, rhs: PiecewiseLinearEasing) -> Bool {');
+      lines.push('            lhs.duration == rhs.duration && lhs.stops.count == rhs.stops.count');
+      lines.push('                && zip(lhs.stops, rhs.stops).allSatisfy { $0.time == $1.time && $0.progress == $1.progress }');
+      lines.push('        }');
+      lines.push('        func hash(into hasher: inout Hasher) {');
+      lines.push('            hasher.combine(duration)');
+      lines.push('            for stop in stops { hasher.combine(stop.time); hasher.combine(stop.progress) }');
+      lines.push('        }');
       lines.push('    }');
       lines.push('    ');
     }
