@@ -4,7 +4,12 @@
 **Drafted by**: Thurgood (Civitas steward; maintainer of the checks this measure specifies; owner and profile author of Task-Completion-Protocol's `#branch-and-pr-conventions` unit, `canonical/operative-sets/task-completion-protocol.yaml` L9–10), at Peter's direction. Peter's words, recorded with `date -u` at receipt (orchestrator relay; **UNVERIFIED** beyond the relay):
 - 2026-11-07T17:00:13Z: *"yes, ratify; and scope the check"*.
 - 2026-11-07T17:33:23Z: *"Re: Decision 1, Yes"*. The orchestrator's summary of what that approves: the format ballot (this one), and one workflow with two jobs. One job is merge-hold: advisory, promoted after N clean runs that parsed a marker. The other is law-ratified: required once a test PR shows it red, with the edit-kind presence limb.
-**Status**: **DRAFT** — not ratified. No edit site below is applied. A merge of this file's PR ratifies nothing; only Peter's dated words in this Status line do.
+**Status**: **RATIFIED (Peter, 2026-11-07T17:59:15Z)**. Peter's words, verbatim: "Re: 2, Ratified. F-1, 5; F-2, Yes; F-3, Yes". The orchestrator recorded them, with the time from `date -u` at receipt, before this PR (#722) merged. "2" is this ballot in the orchestrator's list of three PRs. The fork rulings, read against § 5:
+- **F-1:** N = 5 clean runs.
+- **F-2:** (a) every file under `canonical/agents/**`, frontmatter included, needs an edit-kind line.
+- **F-3:** (a) merge-hold checks presence, citation and the quoted words found in the cited source.
+
+*(Prior text at `b016a237d`: "**DRAFT** — not ratified. No edit site below is applied. A merge of this file's PR ratifies nothing; only Peter's dated words in this Status line do.")*
 **Owner**: Thurgood.
 **Required reviewer**: **Stacy**. She is the C1 confirmer of `#branch-and-pr-conventions` (L10), the census reader, the reader of governance-edit-kind lines, and the specifier of the checks' falsification fixtures (the instrument split, Q5). Her cross-read of the merge-hold scope (2026-11-07) proposed the law-ratified job and the clean-run promotion.
 **Reviewers**: **Peter** ratifies (Task-Completion-Protocol is identity law, and § 6's acts are his).
