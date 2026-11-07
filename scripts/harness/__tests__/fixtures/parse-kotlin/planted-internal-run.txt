@@ -1,0 +1,61 @@
+#harness-fixture toolchain: Temurin OpenJDK 17.0.21+9 (macOS arm64), Gradle 9.8.2, AGP 9.5.0, Kotlin 2.4.21 (Compose compiler plugin 2.4.21), Compose BOM 2026.09.00, compileSdk 36, minSdk 26
+#harness-fixture source: the first real run of harness/android/lane.ts --selftest, 2026-11-06 (Data), whole log. Rewritten: the probe source folder -> /work/probe/src; the problems-report URL -> /work/harness/android/build/reports/problems/problems-report.html. Nothing else changed. Gradle printed `> Task :probe:compileDebugKotlin FAILED` BEFORE that task's own output (`probe: read 2 of 2 ...` and the `e:` line), the opposite of the order in the 2026-11-04 logs; parse-kotlin.ts reads this `e:` line as unattributed.
+#harness-fixture exit: 1
+#harness-fixture roots: gen=/work/fixture pkg=/work/no-package probe=/work/probe/src
+> Task :tokens:preBuild UP-TO-DATE
+> Task :tokens:preDebugBuild UP-TO-DATE
+> Task :tokens:generateDebugResources UP-TO-DATE
+> Task :tokens:packageDebugResources UP-TO-DATE
+> Task :tokens:processDebugNavigationResources UP-TO-DATE
+> Task :tokens:parseDebugLocalResources UP-TO-DATE
+> Task :tokens:generateDebugRFile UP-TO-DATE
+> Task :probe:preBuild UP-TO-DATE
+> Task :probe:preDebugBuild UP-TO-DATE
+> Task :probe:generateDebugResources UP-TO-DATE
+> Task :probe:packageDebugResources UP-TO-DATE
+> Task :probe:processDebugNavigationResources UP-TO-DATE
+> Task :probe:parseDebugLocalResources UP-TO-DATE
+> Task :probe:generateDebugRFile UP-TO-DATE
+> Task :tokens:javaPreCompileDebug UP-TO-DATE
+
+> Task :tokens:compileDebugKotlin
+harness-sources: :tokens gen=1
+harness-toolchain: java.version=17.0.21
+harness-toolchain: gradle.version=9.8.2
+harness-toolchain: kotlin.version=2.4.21
+harness-toolchain: agp.version=9.5.0
+harness-toolchain: compose.bom.version=2026.09.00
+
+> Task :tokens:compileDebugJavaWithJavac NO-SOURCE
+> Task :tokens:bundleLibCompileToJarDebug
+
+> Task :probe:compileDebugKotlin FAILED
+probe: read 2 of 2 index names (2 reads in total)
+e: file:///work/probe/src/ProbeTokens.kt:21:24 Cannot access 'val space_planted: Dp': it is internal in 'com.designerpunk.tokens.DesignTokens'.
+
+[Incubating] Problems report is available at: file:///work/harness/android/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':probe:compileDebugKotlin' (registered by plugin 'com.android.internal.library').
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Kotlin compiler: INVISIBLE_REFERENCE
+       Kotlin compiler error
+         Cannot access 'val space_planted: Dp': it is internal in 'com.designerpunk.tokens.DesignTokens'.
+         Location: /work/probe/src/ProbeTokens.kt:21
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.8.2/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 1s
+14 actionable tasks: 3 executed, 11 up-to-date
