@@ -401,7 +401,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
     - Appends the shared module, the per-run check, the product and provider reads and the `checks` route to `task-4-instruments.md` under `## Found later` as `unlisted` (Start Up Tasks item 8; `[STACY TASKS R4]` Low-1)
     - _Requirements: 2.7, 4.2_
 
-- [ ] 5. Workflow wiring, baselines and the fault run (U1)
+- [x] 5. Workflow wiring, baselines and the fault run (U1)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Thurgood (Sonnet) · Kenya (Sonnet) — iOS job steps · Data (Sonnet) — Android job steps
   **Traces**: Req 1.4 (its list rule), 2.5, 2.7 (the shared module), 2.10, 2.11, 2.12, 2.13, 2.14, 3.5 (b), 4.1 (the shared module), 4.8 · design § 3 ("Wiring"); § 4 ("The shared harness module"; amendment 3)
@@ -453,20 +453,20 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Unit 1: The compile harness (129)"` opens U1's PR (body: Spec, Task 1–5, Agent, the completion docs, validation, `**Consulted**:`); report the URL; STOP.
 
-  - [ ] 5.1 The workflow: jobs, labels, triggers, artifact hand-off
+  - [x] 5.1 The workflow: jobs, labels, triggers, artifact hand-off
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet), Kenya (Sonnet), Data (Sonnet)
     - Starts after the stub is on `main`: the first commit gives the unit branch its own copy of the file, and the probe dispatch runs against it before any later harness run is cited (§ "Unit preconditions"; amended 2026-11-06, tasks amendment 2)
     - _Requirements: 2.5, 2.10, 2.11, 2.12_
-  - [ ] 5.2 The first full run; baseline lists with tags; the protected set filled
+  - [x] 5.2 The first full run; baseline lists with tags; the protected set filled
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - Lina files the component-repair record from this run before the component lists commit, and entries no other root record carries are tagged to it (§ "Unit preconditions"; amended 2026-11-07)
     - *(Tasks amendment 5, under Peter's "a; blend entries fine", received 2026-11-07T02:04:38Z (`evidence/2026-11-07-peter-ruling-component-repair-record-timing.md`): "a". Prior text at `34ea1bf48`, here and in § "Unit preconditions": the record was filed "after U1 merges" from U1's committed lists, which left 54 iOS and 185 Android entries of the first full run with no root record to tag, against this parent's baseline criterion. Lina's lines, spliced byte for byte, `[LINA R4]`.)*
     - The eight entries on `src/blend/ThemeAwareBlendUtilities.*` tag to `.kiro/issues/2026-06-24-blend-system-architecture-and-oklch-alignment.md` (Ada's; Trigger `path:.kiro/specs/133-color-track/requirements.md`). They outlast 129's closeout, as the component-repair record's go on to Spec 132 *(tasks amendment 5, under Peter's "a; blend entries fine", received 2026-11-07T02:04:38Z (`evidence/2026-11-07-peter-ruling-component-repair-record-timing.md`): "blend entries fine")*
     - _Requirements: 1.4, 2.14, 3.5, 4.8_
-  - [ ] 5.3 The forced-failure dispatch; the stability script and its first record
+  - [x] 5.3 The forced-failure dispatch; the stability script and its first record
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - _Requirements: 2.11, 2.12_
-  - [ ] 5.4 The shared harness module, `scripts/harness/native-rules.ts`, and its test; the run file's `checks` and the comparator's `check` class *(added 2026-11-06, tasks amendment 3, under Peter's "B Thurgood", received 2026-11-06T23:31:58Z; the `check` class added in the review fold, placed here on `[KENYA R4 addendum]` item 4)*
+  - [x] 5.4 The shared harness module, `scripts/harness/native-rules.ts`, and its test; the run file's `checks` and the comparator's `check` class *(added 2026-11-06, tasks amendment 3, under Peter's "B Thurgood", received 2026-11-06T23:31:58Z; the `check` class added in the review fold, placed here on `[KENYA R4 addendum]` item 4)*
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - Done first among the subtasks still open: it lands on the unit branch before 3.4 and 4.3 start, because both import it, and so before Tasks 3 and 4 complete and before 5.2's first full run
     - Written from design § 4's text, not from the generator or the probes. Ada is consulted on every rule; Kenya reviews the Swift rules and Data the Kotlin ones, each recorded in this subtask's completion doc
