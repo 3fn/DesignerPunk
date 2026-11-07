@@ -30,7 +30,7 @@ import {
   readRecord,
 } from '../merge-hold';
 
-const FIX = path.join(__dirname, '..', '__fixtures__', 'merge-hold');
+const FIX = path.join(__dirname, '..', '__merge-hold-fixtures__');
 const read = (n: string): string => fs.readFileSync(path.join(FIX, n), 'utf8');
 
 const WORDS = 'Re: 2, Ratified. F-1, 5; F-2, Yes; F-3, Yes';
