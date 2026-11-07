@@ -39,7 +39,7 @@
 
 ## When a governance edit needs a ballot — three kinds
 
-*(Ballot 2026-10-18-governance-edit-kinds.)* Every edit to a **governance path** — `governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, and the prose of `canonical/agents/**` — is exactly one kind, named in the PR body (Task-Completion-Protocol § "Branch and PR Conventions"). **The kinds decide whether a ballot is needed, never who merges**: every PR on these paths stays Peter-merged under the carve-out. "Governance text" includes every one of these paths, and an edit to a seat's write scope or role is always LAW.
+*(Ballot 2026-10-18-governance-edit-kinds.)* Every edit to a **governance path** — `governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, and every file under `canonical/agents/**`, frontmatter included *(corrected 2026-11-07 to match Task-Completion-Protocol L123 as amended by ballot 2026-11-07-merge-hold-and-law-ratified-checks, F-2 (Peter, 2026-11-07T17:59:15Z, "F-2, Yes"), applied in #725; prior text at `91a8d2726`: "the prose of `canonical/agents/**`")* — is exactly one kind, named in the PR body (Task-Completion-Protocol § "Branch and PR Conventions"). **The kinds decide whether a ballot is needed, never who merges**: every PR on these paths stays Peter-merged under the carve-out. "Governance text" includes every one of these paths, and an edit to a seat's write scope or role is always LAW.
 
 | Kind | What it is | Authority | Ratification |
 |---|---|---|---|
