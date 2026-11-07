@@ -35,11 +35,12 @@
  *   2. Attribution is by the task header the diagnostic was printed under, never by its path
  *      (`:tokens` and `:dp` report the same generated paths). The header in force is the latest
  *      `> Task <path>` line with no outcome suffix; a Gradle line of any other kind, or a task line
- *      with an outcome suffix (`FAILED`, `UP-TO-DATE`, …), ends it. One exception (2026-11-06): a
- *      `FAILED` line that is the FIRST line to name its compile task stays in force, because Gradle
- *      prints a failing task's `FAILED` line before its output when no earlier chunk of that output
- *      was printed (the planted-internal run). After a task has printed a header, its `FAILED` line
- *      ends the output, as in the 2026-11-04 logs. A diagnostic printed under no
+ *      with an outcome suffix (`FAILED`, `UP-TO-DATE`, …), ends it. One exception (2026-11-06,
+ *      widened 2026-11-07): a `FAILED` line of a compile task keeps that task in force, because Gradle
+ *      prints a failing task's `FAILED` line before some of its output: with no header before it (the
+ *      planted-internal run) or after the task's header was already printed (the first CI run, a cold
+ *      one, where :tokens' `FAILED` line and then its 291 `e:` lines came after :dp's header). The
+ *      2026-11-04 order (header, output, `FAILED`, nothing after) reads the same. A diagnostic printed under no
  *      header in force, or under a task that is not one of the three compiles, is `unattributed`.
  *      A diagnostic is only ever read under the header directly above it. When a build interleaves
  *      two tasks' output, Gradle's plain console is expected to repeat a task's header in front of
@@ -163,8 +164,6 @@ export function parseKotlin(input: KotlinParseInput): KotlinParseResult {
 
   /** The compile whose task header is in force, or null when none is. */
   let current: KotlinCompileId | null = null;
-  /** The compiles any `> Task` line has named so far: a `FAILED` line is read differently the first time (rule 2). */
-  const mentioned = new Set<KotlinCompileId>();
 
   const lines = log.split(/\r?\n/);
   let i = 0;
@@ -180,15 +179,16 @@ export function parseKotlin(input: KotlinParseInput): KotlinParseResult {
         if (suffix === 'FAILED') slot.failed = true;
         else if (suffix === undefined || suffix === 'UP-TO-DATE' || suffix === 'FROM-CACHE') slot.succeeded = true;
       }
-      // A header with no outcome suffix opens output; a suffixed line reports a task's end, with one exception.
-      // Gradle can print a failing task's `FAILED` line BEFORE that task's own output (recorded 2026-11-06, the
-      // planted-internal run: `> Task :probe:compileDebugKotlin FAILED`, then `probe: read ...`, then the `e:` line).
-      // When the `FAILED` line is the first line to name a compile, no earlier chunk of its output exists, so the
-      // output after it is that task's. A task that already printed a header ends at its `FAILED` line, as in the
-      // 2026-11-04 logs (header, output, `FAILED`).
-      const firstMention = id !== null && !mentioned.has(id);
-      if (id !== null) mentioned.add(id);
-      current = suffix === undefined || (suffix === 'FAILED' && firstMention) ? id : null;
+      // A header with no outcome suffix opens output. So does a `FAILED` line: Gradle prints a failing compile task's
+      // `FAILED` line BEFORE some of that task's output, and the `e:` lines follow it. Recorded 2026-11-06 (the
+      // planted-internal run: `> Task :probe:compileDebugKotlin FAILED`, then `probe: read ...`, then the `e:` line,
+      // with no header before it) and 2026-11-07 (the first CI run, a cold one: `> Task :tokens:compileDebugKotlin`
+      // and `> Task :dp:compileDebugKotlin` headers, then `> Task :tokens:compileDebugKotlin FAILED` and :tokens' 291
+      // `e:` lines after it, then a second `:dp` header). In the 2026-11-04 logs the `FAILED` line came after the output
+      // and nothing followed it, so a `FAILED` line that keeps its task in force reads all three orders alike. Any other
+      // suffix (`UP-TO-DATE`, `FROM-CACHE`, `SKIPPED`, ...) reports a task's end, and a Gradle line of any kind ends the
+      // output.
+      current = suffix === undefined || suffix === 'FAILED' ? id : null;
       i += 1;
       continue;
     }
