@@ -22,19 +22,19 @@ diagnostics by the `> Task` header.
 Pins: `harness/pins.yaml` § `android` and `gradle/libs.versions.toml` carry the same values; the lane prints what Gradle
 resolved (`harness-toolchain:` lines) and the comparator fails on a difference. They are harness pins, not minimums.
 
-## Status (2026-11-06)
+## Status (2026-11-07)
 
-First local runs (Temurin 17.0.21+9, Gradle 9.8.2 from the committed wrapper, Android SDK platform 36, macOS arm64):
-- The build configures and the one invocation runs. `:tokens` compiles the 3 generated files and fails with the generator's
-  errors; `:probe` is skipped by Gradle while `:tokens` fails (the lane prints `probe: blocked (:tokens not compiled)`); `:dp`
-  compiles 41 package files and the 3 generated files and fails. The five toolchain fields Gradle printed equal the pins.
-- `lane.ts --selftest`: `:probe` gives the one planted-`internal` error, but the self-test reports FAIL because
-  `parse-kotlin.ts` reads that `e:` line as unattributed. Gradle printed the task's `FAILED` line before its output.
-  The recorded log is `scripts/harness/__tests__/fixtures/kotlin/planted-internal-run.txt`.
+Run locally with Temurin 17.0.21+9, Gradle 9.8.2 from the committed wrapper, Android SDK platform 36, macOS arm64.
 
-Build-script lines that were resting on training data and are now confirmed by that run: `setSource(files(...))` on
-`KotlinCompile`, `res.srcDir(...)` in AGP 9, `androidComponents.pluginVersion`, and the `kotlinCompilerClasspath` and
-`debugCompileClasspath` configuration names.
+- **The lane** configures and runs the one invocation. On a real packed install the generator's output does not compile yet:
+  `:tokens` fails with the generator's errors, Gradle skips `:probe`, the lane prints `probe: blocked (:tokens not compiled)`
+  and writes empty `checks`; `:dp` compiles 41 package files and the generated files and fails.
+- **On a hand-written generated tree that does compile** (`:tokens` and `:probe` succeed), the probe prints its four count
+  lines and the lane writes them, and the per-run instance check, into the token context's `checks`.
+- **`lane.ts --selftest`** passes: `:probe` gives the one planted-`internal` error.
+- The probe takes every theme-instance, family, provider and product-token rule from `scripts/harness/native-rules.ts` (it keeps no copy).
+- The count lines are printed by `:probe`'s `compileDebugKotlin` `doFirst`, which never throws: the lane reads them into `checks`
+  and the comparator fails the context when `n` differs from `m`.
 
 The wrapper (`gradlew`, `gradlew.bat`, `gradle/wrapper/gradle-wrapper.jar`) was generated with
 `gradle wrapper --gradle-version 9.8.2 --gradle-distribution-sha256-sum 21bd5da2de49b642904077f38c0efdc7778e92b3ed0889392dca61b97e389607`.

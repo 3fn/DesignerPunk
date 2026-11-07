@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 /**
- * lane.ts — the Android compile lane's runner (Spec 129 Task 4, subtask 4.1; design.md § 2).
+ * lane.ts — the Android compile lane's runner (Spec 129 Task 4, subtasks 4.1 and 4.3; design.md §§ 2 and 3).
  * Owner: Data. Both Android contexts (`harness-android-tokens`, `harness-android-components`) run this
  * once and compare its two run files; the workflow steps are Task 5's.
  *
@@ -13,7 +13,11 @@
  *             from `harness/android/`, once. `gradle.properties` supplies the plain console and no parallelism.
  *   report    print `probe: blocked (:tokens not compiled)` when :tokens did not compile and the probe did not run;
  *             read the toolchain and the counts Gradle printed; write `run-<context>.json` for each context, for
- *             `scripts/harness/compare.ts --run`.
+ *             `scripts/harness/compare.ts --run`. The token context's `checks` hold each probe count line
+ *             (`n` against `m`) and the per-run instance check; they are empty while `:tokens` fails. The lane
+ *             never stops on a toolchain pin mismatch: it records the versions and the comparator fails the
+ *             context as `toolchain`. It stops before Gradle, writing no run file, only on a setup failure
+ *             (a duplicate native file name, a bad harness config, a missing toolchain).
  *
  * Where the generated Kotlin is: the manifest's `platformOutputs.android`, which consumer.ts read from the
  * consumer's config (`platforms.android.output`, else `output`). Nothing here names a path.
@@ -27,8 +31,7 @@
  *   The compiled counts in the run files are the counts Gradle printed (`harness-sources:`), the number it gave
  *   the compiler, not the number this script listed.
  *
- * Status: written without a Gradle toolchain (Peter has not approved the downloads). `--prepare-only` has been
- * run against a fake consumer; `run` and `--selftest` have never run.
+ * Status: see README.md.
  *
  * Usage:
  *   npx tsx harness/android/lane.ts --consumer <root> --work <dir> [--prepare-only] [--pins <file>]
@@ -43,14 +46,17 @@ import * as path from 'path';
 import { spawnSync } from 'child_process';
 import * as yaml from 'js-yaml';
 import {
+  checkThemeInstances,
   generateProbe,
   probeConfigFromManifest,
   readProbeIndex,
-  readProductTokenCategories,
+  readProductFiles,
   writeProbe,
+  type ProbeConfig,
 } from '../../scripts/harness/probe-kotlin';
 import { parseKotlin } from '../../scripts/harness/parse-kotlin';
-import type { RunFile } from '../../scripts/harness/compare';
+import { checkHarnessConsumerConfig } from '../../scripts/harness/native-rules';
+import type { RunCheck, RunFile } from '../../scripts/harness/compare';
 
 // ─── Constants ───────────────────────────────────────────────────────────────────────────────────
 
@@ -108,6 +114,17 @@ export function duplicateBaseNames(paths: readonly string[]): Map<string, string
     byName.set(base, [...(byName.get(base) ?? []), p]);
   }
   return new Map([...byName].filter(([, list]) => list.length > 1));
+}
+
+/**
+ * Throws, naming both paths, when two files of the set share a base name (a setup failure: the lane stops before
+ * Gradle and writes no run file). The package's root token files are left out by `packagedKotlin` before this runs.
+ */
+export function assertOneCopyPerName(paths: readonly string[]): void {
+  const dupes = duplicateBaseNames(paths);
+  if (dupes.size === 0) return;
+  const [name, list] = [...dupes][0];
+  throw new LaneError('prepare', `:dp would compile ${dupes.size} file name(s) twice; first: ${name} at ${list.join(' and ')}`);
 }
 
 function walkKotlin(dir: string): string[] {
@@ -219,6 +236,10 @@ export interface Plan {
   floors: { gen: number; pkg: number };
   roots: { gen: string; pkg: string; probe: string };
   probeReads: { indexNames: number; totalReads: number };
+  /** The probe's input config (the manifest's name and themes), for the per-run instance check. */
+  config: ProbeConfig;
+  /** The generated Kotlin, all files joined in path order: what the per-run instance check parses. */
+  generatedText: string;
 }
 
 const byCodePoint = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
@@ -265,11 +286,7 @@ export function prepare(options: PrepareOptions): Plan {
   const pkgAbsolute = pkgRelative.map((r) => path.join(pkgRoot, r));
 
   // One copy of each native file name in :dp's set.
-  const dupes = duplicateBaseNames([...pkgAbsolute, ...genAbsolute]);
-  if (dupes.size > 0) {
-    const [name, list] = [...dupes][0];
-    throw new LaneError('prepare', `:dp would compile ${dupes.size} file name(s) twice; first: ${name} at ${list.join(' and ')}`);
-  }
+  assertOneCopyPerName([...pkgAbsolute, ...genAbsolute]);
 
   const iconRes = path.join(pkgRoot, ICON_RES);
   if (!fs.existsSync(iconRes) || !fs.statSync(iconRes).isDirectory()) throw new LaneError('prepare', `Icon-Base res/ is not a folder: ${iconRes}`);
@@ -278,10 +295,14 @@ export function prepare(options: PrepareOptions): Plan {
   const laneDir = path.resolve(work, 'lane');
   fs.rmSync(laneDir, { recursive: true, force: true });
   fs.mkdirSync(laneDir, { recursive: true });
+  const config = probeConfigFromManifest(manifest);
+  // A check on our own fixture config (design § 4, "The shared harness module"), not a refusal of a consumer.
+  const configProblems = checkHarnessConsumerConfig(config.themes);
+  if (configProblems.length > 0) throw new LaneError('prepare', configProblems.join('; '));
   const probe = generateProbe({
     index: readProbeIndex(path.join(consumer, manifest.tokenIndex)),
-    config: probeConfigFromManifest(manifest),
-    productTokens: readProductTokenCategories(path.join(consumer, manifest.productTokens)),
+    config,
+    productFiles: readProductFiles(path.join(consumer, manifest.productTokens)),
   });
   const probeFiles = writeProbe(laneDir, probe);
 
@@ -293,7 +314,7 @@ export function prepare(options: PrepareOptions): Plan {
   write('dp.res', [iconRes]);
 
   log(`harness-android: invocation: (cd harness/android && HARNESS_LANE_DIR=${laneDir} ./gradlew ${GRADLE_ARGS.join(' ')})`);
-  log(`harness-android: gen files given to the compiler: ${genAbsolute.length} (floor ${floors.gen}); pkg files: ${pkgAbsolute.length} (floor ${floors.pkg}); probe files: ${probeFiles.length} (${probe.expectedIndexNames} index names, ${probe.totalReads} reads)`);
+  log(`harness-android: gen files given to the compiler: ${genAbsolute.length} (floor ${floors.gen}); pkg files: ${pkgAbsolute.length} (floor ${floors.pkg}); probe files: ${probeFiles.length} (index ${probe.groups.index.m}, instances ${probe.groups.instances.m}, product ${probe.groups.product.m}, provider ${probe.groups.provider.m})`);
   log('harness-android: :dp file order (package files first, then generated files, each sorted by path):');
   for (const f of [...pkgAbsolute, ...genAbsolute]) log(`  ${f}`);
 
@@ -303,7 +324,9 @@ export function prepare(options: PrepareOptions): Plan {
     pkgAbsolute,
     floors,
     roots: { gen: genRoot, pkg: pkgRoot, probe: path.join(laneDir, 'src') },
-    probeReads: { indexNames: probe.expectedIndexNames, totalReads: probe.totalReads },
+    probeReads: { indexNames: probe.groups.index.m, totalReads: probe.totalReads },
+    config,
+    generatedText: genAbsolute.map((f) => fs.readFileSync(f, 'utf8')).join('\n'),
   };
 }
 
@@ -329,18 +352,49 @@ export function runGradle(androidDir: string, laneDir: string, args: readonly st
   return { log: result.stdout, exitCode: result.status ?? 1 };
 }
 
+/** The four count lines `:probe` prints, as `checks` names (design § 3, "The probe's count lines and the run file's `checks`"). */
+export const COUNT_LINES = [
+  { name: 'probe: read index names', pattern: /^probe: read (\d+) of (\d+) index names\b/m },
+  { name: 'probe: instances read', pattern: /^probe: instances read (\d+) of (\d+)\s*$/m },
+  { name: 'probe: product read', pattern: /^probe: product read (\d+) of (\d+)\s*$/m },
+  { name: 'probe: provider read', pattern: /^probe: provider read (\d+) of (\d+)\s*$/m },
+] as const;
+
+/**
+ * The `harness-android-tokens` run file's `checks`: each count line the probe printed (`ok` when `n` equals `m`) and the
+ * per-run instance check. While `:tokens` did not compile the probe did not run, the blocked line stands in, and the
+ * array is empty. When `:tokens` compiled and a count line is missing, that is a failing check (it fails closed: a probe
+ * that printed no count cannot read as green).
+ */
+export function buildChecks(plan: Plan, run: GradleRun): RunCheck[] {
+  const parsed = parseKotlin({ log: run.log, exitCode: run.exitCode, roots: plan.roots });
+  if (parsed.compiles[0].outcome !== 'succeeded') return [];
+  const checks: RunCheck[] = [];
+  for (const { name, pattern } of COUNT_LINES) {
+    const m = pattern.exec(run.log);
+    if (m === null) checks.push({ name, ok: false, detail: 'the probe printed no such count line' });
+    else checks.push({ name, ok: m[1] === m[2], detail: `${m[1]} of ${m[2]}` });
+  }
+  const instances = checkThemeInstances(plan.generatedText, plan.config);
+  checks.push({ name: 'theme instances', ok: instances.ok, detail: instances.detail });
+  return checks;
+}
+
 export function buildRunFiles(plan: Plan, run: GradleRun): Record<(typeof CONTEXTS)[number], RunFile> {
   const counts = parseSourceCounts(run.log);
   const toolchain = parseToolchain(run.log);
+  // The lane records the versions it ran and never stops on a pin mismatch: the comparator fails the context as `toolchain`.
   const base = { roots: plan.roots, gradle: { log: LOG_FILE, exitCode: run.exitCode }, toolchain };
   return {
-    'harness-android-tokens': { ...base, files: { gen: { compiled: counts.tokensGen ?? 0, floor: plan.floors.gen } } },
+    'harness-android-tokens': { ...base, files: { gen: { compiled: counts.tokensGen ?? 0, floor: plan.floors.gen } }, checks: buildChecks(plan, run) },
     'harness-android-components': {
       ...base,
       files: {
         gen: { compiled: counts.dpGen ?? 0, floor: plan.floors.gen },
         pkg: { compiled: counts.dpPkg ?? 0, floor: plan.floors.pkg },
       },
+      // The component context reads no probe: its gating results are the compiles'.
+      checks: [],
     },
   };
 }
@@ -367,7 +421,8 @@ export function selftest(repoRoot: string, work: string, log: (line: string) => 
   const probe = generateProbe({
     index: readProbeIndex(path.join(fixture, manifest.tokenIndex)),
     config: probeConfigFromManifest(manifest),
-    productTokens: [],
+    productFiles: [],
+    provider: false,
   });
   const probeFiles = writeProbe(laneDir, probe);
   const write = (name: string, lines: readonly string[]): void => fs.writeFileSync(path.join(laneDir, name), lines.length > 0 ? `${lines.join('\n')}\n` : '');
@@ -424,6 +479,7 @@ export function main(argv: readonly string[], log: (line: string) => void = cons
     const blocked = blockedLine(run, plan.roots);
     if (blocked) log(blocked);
     const runFiles = buildRunFiles(plan, run);
+    for (const c of runFiles['harness-android-tokens'].checks ?? []) log(`${c.ok ? 'ok  ' : 'FAIL'} ${c.name}: ${c.detail}`);
     for (const context of CONTEXTS) fs.writeFileSync(path.join(work, `run-${context}.json`), `${JSON.stringify(runFiles[context], null, 2)}\n`);
     log(`harness-android: gradle exit ${run.exitCode}; wrote ${LOG_FILE} and run-<context>.json under ${work}`);
     return 0;

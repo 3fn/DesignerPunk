@@ -1,47 +1,56 @@
 #!/usr/bin/env tsx
 /**
- * probe-kotlin — the Android compile harness's probe generator (Spec 129 Task 4, subtask 4.2;
- * design.md § 2 ("`:probe`"), § 4 ("The probe's theme list and name roots"); requirements.md
- * Req 2.7 as Peter amended D1 on 2026-11-05). Owner: Data.
+ * probe-kotlin — the Android compile harness's probe generator (Spec 129 Task 4, subtasks 4.2 and 4.3;
+ * design.md § 2 ("`:probe`"), § 3 ("The probe's count lines and the run file's `checks`"), § 4 ("The
+ * shared harness module"); requirements.md Req 2.7 as Peter amended D1 on 2026-11-05). Owner: Data.
  *
  * It writes the Kotlin source of the `:probe` Gradle module from two inputs and nothing else:
  *   - the consumer's own `token-index/` (what the same `generate` run wrote), and
- *   - the consumer's config as the manifest `harness-consumer.json` carries it: the product `name`, and the
- *     registered `themes`; plus the product-token files its `productTokens` folder holds (the member names of `ProductTokens.android.kt`).
- * It names no token, no theme and no product-token member itself. So when item (i) emits theme types,
- * or a product-token file gains a member, the probe reads it with no change to this file or to
- * `harness/android/**` (the criterion this file's suite checks).
+ *   - the consumer's config as the manifest `harness-consumer.json` carries it: the product `name` and
+ *     the registered `themes`; plus the product-token files its `productTokens` folder holds.
+ * It names no token, no theme and no product-token member itself. Every rule about WHICH theme instances,
+ * family cases, provider reads and product members exist comes from `scripts/harness/native-rules.ts`
+ * (Thurgood's independent copy, written from design § 4): this file keeps no local copy of any of them. So
+ * when item (i) emits theme types, or a product-token file gains a member, the probe reads it with no
+ * change to this file or to `harness/android/**`.
  *
- * What it reads, and through which root (token-index/README.md § "Platform names"; design § 4, O-5):
+ * What it reads, through which root (token-index/README.md § "Platform names"; design § 4, O-5):
  *   - a `theme.<prop>` name (a `category: color` semantic) is read through `LocalDPTheme.current.<prop>`
- *     and through every `<Name>Themes.<Member>.<prop>`. `LocalDPTheme` and `package com.designerpunk.tokens`
- *     are DesignerPunk's fixed binding names (design § 4, Q12), whatever the consumer's abbreviation.
+ *     (the name's one index read) and through every `<Name>Themes.<Instance>.<prop>` (the instances group).
  *   - a `components.yaml` name (`ProgressTokens.connectorThickness`) is a top-level type: read as written.
- *   - every other primitive and semantic name is relative to `DesignTokens` (`DesignTokens.space_100`,
- *     `DesignTokens.Duration.Duration150`). A list (a semantic motion token) is one read per element.
- *     A `null` is no read: that platform's output carries no name for it.
- *   - each `Product<Category>.<member>` of the consumer's product-token files whose `platforms` include
- *     `android` (the category is the file name, as the product-token generator makes it).
+ *   - every other primitive and semantic name is relative to `DesignTokens`. A list (a semantic motion
+ *     token) is one read per element. A `null` is no read.
+ *   - each product-token member `native-rules.ts` names for Android (the product group).
+ *   - the family and the provider from outside `:tokens` (the provider group): the default call, and per
+ *     family entry one read `<Name>ThemeFamily.<Entry>` and one call `<Name>Theme(family = …) { }`.
  *
- * Every read is inside a `@Composable` function. `LocalDPTheme.current` and the product-token theme
- * getters (`@Composable @ReadOnlyComposable get()`) can only be read there, and a probe that read them
- * from a plain function would itself be a compile error (Data's design inbound § 1.1).
+ * Every read is inside a `@Composable` function. `LocalDPTheme.current`, the provider and the product-token
+ * theme getters can only be read there. The probe belongs in a module of its own, apart from `:tokens`, so
+ * that a member the generator left `internal` is NOT readable (Kotlin lets a module read its own `internal`
+ * members; another module cannot). That is the planted-member case of Req 2.7.
  *
- * The probe belongs in a module of its own, apart from `:tokens`, so that a member the generator left
- * `internal` is NOT readable (Kotlin lets a module read its own `internal` members; another module
- * cannot). That is the planted-member case of Req 2.7.
+ * The count lines (design § 3). Each read is written under a marker comment, and the generator returns how
+ * many reads each group should hold (`m`, computed from the INPUTS: the index, the shared module, the
+ * product source). The `:probe` module counts the markers in the sources it was given (`n`) and prints one
+ * line per group; the lane writes each as a `checks` entry in the run file, and the comparator fails the
+ * context when `n ≠ m`. The Gradle task prints and never throws. The counts say what the probe was GIVEN to
+ * read; whether each read compiles is the compiler's verdict, which the comparator reads as `probe:` keys.
  *
- * The read count. Each name the index gives is read once under a `// @index <name>` marker, and the
- * generator returns how many names the index gave (`m`). The `:probe` module counts the markers in the
- * sources it was given (`n`) and prints `probe: read <n> of <m>`, failing when they differ: a generator
- * that dropped a name shows as `n < m`. The count says what the probe was GIVEN to read. Whether each
- * read compiles is the compiler's verdict, which the comparator reads as `probe:` keys.
+ *   probe: read <n> of <m> index names      // @index      each distinct name the index gives, a theme. name once
+ *   probe: instances read <n> of <m>        // @instance   theme names x the module's instances
+ *   probe: product read <n> of <m>          // @product    the module's product reads
+ *   probe: provider read <n> of <m>         // @provider   the module's provider reads
  *
- * Purity: `generateProbe` and the helpers it uses read no file and no environment, and start no process.
- * The readers (`readProbeIndex`, `readProductTokenCategories`) and the command line do the file reads.
+ * Android has no `key` group (iOS's `\.dpTheme` read): `LocalDPTheme.current` is the theme name's index read.
  *
- * Status: written without a Gradle toolchain. The emitted Kotlin has never been compiled (Peter has not
- * approved the downloads); Jest checks its shape only.
+ * `checkThemeInstances` is the per-run instance check (Peter's ruling 4, third safeguard): the members of
+ * the `<Name>Themes` holder the generated Kotlin declares, against the instances `native-rules.ts` gives.
+ * It fails closed. The holder's declaration form is the module's (`kotlinHolderOpenLine`,
+ * `kotlinHolderMemberLine`), pinned in Task 11.
+ *
+ * Purity: `generateProbe`, `checkThemeInstances` and the helpers they use read no file and no environment,
+ * and start no process. The readers (`readProbeIndex`, `readProductFiles`) and the command line do the
+ * file reads.
  *
  * Usage:
  *   npx tsx scripts/harness/probe-kotlin.ts --consumer <root> --out <dir>
@@ -53,6 +62,20 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
+import {
+  BINDING,
+  familyTypeName,
+  holderName,
+  instanceNames,
+  kotlinHolderMemberLine,
+  kotlinHolderOpenLine,
+  kotlinProviderFunction,
+  productCategories,
+  productReads,
+  providerReads,
+  type IndexNameLookup,
+  type ThemeEntry,
+} from './native-rules';
 
 // ─── Types ───────────────────────────────────────────────────────────────────────────────────────
 
@@ -68,54 +91,72 @@ export interface ProbeIndex {
   components: Readonly<Record<string, ProbeIndexEntry>>;
 }
 
-export type ThemeMode = 'light' | 'dark' | 'both';
-
-/** The consumer's config, reduced to what the probe reads. A resolved config satisfies it. */
+/** The consumer's config, reduced to what the probe reads. The manifest satisfies it. */
 export interface ProbeConfig {
-  /** The product name: `<Name>Themes` (design § 4: the config's `name`, not the abbreviation). */
+  /** The product name: `<Name>Themes`, `<Name>ThemeFamily`, `<Name>Theme` (design § 4: the config's `name`, not the abbreviation). */
   name: string;
-  /** The registered themes; the built-in base light and dark instances are always read. */
-  themes: ReadonlyArray<{ name: string; mode: ThemeMode }>;
+  /** The registered themes, as the manifest gives them (`name` and `mode`). */
+  themes: readonly ThemeEntry[];
 }
 
-/** One product-token file: the category is its file name without `.yaml`. */
-export interface ProductTokenCategory {
-  name: string;
-  tokens: ReadonlyArray<{ name: string; platforms?: readonly string[] }>;
+/** One product-token file as read: its path relative to the `productTokens` folder, and its parsed YAML. */
+export interface ProductFile {
+  path: string;
+  doc: unknown;
 }
 
 export interface ProbeInput {
   index: ProbeIndex;
   config: ProbeConfig;
-  productTokens: readonly ProductTokenCategory[];
+  productFiles: readonly ProductFile[];
+  /**
+   * Whether to read the family and the provider. Default true. The planted-member self-test turns it off:
+   * its fixture declares neither, and its job is to give exactly one entry.
+   */
+  provider?: boolean;
+}
+
+export interface GroupCount {
+  /** What the group should hold, computed from the inputs. */
+  m: number;
+  /** The markers found in the emitted sources. */
+  n: number;
+}
+
+export interface ProbeGroups {
+  index: GroupCount;
+  instances: GroupCount;
+  product: GroupCount;
+  provider: GroupCount;
 }
 
 export interface ProbeOutput {
   /** Kotlin source files, by file name, for the `:probe` module. Empty groups write no file. */
   files: Readonly<Record<string, string>>;
-  /** `m`: the number of distinct names the index gives for Android (a theme name counts once). */
-  expectedIndexNames: number;
-  /** `n` as emitted: the `// @index` markers in `files`. */
-  indexReads: number;
-  /** Every `probe(...)` read: index names, theme-instance reads and product-token members. */
+  groups: ProbeGroups;
+  /** Every `probe(...)` or provider read emitted: the sum of the four groups' `n`. */
   totalReads: number;
-  /** The `<Name>Themes` members read, in the order they are read. */
-  themeMembers: readonly string[];
+  /** The holder members read, in order (empty when the index names no `theme.` colour). */
+  instances: readonly string[];
   /** The `probe-expected.txt` text the `:probe` module's count task reads. */
   expectedText: string;
 }
 
 // ─── Constants ───────────────────────────────────────────────────────────────────────────────────
 
-/** DesignerPunk's fixed Android binding (design § 4, Q12): not derived from the consumer's abbreviation. */
-export const TOKENS_PACKAGE = 'com.designerpunk.tokens';
-export const PRODUCT_PACKAGE = 'com.designerpunk.product.tokens';
-export const LOCAL_THEME = 'LocalDPTheme';
 /** The probe module's own package: outside the reserved ones, so design § 9's scan does not flag it. */
 export const PROBE_PACKAGE = 'dpharness.probe';
 /** Reads per generated `@Composable` function: a composable with hundreds of calls grows past what is sensible to compile. */
 export const CHUNK_SIZE = 50;
 export const EXPECTED_FILE = 'probe-expected.txt';
+
+/** The marker comment of each group, and the key of its `m` in `probe-expected.txt`. */
+export const MARKERS = {
+  index: { marker: '// @index ', key: 'index-names' },
+  instances: { marker: '// @instance ', key: 'instances' },
+  product: { marker: '// @product ', key: 'product' },
+  provider: { marker: '// @provider ', key: 'provider' },
+} as const;
 
 const IDENT = /^[A-Za-z_][A-Za-z0-9_]*$/;
 const THEME_PREFIX = 'theme.';
@@ -131,46 +172,12 @@ function assertDotted(name: string, what: string): void {
   for (const segment of name.split('.')) assertIdentifier(segment, `${what} segment of ${JSON.stringify(name)}`);
 }
 
-/** Capitalises the first letter only, as `generateKotlinThemeTypes` does (`wcag` → `Wcag`). */
-function capitalise(value: string): string {
-  return value.charAt(0).toUpperCase() + value.slice(1);
-}
-
-/**
- * The `<Name>Themes` members: `BaseLight` and `BaseDark`, then per registered theme `<Theme>Light` and
- * `<Theme>Dark` (mode `both`) or `<Theme>` (mode `light` or `dark`). Mirrors `generateKotlinThemeTypes`
- * (`src/generators/TokenFileGenerator.ts`), which design § 4 keeps ("one member per registered theme and mode").
- *
- * PROVISIONAL, and not settled here: which instances a probe reads is open (Ada's proposal of 2026-11-06 is
- * `baseLight`, `baseDark`, `wcagLight`, `wcagDark` always, `dark` and `wcag` reserved, any other theme adding
- * `<t>Light`/`<t>Dark` per mode; it goes to a consult round and then to Peter). This function is the only
- * place the rule lives, so the outcome changes this function and its test cases, nothing else.
- */
-export function themeMemberNames(config: ProbeConfig): string[] {
-  const members: string[] = ['BaseLight', 'BaseDark'];
-  for (const theme of config.themes) {
-    if (theme.mode !== 'light' && theme.mode !== 'dark' && theme.mode !== 'both') {
-      throw new Error(`probe-kotlin: theme ${JSON.stringify(theme.name)} has mode ${JSON.stringify(theme.mode)}; expected light, dark or both`);
-    }
-    assertIdentifier(theme.name, 'a theme name');
-    const base = capitalise(theme.name);
-    if (theme.mode === 'both') members.push(`${base}Light`, `${base}Dark`);
-    else members.push(base);
-  }
-  return [...new Set(members)];
-}
-
-/** `Product` + the category's PascalCase, split at `-`, as `KotlinEmitter.ts` writes the object's name. */
-export function productObjectName(category: string): string {
-  return `Product${category.split('-').map(capitalise).join('')}`;
-}
-
 type Source = 'primitives' | 'semantics' | 'components';
 
 /** One name the index gives for Android, with the root it is read through. */
 interface IndexName {
   name: string;
-  /** The expression to read, without the `probe(...)`. Null for a theme name: its reads are built apart. */
+  /** The expression to read. Null for a theme name: its reads are built apart. */
   expression: string | null;
   themeProp: string | null;
 }
@@ -211,16 +218,30 @@ export function collectIndexNames(index: ProbeIndex): IndexName[] {
   return [...byName.values()].sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
 }
 
+/** The token index's Android name for a token key (a product token's `ref`), over the three index files. */
+export function indexLookup(index: ProbeIndex): IndexNameLookup {
+  return (ref) => {
+    for (const source of ['primitives', 'semantics', 'components'] as const) {
+      const entry = index[source][ref];
+      if (entry === undefined) continue;
+      const android = entry.platforms?.android;
+      return android === null ? undefined : android;
+    }
+    return undefined;
+  };
+}
+
 // ─── Emission ────────────────────────────────────────────────────────────────────────────────────
 
 interface Read {
-  expression: string;
+  /** The whole statement, without the trailing marker comment. */
+  code: string;
   marker: string;
 }
 
 const FILE_NOTE = [
   '// Generated by scripts/harness/probe-kotlin.ts from the consumer\'s token index and config. Do not edit.',
-  '// Every read is inside a @Composable function: LocalDPTheme.current and the product-token theme getters',
+  '// Every read is inside a @Composable function: LocalDPTheme.current, the provider and the product-token theme getters',
   '// can only be read from one. The reads are the probe\'s whole job; their compile result is the verdict.',
 ];
 
@@ -233,6 +254,8 @@ function chunks<T>(items: readonly T[], size: number): T[][] {
 function pad(n: number): string {
   return String(n).padStart(2, '0');
 }
+
+const probeCall = (expression: string): string => `probe(${expression})`;
 
 /** One generated file: a public entry composable that calls private chunk composables of at most CHUNK_SIZE reads. */
 function emitFile(entry: string, imports: readonly string[], reads: readonly Read[]): string {
@@ -251,63 +274,146 @@ function emitFile(entry: string, imports: readonly string[], reads: readonly Rea
     lines.push('');
     lines.push('@Composable');
     lines.push(`private fun ${entry}${pad(i)}() {`);
-    for (const read of group) lines.push(`    probe(${read.expression}) // ${read.marker}`);
+    for (const read of group) lines.push(`    ${read.code} // ${read.marker}`);
     lines.push('}');
   });
   return `${lines.join('\n')}\n`;
 }
 
+/** The number of lines in `files` that carry a marker, found by scanning the emitted text. */
+function countMarkers(files: Readonly<Record<string, string>>, marker: string): number {
+  let n = 0;
+  for (const text of Object.values(files)) for (const line of text.split('\n')) if (line.includes(marker)) n += 1;
+  return n;
+}
+
 /** Writes the `:probe` sources from the index and the config. Pure. */
 export function generateProbe(input: ProbeInput): ProbeOutput {
-  const { index, config, productTokens } = input;
+  const { index, config, productFiles } = input;
   assertIdentifier(config.name, 'the config name');
   const names = collectIndexNames(index);
-  const members = themeMemberNames(config);
-  const themesObject = `${config.name}Themes`;
+  const members = instanceNames(config.themes, 'android');
+  for (const member of members) assertIdentifier(member, 'a theme instance name');
+  const holder = holderName(config.name);
+  const local = BINDING.kotlin.local;
+  const themeNames = names.filter((n) => n.themeProp !== null);
 
   const tokenReads: Read[] = [];
   const localReads: Read[] = [];
   const instanceReads: Read[] = [];
   for (const n of names) {
     if (n.themeProp === null) {
-      tokenReads.push({ expression: n.expression as string, marker: `@index ${n.name}` });
+      tokenReads.push({ code: probeCall(n.expression as string), marker: `@index ${n.name}` });
     } else {
-      localReads.push({ expression: `${LOCAL_THEME}.current.${n.themeProp}`, marker: `@index ${n.name}` });
+      localReads.push({ code: probeCall(`${local}.current.${n.themeProp}`), marker: `@index ${n.name}` });
       for (const member of members) {
-        instanceReads.push({ expression: `${themesObject}.${member}.${n.themeProp}`, marker: `@instance ${member} ${n.name}` });
+        instanceReads.push({ code: probeCall(`${holder}.${member}.${n.themeProp}`), marker: `@instance ${member} ${n.name}` });
       }
     }
   }
 
-  const productReads: Read[] = [];
-  for (const category of [...productTokens].sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))) {
-    const object = productObjectName(category.name);
-    assertIdentifier(object, `the product-token object for category ${JSON.stringify(category.name)}`);
-    for (const token of [...category.tokens].sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))) {
-      if (token.platforms !== undefined && !token.platforms.includes('android')) continue;
-      assertIdentifier(token.name, `the product token name in ${JSON.stringify(category.name)}`);
-      productReads.push({ expression: `${object}.${token.name}`, marker: `@product ${object}.${token.name}` });
+  const productRead = productReads(productCategories([...productFiles]), 'android', indexLookup(index));
+  const productStatements: Read[] = productRead.map((r) => {
+    assertIdentifier(r.key, `the product token name in ${JSON.stringify(r.category)}`);
+    return { code: probeCall(r.name), marker: `@product ${r.name}` };
+  });
+
+  const providerStatements: Read[] = [];
+  const wantProvider = input.provider !== false;
+  const family = familyTypeName(config.name);
+  const provider = kotlinProviderFunction(config.name);
+  if (wantProvider) {
+    for (const r of providerReads(config.themes, 'android')) {
+      if (r.kind === 'default') providerStatements.push({ code: `${provider} { }`, marker: '@provider default' });
+      else {
+        const entry = r.familyCase as string;
+        assertIdentifier(entry, 'a family entry');
+        if (r.kind === 'family-read') providerStatements.push({ code: probeCall(`${family}.${entry}`), marker: `@provider read ${entry}` });
+        else providerStatements.push({ code: `${provider}(family = ${family}.${entry}) { }`, marker: `@provider call ${entry}` });
+      }
     }
   }
 
   const files: Record<string, string> = {};
-  const designImports = [`${TOKENS_PACKAGE}.*`];
+  const designImports = [`${BINDING.kotlin.themePackage}.*`];
   if (tokenReads.length > 0) files['ProbeTokens.kt'] = emitFile('ProbeTokens', designImports, tokenReads);
   if (localReads.length > 0) files['ProbeThemeLocal.kt'] = emitFile('ProbeThemeLocal', designImports, localReads);
   if (instanceReads.length > 0) files['ProbeThemeInstances.kt'] = emitFile('ProbeThemeInstances', designImports, instanceReads);
-  if (productReads.length > 0) files['ProbeProduct.kt'] = emitFile('ProbeProduct', [`${PRODUCT_PACKAGE}.*`], productReads);
+  if (productStatements.length > 0) files['ProbeProduct.kt'] = emitFile('ProbeProduct', [`${BINDING.kotlin.productPackage}.*`], productStatements);
+  if (providerStatements.length > 0) files['ProbeFamily.kt'] = emitFile('ProbeFamily', designImports, providerStatements);
 
-  const indexReads = tokenReads.length + localReads.length;
-  const totalReads = indexReads + instanceReads.length + productReads.length;
-  const expectedText = `index-names=${names.length}\nreads=${totalReads}\nfiles=${Object.keys(files).sort().join(',')}\n`;
-  return {
-    files,
-    expectedIndexNames: names.length,
-    indexReads,
-    totalReads,
-    themeMembers: localReads.length > 0 ? members : [],
-    expectedText,
+  const groups: ProbeGroups = {
+    index: { m: names.length, n: countMarkers(files, MARKERS.index.marker) },
+    instances: { m: themeNames.length * members.length, n: countMarkers(files, MARKERS.instances.marker) },
+    product: { m: productRead.length, n: countMarkers(files, MARKERS.product.marker) },
+    provider: { m: wantProvider ? providerReads(config.themes, 'android').length : 0, n: countMarkers(files, MARKERS.provider.marker) },
   };
+  const totalReads = groups.index.n + groups.instances.n + groups.product.n + groups.provider.n;
+  const expectedText =
+    `${MARKERS.index.key}=${groups.index.m}\n${MARKERS.instances.key}=${groups.instances.m}\n` +
+    `${MARKERS.product.key}=${groups.product.m}\n${MARKERS.provider.key}=${groups.provider.m}\n` +
+    `files=${Object.keys(files).sort().join(',')}\n`;
+  return { files, groups, totalReads, instances: localReads.length > 0 ? members : [], expectedText };
+}
+
+// ─── The per-run instance check ──────────────────────────────────────────────────────────────────
+
+export interface InstanceCheck {
+  ok: boolean;
+  /** Why: names the members that differ, or the fail-closed reason, or `not checked`. */
+  detail: string;
+  /** The line the lane prints, beginning `theme instances:`. */
+  line: string;
+}
+
+const CLASS_DECLARATION = new RegExp(`^\\s*(?:data\\s+)?class\\s+${BINDING.kotlin.themeClass}\\b`, 'm');
+
+/**
+ * The per-run instance check (Peter's "4 combine", its third safeguard). `generated` is the generated Kotlin,
+ * all files joined. It compares the members of the `<Name>Themes` holder the code declares with the instances
+ * `native-rules.ts` gives for the config, in order, and fails closed:
+ *   - the holder is declared and no member can be parsed from it -> not ok;
+ *   - `DesignerPunkTheme` is declared and no holder can be found -> not ok;
+ *   - neither is declared (every run before U6) -> ok, `not checked`.
+ * The holder form is the module's (`kotlinHolderOpenLine`, `kotlinHolderMemberLine`): the open line, then one
+ * member per line, and the holder ends at the first line that is only `}`.
+ */
+export function checkThemeInstances(generated: string, config: ProbeConfig): InstanceCheck {
+  const make = (ok: boolean, detail: string): InstanceCheck => ({ ok, detail, line: `theme instances: ${detail}` });
+  const lines = generated.split(/\r?\n/);
+  const open = kotlinHolderOpenLine(config.name);
+  const at = lines.findIndex((l) => l.trimEnd() === open);
+  if (at < 0) {
+    return CLASS_DECLARATION.test(generated)
+      ? make(false, `${BINDING.kotlin.themeClass} is declared and no ${holderName(config.name)} holder was found`)
+      : make(true, 'not checked');
+  }
+  const sample = kotlinHolderMemberLine('\u0000');
+  const split = sample.indexOf('\u0000');
+  const prefix = sample.slice(0, split);
+  const suffix = sample.slice(split + 1);
+  const got: string[] = [];
+  for (let i = at + 1; i < lines.length && lines[i].trimEnd() !== '}'; i++) {
+    const line = lines[i].trimEnd();
+    if (line.startsWith(prefix) && line.endsWith(suffix)) {
+      const member = line.slice(prefix.length, line.length - suffix.length);
+      if (IDENT.test(member)) got.push(member);
+    }
+  }
+  if (got.length === 0) return make(false, `holder found, no members parsed (${holderName(config.name)})`);
+  const expected = instanceNames(config.themes, 'android');
+  const missing = expected.filter((e) => !got.includes(e));
+  const seen = new Set<string>();
+  const extra = got.filter((g) => {
+    const bad = !expected.includes(g) || seen.has(g);
+    seen.add(g);
+    return bad;
+  });
+  const problems: string[] = [];
+  if (missing.length > 0) problems.push(`missing ${missing.join(', ')}`);
+  if (extra.length > 0) problems.push(`extra ${extra.join(', ')}`);
+  if (problems.length === 0 && got.join(',') !== expected.join(',')) problems.push(`order differs: got ${got.join(', ')}; the shared module gives ${expected.join(', ')}`);
+  return problems.length > 0 ? make(false, problems.join('; ')) : make(true, `${got.length} of ${expected.length} as the shared module gives (${got.join(', ')})`);
 }
 
 // ─── Readers ─────────────────────────────────────────────────────────────────────────────────────
@@ -330,29 +436,27 @@ export function readProbeIndex(dir: string): ProbeIndex {
 }
 
 /**
- * Reads the product-token files of a folder: one category per `*.yaml`, named by the file (not by the
- * YAML's `category:` field), as `ProductTokenGenerator.parseCategory` does. A missing folder gives none.
- * A token with no `platforms` is on every platform.
+ * Reads the product-token files of a folder: every `*.yaml` directly in it, parsed, with its relative path.
+ * `native-rules.ts` decides which files are read, in what order, and what a malformed one means. A missing
+ * folder gives none. A file that does not parse gives `doc: undefined`, as the generator skips it.
  */
-export function readProductTokenCategories(dir: string): ProductTokenCategory[] {
+export function readProductFiles(dir: string): ProductFile[] {
   if (!fs.existsSync(dir)) return [];
-  const categories: ProductTokenCategory[] = [];
-  for (const file of fs.readdirSync(dir).filter((f) => f.endsWith('.yaml')).sort()) {
-    const doc = yaml.load(fs.readFileSync(path.join(dir, file), 'utf8')) as { tokens?: Record<string, { platforms?: string[] }> } | null;
-    if (!doc || !doc.tokens) continue; // the generator skips a file with no `tokens`
-    categories.push({
-      name: file.replace(/\.yaml$/, ''),
-      tokens: Object.entries(doc.tokens).map(([name, entry]) => ({ name, platforms: entry?.platforms })),
-    });
+  const files: ProductFile[] = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (!entry.isFile() || !entry.name.endsWith('.yaml')) continue;
+    let doc: unknown;
+    try {
+      doc = yaml.load(fs.readFileSync(path.join(dir, entry.name), 'utf8'));
+    } catch {
+      doc = undefined;
+    }
+    files.push({ path: entry.name, doc });
   }
-  return categories;
+  return files.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
 }
 
-/**
- * Reduces the consumer's manifest (`harness-consumer.json`, which `consumer.ts` writes with the installed
- * loader's `name` and `themes`; Ada's `38d1d8ac0`) to what the probe reads. The probe reads the registered
- * themes from there, never from the consumer's config. An absent `themes` reads as none.
- */
+/** Reduces the consumer's manifest (`harness-consumer.json`) to what the probe reads. An absent `themes` reads as none. */
 export function probeConfigFromManifest(manifest: unknown): ProbeConfig {
   const m = manifest as { name?: unknown; themes?: unknown };
   if (typeof m?.name !== 'string') throw new Error('probe-kotlin: the manifest has no `name`');
@@ -361,7 +465,7 @@ export function probeConfigFromManifest(manifest: unknown): ProbeConfig {
     name: m.name,
     themes: themes.map((t: { name?: unknown; mode?: unknown }) => {
       if (typeof t?.name !== 'string') throw new Error('probe-kotlin: a manifest theme has no `name`');
-      return { name: t.name, mode: t.mode as ThemeMode };
+      return { name: t.name, mode: typeof t.mode === 'string' ? t.mode : undefined };
     }),
   };
 }
@@ -412,10 +516,11 @@ export function main(argv: readonly string[], log: (line: string) => void = cons
     const output = generateProbe({
       index: readProbeIndex(path.join(consumer, manifest.tokenIndex)),
       config: probeConfigFromManifest(manifest),
-      productTokens: readProductTokenCategories(path.join(consumer, manifest.productTokens)),
+      productFiles: readProductFiles(path.join(consumer, manifest.productTokens)),
     });
     const written = writeProbe(out, output);
-    log(`probe-kotlin: wrote ${written.length} file(s) under ${path.join(out, 'src')}: ${output.expectedIndexNames} index names, ${output.totalReads} reads (${output.themeMembers.length} theme instance(s))`);
+    const g = output.groups;
+    log(`probe-kotlin: wrote ${written.length} file(s) under ${path.join(out, 'src')}: index ${g.index.m}, instances ${g.instances.m}, product ${g.product.m}, provider ${g.provider.m}`);
     return 0;
   } catch (error) {
     log(`probe-kotlin: ${(error as Error).message}`);
