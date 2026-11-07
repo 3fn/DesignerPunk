@@ -1,0 +1,10 @@
+harness-consumer: [pack] npm pack --pack-destination /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-harness-consumer-RUnXyK   (cwd <repo>/.claude/worktrees/mp4)
+harness-consumer: [pack] tar -tzf /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-harness-consumer-RUnXyK/3fn-core-16.2.0.tgz   (cwd /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-harness-consumer-RUnXyK)
+harness-consumer: [install] npm install /var/folders/z2/kfvx4wfj7cb3hq2gn5c7smzr0000gn/T/dp-harness-consumer-RUnXyK/3fn-core-16.2.0.tgz --no-audit --no-fund --offline   (cwd <scratch>/mp4/consumer)
+harness-consumer: [init] /usr/local/bin/node <scratch>/mp4/consumer/node_modules/@3fn/core/bin/designerpunk.js init --name DesignerPunk --abbreviation HX   (cwd <scratch>/mp4/consumer)
+harness-consumer: [configure] copied 1 fixture file(s) to product/tokens/ and set productTokens in designerpunk.config.ts
+harness-consumer: [generate] /usr/local/bin/node <scratch>/mp4/consumer/node_modules/@3fn/core/bin/designerpunk.js generate   (cwd <scratch>/mp4/consumer)
+harness-consumer: [package] /usr/local/bin/node -e const { loadConfig } = require(process.argv[1]);loadConfig(process.cwd()).then((c) => { process.stdout.write(JSON.stringify(c)); }).catch((e) => { console.error((e && e.stack) || String(e)); process.exit(1); }); <scratch>/mp4/consumer/node_modules/@3fn/core/dist/config/ConfigLoader.js   (cwd <scratch>/mp4/consumer)
+harness-consumer: [package] wrote harness-consumer.json: 3 Swift and 3 Kotlin generated file(s); tarball 1711 file(s)
+harness-consumer: ok — consumer root <scratch>/mp4/consumer (@3fn/core@16.2.0, abbreviation HX)
+exit=0

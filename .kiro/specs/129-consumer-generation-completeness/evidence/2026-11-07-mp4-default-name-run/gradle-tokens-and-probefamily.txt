@@ -1,0 +1,43 @@
+> Task :tokens:preBuild UP-TO-DATE
+> Task :tokens:preDebugBuild UP-TO-DATE
+> Task :tokens:generateDebugResources
+> Task :tokens:packageDebugResources
+> Task :tokens:processDebugNavigationResources
+> Task :probe:preBuild UP-TO-DATE
+> Task :probe:preDebugBuild UP-TO-DATE
+> Task :probe:generateDebugResources
+> Task :tokens:parseDebugLocalResources
+> Task :probe:packageDebugResources
+> Task :probe:processDebugNavigationResources
+> Task :tokens:generateDebugRFile
+> Task :probe:parseDebugLocalResources
+> Task :tokens:javaPreCompileDebug
+> Task :probe:generateDebugRFile
+
+> Task :tokens:compileDebugKotlin
+harness-sources: :tokens gen=3
+harness-toolchain: java.version=17.0.21
+harness-toolchain: gradle.version=9.8.2
+harness-toolchain: kotlin.version=2.4.21
+harness-toolchain: agp.version=9.5.0
+harness-toolchain: compose.bom.version=2026.09.00
+
+> Task :tokens:compileDebugJavaWithJavac NO-SOURCE
+> Task :tokens:bundleLibCompileToJarDebug
+
+> Task :probe:compileDebugKotlin
+probe: read 0 of 443 index names
+probe: instances read 0 of 248
+probe: product read 0 of 1
+probe: provider read 5 of 5
+
+[Incubating] Problems report is available at: file:///Users/3fn/Documents/Work%20Projects/Kiro/DesignerPunk-v2/.claude/worktrees/mp4/harness/android/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.8.2/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1s
+14 actionable tasks: 14 executed
