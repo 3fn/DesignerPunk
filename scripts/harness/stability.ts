@@ -157,6 +157,22 @@ export function parseVerdict(message: string): 'PASS' | 'FAIL' | null {
   return m ? (m[1] as 'PASS' | 'FAIL') : null;
 }
 
+/**
+ * A re-run of only some jobs lists the others again under the new attempt, as copies with new ids, no
+ * annotations and the original job's `started_at` and `completed_at`. The attempt whose job actually ran
+ * carries the annotations, so such a copy is dropped and the earlier attempt's job is the one read.
+ */
+export function carriedOver(job: ApiJob, siblings: readonly ApiJob[]): boolean {
+  return siblings.some(
+    (o) =>
+      o.name === job.name &&
+      o.run_attempt < job.run_attempt &&
+      o.started_at !== null &&
+      o.started_at === job.started_at &&
+      o.completed_at === job.completed_at,
+  );
+}
+
 export function normalize(raw: RawInput): JobRecord[] {
   const runById = new Map(raw.runs.map((r) => [r.id, r]));
   const out: JobRecord[] = [];
@@ -165,6 +181,7 @@ export function normalize(raw: RawInput): JobRecord[] {
     for (const job of jobs) {
       const context = contextOf(job.name);
       if (context === null) continue;
+      if (carriedOver(job, jobs)) continue;
       const checks = raw.checkRunsBySha[job.head_sha] ?? [];
       const check = checks.find((c) => c.id === job.id);
       const notes = raw.annotationsByJob[job.id] ?? [];

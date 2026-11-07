@@ -10,7 +10,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { RawInput, analyze, contextOf, normalize, parseInfra, parseVerdict, render } from '../stability';
+import { RawInput, analyze, carriedOver, contextOf, normalize, parseInfra, parseVerdict, render } from '../stability';
 
 const load = (name: string): RawInput =>
   JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'stability', name), 'utf8')) as RawInput;
@@ -276,5 +276,33 @@ describe('harness-infra runs (tasks.md Task 19; Decision 6 as amended by amendme
     expect(c.infraRuns).toEqual([]);
     expect(c.streak).toBe(3);
     expect(c.coldRuns.map((x) => x.runId)).toEqual([1602]);
+  });
+});
+
+describe('a partial re-run (run 42379456009, recorded): the verdict is read from the attempt whose job ran', () => {
+  const raw = load('recorded-partial-rerun-42379456009.json');
+  it.each(['harness-ios-tokens', 'harness-ios-components', 'harness-android-tokens'])('%s keeps attempt 1\'s PASS and is not a break', (name) => {
+    const c = ctx(raw, name);
+    expect(c.runs).toHaveLength(1);
+    expect(c.runs[0].attempts).toBe(1);
+    expect(c.runs[0].last.attempt).toBe(1);
+    expect(c.runs[0].last.verdict).toBe('PASS');
+    expect(c.runs[0].breaks).toEqual([]);
+    expect(c.streak).toBe(1);
+  });
+  it('harness-android-components went FAIL then PASS: still a break by its differing attempts', () => {
+    const c = ctx(raw, 'harness-android-components');
+    expect(c.runs[0].attempts).toBe(2);
+    expect(c.runs[0].attemptConclusions).toEqual(['failure', 'success']);
+    expect(c.runs[0].last.verdict).toBe('PASS');
+    expect(c.runs[0].breaks).toEqual(['attempts ended with different conclusions']);
+    expect(c.streak).toBe(0);
+  });
+  it('carriedOver drops only a later attempt\'s copy of a job that did not re-run', () => {
+    const jobs = raw.jobsByRun['42379456009'];
+    const copies = jobs.filter((j) => j.run_attempt === 2);
+    const dropped = copies.filter((j) => carriedOver(j, jobs)).map((j) => j.name).sort();
+    expect(dropped).toEqual(['harness-android-tokens', 'harness-generate', 'harness-ios-components', 'harness-ios-tokens']);
+    expect(copies.find((j) => j.name === 'harness-android-components' && carriedOver(j, jobs))).toBeUndefined();
   });
 });
