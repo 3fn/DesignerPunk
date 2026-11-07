@@ -615,7 +615,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
 ### UNIT 3a — Harness verdicts name their side (added 2026-11-07, tasks amendment 7)
 
-- [ ] 19. Environment faults are `harness-infra`, and only a resolved build saves the cache (U3a)
+- [x] 19. Environment faults are `harness-infra`, and only a resolved build saves the cache (U3a)
 
   **Type**: Parent · **Validation**: Tier 3 - Comprehensive · **Agent (plan)**: PRIMARY Thurgood (Sonnet) · Data (Sonnet) — the Android lane's resolve step, its marker and the infra classification
   **Traces**: Req 2.10, 2.11, 2.12, 2.13 · design § 3 ("Verdicts name their side"); § "Decision 6" conditions 2 and 3 as amended by amendment 7 · ruling: Peter's "Let's adopt the fix with class option if you think it'll be effective", received 2026-11-07T14:12:30Z (`evidence/2026-11-07-peter-ruling-harness-infra-verdict.md`, which records the orchestrator's judgment that it is effective)
@@ -664,15 +664,15 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
 
   **Post-Completion:** mark complete; `complete-task.sh "Task 19 Complete: Harness verdicts name their side (129)"` opens U3a's PR (Peter-merged: `.github/**`; Stacy's ARMING read at its merge); report the URL; STOP.
 
-  - [ ] 19.1 The resolve step, the marker and the infra classifier, with their fixtures and tests
+  - [x] 19.1 The resolve step, the marker and the infra classifier, with their fixtures and tests
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Data (Sonnet)
     - On a seat branch the PRIMARY joins, from `main` after `de307e1d7` (U3's 8.5 already removed the colour library from `harness/android/**`) *(corrected 2026-11-07, tasks amendment 7, after U3 merged as #711, `de307e1d7`, at 2026-11-07T14:16:40Z)*
     - _Requirements: 2.11, 2.12_
-  - [ ] 19.2 The workflow's save condition and infra annotation; the workflow test; the guard entry
+  - [x] 19.2 The workflow's save condition and infra annotation; the workflow test; the guard entry
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - After 19.1's marker and `infra.json` exist; the deleted lines are quoted in the PR body
     - _Requirements: 2.10, 2.12_
-  - [ ] 19.3 `stability.ts` and its test; the record re-run
+  - [x] 19.3 `stability.ts` and its test; the record re-run
     **Type**: Implementation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - _Requirements: 2.12, 2.13_
 
