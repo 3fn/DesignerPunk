@@ -19,23 +19,21 @@
  * These functions parse the token-index YAML and assert the properties directly.
  * They are pure (YAML-string in, result out) so each is unit-tested in isolation.
  *
- * SCOPING (ratified by Peter 2026-06-24, Task 3): P3's "no rgba" is scoped to
- * OKLCH-MIGRATED color primitives. The shadow color family (shadowBlack/Blue/
- * Orange/Gray100) was never migrated to OKLCH by Spec 112 (no channel tokens;
- * dist emits them as rgba too), so the index emitting them as rgba is faithful
- * reproduction of dist, NOT a divergence — and NOT a manifest entry. See
- * .kiro/issues/2026-06-24-oklch-shadow-color-family-not-migrated.md.
+ * SCOPING (ratified by Peter 2026-06-24, Task 3): P3's "no rgba" was scoped to
+ * OKLCH-MIGRATED color primitives, because the shadow color family (shadowBlack/Blue/
+ * Orange/Gray100) was never migrated to OKLCH by Spec 112. Spec 129 Task 8.2 migrated it (same
+ * colours, no new names), so the allowlist is empty and every color primitive is held to P3.
+ * See .kiro/issues/2026-06-24-oklch-shadow-color-family-not-migrated.md.
  */
 
 import * as yaml from 'js-yaml';
 
-/** The shadow color family — the only color primitives allowed to carry rgba (see header). */
-export const SHADOW_COLOR_PRIMITIVES = [
-  'shadowBlack100',
-  'shadowBlue100',
-  'shadowOrange100',
-  'shadowGray100',
-] as const;
+/**
+ * Color primitives allowed to carry rgba (see header). Empty since Spec 129 Task 8.2 re-expressed
+ * the shadow family (shadowBlack100, shadowBlue100, shadowOrange100, shadowGray100) in OKLCH,
+ * to the same colours: every color primitive is now OKLCH, so none may carry rgba().
+ */
+export const SHADOW_COLOR_PRIMITIVES: readonly string[] = [];
 
 /**
  * The base-scoped theme-varying set the INDEX must mark `themeVarying: true`

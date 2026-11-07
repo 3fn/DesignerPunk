@@ -971,7 +971,9 @@ export class DTCGFormatGenerator {
       }
 
       // Resolve color RGBA and merge with shadow opacity (replace alpha, don't multiply)
-      const colorRgba = this.resolveColorValue(colorToken, `shadow.${key}.color`);
+      // The shadow colours are OKLCH-sourced (Spec 129 Task 8.2), so resolveColorValue returns their
+      // sRGB hex; mergeShadowColor takes rgba, so the hex is read as opaque rgb first.
+      const colorRgba = this.hexToRgba(this.resolveColorValue(colorToken, `shadow.${key}.color`));
       const opacityValue = opacityToken.baseValue;
       const mergedColor = this.mergeShadowColor(colorRgba, opacityValue, key);
 
@@ -1234,9 +1236,9 @@ export class DTCGFormatGenerator {
    * CSS/Swift/Kotlin, closing the dual-color-source divergence (see
    * `.kiro/issues/2026-08-25-dual-color-source-divergence.md`, Option A).
    *
-   * Only primitives absent from `composedColorMap` (the four legacy-only shadow
-   * primitives: shadowBlack100, shadowBlue100, shadowOrange100, shadowGray100)
-   * fall through to the legacy RGBA `light.base` path.
+   * Only primitives absent from `composedColorMap` fall through to the legacy RGBA
+   * `light.base` path. The four shadow primitives (shadowBlack100, shadowBlue100,
+   * shadowOrange100, shadowGray100) are in the map since Spec 129 Task 8.2.
    *
    * @param token - The primitive color token to resolve
    * @param tokenName - Optional token name for error messages / composedColorMap lookup fallback
@@ -1302,6 +1304,16 @@ export class DTCGFormatGenerator {
       ext.baseValue = familyBase;
     }
     return ext;
+  }
+
+  /**
+   * Read a 6-digit sRGB hex colour (`#141928`) as an opaque `rgba(r, g, b, 1)` string; any other
+   * string is returned unchanged, so a value that is not a colour still fails in mergeShadowColor.
+   */
+  private hexToRgba(color: string): string {
+    const m = /^#([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})$/.exec(color);
+    if (!m) return color;
+    return `rgba(${parseInt(m[1], 16)}, ${parseInt(m[2], 16)}, ${parseInt(m[3], 16)}, 1)`;
   }
 
   /**

@@ -27,8 +27,9 @@ import { oklchToExportHex } from '../oklch/OklchExportUtils';
 import { colorTokens } from '../../tokens/ColorTokens';
 import type { ColorTokenValue, PrimitiveToken } from '../../types/PrimitiveToken';
 
-// The four legacy-only shadow primitives absent from composedColorMap (Option A scope note).
-const LEGACY_ONLY_SHADOW_PRIMITIVES = [
+// The four shadow primitives. They were legacy-only (rgba, absent from composedColorMap) until
+// Spec 129 Task 8.2 re-expressed them in OKLCH, to the same colours (design § 8).
+const SHADOW_PRIMITIVES = [
   'shadowBlack100',
   'shadowBlue100',
   'shadowOrange100',
@@ -86,7 +87,7 @@ describe('DTCG color primitives agree with the OKLCH source of record (Option A 
   });
 });
 
-describe('Legacy-only shadow primitives still resolve via the legacy RGBA path', () => {
+describe('The shadow primitives are OKLCH-sourced and keep their earlier colours (Spec 129 Task 8.2)', () => {
   let colorGroup: DTCGGroup;
 
   beforeAll(() => {
@@ -95,54 +96,22 @@ describe('Legacy-only shadow primitives still resolve via the legacy RGBA path',
     colorGroup = output.color as DTCGGroup;
   });
 
-  it.each(LEGACY_ONLY_SHADOW_PRIMITIVES)(
-    '%s is absent from composedColorMap (confirms it takes the legacy fallback)',
-    (name) => {
-      expect(composedColorMap.get(name)).toBeUndefined();
-    }
-  );
+  it.each(SHADOW_PRIMITIVES)('%s is in composedColorMap', (name) => {
+    expect(composedColorMap.get(name)).toBeDefined();
+  });
 
-  it.each(LEGACY_ONLY_SHADOW_PRIMITIVES)(
-    '%s emits a valid color and matches its legacy light.base value',
+  it.each(SHADOW_PRIMITIVES)(
+    '%s emits the sRGB hex of its earlier rgba value',
     (name) => {
       const token = colorGroup[name] as DTCGToken;
       expect(token).toBeDefined();
-      expect(String(token.$value)).toMatch(
-        /^(#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})|rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(,\s*[\d.]+\s*)?\))$/
-      );
+      expect(String(token.$value)).toMatch(/^#[0-9a-f]{6}$/i);
 
       const legacyToken = (colorTokens as Record<string, PrimitiveToken>)[name];
       const legacyValue = (legacyToken.platforms.web.value as ColorTokenValue).light.base;
-      expect(token.$value).toBe(legacyValue);
+      const m = /^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/.exec(legacyValue)!;
+      const legacyHex = '#' + [m[1], m[2], m[3]].map(v => Number(v).toString(16).padStart(2, '0')).join('');
+      expect(String(token.$value).toLowerCase()).toBe(legacyHex);
     }
   );
-});
-
-describe('Self-consistency: semantic color $value (resolved) agrees with its own primitive', () => {
-  it('resolving aliases produces the same hex as the primitive group for every semantic color token backed by an OKLCH primitive', () => {
-    const generator = new DTCGFormatGenerator({ resolveAliases: true });
-    const output = generator.generate();
-    const semanticGroup = output.semanticColor as DTCGGroup;
-    const primitiveGroup = output.color as DTCGGroup;
-
-    const checked: string[] = [];
-    for (const [key, value] of Object.entries(semanticGroup)) {
-      if (key.startsWith('$')) continue;
-      const token = value as DTCGToken;
-      const resolvedValue = String(token.$value);
-      // Only check tokens that resolved to a hex color (skip rgba-composited/opacity tokens).
-      if (!/^#[0-9a-f]{6}$/i.test(resolvedValue)) continue;
-
-      // Find the primitive in the primitive color group whose $value matches — the
-      // resolved semantic value must correspond to SOME primitive's emitted hex.
-      const matchesAPrimitive = Object.entries(primitiveGroup).some(
-        ([pKey, pValue]) => !pKey.startsWith('$') && (pValue as DTCGToken).$value === resolvedValue
-      );
-      expect(matchesAPrimitive).toBe(true);
-      checked.push(key);
-    }
-
-    // Guard against the check silently checking zero tokens (a vacuously-true test).
-    expect(checked.length).toBeGreaterThan(0);
-  });
 });

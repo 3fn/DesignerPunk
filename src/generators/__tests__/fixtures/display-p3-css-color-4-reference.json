@@ -1,0 +1,632 @@
+{
+  "header": {
+    "purpose": "Reference values for the Display P3 converter and the CSS Color 4 section 13.2 gamut mapping (Spec 129 Task 8.1).",
+    "source": "colorjs.io (Color.js) 0.7.1, npm package colorjs.io@0.7.1",
+    "calls": "inside: new Color('oklch', [l, c, h]).to('p3').coords; outside: new Color('oklch', [l, c, h]).toGamut({ space: 'p3', method: 'css' }).to('p3').coords, each channel clamped to 0-1",
+    "algorithm": "CSS Color Level 4 section 13.2 (https://www.w3.org/TR/css-color-4/#css-gamut-mapping): binary search on OKLCH chroma, delta-E-OK just-noticeable difference 0.02, epsilon 0.0001",
+    "generated": "2026-11-07",
+    "precision": "6 decimal places",
+    "independence": "Neither the converter nor any file of this repository produced these numbers; the cases are chosen by hand and the expected values come from the library only.",
+    "fields": "oklch is [l, c, h]; displayP3 is gamma-encoded [r, g, b]; inGamut is Color.js's own answer for the source colour in Display P3"
+  },
+  "inGamut": [
+    {
+      "oklch": [
+        0.65,
+        0.242,
+        10
+      ],
+      "displayP3": [
+        0.91586,
+        0.256016,
+        0.433089
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0.55,
+        0.203,
+        10
+      ],
+      "displayP3": [
+        0.730764,
+        0.201549,
+        0.342038
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0.66,
+        0.18,
+        154
+      ],
+      "displayP3": [
+        0.270214,
+        0.680551,
+        0.392639
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0.64,
+        0.125,
+        202.5
+      ],
+      "displayP3": [
+        0.204112,
+        0.622417,
+        0.669567
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0.52,
+        0.08,
+        209
+      ],
+      "displayP3": [
+        0.230446,
+        0.453723,
+        0.501222
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0.4,
+        0.183,
+        310
+      ],
+      "displayP3": [
+        0.364064,
+        0.111289,
+        0.538402
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0.93,
+        0.046,
+        310
+      ],
+      "displayP3": [
+        0.934807,
+        0.88066,
+        0.992855
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0.32,
+        0.015,
+        260
+      ],
+      "displayP3": [
+        0.185387,
+        0.199794,
+        0.227339
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0.62,
+        0.02,
+        260
+      ],
+      "displayP3": [
+        0.504232,
+        0.527014,
+        0.570331
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        1,
+        0,
+        0
+      ],
+      "displayP3": [
+        1,
+        1,
+        1
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0,
+        0,
+        0
+      ],
+      "displayP3": [
+        0,
+        0,
+        0
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0.5,
+        0,
+        0
+      ],
+      "displayP3": [
+        0.388573,
+        0.388573,
+        0.388573
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0.2161,
+        0.0306,
+        269.6
+      ],
+      "displayP3": [
+        0.082175,
+        0.097407,
+        0.15222
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0.1956,
+        0.0127,
+        67
+      ],
+      "displayP3": [
+        0.09488,
+        0.079174,
+        0.061187
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0.1912,
+        0.0219,
+        263.8
+      ],
+      "displayP3": [
+        0.062616,
+        0.077871,
+        0.11449
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0.628,
+        0.2577,
+        29.23
+      ],
+      "displayP3": [
+        0.917573,
+        0.200303,
+        0.138664
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0.8664,
+        0.294,
+        142.5
+      ],
+      "displayP3": [
+        0.459743,
+        0.984872,
+        0.300775
+      ],
+      "inGamut": true
+    },
+    {
+      "oklch": [
+        0.452,
+        0.313,
+        264.05
+      ],
+      "displayP3": [
+        0.000111,
+        0.001856,
+        0.959135
+      ],
+      "inGamut": true
+    }
+  ],
+  "outOfGamut": [
+    {
+      "oklch": [
+        0.7,
+        0.35,
+        150
+      ],
+      "displayP3": [
+        0,
+        0.782464,
+        0.19457
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.5,
+        0.4,
+        30
+      ],
+      "displayP3": [
+        0.731096,
+        0,
+        0
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.9,
+        0.35,
+        110
+      ],
+      "displayP3": [
+        0.918709,
+        0.912543,
+        0
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.3,
+        0.3,
+        140
+      ],
+      "displayP3": [
+        0.03274,
+        0.231054,
+        0
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.6,
+        0.38,
+        330
+      ],
+      "displayP3": [
+        0.788829,
+        0,
+        0.814555
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.45,
+        0.4,
+        265
+      ],
+      "displayP3": [
+        0.028624,
+        0,
+        0.9968
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.85,
+        0.3,
+        195
+      ],
+      "displayP3": [
+        0,
+        0.945443,
+        0.965677
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.75,
+        0.37,
+        15
+      ],
+      "displayP3": [
+        1,
+        0.432107,
+        0.510676
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.95,
+        0.25,
+        85
+      ],
+      "displayP3": [
+        1,
+        0.91996,
+        0.625791
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.2,
+        0.3,
+        300
+      ],
+      "displayP3": [
+        0.11598,
+        0,
+        0.266762
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.4,
+        0.4,
+        180
+      ],
+      "displayP3": [
+        0,
+        0.348219,
+        0.292222
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.65,
+        0.4,
+        100
+      ],
+      "displayP3": [
+        0.646254,
+        0.563646,
+        0
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.55,
+        0.33,
+        60
+      ],
+      "displayP3": [
+        0.660091,
+        0.340769,
+        0
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.8,
+        0.33,
+        340
+      ],
+      "displayP3": [
+        1,
+        0.484556,
+        0.912103
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.35,
+        0.35,
+        20
+      ],
+      "displayP3": [
+        0.448974,
+        0,
+        0.068513
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.7,
+        0.3,
+        235
+      ],
+      "displayP3": [
+        0,
+        0.664399,
+        1
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.92,
+        0.3,
+        160
+      ],
+      "displayP3": [
+        0.546735,
+        1,
+        0.750054
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.25,
+        0.25,
+        50
+      ],
+      "displayP3": [
+        0.240653,
+        0.058151,
+        0
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.5,
+        0.35,
+        210
+      ],
+      "displayP3": [
+        0,
+        0.451388,
+        0.542678
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.99,
+        0.2,
+        90
+      ],
+      "displayP3": [
+        1,
+        0.985524,
+        0.796014
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.1,
+        0.2,
+        280
+      ],
+      "displayP3": [
+        0.009457,
+        0,
+        0.116772
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.6,
+        0.4,
+        125
+      ],
+      "displayP3": [
+        0.435259,
+        0.566599,
+        0
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.78,
+        0.4,
+        45
+      ],
+      "displayP3": [
+        1,
+        0.552127,
+        0.286282
+      ],
+      "inGamut": false
+    },
+    {
+      "oklch": [
+        0.42,
+        0.38,
+        355
+      ],
+      "displayP3": [
+        0.546059,
+        0,
+        0.317724
+      ],
+      "inGamut": false
+    }
+  ],
+  "srgbPrimaries": [
+    {
+      "srgb": [
+        1,
+        0,
+        0
+      ],
+      "oklch": [
+        0.627955,
+        0.257683,
+        29.23388
+      ],
+      "displayP3": [
+        0.917488,
+        0.200287,
+        0.138561
+      ]
+    },
+    {
+      "srgb": [
+        0,
+        1,
+        0
+      ],
+      "oklch": [
+        0.86644,
+        0.294827,
+        142.495345
+      ],
+      "displayP3": [
+        0.458402,
+        0.985265,
+        0.298295
+      ]
+    },
+    {
+      "srgb": [
+        0,
+        0,
+        1
+      ],
+      "oklch": [
+        0.452014,
+        0.313214,
+        264.052023
+      ],
+      "displayP3": [
+        0,
+        0,
+        0.959588
+      ]
+    },
+    {
+      "srgb": [
+        1,
+        1,
+        1
+      ],
+      "oklch": [
+        1,
+        0,
+        0
+      ],
+      "displayP3": [
+        1,
+        1,
+        1
+      ]
+    }
+  ]
+}

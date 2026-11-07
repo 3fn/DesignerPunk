@@ -5,6 +5,7 @@ import { getPlatformTokenName } from '../naming/PlatformNamingRules';
 import { getColorToken } from '../tokens/ColorTokens';
 import { getOpacityToken } from '../tokens/OpacityTokens';
 import { generatedByLine, getCoreVersion } from '../generators/coreVersion';
+import { formatKotlinDisplayP3, parseOklchText } from '../generators/oklch/NativeColorUtils';
 
 /**
  * Android-specific format generator
@@ -48,6 +49,25 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
     }
   }
 
+  /**
+   * The type every shadow composite is built with: `ShadowToken`, generated into the token file
+   * (Spec 129 design § 5). Fields are the types of the primitives they take today; the type table
+   * (row 6) retypes them in a later unit. The colour field is written with its full name: the
+   * package-drift guard reads `val <name>: Color` as a theme data class member, and this is not one.
+   */
+  private generateShadowTokenType(): string[] {
+    return [
+      '/** A shadow composite: offset, blur, opacity and the colour primitive it names. */',
+      'data class ShadowToken(',
+      '    val offsetX: Float,',
+      '    val offsetY: Float,',
+      '    val blur: Float,',
+      '    val opacity: Float,',
+      '    val color: androidx.compose.ui.graphics.Color',
+      ')'
+    ];
+  }
+
   generateHeader(metadata?: FileMetadata): string {
     // No wall-clock time: same input, same bytes (2026-10-03-generate-output-not-deterministic).
     const version = metadata?.version || getCoreVersion();
@@ -61,6 +81,8 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
         ' */',
         '',
         'package com.designerpunk.tokens',
+        '',
+        ...this.generateShadowTokenType(),
         '',
         'object DesignTokens {'
       ].join('\n');
@@ -340,12 +362,11 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
     
     // Check if the primitive reference is a baked-in RGBA or OKLCH value
     if (typeof primitiveRef === 'string' && primitiveRef.startsWith('oklch(')) {
-      const match = primitiveRef.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*([\d.]+))?\)/);
-      if (match) {
-        const [, l, c, h, alpha] = match;
+      // OKLCH value — written as a Display P3 constructor with channels computed here
+      const oklch = parseOklchText(primitiveRef);
+      if (oklch) {
         const wcagComment = this.getWCAGComment(semantic);
-        let colorExpr = `Oklch(${l}f, ${c}f, ${h}f).toComposeColor()`;
-        if (alpha) colorExpr += `.copy(alpha = ${alpha}f)`;
+        const colorExpr = formatKotlinDisplayP3(oklch.l, oklch.c, oklch.h, oklch.alpha);
         const tokenLine = `    val ${semanticName} = ${colorExpr}`;
         return wcagComment ? `    ${wcagComment}\n${tokenLine}` : tokenLine;
       }
@@ -505,13 +526,14 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
     const semanticName = this.getTokenName(semantic.name, semantic.category);
     
     if (this.outputFormat === 'kotlin') {
-      // Generate Typography data class initialization format
+      // Generate the composite's data class initialization format
       const parameters = refs.map(([key, primitiveRef]) => {
         const primitiveRefName = this.getTokenName(primitiveRef, semantic.category);
         return `${key} = ${primitiveRefName}`;
       }).join(', ');
       
-      return `    val ${semanticName} = Typography(${parameters})`;
+      const typeWrapper = semantic.category === 'shadow' ? 'ShadowToken' : 'Typography';
+      return `    val ${semanticName} = ${typeWrapper}(${parameters})`;
     } else {
       // XML doesn't support object literals, so we'll generate individual properties
       // This is a limitation of XML resources
@@ -535,10 +557,13 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
       : 'SEMANTIC TOKENS\n    Use these for UI development';
     
     if (this.outputFormat === 'kotlin') {
+      // Every line of the title carries its own `//`. A title with a line break prefixed once left
+      // its second line as bare text in the object body, which does not parse (Spec 129 row 7).
+      const titleLines = sectionTitle.split('\n').map(line => `    // ${line.trim()}`);
       return [
         '',
         '    // ============================================',
-        `    // ${sectionTitle}`,
+        ...titleLines,
         '    // ============================================',
         ''
       ].join('\n');
@@ -736,14 +761,15 @@ export class AndroidFormatGenerator extends BaseFormatProvider {
     return lines;
   }
 
-  // --- OKLCH Output Methods (Spec 112) ---
+  // --- OKLCH Output Methods (Spec 112; native constructors Spec 129) ---
 
   /**
-   * Format a resolved OKLCH color as a colormath Oklch constant.
-   * Output: `val pink300 = Oklch(0.65f, 0.242f, 8.2f).toComposeColor()`
+   * Format a resolved OKLCH color as a Compose Display P3 constant. The channels are computed at
+   * generation, so the file needs no colour library (Spec 129 design § 6).
+   * Output: `val pink300 = Color(0.9175f, 0.2003f, 0.1386f, 1f, ColorSpaces.DisplayP3)`
    */
   formatOklchColor(name: string, l: number, c: number, h: number): string {
     const kotlinName = this.getTokenName(name, 'color');
-    return `    val ${kotlinName} = Oklch(${l}f, ${c}f, ${h}f).toComposeColor()`;
+    return `    val ${kotlinName} = ${formatKotlinDisplayP3(l, c, h)}`;
   }
 }

@@ -24,8 +24,6 @@ import { getOklchMetadata } from './oklch/OklchTokenIndexMetadata';
 import {
   findUnemittedColorReferences,
   unemittedColorReferenceMessage,
-  knownShadowColorWarning,
-  type UnemittedColorReference,
 } from '../validators/ColorReferenceEmissionValidator';
 import type { ModeResolvedTokens } from './ModeResolvedTokens';
 import type { ResolvedConfig } from '../config/ConfigLoader';
@@ -99,17 +97,10 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
   // passes it and is never written out (.kiro/issues/2026-10-25-generate-passes-semantic-
   // references-to-unemitted-primitives.md). Checked again after theme resolution, below.
   const emittedColorNames = TokenFileGenerator.emittedColorPrimitiveNames();
-  const knownDefectReferences: UnemittedColorReference[] = [];
   const checkColorReferences = (contexts: Array<Array<Omit<SemanticToken, 'primitiveTokens'>>>): void => {
     const findings = findUnemittedColorReferences(contexts, primitiveTokens, emittedColorNames);
-    const blocking = findings.filter(f => !f.knownDefect);
-    for (const f of findings) {
-      if (f.knownDefect && !knownDefectReferences.some(k => k.token === f.token && k.key === f.key && k.primitive === f.primitive)) {
-        knownDefectReferences.push(f);
-      }
-    }
-    if (blocking.length === 0) return;
-    const messages = blocking.map(unemittedColorReferenceMessage);
+    if (findings.length === 0) return;
+    const messages = findings.map(unemittedColorReferenceMessage);
     console.error('❌ Semantic colour reference check failed:\n');
     messages.forEach(m => console.error(`   ${m}`));
     console.error('');
@@ -214,9 +205,6 @@ export function generateTokenFiles(tokens: TokenInput, config: ResolvedConfig): 
 
   // Every context the platform files carry, after the theme overrides (which can re-point a token).
   checkColorReferences([resolvedLight, resolvedDark, resolvedLightWcag, resolvedDarkWcag]);
-  if (knownDefectReferences.length > 0) {
-    console.warn(`⚠️  ${knownShadowColorWarning(knownDefectReferences)}\n`);
-  }
 
   // Generate all platform files (passing resolved tokens for all 4 contexts)
   const wcagOverrideKeys = new Set([

@@ -129,8 +129,8 @@ describe('runGenerate — a token source that fails generation validation', () =
     const index = fs.readFileSync(path.join(tmpDir, 'token-index/semantics.yaml'), 'utf8');
     expect(index).not.toBe(SENTINEL);
     expect(index).toMatch(/themeVarying: true/);
-    // The pinned shadow-colour defect is reported, not hidden, and does not stop generation.
-    expect(warnLines.some((l) => l.includes('15 shadow token(s) reference shadow colour primitive(s)'))).toBe(true);
+    // The shadow colours are emitted (Spec 129 Task 8.2), so no shadow-colour warning is printed.
+    expect(warnLines.some((l) => l.includes('shadow colour primitive(s)'))).toBe(false);
   }, 60000);
 
   test('override path: a semantic token the built-in dark map names is missing → exit 1, nothing written', async () => {

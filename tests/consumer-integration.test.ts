@@ -361,6 +361,106 @@ describe('Consumer Integration (Spec 106 R8)', () => {
   }, TIMEOUT);
 
   /**
+   * Spec 129 Task 8.4 (Req 1.6, 7.1; design § 9 "`var()` reach"; Sparky owns it, no browser).
+   *
+   * Two `Consumer Guard` cases on the PACKED install's output (the outer `generate` above ran first):
+   *  (1) every custom property a `var()` references resolves: in the generated web CSS
+   *      (`DesignTokens.web.css` + `ComponentTokens.web.css`) for the generated files, and in the
+   *      generated `DesignTokens.web.css` for the package's `component-tokens.css` (the proof that it
+   *      "binds late to the adopter's primitives" holds), or else is on the pinned allowlist below;
+   *  (2) a blue-tinted shadow composite uses its colour token's custom property, not a literal
+   *      (before Task 8.2 it was `rgba(0, 0, 0, …)`, so the blue-tinted shadows rendered black).
+   * Text-level reads of the emitted CSS; no browser, so `color-mix` is checked as text, not as a rendered colour.
+   */
+  describe('Spec 129 Task 8.4 — web `var()` resolution and the blue-tinted shadow composite (Req 1.6, 7.1)', () => {
+    // The pinned allowlist: custom properties a `var()` may reference without any generated definition.
+    // Kept here, at the head of the case, and its COUNT is asserted: a name added or removed without
+    // changing the count (and this comment) fails. Empty today: at Task 8.4 every `var()` in both files
+    // resolves, so nothing needs pinning. Adding a name takes a reason on this line and a count change.
+    const VAR_ALLOWLIST: readonly string[] = [];
+    const VAR_ALLOWLIST_COUNT = 0;
+
+    const stripComments = (css: string): string => css.replace(/\/\*[\s\S]*?\*\//g, '');
+    const definedProps = (css: string): Set<string> =>
+      new Set([...stripComments(css).matchAll(/(--[A-Za-z0-9_-]+)\s*:/g)].map((m) => m[1]));
+    const referencedProps = (css: string): Set<string> =>
+      new Set([...stripComments(css).matchAll(/var\(\s*(--[A-Za-z0-9_-]+)/g)].map((m) => m[1]));
+    /** References in `css` that are neither defined in `defined` nor allowlisted. Sorted. */
+    const unresolved = (css: string, defined: Set<string>): string[] =>
+      [...referencedProps(css)].filter((r) => !defined.has(r) && !VAR_ALLOWLIST.includes(r)).sort();
+
+    const readGenerated = (name: string): string => {
+      const file = path.join(tempDir, 'dist', 'tokens', name);
+      expect(fs.existsSync(file)).toBe(true);
+      return fs.readFileSync(file, 'utf-8');
+    };
+    const readPackageComponentTokensCss = (): string => {
+      const pkgDir = path.join(tempDir, 'node_modules', '@3fn', 'core');
+      const exportsMap = JSON.parse(fs.readFileSync(path.join(pkgDir, 'package.json'), 'utf-8')).exports;
+      const target = exportsMap['./component-tokens.css'];
+      expect(typeof target).toBe('string');
+      const file = path.join(pkgDir, target);
+      expect(fs.existsSync(file)).toBe(true);
+      return fs.readFileSync(file, 'utf-8');
+    };
+
+    it('the allowlist is pinned: its count is asserted', () => {
+      expect(VAR_ALLOWLIST).toHaveLength(VAR_ALLOWLIST_COUNT);
+      expect(new Set(VAR_ALLOWLIST).size).toBe(VAR_ALLOWLIST_COUNT);
+    });
+
+    it('every custom property a `var()` references in the generated web CSS is defined there or allowlisted', () => {
+      const design = readGenerated('DesignTokens.web.css');
+      const component = readGenerated('ComponentTokens.web.css');
+      const defined = definedProps(design + '\n' + component);
+      // N>0: a vacuous pass (an empty read) is not a pass.
+      expect(referencedProps(design).size).toBeGreaterThan(100);
+      expect(defined.size).toBeGreaterThan(100);
+      expect(unresolved(design, defined)).toEqual([]);
+      expect(unresolved(component, defined)).toEqual([]);
+    });
+
+    it("every custom property a `var()` references in the package's component-tokens.css resolves against the generated DesignTokens.web.css or the allowlist (design § 9)", () => {
+      const pkgCss = readPackageComponentTokensCss();
+      const defined = definedProps(readGenerated('DesignTokens.web.css'));
+      expect(referencedProps(pkgCss).size).toBeGreaterThan(0);
+      expect(unresolved(pkgCss, defined)).toEqual([]);
+    });
+
+    it('the check bites: a `var()` of an undefined custom property is reported; an allowlisted name would not be', () => {
+      const defined = definedProps(readGenerated('DesignTokens.web.css'));
+      const planted = readPackageComponentTokensCss() + '\n:root { --planted: var(--no-such-primitive-999); }\n';
+      expect(unresolved(planted, defined)).toEqual(['--no-such-primitive-999']);
+      // A reference inside a comment is not a reference.
+      expect(unresolved('/* var(--only-in-a-comment) */ :root { --a: 1; }', defined)).toEqual([]);
+    });
+
+    it('a blue-tinted shadow composite uses its colour token\'s custom property, not a literal (Req 7.1)', () => {
+      const css = stripComments(readGenerated('DesignTokens.web.css'));
+      const line = (prop: string): string => {
+        const m = css.match(new RegExp(`^\\s*${prop}:\\s*(.+?);\\s*$`, 'm'));
+        expect(m).not.toBeNull();
+        return m![1];
+      };
+      // shadow.fab is a blue-tinted composite: its colour token is shadowBlue100.
+      expect(line('--shadow-fab-color')).toBe('var(--shadow-blue-100)');
+      const composite = line('--shadow-fab');
+      expect(composite).toContain('var(--shadow-blue-100)');
+      expect(composite).not.toMatch(/rgba?\(/);
+      expect(composite).not.toContain('var(--shadow-black-100)');
+      // ...and the colour primitive it names is itself defined in the generated CSS.
+      expect(definedProps(css).has('--shadow-blue-100')).toBe(true);
+
+      // The general form: every composite names exactly the colour custom property its `-color` names.
+      const colorProps = [...css.matchAll(/^\s*(--shadow-[a-z0-9-]+)-color:\s*(var\(--[A-Za-z0-9_-]+\));/gm)];
+      expect(colorProps.length).toBeGreaterThanOrEqual(3);
+      for (const [, base, colourVar] of colorProps) {
+        expect(line(base)).toContain(colourVar);
+      }
+    });
+  });
+
+  /**
    * Spec 123 Task 20.3 (design.md C24; tasks.md Task 20 criterion 4, Leonardo A8): **a fresh clone of a
    * policy-applied repo runs joining steps 2-4 successfully.** The fixture is BUILT AT TEST TIME and nothing is
    * committed (a born repo under `src/` would be type-checked by full `tsc`, and would rot against every later

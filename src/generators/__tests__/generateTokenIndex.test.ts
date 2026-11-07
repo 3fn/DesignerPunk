@@ -255,9 +255,9 @@ describe('generateTokenIndex', () => {
     expect(t['zIndex.container'].platformNotes).toEqual({ android: 'Use elevation tokens instead' });
   });
 
-  it('gives null on every platform to a colour primitive the generators do not emit', () => {
+  it('gives null on every platform to a colour primitive the generators do not emit (a colour a consumer added to its copy; the shadow colours are emitted since Spec 129 Task 8.2)', () => {
     generateTokenIndex(outputDir, {
-      primitiveTokens: [makePrimitive('shadowBlack100', TokenCategory.COLOR, 0), makePrimitive('teal300', TokenCategory.COLOR, 0)],
+      primitiveTokens: [makePrimitive('brand300', TokenCategory.COLOR, 0), makePrimitive('teal300', TokenCategory.COLOR, 0)],
       semanticTokens: [],
       componentTokens: [],
       modeResolved: makeModeResolved(),
@@ -265,10 +265,24 @@ describe('generateTokenIndex', () => {
     });
 
     const t = (yaml.load(fs.readFileSync(path.join(outputDir, 'primitives.yaml'), 'utf-8')) as any).tokens;
-    expect(t['shadowBlack100'].platforms).toEqual({ web: null, ios: null, android: null });
-    expect(Object.keys(t['shadowBlack100'].platformNotes)).toEqual(['web', 'ios', 'android']);
+    expect(t['brand300'].platforms).toEqual({ web: null, ios: null, android: null });
+    expect(Object.keys(t['brand300'].platformNotes)).toEqual(['web', 'ios', 'android']);
     expect(t['teal300'].platforms).toEqual({ web: '--teal-300', ios: 'teal300', android: 'teal_300' });
     expect(t['teal300'].platformNotes).toBeUndefined();
+  });
+
+  it('gives the shadow colour primitives their names on every platform (emitted since Spec 129 Task 8.2)', () => {
+    generateTokenIndex(outputDir, {
+      primitiveTokens: [makePrimitive('shadowBlack100', TokenCategory.COLOR, 0)],
+      semanticTokens: [],
+      componentTokens: [],
+      modeResolved: makeModeResolved(),
+      componentSchemaDir: NO_SCHEMA_DIR,
+    });
+
+    const t = (yaml.load(fs.readFileSync(path.join(outputDir, 'primitives.yaml'), 'utf-8')) as any).tokens;
+    expect(t['shadowBlack100'].platforms).toEqual({ web: '--shadow-black-100', ios: 'shadowBlack100', android: 'shadow_black_100' });
+    expect(t['shadowBlack100'].platformNotes).toBeUndefined();
   });
 
   it('does not include tokens not in the provided input', () => {

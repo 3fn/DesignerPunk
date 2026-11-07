@@ -3,15 +3,13 @@
  * @purpose Verify that a semantic colour reference to a primitive the platform files do not
  * define is found (.kiro/issues/2026-10-25-generate-passes-semantic-references-to-unemitted-primitives.md),
  * that the emitted set the check reads is what the web, iOS and Android files actually define,
- * and that DesignerPunk's own token set has no such reference beyond the pinned shadow colours.
+ * and that DesignerPunk's own token set has no such reference (the shadow colours are emitted: Spec 129 Task 8.2).
  */
 import { describe, it, expect } from '@jest/globals';
 import {
   findUnemittedColorReferences,
   isColorReference,
   unemittedColorReferenceMessage,
-  knownShadowColorWarning,
-  KNOWN_UNEMITTED_SHADOW_COLORS,
 } from '../ColorReferenceEmissionValidator';
 import { TokenFileGenerator } from '../../generators/TokenFileGenerator';
 import { WebFormatGenerator } from '../../providers/WebFormatGenerator';
@@ -80,20 +78,43 @@ describe('ColorReferenceEmissionValidator', () => {
     });
 
     it('defines no colour primitive outside the emitted set (the token source\'s legacy colours are not written)', () => {
-      const notEmitted = primitives.filter(p => p.category === TokenCategory.COLOR && !emitted.has(p.name));
-      expect(notEmitted.length).toBeGreaterThan(0); // the premise: the source has colours the output lacks
+      // The premise: a copy's source has a colour the palette lacks. DesignerPunk's own source has
+      // none left (the shadow colours were the last), so the test adds one, as a consumer's copy does.
+      const source = [...primitives, legacyColorPrimitive('brand300')];
+      const notEmitted = source.filter(p => p.category === TokenCategory.COLOR && !emitted.has(p.name));
+      expect(notEmitted.map(p => p.name)).toEqual(['brand300']);
       for (const p of notEmitted) {
         expect(web).not.toMatch(new RegExp(`^\\s*${escape(webNames.getTokenName(p.name, 'color'))}:`, 'm'));
       }
     });
 
-    it('web: every var() the file reads is defined in it, except the pinned shadow colours', () => {
+    it('web: every var() the file reads is defined in it', () => {
       const defined = new Set(Array.from(web.matchAll(/(--[\w-]+)\s*:/g), m => m[1]));
       const undefinedRefs = new Set(
         Array.from(web.matchAll(/var\((--[\w-]+)/g), m => m[1]).filter(r => !defined.has(r))
       );
-      const pinned = new Set([...KNOWN_UNEMITTED_SHADOW_COLORS].map(n => webNames.getTokenName(n, 'color')));
-      expect([...undefinedRefs].filter(r => !pinned.has(r))).toEqual([]);
+      expect([...undefinedRefs]).toEqual([]);
+    });
+
+    it('no colour primitive a shadow composite references goes unemitted (web, iOS, Android)', () => {
+      const shadowColours = new Set(
+        semantics
+          .filter(t => t.category === 'shadow')
+          .map(t => (t.primitiveReferences as Record<string, string>).color)
+      );
+      // The premise: the composites name colour primitives, and there is more than one.
+      expect(shadowColours.size).toBeGreaterThanOrEqual(2);
+      const missing: string[] = [];
+      for (const name of shadowColours) {
+        expect(emitted.has(name)).toBe(true);
+        const w = webNames.getTokenName(name, 'color');
+        const i = iosNames.getTokenName(name, 'color');
+        const a = androidNames.getTokenName(name, 'color');
+        if (!new RegExp(`^\\s*${escape(w)}:`, 'm').test(web)) missing.push(`web ${w}`);
+        if (!new RegExp(`\\blet ${escape(i)} =`).test(ios)) missing.push(`ios ${i}`);
+        if (!new RegExp(`\\bval ${escape(a)} =`).test(android)) missing.push(`android ${a}`);
+      }
+      expect(missing).toEqual([]);
     });
 
     it('case 1 premise: a semantic pointed at a source-only colour is written as a reference the file does not define', () => {
@@ -108,23 +129,16 @@ describe('ColorReferenceEmissionValidator', () => {
   });
 
   describe("DesignerPunk's own token set", () => {
-    it('has no unemitted colour reference except the pinned shadow colours (15 shadow tokens)', () => {
+    it('has no unemitted colour reference at all (the 15 shadow tokens included)', () => {
       const findings = findUnemittedColorReferences(resolve(semantics), primitives, emitted);
-      expect(findings.filter(f => !f.knownDefect)).toEqual([]);
-      const tokens = new Set(findings.map(f => f.token));
-      expect(tokens.size).toBe(15);
-      expect([...tokens].every(t => t.startsWith('shadow.'))).toBe(true);
-      expect(knownShadowColorWarning(findings)).toBe(
-        '15 shadow token(s) reference shadow colour primitive(s) that no platform file defines ' +
-        '(shadowBlack100, shadowBlue100). This is a known DesignerPunk defect, not a problem in ' +
-        'your token source; generate continues.'
-      );
+      expect(findings).toEqual([]);
+      // The premise: the 15 shadow composites are among the tokens that were read.
+      expect(semantics.filter(t => t.category === 'shadow')).toHaveLength(15);
     });
 
-    it('pins only colours that are still not emitted (remove a name here once the generators emit it)', () => {
-      for (const name of KNOWN_UNEMITTED_SHADOW_COLORS) {
-        expect(emitted.has(name)).toBe(false);
-        expect(primitives.find(p => p.name === name)?.category).toBe(TokenCategory.COLOR);
+    it('emits all four shadow colour primitives', () => {
+      for (const name of ['shadowBlack100', 'shadowBlue100', 'shadowOrange100', 'shadowGray100']) {
+        expect(emitted.has(name)).toBe(true);
       }
     });
 
@@ -146,8 +160,7 @@ describe('ColorReferenceEmissionValidator', () => {
 
   describe('case 1: a colour primitive the token source declares and the palette lacks', () => {
     const source = [...primitives, legacyColorPrimitive('brand300')];
-    const findings = findUnemittedColorReferences(resolve(repointedActionPrimary('brand300')), source, emitted)
-      .filter(f => !f.knownDefect);
+    const findings = findUnemittedColorReferences(resolve(repointedActionPrimary('brand300')), source, emitted);
 
     it('finds the re-pointed token, as declared in the source', () => {
       // In a consumer's copy, accessibility.focus.color reads color.action.primary's reference
@@ -170,8 +183,7 @@ describe('ColorReferenceEmissionValidator', () => {
   });
 
   describe('case 2: a colour the token source does not declare (only in its color/primitives)', () => {
-    const findings = findUnemittedColorReferences(resolve(repointedActionPrimary('brand300')), primitives, emitted)
-      .filter(f => !f.knownDefect);
+    const findings = findUnemittedColorReferences(resolve(repointedActionPrimary('brand300')), primitives, emitted);
 
     it('is found, and says why rather than only "does not exist"', () => {
       expect(findings).toHaveLength(1);
