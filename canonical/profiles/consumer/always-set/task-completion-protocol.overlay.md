@@ -74,7 +74,7 @@ Branch → PR → required checks → merge.
 - **On merge — the local branch is deleted** on returning to `main` (`git branch -d <branch>`).
 - **Stale or unmerged branches** (abandoned or superseded units) are pruned in your team's periodic health check, so one long-lived branch never quietly accumulates unrelated work.
 
-## @unit #branch-and-pr-conventions @ sha256:4e0f6aca925ae3b32e9dfda4c2972002344de66fafdeefb0c4f05c7ad860583d
+## @unit #branch-and-pr-conventions @ sha256:5e562086d952e86564eb4e57814479d75c936c5a114d2d67363d64050a5a1a10
 ### Branch and PR Conventions
 
 - **The `<spec>` token**: the spec ID — the leading identifier of the spec directory name.
