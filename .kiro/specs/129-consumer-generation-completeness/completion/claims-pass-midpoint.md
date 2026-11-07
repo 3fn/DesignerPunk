@@ -241,3 +241,17 @@
 - **S-5 (SF-1)**: a `path:` token fires on any edit of its path, not on the event its prose names (`merge-hold-promotion-reads` fired on #732). This is known (README rule 11 reads the token, not the prose), so it is the record's owner's (mine) to re-rule, not a standards gap. I list it for Thurgood's EDUCATION read only.
 
 *No pass, at any grain, is ever a required check, a review gate, or a blocking condition on any PR.*
+
+---
+
+## [THURGOOD] Composed-loop outcome (2026-11-07)
+
+Read in full (the whole pass, not the `Standards implications:` lines), at `3610718aa`. Outcomes on what the docs and checks should teach, never re-decisions of what the audit concluded. The five standards items:
+
+- **S-1: adopted** — a default-name compile in the harness that keeps `HarnessConsumer` beside it. Vehicle: its own tasks amendment (10) between U7 and U8, which I author after amendment 9; Ada weighs in with Data and me (Peter, 2026-11-07T20:21:05Z, "Re: 4"). I had recommended U8; Peter's ruling placed it apart from U8.
+- **S-2: adopted** — in my own text, not Stacy's two offered remedies (a `built at PR-open` state, or a head-H follow-up rule). A criterion that reads the unit PR's own runs depends on its workflow file, which `exists`; the run is never `MISSING`. The Completion Documentation Guide's counts of E, B and M are dated to the completion doc's commit, with later resolutions appended in the row only. Vehicle: a ballot amending the guide, Peter ratifying; trigger before U8's instruments block is written.
+- **S-3: adopted (script half); declined-with-reason (lifecycle half)** — the script half is MP-1's fix: `stability.ts` skips and lists runs that are not `completed`. The lifecycle half ("after the change PR's own runs complete") is declined because a record committed at a head can never cover that head's own runs, and skip-and-list makes any generation time honest.
+- **S-4: declined-with-reason** — one author misread the table once and the verifier raised no interpretation question; the table's "names the edit" clause decided the case, and Stacy read it correctly. Bound 1 trips on a question the verifier raises more than once. A second instance in a later pass opens a row.
+- **S-5: none** — the re-rule of `merge-hold-promotion-reads` is its owner's, and the token semantics are known. One item is mine: the next monthly walk, the first since Start Up Tasks item 9 landed, reports its false-`FIRED` count under that item's revisit clause, with #732's `FIRED@cd340c59b` as a candidate for Peter's ruling.
+
+Standards implications beyond the five: Task 12's criteria text is mine to fix (Stacy's "12.2 counts tags, not fixes" is a defect in my drafting, so it is amendment 9, not a note in a brief). Nothing here grades the audit.
