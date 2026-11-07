@@ -53,3 +53,15 @@ After he merges the change PR: in Settings, Branches, the branch protection of `
 ## Counter-argument and what survives
 
 The costs Peter accepted are in his ruling record. What survives: no context has lived through a real registry outage, so the demotion thresholds are guesses (`.kiro/issues/2026-11-07-promoted-harness-contexts-demotion-read.md`), and the context's list holds 18 entries, so its PASS means the failures match the list, not that the code compiles.
+
+---
+
+## Outcome (rule 5), 2026-11-07
+
+**Promoted and ARMED.** The change PR merged as #717 (`6572a601e`) at 2026-11-07T16:12:33Z. Peter then changed `main`'s branch protection. At 2026-11-07T16:15:46Z the orchestrator session, a credentialed session, verified through the API that `main` requires 20 contexts, including `harness-android-tokens`. The stray branch-pattern rule Peter first created was deleted, and `main` is now the only rule.
+
+The orchestrator then ran `bash tools/agent-generator/verify-gate-registration.sh` on `main` at `6572a601e`, after Peter's act. Its last line (the ARMED evidence of lifecycle step 4), pasted as relayed by the orchestrator:
+
+`PASS: all 20 required contexts present, count-asserted (N=20 recorded in this script)`
+
+The grant expired at #717's merge. This PR records the line and, under rule 5, archives the record; it arms Stacy's ARMING read.
