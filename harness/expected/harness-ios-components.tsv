@@ -98,7 +98,6 @@ pkg:src/components/core/Nav-Header-Page/platforms/ios/NavHeaderPage.ios.swift | 
 pkg:src/components/core/Nav-Header-Page/platforms/ios/NavHeaderPage.ios.swift | generic parameter 'Leading' could not be inferred	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Nav-Header-Page/platforms/ios/NavHeaderPage.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
 pkg:src/components/core/Nav-Header-Page/platforms/ios/NavHeaderPage.ios.swift | type 'String' has no member 'chevronLeft'	1	2026-11-07-native-component-repair-from-first-harness-run.md
-pkg:src/components/core/Nav-SegmentedChoice-Base/platforms/ios/NavSegmentedChoiceBase.ios.swift | cannot convert value of type 'Font.Weight' to specified type 'UIFont.Weight'	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Nav-SegmentedChoice-Base/platforms/ios/NavSegmentedChoiceBase.ios.swift | cannot infer key path type from context; consider explicitly specifying a root type	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
 pkg:src/components/core/Nav-SegmentedChoice-Base/platforms/ios/NavSegmentedChoiceBase.ios.swift | extra argument 'minHeight' in call	1	2026-11-07-native-component-repair-from-first-harness-run.md
 pkg:src/components/core/Nav-SegmentedChoice-Base/platforms/ios/NavSegmentedChoiceBase.ios.swift | no exact matches in call to initializer	1	2026-06-28-spec-094-platform-theme-emission-unwired.md
