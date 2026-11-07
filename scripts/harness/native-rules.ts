@@ -10,7 +10,9 @@
  * (`__tests__/native-rules-emitter.test.ts`) and the per-run instance check can find a drift
  * between this copy and the generator's. Where the design is silent or ambiguous the code says
  * `DESIGN-GAP:` and does the plainest thing; Ada answers each gap, and the answer changes the
- * design text first and this file second.
+ * design text first and this file second. `DESIGN: amendment 4 pending` marks a rule Ada has
+ * answered whose design text (tasks amendment 4) has not merged; the code stays as it is until
+ * that text is merged, except where the line says otherwise.
  *
  * Contract:
  *   - Pure functions. No I/O, no clock, no environment, no `fs`, no YAML parsing: a caller reads
@@ -85,11 +87,10 @@ export const productGenKeyRoot = (platform: NativePlatform): string => `gen:${PR
  * `mode` field. `pair: true` marks the `{ light, dark }` registration form (design § 10), which
  * covers both modes.
  *
- * DESIGN-GAP: does an entry in the `{ light, dark }` form also carry a `mode`, and does
- * refusal (g) read it? The design says the form "adds both" modes (item 3) and that `dark` is
- * refused in it (item 5 (c)); it does not say what `mode` such an entry has. This module reads
- * `mode` only when `pair` is not true.
- */
+ * DESIGN: amendment 4 pending. Ada's answer: every entry carries `mode`, and refusal (g) also
+ * refuses the `{ light, dark }` form with a mode other than `both`. Until amendment 4's text is
+ * merged this module reads `mode` only when `pair` is not true, and (g) does not read it for a
+ * pair entry. */
 export interface ThemeEntry {
   name: string;
   mode?: string;
@@ -225,13 +226,14 @@ export function familyCases(themes: readonly ThemeEntry[], platform: NativePlatf
 /**
  * Swift reserved words, which a family case is declared in backticks for.
  *
- * DESIGN-GAP: design § 4 says "a case that is a Swift reserved word is declared in backticks
- * (`` case `default` ``)" and names `self`, `init` and `allCases` as refused, but does not give
- * the list of reserved words. This is the keyword list of The Swift Programming Language
- * ("Keywords and Punctuation": declaration, statement, and expression and type keywords),
- * without the contextual keywords, which need no backticks. `self`, `Self` and `init` are in it,
- * and are refused by item 5 (h) before a declaration is asked for. Ada confirms or replaces it.
- */
+ * DESIGN: amendment 4 pending (the list is to be stated once in § 4, under "The theme family
+ * (6(b))"). It is the keyword list of The Swift Programming Language ("Keywords and
+ * Punctuation": declaration, statement, and expression and type keywords), without the
+ * contextual keywords, which need no backticks. Checked by Kenya against Swift 6.4.2 (Xcode
+ * 27.2, `arm64-apple-ios17.0-simulator`) on 2026-11-06: every word here fails as a bare enum
+ * case and compiles in backticks, except `init`, which fails both ways and is refused by item 5
+ * (h); `await` and the contextual keywords compile bare, so they are not here. `Any` and `Self`
+ * cannot arise (the case is lower-cased) and are harmless. `self` is in it and refused by (h). */
 export const SWIFT_RESERVED_WORDS: readonly string[] = [
   'associatedtype', 'class', 'deinit', 'enum', 'extension', 'fileprivate', 'func', 'import', 'init', 'inout',
   'internal', 'let', 'operator', 'private', 'precedencegroup', 'protocol', 'public', 'rethrows', 'static',
@@ -307,11 +309,9 @@ const squash = (name: string): string => name.toLowerCase().replace(/[-_]/g, '')
  * refusal that holds, in entry order and, within an entry, in rule order. Refusals that need a
  * well-formed name ((d), (e), (h)) are skipped for an entry that fails (a).
  *
- * DESIGN-GAP: (e) says "two themes give the same Pascal words when letter case is ignored" and
- * lists `high-contrast`, `high_contrast` and `highContrast`. This module compares the
- * lower-cased Pascal concatenation, so `a-b` and `ab` collide too (both give `ab`). The design
- * does not say whether that second kind is meant.
- */
+ * DESIGN: amendment 4 pending. (e) compares the lower-cased Pascal concatenation, so `a-b` and
+ * `ab` collide as well as `high-contrast`, `high_contrast` and `highContrast`: Ada's answer is
+ * to keep this broader rule and reword (e) to say so. */
 export function checkThemeConfig(themes: readonly ThemeEntry[]): Refusal[] {
   const out: Refusal[] = [];
   const seenName = new Map<string, number>();
@@ -404,32 +404,40 @@ export function productCategoryPascal(category: string): string {
 /**
  * Reads the categories out of the parsed product files. A file at a subfolder path is not
  * read; a file that did not parse (`doc` null or undefined) or has no `tokens` key contributes
- * no category. Keys are kept as the YAML has them, in file order; categories in the order the
- * caller lists the files.
+ * no category. Keys are kept as the YAML has them, in file order.
  *
- * DESIGN-GAP: the design says keys are "in file order" but not in what order categories come
- * when several files are read (a directory listing's order is not stated), and not what a
- * `tokens` key holding a non-mapping (null, a list) contributes. This function keeps the
- * caller's file order and treats a non-mapping `tokens` as no category. The probes count reads
- * and do not depend on the category order.
+ * Harness-only rules (Ada's answers to the 5.4 consult, gaps 4 and 5; they concern how this
+ * module reads a malformed fixture, not what the generator does):
+ *   - Categories are sorted by file name in code-point order, so the answer does not depend on
+ *     how the lane lists the folder.
+ *   - A `tokens` that is null contributes no category. A `tokens` that is a list throws, naming
+ *     the file: the generator would emit members that cannot compile, so it is a fixture error.
+ *     (A scalar `tokens` also contributes no category; no answer covers it, and no fixture has one.)
+ *   - A token's `platforms` that is null reads as absent. Any other value that is not a list
+ *     throws, naming the file and the token: no single reading matches the generator, which
+ *     substring-matches a string and throws on a mapping.
  */
 export function productCategories(
   files: readonly { path: string; doc: unknown }[],
 ): ProductCategory[] {
   const out: ProductCategory[] = [];
-  for (const f of files) {
-    if (!productFileIsRead(f.path)) continue;
+  const read = files.filter((f) => productFileIsRead(f.path)).sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
+  for (const f of read) {
     const doc = f.doc;
     if (typeof doc !== 'object' || doc === null || Array.isArray(doc)) continue;
-    const tokens = (doc as Record<string, unknown>).tokens;
     if (!Object.prototype.hasOwnProperty.call(doc, 'tokens')) continue;
-    if (typeof tokens !== 'object' || tokens === null || Array.isArray(tokens)) continue;
+    const tokens = (doc as Record<string, unknown>).tokens;
+    if (Array.isArray(tokens)) throw new Error(`${f.path}: "tokens" is a list; it must be a mapping of key to token`);
+    if (typeof tokens !== 'object' || tokens === null) continue;
     const list: ProductTokenInput[] = [];
     for (const [key, v] of Object.entries(tokens as Record<string, unknown>)) {
       const t = (typeof v === 'object' && v !== null ? v : {}) as Record<string, unknown>;
       const entry: ProductTokenInput = { key };
       if (typeof t.ref === 'string') entry.ref = t.ref;
       if (Array.isArray(t.platforms)) entry.platforms = t.platforms.map(String);
+      else if (t.platforms !== undefined && t.platforms !== null) {
+        throw new Error(`${f.path}: token "${key}" has a "platforms" value that is not a list`);
+      }
       list.push(entry);
     }
     out.push({ category: productCategoryOf(f.path), tokens: list });
@@ -439,10 +447,9 @@ export function productCategories(
 
 /**
  * Whether a token is emitted to a platform: an absent `platforms` list means all three; a list
- * keeps the token for the platforms it names; an explicit empty list emits it nowhere.
- *
- * DESIGN-GAP: a `platforms` value that is not a list (a string, a mapping) is not addressed.
- * `productCategories` drops a non-list value, which reads as absent (all platforms).
+ * keeps the token for the platforms it names; an explicit empty list emits it nowhere. (A
+ * `platforms` that is null reads as absent, and any other non-list value throws, in
+ * `productCategories`.)
  */
 export function productTokenOnPlatform(token: ProductTokenInput, platform: NativePlatform): boolean {
   if (token.platforms === undefined) return true;
@@ -491,10 +498,28 @@ export const kotlinProductObject = (category: string): string => `Product${produ
 /** Kotlin: a token is read `Product<Cat>.<key>`, static or theme member alike (a theme member inside `@Composable`). */
 export const kotlinProductRead = (category: string, key: string): string => `${kotlinProductObject(category)}.${key}`;
 
+/**
+ * Whether a string is an identifier a Swift expression can name: an ASCII letter or `_`, then
+ * ASCII letters, digits or `_`; and not `_` alone, which is the wildcard. Narrower than Swift's
+ * own rule (which allows other Unicode letters): a key outside it is reported, never compiled.
+ * A keyword is not tested: 129 adds no backtick rule for a product key (design § 4, "Kotlin"
+ * bullet on keyword keys), so a keyword key compiles to an error the harness lists.
+ */
+export function isSwiftIdentifier(s: string): boolean {
+  return s !== '_' && /^[A-Za-z_][A-Za-z0-9_]*$/.test(s);
+}
+
 export interface ProductRead {
   category: string;
   key: string;
   access: ProductAccess;
+  /**
+   * False when the read cannot be written as a Swift expression (a key or category that is not
+   * a Swift identifier, such as `primary-color`). The lane turns that into a failing check
+   * naming the token and writes no text for it, so one bad key cannot put a syntax error in
+   * `Probe.swift` and kill Stage P for every token. Always true on Android.
+   */
+  valid: boolean;
   /**
    * The text the probe reads. Swift static: `Product<Cat>.<key>`. Swift theme member:
    * `product<Cat><Key>` (read once through an `any DesignerPunkTheme` taken from `\.dpTheme`,
@@ -517,17 +542,92 @@ export function productReads(categories: readonly ProductCategory[], platform: N
       if (!productTokenOnPlatform(t, platform)) continue;
       const access = productAccess(t, platform, lookup);
       if (platform === 'ios') {
+        const theme = access.kind === 'theme';
+        const valid = theme
+          ? isSwiftIdentifier(swiftThemeMemberName(c.category, t.key))
+          : isSwiftIdentifier(swiftProductEnum(c.category)) && isSwiftIdentifier(t.key);
         out.push({
           category: c.category,
           key: t.key,
           access,
-          name: access.kind === 'theme' ? swiftThemeMemberName(c.category, t.key) : swiftStaticRead(c.category, t.key),
+          name: theme ? swiftThemeMemberName(c.category, t.key) : swiftStaticRead(c.category, t.key),
+          valid,
           composable: false,
         });
       } else {
-        out.push({ category: c.category, key: t.key, access, name: kotlinProductRead(c.category, t.key), composable: access.kind === 'theme' });
+        out.push({ category: c.category, key: t.key, access, name: kotlinProductRead(c.category, t.key), valid: true, composable: access.kind === 'theme' });
       }
     }
   }
   return out;
 }
+
+// =============================================================================================
+// The family type, the provider and the holder's declaration lines
+// =============================================================================================
+
+/**
+ * `<Name>ThemeFamily`, the family type, on both platforms ("The theme family (6(b))": Swift
+ * `public enum <Name>ThemeFamily`, Kotlin `enum class <Name>ThemeFamily`). `<Name>` is the
+ * config's `name`, not the abbreviation.
+ */
+export const familyTypeName = (productName: string): string => `${productName}ThemeFamily`;
+/** The Swift spelling of `familyTypeName`; one rule, so an alias and not a second statement of it. */
+export const swiftFamilyType = familyTypeName;
+
+/** Swift: the provider is `View.<name>Theme(_:)`, `<name>` the lower-camel form of `<Name>` (first letter lower-cased). */
+export const swiftProviderFunction = (productName: string): string => `${lowerFirst(productName)}Theme`;
+
+/** Kotlin: the provider is `@Composable fun <Name>Theme(family, darkTheme, content)`. */
+export const kotlinProviderFunction = (productName: string): string => `${productName}Theme`;
+
+/** The provider's name on a platform. */
+export const providerName = (productName: string, platform: NativePlatform): string =>
+  platform === 'ios' ? swiftProviderFunction(productName) : kotlinProviderFunction(productName);
+
+/**
+ * One read a probe makes of the provider or the family, from outside the token module.
+ *   - `default`: the provider with no family (iOS `.<name>Theme()`, Android `<Name>Theme { }`).
+ *   - `family-read` (Android only): the family entry read as `<Name>ThemeFamily.<Entry>`.
+ *   - `case-call`: the provider called with that case (iOS `.<name>Theme(.<case>)`, Android
+ *     `<Name>Theme(family = <Name>ThemeFamily.<Entry>) { }`).
+ * `familyCase` is spelled for the platform. The expression text stays in the probe.
+ */
+export interface ProviderRead {
+  kind: 'default' | 'family-read' | 'case-call';
+  familyCase?: string;
+}
+
+/**
+ * Every provider read on a platform, the default first, then per family case in family order:
+ * iOS one call per case (`1 + cases`), Android one read and one call per entry (`1 + 2 x
+ * cases`) (tasks.md Tasks 3 and 4, on the `probe: provider read <n> of <m>` line). Its length
+ * is that line's `m`, so both probes and the comparison test have one source.
+ */
+export function providerReads(themes: readonly ThemeEntry[], platform: NativePlatform): ProviderRead[] {
+  const out: ProviderRead[] = [{ kind: 'default' }];
+  for (const familyCase of familyCases(themes, platform)) {
+    if (platform === 'android') out.push({ kind: 'family-read', familyCase });
+    out.push({ kind: 'case-call', familyCase });
+  }
+  return out;
+}
+
+/**
+ * The holder's declaration lines, the forms the per-run instance check parses and Task 11's
+ * emitter test pins (tasks.md Task 11, "Shared type, both configs").
+ *   - Kotlin: `object <Name>Themes {`, then each member `val <Instance> = DesignerPunkTheme(` on
+ *     its own line, at four spaces inside the object.
+ *   - Swift: `public enum <Name>Themes {`, then each member `public static let <instance>: any
+ *     DesignerPunkTheme = …` on its own line.
+ *
+ * DESIGN-GAP: Task 11 pins the Kotlin member's indentation (four spaces) but not the Swift
+ * member's, nor the open lines' text. These are the forms design § 4 writes ("Kotlin `object
+ * <Name>Themes { val BaseLight; … }`", "Swift `public enum <Name>Themes { public static let
+ * baseLight, …: any DesignerPunkTheme }`"); the Swift member line is given without
+ * indentation and without what follows `=`, which the generator and Ada settle.
+ */
+export const kotlinHolderOpenLine = (productName: string): string => `object ${holderName(productName)} {`;
+export const kotlinHolderMemberLine = (instance: string): string => `    val ${instance} = ${BINDING.kotlin.themeClass}(`;
+export const swiftHolderOpenLine = (productName: string): string => `public enum ${holderName(productName)} {`;
+export const swiftHolderMemberLine = (instance: string): string => `public static let ${instance}: any ${BINDING.swift.themeProtocol} =`;

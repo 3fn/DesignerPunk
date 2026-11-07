@@ -22,6 +22,17 @@ import {
   familyCases,
   holderName,
   instanceNames,
+  familyTypeName,
+  isSwiftIdentifier,
+  kotlinHolderMemberLine,
+  kotlinHolderOpenLine,
+  kotlinProviderFunction,
+  providerName,
+  providerReads,
+  swiftFamilyType,
+  swiftHolderMemberLine,
+  swiftHolderOpenLine,
+  swiftProviderFunction,
   productAccess,
   productCategories,
   productCategoryOf,
@@ -584,5 +595,122 @@ describe('product tokens: the reads a probe makes', () => {
   });
   it('no categories gives no reads (0 of 0)', () => {
     expect(productReads([], 'ios', lookup)).toEqual([]);
+  });
+});
+
+describe('product tokens: harness-only reading of a malformed fixture (Ada\'s consult, gaps 4 and 5)', () => {
+  it('sorts the categories by file name (brand-colors.yaml before brand.yaml, as "-" is below "."), whatever order the caller lists the files', () => {
+    const files = [
+      { path: 'spacing.yaml', doc: { tokens: { gap: {} } } },
+      { path: 'brand.yaml', doc: { tokens: { a: {} } } },
+      { path: 'brand-colors.yaml', doc: { tokens: { b: {} } } },
+      { path: 'Zeta.yaml', doc: { tokens: { c: {} } } },
+    ];
+    expect(productCategories(files).map((c) => c.category)).toEqual(['Zeta', 'brand-colors', 'brand', 'spacing']);
+    expect(productCategories([...files].reverse()).map((c) => c.category)).toEqual(['Zeta', 'brand-colors', 'brand', 'spacing']);
+  });
+  it('a tokens key holding null contributes no category', () => {
+    expect(productCategories([{ path: 'a.yaml', doc: { tokens: null } }])).toEqual([]);
+  });
+  it('a tokens key holding a list throws, naming the file', () => {
+    expect(() => productCategories([{ path: 'bad.yaml', doc: { tokens: [{ a: 1 }] } }])).toThrow('bad.yaml: "tokens" is a list; it must be a mapping of key to token');
+  });
+  it('a null platforms reads as absent: every platform', () => {
+    const cats = productCategories([{ path: 'a.yaml', doc: { tokens: { x: { value: 1, platforms: null } } } }]);
+    expect(cats[0].tokens).toEqual([{ key: 'x' }]);
+    expect(productTokenOnPlatform(cats[0].tokens[0], 'ios')).toBe(true);
+    expect(productTokenOnPlatform(cats[0].tokens[0], 'android')).toBe(true);
+  });
+  it('any other platforms value that is not a list throws, naming the file and the token', () => {
+    expect(() => productCategories([{ path: 'a.yaml', doc: { tokens: { x: { platforms: 'ios' } } } }])).toThrow('a.yaml: token "x" has a "platforms" value that is not a list');
+    expect(() => productCategories([{ path: 'a.yaml', doc: { tokens: { y: { platforms: { ios: true } } } } }])).toThrow('a.yaml: token "y" has a "platforms" value that is not a list');
+  });
+});
+
+describe('product tokens: a key the Swift probe cannot write (Kenya\'s review)', () => {
+  it('recognises an identifier', () => {
+    for (const ok of ['primary', 'primaryColor', '_x', 'a1', 'Key_2']) expect(isSwiftIdentifier(ok)).toBe(true);
+    for (const bad of ['primary-color', '2fast', '', '_', 'has space', 'a.b']) expect(isSwiftIdentifier(bad)).toBe(false);
+  });
+  it('marks an iOS read valid:false for a key that is not an identifier, and keeps it counted', () => {
+    const cats = productCategories([{ path: 'brand.yaml', doc: { tokens: { ok: { value: 1 }, 'primary-color': { value: 2 } } } }]);
+    const reads = productReads(cats, 'ios', () => undefined);
+    expect(reads.map((r) => [r.name, r.valid])).toEqual([['ProductBrand.ok', true], ['ProductBrand.primary-color', false]]);
+    expect(reads.length).toBe(2);
+  });
+  it('marks a theme member invalid when its composed name is not an identifier', () => {
+    const cats = productCategories([{ path: 'brand.yaml', doc: { tokens: { 'a-b': { ref: 'r' }, fine: { ref: 'r' } } } }]);
+    const reads = productReads(cats, 'ios', () => 'theme.x');
+    expect(reads.map((r) => [r.name, r.valid])).toEqual([['productBrandA-b', false], ['productBrandFine', true]]);
+  });
+  it('marks a category that is not an identifier invalid for a static read', () => {
+    const cats = productCategories([{ path: 'a.b.yaml', doc: { tokens: { k: { value: 1 } } } }]);
+    expect(productReads(cats, 'ios', () => undefined).map((r) => [r.name, r.valid])).toEqual([['ProductA.b.k', false]]);
+  });
+  it('marks every Android read valid', () => {
+    const cats = productCategories([{ path: 'brand.yaml', doc: { tokens: { 'primary-color': { value: 2 } } } }]);
+    expect(productReads(cats, 'android', () => undefined).map((r) => r.valid)).toEqual([true]);
+  });
+});
+
+describe('the family type and the provider names', () => {
+  it('names the family <Name>ThemeFamily on both platforms', () => {
+    expect(familyTypeName('Probe')).toBe('ProbeThemeFamily');
+    expect(familyTypeName('DesignerPunk')).toBe('DesignerPunkThemeFamily');
+    expect(swiftFamilyType('Probe')).toBe('ProbeThemeFamily');
+  });
+  it('Swift: the provider is <name>Theme, the first letter of <Name> lower-cased', () => {
+    expect(swiftProviderFunction('Probe')).toBe('probeTheme');
+    expect(swiftProviderFunction('DesignerPunk')).toBe('designerPunkTheme');
+    expect(swiftProviderFunction('PB')).toBe('pBTheme');
+  });
+  it('Kotlin: the provider is <Name>Theme', () => {
+    expect(kotlinProviderFunction('Probe')).toBe('ProbeTheme');
+    expect(kotlinProviderFunction('DesignerPunk')).toBe('DesignerPunkTheme');
+  });
+  it('providerName picks the platform\'s form', () => {
+    expect(providerName('Probe', 'ios')).toBe('probeTheme');
+    expect(providerName('Probe', 'android')).toBe('ProbeTheme');
+  });
+});
+
+describe('the provider reads (the m of probe: provider read <n> of <m>)', () => {
+  it('iOS: the default call, then one call per family case (1 + cases)', () => {
+    expect(providerReads(CONFIG_S, 'ios')).toEqual([
+      { kind: 'default' },
+      { kind: 'case-call', familyCase: 'base' },
+      { kind: 'case-call', familyCase: 'wcag' },
+    ]);
+    expect(providerReads(CONFIG_C, 'ios').length).toBe(6);
+  });
+  it('Android: the default call, then a family read and a call per entry (1 + 2 x cases)', () => {
+    expect(providerReads(CONFIG_S, 'android')).toEqual([
+      { kind: 'default' },
+      { kind: 'family-read', familyCase: 'Base' },
+      { kind: 'case-call', familyCase: 'Base' },
+      { kind: 'family-read', familyCase: 'Wcag' },
+      { kind: 'case-call', familyCase: 'Wcag' },
+    ]);
+    expect(providerReads(CONFIG_C, 'android').length).toBe(11);
+  });
+  it('config C iOS cases are in family order, in the platform\'s spelling', () => {
+    expect(providerReads(CONFIG_C, 'ios').map((r) => r.familyCase)).toEqual([undefined, 'base', 'wcag', 'highContrast', 'brand', 'default']);
+  });
+  it('no themes: the default and the two fixed cases', () => {
+    expect(providerReads([], 'ios').length).toBe(3);
+    expect(providerReads([], 'android').length).toBe(5);
+  });
+});
+
+describe('the holder\'s declaration lines (Task 11\'s pin; the per-run check parses them)', () => {
+  it('Kotlin: the object line, and each member on its own line at four spaces', () => {
+    expect(kotlinHolderOpenLine('Probe')).toBe('object ProbeThemes {');
+    expect(kotlinHolderMemberLine('BaseLight')).toBe('    val BaseLight = DesignerPunkTheme(');
+    expect(kotlinHolderMemberLine('HighContrastDark')).toBe('    val HighContrastDark = DesignerPunkTheme(');
+  });
+  it('Swift: the enum line, and each member as public static let <instance>: any DesignerPunkTheme =', () => {
+    expect(swiftHolderOpenLine('Probe')).toBe('public enum ProbeThemes {');
+    expect(swiftHolderMemberLine('baseLight')).toBe('public static let baseLight: any DesignerPunkTheme =');
+    expect(swiftHolderMemberLine('defaultDark')).toBe('public static let defaultDark: any DesignerPunkTheme =');
   });
 });
