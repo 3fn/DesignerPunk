@@ -19,9 +19,10 @@
 # nothing when the comparator wrote no output (a job that failed before comparing). The comparator step
 # runs whenever the lane wrote its run file, even when the lane step exited non-zero.
 #
-# No `if:` in this file reads github.event_name, github.event.*, head_ref, base_ref, ref, ref_name or
-# inputs.*, so a context fails rather than skips on every trigger. Job `name:` expressions are not `if:`
-# and read github.event_name for the "(unit-branch)" dispatch suffix.
+# No `if:` in this file reads github.event_name, github.event.*, head_ref, base_ref, ref or ref_name, and
+# only one reads inputs.*: the forced-failure step of harness-generate (dispatch input
+# force_generate_failure, Req 2.11's evidence run). So a context fails rather than skips on every trigger.
+# Job `name:` expressions are not `if:` and read github.event_name for the "(unit-branch)" dispatch suffix.
 #
 # Not a required context. It is in neither EXPECTED_CONTEXTS nor complete-task.sh's
 # REQUIRED_WORKFLOWS while it measures (tasks.md Task 5, criterion 11).
@@ -31,6 +32,11 @@ name: native-harness
 on:
   pull_request:
   workflow_dispatch:
+    inputs:
+      force_generate_failure:
+        description: "Fail harness-generate on purpose, to show each compile context fails rather than skips (Req 2.11). Read by one step of harness-generate only."
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -45,6 +51,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+
+      # The one step in this file whose `if:` reads a dispatch input (tasks.md Task 5). On a pull_request the
+      # input is empty, so the step never runs there; every other `if:` here is event-blind.
+      - name: Forced failure (dispatch input force_generate_failure)
+        if: ${{ inputs.force_generate_failure }}
+        run: |
+          echo "::error::harness-generate failed on purpose: workflow_dispatch input force_generate_failure is true"
+          exit 1
 
       - name: Setup Node.js
         uses: actions/setup-node@v5
