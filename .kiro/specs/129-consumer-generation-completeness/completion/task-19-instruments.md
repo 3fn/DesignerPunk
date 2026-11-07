@@ -21,10 +21,10 @@
 | 13 | C9 the guard registry | `.github/in-lane-guards.json`, `scripts/__tests__/in-lane-guards.test.ts` | exists (`.github/in-lane-guards.json` @ `55276795e`; `in-lane-guards.test.ts` @ `e856dc530`) | the registry is additive-only under P1b; the test checks the entry count against the selected files | 19.2 |
 | 14 | C9 the gate count | `tools/agent-generator/verify-gate-registration.sh` | exists (@ `8bd4bb505`) | counts `EXPECTED_CONTEXTS` (N=19) | — |
 | 15 | C10 the existing comparator case | `compare.test.ts` at `d19eb3958` | exists (see row 6) | — | — |
-| 16 | C11 all four contexts on the PR | the PR's four check runs at head H | MISSING → orchestrator: the PR opens at Task 19's completion; no PR exists when this block is written. Route: the follow-up commit cites them, as in U1 | none of 19.1 to 19.3 |
+| 16 | C11 all four contexts on the PR | the PR's four check runs at head H | MISSING → orchestrator: the PR opens at Task 19's completion; no PR exists when this block is written. Route: the follow-up commit cites them, as in U1 | none of 19.1 to 19.3 → resolved 2026-11-07: exists (PR #713's `native-harness` run https://github.com/3fn/DesignerPunk/actions/runs/42384684480 @ `cba101c76d8d18426a1a1322d8e9b6616875d659`), fit: the four contexts' check runs on the unit's PR, each with a `harness-verdict` annotation and a `harness-summary` line (pasted in `task-19-completion.md`, criterion 11). |
 | 17 | C12 records whose Trigger names `task-19-completion.md` | `grep -l "task-19-completion" .kiro/issues/*.md` | none — a command run and pasted in the completion doc (no record names it at `c73f41ede`) | — | — |
 
-**Counts**: listed **16**, plus **1** none row (row 17, not counted) = 17 rows. exists **9** (rows 1, 6, 7, 9, 10, 11, 13, 14, 15) · built-here **6** (rows 2, 3, 4, 5, 8, 12) · missing **1** (row 16). N = E + B + M = 9 + 6 + 1 = 16.
+**Counts**: listed **16**, plus **1** none row (row 17, not counted) = 17 rows. exists **10** (rows 1, 6, 7, 9, 10, 11, 13, 14, 15, 16 after its resolution) · built-here **6** (rows 2, 3, 4, 5, 8, 12) · missing **0**. N = E + B + M = 10 + 6 + 0 = 16.
 
 **What the MISSING row stops**: nothing before Task 19's completion doc.
 

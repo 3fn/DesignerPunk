@@ -22,4 +22,4 @@ Run 42379456009 (#711) failed on registry 403s, and the cache step then saved a 
 ## Impact
 
 - ✅ U4 can open its PR with the infra class in place. No infra case has occurred in CI yet; the rule is shown by tests.
-- ⚠️ The PR's own runs at head H are added in the follow-up commit.
+- ✅ #713's own runs at head H (`cba101c76`) show all four contexts PASS, and all 26 checks pass.
