@@ -3,7 +3,7 @@
 **Date**: 2026-11-06
 **Owner**: Thurgood (the tool is in his standing write scope). Consulted at build: Stacy, Lina.
 **Class**: P2 obligation (guard) · defect
-**Trigger**: `path:.kiro/specs/129-consumer-generation-completeness/completion/task-5-completion.md` — Spec 129's U1 merge, the event Peter set ("Filed now, built after U1"). At that event the owner closes this record, if the fix has merged, or re-rules it to `path:.kiro/hooks/complete-task.sh` with a dated reason. The re-ruled token fires on the fixing PR, which owes the close. Because U1's diff carries `task-5-completion.md`, U1's PR carries this record's owed act, under `tasks.md`'s Convention "A unit carries the records its diff fires".
+**Trigger**: `path:.kiro/hooks/complete-task.sh` — re-ruled 2026-11-07 (Thurgood; authority Peter, 2026-11-07T20:21:05Z "Re: 2, Fix" and 2026-11-07T20:24:04Z "Let's go with your suggestion", record `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-07-peter-rulings-post-midpoint.md`). The prior token, `path:.kiro/specs/129-consumer-generation-completeness/completion/task-5-completion.md`, fired at `74d7566f5` (Spec 129 U1, #707) with the record open; the fix lands in the PR that edits the tool, which owes the close. Prior text: ``path:.kiro/specs/129-consumer-generation-completeness/completion/task-5-completion.md``.
 **Source**: Peter's Decision 4, verbatim "4 (b)" (his full answer: "1 A, 2 yes, 3 stand, 4 (b), 5 no rewrite; let's also proceed with the class option"), `date -u` at receipt 2026-11-06T14:04:52Z (orchestrator relay; **UNVERIFIED** beyond the relay). Option (b), as he read it: `complete-task.sh` refuses untracked paths outside the parent's listed paths; filed now, built after U1. The instance is entry L-9 of `.kiro/specs/131-governance-simplification/inbound-governance-cost-ledger.md`.
 
 ---
@@ -46,3 +46,22 @@
 ## Criterion (decidable without consulting the author)
 
 The fixing PR adds a suite for the tool (it has none today: no `*.test.*` file exercises `.kiro/hooks/complete-task.sh`'s staging), with a case that reproduces the instance and shows the refusal, and a case that shows a parent's own untracked Primary Artifacts committed without `--add`. Both are red once and then green, with the red strings in the PR body. `.kiro/hooks/complete-task.sh` no longer reaches `git add -A` with an untracked path outside the allowed set.
+
+---
+
+## Lapse (2026-11-07)
+
+Fired at `74d7566f5fd7cb700436ee0fbbf12cf3f050dc57` ("Unit 1: The compile harness (129) (#707)"): its diff carries `task-5-completion.md` and no ancestor closed or re-ruled this record. Peter ruled fix-now (2026-11-07T20:21:05Z, "Re: 2, Fix"); the Trigger is re-ruled above to the fixing PR. — Thurgood
+
+## Build notes (2026-11-07, Thurgood; consulted: Stacy, Lina)
+
+- **Parser (the build consult's disagreement, settled by reading the code and a test).** `extractArtifactEntry` (`scripts/completion-claims/tasks-md.ts`) matches one path per bullet, so a bullet naming several paths loses all but the first (Lina's reading). Spec 129 parents 5, 8 and 19 lose `compare.test.ts`, `harness/README.md`, three gradle files, `stability.test.ts` and `fixtures/kotlin/**`. Stacy's probe counted `notAPath` entries, which this loss does not raise. The guard therefore takes every backticked path-like token of the parent's bullets from `Parent.primaryArtifacts[].raw` in a new function (`scripts/completion-claims/untracked-guard.ts`); the parity parser is unchanged. Pinned in `scripts/completion-claims/__tests__/untracked-guard.test.ts`. The record's spec-wide fallback was not needed.
+- **Parent lookup** reads `--task`, then the message (`Task N`, `Task N.M:`, `Task N …`), then `task/<spec-id>-<N>-…`; a spec branch with none of these refuses and names `--task <N>`.
+- **Escape** is `--add <path> --reason "<why>"` (reason required; exact path; must be a new untracked path), written as an `Added-outside-list: <path> — <reason>` trailer in the commit's final paragraph and copied by parent mode into the PR body's `**Added outside list**:` line (`none` when empty).
+- **Allowed set** adds `.kiro/specs/<spec>/completion/*.md`, `feedback/**` and `docs/specs/<spec>/task-<N>-summary.md`; `evidence/` and deeper `completion/` trees are not admitted by default (run logs live there). An archive file made with plain `mv` pairs with its tracked deletion. Staged-new paths are counted like untracked ones.
+- **Non-spec mode** is strict.
+- Residual: a plain `git add -A` and `git commit` outside the tool bypass the guard; the claims pass's out-of-list diff check is the backstop.
+
+## Outcome (2026-11-07)
+
+Fixed by the PR that carries this edit (branch `fix/complete-task-untracked-guard`): `.kiro/hooks/complete-task.sh` no longer reaches `git add -A` with an untracked path outside the allowed set. The criterion's two cases (the instance refused; a parent's own untracked Primary Artifacts committed without `--add`) are in `scripts/completion-claims/__tests__/complete-task.untracked-guard.test.ts`, red once on the unfixed tool and then green; the red strings are in the PR body. Closed under rule 5 and archived in the same PR. — Thurgood
