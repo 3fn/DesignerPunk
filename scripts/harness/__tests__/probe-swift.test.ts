@@ -1,15 +1,15 @@
 /**
- * probe-swift suite (Spec 129 Task 3.2, 3.3). Owner: Kenya.
+ * probe-swift suite (Spec 129 Task 3.2, 3.3, 3.4). Owner: Kenya.
  *
  * Two subjects, one file, because the iOS lane's logic lives under `harness/ios/` where this config does not
  * select tests (`scripts/jest.config.js` has `rootDir: scripts/`), and the lane's helpers have to run in
  * `lane-functional-root`:
  *
- *   1. the probe generator (`scripts/harness/probe-swift.ts`): reads from the index and the config, the read
- *      count n equals the index's m, one theme read per `theme.` colour per registered theme instance, one read
- *      through `\.dpTheme`, nothing hard-coded to item (i);
- *   2. the lane (`harness/ios/lane.ts`): the invocations, the file order and floor, the toolchain match, the
- *      self-tests' verdicts, and the whole flow of both contexts against a FAKE `swiftc` (no Xcode needed).
+ *   1. the probe generator (`scripts/harness/probe-swift.ts`): reads from the index, the consumer's themes and its
+ *      product source; takes every rule from `native-rules.ts` and keeps no copy; counts each group of reads on its own;
+ *   2. the lane (`harness/ios/lane.ts`): the invocations, the file selection and floor, the toolchain match, the
+ *      self-tests' verdicts, the per-run instance check, and the whole flow of both contexts against a FAKE `swiftc`
+ *      (no Xcode needed).
  *
  * What this suite does NOT show, and only a macOS run under the pinned Xcode can: that the real `swiftc` gives
  * the diagnostics the fake gives. The self-test fixtures exist for exactly that, and run on the runner.
@@ -19,22 +19,34 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
-import { codePointCompare } from '../compare';
+import { codePointCompare, parsePins as parseComparatorPins } from '../compare';
+import { ROOT_TOKEN_FILES } from '../../pack-assert';
 import {
-  countProbeReads,
-  expectedReadCount,
-  formatReadCount,
+  BINDING,
+  instanceNames,
+  swiftHolderMemberLine,
+  swiftHolderOpenLine,
+  type ThemeEntry,
+} from '../native-rules';
+import {
+  formatCountLine,
   generateProbe,
+  groupOf,
   indexIosNames,
+  indexLookup,
   loadIndex,
-  themeInstances,
+  loadProductCategories,
+  loadProductFiles,
+  readsByGroup,
   themeMemberNames,
   type ProbeConfig,
   type TokenIndex,
 } from '../probe-swift';
 import {
   IOS_CONTEXTS,
+  ROOT_TOKEN_SWIFT_FILES,
   TOOLCHAIN_FIELDS,
+  checkThemeInstances,
   judgeMissingReturn,
   judgePlanted,
   parseIosPins,
@@ -51,141 +63,270 @@ import {
   type Runner,
 } from '../../../harness/ios/lane';
 import { parseSwift } from '../parse-swift';
+import { productCategories } from '../native-rules';
 
 const REPO = path.resolve(__dirname, '..', '..', '..');
 const FIXTURES = path.join(__dirname, 'fixtures', 'swift');
 const THEMES_FIXTURE = path.join(FIXTURES, 'index-themes');
+const PRODUCT_FIXTURE = path.join(FIXTURES, 'product');
 const PLANTED = path.join(REPO, 'harness', 'ios', 'selftest', 'planted', 'token-index');
 const PINS_TEXT = fs.readFileSync(path.join(REPO, 'harness', 'pins.yaml'), 'utf8');
 
-const config = (): ProbeConfig => JSON.parse(fs.readFileSync(path.join(THEMES_FIXTURE, 'config.json'), 'utf8')) as ProbeConfig;
+const readConfig = (file: string): ProbeConfig => JSON.parse(fs.readFileSync(path.join(FIXTURES, file), 'utf8')) as ProbeConfig;
+const configS = (): ProbeConfig => JSON.parse(fs.readFileSync(path.join(THEMES_FIXTURE, 'config.json'), 'utf8')) as ProbeConfig;
+const configC = (): ProbeConfig => readConfig('config-c.json');
 const MODULE = 'DPHarnessTokens';
+const lines = (src: string): string[] => src.split('\n');
 
 // ─── 1. The probe generator ──────────────────────────────────────────────────────────────────────
 
-describe('probe-swift: the reads come from the index and the config', () => {
+describe('probe-swift: the reads come from the index, the themes and the product source', () => {
   const index = loadIndex(THEMES_FIXTURE);
-  const probe = generateProbe(index, config(), { tokenModule: MODULE });
-  const reads = probe.source.split('\n').filter((l) => /^ {4}_ = /.test(l));
+  const products = loadProductCategories(PRODUCT_FIXTURE);
+  const probe = generateProbe(index, configS(), { tokenModule: MODULE, products });
+  const reads = lines(probe.source).filter((l) => /^ {4}_ = /.test(l));
 
-  it('reads each name under its root: DesignTokens for primitives and semantics, top-level for components', () => {
+  it('reads each index name under its root: DesignTokens for primitives and semantics, top-level for components', () => {
     expect(reads).toContain('    _ = DesignTokens.space100');
     expect(reads).toContain('    _ = DesignTokens.Duration.duration150');
     expect(reads).toContain('    _ = DesignTokens.typographyBodyMd');
     expect(reads).toContain('    _ = ProgressTokens.connectorThickness');
   });
 
-  it('reads a list-valued name once per element', () => {
+  it('reads a list-valued name once per element, and nothing for a name the index gives as null', () => {
     expect(reads).toContain('    _ = DesignTokens.MotionFloatLabel.duration');
     expect(reads).toContain('    _ = DesignTokens.MotionFloatLabel.easing');
-  });
-
-  it('makes no read for a name the index gives as null', () => {
     expect(probe.source).not.toContain('elevation200');
   });
 
-  it('reads one theme read per theme-named colour per registered theme instance', () => {
-    // 3 `theme.` colours x 4 instances (baseLight, baseDark, darkDark, wcagLight) = 12
-    expect(themeInstances(config())).toEqual(['baseLight', 'baseDark', 'darkDark', 'wcagLight']);
+  it('reads one theme read per `theme.` colour per instance of the shared module: config S has four', () => {
+    expect(probe.instances).toEqual(['baseLight', 'baseDark', 'wcagLight', 'wcagDark']);
     const themeReads = reads.filter((l) => l.includes('FixtureThemes.'));
     expect(themeReads).toHaveLength(12);
     for (const member of ['colorActionPrimary', 'colorFeedbackErrorText', 'colorCanvas']) {
-      for (const instance of ['baseLight', 'baseDark', 'darkDark', 'wcagLight']) {
-        expect(themeReads).toContain(`    _ = FixtureThemes.${instance}.${member}`);
-      }
+      for (const instance of probe.instances) expect(themeReads).toContain(`    _ = FixtureThemes.${instance}.${member}`);
     }
-    // a `theme.` name is never read as a DesignTokens member
+    // the old derivation's `darkDark` is gone: `dark` is a mode of the base theme and adds no instance
+    expect(probe.source).not.toContain('darkDark');
     expect(probe.source).not.toMatch(/DesignTokens\.theme\./);
-    expect(probe.source).not.toMatch(/DesignTokens\.colorActionPrimary/);
+  });
+
+  it('config C adds one instance per mode each other theme covers, in config order', () => {
+    const c = generateProbe(index, configC(), { tokenModule: MODULE });
+    expect(c.instances).toEqual(['baseLight', 'baseDark', 'wcagLight', 'wcagDark', 'highContrastLight', 'highContrastDark', 'brandLight', 'defaultDark']);
+    expect(c.source.split('\n').filter((l) => /^ {4}_ = FixtureThemes\./.test(l))).toHaveLength(3 * 8);
+    expect(c.source).toContain('    _ = FixtureThemes.defaultDark.colorCanvas');
+    expect(c.source).not.toContain('brandDark');
+    expect(c.source).not.toContain('defaultLight');
   });
 
   it('reads one value through the environment key the components read, \\.dpTheme', () => {
-    expect(reads.filter((l) => l.includes('EnvironmentValues().dpTheme'))).toEqual(['    _ = EnvironmentValues().dpTheme']);
+    expect(reads.filter((l) => l.includes('EnvironmentValues().dpTheme') && !l.includes('dpTheme.'))).toEqual(['    _ = EnvironmentValues().dpTheme']);
   });
 
   it('holds one static of the theme type, which is a declaration and not a counted read', () => {
     expect(probe.source).toContain('static let theme: any DesignerPunkTheme = FixtureThemes.baseLight');
     expect(probe.source).toMatch(/^private enum ProbeStatics \{/m);
-    expect(countProbeReads(probe.source)).toBe(reads.length);
   });
 
-  it('imports the token module by plain import, never @testable', () => {
+  it('imports the token module by plain import, never testable', () => {
     expect(probe.source).toContain(`import ${MODULE}`);
     expect(probe.source).not.toMatch(/^\s*@testable\s+import/m);
   });
 
-  it('counts n from its own text and m from the index and the config, and they are equal', () => {
-    // plain: space100, Duration.duration150, MotionFloatLabel x2, typographyBodyMd, ProgressTokens = 6; theme 3 x 4 = 12; key 1
-    expect(probe.expected).toBe(6 + 12 + 1);
-    expect(probe.read).toBe(probe.expected);
-    expect(probe.counts).toEqual({ primitives: 2, semantics: 3, components: 1, themeColours: 3, themeInstances: 4, key: 1 });
-    expect(formatReadCount(probe)).toBe(
-      'probe: read 19 of 19 index names (primitives 2, semantics 3, components 1, theme 3\u00d74, key 1)',
-    );
+  it('reads the provider and the family from outside the module: the default, then one call per case', () => {
+    expect(reads).toContain('    _ = EmptyView().fixtureTheme()');
+    expect(reads).toContain('    _ = EmptyView().fixtureTheme(.base)');
+    expect(reads).toContain('    _ = EmptyView().fixtureTheme(.wcag)');
+    expect(reads.filter((l) => l.includes('EmptyView()'))).toHaveLength(3);
+    const c = generateProbe(index, configC(), { tokenModule: MODULE });
+    const providerReads = c.source.split('\n').filter((l) => l.includes('EmptyView()'));
+    expect(providerReads).toEqual([
+      '    _ = EmptyView().fixtureTheme()',
+      '    _ = EmptyView().fixtureTheme(.base)',
+      '    _ = EmptyView().fixtureTheme(.wcag)',
+      '    _ = EmptyView().fixtureTheme(.highContrast)',
+      '    _ = EmptyView().fixtureTheme(.brand)',
+      '    _ = EmptyView().fixtureTheme(.default)',
+    ]);
   });
 
-  it('needs no change to emit more: a new theme-named colour and a new registered theme add reads', () => {
-    const bigger: TokenIndex = JSON.parse(JSON.stringify(index));
-    bigger.semantics['color.brand.accent'] = { platforms: { ios: 'theme.colorBrandAccent' } };
-    const more: ProbeConfig = { ...config(), themes: [...config().themes, { name: 'night', mode: 'both' }] };
-    const out = generateProbe(bigger, more, { tokenModule: MODULE });
-    // 4 colours x 6 instances (baseLight, baseDark, darkDark, wcagLight, nightLight, nightDark) = 24
-    expect(out.source.split('\n').filter((l) => l.includes('FixtureThemes.') && l.startsWith('    _ = '))).toHaveLength(24);
-    expect(out.read).toBe(out.expected);
+  it('names the provider from the config name with its first letter lower-cased (the default name too)', () => {
+    const d = generateProbe(index, { name: 'DesignerPunk', themes: [] }, { tokenModule: MODULE });
+    expect(d.source).toContain('_ = EmptyView().designerPunkTheme()');
+    expect(d.source).toContain('_ = DesignerPunkThemes.baseLight.colorCanvas');
   });
 
-  it('makes neither a key read nor a static when the index names no theme colour', () => {
+  it('prints one compared count line per group; the index-names line is the index\'s count', () => {
+    // plain: space100, Duration.duration150, MotionFloatLabel x2, typographyBodyMd, ProgressTokens = 6; theme names 3
+    expect(probe.groups.map(formatCountLine)).toEqual([
+      'probe: read 9 of 9 index names',
+      'probe: instances read 12 of 12',
+      'probe: product read 5 of 5',
+      'probe: provider read 3 of 3',
+      'probe: key read 1 of 1',
+    ]);
+  });
+
+  it('counts a `theme.` name once in the index-names line, however many instances read it', () => {
+    const c = generateProbe(index, configC(), { tokenModule: MODULE });
+    expect(groupOf(c, 'index names')).toEqual({ name: 'index names', n: 9, m: 9 });
+    expect(groupOf(c, 'instances')).toEqual({ name: 'instances', n: 24, m: 24 });
+  });
+
+  it('makes neither a key read nor a static when the index names no theme colour, and prints 0 of 0', () => {
     const plain: TokenIndex = { primitives: index.primitives, semantics: {}, components: index.components };
-    const out = generateProbe(plain, config(), { tokenModule: MODULE });
+    const out = generateProbe(plain, configS(), { tokenModule: MODULE, provider: false });
     expect(out.source).not.toContain('dpTheme');
     expect(out.source).not.toContain('ProbeStatics');
-    expect(out.counts.key).toBe(0);
-    expect(out.read).toBe(out.expected);
+    expect(groupOf(out, 'key')).toEqual({ name: 'key', n: 0, m: 0 });
+    expect(formatCountLine(groupOf(out, 'instances'))).toBe('probe: instances read 0 of 0');
+    expect(out.groups.every((g) => g.n === g.m)).toBe(true);
   });
 
-  it('is the same function for a theme-less config: only the two base instances remain', () => {
-    const out = generateProbe(index, { name: 'Fixture', themes: [] }, { tokenModule: MODULE });
-    expect(out.instances).toEqual(['baseLight', 'baseDark']);
-    expect(out.read).toBe(out.expected);
-    expect(out.read).toBe(6 + 3 * 2 + 1);
+  it('needs no change to emit more: a new theme-named colour adds reads, a new registered theme adds instances', () => {
+    const bigger: TokenIndex = JSON.parse(JSON.stringify(index));
+    bigger.semantics['color.brand.accent'] = { platforms: { ios: 'theme.colorBrandAccent' } };
+    const more: ProbeConfig = { ...configS(), themes: [...configS().themes, { name: 'night', mode: 'both' }] };
+    const out = generateProbe(bigger, more, { tokenModule: MODULE });
+    expect(groupOf(out, 'instances')).toEqual({ name: 'instances', n: 4 * 6, m: 4 * 6 });
+    expect(out.groups.every((g) => g.n === g.m)).toBe(true);
   });
 });
 
-describe('probe-swift: n differs from m when the generator drops or doubles a name', () => {
+describe('probe-swift: the product reads (Task 3, the product-token criterion)', () => {
   const index = loadIndex(THEMES_FIXTURE);
-  const probe = generateProbe(index, config(), { tokenModule: MODULE });
+  const cats = loadProductCategories(PRODUCT_FIXTURE);
+  const probe = generateProbe(index, configS(), { tokenModule: MODULE, products: cats });
+  const productLines = readsByGroup(probe.source).product;
 
-  it('a dropped read lowers n below m', () => {
+  it('takes the category from the file name, not from the YAML\'s `category:` field, and splits it at "-" only', () => {
+    expect(cats.map((c) => c.category)).toEqual(['brand-colors', 'plain']);
+    expect(productLines.some((l) => l.startsWith('ProductBrandColors.'))).toBe(true);
+    expect(probe.source).not.toContain('NotThisOne');
+  });
+
+  it('reads a static token as Product<Cat>.<key> and a theme member once, through the environment key', () => {
+    expect(productLines).toEqual([
+      'EnvironmentValues().dpTheme.productBrandColorsAccent',
+      'ProductBrandColors.tint',
+      'ProductBrandColors.radiusRound',
+      'ProductBrandColors.iosOnly',
+      'ProductPlain.gap',
+    ]);
+  });
+
+  it('keeps a token whose platforms list is absent or names ios, and drops one that does not', () => {
+    const joined = productLines.join('\n');
+    expect(joined).toContain('iosOnly');
+    expect(joined).not.toContain('webOnly');
+    expect(joined).not.toContain('androidOnly');
+    expect(joined).not.toContain('nowhere');
+  });
+
+  it('does not read a file in a subfolder, and a file with no tokens key contributes no category', () => {
+    expect(probe.source).not.toContain('neverRead');
+    expect(probe.source).not.toContain('ProductNotokens');
+    expect(loadProductFiles(PRODUCT_FIXTURE).map((f) => f.path)).toEqual(['brand-colors.yaml', 'notokens.yaml', 'plain.yaml']);
+  });
+
+  it('a file that does not parse is skipped, as generate skips it', () => {
+    const tmp = fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()), 'product-'));
+    fs.writeFileSync(path.join(tmp, 'broken.yaml'), 'tokens: [this is: not valid\n');
+    fs.writeFileSync(path.join(tmp, 'ok.yaml'), 'tokens:\n  a:\n    value: 1\n');
+    expect(loadProductFiles(tmp).map((f) => f.path)).toEqual(['broken.yaml', 'ok.yaml']);
+    expect(loadProductCategories(tmp).map((c) => c.category)).toEqual(['ok']);
+    expect(loadProductCategories(path.join(tmp, 'missing'))).toEqual([]);
+  });
+
+  it('counts the product reads on their own line and `n` equals `m`', () => {
+    expect(groupOf(probe, 'product')).toEqual({ name: 'product', n: 5, m: 5 });
+    expect(formatCountLine(groupOf(probe, 'product'))).toBe('probe: product read 5 of 5');
+  });
+
+  it('a key that is not a Swift identifier writes no read, and the count then differs so a check fails', () => {
+    const bad = productCategories(loadProductFiles(path.join(FIXTURES, 'product-bad')));
+    const out = generateProbe(index, configS(), { tokenModule: MODULE, products: bad });
+    expect(out.invalidProduct.map((r) => r.key)).toEqual(['primary-color']);
+    expect(out.source).not.toContain('primary-color');
+    expect(out.source).toContain('ProductBadkeys.fine');
+    expect(groupOf(out, 'product')).toEqual({ name: 'product', n: 1, m: 2 });
+  });
+
+  it('over the committed fixture folder the product reads equal the tokens whose platforms list is absent or names ios, counted from the YAML here', () => {
+    const dir = path.join(REPO, 'harness', 'fixtures', 'product-tokens');
+    const expected: string[] = [];
+    for (const f of fs.readdirSync(dir).filter((x) => x.endsWith('.yaml'))) {
+      const doc = yaml.load(fs.readFileSync(path.join(dir, f), 'utf8')) as { tokens: Record<string, { platforms?: string[] }> };
+      for (const [key, t] of Object.entries(doc.tokens)) if (t.platforms === undefined || t.platforms.includes('ios')) expected.push(key);
+    }
+    expect(expected.length).toBeGreaterThan(0);
+    const repoIndex = loadIndex(path.join(REPO, 'token-index'));
+    const out = generateProbe(repoIndex, configS(), { tokenModule: MODULE, products: loadProductCategories(dir) });
+    expect(groupOf(out, 'product')).toEqual({ name: 'product', n: expected.length, m: expected.length });
+    // the fixture's WCAG-only ref is a theme member and its composite ref is static (design § 4, the access rule)
+    const reads = readsByGroup(out.source).product;
+    expect(reads.filter((r) => r.startsWith('EnvironmentValues().dpTheme.productHarness'))).toHaveLength(
+      expected.includes('actionPrimaryRef') ? 1 : 0,
+    );
+    expect(reads.filter((r) => r.startsWith('ProductHarness.'))).toHaveLength(expected.length - reads.filter((r) => r.includes('dpTheme.')).length);
+  });
+
+  it('the lookup resolves a ref through semantics, then primitives, and reads an unresolvable ref as static', () => {
+    const lookup = indexLookup(index);
+    expect(lookup('color.action.primary', 'ios')).toBe('theme.colorActionPrimary');
+    expect(lookup('space100', 'ios')).toBe('space100');
+    expect(lookup('nope', 'ios')).toBeUndefined();
+  });
+});
+
+describe('probe-swift: it keeps no copy of the shared module\'s rules (3.4)', () => {
+  const src = fs.readFileSync(path.join(REPO, 'scripts', 'harness', 'probe-swift.ts'), 'utf8');
+  it('imports native-rules and defines none of the old rule functions', () => {
+    expect(src).toMatch(/from '\.\/native-rules'/);
+    for (const name of ['themeInstances', 'themeHolder', 'themeMemberNames = ']) expect(src).not.toMatch(new RegExp(`function ${name}|const ${name}`));
+    expect(src).not.toMatch(/mode === 'both'/);
+    expect(src).not.toMatch(/Light`|Dark`/);
+  });
+  it('its instances equal the module\'s for each fixture config', () => {
+    for (const cfg of [configS(), configC(), { name: 'X', themes: [] as ThemeEntry[] }]) {
+      const out = generateProbe(loadIndex(THEMES_FIXTURE), cfg, { tokenModule: MODULE });
+      expect(out.instances).toEqual(instanceNames(cfg.themes, 'ios'));
+    }
+  });
+});
+
+describe('probe-swift: a group\'s n differs from m when the generator drops or doubles a read', () => {
+  const index = loadIndex(THEMES_FIXTURE);
+  const probe = generateProbe(index, configS(), { tokenModule: MODULE, products: loadProductCategories(PRODUCT_FIXTURE) });
+
+  it('a dropped read lowers that group\'s n below m', () => {
     const dropped = probe.source.replace('    _ = DesignTokens.space100\n', '');
-    expect(countProbeReads(dropped)).toBe(probe.expected - 1);
-    expect(countProbeReads(dropped)).not.toBe(probe.expected);
+    expect(readsByGroup(dropped)['index names']).toHaveLength(readsByGroup(probe.source)['index names'].length - 1);
+    const droppedInst = probe.source.replace('    _ = FixtureThemes.wcagDark.colorCanvas\n', '');
+    expect(readsByGroup(droppedInst).instances).toHaveLength(groupOf(probe, 'instances').m - 1);
+    const droppedProduct = probe.source.replace('    _ = ProductPlain.gap\n', '');
+    expect(readsByGroup(droppedProduct).product).toHaveLength(groupOf(probe, 'product').m - 1);
   });
 
   it('a doubled read raises n above m', () => {
-    const doubled = probe.source.replace('    _ = DesignTokens.space100\n', '    _ = DesignTokens.space100\n    _ = DesignTokens.space100\n');
-    expect(countProbeReads(doubled)).toBe(probe.expected + 1);
+    const doubled = probe.source.replace('    _ = EmptyView().fixtureTheme(.wcag)\n', '    _ = EmptyView().fixtureTheme(.wcag)\n    _ = EmptyView().fixtureTheme(.wcag)\n');
+    expect(readsByGroup(doubled).provider).toHaveLength(groupOf(probe, 'provider').m + 1);
   });
 
   it('a name that is not a Swift member path throws, naming the token', () => {
     const bad: TokenIndex = { primitives: { 'space.100': { platforms: { ios: 'space 100' } } }, semantics: {}, components: {} };
-    expect(() => generateProbe(bad, config(), { tokenModule: MODULE })).toThrow(/primitives\.yaml token "space\.100"/);
-  });
-
-  it('two registered themes that would collide on an instance name throw', () => {
-    expect(() =>
-      themeInstances({ name: 'X', themes: [{ name: 'a', mode: 'light' }, { name: 'a', mode: 'both' }] }),
-    ).toThrow(/aLight/);
+    expect(() => generateProbe(bad, configS(), { tokenModule: MODULE })).toThrow(/primitives\.yaml token "space\.100"/);
   });
 });
 
-describe('probe-swift: the planted fixture (Task 3 criterion 2: "2 of 2")', () => {
+describe('probe-swift: the planted fixture (Task 3: "2 of 2")', () => {
   const index = loadIndex(PLANTED);
-  const probe = generateProbe(index, { name: 'Planted', themes: [] }, { tokenModule: MODULE });
+  const probe = generateProbe(index, { name: 'Planted', themes: [] }, { tokenModule: MODULE, provider: false });
 
-  it('the planted index gives a read count of 2 of 2', () => {
-    expect(probe.read).toBe(2);
-    expect(probe.expected).toBe(2);
-    expect(formatReadCount(probe)).toBe('probe: read 2 of 2 index names (primitives 2, semantics 0, components 0, theme 0\u00d70, key 0)');
+  it('the planted index gives a read count of 2 of 2 and no other read', () => {
+    expect(formatCountLine(groupOf(probe, 'index names'))).toBe('probe: read 2 of 2 index names');
+    expect(probe.groups.filter((g) => g.name !== 'index names').every((g) => g.n === 0 && g.m === 0)).toBe(true);
   });
 
   it('reads the internal member too: the probe reads whatever the declared access level is', () => {
@@ -209,42 +350,37 @@ describe('probe-swift: the planted fixture (Task 3 criterion 2: "2 of 2")', () =
     expect(judgePlanted(none, probe).ok).toBe(false);
     const other = parseSwift({ compile: 'ios.P', log: '/w/probe/Probe.swift:6:20: error: cannot find \'x\' in scope\n', exitCode: 1, roots });
     expect(judgePlanted(other, probe).ok).toBe(false);
-    const short = { ...probe, read: 1 };
+    const short = { ...probe, groups: probe.groups.map((g) => (g.name === 'index names' ? { ...g, n: 1 } : g)) };
     expect(judgePlanted(one, short).ok).toBe(false);
   });
 });
 
 describe('probe-swift: against the repository\'s committed token index', () => {
   const index = loadIndex(path.join(REPO, 'token-index'));
-  const cfg: ProbeConfig = {
-    name: 'HarnessConsumer',
-    themes: [
-      { name: 'dark', mode: 'dark' },
-      { name: 'wcag', mode: 'light' },
-    ],
-  };
-  const probe = generateProbe(index, cfg, { tokenModule: MODULE });
+  const cfg: ProbeConfig = { name: 'HarnessConsumer', themes: [{ name: 'dark', mode: 'dark' }, { name: 'wcag', mode: 'light' }] };
+  const products = loadProductCategories(path.join(REPO, 'harness', 'fixtures', 'product-tokens'));
+  const probe = generateProbe(index, cfg, { tokenModule: MODULE, products });
 
-  it('reads every iOS name the index gives, with n equal to m', () => {
-    expect(probe.read).toBe(probe.expected);
+  it('every group\'s n equals its m', () => {
+    for (const g of probe.groups) expect([g.name, g.n]).toEqual([g.name, g.m]);
+  });
+
+  it('the index-names line is the index\'s count of distinct iOS names', () => {
     const names = indexIosNames(index);
-    expect(names.length).toBeGreaterThan(300);
-    const plain = names.filter((n) => !n.name.startsWith('theme.'));
-    expect(probe.counts.primitives + probe.counts.semantics + probe.counts.components).toBe(plain.length);
-    expect(probe.counts.themeColours).toBe(names.length - plain.length);
-    expect(probe.counts.themeColours).toBe(themeMemberNames(names).length);
-    expect(probe.counts.themeColours).toBeGreaterThan(0);
-    expect(expectedReadCount(index, cfg)).toBe(probe.expected);
+    expect(groupOf(probe, 'index names').m).toBe(new Set(names.map((n) => n.name)).size);
+    expect(themeMemberNames(names).length).toBeGreaterThan(0);
+    expect(groupOf(probe, 'instances').m).toBe(new Set(themeMemberNames(names)).size * 4);
   });
 
   it('every plain name appears exactly once as a read line', () => {
-    const lines = new Set(probe.source.split('\n'));
+    const set = new Set(lines(probe.source));
     for (const n of indexIosNames(index).filter((x) => !x.name.startsWith('theme.'))) {
       const root = n.file === 'components' ? '' : 'DesignTokens.';
-      expect(lines.has(`    _ = ${root}${n.name}`)).toBe(true);
+      expect(set.has(`    _ = ${root}${n.name}`)).toBe(true);
     }
   });
 });
+
 
 // ─── 2. The lane ─────────────────────────────────────────────────────────────────────────────────
 
@@ -321,7 +457,8 @@ describe('lane: the invocations (Task 3 criteria 1 and 4)', () => {
   });
 });
 
-describe('lane: file order, the dropped files and the floor (criterion 4 and 9)', () => {
+
+describe('lane: file order, the root token files and duplicate names (Task 3, Stage C and the floor)', () => {
   const tarball = [
     'dist/ComponentTokens.ios.swift',
     'dist/DesignTokens.ios.swift',
@@ -330,40 +467,123 @@ describe('lane: file order, the dropped files and the floor (criterion 4 and 9)'
     'src/components/core/Alpha/platforms/ios/Alpha.ios.swift',
     'src/components/core/Alpha/platforms/ios/AlphaTests.swift',
     'src/components/core/Alpha/platforms/ios/__tests__/Helper.swift',
-    'src/components/core/Beta/platforms/ios/Alpha.ios.swift',
     'src/components/core/Beta/platforms/ios/Beta.ios.swift',
     'src/components/core/Beta/platforms/android/Beta.kt',
   ];
-  const sel = selectFiles(tarball, ['product/ProductTokens.ios.swift', 'DesignTokens.ios.swift', 'ComponentTokens.ios.swift']);
+  const generated = ['product/ProductTokens.ios.swift', 'DesignTokens.ios.swift', 'ComponentTokens.ios.swift'];
+  const sel = selectFiles(tarball, generated);
 
-  it('leaves out the package\'s own dist/ComponentTokens.* and every test', () => {
-    expect(sel.pkg.some((p) => p.includes('ComponentTokens'))).toBe(false);
+  it('the files left out are the .swift entries of ROOT_TOKEN_FILES, by name, and the test asserts that equality', () => {
+    expect([...ROOT_TOKEN_SWIFT_FILES].sort()).toEqual(ROOT_TOKEN_FILES.filter((f) => f.endsWith('.swift')).sort());
+    expect(ROOT_TOKEN_SWIFT_FILES.length).toBeGreaterThan(0);
+    expect(sel.dropped.map((d) => d.path).sort()).toEqual(['dist/ComponentTokens.ios.swift', 'dist/DesignTokens.ios.swift']);
+    const all = selectFiles([...ROOT_TOKEN_FILES, 'src/x/X.swift'], []);
+    expect(all.pkg).toEqual(['src/x/X.swift']);
+  });
+
+  it('leaves out every test and every non-Swift file', () => {
     expect(sel.pkg.some((p) => p.includes('Tests.swift') || p.includes('__tests__'))).toBe(false);
     expect(sel.pkg.some((p) => p.endsWith('.kt'))).toBe(false);
   });
 
-  it('keeps one copy of each native file name: a generated name wins, then the first packaged path', () => {
+  it('sorts each tier by path (code-point order), package first when compiled, with the floor the lengths', () => {
+    for (const tier of [sel.pkg, sel.gen]) expect([...tier].sort(codePointCompare)).toEqual(tier);
     expect(sel.pkg).toEqual([
       'src/components/core/Alpha/platforms/ios/Alpha.ios.swift',
       'src/components/core/Beta/platforms/ios/Beta.ios.swift',
       'src/components/core/Zed/platforms/ios/Zed.ios.swift',
       'src/tokens/platforms/ios/MotionTokens.swift',
     ]);
-    const reasons = Object.fromEntries(sel.dropped.map((d) => [d.path, d.reason]));
-    expect(reasons['dist/DesignTokens.ios.swift']).toMatch(/generated file has the name DesignTokens\.ios\.swift/);
-    expect(reasons['src/components/core/Beta/platforms/ios/Alpha.ios.swift']).toMatch(/earlier packaged file/);
-    expect(reasons['dist/ComponentTokens.ios.swift']).toMatch(/ComponentTokens/);
+    expect(sel.gen).toEqual(['ComponentTokens.ios.swift', 'DesignTokens.ios.swift', 'product/ProductTokens.ios.swift']);
+    expect(sel.duplicates).toEqual([]);
   });
 
-  it('sorts each tier by path (code-point order), with the floor the lengths', () => {
-    for (const tier of [sel.pkg, sel.gen]) {
-      expect([...tier].sort(codePointCompare)).toEqual(tier);
-    }
-    expect(sel.gen).toEqual(['ComponentTokens.ios.swift', 'DesignTokens.ios.swift', 'product/ProductTokens.ios.swift']);
-    expect(sel.gen).toHaveLength(3);
-    expect(sel.pkg).toHaveLength(4);
+  it('a native file name two files share is reported with every path, never silently dropped', () => {
+    const dup = selectFiles([...tarball, 'src/components/core/Beta/platforms/ios/Alpha.ios.swift'], generated);
+    expect(dup.duplicates).toEqual([
+      { name: 'Alpha.ios.swift', paths: ['pkg:src/components/core/Alpha/platforms/ios/Alpha.ios.swift', 'pkg:src/components/core/Beta/platforms/ios/Alpha.ios.swift'] },
+    ]);
+    expect(dup.pkg).toContain('src/components/core/Beta/platforms/ios/Alpha.ios.swift');
+    const cross = selectFiles(['src/x/DesignTokens.ios.swift'], ['DesignTokens.ios.swift']);
+    expect(cross.duplicates).toEqual([{ name: 'DesignTokens.ios.swift', paths: ['pkg:src/x/DesignTokens.ios.swift', 'gen:DesignTokens.ios.swift'] }]);
   });
 });
+
+describe('lane: the per-run instance check (design § 3: fails closed)', () => {
+  const themes: ThemeEntry[] = [{ name: 'dark', mode: 'dark' }, { name: 'wcag', mode: 'light' }];
+  const holder = (names: string[], extra: string[] = []): string =>
+    [
+      'import SwiftUI',
+      `public protocol ${BINDING.swift.themeProtocol}: Sendable {}`,
+      swiftHolderOpenLine('Fake'),
+      ...names.map((n) => `    public static let ${n}: any ${BINDING.swift.themeProtocol} = Fake${n[0].toUpperCase()}${n.slice(1)}Theme()`),
+      ...extra,
+      '}',
+      '',
+    ].join('\n');
+  const expected = instanceNames(themes, 'ios');
+
+  it('passes and says how many members equal the module\'s when the holder declares exactly the module\'s instances in order', () => {
+    const r = checkThemeInstances([holder(expected)], 'Fake', themes);
+    expect(r.ok).toBe(true);
+    expect(r.detail).toMatch(/^4 members equal the shared module's instances/);
+  });
+
+  it('fails on an extra member, naming it', () => {
+    const r = checkThemeInstances([holder([...expected, 'darkDark'])], 'Fake', themes);
+    expect(r.ok).toBe(false);
+    expect(r.detail).toContain('extra darkDark');
+  });
+
+  it('fails on a missing member, naming it', () => {
+    const r = checkThemeInstances([holder(expected.filter((n) => n !== 'wcagDark'))], 'Fake', themes);
+    expect(r.ok).toBe(false);
+    expect(r.detail).toContain('missing wcagDark');
+  });
+
+  it('fails on the right members in another order', () => {
+    const r = checkThemeInstances([holder([...expected].reverse())], 'Fake', themes);
+    expect(r.ok).toBe(false);
+    expect(r.detail).toMatch(/different order/);
+  });
+
+  it('fails closed on a declared holder from which no member parses (a wrong indent, a name list)', () => {
+    const wrongIndent = ['public protocol DesignerPunkTheme: Sendable {}', swiftHolderOpenLine('Fake'), '  public static let baseLight: any DesignerPunkTheme = X()', '}'].join('\n');
+    const nameList = ['public protocol DesignerPunkTheme: Sendable {}', swiftHolderOpenLine('Fake'), '    public static let baseLight, baseDark: any DesignerPunkTheme', '}'].join('\n');
+    for (const text of [wrongIndent, nameList, holder([])]) {
+      const r = checkThemeInstances([text], 'Fake', themes);
+      expect(r.ok).toBe(false);
+      expect(r.detail).toMatch(/holder found, no members parsed/);
+    }
+  });
+
+  it('fails when DesignerPunkTheme is declared and no holder is found', () => {
+    const r = checkThemeInstances(['public protocol DesignerPunkTheme: Sendable {}\n'], 'Fake', themes);
+    expect(r.ok).toBe(false);
+    expect(r.detail).toMatch(/no FakeThemes holder was found/);
+  });
+
+  it('prints "not checked" and does not fail while the generated Swift declares neither', () => {
+    expect(checkThemeInstances(['public struct DesignTokens {}\n'], 'Fake', themes)).toEqual({ ok: true, detail: 'not checked' });
+  });
+
+  it('fails on a holder declared twice', () => {
+    expect(checkThemeInstances([holder(expected), holder(expected)], 'Fake', themes).ok).toBe(false);
+  });
+
+  it('uses the module\'s open line and the member form Task 11 pins (four spaces, public static let, any DesignerPunkTheme)', () => {
+    expect(swiftHolderOpenLine('Fake')).toBe('public enum FakeThemes {');
+    expect('    ' + swiftHolderMemberLine('baseLight').trimStart() + ' X()').toBe('    public static let baseLight: any DesignerPunkTheme = X()');
+  });
+
+  it('a config with a custom theme expects its instances too', () => {
+    const c: ThemeEntry[] = [...themes, { name: 'high-contrast', mode: 'both' }, { name: 'brand', mode: 'light' }];
+    const r = checkThemeInstances([holder(instanceNames(c, 'ios'))], 'Fake', c);
+    expect(r.ok).toBe(true);
+    expect(r.detail).toMatch(/^7 members/);
+  });
+});
+
 
 describe('lane: the toolchain read and match (criterion 7)', () => {
   const texts = {
@@ -550,7 +770,9 @@ interface Rig {
   pins: IosPins;
 }
 
-function rig(opts: { appExists?: boolean; pinSwift?: string; themes?: Array<{ name: string; mode: string }> } = {}): Rig {
+function rig(
+  opts: { appExists?: boolean; pinSwift?: string; themes?: Array<{ name: string; mode: string }>; duplicate?: boolean; designTokensText?: string; noProducts?: boolean } = {},
+): Rig {
   const tmp = fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()), 'lane-test-'));
   const app = path.join(tmp, 'Xcode_26.6.app');
   if (opts.appExists !== false) fs.mkdirSync(path.join(app, 'Contents', 'Developer'), { recursive: true });
@@ -580,10 +802,15 @@ function rig(opts: { appExists?: boolean; pinSwift?: string; themes?: Array<{ na
     'src/components/core/Alpha/platforms/ios/AlphaTests.swift',
     'src/tokens/platforms/ios/MotionTokens.swift',
     'src/components/core/Alpha/platforms/android/Alpha.kt',
+    ...(opts.duplicate ? ['src/components/core/Beta/platforms/ios/Alpha.ios.swift'] : []),
   ];
   for (const t of tarball) write(`node_modules/@3fn/core/${t}`, '// x\n');
   write('harness-tarball-files.txt', tarball.join('\n') + '\n');
-  for (const g of ['ComponentTokens.ios.swift', 'DesignTokens.ios.swift', 'product/ProductTokens.ios.swift']) write(`dist/tokens/${g}`, '// g\n');
+  for (const g of ['ComponentTokens.ios.swift', 'DesignTokens.ios.swift', 'product/ProductTokens.ios.swift']) write(`dist/tokens/${g}`, g === 'DesignTokens.ios.swift' && opts.designTokensText !== undefined ? opts.designTokensText : '// g\n');
+  if (!opts.noProducts) {
+    for (const f of fs.readdirSync(PRODUCT_FIXTURE).filter((x) => x.endsWith('.yaml'))) write(`product/tokens/${f}`, fs.readFileSync(path.join(PRODUCT_FIXTURE, f), 'utf8'));
+    write('product/tokens/sub/ignored.yaml', 'tokens:\n  neverRead:\n    value: 1\n');
+  }
   for (const f of ['primitives', 'semantics', 'components']) {
     write(`token-index/${f}.yaml`, fs.readFileSync(path.join(THEMES_FIXTURE, `${f}.yaml`), 'utf8'));
   }
@@ -615,13 +842,17 @@ function lane(r: Rig, context: (typeof IOS_CONTEXTS)[number], scenario: Scenario
 const compiles = (calls: string[][]): string[][] => calls.filter((c) => c[0] === 'xcrun' && c[1] === 'swiftc' && c[2] !== '--version');
 const moduleOf = (c: string[]): string => c[c.indexOf('-module-name') + 1];
 
+
+const readRun = (r: Rig): { swift: Array<Record<string, unknown>>; files: Record<string, { compiled: number; floor: number }>; toolchain: Record<string, string>; roots: Record<string, string>; checks: Array<{ name: string; ok: boolean; detail: string }> } =>
+  JSON.parse(fs.readFileSync(path.join(r.out, 'run.json'), 'utf8'));
+
 describe('lane: harness-ios-tokens against a fake swiftc', () => {
-  it('while Stage T writes no module: prints "probe: blocked (token module not built)", marks ios.P blocked, writes the run file', () => {
+  it('while Stage T writes no module: prints "probe: blocked (token module not built)", marks ios.P blocked, still prints and records every count line', () => {
     const r = rig();
-    const { lines, outcome, fake } = lane(r, 'harness-ios-tokens', { tokensBuild: false, honestCompiler: true });
+    const { lines: out, outcome, fake } = lane(r, 'harness-ios-tokens', { tokensBuild: false, honestCompiler: true });
     expect(outcome.exit).toBe(0);
-    expect(lines).toContain('probe: blocked (token module not built)');
-    const run = JSON.parse(fs.readFileSync(path.join(r.out, 'run.json'), 'utf8'));
+    expect(out).toContain('probe: blocked (token module not built)');
+    const run = readRun(r);
     expect(run.swift).toEqual([
       { compile: 'ios.T', log: 'logs/T.txt', exitCode: 1 },
       { compile: 'ios.P', blocked: true },
@@ -630,21 +861,39 @@ describe('lane: harness-ios-tokens against a fake swiftc', () => {
     expect(run.roots.gen).toBe(path.join(fs.realpathSync(r.consumer), 'dist', 'tokens'));
     expect(run.roots.probe).toBe(path.join(fs.realpathSync(r.out), 'probe'));
     expect(Object.keys(run.toolchain)).toEqual([...TOOLCHAIN_FIELDS]);
+    for (const l of [
+      'probe: read 9 of 9 index names',
+      'probe: instances read 12 of 12',
+      'probe: product read 5 of 5',
+      'probe: provider read 3 of 3',
+      'probe: key read 1 of 1',
+    ]) expect(out).toContain(l);
+    // each count line and the two other gating results are in the run file's checks, all ok, the blocked ones marked
+    expect(run.checks.map((c) => c.name)).toEqual([
+      'probe: index names',
+      'probe: instances',
+      'probe: product',
+      'probe: provider',
+      'probe: key',
+      'harness consumer config',
+      'theme instances',
+    ]);
+    expect(run.checks.every((c) => c.ok)).toBe(true);
+    expect(run.checks[0].detail).toBe('read 9 of 9 (blocked)');
+    expect(run.checks[6]).toEqual({ name: 'theme instances', ok: true, detail: 'not checked' });
+    expect(out).toContain('theme instances: not checked');
     expect(fs.readFileSync(path.join(r.out, 'logs', 'T.txt'), 'utf8')).toContain('consecutive declarations');
-    // no Stage P compile of the REAL probe ran: only the self-test's planted probe did
+    // no compile of the REAL probe ran: only the self-test's planted probe did
     const realP = compiles(fake.calls).filter((c) => moduleOf(c) === 'DPHarnessProbe' && !c.some((a) => a.includes(`${path.sep}selftest${path.sep}`)));
     expect(realP).toHaveLength(0);
-    // the probe was still generated, and its read count is reported
-    expect(lines.some((l) => /^harness-ios: the probe was generated but not compiled: probe: read 16 of 16 index names/.test(l))).toBe(true);
     expect(fs.existsSync(path.join(r.out, 'probe', 'Probe.swift'))).toBe(true);
   });
 
-  it('runs each stage\'s self-test first, then compiles the generated files in sorted order and prints the invocation and count', () => {
+  it('runs each stage\'s self-test first, compiles the generated files in sorted order, then the probe with Stage T\'s folder on -I', () => {
     const r = rig();
     const { fake, text } = lane(r, 'harness-ios-tokens', { tokensBuild: true, honestCompiler: true });
     const order = compiles(fake.calls).map((c) => `${moduleOf(c)}:${path.basename(c[c.length - 1])}`);
     expect(order[0]).toBe('DPHarnessTokens:missing-return.swift');
-    expect(order.indexOf('DPHarnessTokens:missing-return.swift')).toBeLessThan(order.indexOf('DPHarnessTokens:ProductTokens.ios.swift'));
     const realT = compiles(fake.calls).find((c) => moduleOf(c) === 'DPHarnessTokens' && c.some((a) => a.endsWith('ProductTokens.ios.swift')))!;
     const gen = realT.filter((a) => a.endsWith('.swift')).map((a) => a.slice(a.indexOf('dist/tokens/') + 'dist/tokens/'.length));
     expect(gen).toEqual(['ComponentTokens.ios.swift', 'DesignTokens.ios.swift', 'product/ProductTokens.ios.swift']);
@@ -652,15 +901,15 @@ describe('lane: harness-ios-tokens against a fake swiftc', () => {
     expect(text).toContain('-module-name DPHarnessTokens -swift-version 6 -diagnostic-style llvm');
     expect(text).toContain('Stage T files (3), in the order given to the compiler:');
     expect(text).toContain('floor gen 3; compiled gen 3');
-    // the real probe compiled this time, with Stage T's folder on -I
     const realP = compiles(fake.calls).filter((c) => moduleOf(c) === 'DPHarnessProbe' && !c.some((a) => a.includes(`${path.sep}selftest${path.sep}`)));
     expect(realP).toHaveLength(1);
     expect(realP[0].join(' ')).toContain(`-I ${path.join(fs.realpathSync(r.out), 'T')}`);
-    expect(text).toMatch(/probe: read 16 of 16 index names/);
+    expect(text).toContain('probe: read 9 of 9 index names');
     expect(text).not.toContain('probe: blocked');
+    expect(readRun(r).checks[0].detail).toBe('read 9 of 9');
   });
 
-  it('DEVELOPER_DIR names the pinned Xcode', () => {
+  it('DEVELOPER_DIR names the pinned Xcode on every command', () => {
     const r = rig();
     const seen: string[] = [];
     const fake = fakeRunner({ tokensBuild: false, honestCompiler: true }, r.app, fs.realpathSync(r.consumer));
@@ -671,10 +920,79 @@ describe('lane: harness-ios-tokens against a fake swiftc', () => {
     runLane({ context: 'harness-ios-tokens', consumer: r.consumer, out: r.out, pinsPath: r.pinsPath, run: spy, log: () => undefined });
     expect(new Set(seen)).toEqual(new Set([path.join(r.app, 'Contents', 'Developer')]));
   });
+
+  it('runs no `node` process and sets no NODE_PATH: the consumer\'s config is never loaded', () => {
+    const r = rig();
+    const { fake } = lane(r, 'harness-ios-tokens', { tokensBuild: false, honestCompiler: true });
+    expect(fake.calls.some((c) => c[0] === 'node')).toBe(false);
+    expect(fs.readFileSync(path.join(REPO, 'harness', 'ios', 'lane.ts'), 'utf8')).not.toMatch(/NODE_PATH|loadProbeConfig/);
+  });
+
+  it('records a failing instance check in the run file and still exits 0: the comparator fails the context, not the lane', () => {
+    const holder = [
+      'public protocol DesignerPunkTheme: Sendable {}',
+      'public enum FakeThemes {',
+      '    public static let baseLight: any DesignerPunkTheme = FakeBaseLightTheme()',
+      '    public static let baseDark: any DesignerPunkTheme = FakeBaseDarkTheme()',
+      '}',
+      '',
+    ].join('\n');
+    const r = rig({ designTokensText: holder });
+    const { outcome, lines: out } = lane(r, 'harness-ios-tokens', { tokensBuild: false, honestCompiler: true });
+    expect(outcome.exit).toBe(0);
+    const check = readRun(r).checks.find((c) => c.name === 'theme instances')!;
+    expect(check.ok).toBe(false);
+    expect(check.detail).toContain('missing wcagLight, wcagDark');
+    expect(out.some((l) => l.startsWith('theme instances: FakeThemes members differ'))).toBe(true);
+  });
+
+  it('records a passing instance check when the generated holder is exactly the module\'s four instances', () => {
+    const names = ['baseLight', 'baseDark', 'wcagLight', 'wcagDark'];
+    const holder = [
+      'public protocol DesignerPunkTheme: Sendable {}',
+      'public enum FakeThemes {',
+      ...names.map((n) => `    public static let ${n}: any DesignerPunkTheme = Fake${n[0].toUpperCase()}${n.slice(1)}Theme()`),
+      '}',
+      '',
+    ].join('\n');
+    const r = rig({ designTokensText: holder });
+    lane(r, 'harness-ios-tokens', { tokensBuild: false, honestCompiler: true });
+    const check = readRun(r).checks.find((c) => c.name === 'theme instances')!;
+    expect(check.ok).toBe(true);
+    expect(check.detail).toMatch(/^4 members equal/);
+  });
+
+  it('turns a product key that is not a Swift identifier into a failing check naming it, and writes no read for it', () => {
+    const r = rig({ noProducts: true });
+    fs.mkdirSync(path.join(r.consumer, 'product', 'tokens'), { recursive: true });
+    fs.writeFileSync(path.join(r.consumer, 'product', 'tokens', 'badkeys.yaml'), 'tokens:\n  primary-color:\n    value: 1\n  fine:\n    value: 2\n');
+    const { outcome } = lane(r, 'harness-ios-tokens', { tokensBuild: false, honestCompiler: true });
+    expect(outcome.exit).toBe(0);
+    const run = readRun(r);
+    expect(run.checks.find((c) => c.name === 'probe: product')).toEqual({ name: 'probe: product', ok: false, detail: 'read 1 of 2 (blocked)' });
+    expect(run.checks.find((c) => c.name === 'probe: product key')!.detail).toContain('badkeys.primary-color'.replace('badkeys', 'badkeys'));
+    expect(fs.readFileSync(path.join(r.out, 'probe', 'Probe.swift'), 'utf8')).not.toContain('primary-color');
+  });
+
+  it('reads no product tokens when the manifest has no productTokens, and a missing folder reads as none', () => {
+    const r = rig({ noProducts: true });
+    lane(r, 'harness-ios-tokens', { tokensBuild: false, honestCompiler: true });
+    expect(readRun(r).checks.find((c) => c.name === 'probe: product')).toEqual({ name: 'probe: product', ok: true, detail: 'read 0 of 0 (blocked)' });
+  });
+
+  it('checks the harness consumer\'s own config against the theme-instance rule\'s refusals', () => {
+    const r = rig({ themes: [{ name: 'base', mode: 'both' }] });
+    const { outcome, text } = lane(r, 'harness-ios-tokens', { tokensBuild: false, honestCompiler: true });
+    expect(outcome.exit).toBe(0);
+    const check = readRun(r).checks.find((c) => c.name === 'harness consumer config')!;
+    expect(check.ok).toBe(false);
+    expect(check.detail).toContain('refusal (b)');
+    expect(text).toContain('FAIL check: harness consumer config, refusal (b)');
+  });
 });
 
 describe('lane: harness-ios-components against a fake swiftc', () => {
-  it('compiles package files then generated files as DesignerPunk, then the generated files alone (T5), and records both floors', () => {
+  it('compiles package files then generated files as DesignerPunk, then the generated files alone (T5), and records both floors; its checks array is empty', () => {
     const r = rig();
     const { fake, text, outcome } = lane(r, 'harness-ios-components', { tokensBuild: false, honestCompiler: true });
     expect(outcome.exit).toBe(0);
@@ -690,14 +1008,13 @@ describe('lane: harness-ios-components against a fake swiftc', () => {
       'gen:DesignTokens.ios.swift',
       'gen:product/ProductTokens.ios.swift',
     ]);
-    const t5 = compiles(fake.calls).filter((c) => moduleOf(c) === 'DesignerPunk' && !c.some((a) => a.includes('node_modules/@3fn/core/')) && c.some((a) => a.endsWith('ProductTokens.ios.swift')));
-    expect(t5).toHaveLength(1);
-    const run = JSON.parse(fs.readFileSync(path.join(r.out, 'run.json'), 'utf8'));
-    expect(run.swift.map((s: { compile: string }) => s.compile)).toEqual(['ios.C', 'ios.T5']);
-    expect(run.swift.map((s: { exitCode: number }) => s.exitCode)).toEqual([1, 0]);
+    const run = readRun(r);
+    expect(run.swift.map((s) => s.compile)).toEqual(['ios.C', 'ios.T5']);
+    expect(run.swift.map((s) => s.exitCode)).toEqual([1, 0]);
     expect(run.files).toEqual({ gen: { compiled: 3, floor: 3 }, pkg: { compiled: 3, floor: 3 } });
+    expect(run.checks).toEqual([]);
     expect(text).toContain('left out of the package set: dist/ComponentTokens.ios.swift');
-    expect(text).toContain('left out of the package set: dist/DesignTokens.ios.swift (a generated file has the name DesignTokens.ios.swift)');
+    expect(text).toContain('left out of the package set: dist/DesignTokens.ios.swift');
     expect(text).toContain('floor gen 3, pkg 3; compiled gen 3, pkg 3');
   });
 
@@ -705,13 +1022,21 @@ describe('lane: harness-ios-components against a fake swiftc', () => {
     const r = rig();
     fs.rmSync(path.join(r.consumer, 'node_modules/@3fn/core/src/tokens/platforms/ios/MotionTokens.swift'));
     lane(r, 'harness-ios-components', { tokensBuild: false, honestCompiler: true });
-    const run = JSON.parse(fs.readFileSync(path.join(r.out, 'run.json'), 'utf8'));
-    expect(run.files.pkg).toEqual({ compiled: 2, floor: 3 });
+    expect(readRun(r).files.pkg).toEqual({ compiled: 2, floor: 3 });
+  });
+
+  it('fails as setup, naming every path, when two files of the set share a native file name', () => {
+    const r = rig({ duplicate: true });
+    const { outcome, text, fake } = lane(r, 'harness-ios-components', { tokensBuild: false, honestCompiler: true });
+    expect(outcome.exit).toBe(1);
+    expect(text).toMatch(/FAIL setup: native file name used twice: Alpha\.ios\.swift \(pkg:src\/components\/core\/Alpha\/platforms\/ios\/Alpha\.ios\.swift and pkg:src\/components\/core\/Beta\/platforms\/ios\/Alpha\.ios\.swift\)/);
+    expect(compiles(fake.calls)).toHaveLength(0);
+    expect(fs.existsSync(path.join(r.out, 'run.json'))).toBe(false);
   });
 });
 
 describe('lane: the themes come from harness-consumer.json, not from loading the consumer\'s config', () => {
-  it('reads name and themes from the manifest, in config order', () => {
+  it('reads name and themes from the manifest, in config order, as the module\'s ThemeEntry', () => {
     expect(probeConfigFromManifest({ name: 'Acme', themes: [{ name: 'dark', mode: 'dark' }, { name: 'wcag', mode: 'light' }] })).toEqual({
       name: 'Acme',
       themes: [{ name: 'dark', mode: 'dark' }, { name: 'wcag', mode: 'light' }],
@@ -726,35 +1051,35 @@ describe('lane: the themes come from harness-consumer.json, not from loading the
     expect(() => probeConfigFromManifest({ name: 'Acme', themes: [{ name: 'x' } as unknown as { name: string; mode: string }] })).toThrow(/themes\[0\]/);
   });
 
-  it('the probe reads one theme read per colour per instance the manifest\'s themes give', () => {
-    const r = rig({ themes: [{ name: 'dark', mode: 'dark' }, { name: 'wcag', mode: 'light' }] });
-    const { lines } = lane(r, 'harness-ios-tokens', { tokensBuild: false, honestCompiler: true });
-    // 3 theme colours x 4 instances (baseLight, baseDark, darkDark, wcagLight) = 12; plain 6; key 1
-    expect(lines.some((l) => /probe: read 19 of 19 index names \(.*theme 3\u00d74, key 1\)/.test(l))).toBe(true);
-    const probe = fs.readFileSync(path.join(r.out, 'probe', 'Probe.swift'), 'utf8');
-    expect(probe).toContain('_ = FakeThemes.wcagLight.colorCanvas');
-  });
-
-  it('runs no `node` process and sets no NODE_PATH: the config is never loaded', () => {
-    const r = rig();
-    const { fake } = lane(r, 'harness-ios-tokens', { tokensBuild: false, honestCompiler: true });
-    expect(fake.calls.some((c) => c[0] === 'node')).toBe(false);
-    expect(fs.readFileSync(path.join(REPO, 'harness', 'ios', 'lane.ts'), 'utf8')).not.toMatch(/NODE_PATH|loadProbeConfig/);
+  it('the probe reads the instances the manifest\'s themes give: a custom theme of both modes adds two', () => {
+    const r = rig({ themes: [{ name: 'dark', mode: 'dark' }, { name: 'wcag', mode: 'light' }, { name: 'high-contrast', mode: 'both' }] });
+    const { lines: out } = lane(r, 'harness-ios-tokens', { tokensBuild: false, honestCompiler: true });
+    // 3 theme colours x 6 instances = 18
+    expect(out).toContain('probe: instances read 18 of 18');
+    expect(out).toContain('probe: provider read 4 of 4');
+    expect(fs.readFileSync(path.join(r.out, 'probe', 'Probe.swift'), 'utf8')).toContain('_ = FakeThemes.highContrastDark.colorCanvas');
   });
 });
 
-describe('lane: what stops it before the comparator', () => {
-  it('fails on a toolchain field that differs from the pin, compiling nothing', () => {
+describe('lane: what stops it before the comparator, and what no longer does', () => {
+  it('a toolchain field that differs from the pin does NOT stop the lane: it records what it read, still compiles, and exits 0', () => {
     const r = rig({ pinSwift: '6.2.0' });
     const { outcome, text, fake } = lane(r, 'harness-ios-components', { tokensBuild: false, honestCompiler: true });
-    expect(outcome.exit).toBe(1);
-    expect(text).toContain('FAIL toolchain:');
+    expect(outcome.exit).toBe(0);
     expect(text).toContain('swift.version: observed "6.3.1", pinned "6.2.0"');
-    expect(compiles(fake.calls)).toHaveLength(0);
-    expect(fs.existsSync(path.join(r.out, 'run.json'))).toBe(false);
+    expect(text).toContain('the comparator fails the context as "toolchain"');
+    expect(compiles(fake.calls).length).toBeGreaterThan(0);
+    expect(readRun(r).toolchain['swift.version']).toBe('6.3.1');
   });
 
-  it('fails as "toolchain missing" when the pinned app folder is absent', () => {
+  it('the comparator fails that run as `toolchain` (the comparator reads the pins at the head)', () => {
+    const doc = yaml.load(PINS_TEXT) as { ios: { toolchain: Record<string, string> } };
+    const parsed = parseComparatorPins(yaml.dump({ consumer: { name: 'x' }, ios: doc.ios, android: { runner: 'ubuntu-24.04', toolchain: { 'java.version': '17' } } }));
+    expect(parsed.errors).toEqual([]);
+    expect(Object.keys(parsed.toolchain.ios)).toEqual([...TOOLCHAIN_FIELDS]);
+  });
+
+  it('fails as "toolchain missing" when the pinned app folder is absent, with no run file', () => {
     const r = rig({ appExists: false });
     const { outcome, text, fake } = lane(r, 'harness-ios-tokens', { tokensBuild: false, honestCompiler: true });
     expect(outcome.exit).toBe(1);
@@ -762,7 +1087,7 @@ describe('lane: what stops it before the comparator', () => {
     expect(fake.calls).toHaveLength(0);
   });
 
-  it('fails as "self-test" when the compiler accepts the missing-return fixture', () => {
+  it('fails as "self-test" when the compiler accepts the missing-return fixture, with no run file', () => {
     const r = rig();
     const { outcome, text, fake } = lane(r, 'harness-ios-tokens', { tokensBuild: true, honestCompiler: false });
     expect(outcome.exit).toBe(1);
@@ -778,3 +1103,4 @@ describe('lane: what stops it before the comparator', () => {
     expect(text).toMatch(/FAIL self-test: Stage C:/);
   });
 });
+

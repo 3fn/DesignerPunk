@@ -36,3 +36,10 @@
 
 - **unlisted** (found in 3.2, 2026-11-06): the consumer's registered themes, which the probe needs (C3). Row 5's instrument, `harness-consumer.json`, does not carry them, and the consumer's `node_modules` is pruned to the packed package, so the package's own config loader cannot load the config beside it. Resolved 2026-11-06: Ada's `38d1d8ac0` writes `themes` into the manifest; the lane reads it (`probeConfigFromManifest`) and no longer loads the config.
 - **misfit** (found in 3.2, 2026-11-06): row 7 said the instance names would come from design § 4 by one derivation function. Design § 4 and Req 4.1 give the set only by example ("base light and dark, WCAG light and dark"), and `init`'s scaffolded config registers `dark` (mode dark) and `wcag` (mode light), which the example does not match. The derivation is mine, in `themeInstances` (`probe-swift.ts`), recorded in `task-3-2-completion.md` § 3 item 3.
+- **unlisted** (appended at 3.4, 2026-11-06, `[STACY TASKS R4]` Low-1; each is an instrument built or relied on by 3.4 that the 3.4 criteria add and the table above does not list):
+  1. `scripts/harness/native-rules.ts` and its test (Task 5's 5.4, Thurgood): the shared module the probe imports. Exists on the unit branch at `4252ccc64`.
+  2. The comparator's `checks` route (Task 5's 5.4): `RunFile.checks` and the `check` class in `scripts/harness/compare.ts` at `4252ccc64`. The lane's count lines and the per-run instance check are written into it.
+  3. The per-run instance check: built here, in `harness/ios/lane.ts` (`checkThemeInstances`), tested in `probe-swift.test.ts`. Read for real only at U6.
+  4. The product reads, the provider reads and the `harness consumer config` check: built here (`probe-swift.ts`, `lane.ts`).
+  5. `ROOT_TOKEN_FILES` in `scripts/pack-assert.ts`: relied on, imported by the lane for the root-token-file exclusion (exists at `4252ccc64`).
+  6. The committed fixture folder `harness/fixtures/product-tokens/` (Ada's, Task 1): the instrument for the product-read count test; exists at `4252ccc64`.

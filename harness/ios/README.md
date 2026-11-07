@@ -18,9 +18,13 @@ npx tsx scripts/harness/compare.ts --context harness-ios-components --run <dir>/
 
 - `--consumer` is the root `scripts/harness/consumer.ts` wrote (it holds `harness-consumer.json`).
 - `--pins <file>` defaults to `harness/pins.yaml`.
-- The lane exits **1** for what the comparator cannot see: a toolchain mismatch (`FAIL toolchain`, or `FAIL toolchain missing` when the pinned Xcode folder is absent), a failed self-test (`FAIL self-test`), a setup fault (`FAIL setup`), and a probe whose read count differs from the index's (`FAIL probe`; `run.json` is still written, so the comparator can run beside it). Compile errors are data: they give exit 0, and the comparator decides.
-- Make the comparator step run even when the lane step exits 1 on a probe count, and let the lane's own exit status fail the job as well.
-- The lane reads the consumer only through the files `consumer.ts` wrote (`harness-consumer.json`, including its `name` and `themes`, `harness-tarball-files.txt`, `token-index/`, the generated folder, the installed package). It does not load the consumer's config. It runs under the repository's `tsx`.
+- The lane exits **1** only where the comparator would have nothing to read, so there is no run file and no `harness-verdict` annotation: `FAIL toolchain missing` (the pinned Xcode folder is absent), `FAIL self-test`, and `FAIL setup` (a setup fault, or a native file name that two files of the set share, named with every path). Everything else is data in `run.json`, and the comparator decides:
+  - **A toolchain field that differs from the pin does not stop the lane.** It records the versions it read, still compiles, and the comparator fails the context as `toolchain`; that run carries the annotation like any FAIL.
+  - **`checks`** (`harness-ios-tokens` only; the component context writes an empty array): one entry per probe count line (`probe: index names`, `instances`, `product`, `provider`, `key`; `ok` when `n = m`), a `probe: product key` entry for each product key that is not a Swift identifier, `harness consumer config` (the theme-instance rule's refusals applied to our own fixture), and `theme instances` (the per-run check). The comparator fails the context as class `check` for each `ok: false`. The lane exits 0 for them.
+  - **The count lines print in both states**, compiled and "generated, not compiled": `probe: read <n> of <m> index names` (the index's names, a `theme.` name once), then `probe: instances read …`, `probe: product read …`, `probe: provider read …`, `probe: key read …`.
+  - **`theme instances:`** prints the per-run check: the generated `<Name>Themes` holder's members against the shared module's instances for the manifest's themes. `not checked` (ok) only while the generated Swift declares neither the holder nor `DesignerPunkTheme`; a holder from which no member parses, or `DesignerPunkTheme` with no holder, fails.
+- Make the annotation step run after the comparator on every outcome, and the comparator step run whenever the lane wrote `run.json`.
+- The lane reads the consumer only through the files `consumer.ts` wrote (`harness-consumer.json`, including its `name`, `themes` and `productTokens`, `harness-tarball-files.txt`, `token-index/`, the product-token folder, the generated folder, the installed package). It does not load the consumer's config. It runs under the repository's `tsx`.
 
 ## What it writes into `<dir>`
 
@@ -28,7 +32,7 @@ npx tsx scripts/harness/compare.ts --context harness-ios-components --run <dir>/
 |---|---|
 | `run.json` | the run file `compare.ts --run` reads (`harness/README.md` § "The comparator's command line") |
 | `logs/<stage>.txt` | each stage's captured compiler output (`T`, `P`, `C`, `T5`), and the self-tests' as `selftest-*` |
-| `probe/Probe.swift` | the generated probe (Stage P's input), written whether or not Stage P ran |
+| `probe/Probe.swift` | the generated probe (Stage P's input), written whether or not Stage P ran; it reads the index's names, the theme instances, the product tokens, the provider and the key |
 | `T/`, `P/`, `C/`, `T5/`, `selftest/` | each stage's object files; `T/` holds `DPHarnessTokens.swiftmodule` |
 
 `<dir>` is emptied at the start. Log files end `.txt`, never `.log` (the repository's `.gitignore` ignores `*.log`).

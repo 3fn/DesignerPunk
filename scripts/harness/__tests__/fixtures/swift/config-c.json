@@ -1,0 +1,10 @@
+{
+  "name": "Fixture",
+  "themes": [
+    { "name": "dark", "mode": "dark" },
+    { "name": "wcag", "mode": "light" },
+    { "name": "high-contrast", "mode": "both" },
+    { "name": "brand", "mode": "light" },
+    { "name": "default", "mode": "dark" }
+  ]
+}
