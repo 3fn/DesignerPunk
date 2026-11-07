@@ -252,6 +252,54 @@
       "config": "scripts/jest.config.js",
       "context": "lane-functional-root",
       "record": ".kiro/docs/ballots/2026-10-26-governance-examples-guard.md (the governance-examples guard: token-name half, file-shape half, import surface; ratified 2026-10-26)"
+    },
+    {
+      "file": "scripts/harness/__tests__/compare.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/specs/129-consumer-generation-completeness/completion/task-6-completion.md (Spec 129 Task 6, the native harness comparator, two-sided against its list; Req 3.10)"
+    },
+    {
+      "file": "scripts/harness/__tests__/parse-swift.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/specs/129-consumer-generation-completeness/completion/task-6-completion.md (Spec 129 Task 6, the Swift diagnostic parser over recorded compiler fixtures; Req 3.10)"
+    },
+    {
+      "file": "scripts/harness/__tests__/parse-kotlin.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/specs/129-consumer-generation-completeness/completion/task-6-completion.md (Spec 129 Task 6, the Kotlin/Gradle log parser and its attribution rules; Req 3.10)"
+    },
+    {
+      "file": "scripts/harness/__tests__/probe-swift.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/specs/129-consumer-generation-completeness/completion/task-6-completion.md (Spec 129 Task 6, the generated Swift probe: every read comes from the index, themes and product source; Req 3.10)"
+    },
+    {
+      "file": "scripts/harness/__tests__/probe-kotlin.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/specs/129-consumer-generation-completeness/completion/task-6-completion.md (Spec 129 Task 6, the generated Kotlin probe: every read comes from the index, themes and product source; Req 3.10)"
+    },
+    {
+      "file": "scripts/harness/__tests__/consumer.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/specs/129-consumer-generation-completeness/completion/task-6-completion.md (Spec 129 Task 6, the scratch-consumer driver: a failing step is named and stops the run; Req 3.10)"
+    },
+    {
+      "file": "scripts/harness/__tests__/stability.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/specs/129-consumer-generation-completeness/completion/task-6-completion.md (Spec 129 Task 6, the computed stability record over the checks API shapes; Req 3.10)"
+    },
+    {
+      "file": "scripts/harness/__tests__/native-rules.test.ts",
+      "config": "scripts/jest.config.js",
+      "context": "lane-functional-root",
+      "record": ".kiro/specs/129-consumer-generation-completeness/completion/task-6-completion.md (Spec 129 Task 6, the shared native naming rules the probes and lanes take; Req 3.10)"
     }
   ]
 }
