@@ -2,7 +2,13 @@
 
 **Date**: 2026-11-07 (drafted 2026-11-07T22:02:58Z, `date -u`)
 **Drafted by**: Thurgood (Civitas steward; author of the amended ballot `2026-09-26-tasks-row-write-scope-grant` and of ballot `2026-09-27-ci-regime-standing-scope`, whose § 3 is the issue-row grant; author of Spec 129's `tasks.md`), at Peter's direction.
-**Status**: **DRAFT** — not ratified. No edit site below is applied. A merge of this file's PR ratifies nothing; only Peter's dated words in this Status line do.
+**Status**: **RATIFIED (Peter, 2026-11-07T23:28:57Z)**. Peter's words, verbatim: "Re: F-1, All as recommended and ratified". The orchestrator recorded them, with the time from `date -u` at receipt, in `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-07-peter-ruling-github-grants-ballot-ratified.md` (`748be5d0b`), and read them as answering PR #745's three questions:
+- **F-1:** (a), edit TCP L102 and its operative-set item.
+- **F-2:** (a), Thurgood holds Task 13's issue-row grant and writes the `harness-generate` step; Ada writes `d2-check.ts` and its test.
+- **The ballot:** ratified.
+
+No edit site below is applied yet; they land in the application PR (§ 8).
+*(Prior text at `1eae2b8aa`: "**DRAFT** — not ratified. No edit site below is applied. A merge of this file's PR ratifies nothing; only Peter's dated words in this Status line do.")*
 **Owner**: Thurgood.
 **Required reviewer**: **Stacy**. She proposed the class option, she owns the ARMING row it relies on and the `tasks-row-write-scope-grant` row's audit (`owner: stacy`), she is the census reader, and she is the C1 confirmer of the Task-Completion-Protocol unit item 3 edits.
 **Consulted seats**: Stacy, Ada, Data, Kenya, Lina. § 6 says why each one is on the list and what each is asked, and why Leonardo and Sparky are not.
@@ -179,6 +185,7 @@ The amended row is `check_state: none` with `checks: []`, so no registered instr
 - **F-1 — Item 3, the TCP sentence.**
   - **(a)** Edit TCP L102 and its operative-set item (as drafted).
   - **(b)** Leave TCP, and rely on its "Rule and limits:" pointer.
+  - **Ruled: (a)** (Peter, 2026-11-07T23:28:57Z, "All as recommended and ratified"; see Status).
   - **Recommendation: (a).** Under (b), always-loaded law says a row grants "exactly" its listed artifacts, and that is false for a listed `.github/**` path.
   - **What survives against (a)**: a signing-chain cycle (a re-quote, Stacy's confirmation, possibly a regeneration) to add one sentence to an identity doc. Stacy's confirmation is a Stacy-signed act, so it enters Peter's blind sample of Stacy-signed acts and the delegate audit at the next release: one row, but Peter's time (Stacy R1).
   - **Seat reads**: Stacy (a); Data (a); Kenya (a); Lina (a); Ada defers to Stacy and Thurgood, with no objection to (a).
@@ -186,6 +193,7 @@ The amended row is `check_state: none` with `checks: []`, so no registered instr
 - **F-2 — Task 13's grant owner** (an issue-row grant has exactly one).
   - **(a)** Thurgood writes the `harness-generate` step under the grant, and Ada writes `d2-check.ts` and its test. This is the Task 20 pattern, and Task 13's grant line already names Thurgood as consulted on the step.
   - **(b)** Ada holds the grant and writes the step, and 13.3 stays whole.
+  - **Ruled: (a)** (Peter, 2026-11-07T23:28:57Z, "All as recommended and ratified"; see Status). Thurgood holds the grant and writes the step; Ada writes `d2-check.ts` and its test.
   - **Recommendation: (a)**, for one owner pattern across 129's workflow edits.
   - **What survives against (a)**: one more seat on U8, and the step and the script it runs are written by two seats who must agree on its invocation. § 5's invocation contract in the record holds the seam down; it does not remove it. Under (a), Ada's 13.3 criteria (L1048–1049, the check "runs in `harness-generate` and concludes success") depend on a step another seat writes on the same branch.
   - **What survives against (b)**: a second owner pattern across 129's workflow edits, and Ada on a workflow with a required context, outside her charter, so the record must be tight.
