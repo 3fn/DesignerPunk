@@ -1,0 +1,80 @@
+# merge-hold.yml -- the merge-hold and law-ratified checks (Spec 129; ballot
+# .kiro/docs/ballots/2026-11-07-merge-hold-and-law-ratified-checks.md, RATIFIED by Peter 2026-11-07T17:59:15Z).
+# Grant: .kiro/issues/2026-11-07-merge-hold-checks-build-grant.md.
+#
+# Two jobs, one script (scripts/completion-claims/merge-hold.ts):
+#   merge-hold    each `**Open for Peter**:` marker in the PR body has a `**Peter answered**:` line after it, and
+#                 the quoted words are found in the cited source. ADVISORY (not a required context) until five
+#                 clean runs that parsed a marker; its promotion goes through its own record.
+#   law-ratified  each `**Edit kind**:` LAW line cites a ballot that reads RATIFIED at the PR head, and each
+#                 governance-path file the diff changes has a line. Not required in the build PR; promoted to
+#                 required through the grant after a throwaway PR shows it red.
+#
+# They confirm that an answer or a ratification is present and cited, never who gave it: agents act through
+# Peter's GitHub credential. A green result is not evidence that Peter spoke.
+#
+# The body is read through the API (`gh pr view`), never from the event payload, because a re-run replays the
+# payload of its original event. `edited` fires when an author edits the body to add an answer; a commit that
+# adds the cited file fires `synchronize`. No `if:` appears in this file.
+
+name: merge-hold
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, edited]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  merge-hold:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout the PR head
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Merge-hold (scripts/completion-claims/merge-hold.ts)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: npx tsx scripts/completion-claims/merge-hold.ts --job merge-hold --pr "$PR_NUMBER"
+
+  law-ratified:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout the PR head
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Law-ratified (scripts/completion-claims/merge-hold.ts)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: npx tsx scripts/completion-claims/merge-hold.ts --job law-ratified --pr "$PR_NUMBER"
