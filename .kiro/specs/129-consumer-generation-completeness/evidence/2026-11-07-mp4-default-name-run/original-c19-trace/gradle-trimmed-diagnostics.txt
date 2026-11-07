@@ -1,0 +1,339 @@
+26:harness-toolchain: java.version=17.0.21
+27:harness-toolchain: gradle.version=9.8.2
+28:harness-toolchain: kotlin.version=2.4.21
+29:harness-toolchain: agp.version=9.5.0
+30:harness-toolchain: compose.bom.version=2026.09.00
+39:> Task :probe:compileDebugKotlin FAILED
+40:probe: read 443 of 443 index names
+41:probe: instances read 248 of 248
+42:probe: product read 1 of 1
+43:probe: provider read 5 of 5
+44:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:28:11 Unresolved reference 'AvatarTokens'.
+45:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:29:11 Unresolved reference 'AvatarTokens'.
+46:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:30:11 Unresolved reference 'AvatarTokens'.
+47:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:31:11 Unresolved reference 'AvatarTokens'.
+48:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:32:11 Unresolved reference 'AvatarTokens'.
+49:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:33:11 Unresolved reference 'AvatarTokens'.
+50:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:34:11 Unresolved reference 'AvatarTokens'.
+51:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:35:11 Unresolved reference 'AvatarTokens'.
+52:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:36:11 Unresolved reference 'BadgeLabelBaseTokens'.
+53:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:37:11 Unresolved reference 'ButtonIconTokens'.
+54:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:38:11 Unresolved reference 'ButtonIconTokens'.
+55:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:39:11 Unresolved reference 'ButtonIconTokens'.
+56:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:40:11 Unresolved reference 'ButtonIconTokens'.
+57:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:41:11 Unresolved reference 'ButtonIconTokens'.
+58:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:42:11 Unresolved reference 'ButtonIconTokens'.
+59:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:50:11 Unresolved reference 'InputCheckboxTokens'.
+60:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:51:11 Unresolved reference 'InputCheckboxTokens'.
+61:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:52:11 Unresolved reference 'InputCheckboxTokens'.
+62:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:53:11 Unresolved reference 'InputRadioTokens'.
+63:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:54:11 Unresolved reference 'InputRadioTokens'.
+64:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:55:11 Unresolved reference 'InputRadioTokens'.
+65:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:88:11 Unresolved reference 'VerticalListItemTokens'.
+66:e: file://<scratch>/lane-dn/lane/src/ProbeTokens.kt:89:11 Unresolved reference 'VerticalListItemTokens'.
+68:> Task :dp:compileDebugKotlin FAILED
+69:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:97:17 Unresolved reference 'darkerBlend' on receiver of type 'Color'.
+70:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:116:17 Unresolved reference 'darkerBlend' on receiver of type 'Color'.
+71:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:130:17 Unresolved reference 'lighterBlend' on receiver of type 'Color'.
+72:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:149:17 Unresolved reference 'saturate' on receiver of type 'Color'.
+73:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:169:17 Unresolved reference 'desaturate' on receiver of type 'Color'.
+74:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:188:17 Unresolved reference 'lighterBlend' on receiver of type 'Color'.
+75:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:306:22 Unresolved reference 'darkerBlend' on receiver of type 'Color'.
+76:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:316:22 Unresolved reference 'lighterBlend' on receiver of type 'Color'.
+77:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:326:22 Unresolved reference 'saturate' on receiver of type 'Color'.
+78:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt:336:22 Unresolved reference 'desaturate' on receiver of type 'Color'.
+79:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:53:32 Unresolved reference 'AvatarTokens'.
+80:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:85:26 Unresolved reference 'GeneratedAvatarTokens'.
+81:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:92:27 Unresolved reference 'GeneratedAvatarTokens'.
+82:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:377:29 Unresolved reference 'theme'.
+83:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:378:29 Unresolved reference 'theme'.
+84:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:383:29 Unresolved reference 'theme'.
+85:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:384:29 Unresolved reference 'theme'.
+86:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:389:27 Unresolved reference 'theme'.
+87:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:390:30 Unresolved reference 'borderColor'.
+88:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:390:42 Cannot infer type for type parameter 'K'. Specify it explicitly.
+89:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:390:42 Cannot infer type for type parameter 'V'. Specify it explicitly.
+90:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt:390:42 This declaration needs opt-in. Its usage must be marked with '@kotlin.ExperimentalStdlibApi' or '@OptIn(kotlin.ExperimentalStdlibApi::class)'
+91:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Badge-Count-Base/platforms/android/BadgeCountBase.android.kt:282:42 Unresolved reference 'backgroundColor'.
+92:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Badge-Count-Base/platforms/android/BadgeCountBase.android.kt:316:42 Unresolved reference 'textColor'.
+93:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Badge-Count-Notification/platforms/android/BadgeCountNotification.android.kt:375:50 Unresolved reference 'backgroundColor'.
+94:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Badge-Count-Notification/platforms/android/BadgeCountNotification.android.kt:409:50 Unresolved reference 'textColor'.
+95:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Badge-Label-Base/platforms/android/BadgeLabelBase.android.kt:100:20 Type checking has run into a recursive problem. Easiest workaround: specify the types of your declarations explicitly.
+96:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Badge-Label-Base/platforms/android/BadgeLabelBase.android.kt:250:42 Unresolved reference 'backgroundColor'.
+97:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Badge-Label-Base/platforms/android/BadgeLabelBase.android.kt:269:46 Unresolved reference 'iconColor'.
+98:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Badge-Label-Base/platforms/android/BadgeLabelBase.android.kt:283:42 Unresolved reference 'textColor'.
+99:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Badge-Label-Base/platforms/android/BadgeLabelBase.android.kt:287:40 Type checking has run into a recursive problem. Easiest workaround: specify the types of your declarations explicitly.
+100:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt:97:22 Unresolved reference 'ButtonIconTokens'.
+101:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt:98:23 Unresolved reference 'ButtonIconTokens'.
+102:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt:99:22 Unresolved reference 'ButtonIconTokens'.
+103:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt:246:34 'fun rememberRipple(bounded: Boolean = ..., radius: Dp = ..., color: Color = ...): Indication' is deprecated. rememberRipple has been deprecated - it returns an old Indication implementation that is not compatible with the new Indication APIs that provide notable performance improvements. Instead, use the new ripple APIs provided by design system libraries, such as material and material3. If you are implementing your own design system library, use createRippleNode to create your own custom ripple implementation that queries your own theme values. For a migration guide and background information, please visit developer.android.com.
+104:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt:276:38 Unresolved reference 'theme'.
+105:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt:289:38 Unresolved reference 'theme'.
+106:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt:290:68 Unresolved reference 'theme'.
+107:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt:315:40 Unresolved reference 'theme'.
+108:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt:328:38 Unresolved reference 'theme'.
+109:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt:329:68 Unresolved reference 'theme'.
+110:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:146:18 Unresolved reference 'VisualState'.
+111:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:151:26 Unresolved reference 'CheckmarkTransition'.
+112:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:151:48 Unresolved reference 'CheckmarkTransition'.
+113:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:188:18 Cannot infer type for type parameter 'T'. Specify it explicitly.
+114:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:189:9 Unresolved reference 'computeStyles'.
+115:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:221:23 Argument type mismatch: actual type is 'Modifier', but 'Color' was expected.
+116:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:221:30 Function invocation 'background(...)' expected.
+117:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:221:30 No value passed for parameter 'color'.
+118:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:229:30 Unresolved reference 'borderColor'.
+119:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:237:30 Unresolved reference 'borderWidth'.
+120:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:245:30 Unresolved reference 'labelColor'.
+121:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:253:30 Unresolved reference 'iconColor'.
+122:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:262:24 Unresolved reference 'calculatePaddingBlock'.
+123:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:262:53 Unresolved reference 'borderWidth'.
+124:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:275:45 Unresolved reference 'checkmarkVisible'.
+125:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:280:52 Unresolved reference 'CheckmarkTransition'.
+126:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:280:87 Unresolved reference 'checkmarkVisible'.
+127:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:332:46 Unresolved reference 'accessibilityStateDescription'.
+128:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:336:62 Unresolved reference 'VisualState'.
+129:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:444:21 No parameter with name 'testTag' found.
+130:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:481:24 Unresolved reference 'checkmarkVisible'.
+131:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:494:21 No parameter with name 'testTag' found.
+132:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:525:27 Unresolved reference 'VisualState'.
+133:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:532:27 Unresolved reference 'VisualState'.
+134:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:539:27 Unresolved reference 'VisualState'.
+135:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:549:27 Unresolved reference 'VisualState'.
+136:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:555:27 Unresolved reference 'VisualState'.
+137:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:565:27 Unresolved reference 'VisualState'.
+138:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:572:27 Unresolved reference 'VisualState'.
+139:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:582:27 Unresolved reference 'VisualState'.
+140:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt:590:27 Unresolved reference 'VisualState'.
+141:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:49:18 Unresolved reference 'Companion'.
+142:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:55:18 Unresolved reference 'Companion'.
+143:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:62:18 Unresolved reference 'Companion'.
+144:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:69:18 Unresolved reference 'Companion'.
+145:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:76:18 Unresolved reference 'Companion'.
+146:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:83:18 Unresolved reference 'Companion'.
+147:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:90:18 Unresolved reference 'Companion'.
+148:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:97:18 Unresolved reference 'Companion'.
+149:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt:586:1 Syntax error: Unclosed comment.
+150:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt:312:4 Unresolved reference 'VisualState'.
+151:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt:316:13 Unresolved reference 'VisualState'.
+152:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt:321:42 Unresolved reference 'VisualState'.
+153:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt:322:43 Unresolved reference 'VisualState'.
+154:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt:323:25 Unresolved reference 'VisualState'.
+155:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt:328:50 Unresolved reference 'VisualState'.
+156:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt:328:75 Unresolved reference 'VisualState'.
+157:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt:689:4 Unresolved reference 'CheckmarkTransition'.
+158:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt:691:42 Unresolved reference 'CheckmarkTransition'.
+159:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt:695:17 Unresolved reference 'CheckmarkTransition'.
+160:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt:697:17 Unresolved reference 'CheckmarkTransition'.
+161:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt:700:51 Unresolved reference 'CheckmarkTransition'.
+162:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt:61:32 Unresolved reference 'color_feedback_select_background_rest'.
+163:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt:62:32 Unresolved reference 'color_feedback_select_text_rest'.
+164:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:453:43 None of the following candidates is applicable:
+171:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:454:43 None of the following candidates is applicable:
+181:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:455:43 None of the following candidates is applicable:
+188:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:456:43 None of the following candidates is applicable:
+195:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:457:43 Cannot access 'val spaceInset300: Dp': it is private in file.
+196:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:458:43 Cannot access 'val spaceInset400: Dp': it is private in file.
+197:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:542:62 Unresolved reference 'DesignerPunkTheme'.
+198:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:557:66 Unresolved reference 'DesignerPunkTheme'.
+199:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:560:22 Unresolved reference 'color_structure_border'.
+200:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:565:43 Unresolved reference 'color_structure_border'.
+201:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:566:50 Unresolved reference 'color_structure_border_subtle'.
+202:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:567:23 Unresolved reference 'color_structure_border'.
+203:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:575:45 None of the following candidates is applicable:
+213:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:576:46 Cannot access 'val borderEmphasis: Dp': it is private in file.
+214:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:577:43 Cannot access 'val borderHeavy: Dp': it is private in file.
+215:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:585:68 Cannot access 'val radius050: Dp': it is private in file.
+216:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:586:69 None of the following candidates is applicable:
+223:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:587:68 None of the following candidates is applicable:
+230:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:594:49 Cannot access 'val elevationContainer: Dp': it is private in file.
+231:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:595:50 Cannot access 'val elevationNavigation: Dp': it is private in file.
+232:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:596:48 Cannot access 'val elevationDropdown: Dp': it is private in file.
+233:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:597:45 Cannot access 'val elevationModal: Dp': it is private in file.
+234:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:598:45 Cannot access 'val elevationToast: Dp': it is private in file.
+235:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:599:47 Cannot access 'val elevationTooltip: Dp': it is private in file.
+236:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:606:12 Unresolved reference 'shadowElevation'.
+237:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:626:49 Unresolved reference 'DesignTokens'.
+238:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:627:50 Unresolved reference 'DesignTokens'.
+239:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:628:49 Unresolved reference 'DesignTokens'.
+240:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:642:36 Unresolved reference 'space025'.
+241:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:648:35 Unresolved reference 'borderWidth200'.
+242:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt:654:44 Unresolved reference 'DesignTokens'.
+243:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:47:29 Unresolved reference 'PaddingValue'.
+244:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:48:12 'when' expression must be exhaustive. Add an 'else' branch.
+245:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:49:9 Unresolved reference 'PaddingValue'.
+246:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:50:9 Unresolved reference 'PaddingValue'.
+247:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:51:9 Unresolved reference 'PaddingValue'.
+248:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:52:9 Unresolved reference 'PaddingValue'.
+249:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:53:9 Unresolved reference 'PaddingValue'.
+250:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:54:9 Unresolved reference 'PaddingValue'.
+251:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:55:9 Unresolved reference 'PaddingValue'.
+252:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:70:34 Unresolved reference 'PaddingValue'.
+253:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:71:12 'when' expression must be exhaustive. Add an 'else' branch.
+254:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:72:9 Unresolved reference 'PaddingValue'.
+255:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:73:9 Unresolved reference 'PaddingValue'.
+256:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:74:9 Unresolved reference 'PaddingValue'.
+257:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:75:9 Unresolved reference 'PaddingValue'.
+258:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:76:9 Unresolved reference 'PaddingValue'.
+259:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:77:9 Unresolved reference 'PaddingValue'.
+260:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:78:9 Unresolved reference 'PaddingValue'.
+261:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:123:14 Unresolved reference 'PaddingValue'.
+262:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:124:15 Unresolved reference 'PaddingValue'.
+263:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:125:17 Unresolved reference 'PaddingValue'.
+264:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:126:17 Unresolved reference 'PaddingValue'.
+265:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:127:15 Unresolved reference 'PaddingValue'.
+266:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:128:18 Unresolved reference 'PaddingValue'.
+267:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:129:16 Unresolved reference 'PaddingValue'.
+268:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:136:41 Unresolved reference 'PaddingValue'.
+269:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:145:41 Unresolved reference 'PaddingValue'.
+270:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:155:45 Unresolved reference 'PaddingValue'.
+271:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:164:45 Unresolved reference 'PaddingValue'.
+272:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:194:30 Unresolved reference 'BorderValue'.
+273:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:195:12 'when' expression must be exhaustive. Add an 'else' branch.
+274:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:196:9 Unresolved reference 'BorderValue'.
+275:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:197:9 Unresolved reference 'BorderValue'.
+276:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:198:9 Unresolved reference 'BorderValue'.
+277:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:199:9 Unresolved reference 'BorderValue'.
+278:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:220:53 Unresolved reference 'DesignerPunkTheme'.
+279:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:223:22 Unresolved reference 'color_structure_border'.
+280:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:228:43 Unresolved reference 'color_structure_border'.
+281:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:229:50 Unresolved reference 'color_structure_border_subtle'.
+282:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:230:23 Unresolved reference 'color_structure_border'.
+283:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:253:41 Unresolved reference 'BorderRadiusValue'.
+284:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:254:18 'when' expression must be exhaustive. Add an 'else' branch.
+285:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:255:9 Unresolved reference 'BorderRadiusValue'.
+286:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:256:9 Unresolved reference 'BorderRadiusValue'.
+287:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:257:9 Unresolved reference 'BorderRadiusValue'.
+288:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:258:9 Unresolved reference 'BorderRadiusValue'.
+289:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:293:50 Unresolved reference 'DesignerPunkTheme'.
+290:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:302:41 Unresolved reference 'color_action_primary'.
+291:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:303:43 Unresolved reference 'color_action_secondary'.
+292:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:306:43 Unresolved reference 'color_structure_canvas'.
+293:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:307:44 Unresolved reference 'color_structure_surface'.
+294:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:308:52 Unresolved reference 'color_structure_surface_primary'.
+295:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:309:54 Unresolved reference 'color_structure_surface_secondary'.
+296:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:310:53 Unresolved reference 'color_structure_surface_tertiary'.
+297:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:311:43 Unresolved reference 'color_structure_border'.
+298:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:314:46 Unresolved reference 'color_feedback_error_text'.
+299:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:315:52 Unresolved reference 'color_feedback_error_background'.
+300:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:316:48 Unresolved reference 'color_feedback_error_border'.
+301:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:317:48 Unresolved reference 'color_feedback_success_text'.
+302:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:318:54 Unresolved reference 'color_feedback_success_background'.
+303:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:319:50 Unresolved reference 'color_feedback_success_border'.
+304:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:320:48 Unresolved reference 'color_feedback_warning_text'.
+305:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:321:54 Unresolved reference 'color_feedback_warning_background'.
+306:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:322:50 Unresolved reference 'color_feedback_warning_border'.
+307:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:323:45 Unresolved reference 'color_feedback_info_text'.
+308:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:324:51 Unresolved reference 'color_feedback_info_background'.
+309:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:325:47 Unresolved reference 'color_feedback_info_border'.
+310:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:328:43 Unresolved reference 'color_contrast_on_light'.
+311:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:329:42 Unresolved reference 'color_contrast_on_dark'.
+312:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:332:39 Unresolved reference 'color_text_default'.
+313:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:333:37 Unresolved reference 'color_text_muted'.
+314:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:334:38 Unresolved reference 'color_text_subtle'.
+315:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:337:39 Unresolved reference 'color_icon_default'.
+316:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:340:33 Unresolved reference 'color_structure_border'.
+317:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:341:43 Unresolved reference 'color_structure_border'.
+318:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:342:50 Unresolved reference 'color_structure_border_subtle'.
+319:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:344:23 Unresolved reference 'color_structure_canvas'.
+320:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:475:38 Unresolved reference 'LayeringValue'.
+321:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:476:12 'when' expression must be exhaustive. Add an 'else' branch.
+322:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:478:9 Unresolved reference 'LayeringValue'.
+323:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:479:9 Unresolved reference 'LayeringValue'.
+324:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:480:9 Unresolved reference 'LayeringValue'.
+325:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:481:9 Unresolved reference 'LayeringValue'.
+326:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:482:9 Unresolved reference 'LayeringValue'.
+327:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:483:9 Unresolved reference 'LayeringValue'.
+328:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt:485:2 Syntax error: imports are only allowed in the beginning of file.
+329:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:386:39 Overload resolution ambiguity between candidates:
+332:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:387:34 Overload resolution ambiguity between candidates:
+335:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:389:33 Overload resolution ambiguity between candidates:
+338:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:408:10 Unresolved reference 'clip' on receiver of type 'Modifier'.
+339:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:597:42 Unresolved reference 'theme'.
+340:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:598:44 Unresolved reference 'theme'.
+341:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:599:43 Unresolved reference 'theme'.
+342:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:643:42 Unresolved reference 'theme'.
+343:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:644:41 Unresolved reference 'theme'.
+344:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:675:12 Return type mismatch: expected 'Float', actual 'Dp'.
+345:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:716:13 Conflicting declarations:
+347:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:722:13 Conflicting declarations:
+349:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:729:13 Conflicting declarations:
+351:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt:729:52 Argument type mismatch: actual type is 'Color', but 'Int' was expected.
+352:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:174:36 Unresolved reference 'CompositionLocalProvider'.
+353:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt:177:48 @Composable invocations can only happen from the context of a @Composable function
+354:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Checkbox-Base/platforms/android/InputCheckboxBase.android.kt:415:43 Unresolved reference 'snap'.
+355:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Checkbox-Base/platforms/android/InputCheckboxBase.android.kt:425:43 Unresolved reference 'snap'.
+356:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Checkbox-Base/platforms/android/InputCheckboxBase.android.kt:473:34 'fun rememberRipple(bounded: Boolean = ..., radius: Dp = ..., color: Color = ...): Indication' is deprecated. rememberRipple has been deprecated - it returns an old Indication implementation that is not compatible with the new Indication APIs that provide notable performance improvements. Instead, use the new ripple APIs provided by design system libraries, such as material and material3. If you are implementing your own design system library, use createRippleNode to create your own custom ripple implementation that queries your own theme values. For a migration guide and background information, please visit developer.android.com.
+357:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Checkbox-Base/platforms/android/InputCheckboxBase.android.kt:603:25 Unresolved reference 'theme'.
+358:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Checkbox-Base/platforms/android/InputCheckboxBase.android.kt:772:19 Unresolved reference 'LocalContext'.
+359:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Checkbox-Base/platforms/android/InputCheckboxBase.android.kt:773:17 Unresolved reference 'Settings'.
+360:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Checkbox-Base/platforms/android/InputCheckboxBase.android.kt:775:9 Unresolved reference 'Settings'.
+361:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Checkbox-Legal/platforms/android/InputCheckboxLegal.android.kt:103:17 Unresolved reference 'theme'.
+362:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt:197:5 Property must be initialized or be abstract.
+363:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt:278:25 Unresolved reference 'theme'.
+364:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt:279:25 Unresolved reference 'theme'.
+365:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt:280:21 Unresolved reference 'theme'.
+366:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt:282:29 Unresolved reference 'reduceMotion'.
+367:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt:282:43 Unresolved reference 'snap'.
+368:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt:304:37 Unresolved reference 'reduceMotion'.
+369:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt:304:51 Unresolved reference 'snap'.
+370:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt:307:37 Unresolved reference 'reduceMotion'.
+371:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt:307:51 Unresolved reference 'snap'.
+372:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt:426:34 'fun rememberRipple(bounded: Boolean = ..., radius: Dp = ..., color: Color = ...): Indication' is deprecated. rememberRipple has been deprecated - it returns an old Indication implementation that is not compatible with the new Indication APIs that provide notable performance improvements. Instead, use the new ripple APIs provided by design system libraries, such as material and material3. If you are implementing your own design system library, use createRippleNode to create your own custom ripple implementation that queries your own theme values. For a migration guide and background information, please visit developer.android.com.
+373:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt:671:25 Unresolved reference 'theme'.
+374:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt:680:19 Unresolved reference 'LocalContext'.
+375:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt:681:17 Unresolved reference 'Settings'.
+376:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt:683:9 Unresolved reference 'Settings'.
+377:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Radio-Set/platforms/android/InputRadioSet.android.kt:108:17 Unresolved reference 'theme'.
+378:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Text-Base/platforms/android/InputTextBase.android.kt:197:25 Argument type mismatch: actual type is 'AnimationSpec<Float>', but 'AnimationSpec<Dp>' was expected.
+379:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Text-Base/platforms/android/InputTextBase.android.kt:201:23 Unresolved reference 'animateColorAsState'.
+380:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Text-Base/platforms/android/InputTextBase.android.kt:212:24 Unresolved reference 'animateColorAsState'.
+381:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Text-Base/platforms/android/InputTextBase.android.kt:299:41 Overload resolution ambiguity between candidates:
+384:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Text-Base/platforms/android/InputTextBase.android.kt:300:41 Overload resolution ambiguity between candidates:
+387:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Text-Base/platforms/android/InputTextBase.android.kt:303:38 Overload resolution ambiguity between candidates:
+390:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Text-Base/platforms/android/InputTextBase.android.kt:492:13 Conflicting declarations:
+392:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Text-Base/platforms/android/InputTextBase.android.kt:493:13 Conflicting declarations:
+394:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Input-Text-Base/platforms/android/InputTextBase.android.kt:494:13 Conflicting declarations:
+396:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Nav-Header-Base/platforms/android/NavHeaderBase.android.kt:43:26 Unresolved reference 'DesignTokens'.
+397:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Nav-Header-Base/platforms/android/NavHeaderBase.android.kt:46:21 Unresolved reference 'DesignTokens'.
+398:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt:51:20 Unresolved reference 'DesignTokens'.
+399:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt:52:26 Unresolved reference 'DesignTokens'.
+400:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt:54:29 Unresolved reference 'DesignTokens'.
+401:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt:107:28 Unresolved reference 'DesignTokens'.
+402:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt:108:30 Unresolved reference 'DesignTokens'.
+403:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt:133:9 No parameter with name 'modifier' found.
+404:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Nav-SegmentedChoice-Base/platforms/android/NavSegmentedChoiceBase.android.kt:293:46 Argument type mismatch: actual type is 'Color', but 'Int' was expected.
+405:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Nav-SegmentedChoice-Base/platforms/android/NavSegmentedChoiceBase.android.kt:294:43 Argument type mismatch: actual type is 'Color', but 'Int' was expected.
+406:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Nav-TabBar-Base/platforms/android/NavTabBarBase.android.kt:281:30 Unresolved reference 'width' on receiver of type 'Modifier'.
+407:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Nav-TabBar-Base/platforms/android/NavTabBarBase.android.kt:337:54 Argument type mismatch: actual type is 'Dp', but 'Float' was expected.
+408:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Nav-TabBar-Base/platforms/android/NavTabBarBase.android.kt:340:57 None of the following candidates is applicable:
+427:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Nav-TabBar-Base/platforms/android/NavTabBarBase.android.kt:343:82 Argument type mismatch: actual type is 'Dp', but 'Float' was expected.
+428:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Bar-Base/platforms/android/ProgressBarBase.android.kt:51:29 Unresolved reference 'DesignTokens'.
+429:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Bar-Base/platforms/android/ProgressBarBase.android.kt:52:25 Unresolved reference 'DesignTokens'.
+430:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Bar-Base/platforms/android/ProgressBarBase.android.kt:53:18 Unresolved reference 'DesignTokens'.
+431:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Bar-Base/platforms/android/ProgressBarBase.android.kt:56:31 Unresolved reference 'DesignTokens'.
+432:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Bar-Base/platforms/android/ProgressBarBase.android.kt:57:31 Unresolved reference 'DesignTokens'.
+433:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Bar-Base/platforms/android/ProgressBarBase.android.kt:58:31 Unresolved reference 'DesignTokens'.
+434:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Bar-Base/platforms/android/ProgressBarBase.android.kt:92:25 Unresolved reference 'ProgressBarTokenstheme'.
+435:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Bar-Base/platforms/android/ProgressBarBase.android.kt:93:14 Cannot infer type for type parameter 'T'. Specify it explicitly.
+436:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Bar-Base/platforms/android/ProgressBarBase.android.kt:93:19 Argument type mismatch: actual type is 'Modifier', but 'Comparator<in uninferred T (of fun <T> Comparator<T>.then)>' was expected.
+437:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Bar-Base/platforms/android/ProgressBarBase.android.kt:94:14 Candidate 'fun Modifier.semantics(mergeDescendants: Boolean = ..., properties: SemanticsPropertyReceiver.() -> Unit): Modifier' is inapplicable because of a receiver type mismatch.
+438:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Bar-Base/platforms/android/ProgressBarBase.android.kt:122:37 Unresolved reference 'ProgressBarTokenstheme'.
+439:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Bar-Base/platforms/android/ProgressBarBase.android.kt:161:37 Unresolved reference 'ProgressBarTokenstheme'.
+440:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Indicator-Connector-Base/platforms/android/ProgressIndicatorConnectorBase.android.kt:65:44 Unresolved reference 'theme'.
+441:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Indicator-Connector-Base/platforms/android/ProgressIndicatorConnectorBase.android.kt:66:44 Unresolved reference 'theme'.
+442:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Indicator-Node-Base/platforms/android/ProgressIndicatorNodeBase.android.kt:82:17 Return type mismatch: expected 'Float', actual 'Dp'.
+443:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Indicator-Node-Base/platforms/android/ProgressIndicatorNodeBase.android.kt:90:17 Return type mismatch: expected 'Float', actual 'Dp'.
+444:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Indicator-Node-Base/platforms/android/ProgressIndicatorNodeBase.android.kt:127:41 Unresolved reference 'theme'.
+445:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Indicator-Node-Base/platforms/android/ProgressIndicatorNodeBase.android.kt:128:41 Unresolved reference 'theme'.
+446:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Indicator-Node-Base/platforms/android/ProgressIndicatorNodeBase.android.kt:129:41 Unresolved reference 'theme'.
+447:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Indicator-Node-Base/platforms/android/ProgressIndicatorNodeBase.android.kt:130:41 Unresolved reference 'theme'.
+448:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Indicator-Node-Base/platforms/android/ProgressIndicatorNodeBase.android.kt:139:41 Unresolved reference 'theme'.
+449:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Indicator-Node-Base/platforms/android/ProgressIndicatorNodeBase.android.kt:140:41 Unresolved reference 'theme'.
+450:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Indicator-Node-Base/platforms/android/ProgressIndicatorNodeBase.android.kt:141:41 Unresolved reference 'theme'.
+451:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Indicator-Node-Base/platforms/android/ProgressIndicatorNodeBase.android.kt:142:41 Unresolved reference 'theme'.
+452:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Pagination-Base/platforms/android/ProgressPaginationBase.android.kt:108:13 Unresolved reference 'BuildConfig'.
+453:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Pagination-Base/platforms/android/ProgressPaginationBase.android.kt:140:47 None of the following candidates is applicable:
+472:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Pagination-Base/platforms/android/ProgressPaginationBase.android.kt:170:14 None of the following candidates is applicable:
+479:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Stepper-Base/platforms/android/ProgressStepperBase.android.kt:138:13 Unresolved reference 'BuildConfig'.
+480:e: file://<scratch>/consumer-dn/node_modules/@3fn/core/src/components/core/Progress-Stepper-Detailed/platforms/android/ProgressStepperDetailed.android.kt:180:13 Unresolved reference 'BuildConfig'.
+526:BUILD FAILED in 7s

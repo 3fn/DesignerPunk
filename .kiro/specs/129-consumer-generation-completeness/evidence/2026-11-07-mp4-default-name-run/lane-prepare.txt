@@ -1,0 +1,48 @@
+harness-android: invocation: (cd harness/android && HARNESS_LANE_DIR=<scratch>/mp4/lane-work/lane ./gradlew --continue :tokens:compileDebugKotlin :probe:compileDebugKotlin :dp:compileDebugKotlin)
+harness-android: gen files given to the compiler: 3 (floor 3); pkg files: 41 (floor 41); probe files: 5 (index 443, instances 248, product 1, provider 5)
+harness-android: :dp file order (package files first, then generated files, each sorted by path):
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/blend/ThemeAwareBlendUtilities.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/Avatar.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/AvatarPreview.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Avatar-Base/platforms/android/HexagonShape.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Badge-Count-Base/platforms/android/BadgeCountBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Badge-Count-Notification/platforms/android/BadgeCountNotification.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Badge-Label-Base/platforms/android/BadgeLabelBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Button-CTA/platforms/android/ButtonCTA.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Button-Icon/platforms/android/ButtonIcon.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VerticalListButtonItem.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Item/platforms/android/VisualStateStyles.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSet.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Button-VerticalList-Set/platforms/android/ButtonVerticalListSetPreview.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Chip-Base/platforms/android/ChipBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Chip-Filter/platforms/android/ChipFilter.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Chip-Input/platforms/android/ChipInput.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/ContainerBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Container-Base/platforms/android/TokenMapping.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Container-Card-Base/platforms/android/ContainerCardBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Icon-Base/platforms/android/IconBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Input-Checkbox-Base/platforms/android/InputCheckboxBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Input-Checkbox-Legal/platforms/android/InputCheckboxLegal.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Input-Radio-Base/platforms/android/InputRadioBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Input-Radio-Set/platforms/android/InputRadioSet.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Input-Text-Base/platforms/android/InputTextBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Input-Text-Email/platforms/android/InputTextEmail.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Input-Text-Password/platforms/android/InputTextPassword.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Input-Text-PhoneNumber/platforms/android/InputTextPhoneNumber.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Nav-Header-App/platforms/android/NavHeaderApp.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Nav-Header-Base/platforms/android/NavHeaderBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Nav-Header-Page/platforms/android/NavHeaderPage.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Nav-SegmentedChoice-Base/platforms/android/NavSegmentedChoiceBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Nav-TabBar-Base/platforms/android/NavTabBarBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Progress-Bar-Base/platforms/android/ProgressBarBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Progress-Indicator-Connector-Base/platforms/android/ProgressIndicatorConnectorBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Progress-Indicator-Label-Base/platforms/android/ProgressIndicatorLabelBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Progress-Indicator-Node-Base/platforms/android/ProgressIndicatorNodeBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Progress-Pagination-Base/platforms/android/ProgressPaginationBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Progress-Stepper-Base/platforms/android/ProgressStepperBase.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/components/core/Progress-Stepper-Detailed/platforms/android/ProgressStepperDetailed.android.kt
+  <scratch>/mp4/consumer/node_modules/@3fn/core/src/tokens/platforms/android/MotionTokens.kt
+  <scratch>/mp4/consumer/dist/tokens/ComponentTokens.android.kt
+  <scratch>/mp4/consumer/dist/tokens/DesignTokens.android.kt
+  <scratch>/mp4/consumer/dist/tokens/product/ProductTokens.android.kt
+harness-android: prepared; not run (--prepare-only)

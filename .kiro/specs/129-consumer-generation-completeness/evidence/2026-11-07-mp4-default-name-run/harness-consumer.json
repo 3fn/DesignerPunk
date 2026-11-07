@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "name": "DesignerPunk",
+  "abbreviation": "HX",
+  "packageRoot": "node_modules/@3fn/core",
+  "package": {
+    "name": "@3fn/core",
+    "version": "16.2.0",
+    "tarball": "3fn-core-16.2.0.tgz",
+    "tarballSha256": "d2f42ae5718a41189846e660ad1f6d53b5988be3be52c907be6e827a2005bf3b",
+    "fileList": "harness-tarball-files.txt"
+  },
+  "tokenIndex": "token-index",
+  "productTokens": "product/tokens",
+  "platformOutputs": {
+    "web": "dist/tokens",
+    "ios": "dist/tokens",
+    "android": "dist/tokens"
+  },
+  "generated": {
+    "ios": [
+      "ComponentTokens.ios.swift",
+      "DesignTokens.ios.swift",
+      "product/ProductTokens.ios.swift"
+    ],
+    "android": [
+      "ComponentTokens.android.kt",
+      "DesignTokens.android.kt",
+      "product/ProductTokens.android.kt"
+    ]
+  },
+  "themes": [
+    {
+      "name": "dark",
+      "mode": "dark"
+    },
+    {
+      "name": "wcag",
+      "mode": "light"
+    }
+  ]
+}
