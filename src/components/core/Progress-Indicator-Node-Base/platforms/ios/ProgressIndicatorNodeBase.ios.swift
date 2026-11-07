@@ -90,7 +90,7 @@ private let iconScaleRatio: CGFloat = 0.5
  * @see Requirements 12.13-12.16 - Color application per state
  */
 private enum ProgressNodeColors {
-    static func backgroundColor(for state: ProgressNodeState) -> Color {
+    static func backgroundColor(for state: ProgressNodeState, theme: any DesignerPunkTheme) -> Color {
         switch state {
         case .incomplete: return theme.colorProgressPendingBackground
         case .current:    return theme.colorProgressCurrentBackground
@@ -99,7 +99,7 @@ private enum ProgressNodeColors {
         }
     }
 
-    static func foregroundColor(for state: ProgressNodeState) -> Color {
+    static func foregroundColor(for state: ProgressNodeState, theme: any DesignerPunkTheme) -> Color {
         switch state {
         case .incomplete: return theme.colorProgressPendingText
         case .current:    return theme.colorProgressCurrentText
@@ -171,7 +171,7 @@ public struct ProgressIndicatorNodeBase: View {
         ZStack {
             // Background circle
             Circle()
-                .fill(ProgressNodeColors.backgroundColor(for: state))
+                .fill(ProgressNodeColors.backgroundColor(for: state, theme: theme))
                 .frame(width: dimension, height: dimension)
 
             // Inner content
@@ -193,7 +193,7 @@ public struct ProgressIndicatorNodeBase: View {
         if size == .sm {
             // sm: always a filled dot
             Circle()
-                .fill(ProgressNodeColors.foregroundColor(for: state))
+                .fill(ProgressNodeColors.foregroundColor(for: state, theme: theme))
                 .frame(width: dimension * iconScaleRatio, height: dimension * iconScaleRatio)
         } else if effectiveContent == .checkmark {
             // md/lg + checkmark
@@ -201,13 +201,13 @@ public struct ProgressIndicatorNodeBase: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: dimension * iconScaleRatio, height: dimension * iconScaleRatio)
-                .foregroundColor(ProgressNodeColors.foregroundColor(for: state))
+                .foregroundColor(ProgressNodeColors.foregroundColor(for: state, theme: theme))
         } else if effectiveContent == .icon, let iconName = icon {
             // md/lg + custom icon
             IconBase(
                 name: iconName,
                 size: dimension * iconScaleRatio,
-                color: ProgressNodeColors.foregroundColor(for: state)
+                color: ProgressNodeColors.foregroundColor(for: state, theme: theme)
             )
         }
         // md/lg + none: empty circle (no inner content rendered)

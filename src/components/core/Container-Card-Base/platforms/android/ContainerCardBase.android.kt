@@ -67,6 +67,7 @@ import androidx.compose.ui.unit.dp
 import com.designerpunk.tokens.hoverBlend
 import com.designerpunk.tokens.pressedBlend
 import com.designerpunk.tokens.DesignTokens
+import com.designerpunk.tokens.DesignerPunkTheme
 import com.designerpunk.tokens.LocalDPTheme
 
 // MARK: - Card-Specific Enums (Curated Subsets)
@@ -304,7 +305,7 @@ fun ContainerCardBase(
     
     // Calculate background color for interaction overlay
     // Uses hoverBlend() (8% darker) and pressedBlend() (12% darker) semantic extensions
-    val baseBackgroundColor = mapCardBackgroundToColor(background)
+    val baseBackgroundColor = mapCardBackgroundToColor(background, theme)
     val interactionOverlayColor = when {
         interactive && isPressed -> baseBackgroundColor.pressedBlend()
         interactive && isHovered -> baseBackgroundColor.hoverBlend()
@@ -592,7 +593,7 @@ fun calculateCardDirectionalPadding(
  * 
  * @see Requirements 3.8, 4.2
  */
-fun mapCardBackgroundToColor(background: CardBackground): Color {
+fun mapCardBackgroundToColor(background: CardBackground, theme: DesignerPunkTheme): Color {
     return when (background) {
         CardBackground.SurfacePrimary -> theme.color_structure_surface_primary /* color.surface.primary */
         CardBackground.SurfaceSecondary -> theme.color_structure_surface_secondary /* color.surface.secondary */
@@ -638,7 +639,7 @@ fun mapCardBorderToWidth(border: CardBorder): Dp {
  * 
  * @see Requirements 3.11
  */
-fun mapCardBorderColorToColor(borderColor: CardBorderColor): Color {
+fun mapCardBorderColorToColor(borderColor: CardBorderColor, theme: DesignerPunkTheme): Color {
     return when (borderColor) {
         CardBorderColor.BorderDefault -> theme.color_structure_border /* color.border.default */
         CardBorderColor.BorderSubtle -> theme.color_structure_border_subtle /* color.structure.border.subtle */

@@ -89,7 +89,7 @@ fun ProgressBarBase(
             .fillMaxWidth()
             .height(barHeight)
             .clip(capsule)
-            .background(ProgressBarTokenstheme.color_progress_pending_background)
+            .background(theme.color_progress_pending_background)
             .then(if (testID != null) Modifier.testTag(testID) else Modifier)
             .semantics {
                 contentDescription = accessibilityLabel
@@ -119,7 +119,7 @@ fun ProgressBarBase(
                         .fillMaxWidth(animatedWidth)
                         .fillMaxHeight()
                         .clip(capsule)
-                        .background(ProgressBarTokenstheme.color_progress_completed_background)
+                        .background(theme.color_progress_completed_background)
                 )
 
                 // Milestone announcements (Data F1)
@@ -158,7 +158,7 @@ fun ProgressBarBase(
                         .fillMaxHeight()
                         .clip(capsule)
                         .alpha(opacity)
-                        .background(ProgressBarTokenstheme.color_progress_current_background)
+                        .background(theme.color_progress_current_background)
                 )
             }
         }
