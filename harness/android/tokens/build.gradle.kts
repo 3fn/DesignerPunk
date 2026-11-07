@@ -39,8 +39,6 @@ android {
 dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
-    // api: the generated Kotlin may name colormath types in its public signatures, and :probe reads them.
-    api(libs.colormath)
 }
 
 val genFiles = laneFiles("tokens.sources")
