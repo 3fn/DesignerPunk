@@ -18,18 +18,41 @@ verdict: assent — surviving 5/5
 ## `#in-scope`
 
 signer: stacy
-date: 2026-10-20
+date: 2026-11-07
 row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#in-scope` (re-pointed; ROUTED)
-canonicalHash: sha256:7beb0570510b6af92be4cf368831f0ea152bbfdf9c1a6867bcd92c1fb792de39
+canonicalHash: sha256:8dde99e82eec7cab9a729a7a0ead62d92b01131add3e1cb4c056b1332b0e2d55
 renderedHash: sha256:5ac2d4d30cbdce5a9e34a0a66dff621d3e78e87f4500dee9f715f39f2fc72037
-verdict: assent — surviving 19/29; not surviving: `scope-12`, `scope-13`, `scope-14`, `scope-15`, `scope-16`, `scope-17`, `scope-18`, `scope-19`, `scope-20`, `scope-21`
+verdict: assent — surviving 19/41; not surviving: `scope-12`, `scope-13`, `scope-14`, `scope-15`, `scope-16`, `scope-17`, `scope-18`, `scope-19`, `scope-20`, `scope-21`, `scope-22`, `scope-23`, `scope-24`, `scope-25`, `scope-26`, `scope-27`, `scope-28`, `scope-29`, `scope-30`, `scope-31`, `scope-32`, `scope-33`
 
-**Re-signed 2026-10-20** (prior signature: assent 19/29, 2026-10-17, against `sha256:1ea9098706cf802cea50bde68a44d02b417aeceade432f429b8358c1ad0f38b2`). Stale because the canonical unit changed: ballot `2026-10-20-in-lane-guard-registry-additive-entries` (P1b; RATIFIED, Peter, 2026-10-20) added a sentence to the CI-regime bullet (`scope-12`) for `.github/in-lane-guards.json`: an entry may be added, never changed or removed. Thurgood applied it at `ae68f130b`; I re-confirmed the set at 29 items (`8674be2e5`); he pinned the overlay and regenerated (`ebc83c6b5`). The rendering did not change by a byte: renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/tools-stacy/fresh-rendered-hash.ts`), equal to the committed rendering's value and to the prior signature's.
-- **Judged against**: the rendered unit at this revision and the operative set at 29 items.
-- **`scope-12` still does not survive, and the new sentence goes with it.** The bullet is a repo CI grant: it names `lane-timing.yml`, `EXPECTED_CONTEXTS` and a registry file that only DesignerPunk's `lane-functional-root` check reads. A consumer's CI has none of them, and the rendering states none of it (checked: no "in-lane" or "additiv" text under `canonical/_consumer-output`, and the grep for the registry path, P1b and the predicate in consumer output returns 0). The whole-bullet removal (`subtraction-2`) quotes the bullet, and Thurgood rewrote its text to the new bullet. No refusal follows.
-- **Unchanged from the 2026-10-17 signature**: the same 19 items survive and the same 10 are not credited, for the reasons in the prior record below.
-- **C1 collapse**: I signed this assent on a row of Thurgood's charter in the counterpart seat; it is in Peter's sample as Stacy-signed.
+**Re-signed 2026-11-07** (prior signature: assent 19/29, 2026-10-20, against `sha256:7beb0570510b6af92be4cf368831f0ea152bbfdf9c1a6867bcd92c1fb792de39`). Stale because the canonical unit changed. Ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` (RATIFIED, Peter, 2026-11-07T22:30:08Z) site 2 added the P1c sentence to the CI-regime bullet (`scope-12`), and site 3 added the compile-harness bullet. Thurgood applied both at `a064ea06c`; I authored the items, removals and overlay pin at `f5e6a10a2` and re-confirmed the set at 41 items at `db81c96d8`. renderedHash recomputed from a fresh temp-tree rendering of this branch (`generateAll` → `writeOutputs(<scratchpad temp dir>)` → `readConsumerSpans` → `renderedHashOf` over `rowSpanSource`, three pieces). It is equal to the committed rendering's value and to the prior signature's, and the fresh `_consumer-output/` tree equals the committed one (`diff -rq`: no differences). The rendering did not move by a byte.
+- **Read before this act**: the consumer rendering of the unit, `cat -n canonical/_consumer-output/_canonical/agents/thurgood.md` L141–L163, through a tool call before this commit; `canonical/_consumer-output/` is unchanged on this branch since `e0df47b3f`. The `cc/` (L50–L72) and `kiro/` (L24–L46) copies were compared with it by `diff` and are identical.
+- **Judged against**: the rendered unit at this revision and the operative set at 41 items.
+- **Removals, re-judged against the moved body.** Each occurs once in the unit and in none of the three renderings (checked by script).
+  - `subtraction-2`'s text is rewritten to the CI-regime bullet as it stands now, as site 7 of the ballot names it.
+  - A new removal quotes the site-3 bullet whole and cites `subtraction-1`, repo-internal tooling. The compile harness, its stability script and its demotion read are this repo's own instruments. `scripts/harness/` is not in the package's `files`, and the consumer output carries no `scripts/harness` or `merge-hold` string (grep under the fresh `_consumer-output/`: 0).
+  - The other two removals are unchanged.
+- **`scope-12` still does not survive, and the P1c sentence goes with it.** It grants a fix scope over DesignerPunk's `merge-hold.yml`, bounded by a ballot query a consumer never receives.
+- **The twelve new items do not survive, and I agree they should not.** The rendering states none of them, so a compliant consumer agent could break any of them.
+  - `scope-22` grants this repo's harness files.
+  - `scope-23` to `scope-33` are that grant's limits and consults. They are tied to Spec 129's design § 4, `tasks.md` § "Decision 6", the emitter in `src/generators/**`, this repo's harness annotation titles, and the Kenya, Data and Ada seats over those files.
+  - **The one I weighed is `scope-23`.** "Owning an instrument never authorizes changing a rule it states" reads as general. It is `scope-20`'s shape, and I ruled `scope-20` out on 2026-10-17 for the same reason: as written it binds named repo files to named repo texts.
+- **Unchanged from the 2026-10-20 signature**: the same 19 items survive, for the reasons in the prior records below.
+- **C1 collapse**: I signed this assent on a row of Thurgood's charter in the counterpart seat, so it is in Peter's sample as Stacy-signed. I also drafted `scope-22` to `scope-33` as confirmer. Author, confirmer and signer collapse on me for those twelve.
 
+**Prior signature record (superseded, 2026-10-20)**:
+
+> signer: stacy
+> date: 2026-10-20
+> row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · body · `#in-scope` (re-pointed; ROUTED)
+> canonicalHash: sha256:7beb0570510b6af92be4cf368831f0ea152bbfdf9c1a6867bcd92c1fb792de39
+> renderedHash: sha256:5ac2d4d30cbdce5a9e34a0a66dff621d3e78e87f4500dee9f715f39f2fc72037
+> verdict: assent — surviving 19/29; not surviving: `scope-12`, `scope-13`, `scope-14`, `scope-15`, `scope-16`, `scope-17`, `scope-18`, `scope-19`, `scope-20`, `scope-21`
+>
+> **Re-signed 2026-10-20** (prior signature: assent 19/29, 2026-10-17, against `sha256:1ea9098706cf802cea50bde68a44d02b417aeceade432f429b8358c1ad0f38b2`). Stale because the canonical unit changed: ballot `2026-10-20-in-lane-guard-registry-additive-entries` (P1b; RATIFIED, Peter, 2026-10-20) added a sentence to the CI-regime bullet (`scope-12`) for `.github/in-lane-guards.json`: an entry may be added, never changed or removed. Thurgood applied it at `ae68f130b`; I re-confirmed the set at 29 items (`8674be2e5`); he pinned the overlay and regenerated (`ebc83c6b5`). The rendering did not change by a byte: renderedHash recomputed at this revision from a fresh temp-tree rendering (`generateAll` → `writeOutputs(<temp dir>)` → `readConsumerSpans` → `renderedHashOf`, via `<scratchpad>/tools-stacy/fresh-rendered-hash.ts`), equal to the committed rendering's value and to the prior signature's.
+> - **Judged against**: the rendered unit at this revision and the operative set at 29 items.
+> - **`scope-12` still does not survive, and the new sentence goes with it.** The bullet is a repo CI grant: it names `lane-timing.yml`, `EXPECTED_CONTEXTS` and a registry file that only DesignerPunk's `lane-functional-root` check reads. A consumer's CI has none of them, and the rendering states none of it (checked: no "in-lane" or "additiv" text under `canonical/_consumer-output`, and the grep for the registry path, P1b and the predicate in consumer output returns 0). The whole-bullet removal (`subtraction-2`) quotes the bullet, and Thurgood rewrote its text to the new bullet. No refusal follows.
+> - **Unchanged from the 2026-10-17 signature**: the same 19 items survive and the same 10 are not credited, for the reasons in the prior record below.
+> - **C1 collapse**: I signed this assent on a row of Thurgood's charter in the counterpart seat; it is in Peter's sample as Stacy-signed.
 **Prior signature record (superseded, 2026-10-17)**:
 
 > signer: stacy
@@ -659,6 +682,17 @@ renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb098
 verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 2). `.github/in-lane-guards.json`: the glob added by ballot `2026-10-20-in-lane-guard-registry-additive-entries` (P1b) so the steward may add entries to DesignerPunk's in-lane guard registry. The file is read only by this repo's `lane-functional-root` check against its `EXPECTED_CONTEXTS`; a consumer repo has no such registry and no CI-regime standing scope, so there is no copy to own. It is the same ground as `writeScope[.github/workflows/lane-timing.yml]`. The row's renderedHash is the empty-span hash (0 pieces, fresh render and committed rendering agree). I assent that nothing survives.
+
+## `#frontmatter:writeScope[.github/workflows/merge-hold.yml]`
+
+signer: stacy
+date: 2026-11-07
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[.github/workflows/merge-hold.yml]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:962bd89682994f90d9001289ebe5a004f2eaec15a1a204e31c15f084ec3ac3f9
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I wrote this disposition and its cite (subtraction 2) at `f5e6a10a2`. `.github/workflows/merge-hold.yml` is this repo's workflow for the required `merge-hold` and `law-ratified` checks. Ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` item 2 (P1c) adds it to the steward's scope for fixes inside the § 3 bound B1–B5. It is one of this repo's gates; a consumer's CI has no such workflow and no P1c clause. The ground is the same as for `writeScope[.github/workflows/lane-timing.yml]` and `writeScope[.github/in-lane-guards.json]`. The glob does not carry the bound: the In Scope bullet does, and my ARMING row reads it. canonicalHash is `hashEntry` of the entry's value, recomputed with `entryTree` + `regrounding/hash.ts`; the same computation reproduces the signed `writeScope[scripts/completion-claims/**]` (`afcd81bd…ea9c`) and `writeScope[.github/in-lane-guards.json]` (`579d3495…a20f`). The renderedHash is the empty-span hash: 0 pieces, and the fresh and committed renderings agree. I assent that nothing survives.
 
 ## `#frontmatter:writeScope[scripts/completion-claims/**]`
 
@@ -1352,6 +1386,72 @@ renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb098
 verdict: assent — surviving 0/0
 
 No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/governance-examples/**`: this repo's governance-examples guard (`check.ts`, `pending.json` and `__tests__/` with its fixtures), owned whole by the steward (register row `governance-examples`). Added to the charter's write scope by ballot `2026-10-26-governance-examples-guard-adoption` (RATIFIED, Peter, 2026-10-26, F-1 (a)) § 3 site 3, applied by Thurgood at `e870cf84d`; the row was authored unsigned at `ad9d4053c`. It is repo-internal tooling: the directory is not in the package's `files`, so a consumer has no copy to own, and the consumer output carries no `governance-examples` string (grep under `canonical/_consumer-output/`: 0). It is the same ground as `writeScope[scripts/completion-claims/**]`. The glob does not carry `pending.json`'s limits (the ballot's § 2 does, and my ARMING row's fourth read checks them); that is a charter fact, not a consumer one, and does not reach this row. canonicalHash is `hashEntry` of the entry's value, recomputed with `entryTree` + `regrounding/hash.ts` (the same computation reproduces `writeScope[scripts/completion-claims/**]`'s signed `afcd81bd…ea9c`); the renderedHash is the empty-span hash, recomputed with `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` (no pieces). I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/harness/stability.ts]`
+
+signer: stacy
+date: 2026-11-07
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/stability.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:4c96350b299f21a6a2953d1e26d756aff9b60b0a7dc2963f053025b9d524bafc
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I wrote this disposition and its cite (subtraction 1) at `f5e6a10a2`. `scripts/harness/stability.ts` is one of the six compile-harness paths that ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` item 1 adds to the steward's standing scope. They are the stability script, the rules module and their tests, which the demotion read of the promoted harness contexts runs. It is repo-internal tooling: `scripts/harness/` is not in the package's `files`, so a consumer has no copy to own, and the consumer output carries no `scripts/harness` string. The ground is the same as for `writeScope[scripts/completion-claims/**]`. canonicalHash is `hashEntry` of the entry's value, recomputed with `entryTree` + `regrounding/hash.ts`; the same computation reproduces the signed `writeScope[scripts/completion-claims/**]` (`afcd81bd…ea9c`) and `writeScope[.github/in-lane-guards.json]` (`579d3495…a20f`). The renderedHash is the empty-span hash: 0 pieces, and the fresh and committed renderings agree. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/stability.test.ts]`
+
+signer: stacy
+date: 2026-11-07
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/__tests__/stability.test.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:70a8bf5717743799df4bfcb9f5fb41a542f5247ec04c524be3ae98136c769907
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I wrote this disposition and its cite (subtraction 1) at `f5e6a10a2`. `scripts/harness/__tests__/stability.test.ts` is one of the six compile-harness paths that ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` item 1 adds to the steward's standing scope. They are the stability script, the rules module and their tests, which the demotion read of the promoted harness contexts runs. It is repo-internal tooling: `scripts/harness/` is not in the package's `files`, so a consumer has no copy to own, and the consumer output carries no `scripts/harness` string. The ground is the same as for `writeScope[scripts/completion-claims/**]`. canonicalHash is `hashEntry` of the entry's value, recomputed with `entryTree` + `regrounding/hash.ts`; the same computation reproduces the signed `writeScope[scripts/completion-claims/**]` (`afcd81bd…ea9c`) and `writeScope[.github/in-lane-guards.json]` (`579d3495…a20f`). The renderedHash is the empty-span hash: 0 pieces, and the fresh and committed renderings agree. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/fixtures/stability/**]`
+
+signer: stacy
+date: 2026-11-07
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/__tests__/fixtures/stability/**]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:236ecfb162a6e61108add7e5cf0c33f7bfd3532022fb0ffa1bbd6443d71243e2
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I wrote this disposition and its cite (subtraction 1) at `f5e6a10a2`. `scripts/harness/__tests__/fixtures/stability/**` is one of the six compile-harness paths that ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` item 1 adds to the steward's standing scope. They are the stability script, the rules module and their tests, which the demotion read of the promoted harness contexts runs. It is repo-internal tooling: `scripts/harness/` is not in the package's `files`, so a consumer has no copy to own, and the consumer output carries no `scripts/harness` string. The ground is the same as for `writeScope[scripts/completion-claims/**]`. canonicalHash is `hashEntry` of the entry's value, recomputed with `entryTree` + `regrounding/hash.ts`; the same computation reproduces the signed `writeScope[scripts/completion-claims/**]` (`afcd81bd…ea9c`) and `writeScope[.github/in-lane-guards.json]` (`579d3495…a20f`). The renderedHash is the empty-span hash: 0 pieces, and the fresh and committed renderings agree. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/harness/native-rules.ts]`
+
+signer: stacy
+date: 2026-11-07
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/native-rules.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:2f88d7a1f43ee649211f24d188d55025163579fe5a15883eec48da2b2530707d
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I wrote this disposition and its cite (subtraction 1) at `f5e6a10a2`. `scripts/harness/native-rules.ts` is one of the six compile-harness paths that ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` item 1 adds to the steward's standing scope. They are the stability script, the rules module and their tests, which the demotion read of the promoted harness contexts runs. It is repo-internal tooling: `scripts/harness/` is not in the package's `files`, so a consumer has no copy to own, and the consumer output carries no `scripts/harness` string. The ground is the same as for `writeScope[scripts/completion-claims/**]`. canonicalHash is `hashEntry` of the entry's value, recomputed with `entryTree` + `regrounding/hash.ts`; the same computation reproduces the signed `writeScope[scripts/completion-claims/**]` (`afcd81bd…ea9c`) and `writeScope[.github/in-lane-guards.json]` (`579d3495…a20f`). The renderedHash is the empty-span hash: 0 pieces, and the fresh and committed renderings agree. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/native-rules.test.ts]`
+
+signer: stacy
+date: 2026-11-07
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/__tests__/native-rules.test.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:3fa6c5db93adc3794f5bd0b361c4e39d8cfe7e1bf0689d4f24e3920d125046ff
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I wrote this disposition and its cite (subtraction 1) at `f5e6a10a2`. `scripts/harness/__tests__/native-rules.test.ts` is one of the six compile-harness paths that ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` item 1 adds to the steward's standing scope. They are the stability script, the rules module and their tests, which the demotion read of the promoted harness contexts runs. It is repo-internal tooling: `scripts/harness/` is not in the package's `files`, so a consumer has no copy to own, and the consumer output carries no `scripts/harness` string. The ground is the same as for `writeScope[scripts/completion-claims/**]`. canonicalHash is `hashEntry` of the entry's value, recomputed with `entryTree` + `regrounding/hash.ts`; the same computation reproduces the signed `writeScope[scripts/completion-claims/**]` (`afcd81bd…ea9c`) and `writeScope[.github/in-lane-guards.json]` (`579d3495…a20f`). The renderedHash is the empty-span hash: 0 pieces, and the fresh and committed renderings agree. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/native-rules-emitter.test.ts]`
+
+signer: stacy
+date: 2026-11-07
+row: `canonical/profiles/consumer/thurgood.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/__tests__/native-rules-emitter.test.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:4e80b67014e5782389c42f512c7ebf7b6c526dd198a230992af29c5acde94b33
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I wrote this disposition and its cite (subtraction 1) at `f5e6a10a2`. `scripts/harness/__tests__/native-rules-emitter.test.ts` is one of the six compile-harness paths that ballot `2026-11-07-thurgood-charter-scope-harness-and-merge-hold` item 1 adds to the steward's standing scope. They are the stability script, the rules module and their tests, which the demotion read of the promoted harness contexts runs. It is repo-internal tooling: `scripts/harness/` is not in the package's `files`, so a consumer has no copy to own, and the consumer output carries no `scripts/harness` string. The ground is the same as for `writeScope[scripts/completion-claims/**]`. canonicalHash is `hashEntry` of the entry's value, recomputed with `entryTree` + `regrounding/hash.ts`; the same computation reproduces the signed `writeScope[scripts/completion-claims/**]` (`afcd81bd…ea9c`) and `writeScope[.github/in-lane-guards.json]` (`579d3495…a20f`). The renderedHash is the empty-span hash: 0 pieces, and the fresh and committed renderings agree. I assent that nothing survives.
 
 ## `#frontmatter:writeScope[.kiro/specs/**]`
 
