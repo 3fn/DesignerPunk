@@ -21,7 +21,7 @@ The native token context for Android went from 349 expected failures to 1, and i
 
 ## Impact
 
-Android sizing and font-size reads change type for anyone who read those tokens. The ballot for the guideline statements is held for Peter's dated answer; the unit's PR runs of the four harness contexts are pending.
+Android sizing and font-size reads change type for anyone who read those tokens. The four harness contexts passed on the unit's PR (#719). Peter ratified the guideline statements at 2026-11-07T17:00:13Z, after the PR merged at 16:52:22Z; the completion doc records that order as a finding for CLOSEOUT.
 
 ## Release note draft (I-1 and I-2)
 
