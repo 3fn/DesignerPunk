@@ -10,9 +10,9 @@
  * (`__tests__/native-rules-emitter.test.ts`) and the per-run instance check can find a drift
  * between this copy and the generator's. Where the design is silent or ambiguous the code says
  * `DESIGN-GAP:` and does the plainest thing; Ada answers each gap, and the answer changes the
- * design text first and this file second. `DESIGN: amendment 4 pending` marks a rule Ada has
- * answered whose design text (tasks amendment 4) has not merged; the code stays as it is until
- * that text is merged, except where the line says otherwise.
+ * design text first and this file second. Rules that tasks amendment 4 (#704, 1ba3a7b0c)
+ * added to § 4 after the first draft of this module (the Swift reserved-word list, every
+ * entry's `mode`, refusal (g)'s pair clause, refusal (e)'s comparison) are marked `Amendment 4`.
  *
  * Contract:
  *   - Pure functions. No I/O, no clock, no environment, no `fs`, no YAML parsing: a caller reads
@@ -87,10 +87,9 @@ export const productGenKeyRoot = (platform: NativePlatform): string => `gen:${PR
  * `mode` field. `pair: true` marks the `{ light, dark }` registration form (design § 10), which
  * covers both modes.
  *
- * DESIGN: amendment 4 pending. Ada's answer: every entry carries `mode`, and refusal (g) also
- * refuses the `{ light, dark }` form with a mode other than `both`. Until amendment 4's text is
- * merged this module reads `mode` only when `pair` is not true, and (g) does not read it for a
- * pair entry. */
+ * Amendment 4 (§ 4 item 2, item 3, item 5 (g)): every entry carries `mode`, in either form. The
+ * `{ light, dark }` form always carries `mode: 'both'`, so the instances follow `mode` alone and
+ * `pair` serves only refusals (c) and (g). */
 export interface ThemeEntry {
   name: string;
   mode?: string;
@@ -120,9 +119,8 @@ const nameFor = (words: readonly string[], platform: NativePlatform): string =>
 
 const MODE_SUFFIX: Readonly<Record<Scheme, string>> = { light: 'Light', dark: 'Dark' };
 
-/** Which modes an entry covers (item 3): `both` and the `{ light, dark }` form cover both. */
+/** Which modes an entry covers (item 3): `both` covers both; the `{ light, dark }` form carries `both`, so `mode` alone decides. */
 export function coveredModes(t: ThemeEntry): Readonly<Record<Scheme, boolean>> {
-  if (t.pair === true) return { light: true, dark: true };
   if (t.mode === 'both') return { light: true, dark: true };
   if (t.mode === 'light') return { light: true, dark: false };
   if (t.mode === 'dark') return { light: false, dark: true };
@@ -226,21 +224,18 @@ export function familyCases(themes: readonly ThemeEntry[], platform: NativePlatf
 /**
  * Swift reserved words, which a family case is declared in backticks for.
  *
- * DESIGN: amendment 4 pending (the list is to be stated once in § 4, under "The theme family
- * (6(b))"). It is the keyword list of The Swift Programming Language ("Keywords and
- * Punctuation": declaration, statement, and expression and type keywords), without the
- * contextual keywords, which need no backticks. Checked by Kenya against Swift 6.4.2 (Xcode
- * 27.2, `arm64-apple-ios17.0-simulator`) on 2026-11-06: every word here fails as a bare enum
- * case and compiles in backticks, except `init`, which fails both ways and is refused by item 5
- * (h); `await` and the contextual keywords compile bare, so they are not here. `Any` and `Self`
- * cannot arise (the case is lower-cased) and are harmless. `self` is in it and refused by (h). */
+ * Amendment 4: the list is stated once in § 4, under "The theme family (6(b))", and this is it,
+ * exactly. Kenya verified on Swift 6.4.2 (Xcode 27.2, 2026-11-06) that each word fails as a plain
+ * case and compiles in backticks, and that no contextual keyword (`await`, `any`, `some`, `open`,
+ * ...) fails plain, so none is here. `self`, `init` and `allCases` are not here: each declares,
+ * and each is refused by item 5 (h) for what a use of it names. */
 export const SWIFT_RESERVED_WORDS: readonly string[] = [
-  'associatedtype', 'class', 'deinit', 'enum', 'extension', 'fileprivate', 'func', 'import', 'init', 'inout',
+  'associatedtype', 'class', 'deinit', 'enum', 'extension', 'fileprivate', 'func', 'import', 'inout',
   'internal', 'let', 'operator', 'private', 'precedencegroup', 'protocol', 'public', 'rethrows', 'static',
   'struct', 'subscript', 'typealias', 'var',
   'break', 'case', 'catch', 'continue', 'default', 'defer', 'do', 'else', 'fallthrough', 'for', 'guard', 'if',
   'in', 'repeat', 'return', 'throw', 'switch', 'where', 'while',
-  'Any', 'as', 'false', 'is', 'nil', 'self', 'Self', 'super', 'throws', 'true', 'try',
+  'as', 'false', 'is', 'nil', 'super', 'throws', 'true', 'try',
 ];
 
 /** How a Swift family case is declared: in backticks when it is a reserved word (used as `.default`). */
@@ -309,9 +304,10 @@ const squash = (name: string): string => name.toLowerCase().replace(/[-_]/g, '')
  * refusal that holds, in entry order and, within an entry, in rule order. Refusals that need a
  * well-formed name ((d), (e), (h)) are skipped for an entry that fails (a).
  *
- * DESIGN: amendment 4 pending. (e) compares the lower-cased Pascal concatenation, so `a-b` and
- * `ab` collide as well as `high-contrast`, `high_contrast` and `highContrast`: Ada's answer is
- * to keep this broader rule and reword (e) to say so. */
+ * Amendment 4 (item 5 (e)): the comparison is of the lower-cased Pascal names, so `a-b` and `ab`
+ * (`AB` and `Ab`) collide as well as `high-contrast`, `high_contrast` and `highContrast`.
+ * Amendment 4 (item 5 (g)): a mode that is not `light`, `dark` or `both` is refused, and so is a
+ * `{ light, dark }`-form entry whose mode is not `both`. */
 export function checkThemeConfig(themes: readonly ThemeEntry[]): Refusal[] {
   const out: Refusal[] = [];
   const seenName = new Map<string, number>();
@@ -340,8 +336,10 @@ export function checkThemeConfig(themes: readonly ThemeEntry[]): Refusal[] {
     const first = seenName.get(t.name);
     if (first !== undefined) add('f', `the name is already registered at ${entryLabel(first, themes[first])}`);
     else seenName.set(t.name, i);
-    if (t.pair !== true && t.mode !== 'light' && t.mode !== 'dark' && t.mode !== 'both') {
+    if (t.mode !== 'light' && t.mode !== 'dark' && t.mode !== 'both') {
       add('g', `the mode ${t.mode === undefined ? '(absent)' : `"${t.mode}"`} is not "light", "dark" or "both"`);
+    } else if (t.pair === true && t.mode !== 'both') {
+      add('g', `the { light, dark } form has the mode "${t.mode}", not "both"`);
     }
     if (faultA === null && !isReservedExact(t.name)) {
       const swiftCase = lowerCamelName(themeWords(t.name));

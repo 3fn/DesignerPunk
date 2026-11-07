@@ -14,6 +14,7 @@
 
 import {
   BINDING,
+  SWIFT_RESERVED_WORDS,
   PRODUCT_FILE,
   PRODUCT_GEN_PATH,
   ThemeEntry,
@@ -102,7 +103,7 @@ describe('theme-instance rule, item 2: three reserved names', () => {
     expect(instanceNames([{ name: 'dark', mode: 'dark' }], 'android')).toEqual(['BaseLight', 'BaseDark', 'WcagLight', 'WcagDark']);
   });
   it('`wcag` adds no instance in mode light, dark, both or the { light, dark } form', () => {
-    for (const w of [{ name: 'wcag', mode: 'light' }, { name: 'wcag', mode: 'dark' }, { name: 'wcag', mode: 'both' }, { name: 'wcag', pair: true }]) {
+    for (const w of [{ name: 'wcag', mode: 'light' }, { name: 'wcag', mode: 'dark' }, { name: 'wcag', mode: 'both' }, { name: 'wcag', mode: 'both', pair: true }]) {
       expect(instanceNames([w], 'ios')).toEqual(['baseLight', 'baseDark', 'wcagLight', 'wcagDark']);
     }
   });
@@ -130,7 +131,7 @@ describe('theme-instance rule, item 3: one instance per mode a theme covers', ()
     expect(instanceNames([{ name: 'brand', mode: 'both' }], 'ios').slice(4)).toEqual(['brandLight', 'brandDark']);
   });
   it('the { light, dark } form adds both', () => {
-    expect(instanceNames([{ name: 'brand', pair: true }], 'android').slice(4)).toEqual(['BrandLight', 'BrandDark']);
+    expect(instanceNames([{ name: 'brand', mode: 'both', pair: true }], 'android').slice(4)).toEqual(['BrandLight', 'BrandDark']);
   });
   it('no instance is emitted for a mode the theme does not cover', () => {
     expect(instanceNames([{ name: 'brand', mode: 'light' }], 'ios')).not.toContain('brandDark');
@@ -224,6 +225,11 @@ describe('the theme family (6(b)): cases', () => {
     expect(swiftCaseDeclaration('highContrast')).toBe('highContrast');
     expect(swiftCaseDeclaration('base')).toBe('base');
   });
+  it('lists exactly the reserved words of design § 4 (amendment 4): self, init, allCases and the contextual keywords are not backticked', () => {
+    for (const w of ['self', 'init', 'allCases', 'await', 'any', 'some', 'open', 'Any', 'Self']) expect(swiftCaseDeclaration(w)).toBe(w);
+    for (const w of ['as', 'false', 'is', 'nil', 'super', 'throws', 'true', 'try', 'in', 'where', 'var', 'inout']) expect(swiftCaseDeclaration(w)).toBe(`\`${w}\``);
+    expect(SWIFT_RESERVED_WORDS.length).toBe(49);
+  });
 });
 
 describe('Selection: every row of the table', () => {
@@ -249,7 +255,7 @@ describe('Selection: every row of the table', () => {
       expect(selectInstance([{ name: 'wcag', mode }], 'wcag', 'dark', 'ios')).toBe('wcagDark');
     }
     expect(selectInstance([], 'wcag', 'dark', 'ios')).toBe('wcagDark');
-    expect(selectInstance([{ name: 'wcag', pair: true }], 'wcag', 'light', 'ios')).toBe('wcagLight');
+    expect(selectInstance([{ name: 'wcag', mode: 'both', pair: true }], 'wcag', 'light', 'ios')).toBe('wcagLight');
   });
   it('a registered theme of mode both: <t>Light and <t>Dark', () => {
     expect(selectInstance(CONFIG_C, 'highContrast', 'light', 'ios')).toBe('highContrastLight');
@@ -258,7 +264,7 @@ describe('Selection: every row of the table', () => {
     expect(selectInstance(CONFIG_C, 'HighContrast', 'dark', 'android')).toBe('HighContrastDark');
   });
   it('a theme in the { light, dark } form selects like mode both', () => {
-    const t: ThemeEntry[] = [{ name: 'brand', pair: true }];
+    const t: ThemeEntry[] = [{ name: 'brand', mode: 'both', pair: true }];
     expect(selectInstance(t, 'brand', 'light', 'ios')).toBe('brandLight');
     expect(selectInstance(t, 'brand', 'dark', 'ios')).toBe('brandDark');
   });
@@ -341,7 +347,7 @@ describe('theme-instance rule, item 5: refusals on a harness config', () => {
       expect(checkThemeConfig([{ name: 'dark', mode: 'both' }]).map((r) => r.rule)).toEqual(['c']);
     });
     it('the { light, dark } form', () => {
-      expect(checkThemeConfig([{ name: 'dark', pair: true }]).map((r) => r.rule)).toEqual(['c']);
+      expect(checkThemeConfig([{ name: 'dark', mode: 'both', pair: true }]).map((r) => r.rule)).toEqual(['c']);
     });
     it('mode dark is accepted', () => {
       expect(checkThemeConfig([{ name: 'dark', mode: 'dark' }])).toEqual([]);
@@ -377,6 +383,11 @@ describe('theme-instance rule, item 5: refusals on a harness config', () => {
     it('high-contrast and highContrast', () => {
       expect(checkThemeConfig([{ name: 'high-contrast', mode: 'both' }, { name: 'highContrast', mode: 'both' }]).map((r) => r.rule)).toEqual(['e']);
     });
+    it('a-b and ab, which give AB and Ab (amendment 4)', () => {
+      expect(checkThemeConfig([{ name: 'a-b', mode: 'both' }, { name: 'ab', mode: 'both' }])).toEqual([
+        { rule: 'e', entry: 1, message: 'themes[1] "ab": gives the same Pascal words as themes[0] "a-b" when letter case is ignored' },
+      ]);
+    });
     it('brand and Brand differ only in case', () => {
       expect(checkThemeConfig([{ name: 'brand', mode: 'both' }, { name: 'Brand', mode: 'both' }]).map((r) => r.rule)).toEqual(['e']);
     });
@@ -407,6 +418,17 @@ describe('theme-instance rule, item 5: refusals on a harness config', () => {
       expect(checkThemeConfig(withEntry({ name: 'brand' }))).toEqual([
         { rule: 'g', entry: 2, message: 'themes[2] "brand": the mode (absent) is not "light", "dark" or "both"' },
       ]);
+    });
+    it('the { light, dark } form with a mode other than both (amendment 4)', () => {
+      expect(checkThemeConfig(withEntry({ name: 'brand', mode: 'light', pair: true }))).toEqual([
+        { rule: 'g', entry: 2, message: 'themes[2] "brand": the { light, dark } form has the mode "light", not "both"' },
+      ]);
+    });
+    it('the { light, dark } form with no mode (amendment 4)', () => {
+      expect(checkThemeConfig(withEntry({ name: 'brand', pair: true })).map((r) => r.rule)).toEqual(['g']);
+    });
+    it('the { light, dark } form with mode both is accepted', () => {
+      expect(checkThemeConfig(withEntry({ name: 'brand', mode: 'both', pair: true }))).toEqual([]);
     });
     it('a mode in the wrong case', () => {
       expect(checkThemeConfig(withEntry({ name: 'brand', mode: 'Light' })).map((r) => r.rule)).toEqual(['g']);
