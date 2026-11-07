@@ -10,7 +10,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { RawInput, analyze, contextOf, normalize, parseVerdict, render } from '../stability';
+import { RawInput, analyze, contextOf, normalize, parseInfra, parseVerdict, render } from '../stability';
 
 const load = (name: string): RawInput =>
   JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'stability', name), 'utf8')) as RawInput;
@@ -213,5 +213,68 @@ describe('the rendered record', () => {
     const text = render(analyze(normalize(load('mixed.json'))), meta);
     expect(text).toContain('2 counted — not met');
     expect(text).toContain('no harness-verdict annotation (failed before the comparator)');
+  });
+});
+
+describe('harness-infra runs (tasks.md Task 19; Decision 6 as amended by amendment 7)', () => {
+  const AT = 'harness-android-tokens';
+  const META = { repo: 'owner/repo', workflow: 'native-harness.yml', generatedAt: '2026-11-07T12:00:00Z' };
+
+  it('reads <host> <status> <step> from the annotation', () => {
+    expect(parseInfra('repo.maven.apache.org 403 resolve')).toEqual({ host: 'repo.maven.apache.org', status: '403', step: 'resolve' });
+    expect(parseInfra('plugins.gradle.org timeout resolve')).toEqual({ host: 'plugins.gradle.org', status: 'timeout', step: 'resolve' });
+    expect(parseInfra('two words')).toBeNull();
+  });
+
+  it('an infra run between two PASS runs at different heads leaves the count unbroken and uncounted', () => {
+    const c = ctx(load('infra-between-passes.json'), AT);
+    expect(c.infraRuns.map((r) => r.runId)).toEqual([1202]);
+    expect(c.infraRuns[0].last.infra).toEqual({ host: 'repo.maven.apache.org', status: '403', step: 'resolve' });
+    expect(c.runs.find((r) => r.runId === 1202)?.breaks).toEqual([]);
+    expect(c.streak).toBe(2);
+  });
+
+  it('an infra run with cache: miss is counted toward no cold run', () => {
+    const c = ctx(load('infra-cold-miss.json'), AT);
+    expect(c.runs.find((r) => r.runId === 1301)?.last.cache).toBe('miss');
+    expect(c.runs.find((r) => r.runId === 1301)?.infraRun).toBe(true);
+    expect(c.coldRuns.map((r) => r.runId)).toEqual([1302]);
+  });
+
+  it('two consecutive infra runs at one head print the finding; a third at another head does not extend it', () => {
+    const c = ctx(load('infra-two-at-one-head.json'), AT);
+    expect(c.infraRuns.map((r) => r.runId)).toEqual([1401, 1402, 1403]);
+    expect(c.infraRate).toBe(0.75);
+    expect(c.findings).toEqual(['harness-android-tokens: 2 consecutive infra runs at head f00000000 (runs 1401, 1402): repo.maven.apache.org 403']);
+    expect(c.streak).toBe(1);
+    const text = render(analyze(normalize(load('infra-two-at-one-head.json'))), META);
+    expect(text).toContain('**FINDING**: harness-android-tokens: 2 consecutive infra runs at head f00000000');
+    expect(text).toContain('infra rate 75.0%');
+    expect(text).toContain('no (infra)');
+  });
+
+  it('a single infra run prints no finding', () => {
+    expect(ctx(load('infra-between-passes.json'), AT).findings).toEqual([]);
+  });
+
+  it('a run whose attempts end infra then PASS is a break', () => {
+    const c = ctx(load('infra-then-pass-attempts.json'), AT);
+    const r = c.runs.find((x) => x.runId === 1502);
+    expect(r?.attemptConclusions).toEqual(['failure', 'success']);
+    expect(r?.infraRun).toBe(false);
+    expect(r?.breaks).toEqual(['attempts ended with different conclusions']);
+    expect(c.streak).toBe(1);
+  });
+
+  it('an ordinary resolve failure (harness-verdict FAIL) is counted as a FAIL, not as infra', () => {
+    const c = ctx(load('ordinary-resolve-fail.json'), AT);
+    const r = c.runs.find((x) => x.runId === 1602);
+    expect(r?.infraRun).toBe(false);
+    expect(r?.last.verdict).toBe('FAIL');
+    expect(r?.last.infra).toBeNull();
+    expect(r?.breaks).toEqual([]);
+    expect(c.infraRuns).toEqual([]);
+    expect(c.streak).toBe(3);
+    expect(c.coldRuns.map((x) => x.runId)).toEqual([1602]);
   });
 });

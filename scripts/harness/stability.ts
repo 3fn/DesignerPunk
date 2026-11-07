@@ -22,6 +22,12 @@
  *                 ceiling; queue time is `started_at - max(created_at, harness-generate.completed_at)`
  *                 of the same run and attempt.
  *
+ * An INFRA run (its job carries the `harness-infra` annotation, `<host> <status> <step>`, written when the
+ * lane's resolve step met an environment fault and no comparator ran; tasks.md Task 19, amendment 7) is
+ * neither a break nor a counted run for condition 2 and is never a cold run for condition 3. Two or more
+ * consecutive infra runs of one context at one head SHA are a finding. An infra run whose attempts end with
+ * different conclusions is still a break.
+ *
  * A dispatched run counts toward neither condition 2 nor condition 3 (Peter's Decision 2, "2 yes",
  * and tasks amendment 3 "D yes"); it is listed with the reason.
  *
@@ -101,6 +107,18 @@ export const platformOf = (c: Context): Platform => (c.startsWith('harness-ios')
 
 export const CEILING_SECONDS = 600;
 
+export interface InfraFault {
+  host: string;
+  status: string;
+  step: string;
+}
+
+/** `repo.maven.apache.org 403 resolve` -> its three fields; null when the message does not have them. */
+export function parseInfra(message: string): InfraFault | null {
+  const m = /^(\S+) (\S+) (\S+)$/.exec(message.trim());
+  return m ? { host: m[1], status: m[2], step: m[3] } : null;
+}
+
 export interface JobRecord {
   context: Context;
   runId: number;
@@ -116,6 +134,8 @@ export interface JobRecord {
   durationSeconds: number | null;
   /** `PASS` or `FAIL` from the `harness-verdict` annotation; null when the annotation is absent. */
   verdict: 'PASS' | 'FAIL' | null;
+  /** From the `harness-infra` annotation (`<host> <status> <step>`); null when absent. */
+  infra: InfraFault | null;
   cache: 'hit' | 'miss' | null;
   /** iOS only: seconds from `max(created_at, harness-generate.completed_at)` to `started_at`. */
   queueSeconds: number | null;
@@ -150,7 +170,9 @@ export function normalize(raw: RawInput): JobRecord[] {
       const notes = raw.annotationsByJob[job.id] ?? [];
       let verdict: 'PASS' | 'FAIL' | null = null;
       let cache: 'hit' | 'miss' | null = null;
+      let infra: InfraFault | null = null;
       for (const a of notes) {
+        if (a.title === 'harness-infra') infra = parseInfra(a.message) ?? infra;
         if (a.title === 'harness-verdict') verdict = parseVerdict(a.message) ?? verdict;
         if (a.title === 'cache') {
           const m = /^(hit|miss)$/.exec(a.message.trim());
@@ -176,6 +198,7 @@ export function normalize(raw: RawInput): JobRecord[] {
         completedAt: job.completed_at,
         durationSeconds: secs(ms(job.started_at), ms(job.completed_at)),
         verdict,
+        infra,
         cache,
         queueSeconds,
         xcodePin: raw.xcodePinBySha?.[job.head_sha] ?? null,
@@ -205,6 +228,8 @@ export interface RunSummary {
   attemptConclusions: (string | null)[];
   /** Why this run does not count toward conditions 2 and 3, for a dispatched run. */
   excluded: string | null;
+  /** True when the last attempt carries `harness-infra` and no `harness-verdict`. */
+  infraRun: boolean;
   /** Condition 2: set when this (pull-request) run is a break. */
   breaks: BreakReason[];
   /** Condition 3: this run counts toward the cold-run clause. */
@@ -217,6 +242,12 @@ export interface ContextAnalysis {
   runs: RunSummary[];
   pullRequestRuns: number;
   dispatchedRuns: number;
+  /** Every infra run of the context, in run order, with its host, status and step. */
+  infraRuns: RunSummary[];
+  /** Infra runs over all recorded runs of the context (0 when it has none). */
+  infraRate: number;
+  /** One line per place where two or more consecutive infra runs share a head SHA. */
+  findings: string[];
   /** Condition 2: the number of non-break pull-request runs since the last break. */
   streak: number;
   streakMet: boolean;
@@ -258,11 +289,23 @@ export function analyze(records: readonly JobRecord[], opts: AnalyzeOptions = {}
         last,
         attemptConclusions: attempts.map((a) => a.conclusion),
         excluded: last.event === 'pull_request' ? null : `a ${last.event} run counts toward neither condition 2 nor condition 3`,
+        infraRun: last.infra !== null && last.verdict === null,
         breaks: [],
         coldCounts: false,
       });
     }
     runs.sort(orderRuns);
+
+    // Infra runs: listed per context, and two or more in a row at one head are a finding.
+    const infraRuns = runs.filter((r) => r.infraRun);
+    const findings: string[] = [];
+    for (let i = 1; i < runs.length; i++) {
+      if (!runs[i].infraRun || !runs[i - 1].infraRun || runs[i].headSha !== runs[i - 1].headSha) continue;
+      let j = i;
+      while (j + 1 < runs.length && runs[j + 1].infraRun && runs[j + 1].headSha === runs[i].headSha) j++;
+      findings.push(`${context}: ${j - i + 2} consecutive infra runs at head ${runs[i].headSha.slice(0, 9)} (runs ${runs.slice(i - 1, j + 1).map((r) => r.runId).join(', ')}): ${runs[i].last.infra?.host} ${runs[i].last.infra?.status}`);
+      i = j;
+    }
 
     // Condition 2: walk the pull-request runs in order.
     const pr = runs.filter((r) => r.excluded === null);
@@ -270,6 +313,14 @@ export function analyze(records: readonly JobRecord[], opts: AnalyzeOptions = {}
     let prev: RunSummary | null = null;
     for (const run of pr) {
       const l = run.last;
+      if (run.infraRun) {
+        // An infra run is neither a break nor counted; only differing attempts break it.
+        if (new Set(run.attemptConclusions).size > 1) {
+          run.breaks.push('attempts ended with different conclusions');
+          streak = 0;
+        }
+        continue;
+      }
       if (l.conclusion === 'cancelled' || l.conclusion === 'timed_out') run.breaks.push('cancelled or timed out');
       if (l.verdict === null) run.breaks.push('no harness-verdict annotation (failed before the comparator)');
       if (new Set(run.attemptConclusions).size > 1) run.breaks.push('attempts ended with different conclusions');
@@ -282,7 +333,7 @@ export function analyze(records: readonly JobRecord[], opts: AnalyzeOptions = {}
     }
 
     // Condition 3: pull-request runs that reached the comparator.
-    const reached = pr.filter((r) => r.last.verdict !== null);
+    const reached = pr.filter((r) => r.last.verdict !== null && !r.infraRun);
     let cold: RunSummary[];
     if (platform === 'android') cold = reached.filter((r) => r.last.cache === 'miss');
     else {
@@ -305,6 +356,9 @@ export function analyze(records: readonly JobRecord[], opts: AnalyzeOptions = {}
       context,
       platform,
       runs,
+      infraRuns,
+      infraRate: runs.length === 0 ? 0 : infraRuns.length / runs.length,
+      findings,
       pullRequestRuns: pr.length,
       dispatchedRuns: runs.length - pr.length,
       streak,
@@ -348,12 +402,15 @@ export function render(analysis: Analysis, meta: RenderMeta): string {
   lines.push('- `commits/<head sha>/check-runs`: the checks API, each context\'s check-run conclusion;');
   lines.push('- `check-runs/<job id>/annotations`: the `harness-verdict` and `cache` annotations, which outlast the logs.');
   lines.push('');
-  lines.push('**Rules applied** (conditions of § "Decision 6"). A dispatched run counts toward neither condition 2 nor condition 3. A run counts toward condition 3 only if its context reached the comparator (it carries `harness-verdict`). Duration is `completed_at - started_at`; the ceiling is ' + CEILING_SECONDS / 60 + ' minutes. For an iOS context, queue time is `started_at - max(created_at, harness-generate.completed_at)`.');
+  lines.push('**Rules applied** (conditions of § "Decision 6"). A dispatched run counts toward neither condition 2 nor condition 3. A run counts toward condition 3 only if its context reached the comparator (it carries `harness-verdict`). A run carrying `harness-infra` (an environment fault found before any comparison) is neither a break nor counted for condition 2 and is never a cold run; two or more consecutive infra runs at one head are printed as a finding. Duration is `completed_at - started_at`; the ceiling is ' + CEILING_SECONDS / 60 + ' minutes. For an iOS context, queue time is `started_at - max(created_at, harness-generate.completed_at)`.');
   lines.push('');
   for (const c of analysis.contexts) {
     lines.push(`## ${c.context}`);
     lines.push('');
     lines.push(`- Runs recorded: ${c.runs.length} (${c.pullRequestRuns} pull-request, ${c.dispatchedRuns} dispatched).`);
+    lines.push(`- Infra runs (\`harness-infra\`): ${c.infraRuns.length} of ${c.runs.length} recorded, infra rate ${(c.infraRate * 100).toFixed(1)}%.`);
+    for (const r of c.infraRuns) lines.push(`  - run ${r.runId} at \`${r.headSha.slice(0, 9)}\`: ${r.last.infra?.host} ${r.last.infra?.status} ${r.last.infra?.step}`);
+    for (const f of c.findings) lines.push(`- **FINDING**: ${f}`);
     lines.push(`- **Condition 2** (10 consecutive pull-request runs, no break): current streak ${c.streak} of 10 — ${c.streakMet ? 'met' : 'not met'}.`);
     if (c.platform === 'android') {
       lines.push(`- **Condition 3** (three cold-cache runs under 10 minutes; pull-request runs with \`cache: miss\` that reached the comparator): ${c.coldRuns.length} counted — ${c.coldMet ? 'met' : 'not met'}.`);
@@ -371,9 +428,9 @@ export function render(analysis: Analysis, meta: RenderMeta): string {
     lines.push('|---|---|---|---|---|---|---|---|---|---|---|---|---|---|');
     for (const r of c.runs) {
       const l = r.last;
-      const counts = r.excluded !== null ? 'no (dispatched)' : r.coldCounts ? 'cond 2, cond 3' : 'cond 2';
+      const counts = r.excluded !== null ? 'no (dispatched)' : r.infraRun ? 'no (infra)' : r.coldCounts ? 'cond 2, cond 3' : 'cond 2';
       lines.push(
-        `| ${r.runId} | \`${l.headSha.slice(0, 9)}\` | ${r.event} | ${r.attempts} | ${fmt(l.conclusion)} | ${fmt(l.verdict)} | ${fmt(l.cache)} | ${l.createdAt} | ${fmt(l.startedAt)} | ${fmt(l.completedAt)} | ${dur(l.durationSeconds)} | ${c.platform === 'ios' ? dur(l.queueSeconds) : 'n/a'} | ${counts} | ${r.breaks.length ? r.breaks.join('; ') : '-'} |`,
+        `| ${r.runId} | \`${l.headSha.slice(0, 9)}\` | ${r.event} | ${r.attempts} | ${fmt(l.conclusion)} | ${l.verdict ?? (l.infra ? 'infra' : '-')} | ${fmt(l.cache)} | ${l.createdAt} | ${fmt(l.startedAt)} | ${fmt(l.completedAt)} | ${dur(l.durationSeconds)} | ${c.platform === 'ios' ? dur(l.queueSeconds) : 'n/a'} | ${counts} | ${r.breaks.length ? r.breaks.join('; ') : '-'} |`,
       );
     }
     lines.push('');
