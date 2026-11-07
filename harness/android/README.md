@@ -28,7 +28,7 @@ Run locally with Temurin 17.0.21+9, Gradle 9.8.2 from the committed wrapper, And
 
 - **The lane** configures and runs the one invocation. On a real packed install the generator's output does not compile yet:
   `:tokens` fails with the generator's errors, Gradle skips `:probe`, the lane prints `probe: blocked (:tokens not compiled)`
-  and writes empty `checks`; `:dp` compiles 41 package files and the generated files and fails.
+  and writes the count checks from the generated probe source with detail `blocked`, plus the instance check; `:dp` compiles 41 package files and the generated files and fails.
 - **On a hand-written generated tree that does compile** (`:tokens` and `:probe` succeed), the probe prints its four count
   lines and the lane writes them, and the per-run instance check, into the token context's `checks`.
 - **`lane.ts --selftest`** passes: `:probe` gives the one planted-`internal` error.

@@ -14,7 +14,8 @@
  *   report    print `probe: blocked (:tokens not compiled)` when :tokens did not compile and the probe did not run;
  *             read the toolchain and the counts Gradle printed; write `run-<context>.json` for each context, for
  *             `scripts/harness/compare.ts --run`. The token context's `checks` hold each probe count line
- *             (`n` against `m`) and the per-run instance check; they are empty while `:tokens` fails. The lane
+ *             (`n` against `m`; from the generated probe source, detail `blocked`, while `:tokens` fails) and
+ *             the per-run instance check, on every run. The lane
  *             never stops on a toolchain pin mismatch: it records the versions and the comparator fails the
  *             context as `toolchain`. It stops before Gradle, writing no run file, only on a setup failure
  *             (a duplicate native file name, a bad harness config, a missing toolchain).
@@ -53,6 +54,7 @@ import {
   readProductFiles,
   writeProbe,
   type ProbeConfig,
+  type ProbeGroups,
 } from '../../scripts/harness/probe-kotlin';
 import { parseKotlin } from '../../scripts/harness/parse-kotlin';
 import { checkHarnessConsumerConfig } from '../../scripts/harness/native-rules';
@@ -238,6 +240,8 @@ export interface Plan {
   probeReads: { indexNames: number; totalReads: number };
   /** The probe's input config (the manifest's name and themes), for the per-run instance check. */
   config: ProbeConfig;
+  /** The four count groups of the probe source this lane generated: `m` from the inputs, `n` counted from the emitted text. */
+  probeGroups: ProbeGroups;
   /** The generated Kotlin, all files joined in path order: what the per-run instance check parses. */
   generatedText: string;
 }
@@ -326,6 +330,7 @@ export function prepare(options: PrepareOptions): Plan {
     roots: { gen: genRoot, pkg: pkgRoot, probe: path.join(laneDir, 'src') },
     probeReads: { indexNames: probe.groups.index.m, totalReads: probe.totalReads },
     config,
+    probeGroups: probe.groups,
     generatedText: genAbsolute.map((f) => fs.readFileSync(f, 'utf8')).join('\n'),
   };
 }
@@ -361,16 +366,32 @@ export const COUNT_LINES = [
 ] as const;
 
 /**
- * The `harness-android-tokens` run file's `checks`: each count line the probe printed (`ok` when `n` equals `m`) and the
- * per-run instance check. While `:tokens` did not compile the probe did not run, the blocked line stands in, and the
- * array is empty. When `:tokens` compiled and a count line is missing, that is a failing check (it fails closed: a probe
- * that printed no count cannot read as green).
+ * The `harness-android-tokens` run file's `checks`: each count line (`ok` when `n` equals `m`) and the per-run
+ * instance check, on every run.
+ *   - `:tokens` compiled: the counts are the lines `:probe` printed. A missing line is a failing entry (it fails
+ *     closed: a probe that printed no count cannot read as green).
+ *   - `:tokens` did not compile: Gradle skipped `:probe`, so no line was printed (the blocked line stands in). The
+ *     counts are then taken from the probe source this lane generated (`n` counted from the emitted text, `m` from
+ *     the inputs), with detail `blocked`; a mismatch is still `ok: false`. A blocked probe is not a compile, so it
+ *     adds no diagnostic (design § 3, "The probe's count lines and the run file's `checks`").
+ * The instance check reads the generated files, needs no compile, and so runs regardless.
  */
 export function buildChecks(plan: Plan, run: GradleRun): RunCheck[] {
   const parsed = parseKotlin({ log: run.log, exitCode: run.exitCode, roots: plan.roots });
-  if (parsed.compiles[0].outcome !== 'succeeded') return [];
+  const blocked = parsed.compiles[0].outcome !== 'succeeded';
+  const groupOf: Record<(typeof COUNT_LINES)[number]['name'], keyof ProbeGroups> = {
+    'probe: read index names': 'index',
+    'probe: instances read': 'instances',
+    'probe: product read': 'product',
+    'probe: provider read': 'provider',
+  };
   const checks: RunCheck[] = [];
   for (const { name, pattern } of COUNT_LINES) {
+    if (blocked) {
+      const g = plan.probeGroups[groupOf[name]];
+      checks.push({ name, ok: g.n === g.m, detail: g.n === g.m ? 'blocked' : `blocked: ${g.n} of ${g.m}` });
+      continue;
+    }
     const m = pattern.exec(run.log);
     if (m === null) checks.push({ name, ok: false, detail: 'the probe printed no such count line' });
     else checks.push({ name, ok: m[1] === m[2], detail: `${m[1]} of ${m[2]}` });

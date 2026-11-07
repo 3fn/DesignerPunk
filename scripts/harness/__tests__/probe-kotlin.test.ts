@@ -401,14 +401,16 @@ describe('probe-kotlin: the per-run instance check', () => {
 
 describe('probe-kotlin: the lane\'s checks, the run file and the setup failures', () => {
   const okText = fs.readFileSync(path.join(HOLDER, 'ok.kt'), 'utf8');
+  const GROUPS_OK = generateProbe(fixtureInput()).groups;
   const roots = { gen: '/w/gen', pkg: '/w/pkg', probe: '/w/probe' };
-  const plan = (generatedText: string): Plan => ({
+  const plan = (generatedText: string, probeGroups: Plan['probeGroups'] = GROUPS_OK): Plan => ({
     laneDir: '/w/lane',
     genAbsolute: [],
     pkgAbsolute: [],
     floors: { gen: 3, pkg: 41 },
     roots,
     probeReads: { indexNames: 0, totalReads: 0 },
+    probeGroups,
     config: probeConfigFromManifest(manifest(CONSUMER)),
     generatedText,
   });
@@ -452,9 +454,38 @@ describe('probe-kotlin: the lane\'s checks, the run file and the setup failures'
     expect(checks.filter((c) => !c.ok)).toEqual([{ name: 'theme instances', ok: false, detail: 'missing WcagDark' }]);
   });
 
-  it('writes an empty checks array while :tokens fails (the probe was skipped; the blocked line stands in)', () => {
+  describe('while :tokens fails (the probe is blocked)', () => {
     const failed = ['> Task :tokens:compileDebugKotlin', 'e: file:///w/gen/DesignTokens.android.kt:1:1 Boom.', '> Task :tokens:compileDebugKotlin FAILED'].join('\n');
-    expect(buildChecks(plan(okText), { log: `${failed}\nBUILD FAILED in 3s\n`, exitCode: 1 })).toEqual([]);
+    const blockedRun: GradleRun = { log: `${failed}\nBUILD FAILED in 3s\n`, exitCode: 1 };
+
+    it('counts the markers in the probe source the lane generated, with detail `blocked`, and still runs the instance check', () => {
+      const checks = buildChecks(plan(okText), blockedRun);
+      expect(checks.map((c) => [c.name, c.ok, c.detail])).toEqual([
+        ['probe: read index names', true, 'blocked'],
+        ['probe: instances read', true, 'blocked'],
+        ['probe: product read', true, 'blocked'],
+        ['probe: provider read', true, 'blocked'],
+        ['theme instances', true, '4 of 4 as the shared module gives (BaseLight, BaseDark, WcagLight, WcagDark)'],
+      ]);
+    });
+
+    it('still writes ok: false for a group whose generated source holds fewer reads than the inputs call for', () => {
+      const short = { ...GROUPS_OK, product: { m: 3, n: 2 } };
+      const checks = buildChecks(plan(okText, short), blockedRun);
+      expect(checks.filter((c) => !c.ok)).toEqual([{ name: 'probe: product read', ok: false, detail: 'blocked: 2 of 3' }]);
+    });
+
+    it('runs the instance check regardless: a bad holder fails, and generated code with neither declaration is `not checked`', () => {
+      const bad = fs.readFileSync(path.join(HOLDER, 'empty.kt'), 'utf8');
+      expect(buildChecks(plan(bad), blockedRun).filter((c) => !c.ok).map((c) => c.name)).toEqual(['theme instances']);
+      const neither = fs.readFileSync(path.join(HOLDER, 'neither.kt'), 'utf8');
+      const last = buildChecks(plan(neither), blockedRun).slice(-1)[0];
+      expect(last).toEqual({ name: 'theme instances', ok: true, detail: 'not checked' });
+    });
+
+    it('never writes an empty checks array for the token context', () => {
+      expect(buildChecks(plan(okText), blockedRun)).toHaveLength(5);
+    });
   });
 
   it('gives the token context the checks and the component context none', () => {
