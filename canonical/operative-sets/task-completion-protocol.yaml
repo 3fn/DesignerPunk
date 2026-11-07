@@ -303,7 +303,7 @@ units:
       - id: branch-and-pr-conven-8
         kind: obligation
         label: "Edit kind (ballot 2026-10-18-governance-edit-kinds): a PR wh"
-        text: "**Edit kind** (ballot 2026-10-18-governance-edit-kinds): a PR whose diff touches a governance path (`governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, the prose of `canonical/agents/**`) carries one line per changed file — `**Edit kind**: <path> — LAW (<ballot path>)`, `— EXECUTION (<clause>)` or `— CORRECTION (<observation record>; truth: <referent>)`. Where one file's lines are of different kinds, it carries one line per part instead, with `<path> L<a>–<b>`: the line range in the file as it stands at the merge commit. The lines are read from the PR body (`gh pr view <n> --json body`), never from the squash message."
+        text: "**Edit kind** (ballot 2026-10-18-governance-edit-kinds): a PR whose diff touches a governance path (`governance/**`, `.kiro/steering/**`, `.kiro/hooks/RELEASE-FLOW.md`, every file under `canonical/agents/**`, frontmatter included) carries one line per changed file — `**Edit kind**: <path> — LAW (<ballot path>)`, `— EXECUTION (<clause>)` or `— CORRECTION (<observation record>; truth: <referent>)`. Where one file's lines are of different kinds, it carries one line per part instead, with `<path> L<a>–<b>`: the line range in the file as it stands at the merge commit. The lines are read from the PR body (`gh pr view <n> --json body`), never from the squash message."
       - id: branch-and-pr-conven-9
         kind: obligation
         label: "The marker and its answer, as the merge-hold check reads the"
