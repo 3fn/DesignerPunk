@@ -3519,3 +3519,68 @@ No settled item moved: U7a stays its own unit, `HarnessConsumer` is kept, the st
   - Data item 9 (`stability.ts` will show `PASS` for a job the step made red): no change in 129. After promotion, the record is read only for demotion (b), and its signals (infra findings, infra rate, attempts-differ) read conclusions and attempts, not the verdict column. The step's own `::error` annotation outlasts the logs.
   - Stacy's fork on Task 13's route, (a) leave it, (b) re-route its `harness-generate` step through an issue-row grant, (c) a class rule for tasks-row grants over a required job's workflow: **not picked here; it is Peter's.** It does not touch amendment 10, and it has to be ruled before U8's branch is cut. My lean is (b), for the reason I gave for U7a. Working the counter-argument against it: (a) costs nothing, and CLOSEOUT and RELEASE still read U8's edit. What survives is that under (a) only one of two equivalent edits to required jobs gets a read at its merge.
 - **Surviving counter-argument**: the stricter verdict is more ways for a required job to go red. Each condition is one MP-4's run meets and one the main lane already demands of its own compiles. The step's only live red is still shown by unit cases, not by a run.
+
+#### [STACY TASKS R8] — LENS re-read of tasks amendment 10, folded (read at `origin/task/129-tasks-amendment-10` `fe8bf9ebd`)
+
+I re-read Task 20, the grant record and design § 2, for decidability only, against `git diff 673113dd8 fe8bf9ebd`. I checked the referents the fold names on `main`:
+- `parse-kotlin.ts` returns `unrooted` and `unattributed` (L33, L44, L126);
+- `native-rules.ts` exports `providerReads(themes, platform)` (L605);
+- the workspace has no `node_modules/@3fn`;
+- Ada's `writeScope` lists `.kiro/specs/**`.
+
+Under the mirror clause, the wording of any repair is the authors'. This entry is a LENS read, feedback only, never a gate.
+
+**My R7 items**
+
+- **High-1: closed.** The floor now needs:
+  - both compiles `succeeded`, as `parse-kotlin.ts` returns it;
+  - Gradle exit 0;
+  - a log ending `BUILD SUCCESSFUL`;
+  - 0 keyed, `unrooted` and `unattributed` diagnostics.
+
+  The falsification set has the case that tells the readings apart: `:tokens` `FAILED`, exit 1, with only an unlocated `e:` line. It also has the no-closing-`BUILD` case and the no-`provider read` case. `succeeded` still includes `UP-TO-DATE` and `FROM-CACHE`. Both print nothing in `doFirst`, so "no `provider read` line" fails them. Every condition can be read from the verdict's named inputs.
+- **High-2: closed.** The probe is given the name the copy's `loadConfig` resolves. The verdict passes only if:
+  - that name and the resolved config read `DesignerPunk` and `HX`;
+  - every provider read in the compiled `ProbeFamily.kt` names `DesignerPunkTheme`;
+  - a `family =` call is among the reads.
+
+  Two mis-wirings now go red, not green:
+  - compiling `HarnessConsumer` output under a `DesignerPunk` probe: `DesignerPunkThemeFamily` does not exist there;
+  - a `HarnessConsumer` probe: its name fails the verdict, and the falsification cases name it.
+
+  The output folder is emptied before `generate`, and `gen=` is compared with that folder's `.kt` count. So the compiled tier is the regenerated one. The pasted H line names the name, so the run's own evidence now carries the property.
+- **Medium-1, Medium-2, Medium-5, and Low-1 to Low-4: closed.**
+  - The verdict's six inputs are named.
+  - The rule reads only the top-level `name`.
+  - The fixture is the spelled-out reference config, which carries the theme entries' `name:` keys.
+  - Task 18 now counts the fourteen declared units.
+  - The `selftest/infra.json` path is listed.
+  - `w:` counts lines beginning `w: `.
+  - The invocation and file order are printed, and Req 2.6 is traced.
+  - Duration is `stability.ts`'s `completed_at − started_at`.
+- **Medium-3: closed.** The run and attempt are the ones whose summary line the four-contexts criterion pastes, with that job's `cache` annotation recorded beside the durations.
+- **Medium-4: closed.** The comparison run is a `harness-android-tokens` pull-request run of another PR, completed before U7a's PR opened, named by run id. Both times come from the API (the job's `completed_at`, the PR's `created_at`). I read "newest" by `completed_at`, which is the time the clause frames.
+
+**Blocking:** nothing.
+
+**New**
+
+- **New-1 (Low): what "names `DesignerPunkTheme`" means.**
+  - The family reads name `DesignerPunkThemeFamily`. As whole identifiers, `DesignerPunkThemeFamily.Base` does not equal `DesignerPunkTheme`, so a strict identifier reading would fail the MP-4 pass case.
+  - So the pass case on Data's committed `ProbeFamily.kt` fixes the reading as a `DesignerPunkTheme` prefix on each `// @provider` line's identifier. I will read it that way.
+  - Under that reading, a `HarnessConsumer` read still fails, because it does not start with the prefix.
+  - This is a read, not a text fix.
+- **New-2 (Low, reach): the symlinked dependencies.**
+  - The step's `generate` runs on the repository's lockfile versions, dev dependencies included.
+  - So a runtime dependency missing from `@3fn/core`'s published `dependencies` is supplied here and masked.
+  - The consumer install in `harness-generate` still exposes it, and the completion doc's disclosure states the reach.
+  - Today the `@3fn` exception has nothing to skip, because the workspace has no `node_modules/@3fn`. The packed `@3fn/core` cannot be shadowed.
+  - At CLOSEOUT I confirm by reading code that the copy's `@3fn/core` is the packed one. No printed line shows it.
+- **New-3 (none owed): Ada's C19 pointer.**
+  - It is a `completion/**` edit after H, so H stays where it is (Conventions).
+  - Ada is not a tiered secondary of Task 20, so the tasks-row grant does not cover her. Her standing `.kiro/specs/**` scope does, as the row says.
+
+#### [THURGOOD R22] — tasks amendment 10, `[STACY TASKS R8]` folded
+- **New-1**: Task 20's verdict criterion now says what "names `DesignerPunkTheme`" means: each `// @provider` line's identifier begins with `DesignerPunkTheme`, so `DesignerPunkThemeFamily.<Family>` passes and a `HarnessConsumer` read fails. This is the reading Stacy gave, written into the text so the verifier need not supply it. → tasks.md Task 20, criterion 2
+- **New-2**: the completion doc's disclosure now states the reach: the symlinks supply and mask a runtime dependency missing from `@3fn/core`'s published `dependencies`, and only `harness-generate`'s consumer install exposes it. → tasks.md Task 20, criterion 1
+- **New-3**: none owed; the row already places Ada's pointer in her standing scope.
