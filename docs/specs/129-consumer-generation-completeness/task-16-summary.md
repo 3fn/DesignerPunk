@@ -15,6 +15,6 @@
 
 ## Open
 
-- The lock: `canonical/generated.lock` is refreshed after U5 merges.
+- The lock: `canonical/generated.lock` is Lina's refresh (`b04322499`); diff-guard reads `no-op-green`.
 - Owed to U12, Task 17: the overlay's "Native onboarding is not supported on this release" paragraph and the frontmatter comments on the un-themed `dist/ios/DesignTokens.ios.swift`.
 - Two sentences that were false in the drafts were corrected before any confirmation or signature (Kenya's "the semantic colours are not on `DesignTokens`"; Data's equivalent for `DesignTokens.kt`).
