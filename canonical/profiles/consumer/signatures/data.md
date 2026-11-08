@@ -260,6 +260,15 @@ The fix is a re-point, not a restoration: our bare `dist/*.kt` would, in a consu
 
 signer: data
 
+**Re-signed 2026-11-08 (Task 18.5): ASSENT, `surviving: [tokens-1, tokens-2, tokens-3, tokens-4, ground-truth-live, per-theme-set]`.** A new act; it closes no divergent. Prior signature: assent 6/6 against `renderedHash` `sha256:6979718fcf9114f8a29108b35f92ab6a54a417093b1fddfe7704680ddc3c6c8a`. Stale because the rendering changed under Peter's ruling of 2026-11-08T14:47:50Z (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md`): the overlay's ground-truth paragraph no longer names the package's `dist/` snapshots (Thurgood `3d479bd4b`, Lina's regeneration `7cfe548e7`).
+- **Read before this act**: the whole unit and its rendering, from the print-mode output at `b5022bcb0459e613900344803fd8ac0b34e3a341`: the canonical unit (`## Token Consumption` and `### How to Use DesignerPunk Tokens on Android`) and its three renderings, which are identical to each other.
+- **Hashes, from that print**: `canonicalHash` `sha256:14fa4d5367f385a948746af6f26587002fc2b27522af0fb2588b09a1c901e22e` (did not move). `renderedHash` `sha256:8acb67f9574457436d2e07795605ce52eed0340fc64a363048a89aca89a74b10` (moved).
+- **Credited, each by what the rendering states**:
+  - `tokens-1` to `tokens-4`: verbatim (the four bullets are unchanged).
+  - `per-theme-set`: verbatim ("Theme-varying tokens are a per-theme SET — the tool returns the set, not a single flattened value").
+  - `ground-truth-live`: entailed. The rendering keeps "**Ground truth for token values is LIVE, not a file**" and the query of the application MCP for the resolved value, formula and per-platform names, naming the tools (`get_token_details`, `get_component_full`). The prohibition on "the built `dist/*.kt` snapshots (see the Ground truth section)" (`subtraction-1`) is replaced by "no token snapshot ships in the package", which states why there is nothing to read; it adds where the consumer's own `DesignTokens` and `ComponentTokens` are written.
+- **Residual, not a refusal**: the prohibition as such is gone, so the item's negative half rests on the positive ("LIVE, not a file") and on the fact that no snapshot ships. The new sentence says the consumer's own generated files exist; it does not say to prefer the MCP over them for a theme-varying token, though `per-theme-set` and "LIVE, not a file" together carry that.
+
 **Refuse: should-re-point.** `ground-truth-live` loses "not a file — never read the built `dist/*.kt` snapshots (see the Ground truth section);" (subtraction-3). The rendering keeps "Ground truth … is LIVE — query the application MCP …", so **`ground-truth-live` is not entailed**. `tokens-1` to `tokens-4` and `per-theme-set` are verbatim.
 
 The prohibition has a consumer counterpart (header fact). It is the named negative of this unit's own `per-theme-set` item: the shipped snapshot is exactly "a single flattened value".
