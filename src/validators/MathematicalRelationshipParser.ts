@@ -442,7 +442,7 @@ export class MathematicalRelationshipParser {
    *   It is not evaluated. The decision is by family, never by what the string looks like.
    * - **Formula families** (every other family) must state an equation that evaluates and agrees
    *   with the token's `baseValue`. A formula-family token with no equation is a failure.
-   *   `<expression> = <value>` is exact (within 1e-3, or 0.1% where a factor is shown rounded); `<expression> ≈ <value>` is within half
+   *   `<expression> = <value>` is exact (equal at the precision the string displays); `<expression> ≈ <value>` is within half
    *   the family's rounding step (see {@link RELATIONSHIP_STEP}); `→ <value>` is a deliberate
    *   rounding to the next grid value (within one step).
    * - **Special-case form**: `special case … = <value>` / `percentage = <value>` is accepted when
@@ -528,22 +528,33 @@ export class MathematicalRelationshipParser {
     }
 
     const errors: string[] = [];
-    // `=` is exact to 1e-3, or to 0.1% of the value where a factor is displayed rounded
-    // (`16 × 2.027` for 16 × 1.125⁶): that rounding is display, not an error.
-    const tolerance = (j: '=' | '≈' | '→', at = 0) =>
-      (j === '=' ? Math.max(1e-3, 1e-3 * Math.abs(at)) : j === '≈' ? step / 2 : step);
+    // `=` is exact at the precision the string itself displays: where the right-hand side shows a
+    // factor rounded (`16 × 2.027` for 16 × 1.125⁶), the left side's groups and powers are rounded to the
+    // same number of decimals before the comparison, and the two must then be equal (to float noise).
+    // An error that survives that rounding is reported, however small.
+    const decimalsOf = (text: string): number =>
+      Math.max(0, ...(text.match(/[0-9]*\.[0-9]+/g) ?? []).map(n => n.split('.')[1].length));
+    const FLOAT = 1e-9;
+    const tolerance = (j: '=' | '≈' | '→') => (j === '=' ? FLOAT : j === '≈' ? step / 2 : step);
     for (let i = 0; i < joiners.length; i++) {
-      const tol = tolerance(joiners[i], values[i]);
-      if (Math.abs(values[i] - values[i + 1]) > tol + 1e-9) {
+      let left = values[i];
+      if (joiners[i] === '=') {
+        const d = decimalsOf(segments[i + 1]);
+        try {
+          left = new ExpressionEvaluator(segments[i], familyBase, baseValue, resolve, d).evaluate();
+        } catch { /* already evaluated once above */ }
+      }
+      const tol = tolerance(joiners[i]);
+      if (Math.abs(left - values[i + 1]) > tol + FLOAT) {
         errors.push(
-          `Mathematical relationship incorrect: '${segments[i]}' = ${round(values[i])} ${joiners[i]} '${segments[i + 1]}' = ${round(values[i + 1])}` +
+          `Mathematical relationship incorrect: '${segments[i]}' = ${round(left)} ${joiners[i]} '${segments[i + 1]}' = ${round(values[i + 1])}` +
           (joiners[i] === '=' ? '' : ` (beyond ${tol})`)
         );
       }
     }
     if (!referencesOwnValue) {
       const last = values[values.length - 1];
-      const tol = joiners.length === 0 ? 1e-3 : tolerance(joiners[joiners.length - 1], last);
+      const tol = joiners.length === 0 ? 1e-9 : tolerance(joiners[joiners.length - 1]);
       if (Math.abs(last - baseValue) > tol + 1e-9) {
         errors.push(`Mathematical relationship incorrect: ${segments[segments.length - 1]} = ${round(last)}, but token baseValue is ${baseValue}`);
       }
@@ -582,8 +593,14 @@ class ExpressionEvaluator {
     private readonly src: string,
     private readonly familyBase: number,
     private readonly ownValue: number,
-    private readonly resolve?: (name: string) => number | undefined
+    private readonly resolve?: (name: string) => number | undefined,
+    /** When set, a parenthesised group and a power are rounded to this many decimals as they are read. */
+    private readonly roundGroupsTo?: number
   ) {}
+
+  private group(v: number): number {
+    return this.roundGroupsTo === undefined ? v : Math.round(v * 10 ** this.roundGroupsTo) / 10 ** this.roundGroupsTo;
+  }
 
   evaluate(): number {
     const v = this.expr();
@@ -636,7 +653,7 @@ class ExpressionEvaluator {
       if (!m) throw new Error(`Invalid exponent in: ${this.src}`);
       this.pos += m[0].length;
       this.sawOperator = true;
-      return Math.pow(b, parseInt(m[0], 10));
+      return this.group(Math.pow(b, parseInt(m[0], 10)));
     }
     return b;
   }
@@ -648,7 +665,7 @@ class ExpressionEvaluator {
       const v = this.expr();
       if (this.peek() !== ')') throw new Error(`Unbalanced parenthesis in: ${this.src}`);
       this.pos++;
-      return v;
+      return this.group(v);
     }
     const num = /^[0-9]*\.?[0-9]+/.exec(this.src.slice(this.pos));
     if (num) { this.pos += num[0].length; return parseFloat(num[0]); }

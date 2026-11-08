@@ -524,6 +524,16 @@ describe('MathematicalRelationshipParser', () => {
       expect(parser.validateToken(tok({ category: 'spacing', mathematicalRelationship: 'lightest' }), resolve).isValid).toBe(false);
     });
 
+    it('`=` is exact at the precision the string displays: an error below 0.1% but above that precision is reported', () => {
+      // 12.005 differs from 12 by 0.04%, and the string shows three decimals, so it is reported
+      expect(parser.validateToken(tok({ baseValue: 12, mathematicalRelationship: 'base × 1.5 = 12.005' }), resolve).isValid).toBe(false);
+      // a rounded factor passes at its displayed precision (1.125⁶ = 2.0273 is shown as 2.027) ...
+      const fs6 = { category: 'fontSize', baseValue: 32.432, familyBaseValue: 16 };
+      expect(parser.validateToken(tok({ ...fs6, mathematicalRelationship: 'base × (1.125⁶) = 16 × 2.027' }), resolve).isValid).toBe(true);
+      // ... and one digit off at that precision is reported (2.028 is 0.05% from 2.027)
+      expect(parser.validateToken(tok({ ...fs6, baseValue: 32.448, mathematicalRelationship: 'base × (1.125⁶) = 16 × 2.028' }), resolve).isValid).toBe(false);
+    });
+
     describe('the five false-negative categories of the 2026-06-24 record', () => {
       it('1. incidental hyphens/slashes in a description (cubic-bezier) are not operators', () => {
         expect(parser.validateToken(tok({ category: 'easing', mathematicalRelationship: 'cubic-bezier(0.4, 0.0, 0.2, 1)' }), resolve).isValid).toBe(true);
