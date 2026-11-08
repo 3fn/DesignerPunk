@@ -15,7 +15,7 @@
 | Exp 3 evidence exists (boundary call + FP/FN + hygiene caveat as recorded finding) | `completion/u2/exp3-spike-evidence.md` (4.1) — Thurgood audit PASS |
 | WCAG check re-armed at canonical allowlist with floors; audit-clean ⇒ arm-green; validation promotion audit-first | 4.2 audit (69 contracts THROUGH the armed matcher) + 4.3 implementation; suite green with all fixes applied; `:435` flipped clean-by-inventory |
 | Console-fail armed on root lanes with seeded allowlist; churn countable | 4.4 — net-new `setupFilesAfterEnv` wiring; 12-entry (suite × pattern × reason) allowlist, one object per line |
-| All U2 register entries recorded | Six landed this unit: `no-autonomous-token-creation`, `console-fail-root-lanes`, `console-fail-subpackage-deferred`, `wcag-format-validity` (record-only), `inverse-drift-incremental-build` (WATCH), `wcag-required-refs`, `validation-criteria-completeness` — register at TEN entries |
+| All U2 register entries recorded | Seven landed this unit *(corrected 2026-11-08, Thurgood: was "Six"; seven names follow, and the register went from 3 entries at `6df1375ad^` to 10 at `6df1375ad`; `.kiro/specs/125-B-classification-map/completion/claims-pass.md` CL-2)*: `no-autonomous-token-creation`, `console-fail-root-lanes`, `console-fail-subpackage-deferred`, `wcag-format-validity` (record-only), `inverse-drift-incremental-build` (WATCH), `wcag-required-refs`, `validation-criteria-completeness` — register at TEN entries |
 
 ## Subtask ledger
 
