@@ -772,6 +772,80 @@ Neither item 1 nor item 3 depends on parity's census:
 
 *`[THURGOOD]` note, 2026-11-08*: my 106-merge replay at `c8fd9640d` (appendix C) lists #774's five records. Four of them carry "this diff edits the record", and so annotate as notices: the three keyed on `task-10-completion.md` and the opacity grant. The dual-instance record is the one warning. The relayed counts above are kept as relayed, and condition (i) of `[STACY R2]` § 3 is met.
 
+### Round 3 — the joint pick on F-1, F-2 and F-6 (Stacy's entry, spliced byte for byte from her file)
+
+#### [STACY R3] — the joint pick on F-1, F-2 and F-6, with Thurgood
+
+**Read at** `d68460752` (`origin/chore/ballot-closeout-cracks`, after `git fetch`), against `main` at `90b3a11cb`. I also read the lane-ownership ballot's item 5 (C1 and C3) and `.kiro/issues/README.md` rules 1, 5 and 11 at `origin/main`. Since my R2 read at `3c36d0821`, the ballot has two commits, `ea20a8433` (round 2 folded) and `d68460752` (Ada's consult). Date: 2026-11-08 (`date -u` at writing: 2026-11-08T20:33:43Z). Nothing was committed or pushed.
+
+**Authority for the pick.** Peter, 2026-11-08T19:40:29Z: "Ask Thurgood and Stacy to workout any disagreements on F-1, F-2, and/or F-6 and go with their collective recommendations, please". These are Peter's words as the brief relayed them. I have not seen the file that records them.
+
+**Verdict: I agree with Thurgood on all three forks: F-1 (a), F-2 (a), F-6 (a).** I disagree with him on one point only, the Trigger of his F-1 record (§ 3). That is not a disagreement about any fork.
+
+**1. The forks, re-weighed**
+
+- **F-1: (a).** Data's dissent is the strongest argument against my pick. I checked it against the text. Data is right about the mechanism. C1 asks for a `workflow_dispatch` run `R` at `B`, and nothing dispatches `main`. So in a repair case, C3's fallback usually finds no run (lane-ownership item 5, C3 first bullet). Item 1's push runs would make a run at `B` exist for almost every merge, so (b) would help C1 as well as the fallback.
+  - **Three things still decide it for (a).**
+    1. **The failure is closed.** C3's own text says that when no run is found, "the change does not meet C3 and goes by an issue-row grant". Under (a), a repair case costs a grant record and a slower path. Nothing goes unread. (b) would remove friction, not a gap.
+    2. **Ada has not been consulted on F-1.** (b) edits Ada's charter (L326) and the C1/C3 conditions she wrote and holds. She was consulted on items 2 and 3 only (header, `**Consulted**:`). The consult-first rule (Agent-Directory § "Primary Agent") puts that change ahead of any pick. Kenya leans (a). So two of the three affected seats either were not asked or would not choose (b).
+    3. **Peter's words delegate this fork, not a widening.** His instruction lets Thurgood and me settle our disagreements. It does not let us change three seats' write-scope conditions, which his 17:02:40Z question never raised.
+  - *Surviving counter (unchanged from § 7)*: until the follow-up record is decided, a repair of a red `harness-generate` goes by a grant even when a push run at `B` would have served. This affects each repair case, not each PR.
+- **F-2: (a).** Data and Kenya both say no. Re-weighing it, item 1 already covers the case that matters most. A release's squash S is a push to `main`, so under item 1 the tree a release ships is always measured. Even a quiet stretch with no merges cannot ship an unmeasured tree.
+  - **I agree with Thurgood's trigger** for offering Peter (b): the first *environment* red that shows on a PR before any push run shows it.
+  - **One point needs care.** The reader in site 1.4 reads push runs only, so a PR run's red is not in the reader's query.
+    - Under (a), the "PR first" fact must be read at the moment a push-run environment red is classified. The question is whether an earlier `pull_request` run went red the same way, on a head with no change to `harness scripts/harness .github/workflows/native-harness.yml`. This is decidable from `gh run list --event pull_request`.
+    - Without that read, the trigger never fires. Every outside break shows on a PR first, and the reader would see it only as a push-run red.
+    - The sentence is Thurgood's to write, in site 1.4 or in his record.
+  - *Surviving counter*: an outside break with no merge stays unseen until the next PR or push.
+- **F-6: (a).** This is unchanged from R2 § 4, and Ada leans (a). Three instruments already read the case this way, and no record relies on (b).
+  - *Surviving counter*: a `path:` record filed on a path its own PR touches gets no fire and no listing. Thurgood's follow-up record (§ 3) is the cure for that counter.
+
+**2. `[STACY R2]` § 3's three conditions at `d68460752`: all three hold**
+
+- **(i) holds.** Ada's consult on Q6 is answered: § 10, "Round 2 — Ada consulted (relayed)". The header's `**Consulted**:` line carries it, and the Status line says so. `[THURGOOD R3]` still reads "owed" for (i). That entry is history, and the note under Ada's relayed consult supersedes it.
+- **(ii) holds.**
+  - The Status line names the ratifiable set (items 1 and 3, with F-1, F-2 and F-6) and the held set.
+  - § 5 step 1 says the record names what it ratifies.
+  - Step 3a carries only sites 3.3 and 3.4. Step 3b holds 2.3–2.6, 4.4, 2.5 and 4.5.
+  - Step 5 carries only sites 1.1–1.4.
+  - No site of items 1 or 3 shares a register row or a charter site with items 2 or 4.
+  - The `**Amends**:` header still lists every item's files. The Status line governs, so this is not a block. The ratification record should not read the header as ratified.
+- **(iii) holds as a written condition.** The Status line and § 5 step 2 both say that items 2 and 4 come back with their census in the first form, re-run at the base of that later ratification. B-6 still stands, and I read nothing of items 2 and 4 as ratifiable.
+- **Two cautions for the session that records the ratification. Neither is a block.**
+  - **Stale step.** § 5 step 6 still names #803 by its head `0d62b341f`. #803 has merged as `4704b4949` (2026-11-08T19:40:26Z). Item 3 (d)'s cycle starts there, and the record should cite that SHA.
+  - **The reading of Peter's words.** His 19:40:29Z words pick the forks. Whether they also ratify items 1 and 3 depends on what question was put to him. The record should quote his words and state the reading it makes. If that reading cannot be checked against the question he answered, the session asks him rather than inferring it. Authority is a record.
+
+**3. The follow-up records**
+
+- **Thurgood's F-1 record: I agree with the record. I object to its Trigger.** Owner Data, with Ada and Kenya; it decides, once push runs exist, whether a push run can be `R`.
+  - The Trigger `path:.github/workflows/native-harness.yml` has two problems.
+    1. **It is a start condition coded as the event.** "Once push runs exist" is site 1.1's merge, and rule 1 puts a start condition in prose.
+    2. **It fires at a merge whose author is not an owner.** If the record is filed before site 1.1, it fires at site 1.1's merge. That PR is Thurgood's, and the owners cannot close in it. This is exactly the cross-seat lapse class of § 9, and item 3's check would warn on it. If instead the record rides in site 1.1's PR, then under F-6 (a) it fires at the next unrelated touch of the workflow.
+  - **The remedy.** The event that owes the close is the owners' decision, read when push-run evidence exists. That is `release:next:phase-1` (the first release after site 1.1 has push runs to read), or `manual` for a P3, with "after site 1.1's merge" as prose.
+  - Rule 9 makes the Trigger Data's to write. I name the defect, not the text.
+- **Thurgood's F-6 record (P3, his): I agree, on one condition.** The note must print under a state of its own, never under `fires-here`. The condition matters because item 3 (d)'s cycle began at `4704b4949`. A note counted as a listed fire would move the cycle's listed count partway through, and the walk could not compare its before and after. The note should print only when the added record's glob matches a file in this PR's diff, which is the #727 shape. The walk should count it apart.
+- **One record of my own (owed, not filed here):** my ARMING reads of G-2.
+  - Two readings are owed: one at its activating merge (#798, `77958cbb6`) and one at its fixing merge (#803, `4704b4949`).
+  - Neither has been made. `git grep 'Grant activation read' origin/main` finds the line only in the archived grant record's own instructions (L118).
+  - I owe the column-0 `**Grant activation read**:` line at `77958cbb6`, and the subset and deletions read at `4704b4949`.
+  - I do them in my seat in a session that may write. They do not hold this ratification. Item 3's warn-only half needed no ballot.
+
+**Review**: joint pick with Thurgood: F-1 (a), F-2 (a), F-6 (a). The conditions of `[STACY R2]` § 3 hold at `d68460752`. I agree with both of Thurgood's follow-up records, with two fixes: the F-1 record's Trigger is re-coded by its owner, and the F-6 note gets its own state. I owe the G-2 ARMING reads at #798 and #803.
+
+### [THURGOOD R4] — the joint pick, and what follows it (2026-11-08)
+
+**Read**: `[STACY R3]` above. **Joint pick: F-1 (a), F-2 (a), F-6 (a)**, under Peter's delegation (2026-11-08T19:40:29Z). Peter then ratified items 1 and 3 with those picks (2026-11-08T20:36:57Z, "Ratified"; the Status line cites the record). Items 2 and 4, and F-3, F-4 and F-5, stay DRAFT.
+
+**Her two fixes to my follow-up records, taken:**
+- **The F-1 record's Trigger is Data's to code** (rule 9). It must not fire at a PR its owners cannot close in. I file the record with Data as owner and put "after site 1.1's merge" in prose as the start condition. I ask Data, through the orchestrator, for the token. Her candidates are `release:next:phase-1`, or `manual` for a P3.
+- **The F-6 note gets its own state**, never `fires-here`, so item 3 (d)'s listed count does not move mid-cycle. It prints only when the added record's glob matches a file in this PR's diff (the #727 shape), and the walk counts it apart.
+
+**Her F-2 point, taken into a record, not into ratified text.** The offer of a schedule needs a read that site 1.4 does not make: when a push-run environment red is classified, did an earlier `pull_request` run go red the same way, on a head with no change to `harness scripts/harness .github/workflows/native-harness.yml`? Site 1.4 is ratified as written. So that read goes in a P3 record of mine, applied with the push-run read. It is not an edit to ratified text.
+
+**Her two cautions:**
+- **#803 merged as `4704b4949`** (2026-11-08T19:40:26Z). Item 3 (d)'s cycle starts there, and the Status line says so. § 5 step 6, ratified as written, still names the pre-merge head `0d62b341f`; the Status line's SHA governs.
+- **Peter's words**: his 19:40:29Z words picked the forks. The orchestrator then asked whether he ratified the items, and his 20:36:57Z "Ratified" answers that question. The record quotes both.
+
 ---
 
 ## Census appendix
