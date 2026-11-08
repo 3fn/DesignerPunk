@@ -1248,14 +1248,16 @@ export default defineConfig({
     });
 
     it('C6: token index fails loud when born and absent/empty', async () => {
-      // A fresh born fixture, BEFORE `generate` ever runs there — token-index/ is absent.
+      // A fresh born fixture whose token-index/ is absent. Since Spec 129 Task 15.1 `init` runs `generate`, so the
+      // index `init` wrote is removed: the state under test is a born repo whose index is gone.
       const dir = path.join(c6Root, 'born-empty-index');
       gitBoundary(dir);
       execSync('npx designerpunk init --name BornEmpty --abbreviation BE', {
         cwd: dir,
         encoding: 'utf-8',
-        timeout: 30_000,
+        timeout: 90_000,
       });
+      fs.rmSync(path.join(dir, 'token-index'), { recursive: true, force: true });
       const appBundle = path.join(realDir(tempDir), 'node_modules', '@3fn', 'core', 'dist', 'mcp', 'application-mcp.js');
       const child = spawnNodeBundle(appBundle, { cwd: dir });
       const stderr = await captureStderrUntil(child, (buf) => buf.includes('Server running on stdio') || buf.includes('Server started'), 15_000);
@@ -2311,12 +2313,12 @@ export default defineConfig({
       }
     }
 
-    it('PRODUCT GUARD: the scaffolded product/ tree, from the packed install after init and before generate, is healthy with zero gaps, live gap detection, and its template', async () => {
+    it('PRODUCT GUARD: the scaffolded product/ tree, from the packed install after init, is healthy with zero gaps, live gap detection, and its template', async () => {
       const dir = consumers['cc'];
       for (const rel of ['product/overview.yaml', 'product/experience-map/pages/example-home.yaml', 'product/templates/home-layout.yaml']) {
         expect({ rel, exists: fs.existsSync(path.join(dir, rel)) }).toEqual({ rel, exists: true });
       }
-      expect(fs.existsSync(path.join(dir, 'token-index'))).toBe(false); // BEFORE generate
+      expect(fs.existsSync(path.join(dir, 'token-index'))).toBe(true); // `init` ran `generate` (Spec 129 Task 15.1)
       expect(readText(dir, 'product/overview.yaml')).toContain('name: "Packed"'); // the substitution ran
       expect(readText(dir, 'product/overview.yaml')).not.toContain('__PRODUCT_NAME__');
 
