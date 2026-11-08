@@ -29,3 +29,9 @@ Data diagnosed the entry from native-harness run 42502210216: `ComponentTokens.a
 **Acceptance**: `harness-android-components` is green at the fixing PR's head with 93 entries and no new entries. I could not run the harness locally; the removal stands only if that run is green, else the entry returns.
 
 **Consulted**: Data (diagnosis, Android lane); Thurgood (harness lists). The fixing PR also adds the charter record's closing outcome line (Ada and Lina).
+
+---
+
+## Outcome
+
+**Closed 2026-11-08 (Lina, owner; rule 5).** The fixing PR is #<N> (`chore/129-cp2-retag-grant`). Its diff to the granted file is one line: L11, the `ButtonIcon.android.kt` `Unresolved reference 'ButtonIconTokens'.` entry, removed (94 to 93 entries), alongside the component fix in `src/components/**` (`import com.designerpunk.tokens.ButtonIconTokens`). Whether the removal holds is decided by that PR's `harness-android-components` run. The grant expires with this close. Archived under rule 5.
