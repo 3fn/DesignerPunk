@@ -342,6 +342,86 @@ date: 2026-10-17
 
 **Ruling: ASSENT — `surviving: []` (first signature, 2026-10-17; row added by ballot `2026-10-17-standing-write-scope-six-roots` § 2.5 / § 5 item 1).** `subtraction-3` applies: `.kiro/issues/**` is DesignerPunk's stewardship instrument — the `.kiro/issues/README.md` rules, Thurgood's monthly walk, and rule 9's claims-pass finding on out-of-rule edits. `init` creates no `.kiro/issues/` in a consumer repo (checked `src/cli/init.ts` at `306863b6b`: no such scaffolding), so a consumer's Kenya has nothing there to author or be walked against, and gets no scope.
 
+## `#frontmatter:writeScope[harness/ios/**]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:e9958f4d4e4c795e1a150c554c52f176ee147c1cf7a7d68d5ae1c377d61689ea
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the iOS lane itself: `lane.ts`, the self-test sources and `harness/ios/README.md`. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should.
+
+## `#frontmatter:writeScope[scripts/harness/probe-swift.ts]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:27171a40a13589cb8023134c403902e063415bd53135eb3f4005a768657da468
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the Swift probe the lane runs. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should.
+
+## `#frontmatter:writeScope[scripts/harness/parse-swift.ts]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:3bf190f903b233070042d8d4c6f6b44eb65af7998cb9db97de682e5db89293ad
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the Swift diagnostic parser behind the comparator's interface. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/probe-swift.test.ts]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:895b6ab2c58a97abd3c5d91a98520d4148334d6ae91d2e6f360ef3f6a8320a7d
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the test of `probe-swift.ts` and `harness/ios/lane.ts`. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/parse-swift.test.ts]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:ca2b74d08cf98ac62370579aaab7613731f44875e7706027e0914aec5147ed7f
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the test of `parse-swift.ts`. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/fixtures/swift/**]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:943a29e54f927c0fd45387c6e907f8ec9c31cbb5d71fabf58dbb6bfe9e868fa2
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the fixtures `probe-swift.test.ts` reads. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/fixtures/parse-swift/**]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:d31f5d90265b2b6c57f3a84a34d77fdda397d32afe768f41a6b01d3b2ff77f0f
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the fixtures `parse-swift.test.ts` reads. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should.
+
+## `#frontmatter:writeScope[harness/pins.yaml]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:928141613afeaab9f58b4a771ad4443d82d070551c07284076a0d2e31010da32
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT - `surviving: []` (first signature, 2026-11-08; row added by native-lane ownership ballot `2026-11-07-native-lane-ownership` items 2 and 3, edit site 3).** `subtraction-1` applies: this path is the pin file, of which the charter bullet gives me the `ios:` section only. It exists only in DesignerPunk's own repository, as part of the native compile harness, so a consumer's Kenya has no such path to write and nothing there to be held to. The consumer rendering's `writeScope` lists only `specs/**` and carries no harness path (checked in `canonical/_consumer-output/_canonical/agents/kenya.md`), so nothing renders and I agree nothing should. `harness/pins.yaml` carries the same canonicalHash in three seats' files, which is expected: the entry path is the same string in Data's, Ada's and my charters.
+
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/ios/DesignTokens.ios.swift]`
 
 signer: kenya
