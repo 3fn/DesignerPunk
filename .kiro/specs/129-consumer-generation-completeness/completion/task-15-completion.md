@@ -29,7 +29,7 @@
 
 Unmet or partially met criteria: none.
 
-**The Guide and the lock (✅)**: Task 15 edits the Integration Guide (Thurgood: L6, L69–L82, L314 step 5 → 4; mine: a new entry `### Platform output folders`, L470–L473). Before the refresh, `npx tsx tools/agent-generator/diff-guard.ts` read `diff-guard: full-run-green (input-closure-changed)` on `canonical/registry/tool-registry.json`. Lina's refresh is `33bf1103d` on `task/129-15-lina-lock` (lock only), joined at `201becc3c`, `canonical/generated.lock` byte-identical to it. After it: `diff-guard: no-op-green`, lock unmodified; parity: 50 evaluated, 0 fail. INSTALL did not change for the L470 entry (`derive-install-doc.ts` reads another region).
+**The Guide and the lock (✅)**: Task 15 edits the Integration Guide (Thurgood: L6, L69–L82, L314 step 5 → 4; mine: a new entry `### Platform output folders`, L470–L473). Before the refresh, `npx tsx tools/agent-generator/diff-guard.ts` read `diff-guard: full-run-green (input-closure-changed)` on `canonical/registry/tool-registry.json`. Lina's refresh is `33bf1103d` on `task/129-15-lina-lock` (lock only), joined at `201becc3c`, `canonical/generated.lock` byte-identical to it. After it: `diff-guard: no-op-green`, lock unmodified; parity: 50 evaluated, 0 fail. **Second refresh, after main's #775 (U11) conflicted the lock**: main merged into the branch at `ed5492b49` (the lock taken from main), then Lina's `45eb75378` on `task/129-15-lina-lock2` (parent `ed5492b49`, lock only) joined, `canonical/generated.lock` byte-identical to it; `diff-guard: no-op-green`, lock unmodified. INSTALL did not change for the L470 entry (`derive-install-doc.ts` reads another region).
 
 ## Additional verification
 
