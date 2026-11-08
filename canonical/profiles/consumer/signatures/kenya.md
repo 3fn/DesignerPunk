@@ -22,9 +22,15 @@ date: 2026-09-29
 
 signer: kenya
 disposition: re-pointed
-canonicalHash: sha256:2d200f0d2b9ce6d63a106e452a5b04399c1bfdb3e2ebe85015e5ce8fdf12350e
+canonicalHash: sha256:6a47127f838d27e9b95b7d31a86c62b3d4da183a923bee213d0b44996a5b3d7a
 renderedHash: sha256:9dae5eb7c5cd3b7eb8b36c1f585ee9df6580918b8fee7b9cd2b5007ddbf9737c
-date: 2026-10-13
+date: 2026-11-08
+
+**Re-signed 2026-11-08** (prior signature: assent 8/8, 2026-10-13, against `sha256:2d200f0d2b9ce6d63a106e452a5b04399c1bfdb3e2ebe85015e5ce8fdf12350e`). Stale because the canonical unit changed: ballot `2026-11-07-native-lane-ownership` (RATIFIED, Peter, 2026-11-08T00:24:24Z) site 4 added the iOS-lane bullet to § "In Scope". Data applied it; Thurgood wrote items `scope-9` to `scope-17`, the removal and the overlay pin; I re-confirmed the set at 17 items. renderedHash was recomputed from a fresh temp-tree rendering (`generateAll` -> `writeOutputs(<temp dir>)` -> `readConsumerSpans` -> `renderedHashOf` over `rowSpanSource`). It equals the committed rendering's value and the prior signature's, so the rendering did not move.
+- **Read before this act**: the consumer rendering of the unit, `canonical/_consumer-output/_canonical/agents/kenya.md` § "Domain Boundaries" / "In Scope", through a tool call. It states the eight prior duties and none of the harness text (grep: no "harness" in the file).
+- **Assent: 8/17 surviving.** `scope-1` to `scope-8` survive as before. `scope-9` to `scope-17` do not survive, and I agree they should not: the bullet is a repo-internal grant over `harness/ios/**`, `scripts/harness/**` and a pin file that a consumer's repo does not have, bound to a ballot, Spec 129's design and the other seats' files. A consumer agent could break any of them only by touching those paths.
+- **The removal**: it quotes the bullet whole and cites `subtraction-1` (repo-internal tooling; `scripts/harness/` is not in the package's `files`). It occurs once in the unit and in none of the rendering. The prior removal (`subtraction-5`) is unchanged. No refusal follows.
+- **Prior signature record (superseded, 2026-10-13)**: ASSENT 8/8 surviving, `scope-1` to `scope-8`; the one removal `(referencing existing platforms/ios/ implementations)` re-pointed to the shipped `node_modules/@3fn/core/src/components/core/*/platforms/ios/` sources; the native-scope line (release-3 ruling 11) reads true by source read and does not contradict the output.
 
 **Ruling: ASSENT — 8/8 surviving.** scope-1 through scope-8 survive: the eight In Scope duties (SwiftUI screen implementation, token consumption, component implementation in Swift, iOS tests, navigation/state/data binding, VoiceOver accessibility, build configuration, advising Leonardo) are all present in the rendered unit, verbatim except for the re-grounded pointers. The one removal ("(referencing existing platforms/ios/ implementations)", subtraction-5) is re-pointed to the shipped `node_modules/@3fn/core/src/components/core/*/platforms/ios/` sources, which is true of the package. The added native-scope line (release-3 ruling 11) reads true by source read: the iOS/Android components ship as reference source, and the native token files refer to code nothing in the package defines. It does not contradict the rendered output. It is a release-level gate on starting a NEW native product; the eight items describe duties in an existing app, so both stand without conflict.
 
@@ -333,6 +339,86 @@ renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb098
 date: 2026-10-17
 
 **Ruling: ASSENT — `surviving: []` (first signature, 2026-10-17; row added by ballot `2026-10-17-standing-write-scope-six-roots` § 2.5 / § 5 item 1).** `subtraction-3` applies: `.kiro/issues/**` is DesignerPunk's stewardship instrument — the `.kiro/issues/README.md` rules, Thurgood's monthly walk, and rule 9's claims-pass finding on out-of-rule edits. `init` creates no `.kiro/issues/` in a consumer repo (checked `src/cli/init.ts` at `306863b6b`: no such scaffolding), so a consumer's Kenya has nothing there to author or be walked against, and gets no scope.
+
+## `#frontmatter:writeScope[harness/ios/**]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:e9958f4d4e4c795e1a150c554c52f176ee147c1cf7a7d68d5ae1c377d61689ea
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT — `surviving: []` (first signature, 2026-11-08; row added by ballot `2026-11-07-native-lane-ownership` site 3).** `subtraction-1` applies: `harness/ios/**` belongs to DesignerPunk's native compile harness, repo-internal tooling that is not packaged and that a consumer's repo does not have. Nothing renders, and I agree nothing should. canonicalHash is `hashEntry` of the entry's value, computed by script from the charter's frontmatter at this revision; renderedHash is the empty-span hash, equal to the other `no-consumer-counterpart` rows.
+
+## `#frontmatter:writeScope[scripts/harness/probe-swift.ts]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:27171a40a13589cb8023134c403902e063415bd53135eb3f4005a768657da468
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT — `surviving: []` (first signature, 2026-11-08; row added by ballot `2026-11-07-native-lane-ownership` site 3).** `subtraction-1` applies: `scripts/harness/probe-swift.ts` belongs to DesignerPunk's native compile harness, repo-internal tooling that is not packaged and that a consumer's repo does not have. Nothing renders, and I agree nothing should. canonicalHash is `hashEntry` of the entry's value, computed by script from the charter's frontmatter at this revision; renderedHash is the empty-span hash, equal to the other `no-consumer-counterpart` rows.
+
+## `#frontmatter:writeScope[scripts/harness/parse-swift.ts]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:3bf190f903b233070042d8d4c6f6b44eb65af7998cb9db97de682e5db89293ad
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT — `surviving: []` (first signature, 2026-11-08; row added by ballot `2026-11-07-native-lane-ownership` site 3).** `subtraction-1` applies: `scripts/harness/parse-swift.ts` belongs to DesignerPunk's native compile harness, repo-internal tooling that is not packaged and that a consumer's repo does not have. Nothing renders, and I agree nothing should. canonicalHash is `hashEntry` of the entry's value, computed by script from the charter's frontmatter at this revision; renderedHash is the empty-span hash, equal to the other `no-consumer-counterpart` rows.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/probe-swift.test.ts]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:895b6ab2c58a97abd3c5d91a98520d4148334d6ae91d2e6f360ef3f6a8320a7d
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT — `surviving: []` (first signature, 2026-11-08; row added by ballot `2026-11-07-native-lane-ownership` site 3).** `subtraction-1` applies: `scripts/harness/__tests__/probe-swift.test.ts` belongs to DesignerPunk's native compile harness, repo-internal tooling that is not packaged and that a consumer's repo does not have. Nothing renders, and I agree nothing should. canonicalHash is `hashEntry` of the entry's value, computed by script from the charter's frontmatter at this revision; renderedHash is the empty-span hash, equal to the other `no-consumer-counterpart` rows.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/parse-swift.test.ts]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:ca2b74d08cf98ac62370579aaab7613731f44875e7706027e0914aec5147ed7f
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT — `surviving: []` (first signature, 2026-11-08; row added by ballot `2026-11-07-native-lane-ownership` site 3).** `subtraction-1` applies: `scripts/harness/__tests__/parse-swift.test.ts` belongs to DesignerPunk's native compile harness, repo-internal tooling that is not packaged and that a consumer's repo does not have. Nothing renders, and I agree nothing should. canonicalHash is `hashEntry` of the entry's value, computed by script from the charter's frontmatter at this revision; renderedHash is the empty-span hash, equal to the other `no-consumer-counterpart` rows.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/fixtures/swift/**]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:943a29e54f927c0fd45387c6e907f8ec9c31cbb5d71fabf58dbb6bfe9e868fa2
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT — `surviving: []` (first signature, 2026-11-08; row added by ballot `2026-11-07-native-lane-ownership` site 3).** `subtraction-1` applies: `scripts/harness/__tests__/fixtures/swift/**` belongs to DesignerPunk's native compile harness, repo-internal tooling that is not packaged and that a consumer's repo does not have. Nothing renders, and I agree nothing should. canonicalHash is `hashEntry` of the entry's value, computed by script from the charter's frontmatter at this revision; renderedHash is the empty-span hash, equal to the other `no-consumer-counterpart` rows.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/fixtures/parse-swift/**]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:d31f5d90265b2b6c57f3a84a34d77fdda397d32afe768f41a6b01d3b2ff77f0f
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT — `surviving: []` (first signature, 2026-11-08; row added by ballot `2026-11-07-native-lane-ownership` site 3).** `subtraction-1` applies: `scripts/harness/__tests__/fixtures/parse-swift/**` belongs to DesignerPunk's native compile harness, repo-internal tooling that is not packaged and that a consumer's repo does not have. Nothing renders, and I agree nothing should. canonicalHash is `hashEntry` of the entry's value, computed by script from the charter's frontmatter at this revision; renderedHash is the empty-span hash, equal to the other `no-consumer-counterpart` rows.
+
+## `#frontmatter:writeScope[harness/pins.yaml]`
+
+signer: kenya
+disposition: no-consumer-counterpart
+canonicalHash: sha256:928141613afeaab9f58b4a771ad4443d82d070551c07284076a0d2e31010da32
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+date: 2026-11-08
+
+**Ruling: ASSENT — `surviving: []` (first signature, 2026-11-08; row added by ballot `2026-11-07-native-lane-ownership` site 3).** `subtraction-1` applies: `harness/pins.yaml` belongs to DesignerPunk's native compile harness, repo-internal tooling that is not packaged and that a consumer's repo does not have. Nothing renders, and I agree nothing should. canonicalHash is `hashEntry` of the entry's value, computed by script from the charter's frontmatter at this revision; renderedHash is the empty-span hash, equal to the other `no-consumer-counterpart` rows.
 
 ## `#frontmatter:ambient.groundTruthManifest.trims[dist/ios/DesignTokens.ios.swift]`
 
