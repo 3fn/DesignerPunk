@@ -579,3 +579,43 @@ describe('a job that has not finished (tasks.md § "Decision 6", amendment 11; r
     });
   });
 });
+
+describe('consult findings (Kenya D1/D2, Data default-name), fail-safe reads', () => {
+  const IOS = 'harness-ios-tokens';
+  const META = { repo: 'owner/repo', workflow: 'native-harness.yml', generatedAt: '2026-11-07T12:00:00Z' };
+  const G = (n: number): string => `g${n}` + '0'.repeat(38);
+  it('D1: a finished iOS run with an unknown pin, with a pin given, blocks conditions 3 and 5; a known other pin does not', () => {
+    const raw = JSON.parse(JSON.stringify(load('ios-queue.json'))) as RawInput & { xcodePinBySha: Record<string, string> };
+    raw.xcodePinBySha = { [G(2)]: '26.6', [G(3)]: '26.6', [G(4)]: '26.6' }; // run 801's SHA is unknown
+    const c = ctx(raw, IOS, { currentXcodePin: '26.6' });
+    expect(c.coldBlock).toContain('801');
+    expect(c.coldMet).toBe(false);
+    expect(c.queuePoor).toBeNull();
+    raw.xcodePinBySha[G(1)] = '26.5';
+    const known = ctx(raw, IOS, { currentXcodePin: '26.6' });
+    expect(known.coldBlock).toBeNull();
+    expect(known.coldRuns.map((r) => r.runId)).toEqual([802, 803, 804]);
+  });
+  it('D2: the record prints the pin used, or says every pin counts', () => {
+    const raw = load('ios-queue.json');
+    expect(render(analyze(normalize(raw), { currentXcodePin: '26.6' }), META)).toContain('**Xcode pin used for iOS condition 3**: 26.6.');
+    expect(render(analyze(normalize(raw)), META)).toContain('none given, so every pin counts');
+  });
+  it('default-name: a PASS verdict on a job that concluded failure is neither clean nor cold; conditions 2 and 3 read not yet measurable', () => {
+    const raw = JSON.parse(JSON.stringify(load('cold-met.json'))) as RawInput;
+    const before = ctx(raw, 'harness-android-tokens');
+    expect(before.coldMet).toBe(true);
+    const victim = before.coldRuns[0].last;
+    for (const crs of Object.values(raw.checkRunsBySha)) for (const cr of crs) if (cr.id === jobIdOf(raw, victim.runId)) (cr as { conclusion: string }).conclusion = 'failure';
+    const c = ctx(raw, 'harness-android-tokens');
+    expect(c.coldBlock).toContain(String(victim.runId));
+    expect(c.coldBlock).toContain('PASS verdict');
+    expect(c.streakBlock).toContain(String(victim.runId));
+    expect(c.coldMet).toBe(false);
+    expect(c.streakMet).toBe(false);
+  });
+});
+
+function jobIdOf(raw: RawInput, runId: number): number {
+  return raw.jobsByRun[runId].find((j) => j.name === 'harness-android-tokens')!.id;
+}

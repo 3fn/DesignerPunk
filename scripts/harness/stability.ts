@@ -378,6 +378,8 @@ export interface ContextAnalysis {
 
 export interface Analysis {
   window: WindowInfo | null;
+  /** The Xcode pin iOS condition 3 counted at; null: every pin counted. */
+  currentXcodePin: string | null;
   contexts: ContextAnalysis[];
 }
 
@@ -472,11 +474,15 @@ export function analyze(records: readonly JobRecord[], opts: AnalyzeOptions = {}
     }
 
     // Condition 3: pull-request runs that reached the comparator.
+    // Fail-safe reads: a finished pull-request run whose verdict is PASS but whose job did not conclude
+    // `success` (a step after the comparator failed, e.g. the default-name step) is neither clean nor cold:
+    // the conditions read not yet measurable until Decision 6 says how it counts.
+    const unreconciled = pr.filter((r) => r.last.state === 'finished' && !r.infraRun && r.last.verdict === 'PASS' && r.last.conclusion !== 'success');
     const reached = pr.filter((r) => r.last.state === 'finished' && r.last.verdict !== null && !r.infraRun);
     let cold: RunSummary[];
     if (platform === 'android') cold = reached.filter((r) => r.last.cache === 'miss');
     else {
-      const atPin = reached.filter((r) => opts.currentXcodePin == null || r.last.xcodePin === opts.currentXcodePin);
+      const atPin = reached.filter((r) => opts.currentXcodePin == null || r.last.xcodePin === opts.currentXcodePin || r.last.xcodePin === null);
       cold = atPin.slice(0, 3);
     }
     for (const r of cold) r.coldCounts = true;
@@ -487,10 +493,19 @@ export function analyze(records: readonly JobRecord[], opts: AnalyzeOptions = {}
     const list = (xs: { runId: number }[]): string => xs.map((x) => x.runId).join(', ');
     let streakBlock: string | null = shortfall === null ? null : `the window is short (${shortfall})`;
     let coldBlock: string | null = streakBlock;
+    if (shortfall === null && unreconciled.length > 0) {
+      const why = `run ${list(unreconciled)} carries a PASS verdict but its job concluded ${[...new Set(unreconciled.map((r) => r.last.conclusion ?? 'none'))].join('/')}, not success; it is neither clean nor cold until Decision 6 says how it counts`;
+      streakBlock = streakBlock ?? why;
+      coldBlock = why;
+    }
     if (streakBlock === null && pr.length > 0) {
       const newest = pr[pr.length - 1].runId;
       const before = unfPr.filter((r) => r.runId < newest);
       if (before.length > 0) streakBlock = `unfinished pull-request run ${list(before)} comes before the newest finished pull-request run ${newest}`;
+    }
+    if (coldBlock === null && platform === 'ios' && opts.currentXcodePin != null) {
+      const dropped = cold.filter((r) => r.last.xcodePin === null);
+      if (dropped.length > 0) coldBlock = `run ${list(dropped)} reached the comparator at an unknown Xcode pin (the clone lacks its head SHA); it is counted as if at the pin and the condition is not yet measurable`;
     }
     if (coldBlock === null && platform === 'ios') {
       const pinOk = (r: { xcodePin: string | null }): boolean => opts.currentXcodePin == null || r.xcodePin === 'unknown' || r.xcodePin === opts.currentXcodePin;
@@ -529,7 +544,7 @@ export function analyze(records: readonly JobRecord[], opts: AnalyzeOptions = {}
       queuePoor,
     });
   }
-  return { window: opts.window ?? null, contexts };
+  return { window: opts.window ?? null, currentXcodePin: opts.currentXcodePin ?? null, contexts };
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -555,6 +570,8 @@ export function render(analysis: Analysis, meta: RenderMeta): string {
   lines.push('Computed by `scripts/harness/stability.ts`; never edited by hand (tasks.md § "Decision 6"). Re-run it before each promotion offer.');
   lines.push('');
   lines.push(`**Generated**: ${meta.generatedAt} · **Repository**: \`${meta.repo}\` · **Workflow**: \`${meta.workflow}\`${meta.note ? ` · ${meta.note}` : ''}`);
+  lines.push('');
+  lines.push(`**Xcode pin used for iOS condition 3**: ${analysis.currentXcodePin ?? 'none given, so every pin counts'}.`);
   lines.push('');
   if (analysis.window) {
     const w = analysis.window;
