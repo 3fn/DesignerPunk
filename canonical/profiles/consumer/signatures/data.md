@@ -30,11 +30,19 @@ signer: data
 
 signer: data
 disposition: re-pointed
-canonicalHash: sha256:9838f330a66c772bc46c6d79a597268682348899eb6b2a2a5090f250c195d5c3
+canonicalHash: sha256:49fe090d940a9ee96b05a32f0a1a5b917dde3b73b8125d17fe2892df2ddf778e
 renderedHash: sha256:72e9990409a35f3943744a2d62662e144fb323dd5dcf47bad0b8d2b4acd1411c
-date: 2026-10-13
+date: 2026-11-08
 
-**Ruling: ASSENT — 8/8 surviving.** scope-1 through scope-8 survive: the eight In Scope duties (Compose screen implementation, token consumption, Kotlin component implementation, Android tests, navigation/state/data binding, TalkBack accessibility, build configuration, advising Leonardo) are all present in the rendered unit, verbatim except for the re-grounded pointers. The one removal ("(referencing existing platforms/android/ implementations)", subtraction-5) is re-pointed to the shipped `node_modules/@3fn/core/src/components/core/*/platforms/android/` sources, which is true of the package. The added native-scope line (release-3 ruling 11) reads true by source read (Integration Guide, L182): the Android and iOS components ship as reference source, and the native token files refer to code nothing in the package defines. It does not contradict the rendered output. It is a release-level gate on starting a NEW native product; the eight items describe duties in an existing app, so both stand without conflict.
+**Re-signed 2026-11-08: ASSENT — 8 of 17 surviving.** Prior signature: assent 8/8, 2026-10-13, against `sha256:9838f330a66c772bc46c6d79a597268682348899eb6b2a2a5090f250c195d5c3`. Stale because the canonical unit changed: ballot `2026-11-07-native-lane-ownership` (RATIFIED, Peter, 2026-11-08T00:24:24Z) site 2 added the Android-lane bullet. Thurgood applied it; I re-confirmed the set at 17 items (`d85aaa85d`).
+- **Read before this act**: the consumer rendering of the unit, `canonical/_consumer-output/_canonical/agents/data.md` `#in-scope`, and the `cc/` and `kiro/` copies, through tool calls in this session.
+- **renderedHash**: computed over `readConsumerSpans` / `renderedHashOf` / `rowSpanSource` on the committed rendering. It equals the prior signature's value, so the rendering did not move by a byte. A grep of the rendering for "native compile harness" returns 0.
+- **Removal re-judged**: the new removal (`subtraction-1`, repo-internal tooling) quotes the charter bullet whole, byte for byte (checked by script, one occurrence). The bullet names `harness/android/**`, `probe-kotlin.ts`, `parse-kotlin.ts`, the `harness-android-tokens` check and `harness/pins.yaml`. A consumer's package ships none of them, so a consumer has no lane to own. No refusal follows.
+- **`scope-9` to `scope-17` do not survive, and I agree**: the rendering states none of them, so a compliant consumer agent could break any of them. `scope-9` grants this repo's harness files. `scope-10` to `scope-17` are that grant's limits and consults, tied to Spec 129's design and `tasks.md`, this repo's annotation titles, and the Thurgood, Ada and Kenya seats. `scope-10` reads as general ("owning the lane never authorizes changing what it decides"), and I weighed it, but as written it binds named repo files to named repo texts.
+- **`scope-1` to `scope-8` still survive**, for the reasons in the prior record below.
+- **Prior record (superseded, 2026-10-13)**:
+
+> **Ruling: ASSENT — 8/8 surviving.** scope-1 through scope-8 survive: the eight In Scope duties (Compose screen implementation, token consumption, Kotlin component implementation, Android tests, navigation/state/data binding, TalkBack accessibility, build configuration, advising Leonardo) are all present in the rendered unit, verbatim except for the re-grounded pointers. The one removal ("(referencing existing platforms/android/ implementations)", subtraction-5) is re-pointed to the shipped `node_modules/@3fn/core/src/components/core/*/platforms/android/` sources, which is true of the package. The added native-scope line (release-3 ruling 11) reads true by source read (Integration Guide, L182): the Android and iOS components ship as reference source, and the native token files refer to code nothing in the package defines. It does not contradict the rendered output. It is a release-level gate on starting a NEW native product; the eight items describe duties in an existing app, so both stand without conflict.
 
 ## `#out-of-scope`
 
@@ -355,6 +363,94 @@ signer: data
 - `.kiro/specs/**` re-points to `specs/**`. The consumer repo has no `.kiro/` spec tree; its Task Completion Protocol puts completion docs at `specs/[spec]/completion/...` and summary docs at `specs/[spec]/task-N-summary.md`, so the scope covers what the role writes. Same reasoning Ada signed at `1ddac1d23`.
 - `writeScope[docs/specs/**]` is already `superseded-by` this entry, so the one scope entry carries both canonical paths. `writeScope[.kiro/issues/**]` stays `no-consumer-counterpart`.
 - The hash covers all three renderings (cc `data.md`, kiro `data-prompt.md`, kiro `data.json`).
+
+## `#frontmatter:writeScope[harness/android/**]`
+
+signer: data
+date: 2026-11-08
+row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[harness/android/**]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:6b602a648035b93ee282a3f13c2b25189b919f2c3b5951b1a7b79c4f5ba0f873
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `harness/android/**` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the lane's files). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/harness/probe-kotlin.ts]`
+
+signer: data
+date: 2026-11-08
+row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/probe-kotlin.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:c7a83cc2df75eb723d1bc64e3c84386ff467bbb7735e45ff3f2625dd075beb32
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/harness/probe-kotlin.ts` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the lane's files). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/harness/parse-kotlin.ts]`
+
+signer: data
+date: 2026-11-08
+row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/parse-kotlin.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:7b76ab2c094253ffac225cba9be2fdbe761ed05be9a74e4a99307f17a578f9fc
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/harness/parse-kotlin.ts` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the lane's files). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/probe-kotlin.test.ts]`
+
+signer: data
+date: 2026-11-08
+row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/__tests__/probe-kotlin.test.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:9174976792ac67a36c2cd76e081d85cdc20e4868172367e2e4684d164b75a75f
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/harness/__tests__/probe-kotlin.test.ts` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the lane's files). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/parse-kotlin.test.ts]`
+
+signer: data
+date: 2026-11-08
+row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/__tests__/parse-kotlin.test.ts]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:32f390bf2e2e9f54c05b6e1eaeb2181212ce23107ec538ca41d95856a57180aa
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/harness/__tests__/parse-kotlin.test.ts` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the lane's files). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/fixtures/kotlin/**]`
+
+signer: data
+date: 2026-11-08
+row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/__tests__/fixtures/kotlin/**]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:846c81ba9045989ba7c22ab4ff6519b2f32a118af3f05b9ee90d9c71a4186a6f
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/harness/__tests__/fixtures/kotlin/**` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the lane's files). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives.
+
+## `#frontmatter:writeScope[scripts/harness/__tests__/fixtures/parse-kotlin/**]`
+
+signer: data
+date: 2026-11-08
+row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[scripts/harness/__tests__/fixtures/parse-kotlin/**]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:5e983ce471832f2632116dacdf748114718170b493caf469e13df4be724dc800
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `scripts/harness/__tests__/fixtures/parse-kotlin/**` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the lane's files). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives.
+
+## `#frontmatter:writeScope[harness/pins.yaml]`
+
+signer: data
+date: 2026-11-08
+row: `canonical/profiles/consumer/data.dispositions.yaml` · frontmatter · `writeScope[harness/pins.yaml]` (no-consumer-counterpart; first signature)
+canonicalHash: sha256:928141613afeaab9f58b4a771ad4443d82d070551c07284076a0d2e31010da32
+renderedHash: sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570
+verdict: assent — surviving 0/0
+
+No consumer counterpart, confirmed; I agree with the disposition and the cite (subtraction 1). `harness/pins.yaml` is one of the harness paths that ballot `2026-11-07-native-lane-ownership` items 1 and 3 add to my standing write scope for the native compile harness's Android lane (the `android:` section only, under P1–P6, which a glob cannot carry; the In Scope bullet carries the limit). It is repo-internal tooling: `harness/` and `scripts/harness/` are not in the package's `files`, so a consumer has no copy to own, and none of my four consumer renderings carries the string "harness" (grep over the `_canonical`, `cc` and two `kiro` copies: 0). canonicalHash is `hashEntry` of the entry's value, recomputed by me with `entryTree` + `regrounding/hash.ts` over `canonical/agents/data.md` at `0fc2379f0`. The renderedHash is the empty-span hash: 0 pieces, from `readConsumerSpans` / `renderedHashOf` / `rowSpanSource`. I assent that nothing survives. The same glob stands in Kenya's and Ada's charters; one hash in three files with three signatures is expected, not a collision (ballot site 12).
 
 ## Signing run summary (2026-09-29, phase two)
 
