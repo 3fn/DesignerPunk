@@ -21,7 +21,7 @@
 | 12 | C10, C11, C24 | the four harness contexts and `harness/expected/*.tsv` | exists (lists last @ `c71fb2452`) | `gh workflow run native-harness.yml --ref task/129-13-component-tier` | parent close |
 | 13 | C23 | the token and component contexts' exception (c) print | exists | read at the PR | parent close |
 | 14 | C16, C18, C19, C21, C22 | Lina's seat | none for me — Lina's instruments, in her own block | | 13.4, 13.5 |
-| 15 | C25 | records naming `task-13-completion.md`: `2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md` (Lina), `2026-11-07-d2-check-step-grant.md` (Thurgood), `2026-09-28-full-survival-assent-signal-instrument.md` (grep hit on "Task 13": read at the close, may be a different Task 13) | exists | outcome lines are their owners'; I list, not write | parent close |
+| 15 | C25 | records naming `task-13-completion.md`: `archive/2026-10-02-one-hop-upgrade-rehearsal-tracked-residuals.md` (Lina; archived at U8), `2026-11-07-d2-check-step-grant.md` (Thurgood), `2026-09-28-full-survival-assent-signal-instrument.md` (grep hit on "Task 13": read at the close, may be a different Task 13) | exists | outcome lines are their owners'; I list, not write | parent close |
 
 ## Files I expect to touch outside Task 13's Primary Artifacts
 
