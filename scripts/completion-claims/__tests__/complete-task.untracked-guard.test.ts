@@ -120,11 +120,17 @@ function write(fx: Fx, rel: string, body = 'x\n'): void {
 }
 
 function runTool(fx: Fx, ...args: string[]) {
+  return runToolEnv(fx, { DP_AGENT: 'Fixture' }, ...args);
+}
+
+function runToolEnv(fx: Fx, extra: Record<string, string | undefined>, ...args: string[]) {
   const r = spawnSync('bash', [path.join(fx.work, '.kiro/hooks/complete-task.sh'), ...args], {
     cwd: fx.work,
     env: {
       ...process.env,
       ...GIT_ENV,
+      DP_AGENT: undefined,
+      ...extra,
       PATH: `${fx.bin}:${process.env.PATH}`,
       GH_TOKEN: 'stub-token',
       CT_GUARD_TSX: TSX,
@@ -349,12 +355,23 @@ describe('complete-task.sh commit trailers', () => {
     expect(trailersParsed(fx)).toEqual(['Agent: Ada', CO]);
   });
 
-  it('with no --agent the commit carries "Agent: Peter" (DP_AGENT or Peter): no refusal, no missing trailer', () => {
+  it('with no --agent and DP_AGENT unset the tool refuses before any git change, naming the remedy', () => {
     const fx = makeFx();
     write(fx, 'src/feature.ts');
-    const r = runTool(fx, '--subtask', '--no-ci', 'Task 1.1: add (900)');
+    const r = runToolEnv(fx, {}, '--subtask', '--no-ci', 'Task 1.1: add (900)');
+    expect(r.status).not.toBe(0);
+    expect(r.out).toContain('--agent <Name>');
+    expect(r.out).toContain('--agent Peter');
+    expect(commitCount(fx)).toBe(0);
+    expect(git(fx.work, 'diff', '--cached', '--name-only')).toBe('');
+  });
+
+  it('DP_AGENT is the fallback when --agent is absent', () => {
+    const fx = makeFx();
+    write(fx, 'src/feature.ts');
+    const r = runToolEnv(fx, { DP_AGENT: 'Lina' }, '--subtask', '--no-ci', 'Task 1.1: add (900)');
     expect(r.status).toBe(0);
-    expect(finalParagraph(fx)).toBe('Agent: Peter');
+    expect(finalParagraph(fx)).toBe('Agent: Lina');
   });
 
   it('--add trailers share the final paragraph with Agent', () => {

@@ -375,7 +375,7 @@ OPTIONS:
                          on main you must either already be on the unit branch
                          or pass --branch explicitly.
   --trailer "K: V"       Extra commit trailer (repeatable), e.g. "Co-Authored-By: ..."; "Agent: <--agent>" is always added.
-  --agent NAME           Authoring agent for the PR body (default: $DP_AGENT or "Peter").
+  --agent NAME           Authoring agent for the PR body (default: $DP_AGENT; required - Peter passes --agent Peter).
   --spec-dir NAME        Full spec directory name for the PR body's Spec: field
                          (default: derived from the (<spec>) suffix in MESSAGE).
   --completion-doc PATH  Completion doc path for the PR body (repeatable;
@@ -441,7 +441,7 @@ SUBTASK_FLAG=false
 UNIT_MEMBER_FLAG=false
 MESSAGE=""
 BRANCH_OPT=""
-AGENT="${DP_AGENT:-Peter}"
+AGENT="${DP_AGENT:-}"
 SPEC_DIR_OPT=""
 UNIT_OPT=""
 COMPLETION_DOCS=()
@@ -511,6 +511,7 @@ else
 fi
 
 [[ -n "$MESSAGE" ]] || die "A commit/PR message is required." "Use --help for usage."
+[[ -n "$AGENT" ]] || die "No authoring agent named; refusing before any git change." "Pass --agent <Name> (or set DP_AGENT). Peter passes --agent Peter for his own work."
 [[ "$BRANCH_OPT" == "$PROTECTED_BRANCH" ]] && die "--branch $PROTECTED_BRANCH is not a task branch. Direct work on $PROTECTED_BRANCH is retired (ballot 125-A)."
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"
