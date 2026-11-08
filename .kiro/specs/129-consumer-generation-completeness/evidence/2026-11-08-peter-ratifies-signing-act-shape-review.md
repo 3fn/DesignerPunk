@@ -24,3 +24,5 @@
 ## What was ruled
 
 The ballot is ratified with F-1 (d), F-2 (b), F-3 (a) and F-4 (a). Application follows the ballot's own application section. The re-signs that F-4 (a) requires are timed with 125-B U3's round, as the seats leaned.
+
+- *2026-11-08 (Thurgood, ballot holder; a dated line on this ledger, nothing above rewritten)*: in "What was ruled", the sentence "The re-signs that F-4 (a) requires are timed with 125-B U3's round, as the seats leaned" is **the orchestrator's addition**, not Peter's words. His words at 2026-11-08T17:45:34Z are "Ratified, F-1 (d), F-2 (b), F-3 (a), F-4 (a)", and they state no timing. The application's timing was ruled later, at 2026-11-08T19:06:05Z ("Re: Buckets 3 and 4, proceed as the relevant team members recommend"): two sequential PRs, with F-4 (a)'s pin and the 261 re-signs in PR 2, merged before the next release's squash S. Record: `.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-rulings-f4-two-pr-and-u3-rehome.md`, item 3.
