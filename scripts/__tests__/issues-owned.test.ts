@@ -492,6 +492,7 @@ describe('scripts/issues-owned.sh --pr (fired-records)', () => {
     git(repo, 'mv', '.kiro/issues/archive-me.tmp', '.kiro/issues/archive/archive-me.md');
     write(repo, '.kiro/issues/edited.md', record('**Owner**: Ada', `\`path:${SPEC}\` — edited in the PR`) + '\nOutcome (2026-11-08): done.\n');
     write(repo, '.kiro/issues/added-own.md', record('**Owner**: Kenya', '`merge:#791` — the records PR that carries this file'));
+    write(repo, '.kiro/issues/added-path.md', record('**Owner**: Stacy', `\`path:${SPEC}\` — added in the PR, on a path the PR touches`));
     commit(repo, 'the PR head');
   });
 
@@ -512,6 +513,10 @@ describe('scripts/issues-owned.sh --pr (fired-records)', () => {
 
   it('a record added in the diff that fires at its own merge is fires-here, not re-ruled (CP-12)', () => {
     expect(lineFor(pr(), 'added-own.md')).toBe('fires-here\t.kiro/issues/added-own.md\tKenya\tmerge:#791\t(added in this diff)');
+  });
+
+  it('an added path: record does not fire at the merge that adds it, as the seat mode and compare.ts read it (#727)', () => {
+    expect(lineFor(pr(), 'added-path.md')).toBeUndefined();
   });
 
   it('a changed Trigger line is re-ruled-here; an archive move is closed-here', () => {

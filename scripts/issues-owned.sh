@@ -48,7 +48,11 @@
 #   fires-here       it fires at this merge and this diff does not re-rule or archive it; under
 #                    README rule 11 it lapses at the merge unless this diff closes it (a dated
 #                    outcome line is not read: the reason says when this diff edits the record)
-#   re-ruled-here    its **Trigger**: line changed in this diff (a record added here is not this)
+#   re-ruled-here    a **Trigger**: line changed in this diff (its dated reason is not read); the
+#                    record is read by its base token
+# A record ADDED in this diff fires here only by merge:#<N>. An added path: record does not fire at
+# the merge that adds it, as the seat mode and compare.ts read it (that merge is its last Trigger
+# change), so it is not listed. The diff is read with --no-renames.
 #   closed-here      it is at the root at the merge base and in archive/ at <head>
 #   already-fired@<sha>  a path: record that fired at an earlier first-parent commit of the base
 # A fires-here grant (`**Class**: … · grant`) carries the reason `grant`: grants do not lapse
@@ -230,6 +234,10 @@ $f"
     if ! git cat-file -e "$H:$f" 2>/dev/null; then
       state=closed-here
     elif ! git cat-file -e "$B:$f" 2>/dev/null; then
+      # Added in this diff. The seat mode and compare.ts (firedState) bound a path: fire below by the
+      # commit that last changed a Trigger line, and the adding merge is that commit, so a path: record
+      # does not fire at the merge that adds it. A merge:#<N> token is not bounded, so it does.
+      [ "${#specs[@]}" -gt 0 ] && continue
       state=fires-here; reason="added in this diff"
     elif git diff "$B" "$H" -- "$f" 2>/dev/null | grep -q '^[-+]\*\*Trigger\*\*: '; then
       state=re-ruled-here
