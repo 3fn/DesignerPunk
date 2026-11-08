@@ -1209,7 +1209,7 @@ verification:
   disposition: record-check
   owner: thurgood
   check_state: proposed
-  checks: []
+  checks: ["fired-records (warn-only; .github/workflows/pr-records.yml -> bash scripts/issues-owned.sh --pr; non-required; ballot 2026-11-08-closeout-cracks item 3)"]
   # The ladder (rulings item 26, D-1): held by the walk record and the monthly walk; the second miss on a token-bearing record promotes the grep to a committed script under a scoped grant
   # Rule line updated at application as PRE-DECLARED EXECUTION of Peter's F-A1 = (b) ruling (ballot 2026-10-18-obligation-drain-and-release-falsity-floor § 9, 2026-10-18): a P2 (guard) escalates at lapse 1, like P0 (.kiro/issues/README.md rule 11)
 education:
@@ -1219,6 +1219,7 @@ history:
   - { date: 2026-10-22, change: "README rule 1 gains the trigger-names-the-event sentence (ballot 2026-10-22-trigger-names-the-event-not-the-vehicle); rule line, checks and check_state unchanged", by: thurgood }
   - { date: 2026-10-26, change: "README rule 11 gains two sentences (ballot 2026-10-25-rule-11-post-walk-filings-and-spec-answers § 2): a release:next:phase-1 record filed after the walk merged and rowed there first lapses at the next S; a spec answer is carried out at the outline merge, with the record kept at the root until its items close. Rule line and LAW HOME updated as EXECUTION (§ 4 step 3); checks and check_state unchanged", by: thurgood }
   - { date: 2026-10-26, change: "README rule 1 gains the path: list form (ballot 2026-10-26-issues-multi-path-trigger-token § 2); scripts/issues-owned.sh evaluates it. LAW HOME updated as EXECUTION (§ 3 site 5); rule line, checks and check_state unchanged", by: thurgood }
+  - { date: 2026-11-08, change: "checks gains fired-records, warn-only and non-required (ballot 2026-11-08-closeout-cracks item 3, site 3.4; RATIFIED for items 1 and 3, Peter, 2026-11-08T20:36:57Z): the PR mode of scripts/issues-owned.sh, run by .github/workflows/pr-records.yml (shipped as #803, 4704b4949, under grant #798), lists on each PR the root records its merge fires. check_state stays proposed. README rule 6 gains the check's sentence and rule 11 gains the adding-commit sentence (F-6 (a)), in the same PR. Rule line unchanged", by: thurgood }
 ```
 
 ### release-falsity-floor
