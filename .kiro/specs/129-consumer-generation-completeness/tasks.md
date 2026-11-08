@@ -1360,7 +1360,7 @@ Write scope for every seat below is granted by ballot `2026-09-26-tasks-row-writ
   - [x] 16.1 Charter and overlay text
     **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Kenya (Sonnet), Data (Sonnet)
     - _Requirements: 4.9_
-  - [ ] 16.2 Operative-set re-quotes, overlay pins, dispositions
+  - [x] 16.2 Operative-set re-quotes, overlay pins, dispositions
     **Type**: Documentation · **Validation**: Tier 2 - Standard · **Agent**: Thurgood (Sonnet)
     - _Requirements: 4.9_
   - [ ] 16.3 Regenerate and lock; then the owners' confirmations and signatures
