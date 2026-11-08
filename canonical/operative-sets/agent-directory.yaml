@@ -70,7 +70,7 @@ units:
     items: []
     confirmation: canonical/profiles/consumer/confirmations/agent-directory.md#system-agents:preamble
   "#ada-rosetta-token-specialist":
-    canonicalHash: sha256:7619293b2c05b98df0fc4ff00e0fae662a2a0a2097eefbd3fff01e47ea41a991
+    canonicalHash: sha256:3efb4e1d59b836719e3acc4747940fc53db7556ecaef4bb1d11c4785e110fd49
     items:
       - id: ada-rosetta-to-role-1
         kind: member
@@ -94,7 +94,7 @@ units:
         text: "**When to involve**: New component development, platform implementation, behavioral contract creation, schema changes, composition patterns, component test writing, **platform implementation guideline updates**."
     confirmation: canonical/profiles/consumer/confirmations/agent-directory.md#lina-stemma-component-specialist
   "#thurgood-test-governance-spec-standards-civitas-steward":
-    canonicalHash: sha256:f4c12c98bf64fbc344b80c8d27f5e10a82bf16d67001a9beae4d5d994b47d8e6
+    canonicalHash: sha256:09451915f38ff6403ba828894314356e618ac2d6e3d925aca35c518bea0247e6
     items:
       - id: thurgood-test-govern-1
         kind: obligation
@@ -142,7 +142,7 @@ units:
         text: "**When to involve**: Web screen implementation, Web Component consumption patterns, web accessibility, web-specific platform questions."
     confirmation: canonical/profiles/consumer/confirmations/agent-directory.md#sparky-web-platform-engineer
   "#kenya-ios-platform-engineer":
-    canonicalHash: sha256:64c5dad4c16ebeae41d71d0c472921ba233d4760c70c2f5c4ca93014091aa76c
+    canonicalHash: sha256:53af8b4593793e90539a90abe7ffaeda01d3a6c9c33507252bc29e0fccdc89d4
     items:
       - id: kenya-ios-plat-role-1
         kind: member
@@ -154,7 +154,7 @@ units:
         text: "**When to involve**: iOS screen implementation, SwiftUI consumption patterns, iOS accessibility, iOS-specific platform questions."
     confirmation: canonical/profiles/consumer/confirmations/agent-directory.md#kenya-ios-platform-engineer
   "#data-android-platform-engineer":
-    canonicalHash: sha256:4416b3968374670d37a75ae6a15886bcb0c113148f2d76b7f6f4864bdb9fb8af
+    canonicalHash: sha256:ed0f3918ff55d8e359f6d019874093984b1628c88ca014a37b4ab2333d06295d
     items:
       - id: data-android-p-role-1
         kind: member

@@ -69,9 +69,20 @@ date: 2026-09-29
 ## `#ada-rosetta-token-specialist`
 
 confirmer: stacy
-canonicalHash: sha256:7619293b2c05b98df0fc4ff00e0fae662a2a0a2097eefbd3fff01e47ea41a991
+canonicalHash: sha256:3efb4e1d59b836719e3acc4747940fc53db7556ecaef4bb1d11c4785e110fd49
 items: ada-rosetta-to-role-1, ada-rosetta-to-role-2
-date: 2026-09-29
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d): the native-lane ownership ballot, site 9 (c).**
+- **What changed**: one line of the unit, Ada's **Owns** line (L58). Ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-4 ruled 00:33:06Z; merged in #748, `dc5a8ad45`) § 4 site 9 (c). Data applied it at `4be514236`; Thurgood re-quoted `ada-rosetta-to-role-1` as the whole new line at `67de94640` (authoring; neither moves this canonicalHash).
+- **Text, verified by script**: the site's After text, with `<date>` read as `2026-11-08` and `<SHA>` as `c07951b38` (the application base on `main`), occurs once in the file. Its Before text occurs once in the file at `c07951b38`. Between `c07951b38` and this branch the file differs in exactly four lines, L58, L74, L114 and L122, the four lines site 9 names. The pointer is owed here: `.kiro/steering/**` is a pointer path.
+- **The set is unchanged: 2 items.** `ada-rosetta-to-role-1` still names what the seat owns, so it stays one `member`. Both items are verbatim substrings of the unit with one occurrence each, checked by script.
+- **The hash**: the canonicalHash moves from `sha256:7619293b2c05b98df0fc4ff00e0fae662a2a0a2097eefbd3fff01e47ea41a991` to the value above. I computed it myself, as `hashText` over the unit's text from `partition(splitFrontmatter(...).body)`, from a scratchpad script outside the repository, and again as `sha256` over a raw slice of the file from the unit's heading to the next heading. The two agree. I had run `operative-set-freshness` earlier, to list the stale rows, and it printed the current value truncated; my computation does not use it, and it equals it in full. The overlay pin Thurgood wrote in `67de94640` is equal too. No target hash was given to me.
+- **Read before this act**: the unit whole, `cat -n .kiro/steering/Agent-Directory.md`, through a tool call on this branch at `67de94640`, and the full line in the applied diff.
+
+**Ruling: CONFIRMED at 2 items.**
+
+**Confirmed 2026-09-29 (prior record, superseded)**: canonicalHash `sha256:7619293b2c05b98df0fc4ff00e0fae662a2a0a2097eefbd3fff01e47ea41a991`, 2 items, as below.
 
 **Ruling: CONFIRMED at 2, as drafted.** The one-line domain summary restates **Owns** (description).
 
@@ -87,9 +98,20 @@ date: 2026-09-29
 ## `#thurgood-test-governance-spec-standards-civitas-steward`
 
 confirmer: stacy
-canonicalHash: sha256:f4c12c98bf64fbc344b80c8d27f5e10a82bf16d67001a9beae4d5d994b47d8e6
+canonicalHash: sha256:09451915f38ff6403ba828894314356e618ac2d6e3d925aca35c518bea0247e6
 items: thurgood-test-govern-1, thurgood-test--role-1, thurgood-test--role-2, thurgood-test--role-3
-date: 2026-11-07
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d): the native-lane ownership ballot, site 9 (d).**
+- **What changed**: one line of the unit, Thurgood's **Owns** line (L74). Ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-4 ruled 00:33:06Z; merged in #748, `dc5a8ad45`) § 4 site 9 (d). The compile-harness clause's fragment "**the compile harness's stability script and rules module (`scripts/harness/stability.ts`, `native-rules.ts`)**" becomes "**the compile harness's stability script, rules module and comparator (`scripts/harness/stability.ts`, `native-rules.ts`, `compare.ts`)**", and the line's dated pointer is extended to "*(amended 2026-11-07 by ballot 2026-11-07-thurgood-charter-scope-harness-and-merge-hold § 4 site 4 and 2026-11-08 by ballot 2026-11-07-native-lane-ownership § 4 site 9; prior text at c07951b38)*". Data applied it at `4be514236`; Thurgood re-quoted `thurgood-test--role-1` as the whole new line at `67de94640` (authoring; neither moves this canonicalHash).
+- **Text, verified by script**: the Before fragment and the old pointer each occur once in L74 at `c07951b38`. The old line, with the fragment replaced by the After fragment and the old pointer by the extended one (`<date>` read as `2026-11-08`, `<SHA>` as `c07951b38`), equals the new line byte for byte. No other line of the unit changed.
+- **The set is unchanged: 4 items.** `thurgood-test--role-1` still names what the seat owns and stays one `member`. Each of the 4 is a verbatim substring of the unit with one occurrence, checked by script.
+- **The hash**: the canonicalHash moves from `sha256:f4c12c98bf64fbc344b80c8d27f5e10a82bf16d67001a9beae4d5d994b47d8e6` to the value above. I computed it myself, as `hashText` over the unit's text from `partition(splitFrontmatter(...).body)`, from a scratchpad script outside the repository, and again as `sha256` over a raw slice of the file from the unit's heading to the next heading. The two agree. I had run `operative-set-freshness` earlier, to list the stale rows, and it printed the current value truncated; my computation does not use it, and it equals it in full. The overlay pin Thurgood wrote in `67de94640` is equal too. No target hash was given to me.
+- **Read before this act**: the unit whole, `cat -n .kiro/steering/Agent-Directory.md` L70–L83, through a tool call on this branch at `67de94640`.
+
+**Ruling: CONFIRMED at 4 items.**
+
+**Re-confirmed 2026-11-07 (prior record, superseded)**: canonicalHash `sha256:f4c12c98bf64fbc344b80c8d27f5e10a82bf16d67001a9beae4d5d994b47d8e6`, 4 items, as below.
 
 **Re-confirmed 2026-11-07 (Req 11.6.5d): the charter-scope ballot, site 4.**
 - **What changed**: one line of the unit, Thurgood's **Owns** line (L74). Ballot `.kiro/docs/ballots/2026-11-07-thurgood-charter-scope-harness-and-merge-hold.md` (RATIFIED, Peter, 2026-11-07T22:30:08Z; Status read on `main` at `f28a1fefd`) § 4 site 4. Its CI-regime clause gains "and bounded fixes to `merge-hold.yml`" and "and 2026-11-07"; a new clause follows it, "**the compile harness's stability script and rules module (`scripts/harness/stability.ts`, `native-rules.ts`)**"; and the line ends with the dated pointer "*(amended 2026-11-07 by ballot 2026-11-07-thurgood-charter-scope-harness-and-merge-hold § 4 site 4; prior text at f28a1fefd)*". Thurgood authored it at `a064ea06c`. I checked it against the ballot by script. The site-4 before-fragment occurs once in the line at `f28a1fefd`. The old line, with that fragment replaced by the after-fragment, equals the new line, reading `<date>` as 2026-11-07 and `<SHA>` as `f28a1fefd`. No other line of the file changed.
@@ -156,18 +178,40 @@ date: 2026-09-29
 ## `#kenya-ios-platform-engineer`
 
 confirmer: stacy
-canonicalHash: sha256:64c5dad4c16ebeae41d71d0c472921ba233d4760c70c2f5c4ca93014091aa76c
+canonicalHash: sha256:53af8b4593793e90539a90abe7ffaeda01d3a6c9c33507252bc29e0fccdc89d4
 items: kenya-ios-plat-role-1, kenya-ios-plat-role-2
-date: 2026-09-29
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d): the native-lane ownership ballot, site 9 (b).**
+- **What changed**: one line of the unit, Kenya's **Owns** line (L114). Ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-4 ruled 00:33:06Z; merged in #748, `dc5a8ad45`) § 4 site 9 (b). Data applied it at `4be514236`; Thurgood re-quoted `kenya-ios-plat-role-1` as the whole new line at `67de94640` (authoring; neither moves this canonicalHash).
+- **Text, verified by script**: the site's After text, with `<date>` read as `2026-11-08` and `<SHA>` as `c07951b38` (the application base on `main`), occurs once in the file. Its Before text occurs once in the file at `c07951b38`. Between `c07951b38` and this branch the file differs in exactly four lines, L58, L74, L114 and L122, the four lines site 9 names. The pointer is owed here: `.kiro/steering/**` is a pointer path.
+- **The set is unchanged: 2 items.** `kenya-ios-plat-role-1` still names what the seat owns, so it stays one `member`. Both items are verbatim substrings of the unit with one occurrence each, checked by script.
+- **The hash**: the canonicalHash moves from `sha256:64c5dad4c16ebeae41d71d0c472921ba233d4760c70c2f5c4ca93014091aa76c` to the value above. I computed it myself, as `hashText` over the unit's text from `partition(splitFrontmatter(...).body)`, from a scratchpad script outside the repository, and again as `sha256` over a raw slice of the file from the unit's heading to the next heading. The two agree. I had run `operative-set-freshness` earlier, to list the stale rows, and it printed the current value truncated; my computation does not use it, and it equals it in full. The overlay pin Thurgood wrote in `67de94640` is equal too. No target hash was given to me.
+- **Read before this act**: the unit whole, `cat -n .kiro/steering/Agent-Directory.md`, through a tool call on this branch at `67de94640`, and the full line in the applied diff.
+
+**Ruling: CONFIRMED at 2 items.**
+
+**Confirmed 2026-09-29 (prior record, superseded)**: canonicalHash `sha256:64c5dad4c16ebeae41d71d0c472921ba233d4760c70c2f5c4ca93014091aa76c`, 2 items, as below.
 
 **Ruling: CONFIRMED at 2, as drafted.**
 
 ## `#data-android-platform-engineer`
 
 confirmer: stacy
-canonicalHash: sha256:4416b3968374670d37a75ae6a15886bcb0c113148f2d76b7f6f4864bdb9fb8af
+canonicalHash: sha256:ed0f3918ff55d8e359f6d019874093984b1628c88ca014a37b4ab2333d06295d
 items: data-android-p-role-1, data-android-p-role-2
-date: 2026-09-29
+date: 2026-11-08
+
+**Re-confirmed 2026-11-08 (Req 11.6.5d): the native-lane ownership ballot, site 9 (a).**
+- **What changed**: one line of the unit, Data's **Owns** line (L122). Ballot `.kiro/docs/ballots/2026-11-07-native-lane-ownership.md` (RATIFIED, Peter, 2026-11-08T00:24:24Z; F-4 ruled 00:33:06Z; merged in #748, `dc5a8ad45`) § 4 site 9 (a). Data applied it at `4be514236`; Thurgood re-quoted `data-android-p-role-1` as the whole new line at `67de94640` (authoring; neither moves this canonicalHash).
+- **Text, verified by script**: the site's After text, with `<date>` read as `2026-11-08` and `<SHA>` as `c07951b38` (the application base on `main`), occurs once in the file. Its Before text occurs once in the file at `c07951b38`. Between `c07951b38` and this branch the file differs in exactly four lines, L58, L74, L114 and L122, the four lines site 9 names. The pointer is owed here: `.kiro/steering/**` is a pointer path.
+- **The set is unchanged: 2 items.** `data-android-p-role-1` still names what the seat owns, so it stays one `member`. Both items are verbatim substrings of the unit with one occurrence each, checked by script.
+- **The hash**: the canonicalHash moves from `sha256:4416b3968374670d37a75ae6a15886bcb0c113148f2d76b7f6f4864bdb9fb8af` to the value above. I computed it myself, as `hashText` over the unit's text from `partition(splitFrontmatter(...).body)`, from a scratchpad script outside the repository, and again as `sha256` over a raw slice of the file from the unit's heading to the next heading. The two agree. I had run `operative-set-freshness` earlier, to list the stale rows, and it printed the current value truncated; my computation does not use it, and it equals it in full. The overlay pin Thurgood wrote in `67de94640` is equal too. No target hash was given to me.
+- **Read before this act**: the unit whole, `cat -n .kiro/steering/Agent-Directory.md`, through a tool call on this branch at `67de94640`, and the full line in the applied diff.
+
+**Ruling: CONFIRMED at 2 items.**
+
+**Confirmed 2026-09-29 (prior record, superseded)**: canonicalHash `sha256:4416b3968374670d37a75ae6a15886bcb0c113148f2d76b7f6f4864bdb9fb8af`, 2 items, as below.
 
 **Ruling: CONFIRMED at 2, as drafted.**
 
