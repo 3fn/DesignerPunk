@@ -759,3 +759,13 @@ export function platformOutputInvalidMessage(where: string, why: string): string
 export function platformOutputOutsideRootMessage(key: string, output: string): string {
   return `designerpunk.config.ts: \`platforms.${key}.output\` is "${output}", which resolves outside your project (the folder the config is in). Name a folder inside it.`;
 }
+
+// ---------------------------------------------------------------------------
+// A non-colour key in a theme override map (P1 record 2026-11-08-non-colour-theme-override-accepted-not-applied;
+// Peter, 2026-11-08T15:12:38Z). Wording: Leonardo's.
+// ---------------------------------------------------------------------------
+
+/** A theme override map names a token that is not a colour. `where` is the config entry (it names the theme), `map` the map's place in it. Wording: Leonardo's. */
+export function nonColourOverrideKeyMessage(where: string, map: string, key: string): string {
+  return `${where}: remove "${key}" from ${map}: a theme override map changes colours only, and "${key}" is not a colour token.`;
+}

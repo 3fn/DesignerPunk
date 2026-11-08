@@ -17,6 +17,7 @@ import { resolveSemanticTokenValue } from '../resolvers/SemanticValueResolver';
 import { ThemeRegistry } from '../themes/ThemeRegistry';
 import { resolveThemeMaps, isThemePair } from '../themes/resolveThemeMaps';
 import { findThemeRefusals, themeRefusalMessage } from '../themes/themeRefusals';
+import { findNonColourOverrideKeys, nonColourOverrideMessage } from './themeOverrideCategories';
 import { getCoreVersion } from './coreVersion';
 import { registeredThemeDiffersNotice } from '../cli/shared/errorCatalog';
 import type { TokenSet } from './TokenSet';
@@ -238,6 +239,12 @@ export function generateTokenFiles(
     const message = themeRefusalMessage(refusals);
     console.error(`❌ ${message}\n`);
     throw new TokenGenerationAbortedError('theme-config', refusals.map(r => r.message));
+  }
+  // A non-colour key in any theme's override map is refused too: the colour emitter would write it as a colour.
+  const nonColour = findNonColourOverrideKeys(configThemes, (name) => semanticRegistry.get(name)?.category);
+  if (nonColour.length > 0) {
+    console.error(`❌ ${nonColourOverrideMessage(nonColour)}\n`);
+    throw new TokenGenerationAbortedError('theme-config', nonColour.map(r => r.message));
   }
   const themeMaps = resolveThemeMaps(configThemes, tokenSet, {
     local: config.tokenSourceMode === 'local',

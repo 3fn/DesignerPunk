@@ -36,4 +36,4 @@ Counter-argument and what survives: a unit test at config load already covers th
 
 ## Outcome
 
-Open.
+**Closes at the fixing PR's merge (Ada, owner; rule 5).** The fixing PR is #785 (`fix/theme-map-noncolour-refuse`). Its `tests/consumer-integration.test.ts` diff is one added case (`C6: a spacing key in a theme's dark map makes generate exit non-zero and name the key`, 13 lines, no existing case changed). `npm run test:consumer`: 94 of 94. The grant expires with the close.

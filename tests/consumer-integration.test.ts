@@ -1445,6 +1445,19 @@ export default defineConfig({
       expect(fs.existsSync(path.join(dir, 'token-index', 'primitives.yaml'))).toBe(true);
     }, TIMEOUT);
 
+    it('C6: a spacing key in a theme\'s dark map makes generate exit non-zero and name the key', () => {
+      // Peter's ruling 2026-11-08T15:12:38Z: `generate` refuses a non-colour key in any theme override map.
+      // Grant: .kiro/issues/2026-11-08-theme-map-noncolour-guard-grant.md. Before the refusal, this exited 0.
+      const dir = path.join(c6Root, 'dark-map-spacing-key');
+      gitBoundary(dir);
+      writeFileEnsured(path.join(dir, 'designerpunk.config.ts'),
+        `export default { name: 'DarkSpacing', abbreviation: 'DS', themes: [ { name: 'dark', mode: 'dark', overrides: { 'space.inset.100': { primitiveReferences: { value: 'space100' } } } } ] };\n`);
+
+      const result = runCliCapture(['generate'], { cwd: dir, timeoutMs: 60_000 });
+      expect(result.code).not.toBe(0);
+      expect(result.stdout + result.stderr).toContain('space.inset.100');
+    }, TIMEOUT);
+
     it('C6: attach --reference stays CONSUME', async () => {
       // Spec 123 Task 16.6 (design.md C6 row; Task 16 criterion 4). The property: a `posture:
       // 'consume'` manifest, which `attach --reference` writes, is NEVER a birth signal
