@@ -109,6 +109,13 @@ signer: data
 
 signer: data
 
+**Re-signed 2026-11-08 (Task 18.5): ASSENT to `superseded-by` (destination `#how-to-use-designerpunk-tokens-on-android`, `cites: subtraction-5`), `surviving: []`.** A new act; it changes my 2026-10-02 assent to `re-pointed`. Authoring moved the disposition under Peter's ruling of 2026-11-08T14:47:50Z (`.kiro/specs/129-consumer-generation-completeness/evidence/2026-11-08-peter-ruling-u12-retired-names.md`): Task 17 stops shipping `dist/ComponentTokens.android.kt`, so there is no package file left to trim, and Thurgood's profile commit `3d479bd4b` set the row `superseded-by` and deleted its overlay entry. The earlier `no-consumer-counterpart` and `re-pointed` assents rested on that file shipping at the package root; that premise is gone.
+- **Read before this act**: the whole unit and its rendering, from the print-mode output at `0bd7a7abf5fe2cace6c3ce1621184911db71c26d`: the canonical entry (the trim: artifact `dist/ComponentTokens.android.kt`, cue tool `get_component_full`, `fires: unconditional`) and its rendering, which is empty (0 pieces). As the row is `superseded-by`, I also read the destination unit and its three identical renderings in the same tree.
+- **Hashes, from that print**: `canonicalHash` `sha256:5d43bad7331fc257725c9eb6bcd32c8c1ac4c7b1c7314ecba2237f0d9ea45839` (did not move). `renderedHash` `sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570` (moved: from `e644f5b5...`, the hash over the old trim line, to the empty-piece hash).
+- **Why `superseded-by` holds**: the trim's function is to route me from the component-token file to `get_component_full`. The destination rendering keeps that route: "... and for a component's tokens (`get_component_full`)", and says where my own `ComponentTokens` are written. The negative ("do NOT read the built ... snapshot") has no referent once the file stops shipping.
+- **Surviving**: `[]`; a frontmatter row owes no operative-set items.
+- **Residual, not a refusal**: the rendering no longer names the file at all, so an installed older package's `dist/ComponentTokens.android.kt` would go unwarned. Ada found no older-package guard is lost, since installing the new package replaces the old files in `node_modules`.
+
 **Assent — `no-consumer-counterpart`, with a caveat.**
 - The file does ship (`node_modules/@3fn/core/dist/ComponentTokens.android.kt`).
 - But the trim's reason, a *stale* snapshot, does not reproduce in a consumer. The published file is built at release from the same source as the shipped MCP index.
