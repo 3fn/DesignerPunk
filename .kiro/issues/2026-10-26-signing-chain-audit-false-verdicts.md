@@ -139,3 +139,15 @@ Link 7's evidence line is each unit's first line, which none of these edits touc
   - Every non-Stacy verdict equals the "after" column of #769's body.
   - **My own acts are not re-read by me.** That is § 5.3: the delegate re-reads them, and the next in rotation is Leonardo. This line's "she re-reads them" means my readings of those acts, not the run. The withheld acts are 5 in #445 (`4c0f6977b`) and 15 in #758 (`8560f299e`, `e3abde8f8`), and #763 has none.
   - Fix 2's outcome line is the owner's.
+
+- **2026-11-08 — Fix 2 outcome (Thurgood, owner; rules 5 and 9; a dated line, the record stays open).** Fix 2 (link 4 counted one commit twice) is **executed by #769** (`e7d82c377`; Peter, 2026-11-08T03:55:36Z, "Let's go (A) with the class option"). The tool now treats one call's `[branch sha9]` line and its 40-character `git log` line for the same commit as one candidate: one prefix a prefix of the other, a subject in common, within one call; never across calls, transcripts or commits. Fixtures P9b–P9d, K1–K6, N3b and N5b pin it (8 of 13 were red before the fix).
+  - **Before → after**, `--audit` with the 17 default stores (per act in #769's body):
+    - **#763**: 1 act, `anomaly 4` → `anchored`.
+    - **#758**: 40 acts; `anomaly 4` 31, `anchored` 1, `record absent 7` 8 → `anchored` 17, `record absent 7` 22, `FAIL 7` 1, `anomaly` 0. The `FAIL 7` is Data's `d85aaa85` (`os/data.yaml#in-scope`), this record's cause 3 (the list marker), which is fix 3.
+    - **#416** (this record's own evidence; run 2026-11-08 at `939931b15`): the four acts `3f4f6b26`, `17e0bf93`, `eded5709`, `2e7ae81d` were `anomaly 4`; now `3f4f6b26` and `eded5709` are `anchored`, and `17e0bf93` and `2e7ae81d` are `FAIL 7`, the § 3 ballot question. That is the § 2 table's expectation.
+  - **Re-reads on the fixed instrument**: Stacy (#771) and the delegate Leonardo (#772) re-read #445, #758 and #763 for the non-Stacy and Stacy-signed acts. #758's Stacy-signed acts: anchored 12, `record absent 7` 3 (rows rendering nothing). No `FAIL` or `anomaly` on a Stacy-signed act.
+  - **Ballot step 11 straggler sweep** (run at `939931b15`): `git grep -n -i "first .git log. line"` → 5 hits, all history or ledgers kept: the signing-act ballot's § 9 fold-back line (L280), the 2026-10-23 ballot's own §§ 1 and 11 (L23, L139), and the 2026-10-23 record's §§ 1 and 4 (L17, L61). Reference counts for the ballot id: 3 in the signing-act ballot (the § 4.3 pointer, the § 5.4 pointer, the Errata line), 2 in the register, 3 in the seat brief.
+  - **RS-38's straggler sweep on #769 was missing from its body** (Stacy's batch-5 F2; the PR carried the ballot's own sweep, a different one). It is run and read in `2026-11-08-signing-chain-restatements-stale-after-link4.md`, which also files the two restatements it found false.
+  - **Still open, with Spec 131**: fix 1 (link 6), fix 3 (link 7), the late-read gap and the § 3 ballot question. The Trigger line is unchanged.
+
+*Signed: Thurgood, 2026-11-08.*
