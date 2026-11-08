@@ -55,7 +55,7 @@ DesignerPunk agents operate in two tiers:
 
 Token development, maintenance, documentation, compliance, mathematical foundations, export pipeline architecture (DTCG/Figma), and design token standards alignment.
 
-**Owns**: Primitive and semantic token creation, formula validation, cross-platform generation pipeline, Rosetta architecture, token governance enforcement.
+**Owns**: Primitive and semantic token creation, formula validation, cross-platform generation pipeline, Rosetta architecture, token governance enforcement, **the native compile harness's consumer driver (`scripts/harness/consumer.ts`; ballot 2026-11-07-native-lane-ownership, from Spec 129 U12's merge)**. *(amended 2026-11-08 by ballot 2026-11-07-native-lane-ownership § 4 site 9; prior text at c07951b38)*
 
 **When to involve**: Token creation or modification, mathematical foundation questions, token compliance issues, generation pipeline work, DTCG/Figma export, token family documentation.
 
@@ -71,7 +71,7 @@ Component development, platform implementations (web/iOS/Android), component arc
 
 Test suite health, coverage analysis, test infrastructure standards, audit methodology, spec creation guidelines, accessibility test coverage auditing, and **Civitas governance infrastructure stewardship**.
 
-**Owns**: Test suite health auditing, spec formalization (design outline → requirements → design → tasks), spec quality review, compliance test writing, governance standards, the `completion-criteria-parity` instrument (checker source, CI wiring, gate registration), **the CI regime's standing test-lane scope (`lane-timing.yml` test-script steps with floors, added entries in `.github/in-lane-guards.json`, and bounded fixes to `merge-hold.yml`; ballot 2026-09-27-ci-regime-standing-scope, amended 2026-10-20 and 2026-11-07)**, **the compile harness's stability script and rules module (`scripts/harness/stability.ts`, `native-rules.ts`)**, **Civitas infrastructure** (steering doc health, MCP monitoring, content consistency, agent prompt currency, governance tooling adoption, "Shared" doc maintenance). *(amended 2026-11-07 by ballot 2026-11-07-thurgood-charter-scope-harness-and-merge-hold § 4 site 4; prior text at f28a1fefd)*
+**Owns**: Test suite health auditing, spec formalization (design outline → requirements → design → tasks), spec quality review, compliance test writing, governance standards, the `completion-criteria-parity` instrument (checker source, CI wiring, gate registration), **the CI regime's standing test-lane scope (`lane-timing.yml` test-script steps with floors, added entries in `.github/in-lane-guards.json`, and bounded fixes to `merge-hold.yml`; ballot 2026-09-27-ci-regime-standing-scope, amended 2026-10-20 and 2026-11-07)**, **the compile harness's stability script, rules module and comparator (`scripts/harness/stability.ts`, `native-rules.ts`, `compare.ts`)**, **Civitas infrastructure** (steering doc health, MCP monitoring, content consistency, agent prompt currency, governance tooling adoption, "Shared" doc maintenance). *(amended 2026-11-07 by ballot 2026-11-07-thurgood-charter-scope-harness-and-merge-hold § 4 site 4 and 2026-11-08 by ballot 2026-11-07-native-lane-ownership § 4 site 9; prior text at c07951b38)*
 
 **When to involve**: Spec creation, test suite audits, coverage gap analysis, spec feedback coordination, governance questions, completion documentation standards, **steering doc health issues, MCP accuracy concerns, cross-surface content inconsistencies, governance tooling questions**.
 
@@ -111,7 +111,7 @@ Web Components implementation, DesignerPunk token and component consumption, web
 
 SwiftUI implementation, DesignerPunk token and component consumption, iOS accessibility, and native screen development.
 
-**Owns**: iOS product screen implementation using DesignerPunk SwiftUI components and Swift token constants.
+**Owns**: iOS product screen implementation using DesignerPunk SwiftUI components and Swift token constants; **the native compile harness's iOS lane** (`harness/ios/**`, `probe-swift.ts`, `parse-swift.ts`, and repair moves in `harness/pins.yaml`'s `ios:` section; ballot 2026-11-07-native-lane-ownership, from the later of Spec 129 U12's merge and the first iOS promotion's merge). *(amended 2026-11-08 by ballot 2026-11-07-native-lane-ownership § 4 site 9; prior text at c07951b38)*
 
 **When to involve**: iOS screen implementation, SwiftUI consumption patterns, iOS accessibility, iOS-specific platform questions.
 
@@ -119,7 +119,7 @@ SwiftUI implementation, DesignerPunk token and component consumption, iOS access
 
 Jetpack Compose implementation, DesignerPunk token and component consumption, Android accessibility, and native screen development.
 
-**Owns**: Android product screen implementation using DesignerPunk Compose components and Kotlin token constants.
+**Owns**: Android product screen implementation using DesignerPunk Compose components and Kotlin token constants; **the native compile harness's Android lane** (`harness/android/**`, `probe-kotlin.ts`, `parse-kotlin.ts`, and repair moves in `harness/pins.yaml`'s `android:` section; ballot 2026-11-07-native-lane-ownership, from Spec 129 U12's merge). *(amended 2026-11-08 by ballot 2026-11-07-native-lane-ownership § 4 site 9; prior text at c07951b38)*
 
 **When to involve**: Android screen implementation, Jetpack Compose consumption patterns, Android accessibility, Android-specific platform questions.
 
