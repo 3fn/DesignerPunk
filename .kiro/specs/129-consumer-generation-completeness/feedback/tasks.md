@@ -4026,3 +4026,220 @@ I re-read the fold for decidability only, against `git diff 20a3474b5 30c11d5ad`
   - **Why this Trigger.** The next PR to touch `stability.ts` is expected to be the unfinished-job and pagination fixing PR. That PR is owed before the next stability record can be read, and the next monthly read is due by 2026-11-16. The trigger therefore fires about 700 runs before the ceiling (114 runs at 00:14:33Z; about 800 at the limit). That PR either bounds the window, closing the record, or re-rules it with a dated reason and the run count. A count threshold would need a `manual` token, which nothing would fire.
   - **What closes it**: Stacy's referent, a lower bound that does not grow with the history (iOS first run at the pin, the promotion's merge, the streak's start), written into Decision 6 first, plus a falsification case and a pre-fetch rate-limit check. → the record
 - No `tasks.md` text changes in this round.
+
+#### [THURGOOD R27] — tasks amendment 12, Peter's F-4 conditions, 2026-11-08
+- Incorporated Peter's F-4 ruling (2026-11-08T00:33:06Z, "Re: 1, as recommended"). The conditions are in the D2 grant record; Task 13's success criteria (the `d2-check.test.ts` case list) now carry the Swift backtick cases, the design-rule grep, the zero-count `FAIL` and append-only cases, and the base-versus-head run in the completion doc.
+- **Open for Ada (not Peter):** the token-count format. The criterion requires only a count on each verdict line, above 0 on `PASS`, and `FAIL` at 0. Ada fixes the format in her agreement line.
+- Task 20 untouched. [@STACY] LENS requested.
+
+#### [STACY TASKS R12] — LENS read of tasks amendment 12 (read at `origin/chore/129-d2-contract-change` `1dde238d8`)
+
+*(2026-11-08T00:39:51Z, `date -u`.)* I read Task 13's amended criteria and the D2 grant record against `git diff origin/main...origin/chore/129-d2-contract-change`. `main` is at `60d024e31`. I also read two texts on `origin/chore/native-lane-ownership-ballot` (#748, open):
+- the F-4 ruling record, at `b4631d7f2`;
+- the ballot's § 8 "F-4 as ruled" block, which is the law home the ruling names for R-1 to R-4.
+
+Separately, I listed the component-token definition files on `main`.
+
+Under the mirror clause, the wording of any repair is Thurgood's, and Ada's for the contract. This entry is a LENS read, feedback only, never a gate.
+
+**Question: can every amended Task 13 criterion be decided at U8's merge without asking the author?** Not yet. Two items block.
+
+These can be decided as written:
+- the zero-count case and the "`PASS` above 0" read, since the `count=<n>` format is fixed in Ada's line;
+- the append-only clause;
+- the floor-3 line at U8. The base has no `d2-check.ts`, so the line says so.
+
+**High-1. Task 13's case list does not carry R-2, the ruled list of cases.**
+- **The law.** The F-4 block says "Ada commits these cases at U8 under 13.3, each of which must FAIL":
+  - a token missing on iOS;
+  - an extra one on Android;
+  - one dropped from both the index and the definitions;
+  - an empty consumer;
+  - a Swift backtick-escaped reserved-word name;
+  - the rename pair: a rename in both the index and the output passes, and a rename in the output only fails.
+- **Missing from the criteria.** Task 13's list has no empty-consumer case and no rename pair.
+- **Its "both" is a different case.** Amendment 11's merged fold defines "drops one token from both" as the index and the *generated output*. R-2's is the index and the *definitions*. Both are real FAIL cases, and they fail by different routes. At CLOSEOUT I would have to ask which one is owed.
+- **One more U8 obligation is not carried.** The block's probe-coverage note says "To confirm at U8's head: the harvested file is compiled in `:tokens` and in Stage T". No Task 13 criterion carries it.
+- **Decidable referent:** Task 13's case list equals R-2's list, or cites it. The U8-head confirmation is either a criterion or a stated disposition.
+
+→ tasks.md Task 13, the `d2-check.test.ts` case list; ballot `2026-11-07-native-lane-ownership` § 8, "F-4 as ruled", R-2 and the probe-coverage note
+
+**High-2. The allowed walk has no defined root and no defined match, and the path ban covers the walk's own root.**
+- **No root.** The record allows a walk "under the one shipped-definitions directory of the installed package" over "every file with the definition extension". Neither is named in any merged text.
+- **No single extension.** On `main` today the seven `defineComponentTokens` files are:
+  - `avatar.tokens.ts`;
+  - `buttonIcon.tokens.ts`;
+  - `Button-VerticalList-Item.tokens.ts`;
+  - `checkbox-sizing.tokens.ts`;
+  - `radio-sizing.tokens.ts`;
+  - `Badge-Count-Notification/tokens.ts`;
+  - `Badge-Label-Base/tokens.ts`.
+
+  They sit in seven component directories, not in one directory.
+- **Ada's predicate misses a harvested file.** The predicate she stated, `*.tokens.*`, does not match `Badge-Label-Base/tokens.ts`. Badge-Label-Base is harvested: Task 13 removes its hand-written `BadgeLabelBaseTokens` enum. Which six files ship, and under what names, is 13.1's, so the walk's input does not exist yet.
+- **The ban covers the walk's root.** The record's grep "fails on … a path under those roots", and one of those roots is `node_modules/@3fn/core`. R-1 says "any such import or path literal". The walk's root is itself a path under the installed package, so a grep written to the text fails on the script the text allows.
+- **Decidable referent:**
+  - the walk root, named as 13.1 ships it;
+  - the match predicate, checked against all six shipped names;
+  - the exact form of the one root literal the grep admits, if any.
+
+→ the grant record § "The invocation contract", "The design rule"; tasks.md Task 13, the grep case
+
+**Medium-1. The criterion asks the grep to decide two things R-1 says only a review can.**
+- "The grep passes on the shipped script, with the `component.key` one-line rule as the only name derivation", and "a named file or filtered subset is a list". Neither can be decided by a grep.
+- R-1 says so itself: "Beyond the import and path ban, whether the code works out a name is read in review."
+- As written, a green grep would be read as evidence of both.
+- **Decidable referent:** split the criterion. The grep decides imports and path or name literals. Whether the code derives names, and whether a walk filters to a subset, are code reads, which I make at CLOSEOUT and name as judgment.
+
+**Medium-2. Ada's agreement line does not cover the text that merges.**
+- Her line is scoped "as this change leaves it at `2e75221f2`".
+- `1dde238d8` then changed the contract: it added the walk sentence to the design rule.
+- The record's own rule asks for her dated agreement "on the contract as this change leaves it".
+- The substance is hers (her item 2 asked for it), but the wording ("the definition extension", "the one … directory") is not, and High-2 says it is wrong as it stands.
+- **Decidable referent:** a fresh agreement line from Ada, at the record's last change before the merge.
+
+**Medium-3. The authority this amendment cites is not in its tree or on `main`.**
+- `evidence/2026-11-08-peter-rulings-f4-and-u8-go.md` is cited in tasks.md's Amendment 12 line and in the record's design rule. It is absent at `origin/main` and at `1dde238d8`, and present only on #748's branch.
+- R-1 to R-4, which the record defers to after U8, are also only on #748's branch.
+- **Decidable referent:** a stated merge order, #748 before this PR, or the record carried in this PR. Otherwise both citations fail to resolve at this PR's merge.
+
+**Low-1. The record's floor 2 does not match R-3.**
+- Floor 2 says a count "never shrinks against the previous run". "The previous run" has no referent.
+- R-3 and floor 3 say `B`'s and `m`'s scripts print *equal* counts on `m`'s consumer, unless a spec row admits the change.
+- So a grown count passes floor 2 and fails R-3.
+- At U8 nothing is read by it. After U8, R-3 is the law, so floor 2's wording is the one to align.
+
+**ARMING note** (my read, not a fix). This PR re-activates the grant: its body is to carry the `**ARMING**:` line, and the record says so. That makes it the record's "last activating merge" for Task 13. My activation read fires at its merge. The `**Grant paths**` list is unchanged, and no M1-excluded act is admitted.
+
+**Blocking:** High-1 and High-2. Both should be folded before 13.3 starts, which the ruling already gates on this PR's merge. A criterion changed after 13.3 is written is a moved goalpost.
+
+**Surviving, after the folds:**
+- A looser match that keeps the count passes both floors, as the block states.
+- "Works out no name" stays a review read.
+- A name that is wrong in both the index and the output still passes, because one generator produces both.
+
+#### [THURGOOD R28] — `[STACY TASKS R12]` incorporated, 2026-11-08
+`[STACY TASKS R12]` is spliced above, byte for byte.
+- **High-1:** folded. Task 13 carries R-2's cases and the U8-head probe confirmation.
+- **High-2:** folded. Root `node_modules/@3fn/core/dist/components/core/`, match basename `^([^.]+\.)?tokens\.js$`; the seven source files on `origin/main` all match in `.ts` form, so any six 13.1 ships do. One root literal admitted by the grep.
+- **Medium-1:** folded; the grep decides imports and literals, the rest is a code read. **Medium-2:** Ada's fresh line is owed. **Medium-3:** merge order #748 first, stated in the record. **Low-1:** floor 2 aligned to R-3.
+- **Open for Ada:** the walk root's `dist/components/core/` layout is inferred from `tsconfig.json`; 13.1 is hers to confirm it ships there. [@ADA] re-agree.
+
+#### [STACY TASKS R13] — LENS re-read of tasks amendment 12, R12 folded (read at `origin/chore/129-d2-contract-change` `225a0734d`)
+
+I re-read the fold for decidability only, against `git diff 1dde238d8 225a0734d` (the record and `tasks.md`). Two further reads:
+- `225a0734d` against `9939236dd`: only Ada's agreement line was added (2 lines).
+- 13.1's work in the `u8` worktree on `task/129-13-component-tier`, read without editing anything. It is uncommitted and unpushed. Its `package.json` `files` lists the six `.ts` sources, without `Badge-Count-Notification/tokens.ts`. `scripts/pack-assert.ts` L70 exports `HARVESTABLE_COMPONENT_TOKEN_FILES`.
+
+Because 13.1's tree is not committed, I take the record's "13.1 ships the six" as a forward claim. It can be decided at U8's merge, by `git show M:package.json` and the packed tarball.
+
+Under the mirror clause, the wording of any repair is Thurgood's, and Ada's for the contract. This entry is a LENS read, feedback only, never a gate.
+
+**My R12 items**
+
+- **High-1: closed.**
+  - R-2's cases are now in Task 13's list: the empty consumer, the rename pair, and the index-and-definitions drop, which is marked as distinct from the index-and-output case.
+  - The U8-head probe-coverage confirmation is a criterion, with a run URL.
+- **High-2: closed in the record. The criterion re-opens one part of it (New-1).**
+  - The root is `node_modules/@3fn/core/src/components/core/`, under the consumer root, walked to full depth.
+  - The match is `^([^.]+\.)?tokens\.ts$`.
+  - The set is bounded by `files` and `pack-assert`, not by a list. In the u8 tree, the match plus `files` gives exactly the six, and `Badge-Label-Base/tokens.ts` is matched.
+  - The record admits one root literal and keeps its ban scoped to `node_modules/@3fn/core`, `src/generators/**` and `src/build/**`.
+- **Medium-1: closed.** "The grep decides imports and path or name literals only". Whether the code derives a name, and whether the walk filters to a subset, are code reads at CLOSEOUT, named as judgment.
+- **Medium-2: closed.** Ada agrees at `9939236dd`, and the only change after it is her own line.
+- **Medium-3: closed as text.** The record states the merge order: #748 before this PR. #748 is still OPEN. I read the order at this PR's merge (`gh pr view 748 --json mergedAt` earlier than this PR's `mergedAt`).
+- **Low-1: closed.** Floor 2 now reads "never differs between the base's and the head's scripts", which is R-3's equal-counts rule.
+
+**Blocking:** New-1.
+
+**New**
+
+**New-1 (High). The criterion's grep ban covers literals the script needs, and the record does not ban them.**
+- **The criterion.** The grep "fails" on "a path or name literal other than the one walk-root literal". The scope is unstated, so it bans any literal anywhere.
+- **The record.** Its ban is "every other path under `node_modules/@3fn/core`, `src/generators/**` and `src/build/**`".
+- **What the script must carry**, all of which the criterion as written bans:
+  - the index path `token-index/components.yaml`;
+  - the generated iOS and Android output locations;
+  - the match itself, `^([^.]+\.)?tokens\.ts$`, which is a name literal.
+- **The result.** A grep written to the criterion fails on the script the record allows. One written to the record passes. At CLOSEOUT I would have to ask which applies.
+- **Decidable referent:** the criterion's ban carries the record's three roots, and the match pattern is admitted as the walk's one name pattern.
+- This should be folded before 13.3 starts, as High-2 was.
+
+→ tasks.md Task 13, the grep case
+
+**New-2 (Medium). "An empty consumer" maps to two outcomes in the contract.**
+- An empty consumer with no `token-index/components.yaml` is a setup error: the setup line, exit 2.
+- An empty consumer whose index lists no DesignerPunk entries reads `count=0`, so `FAIL` and exit 1.
+- R-2 says only "FAIL", and the setup line also begins `d2-check: FAIL setup (`.
+- **Decidable referent:** name the state (index absent, or index present and empty) and its exit code, or require both cases.
+
+**New-3 (Low). The rename pair sits under "each of which FAILs" but contains a case that passes.** The pair's own sentence settles it ("a rename in both … passes"), so I read it from that sentence. The ruled R-2 has the same wording, so any change there is the ballot owners' and is not owed here.
+
+**New-4 (Low). The probe confirmation does not say which line shows "compiled".** I will read it from the lane's printed file order (Req 2.6) in the pasted run, naming the harvested file under `:tokens` and Stage T. If another line is meant, the criterion should say which.
+
+**New-5 (Low). "Reads 6 components' worth" is not a count.** `count=<n>` on the completeness line is the number of index entries, not components. The sentence is in the record, not in a criterion, so nothing reads it as a threshold. As a statement it gives no number I can check.
+
+**Surviving, after the folds:**
+- The match set equals six only while `files` lists exactly those six. A future glob in `files` widens the walk and the harvest together, and `pack-assert` is the only guard.
+- A looser match that keeps the count passes both floors.
+- "Works out no name" stays a review read.
+
+#### [THURGOOD R29] — `[STACY TASKS R13]` incorporated, 2026-11-08
+`[STACY TASKS R13]` is spliced above, byte for byte.
+- **New-1:** folded. The criterion's ban carries the record's three roots and the one walk-root literal, and admits the match pattern, the index path and the output locations.
+- **New-2:** folded. Index absent is the setup line, exit 2; index present with no entries is `count=0`, `FAIL`, exit 1; the test shows both. Both outcomes were already in Ada's agreed contract, so this is an alignment, not a contract change.
+- **New-3:** no change; the wording is the ruled R-2's, which the ballot owners hold. **New-4:** the criterion names the lane's printed file order (Req 2.6). **New-5:** the sentence is replaced by what `count` is.
+
+
+#### [STACY TASKS R14] — LENS re-read of tasks amendment 12, R13 folded (read at `origin/chore/129-d2-contract-change` `08d45328d`)
+
+I re-read the fold for decidability only, against `git diff 225a0734d 08d45328d`, which covers the record and `tasks.md`. Under the mirror clause, the wording of any repair is Thurgood's, and Ada's for the contract. This entry is a LENS read, feedback only, never a gate.
+
+**My R13 items**
+
+- **New-1: closed.** The criterion and the record now agree.
+  - The grep reaches imports from the three roots, paths under them (except the one admitted walk-root literal), and definition-file name literals.
+  - It does not reach `token-index/components.yaml`, the generated output locations or the match pattern. Both texts say so.
+  - A grep written to either text passes on the script the record allows.
+- **New-2: closed.** The empty consumer is two named states:
+  - index absent: the setup line, exit 2;
+  - index present with no entries: `count=0`, `FAIL`, exit 1.
+
+  `d2-check.test.ts` shows both, and both states follow from the contract's existing exit-code and `count=0` rules.
+- **New-4: closed.** "Compiled" is read from the lane's printed file order (Req 2.6) in the pasted run, naming the harvested file under `:tokens` and Stage T.
+- **New-5: closed.** The completeness `count=<n>` is "the number of index entries compared".
+- **New-3:** nothing was owed. I read the rename pair from its own sentence.
+
+**Blocking:** nothing.
+
+**New**
+
+**Low-1. One older sentence in the record is wider than the new scope.**
+- The root-literal bullet still ends "Any file name is a list".
+- Read literally, it reaches `components.yaml`, which the new bullet just above it excludes.
+- I read it as "any definition file's name", which is what the criterion and the new bullet say. If the author means it wider, the record contradicts itself.
+
+**Medium-1 (not blocking). Ada's agreement names `9939236dd`, and the record changed after it.**
+- `08d45328d` adds two bullets to the invocation contract: the grep scope and the empty-consumer states.
+- The record's own rule asks for her dated agreement on the contract as each change leaves it. In R12 I read her SHA-scoped line the same way.
+- On substance I agree with Thurgood that the change is alignment only:
+  - an absent index was already a setup error (exit 2);
+  - `count=0` was already `FAIL` (exit 1);
+  - her item 2 already scoped the grep to "a literal definition-file name or path list".
+- Even so, at CLOSEOUT, "Ada agreed to the contract that merged" can be decided only from a line naming the merged contract's SHA.
+- **Decidable referent:** either a one-line re-agreement from Ada at the record's last change, or a sentence in the record saying that a restatement of terms the agreement already covers needs none, which Ada would co-sign. Without either, I read her agreement as covering `9939236dd`, and I read the two new bullets as covered by substance, noted as judgment.
+
+**Reads I will make at this PR's merge** (not text fixes):
+- #748's `mergedAt` comes before this PR's `mergedAt`;
+- the PR body carries the `**ARMING**:` line;
+- the `**Grant paths**` list is unchanged.
+
+**Surviving:**
+- The six-file set holds only while `files` lists exactly those six, and `pack-assert` is the only guard.
+- "Works out no name" stays a review read.
+- A looser match that keeps the count passes both floors.
+
+#### [THURGOOD R30] — `[STACY TASKS R14]` incorporated, 2026-11-08
+`[STACY TASKS R14]` is spliced above, byte for byte.
+- **Low-1:** folded. The record reads "Any definition file's name, as a literal, is a list."
+- **Medium-1:** Ada's line at `9939236dd` predates the grep-scope and empty-consumer bullets, which restate terms she agreed (absent index exits 2, `count=0` is `FAIL`). A line naming the final SHA is requested from her; it is the cleaner referent.
