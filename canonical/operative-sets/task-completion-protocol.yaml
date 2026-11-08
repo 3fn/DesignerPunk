@@ -215,7 +215,7 @@ units:
       - id: completion-state-in--20
         kind: obligation
         label: "A checks-only merge is NOT ratification. For governance-law "
-        text: "**A checks-only merge is NOT ratification.** For governance-law changes, the record-first ballot protocol (`.kiro/docs/ballots/README.md`) remains the ratification mechanism throughout 125-A — the gate verifies mechanics, not authority. PR-approval-as-ratification arrives with 125-B's CODEOWNERS layer."
+        text: "**A checks-only merge is NOT ratification.** For governance-law changes, the record-first ballot protocol (`.kiro/docs/ballots/README.md`) remains the ratification mechanism — the gate verifies mechanics, not authority. PR-approval-as-ratification arrives only when the gated-surfaces scope of register row `record-first-ratification` (`governance/classification-map.md`) moves from `proposed` to `armed`."
     confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#completion-state-in-the-pr-flow:preamble
   "#coherent-units-the-merge-granularity":
     canonicalHash: sha256:6d55794d7cc2603763fd52cba47a3870f8d8728107f49fcbd9611fe7ac4eb28a
@@ -327,7 +327,7 @@ units:
       - id: the-merge-rule-3
         kind: obligation
         label: "Standing carve-out, surviving any delegation: PRs touching g"
-        text: "**Standing carve-out, surviving any delegation**: PRs touching governance law (`governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**`, agent prompts/configs) stay Peter-merged — the closest ratification proxy until 125-B's CODEOWNERS layer."
+        text: "**Standing carve-out, surviving any delegation**: PRs touching governance law (`governance/**`, `.kiro/steering/**`, `.kiro/docs/ballots/**`, agent prompts/configs) stay Peter-merged — the closest ratification proxy until the gated-surfaces scope of register row `record-first-ratification` is `armed`."
     confirmation: canonical/profiles/consumer/confirmations/task-completion-protocol.md#the-merge-rule
   "#emergency-procedure":
     canonicalHash: sha256:fcb97d3f697a6b4cc3bd45b2478e22e305abdf1626258e220b5ac507f4bcbb4d
